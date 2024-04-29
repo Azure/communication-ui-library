@@ -10,21 +10,22 @@ import { test as betaTest } from './FlavoredBaseTest';
 const formatButtonId = 'rich-text-input-box-format-button';
 const editorId = 'rooster-rich-text-editor';
 
+// created a separate file for table tests (`RichTextInputBoxComponentTablesTests.spec.tsx`) to speed up the test execution
 betaTest.describe('RichTextInputBoxComponent tests', () => {
   betaTest.skip(({ isBetaBuild }) => !isBetaBuild, 'The tests should be run for beta flavor only');
   betaTest('RichTextInputBoxComponent should be shown correctly', async ({ mount }) => {
     const component = await mount(<TestRichTextInputBoxComponent disabled={false} minHeight="1rem" maxHeight="2rem" />);
     await component.evaluate(() => document.fonts.ready);
-    await expect(component).toHaveScreenshot('richtextinputboxcomponent-without-format-toolbar.png');
+    await expect(component).toHaveScreenshot('rich-text-input-box-component-without-format-toolbar.png');
     const formatButton = component.getByTestId(formatButtonId);
 
     await formatButton.hover();
-    await expect(component).toHaveScreenshot('richtextinputboxcomponent-hover.png');
+    await expect(component).toHaveScreenshot('rich-text-input-box-component-hover.png');
 
     await formatButton.click();
     //move mouse to the format button so the screenshots are consistent
     await formatButton.hover();
-    await expect(component).toHaveScreenshot('richtextinputboxcomponent-with-format-toolbar.png');
+    await expect(component).toHaveScreenshot('rich-text-input-box-component-with-format-toolbar.png');
   });
 
   betaTest('Text should be formatted correctly when only 1 text style selected', async ({ mount }) => {
@@ -48,7 +49,9 @@ betaTest.describe('RichTextInputBoxComponent tests', () => {
     await underlineButton.click();
     await editor.pressSequentially('Underline ');
 
-    await expect(component).toHaveScreenshot('richtextinputboxcomponent-text-formatted-1-text-format-at-a-time.png');
+    await expect(component).toHaveScreenshot(
+      'rich-text-input-box-component-text-formatted-1-text-format-at-a-time.png'
+    );
   });
 
   betaTest('Text should be formatted correctly when only all text styles selected', async ({ mount }) => {
@@ -64,7 +67,7 @@ betaTest.describe('RichTextInputBoxComponent tests', () => {
     // fill can't be used here as it doesn't trigger needed events
     await editor.pressSequentially('Hello World!');
 
-    await expect(component).toHaveScreenshot('richtextinputboxcomponent-text-formatted-all-text-formats.png');
+    await expect(component).toHaveScreenshot('rich-text-input-box-component-text-formatted-all-text-formats.png');
   });
 
   betaTest('Text should be formatted for bulleted list', async ({ mount }) => {
@@ -74,7 +77,7 @@ betaTest.describe('RichTextInputBoxComponent tests', () => {
     await component.evaluate(() => document.fonts.ready);
     addList('Bulleted list', component);
 
-    await expect(component).toHaveScreenshot('richtextinputboxcomponent-text-formatted-bulleted-list.png');
+    await expect(component).toHaveScreenshot('rich-text-input-box-component-text-formatted-bulleted-list.png');
   });
 
   betaTest('Text should be formatted for numbered list', async ({ mount }) => {
@@ -85,7 +88,7 @@ betaTest.describe('RichTextInputBoxComponent tests', () => {
 
     addList('Numbered list', component);
 
-    await expect(component).toHaveScreenshot('richtextinputboxcomponent-text-formatted-numbered-list.png');
+    await expect(component).toHaveScreenshot('rich-text-input-box-component-text-formatted-numbered-list.png');
   });
 });
 
