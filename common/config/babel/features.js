@@ -21,6 +21,8 @@ module.exports = {
     'meeting-id',
     // Demo feature. Used in live-documentation of conditional compilation. Do not use in production code.
     "in-progress-beta-feature-demo",
+    // Feature for Rich Text Editor (RTE) composite support and uploading images
+    "rich-text-editor-composite-and-image-upload"
   ],
   beta: [
     "call-readiness",
