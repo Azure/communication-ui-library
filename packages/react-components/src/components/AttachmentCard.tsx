@@ -66,8 +66,8 @@ export const _AttachmentCard = (props: _AttachmentCardProps): JSX.Element => {
     return 'progress' in attachment ? attachment.progress : undefined;
   }, [attachment]);
 
-  const isUploadComplete = useMemo(() => {
-    return progress !== undefined && progress > 0 && progress < 1;
+  const isUploadInProgress = useMemo(() => {
+    return progress !== undefined && progress >= 0 && progress < 1;
   }, [progress]);
 
   const [announcerString, setAnnouncerString] = useState<string | undefined>(undefined);
@@ -75,17 +75,15 @@ export const _AttachmentCard = (props: _AttachmentCardProps): JSX.Element => {
   const uploadStartedString = props.strings?.uploading ?? localeStrings.uploading;
   const uploadCompletedString = props.strings?.uploadCompleted ?? localeStrings.uploadCompleted;
 
-  const showProgressIndicator = progress !== undefined && progress > 0 && progress < 1;
-
   useEffect(() => {
-    if (showProgressIndicator) {
+    if (isUploadInProgress) {
       setAnnouncerString(`${uploadStartedString} ${attachment.name}`);
     } else if (progress === 1) {
       setAnnouncerString(`${attachment.name} ${uploadCompletedString}`);
     } else {
       setAnnouncerString(undefined);
     }
-  }, [progress, showProgressIndicator, attachment.name, uploadStartedString, uploadCompletedString]);
+  }, [progress, isUploadInProgress, attachment.name, uploadStartedString, uploadCompletedString]);
 
   return (
     <div data-is-focusable={true}>
@@ -120,7 +118,7 @@ export const _AttachmentCard = (props: _AttachmentCardProps): JSX.Element => {
           action={MappedMenuItems(menuActions, attachment, onActionHandlerFailed)}
         />
       </Card>
-      {isUploadComplete ? (
+      {isUploadInProgress ? (
         <CardFooter>
           <ProgressBar thickness="medium" value={progress ? Math.max(progress, 0.05) : undefined} shape="rounded" />
         </CardFooter>

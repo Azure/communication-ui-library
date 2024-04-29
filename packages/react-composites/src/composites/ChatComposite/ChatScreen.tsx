@@ -88,6 +88,9 @@ interface OverlayImageItem {
   imageUrl: string;
 }
 
+/**
+ * @private
+ */
 interface AttachmentUpload extends AttachmentUploadTask {
   metadata: AttachmentMetadataWithProgress;
 }
@@ -289,7 +292,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
 
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   const onRenderAttachmentDownloads = useCallback(
-    (userId: string, message: ChatMessage) =>
+    (message: ChatMessage) =>
       message?.attachments?.length ?? 0 > 0 ? (
         <_AttachmentDownloadCards
           attachments={message.attachments}

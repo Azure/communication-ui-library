@@ -45,7 +45,7 @@ export function getMessageBubbleContent(
   /**
    * Optional callback to render message attachments in the message component.
    */
-  onRenderAttachmentDownloads?: (userId: string, message: ChatMessage) => JSX.Element,
+  onRenderAttachmentDownloads?: (message: ChatMessage) => JSX.Element,
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   /**
    * Optional callback to define custom actions for attachments.
@@ -71,7 +71,7 @@ export function getMessageBubbleContent(
       />
       {
         /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ onRenderAttachmentDownloads
-          ? onRenderAttachmentDownloads(userId, message)
+          ? onRenderAttachmentDownloads(message)
           : defaultOnRenderAttachmentDownloads(
               message,
               strings,

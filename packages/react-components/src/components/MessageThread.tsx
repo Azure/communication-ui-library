@@ -467,7 +467,7 @@ export type MessageThreadProps = {
    * Optional callback to render attachments in the message component.
    * @beta
    */
-  onRenderAttachmentDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
+  onRenderAttachmentDownloads?: (message: ChatMessage) => JSX.Element;
   /**
    * Optional callback to edit a message.
    *

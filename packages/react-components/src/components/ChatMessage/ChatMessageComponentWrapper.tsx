@@ -57,7 +57,7 @@ export type ChatMessageComponentWrapperProps = _ChatMessageProps & {
   /* @conditional-compile-remove(mention) */
   mentionOptions?: MentionOptions;
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-  onRenderAttachmentDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
+  onRenderAttachmentDownloads?: (message: ChatMessage) => JSX.Element;
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   /**
    * Optional callback to define custom actions for attachments.
