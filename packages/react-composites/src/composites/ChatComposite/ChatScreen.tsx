@@ -200,31 +200,30 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const userId = toFlatCommunicationIdentifier(adapter.getState().userId);
 
   const handleUploadProgress = useCallback(
-    (taskId: string, progress: number): void => {
+    (taskId: string, progress: number, values: AttachmentUpload[]): AttachmentUpload[] => {
       // Iterate through the tasks and update the value
-      const newValues = uploadTasks.map((v) =>
-        v.taskId === taskId ? { ...v, metadata: { ...v.metadata, progress } } : v
-      );
-      setUploadTasks(newValues);
+      const newValues = values.map((v) => (v.taskId === taskId ? { ...v, metadata: { ...v.metadata, progress } } : v));
+      return newValues;
     },
-    [uploadTasks]
+    []
   );
 
   const handleUploadCompleted = useCallback(
-    (taskId: string, id: string, url: string): void => {
+    (taskId: string, id: string, url: string, uploadTasks: AttachmentUpload[]): AttachmentUpload[] => {
+      console.log('uploadTasks', uploadTasks);
       const newValues = uploadTasks.map((v) =>
         v.taskId === taskId ? { ...v, metadata: { ...v.metadata, id, url } } : v
       );
       // Iterate through the tasks and update the value
-      setUploadTasks(newValues);
+      return newValues;
     },
-    [uploadTasks]
+    []
   );
 
   const handleUploadFailed = useCallback(
-    (taskId: string, message: string): void => {
+    (taskId: string, message: string, uploadTasks: AttachmentUpload[]): AttachmentUpload[] => {
       // Iterate through the tasks and update the value
-      const newValues = uploadTasks.map((v) =>
+      return uploadTasks.map((v) =>
         v.taskId === taskId
           ? {
               ...v,
@@ -237,19 +236,14 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             }
           : v
       );
-      setUploadTasks(newValues);
     },
-    [uploadTasks]
+    []
   );
 
-  const removeUploadTask = useCallback(
-    (id: string): void => {
-      // Iterate through the tasks and update the value
-      const newValues = uploadTasks.filter((v) => v.metadata.id === id);
-      setUploadTasks(newValues);
-    },
-    [uploadTasks]
-  );
+  const removeUploadTask = useCallback((id: string, uploadTasks: AttachmentUpload[]): AttachmentUpload[] => {
+    // Iterate through the tasks and update the value
+    return uploadTasks.filter((v) => v.metadata.id !== id);
+  }, []);
 
   const attachmentUploadButtonOnChange = useCallback(
     (files: FileList | null): void => {
@@ -258,7 +252,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       }
 
       // Get files, change to tasks, store locally and pass back to Contoso
-      const attachmentUploads = Array.from(files).map((file): AttachmentUpload => {
+      const newUploads = Array.from(files).map((file): AttachmentUpload => {
         const taskId = nanoid();
         return {
           file,
@@ -270,23 +264,27 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             id: taskId
           },
           notifyUploadProgressChanged: (value: number) => {
-            handleUploadProgress(taskId, value);
+            console.log('uploadProgress changed for taskId: ', taskId);
+            setUploadTasks(handleUploadProgress(taskId, value, uploadTasks));
           },
           notifyUploadCompleted: (id: string, url: string) => {
-            handleUploadCompleted(taskId, id, url);
+            console.log('notifyUploadCompleted changed for taskId: ', taskId);
+            setUploadTasks(handleUploadCompleted(taskId, id, url, uploadTasks));
           },
           notifyUploadFailed: (message: string) => {
-            handleUploadFailed(taskId, message);
+            console.log('notifyUploadFailed changed for taskId: ', taskId);
+            setUploadTasks(handleUploadFailed(taskId, message, uploadTasks));
           }
         };
       });
 
       /* @conditional-compile-remove(attachment-upload) */
-      setUploadTasks(attachmentUploads);
+      console.log('setUploadTasks: ', newUploads);
+      setUploadTasks(newUploads);
       /* @conditional-compile-remove(attachment-upload) */
-      attachmentOptions?.uploadOptions?.handleAttachmentSelection(attachmentUploads);
+      attachmentOptions?.uploadOptions?.handleAttachmentSelection(uploadTasks);
     },
-    [attachmentOptions?.uploadOptions, handleUploadCompleted, handleUploadFailed, handleUploadProgress]
+    [attachmentOptions?.uploadOptions, handleUploadCompleted, handleUploadFailed, handleUploadProgress, uploadTasks]
   );
 
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
@@ -498,8 +496,8 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
                   /* @conditional-compile-remove(attachment-upload) */
                   attachmentsWithProgress={attachmentsWithProgress}
                   /* @conditional-compile-remove(attachment-upload) */
-                  onCancelAttachmentUpload={(id) => {
-                    removeUploadTask(id);
+                  onCancelAttachmentUpload={(id: string) => {
+                    setUploadTasks(removeUploadTask(id, uploadTasks));
                     attachmentOptions?.uploadOptions?.handleAttachmentRemoval?.(id);
                   }}
                 />
