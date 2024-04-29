@@ -5,7 +5,7 @@ import { CallWithChatAdapter } from './CallWithChatAdapter';
 import { ChatAdapter, ChatAdapterState } from '../../ChatComposite';
 import { ResourceDetails } from '../../ChatComposite';
 /* @conditional-compile-remove(attachment-upload) */
-import { AttachmentMetadata, AttachmentUploadTask } from '@internal/react-components';
+import { AttachmentMetadata } from '@internal/react-components';
 import { ErrorBarStrings } from '@internal/react-components';
 import { CallWithChatAdapterState } from '../state/CallWithChatAdapterState';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
@@ -96,41 +96,6 @@ export class CallWithChatBackedChatAdapter implements ChatAdapter {
     throw new Error(`Chat Topics are not supported in CallWithChatComposite.`);
   };
 
-  /* @conditional-compile-remove(attachment-upload) */
-  public registerActiveUploads = (files: File[]): AttachmentUploadTask[] => {
-    return this.callWithChatAdapter.registerActiveUploads(files);
-  };
-
-  /* @conditional-compile-remove(attachment-upload) */
-  public registerCompletedUploads = (metadata: AttachmentMetadata[]): AttachmentUploadTask[] => {
-    return this.callWithChatAdapter.registerCompletedUploads(metadata);
-  };
-
-  /* @conditional-compile-remove(attachment-upload) */
-  public clearUploads = (): void => {
-    this.callWithChatAdapter.clearUploads();
-  };
-
-  /* @conditional-compile-remove(attachment-upload) */
-  public cancelUpload = (id: string): void => {
-    this.callWithChatAdapter.cancelUpload(id);
-  };
-
-  /* @conditional-compile-remove(attachment-upload) */
-  public updateUploadProgress = (id: string, progress: number): void => {
-    this.callWithChatAdapter.updateUploadProgress(id, progress);
-  };
-
-  /* @conditional-compile-remove(attachment-upload) */
-  public updateUploadStatusMessage = (id: string, errorMessage: string): void => {
-    this.callWithChatAdapter.updateUploadStatusMessage(id, errorMessage);
-  };
-
-  /* @conditional-compile-remove(attachment-upload) */
-  public updateUploadMetadata = (id: string, metadata: AttachmentMetadata): void => {
-    this.callWithChatAdapter.updateUploadMetadata(id, metadata);
-  };
-
   public async downloadResourceToCache(resourceDetails: ResourceDetails): Promise<void> {
     this.callWithChatAdapter.downloadResourceToCache(resourceDetails);
   }
@@ -159,9 +124,7 @@ function chatAdapterStateFromCallWithChatAdapterState(
         typingIndicators: [],
         latestReadTime: new Date()
       },
-      latestErrors: callWithChatAdapterState.latestChatErrors,
-      /* @conditional-compile-remove(attachment-upload) */
-      _attachmentUploads: callWithChatAdapterState._attachmentUploads
+      latestErrors: callWithChatAdapterState.latestChatErrors
     };
   }
 
@@ -169,8 +132,6 @@ function chatAdapterStateFromCallWithChatAdapterState(
     userId: callWithChatAdapterState.userId,
     displayName: callWithChatAdapterState.displayName || '',
     thread: callWithChatAdapterState.chat,
-    latestErrors: callWithChatAdapterState.latestChatErrors,
-    /* @conditional-compile-remove(attachment-upload) */
-    _attachmentUploads: callWithChatAdapterState._attachmentUploads
+    latestErrors: callWithChatAdapterState.latestChatErrors
   };
 }

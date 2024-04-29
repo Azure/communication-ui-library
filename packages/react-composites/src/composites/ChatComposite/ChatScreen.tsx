@@ -5,7 +5,7 @@ import { isIOS } from '@fluentui/react';
 import { mergeStyles, Stack } from '@fluentui/react';
 import { PersonaSize } from '@fluentui/react';
 import {
-  AttachmentMetadata,
+  AttachmentMetadataWithProgress,
   AttachmentUploadTask,
   CommunicationParticipant,
   ErrorBar,
@@ -51,10 +51,6 @@ import { InlineImage } from '@internal/react-components';
 import { ResourceFetchResult } from '@internal/chat-stateful-client';
 import { AttachmentOptions } from '@internal/react-components';
 import { SendBox } from '@internal/react-components';
-/* @conditional-compile-remove(attachment-upload) */
-import { useSelector } from './hooks/useSelector';
-/* @conditional-compile-remove(attachment-upload) */
-import { attachmentUploadsSelector } from './selectors/attachmentUploadsSelector';
 import { nanoid } from 'nanoid';
 
 /**
@@ -91,9 +87,9 @@ interface OverlayImageItem {
   messageId: string;
   imageUrl: string;
 }
+
 interface AttachmentUpload extends AttachmentUploadTask {
-  progress: number;
-  metadata?: AttachmentMetadata;
+  metadata: AttachmentMetadataWithProgress;
 }
 
 /**
@@ -206,19 +202,54 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const handleUploadProgress = useCallback(
     (taskId: string, progress: number): void => {
       // Iterate through the tasks and update the value
-      const newValues = uploadTasks.map((v) => (v.taskId === taskId ? { ...v, progress } : v));
+      const newValues = uploadTasks.map((v) =>
+        v.taskId === taskId ? { ...v, metadata: { ...v.metadata, progress } } : v
+      );
       setUploadTasks(newValues);
     },
     [uploadTasks]
   );
 
-  const handleUploadCompleted = (taskId: string, id: string, url: string): void => {
-    // Iterate through the tasks and update the value
-  };
+  const handleUploadCompleted = useCallback(
+    (taskId: string, id: string, url: string): void => {
+      const newValues = uploadTasks.map((v) =>
+        v.taskId === taskId ? { ...v, metadata: { ...v.metadata, id, url } } : v
+      );
+      // Iterate through the tasks and update the value
+      setUploadTasks(newValues);
+    },
+    [uploadTasks]
+  );
 
-  const handleUploadFailed = (taskId: string, message: string): void => {
-    // Iterate through the tasks and update the value
-  };
+  const handleUploadFailed = useCallback(
+    (taskId: string, message: string): void => {
+      // Iterate through the tasks and update the value
+      const newValues = uploadTasks.map((v) =>
+        v.taskId === taskId
+          ? {
+              ...v,
+              metadata: {
+                ...v.metadata,
+                error: {
+                  message: message
+                }
+              }
+            }
+          : v
+      );
+      setUploadTasks(newValues);
+    },
+    [uploadTasks]
+  );
+
+  const removeUploadTask = useCallback(
+    (id: string): void => {
+      // Iterate through the tasks and update the value
+      const newValues = uploadTasks.filter((v) => v.metadata.id === id);
+      setUploadTasks(newValues);
+    },
+    [uploadTasks]
+  );
 
   const attachmentUploadButtonOnChange = useCallback(
     (files: FileList | null): void => {
@@ -232,7 +263,12 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
         return {
           file,
           taskId,
-          progress: 0,
+          metadata: {
+            name: file.name,
+            extension: file.name.split('.').pop() || '',
+            progress: 0,
+            id: taskId
+          },
           notifyUploadProgressChanged: (value: number) => {
             handleUploadProgress(taskId, value);
           },
@@ -246,12 +282,11 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       });
 
       /* @conditional-compile-remove(attachment-upload) */
-      // const uploadTasks = adapter.registerActiveUploads(Array.from(files));
+      setUploadTasks(attachmentUploads);
       /* @conditional-compile-remove(attachment-upload) */
       attachmentOptions?.uploadOptions?.handleAttachmentSelection(attachmentUploads);
-      setUploadTasks(attachmentUploads);
     },
-    [attachmentOptions?.uploadOptions, handleUploadProgress]
+    [attachmentOptions?.uploadOptions, handleUploadCompleted, handleUploadFailed, handleUploadProgress]
   );
 
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
@@ -414,7 +449,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   ]);
 
   /* @conditional-compile-remove(attachment-upload) */
-  const attachmentsWithProgress = useSelector(attachmentUploadsSelector).attachments;
+  const attachmentsWithProgress = uploadTasks.map((v) => v.metadata); //useSelector(attachmentUploadsSelector).attachments;
 
   return (
     <Stack className={chatContainer} grow>
@@ -464,7 +499,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
                   attachmentsWithProgress={attachmentsWithProgress}
                   /* @conditional-compile-remove(attachment-upload) */
                   onCancelAttachmentUpload={(id) => {
-                    adapter.cancelUpload?.(id);
+                    removeUploadTask(id);
                     attachmentOptions?.uploadOptions?.handleAttachmentRemoval?.(id);
                   }}
                 />

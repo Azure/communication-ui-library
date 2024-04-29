@@ -6,8 +6,6 @@ import type { CommunicationIdentifierKind, CommunicationUserKind } from '@azure/
 import { ChatThreadClientState } from '@internal/chat-stateful-client';
 import type { AdapterError, AdapterErrors, AdapterState, Disposable } from '../../common/adapters';
 /* @conditional-compile-remove(attachment-upload) */
-import { _AttachmentUploadAdapter, _AttachmentUploadsUiState } from './AzureCommunicationAttachmentUploadAdapter';
-/* @conditional-compile-remove(attachment-upload) */
 import { AttachmentMetadata } from '@internal/react-components';
 
 /**
@@ -19,15 +17,6 @@ export type ChatAdapterUiState = {
   // FIXME(Delete?)
   // Self-contained state for composite
   error?: Error;
-  /* @conditional-compile-remove(attachment-upload) */
-  /**
-   * Attachments being uploaded by a user in the current thread.
-   * Should be set to null once the upload is complete.
-   * Array of type {@link _AttachmentUploadsUiState}
-   *
-   * @internal
-   */
-  _attachmentUploads?: _AttachmentUploadsUiState;
 };
 
 /**
@@ -222,9 +211,7 @@ export interface ChatAdapterSubscribers {
 export type ChatAdapter = ChatAdapterThreadManagement &
   AdapterState<ChatAdapterState> &
   Disposable &
-  ChatAdapterSubscribers &
-  /* @conditional-compile-remove(attachment-upload) */
-  _AttachmentUploadAdapter;
+  ChatAdapterSubscribers;
 
 /**
  * Callback for {@link ChatAdapterSubscribers} 'messageReceived' event.

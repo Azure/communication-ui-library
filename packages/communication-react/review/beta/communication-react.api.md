@@ -195,24 +195,6 @@ export type AttachmentRemovalHandler = (attachmentId: string) => void;
 // @beta
 export type AttachmentSelectionHandler = (attachmentUploads: AttachmentUploadTask[]) => void;
 
-// @internal (undocumented)
-export interface _AttachmentUploadAdapter {
-    // (undocumented)
-    cancelUpload: (id: string) => void;
-    // (undocumented)
-    clearUploads: () => void;
-    // (undocumented)
-    registerActiveUploads: (files: File[]) => AttachmentUploadTask[];
-    // (undocumented)
-    registerCompletedUploads: (metadata: AttachmentMetadata[]) => AttachmentUploadTask[];
-    // (undocumented)
-    updateUploadMetadata: (id: string, metadata: AttachmentMetadata) => void;
-    // (undocumented)
-    updateUploadProgress: (id: string, progress: number) => void;
-    // (undocumented)
-    updateUploadStatusMessage: (id: string, errorMessage: string) => void;
-}
-
 // @beta (undocumented)
 export interface AttachmentUploadOptions {
     disableMultipleUploads?: boolean;
@@ -220,9 +202,6 @@ export interface AttachmentUploadOptions {
     handleAttachmentSelection: AttachmentSelectionHandler;
     supportedMediaTypes?: string[];
 }
-
-// @internal
-export type _AttachmentUploadsUiState = Record<string, AttachmentMetadataWithProgress>;
 
 // @beta
 export interface AttachmentUploadTask {
@@ -1086,10 +1065,6 @@ export interface CallWithChatAdapterManagement {
     addParticipant(participant: CommunicationUserIdentifier): Promise<void>;
     allowUnsupportedBrowserVersion(): void;
     askDevicePermission(constrain: PermissionConstraints): Promise<void>;
-    // @internal (undocumented)
-    cancelUpload: (id: string) => void;
-    // @internal (undocumented)
-    clearUploads: () => void;
     createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void | CreateVideoStreamViewResult>;
     deleteMessage(messageId: string): Promise<void>;
     disposeLocalVideoStreamView(): Promise<void>;
@@ -1113,10 +1088,6 @@ export interface CallWithChatAdapterManagement {
     queryMicrophones(): Promise<AudioDeviceInfo[]>;
     querySpeakers(): Promise<AudioDeviceInfo[]>;
     raiseHand(): Promise<void>;
-    // @internal (undocumented)
-    registerActiveUploads: (files: File[]) => AttachmentUploadTask[];
-    // @internal (undocumented)
-    registerCompletedUploads: (metadata: AttachmentMetadata[]) => AttachmentUploadTask[];
     removeParticipant(userId: string): Promise<void>;
     // @beta
     removeParticipant(participant: CommunicationIdentifier): Promise<void>;
@@ -1153,12 +1124,6 @@ export interface CallWithChatAdapterManagement {
     updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void;
     updateMessage(messageId: string, content: string, metadata?: Record<string, string>): Promise<void>;
     updateSelectedVideoBackgroundEffect(selectedVideoBackground: VideoBackgroundEffect): void;
-    // @internal (undocumented)
-    updateUploadMetadata: (id: string, metadata: AttachmentMetadata) => void;
-    // @internal (undocumented)
-    updateUploadProgress: (id: string, progress: number) => void;
-    // @internal (undocumented)
-    updateUploadStatusMessage: (id: string, errorMessage: string) => void;
 }
 
 // @public
@@ -1275,8 +1240,6 @@ export interface CallWithChatAdapterSubscriptions {
 
 // @public
 export interface CallWithChatAdapterUiState {
-    // @internal
-    _attachmentUploads?: _AttachmentUploadsUiState;
     isLocalPreviewMicrophoneEnabled: boolean;
     page: CallCompositePage;
     // @beta
@@ -1691,7 +1654,7 @@ export type CaptionsReceivedListener = (event: {
 }) => void;
 
 // @public
-export type ChatAdapter = ChatAdapterThreadManagement & AdapterState<ChatAdapterState> & Disposable_2 & ChatAdapterSubscribers & _AttachmentUploadAdapter;
+export type ChatAdapter = ChatAdapterThreadManagement & AdapterState<ChatAdapterState> & Disposable_2 & ChatAdapterSubscribers;
 
 // @public
 export type ChatAdapterState = ChatAdapterUiState & ChatCompositeClientState;
@@ -1739,7 +1702,6 @@ export interface ChatAdapterThreadManagement {
 // @public
 export type ChatAdapterUiState = {
     error?: Error;
-    _attachmentUploads?: _AttachmentUploadsUiState;
 };
 
 // @public

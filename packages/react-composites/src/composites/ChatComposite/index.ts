@@ -41,8 +41,3 @@ export type {
   AttachmentRemovalHandler,
   AttachmentUploadTask
 } from './file-sharing';
-/* @conditional-compile-remove(attachment-upload) */
-export type {
-  _AttachmentUploadsUiState,
-  _AttachmentUploadAdapter
-} from './adapter/AzureCommunicationAttachmentUploadAdapter';

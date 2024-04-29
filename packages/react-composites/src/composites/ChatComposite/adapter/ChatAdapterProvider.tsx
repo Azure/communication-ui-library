@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 
 import React, { createContext, useContext } from 'react';
-import { AttachmentUploadTask } from '@internal/react-components';
-import { _AttachmentUploadAdapter } from './AzureCommunicationAttachmentUploadAdapter';
 import { ChatAdapter } from './ChatAdapter';
 
 /**
@@ -35,34 +33,34 @@ export const useAdapter = (): ChatAdapter => {
   return adapter;
 };
 
-/**
- * @private
- */
-export const useAttachmentUploadAdapter = (): _AttachmentUploadAdapter => {
-  /* @conditional-compile-remove(attachment-upload) */
-  return useAdapter();
-  // A stub that short-circuits all logic because none of the fields are available.
-  return {
-    registerActiveUploads() {
-      return [] as AttachmentUploadTask[];
-    },
-    registerCompletedUploads() {
-      return [] as AttachmentUploadTask[];
-    },
-    cancelUpload() {
-      // noop
-    },
-    clearUploads() {
-      // noop
-    },
-    updateUploadStatusMessage() {
-      // noop
-    },
-    updateUploadProgress() {
-      // noop
-    },
-    updateUploadMetadata() {
-      // noop
-    }
-  };
-};
+// /**
+//  * @private
+//  */
+// export const useAttachmentUploadAdapter = (): _AttachmentUploadAdapter => {
+//   /* @conditional-compile-remove(attachment-upload) */
+//   return useAdapter();
+//   // A stub that short-circuits all logic because none of the fields are available.
+//   return {
+//     registerActiveUploads() {
+//       return [] as AttachmentUploadTask[];
+//     },
+//     registerCompletedUploads() {
+//       return [] as AttachmentUploadTask[];
+//     },
+//     cancelUpload() {
+//       // noop
+//     },
+//     clearUploads() {
+//       // noop
+//     },
+//     updateUploadStatusMessage() {
+//       // noop
+//     },
+//     updateUploadProgress() {
+//       // noop
+//     },
+//     updateUploadMetadata() {
+//       // noop
+//     }
+//   };
+// };
