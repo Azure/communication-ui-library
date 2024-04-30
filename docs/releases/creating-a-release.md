@@ -70,6 +70,7 @@ For all the features that are going into this release, ask the feature owners to
 1. Create a post in `Language - JavaScript - Reviews` channel with APIView link to request review.
     1. Use a previous review request as an example.
 1. See the [internal documentation](https://skype.visualstudio.com/SPOOL/_wiki/wikis/SPOOL.wiki/27654/Scheduling-an-Azure-Review-Board-%28ARB%29-Review) for how to reach out to the API stewardship board.
+1. Follow up after 24-48 hours if you have not received a response.
 
 ### Step 0.4: Create an Async Bug Bash Meeting
 
