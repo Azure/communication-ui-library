@@ -1251,6 +1251,10 @@ export interface CapabilitiesFeatureState {
 
 // @public
 export interface CapabilityChangedNotificationStrings {
+    hideAttendeeNames?: {
+        hideAttendeeNameAttendee?: string;
+        hideAttendeeNamePresenter?: string;
+    };
     shareScreen?: {
         lostDueToRoleChangeToAttendee?: string;
         grantedDueToRoleChangeToPresenter?: string;
