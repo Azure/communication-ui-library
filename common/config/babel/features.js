@@ -74,7 +74,7 @@ module.exports = {
     // Close captions feature for ACS calls
     "acs-close-captions",
     // Feature for Rich Text Editor (RTE) support
-    'rich-text-editor',
+    'rich-text-editor'
   ],
   stable: [
     // Demo feature. Used in live-documentation of conditional compilation.
