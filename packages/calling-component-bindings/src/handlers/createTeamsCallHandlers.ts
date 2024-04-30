@@ -143,7 +143,7 @@ const teamsSingleParticipantTrampoline = (
   callAgent: TeamsCallAgent,
   participants: CommunicationIdentifier[],
   options?: TeamsCallAgentOptions
-) => {
+): TeamsCall => {
   if (participants.length !== 1) {
     throw new Error('Only one participant is supported in Teams call!');
   } else {
