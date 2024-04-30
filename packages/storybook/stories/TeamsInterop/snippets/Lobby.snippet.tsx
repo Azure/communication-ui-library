@@ -11,7 +11,7 @@ import {
 import React from 'react';
 
 // Don't import this. It's just a helper for the story.
-import { useVideoStreams } from '../../../utils';
+import { useVideoStreams } from '../../utils';
 
 export interface LobbyProps {
   isVideoReady: boolean;
