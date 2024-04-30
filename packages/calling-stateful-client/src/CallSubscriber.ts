@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 import { Features, LocalVideoStream, RemoteParticipant } from '@azure/communication-calling';
+/* @conditional-compile-remove(teams-meeting-conf) */
+import { TeamsMeetingAudioConferencingCallFeature } from '@azure/communication-calling';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { CallCommon } from './BetaToStableTypes';
 import { CallContext } from './CallContext';
@@ -122,6 +124,8 @@ export class CallSubscriber {
   private subscribe = (): void => {
     this._call.on('stateChanged', this.stateChanged);
     this._call.on('stateChanged', this.initCaptionSubscriber);
+    /* @conditional-compile-remove(teams-meeting-conference) */
+    this._call.on('stateChanged', this.initTeamsMeetingConference);
     /* @conditional-compile-remove(local-recording-notification) */
     this._call.on('stateChanged', this.initLocalRecordingNotificationSubscriber);
     this._call.on('idChanged', this.idChanged);
@@ -238,6 +242,12 @@ export class CallSubscriber {
         this._call.feature(Features.Captions)
       );
       this._call.off('stateChanged', this.initCaptionSubscriber);
+    }
+  };
+
+  private initTeamsMeetingConference = (): void => {
+    if (this._call.state === 'Connected') {
+      this._call.off('stateChanged', this.initTeamsMeetingConference);
     }
   };
 

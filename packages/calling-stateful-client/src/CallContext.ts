@@ -183,6 +183,8 @@ export class CallContext {
         existingCall.captionsFeature.currentCaptionLanguage = call.captionsFeature.currentCaptionLanguage;
         /* @conditional-compile-remove(meeting-id) */
         existingCall.info = call.info;
+        /* @conditional-compile-remove(teams-meeting-conference) */
+        existingCall.teamsMeetingConference = call.teamsMeetingConference;
       } else {
         draft.calls[latestCallId] = call;
       }

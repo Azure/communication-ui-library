@@ -15,7 +15,8 @@ import {
   ParticipantRole,
   RemoteParticipantState as RemoteParticipantStatus,
   ScalingMode,
-  VideoDeviceInfo
+  VideoDeviceInfo,
+  TeamsMeetingAudioConferencingDetails
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(meeting-id) */
 import { CallInfo, TeamsCallInfo } from '@azure/communication-calling';
@@ -635,6 +636,12 @@ export interface CallState {
    * Proxy of {@link @azure/communication-calling#Call.info}.
    */
   info?: CallInfo | TeamsCallInfo;
+
+  /* @conditional-compile-remove(teams-meeting-conference) */
+  /**
+   * Proxy of {@link @azure/communication-calling#TeamsMeetingAudioConferencingCallFeature}.
+   */
+  teamsMeetingConference?: TeamsMeetingAudioConferencingDetails;
 }
 
 /**

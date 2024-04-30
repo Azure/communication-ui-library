@@ -21,6 +21,8 @@ module.exports = {
     'meeting-id',
     // Demo feature. Used in live-documentation of conditional compilation. Do not use in production code.
     "in-progress-beta-feature-demo",
+    // Get join conference information
+    'teams-meeting-conference'
   ],
   beta: [
     "call-readiness",
