@@ -161,15 +161,6 @@ After finishing creating a release branch, follow these steps to create a UI sna
 1. Once the snapshot update is finished, you might or might not see changes for the UI snapshot, if there are any updates, open a PR to merge that new branch back to the release branch
 1. Merge the PR if everything looks fine, or notify the feature owner if something looks not 100% correct.
 
-### Step 1.5 (Beta Only): Notify the Release Thread About api.md Update and UI Snapshot Update
-
-After you finish step 1.3, you can check recent latest commits on the release branch, there should be
-
-1. One Api snapshot update commit
-1. 0 or several UI snapshot commits, all in the snapshot PR
-
-Copy links to those snapshot commits and UI snapshot PR link, and post them in the release thread, ask feature owners to check if their features are correctly removed both in API and UI
-
 ## Step 2: Prepare for Release
 
 ### Step 2.1: Bug Bash
