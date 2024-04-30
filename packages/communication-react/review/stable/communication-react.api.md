@@ -3639,15 +3639,12 @@ export interface SystemMessageCommon extends MessageCommon {
 // @public
 export type TeamsAdapterOptions = CommonCallAdapterOptions;
 
-// @beta
+// @public
 export interface TeamsCallAdapter extends CommonCallAdapter {
-    // @public @deprecated
+    // @deprecated
     joinCall(microphoneOn?: boolean): TeamsCall | undefined;
-    // @public
     joinCall(options?: JoinCallOptions): TeamsCall | undefined;
-    // @public
     startCall(participants: string[], options?: StartCallOptions): TeamsCall | undefined;
-    // @public
     startCall(participants: StartCallIdentifier[], options?: StartCallOptions): TeamsCall | undefined;
 }
 
