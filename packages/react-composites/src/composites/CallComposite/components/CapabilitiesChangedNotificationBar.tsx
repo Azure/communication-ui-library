@@ -110,6 +110,22 @@ const getCapabilityChangedNotificationString = (
         return strings?.shareScreen?.lostDueToRoleChangeToAttendee;
       }
       break;
+    /* @conditional-compile-remove(hide-attendee-name) */
+    case 'viewAttendeeNames':
+      if (
+        !notification.isPresent &&
+        notification.changedReason === 'MeetingOptionOrOrganizerPolicyChanged' &&
+        notification.role === 'Attendee'
+      ) {
+        return strings?.hideAttendeeNames?.hideAttendeeNameAttendee;
+      }
+      if (
+        !notification.isPresent &&
+        notification.changedReason === 'MeetingOptionOrOrganizerPolicyChanged' &&
+        notification.role === 'Presenter'
+      ) {
+        return strings?.hideAttendeeNames?.hideAttendeeNamePresenter;
+      }
   }
   return undefined;
 };
@@ -196,5 +212,19 @@ export interface CapabilityChangedNotificationStrings {
      * Notification message shown to the user when capability to share screen is granted due to a role change to Presenter
      */
     grantedDueToRoleChangeToPresenter?: string;
+  };
+  /* @conditional-compile-remove(hide-attendee-name) */
+  /**
+   * Strings for hidden attendee names capability
+   */
+  hideAttendeeNames?: {
+    /**
+     * Notification message shown to the user when capability to view attendee names is lost due to a meeting option change for Attendee
+     */
+    hideAttendeeNameAttendee?: string;
+    /**
+     * Notification message shown to the user when capability to view attendee names is lost due to a meeting option change for Presenter
+     */
+    hideAttendeeNamePresenter?: string;
   };
 }
