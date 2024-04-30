@@ -7,7 +7,8 @@ export type {
   CallWithChatAdapter,
   CallWithChatEvent,
   CallWithChatAdapterManagement,
-  CallWithChatAdapterSubscriptions
+  CallWithChatAdapterSubscriptions,
+  ChatInitializedListener
 } from './adapter/CallWithChatAdapter';
 
 export type {
