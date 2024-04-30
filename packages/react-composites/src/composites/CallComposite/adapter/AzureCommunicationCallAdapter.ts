@@ -1464,7 +1464,8 @@ export type TeamsCallAdapterArgs = {
   credential: CommunicationTokenCredential;
   locator:
     | TeamsMeetingLinkLocator
-    | /* @conditional-compile-remove(teams-adhoc-call) */ /* @conditional-compile-remove(PSTN-calls) */ CallParticipantsLocator;
+    | /* @conditional-compile-remove(teams-adhoc-call) */ /* @conditional-compile-remove(PSTN-calls) */ CallParticipantsLocator
+    | /* @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator;
   /**
    * Optional parameters for the {@link TeamsCallAdapter} created
    */

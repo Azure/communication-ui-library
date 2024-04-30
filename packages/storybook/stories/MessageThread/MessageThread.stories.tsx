@@ -374,6 +374,11 @@ const Docs: () => JSX.Element = () => {
           further customization. The HTML Tag is defined:
         </Description>
         <Source code={mentionTag} />
+        <Description>
+          The MessageThread component also supports mentioning users when editing a message if the `lookupOptions` under
+          the `mentionOptions` property is provided. However, if the `richTextEditor` property is set to true, the
+          `lookupOptions` will be ignored.
+        </Description>
         <Canvas mdxSource={MessageWithCustomMentionRendererText}>
           <MessageWithCustomMentionRenderer />
         </Canvas>
@@ -384,7 +389,8 @@ const Docs: () => JSX.Element = () => {
         <DetailedBetaBanner />
         <Description>
           The following example shows how to enable rich text editor for message editing by providing the
-          `richTextEditor`` property.
+          `richTextEditor` property. Rich text editor does not support mentioning users at the moment. By setting
+          `richTextEditor` property to true, the `lookupOptions` under the `mentionOptions` property will be ignored.
         </Description>
         <Canvas mdxSource={MessageThreadWithRichTextEditorText}>
           <MessageThreadWithRichTextEditorExample />
