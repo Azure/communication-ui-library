@@ -75,8 +75,6 @@ module.exports = {
     "acs-close-captions",
     // Feature for Rich Text Editor (RTE) support
     'rich-text-editor',
-    // Join meeting with meetingId and passcode
-    'meeting-id'
   ],
   stable: [
     // Demo feature. Used in live-documentation of conditional compilation.
@@ -92,5 +90,7 @@ module.exports = {
     'ppt-live',
     // feature for hiding attendee name in the teams meeting
     "hide-attendee-name",
+    // Join meeting with meetingId and passcode
+    'meeting-id'
   ]
 }
