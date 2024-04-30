@@ -279,6 +279,7 @@ export type CallAdapterClientState = {
     onResolveVideoEffectDependency?: () => Promise<VideoBackgroundEffectsDependency>;
     selectedVideoBackgroundEffect?: VideoBackgroundEffect;
     acceptedTransferCallState?: CallState;
+    hideAttendeeNames?: boolean;
     sounds?: CallingSounds;
     reactions?: ReactionResources;
 };
@@ -489,6 +490,7 @@ export type CallCompositeOptions = {
     callControls?: boolean | CallControlOptions;
     remoteVideoTileMenuOptions?: RemoteVideoTileMenuOptions;
     localVideoTile?: boolean | LocalVideoTileOptions;
+    videoTilesOptions?: VideoTilesOptions;
     galleryOptions?: {
         layout?: VideoGalleryLayout;
     };
@@ -758,6 +760,7 @@ export interface CallingTheme {
         callRedDarker: string;
         iconWhite: string;
         raiseHandGold: string;
+        videoTileLabelBackgroundLight: string;
     };
 }
 
@@ -794,6 +797,7 @@ export interface CallState {
     direction: CallDirection;
     dominantSpeakers?: DominantSpeakersInfo;
     endTime: Date | undefined;
+    hideAttendeeNames?: boolean;
     id: string;
     isMuted: boolean;
     isScreenSharingOn: boolean;
@@ -943,6 +947,8 @@ export interface CallWithChatAdapterSubscriptions {
     // (undocumented)
     off(event: 'chatError', listener: (e: AdapterError) => void): void;
     // (undocumented)
+    off(event: 'chatInitialized', listener: ChatInitializedListener): void;
+    // (undocumented)
     on(event: 'callEnded', listener: CallEndedListener): void;
     // (undocumented)
     on(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
@@ -992,6 +998,8 @@ export interface CallWithChatAdapterSubscriptions {
     on(event: 'chatParticipantsRemoved', listener: ParticipantsRemovedListener): void;
     // (undocumented)
     on(event: 'chatError', listener: (e: AdapterError) => void): void;
+    // (undocumented)
+    on(event: 'chatInitialized', listener: ChatInitializedListener): void;
 }
 
 // @public
@@ -1006,6 +1014,7 @@ export interface CallWithChatClientState {
     chat?: ChatThreadClientState;
     devices: DeviceManagerState;
     displayName: string | undefined;
+    hideAttendeeNames?: boolean;
     isTeamsCall: boolean;
     latestCallErrors: AdapterErrors;
     latestChatErrors: AdapterErrors;
@@ -1171,7 +1180,7 @@ export interface CallWithChatControlOptions extends CommonCallControlOptions {
 }
 
 // @public
-export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'selectedMicrophoneChanged' | 'selectedSpeakerChanged' | /* @conditional-compile-remove(close-captions) */ 'isCaptionsActiveChanged' | /* @conditional-compile-remove(close-captions) */ 'captionsReceived' | /* @conditional-compile-remove(close-captions) */ 'isCaptionLanguageChanged' | /* @conditional-compile-remove(close-captions) */ 'isSpokenLanguageChanged' | 'capabilitiesChanged' | /* @conditional-compile-remove(spotlight) */ 'spotlightChanged' | 'messageReceived' | 'messageEdited' | 'messageDeleted' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved';
+export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'selectedMicrophoneChanged' | 'selectedSpeakerChanged' | 'isCaptionsActiveChanged' | 'captionsReceived' | 'isCaptionLanguageChanged' | 'isSpokenLanguageChanged' | 'capabilitiesChanged' | /* @conditional-compile-remove(spotlight) */ 'spotlightChanged' | 'messageReceived' | 'messageEdited' | 'messageDeleted' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved' | 'chatInitialized';
 
 // @public
 export const CameraButton: (props: CameraButtonProps) => JSX.Element;
@@ -1242,6 +1251,10 @@ export interface CapabilitiesFeatureState {
 
 // @public
 export interface CapabilityChangedNotificationStrings {
+    hideAttendeeNames?: {
+        hideAttendeeNameAttendee?: string;
+        hideAttendeeNamePresenter?: string;
+    };
     shareScreen?: {
         lostDueToRoleChangeToAttendee?: string;
         grantedDueToRoleChangeToPresenter?: string;
@@ -1512,6 +1525,11 @@ export type ChatHandlers = {
 };
 
 // @public
+export type ChatInitializedListener = (event: {
+    adapter: CallWithChatAdapter;
+}) => void;
+
+// @public
 export interface ChatMessage extends MessageCommon {
     // (undocumented)
     attached?: MessageAttachedStatus;
@@ -1606,6 +1624,7 @@ export type CommonCallAdapterOptions = {
         videoBackgroundImages?: VideoBackgroundImage[];
         onResolveDependency?: () => Promise<VideoBackgroundEffectsDependency>;
     };
+    onFetchProfile?: OnFetchProfileCallback;
     callingSounds?: CallingSounds;
     reactionResources?: ReactionResources;
 };
@@ -2932,6 +2951,9 @@ export interface NetworkDiagnosticsState {
 }
 
 // @public
+export type OnFetchProfileCallback = (userId: string, defaultProfile?: Profile) => Promise<Profile | undefined>;
+
+// @public
 export type OnRenderAvatarCallback = (
 userId?: string, options?: CustomAvatarOptions,
 defaultOnRender?: (props: CustomAvatarOptions) => JSX.Element) => JSX.Element;
@@ -2985,6 +3007,7 @@ export interface ParticipantItemProps {
 
 // @public
 export interface ParticipantItemStrings {
+    attendeeRole: string;
     displayNamePlaceholder?: string;
     isMeText: string;
     menuTitle: string;
@@ -3128,6 +3151,11 @@ export type ParticipantState = 'Idle' | 'Connecting' | 'Ringing' | 'Connected' |
 export interface PPTLiveCallFeatureState {
     isActive: boolean;
 }
+
+// @public
+export type Profile = {
+    displayName?: string;
+};
 
 // @public
 export type RaisedHand = {
@@ -3823,6 +3851,7 @@ export interface VideoGalleryProps {
     spotlightedParticipants?: string[];
     strings?: Partial<VideoGalleryStrings>;
     styles?: VideoGalleryStyles;
+    videoTilesOptions?: VideoTilesOptions;
 }
 
 // @public
@@ -3861,6 +3890,7 @@ export interface VideoGalleryStream {
 // @public
 export interface VideoGalleryStrings {
     addSpotlightVideoTileMenuLabel: string;
+    attendeeRole: string;
     displayNamePlaceholder: string;
     fillRemoteParticipantFrame: string;
     fitRemoteParticipantToFrame: string;
@@ -3919,6 +3949,7 @@ export interface VideoTileDrawerMenuProps {
 
 // @public
 export interface VideoTileProps {
+    alwaysShowLabelBackground?: boolean;
     children?: React_2.ReactNode;
     contextualMenu?: IContextualMenuProps;
     displayName?: string;
@@ -3941,6 +3972,11 @@ export interface VideoTileProps {
     showMuteIndicator?: boolean;
     styles?: VideoTileStylesProps;
     userId?: string;
+}
+
+// @public
+export interface VideoTilesOptions {
+    alwaysShowLabelBackground?: boolean;
 }
 
 // @public

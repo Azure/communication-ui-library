@@ -29,6 +29,7 @@ import { useAdapter } from '../adapter/CallAdapterProvider';
 import { PromptProps } from './Prompt';
 /* @conditional-compile-remove(spotlight) */
 import { useLocalSpotlightCallbacksWithPrompt, useRemoteSpotlightCallbacksWithPrompt } from '../utils/spotlightUtils';
+import { VideoTilesOptions } from '@internal/react-components';
 
 const VideoGalleryStyles = {
   root: {
@@ -69,6 +70,7 @@ export interface MediaGalleryProps {
   setPromptProps: (props: PromptProps) => void;
   /* @conditional-compile-remove(spotlight) */
   hideSpotlightButtons?: boolean;
+  videoTilesOptions?: VideoTilesOptions;
 }
 
 /**
@@ -80,7 +82,8 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     setPinnedParticipants,
     /* @conditional-compile-remove(spotlight) */ setIsPromptOpen,
     /* @conditional-compile-remove(spotlight) */ setPromptProps,
-    /* @conditional-compile-remove(spotlight) */ hideSpotlightButtons
+    /* @conditional-compile-remove(spotlight) */ hideSpotlightButtons,
+    videoTilesOptions
   } = props;
 
   const videoGalleryProps = usePropsFor(VideoGallery);
@@ -96,7 +99,6 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
   const containerWidth = _useContainerWidth(containerRef);
   const containerHeight = _useContainerHeight(containerRef);
   const containerAspectRatio = containerWidth && containerHeight ? containerWidth / containerHeight : 0;
-  /* @conditional-compile-remove(reaction) */
   const reactionResources = adapter.getState().reactions;
 
   const layoutBasedOnTilePosition: VideoGalleryLayout = getVideoGalleryLayoutBasedOnLocalOptions(
@@ -193,6 +195,7 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     return (
       <VideoGallery
         {...videoGalleryProps}
+        videoTilesOptions={videoTilesOptions}
         localVideoViewOptions={localVideoViewOptions}
         remoteVideoViewOptions={remoteVideoViewOptions}
         styles={VideoGalleryStyles}
@@ -212,7 +215,6 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
         pinnedParticipants={pinnedParticipants}
         onPinParticipant={onPinParticipant}
         onUnpinParticipant={onUnpinParticipant}
-        /* @conditional-compile-remove(reaction) */
         reactionResources={reactionResources}
         /* @conditional-compile-remove(spotlight) */
         onStartLocalSpotlight={hideSpotlightButtons ? undefined : onStartLocalSpotlightWithPrompt}
@@ -235,13 +237,11 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     userRole,
     isRoomsCall,
     containerAspectRatio,
-
     props.userSetGalleryLayout,
     pinnedParticipants,
     onPinParticipant,
     onUnpinParticipant,
     layoutBasedOnTilePosition,
-    /* @conditional-compile-remove(reaction) */
     reactionResources,
     /* @conditional-compile-remove(spotlight) */
     onStartLocalSpotlightWithPrompt,
@@ -252,7 +252,8 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     /* @conditional-compile-remove(spotlight) */
     onStopRemoteSpotlightWithPrompt,
     /* @conditional-compile-remove(spotlight) */
-    hideSpotlightButtons
+    hideSpotlightButtons,
+    videoTilesOptions
   ]);
 
   return (

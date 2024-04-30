@@ -1,9 +1,0 @@
-{
-  "type": "none",
-  "area": "improvement",
-  "workstream": "Release Driving Improvements",
-  "comment": "pushing port:sample changes into an internal branch instead of external",
-  "packageName": "@azure/communication-react",
-  "email": "alkwa@microsoft.com",
-  "dependentChangeType": "none"
-}

@@ -31,12 +31,21 @@ export interface _FakeChatAdapters {
   };
 }
 
+/** @private */
+export interface _FakeChatAdaptersOptionalArgs {
+  forceInvalidChatThread?: boolean;
+}
+
 /**
  * Create chat adapters using an in-memory fake-backend for chat.
  * @internal
  */
-export function _useFakeChatAdapters(args: _FakeChatAdapterArgs): _FakeChatAdapters | undefined {
+export function _useFakeChatAdapters(
+  args: _FakeChatAdapterArgs,
+  options?: _FakeChatAdaptersOptionalArgs
+): _FakeChatAdapters | undefined {
   const [fakeAdapters, setFakeAdapters] = useState<_FakeChatAdapters>();
+  const { forceInvalidChatThread } = options ?? {};
   useEffect(() => {
     (async (): Promise<void> => {
       if (!args.localParticipant.displayName) {
@@ -52,7 +61,10 @@ export function _useFakeChatAdapters(args: _FakeChatAdapterArgs): _FakeChatAdapt
         args.localParticipantPosition
       );
       const chatClient = new FakeChatClient(chatClientModel, args.localParticipant.id);
-      const thread = await chatClient.createChatThread({ topic: args.topic ?? 'Cowabunga' }, { participants });
+      const thread = await chatClient.createChatThread(
+        { topic: args.topic ?? 'Cowabunga' },
+        { participants, fakeInvalidThread: !!forceInvalidChatThread }
+      );
       const threadId = thread?.chatThread?.id ?? '';
       const chatThreadClient = chatClient.getChatThreadClient(threadId);
       const adapter = await initializeAdapter(
@@ -81,7 +93,7 @@ export function _useFakeChatAdapters(args: _FakeChatAdapterArgs): _FakeChatAdapt
       }
       setFakeAdapters(newFakeAdapters);
     })();
-  }, [args]);
+  }, [args, forceInvalidChatThread]);
 
   return fakeAdapters;
 }

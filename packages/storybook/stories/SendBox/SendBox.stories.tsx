@@ -72,9 +72,9 @@ const getDocs: () => JSX.Element = () => {
       <Heading>Display Attachment Uploads</Heading>
       <DetailedBetaBanner />
       <Description>
-        SendBox component provides UI for displaying active attachment uploads in the SendBox. This allows developers to
-        implement a file sharing feature using the pure UI component with minimal effort. Developers can write their own
-        attachment upload logic and utilize the UI provided by SendBox.
+        SendBox component provides UI for displaying AttachmentMetadataWithProgress in the SendBox. This allows
+        developers to implement a file sharing feature using the pure UI component with minimal effort. Developers can
+        write their own attachment upload logic and utilize the UI provided by SendBox.
       </Description>
       <Canvas mdxSource={AttachmentUploadsExampleText}>
         <AttachmentUploadsExample />
@@ -132,7 +132,7 @@ export const SendBox = SendBoxStory.bind({});
 
 export default {
   id: `${COMPONENT_FOLDER_PREFIX}-sendbox`,
-  title: `${COMPONENT_FOLDER_PREFIX}/Send Box`,
+  title: `${COMPONENT_FOLDER_PREFIX}/Send Box/Send Box`,
   component: SendBoxComponent,
   argTypes: {
     disabled: controlsToAdd.disabled,

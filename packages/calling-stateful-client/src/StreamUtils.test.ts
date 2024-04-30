@@ -89,14 +89,12 @@ function createMockCall(mockCallId: string): CallState {
     /* @conditional-compile-remove(local-recording-notification) */
     localRecording: { isLocalRecordingActive: false },
     raiseHand: { raisedHands: [] },
-    /* @conditional-compile-remove(reaction) */
     localParticipantReaction: undefined,
     transcription: { isTranscriptionActive: false },
     screenShareRemoteParticipant: undefined,
     startTime: new Date(),
     endTime: undefined,
     dominantSpeakers: undefined,
-    /* @conditional-compile-remove(close-captions) */
     captionsFeature: {
       captions: [],
       supportedSpokenLanguages: [],

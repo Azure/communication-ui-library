@@ -35,13 +35,14 @@ export * from './Strings';
 export type { AttachmentOptions, AttachmentMetadata, AttachmentDownloadOptions } from './file-sharing';
 /* @conditional-compile-remove(attachment-upload) */
 export type {
-  AttachmentUploadStatus,
+  AttachmentProgressError,
   AttachmentUploadOptions,
-  AttachmentUploadHandler,
-  AttachmentUploadManager
+  AttachmentSelectionHandler,
+  AttachmentRemovalHandler,
+  AttachmentUploadTask
 } from './file-sharing';
 /* @conditional-compile-remove(attachment-upload) */
 export type {
-  AttachmentUploadsUiState,
-  AttachmentUploadAdapter
+  _AttachmentUploadsUiState,
+  _AttachmentUploadAdapter
 } from './adapter/AzureCommunicationAttachmentUploadAdapter';

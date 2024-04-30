@@ -6,10 +6,11 @@ export * from './AttachmentUploadButton';
 
 export type {
   AttachmentOptions,
-  AttachmentUploadStatus,
+  AttachmentProgressError,
   AttachmentUploadOptions,
-  AttachmentUploadHandler,
-  AttachmentUploadManager
+  AttachmentSelectionHandler,
+  AttachmentRemovalHandler,
+  AttachmentUploadTask
 } from '@internal/react-components';
 
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
