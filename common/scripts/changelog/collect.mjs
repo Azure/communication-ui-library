@@ -12,7 +12,7 @@
  *   node common/scripts/changelog/collect.mjs beta
  */
 
-import { copyFile, open, rm, readFile, rename, writeFile } from 'fs/promises';
+import { copyFile, open, rm, readFile, rename, writeFile, mkdir } from 'fs/promises';
 import { exec } from "../lib/exec.mjs";
 import { CHANGE_DIR, CHANGE_DIR_BETA, CHANGE_DIR_STABLE_TEMP, COMMUNICATION_REACT_CHANGELOG_BETA, COMMUNICATION_REACT_CHANGELOG_STABLE, COMMUNICATION_REACT_CHANGELOG_TEMPORARY } from './constants.mjs';
 import { generateChangelogs } from './changelog.mjs';
@@ -56,12 +56,10 @@ async function collectionStableChangelog() {
 async function swapInBetaChangeFiles() {
     await rm(CHANGE_DIR_STABLE_TEMP, { recursive: true, force: true })
     await rename(CHANGE_DIR, CHANGE_DIR_STABLE_TEMP);
-    if(existsSync(CHANGE_DIR_BETA)) {
-        await rename(CHANGE_DIR_BETA, CHANGE_DIR);
-    } else {
-        console.error(`Beta change directory ${CHANGE_DIR_BETA} does not exist.`);
-        throw new Error(`Please make sure beta change directory ${CHANGE_DIR_BETA} exists.`);
+    if(!existsSync(CHANGE_DIR_BETA)) {
+        await mkdir(CHANGE_DIR_BETA);
     }
+    await rename(CHANGE_DIR_BETA, CHANGE_DIR);
 }
 
 async function restoreStableChangeFiles() {
