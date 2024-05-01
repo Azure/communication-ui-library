@@ -6,7 +6,7 @@ import { ChatMyMessage } from '@fluentui-contrib/react-chat';
 import { mergeClasses } from '@fluentui/react-components';
 import { _formatString } from '@internal/acs-ui-common';
 import { useTheme } from '../../../theming/FluentThemeProvider';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useReducer, useState } from 'react';
 import { editBoxStyle, editingButtonStyle, editBoxStyleSet, inputBoxIcon } from '../../styles/EditBox.styles';
 import { InputBoxComponent } from '../../InputBoxComponent';
 import { InputBoxButton } from '../../InputBoxButton';
@@ -27,6 +27,7 @@ import {
 import { MentionLookupOptions } from '../../MentionPopover';
 import { MAXIMUM_LENGTH_OF_MESSAGE } from '../../utils/SendBoxUtils';
 import {
+  attachmentMetadataReducer,
   getMessageState,
   onRenderCancelIcon,
   onRenderSubmitIcon
@@ -61,7 +62,10 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
 
   const [textValue, setTextValue] = useState<string>(message.content || '');
   /* @conditional-compile-remove(attachment-upload) */
-  const [attachmentMetadata, setAttachmentMetadata] = React.useState(getMessageWithAttachmentMetadata(message));
+  const [attachmentMetadata, handleAttachmentAction] = useReducer(
+    attachmentMetadataReducer,
+    getMessageWithAttachmentMetadata(message) ?? []
+  );
   const editTextFieldRef = React.useRef<ITextField>(null);
   const theme = useTheme();
   const messageState = getMessageState(
@@ -120,8 +124,11 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
         <div style={{ margin: '0.25rem' }}>
           <_AttachmentUploadCards
             attachmentsWithProgress={attachmentMetadata}
-            onCancelAttachmentUpload={(attachmentId) => {
-              setAttachmentMetadata(attachmentMetadata?.filter((attachment) => attachment.id !== attachmentId));
+            onCancelAttachmentUpload={(id) => {
+              // edit box only capable of removing attachments
+              // we need to expand attachment actions
+              // if we want to support more actions e.g. add
+              handleAttachmentAction({ type: 'remove', id });
             }}
           />
         </div>

@@ -32,7 +32,7 @@ type ChatMyMessageComponentProps = {
    * Callback to send a message
    * @param content The message content to send
    */
-  onSendMessage?: (content: string) => Promise<void>;
+  onSendMessage?: (content: string, options?: { attachments?: AttachmentMetadata[] }) => Promise<void>;
   strings: MessageThreadStrings;
   messageStatus?: string;
   /**
@@ -117,8 +117,12 @@ export const ChatMyMessageComponent = (props: ChatMyMessageComponentProps): JSX.
   }, [onDeleteMessage, message.messageId, message.messageType, clientMessageId]);
   const onResendClick = useCallback(() => {
     onDeleteMessage && clientMessageId && onDeleteMessage(clientMessageId);
-    onSendMessage && onSendMessage(content !== undefined ? content : '');
-  }, [clientMessageId, content, onSendMessage, onDeleteMessage]);
+    onSendMessage &&
+      onSendMessage(
+        content !== undefined ? content : '',
+        (message as ChatMessage).attachments ? { attachments: (message as ChatMessage).attachments } : undefined
+      );
+  }, [onDeleteMessage, clientMessageId, onSendMessage, content, message]);
 
   if (isEditing && message.messageType === 'chat') {
     return (
@@ -137,6 +141,7 @@ export const ChatMyMessageComponent = (props: ChatMyMessageComponentProps): JSX.
                 attachmentMetadata: options?.attachmentMetadata
               }
             ));
+          message.attachments = options?.attachmentMetadata;
           setIsEditing(false);
         }}
         onCancel={(messageId) => {

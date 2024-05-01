@@ -57,3 +57,39 @@ export function getMessageState(
 export function getMessageWithAttachmentMetadata(message: ChatMessage): AttachmentMetadata[] | undefined {
   return message.attachments;
 }
+
+/* @conditional-compile-remove(attachment-upload) */
+/**
+ * @private
+ */
+interface Action {
+  type: string;
+}
+
+/* @conditional-compile-remove(attachment-upload) */
+/**
+ * @private
+ */
+type Actions = RemoveAction;
+
+/* @conditional-compile-remove(attachment-upload) */
+/**
+ * @private
+ */
+interface RemoveAction extends Action {
+  type: 'remove';
+  id: string;
+}
+
+/* @conditional-compile-remove(attachment-upload) */
+/**
+ * @internal
+ */
+export const attachmentMetadataReducer = (state: AttachmentMetadata[], action: Actions): AttachmentMetadata[] => {
+  switch (action.type) {
+    case 'remove':
+      return state.filter((v) => v.id !== action.id);
+    default:
+      return state;
+  }
+};

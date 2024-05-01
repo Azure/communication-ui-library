@@ -53,6 +53,11 @@ export const createDefaultChatHandlers = memoizeOne(
     let readReceiptIterator: PagedAsyncIterableIterator<ChatMessageReadReceipt> | undefined = undefined;
     return {
       onSendMessage: async (content: string, options?: SendMessageOptions) => {
+        if (options?.attachments && options.attachments.length > 0) {
+          options.metadata = options.metadata ?? {};
+          options.metadata.fileSharingMetadata = JSON.stringify(options.attachments);
+          options.attachments = undefined;
+        }
         const sendMessageRequest = {
           content,
           senderDisplayName: chatClient.getState().displayName

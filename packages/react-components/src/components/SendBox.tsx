@@ -15,13 +15,13 @@ import { SendBoxErrors } from './SendBoxErrors';
 /* @conditional-compile-remove(attachment-upload) */
 import { _AttachmentUploadCards } from './AttachmentUploadCards';
 /* @conditional-compile-remove(attachment-upload) */
-import { AttachmentMetadataWithProgress } from '../types/Attachment';
+import { AttachmentMetadata, AttachmentMetadataWithProgress } from '../types/Attachment';
 /* @conditional-compile-remove(attachment-upload) */
 import { attachmentUploadCardsStyles } from './styles/SendBox.styles';
 /* @conditional-compile-remove(attachment-upload) */
 import { SendBoxErrorBarError } from './SendBoxErrorBar';
 /* @conditional-compile-remove(attachment-upload) */
-import { hasCompletedAttachmentUploads, hasIncompleteAttachmentUploads } from './utils/SendBoxUtils';
+import { IsAttachmentUploadCompleted, hasIncompleteAttachmentUploads } from './utils/SendBoxUtils';
 import {
   MAXIMUM_LENGTH_OF_MESSAGE,
   isMessageTooLong,
@@ -114,7 +114,7 @@ export interface SendBoxProps {
   /**
    * Optional override behavior on send button click
    */
-  onSendMessage?: (content: string) => Promise<void>;
+  onSendMessage?: (content: string, options?: { attachments?: AttachmentMetadata[] }) => Promise<void>;
   /* @conditional-compile-remove(mention) */
   /**
    * Optional props needed to lookup suggestions in the mention scenario.
@@ -180,6 +180,13 @@ export interface SendBoxProps {
    * @beta
    */
   onCancelAttachmentUpload?: (attachmentId: string) => void;
+  /* @conditional-compile-remove(attachment-upload) */
+  /**
+   * Optional array of type {@link AttachmentMetadataWithProgress}
+   * to render attachments being uploaded in the SendBox.
+   * @internal
+   */
+  onSentCompleted?: () => void;
 }
 
 /**
@@ -204,7 +211,9 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     /* @conditional-compile-remove(mention) */
     mentionLookupOptions,
     /* @conditional-compile-remove(attachment-upload) */
-    attachmentsWithProgress
+    attachmentsWithProgress,
+    /* @conditional-compile-remove(attachment-upload) */
+    onSentCompleted
   } = props;
   const theme = useTheme();
   const localeStrings = useLocale().strings.sendBox;
@@ -238,16 +247,25 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     }
 
     const message = textValue;
+    let hasAttachment = false;
+    /* @conditional-compile-remove(attachment-upload) */
+    hasAttachment = (attachmentsWithProgress && attachmentsWithProgress.length > 0) ?? false;
     // we don't want to send empty messages including spaces, newlines, tabs
     // Message can be empty if there is a valid attachment upload
-    if (
-      sanitizeText(message).length > 0 ||
-      /* @conditional-compile-remove(attachment-upload) */ hasCompletedAttachmentUploads(attachmentsWithProgress)
-    ) {
-      onSendMessage && onSendMessage(message);
+    if (sanitizeText(message).length > 0 || hasAttachment) {
+      onSendMessage &&
+        onSendMessage(
+          message,
+          attachmentsWithProgress
+            ? {
+                attachments: attachmentsWithProgress
+              }
+            : { attachments: [] } // Ensure 'attachments' property is always present
+        );
       setTextValue('');
       sendTextFieldRef.current?.focus();
     }
+    onSentCompleted?.();
   };
 
   const setText = (newValue?: string | undefined): void => {
@@ -275,7 +293,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
         theme,
         hasText: sanitizeText(textValue).length > 0,
         /* @conditional-compile-remove(attachment-upload) */ hasAttachment:
-          hasCompletedAttachmentUploads(attachmentsWithProgress),
+          IsAttachmentUploadCompleted(attachmentsWithProgress),
         hasErrorMessage: !!errorMessage,
         customSendIconStyle: styles?.sendMessageIcon,
         disabled: !!disabled
@@ -294,7 +312,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     return isSendBoxButtonAriaDisabled({
       hasContent: sanitizeText(textValue).length > 0,
       /* @conditional-compile-remove(attachment-upload) */ hasCompletedAttachmentUploads:
-        hasCompletedAttachmentUploads(attachmentsWithProgress),
+        IsAttachmentUploadCompleted(attachmentsWithProgress),
       hasError: !!errorMessage,
       disabled: !!disabled
     });

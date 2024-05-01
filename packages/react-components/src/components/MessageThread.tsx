@@ -611,7 +611,7 @@ export type MessageProps = {
    * @param messageId - message id from chatClient
    *
    */
-  onSendMessage?: (messageId: string) => Promise<void>;
+  onSendMessage?: (messageId: string, options?: { attachments?: AttachmentMetadata[] }) => Promise<void>;
 };
 
 /**

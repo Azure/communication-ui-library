@@ -29,7 +29,7 @@ export const hasIncompleteAttachmentUploads = (
 /**
  * @private
  */
-export const hasCompletedAttachmentUploads = (
+export const IsAttachmentUploadCompleted = (
   attachmentsWithProgress: AttachmentMetadataWithProgress[] | undefined
 ): boolean => {
   return !!attachmentsWithProgress?.find((attachment) => !attachment.error);

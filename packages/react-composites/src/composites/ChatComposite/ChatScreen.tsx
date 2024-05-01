@@ -5,8 +5,6 @@ import { isIOS } from '@fluentui/react';
 import { mergeStyles, Stack } from '@fluentui/react';
 import { PersonaSize } from '@fluentui/react';
 import {
-  AttachmentMetadataWithProgress,
-  AttachmentUploadTask,
   CommunicationParticipant,
   ErrorBar,
   MessageProps,
@@ -52,6 +50,8 @@ import { ResourceFetchResult } from '@internal/chat-stateful-client';
 import { AttachmentOptions } from '@internal/react-components';
 import { SendBox } from '@internal/react-components';
 import { nanoid } from 'nanoid';
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+import { AttachmentActionType, AttachmentUpload, uploadReducer } from './file-sharing/AttachmentUploadReducer';
 
 /**
  * @private
@@ -86,13 +86,6 @@ interface OverlayImageItem {
   attachmentId: string;
   messageId: string;
   imageUrl: string;
-}
-
-/**
- * @private
- */
-interface AttachmentUpload extends AttachmentUploadTask {
-  metadata: AttachmentMetadataWithProgress;
 }
 
 /**
@@ -221,19 +214,19 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             id: taskId
           },
           notifyUploadProgressChanged: (value: number) => {
-            handleUploadAction({ type: 'progress', taskId, progress: value });
+            handleUploadAction({ type: AttachmentActionType.Progress, taskId, progress: value });
           },
           notifyUploadCompleted: (id: string, url: string) => {
-            handleUploadAction({ type: 'completed', taskId, id, url });
+            handleUploadAction({ type: AttachmentActionType.Completed, taskId, id, url });
           },
           notifyUploadFailed: (message: string) => {
-            handleUploadAction({ type: 'failed', taskId, message });
+            handleUploadAction({ type: AttachmentActionType.Failed, taskId, message });
           }
         };
       });
 
       /* @conditional-compile-remove(attachment-upload) */
-      handleUploadAction({ type: 'set', newUploads });
+      handleUploadAction({ type: AttachmentActionType.Set, newUploads });
       attachmentOptions?.uploadOptions?.handleAttachmentSelection(newUploads);
     },
     [attachmentOptions?.uploadOptions]
@@ -449,8 +442,11 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
                   attachmentsWithProgress={attachmentsWithProgress}
                   /* @conditional-compile-remove(attachment-upload) */
                   onCancelAttachmentUpload={(id: string) => {
-                    handleUploadAction({ type: 'remove', taskId: id });
+                    handleUploadAction({ type: AttachmentActionType.Remove, id });
                     attachmentOptions?.uploadOptions?.handleAttachmentRemoval?.(id);
+                  }}
+                  onSentCompleted={() => {
+                    handleUploadAction({ type: AttachmentActionType.Clear });
                   }}
                 />
               </Stack>
@@ -487,69 +483,4 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       )}
     </Stack>
   );
-};
-interface Action {
-  type: string;
-}
-interface SetAction extends Action {
-  type: 'set';
-  newUploads: AttachmentUpload[];
-}
-interface ProgressAction extends Action {
-  type: 'progress';
-  taskId: string;
-  progress: number;
-}
-interface CompleteAction extends Action {
-  type: 'completed';
-  taskId: string;
-  id: string;
-  url: string;
-}
-interface FailedAction extends Action {
-  type: 'failed';
-  taskId: string;
-  message: string;
-}
-interface RemoveAction extends Action {
-  type: 'remove';
-  taskId: string;
-}
-type Actions = SetAction | ProgressAction | CompleteAction | FailedAction | RemoveAction;
-
-const uploadReducer = (state: AttachmentUpload[], action: Actions): AttachmentUpload[] => {
-  switch (action.type) {
-    case 'set':
-      return action.newUploads;
-
-    case 'completed':
-      return state.map((v) =>
-        v.taskId === action.taskId ? { ...v, metadata: { ...v.metadata, id: action.id, url: action.url } } : v
-      );
-
-    case 'failed':
-      return state.map((v) =>
-        v.taskId === action.taskId
-          ? {
-              ...v,
-              metadata: {
-                ...v.metadata,
-                error: {
-                  message: action.message
-                }
-              }
-            }
-          : v
-      );
-
-    case 'remove':
-      return state.filter((v) => v.metadata.id !== action.taskId);
-
-    case 'progress':
-      return state.map((v) =>
-        v.taskId === action.taskId ? { ...v, metadata: { ...v.metadata, progress: action.progress } } : v
-      );
-    default:
-      return state;
-  }
 };
