@@ -51,7 +51,7 @@ import { AttachmentOptions } from '@internal/react-components';
 import { SendBox } from '@internal/react-components';
 import { nanoid } from 'nanoid';
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-import { AttachmentActionType, AttachmentUpload, uploadReducer } from './file-sharing/AttachmentUploadReducer';
+import { AttachmentUploadActionType, AttachmentUpload, AttachmentUploadReducer } from './file-sharing/AttachmentUpload';
 
 /**
  * @private
@@ -107,7 +107,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const [downloadErrorMessage, setDownloadErrorMessage] = React.useState('');
   const [overlayImageItem, setOverlayImageItem] = useState<OverlayImageItem>();
   const [isImageOverlayOpen, setIsImageOverlayOpen] = useState<boolean>(false);
-  const [uploads, handleUploadAction] = useReducer(uploadReducer, []);
+  const [uploads, handleUploadAction] = useReducer(AttachmentUploadReducer, []);
 
   const adapter = useAdapter();
   const theme = useTheme();
@@ -214,19 +214,19 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             id: taskId
           },
           notifyUploadProgressChanged: (value: number) => {
-            handleUploadAction({ type: AttachmentActionType.Progress, taskId, progress: value });
+            handleUploadAction({ type: AttachmentUploadActionType.Progress, taskId, progress: value });
           },
           notifyUploadCompleted: (id: string, url: string) => {
-            handleUploadAction({ type: AttachmentActionType.Completed, taskId, id, url });
+            handleUploadAction({ type: AttachmentUploadActionType.Completed, taskId, id, url });
           },
           notifyUploadFailed: (message: string) => {
-            handleUploadAction({ type: AttachmentActionType.Failed, taskId, message });
+            handleUploadAction({ type: AttachmentUploadActionType.Failed, taskId, message });
           }
         };
       });
 
       /* @conditional-compile-remove(attachment-upload) */
-      handleUploadAction({ type: AttachmentActionType.Set, newUploads });
+      handleUploadAction({ type: AttachmentUploadActionType.Set, newUploads });
       attachmentOptions?.uploadOptions?.handleAttachmentSelection(newUploads);
     },
     [attachmentOptions?.uploadOptions]
@@ -442,11 +442,23 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
                   attachmentsWithProgress={attachmentsWithProgress}
                   /* @conditional-compile-remove(attachment-upload) */
                   onCancelAttachmentUpload={(id: string) => {
-                    handleUploadAction({ type: AttachmentActionType.Remove, id });
+                    handleUploadAction({ type: AttachmentUploadActionType.Remove, id });
                     attachmentOptions?.uploadOptions?.handleAttachmentRemoval?.(id);
                   }}
-                  onSentCompleted={() => {
-                    handleUploadAction({ type: AttachmentActionType.Clear });
+                  onSendMessage={async (content: string) => {
+                    const attachments = uploads;
+                    handleUploadAction({ type: AttachmentUploadActionType.Clear });
+                    await adapter.sendMessageWithAttachments(
+                      content,
+                      attachments.map((v) => {
+                        return {
+                          id: v.metadata.id,
+                          name: v.metadata.name,
+                          url: v.metadata.url,
+                          extension: v.metadata.extension
+                        };
+                      })
+                    );
                   }}
                 />
               </Stack>

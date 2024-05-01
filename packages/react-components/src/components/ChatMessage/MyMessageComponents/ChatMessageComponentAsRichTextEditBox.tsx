@@ -39,11 +39,8 @@ export type ChatMessageComponentAsRichTextEditBoxProps = {
   onCancel?: (messageId: string) => void;
   onSubmit: (
     text: string,
-    metadata?: Record<string, string>,
-    options?: {
-      /* @conditional-compile-remove(attachment-upload) */
-      attachmentMetadata?: AttachmentMetadata[];
-    }
+    /* @conditional-compile-remove(attachment-upload) */
+    attachmentMetadata?: AttachmentMetadata[]
   ) => void;
   message: ChatMessage;
   strings: MessageThreadStrings;
@@ -123,14 +120,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
           tooltipContent={strings.editBoxSubmitButton}
           onRenderIcon={onRenderThemedSubmitIcon}
           onClick={(e) => {
-            submitEnabled &&
-              onSubmit(
-                textValue,
-                message.metadata,
-                /* @conditional-compile-remove(attachment-upload) */ {
-                  attachmentMetadata
-                }
-              );
+            submitEnabled && onSubmit(textValue, attachmentMetadata);
             e.stopPropagation();
           }}
           id={'submitIconWrapper'}
@@ -139,9 +129,8 @@ export const ChatMessageComponentAsRichTextEditBox = (
       </Stack>
     );
   }, [
-    /* @conditional-compile-remove(attachment-upload) */ attachmentMetadata,
+    attachmentMetadata,
     message.messageId,
-    message.metadata,
     onCancel,
     onRenderThemedCancelIcon,
     onRenderThemedSubmitIcon,

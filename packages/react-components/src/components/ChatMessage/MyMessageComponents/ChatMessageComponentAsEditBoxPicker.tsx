@@ -37,11 +37,8 @@ export type ChatMessageComponentAsEditBoxPickerProps = {
   onCancel?: (messageId: string) => void;
   onSubmit: (
     text: string,
-    metadata?: Record<string, string>,
-    options?: {
-      /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-      attachmentMetadata?: AttachmentMetadata[];
-    }
+    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+    attachmentMetadata?: AttachmentMetadata[]
   ) => void;
   message: ChatMessage;
   strings: MessageThreadStrings;

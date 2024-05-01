@@ -39,7 +39,7 @@ import { _isValidIdentifier } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(attachment-upload) */
 import { AttachmentMetadata } from '@internal/react-components';
 /* @conditional-compile-remove(attachment-upload) */
-import { FileSharingMetadata } from '../../ChatComposite/file-sharing';
+import { AttachmentMetadataWrapper } from '../../ChatComposite/file-sharing';
 import { TEAMS_LIMITATION_LEARN_MORE, UNSUPPORTED_CHAT_THREAD_TYPE } from '../../common/constants';
 
 /**
@@ -204,11 +204,11 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   /** Send a chat message with attachments. */
   public async sendMessageWithAttachments(content: string, attachments: AttachmentMetadata[]): Promise<void> {
     await this.asyncTeeErrorToEventEmitter(async () => {
-      const fileSharingMetadata: FileSharingMetadata = {
+      const attachmentMetadata: AttachmentMetadataWrapper = {
         fileSharingMetadata: JSON.stringify(attachments)
       };
       await this.handlers.onSendMessage(content, {
-        metadata: fileSharingMetadata
+        metadata: attachmentMetadata
       });
     });
   }

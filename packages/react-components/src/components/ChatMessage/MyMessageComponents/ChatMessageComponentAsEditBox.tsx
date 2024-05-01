@@ -40,11 +40,8 @@ export type ChatMessageComponentAsEditBoxProps = {
   onCancel?: (messageId: string) => void;
   onSubmit: (
     text: string,
-    metadata?: Record<string, string>,
-    options?: {
-      /* @conditional-compile-remove(attachment-upload) */
-      attachmentMetadata?: AttachmentMetadata[];
-    }
+    /* @conditional-compile-remove(attachment-upload) */
+    attachmentMetadata?: AttachmentMetadata[]
   ) => void;
   message: ChatMessage;
   strings: MessageThreadStrings;
@@ -155,10 +152,8 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
             submitEnabled &&
               onSubmit(
                 textValue,
-                message.metadata,
-                /* @conditional-compile-remove(attachment-upload) */ {
-                  attachmentMetadata
-                }
+                /* @conditional-compile-remove(attachment-upload) */
+                attachmentMetadata
               );
           }}
           supportNewline={false}
@@ -200,14 +195,7 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
               tooltipContent={strings.editBoxSubmitButton}
               onRenderIcon={onRenderThemedSubmitIcon}
               onClick={(e) => {
-                submitEnabled &&
-                  onSubmit(
-                    textValue,
-                    message.metadata,
-                    /* @conditional-compile-remove(attachment-upload) */ {
-                      attachmentMetadata
-                    }
-                  );
+                submitEnabled && onSubmit(textValue, attachmentMetadata);
                 e.stopPropagation();
               }}
               id={'submitIconWrapper'}

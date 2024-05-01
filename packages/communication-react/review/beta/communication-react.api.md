@@ -3270,9 +3270,7 @@ export type MessageProps = {
     onUpdateMessage?: UpdateMessageCallback;
     onCancelEditMessage?: CancelEditCallback;
     onDeleteMessage?: (messageId: string) => Promise<void>;
-    onSendMessage?: (messageId: string, options?: {
-        attachments?: AttachmentMetadata[];
-    }) => Promise<void>;
+    onSendMessage?: (messageId: string) => Promise<void>;
 };
 
 // @public
@@ -3953,11 +3951,7 @@ export interface SendBoxProps {
     onRenderAttachmentUploads?: () => JSX.Element;
     onRenderIcon?: (isHover: boolean) => JSX.Element;
     onRenderSystemMessage?: (systemMessage: string | undefined) => React_2.ReactElement;
-    onSendMessage?: (content: string, options: {
-        attachments?: AttachmentMetadata[];
-    }) => Promise<void>;
-    // @internal
-    onSentCompleted?: () => void;
+    onSendMessage?: (content: string) => Promise<void>;
     onTyping?: () => Promise<void>;
     strings?: Partial<SendBoxStrings>;
     styles?: SendBoxStylesProps;
@@ -4416,7 +4410,6 @@ export interface UnsupportedOperatingSystemStrings {
 // @public
 export type UpdateMessageCallback = (messageId: string, content: string, options?: {
     metadata?: Record<string, string>;
-    attachmentMetadata?: AttachmentMetadata[];
 }) => Promise<void>;
 
 // @public

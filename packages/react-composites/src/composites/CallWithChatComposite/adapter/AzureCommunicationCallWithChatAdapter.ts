@@ -103,7 +103,7 @@ import { VideoBackgroundImage, VideoBackgroundEffect } from '../../CallComposite
 /* @conditional-compile-remove(end-of-call-survey) */
 import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
 /* @conditional-compile-remove(attachment-upload) */
-import { FileSharingMetadata } from '../../ChatComposite/file-sharing';
+import { AttachmentMetadataWrapper } from '../../ChatComposite/file-sharing';
 
 type CallWithChatAdapterStateChangedHandler = (newState: CallWithChatAdapterState) => void;
 
@@ -425,11 +425,11 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   /** Send a chat message with attachments. */
   public async sendMessageWithAttachments(content: string, attachments: AttachmentMetadata[]): Promise<void> {
     return await this.executeWithResolvedChatAdapter((adapter) => {
-      const fileSharingMetadata: FileSharingMetadata = {
+      const attachmentMetadata: AttachmentMetadataWrapper = {
         fileSharingMetadata: JSON.stringify(attachments)
       };
       return adapter.sendMessage(content, {
-        metadata: fileSharingMetadata
+        metadata: attachmentMetadata
       });
     });
   }

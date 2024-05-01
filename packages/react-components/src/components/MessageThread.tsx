@@ -33,7 +33,7 @@ import { useLocale } from '../localization/LocalizationProvider';
 import { isNarrowWidth, _useContainerWidth } from './utils/responsive';
 import getParticipantsWhoHaveReadMessage from './utils/getParticipantsWhoHaveReadMessage';
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-import { AttachmentMetadata, AttachmentOptions } from '../types/Attachment';
+import { AttachmentOptions } from '../types/Attachment';
 import { useTheme } from '../theming';
 import { FluentV9ThemeProvider } from './../theming/FluentV9ThemeProvider';
 import LiveAnnouncer from './Announcer/LiveAnnouncer';
@@ -352,9 +352,7 @@ export type UpdateMessageCallback = (
   content: string,
   /* @conditional-compile-remove(attachment-upload) */
   options?: {
-    /* @conditional-compile-remove(attachment-upload) */
     metadata?: Record<string, string>;
-    attachmentMetadata?: AttachmentMetadata[];
   }
 ) => Promise<void>;
 /**
@@ -611,7 +609,7 @@ export type MessageProps = {
    * @param messageId - message id from chatClient
    *
    */
-  onSendMessage?: (messageId: string, options?: { attachments?: AttachmentMetadata[] }) => Promise<void>;
+  onSendMessage?: (messageId: string) => Promise<void>;
 };
 
 /**

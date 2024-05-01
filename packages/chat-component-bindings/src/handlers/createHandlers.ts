@@ -53,11 +53,6 @@ export const createDefaultChatHandlers = memoizeOne(
     let readReceiptIterator: PagedAsyncIterableIterator<ChatMessageReadReceipt> | undefined = undefined;
     return {
       onSendMessage: async (content: string, options?: SendMessageOptions) => {
-        if (options?.attachments && options.attachments.length > 0) {
-          options.metadata = options.metadata ?? {};
-          options.metadata.fileSharingMetadata = JSON.stringify(options.attachments);
-          options.attachments = undefined;
-        }
         const sendMessageRequest = {
           content,
           senderDisplayName: chatClient.getState().displayName
@@ -70,19 +65,9 @@ export const createDefaultChatHandlers = memoizeOne(
         /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
         options?: {
           metadata?: Record<string, string>;
-          attachmentMetadata?: AttachmentMetadata[];
         }
       ) => {
-        let updatedMetadata: Record<string, string> | undefined = {};
-        /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-        updatedMetadata = options?.metadata ? { ...options.metadata } : {};
-        /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-        // need to set fileSharingMetadata explicitly to empty array to remove existing attachments
-        // setting it to undefined or empty object will not remove the existing attachments
-        if (updatedMetadata?.fileSharingMetadata) {
-          updatedMetadata.fileSharingMetadata = JSON.stringify(options?.attachmentMetadata ?? []);
-        }
-        await chatThreadClient.updateMessage(messageId, { content, metadata: updatedMetadata });
+        await chatThreadClient.updateMessage(messageId, { content, metadata: options?.metadata });
       },
       onDeleteMessage: async (messageId: string) => {
         await chatThreadClient.deleteMessage(messageId);
