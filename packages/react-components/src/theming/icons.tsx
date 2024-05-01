@@ -45,7 +45,8 @@ import {
   Pin16Regular,
   PinOff16Regular,
   ScaleFit20Regular,
-  ScaleFill20Regular
+  ScaleFill20Regular,
+  PersonDelete20Regular
 } from '@fluentui/react-icons';
 /* @conditional-compile-remove(rich-text-editor) */
 import {
@@ -359,6 +360,7 @@ export const DEFAULT_COMPONENT_ICONS = {
   ContextMenuCameraIcon: <Video20Regular />,
   ContextMenuMicIcon: <Mic20Regular />,
   ContextMenuSpeakerIcon: <Speaker220Regular />,
+  ContextMenuRemoveParticipant: <PersonDelete20Regular />,
   /* @conditional-compile-remove(end-of-call-survey) */
   SurveyStarIcon: <Star28Regular />,
   /* @conditional-compile-remove(end-of-call-survey) */
