@@ -11,7 +11,9 @@ import { TeamsCaptionsInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(acs-close-captions) */
 import { CaptionsInfo as AcsCaptionsInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support) */
-import { CallKind } from '@azure/communication-calling';
+import { CallKind, TeamsCallInfo } from '@azure/communication-calling';
+/* @conditional-compile-remove(meeting-id) */
+import { CallInfo } from '@azure/communication-calling';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import {
   CallState,
@@ -121,6 +123,13 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
     }
   }
 
+  let callInfo: CallInfo | undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCallInfo =
+    _isACSCall(call) ? call.info : undefined;
+  /* @conditional-compile-remove(teams-identity-support) */
+  if (_isTeamsCall(call)) {
+    callInfo = call.info;
+  }
+
   return {
     id: call.id,
     /* @conditional-compile-remove(teams-identity-support) */
@@ -174,7 +183,7 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
     /* @conditional-compile-remove(hide-attendee-name) */
     hideAttendeeNames,
     /* @conditional-compile-remove(meeting-id) */
-    info: _isACSCall(call) ? call.info : _isTeamsCall(call) ? call.info : undefined
+    info: callInfo
   };
 }
 
