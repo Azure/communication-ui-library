@@ -97,7 +97,7 @@ type Actions = SetAction | ProgressAction | CompleteAction | FailedAction | Remo
 export const AttachmentUploadReducer = (state: AttachmentUpload[], action: Actions): AttachmentUpload[] => {
   switch (action.type) {
     case AttachmentUploadActionType.Set:
-      return action.newUploads;
+      return state.concat(action.newUploads);
 
     case AttachmentUploadActionType.Completed:
       return state.map((v) =>

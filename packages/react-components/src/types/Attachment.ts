@@ -176,7 +176,7 @@ export type AttachmentSelectionHandler = (attachmentUploads: AttachmentUploadTas
 export type AttachmentRemovalHandler = (attachmentId: string) => void;
 
 /**
- * Metadata used for setting uploaded attachments by a user using chat composite in a group call.
+ * A wrapper for list of attachment metadata that is used for new message requests and update message requsts.
  * @internal
  */
 export type AttachmentMetadataWrapper = {
