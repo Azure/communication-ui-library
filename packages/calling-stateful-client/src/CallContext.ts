@@ -8,7 +8,8 @@ import {
   DominantSpeakersInfo,
   ParticipantRole,
   ScalingMode,
-  VideoDeviceInfo
+  VideoDeviceInfo,
+  TeamsMeetingAudioConferencingDetails
 } from '@azure/communication-calling';
 import { RaisedHand } from '@azure/communication-calling';
 
@@ -559,6 +560,19 @@ export class CallContext {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
         call.spotlight = { ...call.spotlight, spotlightedParticipants, maxParticipantsToSpotlight };
+      }
+    });
+  }
+
+  /* @conditional-compile-remove(teams-meeting-conference) */
+  public setTeamsMeetingConference(
+    callId: string,
+    teamsMeetingConferenceDetails: TeamsMeetingAudioConferencingDetails
+  ): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        call.teamsMeetingConference = teamsMeetingConferenceDetails;
       }
     });
   }

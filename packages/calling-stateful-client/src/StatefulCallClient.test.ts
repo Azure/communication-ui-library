@@ -683,6 +683,21 @@ describe('errors should be reported correctly from Call when', () => {
       expect(client.getState().latestErrors['Call.stopScreenSharing']).toBeDefined();
     }
   });
+
+  test('Conference call is undefined in acs to acs calls', async () => {
+    const { client, callId } = await prepareCall();
+    expect(client.getState().calls[callId]?.teamsMeetingConference).toBeUndefined();
+  });
+
+  test('Conference call is undefined in acs to acs calls', async () => {
+    const recording = addMockEmitter({ name: 'Default' });
+
+    const { client, callId } = await prepareCallWithFeatures(
+      createMockApiFeatures(new Map([[Features.TeamsMeetingAudioConferencing, recording]]))
+    );
+
+    expect(client.getState().calls[callId]?.teamsMeetingConference).toBeUndefined();
+  });
 });
 
 interface PreparedCall {
