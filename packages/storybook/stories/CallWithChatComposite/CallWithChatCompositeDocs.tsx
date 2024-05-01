@@ -185,15 +185,6 @@ export const Docs: () => JSX.Element = () => {
         />
       </Stack>
       <Source code={customBrandingSnippet} />
-
-      <div ref={refTeamsMeeting}>
-        <Heading>Joining a Teams Meeting</Heading>
-        <Description>
-          The [Joining a Teams Meeting](./?path=/story/composites-call-with-chat-jointeamsmeeting) preview provides an
-          easy playground to join an existing Teams meeting. This is useful if you want to explore the composite in a
-          Teams interop scenario.
-        </Description>
-      </div>
       <Heading>Customize Call Controls</Heading>
       <Description>
         CallWithChatComposite provides a set of default controls for the call that can be customized similar to

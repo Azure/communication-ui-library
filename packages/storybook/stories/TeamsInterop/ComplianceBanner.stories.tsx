@@ -5,7 +5,7 @@ import { Stack } from '@fluentui/react';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 
-import { EXAMPLES_FOLDER_PREFIX } from '../../constants';
+import { CONCEPTS_FOLDER_PREFIX } from '../constants';
 import { ComplianceBanner as Banner } from './snippets/ComplianceBanner.snippet';
 import { getComplianceBannerDocs } from './TeamsInteropDocs';
 
@@ -20,8 +20,8 @@ const ComplianceBannerStory = (args): JSX.Element => {
 export const ComplianceBanner = ComplianceBannerStory.bind({});
 
 export default {
-  id: `${EXAMPLES_FOLDER_PREFIX}-teamsinterop-compliancebanner`,
-  title: `${EXAMPLES_FOLDER_PREFIX}/Teams Interop/Compliance Banner`,
+  id: `${CONCEPTS_FOLDER_PREFIX}-teamsinterop-compliancebanner`,
+  title: `${CONCEPTS_FOLDER_PREFIX}/Teams Interop/Compliance Banner`,
   component: ComplianceBanner,
   argTypes: {
     callRecordState: { control: 'boolean', defaultValue: false, name: 'Is recording on?' },
