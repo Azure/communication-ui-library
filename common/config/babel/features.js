@@ -19,6 +19,10 @@ module.exports = {
     "hide-attendee-name",
     // Demo feature. Used in live-documentation of conditional compilation. Do not use in production code.
     "in-progress-beta-feature-demo",
+    // Feature for Rich Text Editor (RTE) composite support
+    "rich-text-editor-composite-support",
+    // Feature for Rich Text Editor (RTE) image upload support
+    "rich-text-editor-image-upload"
   ],
   beta: [
     "call-readiness",
