@@ -120,7 +120,8 @@ export const ChatMessageComponentAsRichTextEditBox = (
           tooltipContent={strings.editBoxSubmitButton}
           onRenderIcon={onRenderThemedSubmitIcon}
           onClick={(e) => {
-            submitEnabled && onSubmit(textValue, attachmentMetadata);
+            submitEnabled &&
+              onSubmit(textValue, /* @conditional-compile-remove(attachment-upload) */ attachmentMetadata);
             e.stopPropagation();
           }}
           id={'submitIconWrapper'}
@@ -129,6 +130,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
       </Stack>
     );
   }, [
+    /* @conditional-compile-remove(attachment-upload) */
     attachmentMetadata,
     message.messageId,
     onCancel,

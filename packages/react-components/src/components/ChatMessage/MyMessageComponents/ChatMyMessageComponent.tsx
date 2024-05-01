@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import { _formatString } from '@internal/acs-ui-common';
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { MessageThreadStrings, UpdateMessageCallback } from '../../MessageThread';
 import { ChatMessage, ComponentSlotStyle, OnRenderAvatarCallback } from '../../../types';
 /* @conditional-compile-remove(data-loss-prevention) */
@@ -144,16 +144,12 @@ export const ChatMyMessageComponent = (props: ChatMyMessageComponentProps): JSX.
       <ChatMessageComponentAsEditBoxPicker
         message={message}
         strings={props.strings}
-        onSubmit={async (text, attachmentMetadata) => {
+        onSubmit={async (text, /* @conditional-compile-remove(attachment-upload) */ attachmentMetadata) => {
+          /* @conditional-compile-remove(attachment-upload) */
           message.attachments = attachmentMetadata;
           props.onUpdateMessage &&
             message.messageId &&
-            (await props.onUpdateMessage(
-              message.messageId,
-              text,
-              /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-              getMetadata()
-            ));
+            (await props.onUpdateMessage(message.messageId, text, getMetadata()));
           setIsEditing(false);
         }}
         onCancel={(messageId) => {
