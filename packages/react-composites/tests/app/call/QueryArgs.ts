@@ -78,6 +78,6 @@ export function parseQueryArgs(): QueryArgs {
     logo: params.logo as 'circle' | 'square' | undefined,
     backgroundImage: Boolean(params.backgroundImage),
     playSounds: Boolean(params.playSounds),
-    disableAutoShowDtmfDialer: params.disableAutoShowDtmfDialer !== 'false' ? false : true
+    disableAutoShowDtmfDialer: params.disableAutoShowDtmfDialer === 'true' ? true : false
   };
 }
