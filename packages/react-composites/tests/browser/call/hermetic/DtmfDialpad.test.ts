@@ -76,27 +76,33 @@ test.describe('Dtmf dialpad tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot(`call-more-drawer-dtmf-dialpad-closed.png`);
   });
   /* @conditional-compile-remove(PSTN-calls) */
-  test('Dtmf dialer should not be visible when auto show is false', async ({ page, serverUrl }, testInfo) => {
+  test.only('Dtmf dialer should not be visible when auto show is false', async ({ page, serverUrl }, testInfo) => {
     test.skip(!isTestProfileDesktop(testInfo));
     const initialState = defaultMockCallAdapterState([defaultMockRemotePSTNParticipant('+14255550123')]);
     initialState.targetCallees = [{ phoneNumber: '+14255550123', rawId: '4:14255550123' }];
 
     await page.goto(
-      buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true', autoShowDtmfDialer: 'false' })
-    );
-    await waitForSelector(page, dataUiId('common-call-composite-more-button'));
-    expect(await stableScreenshot(page)).toMatchSnapshot(`call-dtmf-dialpad-auto-show-false.png`);
-  });
-  /* @conditional-compile-remove(PSTN-calls) */
-  test('Dtmf dialer should be visible when auto show is true', async ({ page, serverUrl }, testInfo) => {
-    test.skip(!isTestProfileDesktop(testInfo));
-    const initialState = defaultMockCallAdapterState([defaultMockRemotePSTNParticipant('+14255550123')]);
-    initialState.targetCallees = [{ phoneNumber: '+14255550123', rawId: '4:14255550123' }];
-
-    await page.goto(
-      buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true', autoShowDtmfDialer: 'true' })
+      buildUrlWithMockAdapter(serverUrl, initialState, {
+        newControlBarExperience: 'true',
+        disableAutoShowDtmfDialer: 'false'
+      })
     );
     await waitForSelector(page, dataUiId('common-call-composite-more-button'));
     expect(await stableScreenshot(page)).toMatchSnapshot(`call-dtmf-dialpad-auto-show-true.png`);
+  });
+  /* @conditional-compile-remove(PSTN-calls) */
+  test.only('Dtmf dialer should be visible when auto show is true', async ({ page, serverUrl }, testInfo) => {
+    test.skip(!isTestProfileDesktop(testInfo));
+    const initialState = defaultMockCallAdapterState([defaultMockRemotePSTNParticipant('+14255550123')]);
+    initialState.targetCallees = [{ phoneNumber: '+14255550123', rawId: '4:14255550123' }];
+
+    await page.goto(
+      buildUrlWithMockAdapter(serverUrl, initialState, {
+        newControlBarExperience: 'true',
+        disableAutoShowDtmfDialer: 'true'
+      })
+    );
+    await waitForSelector(page, dataUiId('common-call-composite-more-button'));
+    expect(await stableScreenshot(page)).toMatchSnapshot(`call-dtmf-dialpad-auto-show-false.png`);
   });
 });

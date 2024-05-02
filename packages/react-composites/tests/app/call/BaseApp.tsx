@@ -100,10 +100,10 @@ export function BaseApp(props: { queryArgs: QueryArgs; callAdapter?: CallAdapter
     };
   }
 
-  if (queryArgs.autoShowDtmfDialer !== undefined) {
+  if (queryArgs.disableAutoShowDtmfDialer !== undefined) {
     options = {
       ...options,
-      autoShowDtmfDialer: queryArgs.autoShowDtmfDialer
+      disableAutoShowDtmfDialer: queryArgs.disableAutoShowDtmfDialer
     };
   }
 

@@ -236,9 +236,9 @@ export type CallCompositeOptions = {
    * Whether to auto show the DTMF Dialer when the call starts in supported scenarios.
    * - Teams Voice Application like Call queue or Auto Attendant
    * - PSTN Calls
-   * @defaultValue true
+   * @defaultValue false
    */
-  autoShowDtmfDialer?: boolean;
+  disableAutoShowDtmfDialer?: boolean;
   /**
    * Options for controlling the starting layout of the composite's video gallery
    */
@@ -602,7 +602,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           pinnedParticipants={pinnedParticipants}
           setPinnedParticipants={setPinnedParticipants}
           compositeAudioContext={compositeAudioContext}
-          autoShowDtmfDialer={props.options?.autoShowDtmfDialer}
+          disableAutoShowDtmfDialer={props.options?.disableAutoShowDtmfDialer}
         />
       );
       break;
