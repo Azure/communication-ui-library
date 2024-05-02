@@ -1,11 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { StartCallOptions, TeamsCallAgentOptions } from '@azure/communication-calling';
+import { StartCallOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support) */
-import { TeamsCall, TeamsCallAgent } from '@azure/communication-calling';
+import { TeamsCall, TeamsCallAgent, TeamsCallAgentOptions } from '@azure/communication-calling';
 import {
   CommunicationIdentifier,
   isCommunicationUserIdentifier,
@@ -29,7 +29,7 @@ import {
  * Calling related components from this package are able to pick out relevant handlers from this object.
  * See {@link useHandlers} and {@link usePropsFor}.
  *
- * @beta
+ * @public
  */
 export interface TeamsCallingHandlers extends CommonCallingHandlers {
   onStartCall: (
@@ -44,7 +44,7 @@ export interface TeamsCallingHandlers extends CommonCallingHandlers {
  * Useful when implementing a custom component that utilizes the providers
  * exported from this library.
  *
- * @beta
+ * @public
  */
 export const createDefaultTeamsCallingHandlers = memoizeOne(
   (
@@ -126,7 +126,7 @@ export const createDefaultTeamsCallingHandlers = memoizeOne(
  * @param call - Instance of {@link @azure/communication-calling#TeamsCall}.
  * @param _ - React component that you want to generate handlers for.
  *
- * @beta
+ * @public
  */
 export const createTeamsCallingHandlersForComponent = <Props>(
   callClient: StatefulCallClient,
