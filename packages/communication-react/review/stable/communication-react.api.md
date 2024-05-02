@@ -18,7 +18,6 @@ import { CallClientOptions } from '@azure/communication-calling';
 import { CallDirection } from '@azure/communication-calling';
 import { CallEndReason } from '@azure/communication-calling';
 import { CallerInfo } from '@azure/communication-calling';
-import { CallInfo } from '@azure/communication-calling';
 import { CallState as CallState_2 } from '@azure/communication-calling';
 import { CallSurvey } from '@azure/communication-calling';
 import { CallSurveyResponse } from '@azure/communication-calling';
@@ -803,7 +802,7 @@ export interface CallState {
     endTime: Date | undefined;
     hideAttendeeNames?: boolean;
     id: string;
-    info?: CallInfo | TeamsCallInfo;
+    info?: TeamsCallInfo;
     isMuted: boolean;
     isScreenSharingOn: boolean;
     localParticipantReaction?: ReactionState;
