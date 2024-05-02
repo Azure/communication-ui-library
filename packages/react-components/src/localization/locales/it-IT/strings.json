@@ -27,7 +27,8 @@
     "attachmentUploadsPendingError": "Caricamento in corso... Attendere.",
     "removeAttachment": "Rimuovi file",
     "uploading": "Caricamento in corso",
-    "uploadCompleted": "Caricamento completato"
+    "uploadCompleted": "Caricamento completato",
+    "attachmentMoreMenu": "Altre opzioni"
   },
   "richTextSendBox": {
     "placeholderText": "Immetti un messaggio",
@@ -55,7 +56,8 @@
     "deleteRowOrColumnMenu": "Elimina",
     "deleteColumnMenu": "Elimina colonna",
     "deleteRowMenu": "Elimina riga",
-    "deleteTableMenu": "Elimina tabella"
+    "deleteTableMenu": "Elimina tabella",
+    "attachmentMoreMenu": "Altre opzioni"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Suggerimenti"
@@ -79,7 +81,7 @@
     "label": "Permesso",
     "tooltipContent": "Abbandona chiamata",
     "leaveOption": "Abbandona",
-    "endCallOption": "Termina chiamata"
+    "endCallOption": "Termina chiamata per tutti"
   },
   "cameraButton": {
     "onLabel": "Fotocamera",
