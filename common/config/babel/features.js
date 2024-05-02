@@ -17,10 +17,12 @@ module.exports = {
     "gallery-layout-composite",
     // feature for hiding attendee name in the teams meeting
     "hide-attendee-name",
-    // Join meeting with meetingId and passcode
-    'meeting-id',
     // Demo feature. Used in live-documentation of conditional compilation. Do not use in production code.
     "in-progress-beta-feature-demo",
+    // Feature for Rich Text Editor (RTE) composite support
+    "rich-text-editor-composite-support",
+    // Feature for Rich Text Editor (RTE) image upload support
+    "rich-text-editor-image-upload"
   ],
   beta: [
     "call-readiness",
@@ -71,8 +73,6 @@ module.exports = {
     'image-overlay-theme',
     // Feature for local recording notification for teams meetings
     'local-recording-notification',
-    // Feature for end call options 
-    'end-call-options',
     // Close captions feature for ACS calls
     "acs-close-captions",
     // Feature for Rich Text Editor (RTE) support
@@ -86,11 +86,15 @@ module.exports = {
     "video-stream-is-receiving-flag",
     // Feature for spotlight
     'spotlight',
-     // Feature for end of call survey
+    // Feature for end of call survey
     'end-of-call-survey',
     // Feature for PPT Live for teams meeting
     'ppt-live',
     // feature for hiding attendee name in the teams meeting
     "hide-attendee-name",
+    // Join meeting with meetingId and passcode
+    'meeting-id',
+    // Feature for end call options 
+    'end-call-options',
   ]
 }
