@@ -7,7 +7,6 @@ import { Common, fromFlatCommunicationIdentifier } from '@internal/acs-ui-common
 import { StatefulChatClient } from '@internal/chat-stateful-client';
 import { ChatMessage, ChatMessageReadReceipt, ChatThreadClient, SendMessageOptions } from '@azure/communication-chat';
 import memoizeOne from 'memoize-one';
-import { AttachmentMetadata } from '@internal/react-components';
 
 /**
  * Object containing all the handlers required for chat components.
@@ -29,9 +28,7 @@ export type ChatHandlers = {
     content: string,
     /* @conditional-compile-remove(attachment-upload) */
     options?: {
-      /* @conditional-compile-remove(attachment-upload) */
       metadata?: Record<string, string>;
-      attachmentMetadata?: AttachmentMetadata[];
     }
   ) => Promise<void>;
   onDeleteMessage: (messageId: string) => Promise<void>;

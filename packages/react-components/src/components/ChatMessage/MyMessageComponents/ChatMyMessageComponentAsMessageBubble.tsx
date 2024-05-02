@@ -18,7 +18,7 @@ import { chatMessageActionMenuProps } from '../ChatMessageActionMenu';
 import { ComponentSlotStyle, OnRenderAvatarCallback } from '../../../types';
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 import { AttachmentMenuAction, AttachmentMetadata } from '../../../types/Attachment';
-import { _AttachmentDownloadCards } from '../../AttachmentDownloadCards';
+import { _AttachmentDownloadCards } from '../../Attachment/AttachmentDownloadCards';
 import { useLocale } from '../../../localization';
 /* @conditional-compile-remove(mention) */
 import { MentionDisplayOptions } from '../../MentionPopover';

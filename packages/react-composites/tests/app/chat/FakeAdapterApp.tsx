@@ -48,10 +48,6 @@ export const FakeAdapterApp = (): JSX.Element => {
         return;
       }
 
-      if (fakeChatAdapterArgs.attachmentUploads) {
-        handleAttachmentUploads(fakeAdapters.local, fakeChatAdapterArgs.attachmentUploads);
-      }
-
       if (fakeChatAdapterArgs.sendRemoteFileSharingMessage && fakeChatAdapterArgs.remoteParticipants.length > 0) {
         sendRemoteFileSharingMessage(
           fakeAdapters.service.model,
@@ -109,11 +105,7 @@ export const FakeAdapterApp = (): JSX.Element => {
                     downloadOptions: {
                       actionsForAttachment: actionsForAttachment
                     },
-                    uploadOptions: {
-                      handleAttachmentSelection: () => {
-                        // noop
-                      }
-                    }
+                    uploadOptions: fakeChatAdapterArgs.uploadHandler
                   }
                 : undefined
             }}
@@ -127,23 +119,6 @@ export const FakeAdapterApp = (): JSX.Element => {
       <HiddenChatComposites adapters={fakeAdapters.remotes} />
     </>
   );
-};
-
-const handleAttachmentUploads = (adapter: ChatAdapter, attachmentUploads: _MockAttachmentUpload[]): void => {
-  attachmentUploads.forEach((attachment) => {
-    if (attachment.uploadComplete) {
-      const attachmentUploads = adapter.registerActiveUploads([new File([], attachment.name)]);
-      attachmentUploads[0].notifyUploadCompleted(attachment.id, attachment.url ?? '');
-    } else if (attachment.error) {
-      const attachmentUploads = adapter.registerActiveUploads([new File([], attachment.name)]);
-      attachmentUploads[0].notifyUploadFailed(attachment.error);
-    } else if (attachment.progress) {
-      const attachmentUploads = adapter.registerActiveUploads([new File([], attachment.name)]);
-      attachmentUploads[0].notifyUploadProgressChanged(attachment.progress);
-    } else {
-      adapter.registerCompletedUploads([attachment]);
-    }
-  });
 };
 
 const sendRemoteFileSharingMessage = (

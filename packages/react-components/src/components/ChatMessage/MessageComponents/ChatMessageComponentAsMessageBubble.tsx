@@ -16,7 +16,7 @@ import { MessageThreadStrings } from '../../MessageThread';
 import { ComponentSlotStyle } from '../../../types';
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 import { AttachmentMenuAction, AttachmentMetadata } from '../../../types';
-import { _AttachmentDownloadCards } from '../../AttachmentDownloadCards';
+import { _AttachmentDownloadCards } from '../../Attachment/AttachmentDownloadCards';
 import { useLocale } from '../../../localization';
 /* @conditional-compile-remove(mention) */
 import { MentionDisplayOptions } from '../../MentionPopover';

@@ -5,8 +5,8 @@ import { Icon, mergeStyles } from '@fluentui/react';
 import React, { useMemo } from 'react';
 import { _AttachmentCard } from './AttachmentCard';
 import { _AttachmentCardGroup } from './AttachmentCardGroup';
-import { AttachmentMetadataWithProgress } from '../types/Attachment';
-import { useLocaleAttachmentCardStringsTrampoline } from './utils/common';
+import { AttachmentMetadataWithProgress } from '../../types/Attachment';
+import { useLocaleAttachmentCardStringsTrampoline } from '../utils/common';
 
 /**
  * Strings of _AttachmentUploadCards that can be overridden.

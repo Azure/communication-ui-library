@@ -13,7 +13,7 @@ import { InputBoxButton } from './InputBoxButton';
 /* @conditional-compile-remove(attachment-upload) */
 import { SendBoxErrors } from './SendBoxErrors';
 /* @conditional-compile-remove(attachment-upload) */
-import { _AttachmentUploadCards } from './AttachmentUploadCards';
+import { _AttachmentUploadCards } from './Attachment/AttachmentUploadCards';
 /* @conditional-compile-remove(attachment-upload) */
 import { AttachmentMetadataWithProgress } from '../types/Attachment';
 /* @conditional-compile-remove(attachment-upload) */

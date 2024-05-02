@@ -12,7 +12,7 @@ import { InputBoxButton } from '../../InputBoxButton';
 import { MessageThreadStrings } from '../../MessageThread';
 import { useChatMyMessageStyles } from '../../styles/MessageThread.styles';
 import { ChatMessage } from '../../../types';
-import { _AttachmentUploadCards } from '../../AttachmentUploadCards';
+import { _AttachmentUploadCards } from '../../Attachment/AttachmentUploadCards';
 /* @conditional-compile-remove(attachment-upload) */
 import { AttachmentMetadata } from '../../../types/Attachment';
 import { useChatMessageRichTextEditContainerStyles } from '../../styles/ChatMessageComponent.styles';

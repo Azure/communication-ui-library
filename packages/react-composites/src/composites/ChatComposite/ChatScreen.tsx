@@ -19,12 +19,15 @@ import {
 } from '@internal/react-components';
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 import { ChatMessage } from '@internal/react-components';
-import React, { useCallback, useEffect, useMemo, useReducer } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
+/* @conditional-compile-remove(attachment-upload) */
+import { useReducer } from 'react';
 import { useState } from 'react';
 import { AvatarPersona, AvatarPersonaDataCallback, AvatarPersonaProps } from '../common/AvatarPersona';
 import { useAdapter } from './adapter/ChatAdapterProvider';
 import { ChatCompositeOptions } from './ChatComposite';
 import { ChatHeader, getHeaderProps } from './ChatHeader';
+/* @conditional-compile-remove(attachment-upload) */
 import { AttachmentUploadButtonWrapper as AttachmentUploadButton } from './file-sharing';
 import { useAdaptedSelector } from './hooks/useAdaptedSelector';
 import { usePropsFor } from './hooks/usePropsFor';
@@ -49,8 +52,9 @@ import { InlineImage } from '@internal/react-components';
 import { ResourceFetchResult } from '@internal/chat-stateful-client';
 import { AttachmentOptions } from '@internal/react-components';
 import { SendBox } from '@internal/react-components';
+/* @conditional-compile-remove(attachment-upload) */
 import { nanoid } from 'nanoid';
-/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(attachment-upload) */
 import { AttachmentUploadActionType, AttachmentUpload, AttachmentUploadReducer } from './file-sharing/AttachmentUpload';
 
 /**
@@ -107,6 +111,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const [downloadErrorMessage, setDownloadErrorMessage] = React.useState('');
   const [overlayImageItem, setOverlayImageItem] = useState<OverlayImageItem>();
   const [isImageOverlayOpen, setIsImageOverlayOpen] = useState<boolean>(false);
+  /* @conditional-compile-remove(attachment-upload) */
   const [uploads, handleUploadAction] = useReducer(AttachmentUploadReducer, []);
 
   const adapter = useAdapter();
@@ -195,6 +200,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
 
   const userId = toFlatCommunicationIdentifier(adapter.getState().userId);
 
+  /* @conditional-compile-remove(attachment-upload) */
   const attachmentUploadButtonOnChange = useCallback(
     (files: FileList | null): void => {
       if (!files) {
@@ -225,7 +231,6 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
         };
       });
 
-      /* @conditional-compile-remove(attachment-upload) */
       handleUploadAction({ type: AttachmentUploadActionType.Set, newUploads });
       attachmentOptions?.uploadOptions?.handleAttachmentSelection(newUploads);
     },
@@ -374,9 +379,11 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   );
 
   const AttachmentButton = useCallback(() => {
+    /* @conditional-compile-remove(attachment-upload) */
     if (!attachmentOptions?.uploadOptions?.handleAttachmentSelection) {
       return null;
     }
+    /* @conditional-compile-remove(attachment-upload) */
     return (
       <AttachmentUploadButton
         supportedMediaTypes={attachmentOptions?.uploadOptions?.supportedMediaTypes}
@@ -384,10 +391,12 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
         onChange={attachmentUploadButtonOnChange}
       />
     );
+    return <></>;
   }, [
     attachmentOptions?.uploadOptions?.handleAttachmentSelection,
     attachmentOptions?.uploadOptions?.supportedMediaTypes,
     attachmentOptions?.uploadOptions?.disableMultipleUploads,
+    /* @conditional-compile-remove(attachment-upload) */
     attachmentUploadButtonOnChange
   ]);
 
@@ -446,8 +455,11 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
                     attachmentOptions?.uploadOptions?.handleAttachmentRemoval?.(id);
                   }}
                   onSendMessage={async (content: string) => {
+                    /* @conditional-compile-remove(attachment-upload) */
                     const attachments = uploads;
+                    /* @conditional-compile-remove(attachment-upload) */
                     handleUploadAction({ type: AttachmentUploadActionType.Clear });
+                    /* @conditional-compile-remove(attachment-upload) */
                     await adapter.sendMessageWithAttachments(
                       content,
                       attachments.map((v) => {
@@ -459,6 +471,9 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
                         };
                       })
                     );
+                    /* @conditional-compile-remove(attachment-upload) */
+                    return;
+                    await adapter.sendMessage(content);
                   }}
                 />
               </Stack>

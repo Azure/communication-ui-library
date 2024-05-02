@@ -14,7 +14,7 @@ import { RichTextEditorComponentRef } from './RichTextEditor';
 import { useTheme } from '../../theming';
 import { richTextActionButtonsStyle, sendBoxRichTextEditorStyle } from '../styles/RichTextEditor.styles';
 /* @conditional-compile-remove(attachment-upload) */
-import { _AttachmentUploadCards } from '../AttachmentUploadCards';
+import { _AttachmentUploadCards } from '../Attachment/AttachmentUploadCards';
 /* @conditional-compile-remove(attachment-upload) */
 import { AttachmentMetadataWithProgress } from '../../types/Attachment';
 /* @conditional-compile-remove(attachment-upload) */

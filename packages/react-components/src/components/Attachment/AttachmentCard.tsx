@@ -22,12 +22,12 @@ import {
 import { getFileTypeIconProps } from '@fluentui/react-file-type-icons';
 import React from 'react';
 import { _pxToRem } from '@internal/acs-ui-common';
-import { Announcer } from './Announcer';
+import { Announcer } from '../Announcer';
 import { useEffect, useState, useMemo } from 'react';
 import { _AttachmentUploadCardsStrings } from './AttachmentUploadCards';
-import { useLocaleAttachmentCardStringsTrampoline } from './utils/common';
-import { AttachmentMetadata, AttachmentMenuAction, AttachmentMetadataWithProgress } from '../types/Attachment';
-import { useAttachmentCardStyles, attachmentNameContainerClassName } from './styles/AttachmentCard.styles';
+import { useLocaleAttachmentCardStringsTrampoline } from '../utils/common';
+import { AttachmentMetadata, AttachmentMenuAction, AttachmentMetadataWithProgress } from '../../types/Attachment';
+import { useAttachmentCardStyles, attachmentNameContainerClassName } from '../styles/AttachmentCard.styles';
 
 /**
  * @internal

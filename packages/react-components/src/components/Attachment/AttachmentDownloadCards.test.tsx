@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import React from 'react';
-import { AttachmentMetadata } from '../types/Attachment';
+import { AttachmentMetadata } from '../../types/Attachment';
 import { _AttachmentDownloadCards } from './AttachmentDownloadCards';
 import { render, screen } from '@testing-library/react';
 import { registerIcons } from '@fluentui/react';

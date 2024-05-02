@@ -79,6 +79,7 @@ export const AttachmentUploadButton = (props: AttachmentUploadButtonProps): JSX.
         </IconButton>
       </Stack>
       <input
+        data-ui-id="attachment-upload-button"
         ref={inputRef}
         hidden
         multiple={!disableMultipleUploads}

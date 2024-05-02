@@ -3,6 +3,7 @@
 
 import { ChatParticipant, ChatThreadClient } from '@azure/communication-chat';
 import type { AttachmentMetadata } from '@internal/react-components';
+import { AttachmentSelectionHandler } from '../composites';
 
 /**
  * Type to represent a attachment upload the local participant will perform.
@@ -90,6 +91,10 @@ export type _FakeChatAdapterArgs = {
    */
   chatThreadClientMethodErrors?: Partial<Record<keyof ChatThreadClient, _ChatThreadRestError>>;
   theme?: 'light' | 'dark';
+  /*
+   * Determines how file upload should be handled
+   */
+  uploadHandler: AttachmentSelectionHandler;
 };
 
 /** @internal */

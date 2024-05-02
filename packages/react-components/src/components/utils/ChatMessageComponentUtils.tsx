@@ -12,7 +12,7 @@ import { InlineImageOptions } from '../ChatMessage/ChatMessageContent';
 import { MessageThreadStrings } from '../MessageThread';
 /* @conditional-compile-remove(mention) */
 import { MentionDisplayOptions } from '../MentionPopover';
-import { _AttachmentDownloadCards } from '../AttachmentDownloadCards';
+import { _AttachmentDownloadCards } from '../Attachment/AttachmentDownloadCards';
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 import { AttachmentMenuAction, AttachmentMetadata } from '../../types/Attachment';
 import { formatTimeForChatMessage, formatTimestampForChatMessage } from './Datetime';

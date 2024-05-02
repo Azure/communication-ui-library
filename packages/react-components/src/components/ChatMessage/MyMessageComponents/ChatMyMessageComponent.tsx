@@ -32,7 +32,11 @@ type ChatMyMessageComponentProps = {
    * Callback to send a message
    * @param content The message content to send
    */
-  onSendMessage?: (content: string, options?: { metadata?: Record<string, string> }) => Promise<void>;
+  onSendMessage?: (
+    content: string,
+    /* @conditional-compile-remove(attachment-upload) */
+    options?: { metadata?: Record<string, string> }
+  ) => Promise<void>;
   strings: MessageThreadStrings;
   messageStatus?: string;
   /**
@@ -123,9 +127,8 @@ export const ChatMyMessageComponent = (props: ChatMyMessageComponentProps): JSX.
         }
       : undefined;
   }, [message]);
-  let getMetadata = useCallback((): { metadata?: Record<string, string> } | undefined => undefined, []);
-  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-  getMetadata = useCallback(() => {
+  /* @conditional-compile-remove(attachment-upload) */
+  const getMetadata = useCallback(() => {
     const wrapper = getAttachmentMetadataWrapper();
     return wrapper
       ? {
@@ -136,8 +139,18 @@ export const ChatMyMessageComponent = (props: ChatMyMessageComponentProps): JSX.
 
   const onResendClick = useCallback(() => {
     onDeleteMessage && clientMessageId && onDeleteMessage(clientMessageId);
-    onSendMessage && onSendMessage(content !== undefined ? content : '', getMetadata());
-  }, [onDeleteMessage, clientMessageId, onSendMessage, content, getMetadata]);
+    onSendMessage &&
+      onSendMessage(
+        content !== undefined ? content : '',
+        /* @conditional-compile-remove(attachment-upload) */ getMetadata()
+      );
+  }, [
+    onDeleteMessage,
+    clientMessageId,
+    onSendMessage,
+    content,
+    /* @conditional-compile-remove(attachment-upload) */ getMetadata
+  ]);
 
   if (isEditing && message.messageType === 'chat') {
     return (
@@ -149,7 +162,11 @@ export const ChatMyMessageComponent = (props: ChatMyMessageComponentProps): JSX.
           message.attachments = attachmentMetadata;
           props.onUpdateMessage &&
             message.messageId &&
-            (await props.onUpdateMessage(message.messageId, text, getMetadata()));
+            (await props.onUpdateMessage(
+              message.messageId,
+              text,
+              /* @conditional-compile-remove(attachment-upload) */ getMetadata()
+            ));
           setIsEditing(false);
         }}
         onCancel={(messageId) => {

@@ -6,14 +6,17 @@ import { ChatMyMessage } from '@fluentui-contrib/react-chat';
 import { mergeClasses } from '@fluentui/react-components';
 import { _formatString } from '@internal/acs-ui-common';
 import { useTheme } from '../../../theming/FluentThemeProvider';
-import React, { useCallback, useEffect, useMemo, useReducer, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+/* @conditional-compile-remove(attachment-upload) */
+import { useReducer } from 'react';
 import { editBoxStyle, editingButtonStyle, editBoxStyleSet, inputBoxIcon } from '../../styles/EditBox.styles';
 import { InputBoxComponent } from '../../InputBoxComponent';
 import { InputBoxButton } from '../../InputBoxButton';
 import { MessageThreadStrings } from '../../MessageThread';
 import { useChatMyMessageStyles } from '../../styles/MessageThread.styles';
 import { ChatMessage } from '../../../types';
-import { _AttachmentUploadCards } from '../../AttachmentUploadCards';
+/* @conditional-compile-remove(attachment-upload) */
+import { _AttachmentUploadCards } from '../../Attachment/AttachmentUploadCards';
 /* @conditional-compile-remove(attachment-upload) */
 import { AttachmentMetadata } from '../../../types/Attachment';
 import {
@@ -26,8 +29,9 @@ import {
 /* @conditional-compile-remove(mention) */
 import { MentionLookupOptions } from '../../MentionPopover';
 import { MAXIMUM_LENGTH_OF_MESSAGE } from '../../utils/SendBoxUtils';
+/* @conditional-compile-remove(attachment-upload) */
+import { attachmentMetadataReducer } from '../../utils/ChatMessageComponentAsEditBoxUtils';
 import {
-  attachmentMetadataReducer,
   getMessageState,
   onRenderCancelIcon,
   onRenderSubmitIcon
@@ -195,7 +199,8 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
               tooltipContent={strings.editBoxSubmitButton}
               onRenderIcon={onRenderThemedSubmitIcon}
               onClick={(e) => {
-                submitEnabled && onSubmit(textValue, attachmentMetadata);
+                submitEnabled &&
+                  onSubmit(textValue, /* @conditional-compile-remove(attachment-upload) */ attachmentMetadata);
                 e.stopPropagation();
               }}
               id={'submitIconWrapper'}
