@@ -26,11 +26,11 @@ const TableEditOperationMap: Partial<Record<string, CompatibleTableOperation>> =
 
 const tableEditInsertMenuItem: ContextMenuItem<string> = {
   key: 'menuNameTableInsert',
-  unlocalizedText: 'Insert123',
+  unlocalizedText: 'Insert',
   subItems: {
-    menuNameTableInsertAbove: 'Insert above121312 ',
+    menuNameTableInsertAbove: 'Insert above',
     menuNameTableInsertBelow: 'Insert below',
-    menuNameTableInsertLeft: 'Insert left123 ',
+    menuNameTableInsertLeft: 'Insert left',
     menuNameTableInsertRight: 'Insert right'
   },
   onClick,

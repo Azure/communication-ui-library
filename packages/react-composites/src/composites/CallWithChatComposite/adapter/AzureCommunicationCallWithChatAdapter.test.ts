@@ -38,7 +38,6 @@ describe('Adapter is created as expected', () => {
     const locator = { meetingId: '123', passcode: 'qwe' };
     const statefulChatClient = createStatefulChatClientMock(new StubChatThreadClient());
     const threadClient = statefulChatClient.getChatThreadClient('threadId');
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     const options = { credential: stubCommunicationTokenCredential() };
     const args = {
       callClient: mockCallClient,
@@ -46,7 +45,6 @@ describe('Adapter is created as expected', () => {
       callLocator: locator,
       chatClient: statefulChatClient,
       chatThreadClient: threadClient,
-      /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
       options: options
     };
     const adapter = await createAzureCommunicationCallWithChatAdapterFromClients(args);
