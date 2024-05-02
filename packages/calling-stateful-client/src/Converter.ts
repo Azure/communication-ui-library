@@ -94,7 +94,6 @@ export function convertSdkParticipantToDeclarativeParticipant(
     isMuted: participant.isMuted,
     isSpeaking: participant.isSpeaking,
     raisedHand: undefined,
-    /* @conditional-compile-remove(hide-attendee-name) */
     role: participant.role,
     /* @conditional-compile-remove(spotlight) */
     spotlight: undefined
@@ -112,9 +111,9 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
     declarativeRemoteParticipants[toFlatCommunicationIdentifier(participant.identifier)] =
       convertSdkParticipantToDeclarativeParticipant(participant);
   });
-  /* @conditional-compile-remove(hide-attendee-name) */
+
   let hideAttendeeNames = false;
-  /* @conditional-compile-remove(hide-attendee-name) */
+
   if (
     call.feature(Features.Capabilities).capabilities &&
     call.feature(Features.Capabilities).capabilities.viewAttendeeNames
@@ -180,7 +179,7 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
     optimalVideoCount: {
       maxRemoteVideoStreams: call.feature(Features.OptimalVideoCount).optimalVideoCount
     },
-    /* @conditional-compile-remove(hide-attendee-name) */
+
     hideAttendeeNames,
     /* @conditional-compile-remove(meeting-id) */
     info: callInfo

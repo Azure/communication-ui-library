@@ -161,7 +161,7 @@ export type CallAdapterClientState = {
    * Call from transfer request accepted by local user
    */
   acceptedTransferCallState?: CallState;
-  /* @conditional-compile-remove(hide-attendee-name) */
+
   /**
    * Hide attendee names in teams meeting
    */

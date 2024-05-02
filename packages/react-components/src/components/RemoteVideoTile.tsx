@@ -22,7 +22,7 @@ import {
 } from './VideoGallery/useVideoStreamLifecycleMaintainer';
 import { useVideoTileContextualMenuProps } from './VideoGallery/useVideoTileContextualMenuProps';
 import { VideoTile } from './VideoTile';
-/* @conditional-compile-remove(hide-attendee-name) */
+
 import { _formatString } from '@internal/acs-ui-common';
 import { ReactionResources } from '../types/ReactionTypes';
 import { MeetingReactionOverlay } from './MeetingReactionOverlay';
@@ -185,10 +185,9 @@ export const _RemoteVideoTile = React.memo(
     );
 
     let displayName = remoteParticipant.displayName || strings.displayNamePlaceholder;
-    /* @conditional-compile-remove(hide-attendee-name) */
+
     const attendeeRoleString = props.strings?.attendeeRole;
 
-    /* @conditional-compile-remove(hide-attendee-name) */
     const formatDisplayName = (): string => {
       if (displayName && attendeeRoleString) {
         return _formatString(displayName, { AttendeeRole: attendeeRoleString });
@@ -204,7 +203,6 @@ export const _RemoteVideoTile = React.memo(
       />
     );
 
-    /* @conditional-compile-remove(hide-attendee-name) */
     displayName = formatDisplayName();
     return (
       <Stack

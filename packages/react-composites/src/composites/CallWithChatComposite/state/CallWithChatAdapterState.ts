@@ -92,7 +92,7 @@ export interface CallWithChatClientState {
 
   /** State to track the selected video background effect */
   selectedVideoBackgroundEffect?: VideoBackgroundEffect;
-  /* @conditional-compile-remove(hide-attendee-name) */
+
   /** Hide attendee names in teams meeting */
   hideAttendeeNames?: boolean;
   /**
@@ -135,7 +135,7 @@ export function callWithChatAdapterStateFromBackingStates(callAdapter: CallAdapt
     videoBackgroundImages: callAdapterState.videoBackgroundImages,
     onResolveVideoEffectDependency: callAdapterState.onResolveVideoEffectDependency,
     selectedVideoBackgroundEffect: callAdapterState.selectedVideoBackgroundEffect,
-    /* @conditional-compile-remove(hide-attendee-name) */
+
     /** Hide attendee names in teams meeting */
     hideAttendeeNames: callAdapterState.hideAttendeeNames,
     reactions: callAdapterState.reactions
