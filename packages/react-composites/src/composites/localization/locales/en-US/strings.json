@@ -244,6 +244,10 @@
       "shareScreen": {
         "lostDueToRoleChangeToAttendee": "Your role has been changed. Some actions, like sharing content, won't be available to you.",
         "grantedDueToRoleChangeToPresenter": "You're a presenter. You can share content and facilitate the meeting."
+      },
+      "hideAttendeeNames": {
+        "hideAttendeeNameAttendee": "Your name is hidden from other attendees. Organizers and presenters can see your real name.",
+        "hideAttendeeNamePresenter": "Attendee names are hidden. Only organizers and presenters can see names to protect attendee privacy."
       }
     },
     "surveyTitle": "Help us improve",

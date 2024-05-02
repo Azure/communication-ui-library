@@ -61,6 +61,7 @@ import { useTrackedCapabilityChangedNotifications } from './utils/TrackCapabilit
 import { useEndedCallConsoleErrors } from './utils/useConsoleErrors';
 /* @conditional-compile-remove(end-of-call-survey) */
 import { SurveyPage } from './pages/SurveyPage';
+import { useAudio } from '../common/AudioProvider';
 
 /**
  * Props for {@link CallComposite}.
@@ -418,7 +419,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
     };
   }, [adapter]);
 
-  const compositeAudioContext = useRef<AudioContext>(new AudioContext());
+  const compositeAudioContext = useAudio();
 
   const capabilitiesChangedInfoAndRole = useSelector(capabilitiesChangedInfoAndRoleSelector);
 
