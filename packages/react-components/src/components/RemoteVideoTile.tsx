@@ -215,7 +215,7 @@ export const _RemoteVideoTile = React.memo(
         <VideoTile
           key={userId}
           userId={userId}
-          initialsName={displayName ?? ''}
+          initialsName={formatDisplayName() ?? ''}
           renderElement={renderVideoStreamElement}
           displayName={displayName}
           onRenderPlaceholder={onRenderAvatar}
