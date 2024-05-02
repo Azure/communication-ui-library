@@ -357,24 +357,24 @@ test.describe('Filesharing SendBox', async () => {
 //     );
 //   });
 
-  test('displays attachment upload cards', async ({ page }) => {
-    const testMessageText = 'Hello!';
+test('displays attachment upload cards', async ({ page }) => {
+  const testMessageText = 'Hello!';
 
-    await sendMessage(page, testMessageText);
-    await waitForMessageDelivered(page);
-    await page.waitForSelector(dataUiId('attachment-download-card-group'));
-    await page.locator(dataUiId('chat-composite-message')).click();
-    await page.locator(dataUiId('chat-composite-message-action-icon')).click();
-    await page.waitForSelector(dataUiId('chat-composite-message-contextual-menu-edit-action'));
-    await page.locator(dataUiId('chat-composite-message-contextual-menu-edit-action')).click();
-    await page.waitForSelector(dataUiId('edit-box'));
+  await sendMessage(page, testMessageText);
+  await waitForMessageDelivered(page);
+  await page.waitForSelector(dataUiId('attachment-download-card-group'));
+  await page.locator(dataUiId('chat-composite-message')).click();
+  await page.locator(dataUiId('chat-composite-message-action-icon')).click();
+  await page.waitForSelector(dataUiId('chat-composite-message-contextual-menu-edit-action'));
+  await page.locator(dataUiId('chat-composite-message-contextual-menu-edit-action')).click();
+  await page.waitForSelector(dataUiId('edit-box'));
 
-    expect(
-      await stableScreenshot(page, {
-        stubMessageTimestamps: true,
-        dismissChatMessageActions: true,
-        awaitFileTypeIcon: true
-      })
-    ).toMatchSnapshot('filesharing-file-upload-card-while-editing-message.png');
-  });
+  expect(
+    await stableScreenshot(page, {
+      stubMessageTimestamps: true,
+      dismissChatMessageActions: true,
+      awaitFileTypeIcon: true
+    })
+  ).toMatchSnapshot('filesharing-file-upload-card-while-editing-message.png');
 });
+// });

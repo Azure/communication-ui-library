@@ -8,7 +8,6 @@ import { _IdentifierProvider, lightTheme, darkTheme, defaultAttachmentMenuAction
 import React, { useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import {
-  ChatAdapter,
   ChatComposite,
   COMPOSITE_LOCALE_FR_FR,
   _FakeChatAdapterArgs,
