@@ -601,7 +601,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           capabilitiesChangedNotificationBarProps={capabilitiesChangedNotificationBarProps}
           pinnedParticipants={pinnedParticipants}
           setPinnedParticipants={setPinnedParticipants}
-          compositeAudioContext={compositeAudioContext.current}
+          compositeAudioContext={compositeAudioContext}
           autoShowDtmfDialer={props.options?.autoShowDtmfDialer}
         />
       );
