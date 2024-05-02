@@ -6,14 +6,18 @@ import { ArrowDownload24Filled, Open24Filled, Pin24Regular, Share24Regular } fro
 import {
   AttachmentMetadata,
   _AttachmentCard as AttachmentCardComponent,
-  AttachmentMetadataWithProgress
+  AttachmentMenuAction
 } from '@internal/react-components';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 import { FluentV9ThemeProvider } from '../../../../react-components/src/theming/FluentV9ThemeProvider';
 import { COMPONENT_FOLDER_PREFIX } from '../../constants';
 
-const AttachmentCardStory = (args): JSX.Element => {
+const AttachmentCardStory = (args: {
+  attachment: { id: any; name: any; extension: any; url: any };
+  progress: any;
+  menuActions: AttachmentMenuAction[];
+}): JSX.Element => {
   const theme = useTheme();
   return (
     <FluentV9ThemeProvider v8Theme={theme}>
