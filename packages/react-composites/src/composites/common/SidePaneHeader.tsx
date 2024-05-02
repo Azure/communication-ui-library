@@ -45,7 +45,7 @@ export const SidePaneHeader = (props: {
 
   return (
     <Stack horizontal horizontalAlign="space-between" styles={sidePaneHeaderContainerStyles} verticalAlign="center">
-      <Stack.Item role="heading" styles={sidePaneHeaderStyles} aria-label={props.headingText}>
+      <Stack.Item role="heading" styles={sidePaneHeaderStyles} aria-label={props.headingText} aria-level={2}>
         {props.headingText}
       </Stack.Item>
       <Stack.Item>
