@@ -17,8 +17,6 @@ module.exports = {
     "gallery-layout-composite",
     // feature for hiding attendee name in the teams meeting
     "hide-attendee-name",
-    // Join meeting with meetingId and passcode
-    'meeting-id',
     // Demo feature. Used in live-documentation of conditional compilation. Do not use in production code.
     "in-progress-beta-feature-demo",
     // Feature for Rich Text Editor (RTE) composite support
@@ -94,6 +92,8 @@ module.exports = {
     'ppt-live',
     // feature for hiding attendee name in the teams meeting
     "hide-attendee-name",
+    // Join meeting with meetingId and passcode
+    'meeting-id',
     // Feature for end call options 
     'end-call-options',
   ]

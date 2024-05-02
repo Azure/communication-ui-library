@@ -1040,7 +1040,7 @@ export interface CallState {
     endTime: Date | undefined;
     hideAttendeeNames?: boolean;
     id: string;
-    info?: CallInfo | TeamsCallInfo;
+    info?: TeamsCallInfo | /* @conditional-compile-remove(calling-beta-sdk) */ CallInfo;
     isMuted: boolean;
     isScreenSharingOn: boolean;
     kind: CallKind;
