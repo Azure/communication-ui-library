@@ -44,7 +44,8 @@ export const TEST_PARTICIPANTS: ChatParticipant[] = TEST_PARTICIPANTS_CHAT.map((
  */
 export const DEFAULT_FAKE_CHAT_ADAPTER_ARGS = {
   localParticipant: TEST_PARTICIPANTS[0],
-  remoteParticipants: TEST_PARTICIPANTS.slice(1)
+  remoteParticipants: TEST_PARTICIPANTS.slice(1),
+  uploadHandler: () => {}
 };
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type

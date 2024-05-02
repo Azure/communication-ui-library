@@ -93,7 +93,7 @@ export type _FakeChatAdapterArgs = {
   /*
    * Determines how file upload should be handled
    */
-  uploadHandler: AttachmentSelectionHandler;
+  uploadHandler?: AttachmentSelectionHandler;
 };
 
 /** @internal */

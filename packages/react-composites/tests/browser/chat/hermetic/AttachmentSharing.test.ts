@@ -3,8 +3,8 @@
 
 import { expect } from '@playwright/test';
 import { sendMessage, waitForMessageDelivered } from '../../common/chatTestHelpers';
-import { dataUiId, stableScreenshot, waitForSelector } from '../../common/utils';
-import { buildUrlForChatAppUsingFakeAdapter, DEFAULT_FAKE_CHAT_ADAPTER_ARGS, test, TEST_PARTICIPANTS } from './fixture';
+import { dataUiId, stableScreenshot } from '../../common/utils';
+import { buildUrlForChatAppUsingFakeAdapter, DEFAULT_FAKE_CHAT_ADAPTER_ARGS, test } from './fixture';
 import { AttachmentUploadTask } from '../../../../../react-components/dist/dist-esm';
 import { nanoid } from 'nanoid';
 
@@ -66,12 +66,12 @@ test.describe('Filesharing SendBox', async () => {
     const fileChooser = await fileChooserPromise;
     await fileChooser.setFiles([
       {
-        name: 'SampleFile.pdf',
+        name: attachmentUploads[0].name,
         mimeType: 'application/pdf',
         buffer: Buffer.from('test')
       },
       {
-        name: 'SampleXlsLoooongName.xlsx',
+        name: attachmentUploads[1].name,
         mimeType: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
         buffer: Buffer.from('test')
       }
