@@ -93,7 +93,7 @@ module.exports = {
     // feature for hiding attendee name in the teams meeting
     "hide-attendee-name",
     // Join meeting with meetingId and passcode
-    'meeting-id'
+    'meeting-id',
     // Feature for end call options 
     'end-call-options',
   ]
