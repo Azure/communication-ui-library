@@ -80,6 +80,8 @@ import { SendMessageOptions } from '@azure/communication-chat';
 import { SpotlightedParticipant } from '@azure/communication-calling';
 import { StartCallOptions } from '@azure/communication-calling';
 import { StartCaptionsOptions } from '@azure/communication-calling';
+import { TeamsCallInfo } from '@azure/communication-calling';
+import { TeamsMeetingIdLocator } from '@azure/communication-calling';
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { Theme } from '@fluentui/react';
 import { TransferEventArgs } from '@azure/communication-calling';
@@ -160,7 +162,7 @@ export type AzureCommunicationCallWithChatAdapterArgs = {
     userId: CommunicationUserIdentifier;
     displayName: string;
     credential: CommunicationTokenCredential;
-    locator: CallAndChatLocator | TeamsMeetingLinkLocator;
+    locator: CallAndChatLocator | TeamsMeetingLinkLocator | /** @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator;
     callAdapterOptions?: AzureCommunicationCallAdapterOptions;
 };
 
@@ -296,7 +298,7 @@ export interface CallAdapterDeviceManagement {
 }
 
 // @public
-export type CallAdapterLocator = TeamsMeetingLinkLocator | GroupCallLocator | RoomCallLocator;
+export type CallAdapterLocator = TeamsMeetingLinkLocator | GroupCallLocator | RoomCallLocator | /* @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator;
 
 // @public
 export type CallAdapterState = CallAdapterUiState & CallAdapterClientState;
@@ -594,6 +596,7 @@ export interface CallCompositeStrings {
     failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails?: string;
     failedToJoinTeamsMeetingReasonAccessDeniedTitle: string;
     hangUpCancelButtonLabel?: string;
+    invalidMeetingIdentifier: string;
     inviteToRoomRemovedDetails?: string;
     inviteToRoomRemovedTitle: string;
     learnMore: string;
@@ -806,6 +809,7 @@ export interface CallState {
     endTime: Date | undefined;
     hideAttendeeNames?: boolean;
     id: string;
+    info?: TeamsCallInfo;
     isMuted: boolean;
     isScreenSharingOn: boolean;
     localParticipantReaction?: ReactionState;
