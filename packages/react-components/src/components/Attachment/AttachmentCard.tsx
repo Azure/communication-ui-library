@@ -120,7 +120,7 @@ export const _AttachmentCard = (props: _AttachmentCardProps): JSX.Element => {
       </Card>
       {isUploadInProgress ? (
         <CardFooter>
-          <ProgressBar thickness="medium" value={progress ? Math.max(progress, 0.05) : undefined} shape="rounded" />
+          <ProgressBar thickness="medium" value={Math.max(progress ?? 0, 0.05)} shape="rounded" />
         </CardFooter>
       ) : (
         <> </>

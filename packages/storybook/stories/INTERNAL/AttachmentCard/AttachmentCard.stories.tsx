@@ -3,7 +3,11 @@
 
 import { useTheme } from '@fluentui/react';
 import { ArrowDownload24Filled, Open24Filled, Pin24Regular, Share24Regular } from '@fluentui/react-icons';
-import { AttachmentMetadata, _AttachmentCard as AttachmentCardComponent } from '@internal/react-components';
+import {
+  AttachmentMetadata,
+  _AttachmentCard as AttachmentCardComponent,
+  AttachmentMetadataWithProgress
+} from '@internal/react-components';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 import { FluentV9ThemeProvider } from '../../../../react-components/src/theming/FluentV9ThemeProvider';
@@ -14,7 +18,16 @@ const AttachmentCardStory = (args): JSX.Element => {
   return (
     <FluentV9ThemeProvider v8Theme={theme}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
-        <AttachmentCardComponent attachment={args.attachment} progress={args.progress} menuActions={args.menuActions} />
+        <AttachmentCardComponent
+          attachment={{
+            id: args.attachment.id,
+            name: args.attachment.name,
+            extension: args.attachment.extension,
+            url: args.attachment.url,
+            progress: args.progress
+          }}
+          menuActions={args.menuActions}
+        />
       </div>
     </FluentV9ThemeProvider>
   );

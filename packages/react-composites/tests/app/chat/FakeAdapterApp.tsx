@@ -104,7 +104,9 @@ export const FakeAdapterApp = (): JSX.Element => {
                     downloadOptions: {
                       actionsForAttachment: actionsForAttachment
                     },
-                    uploadOptions: fakeChatAdapterArgs.uploadHandler
+                    uploadOptions: {
+                      handleAttachmentSelection: fakeChatAdapterArgs.uploadHandler ?? (() => {})
+                    }
                   }
                 : undefined
             }}
