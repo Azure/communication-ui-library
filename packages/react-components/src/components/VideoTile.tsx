@@ -30,11 +30,9 @@ import {
   overlayContainerStyles,
   rootStyles,
   videoContainerStyles,
-  videoHint,
   tileInfoContainerStyle,
   participantStateStringStyles
 } from './styles/VideoTile.styles';
-import { getVideoTileOverrideColor } from './utils/videoTileStylesUtils';
 import { pinIconStyle } from './styles/VideoTile.styles';
 import useLongPress from './utils/useLongPress';
 import { moreButtonStyles } from './styles/VideoTile.styles';
@@ -97,6 +95,11 @@ export interface VideoTileProps {
    * @defaultValue true
    */
   showLabel?: boolean;
+  /**
+   * Show label background on the VideoTile
+   * @defaultValue false
+   */
+  alwaysShowLabelBackground?: boolean;
   /**
    * Whether to display a mute icon beside the user's display name.
    * @defaultValue true
@@ -270,6 +273,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
 
   const locale = useLocale();
   const theme = useTheme();
+  const callingPalette = (theme as unknown as CallingTheme).callingPalette;
 
   const isVideoRendered = !!renderElement;
 
@@ -351,16 +355,18 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     hidePersonaDetails: true
   };
 
-  const videoHintWithBorderRadius = mergeStyles(videoHint, { borderRadius: theme.effects.roundedCorner4 });
+  const videoHintWithBorderRadius = mergeStyles(disabledVideoHint, {
+    borderRadius: theme.effects.roundedCorner4,
+    backgroundColor: callingPalette.videoTileLabelBackgroundLight
+  });
 
   const tileInfoStyle = useMemo(
     () =>
       mergeStyles(
-        isVideoRendered ? videoHintWithBorderRadius : disabledVideoHint,
-        getVideoTileOverrideColor(isVideoRendered, theme, 'neutralPrimary'),
+        isVideoRendered || props.alwaysShowLabelBackground ? videoHintWithBorderRadius : disabledVideoHint,
         styles?.displayNameContainer
       ),
-    [isVideoRendered, videoHintWithBorderRadius, theme, styles?.displayNameContainer]
+    [isVideoRendered, videoHintWithBorderRadius, styles?.displayNameContainer, props.alwaysShowLabelBackground]
   );
 
   const ids = useIdentifiers();
@@ -369,7 +375,6 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
   const participantStateString = participantStateStringTrampoline(props, locale);
   const canShowContextMenuButton = isHovered || isFocused;
   let raisedHandBackgroundColor = '';
-  const callingPalette = (theme as unknown as CallingTheme).callingPalette;
   raisedHandBackgroundColor = callingPalette.raiseHandGold;
 
   return (

@@ -41,7 +41,6 @@ export type {
 
 export type { VideoBackgroundEffectsDependency, CallingHandlersOptions } from '../../calling-component-bindings/src';
 
-/* @conditional-compile-remove(close-captions) */
 export type { CaptionsOptions } from '../../calling-component-bindings/src';
 
 export type {
@@ -290,7 +289,8 @@ export type {
   VideoTileStylesProps,
   ViewScalingMode,
   VideoTileContextualMenuProps,
-  VideoTileDrawerMenuProps
+  VideoTileDrawerMenuProps,
+  VideoTilesOptions
 } from '../../react-components/src';
 
 export type { RaiseHandButtonProps, RaiseHandButtonStrings, RaisedHand } from '../../react-components/src';
@@ -324,10 +324,12 @@ export type { AttachmentMetadata, AttachmentOptions } from '../../react-componen
 export type { SendBoxErrorBarError } from '../../react-components/src';
 /* @conditional-compile-remove(attachment-upload) */
 export type {
-  AttachmentUploadStatus,
-  AttachmentUploadHandler,
+  AttachmentProgressError,
+  AttachmentSelectionHandler,
+  AttachmentRemovalHandler,
   AttachmentUploadOptions,
-  AttachmentUploadManager
+  AttachmentUploadTask,
+  AttachmentMetadataWithProgress
 } from '../../react-components/src';
 
 /* @conditional-compile-remove(attachment-download) */
@@ -388,7 +390,7 @@ export type {
   VerticalGalleryStrings,
   VerticalGalleryControlBarStyles
 } from '../../react-components/src';
-/* @conditional-compile-remove(close-captions) */
+
 export type { SpokenLanguageStrings, CaptionLanguageStrings } from '../../react-components/src';
 /* @conditional-compile-remove(end-of-call-survey) */
 export type { SurveyIssues } from '../../react-components/src';

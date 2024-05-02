@@ -32,6 +32,8 @@ import { localStorageAvailable } from '../utils/localStorage';
 import { getDisplayNameFromLocalStorage, saveDisplayNameToLocalStorage } from '../utils/localStorage';
 import { DisplayNameField } from './DisplayNameField';
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
+/* @conditional-compile-remove(meeting-id) */
+import { TeamsMeetingIdLocator } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { Dialpad } from '@azure/communication-react';
 /* @conditional-compile-remove(PSTN-calls) */
@@ -42,7 +44,7 @@ import { useIsMobile } from '../utils/useIsMobile';
 export interface HomeScreenProps {
   startCallHandler(callDetails: {
     displayName: string;
-    teamsLink?: TeamsMeetingLinkLocator;
+    meetingLocator?: TeamsMeetingLinkLocator | /* @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator;
     /* @conditional-compile-remove(one-to-n-calling)  */
     outboundParticipants?: string[];
     /* @conditional-compile-remove(PSTN-calls) */
@@ -71,7 +73,13 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const [displayName, setDisplayName] = useState<string | undefined>(defaultDisplayName ?? undefined);
 
   const [chosenCallOption, setChosenCallOption] = useState<IChoiceGroupOption>(callOptions[0]);
-  const [teamsLink, setTeamsLink] = useState<TeamsMeetingLinkLocator>();
+  const [meetingLocator, setMeetingLocator] = useState<
+    TeamsMeetingLinkLocator | /* @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator
+  >();
+  /* @conditional-compile-remove(meeting-id) */
+  const [meetingId, setMeetingId] = useState<string>();
+  /* @conditional-compile-remove(meeting-id) */
+  const [passcode, setPasscode] = useState<string>();
 
   /* @conditional-compile-remove(PSTN-calls) */
   const [alternateCallerId, setAlternateCallerId] = useState<string>();
@@ -92,8 +100,8 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const buttonEnabled =
     displayName &&
     (startGroupCall ||
-      teamsLink ||
-      (teamsCallChosen && teamsLink) ||
+      meetingLocator ||
+      (teamsCallChosen && meetingLocator) ||
       /* @conditional-compile-remove(PSTN-calls) */ (pstnCallChosen && dialpadParticipant && alternateCallerId) ||
       /* @conditional-compile-remove(one-to-n-calling) */ (outboundParticipants && acsCallChosen));
 
@@ -135,9 +143,59 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                 label={'Meeting Link'}
                 required
                 placeholder={'Enter a Teams meeting link'}
-                onChange={(_, newValue) => newValue && setTeamsLink({ meetingLink: newValue })}
+                onChange={(_, newValue) => {
+                  newValue ? setMeetingLocator({ meetingLink: newValue }) : setMeetingLocator(undefined);
+                }}
               />
             )}
+            {
+              /* @conditional-compile-remove(meeting-id) */ teamsCallChosen && (
+                <Text className={teamsItemStyle} block variant="medium">
+                  <b>Or</b>
+                </Text>
+              )
+            }
+            {
+              /* @conditional-compile-remove(meeting-id) */ teamsCallChosen && (
+                <TextField
+                  className={teamsItemStyle}
+                  iconProps={{ iconName: 'MeetingId' }}
+                  label={'Meeting Id'}
+                  required
+                  placeholder={'Enter a meeting id'}
+                  onChange={(_, newValue) => {
+                    setMeetingId(newValue);
+                    newValue
+                      ? setMeetingLocator({ meetingId: newValue, passcode: passcode })
+                      : setMeetingLocator(undefined);
+                  }}
+                />
+              )
+            }
+            {
+              /* @conditional-compile-remove(meeting-id) */ teamsCallChosen && (
+                <TextField
+                  className={teamsItemStyle}
+                  iconProps={{ iconName: 'passcode' }}
+                  label={'Passcode'}
+                  placeholder={'Enter a meeting passcode'}
+                  onChange={(_, newValue) => {
+                    // meeting id is required, but passcode is not
+                    setPasscode(newValue);
+                    meetingId
+                      ? setMeetingLocator({ meetingId: meetingId, passcode: newValue })
+                      : setMeetingLocator(undefined);
+                  }}
+                />
+              )
+            }
+            {
+              /* @conditional-compile-remove(meeting-id) */ teamsCallChosen && (
+                <Text className={teamsItemStyle} block variant="medium">
+                  <b>And</b>
+                </Text>
+              )
+            }
             {
               /* @conditional-compile-remove(one-to-n-calling) */ acsCallChosen && (
                 <Stack>
@@ -226,7 +284,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                 const dialpadParticipantToCall = parseParticipants(dialpadParticipant);
                 startCallHandler({
                   displayName,
-                  teamsLink,
+                  meetingLocator,
                   /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
                   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling)  */
                   outboundParticipants: acsParticipantsToCall ? acsParticipantsToCall : dialpadParticipantToCall

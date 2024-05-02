@@ -52,6 +52,7 @@ export const _RemoteVideoTile = React.memo(
     onRenderAvatar?: OnRenderAvatarCallback;
     showMuteIndicator?: boolean;
     showLabel?: boolean;
+    alwaysShowLabelBackground?: boolean;
     personaMinSize?: number;
     strings: VideoGalleryStrings;
     participantState?: ParticipantState;
@@ -224,6 +225,7 @@ export const _RemoteVideoTile = React.memo(
           showMuteIndicator={showMuteIndicator}
           personaMinSize={props.personaMinSize}
           showLabel={props.showLabel}
+          alwaysShowLabelBackground={props.alwaysShowLabelBackground}
           /* @conditional-compile-remove(one-to-n-calling) */
           /* @conditional-compile-remove(PSTN-calls) */
           participantState={participantState}
@@ -244,7 +246,7 @@ export const _RemoteVideoTile = React.memo(
               <_DrawerMenu
                 onLightDismiss={() => setDrawerMenuItemProps([])}
                 items={drawerMenuItemProps}
-                heading={remoteParticipant.displayName}
+                heading={displayName}
               />
             </Stack>
           </Layer>

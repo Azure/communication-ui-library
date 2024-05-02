@@ -36,7 +36,7 @@ import { ResourceDetails } from './ChatAdapter';
 import { AdapterError } from '../../common/adapters';
 /* @conditional-compile-remove(attachment-upload) */
 import {
-  AttachmentUploadAdapter,
+  _AttachmentUploadAdapter,
   convertAttachmentUploadsUiStateToMessageMetadata
 } from './AzureCommunicationAttachmentUploadAdapter';
 /* @conditional-compile-remove(attachment-upload) */
@@ -46,7 +46,10 @@ import { _isValidIdentifier } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(attachment-upload) */
 import { AttachmentMetadata } from '@internal/react-components';
 /* @conditional-compile-remove(attachment-upload) */
-import { AttachmentUploadManager } from '@internal/react-components';
+import { AttachmentUploadTask } from '@internal/react-components';
+/* @conditional-compile-remove(attachment-upload) */
+import { FileSharingMetadata } from '../../ChatComposite/file-sharing';
+import { TEAMS_LIMITATION_LEARN_MORE, UNSUPPORTED_CHAT_THREAD_TYPE } from '../../common/constants';
 
 /**
  * Context of Chat, which is a centralized context for all state updates
@@ -106,7 +109,7 @@ export class ChatContext {
     };
 
     /* @conditional-compile-remove(attachment-upload) */
-    updatedState = { ...updatedState, attachmentUploads: this.state.attachmentUploads };
+    updatedState = { ...updatedState, _attachmentUploads: this.state._attachmentUploads };
 
     this.setState(updatedState);
   }
@@ -120,7 +123,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   private chatThreadClient: ChatThreadClient;
   private context: ChatContext;
   /* @conditional-compile-remove(attachment-upload) */
-  private attachmentUploadAdapter: AttachmentUploadAdapter;
+  private attachmentUploadAdapter: _AttachmentUploadAdapter;
   private handlers: ChatHandlers;
   private emitter: EventEmitter = new EventEmitter();
 
@@ -154,6 +157,8 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     this.dispose = this.dispose.bind(this);
     this.fetchInitialData = this.fetchInitialData.bind(this);
     this.sendMessage = this.sendMessage.bind(this);
+    /* @conditional-compile-remove(attachment-upload) */
+    this.sendMessageWithAttachments = this.sendMessageWithAttachments.bind(this);
     this.sendReadReceipt = this.sendReadReceipt.bind(this);
     this.sendTypingIndicator = this.sendTypingIndicator.bind(this);
     this.updateMessage = this.updateMessage.bind(this);
@@ -216,7 +221,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
       /* @conditional-compile-remove(attachment-upload) */
       options.metadata = {
         ...options.metadata,
-        ...convertAttachmentUploadsUiStateToMessageMetadata(this.context.getState().attachmentUploads)
+        ...convertAttachmentUploadsUiStateToMessageMetadata(this.context.getState()._attachmentUploads)
       };
 
       /* @conditional-compile-remove(attachment-upload) */
@@ -230,6 +235,27 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
       this.attachmentUploadAdapter.clearUploads();
 
       await this.handlers.onSendMessage(content, options);
+    });
+  }
+
+  /* @conditional-compile-remove(attachment-upload) */
+  /** Send a chat message with attachments. */
+  public async sendMessageWithAttachments(content: string, attachments: AttachmentMetadata[]): Promise<void> {
+    await this.asyncTeeErrorToEventEmitter(async () => {
+      const fileSharingMetadata: FileSharingMetadata = {
+        fileSharingMetadata: JSON.stringify(attachments)
+      };
+      /**
+       * All the current uploads need to be clear from the state before a message has been sent.
+       * This ensures the following behavior:
+       * 1. Attachment Upload cards are removed from sendbox at the same time text in sendbox is removed.
+       * 2. any component rendering these attachment uploads doesn't continue to do so.
+       * 3. Cleans the state for new attachment uploads with a fresh message.
+       */
+      this.attachmentUploadAdapter.clearUploads();
+      await this.handlers.onSendMessage(content, {
+        metadata: fileSharingMetadata
+      });
     });
   }
 
@@ -288,12 +314,12 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   }
 
   /* @conditional-compile-remove(attachment-upload) */
-  registerActiveUploads(files: File[]): AttachmentUploadManager[] {
+  registerActiveUploads(files: File[]): AttachmentUploadTask[] {
     return this.attachmentUploadAdapter.registerActiveUploads(files);
   }
 
   /* @conditional-compile-remove(attachment-upload) */
-  registerCompletedUploads(metadata: AttachmentMetadata[]): AttachmentUploadManager[] {
+  registerCompletedUploads(metadata: AttachmentMetadata[]): AttachmentUploadTask[] {
     return this.attachmentUploadAdapter.registerCompletedUploads(metadata);
   }
 
@@ -589,6 +615,12 @@ export const _createLazyAzureCommunicationChatAdapterInner = async (
     telemetryImplementationHint
   );
   return threadId.then(async (threadId) => {
+    if (UNSUPPORTED_CHAT_THREAD_TYPE.some((t) => threadId.includes(t))) {
+      console.error(
+        `Invalid Chat ThreadId: ${threadId}. Please note with Teams Channel Meetings, only Calling is supported and Chat is not currently supported. Read more: ${TEAMS_LIMITATION_LEARN_MORE}.`
+      );
+    }
+
     const chatThreadClient = await chatClient.getChatThreadClient(threadId);
     await chatClient.startRealtimeNotifications();
 

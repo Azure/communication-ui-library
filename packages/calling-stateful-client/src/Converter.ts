@@ -7,7 +7,6 @@ import {
   LocalVideoStream as SdkLocalVideoStream,
   VideoStreamRendererView
 } from '@azure/communication-calling';
-/* @conditional-compile-remove(close-captions) */
 import { TeamsCaptionsInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(acs-close-captions) */
 import { CaptionsInfo as AcsCaptionsInfo } from '@azure/communication-calling';
@@ -22,12 +21,11 @@ import {
   IncomingCallState as DeclarativeIncomingCall,
   VideoStreamRendererViewState as DeclarativeVideoStreamRendererView
 } from './CallClientState';
-/* @conditional-compile-remove(close-captions) */
 import { CaptionsInfo } from './CallClientState';
 
 /* @conditional-compile-remove(teams-identity-support) */ /* @conditional-compile-remove(meeting-id) */
 import { _isACSCall } from './TypeGuards';
-/* @conditional-compile-remove(meeting-id) */
+/* @conditional-compile-remove(meeting-id) */ /* @conditional-compile-remove(acs-close-captions) */
 import { _isTeamsCall } from './TypeGuards';
 import { CallCommon, IncomingCallCommon } from './BetaToStableTypes';
 
@@ -110,6 +108,19 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
     declarativeRemoteParticipants[toFlatCommunicationIdentifier(participant.identifier)] =
       convertSdkParticipantToDeclarativeParticipant(participant);
   });
+  /* @conditional-compile-remove(hide-attendee-name) */
+  let hideAttendeeNames = false;
+  /* @conditional-compile-remove(hide-attendee-name) */
+  if (
+    call.feature(Features.Capabilities).capabilities &&
+    call.feature(Features.Capabilities).capabilities.viewAttendeeNames
+  ) {
+    const viewAttendeeNames = call.feature(Features.Capabilities).capabilities.viewAttendeeNames;
+    if (!viewAttendeeNames.isPresent && viewAttendeeNames.reason === 'MeetingRestricted') {
+      hideAttendeeNames = true;
+    }
+  }
+
   return {
     id: call.id,
     /* @conditional-compile-remove(teams-identity-support) */
@@ -143,7 +154,6 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
     startTime: new Date(),
     endTime: undefined,
     role: call.role,
-    /* @conditional-compile-remove(close-captions) */
     captionsFeature: {
       captions: [],
       supportedSpokenLanguages: [],
@@ -162,8 +172,7 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
       maxRemoteVideoStreams: call.feature(Features.OptimalVideoCount).optimalVideoCount
     },
     /* @conditional-compile-remove(hide-attendee-name) */
-    // TODO: Replace this once the SDK supports hide attendee name
-    hideAttendeeNames: false,
+    hideAttendeeNames,
     /* @conditional-compile-remove(meeting-id) */
     info: _isACSCall(call) ? call.info : _isTeamsCall(call) ? call.info : undefined
   };
@@ -194,7 +203,6 @@ export function convertFromSDKToDeclarativeVideoStreamRendererView(
   };
 }
 
-/* @conditional-compile-remove(close-captions) */
 /**
  * @private
  */

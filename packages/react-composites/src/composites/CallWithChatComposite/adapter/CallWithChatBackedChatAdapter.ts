@@ -5,9 +5,10 @@ import { CallWithChatAdapter } from './CallWithChatAdapter';
 import { ChatAdapter, ChatAdapterState } from '../../ChatComposite';
 import { ResourceDetails } from '../../ChatComposite';
 /* @conditional-compile-remove(attachment-upload) */
-import { AttachmentMetadata, AttachmentUploadManager } from '@internal/react-components';
+import { AttachmentMetadata, AttachmentUploadTask } from '@internal/react-components';
 import { ErrorBarStrings } from '@internal/react-components';
 import { CallWithChatAdapterState } from '../state/CallWithChatAdapterState';
+import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -30,6 +31,10 @@ export class CallWithChatBackedChatAdapter implements ChatAdapter {
 
   public fetchInitialData = async (): Promise<void> => await this.callWithChatAdapter.fetchInitialData();
   public sendMessage = async (content: string): Promise<void> => await this.callWithChatAdapter.sendMessage(content);
+  /* @conditional-compile-remove(attachment-upload) */
+  public sendMessageWithAttachments(content: string, attachments: AttachmentMetadata[]): Promise<void> {
+    return this.callWithChatAdapter.sendMessageWithAttachments(content, attachments);
+  }
   public sendReadReceipt = async (chatMessageId: string): Promise<void> =>
     await this.callWithChatAdapter.sendReadReceipt(chatMessageId);
   public sendTypingIndicator = async (): Promise<void> => await this.callWithChatAdapter.sendTypingIndicator();
@@ -41,7 +46,7 @@ export class CallWithChatBackedChatAdapter implements ChatAdapter {
 
   public onStateChange = (handler: (state: ChatAdapterState) => void): void => {
     const convertedHandler = (state: CallWithChatAdapterState): void => {
-      handler(chatAdapterStateFromCallWithChatAdapterState(state));
+      !!state.chat && handler(chatAdapterStateFromCallWithChatAdapterState(state));
     };
     this.callWithChatAdapter.onStateChange(convertedHandler);
     this.eventStore.set(handler, convertedHandler);
@@ -92,12 +97,12 @@ export class CallWithChatBackedChatAdapter implements ChatAdapter {
   };
 
   /* @conditional-compile-remove(attachment-upload) */
-  public registerActiveUploads = (files: File[]): AttachmentUploadManager[] => {
+  public registerActiveUploads = (files: File[]): AttachmentUploadTask[] => {
     return this.callWithChatAdapter.registerActiveUploads(files);
   };
 
   /* @conditional-compile-remove(attachment-upload) */
-  public registerCompletedUploads = (metadata: AttachmentMetadata[]): AttachmentUploadManager[] => {
+  public registerCompletedUploads = (metadata: AttachmentMetadata[]): AttachmentUploadTask[] => {
     return this.callWithChatAdapter.registerCompletedUploads(metadata);
   };
 
@@ -138,7 +143,26 @@ function chatAdapterStateFromCallWithChatAdapterState(
   callWithChatAdapterState: CallWithChatAdapterState
 ): ChatAdapterState {
   if (!callWithChatAdapterState.chat) {
-    throw new Error('Chat thread state id undefined.');
+    // Return some empty state if chat is not initialized yet
+    return {
+      userId: callWithChatAdapterState.userId,
+      displayName: callWithChatAdapterState.displayName || '',
+      thread: {
+        chatMessages: {},
+        participants: {
+          [toFlatCommunicationIdentifier(callWithChatAdapterState.userId)]: {
+            id: callWithChatAdapterState.userId
+          }
+        },
+        threadId: '',
+        readReceipts: [],
+        typingIndicators: [],
+        latestReadTime: new Date()
+      },
+      latestErrors: callWithChatAdapterState.latestChatErrors,
+      /* @conditional-compile-remove(attachment-upload) */
+      _attachmentUploads: callWithChatAdapterState._attachmentUploads
+    };
   }
 
   return {
@@ -147,6 +171,6 @@ function chatAdapterStateFromCallWithChatAdapterState(
     thread: callWithChatAdapterState.chat,
     latestErrors: callWithChatAdapterState.latestChatErrors,
     /* @conditional-compile-remove(attachment-upload) */
-    attachmentUploads: callWithChatAdapterState.attachmentUploads
+    _attachmentUploads: callWithChatAdapterState._attachmentUploads
   };
 }
