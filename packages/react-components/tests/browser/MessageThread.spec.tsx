@@ -4,27 +4,19 @@
 import React from 'react';
 import { expect } from '@playwright/experimental-ct-react';
 import { test as betaTest } from './FlavoredBaseTest';
-import { FluentThemeProvider, Message, MessageThread } from '../../src';
+import { Message, MessageThread } from '../../src';
 
 betaTest.describe('MessageThread inline image tests', () => {
   betaTest.skip(({ isBetaBuild }) => !isBetaBuild, 'The tests should be run for beta flavor only');
 
   betaTest('MessageThread inline image should show grey box when loading', async ({ mount }) => {
-    const component = await mount(
-      <FluentThemeProvider>
-        <MessageThread userId={'1'} messages={getMessages('')} />
-      </FluentThemeProvider>
-    );
+    const component = await mount(<MessageThread userId={'1'} messages={getMessages('')} />);
     await component.evaluate(() => document.fonts.ready);
     await expect(component).toHaveScreenshot('message-thread-inline-image-loading-stage.png');
   });
 
   betaTest('MessageThread inline image should show broken image icon with invalid src', async ({ mount }) => {
-    const component = await mount(
-      <FluentThemeProvider>
-        <MessageThread userId={'1'} messages={getMessages('http://')} />
-      </FluentThemeProvider>
-    );
+    const component = await mount(<MessageThread userId={'1'} messages={getMessages('http://')} />);
     await component.evaluate(() => document.fonts.ready);
     await expect(component).toHaveScreenshot('message-thread-inline-image-broken-image.png');
   });

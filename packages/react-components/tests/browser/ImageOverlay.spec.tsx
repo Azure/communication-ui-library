@@ -4,7 +4,7 @@
 import React from 'react';
 import { expect } from '@playwright/experimental-ct-react';
 import { test as betaTest } from './FlavoredBaseTest';
-import { FluentThemeProvider, ImageOverlay, Message, MessageThread } from '../../src';
+import { ImageOverlay, Message, MessageThread } from '../../src';
 
 betaTest.describe('ImageOverlay tests', () => {
   betaTest.skip(({ isBetaBuild }) => !isBetaBuild, 'The tests should be run for beta flavor only');
@@ -36,7 +36,7 @@ betaTest.describe('ImageOverlay tests', () => {
 
   betaTest('ImageOverlay should be shown correctly when loading', async ({ mount }) => {
     const component = await mount(
-      <FluentThemeProvider>
+      <div>
         <MessageThread userId={'1'} messages={messages} />
         {
           <ImageOverlay
@@ -47,7 +47,7 @@ betaTest.describe('ImageOverlay tests', () => {
             onDownloadButtonClicked={() => {}}
           />
         }
-      </FluentThemeProvider>
+      </div>
     );
     await component.evaluate(() => document.fonts.ready);
     await expect(component).toHaveScreenshot('image-overlay-loading-stage.png');
