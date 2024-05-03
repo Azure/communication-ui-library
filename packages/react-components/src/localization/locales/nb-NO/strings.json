@@ -27,7 +27,8 @@
     "attachmentUploadsPendingError": "Laster opp. Vent litt ...",
     "removeAttachment": "Fjern fil",
     "uploading": "Laster opp",
-    "uploadCompleted": "Opplasting fullført"
+    "uploadCompleted": "Opplasting fullført",
+    "attachmentMoreMenu": "Flere alternativer"
   },
   "richTextSendBox": {
     "placeholderText": "Skriv en melding",
@@ -55,7 +56,8 @@
     "deleteRowOrColumnMenu": "Slett",
     "deleteColumnMenu": "Slett kolonne",
     "deleteRowMenu": "Slett rad",
-    "deleteTableMenu": "Slett tabell"
+    "deleteTableMenu": "Slett tabell",
+    "attachmentMoreMenu": "Flere alternativer"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Forslag"
@@ -79,7 +81,7 @@
     "label": "Forlat",
     "tooltipContent": "Forlat samtale",
     "leaveOption": "Forlat",
-    "endCallOption": "Avslutt samtalen"
+    "endCallOption": "Avslutt samtale for alle"
   },
   "cameraButton": {
     "onLabel": "Kamera",

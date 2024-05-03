@@ -493,6 +493,7 @@ export type CallCompositeOptions = {
     remoteVideoTileMenuOptions?: RemoteVideoTileMenuOptions;
     localVideoTile?: boolean | LocalVideoTileOptions;
     videoTilesOptions?: VideoTilesOptions;
+    disableAutoShowDtmfDialer?: boolean;
     galleryOptions?: {
         layout?: VideoGalleryLayout;
     };
@@ -1175,7 +1176,9 @@ export interface CallWithChatCompositeStrings {
     moreDrawerSpokenLanguageMenuTitle: string;
     peopleButtonLabel: string;
     peopleButtonTooltipClose: string;
+    peopleButtonTooltipCloseAriaLabel: string;
     peopleButtonTooltipOpen: string;
+    peopleButtonTooltipOpenAriaLabel: string;
     peoplePaneSubTitle: string;
     peoplePaneTitle: string;
     pictureInPictureTileAriaLabel: string;

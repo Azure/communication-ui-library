@@ -244,6 +244,10 @@
       "shareScreen": {
         "lostDueToRoleChangeToAttendee": "تم تغيير دورك. لن تتوفر بعض الإجراءات، مثل مشاركة المحتوى، لك.",
         "grantedDueToRoleChangeToPresenter": "أنت مقدم العرض. يمكنك مشاركة المحتوى وتسهيل الاجتماع."
+      },
+      "hideAttendeeNames": {
+        "hideAttendeeNameAttendee": "اسمك مخفي عن الحضور الآخرين. يمكن للمنظمين والمقدمين رؤية اسمك الحقيقي.",
+        "hideAttendeeNamePresenter": "أسماء الحضور مخفية. يمكن للمنظمين والمقدمين فقط رؤية الأسماء لحماية خصوصية الحضور."
       }
     },
     "surveyTitle": "ساعدنا في تحسين خدماتنا",
@@ -259,7 +263,6 @@
     "tagsSurveyQuestion": "ما الذي كان يمكن أن يكون أفضل؟",
     "tagsSurveyTextFieldDefaultText": "أخرى، يُرجى التحديد",
     "tagsSurveyHelperText": "تحقق من أي مشاكل واجهتك",
-    "surveyTextboxDefaultText": "أخرى، يُرجى التحديد",
     "endOfSurveyText": "شكراً لك على تقديم ملاحظاتك!",
     "surveyIssues": {
       "overallRating": {
@@ -301,7 +304,7 @@
         "otherIssues": "كنت أواجه مشكلات أخرى في مشاركة الشاشة في هذه المكالمة"
       }
     },
-    "SurveyIssuesHeadingStrings": {
+    "surveyIssuesHeadingStrings": {
       "overallRating": "بشكل عام",
       "audioRating": "صوت",
       "videoRating": "فيديو",
@@ -325,7 +328,8 @@
     },
     "exitSpotlightButtonLabel": "الخروج من وضع تسليط الضوء",
     "exitSpotlightButtonTooltip": "الخروج من وضع تسليط الضوء",
-    "hangUpConfirmButtonLabel": "تأكيد",
+    "leaveConfirmButtonLabel": "مغادرة",
+    "endCallConfirmButtonLabel": "إنهاء المكالمة",
     "hangUpCancelButtonLabel": "إلغاء",
     "leaveConfirmDialogTitle": "هل تريد مغادرة المكالمة؟",
     "leaveConfirmDialogContent": "هل تريد بالتأكيد مغادرة المكالمة؟",

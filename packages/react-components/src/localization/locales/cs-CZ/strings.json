@@ -27,7 +27,8 @@
     "attachmentUploadsPendingError": "Probíhá nahrávání... Počkejte prosím.",
     "removeAttachment": "Odebrat soubor",
     "uploading": "Nahrávání",
-    "uploadCompleted": "Nahrávání se dokončilo"
+    "uploadCompleted": "Nahrávání se dokončilo",
+    "attachmentMoreMenu": "Další možnosti"
   },
   "richTextSendBox": {
     "placeholderText": "Zadejte zprávu",
@@ -55,7 +56,8 @@
     "deleteRowOrColumnMenu": "Odstranit",
     "deleteColumnMenu": "Odstranit sloupec",
     "deleteRowMenu": "Odstranit řádek",
-    "deleteTableMenu": "Odstranit tabulku"
+    "deleteTableMenu": "Odstranit tabulku",
+    "attachmentMoreMenu": "Další možnosti"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Návrhy"
@@ -79,7 +81,7 @@
     "label": "Opustit",
     "tooltipContent": "Opustit hovor",
     "leaveOption": "Odejít",
-    "endCallOption": "Ukončit hovor"
+    "endCallOption": "Ukončit hovor pro všechny"
   },
   "cameraButton": {
     "onLabel": "Kamera",
