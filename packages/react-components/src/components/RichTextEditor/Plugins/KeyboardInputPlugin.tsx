@@ -18,7 +18,6 @@ export default class KeyboardInputPlugin implements EditorPlugin {
   dispose(): void {}
 
   onPluginEvent(event: PluginEvent): void {
-    // check if it works or if BeforeKeyboardEditingEvent should be used instead
     if (this.onKeyDown && event.eventType === 'keyDown' && event.rawEvent instanceof KeyboardEvent) {
       this.onKeyDown(event.rawEvent);
     }
