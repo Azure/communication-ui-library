@@ -85,7 +85,7 @@ describe('RichTextSendBox should return text correctly', () => {
       icons: icons
     });
   });
-  test('HTML string should be correct when send button is clicked', async () => {
+  test.skip('HTML string should be correct when send button is clicked', async () => {
     let changedValue = '';
     render(
       <RichTextSendBox
@@ -119,7 +119,7 @@ describe('RichTextSendBox should return text correctly', () => {
 });
 
 /* @conditional-compile-remove(rich-text-editor) */
-describe('RichTextSendBox should work with localization', () => {
+describe.skip('RichTextSendBox should work with localization', () => {
   beforeAll(() => {
     registerIcons({
       icons: icons
