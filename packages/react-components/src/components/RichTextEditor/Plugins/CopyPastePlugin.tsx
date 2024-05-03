@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 import type { PluginEvent, EditorPlugin, IEditor } from 'roosterjs-content-model-types';
+import { ContentChangedEventSource, PluginEventType } from '../../utils/RichTextEditorUtils';
 
 /**
  * CopyPastePlugin is a plugin for handling copy and paste events in the editor.
@@ -33,7 +34,7 @@ export default class CopyPastePlugin implements EditorPlugin {
  */
 export const removeImageElement = (event: PluginEvent): void => {
   // We don't support the pasting options such as paste as image yet.
-  if (event.eventType === 'beforePaste' && event.pasteType === 'normal') {
+  if (event.eventType === PluginEventType.BeforePaste && event.pasteType === 'normal') {
     event.fragment.querySelectorAll('img').forEach((image) => {
       // If the image is the only child of its parent, remove all the parents of this img element.
       let parentNode: HTMLElement | null = image.parentElement;
@@ -53,7 +54,7 @@ export const removeImageElement = (event: PluginEvent): void => {
  * @param editor - The editor instance.
  */
 export const scrollToBottomAfterContentPaste = (event: PluginEvent, editor: IEditor): void => {
-  if (event.eventType === 'contentChanged' && event.source === 'Paste') {
+  if (event.eventType === PluginEventType.ContentChanged && event.source === ContentChangedEventSource.Paste) {
     const scrollContainer = editor.getScrollContainer();
     // get current selection for the editor
     const selection = document.getSelection();

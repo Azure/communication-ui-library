@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 import type { EditorPlugin, IEditor, PluginEvent } from 'roosterjs-content-model-types';
+import { PluginEventType } from '../../utils/RichTextEditorUtils';
 
 /**
  * An update mode to indicate when the content update happens
@@ -52,19 +53,19 @@ export class UpdateContentPlugin implements EditorPlugin {
       return;
     }
     switch (event.eventType) {
-      case 'editorReady':
+      case PluginEventType.EditorReady:
         this.onUpdate(UpdateEvent.Init);
         break;
 
-      case 'beforeDispose':
+      case PluginEventType.BeforeDispose:
         this.onUpdate(UpdateEvent.Dispose);
         break;
 
-      case 'contentChanged':
+      case PluginEventType.ContentChanged:
         this.onUpdate(UpdateEvent.ContentChanged);
         break;
 
-      case 'input':
+      case PluginEventType.Input:
         this.onUpdate(UpdateEvent.UserInput);
         break;
     }
