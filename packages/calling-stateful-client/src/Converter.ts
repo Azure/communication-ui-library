@@ -183,7 +183,7 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
     /* @conditional-compile-remove(hide-attendee-name) */
     hideAttendeeNames,
     /* @conditional-compile-remove(meeting-id) */
-    info: callInfo
+    info: callInfo,
     /* @conditional-compile-remove(teams-meeting-conference) */
     teamsMeetingConference: undefined
   };
