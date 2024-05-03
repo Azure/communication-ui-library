@@ -103,7 +103,7 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
       editorComponentRef.current?.focus();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [showRichTextEditorFormatting]);
+  }, [isRichTextEditorToolbarShown]);
 
   const actionButtons = useMemo(() => {
     return (
