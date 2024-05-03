@@ -8,10 +8,12 @@ import {
   DominantSpeakersInfo,
   ParticipantRole,
   ScalingMode,
-  VideoDeviceInfo,
-  TeamsMeetingAudioConferencingDetails
+  VideoDeviceInfo
 } from '@azure/communication-calling';
 import { RaisedHand } from '@azure/communication-calling';
+
+/* @conditional-compile-remove(teams-meeting-conference) */
+import { TeamsMeetingAudioConferencingDetails } from '@azure/communication-calling';
 
 import { CapabilitiesChangeInfo, ParticipantCapabilities } from '@azure/communication-calling';
 import { TeamsCaptionsInfo } from '@azure/communication-calling';

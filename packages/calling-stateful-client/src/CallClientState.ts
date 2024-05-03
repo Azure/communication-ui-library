@@ -15,9 +15,10 @@ import {
   ParticipantRole,
   RemoteParticipantState as RemoteParticipantStatus,
   ScalingMode,
-  VideoDeviceInfo,
-  TeamsMeetingAudioConferencingDetails
+  VideoDeviceInfo
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(teams-meeting-conference) */
+import { TeamsMeetingAudioConferencingDetails } from '@azure/communication-calling';
 /* @conditional-compile-remove(meeting-id) */
 import { TeamsCallInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(calling-beta-sdk) */

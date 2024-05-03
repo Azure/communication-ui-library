@@ -245,6 +245,7 @@ export class CallSubscriber {
     }
   };
 
+  /* @conditional-compile-remove(teams-meeting-conference) */
   private initTeamsMeetingConference = (): void => {
     if (this._call.state === 'Connected') {
       this._call
