@@ -4,7 +4,7 @@
 import React from 'react';
 import { expect } from '@playwright/experimental-ct-react';
 import { test as betaTest } from './FlavoredBaseTest';
-import { COMPONENT_LOCALE_EN_US, ChatMessageComponentAsRichTextEditBox, FluentThemeProvider, Message } from '../../src';
+import { COMPONENT_LOCALE_EN_US, ChatMessageComponentAsRichTextEditBox, Message } from '../../src';
 import { MessageStatus } from '@internal/acs-ui-common';
 
 const formatButtonId = 'rich-text-input-box-format-button';
@@ -26,15 +26,13 @@ betaTest.describe('ChatMessageComponentAsRichTextEditBox tests', () => {
 
   betaTest('ChatMessageComponentAsRichTextEditBox should be shown correctly', async ({ mount }) => {
     const component = await mount(
-      <FluentThemeProvider>
-        <ChatMessageComponentAsRichTextEditBox
-          message={message}
-          onSubmit={async () => {
-            return;
-          }}
-          strings={COMPONENT_LOCALE_EN_US.strings.messageThread}
-        />
-      </FluentThemeProvider>
+      <ChatMessageComponentAsRichTextEditBox
+        message={message}
+        onSubmit={async () => {
+          return;
+        }}
+        strings={COMPONENT_LOCALE_EN_US.strings.messageThread}
+      />
     );
     await component.evaluate(() => document.fonts.ready);
     await expect(component).toHaveScreenshot('chat-message-component-as-rich-text-edit-box-without-format-toolbar.png');
@@ -50,15 +48,13 @@ betaTest.describe('ChatMessageComponentAsRichTextEditBox tests', () => {
 
   betaTest('ChatMessageComponentAsRichTextEditBox should be shown correctly with system error', async ({ mount }) => {
     const component = await mount(
-      <FluentThemeProvider>
-        <ChatMessageComponentAsRichTextEditBox
-          message={{ ...message, failureReason: 'System Error' }}
-          onSubmit={async () => {
-            return;
-          }}
-          strings={COMPONENT_LOCALE_EN_US.strings.messageThread}
-        />
-      </FluentThemeProvider>
+      <ChatMessageComponentAsRichTextEditBox
+        message={{ ...message, failureReason: 'System Error' }}
+        onSubmit={async () => {
+          return;
+        }}
+        strings={COMPONENT_LOCALE_EN_US.strings.messageThread}
+      />
     );
     await component.evaluate(() => document.fonts.ready);
     await expect(component).toHaveScreenshot(

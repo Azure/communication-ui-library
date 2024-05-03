@@ -3,7 +3,6 @@
 import React, { useRef } from 'react';
 import { RichTextInputBoxComponent } from '../../../src/components/RichTextEditor/RichTextInputBoxComponent';
 import { RichTextEditorComponentRef } from '../../../src/components/RichTextEditor/RichTextEditor';
-import { FluentThemeProvider } from '../../../src/theming/FluentThemeProvider';
 
 interface TestRichTextInputBoxComponentProps {
   minHeight: string;
@@ -18,18 +17,16 @@ export const TestRichTextInputBoxComponent = (props: TestRichTextInputBoxCompone
   const { disabled, minHeight, maxHeight } = props;
   const ref = useRef<RichTextEditorComponentRef>(null);
   return (
-    <FluentThemeProvider>
-      <RichTextInputBoxComponent
-        onChange={() => {}}
-        strings={{}}
-        disabled={disabled}
-        placeholderText="Placeholder"
-        actionComponents={<button>Test</button>}
-        richTextEditorStyleProps={() => {
-          return { minHeight, maxHeight };
-        }}
-        editorComponentRef={ref}
-      />
-    </FluentThemeProvider>
+    <RichTextInputBoxComponent
+      onChange={() => {}}
+      strings={{}}
+      disabled={disabled}
+      placeholderText="Placeholder"
+      actionComponents={<button>Test</button>}
+      richTextEditorStyleProps={() => {
+        return { minHeight, maxHeight };
+      }}
+      editorComponentRef={ref}
+    />
   );
 };

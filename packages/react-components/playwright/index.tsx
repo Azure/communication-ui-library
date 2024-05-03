@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { initializeIcons, registerIcons } from '@fluentui/react';
+import { registerIcons } from '@fluentui/react';
 import { DEFAULT_COMPONENT_ICONS } from '../src/theming/icons';
 import { initializeFileTypeIcons } from '@fluentui/react-file-type-icons';
 
@@ -10,4 +10,3 @@ registerIcons({
   icons: DEFAULT_COMPONENT_ICONS
 });
 initializeFileTypeIcons();
-initializeIcons();
