@@ -684,11 +684,13 @@ describe('errors should be reported correctly from Call when', () => {
     }
   });
 
+  /* @conditional-compile-remove(teams-meeting-conference) */
   test('Conference call is undefined in acs to acs calls', async () => {
     const { client, callId } = await prepareCall();
     expect(client.getState().calls[callId]?.teamsMeetingConference).toBeUndefined();
   });
 
+  /* @conditional-compile-remove(teams-meeting-conference) */
   test('Conference call is undefined in acs to acs calls', async () => {
     const recording = addMockEmitter({ name: 'Default' });
 
