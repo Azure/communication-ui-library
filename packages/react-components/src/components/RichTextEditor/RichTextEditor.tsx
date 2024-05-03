@@ -129,7 +129,7 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
         }
       };
     },
-    []
+    [onContentModelUpdate]
   );
 
   // const ribbonPlugin = React.useMemo(() => {
