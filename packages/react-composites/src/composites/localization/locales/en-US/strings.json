@@ -364,6 +364,8 @@
     "selectedPeopleButtonLabel": "People Button Selected",
     "peopleButtonTooltipOpen": "Show participants",
     "peopleButtonTooltipClose": "Hide participants",
+    "peopleButtonTooltipOpenAriaLabel": "People button, Show participants",
+    "peopleButtonTooltipCloseAriaLabel": "People button, Hide participants",
     "peoplePaneSubTitle": "In this call",
     "peoplePaneTitle": "People",
     "pictureInPictureTileAriaLabel": "Video Feeds. Click to return to call screen.",
