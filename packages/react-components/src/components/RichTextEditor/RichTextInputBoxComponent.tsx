@@ -76,24 +76,32 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
     onTyping
   } = props;
   const theme = useTheme();
-  const [showRichTextEditorFormatting, setShowRichTextEditorFormatting] = useState(false);
+  // undefined is used to indicate that the rich text editor toolbar state wasn't changed yet
+  const [isRichTextEditorToolbarShown, setIsRichTextEditorToolbarShown] = useState<boolean | undefined>(undefined);
   const [contentModel, setContentModel] = useState<ContentModelDocument | undefined>(undefined);
 
   const onRenderRichTextEditorIcon = useCallback(
     (isHover: boolean) => (
       <Icon
         iconName={
-          isHover || showRichTextEditorFormatting ? 'RichTextEditorButtonIconFilled' : 'RichTextEditorButtonIcon'
+          isHover || showRichTextEditorFormatting(isRichTextEditorToolbarShown)
+            ? 'RichTextEditorButtonIconFilled'
+            : 'RichTextEditorButtonIcon'
         }
-        className={richTextFormatButtonIconStyle(theme, !disabled && (isHover || showRichTextEditorFormatting))}
+        className={richTextFormatButtonIconStyle(
+          theme,
+          !disabled && (isHover || showRichTextEditorFormatting(isRichTextEditorToolbarShown))
+        )}
       />
     ),
-    [disabled, showRichTextEditorFormatting, theme]
+    [disabled, isRichTextEditorToolbarShown, theme]
   );
 
   useEffect(() => {
-    // Focus the editor when toolbar shown/hidden
-    editorComponentRef.current?.focus();
+    if (isRichTextEditorToolbarShown !== undefined) {
+      // Focus the editor when toolbar shown/hidden
+      editorComponentRef.current?.focus();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [showRichTextEditorFormatting]);
 
@@ -104,7 +112,7 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
           <InputBoxButton
             onRenderIcon={onRenderRichTextEditorIcon}
             onClick={(e) => {
-              setShowRichTextEditorFormatting(!showRichTextEditorFormatting);
+              setIsRichTextEditorToolbarShown(!showRichTextEditorFormatting(isRichTextEditorToolbarShown));
               e.stopPropagation(); // Prevents the click from bubbling up and triggering a focus event on the chat.
             }}
             ariaLabel={strings.richTextFormatButtonTooltip}
@@ -120,39 +128,39 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
   }, [
     actionComponents,
     onRenderRichTextEditorIcon,
-    showRichTextEditorFormatting,
+    isRichTextEditorToolbarShown,
     strings.richTextFormatButtonTooltip,
     theme
   ]);
 
   const richTextEditorStyle = useMemo(() => {
-    return richTextEditorStyleProps(showRichTextEditorFormatting);
-  }, [richTextEditorStyleProps, showRichTextEditorFormatting]);
+    return richTextEditorStyleProps(showRichTextEditorFormatting(isRichTextEditorToolbarShown));
+  }, [richTextEditorStyleProps, isRichTextEditorToolbarShown]);
 
   const onKeyDown = useCallback(
     (ev: KeyboardEvent) => {
       if (isEnterKeyEventFromCompositionSession(ev)) {
         return;
       }
-      if (ev.key === 'Enter' && ev.shiftKey === false && !showRichTextEditorFormatting) {
+      if (ev.key === 'Enter' && ev.shiftKey === false && !showRichTextEditorFormatting(isRichTextEditorToolbarShown)) {
         ev.preventDefault();
         onEnterKeyDown && onEnterKeyDown();
       } else {
         onTyping?.();
       }
     },
-    [onEnterKeyDown, showRichTextEditorFormatting, onTyping]
+    [onEnterKeyDown, isRichTextEditorToolbarShown, onTyping]
   );
 
   const useHorizontalLayout = useMemo(() => {
     return (
       !isHorizontalLayoutDisabled &&
-      !showRichTextEditorFormatting &&
+      !showRichTextEditorFormatting(isRichTextEditorToolbarShown) &&
       /* @conditional-compile-remove(attachment-upload) */ !hasAttachments
     );
   }, [
     isHorizontalLayoutDisabled,
-    showRichTextEditorFormatting,
+    isRichTextEditorToolbarShown,
     /* @conditional-compile-remove(attachment-upload) */ hasAttachments
   ]);
 
@@ -186,7 +194,7 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
               onKeyDown={onKeyDown}
               ref={editorComponentRef}
               strings={strings}
-              showRichTextEditorFormatting={showRichTextEditorFormatting}
+              showRichTextEditorFormatting={showRichTextEditorFormatting(isRichTextEditorToolbarShown)}
               styles={richTextEditorStyle}
               autoFocus={autoFocus}
               onContentModelUpdate={onContentModelUpdate}
@@ -201,4 +209,8 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
       </Stack>
     </div>
   );
+};
+
+const showRichTextEditorFormatting = (isRichTextEditorToolbarShown: boolean | undefined): boolean => {
+  return isRichTextEditorToolbarShown === true;
 };
