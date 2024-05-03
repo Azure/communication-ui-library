@@ -3,6 +3,7 @@
 
 import { PluginEvent, PasteType } from 'roosterjs-content-model-types';
 import { removeImageElement } from './CopyPastePlugin';
+import { PluginEventType } from '../../utils/RichTextEditorUtils';
 
 describe('removeImageElement should work correctly', () => {
   test('removeImageElement should remove all image elements when fragment only contains image children', () => {
@@ -56,7 +57,7 @@ describe('removeImageElement should work correctly', () => {
 
   const getPluginEvent = (fragment: DocumentFragment): PluginEvent => {
     return {
-      eventType: 'beforePaste',
+      eventType: PluginEventType.BeforePaste,
       clipboardData: {
         types: ['text/plain', 'text/html'],
         text: '',
