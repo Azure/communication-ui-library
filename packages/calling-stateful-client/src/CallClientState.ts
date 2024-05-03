@@ -19,7 +19,9 @@ import {
   TeamsMeetingAudioConferencingDetails
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(meeting-id) */
-import { CallInfo, TeamsCallInfo } from '@azure/communication-calling';
+import { TeamsCallInfo } from '@azure/communication-calling';
+/* @conditional-compile-remove(calling-beta-sdk) */
+import { CallInfo } from '@azure/communication-calling';
 
 import { CapabilitiesChangeInfo, ParticipantCapabilities } from '@azure/communication-calling';
 import { CaptionsResultType } from '@azure/communication-calling';
@@ -635,7 +637,7 @@ export interface CallState {
   /**
    * Proxy of {@link @azure/communication-calling#Call.info}.
    */
-  info?: CallInfo | TeamsCallInfo;
+  info?: TeamsCallInfo | /* @conditional-compile-remove(calling-beta-sdk) */ CallInfo;
 
   /* @conditional-compile-remove(teams-meeting-conference) */
   /**
