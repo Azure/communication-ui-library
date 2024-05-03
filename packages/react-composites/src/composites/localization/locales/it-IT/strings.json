@@ -244,6 +244,10 @@
       "shareScreen": {
         "lostDueToRoleChangeToAttendee": "Il tuo ruolo è stato modificato. Alcune azioni, come la condivisione di contenuti, non saranno disponibili per te.",
         "grantedDueToRoleChangeToPresenter": "Sei un relatore. Puoi condividere i contenuti e facilitare la riunione."
+      },
+      "hideAttendeeNames": {
+        "hideAttendeeNameAttendee": "Il tuo nome è nascosto agli altri partecipanti. Gli organizzatori e i relatori possono vedere il tuo vero nome.",
+        "hideAttendeeNamePresenter": "I nomi dei partecipanti sono nascosti. Solo gli organizzatori e i relatori possono visualizzare i nomi per proteggere la privacy dei partecipanti."
       }
     },
     "surveyTitle": "Aiutaci a migliorare",
@@ -259,7 +263,6 @@
     "tagsSurveyQuestion": "Cosa avrebbe potuto essere migliore?",
     "tagsSurveyTextFieldDefaultText": "Altro, specifica",
     "tagsSurveyHelperText": "Controlla eventuali problemi riscontrati",
-    "surveyTextboxDefaultText": "Altro, specifica",
     "endOfSurveyText": "Grazie per il feedback!",
     "surveyIssues": {
       "overallRating": {
@@ -301,7 +304,7 @@
         "otherIssues": "Ho avuto altri problemi di condivisione dello schermo in questa chiamata"
       }
     },
-    "SurveyIssuesHeadingStrings": {
+    "surveyIssuesHeadingStrings": {
       "overallRating": "Generale",
       "audioRating": "Audio",
       "videoRating": "Video",
@@ -325,7 +328,8 @@
     },
     "exitSpotlightButtonLabel": "Esci da visualizzazione in evidenza",
     "exitSpotlightButtonTooltip": "Esci da visualizzazione in evidenza",
-    "hangUpConfirmButtonLabel": "Conferma",
+    "leaveConfirmButtonLabel": "Abbandona",
+    "endCallConfirmButtonLabel": "Termina chiamata",
     "hangUpCancelButtonLabel": "Annulla",
     "leaveConfirmDialogTitle": "Vuoi abbandonare la chiamata?",
     "leaveConfirmDialogContent": "Vuoi abbandonare la chiamata?",

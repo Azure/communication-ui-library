@@ -156,6 +156,7 @@ export const ImageOverlay = (props: ImageOverlayProps): JSX.Element => {
             className={mergeStyles(imageStyle)}
             alt={altText || 'image'}
             aria-label={'image-overlay-main-image'}
+            data-ui-id={'image-overlay-main-image'}
             aria-live={'polite'}
             onError={() => {
               setIsImageLoaded(false);

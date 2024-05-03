@@ -27,7 +27,8 @@
     "attachmentUploadsPendingError": "正在上载...请稍候。",
     "removeAttachment": "删除文件",
     "uploading": "正在上传",
-    "uploadCompleted": "已完成上传"
+    "uploadCompleted": "已完成上传",
+    "attachmentMoreMenu": "更多选项"
   },
   "richTextSendBox": {
     "placeholderText": "输入消息",
@@ -55,7 +56,8 @@
     "deleteRowOrColumnMenu": "删除",
     "deleteColumnMenu": "删除列",
     "deleteRowMenu": "删除行",
-    "deleteTableMenu": "删除表格"
+    "deleteTableMenu": "删除表格",
+    "attachmentMoreMenu": "更多选项"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "建议"
@@ -79,7 +81,7 @@
     "label": "退出",
     "tooltipContent": "离开通话",
     "leaveOption": "退出",
-    "endCallOption": "结束通话"
+    "endCallOption": "结束所有人的通话"
   },
   "cameraButton": {
     "onLabel": "相机",
