@@ -188,7 +188,6 @@ export const ChatMessageComponentAsRichTextEditBox = (
           onChange={setText}
           editorComponentRef={editTextFieldRef}
           initialContent={message.content}
-          content={textValue}
           strings={richTextLocaleStrings}
           disabled={false}
           actionComponents={actionButtons}

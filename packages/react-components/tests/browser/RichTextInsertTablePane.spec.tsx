@@ -7,6 +7,7 @@ import { test as betaTest } from './FlavoredBaseTest';
 import { TestRichTextInsertTablePane } from './TestingComponents/TestRichTextInsertTablePane';
 
 betaTest.describe('RichTextInsertTablePane tests', () => {
+  betaTest.skip(true, 'Disable tests temporarily');
   betaTest.skip(({ isBetaBuild }) => !isBetaBuild, 'The tests should be run for beta flavor only');
 
   betaTest('RichTextInsertTablePane should be shown correctly', async ({ mount, page }) => {

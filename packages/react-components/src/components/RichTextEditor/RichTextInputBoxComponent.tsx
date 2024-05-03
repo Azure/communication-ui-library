@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import React, { ReactNode, useCallback, useMemo, useState } from 'react';
+import React, { ReactNode, useCallback, useEffect, useMemo, useState } from 'react';
 import { BaseCustomStyles } from '../../types';
 import { RichTextEditor, RichTextEditorComponentRef, RichTextEditorStyleProps } from './RichTextEditor';
 import { RichTextSendBoxStrings } from './RichTextSendBox';
@@ -21,6 +21,7 @@ import {
   inputBoxRichTextStackStyle,
   richTextBorderBoxStyle
 } from '../styles/RichTextInputBoxComponent.styles';
+import type { ContentModelDocument } from 'roosterjs-content-model-types';
 
 /**
  * @private
@@ -34,8 +35,6 @@ export interface RichTextInputBoxComponentProps {
   placeholderText?: string;
   // the initial content of editor that is set when editor is created (e.g. when editing a message)
   initialContent?: string;
-  // the current content of the editor
-  content?: string;
   onChange: (newValue?: string) => void;
   onEnterKeyDown?: () => void;
   editorComponentRef: React.RefObject<RichTextEditorComponentRef>;
@@ -73,12 +72,12 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
     hasAttachments,
     richTextEditorStyleProps,
     isHorizontalLayoutDisabled = false,
-    content,
     autoFocus,
     onTyping
   } = props;
   const theme = useTheme();
   const [showRichTextEditorFormatting, setShowRichTextEditorFormatting] = useState(false);
+  const [contentModel, setContentModel] = useState<ContentModelDocument | undefined>(undefined);
 
   const onRenderRichTextEditorIcon = useCallback(
     (isHover: boolean) => (
@@ -92,6 +91,12 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
     [disabled, showRichTextEditorFormatting, theme]
   );
 
+  useEffect(() => {
+    // Focus the editor when toolbar shown/hidden
+    editorComponentRef.current?.focus();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [showRichTextEditorFormatting]);
+
   const actionButtons = useMemo(() => {
     return (
       <Stack.Item align="end" className={richTextActionButtonsStackStyle}>
@@ -100,7 +105,6 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
             onRenderIcon={onRenderRichTextEditorIcon}
             onClick={(e) => {
               setShowRichTextEditorFormatting(!showRichTextEditorFormatting);
-              editorComponentRef.current?.focus();
               e.stopPropagation(); // Prevents the click from bubbling up and triggering a focus event on the chat.
             }}
             ariaLabel={strings.richTextFormatButtonTooltip}
@@ -115,7 +119,6 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
     );
   }, [
     actionComponents,
-    editorComponentRef,
     onRenderRichTextEditorIcon,
     showRichTextEditorFormatting,
     strings.richTextFormatButtonTooltip,
@@ -127,7 +130,7 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
   }, [richTextEditorStyleProps, showRichTextEditorFormatting]);
 
   const onKeyDown = useCallback(
-    (ev: React.KeyboardEvent<HTMLElement>) => {
+    (ev: KeyboardEvent) => {
       if (isEnterKeyEventFromCompositionSession(ev)) {
         return;
       }
@@ -153,6 +156,10 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
     /* @conditional-compile-remove(attachment-upload) */ hasAttachments
   ]);
 
+  const onContentModelUpdate = useCallback((contentModel: ContentModelDocument | undefined) => {
+    setContentModel(contentModel);
+  }, []);
+
   return (
     <div
       className={richTextBorderBoxStyle({
@@ -172,7 +179,7 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
         <Stack grow className={inputBoxRichTextStackStyle}>
           <Stack.Item className={inputBoxRichTextStackItemStyle}>
             <RichTextEditor
-              content={content}
+              contentModel={contentModel}
               initialContent={initialContent}
               placeholderText={placeholderText}
               onChange={onChange}
@@ -182,6 +189,7 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
               showRichTextEditorFormatting={showRichTextEditorFormatting}
               styles={richTextEditorStyle}
               autoFocus={autoFocus}
+              onContentModelUpdate={onContentModelUpdate}
             />
           </Stack.Item>
           {
