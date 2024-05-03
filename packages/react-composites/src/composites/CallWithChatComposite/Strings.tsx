@@ -18,6 +18,14 @@ export interface CallWithChatCompositeStrings {
    */
   selectedPeopleButtonLabel: string;
   /**
+   * {@link CallWithChatComposite} aria label for control bar People button when unchecked
+   */
+  peopleButtonTooltipOpenAriaLabel: string;
+  /**
+   * {@link CallWithChatComposite} aria label for control bar People button when checked
+   */
+  peopleButtonTooltipCloseAriaLabel: string;
+  /**
    * {@link CallWithChatComposite} control bar People button ToolTipContent
    */
   peopleButtonTooltipOpen: string;
