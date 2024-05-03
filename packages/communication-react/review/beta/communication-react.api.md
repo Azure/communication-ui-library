@@ -692,6 +692,7 @@ export type CallCompositeOptions = {
     remoteVideoTileMenuOptions?: RemoteVideoTileMenuOptions;
     localVideoTile?: boolean | LocalVideoTileOptions;
     videoTilesOptions?: VideoTilesOptions;
+    disableAutoShowDtmfDialer?: boolean;
     galleryOptions?: {
         layout?: VideoGalleryLayout;
     };
