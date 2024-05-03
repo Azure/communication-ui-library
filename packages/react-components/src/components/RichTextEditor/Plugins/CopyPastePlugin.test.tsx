@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { PluginEvent } from 'roosterjs-editor-types';
+import { PluginEvent, PasteType } from 'roosterjs-content-model-types';
 import { removeImageElement } from './CopyPastePlugin';
 
 describe('removeImageElement should work correctly', () => {
@@ -55,47 +55,29 @@ describe('removeImageElement should work correctly', () => {
   });
 
   const getPluginEvent = (fragment: DocumentFragment): PluginEvent => {
-    const event = {
-      eventType: 10,
+    return {
+      eventType: 'beforePaste',
       clipboardData: {
         types: ['text/plain', 'text/html'],
         text: '',
-        image: null,
-        files: [],
         rawHtml: '',
-        customValues: {},
-        pasteNativeEvent: true,
-        snapshotBeforePaste: '<div style="background-color: transparent;"><br></div><!--{"start":[0,0],"end":[0,0]}-->',
-        htmlFirstLevelChildTags: ['P', 'P', 'P', 'P']
+        image: null,
+        customValues: {}
       },
       fragment: fragment,
-      sanitizingOption: {
-        elementCallbacks: {},
-        attributeCallbacks: {},
-        cssStyleCallbacks: {},
-        additionalTagReplacements: {},
-        additionalAllowedAttributes: [],
-        additionalAllowedCssClasses: [
-          '^_Entity$',
-          '^_EId_',
-          '^_EType_',
-          '^_EReadonly_',
-          'entityDelimiterAfter',
-          'entityDelimiterBefore'
-        ],
-        additionalDefaultStyleValues: {},
-        additionalGlobalStyleNodes: [],
-        additionalPredefinedCssForElement: {},
-        preserveHtmlComments: false,
-        unknownTagReplacement: null
-      },
       htmlBefore: '',
       htmlAfter: '',
-      htmlAttributes: {
-        '': ''
-      },
-      pasteType: 0
+      htmlAttributes: {},
+      pasteType: 'normal' as PasteType,
+      domToModelOption: {
+        additionalAllowedTags: [],
+        additionalDisallowedTags: [],
+        additionalFormatParsers: {},
+        attributeSanitizers: {},
+        formatParserOverride: {},
+        processorOverride: {},
+        styleSanitizers: {}
+      }
     };
-    return event;
   };
 });
