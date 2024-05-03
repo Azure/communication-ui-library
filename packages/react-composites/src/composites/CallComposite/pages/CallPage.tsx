@@ -57,6 +57,7 @@ export interface CallPageProps {
   pinnedParticipants?: string[];
   setPinnedParticipants?: (pinnedParticipants: string[]) => void;
   compositeAudioContext?: AudioContext;
+  disableAutoShowDtmfDialer?: boolean;
 }
 
 /**
@@ -76,7 +77,8 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
     onCloseChatPane,
     pinnedParticipants,
     setPinnedParticipants,
-    compositeAudioContext
+    compositeAudioContext,
+    disableAutoShowDtmfDialer = false
   } = props;
 
   // To use useProps to get these states, we need to create another file wrapping Call,
@@ -92,7 +94,9 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
 
   const callees = useSelector(getTargetCallees);
   const renderDtmfDialerFromStart = showDtmfDialer(callees, remoteParticipantsConnected);
-  const [dtmfDialerPresent, setDtmfDialerPresent] = useState<boolean>(renderDtmfDialerFromStart);
+  const [dtmfDialerPresent, setDtmfDialerPresent] = useState<boolean>(
+    renderDtmfDialerFromStart && disableAutoShowDtmfDialer
+  );
 
   const strings = useLocale().strings.call;
 
