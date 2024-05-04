@@ -1318,7 +1318,6 @@ export type CallWithChatCompositeIcons = {
     MoreDrawerSelectedMicrophone?: JSX.Element;
     MoreDrawerSelectedSpeaker?: JSX.Element;
     MoreDrawerSpeakers?: JSX.Element;
-    Checkmark?: JSX.Element;
     ControlButtonCameraOff?: JSX.Element;
     ControlButtonCameraOn?: JSX.Element;
     ControlButtonEndCall?: JSX.Element;
@@ -2703,7 +2702,6 @@ export const DEFAULT_COMPOSITE_ICONS: {
     MoreDrawerSelectedMicrophone?: JSX.Element | undefined;
     MoreDrawerSelectedSpeaker?: JSX.Element | undefined;
     MoreDrawerSpeakers?: JSX.Element | undefined;
-    Checkmark?: JSX.Element | undefined;
     ChatMessageOptions: React_2.JSX.Element;
     ControlButtonParticipantsContextualMenuItem: React_2.JSX.Element;
     CancelAttachmentUpload: React_2.JSX.Element;

@@ -18,8 +18,7 @@ import {
   Video20Filled,
   VideoOff20Filled,
   WifiWarning20Filled,
-  Circle20Regular,
-  Checkmark20Regular
+  Circle20Regular
 } from '@fluentui/react-icons';
 /* @conditional-compile-remove(spotlight) */
 import { MoreHorizontal20Filled, VideoPersonStarOff20Filled } from '@fluentui/react-icons';
@@ -56,7 +55,6 @@ const SpinnerIcon = (): JSX.Element => <Spinner size={SpinnerSize.large} />;
 export const COMPOSITE_ONLY_ICONS: CompositeIcons = {
   ChevronLeft: undefined,
   Link: undefined,
-  Checkmark: <Checkmark20Regular />,
   LobbyScreenConnectingToCall: <SpinnerIcon />,
   LobbyScreenWaitingToBeAdmitted: <SpinnerIcon />,
   LocalDeviceSettingsCamera: <Video20Filled />,
@@ -287,7 +285,6 @@ export type CallWithChatCompositeIcons = {
   MoreDrawerSpeakers?: JSX.Element;
 
   // Call icons
-  Checkmark?: JSX.Element;
   ControlButtonCameraOff?: JSX.Element;
   ControlButtonCameraOn?: JSX.Element;
   ControlButtonEndCall?: JSX.Element;

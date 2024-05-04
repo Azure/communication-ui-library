@@ -132,7 +132,6 @@ export const AddPeopleButton = (props: AddPeopleButtonProps): JSX.Element => {
               <CalloutWithIcon
                 targetId={calloutButtonId}
                 text={strings.copyInviteLinkButtonActionedLabel}
-                iconName="Checkmark"
                 doNotLayer={true}
               />
             )}
@@ -158,11 +157,7 @@ export const AddPeopleButton = (props: AddPeopleButtonProps): JSX.Element => {
               styles={copyLinkButtonStylesThemed}
             />
             {inviteLinkCopiedRecently && (
-              <CalloutWithIcon
-                targetId={calloutButtonId}
-                text={strings.copyInviteLinkButtonActionedLabel}
-                iconName="Checkmark"
-              />
+              <CalloutWithIcon targetId={calloutButtonId} text={strings.copyInviteLinkButtonActionedLabel} />
             )}
           </Stack>
         )}

@@ -157,7 +157,6 @@ export const AddPeopleDropdown = (props: AddPeopleDropdownProps): JSX.Element =>
               <CalloutWithIcon
                 targetId={calloutButtonId}
                 text={strings.copyInviteLinkButtonActionedLabel}
-                iconName="Checkmark"
                 doNotLayer={true}
               />
             )}
@@ -214,11 +213,7 @@ export const AddPeopleDropdown = (props: AddPeopleDropdownProps): JSX.Element =>
                 data-ui-id="call-add-people-button"
               />
               {inviteLinkCopiedRecently && (
-                <CalloutWithIcon
-                  targetId={calloutButtonId}
-                  text={strings.copyInviteLinkButtonActionedLabel}
-                  iconName="Checkmark"
-                />
+                <CalloutWithIcon targetId={calloutButtonId} text={strings.copyInviteLinkButtonActionedLabel} />
               )}
             </Stack>
           )}

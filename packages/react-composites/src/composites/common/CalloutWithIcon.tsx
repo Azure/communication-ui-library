@@ -2,15 +2,14 @@
 // Licensed under the MIT License.
 
 import { Callout, DirectionalHint, mergeStyles, Stack, Text } from '@fluentui/react';
+// eslint-disable-next-line no-restricted-imports
+import { FontIcon } from '@fluentui/react';
 import React from 'react';
-
-import { CallWithChatCompositeIcon, CallWithChatCompositeIcons } from './icons';
 
 /** @private */
 export interface CalloutWithIconProps {
   targetId: string;
   text: string;
-  iconName: keyof CallWithChatCompositeIcons;
   doNotLayer?: boolean;
 }
 
@@ -26,7 +25,7 @@ export const CalloutWithIcon = (props: CalloutWithIconProps): JSX.Element => {
       doNotLayer={props.doNotLayer}
     >
       <Stack horizontal styles={calloutRootStackStyle} tokens={{ childrenGap: '0.375rem' }}>
-        <CallWithChatCompositeIcon iconName={props.iconName} className={iconClass} />
+        <FontIcon iconName="Checkmark" className={iconClass} />
         <Text>{props.text}</Text>
       </Stack>
     </Callout>
