@@ -220,14 +220,16 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
               />
             )}
             {
-              /* @conditional-compile-remove(meeting-id) */ (teamsCallChosen || teamsIdentityChosen) && (
+              /* @conditional-compile-remove(meeting-id) */ (teamsCallChosen ||
+                /* @conditional-compile-remove(teams-identity-support) */ teamsIdentityChosen) && (
                 <Text className={teamsItemStyle} block variant="medium">
                   <b>Or</b>
                 </Text>
               )
             }
             {
-              /* @conditional-compile-remove(meeting-id) */ (teamsCallChosen || teamsIdentityChosen) && (
+              /* @conditional-compile-remove(meeting-id) */ (teamsCallChosen ||
+                /* @conditional-compile-remove(teams-identity-support) */ teamsIdentityChosen) && (
                 <TextField
                   className={teamsItemStyle}
                   iconProps={{ iconName: 'MeetingId' }}
@@ -242,7 +244,8 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
               )
             }
             {
-              /* @conditional-compile-remove(meeting-id) */ (teamsCallChosen || teamsIdentityChosen) && (
+              /* @conditional-compile-remove(meeting-id) */ (teamsCallChosen ||
+                /* @conditional-compile-remove(teams-identity-support) */ teamsIdentityChosen) && (
                 <TextField
                   className={teamsItemStyle}
                   iconProps={{ iconName: 'passcode' }}

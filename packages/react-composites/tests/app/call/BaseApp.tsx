@@ -100,6 +100,13 @@ export function BaseApp(props: { queryArgs: QueryArgs; callAdapter?: CallAdapter
     };
   }
 
+  if (queryArgs.disableAutoShowDtmfDialer !== undefined) {
+    options = {
+      ...options,
+      disableAutoShowDtmfDialer: queryArgs.disableAutoShowDtmfDialer
+    };
+  }
+
   if (queryArgs.logo === 'square') {
     options = {
       ...options,
