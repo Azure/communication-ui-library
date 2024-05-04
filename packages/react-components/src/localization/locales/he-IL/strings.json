@@ -27,7 +27,8 @@
     "attachmentUploadsPendingError": "מעלה... אנא המתן.",
     "removeAttachment": "הסרת קובץ",
     "uploading": "מעלה",
-    "uploadCompleted": "ההעלאה הושלמה"
+    "uploadCompleted": "ההעלאה הושלמה",
+    "attachmentMoreMenu": "אפשרויות נוספות"
   },
   "richTextSendBox": {
     "placeholderText": "הזן הודעה",
@@ -55,7 +56,8 @@
     "deleteRowOrColumnMenu": "מחק",
     "deleteColumnMenu": "מחק עמודה",
     "deleteRowMenu": "מחק שורה",
-    "deleteTableMenu": "מחק טבלה"
+    "deleteTableMenu": "מחק טבלה",
+    "attachmentMoreMenu": "אפשרויות נוספות"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "הצעות"
@@ -79,7 +81,7 @@
     "label": "עזוב",
     "tooltipContent": "עזוב את השיחה",
     "leaveOption": "צא",
-    "endCallOption": "סיים שיחה"
+    "endCallOption": "סיים את השיחה לכולם"
   },
   "cameraButton": {
     "onLabel": "מצלמה",

@@ -3,7 +3,7 @@
 
 import React, { useMemo } from 'react';
 import { FocusZone, FocusZoneDirection, mergeStyles } from '@fluentui/react';
-import type { IContextualMenuItem, Theme } from '@fluentui/react';
+import type { IContextualMenuItem } from '@fluentui/react';
 import {
   insertTableMenuCellButtonSelectedStyles,
   insertTableMenuCellButtonStyles,
@@ -11,12 +11,12 @@ import {
   insertTableMenuTitleStyles
 } from '../../../styles/RichTextEditor.styles';
 import { ColumnRowReplaceString, createKey } from '../../../utils/RichTextTableUtils';
+import { useTheme } from '../../../../theming';
 
 // This file uses RoosterJS React package implementation with updates to UI components and styles.
 const RowColumnInitialValue = 0;
 
 interface RichTextInsertTablePaneProps {
-  theme: Theme;
   item: IContextualMenuItem;
   onClick: (e: React.MouseEvent<Element> | React.KeyboardEvent<Element>, item: IContextualMenuItem) => void;
   maxRowsNumber: number;
@@ -28,9 +28,10 @@ interface RichTextInsertTablePaneProps {
  * Component for the insert table pane
  */
 export const RichTextInsertTablePane = (props: RichTextInsertTablePaneProps): JSX.Element => {
-  const { item, onClick, theme, maxColumnsNumber, maxRowsNumber } = props;
+  const { item, onClick, maxColumnsNumber, maxRowsNumber } = props;
   const [column, setColumn] = React.useState(RowColumnInitialValue);
   const [row, setRow] = React.useState(RowColumnInitialValue);
+  const theme = useTheme();
 
   const updateSize = React.useCallback(
     (target?: HTMLElement) => {
@@ -89,7 +90,8 @@ export const RichTextInsertTablePane = (props: RichTextInsertTablePaneProps): JS
             data-row={i}
             data-is-focusable={true}
             onMouseEnter={onMouseEnter}
-            aria-label={formatText(item.text ?? '', i, j)}
+            aria-label={formatText(item.text ?? '', formatRowColumnText(i), formatRowColumnText(j))}
+            data-testid={key}
           />
         );
       }

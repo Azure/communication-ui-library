@@ -1,6 +1,6 @@
 {
   "name": "@azure/communication-react",
-  "version": "1.16.0-beta.0",
+  "version": "1.16.0-beta.1",
   "sideEffects": false,
   "description": "React library for building modern communication user experiences utilizing Azure Communication Services",
   "keywords": [
@@ -56,7 +56,7 @@
     "uuid": "^9.0.0"
   },
   "peerDependencies": {
-    "@azure/communication-calling": "1.24.1-beta.2 || ^1.23.2",
+    "@azure/communication-calling": "1.24.2-beta.1 || ^1.24.1",
     "@azure/communication-calling-effects": "1.0.1",
     "@azure/communication-chat": "1.6.0-beta.1 || >=1.5.0",
     "@types/react": ">=16.8.0 <19.0.0",
@@ -98,19 +98,19 @@
     "_by-flavor": "rushx _current-flavor && env-cmd -f ../../common/config/env/.env --use-shell"
   },
   "devDependencies": {
-    "@azure/communication-calling": "1.24.1-beta.2 || ^1.23.2",
+    "@azure/communication-calling": "1.24.2-beta.1 || ^1.24.1",
     "@azure/communication-calling-effects": "1.0.1",
     "@azure/communication-chat": "1.6.0-beta.1 || ^1.5.0",
     "@azure/core-auth": "^1.4.0",
     "@babel/cli": "^7.23.9",
     "@babel/core": "^7.24.3",
-    "@internal/calling-component-bindings": "1.16.0-beta.0",
-    "@internal/calling-stateful-client": "1.16.0-beta.0",
-    "@internal/chat-component-bindings": "1.16.0-beta.0",
-    "@internal/chat-stateful-client": "1.16.0-beta.0",
-    "@internal/fake-backends": "1.16.0-beta.0",
-    "@internal/react-components": "1.16.0-beta.0",
-    "@internal/react-composites": "1.16.0-beta.0",
+    "@internal/calling-component-bindings": "1.16.0-beta.1",
+    "@internal/calling-stateful-client": "1.16.0-beta.1",
+    "@internal/chat-component-bindings": "1.16.0-beta.1",
+    "@internal/chat-stateful-client": "1.16.0-beta.1",
+    "@internal/fake-backends": "1.16.0-beta.1",
+    "@internal/react-components": "1.16.0-beta.1",
+    "@internal/react-composites": "1.16.0-beta.1",
     "@microsoft/api-documenter": "~7.23.30",
     "@microsoft/api-extractor": "~7.42.3",
     "@rollup/plugin-json": "^6.0.1",

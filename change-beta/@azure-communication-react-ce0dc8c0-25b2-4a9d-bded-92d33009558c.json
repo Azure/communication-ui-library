@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "area": "feature",
-  "workstream": "Captions",
-  "comment": "We are excited to announce that Azure Communications Services has recently added the Closed Captions feature. With closed captions, developers can provide a textual representation of the audio content in their videos, making it easier for users who are deaf or hard of hearing to follow along. Developers can enable this functionality today through our composites (e.g CallComposite, CallWithChatComposite). Azure Communications Services Closed Captions supports: Enable and disable closed captions in the call, Change spoken language, Being able to use captions outside of teams scenario",
-  "packageName": "@azure/communication-react",
-  "email": "96077406+carocao-msft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
