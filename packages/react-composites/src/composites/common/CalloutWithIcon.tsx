@@ -20,8 +20,8 @@ export const CalloutWithIcon = (props: CalloutWithIconProps): JSX.Element => {
       styles={calloutStyle}
       target={`#${props.targetId}`}
       directionalHint={DirectionalHint.topCenter}
-      beakWidth={8}
-      gapSpace={2}
+      beakWidth={BEAK_WIDTH_PX}
+      gapSpace={GAP_SPACE_PX}
       doNotLayer={props.doNotLayer}
     >
       <Stack horizontal styles={calloutRootStackStyle} tokens={{ childrenGap: '0.375rem' }}>
@@ -51,6 +51,10 @@ const calloutRootStackStyle = {
     alignItems: 'center'
   }
 };
+
+const BEAK_WIDTH_PX = 8;
+
+const GAP_SPACE_PX = 2;
 
 const iconClass = mergeStyles({
   fontSize: 18
