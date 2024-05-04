@@ -9,13 +9,11 @@ export const AttachmentUploadsExample: () => JSX.Element = () => (
           {
             id: '1',
             name: 'Sample.pdf',
-            extension: 'pdf',
             progress: 0.75
           },
           {
             id: '2',
             name: 'SampleXl.xlsx',
-            extension: 'xlsx',
             progress: 0.33
           }
         ]}
