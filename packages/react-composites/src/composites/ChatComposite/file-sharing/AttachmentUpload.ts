@@ -6,6 +6,7 @@ import {
   AttachmentUploadTask,
   AttachmentProgressError,
   AttachmentSelectionHandler,
+  AttachmentActionHandler,
   AttachmentMetadataWithProgress
 } from '@internal/react-components';
 
@@ -136,7 +137,10 @@ export const AttachmentUploadReducer = (state: AttachmentUpload[], action: Actio
   }
 };
 
-/**
- * @beta
- */
-export type { AttachmentMetadata, AttachmentSelectionHandler, AttachmentUploadTask, AttachmentProgressError };
+export type {
+  AttachmentMetadata,
+  AttachmentSelectionHandler,
+  AttachmentActionHandler,
+  AttachmentUploadTask,
+  AttachmentProgressError
+};

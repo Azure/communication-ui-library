@@ -102,7 +102,9 @@ export const _AttachmentCard = (props: _AttachmentCardProps): JSX.Element => {
               iconName={
                 getFileTypeIconProps({
                   extension: useMemo((): string => {
-                    return attachment.extension ?? attachment.name.split('.').pop() ?? '';
+                    const re = /(?:\.([^.]+))?$/;
+                    const match = re.exec(attachment.name);
+                    return match && match[1] ? match[1] : '';
                   }, [attachment]),
                   size: 24,
                   imageFileType: 'svg'
@@ -115,7 +117,14 @@ export const _AttachmentCard = (props: _AttachmentCardProps): JSX.Element => {
               <Text title={attachment.name}>{attachment.name}</Text>
             </div>
           }
-          action={MappedMenuItems(menuActions, attachment, onActionHandlerFailed)}
+          action={MappedMenuItems(
+            menuActions,
+            {
+              ...attachment,
+              url: attachment.url ?? ''
+            },
+            onActionHandlerFailed
+          )}
         />
       </Card>
       {isUploadInProgress ? (

@@ -20,8 +20,7 @@ describe('AttachmentDownloadCards should be rendered properly', () => {
 
   it('should render if it is AttachmentSharingMetadata', async () => {
     const attachment: AttachmentMetadata = {
-      name: 'MockAttachmentCard',
-      extension: 'docx',
+      name: 'MockAttachmentCard.docx',
       url: 'mockUrl',
       id: 'mockId'
     };

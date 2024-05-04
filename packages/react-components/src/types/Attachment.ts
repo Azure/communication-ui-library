@@ -4,17 +4,40 @@
 import { ChatMessage } from './ChatMessage';
 
 /**
- * Metadata containing basic information about the attachment.
+ * Data model that represents a chat message attachment
+ * where it contains an ID to uniquely identify the attachment,
+ * a name that represents the name of file, and
+ * a URL to download the attachment.
  *
  * @beta
  */
 export interface AttachmentMetadata {
   /**
-   * Extension hint, useful for rendering a specific icon.
-   * An unknown or empty extension will be rendered as a generic icon.
-   * Example: `pdf`
+   * Unique ID of the attachment.
    */
-  extension?: string;
+  id: string;
+  /**
+   * Attachment name to be displayed.
+   */
+  name: string;
+  /**
+   * Download URL for the attachment.
+   */
+  url: string;
+}
+
+/**
+ * Data model that represents a chat message attachment being uploaded
+ * where it contains an ID to uniquely identify the attachment,
+ * a name that represents the name of file,
+ * an optional URL to download the attachment,
+ * an optional progress value between 0 and 1 indicating the progress of the upload, and
+ * an optional error object that contains error message would be shown to the user.
+ *
+ *
+ * @beta
+ */
+export interface AttachmentMetadataWithProgress {
   /**
    * Unique ID of the attachment.
    */
@@ -27,14 +50,6 @@ export interface AttachmentMetadata {
    * Download URL for the attachment.
    */
   url?: string;
-}
-
-/**
- * Metadata containing basic information about the uploading attachment.
- *
- * @beta
- */
-export interface AttachmentMetadataWithProgress extends AttachmentMetadata {
   /**
    * A number between 0 and 1 indicating the progress of the upload.
    */
@@ -73,7 +88,7 @@ export interface AttachmentDownloadOptions {
   // A callback function that defines what action user can perform on an attachment.
   // by default, the UI library would have default actions that opens attachment URL in a new tab
   // provide this callback function to override the default actions or add new actions.
-  actionsForAttachment: (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[];
+  actionsForAttachment: AttachmentActionHandler;
 }
 
 /**
@@ -158,6 +173,19 @@ export interface AttachmentUploadTask {
    */
   notifyUploadFailed: (message: string) => void;
 }
+
+/**
+ * @beta
+ * A callback function that defines what actions user can perform on an attachment.
+ * By default, the UI library would have default actions that opens attachment URL in a new tab.
+ * You can override the default actions or add new actions by providing this callback function.
+ * Moreover, you can also return dynamic actions based on the properties in {@link AttachmentMetadata} and/or {@link ChatMessage}.
+ *
+ * @param attachment - The file attachment that user is trying to perform actions on.
+ * @param message - The chat message that contains this attachment.
+ * @returns A list of {@link AttachmentMenuAction} that defines the type of actions user can perform on the attachment.
+ */
+export type AttachmentActionHandler = (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[];
 
 /**
  * @beta

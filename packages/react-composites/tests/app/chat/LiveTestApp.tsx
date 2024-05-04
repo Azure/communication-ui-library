@@ -10,7 +10,7 @@ import { ChatComposite, COMPOSITE_LOCALE_FR_FR, useAzureCommunicationChatAdapter
 // eslint-disable-next-line no-restricted-imports
 import { IDS } from '../../browser/common/constants';
 import { verifyParamExists } from '../lib/utils';
-import { AttachmentMenuAction } from '@internal/react-components';
+import { AttachmentMenuAction, AttachmentSelectionHandler } from '@internal/react-components';
 
 const urlSearchParams = new URLSearchParams(window.location.search);
 const params = Object.fromEntries(urlSearchParams.entries());
@@ -119,7 +119,9 @@ export const LiveTestApp = (): JSX.Element => {
                     downloadOptions: {
                       actionsForAttachment: actionsForAttachment
                     },
-                    uploadOptions: params.uploadHandler
+                    uploadOptions: {
+                      handleAttachmentSelection: () => {}
+                    }
                   }
                 : undefined
             }}

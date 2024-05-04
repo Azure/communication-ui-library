@@ -54,8 +54,8 @@ const attachmentSelectionHandler: AttachmentSelectionHandler = async (
           }
         }
       });
-
-      task.notifyUploadCompleted(uniqueFileName, response.data.url);
+      const randomId = Math.random().toString(16).slice(2);
+      task.notifyUploadCompleted(randomId, response.data.url);
     } catch (error) {
       console.error(error);
       task.notifyUploadFailed('Unable to upload file. Please try again later.');

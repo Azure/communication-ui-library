@@ -11,7 +11,8 @@ export type {
   AttachmentProgressError,
   AttachmentRemovalHandler,
   AttachmentMetadataWrapper,
-  AttachmentSelectionHandler
+  AttachmentSelectionHandler,
+  AttachmentActionHandler
 } from '@internal/react-components';
 
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */

@@ -146,9 +146,12 @@ export type AreParamEqual<A extends (props: any) => JSX.Element | undefined, B e
 export type AreTypeEqual<A, B> = A extends B ? (B extends A ? true : false) : false;
 
 // @beta
+export type AttachmentActionHandler = (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[];
+
+// @beta
 export interface AttachmentDownloadOptions {
     // (undocumented)
-    actionsForAttachment: (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[];
+    actionsForAttachment: AttachmentActionHandler;
 }
 
 // @beta
@@ -163,16 +166,18 @@ export interface AttachmentMenuAction {
 
 // @beta
 export interface AttachmentMetadata {
-    extension?: string;
     id: string;
     name: string;
-    url?: string;
+    url: string;
 }
 
 // @beta
-export interface AttachmentMetadataWithProgress extends AttachmentMetadata {
+export interface AttachmentMetadataWithProgress {
     error?: AttachmentProgressError;
+    id: string;
+    name: string;
     progress?: number;
+    url?: string;
 }
 
 // @beta

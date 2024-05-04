@@ -38,6 +38,7 @@ export type {
   AttachmentProgressError,
   AttachmentUploadOptions,
   AttachmentSelectionHandler,
+  AttachmentActionHandler,
   AttachmentRemovalHandler,
   AttachmentUploadTask
 } from './file-sharing';

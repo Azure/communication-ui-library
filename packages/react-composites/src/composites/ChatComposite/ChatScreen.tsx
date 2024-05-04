@@ -214,10 +214,9 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
           file,
           taskId,
           metadata: {
+            id: taskId,
             name: file.name,
-            extension: file.name.split('.').pop() || '',
-            progress: 0,
-            id: taskId
+            progress: 0
           },
           notifyUploadProgressChanged: (value: number) => {
             handleUploadAction({ type: AttachmentUploadActionType.Progress, taskId, progress: value });
@@ -462,14 +461,18 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
                     /* @conditional-compile-remove(attachment-upload) */
                     await adapter.sendMessageWithAttachments(
                       content,
-                      attachments.map((v) => {
-                        return {
-                          id: v.metadata.id,
-                          name: v.metadata.name,
-                          url: v.metadata.url,
-                          extension: v.metadata.extension
-                        };
-                      })
+                      attachments
+                        // remove failed attachments from the list
+                        .filter((v) => {
+                          v.metadata.error;
+                        })
+                        .map((v) => {
+                          return {
+                            id: v.metadata.id,
+                            name: v.metadata.name,
+                            url: v.metadata.url ?? ''
+                          };
+                        })
                     );
                     /* @conditional-compile-remove(attachment-upload) */
                     return;

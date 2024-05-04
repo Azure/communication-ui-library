@@ -82,12 +82,10 @@ const extractTeamsAttachmentsMetadata = (
   const attachments: AttachmentMetadata[] = [];
   rawAttachments.forEach((rawAttachment) => {
     const attachmentType = rawAttachment.attachmentType as ChatAttachmentType;
-    const contentType = extractAttachmentContentTypeFromName(rawAttachment.name);
     if (attachmentType === 'file') {
       attachments.push({
         id: rawAttachment.id,
         name: rawAttachment.name ?? '',
-        extension: contentType ?? '',
         url: extractAttachmentUrl(rawAttachment)
       });
     }

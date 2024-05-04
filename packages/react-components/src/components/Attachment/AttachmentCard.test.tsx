@@ -80,8 +80,8 @@ const renderAttachmentCardWithDefaults = (props?: Partial<_AttachmentCardProps>)
   const mergedProps: _AttachmentCardProps = {
     attachment: {
       id: 'mockId',
-      name: 'MockAttachmentCard',
-      extension: 'docx'
+      name: 'MockAttachmentCard.docx',
+      url: 'mockUrl'
     },
     menuActions: props?.menuActions ?? [],
     ...(props ?? {})

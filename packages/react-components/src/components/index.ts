@@ -212,6 +212,7 @@ export type {
   AttachmentUploadOptions,
   AttachmentMetadata,
   AttachmentProgressError,
+  AttachmentActionHandler,
   AttachmentSelectionHandler,
   AttachmentMetadataWrapper,
   AttachmentRemovalHandler,
