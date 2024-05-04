@@ -106,7 +106,8 @@ import {
   MicrosoftTeamsUserIdentifier,
   isMicrosoftTeamsUserIdentifier,
   MicrosoftTeamsAppIdentifier,
-  UnknownIdentifier
+  UnknownIdentifier,
+  isMicrosoftTeamsAppIdentifier
 } from '@azure/communication-common';
 /* @conditional-compile-remove(teams-identity-support) */ /* @conditional-compile-remove(PSTN-calls) */
 import { isCommunicationUserIdentifier } from '@azure/communication-common';
@@ -140,6 +141,7 @@ class CallContext {
   constructor(
     clientState: CallClientState,
     isTeamsCall: boolean,
+    isTeamsMeeting: boolean,
     isRoomsCall: boolean,
     options?: {
       maxListeners?: number;
@@ -164,6 +166,7 @@ class CallContext {
       page: 'configuration',
       latestErrors: clientState.latestErrors,
       isTeamsCall,
+      isTeamsMeeting,
       isRoomsCall,
       /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId: clientState.alternateCallerId,
       /* @conditional-compile-remove(unsupported-browser) */ environmentInfo: clientState.environmentInfo,
@@ -398,12 +401,25 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     const isTeamsMeeting = this.locator
       ? 'meetingLink' in this.locator || /* @conditional-compile-remove(meeting-id) */ 'meetingId' in this.locator
       : false;
+    let isTeamsCall: boolean | undefined;
+    this.targetCallees?.forEach((callee) => {
+      if (isMicrosoftTeamsUserIdentifier(callee) || isMicrosoftTeamsAppIdentifier(callee)) {
+        isTeamsCall = true;
+      }
+    });
 
     const isRoomsCall = this.locator ? 'roomId' in this.locator : false;
 
     this.onResolveVideoBackgroundEffectsDependency = options?.videoBackgroundOptions?.onResolveDependency;
 
-    this.context = new CallContext(callClient.getState(), isTeamsMeeting, isRoomsCall, options, this.targetCallees);
+    this.context = new CallContext(
+      callClient.getState(),
+      !!isTeamsCall,
+      isTeamsMeeting,
+      isRoomsCall,
+      options,
+      this.targetCallees
+    );
 
     this.context.onCallEnded((endCallData) => this.emitter.emit('callEnded', endCallData));
 
@@ -1078,7 +1094,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
 
   private subscribeToCaptionEvents(): void {
     if (this.call && this.call.state === 'Connected') {
-      if (this.context.getState().isTeamsCall) {
+      if (this.context.getState().isTeamsCall || this.context.getState().isTeamsMeeting) {
         const captionsFeature = this.call?.feature(Features.Captions).captions as TeamsCaptions;
         captionsFeature.on('CaptionsReceived', this.teamsCaptionsReceived.bind(this));
         captionsFeature.on('CaptionsActiveChanged', this.isCaptionsActiveChanged.bind(this));
@@ -1099,7 +1115,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
 
   private unsubscribeFromCaptionEvents(): void {
     if (this.call && this.call.state === 'Connected') {
-      if (this.context.getState().isTeamsCall) {
+      if (this.context.getState().isTeamsCall || this.context.getState().isTeamsMeeting) {
         const captionsFeature = this.call?.feature(Features.Captions).captions as TeamsCaptions;
         captionsFeature.off('CaptionsReceived', this.teamsCaptionsReceived.bind(this));
         captionsFeature.off('CaptionsActiveChanged', this.isCaptionsActiveChanged.bind(this));
