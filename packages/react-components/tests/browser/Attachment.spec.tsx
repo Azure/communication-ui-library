@@ -6,6 +6,7 @@ import { expect } from '@playwright/experimental-ct-react';
 import { test as betaTest } from './FlavoredBaseTest';
 import { RichTextSendBox } from '../../src/components/RichTextEditor/RichTextSendBox';
 import { MessageThread, SendBox, defaultAttachmentMenuAction } from '../../src';
+import { Icon } from '@fluentui/react';
 
 betaTest.describe('Attachment tests', () => {
   betaTest.skip(({ isBetaBuild }) => !isBetaBuild, 'The tests should be run for beta flavor only');
@@ -117,7 +118,7 @@ betaTest.describe('Attachment tests', () => {
             contentType: 'text',
             messageType: 'chat',
             messageId: '1234567890',
-            createdOn: new Date(),
+            createdOn: new Date('01-01-2024'),
             senderId: '8:acs:12345',
             content: 'Hello!',
             mine: true,
@@ -139,7 +140,7 @@ betaTest.describe('Attachment tests', () => {
             contentType: 'text',
             messageType: 'chat',
             messageId: '1234567890',
-            createdOn: new Date(),
+            createdOn: new Date('01-01-2024'),
             senderId: '8:acs:12345',
             content: 'Hello!',
             mine: true,
@@ -165,23 +166,23 @@ betaTest.describe('Attachment tests', () => {
             contentType: 'text',
             messageType: 'chat',
             messageId: '1234567890',
-            createdOn: new Date(),
+            createdOn: new Date('01-01-2024'),
             senderId: '8:acs:12345',
             content: 'Hello!',
             mine: true,
             attachments: [{ name: 'test1.pdf', id: 'id1', url: 'https://www.contoso.com/test1.pdf' }]
           }
         ]}
+        onRenderAttachmentDownloads={undefined}
         attachmentOptions={{
           downloadOptions: {
-            actionsForAttachment: (attachment) => {
+            actionsForAttachment: () => {
               return [
                 defaultAttachmentMenuAction,
                 {
-                  icon: <></>,
-                  name: 'custom action',
+                  icon: <Icon iconName="OpenAttachment" />,
+                  name: 'open',
                   onClick: async () => {
-                    window.open(attachment.url);
                     return Promise.resolve();
                   }
                 }
@@ -204,7 +205,7 @@ betaTest.describe('Attachment tests', () => {
             contentType: 'text',
             messageType: 'chat',
             messageId: '1234567890',
-            createdOn: new Date(),
+            createdOn: new Date('01-01-2024'),
             senderId: '8:acs:12345',
             content: 'Hello!',
             mine: false,
@@ -230,7 +231,7 @@ betaTest.describe('Attachment tests', () => {
             contentType: 'text',
             messageType: 'chat',
             messageId: '1234567890',
-            createdOn: new Date(),
+            createdOn: new Date('01-01-2024'),
             senderId: '8:acs:12345',
             content: 'Hello!',
             mine: false,
@@ -252,7 +253,7 @@ betaTest.describe('Attachment tests', () => {
             contentType: 'text',
             messageType: 'chat',
             messageId: '1234567890',
-            createdOn: new Date(),
+            createdOn: new Date('01-01-2024'),
             senderId: '8:orgid:1234',
             content: 'Hello!',
             mine: false,
@@ -278,7 +279,7 @@ betaTest.describe('Attachment tests', () => {
             contentType: 'text',
             messageType: 'chat',
             messageId: '1234567890',
-            createdOn: new Date(),
+            createdOn: new Date('01-01-2024'),
             senderId: '8:orgid:1234',
             content: 'Hello!',
             mine: false,
