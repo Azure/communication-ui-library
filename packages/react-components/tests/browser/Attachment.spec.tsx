@@ -5,13 +5,13 @@ import React from 'react';
 import { expect } from '@playwright/experimental-ct-react';
 import { test as betaTest } from './FlavoredBaseTest';
 import { RichTextSendBox } from '../../src/components/RichTextEditor/RichTextSendBox';
-import { MessageThread, SendBox, defaultAttachmentMenuAction } from '../../src';
-import { Icon } from '@fluentui/react';
+import { MessageThread, SendBox } from '../../src';
+import { TestMessageThreadWithCustomAttachmentActions } from './TestingComponents/TestMessageThreadWithCustomAttachmentActions';
 
-betaTest.describe('Attachment tests', () => {
+betaTest.describe.only('Attachment tests', () => {
   betaTest.skip(({ isBetaBuild }) => !isBetaBuild, 'The tests should be run for beta flavor only');
 
-  betaTest('Regular SendBox should show attachment progress correctly in group layout', async ({ mount }) => {
+  betaTest.only('Regular SendBox should show attachment progress correctly in group layout', async ({ mount }) => {
     const component = await mount(
       <SendBox
         onSendMessage={async () => {
@@ -28,7 +28,7 @@ betaTest.describe('Attachment tests', () => {
     await expect(component).toHaveScreenshot('attachment-in-sendbox-with-progress-group-layout.png');
   });
 
-  betaTest('Regular SendBox should show attachment progress correctly in singular layout', async ({ mount }) => {
+  betaTest.only('Regular SendBox should show attachment progress correctly in singular layout', async ({ mount }) => {
     const component = await mount(
       <SendBox
         onSendMessage={async () => {
@@ -41,7 +41,7 @@ betaTest.describe('Attachment tests', () => {
     await expect(component).toHaveScreenshot('attachment-in-sendbox-with-progress-singlular-layout.png');
   });
 
-  betaTest('Regular SendBox should show failed attachment', async ({ mount }) => {
+  betaTest.only('Regular SendBox should show failed attachment', async ({ mount }) => {
     const component = await mount(
       <SendBox
         onSendMessage={async () => {
@@ -60,7 +60,7 @@ betaTest.describe('Attachment tests', () => {
     await expect(component).toHaveScreenshot('attachment-in-sendbox-with-error.png');
   });
 
-  betaTest('RichText SendBox should show attachment progress correctly in singular layout', async ({ mount }) => {
+  betaTest.only('RichText SendBox should show attachment progress correctly in singular layout', async ({ mount }) => {
     const component = await mount(
       <RichTextSendBox
         onSendMessage={async () => {
@@ -73,7 +73,7 @@ betaTest.describe('Attachment tests', () => {
     await expect(component).toHaveScreenshot('attachments-in-richtext-sendbox-with-progress-singular-layout.png');
   });
 
-  betaTest('RichText SendBox should show attachment progress correctly in group layout', async ({ mount }) => {
+  betaTest.only('RichText SendBox should show attachment progress correctly in group layout', async ({ mount }) => {
     const component = await mount(
       <RichTextSendBox
         onSendMessage={async () => {
@@ -87,10 +87,10 @@ betaTest.describe('Attachment tests', () => {
       />
     );
     await component.evaluate(() => document.fonts.ready);
-    await expect(component).toHaveScreenshot('attachments-in-rich text-sendbox-with-progress-group-layout.png');
+    await expect(component).toHaveScreenshot('attachments-in-richtext-sendbox-with-progress-group-layout.png');
   });
 
-  betaTest('RichText SendBox should show failed attachment', async ({ mount }) => {
+  betaTest.only('RichText SendBox should show failed attachment', async ({ mount }) => {
     const component = await mount(
       <RichTextSendBox
         onSendMessage={async () => {
@@ -109,7 +109,7 @@ betaTest.describe('Attachment tests', () => {
     await expect(component).toHaveScreenshot('attachment-in-richtext-sendbox-with-error.png');
   });
 
-  betaTest('MessageThread should show single attachments that has sent out', async ({ mount }) => {
+  betaTest.only('MessageThread should show single attachments that has sent out', async ({ mount }) => {
     const component = await mount(
       <MessageThread
         userId={'8:acs:12345'}
@@ -131,7 +131,7 @@ betaTest.describe('Attachment tests', () => {
     await expect(component).toHaveScreenshot('attachment-in-messagethread-mymessage-single.png');
   });
 
-  betaTest('MessageThread should show multiple attachments that has sent out', async ({ mount }) => {
+  betaTest.only('MessageThread should show multiple attachments that has sent out', async ({ mount }) => {
     const component = await mount(
       <MessageThread
         userId={'8:acs:12345'}
@@ -157,45 +157,20 @@ betaTest.describe('Attachment tests', () => {
     await expect(component).toHaveScreenshot('attachment-in-messagethread-mymessage-multiple.png');
   });
 
-  betaTest('MessageThread should show single attachments that has sent out with custom action', async ({ mount }) => {
-    const component = await mount(
-      <MessageThread
-        userId={'8:acs:12345'}
-        messages={[
-          {
-            contentType: 'text',
-            messageType: 'chat',
-            messageId: '1234567890',
-            createdOn: new Date('01-01-2024'),
-            senderId: '8:acs:12345',
-            content: 'Custom Action Test',
-            mine: true,
-            attachments: [{ name: 'test1.docx', id: 'id1', url: 'https://www.contoso.com/test1.docx' }]
-          }
-        ]}
-        attachmentOptions={{
-          downloadOptions: {
-            actionsForAttachment: () => {
-              return [
-                defaultAttachmentMenuAction,
-                {
-                  icon: <Icon iconName="OpenAttachment" />,
-                  name: 'open',
-                  onClick: async () => {
-                    return Promise.resolve();
-                  }
-                }
-              ];
-            }
-          }
-        }}
-      />
-    );
-    await component.evaluate(() => document.fonts.ready);
-    await expect(component).toHaveScreenshot('attachment-in-messagethread-mymessage-actions.png');
-  });
+  betaTest.only(
+    'MessageThread should show single attachments that has sent out with custom action',
+    async ({ mount }) => {
+      // due to limitation of playright, a mock component is required
+      // we can't test directly on the MessageThread component
+      const component = await mount(<TestMessageThreadWithCustomAttachmentActions />);
+      await component.evaluate(() => document.fonts.ready);
+      await expect(component).toHaveScreenshot('attachment-in-messagethread-mymessage-custom-actions.png');
+      await component.getByRole('button').click();
+      await expect(component).toHaveScreenshot('attachment-in-messagethread-mymessage-custom-actions-clicked.png');
+    }
+  );
 
-  betaTest('MessageThread should show multiple attachments that has received', async ({ mount }) => {
+  betaTest.only('MessageThread should show multiple attachments that has received', async ({ mount }) => {
     const component = await mount(
       <MessageThread
         userId={'8:acs:12345'}
@@ -221,7 +196,7 @@ betaTest.describe('Attachment tests', () => {
     await expect(component).toHaveScreenshot('attachment-in-messagethread-acs-message-multiple.png');
   });
 
-  betaTest('MessageThread should show single attachment that has received', async ({ mount }) => {
+  betaTest.only('MessageThread should show single attachment that has received', async ({ mount }) => {
     const component = await mount(
       <MessageThread
         userId={'8:acs:12345'}
@@ -240,10 +215,10 @@ betaTest.describe('Attachment tests', () => {
       />
     );
     await component.evaluate(() => document.fonts.ready);
-    await expect(component).toHaveScreenshot('attachment-in-messagethreadt-acs-message-single.png');
+    await expect(component).toHaveScreenshot('attachment-in-messagethread-acs-message-single.png');
   });
 
-  betaTest('MessageThread should show multiple attachments from Teams user that has received', async ({ mount }) => {
+  betaTest.only('MessageThread should show multiple attachments from Teams user that has received', async ({ mount }) => {
     const component = await mount(
       <MessageThread
         userId={'8:acs:12345'}
@@ -269,7 +244,7 @@ betaTest.describe('Attachment tests', () => {
     await expect(component).toHaveScreenshot('attachment-in-messagethread-teams-message-multiple.png');
   });
 
-  betaTest('MessageThread should show single attachment from Teams user that has received', async ({ mount }) => {
+  betaTest.only('MessageThread should show single attachment from Teams user that has received', async ({ mount }) => {
     const component = await mount(
       <MessageThread
         userId={'8:acs:12345'}
