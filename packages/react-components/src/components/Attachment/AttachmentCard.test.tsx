@@ -18,7 +18,7 @@ describe('AttachmentCard should be rendered properly', () => {
 
   it('should render the component', () => {
     renderAttachmentCardWithDefaults();
-    expect(screen.getByText('MockAttachmentCard.docx')).toBeDefined();
+    expect(screen.getByText('MockAttachmentCard')).toBeDefined();
   });
 
   it('should render the component with progress bar', () => {
@@ -80,7 +80,7 @@ const renderAttachmentCardWithDefaults = (props?: Partial<_AttachmentCardProps>)
   const mergedProps: _AttachmentCardProps = {
     attachment: {
       id: 'mockId',
-      name: 'MockAttachmentCard.docx',
+      name: 'MockAttachmentCard',
       url: 'mockUrl'
     },
     menuActions: props?.menuActions ?? [],

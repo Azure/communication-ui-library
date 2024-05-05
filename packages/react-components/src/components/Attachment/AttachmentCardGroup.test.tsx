@@ -40,11 +40,11 @@ describe('AttachmentCardGroup should be rendered properly', () => {
       children: (
         <>
           <_AttachmentCard
-            attachment={{ id: '1', name: 'MockAttachmentCard.docx', url: 'mockUrl1' }}
+            attachment={{ id: '1', name: 'MockAttachmentCard', url: 'mockUrl1' }}
             menuActions={[defaultAttachmentMenuAction]}
           />
           <_AttachmentCard
-            attachment={{ id: '2', name: 'MockSecondAttachmentCard.docx', url: 'mockUrl2' }}
+            attachment={{ id: '2', name: 'MockSecondAttachmentCard', url: 'mockUrl2' }}
             menuActions={[defaultAttachmentMenuAction]}
           />
         </>
@@ -53,8 +53,8 @@ describe('AttachmentCardGroup should be rendered properly', () => {
     };
 
     renderAttachmentCardGroupWithDefaults(props);
-    const attachmentCard = screen.findByText('MockAttachmentCard.docx');
-    const secondAttachmentCard = screen.findByText('MockSecondAttachmentCard.docx');
+    const attachmentCard = screen.findByText('MockAttachmentCard');
+    const secondAttachmentCard = screen.findByText('MockSecondAttachmentCard');
 
     expect(attachmentCard).toBeDefined();
     expect(secondAttachmentCard).toBeDefined();

@@ -30,7 +30,7 @@ describe('AttachmentDownloadCards should be rendered properly', () => {
       attachments: [attachment]
     };
     renderAttachmentDownloadCardsWithDefaults(props);
-    const card = await screen.findByText('MockAttachmentCard.docx');
+    const card = await screen.findByText('MockAttachmentCard');
     expect(card).toBeDefined();
   });
 });
