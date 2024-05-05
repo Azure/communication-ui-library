@@ -18,7 +18,7 @@ import { _AttachmentUploadCards } from '../Attachment/AttachmentUploadCards';
 /* @conditional-compile-remove(attachment-upload) */
 import { AttachmentMetadataWithProgress } from '../../types/Attachment';
 /* @conditional-compile-remove(attachment-upload) */
-import { IsAttachmentUploadCompleted, hasIncompleteAttachmentUploads } from '../utils/SendBoxUtils';
+import { isAttachmentUploadCompleted, hasIncompleteAttachmentUploads } from '../utils/SendBoxUtils';
 /* @conditional-compile-remove(attachment-upload) */
 import { SendBoxErrorBarError } from '../SendBoxErrorBar';
 /* @conditional-compile-remove(attachment-upload) */
@@ -238,7 +238,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     // Message can be empty if there is a valid attachment upload
     if (
       hasContent ||
-      /* @conditional-compile-remove(attachment-upload) */ IsAttachmentUploadCompleted(attachmentsWithProgress)
+      /* @conditional-compile-remove(attachment-upload) */ isAttachmentUploadCompleted(attachmentsWithProgress)
     ) {
       onSendMessage(message);
       setContentValue('');
@@ -362,7 +362,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     return isSendBoxButtonAriaDisabled({
       hasContent,
       /* @conditional-compile-remove(attachment-upload) */ hasCompletedAttachmentUploads:
-        IsAttachmentUploadCompleted(attachmentsWithProgress),
+        isAttachmentUploadCompleted(attachmentsWithProgress),
       hasError: hasErrorMessage,
       disabled
     });
@@ -392,7 +392,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
   /* @conditional-compile-remove(attachment-upload) */
   const hasAttachmentUploads = useMemo(() => {
     return (
-      IsAttachmentUploadCompleted(attachmentsWithProgress) || hasIncompleteAttachmentUploads(attachmentsWithProgress)
+      isAttachmentUploadCompleted(attachmentsWithProgress) || hasIncompleteAttachmentUploads(attachmentsWithProgress)
     );
   }, [attachmentsWithProgress]);
 

@@ -21,7 +21,7 @@ import { attachmentUploadCardsStyles } from './styles/SendBox.styles';
 /* @conditional-compile-remove(attachment-upload) */
 import { SendBoxErrorBarError } from './SendBoxErrorBar';
 /* @conditional-compile-remove(attachment-upload) */
-import { IsAttachmentUploadCompleted, hasIncompleteAttachmentUploads } from './utils/SendBoxUtils';
+import { isAttachmentUploadCompleted, hasIncompleteAttachmentUploads } from './utils/SendBoxUtils';
 import {
   MAXIMUM_LENGTH_OF_MESSAGE,
   isMessageTooLong,
@@ -242,7 +242,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     // Message can be empty if there is a valid attachment upload
     if (
       sanitizeText(message).length > 0 ||
-      /* @conditional-compile-remove(attachment-upload) */ IsAttachmentUploadCompleted(attachmentsWithProgress)
+      /* @conditional-compile-remove(attachment-upload) */ isAttachmentUploadCompleted(attachmentsWithProgress)
     ) {
       onSendMessage && onSendMessage(message);
       setTextValue('');
@@ -275,7 +275,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
         theme,
         hasText: sanitizeText(textValue).length > 0,
         /* @conditional-compile-remove(attachment-upload) */ hasAttachment:
-          IsAttachmentUploadCompleted(attachmentsWithProgress),
+          isAttachmentUploadCompleted(attachmentsWithProgress),
         hasErrorMessage: !!errorMessage,
         customSendIconStyle: styles?.sendMessageIcon,
         disabled: !!disabled
@@ -294,7 +294,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     return isSendBoxButtonAriaDisabled({
       hasContent: sanitizeText(textValue).length > 0,
       /* @conditional-compile-remove(attachment-upload) */ hasCompletedAttachmentUploads:
-        IsAttachmentUploadCompleted(attachmentsWithProgress),
+        isAttachmentUploadCompleted(attachmentsWithProgress),
       hasError: !!errorMessage,
       disabled: !!disabled
     });

@@ -43,16 +43,6 @@ export type _FakeChatAdapterArgs = {
    */
   fileSharingEnabled?: boolean;
   /**
-   * Array of {@link AttachmentUpload} the local participant will perform when. Property `fileSharingEnabled`
-   * needs to be enabled.
-   */
-  attachmentUploads?: _MockAttachmentUpload[];
-  /**
-   * Determines if array of {@link AttachmentUpload} the local participant will perform in property `attachmentUploads`
-   * will fail. Property `fileSharingEnabled` needs to be enabled.
-   */
-  failFileDownload?: boolean;
-  /**
    * Determines if the first remote participant will send a fixed message with a shared attachment. Property
    * `fileSharingEnabled` needs to be enabled.
    */

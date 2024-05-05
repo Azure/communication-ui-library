@@ -18,7 +18,7 @@ describe('AttachmentCard should be rendered properly', () => {
 
   it('should render the component', () => {
     renderAttachmentCardWithDefaults();
-    expect(screen.getByText('MockAttachmentCard')).toBeDefined();
+    expect(screen.getByText('MockAttachmentCard.docx')).toBeDefined();
   });
 
   it('should render the component with progress bar', () => {

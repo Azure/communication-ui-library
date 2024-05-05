@@ -21,13 +21,13 @@ describe('AttachmentUploadCards should be rendered properly', () => {
       attachmentsWithProgress: [
         {
           id: 'MockId',
-          name: 'MockAttachmentUpload',
+          name: 'MockAttachmentUpload.docx',
           progress: 50
         }
       ]
     } as AttachmentUploadCardsProps;
     renderAttachmentUploadCardWithDefaults(props);
-    expect(await screen.findByText('MockAttachmentUpload')).toBeDefined();
+    expect(await screen.findByText('MockAttachmentUpload.docx')).toBeDefined();
   });
 
   it('should not render the component with no attachmentsWithProgress', async () => {
@@ -35,7 +35,7 @@ describe('AttachmentUploadCards should be rendered properly', () => {
       attachmentsWithProgress: undefined
     } as AttachmentUploadCardsProps;
     renderAttachmentUploadCardWithDefaults(props);
-    expect(screen.queryByText('MockAttachmentUpload')).toBeNull();
+    expect(screen.queryByText('MockAttachmentUpload.docx')).toBeNull();
   });
 });
 

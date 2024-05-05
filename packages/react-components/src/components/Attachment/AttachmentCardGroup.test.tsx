@@ -53,8 +53,8 @@ describe('AttachmentCardGroup should be rendered properly', () => {
     };
 
     renderAttachmentCardGroupWithDefaults(props);
-    const attachmentCard = screen.findByText('MockAttachmentCard');
-    const secondAttachmentCard = screen.findByText('MockSecondAttachmentCard');
+    const attachmentCard = screen.findByText('MockAttachmentCard.docx');
+    const secondAttachmentCard = screen.findByText('MockSecondAttachmentCard.docx');
 
     expect(attachmentCard).toBeDefined();
     expect(secondAttachmentCard).toBeDefined();
