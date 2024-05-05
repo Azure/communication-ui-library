@@ -24,7 +24,7 @@ betaTest.describe('Attachment tests', () => {
       />
     );
     await component.evaluate(() => document.fonts.ready);
-    await expect(component).toHaveScreenshot('attachment-in-sendbox-with-progress-group-layout');
+    await expect(component).toHaveScreenshot('attachment-in-sendbox-with-progress-group-layout.png');
   });
 
   betaTest('Regular SendBox should show attachment progress correctly in singular layout', async ({ mount }) => {
@@ -118,7 +118,7 @@ betaTest.describe('Attachment tests', () => {
             messageType: 'chat',
             messageId: '1234567890',
             createdOn: new Date(),
-            senderId: '1234',
+            senderId: '8:acs:12345',
             content: 'Hello!',
             mine: true,
             attachments: [{ name: 'test1.pdf', id: 'id1', url: 'https://www.contoso.com/test1.pdf' }]
@@ -140,7 +140,7 @@ betaTest.describe('Attachment tests', () => {
             messageType: 'chat',
             messageId: '1234567890',
             createdOn: new Date(),
-            senderId: '1234',
+            senderId: '8:acs:12345',
             content: 'Hello!',
             mine: true,
             attachments: [
@@ -166,7 +166,7 @@ betaTest.describe('Attachment tests', () => {
             messageType: 'chat',
             messageId: '1234567890',
             createdOn: new Date(),
-            senderId: '1234',
+            senderId: '8:acs:12345',
             content: 'Hello!',
             mine: true,
             attachments: [{ name: 'test1.pdf', id: 'id1', url: 'https://www.contoso.com/test1.pdf' }]
@@ -205,7 +205,7 @@ betaTest.describe('Attachment tests', () => {
             messageType: 'chat',
             messageId: '1234567890',
             createdOn: new Date(),
-            senderId: '1234',
+            senderId: '8:acs:12345',
             content: 'Hello!',
             mine: false,
             attachments: [
@@ -231,7 +231,55 @@ betaTest.describe('Attachment tests', () => {
             messageType: 'chat',
             messageId: '1234567890',
             createdOn: new Date(),
-            senderId: '1234',
+            senderId: '8:acs:12345',
+            content: 'Hello!',
+            mine: false,
+            attachments: [{ name: 'test1.pdf', id: 'id1', url: 'https://www.contoso.com/test1.pdf' }]
+          }
+        ]}
+      />
+    );
+    await component.evaluate(() => document.fonts.ready);
+    await expect(component).toHaveScreenshot('attachment-in-messagethread-message-multiple.png');
+  });
+
+  betaTest('MessageThread should show multiple attachments from Teams user that has received', async ({ mount }) => {
+    const component = await mount(
+      <MessageThread
+        userId={''}
+        messages={[
+          {
+            contentType: 'text',
+            messageType: 'chat',
+            messageId: '1234567890',
+            createdOn: new Date(),
+            senderId: '8:orgid:1234',
+            content: 'Hello!',
+            mine: false,
+            attachments: [
+              { name: 'test1.pdf', id: 'id1', url: 'https://www.contoso.com/test1.pdf' },
+              { name: 'test2.docx', id: 'id2', url: 'https://www.contoso.com/test2.docx' },
+              { name: 'test3.txt', id: 'id3', url: 'https://www.contoso.com/test3.txt' }
+            ]
+          }
+        ]}
+      />
+    );
+    await component.evaluate(() => document.fonts.ready);
+    await expect(component).toHaveScreenshot('attachment-in-messagethread-message-multiple.png');
+  });
+
+  betaTest('MessageThread should show single attachment from Teams user that has received', async ({ mount }) => {
+    const component = await mount(
+      <MessageThread
+        userId={''}
+        messages={[
+          {
+            contentType: 'text',
+            messageType: 'chat',
+            messageId: '1234567890',
+            createdOn: new Date(),
+            senderId: '8:orgid:1234',
             content: 'Hello!',
             mine: false,
             attachments: [{ name: 'test1.pdf', id: 'id1', url: 'https://www.contoso.com/test1.pdf' }]
