@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 import React from 'react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { expect } from '@playwright/experimental-ct-react';
 import { test as betaTest } from './FlavoredBaseTest';
 import { RichTextSendBox } from '../../src/components/RichTextEditor/RichTextSendBox';
@@ -112,7 +113,7 @@ betaTest.describe('Attachment tests', () => {
   betaTest('MessageThread should show single attachments that has sent out', async ({ mount }) => {
     const component = await mount(
       <MessageThread
-        userId={''}
+        userId={'8:acs:12345'}
         messages={[
           {
             contentType: 'text',
@@ -134,7 +135,7 @@ betaTest.describe('Attachment tests', () => {
   betaTest('MessageThread should show multiple attachments that has sent out', async ({ mount }) => {
     const component = await mount(
       <MessageThread
-        userId={''}
+        userId={'8:acs:12345'}
         messages={[
           {
             contentType: 'text',
@@ -160,7 +161,7 @@ betaTest.describe('Attachment tests', () => {
   betaTest('MessageThread should show single attachments that has sent out with custom action', async ({ mount }) => {
     const component = await mount(
       <MessageThread
-        userId={''}
+        userId={'8:acs:12345'}
         messages={[
           {
             contentType: 'text',
@@ -168,12 +169,11 @@ betaTest.describe('Attachment tests', () => {
             messageId: '1234567890',
             createdOn: new Date('01-01-2024'),
             senderId: '8:acs:12345',
-            content: 'Hello!',
+            content: 'Custom Action Test',
             mine: true,
-            attachments: [{ name: 'test1.pdf', id: 'id1', url: 'https://www.contoso.com/test1.pdf' }]
+            attachments: [{ name: 'test1.docx', id: 'id1', url: 'https://www.contoso.com/test1.docx' }]
           }
         ]}
-        onRenderAttachmentDownloads={undefined}
         attachmentOptions={{
           downloadOptions: {
             actionsForAttachment: () => {
@@ -199,7 +199,7 @@ betaTest.describe('Attachment tests', () => {
   betaTest('MessageThread should show multiple attachments that has received', async ({ mount }) => {
     const component = await mount(
       <MessageThread
-        userId={''}
+        userId={'8:acs:12345'}
         messages={[
           {
             contentType: 'text',
@@ -219,13 +219,13 @@ betaTest.describe('Attachment tests', () => {
       />
     );
     await component.evaluate(() => document.fonts.ready);
-    await expect(component).toHaveScreenshot('attachment-in-messagethread-message-multiple.png');
+    await expect(component).toHaveScreenshot('attachment-in-messagethread-acs-message-multiple.png');
   });
 
   betaTest('MessageThread should show single attachment that has received', async ({ mount }) => {
     const component = await mount(
       <MessageThread
-        userId={''}
+        userId={'8:acs:12345'}
         messages={[
           {
             contentType: 'text',
@@ -241,13 +241,13 @@ betaTest.describe('Attachment tests', () => {
       />
     );
     await component.evaluate(() => document.fonts.ready);
-    await expect(component).toHaveScreenshot('attachment-in-messagethread-message-multiple.png');
+    await expect(component).toHaveScreenshot('attachment-in-messagethreadt-acs-message-single.png');
   });
 
   betaTest('MessageThread should show multiple attachments from Teams user that has received', async ({ mount }) => {
     const component = await mount(
       <MessageThread
-        userId={''}
+        userId={'8:acs:12345'}
         messages={[
           {
             contentType: 'text',
@@ -267,13 +267,13 @@ betaTest.describe('Attachment tests', () => {
       />
     );
     await component.evaluate(() => document.fonts.ready);
-    await expect(component).toHaveScreenshot('attachment-in-messagethread-message-multiple.png');
+    await expect(component).toHaveScreenshot('attachment-in-messagethread-teams-message-multiple.png');
   });
 
   betaTest('MessageThread should show single attachment from Teams user that has received', async ({ mount }) => {
     const component = await mount(
       <MessageThread
-        userId={''}
+        userId={'8:acs:12345'}
         messages={[
           {
             contentType: 'text',
@@ -289,6 +289,6 @@ betaTest.describe('Attachment tests', () => {
       />
     );
     await component.evaluate(() => document.fonts.ready);
-    await expect(component).toHaveScreenshot('attachment-in-messagethread-message-multiple.png');
+    await expect(component).toHaveScreenshot('attachment-in-messagethread-teams-message-single.png');
   });
 });
