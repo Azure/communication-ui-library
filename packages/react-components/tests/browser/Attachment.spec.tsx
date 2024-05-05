@@ -89,7 +89,7 @@ betaTest.describe('Attachment tests', () => {
     await expect(component).toHaveScreenshot('attachments-in-rich text-sendbox-with-progress-group-layout.png');
   });
 
-  betaTest('Regular SendBox should show failed attachment', async ({ mount }) => {
+  betaTest('RichText SendBox should show failed attachment', async ({ mount }) => {
     const component = await mount(
       <RichTextSendBox
         onSendMessage={async () => {
