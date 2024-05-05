@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 import React from 'react';
-import { fireEvent, render, screen } from '@testing-library/react';
 import { expect } from '@playwright/experimental-ct-react';
 import { test as betaTest } from './FlavoredBaseTest';
 import { RichTextSendBox } from '../../src/components/RichTextEditor/RichTextSendBox';
