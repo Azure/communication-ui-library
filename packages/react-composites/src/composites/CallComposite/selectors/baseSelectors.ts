@@ -198,7 +198,12 @@ export const getSupportedSpokenLanguages = (state: CallAdapterState): string[] |
 /**
  * @private
  */
-export const getIsTeamsCall = (state: CallAdapterState): boolean => state.isTeamsCall;
+export const getIsTeamsCall = (state: CallAdapterState): boolean => {
+  if (state.isTeamsCall || state.isTeamsMeeting) {
+    return true;
+  }
+  return false;
+};
 
 /**
  * @private
