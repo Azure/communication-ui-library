@@ -1163,6 +1163,7 @@ export interface CallWithChatCompositeStrings {
     chatButtonTooltipOpen: string;
     chatPaneTitle: string;
     copyInviteLinkActionedAriaLabel: string;
+    copyInviteLinkButtonActionedLabel: string;
     copyInviteLinkButtonLabel: string;
     dismissSidePaneButtonLabel?: string;
     moreDrawerAudioDeviceMenuTitle?: string;
