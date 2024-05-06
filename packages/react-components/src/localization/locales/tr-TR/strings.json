@@ -27,7 +27,8 @@
     "attachmentUploadsPendingError": "Karşıya yükleniyor... Lütfen bekleyin.",
     "removeAttachment": "Dosyayı kaldır",
     "uploading": "Karşıya yükleniyor",
-    "uploadCompleted": "Karşıya yükleme tamamlandı"
+    "uploadCompleted": "Karşıya yükleme tamamlandı",
+    "attachmentMoreMenu": "Diğer Seçenekler"
   },
   "richTextSendBox": {
     "placeholderText": "Bir mesaj girin",
@@ -55,7 +56,8 @@
     "deleteRowOrColumnMenu": "Sil",
     "deleteColumnMenu": "Sütunu sil",
     "deleteRowMenu": "Satırı sil",
-    "deleteTableMenu": "Tabloyu sil"
+    "deleteTableMenu": "Tabloyu sil",
+    "attachmentMoreMenu": "Diğer Seçenekler"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Öneriler"
@@ -79,7 +81,7 @@
     "label": "Ayrıl",
     "tooltipContent": "Aramadan ayrıl",
     "leaveOption": "Ayrıl",
-    "endCallOption": "Aramayı sonlandır"
+    "endCallOption": "Aramayı herkes için sonlandır"
   },
   "cameraButton": {
     "onLabel": "Kamera",

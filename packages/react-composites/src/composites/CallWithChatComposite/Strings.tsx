@@ -18,6 +18,14 @@ export interface CallWithChatCompositeStrings {
    */
   selectedPeopleButtonLabel: string;
   /**
+   * {@link CallWithChatComposite} aria label for control bar People button when unchecked
+   */
+  peopleButtonTooltipOpenAriaLabel: string;
+  /**
+   * {@link CallWithChatComposite} aria label for control bar People button when checked
+   */
+  peopleButtonTooltipCloseAriaLabel: string;
+  /**
    * {@link CallWithChatComposite} control bar People button ToolTipContent
    */
   peopleButtonTooltipOpen: string;
@@ -121,6 +129,10 @@ export interface CallWithChatCompositeStrings {
    * Label for button to copy invite link
    */
   copyInviteLinkButtonLabel: string;
+  /**
+   * Label for button to copy invite link when it has been actioned
+   */
+  copyInviteLinkButtonActionedLabel: string;
   /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Label for button to open dialpad
