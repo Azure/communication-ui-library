@@ -53,11 +53,6 @@ export interface RichTextEditorProps {
 }
 
 /**
- * Props for {@link RichTextEditor}.
- *
- * @beta
- */
-/**
  * Represents a reference to the RichTextEditor component.
  */
 export interface RichTextEditorComponentRef {

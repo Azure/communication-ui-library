@@ -3,8 +3,8 @@
 import { editTable } from 'roosterjs-editor-api';
 import { CompatibleTableOperation, EditorPlugin, IEditor } from 'roosterjs-editor-types-compatible';
 import { ContextMenuItem, createContextMenuProvider, LocalizedStrings } from 'roosterjs-react';
-import { tableContextMenuStrings } from '../../../utils/RichTextEditorStringsUtils';
-import { tableContextMenuIconStyles } from '../../../styles/RichTextEditor.styles';
+import { tableContextMenuStrings } from '../../../../utils/RichTextEditorStringsUtils';
+import { tableContextMenuIconStyles } from '../../../../styles/RichTextEditor.styles';
 
 const onClick = (key: string, editor: IEditor): void => {
   editor.focus();

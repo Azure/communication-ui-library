@@ -3,7 +3,7 @@
 
 import { ContextualMenuItemType, Icon, Theme } from '@fluentui/react';
 import { KnownRibbonButtonKey, RibbonButton, getButtons } from 'roosterjs-react';
-import { ribbonButtonStyle, ribbonDividerStyle } from '../../styles/RichTextEditor.styles';
+import { ribbonButtonStyle, ribbonDividerStyle } from '../../../styles/RichTextEditor.styles';
 import { insertTableButton } from './Table/RichTextInsertTableButton';
 import React from 'react';
 

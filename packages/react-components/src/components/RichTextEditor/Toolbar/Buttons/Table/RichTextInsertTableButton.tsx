@@ -6,9 +6,9 @@ import { Icon, Stack } from '@fluentui/react';
 import { insertTable as insertTableAction } from './insertTableAction';
 import type { RibbonButton } from 'roosterjs-react';
 import type { IContextualMenuItem, Theme } from '@fluentui/react';
-import { insertTableMenuTablePane, ribbonTableButtonStyle } from '../../../styles/RichTextEditor.styles';
+import { insertTableMenuTablePane, ribbonTableButtonStyle } from '../../../../styles/RichTextEditor.styles';
 import { RichTextInsertTablePane } from './RichTextInsertTablePane';
-import { ColumnRowReplaceString, parseKey } from '../../../utils/RichTextTableUtils';
+import { ColumnRowReplaceString, parseKey } from '../../../../utils/RichTextTableUtils';
 import type { IEditor } from 'roosterjs-editor-types-compatible';
 
 // This file uses RoosterJS React package implementation with updates to UI components and styles.

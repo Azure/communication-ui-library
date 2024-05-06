@@ -9,9 +9,9 @@ import {
   insertTableMenuCellButtonStyles,
   insertTableMenuFocusZone,
   insertTableMenuTitleStyles
-} from '../../../styles/RichTextEditor.styles';
-import { ColumnRowReplaceString, createKey } from '../../../utils/RichTextTableUtils';
-import { useTheme } from '../../../../theming';
+} from '../../../../styles/RichTextEditor.styles';
+import { ColumnRowReplaceString, createKey } from '../../../../utils/RichTextTableUtils';
+import { useTheme } from '../../../../../theming';
 
 // This file uses RoosterJS React package implementation with updates to UI components and styles.
 const RowColumnInitialValue = 0;
