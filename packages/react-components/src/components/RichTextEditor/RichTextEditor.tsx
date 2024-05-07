@@ -14,12 +14,12 @@ import { RichTextSendBoxStrings } from './RichTextSendBox';
 import { isDarkThemed } from '../../theming/themeUtils';
 // import { ribbonButtonsStrings } from '../utils/RichTextEditorStringsUtils';
 // import { createTableEditMenuProvider } from './Buttons/Table/RichTextTableContextMenu';
-// import CopyPastePlugin from './Plugins/CopyPastePlugin';
+import CopyPastePlugin from './Plugins/CopyPastePlugin';
 import type { ContentModelDocument, EditorPlugin, IEditor } from 'roosterjs-content-model-types';
 import { createModelFromHtml, Editor, exportContent } from 'roosterjs-content-model-core';
 import { createParagraph, createSelectionMarker } from 'roosterjs-content-model-dom';
-import KeyboardInputPlugin from './Plugins/KeyboardInputPlugin';
-import { AutoFormatPlugin, EditPlugin, WatermarkPlugin } from 'roosterjs-content-model-plugins';
+import { KeyboardInputPlugin } from './Plugins/KeyboardInputPlugin';
+import { AutoFormatPlugin, EditPlugin, WatermarkPlugin, PastePlugin } from 'roosterjs-content-model-plugins';
 import { UpdateContentPlugin, UpdateEvent } from './Plugins/UpdateContentPlugin';
 
 /**
@@ -203,18 +203,26 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     //   const contextPlugin = createContextMenuPlugin();
     //   const tableEditMenuProvider = createTableEditMenuProvider(strings);
     const contentEdit = new EditPlugin();
-    // previously wa part of the edit plugin
+    // AutoFormatPlugin previously was a part of the edit plugin
     const autoFormatPlugin = new AutoFormatPlugin();
-    //   const copyPastePlugin = new CopyPastePlugin();
+    const copyPastePlugin = new CopyPastePlugin();
+    const roosterPastePlugin = new PastePlugin(false);
     const placeholderPlugin = new WatermarkPlugin(placeholderText ?? '');
-    return [placeholderPlugin, keyboardInputPlugin, contentEdit, autoFormatPlugin, updatePlugin];
+    return [
+      placeholderPlugin,
+      keyboardInputPlugin,
+      contentEdit,
+      autoFormatPlugin,
+      updatePlugin,
+      copyPastePlugin,
+      roosterPastePlugin
+    ];
   }, [keyboardInputPlugin, placeholderText, updatePlugin]);
-
+  // TODO: check shortcuts plugin
   //   return [,
   //     ribbonPlugin,
   //     contextPlugin,
   //     tableEditMenuProvider,
-  //     copyPastePlugin
   //   ];
   // TODO-vhuseinova: check that localization/rtl works
   useEffect(() => {

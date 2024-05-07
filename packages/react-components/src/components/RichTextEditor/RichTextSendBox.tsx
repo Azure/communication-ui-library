@@ -211,14 +211,12 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     setContentValue(newValue);
   }, []);
 
-  // update the content value when the editor content changes
   const hasContent = useMemo(() => {
     //TODO-vhuseinova: check if table is considered an empty message
     // get plain text content from the editor to check if the message is empty
     // as the content may contain tags even when the content is empty
     const plainTextContent = editorComponentRef.current?.getPlainContent();
-    return sanitizeText(plainTextContent ?? '').length > 0;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    return sanitizeText(contentValue ?? '').length > 0 && sanitizeText(plainTextContent ?? '').length > 0;
   }, [contentValue]);
 
   const sendMessageOnClick = useCallback((): void => {

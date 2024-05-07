@@ -32,7 +32,6 @@ export const richTextEditorWrapperStyle = (theme: Theme, addTopOffset: boolean):
     paddingTop: `${addTopOffset ? '0.5rem' : '0'}`,
     paddingInlineStart: `0.75rem`,
     paddingInlineEnd: `0.75rem`,
-    lineHeight: '1.25rem',
     maxWidth: '100%',
     color: theme.palette.neutralPrimary,
 
