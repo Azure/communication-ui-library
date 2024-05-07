@@ -11,13 +11,14 @@ import { ChatCompositeOptions } from '../ChatComposite';
 import { Suspense } from 'react';
 /* @conditional-compile-remove(file-sharing) */
 import { ChatAdapter } from '../ChatComposite';
-/* @conditional-compile-remove(file-sharing) */
-import { useSelector } from '../ChatComposite/hooks/useSelector';
+// /* @conditional-compile-remove(file-sharing) */
+// import { useSelector } from '../ChatComposite/hooks/useSelector';
 
-// TODO: Improve Lazy Loading
-/* @condition-compile-remove(rich-text-editor-composite-support) */
-const richTextSendBox = React.lazy(() =>
-  import('./rich-text-editor/RichTextSendBox').then((module) => ({ default: module.RichTextSendBox }))
+// TODO: Improve lazy loading
+const RichTextSendBox = React.lazy(() =>
+  import('../../../../react-components/src/components/RichTextEditor/RichTextSendBox').then((module) => ({
+    default: module.RichTextSendBox
+  }))
 );
 
 /**
@@ -36,9 +37,9 @@ export type SendBoxPickerProps = {
 export const SendBoxPicker = (props: SendBoxPickerProps): JSX.Element => {
   const {
     options,
-    styles,
-    /* @conditional-compile-remove(file-sharing) */
-    adapter
+    styles
+    // /* @conditional-compile-remove(file-sharing) */
+    // adapter
   } = props;
 
   const sendBoxProps = usePropsFor(SendBox);
@@ -66,8 +67,12 @@ export const SendBoxPicker = (props: SendBoxPickerProps): JSX.Element => {
   if (isRichTextEditorEnabled) {
     return (
       <Suspense fallback={sendBox}>
-        <RichTextSendBox adapter={adapter} options={options} styles={sendBoxStyles} />
+        <RichTextSendBox
+          {...sendBoxProps}
+          // TODO: Add file upload
+        />
       </Suspense>
     );
   }
+  return sendBox;
 };
