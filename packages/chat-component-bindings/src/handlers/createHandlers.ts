@@ -21,7 +21,7 @@ export type ChatHandlers = {
   onSendMessage: (
     content: string,
     /**
-     * @deprecated The usage of {@link SendMessageOptions} here is being deprecated, 
+     * @deprecated The usage of {@link SendMessageOptions} here is being deprecated,
      * moving forward, please use {@link UIComponentMessageOptions} instead
      *
      * options to set properties associated with chat messages
@@ -47,8 +47,7 @@ export type ChatHandlers = {
  */
 export type UIComponentMessageOptions = {
   attachmentMetadata?: AttachmentMetadata[];
-}
-
+};
 
 /**
  * Create the default implementation of {@link ChatHandlers}.
@@ -67,8 +66,8 @@ export const createDefaultChatHandlers = memoizeOne(
     return {
       onSendMessage: async (content: string, options?: SendMessageOptions | UIComponentMessageOptions) => {
         let chatSDKOptions = {};
-        // if attachmentMetadata is present in options, 
-        // then it is a UIComponentMessageOptions and 
+        // if attachmentMetadata is present in options,
+        // then it is a UIComponentMessageOptions and
         // we need to convert it to SendMessageOptions from Chat SDK
         if (options && `attachmentMetadata` in options) {
           chatSDKOptions = {
@@ -96,7 +95,7 @@ export const createDefaultChatHandlers = memoizeOne(
           metadata: {
             fileSharingMetadata: JSON.stringify(options?.attachmentMetadata)
           }
-        }
+        };
         await chatThreadClient.updateMessage(messageId, updateMessageOptions);
       },
       onDeleteMessage: async (messageId: string) => {
