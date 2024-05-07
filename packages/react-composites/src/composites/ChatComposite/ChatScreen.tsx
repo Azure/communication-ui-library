@@ -456,7 +456,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
                   }}
                   // we need to overwrite onSendMessage for SendBox because we need to clear attachment state
                   // when submit button is clicked
-                  onSendMessage={async (content: string, options?: { attachmentMetadata: AttachmentMetadata[] }) => {
+                  onSendMessage={async (content: string, options?: { attachmentMetadata?: AttachmentMetadata[] }) => {
                     /* @conditional-compile-remove(attachment-upload) */
                     const attachments = options?.attachmentMetadata ?? [];
                     /* @conditional-compile-remove(attachment-upload) */
