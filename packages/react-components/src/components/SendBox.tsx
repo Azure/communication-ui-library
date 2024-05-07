@@ -251,19 +251,23 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
       /* @conditional-compile-remove(attachment-upload) */ isAttachmentUploadCompleted(attachmentsWithProgress)
     ) {
       onSendMessage &&
-        onSendMessage(message /* @conditional-compile-remove(attachment-upload) */, {
-          attachmentMetadata: attachmentsWithProgress
-            ?.filter((v) => {
-              return !('error' in v) && !v.error?.message;
-            })
-            .map((v) => {
-              return {
-                id: v.id,
-                name: v.name,
-                url: v.url ?? ''
-              };
-            })
-        });
+        onSendMessage(
+          message,
+          /* @conditional-compile-remove(attachment-upload) */
+          {
+            attachmentMetadata: attachmentsWithProgress
+              ?.filter((v) => {
+                return !('error' in v) && !v.error?.message;
+              })
+              .map((v) => {
+                return {
+                  id: v.id,
+                  name: v.name,
+                  url: v.url ?? ''
+                };
+              })
+          }
+        );
       setTextValue('');
       sendTextFieldRef.current?.focus();
     }

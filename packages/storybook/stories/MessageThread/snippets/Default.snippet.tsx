@@ -11,11 +11,8 @@ export const DefaultMessageThreadExample: () => JSX.Element = () => {
         userId={'1'}
         messages={messages}
         onUpdateMessage={async (id, content, options) => {
-          const metadata = options?.metadata;
           const updated = messages.map((m) =>
-            m.messageId === id
-              ? { ...m, metadata, failureReason: 'Failed to edit', status: 'failed' as MessageStatus }
-              : m
+            m.messageId === id ? { ...m, failureReason: 'Failed to edit', status: 'failed' as MessageStatus } : m
           );
           setMessages(updated);
           return Promise.reject('Failed to update');
