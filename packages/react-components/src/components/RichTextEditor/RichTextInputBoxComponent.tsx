@@ -81,22 +81,28 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
   const [contentModel, setContentModel] = useState<ContentModelDocument | undefined>(undefined);
 
   const onRenderRichTextEditorIcon = useCallback(
-    (isHover: boolean) => (
-      <Icon
-        iconName={
-          isHover || showRichTextEditorFormatting ? 'RichTextEditorButtonIconFilled' : 'RichTextEditorButtonIcon'
-        }
-        className={richTextFormatButtonIconStyle(theme, !disabled && (isHover || showRichTextEditorFormatting))}
-      />
-    ),
+    (isHover: boolean) => {
+      const isRichTextEditorToolbarShown = showRichTextEditorFormatting === true;
+      return (
+        <Icon
+          iconName={
+            isHover || isRichTextEditorToolbarShown ? 'RichTextEditorButtonIconFilled' : 'RichTextEditorButtonIcon'
+          }
+          className={richTextFormatButtonIconStyle(theme, !disabled && (isHover || isRichTextEditorToolbarShown))}
+        />
+      );
+    },
     [disabled, showRichTextEditorFormatting, theme]
   );
 
   useEffect(() => {
-    // Focus the editor when toolbar shown/hidden
-    editorComponentRef.current?.focus();
+    if (showRichTextEditorFormatting !== undefined) {
+      // Focus the editor when toolbar shown/hidden
+      editorComponentRef.current?.focus();
+    }
+    // we don't need execute this useEffect if editorComponentRef is changed
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isRichTextEditorToolbarShown]);
+  }, [showRichTextEditorFormatting]);
 
   const actionButtons = useMemo(() => {
     return (
@@ -105,7 +111,8 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
           <InputBoxButton
             onRenderIcon={onRenderRichTextEditorIcon}
             onClick={(e) => {
-              setShowRichTextEditorFormatting(!showRichTextEditorFormatting);
+              const isRichTextEditorToolbarShown = showRichTextEditorFormatting === true;
+              setShowRichTextEditorFormatting(!isRichTextEditorToolbarShown);
               e.stopPropagation(); // Prevents the click from bubbling up and triggering a focus event on the chat.
             }}
             ariaLabel={strings.richTextFormatButtonTooltip}
@@ -121,13 +128,13 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
   }, [
     actionComponents,
     onRenderRichTextEditorIcon,
-    isRichTextEditorToolbarShown,
+    showRichTextEditorFormatting,
     strings.richTextFormatButtonTooltip,
     theme
   ]);
 
   const richTextEditorStyle = useMemo(() => {
-    return richTextEditorStyleProps(showRichTextEditorFormatting);
+    return richTextEditorStyleProps(showRichTextEditorFormatting === true);
   }, [richTextEditorStyleProps, showRichTextEditorFormatting]);
 
   const onKeyDown = useCallback(
@@ -135,7 +142,8 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
       if (isEnterKeyEventFromCompositionSession(ev)) {
         return;
       }
-      if (ev.key === 'Enter' && ev.shiftKey === false && !showRichTextEditorFormatting) {
+      const isRichTextEditorToolbarShown = showRichTextEditorFormatting === true;
+      if (ev.key === 'Enter' && ev.shiftKey === false && !isRichTextEditorToolbarShown) {
         ev.preventDefault();
         onEnterKeyDown && onEnterKeyDown();
       } else {
@@ -149,12 +157,12 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
     const isRichTextEditorToolbarShown = showRichTextEditorFormatting === true;
     return (
       !isHorizontalLayoutDisabled &&
-      !showRichTextEditorFormatting &&
+      !isRichTextEditorToolbarShown &&
       /* @conditional-compile-remove(attachment-upload) */ !hasAttachments
     );
   }, [
     isHorizontalLayoutDisabled,
-    isRichTextEditorToolbarShown,
+    showRichTextEditorFormatting,
     /* @conditional-compile-remove(attachment-upload) */ hasAttachments
   ]);
 
@@ -188,7 +196,7 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
               onKeyDown={onKeyDown}
               ref={editorComponentRef}
               strings={strings}
-              showRichTextEditorFormatting={showRichTextEditorFormatting}
+              showRichTextEditorFormatting={showRichTextEditorFormatting === true}
               styles={richTextEditorStyle}
               autoFocus={autoFocus}
               onContentModelUpdate={onContentModelUpdate}
@@ -203,8 +211,4 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
       </Stack>
     </div>
   );
-};
-
-const showRichTextEditorFormatting = (isRichTextEditorToolbarShown: boolean | undefined): boolean => {
-  return isRichTextEditorToolbarShown === true;
 };
