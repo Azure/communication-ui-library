@@ -77,31 +77,24 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
   } = props;
   const theme = useTheme();
   // undefined is used to indicate that the rich text editor toolbar state wasn't changed yet
-  const [isRichTextEditorToolbarShown, setIsRichTextEditorToolbarShown] = useState<boolean | undefined>(undefined);
+  const [showRichTextEditorFormatting, setShowRichTextEditorFormatting] = useState<boolean | undefined>(undefined);
   const [contentModel, setContentModel] = useState<ContentModelDocument | undefined>(undefined);
 
   const onRenderRichTextEditorIcon = useCallback(
     (isHover: boolean) => (
       <Icon
         iconName={
-          isHover || showRichTextEditorFormatting(isRichTextEditorToolbarShown)
-            ? 'RichTextEditorButtonIconFilled'
-            : 'RichTextEditorButtonIcon'
+          isHover || showRichTextEditorFormatting ? 'RichTextEditorButtonIconFilled' : 'RichTextEditorButtonIcon'
         }
-        className={richTextFormatButtonIconStyle(
-          theme,
-          !disabled && (isHover || showRichTextEditorFormatting(isRichTextEditorToolbarShown))
-        )}
+        className={richTextFormatButtonIconStyle(theme, !disabled && (isHover || showRichTextEditorFormatting))}
       />
     ),
-    [disabled, isRichTextEditorToolbarShown, theme]
+    [disabled, showRichTextEditorFormatting, theme]
   );
 
   useEffect(() => {
-    if (isRichTextEditorToolbarShown !== undefined) {
-      // Focus the editor when toolbar shown/hidden
-      editorComponentRef.current?.focus();
-    }
+    // Focus the editor when toolbar shown/hidden
+    editorComponentRef.current?.focus();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isRichTextEditorToolbarShown]);
 
@@ -112,7 +105,7 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
           <InputBoxButton
             onRenderIcon={onRenderRichTextEditorIcon}
             onClick={(e) => {
-              setIsRichTextEditorToolbarShown(!showRichTextEditorFormatting(isRichTextEditorToolbarShown));
+              setShowRichTextEditorFormatting(!showRichTextEditorFormatting);
               e.stopPropagation(); // Prevents the click from bubbling up and triggering a focus event on the chat.
             }}
             ariaLabel={strings.richTextFormatButtonTooltip}
@@ -134,15 +127,15 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
   ]);
 
   const richTextEditorStyle = useMemo(() => {
-    return richTextEditorStyleProps(showRichTextEditorFormatting(isRichTextEditorToolbarShown));
-  }, [richTextEditorStyleProps, isRichTextEditorToolbarShown]);
+    return richTextEditorStyleProps(showRichTextEditorFormatting);
+  }, [richTextEditorStyleProps, showRichTextEditorFormatting]);
 
   const onKeyDown = useCallback(
     (ev: KeyboardEvent) => {
       if (isEnterKeyEventFromCompositionSession(ev)) {
         return;
       }
-      if (ev.key === 'Enter' && ev.shiftKey === false && !showRichTextEditorFormatting(isRichTextEditorToolbarShown)) {
+      if (ev.key === 'Enter' && ev.shiftKey === false && !showRichTextEditorFormatting) {
         ev.preventDefault();
         onEnterKeyDown && onEnterKeyDown();
       } else {
@@ -153,9 +146,10 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
   );
 
   const useHorizontalLayout = useMemo(() => {
+    const isRichTextEditorToolbarShown = showRichTextEditorFormatting === true;
     return (
       !isHorizontalLayoutDisabled &&
-      !showRichTextEditorFormatting(isRichTextEditorToolbarShown) &&
+      !showRichTextEditorFormatting &&
       /* @conditional-compile-remove(attachment-upload) */ !hasAttachments
     );
   }, [
@@ -194,7 +188,7 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
               onKeyDown={onKeyDown}
               ref={editorComponentRef}
               strings={strings}
-              showRichTextEditorFormatting={showRichTextEditorFormatting(isRichTextEditorToolbarShown)}
+              showRichTextEditorFormatting={showRichTextEditorFormatting}
               styles={richTextEditorStyle}
               autoFocus={autoFocus}
               onContentModelUpdate={onContentModelUpdate}
