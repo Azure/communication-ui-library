@@ -28,9 +28,13 @@ const createCompositeHandlers = memoizeOne(
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     onSendMessage: (content: string, options: any) => {
       if (options && 'attachmentMetadata' in options) {
-        return adapter.sendMessage(content, {
-          attachments: options.attachmentMetadata
-        });
+        return adapter.sendMessage(
+          content,
+          /* @conditional-compile-remove(attachment-upload) */
+          {
+            attachmentMetadata: options.attachmentMetadata
+          }
+        );
       } else {
         return adapter.sendMessage(content, options);
       }
@@ -45,6 +49,7 @@ const createCompositeHandlers = memoizeOne(
       content: string,
       /* @conditional-compile-remove(attachment-upload) */
       options?: {
+        /* @conditional-compile-remove(attachment-upload) */
         attachmentMetadata?: AttachmentMetadata[];
       }
     ) => {

@@ -39,6 +39,7 @@ import { _isValidIdentifier } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(attachment-upload) */
 import { AttachmentMetadata } from '@internal/react-components';
 import { TEAMS_LIMITATION_LEARN_MORE, UNSUPPORTED_CHAT_THREAD_TYPE } from '../../common/constants';
+/* @conditional-compile-remove(attachment-upload) */
 import { UIComponentMessageOptions } from '@internal/chat-component-bindings';
 
 /**
@@ -186,7 +187,10 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     this.context.offStateChange(handler);
   }
 
-  async sendMessage(content: string, options?: SendMessageOptions | UIComponentMessageOptions): Promise<void> {
+  async sendMessage(
+    content: string,
+    options?: SendMessageOptions | /* @conditional-compile-remove(attachment-upload) */ UIComponentMessageOptions
+  ): Promise<void> {
     await this.asyncTeeErrorToEventEmitter(async () => {
       return await this.handlers.onSendMessage(content, options);
     });
@@ -226,8 +230,8 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     messageId: string,
     content: string,
     metadata?: Record<string, string>,
+    /* @conditional-compile-remove(attachment-upload) */
     options?: {
-      /* @conditional-compile-remove(attachment-upload) */
       attachmentMetadata?: AttachmentMetadata[];
     }
   ): Promise<void> {
