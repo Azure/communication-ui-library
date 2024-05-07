@@ -215,9 +215,9 @@ export const ribbonDividerStyle = (theme: Theme): string => {
 /**
  * @private
  */
-export const ribbonStyle: Partial<ICommandBarStyles> = {
+export const richTextToolbarStyle: Partial<ICommandBarStyles> = {
   // Override for the default white color of the Ribbon component
-  root: { backgroundColor: 'transparent' }
+  root: { backgroundColor: 'transparent', padding: '0px' }
 };
 
 /**

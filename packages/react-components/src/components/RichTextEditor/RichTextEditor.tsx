@@ -4,7 +4,7 @@ import React, { /*useCallback,*/ useEffect, useImperativeHandle, useMemo, useRef
 import {
   // ribbonButtonStyle,
   // ribbonOverflowButtonStyle,
-  // ribbonStyle,
+  // richTextToolbarStyle,
   richTextEditorWrapperStyle,
   richTextEditorStyle
 } from '../styles/RichTextEditor.styles';
@@ -21,6 +21,8 @@ import { createParagraph, createSelectionMarker } from 'roosterjs-content-model-
 import { KeyboardInputPlugin } from './Plugins/KeyboardInputPlugin';
 import { AutoFormatPlugin, EditPlugin, WatermarkPlugin, PastePlugin } from 'roosterjs-content-model-plugins';
 import { UpdateContentPlugin, UpdateEvent } from './Plugins/UpdateContentPlugin';
+import { RichTextToolbar } from './Toolbar/RichTextToolbar';
+import { RichTextToolbarPlugin } from './Plugins/RichTextToolbarPlugin';
 
 /**
  * Style props for {@link RichTextEditor}.
@@ -83,7 +85,7 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     initialContent,
     onChange,
     placeholderText,
-    // strings,
+    strings,
     showRichTextEditorFormatting,
     autoFocus,
     onKeyDown,
@@ -127,9 +129,9 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     [onContentModelUpdate]
   );
 
-  // const ribbonPlugin = React.useMemo(() => {
-  //   return createRibbonPlugin();
-  // }, []);
+  const toolbarPlugin = React.useMemo(() => {
+    return new RichTextToolbarPlugin();
+  }, []);
 
   const isDarkThemedValue = useMemo(() => {
     return isDarkThemed(theme);
@@ -145,27 +147,29 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
   //   }
   // }, [placeholderPlugin, placeholderText]);
 
-  // const ribbon = useMemo(() => {
-  //   const buttons = ribbonButtons(theme);
+  const toolbar = useMemo(() => {
+    return <RichTextToolbar plugin={toolbarPlugin} strings={strings} />;
+    // const buttons = ribbonButtons(theme);
 
-  //   return (
-  //     <Ribbon
-  //       styles={ribbonStyle}
-  //       buttons={buttons}
-  //       plugin={ribbonPlugin}
-  //       overflowButtonProps={{
-  //         styles: ribbonButtonStyle(theme),
-  //         menuProps: {
-  //           items: [], // CommandBar will determine items rendered in overflow
-  //           isBeakVisible: false,
-  //           styles: ribbonOverflowButtonStyle(theme)
-  //         }
-  //       }}
-  //       strings={ribbonButtonsStrings(strings)}
-  //       data-testid={'rich-text-editor-ribbon'}
-  //     />
-  //   );
-  // }, [strings, ribbonPlugin, theme]);
+    // return (
+    // <Ribbon
+    //   styles={richTextToolbarStyle}
+    //   buttons={buttons}
+    //   plugin={ribbonPlugin}
+    //   overflowButtonProps={{
+    //     styles: ribbonButtonStyle(theme),
+    //     menuProps: {
+    //       items: [], // CommandBar will determine items rendered in overflow
+    //       isBeakVisible: false,
+    //       styles: ribbonOverflowButtonStyle(theme)
+    //     }
+    //   }}
+    //   strings={ribbonButtonsStrings(strings)}
+    //   data-testid={'rich-text-editor-ribbon'}
+    // />
+    // );
+  }, [strings, toolbarPlugin]);
+
   const updatePlugin = useMemo(() => {
     return new UpdateContentPlugin();
   }, []);
@@ -210,9 +214,10 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
       autoFormatPlugin,
       updatePlugin,
       copyPastePlugin,
-      roosterPastePlugin
+      roosterPastePlugin,
+      toolbarPlugin
     ];
-  }, [keyboardInputPlugin, placeholderText, updatePlugin]);
+  }, [keyboardInputPlugin, placeholderText, updatePlugin, toolbarPlugin]);
   // TODO: check shortcuts plugin
   //   return [,
   //     ribbonPlugin,
@@ -250,7 +255,7 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
 
   return (
     <div data-testid={'rich-text-editor-wrapper'}>
-      {/* {showRichTextEditorFormatting && ribbon} */}
+      {showRichTextEditorFormatting && toolbar}
       <div className={richTextEditorWrapperStyle(theme, !showRichTextEditorFormatting)}>
         {/* div that is used by Rooster JS as a parent of the editor */}
         <div
