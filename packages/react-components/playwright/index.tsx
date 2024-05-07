@@ -12,7 +12,6 @@ import { beforeMount } from '@playwright/experimental-ct-react/hooks';
 registerIcons({
   icons: DEFAULT_COMPONENT_ICONS
 });
-initializeFileTypeIcons();
 initializeIcons();
 
 /**
@@ -27,6 +26,7 @@ export type HooksConfig = {
 beforeMount<HooksConfig>(async ({ App, hooksConfig }) => {
   // If useTheme is not provided, default to true
   const useTheme = hooksConfig?.useTheme === undefined ? true : hooksConfig?.useTheme;
+  initializeFileTypeIcons();
   if (useTheme) {
     return (
       <FluentThemeProvider>

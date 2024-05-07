@@ -15,7 +15,7 @@ import { SendBoxErrors } from './SendBoxErrors';
 /* @conditional-compile-remove(attachment-upload) */
 import { _AttachmentUploadCards } from './Attachment/AttachmentUploadCards';
 /* @conditional-compile-remove(attachment-upload) */
-import { AttachmentMetadataWithProgress } from '../types/Attachment';
+import { AttachmentMetadata, AttachmentMetadataWithProgress } from '../types/Attachment';
 /* @conditional-compile-remove(attachment-upload) */
 import { attachmentUploadCardsStyles } from './styles/SendBox.styles';
 /* @conditional-compile-remove(attachment-upload) */
@@ -114,7 +114,13 @@ export interface SendBoxProps {
   /**
    * Optional override behavior on send button click
    */
-  onSendMessage?: (content: string) => Promise<void>;
+  onSendMessage?: (
+    content: string,
+    /* @conditional-compile-remove(attachment-upload) */
+    options?: {
+      attachmentMetadata?: AttachmentMetadata[];
+    }
+  ) => Promise<void>;
   /* @conditional-compile-remove(mention) */
   /**
    * Optional props needed to lookup suggestions in the mention scenario.
@@ -172,7 +178,7 @@ export interface SendBoxProps {
    * to render attachments being uploaded in the SendBox.
    * @beta
    */
-  attachmentsWithProgress?: AttachmentMetadataWithProgress[];
+  attachments?: AttachmentMetadataWithProgress[];
   /* @conditional-compile-remove(attachment-upload) */
   /**
    * Optional callback to remove the attachment upload before sending by clicking on
@@ -204,7 +210,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     /* @conditional-compile-remove(mention) */
     mentionLookupOptions,
     /* @conditional-compile-remove(attachment-upload) */
-    attachmentsWithProgress
+    attachments: attachmentsWithProgress
   } = props;
   const theme = useTheme();
   const localeStrings = useLocale().strings.sendBox;
@@ -244,7 +250,20 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
       sanitizeText(message).length > 0 ||
       /* @conditional-compile-remove(attachment-upload) */ isAttachmentUploadCompleted(attachmentsWithProgress)
     ) {
-      onSendMessage && onSendMessage(message);
+      onSendMessage &&
+        onSendMessage(message /* @conditional-compile-remove(attachment-upload) */, {
+          attachmentMetadata: attachmentsWithProgress
+            ?.filter((v) => {
+              return !('error' in v) && !v.error?.message;
+            })
+            .map((v) => {
+              return {
+                id: v.id,
+                name: v.name,
+                url: v.url ?? ''
+              };
+            })
+        });
       setTextValue('');
       sendTextFieldRef.current?.focus();
     }

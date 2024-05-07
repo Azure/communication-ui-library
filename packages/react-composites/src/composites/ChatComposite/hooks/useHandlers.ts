@@ -24,7 +24,17 @@ export const useHandlers = <PropsT>(
 
 const createCompositeHandlers = memoizeOne(
   (adapter: ChatAdapter): ChatHandlers => ({
-    onSendMessage: adapter.sendMessage,
+    // have to use `any` here so we don't import from Chat SDK
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    onSendMessage: (content: string, options: any) => {
+      if (options && 'attachmentMetadata' in options) {
+        return adapter.sendMessage(content, {
+          attachments: options.attachmentMetadata
+        });
+      } else {
+        return adapter.sendMessage(content, options);
+      }
+    },
     onLoadPreviousChatMessages: adapter.loadPreviousChatMessages,
     onMessageSeen: adapter.sendReadReceipt,
     onTyping: adapter.sendTypingIndicator,
@@ -35,14 +45,14 @@ const createCompositeHandlers = memoizeOne(
       content: string,
       /* @conditional-compile-remove(attachment-upload) */
       options?: {
-        metadata?: Record<string, string>;
-        /* @conditional-compile-remove(attachment-upload) */
         attachmentMetadata?: AttachmentMetadata[];
       }
     ) => {
       let metadata = undefined;
       /* @conditional-compile-remove(attachment-upload) */
-      metadata = options?.metadata;
+      metadata = {
+        filesharingMetadata: JSON.stringify(options?.attachmentMetadata)
+      };
       /* @conditional-compile-remove(attachment-upload) */
       const updatedOptions = {
         attachmentMetadata: options?.attachmentMetadata

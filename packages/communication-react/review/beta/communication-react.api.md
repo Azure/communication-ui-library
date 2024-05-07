@@ -1703,14 +1703,12 @@ export interface ChatAdapterThreadManagement {
     loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
     removeParticipant(userId: string): Promise<void>;
     removeResourceFromCache(resourceDetails: ResourceDetails): void;
-    sendMessage(content: string, options?: SendMessageOptions): Promise<void>;
-    sendMessageWithAttachments(content: string, attachments: AttachmentMetadata[]): Promise<void>;
+    sendMessage(content: string, options?: SendMessageOptions | /* @conditional-compile-remove(attachment-upload) */ UIComponentMessageOptions): Promise<void>;
     sendReadReceipt(chatMessageId: string): Promise<void>;
     sendTypingIndicator(): Promise<void>;
     setTopic(topicName: string): Promise<void>;
-    updateMessage(messageId: string, content: string, metadata?: Record<string, string>, options?: {
-        attachmentMetadata?: AttachmentMetadata[];
-    }): Promise<void>;
+    updateMessage(messageId: string, content: string, metadata?: Record<string, string>, // <--- GA-ed !!!
+    options?: UIComponentMessageOptions): Promise<void>;
 }
 
 // @public
@@ -1820,15 +1818,14 @@ export type ChatErrorTarget = 'ChatClient.createChatThread' | 'ChatClient.delete
 
 // @public
 export type ChatHandlers = {
-    onSendMessage: (content: string, options?: SendMessageOptions) => Promise<void>;
+    onSendMessage: (content: string,
+    options?: SendMessageOptions | /* @conditional-compile-remove(attachment-upload) */ UIComponentMessageOptions) => Promise<void>;
     onMessageSeen: (chatMessageId: string) => Promise<void>;
     onTyping: () => Promise<void>;
     onRemoveParticipant: (userId: string) => Promise<void>;
     updateThreadTopicName: (topicName: string) => Promise<void>;
     onLoadPreviousChatMessages: (messagesToLoad: number) => Promise<boolean>;
-    onUpdateMessage: (messageId: string, content: string, options?: {
-        metadata?: Record<string, string>;
-    }) => Promise<void>;
+    onUpdateMessage: (messageId: string, content: string, options?: UIComponentMessageOptions) => Promise<void>;
     onDeleteMessage: (messageId: string) => Promise<void>;
 };
 
@@ -3949,7 +3946,7 @@ export interface SendBoxErrorBarError {
 // @public
 export interface SendBoxProps {
     // @beta
-    attachmentsWithProgress?: AttachmentMetadataWithProgress[];
+    attachments?: AttachmentMetadataWithProgress[];
     autoFocus?: 'sendBoxTextField';
     disabled?: boolean;
     // @beta
@@ -3960,7 +3957,9 @@ export interface SendBoxProps {
     onRenderAttachmentUploads?: () => JSX.Element;
     onRenderIcon?: (isHover: boolean) => JSX.Element;
     onRenderSystemMessage?: (systemMessage: string | undefined) => React_2.ReactElement;
-    onSendMessage?: (content: string) => Promise<void>;
+    onSendMessage?: (content: string, options?: {
+        attachmentMetadata?: AttachmentMetadata[];
+    }) => Promise<void>;
     onTyping?: () => Promise<void>;
     strings?: Partial<SendBoxStrings>;
     styles?: SendBoxStylesProps;
@@ -4366,6 +4365,11 @@ export interface TypingIndicatorStylesProps extends BaseCustomStyles {
     typingUserDisplayName?: IStyle;
 }
 
+// @beta (undocumented)
+export type UIComponentMessageOptions = {
+    attachmentMetadata?: AttachmentMetadata[];
+};
+
 // @beta
 export const UnsupportedBrowser: (props: UnsupportedBrowserProps) => JSX.Element;
 
@@ -4418,7 +4422,7 @@ export interface UnsupportedOperatingSystemStrings {
 
 // @public
 export type UpdateMessageCallback = (messageId: string, content: string, options?: {
-    metadata?: Record<string, string>;
+    attachmentMetadata?: AttachmentMetadata[];
 }) => Promise<void>;
 
 // @public

@@ -38,9 +38,8 @@ import { useEffect, useRef, useState } from 'react';
 import { _isValidIdentifier } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(attachment-upload) */
 import { AttachmentMetadata } from '@internal/react-components';
-/* @conditional-compile-remove(attachment-upload) */
-import { AttachmentMetadataWrapper } from '../../ChatComposite/file-sharing';
 import { TEAMS_LIMITATION_LEARN_MORE, UNSUPPORTED_CHAT_THREAD_TYPE } from '../../common/constants';
+import { UIComponentMessageOptions } from '@internal/chat-component-bindings';
 
 /**
  * Context of Chat, which is a centralized context for all state updates
@@ -144,8 +143,6 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     this.dispose = this.dispose.bind(this);
     this.fetchInitialData = this.fetchInitialData.bind(this);
     this.sendMessage = this.sendMessage.bind(this);
-    /* @conditional-compile-remove(attachment-upload) */
-    this.sendMessageWithAttachments = this.sendMessageWithAttachments.bind(this);
     this.sendReadReceipt = this.sendReadReceipt.bind(this);
     this.sendTypingIndicator = this.sendTypingIndicator.bind(this);
     this.updateMessage = this.updateMessage.bind(this);
@@ -189,27 +186,9 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     this.context.offStateChange(handler);
   }
 
-  async sendMessage(content: string, options: SendMessageOptions = {}): Promise<void> {
+  async sendMessage(content: string, options?: SendMessageOptions | UIComponentMessageOptions): Promise<void> {
     await this.asyncTeeErrorToEventEmitter(async () => {
-      /* @conditional-compile-remove(attachment-upload) */
-      options.metadata = {
-        ...options.metadata
-      };
-
-      await this.handlers.onSendMessage(content, options);
-    });
-  }
-
-  /* @conditional-compile-remove(attachment-upload) */
-  /** Send a chat message with attachments. */
-  public async sendMessageWithAttachments(content: string, attachments: AttachmentMetadata[]): Promise<void> {
-    await this.asyncTeeErrorToEventEmitter(async () => {
-      const attachmentMetadata: AttachmentMetadataWrapper = {
-        fileSharingMetadata: JSON.stringify(attachments)
-      };
-      await this.handlers.onSendMessage(content, {
-        metadata: attachmentMetadata
-      });
+      return await this.handlers.onSendMessage(content, options);
     });
   }
 

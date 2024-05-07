@@ -51,6 +51,9 @@ export type {
   ChatBaseSelectorProps
 } from '../../chat-component-bindings/src';
 
+/* @conditional-compile-remove(attchment-upload) */
+export type { UIComponentMessageOptions } from '../../chat-component-bindings/src';
+
 export {
   CallClientProvider,
   CallAgentProvider,

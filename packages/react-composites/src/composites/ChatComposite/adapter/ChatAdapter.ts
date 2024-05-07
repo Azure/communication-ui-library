@@ -6,7 +6,7 @@ import type { CommunicationIdentifierKind, CommunicationUserKind } from '@azure/
 import { ChatThreadClientState } from '@internal/chat-stateful-client';
 import type { AdapterError, AdapterErrors, AdapterState, Disposable } from '../../common/adapters';
 /* @conditional-compile-remove(attachment-upload) */
-import { AttachmentMetadata } from '@internal/react-components';
+import { UIComponentMessageOptions } from '@internal/chat-component-bindings';
 
 /**
  * {@link ChatAdapter} state for pure UI purposes.
@@ -56,12 +56,10 @@ export interface ChatAdapterThreadManagement {
   /**
    * Send a message in the thread.
    */
-  sendMessage(content: string, options?: SendMessageOptions): Promise<void>;
-  /* @conditional-compile-remove(attachment-upload) */
-  /**
-   * Send a message with attachments in the chat thread.
-   */
-  sendMessageWithAttachments(content: string, attachments: AttachmentMetadata[]): Promise<void>;
+  sendMessage(
+    content: string,
+    options?: SendMessageOptions | /* @conditional-compile-remove(attachment-upload) */ UIComponentMessageOptions
+  ): Promise<void>;
   /**
    * Send a read receipt for a message.
    */
@@ -84,11 +82,9 @@ export interface ChatAdapterThreadManagement {
   updateMessage(
     messageId: string,
     content: string,
-    metadata?: Record<string, string>,
+    metadata?: Record<string, string>, // <--- GA-ed !!!
     /* @conditional-compile-remove(attachment-upload) */
-    options?: {
-      attachmentMetadata?: AttachmentMetadata[];
-    }
+    options?: UIComponentMessageOptions
   ): Promise<void>;
   /**
    * Delete a message in the thread.

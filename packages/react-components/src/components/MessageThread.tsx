@@ -33,7 +33,7 @@ import { useLocale } from '../localization/LocalizationProvider';
 import { isNarrowWidth, _useContainerWidth } from './utils/responsive';
 import getParticipantsWhoHaveReadMessage from './utils/getParticipantsWhoHaveReadMessage';
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-import { AttachmentOptions } from '../types/Attachment';
+import { AttachmentMetadata, AttachmentOptions } from '../types/Attachment';
 import { useTheme } from '../theming';
 import { FluentV9ThemeProvider } from './../theming/FluentV9ThemeProvider';
 import LiveAnnouncer from './Announcer/LiveAnnouncer';
@@ -271,7 +271,13 @@ const memoizeAllMessages = memoizeFnAll(
     onUpdateMessage?: UpdateMessageCallback,
     onCancelEditMessage?: CancelEditCallback,
     onDeleteMessage?: (messageId: string) => Promise<void>,
-    onSendMessage?: (content: string) => Promise<void>,
+    onSendMessage?: (
+      content: string,
+      /* @conditional-compile-remove(attachment-upload) */
+      options?: {
+        attachmentMetadata?: AttachmentMetadata[];
+      }
+    ) => Promise<void>,
     disableEditing?: boolean,
     lastSeenChatMessage?: string,
     lastSendingChatMessage?: string,
@@ -352,7 +358,7 @@ export type UpdateMessageCallback = (
   content: string,
   /* @conditional-compile-remove(attachment-upload) */
   options?: {
-    metadata?: Record<string, string>;
+    attachmentMetadata?: AttachmentMetadata[];
   }
 ) => Promise<void>;
 /**

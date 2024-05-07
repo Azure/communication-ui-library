@@ -56,6 +56,7 @@ import { SendBox } from '@internal/react-components';
 import { nanoid } from 'nanoid';
 /* @conditional-compile-remove(attachment-upload) */
 import { AttachmentUploadActionType, AttachmentUpload, AttachmentUploadReducer } from './file-sharing/AttachmentUpload';
+import { AttachmentMetadata } from '@internal/react-components';
 
 /**
  * @private
@@ -447,33 +448,23 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
                   autoFocus={options?.autoFocus}
                   styles={sendBoxStyles}
                   /* @conditional-compile-remove(attachment-upload) */
-                  attachmentsWithProgress={attachmentsWithProgress}
+                  attachments={attachmentsWithProgress}
                   /* @conditional-compile-remove(attachment-upload) */
                   onCancelAttachmentUpload={(id: string) => {
                     handleUploadAction({ type: AttachmentUploadActionType.Remove, id });
                     attachmentOptions?.uploadOptions?.handleAttachmentRemoval?.(id);
                   }}
-                  onSendMessage={async (content: string) => {
+                  // we need to overwrite onSendMessage for SendBox because we need to clear attachment state
+                  // when submit button is clicked
+                  onSendMessage={async (content: string, options?: { attachmentMetadata: AttachmentMetadata[] }) => {
                     /* @conditional-compile-remove(attachment-upload) */
-                    const attachments = uploads;
+                    const attachments = options?.attachmentMetadata ?? [];
                     /* @conditional-compile-remove(attachment-upload) */
                     handleUploadAction({ type: AttachmentUploadActionType.Clear });
                     /* @conditional-compile-remove(attachment-upload) */
-                    await adapter.sendMessageWithAttachments(
-                      content,
-                      attachments
-                        // remove failed attachments from the list
-                        .filter((v) => {
-                          v.metadata.error;
-                        })
-                        .map((v) => {
-                          return {
-                            id: v.metadata.id,
-                            name: v.metadata.name,
-                            url: v.metadata.url ?? ''
-                          };
-                        })
-                    );
+                    await adapter.sendMessage(content, {
+                      attachmentMetadata: attachments
+                    });
                     /* @conditional-compile-remove(attachment-upload) */
                     return;
                     await adapter.sendMessage(content);

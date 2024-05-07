@@ -8,7 +8,7 @@ import { ChatMessage, ComponentSlotStyle, OnRenderAvatarCallback } from '../../.
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '../../../types';
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-import { AttachmentMenuAction, AttachmentMetadata, AttachmentMetadataWrapper } from '../../../types/Attachment';
+import { AttachmentMenuAction, AttachmentMetadata } from '../../../types/Attachment';
 /* @conditional-compile-remove(mention) */
 import { MentionOptions } from '../../MentionPopover';
 import { InlineImageOptions } from '../ChatMessageContent';
@@ -35,7 +35,9 @@ type ChatMyMessageComponentProps = {
   onSendMessage?: (
     content: string,
     /* @conditional-compile-remove(attachment-upload) */
-    options?: { metadata?: Record<string, string> }
+    options?: {
+      attachmentMetadata?: AttachmentMetadata[];
+    }
   ) => Promise<void>;
   strings: MessageThreadStrings;
   messageStatus?: string;
@@ -119,38 +121,18 @@ export const ChatMyMessageComponent = (props: ChatMyMessageComponentProps): JSX.
       onDeleteMessage(clientMessageId);
     }
   }, [onDeleteMessage, message.messageId, message.messageType, clientMessageId]);
-  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-  const getAttachmentMetadataWrapper = useCallback((): AttachmentMetadataWrapper | undefined => {
-    return (message as ChatMessage).attachments
-      ? {
-          fileSharingMetadata: JSON.stringify((message as ChatMessage).attachments)
-        }
-      : undefined;
-  }, [message]);
-  /* @conditional-compile-remove(attachment-upload) */
-  const getMetadata = useCallback(() => {
-    const wrapper = getAttachmentMetadataWrapper();
-    return wrapper
-      ? {
-          metadata: wrapper
-        }
-      : undefined;
-  }, [getAttachmentMetadataWrapper]);
 
   const onResendClick = useCallback(() => {
     onDeleteMessage && clientMessageId && onDeleteMessage(clientMessageId);
     onSendMessage &&
       onSendMessage(
         content !== undefined ? content : '',
-        /* @conditional-compile-remove(attachment-upload) */ getMetadata()
+        /* @conditional-compile-remove(attachment-upload) */
+        {
+          attachmentMetadata: (message as ChatMessage).attachments
+        }
       );
-  }, [
-    onDeleteMessage,
-    clientMessageId,
-    onSendMessage,
-    content,
-    /* @conditional-compile-remove(attachment-upload) */ getMetadata
-  ]);
+  }, [onDeleteMessage, clientMessageId, onSendMessage, content, message]);
 
   if (isEditing && message.messageType === 'chat') {
     return (
@@ -165,7 +147,10 @@ export const ChatMyMessageComponent = (props: ChatMyMessageComponentProps): JSX.
             (await props.onUpdateMessage(
               message.messageId,
               text,
-              /* @conditional-compile-remove(attachment-upload) */ getMetadata()
+              /* @conditional-compile-remove(attachment-upload) */
+              {
+                attachmentMetadata: attachmentMetadata
+              }
             ));
           setIsEditing(false);
         }}
