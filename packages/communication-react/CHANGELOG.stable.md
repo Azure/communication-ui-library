@@ -19,6 +19,9 @@ The Web UI Calling and CallWithChat composite now supports "Hide Attendee Names"
 
 We are excited to announce that the Azure Communication Services Web UI Library now supports joining a call with a Meeting Passcode and ID. Currently, Microsoft Teams allows you to require a meeting password for added security and generates a unique meeting ID for each meeting that participants can use to join. This feature now allows users on ACS to join interop Teams calls that have a meeting passcode or an ID generated. This is useful for private calls or events where limited access needs to be granted. Developers can use this functionality today through our composites (e.g CallComposite, CallWithChatComposite) as well as through components.
 
+### End Call Options
+Support end call for everyone feature, developer can now use hangUpForEveryone parameter in Call and CallWithChat composite to allow the user to end the whole call for everyone.
+
 
 ### Improvements
 
