@@ -24,7 +24,7 @@ import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { DtmfTone } from '@azure/communication-calling';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 /* @conditional-compile-remove(attachment-upload) */
-import { AttachmentMetadata, MessageOptions } from '@internal/acs-ui-common';
+import { MessageOptions } from '@internal/acs-ui-common';
 import {
   ParticipantsJoinedListener,
   ParticipantsLeftListener,
