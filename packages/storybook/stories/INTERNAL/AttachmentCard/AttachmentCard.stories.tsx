@@ -3,11 +3,8 @@
 
 import { useTheme } from '@fluentui/react';
 import { ArrowDownload24Filled, Open24Filled, Pin24Regular, Share24Regular } from '@fluentui/react-icons';
-import {
-  AttachmentMetadata,
-  _AttachmentCard as AttachmentCardComponent,
-  AttachmentMenuAction
-} from '@internal/react-components';
+import { AttachmentMetadata } from '@internal/acs-ui-common';
+import { _AttachmentCard as AttachmentCardComponent, AttachmentMenuAction } from '@internal/react-components';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 import { FluentV9ThemeProvider } from '../../../../react-components/src/theming/FluentV9ThemeProvider';
@@ -26,7 +23,6 @@ const AttachmentCardStory = (args: {
           attachment={{
             id: args.attachment.id,
             name: args.attachment.name,
-            extension: args.attachment.extension,
             url: args.attachment.url,
             progress: args.progress
           }}
@@ -42,7 +38,6 @@ const AttachmentCardStory = (args: {
 export const AttachmentCard = AttachmentCardStory.bind({});
 
 const attachment: AttachmentMetadata = {
-  extension: 'pdf',
   id: '42839hdwe-dfr2-323fcfwe',
   name: 'SampleAttachmentName.pdf',
   url: 'https://www.bing.com'

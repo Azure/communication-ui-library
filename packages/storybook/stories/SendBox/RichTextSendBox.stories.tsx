@@ -99,7 +99,7 @@ export default {
     warningMessage: controlsToAdd.sendBoxWarningMessage,
     strings: hiddenControl,
     onRenderAttachmentUploads: hiddenControl,
-    attachmentsWithProgress: hiddenControl,
+    attachments: hiddenControl,
     onCancelAttachmentUpload: hiddenControl,
     onSendMessage: hiddenControl,
     onTyping: hiddenControl

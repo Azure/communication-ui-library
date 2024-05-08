@@ -92,7 +92,7 @@ type Actions = SetAction | ProgressAction | CompleteAction | FailedAction | Remo
 export const AttachmentUploadReducer = (state: AttachmentUpload[], action: Actions): AttachmentUpload[] => {
   switch (action.type) {
     case AttachmentUploadActionType.Set:
-      return state.concat(action.newUploads);
+      return state.filter((v) => !v.metadata.error).concat(action.newUploads);
 
     case AttachmentUploadActionType.Completed:
       return state.map((v) =>
@@ -117,7 +117,7 @@ export const AttachmentUploadReducer = (state: AttachmentUpload[], action: Actio
       );
 
     case AttachmentUploadActionType.Remove:
-      return state.filter((v) => v.metadata.id !== action.id);
+      return state.filter((v) => !v.metadata.error).filter((v) => v.metadata.id !== action.id);
 
     case AttachmentUploadActionType.Progress:
       return state.map((v) =>

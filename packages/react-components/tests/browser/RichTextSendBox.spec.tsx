@@ -57,7 +57,7 @@ betaTest.describe('RichTextSendBox tests', () => {
     await expect(component).toHaveScreenshot('rich-text-send-box-with-system-message.png');
   });
 
-  betaTest('RichTextSendBox should show attachmentsWithProgress correctly', async ({ mount }) => {
+  betaTest('RichTextSendBox should show attachments correctly', async ({ mount }) => {
     const component = await mount(
       <RichTextSendBox
         onSendMessage={async () => {

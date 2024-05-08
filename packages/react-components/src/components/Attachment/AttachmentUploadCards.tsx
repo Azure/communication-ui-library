@@ -31,7 +31,7 @@ export interface AttachmentUploadCardsProps {
   /**
    * Optional array of {@link AttachmentMetadataWithProgress}
    */
-  attachmentsWithProgress?: AttachmentMetadataWithProgress[];
+  attachments?: AttachmentMetadataWithProgress[];
   /**
    * Optional callback to remove the attachment upload before sending by clicking on
    * cancel icon.
@@ -49,7 +49,7 @@ const actionIconStyle = { height: '1rem' };
  * @internal
  */
 export const _AttachmentUploadCards = (props: AttachmentUploadCardsProps): JSX.Element => {
-  const attachments = props.attachmentsWithProgress;
+  const attachments = props.attachments;
   const localeStrings = useLocaleAttachmentCardStringsTrampoline();
   const removeAttachmentButtonString = useMemo(
     () => () => {

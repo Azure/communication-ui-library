@@ -332,7 +332,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
       <Stack className={attachmentUploadCardsStyles}>
         <FluentV9ThemeProvider v8Theme={theme}>
           <_AttachmentUploadCards
-            attachmentsWithProgress={attachments}
+            attachments={attachments}
             onCancelAttachmentUpload={onCancelAttachmentUpload}
             strings={{
               removeAttachment: strings.removeAttachment,

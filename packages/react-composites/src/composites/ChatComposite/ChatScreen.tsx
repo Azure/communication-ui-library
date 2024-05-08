@@ -402,7 +402,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   ]);
 
   /* @conditional-compile-remove(attachment-upload) */
-  const attachmentsWithProgress = useMemo(() => {
+  const attachments = useMemo(() => {
     return uploads?.map((v) => v.metadata);
   }, [uploads]);
 
@@ -476,7 +476,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
                   autoFocus={options?.autoFocus}
                   styles={sendBoxStyles}
                   /* @conditional-compile-remove(attachment-upload) */
-                  attachments={attachmentsWithProgress}
+                  attachments={attachments}
                   /* @conditional-compile-remove(attachment-upload) */
                   onCancelAttachmentUpload={onCancelUploadHandler}
                   // we need to overwrite onSendMessage for SendBox because we need to clear attachment state

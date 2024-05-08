@@ -124,7 +124,7 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
       attachmentMetadata.length > 0 && (
         <div style={{ margin: '0.25rem' }}>
           <_AttachmentUploadCards
-            attachmentsWithProgress={attachmentMetadata}
+            attachments={attachmentMetadata}
             onCancelAttachmentUpload={(id) => {
               // edit box only capable of removing attachments
               // we need to expand attachment actions

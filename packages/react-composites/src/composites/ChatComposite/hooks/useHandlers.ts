@@ -56,7 +56,7 @@ const createCompositeHandlers = memoizeOne(
         filesharingMetadata: JSON.stringify(options?.attachments)
       };
       /* @conditional-compile-remove(attachment-upload) */
-      const updatedOptions = {
+      const updatedOptions: MessageOptions = {
         attachments: options?.attachments
       };
       return adapter.updateMessage(

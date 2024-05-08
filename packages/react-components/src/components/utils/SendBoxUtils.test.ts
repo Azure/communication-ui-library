@@ -117,7 +117,7 @@ describe('SendBoxUtils hasCompletedAttachmentUploads tests', () => {
     expect(result).toEqual(false);
   });
 
-  test('hasCompletedAttachmentUploads should return false when attachmentsWithProgress is undefined', () => {
+  test('hasCompletedAttachmentUploads should return false when attachments is undefined', () => {
     const result = isAttachmentUploadCompleted(undefined);
     expect(result).toEqual(false);
   });
