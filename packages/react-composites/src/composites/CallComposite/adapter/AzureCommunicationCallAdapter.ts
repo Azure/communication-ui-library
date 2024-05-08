@@ -1165,7 +1165,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     /* @conditional-compile-remove(spotlight) */
     this.call?.feature(Features.Spotlight).on('spotlightChanged', this.spotlightChanged.bind(this));
     /* @conditional-compile-remove(acs-close-captions) */
-    this.call?.feature(Features.Captions).on('CaptionsKindChanged', this.subscribeToCaptionEvents.bind(this));
+    this.call?.feature(Features.Captions).on('CaptionsKindChanged', this.captionsKindChanged.bind(this));
   }
 
   private unsubscribeCallEvents(): void {
@@ -1179,7 +1179,9 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.call?.off('idChanged', this.callIdChanged.bind(this));
     this.call?.off('roleChanged', this.roleChanged.bind(this));
     /* @conditional-compile-remove(acs-close-captions) */
-    this.call?.feature(Features.Captions).off('CaptionsKindChanged', this.subscribeToCaptionEvents.bind(this));
+    if (this.call?.feature(Features.Captions).captions.kind === 'Captions') {
+      this.call?.feature(Features.Captions).off('CaptionsKindChanged', this.unsubscribeFromCaptionEvents.bind(this));
+    }
 
     this.unsubscribeFromCaptionEvents();
     if (this.callingSoundSubscriber) {
@@ -1193,6 +1195,16 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
       isMuted: this.call?.isMuted
     });
   };
+
+  private captionsKindChanged(): void {
+    this.emitter.emit('CaptionsKindChanged', {});
+    const captionsFeature = this.call?.feature(Features.Captions);
+    const teamsCaptionsFeature = captionsFeature?.captions as TeamsCaptions;
+    teamsCaptionsFeature.on('CaptionsReceived', this.teamsCaptionsReceived.bind(this));
+    teamsCaptionsFeature.on('CaptionsActiveChanged', this.isCaptionsActiveChanged.bind(this));
+    teamsCaptionsFeature.on('CaptionLanguageChanged', this.isCaptionLanguageChanged.bind(this));
+    teamsCaptionsFeature.on('SpokenLanguageChanged', this.isSpokenLanguageChanged.bind(this));
+  }
 
   private onRemoteParticipantsUpdated({
     added,
