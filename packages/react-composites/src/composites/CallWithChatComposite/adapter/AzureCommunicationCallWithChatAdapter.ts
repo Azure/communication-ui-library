@@ -24,7 +24,7 @@ import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { DtmfTone } from '@azure/communication-calling';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 /* @conditional-compile-remove(attachment-upload) */
-import { AttachmentMetadata } from '@internal/acs-ui-common';
+import { AttachmentMetadata, MessageOptions } from '@internal/acs-ui-common';
 import {
   ParticipantsJoinedListener,
   ParticipantsLeftListener,
@@ -102,8 +102,6 @@ import { SpotlightChangedListener } from '../../CallComposite/adapter/CallAdapte
 import { VideoBackgroundImage, VideoBackgroundEffect } from '../../CallComposite';
 /* @conditional-compile-remove(end-of-call-survey) */
 import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
-/* @conditional-compile-remove(attachment-upload) */
-import { AttachmentMetadataWrapper } from '../../ChatComposite/file-sharing';
 
 type CallWithChatAdapterStateChangedHandler = (newState: CallWithChatAdapterState) => void;
 
@@ -227,8 +225,6 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     this.disposeScreenShareStreamView.bind(this);
     this.fetchInitialData.bind(this);
     this.sendMessage.bind(this);
-    /* @conditional-compile-remove(attachment-upload) */
-    this.sendMessageWithAttachments.bind(this);
     this.sendReadReceipt.bind(this);
     this.sendTypingIndicator.bind(this);
     this.loadPreviousChatMessages.bind(this);
@@ -416,21 +412,13 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     });
   }
   /** Send a chat message. */
-  public async sendMessage(content: string): Promise<void> {
+  public async sendMessage(
+    content: string,
+    /* @conditional-compile-remove(attachment-upload) */
+    options?: MessageOptions
+  ): Promise<void> {
     return await this.executeWithResolvedChatAdapter((adapter) => {
-      return adapter.sendMessage(content);
-    });
-  }
-  /* @conditional-compile-remove(attachment-upload) */
-  /** Send a chat message with attachments. */
-  public async sendMessageWithAttachments(content: string, attachments: AttachmentMetadata[]): Promise<void> {
-    return await this.executeWithResolvedChatAdapter((adapter) => {
-      const attachmentMetadata: AttachmentMetadataWrapper = {
-        fileSharingMetadata: JSON.stringify(attachments)
-      };
-      return adapter.sendMessage(content, {
-        metadata: attachmentMetadata
-      });
+      return adapter.sendMessage(content, /* @conditional-compile-remove(attachment-upload) */ options);
     });
   }
   /** Send a chat read receipt. */
@@ -456,10 +444,8 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     messageId: string,
     content: string,
     metadata?: Record<string, string>,
-    options?: {
-      /* @conditional-compile-remove(attachment-upload) */
-      attachmentMetadata?: AttachmentMetadata[];
-    }
+    /* @conditional-compile-remove(attachment-upload) */
+    options?: MessageOptions
   ): Promise<void> {
     return this.executeWithResolvedChatAdapter((adapter) => {
       return adapter.updateMessage(

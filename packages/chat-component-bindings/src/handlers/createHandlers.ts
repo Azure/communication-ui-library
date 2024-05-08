@@ -52,18 +52,23 @@ export const createDefaultChatHandlers = memoizeOne(
     let messageIterator: PagedAsyncIterableIterator<ChatMessage> | undefined = undefined;
     let readReceiptIterator: PagedAsyncIterableIterator<ChatMessageReadReceipt> | undefined = undefined;
     return {
-      onSendMessage: async (content: string, options?: SendMessageOptions | MessageOptions) => {
-        let chatSDKOptions = {};
+      onSendMessage: async function (
+        content: string, 
+        options?: SendMessageOptions | /* @conditional-compile-remove(attachment-upload) */ MessageOptions) {
+        let chatSDKOptions = {}
         // if attachmentMetadata is present in options,
         // then it is a MessageOptions and
         // we need to convert it to SendMessageOptions from Chat SDK
+        /* @conditional-compile-remove(attachment-upload) */
         if (options && `attachmentMetadata` in options) {
           chatSDKOptions = {
             metadata: {
               fileSharingMetadata: JSON.stringify(options.attachmentMetadata)
             }
           };
-        } else {
+        }
+        // can't use else because we need CC to keep the condition below
+        if (options && !(`attachmentMetadata` in options)) {
           chatSDKOptions = options as SendMessageOptions;
         }
         const sendMessageRequest = {
@@ -72,19 +77,23 @@ export const createDefaultChatHandlers = memoizeOne(
         };
         await chatThreadClient.sendMessage(sendMessageRequest, chatSDKOptions);
       },
-      onUpdateMessage: async (
+      onUpdateMessage: async function (
         messageId: string,
         content: string,
-        /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+        /* @conditional-compile-remove(attachment-upload) */
         options?: MessageOptions
-      ) => {
+      ) {
+        /* @conditional-compile-remove(attachment-upload) */
         const updateMessageOptions = {
           content,
           metadata: {
             fileSharingMetadata: JSON.stringify(options?.attachmentMetadata)
           }
         };
-        await chatThreadClient.updateMessage(messageId, updateMessageOptions);
+        await chatThreadClient.updateMessage(
+          messageId, 
+          /* @conditional-compile-remove(attachment-upload) */
+          updateMessageOptions);
       },
       onDeleteMessage: async (messageId: string) => {
         await chatThreadClient.deleteMessage(messageId);

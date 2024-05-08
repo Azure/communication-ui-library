@@ -5,7 +5,7 @@ import { CallWithChatAdapter } from './CallWithChatAdapter';
 import { ChatAdapter, ChatAdapterState } from '../../ChatComposite';
 import { ResourceDetails } from '../../ChatComposite';
 /* @conditional-compile-remove(attachment-upload) */
-import { AttachmentMetadata } from '@internal/acs-ui-common';
+import { MessageOptions } from '@internal/acs-ui-common';
 import { ErrorBarStrings } from '@internal/react-components';
 import { CallWithChatAdapterState } from '../state/CallWithChatAdapterState';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
@@ -30,11 +30,17 @@ export class CallWithChatBackedChatAdapter implements ChatAdapter {
   }
 
   public fetchInitialData = async (): Promise<void> => await this.callWithChatAdapter.fetchInitialData();
-  public sendMessage = async (content: string): Promise<void> => await this.callWithChatAdapter.sendMessage(content);
-  /* @conditional-compile-remove(attachment-upload) */
-  public sendMessageWithAttachments(content: string, attachments: AttachmentMetadata[]): Promise<void> {
-    return this.callWithChatAdapter.sendMessageWithAttachments(content, attachments);
-  }
+  // cannot use arrow function because CC won't remove paramters properly
+  // have to bind this since the scope of 'this' is lost when the function is passed as a callback
+  sendMessageHandler = async function (
+    this: CallWithChatBackedChatAdapter,
+    content: string,
+    /* @conditional-compile-remove(attachment-upload) */
+    options?: MessageOptions
+  ): Promise<void> {
+    await this.callWithChatAdapter.sendMessage(content, /* @conditional-compile-remove(attachment-upload) */ options);
+  };
+  public sendMessage = this.sendMessageHandler.bind(this);
   public sendReadReceipt = async (chatMessageId: string): Promise<void> =>
     await this.callWithChatAdapter.sendReadReceipt(chatMessageId);
   public sendTypingIndicator = async (): Promise<void> => await this.callWithChatAdapter.sendTypingIndicator();
