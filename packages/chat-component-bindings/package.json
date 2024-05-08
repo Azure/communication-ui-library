@@ -45,7 +45,7 @@
   "devDependencies": {
     "@azure/communication-chat": "1.6.0-beta.1 || ^1.5.0",
     "@babel/cli": "^7.23.9",
-    "@babel/core": "^7.24.3",
+    "@babel/core": "^7.24.5",
     "@types/jest": "^29.5.11",
     "@types/react": "18.2.74",
     "copyfiles": "^2.4.1",
@@ -64,6 +64,6 @@
     "react": "18.2.0",
     "rimraf": "^2.6.2",
     "rollup": "^4.12.1",
-    "typescript": "5.4.3"
+    "typescript": "5.4.5"
   }
 }
