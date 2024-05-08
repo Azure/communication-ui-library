@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 /* @conditional-compile-remove(attachment-upload) */
-import { AttachmentMetadataWithProgress } from '../../types/Attachment';
+import { AttachmentMetadataWithProgress } from '@internal/acs-ui-common';
 
 /**
  * @private

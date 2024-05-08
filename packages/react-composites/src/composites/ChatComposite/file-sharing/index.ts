@@ -8,7 +8,6 @@ export type {
   AttachmentOptions,
   AttachmentUploadTask,
   AttachmentUploadOptions,
-  AttachmentProgressError,
   AttachmentRemovalHandler,
   AttachmentMetadataWrapper,
   AttachmentSelectionHandler,

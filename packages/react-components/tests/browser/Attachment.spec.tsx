@@ -69,7 +69,7 @@ betaTest.describe('Attachment tests', () => {
         onSendMessage={async () => {
           return;
         }}
-        attachmentsWithProgress={[{ progress: 0.65, id: 'id1', name: 'test1.pdf' }]}
+        attachments={[{ progress: 0.65, id: 'id1', name: 'test1.pdf' }]}
       />
     );
     await page.waitForLoadState();
@@ -83,7 +83,7 @@ betaTest.describe('Attachment tests', () => {
         onSendMessage={async () => {
           return;
         }}
-        attachmentsWithProgress={[
+        attachments={[
           { progress: 0.65, id: 'id1', name: 'test1.pdf' },
           { progress: 1, id: 'id2', name: 'test2.docx' },
           { progress: 0, id: 'id3', name: 'test3' }
@@ -101,7 +101,7 @@ betaTest.describe('Attachment tests', () => {
         onSendMessage={async () => {
           return;
         }}
-        attachmentsWithProgress={[
+        attachments={[
           {
             id: 'id1',
             name: 'test1.pdf',

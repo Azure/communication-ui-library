@@ -5,7 +5,7 @@ import { Icon, mergeStyles } from '@fluentui/react';
 import React, { useMemo } from 'react';
 import { _AttachmentCard } from './AttachmentCard';
 import { _AttachmentCardGroup } from './AttachmentCardGroup';
-import { AttachmentMetadataWithProgress } from '../../types/Attachment';
+import { AttachmentMetadataWithProgress } from '@internal/acs-ui-common';
 import { useLocaleAttachmentCardStringsTrampoline } from '../utils/common';
 
 /**
@@ -75,7 +75,7 @@ export const _AttachmentUploadCards = (props: AttachmentUploadCardsProps): JSX.E
                 {
                   name: props.strings?.removeAttachment ?? 'Remove',
                   icon: (
-                    <div aria-label={removeAttachmentButtonString()} data-ui-id="attachment-upload-card-remove">
+                    <div aria-label={removeAttachmentButtonString()} data-testid="attachment-upload-card-remove">
                       <Icon iconName="CancelAttachmentUpload" className={mergeStyles(actionIconStyle)} />
                     </div>
                   ),

@@ -15,7 +15,7 @@ import { SendBoxErrors } from './SendBoxErrors';
 /* @conditional-compile-remove(attachment-upload) */
 import { _AttachmentUploadCards } from './Attachment/AttachmentUploadCards';
 /* @conditional-compile-remove(attachment-upload) */
-import { AttachmentMetadata, AttachmentMetadataWithProgress } from '../types/Attachment';
+import { AttachmentMetadata, AttachmentMetadataWithProgress } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(attachment-upload) */
 import { attachmentUploadCardsStyles } from './styles/SendBox.styles';
 /* @conditional-compile-remove(attachment-upload) */
@@ -255,23 +255,27 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
           message,
           /* @conditional-compile-remove(attachment-upload) */
           {
-            attachmentMetadata: attachmentsWithProgress
-              ?.filter((v) => {
-                return !('error' in v) && !v.error?.message;
-              })
-              .map((v) => {
-                return {
-                  id: v.id,
-                  name: v.name,
-                  url: v.url ?? ''
-                };
-              })
+            attachmentMetadata: toAttachmentMetadata(attachmentsWithProgress)
           }
         );
       setTextValue('');
       sendTextFieldRef.current?.focus();
     }
   };
+
+  const toAttachmentMetadata = useCallback((attachmentsWithProgress: AttachmentMetadataWithProgress[] | undefined) => {
+    return attachmentsWithProgress
+      ?.filter((attachment) => {
+        return !('error' in attachment) && !attachment.error?.message;
+      })
+      .map((attachment) => {
+        return {
+          id: attachment.id,
+          name: attachment.name,
+          url: attachment.url ?? ''
+        };
+      });
+  }, []);
 
   const setText = (newValue?: string | undefined): void => {
     if (newValue === undefined) {

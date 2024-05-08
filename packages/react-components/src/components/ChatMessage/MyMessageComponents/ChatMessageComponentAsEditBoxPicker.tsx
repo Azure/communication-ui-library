@@ -6,7 +6,7 @@ import React, { useMemo } from 'react';
 import { Suspense } from 'react';
 import { ChatMessage } from '../../../types';
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-import { AttachmentMetadata } from '../../../types';
+import { AttachmentMetadata } from '@internal/acs-ui-common';
 import { MessageThreadStrings } from '../../MessageThread';
 import { ChatMessageComponentAsEditBox } from './ChatMessageComponentAsEditBox';
 /* @conditional-compile-remove(mention) */

@@ -18,7 +18,7 @@ import { ChatMessage } from '../../../types';
 /* @conditional-compile-remove(attachment-upload) */
 import { _AttachmentUploadCards } from '../../Attachment/AttachmentUploadCards';
 /* @conditional-compile-remove(attachment-upload) */
-import { AttachmentMetadata } from '../../../types/Attachment';
+import { AttachmentMetadata } from '@internal/acs-ui-common';
 import {
   chatMessageFailedTagStyle,
   editChatMessageFailedTagStyle,

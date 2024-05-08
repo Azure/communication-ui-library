@@ -14,7 +14,9 @@ import { MessageThreadStrings } from '../MessageThread';
 import { MentionDisplayOptions } from '../MentionPopover';
 import { _AttachmentDownloadCards } from '../Attachment/AttachmentDownloadCards';
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-import { AttachmentMenuAction, AttachmentMetadata } from '../../types/Attachment';
+import { AttachmentMenuAction } from '../../types/Attachment';
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+import { AttachmentMetadata } from '@internal/acs-ui-common';
 import { formatTimeForChatMessage, formatTimestampForChatMessage } from './Datetime';
 import { ComponentLocale } from '../../localization/LocalizationProvider';
 import { chatMessageEditedTagStyle } from '../styles/ChatMessageComponent.styles';

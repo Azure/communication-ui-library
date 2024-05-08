@@ -4,7 +4,7 @@
 import React from 'react';
 import { Icon } from '@fluentui/react';
 /* @conditional-compile-remove(attachment-upload) */
-import { AttachmentMetadata } from '../../types/Attachment';
+import { AttachmentMetadata } from '@internal/acs-ui-common';
 import { isMessageTooLong } from './SendBoxUtils';
 /* @conditional-compile-remove(attachment-upload) */
 import { ChatMessage } from '../../types';

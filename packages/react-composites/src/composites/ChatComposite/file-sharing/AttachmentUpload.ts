@@ -1,14 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import {
-  AttachmentMetadata,
-  AttachmentUploadTask,
-  AttachmentProgressError,
-  AttachmentSelectionHandler,
-  AttachmentActionHandler,
-  AttachmentMetadataWithProgress
-} from '@internal/react-components';
+import { AttachmentUploadTask, AttachmentSelectionHandler, AttachmentActionHandler } from '@internal/react-components';
+import { AttachmentMetadata, AttachmentMetadataWithProgress, AttachmentProgressError } from '@internal/acs-ui-common';
 
 /**
  * @internal

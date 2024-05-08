@@ -5,7 +5,7 @@ import { CallWithChatAdapter } from './CallWithChatAdapter';
 import { ChatAdapter, ChatAdapterState } from '../../ChatComposite';
 import { ResourceDetails } from '../../ChatComposite';
 /* @conditional-compile-remove(attachment-upload) */
-import { AttachmentMetadata } from '@internal/react-components';
+import { AttachmentMetadata } from '@internal/acs-ui-common';
 import { ErrorBarStrings } from '@internal/react-components';
 import { CallWithChatAdapterState } from '../state/CallWithChatAdapterState';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';

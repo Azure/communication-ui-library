@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import { ChatParticipant, ChatThreadClient } from '@azure/communication-chat';
-import type { AttachmentMetadata } from '@internal/react-components';
+import type { AttachmentMetadata } from '@internal/acs-ui-common';
 
 /**
  * Type to represent a attachment upload the local participant will perform.

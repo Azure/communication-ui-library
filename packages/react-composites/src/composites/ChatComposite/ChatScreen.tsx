@@ -56,7 +56,7 @@ import { SendBox } from '@internal/react-components';
 import { nanoid } from 'nanoid';
 /* @conditional-compile-remove(attachment-upload) */
 import { AttachmentUploadActionType, AttachmentUpload, AttachmentUploadReducer } from './file-sharing/AttachmentUpload';
-import { AttachmentMetadata } from '@internal/react-components';
+import { AttachmentMetadata } from '@internal/acs-ui-common';
 
 /**
  * @private
@@ -401,8 +401,35 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   ]);
 
   /* @conditional-compile-remove(attachment-upload) */
-  const attachmentsWithProgress = uploads?.map((v) => v.metadata);
+  const attachmentsWithProgress = useMemo(() => {
+    return uploads?.map((v) => v.metadata);
+  }, [uploads]);
 
+  const onSendMessageHandler = useCallback(
+    async (content: string, options?: { attachmentMetadata?: AttachmentMetadata[] }) => {
+      /* @conditional-compile-remove(attachment-upload) */
+      const attachments = options?.attachmentMetadata ?? [];
+      /* @conditional-compile-remove(attachment-upload) */
+      handleUploadAction({ type: AttachmentUploadActionType.Clear });
+      /* @conditional-compile-remove(attachment-upload) */
+      await adapter.sendMessage(content, {
+        attachmentMetadata: attachments
+      });
+      /* @conditional-compile-remove(attachment-upload) */
+      return;
+      await adapter.sendMessage(content);
+    },
+    [adapter]
+  );
+
+  /* @conditional-compile-remove(attachment-upload) */
+  const onCancelUploadHandler = useCallback(
+    (id: string) => {
+      handleUploadAction({ type: AttachmentUploadActionType.Remove, id });
+      attachmentOptions?.uploadOptions?.handleAttachmentRemoval?.(id);
+    },
+    [attachmentOptions?.uploadOptions]
+  );
   return (
     <Stack className={chatContainer} grow>
       {options?.topic !== false && <ChatHeader {...headerProps} />}
@@ -450,25 +477,10 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
                   /* @conditional-compile-remove(attachment-upload) */
                   attachments={attachmentsWithProgress}
                   /* @conditional-compile-remove(attachment-upload) */
-                  onCancelAttachmentUpload={(id: string) => {
-                    handleUploadAction({ type: AttachmentUploadActionType.Remove, id });
-                    attachmentOptions?.uploadOptions?.handleAttachmentRemoval?.(id);
-                  }}
+                  onCancelAttachmentUpload={onCancelUploadHandler}
                   // we need to overwrite onSendMessage for SendBox because we need to clear attachment state
                   // when submit button is clicked
-                  onSendMessage={async (content: string, options?: { attachmentMetadata?: AttachmentMetadata[] }) => {
-                    /* @conditional-compile-remove(attachment-upload) */
-                    const attachments = options?.attachmentMetadata ?? [];
-                    /* @conditional-compile-remove(attachment-upload) */
-                    handleUploadAction({ type: AttachmentUploadActionType.Clear });
-                    /* @conditional-compile-remove(attachment-upload) */
-                    await adapter.sendMessage(content, {
-                      attachmentMetadata: attachments
-                    });
-                    /* @conditional-compile-remove(attachment-upload) */
-                    return;
-                    await adapter.sendMessage(content);
-                  }}
+                  onSendMessage={onSendMessageHandler}
                 />
               </Stack>
               {formFactor !== 'mobile' && <AttachmentButton />}

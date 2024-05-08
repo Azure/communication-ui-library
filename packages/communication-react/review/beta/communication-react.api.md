@@ -1703,12 +1703,11 @@ export interface ChatAdapterThreadManagement {
     loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
     removeParticipant(userId: string): Promise<void>;
     removeResourceFromCache(resourceDetails: ResourceDetails): void;
-    sendMessage(content: string, options?: SendMessageOptions | /* @conditional-compile-remove(attachment-upload) */ UIComponentMessageOptions): Promise<void>;
+    sendMessage(content: string, options?: SendMessageOptions | /* @conditional-compile-remove(attachment-upload) */ MessageOptions): Promise<void>;
     sendReadReceipt(chatMessageId: string): Promise<void>;
     sendTypingIndicator(): Promise<void>;
     setTopic(topicName: string): Promise<void>;
-    updateMessage(messageId: string, content: string, metadata?: Record<string, string>, // <--- GA-ed !!!
-    options?: UIComponentMessageOptions): Promise<void>;
+    updateMessage(messageId: string, content: string, metadata?: Record<string, string>, options?: MessageOptions): Promise<void>;
 }
 
 // @public
@@ -1818,14 +1817,13 @@ export type ChatErrorTarget = 'ChatClient.createChatThread' | 'ChatClient.delete
 
 // @public
 export type ChatHandlers = {
-    onSendMessage: (content: string,
-    options?: SendMessageOptions | /* @conditional-compile-remove(attachment-upload) */ UIComponentMessageOptions) => Promise<void>;
+    onSendMessage: (content: string, options?: SendMessageOptions | /* @conditional-compile-remove(attachment-upload) */ MessageOptions) => Promise<void>;
     onMessageSeen: (chatMessageId: string) => Promise<void>;
     onTyping: () => Promise<void>;
     onRemoveParticipant: (userId: string) => Promise<void>;
     updateThreadTopicName: (topicName: string) => Promise<void>;
     onLoadPreviousChatMessages: (messagesToLoad: number) => Promise<boolean>;
-    onUpdateMessage: (messageId: string, content: string, options?: UIComponentMessageOptions) => Promise<void>;
+    onUpdateMessage: (messageId: string, content: string, options?: MessageOptions) => Promise<void>;
     onDeleteMessage: (messageId: string) => Promise<void>;
 };
 
@@ -3266,6 +3264,11 @@ export type MessageDeletedListener = MessageReceivedListener;
 // @public
 export type MessageEditedListener = MessageReceivedListener;
 
+// @beta
+export type MessageOptions = {
+    attachmentMetadata?: AttachmentMetadata[];
+};
+
 // @public
 export type MessageProps = {
     message: Message;
@@ -3874,7 +3877,7 @@ export const RichTextSendBox: (props: RichTextSendBoxProps) => JSX.Element;
 
 // @beta
 export interface RichTextSendBoxProps {
-    attachmentsWithProgress?: AttachmentMetadataWithProgress[];
+    attachments?: AttachmentMetadataWithProgress[];
     autoFocus?: 'sendBoxTextField';
     disabled?: boolean;
     onCancelAttachmentUpload?: (attachmentId: string) => void;
@@ -4364,11 +4367,6 @@ export interface TypingIndicatorStylesProps extends BaseCustomStyles {
     typingString?: IStyle;
     typingUserDisplayName?: IStyle;
 }
-
-// @beta (undocumented)
-export type UIComponentMessageOptions = {
-    attachmentMetadata?: AttachmentMetadata[];
-};
 
 // @beta
 export const UnsupportedBrowser: (props: UnsupportedBrowserProps) => JSX.Element;

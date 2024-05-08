@@ -210,14 +210,11 @@ export type { _AttachmentUploadCardsStrings } from './Attachment/AttachmentUploa
 export type {
   AttachmentOptions,
   AttachmentUploadOptions,
-  AttachmentMetadata,
-  AttachmentProgressError,
   AttachmentActionHandler,
   AttachmentSelectionHandler,
   AttachmentMetadataWrapper,
   AttachmentRemovalHandler,
-  AttachmentUploadTask,
-  AttachmentMetadataWithProgress
+  AttachmentUploadTask
 } from '../types/Attachment';
 
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */

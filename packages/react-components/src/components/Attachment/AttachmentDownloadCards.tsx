@@ -11,7 +11,8 @@ import { _AttachmentCardGroup } from './AttachmentCardGroup';
 /* @conditional-compile-remove(attachment-download) */
 import { getAttachmentCountLiveMessage } from '../ChatMessage/ChatMessageContent';
 import { _formatString } from '@internal/acs-ui-common';
-import { AttachmentMenuAction, AttachmentMetadata } from '../../types/Attachment';
+import { AttachmentMenuAction } from '../../types/Attachment';
+import { AttachmentMetadata } from '@internal/acs-ui-common';
 import { ChatMessage } from '../../types';
 
 /**

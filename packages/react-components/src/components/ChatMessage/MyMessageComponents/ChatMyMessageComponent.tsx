@@ -8,7 +8,9 @@ import { ChatMessage, ComponentSlotStyle, OnRenderAvatarCallback } from '../../.
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '../../../types';
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-import { AttachmentMenuAction, AttachmentMetadata } from '../../../types/Attachment';
+import { AttachmentMenuAction } from '../../../types/Attachment';
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+import { AttachmentMetadata } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(mention) */
 import { MentionOptions } from '../../MentionPopover';
 import { InlineImageOptions } from '../ChatMessageContent';
@@ -134,26 +136,34 @@ export const ChatMyMessageComponent = (props: ChatMyMessageComponentProps): JSX.
       );
   }, [onDeleteMessage, clientMessageId, onSendMessage, content, message]);
 
+  const onSubmitHandler = useCallback(
+    async (
+      text: string,
+      /* @conditional-compile-remove(attachment-upload) */
+      attachmentMetadata: AttachmentMetadata[] | undefined
+    ) => {
+      /* @conditional-compile-remove(attachment-upload) */
+      (message as ChatMessage).attachments = attachmentMetadata;
+      props.onUpdateMessage &&
+        message.messageId &&
+        (await props.onUpdateMessage(
+          message.messageId,
+          text,
+          /* @conditional-compile-remove(attachment-upload) */
+          {
+            attachmentMetadata: attachmentMetadata
+          }
+        ));
+      setIsEditing(false);
+    },
+    [message, props]
+  );
   if (isEditing && message.messageType === 'chat') {
     return (
       <ChatMessageComponentAsEditBoxPicker
         message={message}
         strings={props.strings}
-        onSubmit={async (text, /* @conditional-compile-remove(attachment-upload) */ attachmentMetadata) => {
-          /* @conditional-compile-remove(attachment-upload) */
-          message.attachments = attachmentMetadata;
-          props.onUpdateMessage &&
-            message.messageId &&
-            (await props.onUpdateMessage(
-              message.messageId,
-              text,
-              /* @conditional-compile-remove(attachment-upload) */
-              {
-                attachmentMetadata: attachmentMetadata
-              }
-            ));
-          setIsEditing(false);
-        }}
+        onSubmit={onSubmitHandler}
         onCancel={(messageId) => {
           props.onCancelEditMessage && props.onCancelEditMessage(messageId);
           setIsEditing(false);

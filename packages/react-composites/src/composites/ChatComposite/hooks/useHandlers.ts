@@ -9,7 +9,7 @@ import memoizeOne from 'memoize-one';
 import { ChatAdapter } from '../adapter/ChatAdapter';
 import { useAdapter } from '../adapter/ChatAdapterProvider';
 /* @conditional-compile-remove(attachment-upload) */
-import { AttachmentMetadata } from '@internal/react-components';
+import { AttachmentMetadata } from '@internal/acs-ui-common';
 
 /**
  * @private

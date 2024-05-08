@@ -7,7 +7,8 @@ import { Common, fromFlatCommunicationIdentifier } from '@internal/acs-ui-common
 import { StatefulChatClient } from '@internal/chat-stateful-client';
 import { ChatMessage, ChatMessageReadReceipt, ChatThreadClient, SendMessageOptions } from '@azure/communication-chat';
 import memoizeOne from 'memoize-one';
-import { AttachmentMetadata } from '@internal/react-components';
+/* @conditional-compile-remove(attachment-upload) */
+import { MessageOptions } from '@internal/acs-ui-common';
 
 /**
  * Object containing all the handlers required for chat components.
@@ -20,13 +21,7 @@ import { AttachmentMetadata } from '@internal/react-components';
 export type ChatHandlers = {
   onSendMessage: (
     content: string,
-    /**
-     * @deprecated The usage of {@link SendMessageOptions} here is being deprecated,
-     * moving forward, please use {@link UIComponentMessageOptions} instead
-     *
-     * options to set properties associated with chat messages
-     */
-    options?: SendMessageOptions | /* @conditional-compile-remove(attachment-upload) */ UIComponentMessageOptions
+    options?: SendMessageOptions | /* @conditional-compile-remove(attachment-upload) */ MessageOptions
   ) => Promise<void>;
   onMessageSeen: (chatMessageId: string) => Promise<void>;
   onTyping: () => Promise<void>;
@@ -37,16 +32,9 @@ export type ChatHandlers = {
     messageId: string,
     content: string,
     /* @conditional-compile-remove(attachment-upload) */
-    options?: UIComponentMessageOptions
+    options?: MessageOptions
   ) => Promise<void>;
   onDeleteMessage: (messageId: string) => Promise<void>;
-};
-
-/**
- * @beta
- */
-export type UIComponentMessageOptions = {
-  attachmentMetadata?: AttachmentMetadata[];
 };
 
 /**
@@ -64,10 +52,10 @@ export const createDefaultChatHandlers = memoizeOne(
     let messageIterator: PagedAsyncIterableIterator<ChatMessage> | undefined = undefined;
     let readReceiptIterator: PagedAsyncIterableIterator<ChatMessageReadReceipt> | undefined = undefined;
     return {
-      onSendMessage: async (content: string, options?: SendMessageOptions | UIComponentMessageOptions) => {
+      onSendMessage: async (content: string, options?: SendMessageOptions | MessageOptions) => {
         let chatSDKOptions = {};
         // if attachmentMetadata is present in options,
-        // then it is a UIComponentMessageOptions and
+        // then it is a MessageOptions and
         // we need to convert it to SendMessageOptions from Chat SDK
         if (options && `attachmentMetadata` in options) {
           chatSDKOptions = {
@@ -88,7 +76,7 @@ export const createDefaultChatHandlers = memoizeOne(
         messageId: string,
         content: string,
         /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-        options?: UIComponentMessageOptions
+        options?: MessageOptions
       ) => {
         const updateMessageOptions = {
           content,

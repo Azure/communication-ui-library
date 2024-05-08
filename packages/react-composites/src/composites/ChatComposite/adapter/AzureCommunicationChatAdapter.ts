@@ -37,10 +37,10 @@ import { AdapterError } from '../../common/adapters';
 import { useEffect, useRef, useState } from 'react';
 import { _isValidIdentifier } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(attachment-upload) */
-import { AttachmentMetadata } from '@internal/react-components';
+import { AttachmentMetadata } from '@internal/acs-ui-common';
 import { TEAMS_LIMITATION_LEARN_MORE, UNSUPPORTED_CHAT_THREAD_TYPE } from '../../common/constants';
 /* @conditional-compile-remove(attachment-upload) */
-import { UIComponentMessageOptions } from '@internal/chat-component-bindings';
+import { MessageOptions } from '@internal/acs-ui-common';
 
 /**
  * Context of Chat, which is a centralized context for all state updates
@@ -189,7 +189,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
 
   async sendMessage(
     content: string,
-    options?: SendMessageOptions | /* @conditional-compile-remove(attachment-upload) */ UIComponentMessageOptions
+    options?: SendMessageOptions | /* @conditional-compile-remove(attachment-upload) */ MessageOptions
   ): Promise<void> {
     await this.asyncTeeErrorToEventEmitter(async () => {
       return await this.handlers.onSendMessage(content, options);

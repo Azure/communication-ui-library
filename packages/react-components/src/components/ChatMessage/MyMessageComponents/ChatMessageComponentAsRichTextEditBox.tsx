@@ -14,7 +14,7 @@ import { useChatMyMessageStyles } from '../../styles/MessageThread.styles';
 import { ChatMessage } from '../../../types';
 import { _AttachmentUploadCards } from '../../Attachment/AttachmentUploadCards';
 /* @conditional-compile-remove(attachment-upload) */
-import { AttachmentMetadata } from '../../../types/Attachment';
+import { AttachmentMetadata } from '@internal/acs-ui-common';
 import { useChatMessageRichTextEditContainerStyles } from '../../styles/ChatMessageComponent.styles';
 import { MAXIMUM_LENGTH_OF_MESSAGE } from '../../utils/SendBoxUtils';
 import {

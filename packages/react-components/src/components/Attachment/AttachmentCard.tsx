@@ -26,7 +26,8 @@ import { Announcer } from '../Announcer';
 import { useEffect, useState, useMemo } from 'react';
 import { _AttachmentUploadCardsStrings } from './AttachmentUploadCards';
 import { useLocaleAttachmentCardStringsTrampoline } from '../utils/common';
-import { AttachmentMetadata, AttachmentMenuAction, AttachmentMetadataWithProgress } from '../../types/Attachment';
+import { AttachmentMenuAction } from '../../types/Attachment';
+import { AttachmentMetadata, AttachmentMetadataWithProgress } from '@internal/acs-ui-common';
 import { useAttachmentCardStyles, attachmentNameContainerClassName } from '../styles/AttachmentCard.styles';
 
 /**
@@ -85,6 +86,11 @@ export const _AttachmentCard = (props: _AttachmentCardProps): JSX.Element => {
     }
   }, [progress, isUploadInProgress, attachment.name, uploadStartedString, uploadCompletedString]);
 
+  const extension = useMemo((): string => {
+    const re = /(?:\.([^.]+))?$/;
+    const match = re.exec(attachment.name);
+    return match && match[1] ? match[1] : '';
+  }, [attachment]);
   return (
     <div data-is-focusable={true}>
       <Announcer announcementString={announcerString} ariaLive={'polite'} />
@@ -101,11 +107,7 @@ export const _AttachmentCard = (props: _AttachmentCardProps): JSX.Element => {
               data-ui-id={'attachmenttype-icon'}
               iconName={
                 getFileTypeIconProps({
-                  extension: useMemo((): string => {
-                    const re = /(?:\.([^.]+))?$/;
-                    const match = re.exec(attachment.name);
-                    return match && match[1] ? match[1] : '';
-                  }, [attachment]),
+                  extension: extension,
                   size: 24,
                   imageFileType: 'svg'
                 }).iconName

@@ -6,7 +6,7 @@ import type { CommunicationIdentifierKind, CommunicationUserKind } from '@azure/
 import { ChatThreadClientState } from '@internal/chat-stateful-client';
 import type { AdapterError, AdapterErrors, AdapterState, Disposable } from '../../common/adapters';
 /* @conditional-compile-remove(attachment-upload) */
-import { UIComponentMessageOptions } from '@internal/chat-component-bindings';
+import { MessageOptions } from '@internal/acs-ui-common';
 
 /**
  * {@link ChatAdapter} state for pure UI purposes.
@@ -58,7 +58,7 @@ export interface ChatAdapterThreadManagement {
    */
   sendMessage(
     content: string,
-    options?: SendMessageOptions | /* @conditional-compile-remove(attachment-upload) */ UIComponentMessageOptions
+    options?: SendMessageOptions | /* @conditional-compile-remove(attachment-upload) */ MessageOptions
   ): Promise<void>;
   /**
    * Send a read receipt for a message.
@@ -82,9 +82,9 @@ export interface ChatAdapterThreadManagement {
   updateMessage(
     messageId: string,
     content: string,
-    metadata?: Record<string, string>, // <--- GA-ed !!!
+    metadata?: Record<string, string>,
     /* @conditional-compile-remove(attachment-upload) */
-    options?: UIComponentMessageOptions
+    options?: MessageOptions
   ): Promise<void>;
   /**
    * Delete a message in the thread.

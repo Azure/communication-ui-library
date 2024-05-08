@@ -9,13 +9,15 @@ import React from 'react';
  */
 export const TestMessageThreadWithCustomAttachmentActions = (): JSX.Element => {
   const attachmentActions = (attachment, message): AttachmentMenuAction[] => {
-    console.log('test', attachment, message);
     return [
       defaultAttachmentMenuAction,
       {
         icon: <Icon iconName="OpenAttachment" />,
         name: 'Open',
         onClick: async () => {
+          window.alert(
+            'Open attachment clicked, opening ' + attachment.name + ' for message with id ' + message.messageId
+          );
           return Promise.resolve();
         }
       }

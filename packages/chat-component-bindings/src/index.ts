@@ -12,8 +12,6 @@ export type { ChatClientProviderProps } from './providers/ChatClientProvider';
 export type { ChatThreadClientProviderProps } from './providers/ChatThreadClientProvider';
 export type { ChatBaseSelectorProps } from './baseSelectors';
 export type { ChatHandlers } from './handlers/createHandlers';
-/* @conditional-compile-remove(attachment-upload) */
-export type { UIComponentMessageOptions } from './handlers/createHandlers';
 export type { GetSelector as GetChatSelector } from './hooks/usePropsFor';
 
 export type { MessageThreadSelector } from './messageThreadSelector';
