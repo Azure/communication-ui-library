@@ -27,7 +27,8 @@
     "attachmentUploadsPendingError": "正在上傳... 請稍候。",
     "removeAttachment": "移除檔案",
     "uploading": "正在上傳",
-    "uploadCompleted": "上傳完成"
+    "uploadCompleted": "上傳完成",
+    "attachmentMoreMenu": "其他選項"
   },
   "richTextSendBox": {
     "placeholderText": "輸入訊息",
@@ -55,7 +56,8 @@
     "deleteRowOrColumnMenu": "刪除",
     "deleteColumnMenu": "刪除欄",
     "deleteRowMenu": "刪除列",
-    "deleteTableMenu": "刪除表格"
+    "deleteTableMenu": "刪除表格",
+    "attachmentMoreMenu": "其他選項"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "建議"
@@ -79,7 +81,7 @@
     "label": "離開",
     "tooltipContent": "離開通話",
     "leaveOption": "離開",
-    "endCallOption": "結束通話"
+    "endCallOption": "每個人都結束通話"
   },
   "cameraButton": {
     "onLabel": "相機",

@@ -244,6 +244,10 @@
       "shareScreen": {
         "lostDueToRoleChangeToAttendee": "Ваша роль изменилась. Некоторые действия, например общий доступ к содержимому, будут вам недоступны.",
         "grantedDueToRoleChangeToPresenter": "Вы ведущий. Вы можете предоставлять доступ к содержимому и помогать вести собрание."
+      },
+      "hideAttendeeNames": {
+        "hideAttendeeNameAttendee": "Ваше имя скрыто от других участников. Организаторы и выступающие могут видеть ваше настоящее имя.",
+        "hideAttendeeNamePresenter": "Имена участников скрыты. Для защиты конфиденциальности участников имена видят только организаторы и выступающие."
       }
     },
     "surveyTitle": "Улучшение продукта",
@@ -259,7 +263,6 @@
     "tagsSurveyQuestion": "Что можно было улучшить?",
     "tagsSurveyTextFieldDefaultText": "Другое, укажите",
     "tagsSurveyHelperText": "Отметьте все проблемы, с которыми вы столкнулись",
-    "surveyTextboxDefaultText": "Другое, укажите",
     "endOfSurveyText": "Спасибо за отзыв!",
     "surveyIssues": {
       "overallRating": {
@@ -301,7 +304,7 @@
         "otherIssues": "У меня возникли другие проблемы с демонстрацией экрана во время этого звонка"
       }
     },
-    "SurveyIssuesHeadingStrings": {
+    "surveyIssuesHeadingStrings": {
       "overallRating": "Общий",
       "audioRating": "Звук",
       "videoRating": "Видео",
@@ -325,7 +328,8 @@
     },
     "exitSpotlightButtonLabel": "Выйти из важного",
     "exitSpotlightButtonTooltip": "Выйти из важного",
-    "hangUpConfirmButtonLabel": "Подтвердить",
+    "leaveConfirmButtonLabel": "Выйти",
+    "endCallConfirmButtonLabel": "Завершить звонок",
     "hangUpCancelButtonLabel": "Отмена",
     "leaveConfirmDialogTitle": "Покинуть звонок?",
     "leaveConfirmDialogContent": "Вы действительно хотите покинуть звонок?",

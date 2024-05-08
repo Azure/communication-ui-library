@@ -27,7 +27,8 @@
     "attachmentUploadsPendingError": "Выполняется загрузка. Подождите...",
     "removeAttachment": "Удалить файл",
     "uploading": "Отправка",
-    "uploadCompleted": "Отправка завершена"
+    "uploadCompleted": "Отправка завершена",
+    "attachmentMoreMenu": "Дополнительные параметры"
   },
   "richTextSendBox": {
     "placeholderText": "Введите сообщение",
@@ -55,7 +56,8 @@
     "deleteRowOrColumnMenu": "Удалить",
     "deleteColumnMenu": "Удалить столбец",
     "deleteRowMenu": "Удалить строку",
-    "deleteTableMenu": "Удалить таблицу"
+    "deleteTableMenu": "Удалить таблицу",
+    "attachmentMoreMenu": "Дополнительные параметры"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Рекомендации"
@@ -79,7 +81,7 @@
     "label": "Выйти",
     "tooltipContent": "Покинуть вызов",
     "leaveOption": "Выйти",
-    "endCallOption": "Завершить звонок"
+    "endCallOption": "Завершить звонок для всех"
   },
   "cameraButton": {
     "onLabel": "Камера",

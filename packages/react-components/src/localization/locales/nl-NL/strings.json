@@ -27,7 +27,8 @@
     "attachmentUploadsPendingError": "Uploaden.... Een ogenblik geduld.",
     "removeAttachment": "Bestand verwijderen",
     "uploading": "Uploaden",
-    "uploadCompleted": "Upload voltooid"
+    "uploadCompleted": "Upload voltooid",
+    "attachmentMoreMenu": "Meer opties"
   },
   "richTextSendBox": {
     "placeholderText": "Een bericht invoeren",
@@ -55,7 +56,8 @@
     "deleteRowOrColumnMenu": "Verwijderen",
     "deleteColumnMenu": "Kolom verwijderen",
     "deleteRowMenu": "Rij verwijderen",
-    "deleteTableMenu": "Tabel verwijderen"
+    "deleteTableMenu": "Tabel verwijderen",
+    "attachmentMoreMenu": "Meer opties"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Suggesties"
@@ -79,7 +81,7 @@
     "label": "Verlaten",
     "tooltipContent": "Gesprek verlaten",
     "leaveOption": "Verlaten",
-    "endCallOption": "Gesprek beëindigen"
+    "endCallOption": "Oproep beëindigen voor iedereen"
   },
   "cameraButton": {
     "onLabel": "Camera",

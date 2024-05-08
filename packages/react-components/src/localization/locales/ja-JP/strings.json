@@ -27,7 +27,8 @@
     "attachmentUploadsPendingError": "アップロード中です... お待ちください。",
     "removeAttachment": "ファイルの削除",
     "uploading": "アップロード中",
-    "uploadCompleted": "アップロードが完了しました"
+    "uploadCompleted": "アップロードが完了しました",
+    "attachmentMoreMenu": "その他のオプション"
   },
   "richTextSendBox": {
     "placeholderText": "メッセージを入力してください",
@@ -55,7 +56,8 @@
     "deleteRowOrColumnMenu": "削除",
     "deleteColumnMenu": "列の削除",
     "deleteRowMenu": "行の削除",
-    "deleteTableMenu": "表の削除"
+    "deleteTableMenu": "表の削除",
+    "attachmentMoreMenu": "その他のオプション"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "候補"
@@ -79,7 +81,7 @@
     "label": "退出",
     "tooltipContent": "通話を終了",
     "leaveOption": "退出",
-    "endCallOption": "通話の終了"
+    "endCallOption": "全員の通話を終了"
   },
   "cameraButton": {
     "onLabel": "カメラ",

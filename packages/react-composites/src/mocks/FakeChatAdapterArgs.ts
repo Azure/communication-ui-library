@@ -66,10 +66,6 @@ export type _FakeChatAdapterArgs = {
    */
   serverUrl?: string;
   /**
-   * Overwrites the url of the inline image that the first remote participant will send.
-   */
-  inlineImageUrl?: string;
-  /**
    * Determines if chat composite will be localized in French (France).
    */
   frenchLocaleEnabled?: boolean;

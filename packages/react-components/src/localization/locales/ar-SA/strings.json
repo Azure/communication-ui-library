@@ -27,7 +27,8 @@
     "attachmentUploadsPendingError": "جارِ التحميل... يرجى الانتظار.",
     "removeAttachment": "إزالة الملف",
     "uploading": "جارٍ التحميل",
-    "uploadCompleted": "اكتمل التحميل"
+    "uploadCompleted": "اكتمل التحميل",
+    "attachmentMoreMenu": "خيارات إضافية"
   },
   "richTextSendBox": {
     "placeholderText": "أدخل رسالة",
@@ -55,7 +56,8 @@
     "deleteRowOrColumnMenu": "حذف",
     "deleteColumnMenu": "حذف العمود",
     "deleteRowMenu": "حذف الصف",
-    "deleteTableMenu": "حذف الجدول"
+    "deleteTableMenu": "حذف الجدول",
+    "attachmentMoreMenu": "خيارات إضافية"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "الاقتراحات"
@@ -79,7 +81,7 @@
     "label": "مغادرة",
     "tooltipContent": "مغادرة المكالمة",
     "leaveOption": "مغادرة",
-    "endCallOption": "إنهاء المكالمة"
+    "endCallOption": "إنهاء المكالمة لدى الجميع"
   },
   "cameraButton": {
     "onLabel": "الكاميرا",
