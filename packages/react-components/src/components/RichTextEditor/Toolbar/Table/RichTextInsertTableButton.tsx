@@ -6,7 +6,7 @@ import { Icon, Stack } from '@fluentui/react';
 import { insertTable as insertTableAction } from './insertTableAction';
 import type { RibbonButton } from 'roosterjs-react';
 import type { IContextualMenuItem, Theme } from '@fluentui/react';
-import { insertTableMenuTablePane, ribbonTableButtonStyle } from '../../../styles/RichTextEditor.styles';
+import { insertTableMenuTablePane, toolbarTableButtonStyle } from '../../../styles/RichTextEditor.styles';
 import { RichTextInsertTablePane } from './RichTextInsertTablePane';
 import { ColumnRowReplaceString, parseKey } from '../../../utils/RichTextTableUtils';
 import type { IEditor } from 'roosterjs-editor-types-compatible';
@@ -60,18 +60,8 @@ export const insertTableButton = (
       onRenderIcon: () => {
         return <TableIcon />;
       },
-      buttonStyles: ribbonTableButtonStyle(theme),
+      buttonStyles: toolbarTableButtonStyle(theme),
       canCheck: false
     }
   };
-};
-
-const TableIcon = (): JSX.Element => {
-  return (
-    // update the visibility of the Table Icon with css classes that are triggered by command bar's state
-    <Stack>
-      <Icon iconName="RichTextInsertTableFilledIcon" className={'ribbon-table-button-filled-icon'} />
-      <Icon iconName="RichTextInsertTableRegularIcon" className={'ribbon-table-button-regular-icon'} />
-    </Stack>
-  );
 };

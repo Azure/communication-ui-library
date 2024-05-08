@@ -2,13 +2,15 @@
 // Licensed under the MIT License.
 import React, { useCallback, useEffect, useMemo } from 'react';
 import { RichTextToolbarPlugin } from '../Plugins/RichTextToolbarPlugin';
-import { CommandBar, ContextualMenuItemType, Icon } from '@fluentui/react';
-import type { ICommandBarItemProps, Theme } from '@fluentui/react';
+import { CommandBar, ContextualMenuItemType, FocusZoneDirection, Icon } from '@fluentui/react';
+import type { ICommandBarItemProps, IContextualMenuItem, Theme } from '@fluentui/react';
 import {
   toolbarButtonStyle,
   ribbonDividerStyle,
   ribbonOverflowButtonStyle,
-  richTextToolbarStyle
+  richTextToolbarStyle,
+  toolbarTableButtonStyle,
+  insertTableMenuTablePane
 } from '../../styles/RichTextEditor.styles';
 import { useTheme } from '../../../theming';
 import { ContentModelFormatState } from 'roosterjs-content-model-types';
@@ -18,12 +20,16 @@ import {
   toggleUnderline,
   toggleBullet,
   toggleNumbering,
-  setIndentation
+  setIndentation,
+  insertTable
 } from 'roosterjs-content-model-api';
 import { RichTextSendBoxStrings } from '../RichTextSendBox';
+import { RichTextToolbarTableIcon } from './Table/RichTextToolbarTableIcon';
+import { RichTextInsertTablePane } from './Table/RichTextInsertTablePane';
+import { parseKey } from '../../utils/RichTextTableUtils';
 
-// const MaxRowsNumber = 5;
-// const MaxColumnsNumber = 5;
+const MaxRowsNumber = 5;
+const MaxColumnsNumber = 5;
 
 /**
  * Props for {@link RichTextToolbar}.
@@ -165,6 +171,59 @@ export const RichTextToolbar = (props: RichTextToolbarProps): JSX.Element => {
     [theme]
   );
 
+  const tableButton: ICommandBarItemProps = useMemo(() => {
+    return {
+      key: 'RichTextToolbarInsertTableButton',
+      text: strings.insertTableTooltip,
+      ariaLabel: strings.insertTableTooltip,
+      // hide the chevron icon
+      menuIconProps: {
+        hidden: true
+      },
+      onRenderIcon: () => {
+        return <RichTextToolbarTableIcon />;
+      },
+      buttonStyles: toolbarTableButtonStyle(theme),
+      canCheck: false,
+      iconOnly: true,
+      subMenuProps: {
+        shouldFocusOnMount: true,
+        focusZoneProps: { direction: FocusZoneDirection.bidirectional },
+        items: [
+          {
+            key: 'RichTextToolbarInsertTableMenu',
+            text: strings.insertTableMenuTitle,
+            canCheck: false,
+            className: insertTableMenuTablePane,
+            onRender: (
+              item: IContextualMenuItem,
+              onClick: (e: React.MouseEvent<Element> | React.KeyboardEvent<Element>) => void
+            ) => {
+              return (
+                <RichTextInsertTablePane
+                  item={item}
+                  onClick={(key) => {
+                    plugin.onToolbarButtonClick((editor) => {
+                      const { row, column } = parseKey(key);
+                      insertTable(editor, column, row);
+                    });
+                  }}
+                  maxColumnsNumber={MaxColumnsNumber}
+                  maxRowsNumber={MaxRowsNumber}
+                />
+              );
+            }
+          }
+        ]
+      }
+    };
+
+    //   onClick: (editor: IEditor, key: string) => {
+    //     const { row, column } = parseKey(key);
+    //     insertTableAction(editor, column, row);
+    //   },
+  }, [strings.insertTableMenuTitle, strings.insertTableTooltip, theme]);
+
   const buttons: ICommandBarItemProps[] = useMemo(() => {
     return [
       boldButton,
@@ -175,8 +234,8 @@ export const RichTextToolbar = (props: RichTextToolbarProps): JSX.Element => {
       numberListButton,
       indentDecreaseButton,
       indentIncreaseButton,
-      divider('RichTextRibbonTableDivider')
-      /*insertTableButton(theme, MaxRowsNumber, MaxColumnsNumber) */
+      divider('RichTextRibbonTableDivider'),
+      tableButton
     ];
   }, [
     boldButton,
@@ -186,7 +245,8 @@ export const RichTextToolbar = (props: RichTextToolbarProps): JSX.Element => {
     bulletListButton,
     numberListButton,
     indentDecreaseButton,
-    indentIncreaseButton
+    indentIncreaseButton,
+    tableButton
   ]);
 
   const overflowButtonProps = useMemo(() => {
