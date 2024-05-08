@@ -1103,9 +1103,7 @@ export interface CallWithChatAdapterManagement {
     // @beta
     resumeCall: () => Promise<void>;
     sendDtmfTone: (dtmfTone: DtmfTone_2) => Promise<void>;
-    sendMessage(content: string, options?: SendMessageOptions): Promise<void>;
-    // @beta
-    sendMessageWithAttachments(content: string, attachments: AttachmentMetadata[]): Promise<void>;
+    sendMessage(content: string, options?: SendMessageOptions | /* @conditional-compile-remove(attachment-upload) */ MessageOptions): Promise<void>;
     sendReadReceipt(chatMessageId: string): Promise<void>;
     sendTypingIndicator(): Promise<void>;
     setCamera(sourceInfo: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void>;
@@ -1129,7 +1127,7 @@ export interface CallWithChatAdapterManagement {
     submitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined>;
     unmute(): Promise<void>;
     updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void;
-    updateMessage(messageId: string, content: string, metadata?: Record<string, string>): Promise<void>;
+    updateMessage(messageId: string, content: string, metadata?: Record<string, string>, options?: MessageOptions): Promise<void>;
     updateSelectedVideoBackgroundEffect(selectedVideoBackground: VideoBackgroundEffect): void;
 }
 
