@@ -12,7 +12,14 @@ import {
 } from '../../styles/RichTextEditor.styles';
 import { useTheme } from '../../../theming';
 import { ContentModelFormatState } from 'roosterjs-content-model-types';
-import { toggleBold, toggleItalic, toggleUnderline, toggleBullet, toggleNumbering } from 'roosterjs-content-model-api';
+import {
+  toggleBold,
+  toggleItalic,
+  toggleUnderline,
+  toggleBullet,
+  toggleNumbering,
+  setIndentation
+} from 'roosterjs-content-model-api';
 import { RichTextSendBoxStrings } from '../RichTextSendBox';
 
 // const MaxRowsNumber = 5;
@@ -121,6 +128,36 @@ export const RichTextToolbar = (props: RichTextToolbarProps): JSX.Element => {
     });
   }, [formatState, plugin, strings.numberListTooltip, theme]);
 
+  const indentDecreaseButton: ICommandBarItemProps = useMemo(() => {
+    return getCommandBarItem({
+      key: 'RichTextToolbarIndentDecreaseButton',
+      icon: 'RichTextIndentDecreaseButtonIcon',
+      onClick: () => {
+        plugin.onToolbarButtonClick((editor) => {
+          setIndentation(editor, 'outdent');
+        });
+      },
+      text: strings.decreaseIndentTooltip,
+      canCheck: false,
+      theme: theme
+    });
+  }, [plugin, strings.decreaseIndentTooltip, theme]);
+
+  const indentIncreaseButton: ICommandBarItemProps = useMemo(() => {
+    return getCommandBarItem({
+      key: 'RichTextToolbarIndentIncreaseButton',
+      icon: 'RichTextIndentIncreaseButtonIcon',
+      onClick: () => {
+        plugin.onToolbarButtonClick((editor) => {
+          setIndentation(editor, 'indent');
+        });
+      },
+      text: strings.increaseIndentTooltip,
+      canCheck: false,
+      theme: theme
+    });
+  }, [plugin, strings.increaseIndentTooltip, theme]);
+
   const divider = useCallback(
     (key: string) => {
       return dividerCommandBarItem(theme, key);
@@ -136,6 +173,8 @@ export const RichTextToolbar = (props: RichTextToolbarProps): JSX.Element => {
       divider('RichTextRibbonTextFormatDivider'),
       bulletListButton,
       numberListButton,
+      indentDecreaseButton,
+      indentIncreaseButton,
       divider('RichTextRibbonTableDivider')
       /*insertTableButton(theme, MaxRowsNumber, MaxColumnsNumber) */
     ];
@@ -169,7 +208,7 @@ const getCommandBarItem = ({
   onClick,
   text,
   canCheck = true,
-  checked,
+  checked = false,
   disabled = false,
   theme
 }: {
@@ -178,7 +217,7 @@ const getCommandBarItem = ({
   onClick: () => void;
   text?: string;
   canCheck?: boolean;
-  checked: boolean;
+  checked?: boolean;
   disabled?: boolean;
   theme: Theme;
 }): ICommandBarItemProps => {
