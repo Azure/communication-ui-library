@@ -53,9 +53,10 @@ export const createDefaultChatHandlers = memoizeOne(
     let readReceiptIterator: PagedAsyncIterableIterator<ChatMessageReadReceipt> | undefined = undefined;
     return {
       onSendMessage: async function (
-        content: string, 
-        options?: SendMessageOptions | /* @conditional-compile-remove(attachment-upload) */ MessageOptions) {
-        let chatSDKOptions = {}
+        content: string,
+        options?: SendMessageOptions | /* @conditional-compile-remove(attachment-upload) */ MessageOptions
+      ) {
+        let chatSDKOptions = {};
         // if attachmentMetadata is present in options,
         // then it is a MessageOptions and
         // we need to convert it to SendMessageOptions from Chat SDK
@@ -91,9 +92,10 @@ export const createDefaultChatHandlers = memoizeOne(
           }
         };
         await chatThreadClient.updateMessage(
-          messageId, 
+          messageId,
           /* @conditional-compile-remove(attachment-upload) */
-          updateMessageOptions);
+          updateMessageOptions
+        );
       },
       onDeleteMessage: async (messageId: string) => {
         await chatThreadClient.deleteMessage(messageId);
