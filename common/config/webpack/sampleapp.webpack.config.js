@@ -6,6 +6,8 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 const CopyPlugin = require("copy-webpack-plugin");
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
+const ReactRefreshTypeScript = require('react-refresh-typescript');
 
 const webpackConfig = (sampleAppDir, env, babelConfig) => {
   const config = {
@@ -46,6 +48,9 @@ const webpackConfig = (sampleAppDir, env, babelConfig) => {
           test: /\.tsx?$/,
           loader: 'ts-loader',
           options: {
+            getCustomTransformers: () => ({
+              before: [!env.production && ReactRefreshTypeScript()].filter(Boolean),
+            }),
             transpileOnly: true
           },
           exclude: /dist/,
@@ -66,6 +71,7 @@ const webpackConfig = (sampleAppDir, env, babelConfig) => {
       ]
     },
     plugins: [
+      !env.production && new ReactRefreshWebpackPlugin(),
       new HtmlWebpackPlugin({ template: './public/index.html' }),
       new webpack.DefinePlugin({
         'process.env.PRODUCTION': env.production || !env.development,
@@ -86,12 +92,17 @@ const webpackConfig = (sampleAppDir, env, babelConfig) => {
           { from: path.resolve(sampleAppDir, "public/assets"), to: "assets",  noErrorOnMissing: true },
         ]
       })
-    ],
+    ].filter(Boolean),
     devServer: {
       port: 3000,
       hot: true,
       open: true,
       static: { directory: path.resolve(sampleAppDir, 'public') },
+      client: {
+        webSocketURL: {
+          port: '443'
+        }
+      },
       proxy: [
         {
           path: '/token',
