@@ -41,7 +41,7 @@
   },
   "devDependencies": {
     "@babel/cli": "^7.23.9",
-    "@babel/core": "^7.24.3",
+    "@babel/core": "^7.24.5",
     "@babel/preset-env": "7.23.9",
     "@types/jest": "^29.5.11",
     "@typescript-eslint/eslint-plugin": "^6.19.1",
@@ -64,7 +64,7 @@
     "rimraf": "^2.6.2",
     "rollup": "^4.12.1",
     "ts-jest": "^29.1.2",
-    "typescript": "5.4.3",
+    "typescript": "5.4.5",
     "webpack": "5.89.0"
   }
 }
