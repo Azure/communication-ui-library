@@ -9,7 +9,7 @@ import memoizeOne from 'memoize-one';
 import { ChatAdapter } from '../adapter/ChatAdapter';
 import { useAdapter } from '../adapter/ChatAdapterProvider';
 /* @conditional-compile-remove(attachment-upload) */
-import { AttachmentMetadata } from '@internal/acs-ui-common';
+import { MessageOptions } from '@internal/acs-ui-common';
 
 /**
  * @private
@@ -32,7 +32,7 @@ const createCompositeHandlers = memoizeOne(
           content,
           /* @conditional-compile-remove(attachment-upload) */
           {
-            attachmentMetadata: options.attachmentMetadata
+            attachments: options?.attachments
           }
         );
       } else {
@@ -44,23 +44,20 @@ const createCompositeHandlers = memoizeOne(
     onTyping: adapter.sendTypingIndicator,
     onRemoveParticipant: adapter.removeParticipant,
     updateThreadTopicName: adapter.setTopic,
-    onUpdateMessage: (
+    onUpdateMessage: function (
       messageId: string,
       content: string,
       /* @conditional-compile-remove(attachment-upload) */
-      options?: {
-        /* @conditional-compile-remove(attachment-upload) */
-        attachmentMetadata?: AttachmentMetadata[];
-      }
-    ) => {
+      options?: MessageOptions
+    ) {
       let metadata = undefined;
       /* @conditional-compile-remove(attachment-upload) */
       metadata = {
-        filesharingMetadata: JSON.stringify(options?.attachmentMetadata)
+        filesharingMetadata: JSON.stringify(options?.attachments)
       };
       /* @conditional-compile-remove(attachment-upload) */
       const updatedOptions = {
-        attachmentMetadata: options?.attachmentMetadata
+        attachments: options?.attachments
       };
       return adapter.updateMessage(
         messageId,

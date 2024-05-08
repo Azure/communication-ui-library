@@ -64,7 +64,7 @@ export const createDefaultChatHandlers = memoizeOne(
         if (options && `attachmentMetadata` in options) {
           chatSDKOptions = {
             metadata: {
-              fileSharingMetadata: JSON.stringify(options.attachmentMetadata)
+              fileSharingMetadata: JSON.stringify(options?.attachmentMetadata)
             }
           };
         }
@@ -88,7 +88,7 @@ export const createDefaultChatHandlers = memoizeOne(
         const updateMessageOptions = {
           content,
           metadata: {
-            fileSharingMetadata: JSON.stringify(options?.attachmentMetadata)
+            fileSharingMetadata: JSON.stringify(options?.attachments)
           }
         };
         await chatThreadClient.updateMessage(

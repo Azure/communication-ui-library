@@ -3264,7 +3264,8 @@ export type MessageEditedListener = MessageReceivedListener;
 
 // @beta
 export type MessageOptions = {
-    attachmentMetadata?: AttachmentMetadata[];
+    metadata?: Record<string, string>;
+    attachments?: AttachmentMetadata[];
 };
 
 // @public
@@ -3958,9 +3959,7 @@ export interface SendBoxProps {
     onRenderAttachmentUploads?: () => JSX.Element;
     onRenderIcon?: (isHover: boolean) => JSX.Element;
     onRenderSystemMessage?: (systemMessage: string | undefined) => React_2.ReactElement;
-    onSendMessage?: (content: string, options?: {
-        attachmentMetadata?: AttachmentMetadata[];
-    }) => Promise<void>;
+    onSendMessage?: (content: string, options?: MessageOptions) => Promise<void>;
     onTyping?: () => Promise<void>;
     strings?: Partial<SendBoxStrings>;
     styles?: SendBoxStylesProps;
@@ -4417,9 +4416,7 @@ export interface UnsupportedOperatingSystemStrings {
 }
 
 // @public
-export type UpdateMessageCallback = (messageId: string, content: string, options?: {
-    attachmentMetadata?: AttachmentMetadata[];
-}) => Promise<void>;
+export type UpdateMessageCallback = (messageId: string, content: string, options?: MessageOptions) => Promise<void>;
 
 // @public
 export const useAzureCommunicationCallAdapter: (args: Partial<AzureCommunicationCallAdapterArgs | AzureCommunicationOutboundCallAdapterArgs>, afterCreate?: ((adapter: CallAdapter) => Promise<CallAdapter>) | undefined, beforeDispose?: ((adapter: CallAdapter) => Promise<void>) | undefined) => CallAdapter | undefined;

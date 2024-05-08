@@ -36,8 +36,6 @@ import { ResourceDetails } from './ChatAdapter';
 import { AdapterError } from '../../common/adapters';
 import { useEffect, useRef, useState } from 'react';
 import { _isValidIdentifier } from '@internal/acs-ui-common';
-/* @conditional-compile-remove(attachment-upload) */
-import { AttachmentMetadata } from '@internal/acs-ui-common';
 import { TEAMS_LIMITATION_LEARN_MORE, UNSUPPORTED_CHAT_THREAD_TYPE } from '../../common/constants';
 /* @conditional-compile-remove(attachment-upload) */
 import { MessageOptions } from '@internal/acs-ui-common';
@@ -231,15 +229,16 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     content: string,
     metadata?: Record<string, string>,
     /* @conditional-compile-remove(attachment-upload) */
-    options?: {
-      attachmentMetadata?: AttachmentMetadata[];
-    }
+    options?: MessageOptions
   ): Promise<void> {
     return await this.asyncTeeErrorToEventEmitter(async () => {
       /* @conditional-compile-remove(attachment-upload) */
-      const updatedOptions = { attachmentMetadata: options?.attachmentMetadata, metadata: metadata };
+      const messageOptions = {
+        metadata,
+        attachments: options?.attachments
+      };
       /* @conditional-compile-remove(attachment-upload) */
-      return await this.handlers.onUpdateMessage(messageId, content, updatedOptions);
+      return await this.handlers.onUpdateMessage(messageId, content, messageOptions);
       return await this.handlers.onUpdateMessage(messageId, content);
     });
   }

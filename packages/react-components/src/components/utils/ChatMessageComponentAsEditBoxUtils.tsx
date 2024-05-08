@@ -40,9 +40,9 @@ function isMessageEmpty(
  */
 export function getMessageState(
   messageText: string,
-  /* @conditional-compile-remove(attachment-upload) */ attachmentMetadata: AttachmentMetadata[]
+  /* @conditional-compile-remove(attachment-upload) */ attachments: AttachmentMetadata[]
 ): MessageState {
-  return isMessageEmpty(messageText, /* @conditional-compile-remove(attachment-upload) */ attachmentMetadata)
+  return isMessageEmpty(messageText, /* @conditional-compile-remove(attachment-upload) */ attachments)
     ? 'too short'
     : isMessageTooLong(messageText.length)
     ? 'too long'

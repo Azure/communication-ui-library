@@ -116,7 +116,10 @@ export interface AttachmentProgressError {
  * @beta
  * Message option that defines properties that can be set when
  * sending or updating a chat message.
+ * @property metadata - Metadata that contains additional information about the message to be passed betrween 2 users.
+ * @property attachments - Attachments that contains file attachments attached to the message.
  */
 export type MessageOptions = {
-  attachmentMetadata?: AttachmentMetadata[];
+  metadata?: Record<string, string>;
+  attachments?: AttachmentMetadata[];
 };

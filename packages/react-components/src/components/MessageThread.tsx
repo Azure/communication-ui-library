@@ -29,13 +29,13 @@ import {
 import { BlockedMessage } from '../types';
 import { MessageStatusIndicatorProps } from './MessageStatusIndicator';
 import { memoizeFnAll, MessageStatus } from '@internal/acs-ui-common';
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+import { MessageOptions } from '@internal/acs-ui-common';
 import { useLocale } from '../localization/LocalizationProvider';
 import { isNarrowWidth, _useContainerWidth } from './utils/responsive';
 import getParticipantsWhoHaveReadMessage from './utils/getParticipantsWhoHaveReadMessage';
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 import { AttachmentOptions } from '../types/Attachment';
-/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-import { AttachmentMetadata } from '@internal/acs-ui-common';
 import { useTheme } from '../theming';
 import { FluentV9ThemeProvider } from './../theming/FluentV9ThemeProvider';
 import LiveAnnouncer from './Announcer/LiveAnnouncer';
@@ -276,9 +276,7 @@ const memoizeAllMessages = memoizeFnAll(
     onSendMessage?: (
       content: string,
       /* @conditional-compile-remove(attachment-upload) */
-      options?: {
-        attachmentMetadata?: AttachmentMetadata[];
-      }
+      options?: MessageOptions
     ) => Promise<void>,
     disableEditing?: boolean,
     lastSeenChatMessage?: string,
@@ -359,9 +357,7 @@ export type UpdateMessageCallback = (
   messageId: string,
   content: string,
   /* @conditional-compile-remove(attachment-upload) */
-  options?: {
-    attachmentMetadata?: AttachmentMetadata[];
-  }
+  options?: MessageOptions
 ) => Promise<void>;
 /**
  * @public

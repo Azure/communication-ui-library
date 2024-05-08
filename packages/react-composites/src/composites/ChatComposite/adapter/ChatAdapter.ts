@@ -55,6 +55,7 @@ export interface ChatAdapterThreadManagement {
   fetchInitialData(): Promise<void>;
   /**
    * Send a message in the thread.
+   * Please note that SendMessageOptions is being deprecated, please use MessageOptions instead.
    */
   sendMessage(
     content: string,
@@ -78,6 +79,7 @@ export interface ChatAdapterThreadManagement {
   setTopic(topicName: string): Promise<void>;
   /**
    * Update a message content.
+   * Please note that metadata is being deprecated, please use MessageOptions.metadata instead.
    */
   updateMessage(
     messageId: string,

@@ -10,7 +10,7 @@ import { BlockedMessage } from '../../../types';
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 import { AttachmentMenuAction } from '../../../types/Attachment';
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-import { AttachmentMetadata } from '@internal/acs-ui-common';
+import { AttachmentMetadata, MessageOptions } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(mention) */
 import { MentionOptions } from '../../MentionPopover';
 import { InlineImageOptions } from '../ChatMessageContent';
@@ -37,9 +37,7 @@ type ChatMyMessageComponentProps = {
   onSendMessage?: (
     content: string,
     /* @conditional-compile-remove(attachment-upload) */
-    options?: {
-      attachmentMetadata?: AttachmentMetadata[];
-    }
+    options?: MessageOptions
   ) => Promise<void>;
   strings: MessageThreadStrings;
   messageStatus?: string;
@@ -131,7 +129,7 @@ export const ChatMyMessageComponent = (props: ChatMyMessageComponentProps): JSX.
         content !== undefined ? content : '',
         /* @conditional-compile-remove(attachment-upload) */
         {
-          attachmentMetadata: (message as ChatMessage).attachments
+          attachments: (message as ChatMessage).attachments
         }
       );
   }, [onDeleteMessage, clientMessageId, onSendMessage, content, message]);
@@ -141,10 +139,10 @@ export const ChatMyMessageComponent = (props: ChatMyMessageComponentProps): JSX.
     function (
       text: string,
       /* @conditional-compile-remove(attachment-upload) */
-      attachmentMetadata?: AttachmentMetadata[] | undefined
+      attachments?: AttachmentMetadata[] | undefined
     ) {
       /* @conditional-compile-remove(attachment-upload) */
-      (message as ChatMessage).attachments = attachmentMetadata;
+      (message as ChatMessage).attachments = attachments;
       props.onUpdateMessage &&
         message.messageId &&
         props.onUpdateMessage(
@@ -152,7 +150,7 @@ export const ChatMyMessageComponent = (props: ChatMyMessageComponentProps): JSX.
           text,
           /* @conditional-compile-remove(attachment-upload) */
           {
-            attachmentMetadata: attachmentMetadata
+            attachments: attachments
           }
         );
       setIsEditing(false);

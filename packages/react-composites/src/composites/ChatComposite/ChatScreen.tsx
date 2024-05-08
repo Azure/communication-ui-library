@@ -56,7 +56,8 @@ import { SendBox } from '@internal/react-components';
 import { nanoid } from 'nanoid';
 /* @conditional-compile-remove(attachment-upload) */
 import { AttachmentUploadActionType, AttachmentUpload, AttachmentUploadReducer } from './file-sharing/AttachmentUpload';
-import { AttachmentMetadata } from '@internal/acs-ui-common';
+/* @conditional-compile-remove(attachment-upload) */
+import { MessageOptions } from '@internal/acs-ui-common';
 
 /**
  * @private
@@ -406,14 +407,14 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   }, [uploads]);
 
   const onSendMessageHandler = useCallback(
-    async (content: string, options?: { attachmentMetadata?: AttachmentMetadata[] }) => {
+    async function (content: string, /* @conditional-compile-remove(attachment-upload) */ options?: MessageOptions) {
       /* @conditional-compile-remove(attachment-upload) */
-      const attachments = options?.attachmentMetadata ?? [];
+      const attachments = options?.attachments ?? [];
       /* @conditional-compile-remove(attachment-upload) */
       handleUploadAction({ type: AttachmentUploadActionType.Clear });
       /* @conditional-compile-remove(attachment-upload) */
       await adapter.sendMessage(content, {
-        attachmentMetadata: attachments
+        attachments: attachments
       });
       /* @conditional-compile-remove(attachment-upload) */
       return;

@@ -89,8 +89,27 @@ export class CallWithChatBackedChatAdapter implements ChatAdapter {
         return this.callWithChatAdapter.off(event, listener);
     }
   };
-  public updateMessage = async (messageId: string, content: string, metadata?: Record<string, string>): Promise<void> =>
-    await this.callWithChatAdapter.updateMessage(messageId, content, metadata);
+
+  // cannot use arrow function because CC won't remove paramters properly
+  // have to bind this since the scope of 'this' is lost when the function is passed as a callback
+  updateMessageHandler = async function (
+    this: CallWithChatBackedChatAdapter,
+    messageId: string,
+    content: string,
+    metadata?: Record<string, string>,
+    /* @conditional-compile-remove(attachment-upload) */
+    options?: MessageOptions
+  ): Promise<void> {
+    await this.callWithChatAdapter.updateMessage(
+      messageId,
+      content,
+      metadata,
+      /* @conditional-compile-remove(attachment-upload) */
+      options
+    );
+  };
+
+  public updateMessage = this.updateMessageHandler.bind(this);
   public deleteMessage = async (messageId: string): Promise<void> =>
     await this.callWithChatAdapter.deleteMessage(messageId);
 

@@ -15,7 +15,7 @@ import { SendBoxErrors } from './SendBoxErrors';
 /* @conditional-compile-remove(attachment-upload) */
 import { _AttachmentUploadCards } from './Attachment/AttachmentUploadCards';
 /* @conditional-compile-remove(attachment-upload) */
-import { AttachmentMetadata, AttachmentMetadataWithProgress } from '@internal/acs-ui-common';
+import { AttachmentMetadataWithProgress, MessageOptions } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(attachment-upload) */
 import { attachmentUploadCardsStyles } from './styles/SendBox.styles';
 /* @conditional-compile-remove(attachment-upload) */
@@ -117,9 +117,7 @@ export interface SendBoxProps {
   onSendMessage?: (
     content: string,
     /* @conditional-compile-remove(attachment-upload) */
-    options?: {
-      attachmentMetadata?: AttachmentMetadata[];
-    }
+    options?: MessageOptions
   ) => Promise<void>;
   /* @conditional-compile-remove(mention) */
   /**
@@ -255,7 +253,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
           message,
           /* @conditional-compile-remove(attachment-upload) */
           {
-            attachmentMetadata: toAttachmentMetadata(attachmentsWithProgress)
+            attachments: toAttachmentMetadata(attachmentsWithProgress)
           }
         );
       setTextValue('');
