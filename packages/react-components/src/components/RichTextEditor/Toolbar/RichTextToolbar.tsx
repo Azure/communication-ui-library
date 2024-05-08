@@ -4,18 +4,19 @@ import React, { useCallback, useEffect, useMemo } from 'react';
 import { RichTextToolbarPlugin } from '../Plugins/RichTextToolbarPlugin';
 import { CommandBar, ContextualMenuItemType, Icon } from '@fluentui/react';
 import type { ICommandBarItemProps, Theme } from '@fluentui/react';
-import { ribbonButtonStyle, ribbonDividerStyle, richTextToolbarStyle } from '../../styles/RichTextEditor.styles';
-import { useTheme } from '../../../theming';
-import { ContentModelFormatState, IEditor } from 'roosterjs-content-model-types';
 import {
-  toggleBold,
-  getFormatState,
-  toggleItalic,
-  toggleUnderline,
-  toggleBullet,
-  toggleNumbering
-} from 'roosterjs-content-model-api';
+  toolbarButtonStyle,
+  ribbonDividerStyle,
+  ribbonOverflowButtonStyle,
+  richTextToolbarStyle
+} from '../../styles/RichTextEditor.styles';
+import { useTheme } from '../../../theming';
+import { ContentModelFormatState } from 'roosterjs-content-model-types';
+import { toggleBold, toggleItalic, toggleUnderline, toggleBullet, toggleNumbering } from 'roosterjs-content-model-api';
 import { RichTextSendBoxStrings } from '../RichTextSendBox';
+
+// const MaxRowsNumber = 5;
+// const MaxColumnsNumber = 5;
 
 /**
  * Props for {@link RichTextToolbar}.
@@ -41,42 +42,31 @@ export const RichTextToolbar = (props: RichTextToolbarProps): JSX.Element => {
   const [formatState, setFormatState] = React.useState<ContentModelFormatState | undefined>(undefined);
 
   useEffect(() => {
-    //set the initial state of formatState
-    if (plugin.editor) {
-      setFormatState(getFormatState(plugin.editor));
-    }
+    // update the format state on editor events
+    plugin.onFormatChanged = setFormatState;
   }, [plugin]);
 
-  const onClickWrapper = useCallback(
-    (onClick: (editor: IEditor) => void) => {
-      if (plugin.editor) {
-        onClick(plugin.editor);
-        setFormatState(getFormatState(plugin.editor));
-      }
-    },
-    [plugin.editor]
-  );
   const boldButton: ICommandBarItemProps = useMemo(() => {
     return getCommandBarItem({
       key: 'RichTextToolbarBoldButton',
       icon: 'RichTextBoldButtonIcon',
       onClick: () => {
-        onClickWrapper((editor) => {
+        plugin.onToolbarButtonClick((editor) => {
           toggleBold(editor);
         });
       },
       text: strings.boldTooltip,
-      checked: formatState !== undefined && formatState?.isBold === true,
+      checked: formatState !== undefined && formatState.isBold === true,
       theme: theme
     });
-  }, [formatState, onClickWrapper, strings.boldTooltip, theme]);
+  }, [formatState, plugin, strings.boldTooltip, theme]);
 
   const italicButton: ICommandBarItemProps = useMemo(() => {
     return getCommandBarItem({
       key: 'RichTextToolbarItalicButton',
       icon: 'RichTextItalicButtonIcon',
       onClick: () => {
-        onClickWrapper((editor) => {
+        plugin.onToolbarButtonClick((editor) => {
           toggleItalic(editor);
         });
       },
@@ -84,14 +74,14 @@ export const RichTextToolbar = (props: RichTextToolbarProps): JSX.Element => {
       checked: formatState !== undefined && formatState?.isItalic === true,
       theme: theme
     });
-  }, [formatState, onClickWrapper, strings.italicTooltip, theme]);
+  }, [formatState, plugin, strings.italicTooltip, theme]);
 
   const underlineButton: ICommandBarItemProps = useMemo(() => {
     return getCommandBarItem({
       key: 'RichTextToolbarUnderlineButton',
       icon: 'RichTextUnderlineButtonIcon',
       onClick: () => {
-        onClickWrapper((editor) => {
+        plugin.onToolbarButtonClick((editor) => {
           toggleUnderline(editor);
         });
       },
@@ -99,14 +89,14 @@ export const RichTextToolbar = (props: RichTextToolbarProps): JSX.Element => {
       checked: formatState !== undefined && formatState?.isUnderline === true,
       theme: theme
     });
-  }, [formatState, onClickWrapper, strings.underlineTooltip, theme]);
+  }, [formatState, plugin, strings.underlineTooltip, theme]);
 
   const bulletListButton: ICommandBarItemProps = useMemo(() => {
     return getCommandBarItem({
       key: 'RichTextToolbarBulletListButton',
       icon: 'RichTextBulletListButtonIcon',
       onClick: () => {
-        onClickWrapper((editor) => {
+        plugin.onToolbarButtonClick((editor) => {
           toggleBullet(editor);
         });
       },
@@ -114,14 +104,14 @@ export const RichTextToolbar = (props: RichTextToolbarProps): JSX.Element => {
       checked: formatState !== undefined && formatState?.isBullet === true,
       theme: theme
     });
-  }, [formatState, onClickWrapper, strings.bulletListTooltip, theme]);
+  }, [formatState, plugin, strings.bulletListTooltip, theme]);
 
   const numberListButton: ICommandBarItemProps = useMemo(() => {
     return getCommandBarItem({
       key: 'RichTextToolbarNumberListButton',
       icon: 'RichTextNumberListButtonIcon',
       onClick: () => {
-        onClickWrapper((editor) => {
+        plugin.onToolbarButtonClick((editor) => {
           toggleNumbering(editor);
         });
       },
@@ -129,7 +119,7 @@ export const RichTextToolbar = (props: RichTextToolbarProps): JSX.Element => {
       checked: formatState !== undefined && formatState?.isNumbering === true,
       theme: theme
     });
-  }, [formatState, onClickWrapper, strings.numberListTooltip, theme]);
+  }, [formatState, plugin, strings.numberListTooltip, theme]);
 
   const divider = useCallback(
     (key: string) => {
@@ -144,21 +134,31 @@ export const RichTextToolbar = (props: RichTextToolbarProps): JSX.Element => {
       italicButton,
       underlineButton,
       divider('RichTextRibbonTextFormatDivider'),
-      /*divider*/ bulletListButton,
-      numberListButton /*divider table*/
+      bulletListButton,
+      numberListButton,
+      divider('RichTextRibbonTableDivider')
+      /*insertTableButton(theme, MaxRowsNumber, MaxColumnsNumber) */
     ];
   }, [boldButton, italicButton, underlineButton, divider, bulletListButton, numberListButton]);
+
+  const overflowButtonProps = useMemo(() => {
+    return {
+      ariaLabel: strings.richTextToolbarMoreButtonAriaLabel,
+      styles: toolbarButtonStyle(theme),
+      menuProps: {
+        items: [], // CommandBar will determine items rendered in overflow
+        isBeakVisible: false,
+        styles: ribbonOverflowButtonStyle(theme)
+      }
+    };
+  }, [strings.richTextToolbarMoreButtonAriaLabel, theme]);
 
   return (
     <CommandBar
       items={buttons}
       data-testid={'rich-text-editor-ribbon'}
       styles={richTextToolbarStyle}
-      // {...props}
-      // overflowButtonProps={{
-      //   ariaLabel: getLocalizedString<string, string>(strings, moreCommandsBtn.key, moreCommandsBtn.unlocalizedText),
-      //   ...props?.overflowButtonProps
-      // }}
+      overflowButtonProps={overflowButtonProps}
     />
   );
 };
@@ -191,7 +191,7 @@ const getCommandBarItem = ({
     iconOnly: true,
     canCheck: canCheck,
     buttonStyles: {
-      ...ribbonButtonStyle(theme)
+      ...toolbarButtonStyle(theme)
     },
     checked: checked,
     disabled: disabled

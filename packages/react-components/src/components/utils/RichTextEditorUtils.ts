@@ -11,7 +11,9 @@ export enum PluginEventType {
   ContentChanged = 'contentChanged',
   Input = 'input',
   KeyDown = 'keyDown',
-  BeforePaste = 'beforePaste'
+  BeforePaste = 'beforePaste',
+  ZoomChanged = 'zoomChanged',
+  MouseUp = 'mouseUp'
 }
 
 /**

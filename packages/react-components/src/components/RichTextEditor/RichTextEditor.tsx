@@ -1,18 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-import React, { /*useCallback,*/ useEffect, useImperativeHandle, useMemo, useRef } from 'react';
-import {
-  // ribbonButtonStyle,
-  // ribbonOverflowButtonStyle,
-  // richTextToolbarStyle,
-  richTextEditorWrapperStyle,
-  richTextEditorStyle
-} from '../styles/RichTextEditor.styles';
+import React, { useEffect, useImperativeHandle, useMemo, useRef } from 'react';
+import { richTextEditorWrapperStyle, richTextEditorStyle } from '../styles/RichTextEditor.styles';
 import { useTheme } from '../../theming';
-// import { ribbonButtons } from './Buttons/RichTextRibbonButtons';
 import { RichTextSendBoxStrings } from './RichTextSendBox';
 import { isDarkThemed } from '../../theming/themeUtils';
-// import { ribbonButtonsStrings } from '../utils/RichTextEditorStringsUtils';
 // import { createTableEditMenuProvider } from './Buttons/Table/RichTextTableContextMenu';
 import CopyPastePlugin from './Plugins/CopyPastePlugin';
 import type { ContentModelDocument, EditorPlugin, IEditor } from 'roosterjs-content-model-types';
@@ -149,25 +141,6 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
 
   const toolbar = useMemo(() => {
     return <RichTextToolbar plugin={toolbarPlugin} strings={strings} />;
-    // const buttons = ribbonButtons(theme);
-
-    // return (
-    // <Ribbon
-    //   styles={richTextToolbarStyle}
-    //   buttons={buttons}
-    //   plugin={ribbonPlugin}
-    //   overflowButtonProps={{
-    //     styles: ribbonButtonStyle(theme),
-    //     menuProps: {
-    //       items: [], // CommandBar will determine items rendered in overflow
-    //       isBeakVisible: false,
-    //       styles: ribbonOverflowButtonStyle(theme)
-    //     }
-    //   }}
-    //   strings={ribbonButtonsStrings(strings)}
-    //   data-testid={'rich-text-editor-ribbon'}
-    // />
-    // );
   }, [strings, toolbarPlugin]);
 
   const updatePlugin = useMemo(() => {
@@ -203,7 +176,7 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     //   const tableEditMenuProvider = createTableEditMenuProvider(strings);
     const contentEdit = new EditPlugin();
     // AutoFormatPlugin previously was a part of the edit plugin
-    const autoFormatPlugin = new AutoFormatPlugin();
+    const autoFormatPlugin = new AutoFormatPlugin({ autoBullet: true, autoNumbering: true, autoLink: true });
     const copyPastePlugin = new CopyPastePlugin();
     const roosterPastePlugin = new PastePlugin(false);
     const placeholderPlugin = new WatermarkPlugin(placeholderText ?? '');
@@ -220,7 +193,6 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
   }, [keyboardInputPlugin, placeholderText, updatePlugin, toolbarPlugin]);
   // TODO: check shortcuts plugin
   //   return [,
-  //     ribbonPlugin,
   //     contextPlugin,
   //     tableEditMenuProvider,
   //   ];
