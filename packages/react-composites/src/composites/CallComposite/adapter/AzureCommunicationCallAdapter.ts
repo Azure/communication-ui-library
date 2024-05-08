@@ -1196,6 +1196,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     });
   };
 
+  /* @conditional-compile-remove(acs-close-captions) */
   private captionsKindChanged(): void {
     this.emitter.emit('CaptionsKindChanged', {});
     const captionsFeature = this.call?.feature(Features.Captions);
