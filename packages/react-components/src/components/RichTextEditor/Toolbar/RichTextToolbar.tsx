@@ -178,7 +178,16 @@ export const RichTextToolbar = (props: RichTextToolbarProps): JSX.Element => {
       divider('RichTextRibbonTableDivider')
       /*insertTableButton(theme, MaxRowsNumber, MaxColumnsNumber) */
     ];
-  }, [boldButton, italicButton, underlineButton, divider, bulletListButton, numberListButton]);
+  }, [
+    boldButton,
+    italicButton,
+    underlineButton,
+    divider,
+    bulletListButton,
+    numberListButton,
+    indentDecreaseButton,
+    indentIncreaseButton
+  ]);
 
   const overflowButtonProps = useMemo(() => {
     return {
