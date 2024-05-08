@@ -349,9 +349,12 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
 
   /* @conditional-compile-remove(acs-close-captions) */
   const isTeamsCaptions = useSelector(getCaptionsKind) === 'TeamsCaptions';
+  const isTeamsMeeting = useSelector(getIsTeamsMeeting);
+  /* @conditional-compile-remove(acs-close-captions) */
+  const isTeamsCall = useSelector(getIsTeamsCall);
   const useTeamsCaptions =
-    useSelector(getIsTeamsMeeting) ||
-    /* @conditional-compile-remove(acs-close-captions) */ useSelector(getIsTeamsCall) ||
+    isTeamsMeeting ||
+    /* @conditional-compile-remove(acs-close-captions) */ isTeamsCall ||
     /* @conditional-compile-remove(acs-close-captions) */ isTeamsCaptions;
   const hasJoinedCall = useSelector(getCallStatus) === 'Connected';
   const isCaptionsOn = useSelector(getCaptionsStatus);
