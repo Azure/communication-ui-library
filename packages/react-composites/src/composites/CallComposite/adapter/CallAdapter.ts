@@ -894,6 +894,11 @@ export interface CallAdapterSubscribers {
    * Subscribe function for 'spotlightChanged' event.
    */
   on(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
+  /* @conditional-compile-remove(acs-close-captions) */
+  /**
+   * Subscribe function for 'CaptionsKindChanged' event.
+   */
+  on(event: 'CaptionsKindChanged', listener: PropertyChangedEvent): void;
 
   /**
    * Unsubscribe function for 'participantsJoined' event.
@@ -977,6 +982,11 @@ export interface CallAdapterSubscribers {
    * Subscribe function for 'spotlightChanged' event.
    */
   off(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
+  /* @conditional-compile-remove(acs-close-captions) */
+  /**
+   * Unsubscribe function for 'CaptionsKindChanged' event.
+   */
+  off(event: 'CaptionsKindChanged', listener: PropertyChangedEvent): void;
 }
 
 // This type remains for non-breaking change reason
