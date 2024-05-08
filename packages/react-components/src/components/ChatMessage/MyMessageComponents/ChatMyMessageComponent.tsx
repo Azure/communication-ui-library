@@ -123,13 +123,17 @@ export const ChatMyMessageComponent = (props: ChatMyMessageComponentProps): JSX.
   }, [onDeleteMessage, message.messageId, message.messageType, clientMessageId]);
 
   const onResendClick = useCallback(() => {
-    let messageOptions = undefined;
     /* @conditional-compile-remove(attachment-upload) */
-    messageOptions = {
+    const messageOptions = {
       attachments: `attachments` in message ? message.attachments : undefined
     };
     onDeleteMessage && clientMessageId && onDeleteMessage(clientMessageId);
-    onSendMessage && onSendMessage(content !== undefined ? content : '', messageOptions);
+    onSendMessage &&
+      onSendMessage(
+        content !== undefined ? content : '',
+        /* @conditional-compile-remove(attachment-upload) */
+        messageOptions
+      );
   }, [onDeleteMessage, clientMessageId, onSendMessage, content, message]);
 
   const onSubmitHandler = useCallback(
