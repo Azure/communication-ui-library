@@ -140,7 +140,7 @@ export const ChatMyMessageComponent = (props: ChatMyMessageComponentProps): JSX.
     async (
       text: string,
       /* @conditional-compile-remove(attachment-upload) */
-      attachmentMetadata: AttachmentMetadata[] | undefined
+      attachmentMetadata?: AttachmentMetadata[] | undefined
     ) => {
       /* @conditional-compile-remove(attachment-upload) */
       (message as ChatMessage).attachments = attachmentMetadata;

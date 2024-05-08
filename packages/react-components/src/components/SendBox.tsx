@@ -263,6 +263,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     }
   };
 
+  /* @conditional-compile-remove(attachment-upload) */
   const toAttachmentMetadata = useCallback((attachmentsWithProgress: AttachmentMetadataWithProgress[] | undefined) => {
     return attachmentsWithProgress
       ?.filter((attachment) => {
@@ -325,7 +326,13 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
       hasError: !!errorMessage,
       disabled: !!disabled
     });
-  }, [/* @conditional-compile-remove(attachment-upload) */ attachmentsWithProgress, disabled, errorMessage, textValue]);
+  }, [
+    /* @conditional-compile-remove(attachment-upload) */
+    attachmentsWithProgress,
+    disabled,
+    errorMessage,
+    textValue
+  ]);
 
   const onRenderSendIcon = useCallback(
     (isHover: boolean) =>
