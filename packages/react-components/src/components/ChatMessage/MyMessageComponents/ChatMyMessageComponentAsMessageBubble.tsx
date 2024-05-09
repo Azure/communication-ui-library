@@ -216,6 +216,7 @@ const MessageBubble = (props: ChatMyMessageComponentAsMessageBubbleProps): JSX.E
           body={{
             // messageContainerStyle used in className and style prop as style prop can't handle CSS selectors
             className: mergeClasses(
+              chatMessageCommonStyles.body,
               chatMyMessageStyles.body,
               isBlockedMessage
                 ? chatMessageCommonStyles.blocked

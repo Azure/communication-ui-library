@@ -40,14 +40,11 @@ import {
 import { SpotlightedParticipant } from '@azure/communication-calling';
 /* @conditional-compile-remove(meeting-id) */
 import { TeamsMeetingIdLocator } from '@azure/communication-calling';
-/* @conditional-compile-remove(reaction) */
 import { Reaction } from '@azure/communication-calling';
-/* @conditional-compile-remove(close-captions) */
 import { TeamsCaptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(acs-close-captions) */
 import { Captions, CaptionsInfo } from '@azure/communication-calling';
 import { TransferEventArgs } from '@azure/communication-calling';
-/* @conditional-compile-remove(close-captions) */
 import { StartCaptionsOptions, TeamsCaptionsInfo } from '@azure/communication-calling';
 
 import type { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling';
@@ -77,14 +74,13 @@ import {
   JoinCallOptions,
   StartCallIdentifier
 } from './CallAdapter';
-/* @conditional-compile-remove(reaction) */
 import { ReactionResources } from '@internal/react-components';
 import { TransferAcceptedListener } from './CallAdapter';
 
 import { CapabilitiesChangedListener } from './CallAdapter';
 /* @conditional-compile-remove(spotlight) */
 import { SpotlightChangedListener } from './CallAdapter';
-/* @conditional-compile-remove(close-captions) */
+
 import {
   CaptionsReceivedListener,
   IsCaptionsActiveChangedListener,
@@ -110,7 +106,8 @@ import {
   MicrosoftTeamsUserIdentifier,
   isMicrosoftTeamsUserIdentifier,
   MicrosoftTeamsAppIdentifier,
-  UnknownIdentifier
+  UnknownIdentifier,
+  isMicrosoftTeamsAppIdentifier
 } from '@azure/communication-common';
 /* @conditional-compile-remove(teams-identity-support) */ /* @conditional-compile-remove(PSTN-calls) */
 import { isCommunicationUserIdentifier } from '@azure/communication-common';
@@ -144,6 +141,7 @@ class CallContext {
   constructor(
     clientState: CallClientState,
     isTeamsCall: boolean,
+    isTeamsMeeting: boolean,
     isRoomsCall: boolean,
     options?: {
       maxListeners?: number;
@@ -154,7 +152,6 @@ class CallContext {
         onResolveDependency?: () => Promise<VideoBackgroundEffectsDependency>;
       };
       callingSounds?: CallingSounds;
-      /* @conditional-compile-remove(reaction) */
       reactionResources?: ReactionResources;
     },
     targetCallees?: StartCallIdentifier[]
@@ -169,6 +166,7 @@ class CallContext {
       page: 'configuration',
       latestErrors: clientState.latestErrors,
       isTeamsCall,
+      isTeamsMeeting,
       isRoomsCall,
       /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId: clientState.alternateCallerId,
       /* @conditional-compile-remove(unsupported-browser) */ environmentInfo: clientState.environmentInfo,
@@ -179,7 +177,7 @@ class CallContext {
       selectedVideoBackgroundEffect: undefined,
       cameraStatus: undefined,
       sounds: options?.callingSounds,
-      /* @conditional-compile-remove(reaction) */ reactions: options?.reactionResources
+      reactions: options?.reactionResources
     };
     this.emitter.setMaxListeners(options?.maxListeners ?? 50);
     this.bindPublicMethods();
@@ -403,12 +401,25 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     const isTeamsMeeting = this.locator
       ? 'meetingLink' in this.locator || /* @conditional-compile-remove(meeting-id) */ 'meetingId' in this.locator
       : false;
+    let isTeamsCall: boolean | undefined;
+    this.targetCallees?.forEach((callee) => {
+      if (isMicrosoftTeamsUserIdentifier(callee) || isMicrosoftTeamsAppIdentifier(callee)) {
+        isTeamsCall = true;
+      }
+    });
 
     const isRoomsCall = this.locator ? 'roomId' in this.locator : false;
 
     this.onResolveVideoBackgroundEffectsDependency = options?.videoBackgroundOptions?.onResolveDependency;
 
-    this.context = new CallContext(callClient.getState(), isTeamsMeeting, isRoomsCall, options, this.targetCallees);
+    this.context = new CallContext(
+      callClient.getState(),
+      !!isTeamsCall,
+      isTeamsMeeting,
+      isRoomsCall,
+      options,
+      this.targetCallees
+    );
 
     this.context.onCallEnded((endCallData) => this.emitter.emit('callEnded', endCallData));
 
@@ -520,7 +531,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.startScreenShare.bind(this);
     this.stopScreenShare.bind(this);
     this.raiseHand.bind(this);
-    /* @conditional-compile-remove(reaction) */
     this.onReactionClick.bind(this);
     this.lowerHand.bind(this);
     this.removeParticipant.bind(this);
@@ -541,14 +551,10 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.sendDtmfTone.bind(this);
     /* @conditional-compile-remove(unsupported-browser) */
     this.allowUnsupportedBrowserVersion.bind(this);
-    /* @conditional-compile-remove(close-captions) */
-    {
-      this.startCaptions.bind(this);
-      this.stopCaptions.bind(this);
-      this.setSpokenLanguage.bind(this);
-      this.setCaptionLanguage.bind(this);
-    }
-
+    this.startCaptions.bind(this);
+    this.stopCaptions.bind(this);
+    this.setSpokenLanguage.bind(this);
+    this.setCaptionLanguage.bind(this);
     this.startVideoBackgroundEffect.bind(this);
 
     this.stopVideoBackgroundEffects.bind(this);
@@ -849,7 +855,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     });
   }
 
-  /* @conditional-compile-remove(reaction) */
   public async onReactionClick(reaction: Reaction): Promise<void> {
     return await this.asyncTeeErrorToEventEmitter(async () => {
       await this.handlers.onReactionClick(reaction);
@@ -1013,22 +1018,18 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.handlers.onSendDtmfTone(dtmfTone);
   }
 
-  /* @conditional-compile-remove(close-captions) */
   public async startCaptions(options?: StartCaptionsOptions): Promise<void> {
     this.handlers.onStartCaptions(options);
   }
 
-  /* @conditional-compile-remove(close-captions) */
   public async stopCaptions(): Promise<void> {
     this.handlers.onStopCaptions();
   }
 
-  /* @conditional-compile-remove(close-captions) */
   public async setCaptionLanguage(language: string): Promise<void> {
     this.handlers.onSetCaptionLanguage(language);
   }
 
-  /* @conditional-compile-remove(close-captions) */
   public async setSpokenLanguage(language: string): Promise<void> {
     this.handlers.onSetSpokenLanguage(language);
   }
@@ -1076,13 +1077,9 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   on(event: 'selectedMicrophoneChanged', listener: PropertyChangedEvent): void;
   on(event: 'selectedSpeakerChanged', listener: PropertyChangedEvent): void;
   on(event: 'error', errorHandler: (e: AdapterError) => void): void;
-  /* @conditional-compile-remove(close-captions) */
   on(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
-  /* @conditional-compile-remove(close-captions) */
   on(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
-  /* @conditional-compile-remove(close-captions) */
   on(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
-  /* @conditional-compile-remove(close-captions) */
   on(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
   on(event: 'transferAccepted', listener: TransferAcceptedListener): void;
   on(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
@@ -1095,46 +1092,52 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.emitter.on(event, listener);
   }
 
-  /* @conditional-compile-remove(close-captions) */
   private subscribeToCaptionEvents(): void {
     if (this.call && this.call.state === 'Connected') {
-      if (this.context.getState().isTeamsCall) {
-        const captionsFeature = this.call?.feature(Features.Captions).captions as TeamsCaptions;
-        captionsFeature.on('CaptionsReceived', this.teamsCaptionsReceived.bind(this));
-        captionsFeature.on('CaptionsActiveChanged', this.isCaptionsActiveChanged.bind(this));
-        captionsFeature.on('CaptionLanguageChanged', this.isCaptionLanguageChanged.bind(this));
-        captionsFeature.on('SpokenLanguageChanged', this.isSpokenLanguageChanged.bind(this));
+      const captionsFeature = this.call?.feature(Features.Captions);
+      if (
+        captionsFeature.captions.kind === 'TeamsCaptions' &&
+        (this.context.getState().isTeamsCall || this.context.getState().isTeamsMeeting)
+      ) {
+        const teamsCaptionsFeature = captionsFeature.captions as TeamsCaptions;
+        teamsCaptionsFeature.on('CaptionsReceived', this.teamsCaptionsReceived.bind(this));
+        teamsCaptionsFeature.on('CaptionsActiveChanged', this.isCaptionsActiveChanged.bind(this));
+        teamsCaptionsFeature.on('CaptionLanguageChanged', this.isCaptionLanguageChanged.bind(this));
+        teamsCaptionsFeature.on('SpokenLanguageChanged', this.isSpokenLanguageChanged.bind(this));
       } else {
         /* @conditional-compile-remove(acs-close-captions) */
-        const captionsFeature = this.call?.feature(Features.Captions).captions as Captions;
+        const acsCaptionsFeature = captionsFeature.captions as Captions;
         /* @conditional-compile-remove(acs-close-captions) */
-        captionsFeature.on('CaptionsReceived', this.captionsReceived.bind(this));
+        acsCaptionsFeature.on('CaptionsReceived', this.captionsReceived.bind(this));
         /* @conditional-compile-remove(acs-close-captions) */
-        captionsFeature.on('CaptionsActiveChanged', this.isCaptionsActiveChanged.bind(this));
+        acsCaptionsFeature.on('CaptionsActiveChanged', this.isCaptionsActiveChanged.bind(this));
         /* @conditional-compile-remove(acs-close-captions) */
-        captionsFeature.on('SpokenLanguageChanged', this.isSpokenLanguageChanged.bind(this));
+        acsCaptionsFeature.on('SpokenLanguageChanged', this.isSpokenLanguageChanged.bind(this));
       }
     }
   }
 
-  /* @conditional-compile-remove(close-captions) */
   private unsubscribeFromCaptionEvents(): void {
     if (this.call && this.call.state === 'Connected') {
-      if (this.context.getState().isTeamsCall) {
-        const captionsFeature = this.call?.feature(Features.Captions).captions as TeamsCaptions;
-        captionsFeature.off('CaptionsReceived', this.teamsCaptionsReceived.bind(this));
-        captionsFeature.off('CaptionsActiveChanged', this.isCaptionsActiveChanged.bind(this));
-        captionsFeature.off('CaptionLanguageChanged', this.isCaptionLanguageChanged.bind(this));
-        captionsFeature.off('SpokenLanguageChanged', this.isSpokenLanguageChanged.bind(this));
+      const captionsFeature = this.call?.feature(Features.Captions);
+      if (
+        captionsFeature.captions.kind === 'TeamsCaptions' &&
+        (this.context.getState().isTeamsCall || this.context.getState().isTeamsMeeting)
+      ) {
+        const teamsCaptionsFeature = captionsFeature.captions as TeamsCaptions;
+        teamsCaptionsFeature.off('CaptionsReceived', this.teamsCaptionsReceived.bind(this));
+        teamsCaptionsFeature.off('CaptionsActiveChanged', this.isCaptionsActiveChanged.bind(this));
+        teamsCaptionsFeature.off('CaptionLanguageChanged', this.isCaptionLanguageChanged.bind(this));
+        teamsCaptionsFeature.off('SpokenLanguageChanged', this.isSpokenLanguageChanged.bind(this));
       } else {
         /* @conditional-compile-remove(acs-close-captions) */
-        const captionsFeature = this.call?.feature(Features.Captions).captions as Captions;
+        const acsCaptionsFeature = captionsFeature.captions as Captions;
         /* @conditional-compile-remove(acs-close-captions) */
-        captionsFeature.off('CaptionsReceived', this.captionsReceived.bind(this));
+        acsCaptionsFeature.off('CaptionsReceived', this.captionsReceived.bind(this));
         /* @conditional-compile-remove(acs-close-captions) */
-        captionsFeature.off('CaptionsActiveChanged', this.isCaptionsActiveChanged.bind(this));
+        acsCaptionsFeature.off('CaptionsActiveChanged', this.isCaptionsActiveChanged.bind(this));
         /* @conditional-compile-remove(acs-close-captions) */
-        captionsFeature.off('SpokenLanguageChanged', this.isSpokenLanguageChanged.bind(this));
+        acsCaptionsFeature.off('SpokenLanguageChanged', this.isSpokenLanguageChanged.bind(this));
       }
       this.call?.off('stateChanged', this.subscribeToCaptionEvents.bind(this));
     }
@@ -1152,7 +1155,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.call?.on('isMutedChanged', this.isMyMutedChanged.bind(this));
     this.call?.on('isScreenSharingOnChanged', this.isScreenSharingOnChanged.bind(this));
     this.call?.on('idChanged', this.callIdChanged.bind(this));
-    /* @conditional-compile-remove(close-captions) */
     this.call?.on('stateChanged', this.subscribeToCaptionEvents.bind(this));
     this.call?.on('roleChanged', this.roleChanged.bind(this));
 
@@ -1160,6 +1162,8 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.call?.feature(Features.Capabilities).on('capabilitiesChanged', this.capabilitiesChanged.bind(this));
     /* @conditional-compile-remove(spotlight) */
     this.call?.feature(Features.Spotlight).on('spotlightChanged', this.spotlightChanged.bind(this));
+    /* @conditional-compile-remove(acs-close-captions) */
+    this.call?.feature(Features.Captions).on('CaptionsKindChanged', this.captionsKindChanged.bind(this));
   }
 
   private unsubscribeCallEvents(): void {
@@ -1172,8 +1176,11 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.call?.off('isScreenSharingOnChanged', this.isScreenSharingOnChanged.bind(this));
     this.call?.off('idChanged', this.callIdChanged.bind(this));
     this.call?.off('roleChanged', this.roleChanged.bind(this));
+    /* @conditional-compile-remove(acs-close-captions) */
+    if (this.call?.feature(Features.Captions).captions.kind === 'Captions') {
+      this.call?.feature(Features.Captions).off('CaptionsKindChanged', this.unsubscribeFromCaptionEvents.bind(this));
+    }
 
-    /* @conditional-compile-remove(close-captions) */
     this.unsubscribeFromCaptionEvents();
     if (this.callingSoundSubscriber) {
       this.callingSoundSubscriber.unsubscribeAll();
@@ -1186,6 +1193,16 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
       isMuted: this.call?.isMuted
     });
   };
+
+  /* @conditional-compile-remove(acs-close-captions) */
+  private captionsKindChanged(): void {
+    const captionsFeature = this.call?.feature(Features.Captions);
+    const teamsCaptionsFeature = captionsFeature?.captions as TeamsCaptions;
+    teamsCaptionsFeature.on('CaptionsReceived', this.teamsCaptionsReceived.bind(this));
+    teamsCaptionsFeature.on('CaptionsActiveChanged', this.isCaptionsActiveChanged.bind(this));
+    teamsCaptionsFeature.on('CaptionLanguageChanged', this.isCaptionLanguageChanged.bind(this));
+    teamsCaptionsFeature.on('SpokenLanguageChanged', this.isSpokenLanguageChanged.bind(this));
+  }
 
   private onRemoteParticipantsUpdated({
     added,
@@ -1219,7 +1236,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.emitter.emit('isLocalScreenSharingActiveChanged', { isScreenSharingOn: this.call?.isScreenSharingOn });
   }
 
-  /* @conditional-compile-remove(close-captions) */
   private teamsCaptionsReceived(captionsInfo: TeamsCaptionsInfo): void {
     this.emitter.emit('captionsReceived', { captionsInfo });
   }
@@ -1229,7 +1245,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.emitter.emit('captionsReceived', { captionsInfo });
   }
 
-  /* @conditional-compile-remove(close-captions) */
   private isCaptionsActiveChanged(): void {
     const captionsFeature = this.call?.feature(Features.Captions).captions as
       | TeamsCaptions
@@ -1239,7 +1254,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     });
   }
 
-  /* @conditional-compile-remove(close-captions) */
   private isSpokenLanguageChanged(): void {
     const captionsFeature = this.call?.feature(Features.Captions).captions as
       | TeamsCaptions
@@ -1249,7 +1263,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     });
   }
 
-  /* @conditional-compile-remove(close-captions) */
   private isCaptionLanguageChanged(): void {
     const captionsFeature = this.call?.feature(Features.Captions).captions as TeamsCaptions;
     this.emitter.emit('isCaptionLanguageChanged', {
@@ -1316,13 +1329,9 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   off(event: 'selectedMicrophoneChanged', listener: PropertyChangedEvent): void;
   off(event: 'selectedSpeakerChanged', listener: PropertyChangedEvent): void;
   off(event: 'error', errorHandler: (e: AdapterError) => void): void;
-  /* @conditional-compile-remove(close-captions) */
   off(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
-  /* @conditional-compile-remove(close-captions) */
   off(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
-  /* @conditional-compile-remove(close-captions) */
   off(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
-  /* @conditional-compile-remove(close-captions) */
   off(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
   off(event: 'transferAccepted', listener: TransferAcceptedListener): void;
   off(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
@@ -1402,7 +1411,6 @@ export type CommonCallAdapterOptions = {
     videoBackgroundImages?: VideoBackgroundImage[];
     onResolveDependency?: () => Promise<VideoBackgroundEffectsDependency>;
   };
-  /* @conditional-compile-remove(teams-identity-support) */
   /**
    * Use this to fetch profile information which will override data in {@link CallAdapterState} like display name
    * The onFetchProfile is fetch-and-forget one time action for each user, once a user profile is updated, the value will be cached
@@ -1413,7 +1421,6 @@ export type CommonCallAdapterOptions = {
    * Sounds to use for calling events
    */
   callingSounds?: CallingSounds;
-  /* @conditional-compile-remove(reaction) */
   /**
    * Reaction resource for reaction resources
    * @beta
@@ -1497,7 +1504,8 @@ export type TeamsCallAdapterArgs = {
   credential: CommunicationTokenCredential;
   locator:
     | TeamsMeetingLinkLocator
-    | /* @conditional-compile-remove(teams-adhoc-call) */ /* @conditional-compile-remove(PSTN-calls) */ CallParticipantsLocator;
+    | /* @conditional-compile-remove(teams-adhoc-call) */ /* @conditional-compile-remove(PSTN-calls) */ CallParticipantsLocator
+    | /* @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator;
   /**
    * Optional parameters for the {@link TeamsCallAdapter} created
    */

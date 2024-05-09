@@ -13,9 +13,7 @@ import {
   PermissionConstraints,
   StartCallOptions
 } from '@azure/communication-calling';
-/* @conditional-compile-remove(reaction) */
 import { Reaction } from '@azure/communication-calling';
-/* @conditional-compile-remove(close-captions) */
 import { StartCaptionsOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
@@ -124,7 +122,6 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
   public stopScreenShare = async (): Promise<void> => await this.callWithChatAdapter.stopScreenShare();
   public raiseHand = async (): Promise<void> => await this.callWithChatAdapter.raiseHand();
   public lowerHand = async (): Promise<void> => await this.callWithChatAdapter.lowerHand();
-  /* @conditional-compile-remove(reaction) */
   public onReactionClick = async (reaction: Reaction): Promise<void> =>
     await this.callWithChatAdapter.onReactionClick(reaction);
   public removeParticipant = async (
@@ -184,22 +181,18 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
     await this.callWithChatAdapter.sendDtmfTone(dtmfTone);
   };
 
-  /* @conditional-compile-remove(close-captions) */
   public async startCaptions(options?: StartCaptionsOptions): Promise<void> {
     this.callWithChatAdapter.startCaptions(options);
   }
 
-  /* @conditional-compile-remove(close-captions) */
   public async stopCaptions(): Promise<void> {
     this.callWithChatAdapter.stopCaptions();
   }
 
-  /* @conditional-compile-remove(close-captions) */
   public async setCaptionLanguage(language: string): Promise<void> {
     this.callWithChatAdapter.setCaptionLanguage(language);
   }
 
-  /* @conditional-compile-remove(close-captions) */
   public async setSpokenLanguage(language: string): Promise<void> {
     this.callWithChatAdapter.setSpokenLanguage(language);
   }
@@ -250,6 +243,7 @@ function callAdapterStateFromCallWithChatAdapterState(
     call: callWithChatAdapterState.call,
     devices: callWithChatAdapterState.devices,
     isTeamsCall: callWithChatAdapterState.isTeamsCall,
+    isTeamsMeeting: callWithChatAdapterState.isTeamsMeeting,
     isRoomsCall: false,
     latestErrors: callWithChatAdapterState.latestCallErrors,
     /* @conditional-compile-remove(PSTN-calls) */
@@ -262,7 +256,6 @@ function callAdapterStateFromCallWithChatAdapterState(
     onResolveVideoEffectDependency: callWithChatAdapterState.onResolveVideoEffectDependency,
 
     selectedVideoBackgroundEffect: callWithChatAdapterState.selectedVideoBackgroundEffect,
-    /* @conditional-compile-remove(reaction) */
     reactions: callWithChatAdapterState.reactions
   };
 }

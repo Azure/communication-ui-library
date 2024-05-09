@@ -6,7 +6,6 @@ import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { CallCommon } from './BetaToStableTypes';
 import { CallContext } from './CallContext';
 import { CallIdRef } from './CallIdRef';
-/* @conditional-compile-remove(close-captions) */
 import { CaptionsFeatureSubscriber } from './CaptionsSubscriber';
 import {
   convertSdkLocalStreamToDeclarativeLocalStream,
@@ -26,7 +25,6 @@ import { RaiseHandSubscriber } from './RaiseHandSubscriber';
 import { OptimalVideoCountSubscriber } from './OptimalVideoCountSubscriber';
 
 import { CapabilitiesSubscriber } from './CapabilitiesSubscriber';
-/* @conditional-compile-remove(reaction) */
 import { ReactionSubscriber } from './ReactionSubscriber';
 /* @conditional-compile-remove(spotlight) */
 import { SpotlightSubscriber } from './SpotlightSubscriber';
@@ -55,7 +53,6 @@ export class CallSubscriber {
   private _optimalVideoCountSubscriber: OptimalVideoCountSubscriber;
   private _CaptionsFeatureSubscriber?: CaptionsFeatureSubscriber;
   private _raiseHandSubscriber?: RaiseHandSubscriber;
-  /* @conditional-compile-remove(reaction) */
   private _reactionSubscriber?: ReactionSubscriber;
 
   private _localVideoStreamVideoEffectsSubscribers: Map<string, LocalVideoStreamVideoEffectsSubscriber>;
@@ -93,7 +90,6 @@ export class CallSubscriber {
       this._context,
       this._call.feature(Features.RaiseHand)
     );
-    /* @conditional-compile-remove(reaction) */
     this._reactionSubscriber = new ReactionSubscriber(
       this._callIdRef,
       this._context,
@@ -125,7 +121,6 @@ export class CallSubscriber {
 
   private subscribe = (): void => {
     this._call.on('stateChanged', this.stateChanged);
-    /* @conditional-compile-remove(close-captions) */
     this._call.on('stateChanged', this.initCaptionSubscriber);
     /* @conditional-compile-remove(local-recording-notification) */
     this._call.on('stateChanged', this.initLocalRecordingNotificationSubscriber);
@@ -164,7 +159,6 @@ export class CallSubscriber {
 
   public unsubscribe = (): void => {
     this._call.off('stateChanged', this.stateChanged);
-    /* @conditional-compile-remove(close-captions) */
     this._call.off('stateChanged', this.initCaptionSubscriber);
     /* @conditional-compile-remove(local-recording-notification) */
     this._call.off('stateChanged', this.initLocalRecordingNotificationSubscriber);
@@ -208,7 +202,6 @@ export class CallSubscriber {
     this._raiseHandSubscriber?.unsubscribe();
 
     this._capabilitiesSubscriber.unsubscribe();
-    /* @conditional-compile-remove(reaction) */
     this._reactionSubscriber?.unsubscribe();
     /* @conditional-compile-remove(spotlight) */
     this._spotlightSubscriber.unsubscribe();
@@ -236,7 +229,6 @@ export class CallSubscriber {
     this._context.setCallState(this._callIdRef.callId, this._call.state);
   };
 
-  /* @conditional-compile-remove(close-captions) */
   private initCaptionSubscriber = (): void => {
     // subscribe to captions here so that we don't call captions when call is not initialized
     if (this._call.state === 'Connected' && !this._CaptionsFeatureSubscriber) {

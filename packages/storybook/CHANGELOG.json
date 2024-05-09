@@ -2,6 +2,48 @@
   "name": "@internal/storybook",
   "entries": [
     {
+      "date": "Tue, 23 Apr 2024 17:54:37 GMT",
+      "tag": "@internal/storybook_v1.16.0-beta.1",
+      "version": "1.16.0-beta.1",
+      "comments": {
+        "minor": [
+          {
+            "author": "beachball",
+            "package": "@internal/storybook",
+            "comment": "Bump @azure/communication-react to v1.16.0-beta.1",
+            "commit": "04a79e96b9d8be86b08060c3c9ba56ae8a46bbb1"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/storybook",
+            "comment": "Bump @internal/fake-backends to v1.16.0-beta.1",
+            "commit": "04a79e96b9d8be86b08060c3c9ba56ae8a46bbb1"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 08 Apr 2024 20:34:42 GMT",
+      "tag": "@internal/storybook_v1.15.0",
+      "version": "1.15.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@internal/storybook",
+            "comment": "Bump @azure/communication-react to v1.15.0",
+            "commit": "a5d118183ecd1e7ea767a85561ff170cf11f653b"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/storybook",
+            "comment": "Bump @internal/fake-backends to v1.15.0",
+            "commit": "a5d118183ecd1e7ea767a85561ff170cf11f653b"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 26 Mar 2024 17:38:32 GMT",
       "tag": "@internal/storybook_v1.15.0-beta.1",
       "version": "1.15.0-beta.1",

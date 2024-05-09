@@ -18,6 +18,14 @@ export interface CallWithChatCompositeStrings {
    */
   selectedPeopleButtonLabel: string;
   /**
+   * {@link CallWithChatComposite} aria label for control bar People button when unchecked
+   */
+  peopleButtonTooltipOpenAriaLabel: string;
+  /**
+   * {@link CallWithChatComposite} aria label for control bar People button when checked
+   */
+  peopleButtonTooltipCloseAriaLabel: string;
+  /**
    * {@link CallWithChatComposite} control bar People button ToolTipContent
    */
   peopleButtonTooltipOpen: string;
@@ -59,21 +67,18 @@ export interface CallWithChatCompositeStrings {
    * Only used with `mobileView` set to `true`.
    */
   moreDrawerSpeakerMenuTitle: string;
-  /* @conditional-compile-remove(close-captions) */
   /**
    * Title for the captions sub-menu in more button drawer.
    *
    * Only used with `mobileView` set to `true`.
    */
   moreDrawerCaptionsMenuTitle: string;
-  /* @conditional-compile-remove(close-captions) */
   /**
    * Title for the spoken language sub-menu in more button drawer.
    *
    * Only used with `mobileView` set to `true`.
    */
   moreDrawerSpokenLanguageMenuTitle: string;
-  /* @conditional-compile-remove(close-captions) */
   /**
    * Title for the caption language sub-menu in more button drawer.
    *
@@ -124,6 +129,10 @@ export interface CallWithChatCompositeStrings {
    * Label for button to copy invite link
    */
   copyInviteLinkButtonLabel: string;
+  /**
+   * Label for button to copy invite link when it has been actioned
+   */
+  copyInviteLinkButtonActionedLabel: string;
   /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Label for button to open dialpad

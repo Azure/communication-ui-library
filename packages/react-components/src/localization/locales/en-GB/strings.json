@@ -27,7 +27,8 @@
     "attachmentUploadsPendingError": "Uploading... Please wait.",
     "removeAttachment": "Remove file",
     "uploading": "Uploading",
-    "uploadCompleted": "Upload completed"
+    "uploadCompleted": "Upload completed",
+    "attachmentMoreMenu": "More Options"
   },
   "richTextSendBox": {
     "placeholderText": "Enter a message",
@@ -55,7 +56,8 @@
     "deleteRowOrColumnMenu": "Delete",
     "deleteColumnMenu": "Delete column",
     "deleteRowMenu": "Delete row",
-    "deleteTableMenu": "Delete table"
+    "deleteTableMenu": "Delete table",
+    "attachmentMoreMenu": "More Options"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Suggestions"
@@ -79,7 +81,7 @@
     "label": "Leave",
     "tooltipContent": "Leave call",
     "leaveOption": "Leave",
-    "endCallOption": "End call"
+    "endCallOption": "End call for everyone"
   },
   "cameraButton": {
     "onLabel": "Camera",

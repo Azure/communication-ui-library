@@ -6,7 +6,6 @@ import { expect } from '@playwright/test';
 import { dataUiId, isTestProfileMobile, pageClick, stableScreenshot, waitForSelector } from '../../common/utils';
 import { IDS, captionsFeatureState, captionsFeatureStateArabic } from '../../common/constants';
 
-/* @conditional-compile-remove(close-captions) */
 test.describe('Teams Closed Captions Banner tests', async () => {
   test('Show loading banner when start captions is clicked but captions is not started yet', async ({
     page,
@@ -14,7 +13,7 @@ test.describe('Teams Closed Captions Banner tests', async () => {
   }) => {
     const initialState = defaultMockCallAdapterState();
     if (initialState?.call) {
-      initialState.isTeamsCall = true;
+      initialState.isTeamsMeeting = true;
       initialState.call.captionsFeature = {
         ...captionsFeatureState,
         isCaptionsFeatureActive: false,
@@ -31,7 +30,7 @@ test.describe('Teams Closed Captions Banner tests', async () => {
   test('Show closed captions banner when enabled', async ({ page, serverUrl }) => {
     const initialState = defaultMockCallAdapterState();
     if (initialState?.call) {
-      initialState.isTeamsCall = true;
+      initialState.isTeamsMeeting = true;
       initialState.call.captionsFeature = captionsFeatureState;
       /* @conditional-compile-remove(acs-close-captions) */
       initialState.call.captionsFeature.captionsKind = 'TeamsCaptions';
@@ -44,7 +43,7 @@ test.describe('Teams Closed Captions Banner tests', async () => {
   test('Show RTL languages from right to left', async ({ page, serverUrl }) => {
     const initialState = defaultMockCallAdapterState();
     if (initialState?.call) {
-      initialState.isTeamsCall = true;
+      initialState.isTeamsMeeting = true;
       initialState.call.captionsFeature = captionsFeatureStateArabic;
       /* @conditional-compile-remove(acs-close-captions) */
       initialState.call.captionsFeature.captionsKind = 'TeamsCaptions';
@@ -60,7 +59,7 @@ test.describe('Teams Closed Captions Banner tests', async () => {
     }
     const initialState = defaultMockCallAdapterState();
     if (initialState?.call) {
-      initialState.isTeamsCall = true;
+      initialState.isTeamsMeeting = true;
       initialState.call.captionsFeature = captionsFeatureState;
       /* @conditional-compile-remove(acs-close-captions) */
       initialState.call.captionsFeature.captionsKind = 'TeamsCaptions';
@@ -73,7 +72,7 @@ test.describe('Teams Closed Captions Banner tests', async () => {
   test('Hide closed captions banner when disabled', async ({ page, serverUrl }) => {
     const initialState = defaultMockCallAdapterState();
     if (initialState?.call) {
-      initialState.isTeamsCall = true;
+      initialState.isTeamsMeeting = true;
       initialState.call.captionsFeature = {
         ...captionsFeatureState,
         isCaptionsFeatureActive: false,
@@ -93,7 +92,7 @@ test.describe('Teams Closed Captions Banner tests', async () => {
     }
     const initialState = defaultMockCallAdapterState();
     if (initialState?.call) {
-      initialState.isTeamsCall = true;
+      initialState.isTeamsMeeting = true;
       initialState.call.captionsFeature = captionsFeatureState;
       /* @conditional-compile-remove(acs-close-captions) */
       initialState.call.captionsFeature.captionsKind = 'TeamsCaptions';
@@ -105,12 +104,11 @@ test.describe('Teams Closed Captions Banner tests', async () => {
   });
 });
 
-/* @conditional-compile-remove(close-captions) */
 test.describe('Captions buttons in call control', () => {
   test('Captions buttons shows when it is teams call and connected', async ({ page, serverUrl }, testInfo) => {
     const initialState = defaultMockCallAdapterState();
     if (initialState?.call) {
-      initialState.isTeamsCall = true;
+      initialState.isTeamsMeeting = true;
       /* @conditional-compile-remove(acs-close-captions) */
       initialState.call.captionsFeature.captionsKind = 'TeamsCaptions';
     }
@@ -125,7 +123,7 @@ test.describe('Captions buttons in call control', () => {
   test('Captions settings renders normally', async ({ page, serverUrl }, testInfo) => {
     const initialState = defaultMockCallAdapterState();
     if (initialState?.call) {
-      initialState.isTeamsCall = true;
+      initialState.isTeamsMeeting = true;
       initialState.call.captionsFeature = captionsFeatureState;
       /* @conditional-compile-remove(acs-close-captions) */
       initialState.call.captionsFeature.captionsKind = 'TeamsCaptions';
@@ -142,7 +140,7 @@ test.describe('Captions buttons in call control', () => {
   test('Captions toggle button renders correctly when caption enabled', async ({ page, serverUrl }) => {
     const initialState = defaultMockCallAdapterState();
     if (initialState?.call) {
-      initialState.isTeamsCall = true;
+      initialState.isTeamsMeeting = true;
       initialState.call.captionsFeature = captionsFeatureState;
       /* @conditional-compile-remove(acs-close-captions) */
       initialState.call.captionsFeature.captionsKind = 'TeamsCaptions';
@@ -156,7 +154,7 @@ test.describe('Captions buttons in call control', () => {
   test('Captions toggle button renders correctly when caption disabled', async ({ page, serverUrl }) => {
     const initialState = defaultMockCallAdapterState();
     if (initialState?.call) {
-      initialState.isTeamsCall = true;
+      initialState.isTeamsMeeting = true;
       initialState.call.captionsFeature.isCaptionsFeatureActive = false;
       /* @conditional-compile-remove(acs-close-captions) */
       initialState.call.captionsFeature.captionsKind = 'TeamsCaptions';

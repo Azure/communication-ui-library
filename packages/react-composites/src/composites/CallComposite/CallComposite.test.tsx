@@ -7,10 +7,6 @@ import { _MockCallAdapter } from './MockCallAdapter';
 import { CallComposite } from './CallComposite';
 import { render } from '@testing-library/react';
 
-window.AudioContext = jest.fn().mockImplementation(() => {
-  return {};
-});
-
 describe('CallComposite device permission test for different roles', () => {
   let audioDevicePermissionRequests = 0;
   let videoDevicePermissionRequests = 0;

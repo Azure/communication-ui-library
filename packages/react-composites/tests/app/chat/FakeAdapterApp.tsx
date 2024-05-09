@@ -66,8 +66,7 @@ export const FakeAdapterApp = (): JSX.Element => {
           fakeChatAdapterArgs.localParticipant,
           fakeChatAdapterArgs.remoteParticipants[0],
           fakeAdapters.service.threadId,
-          fakeChatAdapterArgs.serverUrl ?? '',
-          fakeChatAdapterArgs.inlineImageUrl
+          fakeChatAdapterArgs.serverUrl ?? ''
         );
       }
     })();
@@ -110,7 +109,7 @@ export const FakeAdapterApp = (): JSX.Element => {
                       actionsForAttachment: actionsForAttachment
                     },
                     uploadOptions: {
-                      handler: () => {
+                      handleAttachmentSelection: () => {
                         // noop
                       }
                     }
@@ -133,19 +132,13 @@ const handleAttachmentUploads = (adapter: ChatAdapter, attachmentUploads: _MockA
   attachmentUploads.forEach((attachment) => {
     if (attachment.uploadComplete) {
       const attachmentUploads = adapter.registerActiveUploads([new File([], attachment.name)]);
-      attachmentUploads[0].notifyCompleted({
-        name: attachment.name,
-        extension: attachment.extension,
-        url: attachment.url,
-        progress: 1,
-        id: attachment.id
-      });
+      attachmentUploads[0].notifyUploadCompleted(attachment.id, attachment.url ?? '');
     } else if (attachment.error) {
       const attachmentUploads = adapter.registerActiveUploads([new File([], attachment.name)]);
-      attachmentUploads[0].notifyFailed(attachment.error);
+      attachmentUploads[0].notifyUploadFailed(attachment.error);
     } else if (attachment.progress) {
       const attachmentUploads = adapter.registerActiveUploads([new File([], attachment.name)]);
-      attachmentUploads[0].notifyProgressChanged(attachment.progress);
+      attachmentUploads[0].notifyUploadProgressChanged(attachment.progress);
     } else {
       adapter.registerCompletedUploads([attachment]);
     }
@@ -177,12 +170,12 @@ const sendRemoteInlineImageMessage = (
   localParticipant: ChatParticipant,
   remoteParticipant: ChatParticipant,
   threadId: string,
-  serverUrl: string,
-  inlineImageUrl?: string
+  serverUrl: string
 ): void => {
   const localParticipantId = getIdentifierKind(localParticipant.id);
   const remoteParticipantId = getIdentifierKind(remoteParticipant.id);
-  const imgSrc = serverUrl + (inlineImageUrl || '/images/inlineImageExample1.png');
+  const imgSrcPreview = serverUrl + '/images/inlineImageExample1.png';
+  const imgSrcFullSize = serverUrl + '/images/inlineImageExample1-fullSize.png';
   if (localParticipantId.kind === 'microsoftTeamsApp' || remoteParticipantId.kind === 'microsoftTeamsApp') {
     throw new Error('Unsupported identifier kind: microsoftBot');
   }
@@ -194,14 +187,14 @@ const sendRemoteInlineImageMessage = (
     sequenceId: `${thread.messages.length}`,
     version: '0',
     content: {
-      message: `<p>Test</p><p><img alt="image" src="${imgSrc}" itemscope="png" width="200" height="300" id="SomeImageId1" style="vertical-align:bottom"></p><p>&nbsp;</p>`,
+      message: `<p>Test</p><p><img alt="image" src="${imgSrcPreview}" itemscope="png" width="200" height="300" id="SomeImageId1" style="vertical-align:bottom"></p><p>&nbsp;</p>`,
       attachments: [
         {
           id: 'SomeImageId1',
           attachmentType: 'image',
           name: '',
-          url: imgSrc,
-          previewUrl: imgSrc
+          url: imgSrcFullSize,
+          previewUrl: imgSrcPreview
         }
       ]
     },

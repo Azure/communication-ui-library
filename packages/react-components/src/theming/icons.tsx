@@ -42,8 +42,8 @@ import {
   MicProhibited16Filled,
   VideoProhibited16Filled,
   Pin16Filled,
-  Pin16Regular,
-  PinOff16Regular,
+  Pin20Regular,
+  PinOff20Regular,
   ScaleFit20Regular,
   ScaleFill20Regular
 } from '@fluentui/react-icons';
@@ -64,17 +64,10 @@ import {
   TableAdd20Regular,
   TableDismiss20Regular
 } from '@fluentui/react-icons';
-/* @conditional-compile-remove(reaction) */
 import { Emoji20Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(end-of-call-survey) */
 import { Star28Regular, Star28Filled } from '@fluentui/react-icons';
-import {
-  HandRight20Filled,
-  HandRightOff20Filled,
-  HandRight20Regular,
-  HandRightOff20Regular
-} from '@fluentui/react-icons';
-/* @conditional-compile-remove(close-captions) */
+import { HandRight20Regular, HandRightOff20Regular } from '@fluentui/react-icons';
 import {
   ClosedCaption20Regular,
   ClosedCaptionOff20Regular,
@@ -245,15 +238,11 @@ const GalleryRightButton = (): JSX.Element => {
 };
 
 const ControlButtonRaiseHandIcon = (): JSX.Element => {
-  /* @conditional-compile-remove(reaction) */
   return <HandRight20Regular />;
-  return <HandRight20Filled />;
 };
 
 const ControlButtonLowerHandIcon = (): JSX.Element => {
-  /* @conditional-compile-remove(reaction) */
   return <HandRightOff20Regular />;
-  return <HandRightOff20Filled />;
 };
 
 /**
@@ -279,7 +268,6 @@ export const DEFAULT_COMPONENT_ICONS = {
   ControlButtonLowerHand: <ControlButtonLowerHandIcon />,
   RaiseHandContextualMenuItem: <HandRight20Regular />,
   LowerHandContextualMenuItem: <HandRightOff20Regular />,
-  /* @conditional-compile-remove(reaction) */
   ReactionButtonIcon: <Emoji20Regular />,
   /* @conditional-compile-remove(attachment-upload) */
   CancelAttachmentUpload: <Dismiss16Regular />,
@@ -353,27 +341,20 @@ export const DEFAULT_COMPONENT_ICONS = {
   VideoTileMoreOptions: <MoreHorizontal20Filled />,
   VideoTileScaleFit: <ScaleFit20Regular />,
   VideoTileScaleFill: <ScaleFill20Regular />,
-  PinParticipant: <Pin16Regular />,
-  UnpinParticipant: <PinOff16Regular />,
+  PinParticipant: <Pin20Regular />,
+  UnpinParticipant: <PinOff20Regular />,
   SplitButtonPrimaryActionCameraOn: <Video20Filled />,
   SplitButtonPrimaryActionCameraOff: <VideoOff20Filled />,
   SplitButtonPrimaryActionMicUnmuted: <Mic20Filled />,
   SplitButtonPrimaryActionMicMuted: <MicOff20Filled />,
   VerticalGalleryLeftButton: <GalleryLeftButton />,
   VerticalGalleryRightButton: <GalleryRightButton />,
-
   ControlButtonVideoEffectsOption: <VideoBackgroundEffect20Regular />,
-
   ConfigurationScreenVideoEffectsButton: <VideoBackgroundEffect20Filled />,
-  /* @conditional-compile-remove(close-captions) */
   CaptionsIcon: <ClosedCaption20Regular />,
-  /* @conditional-compile-remove(close-captions) */
   CaptionsOffIcon: <ClosedCaptionOff20Regular />,
-  /* @conditional-compile-remove(close-captions) */
   CaptionsSettingsIcon: <Settings20Regular />,
-  /* @conditional-compile-remove(close-captions) */
   ChangeSpokenLanguageIcon: <PersonVoice20Regular />,
-  /* @conditional-compile-remove(close-captions) */
   ChangeCaptionLanguageIcon: <Translate20Regular />,
   ContextMenuCameraIcon: <Video20Regular />,
   ContextMenuMicIcon: <Mic20Regular />,

@@ -23,6 +23,7 @@ export const usePeoplePane = (props: {
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   mobileView?: boolean;
   peopleButtonRef?: RefObject<IButton>;
+  setParticipantActioned?: (userId: string) => void;
   /* @conditional-compile-remove(spotlight) */
   spotlightedParticipantUserIds?: string[];
   /* @conditional-compile-remove(spotlight) */
@@ -50,6 +51,7 @@ export const usePeoplePane = (props: {
     setDrawerMenuItems,
     mobileView,
     peopleButtonRef,
+    setParticipantActioned,
     /* @conditional-compile-remove(spotlight) */
     spotlightedParticipantUserIds,
     /* @conditional-compile-remove(spotlight) */
@@ -197,6 +199,7 @@ export const usePeoplePane = (props: {
         onFetchParticipantMenuItems={_onFetchParticipantMenuItems}
         setDrawerMenuItems={setDrawerMenuItems}
         mobileView={mobileView}
+        setParticipantActioned={setParticipantActioned}
         /* @conditional-compile-remove(spotlight) */
         participantListHeadingMoreButtonProps={sidePaneHeaderMenuProps}
       />
@@ -207,6 +210,7 @@ export const usePeoplePane = (props: {
     onFetchAvatarPersonaData,
     _onFetchParticipantMenuItems,
     setDrawerMenuItems,
+    setParticipantActioned,
     /* @conditional-compile-remove(spotlight) */ sidePaneHeaderMenuProps
   ]);
 

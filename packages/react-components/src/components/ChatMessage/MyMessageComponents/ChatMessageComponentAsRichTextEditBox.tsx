@@ -115,6 +115,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
             onCancel && onCancel(message.messageId);
           }}
           id={'dismissIconWrapper'}
+          data-testId={strings.editBoxCancelButton}
         />
         <InputBoxButton
           className={richTextActionButtonsStyle}
@@ -133,6 +134,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
             e.stopPropagation();
           }}
           id={'submitIconWrapper'}
+          data-testId={strings.editBoxSubmitButton}
         />
       </Stack>
     );
@@ -169,7 +171,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
       <Stack className={attachmentUploadCardsStyles}>
         <FluentV9ThemeProvider v8Theme={theme}>
           <_AttachmentUploadCards
-            activeAttachmentUploads={attachmentMetadata}
+            attachmentsWithProgress={attachmentMetadata}
             onCancelAttachmentUpload={onCancelAttachmentUpload}
           />
         </FluentV9ThemeProvider>
@@ -217,3 +219,5 @@ export const ChatMessageComponentAsRichTextEditBox = (
     </ChatMyMessage>
   );
 };
+
+export default ChatMessageComponentAsRichTextEditBox;

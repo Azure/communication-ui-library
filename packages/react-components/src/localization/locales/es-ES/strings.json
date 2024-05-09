@@ -27,7 +27,8 @@
     "attachmentUploadsPendingError": "Cargando... Espere.",
     "removeAttachment": "Quitar archivo",
     "uploading": "Cargando",
-    "uploadCompleted": "Carga completada"
+    "uploadCompleted": "Carga completada",
+    "attachmentMoreMenu": "Más opciones"
   },
   "richTextSendBox": {
     "placeholderText": "Escribir un mensaje",
@@ -55,7 +56,8 @@
     "deleteRowOrColumnMenu": "Eliminar",
     "deleteColumnMenu": "Eliminar columna",
     "deleteRowMenu": "Eliminar fila",
-    "deleteTableMenu": "Eliminar tabla"
+    "deleteTableMenu": "Eliminar tabla",
+    "attachmentMoreMenu": "Más opciones"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Sugerencias"
@@ -79,7 +81,7 @@
     "label": "Baja",
     "tooltipContent": "Abandonar llamada",
     "leaveOption": "Salir",
-    "endCallOption": "Finalizar llamada"
+    "endCallOption": "Finalizar la llamada para todos"
   },
   "cameraButton": {
     "onLabel": "Cámara",

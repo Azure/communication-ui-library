@@ -5,6 +5,11 @@ import { ContentEdit, Watermark } from 'roosterjs-editor-plugins';
 import { Editor } from 'roosterjs-editor-core';
 import type { DefaultFormat, EditorOptions, IEditor } from 'roosterjs-editor-types-compatible';
 import {
+  CompatibleContentPosition,
+  CompatibleGetContentMode,
+  CompatiblePositionType
+} from 'roosterjs-editor-types-compatible';
+import {
   Rooster,
   createUpdateContentPlugin,
   UpdateMode,
@@ -61,9 +66,25 @@ export interface RichTextEditorProps {
  *
  * @beta
  */
+/**
+ * Represents a reference to the RichTextEditor component.
+ */
 export interface RichTextEditorComponentRef {
+  /**
+   * Sets focus on the RichTextEditor component.
+   */
   focus: () => void;
+
+  /**
+   * Sets the content of the RichTextEditor component to an empty string.
+   */
   setEmptyContent: () => void;
+
+  /**
+   * Retrieves the plain text content of the RichTextEditor component.
+   * @returns The plain text content of the RichTextEditor component, or undefined if the editor isn't available.
+   */
+  getPlainContent: () => string | undefined;
 }
 
 /**
@@ -90,6 +111,9 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
           if (editor.current) {
             editor.current.setContent('');
           }
+        },
+        getPlainContent() {
+          return editor?.current?.getContent(CompatibleGetContentMode.PlainTextFast);
         }
       };
     },
@@ -212,8 +236,16 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
 });
 
 const focusAndUpdateContent = (editor: Editor, content: string): void => {
-  // focus the editor to set correct selection position
-  editor.focus();
-  // set initial content
+  // setting focus before setting content, works for Chrome and Edge but not Safari
   editor.setContent(content);
+  // this is a recommended way (by RoosterJS team) to set focus at the end of the text
+  // RoosterJS v9 has this issue fixed and this code can be removed
+  // CompatibleContentPosition.DomEnd shouldn't be used here as it set focus after the editor div
+  editor.insertContent('<span id="focus-position-span"></span>', { position: CompatibleContentPosition.End });
+  const elements = editor.queryElements('#focus-position-span');
+  if (elements.length > 0) {
+    const placeholder = editor.queryElements('#focus-position-span')[0];
+    editor.select(placeholder, CompatiblePositionType.Before);
+    placeholder.remove();
+  }
 };

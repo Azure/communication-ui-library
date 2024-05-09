@@ -18,7 +18,10 @@ describe('RichTextEditor should be shown correctly', () => {
         richtextnumberlistbuttonicon: <></>,
         richtextindentdecreasebuttonicon: <></>,
         richtextindentincreasebuttonicon: <></>,
-        richtextdividericon: <></>
+        richtextdividericon: <></>,
+        chevrondown: <></>,
+        richtextinserttableregularicon: <></>,
+        richtextinserttablefilledicon: <></>
       }
     });
   });
@@ -69,7 +72,8 @@ describe('RichTextEditor should be shown correctly', () => {
     const numberListButton = screen.queryByLabelText('Numbered list');
     const indentDecreaseButton = screen.queryByLabelText('Decrease indent');
     const indentIncreaseButton = screen.queryByLabelText('Increase indent');
-    const divider = container.querySelector('[data-icon-name="RichTextDividerIcon"]');
+    const divider = container.querySelectorAll('[data-icon-name="RichTextDividerIcon"]');
+    const insertTableButton = screen.queryByLabelText('Insert table');
     expect(boldButton).not.toBeNull();
     expect(italicButton).not.toBeNull();
     expect(underlineButton).not.toBeNull();
@@ -77,7 +81,9 @@ describe('RichTextEditor should be shown correctly', () => {
     expect(numberListButton).not.toBeNull();
     expect(indentDecreaseButton).not.toBeNull();
     expect(indentIncreaseButton).not.toBeNull();
-    expect(divider).not.toBeNull();
+    //2 dividers in the format toolbar
+    expect(divider.length).toBe(2);
+    expect(insertTableButton).not.toBeNull();
   });
 
   // button clicks cause `TypeError: editor.getDocument(...).execCommand is not a function`.

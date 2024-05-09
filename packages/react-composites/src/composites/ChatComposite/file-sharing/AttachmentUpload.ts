@@ -6,9 +6,9 @@ import { nanoid } from 'nanoid';
 import { _MAX_EVENT_LISTENERS } from '@internal/acs-ui-common';
 import {
   AttachmentMetadata,
-  AttachmentUploadHandler,
-  AttachmentUploadManager,
-  AttachmentUploadStatus
+  AttachmentSelectionHandler,
+  AttachmentUploadTask,
+  AttachmentProgressError
 } from '@internal/react-components';
 
 /**
@@ -16,9 +16,11 @@ import {
  * Provides common functions for updating the upload progress, canceling an upload etc.
  * @private
  */
-export class AttachmentUpload implements AttachmentUploadManager, AttachmentUploadEventEmitter {
+export class AttachmentUpload implements AttachmentUploadTask, AttachmentUploadEventEmitter {
   private _emitter: EventEmitter;
-  public readonly id: string;
+  // a nanoid to uniquely identify each upload task
+  public readonly taskId: string;
+  // a file object that represents the attachment selected by the user via browser file picker
   public readonly file?: File;
   /**
    * Name to be displayed in the UI during attachment upload.
@@ -32,7 +34,7 @@ export class AttachmentUpload implements AttachmentUploadManager, AttachmentUplo
   constructor(data: File | AttachmentMetadata) {
     this._emitter = new EventEmitter();
     this._emitter.setMaxListeners(_MAX_EVENT_LISTENERS);
-    this.id = nanoid();
+    this.taskId = nanoid();
     if (data instanceof File) {
       this.file = data;
     } else {
@@ -42,16 +44,16 @@ export class AttachmentUpload implements AttachmentUploadManager, AttachmentUplo
     this.name = name;
   }
 
-  notifyProgressChanged(value: number): void {
-    this._emitter.emit('uploadProgressChange', this.id, value);
+  notifyUploadProgressChanged(value: number): void {
+    this._emitter.emit('uploadProgressChange', this.taskId, value);
   }
 
-  notifyCompleted(metadata: AttachmentMetadata): void {
-    this._emitter.emit('uploadComplete', this.id, metadata);
+  notifyUploadCompleted(id: string, url: string): void {
+    this._emitter.emit('uploadComplete', this.taskId, id, url);
   }
 
-  notifyFailed(message: string): void {
-    this._emitter.emit('uploadFail', this.id, message);
+  notifyUploadFailed(message: string): void {
+    this._emitter.emit('uploadFail', this.taskId, message);
   }
 
   on(event: 'uploadProgressChange', listener: UploadProgressListener): void;
@@ -79,7 +81,7 @@ export class AttachmentUpload implements AttachmentUploadManager, AttachmentUplo
   }
 }
 
-export type { AttachmentMetadata, AttachmentUploadHandler, AttachmentUploadManager, AttachmentUploadStatus };
+export type { AttachmentMetadata, AttachmentSelectionHandler, AttachmentUploadTask, AttachmentProgressError };
 
 /**
  * Events emitted by the AttachmentUpload class.
@@ -97,17 +99,17 @@ type AttachmentUploadEventListener = UploadProgressListener | UploadCompleteList
  * Listener for `uploadProgressed` event.
  * @beta
  */
-type UploadProgressListener = (id: string, value: number) => void;
+type UploadProgressListener = (taskId: string, value: number) => void;
 /**
  * Listener for `uploadComplete` event.
  * @beta
  */
-type UploadCompleteListener = (id: string, metadata: AttachmentMetadata) => void;
+type UploadCompleteListener = (taskId: string, attachmentId: string, attachmentUrl: string) => void;
 /**
  * Listener for `uploadFailed` event.
  * @beta
  */
-type UploadFailedListener = (id: string, message: string) => void;
+type UploadFailedListener = (taskId: string, message: string) => void;
 
 /**
  * @beta

@@ -27,7 +27,8 @@
     "attachmentUploadsPendingError": "업로드 중... 잠시만 기다려 주세요.",
     "removeAttachment": "파일 제거",
     "uploading": "업로드 중",
-    "uploadCompleted": "업로드 완료"
+    "uploadCompleted": "업로드 완료",
+    "attachmentMoreMenu": "옵션 더 보기"
   },
   "richTextSendBox": {
     "placeholderText": "메시지 입력",
@@ -55,7 +56,8 @@
     "deleteRowOrColumnMenu": "삭제",
     "deleteColumnMenu": "열 삭제",
     "deleteRowMenu": "행 삭제",
-    "deleteTableMenu": "표 삭제"
+    "deleteTableMenu": "표 삭제",
+    "attachmentMoreMenu": "옵션 더 보기"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "제안"
@@ -79,7 +81,7 @@
     "label": "휴가",
     "tooltipContent": "통화에서 나가기",
     "leaveOption": "나가기",
-    "endCallOption": "통화 종료"
+    "endCallOption": "모든 사람의 통화 종료"
   },
   "cameraButton": {
     "onLabel": "카메라",

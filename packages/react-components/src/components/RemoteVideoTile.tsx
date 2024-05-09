@@ -24,9 +24,7 @@ import { useVideoTileContextualMenuProps } from './VideoGallery/useVideoTileCont
 import { VideoTile } from './VideoTile';
 /* @conditional-compile-remove(hide-attendee-name) */
 import { _formatString } from '@internal/acs-ui-common';
-/* @conditional-compile-remove(reaction) */
 import { ReactionResources } from '../types/ReactionTypes';
-/* @conditional-compile-remove(reaction) */
 import { MeetingReactionOverlay } from './MeetingReactionOverlay';
 
 /**
@@ -47,12 +45,14 @@ export const _RemoteVideoTile = React.memo(
     onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
     isAvailable?: boolean;
     isReceiving?: boolean;
+    streamId?: number;
     isScreenSharingOn?: boolean; // TODO: Remove this once onDisposeRemoteStreamView no longer disposes of screen share stream
     renderElement?: HTMLElement;
     remoteVideoViewOptions?: VideoStreamOptions;
     onRenderAvatar?: OnRenderAvatarCallback;
     showMuteIndicator?: boolean;
     showLabel?: boolean;
+    alwaysShowLabelBackground?: boolean;
     personaMinSize?: number;
     strings: VideoGalleryStrings;
     participantState?: ParticipantState;
@@ -69,7 +69,7 @@ export const _RemoteVideoTile = React.memo(
     /* @conditional-compile-remove(spotlight) */ maxParticipantsToSpotlight?: number;
     disablePinMenuItem?: boolean;
     toggleAnnouncerString?: (announcerString: string) => void;
-    /* @conditional-compile-remove(reaction) */ reactionResources?: ReactionResources;
+    reactionResources?: ReactionResources;
   }) => {
     const {
       isAvailable,
@@ -97,7 +97,8 @@ export const _RemoteVideoTile = React.memo(
       disablePinMenuItem,
       toggleAnnouncerString,
       strings,
-      /* @conditional-compile-remove(reaction) */ reactionResources
+      reactionResources,
+      streamId
     } = props;
 
     const remoteVideoStreamProps: RemoteVideoStreamLifecycleMaintainerProps = useMemo(
@@ -110,7 +111,8 @@ export const _RemoteVideoTile = React.memo(
         onDisposeRemoteStreamView,
         remoteParticipantId: userId,
         renderElementExists: !!renderElement,
-        scalingMode: remoteVideoViewOptions?.scalingMode
+        scalingMode: remoteVideoViewOptions?.scalingMode,
+        streamId
       }),
       [
         isAvailable,
@@ -121,7 +123,8 @@ export const _RemoteVideoTile = React.memo(
         remoteVideoViewOptions?.isMirrored,
         remoteVideoViewOptions?.scalingMode,
         renderElement,
-        userId
+        userId,
+        streamId
       ]
     );
 
@@ -193,7 +196,13 @@ export const _RemoteVideoTile = React.memo(
       return displayName;
     };
 
-    /* @conditional-compile-remove(reaction) */
+    const formatInitialsName = (): string | undefined => {
+      if (remoteParticipant.displayName && attendeeRoleString) {
+        return _formatString(remoteParticipant.displayName, { AttendeeRole: attendeeRoleString });
+      }
+      return remoteParticipant.displayName;
+    };
+
     const reactionOverlay = (
       <MeetingReactionOverlay
         overlayMode="grid-tiles"
@@ -213,7 +222,7 @@ export const _RemoteVideoTile = React.memo(
         <VideoTile
           key={userId}
           userId={userId}
-          initialsName={remoteParticipant.displayName ?? ''}
+          initialsName={formatInitialsName() ?? ''}
           renderElement={renderVideoStreamElement}
           displayName={displayName}
           onRenderPlaceholder={onRenderAvatar}
@@ -223,6 +232,7 @@ export const _RemoteVideoTile = React.memo(
           showMuteIndicator={showMuteIndicator}
           personaMinSize={props.personaMinSize}
           showLabel={props.showLabel}
+          alwaysShowLabelBackground={props.alwaysShowLabelBackground}
           /* @conditional-compile-remove(one-to-n-calling) */
           /* @conditional-compile-remove(PSTN-calls) */
           participantState={participantState}
@@ -235,7 +245,6 @@ export const _RemoteVideoTile = React.memo(
           }
           /* @conditional-compile-remove(spotlight) */
           isSpotlighted={isSpotlighted}
-          /* @conditional-compile-remove(reaction) */
           overlay={reactionOverlay}
         />
         {drawerMenuItemProps.length > 0 && (
@@ -244,7 +253,7 @@ export const _RemoteVideoTile = React.memo(
               <_DrawerMenu
                 onLightDismiss={() => setDrawerMenuItemProps([])}
                 items={drawerMenuItemProps}
-                heading={remoteParticipant.displayName}
+                heading={displayName}
               />
             </Stack>
           </Layer>

@@ -161,22 +161,18 @@ export class _MockCallAdapter implements CallAdapter {
     throw Error('getEnvironmentInfo not implemented');
   }
 
-  /* @conditional-compile-remove(close-captions) */
   startCaptions(): Promise<void> {
     throw Error('start captions not implemented');
   }
 
-  /* @conditional-compile-remove(close-captions) */
   setCaptionLanguage(): Promise<void> {
     throw Error('setCaptionLanguage not implemented');
   }
 
-  /* @conditional-compile-remove(close-captions) */
   setSpokenLanguage(): Promise<void> {
     throw Error('setSpokenLanguage not implemented');
   }
 
-  /* @conditional-compile-remove(close-captions) */
   stopCaptions(): Promise<void> {
     throw Error('stopCaptions not implemented');
   }
@@ -244,10 +240,8 @@ const createDefaultCallAdapterState = (role?: ParticipantRole): CallAdapterState
       raiseHand: { raisedHands: [] },
       /* @conditional-compile-remove(ppt-live) */
       pptLive: { isActive: false },
-      /* @conditional-compile-remove(reaction) */
       localParticipantReaction: undefined,
       role,
-      /* @conditional-compile-remove(close-captions) */
       captionsFeature: {
         captions: [],
         supportedSpokenLanguages: [],
@@ -284,6 +278,7 @@ const createDefaultCallAdapterState = (role?: ParticipantRole): CallAdapterState
       deviceAccess: { video: true, audio: true }
     },
     isTeamsCall: false,
+    isTeamsMeeting: false,
     isRoomsCall: false,
     latestErrors: {}
   };

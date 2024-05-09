@@ -27,7 +27,8 @@
     "attachmentUploadsPendingError": "Uppladdning pågår... Vänta.",
     "removeAttachment": "Ta bort fil",
     "uploading": "Laddar upp",
-    "uploadCompleted": "Uppladdningen har slutförts"
+    "uploadCompleted": "Uppladdningen har slutförts",
+    "attachmentMoreMenu": "Fler alternativ"
   },
   "richTextSendBox": {
     "placeholderText": "Skriv ett meddelande",
@@ -55,7 +56,8 @@
     "deleteRowOrColumnMenu": "Ta bort",
     "deleteColumnMenu": "Ta bort kolumn",
     "deleteRowMenu": "Ta bort rad",
-    "deleteTableMenu": "Ta bort tabell"
+    "deleteTableMenu": "Ta bort tabell",
+    "attachmentMoreMenu": "Fler alternativ"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Förslag"
@@ -79,7 +81,7 @@
     "label": "Lämna",
     "tooltipContent": "Lämna samtal",
     "leaveOption": "Lämna",
-    "endCallOption": "Avsluta samtal"
+    "endCallOption": "Avsluta samtal för alla"
   },
   "cameraButton": {
     "onLabel": "Kamera",

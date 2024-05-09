@@ -244,6 +244,10 @@
       "shareScreen": {
         "lostDueToRoleChangeToAttendee": "Rolünüz değiştirildi. İçerik paylaşma gibi bazı eylemler kullanılamaz.",
         "grantedDueToRoleChangeToPresenter": "Sunucuyuz. İçerik paylaşabilir ve toplantıya yardımcı olabilirsiniz."
+      },
+      "hideAttendeeNames": {
+        "hideAttendeeNameAttendee": "Adınız diğer katılımcılardan gizlendi. Düzenleyiciler ve sunucular gerçek adınızı görebilir.",
+        "hideAttendeeNamePresenter": "Katılımcı adları gizlidir. Katılımcı gizliliğini korumak için yalnızca düzenleyiciler ve sunucular adları görebilir."
       }
     },
     "surveyTitle": "Geliştirmemize yardımcı olun",
@@ -259,7 +263,6 @@
     "tagsSurveyQuestion": "Neleri iyileştirebiliriz?",
     "tagsSurveyTextFieldDefaultText": "Diğer, lütfen belirtin",
     "tagsSurveyHelperText": "Karşılaştığınız tüm sorunları işaretleyin",
-    "surveyTextboxDefaultText": "Diğer, lütfen belirtin",
     "endOfSurveyText": "Geri bildiriminiz için teşekkür ederiz!",
     "surveyIssues": {
       "overallRating": {
@@ -301,7 +304,7 @@
         "otherIssues": "Bu aramada başka ekran paylaşımı sorunlarıyla karşılaştım"
       }
     },
-    "SurveyIssuesHeadingStrings": {
+    "surveyIssuesHeadingStrings": {
       "overallRating": "Genel",
       "audioRating": "Ses",
       "videoRating": "Video",
@@ -325,7 +328,8 @@
     },
     "exitSpotlightButtonLabel": "Öne çıkarmadan çık",
     "exitSpotlightButtonTooltip": "Öne çıkarmadan çık",
-    "hangUpConfirmButtonLabel": "Onayla",
+    "leaveConfirmButtonLabel": "Ayrıl",
+    "endCallConfirmButtonLabel": "Aramayı sonlandır",
     "hangUpCancelButtonLabel": "İptal",
     "leaveConfirmDialogTitle": "Aramadan çıkılsın mı?",
     "leaveConfirmDialogContent": "Aramadan ayrılmak istediğinizden emin misiniz?",

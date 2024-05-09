@@ -11,11 +11,10 @@ import { VideoBackgroundImage, VideoBackgroundEffect } from '../../CallComposite
 import { VideoBackgroundEffectsDependency } from '@internal/calling-component-bindings';
 import { ChatAdapterState } from '../../ChatComposite';
 /* @conditional-compile-remove(attachment-upload) */
-import { AttachmentUploadsUiState } from '../../ChatComposite';
+import { _AttachmentUploadsUiState } from '../../ChatComposite';
 import { AdapterErrors } from '../../common/adapters';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
-/* @conditional-compile-remove(reaction) */
 import { ReactionResources } from '@internal/react-components';
 
 /**
@@ -40,11 +39,11 @@ export interface CallWithChatAdapterUiState {
   /**
    * Files being uploaded by a user in the current thread.
    * Should be set to null once the upload is complete.
-   * Array of type {@link AttachmentUploadsUiState}
+   * Array of type {@link _AttachmentUploadsUiState}
    *
-   * @beta
+   * @internal
    */
-  attachmentUploads?: AttachmentUploadsUiState;
+  _attachmentUploads?: _AttachmentUploadsUiState;
   /* @conditional-compile-remove(unsupported-browser) */
   /**
    * State to track whether the end user has opted in to using a
@@ -78,6 +77,8 @@ export interface CallWithChatClientState {
   devices: DeviceManagerState;
   /** State of whether the active call is a Teams interop call */
   isTeamsCall: boolean;
+  /** State of whether the active call is a Teams interop meeting */
+  isTeamsMeeting: boolean;
   /* @conditional-compile-remove(PSTN-calls) */
   /** alternateCallerId for PSTN call */
   alternateCallerId?: string | undefined;
@@ -96,7 +97,6 @@ export interface CallWithChatClientState {
   /* @conditional-compile-remove(hide-attendee-name) */
   /** Hide attendee names in teams meeting */
   hideAttendeeNames?: boolean;
-  /* @conditional-compile-remove(reaction) */
   /**
    * Reaction resources to render in meetings
    * */
@@ -126,10 +126,11 @@ export function callWithChatAdapterStateFromBackingStates(callAdapter: CallAdapt
     devices: callAdapterState.devices,
     isLocalPreviewMicrophoneEnabled: callAdapterState.isLocalPreviewMicrophoneEnabled,
     isTeamsCall: callAdapterState.isTeamsCall,
+    isTeamsMeeting: callAdapterState.isTeamsMeeting,
     latestCallErrors: callAdapterState.latestErrors,
     latestChatErrors: {},
     /* @conditional-compile-remove(attachment-upload) */
-    attachmentUploads: {},
+    _attachmentUploads: {},
     /* @conditional-compile-remove(PSTN-calls) */
     alternateCallerId: callAdapterState.alternateCallerId,
     /* @conditional-compile-remove(unsupported-browser) */
@@ -140,7 +141,6 @@ export function callWithChatAdapterStateFromBackingStates(callAdapter: CallAdapt
     /* @conditional-compile-remove(hide-attendee-name) */
     /** Hide attendee names in teams meeting */
     hideAttendeeNames: callAdapterState.hideAttendeeNames,
-    /* @conditional-compile-remove(reaction) */
     reactions: callAdapterState.reactions
   };
 }
@@ -157,7 +157,7 @@ export function mergeChatAdapterStateIntoCallWithChatAdapterState(
     chat: chatAdapterState.thread,
     latestChatErrors: chatAdapterState.latestErrors,
     /* @conditional-compile-remove(attachment-upload) */
-    attachmentUploads: chatAdapterState.attachmentUploads
+    _attachmentUploads: chatAdapterState._attachmentUploads
   };
 }
 
@@ -177,6 +177,7 @@ export function mergeCallAdapterStateIntoCallWithChatAdapterState(
     call: callAdapterState.call,
     isLocalPreviewMicrophoneEnabled: callAdapterState.isLocalPreviewMicrophoneEnabled,
     isTeamsCall: callAdapterState.isTeamsCall,
+    isTeamsMeeting: callAdapterState.isTeamsMeeting,
     latestCallErrors: callAdapterState.latestErrors,
 
     videoBackgroundImages: callAdapterState.videoBackgroundImages,

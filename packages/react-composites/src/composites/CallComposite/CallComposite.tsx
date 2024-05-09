@@ -2,7 +2,13 @@
 // Licensed under the MIT License.
 
 import { _isInCall } from '@internal/calling-component-bindings';
-import { ActiveErrorMessage, ErrorBar, ParticipantMenuItemsCallback, useTheme } from '@internal/react-components';
+import {
+  ActiveErrorMessage,
+  ErrorBar,
+  ParticipantMenuItemsCallback,
+  useTheme,
+  VideoTilesOptions
+} from '@internal/react-components';
 /* @conditional-compile-remove(end-of-call-survey) */
 import { CallSurveyImprovementSuggestions } from '@internal/react-components';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
@@ -55,6 +61,7 @@ import { useTrackedCapabilityChangedNotifications } from './utils/TrackCapabilit
 import { useEndedCallConsoleErrors } from './utils/useConsoleErrors';
 /* @conditional-compile-remove(end-of-call-survey) */
 import { SurveyPage } from './pages/SurveyPage';
+import { useAudio } from '../common/AudioProvider';
 
 /**
  * Props for {@link CallComposite}.
@@ -221,6 +228,17 @@ export type CallCompositeOptions = {
    * @remarks if 'false' the local video tile will not be rendered.
    */
   localVideoTile?: boolean | LocalVideoTileOptions;
+  /**
+   * Options for controlling video tile.
+   */
+  videoTilesOptions?: VideoTilesOptions;
+  /**
+   * Whether to auto show the DTMF Dialer when the call starts in supported scenarios.
+   * - Teams Voice Application like Call queue or Auto Attendant
+   * - PSTN Calls
+   * @defaultValue false
+   */
+  disableAutoShowDtmfDialer?: boolean;
   /**
    * Options for controlling the starting layout of the composite's video gallery
    */
@@ -401,7 +419,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
     };
   }, [adapter]);
 
-  const compositeAudioContext = useRef<AudioContext>(new AudioContext());
+  const compositeAudioContext = useAudio();
 
   const capabilitiesChangedInfoAndRole = useSelector(capabilitiesChangedInfoAndRoleSelector);
 
@@ -583,7 +601,8 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           capabilitiesChangedNotificationBarProps={capabilitiesChangedNotificationBarProps}
           pinnedParticipants={pinnedParticipants}
           setPinnedParticipants={setPinnedParticipants}
-          compositeAudioContext={compositeAudioContext.current}
+          compositeAudioContext={compositeAudioContext}
+          disableAutoShowDtmfDialer={props.options?.disableAutoShowDtmfDialer}
         />
       );
       break;
