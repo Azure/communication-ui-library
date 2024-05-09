@@ -7,12 +7,7 @@ import { Common, fromFlatCommunicationIdentifier } from '@internal/acs-ui-common
 import { StatefulChatClient } from '@internal/chat-stateful-client';
 /* @conditional-compile-remove(attachment-upload) */
 import { ChatAttachment } from '@azure/communication-chat';
-import {
-  ChatMessage,
-  ChatMessageReadReceipt,
-  ChatThreadClient,
-  SendMessageOptions
-} from '@azure/communication-chat';
+import { ChatMessage, ChatMessageReadReceipt, ChatThreadClient, SendMessageOptions } from '@azure/communication-chat';
 import memoizeOne from 'memoize-one';
 /* @conditional-compile-remove(attachment-upload) */
 import { MessageOptions } from '@internal/acs-ui-common';
@@ -84,7 +79,7 @@ export const createDefaultChatHandlers = memoizeOne(
           await chatThreadClient.sendMessage(sendMessageRequest, chatSDKOptions);
           return;
         }
-        await chatThreadClient.sendMessage(sendMessageRequest, options);
+        await chatThreadClient.sendMessage(sendMessageRequest, options as SendMessageOptions);
       },
       onUpdateMessage: async function (
         messageId: string,

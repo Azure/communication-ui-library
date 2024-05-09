@@ -125,7 +125,7 @@ export const AttachmentUploadButtonWrapper = (
 };
 
 const uploadAttachmentButtonStringTrampoline = (): string => {
-  //@conditional-compile-remove(attachment-upload)
+  /* @conditional-compile-remove(attachment-upload) */
   //eslint-disable-next-line react-hooks/rules-of-hooks
   return useLocale().strings.chat.uploadAttachment;
   return '';
