@@ -414,7 +414,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
                   styles={sendBoxStyles}
                   autoFocus={options?.autoFocus}
                   /* @conditional-compile-remove(rich-text-editor-composite-support) */
-                  richTextEditor={options?.richTextEditor}
+                  richTextEditor={true} // TODO: Remove hardcode for true {options?.richTextEditor}
                   /* @conditional-compile-remove(attachment-upload) */
                   attachmentsWithProgress={attachmentsWithProgress}
                   /* @conditional-compile-remove(attachment-upload) */
