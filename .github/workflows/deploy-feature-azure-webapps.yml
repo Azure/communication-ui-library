@@ -31,8 +31,8 @@ jobs:
         run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
       - name: Install dependencies
         run: rush install
-      - name: Switch flavor for beta release build
-        run: rush switch-flavor:beta-release
+      - name: Switch flavor for stable release build
+        run: rush switch-flavor:stable
       - name: Build Communication-react
         run: rush build -t @azure/communication-react
       - name: Build Server
@@ -73,8 +73,8 @@ jobs:
         run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
       - name: Install dependencies
         run: rush install
-      - name: Switch flavor for stable release build
-        run: rush switch-flavor:stable
+      - name: Switch flavor for beta release build
+        run: rush switch-flavor:beta-release
       - name: Build Communication-react
         run: rush build -t @azure/communication-react
       - name: Build Server
