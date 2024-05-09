@@ -5,7 +5,13 @@ import { PagedAsyncIterableIterator } from '@azure/core-paging';
 import { ReactElement } from 'react';
 import { Common, fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { StatefulChatClient } from '@internal/chat-stateful-client';
-import { ChatMessage, ChatMessageReadReceipt, ChatThreadClient, SendMessageOptions } from '@azure/communication-chat';
+import {
+  ChatAttachment,
+  ChatMessage,
+  ChatMessageReadReceipt,
+  ChatThreadClient,
+  SendMessageOptions
+} from '@azure/communication-chat';
 import memoizeOne from 'memoize-one';
 /* @conditional-compile-remove(attachment-upload) */
 import { MessageOptions } from '@internal/acs-ui-common';
@@ -56,26 +62,29 @@ export const createDefaultChatHandlers = memoizeOne(
         content: string,
         options?: SendMessageOptions | /* @conditional-compile-remove(attachment-upload) */ MessageOptions
       ) {
-        let chatSDKOptions = {};
-        // if attachmentMetadata is present in options,
-        // then it is a MessageOptions and
-        // we need to convert it to SendMessageOptions from Chat SDK
-        /* @conditional-compile-remove(attachment-upload) */
-        if (options && `attachmentMetadata` in options) {
-          chatSDKOptions = {
-            metadata: {
-              fileSharingMetadata: JSON.stringify(options?.attachmentMetadata)
-            }
-          };
-        }
-        // can't use else because we need CC to keep the condition below
-        if (options && !(`attachmentMetadata` in options)) {
-          chatSDKOptions = options as SendMessageOptions;
-        }
         const sendMessageRequest = {
           content,
           senderDisplayName: chatClient.getState().displayName
         };
+        let chatSDKOptions = undefined;
+        /* @conditional-compile-remove(attachment-upload) */
+        if (
+          options &&
+          `attachments` in options &&
+          options.attachments &&
+          options.attachments[0] &&
+          !(options.attachments[0] as ChatAttachment).attachmentType
+        ) {
+          chatSDKOptions = {
+            metadata: {
+              ...options?.metadata,
+              fileSharingMetadata: JSON.stringify(options?.attachments)
+            }
+          };
+          await chatThreadClient.sendMessage(sendMessageRequest, chatSDKOptions);
+          return;
+        }
+        chatSDKOptions = options as SendMessageOptions;
         await chatThreadClient.sendMessage(sendMessageRequest, chatSDKOptions);
       },
       onUpdateMessage: async function (

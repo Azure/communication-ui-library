@@ -228,6 +228,11 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
           },
           notifyUploadFailed: (message: string) => {
             handleUploadAction({ type: AttachmentUploadActionType.Failed, taskId, message });
+            // remove the failed upload task when error banner is auto dismissed after 10 seconds
+            // so the banner won't be shown again on UI re-rendering.
+            setTimeout(() => {
+              handleUploadAction({ type: AttachmentUploadActionType.Remove, id: taskId });
+            }, 10 * 1000);
           }
         };
       });

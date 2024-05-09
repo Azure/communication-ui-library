@@ -138,7 +138,7 @@ export const ChatMyMessageComponent = (props: ChatMyMessageComponentProps): JSX.
 
   const onSubmitHandler = useCallback(
     // due to a bug in babel, we can't use arrow function here
-    function (
+    async function (
       text: string,
       /* @conditional-compile-remove(attachment-upload) */
       attachments?: AttachmentMetadata[] | undefined
@@ -149,14 +149,14 @@ export const ChatMyMessageComponent = (props: ChatMyMessageComponentProps): JSX.
       }
       props.onUpdateMessage &&
         message.messageId &&
-        props.onUpdateMessage(
+        (await props.onUpdateMessage(
           message.messageId,
           text,
           /* @conditional-compile-remove(attachment-upload) */
           {
             attachments: attachments
           }
-        );
+        ));
       setIsEditing(false);
     },
     [message, props]

@@ -27,17 +27,23 @@ const createCompositeHandlers = memoizeOne(
     // have to use `any` here so we don't import from Chat SDK
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     onSendMessage: (content: string, options: any) => {
-      if (options && 'attachmentMetadata' in options) {
-        return adapter.sendMessage(
-          content,
-          /* @conditional-compile-remove(attachment-upload) */
-          {
-            attachments: options?.attachments
+      /* @conditional-compile-remove(attachment-upload) */
+      if (
+        options &&
+        `attachments` in options &&
+        options.attachments &&
+        options.attachments[0] &&
+        !(`attachmentType` in options.attachments[0])
+      ) {
+        const adapterMessageOption = {
+          metadata: {
+            ...options?.metadata,
+            fileSharingMetadata: JSON.stringify(options?.attachments)
           }
-        );
-      } else {
-        return adapter.sendMessage(content, options);
+        };
+        return adapter.sendMessage(content, adapterMessageOption);
       }
+      return adapter.sendMessage(content, options);
     },
     onLoadPreviousChatMessages: adapter.loadPreviousChatMessages,
     onMessageSeen: adapter.sendReadReceipt,
