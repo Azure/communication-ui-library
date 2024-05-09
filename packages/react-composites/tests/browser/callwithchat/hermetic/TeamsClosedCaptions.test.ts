@@ -14,7 +14,7 @@ test.describe('Teams Closed Captions Banner tests', async () => {
   }) => {
     const initialState = defaultMockCallAdapterState([defaultMockRemoteParticipant('Paul Bridges')]);
     if (initialState?.call) {
-      initialState.isTeamsCall = true;
+      initialState.isTeamsMeeting = true;
       initialState.call.captionsFeature = {
         ...captionsFeatureState,
         isCaptionsFeatureActive: false,
@@ -31,7 +31,7 @@ test.describe('Teams Closed Captions Banner tests', async () => {
   test('Show closed captions banner when enabled', async ({ page, serverUrl }) => {
     const initialState = defaultMockCallAdapterState([defaultMockRemoteParticipant('Paul Bridges')]);
     if (initialState?.call) {
-      initialState.isTeamsCall = true;
+      initialState.isTeamsMeeting = true;
       initialState.call.captionsFeature = captionsFeatureState;
       /* @conditional-compile-remove(acs-close-captions) */
       initialState.call.captionsFeature.captionsKind = 'TeamsCaptions';
@@ -44,7 +44,7 @@ test.describe('Teams Closed Captions Banner tests', async () => {
   test('Show RTL languages from right to left', async ({ page, serverUrl }) => {
     const initialState = defaultMockCallAdapterState([defaultMockRemoteParticipant('Paul Bridges')]);
     if (initialState?.call) {
-      initialState.isTeamsCall = true;
+      initialState.isTeamsMeeting = true;
       initialState.call.captionsFeature = captionsFeatureStateArabic;
       /* @conditional-compile-remove(acs-close-captions) */
       initialState.call.captionsFeature.captionsKind = 'TeamsCaptions';
@@ -60,7 +60,7 @@ test.describe('Teams Closed Captions Banner tests', async () => {
     }
     const initialState = defaultMockCallAdapterState([defaultMockRemoteParticipant('Paul Bridges')]);
     if (initialState?.call) {
-      initialState.isTeamsCall = true;
+      initialState.isTeamsMeeting = true;
       initialState.call.captionsFeature = captionsFeatureState;
       /* @conditional-compile-remove(acs-close-captions) */
       initialState.call.captionsFeature.captionsKind = 'TeamsCaptions';
@@ -73,7 +73,7 @@ test.describe('Teams Closed Captions Banner tests', async () => {
   test('Hide closed captions banner when disabled', async ({ page, serverUrl }) => {
     const initialState = defaultMockCallAdapterState([defaultMockRemoteParticipant('Paul Bridges')]);
     if (initialState?.call) {
-      initialState.isTeamsCall = true;
+      initialState.isTeamsMeeting = true;
       initialState.call.captionsFeature = {
         ...captionsFeatureState,
         isCaptionsFeatureActive: false,
@@ -93,7 +93,7 @@ test.describe('Teams Closed Captions Banner tests', async () => {
     }
     const initialState = defaultMockCallAdapterState([defaultMockRemoteParticipant('Paul Bridges')]);
     if (initialState?.call) {
-      initialState.isTeamsCall = true;
+      initialState.isTeamsMeeting = true;
       initialState.call.captionsFeature = captionsFeatureState;
       /* @conditional-compile-remove(acs-close-captions) */
       initialState.call.captionsFeature.captionsKind = 'TeamsCaptions';
@@ -110,7 +110,7 @@ test.describe('Teams Closed Captions Banner tests', async () => {
     }
     const initialState = defaultMockCallAdapterState([defaultMockRemoteParticipant('Paul Bridges')]);
     if (initialState?.call) {
-      initialState.isTeamsCall = true;
+      initialState.isTeamsMeeting = true;
       initialState.call.captionsFeature = captionsFeatureState;
       /* @conditional-compile-remove(acs-close-captions) */
       initialState.call.captionsFeature.captionsKind = 'TeamsCaptions';
@@ -129,7 +129,7 @@ test.describe('Teams Closed Captions Banner tests', async () => {
     }
     const initialState = defaultMockCallAdapterState([defaultMockRemoteParticipant('Paul Bridges')]);
     if (initialState?.call) {
-      initialState.isTeamsCall = true;
+      initialState.isTeamsMeeting = true;
       initialState.call.captionsFeature = captionsFeatureState;
       /* @conditional-compile-remove(acs-close-captions) */
       initialState.call.captionsFeature.captionsKind = 'TeamsCaptions';
