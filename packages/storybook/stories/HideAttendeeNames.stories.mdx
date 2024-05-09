@@ -1,0 +1,58 @@
+import { Stack } from '@fluentui/react';
+import { Meta } from '@storybook/addon-docs';
+import { overviewPageImagesStackStyle } from './constants';
+
+<Meta
+  id="hideAttendeeNames"
+  title="Concepts/Hide Attendee Names"
+  parameters={{ previewTabs: { canvas: { disable: true, hidden: true } } }}
+/>
+
+## Hide Attendee Names
+
+Microsoft Teams Meetings has introduced a Teams Premium meeting option called “Hide attendee names” which would mask the identity of attendees for other attendees in the meeting.
+This feature is launching in Webinars and Meetings.
+As a follow up, Microsoft Azure Communications Services has updated its UI library composites to include support for “hide attendee names”.
+This feature will enable more optimized experience for large meetings and presentations and greater interoperability with Teams meetings.
+
+**Incorporating Hide Attendee Names to your Meeting Experiences**
+The UI Library enables users to enhance their video conferencing experiences by providing the hide attendee names feature by default within the CallComposite and CallWithChat experiences.
+
+**Attendee View**
+Attendees cannot see names and details of other attendees, but they will be able to see names and details of organizers co-organizers, and presenters.
+
+<Stack tokens={{ childrenGap: '3rem' }} style={overviewPageImagesStackStyle}>
+  <Stack.Item align="center">
+    <img src="images/hideAttendee-Attendeeview.png" alt="example of hide attendee names Attendee view" />
+  </Stack.Item>
+</Stack>
+
+**Organizer and presenter view**
+Organizers, co-organizers, and presenters will see each attendee’s name next to their Attendee label.
+
+<Stack tokens={{ childrenGap: '3rem' }} style={overviewPageImagesStackStyle}>
+  <Stack.Item align="center">
+    <img src="images/hideAttendees-PresenterView.png" alt="example of hide attendee names Presenter view" />
+  </Stack.Item>
+</Stack>
+
+**FAQs**
+
+- <b>How can I view the names of the attendees?</b>
+  <br />
+  Hide attendee names are enabled during Teams meetings to protect identities and privacy. Attendee names can only be
+  seen by organizers, co-organizers, and presenters. The names and details of organizers and presenters are visible to
+  all participants.
+- <b>Can the hide attendee names option be changed during the meeting?</b>
+  <br />
+  No, the hide attendee names option cannot be changed during the meeting. The option is set by the organizer before the
+  meeting starts.
+- <b>Why is pinning not working properly with the hide attendee names enabled?</b>
+  <br />
+  Pinning is not supported in the event of promotion, for example, when an attendee is promoted to presenter. For other
+  cases, pinning should work as expected.
+- <b>Where can I learn more about hide attendee names option?</b>
+  <br />
+  You can learn more about hide attendee names option in the Microsoft Teams help center. For more information, visit
+
+  [Hide Attendee Names Teams](https://support.microsoft.com/en-us/office/hide-attendee-names-in-teams-meetings-and-webinars-00389c74-ee61-48b5-bad8-8295600085ed).
