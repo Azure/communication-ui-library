@@ -48,11 +48,11 @@ import { ImageOverlay } from '@internal/react-components';
 import { InlineImage } from '@internal/react-components';
 import { ResourceFetchResult } from '@internal/chat-stateful-client';
 import { AttachmentOptions } from '@internal/react-components';
-import { SendBox } from '@internal/react-components';
 /* @conditional-compile-remove(attachment-upload) */
 import { useSelector } from './hooks/useSelector';
 /* @conditional-compile-remove(attachment-upload) */
 import { attachmentUploadsSelector } from './selectors/attachmentUploadsSelector';
+import { SendBoxPicker } from '../common/SendBoxPicker';
 
 /**
  * @private
@@ -124,7 +124,6 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   }, [adapter]);
 
   const messageThreadProps = usePropsFor(MessageThread);
-  const sendBoxProps = usePropsFor(SendBox);
   const typingIndicatorProps = usePropsFor(TypingIndicator);
   const headerProps = useAdaptedSelector(getHeaderProps);
   const errorBarProps = usePropsFor(ErrorBar);
@@ -411,10 +410,11 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
                 </Stack>
               )}
               <Stack grow>
-                <SendBox
-                  {...sendBoxProps}
-                  autoFocus={options?.autoFocus}
+                <SendBoxPicker
                   styles={sendBoxStyles}
+                  autoFocus={options?.autoFocus}
+                  /* @conditional-compile-remove(rich-text-editor-composite-support) */
+                  richTextEditor={options?.richTextEditor}
                   /* @conditional-compile-remove(attachment-upload) */
                   attachmentsWithProgress={attachmentsWithProgress}
                   /* @conditional-compile-remove(attachment-upload) */

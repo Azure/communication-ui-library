@@ -1815,6 +1815,7 @@ export type ChatCompositeOptions = {
     topic?: boolean;
     autoFocus?: 'sendBoxTextField';
     attachmentOptions?: AttachmentOptions;
+    richTextEditor?: boolean;
 };
 
 // @public
