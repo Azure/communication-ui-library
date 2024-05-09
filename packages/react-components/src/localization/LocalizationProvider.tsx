@@ -46,7 +46,7 @@ import { MentionPopoverStrings } from '../components/MentionPopover';
 import { ImageOverlayStrings } from '../components/ImageOverlay';
 import { ReactionButtonStrings } from '../components';
 /* @conditional-compile-remove(rich-text-editor) */
-import { RichTextSendBoxStrings, RichTextStrings } from '../components/RichTextEditor/RichTextSendBox';
+import { RichTextSendBoxStrings } from '../components/RichTextEditor/RichTextSendBox';
 
 /**
  * Locale information for all components exported from this library.
@@ -178,7 +178,6 @@ export interface ComponentStrings {
   /* @conditional-compile-remove(total-participant-count) */
   /** Strings for the participant list component */
   ParticipantList: ParticipantListStrings;
-  richText: RichTextStrings;
 }
 
 /**

@@ -35,7 +35,7 @@ export interface RichTextSendBoxStrings extends RichTextStrings, SendBoxStrings 
 
 /**
  *
- * @internal
+ * @beta
  */
 export interface RichTextStrings {
   /**

@@ -53,7 +53,6 @@ import { SendBox } from '@internal/react-components';
 import { useSelector } from './hooks/useSelector';
 /* @conditional-compile-remove(attachment-upload) */
 import { attachmentUploadsSelector } from './selectors/attachmentUploadsSelector';
-import { RichTextSendBox } from '@internal/react-components';
 
 /**
  * @private
@@ -396,7 +395,6 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             inlineImageOptions={inlineImageOptions}
             numberOfChatMessagesToReload={defaultNumberOfChatMessagesToReload}
             styles={messageThreadStyles}
-            strings={{ sunday: '134', editBoxSubmitButton: '456', boldTooltip: '123' }}
           />
           <Stack className={mergeStyles(sendboxContainerStyles)}>
             <div className={mergeStyles(typingIndicatorContainerStyles)}>
@@ -413,7 +411,6 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
                 </Stack>
               )}
               <Stack grow>
-                <RichTextSendBox {...sendBoxProps} autoFocus={options?.autoFocus} />
                 <SendBox
                   {...sendBoxProps}
                   autoFocus={options?.autoFocus}

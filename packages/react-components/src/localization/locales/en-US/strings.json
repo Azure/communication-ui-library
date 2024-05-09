@@ -30,27 +30,6 @@
     "uploadCompleted": "Upload completed",
     "attachmentMoreMenu": "More Options"
   },
-  "richText": {
-    "boldTooltip": "Bold",
-    "italicTooltip": "Italic",
-    "underlineTooltip": "Underline",
-    "bulletListTooltip": "Bulleted list",
-    "numberListTooltip": "Numbered list",
-    "increaseIndentTooltip": "Increase indent",
-    "decreaseIndentTooltip": "Decrease indent",
-    "insertTableTooltip": "Insert table",
-    "richTextFormatButtonTooltip": "Format",
-    "insertRowOrColumnMenu": "Insert",
-    "insertTableMenuTitle": "Insert {column} x {row} table",
-    "insertRowAboveMenu": "Insert above",
-    "insertRowBelowMenu": "Insert below",
-    "insertColumnLeftMenu": "Insert left",
-    "insertColumnRightMenu": "Insert right",
-    "deleteRowOrColumnMenu": "Delete",
-    "deleteColumnMenu": "Delete column",
-    "deleteRowMenu": "Delete row",
-    "deleteTableMenu": "Delete table"
-  },
   "richTextSendBox": {
     "placeholderText": "Enter a message",
     "textTooLong": "Your message length is over the maximum limit.",
