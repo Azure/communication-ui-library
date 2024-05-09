@@ -5,8 +5,9 @@ import { PagedAsyncIterableIterator } from '@azure/core-paging';
 import { ReactElement } from 'react';
 import { Common, fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { StatefulChatClient } from '@internal/chat-stateful-client';
+/* @conditional-compile-remove(attachment-upload) */
+import { ChatAttachment } from '@azure/communication-chat';
 import {
-  ChatAttachment,
   ChatMessage,
   ChatMessageReadReceipt,
   ChatThreadClient,
@@ -66,7 +67,6 @@ export const createDefaultChatHandlers = memoizeOne(
           content,
           senderDisplayName: chatClient.getState().displayName
         };
-        let chatSDKOptions = undefined;
         /* @conditional-compile-remove(attachment-upload) */
         if (
           options &&
@@ -75,7 +75,7 @@ export const createDefaultChatHandlers = memoizeOne(
           options.attachments[0] &&
           !(options.attachments[0] as ChatAttachment).attachmentType
         ) {
-          chatSDKOptions = {
+          const chatSDKOptions = {
             metadata: {
               ...options?.metadata,
               fileSharingMetadata: JSON.stringify(options?.attachments)
@@ -84,8 +84,7 @@ export const createDefaultChatHandlers = memoizeOne(
           await chatThreadClient.sendMessage(sendMessageRequest, chatSDKOptions);
           return;
         }
-        chatSDKOptions = options as SendMessageOptions;
-        await chatThreadClient.sendMessage(sendMessageRequest, chatSDKOptions);
+        await chatThreadClient.sendMessage(sendMessageRequest, options);
       },
       onUpdateMessage: async function (
         messageId: string,
