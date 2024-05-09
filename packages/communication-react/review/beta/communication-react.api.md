@@ -3941,6 +3941,7 @@ export interface RichTextSendBoxStrings extends SendBoxStrings {
     italicTooltip: string;
     numberListTooltip: string;
     richTextFormatButtonTooltip: string;
+    richTextToolbarMoreButtonAriaLabel: string;
     underlineTooltip: string;
 }
 

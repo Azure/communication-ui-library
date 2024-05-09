@@ -142,7 +142,7 @@ const ribbonButtonRootStyles = (theme: Theme): IStyle => {
 /**
  * @private
  */
-export const ribbonButtonStyle = (theme: Theme): Partial<IButtonStyles> => {
+export const toolbarButtonStyle = (theme: Theme): Partial<IButtonStyles> => {
   return {
     icon: { color: theme.palette.neutralPrimary, height: 'auto' },
     menuIcon: { color: theme.palette.neutralPrimary, height: 'auto' },
@@ -215,9 +215,9 @@ export const ribbonDividerStyle = (theme: Theme): string => {
 /**
  * @private
  */
-export const ribbonStyle: Partial<ICommandBarStyles> = {
+export const richTextToolbarStyle: Partial<ICommandBarStyles> = {
   // Override for the default white color of the Ribbon component
-  root: { backgroundColor: 'transparent' }
+  root: { backgroundColor: 'transparent', padding: '0px' }
 };
 
 /**

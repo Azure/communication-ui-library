@@ -108,6 +108,10 @@ export interface RichTextSendBoxStrings extends SendBoxStrings {
    * Text for the delete table menu.
    */
   deleteTableMenu: string;
+  /**
+   * Text for the rich text toolbar more button.
+   */
+  richTextToolbarMoreButtonAriaLabel: string;
 }
 
 /**

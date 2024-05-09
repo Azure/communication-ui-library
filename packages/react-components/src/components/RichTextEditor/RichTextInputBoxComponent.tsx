@@ -142,7 +142,6 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
       if (isEnterKeyEventFromCompositionSession(ev)) {
         return;
       }
-
       const isRichTextEditorToolbarShown = showRichTextEditorFormatting === true;
       if (ev.key === 'Enter' && ev.shiftKey === false && !isRichTextEditorToolbarShown) {
         ev.preventDefault();

@@ -44,6 +44,7 @@
     "react-linkify": "^1.0.0-alpha",
     "react-use-draggable-scroll": "^0.4.7",
     "reselect": "^4.0.0",
+    "roosterjs-content-model-api": "^9.2.0",
     "roosterjs-content-model-core":"^9.2.0",
     "roosterjs-content-model-dom":"^9.2.0",
     "roosterjs-content-model-plugins": "^9.2.0",
