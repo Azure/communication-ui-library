@@ -1,8 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-// Component that chooses either the SendBox or the RichTextSendBox based on if RichTextEditor is enabled
-
 import React, { useMemo } from 'react';
 import { SendBox, SendBoxStylesProps } from '@internal/react-components';
 import { usePropsFor } from '../ChatComposite/hooks/usePropsFor';
@@ -13,9 +11,7 @@ import { AttachmentMetadataWithProgress } from '@internal/react-components';
 
 // TODO: Improve lazy loading
 const RichTextSendBox = React.lazy(() =>
-  import('@internal/react-components/src/components/RichTextEditor/RichTextSendBox').then((module) => ({
-    default: module.RichTextSendBox
-  }))
+  import('@internal/react-components').then((module) => ({ default: module.RichTextSendBox }))
 );
 
 /**
