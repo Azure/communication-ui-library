@@ -1,66 +1,77 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-import { Position, VTable } from 'roosterjs-editor-dom';
-import type { IEditor } from 'roosterjs-editor-types-compatible';
-import { CompatibleChangeSource, CompatiblePositionType } from 'roosterjs-editor-types-compatible';
 
-// This file  uses RoosterJS React package implementation with updates to change table's size and remove styles
+import {
+  addBlock,
+  createContentModelDocument,
+  createSelectionMarker,
+  createTable,
+  createTableCell,
+  deleteSelection,
+  mergeModel,
+  normalizeTable,
+  setSelection
+} from 'roosterjs-content-model-dom';
+import type { ContentModelBlockGroup, ContentModelTable, IEditor } from 'roosterjs-content-model-types';
+
+// This file  uses RoosterJS React package implementation but without applyTableFormat call. This is done because we want to use CSS classes to apply styles instead of inline styles.
 
 /**
  * Insert table into editor at current selection
  * @param editor The editor instance
- * @param columns Number of columns in table
+ * @param columns Number of columns in table, it also controls the default table cell width:
+ * if columns &lt;= 4, width = 120px; if columns &lt;= 6, width = 100px; else width = 70px
  * @param rows Number of rows in table
  */
-export const insertTable = (editor: IEditor, columns: number, rows: number): void => {
-  const document = editor.getDocument();
-  const table = document.createElement('table') as HTMLTableElement;
-  for (let i = 0; i < rows; i++) {
-    const tr = document.createElement('tr') as HTMLTableRowElement;
-    table.appendChild(tr);
-    for (let j = 0; j < columns; j++) {
-      const td = document.createElement('td') as HTMLTableCellElement;
-      tr.appendChild(td);
-      td.appendChild(document.createElement('br'));
-
-      // set the width as otherwise insets doesn't work well in table
-      // review if it's needed when content model packages are used
-      td.style.width = getTableCellWidth(columns);
-    }
-  }
-
+export function insertTable(editor: IEditor, columns: number, rows: number): void {
   editor.focus();
-  editor.addUndoSnapshot(
-    () => {
-      const vTable = new VTable(table);
-      vTable.writeBack();
-      editor.insertNode(table);
-      const nextElementAfterTable = table.nextElementSibling;
 
-      // insert br only if there is no next element after the table
-      if (nextElementAfterTable === null) {
-        // insert br after the table
-        // so users can easily input content after table
-        editor.select(new Position(table, CompatiblePositionType.After));
-        editor.insertNode(document.createElement('br'));
+  editor.formatContentModel(
+    (model, context) => {
+      const insertPosition = deleteSelection(model, [], context).insertPoint;
+
+      if (insertPosition) {
+        const doc = createContentModelDocument();
+        const table = createTableStructure(doc, columns, rows);
+
+        normalizeTable(table, editor.getPendingFormat() || insertPosition.marker.format);
+
+        mergeModel(model, doc, context, {
+          insertPosition,
+          mergeFormat: 'mergeAll'
+        });
+
+        const firstBlock = table.rows[0]?.cells[0]?.blocks[0];
+
+        if (firstBlock?.blockType === 'Paragraph') {
+          const marker = createSelectionMarker(firstBlock.segments[0]?.format);
+          firstBlock.segments.unshift(marker);
+          setSelection(model, marker);
+        }
+
+        return true;
+      } else {
+        return false;
       }
-
-      editor.runAsync((editor) => editor.select(new Position(table, CompatiblePositionType.Begin).normalize()));
     },
-    CompatibleChangeSource.Format,
-    undefined /* canUndoByBackspace */,
     {
-      formatApiName: 'insertTable'
+      apiName: 'insertTable'
     }
   );
-};
-
-function getTableCellWidth(columns: number): string {
-  if (columns <= 4) {
-    return '120px';
-  } else if (columns <= 6) {
-    return '100px';
-  } else {
-    return '70px';
-  }
 }
+
+const createTableStructure = (parent: ContentModelBlockGroup, columns: number, rows: number): ContentModelTable => {
+  const table = createTable(rows);
+
+  addBlock(parent, table);
+
+  table.rows.forEach((row) => {
+    for (let i = 0; i < columns; i++) {
+      const cell = createTableCell();
+
+      row.cells.push(cell);
+    }
+  });
+
+  return table;
+};

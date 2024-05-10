@@ -2,15 +2,13 @@
 // Licensed under the MIT License.
 import React, { useCallback, useEffect, useMemo } from 'react';
 import { RichTextToolbarPlugin } from '../Plugins/RichTextToolbarPlugin';
-import { CommandBar, ContextualMenuItemType, FocusZoneDirection, Icon } from '@fluentui/react';
-import type { ICommandBarItemProps, IContextualMenuItem, Theme } from '@fluentui/react';
+import { CommandBar, ContextualMenuItemType, Icon } from '@fluentui/react';
+import type { ICommandBarItemProps, Theme } from '@fluentui/react';
 import {
   toolbarButtonStyle,
   ribbonDividerStyle,
   ribbonOverflowButtonStyle,
-  richTextToolbarStyle,
-  toolbarTableButtonStyle,
-  insertTableMenuTablePane
+  richTextToolbarStyle
 } from '../../styles/RichTextEditor.styles';
 import { useTheme } from '../../../theming';
 import { ContentModelFormatState } from 'roosterjs-content-model-types';
@@ -20,13 +18,11 @@ import {
   toggleUnderline,
   toggleBullet,
   toggleNumbering,
-  setIndentation,
-  insertTable
+  setIndentation
 } from 'roosterjs-content-model-api';
+import { insertTable } from './Table/insertTableAction';
 import { RichTextSendBoxStrings } from '../RichTextSendBox';
-import { RichTextToolbarTableIcon } from './Table/RichTextToolbarTableIcon';
-import { RichTextInsertTablePane } from './Table/RichTextInsertTablePane';
-import { parseKey } from '../../utils/RichTextTableUtils';
+import { richTextInsertTableCommandBarItem } from './Table/RichTextInsertTableCommandBarItem';
 
 const MaxRowsNumber = 5;
 const MaxColumnsNumber = 5;
@@ -172,57 +168,24 @@ export const RichTextToolbar = (props: RichTextToolbarProps): JSX.Element => {
   );
 
   const tableButton: ICommandBarItemProps = useMemo(() => {
-    return {
-      key: 'RichTextToolbarInsertTableButton',
-      text: strings.insertTableTooltip,
-      ariaLabel: strings.insertTableTooltip,
-      // hide the chevron icon
-      menuIconProps: {
-        hidden: true
-      },
-      onRenderIcon: () => {
-        return <RichTextToolbarTableIcon />;
-      },
-      buttonStyles: toolbarTableButtonStyle(theme),
-      canCheck: false,
-      iconOnly: true,
-      subMenuProps: {
-        shouldFocusOnMount: true,
-        focusZoneProps: { direction: FocusZoneDirection.bidirectional },
-        items: [
-          {
-            key: 'RichTextToolbarInsertTableMenu',
-            text: strings.insertTableMenuTitle,
-            canCheck: false,
-            className: insertTableMenuTablePane,
-            onRender: (
-              item: IContextualMenuItem,
-              onClick: (e: React.MouseEvent<Element> | React.KeyboardEvent<Element>) => void
-            ) => {
-              return (
-                <RichTextInsertTablePane
-                  item={item}
-                  onClick={(key) => {
-                    plugin.onToolbarButtonClick((editor) => {
-                      const { row, column } = parseKey(key);
-                      insertTable(editor, column, row);
-                    });
-                  }}
-                  maxColumnsNumber={MaxColumnsNumber}
-                  maxRowsNumber={MaxRowsNumber}
-                />
-              );
-            }
-          }
-        ]
+    return richTextInsertTableCommandBarItem(
+      theme,
+      MaxRowsNumber,
+      MaxColumnsNumber,
+      strings,
+      (column: number, row: number) => {
+        plugin.onToolbarButtonClick((editor) => {
+          //add format
+          insertTable(editor, column, row);
+          // when subMenuProps is used and the menu is dismissed, focus is set to the command bar item that opened the menu
+          // set focus to editor on next re-render
+          setTimeout(() => {
+            editor.focus();
+          });
+        });
       }
-    };
-
-    //   onClick: (editor: IEditor, key: string) => {
-    //     const { row, column } = parseKey(key);
-    //     insertTableAction(editor, column, row);
-    //   },
-  }, [strings.insertTableMenuTitle, strings.insertTableTooltip, theme]);
+    );
+  }, [plugin, strings, theme]);
 
   const buttons: ICommandBarItemProps[] = useMemo(() => {
     return [

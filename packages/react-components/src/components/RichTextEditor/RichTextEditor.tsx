@@ -9,7 +9,7 @@ import { isDarkThemed } from '../../theming/themeUtils';
 import CopyPastePlugin from './Plugins/CopyPastePlugin';
 import type { ContentModelDocument, EditorPlugin, IEditor } from 'roosterjs-content-model-types';
 import { createModelFromHtml, Editor, exportContent } from 'roosterjs-content-model-core';
-import { createParagraph, createSelectionMarker } from 'roosterjs-content-model-dom';
+import { createParagraph, createSelectionMarker, setSelection } from 'roosterjs-content-model-dom';
 import { KeyboardInputPlugin } from './Plugins/KeyboardInputPlugin';
 import { AutoFormatPlugin, EditPlugin, WatermarkPlugin, PastePlugin } from 'roosterjs-content-model-plugins';
 import { UpdateContentPlugin, UpdateEvent } from './Plugins/UpdateContentPlugin';
@@ -267,6 +267,7 @@ const createEditorInitialModel = (
       }
       const marker = createSelectionMarker();
       lastBlock.segments.push(marker);
+      setSelection(initialModel, marker);
     }
     return initialModel;
   }
