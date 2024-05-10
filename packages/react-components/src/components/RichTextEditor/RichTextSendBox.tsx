@@ -34,8 +34,9 @@ import { FluentV9ThemeProvider } from '../../theming/FluentV9ThemeProvider';
 export interface RichTextSendBoxStrings extends RichTextStrings, SendBoxStrings {}
 
 /**
+ * Strings of RichText that can be overridden.
  *
- * @public
+ * @beta
  */
 export interface RichTextStrings {
   /**

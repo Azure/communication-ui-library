@@ -159,7 +159,7 @@ export interface MessageThreadStyles extends BaseCustomStyles {
  *
  * @public
  */
-export interface MessageThreadStrings extends RichTextStrings {
+export interface MessageThreadStrings {
   /** String for Sunday */
   sunday: string;
   /** String for Monday */
@@ -566,7 +566,7 @@ export type MessageProps = {
   /**
    * Strings from parent MessageThread component
    */
-  strings: MessageThreadStrings;
+  strings: MessageThreadStrings & /* @conditional-compile-remove(rich-text-editor) */ Partial<RichTextStrings>;
   /**
    * Custom CSS styles for chat message container.
    */
