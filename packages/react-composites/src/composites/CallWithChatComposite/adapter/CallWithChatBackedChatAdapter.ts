@@ -31,7 +31,7 @@ export class CallWithChatBackedChatAdapter implements ChatAdapter {
 
   public fetchInitialData = async (): Promise<void> => await this.callWithChatAdapter.fetchInitialData();
   // due to a bug in babel, we can't use arrow function here
-  // affacting conditional-compile-remove(attachment-upload)
+  // affecting conditional-compile-remove(attachment-upload)
   // have to bind this since the scope of 'this' is lost when the function is passed as a callback
   sendMessageHandler = async function (
     this: CallWithChatBackedChatAdapter,
@@ -92,7 +92,7 @@ export class CallWithChatBackedChatAdapter implements ChatAdapter {
   };
 
   // due to a bug in babel, we can't use arrow function here
-  // affacting conditional-compile-remove(attachment-upload)
+  // affecting conditional-compile-remove(attachment-upload)
   // have to bind this since the scope of 'this' is lost when the function is passed as a callback
   updateMessageHandler = async function (
     this: CallWithChatBackedChatAdapter,

@@ -115,7 +115,7 @@ describe('ChatMessageComponentAsRichTextEditBox tests', () => {
       // in beta, attachment metadata is undefined
       // because there is no attachment associated with this message
       // in stable, attachment metadata field do not exist
-      /* @conditional-compile-remove(attachment-upload) */ undefined
+      /* @conditional-compile-remove(attachment-upload) */ []
     );
   });
 });

@@ -16,7 +16,7 @@ import { richTextActionButtonsStyle, sendBoxRichTextEditorStyle } from '../style
 /* @conditional-compile-remove(attachment-upload) */
 import { _AttachmentUploadCards } from '../Attachment/AttachmentUploadCards';
 /* @conditional-compile-remove(attachment-upload) */
-import { AttachmentMetadataWithProgress } from '@internal/acs-ui-common';
+import { AttachmentMetadataWithProgress, MessageOptions } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(attachment-upload) */
 import { isAttachmentUploadCompleted, hasIncompleteAttachmentUploads } from '../utils/SendBoxUtils';
 /* @conditional-compile-remove(attachment-upload) */
@@ -151,7 +151,11 @@ export interface RichTextSendBoxProps {
   /**
    * Callback function used when the send button is clicked.
    */
-  onSendMessage: (content: string) => Promise<void>;
+  onSendMessage: (
+    content: string,
+    /* @conditional-compile-remove(attachment-upload) */
+    options?: MessageOptions
+  ) => Promise<void>;
   /**
    * Optional callback called when user is typing
    */
@@ -211,6 +215,21 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     setContentValue(newValue);
   }, []);
 
+  /* @conditional-compile-remove(attachment-upload) */
+  const toAttachmentMetadata = useCallback((attachmentsWithProgress: AttachmentMetadataWithProgress[] | undefined) => {
+    return attachmentsWithProgress
+      ?.filter((attachment) => {
+        return !('error' in attachment) && !attachment.error?.message;
+      })
+      .map((attachment) => {
+        return {
+          id: attachment.id,
+          name: attachment.name,
+          url: attachment.url ?? ''
+        };
+      });
+  }, []);
+
   const sendMessageOnClick = useCallback((): void => {
     if (disabled || contentValueOverflow) {
       return;
@@ -237,19 +256,29 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     // we don't want to send empty messages including spaces, newlines, tabs
     // Message can be empty if there is a valid attachment upload
     if (hasContent || /* @conditional-compile-remove(attachment-upload) */ isAttachmentUploadCompleted(attachments)) {
-      onSendMessage(message);
+      onSendMessage(
+        message,
+        /* @conditional-compile-remove(attachment-upload) */
+        {
+          attachments: toAttachmentMetadata(attachments)
+        }
+      );
       setContentValue('');
       editorComponentRef.current?.setEmptyContent();
       editorComponentRef.current?.focus();
     }
   }, [
-    contentValue,
-    contentValueOverflow,
     disabled,
-    onSendMessage,
+    contentValueOverflow,
+    /* @conditional-compile-remove(attachment-upload) */
+    attachments,
+    contentValue,
     strings.placeholderText,
-    /* @conditional-compile-remove(attachment-upload) */ attachments,
-    /* @conditional-compile-remove(attachment-upload) */ strings.attachmentUploadsPendingError
+    /* @conditional-compile-remove(attachment-upload) */
+    strings.attachmentUploadsPendingError,
+    onSendMessage,
+    /* @conditional-compile-remove(attachment-upload) */
+    toAttachmentMetadata
   ]);
 
   const hasErrorMessage = useMemo(() => {

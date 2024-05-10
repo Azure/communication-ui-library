@@ -55,7 +55,7 @@ export const createDefaultChatHandlers = memoizeOne(
     let readReceiptIterator: PagedAsyncIterableIterator<ChatMessageReadReceipt> | undefined = undefined;
     return {
       // due to a bug in babel, we can't use arrow function here
-      // affacting conditional-compile-remove(attachment-upload)
+      // affecting conditional-compile-remove(attachment-upload)
       onSendMessage: async function (
         content: string,
         options?: SendMessageOptions | /* @conditional-compile-remove(attachment-upload) */ MessageOptions
@@ -84,7 +84,7 @@ export const createDefaultChatHandlers = memoizeOne(
         await chatThreadClient.sendMessage(sendMessageRequest, options as SendMessageOptions);
       },
       // due to a bug in babel, we can't use arrow function here
-      // affacting conditional-compile-remove(attachment-upload)
+      // affecting conditional-compile-remove(attachment-upload)
       onUpdateMessage: async function (
         messageId: string,
         content: string,

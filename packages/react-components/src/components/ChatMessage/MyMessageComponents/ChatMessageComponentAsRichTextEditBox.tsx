@@ -128,9 +128,12 @@ export const ChatMessageComponentAsRichTextEditBox = (
           tooltipContent={strings.editBoxSubmitButton}
           onRenderIcon={onRenderThemedSubmitIcon}
           onClick={(e) => {
-            /* @conditional-compile-remove(attachment-upload) */
-            const attachments = attachmentMetadata.length > 0 ? attachmentMetadata : undefined;
-            submitEnabled && onSubmit(textValue, /* @conditional-compile-remove(attachment-upload) */ attachments);
+            // it's very important to pass an empty attachment here
+            // so when user remvoes all attachments, UI can reflect it instantly
+            // if you set it to undefined, the attachments pre-edited would still be there
+            // until edit message event is received
+            submitEnabled &&
+              onSubmit(textValue, /* @conditional-compile-remove(attachment-upload) */ attachmentMetadata);
             e.stopPropagation();
           }}
           id={'submitIconWrapper'}

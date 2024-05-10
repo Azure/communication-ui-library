@@ -20,8 +20,6 @@ import type {
   ReadReceiptReceivedEvent
 } from '@azure/communication-chat';
 import { toFlatCommunicationIdentifier, _TelemetryImplementationHint } from '@internal/acs-ui-common';
-/* @conditional-compile-remove(attachment-upload) */
-import { AttachmentMetadata } from '@internal/acs-ui-common';
 import EventEmitter from 'events';
 import {
   ChatAdapter,
@@ -237,11 +235,11 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
       /* @conditional-compile-remove(attachment-upload) */
       if (
         options &&
-        // if options.attachments is an array, then given options is a MessageOptions
-        Array.isArray(options.attachments) &&
-        (options.attachments as AttachmentMetadata[])
+        // if options.attachments is an array or undefined (for removal all attachments),
+        // then given options is a MessageOptions
+        (Array.isArray(options.attachments) || options.attachments === undefined)
       ) {
-        messageOptions.attachments = options.attachments;
+        messageOptions.attachments = options.attachments ?? [];
       }
       /* @conditional-compile-remove(attachment-upload) */
       if (

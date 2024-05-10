@@ -138,7 +138,7 @@ export const ChatMyMessageComponent = (props: ChatMyMessageComponentProps): JSX.
 
   const onSubmitHandler = useCallback(
     // due to a bug in babel, we can't use arrow function here
-    // affacting conditional-compile-remove(attachment-upload)
+    // affecting conditional-compile-remove(attachment-upload)
     async function (
       text: string,
       /* @conditional-compile-remove(attachment-upload) */
