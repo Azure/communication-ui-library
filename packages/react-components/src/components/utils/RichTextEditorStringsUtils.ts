@@ -10,15 +10,15 @@ import type { RichTextSendBoxStrings } from '../RichTextEditor/RichTextSendBox';
  */
 export const ribbonButtonsStrings = (strings: Partial<RichTextSendBoxStrings>): LocalizedStrings<string> => {
   return {
-    buttonNameBold: strings.boldTooltip,
-    buttonNameItalic: strings.italicTooltip,
-    buttonNameUnderline: strings.underlineTooltip,
-    buttonNameBulletedList: strings.bulletListTooltip,
-    buttonNameNumberedList: strings.numberListTooltip,
-    buttonNameIncreaseIndent: strings.increaseIndentTooltip,
-    buttonNameDecreaseIndent: strings.decreaseIndentTooltip,
-    buttonNameInsertTable: strings.insertTableTooltip,
-    insertTablePane: strings.insertTableMenuTitle
+    buttonNameBold: strings.richTextBoldTooltip,
+    buttonNameItalic: strings.richTextItalicTooltip,
+    buttonNameUnderline: strings.richTextUnderlineTooltip,
+    buttonNameBulletedList: strings.richTextBulletListTooltip,
+    buttonNameNumberedList: strings.richTextNumberListTooltip,
+    buttonNameIncreaseIndent: strings.richTextIncreaseIndentTooltip,
+    buttonNameDecreaseIndent: strings.richTextDecreaseIndentTooltip,
+    buttonNameInsertTable: strings.richTextInsertTableTooltip,
+    insertTablePane: strings.richTextInsertTableMenuTitle
   };
 };
 
@@ -29,14 +29,14 @@ export const ribbonButtonsStrings = (strings: Partial<RichTextSendBoxStrings>): 
  */
 export const tableContextMenuStrings = (strings: Partial<RichTextSendBoxStrings>): LocalizedStrings<string> => {
   return {
-    menuNameTableInsert: strings.insertRowOrColumnMenu,
-    menuNameTableInsertAbove: strings.insertRowAboveMenu,
-    menuNameTableInsertBelow: strings.insertRowBelowMenu,
-    menuNameTableInsertLeft: strings.insertColumnLeftMenu,
-    menuNameTableInsertRight: strings.insertColumnRightMenu,
-    menuNameTableDelete: strings.deleteRowOrColumnMenu,
-    menuNameTableDeleteColumn: strings.deleteColumnMenu,
-    menuNameTableDeleteRow: strings.deleteRowMenu,
-    menuNameTableDeleteTable: strings.deleteTableMenu
+    menuNameTableInsert: strings.richTextInsertRowOrColumnMenu,
+    menuNameTableInsertAbove: strings.richTextInsertRowAboveMenu,
+    menuNameTableInsertBelow: strings.richTextInsertRowBelowMenu,
+    menuNameTableInsertLeft: strings.richTextInsertColumnLeftMenu,
+    menuNameTableInsertRight: strings.richTextInsertColumnRightMenu,
+    menuNameTableDelete: strings.richTextDeleteRowOrColumnMenu,
+    menuNameTableDeleteColumn: strings.richTextDeleteColumnMenu,
+    menuNameTableDeleteRow: strings.richTextDeleteRowMenu,
+    menuNameTableDeleteTable: strings.richTextDeleteTableMenu
   };
 };

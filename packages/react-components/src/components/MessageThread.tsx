@@ -47,6 +47,7 @@ import {
 import { InlineImageOptions } from './ChatMessage/ChatMessageContent';
 import { MessageStatusIndicatorInternal } from './MessageStatusIndicatorInternal';
 import { Announcer } from './Announcer';
+/* @conditional-compile-remove(rich-text-editor) */
 import { RichTextStrings } from './RichTextEditor/RichTextSendBox';
 /* @conditional-compile-remove(rich-text-editor) */
 import { loadChatMessageComponentAsRichTextEditBox } from './ChatMessage/MyMessageComponents/ChatMessageComponentAsEditBoxPicker';
