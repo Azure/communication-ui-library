@@ -99,7 +99,7 @@ jobs:
       # Deploy npm package - this is done by uploading to Azure's SDK blob storage then triggering their partner release pipeline.
       # More info: https://dev.azure.com/azure-sdk/internal/_wiki/wikis/internal.wiki/1/Partner-Release-Pipeline
       - name: Upload tarball to blob storage
-        run: azcopy copy "packages/communication-react/release/*" -c "https://azuresdkpartnerdrops.blob.core.windows.net/drops/azure-communication-services/react/npm/${{ steps.version.outputs.version }}"
+        run: azcopy copy "packages/communication-react/release/*" "https://azuresdkpartnerdrops.blob.core.windows.net/drops/azure-communication-services/react/npm/${{ steps.version.outputs.version }}"
 
       - name: Trigger alpha package release pipeline
         uses: Azure/pipelines@v1.2
