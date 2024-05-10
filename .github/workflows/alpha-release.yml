@@ -52,7 +52,7 @@ jobs:
       # Login via OIDC to permit uploading to azure blob store
       - name: Azure login
         run: |
-          azcopy login --service-principal --tenant-id ${{ secrets.NPM_DEPLOY_AZURE_TENANT_ID }} --client-id ${{ secrets.NPM_DEPLOY_AZURE_CLIENT_ID }}
+          azcopy login --tenant-id ${{ secrets.NPM_DEPLOY_AZURE_TENANT_ID }} --identity --identity-client-id ${{ secrets.NPM_DEPLOY_AZURE_CLIENT_ID }}
 
       # Get datetime
       - name: Get datetime for alpha release name
