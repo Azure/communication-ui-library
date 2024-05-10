@@ -59,15 +59,6 @@ export const createDefaultChatHandlers = memoizeOne(
         };
         await chatThreadClient.sendMessage(sendMessageRequest, options);
       },
-      // TODO: Maybe add separate handler here, then apply with new usePropsFor. Use untyped options bag similar to onUpdateMessage
-      // onSendMessageWithRichText: async (content: string, options?: ) => {
-      //   const sendMessageRequest = {
-      //     content,
-      //     senderDisplayName: chatClient.getState().displayName,
-      //     type: 'richtext/html'
-      //   };
-      //   await chatThreadClient.sendMessage(sendMessageRequest, options);
-      // },
       onUpdateMessage: async (
         messageId: string,
         content: string,

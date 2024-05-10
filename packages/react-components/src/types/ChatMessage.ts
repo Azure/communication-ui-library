@@ -22,13 +22,6 @@ export type MessageAttachedStatus = 'bottom' | 'top' | boolean;
  */
 export type MessageContentType = 'text' | 'html' | 'richtext/html' | 'unknown';
 
-// TODO: Maybe add a SendMessageOptions type in this file. Then use this type in RichTextSendBoxProps. The type should work as a stand in.
-// export  type SendMessageOptions {
-//   senderDisplayName?: string;
-//   type?: ChatMessageType;
-//   metadata?: Record<string, string>;
-// }
-
 /**
  * Discriminated union of all messages.
  *
