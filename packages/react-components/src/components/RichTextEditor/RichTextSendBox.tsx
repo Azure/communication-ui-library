@@ -31,39 +31,46 @@ import { FluentV9ThemeProvider } from '../../theming/FluentV9ThemeProvider';
  *
  * @beta
  */
-export interface RichTextSendBoxStrings extends SendBoxStrings {
+export interface RichTextSendBoxStrings extends RichTextStrings, SendBoxStrings {}
+
+/**
+ * Strings of RichText that can be overridden.
+ *
+ * @beta
+ */
+export interface RichTextStrings {
   /**
    * Tooltip text for the bold button.
    */
-  boldTooltip: string;
+  richTextBoldTooltip: string;
   /**
    * Tooltip text for the italic button.
    */
-  italicTooltip: string;
+  richTextItalicTooltip: string;
   /**
    * Tooltip text for the underline button.
    */
-  underlineTooltip: string;
+  richTextUnderlineTooltip: string;
   /**
    * Tooltip text for the bullet list button.
    */
-  bulletListTooltip: string;
+  richTextBulletListTooltip: string;
   /**
    * Tooltip text for the number list button.
    */
-  numberListTooltip: string;
+  richTextNumberListTooltip: string;
   /**
    * Tooltip text for the increase indent button.
    */
-  increaseIndentTooltip: string;
+  richTextIncreaseIndentTooltip: string;
   /**
    * Tooltip text for the decrease indent button.
    */
-  decreaseIndentTooltip: string;
+  richTextDecreaseIndentTooltip: string;
   /**
    * Tooltip text insert table button.
    */
-  insertTableTooltip: string;
+  richTextInsertTableTooltip: string;
   /**
    * Tooltip text for the rich text format button button.
    */
@@ -71,43 +78,43 @@ export interface RichTextSendBoxStrings extends SendBoxStrings {
   /**
    * Text for the insert menu item.
    */
-  insertRowOrColumnMenu: string;
+  richTextInsertRowOrColumnMenu: string;
   /**
    * Title for the insert table menu.
    */
-  insertTableMenuTitle: string;
+  richTextInsertTableMenuTitle: string;
   /**
    * Text for the insert menu item to insert row above the current selection.
    */
-  insertRowAboveMenu: string;
+  richTextInsertRowAboveMenu: string;
   /**
    * Text for the insert menu item to insert row below the current selection.
    */
-  insertRowBelowMenu: string;
+  richTextInsertRowBelowMenu: string;
   /**
    * Text for the insert menu item to insert column to the left from the current selection.
    */
-  insertColumnLeftMenu: string;
+  richTextInsertColumnLeftMenu: string;
   /**
    * Text for the insert menu item to insert column to the right from the current selection.
    */
-  insertColumnRightMenu: string;
+  richTextInsertColumnRightMenu: string;
   /**
    * Text for the delete row or column menu.
    */
-  deleteRowOrColumnMenu: string;
+  richTextDeleteRowOrColumnMenu: string;
   /**
    * Text for the delete column menu.
    */
-  deleteColumnMenu: string;
+  richTextDeleteColumnMenu: string;
   /**
    * Text for the delete row menu.
    */
-  deleteRowMenu: string;
+  richTextDeleteRowMenu: string;
   /**
    * Text for the delete table menu.
    */
-  deleteTableMenu: string;
+  richTextDeleteTableMenu: string;
 }
 
 /**

@@ -156,9 +156,13 @@ export const ChatMessageComponentAsRichTextEditBox = (
   ]);
   const richTextLocaleStrings = useMemo(() => {
     /* @conditional-compile-remove(rich-text-editor) */
-    return locale.richTextSendBox;
+    return { ...locale.richTextSendBox, ...strings };
     return locale.sendBox;
-  }, [/* @conditional-compile-remove(rich-text-editor) */ locale.richTextSendBox, locale.sendBox]);
+  }, [
+    /* @conditional-compile-remove(rich-text-editor) */ locale.richTextSendBox,
+    /* @conditional-compile-remove(rich-text-editor) */ strings,
+    locale.sendBox
+  ]);
 
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   const onCancelAttachmentUpload = useCallback((attachmentId: string) => {

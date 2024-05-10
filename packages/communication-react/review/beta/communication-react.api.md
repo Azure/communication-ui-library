@@ -3273,7 +3273,7 @@ export type MessageOptions = {
 // @public
 export type MessageProps = {
     message: Message;
-    strings: MessageThreadStrings;
+    strings: MessageThreadStrings & /* @conditional-compile-remove(rich-text-editor) */ Partial<RichTextStrings>;
     messageContainerStyle?: ComponentSlotStyle;
     showDate?: boolean;
     disableEditing?: boolean;
@@ -3889,26 +3889,30 @@ export interface RichTextSendBoxProps {
 }
 
 // @beta
-export interface RichTextSendBoxStrings extends SendBoxStrings {
-    boldTooltip: string;
-    bulletListTooltip: string;
-    decreaseIndentTooltip: string;
-    deleteColumnMenu: string;
-    deleteRowMenu: string;
-    deleteRowOrColumnMenu: string;
-    deleteTableMenu: string;
-    increaseIndentTooltip: string;
-    insertColumnLeftMenu: string;
-    insertColumnRightMenu: string;
-    insertRowAboveMenu: string;
-    insertRowBelowMenu: string;
-    insertRowOrColumnMenu: string;
-    insertTableMenuTitle: string;
-    insertTableTooltip: string;
-    italicTooltip: string;
-    numberListTooltip: string;
+export interface RichTextSendBoxStrings extends RichTextStrings, SendBoxStrings {
+}
+
+// @beta
+export interface RichTextStrings {
+    richTextBoldTooltip: string;
+    richTextBulletListTooltip: string;
+    richTextDecreaseIndentTooltip: string;
+    richTextDeleteColumnMenu: string;
+    richTextDeleteRowMenu: string;
+    richTextDeleteRowOrColumnMenu: string;
+    richTextDeleteTableMenu: string;
     richTextFormatButtonTooltip: string;
-    underlineTooltip: string;
+    richTextIncreaseIndentTooltip: string;
+    richTextInsertColumnLeftMenu: string;
+    richTextInsertColumnRightMenu: string;
+    richTextInsertRowAboveMenu: string;
+    richTextInsertRowBelowMenu: string;
+    richTextInsertRowOrColumnMenu: string;
+    richTextInsertTableMenuTitle: string;
+    richTextInsertTableTooltip: string;
+    richTextItalicTooltip: string;
+    richTextNumberListTooltip: string;
+    richTextUnderlineTooltip: string;
 }
 
 // @public
