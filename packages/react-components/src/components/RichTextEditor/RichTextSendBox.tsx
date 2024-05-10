@@ -151,7 +151,7 @@ export interface RichTextSendBoxProps {
   /**
    * Callback function used when the send button is clicked.
    */
-  onSendMessage: (content: string) => Promise<void>;
+  onSendMessage: (content: string, options?: MessageOptions) => Promise<void>;
   /**
    * Optional callback called when user is typing
    */
