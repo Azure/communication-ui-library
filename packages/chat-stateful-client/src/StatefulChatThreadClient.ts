@@ -40,7 +40,7 @@ class ProxyChatThreadClient implements ProxyHandler<ChatThreadClient> {
             content: { message: content },
             clientMessageId,
             id: '',
-            type: options?.type ?? 'text',
+            type: options?.type ?? 'html',
             sequenceId: '',
             version: '',
             createdOn: new Date(),
