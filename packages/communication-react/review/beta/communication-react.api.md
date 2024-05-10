@@ -3308,7 +3308,7 @@ export type MessageEditedListener = MessageReceivedListener;
 // @public
 export type MessageProps = {
     message: Message;
-    strings: MessageThreadStrings;
+    strings: MessageThreadStrings & /* @conditional-compile-remove(rich-text-editor) */ Partial<RichTextStrings>;
     messageContainerStyle?: ComponentSlotStyle;
     showDate?: boolean;
     disableEditing?: boolean;
@@ -3408,7 +3408,7 @@ export type MessageThreadSelector = (state: ChatClientState, props: ChatBaseSele
 };
 
 // @public
-export interface MessageThreadStrings extends RichTextStrings {
+export interface MessageThreadStrings {
     actionMenuMoreOptions?: string;
     attachmentCardGroupMessage: string;
     blockedWarningLinkText: string;
@@ -3927,7 +3927,7 @@ export interface RichTextSendBoxProps {
 export interface RichTextSendBoxStrings extends RichTextStrings, SendBoxStrings {
 }
 
-// @beta (undocumented)
+// @beta
 export interface RichTextStrings {
     richTextBoldTooltip: string;
     richTextBulletListTooltip: string;
@@ -3936,6 +3936,7 @@ export interface RichTextStrings {
     richTextDeleteRowMenu: string;
     richTextDeleteRowOrColumnMenu: string;
     richTextDeleteTableMenu: string;
+    richTextFormatButtonTooltip: string;
     richTextIncreaseIndentTooltip: string;
     richTextInsertColumnLeftMenu: string;
     richTextInsertColumnRightMenu: string;
@@ -3946,7 +3947,6 @@ export interface RichTextStrings {
     richTextInsertTableTooltip: string;
     richTextItalicTooltip: string;
     richTextNumberListTooltip: string;
-    richTextFormatButtonTooltip: string;
     richTextUnderlineTooltip: string;
 }
 
@@ -4463,13 +4463,13 @@ export type UpdateMessageCallback = (messageId: string, content: string, options
 }) => Promise<void>;
 
 // @public
-export const useAzureCommunicationCallAdapter: (args: Partial<AzureCommunicationCallAdapterArgs | AzureCommunicationOutboundCallAdapterArgs>, afterCreate?: ((adapter: CallAdapter) => Promise<CallAdapter>) | undefined, beforeDispose?: ((adapter: CallAdapter) => Promise<void>) | undefined) => CallAdapter | undefined;
+export const useAzureCommunicationCallAdapter: (args: Partial<AzureCommunicationCallAdapterArgs | AzureCommunicationOutboundCallAdapterArgs>, afterCreate?: (adapter: CallAdapter) => Promise<CallAdapter>, beforeDispose?: (adapter: CallAdapter) => Promise<void>) => CallAdapter | undefined;
 
 // @public
-export const useAzureCommunicationCallWithChatAdapter: (args: Partial<AzureCommunicationCallWithChatAdapterArgs>, afterCreate?: ((adapter: CallWithChatAdapter) => Promise<CallWithChatAdapter>) | undefined, beforeDispose?: ((adapter: CallWithChatAdapter) => Promise<void>) | undefined) => CallWithChatAdapter | undefined;
+export const useAzureCommunicationCallWithChatAdapter: (args: Partial<AzureCommunicationCallWithChatAdapterArgs>, afterCreate?: (adapter: CallWithChatAdapter) => Promise<CallWithChatAdapter>, beforeDispose?: (adapter: CallWithChatAdapter) => Promise<void>) => CallWithChatAdapter | undefined;
 
 // @public
-export const useAzureCommunicationChatAdapter: (args: Partial<AzureCommunicationChatAdapterArgs>, afterCreate?: ((adapter: ChatAdapter) => Promise<ChatAdapter>) | undefined, beforeDispose?: ((adapter: ChatAdapter) => Promise<void>) | undefined) => ChatAdapter | undefined;
+export const useAzureCommunicationChatAdapter: (args: Partial<AzureCommunicationChatAdapterArgs>, afterCreate?: (adapter: ChatAdapter) => Promise<ChatAdapter>, beforeDispose?: (adapter: ChatAdapter) => Promise<void>) => ChatAdapter | undefined;
 
 // @public
 export const useCall: () => Call | undefined;
@@ -4499,7 +4499,7 @@ export const useSelector: <ParamT extends Selector | undefined>(selector: ParamT
 export const useTeamsCall: () => undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall;
 
 // @beta
-export const useTeamsCallAdapter: (args: Partial<TeamsCallAdapterArgs>, afterCreate?: ((adapter: TeamsCallAdapter) => Promise<TeamsCallAdapter>) | undefined, beforeDispose?: ((adapter: TeamsCallAdapter) => Promise<void>) | undefined) => TeamsCallAdapter | undefined;
+export const useTeamsCallAdapter: (args: Partial<TeamsCallAdapterArgs>, afterCreate?: (adapter: TeamsCallAdapter) => Promise<TeamsCallAdapter>, beforeDispose?: (adapter: TeamsCallAdapter) => Promise<void>) => TeamsCallAdapter | undefined;
 
 // @beta
 export const useTeamsCallAgent: () => undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCallAgent;
