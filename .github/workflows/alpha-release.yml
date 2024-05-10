@@ -103,8 +103,7 @@ jobs:
         with:
           azcliversion: latest
           inlineScript: |
-            az extension add --name storage-preview
-            az storage azcopy blob upload -s "packages/communication-react/release/*" -c "drops/azure-communication-services/react/npm/${{ steps.version.outputs.version }}" --account-name azuresdkpartnerdrops
+            azcopy copy "packages/communication-react/release/*" -c "https://azuresdkpartnerdrops.blob.core.windows.net/drops/azure-communication-services/react/npm/${{ steps.version.outputs.version }}"
 
       - name: Trigger alpha package release pipeline
         uses: Azure/pipelines@v1.2
