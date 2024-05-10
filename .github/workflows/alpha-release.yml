@@ -10,8 +10,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  publish_alpha_package:
-    name: Publish alpha package
+  build-and-deploy:
+    name: Build and publish alpha package
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -40,6 +40,14 @@ jobs:
         run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
       - name: Install dependencies
         run: rush install --max-install-attempts 3
+
+      # Login via OIDC to permit uploading to azure blob store
+      - name: Azure login
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.NPM_DEPLOY_AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.NPM_DEPLOY_AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.NPM_DEPLOY_AZURE_SUBSCRIPTION_ID }}
 
       # Get datetime
       - name: Get datetime for alpha release name
@@ -87,14 +95,6 @@ jobs:
       - name: Package alpha packages for release
         run: npm pack
         working-directory: ./packages/communication-react
-
-      # Login via OIDC to permit uploading to azure blob store
-      - name: Azure login
-        uses: azure/login@v2
-        with:
-          client-id: ${{ secrets.NPM_DEPLOY_AZURE_CLIENT_ID }}
-          tenant-id: ${{ secrets.NPM_DEPLOY_AZURE_TENANT_ID }}
-          subscription-id: ${{ secrets.NPM_DEPLOY_AZURE_SUBSCRIPTION_ID }}
 
       # Deploy npm package - this is done by uploading to Azure's SDK blob storage then triggering their partner release pipeline.
       # More info: https://dev.azure.com/azure-sdk/internal/_wiki/wikis/internal.wiki/1/Partner-Release-Pipeline
