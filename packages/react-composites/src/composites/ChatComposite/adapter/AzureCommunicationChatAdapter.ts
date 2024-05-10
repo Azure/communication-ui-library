@@ -20,6 +20,8 @@ import type {
   ReadReceiptReceivedEvent
 } from '@azure/communication-chat';
 import { toFlatCommunicationIdentifier, _TelemetryImplementationHint } from '@internal/acs-ui-common';
+/* @conditional-compile-remove(attachment-upload) */
+import { AttachmentMetadata } from '@internal/acs-ui-common';
 import EventEmitter from 'events';
 import {
   ChatAdapter,
@@ -227,18 +229,39 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   async updateMessage(
     messageId: string,
     content: string,
-    metadata?: Record<string, string>,
-    /* @conditional-compile-remove(attachment-upload) */
-    options?: MessageOptions
+    options?: Record<string, string> | /* @conditional-compile-remove(attachment-upload) */ MessageOptions
   ): Promise<void> {
     return await this.asyncTeeErrorToEventEmitter(async () => {
       /* @conditional-compile-remove(attachment-upload) */
-      const messageOptions = {
-        metadata,
-        attachments: options?.attachments
-      };
+      const messageOptions: MessageOptions = {};
+      /* @conditional-compile-remove(attachment-upload) */
+      if (
+        options &&
+        // if options.attachments is an array, then given options is a MessageOptions
+        Array.isArray(options.attachments) &&
+        (options.attachments as AttachmentMetadata[])
+      ) {
+        messageOptions.attachments = options.attachments;
+      }
+      /* @conditional-compile-remove(attachment-upload) */
+      if (
+        options &&
+        // if options.metadata is provided, we need to add it in MessageOptions
+        options.metadata &&
+        typeof options.metadata === 'object'
+      ) {
+        messageOptions.metadata = options.metadata;
+      }
+      /* @conditional-compile-remove(attachment-upload) */
+      if (options && !('attachments' in options) && !('metadata' in options)) {
+        // if options don't have attachments or metadata,
+        // then it is a Record<string, string>
+        /* @conditional-compile-remove(attachment-upload) */
+        return await this.handlers.onUpdateMessage(messageId, content, options);
+      }
       /* @conditional-compile-remove(attachment-upload) */
       return await this.handlers.onUpdateMessage(messageId, content, messageOptions);
+      // metadata is never used in the current stable
       return await this.handlers.onUpdateMessage(messageId, content);
     });
   }

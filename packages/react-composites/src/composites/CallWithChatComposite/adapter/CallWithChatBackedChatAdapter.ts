@@ -30,7 +30,8 @@ export class CallWithChatBackedChatAdapter implements ChatAdapter {
   }
 
   public fetchInitialData = async (): Promise<void> => await this.callWithChatAdapter.fetchInitialData();
-  // cannot use arrow function because CC won't remove paramters properly
+  // due to a bug in babel, we can't use arrow function here
+  // affacting conditional-compile-remove(attachment-upload)
   // have to bind this since the scope of 'this' is lost when the function is passed as a callback
   sendMessageHandler = async function (
     this: CallWithChatBackedChatAdapter,
@@ -90,23 +91,16 @@ export class CallWithChatBackedChatAdapter implements ChatAdapter {
     }
   };
 
-  // cannot use arrow function because CC won't remove paramters properly
+  // due to a bug in babel, we can't use arrow function here
+  // affacting conditional-compile-remove(attachment-upload)
   // have to bind this since the scope of 'this' is lost when the function is passed as a callback
   updateMessageHandler = async function (
     this: CallWithChatBackedChatAdapter,
     messageId: string,
     content: string,
-    metadata?: Record<string, string>,
-    /* @conditional-compile-remove(attachment-upload) */
-    options?: MessageOptions
+    options?: Record<string, string> | /* @conditional-compile-remove(attachment-upload) */ MessageOptions
   ): Promise<void> {
-    await this.callWithChatAdapter.updateMessage(
-      messageId,
-      content,
-      metadata,
-      /* @conditional-compile-remove(attachment-upload) */
-      options
-    );
+    await this.callWithChatAdapter.updateMessage(messageId, content, options);
   };
 
   public updateMessage = this.updateMessageHandler.bind(this);

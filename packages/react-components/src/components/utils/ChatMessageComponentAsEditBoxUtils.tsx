@@ -68,6 +68,10 @@ interface Action {
 
 /* @conditional-compile-remove(attachment-upload) */
 /**
+ * Currently `Actions` only have one action which is to remove.
+ * But in the future, we may have more actions like `add`, `update`, etc.
+ * And this action would be a uinon of all those actions.
+ * i.e. `type Actions = RemoveAction | AddAction | UpdateAction;`
  * @private
  */
 type Actions = RemoveAction;

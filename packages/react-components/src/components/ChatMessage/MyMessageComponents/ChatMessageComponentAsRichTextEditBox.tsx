@@ -7,6 +7,8 @@ import { mergeClasses } from '@fluentui/react-components';
 import { _formatString } from '@internal/acs-ui-common';
 import { useTheme } from '../../../theming';
 import React, { useCallback, useMemo, useState } from 'react';
+/* @conditional-compile-remove(attachment-upload) */
+import { useReducer } from 'react';
 import { editBoxWidthStyles, richTextEditBoxActionButtonIcon } from '../../styles/EditBox.styles';
 import { InputBoxButton } from '../../InputBoxButton';
 import { MessageThreadStrings } from '../../MessageThread';
@@ -23,7 +25,10 @@ import {
   onRenderSubmitIcon
 } from '../../utils/ChatMessageComponentAsEditBoxUtils';
 /* @conditional-compile-remove(attachment-upload) */
-import { getMessageWithAttachmentMetadata } from '../../utils/ChatMessageComponentAsEditBoxUtils';
+import {
+  attachmentMetadataReducer,
+  getMessageWithAttachmentMetadata
+} from '../../utils/ChatMessageComponentAsEditBoxUtils';
 import { RichTextEditorComponentRef } from '../../RichTextEditor/RichTextEditor';
 import { RichTextInputBoxComponent } from '../../RichTextEditor/RichTextInputBoxComponent';
 import { editBoxRichTextEditorStyle, richTextActionButtonsStyle } from '../../styles/RichTextEditor.styles';
@@ -56,7 +61,10 @@ export const ChatMessageComponentAsRichTextEditBox = (
 
   const [textValue, setTextValue] = useState<string>(message.content || '');
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-  const [attachmentMetadata, setAttachmentMetadata] = useState(getMessageWithAttachmentMetadata(message));
+  const [attachmentMetadata, handleAttachmentAction] = useReducer(
+    attachmentMetadataReducer,
+    getMessageWithAttachmentMetadata(message) ?? []
+  );
   const editTextFieldRef = React.useRef<RichTextEditorComponentRef>(null);
   const theme = useTheme();
   const messageState = getMessageState(
@@ -149,12 +157,12 @@ export const ChatMessageComponentAsRichTextEditBox = (
   }, [/* @conditional-compile-remove(rich-text-editor) */ locale.richTextSendBox, locale.sendBox]);
 
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-  const onCancelAttachmentUpload = useCallback(
-    (attachmentId: string) => {
-      setAttachmentMetadata(attachmentMetadata?.filter((attachment) => attachment.id !== attachmentId));
-    },
-    [attachmentMetadata]
-  );
+  const onCancelAttachmentUpload = useCallback((attachmentId: string) => {
+    // edit box only capable of removing attachments
+    // we need to expand attachment actions
+    // if we want to support more actions e.g. add
+    handleAttachmentAction({ type: 'remove', id: attachmentId });
+  }, []);
 
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   const onRenderAttachmentUploads = useCallback(() => {

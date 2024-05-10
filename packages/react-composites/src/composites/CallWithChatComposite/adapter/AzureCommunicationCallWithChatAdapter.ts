@@ -443,17 +443,10 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   public async updateMessage(
     messageId: string,
     content: string,
-    metadata?: Record<string, string>,
-    /* @conditional-compile-remove(attachment-upload) */
-    options?: MessageOptions
+    options?: Record<string, string> | /* @conditional-compile-remove(attachment-upload) */ MessageOptions
   ): Promise<void> {
     return this.executeWithResolvedChatAdapter((adapter) => {
-      return adapter.updateMessage(
-        messageId,
-        content,
-        metadata,
-        /* @conditional-compile-remove(attachment-upload) */ options
-      );
+      return adapter.updateMessage(messageId, content, options);
     });
   }
   /** Delete an existing message. */

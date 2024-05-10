@@ -360,9 +360,7 @@ export interface CallWithChatAdapterManagement {
   updateMessage(
     messageId: string,
     content: string,
-    metadata?: Record<string, string>,
-    /* @conditional-compile-remove(attachment-upload) */
-    options?: MessageOptions
+    options?: Record<string, string> | /* @conditional-compile-remove(attachment-upload) */ MessageOptions
   ): Promise<void>;
   /**
    * Delete a message in the thread.

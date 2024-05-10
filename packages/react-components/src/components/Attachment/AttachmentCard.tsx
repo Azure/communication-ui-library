@@ -28,7 +28,11 @@ import { _AttachmentUploadCardsStrings } from './AttachmentUploadCards';
 import { useLocaleAttachmentCardStringsTrampoline } from '../utils/common';
 import { AttachmentMenuAction } from '../../types/Attachment';
 import { AttachmentMetadata, AttachmentMetadataWithProgress } from '@internal/acs-ui-common';
-import { useAttachmentCardStyles, attachmentNameContainerClassName } from '../styles/AttachmentCard.styles';
+import {
+  useAttachmentCardStyles,
+  attachmentNameContainerClassName,
+  ATTACHMENT_CARD_MIN_PROGRESS
+} from '../styles/AttachmentCard.styles';
 
 /**
  * @internal
@@ -131,7 +135,11 @@ export const _AttachmentCard = (props: _AttachmentCardProps): JSX.Element => {
       </Card>
       {isUploadInProgress ? (
         <CardFooter>
-          <ProgressBar thickness="medium" value={Math.max(progress ?? 0, 0.05)} shape="rounded" />
+          <ProgressBar
+            thickness="medium"
+            value={Math.max(progress ?? 0, ATTACHMENT_CARD_MIN_PROGRESS)}
+            shape="rounded"
+          />
         </CardFooter>
       ) : (
         <> </>

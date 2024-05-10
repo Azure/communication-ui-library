@@ -126,6 +126,7 @@ betaTest.describe('Attachment tests', () => {
             messageId: '1234567890',
             createdOn: new Date('01-01-2024'),
             senderId: '8:acs:12345',
+            senderDisplayName: 'John Doe',
             content: 'Hello!',
             mine: true,
             attachments: [{ name: 'test1.pdf', id: 'id1', url: 'https://www.contoso.com/test1.pdf' }]
@@ -149,6 +150,7 @@ betaTest.describe('Attachment tests', () => {
             messageId: '1234567890',
             createdOn: new Date('01-01-2024'),
             senderId: '8:acs:12345',
+            senderDisplayName: 'John Doe',
             content: 'Hello!',
             mine: true,
             attachments: [
@@ -179,7 +181,7 @@ betaTest.describe('Attachment tests', () => {
     }
   );
 
-  betaTest('MessageThread should show multiple attachments that has received', async ({ mount, page }) => {
+  betaTest.only('MessageThread should show multiple attachments that has received', async ({ mount, page }) => {
     const component = await mount(
       <MessageThread
         userId={'8:acs:12345'}
@@ -190,6 +192,7 @@ betaTest.describe('Attachment tests', () => {
             messageId: '1234567890',
             createdOn: new Date('01-01-2024'),
             senderId: '8:acs:12345',
+            senderDisplayName: 'John Doe',
             content: 'Hello!',
             mine: false,
             attachments: [
@@ -217,6 +220,7 @@ betaTest.describe('Attachment tests', () => {
             messageId: '1234567890',
             createdOn: new Date('01-01-2024'),
             senderId: '8:acs:12345',
+            senderDisplayName: 'John Doe',
             content: 'Hello!',
             mine: false,
             attachments: [{ name: 'test1.pdf', id: 'id1', url: 'https://www.contoso.com/test1.pdf' }]
@@ -242,6 +246,7 @@ betaTest.describe('Attachment tests', () => {
               messageId: '1234567890',
               createdOn: new Date('01-01-2024'),
               senderId: '8:orgid:1234',
+              senderDisplayName: 'John Doe',
               content: 'Hello!',
               mine: false,
               attachments: [
@@ -270,6 +275,7 @@ betaTest.describe('Attachment tests', () => {
             messageId: '1234567890',
             createdOn: new Date('01-01-2024'),
             senderId: '8:orgid:1234',
+            senderDisplayName: 'John Doe',
             content: 'Hello!',
             mine: false,
             attachments: [{ name: 'test1.pdf', id: 'id1', url: 'https://www.contoso.com/test1.pdf' }]

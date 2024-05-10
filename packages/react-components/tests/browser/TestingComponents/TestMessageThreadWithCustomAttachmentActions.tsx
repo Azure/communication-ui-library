@@ -39,6 +39,7 @@ export const TestMessageThreadWithCustomAttachmentActions = (): JSX.Element => {
             messageId: '1234567890',
             createdOn: new Date('01-01-2024'),
             senderId: '8:acs:12345',
+            senderDisplayName: 'John Doe',
             content: 'Custom Action Test',
             mine: true,
             attachments: [{ name: 'test1.docx', id: 'id1', url: 'https://www.contoso.com/test1.docx' }]

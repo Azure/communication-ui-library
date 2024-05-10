@@ -30,10 +30,10 @@ const createCompositeHandlers = memoizeOne(
       /* @conditional-compile-remove(attachment-upload) */
       if (
         options &&
-        `attachments` in options &&
+        'attachments' in options &&
         options.attachments &&
         options.attachments[0] &&
-        !(`attachmentType` in options.attachments[0])
+        !('attachmentType' in options.attachments[0])
       ) {
         const adapterMessageOption = {
           metadata: {
@@ -56,20 +56,14 @@ const createCompositeHandlers = memoizeOne(
       /* @conditional-compile-remove(attachment-upload) */
       options?: MessageOptions
     ) {
-      let metadata = undefined;
       /* @conditional-compile-remove(attachment-upload) */
-      metadata = {
-        filesharingMetadata: JSON.stringify(options?.attachments)
-      };
-      /* @conditional-compile-remove(attachment-upload) */
-      const updatedOptions: MessageOptions = {
+      const adapterMessageOptions: MessageOptions = {
         attachments: options?.attachments
       };
       return adapter.updateMessage(
         messageId,
         content,
-        metadata,
-        /* @conditional-compile-remove(attachment-upload) */ updatedOptions
+        /* @conditional-compile-remove(attachment-upload) */ adapterMessageOptions
       );
     },
     onDeleteMessage: adapter.deleteMessage
