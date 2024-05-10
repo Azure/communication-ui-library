@@ -42,17 +42,12 @@ jobs:
         run: rush install --max-install-attempts 3
 
       # Login via OIDC to permit uploading to azure blob store
-      # - name: Azure login
-      #   uses: azure/login@v2
-      #   with:
-      #     client-id: ${{ secrets.NPM_DEPLOY_AZURE_CLIENT_ID }}
-      #     tenant-id: ${{ secrets.NPM_DEPLOY_AZURE_TENANT_ID }}
-      #     subscription-id: ${{ secrets.NPM_DEPLOY_AZURE_SUBSCRIPTION_ID }}
-
-      # Login via OIDC to permit uploading to azure blob store
       - name: Azure login
-        run: |
-          azcopy login --tenant-id ${{ secrets.NPM_DEPLOY_AZURE_TENANT_ID }} --identity --identity-client-id ${{ secrets.NPM_DEPLOY_AZURE_CLIENT_ID }}
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.NPM_DEPLOY_AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.NPM_DEPLOY_AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.NPM_DEPLOY_AZURE_SUBSCRIPTION_ID }}
 
       # Get datetime
       - name: Get datetime for alpha release name
@@ -105,8 +100,6 @@ jobs:
       # More info: https://dev.azure.com/azure-sdk/internal/_wiki/wikis/internal.wiki/1/Partner-Release-Pipeline
       - name: Upload tarball to blob storage
         run: azcopy copy "packages/communication-react/release/*" "https://azuresdkpartnerdrops.blob.core.windows.net/drops/azure-communication-services/react/npm/${{ steps.version.outputs.version }}"
-        env:
-          AZCOPY_AUTO_LOGIN_TYPE: 'MSI'
 
       - name: Trigger alpha package release pipeline
         uses: Azure/pipelines@v1.2
