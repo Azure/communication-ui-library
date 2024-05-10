@@ -181,7 +181,7 @@ betaTest.describe('Attachment tests', () => {
     }
   );
 
-  betaTest.only('MessageThread should show multiple attachments that has received', async ({ mount, page }) => {
+  betaTest('MessageThread should show multiple attachments that has received', async ({ mount, page }) => {
     const component = await mount(
       <MessageThread
         userId={'8:acs:12345'}
