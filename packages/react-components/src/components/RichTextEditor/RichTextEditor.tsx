@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 import React, { useEffect, useImperativeHandle, useMemo, useRef } from 'react';
 import { richTextEditorWrapperStyle, richTextEditorStyle } from '../styles/RichTextEditor.styles';
+//
 import { useTheme } from '../../theming';
 import { RichTextSendBoxStrings } from './RichTextSendBox';
 import { isDarkThemed } from '../../theming/themeUtils';
