@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 import React from 'react';
+// Need to update as soon as we drop support for React 17
+// eslint-disable-next-line react/no-deprecated
 import { render, unmountComponentAtNode } from 'react-dom';
 import { ContextMenuPluginBase } from 'roosterjs-content-model-plugins';
 import { ContextualMenu, WindowProvider } from '@fluentui/react';
