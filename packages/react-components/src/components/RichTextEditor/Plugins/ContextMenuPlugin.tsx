@@ -22,8 +22,8 @@ export class ContextMenuPlugin extends ContextMenuPluginBase<IContextualMenuItem
        * @param onDismiss - Callback function to be called when the context menu is dismissed.
        */
       render: (container, items, onDismiss) => {
-        if (items.length > 0) {
-          const filteredItems = items.filter((item) => item !== null);
+        const filteredItems = items.filter((item): item is IContextualMenuItem => item !== null);
+        if (filteredItems.length > 0) {
           this.disposer = renderReactComponent(
             <ContextualMenu target={container} onDismiss={onDismiss} items={filteredItems} />,
             container
@@ -42,7 +42,7 @@ export class ContextMenuPlugin extends ContextMenuPluginBase<IContextualMenuItem
   }
 }
 
-function renderReactComponent(reactElement: JSX.Element, container: HTMLElement): () => void {
+const renderReactComponent = (reactElement: JSX.Element, container: HTMLElement): (() => void) => {
   const doc = container.ownerDocument;
   if (doc.defaultView !== null) {
     const root = createRoot(container!);
@@ -58,4 +58,4 @@ function renderReactComponent(reactElement: JSX.Element, container: HTMLElement)
     };
   }
   return () => {};
-}
+};

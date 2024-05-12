@@ -6,8 +6,10 @@ import { RichTextEditor } from './RichTextEditor';
 import { render, screen, waitFor } from '@testing-library/react';
 import { registerIcons } from '@fluentui/react';
 import userEvent from '@testing-library/user-event';
+import { COMPONENT_LOCALE_EN_US } from '../../localization/locales';
 
 describe('RichTextEditor should be shown correctly', () => {
+  const localeStrings = COMPONENT_LOCALE_EN_US.strings;
   beforeAll(() => {
     registerIcons({
       icons: {
@@ -26,11 +28,11 @@ describe('RichTextEditor should be shown correctly', () => {
     });
   });
 
-  test.skip('Format bar should not be shown when showRichTextEditorFormatting is false', async () => {
+  test('Format bar should not be shown when showRichTextEditorFormatting is false', async () => {
     render(
       <RichTextEditor
         onChange={() => {}}
-        strings={{}}
+        strings={localeStrings.richTextSendBox}
         showRichTextEditorFormatting={false}
         styles={{ minHeight: '1rem', maxHeight: '1rem' }}
       />
@@ -41,11 +43,11 @@ describe('RichTextEditor should be shown correctly', () => {
     expect(richTextEditorRibbon).toBeNull();
   });
 
-  test.skip('Format bar should not be shown when showRichTextEditorFormatting is true', async () => {
+  test('Format bar should be shown when showRichTextEditorFormatting is true', async () => {
     render(
       <RichTextEditor
         onChange={() => {}}
-        strings={{}}
+        strings={localeStrings.richTextSendBox}
         showRichTextEditorFormatting={true}
         styles={{ minHeight: '1rem', maxHeight: '1rem' }}
       />
@@ -56,11 +58,11 @@ describe('RichTextEditor should be shown correctly', () => {
     expect(richTextEditorRibbon).not.toBeNull();
   });
 
-  test.skip('Format bar should be shown correctly', async () => {
+  test('Format bar should be shown correctly', async () => {
     const { container } = render(
       <RichTextEditor
         onChange={() => {}}
-        strings={{}}
+        strings={localeStrings.richTextSendBox}
         showRichTextEditorFormatting={true}
         styles={{ minHeight: '1rem', maxHeight: '1rem' }}
       />
@@ -96,7 +98,7 @@ describe('RichTextEditor should be shown correctly', () => {
           onChange={(updatedValue) => {
             value = updatedValue;
           }}
-          strings={{}}
+          strings={localeStrings.richTextSendBox}
           showRichTextEditorFormatting={true}
           styles={{ minHeight: '1rem', maxHeight: '1rem' }}
         />
