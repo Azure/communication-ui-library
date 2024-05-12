@@ -21,6 +21,7 @@ export const richTextInsertTableCommandBarItem = (
   onClick: (column: number, row: number) => void
 ): ICommandBarItemProps => {
   return {
+    'data-testid': 'rich-text-toolbar-insert-table-button',
     key: 'RichTextToolbarInsertTableButton',
     text: strings.insertTableTooltip,
     ariaLabel: strings.insertTableTooltip,

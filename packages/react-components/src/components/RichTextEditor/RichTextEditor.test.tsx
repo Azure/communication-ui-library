@@ -6,10 +6,8 @@ import { RichTextEditor } from './RichTextEditor';
 import { render, screen, waitFor } from '@testing-library/react';
 import { registerIcons } from '@fluentui/react';
 import userEvent from '@testing-library/user-event';
-import { COMPONENT_LOCALE_EN_US } from '../../localization/locales';
 
 describe('RichTextEditor should be shown correctly', () => {
-  const localeStrings = COMPONENT_LOCALE_EN_US.strings;
   beforeAll(() => {
     registerIcons({
       icons: {
@@ -32,13 +30,13 @@ describe('RichTextEditor should be shown correctly', () => {
     render(
       <RichTextEditor
         onChange={() => {}}
-        strings={localeStrings.richTextSendBox}
+        strings={{}}
         showRichTextEditorFormatting={false}
         styles={{ minHeight: '1rem', maxHeight: '1rem' }}
       />
     );
     const richTextEditor = screen.queryByTestId('rich-text-editor-wrapper');
-    const richTextEditorRibbon = screen.queryByTestId('rich-text-editor-ribbon');
+    const richTextEditorRibbon = screen.queryByTestId('rich-text-editor-toolbar');
     expect(richTextEditor).not.toBeNull();
     expect(richTextEditorRibbon).toBeNull();
   });
@@ -47,13 +45,13 @@ describe('RichTextEditor should be shown correctly', () => {
     render(
       <RichTextEditor
         onChange={() => {}}
-        strings={localeStrings.richTextSendBox}
+        strings={{}}
         showRichTextEditorFormatting={true}
         styles={{ minHeight: '1rem', maxHeight: '1rem' }}
       />
     );
     const richTextEditor = screen.queryByTestId('rich-text-editor-wrapper');
-    const richTextEditorRibbon = screen.queryByTestId('rich-text-editor-ribbon');
+    const richTextEditorRibbon = screen.queryByTestId('rich-text-editor-toolbar');
     expect(richTextEditor).not.toBeNull();
     expect(richTextEditorRibbon).not.toBeNull();
   });
@@ -62,20 +60,21 @@ describe('RichTextEditor should be shown correctly', () => {
     const { container } = render(
       <RichTextEditor
         onChange={() => {}}
-        strings={localeStrings.richTextSendBox}
+        strings={{}}
         showRichTextEditorFormatting={true}
         styles={{ minHeight: '1rem', maxHeight: '1rem' }}
       />
     );
-    const boldButton = screen.queryByLabelText('Bold');
-    const italicButton = screen.queryByLabelText('Italic');
-    const underlineButton = screen.queryByLabelText('Underline');
-    const bulletListButton = screen.queryByLabelText('Bulleted list');
-    const numberListButton = screen.queryByLabelText('Numbered list');
-    const indentDecreaseButton = screen.queryByLabelText('Decrease indent');
-    const indentIncreaseButton = screen.queryByLabelText('Increase indent');
+    // const boldButton = screen.queryByLabelText('Bold');
+    const boldButton = screen.queryByTestId('rich-text-toolbar-bold-button');
+    const italicButton = screen.queryByTestId('rich-text-toolbar-italic-button');
+    const underlineButton = screen.queryByTestId('rich-text-toolbar-underline-button');
+    const bulletListButton = screen.queryByTestId('rich-text-toolbar-bullet-list-button');
+    const numberListButton = screen.queryByTestId('rich-text-toolbar-number-list-button');
+    const indentDecreaseButton = screen.queryByTestId('rich-text-toolbar-indent-decrease-button');
+    const indentIncreaseButton = screen.queryByTestId('rich-text-toolbar-indent-increase-button');
     const divider = container.querySelectorAll('[data-icon-name="RichTextDividerIcon"]');
-    const insertTableButton = screen.queryByLabelText('Insert table');
+    const insertTableButton = screen.queryByTestId('rich-text-toolbar-insert-table-button');
     expect(boldButton).not.toBeNull();
     expect(italicButton).not.toBeNull();
     expect(underlineButton).not.toBeNull();
@@ -98,7 +97,7 @@ describe('RichTextEditor should be shown correctly', () => {
           onChange={(updatedValue) => {
             value = updatedValue;
           }}
-          strings={localeStrings.richTextSendBox}
+          strings={{}}
           showRichTextEditorFormatting={true}
           styles={{ minHeight: '1rem', maxHeight: '1rem' }}
         />
