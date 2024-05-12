@@ -269,7 +269,6 @@ const createEditorInitialModel = (
     const initialContentValue = initialContent;
     const initialModel =
       initialContentValue && initialContentValue.length > 0 ? createModelFromHtml(initialContentValue) : undefined;
-    // TODO-vhuseinova: check this and also check if 1 param in createParagraph should be true
     if (initialModel && initialModel.blocks.length > 0) {
       // lastBlock should have blockType = paragraph, otherwise add a new paragraph
       // to set focus to the end of the content
@@ -277,7 +276,7 @@ const createEditorInitialModel = (
       if (lastBlock?.blockType === 'Paragraph') {
         // now lastBlock is paragraph
       } else {
-        lastBlock = createParagraph(false);
+        lastBlock = createParagraph(true);
         initialModel.blocks.push(lastBlock);
       }
       const marker = createSelectionMarker();

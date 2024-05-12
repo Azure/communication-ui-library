@@ -36,7 +36,20 @@ export class TableEditContextMenuProvider implements ContextMenuProvider<IContex
     this.editor = null;
   }
 
-  getContextMenuItems(): IContextualMenuItem[] | null {
-    return this.items;
+  getContextMenuItems(node: Node): IContextualMenuItem[] | null {
+    // return this.items;
+    if (this.editor && isTableEditable(this.editor, node)) {
+      return this.items;
+    } else {
+      return null;
+    }
   }
 }
+
+const isTableEditable = (editor: IEditor, node: Node): boolean => {
+  const domHelper = editor.getDOMHelper();
+  const td = domHelper.findClosestElementAncestor(node, 'TD,TH');
+  const table = td && domHelper.findClosestElementAncestor(td, 'table');
+
+  return table?.isContentEditable === true;
+};
