@@ -18,9 +18,9 @@ import {
   toggleUnderline,
   toggleBullet,
   toggleNumbering,
-  setIndentation
+  setIndentation,
+  insertTable
 } from 'roosterjs-content-model-api';
-import { insertTable } from './Table/insertTableAction';
 import { RichTextSendBoxStrings } from '../RichTextSendBox';
 import { richTextInsertTableCommandBarItem } from './Table/RichTextInsertTableCommandBarItem';
 

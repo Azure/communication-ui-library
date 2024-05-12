@@ -5,7 +5,6 @@ import { richTextEditorWrapperStyle, richTextEditorStyle } from '../styles/RichT
 import { useTheme } from '../../theming';
 import { RichTextSendBoxStrings } from './RichTextSendBox';
 import { isDarkThemed } from '../../theming/themeUtils';
-// import { createTableEditMenuProvider } from './Buttons/Table/RichTextTableContextMenu';
 import CopyPastePlugin from './Plugins/CopyPastePlugin';
 import type { ContentModelDocument, EditorPlugin, IEditor } from 'roosterjs-content-model-types';
 import { createModelFromHtml, Editor, exportContent } from 'roosterjs-content-model-core';
@@ -15,6 +14,9 @@ import { AutoFormatPlugin, EditPlugin, WatermarkPlugin, PastePlugin } from 'roos
 import { UpdateContentPlugin, UpdateEvent } from './Plugins/UpdateContentPlugin';
 import { RichTextToolbar } from './Toolbar/RichTextToolbar';
 import { RichTextToolbarPlugin } from './Plugins/RichTextToolbarPlugin';
+import { ContextMenuPlugin } from './Plugins/ContextMenuPlugin';
+import { TableEditContextMenuProvider } from './Plugins/TableEditContextMenuProvider';
+import { borderApplier, dataSetApplier } from '../utils/RichTextEditorUtils';
 
 /**
  * Style props for {@link RichTextEditor}.
@@ -170,16 +172,23 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     keyboardInputPlugin.onKeyDown = onKeyDown;
   }, [keyboardInputPlugin, onKeyDown]);
 
+  const tableContextMenuPlugin = useMemo(() => {
+    return new TableEditContextMenuProvider();
+  }, []);
+
+  useMemo(() => {
+    tableContextMenuPlugin.updateStrings(strings);
+  }, [tableContextMenuPlugin, strings]);
+
   const plugins: EditorPlugin[] = useMemo(() => {
-    //   // contextPlugin and tableEditMenuProvider allow to show insert/delete menu for the table
-    //   const contextPlugin = createContextMenuPlugin();
-    //   const tableEditMenuProvider = createTableEditMenuProvider(strings);
     const contentEdit = new EditPlugin();
     // AutoFormatPlugin previously was a part of the edit plugin
     const autoFormatPlugin = new AutoFormatPlugin({ autoBullet: true, autoNumbering: true, autoLink: true });
     const copyPastePlugin = new CopyPastePlugin();
     const roosterPastePlugin = new PastePlugin(false);
     const placeholderPlugin = new WatermarkPlugin(placeholderText ?? '');
+    // contextPlugin and tableEditMenuProvider allow to show insert/delete menu for the table
+    const contextMenuPlugin = new ContextMenuPlugin();
     return [
       placeholderPlugin,
       keyboardInputPlugin,
@@ -188,14 +197,13 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
       updatePlugin,
       copyPastePlugin,
       roosterPastePlugin,
-      toolbarPlugin
+      toolbarPlugin,
+      contextMenuPlugin,
+      tableContextMenuPlugin
     ];
-  }, [keyboardInputPlugin, placeholderText, updatePlugin, toolbarPlugin]);
+  }, [keyboardInputPlugin, placeholderText, updatePlugin, toolbarPlugin, tableContextMenuPlugin]);
+
   // TODO: check shortcuts plugin
-  //   return [,
-  //     contextPlugin,
-  //     tableEditMenuProvider,
-  //   ];
   // TODO-vhuseinova: check that localization/rtl works
   useEffect(() => {
     const initialModel = createEditorInitialModel(initialContent, contentModel);
@@ -207,7 +215,14 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
         // TODO: confirm the color during inline images implementation
         imageSelectionBorderColor: 'blue',
         plugins: plugins,
-        initialModel: initialModel
+        initialModel: initialModel,
+        defaultModelToDomOptions: {
+          formatApplierOverride: {
+            // apply border and dataset formats for table
+            border: borderApplier,
+            dataset: dataSetApplier
+          }
+        }
       });
     }
 
