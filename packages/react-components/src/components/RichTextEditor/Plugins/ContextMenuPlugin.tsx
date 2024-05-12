@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 import React from 'react';
-import { createRoot } from 'react-dom/client';
+import { render, unmountComponentAtNode } from 'react-dom';
 import { ContextMenuPluginBase } from 'roosterjs-content-model-plugins';
 import { ContextualMenu, WindowProvider } from '@fluentui/react';
 import type { IContextualMenuItem } from '@fluentui/react/';
@@ -44,18 +44,18 @@ export class ContextMenuPlugin extends ContextMenuPluginBase<IContextualMenuItem
 
 const renderReactComponent = (reactElement: JSX.Element, container: HTMLElement): (() => void) => {
   const doc = container.ownerDocument;
-  if (doc.defaultView !== null) {
-    const root = createRoot(container!);
-    root.render(
-      <>
-        <WindowProvider window={doc.defaultView}>
-          <FluentThemeProvider>{reactElement}</FluentThemeProvider>
-        </WindowProvider>
-      </>
-    );
-    return () => {
-      root.unmount();
-    };
-  }
-  return () => {};
+  const div = doc.createElement('div');
+  doc.body.appendChild(div);
+
+  render(
+    <WindowProvider window={doc.defaultView!}>
+      <FluentThemeProvider>{reactElement}</FluentThemeProvider>
+    </WindowProvider>,
+    div
+  );
+
+  return () => {
+    unmountComponentAtNode(div);
+    doc.body.removeChild(div);
+  };
 };
