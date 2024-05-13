@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 /* @conditional-compile-remove(attachment-upload) */
-import { AttachmentMetadataWithProgress } from '@internal/acs-ui-common';
+import { AttachmentMetadataInProgress } from '@internal/acs-ui-common';
 
 /**
  * @private
@@ -15,7 +15,7 @@ const EMPTY_MESSAGE_REGEX = /^\s*$/;
  * @private
  */
 export const hasIncompleteAttachmentUploads = (
-  attachmentsWithProgress: AttachmentMetadataWithProgress[] | undefined
+  attachmentsWithProgress: AttachmentMetadataInProgress[] | undefined
 ): boolean => {
   return !!(
     attachmentsWithProgress?.length &&
@@ -30,7 +30,7 @@ export const hasIncompleteAttachmentUploads = (
  * @private
  */
 export const isAttachmentUploadCompleted = (
-  attachmentsWithProgress: AttachmentMetadataWithProgress[] | undefined
+  attachmentsWithProgress: AttachmentMetadataInProgress[] | undefined
 ): boolean => {
   return !!attachmentsWithProgress?.find((attachment) => !attachment.error);
 };

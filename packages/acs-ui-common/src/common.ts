@@ -80,7 +80,7 @@ export interface AttachmentMetadata {
  *
  * @beta
  */
-export interface AttachmentMetadataWithProgress {
+export interface AttachmentMetadataInProgress {
   /**
    * Unique ID of the attachment.
    */

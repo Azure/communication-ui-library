@@ -16,7 +16,7 @@ import { richTextActionButtonsStyle, sendBoxRichTextEditorStyle } from '../style
 /* @conditional-compile-remove(attachment-upload) */
 import { _AttachmentUploadCards } from '../Attachment/AttachmentUploadCards';
 /* @conditional-compile-remove(attachment-upload) */
-import { AttachmentMetadataWithProgress, MessageOptions } from '@internal/acs-ui-common';
+import { AttachmentMetadataInProgress, MessageOptions } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(attachment-upload) */
 import { isAttachmentUploadCompleted, hasIncompleteAttachmentUploads } from '../utils/SendBoxUtils';
 /* @conditional-compile-remove(attachment-upload) */
@@ -138,11 +138,11 @@ export interface RichTextSendBoxProps {
   systemMessage?: string;
   /* @conditional-compile-remove(attachment-upload) */
   /**
-   * Optional array of type {@link AttachmentMetadataWithProgress}
+   * Optional array of type {@link AttachmentMetadataInProgress}
    * to render attachments being uploaded in the SendBox.
    * @beta
    */
-  attachments?: AttachmentMetadataWithProgress[];
+  attachments?: AttachmentMetadataInProgress[];
   /**
    * enumerable to determine if the input box has focus on render or not.
    * When undefined nothing has focus on render
@@ -223,7 +223,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
   }, []);
 
   /* @conditional-compile-remove(attachment-upload) */
-  const toAttachmentMetadata = useCallback((attachmentsWithProgress: AttachmentMetadataWithProgress[] | undefined) => {
+  const toAttachmentMetadata = useCallback((attachmentsWithProgress: AttachmentMetadataInProgress[] | undefined) => {
     return attachmentsWithProgress
       ?.filter((attachment) => {
         return !('error' in attachment) && !attachment.error?.message;

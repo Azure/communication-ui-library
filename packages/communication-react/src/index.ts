@@ -337,7 +337,7 @@ export type {
 /* @conditional-compile-remove(attachment-upload) */
 export type {
   AttachmentMetadata,
-  AttachmentMetadataWithProgress,
+  AttachmentMetadataInProgress,
   AttachmentProgressError
 } from '../../acs-ui-common/src';
 

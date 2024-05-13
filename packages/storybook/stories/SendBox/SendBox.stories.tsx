@@ -72,7 +72,7 @@ const getDocs: () => JSX.Element = () => {
       <Heading>Display Attachment Uploads</Heading>
       <DetailedBetaBanner />
       <Description>
-        SendBox component provides UI for displaying AttachmentMetadataWithProgress in the SendBox. This allows
+        SendBox component provides UI for displaying AttachmentMetadataInProgress in the SendBox. This allows
         developers to implement a file sharing feature using the pure UI component with minimal effort. Developers can
         write their own attachment upload logic and utilize the UI provided by SendBox.
       </Description>

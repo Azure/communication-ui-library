@@ -15,7 +15,7 @@ import { SendBoxErrors } from './SendBoxErrors';
 /* @conditional-compile-remove(attachment-upload) */
 import { _AttachmentUploadCards } from './Attachment/AttachmentUploadCards';
 /* @conditional-compile-remove(attachment-upload) */
-import { AttachmentMetadataWithProgress, MessageOptions } from '@internal/acs-ui-common';
+import { AttachmentMetadataInProgress, MessageOptions } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(attachment-upload) */
 import { attachmentUploadCardsStyles } from './styles/SendBox.styles';
 /* @conditional-compile-remove(attachment-upload) */
@@ -172,11 +172,11 @@ export interface SendBoxProps {
   onRenderAttachmentUploads?: () => JSX.Element;
   /* @conditional-compile-remove(attachment-upload) */
   /**
-   * Optional array of type {@link AttachmentMetadataWithProgress}
+   * Optional array of type {@link AttachmentMetadataInProgress}
    * to render attachments being uploaded in the SendBox.
    * @beta
    */
-  attachments?: AttachmentMetadataWithProgress[];
+  attachments?: AttachmentMetadataInProgress[];
   /* @conditional-compile-remove(attachment-upload) */
   /**
    * Optional callback to remove the attachment upload before sending by clicking on
@@ -262,7 +262,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
   };
 
   /* @conditional-compile-remove(attachment-upload) */
-  const toAttachmentMetadata = useCallback((attachmentsWithProgress: AttachmentMetadataWithProgress[] | undefined) => {
+  const toAttachmentMetadata = useCallback((attachmentsWithProgress: AttachmentMetadataInProgress[] | undefined) => {
     return attachmentsWithProgress
       ?.filter((attachment) => {
         return !('error' in attachment) && !attachment.error?.message;

@@ -2,13 +2,13 @@
 // Licensed under the MIT License.
 
 import { AttachmentUploadTask, AttachmentSelectionHandler, AttachmentActionHandler } from '@internal/react-components';
-import { AttachmentMetadata, AttachmentMetadataWithProgress, AttachmentProgressError } from '@internal/acs-ui-common';
+import { AttachmentMetadata, AttachmentMetadataInProgress, AttachmentProgressError } from '@internal/acs-ui-common';
 
 /**
  * @internal
  */
 export interface AttachmentUpload extends AttachmentUploadTask {
-  metadata: AttachmentMetadataWithProgress;
+  metadata: AttachmentMetadataInProgress;
 }
 
 /**

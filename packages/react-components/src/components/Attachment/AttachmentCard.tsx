@@ -27,7 +27,7 @@ import { useEffect, useState, useMemo } from 'react';
 import { _AttachmentUploadCardsStrings } from './AttachmentUploadCards';
 import { useLocaleAttachmentCardStringsTrampoline } from '../utils/common';
 import { AttachmentMenuAction } from '../../types/Attachment';
-import { AttachmentMetadata, AttachmentMetadataWithProgress } from '@internal/acs-ui-common';
+import { AttachmentMetadata, AttachmentMetadataInProgress } from '@internal/acs-ui-common';
 import {
   useAttachmentCardStyles,
   attachmentNameContainerClassName,
@@ -42,7 +42,7 @@ export interface _AttachmentCardProps {
   /**
    * Attachment details including name, extension, url, etc.
    */
-  attachment: AttachmentMetadata | AttachmentMetadataWithProgress;
+  attachment: AttachmentMetadata | AttachmentMetadataInProgress;
   /**
    * An array of menu actions to be displayed in the attachment card.
    */

@@ -27,6 +27,6 @@ export { _pxToRem } from './cssUtils';
 export { _logEvent } from './logEvent';
 export type { TelemetryEvent } from './logEvent';
 
-export type { AttachmentMetadata, AttachmentMetadataWithProgress, AttachmentProgressError } from './common';
+export type { AttachmentMetadata, AttachmentMetadataInProgress, AttachmentProgressError } from './common';
 
 export type { MessageOptions } from './common';

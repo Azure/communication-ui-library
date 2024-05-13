@@ -5,7 +5,7 @@ import { Icon, mergeStyles } from '@fluentui/react';
 import React, { useMemo } from 'react';
 import { _AttachmentCard } from './AttachmentCard';
 import { _AttachmentCardGroup } from './AttachmentCardGroup';
-import { AttachmentMetadataWithProgress } from '@internal/acs-ui-common';
+import { AttachmentMetadataInProgress } from '@internal/acs-ui-common';
 import { useLocaleAttachmentCardStringsTrampoline } from '../utils/common';
 
 /**
@@ -29,9 +29,9 @@ export interface _AttachmentUploadCardsStrings {
  */
 export interface AttachmentUploadCardsProps {
   /**
-   * Optional array of {@link AttachmentMetadataWithProgress}
+   * Optional array of {@link AttachmentMetadataInProgress}
    */
-  attachments?: AttachmentMetadataWithProgress[];
+  attachments?: AttachmentMetadataInProgress[];
   /**
    * Optional callback to remove the attachment upload before sending by clicking on
    * cancel icon.

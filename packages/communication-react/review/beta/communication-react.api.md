@@ -172,7 +172,7 @@ export interface AttachmentMetadata {
 }
 
 // @beta
-export interface AttachmentMetadataWithProgress {
+export interface AttachmentMetadataInProgress {
     error?: AttachmentProgressError;
     id: string;
     name: string;
@@ -3878,7 +3878,7 @@ export const RichTextSendBox: (props: RichTextSendBoxProps) => JSX.Element;
 
 // @beta
 export interface RichTextSendBoxProps {
-    attachments?: AttachmentMetadataWithProgress[];
+    attachments?: AttachmentMetadataInProgress[];
     autoFocus?: 'sendBoxTextField';
     disabled?: boolean;
     onCancelAttachmentUpload?: (attachmentId: string) => void;
@@ -3954,7 +3954,7 @@ export interface SendBoxErrorBarError {
 // @public
 export interface SendBoxProps {
     // @beta
-    attachments?: AttachmentMetadataWithProgress[];
+    attachments?: AttachmentMetadataInProgress[];
     autoFocus?: 'sendBoxTextField';
     disabled?: boolean;
     // @beta
