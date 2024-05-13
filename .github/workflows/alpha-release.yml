@@ -145,6 +145,7 @@ jobs:
         if: ${{ always() }}
         uses: azure/powershell@v2
         with:
+          azPSVersion: 'latest'
           inlineScript: |
             Get-AzContext
 
@@ -153,12 +154,14 @@ jobs:
         uses: azure/powershell@v2
         with:
           inlineScript: azcopy copy "packages/communication-react/review/beta/*" "https://azuresdkpartnerdrops.blob.core.windows.net/drops/azure-communication-services/react/npm/1.16.0-alphatest"
+          azPSVersion: 'latest'
 
       - name: az storage blob upload through powershell test 2
         if: ${{ always() }}
         uses: azure/powershell@v2
         with:
           inlineScript: azcopy copy "packages/communication-react/review/beta/*" "https://azuresdkpartnerdrops.blob.core.windows.net/drops/azure-communication-services/react/npm/1.16.0-alphatest"
+          azPSVersion: 'latest'
         env:
           AZCOPY_AUTO_LOGIN_TYPE: AZCLI
 
