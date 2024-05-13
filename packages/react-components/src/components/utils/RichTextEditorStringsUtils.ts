@@ -11,14 +11,14 @@ import type { RichTextSendBoxStrings } from '../RichTextEditor/RichTextSendBox';
  */
 export const tableContextMenuStrings = (strings: Partial<RichTextSendBoxStrings>): LocalizedStrings<string> => {
   return {
-    menuNameTableInsert: strings.insertRowOrColumnMenu,
-    menuNameTableInsertAbove: strings.insertRowAboveMenu,
-    menuNameTableInsertBelow: strings.insertRowBelowMenu,
-    menuNameTableInsertLeft: strings.insertColumnLeftMenu,
-    menuNameTableInsertRight: strings.insertColumnRightMenu,
-    menuNameTableDelete: strings.deleteRowOrColumnMenu,
-    menuNameTableDeleteColumn: strings.deleteColumnMenu,
-    menuNameTableDeleteRow: strings.deleteRowMenu,
-    menuNameTableDeleteTable: strings.deleteTableMenu
+    menuNameTableInsert: strings.richTextInsertRowOrColumnMenu,
+    menuNameTableInsertAbove: strings.richTextInsertRowAboveMenu,
+    menuNameTableInsertBelow: strings.richTextInsertRowBelowMenu,
+    menuNameTableInsertLeft: strings.richTextInsertColumnLeftMenu,
+    menuNameTableInsertRight: strings.richTextInsertColumnRightMenu,
+    menuNameTableDelete: strings.richTextDeleteRowOrColumnMenu,
+    menuNameTableDeleteColumn: strings.richTextDeleteColumnMenu,
+    menuNameTableDeleteRow: strings.richTextDeleteRowMenu,
+    menuNameTableDeleteTable: strings.richTextDeleteTableMenu
   };
 };
