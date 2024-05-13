@@ -48,7 +48,7 @@ const getDocs: () => JSX.Element = () => {
       <Heading>Display File Uploads</Heading>
       <DetailedBetaBanner />
       <Description>
-        RichTextSendBox component provides UI for displaying AttachmentMetadataWithProgress in the RichTextSendBox. This
+        RichTextSendBox component provides UI for displaying AttachmentMetadataInProgress in the RichTextSendBox. This
         allows developers to implement a file sharing feature using the pure UI component with minimal effort.
         Developers can write their own attachment upload logic and utilize the UI provided by RichTextSendBox.
       </Description>
@@ -70,11 +70,32 @@ const RichTextSendBoxStory = (args): JSX.Element => {
     <div style={{ width: '31.25rem', maxWidth: '90%' }}>
       <RichTextSendBoxComponent
         disabled={args.disabled}
+        attachments={
+          args.hasAttachments
+            ? [
+                {
+                  id: '1',
+                  name: 'file1.txt',
+                  url: 'https://www.contoso.com/file1.txt',
+                  progress: 1
+                },
+                {
+                  id: '2',
+                  name: 'file2.docx',
+                  url: 'https://www.contoso.com/file2.txt',
+                  progress: 1
+                }
+              ]
+            : undefined
+        }
         systemMessage={args.hasWarning ? args.warningMessage : undefined}
-        onSendMessage={async (message) => {
+        onSendMessage={async (message, options) => {
           timeoutRef.current = setTimeout(() => {
-            alert(`sent message: ${message} `);
+            alert(`sent message: ${message} with options ${JSON.stringify(options)}`);
           }, delayForSendButton);
+        }}
+        onCancelAttachmentUpload={(attachmentId) => {
+          window.alert(`requested to cancel attachment upload for attachment with id: "${attachmentId}"`);
         }}
         onTyping={(): Promise<void> => {
           console.log(`sending typing notifications`);
@@ -96,10 +117,11 @@ export default {
   argTypes: {
     disabled: controlsToAdd.disabled,
     hasWarning: controlsToAdd.isSendBoxWithWarning,
+    hasAttachments: controlsToAdd.isSendBoxWithAttachments,
     warningMessage: controlsToAdd.sendBoxWarningMessage,
     strings: hiddenControl,
     onRenderAttachmentUploads: hiddenControl,
-    attachmentsWithProgress: hiddenControl,
+    attachments: hiddenControl,
     onCancelAttachmentUpload: hiddenControl,
     onSendMessage: hiddenControl,
     onTyping: hiddenControl

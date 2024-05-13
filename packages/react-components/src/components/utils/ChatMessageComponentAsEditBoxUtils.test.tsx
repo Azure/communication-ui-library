@@ -27,7 +27,8 @@ describe('ChatMessageComponentAsEditBoxUtils tests', () => {
     const messageState = getMessageState('', [
       {
         id: 'id1',
-        name: 'Image1'
+        name: 'Image1',
+        url: 'https://example.com/image1.jpg'
       }
     ]);
     expect(messageState).toEqual('OK');

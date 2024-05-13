@@ -40,11 +40,11 @@ describe('AttachmentCardGroup should be rendered properly', () => {
       children: (
         <>
           <_AttachmentCard
-            attachment={{ id: '1', name: 'MockAttachmentCard', extension: 'docx' }}
+            attachment={{ id: '1', name: 'MockAttachmentCard', url: 'mockUrl1' }}
             menuActions={[defaultAttachmentMenuAction]}
           />
           <_AttachmentCard
-            attachment={{ id: '2', name: 'MockSecondAttachmentCard', extension: 'docx' }}
+            attachment={{ id: '2', name: 'MockSecondAttachmentCard', url: 'mockUrl2' }}
             menuActions={[defaultAttachmentMenuAction]}
           />
         </>
