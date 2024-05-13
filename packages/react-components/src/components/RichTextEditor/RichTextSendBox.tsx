@@ -151,7 +151,7 @@ export interface RichTextSendBoxProps {
   /**
    * Callback function used when the send button is clicked.
    */
-  onSendMessage: (content: string, options?: MessageOptions) => Promise<void>;
+  onSendMessage: (content: string) => Promise<void>;
   /**
    * Optional callback called when user is typing
    */
@@ -240,9 +240,6 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
       hasContent ||
       /* @conditional-compile-remove(attachment-upload) */ hasCompletedAttachmentUploads(attachmentsWithProgress)
     ) {
-      const options = {
-        messageType = 'html'
-      };
       onSendMessage(message);
       setContentValue('');
       editorComponentRef.current?.setEmptyContent();
