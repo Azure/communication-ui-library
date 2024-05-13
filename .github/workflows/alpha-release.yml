@@ -110,9 +110,9 @@ jobs:
         env:
           AZCOPY_AUTO_LOGIN_TYPE: AZCLI
 
-      - name: Try upload tarball to blob storage (via az storage extra params)
+      - name: Try upload tarball to blob storage (via az storage blob upload-batch with login)
         if: ${{ always() }}
-        run: az storage blob upload-batch -s "packages/communication-react/review/beta/*" -c "drops/azure-communication-services/react/npm/1.16.0-alphatest" --auth-mode login
+        run: az storage blob upload -s "packages/communication-react/review/beta/*" -c "drops/azure-communication-services/react/npm/1.16.0-alphatest" --account-name azuresdkpartnerdrops --auth-mode login
 
       - name: Try upload tarball to blob storage (via azcopy with login type AZCLI)
         if: ${{ always() }}
