@@ -75,7 +75,7 @@ export const SendBoxPicker = (props: SendBoxPickerProps): JSX.Element => {
       <Suspense fallback={sendBox}>
         <RichTextSendBox
           {...sendBoxProps}
-          onSendMessage={(content) => {
+          onSendMessage={(content: string) => {
             return sendBoxProps.onSendMessage(content, { type: 'html' });
           }}
           autoFocus={autoFocus}
