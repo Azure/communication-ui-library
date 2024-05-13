@@ -410,6 +410,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
   const openChat = useCallback(() => {
     setIsChatOpen(true);
     // timeout is required to give the window time to render the sendbox so we have something to send focus to.
+    // TODO: Update to use richTextEditor
     // TODO: Selecting elements in the DOM via attributes is not stable. We should expose an API from ChatComposite to be able to focus on the sendbox.
     const chatFocusTimeout = setInterval(() => {
       const callWithChatCompositeRootDiv = document.querySelector(`[id="${compositeParentDivId}"]`);
@@ -588,7 +589,14 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
         onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
       />
     ),
-    [chatAdapter, props.attachmentOptions, props.onFetchAvatarPersonaData, props.richTextEditor, theme]
+    [
+      chatAdapter,
+      /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+      props.attachmentOptions,
+      props.onFetchAvatarPersonaData,
+      /* @conditional-compile-remove(rich-text-editor-composite-support) */ props.richTextEditor,
+      theme
+    ]
   );
 
   const sidePaneHeaderRenderer = useCallback(

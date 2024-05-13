@@ -10,6 +10,7 @@ import { Suspense } from 'react';
 import { AttachmentMetadataWithProgress } from '@internal/react-components';
 
 // TODO: Improve lazy loading
+/* @conditional-compile-remove(rich-text-editor-composite-support) */
 const RichTextSendBox = React.lazy(() =>
   import('@internal/react-components').then((module) => ({ default: module.RichTextSendBox }))
 );
@@ -37,9 +38,9 @@ export const SendBoxPicker = (props: SendBoxPickerProps): JSX.Element => {
     autoFocus,
     /* @conditional-compile-remove(rich-text-editor-composite-support) */
     richTextEditor,
-    /* @conditional-compile-remove(file-sharing) */
+    /* @conditional-compile-remove(attachment-upload) */
     attachmentsWithProgress,
-    /* @conditional-compile-remove(file-sharing) */
+    /* @conditional-compile-remove(attachment-upload) */
     onCancelAttachmentUpload
   } = props;
 
@@ -66,7 +67,13 @@ export const SendBoxPicker = (props: SendBoxPickerProps): JSX.Element => {
         onCancelAttachmentUpload={onCancelAttachmentUpload}
       />
     ),
-    [attachmentsWithProgress, autoFocus, onCancelAttachmentUpload, sendBoxProps, sendBoxStyles]
+    [
+      /* @conditional-compile-remove(attachment-upload) */ attachmentsWithProgress,
+      autoFocus,
+      /* @conditional-compile-remove(attachment-upload) */ onCancelAttachmentUpload,
+      sendBoxProps,
+      sendBoxStyles
+    ]
   );
 
   /* @conditional-compile-remove(rich-text-editor-composite-support) */
