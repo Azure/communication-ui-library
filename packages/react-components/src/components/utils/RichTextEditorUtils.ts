@@ -33,7 +33,6 @@ export enum ContentChangedEventSource {
  * For all other cases, the default format applier is used.
  */
 export const borderApplier = (format: BorderFormat, element: HTMLElement, context: ModelToDomContext): void => {
-  HTMLTableCellElement;
   if (element instanceof HTMLTableCellElement) {
     // don't set format for table cell
     // as it will set inline styles for them
@@ -51,8 +50,6 @@ export const borderApplier = (format: BorderFormat, element: HTMLElement, contex
  * For all other cases, it applies the default formats.
  */
 export const dataSetApplier = (format: DatasetFormat, element: HTMLElement, context: ModelToDomContext): void => {
-  HTMLTableCellElement;
-  console.log('dataSetApplier element', element);
   if (element instanceof HTMLTableElement) {
     // don't set editing info for tables
     // as it will set inline styles for them

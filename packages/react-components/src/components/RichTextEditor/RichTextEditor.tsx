@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-import React, { useEffect, useImperativeHandle, useMemo, useRef } from 'react';
+import React, { useCallback, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react';
 import { richTextEditorWrapperStyle, richTextEditorStyle } from '../styles/RichTextEditor.styles';
 import { useTheme } from '../../theming';
 import { RichTextSendBoxStrings } from './RichTextSendBox';
@@ -17,6 +17,7 @@ import { RichTextToolbarPlugin } from './Plugins/RichTextToolbarPlugin';
 import { ContextMenuPlugin } from './Plugins/ContextMenuPlugin';
 import { TableEditContextMenuProvider } from './Plugins/TableEditContextMenuProvider';
 import { borderApplier, dataSetApplier } from '../utils/RichTextEditorUtils';
+import { ContextualMenu, IContextualMenuItem, IContextualMenuProps } from '@fluentui/react';
 
 /**
  * Style props for {@link RichTextEditor}.
@@ -89,6 +90,7 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
   const editor = useRef<IEditor | null>(null);
   const editorDiv = useRef<HTMLDivElement>(null);
   const theme = useTheme();
+  const [contextMenuProps, setContextMenuProps] = useState<IContextualMenuProps | null>(null);
 
   useImperativeHandle(
     ref,
@@ -176,9 +178,24 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     return new TableEditContextMenuProvider();
   }, []);
 
-  useMemo(() => {
+  useEffect(() => {
     tableContextMenuPlugin.updateStrings(strings);
   }, [tableContextMenuPlugin, strings]);
+
+  const onContextMenuRender = useCallback(
+    (container: HTMLElement, items: IContextualMenuItem[], onDismiss: () => void): void => {
+      setContextMenuProps({
+        items: items,
+        target: container,
+        onDismiss: onDismiss
+      });
+    },
+    []
+  );
+
+  const onContextMenuDismiss = useCallback((): void => {
+    setContextMenuProps(null);
+  }, []);
 
   const plugins: EditorPlugin[] = useMemo(() => {
     const contentEdit = new EditPlugin();
@@ -188,7 +205,7 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     const roosterPastePlugin = new PastePlugin(false);
     const placeholderPlugin = new WatermarkPlugin(placeholderText ?? '');
     // contextPlugin and tableEditMenuProvider allow to show insert/delete menu for the table
-    const contextMenuPlugin = new ContextMenuPlugin();
+    const contextMenuPlugin = new ContextMenuPlugin(onContextMenuRender, onContextMenuDismiss);
     return [
       placeholderPlugin,
       keyboardInputPlugin,
@@ -201,7 +218,15 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
       contextMenuPlugin,
       tableContextMenuPlugin
     ];
-  }, [keyboardInputPlugin, placeholderText, updatePlugin, toolbarPlugin, tableContextMenuPlugin]);
+  }, [
+    placeholderText,
+    onContextMenuRender,
+    onContextMenuDismiss,
+    keyboardInputPlugin,
+    updatePlugin,
+    toolbarPlugin,
+    tableContextMenuPlugin
+  ]);
 
   // TODO: check shortcuts plugin
   // TODO-vhuseinova: check that localization/rtl works
@@ -254,6 +279,7 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
           className={richTextEditorStyle(props.styles)}
         />
       </div>
+      {contextMenuProps && <ContextualMenu {...contextMenuProps} />}
     </div>
   );
 });
