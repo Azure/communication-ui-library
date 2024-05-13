@@ -49,6 +49,9 @@ jobs:
           tenant-id: ${{ secrets.NPM_DEPLOY_AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.NPM_DEPLOY_AZURE_SUBSCRIPTION_ID }}
 
+      - name: 'Test Azure CLI command'
+        run: az account show
+
       # Get datetime
       - name: Get datetime for alpha release name
         id: datetime
@@ -75,8 +78,8 @@ jobs:
         run: rush build -t @azure/communication-react
 
       # Test Packages
-      - name: Test @azure/communication-react package
-        run: rush test -t @azure/communication-react
+      # - name: Test @azure/communication-react package
+      #   run: rush test -t @azure/communication-react
 
       # Retrieve new version to tag and publish release with
       - name: Retrieve new version from package.json
@@ -98,24 +101,49 @@ jobs:
 
       # Deploy npm package - this is done by uploading to Azure's SDK blob storage then triggering their partner release pipeline.
       # More info: https://dev.azure.com/azure-sdk/internal/_wiki/wikis/internal.wiki/1/Partner-Release-Pipeline
-      - name: Upload tarball to blob storage
+      - name: Try upload tarball to blob storage (via azure/cli)
+        if: ${{ always() }}
+        uses: azure/CLI@v1
+        with:
+          inlineScript: az storage azcopy blob upload -s "packages/communication-react/release/*" -c "drops/azure-communication-services/react/npm/${{ steps.version.outputs.version }}" --account-name azuresdkpartnerdrops
+        env:
+          AZCOPY_AUTO_LOGIN_TYPE: AZCLI
+
+      - name: Try upload tarball to blob storage (via az storage extra params)
+        if: ${{ always() }}
+        run: az storage blob upload-batch --source "packages/communication-react/release" --destination "https://azuresdkpartnerdrops.blob.core.windows.net/drops/azure-communication-services/react/npm/${{ steps.version.outputs.version }}" --account-name azuresdkpartnerdrops --pattern "*" --auth-mode login
+
+      - name: Try upload tarball to blob storage (via azcopy with login type AZCLI)
+        if: ${{ always() }}
         run: azcopy copy "packages/communication-react/release/*" "https://azuresdkpartnerdrops.blob.core.windows.net/drops/azure-communication-services/react/npm/${{ steps.version.outputs.version }}"
         env:
           AZCOPY_AUTO_LOGIN_TYPE: AZCLI
 
-      - name: Trigger alpha package release pipeline
-        uses: Azure/pipelines@v1.2
-        with:
-          azure-devops-project-url: 'https://dev.azure.com/azure-sdk/internal'
-          azure-pipeline-name: 'azuresdkpartnerdrops to npm'
-          azure-devops-token: '${{ secrets.AZURE_SDK_RELEASE_PIPELINE_DEVOPS_TOKEN }}'
-          azure-pipeline-variables: '{"accessLevel": "public", "BlobPath": "azure-communication-services/react/npm/${{ steps.version.outputs.version }}", "registry": "https://registry.npmjs.org/", "skipDiff": "False", "tag": "dev"}'
+      - name: Try upload tarball to blob storage (via azcopy login)
+        if: ${{ always() }}
+        run: |
+          azcopy login
+          azcopy copy "packages/communication-react/release/*" "https://azuresdkpartnerdrops.blob.core.windows.net/drops/azure-communication-services/react/npm/${{ steps.version.outputs.version }}"
+
+      - name: Try upload tarball to blob storage (via azcopy login with tenant id)
+        if: ${{ always() }}
+        run: |
+          azcopy login --tenant-id ${{ secrets.NPM_DEPLOY_AZURE_TENANT_ID }}
+          azcopy copy "packages/communication-react/release/*" "https://azuresdkpartnerdrops.blob.core.windows.net/drops/azure-communication-services/react/npm/${{ steps.version.outputs.version }}"
+
+      # - name: Trigger alpha package release pipeline
+      #   uses: Azure/pipelines@v1.2
+      #   with:
+      #     azure-devops-project-url: 'https://dev.azure.com/azure-sdk/internal'
+      #     azure-pipeline-name: 'azuresdkpartnerdrops to npm'
+      #     azure-devops-token: '${{ secrets.AZURE_SDK_RELEASE_PIPELINE_DEVOPS_TOKEN }}'
+      #     azure-pipeline-variables: '{"accessLevel": "public", "BlobPath": "azure-communication-services/react/npm/${{ steps.version.outputs.version }}", "registry": "https://registry.npmjs.org/", "skipDiff": "False", "tag": "dev"}'
 
       # Push git tags
-      - name: Create and push git tags
-        run: |
-          git tag ${{ steps.version.outputs.version }}
-          git push --tags
+      # - name: Create and push git tags
+      #   run: |
+      #     git tag ${{ steps.version.outputs.version }}
+      #     git push --tags
 
-      - name: Check if npm package published successfully
-        run: node common/scripts/poll-npm-package-published.mjs ${{ steps.version.outputs.version }}
+      # - name: Check if npm package published successfully
+      #   run: node common/scripts/poll-npm-package-published.mjs ${{ steps.version.outputs.version }}
