@@ -1,13 +1,14 @@
 name: Manual Alpha Package Release
 
 on:
+  push:
   # Allows running workflow manually from the GitHub Actions tab
   workflow_dispatch:
 
 # cancel workflow when a newer version of the workflow is triggered on the same github ref
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+# concurrency:
+#   group: ${{ github.workflow }}-${{ github.ref }}
+#   cancel-in-progress: true
 
 jobs:
   build-and-deploy:
@@ -111,7 +112,7 @@ jobs:
 
       - name: Try upload tarball to blob storage (via az storage extra params)
         if: ${{ always() }}
-        run: az storage blob upload-batch --source "packages/communication-react/release" --destination "https://azuresdkpartnerdrops.blob.core.windows.net/drops/azure-communication-services/react/npm/${{ steps.version.outputs.version }}" --account-name azuresdkpartnerdrops --pattern "*" --auth-mode login
+        run: az storage blob upload-batch -s "packages/communication-react/release" -c "drops/azure-communication-services/react/npm/${{ steps.version.outputs.version }}" --auth-mode login
 
       - name: Try upload tarball to blob storage (via azcopy with login type AZCLI)
         if: ${{ always() }}
@@ -119,11 +120,11 @@ jobs:
         env:
           AZCOPY_AUTO_LOGIN_TYPE: AZCLI
 
-      - name: Try upload tarball to blob storage (via azcopy login)
-        if: ${{ always() }}
-        run: |
-          azcopy login
-          azcopy copy "packages/communication-react/release/*" "https://azuresdkpartnerdrops.blob.core.windows.net/drops/azure-communication-services/react/npm/${{ steps.version.outputs.version }}"
+      # - name: Try upload tarball to blob storage (via azcopy login)
+      #   if: ${{ always() }}
+      #   run: |
+      #     azcopy login
+      #     azcopy copy "packages/communication-react/release/*" "https://azuresdkpartnerdrops.blob.core.windows.net/drops/azure-communication-services/react/npm/${{ steps.version.outputs.version }}"
 
       - name: Try upload tarball to blob storage (via azcopy login with tenant id)
         if: ${{ always() }}
