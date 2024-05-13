@@ -9,7 +9,6 @@ import React, { useMemo } from 'react';
 /* @conditional-compile-remove(spotlight) */
 import { KeyboardEvent, useCallback } from 'react';
 import { OnRenderAvatarCallback, VideoStreamOptions, CreateVideoStreamViewResult } from '../types';
-/* @conditional-compile-remove(reaction) */
 import { Reaction } from '../types';
 import { LocalVideoCameraCycleButton, LocalVideoCameraCycleButtonProps } from './LocalVideoCameraButton';
 import { StreamMedia } from './StreamMedia';
@@ -21,8 +20,8 @@ import { VideoTile, VideoTileStylesProps } from './VideoTile';
 import { RaisedHand } from '../types';
 /* @conditional-compile-remove(spotlight) */
 import { useTheme } from '../theming';
-/* @conditional-compile-remove(reaction) */
 import { ReactionResources } from '../types/ReactionTypes';
+import { MeetingReactionOverlay } from './MeetingReactionOverlay';
 /* @conditional-compile-remove(spotlight) */
 import { useVideoTileContextualMenuProps } from './VideoGallery/useVideoTileContextualMenuProps';
 /* @conditional-compile-remove(spotlight) */
@@ -49,6 +48,7 @@ export const _LocalVideoTile = React.memo(
     localVideoViewOptions?: VideoStreamOptions;
     onRenderAvatar?: OnRenderAvatarCallback;
     showLabel: boolean;
+    alwaysShowLabelBackground?: boolean;
     showMuteIndicator?: boolean;
     showCameraSwitcherInLocalPreview?: boolean;
     localVideoCameraCycleButtonProps?: LocalVideoCameraCycleButtonProps;
@@ -57,7 +57,6 @@ export const _LocalVideoTile = React.memo(
     styles?: VideoTileStylesProps;
     personaMinSize?: number;
     raisedHand?: RaisedHand;
-    /* @conditional-compile-remove(reaction) */
     reaction?: Reaction;
     /* @conditional-compile-remove(spotlight) */
     spotlightedParticipantUserIds?: string[];
@@ -75,7 +74,6 @@ export const _LocalVideoTile = React.memo(
     drawerMenuHostId?: string;
     /* @conditional-compile-remove(spotlight) */
     strings?: VideoGalleryStrings;
-    /* @conditional-compile-remove(reaction) */
     reactionResources?: ReactionResources;
   }) => {
     const {
@@ -87,6 +85,7 @@ export const _LocalVideoTile = React.memo(
       renderElement,
       userId,
       showLabel,
+      alwaysShowLabelBackground,
       displayName,
       initialsName,
       onRenderAvatar,
@@ -97,7 +96,6 @@ export const _LocalVideoTile = React.memo(
       localVideoCameraSwitcherLabel,
       localVideoSelectedDescription,
       raisedHand,
-      /* @conditional-compile-remove(reaction) */
       reaction,
       /* @conditional-compile-remove(spotlight) */
       isSpotlighted,
@@ -113,7 +111,6 @@ export const _LocalVideoTile = React.memo(
       menuKind,
       /* @conditional-compile-remove(spotlight) */
       strings,
-      /* @conditional-compile-remove(reaction) */
       reactionResources
     } = props;
 
@@ -231,6 +228,11 @@ export const _LocalVideoTile = React.memo(
       showCameraSwitcherInLocalPreview
     ]);
 
+    const reactionOverlay =
+      reactionResources !== undefined ? (
+        <MeetingReactionOverlay overlayMode="grid-tiles" reaction={reaction} reactionResources={reactionResources} />
+      ) : undefined;
+
     return (
       <Stack
         className={mergeStyles({ width: '100%', height: '100%' })}
@@ -241,6 +243,7 @@ export const _LocalVideoTile = React.memo(
           userId={userId}
           renderElement={renderVideoStreamElement}
           showLabel={showLabel}
+          alwaysShowLabelBackground={alwaysShowLabelBackground}
           displayName={displayName}
           initialsName={initialsName}
           styles={videoTileStyles}
@@ -249,8 +252,6 @@ export const _LocalVideoTile = React.memo(
           showMuteIndicator={showMuteIndicator}
           personaMinSize={props.personaMinSize}
           raisedHand={raisedHand}
-          /* @conditional-compile-remove(reaction) */
-          reaction={reaction}
           /* @conditional-compile-remove(spotlight) */
           isSpotlighted={isSpotlighted}
           {...videoTileContextualMenuProps}
@@ -260,8 +261,7 @@ export const _LocalVideoTile = React.memo(
               convertContextualMenuItemsToDrawerMenuItemProps(contextualMenuProps, () => setDrawerMenuItemProps([]))
             )
           }
-          /* @conditional-compile-remove(reaction) */
-          reactionResources={reactionResources}
+          overlay={reactionOverlay}
         >
           {
             /* @conditional-compile-remove(spotlight) */ drawerMenuItemProps.length > 0 && (

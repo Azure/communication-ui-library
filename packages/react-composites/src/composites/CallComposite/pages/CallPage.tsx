@@ -26,7 +26,7 @@ import { networkReconnectTileSelector } from '../selectors/networkReconnectTileS
 import { reduceCallControlsForMobile } from '../utils';
 import { MobileChatSidePaneTabHeaderProps } from '../../common/TabHeader';
 import { SidePaneRenderer } from '../components/SidePane/SidePaneProvider';
-/* @conditional-compile-remove(capabilities) */
+
 import { CapabilitiesChangeNotificationBarProps } from '../components/CapabilitiesChangedNotificationBar';
 import { DtmfDialpadPage } from './DtmfDialpadPage';
 import { showDtmfDialer } from '../utils/MediaGalleryUtils';
@@ -49,12 +49,15 @@ export interface CallPageProps {
   latestErrors: ActiveErrorMessage[];
   onDismissError: (error: ActiveErrorMessage) => void;
   galleryLayout: VideoGalleryLayout;
-  /* @conditional-compile-remove(capabilities) */
   capabilitiesChangedNotificationBarProps?: CapabilitiesChangeNotificationBarProps;
   onUserSetGalleryLayoutChange?: (layout: VideoGalleryLayout) => void;
   userSetOverflowGalleryPosition?: 'Responsive' | 'horizontalTop';
   onSetUserSetOverflowGalleryPosition?: (position: 'Responsive' | 'horizontalTop') => void;
   onCloseChatPane?: () => void;
+  pinnedParticipants?: string[];
+  setPinnedParticipants?: (pinnedParticipants: string[]) => void;
+  compositeAudioContext?: AudioContext;
+  disableAutoShowDtmfDialer?: boolean;
 }
 
 /**
@@ -71,7 +74,11 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
     onUserSetGalleryLayoutChange,
     userSetOverflowGalleryPosition = 'Responsive',
     onSetUserSetOverflowGalleryPosition,
-    onCloseChatPane
+    onCloseChatPane,
+    pinnedParticipants,
+    setPinnedParticipants,
+    compositeAudioContext,
+    disableAutoShowDtmfDialer = false
   } = props;
 
   // To use useProps to get these states, we need to create another file wrapping Call,
@@ -87,7 +94,9 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
 
   const callees = useSelector(getTargetCallees);
   const renderDtmfDialerFromStart = showDtmfDialer(callees, remoteParticipantsConnected);
-  const [dtmfDialerPresent, setDtmfDialerPresent] = useState<boolean>(renderDtmfDialerFromStart);
+  const [dtmfDialerPresent, setDtmfDialerPresent] = useState<boolean>(
+    renderDtmfDialerFromStart && disableAutoShowDtmfDialer
+  );
 
   const strings = useLocale().strings.call;
 
@@ -111,10 +120,10 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
           mobileChatTabHeader={props.mobileChatTabHeader}
           latestErrors={props.latestErrors}
           onDismissError={props.onDismissError}
-          /* @conditional-compile-remove(capabilities) */
           capabilitiesChangedNotificationBarProps={props.capabilitiesChangedNotificationBarProps}
           onSetDialpadPage={() => setDtmfDialerPresent(!dtmfDialerPresent)}
           dtmfDialerPresent={dtmfDialerPresent}
+          compositeAudioContext={compositeAudioContext}
         />
       );
     } else {
@@ -126,16 +135,18 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
           onFetchAvatarPersonaData={onFetchAvatarPersonaData}
           remoteVideoTileMenuOptions={options?.remoteVideoTileMenuOptions}
           drawerMenuHostId={drawerMenuHostId}
-          /* @conditional-compile-remove(click-to-call) */
           localVideoTileOptions={options?.localVideoTile}
           userSetOverflowGalleryPosition={userSetOverflowGalleryPosition}
           userSetGalleryLayout={galleryLayout}
+          pinnedParticipants={pinnedParticipants}
+          setPinnedParticipants={setPinnedParticipants}
           /* @conditional-compile-remove(spotlight) */
           setIsPromptOpen={setIsPromptOpen}
           /* @conditional-compile-remove(spotlight) */
           setPromptProps={setPromptProps}
           /* @conditional-compile-remove(spotlight) */
           hideSpotlightButtons={options?.spotlight?.hideSpotlightButtons}
+          videoTilesOptions={options?.videoTilesOptions}
         />
       );
     }
@@ -154,7 +165,6 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
           options: callControlOptions,
           increaseFlyoutItemSize: mobileView
         }}
-        /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(close-captions) */
         onFetchAvatarPersonaData={onFetchAvatarPersonaData}
         mobileView={mobileView}
         modalLayerHostId={props.modalLayerHostId}
@@ -178,7 +188,6 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
         onUserSetOverflowGalleryPositionChange={onSetUserSetOverflowGalleryPosition}
         onUserSetGalleryLayoutChange={onUserSetGalleryLayoutChange}
         userSetGalleryLayout={galleryLayout}
-        /* @conditional-compile-remove(capabilities) */
         capabilitiesChangedNotificationBarProps={props.capabilitiesChangedNotificationBarProps}
         onSetDialpadPage={() => setDtmfDialerPresent(!dtmfDialerPresent)}
         dtmfDialerPresent={dtmfDialerPresent}

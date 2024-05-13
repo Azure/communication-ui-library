@@ -35,11 +35,27 @@
     },
     {
       "commandKind": "global",
+      "name": "sb",
+      "summary": "SHORTNAME: switch-flavor:beta",
+      "description": "SHORTNAME: switch-flavor:beta",
+      "shellCommand": "rush switch-flavor:beta",
+      "safeForSimultaneousRushProcesses": true
+    },
+    {
+      "commandKind": "global",
       "name": "switch-flavor:beta-release",
       "summary": "Switch flavor to beta release mode (strip out in-progress features)",
       "description": "Every build and test command will run based on beta version.",
       "autoinstallerName": "rush-cpy",
       "shellCommand": "rush switch-flavor:beta && cpy --flat common/config/env/beta-release.env common/config/env --rename .env",
+      "safeForSimultaneousRushProcesses": true
+    },
+    {
+      "commandKind": "global",
+      "name": "sbr",
+      "summary": "SHORTNAME: switch-flavor:beta-release",
+      "description": "SHORTNAME: switch-flavor:beta-release",
+      "shellCommand": "rush switch-flavor:beta-release",
       "safeForSimultaneousRushProcesses": true
     },
     {
@@ -53,6 +69,14 @@
     },
     {
       "commandKind": "global",
+      "name": "ss",
+      "summary": "SHORTNAME: switch-flavor:stable",
+      "description": "SHORTNAME: switch-flavor:stable",
+      "shellCommand": "rush switch-flavor:stable",
+      "safeForSimultaneousRushProcesses": true
+    },
+    {
+      "commandKind": "global",
       "name": "update:stable",
       "summary": "Update dependencies for stable version.",
       "description": "Update dependencies for stable version.",
@@ -61,10 +85,34 @@
     },
     {
       "commandKind": "global",
+      "name": "update:all-flavors",
+      "summary": "Update dependencies for all flavors",
+      "description": "Update dependencies for all flavors.",
+      "shellCommand": "rush update && rush update:stable",
+      "safeForSimultaneousRushProcesses": true
+    },
+    {
+      "commandKind": "global",
       "name": "update:full",
       "summary": "Update dependencies for all build flavours to latest SemVers.",
-      "description": "Updates dependendencies to latest SemVer for all build flavors. This update is more aggressive than a routine `rush update`.",
-      "shellCommand": "rush update -p --variant stable --full && rush update -p --full",
+      "description": "Deprecated; dependencies need to be carefully updated using `rush upgrade-interactive` to avoid breaks",
+      "shellCommand": "echo This command has been deprecated. Please use rush update:all-flavors.",
+      "safeForSimultaneousRushProcesses": true
+    },
+    {
+      "commandKind": "global",
+      "name": "u",
+      "summary": "SHORTNAME: update",
+      "description": "SHORTNAME: update",
+      "shellCommand": "rush update",
+      "safeForSimultaneousRushProcesses": true
+    },
+    {
+      "commandKind": "global",
+      "name": "us",
+      "summary": "SHORTNAME: update:stable",
+      "description": "SHORTNAME: update:stable",
+      "shellCommand": "rush update:stable",
       "safeForSimultaneousRushProcesses": true
     },
     {
@@ -77,10 +125,26 @@
     },
     {
       "commandKind": "global",
+      "name": "baf",
+      "summary": "SHORTNAME: build:all-flavors",
+      "description": "SHORTNAME: build:all-flavors",
+      "shellCommand": "rush build:all-flavors",
+      "safeForSimultaneousRushProcesses": true
+    },
+    {
+      "commandKind": "global",
       "name": "build-api:all-flavors",
       "summary": "Build all packages in all flavors, excluding samples and storybook, to update api files",
       "description": "Build all packages in all flavors in one command, excluding samples and storybook, to update api files. This command will switch current flavor to beta.",
       "shellCommand": "(rush switch-flavor:stable && rush rebuild -t @azure/communication-react) || rush switch-flavor:beta && rush rebuild -t @azure/communication-react",
+      "safeForSimultaneousRushProcesses": true
+    },
+    {
+      "commandKind": "global",
+      "name": "bapi",
+      "summary": "SHORTNAME: build-api:all-flavors",
+      "description": "SHORTNAME: build-api:all-flavors",
+      "shellCommand": "rush build-api:all-flavors",
       "safeForSimultaneousRushProcesses": true
     },
     {
@@ -104,6 +168,25 @@
       "name": "build",
       "summary": "Build all projects that haven't been built, or have changed since they were last built",
       "description": "This command is similar to \"rush rebuild\", except this will only return non-zero when error happens not warnings.",
+      "safeForSimultaneousRushProcesses": false,
+      "enableParallelism": true,
+      "ignoreDependencyOrder": false,
+      "ignoreMissingScript": false,
+      "allowWarningsInSuccessfulBuild": true
+    },
+    {
+      "commandKind": "global",
+      "name": "b",
+      "summary": "SHORTNAME: build",
+      "description": "SHORTNAME: build",
+      "shellCommand": "rush build",
+      "safeForSimultaneousRushProcesses": true
+    },
+    {
+      "commandKind": "bulk",
+      "name": "build:minify",
+      "summary": "Primiarily used for samples. Build all projects that haven't been built, or have changed since they were last built using minified code",
+      "description": "This command is similar to \"rush build\", except this will minify sample projects.",
       "safeForSimultaneousRushProcesses": false,
       "enableParallelism": true,
       "ignoreDependencyOrder": false,

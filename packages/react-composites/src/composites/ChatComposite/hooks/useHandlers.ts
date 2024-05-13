@@ -8,7 +8,7 @@ import { ReactElement } from 'react';
 import memoizeOne from 'memoize-one';
 import { ChatAdapter } from '../adapter/ChatAdapter';
 import { useAdapter } from '../adapter/ChatAdapterProvider';
-/* @conditional-compile-remove(file-sharing) */
+/* @conditional-compile-remove(attachment-upload) */
 import { AttachmentMetadata } from '@internal/react-components';
 
 /**
@@ -33,21 +33,25 @@ const createCompositeHandlers = memoizeOne(
     onUpdateMessage: (
       messageId: string,
       content: string,
-      /* @conditional-compile-remove(file-sharing) */
+      /* @conditional-compile-remove(attachment-upload) */
       options?: {
         metadata?: Record<string, string>;
-        /* @conditional-compile-remove(file-sharing) */
+        /* @conditional-compile-remove(attachment-upload) */
         attachmentMetadata?: AttachmentMetadata[];
       }
     ) => {
-      const metadata = options?.metadata;
-      /* @conditional-compile-remove(file-sharing) */
-      const updatedOptions = options?.attachmentMetadata ? { ...options.attachmentMetadata } : {};
+      let metadata = undefined;
+      /* @conditional-compile-remove(attachment-upload) */
+      metadata = options?.metadata;
+      /* @conditional-compile-remove(attachment-upload) */
+      const updatedOptions = {
+        attachmentMetadata: options?.attachmentMetadata
+      };
       return adapter.updateMessage(
         messageId,
         content,
         metadata,
-        /* @conditional-compile-remove(file-sharing) */ updatedOptions
+        /* @conditional-compile-remove(attachment-upload) */ updatedOptions
       );
     },
     onDeleteMessage: adapter.deleteMessage

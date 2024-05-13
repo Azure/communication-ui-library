@@ -19,11 +19,13 @@ import { CallClientOptions } from '@azure/communication-calling';
 import { CallDirection } from '@azure/communication-calling';
 import { CallEndReason } from '@azure/communication-calling';
 import { CallerInfo } from '@azure/communication-calling';
+import { CallInfo } from '@azure/communication-calling';
 import { CallKind } from '@azure/communication-calling';
 import { CallState as CallState_2 } from '@azure/communication-calling';
 import { CallSurvey } from '@azure/communication-calling';
 import { CallSurveyResponse } from '@azure/communication-calling';
 import { CapabilitiesChangeInfo } from '@azure/communication-calling';
+import { CaptionsKind } from '@azure/communication-calling';
 import { CaptionsResultType } from '@azure/communication-calling';
 import { ChatClient } from '@azure/communication-chat';
 import { ChatClientOptions } from '@azure/communication-chat';
@@ -91,6 +93,8 @@ import { StartCallOptions } from '@azure/communication-calling';
 import { StartCaptionsOptions } from '@azure/communication-calling';
 import { TeamsCall } from '@azure/communication-calling';
 import { TeamsCallAgent } from '@azure/communication-calling';
+import { TeamsCallInfo } from '@azure/communication-calling';
+import { TeamsMeetingIdLocator } from '@azure/communication-calling';
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { Theme } from '@fluentui/react';
 import { TransferEventArgs } from '@azure/communication-calling';
@@ -111,15 +115,6 @@ export interface AcceptedTransfer {
 export interface ActiveErrorMessage {
     timestamp?: Date;
     type: ErrorType;
-}
-
-// @beta
-export interface ActiveFileUpload {
-    error?: SendBoxErrorBarError;
-    filename: string;
-    id: string;
-    progress: number;
-    uploadComplete?: boolean;
 }
 
 // @public
@@ -151,13 +146,91 @@ export type AreParamEqual<A extends (props: any) => JSX.Element | undefined, B e
 export type AreTypeEqual<A, B> = A extends B ? (B extends A ? true : false) : false;
 
 // @beta
-export interface AttachmentMetadata {
-    extension: string;
-    id: string;
+export interface AttachmentDownloadOptions {
+    // (undocumented)
+    actionsForAttachment: (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[];
+}
+
+// @beta
+export interface AttachmentMenuAction {
+    // (undocumented)
+    icon: JSX.Element;
+    // (undocumented)
     name: string;
     // (undocumented)
-    payload?: Record<string, string>;
-    url: string;
+    onClick: (attachment: AttachmentMetadata) => Promise<void>;
+}
+
+// @beta
+export interface AttachmentMetadata {
+    extension?: string;
+    id: string;
+    name: string;
+    url?: string;
+}
+
+// @beta
+export interface AttachmentMetadataWithProgress extends AttachmentMetadata {
+    error?: AttachmentProgressError;
+    progress?: number;
+}
+
+// @beta
+export interface AttachmentOptions {
+    // (undocumented)
+    downloadOptions?: AttachmentDownloadOptions;
+    // (undocumented)
+    uploadOptions?: AttachmentUploadOptions;
+}
+
+// @beta
+export interface AttachmentProgressError {
+    // (undocumented)
+    message: string;
+}
+
+// @beta
+export type AttachmentRemovalHandler = (attachmentId: string) => void;
+
+// @beta
+export type AttachmentSelectionHandler = (attachmentUploads: AttachmentUploadTask[]) => void;
+
+// @internal (undocumented)
+export interface _AttachmentUploadAdapter {
+    // (undocumented)
+    cancelUpload: (id: string) => void;
+    // (undocumented)
+    clearUploads: () => void;
+    // (undocumented)
+    registerActiveUploads: (files: File[]) => AttachmentUploadTask[];
+    // (undocumented)
+    registerCompletedUploads: (metadata: AttachmentMetadata[]) => AttachmentUploadTask[];
+    // (undocumented)
+    updateUploadMetadata: (id: string, metadata: AttachmentMetadata) => void;
+    // (undocumented)
+    updateUploadProgress: (id: string, progress: number) => void;
+    // (undocumented)
+    updateUploadStatusMessage: (id: string, errorMessage: string) => void;
+}
+
+// @beta (undocumented)
+export interface AttachmentUploadOptions {
+    disableMultipleUploads?: boolean;
+    handleAttachmentRemoval?: AttachmentRemovalHandler;
+    handleAttachmentSelection: AttachmentSelectionHandler;
+    supportedMediaTypes?: string[];
+}
+
+// @internal
+export type _AttachmentUploadsUiState = Record<string, AttachmentMetadataWithProgress>;
+
+// @beta
+export interface AttachmentUploadTask {
+    file?: File;
+    notifyUploadCompleted: (id: string, url: string) => void;
+    notifyUploadFailed: (message: string) => void;
+    notifyUploadProgressChanged: (value: number) => void;
+    taskId: string;
 }
 
 // @public
@@ -192,7 +265,7 @@ export type AzureCommunicationCallWithChatAdapterArgs = {
     userId: CommunicationUserIdentifier;
     displayName: string;
     credential: CommunicationTokenCredential;
-    locator: CallAndChatLocator | TeamsMeetingLinkLocator;
+    locator: CallAndChatLocator | TeamsMeetingLinkLocator | /** @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator;
     alternateCallerId?: string;
     callAdapterOptions?: AzureCommunicationCallAdapterOptions;
 };
@@ -349,7 +422,6 @@ export interface CallAdapterCallOperations {
     leaveCall(forEveryone?: boolean): Promise<void>;
     lowerHand(): Promise<void>;
     mute(): Promise<void>;
-    // @beta
     onReactionClick(reaction: Reaction_2): Promise<void>;
     raiseHand(): Promise<void>;
     removeParticipant(userId: string): Promise<void>;
@@ -371,7 +443,6 @@ export interface CallAdapterCallOperations {
     stopScreenShare(): Promise<void>;
     stopSpotlight(userIds?: string[]): Promise<void>;
     stopVideoBackgroundEffects(): Promise<void>;
-    // @beta
     submitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined>;
     unmute(): Promise<void>;
     updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void;
@@ -387,6 +458,7 @@ export type CallAdapterClientState = {
     devices: DeviceManagerState;
     endedCall?: CallState;
     isTeamsCall: boolean;
+    isTeamsMeeting: boolean;
     isRoomsCall: boolean;
     latestErrors: AdapterErrors;
     alternateCallerId?: string;
@@ -413,7 +485,7 @@ export interface CallAdapterDeviceManagement {
 }
 
 // @public
-export type CallAdapterLocator = TeamsMeetingLinkLocator | GroupCallLocator | /* @conditional-compile-remove(rooms) */ RoomCallLocator | /* @conditional-compile-remove(teams-adhoc-call) */ /* @conditional-compile-remove(PSTN-calls) */ CallParticipantsLocator;
+export type CallAdapterLocator = TeamsMeetingLinkLocator | GroupCallLocator | RoomCallLocator | /* @conditional-compile-remove(teams-adhoc-call) */ /* @conditional-compile-remove(PSTN-calls) */ CallParticipantsLocator | /* @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator;
 
 // @public
 export type CallAdapterState = CallAdapterUiState & CallAdapterClientState;
@@ -620,6 +692,8 @@ export type CallCompositeOptions = {
     onEnvironmentInfoTroubleshootingClick?: () => void;
     remoteVideoTileMenuOptions?: RemoteVideoTileMenuOptions;
     localVideoTile?: boolean | LocalVideoTileOptions;
+    videoTilesOptions?: VideoTilesOptions;
+    disableAutoShowDtmfDialer?: boolean;
     galleryOptions?: {
         layout?: VideoGalleryLayout;
     };
@@ -646,7 +720,7 @@ export type CallCompositeOptions = {
 };
 
 // @public
-export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configuration' | /* @conditional-compile-remove(PSTN-calls) */ 'hold' | 'joinCallFailedDueToNoNetwork' | 'leftCall' | 'leaving' | 'lobby' | 'removedFromCall' | /* @conditional-compile-remove(unsupported-browser) */ 'unsupportedEnvironment' | /* @conditional-compile-remove(call-transfer) */ 'transferring';
+export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configuration' | /* @conditional-compile-remove(PSTN-calls) */ 'hold' | 'joinCallFailedDueToNoNetwork' | 'leftCall' | 'leaving' | 'lobby' | 'removedFromCall' | /* @conditional-compile-remove(unsupported-browser) */ 'unsupportedEnvironment' | 'transferring';
 
 // @public
 export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcons> {
@@ -658,7 +732,7 @@ export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcon
 
 // @public
 export interface CallCompositeStrings {
-    addSpotlightParticipantListMenuLabel: string;
+    addSpotlightMenuLabel: string;
     blurBackgroundEffectButtonLabel?: string;
     blurBackgroundTooltip?: string;
     callRejectedMoreDetails?: string;
@@ -704,6 +778,7 @@ export interface CallCompositeStrings {
     configurationPageTitle: string;
     configurationPageVideoEffectsButtonLabel?: string;
     copyInviteLinkActionedAriaLabel: string;
+    copyInviteLinkButtonActionedLabel: string;
     copyInviteLinkButtonLabel: string;
     defaultPlaceHolder: string;
     dialpadCloseModalButtonAriaLabel: string;
@@ -718,6 +793,9 @@ export interface CallCompositeStrings {
     dtmfDialerMoreButtonLabelOff?: string;
     dtmfDialerMoreButtonLabelOn?: string;
     dtmfDialpadPlaceholderText: string;
+    endCallConfirmButtonLabel?: string;
+    endCallConfirmDialogContent?: string;
+    endCallConfirmDialogTitle?: string;
     endOfSurveyText: string;
     exitSpotlightButtonLabel: string;
     exitSpotlightButtonTooltip: string;
@@ -725,10 +803,15 @@ export interface CallCompositeStrings {
     failedToJoinCallDueToNoNetworkTitle: string;
     failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails?: string;
     failedToJoinTeamsMeetingReasonAccessDeniedTitle: string;
+    hangUpCancelButtonLabel?: string;
     holdScreenLabel: string;
+    invalidMeetingIdentifier: string;
     inviteToRoomRemovedDetails?: string;
     inviteToRoomRemovedTitle: string;
     learnMore: string;
+    leaveConfirmButtonLabel?: string;
+    leaveConfirmDialogContent?: string;
+    leaveConfirmDialogTitle?: string;
     leavingCallTitle?: string;
     leftCallMoreDetails?: string;
     leftCallTitle: string;
@@ -797,7 +880,7 @@ export interface CallCompositeStrings {
     selectedPeopleButtonLabel: string;
     soundLabel: string;
     spokenLanguageStrings?: SpokenLanguageStrings;
-    spotlightLimitReachedParticipantListMenuTitle: string;
+    spotlightLimitReachedMenuTitle: string;
     spotlightPrompt: SpotlightPromptStrings;
     starRatingAriaLabel: string;
     starSurveyFiveStarText: string;
@@ -811,15 +894,14 @@ export interface CallCompositeStrings {
     startCaptionsButtonOnLabel?: string;
     startCaptionsButtonTooltipOffContent?: string;
     startCaptionsButtonTooltipOnContent?: string;
-    startSpotlightParticipantListMenuLabel: string;
+    startSpotlightMenuLabel: string;
     stopAllSpotlightMenuLabel: string;
-    stopSpotlightOnSelfParticipantListMenuLabel: string;
-    stopSpotlightParticipantListMenuLabel: string;
+    stopSpotlightMenuLabel: string;
+    stopSpotlightOnSelfMenuLabel: string;
     surveyConfirmButtonLabel: string;
     surveyIssues: SurveyIssues;
-    SurveyIssuesHeadingStrings: SurveyIssuesHeadingStrings;
+    surveyIssuesHeadingStrings: SurveyIssuesHeadingStrings;
     surveySkipButtonLabel: string;
-    surveyTextboxDefaultText: string;
     surveyTitle: string;
     tagsSurveyHelperText: string;
     tagsSurveyQuestion: string;
@@ -916,6 +998,7 @@ export interface CallingTheme {
         callRedDarker: string;
         iconWhite: string;
         raiseHandGold: string;
+        videoTileLabelBackgroundLight: string;
     };
 }
 
@@ -959,10 +1042,10 @@ export interface CallState {
     endTime: Date | undefined;
     hideAttendeeNames?: boolean;
     id: string;
+    info?: TeamsCallInfo | /* @conditional-compile-remove(calling-beta-sdk) */ CallInfo;
     isMuted: boolean;
     isScreenSharingOn: boolean;
     kind: CallKind;
-    // @beta
     localParticipantReaction?: ReactionState;
     localRecording: LocalRecordingCallFeatureState;
     localVideoStreams: LocalVideoStreamState[];
@@ -986,7 +1069,7 @@ export interface CallState {
     transfer: TransferFeature;
 }
 
-// @beta
+// @public
 export interface CallSurveyImprovementSuggestions {
     audioRating?: string;
     overallRating?: string;
@@ -1006,10 +1089,10 @@ export interface CallWithChatAdapterManagement {
     addParticipant(participant: CommunicationUserIdentifier): Promise<void>;
     allowUnsupportedBrowserVersion(): void;
     askDevicePermission(constrain: PermissionConstraints): Promise<void>;
-    // @beta (undocumented)
-    cancelFileUpload: (id: string) => void;
-    // @beta (undocumented)
-    clearFileUploads: () => void;
+    // @internal (undocumented)
+    cancelUpload: (id: string) => void;
+    // @internal (undocumented)
+    clearUploads: () => void;
     createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void | CreateVideoStreamViewResult>;
     deleteMessage(messageId: string): Promise<void>;
     disposeLocalVideoStreamView(): Promise<void>;
@@ -1028,16 +1111,15 @@ export interface CallWithChatAdapterManagement {
     loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
     lowerHand(): Promise<void>;
     mute(): Promise<void>;
-    // @beta
     onReactionClick(reaction: Reaction_2): Promise<void>;
     queryCameras(): Promise<VideoDeviceInfo[]>;
     queryMicrophones(): Promise<AudioDeviceInfo[]>;
     querySpeakers(): Promise<AudioDeviceInfo[]>;
     raiseHand(): Promise<void>;
-    // @beta (undocumented)
-    registerActiveFileUploads: (files: File[]) => FileUploadManager[];
-    // @beta (undocumented)
-    registerCompletedFileUploads: (metadata: AttachmentMetadata[]) => FileUploadManager[];
+    // @internal (undocumented)
+    registerActiveUploads: (files: File[]) => AttachmentUploadTask[];
+    // @internal (undocumented)
+    registerCompletedUploads: (metadata: AttachmentMetadata[]) => AttachmentUploadTask[];
     removeParticipant(userId: string): Promise<void>;
     // @beta
     removeParticipant(participant: CommunicationIdentifier): Promise<void>;
@@ -1047,6 +1129,8 @@ export interface CallWithChatAdapterManagement {
     resumeCall: () => Promise<void>;
     sendDtmfTone: (dtmfTone: DtmfTone_2) => Promise<void>;
     sendMessage(content: string, options?: SendMessageOptions): Promise<void>;
+    // @beta
+    sendMessageWithAttachments(content: string, attachments: AttachmentMetadata[]): Promise<void>;
     sendReadReceipt(chatMessageId: string): Promise<void>;
     sendTypingIndicator(): Promise<void>;
     setCamera(sourceInfo: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void>;
@@ -1067,18 +1151,17 @@ export interface CallWithChatAdapterManagement {
     stopScreenShare(): Promise<void>;
     stopSpotlight(userIds?: string[]): Promise<void>;
     stopVideoBackgroundEffects(): Promise<void>;
-    // @beta
     submitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined>;
     unmute(): Promise<void>;
     updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void;
-    // @beta (undocumented)
-    updateFileUploadErrorMessage: (id: string, errorMessage: string) => void;
-    // @beta (undocumented)
-    updateFileUploadMetadata: (id: string, metadata: AttachmentMetadata) => void;
-    // @beta (undocumented)
-    updateFileUploadProgress: (id: string, progress: number) => void;
     updateMessage(messageId: string, content: string, metadata?: Record<string, string>): Promise<void>;
     updateSelectedVideoBackgroundEffect(selectedVideoBackground: VideoBackgroundEffect): void;
+    // @internal (undocumented)
+    updateUploadMetadata: (id: string, metadata: AttachmentMetadata) => void;
+    // @internal (undocumented)
+    updateUploadProgress: (id: string, progress: number) => void;
+    // @internal (undocumented)
+    updateUploadStatusMessage: (id: string, errorMessage: string) => void;
 }
 
 // @public
@@ -1138,6 +1221,8 @@ export interface CallWithChatAdapterSubscriptions {
     // (undocumented)
     off(event: 'chatError', listener: (e: AdapterError) => void): void;
     // (undocumented)
+    off(event: 'chatInitialized', listener: ChatInitializedListener): void;
+    // (undocumented)
     on(event: 'callEnded', listener: CallEndedListener): void;
     // (undocumented)
     on(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
@@ -1187,12 +1272,14 @@ export interface CallWithChatAdapterSubscriptions {
     on(event: 'chatParticipantsRemoved', listener: ParticipantsRemovedListener): void;
     // (undocumented)
     on(event: 'chatError', listener: (e: AdapterError) => void): void;
+    // (undocumented)
+    on(event: 'chatInitialized', listener: ChatInitializedListener): void;
 }
 
 // @public
 export interface CallWithChatAdapterUiState {
-    // @beta
-    fileUploads?: FileUploadsUiState;
+    // @internal
+    _attachmentUploads?: _AttachmentUploadsUiState;
     isLocalPreviewMicrophoneEnabled: boolean;
     page: CallCompositePage;
     // @beta
@@ -1209,10 +1296,10 @@ export interface CallWithChatClientState {
     environmentInfo?: EnvironmentInfo;
     hideAttendeeNames?: boolean;
     isTeamsCall: boolean;
+    isTeamsMeeting: boolean;
     latestCallErrors: AdapterErrors;
     latestChatErrors: AdapterErrors;
     onResolveVideoEffectDependency?: () => Promise<VideoBackgroundEffectsDependency>;
-    // @beta
     reactions?: ReactionResources;
     selectedVideoBackgroundEffect?: VideoBackgroundEffect;
     userId: CommunicationIdentifierKind;
@@ -1302,7 +1389,7 @@ export type CallWithChatCompositeIcons = {
 // @public
 export type CallWithChatCompositeOptions = {
     callControls?: boolean | CallWithChatControlOptions;
-    fileSharing?: FileSharingOptions;
+    attachmentOptions?: AttachmentOptions;
     deviceChecks?: DeviceCheckOptions;
     onPermissionsTroubleshootingClick?: (permissionsState: {
         camera: PermissionState;
@@ -1356,6 +1443,7 @@ export interface CallWithChatCompositeStrings {
     chatButtonTooltipOpen: string;
     chatPaneTitle: string;
     copyInviteLinkActionedAriaLabel: string;
+    copyInviteLinkButtonActionedLabel: string;
     copyInviteLinkButtonLabel: string;
     dialpadCloseModalButtonAriaLabel: string;
     dialpadModalAriaLabel: string;
@@ -1376,7 +1464,9 @@ export interface CallWithChatCompositeStrings {
     openDtmfDialpadLabel: string;
     peopleButtonLabel: string;
     peopleButtonTooltipClose: string;
+    peopleButtonTooltipCloseAriaLabel: string;
     peopleButtonTooltipOpen: string;
+    peopleButtonTooltipOpenAriaLabel: string;
     peoplePaneAddPeopleButtonLabel: string;
     peoplePaneSubTitle: string;
     peoplePaneTitle: string;
@@ -1395,7 +1485,7 @@ export interface CallWithChatControlOptions extends CommonCallControlOptions {
 }
 
 // @public
-export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'selectedMicrophoneChanged' | 'selectedSpeakerChanged' | /* @conditional-compile-remove(close-captions) */ 'isCaptionsActiveChanged' | /* @conditional-compile-remove(close-captions) */ 'captionsReceived' | /* @conditional-compile-remove(close-captions) */ 'isCaptionLanguageChanged' | /* @conditional-compile-remove(close-captions) */ 'isSpokenLanguageChanged' | /* @conditional-compile-remove(capabilities) */ 'capabilitiesChanged' | /* @conditional-compile-remove(spotlight) */ 'spotlightChanged' | 'messageReceived' | 'messageEdited' | 'messageDeleted' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved';
+export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'selectedMicrophoneChanged' | 'selectedSpeakerChanged' | 'isCaptionsActiveChanged' | 'captionsReceived' | 'isCaptionLanguageChanged' | 'isSpokenLanguageChanged' | 'capabilitiesChanged' | /* @conditional-compile-remove(spotlight) */ 'spotlightChanged' | 'messageReceived' | 'messageEdited' | 'messageDeleted' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved' | 'chatInitialized';
 
 // @beta
 export const CameraAndMicrophoneSitePermissions: (props: CameraAndMicrophoneSitePermissionsProps) => JSX.Element;
@@ -1492,6 +1582,10 @@ export interface CapabilitiesFeatureState {
 
 // @public
 export interface CapabilityChangedNotificationStrings {
+    hideAttendeeNames?: {
+        hideAttendeeNameAttendee?: string;
+        hideAttendeeNamePresenter?: string;
+    };
     shareScreen?: {
         lostDueToRoleChangeToAttendee?: string;
         grantedDueToRoleChangeToPresenter?: string;
@@ -1577,6 +1671,7 @@ export interface CaptionLanguageStrings {
 // @public (undocumented)
 export interface CaptionsCallFeatureState {
     captions: CaptionsInfo[];
+    captionsKind: CaptionsKind;
     currentCaptionLanguage: string;
     currentSpokenLanguage: string;
     isCaptionsFeatureActive: boolean;
@@ -1607,7 +1702,7 @@ export type CaptionsReceivedListener = (event: {
 }) => void;
 
 // @public
-export type ChatAdapter = ChatAdapterThreadManagement & AdapterState<ChatAdapterState> & Disposable_2 & ChatAdapterSubscribers & FileUploadAdapter;
+export type ChatAdapter = ChatAdapterThreadManagement & AdapterState<ChatAdapterState> & Disposable_2 & ChatAdapterSubscribers & _AttachmentUploadAdapter;
 
 // @public
 export type ChatAdapterState = ChatAdapterUiState & ChatCompositeClientState;
@@ -1643,6 +1738,7 @@ export interface ChatAdapterThreadManagement {
     removeParticipant(userId: string): Promise<void>;
     removeResourceFromCache(resourceDetails: ResourceDetails): void;
     sendMessage(content: string, options?: SendMessageOptions): Promise<void>;
+    sendMessageWithAttachments(content: string, attachments: AttachmentMetadata[]): Promise<void>;
     sendReadReceipt(chatMessageId: string): Promise<void>;
     sendTypingIndicator(): Promise<void>;
     setTopic(topicName: string): Promise<void>;
@@ -1654,11 +1750,11 @@ export interface ChatAdapterThreadManagement {
 // @public
 export type ChatAdapterUiState = {
     error?: Error;
-    fileUploads?: FileUploadsUiState;
+    _attachmentUploads?: _AttachmentUploadsUiState;
 };
 
 // @public
-export type ChatAttachmentType = 'unknown' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'image' | /* @conditional-compile-remove(file-sharing) */ 'file';
+export type ChatAttachmentType = 'unknown' | 'image' | /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ 'file';
 
 // @public
 export type ChatBaseSelectorProps = {
@@ -1718,8 +1814,7 @@ export type ChatCompositeOptions = {
     participantPane?: boolean;
     topic?: boolean;
     autoFocus?: 'sendBoxTextField';
-    fileSharing?: FileSharingOptions;
-    richTextEditor?: boolean | RichTextEditorOptions;
+    attachmentOptions?: AttachmentOptions;
 };
 
 // @public
@@ -1734,7 +1829,7 @@ export interface ChatCompositeProps extends BaseCompositeProps<ChatCompositeIcon
 // @public
 export interface ChatCompositeStrings {
     chatListHeader: string;
-    uploadFile: string;
+    uploadAttachment: string;
 }
 
 // @public
@@ -1756,7 +1851,7 @@ export type ChatErrors = {
 };
 
 // @public
-export type ChatErrorTarget = 'ChatClient.createChatThread' | 'ChatClient.deleteChatThread' | 'ChatClient.getChatThreadClient' | 'ChatClient.listChatThreads' | 'ChatClient.off' | 'ChatClient.on' | 'ChatClient.startRealtimeNotifications' | 'ChatClient.stopRealtimeNotifications' | 'ChatThreadClient.addParticipants' | 'ChatThreadClient.deleteMessage' | 'ChatThreadClient.getMessage' | 'ChatThreadClient.getProperties' | 'ChatThreadClient.listMessages' | 'ChatThreadClient.listParticipants' | 'ChatThreadClient.listReadReceipts' | 'ChatThreadClient.removeParticipant' | 'ChatThreadClient.sendMessage' | 'ChatThreadClient.sendReadReceipt' | 'ChatThreadClient.sendTypingNotification' | 'ChatThreadClient.updateMessage' | /* @conditional-compile-remove(chat-beta-sdk) */ 'ChatThreadClient.updateProperties' | 'ChatThreadClient.updateTopic';
+export type ChatErrorTarget = 'ChatClient.createChatThread' | 'ChatClient.deleteChatThread' | 'ChatClient.getChatThreadClient' | 'ChatClient.listChatThreads' | 'ChatClient.off' | 'ChatClient.on' | 'ChatClient.startRealtimeNotifications' | 'ChatClient.stopRealtimeNotifications' | 'ChatThreadClient.addParticipants' | 'ChatThreadClient.deleteMessage' | 'ChatThreadClient.getMessage' | 'ChatThreadClient.getProperties' | 'ChatThreadClient.listMessages' | 'ChatThreadClient.listParticipants' | 'ChatThreadClient.listReadReceipts' | 'ChatThreadClient.removeParticipant' | 'ChatThreadClient.sendMessage' | 'ChatThreadClient.sendReadReceipt' | 'ChatThreadClient.sendTypingNotification' | 'ChatThreadClient.updateMessage' | /* @conditional-compile-remove(chat-beta-sdk) */ 'ChatThreadClient.updateProperties' | 'ChatThreadClient.updateTopic' | /* @conditional-compile-remove(chat-beta-sdk) */ 'ChatThreadClient.uploadImage' | /* @conditional-compile-remove(chat-beta-sdk) */ 'ChatThreadClient.deleteImage';
 
 // @public
 export type ChatHandlers = {
@@ -1774,9 +1869,16 @@ export type ChatHandlers = {
 };
 
 // @public
+export type ChatInitializedListener = (event: {
+    adapter: CallWithChatAdapter;
+}) => void;
+
+// @public
 export interface ChatMessage extends MessageCommon {
     // (undocumented)
     attached?: MessageAttachedStatus;
+    // @beta
+    attachments?: AttachmentMetadata[];
     // (undocumented)
     clientMessageId?: string;
     // (undocumented)
@@ -1789,8 +1891,6 @@ export interface ChatMessage extends MessageCommon {
     editedOn?: Date;
     // (undocumented)
     failureReason?: string;
-    // @beta
-    files?: AttachmentMetadata[];
     // (undocumented)
     messageType: 'chat';
     metadata?: Record<string, string>;
@@ -1882,7 +1982,9 @@ export type CommonCallControlOptions = {
     cameraButton?: boolean | /* @conditional-compile-remove(PSTN-calls) */ {
         disabled: boolean;
     };
-    endCallButton?: boolean;
+    endCallButton?: boolean | /* @conditional-compile-remove(end-call-options) */ {
+        hangUpForEveryone?: false | 'endCallOptions';
+    };
     microphoneButton?: boolean | /* @conditional-compile-remove(PSTN-calls) */ {
         disabled: boolean;
     };
@@ -1913,6 +2015,7 @@ export type CommonCallControlOptions = {
         disabled: boolean;
     };
     exitSpotlightButton?: boolean;
+    captionsButton?: boolean;
 };
 
 // @public
@@ -1943,7 +2046,7 @@ export interface CommonCallingHandlers {
     onLowerHand: () => Promise<void>;
     // (undocumented)
     onRaiseHand: () => Promise<void>;
-    // @beta (undocumented)
+    // (undocumented)
     onReactionClick: (reaction: Reaction_2) => Promise<void>;
     // (undocumented)
     onRemoveParticipant(userId: string): Promise<void>;
@@ -2128,7 +2231,6 @@ export interface ComponentStrings {
     ParticipantList: ParticipantListStrings;
     participantsButton: ParticipantsButtonStrings;
     raiseHandButton: RaiseHandButtonStrings;
-    // @beta
     reactionButton: ReactionButtonStrings;
     richTextSendBox: RichTextSendBoxStrings;
     screenShareButton: ScreenShareButtonStrings;
@@ -2416,8 +2518,10 @@ export const DEFAULT_COMPONENT_ICONS: {
     RaiseHandContextualMenuItem: React_2.JSX.Element;
     LowerHandContextualMenuItem: React_2.JSX.Element;
     ReactionButtonIcon: React_2.JSX.Element;
-    CancelFileUpload: React_2.JSX.Element;
-    DownloadFile: React_2.JSX.Element;
+    CancelAttachmentUpload: React_2.JSX.Element;
+    DownloadAttachment: React_2.JSX.Element;
+    OpenAttachment: React_2.JSX.Element;
+    AttachmentMoreMenu: React_2.JSX.Element;
     DataLossPreventionProhibited: React_2.JSX.Element;
     EditBoxCancel: React_2.JSX.Element;
     EditBoxSubmit: React_2.JSX.Element;
@@ -2492,7 +2596,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     SurveyStarIconFilled: React_2.JSX.Element;
     StartSpotlightContextualMenuItem: React_2.JSX.Element;
     StopSpotlightContextualMenuItem: React_2.JSX.Element;
-    VideoSpotlighted: React_2.JSX.Element;
+    VideoTileSpotlighted: React_2.JSX.Element;
     RichTextBoldButtonIcon: React_2.JSX.Element;
     RichTextItalicButtonIcon: React_2.JSX.Element;
     RichTextUnderlineButtonIcon: React_2.JSX.Element;
@@ -2503,6 +2607,10 @@ export const DEFAULT_COMPONENT_ICONS: {
     RichTextDividerIcon: React_2.JSX.Element;
     RichTextEditorButtonIcon: React_2.JSX.Element;
     RichTextEditorButtonIconFilled: React_2.JSX.Element;
+    RichTextInsertTableRegularIcon: React_2.JSX.Element;
+    RichTextInsertTableFilledIcon: React_2.JSX.Element;
+    RichTextTableInsertMenuIcon: React_2.JSX.Element;
+    RichTextTableDeleteMenuIcon: React_2.JSX.Element;
 };
 
 // @public
@@ -2605,8 +2713,10 @@ export const DEFAULT_COMPOSITE_ICONS: {
     MoreDrawerSpeakers?: JSX.Element | undefined;
     ChatMessageOptions: React_2.JSX.Element;
     ControlButtonParticipantsContextualMenuItem: React_2.JSX.Element;
-    CancelFileUpload: React_2.JSX.Element;
-    DownloadFile: React_2.JSX.Element;
+    CancelAttachmentUpload: React_2.JSX.Element;
+    DownloadAttachment: React_2.JSX.Element;
+    OpenAttachment: React_2.JSX.Element;
+    AttachmentMoreMenu: React_2.JSX.Element;
     DataLossPreventionProhibited: React_2.JSX.Element;
     ErrorBarCallVideoRecoveredBySystem: React_2.JSX.Element;
     ErrorBarCallVideoStoppedBySystem: React_2.JSX.Element;
@@ -2649,7 +2759,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     SurveyStarIconFilled: React_2.JSX.Element;
     StartSpotlightContextualMenuItem: React_2.JSX.Element;
     StopSpotlightContextualMenuItem: React_2.JSX.Element;
-    VideoSpotlighted: React_2.JSX.Element;
+    VideoTileSpotlighted: React_2.JSX.Element;
     RichTextBoldButtonIcon: React_2.JSX.Element;
     RichTextItalicButtonIcon: React_2.JSX.Element;
     RichTextUnderlineButtonIcon: React_2.JSX.Element;
@@ -2660,7 +2770,14 @@ export const DEFAULT_COMPOSITE_ICONS: {
     RichTextDividerIcon: React_2.JSX.Element;
     RichTextEditorButtonIcon: React_2.JSX.Element;
     RichTextEditorButtonIconFilled: React_2.JSX.Element;
+    RichTextInsertTableRegularIcon: React_2.JSX.Element;
+    RichTextInsertTableFilledIcon: React_2.JSX.Element;
+    RichTextTableInsertMenuIcon: React_2.JSX.Element;
+    RichTextTableDeleteMenuIcon: React_2.JSX.Element;
 };
+
+// @beta
+export const defaultAttachmentMenuAction: AttachmentMenuAction;
 
 // @beta
 export interface DeviceCheckOptions {
@@ -2750,6 +2867,7 @@ export type DialpadMode = 'dtmf' | 'dialer';
 export interface DialpadProps {
     dialpadMode?: DialpadMode;
     disableDtmfPlayback?: boolean;
+    dtmfAudioContext?: AudioContext;
     longPressTrigger?: LongPressTrigger;
     onChange?: (input: string) => void;
     onClickDialpadButton?: (buttonValue: string, buttonIndex: number) => void;
@@ -2808,13 +2926,16 @@ export const EndCallButton: (props: EndCallButtonProps) => JSX.Element;
 
 // @public
 export interface EndCallButtonProps extends ControlBarButtonProps {
-    onHangUp?: () => Promise<void>;
+    enableEndCallMenu?: boolean;
+    onHangUp?: (forEveryone?: boolean) => Promise<void>;
     strings?: EndCallButtonStrings;
 }
 
 // @public
 export interface EndCallButtonStrings {
+    endCallOption?: string;
     label: string;
+    leaveOption?: string;
     tooltipContent?: string;
 }
 
@@ -2868,70 +2989,6 @@ export interface ErrorBarStrings {
 
 // @public
 export type ErrorType = keyof ErrorBarStrings;
-
-// @beta
-export interface FileDownloadError {
-    errorMessage: string;
-}
-
-// @beta
-export type FileDownloadHandler = (userId: string, fileMetadata: AttachmentMetadata) => Promise<URL | FileDownloadError>;
-
-// @beta
-export interface FileSharingOptions {
-    accept?: string;
-    downloadHandler?: FileDownloadHandler;
-    multiple?: boolean;
-    uploadHandler: FileUploadHandler;
-}
-
-// @beta (undocumented)
-export interface FileUploadAdapter {
-    // (undocumented)
-    cancelFileUpload: (id: string) => void;
-    // (undocumented)
-    clearFileUploads: () => void;
-    // (undocumented)
-    registerActiveFileUploads: (files: File[]) => FileUploadManager[];
-    // (undocumented)
-    registerCompletedFileUploads: (metadata: AttachmentMetadata[]) => FileUploadManager[];
-    // (undocumented)
-    updateFileUploadErrorMessage: (id: string, errorMessage: string) => void;
-    // (undocumented)
-    updateFileUploadMetadata: (id: string, metadata: AttachmentMetadata) => void;
-    // (undocumented)
-    updateFileUploadProgress: (id: string, progress: number) => void;
-}
-
-// @beta
-export type FileUploadError = {
-    message: string;
-    timestamp: number;
-};
-
-// @beta
-export type FileUploadHandler = (userId: string, fileUploads: FileUploadManager[]) => void;
-
-// @beta
-export interface FileUploadManager {
-    file?: File;
-    id: string;
-    notifyUploadCompleted: (metadata: AttachmentMetadata) => void;
-    notifyUploadFailed: (message: string) => void;
-    notifyUploadProgressChanged: (value: number) => void;
-}
-
-// @beta
-export interface FileUploadState {
-    error?: FileUploadError;
-    filename: string;
-    id: string;
-    metadata?: AttachmentMetadata;
-    progress: number;
-}
-
-// @beta
-export type FileUploadsUiState = Record<string, FileUploadState>;
 
 // @public
 export const FluentThemeProvider: (props: FluentThemeProviderProps) => JSX.Element;
@@ -3251,7 +3308,7 @@ export type MessageEditedListener = MessageReceivedListener;
 // @public
 export type MessageProps = {
     message: Message;
-    strings: MessageThreadStrings;
+    strings: MessageThreadStrings & /* @conditional-compile-remove(rich-text-editor) */ Partial<RichTextStrings>;
     messageContainerStyle?: ComponentSlotStyle;
     showDate?: boolean;
     disableEditing?: boolean;
@@ -3329,17 +3386,18 @@ export type MessageThreadProps = {
     onRenderJumpToNewMessageButton?: (newMessageButtonProps: JumpToNewMessageButtonProps) => JSX.Element;
     onLoadPreviousChatMessages?: (messagesToLoad: number) => Promise<boolean>;
     onRenderMessage?: (messageProps: MessageProps, messageRenderer?: MessageRenderer) => JSX.Element;
-    onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
+    onRenderAttachmentDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
     onUpdateMessage?: UpdateMessageCallback;
     onCancelEditMessage?: CancelEditCallback;
     onDeleteMessage?: (messageId: string) => Promise<void>;
     onSendMessage?: (content: string) => Promise<void>;
     disableEditing?: boolean;
     strings?: Partial<MessageThreadStrings>;
-    fileDownloadHandler?: FileDownloadHandler;
+    attachmentOptions?: AttachmentOptions;
     onDisplayDateTimeString?: (messageDate: Date) => string;
     mentionOptions?: MentionOptions;
     inlineImageOptions?: InlineImageOptions;
+    richTextEditor?: boolean;
 };
 
 // @public
@@ -3352,9 +3410,10 @@ export type MessageThreadSelector = (state: ChatClientState, props: ChatBaseSele
 // @public
 export interface MessageThreadStrings {
     actionMenuMoreOptions?: string;
+    attachmentCardGroupMessage: string;
     blockedWarningLinkText: string;
     blockedWarningText: string;
-    downloadFile: string;
+    downloadAttachment: string;
     editBoxCancelButton: string;
     editBoxPlaceholderText: string;
     editBoxSubmitButton: string;
@@ -3362,7 +3421,6 @@ export interface MessageThreadStrings {
     editedTag: string;
     editMessage: string;
     failToSendTag?: string;
-    fileCardGroupMessage: string;
     friday: string;
     liveAuthorIntro: string;
     messageContentAriaText: string;
@@ -3372,6 +3430,7 @@ export interface MessageThreadStrings {
     monday: string;
     newMessagesIndicator: string;
     noDisplayNameSub: string;
+    openAttachment: string;
     participantJoined: string;
     participantLeft: string;
     removeMessage: string;
@@ -3480,7 +3539,7 @@ export interface NetworkDiagnosticsState {
     latest: LatestNetworkDiagnostics;
 }
 
-// @beta
+// @public
 export type OnFetchProfileCallback = (userId: string, defaultProfile?: Profile) => Promise<Profile | undefined>;
 
 // @public
@@ -3693,7 +3752,7 @@ export interface PPTLiveCallFeatureState {
     isActive: boolean;
 }
 
-// @beta
+// @public
 export type Profile = {
     displayName?: string;
 };
@@ -3738,20 +3797,20 @@ export interface RaiseHandCallFeature {
     raisedHands: RaisedHandState[];
 }
 
-// @beta
+// @public
 export type Reaction = {
     reactionType: string;
     receivedOn: Date;
 };
 
-// @beta
+// @public
 export interface ReactionButtonProps extends ControlBarButtonProps {
     onReactionClick: (reaction: string) => Promise<void>;
     reactionResources: ReactionResources;
     strings?: Partial<ReactionButtonStrings>;
 }
 
-// @beta
+// @public
 export interface ReactionButtonStrings {
     applauseReactionTooltipContent?: string;
     ariaLabel: string;
@@ -3764,7 +3823,7 @@ export interface ReactionButtonStrings {
     tooltipDisabledContent?: string;
 }
 
-// @beta
+// @public
 export interface ReactionResources {
     applauseReaction?: ReactionSprite;
     heartReaction?: ReactionSprite;
@@ -3773,14 +3832,13 @@ export interface ReactionResources {
     surprisedReaction?: ReactionSprite;
 }
 
-// @beta
+// @public
 export type ReactionSprite = {
     url: string;
     frameCount: number;
-    size?: number;
 };
 
-// @beta
+// @public
 export type ReactionState = {
     reactionMessage: ReactionMessage;
     receivedOn: Date;
@@ -3810,7 +3868,6 @@ export interface RemoteParticipantState {
     isMuted: boolean;
     isSpeaking: boolean;
     raisedHand?: RaisedHandState;
-    // @beta
     reactionState?: ReactionState;
     role?: ParticipantRole;
     spotlight?: SpotlightState;
@@ -3824,7 +3881,6 @@ export interface RemoteParticipantState {
 export interface RemoteVideoStreamState {
     id: number;
     isAvailable: boolean;
-    // @beta
     isReceiving: boolean;
     mediaStreamType: MediaStreamType;
     streamSize?: {
@@ -3853,33 +3909,45 @@ export type ResourceFetchResult = {
 };
 
 // @beta
-export interface RichTextEditorOptions {
-}
-
-// @beta
 export const RichTextSendBox: (props: RichTextSendBoxProps) => JSX.Element;
 
 // @beta
 export interface RichTextSendBoxProps {
-    activeFileUploads?: ActiveFileUpload[];
+    attachmentsWithProgress?: AttachmentMetadataWithProgress[];
+    autoFocus?: 'sendBoxTextField';
     disabled?: boolean;
-    onCancelFileUpload?: (fileId: string) => void;
-    onRenderFileUploads?: () => JSX.Element;
+    onCancelAttachmentUpload?: (attachmentId: string) => void;
     onSendMessage: (content: string) => Promise<void>;
+    onTyping?: () => Promise<void>;
     strings?: Partial<RichTextSendBoxStrings>;
     systemMessage?: string;
 }
 
 // @beta
-export interface RichTextSendBoxStrings extends SendBoxStrings {
-    boldTooltip: string;
-    bulletListTooltip: string;
-    decreaseIndentTooltip: string;
-    increaseIndentTooltip: string;
-    italicTooltip: string;
-    numberListTooltip: string;
+export interface RichTextSendBoxStrings extends RichTextStrings, SendBoxStrings {
+}
+
+// @beta
+export interface RichTextStrings {
+    richTextBoldTooltip: string;
+    richTextBulletListTooltip: string;
+    richTextDecreaseIndentTooltip: string;
+    richTextDeleteColumnMenu: string;
+    richTextDeleteRowMenu: string;
+    richTextDeleteRowOrColumnMenu: string;
+    richTextDeleteTableMenu: string;
     richTextFormatButtonTooltip: string;
-    underlineTooltip: string;
+    richTextIncreaseIndentTooltip: string;
+    richTextInsertColumnLeftMenu: string;
+    richTextInsertColumnRightMenu: string;
+    richTextInsertRowAboveMenu: string;
+    richTextInsertRowBelowMenu: string;
+    richTextInsertRowOrColumnMenu: string;
+    richTextInsertTableMenuTitle: string;
+    richTextInsertTableTooltip: string;
+    richTextItalicTooltip: string;
+    richTextNumberListTooltip: string;
+    richTextUnderlineTooltip: string;
 }
 
 // @public
@@ -3921,15 +3989,15 @@ export interface SendBoxErrorBarError {
 // @public
 export interface SendBoxProps {
     // @beta
-    activeFileUploads?: ActiveFileUpload[];
+    attachmentsWithProgress?: AttachmentMetadataWithProgress[];
     autoFocus?: 'sendBoxTextField';
     disabled?: boolean;
     // @beta
     mentionLookupOptions?: MentionLookupOptions;
     // @beta
-    onCancelFileUpload?: (fileId: string) => void;
+    onCancelAttachmentUpload?: (attachmentId: string) => void;
     // @beta
-    onRenderFileUploads?: () => JSX.Element;
+    onRenderAttachmentUploads?: () => JSX.Element;
     onRenderIcon?: (isHover: boolean) => JSX.Element;
     onRenderSystemMessage?: (systemMessage: string | undefined) => React_2.ReactElement;
     onSendMessage?: (content: string) => Promise<void>;
@@ -3948,9 +4016,10 @@ export type SendBoxSelector = (state: ChatClientState, props: ChatBaseSelectorPr
 
 // @public
 export interface SendBoxStrings {
-    fileUploadsPendingError: string;
+    attachmentMoreMenu: string;
+    attachmentUploadsPendingError: string;
     placeholderText: string;
-    removeFile: string;
+    removeAttachment: string;
     sendButtonAriaLabel: string;
     textTooLong: string;
     uploadCompleted: string;
@@ -4072,12 +4141,12 @@ export interface SpokenLanguageStrings {
     'zh-tw': string;
 }
 
-// @beta
+// @public
 export type Spotlight = {
     spotlightedOrderPosition?: number;
 };
 
-// @beta
+// @public
 export interface SpotlightCallFeatureState {
     localParticipantSpotlight?: SpotlightState;
     maxParticipantsToSpotlight: number;
@@ -4090,13 +4159,15 @@ export type SpotlightChangedListener = (args: {
     removed: SpotlightedParticipant[];
 }) => void;
 
-// @beta
+// @public
 export interface SpotlightPromptStrings {
     startSpotlightCancelButtonLabel: string;
     startSpotlightConfirmButtonLabel: string;
     startSpotlightHeading: string;
     startSpotlightOnSelfText: string;
     startSpotlightText: string;
+    stopAllSpotlightHeading: string;
+    stopAllSpotlightText: string;
     stopSpotlightCancelButtonLabel: string;
     stopSpotlightConfirmButtonLabel: string;
     stopSpotlightHeading: string;
@@ -4106,7 +4177,7 @@ export interface SpotlightPromptStrings {
     stopSpotlightText: string;
 }
 
-// @beta
+// @public
 export interface SpotlightState {
     spotlightedOrderPosition?: number;
 }
@@ -4177,7 +4248,7 @@ export interface StreamMediaProps {
     videoStreamElement: HTMLElement | null;
 }
 
-// @beta
+// @public
 export interface SurveyIssues {
     // (undocumented)
     audioRating: {
@@ -4223,7 +4294,7 @@ export interface SurveyIssues {
     };
 }
 
-// @beta
+// @public
 export interface SurveyIssuesHeadingStrings {
     // (undocumented)
     audioRating: string;
@@ -4263,7 +4334,7 @@ export interface TeamsCallAdapter extends CommonCallAdapter {
 export type TeamsCallAdapterArgs = {
     userId: MicrosoftTeamsUserIdentifier;
     credential: CommunicationTokenCredential;
-    locator: TeamsMeetingLinkLocator | /* @conditional-compile-remove(teams-adhoc-call) */ /* @conditional-compile-remove(PSTN-calls) */ CallParticipantsLocator;
+    locator: TeamsMeetingLinkLocator | /* @conditional-compile-remove(teams-adhoc-call) */ /* @conditional-compile-remove(PSTN-calls) */ CallParticipantsLocator | /* @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator;
     options?: TeamsAdapterOptions;
 };
 
@@ -4392,13 +4463,13 @@ export type UpdateMessageCallback = (messageId: string, content: string, options
 }) => Promise<void>;
 
 // @public
-export const useAzureCommunicationCallAdapter: (args: Partial<AzureCommunicationCallAdapterArgs | AzureCommunicationOutboundCallAdapterArgs>, afterCreate?: ((adapter: CallAdapter) => Promise<CallAdapter>) | undefined, beforeDispose?: ((adapter: CallAdapter) => Promise<void>) | undefined) => CallAdapter | undefined;
+export const useAzureCommunicationCallAdapter: (args: Partial<AzureCommunicationCallAdapterArgs | AzureCommunicationOutboundCallAdapterArgs>, afterCreate?: (adapter: CallAdapter) => Promise<CallAdapter>, beforeDispose?: (adapter: CallAdapter) => Promise<void>) => CallAdapter | undefined;
 
 // @public
-export const useAzureCommunicationCallWithChatAdapter: (args: Partial<AzureCommunicationCallWithChatAdapterArgs>, afterCreate?: ((adapter: CallWithChatAdapter) => Promise<CallWithChatAdapter>) | undefined, beforeDispose?: ((adapter: CallWithChatAdapter) => Promise<void>) | undefined) => CallWithChatAdapter | undefined;
+export const useAzureCommunicationCallWithChatAdapter: (args: Partial<AzureCommunicationCallWithChatAdapterArgs>, afterCreate?: (adapter: CallWithChatAdapter) => Promise<CallWithChatAdapter>, beforeDispose?: (adapter: CallWithChatAdapter) => Promise<void>) => CallWithChatAdapter | undefined;
 
 // @public
-export const useAzureCommunicationChatAdapter: (args: Partial<AzureCommunicationChatAdapterArgs>, afterCreate?: ((adapter: ChatAdapter) => Promise<ChatAdapter>) | undefined, beforeDispose?: ((adapter: ChatAdapter) => Promise<void>) | undefined) => ChatAdapter | undefined;
+export const useAzureCommunicationChatAdapter: (args: Partial<AzureCommunicationChatAdapterArgs>, afterCreate?: (adapter: ChatAdapter) => Promise<ChatAdapter>, beforeDispose?: (adapter: ChatAdapter) => Promise<void>) => ChatAdapter | undefined;
 
 // @public
 export const useCall: () => Call | undefined;
@@ -4422,13 +4493,13 @@ export const useDeviceManager: () => StatefulDeviceManager | undefined;
 export const usePropsFor: <Component extends (props: any) => JSX.Element>(component: Component, type?: 'calling' | 'chat') => ComponentProps<Component>;
 
 // @public
-export const useSelector: <ParamT extends Selector | undefined>(selector: ParamT, selectorProps?: (ParamT extends Selector ? Parameters<ParamT>[1] : undefined) | undefined, type?: 'calling' | 'chat') => ParamT extends Selector ? ReturnType<ParamT> : undefined;
+export const useSelector: <ParamT extends Selector | undefined>(selector: ParamT, selectorProps?: ParamT extends Selector ? Parameters<ParamT>[1] : undefined, type?: 'calling' | 'chat') => ParamT extends Selector ? ReturnType<ParamT> : undefined;
 
 // @beta
 export const useTeamsCall: () => undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall;
 
 // @beta
-export const useTeamsCallAdapter: (args: Partial<TeamsCallAdapterArgs>, afterCreate?: ((adapter: TeamsCallAdapter) => Promise<TeamsCallAdapter>) | undefined, beforeDispose?: ((adapter: TeamsCallAdapter) => Promise<void>) | undefined) => TeamsCallAdapter | undefined;
+export const useTeamsCallAdapter: (args: Partial<TeamsCallAdapterArgs>, afterCreate?: (adapter: TeamsCallAdapter) => Promise<TeamsCallAdapter>, beforeDispose?: (adapter: TeamsCallAdapter) => Promise<void>) => TeamsCallAdapter | undefined;
 
 // @beta
 export const useTeamsCallAgent: () => undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCallAgent;
@@ -4496,7 +4567,6 @@ export type VideoGalleryLayout = 'default' | 'floatingLocalVideo' | 'speaker' | 
 // @public
 export interface VideoGalleryLocalParticipant extends VideoGalleryParticipant {
     raisedHand?: RaisedHand;
-    // @beta
     reaction?: Reaction;
 }
 
@@ -4532,13 +4602,12 @@ export interface VideoGalleryProps {
     onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
     onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
     onStartLocalSpotlight?: () => Promise<void>;
-    onStartRemoteSpotlight?: (userIds?: string[]) => Promise<void>;
+    onStartRemoteSpotlight?: (userIds: string[]) => Promise<void>;
     onStopLocalSpotlight?: () => Promise<void>;
-    onStopRemoteSpotlight?: (userIds?: string[]) => Promise<void>;
+    onStopRemoteSpotlight?: (userIds: string[]) => Promise<void>;
     onUnpinParticipant?: (userId: string) => void;
     overflowGalleryPosition?: OverflowGalleryPosition;
     pinnedParticipants?: string[];
-    // @beta
     reactionResources?: ReactionResources;
     remoteParticipants?: VideoGalleryRemoteParticipant[];
     remoteVideoTileMenu?: false | VideoTileContextualMenuProps | VideoTileDrawerMenuProps;
@@ -4548,13 +4617,13 @@ export interface VideoGalleryProps {
     spotlightedParticipants?: string[];
     strings?: Partial<VideoGalleryStrings>;
     styles?: VideoGalleryStyles;
+    videoTilesOptions?: VideoTilesOptions;
 }
 
 // @public
 export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
     isSpeaking?: boolean;
     raisedHand?: RaisedHand;
-    // @beta
     reaction?: Reaction;
     screenShareStream?: VideoGalleryStream;
     // @beta
@@ -4648,6 +4717,7 @@ export interface VideoTileDrawerMenuProps {
 
 // @public
 export interface VideoTileProps {
+    alwaysShowLabelBackground?: boolean;
     children?: React_2.ReactNode;
     contextualMenu?: IContextualMenuProps;
     displayName?: string;
@@ -4660,13 +4730,11 @@ export interface VideoTileProps {
     noVideoAvailableAriaLabel?: string;
     onLongTouch?: () => void;
     onRenderPlaceholder?: OnRenderAvatarCallback;
+    overlay?: JSX.Element | null;
     participantState?: ParticipantState;
     personaMaxSize?: number;
     personaMinSize?: number;
     raisedHand?: RaisedHand;
-    // @beta
-    reaction?: Reaction;
-    // @beta
     reactionResources?: ReactionResources;
     renderElement?: JSX.Element | null;
     showLabel?: boolean;
@@ -4675,6 +4743,11 @@ export interface VideoTileProps {
     strings?: VideoTileStrings;
     styles?: VideoTileStylesProps;
     userId?: string;
+}
+
+// @public
+export interface VideoTilesOptions {
+    alwaysShowLabelBackground?: boolean;
 }
 
 // @beta

@@ -5,17 +5,16 @@ import { CommunicationIdentifierKind } from '@azure/communication-common';
 import { CallState, DeviceManagerState } from '@internal/calling-stateful-client';
 import { ChatThreadClientState } from '@internal/chat-stateful-client';
 import { CallAdapter, CallAdapterState, CallCompositePage } from '../../CallComposite';
-/* @conditional-compile-remove(video-background-effects) */
+
 import { VideoBackgroundImage, VideoBackgroundEffect } from '../../CallComposite';
-/* @conditional-compile-remove(video-background-effects) */
+
 import { VideoBackgroundEffectsDependency } from '@internal/calling-component-bindings';
-import { ChatAdapter, ChatAdapterState } from '../../ChatComposite';
-/* @conditional-compile-remove(file-sharing) */
-import { FileUploadsUiState } from '../../ChatComposite';
+import { ChatAdapterState } from '../../ChatComposite';
+/* @conditional-compile-remove(attachment-upload) */
+import { _AttachmentUploadsUiState } from '../../ChatComposite';
 import { AdapterErrors } from '../../common/adapters';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
-/* @conditional-compile-remove(reaction) */
 import { ReactionResources } from '@internal/react-components';
 
 /**
@@ -36,15 +35,15 @@ export interface CallWithChatAdapterUiState {
    * @public
    */
   page: CallCompositePage;
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(attachment-upload) */
   /**
    * Files being uploaded by a user in the current thread.
    * Should be set to null once the upload is complete.
-   * Array of type {@link FileUploadsUiState}
+   * Array of type {@link _AttachmentUploadsUiState}
    *
-   * @beta
+   * @internal
    */
-  fileUploads?: FileUploadsUiState;
+  _attachmentUploads?: _AttachmentUploadsUiState;
   /* @conditional-compile-remove(unsupported-browser) */
   /**
    * State to track whether the end user has opted in to using a
@@ -78,28 +77,28 @@ export interface CallWithChatClientState {
   devices: DeviceManagerState;
   /** State of whether the active call is a Teams interop call */
   isTeamsCall: boolean;
+  /** State of whether the active call is a Teams interop meeting */
+  isTeamsMeeting: boolean;
   /* @conditional-compile-remove(PSTN-calls) */
   /** alternateCallerId for PSTN call */
   alternateCallerId?: string | undefined;
   /* @conditional-compile-remove(unsupported-browser) */
   /** Environment information for system adapter is made on */
   environmentInfo?: EnvironmentInfo;
-  /* @conditional-compile-remove(video-background-effects) */
+
   /** Default set of background images for background replacement effect */
   videoBackgroundImages?: VideoBackgroundImage[];
-  /* @conditional-compile-remove(video-background-effects) */
+
   /** Dependency to be injected for video background effects */
   onResolveVideoEffectDependency?: () => Promise<VideoBackgroundEffectsDependency>;
-  /* @conditional-compile-remove(video-background-effects) */
+
   /** State to track the selected video background effect */
   selectedVideoBackgroundEffect?: VideoBackgroundEffect;
   /* @conditional-compile-remove(hide-attendee-name) */
   /** Hide attendee names in teams meeting */
   hideAttendeeNames?: boolean;
-  /* @conditional-compile-remove(reaction) */
   /**
    * Reaction resources to render in meetings
-   * @beta
    * */
   reactions?: ReactionResources;
 }
@@ -115,40 +114,33 @@ export interface CallWithChatAdapterState extends CallWithChatAdapterUiState, Ca
 /**
  * @private
  */
-export function callWithChatAdapterStateFromBackingStates(
-  callAdapter: CallAdapter,
-  chatAdapter: ChatAdapter
-): CallWithChatAdapterState {
+export function callWithChatAdapterStateFromBackingStates(callAdapter: CallAdapter): CallWithChatAdapterState {
   const callAdapterState = callAdapter.getState();
-  const chatAdapterState = chatAdapter.getState();
 
   return {
     call: callAdapterState.call,
-    chat: chatAdapterState.thread,
+    chat: undefined,
     userId: callAdapterState.userId,
     page: callAdapterState.page,
     displayName: callAdapterState.displayName,
     devices: callAdapterState.devices,
     isLocalPreviewMicrophoneEnabled: callAdapterState.isLocalPreviewMicrophoneEnabled,
     isTeamsCall: callAdapterState.isTeamsCall,
+    isTeamsMeeting: callAdapterState.isTeamsMeeting,
     latestCallErrors: callAdapterState.latestErrors,
-    latestChatErrors: chatAdapterState.latestErrors,
-    /* @conditional-compile-remove(file-sharing) */
-    fileUploads: chatAdapterState.fileUploads,
+    latestChatErrors: {},
+    /* @conditional-compile-remove(attachment-upload) */
+    _attachmentUploads: {},
     /* @conditional-compile-remove(PSTN-calls) */
     alternateCallerId: callAdapterState.alternateCallerId,
     /* @conditional-compile-remove(unsupported-browser) */
     environmentInfo: callAdapterState.environmentInfo,
-    /* @conditional-compile-remove(video-background-effects) */
     videoBackgroundImages: callAdapterState.videoBackgroundImages,
-    /* @conditional-compile-remove(video-background-effects) */
     onResolveVideoEffectDependency: callAdapterState.onResolveVideoEffectDependency,
-    /* @conditional-compile-remove(video-background-effects) */
     selectedVideoBackgroundEffect: callAdapterState.selectedVideoBackgroundEffect,
     /* @conditional-compile-remove(hide-attendee-name) */
     /** Hide attendee names in teams meeting */
     hideAttendeeNames: callAdapterState.hideAttendeeNames,
-    /* @conditional-compile-remove(reaction) */
     reactions: callAdapterState.reactions
   };
 }
@@ -164,8 +156,8 @@ export function mergeChatAdapterStateIntoCallWithChatAdapterState(
     ...existingCallWithChatAdapterState,
     chat: chatAdapterState.thread,
     latestChatErrors: chatAdapterState.latestErrors,
-    /* @conditional-compile-remove(file-sharing) */
-    fileUploads: chatAdapterState.fileUploads
+    /* @conditional-compile-remove(attachment-upload) */
+    _attachmentUploads: chatAdapterState._attachmentUploads
   };
 }
 
@@ -185,12 +177,13 @@ export function mergeCallAdapterStateIntoCallWithChatAdapterState(
     call: callAdapterState.call,
     isLocalPreviewMicrophoneEnabled: callAdapterState.isLocalPreviewMicrophoneEnabled,
     isTeamsCall: callAdapterState.isTeamsCall,
+    isTeamsMeeting: callAdapterState.isTeamsMeeting,
     latestCallErrors: callAdapterState.latestErrors,
-    /* @conditional-compile-remove(video-background-effects) */
+
     videoBackgroundImages: callAdapterState.videoBackgroundImages,
-    /* @conditional-compile-remove(video-background-effects) */
+
     onResolveVideoEffectDependency: callAdapterState.onResolveVideoEffectDependency,
-    /* @conditional-compile-remove(video-background-effects) */
+
     selectedVideoBackgroundEffect: callAdapterState.selectedVideoBackgroundEffect
   };
 }

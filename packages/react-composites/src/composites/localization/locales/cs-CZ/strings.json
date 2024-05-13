@@ -61,11 +61,11 @@
     "removedFromCallMoreDetails": "Jiný účastník vás odebral z hovoru.",
     "removedFromCallTitle": "Byli jste odebráni",
     "removeMenuLabel": "Odebrat",
-    "startSpotlightParticipantListMenuLabel": "Přidat do hlavního výběru všem",
-    "addSpotlightParticipantListMenuLabel": "Přidat do hlavního výběru",
-    "stopSpotlightParticipantListMenuLabel": "Zastavit přidávání do hlavního výběru",
-    "stopSpotlightOnSelfParticipantListMenuLabel": "Ukončit hlavní výběr",
-    "spotlightLimitReachedParticipantListMenuTitle": "Dosáhlo se limitu hlavního výběru",
+    "startSpotlightMenuLabel": "Přidat do hlavního výběru všem",
+    "addSpotlightMenuLabel": "Přidat do hlavního výběru",
+    "stopSpotlightMenuLabel": "Zastavit přidávání do hlavního výběru",
+    "stopSpotlightOnSelfMenuLabel": "Ukončit hlavní výběr",
+    "spotlightLimitReachedMenuTitle": "Dosáhlo se limitu hlavního výběru",
     "stopAllSpotlightMenuLabel": "Zastavit všechny výběry",
     "returnToCallButtonAriaDescription": "Pokračovat v hovoru",
     "returnToCallButtonAriaLabel": "Zpět",
@@ -244,6 +244,10 @@
       "shareScreen": {
         "lostDueToRoleChangeToAttendee": "Vaše role se změnila. Některé akce, jako je sdílení obsahu, pro vás nebudou k dispozici.",
         "grantedDueToRoleChangeToPresenter": "Jste prezentující. Můžete sdílet obsah a moderovat schůzku."
+      },
+      "hideAttendeeNames": {
+        "hideAttendeeNameAttendee": "Vaše jméno je před ostatními účastníky skryté. Organizátoři a přednášející uvidí vaše skutečné jméno.",
+        "hideAttendeeNamePresenter": "Jména účastníků jsou skrytá. Pro ochranu soukromí účastníků uvidí jména jenom organizátoři a přednášející."
       }
     },
     "surveyTitle": "Pomozte nám se zlepšovat",
@@ -259,7 +263,6 @@
     "tagsSurveyQuestion": "Co by mohlo být lepší?",
     "tagsSurveyTextFieldDefaultText": "Jiné, upřesněte prosím",
     "tagsSurveyHelperText": "Zkontrolujte všechny problémy, se které jste zaznamenali.",
-    "surveyTextboxDefaultText": "Jiné, upřesněte prosím",
     "endOfSurveyText": "Děkujeme za váš názor!",
     "surveyIssues": {
       "overallRating": {
@@ -301,7 +304,7 @@
         "otherIssues": "Měl(a) jsem jiné problémy se sdílením obrazovky v tomto hovoru"
       }
     },
-    "SurveyIssuesHeadingStrings": {
+    "surveyIssuesHeadingStrings": {
       "overallRating": "Celkem",
       "audioRating": "Zvuk",
       "videoRating": "Video",
@@ -315,18 +318,28 @@
       "startSpotlightCancelButtonLabel": "Zrušit",
       "stopSpotlightHeading": "Chcete přestat zobrazovat toto video v hlavním výběru?",
       "stopSpotlightOnSelfHeading": "Ukončit hlavní výběr?",
+      "stopAllSpotlightHeading": "Zastavit zobrazování všech videí v hlavním výběru?",
       "stopSpotlightText": "Účastníkům se už toto video nebude zvýrazňovat.",
       "stopSpotlightOnSelfText": "Účastníkům se už vaše video nebude zvýrazňovat.",
+      "stopAllSpotlightText": "Účastníkům schůzky se už videa nebudou zvýrazňovat.",
       "stopSpotlightConfirmButtonLabel": "Zastavit přidávání do hlavního výběru",
       "stopSpotlightOnSelfConfirmButtonLabel": "Ukončit hlavní výběr",
       "stopSpotlightCancelButtonLabel": "Zrušit"
     },
     "exitSpotlightButtonLabel": "Ukončit hlavní výběr",
-    "exitSpotlightButtonTooltip": "Ukončit hlavní výběr"
+    "exitSpotlightButtonTooltip": "Ukončit hlavní výběr",
+    "leaveConfirmButtonLabel": "Odejít",
+    "endCallConfirmButtonLabel": "Ukončit hovor",
+    "hangUpCancelButtonLabel": "Zrušit",
+    "leaveConfirmDialogTitle": "Chcete z hovoru odejít?",
+    "leaveConfirmDialogContent": "Opravdu chcete hovor opustit?",
+    "endCallConfirmDialogTitle": "Chcete hovor ukončit?",
+    "endCallConfirmDialogContent": "Hovor ukončíte pro všechny.",
+    "invalidMeetingIdentifier": "Neplatné ID schůzky nebo heslo"
   },
   "chat": {
     "chatListHeader": "V tomto chatu",
-    "uploadFile": "Nahrát soubor"
+    "uploadAttachment": "Odeslat přílohu"
   },
   "callWithChat": {
     "chatButtonLabel": "Chat",

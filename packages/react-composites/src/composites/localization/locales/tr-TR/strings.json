@@ -61,11 +61,11 @@
     "removedFromCallMoreDetails": "Başka bir katılımcı sizi aramadan çıkardı.",
     "removedFromCallTitle": "Çıkarıldınız",
     "removeMenuLabel": "Kaldır",
-    "startSpotlightParticipantListMenuLabel": "Herkes için öne çıkar",
-    "addSpotlightParticipantListMenuLabel": "Öne çıkarma ekle",
-    "stopSpotlightParticipantListMenuLabel": "Öne çıkarmayı durdur",
-    "stopSpotlightOnSelfParticipantListMenuLabel": "Öne çıkarmadan çık",
-    "spotlightLimitReachedParticipantListMenuTitle": "Öne çıkarma sınırına ulaşıldı",
+    "startSpotlightMenuLabel": "Herkes için öne çıkar",
+    "addSpotlightMenuLabel": "Öne çıkarma ekle",
+    "stopSpotlightMenuLabel": "Öne çıkarmayı durdur",
+    "stopSpotlightOnSelfMenuLabel": "Öne çıkarmadan çık",
+    "spotlightLimitReachedMenuTitle": "Öne çıkarma sınırına ulaşıldı",
     "stopAllSpotlightMenuLabel": "Tüm öne çıkarmaları durdur",
     "returnToCallButtonAriaDescription": "Aramaya Dön",
     "returnToCallButtonAriaLabel": "Geri",
@@ -244,6 +244,10 @@
       "shareScreen": {
         "lostDueToRoleChangeToAttendee": "Rolünüz değiştirildi. İçerik paylaşma gibi bazı eylemler kullanılamaz.",
         "grantedDueToRoleChangeToPresenter": "Sunucuyuz. İçerik paylaşabilir ve toplantıya yardımcı olabilirsiniz."
+      },
+      "hideAttendeeNames": {
+        "hideAttendeeNameAttendee": "Adınız diğer katılımcılardan gizlendi. Düzenleyiciler ve sunucular gerçek adınızı görebilir.",
+        "hideAttendeeNamePresenter": "Katılımcı adları gizlidir. Katılımcı gizliliğini korumak için yalnızca düzenleyiciler ve sunucular adları görebilir."
       }
     },
     "surveyTitle": "Geliştirmemize yardımcı olun",
@@ -259,7 +263,6 @@
     "tagsSurveyQuestion": "Neleri iyileştirebiliriz?",
     "tagsSurveyTextFieldDefaultText": "Diğer, lütfen belirtin",
     "tagsSurveyHelperText": "Karşılaştığınız tüm sorunları işaretleyin",
-    "surveyTextboxDefaultText": "Diğer, lütfen belirtin",
     "endOfSurveyText": "Geri bildiriminiz için teşekkür ederiz!",
     "surveyIssues": {
       "overallRating": {
@@ -301,7 +304,7 @@
         "otherIssues": "Bu aramada başka ekran paylaşımı sorunlarıyla karşılaştım"
       }
     },
-    "SurveyIssuesHeadingStrings": {
+    "surveyIssuesHeadingStrings": {
       "overallRating": "Genel",
       "audioRating": "Ses",
       "videoRating": "Video",
@@ -315,18 +318,28 @@
       "startSpotlightCancelButtonLabel": "İptal",
       "stopSpotlightHeading": "Bu video için öne çıkarma durdurulsun mu?",
       "stopSpotlightOnSelfHeading": "Öne çıkarmadan çıkılsın mı?",
+      "stopAllSpotlightHeading": "Tüm videolarda öne çıkarma durdurulsun mu?",
       "stopSpotlightText": "Bu video artık toplantıdaki herkes için öne çıkarılmayacak.",
       "stopSpotlightOnSelfText": "Videonuz toplantıdaki herkes için artık öne çıkarılmayacak.",
+      "stopAllSpotlightText": "Artık videolar toplantıdaki herkes için öne çıkarılmayacak.",
       "stopSpotlightConfirmButtonLabel": "Öne çıkarmayı durdur",
       "stopSpotlightOnSelfConfirmButtonLabel": "Öne çıkarmadan çık",
       "stopSpotlightCancelButtonLabel": "İptal"
     },
     "exitSpotlightButtonLabel": "Öne çıkarmadan çık",
-    "exitSpotlightButtonTooltip": "Öne çıkarmadan çık"
+    "exitSpotlightButtonTooltip": "Öne çıkarmadan çık",
+    "leaveConfirmButtonLabel": "Ayrıl",
+    "endCallConfirmButtonLabel": "Aramayı sonlandır",
+    "hangUpCancelButtonLabel": "İptal",
+    "leaveConfirmDialogTitle": "Aramadan çıkılsın mı?",
+    "leaveConfirmDialogContent": "Aramadan ayrılmak istediğinizden emin misiniz?",
+    "endCallConfirmDialogTitle": "Arama sonlandırılsın mı?",
+    "endCallConfirmDialogContent": "Aramayı herkes için sonlandırıyorsunuz.",
+    "invalidMeetingIdentifier": "Geçersiz toplantı kimliği veya geçiş kodu"
   },
   "chat": {
     "chatListHeader": "Bu sohbette",
-    "uploadFile": "Dosyayı Karşıya Yükle"
+    "uploadAttachment": "Eki Karşıya Yükle"
   },
   "callWithChat": {
     "chatButtonLabel": "Sohbet",

@@ -24,27 +24,40 @@
     "placeholderText": "Escribir un mensaje",
     "textTooLong": "La longitud del mensaje supera el límite máximo.",
     "sendButtonAriaLabel": "Enviar mensaje",
-    "fileUploadsPendingError": "Cargando... Espere.",
-    "removeFile": "Quitar archivo",
+    "attachmentUploadsPendingError": "Cargando... Espere.",
+    "removeAttachment": "Quitar archivo",
     "uploading": "Cargando",
-    "uploadCompleted": "Carga completada"
+    "uploadCompleted": "Carga completada",
+    "attachmentMoreMenu": "Más opciones"
   },
   "richTextSendBox": {
     "placeholderText": "Escribir un mensaje",
     "textTooLong": "La longitud del mensaje supera el límite máximo.",
     "sendButtonAriaLabel": "Enviar mensaje",
-    "fileUploadsPendingError": "Cargando... Espere.",
-    "removeFile": "Quitar archivo",
+    "attachmentUploadsPendingError": "Cargando... Espere.",
+    "removeAttachment": "Quitar archivo",
     "uploading": "Cargando",
     "uploadCompleted": "Carga completada",
-    "boldTooltip": "Negrita",
-    "italicTooltip": "Cursiva",
-    "underlineTooltip": "Subrayado",
-    "bulletListTooltip": "Lista con viñetas",
-    "numberListTooltip": "Lista numerada",
-    "increaseIndentTooltip": "Aumentar sangría",
-    "decreaseIndentTooltip": "Reducir sangría",
-    "richTextFormatButtonTooltip": "Formato"
+    "richTextBoldTooltip": "Negrita",
+    "richTextItalicTooltip": "Cursiva",
+    "richTextUnderlineTooltip": "Subrayado",
+    "richTextBulletListTooltip": "Lista con viñetas",
+    "richTextNumberListTooltip": "Lista numerada",
+    "richTextIncreaseIndentTooltip": "Aumentar sangría",
+    "richTextDecreaseIndentTooltip": "Reducir sangría",
+    "richTextInsertTableTooltip": "Insertar tabla",
+    "richTextFormatButtonTooltip": "Formato",
+    "richTextInsertRowOrColumnMenu": "Insertar",
+    "richTextInsertTableMenuTitle": "Insertar {column} x {row} tabla",
+    "richTextInsertRowAboveMenu": "Insertar arriba",
+    "richTextInsertRowBelowMenu": "Insertar debajo",
+    "richTextInsertColumnLeftMenu": "Insertar a la izquierda",
+    "richTextInsertColumnRightMenu": "Insertar a la derecha",
+    "richTextDeleteRowOrColumnMenu": "Eliminar",
+    "richTextDeleteColumnMenu": "Eliminar columna",
+    "richTextDeleteRowMenu": "Eliminar fila",
+    "richTextDeleteTableMenu": "Eliminar tabla",
+    "attachmentMoreMenu": "Más opciones"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Sugerencias"
@@ -66,7 +79,9 @@
   },
   "endCallButton": {
     "label": "Baja",
-    "tooltipContent": "Abandonar llamada"
+    "tooltipContent": "Abandonar llamada",
+    "leaveOption": "Salir",
+    "endCallOption": "Finalizar la llamada para todos"
   },
   "cameraButton": {
     "onLabel": "Cámara",
@@ -179,10 +194,11 @@
     "editBoxSubmitButton": "Listo",
     "messageReadCount": "Leído por {messageReadByCount} de {remoteParticipantsCount}",
     "actionMenuMoreOptions": "Más opciones",
-    "downloadFile": "Descargar archivo",
+    "downloadAttachment": "Descargar archivo",
+    "openAttachment": "Abrir archivo",
     "blockedWarningText": "Este mensaje se eliminó debido a la directiva de la organización.",
     "blockedWarningLinkText": "Detalles",
-    "fileCardGroupMessage": "El mensaje tiene {fileCount} datos adjuntos",
+    "attachmentCardGroupMessage": "El mensaje tiene {attachmentCount} archivo adjunto",
     "messageDeletedAnnouncementAriaLabel": "El mensaje se ha eliminado"
   },
   "errorBar": {

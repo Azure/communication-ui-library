@@ -5,12 +5,9 @@ import { concatStyleSets } from '@fluentui/react';
 import React, { useMemo } from 'react';
 import { HorizontalGalleryStyles } from '../HorizontalGallery';
 import { ResponsiveHorizontalGallery } from '../ResponsiveHorizontalGallery';
-/* @conditional-compile-remove(vertical-gallery) */
 import { ResponsiveVerticalGallery } from '../ResponsiveVerticalGallery';
 import { HORIZONTAL_GALLERY_BUTTON_WIDTH, HORIZONTAL_GALLERY_GAP } from '../styles/HorizontalGallery.styles';
-/* @conditional-compile-remove(vertical-gallery) */
 import { VerticalGalleryStyles } from '../VerticalGallery';
-/* @conditional-compile-remove(vertical-gallery) */
 import { OverflowGalleryPosition } from '../VideoGallery';
 import { ScrollableHorizontalGallery } from './ScrollableHorizontalGallery';
 import {
@@ -18,7 +15,6 @@ import {
   horizontalGalleryContainerStyle,
   horizontalGalleryStyle
 } from './styles/VideoGalleryResponsiveHorizontalGallery.styles';
-/* @conditional-compile-remove(vertical-gallery) */
 import { _convertPxToRem } from '@internal/acs-ui-common';
 import { SMALL_FLOATING_MODAL_SIZE_REM } from './styles/FloatingLocalVideo.styles';
 import {
@@ -35,13 +31,10 @@ export const OverflowGallery = (props: {
   shouldFloatLocalVideo?: boolean;
   onFetchTilesToRender?: (indexes: number[]) => void;
   isNarrow?: boolean;
-  /* @conditional-compile-remove(vertical-gallery) */
   isShort?: boolean;
   overflowGalleryElements?: JSX.Element[];
   horizontalGalleryStyles?: HorizontalGalleryStyles;
-  /* @conditional-compile-remove(vertical-gallery) */
   verticalGalleryStyles?: VerticalGalleryStyles;
-  /* @conditional-compile-remove(vertical-gallery) */
   overflowGalleryPosition?: OverflowGalleryPosition;
   onChildrenPerPageChange?: (childrenPerPage: number) => void;
   parentWidth?: number;
@@ -50,42 +43,28 @@ export const OverflowGallery = (props: {
     shouldFloatLocalVideo = false,
     onFetchTilesToRender,
     isNarrow = false,
-    /* @conditional-compile-remove(vertical-gallery) */
     isShort = false,
     overflowGalleryElements,
     horizontalGalleryStyles,
-    /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition = 'horizontalBottom',
-    /* @conditional-compile-remove(vertical-gallery) */ verticalGalleryStyles,
+    overflowGalleryPosition = 'horizontalBottom',
+    verticalGalleryStyles,
     onChildrenPerPageChange,
     parentWidth
   } = props;
 
   const containerStyles = useMemo(() => {
-    /* @conditional-compile-remove(vertical-gallery) */
     if (overflowGalleryPosition === 'verticalRight') {
       return verticalGalleryContainerStyle(shouldFloatLocalVideo, isNarrow, isShort);
     }
     return horizontalGalleryContainerStyle(shouldFloatLocalVideo, isNarrow);
-  }, [
-    shouldFloatLocalVideo,
-    /* @conditional-compile-remove(vertical-gallery) */ isShort,
-    isNarrow,
-    /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition
-  ]);
+  }, [shouldFloatLocalVideo, isShort, isNarrow, overflowGalleryPosition]);
 
   const galleryStyles = useMemo(() => {
-    /* @conditional-compile-remove(vertical-gallery) */
     if (overflowGalleryPosition === 'verticalRight') {
       return concatStyleSets(verticalGalleryStyle(isShort), verticalGalleryStyles);
     }
     return concatStyleSets(horizontalGalleryStyle(isNarrow), horizontalGalleryStyles);
-  }, [
-    isNarrow,
-    /* @conditional-compile-remove(vertical-gallery) */ isShort,
-    horizontalGalleryStyles,
-    /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition,
-    /* @conditional-compile-remove(vertical-gallery) */ verticalGalleryStyles
-  ]);
+  }, [isNarrow, isShort, horizontalGalleryStyles, overflowGalleryPosition, verticalGalleryStyles]);
 
   const scrollableHorizontalGalleryContainerStyles = useMemo(() => {
     if (isNarrow && parentWidth) {
@@ -98,7 +77,6 @@ export const OverflowGallery = (props: {
     return undefined;
   }, [isNarrow, parentWidth, shouldFloatLocalVideo]);
 
-  /* @conditional-compile-remove(vertical-gallery) */
   if (overflowGalleryPosition === 'verticalRight') {
     return (
       <ResponsiveVerticalGallery

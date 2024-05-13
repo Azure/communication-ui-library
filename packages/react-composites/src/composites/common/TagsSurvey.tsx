@@ -40,7 +40,7 @@ export const TagsSurvey = (
   return (
     <_TagsSurvey
       callIssuesToTag={strings.surveyIssues}
-      categoryHeadings={strings.SurveyIssuesHeadingStrings}
+      categoryHeadings={strings.surveyIssuesHeadingStrings}
       onConfirm={props.onConfirm}
       strings={tagsSurveyStrings}
       showFreeFormTextField={props.showFreeFormTextField}

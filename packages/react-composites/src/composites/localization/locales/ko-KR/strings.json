@@ -61,11 +61,11 @@
     "removedFromCallMoreDetails": "다른 참가자가 귀하를 통화에서 제거했습니다.",
     "removedFromCallTitle": "통화에서 제거됐습니다.",
     "removeMenuLabel": "제거",
-    "startSpotlightParticipantListMenuLabel": "모두를 위한 스포트라이트",
-    "addSpotlightParticipantListMenuLabel": "스포트라이트 추가",
-    "stopSpotlightParticipantListMenuLabel": "스포트라이트 중지",
-    "stopSpotlightOnSelfParticipantListMenuLabel": "스포트라이트 종료",
-    "spotlightLimitReachedParticipantListMenuTitle": "스포트라이트 한도 도달",
+    "startSpotlightMenuLabel": "모두를 위한 스포트라이트",
+    "addSpotlightMenuLabel": "스포트라이트 추가",
+    "stopSpotlightMenuLabel": "스포트라이트 중지",
+    "stopSpotlightOnSelfMenuLabel": "스포트라이트 종료",
+    "spotlightLimitReachedMenuTitle": "스포트라이트 한도 도달",
     "stopAllSpotlightMenuLabel": "모든 스포트라이트 중지",
     "returnToCallButtonAriaDescription": "통화로 돌아가기",
     "returnToCallButtonAriaLabel": "뒤로",
@@ -244,6 +244,10 @@
       "shareScreen": {
         "lostDueToRoleChangeToAttendee": "역할이 변경되었습니다. 콘텐츠 공유와 같은 일부 작업은 사용할 수 없습니다.",
         "grantedDueToRoleChangeToPresenter": "귀하는 발표자입니다. 콘텐츠를 공유하고 모임을 활성화할 수 있습니다."
+      },
+      "hideAttendeeNames": {
+        "hideAttendeeNameAttendee": "다른 참석자가 내 이름을 볼 수 없도록 숨겨집니다. 주최자와 발표자는 내 실명을 볼 수 있습니다.",
+        "hideAttendeeNamePresenter": "참석자 이름이 숨겨집니다. 참석자 개인 정보를 보호하기 위해 주최자와 발표자만 이름을 볼 수 있습니다."
       }
     },
     "surveyTitle": "사용자 환경 개선",
@@ -259,7 +263,6 @@
     "tagsSurveyQuestion": "개선할 사항을 알려주세요.",
     "tagsSurveyTextFieldDefaultText": "기타(구체적으로)",
     "tagsSurveyHelperText": "발생한 문제를 확인하세요.",
-    "surveyTextboxDefaultText": "기타(구체적으로)",
     "endOfSurveyText": "피드백을 보내주셔서 감사합니다!",
     "surveyIssues": {
       "overallRating": {
@@ -301,7 +304,7 @@
         "otherIssues": "이 통화에서 다른 화면 공유 문제가 있었습니다."
       }
     },
-    "SurveyIssuesHeadingStrings": {
+    "surveyIssuesHeadingStrings": {
       "overallRating": "전체",
       "audioRating": "오디오",
       "videoRating": "비디오",
@@ -315,18 +318,28 @@
       "startSpotlightCancelButtonLabel": "취소",
       "stopSpotlightHeading": "이 비디오 스포트라이트를 중지할까요?",
       "stopSpotlightOnSelfHeading": "스포트라이트를 종료하시겠습니까?",
+      "stopAllSpotlightHeading": "모든 비디오 스포트라이트를 중지할까요?",
       "stopSpotlightText": "모임에 참석한 모든 사용자에게 이 비디오가 더 이상 강조되지 않습니다.",
       "stopSpotlightOnSelfText": "모임에 참석한 모든 사용자에 대해 비디오가 더 이상 강조되지 않습니다.",
+      "stopAllSpotlightText": "해당 비디오는 모임에 참석한 모든 사용자에 대해 더 이상 강조되지 않습니다.",
       "stopSpotlightConfirmButtonLabel": "스포트라이트 중지",
       "stopSpotlightOnSelfConfirmButtonLabel": "스포트라이트 종료",
       "stopSpotlightCancelButtonLabel": "취소"
     },
     "exitSpotlightButtonLabel": "스포트라이트 종료",
-    "exitSpotlightButtonTooltip": "스포트라이트 종료"
+    "exitSpotlightButtonTooltip": "스포트라이트 종료",
+    "leaveConfirmButtonLabel": "나가기",
+    "endCallConfirmButtonLabel": "통화 종료",
+    "hangUpCancelButtonLabel": "취소",
+    "leaveConfirmDialogTitle": "통화에서 나가시겠습니까?",
+    "leaveConfirmDialogContent": "통화에서 나가시겠습니까?",
+    "endCallConfirmDialogTitle": "통화를 종료하시겠습니까?",
+    "endCallConfirmDialogContent": "모든 사용자의 통화가 종료됩니다.",
+    "invalidMeetingIdentifier": "유효하지 않은 모임 ID 또는 암호"
   },
   "chat": {
     "chatListHeader": "채팅 참가자",
-    "uploadFile": "파일 업로드"
+    "uploadAttachment": "첨부 파일 업로드"
   },
   "callWithChat": {
     "chatButtonLabel": "채팅",

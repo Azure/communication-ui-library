@@ -1,20 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { ChatAttachment } from '@azure/communication-chat';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { CommunicationTokenCredential } from '@azure/communication-common';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { ChatContext } from './ChatContext';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { ResourceDownloadQueue, fetchImageSource } from './ResourceDownloadQueue';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { messageTemplate } from './mocks/createMockChatThreadClient';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { resolve } from 'path';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 jest.mock('@azure/communication-chat');
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 /**
  * @private
  */
@@ -29,11 +21,6 @@ export const stubCommunicationTokenCredential = (): CommunicationTokenCredential
   };
 };
 
-describe('ResourceDownloadQueue api functions', () => {
-  test('Placeholder test. Please remove this when stabilizing teams-inline-images-and-file-sharing', () => {});
-});
-
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 describe('ResourceDownloadQueue api functions', () => {
   // URL.createObjectURL is not available in jest-dom
   // so we need to mock it in tests
@@ -218,7 +205,6 @@ describe('ResourceDownloadQueue api functions', () => {
     expect(operation).toHaveBeenCalledTimes(3);
   });
 
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   test('startQueue method should update the resourceCache', async () => {
     const threadId = 'threadId';
     const messageId = 'messageId';
@@ -240,7 +226,6 @@ describe('ResourceDownloadQueue api functions', () => {
     const resourceCache = context.getState().threads[threadId].chatMessages[messageId].resourceCache;
     expect(resourceCache).toBeDefined();
   });
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   test('if operation fails, error should be in the cache', async () => {
     const threadId = 'threadId';
     const messageId = 'messageId';
@@ -265,7 +250,6 @@ describe('ResourceDownloadQueue api functions', () => {
     expect(resourceCache?.['previewUrl1'].error).toBeDefined();
     expect(resourceCache?.['previewUrl1'].sourceUrl).toEqual('');
   });
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   test('if operation fails for first item, error should be in the cache only for first item', async () => {
     const threadId = 'threadId';
     const messageId = 'messageId';

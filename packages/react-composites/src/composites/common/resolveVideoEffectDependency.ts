@@ -7,10 +7,9 @@ import {
   BackgroundReplacementConfig,
   BackgroundReplacementEffect
 } from '@azure/communication-calling-effects';
-/* @conditional-compile-remove(video-background-effects) */
+
 import { VideoBackgroundEffectsDependency } from '@internal/calling-component-bindings';
 
-/* @conditional-compile-remove(video-background-effects) */
 /**
  * Dependency resolution for video background effects.
  *

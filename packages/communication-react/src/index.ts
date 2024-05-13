@@ -39,10 +39,8 @@ export type {
   CommonCallingHandlers
 } from '../../calling-component-bindings/src';
 
-/* @conditional-compile-remove(video-background-effects) */
 export type { VideoBackgroundEffectsDependency, CallingHandlersOptions } from '../../calling-component-bindings/src';
 
-/* @conditional-compile-remove(close-captions) */
 export type { CaptionsOptions } from '../../calling-component-bindings/src';
 
 export type {
@@ -152,14 +150,12 @@ export {
   COMPONENT_LOCALE_ZH_CN,
   COMPONENT_LOCALE_ZH_TW
 } from '../../react-components/src';
-/* @conditional-compile-remove(image-overlay) */
 export { ImageOverlay } from '../../react-components/src';
 /* @conditional-compile-remove(PSTN-calls) */
 export { HoldButton } from '../../react-components/src';
 
 export { RaiseHandButton } from '../../react-components/src';
 
-/* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
 export { Dialpad } from '../../react-components/src';
 
 /* @conditional-compile-remove(call-readiness) */
@@ -293,11 +289,11 @@ export type {
   VideoTileStylesProps,
   ViewScalingMode,
   VideoTileContextualMenuProps,
-  VideoTileDrawerMenuProps
+  VideoTileDrawerMenuProps,
+  VideoTilesOptions
 } from '../../react-components/src';
 
 export type { RaiseHandButtonProps, RaiseHandButtonStrings, RaisedHand } from '../../react-components/src';
-/* @conditional-compile-remove(reaction) */
 export type {
   ReactionButtonStrings,
   Reaction,
@@ -308,14 +304,12 @@ export type {
 /* @conditional-compile-remove(rich-text-editor) */
 export { RichTextSendBox } from '../../react-components/src';
 /* @conditional-compile-remove(rich-text-editor) */
-export type { RichTextSendBoxProps, RichTextSendBoxStrings } from '../../react-components/src';
+export type { RichTextSendBoxProps, RichTextSendBoxStrings, RichTextStrings } from '../../react-components/src';
 /* @conditional-compile-remove(spotlight) */
 export type { Spotlight } from '../../react-components/src';
-/* @conditional-compile-remove(image-overlay) */
 export type { ImageOverlayProps, ImageOverlayStrings } from '../../react-components/src';
 /* @conditional-compile-remove(data-loss-prevention) */
 export type { BlockedMessage } from '../../react-components/src';
-/* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
 export type {
   DialpadMode,
   DialpadProps,
@@ -324,18 +318,25 @@ export type {
   DtmfTone,
   LongPressTrigger
 } from '../../react-components/src';
-/* @conditional-compile-remove(file-sharing) */
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+export type { AttachmentMetadata, AttachmentOptions } from '../../react-components/src';
+/* @conditional-compile-remove(attachment-upload) */
+export type { SendBoxErrorBarError } from '../../react-components/src';
+/* @conditional-compile-remove(attachment-upload) */
 export type {
-  ActiveFileUpload,
-  SendBoxErrorBarError,
-  FileDownloadHandler,
-  FileDownloadError
+  AttachmentProgressError,
+  AttachmentSelectionHandler,
+  AttachmentRemovalHandler,
+  AttachmentUploadOptions,
+  AttachmentUploadTask,
+  AttachmentMetadataWithProgress
 } from '../../react-components/src';
-/* @conditional-compile-remove(file-sharing) */
-export type { AttachmentMetadata } from '../../react-components/src';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+
+/* @conditional-compile-remove(attachment-download) */
+export type { AttachmentMenuAction, AttachmentDownloadOptions } from '../../react-components/src';
+/* @conditional-compile-remove(attachment-download) */
+export { defaultAttachmentMenuAction } from '../../react-components/src';
 export type { ChatAttachmentType } from '../../react-components/src';
-/* @conditional-compile-remove(image-overlay) */
 export type { InlineImageOptions, InlineImage } from '../../react-components/src';
 /* @conditional-compile-remove(PSTN-calls) */
 export type { HoldButtonProps, HoldButtonStrings, VideoTileStrings } from '../../react-components/src';
@@ -347,9 +348,7 @@ export type {
   BrowserPermissionDeniedStyles,
   BrowserPermissionDeniedIOSProps
 } from '../../react-components/src';
-/* @conditional-compile-remove(vertical-gallery) */
 export type { OverflowGalleryPosition } from '../../react-components/src';
-/* @conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */
 export type { LocalVideoTileSize } from '../../react-components/src';
 export * from '../../react-components/src/localization/locales';
 export * from '../../react-components/src/theming';
@@ -370,7 +369,6 @@ export type {
   ChatErrorTarget
 } from '../../chat-stateful-client/src';
 
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 export type { ResourceFetchResult } from '../../chat-stateful-client/src';
 export * from '../../react-composites/src/index-public';
 export * from './mergedHooks';
@@ -387,13 +385,12 @@ export type { UnsupportedBrowserVersionStrings, UnsupportedBrowserVersionProps }
 export { UnsupportedOperatingSystem } from '../../react-components/src';
 /* @conditional-compile-remove(unsupported-browser) */
 export type { UnsupportedOperatingSystemStrings, UnsupportedOperatingSystemProps } from '../../react-components/src';
-/* @conditional-compile-remove(vertical-gallery) */
 export type {
   VerticalGalleryStyles,
   VerticalGalleryStrings,
   VerticalGalleryControlBarStyles
 } from '../../react-components/src';
-/* @conditional-compile-remove(close-captions) */
+
 export type { SpokenLanguageStrings, CaptionLanguageStrings } from '../../react-components/src';
 /* @conditional-compile-remove(end-of-call-survey) */
 export type { SurveyIssues } from '../../react-components/src';

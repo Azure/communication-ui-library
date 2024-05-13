@@ -2,22 +2,17 @@
 // Licensed under the MIT License.
 
 import { Features, LocalVideoStream, RemoteParticipant } from '@azure/communication-calling';
-/* @conditional-compile-remove(acs-close-captions) */
-import { Captions } from '@azure/communication-calling';
-/* @conditional-compile-remove(close-captions) */
-import { TeamsCaptions } from '@azure/communication-calling';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { CallCommon } from './BetaToStableTypes';
 import { CallContext } from './CallContext';
 import { CallIdRef } from './CallIdRef';
-/* @conditional-compile-remove(close-captions) */
-import { TeamsCaptionsSubscriber } from './CaptionsSubscriber';
+import { CaptionsFeatureSubscriber } from './CaptionsSubscriber';
 import {
   convertSdkLocalStreamToDeclarativeLocalStream,
   convertSdkParticipantToDeclarativeParticipant
 } from './Converter';
 import { InternalCallContext } from './InternalCallContext';
-/* @conditional-compile-remove(video-background-effects) */
+
 import { LocalVideoStreamVideoEffectsSubscriber } from './LocalVideoStreamVideoEffectsSubscriber';
 import { ParticipantSubscriber } from './ParticipantSubscriber';
 import { RecordingSubscriber } from './RecordingSubscriber';
@@ -28,14 +23,11 @@ import { TranscriptionSubscriber } from './TranscriptionSubscriber';
 import { UserFacingDiagnosticsSubscriber } from './UserFacingDiagnosticsSubscriber';
 import { RaiseHandSubscriber } from './RaiseHandSubscriber';
 import { OptimalVideoCountSubscriber } from './OptimalVideoCountSubscriber';
-/* @conditional-compile-remove(capabilities) */
+
 import { CapabilitiesSubscriber } from './CapabilitiesSubscriber';
-/* @conditional-compile-remove(reaction) */
 import { ReactionSubscriber } from './ReactionSubscriber';
 /* @conditional-compile-remove(spotlight) */
 import { SpotlightSubscriber } from './SpotlightSubscriber';
-/* @conditional-compile-remove(acs-close-captions) */
-import { CaptionsSubscriber } from './CaptionsSubscriber';
 /* @conditional-compile-remove(local-recording-notification) */
 import { LocalRecordingSubscriber } from './LocalRecordingSubscriber';
 
@@ -55,20 +47,16 @@ export class CallSubscriber {
   private _recordingSubscriber: RecordingSubscriber;
   private _transcriptionSubscriber: TranscriptionSubscriber;
   /* @conditional-compile-remove(local-recording-notification) */
-  private _localRecordingSubscriber: LocalRecordingSubscriber;
+  private _localRecordingSubscriber?: LocalRecordingSubscriber;
   /* @conditional-compile-remove(ppt-live) */
   private _pptLiveSubscriber: PPTLiveSubscriber;
   private _optimalVideoCountSubscriber: OptimalVideoCountSubscriber;
-  /* @conditional-compile-remove(close-captions) */
-  private _TeamsCaptionsSubscriber?: TeamsCaptionsSubscriber;
-  /* @conditional-compile-remove(acs-close-captions) */
-  private _CaptionsSubscriber?: CaptionsSubscriber;
+  private _CaptionsFeatureSubscriber?: CaptionsFeatureSubscriber;
   private _raiseHandSubscriber?: RaiseHandSubscriber;
-  /* @conditional-compile-remove(reaction) */
   private _reactionSubscriber?: ReactionSubscriber;
-  /* @conditional-compile-remove(video-background-effects) */
+
   private _localVideoStreamVideoEffectsSubscribers: Map<string, LocalVideoStreamVideoEffectsSubscriber>;
-  /* @conditional-compile-remove(capabilities) */
+
   private _capabilitiesSubscriber: CapabilitiesSubscriber;
   /* @conditional-compile-remove(spotlight) */
   private _spotlightSubscriber: SpotlightSubscriber;
@@ -90,12 +78,6 @@ export class CallSubscriber {
       this._context,
       this._call.feature(Features.Recording)
     );
-    /* @conditional-compile-remove(local-recording-notification) */
-    this._localRecordingSubscriber = new LocalRecordingSubscriber(
-      this._callIdRef,
-      this._context,
-      this._call.feature(Features.LocalRecording)
-    );
     /* @conditional-compile-remove(ppt-live) */
     this._pptLiveSubscriber = new PPTLiveSubscriber(this._callIdRef, this._context, this._call);
     this._transcriptionSubscriber = new TranscriptionSubscriber(
@@ -108,7 +90,6 @@ export class CallSubscriber {
       this._context,
       this._call.feature(Features.RaiseHand)
     );
-    /* @conditional-compile-remove(reaction) */
     this._reactionSubscriber = new ReactionSubscriber(
       this._callIdRef,
       this._context,
@@ -119,10 +100,9 @@ export class CallSubscriber {
       context: this._context,
       localOptimalVideoCountFeature: this._call.feature(Features.OptimalVideoCount)
     });
-    /* @conditional-compile-remove(video-background-effects) */
+
     this._localVideoStreamVideoEffectsSubscribers = new Map();
 
-    /* @conditional-compile-remove(capabilities) */
     this._capabilitiesSubscriber = new CapabilitiesSubscriber(
       this._callIdRef,
       this._context,
@@ -141,14 +121,14 @@ export class CallSubscriber {
 
   private subscribe = (): void => {
     this._call.on('stateChanged', this.stateChanged);
-    /* @conditional-compile-remove(close-captions) */
     this._call.on('stateChanged', this.initCaptionSubscriber);
+    /* @conditional-compile-remove(local-recording-notification) */
+    this._call.on('stateChanged', this.initLocalRecordingNotificationSubscriber);
     this._call.on('idChanged', this.idChanged);
     this._call.on('isScreenSharingOnChanged', this.isScreenSharingOnChanged);
     this._call.on('remoteParticipantsUpdated', this.remoteParticipantsUpdated);
     this._call.on('localVideoStreamsUpdated', this.localVideoStreamsUpdated);
     this._call.on('isMutedChanged', this.isMuteChanged);
-    /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(capabilities) */
     this._call.on('roleChanged', this.callRoleChangedHandler);
     this._call.feature(Features.DominantSpeakers).on('dominantSpeakersChanged', this.dominantSpeakersChanged);
     /* @conditional-compile-remove(total-participant-count) */
@@ -179,14 +159,14 @@ export class CallSubscriber {
 
   public unsubscribe = (): void => {
     this._call.off('stateChanged', this.stateChanged);
-    /* @conditional-compile-remove(close-captions) */
     this._call.off('stateChanged', this.initCaptionSubscriber);
+    /* @conditional-compile-remove(local-recording-notification) */
+    this._call.off('stateChanged', this.initLocalRecordingNotificationSubscriber);
     this._call.off('idChanged', this.idChanged);
     this._call.off('isScreenSharingOnChanged', this.isScreenSharingOnChanged);
     this._call.off('remoteParticipantsUpdated', this.remoteParticipantsUpdated);
     this._call.off('localVideoStreamsUpdated', this.localVideoStreamsUpdated);
     this._call.off('isMutedChanged', this.isMuteChanged);
-    /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(capabilities) */
     this._call.off('roleChanged', this.callRoleChangedHandler);
     /* @conditional-compile-remove(total-participant-count) */
     this._call.off('totalParticipantCountChanged', this.totalParticipantCountChangedHandler);
@@ -214,18 +194,14 @@ export class CallSubscriber {
     this._recordingSubscriber.unsubscribe();
     this._transcriptionSubscriber.unsubscribe();
     /* @conditional-compile-remove(local-recording-notification) */
-    this._localRecordingSubscriber.unsubscribe();
+    this._localRecordingSubscriber?.unsubscribe();
     this._optimalVideoCountSubscriber.unsubscribe();
     /* @conditional-compile-remove(ppt-live) */
     this._pptLiveSubscriber.unsubscribe();
-    /* @conditional-compile-remove(close-captions) */
-    this._TeamsCaptionsSubscriber?.unsubscribe();
-    /* @conditional-compile-remove(acs-close-captions) */
-    this._CaptionsSubscriber?.unsubscribe();
+    this._CaptionsFeatureSubscriber?.unsubscribe();
     this._raiseHandSubscriber?.unsubscribe();
-    /* @conditional-compile-remove(capabilities) */
+
     this._capabilitiesSubscriber.unsubscribe();
-    /* @conditional-compile-remove(reaction) */
     this._reactionSubscriber?.unsubscribe();
     /* @conditional-compile-remove(spotlight) */
     this._spotlightSubscriber.unsubscribe();
@@ -253,29 +229,29 @@ export class CallSubscriber {
     this._context.setCallState(this._callIdRef.callId, this._call.state);
   };
 
-  /* @conditional-compile-remove(close-captions) */
   private initCaptionSubscriber = (): void => {
     // subscribe to captions here so that we don't call captions when call is not initialized
-    if (
-      this._call.state === 'Connected' &&
-      !this._TeamsCaptionsSubscriber &&
-      /* @conditional-compile-remove(acs-close-captions) */ !this._CaptionsSubscriber
-    ) {
-      if (this._call.feature(Features.Captions).captions.kind === 'TeamsCaptions') {
-        this._TeamsCaptionsSubscriber = new TeamsCaptionsSubscriber(
-          this._callIdRef,
-          this._context,
-          this._call.feature(Features.Captions).captions as TeamsCaptions
-        );
-      } else {
-        /* @conditional-compile-remove(acs-close-captions) */
-        this._CaptionsSubscriber = new CaptionsSubscriber(
-          this._callIdRef,
-          this._context,
-          this._call.feature(Features.Captions).captions as Captions
-        );
-      }
+    if (this._call.state === 'Connected' && !this._CaptionsFeatureSubscriber) {
+      this._CaptionsFeatureSubscriber = new CaptionsFeatureSubscriber(
+        this._callIdRef,
+        this._context,
+        this._call.feature(Features.Captions)
+      );
       this._call.off('stateChanged', this.initCaptionSubscriber);
+    }
+  };
+
+  /* @conditional-compile-remove(local-recording-notification) */
+  private initLocalRecordingNotificationSubscriber = (): void => {
+    // Subscribe to LocalRecordingFeature as it is only available in interop scenarios
+    // Will throw an error if not in interop scenarios
+    if (this._call.state === 'Connected' && this._call.kind === 'TeamsCall' && !this._localRecordingSubscriber) {
+      this._localRecordingSubscriber = new LocalRecordingSubscriber(
+        this._callIdRef,
+        this._context,
+        this._call.feature(Features.LocalRecording)
+      );
+      this._call.off('stateChanged', this.initLocalRecordingNotificationSubscriber);
     }
   };
 
@@ -293,7 +269,6 @@ export class CallSubscriber {
     this._context.setCallIsMicrophoneMuted(this._callIdRef.callId, this._call.isMuted);
   };
 
-  /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(capabilities) */
   private callRoleChangedHandler = (): void => {
     this._context.setRole(this._callIdRef.callId, this._call.role);
   };

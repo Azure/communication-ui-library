@@ -3,7 +3,7 @@
 
 import { CallWithChatAdapter } from './CallWithChatAdapter';
 import { CallAdapter, CallAdapterState } from '../../CallComposite';
-/* @conditional-compile-remove(video-background-effects) */
+
 import { VideoBackgroundImage, VideoBackgroundEffect } from '../../CallComposite';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 import {
@@ -13,9 +13,7 @@ import {
   PermissionConstraints,
   StartCallOptions
 } from '@azure/communication-calling';
-/* @conditional-compile-remove(reaction) */
 import { Reaction } from '@azure/communication-calling';
-/* @conditional-compile-remove(close-captions) */
 import { StartCaptionsOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
@@ -124,7 +122,6 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
   public stopScreenShare = async (): Promise<void> => await this.callWithChatAdapter.stopScreenShare();
   public raiseHand = async (): Promise<void> => await this.callWithChatAdapter.raiseHand();
   public lowerHand = async (): Promise<void> => await this.callWithChatAdapter.lowerHand();
-  /* @conditional-compile-remove(reaction) */
   public onReactionClick = async (reaction: Reaction): Promise<void> =>
     await this.callWithChatAdapter.onReactionClick(reaction);
   public removeParticipant = async (
@@ -184,39 +181,34 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
     await this.callWithChatAdapter.sendDtmfTone(dtmfTone);
   };
 
-  /* @conditional-compile-remove(close-captions) */
   public async startCaptions(options?: StartCaptionsOptions): Promise<void> {
     this.callWithChatAdapter.startCaptions(options);
   }
 
-  /* @conditional-compile-remove(close-captions) */
   public async stopCaptions(): Promise<void> {
     this.callWithChatAdapter.stopCaptions();
   }
 
-  /* @conditional-compile-remove(close-captions) */
   public async setCaptionLanguage(language: string): Promise<void> {
     this.callWithChatAdapter.setCaptionLanguage(language);
   }
 
-  /* @conditional-compile-remove(close-captions) */
   public async setSpokenLanguage(language: string): Promise<void> {
     this.callWithChatAdapter.setSpokenLanguage(language);
   }
 
-  /* @conditional-compile-remove(video-background-effects) */
   public async startVideoBackgroundEffect(videoBackgroundEffect: VideoBackgroundEffect): Promise<void> {
     await this.callWithChatAdapter.startVideoBackgroundEffect(videoBackgroundEffect);
   }
-  /* @conditional-compile-remove(video-background-effects) */
+
   public async stopVideoBackgroundEffects(): Promise<void> {
     await this.callWithChatAdapter.stopVideoBackgroundEffects();
   }
-  /* @conditional-compile-remove(video-background-effects) */
+
   public updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void {
     return this.callWithChatAdapter.updateBackgroundPickerImages(backgroundImages);
   }
-  /* @conditional-compile-remove(video-background-effects) */
+
   public updateSelectedVideoBackgroundEffect(selectedVideoBackground: VideoBackgroundEffect): void {
     return this.callWithChatAdapter.updateSelectedVideoBackgroundEffect(selectedVideoBackground);
   }
@@ -251,20 +243,19 @@ function callAdapterStateFromCallWithChatAdapterState(
     call: callWithChatAdapterState.call,
     devices: callWithChatAdapterState.devices,
     isTeamsCall: callWithChatAdapterState.isTeamsCall,
-    /* @conditional-compile-remove(rooms) */
+    isTeamsMeeting: callWithChatAdapterState.isTeamsMeeting,
     isRoomsCall: false,
     latestErrors: callWithChatAdapterState.latestCallErrors,
     /* @conditional-compile-remove(PSTN-calls) */
     alternateCallerId: callWithChatAdapterState.alternateCallerId,
     /* @conditional-compile-remove(unsupported-browser) */
     environmentInfo: callWithChatAdapterState.environmentInfo,
-    /* @conditional-compile-remove(video-background-effects) */
+
     videoBackgroundImages: callWithChatAdapterState.videoBackgroundImages,
-    /* @conditional-compile-remove(video-background-effects) */
+
     onResolveVideoEffectDependency: callWithChatAdapterState.onResolveVideoEffectDependency,
-    /* @conditional-compile-remove(video-background-effects) */
+
     selectedVideoBackgroundEffect: callWithChatAdapterState.selectedVideoBackgroundEffect,
-    /* @conditional-compile-remove(reaction) */
     reactions: callWithChatAdapterState.reactions
   };
 }

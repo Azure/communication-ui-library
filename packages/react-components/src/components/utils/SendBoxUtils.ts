@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/* @conditional-compile-remove(file-sharing) */
-import { ActiveFileUpload } from '../FileUploadCards';
+/* @conditional-compile-remove(attachment-upload) */
+import { AttachmentMetadataWithProgress } from '../../types/Attachment';
 
 /**
  * @private
@@ -10,23 +10,29 @@ import { ActiveFileUpload } from '../FileUploadCards';
 export const MAXIMUM_LENGTH_OF_MESSAGE = 8000;
 const EMPTY_MESSAGE_REGEX = /^\s*$/;
 
-/* @conditional-compile-remove(file-sharing) */
+/* @conditional-compile-remove(attachment-upload) */
 /**
  * @private
  */
-export const hasIncompleteFileUploads = (activeFileUploads: ActiveFileUpload[] | undefined): boolean => {
+export const hasIncompleteAttachmentUploads = (
+  attachmentsWithProgress: AttachmentMetadataWithProgress[] | undefined
+): boolean => {
   return !!(
-    activeFileUploads?.length &&
-    !activeFileUploads.filter((fileUpload) => !fileUpload.error).every((fileUpload) => fileUpload.uploadComplete)
+    attachmentsWithProgress?.length &&
+    !attachmentsWithProgress
+      .filter((attachmentUpload) => !attachmentUpload.error)
+      .every((attachmentUpload) => attachmentUpload.progress === 1 && attachmentUpload.progress !== undefined)
   );
 };
 
-/* @conditional-compile-remove(file-sharing) */
+/* @conditional-compile-remove(attachment-upload) */
 /**
  * @private
  */
-export const hasCompletedFileUploads = (activeFileUploads: ActiveFileUpload[] | undefined): boolean => {
-  return !!activeFileUploads?.find((file) => !file.error);
+export const hasCompletedAttachmentUploads = (
+  attachmentsWithProgress: AttachmentMetadataWithProgress[] | undefined
+): boolean => {
+  return !!attachmentsWithProgress?.find((attachment) => !attachment.error);
 };
 
 /**
@@ -45,4 +51,35 @@ export const sanitizeText = (message: string): string => {
   } else {
     return message;
   }
+};
+
+/**
+ * Determines whether the send box should be disabled for ARIA accessibility.
+ *
+ * @param hasContent - Indicates whether the send box has content.
+ * @param hasCompletedAttachmentUploads - Indicates whether attachment uploads have completed.
+ * @param hasError - Indicates whether there is an error.
+ * @param disabled - Indicates whether the send box is disabled.
+ * @returns A boolean value indicating whether the send box should be disabled for ARIA accessibility.
+ */
+export const isSendBoxButtonAriaDisabled = ({
+  hasContent,
+  /* @conditional-compile-remove(attachment-upload) */
+  hasCompletedAttachmentUploads,
+  hasError,
+  disabled
+}: {
+  hasContent: boolean;
+  /* @conditional-compile-remove(attachment-upload) */
+  hasCompletedAttachmentUploads: boolean;
+  hasError: boolean;
+  disabled: boolean;
+}): boolean => {
+  return (
+    // no content
+    !(hasContent || /* @conditional-compile-remove(attachment-upload) */ hasCompletedAttachmentUploads) ||
+    //error message exists
+    hasError ||
+    disabled
+  );
 };

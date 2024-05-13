@@ -22,7 +22,6 @@ import { useLocale } from '../../localization';
 import { MoreButton } from '../../common/MoreButton';
 import { usePropsFor } from '../hooks/usePropsFor';
 import { buttonFlyoutIncreasedSizeStyles } from '../styles/Buttons.styles';
-/* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(rooms) */
 import { useAdapter } from '../adapter/CallAdapterProvider';
 import { isDisabled } from '../utils';
 import { callControlsContainerStyles } from '../styles/CallPage.styles';
@@ -36,12 +35,10 @@ import {
   generateCustomCallDesktopOverflowButtons,
   onFetchCustomButtonPropsTrampoline
 } from '../../common/ControlBar/CustomButton';
-/* @conditional-compile-remove(reaction) */
 import { Reaction } from './buttons/Reaction';
-/* @conditional-compile-remove(reaction) */
 import { useSelector } from '../hooks/useSelector';
-/* @conditional-compile-remove(reaction) */
 import { capabilitySelector } from '../../CallComposite/selectors/capabilitySelector';
+import { callStatusSelector } from '../../CallComposite/selectors/callStatusSelector';
 
 /**
  * @private
@@ -90,7 +87,6 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
     [props.isMobile, props.options]
   );
 
-  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(rooms) */
   const adapter = useAdapter();
 
   const localeStrings = useLocale();
@@ -118,11 +114,12 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
 
   const raiseHandButtonProps = usePropsFor(RaiseHandButton) as RaiseHandButtonProps;
 
-  /* @conditional-compile-remove(reaction) */
   const capabilitiesSelector = useSelector(capabilitySelector);
-  /* @conditional-compile-remove(reaction) */
+  const callState = useSelector(callStatusSelector);
   const isReactionAllowed =
-    !capabilitiesSelector?.capabilities || capabilitiesSelector.capabilities.useReactions.isPresent;
+    callState.callStatus !== 'Connected' ||
+    !capabilitiesSelector?.capabilities ||
+    capabilitiesSelector.capabilities.useReactions.isPresent;
 
   const devicesButtonProps = usePropsFor(DevicesButton);
 
@@ -155,9 +152,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
     numberOfButtons++;
   }
 
-  /* @conditional-compile-remove(reaction) */
   const showReactionButtonInControlBar = isEnabled(options?.reactionButton) && isReactionAllowed && !props.isMobile;
-  /* @conditional-compile-remove(reaction) */
   if (showReactionButtonInControlBar) {
     numberOfButtons++;
   }
@@ -233,13 +228,10 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
     showMoreButton = isEnabled(options?.moreButton);
   }
 
-  /* @conditional-compile-remove(reaction) */
   const reactionResources = adapter.getState().reactions;
   const raiseHandButtonIsEnabled = isEnabled(options?.raiseHandButton);
   let showRaiseHandButtonInControlBar = raiseHandButtonIsEnabled;
-  /* @conditional-compile-remove(rooms) */
   const role = adapter.getState().call?.role;
-  /* @conditional-compile-remove(rooms) */
   const hideRaiseHandButtonInRoomsCall =
     adapter.getState().isRoomsCall && role && ['Consumer', 'Unknown'].includes(role);
   if (showRaiseHandButtonInControlBar && (props.isMobile ? numberOfButtons < 5 : true)) {
@@ -268,7 +260,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
     });
   }
 
-  if (!showRaiseHandButtonInControlBar && /* @conditional-compile-remove(rooms) */ !hideRaiseHandButtonInRoomsCall) {
+  if (!showRaiseHandButtonInControlBar && !hideRaiseHandButtonInRoomsCall) {
     moreButtonMenuItems.push({
       key: 'raiseHandButtonKey',
       text: raiseHandButtonProps.checked
@@ -353,16 +345,12 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
           {cameraButtonIsEnabled && (
             <Camera displayType={options?.displayType} disabled={isDisabled(options?.cameraButton)} />
           )}
-          {
-            /* @conditional-compile-remove(reaction) */
-            showReactionButtonInControlBar && reactionResources && (
-              <Reaction displayType={options?.displayType} reactionResource={reactionResources} />
-            )
-          }
-          {showRaiseHandButtonInControlBar &&
-            /* @conditional-compile-remove(rooms) */ !hideRaiseHandButtonInRoomsCall && (
-              <RaiseHand displayType={options?.displayType} />
-            )}
+          {showReactionButtonInControlBar && reactionResources && (
+            <Reaction displayType={options?.displayType} reactionResource={reactionResources} />
+          )}
+          {showRaiseHandButtonInControlBar && !hideRaiseHandButtonInRoomsCall && (
+            <RaiseHand displayType={options?.displayType} />
+          )}
           {screenShareButtonIsEnabled && (
             <ScreenShare
               option={options?.screenShareButton}
@@ -438,8 +426,5 @@ const isEnabled = (option: unknown): boolean => option !== false;
 
 /** @private */
 export const isRoomsCallTrampoline = (adapter: CommonCallAdapter): boolean => {
-  /* @conditional-compile-remove(rooms) */
   return adapter.getState().isRoomsCall;
-
-  return false;
 };

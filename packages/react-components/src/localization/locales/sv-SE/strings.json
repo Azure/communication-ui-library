@@ -24,27 +24,40 @@
     "placeholderText": "Skriv ett meddelande",
     "textTooLong": "Meddelandelängden överskrider maxgränsen.",
     "sendButtonAriaLabel": "Skicka meddelande",
-    "fileUploadsPendingError": "Uppladdning pågår... Vänta.",
-    "removeFile": "Ta bort filen",
+    "attachmentUploadsPendingError": "Uppladdning pågår... Vänta.",
+    "removeAttachment": "Ta bort fil",
     "uploading": "Laddar upp",
-    "uploadCompleted": "Uppladdningen har slutförts"
+    "uploadCompleted": "Uppladdningen har slutförts",
+    "attachmentMoreMenu": "Fler alternativ"
   },
   "richTextSendBox": {
     "placeholderText": "Skriv ett meddelande",
     "textTooLong": "Meddelandelängden överskrider maxgränsen.",
     "sendButtonAriaLabel": "Skicka meddelande",
-    "fileUploadsPendingError": "Laddar upp... Var god vänta.",
-    "removeFile": "Ta bort fil",
+    "attachmentUploadsPendingError": "Laddar upp... Var god vänta.",
+    "removeAttachment": "Ta bort filen",
     "uploading": "Laddar upp",
     "uploadCompleted": "Uppladdningen har slutförts",
-    "boldTooltip": "Fet",
-    "italicTooltip": "Kursiv",
-    "underlineTooltip": "Understruken",
-    "bulletListTooltip": "Punktlista",
-    "numberListTooltip": "Numrerad lista",
-    "increaseIndentTooltip": "Öka indrag",
-    "decreaseIndentTooltip": "Minska indrag",
-    "richTextFormatButtonTooltip": "Format"
+    "richTextBoldTooltip": "Fet",
+    "richTextItalicTooltip": "Kursiv",
+    "richTextUnderlineTooltip": "Understruken",
+    "richTextBulletListTooltip": "Punktlista",
+    "richTextNumberListTooltip": "Numrerad lista",
+    "richTextIncreaseIndentTooltip": "Öka indrag",
+    "richTextDecreaseIndentTooltip": "Minska indrag",
+    "richTextInsertTableTooltip": "Infoga tabell",
+    "richTextFormatButtonTooltip": "Format",
+    "richTextInsertRowOrColumnMenu": "Infoga",
+    "richTextInsertTableMenuTitle": "Infoga tabell på {column} x {row}",
+    "richTextInsertRowAboveMenu": "Infoga ovan",
+    "richTextInsertRowBelowMenu": "Infoga nedanför",
+    "richTextInsertColumnLeftMenu": "Infoga till vänster",
+    "richTextInsertColumnRightMenu": "Infoga till höger",
+    "richTextDeleteRowOrColumnMenu": "Ta bort",
+    "richTextDeleteColumnMenu": "Ta bort kolumn",
+    "richTextDeleteRowMenu": "Ta bort rad",
+    "richTextDeleteTableMenu": "Ta bort tabell",
+    "attachmentMoreMenu": "Fler alternativ"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Förslag"
@@ -66,7 +79,9 @@
   },
   "endCallButton": {
     "label": "Lämna",
-    "tooltipContent": "Lämna samtal"
+    "tooltipContent": "Lämna samtal",
+    "leaveOption": "Lämna",
+    "endCallOption": "Avsluta samtal för alla"
   },
   "cameraButton": {
     "onLabel": "Kamera",
@@ -179,10 +194,11 @@
     "editBoxSubmitButton": "Klar",
     "messageReadCount": "Läst av {messageReadByCount} av {remoteParticipantsCount}",
     "actionMenuMoreOptions": "Fler alternativ",
-    "downloadFile": "Ladda ner fil",
+    "downloadAttachment": "Ladda ner fil",
+    "openAttachment": "Öppna fil",
     "blockedWarningText": "Det här meddelandet har tagits bort på grund av en organisationsprincip.",
     "blockedWarningLinkText": "Information",
-    "fileCardGroupMessage": "Meddelandet har {fileCount} bifogad fil",
+    "attachmentCardGroupMessage": "Meddelandet har {attachmentCount} bifogade filer.",
     "messageDeletedAnnouncementAriaLabel": "Meddelandet har tagits bort"
   },
   "errorBar": {

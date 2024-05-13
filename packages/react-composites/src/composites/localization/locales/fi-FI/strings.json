@@ -61,11 +61,11 @@
     "removedFromCallMoreDetails": "Toinen osallistuja poisti sinut puhelusta.",
     "removedFromCallTitle": "Sinut on poistettu",
     "removeMenuLabel": "Poista",
-    "startSpotlightParticipantListMenuLabel": "Lisää valokeilaan kaikille",
-    "addSpotlightParticipantListMenuLabel": "Lisää valokeilaan",
-    "stopSpotlightParticipantListMenuLabel": "Poista valokeilasta",
-    "stopSpotlightOnSelfParticipantListMenuLabel": "Valokeila",
-    "spotlightLimitReachedParticipantListMenuTitle": "Spotlight-raja saavutettu",
+    "startSpotlightMenuLabel": "Lisää valokeilaan kaikille",
+    "addSpotlightMenuLabel": "Lisää valokeilaan",
+    "stopSpotlightMenuLabel": "Poista valokeilasta",
+    "stopSpotlightOnSelfMenuLabel": "Valokeila",
+    "spotlightLimitReachedMenuTitle": "Spotlight-raja saavutettu",
     "stopAllSpotlightMenuLabel": "Poista kaikki valokeilat",
     "returnToCallButtonAriaDescription": "Palaa puheluun",
     "returnToCallButtonAriaLabel": "Takaisin",
@@ -244,6 +244,10 @@
       "shareScreen": {
         "lostDueToRoleChangeToAttendee": "Roolisi on muuttunut. Jotkin toiminnot, kuten sisällön jakaminen, eivät ole käytettävissäsi.",
         "grantedDueToRoleChangeToPresenter": "Olet esittäjä. Voit jakaa sisältöä ja johtaa kokousta."
+      },
+      "hideAttendeeNames": {
+        "hideAttendeeNameAttendee": "Nimesi on piilotettu muilta osallistujilta. Järjestäjät ja esittäjät voivat nähdä oikean nimesi.",
+        "hideAttendeeNamePresenter": "Osallistujien nimet on piilotettu. Vain järjestäjät ja esittäjät voivat nähdä nimet osallistujien yksityisyyden suojaamiseksi."
       }
     },
     "surveyTitle": "Auta kehittämään tuotetta",
@@ -259,7 +263,6 @@
     "tagsSurveyQuestion": "Mikä olisi voinut olla paremmin?",
     "tagsSurveyTextFieldDefaultText": "Muu, anna kuvaus",
     "tagsSurveyHelperText": "Tarkista havaitsematsi ongelmat",
-    "surveyTextboxDefaultText": "Muu, anna kuvaus",
     "endOfSurveyText": "Kiitos palautteestasi!",
     "surveyIssues": {
       "overallRating": {
@@ -301,7 +304,7 @@
         "otherIssues": "Minulla oli puhelun aikana muita näytön jakamiseen liittyviä ongelmia"
       }
     },
-    "SurveyIssuesHeadingStrings": {
+    "surveyIssuesHeadingStrings": {
       "overallRating": "Yleinen",
       "audioRating": "Äänet",
       "videoRating": "Video",
@@ -315,18 +318,28 @@
       "startSpotlightCancelButtonLabel": "Peruuta",
       "stopSpotlightHeading": "Haluatko poistaa videon valokeilasta?",
       "stopSpotlightOnSelfHeading": "Haluatko poistua valokeilasta?",
+      "stopAllSpotlightHeading": "Poistetaanko kaikki videot valokeilasta?",
       "stopSpotlightText": "Videota ei enää korosteta kaikille kokouksen osallistujille.",
       "stopSpotlightOnSelfText": "Videota ei enää korosteta kaikille kokouksen osallistujille.",
+      "stopAllSpotlightText": "Videoita ei enää korosteta kaikille kokouksen osallistujille.",
       "stopSpotlightConfirmButtonLabel": "Poista valokeilasta",
       "stopSpotlightOnSelfConfirmButtonLabel": "Valokeila",
       "stopSpotlightCancelButtonLabel": "Peruuta"
     },
     "exitSpotlightButtonLabel": "Poistu valokeilasta",
-    "exitSpotlightButtonTooltip": "Poistu valokeilasta"
+    "exitSpotlightButtonTooltip": "Poistu valokeilasta",
+    "leaveConfirmButtonLabel": "Poistu",
+    "endCallConfirmButtonLabel": "Lopeta puhelu",
+    "hangUpCancelButtonLabel": "Peruuta",
+    "leaveConfirmDialogTitle": "Poistutaanko puhelusta?",
+    "leaveConfirmDialogContent": "Haluatko varmasti poistua puhelusta?",
+    "endCallConfirmDialogTitle": "Lopetetaanko puhelu?",
+    "endCallConfirmDialogContent": "Puhelu lopetetaan kaikkien osallistujien osalta.",
+    "invalidMeetingIdentifier": "Virheellinen kokoustunnus tai tunnuskoodi"
   },
   "chat": {
     "chatListHeader": "Tässä keskustelussa",
-    "uploadFile": "Lataa tiedosto palvelimeen"
+    "uploadAttachment": "Lataa liite"
   },
   "callWithChat": {
     "chatButtonLabel": "Keskustelu",

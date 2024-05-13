@@ -1,9 +1,0 @@
-{
-  "type": "none",
-  "area": "improvement",
-  "workstream": "storybook",
-  "comment": "Improved storybook wording and make sure code snippets do not include return statements, and move survey story to internal folder ",
-  "packageName": "@azure/communication-react",
-  "email": "96077406+carocao-msft@users.noreply.github.com",
-  "dependentChangeType": "none"
-}

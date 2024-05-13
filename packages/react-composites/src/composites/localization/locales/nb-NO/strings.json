@@ -61,11 +61,11 @@
     "removedFromCallMoreDetails": "En annen deltaker fjernet deg fra samtalen.",
     "removedFromCallTitle": "Du ble fjernet",
     "removeMenuLabel": "Fjern",
-    "startSpotlightParticipantListMenuLabel": "Sett i rampelyset for alle",
-    "addSpotlightParticipantListMenuLabel": "Legg til rampelys",
-    "stopSpotlightParticipantListMenuLabel": "Fjern fra rampelyset",
-    "stopSpotlightOnSelfParticipantListMenuLabel": "Rampelys av",
-    "spotlightLimitReachedParticipantListMenuTitle": "Rampelys-grensen er nådd",
+    "startSpotlightMenuLabel": "Sett i rampelyset for alle",
+    "addSpotlightMenuLabel": "Legg til rampelys",
+    "stopSpotlightMenuLabel": "Fjern fra rampelyset",
+    "stopSpotlightOnSelfMenuLabel": "Rampelys av",
+    "spotlightLimitReachedMenuTitle": "Rampelys-grensen er nådd",
     "stopAllSpotlightMenuLabel": "Stopp rampelyset for alle",
     "returnToCallButtonAriaDescription": "Gå tilbake til samtale",
     "returnToCallButtonAriaLabel": "Tilbake",
@@ -244,6 +244,10 @@
       "shareScreen": {
         "lostDueToRoleChangeToAttendee": "Rollen din er endret. Noen handlinger, for eksempel deling av innhold, vil ikke være tilgjengelige for deg.",
         "grantedDueToRoleChangeToPresenter": "Du er presentatør. Du kan dele innhold og tilrettelegge møtet."
+      },
+      "hideAttendeeNames": {
+        "hideAttendeeNameAttendee": "Navnet ditt er skjult for andre deltakere. Arrangører og presentatører kan se ditt virkelige navn.",
+        "hideAttendeeNamePresenter": "Deltakernavn er skjult. Bare arrangører og presentatører kan se navn for å beskytte deltakernes personvern."
       }
     },
     "surveyTitle": "Hjelp oss med å bli bedre",
@@ -259,7 +263,6 @@
     "tagsSurveyQuestion": "Hva kunne ha vært bedre?",
     "tagsSurveyTextFieldDefaultText": "Annet, spesifiser",
     "tagsSurveyHelperText": "Merk eventuelle problemer du har opplevd.",
-    "surveyTextboxDefaultText": "Annet, spesifiser",
     "endOfSurveyText": "Takk for tilbakemeldingen!",
     "surveyIssues": {
       "overallRating": {
@@ -301,7 +304,7 @@
         "otherIssues": "Jeg hadde andre problemer med skjermdeling i denne samtalen"
       }
     },
-    "SurveyIssuesHeadingStrings": {
+    "surveyIssuesHeadingStrings": {
       "overallRating": "Samlet vurdering",
       "audioRating": "Lyd",
       "videoRating": "Video",
@@ -315,18 +318,28 @@
       "startSpotlightCancelButtonLabel": "Avbryt",
       "stopSpotlightHeading": "Slutte å sette denne videoen i rampelyset?",
       "stopSpotlightOnSelfHeading": "Fjern rampelyset?",
+      "stopAllSpotlightHeading": "Vil du stoppe rampelyset for alle videoer?",
       "stopSpotlightText": "Denne videoen vil ikke lenger være uthevet for alle i møtet.",
       "stopSpotlightOnSelfText": "Videoen vil ikke lenger være uthevet for alle i møtet.",
+      "stopAllSpotlightText": "Videoene vil ikke lenger være uthevet for alle i møtet.",
       "stopSpotlightConfirmButtonLabel": "Fjern fra rampelyset",
       "stopSpotlightOnSelfConfirmButtonLabel": "Rampelys av",
       "stopSpotlightCancelButtonLabel": "Avbryt"
     },
     "exitSpotlightButtonLabel": "Rampelys av",
-    "exitSpotlightButtonTooltip": "Rampelys av"
+    "exitSpotlightButtonTooltip": "Rampelys av",
+    "leaveConfirmButtonLabel": "Forlat",
+    "endCallConfirmButtonLabel": "Avslutt samtalen",
+    "hangUpCancelButtonLabel": "Avbryt",
+    "leaveConfirmDialogTitle": "Forlat chatten",
+    "leaveConfirmDialogContent": "Er du sikker på at du vil forlate samtalen?",
+    "endCallConfirmDialogTitle": "Avslutt samtalen?",
+    "endCallConfirmDialogContent": "Du avslutter møtet for alle.",
+    "invalidMeetingIdentifier": "Ugyldig møte-ID eller passord"
   },
   "chat": {
     "chatListHeader": "I denne chatten",
-    "uploadFile": "Last opp fil"
+    "uploadAttachment": "Last opp vedlegg"
   },
   "callWithChat": {
     "chatButtonLabel": "Chat",

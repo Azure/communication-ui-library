@@ -24,27 +24,40 @@
     "placeholderText": "Nachricht eingeben",
     "textTooLong": "Ihre Nachrichtenlänge überschreitet den maximalen Grenzwert.",
     "sendButtonAriaLabel": "Nachricht senden",
-    "fileUploadsPendingError": "Wird hochgeladen... Bitte warten.",
-    "removeFile": "Datei entfernen",
+    "attachmentUploadsPendingError": "Wird hochgeladen... Bitte warten.",
+    "removeAttachment": "Datei entfernen",
     "uploading": "Hochladen",
-    "uploadCompleted": "Upload abgeschlossen"
+    "uploadCompleted": "Upload abgeschlossen",
+    "attachmentMoreMenu": "Mehr Optionen"
   },
   "richTextSendBox": {
     "placeholderText": "Nachricht eingeben",
     "textTooLong": "Ihre Nachrichtenlänge überschreitet den maximalen Grenzwert.",
     "sendButtonAriaLabel": "Nachricht senden",
-    "fileUploadsPendingError": "Wird hochgeladen... Bitte warten.",
-    "removeFile": "Datei entfernen",
+    "attachmentUploadsPendingError": "Wird hochgeladen... Bitte warten.",
+    "removeAttachment": "Datei entfernen",
     "uploading": "Wird hochgeladen",
     "uploadCompleted": "Upload abgeschlossen",
-    "boldTooltip": "Fett",
-    "italicTooltip": "Kursiv",
-    "underlineTooltip": "Unterstreichen",
-    "bulletListTooltip": "Aufzählungsliste",
-    "numberListTooltip": "Nummerierte Liste",
-    "increaseIndentTooltip": "Einzug vergrößern",
-    "decreaseIndentTooltip": "Einzug verringern",
-    "richTextFormatButtonTooltip": "Formatieren"
+    "richTextBoldTooltip": "Fett",
+    "richTextItalicTooltip": "Kursiv",
+    "richTextUnderlineTooltip": "Unterstreichen",
+    "richTextBulletListTooltip": "Aufzählungsliste",
+    "richTextNumberListTooltip": "Nummerierte Liste",
+    "richTextIncreaseIndentTooltip": "Einzug vergrößern",
+    "richTextDecreaseIndentTooltip": "Einzug verringern",
+    "richTextInsertTableTooltip": "Tabelle einfügen",
+    "richTextFormatButtonTooltip": "Formatieren",
+    "richTextInsertRowOrColumnMenu": "Einfügen",
+    "richTextInsertTableMenuTitle": "{column} x {row} Tabelle einfügen",
+    "richTextInsertRowAboveMenu": "Oben einfügen",
+    "richTextInsertRowBelowMenu": "Darunter einfügen",
+    "richTextInsertColumnLeftMenu": "Links einfügen",
+    "richTextInsertColumnRightMenu": "Rechts einfügen",
+    "richTextDeleteRowOrColumnMenu": "Löschen",
+    "richTextDeleteColumnMenu": "Spalte löschen",
+    "richTextDeleteRowMenu": "Zeile löschen",
+    "richTextDeleteTableMenu": "Tabelle löschen",
+    "attachmentMoreMenu": "Mehr Optionen"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Vorschläge"
@@ -66,7 +79,9 @@
   },
   "endCallButton": {
     "label": "Verlassen",
-    "tooltipContent": "Anruf verlassen"
+    "tooltipContent": "Anruf verlassen",
+    "leaveOption": "Beenden",
+    "endCallOption": "Anruf für alle beenden"
   },
   "cameraButton": {
     "onLabel": "Kamera",
@@ -179,10 +194,11 @@
     "editBoxSubmitButton": "Fertig",
     "messageReadCount": "Gelesen von {messageReadByCount} von {remoteParticipantsCount}",
     "actionMenuMoreOptions": "Weitere Optionen",
-    "downloadFile": "Datei herunterladen",
+    "downloadAttachment": "Datei herunterladen",
+    "openAttachment": "Datei öffnen",
     "blockedWarningText": "Diese Nachricht wurde aufgrund einer Organisationsrichtlinie gelöscht.",
     "blockedWarningLinkText": "Details",
-    "fileCardGroupMessage": "Die Nachricht weist eine {fileCount}-Anlage auf",
+    "attachmentCardGroupMessage": "Die Nachricht enthält {attachmentCount} Anlage.",
     "messageDeletedAnnouncementAriaLabel": "Die Nachricht wurde gelöscht"
   },
   "errorBar": {

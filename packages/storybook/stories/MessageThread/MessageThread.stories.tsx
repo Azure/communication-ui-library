@@ -40,7 +40,8 @@ import {
   GenerateMockCustomMessage,
   GetAvatarUrlByUserId,
   GenerateMockNewChatMessageWithInlineImage,
-  GenerateMockNewChatMessageWithMention
+  GenerateMockNewChatMessageWithMention,
+  GenerateMockNewChatMessageWithAttachment
 } from './placeholdermessages';
 import { MessageThreadWithBlockedMessagesExample } from './snippets/BlockedMessages.snippet';
 import { MessageThreadWithCustomAvatarExample } from './snippets/CustomAvatar.snippet';
@@ -52,11 +53,13 @@ import { MessageThreadWithCustomMessageStatusIndicatorExample } from './snippets
 import { MessageThreadWithCustomTimestampExample } from './snippets/CustomTimestamp.snippet';
 import { DefaultMessageThreadExample } from './snippets/Default.snippet';
 import { MessageThreadWithMessageStatusIndicatorExample } from './snippets/MessageStatusIndicator.snippet';
+import { MessageWithAttachment } from './snippets/MessageWithAttachment.snippet';
+import { MessageWithCustomAttachment } from './snippets/MessageWithCustomAttachment.snippet';
 import { MessageWithCustomMentionRenderer } from './snippets/MessageWithCustomMentionRenderer.snippet';
-import { MessageWithFile } from './snippets/MessageWithFile.snippet';
 import { MessageThreadWithSystemMessagesExample } from './snippets/SystemMessages.snippet';
 import { MessageThreadWithInlineImageExample } from './snippets/WithInlineImageMessage.snippet';
 import { MessageThreadWithMessageDateExample } from './snippets/WithMessageDate.snippet';
+import { MessageThreadWithRichTextEditorExample } from './snippets/WithRichTextEditor.snippet';
 
 const MessageThreadWithBlockedMessagesExampleText =
   require('!!raw-loader!./snippets/BlockedMessages.snippet.tsx').default;
@@ -76,15 +79,18 @@ const MessageThreadWithCustomTimestampExampleText =
 const DefaultMessageThreadExampleText = require('!!raw-loader!./snippets/Default.snippet.tsx').default;
 const MessageThreadWithMessageStatusIndicatorExampleText =
   require('!!raw-loader!./snippets/MessageStatusIndicator.snippet.tsx').default;
+const MessageWithAttachmentText = require('!!raw-loader!./snippets/MessageWithAttachment.snippet.tsx').default;
+const MessageWithCustomAttachmentText =
+  require('!!raw-loader!./snippets/MessageWithCustomAttachment.snippet.tsx').default;
 const MessageWithCustomMentionRendererText =
   require('!!raw-loader!./snippets/MessageWithCustomMentionRenderer.snippet.tsx').default;
-const MessageWithFileText = require('!!raw-loader!./snippets/MessageWithFile.snippet.tsx').default;
 const ExampleConstantsText = require('!!raw-loader!./snippets/placeholdermessages.ts').default;
 const MessageThreadWithSystemMessagesExampleText =
   require('!!raw-loader!./snippets/SystemMessages.snippet.tsx').default;
 const MessageThreadWithInlineImageExampleText =
   require('!!raw-loader!./snippets/WithInlineImageMessage.snippet.tsx').default;
 const MessageThreadWithMessageDateExampleText = require('!!raw-loader!./snippets/WithMessageDate.snippet.tsx').default;
+const MessageThreadWithRichTextEditorText = require('!!raw-loader!./snippets/WithRichTextEditor.snippet.tsx').default;
 
 const importStatement = `
 import { FluentThemeProvider, MessageThread } from '@azure/communication-react';
@@ -109,8 +115,9 @@ const Docs: () => JSX.Element = () => {
   const refCustomAvatar = useRef(null);
   const refCustomTimestamp = useRef(null);
   const refDisplayInlineImages = useRef(null);
-  const refDisplayFileAttachments = useRef(null);
+  const refDisplayAttachments = useRef(null);
   const refMentionOfUsers = useRef(null);
+  const refRichTextEditor = useRef(null);
   const refProps = useRef(null);
 
   const scrollToRef = (ref): void => {
@@ -151,10 +158,12 @@ const Docs: () => JSX.Element = () => {
       scrollToRef(refCustomTimestamp);
     } else if (url.includes('display-inline-image-with-messages') && refDisplayInlineImages.current) {
       scrollToRef(refDisplayInlineImages);
-    } else if (url.includes('display-file-attachments-with-messages') && refDisplayFileAttachments.current) {
-      scrollToRef(refDisplayFileAttachments);
+    } else if (url.includes('display-attachments-with-messages') && refDisplayAttachments.current) {
+      scrollToRef(refDisplayAttachments);
     } else if (url.includes('mention-of-users-with-a-custom-renderer-within-messages') && refMentionOfUsers.current) {
       scrollToRef(refMentionOfUsers);
+    } else if (url.includes('rich-text-editor-support-for-editing-messages') && refRichTextEditor.current) {
+      scrollToRef(refRichTextEditor);
     } else if (url.includes('props') && refProps.current) {
       scrollToRef(refProps);
     }
@@ -172,7 +181,7 @@ const Docs: () => JSX.Element = () => {
     refCustomAvatar,
     refCustomTimestamp,
     refDisplayInlineImages,
-    refDisplayFileAttachments,
+    refDisplayAttachments,
     refMentionOfUsers,
     refProps
   ]);
@@ -187,6 +196,12 @@ const Docs: () => JSX.Element = () => {
         MessageThread internally uses the `Chat` &amp; `ChatMessage` components from `@fluentui-contrib/chat`. You can
         checkout the details about these components
         [here](https://microsoft.github.io/fluentui-contrib/react-chat/?path=/story/chat--default).
+      </Description>
+      <Description>
+        The MessageThread component supports lazy loading for the rich text editor used for editing messages. This means
+        that the rich text editor and its dependencies can be excluded from the bundle if they're not required,
+        utilizing tree-shaking techniques such as [the sideEffects
+        option](https://webpack.js.org/guides/tree-shaking/#mark-the-file-as-side-effect-free) in webpack.
       </Description>
 
       <Heading>Importing</Heading>
@@ -329,18 +344,24 @@ const Docs: () => JSX.Element = () => {
         </Canvas>
       </div>
 
-      <div ref={refDisplayFileAttachments}>
-        <Heading>Display File Attachments with Messages</Heading>
+      <div ref={refDisplayAttachments}>
+        <Heading>Display Messages with Attachments</Heading>
         <DetailedBetaBanner />
         <Description>
-          MessageThread component provides UI for displaying file attachments in a message. This allows developers to
-          implement a file sharing feature using the pure UI component with minimal effort. Developers can write their
-          own file download logic and utilize the UI provided by MessageThread. Clicking on the file attachment opens it
-          in a new browser tab. Developers can override this behavior as well using MessageThread props. [The file types
-          icons](./?path=/docs/icons--page) should be initialized before rendering MessageThread component.
+          The MessageThread component supports rendering of message attachments, including multiple ways to customize
+          it. Developers can opt to use the default attachment rendering by not providing `attachmentOptions`. In the
+          following example, the default attachment rendering is shown with an attachment on the first chat message. By
+          default, the browser `window.open` method will be called with the target URL.
         </Description>
-        <Canvas mdxSource={MessageWithFileText}>
-          <MessageWithFile />
+        <Canvas mdxSource={MessageWithAttachmentText}>
+          <MessageWithAttachment />
+        </Canvas>
+        <Description>
+          The `attachmentOptions` allows the attachmentCard to be customized in multiple ways. For example, developers
+          can have a custom icon, label for the button and custom `onClick` callback.
+        </Description>
+        <Canvas mdxSource={MessageWithCustomAttachmentText}>
+          <MessageWithCustomAttachment />
         </Canvas>
       </div>
 
@@ -353,8 +374,26 @@ const Docs: () => JSX.Element = () => {
           further customization. The HTML Tag is defined:
         </Description>
         <Source code={mentionTag} />
+        <Description>
+          The MessageThread component also supports mentioning users when editing a message if the `lookupOptions` under
+          the `mentionOptions` property is provided. However, if the `richTextEditor` property is set to true, the
+          `lookupOptions` will be ignored.
+        </Description>
         <Canvas mdxSource={MessageWithCustomMentionRendererText}>
           <MessageWithCustomMentionRenderer />
+        </Canvas>
+      </div>
+
+      <div ref={refRichTextEditor}>
+        <Heading>Rich Text Editor Support for Editing Messages</Heading>
+        <DetailedBetaBanner />
+        <Description>
+          The following example shows how to enable rich text editor for message editing by providing the
+          `richTextEditor` property. Rich text editor does not support mentioning users at the moment. By setting
+          `richTextEditor` property to true, the `lookupOptions` under the `mentionOptions` property will be ignored.
+        </Description>
+        <Canvas mdxSource={MessageThreadWithRichTextEditorText}>
+          <MessageThreadWithRichTextEditorExample />
         </Canvas>
       </div>
 
@@ -374,6 +413,7 @@ const MessageThreadStory = (args): JSX.Element => {
     { key: 'newMessage', text: 'New Message' },
     { key: 'newMessageOthers', text: 'New Message from others' },
     { key: 'newMessageWithInlineImage', text: 'New Message with Inline Image' },
+    { key: 'newMessageWithAttachment', text: 'New Message with Attachment' },
     { key: 'newMessageWithMention', text: 'New Message with Mention' },
     { key: 'newSystemMessage', text: 'New System Message' },
     { key: 'newCustomMessage', text: 'New Custom Message' }
@@ -400,6 +440,10 @@ const MessageThreadStory = (args): JSX.Element => {
 
   const onSendNewMessageWithInlineImage = (): void => {
     setChatMessages([...chatMessages, GenerateMockNewChatMessageWithInlineImage()]);
+  };
+
+  const onSendNewMessageWithAttachment = (): void => {
+    setChatMessages([...chatMessages, GenerateMockNewChatMessageWithAttachment()]);
   };
 
   const onSendNewMessageWithMention = (): void => {
@@ -437,6 +481,9 @@ const MessageThreadStory = (args): JSX.Element => {
     if (message.messageType === 'chat') {
       message.content = content;
       message.editedOn = new Date(Date.now());
+      if (args.richTextEditor === true) {
+        message.contentType = 'html';
+      }
     }
     updatedChatMessages[msgIdx] = message;
     setChatMessages(updatedChatMessages);
@@ -444,7 +491,7 @@ const MessageThreadStory = (args): JSX.Element => {
   };
 
   const [overlayImageItem, setOverlayImageItem] =
-    useState<{ imageSrc: string; title: string; titleIcon: JSX.Element; downloadFilename: string }>();
+    useState<{ imageSrc: string; title: string; titleIcon: JSX.Element; downloadAttachmentname: string }>();
 
   const onInlineImageClicked = (attachmentId: string, messageId: string): Promise<void> => {
     const messages = chatMessages?.filter((message) => {
@@ -465,7 +512,7 @@ const MessageThreadStory = (args): JSX.Element => {
         setOverlayImageItem({
           title,
           titleIcon,
-          downloadFilename: attachmentId,
+          downloadAttachmentname: attachmentId,
           imageSrc: img.src
         });
       }
@@ -519,6 +566,9 @@ const MessageThreadStory = (args): JSX.Element => {
       case 'newCustomMessage':
         onSendCustomMessage();
         break;
+      case 'newMessageWithAttachment':
+        onSendNewMessageWithAttachment();
+        break;
       default:
         console.log('Invalid message type');
     }
@@ -535,6 +585,7 @@ const MessageThreadStory = (args): JSX.Element => {
         onRenderMessage={onRenderMessage}
         inlineImageOptions={inlineImageOptions}
         onUpdateMessage={onUpdateMessageCallback}
+        richTextEditor={args.richTextEditor}
         onRenderAvatar={(userId?: string) => {
           return (
             <Persona
@@ -590,6 +641,7 @@ export default {
     showMessageDate: controlsToAdd.showMessageDate,
     showMessageStatus: controlsToAdd.showMessageStatus,
     enableJumpToNewMessageButton: controlsToAdd.enableJumpToNewMessageButton,
+    richTextEditor: controlsToAdd.richTextEditor,
     // Hiding auto-generated controls
     styles: hiddenControl,
     strings: hiddenControl,

@@ -24,27 +24,40 @@
     "placeholderText": "Bir mesaj girin",
     "textTooLong": "İletinizin uzunluğu üst sınırı aşıyor.",
     "sendButtonAriaLabel": "İleti gönder",
-    "fileUploadsPendingError": "Karşıya yükleniyor... Lütfen bekleyin.",
-    "removeFile": "Dosyayı kaldır",
+    "attachmentUploadsPendingError": "Karşıya yükleniyor... Lütfen bekleyin.",
+    "removeAttachment": "Dosyayı kaldır",
     "uploading": "Karşıya yükleniyor",
-    "uploadCompleted": "Karşıya yükleme tamamlandı"
+    "uploadCompleted": "Karşıya yükleme tamamlandı",
+    "attachmentMoreMenu": "Diğer Seçenekler"
   },
   "richTextSendBox": {
     "placeholderText": "Bir mesaj girin",
     "textTooLong": "İletinizin uzunluğu üst sınırı aşıyor.",
     "sendButtonAriaLabel": "Mesaj gönder",
-    "fileUploadsPendingError": "Karşıya yükleniyor... Lütfen bekleyin.",
-    "removeFile": "Dosyayı kaldır",
+    "attachmentUploadsPendingError": "Karşıya yükleniyor... Lütfen bekleyin.",
+    "removeAttachment": "Dosyayı kaldır",
     "uploading": "Yükleniyor",
     "uploadCompleted": "Karşıya yükleme tamamlandı",
-    "boldTooltip": "Kalın",
-    "italicTooltip": "İtalik",
-    "underlineTooltip": "Altı çizili",
-    "bulletListTooltip": "Madde işaretli liste",
-    "numberListTooltip": "Numaralandırılmış liste",
-    "increaseIndentTooltip": "Girintiyi artır",
-    "decreaseIndentTooltip": "Girintiyi azalt",
-    "richTextFormatButtonTooltip": "Biçim"
+    "richTextBoldTooltip": "Kalın",
+    "richTextItalicTooltip": "İtalik",
+    "richTextUnderlineTooltip": "Altı çizili",
+    "richTextBulletListTooltip": "Madde işaretli liste",
+    "richTextNumberListTooltip": "Numaralandırılmış liste",
+    "richTextIncreaseIndentTooltip": "Girintiyi artır",
+    "richTextDecreaseIndentTooltip": "Girintiyi azalt",
+    "richTextInsertTableTooltip": "Tablo ekle",
+    "richTextFormatButtonTooltip": "Biçim",
+    "richTextInsertRowOrColumnMenu": "Ekle",
+    "richTextInsertTableMenuTitle": "{column} x {row} tablosunu ekleme",
+    "richTextInsertRowAboveMenu": "Üste ekle",
+    "richTextInsertRowBelowMenu": "Aşağıya ekle",
+    "richTextInsertColumnLeftMenu": "Sola ekle",
+    "richTextInsertColumnRightMenu": "Sağa ekle",
+    "richTextDeleteRowOrColumnMenu": "Sil",
+    "richTextDeleteColumnMenu": "Sütunu sil",
+    "richTextDeleteRowMenu": "Satırı sil",
+    "richTextDeleteTableMenu": "Tabloyu sil",
+    "attachmentMoreMenu": "Diğer Seçenekler"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Öneriler"
@@ -66,7 +79,9 @@
   },
   "endCallButton": {
     "label": "Ayrıl",
-    "tooltipContent": "Aramadan ayrıl"
+    "tooltipContent": "Aramadan ayrıl",
+    "leaveOption": "Ayrıl",
+    "endCallOption": "Aramayı herkes için sonlandır"
   },
   "cameraButton": {
     "onLabel": "Kamera",
@@ -179,10 +194,11 @@
     "editBoxSubmitButton": "Bitti",
     "messageReadCount": "{messageReadByCount} / {remoteParticipantsCount} katılımcı tarafından okundu",
     "actionMenuMoreOptions": "Diğer Seçenekler",
-    "downloadFile": "Dosyayı indir",
+    "downloadAttachment": "Dosyayı indir",
+    "openAttachment": "Dosyayı aç",
     "blockedWarningText": "Bu ileti kuruluş ilkesi nedeniyle silindi.",
     "blockedWarningLinkText": "Ayrıntılar",
-    "fileCardGroupMessage": "İletide {fileCount} ek var",
+    "attachmentCardGroupMessage": "İletinin {attachmentCount} eki var",
     "messageDeletedAnnouncementAriaLabel": "İleti silindi"
   },
   "errorBar": {

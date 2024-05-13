@@ -21,7 +21,7 @@ import {
 } from '@azure/communication-calling';
 import { RaiseHandCallFeature, RaisedHandListener, RaisedHand } from '@azure/communication-calling';
 import { CollectionUpdatedEvent, RecordingInfo } from '@azure/communication-calling';
-/* @conditional-compile-remove(video-background-effects) */
+
 import { VideoEffectsFeature } from '@azure/communication-calling';
 import { CommunicationTokenCredential } from '@azure/communication-common';
 import { AccessToken } from '@azure/core-auth';
@@ -252,7 +252,6 @@ export function createMockCall(mockCallId = 'defaultCallID'): MockCall {
     id: mockCallId,
     /* @conditional-compile-remove(teams-identity-support) */
     kind: 'Call',
-    /* @conditional-compile-remove(close-captions) */
     info: {
       groupId: 'testGroupId'
     },
@@ -324,7 +323,6 @@ export function createMockIncomingCall(mockCallId: string): MockIncomingCall {
   return addMockEmitter(mockIncomingCall);
 }
 
-/* @conditional-compile-remove(video-background-effects) */
 const createMockVideoEffectsAPI = (): VideoEffectsFeature =>
   addMockEmitter({
     activeEffects: ['MockVideoEffect'],
@@ -343,7 +341,7 @@ export const createMockLocalVideoStream = (): LocalVideoStream =>
     },
     mediaStreamType: 'Video',
     switchSource: Promise.resolve,
-    /* @conditional-compile-remove(video-background-effects) */
+
     feature: () => createMockVideoEffectsAPI()
   } as unknown as LocalVideoStream);
 

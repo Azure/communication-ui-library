@@ -6,20 +6,18 @@ import {
   AudioDeviceInfo,
   DeviceAccess,
   DominantSpeakersInfo,
+  ParticipantRole,
   ScalingMode,
   VideoDeviceInfo
 } from '@azure/communication-calling';
 import { RaisedHand } from '@azure/communication-calling';
-/* @conditional-compile-remove(capabilities) */
+
 import { CapabilitiesChangeInfo, ParticipantCapabilities } from '@azure/communication-calling';
-/* @conditional-compile-remove(close-captions) */
 import { TeamsCaptionsInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(acs-close-captions) */
-import { CaptionsInfo as AcsCaptionsInfo } from '@azure/communication-calling';
+import { CaptionsKind, CaptionsInfo as AcsCaptionsInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
-/* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(capabilities) */
-import { ParticipantRole } from '@azure/communication-calling';
 import { AzureLogger, createClientLogger, getLogLevel } from '@azure/logger';
 import EventEmitter from 'events';
 import { enableMapSet, enablePatches, Patch, produce } from 'immer';
@@ -42,22 +40,16 @@ import {
   CallErrorTarget,
   CallError
 } from './CallClientState';
-/* @conditional-compile-remove(close-captions) */
 import { CaptionsInfo } from './CallClientState';
-/* @conditional-compile-remove(reaction) */
 import { ReactionState } from './CallClientState';
-/* @conditional-compile-remove(call-transfer) */
 import { AcceptedTransfer } from './CallClientState';
 import { callingStatefulLogger } from './Logger';
 import { CallIdHistory } from './CallIdHistory';
-/* @conditional-compile-remove(video-background-effects) */
 import { LocalVideoStreamVideoEffectsState } from './CallClientState';
-/* @conditional-compile-remove(close-captions) */
 import { convertFromTeamsSDKToCaptionInfoState } from './Converter';
 /* @conditional-compile-remove(acs-close-captions) */
 import { convertFromSDKToCaptionInfoState } from './Converter';
 import { convertFromSDKToRaisedHandState } from './Converter';
-/* @conditional-compile-remove(reaction) */
 import { ReactionMessage } from '@azure/communication-calling';
 /* @conditional-compile-remove(spotlight) */
 import { SpotlightedParticipant } from '@azure/communication-calling';
@@ -75,6 +67,10 @@ enablePatches();
  * @private
  */
 export const MAX_CALL_HISTORY_LENGTH = 10;
+/**
+ * @private
+ */
+export const REACTION_ANIMATION_TIME_MS = 4133;
 
 /**
  * @private
@@ -85,7 +81,6 @@ export class CallContext {
   private _emitter: EventEmitter;
   private _atomicId: number;
   private _callIdHistory: CallIdHistory = new CallIdHistory();
-  /* @conditional-compile-remove(reaction) */
   private _timeOutId: { [key: string]: NodeJS.Timeout } = {};
 
   constructor(
@@ -180,15 +175,14 @@ export class CallContext {
         /* @conditional-compile-remove(ppt-live) */
         existingCall.pptLive.isActive = call.pptLive.isActive;
         existingCall.raiseHand.localParticipantRaisedHand = call.raiseHand.localParticipantRaisedHand;
-        /* @conditional-compile-remove(rooms) */
         existingCall.role = call.role;
         /* @conditional-compile-remove(total-participant-count) */
         existingCall.totalParticipantCount = call.totalParticipantCount;
         // We don't update the startTime and endTime if we are updating an existing active call
-        /* @conditional-compile-remove(close-captions) */
         existingCall.captionsFeature.currentSpokenLanguage = call.captionsFeature.currentSpokenLanguage;
-        /* @conditional-compile-remove(close-captions) */
         existingCall.captionsFeature.currentCaptionLanguage = call.captionsFeature.currentCaptionLanguage;
+        /* @conditional-compile-remove(meeting-id) */
+        existingCall.info = call.info;
       } else {
         draft.calls[latestCallId] = call;
       }
@@ -324,7 +318,6 @@ export class CallContext {
     });
   }
 
-  /* @conditional-compile-remove(video-background-effects) */
   public setCallLocalVideoStreamVideoEffects(callId: string, videoEffects: LocalVideoStreamVideoEffectsState): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
@@ -346,7 +339,6 @@ export class CallContext {
     });
   }
 
-  /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(capabilities) */
   public setRole(callId: string, role: ParticipantRole): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
@@ -480,7 +472,6 @@ export class CallContext {
     });
   }
 
-  /* @conditional-compile-remove(reaction) */
   public setReceivedReactionFromParticipant(
     callId: string,
     participantKey: string,
@@ -509,7 +500,7 @@ export class CallContext {
       if (reactionMessage) {
         this._timeOutId[participantKey] = setTimeout(() => {
           clearParticipantReactionState(this, callId, participantKey);
-        }, 5120);
+        }, REACTION_ANIMATION_TIME_MS);
       }
     });
   }
@@ -523,7 +514,6 @@ export class CallContext {
     });
   }
 
-  /* @conditional-compile-remove(capabilities) */
   public setCapabilities(
     callId: string,
     capabilities: ParticipantCapabilities,
@@ -533,6 +523,26 @@ export class CallContext {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
         call.capabilitiesFeature = { capabilities, latestCapabilitiesChangeInfo: capabilitiesChangeInfo };
+      }
+    });
+  }
+
+  /* @conditional-compile-remove(hide-attendee-name) */
+  public setHideAttendeeNames(callId: string, capabilitiesChangeInfo: CapabilitiesChangeInfo): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (capabilitiesChangeInfo.oldValue.viewAttendeeNames !== capabilitiesChangeInfo.newValue.viewAttendeeNames) {
+        const viewAttendeeNames = capabilitiesChangeInfo.newValue.viewAttendeeNames;
+        if (
+          call &&
+          viewAttendeeNames &&
+          !viewAttendeeNames.isPresent &&
+          viewAttendeeNames.reason === 'MeetingRestricted'
+        ) {
+          call.hideAttendeeNames = true;
+        } else {
+          call.hideAttendeeNames = false;
+        }
       }
     });
   }
@@ -649,7 +659,6 @@ export class CallContext {
     });
   }
 
-  /* @conditional-compile-remove(rooms) */
   public setParticipantRole(callId: string, participantKey: string, role: ParticipantRole): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
@@ -956,7 +965,6 @@ export class CallContext {
     });
   }
 
-  /* @conditional-compile-remove(video-background-effects) */
   public setDeviceManagerUnparentedViewVideoEffects(
     localVideoStream: LocalVideoStreamState,
     videoEffects: LocalVideoStreamVideoEffectsState
@@ -976,32 +984,43 @@ export class CallContext {
     this._atomicId++;
     return id;
   }
-  /* @conditional-compile-remove(close-captions) */
+
   private processNewCaption(captions: CaptionsInfo[], newCaption: CaptionsInfo): void {
-    // going through current captions to find the last caption said by the same speaker, remove that caption if it's partial and replace with the new caption
-    for (let index = captions.length - 1; index >= 0; index--) {
-      const currentCaption = captions[index];
+    // time stamp when new caption comes in
+    newCaption.timestamp = new Date();
+    // if this is the first caption, push it in
+    if (captions.length === 0) {
+      captions.push(newCaption);
+    }
+    // if the last caption is final, then push the new one in
+    else if (captions[captions.length - 1].resultType === 'Final') {
+      captions.push(newCaption);
+    }
+    // if the last caption is Partial, then check if the speaker is the same as the new caption, if so, update the last caption
+    else {
       if (
-        currentCaption &&
-        currentCaption.resultType !== 'Final' &&
-        currentCaption.speaker.identifier &&
-        newCaption.speaker.identifier &&
-        toFlatCommunicationIdentifier(currentCaption.speaker.identifier) ===
-          toFlatCommunicationIdentifier(newCaption.speaker.identifier)
+        toFlatCommunicationIdentifier(
+          captions[captions.length - 1].speaker.identifier as CommunicationIdentifierKind
+        ) === toFlatCommunicationIdentifier(newCaption.speaker.identifier as CommunicationIdentifierKind)
       ) {
-        captions.splice(index, 1);
-        break;
+        captions[captions.length - 1] = newCaption;
+      }
+      // if different speaker, ignore the interjector until the current speaker finishes
+      // edge case: if we dont receive the final caption from the current speaker for 5 secs, we turn the current speaker caption to final and push in the new interjector
+      else {
+        if (Date.now() - captions[captions.length - 1].timestamp.getTime() > 5000) {
+          captions[captions.length - 1].resultType = 'Final';
+          captions.push(newCaption);
+        }
       }
     }
-
-    captions.push(newCaption);
 
     // If the array length exceeds 50, remove the oldest caption
     if (captions.length > 50) {
       captions.shift();
     }
   }
-  /* @conditional-compile-remove(close-captions) */
+
   public addTeamsCaption(callId: string, caption: TeamsCaptionsInfo): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
@@ -1028,7 +1047,16 @@ export class CallContext {
     });
   }
 
-  /* @conditional-compile-remove(close-captions) */
+  /* @conditional-compile-remove(acs-close-captions) */
+  public setCaptionsKind(callId: string, kind: CaptionsKind): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        call.captionsFeature.captionsKind = kind;
+      }
+    });
+  }
+
   public clearCaptions(callId: string): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
@@ -1038,7 +1066,6 @@ export class CallContext {
     });
   }
 
-  /* @conditional-compile-remove(close-captions) */
   setIsCaptionActive(callId: string, isCaptionsActive: boolean): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
@@ -1048,7 +1075,6 @@ export class CallContext {
     });
   }
 
-  /* @conditional-compile-remove(close-captions) */
   setStartCaptionsInProgress(callId: string, startCaptionsInProgress: boolean): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
@@ -1057,7 +1083,7 @@ export class CallContext {
       }
     });
   }
-  /* @conditional-compile-remove(close-captions) */
+
   setSelectedSpokenLanguage(callId: string, spokenLanguage: string): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
@@ -1066,7 +1092,7 @@ export class CallContext {
       }
     });
   }
-  /* @conditional-compile-remove(close-captions) */
+
   setSelectedCaptionLanguage(callId: string, captionLanguage: string): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
@@ -1075,7 +1101,7 @@ export class CallContext {
       }
     });
   }
-  /* @conditional-compile-remove(close-captions) */
+
   setAvailableCaptionLanguages(callId: string, captionLanguages: string[]): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
@@ -1084,7 +1110,7 @@ export class CallContext {
       }
     });
   }
-  /* @conditional-compile-remove(close-captions) */
+
   setAvailableSpokenLanguages(callId: string, spokenLanguages: string[]): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
@@ -1094,7 +1120,6 @@ export class CallContext {
     });
   }
 
-  /* @conditional-compile-remove(call-transfer) */
   setAcceptedTransfer(callId: string, acceptedTransfer: AcceptedTransfer): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
@@ -1197,7 +1222,6 @@ const findOldestCallEnded = (calls: { [key: string]: { endTime?: Date } }): stri
   return oldestCallId;
 };
 
-/* @conditional-compile-remove(reaction) */
 function clearParticipantReactionState(callContext: CallContext, callId: string, participantKey: string): void {
   callContext.setReceivedReactionFromParticipant(callId, participantKey, null);
 }

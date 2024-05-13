@@ -61,11 +61,11 @@
     "removedFromCallMoreDetails": "Ein anderer Teilnehmer hat Sie aus dem Anruf entfernt.",
     "removedFromCallTitle": "Sie wurden entfernt",
     "removeMenuLabel": "Entfernen",
-    "startSpotlightParticipantListMenuLabel": "Spotlight für alle",
-    "addSpotlightParticipantListMenuLabel": "Spotlight hinzufügen",
-    "stopSpotlightParticipantListMenuLabel": "Spotlight beenden",
-    "stopSpotlightOnSelfParticipantListMenuLabel": "Spotlight beenden",
-    "spotlightLimitReachedParticipantListMenuTitle": "Spotlight-Limit erreicht",
+    "startSpotlightMenuLabel": "Spotlight für alle",
+    "addSpotlightMenuLabel": "Spotlight hinzufügen",
+    "stopSpotlightMenuLabel": "Spotlight beenden",
+    "stopSpotlightOnSelfMenuLabel": "Spotlight beenden",
+    "spotlightLimitReachedMenuTitle": "Spotlight-Limit erreicht",
     "stopAllSpotlightMenuLabel": "Alle Spotlights beenden",
     "returnToCallButtonAriaDescription": "Zurück zum Anruf",
     "returnToCallButtonAriaLabel": "Zurück",
@@ -244,6 +244,10 @@
       "shareScreen": {
         "lostDueToRoleChangeToAttendee": "Ihre Rolle wurde geändert. Einige Aktionen, z. B. das Teilen von Inhalten, stehen Ihnen nicht zur Verfügung.",
         "grantedDueToRoleChangeToPresenter": "Sie sind Referent. Sie können Inhalte teilen und die Besprechung unterstützen."
+      },
+      "hideAttendeeNames": {
+        "hideAttendeeNameAttendee": "Ihr Name ist für andere Teilnehmer ausgeblendet. Organisatoren und Referenten können Ihren richtigen Namen sehen.",
+        "hideAttendeeNamePresenter": "Teilnehmernamen sind ausgeblendet. Nur Organisatoren und Referenten können Namen sehen, um die Privatsphäre der Teilnehmer zu schützen."
       }
     },
     "surveyTitle": "Helfen Sie uns, besser zu werden.",
@@ -259,7 +263,6 @@
     "tagsSurveyQuestion": "Was hätte besser sein können?",
     "tagsSurveyTextFieldDefaultText": "Sonstiges, bitte angeben",
     "tagsSurveyHelperText": "Überprüfen Sie alle aufgetretenen Probleme",
-    "surveyTextboxDefaultText": "Sonstiges, bitte angeben",
     "endOfSurveyText": "Vielen Dank für Ihr Feedback!",
     "surveyIssues": {
       "overallRating": {
@@ -301,7 +304,7 @@
         "otherIssues": "Ich hatte andere Probleme mit der Bildschirmfreigabe in diesem Anruf."
       }
     },
-    "SurveyIssuesHeadingStrings": {
+    "surveyIssuesHeadingStrings": {
       "overallRating": "Insgesamt",
       "audioRating": "Audio",
       "videoRating": "Video",
@@ -315,18 +318,28 @@
       "startSpotlightCancelButtonLabel": "Abbrechen",
       "stopSpotlightHeading": "Dieses Video aus dem Spotlight nehmen?",
       "stopSpotlightOnSelfHeading": "Spotlight verlassen?",
+      "stopAllSpotlightHeading": "Spotlighting aller Videos beenden?",
       "stopSpotlightText": "Dieses Video wird nicht mehr für alle Teilnehmer der Besprechung hervorgehoben.",
       "stopSpotlightOnSelfText": "Ihr Video wird nicht mehr für alle Teilnehmer der Besprechung hervor gehoben.",
+      "stopAllSpotlightText": "Die Videos werden nicht mehr für alle Teilnehmer der Besprechung hervorgehoben.",
       "stopSpotlightConfirmButtonLabel": "Spotlight beenden",
       "stopSpotlightOnSelfConfirmButtonLabel": "Spotlight beenden",
       "stopSpotlightCancelButtonLabel": "Abbrechen"
     },
     "exitSpotlightButtonLabel": "Spotlight beenden",
-    "exitSpotlightButtonTooltip": "Spotlight beenden"
+    "exitSpotlightButtonTooltip": "Spotlight beenden",
+    "leaveConfirmButtonLabel": "Beenden",
+    "endCallConfirmButtonLabel": "Gespräch beenden",
+    "hangUpCancelButtonLabel": "Abbrechen",
+    "leaveConfirmDialogTitle": "Gespräch beenden?",
+    "leaveConfirmDialogContent": "Möchten Sie den Anruf wirklich verlassen?",
+    "endCallConfirmDialogTitle": "Gespräch beenden?",
+    "endCallConfirmDialogContent": "Sie beenden das Gespräch für alle.",
+    "invalidMeetingIdentifier": "Ungültige Besprechungs-ID oder -Kennung"
   },
   "chat": {
     "chatListHeader": "In diesem Chat",
-    "uploadFile": "Datei hochladen"
+    "uploadAttachment": "Anlage hochladen"
   },
   "callWithChat": {
     "chatButtonLabel": "Chat",

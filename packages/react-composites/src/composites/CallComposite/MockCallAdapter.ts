@@ -29,7 +29,7 @@ export class _MockCallAdapter implements CallAdapter {
     localParticipantRole?: ParticipantRole;
   }) {
     this.state = {
-      ...createDefaultCallAdapterState(/* @conditional-compile-remove(rooms) */ testState.localParticipantRole)
+      ...createDefaultCallAdapterState(testState.localParticipantRole)
     };
 
     if (testState.askDevicePermission) {
@@ -161,39 +161,34 @@ export class _MockCallAdapter implements CallAdapter {
     throw Error('getEnvironmentInfo not implemented');
   }
 
-  /* @conditional-compile-remove(close-captions) */
   startCaptions(): Promise<void> {
     throw Error('start captions not implemented');
   }
 
-  /* @conditional-compile-remove(close-captions) */
   setCaptionLanguage(): Promise<void> {
     throw Error('setCaptionLanguage not implemented');
   }
 
-  /* @conditional-compile-remove(close-captions) */
   setSpokenLanguage(): Promise<void> {
     throw Error('setSpokenLanguage not implemented');
   }
 
-  /* @conditional-compile-remove(close-captions) */
   stopCaptions(): Promise<void> {
     throw Error('stopCaptions not implemented');
   }
-  /* @conditional-compile-remove(video-background-effects) */
+
   startVideoBackgroundEffect(): Promise<void> {
     throw new Error('startVideoBackgroundEffect not implemented.');
   }
 
-  /* @conditional-compile-remove(video-background-effects) */
   stopVideoBackgroundEffects(): Promise<void> {
     throw new Error('stopVideoBackgroundEffects not implemented.');
   }
-  /* @conditional-compile-remove(video-background-effects) */
+
   updateBackgroundPickerImages(): void {
     throw new Error('updateBackgroundPickerImages not implemented.');
   }
-  /* @conditional-compile-remove(video-background-effects) */
+
   public updateSelectedVideoBackgroundEffect(): void {
     throw new Error('updateSelectedVideoBackgroundEffect not implemented.');
   }
@@ -245,11 +240,8 @@ const createDefaultCallAdapterState = (role?: ParticipantRole): CallAdapterState
       raiseHand: { raisedHands: [] },
       /* @conditional-compile-remove(ppt-live) */
       pptLive: { isActive: false },
-      /* @conditional-compile-remove(reaction) */
       localParticipantReaction: undefined,
-      /* @conditional-compile-remove(rooms) */
       role,
-      /* @conditional-compile-remove(close-captions) */
       captionsFeature: {
         captions: [],
         supportedSpokenLanguages: [],
@@ -257,9 +249,10 @@ const createDefaultCallAdapterState = (role?: ParticipantRole): CallAdapterState
         currentCaptionLanguage: '',
         currentSpokenLanguage: '',
         isCaptionsFeatureActive: false,
-        startCaptionsInProgress: false
+        startCaptionsInProgress: false,
+        /* @conditional-compile-remove(acs-close-captions) */
+        captionsKind: 'Captions'
       },
-      /* @conditional-compile-remove(call-transfer) */
       transfer: {
         acceptedTransfers: {}
       },
@@ -285,7 +278,7 @@ const createDefaultCallAdapterState = (role?: ParticipantRole): CallAdapterState
       deviceAccess: { video: true, audio: true }
     },
     isTeamsCall: false,
-    /* @conditional-compile-remove(rooms) */
+    isTeamsMeeting: false,
     isRoomsCall: false,
     latestErrors: {}
   };

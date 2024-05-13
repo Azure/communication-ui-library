@@ -1,27 +1,58 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { _isInCall, _isPreviewOn, _videoGalleryRemoteParticipantsMemo } from '@internal/calling-component-bindings';
+import { _videoGalleryRemoteParticipantsMemo } from '@internal/calling-component-bindings';
+/* @conditional-compile-remove(PSTN-calls) */
+import { _updateUserDisplayNames } from '@internal/calling-component-bindings';
+import { RemoteParticipantState } from '@internal/calling-stateful-client';
 import * as reselect from 'reselect';
 import { localVideoSelector } from './localVideoStreamSelector';
 import { dominantRemoteParticipantSelector } from './dominantRemoteParticipantSelector';
 import { getDisplayName } from './baseSelectors';
 import { getLocalParticipantRaisedHand } from './baseSelectors';
+/* @conditional-compile-remove(spotlight) */
+import { getFirstSpotlightedRemoteParticipant } from './getFirstSpotlightedRemoteParticipantSelector';
 
 /**
  * Picture in picture in picture needs to display the most-dominant remote speaker, as well as the local participant video.
  * @private
  */
 export const localAndRemotePIPSelector = reselect.createSelector(
-  [getDisplayName, dominantRemoteParticipantSelector, localVideoSelector, getLocalParticipantRaisedHand],
-  (displayName, dominantRemoteParticipant, localVideoStreamInfo, raisedHand) => {
+  [
+    getDisplayName,
+    dominantRemoteParticipantSelector,
+    localVideoSelector,
+    getLocalParticipantRaisedHand,
+    /* @conditional-compile-remove(spotlight) */ getFirstSpotlightedRemoteParticipant
+  ],
+  (
+    displayName,
+    dominantRemoteParticipantState,
+    localVideoStreamInfo,
+    raisedHand,
+    /* @conditional-compile-remove(spotlight) */ firstSpotlightedRemoteParticipantState
+  ) => {
+    let remoteParticipantState = dominantRemoteParticipantState;
+    /* @conditional-compile-remove(spotlight) */
+    if (firstSpotlightedRemoteParticipantState) {
+      remoteParticipantState = firstSpotlightedRemoteParticipantState;
+    }
+    const remoteParticipant = remoteParticipantState
+      ? _videoGalleryRemoteParticipantsMemo(updateUserDisplayNamesTrampoline([remoteParticipantState]))[0]
+      : undefined;
     return {
       localParticipant: {
         displayName,
         videoStream: localVideoStreamInfo,
-        raisedHand: raisedHand
+        raisedHand
       },
-      dominantRemoteParticipant
+      remoteParticipant
     };
   }
 );
+
+const updateUserDisplayNamesTrampoline = (remoteParticipants: RemoteParticipantState[]): RemoteParticipantState[] => {
+  /* @conditional-compile-remove(PSTN-calls) */
+  return _updateUserDisplayNames(remoteParticipants);
+  return remoteParticipants;
+};

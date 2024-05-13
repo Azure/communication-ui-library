@@ -1,11 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/* @conditional-compile-remove(image-overlay) */
 import { DefaultButton, Icon, IconButton, Modal, PartialTheme, Stack, mergeStyles } from '@fluentui/react';
-/* @conditional-compile-remove(image-overlay) */
 import React, { useMemo, useState } from 'react';
-/* @conditional-compile-remove(image-overlay) */
 import {
   bodyContainer,
   brokenImageStyle,
@@ -25,16 +22,12 @@ import {
   titleBarContainerStyle,
   titleStyle
 } from './styles/ImageOverlay.style';
-/* @conditional-compile-remove(image-overlay) */
 import { FluentThemeProvider } from '../theming/FluentThemeProvider';
-/* @conditional-compile-remove(image-overlay) */
 import { useLocale } from '../localization';
 /* @conditional-compile-remove(image-overlay-theme) */
 import { imageOverlayTheme } from '../theming';
-/* @conditional-compile-remove(image-overlay) */
 import { darkTheme } from '../theming';
 
-/* @conditional-compile-remove(image-overlay) */
 /**
  * Props for {@link ImageOverlay}.
  *
@@ -70,7 +63,6 @@ export interface ImageOverlayProps {
    */
   onDownloadButtonClicked?: (imageSrc: string) => void;
 }
-/* @conditional-compile-remove(image-overlay) */
 /**
  * Strings of {@link ImageOverlay} that can be overridden.
  *
@@ -86,7 +78,6 @@ export interface ImageOverlayStrings {
    */
   dismissButtonAriaLabel: string;
 }
-/* @conditional-compile-remove(image-overlay) */
 /**
  * Component to render a fullscreen modal for a selected image.
  *
@@ -95,12 +86,10 @@ export interface ImageOverlayStrings {
 export const ImageOverlay = (props: ImageOverlayProps): JSX.Element => {
   const { isOpen, imageSrc, title, titleIcon, altText, onDownloadButtonClicked, onDismiss } = props;
 
-  /* @conditional-compile-remove(image-overlay) */
   const localeStrings = useLocale().strings.imageOverlay;
 
   const [isImageLoaded, setIsImageLoaded] = useState<boolean>(true);
 
-  /* @conditional-compile-remove(image-overlay) */
   const overlayTheme = useMemo((): PartialTheme => {
     /* @conditional-compile-remove(image-overlay-theme) */
     return imageOverlayTheme;
@@ -128,12 +117,10 @@ export const ImageOverlay = (props: ImageOverlayProps): JSX.Element => {
           {onDownloadButtonClicked && (
             <DefaultButton
               className={mergeStyles(downloadButtonStyle)}
-              /* @conditional-compile-remove(image-overlay) */
               text={localeStrings.downloadButtonLabel}
               onClick={() => onDownloadButtonClicked && onDownloadButtonClicked(imageSrc)}
               onRenderIcon={() => <Icon iconName={downloadIcon.iconName} className={mergeStyles(downloadIconStyle)} />}
               aria-live={'polite'}
-              /* @conditional-compile-remove(image-overlay) */
               aria-label={localeStrings.downloadButtonLabel}
               disabled={imageSrc === ''}
             />
@@ -143,7 +130,6 @@ export const ImageOverlay = (props: ImageOverlayProps): JSX.Element => {
               iconProps={downloadIcon}
               className={mergeStyles(smallDownloadButtonContainerStyle(overlayTheme))}
               onClick={() => onDownloadButtonClicked && onDownloadButtonClicked(imageSrc)}
-              /* @conditional-compile-remove(image-overlay) */
               aria-label={localeStrings.downloadButtonLabel}
               aria-live={'polite'}
               disabled={imageSrc === ''}
@@ -153,7 +139,6 @@ export const ImageOverlay = (props: ImageOverlayProps): JSX.Element => {
             iconProps={cancelIcon}
             className={mergeStyles(closeButtonStyles(overlayTheme))}
             onClick={onDismiss}
-            /* @conditional-compile-remove(image-overlay) */
             ariaLabel={localeStrings.dismissButtonAriaLabel}
             aria-live={'polite'}
           />
@@ -171,6 +156,7 @@ export const ImageOverlay = (props: ImageOverlayProps): JSX.Element => {
             className={mergeStyles(imageStyle)}
             alt={altText || 'image'}
             aria-label={'image-overlay-main-image'}
+            data-ui-id={'image-overlay-main-image'}
             aria-live={'polite'}
             onError={() => {
               setIsImageLoaded(false);

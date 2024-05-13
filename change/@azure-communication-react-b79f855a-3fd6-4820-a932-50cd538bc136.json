@@ -1,9 +1,0 @@
-{
-  "type": "none",
-  "area": "improvement",
-  "workstream": "StatefulClient",
-  "comment": "Add reference to the stateful client storybook page",
-  "packageName": "@azure/communication-react",
-  "email": "107075081+Leah-Xia-Microsoft@users.noreply.github.com",
-  "dependentChangeType": "none"
-}

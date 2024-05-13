@@ -1,9 +1,0 @@
-{
-  "type": "none",
-  "area": "improvement",
-  "workstream": "Dependency updates",
-  "comment": "Update minor version of microsoft/api-extractor version to 7.40.6",
-  "packageName": "@azure/communication-react",
-  "email": "79475487+mgamis-msft@users.noreply.github.com",
-  "dependentChangeType": "none"
-}

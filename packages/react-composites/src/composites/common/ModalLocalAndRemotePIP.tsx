@@ -8,7 +8,6 @@ import { useHandlers } from '../CallComposite/hooks/useHandlers';
 import { useSelector } from '../CallComposite/hooks/useSelector';
 import { localAndRemotePIPSelector } from '../CallComposite/selectors/localAndRemotePIPSelector';
 import { _ModalClone, _ICoordinates } from '@internal/react-components';
-/* @conditional-compile-remove(rooms) */
 import { _RemoteVideoTile } from '@internal/react-components';
 import {
   hiddenStyle,
@@ -16,7 +15,6 @@ import {
   modalStyle,
   PIPContainerStyle
 } from './styles/ModalLocalAndRemotePIP.styles';
-/* @conditional-compile-remove(rooms) */
 import { useAdapter } from '../CallComposite/adapter/CallAdapterProvider';
 import { useLocale } from '../localization';
 
@@ -56,9 +54,7 @@ export const ModalLocalAndRemotePIP = (props: {
 }): JSX.Element | null => {
   const rootStyles = props.hidden ? hiddenStyle : PIPContainerStyle;
 
-  /* @conditional-compile-remove(rooms) */
   const adapter = useAdapter();
-  /* @conditional-compile-remove(rooms) */
   const role = adapter.getState().call?.role;
 
   const locale = useLocale();
@@ -97,35 +93,40 @@ export const ModalLocalAndRemotePIP = (props: {
   );
 
   const pictureInPictureHandlers = useHandlers(LocalAndRemotePIP);
+  const remoteParticipant = pictureInPictureProps.remoteParticipant;
+
   const localAndRemotePIP = useMemo(() => {
-    /* @conditional-compile-remove(rooms) */
-    if (role === 'Consumer' && pictureInPictureProps.dominantRemoteParticipant?.userId) {
+    if (role === 'Consumer' && remoteParticipant?.userId) {
       return (
         <Stack tabIndex={0} aria-label={props.strings?.dismissModalAriaLabel ?? ''} onKeyDown={onKeyDown}>
           <_RemoteVideoTile
             strings={locale.component.strings.videoGallery}
-            {...pictureInPictureProps.dominantRemoteParticipant}
-            remoteParticipant={pictureInPictureProps.dominantRemoteParticipant}
+            {...remoteParticipant}
+            remoteParticipant={remoteParticipant}
           />
         </Stack>
       );
     }
     return (
       <Stack tabIndex={0} aria-label={props.strings?.dismissModalAriaLabel ?? ''} onKeyDown={onKeyDown}>
-        <LocalAndRemotePIP {...pictureInPictureProps} {...pictureInPictureHandlers} />
+        <LocalAndRemotePIP
+          {...pictureInPictureProps}
+          {...pictureInPictureHandlers}
+          remoteParticipant={remoteParticipant}
+        />
       </Stack>
     );
   }, [
-    /* @conditional-compile-remove(rooms) */ role,
+    role,
     onKeyDown,
     pictureInPictureProps,
     props,
     pictureInPictureHandlers,
-    locale.component.strings.videoGallery
+    locale.component.strings.videoGallery,
+    remoteParticipant
   ]);
 
-  /* @conditional-compile-remove(rooms) */
-  if (role === 'Consumer' && !pictureInPictureProps.dominantRemoteParticipant) {
+  if (role === 'Consumer' && !remoteParticipant) {
     return null;
   }
 

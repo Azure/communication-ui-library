@@ -1,0 +1,21 @@
+{
+  "baseUrl": ".",
+  "extends": "../../common/config/tsc/tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./dist",
+    "paths": {
+      "@azure/communication-react": ["../communication-react/src"],
+      "@internal/acs-ui-common": ["../acs-ui-common/src"],
+      "@internal/calling-component-bindings": ["../calling-component-bindings/src"],
+      "@internal/calling-stateful-client": ["../calling-stateful-client/src"],
+      "@internal/chat-component-bindings": ["../chat-component-bindings/src"],
+      "@internal/chat-stateful-client": ["../chat-stateful-client/src"],
+      "@internal/fake-backends": ["../fake-backends/src"],
+      "@internal/react-components": ["../react-components/src"],
+      "@internal/react-composites": ["../react-composites/src"]
+    }
+  },
+  "typeRoots": ["./node_modules/@types"],
+  "include": ["stories/**/*"],
+  "exclude": ["dist", "node_modules"]
+}

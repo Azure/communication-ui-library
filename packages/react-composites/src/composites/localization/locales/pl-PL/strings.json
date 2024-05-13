@@ -61,11 +61,11 @@
     "removedFromCallMoreDetails": "Inny uczestnik usunął Cię z rozmowy.",
     "removedFromCallTitle": "Usunięto Cię",
     "removeMenuLabel": "Usuń",
-    "startSpotlightParticipantListMenuLabel": "Wyróżnij dla wszystkich",
-    "addSpotlightParticipantListMenuLabel": "Dodaj wyróżnienie",
-    "stopSpotlightParticipantListMenuLabel": "Zatrzymaj wyróżnianie",
-    "stopSpotlightOnSelfParticipantListMenuLabel": "Zakończ wyróżnienie",
-    "spotlightLimitReachedParticipantListMenuTitle": "Osiągnięto limit wyróżnienia",
+    "startSpotlightMenuLabel": "Wyróżnij dla wszystkich",
+    "addSpotlightMenuLabel": "Dodaj wyróżnienie",
+    "stopSpotlightMenuLabel": "Zatrzymaj wyróżnianie",
+    "stopSpotlightOnSelfMenuLabel": "Zakończ wyróżnienie",
+    "spotlightLimitReachedMenuTitle": "Osiągnięto limit wyróżnienia",
     "stopAllSpotlightMenuLabel": "Zatrzymaj wszystkie wyróżnienia",
     "returnToCallButtonAriaDescription": "Wróć do rozmowy",
     "returnToCallButtonAriaLabel": "Wstecz",
@@ -244,6 +244,10 @@
       "shareScreen": {
         "lostDueToRoleChangeToAttendee": "Rola została zmieniona. Niektóre akcje, takie jak udostępnianie zawartości, nie będą dla Ciebie dostępne.",
         "grantedDueToRoleChangeToPresenter": "Jesteś osobą prowadzącą. Możesz udostępniać zawartość i prowadzić spotkanie."
+      },
+      "hideAttendeeNames": {
+        "hideAttendeeNameAttendee": "Twoje imię i nazwisko jest ukryte przed innymi uczestnikami. Organizatorzy i osoby prowadzące mogą zobaczyć Twoje prawdziwe imię.",
+        "hideAttendeeNamePresenter": "Imiona i nazwiska uczestników są ukryte. Tylko organizatorzy i osoby prowadzące mogą wyświetlać imiona i nazwiska, aby chronić prywatność uczestników."
       }
     },
     "surveyTitle": "Pomóż nam w ulepszaniu",
@@ -259,7 +263,6 @@
     "tagsSurveyQuestion": "Co można było zrobić lepiej?",
     "tagsSurveyTextFieldDefaultText": "Inny — prosimy określić",
     "tagsSurveyHelperText": "Sprawdź wszelkie napotkane problemy",
-    "surveyTextboxDefaultText": "Inna odpowiedź, podaj szczegóły",
     "endOfSurveyText": "Dziękujemy za opinię!",
     "surveyIssues": {
       "overallRating": {
@@ -301,7 +304,7 @@
         "otherIssues": "Wystąpiły inne problemy z udostępnianiem ekranu podczas tej rozmowy"
       }
     },
-    "SurveyIssuesHeadingStrings": {
+    "surveyIssuesHeadingStrings": {
       "overallRating": "Ogólne",
       "audioRating": "Dźwięk",
       "videoRating": "Wideo",
@@ -315,18 +318,28 @@
       "startSpotlightCancelButtonLabel": "Anuluj",
       "stopSpotlightHeading": "Zatrzymać wyróżnianie tego klipu wideo?",
       "stopSpotlightOnSelfHeading": "Zakończyć wyróżnianie?",
+      "stopAllSpotlightHeading": "Zatrzymać wyróżnianie wszystkich klipów wideo?",
       "stopSpotlightText": "Klip wideo nie będzie już wyróżniany dla wszystkich osób na spotkaniu.",
       "stopSpotlightOnSelfText": "Twój klip wideo nie będzie już wyróżniany dla wszystkich osób na spotkaniu.",
+      "stopAllSpotlightText": "Klipy wideo nie będą już wyróżniane dla wszystkich osób na spotkaniu.",
       "stopSpotlightConfirmButtonLabel": "Zatrzymaj wyróżnianie",
       "stopSpotlightOnSelfConfirmButtonLabel": "Zakończ wyróżnienie",
       "stopSpotlightCancelButtonLabel": "Anuluj"
     },
     "exitSpotlightButtonLabel": "Wyjdź z ważnych informacji",
-    "exitSpotlightButtonTooltip": "Wyjdź z ważnych informacji"
+    "exitSpotlightButtonTooltip": "Wyjdź z ważnych informacji",
+    "leaveConfirmButtonLabel": "Opuść",
+    "endCallConfirmButtonLabel": "Zakończ połączenie",
+    "hangUpCancelButtonLabel": "Anuluj",
+    "leaveConfirmDialogTitle": "Opuścić połączenie?",
+    "leaveConfirmDialogContent": "Czy na pewno chcesz opuścić rozmowę?",
+    "endCallConfirmDialogTitle": "Zakończyć połączenie?",
+    "endCallConfirmDialogContent": "Zakończysz połączenie dla wszystkich.",
+    "invalidMeetingIdentifier": "Nieprawidłowy identyfikator spotkania lub kod dostępu"
   },
   "chat": {
     "chatListHeader": "W tym czacie",
-    "uploadFile": "Przekazywanie pliku"
+    "uploadAttachment": "Przekaż załącznik"
   },
   "callWithChat": {
     "chatButtonLabel": "Czat",

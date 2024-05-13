@@ -24,27 +24,40 @@
     "placeholderText": "輸入訊息",
     "textTooLong": "您的訊息長度超過上限。",
     "sendButtonAriaLabel": "傳送訊息",
-    "fileUploadsPendingError": "正在上傳... 請稍候。",
-    "removeFile": "移除檔案",
+    "attachmentUploadsPendingError": "正在上傳... 請稍候。",
+    "removeAttachment": "移除檔案",
     "uploading": "正在上傳",
-    "uploadCompleted": "上傳完成"
+    "uploadCompleted": "上傳完成",
+    "attachmentMoreMenu": "其他選項"
   },
   "richTextSendBox": {
     "placeholderText": "輸入訊息",
     "textTooLong": "您的訊息長度超過上限。",
     "sendButtonAriaLabel": "傳送訊息",
-    "fileUploadsPendingError": "正在上傳...請稍候。",
-    "removeFile": "移除檔案",
+    "attachmentUploadsPendingError": "正在上傳...請稍候。",
+    "removeAttachment": "移除檔案",
     "uploading": "正在上傳",
     "uploadCompleted": "上傳完成",
-    "boldTooltip": "粗體",
-    "italicTooltip": "斜體",
-    "underlineTooltip": "底線",
-    "bulletListTooltip": "項目符號清單",
-    "numberListTooltip": "編號清單",
-    "increaseIndentTooltip": "增加縮排",
-    "decreaseIndentTooltip": "減少縮排",
-    "richTextFormatButtonTooltip": "格式"
+    "richTextBoldTooltip": "粗體",
+    "richTextItalicTooltip": "斜體",
+    "richTextUnderlineTooltip": "底線",
+    "richTextBulletListTooltip": "項目符號清單",
+    "richTextNumberListTooltip": "編號清單",
+    "richTextIncreaseIndentTooltip": "增加縮排",
+    "richTextDecreaseIndentTooltip": "減少縮排",
+    "richTextInsertTableTooltip": "插入表格",
+    "richTextFormatButtonTooltip": "格式",
+    "richTextInsertRowOrColumnMenu": "插入",
+    "richTextInsertTableMenuTitle": "插入 {column} x {row} 表格",
+    "richTextInsertRowAboveMenu": "在上方插入",
+    "richTextInsertRowBelowMenu": "在下方插入",
+    "richTextInsertColumnLeftMenu": "於左方插入",
+    "richTextInsertColumnRightMenu": "於右方插入",
+    "richTextDeleteRowOrColumnMenu": "刪除",
+    "richTextDeleteColumnMenu": "刪除欄",
+    "richTextDeleteRowMenu": "刪除列",
+    "richTextDeleteTableMenu": "刪除表格",
+    "attachmentMoreMenu": "其他選項"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "建議"
@@ -66,7 +79,9 @@
   },
   "endCallButton": {
     "label": "離開",
-    "tooltipContent": "離開通話"
+    "tooltipContent": "離開通話",
+    "leaveOption": "離開",
+    "endCallOption": "每個人都結束通話"
   },
   "cameraButton": {
     "onLabel": "相機",
@@ -179,10 +194,11 @@
     "editBoxSubmitButton": "完成",
     "messageReadCount": "讀取者為 {messageReadByCount} / {remoteParticipantsCount}",
     "actionMenuMoreOptions": "更多選項",
-    "downloadFile": "下載檔案",
+    "downloadAttachment": "下載檔案",
+    "openAttachment": "開啟檔案",
     "blockedWarningText": "由於組織原則，已刪除此訊息。",
     "blockedWarningLinkText": "詳細資料",
-    "fileCardGroupMessage": "郵件有 {fileCount} 個附件",
+    "attachmentCardGroupMessage": "這則訊息有 {attachmentCount} 個附件",
     "messageDeletedAnnouncementAriaLabel": "訊息已刪除"
   },
   "errorBar": {

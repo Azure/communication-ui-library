@@ -61,11 +61,11 @@
     "removedFromCallMoreDetails": "Un altro partecipante ti ha rimosso dalla chiamata.",
     "removedFromCallTitle": "Sei stato rimosso",
     "removeMenuLabel": "Rimuovi",
-    "startSpotlightParticipantListMenuLabel": "Metti in evidenza per tutti",
-    "addSpotlightParticipantListMenuLabel": "Metti in evidenza",
-    "stopSpotlightParticipantListMenuLabel": "Interrompi la posizione in evidenza",
-    "stopSpotlightOnSelfParticipantListMenuLabel": "Chiudi visualizzazione in evidenza",
-    "spotlightLimitReachedParticipantListMenuTitle": "È stato raggiunto il limite di contenuti in evidenza",
+    "startSpotlightMenuLabel": "Metti in evidenza per tutti",
+    "addSpotlightMenuLabel": "Metti in evidenza",
+    "stopSpotlightMenuLabel": "Interrompi la posizione in evidenza",
+    "stopSpotlightOnSelfMenuLabel": "Chiudi visualizzazione in evidenza",
+    "spotlightLimitReachedMenuTitle": "È stato raggiunto il limite di contenuti in evidenza",
     "stopAllSpotlightMenuLabel": "Smetti di mostrare in evidenza",
     "returnToCallButtonAriaDescription": "Torna alla chiamata",
     "returnToCallButtonAriaLabel": "Indietro",
@@ -244,6 +244,10 @@
       "shareScreen": {
         "lostDueToRoleChangeToAttendee": "Il tuo ruolo è stato modificato. Alcune azioni, come la condivisione di contenuti, non saranno disponibili per te.",
         "grantedDueToRoleChangeToPresenter": "Sei un relatore. Puoi condividere i contenuti e facilitare la riunione."
+      },
+      "hideAttendeeNames": {
+        "hideAttendeeNameAttendee": "Il tuo nome è nascosto agli altri partecipanti. Gli organizzatori e i relatori possono vedere il tuo vero nome.",
+        "hideAttendeeNamePresenter": "I nomi dei partecipanti sono nascosti. Solo gli organizzatori e i relatori possono visualizzare i nomi per proteggere la privacy dei partecipanti."
       }
     },
     "surveyTitle": "Aiutaci a migliorare",
@@ -259,7 +263,6 @@
     "tagsSurveyQuestion": "Cosa avrebbe potuto essere migliore?",
     "tagsSurveyTextFieldDefaultText": "Altro, specifica",
     "tagsSurveyHelperText": "Controlla eventuali problemi riscontrati",
-    "surveyTextboxDefaultText": "Altro, specifica",
     "endOfSurveyText": "Grazie per il feedback!",
     "surveyIssues": {
       "overallRating": {
@@ -301,7 +304,7 @@
         "otherIssues": "Ho avuto altri problemi di condivisione dello schermo in questa chiamata"
       }
     },
-    "SurveyIssuesHeadingStrings": {
+    "surveyIssuesHeadingStrings": {
       "overallRating": "Generale",
       "audioRating": "Audio",
       "videoRating": "Video",
@@ -315,18 +318,28 @@
       "startSpotlightCancelButtonLabel": "Annulla",
       "stopSpotlightHeading": "Smettere di mostrare in evidenza questo video?",
       "stopSpotlightOnSelfHeading": "Uscire dalla messa in evidenza?",
+      "stopAllSpotlightHeading": "Vuoi smettere di mostrare in evidenza tutti i video?",
       "stopSpotlightText": "Questo video non sarà più in evidenza per tutti i partecipanti alla riunione.",
       "stopSpotlightOnSelfText": "Il tuo video non sarà più in evidenza per tutti i partecipanti alla riunione.",
+      "stopAllSpotlightText": "I video non saranno più in evidenza per tutti i partecipanti della riunione.",
       "stopSpotlightConfirmButtonLabel": "Smetti di mettere in evidenza",
       "stopSpotlightOnSelfConfirmButtonLabel": "Esci da visualizzazione in evidenza",
       "stopSpotlightCancelButtonLabel": "Annulla"
     },
     "exitSpotlightButtonLabel": "Esci da visualizzazione in evidenza",
-    "exitSpotlightButtonTooltip": "Esci da visualizzazione in evidenza"
+    "exitSpotlightButtonTooltip": "Esci da visualizzazione in evidenza",
+    "leaveConfirmButtonLabel": "Abbandona",
+    "endCallConfirmButtonLabel": "Termina chiamata",
+    "hangUpCancelButtonLabel": "Annulla",
+    "leaveConfirmDialogTitle": "Vuoi abbandonare la chiamata?",
+    "leaveConfirmDialogContent": "Vuoi abbandonare la chiamata?",
+    "endCallConfirmDialogTitle": "Vuoi terminare la chiamata?",
+    "endCallConfirmDialogContent": "La chiamata terminerà per tutti gli utenti.",
+    "invalidMeetingIdentifier": "ID riunione o passcode non valido"
   },
   "chat": {
     "chatListHeader": "In questa chat",
-    "uploadFile": "Carica file"
+    "uploadAttachment": "Carica allegato"
   },
   "callWithChat": {
     "chatButtonLabel": "Chat",

@@ -61,11 +61,11 @@
     "removedFromCallMoreDetails": "另一名參與者已將您自通話中移除。",
     "removedFromCallTitle": "您已遭移除",
     "removeMenuLabel": "移除",
-    "startSpotlightParticipantListMenuLabel": "設為每個人的焦點",
-    "addSpotlightParticipantListMenuLabel": "新增焦點",
-    "stopSpotlightParticipantListMenuLabel": "停止聚焦",
-    "stopSpotlightOnSelfParticipantListMenuLabel": "結束聚焦",
-    "spotlightLimitReachedParticipantListMenuTitle": "已達焦點限制",
+    "startSpotlightMenuLabel": "設為每個人的焦點",
+    "addSpotlightMenuLabel": "新增焦點",
+    "stopSpotlightMenuLabel": "停止聚焦",
+    "stopSpotlightOnSelfMenuLabel": "結束聚焦",
+    "spotlightLimitReachedMenuTitle": "已達焦點限制",
     "stopAllSpotlightMenuLabel": "停止所有聚焦",
     "returnToCallButtonAriaDescription": "返回通話",
     "returnToCallButtonAriaLabel": "返回",
@@ -244,6 +244,10 @@
       "shareScreen": {
         "lostDueToRoleChangeToAttendee": "您的角色已變更。某些動作，例如共用內容，將無法供您使用。",
         "grantedDueToRoleChangeToPresenter": "您就是簡報者。您可以分享內容並協助會議。"
+      },
+      "hideAttendeeNames": {
+        "hideAttendeeNameAttendee": "其他出席者看不到您的名字。召集人和簡報者可以看到您的真實姓名。",
+        "hideAttendeeNamePresenter": "已隱藏出席者名稱。只有召集人和簡報者可以看到名稱以保護出席者隱私權。"
       }
     },
     "surveyTitle": "協助我們改善",
@@ -259,7 +263,6 @@
     "tagsSurveyQuestion": "什麼部分本來能做得更好?",
     "tagsSurveyTextFieldDefaultText": "其他，請註明",
     "tagsSurveyHelperText": "檢查您遇到的任何問題",
-    "surveyTextboxDefaultText": "其他，請註明",
     "endOfSurveyText": "感謝您提供意見反應!",
     "surveyIssues": {
       "overallRating": {
@@ -301,7 +304,7 @@
         "otherIssues": "我在這次通話中遇到其他螢幕畫面分享問題"
       }
     },
-    "SurveyIssuesHeadingStrings": {
+    "surveyIssuesHeadingStrings": {
       "overallRating": "整體",
       "audioRating": "音訊",
       "videoRating": "影片",
@@ -315,18 +318,28 @@
       "startSpotlightCancelButtonLabel": "取消",
       "stopSpotlightHeading": "要停止聚焦這部影片嗎?",
       "stopSpotlightOnSelfHeading": "結束精選?",
+      "stopAllSpotlightHeading": "是否要停止聚焦所有影片?",
       "stopSpotlightText": "不會再向會議中的每個人醒目提示該影片。",
       "stopSpotlightOnSelfText": "不會再向會議中的每個人醒目提示您的影片。",
+      "stopAllSpotlightText": "不會再向會議中的每個人醒目提示此影片。",
       "stopSpotlightConfirmButtonLabel": "停止選為精選",
       "stopSpotlightOnSelfConfirmButtonLabel": "結束精選",
       "stopSpotlightCancelButtonLabel": "取消"
     },
     "exitSpotlightButtonLabel": "結束精選",
-    "exitSpotlightButtonTooltip": "結束精選"
+    "exitSpotlightButtonTooltip": "結束精選",
+    "leaveConfirmButtonLabel": "離開",
+    "endCallConfirmButtonLabel": "結束通話",
+    "hangUpCancelButtonLabel": "取消",
+    "leaveConfirmDialogTitle": "離開通話?",
+    "leaveConfirmDialogContent": "確定要離開此通話?",
+    "endCallConfirmDialogTitle": "結束通話?",
+    "endCallConfirmDialogContent": "您將結束所有人的通話。",
+    "invalidMeetingIdentifier": "會議標識碼或密碼無效"
   },
   "chat": {
     "chatListHeader": "在此聊天中",
-    "uploadFile": "上傳檔案"
+    "uploadAttachment": "上傳附件"
   },
   "callWithChat": {
     "chatButtonLabel": "聊天",

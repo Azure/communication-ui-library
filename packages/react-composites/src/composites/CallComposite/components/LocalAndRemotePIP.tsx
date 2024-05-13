@@ -25,7 +25,7 @@ export interface LocalAndRemotePIPProps {
     videoStream?: VideoGalleryStream;
     raisedHand?: RaisedHand;
   };
-  dominantRemoteParticipant?: {
+  remoteParticipant?: {
     userId: string;
     displayName?: string;
     videoStream?: VideoGalleryStream;
@@ -51,7 +51,7 @@ export interface LocalAndRemotePIPProps {
 export const LocalAndRemotePIP = (props: LocalAndRemotePIPProps): JSX.Element => {
   const {
     localParticipant,
-    dominantRemoteParticipant,
+    remoteParticipant,
     onCreateLocalStreamView,
     onDisposeLocalStreamView,
     onCreateRemoteStreamView,
@@ -83,23 +83,23 @@ export const LocalAndRemotePIP = (props: LocalAndRemotePIPProps): JSX.Element =>
 
   const remoteVideoTileProps = useMemo(
     () =>
-      !dominantRemoteParticipant
+      !remoteParticipant
         ? undefined
         : {
-            remoteParticipant: dominantRemoteParticipant,
+            remoteParticipant: remoteParticipant,
             onCreateRemoteStreamView,
             onDisposeRemoteStreamView,
             remoteVideoViewOptions,
-            displayName: dominantRemoteParticipant?.displayName,
+            displayName: remoteParticipant?.displayName,
             showLabel: false,
             showMuteIndicator: false,
-            isAvailable: dominantRemoteParticipant.videoStream?.isAvailable,
-            isReceiving: dominantRemoteParticipant.videoStream?.isReceiving,
-            renderElement: dominantRemoteParticipant.videoStream?.renderElement,
-            userId: dominantRemoteParticipant.userId,
-            key: dominantRemoteParticipant.userId
+            isAvailable: remoteParticipant.videoStream?.isAvailable,
+            isReceiving: remoteParticipant.videoStream?.isReceiving,
+            renderElement: remoteParticipant.videoStream?.renderElement,
+            userId: remoteParticipant.userId,
+            key: remoteParticipant.userId
           },
-    [dominantRemoteParticipant, onCreateRemoteStreamView, onDisposeRemoteStreamView]
+    [remoteParticipant, onCreateRemoteStreamView, onDisposeRemoteStreamView]
   );
 
   const locale = useLocale();

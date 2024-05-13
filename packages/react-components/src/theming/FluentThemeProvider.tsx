@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import React, { createContext, useContext } from 'react';
+import React, { createContext, useContext, useMemo } from 'react';
 import { ThemeProvider, PartialTheme, Theme, getTheme, mergeThemes, mergeStyles } from '@fluentui/react';
 import { lightTheme } from './themes';
 
@@ -20,7 +20,6 @@ export interface FluentThemeProviderProps {
    * @defaultValue `false`
    */
   rtl?: boolean;
-  /* @conditional-compile-remove(image-overlay) */
   /** Optional style to change the root style of the ThemeProvider */
   rootStyle?: React.CSSProperties | undefined;
 }
@@ -61,18 +60,16 @@ const ThemeContext = createContext<Theme>(defaultTheme);
  * @public
  */
 export const FluentThemeProvider = (props: FluentThemeProviderProps): JSX.Element => {
-  const { fluentTheme, rtl, children, /* @conditional-compile-remove(image-overlay) */ rootStyle } = props;
+  const { fluentTheme, rtl, children, rootStyle } = props;
 
-  let fluentV8Theme: Theme = mergeThemes(defaultTheme, fluentTheme);
-  fluentV8Theme = mergeThemes(fluentV8Theme, { rtl });
+  const fluentV8Theme = useMemo(() => {
+    const mergedTheme = mergeThemes(defaultTheme, fluentTheme);
+    return mergeThemes(mergedTheme, { rtl });
+  }, [fluentTheme, rtl]);
 
   return (
     <ThemeContext.Provider value={fluentV8Theme}>
-      <ThemeProvider
-        theme={fluentV8Theme}
-        className={wrapper}
-        /* @conditional-compile-remove(image-overlay) */ style={rootStyle}
-      >
+      <ThemeProvider theme={fluentV8Theme} className={wrapper} style={rootStyle}>
         {children}
       </ThemeProvider>
     </ThemeContext.Provider>

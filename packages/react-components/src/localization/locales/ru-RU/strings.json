@@ -24,27 +24,40 @@
     "placeholderText": "Введите сообщение",
     "textTooLong": "Длина сообщения превышает максимально допустимую.",
     "sendButtonAriaLabel": "Отправить сообщение",
-    "fileUploadsPendingError": "Выполняется загрузка. Подождите...",
-    "removeFile": "Удалить файл",
+    "attachmentUploadsPendingError": "Выполняется загрузка. Подождите...",
+    "removeAttachment": "Удалить файл",
     "uploading": "Отправка",
-    "uploadCompleted": "Отправка завершена"
+    "uploadCompleted": "Отправка завершена",
+    "attachmentMoreMenu": "Дополнительные параметры"
   },
   "richTextSendBox": {
     "placeholderText": "Введите сообщение",
     "textTooLong": "Длина сообщения превышает максимально допустимую.",
     "sendButtonAriaLabel": "Отправить сообщение",
-    "fileUploadsPendingError": "Производится отправка... Подождите.",
-    "removeFile": "Удалить файл",
+    "attachmentUploadsPendingError": "Производится отправка... Подождите.",
+    "removeAttachment": "Удалить файл",
     "uploading": "Отправка",
     "uploadCompleted": "Отправка завершена",
-    "boldTooltip": "Полужирный",
-    "italicTooltip": "Курсив",
-    "underlineTooltip": "Подчеркнуть",
-    "bulletListTooltip": "Маркированный список",
-    "numberListTooltip": "Нумерованный список",
-    "increaseIndentTooltip": "Увеличить отступ",
-    "decreaseIndentTooltip": "Уменьшить отступ",
-    "richTextFormatButtonTooltip": "Формат"
+    "richTextBoldTooltip": "Полужирный",
+    "richTextItalicTooltip": "Курсив",
+    "richTextUnderlineTooltip": "Подчеркнуть",
+    "richTextBulletListTooltip": "Маркированный список",
+    "richTextNumberListTooltip": "Нумерованный список",
+    "richTextIncreaseIndentTooltip": "Увеличить отступ",
+    "richTextDecreaseIndentTooltip": "Уменьшить отступ",
+    "richTextInsertTableTooltip": "Вставить таблицу",
+    "richTextFormatButtonTooltip": "Формат",
+    "richTextInsertRowOrColumnMenu": "Вставить",
+    "richTextInsertTableMenuTitle": "Вставить таблицу {column} x {row}",
+    "richTextInsertRowAboveMenu": "Вставить сверху",
+    "richTextInsertRowBelowMenu": "Вставить снизу",
+    "richTextInsertColumnLeftMenu": "Вставить слева",
+    "richTextInsertColumnRightMenu": "Вставить справа",
+    "richTextDeleteRowOrColumnMenu": "Удалить",
+    "richTextDeleteColumnMenu": "Удалить столбец",
+    "richTextDeleteRowMenu": "Удалить строку",
+    "richTextDeleteTableMenu": "Удалить таблицу",
+    "attachmentMoreMenu": "Дополнительные параметры"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Рекомендации"
@@ -66,7 +79,9 @@
   },
   "endCallButton": {
     "label": "Выйти",
-    "tooltipContent": "Покинуть вызов"
+    "tooltipContent": "Покинуть вызов",
+    "leaveOption": "Выйти",
+    "endCallOption": "Завершить звонок для всех"
   },
   "cameraButton": {
     "onLabel": "Камера",
@@ -179,10 +194,11 @@
     "editBoxSubmitButton": "Готово",
     "messageReadCount": "Прочитали: {messageReadByCount} из {remoteParticipantsCount}",
     "actionMenuMoreOptions": "Дополнительные параметры",
-    "downloadFile": "Скачать файл",
+    "downloadAttachment": "Скачать файл",
+    "openAttachment": "Открыть файл",
     "blockedWarningText": "Это сообщение было удалено политикой организации.",
     "blockedWarningLinkText": "Сведения",
-    "fileCardGroupMessage": "Сообщение содержит {fileCount} вложение",
+    "attachmentCardGroupMessage": "Сообщение содержит {attachmentCount} вложение",
     "messageDeletedAnnouncementAriaLabel": "Сообщение удалено"
   },
   "errorBar": {

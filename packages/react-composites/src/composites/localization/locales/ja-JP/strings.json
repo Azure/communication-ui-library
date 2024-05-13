@@ -61,11 +61,11 @@
     "removedFromCallMoreDetails": "別の参加者があなたを通話から削除しました。",
     "removedFromCallTitle": "削除されました",
     "removeMenuLabel": "削除",
-    "startSpotlightParticipantListMenuLabel": "全員にスポットライトを設定",
-    "addSpotlightParticipantListMenuLabel": "スポットライトを追加",
-    "stopSpotlightParticipantListMenuLabel": "スポットライトの設定を解除",
-    "stopSpotlightOnSelfParticipantListMenuLabel": "スポットライトを終了",
-    "spotlightLimitReachedParticipantListMenuTitle": "スポットライトの上限に達しました",
+    "startSpotlightMenuLabel": "全員にスポットライトを設定",
+    "addSpotlightMenuLabel": "スポットライトを追加",
+    "stopSpotlightMenuLabel": "スポットライトの設定を解除",
+    "stopSpotlightOnSelfMenuLabel": "スポットライトを終了",
+    "spotlightLimitReachedMenuTitle": "スポットライトの上限に達しました",
     "stopAllSpotlightMenuLabel": "すべてのスポットライトを停止",
     "returnToCallButtonAriaDescription": "通話に戻る",
     "returnToCallButtonAriaLabel": "戻る",
@@ -244,6 +244,10 @@
       "shareScreen": {
         "lostDueToRoleChangeToAttendee": "ロールが変更されました。コンテンツの共有などの一部の操作は利用できません。",
         "grantedDueToRoleChangeToPresenter": "あなたは発表者です。コンテンツの共有と会議の進行を行うことができます。"
+      },
+      "hideAttendeeNames": {
+        "hideAttendeeNameAttendee": "自分の名前は他の出席者には表示されません。開催者と発表者にあなたの名前が表示されます。",
+        "hideAttendeeNamePresenter": "出席者の名前は非表示です。出席者のプライバシーを守るため、開催者と発表者のみ名前を見ることができます。"
       }
     },
     "surveyTitle": "品質向上にご協力ください",
@@ -259,7 +263,6 @@
     "tagsSurveyQuestion": "何が良くなりましたか?",
     "tagsSurveyTextFieldDefaultText": "その他、特定してください",
     "tagsSurveyHelperText": "発生した問題を確認する",
-    "surveyTextboxDefaultText": "その他 (明記してください)",
     "endOfSurveyText": "フィードバックをお送りいただき、ありがとうございます。",
     "surveyIssues": {
       "overallRating": {
@@ -301,7 +304,7 @@
         "otherIssues": "この通話で他の画面共有の問題があった"
       }
     },
-    "SurveyIssuesHeadingStrings": {
+    "surveyIssuesHeadingStrings": {
       "overallRating": "全体",
       "audioRating": "オーディオ",
       "videoRating": "動画",
@@ -315,18 +318,28 @@
       "startSpotlightCancelButtonLabel": "キャンセル",
       "stopSpotlightHeading": "このビデオへのスポットライトの設定を解除しますか?",
       "stopSpotlightOnSelfHeading": "スポットライトを終了しますか?",
+      "stopAllSpotlightHeading": "すべてのビデオへのスポットライトの設定を解除しますか?",
       "stopSpotlightText": "このビデオは、会議の全員に対して強調表示されなくなります。",
       "stopSpotlightOnSelfText": "ビデオは、会議の全員に対して強調表示されなくなります。",
+      "stopAllSpotlightText": "ビデオは、会議の全員に対して強調表示されなくなります。",
       "stopSpotlightConfirmButtonLabel": "スポットライトの設定を解除",
       "stopSpotlightOnSelfConfirmButtonLabel": "スポットライトを終了",
       "stopSpotlightCancelButtonLabel": "キャンセル"
     },
     "exitSpotlightButtonLabel": "スポットライトを終了",
-    "exitSpotlightButtonTooltip": "スポットライトを終了"
+    "exitSpotlightButtonTooltip": "スポットライトを終了",
+    "leaveConfirmButtonLabel": "退出",
+    "endCallConfirmButtonLabel": "通話の終了",
+    "hangUpCancelButtonLabel": "キャンセル",
+    "leaveConfirmDialogTitle": "通話から退出しますか?",
+    "leaveConfirmDialogContent": "通話から退出してよろしいですか?",
+    "endCallConfirmDialogTitle": "通話を終了しますか?",
+    "endCallConfirmDialogContent": "全員に対する通話が終了されます。",
+    "invalidMeetingIdentifier": "無効なミーティング ID またはパスコード"
   },
   "chat": {
     "chatListHeader": "このチャット内",
-    "uploadFile": "ファイルのアップロード"
+    "uploadAttachment": "添付ファイルのアップロード"
   },
   "callWithChat": {
     "chatButtonLabel": "チャット",

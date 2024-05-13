@@ -7,8 +7,10 @@ import { useLocale } from '../../localization';
 import { StreamMedia } from '../StreamMedia';
 import { VideoTile } from '../VideoTile';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '../../types';
+import { ReactionResources, VideoGalleryLocalParticipant, VideoGalleryRemoteParticipant } from '../../types';
 import { loadingStyle } from './styles/RemoteScreenShare.styles';
 import { _formatString } from '@internal/acs-ui-common';
+import { MeetingReactionOverlay } from '../MeetingReactionOverlay';
 
 /**
  * A memoized version of VideoTile for rendering the remote screen share stream. React.memo is used for a performance
@@ -30,6 +32,9 @@ export const RemoteScreenShare = React.memo(
     isSpeaking?: boolean;
     renderElement?: HTMLElement;
     participantVideoScalingMode?: VideoStreamOptions;
+    reactionResources?: ReactionResources;
+    localParticipant?: VideoGalleryLocalParticipant;
+    remoteParticipants?: VideoGalleryRemoteParticipant[];
     /* @conditional-compile-remove(ppt-live) */
     isPPTLive?: boolean;
   }) => {
@@ -42,6 +47,9 @@ export const RemoteScreenShare = React.memo(
       onDisposeRemoteStreamView,
       isReceiving,
       participantVideoScalingMode,
+      reactionResources,
+      localParticipant,
+      remoteParticipants,
       /* @conditional-compile-remove(ppt-live) */
       isPPTLive
     } = props;
@@ -84,6 +92,14 @@ export const RemoteScreenShare = React.memo(
             ) : undefined
           }
           onRenderPlaceholder={() => <LoadingSpinner loadingMessage={loadingMessage} />}
+          overlay={
+            <MeetingReactionOverlay
+              reactionResources={reactionResources!}
+              localParticipant={localParticipant}
+              remoteParticipants={remoteParticipants}
+              overlayMode="screen-share"
+            />
+          }
         />
       );
     }
@@ -98,6 +114,14 @@ export const RemoteScreenShare = React.memo(
           ) : undefined
         }
         onRenderPlaceholder={() => <LoadingSpinner loadingMessage={loadingMessage} />}
+        overlay={
+          <MeetingReactionOverlay
+            reactionResources={reactionResources!}
+            localParticipant={localParticipant}
+            remoteParticipants={remoteParticipants}
+            overlayMode="screen-share"
+          />
+        }
       />
     );
   }

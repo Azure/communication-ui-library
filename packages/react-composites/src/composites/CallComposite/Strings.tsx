@@ -1,11 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/* @conditional-compile-remove(close-captions) */
 import { SpokenLanguageStrings, CaptionLanguageStrings } from '@internal/react-components';
 /* @conditional-compile-remove(end-of-call-survey) */
 import { SurveyIssues, SurveyIssuesHeadingStrings } from '@internal/react-components';
-/* @conditional-compile-remove(capabilities) */
+
 import { CapabilityChangedNotificationStrings } from './components/CapabilitiesChangedNotificationBar';
 /* @conditional-compile-remove(spotlight) */
 import { SpotlightPromptStrings } from './components/Prompt';
@@ -240,6 +239,11 @@ export interface CallCompositeStrings {
    * Label for button to copy invite link
    */
   copyInviteLinkButtonLabel: string;
+  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
+  /**
+   * Label for button to copy invite link when it has been actioned
+   */
+  copyInviteLinkButtonActionedLabel: string;
   /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Label for button to open dialpad
@@ -254,27 +258,27 @@ export interface CallCompositeStrings {
   /**
    * Label for menu item to start spotlight on participant
    */
-  startSpotlightParticipantListMenuLabel: string;
+  startSpotlightMenuLabel: string;
   /* @conditional-compile-remove(spotlight) */
   /**
    * Label for menu item to add spotlight on participant
    */
-  addSpotlightParticipantListMenuLabel: string;
+  addSpotlightMenuLabel: string;
   /* @conditional-compile-remove(spotlight) */
   /**
    * Label for menu item to stop spotlight on participant
    */
-  stopSpotlightParticipantListMenuLabel: string;
+  stopSpotlightMenuLabel: string;
   /* @conditional-compile-remove(spotlight) */
   /**
    * Label for menu item to stop spotlight on local user
    */
-  stopSpotlightOnSelfParticipantListMenuLabel: string;
+  stopSpotlightOnSelfMenuLabel: string;
   /* @conditional-compile-remove(spotlight) */
   /**
    * Label for menu item to stop spotlight on local user
    */
-  spotlightLimitReachedParticipantListMenuTitle: string;
+  spotlightLimitReachedMenuTitle: string;
   /* @conditional-compile-remove(spotlight) */
   /**
    * Label for menu item to stop all spotlight
@@ -348,87 +352,79 @@ export interface CallCompositeStrings {
    * aria label for when the invite link has been actioned
    */
   copyInviteLinkActionedAriaLabel: string;
-  /* @conditional-compile-remove(rooms) */
   /**
    * Title text of the page shown to the user when the user attempts to join a room that cannot be found.
    */
   roomNotFoundTitle: string;
-  /* @conditional-compile-remove(rooms) */
   /**
    * More details text of the page shown to the user when the user attempts to join a room that cannot be found.
    */
   roomNotFoundDetails?: string;
-  /* @conditional-compile-remove(rooms) */
   /**
    * Title text of the page shown to the user when the user attempts to join a room that is not valid.
    */
   roomNotValidTitle: string;
-  /* @conditional-compile-remove(rooms) */
   /**
    * More details text of the page shown to the user when the user attempts to join a room that is not valid.
    */
   roomNotValidDetails?: string;
-  /* @conditional-compile-remove(rooms) */
   /**
    * Title text of the page shown to the user when the user's permission to join the room is removed.
    */
   inviteToRoomRemovedTitle: string;
-  /* @conditional-compile-remove(rooms) */
   /**
    * More details text of the page shown to the user when the user's permission to join the room is removed.
    */
   inviteToRoomRemovedDetails?: string;
-  /* @conditional-compile-remove(video-background-effects) */
+
   /**
    * Video Effects pane title.
    */
   videoEffectsPaneTitle: string;
-  /* @conditional-compile-remove(video-background-effects) */
+
   /**
    * Video Effects pane sub section title for choosing background.
    */
   videoEffectsPaneBackgroundSelectionTitle: string;
-  /* @conditional-compile-remove(video-background-effects) */
+
   /**
    * Label for the button to open effects
    */
   configurationPageVideoEffectsButtonLabel?: string;
-  /* @conditional-compile-remove(video-background-effects) */
+
   /**
    * Error message for video effect failure
    */
   unableToStartVideoEffect?: string;
-  /* @conditional-compile-remove(video-background-effects) */
+
   /**
    * Label for the blur video background effect item
    */
   blurBackgroundEffectButtonLabel?: string;
-  /* @conditional-compile-remove(video-background-effects) */
+
   /**
    * Tooltip text for the blur video background effect item
    */
   blurBackgroundTooltip?: string;
-  /* @conditional-compile-remove(video-background-effects) */
+
   /**
    * Label for the remove video background effect item
    */
   removeBackgroundEffectButtonLabel?: string;
-  /* @conditional-compile-remove(video-background-effects) */
+
   /**
    * Tooltip text for the blur video background effect item
    */
   removeBackgroundTooltip?: string;
-  /* @conditional-compile-remove(video-background-effects) */
+
   /**
    * Text to show when warning the user the camera is off and inform the user to turn the camera on to see the selected video background effect.
    */
   cameraOffBackgroundEffectWarningText?: string;
-  /* @conditional-compile-remove(rooms) */
   /**
    * Title text of the page shown to the user when the user attempts to join a room they are not invited to.
    */
   notInvitedToRoomTitle: string;
-  /* @conditional-compile-remove(rooms) */
   /**
    * More details text of the page shown to the user when the user attempts to join a room they are not invited to.
    */
@@ -491,127 +487,102 @@ export interface CallCompositeStrings {
    * string to be used to announce when multiple unnamed participants have left at the same time.
    */
   manyUnnamedParticipantsLeft: string;
-  /* @conditional-compile-remove(close-captions) */
   /**
    * string to be used to open live captions contextual menu
    */
   liveCaptionsLabel?: string;
-  /* @conditional-compile-remove(close-captions) */
   /**
    * label for opening captions setting modal
    */
   captionsSettingsLabel?: string;
-  /* @conditional-compile-remove(close-captions) */
   /**
    * string to be used to start captions
    */
   startCaptionsButtonOnLabel?: string;
-  /* @conditional-compile-remove(close-captions) */
   /**
    * string to be used to stop captions
    */
   startCaptionsButtonOffLabel?: string;
-  /* @conditional-compile-remove(close-captions) */
   /**
    * tooltip string to be used to show captions is on
    */
   startCaptionsButtonTooltipOnContent?: string;
-  /* @conditional-compile-remove(close-captions) */
   /**
    *tooltip string to be used to show captions is off
    */
   startCaptionsButtonTooltipOffContent?: string;
-  /* @conditional-compile-remove(close-captions) */
   /**
    * captions setting modal title
    */
   captionsSettingsModalTitle?: string;
-  /* @conditional-compile-remove(close-captions) */
   /**
    * label for spoken language dropdown inside captions setting modal
    */
   captionsSettingsSpokenLanguageDropdownLabel?: string;
-  /* @conditional-compile-remove(close-captions) */
   /**
    * label for captions language inside captions setting modal
    */
   captionsSettingsCaptionLanguageDropdownLabel?: string;
-  /* @conditional-compile-remove(close-captions) */
   /**
    * text under captions setting dropdown indicating what the dropdown is for
    */
   captionsSettingsSpokenLanguageDropdownInfoText?: string;
-  /* @conditional-compile-remove(close-captions) */
   /**
    * text under captions setting dropdown indicating what the dropdown is for
    */
   captionsSettingsCaptionLanguageDropdownInfoText?: string;
-  /* @conditional-compile-remove(close-captions) */
   /**
    * confirm button label in captions setting modal
    */
   captionsSettingsConfirmButtonLabel?: string;
-  /* @conditional-compile-remove(close-captions) */
   /**
    * cancel button label in captions setting modal
    */
   captionsSettingsCancelButtonLabel?: string;
-  /* @conditional-compile-remove(close-captions) */
   /**
    * arial label for captions setting modal
    */
   captionsSettingsModalAriaLabel?: string;
-  /* @conditional-compile-remove(close-captions) */
   /**
    * arial label for captions setting modal close button
    */
   captionsSettingsCloseModalButtonAriaLabel?: string;
-  /* @conditional-compile-remove(close-captions) */
   /**
    * label for more button inside captions banner
    */
   captionsBannerMoreButtonCallingLabel?: string;
-  /* @conditional-compile-remove(close-captions) */
   /**
    * arial label for more button inside captions banner
    */
   captionsBannerMoreButtonTooltip?: string;
-  /* @conditional-compile-remove(close-captions) */
   /**
    * list of key value pairs that pairs spoken language code to language names
    */
   spokenLanguageStrings?: SpokenLanguageStrings;
-  /* @conditional-compile-remove(close-captions) */
   /**
    * list of key value pairs that pairs caption language code to language names
    */
   captionLanguageStrings?: CaptionLanguageStrings;
-  /* @conditional-compile-remove(close-captions) */
   /**
    * captions banner loading spinner label
    */
   captionsBannerSpinnerText?: string;
-  /* @conditional-compile-remove(call-transfer) */
   /**
    * transfer page text when showing the transferor who initiated the transfer
    */
   transferPageTransferorText: string;
-  /* @conditional-compile-remove(call-transfer) */
   /**
    * transfer page text when showing the transfer target
    */
   transferPageTransferTargetText: string;
-  /* @conditional-compile-remove(call-transfer) */
   /**
    * transfer page display name for unknown participant
    */
   transferPageUnknownTransferorDisplayName: string;
-  /* @conditional-compile-remove(call-transfer) */
   /**
    * transfer page display name for unknown participant
    */
   transferPageUnknownTransferTargetDisplayName: string;
-  /* @conditional-compile-remove(call-transfer) */
   /**
    * notice to be announced by narrator the transfer page is showing
    */
@@ -684,7 +655,7 @@ export interface CallCompositeStrings {
    * Label for the selection of the focusedContentLayout (Focused content) layout
    */
   moreButtonGalleryFocusedContentLayoutLabel?: string;
-  /* @conditional-compile-remove(capabilities) */
+
   /**
    * All strings for capability changed notification
    */
@@ -756,11 +727,6 @@ export interface CallCompositeStrings {
   surveySkipButtonLabel: string;
   /* @conditional-compile-remove(end-of-call-survey) */
   /**
-   * Default text for free form text box
-   */
-  surveyTextboxDefaultText: string;
-  /* @conditional-compile-remove(end-of-call-survey) */
-  /**
    * Thank you text appeared on screen after survey is submitted
    */
   endOfSurveyText: string;
@@ -773,17 +739,15 @@ export interface CallCompositeStrings {
   /**
    * Corresponding texts to each call category
    */
-  SurveyIssuesHeadingStrings: SurveyIssuesHeadingStrings;
+  surveyIssuesHeadingStrings: SurveyIssuesHeadingStrings;
   /**
    * String for the dismiss control on the local and remote PIP on mobile
    */
   dismissModalAriaLabel?: string;
-  /* @conditional-compile-remove(calling-sounds) */
   /**
    * String for title when the call is rejected by the callee
    */
   callRejectedTitle?: string;
-  /* @conditional-compile-remove(calling-sounds) */
   /**
    * String for more details when the call is rejected by the callee
    */
@@ -839,4 +803,44 @@ export interface CallCompositeStrings {
    * Tooltip for button to exit spotlight
    */
   exitSpotlightButtonTooltip: string;
+  /* @conditional-compile-remove(end-call-options) */
+  /**
+   * Label for confirm button of hang up for everyone dialog
+   */
+  leaveConfirmButtonLabel?: string;
+  /* @conditional-compile-remove(end-call-options) */
+  /**
+   * Label for confirm button of leave confim dialog
+   */
+  endCallConfirmButtonLabel?: string;
+  /* @conditional-compile-remove(end-call-options) */
+  /**
+   * Label for cancel button in hang up confirm dialog
+   */
+  hangUpCancelButtonLabel?: string;
+  /* @conditional-compile-remove(end-call-options) */
+  /**
+   * Title of confirm dialog when leaving
+   */
+  leaveConfirmDialogTitle?: string;
+  /* @conditional-compile-remove(end-call-options) */
+  /**
+   * Content of confirm dialog when leaving
+   */
+  leaveConfirmDialogContent?: string;
+  /* @conditional-compile-remove(end-call-options) */
+  /**
+   * Title of confirm dialog when leaving
+   */
+  endCallConfirmDialogTitle?: string;
+  /* @conditional-compile-remove(end-call-options) */
+  /**
+   * Content of confirm dialog when leaving
+   */
+  endCallConfirmDialogContent?: string;
+  /* @conditional-compile-remove(meeting-id) */
+  /**
+   * Error message when the meeting identifier or passcode is invalid
+   */
+  invalidMeetingIdentifier: string;
 }

@@ -24,27 +24,40 @@
     "placeholderText": "Enter a message",
     "textTooLong": "Your message length is over the maximum limit.",
     "sendButtonAriaLabel": "Send message",
-    "fileUploadsPendingError": "Uploading... Please wait.",
-    "removeFile": "Remove file",
+    "attachmentUploadsPendingError": "Uploading... Please wait.",
+    "removeAttachment": "Remove file",
     "uploading": "Uploading",
-    "uploadCompleted": "Upload completed"
+    "uploadCompleted": "Upload completed",
+    "attachmentMoreMenu": "More Options"
   },
   "richTextSendBox": {
     "placeholderText": "Enter a message",
     "textTooLong": "Your message length is over the maximum limit.",
     "sendButtonAriaLabel": "Send message",
-    "fileUploadsPendingError": "Uploading... Please wait.",
-    "removeFile": "Remove file",
+    "attachmentUploadsPendingError": "Uploading... Please wait.",
+    "removeAttachment": "Remove file",
     "uploading": "Uploading",
     "uploadCompleted": "Upload completed",
-    "boldTooltip": "Bold",
-    "italicTooltip": "Italic",
-    "underlineTooltip": "Underline",
-    "bulletListTooltip": "Bulleted list",
-    "numberListTooltip": "Numbered list",
-    "increaseIndentTooltip": "Increase indent",
-    "decreaseIndentTooltip": "Decrease indent",
-    "richTextFormatButtonTooltip": "Format"
+    "richTextBoldTooltip": "Bold",
+    "richTextItalicTooltip": "Italic",
+    "richTextUnderlineTooltip": "Underline",
+    "richTextBulletListTooltip": "Bulleted list",
+    "richTextNumberListTooltip": "Numbered list",
+    "richTextIncreaseIndentTooltip": "Increase indent",
+    "richTextDecreaseIndentTooltip": "Decrease indent",
+    "richTextInsertTableTooltip": "Insert table",
+    "richTextFormatButtonTooltip": "Format",
+    "richTextInsertRowOrColumnMenu": "Insert",
+    "richTextInsertTableMenuTitle": "Insert {column} x {row} table",
+    "richTextInsertRowAboveMenu": "Insert above",
+    "richTextInsertRowBelowMenu": "Insert below",
+    "richTextInsertColumnLeftMenu": "Insert left",
+    "richTextInsertColumnRightMenu": "Insert right",
+    "richTextDeleteRowOrColumnMenu": "Delete",
+    "richTextDeleteColumnMenu": "Delete column",
+    "richTextDeleteRowMenu": "Delete row",
+    "richTextDeleteTableMenu": "Delete table",
+    "attachmentMoreMenu": "More Options"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Suggestions"
@@ -66,7 +79,9 @@
   },
   "endCallButton": {
     "label": "Leave",
-    "tooltipContent": "Leave call"
+    "tooltipContent": "Leave call",
+    "leaveOption": "Leave",
+    "endCallOption": "End call for everyone"
   },
   "cameraButton": {
     "onLabel": "Camera",
@@ -179,10 +194,11 @@
     "editBoxSubmitButton": "Done",
     "messageReadCount": "Read by {messageReadByCount} of {remoteParticipantsCount}",
     "actionMenuMoreOptions": "More Options",
-    "downloadFile": "Download file",
+    "downloadAttachment": "Download file",
+    "openAttachment": "Open file",
     "blockedWarningText": "This message was deleted due to organisational policy.",
     "blockedWarningLinkText": "Details",
-    "fileCardGroupMessage": "The message has {fileCount} attachment",
+    "attachmentCardGroupMessage": "The message has {attachmentCount} attachment",
     "messageDeletedAnnouncementAriaLabel": "The message is deleted"
   },
   "errorBar": {

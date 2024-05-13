@@ -32,10 +32,8 @@ import { memoizeFnAll, MessageStatus } from '@internal/acs-ui-common';
 import { useLocale } from '../localization/LocalizationProvider';
 import { isNarrowWidth, _useContainerWidth } from './utils/responsive';
 import getParticipantsWhoHaveReadMessage from './utils/getParticipantsWhoHaveReadMessage';
-/* @conditional-compile-remove(file-sharing) */
-import { FileDownloadHandler } from './FileDownloadCards';
-/* @conditional-compile-remove(file-sharing) */
-import { AttachmentMetadata } from './FileDownloadCards';
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+import { AttachmentMetadata, AttachmentOptions } from '../types/Attachment';
 import { useTheme } from '../theming';
 import { FluentV9ThemeProvider } from './../theming/FluentV9ThemeProvider';
 import LiveAnnouncer from './Announcer/LiveAnnouncer';
@@ -46,10 +44,13 @@ import {
   ChatMessageComponentWrapper,
   ChatMessageComponentWrapperProps
 } from './ChatMessage/ChatMessageComponentWrapper';
-/* @conditional-compile-remove(image-overlay) */
 import { InlineImageOptions } from './ChatMessage/ChatMessageContent';
 import { MessageStatusIndicatorInternal } from './MessageStatusIndicatorInternal';
 import { Announcer } from './Announcer';
+/* @conditional-compile-remove(rich-text-editor) */
+import { RichTextStrings } from './RichTextEditor/RichTextSendBox';
+/* @conditional-compile-remove(rich-text-editor) */
+import { loadChatMessageComponentAsRichTextEditBox } from './ChatMessage/MyMessageComponents/ChatMessageComponentAsEditBoxPicker';
 
 const isMessageSame = (first: ChatMessage, second: ChatMessage): boolean => {
   return (
@@ -213,18 +214,21 @@ export interface MessageThreadStrings {
   actionMenuMoreOptions?: string;
   /** Aria label to announce when a message is deleted */
   messageDeletedAnnouncementAriaLabel: string;
-  /* @conditional-compile-remove(file-sharing) */
-  /** String for download file button in file card */
-  downloadFile: string;
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  /** String for download attachment button in attachment card */
+  downloadAttachment: string;
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  /** String for open attachment button in attachment card */
+  openAttachment: string;
   /* @conditional-compile-remove(data-loss-prevention) */
   /** String for policy violation message removal */
   blockedWarningText: string;
   /* @conditional-compile-remove(data-loss-prevention) */
   /** String for policy violation message removal details link */
   blockedWarningLinkText: string;
-  /* @conditional-compile-remove(file-sharing) */
-  /** String for aria text in file attachment group*/
-  fileCardGroupMessage: string;
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  /** String for aria text in attachment card group*/
+  attachmentCardGroupMessage: string;
 }
 
 /**
@@ -348,9 +352,9 @@ const getLastChatMessageForCurrentUser = (messages: Message[]): ChatMessage | un
 export type UpdateMessageCallback = (
   messageId: string,
   content: string,
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(attachment-upload) */
   options?: {
-    /* @conditional-compile-remove(file-sharing) */
+    /* @conditional-compile-remove(attachment-upload) */
     metadata?: Record<string, string>;
     attachmentMetadata?: AttachmentMetadata[];
   }
@@ -460,12 +464,12 @@ export type MessageThreadProps = {
    * `messageRenderer` is not provided for `CustomMessage` and thus only available for `ChatMessage` and `SystemMessage`.
    */
   onRenderMessage?: (messageProps: MessageProps, messageRenderer?: MessageRenderer) => JSX.Element;
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   /**
-   * Optional callback to render attached files in the message component.
+   * Optional callback to render attachments in the message component.
    * @beta
    */
-  onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
+  onRenderAttachmentDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
   /**
    * Optional callback to edit a message.
    *
@@ -512,14 +516,13 @@ export type MessageThreadProps = {
    */
   strings?: Partial<MessageThreadStrings>;
 
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   /**
    * @beta
-   * Optional function called when someone clicks on the file download icon.
-   * If file attachments are defined in the `message.metadata` property using the `fileSharingMetadata` key,
-   * this function will be called with the data inside `fileSharingMetadata` key.
+   * Optional attachment options, which defines behvaiour for uploading and downloading attachments.
+   * As this moment, the uploadOptions would be ignored and this option is intended for download only.
    */
-  fileDownloadHandler?: FileDownloadHandler;
+  attachmentOptions?: AttachmentOptions;
 
   /* @conditional-compile-remove(date-time-customization) */
   /**
@@ -533,12 +536,19 @@ export type MessageThreadProps = {
    * @beta
    */
   mentionOptions?: MentionOptions;
-  /* @conditional-compile-remove(image-overlay) */
   /**
    * Optional callback called when an inline image is clicked.
    * @beta
    */
   inlineImageOptions?: InlineImageOptions;
+
+  /* @conditional-compile-remove(rich-text-editor) */
+  /**
+   * enables rich text editor for the edit box
+   *
+   * @defaultValue `false`
+   */
+  richTextEditor?: boolean;
 };
 
 /**
@@ -556,7 +566,7 @@ export type MessageProps = {
   /**
    * Strings from parent MessageThread component
    */
-  strings: MessageThreadStrings;
+  strings: MessageThreadStrings & /* @conditional-compile-remove(rich-text-editor) */ Partial<RichTextStrings>;
   /**
    * Custom CSS styles for chat message container.
    */
@@ -669,10 +679,13 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
     onDisplayDateTimeString,
     /* @conditional-compile-remove(mention) */
     mentionOptions,
-    /* @conditional-compile-remove(image-overlay) */
     inlineImageOptions,
-    /* @conditional-compile-remove(file-sharing) */
-    onRenderFileDownloads
+    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+    attachmentOptions,
+    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+    onRenderAttachmentDownloads,
+    /* @conditional-compile-remove(rich-text-editor) */
+    richTextEditor = false
   } = props;
   // We need this state to wait for one tick and scroll to bottom after messages have been initialized.
   // Otherwise chatScrollDivRef.current.clientHeight is wrong if we scroll to bottom before messages are initialized.
@@ -704,6 +717,15 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
   const previousMessagesRef = useRef<Message[]>([]);
   // an aria label for Narrator to notify when a message is deleted
   const [deletedMessageAriaLabel, setDeletedMessageAriaLabel] = useState<string | undefined>(undefined);
+  /* @conditional-compile-remove(rich-text-editor) */
+  useEffect(() => {
+    // if rich text editor is enabled, the rich text editor component should be loaded early for good UX
+    if (richTextEditor !== undefined && richTextEditor) {
+      // this line is needed to load the Rooster JS dependencies early in the lifecycle
+      // when the rich text editor is enabled
+      loadChatMessageComponentAsRichTextEditBox();
+    }
+  }, [richTextEditor]);
 
   const onDeleteMessageCallback = useCallback(
     async (messageId: string): Promise<void> => {
@@ -1090,19 +1112,19 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
       )}
       <LiveAnnouncer>
         <FluentV9ThemeProvider v8Theme={theme}>
-          {latestDeletedMessageId && (
-            <Announcer
-              key={latestDeletedMessageId}
-              announcementString={deletedMessageAriaLabel}
-              ariaLive={'assertive'}
-            />
-          )}
           <Chat
             // styles?.chatContainer used in className and style prop as style prop can't handle CSS selectors
             className={mergeClasses(classes.root, mergeStyles(styles?.chatContainer))}
             ref={chatScrollDivRef}
             style={{ ...createStyleFromV8Style(styles?.chatContainer) }}
           >
+            {latestDeletedMessageId && (
+              <Announcer
+                key={latestDeletedMessageId}
+                announcementString={deletedMessageAriaLabel}
+                ariaLive={'polite'}
+              />
+            )}
             {messagesToDisplay.map((message: _ChatMessageProps): JSX.Element => {
               return (
                 <MemoChatMessageComponentWrapper
@@ -1119,16 +1141,17 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
                   onActionButtonClick={onActionButtonClickMemo}
                   readCount={readCountForHoveredIndicator}
                   participantCount={participantCount}
-                  /* @conditional-compile-remove(file-sharing) */
-                  fileDownloadHandler={props.fileDownloadHandler}
-                  /* @conditional-compile-remove(image-overlay) */
+                  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+                  actionsForAttachment={attachmentOptions?.downloadOptions?.actionsForAttachment}
                   inlineImageOptions={inlineImageOptions}
                   /* @conditional-compile-remove(date-time-customization) */
                   onDisplayDateTimeString={onDisplayDateTimeString}
                   /* @conditional-compile-remove(mention) */
                   mentionOptions={mentionOptions}
-                  /* @conditional-compile-remove(file-sharing) */
-                  onRenderFileDownloads={onRenderFileDownloads}
+                  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+                  onRenderAttachmentDownloads={onRenderAttachmentDownloads}
+                  /* @conditional-compile-remove(rich-text-editor) */
+                  richTextEditor={richTextEditor}
                 />
               );
             })}

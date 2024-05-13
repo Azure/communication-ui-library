@@ -24,27 +24,40 @@
     "placeholderText": "Kirjoita viesti",
     "textTooLong": "Viestin pituus ylittää enimmäispituuden.",
     "sendButtonAriaLabel": "Lähetä viesti",
-    "fileUploadsPendingError": "Ladataan palvelimeen... Odota hetki.",
-    "removeFile": "Poista tiedosto",
+    "attachmentUploadsPendingError": "Ladataan palvelimeen... Odota hetki.",
+    "removeAttachment": "Poista tiedosto",
     "uploading": "Ladataan palvelimeen",
-    "uploadCompleted": "Ladattu palvelimeen"
+    "uploadCompleted": "Ladattu palvelimeen",
+    "attachmentMoreMenu": "Lisää asetuksia"
   },
   "richTextSendBox": {
     "placeholderText": "Kirjoita viesti",
     "textTooLong": "Viestin pituus ylittää enimmäispituuden.",
     "sendButtonAriaLabel": "Lähetä viesti",
-    "fileUploadsPendingError": "Ladataan... Odota.",
-    "removeFile": "Poista tiedosto",
+    "attachmentUploadsPendingError": "Ladataan... Odota.",
+    "removeAttachment": "Poista tiedosto",
     "uploading": "Ladataan",
     "uploadCompleted": "Lataus valmis",
-    "boldTooltip": "Lihavoi",
-    "italicTooltip": "Kursivointi",
-    "underlineTooltip": "Alleviivaa",
-    "bulletListTooltip": "Luettelomerkeillä varustettu luettelo",
-    "numberListTooltip": "Numeroitu luettelo",
-    "increaseIndentTooltip": "Suurenna sisennystä",
-    "decreaseIndentTooltip": "Pienennä sisennystä",
-    "richTextFormatButtonTooltip": "Muoto"
+    "richTextBoldTooltip": "Lihavoi",
+    "richTextItalicTooltip": "Kursivointi",
+    "richTextUnderlineTooltip": "Alleviivaa",
+    "richTextBulletListTooltip": "Luettelomerkeillä varustettu luettelo",
+    "richTextNumberListTooltip": "Numeroitu luettelo",
+    "richTextIncreaseIndentTooltip": "Suurenna sisennystä",
+    "richTextDecreaseIndentTooltip": "Pienennä sisennystä",
+    "richTextInsertTableTooltip": "Lisää taulukko",
+    "richTextFormatButtonTooltip": "Muoto",
+    "richTextInsertRowOrColumnMenu": "Lisää",
+    "richTextInsertTableMenuTitle": "Lisää {row}x{column}-kokoinen taulukko",
+    "richTextInsertRowAboveMenu": "Lisää yläpuolelle",
+    "richTextInsertRowBelowMenu": "Lisää alapuolelle",
+    "richTextInsertColumnLeftMenu": "Lisää vasemmalle",
+    "richTextInsertColumnRightMenu": "Lisää oikealle",
+    "richTextDeleteRowOrColumnMenu": "Poista",
+    "richTextDeleteColumnMenu": "Poista sarake",
+    "richTextDeleteRowMenu": "Poista rivi",
+    "richTextDeleteTableMenu": "Poista taulukko",
+    "attachmentMoreMenu": "Lisää asetuksia"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Ehdotuksia"
@@ -66,7 +79,9 @@
   },
   "endCallButton": {
     "label": "Poistu",
-    "tooltipContent": "Poistu puhelusta"
+    "tooltipContent": "Poistu puhelusta",
+    "leaveOption": "Poistu",
+    "endCallOption": "Lopeta kaikkien puhelu"
   },
   "cameraButton": {
     "onLabel": "Kamera",
@@ -179,10 +194,11 @@
     "editBoxSubmitButton": "Valmis",
     "messageReadCount": "{messageReadByCount}/{remoteParticipantsCount} osallistujaa on lukenut viestin",
     "actionMenuMoreOptions": "Lisää vaihtoehtoja",
-    "downloadFile": "Lataa tiedosto",
+    "downloadAttachment": "Lataa tiedosto",
+    "openAttachment": "Avaa tiedosto",
     "blockedWarningText": "Tämä viesti poistettiin organisaation käytännön vuoksi.",
     "blockedWarningLinkText": "Lisätiedot",
-    "fileCardGroupMessage": "Viestissä on {fileCount} liite",
+    "attachmentCardGroupMessage": "Viestissä on {attachmentCount} liitettä",
     "messageDeletedAnnouncementAriaLabel": "Viesti on poistettu"
   },
   "errorBar": {

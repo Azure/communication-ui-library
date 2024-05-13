@@ -24,27 +24,40 @@
     "placeholderText": "メッセージを入力",
     "textTooLong": "メッセージの長さが上限を超えています。",
     "sendButtonAriaLabel": "メッセージの送信",
-    "fileUploadsPendingError": "アップロード中です... お待ちください。",
-    "removeFile": "ファイルを削除します",
+    "attachmentUploadsPendingError": "アップロード中です... お待ちください。",
+    "removeAttachment": "ファイルの削除",
     "uploading": "アップロード中",
-    "uploadCompleted": "アップロードが完了しました"
+    "uploadCompleted": "アップロードが完了しました",
+    "attachmentMoreMenu": "その他のオプション"
   },
   "richTextSendBox": {
     "placeholderText": "メッセージを入力してください",
     "textTooLong": "メッセージの長さが上限を超えています。",
     "sendButtonAriaLabel": "メッセージの送信",
-    "fileUploadsPendingError": "アップロード中...お待ちください。",
-    "removeFile": "ファイルの削除",
+    "attachmentUploadsPendingError": "アップロード中...お待ちください。",
+    "removeAttachment": "ファイルを削除します",
     "uploading": "アップロード中",
     "uploadCompleted": "アップロード完了",
-    "boldTooltip": "太字",
-    "italicTooltip": "斜体",
-    "underlineTooltip": "下線",
-    "bulletListTooltip": "箇条書き",
-    "numberListTooltip": "番号付きリスト",
-    "increaseIndentTooltip": "インデントを増やす",
-    "decreaseIndentTooltip": "インデントを減らす",
-    "richTextFormatButtonTooltip": "形式"
+    "richTextBoldTooltip": "太字",
+    "richTextItalicTooltip": "斜体",
+    "richTextUnderlineTooltip": "下線",
+    "richTextBulletListTooltip": "箇条書き",
+    "richTextNumberListTooltip": "番号付きリスト",
+    "richTextIncreaseIndentTooltip": "インデントを増やす",
+    "richTextDecreaseIndentTooltip": "インデントを減らす",
+    "richTextInsertTableTooltip": "表の挿入",
+    "richTextFormatButtonTooltip": "形式",
+    "richTextInsertRowOrColumnMenu": "挿入",
+    "richTextInsertTableMenuTitle": "{column} x {row} の表を挿入する",
+    "richTextInsertRowAboveMenu": "上に挿入",
+    "richTextInsertRowBelowMenu": "下に挿入",
+    "richTextInsertColumnLeftMenu": "左に挿入",
+    "richTextInsertColumnRightMenu": "右に挿入",
+    "richTextDeleteRowOrColumnMenu": "削除",
+    "richTextDeleteColumnMenu": "列の削除",
+    "richTextDeleteRowMenu": "行の削除",
+    "richTextDeleteTableMenu": "表の削除",
+    "attachmentMoreMenu": "その他のオプション"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "候補"
@@ -66,7 +79,9 @@
   },
   "endCallButton": {
     "label": "退出",
-    "tooltipContent": "通話を終了"
+    "tooltipContent": "通話を終了",
+    "leaveOption": "退出",
+    "endCallOption": "全員の通話を終了"
   },
   "cameraButton": {
     "onLabel": "カメラ",
@@ -179,10 +194,11 @@
     "editBoxSubmitButton": "完了",
     "messageReadCount": "{remoteParticipantsCount} の {messageReadByCount} による読み取り",
     "actionMenuMoreOptions": "その他のオプション",
-    "downloadFile": "ファイルをダウンロード",
+    "downloadAttachment": "ファイルをダウンロード",
+    "openAttachment": "ファイルを開く",
     "blockedWarningText": "組織のポリシーにより、このメッセージは削除されました。",
     "blockedWarningLinkText": "詳細",
-    "fileCardGroupMessage": "メッセージには {fileCount} 個の添付ファイルがあります",
+    "attachmentCardGroupMessage": "メッセージに添付ファイルが {attachmentCount} 個あります",
     "messageDeletedAnnouncementAriaLabel": "メッセージが削除されます"
   },
   "errorBar": {

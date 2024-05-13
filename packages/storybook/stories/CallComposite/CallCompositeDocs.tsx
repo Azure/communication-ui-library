@@ -358,14 +358,6 @@ export const Docs: () => JSX.Element = () => {
       <Source code="<CallComposite options={galleryOptions: {layout: 'default'}} />" />
       <Source code="<CallComposite options={galleryOptions: {layout: 'floatingLocalVideo'}} />" />
       <Source code="<CallComposite options={galleryOptions: {layout: 'focusedContent'}} />" />
-      <div ref={refExistedJoinCall}>
-        <Heading>Joining an existing Call</Heading>
-        <Description>
-          The [join existing call](./?path=/story/composites-call-joinexistingcall--join-existing-call) provides an easy
-          playground to join an existing Azure Communication Services group call or an existing Teams meeting. This is
-          useful if you want to explore the composite with multiple users.
-        </Description>
-      </div>
       <Heading>PSTN and 1:N Calling</Heading>
       <SingleLineBetaBanner version={'1.3.2-beta.1'} />
       <Description>

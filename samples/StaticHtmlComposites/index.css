@@ -18,6 +18,10 @@ body {
   height: 100%;
 }
 
+#outbound-call-composite-container {
+  height: 100%;
+}
+
 #callWithChat-composite-container {
   height: 100%;
 }

@@ -24,27 +24,40 @@
     "placeholderText": "הזן הודעה",
     "textTooLong": "אורך ההודעה שלך חורג מהמגבלה המרבית.",
     "sendButtonAriaLabel": "שלח הודעה",
-    "fileUploadsPendingError": "מעלה... אנא המתן.",
-    "removeFile": "הסר קובץ",
+    "attachmentUploadsPendingError": "מעלה... אנא המתן.",
+    "removeAttachment": "הסרת קובץ",
     "uploading": "מעלה",
-    "uploadCompleted": "ההעלאה הושלמה"
+    "uploadCompleted": "ההעלאה הושלמה",
+    "attachmentMoreMenu": "אפשרויות נוספות"
   },
   "richTextSendBox": {
     "placeholderText": "הזן הודעה",
     "textTooLong": "אורך ההודעה שלך חורג מהמגבלה המרבית.",
     "sendButtonAriaLabel": "שלח הודעה",
-    "fileUploadsPendingError": "מעלה... המתן.",
-    "removeFile": "הסרת קובץ",
+    "attachmentUploadsPendingError": "מעלה... המתן.",
+    "removeAttachment": "הסר קובץ",
     "uploading": "מעלה",
     "uploadCompleted": "ההעלאה הושלמה",
-    "boldTooltip": "מודגש",
-    "italicTooltip": "נטוי",
-    "underlineTooltip": "קו תחתון",
-    "bulletListTooltip": "רשימה עם תבליטים",
-    "numberListTooltip": "רשימה ממוספרת",
-    "increaseIndentTooltip": "הגדל כניסה",
-    "decreaseIndentTooltip": "הקטן כניסה",
-    "richTextFormatButtonTooltip": "תבנית"
+    "richTextBoldTooltip": "מודגש",
+    "richTextItalicTooltip": "נטוי",
+    "richTextUnderlineTooltip": "קו תחתון",
+    "richTextBulletListTooltip": "רשימה עם תבליטים",
+    "richTextNumberListTooltip": "רשימה ממוספרת",
+    "richTextIncreaseIndentTooltip": "הגדל כניסה",
+    "richTextDecreaseIndentTooltip": "הקטן כניסה",
+    "richTextInsertTableTooltip": "הוסף טבלה",
+    "richTextFormatButtonTooltip": "תבנית",
+    "richTextInsertRowOrColumnMenu": "הוסף",
+    "richTextInsertTableMenuTitle": "הוסף טבלה {column} x‏ {row}",
+    "richTextInsertRowAboveMenu": "הוסף מעל",
+    "richTextInsertRowBelowMenu": "הוסף מתחת",
+    "richTextInsertColumnLeftMenu": "הוסף משמאל",
+    "richTextInsertColumnRightMenu": "הוסף מימין",
+    "richTextDeleteRowOrColumnMenu": "מחק",
+    "richTextDeleteColumnMenu": "מחק עמודה",
+    "richTextDeleteRowMenu": "מחק שורה",
+    "richTextDeleteTableMenu": "מחק טבלה",
+    "attachmentMoreMenu": "אפשרויות נוספות"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "הצעות"
@@ -66,7 +79,9 @@
   },
   "endCallButton": {
     "label": "עזוב",
-    "tooltipContent": "עזוב את השיחה"
+    "tooltipContent": "עזוב את השיחה",
+    "leaveOption": "צא",
+    "endCallOption": "סיים את השיחה לכולם"
   },
   "cameraButton": {
     "onLabel": "מצלמה",
@@ -179,10 +194,11 @@
     "editBoxSubmitButton": "בוצע",
     "messageReadCount": "נקרא על-ידי {messageReadByCount} מתוך {remoteParticipantsCount}",
     "actionMenuMoreOptions": "אפשרויות נוספות",
-    "downloadFile": "הורד קובץ",
+    "downloadAttachment": "הורד קובץ",
+    "openAttachment": "פתח קובץ",
     "blockedWarningText": "הודעה זו נמחקה עקב מדיניות ארגונית.",
     "blockedWarningLinkText": "פרטים",
-    "fileCardGroupMessage": "ההודעה כוללת קובץ מצורף {fileCount}",
+    "attachmentCardGroupMessage": "ההודעה כוללת {attachmentCount} קבצים מצורפים.",
     "messageDeletedAnnouncementAriaLabel": "ההודעה נמחקת"
   },
   "errorBar": {

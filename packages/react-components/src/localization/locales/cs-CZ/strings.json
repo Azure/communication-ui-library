@@ -24,27 +24,40 @@
     "placeholderText": "Zadejte zprávu",
     "textTooLong": "Délka vaší zprávy překračuje maximální limit.",
     "sendButtonAriaLabel": "Poslat zprávu",
-    "fileUploadsPendingError": "Probíhá nahrávání... Počkejte prosím.",
-    "removeFile": "Odebrat soubor",
+    "attachmentUploadsPendingError": "Probíhá nahrávání... Počkejte prosím.",
+    "removeAttachment": "Odebrat soubor",
     "uploading": "Nahrávání",
-    "uploadCompleted": "Nahrávání se dokončilo"
+    "uploadCompleted": "Nahrávání se dokončilo",
+    "attachmentMoreMenu": "Další možnosti"
   },
   "richTextSendBox": {
     "placeholderText": "Zadejte zprávu",
     "textTooLong": "Délka vaší zprávy překračuje maximální limit.",
     "sendButtonAriaLabel": "Poslat zprávu",
-    "fileUploadsPendingError": "Nahrávání… Počkejte prosím.",
-    "removeFile": "Odebrat soubor",
+    "attachmentUploadsPendingError": "Nahrávání… Počkejte prosím.",
+    "removeAttachment": "Odebrat soubor",
     "uploading": "Nahrávání",
     "uploadCompleted": "Nahrávání se dokončilo",
-    "boldTooltip": "Tučné",
-    "italicTooltip": "Kurzíva",
-    "underlineTooltip": "Podtržení",
-    "bulletListTooltip": "Seznam s odrážkami",
-    "numberListTooltip": "Číslovaný seznam",
-    "increaseIndentTooltip": "Zvětšit odsazení",
-    "decreaseIndentTooltip": "Zmenšit odsazení",
-    "richTextFormatButtonTooltip": "Formát"
+    "richTextBoldTooltip": "Tučné",
+    "richTextItalicTooltip": "Kurzíva",
+    "richTextUnderlineTooltip": "Podtržení",
+    "richTextBulletListTooltip": "Seznam s odrážkami",
+    "richTextNumberListTooltip": "Číslovaný seznam",
+    "richTextIncreaseIndentTooltip": "Zvětšit odsazení",
+    "richTextDecreaseIndentTooltip": "Zmenšit odsazení",
+    "richTextInsertTableTooltip": "Vložit tabulku",
+    "richTextFormatButtonTooltip": "Formát",
+    "richTextInsertRowOrColumnMenu": "Vložit",
+    "richTextInsertTableMenuTitle": "Vložit {column} x {row} tabulka",
+    "richTextInsertRowAboveMenu": "Vložit nad",
+    "richTextInsertRowBelowMenu": "Vložit pod",
+    "richTextInsertColumnLeftMenu": "Vložit vlevo",
+    "richTextInsertColumnRightMenu": "Vložit vpravo",
+    "richTextDeleteRowOrColumnMenu": "Odstranit",
+    "richTextDeleteColumnMenu": "Odstranit sloupec",
+    "richTextDeleteRowMenu": "Odstranit řádek",
+    "richTextDeleteTableMenu": "Odstranit tabulku",
+    "attachmentMoreMenu": "Další možnosti"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Návrhy"
@@ -66,7 +79,9 @@
   },
   "endCallButton": {
     "label": "Opustit",
-    "tooltipContent": "Opustit hovor"
+    "tooltipContent": "Opustit hovor",
+    "leaveOption": "Odejít",
+    "endCallOption": "Ukončit hovor pro všechny"
   },
   "cameraButton": {
     "onLabel": "Kamera",
@@ -179,10 +194,11 @@
     "editBoxSubmitButton": "Hotovo",
     "messageReadCount": "Přečetl(a) {messageReadByCount} z {remoteParticipantsCount}",
     "actionMenuMoreOptions": "Další možnosti",
-    "downloadFile": "Stáhnout soubor",
+    "downloadAttachment": "Stáhnout soubor",
+    "openAttachment": "Otevřít soubor",
     "blockedWarningText": "Tato zpráva se odstranila kvůli zásadám organizace.",
     "blockedWarningLinkText": "Podrobnosti",
-    "fileCardGroupMessage": "Zpráva obsahuje počet příloh: {fileCount}",
+    "attachmentCardGroupMessage": "Zpráva obsahuje {attachmentCount} přílohu",
     "messageDeletedAnnouncementAriaLabel": "Zpráva se odstranila."
   },
   "errorBar": {

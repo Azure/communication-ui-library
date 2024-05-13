@@ -7,12 +7,15 @@ import {
   LocalVideoStream as SdkLocalVideoStream,
   VideoStreamRendererView
 } from '@azure/communication-calling';
-/* @conditional-compile-remove(close-captions) */
 import { TeamsCaptionsInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(acs-close-captions) */
 import { CaptionsInfo as AcsCaptionsInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support) */
 import { CallKind } from '@azure/communication-calling';
+/* @conditional-compile-remove(meeting-id) */
+import { TeamsCallInfo } from '@azure/communication-calling';
+/* @conditional-compile-remove(calling-beta-sdk) */
+import { CallInfo } from '@azure/communication-calling';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import {
   CallState,
@@ -22,18 +25,18 @@ import {
   IncomingCallState as DeclarativeIncomingCall,
   VideoStreamRendererViewState as DeclarativeVideoStreamRendererView
 } from './CallClientState';
-/* @conditional-compile-remove(close-captions) */
 import { CaptionsInfo } from './CallClientState';
 
-/* @conditional-compile-remove(teams-identity-support) */
+/* @conditional-compile-remove(teams-identity-support) */ /* @conditional-compile-remove(meeting-id) */
 import { _isACSCall } from './TypeGuards';
+/* @conditional-compile-remove(meeting-id) */ /* @conditional-compile-remove(acs-close-captions) */
+import { _isTeamsCall } from './TypeGuards';
 import { CallCommon, IncomingCallCommon } from './BetaToStableTypes';
 
-/* @conditional-compile-remove(video-background-effects) */
 import { Features } from '@azure/communication-calling';
-/* @conditional-compile-remove(video-background-effects) */
+
 import { VideoEffectName } from '@azure/communication-calling';
-/* @conditional-compile-remove(video-background-effects) */
+
 import { LocalVideoStreamVideoEffectsState } from './CallClientState';
 import { RaisedHand } from '@azure/communication-calling';
 import { RaisedHandState } from './CallClientState';
@@ -44,14 +47,13 @@ import { RaisedHandState } from './CallClientState';
 export function convertSdkLocalStreamToDeclarativeLocalStream(
   stream: SdkLocalVideoStream
 ): DeclarativeLocalVideoStream {
-  /* @conditional-compile-remove(video-background-effects) */
   const localVideoStreamEffectsAPI = stream.feature(Features.VideoEffects);
 
   return {
     source: stream.source,
     mediaStreamType: stream.mediaStreamType,
     view: undefined,
-    /* @conditional-compile-remove(video-background-effects) */
+
     videoEffects: convertFromSDKToDeclarativeVideoStreamVideoEffects(localVideoStreamEffectsAPI.activeEffects)
   };
 }
@@ -110,6 +112,24 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
     declarativeRemoteParticipants[toFlatCommunicationIdentifier(participant.identifier)] =
       convertSdkParticipantToDeclarativeParticipant(participant);
   });
+  /* @conditional-compile-remove(hide-attendee-name) */
+  let hideAttendeeNames = false;
+  /* @conditional-compile-remove(hide-attendee-name) */
+  if (
+    call.feature(Features.Capabilities).capabilities &&
+    call.feature(Features.Capabilities).capabilities.viewAttendeeNames
+  ) {
+    const viewAttendeeNames = call.feature(Features.Capabilities).capabilities.viewAttendeeNames;
+    if (!viewAttendeeNames.isPresent && viewAttendeeNames.reason === 'MeetingRestricted') {
+      hideAttendeeNames = true;
+    }
+  }
+
+  let callInfo: TeamsCallInfo | undefined | /* @conditional-compile-remove(calling-beta-sdk) */ CallInfo;
+  if ('info' in call) {
+    callInfo = call.info as TeamsCallInfo | undefined | /* @conditional-compile-remove(calling-beta-sdk) */ CallInfo;
+  }
+
   return {
     id: call.id,
     /* @conditional-compile-remove(teams-identity-support) */
@@ -137,15 +157,12 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
     /* @conditional-compile-remove(ppt-live) */
     pptLive: { isActive: false },
     raiseHand: { raisedHands: [] },
-    /* @conditional-compile-remove(reaction) */
     localParticipantReaction: undefined,
     transcription: { isTranscriptionActive: false },
     screenShareRemoteParticipant: undefined,
     startTime: new Date(),
     endTime: undefined,
-    /* @conditional-compile-remove(rooms) */
     role: call.role,
-    /* @conditional-compile-remove(close-captions) */
     captionsFeature: {
       captions: [],
       supportedSpokenLanguages: [],
@@ -153,9 +170,10 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
       currentCaptionLanguage: '',
       currentSpokenLanguage: '',
       isCaptionsFeatureActive: false,
-      startCaptionsInProgress: false
+      startCaptionsInProgress: false,
+      /* @conditional-compile-remove(acs-close-captions) */
+      captionsKind: _isTeamsCall(call) ? 'TeamsCaptions' : 'Captions'
     },
-    /* @conditional-compile-remove(call-transfer) */
     transfer: {
       acceptedTransfers: {}
     },
@@ -163,8 +181,9 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
       maxRemoteVideoStreams: call.feature(Features.OptimalVideoCount).optimalVideoCount
     },
     /* @conditional-compile-remove(hide-attendee-name) */
-    // TODO: Replace this once the SDK supports hide attendee name
-    hideAttendeeNames: false
+    hideAttendeeNames,
+    /* @conditional-compile-remove(meeting-id) */
+    info: callInfo
   };
 }
 
@@ -193,7 +212,6 @@ export function convertFromSDKToDeclarativeVideoStreamRendererView(
   };
 }
 
-/* @conditional-compile-remove(close-captions) */
 /**
  * @private
  */
@@ -214,7 +232,6 @@ export function convertFromSDKToCaptionInfoState(caption: AcsCaptionsInfo): Capt
   };
 }
 
-/* @conditional-compile-remove(video-background-effects) */
 /** @private */
 export function convertFromSDKToDeclarativeVideoStreamVideoEffects(
   videoEffects: VideoEffectName[]

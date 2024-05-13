@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "area": "feature",
-  "workstream": "Spotlight",
-  "comment": "Add adapter function to stop all spotligh t. Add people pane menu button to stop all spotlight.",
-  "packageName": "@azure/communication-react",
-  "email": "79475487+mgamis-msft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

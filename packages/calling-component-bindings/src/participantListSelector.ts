@@ -16,18 +16,10 @@ import { isHideAttendeeNamesEnabled } from './baseSelectors';
 import { CallParticipantListParticipant } from '@internal/react-components';
 import { _isRingingPSTNParticipant, _updateUserDisplayNames } from './utils/callUtils';
 import { memoizedConvertAllremoteParticipants } from './utils/participantListSelectorUtils';
-/* @conditional-compile-remove(spotlight) */
-import { memoizedConvertAllremoteParticipantsBetaSpotlight } from './utils/participantListSelectorUtils';
-/* @conditional-compile-remove(reaction) */
 import { memoizedConvertToVideoTileReaction } from './utils/participantListSelectorUtils';
-/* @conditional-compile-remove(rooms) */
-import { memoizedConvertAllremoteParticipantsBetaRelease } from './utils/participantListSelectorUtils';
-/* @conditional-compile-remove(reaction) */
-import { memoizedConvertAllremoteParticipantsBeta } from './utils/participantListSelectorUtils';
 /* @conditional-compile-remove(spotlight) */
 import { memoizedSpotlight } from './utils/participantListSelectorUtils';
 import { getLocalParticipantRaisedHand } from './baseSelectors';
-/* @conditional-compile-remove(reaction) */
 import { getLocalParticipantReactionState } from './baseSelectors';
 /* @conditional-compile-remove(spotlight) */
 import { getSpotlightCallFeature } from './baseSelectors';
@@ -83,13 +75,10 @@ const convertRemoteParticipantsToParticipantListParticipants = (
             participant.role,
             isHideAttendeeNamesEnabled
           );
-          /* @conditional-compile-remove(reaction) */
           const remoteParticipantReaction = memoizedConvertToVideoTileReaction(participant.reactionState);
+          let spotlight = undefined;
           /* @conditional-compile-remove(spotlight) */
-          const spotlight = memoizedSpotlight(
-            spotlightedParticipants,
-            toFlatCommunicationIdentifier(participant.identifier)
-          );
+          spotlight = memoizedSpotlight(spotlightedParticipants, toFlatCommunicationIdentifier(participant.identifier));
           return memoizeFn(
             toFlatCommunicationIdentifier(participant.identifier),
             displayName,
@@ -99,9 +88,7 @@ const convertRemoteParticipantsToParticipantListParticipants = (
             participant.isSpeaking,
             participant.raisedHand,
             localUserCanRemoveOthers,
-            /* @conditional-compile-remove(reaction) */
             remoteParticipantReaction,
-            /* @conditional-compile-remove(spotlight) */
             spotlight
           );
         })
@@ -118,12 +105,6 @@ const convertRemoteParticipantsToParticipantListParticipants = (
         })
     );
   };
-  /* @conditional-compile-remove(spotlight) */
-  return memoizedConvertAllremoteParticipantsBetaSpotlight(conversionCallback);
-  /* @conditional-compile-remove(reaction) */
-  return memoizedConvertAllremoteParticipantsBeta(conversionCallback);
-  /* @conditional-compile-remove(rooms) */
-  return memoizedConvertAllremoteParticipantsBetaRelease(conversionCallback);
   return memoizedConvertAllremoteParticipants(conversionCallback);
 };
 
@@ -159,7 +140,6 @@ export const participantListSelector: ParticipantListSelector = createSelector(
     getParticipantCount,
     /* @conditional-compile-remove(hide-attendee-name) */
     isHideAttendeeNamesEnabled,
-    /* @conditional-compile-remove(reaction) */
     getLocalParticipantReactionState,
     /* @conditional-compile-remove(spotlight) */
     getSpotlightCallFeature
@@ -175,7 +155,6 @@ export const participantListSelector: ParticipantListSelector = createSelector(
     partitipantCount,
     /* @conditional-compile-remove(hide-attendee-name) */
     isHideAttendeeNamesEnabled,
-    /* @conditional-compile-remove(reaction) */
     localParticipantReactionState,
     /* @conditional-compile-remove(spotlight) */
     spotlightCallFeature
@@ -189,16 +168,12 @@ export const participantListSelector: ParticipantListSelector = createSelector(
       ? convertRemoteParticipantsToParticipantListParticipants(
           updateUserDisplayNamesTrampoline(Object.values(remoteParticipants)),
           localUserCanRemoveOthers,
-          /* @conditional-compile-remove(hide-attendee-name) */
-          isHideAttendeeNamesEnabled,
-          /* @conditional-compile-remove(hide-attendee-name) */
-          role,
+          undefined || /* @conditional-compile-remove(hide-attendee-name) */ isHideAttendeeNamesEnabled,
+          undefined || /* @conditional-compile-remove(hide-attendee-name) */ role,
           /* @conditional-compile-remove(spotlight) */
           spotlightCallFeature?.spotlightedParticipants
         )
       : [];
-    /* @conditional-compile-remove(reaction) */
-    const localParticipantReaction = memoizedConvertToVideoTileReaction(localParticipantReactionState);
     participants.push({
       userId: userId,
       displayName: displayName,
@@ -208,8 +183,7 @@ export const participantListSelector: ParticipantListSelector = createSelector(
       state: 'Connected',
       // Local participant can never remove themselves.
       isRemovable: false,
-      /* @conditional-compile-remove(reaction) */
-      reaction: localParticipantReaction,
+      reaction: memoizedConvertToVideoTileReaction(localParticipantReactionState),
       /* @conditional-compile-remove(spotlight) */
       spotlight: memoizedSpotlight(spotlightCallFeature?.spotlightedParticipants, userId)
     });
@@ -231,7 +205,5 @@ const updateUserDisplayNamesTrampoline = (remoteParticipants: RemoteParticipantS
 };
 
 const localUserCanRemoveOthersTrampoline = (role?: string): boolean => {
-  /* @conditional-compile-remove(rooms) */
   return role === 'Presenter' || role === 'Unknown' || role === undefined;
-  return true;
 };

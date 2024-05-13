@@ -35,6 +35,7 @@ export async function generateChangelogs() {
   ensureDirectory(CHANGE_DIR);
 }
 
+
 function clone(obj) {
   return JSON.parse(JSON.stringify(obj));
 }

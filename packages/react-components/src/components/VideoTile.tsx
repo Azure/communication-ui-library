@@ -12,17 +12,13 @@ import {
   Stack,
   Text
 } from '@fluentui/react';
-import React, { useLayoutEffect, useMemo, useRef, useState } from 'react';
-/* @conditional-compile-remove(reaction) */
-import { useCallback, useEffect } from 'react';
+import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useIdentifiers } from '../identifiers';
 import { ComponentLocale, useLocale } from '../localization';
 import { useTheme } from '../theming';
 import { BaseCustomStyles, CustomAvatarOptions, OnRenderAvatarCallback } from '../types';
 import { CallingTheme } from '../theming';
 import { RaisedHand } from '../types';
-/* @conditional-compile-remove(reaction) */
-import { Reaction } from '../types';
 import { RaisedHandIcon } from './assets/RaisedHandIcon';
 /* @conditional-compile-remove(one-to-n-calling) */
 /* @conditional-compile-remove(PSTN-calls) */
@@ -34,21 +30,14 @@ import {
   overlayContainerStyles,
   rootStyles,
   videoContainerStyles,
-  videoHint,
   tileInfoContainerStyle,
   participantStateStringStyles
 } from './styles/VideoTile.styles';
-/* @conditional-compile-remove(reaction) */
-import { reactionRenderingStyle } from './styles/VideoTile.styles';
-import { getVideoTileOverrideColor } from './utils/videoTileStylesUtils';
 import { pinIconStyle } from './styles/VideoTile.styles';
 import useLongPress from './utils/useLongPress';
 import { moreButtonStyles } from './styles/VideoTile.styles';
 import { raiseHandContainerStyles } from './styles/VideoTile.styles';
-/* @conditional-compile-remove(reaction) */
 import { ReactionResources } from '../types/ReactionTypes';
-/* @conditional-compile-remove(reaction) */
-import { getEmojiResource } from './VideoGallery/utils/videoGalleryLayoutUtils';
 
 /**
  * Strings of {@link VideoTile} that can be overridden.
@@ -93,6 +82,10 @@ export interface VideoTileProps {
   userId?: string;
   /** Component with the video stream. */
   renderElement?: JSX.Element | null;
+  /**
+   * Overlay component responsible for rendering reaction
+   */
+  overlay?: JSX.Element | null;
   /** Determines if the video is mirrored or not. */
   isMirrored?: boolean;
   /** Custom render Component function for no video is available. Render a Persona Icon if undefined. */
@@ -102,6 +95,11 @@ export interface VideoTileProps {
    * @defaultValue true
    */
   showLabel?: boolean;
+  /**
+   * Show label background on the VideoTile
+   * @defaultValue false
+   */
+  alwaysShowLabelBackground?: boolean;
   /**
    * Whether to display a mute icon beside the user's display name.
    * @defaultValue true
@@ -147,13 +145,6 @@ export interface VideoTileProps {
   /** Whether the participant is raised hand. Show a indicator (border) and icon with order */
   raisedHand?: RaisedHand;
 
-  /* @conditional-compile-remove(reaction) */
-  /**
-   * When the participant has reacted, animate the reaction.
-   * @beta
-   * */
-  reaction?: Reaction;
-
   /* @conditional-compile-remove(one-to-n-calling) */
   /* @conditional-compile-remove(PSTN-calls) */
   /**
@@ -179,10 +170,8 @@ export interface VideoTileProps {
    * If true, the video tile will show the spotlighted icon.
    */
   isSpotlighted?: boolean;
-  /* @conditional-compile-remove(reaction) */
   /**
    * Reactions resources' url and metadata.
-   * @beta
    */
   reactionResources?: ReactionResources;
 }
@@ -262,6 +251,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     isPinned,
     onRenderPlaceholder,
     renderElement,
+    overlay: reactionOverlay,
     showLabel = true,
     showMuteIndicator = true,
     styles,
@@ -269,25 +259,21 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     noVideoAvailableAriaLabel,
     isSpeaking,
     raisedHand,
-    /* @conditional-compile-remove(reaction) */
-    reaction,
     personaMinSize = DEFAULT_PERSONA_MIN_SIZE_PX,
     personaMaxSize = DEFAULT_PERSONA_MAX_SIZE_PX,
-    contextualMenu,
-    /* @conditional-compile-remove(reaction) */
-    reactionResources
+    contextualMenu
   } = props;
 
   const [isHovered, setIsHovered] = useState<boolean>(false);
   const [isFocused, setIsFocused] = useState<boolean>(false);
   // need to set a default otherwise the resizeObserver will get stuck in an infinite loop.
   const [personaSize, setPersonaSize] = useState<number>(1);
-  /* @conditional-compile-remove(reaction) */
-  const [isValidImageSource, setIsValidImageSource] = useState<boolean>(false);
+
   const videoTileRef = useRef<HTMLDivElement>(null);
 
   const locale = useLocale();
   const theme = useTheme();
+  const callingPalette = (theme as unknown as CallingTheme).callingPalette;
 
   const isVideoRendered = !!renderElement;
 
@@ -309,6 +295,36 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     const currentObserver = observer.current;
     return () => currentObserver.disconnect();
   }, [videoTileRef]);
+
+  /* @conditional-compile-remove(ppt-live) */
+  // TODO: Remove after calling sdk fix the keybaord focus
+  useEffect(() => {
+    // PPTLive display name is undefined, return as it is not screen share
+    if (displayName !== undefined) {
+      return;
+    }
+    let observer: MutationObserver | undefined;
+    if (videoTileRef.current) {
+      observer = new MutationObserver((mutationsList) => {
+        for (const mutation of mutationsList) {
+          if (mutation.type === 'childList') {
+            const iframe = document.querySelector('iframe');
+            if (iframe) {
+              if (!iframe.getAttribute('tabIndex')) {
+                iframe.setAttribute('tabIndex', '-1');
+              }
+            }
+          }
+        }
+      });
+
+      observer.observe(videoTileRef.current, { childList: true, subtree: true });
+    }
+
+    return () => {
+      observer?.disconnect();
+    };
+  }, [displayName, renderElement]);
 
   const useLongPressProps = useMemo(() => {
     return {
@@ -339,16 +355,18 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     hidePersonaDetails: true
   };
 
-  const videoHintWithBorderRadius = mergeStyles(videoHint, { borderRadius: theme.effects.roundedCorner4 });
+  const videoHintWithBorderRadius = mergeStyles(disabledVideoHint, {
+    borderRadius: theme.effects.roundedCorner4,
+    backgroundColor: callingPalette.videoTileLabelBackgroundLight
+  });
 
   const tileInfoStyle = useMemo(
     () =>
       mergeStyles(
-        isVideoRendered ? videoHintWithBorderRadius : disabledVideoHint,
-        getVideoTileOverrideColor(isVideoRendered, theme, 'neutralPrimary'),
+        isVideoRendered || props.alwaysShowLabelBackground ? videoHintWithBorderRadius : disabledVideoHint,
         styles?.displayNameContainer
       ),
-    [isVideoRendered, videoHintWithBorderRadius, theme, styles?.displayNameContainer]
+    [isVideoRendered, videoHintWithBorderRadius, styles?.displayNameContainer, props.alwaysShowLabelBackground]
   );
 
   const ids = useIdentifiers();
@@ -357,47 +375,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
   const participantStateString = participantStateStringTrampoline(props, locale);
   const canShowContextMenuButton = isHovered || isFocused;
   let raisedHandBackgroundColor = '';
-  const callingPalette = (theme as unknown as CallingTheme).callingPalette;
   raisedHandBackgroundColor = callingPalette.raiseHandGold;
-
-  /* @conditional-compile-remove(reaction) */
-  const backgroundImageUrl =
-    reaction !== undefined && reactionResources !== undefined
-      ? getEmojiResource(reaction?.reactionType, reactionResources)
-      : '';
-  /* @conditional-compile-remove(reaction) */
-  const currentTimestamp = new Date();
-  /* @conditional-compile-remove(reaction) */
-  const currentUnixTimeStamp = Math.floor(currentTimestamp.getTime() / 1000);
-  /* @conditional-compile-remove(reaction) */
-  const receivedUnixTimestamp = reaction ? Math.floor(reaction.receivedOn.getTime() / 1000) : undefined;
-  /* @conditional-compile-remove(reaction) */
-  const canRenderReaction =
-    (receivedUnixTimestamp ? currentUnixTimeStamp - receivedUnixTimestamp < 3000 : false) &&
-    backgroundImageUrl !== undefined;
-  /* @conditional-compile-remove(reaction) */
-  useEffect(() => {
-    if (!backgroundImageUrl || backgroundImageUrl.length === 0) {
-      return;
-    }
-
-    fetch(`${backgroundImageUrl}`)
-      .then((res) => setIsValidImageSource(res.ok))
-      .catch((warning) => console.warn(`Sprite image for animation rendering failed with warning: ${warning}`));
-
-    return () => setIsValidImageSource(false);
-  }, [backgroundImageUrl]);
-  /* @conditional-compile-remove(reaction) */
-  const spriteImageUrl = backgroundImageUrl !== undefined ? backgroundImageUrl : '';
-  /* @conditional-compile-remove(reaction) */
-  const reactionContainerStyles = useCallback(
-    () =>
-      reactionRenderingStyle({
-        spriteImageUrl,
-        personaSize
-      }),
-    [spriteImageUrl, personaSize]
-  );
 
   return (
     <Stack
@@ -451,25 +429,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
             )}
           </Stack>
         )}
-
-        {
-          /* @conditional-compile-remove(reaction) */
-          canRenderReaction && isValidImageSource && (
-            <Stack
-              className={mergeStyles(videoContainerStyles, {
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                backgroundColor: reaction ? 'rgba(0, 0, 0, 0.5)' : 'transparent'
-              })}
-            >
-              <div style={{ height: '33.33%' }}></div>
-              <div style={{ height: '84px', width: '84px' }}>
-                <div className={reactionContainerStyles()} />
-              </div>
-            </Stack>
-          )
-        }
+        {reactionOverlay}
         {(canShowLabel || participantStateString) && (
           <Stack horizontal className={tileInfoContainerStyle} tokens={tileInfoContainerTokens}>
             <Stack horizontal className={tileInfoStyle}>
@@ -497,7 +457,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
                 /* @conditional-compile-remove(spotlight) */
                 isSpotlighted && (
                   <Stack className={mergeStyles(iconContainerStyle)}>
-                    <Icon iconName="VideoSpotlighted" />
+                    <Icon iconName="VideoTileSpotlighted" />
                   </Stack>
                 )
               }

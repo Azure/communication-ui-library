@@ -8,17 +8,20 @@ import { CommonProperties, toFlatCommunicationIdentifier } from '@internal/acs-u
 import { ReactElement } from 'react';
 import memoizeOne from 'memoize-one';
 import { CommonCallAdapter } from '..';
-/* @conditional-compile-remove(video-background-effects) */
+
 import { VideoBackgroundBlurEffect, VideoBackgroundReplacementEffect } from '..';
 import { useAdapter } from '../adapter/CallAdapterProvider';
 import { isCameraOn } from '../utils';
 import { DtmfTone } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
-/* @conditional-compile-remove(reaction) */
 import { Reaction } from '@azure/communication-calling';
-/* @conditional-compile-remove(video-background-effects) */
-import type { BackgroundReplacementConfig, BackgroundBlurConfig } from '@azure/communication-calling';
+
+import type {
+  BackgroundReplacementConfig,
+  BackgroundBlurConfig,
+  ParticipantCapabilities
+} from '@azure/communication-calling';
 /* @conditional-compile-remove(end-of-call-survey) */
 import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
@@ -40,22 +43,14 @@ export const useHandlers = <PropsT>(
 ): Pick<CommonCallingHandlers, CommonProperties<CommonCallingHandlers, PropsT>> &
   /* @conditional-compile-remove(spotlight) */ Partial<_ComponentCallingHandlers> => {
   const adapter = useAdapter();
-  const compositeHandlers = createCompositeHandlers(adapter);
-  /* @conditional-compile-remove(spotlight) */
-  const canSpotlight = adapter.getState().call?.capabilitiesFeature?.capabilities.spotlightParticipant.isPresent;
-  /* @conditional-compile-remove(spotlight) */
-  return {
-    ...compositeHandlers,
-    ...(canSpotlight
-      ? {}
-      : { onStartLocalSpotlight: undefined, onStartRemoteSpotlight: undefined, onStopRemoteSpotlight: undefined })
-  };
-  return compositeHandlers;
+  const capabilities = adapter.getState().call?.capabilitiesFeature?.capabilities;
+  return createCompositeHandlers(adapter, capabilities);
 };
 
 const createCompositeHandlers = memoizeOne(
   (
-    adapter: CommonCallAdapter
+    adapter: CommonCallAdapter,
+    capabilities?: ParticipantCapabilities
   ): CommonCallingHandlers & /* @conditional-compile-remove(spotlight) */ Partial<_ComponentCallingHandlers> => {
     return {
       onCreateLocalStreamView: async (options) => {
@@ -106,7 +101,6 @@ const createCompositeHandlers = memoizeOne(
           ? await adapter.lowerHand()
           : await adapter.raiseHand();
       },
-      /* @conditional-compile-remove(reaction) */
       onReactionClick: async (reaction: Reaction) => {
         await adapter.onReactionClick(reaction);
       },
@@ -161,11 +155,11 @@ const createCompositeHandlers = memoizeOne(
       askDevicePermission: async (constrain) => {
         return adapter.askDevicePermission(constrain);
       },
-      /* @conditional-compile-remove(video-background-effects) */
+
       onRemoveVideoBackgroundEffects: async () => {
         return await adapter.stopVideoBackgroundEffects();
       },
-      /* @conditional-compile-remove(video-background-effects) */
+
       onBlurVideoBackground: async (backgroundBlurConfig?: BackgroundBlurConfig) => {
         const blurConfig: VideoBackgroundBlurEffect = {
           effectName: 'blur',
@@ -173,7 +167,7 @@ const createCompositeHandlers = memoizeOne(
         };
         return await adapter.startVideoBackgroundEffect(blurConfig);
       },
-      /* @conditional-compile-remove(video-background-effects) */
+
       onReplaceVideoBackground: async (backgroundReplacementConfig: BackgroundReplacementConfig) => {
         const replacementConfig: VideoBackgroundReplacementEffect = {
           effectName: 'replacement',
@@ -181,19 +175,15 @@ const createCompositeHandlers = memoizeOne(
         };
         return await adapter.startVideoBackgroundEffect(replacementConfig);
       },
-      /* @conditional-compile-remove(close-captions) */
       onStartCaptions: async (options) => {
         await adapter.startCaptions(options);
       },
-      /* @conditional-compile-remove(close-captions) */
       onStopCaptions: async () => {
         await adapter.stopCaptions();
       },
-      /* @conditional-compile-remove(close-captions) */
       onSetSpokenLanguage: async (language) => {
         await adapter.setSpokenLanguage(language);
       },
-      /* @conditional-compile-remove(close-captions) */
       onSetCaptionLanguage: async (language) => {
         await adapter.setCaptionLanguage(language);
       },
@@ -214,21 +204,27 @@ const createCompositeHandlers = memoizeOne(
         await adapter.stopAllSpotlight();
       },
       /* @conditional-compile-remove(spotlight) */
-      onStartLocalSpotlight: async (): Promise<void> => {
-        await adapter.startSpotlight();
-      },
+      onStartLocalSpotlight: capabilities?.spotlightParticipant.isPresent
+        ? async (): Promise<void> => {
+            await adapter.startSpotlight();
+          }
+        : undefined,
       /* @conditional-compile-remove(spotlight) */
       onStopLocalSpotlight: async (): Promise<void> => {
         await adapter.stopSpotlight();
       },
       /* @conditional-compile-remove(spotlight) */
-      onStartRemoteSpotlight: async (userIds?: string[]): Promise<void> => {
-        await adapter.startSpotlight(userIds);
-      },
+      onStartRemoteSpotlight: capabilities?.spotlightParticipant.isPresent
+        ? async (userIds?: string[]): Promise<void> => {
+            await adapter.startSpotlight(userIds);
+          }
+        : undefined,
       /* @conditional-compile-remove(spotlight) */
-      onStopRemoteSpotlight: async (userIds?: string[]): Promise<void> => {
-        await adapter.stopSpotlight(userIds);
-      }
+      onStopRemoteSpotlight: capabilities?.removeParticipantsSpotlight.isPresent
+        ? async (userIds?: string[]): Promise<void> => {
+            await adapter.stopSpotlight(userIds);
+          }
+        : undefined
     };
   }
 );
