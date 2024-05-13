@@ -26,7 +26,9 @@ export const attachmentDownloadOptionsWithCustomButtons = {
     // You can make the list of menu actions to be dynamic based on the
     // the attachment metadata such as the file extension, file name, etc, OR
     // based on the message metadata such as the sender ID, message type, etc.
-    if (attachment.extension === 'pdf') {
+    const re = /(?:\.([^.]+))?$/;
+    const match = re.exec(attachment.name);
+    if (match && match[1] === 'pdf') {
       return [
         {
           ...defaultAttachmentMenuAction,
