@@ -1,14 +1,13 @@
 name: Manual Alpha Package Release
 
 on:
-  push:
   # Allows running workflow manually from the GitHub Actions tab
   workflow_dispatch:
 
 # cancel workflow when a newer version of the workflow is triggered on the same github ref
-# concurrency:
-#   group: ${{ github.workflow }}-${{ github.ref }}
-#   cancel-in-progress: true
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build-and-deploy:
@@ -30,17 +29,64 @@ jobs:
           node-version: '20.x'
 
       # Try get node_modules from cache
-      # - name: Restore node_modules from cache
-      #   uses: actions/cache@v3
-      #   with:
-      #     path: common/temp/pnpm-store
-      #     key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
+      - name: Restore node_modules from cache
+        uses: actions/cache@v3
+        with:
+          path: common/temp/pnpm-store
+          key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
 
       # Install dependencies
-      # - name: Install rush
-      #   run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
-      # - name: Install dependencies
-      #   run: rush install --max-install-attempts 3
+      - name: Install rush
+        run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
+      - name: Install dependencies
+        run: rush install --max-install-attempts 3
+
+      # Get datetime
+      - name: Get datetime for alpha release name
+        id: datetime
+        run: |
+          echo "datetime=$(date +'%Y%m%d%H%M')" >> $GITHUB_OUTPUT
+
+      # Bump alpha package versions
+      - name: Bump alpha package versions
+        run: node common/scripts/bump-alpha-versions.js ${{ steps.datetime.outputs.datetime }}
+
+      - name: Synchronize package version reported to telemetry
+        run: node common/scripts/sync-telemetry-package-version
+
+      # Important to check version consistency again after bumping versions.
+      - name: Ensure all package versions are consistent
+        run: rush ensure-consistent-versions
+
+      # Alpha version run latest
+      - name: Force build flavor to `beta`
+        run: node ./common/scripts/force-build-flavor.mjs beta
+
+      # Build packages
+      - name: Build @azure/communication-react package
+        run: rush build -t @azure/communication-react
+
+      # Test Packages
+      - name: Test @azure/communication-react package
+        run: rush test -t @azure/communication-react
+
+      # Retrieve new version to tag and publish release with
+      - name: Retrieve new version from package.json
+        id: version
+        run: |
+          ver=$(jq -r .version packages/communication-react/package.json)
+          echo version: $ver
+          echo "version=$ver" >> $GITHUB_OUTPUT
+
+      # Clean package.json
+      - name: Remove devDependencies and beachball from package.json
+        run: node ../../common/scripts/prepare-package-json.js
+        working-directory: ./packages/communication-react
+
+      # Package package into tarball for release
+      - name: Package alpha packages for release
+        run: npm pack
+        working-directory: ./packages/communication-react
 
       # Login via OIDC to permit uploading to azure blob store
       - name: Azure login
@@ -50,134 +96,24 @@ jobs:
           tenant-id: ${{ secrets.NPM_DEPLOY_AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.NPM_DEPLOY_AZURE_SUBSCRIPTION_ID }}
 
-      - name: 'Test Azure CLI command'
-        run: az account show
-
-      # Get datetime
-      - name: Get datetime for alpha release name
-        id: datetime
-        run: |
-          echo "datetime=$(date +'%Y%m%d%H%M')" >> $GITHUB_OUTPUT
-
-      # Bump alpha package versions
-      # - name: Bump alpha package versions
-      #   run: node common/scripts/bump-alpha-versions.js ${{ steps.datetime.outputs.datetime }}
-
-      # - name: Synchronize package version reported to telemetry
-      #   run: node common/scripts/sync-telemetry-package-version
-
-      # Important to check version consistency again after bumping versions.
-      # - name: Ensure all package versions are consistent
-      #   run: rush ensure-consistent-versions
-
-      # Alpha version run latest
-      # - name: Force build flavor to `beta`
-      #   run: node ./common/scripts/force-build-flavor.mjs beta
-
-      # Build packages
-      # - name: Build @azure/communication-react package
-      #   run: rush build -t @azure/communication-react
-
-      # Test Packages
-      # - name: Test @azure/communication-react package
-      #   run: rush test -t @azure/communication-react
-
-      # Retrieve new version to tag and publish release with
-      # - name: Retrieve new version from package.json
-      #   id: version
-      #   run: |
-      #     ver=$(jq -r .version packages/communication-react/package.json)
-      #     echo version: $ver
-      #     echo "version=$ver" >> $GITHUB_OUTPUT
-
-      # Clean package.json
-      # - name: Remove devDependencies and beachball from package.json
-      #   run: node ../../common/scripts/prepare-package-json.js
-      #   working-directory: ./packages/communication-react
-
-      # Package package into tarball for release
-      # - name: Package alpha packages for release
-      #   run: npm pack
-      #   working-directory: ./packages/communication-react
-
       # Deploy npm package - this is done by uploading to Azure's SDK blob storage then triggering their partner release pipeline.
       # More info: https://dev.azure.com/azure-sdk/internal/_wiki/wikis/internal.wiki/1/Partner-Release-Pipeline
-      - name: Try upload tarball to blob storage (via azure/cli)
-        if: ${{ always() }}
-        uses: azure/cli@v2
-        with:
-          inlineScript: az storage azcopy blob upload -s "packages/communication-react/review/beta/*" -c "drops/azure-communication-services/react/npm/1.16.0-alphatest" --account-name azuresdkpartnerdrops
-        env:
-          AZCOPY_AUTO_LOGIN_TYPE: AZCLI
-
       - name: Try upload tarball to blob storage (via az storage blob upload-batch with login)
-        if: ${{ always() }}
-        run: az storage blob upload -f "packages/communication-react/review/beta/communication-react.api.md" -c "drops/azure-communication-services/react/npm/1.16.0-alphatest" --account-name azuresdkpartnerdrops --auth-mode login
+        run: az storage blob upload -f "packages/communication-react/release/*" -c "drops/azure-communication-services/react/npm/${{ steps.version.outputs.version }}" --account-name azuresdkpartnerdrops --auth-mode login
 
-      - name: Try upload tarball to blob storage (via azcopy with login type AZCLI)
-        if: ${{ always() }}
-        run: azcopy copy "packages/communication-react/review/beta/*" "https://azuresdkpartnerdrops.blob.core.windows.net/drops/azure-communication-services/react/npm/1.16.0-alphatest"
-        env:
-          AZCOPY_AUTO_LOGIN_TYPE: AZCLI
-
-      # - name: Try upload tarball to blob storage (via azcopy login)
-      #   if: ${{ always() }}
-      #   run: |
-      #     azcopy login
-      #     azcopy copy "packages/communication-react/review/beta/*" "https://azuresdkpartnerdrops.blob.core.windows.net/drops/azure-communication-services/react/npm/1.16.0-alphatest"
-
-      # - name: Try upload tarball to blob storage (via azcopy login with tenant id)
-      #   if: ${{ always() }}
-      #   run: |
-      #     azcopy login --tenant-id ${{ secrets.NPM_DEPLOY_AZURE_TENANT_ID }}
-      #     azcopy copy "packages/communication-react/review/beta/*" "https://azuresdkpartnerdrops.blob.core.windows.net/drops/azure-communication-services/react/npm/1.16.0-alphatest"
-
-      - name: Azure login
-        if: ${{ always() }}
-        uses: azure/login@v2
+      - name: Trigger alpha package release pipeline
+        uses: Azure/pipelines@v1.2
         with:
-          client-id: ${{ secrets.NPM_DEPLOY_AZURE_CLIENT_ID }}
-          tenant-id: ${{ secrets.NPM_DEPLOY_AZURE_TENANT_ID }}
-          subscription-id: ${{ secrets.NPM_DEPLOY_AZURE_SUBSCRIPTION_ID }}
-          enable-AzPSSession: true
-
-      - name: Azure PowerShell script test
-        if: ${{ always() }}
-        uses: azure/powershell@v2
-        with:
-          azPSVersion: 'latest'
-          inlineScript: |
-            Get-AzContext
-
-      - name: az storage blob upload through powershell test
-        if: ${{ always() }}
-        uses: azure/powershell@v2
-        with:
-          inlineScript: azcopy copy "packages/communication-react/review/beta/*" "https://azuresdkpartnerdrops.blob.core.windows.net/drops/azure-communication-services/react/npm/1.16.0-alphatest"
-          azPSVersion: 'latest'
-
-      - name: az storage blob upload through powershell test 2
-        if: ${{ always() }}
-        uses: azure/powershell@v2
-        with:
-          inlineScript: azcopy copy "packages/communication-react/review/beta/*" "https://azuresdkpartnerdrops.blob.core.windows.net/drops/azure-communication-services/react/npm/1.16.0-alphatest"
-          azPSVersion: 'latest'
-        env:
-          AZCOPY_AUTO_LOGIN_TYPE: AZCLI
-
-      # - name: Trigger alpha package release pipeline
-      #   uses: Azure/pipelines@v1.2
-      #   with:
-      #     azure-devops-project-url: 'https://dev.azure.com/azure-sdk/internal'
-      #     azure-pipeline-name: 'azuresdkpartnerdrops to npm'
-      #     azure-devops-token: '${{ secrets.AZURE_SDK_RELEASE_PIPELINE_DEVOPS_TOKEN }}'
-      #     azure-pipeline-variables: '{"accessLevel": "public", "BlobPath": "azure-communication-services/react/npm/1.16.0-alphatest", "registry": "https://registry.npmjs.org/", "skipDiff": "False", "tag": "dev"}'
+          azure-devops-project-url: 'https://dev.azure.com/azure-sdk/internal'
+          azure-pipeline-name: 'azuresdkpartnerdrops to npm'
+          azure-devops-token: '${{ secrets.AZURE_SDK_RELEASE_PIPELINE_DEVOPS_TOKEN }}'
+          azure-pipeline-variables: '{"accessLevel": "public", "BlobPath": "azure-communication-services/react/npm/${{ steps.version.outputs.version }}", "registry": "https://registry.npmjs.org/", "skipDiff": "False", "tag": "dev"}'
 
       # Push git tags
-      # - name: Create and push git tags
-      #   run: |
-      #     git tag 1.16.0-alphatest
-      #     git push --tags
+      - name: Create and push git tags
+        run: |
+          git tag ${{ steps.version.outputs.version }}
+          git push --tags
 
-      # - name: Check if npm package published successfully
-      #   run: node common/scripts/poll-npm-package-published.mjs 1.16.0-alphatest
+      - name: Check if npm package published successfully
+        run: node common/scripts/poll-npm-package-published.mjs ${{ steps.version.outputs.version }}
