@@ -18,7 +18,7 @@ describe('AttachmentUploadCards should be rendered properly', () => {
 
   it('should render the component', async () => {
     const props = {
-      attachmentsWithProgress: [
+      attachments: [
         {
           id: 'MockId',
           name: 'MockAttachmentUpload',
@@ -30,9 +30,9 @@ describe('AttachmentUploadCards should be rendered properly', () => {
     expect(await screen.findByText('MockAttachmentUpload')).toBeDefined();
   });
 
-  it('should not render the component with no attachmentsWithProgress', async () => {
+  it('should not render the component with no attachments', async () => {
     const props = {
-      attachmentsWithProgress: undefined
+      attachments: undefined
     } as AttachmentUploadCardsProps;
     renderAttachmentUploadCardWithDefaults(props);
     expect(screen.queryByText('MockAttachmentUpload')).toBeNull();
@@ -41,7 +41,7 @@ describe('AttachmentUploadCards should be rendered properly', () => {
 
 const renderAttachmentUploadCardWithDefaults = (props?: Partial<AttachmentUploadCardsProps>): void => {
   const mergedProps: AttachmentUploadCardsProps = {
-    attachmentsWithProgress: props?.attachmentsWithProgress ?? [],
+    attachments: props?.attachments ?? [],
     ...(props ?? {})
   };
 

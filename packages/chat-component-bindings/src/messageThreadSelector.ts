@@ -29,7 +29,7 @@ import { DEFAULT_DATA_LOSS_PREVENTION_POLICY_URL } from './utils/constants';
 import { ACSKnownMessageType } from './utils/constants';
 import { updateMessagesWithAttached } from './utils/updateMessagesWithAttached';
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-import { AttachmentMetadata } from '@internal/react-components';
+import { AttachmentMetadata } from '@internal/acs-ui-common';
 import { ChatAttachment } from '@azure/communication-chat';
 import type { ChatParticipant } from '@azure/communication-chat';
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
@@ -82,12 +82,10 @@ const extractTeamsAttachmentsMetadata = (
   const attachments: AttachmentMetadata[] = [];
   rawAttachments.forEach((rawAttachment) => {
     const attachmentType = rawAttachment.attachmentType as ChatAttachmentType;
-    const contentType = extractAttachmentContentTypeFromName(rawAttachment.name);
     if (attachmentType === 'file') {
       attachments.push({
         id: rawAttachment.id,
         name: rawAttachment.name ?? '',
-        extension: contentType ?? '',
         url: extractAttachmentUrl(rawAttachment)
       });
     }

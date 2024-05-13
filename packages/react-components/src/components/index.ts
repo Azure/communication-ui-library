@@ -201,21 +201,20 @@ export type {
 export * from './Drawer';
 /* @conditional-compile-remove(attachment-upload) */
 export type { SendBoxErrorBarError } from './SendBoxErrorBar';
-export * from './AttachmentCard';
-export * from './AttachmentCardGroup';
+export * from './Attachment/AttachmentCard';
+export * from './Attachment/AttachmentCardGroup';
 export * from './ModalClone/ModalClone';
-export * from './AttachmentDownloadCards';
-export type { _AttachmentUploadCardsStrings } from './AttachmentUploadCards';
+export * from './Attachment/AttachmentDownloadCards';
+export type { _AttachmentUploadCardsStrings } from './Attachment/AttachmentUploadCards';
 
 export type {
   AttachmentOptions,
   AttachmentUploadOptions,
-  AttachmentMetadata,
-  AttachmentProgressError,
+  AttachmentActionHandler,
   AttachmentSelectionHandler,
+  AttachmentMetadataWrapper,
   AttachmentRemovalHandler,
-  AttachmentUploadTask,
-  AttachmentMetadataWithProgress
+  AttachmentUploadTask
 } from '../types/Attachment';
 
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */

@@ -51,6 +51,9 @@ export type {
   ChatBaseSelectorProps
 } from '../../chat-component-bindings/src';
 
+/* @conditional-compile-remove(attachment-upload) */
+export type { MessageOptions } from '../../acs-ui-common/src';
+
 export {
   CallClientProvider,
   CallAgentProvider,
@@ -319,18 +322,24 @@ export type {
   LongPressTrigger
 } from '../../react-components/src';
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-export type { AttachmentMetadata, AttachmentOptions } from '../../react-components/src';
+export type { AttachmentOptions } from '../../react-components/src';
 /* @conditional-compile-remove(attachment-upload) */
 export type { SendBoxErrorBarError } from '../../react-components/src';
 /* @conditional-compile-remove(attachment-upload) */
 export type {
-  AttachmentProgressError,
+  AttachmentActionHandler,
   AttachmentSelectionHandler,
   AttachmentRemovalHandler,
   AttachmentUploadOptions,
-  AttachmentUploadTask,
-  AttachmentMetadataWithProgress
+  AttachmentUploadTask
 } from '../../react-components/src';
+
+/* @conditional-compile-remove(attachment-upload) */
+export type {
+  AttachmentMetadata,
+  AttachmentMetadataInProgress,
+  AttachmentProgressError
+} from '../../acs-ui-common/src';
 
 /* @conditional-compile-remove(attachment-download) */
 export type { AttachmentMenuAction, AttachmentDownloadOptions } from '../../react-components/src';

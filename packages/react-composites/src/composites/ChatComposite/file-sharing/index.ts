@@ -6,20 +6,13 @@ export * from './AttachmentUploadButton';
 
 export type {
   AttachmentOptions,
-  AttachmentProgressError,
+  AttachmentUploadTask,
   AttachmentUploadOptions,
-  AttachmentSelectionHandler,
   AttachmentRemovalHandler,
-  AttachmentUploadTask
+  AttachmentMetadataWrapper,
+  AttachmentSelectionHandler,
+  AttachmentActionHandler
 } from '@internal/react-components';
 
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 export type { AttachmentDownloadOptions } from '@internal/react-components';
-
-/**
- * Metadata used for setting uploaded attachments by a user using chat composite in a group call.
- * @internal
- */
-export type FileSharingMetadata = {
-  fileSharingMetadata: string;
-};
