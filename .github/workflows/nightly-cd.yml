@@ -58,10 +58,13 @@ jobs:
   release:
     name: Create alpha releases
     needs: checkForChanges
+    environment:
+      name: npm-alpha
     if: needs.checkForChanges.outputs.hasChanged == 'true'
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      id-token: write
     steps:
       # Check-out repo
       - uses: actions/checkout@v3

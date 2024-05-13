@@ -12,6 +12,8 @@ concurrency:
 jobs:
   build-and-deploy:
     name: Build and publish alpha package
+    environment:
+      name: npm-alpha
     runs-on: ubuntu-latest
     permissions:
       contents: write
