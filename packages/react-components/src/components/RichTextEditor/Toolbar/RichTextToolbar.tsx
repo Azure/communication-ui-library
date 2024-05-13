@@ -18,12 +18,14 @@ import {
   toggleUnderline,
   toggleBullet,
   toggleNumbering,
-  setIndentation
+  setIndentation,
+  insertTable
 } from 'roosterjs-content-model-api';
 import { RichTextSendBoxStrings } from '../RichTextSendBox';
+import { richTextInsertTableCommandBarItem } from './Table/RichTextInsertTableCommandBarItem';
 
-// const MaxRowsNumber = 5;
-// const MaxColumnsNumber = 5;
+const MaxRowsNumber = 5;
+const MaxColumnsNumber = 5;
 
 /**
  * Props for {@link RichTextToolbar}.
@@ -55,6 +57,7 @@ export const RichTextToolbar = (props: RichTextToolbarProps): JSX.Element => {
 
   const boldButton: ICommandBarItemProps = useMemo(() => {
     return getCommandBarItem({
+      dataTestId: 'rich-text-toolbar-bold-button',
       key: 'RichTextToolbarBoldButton',
       icon: 'RichTextBoldButtonIcon',
       onClick: () => {
@@ -70,6 +73,7 @@ export const RichTextToolbar = (props: RichTextToolbarProps): JSX.Element => {
 
   const italicButton: ICommandBarItemProps = useMemo(() => {
     return getCommandBarItem({
+      dataTestId: 'rich-text-toolbar-italic-button',
       key: 'RichTextToolbarItalicButton',
       icon: 'RichTextItalicButtonIcon',
       onClick: () => {
@@ -85,6 +89,7 @@ export const RichTextToolbar = (props: RichTextToolbarProps): JSX.Element => {
 
   const underlineButton: ICommandBarItemProps = useMemo(() => {
     return getCommandBarItem({
+      dataTestId: 'rich-text-toolbar-underline-button',
       key: 'RichTextToolbarUnderlineButton',
       icon: 'RichTextUnderlineButtonIcon',
       onClick: () => {
@@ -100,6 +105,7 @@ export const RichTextToolbar = (props: RichTextToolbarProps): JSX.Element => {
 
   const bulletListButton: ICommandBarItemProps = useMemo(() => {
     return getCommandBarItem({
+      dataTestId: 'rich-text-toolbar-bullet-list-button',
       key: 'RichTextToolbarBulletListButton',
       icon: 'RichTextBulletListButtonIcon',
       onClick: () => {
@@ -115,6 +121,7 @@ export const RichTextToolbar = (props: RichTextToolbarProps): JSX.Element => {
 
   const numberListButton: ICommandBarItemProps = useMemo(() => {
     return getCommandBarItem({
+      dataTestId: 'rich-text-toolbar-number-list-button',
       key: 'RichTextToolbarNumberListButton',
       icon: 'RichTextNumberListButtonIcon',
       onClick: () => {
@@ -130,6 +137,7 @@ export const RichTextToolbar = (props: RichTextToolbarProps): JSX.Element => {
 
   const indentDecreaseButton: ICommandBarItemProps = useMemo(() => {
     return getCommandBarItem({
+      dataTestId: 'rich-text-toolbar-indent-decrease-button',
       key: 'RichTextToolbarIndentDecreaseButton',
       icon: 'RichTextIndentDecreaseButtonIcon',
       onClick: () => {
@@ -145,6 +153,7 @@ export const RichTextToolbar = (props: RichTextToolbarProps): JSX.Element => {
 
   const indentIncreaseButton: ICommandBarItemProps = useMemo(() => {
     return getCommandBarItem({
+      dataTestId: 'rich-text-toolbar-indent-increase-button',
       key: 'RichTextToolbarIndentIncreaseButton',
       icon: 'RichTextIndentIncreaseButtonIcon',
       onClick: () => {
@@ -165,6 +174,26 @@ export const RichTextToolbar = (props: RichTextToolbarProps): JSX.Element => {
     [theme]
   );
 
+  const tableButton: ICommandBarItemProps = useMemo(() => {
+    return richTextInsertTableCommandBarItem(
+      theme,
+      MaxRowsNumber,
+      MaxColumnsNumber,
+      strings,
+      (column: number, row: number) => {
+        plugin.onToolbarButtonClick((editor) => {
+          //add format
+          insertTable(editor, column, row);
+          // when subMenuProps is used and the menu is dismissed, focus is set to the command bar item that opened the menu
+          // set focus to editor on next re-render
+          setTimeout(() => {
+            editor.focus();
+          });
+        });
+      }
+    );
+  }, [plugin, strings, theme]);
+
   const buttons: ICommandBarItemProps[] = useMemo(() => {
     return [
       boldButton,
@@ -175,8 +204,8 @@ export const RichTextToolbar = (props: RichTextToolbarProps): JSX.Element => {
       numberListButton,
       indentDecreaseButton,
       indentIncreaseButton,
-      divider('RichTextRibbonTableDivider')
-      /*insertTableButton(theme, MaxRowsNumber, MaxColumnsNumber) */
+      divider('RichTextRibbonTableDivider'),
+      tableButton
     ];
   }, [
     boldButton,
@@ -186,7 +215,8 @@ export const RichTextToolbar = (props: RichTextToolbarProps): JSX.Element => {
     bulletListButton,
     numberListButton,
     indentDecreaseButton,
-    indentIncreaseButton
+    indentIncreaseButton,
+    tableButton
   ]);
 
   const overflowButtonProps = useMemo(() => {
@@ -204,7 +234,7 @@ export const RichTextToolbar = (props: RichTextToolbarProps): JSX.Element => {
   return (
     <CommandBar
       items={buttons}
-      data-testid={'rich-text-editor-ribbon'}
+      data-testid={'rich-text-editor-toolbar'}
       styles={richTextToolbarStyle}
       overflowButtonProps={overflowButtonProps}
     />
@@ -219,7 +249,8 @@ const getCommandBarItem = ({
   canCheck = true,
   checked = false,
   disabled = false,
-  theme
+  theme,
+  dataTestId
 }: {
   key: string;
   icon: string;
@@ -229,8 +260,10 @@ const getCommandBarItem = ({
   checked?: boolean;
   disabled?: boolean;
   theme: Theme;
+  dataTestId: string;
 }): ICommandBarItemProps => {
   return {
+    'data-testid': dataTestId,
     key: key,
     iconProps: { iconName: icon },
     onClick: onClick,

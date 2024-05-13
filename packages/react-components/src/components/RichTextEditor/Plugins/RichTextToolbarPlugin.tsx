@@ -22,7 +22,9 @@ export class RichTextToolbarPlugin implements EditorPlugin {
     this.editor = editor;
   }
 
-  dispose(): void {}
+  dispose(): void {
+    this.editor = null;
+  }
 
   onPluginEvent(event: PluginEvent): void {
     switch (event.eventType) {

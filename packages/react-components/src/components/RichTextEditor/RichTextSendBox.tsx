@@ -216,7 +216,6 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
   }, []);
 
   const hasContent = useMemo(() => {
-    //TODO-vhuseinova: check if table is considered an empty message
     // get plain text content from the editor to check if the message is empty
     // as the content may contain tags even when the content is empty
     const plainTextContent = editorComponentRef.current?.getPlainContent();

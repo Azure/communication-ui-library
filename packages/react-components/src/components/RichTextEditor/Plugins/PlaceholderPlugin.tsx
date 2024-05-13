@@ -24,6 +24,10 @@ export default class PlaceholderPlugin extends WatermarkPlugin {
   //   this.editorValue = editor;
   //   super.initialize(editor);
   // }
+  // dispose(): void {
+  //   this.editorValue = null;
+  //   super.dispose();
+  // }
   // protected show(editor: IEditor): void {
   //   super.show(editor);
   //   this.isPlaceholderShown = true;

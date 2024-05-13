@@ -165,7 +165,7 @@ const rootRibbonTableButtonStyle = (theme: Theme): IStyle => {
 /**
  * @private
  */
-export const ribbonTableButtonStyle = (theme: Theme): Partial<IButtonStyles> => {
+export const toolbarTableButtonStyle = (theme: Theme): Partial<IButtonStyles> => {
   return {
     icon: { height: 'auto' },
     menuIcon: { height: 'auto' },
