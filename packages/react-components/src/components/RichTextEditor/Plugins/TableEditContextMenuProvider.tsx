@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 import type { ContextMenuProvider, IEditor } from 'roosterjs-content-model-types';
-import { RichTextSendBoxStrings } from '../RichTextSendBox';
+import { RichTextStrings } from '../RichTextSendBox';
 import { IContextualMenuItem } from '@fluentui/react';
 import { getTableEditContextMenuItems } from '../../utils/RichTextTableUtils';
 
@@ -10,10 +10,10 @@ import { getTableEditContextMenuItems } from '../../utils/RichTextTableUtils';
  */
 export class TableEditContextMenuProvider implements ContextMenuProvider<IContextualMenuItem> {
   private editor: IEditor | null = null;
-  strings: Partial<RichTextSendBoxStrings> = {};
+  strings: Partial<RichTextStrings> = {};
   private items: IContextualMenuItem[] | null = null;
 
-  updateStrings(strings: Partial<RichTextSendBoxStrings>): void {
+  updateStrings(strings: Partial<RichTextStrings>): void {
     this.strings = strings;
     if (this.editor) {
       this.items = getTableEditContextMenuItems(this.editor, this.strings);

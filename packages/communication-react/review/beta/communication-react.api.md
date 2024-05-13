@@ -3937,7 +3937,6 @@ export interface RichTextStrings {
     richTextDeleteRowOrColumnMenu: string;
     richTextDeleteTableMenu: string;
     richTextFormatButtonTooltip: string;
-    richTextToolbarMoreButtonAriaLabel: string;
     richTextIncreaseIndentTooltip: string;
     richTextInsertColumnLeftMenu: string;
     richTextInsertColumnRightMenu: string;
@@ -3948,6 +3947,7 @@ export interface RichTextStrings {
     richTextInsertTableTooltip: string;
     richTextItalicTooltip: string;
     richTextNumberListTooltip: string;
+    richTextToolbarMoreButtonAriaLabel: string;
     richTextUnderlineTooltip: string;
 }
 
