@@ -49,6 +49,7 @@ jobs:
     permissions:
       packages: write
       contents: write
+      id-token: write
     steps:
       # Check-out repo
       - uses: actions/checkout@v3
@@ -125,15 +126,18 @@ jobs:
         run: npm pack
         working-directory: ./packages/communication-react
 
+      # Login via OIDC to permit uploading to azure blob store
+      - name: Azure login
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.NPM_DEPLOY_AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.NPM_DEPLOY_AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.NPM_DEPLOY_AZURE_SUBSCRIPTION_ID }}
+
       # Deploy npm package - this is done by uploading to Azure's SDK blob storage then triggering their partner release pipeline.
       # More info: https://dev.azure.com/azure-sdk/internal/_wiki/wikis/internal.wiki/1/Partner-Release-Pipeline
       - name: Upload tarball to blob storage
-        uses: azure/CLI@v1
-        with:
-          inlineScript: |
-            az login --service-principal -u ${{ secrets.AZURESDKPARTNERDROPS_CLIENT_ID }} -p ${{ secrets.AZURESDKPARTNERDROPS_SERVICE_PRINCIPAL_KEY }} --tenant ${{ secrets.AZURESDKPARTNERDROPS_TENANT_ID }}
-            az extension add --name storage-preview
-            az storage azcopy blob upload -s "packages/communication-react/release/*" -c "drops/azure-communication-services/react/npm/${{ steps.version.outputs.version }}" --account-name azuresdkpartnerdrops
+        run: az storage blob upload -f "packages/communication-react/release/azure-communication-react-${{ steps.version.outputs.version }}.tgz" -c "drops/azure-communication-services/react/npm/${{ steps.version.outputs.version }}" --account-name azuresdkpartnerdrops --auth-mode login
 
       - name: Trigger package release pipeline
         uses: Azure/pipelines@v1.2
