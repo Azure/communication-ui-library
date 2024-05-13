@@ -65,7 +65,6 @@ describe('RichTextEditor should be shown correctly', () => {
         styles={{ minHeight: '1rem', maxHeight: '1rem' }}
       />
     );
-    // const boldButton = screen.queryByLabelText('Bold');
     const boldButton = screen.queryByTestId('rich-text-toolbar-bold-button');
     const italicButton = screen.queryByTestId('rich-text-toolbar-italic-button');
     const underlineButton = screen.queryByTestId('rich-text-toolbar-underline-button');
