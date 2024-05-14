@@ -7,13 +7,16 @@ import { useMemo } from 'react';
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 import { useLocale } from '../../localization';
 import { _AttachmentCard } from './AttachmentCard';
-import { _AttachmentCardGroup } from './AttachmentCardGroup';
+import { _AttachmentCardGroup, _AttachmentCardGroupLayout } from './AttachmentCardGroup';
 /* @conditional-compile-remove(attachment-download) */
 import { getAttachmentCountLiveMessage } from '../ChatMessage/ChatMessageContent';
 import { _formatString } from '@internal/acs-ui-common';
 import { AttachmentMenuAction } from '../../types/Attachment';
 import { AttachmentMetadata } from '@internal/acs-ui-common';
 import { ChatMessage } from '../../types';
+import { mergeClasses } from '@griffel/react';
+import { _ATTACHMENT_CARD_WIDTH_IN_REM } from '../styles/AttachmentCard.styles';
+import { useAttachmentCardGroupStyles } from '../styles/AttachmentCardGroup.styles';
 
 /**
  * Represents the type of attachment
@@ -63,16 +66,13 @@ export interface _AttachmentDownloadCardsProps {
   strings?: _AttachmentDownloadCardsStrings;
 }
 
-const attachmentDownloadCardsStyle = {
-  marginTop: '0.25rem'
-};
-
 /**
  * @internal
  */
 export const _AttachmentDownloadCards = (props: _AttachmentDownloadCardsProps): JSX.Element => {
   const { attachments, message } = props;
   const localeStrings = useLocaleStringsTrampoline();
+  const attachmentCardGroupStyles = useAttachmentCardGroupStyles();
 
   const getMenuActions = useCallback(
     (
@@ -115,13 +115,28 @@ export const _AttachmentDownloadCards = (props: _AttachmentDownloadCardsProps): 
     [props.strings?.attachmentCardGroupMessage, localeStrings.attachmentCardGroupMessage, attachments]
   );
 
+  const hasMultipleAttachments = useMemo(() => {
+    return (props.attachments?.length ?? 0) > 1;
+  }, [props.attachments]);
+
   if (!attachments || attachments.length === 0 || !attachments) {
     return <></>;
   }
 
   return (
-    <div style={attachmentDownloadCardsStyle} data-ui-id="attachment-download-card-group">
-      <_AttachmentCardGroup ariaLabel={attachmentCardGroupDescription()}>
+    <div
+      className={mergeClasses(
+        attachmentCardGroupStyles.root,
+        hasMultipleAttachments
+          ? attachmentCardGroupStyles.multipleAttachments
+          : attachmentCardGroupStyles.singleAttachment
+      )}
+      data-ui-id="attachment-download-card-group"
+    >
+      <_AttachmentCardGroup
+        ariaLabel={attachmentCardGroupDescription()}
+        attachmentGroupLayout={_AttachmentCardGroupLayout.Grid}
+      >
         {attachments &&
           attachments.map((attachment) => (
             <TooltipHost content={downloadAttachmentButtonString()} key={attachment.name}>
@@ -130,6 +145,7 @@ export const _AttachmentDownloadCards = (props: _AttachmentDownloadCardsProps): 
                 key={attachment.id}
                 menuActions={getMenuActions(attachment, localeStrings, message, props.actionsForAttachment)}
                 onActionHandlerFailed={props.onActionHandlerFailed}
+                selfResizing={hasMultipleAttachments}
               />
             </TooltipHost>
           ))}

@@ -135,7 +135,9 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
   const isBlockedMessage =
     false || /* @conditional-compile-remove(data-loss-prevention) */ message.messageType === 'blocked';
   const chatMessageCommonStyles = useChatMessageCommonStyles();
-
+  const hasMultipleAttachments = useMemo(() => {
+    return (message as ChatMessage).attachments?.length ?? 0 > 1;
+  }, [message]);
   const chatMessageStyles = useChatMessageStyles();
   const chatItemMessageContainerClassName = mergeClasses(
     chatMessageCommonStyles.body,
@@ -148,6 +150,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
       ? chatMessageCommonStyles.failed
       : undefined,
     shouldOverlapAvatarAndMessage ? chatMessageStyles.avatarOverlap : chatMessageStyles.avatarNoOverlap,
+    hasMultipleAttachments ? chatMessageStyles.multipleAttachments : undefined,
     message.attached === 'top' || message.attached === false
       ? chatMessageStyles.bodyWithAvatar
       : chatMessageStyles.bodyWithoutAvatar,

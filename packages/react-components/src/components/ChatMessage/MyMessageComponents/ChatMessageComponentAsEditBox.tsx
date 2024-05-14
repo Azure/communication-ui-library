@@ -113,6 +113,10 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
     [iconClassName]
   );
 
+  const hasMultipleAttachments = useMemo(() => {
+    return (message as ChatMessage).attachments?.length ?? 0 > 1;
+  }, [message]);
+
   const editBoxStyles = useMemo(() => {
     return concatStyleSets(editBoxStyleSet, { textField: { borderColor: theme.palette.themePrimary } });
   }, [theme.palette.themePrimary]);
@@ -221,7 +225,10 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
     <ChatMyMessage
       attached={attached}
       root={{
-        className: chatMyMessageStyles.root
+        className: mergeStyles(
+          chatMyMessageStyles.root,
+          hasMultipleAttachments ? chatMyMessageStyles.multipleAttachments : undefined
+        )
       }}
       body={{
         className: mergeClasses(
