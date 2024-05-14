@@ -72,7 +72,14 @@ export const SendBoxPicker = (props: SendBoxPickerProps): JSX.Element => {
         onCancelAttachmentUpload={onCancelAttachmentUpload}
       />
     ),
-    [attachments, autoFocus, onCancelAttachmentUpload, props.onSendMessage, sendBoxProps, sendBoxStyles]
+    [
+      /* @conditional-compile-remove(attachment-upload) */ attachments,
+      autoFocus,
+      /* @conditional-compile-remove(attachment-upload) */ onCancelAttachmentUpload,
+      props.onSendMessage,
+      sendBoxProps,
+      sendBoxStyles
+    ]
   );
 
   /* @conditional-compile-remove(rich-text-editor-composite-support) */
