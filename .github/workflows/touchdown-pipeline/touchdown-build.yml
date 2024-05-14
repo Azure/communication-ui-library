@@ -99,6 +99,7 @@ extends:
                     git add -A
                     git commit -m "TDBuild latest localization" -a
                     git push origin $branchName
+                condition: eq(variables['commit'], 'true')
     sdl:
       arrow:
         serviceConnection: Arrow_skype_PROD
