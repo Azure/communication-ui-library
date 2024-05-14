@@ -118,6 +118,7 @@ export interface AttachmentProgressError {
  * sending or updating a chat message.
  * @property metadata - Metadata that contains additional information about the message to be passed between 2 users.
  * @property attachments - Attachments that contains file attachments attached to the message.
+ * @property type - Type of the message content, either 'text' or 'html'.
  */
 export type MessageOptions = {
   metadata?: Record<string, string>;
