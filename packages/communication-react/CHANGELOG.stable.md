@@ -1,8 +1,63 @@
 # Change Log - @azure/communication-react
 
-This log was last generated on Mon, 08 Apr 2024 20:34:39 GMT and should not be manually modified.
+This log was last generated on Mon, 06 May 2024 20:38:24 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.16.0](https://github.com/azure/communication-ui-library/tree/1.16.0)
+
+Mon, 06 May 2024 20:38:24 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@azure/communication-react_v1.16.0-beta.1...@azure/communication-react_v1.16.0)
+
+### Features
+
+### Hide Attendee Names
+
+The Web UI Calling and CallWithChat composite now supports "Hide Attendee Names". This feature supports Teams Premium option of hiding attendees in the meeting and helps protect identities during large Teams interop meetings.
+
+### Join Call with Meeting ID/Passcode
+
+We are excited to announce that the Azure Communication Services Web UI Library now supports joining a call with a Meeting Passcode and ID. Currently, Microsoft Teams allows you to require a meeting password for added security and generates a unique meeting ID for each meeting that participants can use to join. This feature now allows users on ACS to join interop Teams calls that have a meeting passcode or an ID generated. This is useful for private calls or events where limited access needs to be granted. Developers can use this functionality today through our composites (e.g CallComposite, CallWithChatComposite) as well as through components.
+
+### End Call Options
+Support end call for everyone feature, developer can now use hangUpForEveryone parameter in Call and CallWithChat composite to allow the user to end the whole call for everyone.
+
+
+### Improvements
+
+- Add callout on Copy Invite Link button or Add People button when invite link is copied ([PR #4497](https://github.com/azure/communication-ui-library/pull/4497) by 79475487+mgamis-msft@users.noreply.github.com)
+- Lay groundwork for supporting the new Teams' short meeting URLs ([PR #4481](https://github.com/azure/communication-ui-library/pull/4481) by 2684369+JamesBurnside@users.noreply.github.com)
+- Update File Sharing Public APIs ([PR #4464](https://github.com/azure/communication-ui-library/pull/4464) by 109105353+jpeng-ms@users.noreply.github.com)
+- Allow always showing background color for display name containers in VideoTiles ([PR #4489](https://github.com/azure/communication-ui-library/pull/4489) by edwardlee@microsoft.com)
+
+### Bug Fixes
+
+- Fix the issue where aria label contains spacial chars ([PR #4531](https://github.com/azure/communication-ui-library/pull/4531) by 109105353+jpeng-ms@users.noreply.github.com)
+- Move internal CallComposite AudioContext to a react context to avoid over creation of audio contexts ([PR #4539](https://github.com/azure/communication-ui-library/pull/4539) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Update caption logic to only process current speaker and ignore interceptors until the current speaker stops talking ([PR #4488](https://github.com/azure/communication-ui-library/pull/4488) by 96077406+carocao-msft@users.noreply.github.com)
+- Fix an accessibility issue where a send box button disabled state wasn't announced ([PR #4526](https://github.com/azure/communication-ui-library/pull/4526) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- Fix for drawer menu display name not localized ([PR #4558](https://github.com/azure/communication-ui-library/pull/4558) by 97124699+prabhjot-msft@users.noreply.github.com)
+- Fix VideoGallery to not use optimal video count when there are no remote videos on ([PR #4364](https://github.com/azure/communication-ui-library/pull/4364) by 79475487+mgamis-msft@users.noreply.github.com)
+- Fix for wrong initials in remote video tile ([PR #4561](https://github.com/azure/communication-ui-library/pull/4561) by 97124699+prabhjot-msft@users.noreply.github.com)
+- Fix an issue where all messages were re-rendered when a new message was sent ([PR #4451](https://github.com/azure/communication-ui-library/pull/4451) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- Improve detecting if camera permission is available by using Permissions API in the StatefulCallClient ([PR #4472](https://github.com/azure/communication-ui-library/pull/4472) by 2684369+JamesBurnside@users.noreply.github.com)
+- Fixed Upload Issue in Chat Sample App ([PR #4487](https://github.com/azure/communication-ui-library/pull/4487) by 109105353+jpeng-ms@users.noreply.github.com)
+- Fix bug where captions stuck at bottom ([PR #4462](https://github.com/azure/communication-ui-library/pull/4462) by 96077406+carocao-msft@users.noreply.github.com)
+- Add aria label for sidepane header ([PR #4475](https://github.com/azure/communication-ui-library/pull/4475) by edwardlee@microsoft.com)
+- Fix issue where android user's videos would not be on when joining the call caused by a stream change ([PR #4461](https://github.com/azure/communication-ui-library/pull/4461) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Fix local tile switcher action ([PR #4447](https://github.com/azure/communication-ui-library/pull/4447) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Fix position of raised hand icon in video tiles ([PR #4453](https://github.com/azure/communication-ui-library/pull/4453) by 79475487+mgamis-msft@users.noreply.github.com)
+- Fix exception thrown when joining an Teams Interop meeting that has an unsupported chat thread ([PR #4482](https://github.com/azure/communication-ui-library/pull/4482) by 2684369+JamesBurnside@users.noreply.github.com)
+- Fix default constant maxWidth value for fluent chat components ([PR #4510](https://github.com/azure/communication-ui-library/pull/4510) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- Fix Screen Reader Reads `&nbsp;` ([PR #4500](https://github.com/azure/communication-ui-library/pull/4500) by 109105353+jpeng-ms@users.noreply.github.com)
+- Update button label rem size to fit shorter text ([PR #4460](https://github.com/azure/communication-ui-library/pull/4460) by edwardlee@microsoft.com)
+- Close drawer menu for remote participant when they are no longer in the call ([PR #4466](https://github.com/azure/communication-ui-library/pull/4466) by 79475487+mgamis-msft@users.noreply.github.com)
+- Add aria label to People button to indicate selected state action ([PR #4573](https://github.com/azure/communication-ui-library/pull/4573) by edwardlee@microsoft.com)
+- Add adapter options to JS bundles ([PR #4486](https://github.com/azure/communication-ui-library/pull/4486) by dmceachern@microsoft.com)
+- Update default scaling mode to Crop when selecting a camera ([PR #4502](https://github.com/azure/communication-ui-library/pull/4502) by 79475487+mgamis-msft@users.noreply.github.com)
+- Remove PPTLive overlay ([PR #4446](https://github.com/azure/communication-ui-library/pull/4446) by 93549644+ShaunaSong@users.noreply.github.com)
+- Introduces API to show or hude the dialpad automatically when the call starts ([PR #4568](https://github.com/azure/communication-ui-library/pull/4568) by dmceachern@microsoft.com)
+
 
 ## [1.15.0](https://github.com/azure/communication-ui-library/tree/1.15.0)
 
