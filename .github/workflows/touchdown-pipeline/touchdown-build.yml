@@ -79,8 +79,8 @@ extends:
                     Write-Host "##[group] Configure GIT"
 
                     #Setting Global Git Username and Email. NOTE: Branch will be created as this user
-                    git config --global user.email "79475487+mgamis-msft@users.noreply.github.com"
-                    git config --global user.name "mgamis-msft"
+                    git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+                    git config user.name "github-actions[bot]"
 
                     #**********************************************
                     #***Checkout current branch and push changes***
