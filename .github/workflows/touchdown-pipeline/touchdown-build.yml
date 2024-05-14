@@ -99,6 +99,12 @@ extends:
                     git add -A
                     git commit -m "TDBuild latest localization" -a
                     git push origin $branchName
+
+                    if (!$?) {
+                      # We ignore stderr (in task definition) due to git loving to write there even when things are fine.
+                      Write-Host "The git push command failed. Exiting."
+                      Exit 1
+                    }
                 condition: eq(variables['commit'], 'true')
     sdl:
       arrow:
