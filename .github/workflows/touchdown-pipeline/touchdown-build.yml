@@ -26,7 +26,7 @@ extends:
                 clean: true
                 persistCredentials: true
 
-              - task: TouchdownBuildTask@3
+              - task: TouchdownBuildTask@4
                 inputs:
                   environment: 'PRODEXT'
                   teamId: '35669'
@@ -38,7 +38,7 @@ extends:
                   cultureMappingType: 'None'
                 displayName: 'Call Touchdown build task for components and commit changes'
 
-              - task: TouchdownBuildTask@3
+              - task: TouchdownBuildTask@4
                 inputs:
                   environment: 'PRODEXT'
                   teamId: '35669'
