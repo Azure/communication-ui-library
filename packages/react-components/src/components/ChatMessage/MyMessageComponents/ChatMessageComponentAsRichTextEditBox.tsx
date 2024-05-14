@@ -108,6 +108,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
     [iconClassName]
   );
 
+  /* @conditional-compile-remove(attachment-upload) */
   const hasMultipleAttachments = useMemo(() => {
     const length = (message as ChatMessage).attachments?.length ?? 0;
     return length > 1;
@@ -220,6 +221,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
       root={{
         className: mergeStyles(
           chatMyMessageStyles.root,
+          /* @conditional-compile-remove(attachment-upload) */
           hasMultipleAttachments ? chatMyMessageStyles.multipleAttachments : undefined
         )
       }}

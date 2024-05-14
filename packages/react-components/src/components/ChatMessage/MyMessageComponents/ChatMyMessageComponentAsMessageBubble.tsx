@@ -172,6 +172,7 @@ const MessageBubble = (props: ChatMyMessageComponentAsMessageBubbleProps): JSX.E
     setChatMessageActionFlyoutTarget(undefined);
   }, [setChatMessageActionFlyoutTarget]);
 
+  /* @conditional-compile-remove(attachment-upload) */
   const hasMultipleAttachments = useMemo(() => {
     const length = (message as ChatMessage).attachments?.length ?? 0;
     return length > 1;
@@ -231,6 +232,7 @@ const MessageBubble = (props: ChatMyMessageComponentAsMessageBubbleProps): JSX.E
                 ? chatMessageCommonStyles.failed
                 : undefined,
               attached !== 'top' ? chatMyMessageStyles.bodyAttached : undefined,
+              /* @conditional-compile-remove(attachment-upload) */
               hasMultipleAttachments ? chatMyMessageStyles.multipleAttachments : undefined,
               mergeStyles(messageContainerStyle)
             ),
