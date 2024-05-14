@@ -12,8 +12,8 @@ import { beforeMount } from '@playwright/experimental-ct-react/hooks';
 registerIcons({
   icons: DEFAULT_COMPONENT_ICONS
 });
-initializeFileTypeIcons();
 initializeIcons();
+initializeFileTypeIcons();
 
 /**
  * custom configuration options for the test hooks.

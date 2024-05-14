@@ -29,11 +29,13 @@ import {
 import { BlockedMessage } from '../types';
 import { MessageStatusIndicatorProps } from './MessageStatusIndicator';
 import { memoizeFnAll, MessageStatus } from '@internal/acs-ui-common';
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+import { MessageOptions } from '@internal/acs-ui-common';
 import { useLocale } from '../localization/LocalizationProvider';
 import { isNarrowWidth, _useContainerWidth } from './utils/responsive';
 import getParticipantsWhoHaveReadMessage from './utils/getParticipantsWhoHaveReadMessage';
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-import { AttachmentMetadata, AttachmentOptions } from '../types/Attachment';
+import { AttachmentOptions } from '../types/Attachment';
 import { useTheme } from '../theming';
 import { FluentV9ThemeProvider } from './../theming/FluentV9ThemeProvider';
 import LiveAnnouncer from './Announcer/LiveAnnouncer';
@@ -273,7 +275,11 @@ const memoizeAllMessages = memoizeFnAll(
     onUpdateMessage?: UpdateMessageCallback,
     onCancelEditMessage?: CancelEditCallback,
     onDeleteMessage?: (messageId: string) => Promise<void>,
-    onSendMessage?: (content: string) => Promise<void>,
+    onSendMessage?: (
+      content: string,
+      /* @conditional-compile-remove(attachment-upload) */
+      options?: MessageOptions
+    ) => Promise<void>,
     disableEditing?: boolean,
     lastSeenChatMessage?: string,
     lastSendingChatMessage?: string,
@@ -353,11 +359,7 @@ export type UpdateMessageCallback = (
   messageId: string,
   content: string,
   /* @conditional-compile-remove(attachment-upload) */
-  options?: {
-    /* @conditional-compile-remove(attachment-upload) */
-    metadata?: Record<string, string>;
-    attachmentMetadata?: AttachmentMetadata[];
-  }
+  options?: MessageOptions
 ) => Promise<void>;
 /**
  * @public
@@ -469,7 +471,7 @@ export type MessageThreadProps = {
    * Optional callback to render attachments in the message component.
    * @beta
    */
-  onRenderAttachmentDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
+  onRenderAttachmentDownloads?: (message: ChatMessage) => JSX.Element;
   /**
    * Optional callback to edit a message.
    *
