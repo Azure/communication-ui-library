@@ -421,7 +421,9 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       handleUploadAction({ type: AttachmentUploadActionType.Clear });
       /* @conditional-compile-remove(attachment-upload) */
       await adapter.sendMessage(content, {
-        attachments: attachments
+        attachments: attachments,
+        /* @conditional-compile-remove(rich-text-editor-composite-support) */
+        type: options?.richTextEditor ? 'html' : 'text'
       });
       /* @conditional-compile-remove(attachment-upload) */
       return;
@@ -487,7 +489,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
                   styles={sendBoxStyles}
                   autoFocus={options?.autoFocus}
                   /* @conditional-compile-remove(rich-text-editor-composite-support) */
-                  richTextEditor={options?.richTextEditor}
+                  richTextEditor={true} // {options?.richTextEditor}
                   /* @conditional-compile-remove(attachment-upload) */
                   attachments={attachments}
                   /* @conditional-compile-remove(attachment-upload) */

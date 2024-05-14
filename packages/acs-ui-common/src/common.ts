@@ -122,4 +122,5 @@ export interface AttachmentProgressError {
 export type MessageOptions = {
   metadata?: Record<string, string>;
   attachments?: AttachmentMetadata[];
+  type?: 'text' | 'html';
 };
