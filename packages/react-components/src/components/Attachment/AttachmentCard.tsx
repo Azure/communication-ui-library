@@ -114,40 +114,46 @@ export const _AttachmentCard = (props: _AttachmentCardProps): JSX.Element => {
         appearance="filled-alternative"
         aria-label={attachment.name}
       >
-        <TooltipHost content={attachment.name} key={attachment.name}>
-          <CardHeader
-            className={attachmentCardStyles.content}
-            image={
-              <div className={attachmentCardStyles.fileIcon}>
-                <Icon
-                  data-ui-id={'attachmenttype-icon'}
-                  iconName={
-                    getFileTypeIconProps({
-                      extension: extension,
-                      size: 24,
-                      imageFileType: 'svg'
-                    }).iconName
-                  }
-                />
-              </div>
-            }
-            header={
-              <div className={attachmentNameContainerClassName}>
+        <CardHeader
+          className={attachmentCardStyles.content}
+          image={
+            <div className={attachmentCardStyles.fileIcon}>
+              <Icon
+                data-ui-id={'attachmenttype-icon'}
+                iconName={
+                  getFileTypeIconProps({
+                    extension: extension,
+                    size: 24,
+                    imageFileType: 'svg'
+                  }).iconName
+                }
+              />
+            </div>
+          }
+          header={
+            <div className={attachmentNameContainerClassName} id={'attachment-' + attachment.id}>
+              <TooltipHost
+                content={attachment.name}
+                calloutProps={{
+                  gapSpace: 0,
+                  target: '#attachment-' + attachment.id
+                }}
+              >
                 <Text className={attachmentCardStyles.title} title={attachment.name}>
                   {attachment.name}
                 </Text>
-              </div>
-            }
-            action={MappedMenuItems(
-              menuActions,
-              {
-                ...attachment,
-                url: attachment.url ?? ''
-              },
-              onActionHandlerFailed
-            )}
-          />
-        </TooltipHost>
+              </TooltipHost>
+            </div>
+          }
+          action={MappedMenuItems(
+            menuActions,
+            {
+              ...attachment,
+              url: attachment.url ?? ''
+            },
+            onActionHandlerFailed
+          )}
+        />
       </Card>
       {isUploadInProgress ? (
         <CardFooter>

@@ -42,7 +42,7 @@ export const TestMessageThreadWithCustomAttachmentActions = (): JSX.Element => {
             senderDisplayName: 'John Doe',
             content: 'Custom Action Test',
             mine: true,
-            attachments: [{ name: 'test1.docx', id: 'id1', url: 'https://www.contoso.com/test1.docx' }]
+            attachments: [{ name: 'test1.docx', id: '854f29c09740', url: 'https://www.contoso.com/test1.docx' }]
           }
         ]}
       />
