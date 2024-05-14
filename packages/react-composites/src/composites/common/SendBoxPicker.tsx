@@ -81,9 +81,6 @@ export const SendBoxPicker = (props: SendBoxPickerProps): JSX.Element => {
       <Suspense fallback={sendBox}>
         <RichTextSendBox
           {...sendBoxProps}
-          // onSendMessage={(content: string) => {
-          //   return sendBoxProps.onSendMessage(content, { type: 'html' });
-          // }}
           onSendMessage={props.onSendMessage}
           autoFocus={autoFocus}
           /* @conditional-compile-remove(attachment-upload) */
