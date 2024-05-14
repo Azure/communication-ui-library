@@ -5,14 +5,15 @@ import { Icon, TooltipHost } from '@fluentui/react';
 import React, { useCallback } from 'react';
 import { useMemo } from 'react';
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-import { useLocale } from '../localization';
+import { useLocale } from '../../localization';
 import { _AttachmentCard } from './AttachmentCard';
 import { _AttachmentCardGroup } from './AttachmentCardGroup';
 /* @conditional-compile-remove(attachment-download) */
-import { getAttachmentCountLiveMessage } from './ChatMessage/ChatMessageContent';
+import { getAttachmentCountLiveMessage } from '../ChatMessage/ChatMessageContent';
 import { _formatString } from '@internal/acs-ui-common';
-import { AttachmentMenuAction, AttachmentMetadata } from '../types/Attachment';
-import { ChatMessage } from '../types';
+import { AttachmentMenuAction } from '../../types/Attachment';
+import { AttachmentMetadata } from '@internal/acs-ui-common';
+import { ChatMessage } from '../../types';
 
 /**
  * Represents the type of attachment

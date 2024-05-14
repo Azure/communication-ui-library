@@ -22,12 +22,17 @@ import {
 import { getFileTypeIconProps } from '@fluentui/react-file-type-icons';
 import React from 'react';
 import { _pxToRem } from '@internal/acs-ui-common';
-import { Announcer } from './Announcer';
+import { Announcer } from '../Announcer';
 import { useEffect, useState, useMemo } from 'react';
 import { _AttachmentUploadCardsStrings } from './AttachmentUploadCards';
-import { useLocaleAttachmentCardStringsTrampoline } from './utils/common';
-import { AttachmentMetadata, AttachmentMenuAction, AttachmentMetadataWithProgress } from '../types/Attachment';
-import { useAttachmentCardStyles, attachmentNameContainerClassName } from './styles/AttachmentCard.styles';
+import { useLocaleAttachmentCardStringsTrampoline } from '../utils/common';
+import { AttachmentMenuAction } from '../../types/Attachment';
+import { AttachmentMetadata, AttachmentMetadataInProgress } from '@internal/acs-ui-common';
+import {
+  useAttachmentCardStyles,
+  attachmentNameContainerClassName,
+  ATTACHMENT_CARD_MIN_PROGRESS
+} from '../styles/AttachmentCard.styles';
 
 /**
  * @internal
@@ -37,7 +42,7 @@ export interface _AttachmentCardProps {
   /**
    * Attachment details including name, extension, url, etc.
    */
-  attachment: AttachmentMetadata | AttachmentMetadataWithProgress;
+  attachment: AttachmentMetadata | AttachmentMetadataInProgress;
   /**
    * An array of menu actions to be displayed in the attachment card.
    */
@@ -66,8 +71,8 @@ export const _AttachmentCard = (props: _AttachmentCardProps): JSX.Element => {
     return 'progress' in attachment ? attachment.progress : undefined;
   }, [attachment]);
 
-  const isUploadComplete = useMemo(() => {
-    return progress !== undefined && progress > 0 && progress < 1;
+  const isUploadInProgress = useMemo(() => {
+    return progress !== undefined && progress >= 0 && progress < 1;
   }, [progress]);
 
   const [announcerString, setAnnouncerString] = useState<string | undefined>(undefined);
@@ -75,18 +80,21 @@ export const _AttachmentCard = (props: _AttachmentCardProps): JSX.Element => {
   const uploadStartedString = props.strings?.uploading ?? localeStrings.uploading;
   const uploadCompletedString = props.strings?.uploadCompleted ?? localeStrings.uploadCompleted;
 
-  const showProgressIndicator = progress !== undefined && progress > 0 && progress < 1;
-
   useEffect(() => {
-    if (showProgressIndicator) {
+    if (isUploadInProgress) {
       setAnnouncerString(`${uploadStartedString} ${attachment.name}`);
     } else if (progress === 1) {
       setAnnouncerString(`${attachment.name} ${uploadCompletedString}`);
     } else {
       setAnnouncerString(undefined);
     }
-  }, [progress, showProgressIndicator, attachment.name, uploadStartedString, uploadCompletedString]);
+  }, [progress, isUploadInProgress, attachment.name, uploadStartedString, uploadCompletedString]);
 
+  const extension = useMemo((): string => {
+    const re = /(?:\.([^.]+))?$/;
+    const match = re.exec(attachment.name);
+    return match && match[1] ? match[1] : '';
+  }, [attachment]);
   return (
     <div data-is-focusable={true}>
       <Announcer announcementString={announcerString} ariaLive={'polite'} />
@@ -103,9 +111,7 @@ export const _AttachmentCard = (props: _AttachmentCardProps): JSX.Element => {
               data-ui-id={'attachmenttype-icon'}
               iconName={
                 getFileTypeIconProps({
-                  extension: useMemo((): string => {
-                    return attachment.extension ?? attachment.name.split('.').pop() ?? '';
-                  }, [attachment]),
+                  extension: extension,
                   size: 24,
                   imageFileType: 'svg'
                 }).iconName
@@ -117,12 +123,23 @@ export const _AttachmentCard = (props: _AttachmentCardProps): JSX.Element => {
               <Text title={attachment.name}>{attachment.name}</Text>
             </div>
           }
-          action={MappedMenuItems(menuActions, attachment, onActionHandlerFailed)}
+          action={MappedMenuItems(
+            menuActions,
+            {
+              ...attachment,
+              url: attachment.url ?? ''
+            },
+            onActionHandlerFailed
+          )}
         />
       </Card>
-      {isUploadComplete ? (
+      {isUploadInProgress ? (
         <CardFooter>
-          <ProgressBar thickness="medium" value={progress} shape="rounded" />
+          <ProgressBar
+            thickness="medium"
+            value={Math.max(progress ?? 0, ATTACHMENT_CARD_MIN_PROGRESS)}
+            shape="rounded"
+          />
         </CardFooter>
       ) : (
         <> </>

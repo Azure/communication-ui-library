@@ -81,7 +81,7 @@ const renderAttachmentCardWithDefaults = (props?: Partial<_AttachmentCardProps>)
     attachment: {
       id: 'mockId',
       name: 'MockAttachmentCard',
-      extension: 'docx'
+      url: 'mockUrl'
     },
     menuActions: props?.menuActions ?? [],
     ...(props ?? {})

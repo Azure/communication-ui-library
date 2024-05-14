@@ -5,8 +5,8 @@ import { Icon, mergeStyles } from '@fluentui/react';
 import React, { useMemo } from 'react';
 import { _AttachmentCard } from './AttachmentCard';
 import { _AttachmentCardGroup } from './AttachmentCardGroup';
-import { AttachmentMetadataWithProgress } from '../types/Attachment';
-import { useLocaleAttachmentCardStringsTrampoline } from './utils/common';
+import { AttachmentMetadataInProgress } from '@internal/acs-ui-common';
+import { useLocaleAttachmentCardStringsTrampoline } from '../utils/common';
 
 /**
  * Strings of _AttachmentUploadCards that can be overridden.
@@ -29,9 +29,9 @@ export interface _AttachmentUploadCardsStrings {
  */
 export interface AttachmentUploadCardsProps {
   /**
-   * Optional array of {@link AttachmentMetadataWithProgress}
+   * Optional array of {@link AttachmentMetadataInProgress}
    */
-  attachmentsWithProgress?: AttachmentMetadataWithProgress[];
+  attachments?: AttachmentMetadataInProgress[];
   /**
    * Optional callback to remove the attachment upload before sending by clicking on
    * cancel icon.
@@ -49,7 +49,7 @@ const actionIconStyle = { height: '1rem' };
  * @internal
  */
 export const _AttachmentUploadCards = (props: AttachmentUploadCardsProps): JSX.Element => {
-  const attachments = props.attachmentsWithProgress;
+  const attachments = props.attachments;
   const localeStrings = useLocaleAttachmentCardStringsTrampoline();
   const removeAttachmentButtonString = useMemo(
     () => () => {
@@ -75,7 +75,7 @@ export const _AttachmentUploadCards = (props: AttachmentUploadCardsProps): JSX.E
                 {
                   name: props.strings?.removeAttachment ?? 'Remove',
                   icon: (
-                    <div aria-label={removeAttachmentButtonString()}>
+                    <div aria-label={removeAttachmentButtonString()} data-testid="attachment-upload-card-remove">
                       <Icon iconName="CancelAttachmentUpload" className={mergeStyles(actionIconStyle)} />
                     </div>
                   ),
