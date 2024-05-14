@@ -31,6 +31,16 @@ export const useAttachmentCardStyles = makeStyles({
   },
   fileIcon: {
     marginLeft: _pxToRem(4)
+  },
+  content: {
+    '> div': {
+      width: '100%',
+      overflow: 'hidden',
+      textOverflow: 'ellipsis'
+    }
+  },
+  title: {
+    width: '100%'
   }
 });
 
@@ -39,7 +49,6 @@ export const useAttachmentCardStyles = makeStyles({
  */
 export const attachmentNameContainerClassName = mergeStyles({
   marginTop: _pxToRem(5),
-  width: '5.75rem',
   overflow: 'hidden',
   textOverflow: 'ellipsis',
   span: {
