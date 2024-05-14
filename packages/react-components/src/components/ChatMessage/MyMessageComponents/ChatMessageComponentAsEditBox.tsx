@@ -7,15 +7,18 @@ import { mergeClasses } from '@fluentui/react-components';
 import { _formatString } from '@internal/acs-ui-common';
 import { useTheme } from '../../../theming/FluentThemeProvider';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
+/* @conditional-compile-remove(attachment-upload) */
+import { useReducer } from 'react';
 import { editBoxStyle, editingButtonStyle, editBoxStyleSet, inputBoxIcon } from '../../styles/EditBox.styles';
 import { InputBoxComponent } from '../../InputBoxComponent';
 import { InputBoxButton } from '../../InputBoxButton';
 import { MessageThreadStrings } from '../../MessageThread';
 import { useChatMyMessageStyles } from '../../styles/MessageThread.styles';
 import { ChatMessage } from '../../../types';
-import { _AttachmentUploadCards } from '../../AttachmentUploadCards';
 /* @conditional-compile-remove(attachment-upload) */
-import { AttachmentMetadata } from '../../../types/Attachment';
+import { _AttachmentUploadCards } from '../../Attachment/AttachmentUploadCards';
+/* @conditional-compile-remove(attachment-upload) */
+import { AttachmentMetadata } from '@internal/acs-ui-common';
 import {
   chatMessageFailedTagStyle,
   editChatMessageFailedTagStyle,
@@ -26,6 +29,8 @@ import {
 /* @conditional-compile-remove(mention) */
 import { MentionLookupOptions } from '../../MentionPopover';
 import { MAXIMUM_LENGTH_OF_MESSAGE } from '../../utils/SendBoxUtils';
+/* @conditional-compile-remove(attachment-upload) */
+import { attachmentMetadataReducer } from '../../utils/ChatMessageComponentAsEditBoxUtils';
 import {
   getMessageState,
   onRenderCancelIcon,
@@ -39,11 +44,8 @@ export type ChatMessageComponentAsEditBoxProps = {
   onCancel?: (messageId: string) => void;
   onSubmit: (
     text: string,
-    metadata?: Record<string, string>,
-    options?: {
-      /* @conditional-compile-remove(attachment-upload) */
-      attachmentMetadata?: AttachmentMetadata[];
-    }
+    /* @conditional-compile-remove(attachment-upload) */
+    attachmentMetadata?: AttachmentMetadata[]
   ) => void;
   message: ChatMessage;
   strings: MessageThreadStrings;
@@ -61,7 +63,10 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
 
   const [textValue, setTextValue] = useState<string>(message.content || '');
   /* @conditional-compile-remove(attachment-upload) */
-  const [attachmentMetadata, setAttachmentMetadata] = React.useState(getMessageWithAttachmentMetadata(message));
+  const [attachmentMetadata, handleAttachmentAction] = useReducer(
+    attachmentMetadataReducer,
+    getMessageWithAttachmentMetadata(message) ?? []
+  );
   const editTextFieldRef = React.useRef<ITextField>(null);
   const theme = useTheme();
   const messageState = getMessageState(
@@ -119,9 +124,12 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
       attachmentMetadata.length > 0 && (
         <div style={{ margin: '0.25rem' }}>
           <_AttachmentUploadCards
-            attachmentsWithProgress={attachmentMetadata}
-            onCancelAttachmentUpload={(attachmentId) => {
-              setAttachmentMetadata(attachmentMetadata?.filter((attachment) => attachment.id !== attachmentId));
+            attachments={attachmentMetadata}
+            onCancelAttachmentUpload={(id) => {
+              // edit box only capable of removing attachments
+              // we need to expand attachment actions
+              // if we want to support more actions e.g. add
+              handleAttachmentAction({ type: 'remove', id });
             }}
           />
         </div>
@@ -148,10 +156,8 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
             submitEnabled &&
               onSubmit(
                 textValue,
-                message.metadata,
-                /* @conditional-compile-remove(attachment-upload) */ {
-                  attachmentMetadata
-                }
+                /* @conditional-compile-remove(attachment-upload) */
+                attachmentMetadata
               );
           }}
           supportNewline={false}
@@ -193,14 +199,12 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
               tooltipContent={strings.editBoxSubmitButton}
               onRenderIcon={onRenderThemedSubmitIcon}
               onClick={(e) => {
+                // it's very important to pass an empty attachment here
+                // so when user remvoes all attachments, UI can reflect it instantly
+                // if you set it to undefined, the attachments pre-edited would still be there
+                // until edit message event is received
                 submitEnabled &&
-                  onSubmit(
-                    textValue,
-                    message.metadata,
-                    /* @conditional-compile-remove(attachment-upload) */ {
-                      attachmentMetadata
-                    }
-                  );
+                  onSubmit(textValue, /* @conditional-compile-remove(attachment-upload) */ attachmentMetadata);
                 e.stopPropagation();
               }}
               id={'submitIconWrapper'}

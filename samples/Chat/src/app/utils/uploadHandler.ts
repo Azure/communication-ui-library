@@ -50,12 +50,16 @@ const attachmentSelectionHandler: AttachmentSelectionHandler = async (
         onUploadProgress: (progressEvent: AxiosProgressEvent) => {
           const { total, loaded } = progressEvent;
           if (total) {
-            task.notifyUploadProgressChanged(loaded / total);
+            // cap progress at 95% because progress should
+            // only be 100% when notifyUploadCompleted is called
+            // we cap at 95% not 99% is to make it consistent with upoad
+            // where 0 progress shows 5% progress in the UI
+            task.notifyUploadProgressChanged(Math.min(0.95, loaded / total));
           }
         }
       });
-
-      task.notifyUploadCompleted(uniqueFileName, response.data.url);
+      const randomId = Math.random().toString(16).slice(2);
+      task.notifyUploadCompleted(randomId, response.data.url);
     } catch (error) {
       console.error(error);
       task.notifyUploadFailed('Unable to upload file. Please try again later.');
