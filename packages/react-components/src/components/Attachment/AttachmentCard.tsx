@@ -3,7 +3,8 @@
 
 import {
   // eslint-disable-next-line no-restricted-imports
-  Icon
+  Icon,
+  TooltipHost
 } from '@fluentui/react';
 import {
   Card,
@@ -115,20 +116,24 @@ export const _AttachmentCard = (props: _AttachmentCardProps): JSX.Element => {
       >
         <CardHeader
           image={
-            <Icon
-              data-ui-id={'attachmenttype-icon'}
-              iconName={
-                getFileTypeIconProps({
-                  extension: extension,
-                  size: 24,
-                  imageFileType: 'svg'
-                }).iconName
-              }
-            />
+            <div className={attachmentCardStyles.fileIcon}>
+              <Icon
+                data-ui-id={'attachmenttype-icon'}
+                iconName={
+                  getFileTypeIconProps({
+                    extension: extension,
+                    size: 24,
+                    imageFileType: 'svg'
+                  }).iconName
+                }
+              />
+            </div>
           }
           header={
             <div className={attachmentNameContainerClassName}>
-              <Text title={attachment.name}>{attachment.name}</Text>
+              <TooltipHost content={attachment.name} key={attachment.name}>
+                <Text title={attachment.name}>{attachment.name}</Text>
+              </TooltipHost>
             </div>
           }
           action={MappedMenuItems(
@@ -167,23 +172,29 @@ const MappedMenuItems = (
     return <></>;
   }
   return menuActions.length === 1 ? (
-    <ToolbarButton
-      aria-label={menuActions[0].name}
-      icon={menuActions[0].icon}
-      onClick={() => {
-        try {
-          menuActions[0].onClick(attachment);
-        } catch (e) {
-          handleOnClickError?.((e as Error).message);
-        }
-      }}
-    />
+    <TooltipHost content={menuActions[0].name}>
+      <ToolbarButton
+        aria-label={menuActions[0].name}
+        icon={menuActions[0].icon}
+        onClick={() => {
+          try {
+            menuActions[0].onClick(attachment);
+          } catch (e) {
+            handleOnClickError?.((e as Error).message);
+          }
+        }}
+      />
+    </TooltipHost>
   ) : (
     <Toolbar>
       <Menu>
-        <MenuTrigger>
-          <ToolbarButton icon={<Icon iconName="AttachmentMoreMenu" aria-label={localeStrings.attachmentMoreMenu} />} />
-        </MenuTrigger>
+        <TooltipHost content={localeStrings.attachmentMoreMenu}>
+          <MenuTrigger>
+            <ToolbarButton
+              icon={<Icon iconName="AttachmentMoreMenu" aria-label={localeStrings.attachmentMoreMenu} />}
+            />
+          </MenuTrigger>
+        </TooltipHost>
         <MenuPopover>
           <MenuList>
             {menuActions.map((menuItem, index) => (

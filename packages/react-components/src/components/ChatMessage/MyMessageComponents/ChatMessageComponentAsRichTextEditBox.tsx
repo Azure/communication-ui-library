@@ -109,7 +109,8 @@ export const ChatMessageComponentAsRichTextEditBox = (
   );
 
   const hasMultipleAttachments = useMemo(() => {
-    return (message as ChatMessage).attachments?.length ?? 0 > 1;
+    const length = (message as ChatMessage).attachments?.length ?? 0;
+    return length > 1;
   }, [message]);
 
   const actionButtons = useMemo(() => {

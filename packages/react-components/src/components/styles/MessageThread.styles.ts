@@ -213,12 +213,8 @@ export const useChatMyMessageStyles = makeStyles({
     visibility: 'visible'
   },
   multipleAttachments: {
-    // if we have more than one attachment,
-    // we want to make sure the message bubble is wide enough to contain them
-    // so the width should be at least the width of two attachment cards plus margin between them
-    width: `max(${_ATTACHMENT_CARD_WIDTH_IN_REM + _ATTACHMENT_CARD_MARGIN_IN_PX}rem, min(${
-      (_ATTACHMENT_CARD_WIDTH_IN_REM + _ATTACHMENT_CARD_MARGIN_IN_PX) * 2
-    }rem, calc(100% - ${_ATTACHMENT_CARD_WIDTH_IN_REM}rem))`
+    width: '100%',
+    maxWidth: `${(_ATTACHMENT_CARD_WIDTH_IN_REM + _ATTACHMENT_CARD_MARGIN_IN_PX) * 2}rem`
   }
 });
 
@@ -328,9 +324,6 @@ export const useChatMessageStyles = makeStyles({
     marginLeft: `${-AVATAR_MARGIN_LEFT - MESSAGE_AVATAR_OVERLAP_REM}rem`
   },
   multipleAttachments: {
-    // if we have more than one attachment,
-    // we want to make sure the message bubble is wide enough to contain them
-    // so the width should be at least the width of two attachment cards plus margin between them
     width: `${(_ATTACHMENT_CARD_WIDTH_IN_REM + _ATTACHMENT_CARD_MARGIN_IN_PX) * 2}rem`
   }
 });

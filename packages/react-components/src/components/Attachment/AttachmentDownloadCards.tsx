@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { Icon, TooltipHost } from '@fluentui/react';
+import { Icon } from '@fluentui/react';
 import React, { useCallback } from 'react';
 import { useMemo } from 'react';
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
@@ -96,13 +96,6 @@ export const _AttachmentDownloadCards = (props: _AttachmentDownloadCardsProps): 
     []
   );
 
-  const downloadAttachmentButtonString = useMemo(
-    () => () => {
-      return props.strings?.downloadAttachment ?? localeStrings.downloadAttachment;
-    },
-    [props.strings?.downloadAttachment, localeStrings.downloadAttachment]
-  );
-
   const attachmentCardGroupDescription = useMemo(
     () => () => {
       /* @conditional-compile-remove(attachment-download) */
@@ -139,15 +132,13 @@ export const _AttachmentDownloadCards = (props: _AttachmentDownloadCardsProps): 
       >
         {attachments &&
           attachments.map((attachment) => (
-            <TooltipHost content={downloadAttachmentButtonString()} key={attachment.name}>
-              <_AttachmentCard
-                attachment={attachment}
-                key={attachment.id}
-                menuActions={getMenuActions(attachment, localeStrings, message, props.actionsForAttachment)}
-                onActionHandlerFailed={props.onActionHandlerFailed}
-                selfResizing={hasMultipleAttachments}
-              />
-            </TooltipHost>
+            <_AttachmentCard
+              attachment={attachment}
+              key={attachment.id}
+              menuActions={getMenuActions(attachment, localeStrings, message, props.actionsForAttachment)}
+              onActionHandlerFailed={props.onActionHandlerFailed}
+              selfResizing={hasMultipleAttachments}
+            />
           ))}
       </_AttachmentCardGroup>
     </div>

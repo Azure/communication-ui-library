@@ -28,6 +28,9 @@ export const useAttachmentCardStyles = makeStyles({
   },
   staticWidth: {
     width: `${_ATTACHMENT_CARD_WIDTH_IN_REM}rem`
+  },
+  fileIcon: {
+    marginLeft: _pxToRem(4)
   }
 });
 

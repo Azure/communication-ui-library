@@ -4,8 +4,8 @@
 import { mergeStyles, Stack } from '@fluentui/react';
 import { _pxToRem } from '@internal/acs-ui-common';
 import React from 'react';
-import { _ATTACHMENT_CARD_MARGIN_IN_PX, _ATTACHMENT_CARD_WIDTH_IN_REM } from './styles/AttachmentCard.styles';
-import { useattachmentCardGroupLayout } from './styles/AttachmentCardGroup.styles';
+import { _ATTACHMENT_CARD_MARGIN_IN_PX, _ATTACHMENT_CARD_WIDTH_IN_REM } from '../styles/AttachmentCard.styles';
+import { useattachmentCardGroupLayout } from '../styles/AttachmentCardGroup.styles';
 
 /**
  * @internal
