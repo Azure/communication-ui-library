@@ -51,6 +51,7 @@ extends:
                 displayName: 'Call Touchdown build task for composites and commit changes'
 
               - task: PowerShell@2
+                displayName: Push changes to repo
                 inputs:
                   targetType: 'inline'
                   script: |
@@ -94,7 +95,6 @@ extends:
                     $branchName = "$(Build.SourceBranch)"
                     $branchName = $branchName -replace "refs/heads/", ""
 
-                    git remote set-url origin https://github.com/$repoName
                     git checkout $branchName
                     git add -A
                     git commit -m "TDBuild latest localization" -a
