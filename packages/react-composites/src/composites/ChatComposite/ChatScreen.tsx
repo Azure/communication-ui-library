@@ -411,9 +411,12 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   }, [uploads]);
 
   const onSendMessageHandler = useCallback(
-    async function (content: string, /* @conditional-compile-remove(attachment-upload) */ options?: MessageOptions) {
+    async function (
+      content: string,
+      /* @conditional-compile-remove(attachment-upload) */ messageOptions?: MessageOptions
+    ) {
       /* @conditional-compile-remove(attachment-upload) */
-      const attachments = options?.attachments ?? [];
+      const attachments = messageOptions?.attachments ?? [];
       /* @conditional-compile-remove(attachment-upload) */
       handleUploadAction({ type: AttachmentUploadActionType.Clear });
       /* @conditional-compile-remove(attachment-upload) */
@@ -422,9 +425,12 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       });
       /* @conditional-compile-remove(attachment-upload) */
       return;
-      await adapter.sendMessage(content);
+      await adapter.sendMessage(content, {
+        /* @conditional-compile-remove(rich-text-editor-composite-support) */
+        type: options?.richTextEditor ? 'html' : 'text'
+      });
     },
-    [adapter]
+    [adapter, /* @conditional-compile-remove(rich-text-editor-composite-support) */ options?.richTextEditor]
   );
 
   /* @conditional-compile-remove(attachment-upload) */

@@ -7,7 +7,7 @@ import { usePropsFor } from '../ChatComposite/hooks/usePropsFor';
 /* @conditional-compile-remove(rich-text-editor-composite-support) */
 import { Suspense } from 'react';
 /* @conditional-compile-remove(attachment-upload) */
-import { AttachmentMetadataWithProgress } from '@internal/react-components';
+import { AttachmentMetadataInProgress, MessageOptions } from '@internal/acs-ui-common';
 
 // TODO: Improve lazy loading
 /* @conditional-compile-remove(rich-text-editor-composite-support) */
@@ -21,10 +21,14 @@ const RichTextSendBox = React.lazy(() =>
 export type SendBoxPickerProps = {
   styles?: SendBoxStylesProps;
   autoFocus?: 'sendBoxTextField';
+  onSendMessage: (
+    content: string,
+    /* @conditional-compile-remove(attachment-upload) */ options?: MessageOptions
+  ) => Promise<void>;
   /* @conditional-compile-remove(rich-text-editor-composite-support) */
   richTextEditor?: boolean;
   /* @conditional-compile-remove(attachment-upload) */
-  attachmentsWithProgress?: AttachmentMetadataWithProgress[];
+  attachments?: AttachmentMetadataInProgress[];
   /* @conditional-compile-remove(attachment-upload) */
   onCancelAttachmentUpload?: (attachmentId: string) => void;
 };
@@ -39,7 +43,7 @@ export const SendBoxPicker = (props: SendBoxPickerProps): JSX.Element => {
     /* @conditional-compile-remove(rich-text-editor-composite-support) */
     richTextEditor,
     /* @conditional-compile-remove(attachment-upload) */
-    attachmentsWithProgress,
+    attachments,
     /* @conditional-compile-remove(attachment-upload) */
     onCancelAttachmentUpload
   } = props;
@@ -59,21 +63,16 @@ export const SendBoxPicker = (props: SendBoxPickerProps): JSX.Element => {
     () => (
       <SendBox
         {...sendBoxProps}
+        onSendMessage={props.onSendMessage}
         autoFocus={autoFocus}
         styles={sendBoxStyles}
         /* @conditional-compile-remove(attachment-upload) */
-        attachmentsWithProgress={attachmentsWithProgress}
+        attachments={attachments}
         /* @conditional-compile-remove(attachment-upload) */
         onCancelAttachmentUpload={onCancelAttachmentUpload}
       />
     ),
-    [
-      /* @conditional-compile-remove(attachment-upload) */ attachmentsWithProgress,
-      autoFocus,
-      /* @conditional-compile-remove(attachment-upload) */ onCancelAttachmentUpload,
-      sendBoxProps,
-      sendBoxStyles
-    ]
+    [attachments, autoFocus, onCancelAttachmentUpload, props.onSendMessage, sendBoxProps, sendBoxStyles]
   );
 
   /* @conditional-compile-remove(rich-text-editor-composite-support) */
@@ -82,12 +81,13 @@ export const SendBoxPicker = (props: SendBoxPickerProps): JSX.Element => {
       <Suspense fallback={sendBox}>
         <RichTextSendBox
           {...sendBoxProps}
-          onSendMessage={(content: string) => {
-            return sendBoxProps.onSendMessage(content, { type: 'html' });
-          }}
+          // onSendMessage={(content: string) => {
+          //   return sendBoxProps.onSendMessage(content, { type: 'html' });
+          // }}
+          onSendMessage={props.onSendMessage}
           autoFocus={autoFocus}
           /* @conditional-compile-remove(attachment-upload) */
-          attachmentsWithProgress={attachmentsWithProgress}
+          attachments={attachments}
           /* @conditional-compile-remove(attachment-upload) */
           onCancelAttachmentUpload={onCancelAttachmentUpload}
         />
