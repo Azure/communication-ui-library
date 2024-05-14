@@ -7,7 +7,7 @@ import type { ICommandBarItemProps, IContextualMenuItem, Theme } from '@fluentui
 import { insertTableMenuTablePane, toolbarTableButtonStyle } from '../../../styles/RichTextEditor.styles';
 import { RichTextInsertTablePane } from './RichTextInsertTablePane';
 import { parseKey } from '../../../utils/RichTextTableUtils';
-import { RichTextSendBoxStrings } from '../../RichTextSendBox';
+import { RichTextStrings } from '../../RichTextSendBox';
 import { RichTextToolbarTableIcon } from './RichTextToolbarTableIcon';
 
 /**
@@ -17,14 +17,14 @@ export const richTextInsertTableCommandBarItem = (
   theme: Theme,
   maxRowsNumber: number,
   maxColumnsNumber: number,
-  strings: Partial<RichTextSendBoxStrings>,
+  strings: Partial<RichTextStrings>,
   onClick: (column: number, row: number) => void
 ): ICommandBarItemProps => {
   return {
     'data-testid': 'rich-text-toolbar-insert-table-button',
     key: 'RichTextToolbarInsertTableButton',
-    text: strings.insertTableTooltip,
-    ariaLabel: strings.insertTableTooltip,
+    text: strings.richTextInsertTableTooltip,
+    ariaLabel: strings.richTextInsertTableTooltip,
     // hide the chevron icon
     menuIconProps: {
       hidden: true
@@ -42,7 +42,7 @@ export const richTextInsertTableCommandBarItem = (
       items: [
         {
           key: 'RichTextToolbarInsertTableMenu',
-          text: strings.insertTableMenuTitle,
+          text: strings.richTextInsertTableMenuTitle,
           canCheck: false,
           onRender: (item: IContextualMenuItem) => {
             return (

@@ -3,7 +3,7 @@
 import React, { useCallback, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react';
 import { richTextEditorWrapperStyle, richTextEditorStyle } from '../styles/RichTextEditor.styles';
 import { useTheme } from '../../theming';
-import { RichTextSendBoxStrings } from './RichTextSendBox';
+import { RichTextStrings } from './RichTextSendBox';
 import { isDarkThemed } from '../../theming/themeUtils';
 import CopyPastePlugin from './Plugins/CopyPastePlugin';
 import type { ContentModelDocument, EditorPlugin, IEditor } from 'roosterjs-content-model-types';
@@ -43,7 +43,7 @@ export interface RichTextEditorProps {
   onContentModelUpdate?: (contentModel: ContentModelDocument | undefined) => void;
   contentModel?: ContentModelDocument | undefined;
   placeholderText?: string;
-  strings: Partial<RichTextSendBoxStrings>;
+  strings: Partial<RichTextStrings>;
   showRichTextEditorFormatting: boolean;
   styles: RichTextEditorStyleProps;
   autoFocus?: 'sendBoxTextField';

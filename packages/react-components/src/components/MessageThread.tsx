@@ -48,6 +48,8 @@ import { InlineImageOptions } from './ChatMessage/ChatMessageContent';
 import { MessageStatusIndicatorInternal } from './MessageStatusIndicatorInternal';
 import { Announcer } from './Announcer';
 /* @conditional-compile-remove(rich-text-editor) */
+import { RichTextStrings } from './RichTextEditor/RichTextSendBox';
+/* @conditional-compile-remove(rich-text-editor) */
 import { loadChatMessageComponentAsRichTextEditBox } from './ChatMessage/MyMessageComponents/ChatMessageComponentAsEditBoxPicker';
 
 const isMessageSame = (first: ChatMessage, second: ChatMessage): boolean => {
@@ -564,7 +566,7 @@ export type MessageProps = {
   /**
    * Strings from parent MessageThread component
    */
-  strings: MessageThreadStrings;
+  strings: MessageThreadStrings & /* @conditional-compile-remove(rich-text-editor) */ Partial<RichTextStrings>;
   /**
    * Custom CSS styles for chat message container.
    */

@@ -3,7 +3,7 @@
 
 import { editTable } from 'roosterjs-content-model-api';
 import { tableContextMenuIconStyles } from '../styles/RichTextEditor.styles';
-import { RichTextSendBoxStrings } from '../RichTextEditor/RichTextSendBox';
+import { RichTextStrings } from '../RichTextEditor/RichTextSendBox';
 import { IEditor } from 'roosterjs-content-model-types';
 import { IContextualMenuItem } from '@fluentui/react';
 
@@ -45,13 +45,13 @@ export function parseKey(key: string): { row: number; column: number } {
  */
 export const getTableEditContextMenuItems = (
   editor: IEditor,
-  strings: Partial<RichTextSendBoxStrings>
+  strings: Partial<RichTextStrings>
 ): IContextualMenuItem[] => {
   return [
     {
       key: 'RichTextTableEditMenuTableInsert',
-      text: strings.insertRowOrColumnMenu,
-      ariaLabel: strings.insertRowOrColumnMenu,
+      text: strings.richTextInsertRowOrColumnMenu,
+      ariaLabel: strings.richTextInsertRowOrColumnMenu,
       iconProps: {
         iconName: 'RichTextTableInsertMenuIcon',
         styles: { root: tableContextMenuIconStyles }
@@ -60,32 +60,32 @@ export const getTableEditContextMenuItems = (
         items: [
           {
             key: 'RichTextTableEditMenuTableInsertRowAbove',
-            text: strings.insertRowAboveMenu,
-            ariaLabel: strings.insertRowAboveMenu,
+            text: strings.richTextInsertRowAboveMenu,
+            ariaLabel: strings.richTextInsertRowAboveMenu,
             onClick: () => {
               editTable(editor, 'insertAbove');
             }
           },
           {
             key: 'RichTextTableEditMenuTableInsertRowBelow',
-            text: strings.insertRowBelowMenu,
-            ariaLabel: strings.insertRowBelowMenu,
+            text: strings.richTextInsertRowBelowMenu,
+            ariaLabel: strings.richTextInsertRowBelowMenu,
             onClick: () => {
               editTable(editor, 'insertBelow');
             }
           },
           {
             key: 'RichTextTableEditMenuTableInsertColumnLeft',
-            text: strings.insertColumnLeftMenu,
-            ariaLabel: strings.insertColumnLeftMenu,
+            text: strings.richTextInsertColumnLeftMenu,
+            ariaLabel: strings.richTextInsertColumnLeftMenu,
             onClick: () => {
               editTable(editor, 'insertLeft');
             }
           },
           {
             key: 'RichTextTableEditMenuTableInsertColumnRight',
-            text: strings.insertColumnRightMenu,
-            ariaLabel: strings.insertColumnRightMenu,
+            text: strings.richTextInsertColumnRightMenu,
+            ariaLabel: strings.richTextInsertColumnRightMenu,
             onClick: () => {
               editTable(editor, 'insertRight');
             }
@@ -95,8 +95,8 @@ export const getTableEditContextMenuItems = (
     },
     {
       key: 'RichTextTableEditMenuTableDelete',
-      text: strings.deleteRowOrColumnMenu,
-      ariaLabel: strings.deleteRowOrColumnMenu,
+      text: strings.richTextDeleteRowOrColumnMenu,
+      ariaLabel: strings.richTextDeleteRowOrColumnMenu,
       iconProps: {
         iconName: 'RichTextTableDeleteMenuIcon',
         styles: { root: tableContextMenuIconStyles }
@@ -105,24 +105,24 @@ export const getTableEditContextMenuItems = (
         items: [
           {
             key: 'RichTextTableEditMenuTableDeleteRow',
-            text: strings.deleteRowMenu,
-            ariaLabel: strings.deleteRowMenu,
+            text: strings.richTextDeleteRowMenu,
+            ariaLabel: strings.richTextDeleteRowMenu,
             onClick: () => {
               editTable(editor, 'deleteRow');
             }
           },
           {
             key: 'RichTextTableEditMenuTableDeleteColumn',
-            text: strings.deleteColumnMenu,
-            ariaLabel: strings.deleteColumnMenu,
+            text: strings.richTextDeleteColumnMenu,
+            ariaLabel: strings.richTextDeleteColumnMenu,
             onClick: () => {
               editTable(editor, 'deleteColumn');
             }
           },
           {
             key: 'RichTextTableEditMenuTableDeleteTable',
-            text: strings.deleteTableMenu,
-            ariaLabel: strings.deleteTableMenu,
+            text: strings.richTextDeleteTableMenu,
+            ariaLabel: strings.richTextDeleteTableMenu,
             onClick: () => {
               editTable(editor, 'deleteTable');
             }

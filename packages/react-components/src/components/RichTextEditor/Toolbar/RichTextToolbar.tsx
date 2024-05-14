@@ -21,7 +21,7 @@ import {
   setIndentation,
   insertTable
 } from 'roosterjs-content-model-api';
-import { RichTextSendBoxStrings } from '../RichTextSendBox';
+import { RichTextStrings } from '../RichTextSendBox';
 import { richTextInsertTableCommandBarItem } from './Table/RichTextInsertTableCommandBarItem';
 
 const MaxRowsNumber = 5;
@@ -36,7 +36,7 @@ export interface RichTextToolbarProps {
   // The rich text toolbar plugin used for connect editor and the ribbon.
   plugin: RichTextToolbarPlugin;
   // Strings for localization.
-  strings: Partial<RichTextSendBoxStrings>;
+  strings: Partial<RichTextStrings>;
 }
 
 /**
@@ -65,11 +65,11 @@ export const RichTextToolbar = (props: RichTextToolbarProps): JSX.Element => {
           toggleBold(editor);
         });
       },
-      text: strings.boldTooltip,
+      text: strings.richTextBoldTooltip,
       checked: formatState !== undefined && formatState.isBold === true,
       theme: theme
     });
-  }, [formatState, plugin, strings.boldTooltip, theme]);
+  }, [formatState, plugin, strings.richTextBoldTooltip, theme]);
 
   const italicButton: ICommandBarItemProps = useMemo(() => {
     return getCommandBarItem({
@@ -81,11 +81,11 @@ export const RichTextToolbar = (props: RichTextToolbarProps): JSX.Element => {
           toggleItalic(editor);
         });
       },
-      text: strings.italicTooltip,
+      text: strings.richTextItalicTooltip,
       checked: formatState !== undefined && formatState?.isItalic === true,
       theme: theme
     });
-  }, [formatState, plugin, strings.italicTooltip, theme]);
+  }, [formatState, plugin, strings.richTextItalicTooltip, theme]);
 
   const underlineButton: ICommandBarItemProps = useMemo(() => {
     return getCommandBarItem({
@@ -97,11 +97,11 @@ export const RichTextToolbar = (props: RichTextToolbarProps): JSX.Element => {
           toggleUnderline(editor);
         });
       },
-      text: strings.underlineTooltip,
+      text: strings.richTextUnderlineTooltip,
       checked: formatState !== undefined && formatState?.isUnderline === true,
       theme: theme
     });
-  }, [formatState, plugin, strings.underlineTooltip, theme]);
+  }, [formatState, plugin, strings.richTextUnderlineTooltip, theme]);
 
   const bulletListButton: ICommandBarItemProps = useMemo(() => {
     return getCommandBarItem({
@@ -113,11 +113,11 @@ export const RichTextToolbar = (props: RichTextToolbarProps): JSX.Element => {
           toggleBullet(editor);
         });
       },
-      text: strings.bulletListTooltip,
+      text: strings.richTextBulletListTooltip,
       checked: formatState !== undefined && formatState?.isBullet === true,
       theme: theme
     });
-  }, [formatState, plugin, strings.bulletListTooltip, theme]);
+  }, [formatState, plugin, strings.richTextBulletListTooltip, theme]);
 
   const numberListButton: ICommandBarItemProps = useMemo(() => {
     return getCommandBarItem({
@@ -129,11 +129,11 @@ export const RichTextToolbar = (props: RichTextToolbarProps): JSX.Element => {
           toggleNumbering(editor);
         });
       },
-      text: strings.numberListTooltip,
+      text: strings.richTextNumberListTooltip,
       checked: formatState !== undefined && formatState?.isNumbering === true,
       theme: theme
     });
-  }, [formatState, plugin, strings.numberListTooltip, theme]);
+  }, [formatState, plugin, strings.richTextNumberListTooltip, theme]);
 
   const indentDecreaseButton: ICommandBarItemProps = useMemo(() => {
     return getCommandBarItem({
@@ -145,11 +145,11 @@ export const RichTextToolbar = (props: RichTextToolbarProps): JSX.Element => {
           setIndentation(editor, 'outdent');
         });
       },
-      text: strings.decreaseIndentTooltip,
+      text: strings.richTextDecreaseIndentTooltip,
       canCheck: false,
       theme: theme
     });
-  }, [plugin, strings.decreaseIndentTooltip, theme]);
+  }, [plugin, strings.richTextDecreaseIndentTooltip, theme]);
 
   const indentIncreaseButton: ICommandBarItemProps = useMemo(() => {
     return getCommandBarItem({
@@ -161,11 +161,11 @@ export const RichTextToolbar = (props: RichTextToolbarProps): JSX.Element => {
           setIndentation(editor, 'indent');
         });
       },
-      text: strings.increaseIndentTooltip,
+      text: strings.richTextIncreaseIndentTooltip,
       canCheck: false,
       theme: theme
     });
-  }, [plugin, strings.increaseIndentTooltip, theme]);
+  }, [plugin, strings.richTextIncreaseIndentTooltip, theme]);
 
   const divider = useCallback(
     (key: string) => {
