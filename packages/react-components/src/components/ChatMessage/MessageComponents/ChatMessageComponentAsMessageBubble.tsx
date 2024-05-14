@@ -15,8 +15,10 @@ import { BlockedMessage } from '../../../types/ChatMessage';
 import { MessageThreadStrings } from '../../MessageThread';
 import { ComponentSlotStyle } from '../../../types';
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-import { AttachmentMenuAction, AttachmentMetadata } from '../../../types';
-import { _AttachmentDownloadCards } from '../../AttachmentDownloadCards';
+import { AttachmentMenuAction } from '../../../types';
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+import { AttachmentMetadata } from '@internal/acs-ui-common';
+import { _AttachmentDownloadCards } from '../../Attachment/AttachmentDownloadCards';
 import { useLocale } from '../../../localization';
 /* @conditional-compile-remove(mention) */
 import { MentionDisplayOptions } from '../../MentionPopover';
@@ -44,7 +46,7 @@ type ChatMessageComponentAsMessageBubbleProps = {
   /**
    * Optional callback to render message attachments in the message component.
    */
-  onRenderAttachmentDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
+  onRenderAttachmentDownloads?: (message: ChatMessage) => JSX.Element;
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   /**
    * Optional callback to define custom actions for attachments.

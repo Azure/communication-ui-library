@@ -31,10 +31,6 @@ export const LiveTestApp = (): JSX.Element => {
   const customDataModel = params.customDataModel;
   const useFileSharing = Boolean(params.useFileSharing);
   const failAttachmentDownload = Boolean(params.failDownload);
-  const uploadAttachments = React.useMemo(
-    () => (params.uploadAttachments ? JSON.parse(params.uploadAttachments) : []),
-    []
-  );
   const showParticipantPane = params.showParticipantPane === 'true' ? true : false;
 
   const args = useMemo(
@@ -57,26 +53,6 @@ export const LiveTestApp = (): JSX.Element => {
       return adapter;
     }
   });
-
-  React.useEffect(() => {
-    if (adapter && uploadAttachments.length) {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      uploadAttachments.forEach((attachment: any) => {
-        if (attachment.uploadComplete) {
-          const attachmentUploads = adapter.registerActiveUploads([new File([], attachment.name)]);
-          attachmentUploads[0].notifyUploadCompleted(attachment.id, attachment.url);
-        } else if (attachment.error) {
-          const attachmentUploads = adapter.registerActiveUploads([new File([], attachment.name)]);
-          attachmentUploads[0].notifyUploadFailed(attachment.error);
-        } else if (attachment.progress) {
-          const attachmentUploads = adapter.registerActiveUploads([new File([], attachment.name)]);
-          attachmentUploads[0].notifyUploadProgressChanged(attachment.progress);
-        } else {
-          adapter.registerCompletedUploads([attachment]);
-        }
-      });
-    }
-  }, [adapter, uploadAttachments]);
 
   const actionsForAttachment = (): AttachmentMenuAction[] => {
     if (failAttachmentDownload) {
@@ -144,9 +120,7 @@ export const LiveTestApp = (): JSX.Element => {
                       actionsForAttachment: actionsForAttachment
                     },
                     uploadOptions: {
-                      handleAttachmentSelection: () => {
-                        // noop
-                      }
+                      handleAttachmentSelection: () => {}
                     }
                   }
                 : undefined

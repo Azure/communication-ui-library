@@ -79,6 +79,7 @@ export const AttachmentUploadButton = (props: AttachmentUploadButtonProps): JSX.
         </IconButton>
       </Stack>
       <input
+        data-testid="attachment-upload-button"
         ref={inputRef}
         hidden
         multiple={!disableMultipleUploads}
@@ -124,7 +125,7 @@ export const AttachmentUploadButtonWrapper = (
 };
 
 const uploadAttachmentButtonStringTrampoline = (): string => {
-  //@conditional-compile-remove(attachment-upload)
+  /* @conditional-compile-remove(attachment-upload) */
   //eslint-disable-next-line react-hooks/rules-of-hooks
   return useLocale().strings.chat.uploadAttachment;
   return '';
