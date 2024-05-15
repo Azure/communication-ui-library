@@ -31,6 +31,8 @@ import {
   getMessageBubbleContent,
   getMessageEditedDetails
 } from '../../utils/ChatMessageComponentUtils';
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+import { doesMessageContainMultipleAttachments } from '../../utils/ChatMessageComponentAsEditBoxUtils';
 
 type ChatMessageComponentAsMessageBubbleProps = {
   message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage;
@@ -137,8 +139,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
   const chatMessageCommonStyles = useChatMessageCommonStyles();
   /* @conditional-compile-remove(attachment-upload) */
   const hasMultipleAttachments = useMemo(() => {
-    const length = (message as ChatMessage).attachments?.length ?? 0;
-    return length > 1;
+    return doesMessageContainMultipleAttachments(message as ChatMessage);
   }, [message]);
   const chatMessageStyles = useChatMessageStyles();
   const chatItemMessageContainerClassName = mergeClasses(
