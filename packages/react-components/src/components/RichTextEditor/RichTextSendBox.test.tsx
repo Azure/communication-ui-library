@@ -117,26 +117,3 @@ describe('RichTextSendBox should return text correctly', () => {
     expect(changedValue).toEqual(result);
   });
 });
-
-/* @conditional-compile-remove(rich-text-editor) */
-describe.skip('RichTextSendBox should work with localization', () => {
-  beforeAll(() => {
-    registerIcons({
-      icons: icons
-    });
-  });
-  test('Should localize placeholder', async () => {
-    const testLocale = createTestLocale({
-      richTextSendBox: { placeholderText: Math.random().toString() }
-    });
-    const { container } = renderWithLocalization(
-      <RichTextSendBox
-        onSendMessage={() => {
-          return Promise.resolve();
-        }}
-      />,
-      testLocale
-    );
-    expect(container.textContent).toContain(testLocale.strings.richTextSendBox.placeholderText);
-  });
-});
