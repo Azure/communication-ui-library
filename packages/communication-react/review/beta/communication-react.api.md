@@ -3912,6 +3912,7 @@ export interface RichTextStrings {
     richTextInsertTableTooltip: string;
     richTextItalicTooltip: string;
     richTextNumberListTooltip: string;
+    richTextToolbarMoreButtonAriaLabel: string;
     richTextUnderlineTooltip: string;
 }
 

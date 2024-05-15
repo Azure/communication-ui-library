@@ -115,6 +115,10 @@ export interface RichTextStrings {
    * Text for the delete table menu.
    */
   richTextDeleteTableMenu: string;
+  /**
+   * Text for the rich text toolbar more button.
+   */
+  richTextToolbarMoreButtonAriaLabel: string;
 }
 
 /**
