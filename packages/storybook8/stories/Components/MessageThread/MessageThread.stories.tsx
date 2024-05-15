@@ -24,10 +24,10 @@ import { Divider } from '@fluentui/react-components';
 import { Canvas, Description, Heading, Source, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react';
 import React, { useEffect, useRef, useState } from 'react';
-import { DetailedBetaBanner } from '../BetaBanners/DetailedBetaBanner';
-import { SingleLineBetaBanner } from '../BetaBanners/SingleLineBetaBanner';
+import { DetailedBetaBanner } from '../../BetaBanners/DetailedBetaBanner';
+import { SingleLineBetaBanner } from '../../BetaBanners/SingleLineBetaBanner';
 
-import { controlsToAdd, hiddenControl } from '../controlsUtils';
+import { controlsToAdd, hiddenControl } from '../../controlsUtils';
 import {
   GenerateMockNewChatMessage,
   UserOne,

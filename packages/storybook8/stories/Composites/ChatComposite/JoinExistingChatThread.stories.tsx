@@ -4,10 +4,9 @@
 import { Stack } from '@fluentui/react';
 import { Meta } from '@storybook/react';
 import React from 'react';
-import { compositeExperienceContainerStyle } from '../constants';
-import { defaultChatCompositeHiddenControls, controlsToAdd, ArgsFrom } from '../controlsUtils';
-import { compositeLocale } from '../localizationUtils';
-import { Docs } from './ChatCompositeDocs';
+import { compositeExperienceContainerStyle } from '../../constants';
+import { defaultChatCompositeHiddenControls, controlsToAdd, ArgsFrom } from '../../controlsUtils';
+import { compositeLocale } from '../../localizationUtils';
 import { ContosoChatContainer } from './snippets/Container.snippet';
 import { ConfigJoinChatThreadHintBanner } from './snippets/Utils';
 
@@ -62,8 +61,7 @@ const meta: Meta<typeof JoinExistingChatThreadStory> = {
     useMaxWidthParent: true,
     docs: {
       //Prevent Docs auto scroll to top
-      container: null,
-      page: () => Docs()
+      container: null
     }
   }
 };
