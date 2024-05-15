@@ -8,7 +8,9 @@ import { ChatMessage, OnRenderAvatarCallback } from '../../types';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '../../types';
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-import { AttachmentMenuAction, AttachmentMetadata } from '../../types/Attachment';
+import { AttachmentMenuAction } from '../../types/Attachment';
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+import { AttachmentMetadata } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(mention) */
 import { MentionOptions } from '../MentionPopover';
 import { MessageStatusIndicatorProps } from '../MessageStatusIndicator';
@@ -57,7 +59,7 @@ export type ChatMessageComponentWrapperProps = _ChatMessageProps & {
   /* @conditional-compile-remove(mention) */
   mentionOptions?: MentionOptions;
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-  onRenderAttachmentDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
+  onRenderAttachmentDownloads?: (message: ChatMessage) => JSX.Element;
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   /**
    * Optional callback to define custom actions for attachments.

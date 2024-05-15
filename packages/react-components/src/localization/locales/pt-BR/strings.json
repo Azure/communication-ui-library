@@ -27,7 +27,8 @@
     "attachmentUploadsPendingError": "Carregando... Aguarde.",
     "removeAttachment": "Remover arquivo",
     "uploading": "Carregando",
-    "uploadCompleted": "Carregamento concluído"
+    "uploadCompleted": "Carregamento concluído",
+    "attachmentMoreMenu": "Mais Opções"
   },
   "richTextSendBox": {
     "placeholderText": "Inserir uma mensagem",
@@ -37,25 +38,26 @@
     "removeAttachment": "Remover arquivo",
     "uploading": "Carregando",
     "uploadCompleted": "Carregamento concluído",
-    "boldTooltip": "Negrito",
-    "italicTooltip": "Itálico",
-    "underlineTooltip": "Sublinhar",
-    "bulletListTooltip": "Lista com marcadores",
-    "numberListTooltip": "Lista numerada",
-    "increaseIndentTooltip": "Aumentar recuo",
-    "decreaseIndentTooltip": "Diminuir recuo",
-    "insertTableTooltip": "Inserir tabela",
+    "richTextBoldTooltip": "Negrito",
+    "richTextItalicTooltip": "Itálico",
+    "richTextUnderlineTooltip": "Sublinhar",
+    "richTextBulletListTooltip": "Lista com marcadores",
+    "richTextNumberListTooltip": "Lista numerada",
+    "richTextIncreaseIndentTooltip": "Aumentar recuo",
+    "richTextDecreaseIndentTooltip": "Diminuir recuo",
+    "richTextInsertTableTooltip": "Inserir tabela",
     "richTextFormatButtonTooltip": "Formato",
-    "insertRowOrColumnMenu": "Inserir",
-    "insertTableMenuTitle": "Inserir tabela {column} x {row}",
-    "insertRowAboveMenu": "Inserir acima",
-    "insertRowBelowMenu": "Inserir abaixo",
-    "insertColumnLeftMenu": "Inserir à esquerda",
-    "insertColumnRightMenu": "Inserir à direita",
-    "deleteRowOrColumnMenu": "Excluir",
-    "deleteColumnMenu": "Excluir coluna",
-    "deleteRowMenu": "Excluir linha",
-    "deleteTableMenu": "Excluir tabela"
+    "richTextInsertRowOrColumnMenu": "Inserir",
+    "richTextInsertTableMenuTitle": "Inserir tabela {column} x {row}",
+    "richTextInsertRowAboveMenu": "Inserir acima",
+    "richTextInsertRowBelowMenu": "Inserir abaixo",
+    "richTextInsertColumnLeftMenu": "Inserir à esquerda",
+    "richTextInsertColumnRightMenu": "Inserir à direita",
+    "richTextDeleteRowOrColumnMenu": "Excluir",
+    "richTextDeleteColumnMenu": "Excluir coluna",
+    "richTextDeleteRowMenu": "Excluir linha",
+    "richTextDeleteTableMenu": "Excluir tabela",
+    "attachmentMoreMenu": "Mais Opções"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Sugestões"
@@ -79,7 +81,7 @@
     "label": "Sair",
     "tooltipContent": "Sair da chamada",
     "leaveOption": "Sair",
-    "endCallOption": "Encerrar chamada"
+    "endCallOption": "Encerrar chamada para todos"
   },
   "cameraButton": {
     "onLabel": "Câmera",

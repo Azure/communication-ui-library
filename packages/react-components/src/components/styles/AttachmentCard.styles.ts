@@ -30,3 +30,8 @@ export const attachmentNameContainerClassName = mergeStyles({
     whiteSpace: 'nowrap'
   }
 });
+
+/**
+ * @private
+ */
+export const ATTACHMENT_CARD_MIN_PROGRESS = 0.05;

@@ -27,7 +27,8 @@
     "attachmentUploadsPendingError": "Laster opp. Vent litt ...",
     "removeAttachment": "Fjern fil",
     "uploading": "Laster opp",
-    "uploadCompleted": "Opplasting fullført"
+    "uploadCompleted": "Opplasting fullført",
+    "attachmentMoreMenu": "Flere alternativer"
   },
   "richTextSendBox": {
     "placeholderText": "Skriv en melding",
@@ -37,25 +38,26 @@
     "removeAttachment": "Fjern fil",
     "uploading": "Laster opp",
     "uploadCompleted": "Opplasting fullført",
-    "boldTooltip": "Fet",
-    "italicTooltip": "Kursiv",
-    "underlineTooltip": "Understreking",
-    "bulletListTooltip": "Punktliste",
-    "numberListTooltip": "Nummerert liste",
-    "increaseIndentTooltip": "Øk innrykk",
-    "decreaseIndentTooltip": "Reduser innrykk",
-    "insertTableTooltip": "Sett inn tabell",
+    "richTextBoldTooltip": "Fet",
+    "richTextItalicTooltip": "Kursiv",
+    "richTextUnderlineTooltip": "Understreking",
+    "richTextBulletListTooltip": "Punktliste",
+    "richTextNumberListTooltip": "Nummerert liste",
+    "richTextIncreaseIndentTooltip": "Øk innrykk",
+    "richTextDecreaseIndentTooltip": "Reduser innrykk",
+    "richTextInsertTableTooltip": "Sett inn tabell",
     "richTextFormatButtonTooltip": "Format",
-    "insertRowOrColumnMenu": "Sett inn",
-    "insertTableMenuTitle": "Sett inn {column} x {row}-tabell",
-    "insertRowAboveMenu": "Sett inn ovenfor",
-    "insertRowBelowMenu": "Sett inn nedenfor",
-    "insertColumnLeftMenu": "Sett inn til venstre",
-    "insertColumnRightMenu": "Sett inn til høyre",
-    "deleteRowOrColumnMenu": "Slett",
-    "deleteColumnMenu": "Slett kolonne",
-    "deleteRowMenu": "Slett rad",
-    "deleteTableMenu": "Slett tabell"
+    "richTextInsertRowOrColumnMenu": "Sett inn",
+    "richTextInsertTableMenuTitle": "Sett inn {column} x {row}-tabell",
+    "richTextInsertRowAboveMenu": "Sett inn ovenfor",
+    "richTextInsertRowBelowMenu": "Sett inn nedenfor",
+    "richTextInsertColumnLeftMenu": "Sett inn til venstre",
+    "richTextInsertColumnRightMenu": "Sett inn til høyre",
+    "richTextDeleteRowOrColumnMenu": "Slett",
+    "richTextDeleteColumnMenu": "Slett kolonne",
+    "richTextDeleteRowMenu": "Slett rad",
+    "richTextDeleteTableMenu": "Slett tabell",
+    "attachmentMoreMenu": "Flere alternativer"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Forslag"
@@ -79,7 +81,7 @@
     "label": "Forlat",
     "tooltipContent": "Forlat samtale",
     "leaveOption": "Forlat",
-    "endCallOption": "Avslutt samtalen"
+    "endCallOption": "Avslutt samtale for alle"
   },
   "cameraButton": {
     "onLabel": "Kamera",

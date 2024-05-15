@@ -27,7 +27,8 @@
     "attachmentUploadsPendingError": "Probíhá nahrávání... Počkejte prosím.",
     "removeAttachment": "Odebrat soubor",
     "uploading": "Nahrávání",
-    "uploadCompleted": "Nahrávání se dokončilo"
+    "uploadCompleted": "Nahrávání se dokončilo",
+    "attachmentMoreMenu": "Další možnosti"
   },
   "richTextSendBox": {
     "placeholderText": "Zadejte zprávu",
@@ -37,25 +38,26 @@
     "removeAttachment": "Odebrat soubor",
     "uploading": "Nahrávání",
     "uploadCompleted": "Nahrávání se dokončilo",
-    "boldTooltip": "Tučné",
-    "italicTooltip": "Kurzíva",
-    "underlineTooltip": "Podtržení",
-    "bulletListTooltip": "Seznam s odrážkami",
-    "numberListTooltip": "Číslovaný seznam",
-    "increaseIndentTooltip": "Zvětšit odsazení",
-    "decreaseIndentTooltip": "Zmenšit odsazení",
-    "insertTableTooltip": "Vložit tabulku",
+    "richTextBoldTooltip": "Tučné",
+    "richTextItalicTooltip": "Kurzíva",
+    "richTextUnderlineTooltip": "Podtržení",
+    "richTextBulletListTooltip": "Seznam s odrážkami",
+    "richTextNumberListTooltip": "Číslovaný seznam",
+    "richTextIncreaseIndentTooltip": "Zvětšit odsazení",
+    "richTextDecreaseIndentTooltip": "Zmenšit odsazení",
+    "richTextInsertTableTooltip": "Vložit tabulku",
     "richTextFormatButtonTooltip": "Formát",
-    "insertRowOrColumnMenu": "Vložit",
-    "insertTableMenuTitle": "Vložit {column} x {row} tabulka",
-    "insertRowAboveMenu": "Vložit nad",
-    "insertRowBelowMenu": "Vložit pod",
-    "insertColumnLeftMenu": "Vložit vlevo",
-    "insertColumnRightMenu": "Vložit vpravo",
-    "deleteRowOrColumnMenu": "Odstranit",
-    "deleteColumnMenu": "Odstranit sloupec",
-    "deleteRowMenu": "Odstranit řádek",
-    "deleteTableMenu": "Odstranit tabulku"
+    "richTextInsertRowOrColumnMenu": "Vložit",
+    "richTextInsertTableMenuTitle": "Vložit {column} x {row} tabulka",
+    "richTextInsertRowAboveMenu": "Vložit nad",
+    "richTextInsertRowBelowMenu": "Vložit pod",
+    "richTextInsertColumnLeftMenu": "Vložit vlevo",
+    "richTextInsertColumnRightMenu": "Vložit vpravo",
+    "richTextDeleteRowOrColumnMenu": "Odstranit",
+    "richTextDeleteColumnMenu": "Odstranit sloupec",
+    "richTextDeleteRowMenu": "Odstranit řádek",
+    "richTextDeleteTableMenu": "Odstranit tabulku",
+    "attachmentMoreMenu": "Další možnosti"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Návrhy"
@@ -79,7 +81,7 @@
     "label": "Opustit",
     "tooltipContent": "Opustit hovor",
     "leaveOption": "Odejít",
-    "endCallOption": "Ukončit hovor"
+    "endCallOption": "Ukončit hovor pro všechny"
   },
   "cameraButton": {
     "onLabel": "Kamera",

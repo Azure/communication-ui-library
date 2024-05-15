@@ -27,7 +27,8 @@
     "attachmentUploadsPendingError": "Uploading... Please wait.",
     "removeAttachment": "Remove file",
     "uploading": "Uploading",
-    "uploadCompleted": "Upload completed"
+    "uploadCompleted": "Upload completed",
+    "attachmentMoreMenu": "More Options"
   },
   "richTextSendBox": {
     "placeholderText": "Enter a message",
@@ -37,25 +38,26 @@
     "removeAttachment": "Remove file",
     "uploading": "Uploading",
     "uploadCompleted": "Upload completed",
-    "boldTooltip": "Bold",
-    "italicTooltip": "Italic",
-    "underlineTooltip": "Underline",
-    "bulletListTooltip": "Bulleted list",
-    "numberListTooltip": "Numbered list",
-    "increaseIndentTooltip": "Increase indent",
-    "decreaseIndentTooltip": "Decrease indent",
-    "insertTableTooltip": "Insert table",
+    "richTextBoldTooltip": "Bold",
+    "richTextItalicTooltip": "Italic",
+    "richTextUnderlineTooltip": "Underline",
+    "richTextBulletListTooltip": "Bulleted list",
+    "richTextNumberListTooltip": "Numbered list",
+    "richTextIncreaseIndentTooltip": "Increase indent",
+    "richTextDecreaseIndentTooltip": "Decrease indent",
+    "richTextInsertTableTooltip": "Insert table",
     "richTextFormatButtonTooltip": "Format",
-    "insertRowOrColumnMenu": "Insert",
-    "insertTableMenuTitle": "Insert {column} x {row} table",
-    "insertRowAboveMenu": "Insert above",
-    "insertRowBelowMenu": "Insert below",
-    "insertColumnLeftMenu": "Insert left",
-    "insertColumnRightMenu": "Insert right",
-    "deleteRowOrColumnMenu": "Delete",
-    "deleteColumnMenu": "Delete column",
-    "deleteRowMenu": "Delete row",
-    "deleteTableMenu": "Delete table"
+    "richTextInsertRowOrColumnMenu": "Insert",
+    "richTextInsertTableMenuTitle": "Insert {column} x {row} table",
+    "richTextInsertRowAboveMenu": "Insert above",
+    "richTextInsertRowBelowMenu": "Insert below",
+    "richTextInsertColumnLeftMenu": "Insert left",
+    "richTextInsertColumnRightMenu": "Insert right",
+    "richTextDeleteRowOrColumnMenu": "Delete",
+    "richTextDeleteColumnMenu": "Delete column",
+    "richTextDeleteRowMenu": "Delete row",
+    "richTextDeleteTableMenu": "Delete table",
+    "attachmentMoreMenu": "More Options"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Suggestions"
@@ -79,7 +81,7 @@
     "label": "Leave",
     "tooltipContent": "Leave call",
     "leaveOption": "Leave",
-    "endCallOption": "End call"
+    "endCallOption": "End call for everyone"
   },
   "cameraButton": {
     "onLabel": "Camera",

@@ -278,6 +278,7 @@ const createDefaultCallAdapterState = (role?: ParticipantRole): CallAdapterState
       deviceAccess: { video: true, audio: true }
     },
     isTeamsCall: false,
+    isTeamsMeeting: false,
     isRoomsCall: false,
     latestErrors: {}
   };

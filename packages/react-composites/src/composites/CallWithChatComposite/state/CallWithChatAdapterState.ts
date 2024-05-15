@@ -10,8 +10,6 @@ import { VideoBackgroundImage, VideoBackgroundEffect } from '../../CallComposite
 
 import { VideoBackgroundEffectsDependency } from '@internal/calling-component-bindings';
 import { ChatAdapterState } from '../../ChatComposite';
-/* @conditional-compile-remove(attachment-upload) */
-import { _AttachmentUploadsUiState } from '../../ChatComposite';
 import { AdapterErrors } from '../../common/adapters';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
@@ -35,15 +33,6 @@ export interface CallWithChatAdapterUiState {
    * @public
    */
   page: CallCompositePage;
-  /* @conditional-compile-remove(attachment-upload) */
-  /**
-   * Files being uploaded by a user in the current thread.
-   * Should be set to null once the upload is complete.
-   * Array of type {@link _AttachmentUploadsUiState}
-   *
-   * @internal
-   */
-  _attachmentUploads?: _AttachmentUploadsUiState;
   /* @conditional-compile-remove(unsupported-browser) */
   /**
    * State to track whether the end user has opted in to using a
@@ -77,6 +66,8 @@ export interface CallWithChatClientState {
   devices: DeviceManagerState;
   /** State of whether the active call is a Teams interop call */
   isTeamsCall: boolean;
+  /** State of whether the active call is a Teams interop meeting */
+  isTeamsMeeting: boolean;
   /* @conditional-compile-remove(PSTN-calls) */
   /** alternateCallerId for PSTN call */
   alternateCallerId?: string | undefined;
@@ -124,10 +115,9 @@ export function callWithChatAdapterStateFromBackingStates(callAdapter: CallAdapt
     devices: callAdapterState.devices,
     isLocalPreviewMicrophoneEnabled: callAdapterState.isLocalPreviewMicrophoneEnabled,
     isTeamsCall: callAdapterState.isTeamsCall,
+    isTeamsMeeting: callAdapterState.isTeamsMeeting,
     latestCallErrors: callAdapterState.latestErrors,
     latestChatErrors: {},
-    /* @conditional-compile-remove(attachment-upload) */
-    _attachmentUploads: {},
     /* @conditional-compile-remove(PSTN-calls) */
     alternateCallerId: callAdapterState.alternateCallerId,
     /* @conditional-compile-remove(unsupported-browser) */
@@ -152,9 +142,7 @@ export function mergeChatAdapterStateIntoCallWithChatAdapterState(
   return {
     ...existingCallWithChatAdapterState,
     chat: chatAdapterState.thread,
-    latestChatErrors: chatAdapterState.latestErrors,
-    /* @conditional-compile-remove(attachment-upload) */
-    _attachmentUploads: chatAdapterState._attachmentUploads
+    latestChatErrors: chatAdapterState.latestErrors
   };
 }
 
@@ -174,6 +162,7 @@ export function mergeCallAdapterStateIntoCallWithChatAdapterState(
     call: callAdapterState.call,
     isLocalPreviewMicrophoneEnabled: callAdapterState.isLocalPreviewMicrophoneEnabled,
     isTeamsCall: callAdapterState.isTeamsCall,
+    isTeamsMeeting: callAdapterState.isTeamsMeeting,
     latestCallErrors: callAdapterState.latestErrors,
 
     videoBackgroundImages: callAdapterState.videoBackgroundImages,

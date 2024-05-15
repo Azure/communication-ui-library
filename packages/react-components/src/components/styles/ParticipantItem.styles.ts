@@ -3,6 +3,8 @@
 
 import { IStyle, mergeStyles } from '@fluentui/react';
 
+const menuIconClass = 'ms-acs-participant-item-menu-icon';
+
 /**
  * @private
  */
@@ -14,15 +16,27 @@ export const participantItemContainerStyle = (options: { clickable: boolean }): 
     maxWidth: '100%',
     minWidth: '8rem',
     cursor: !options.clickable ? 'default' : 'pointer',
-    alignItems: 'center'
+    alignItems: 'center',
+    ':focus-visible': {
+      [` .${menuIconClass}`]: {
+        display: 'flex'
+      }
+    }
   };
 };
 
 /**
  * @private
  */
+export const displayNoneStyle: IStyle = {
+  display: 'none'
+};
+
+/**
+ * @private
+ */
 export const menuButtonContainerStyle = {
-  width: '1.5rem'
+  width: 'auto'
 };
 
 /**
@@ -55,11 +69,14 @@ export const iconContainerStyle = {
 /**
  * @private
  */
-export const iconStyles = mergeStyles({
-  display: 'flex',
-  lineHeight: 0, // ensure the icon center is on the center line and not slightly above it
-  alignItems: 'center'
-});
+export const iconStyles = mergeStyles([
+  menuIconClass,
+  {
+    display: 'flex',
+    lineHeight: 0, // ensure the icon center is on the center line and not slightly above it
+    alignItems: 'center'
+  }
+]);
 
 /**
  * @private

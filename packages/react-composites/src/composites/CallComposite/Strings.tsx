@@ -239,6 +239,11 @@ export interface CallCompositeStrings {
    * Label for button to copy invite link
    */
   copyInviteLinkButtonLabel: string;
+  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
+  /**
+   * Label for button to copy invite link when it has been actioned
+   */
+  copyInviteLinkButtonActionedLabel: string;
   /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Label for button to open dialpad

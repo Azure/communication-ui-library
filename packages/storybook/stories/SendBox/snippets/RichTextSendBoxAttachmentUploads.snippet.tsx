@@ -5,7 +5,7 @@ export const RichTextSendBoxAttachmentUploadsExample: () => JSX.Element = () => 
   <FluentThemeProvider>
     <div style={{ width: '31.25rem' }}>
       <RichTextSendBox
-        attachmentsWithProgress={[
+        attachments={[
           {
             id: '1',
             name: 'Sample.pdf',
