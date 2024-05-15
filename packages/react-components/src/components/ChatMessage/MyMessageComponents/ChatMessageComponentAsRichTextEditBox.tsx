@@ -219,7 +219,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
     <ChatMyMessage
       attached={attached}
       root={{
-        className: mergeStyles(
+        className: mergeClasses(
           chatMyMessageStyles.root,
           /* @conditional-compile-remove(attachment-upload) */
           hasMultipleAttachments ? chatMyMessageStyles.multipleAttachments : undefined

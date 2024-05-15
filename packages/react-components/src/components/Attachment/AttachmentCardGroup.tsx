@@ -5,7 +5,11 @@ import { mergeStyles, Stack } from '@fluentui/react';
 import { _pxToRem } from '@internal/acs-ui-common';
 import React from 'react';
 import { _ATTACHMENT_CARD_MARGIN_IN_PX, _ATTACHMENT_CARD_WIDTH_IN_REM } from '../styles/AttachmentCard.styles';
-import { useattachmentCardGroupLayout } from '../styles/AttachmentCardGroup.styles';
+import {
+  attachmentCardBaseStyles,
+  attachmentCardFlexLayout,
+  attachmentCardGirdLayout
+} from '../styles/AttachmentCardGroup.styles';
 
 /**
  * @internal
@@ -39,7 +43,6 @@ export interface _AttachmentCardGroupProps {
  */
 export const _AttachmentCardGroup = (props: _AttachmentCardGroupProps): JSX.Element => {
   const { children, ariaLabel, attachmentGroupLayout } = props;
-  const attachmentCardGroupStyles = useattachmentCardGroupLayout();
   if (!children) {
     return <></>;
   }
@@ -47,10 +50,8 @@ export const _AttachmentCardGroup = (props: _AttachmentCardGroupProps): JSX.Elem
     <Stack
       horizontal
       className={mergeStyles(
-        attachmentCardGroupStyles.root,
-        attachmentGroupLayout === _AttachmentCardGroupLayout.Grid
-          ? attachmentCardGroupStyles.gridLayout
-          : attachmentCardGroupStyles.flexLayout
+        attachmentCardBaseStyles,
+        attachmentGroupLayout === _AttachmentCardGroupLayout.Grid ? attachmentCardGirdLayout : attachmentCardFlexLayout
       )}
       aria-label={ariaLabel}
     >
