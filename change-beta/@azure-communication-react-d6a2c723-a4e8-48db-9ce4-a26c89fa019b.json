@@ -1,9 +1,9 @@
 {
   "type": "patch",
   "area": "fix",
-  "workstream": "a11y",
-  "comment": "Aria label for sidepane header",
+  "workstream": "",
+  "comment": "Fix crash bug for remote screen share",
   "packageName": "@azure/communication-react",
-  "email": "edwardlee@microsoft.com",
+  "email": "jiangnanhello@live.com",
   "dependentChangeType": "patch"
 }
