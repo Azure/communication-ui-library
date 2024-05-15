@@ -10,7 +10,7 @@ import type { ContentModelDocument, EditorPlugin, IEditor } from 'roosterjs-cont
 import { createModelFromHtml, Editor, exportContent } from 'roosterjs-content-model-core';
 import { createParagraph, createSelectionMarker, setSelection } from 'roosterjs-content-model-dom';
 import { KeyboardInputPlugin } from './Plugins/KeyboardInputPlugin';
-import { AutoFormatPlugin, EditPlugin, WatermarkPlugin, PastePlugin } from 'roosterjs-content-model-plugins';
+import { AutoFormatPlugin, EditPlugin, PastePlugin } from 'roosterjs-content-model-plugins';
 import { UpdateContentPlugin, UpdateEvent } from './Plugins/UpdateContentPlugin';
 import { RichTextToolbar } from './Toolbar/RichTextToolbar';
 import { RichTextToolbarPlugin } from './Plugins/RichTextToolbarPlugin';
@@ -18,6 +18,7 @@ import { ContextMenuPlugin } from './Plugins/ContextMenuPlugin';
 import { TableEditContextMenuProvider } from './Plugins/TableEditContextMenuProvider';
 import { borderApplier, dataSetApplier } from '../utils/RichTextEditorUtils';
 import { ContextualMenu, IContextualMenuItem, IContextualMenuProps } from '@fluentui/react';
+import PlaceholderPlugin from './Plugins/PlaceholderPlugin';
 
 /**
  * Style props for {@link RichTextEditor}.
@@ -137,11 +138,15 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     editor.current?.setDarkModeState(isDarkThemedValue);
   }, [isDarkThemedValue]);
 
-  // useEffect(() => {
-  //   if (placeholderText !== undefined) {
-  //     placeholderPlugin.updateWatermark(placeholderText);
-  //   }
-  // }, [placeholderPlugin, placeholderText]);
+  const placeholderPlugin = useMemo(() => {
+    return new PlaceholderPlugin('');
+  }, []);
+
+  useEffect(() => {
+    if (placeholderText !== undefined) {
+      placeholderPlugin.updatePlaceholder(placeholderText);
+    }
+  }, [placeholderPlugin, placeholderText]);
 
   const toolbar = useMemo(() => {
     return <RichTextToolbar plugin={toolbarPlugin} strings={strings} />;
@@ -203,8 +208,6 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     const autoFormatPlugin = new AutoFormatPlugin({ autoBullet: true, autoNumbering: true, autoLink: true });
     const copyPastePlugin = new CopyPastePlugin();
     const roosterPastePlugin = new PastePlugin(false);
-    const placeholderPlugin = new WatermarkPlugin(placeholderText ?? '');
-    // contextPlugin and tableEditMenuProvider allow to show insert/delete menu for the table
     const contextMenuPlugin = new ContextMenuPlugin(onContextMenuRender, onContextMenuDismiss);
     return [
       placeholderPlugin,
@@ -215,21 +218,20 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
       copyPastePlugin,
       roosterPastePlugin,
       toolbarPlugin,
+      // contextPlugin and tableEditMenuProvider allow to show insert/delete menu for the table
       contextMenuPlugin,
       tableContextMenuPlugin
     ];
   }, [
-    placeholderText,
     onContextMenuRender,
     onContextMenuDismiss,
+    placeholderPlugin,
     keyboardInputPlugin,
     updatePlugin,
     toolbarPlugin,
     tableContextMenuPlugin
   ]);
 
-  // TODO: check shortcuts plugin
-  // TODO-vhuseinova: check that localization/rtl works
   useEffect(() => {
     const initialModel = createEditorInitialModel(initialContent, contentModel);
     if (editorDiv.current) {
@@ -261,7 +263,7 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
         editor.current = null;
       }
     };
-    // don't update the editor on focusOnInit, theme  change as it might reset the editor
+    // don't update the editor on deps update as everything is handled in separate hooks or plugins
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -279,7 +281,7 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
           className={richTextEditorStyle(props.styles)}
         />
       </div>
-      {contextMenuProps && <ContextualMenu {...contextMenuProps} />}
+      {contextMenuProps && <ContextualMenu {...contextMenuProps} calloutProps={{ isBeakVisible: false }} />}
     </div>
   );
 });
