@@ -57,6 +57,7 @@
     "richTextDeleteColumnMenu": "Delete column",
     "richTextDeleteRowMenu": "Delete row",
     "richTextDeleteTableMenu": "Delete table",
+    "richTextToolbarMoreButtonAriaLabel": "More options",
     "attachmentMoreMenu": "More Options"
   },
   "mentionPopover": {
