@@ -27,7 +27,8 @@ import {
 /* @conditional-compile-remove(attachment-upload) */
 import {
   attachmentMetadataReducer,
-  getMessageWithAttachmentMetadata
+  getMessageWithAttachmentMetadata,
+  doesMessageContainMultipleAttachments
 } from '../../utils/ChatMessageComponentAsEditBoxUtils';
 import { RichTextEditorComponentRef } from '../../RichTextEditor/RichTextEditor';
 import { RichTextInputBoxComponent } from '../../RichTextEditor/RichTextInputBoxComponent';
@@ -110,8 +111,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
 
   /* @conditional-compile-remove(attachment-upload) */
   const hasMultipleAttachments = useMemo(() => {
-    const length = (message as ChatMessage).attachments?.length ?? 0;
-    return length > 1;
+    return doesMessageContainMultipleAttachments(message);
   }, [message]);
 
   const actionButtons = useMemo(() => {

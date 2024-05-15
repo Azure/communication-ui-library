@@ -30,7 +30,10 @@ import {
 import { MentionLookupOptions } from '../../MentionPopover';
 import { MAXIMUM_LENGTH_OF_MESSAGE } from '../../utils/SendBoxUtils';
 /* @conditional-compile-remove(attachment-upload) */
-import { attachmentMetadataReducer } from '../../utils/ChatMessageComponentAsEditBoxUtils';
+import {
+  attachmentMetadataReducer,
+  doesMessageContainMultipleAttachments
+} from '../../utils/ChatMessageComponentAsEditBoxUtils';
 import {
   getMessageState,
   onRenderCancelIcon,
@@ -115,8 +118,7 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
 
   /* @conditional-compile-remove(attachment-upload) */
   const hasMultipleAttachments = useMemo(() => {
-    const length = (message as ChatMessage).attachments?.length ?? 0;
-    return length > 1;
+    return doesMessageContainMultipleAttachments(message);
   }, [message]);
 
   const editBoxStyles = useMemo(() => {
