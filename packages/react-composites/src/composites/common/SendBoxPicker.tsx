@@ -50,14 +50,8 @@ export type SendBoxPickerProps = {
  */
 export const SendBoxPicker = (props: SendBoxPickerProps): JSX.Element => {
   const {
-    styles,
-    autoFocus,
     /* @conditional-compile-remove(rich-text-editor-composite-support) */
-    richTextEditor,
-    /* @conditional-compile-remove(attachment-upload) */
-    attachments,
-    /* @conditional-compile-remove(attachment-upload) */
-    onCancelAttachmentUpload
+    richTextEditor
   } = props;
 
   const sendBoxProps = usePropsFor(SendBox);
@@ -67,31 +61,9 @@ export const SendBoxPicker = (props: SendBoxPickerProps): JSX.Element => {
     return richTextEditor;
   }, [richTextEditor]);
 
-  const sendBoxStyles = useMemo(() => {
-    return styles;
-  }, [styles]);
-
   const sendBox = useMemo(
-    () => (
-      <SendBox
-        {...sendBoxProps}
-        onSendMessage={props.onSendMessage}
-        autoFocus={autoFocus}
-        styles={sendBoxStyles}
-        /* @conditional-compile-remove(attachment-upload) */
-        attachments={attachments}
-        /* @conditional-compile-remove(attachment-upload) */
-        onCancelAttachmentUpload={onCancelAttachmentUpload}
-      />
-    ),
-    [
-      /* @conditional-compile-remove(attachment-upload) */ attachments,
-      autoFocus,
-      /* @conditional-compile-remove(attachment-upload) */ onCancelAttachmentUpload,
-      props.onSendMessage,
-      sendBoxProps,
-      sendBoxStyles
-    ]
+    () => <SendBox {...sendBoxProps} {...props} onSendMessage={props.onSendMessage} />,
+    [props, sendBoxProps]
   );
 
   /* @conditional-compile-remove(rich-text-editor-composite-support) */
@@ -99,15 +71,7 @@ export const SendBoxPicker = (props: SendBoxPickerProps): JSX.Element => {
     return (
       <_ErrorBoundary fallback={sendBox}>
         <Suspense fallback={sendBox}>
-          <RichTextSendBox
-            {...sendBoxProps}
-            onSendMessage={props.onSendMessage}
-            autoFocus={autoFocus}
-            /* @conditional-compile-remove(attachment-upload) */
-            attachments={attachments}
-            /* @conditional-compile-remove(attachment-upload) */
-            onCancelAttachmentUpload={onCancelAttachmentUpload}
-          />
+          <RichTextSendBox {...sendBoxProps} {...props} onSendMessage={props.onSendMessage} />
         </Suspense>
       </_ErrorBoundary>
     );
