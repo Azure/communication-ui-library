@@ -24,7 +24,9 @@ export const MessageWithCustomAttachment: () => JSX.Element = () => {
               // allows the menu actions to be dynamically generated based on the attachment content
               // (i.e. name, extension, etc.), or the message content (i.e. senderID, etc.)
               // in this example, we are constructing a dynamic menu based on the attachment extension
-              if (attachment.extension === 'pdf') {
+              const re = /(?:\.([^.]+))?$/;
+              const match = re.exec(attachment.name);
+              if (match && match[1] === 'pdf') {
                 return [
                   {
                     name: 'Share',
@@ -79,7 +81,6 @@ export const MessageWithCustomAttachment: () => JSX.Element = () => {
               {
                 id: 'SomeUniqueId1',
                 name: 'Report.docx',
-                extension: 'docx',
                 url: 'https://<file_url>/report.docx'
               }
             ]
@@ -98,7 +99,6 @@ export const MessageWithCustomAttachment: () => JSX.Element = () => {
               {
                 id: 'SomeUniqueId2',
                 name: 'Manual.pdf',
-                extension: 'pdf',
                 url: 'https://<file_url>/manual.pdf'
               }
             ]
