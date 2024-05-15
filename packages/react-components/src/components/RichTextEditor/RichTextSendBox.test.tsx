@@ -3,8 +3,6 @@
 
 import React from 'react';
 import { RichTextSendBox } from './RichTextSendBox';
-/* @conditional-compile-remove(rich-text-editor) */
-import { renderWithLocalization, createTestLocale } from '../utils/testUtils';
 import { render, waitFor, fireEvent, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { registerIcons } from '@fluentui/react';
