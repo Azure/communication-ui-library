@@ -11,7 +11,6 @@ const formatButtonId = 'rich-text-input-box-format-button';
 
 // create a separate file for table tests to speed up the test execution
 betaTest.describe('RichTextInputBoxComponent table tests', () => {
-  betaTest.skip(true, 'Disable tests temporarily');
   betaTest.skip(({ isBetaBuild }) => !isBetaBuild, 'The tests should be run for beta flavor only');
 
   betaTest('Tables can be added and deleted', async ({ mount, page }) => {

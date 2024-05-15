@@ -12,7 +12,6 @@ const editorId = 'rooster-rich-text-editor';
 
 // created a separate file for table tests (`RichTextInputBoxComponentTablesTests.spec.tsx`) to speed up the test execution
 betaTest.describe('RichTextInputBoxComponent tests', () => {
-  betaTest.skip(true, 'Disable tests temporarily');
   betaTest.skip(({ isBetaBuild }) => !isBetaBuild, 'The tests should be run for beta flavor only');
   betaTest('RichTextInputBoxComponent should be shown correctly', async ({ mount }) => {
     const component = await mount(<TestRichTextInputBoxComponent disabled={false} minHeight="1rem" maxHeight="2rem" />);
