@@ -29,4 +29,4 @@ export type { TelemetryEvent } from './logEvent';
 
 export type { AttachmentMetadata, AttachmentMetadataInProgress, AttachmentProgressError } from './common';
 
-export type { MessageOptions } from './common';
+export type { MessageOptions, ChatMessageType } from './common';

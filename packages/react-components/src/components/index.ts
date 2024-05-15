@@ -291,3 +291,5 @@ export * from './Caption';
 export * from './StartCaptionsButton';
 
 export * from './CaptionsSettingsModal';
+
+export { _ErrorBoundary } from './ErrorBoundary';

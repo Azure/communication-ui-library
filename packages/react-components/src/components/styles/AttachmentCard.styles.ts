@@ -8,13 +8,39 @@ import { _pxToRem } from '@internal/acs-ui-common';
 /**
  * @private
  */
+export const _ATTACHMENT_CARD_WIDTH_IN_REM = 12;
+/**
+ * @private
+ */
+export const _ATTACHMENT_CARD_MARGIN_IN_PX = 2;
+
+/**
+ * @private
+ */
 export const useAttachmentCardStyles = makeStyles({
   root: {
-    width: '12rem',
-    minWidth: '75%',
     '& div[role=toolbar]': {
       ...shorthands.padding(0)
     }
+  },
+  dynamicWidth: {
+    minWidth: `${_ATTACHMENT_CARD_WIDTH_IN_REM}rem`
+  },
+  staticWidth: {
+    width: `${_ATTACHMENT_CARD_WIDTH_IN_REM}rem`
+  },
+  fileIcon: {
+    marginLeft: _pxToRem(4)
+  },
+  content: {
+    '> div': {
+      width: '100%',
+      overflow: 'hidden',
+      textOverflow: 'ellipsis'
+    }
+  },
+  title: {
+    width: '100%'
   }
 });
 
@@ -23,7 +49,6 @@ export const useAttachmentCardStyles = makeStyles({
  */
 export const attachmentNameContainerClassName = mergeStyles({
   marginTop: _pxToRem(5),
-  width: '5.75rem',
   overflow: 'hidden',
   textOverflow: 'ellipsis',
   span: {

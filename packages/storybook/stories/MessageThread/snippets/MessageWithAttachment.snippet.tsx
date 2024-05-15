@@ -24,7 +24,7 @@ export const MessageWithAttachment: () => JSX.Element = () => {
             contentType: 'text',
             attachments: [
               {
-                id: 'SomeUniqueId1',
+                id: 'a021eacd612d',
                 name: 'RouterConfig.xlsx',
                 url: 'https://<file_url>/RouterConfig.xlsx'
               }
