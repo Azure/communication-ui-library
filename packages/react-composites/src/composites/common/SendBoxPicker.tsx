@@ -12,8 +12,8 @@ import { _ErrorBoundary, RichTextSendBoxProps } from '@internal/react-components
 import { AttachmentMetadataInProgress, MessageOptions } from '@internal/acs-ui-common';
 
 /* @conditional-compile-remove(rich-text-editor-composite-support) */
-const RichTextSendBox = React.lazy(() =>
-  import('@internal/react-components').then((module) => ({ default: module.RichTextSendBox }))
+const RichTextSendBoxWrapper = React.lazy(() =>
+  import('./RichTextSendBoxWrapper').then((module) => ({ default: module.RichTextSendBoxWrapper }))
 );
 
 /**
@@ -25,7 +25,7 @@ const RichTextSendBox = React.lazy(() =>
  */
 export const loadRichTextSendBox = (): Promise<{
   default: React.ComponentType<RichTextSendBoxProps>;
-}> => import('@internal/react-components').then((module) => ({ default: module.RichTextSendBox }));
+}> => import('./RichTextSendBoxWrapper').then((module) => ({ default: module.RichTextSendBoxWrapper }));
 
 /**
  * @private
@@ -68,7 +68,7 @@ export const SendBoxPicker = (props: SendBoxPickerProps): JSX.Element => {
     return (
       <_ErrorBoundary fallback={sendBox}>
         <Suspense fallback={sendBox}>
-          <RichTextSendBox {...sendBoxProps} {...props} />
+          <RichTextSendBoxWrapper {...props} />
         </Suspense>
       </_ErrorBoundary>
     );
