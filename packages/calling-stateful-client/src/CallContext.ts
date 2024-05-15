@@ -4,6 +4,8 @@
 import { CommunicationIdentifierKind } from '@azure/communication-common';
 import {
   AudioDeviceInfo,
+  BreakoutRoom,
+  BreakoutRoomSettings,
   DeviceAccess,
   DominantSpeakersInfo,
   ParticipantRole,
@@ -609,6 +611,24 @@ export class CallContext {
         ) {
           call.spotlight.localParticipantSpotlight = undefined;
         }
+      }
+    });
+  }
+
+  public setAssignBreakoutRoom(callId: string, breakoutRoom: BreakoutRoom): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        call.breakoutRooms = { ...call.breakoutRooms, assignedBreakoutRoom: breakoutRoom };
+      }
+    });
+  }
+
+  public setBreakoutRoomSettings(callId: string, breakoutRoomSettings: BreakoutRoomSettings): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        call.breakoutRooms = { ...call.breakoutRooms, breakoutRoomSettings: breakoutRoomSettings };
       }
     });
   }

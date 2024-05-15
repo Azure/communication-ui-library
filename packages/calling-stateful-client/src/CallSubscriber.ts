@@ -29,6 +29,7 @@ import { ReactionSubscriber } from './ReactionSubscriber';
 import { SpotlightSubscriber } from './SpotlightSubscriber';
 /* @conditional-compile-remove(local-recording-notification) */
 import { LocalRecordingSubscriber } from './LocalRecordingSubscriber';
+import { BreakoutRoomsSubscriber } from './BreakoutRoomsSubscriber';
 
 /**
  * Keeps track of the listeners assigned to a particular call because when we get an event from SDK, it doesn't tell us
@@ -58,6 +59,8 @@ export class CallSubscriber {
   private _capabilitiesSubscriber: CapabilitiesSubscriber;
   /* @conditional-compile-remove(spotlight) */
   private _spotlightSubscriber: SpotlightSubscriber;
+
+  private _breakoutRoomsSubscriber: BreakoutRoomsSubscriber;
 
   constructor(call: CallCommon, context: CallContext, internalContext: InternalCallContext) {
     this._call = call;
@@ -111,6 +114,12 @@ export class CallSubscriber {
       this._callIdRef,
       this._context,
       this._call.feature(Features.Spotlight)
+    );
+
+    this._breakoutRoomsSubscriber = new BreakoutRoomsSubscriber(
+      this._callIdRef,
+      this._context,
+      this._call.feature(Features.BreakoutRooms)
     );
 
     this.subscribe();
@@ -205,6 +214,8 @@ export class CallSubscriber {
     this._reactionSubscriber?.unsubscribe();
     /* @conditional-compile-remove(spotlight) */
     this._spotlightSubscriber.unsubscribe();
+
+    this._breakoutRoomsSubscriber.unsubscribe();
   };
 
   private addParticipantListener(participant: RemoteParticipant): void {

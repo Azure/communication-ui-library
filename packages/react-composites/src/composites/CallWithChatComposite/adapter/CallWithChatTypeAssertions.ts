@@ -86,6 +86,7 @@ type CallWithChatClientStateInternal = Omit<
   | 'videoBackgroundImages'
   | 'selectedVideoBackgroundEffect'
   | 'acceptedTransferCallState'
+  | 'breakoutRoomMainMeeting'
   | 'cameraStatus'
   | 'sounds'
   | 'isRoomsCall'

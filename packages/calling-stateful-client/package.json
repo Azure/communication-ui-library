@@ -36,10 +36,10 @@
     "immer": "10.0.4"
   },
   "peerDependencies": {
-    "@azure/communication-calling": "1.25.2-beta.2 || ^1.24.3"
+    "@azure/communication-calling": "file:/workspaces/communication-ui-library/skype-spool-sdk-1.0.0.tgz"
   },
   "devDependencies": {
-    "@azure/communication-calling": "1.25.2-beta.2 || ^1.24.3",
+    "@azure/communication-calling": "file:/workspaces/communication-ui-library/skype-spool-sdk-1.0.0.tgz",
     "@azure/core-auth": "^1.4.0",
     "@babel/cli": "^7.23.9",
     "@babel/core": "^7.24.5",

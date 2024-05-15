@@ -47,7 +47,14 @@ import { Captions, CaptionsInfo } from '@azure/communication-calling';
 import { TransferEventArgs } from '@azure/communication-calling';
 import { StartCaptionsOptions, TeamsCaptionsInfo } from '@azure/communication-calling';
 
-import type { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling';
+import type {
+  AssignedBreakoutRoomUpdatedListener,
+  BackgroundBlurConfig,
+  BackgroundReplacementConfig,
+  BreakoutRoom,
+  BreakoutRoomJoinedListener,
+  BreakoutRoomSettingsAvailableListener
+} from '@azure/communication-calling';
 
 import type { CapabilitiesChangeInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support)) */
@@ -292,6 +299,10 @@ class CallContext {
 
   public setAcceptedTransferCall(call?: CallState): void {
     this.setState({ ...this.state, acceptedTransferCallState: call });
+  }
+
+  public setBreakoutRoomMainMeeting(call?: CallState): void {
+    this.setState({ ...this.state, breakoutRoomMainMeeting: call });
   }
 }
 
@@ -1086,6 +1097,10 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   /* @conditional-compile-remove(spotlight) */
   on(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
 
+  on(event: 'assignedBreakoutRoomUpdated', listener: AssignedBreakoutRoomUpdatedListener): void;
+  on(event: 'breakoutRoomJoined', listener: BreakoutRoomJoinedListener): void;
+  on(event: 'breakoutRoomSettingsAvailable', listener: BreakoutRoomSettingsAvailableListener): void;
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public on(event: string, listener: (e: any) => void): void {
     this.emitter.on(event, listener);
@@ -1163,6 +1178,12 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.call?.feature(Features.Capabilities).on('capabilitiesChanged', this.capabilitiesChanged.bind(this));
     /* @conditional-compile-remove(spotlight) */
     this.call?.feature(Features.Spotlight).on('spotlightChanged', this.spotlightChanged.bind(this));
+    const breakoutRoomsFeature = this.call?.feature(Features.BreakoutRooms);
+    if (breakoutRoomsFeature) {
+      breakoutRoomsFeature.on('assignedBreakoutRoomUpdated', this.assignedBreakoutRoomUpdated.bind(this));
+      breakoutRoomsFeature.on('breakoutRoomJoined', this.breakoutRoomJoinedListener.bind(this));
+    }
+    console.log('breakoutRooms: ', breakoutRoomsFeature);
   }
 
   private unsubscribeCallEvents(): void {
@@ -1303,6 +1324,27 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.emitter.emit('spotlightChanged', args);
   }
 
+  private assignedBreakoutRoomUpdated(breakoutRoom: BreakoutRoom): void {
+    console.log('Call adapter assignedBreakoutRoomUpdated: ', breakoutRoom);
+    if (breakoutRoom.state === 'open') {
+      /** Temp code */
+      const thisCall = this.call?.id ? this.callClient.getState().calls[this.call?.id] : undefined;
+      if (thisCall && thisCall.breakoutRooms && thisCall.breakoutRooms.assignedBreakoutRoom && breakoutRoom.call) {
+        console.log('Call adapter breakout main meeting set');
+        this.context.setBreakoutRoomMainMeeting(thisCall);
+        this.processNewCall(breakoutRoom.call);
+      }
+      /** Temp code */
+    }
+    this.emitter.emit('assignedBreakoutRoomUpdated', breakoutRoom);
+  }
+
+  private breakoutRoomJoinedListener(call: Call | TeamsCall): void {
+    console.log('Call adapter breakoutRoomJoinedListener call: ', call);
+    this.processNewCall(call);
+    this.emitter.emit('breakoutRoomJoined', call);
+  }
+
   private callIdChanged(): void {
     this.call?.id && this.emitter.emit('callIdChanged', { callId: this.call.id });
   }
@@ -1337,6 +1379,10 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   off(event: 'roleChanged', listener: PropertyChangedEvent): void;
   /* @conditional-compile-remove(spotlight) */
   off(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
+
+  off(event: 'assignedBreakoutRoomUpdated', listener: AssignedBreakoutRoomUpdatedListener): void;
+  off(event: 'breakoutRoomJoined', listener: BreakoutRoomJoinedListener): void;
+  off(event: 'breakoutRoomSettingsAvailable', listener: BreakoutRoomSettingsAvailableListener): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public off(event: string, listener: (e: any) => void): void {

@@ -3,7 +3,15 @@
 
 import { CallState, DeviceManagerState } from '@internal/calling-stateful-client';
 import { CaptionsInfo } from '@internal/calling-stateful-client';
-import type { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling';
+
+import type {
+  AssignedBreakoutRoomUpdatedListener,
+  BackgroundBlurConfig,
+  BackgroundReplacementConfig,
+  BreakoutRoomJoinedListener,
+  BreakoutRoomSettingsAvailableListener
+} from '@azure/communication-calling';
+/* @conditional-compile-remove(reaction) */
 import { Reaction } from '@azure/communication-calling';
 import type { CapabilitiesChangeInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(spotlight) */
@@ -183,6 +191,10 @@ export type CallAdapterClientState = {
    * @public
    */
   reactions?: ReactionResources;
+  /**
+   * Call of main meeting. Only defined if current call is a breakout room.
+   */
+  breakoutRoomMainMeeting?: CallState;
 };
 
 /**
@@ -901,7 +913,18 @@ export interface CallAdapterSubscribers {
    * Subscribe function for 'spotlightChanged' event.
    */
   on(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
-
+  /**
+   * Subscribe function for 'assignedBreakoutRoomUpdated' event.
+   */
+  on(event: 'assignedBreakoutRoomUpdated', listener: AssignedBreakoutRoomUpdatedListener): void;
+  /**
+   * Subscribe function for 'breakoutRoomJoined' event.
+   */
+  on(event: 'breakoutRoomJoined', listener: BreakoutRoomJoinedListener): void;
+  /**
+   * Subscribe function for 'breakoutRoomSettingsAvailable' event.
+   */
+  on(event: 'breakoutRoomSettingsAvailable', listener: BreakoutRoomSettingsAvailableListener): void;
   /**
    * Unsubscribe function for 'participantsJoined' event.
    */
@@ -981,9 +1004,21 @@ export interface CallAdapterSubscribers {
   off(event: 'roleChanged', listener: PropertyChangedEvent): void;
   /* @conditional-compile-remove(spotlight) */
   /**
-   * Subscribe function for 'spotlightChanged' event.
+   * Unsubscribe function for 'spotlightChanged' event.
    */
   off(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
+  /**
+   * Unsubscribe function for 'assignedBreakoutRoomUpdated' event.
+   */
+  off(event: 'assignedBreakoutRoomUpdated', listener: AssignedBreakoutRoomUpdatedListener): void;
+  /**
+   * Unsubscribe function for 'breakoutRoomJoined' event.
+   */
+  off(event: 'breakoutRoomJoined', listener: BreakoutRoomJoinedListener): void;
+  /**
+   * Unsubscribe function for 'breakoutRoomSettingsAvailable' event.
+   */
+  off(event: 'breakoutRoomSettingsAvailable', listener: BreakoutRoomSettingsAvailableListener): void;
 }
 
 // This type remains for non-breaking change reason

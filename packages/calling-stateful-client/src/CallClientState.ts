@@ -3,6 +3,8 @@
 
 import {
   AudioDeviceInfo,
+  BreakoutRoom,
+  BreakoutRoomSettings,
   CallDirection,
   CallEndReason,
   CallerInfo,
@@ -190,6 +192,17 @@ export interface SpotlightState {
    * Order position of spotlight in call
    */
   spotlightedOrderPosition?: number;
+}
+
+/* @conditional-compile-remove(spotlight) */
+/**
+ * Breakout rooms state
+ *
+ * @public
+ */
+export interface BreakoutRoomsState {
+  assignedBreakoutRoom?: BreakoutRoom;
+  breakoutRoomSettings?: BreakoutRoomSettings;
 }
 
 /**
@@ -641,6 +654,10 @@ export interface CallState {
    * Proxy of {@link @azure/communication-calling#TeamsMeetingAudioConferencingCallFeature}.
    */
   teamsMeetingConference?: TeamsMeetingAudioConferencingDetails;
+  /**
+   * Proxy of {@link @azure/communication-calling#BreakoutRoomsFeature}.
+   */
+  breakoutRooms?: BreakoutRoomsState;
 }
 
 /**

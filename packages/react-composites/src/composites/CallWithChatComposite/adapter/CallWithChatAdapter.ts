@@ -600,6 +600,8 @@ export type CallWithChatEvent =
   | 'isSpokenLanguageChanged'
   | 'capabilitiesChanged'
   | /* @conditional-compile-remove(spotlight) */ 'spotlightChanged'
+  | 'assignedBreakoutRoomUpdated'
+  | 'breakoutRoomSettingsAvailable'
   | 'messageReceived'
   | 'messageEdited'
   | 'messageDeleted'

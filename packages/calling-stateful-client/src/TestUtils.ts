@@ -17,7 +17,8 @@ import {
   RemoteVideoStream,
   TranscriptionCallFeature,
   CallFeatureFactory,
-  CallFeature
+  CallFeature,
+  RemoteParticipantDiagnosticsData
 } from '@azure/communication-calling';
 import { RaiseHandCallFeature, RaisedHandListener, RaisedHand } from '@azure/communication-calling';
 import { CollectionUpdatedEvent, RecordingInfo } from '@azure/communication-calling';
@@ -213,7 +214,20 @@ export class StubDiagnosticsCallFeatureImpl implements UserFacingDiagnosticsFeat
   };
   dispose(): void {
     /* No state to clean up */
-  }
+  };
+  public remote = {
+    getLatest(): RemoteParticipantDiagnosticsData {
+      return {
+        diagnostics: []
+      };
+    },
+    on(): void {
+      /* Stub to appease types */
+    },
+    off(): void {
+      /* Stub to appease types */
+    }
+  };
 }
 
 /**
