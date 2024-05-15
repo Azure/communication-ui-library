@@ -12,7 +12,10 @@ describe('AttachmentCardGroup should be rendered properly', () => {
   beforeEach(() => {
     registerIcons({
       icons: {
-        docx24_svg: <></>
+        downloadattachment: <></>,
+        docx24_svg: <></>,
+        editboxcancel: <></>,
+        genericfile24_svg: <></>
       }
     });
   });

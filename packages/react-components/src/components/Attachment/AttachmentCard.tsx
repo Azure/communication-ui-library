@@ -1,11 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import {
-  // eslint-disable-next-line no-restricted-imports
-  Icon,
-  TooltipHost
-} from '@fluentui/react';
+import { Icon, TooltipHost } from '@fluentui/react';
 import {
   Card,
   CardHeader,
