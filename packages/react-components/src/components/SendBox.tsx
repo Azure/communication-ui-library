@@ -251,9 +251,12 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
       onSendMessage &&
         onSendMessage(
           message,
-          /* @conditional-compile-remove(attachment-upload) */
+          /* @conditional-compile-remove(attachment-upload) */ /* @conditional-compile-remove(rich-text-editor-composite-support) */
           {
-            attachments: toAttachmentMetadata(attachments)
+            /* @conditional-compile-remove(attachment-upload) */
+            attachments: toAttachmentMetadata(attachments),
+            /* @conditional-compile-remove(rich-text-editor-composite-support) */
+            type: 'html'
           }
         );
       setTextValue('');

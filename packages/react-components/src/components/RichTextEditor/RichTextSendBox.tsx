@@ -265,9 +265,12 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     if (hasContent || /* @conditional-compile-remove(attachment-upload) */ isAttachmentUploadCompleted(attachments)) {
       onSendMessage(
         message,
-        /* @conditional-compile-remove(attachment-upload) */
+        /* @conditional-compile-remove(attachment-upload) */ /* @conditional-compile-remove(rich-text-editor-composite-support) */
         {
-          attachments: toAttachmentMetadata(attachments)
+          /* @conditional-compile-remove(attachment-upload) */
+          attachments: toAttachmentMetadata(attachments),
+          /* @conditional-compile-remove(rich-text-editor-composite-support) */
+          type: 'html'
         }
       );
       setContentValue('');
