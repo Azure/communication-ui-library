@@ -256,7 +256,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
             /* @conditional-compile-remove(attachment-upload) */
             attachments: toAttachmentMetadata(attachments),
             /* @conditional-compile-remove(rich-text-editor-composite-support) */
-            type: 'html'
+            type: 'text'
           }
         );
       setTextValue('');

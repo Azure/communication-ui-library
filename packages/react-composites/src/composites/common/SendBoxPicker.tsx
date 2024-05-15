@@ -61,17 +61,14 @@ export const SendBoxPicker = (props: SendBoxPickerProps): JSX.Element => {
     return richTextEditor;
   }, [richTextEditor]);
 
-  const sendBox = useMemo(
-    () => <SendBox {...sendBoxProps} {...props} onSendMessage={props.onSendMessage} />,
-    [props, sendBoxProps]
-  );
+  const sendBox = useMemo(() => <SendBox {...sendBoxProps} {...props} />, [props, sendBoxProps]);
 
   /* @conditional-compile-remove(rich-text-editor-composite-support) */
   if (isRichTextEditorEnabled) {
     return (
       <_ErrorBoundary fallback={sendBox}>
         <Suspense fallback={sendBox}>
-          <RichTextSendBox {...sendBoxProps} {...props} onSendMessage={props.onSendMessage} />
+          <RichTextSendBox {...sendBoxProps} {...props} />
         </Suspense>
       </_ErrorBoundary>
     );
