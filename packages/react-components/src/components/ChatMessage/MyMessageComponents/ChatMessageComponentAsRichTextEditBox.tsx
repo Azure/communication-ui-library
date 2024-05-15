@@ -69,7 +69,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
   const theme = useTheme();
   const messageState = useMemo(() => {
     return getMessageState(textValue, /* @conditional-compile-remove(attachment-upload) */ attachmentMetadata ?? []);
-  }, [attachmentMetadata, textValue]);
+  }, [/* @conditional-compile-remove(attachment-upload) */ attachmentMetadata, textValue]);
 
   const submitEnabled = messageState === 'OK';
 
