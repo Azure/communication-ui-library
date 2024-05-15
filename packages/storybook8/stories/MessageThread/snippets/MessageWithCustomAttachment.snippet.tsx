@@ -79,7 +79,7 @@ export const MessageWithCustomAttachment: () => JSX.Element = () => {
             contentType: 'text',
             attachments: [
               {
-                id: 'SomeUniqueId1',
+                id: '653d554cede5',
                 name: 'Report.docx',
                 url: 'https://<file_url>/report.docx'
               }
@@ -97,7 +97,7 @@ export const MessageWithCustomAttachment: () => JSX.Element = () => {
             contentType: 'text',
             attachments: [
               {
-                id: 'SomeUniqueId2',
+                id: 'd4a58f6e87f2',
                 name: 'Manual.pdf',
                 url: 'https://<file_url>/manual.pdf'
               }

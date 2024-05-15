@@ -33,6 +33,8 @@ import {
   getMessageBubbleContent,
   getMessageEditedDetails
 } from '../../utils/ChatMessageComponentUtils';
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+import { doesMessageContainMultipleAttachments } from '../../utils/ChatMessageComponentAsEditBoxUtils';
 
 type ChatMyMessageComponentAsMessageBubbleProps = {
   message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage;
@@ -172,6 +174,11 @@ const MessageBubble = (props: ChatMyMessageComponentAsMessageBubbleProps): JSX.E
     setChatMessageActionFlyoutTarget(undefined);
   }, [setChatMessageActionFlyoutTarget]);
 
+  /* @conditional-compile-remove(attachment-upload) */
+  const hasMultipleAttachments = useMemo(() => {
+    return doesMessageContainMultipleAttachments(message as ChatMessage);
+  }, [message]);
+
   const getMessageDetails = useCallback(() => {
     if (messageStatus === 'failed') {
       return <div className={chatMessageFailedTagStyle(theme)}>{strings.failToSendTag}</div>;
@@ -226,6 +233,8 @@ const MessageBubble = (props: ChatMyMessageComponentAsMessageBubbleProps): JSX.E
                 ? chatMessageCommonStyles.failed
                 : undefined,
               attached !== 'top' ? chatMyMessageStyles.bodyAttached : undefined,
+              /* @conditional-compile-remove(attachment-upload) */
+              hasMultipleAttachments ? chatMyMessageStyles.multipleAttachments : undefined,
               mergeStyles(messageContainerStyle)
             ),
             style: { ...createStyleFromV8Style(messageContainerStyle) },
