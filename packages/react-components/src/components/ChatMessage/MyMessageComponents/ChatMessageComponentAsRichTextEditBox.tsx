@@ -6,7 +6,7 @@ import { ChatMyMessage } from '@fluentui-contrib/react-chat';
 import { mergeClasses } from '@fluentui/react-components';
 import { _formatString } from '@internal/acs-ui-common';
 import { useTheme } from '../../../theming';
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 /* @conditional-compile-remove(attachment-upload) */
 import { useReducer } from 'react';
 import { editBoxWidthStyles, richTextEditBoxActionButtonIcon } from '../../styles/EditBox.styles';
@@ -67,24 +67,29 @@ export const ChatMessageComponentAsRichTextEditBox = (
   );
   const editTextFieldRef = React.useRef<RichTextEditorComponentRef>(null);
   const theme = useTheme();
-  const messageState = getMessageState(
-    textValue,
-    /* @conditional-compile-remove(attachment-upload) */ attachmentMetadata ?? []
-  );
+  const messageState = useMemo(() => {
+    return getMessageState(textValue, /* @conditional-compile-remove(attachment-upload) */ attachmentMetadata ?? []);
+  }, [attachmentMetadata, textValue]);
+
   const submitEnabled = messageState === 'OK';
 
   const editContainerStyles = useChatMessageRichTextEditContainerStyles();
   const chatMyMessageStyles = useChatMyMessageStyles();
   const locale = useLocale().strings;
 
-  const setText = (newValue?: string): void => {
+  const setText = useCallback((newValue?: string): void => {
     setTextValue(newValue ?? '');
-  };
+  }, []);
 
-  const textTooLongMessage =
-    messageState === 'too long'
+  useEffect(() => {
+    editTextFieldRef.current?.focus();
+  }, []);
+
+  const textTooLongMessage = useMemo(() => {
+    return messageState === 'too long'
       ? _formatString(strings.editBoxTextLimit, { limitNumber: `${MAXIMUM_LENGTH_OF_MESSAGE}` })
       : undefined;
+  }, [messageState, strings.editBoxTextLimit]);
 
   const iconClassName = useCallback(
     (isHover: boolean) => {
@@ -129,7 +134,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
           onRenderIcon={onRenderThemedSubmitIcon}
           onClick={(e) => {
             // it's very important to pass an empty attachment here
-            // so when user remvoes all attachments, UI can reflect it instantly
+            // so when user removes all attachments, UI can reflect it instantly
             // if you set it to undefined, the attachments pre-edited would still be there
             // until edit message event is received
             submitEnabled &&
