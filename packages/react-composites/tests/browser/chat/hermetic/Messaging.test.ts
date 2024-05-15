@@ -65,6 +65,7 @@ test.describe('Tests related to messaging', async () => {
         console.error('Failed at fulfill on route, Error: ', error);
       }
     });
+    // Testing the flaky test that fails due to the new message button.
 
     await waitForChatCompositeToLoad(page);
 
