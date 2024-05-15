@@ -37,6 +37,7 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/no-unused-vars': ['warn', { varsIgnorePattern: '^_' }],
     eqeqeq: 'warn',
+    '@typescript-eslint/no-non-null-assertion': 'error',
     'header/header': ['error', 'line', ' Copyright (c) Microsoft Corporation.\n Licensed under the MIT License.'],
     'import/named': 'off', // very time consuming
     'import/namespace': 'off', // very time consuming
