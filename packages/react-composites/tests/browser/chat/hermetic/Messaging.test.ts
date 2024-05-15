@@ -66,6 +66,7 @@ test.describe('Tests related to messaging', async () => {
       }
     });
     // Testing the flaky test that fails due to the new message button.
+    // Second attempt
 
     await waitForChatCompositeToLoad(page);
 
