@@ -38,7 +38,7 @@ export interface RichTextInputBoxComponentProps {
   onChange: (newValue?: string) => void;
   onEnterKeyDown?: () => void;
   editorComponentRef: React.RefObject<RichTextEditorComponentRef>;
-  // Partial needs to be removed when the rich text go to GA
+  // Partial needs to be removed when the rich text editor feature goes to GA
   strings: Partial<RichTextSendBoxStrings>;
   disabled: boolean;
   actionComponents: ReactNode;
