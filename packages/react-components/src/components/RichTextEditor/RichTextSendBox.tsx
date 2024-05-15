@@ -14,11 +14,11 @@ import { RichTextEditorComponentRef } from './RichTextEditor';
 import { useTheme } from '../../theming';
 import { richTextActionButtonsStyle, sendBoxRichTextEditorStyle } from '../styles/RichTextEditor.styles';
 /* @conditional-compile-remove(attachment-upload) */
-import { _AttachmentUploadCards } from '../AttachmentUploadCards';
+import { _AttachmentUploadCards } from '../Attachment/AttachmentUploadCards';
 /* @conditional-compile-remove(attachment-upload) */
-import { AttachmentMetadataWithProgress } from '../../types/Attachment';
+import { AttachmentMetadataInProgress, MessageOptions } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(attachment-upload) */
-import { hasCompletedAttachmentUploads, hasIncompleteAttachmentUploads } from '../utils/SendBoxUtils';
+import { isAttachmentUploadCompleted, hasIncompleteAttachmentUploads } from '../utils/SendBoxUtils';
 /* @conditional-compile-remove(attachment-upload) */
 import { SendBoxErrorBarError } from '../SendBoxErrorBar';
 /* @conditional-compile-remove(attachment-upload) */
@@ -31,39 +31,46 @@ import { FluentV9ThemeProvider } from '../../theming/FluentV9ThemeProvider';
  *
  * @beta
  */
-export interface RichTextSendBoxStrings extends SendBoxStrings {
+export interface RichTextSendBoxStrings extends RichTextStrings, SendBoxStrings {}
+
+/**
+ * Strings of RichText that can be overridden.
+ *
+ * @beta
+ */
+export interface RichTextStrings {
   /**
    * Tooltip text for the bold button.
    */
-  boldTooltip: string;
+  richTextBoldTooltip: string;
   /**
    * Tooltip text for the italic button.
    */
-  italicTooltip: string;
+  richTextItalicTooltip: string;
   /**
    * Tooltip text for the underline button.
    */
-  underlineTooltip: string;
+  richTextUnderlineTooltip: string;
   /**
    * Tooltip text for the bullet list button.
    */
-  bulletListTooltip: string;
+  richTextBulletListTooltip: string;
   /**
    * Tooltip text for the number list button.
    */
-  numberListTooltip: string;
+  richTextNumberListTooltip: string;
   /**
    * Tooltip text for the increase indent button.
    */
-  increaseIndentTooltip: string;
+  richTextIncreaseIndentTooltip: string;
   /**
    * Tooltip text for the decrease indent button.
    */
-  decreaseIndentTooltip: string;
+  richTextDecreaseIndentTooltip: string;
   /**
    * Tooltip text insert table button.
    */
-  insertTableTooltip: string;
+  richTextInsertTableTooltip: string;
   /**
    * Tooltip text for the rich text format button button.
    */
@@ -71,43 +78,43 @@ export interface RichTextSendBoxStrings extends SendBoxStrings {
   /**
    * Text for the insert menu item.
    */
-  insertRowOrColumnMenu: string;
+  richTextInsertRowOrColumnMenu: string;
   /**
    * Title for the insert table menu.
    */
-  insertTableMenuTitle: string;
+  richTextInsertTableMenuTitle: string;
   /**
    * Text for the insert menu item to insert row above the current selection.
    */
-  insertRowAboveMenu: string;
+  richTextInsertRowAboveMenu: string;
   /**
    * Text for the insert menu item to insert row below the current selection.
    */
-  insertRowBelowMenu: string;
+  richTextInsertRowBelowMenu: string;
   /**
    * Text for the insert menu item to insert column to the left from the current selection.
    */
-  insertColumnLeftMenu: string;
+  richTextInsertColumnLeftMenu: string;
   /**
    * Text for the insert menu item to insert column to the right from the current selection.
    */
-  insertColumnRightMenu: string;
+  richTextInsertColumnRightMenu: string;
   /**
    * Text for the delete row or column menu.
    */
-  deleteRowOrColumnMenu: string;
+  richTextDeleteRowOrColumnMenu: string;
   /**
    * Text for the delete column menu.
    */
-  deleteColumnMenu: string;
+  richTextDeleteColumnMenu: string;
   /**
    * Text for the delete row menu.
    */
-  deleteRowMenu: string;
+  richTextDeleteRowMenu: string;
   /**
    * Text for the delete table menu.
    */
-  deleteTableMenu: string;
+  richTextDeleteTableMenu: string;
 }
 
 /**
@@ -131,11 +138,11 @@ export interface RichTextSendBoxProps {
   systemMessage?: string;
   /* @conditional-compile-remove(attachment-upload) */
   /**
-   * Optional array of type {@link AttachmentMetadataWithProgress}
+   * Optional array of type {@link AttachmentMetadataInProgress}
    * to render attachments being uploaded in the SendBox.
    * @beta
    */
-  attachmentsWithProgress?: AttachmentMetadataWithProgress[];
+  attachments?: AttachmentMetadataInProgress[];
   /**
    * enumerable to determine if the input box has focus on render or not.
    * When undefined nothing has focus on render
@@ -151,7 +158,11 @@ export interface RichTextSendBoxProps {
   /**
    * Callback function used when the send button is clicked.
    */
-  onSendMessage: (content: string) => Promise<void>;
+  onSendMessage: (
+    content: string,
+    /* @conditional-compile-remove(attachment-upload) */
+    options?: MessageOptions
+  ) => Promise<void>;
   /**
    * Optional callback called when user is typing
    */
@@ -171,7 +182,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     onSendMessage,
     onTyping,
     /* @conditional-compile-remove(attachment-upload) */
-    attachmentsWithProgress,
+    attachments,
     /* @conditional-compile-remove(attachment-upload) */
     onCancelAttachmentUpload
   } = props;
@@ -211,6 +222,21 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     setContentValue(newValue);
   }, []);
 
+  /* @conditional-compile-remove(attachment-upload) */
+  const toAttachmentMetadata = useCallback((attachmentsWithProgress: AttachmentMetadataInProgress[] | undefined) => {
+    return attachmentsWithProgress
+      ?.filter((attachment) => {
+        return !('error' in attachment) && !attachment.error?.message;
+      })
+      .map((attachment) => {
+        return {
+          id: attachment.id,
+          name: attachment.name,
+          url: attachment.url ?? ''
+        };
+      });
+  }, []);
+
   const sendMessageOnClick = useCallback((): void => {
     if (disabled || contentValueOverflow) {
       return;
@@ -220,7 +246,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     setAttachmentUploadsPendingError(undefined);
 
     /* @conditional-compile-remove(attachment-upload) */
-    if (hasIncompleteAttachmentUploads(attachmentsWithProgress)) {
+    if (hasIncompleteAttachmentUploads(attachments)) {
       setAttachmentUploadsPendingError({ message: strings.attachmentUploadsPendingError, timestamp: Date.now() });
       return;
     }
@@ -236,23 +262,30 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     });
     // we don't want to send empty messages including spaces, newlines, tabs
     // Message can be empty if there is a valid attachment upload
-    if (
-      hasContent ||
-      /* @conditional-compile-remove(attachment-upload) */ hasCompletedAttachmentUploads(attachmentsWithProgress)
-    ) {
-      onSendMessage(message);
+    if (hasContent || /* @conditional-compile-remove(attachment-upload) */ isAttachmentUploadCompleted(attachments)) {
+      onSendMessage(
+        message,
+        /* @conditional-compile-remove(attachment-upload) */
+        {
+          attachments: toAttachmentMetadata(attachments)
+        }
+      );
       setContentValue('');
       editorComponentRef.current?.setEmptyContent();
       editorComponentRef.current?.focus();
     }
   }, [
-    contentValue,
-    contentValueOverflow,
     disabled,
-    onSendMessage,
+    contentValueOverflow,
+    /* @conditional-compile-remove(attachment-upload) */
+    attachments,
+    contentValue,
     strings.placeholderText,
-    /* @conditional-compile-remove(attachment-upload) */ attachmentsWithProgress,
-    /* @conditional-compile-remove(attachment-upload) */ strings.attachmentUploadsPendingError
+    /* @conditional-compile-remove(attachment-upload) */
+    strings.attachmentUploadsPendingError,
+    onSendMessage,
+    /* @conditional-compile-remove(attachment-upload) */
+    toAttachmentMetadata
   ]);
 
   const hasErrorMessage = useMemo(() => {
@@ -262,11 +295,11 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
       /* @conditional-compile-remove(attachment-upload) */
       !!attachmentUploadsPendingError ||
       /* @conditional-compile-remove(attachment-upload) */
-      !!attachmentsWithProgress?.filter((attachmentUpload) => attachmentUpload.error).pop()?.error
+      !!attachments?.filter((attachmentUpload) => attachmentUpload.error).pop()?.error
     );
   }, [
     /* @conditional-compile-remove(attachment-upload) */
-    attachmentsWithProgress,
+    attachments,
     contentTooLongMessage,
     /* @conditional-compile-remove(attachment-upload) */
     attachmentUploadsPendingError,
@@ -306,8 +339,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
 
   const sendBoxErrorsProps: RichTextSendBoxErrorsProps = useMemo(() => {
     /* @conditional-compile-remove(attachment-upload) */
-    const uploadErrorMessage = attachmentsWithProgress?.filter((attachmentUpload) => attachmentUpload.error).pop()
-      ?.error?.message;
+    const uploadErrorMessage = attachments?.filter((attachmentUpload) => attachmentUpload.error).pop()?.error?.message;
     return {
       /* @conditional-compile-remove(attachment-upload) */
       attachmentUploadsPendingError: attachmentUploadsPendingError,
@@ -323,7 +355,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     };
   }, [
     /* @conditional-compile-remove(attachment-upload) */
-    attachmentsWithProgress,
+    attachments,
     contentTooLongMessage,
     /* @conditional-compile-remove(attachment-upload) */
     attachmentUploadsPendingError,
@@ -336,7 +368,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
       <Stack className={attachmentUploadCardsStyles}>
         <FluentV9ThemeProvider v8Theme={theme}>
           <_AttachmentUploadCards
-            attachmentsWithProgress={attachmentsWithProgress}
+            attachments={attachments}
             onCancelAttachmentUpload={onCancelAttachmentUpload}
             strings={{
               removeAttachment: strings.removeAttachment,
@@ -349,7 +381,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
       </Stack>
     );
   }, [
-    attachmentsWithProgress,
+    attachments,
     onCancelAttachmentUpload,
     strings.removeAttachment,
     strings.uploadCompleted,
@@ -362,16 +394,11 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     return isSendBoxButtonAriaDisabled({
       hasContent,
       /* @conditional-compile-remove(attachment-upload) */ hasCompletedAttachmentUploads:
-        hasCompletedAttachmentUploads(attachmentsWithProgress),
+        isAttachmentUploadCompleted(attachments),
       hasError: hasErrorMessage,
       disabled
     });
-  }, [
-    /* @conditional-compile-remove(attachment-upload) */ attachmentsWithProgress,
-    disabled,
-    hasContent,
-    hasErrorMessage
-  ]);
+  }, [/* @conditional-compile-remove(attachment-upload) */ attachments, disabled, hasContent, hasErrorMessage]);
 
   const sendButton = useMemo(() => {
     return (
@@ -391,10 +418,8 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
 
   /* @conditional-compile-remove(attachment-upload) */
   const hasAttachmentUploads = useMemo(() => {
-    return (
-      hasCompletedAttachmentUploads(attachmentsWithProgress) || hasIncompleteAttachmentUploads(attachmentsWithProgress)
-    );
-  }, [attachmentsWithProgress]);
+    return isAttachmentUploadCompleted(attachments) || hasIncompleteAttachmentUploads(attachments);
+  }, [attachments]);
 
   return (
     <Stack>

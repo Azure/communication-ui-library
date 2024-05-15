@@ -112,8 +112,10 @@ describe('ChatMessageComponentAsRichTextEditBox tests', () => {
 
     expect(onSubmitMock).toHaveBeenCalledWith(
       '<div style="background-color: transparent;">Hello World! Test</div>',
-      undefined,
-      /* @conditional-compile-remove(attachment-upload) */ { attachmentMetadata: undefined }
+      // in beta, attachment metadata is undefined
+      // because there is no attachment associated with this message
+      // in stable, attachment metadata field do not exist
+      /* @conditional-compile-remove(attachment-upload) */ []
     );
   });
 });

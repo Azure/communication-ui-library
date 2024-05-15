@@ -148,6 +148,7 @@ export function defaultMockCallAdapterState(
       deviceAccess: { video: true, audio: true }
     },
     isTeamsCall: false,
+    isTeamsMeeting: false,
     isRoomsCall: isRoomsCall ?? false,
     latestErrors: {},
     targetCallees: undefined,
