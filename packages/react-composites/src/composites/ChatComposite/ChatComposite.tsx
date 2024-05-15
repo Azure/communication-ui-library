@@ -84,6 +84,15 @@ export type ChatCompositeOptions = {
    * @beta
    */
   attachmentOptions?: AttachmentOptions;
+
+  /* @conditional-compile-remove(rich-text-editor-composite-support) */
+  /**
+   * enables rich text editor for the edit box
+   * @defaultValue `false`
+   *
+   * @beta
+   */
+  richTextEditor?: boolean;
 };
 
 /**
