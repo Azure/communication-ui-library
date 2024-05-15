@@ -435,13 +435,13 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       await adapter.sendMessage(content, {
         attachments: attachments,
         /* @conditional-compile-remove(rich-text-editor-composite-support) */
-        type: options.type
+        type: options?.type
       });
       /* @conditional-compile-remove(attachment-upload) */
       return;
       await adapter.sendMessage(content, {
         /* @conditional-compile-remove(rich-text-editor-composite-support) */
-        type: options?.richTextEditor ? 'html' : 'text'
+        type: options?.type
       });
     },
     [adapter]
