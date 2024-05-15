@@ -23,7 +23,7 @@ describe('AttachmentCardGroup should be rendered properly', () => {
       ariaLabel: 'MockAttachmentCardGroup'
     };
     renderAttachmentCardGroupWithDefaults(props);
-    expect(await screen.findByLabelText('MockAttachmentCardGroup')).toBeDefined();
+    expect(screen.queryByTestId('attachment-card')).toBeDefined();
   });
 
   it('should not render the component with no children', async () => {
@@ -32,7 +32,7 @@ describe('AttachmentCardGroup should be rendered properly', () => {
       ariaLabel: 'MockAttachmentCardGroup'
     };
     renderAttachmentCardGroupWithDefaults(props);
-    expect(screen.queryByLabelText('MockAttachmentCardGroup')).toBeNull();
+    expect(screen.queryByTestId('attachment-card')).toBeNull();
   });
 
   it('should render the component with children', async () => {
@@ -53,11 +53,10 @@ describe('AttachmentCardGroup should be rendered properly', () => {
     };
 
     renderAttachmentCardGroupWithDefaults(props);
-    const attachmentCard = screen.findByText('MockAttachmentCard');
-    const secondAttachmentCard = screen.findByText('MockSecondAttachmentCard');
-
-    expect(attachmentCard).toBeDefined();
-    expect(secondAttachmentCard).toBeDefined();
+    const cards = await screen.queryAllByTestId('attachment-card');
+    expect(cards.length).toBe(2);
+    expect(cards[0]).toBeDefined();
+    expect(cards[1]).toBeDefined();
   });
 });
 

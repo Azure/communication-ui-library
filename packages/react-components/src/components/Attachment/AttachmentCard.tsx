@@ -113,6 +113,7 @@ export const _AttachmentCard = (props: _AttachmentCardProps): JSX.Element => {
         role="listitem"
         appearance="filled-alternative"
         aria-label={attachment.name}
+        data-testid={'attachment-card'}
       >
         <CardHeader
           className={attachmentCardStyles.content}
