@@ -53,7 +53,8 @@ describe('Calling sound subscriber tests', () => {
     call.testHelperSetCallEndReason({
       code: 0,
       subCode: 0,
-      /* @conditional-compile-remove(calling-beta-sdk) */ resultCategories: ['Success']
+      /* @conditional-compile-remove(calling-beta-sdk) */ resultCategories: ['Success'],
+      /* @conditional-compile-remove(calling-beta-sdk) */ message: ''
     });
     expect(audioMocks.Audio.play).toHaveBeenCalled();
   });
@@ -82,7 +83,8 @@ describe('Calling sound subscriber tests', () => {
     call.testHelperSetCallEndReason({
       code: 603,
       subCode: 0,
-      /* @conditional-compile-remove(calling-beta-sdk) */ resultCategories: []
+      /* @conditional-compile-remove(calling-beta-sdk) */ resultCategories: [],
+      /* @conditional-compile-remove(calling-beta-sdk) */ message: ''
     });
     expect(audioMocks.Audio.play).not.toHaveBeenCalled();
   });
@@ -97,7 +99,8 @@ describe('Calling sound subscriber tests', () => {
     call.testHelperSetCallEndReason({
       code: 0,
       subCode: 7015,
-      /* @conditional-compile-remove(calling-beta-sdk) */ resultCategories: ['Success']
+      /* @conditional-compile-remove(calling-beta-sdk) */ resultCategories: ['Success'],
+      /* @conditional-compile-remove(calling-beta-sdk) */ message: ''
     });
     call.testHelperSetCallState('Disconnected');
     expect(audioMocks.Audio.play).not.toHaveBeenCalled();
