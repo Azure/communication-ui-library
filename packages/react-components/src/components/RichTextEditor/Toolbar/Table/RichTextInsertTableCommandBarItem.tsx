@@ -36,7 +36,6 @@ export const richTextInsertTableCommandBarItem = (
     canCheck: false,
     iconOnly: true,
     subMenuProps: {
-      beakWidth: 0,
       calloutProps: { isBeakVisible: false },
       shouldFocusOnMount: true,
       className: insertTableMenuTablePane,
