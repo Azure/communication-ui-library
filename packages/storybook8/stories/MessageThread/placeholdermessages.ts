@@ -96,15 +96,13 @@ export const GenerateMockNewChatMessageWithAttachment = (): ChatMessage => {
     contentType: 'text',
     attachments: [
       {
-        id: 'SomeUniqueId1',
+        id: '33f675ea7079',
         name: 'Annual Report.xlsx',
-        extension: 'xlsx',
         url: 'https://www.sharepoint.com/'
       },
       {
-        id: 'SomeUniqueId2',
+        id: '940cb3c4d8eb',
         name: 'Business Report.pdf',
-        extension: 'pdf',
         url: 'https://www.example.com/files/RouterConfig.xlsx'
       }
     ]
