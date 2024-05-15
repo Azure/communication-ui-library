@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { useCallback, useMemo } from 'react';
 
@@ -37,6 +37,9 @@ export const VideoEffectsPaneContent = (props: {
   activeVideoEffectError?: ActiveErrorMessage;
   onDismissError: (error: ActiveErrorMessage) => void;
   activeVideoEffectChange: (effect: ActiveVideoEffect) => void;
+  updateFocusHandle: React.RefObject<{
+    focus: () => void;
+  }>;
 }): JSX.Element => {
   const {
     onDismissError,
@@ -140,18 +143,21 @@ export const VideoEffectsPaneContent = (props: {
     };
     adapter.updateSelectedVideoBackgroundEffect(noneEffect);
   }
+
   return VideoEffectsPaneTrampoline(
     onDismissError,
+    props.updateFocusHandle,
     activeVideoEffectError,
-
     selectableVideoEffects,
-
     onEffectChange
   );
 };
 
 const VideoEffectsPaneTrampoline = (
   onDismissError: (error: ActiveErrorMessage) => void,
+  updateFocusHandle: React.RefObject<{
+    focus: () => void;
+  }>,
   activeVideoEffectError?: ActiveErrorMessage,
   selectableVideoEffects?: _VideoEffectsItemProps[],
   onEffectChange?: (effectKey: string) => Promise<void>
@@ -182,6 +188,7 @@ const VideoEffectsPaneTrampoline = (
         options={selectableVideoEffects ?? []}
         onChange={onEffectChange}
         selectedEffectKey={selectedEffect}
+        componentRef={updateFocusHandle}
       />
     </Stack>
   );
