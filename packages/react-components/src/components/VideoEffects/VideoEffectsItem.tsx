@@ -124,8 +124,8 @@ export const _VideoEffectsItem = (props: _VideoEffectsItemProps): JSX.Element =>
   const isSelected = props.isSelected ?? false;
   const disabled = props.disabled ?? false;
   const backgroundImage = props.backgroundProps?.url;
-  const iconContainerStyles = mergeStyles(props.styles?.iconContainer, { height: '1.25rem' });
-  const textContainerStyles = mergeStyles(props.styles?.textContainer, { height: '1.25rem' });
+  const iconContainerStyles = mergeStyles({ height: '1.25rem' }, props.styles?.iconContainer);
+  const textContainerStyles = mergeStyles({ height: '1.25rem' }, props.styles?.textContainer);
 
   const containerStyles = useCallback(
     () =>
