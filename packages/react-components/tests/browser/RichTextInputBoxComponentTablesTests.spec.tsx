@@ -11,7 +11,6 @@ const formatButtonId = 'rich-text-input-box-format-button';
 
 // create a separate file for table tests to speed up the test execution
 betaTest.describe('RichTextInputBoxComponent table tests', () => {
-  betaTest.skip(true, 'Disable tests temporarily');
   betaTest.skip(({ isBetaBuild }) => !isBetaBuild, 'The tests should be run for beta flavor only');
 
   betaTest('Tables can be added and deleted', async ({ mount, page }) => {
@@ -153,6 +152,7 @@ const selectTableContextMenu = async ({
   cellName: string;
 }): Promise<void> => {
   const cell = component.getByRole('cell', { name: cellName });
+  await cell.click();
   await cell.click({ button: 'right' });
   await page.getByText(menuTitle, { exact: true }).hover();
   await page.getByText(subMenuTitle).click();

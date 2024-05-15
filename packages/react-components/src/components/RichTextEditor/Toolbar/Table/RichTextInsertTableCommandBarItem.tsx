@@ -36,6 +36,7 @@ export const richTextInsertTableCommandBarItem = (
     canCheck: false,
     iconOnly: true,
     subMenuProps: {
+      calloutProps: { isBeakVisible: false },
       shouldFocusOnMount: true,
       className: insertTableMenuTablePane,
       focusZoneProps: { direction: FocusZoneDirection.bidirectional },
