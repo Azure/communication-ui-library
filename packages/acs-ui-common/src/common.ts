@@ -126,4 +126,8 @@ export type MessageOptions = {
   type?: ChatMessageType;
 };
 
+/**
+ * @beta
+ * Type of the message content, either 'text' or 'html'.
+ */
 export type ChatMessageType = 'text' | 'html';

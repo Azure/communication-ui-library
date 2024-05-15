@@ -58,6 +58,8 @@ import { AttachmentUploadActionType, AttachmentUpload, AttachmentUploadReducer }
 /* @conditional-compile-remove(attachment-upload) */
 import { MessageOptions } from '@internal/acs-ui-common';
 import { SendBoxPicker } from '../common/SendBoxPicker';
+/* @conditional-compile-remove(rich-text-editor-composite-support) */
+import { loadRichTextSendBox } from '../common/SendBoxPicker';
 
 /**
  * @private
@@ -129,6 +131,16 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     };
     fetchData();
   }, [adapter]);
+
+  /* @conditional-compile-remove(rich-text-editor-composite-support) */
+  useEffect(() => {
+    // if rich text editor is enabled, the rich text editor component should be loaded early for good UX
+    if (options?.richTextEditor !== undefined && options.richTextEditor) {
+      // this line is needed to load the Rooster JS dependencies early in the lifecycle
+      // when the rich text editor is enabled
+      loadRichTextSendBox();
+    }
+  }, [options?.richTextEditor]);
 
   const messageThreadProps = usePropsFor(MessageThread);
   const typingIndicatorProps = usePropsFor(TypingIndicator);

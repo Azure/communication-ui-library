@@ -1865,6 +1865,9 @@ export interface ChatMessage extends MessageCommon {
     status?: MessageStatus;
 }
 
+// @beta
+export type ChatMessageType = 'text' | 'html';
+
 // @public
 export type ChatMessageWithStatus = ChatMessage_2 & {
     clientMessageId?: string;
@@ -3270,7 +3273,7 @@ export type MessageEditedListener = MessageReceivedListener;
 export type MessageOptions = {
     metadata?: Record<string, string>;
     attachments?: AttachmentMetadata[];
-    type?: 'text' | 'html';
+    type?: ChatMessageType;
 };
 
 // @public
