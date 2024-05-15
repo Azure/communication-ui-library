@@ -10,7 +10,7 @@ import type { ContentModelDocument, EditorPlugin, IEditor } from 'roosterjs-cont
 import { createModelFromHtml, Editor, exportContent } from 'roosterjs-content-model-core';
 import { createParagraph, createSelectionMarker, setSelection } from 'roosterjs-content-model-dom';
 import { KeyboardInputPlugin } from './Plugins/KeyboardInputPlugin';
-import { AutoFormatPlugin, EditPlugin, PastePlugin } from 'roosterjs-content-model-plugins';
+import { AutoFormatPlugin, EditPlugin, PastePlugin, ShortcutPlugin } from 'roosterjs-content-model-plugins';
 import { UpdateContentPlugin, UpdateEvent } from './Plugins/UpdateContentPlugin';
 import { RichTextToolbar } from './Toolbar/RichTextToolbar';
 import { RichTextToolbarPlugin } from './Plugins/RichTextToolbarPlugin';
@@ -208,6 +208,7 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     const autoFormatPlugin = new AutoFormatPlugin({ autoBullet: true, autoNumbering: true, autoLink: true });
     const copyPastePlugin = new CopyPastePlugin();
     const roosterPastePlugin = new PastePlugin(false);
+    const shortcutPlugin = new ShortcutPlugin();
     const contextMenuPlugin = new ContextMenuPlugin(onContextMenuRender, onContextMenuDismiss);
     return [
       placeholderPlugin,
@@ -218,6 +219,7 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
       copyPastePlugin,
       roosterPastePlugin,
       toolbarPlugin,
+      shortcutPlugin,
       // contextPlugin and tableEditMenuProvider allow to show insert/delete menu for the table
       contextMenuPlugin,
       tableContextMenuPlugin
