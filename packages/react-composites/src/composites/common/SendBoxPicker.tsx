@@ -12,6 +12,9 @@ import { _ErrorBoundary, RichTextSendBoxProps } from '@internal/react-components
 import { AttachmentMetadataInProgress, MessageOptions } from '@internal/acs-ui-common';
 
 /* @conditional-compile-remove(rich-text-editor-composite-support) */
+/**
+ * Wrapper for RichTextSendBox component to allow us to use usePropsFor with richTextSendBox with lazy loading
+ */
 const RichTextSendBoxWrapper = React.lazy(() =>
   import('./RichTextSendBoxWrapper').then((module) => ({ default: module.RichTextSendBoxWrapper }))
 );
