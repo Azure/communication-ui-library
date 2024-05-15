@@ -499,9 +499,14 @@ export type MessageThreadProps = {
    * Optional callback to send a message.
    *
    * @param content - message body to send
+   * @param options - message options to be included in the message
    *
    */
-  onSendMessage?: (content: string) => Promise<void>;
+  onSendMessage?: (
+    content: string,
+    /* @conditional-compile-remove(attachment-upload) */
+    options?: MessageOptions
+  ) => Promise<void>;
 
   /**
   /**
@@ -612,10 +617,15 @@ export type MessageProps = {
   /**
    * Optional callback to send a message.
    *
-   * @param messageId - message id from chatClient
+   * @param content - message content from chatClient
+   * @param options - message options to be included in the message
    *
    */
-  onSendMessage?: (messageId: string) => Promise<void>;
+  onSendMessage?: (
+    content: string,
+    /* @conditional-compile-remove(attachment-upload) */
+    options?: MessageOptions
+  ) => Promise<void>;
 };
 
 /**

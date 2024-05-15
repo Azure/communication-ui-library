@@ -1,8 +1,8 @@
 {
   "type": "patch",
   "area": "fix",
-  "workstream": "Add Adapter options to JS bundles to allow for custom bot displayNames",
-  "comment": "add adapter options to JS bundles",
+  "workstream": "Background effects",
+  "comment": "Update styles to fix spacing of labeled background effects",
   "packageName": "@azure/communication-react",
   "email": "dmceachern@microsoft.com",
   "dependentChangeType": "patch"
