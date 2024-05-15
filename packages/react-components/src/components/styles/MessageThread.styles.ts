@@ -6,6 +6,7 @@ import { makeStyles, shorthands, tokens } from '@fluentui/react-components';
 import { CSSProperties } from 'react';
 import { MESSAGE_STATUS_INDICATOR_SIZE_REM } from './MessageStatusIndicator.styles';
 import { ComponentSlotStyle } from '../../types';
+import { _ATTACHMENT_CARD_MARGIN_IN_PX, _ATTACHMENT_CARD_WIDTH_IN_REM } from './AttachmentCard.styles';
 
 // Minimum chat bubble width. This matches the minimum chat bubble width from FluentUI
 // that can contain a message and a timestamp.
@@ -210,6 +211,10 @@ export const useChatMyMessageStyles = makeStyles({
   },
   menuVisible: {
     visibility: 'visible'
+  },
+  multipleAttachments: {
+    width: '100%',
+    maxWidth: `${(_ATTACHMENT_CARD_WIDTH_IN_REM + _ATTACHMENT_CARD_MARGIN_IN_PX) * 2}rem`
   }
 });
 
@@ -317,6 +322,9 @@ export const useChatMessageStyles = makeStyles({
   },
   avatarOverlap: {
     marginLeft: `${-AVATAR_MARGIN_LEFT - MESSAGE_AVATAR_OVERLAP_REM}rem`
+  },
+  multipleAttachments: {
+    width: `${(_ATTACHMENT_CARD_WIDTH_IN_REM + _ATTACHMENT_CARD_MARGIN_IN_PX) * 2}rem`
   }
 });
 

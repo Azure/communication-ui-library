@@ -30,7 +30,10 @@ import {
 import { MentionLookupOptions } from '../../MentionPopover';
 import { MAXIMUM_LENGTH_OF_MESSAGE } from '../../utils/SendBoxUtils';
 /* @conditional-compile-remove(attachment-upload) */
-import { attachmentMetadataReducer } from '../../utils/ChatMessageComponentAsEditBoxUtils';
+import {
+  attachmentMetadataReducer,
+  doesMessageContainMultipleAttachments
+} from '../../utils/ChatMessageComponentAsEditBoxUtils';
 import {
   getMessageState,
   onRenderCancelIcon,
@@ -112,6 +115,11 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
     },
     [iconClassName]
   );
+
+  /* @conditional-compile-remove(attachment-upload) */
+  const hasMultipleAttachments = useMemo(() => {
+    return doesMessageContainMultipleAttachments(message);
+  }, [message]);
 
   const editBoxStyles = useMemo(() => {
     return concatStyleSets(editBoxStyleSet, { textField: { borderColor: theme.palette.themePrimary } });
@@ -221,7 +229,11 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
     <ChatMyMessage
       attached={attached}
       root={{
-        className: chatMyMessageStyles.root
+        className: mergeClasses(
+          chatMyMessageStyles.root,
+          /* @conditional-compile-remove(attachment-upload) */
+          hasMultipleAttachments ? chatMyMessageStyles.multipleAttachments : undefined
+        )
       }}
       body={{
         className: mergeClasses(
