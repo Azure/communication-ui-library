@@ -53,8 +53,11 @@ import { MessageThreadWithCustomMessageStatusIndicatorExample } from './snippets
 import { MessageThreadWithCustomTimestampExample } from './snippets/CustomTimestamp.snippet';
 import { DefaultMessageThreadExample } from './snippets/Default.snippet';
 import { MessageThreadWithMessageStatusIndicatorExample } from './snippets/MessageStatusIndicator.snippet';
-import { MessageWithAttachment, MessageWithAttachmentFromTeams } from './snippets/MessageWithAttachment.snippet';
-import { MessageWithCustomAttachment } from './snippets/MessageWithCustomAttachment.snippet';
+import {
+  MessageWithAttachment,
+  MessageWithAttachmentFromTeams,
+  MessageWithCustomAttachment
+} from './snippets/MessageWithAttachment.snippet';
 import { MessageWithCustomMentionRenderer } from './snippets/MessageWithCustomMentionRenderer.snippet';
 import { MessageThreadWithSystemMessagesExample } from './snippets/SystemMessages.snippet';
 import { MessageThreadWithInlineImageExample } from './snippets/WithInlineImageMessage.snippet';
@@ -378,7 +381,7 @@ const Docs: () => JSX.Element = () => {
         <Description>
           For example, the following code snippet demonstrates how to customize the download options for attachments.
         </Description>
-        <Canvas mdxSource={MessageWithCustomAttachmentText}>
+        <Canvas mdxSource={MessageWithAttachmentText}>
           <MessageWithCustomAttachment />
         </Canvas>
       </div>
