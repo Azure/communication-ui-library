@@ -219,7 +219,8 @@
     "richTextDeleteRowOrColumnMenu": "删除",
     "richTextDeleteColumnMenu": "删除列",
     "richTextDeleteRowMenu": "删除行",
-    "richTextDeleteTableMenu": "删除表格"
+    "richTextDeleteTableMenu": "删除表格",
+    "richTextToolbarMoreButtonAriaLabel": "More options"
   },
   "errorBar": {
     "unableToReachChatService": "你已脱机",

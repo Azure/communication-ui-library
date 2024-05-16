@@ -219,7 +219,8 @@
     "richTextDeleteRowOrColumnMenu": "Delete",
     "richTextDeleteColumnMenu": "列の削除",
     "richTextDeleteRowMenu": "行の削除",
-    "richTextDeleteTableMenu": "Delete table"
+    "richTextDeleteTableMenu": "Delete table",
+    "richTextToolbarMoreButtonAriaLabel": "More options"
   },
   "errorBar": {
     "unableToReachChatService": "オフラインです",

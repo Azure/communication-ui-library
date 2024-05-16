@@ -219,7 +219,8 @@
     "richTextDeleteRowOrColumnMenu": "حذف",
     "richTextDeleteColumnMenu": "حذف العمود",
     "richTextDeleteRowMenu": "حذف الصف",
-    "richTextDeleteTableMenu": "حذف الجدول"
+    "richTextDeleteTableMenu": "حذف الجدول",
+    "richTextToolbarMoreButtonAriaLabel": "More options"
   },
   "errorBar": {
     "unableToReachChatService": "أنت غير متصل",
