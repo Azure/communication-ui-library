@@ -8,11 +8,13 @@ import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin';
 const DEVELOPMENT_BUILD = process.env.NODE_ENV === 'development';
 console.log(`Creating storybook with internal-only stories: ${DEVELOPMENT_BUILD}`);
 // Include all stories that have .ts, .tsx or .mdx extensions in development builds.
-const storybookDevGlobPaths = ['../stories/**/*.stories.@(ts|tsx|mdx)'];
+const storybookDevGlobPaths = ['../stories/**/*.@(mdx)', '../stories/**/*.stories.@(ts|tsx)'];
 // In production builds include all stories except those in the INTERNAL/ folder
 const storybookProdGlobPaths = [
-  '../stories/!(INTERNAL)/**/*.stories.@(ts|tsx|mdx)', // includes all stories in folders, *excluding* anything in the INTERNAL folder
-  '../stories/*.stories.@(ts|tsx|mdx)' // includes all top level stories
+  '../stories/!(INTERNAL)/**/*.@(mdx)', // includes all stories in folders, *excluding* anything in the INTERNAL folder
+  '../stories/*.@(mdx)', // includes all top level stories
+  '../stories/!(INTERNAL)/**/*.stories.@(ts|tsx)', // includes all stories in folders, *excluding* anything in the INTERNAL folder
+  '../stories/*.stories.@(ts|tsx)' // includes all top level stories
 ];
 const storybookConfig: StorybookConfig = {
   addons: [
