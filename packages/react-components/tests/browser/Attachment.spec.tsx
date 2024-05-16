@@ -311,4 +311,3 @@ function getAttachmentIconDocx(): string | JSX.Element {
 function getAttachmentIconGenericFile(): string | JSX.Element {
   throw new Error('Function not implemented.');
 }
-
