@@ -14,7 +14,7 @@ import { MentionLookupOptions } from '../../MentionPopover';
 /* @conditional-compile-remove(rich-text-editor) */
 import type { ChatMessageComponentAsRichTextEditBoxProps } from './ChatMessageComponentAsRichTextEditBox';
 /* @conditional-compile-remove(rich-text-editor) */
-import { ErrorBoundary } from '../../ErrorBoundary';
+import { _ErrorBoundary } from '../../ErrorBoundary';
 
 /* @conditional-compile-remove(rich-text-editor) */
 const ChatMessageComponentAsRichTextEditBox = React.lazy(() => import('./ChatMessageComponentAsRichTextEditBox'));
@@ -61,11 +61,11 @@ export const ChatMessageComponentAsEditBoxPicker = (props: ChatMessageComponentA
   /* @conditional-compile-remove(rich-text-editor) */
   if (richTextEditor) {
     return (
-      <ErrorBoundary fallback={simpleEditBox}>
+      <_ErrorBoundary fallback={simpleEditBox}>
         <Suspense fallback={simpleEditBox}>
           <ChatMessageComponentAsRichTextEditBox {...props} />
         </Suspense>
-      </ErrorBoundary>
+      </_ErrorBoundary>
     );
   }
 
