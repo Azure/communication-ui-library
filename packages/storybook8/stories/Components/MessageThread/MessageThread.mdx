@@ -31,11 +31,9 @@ import MessageThreadWithCustomMessageStatusIndicatorExampleText from '!!raw-load
 import MessageThreadWithCustomTimestampExampleText from '!!raw-loader!./snippets/CustomTimestamp.snippet.tsx';
 import DefaultMessageThreadExampleText from '!!raw-loader!./snippets/Default.snippet.tsx';
 import MessageThreadWithMessageStatusIndicatorExampleText from '!!raw-loader!./snippets/MessageStatusIndicator.snippet.tsx';
-const MessageWithAttachmentText = require('!!raw-loader!./snippets/MessageWithAttachment.snippet.tsx').default;
-const MessageWithAttachmentFromTeamsText =
-  require('!!raw-loader!./snippets/MessageWithAttachmentFromTeams.snippet.tsx').default;
-const MessageWithCustomAttachmentText =
-  require('!!raw-loader!./snippets/MessageWithCustomAttachment.snippet.tsx').default;
+import MessageWithAttachmentText from '!!raw-loader!./snippets/MessageWithAttachment.snippet.tsx';
+import MessageWithAttachmentFromTeamsText from '!!raw-loader!./snippets/MessageWithAttachmentFromTeams.snippet.tsx';
+import MessageWithCustomAttachmentText from '!!raw-loader!./snippets/MessageWithCustomAttachment.snippet.tsx';
 import MessageWithCustomMentionRendererText from '!!raw-loader!./snippets/MessageWithCustomMentionRenderer.snippet.tsx';
 import ExampleImportantsText from '!!raw-loader!./snippets/placeholdermessages.ts';
 import MessageThreadWithSystemMessagesExampleText from '!!raw-loader!./snippets/SystemMessages.snippet.tsx';
@@ -195,11 +193,13 @@ Specifically, `window.open` method will be called for target `URL` defined in `A
 If the identity of message sender is a Microsoft Teams user, the attachment will be rendered with an `open`
 icon shown below.
 
-<Canvas mdxSource={MessageWithAttachmentText}>
+<Canvas mdxSource={MessageWithAttachmentFromTeamsText}>
   <MessageWithAttachmentFromTeams />
 </Canvas>
 
 ### Advanced Usage: Customizing Attachment Rendering
+
+<SingleLineBetaBanner />
 
 The MessageThread component also supports multiple ways to customize the rendering. You can leverage the
 `attachmentOptions.downloadOptions` props to provide a dynamic list of menu action buttons that will be based
@@ -208,9 +208,9 @@ a static list for all secanrios.
 
 For example, the following code snippet demonstrates how to customize the download options for attachments.
 
-<Canvas mdxSource={MessageWithAttachmentText}>
+<Canvas mdxSource={MessageWithCustomAttachmentText}>
   <MessageWithCustomAttachment />
-</Canvas>{' '}
+</Canvas>
 
 ## Mention of Users with a custom renderer within Message
 
