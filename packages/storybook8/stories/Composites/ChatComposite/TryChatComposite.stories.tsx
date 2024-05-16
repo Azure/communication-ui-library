@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { ChatComposite } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
 import { Meta } from '@storybook/react';
 import React, { useState, useEffect } from 'react';
@@ -36,8 +35,8 @@ const TryChatCompositeStory = (args: ArgsFrom<typeof storyControls>, context): J
 
   useEffect(() => {
     setContainerProps({
-      displayName: args.displayName,
-      topic: args.topic,
+      displayName: args.displayName ?? 'John Smith',
+      topic: args.topic ?? 'Chat with a friendly bot',
       messages: messageArray
     });
   }, [args.displayName, args.topic]);
@@ -63,17 +62,14 @@ const TryChatCompositeStory = (args: ArgsFrom<typeof storyControls>, context): J
   );
 };
 
+export const TryChatComposite = TryChatCompositeStory.bind({});
+
 const meta: Meta<typeof TryChatCompositeStory> = {
-  title: 'ChatComposite/Try Chat Composite',
-  component: ChatComposite,
+  title: 'Composites/ChatComposite/Try Chat Composite',
   argTypes: {
     ...storyControls,
     // Hiding auto-generated controls
     ...defaultChatCompositeHiddenControls
-  },
-  parameters: {
-    useMaxHeightParent: true,
-    useMaxWidthParent: true
   }
 };
 

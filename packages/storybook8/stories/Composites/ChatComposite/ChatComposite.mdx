@@ -1,12 +1,13 @@
 import { Canvas, Meta, Source } from '@storybook/blocks';
 import { SingleLineBetaBanner } from '../../BetaBanners/SingleLineBetaBanner';
 
+import { JoinExistingChatThread } from './JoinExistingChatThread.stories';
 import containerText from '!!raw-loader!./snippets/Container.snippet.tsx';
 import customDataModelExampleContainerText from '!!raw-loader!./snippets/CustomDataModelExampleContainer.snippet.tsx';
 import customDateTimeFormatExampleText from '!!raw-loader!./snippets/CustomDateTimeFormat.snippet.tsx';
 import customBehaviorExampleText from '!!raw-loader!./snippets/CustomizeBehavior.snippet.tsx';
 
-<Meta title="Composites/ChatComposite2" />
+<Meta title="Composites/ChatComposite" />
 
 # ChatComposite
 
@@ -115,7 +116,7 @@ shows a way to intercept messages entered by the user and modify them before sen
 
 ## Joining existing Chat
 
-The [join existing chat thread](./?path=/story/composites-chat-joinexistingchatthread--join-existing-chat-thread)
+The [join existing chat thread](./?path=/story/composites-chatcomposite-join-existing-chat-thread--join-existing-chat-thread)
 provides an easy playground to join an existing Azure Communication Services chat thread. This is useful if you
 want to explore the composite with multiple users.
 

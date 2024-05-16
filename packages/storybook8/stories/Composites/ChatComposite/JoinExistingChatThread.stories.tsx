@@ -49,20 +49,10 @@ export const JoinExistingChatThread = JoinExistingChatThreadStory.bind({});
 
 const meta: Meta<typeof JoinExistingChatThreadStory> = {
   title: 'Composites/ChatComposite/Join Existing Chat Thread',
-  // name: 'Join Existing Chat Thread',
-  component: JoinExistingChatThreadStory,
   argTypes: {
     ...storyControls,
     // Hiding auto-generated controls
     ...defaultChatCompositeHiddenControls
-  },
-  parameters: {
-    useMaxHeightParent: true,
-    useMaxWidthParent: true,
-    docs: {
-      //Prevent Docs auto scroll to top
-      container: null
-    }
   }
 };
 
