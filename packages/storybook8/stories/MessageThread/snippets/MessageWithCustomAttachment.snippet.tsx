@@ -1,13 +1,20 @@
 import {
   AttachmentMenuAction,
   AttachmentMetadata,
+  ChatMessage,
   FluentThemeProvider,
   MessageStatus,
   MessageThread,
   defaultAttachmentMenuAction
 } from '@azure/communication-react';
 import { initializeFileTypeIcons } from '@fluentui/react-file-type-icons';
-import { ShareIos24Regular, WindowNew24Regular } from '@fluentui/react-icons';
+import {
+  Bookmark24Filled,
+  Heart24Filled,
+  Pin24Filled,
+  ShareIos24Regular,
+  WindowNew24Regular
+} from '@fluentui/react-icons';
 import React from 'react';
 
 initializeFileTypeIcons();
@@ -20,7 +27,10 @@ export const MessageWithCustomAttachment: () => JSX.Element = () => {
         showMessageDate={true}
         attachmentOptions={{
           downloadOptions: {
-            actionsForAttachment: (attachment: AttachmentMetadata): AttachmentMenuAction[] => {
+            actionsForAttachment: (
+              attachment: AttachmentMetadata,
+              message: ChatMessage | undefined
+            ): AttachmentMenuAction[] => {
               // allows the menu actions to be dynamically generated based on the attachment content
               // (i.e. name, extension, etc.), or the message content (i.e. senderID, etc.)
               // in this example, we are constructing a dynamic menu based on the attachment extension
@@ -39,7 +49,41 @@ export const MessageWithCustomAttachment: () => JSX.Element = () => {
                     }
                   }
                 ];
+              } else if (message?.senderId === 'user4') {
+                // alternatively, you can return a dynamic menu based on the message metadata such as user ID
+                return [
+                  // you can reuse default action if you would like to
+                  defaultAttachmentMenuAction,
+                  // you can also overwrite the default action and reuse only a part of it
+                  {
+                    name: 'Bookmart',
+                    icon: <Bookmark24Filled />,
+                    onClick: defaultAttachmentMenuAction.onClick
+                  },
+                  // or you can create a new action from scratch
+                  {
+                    name: 'Favorite',
+                    icon: <Heart24Filled />,
+                    onClick: () => {
+                      return new Promise((resolve) => {
+                        window.alert('Favorite button clicked');
+                        resolve();
+                      });
+                    }
+                  },
+                  {
+                    name: 'Pin',
+                    icon: <Pin24Filled />,
+                    onClick: () => {
+                      return new Promise((resolve) => {
+                        window.alert('pin button clicked');
+                        resolve();
+                      });
+                    }
+                  }
+                ];
               } else {
+                // or return a static list of menu actions for all other cases
                 return [
                   {
                     ...defaultAttachmentMenuAction,
@@ -79,9 +123,9 @@ export const MessageWithCustomAttachment: () => JSX.Element = () => {
             contentType: 'text',
             attachments: [
               {
-                id: '653d554cede5',
+                id: '750e4dbd2900',
                 name: 'Report.docx',
-                url: 'https://<file_url>/report.docx'
+                url: 'https://www.bing.com'
               }
             ]
           },
@@ -97,9 +141,27 @@ export const MessageWithCustomAttachment: () => JSX.Element = () => {
             contentType: 'text',
             attachments: [
               {
-                id: 'd4a58f6e87f2',
+                id: '607b3100f37a',
                 name: 'Manual.pdf',
-                url: 'https://<file_url>/manual.pdf'
+                url: 'https://www.bing.com'
+              }
+            ]
+          },
+          {
+            messageType: 'chat',
+            senderId: 'user4',
+            senderDisplayName: 'John Doe',
+            messageId: Math.random().toString(),
+            content: 'Great, I just need you two to sign off on this document.',
+            createdOn: new Date('2019-04-13T00:00:00.000+08:00'),
+            mine: true,
+            attached: false,
+            contentType: 'text',
+            attachments: [
+              {
+                id: 'bv7b3100f37a',
+                name: 'RSVP.xlsx',
+                url: 'https://www.bing.com'
               }
             ]
           }

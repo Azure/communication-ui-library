@@ -21,7 +21,7 @@ import {
   IDropdownOption
 } from '@fluentui/react';
 import { Divider } from '@fluentui/react-components';
-import { Canvas, Description, Heading, Source, Title } from '@storybook/addon-docs';
+import { Canvas, Description, Heading, Source, Subtitle, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react';
 import React, { useEffect, useRef, useState } from 'react';
 import { DetailedBetaBanner } from '../BetaBanners/DetailedBetaBanner';
@@ -52,7 +52,7 @@ import { MessageThreadWithCustomMessageStatusIndicatorExample } from './snippets
 import { MessageThreadWithCustomTimestampExample } from './snippets/CustomTimestamp.snippet';
 import { DefaultMessageThreadExample } from './snippets/Default.snippet';
 import { MessageThreadWithMessageStatusIndicatorExample } from './snippets/MessageStatusIndicator.snippet';
-import { MessageWithAttachment } from './snippets/MessageWithAttachment.snippet';
+import { MessageWithAttachment, MessageWithAttachmentFromTeams } from './snippets/MessageWithAttachment.snippet';
 import { MessageWithCustomAttachment } from './snippets/MessageWithCustomAttachment.snippet';
 import { MessageWithCustomMentionRenderer } from './snippets/MessageWithCustomMentionRenderer.snippet';
 import { MessageThreadWithSystemMessagesExample } from './snippets/SystemMessages.snippet';
@@ -338,16 +338,31 @@ const Docs: () => JSX.Element = () => {
 
       <div ref={refDisplayAttachments}>
         <Heading>Display Messages with Attachments</Heading>
+        <Subtitle>Basic Usage: Default Attachment Rendering</Subtitle>
         <DetailedBetaBanner />
         <Description>
-          The MessageThread component supports rendering of message attachments, including multiple ways to customize
-          it. Developers can opt to use the default attachment rendering by not providing `attachmentOptions`. In the
-          following example, the default attachment rendering is shown with an attachment on the first chat message. By
-          default, the browser `window.open` method will be called with the target URL.
+          MessageThread component renders message attachment out of box without any additional configuration. Simply
+          provide a list of `ChatMessages` with attachments of type `AttachmentMetadata` and the component will render
+          the message content along with associated attachments.
         </Description>
         <Canvas mdxSource={MessageWithAttachmentText}>
           <MessageWithAttachment />
         </Canvas>
+        <Description>
+          If the identity of message sender is a Microsoft Teams user, the attachment will be rendered with an `open`
+          icon shown below.
+        </Description>
+        <Canvas mdxSource={MessageWithAttachmentText}>
+          <MessageWithAttachmentFromTeams />
+        </Canvas>
+        <Subtitle>Advanced Usage: Customizing Attachment Rendering</Subtitle>
+        <DetailedBetaBanner />
+        <Description>
+          MessageThread component also support multiple ways to customize the rendering. Developers can opt to use the
+          default attachment rendering by not providing `attachmentOptions`. In the following example, the default
+          attachment rendering is shown with an attachment on the first chat message. By default, the browser
+          `window.open` method will be called with the target URL.
+        </Description>
         <Description>
           The `attachmentOptions` allows the attachmentCard to be customized in multiple ways. For example, developers
           can have a custom icon, label for the button and custom `onClick` callback.
