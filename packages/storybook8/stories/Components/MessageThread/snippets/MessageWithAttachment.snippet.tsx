@@ -13,10 +13,10 @@ export const MessageWithAttachment: () => JSX.Element = () => {
         messages={[
           {
             messageType: 'chat',
-            senderId: 'user1',
-            senderDisplayName: 'Kat Larsson',
-            messageId: Math.random().toString(),
-            content: 'Here is my router configuration file.',
+            senderId: '8:acs:7a7894bb-0d53-4fe8-b83e-dce84ade5e89',
+            senderDisplayName: 'Robert Tolbert',
+            messageId: `64d334be-f30c-4218-bc1c-853a28512187`,
+            content: 'Here is my router configuration file',
             createdOn: new Date('2019-04-13T00:00:00.000+08:10'),
             mine: false,
             attached: false,
@@ -24,17 +24,17 @@ export const MessageWithAttachment: () => JSX.Element = () => {
             contentType: 'text',
             attachments: [
               {
-                id: 'f02890e65014',
-                name: 'RouterConfig.xlsx',
-                url: 'https://<file_url>/RouterConfig.xlsx'
+                id: 'p121eacd612d',
+                name: 'RouterConfig.txt',
+                url: 'https://www.bing.com'
               }
             ]
           },
           {
             messageType: 'chat',
             senderId: 'user2',
-            senderDisplayName: 'Robert Tolbert',
-            messageId: Math.random().toString(),
+            senderDisplayName: 'Kat Larsson',
+            messageId: `348eda2f-1582-4f29-bb5d-cda7295ca398`,
             content: 'Thanks for sharing. This will help me troubleshoot your internet connection.',
             createdOn: new Date('2019-04-13T00:00:00.000+08:09'),
             mine: true,
