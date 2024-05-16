@@ -7,25 +7,9 @@ import { test as betaTest } from './FlavoredBaseTest';
 import { RichTextSendBox } from '../../src/components/RichTextEditor/RichTextSendBox';
 import { MessageThread, SendBox } from '../../src';
 import { TestMessageThreadWithCustomAttachmentActions } from './TestingComponents/TestMessageThreadWithCustomAttachmentActions';
-import { registerIcons } from '@fluentui/react';
-import { beforeEach } from 'node:test';
 
 betaTest.describe('Attachment tests', () => {
   betaTest.skip(({ isBetaBuild }) => !isBetaBuild, 'The tests should be run for beta flavor only');
-
-  beforeEach(() => {
-    registerIcons({
-      icons: {
-        docx24_svg: getAttachmentIconDocx(),
-        pdf24_svg: getAttachmentIconDocx(),
-        ppt24_svg: getAttachmentIconDocx(),
-        txt24_svg: getAttachmentIconDocx(),
-        AttachmentMoreMenu: getAttachmentIconDocx(),
-        cancelattachmentupload: getAttachmentIconDocx(),
-        genericfile24_svg: getAttachmentIconGenericFile()
-      }
-    });
-  });
 
   betaTest('Regular SendBox should show attachment progress correctly in group layout', async ({ mount, page }) => {
     const component = await mount(
