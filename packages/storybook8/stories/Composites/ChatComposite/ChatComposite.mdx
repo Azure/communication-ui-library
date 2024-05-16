@@ -64,7 +64,9 @@ accepts an object where you can provide a custom JSX element against an icon nam
 Some UI elements of the composite can be hidden if desired using the ChatAdapter `options` interface. Currently
 we support hiding the `Topic Header`:
 
-<Source code={`<ChatComposite options={{ topic: false}}>`} />
+```ts
+<ChatComposite options={{ topic: false }} />
+```
 
 ## Participant Pane
 
@@ -72,12 +74,10 @@ we support hiding the `Topic Header`:
 You can also show a `Participant Pane` to the right hand side of the chat that has support for removing users. The Participant
 pane is a `beta` feature. Currently it does not support mobile views and is subject to breaking changes.
 
-<Source
-  code={`
+```ts
   // Caution: the Participant Pane is a beta feature
 <ChatComposite options={{ participantPane: true}}>
-`}
-/>
+```
 
 ## Running in a Mobile browser
 
