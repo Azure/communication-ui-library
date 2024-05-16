@@ -97,3 +97,12 @@ export const attachmentMetadataReducer = (state: AttachmentMetadata[], action: A
       return state;
   }
 };
+
+/* @conditional-compile-remove(attachment-upload) */
+/**
+ * @internal
+ */
+export const doesMessageContainMultipleAttachments = (message: ChatMessage): boolean => {
+  const length = message.attachments?.length ?? 0;
+  return length > 1;
+};
