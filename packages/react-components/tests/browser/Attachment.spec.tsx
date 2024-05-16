@@ -288,10 +288,3 @@ betaTest.describe('Attachment tests', () => {
     await expect(component).toHaveScreenshot('attachment-in-messagethread-teams-message-single.png');
   });
 });
-function getAttachmentIconDocx(): string | JSX.Element {
-  throw new Error('Function not implemented.');
-}
-
-function getAttachmentIconGenericFile(): string | JSX.Element {
-  throw new Error('Function not implemented.');
-}
