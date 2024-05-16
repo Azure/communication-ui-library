@@ -83,8 +83,6 @@ const DefaultMessageThreadExampleText = require('!!raw-loader!./snippets/Default
 const MessageThreadWithMessageStatusIndicatorExampleText =
   require('!!raw-loader!./snippets/MessageStatusIndicator.snippet.tsx').default;
 const MessageWithAttachmentText = require('!!raw-loader!./snippets/MessageWithAttachment.snippet.tsx').default;
-const MessageWithCustomAttachmentText =
-  require('!!raw-loader!./snippets/MessageWithCustomAttachment.snippet.tsx').default;
 const MessageWithCustomMentionRendererText =
   require('!!raw-loader!./snippets/MessageWithCustomMentionRenderer.snippet.tsx').default;
 const ExampleConstantsText = require('!!raw-loader!./snippets/placeholdermessages.ts').default;
