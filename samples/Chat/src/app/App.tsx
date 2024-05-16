@@ -3,7 +3,7 @@
 
 import { setLogLevel } from '@azure/logger';
 import { initializeIcons, Spinner } from '@fluentui/react';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { ChatScreen } from './ChatScreen';
 import ConfigurationScreen from './ConfigurationScreen';
 import { EndScreen } from './EndScreen';
@@ -35,11 +35,6 @@ export default (): JSX.Element => {
   const [endpointUrl, setEndpointUrl] = useState('');
   /* @conditional-compile-remove(rich-text-editor-composite-support) */
   const [isRichTextEditorEnabled, setIsRichTextEditorEnabled] = useState(false);
-
-  // Console log if isRichTextEditorEnabled changes
-  useEffect(() => {
-    console.log(`Rich Text Editor is ${isRichTextEditorEnabled ? 'enabled' : 'disabled'}`);
-  }, [isRichTextEditorEnabled]);
 
   const renderPage = (): JSX.Element => {
     switch (page) {
