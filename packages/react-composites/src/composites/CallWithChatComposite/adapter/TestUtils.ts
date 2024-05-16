@@ -239,7 +239,6 @@ function createMockCall(mockCallId: string): CallState {
     endTime: undefined,
     dominantSpeakers: undefined,
     raiseHand: { raisedHands: [] },
-    /* @conditional-compile-remove(ppt-live) */
     pptLive: { isActive: false },
     localParticipantReaction: undefined,
     captionsFeature: {
