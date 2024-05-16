@@ -5,14 +5,27 @@ import React from 'react';
 import { _AttachmentCard, _AttachmentCardProps } from './AttachmentCard';
 import { render, screen } from '@testing-library/react';
 import { Icon, registerIcons } from '@fluentui/react';
+import {
+  getAttachmentIconDismiss,
+  getAttachmentIconDocx,
+  getAttachmentIconGenericFile,
+  getAttachmentIconMenu,
+  getAttachmentIconPdf,
+  getAttachmentIconPpt,
+  getAttachmentIconTxt
+} from '../assets/AttachmentCardIcon';
 
 describe('AttachmentCard should be rendered properly', () => {
   beforeEach(() => {
     registerIcons({
       icons: {
-        docx24_svg: <></>,
-        cancelattachmentupload: <></>,
-        genericfile24_svg: <></>
+        docx24_svg: getAttachmentIconDocx(),
+        pdf24_svg: getAttachmentIconPdf(),
+        ppt24_svg: getAttachmentIconPpt(),
+        txt24_svg: getAttachmentIconTxt(),
+        AttachmentMoreMenu: getAttachmentIconMenu(),
+        cancelattachmentupload: getAttachmentIconDismiss(),
+        genericfile24_svg: getAttachmentIconGenericFile()
       }
     });
   });
