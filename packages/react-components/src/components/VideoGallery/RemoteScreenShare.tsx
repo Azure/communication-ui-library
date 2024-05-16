@@ -35,7 +35,6 @@ export const RemoteScreenShare = React.memo(
     reactionResources?: ReactionResources;
     localParticipant?: VideoGalleryLocalParticipant;
     remoteParticipants?: VideoGalleryRemoteParticipant[];
-    /* @conditional-compile-remove(ppt-live) */
     isPPTLive?: boolean;
   }) => {
     const {
@@ -50,7 +49,6 @@ export const RemoteScreenShare = React.memo(
       reactionResources,
       localParticipant,
       remoteParticipants,
-      /* @conditional-compile-remove(ppt-live) */
       isPPTLive
     } = props;
     const locale = useLocale();
@@ -79,7 +77,6 @@ export const RemoteScreenShare = React.memo(
           participant: displayName
         })
       : '';
-    /* @conditional-compile-remove(ppt-live) */
     if (isPPTLive) {
       return (
         <VideoTile
