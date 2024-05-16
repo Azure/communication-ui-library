@@ -219,7 +219,8 @@
     "richTextDeleteRowOrColumnMenu": "Odstranit",
     "richTextDeleteColumnMenu": "Odstranit sloupec",
     "richTextDeleteRowMenu": "Odstranit řádek",
-    "richTextDeleteTableMenu": "Odstranit tabulku"
+    "richTextDeleteTableMenu": "Odstranit tabulku",
+    "richTextToolbarMoreButtonAriaLabel": "More options"
   },
   "errorBar": {
     "unableToReachChatService": "Jste offline",

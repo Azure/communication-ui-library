@@ -219,7 +219,8 @@
     "richTextDeleteRowOrColumnMenu": "מחק",
     "richTextDeleteColumnMenu": "מחק עמודה",
     "richTextDeleteRowMenu": "מחק שורה",
-    "richTextDeleteTableMenu": "מחק טבלה"
+    "richTextDeleteTableMenu": "מחק טבלה",
+    "richTextToolbarMoreButtonAriaLabel": "More options"
   },
   "errorBar": {
     "unableToReachChatService": "אתה נמצא במצב לא מקוון",

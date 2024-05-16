@@ -219,7 +219,8 @@
     "richTextDeleteRowOrColumnMenu": "Sil",
     "richTextDeleteColumnMenu": "Sütunu sil",
     "richTextDeleteRowMenu": "Satırı sil",
-    "richTextDeleteTableMenu": "Tabloyu sil"
+    "richTextDeleteTableMenu": "Tabloyu sil",
+    "richTextToolbarMoreButtonAriaLabel": "More options"
   },
   "errorBar": {
     "unableToReachChatService": "Çevrimdışısınız",

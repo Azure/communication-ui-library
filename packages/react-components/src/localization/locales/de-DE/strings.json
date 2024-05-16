@@ -219,7 +219,8 @@
     "richTextDeleteRowOrColumnMenu": "Löschen",
     "richTextDeleteColumnMenu": "Spalte löschen",
     "richTextDeleteRowMenu": "Zeile löschen",
-    "richTextDeleteTableMenu": "Tabelle löschen"
+    "richTextDeleteTableMenu": "Tabelle löschen",
+    "richTextToolbarMoreButtonAriaLabel": "More options"
   },
   "errorBar": {
     "unableToReachChatService": "Sie sind offline.",

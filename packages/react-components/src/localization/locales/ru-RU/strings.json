@@ -219,7 +219,8 @@
     "richTextDeleteRowOrColumnMenu": "Удалить",
     "richTextDeleteColumnMenu": "Удалить столбец",
     "richTextDeleteRowMenu": "Удалить строку",
-    "richTextDeleteTableMenu": "Удалить таблицу"
+    "richTextDeleteTableMenu": "Удалить таблицу",
+    "richTextToolbarMoreButtonAriaLabel": "More options"
   },
   "errorBar": {
     "unableToReachChatService": "Вы не в сети",

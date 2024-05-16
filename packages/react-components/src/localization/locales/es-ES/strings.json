@@ -219,7 +219,8 @@
     "richTextDeleteRowOrColumnMenu": "Eliminar",
     "richTextDeleteColumnMenu": "Eliminar columna",
     "richTextDeleteRowMenu": "Eliminar fila",
-    "richTextDeleteTableMenu": "Eliminar tabla"
+    "richTextDeleteTableMenu": "Eliminar tabla",
+    "richTextToolbarMoreButtonAriaLabel": "More options"
   },
   "errorBar": {
     "unableToReachChatService": "Sin conexión",

@@ -219,7 +219,8 @@
     "richTextDeleteRowOrColumnMenu": "Slett",
     "richTextDeleteColumnMenu": "Slett kolonne",
     "richTextDeleteRowMenu": "Slett rad",
-    "richTextDeleteTableMenu": "Slett tabell"
+    "richTextDeleteTableMenu": "Slett tabell",
+    "richTextToolbarMoreButtonAriaLabel": "More options"
   },
   "errorBar": {
     "unableToReachChatService": "Du er frakoblet",

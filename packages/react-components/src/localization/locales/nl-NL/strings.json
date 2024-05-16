@@ -219,7 +219,8 @@
     "richTextDeleteRowOrColumnMenu": "Verwijderen",
     "richTextDeleteColumnMenu": "Kolom verwijderen",
     "richTextDeleteRowMenu": "Rij verwijderen",
-    "richTextDeleteTableMenu": "Tabel verwijderen"
+    "richTextDeleteTableMenu": "Tabel verwijderen",
+    "richTextToolbarMoreButtonAriaLabel": "More options"
   },
   "errorBar": {
     "unableToReachChatService": "U bent offline",

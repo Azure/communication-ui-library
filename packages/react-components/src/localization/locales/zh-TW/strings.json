@@ -219,7 +219,8 @@
     "richTextDeleteRowOrColumnMenu": "刪除",
     "richTextDeleteColumnMenu": "刪除欄",
     "richTextDeleteRowMenu": "刪除列",
-    "richTextDeleteTableMenu": "刪除表格"
+    "richTextDeleteTableMenu": "刪除表格",
+    "richTextToolbarMoreButtonAriaLabel": "More options"
   },
   "errorBar": {
     "unableToReachChatService": "您處於離線狀態",

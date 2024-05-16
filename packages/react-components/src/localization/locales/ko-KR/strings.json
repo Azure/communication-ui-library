@@ -219,7 +219,8 @@
     "richTextDeleteRowOrColumnMenu": "Delete",
     "richTextDeleteColumnMenu": "열 삭제",
     "richTextDeleteRowMenu": "행 삭제",
-    "richTextDeleteTableMenu": "Delete table"
+    "richTextDeleteTableMenu": "Delete table",
+    "richTextToolbarMoreButtonAriaLabel": "More options"
   },
   "errorBar": {
     "unableToReachChatService": "오프라인 상태입니다.",
