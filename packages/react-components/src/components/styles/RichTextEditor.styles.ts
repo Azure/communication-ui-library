@@ -150,10 +150,10 @@ export const toolbarButtonStyle = (theme: Theme): Partial<IButtonStyles> => {
     rootChecked: ribbonButtonRootStyles(theme),
     rootHovered: ribbonButtonRootStyles(theme),
     rootCheckedHovered: ribbonButtonRootStyles(theme)
-    // rootCheckedPressed: ribbonButtonRootStyles(theme),
-    // rootPressed: ribbonButtonRootStyles(theme),
-    // rootExpanded: ribbonButtonRootStyles(theme),
-    // rootExpandedHovered: ribbonButtonRootStyles(theme)
+    rootCheckedPressed: ribbonButtonRootStyles(theme),
+    rootPressed: ribbonButtonRootStyles(theme),
+    rootExpanded: ribbonButtonRootStyles(theme),
+    rootExpandedHovered: ribbonButtonRootStyles(theme)
   };
 };
 
