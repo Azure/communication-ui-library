@@ -71,9 +71,6 @@ export const _videoGalleryRemoteParticipantsMemo: _VideoGalleryRemoteParticipant
             participant.role,
             isHideAttendeeNamesEnabled
           );
-          let contentSharingStream = undefined;
-          /* @conditional-compile-remove(ppt-live) */
-          contentSharingStream = participant.contentSharingStream;
           const remoteParticipantReaction = memoizedConvertToVideoTileReaction(participant.reactionState);
           let spotlight = undefined;
           /* @conditional-compile-remove(spotlight) */ spotlight = participant.spotlight;
@@ -85,7 +82,7 @@ export const _videoGalleryRemoteParticipantsMemo: _VideoGalleryRemoteParticipant
             state,
             displayName,
             participant.raisedHand,
-            contentSharingStream,
+            participant.contentSharingStream,
             remoteParticipantReaction,
             spotlight
           );
@@ -161,7 +158,6 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
     screenShareStream = convertRemoteVideoStreamToVideoGalleryStream(sdkScreenShareStream);
   }
 
-  /* @conditional-compile-remove(ppt-live) */
   if (contentSharingStream) {
     screenShareStream = convertRemoteContentSharingStreamToVideoGalleryStream(contentSharingStream);
   }
@@ -197,7 +193,6 @@ const convertRemoteVideoStreamToVideoGalleryStream = (stream: RemoteVideoStreamS
   };
 };
 
-/* @conditional-compile-remove(ppt-live) */
 const convertRemoteContentSharingStreamToVideoGalleryStream = (stream: HTMLElement): VideoGalleryStream => {
   return {
     isAvailable: !!stream,

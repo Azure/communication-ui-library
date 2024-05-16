@@ -711,7 +711,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       localParticipant={localParticipant}
       remoteParticipants={remoteParticipants}
       reactionResources={reactionResources}
-      /* @conditional-compile-remove(ppt-live) */
       isPPTLive={!screenShareParticipant.screenShareStream?.id}
     />
   );
