@@ -57,6 +57,7 @@
     "richTextDeleteColumnMenu": "Eliminar columna",
     "richTextDeleteRowMenu": "Eliminar fila",
     "richTextDeleteTableMenu": "Eliminar tabla",
+    "richTextToolbarMoreButtonAriaLabel": "More options",
     "attachmentMoreMenu": "Más opciones"
   },
   "mentionPopover": {
@@ -199,7 +200,26 @@
     "blockedWarningText": "Este mensaje se eliminó debido a la directiva de la organización.",
     "blockedWarningLinkText": "Detalles",
     "attachmentCardGroupMessage": "El mensaje tiene {attachmentCount} archivo adjunto",
-    "messageDeletedAnnouncementAriaLabel": "El mensaje se ha eliminado"
+    "messageDeletedAnnouncementAriaLabel": "El mensaje se ha eliminado",
+    "richTextBoldTooltip": "Negrita",
+    "richTextItalicTooltip": "Cursiva",
+    "richTextUnderlineTooltip": "Subrayado",
+    "richTextBulletListTooltip": "Lista con viñetas",
+    "richTextNumberListTooltip": "Lista numerada",
+    "richTextIncreaseIndentTooltip": "Aumentar sangría",
+    "richTextDecreaseIndentTooltip": "Reducir sangría",
+    "richTextInsertTableTooltip": "Insertar tabla",
+    "richTextFormatButtonTooltip": "Formato",
+    "richTextInsertRowOrColumnMenu": "Insertar",
+    "richTextInsertTableMenuTitle": "Insertar {column} x {row} tabla",
+    "richTextInsertRowAboveMenu": "Insertar arriba",
+    "richTextInsertRowBelowMenu": "Insertar debajo",
+    "richTextInsertColumnLeftMenu": "Insertar a la izquierda",
+    "richTextInsertColumnRightMenu": "Insertar a la derecha",
+    "richTextDeleteRowOrColumnMenu": "Eliminar",
+    "richTextDeleteColumnMenu": "Eliminar columna",
+    "richTextDeleteRowMenu": "Eliminar fila",
+    "richTextDeleteTableMenu": "Eliminar tabla"
   },
   "errorBar": {
     "unableToReachChatService": "Sin conexión",

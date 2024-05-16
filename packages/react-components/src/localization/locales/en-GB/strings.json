@@ -57,6 +57,7 @@
     "richTextDeleteColumnMenu": "Delete column",
     "richTextDeleteRowMenu": "Delete row",
     "richTextDeleteTableMenu": "Delete table",
+    "richTextToolbarMoreButtonAriaLabel": "More options",
     "attachmentMoreMenu": "More Options"
   },
   "mentionPopover": {
@@ -199,7 +200,26 @@
     "blockedWarningText": "This message was deleted due to organisational policy.",
     "blockedWarningLinkText": "Details",
     "attachmentCardGroupMessage": "The message has {attachmentCount} attachment",
-    "messageDeletedAnnouncementAriaLabel": "The message is deleted"
+    "messageDeletedAnnouncementAriaLabel": "The message is deleted",
+    "richTextBoldTooltip": "Bold",
+    "richTextItalicTooltip": "Italic",
+    "richTextUnderlineTooltip": "Underline",
+    "richTextBulletListTooltip": "Bulleted list",
+    "richTextNumberListTooltip": "Numbered list",
+    "richTextIncreaseIndentTooltip": "Increase indent",
+    "richTextDecreaseIndentTooltip": "Decrease indent",
+    "richTextInsertTableTooltip": "Insert table",
+    "richTextFormatButtonTooltip": "Format",
+    "richTextInsertRowOrColumnMenu": "Insert",
+    "richTextInsertTableMenuTitle": "Insert {column} x {row} table",
+    "richTextInsertRowAboveMenu": "Insert above",
+    "richTextInsertRowBelowMenu": "Insert below",
+    "richTextInsertColumnLeftMenu": "Insert left",
+    "richTextInsertColumnRightMenu": "Insert right",
+    "richTextDeleteRowOrColumnMenu": "Delete",
+    "richTextDeleteColumnMenu": "Delete column",
+    "richTextDeleteRowMenu": "Delete row",
+    "richTextDeleteTableMenu": "Delete table"
   },
   "errorBar": {
     "unableToReachChatService": "You are offline",

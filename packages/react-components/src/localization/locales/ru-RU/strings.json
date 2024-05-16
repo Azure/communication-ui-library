@@ -57,6 +57,7 @@
     "richTextDeleteColumnMenu": "Удалить столбец",
     "richTextDeleteRowMenu": "Удалить строку",
     "richTextDeleteTableMenu": "Удалить таблицу",
+    "richTextToolbarMoreButtonAriaLabel": "More options",
     "attachmentMoreMenu": "Дополнительные параметры"
   },
   "mentionPopover": {
@@ -199,7 +200,26 @@
     "blockedWarningText": "Это сообщение было удалено политикой организации.",
     "blockedWarningLinkText": "Сведения",
     "attachmentCardGroupMessage": "Сообщение содержит {attachmentCount} вложение",
-    "messageDeletedAnnouncementAriaLabel": "Сообщение удалено"
+    "messageDeletedAnnouncementAriaLabel": "Сообщение удалено",
+    "richTextBoldTooltip": "Полужирный",
+    "richTextItalicTooltip": "Курсив",
+    "richTextUnderlineTooltip": "Подчеркнутый",
+    "richTextBulletListTooltip": "Маркированный список",
+    "richTextNumberListTooltip": "Нумерованный список",
+    "richTextIncreaseIndentTooltip": "Увеличить отступ",
+    "richTextDecreaseIndentTooltip": "Уменьшить отступ",
+    "richTextInsertTableTooltip": "Вставить таблицу",
+    "richTextFormatButtonTooltip": "Форматирование",
+    "richTextInsertRowOrColumnMenu": "Вставить",
+    "richTextInsertTableMenuTitle": "Вставить таблицу {column} x {row}",
+    "richTextInsertRowAboveMenu": "Вставить сверху",
+    "richTextInsertRowBelowMenu": "Вставить снизу",
+    "richTextInsertColumnLeftMenu": "Вставить слева",
+    "richTextInsertColumnRightMenu": "Вставить справа",
+    "richTextDeleteRowOrColumnMenu": "Удалить",
+    "richTextDeleteColumnMenu": "Удалить столбец",
+    "richTextDeleteRowMenu": "Удалить строку",
+    "richTextDeleteTableMenu": "Удалить таблицу"
   },
   "errorBar": {
     "unableToReachChatService": "Вы не в сети",
