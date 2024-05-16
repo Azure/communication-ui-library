@@ -219,7 +219,8 @@
     "richTextDeleteRowOrColumnMenu": "Radera",
     "richTextDeleteColumnMenu": "Ta bort kolumn",
     "richTextDeleteRowMenu": "Ta bort rad",
-    "richTextDeleteTableMenu": "Ta bort tabell"
+    "richTextDeleteTableMenu": "Ta bort tabell",
+    "richTextToolbarMoreButtonAriaLabel": "More options"
   },
   "errorBar": {
     "unableToReachChatService": "Du är offline",

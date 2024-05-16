@@ -219,7 +219,8 @@
     "richTextDeleteRowOrColumnMenu": "Delete",
     "richTextDeleteColumnMenu": "Supprimer la colonne",
     "richTextDeleteRowMenu": "Supprimer une ligne",
-    "richTextDeleteTableMenu": "Delete table"
+    "richTextDeleteTableMenu": "Delete table",
+    "richTextToolbarMoreButtonAriaLabel": "More options"
   },
   "errorBar": {
     "unableToReachChatService": "Vous êtes hors connexion",

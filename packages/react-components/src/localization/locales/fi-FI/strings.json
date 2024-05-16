@@ -219,7 +219,8 @@
     "richTextDeleteRowOrColumnMenu": "Poista",
     "richTextDeleteColumnMenu": "Poista sarake",
     "richTextDeleteRowMenu": "Poista rivi",
-    "richTextDeleteTableMenu": "Poista taulukko"
+    "richTextDeleteTableMenu": "Poista taulukko",
+    "richTextToolbarMoreButtonAriaLabel": "More options"
   },
   "errorBar": {
     "unableToReachChatService": "Olet offline-tilassa",
