@@ -4,10 +4,9 @@
 import { Stack } from '@fluentui/react';
 import { Meta } from '@storybook/react';
 import React from 'react';
-import { compositeExperienceContainerStyle } from '../constants';
-import { defaultChatCompositeHiddenControls, controlsToAdd, ArgsFrom } from '../controlsUtils';
-import { compositeLocale } from '../localizationUtils';
-import { Docs } from './ChatCompositeDocs';
+import { compositeExperienceContainerStyle } from '../../constants';
+import { defaultChatCompositeHiddenControls, controlsToAdd, ArgsFrom } from '../../controlsUtils';
+import { compositeLocale } from '../../localizationUtils';
 import { ContosoChatContainer } from './snippets/Container.snippet';
 import { ConfigJoinChatThreadHintBanner } from './snippets/Utils';
 
@@ -50,21 +49,10 @@ export const JoinExistingChatThread = JoinExistingChatThreadStory.bind({});
 
 const meta: Meta<typeof JoinExistingChatThreadStory> = {
   title: 'Composites/ChatComposite/Join Existing Chat Thread',
-  // name: 'Join Existing Chat Thread',
-  component: JoinExistingChatThreadStory,
   argTypes: {
     ...storyControls,
     // Hiding auto-generated controls
     ...defaultChatCompositeHiddenControls
-  },
-  parameters: {
-    useMaxHeightParent: true,
-    useMaxWidthParent: true,
-    docs: {
-      //Prevent Docs auto scroll to top
-      container: null,
-      page: () => Docs()
-    }
   }
 };
 

@@ -1,0 +1,206 @@
+import { Canvas, Description, Meta, Source } from '@storybook/blocks';
+import { SingleLineBetaBanner } from '../../BetaBanners/SingleLineBetaBanner';
+
+import * as MessageThreadStory from './MessageThread.stories';
+
+import { MessageThreadWithBlockedMessagesExample } from './snippets/BlockedMessages.snippet';
+import { MessageThreadWithCustomAvatarExample } from './snippets/CustomAvatar.snippet';
+import { MessageThreadWithCustoBlockedmMessageContainerExample } from './snippets/CustomBlockedMessage.snippet';
+import { MessageThreadWithCustomChatContainerExample } from './snippets/CustomChatContainer.snippet';
+import { MessageThreadWithCustomMessageContainerExample } from './snippets/CustomMessageContainer.snippet';
+import { MessageThreadWithCustomMessagesExample } from './snippets/CustomMessages.snippet';
+import { MessageThreadWithCustomMessageStatusIndicatorExample } from './snippets/CustomMessageStatusIndicator.snippet';
+import { MessageThreadWithCustomTimestampExample } from './snippets/CustomTimestamp.snippet';
+import { DefaultMessageThreadExample } from './snippets/Default.snippet';
+import { MessageThreadWithMessageStatusIndicatorExample } from './snippets/MessageStatusIndicator.snippet';
+import { MessageWithAttachment } from './snippets/MessageWithAttachment.snippet';
+import { MessageWithCustomAttachment } from './snippets/MessageWithCustomAttachment.snippet';
+import { MessageWithCustomMentionRenderer } from './snippets/MessageWithCustomMentionRenderer.snippet';
+import { MessageThreadWithSystemMessagesExample } from './snippets/SystemMessages.snippet';
+import { MessageThreadWithInlineImageExample } from './snippets/WithInlineImageMessage.snippet';
+import { MessageThreadWithMessageDateExample } from './snippets/WithMessageDate.snippet';
+
+import MessageThreadWithBlockedMessagesExampleText from '!!raw-loader!./snippets/BlockedMessages.snippet.tsx';
+import MessageThreadWithCustomAvatarExampleText from '!!raw-loader!./snippets/CustomAvatar.snippet.tsx';
+import MessageThreadWithCustoBlockedmMessageContainerExampleText from '!!raw-loader!./snippets/CustomBlockedMessage.snippet.tsx';
+import MessageThreadWithCustomChatContainerExampleText from '!!raw-loader!./snippets/CustomChatContainer.snippet.tsx';
+import MessageThreadWithCustomMessageContainerExampleText from '!!raw-loader!./snippets/CustomMessageContainer.snippet.tsx';
+import MessageThreadWithCustomMessagesExampleText from '!!raw-loader!./snippets/CustomMessages.snippet.tsx';
+import MessageThreadWithCustomMessageStatusIndicatorExampleText from '!!raw-loader!./snippets/CustomMessageStatusIndicator.snippet.tsx';
+import MessageThreadWithCustomTimestampExampleText from '!!raw-loader!./snippets/CustomTimestamp.snippet.tsx';
+import DefaultMessageThreadExampleText from '!!raw-loader!./snippets/Default.snippet.tsx';
+import MessageThreadWithMessageStatusIndicatorExampleText from '!!raw-loader!./snippets/MessageStatusIndicator.snippet.tsx';
+import MessageWithAttachmentText from '!!raw-loader!./snippets/MessageWithAttachment.snippet.tsx';
+import MessageWithCustomAttachmentText from '!!raw-loader!./snippets/MessageWithCustomAttachment.snippet.tsx';
+import MessageWithCustomMentionRendererText from '!!raw-loader!./snippets/MessageWithCustomMentionRenderer.snippet.tsx';
+import ExampleImportantsText from '!!raw-loader!./snippets/placeholdermessages.ts';
+import MessageThreadWithSystemMessagesExampleText from '!!raw-loader!./snippets/SystemMessages.snippet.tsx';
+import MessageThreadWithInlineImageExampleText from '!!raw-loader!./snippets/WithInlineImageMessage.snippet.tsx';
+import MessageThreadWithMessageDateExampleText from '!!raw-loader!./snippets/WithMessageDate.snippet.tsx';
+
+<Meta of={MessageThreadStory} />
+
+# MessageThread
+
+MessageThread allows you to easily create a component for rendering chat messages, handling scrolling behavior of new/old messages and customizing icons & controls inside the chat thread.
+
+MessageThread internally uses the `Chat` & `ChatMessage` components from `@fluentui-contrib/chat`. You can
+checkout the details about these components
+[here](https://microsoft.github.io/fluentui-contrib/react-chat/?path=/story/chat--default).
+
+## Importing
+
+```ts
+import { FluentThemeProvider, MessageThread } from '@azure/communication-react';
+```
+
+## Sample messages
+
+Create a `placeholdermessages.ts` file in the current folder you are working on. Then copy paste the code below
+into that file.
+
+<Source code={ExampleImportantsText} />
+
+## Default MessageThread
+
+By default, MessageThread displays Chat messages with display name of only for other users and creation time
+of message when available.
+
+<Canvas mdxSource={DefaultMessageThreadExampleText}>
+  <DefaultMessageThreadExample />
+</Canvas>
+
+## MessageThread With Message Date
+
+<Canvas mdxSource={MessageThreadWithMessageDateExampleText}>
+  <MessageThreadWithMessageDateExample />
+</Canvas>
+
+## System Message
+
+The example below shows a message thread with a system message.
+
+<Canvas mdxSource={MessageThreadWithSystemMessagesExampleText}>
+  <MessageThreadWithSystemMessagesExample />
+</Canvas>
+
+## Blocked Message
+
+<SingleLineBetaBanner />
+
+The example below shows a message thread with a blocked message. If `link` is not provided, it will omit the hyperlink.
+
+<Canvas mdxSource={MessageThreadWithBlockedMessagesExampleText}>
+  <MessageThreadWithBlockedMessagesExample />
+</Canvas>
+
+## Custom Message
+
+he example below shows how to render a `custom` message with `onRenderMessage` in `MessageThread`
+
+<Canvas mdxSource={MessageThreadWithCustomChatContainerExampleText}>
+  <MessageThreadWithCustomChatContainerExample />
+</Canvas>
+
+## Messages with Customized Chat Container
+
+The example below shows how to render a `custom` chat container with `styles.chatContainer` in `MessageThread`
+
+<Canvas mdxSource={MessageThreadWithCustomChatContainerExampleText}>
+  <MessageThreadWithCustomChatContainerExample />
+</Canvas>
+
+## Messages with Customized Message Container
+
+The example below shows how to render a `custom` message container with `styles.chatMessageContainer` or
+`styles.systemMessageContainer` in `MessageThread`
+
+Note: In the code example, all `%` characters were replaced by their unicode value `\u0025` due to URI
+malformed issue when loading the storybook snippets
+
+<Canvas mdxSource={MessageThreadWithCustomMessageContainerExampleText}>
+  <MessageThreadWithCustomMessageContainerExample />
+</Canvas>
+
+## Messages with Customized Blocked message Container
+
+<SingleLineBetaBanner />
+
+The example below shows how to render a `blocked` message with custom `warningText`, with
+`styles.blockedMessageContainer` for styling, and rendering your own JSX.Element with with `onRenderMessage`
+in `MessageThread`
+
+<Canvas mdxSource={MessageThreadWithCustoBlockedmMessageContainerExampleText}>
+  <MessageThreadWithCustoBlockedmMessageContainerExample />
+</Canvas>
+
+## Default Message Status Indicator
+
+<Canvas mdxSource={MessageThreadWithMessageStatusIndicatorExampleText}>
+  <MessageThreadWithMessageStatusIndicatorExample />
+</Canvas>
+
+## Custom Message Status Indicator
+
+The example below shows how to render a `custom` message status indicator with `onRenderMessageStatus` in
+`MessageThread`
+
+<Canvas mdxSource={MessageThreadWithCustomMessageStatusIndicatorExampleText}>
+  <MessageThreadWithCustomMessageStatusIndicatorExample />
+</Canvas>
+
+## Custom Avatar
+
+<Canvas mdxSource={MessageThreadWithCustomAvatarExampleText}>
+  <MessageThreadWithCustomAvatarExample />
+</Canvas>
+
+Note: You can view the details of the
+[Persona](https://developer.microsoft.com/fluentui#/controls/web/persona) component
+
+## Custom Timestamp
+
+<SingleLineBetaBanner />
+<Canvas mdxSource={MessageThreadWithCustomTimestampExampleText}>
+  <MessageThreadWithCustomTimestampExample />
+</Canvas>
+
+## Tapping Inline Images on Messages
+
+<Canvas mdxSource={MessageThreadWithInlineImageExampleText}>
+  <MessageThreadWithInlineImageExample />
+</Canvas>
+
+## Display Messages with Attachments
+
+The MessageThread component supports rendering of message attachments, including multiple ways to customize
+it. Developers can opt to use the default attachment rendering by not providing `attachmentOptions`. In the
+following example, the default attachment rendering is shown with an attachment on the first chat message. By
+default, the browser `window.open` method will be called with the target URL.
+
+<Canvas mdxSource={MessageWithAttachmentText}>
+  <MessageWithAttachment />
+</Canvas>
+
+The `attachmentOptions` allows the attachmentCard to be customized in multiple ways. For example, developers
+can have a custom icon, label for the button and custom `onClick` callback.
+
+<Canvas mdxSource={MessageWithCustomAttachmentText}>
+  <MessageWithCustomAttachment />
+</Canvas>{' '}
+
+## Mention of Users with a custom renderer within Message
+
+<SingleLineBetaBanner version={'1.7.0-beta.1'} />
+
+When a user is mentioned in a message, a custom HTML tag is used to represent the element in the
+MessageThread. This element can be styled using the standard methods and the renderer can be overridden for
+further customization. The HTML Tag is defined:
+
+```ts
+<msft-mention id="<id>">Displayable Text</msft-mention>
+```
+
+<Canvas mdxSource={MessageWithCustomMentionRendererText}>
+  <MessageWithCustomMentionRenderer />
+</Canvas>

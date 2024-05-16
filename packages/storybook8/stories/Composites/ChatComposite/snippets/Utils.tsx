@@ -6,8 +6,8 @@ import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '
 import { ChatAdapter } from '@azure/communication-react';
 import React from 'react';
 
-import { CompositeConnectionParamsErrMessage } from '../../CompositeStringUtils';
-import { MICROSOFT_AZURE_ACCESS_TOKEN_QUICKSTART } from '../../constants';
+import { CompositeConnectionParamsErrMessage } from '../../../CompositeStringUtils';
+import { MICROSOFT_AZURE_ACCESS_TOKEN_QUICKSTART } from '../../../constants';
 
 const botDisplayName = 'A simple bot';
 
