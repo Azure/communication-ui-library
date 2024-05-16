@@ -4,10 +4,9 @@
 import { Stack } from '@fluentui/react';
 import { Meta } from '@storybook/react';
 import React, { useState, useEffect } from 'react';
-import { compositeExperienceContainerStyle } from '../constants';
-import { defaultChatCompositeHiddenControls, controlsToAdd, ArgsFrom } from '../controlsUtils';
-import { compositeLocale } from '../localizationUtils';
-import { Docs } from './ChatCompositeDocs';
+import { compositeExperienceContainerStyle } from '../../constants';
+import { defaultChatCompositeHiddenControls, controlsToAdd, ArgsFrom } from '../../controlsUtils';
+import { compositeLocale } from '../../localizationUtils';
 import { ContosoChatContainer } from './snippets/Container.snippet';
 import {
   ChatCompositeSetupProps,
@@ -87,21 +86,11 @@ export const BasicExample = BasicStory.bind({});
 
 const meta: Meta<typeof BasicStory> = {
   title: 'Composites/ChatComposite/Basic Example',
-  // name: 'Chat Composite Basic Example',
   component: BasicStory,
   argTypes: {
     ...storyControls,
     // Hiding auto-generated controls
     ...defaultChatCompositeHiddenControls
-  },
-  parameters: {
-    useMaxHeightParent: true,
-    useMaxWidthParent: true,
-    docs: {
-      //Prevent Docs auto scroll to top
-      container: null,
-      page: () => Docs()
-    }
   }
 };
 
