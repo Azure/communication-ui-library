@@ -94,7 +94,6 @@ export function defaultMockCallAdapterState(
       remoteParticipants,
       remoteParticipantsEnded: {},
       raiseHand: { raisedHands: [] },
-      /** @conditional-compile-remove(ppt-live) */
       pptLive: { isActive: false },
       role: role ?? 'Unknown',
       dominantSpeakers: dominantSpeakers,
@@ -492,7 +491,6 @@ const defaultEndedCallState: CallState = {
   remoteParticipants: {},
   remoteParticipantsEnded: {},
   raiseHand: { raisedHands: [] },
-  /** @conditional-compile-remove(ppt-live) */
   pptLive: { isActive: false },
   captionsFeature: {
     captions: [],
