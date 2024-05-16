@@ -15,7 +15,7 @@ import {
   getAttachmentIconPpt,
   getAttachmentIconTxt,
   getAttachmentIconXlsx
-} from '../src/components/assets/AttachmentCardIcon';
+} from './assets/AttachmentCardIcon';
 
 // Apply theme here, add anything your component needs at runtime here.
 registerIcons({
