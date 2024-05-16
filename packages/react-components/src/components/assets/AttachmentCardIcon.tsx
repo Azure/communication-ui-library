@@ -212,16 +212,16 @@ export const getAttachmentIconDismiss = (): JSX.Element => {
 export const getAttachmentIconMenu = (): JSX.Element => {
   return (
     <svg
-      className="___1okpztj f1w7gpdv fez10in fg4l7m0 f16hsg94 fwpfdsa f88nxoq f1e2fz10"
       fill="currentColor"
+      className="___12fm75w_v8ls9a0 f1w7gpdv fez10in fg4l7m0"
       aria-hidden="true"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
+      width="20"
+      height="20"
+      viewBox="0 0 20 20"
       xmlns="http://www.w3.org/2000/svg"
     >
       <path
-        d="M8 12a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm6 0a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 2a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"
+        d="M6.75 10a1.75 1.75 0 1 1-3.5 0 1.75 1.75 0 0 1 3.5 0Zm5 0a1.75 1.75 0 1 1-3.5 0 1.75 1.75 0 0 1 3.5 0ZM15 11.75a1.75 1.75 0 1 0 0-3.5 1.75 1.75 0 0 0 0 3.5Z"
         fill="currentColor"
       ></path>
     </svg>
