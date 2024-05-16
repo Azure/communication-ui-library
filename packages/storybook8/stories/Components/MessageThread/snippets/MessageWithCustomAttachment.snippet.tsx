@@ -56,7 +56,7 @@ export const MessageWithCustomAttachment: () => JSX.Element = () => {
                   defaultAttachmentMenuAction,
                   // you can also overwrite the default action and reuse only a part of it
                   {
-                    name: 'Bookmart',
+                    name: 'Bookmark',
                     icon: <Bookmark24Filled />,
                     onClick: defaultAttachmentMenuAction.onClick
                   },
