@@ -3,7 +3,6 @@
 
 import { initializeIcons, registerIcons } from '@fluentui/react';
 import { DEFAULT_COMPONENT_ICONS } from '../src/theming/icons';
-import { initializeFileTypeIcons } from '@fluentui/react-file-type-icons';
 import { FluentThemeProvider } from '../src/theming/FluentThemeProvider';
 import React from 'react';
 import { beforeMount } from '@playwright/experimental-ct-react/hooks';
@@ -13,7 +12,6 @@ registerIcons({
   icons: DEFAULT_COMPONENT_ICONS
 });
 initializeIcons();
-initializeFileTypeIcons();
 
 /**
  * custom configuration options for the test hooks.
