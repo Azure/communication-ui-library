@@ -53,11 +53,9 @@ import { MessageThreadWithCustomMessageStatusIndicatorExample } from './snippets
 import { MessageThreadWithCustomTimestampExample } from './snippets/CustomTimestamp.snippet';
 import { DefaultMessageThreadExample } from './snippets/Default.snippet';
 import { MessageThreadWithMessageStatusIndicatorExample } from './snippets/MessageStatusIndicator.snippet';
-import {
-  MessageWithAttachment,
-  MessageWithAttachmentFromTeams,
-  MessageWithCustomAttachment
-} from './snippets/MessageWithAttachment.snippet';
+import { MessageWithAttachment } from './snippets/MessageWithAttachment.snippet';
+import { MessageWithAttachmentFromTeams } from './snippets/MessageWithAttachmentFromTeams.snippet';
+import { MessageWithCustomAttachment } from './snippets/MessageWithCustomAttachment.snippet';
 import { MessageWithCustomMentionRenderer } from './snippets/MessageWithCustomMentionRenderer.snippet';
 import { MessageThreadWithSystemMessagesExample } from './snippets/SystemMessages.snippet';
 import { MessageThreadWithInlineImageExample } from './snippets/WithInlineImageMessage.snippet';
@@ -83,6 +81,10 @@ const DefaultMessageThreadExampleText = require('!!raw-loader!./snippets/Default
 const MessageThreadWithMessageStatusIndicatorExampleText =
   require('!!raw-loader!./snippets/MessageStatusIndicator.snippet.tsx').default;
 const MessageWithAttachmentText = require('!!raw-loader!./snippets/MessageWithAttachment.snippet.tsx').default;
+const MessageWithAttachmentFromTeamsText =
+  require('!!raw-loader!./snippets/MessageWithAttachmentFromTeams.snippet.tsx').default;
+const MessageWithCustomAttachmentText =
+  require('!!raw-loader!./snippets/MessageWithCustomAttachment.snippet.tsx').default;
 const MessageWithCustomMentionRendererText =
   require('!!raw-loader!./snippets/MessageWithCustomMentionRenderer.snippet.tsx').default;
 const ExampleConstantsText = require('!!raw-loader!./snippets/placeholdermessages.ts').default;
@@ -365,7 +367,7 @@ const Docs: () => JSX.Element = () => {
           If the identity of message sender is a Microsoft Teams user, the attachment will be rendered with an `open`
           icon shown below.
         </Description>
-        <Canvas mdxSource={MessageWithAttachmentText}>
+        <Canvas mdxSource={MessageWithAttachmentFromTeamsText}>
           <MessageWithAttachmentFromTeams />
         </Canvas>
         <Subtitle>Advanced Usage: Customizing Attachment Rendering</Subtitle>
@@ -379,7 +381,7 @@ const Docs: () => JSX.Element = () => {
         <Description>
           For example, the following code snippet demonstrates how to customize the download options for attachments.
         </Description>
-        <Canvas mdxSource={MessageWithAttachmentText}>
+        <Canvas mdxSource={MessageWithCustomAttachmentText}>
           <MessageWithCustomAttachment />
         </Canvas>
       </div>

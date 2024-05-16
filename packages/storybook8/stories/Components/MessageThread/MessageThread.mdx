@@ -12,11 +12,10 @@ import { MessageThreadWithCustomMessagesExample } from './snippets/CustomMessage
 import { MessageThreadWithCustomMessageStatusIndicatorExample } from './snippets/CustomMessageStatusIndicator.snippet';
 import { MessageThreadWithCustomTimestampExample } from './snippets/CustomTimestamp.snippet';
 import { DefaultMessageThreadExample } from './snippets/Default.snippet';
-import { MessageThreadWithMessageStatusIndicatorExample } from './snippets/MessageStatusIndicator.snippet';import {
-  MessageWithAttachment,
-  MessageWithAttachmentFromTeams,
-  MessageWithCustomAttachment
-} from './snippets/MessageWithAttachment.snippet';
+import { MessageThreadWithMessageStatusIndicatorExample } from './snippets/MessageStatusIndicator.snippet';
+import { MessageWithAttachment } from './snippets/MessageWithAttachment.snippet';
+import { MessageWithAttachmentFromTeams } from './snippets/MessageWithAttachmentFromTeams.snippet';
+import { MessageWithCustomAttachment } from './snippets/MessageWithCustomAttachment.snippet';
 import { MessageWithCustomMentionRenderer } from './snippets/MessageWithCustomMentionRenderer.snippet';
 import { MessageThreadWithSystemMessagesExample } from './snippets/SystemMessages.snippet';
 import { MessageThreadWithInlineImageExample } from './snippets/WithInlineImageMessage.snippet';
@@ -32,7 +31,11 @@ import MessageThreadWithCustomMessageStatusIndicatorExampleText from '!!raw-load
 import MessageThreadWithCustomTimestampExampleText from '!!raw-loader!./snippets/CustomTimestamp.snippet.tsx';
 import DefaultMessageThreadExampleText from '!!raw-loader!./snippets/Default.snippet.tsx';
 import MessageThreadWithMessageStatusIndicatorExampleText from '!!raw-loader!./snippets/MessageStatusIndicator.snippet.tsx';
-import MessageWithAttachmentText from '!!raw-loader!./snippets/MessageWithAttachment.snippet.tsx';
+const MessageWithAttachmentText = require('!!raw-loader!./snippets/MessageWithAttachment.snippet.tsx').default;
+const MessageWithAttachmentFromTeamsText =
+  require('!!raw-loader!./snippets/MessageWithAttachmentFromTeams.snippet.tsx').default;
+const MessageWithCustomAttachmentText =
+  require('!!raw-loader!./snippets/MessageWithCustomAttachment.snippet.tsx').default;
 import MessageWithCustomMentionRendererText from '!!raw-loader!./snippets/MessageWithCustomMentionRenderer.snippet.tsx';
 import ExampleImportantsText from '!!raw-loader!./snippets/placeholdermessages.ts';
 import MessageThreadWithSystemMessagesExampleText from '!!raw-loader!./snippets/SystemMessages.snippet.tsx';
