@@ -6,7 +6,7 @@ import React, { useMemo } from 'react';
 import { Suspense } from 'react';
 import { ChatMessage } from '../../../types';
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-import { AttachmentMetadata } from '../../../types';
+import { AttachmentMetadata } from '@internal/acs-ui-common';
 import { MessageThreadStrings } from '../../MessageThread';
 import { ChatMessageComponentAsEditBox } from './ChatMessageComponentAsEditBox';
 /* @conditional-compile-remove(mention) */
@@ -14,7 +14,7 @@ import { MentionLookupOptions } from '../../MentionPopover';
 /* @conditional-compile-remove(rich-text-editor) */
 import type { ChatMessageComponentAsRichTextEditBoxProps } from './ChatMessageComponentAsRichTextEditBox';
 /* @conditional-compile-remove(rich-text-editor) */
-import { ErrorBoundary } from '../../ErrorBoundary';
+import { _ErrorBoundary } from '../../ErrorBoundary';
 
 /* @conditional-compile-remove(rich-text-editor) */
 const ChatMessageComponentAsRichTextEditBox = React.lazy(() => import('./ChatMessageComponentAsRichTextEditBox'));
@@ -37,11 +37,8 @@ export type ChatMessageComponentAsEditBoxPickerProps = {
   onCancel?: (messageId: string) => void;
   onSubmit: (
     text: string,
-    metadata?: Record<string, string>,
-    options?: {
-      /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-      attachmentMetadata?: AttachmentMetadata[];
-    }
+    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+    attachmentMetadata?: AttachmentMetadata[]
   ) => void;
   message: ChatMessage;
   strings: MessageThreadStrings;
@@ -64,11 +61,11 @@ export const ChatMessageComponentAsEditBoxPicker = (props: ChatMessageComponentA
   /* @conditional-compile-remove(rich-text-editor) */
   if (richTextEditor) {
     return (
-      <ErrorBoundary fallback={simpleEditBox}>
+      <_ErrorBoundary fallback={simpleEditBox}>
         <Suspense fallback={simpleEditBox}>
           <ChatMessageComponentAsRichTextEditBox {...props} />
         </Suspense>
-      </ErrorBoundary>
+      </_ErrorBoundary>
     );
   }
 

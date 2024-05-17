@@ -20,11 +20,14 @@ import {
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 import { ChatMessage } from '@internal/react-components';
 import React, { useCallback, useEffect, useMemo } from 'react';
+/* @conditional-compile-remove(attachment-upload) */
+import { useReducer } from 'react';
 import { useState } from 'react';
 import { AvatarPersona, AvatarPersonaDataCallback, AvatarPersonaProps } from '../common/AvatarPersona';
 import { useAdapter } from './adapter/ChatAdapterProvider';
 import { ChatCompositeOptions } from './ChatComposite';
 import { ChatHeader, getHeaderProps } from './ChatHeader';
+/* @conditional-compile-remove(attachment-upload) */
 import { AttachmentUploadButtonWrapper as AttachmentUploadButton } from './file-sharing';
 import { useAdaptedSelector } from './hooks/useAdaptedSelector';
 import { usePropsFor } from './hooks/usePropsFor';
@@ -48,11 +51,15 @@ import { ImageOverlay } from '@internal/react-components';
 import { InlineImage } from '@internal/react-components';
 import { ResourceFetchResult } from '@internal/chat-stateful-client';
 import { AttachmentOptions } from '@internal/react-components';
-import { SendBox } from '@internal/react-components';
 /* @conditional-compile-remove(attachment-upload) */
-import { useSelector } from './hooks/useSelector';
+import { nanoid } from 'nanoid';
 /* @conditional-compile-remove(attachment-upload) */
-import { attachmentUploadsSelector } from './selectors/attachmentUploadsSelector';
+import { AttachmentUploadActionType, AttachmentUpload, AttachmentUploadReducer } from './file-sharing/AttachmentUpload';
+/* @conditional-compile-remove(attachment-upload) */
+import { MessageOptions } from '@internal/acs-ui-common';
+import { SendBoxPicker } from '../common/SendBoxPicker';
+/* @conditional-compile-remove(rich-text-editor-composite-support) */
+import { loadRichTextSendBox } from '../common/SendBoxPicker';
 
 /**
  * @private
@@ -108,6 +115,8 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const [downloadErrorMessage, setDownloadErrorMessage] = React.useState('');
   const [overlayImageItem, setOverlayImageItem] = useState<OverlayImageItem>();
   const [isImageOverlayOpen, setIsImageOverlayOpen] = useState<boolean>(false);
+  /* @conditional-compile-remove(attachment-upload) */
+  const [uploads, handleUploadAction] = useReducer(AttachmentUploadReducer, []);
 
   const adapter = useAdapter();
   const theme = useTheme();
@@ -123,8 +132,17 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     fetchData();
   }, [adapter]);
 
+  /* @conditional-compile-remove(rich-text-editor-composite-support) */
+  useEffect(() => {
+    // if rich text editor is enabled, the rich text editor component should be loaded early for good UX
+    if (options?.richTextEditor !== undefined && options.richTextEditor) {
+      // this line is needed to load the Rooster JS dependencies early in the lifecycle
+      // when the rich text editor is enabled
+      loadRichTextSendBox();
+    }
+  }, [options?.richTextEditor]);
+
   const messageThreadProps = usePropsFor(MessageThread);
-  const sendBoxProps = usePropsFor(SendBox);
   const typingIndicatorProps = usePropsFor(TypingIndicator);
   const headerProps = useAdaptedSelector(getHeaderProps);
   const errorBarProps = usePropsFor(ErrorBar);
@@ -195,23 +213,50 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
 
   const userId = toFlatCommunicationIdentifier(adapter.getState().userId);
 
+  /* @conditional-compile-remove(attachment-upload) */
   const attachmentUploadButtonOnChange = useCallback(
     (files: FileList | null): void => {
       if (!files) {
         return;
       }
 
-      /* @conditional-compile-remove(attachment-upload) */
-      const uploadTasks = adapter.registerActiveUploads(Array.from(files));
-      /* @conditional-compile-remove(attachment-upload) */
-      attachmentOptions?.uploadOptions?.handleAttachmentSelection(uploadTasks);
+      // Get files, change to tasks, store locally and pass back to Contoso
+      const newUploads = Array.from(files).map((file): AttachmentUpload => {
+        const taskId = nanoid();
+        return {
+          file,
+          taskId,
+          metadata: {
+            id: taskId,
+            name: file.name,
+            progress: 0
+          },
+          notifyUploadProgressChanged: (value: number) => {
+            handleUploadAction({ type: AttachmentUploadActionType.Progress, taskId, progress: value });
+          },
+          notifyUploadCompleted: (id: string, url: string) => {
+            handleUploadAction({ type: AttachmentUploadActionType.Completed, taskId, id, url });
+          },
+          notifyUploadFailed: (message: string) => {
+            handleUploadAction({ type: AttachmentUploadActionType.Failed, taskId, message });
+            // remove the failed upload task when error banner is auto dismissed after 10 seconds
+            // so the banner won't be shown again on UI re-rendering.
+            setTimeout(() => {
+              handleUploadAction({ type: AttachmentUploadActionType.Remove, id: taskId });
+            }, 10 * 1000);
+          }
+        };
+      });
+
+      handleUploadAction({ type: AttachmentUploadActionType.Set, newUploads });
+      attachmentOptions?.uploadOptions?.handleAttachmentSelection(newUploads);
     },
-    [adapter, attachmentOptions]
+    [attachmentOptions?.uploadOptions]
   );
 
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   const onRenderAttachmentDownloads = useCallback(
-    (userId: string, message: ChatMessage) =>
+    (message: ChatMessage) =>
       message?.attachments?.length ?? 0 > 0 ? (
         <_AttachmentDownloadCards
           attachments={message.attachments}
@@ -351,9 +396,11 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   );
 
   const AttachmentButton = useCallback(() => {
+    /* @conditional-compile-remove(attachment-upload) */
     if (!attachmentOptions?.uploadOptions?.handleAttachmentSelection) {
       return null;
     }
+    /* @conditional-compile-remove(attachment-upload) */
     return (
       <AttachmentUploadButton
         supportedMediaTypes={attachmentOptions?.uploadOptions?.supportedMediaTypes}
@@ -361,16 +408,53 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
         onChange={attachmentUploadButtonOnChange}
       />
     );
+    return <></>;
   }, [
     attachmentOptions?.uploadOptions?.handleAttachmentSelection,
     attachmentOptions?.uploadOptions?.supportedMediaTypes,
     attachmentOptions?.uploadOptions?.disableMultipleUploads,
+    /* @conditional-compile-remove(attachment-upload) */
     attachmentUploadButtonOnChange
   ]);
 
   /* @conditional-compile-remove(attachment-upload) */
-  const attachmentsWithProgress = useSelector(attachmentUploadsSelector).attachments;
+  const attachments = useMemo(() => {
+    return uploads?.map((v) => v.metadata);
+  }, [uploads]);
 
+  const onSendMessageHandler = useCallback(
+    async function (
+      content: string,
+      /* @conditional-compile-remove(attachment-upload) */ /* @conditional-compile-remove(rich-text-editor-composite-support) */ options?: MessageOptions
+    ) {
+      /* @conditional-compile-remove(attachment-upload) */
+      const attachments = options?.attachments ?? [];
+      /* @conditional-compile-remove(attachment-upload) */
+      handleUploadAction({ type: AttachmentUploadActionType.Clear });
+      /* @conditional-compile-remove(attachment-upload) */
+      await adapter.sendMessage(content, {
+        attachments: attachments,
+        /* @conditional-compile-remove(rich-text-editor-composite-support) */
+        type: options?.type
+      });
+      /* @conditional-compile-remove(attachment-upload) */
+      return;
+      await adapter.sendMessage(content, {
+        /* @conditional-compile-remove(rich-text-editor-composite-support) */
+        type: options?.type
+      });
+    },
+    [adapter]
+  );
+
+  /* @conditional-compile-remove(attachment-upload) */
+  const onCancelUploadHandler = useCallback(
+    (id: string) => {
+      handleUploadAction({ type: AttachmentUploadActionType.Remove, id });
+      attachmentOptions?.uploadOptions?.handleAttachmentRemoval?.(id);
+    },
+    [attachmentOptions?.uploadOptions]
+  );
   return (
     <Stack className={chatContainer} grow>
       {options?.topic !== false && <ChatHeader {...headerProps} />}
@@ -395,6 +479,8 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             inlineImageOptions={inlineImageOptions}
             numberOfChatMessagesToReload={defaultNumberOfChatMessagesToReload}
             styles={messageThreadStyles}
+            /* @conditional-compile-remove(rich-text-editor-composite-support) */
+            richTextEditor={options?.richTextEditor}
           />
           <Stack className={mergeStyles(sendboxContainerStyles)}>
             <div className={mergeStyles(typingIndicatorContainerStyles)}>
@@ -411,17 +497,18 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
                 </Stack>
               )}
               <Stack grow>
-                <SendBox
-                  {...sendBoxProps}
-                  autoFocus={options?.autoFocus}
+                <SendBoxPicker
                   styles={sendBoxStyles}
+                  autoFocus={options?.autoFocus}
+                  /* @conditional-compile-remove(rich-text-editor-composite-support) */
+                  richTextEditor={options?.richTextEditor}
                   /* @conditional-compile-remove(attachment-upload) */
-                  attachmentsWithProgress={attachmentsWithProgress}
+                  attachments={attachments}
                   /* @conditional-compile-remove(attachment-upload) */
-                  onCancelAttachmentUpload={(id) => {
-                    adapter.cancelUpload?.(id);
-                    attachmentOptions?.uploadOptions?.handleAttachmentRemoval?.(id);
-                  }}
+                  onCancelAttachmentUpload={onCancelUploadHandler}
+                  // we need to overwrite onSendMessage for SendBox because we need to clear attachment state
+                  // when submit button is clicked
+                  onSendMessage={onSendMessageHandler}
                 />
               </Stack>
               {formFactor !== 'mobile' && <AttachmentButton />}

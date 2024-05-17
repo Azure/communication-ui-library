@@ -1,9 +1,0 @@
-{
-  "type": "patch",
-  "area": "fix",
-  "workstream": "Remove PPTLive overlay",
-  "comment": "Remove PPTLive overlay",
-  "packageName": "@azure/communication-react",
-  "email": "93549644+ShaunaSong@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

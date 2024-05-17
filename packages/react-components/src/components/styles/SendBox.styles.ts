@@ -78,7 +78,6 @@ export const editorTextBoxButtonStyle: IStyle = {
  */
 export const attachmentUploadCardsStyles = mergeStyles({
   margin: '0 0.25rem 0.25rem 0.25rem',
-  maxHeight: '12.5rem',
   overflow: 'auto'
 });
 
