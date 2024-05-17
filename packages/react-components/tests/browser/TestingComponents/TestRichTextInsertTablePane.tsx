@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 import React from 'react';
-import { RichTextInsertTablePane } from '../../../src/components/RichTextEditor/Buttons/Table/RichTextInsertTablePane';
+import { RichTextInsertTablePane } from '../../../src/components/RichTextEditor/Toolbar/Table/RichTextInsertTablePane';
 import { ColumnRowReplaceString } from '../../../src/components/utils/RichTextTableUtils';
 
 interface TestRichTextInsertTablePaneProps {
