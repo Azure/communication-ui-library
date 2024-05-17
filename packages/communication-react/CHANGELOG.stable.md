@@ -1,8 +1,17 @@
 # Change Log - @azure/communication-react
 
-This log was last generated on Mon, 06 May 2024 20:38:24 GMT and should not be manually modified.
+This log was last generated on Fri, 17 May 2024 00:46:59 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.16.1](https://github.com/azure/communication-ui-library/tree/@azure/communication-react_v1.16.1)
+
+Fri, 17 May 2024 00:46:59 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@azure/communication-react_v1.16.0...@azure/communication-react_v1.16.1)
+
+### Bug Fixes
+- Fix crash bug for remote screen share ([PR #4608](https://github.com/azure/communication-ui-library/pull/4608) by jiangnanhello@live.com)
+
 
 ## [1.16.0](https://github.com/azure/communication-ui-library/tree/1.16.0)
 

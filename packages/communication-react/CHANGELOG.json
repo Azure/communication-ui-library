@@ -2,6 +2,23 @@
   "name": "@azure/communication-react",
   "entries": [
     {
+      "date": "Fri, 17 May 2024 00:46:59 GMT",
+      "tag": "@azure/communication-react_v1.16.1",
+      "version": "1.16.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@azure/communication-react",
+            "commit": "eb51311589b98adf340e39cc31f52af389599861",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Fix crash bug for remote screen share"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 06 May 2024 20:38:24 GMT",
       "tag": "@azure/communication-react_v1.16.0",
       "version": "1.16.0",
