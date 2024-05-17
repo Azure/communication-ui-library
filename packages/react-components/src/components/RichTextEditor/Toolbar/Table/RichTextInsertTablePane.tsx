@@ -18,7 +18,7 @@ const RowColumnInitialValue = 0;
 
 interface RichTextInsertTablePaneProps {
   item: IContextualMenuItem;
-  onClick: (e: React.MouseEvent<Element> | React.KeyboardEvent<Element>, item: IContextualMenuItem) => void;
+  onClick: (key: string) => void;
   maxRowsNumber: number;
   maxColumnsNumber: number;
 }
@@ -60,15 +60,9 @@ export const RichTextInsertTablePane = (props: RichTextInsertTablePaneProps): JS
     [updateSize]
   );
 
-  const onClickButton = React.useCallback(
-    (e: React.MouseEvent<HTMLButtonElement>) => {
-      onClick(e, {
-        ...item,
-        key: createKey(formatRowColumnText(row), formatRowColumnText(column))
-      });
-    },
-    [row, column, onClick, item]
-  );
+  const onClickButton = React.useCallback(() => {
+    onClick(createKey(formatRowColumnText(row), formatRowColumnText(column)));
+  }, [row, column, onClick]);
 
   const items = React.useMemo(() => {
     const items: JSX.Element[] = [];

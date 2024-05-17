@@ -7,12 +7,12 @@ export const RichTextSendBoxAttachmentUploadsExample: () => JSX.Element = () => 
       <RichTextSendBox
         attachments={[
           {
-            id: '1',
+            id: '3b0785642e8b',
             name: 'Sample.pdf',
             progress: 0.75
           },
           {
-            id: '2',
+            id: '199f184a1d40',
             name: 'SampleXl.xlsx',
             progress: 0.33
           }
