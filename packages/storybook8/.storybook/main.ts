@@ -36,6 +36,11 @@ const storybookConfig: StorybookConfig = {
     name: '@storybook/react-webpack5',
     options: { }
   },
+  // Use this to remove stories if we don't want to show; name <NameOfStory>DocsOnly
+  managerHead: (head) => `
+  ${head}
+  <style>div[data-item-id$="-docs-only"] { display: none; }</style>
+  `,
   staticDirs: ['../public', '.'],
   stories: DEVELOPMENT_BUILD ? storybookDevGlobPaths : storybookProdGlobPaths,
   typescript: { reactDocgen: 'react-docgen' },
