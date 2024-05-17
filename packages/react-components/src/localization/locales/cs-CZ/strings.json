@@ -57,6 +57,7 @@
     "richTextDeleteColumnMenu": "Odstranit sloupec",
     "richTextDeleteRowMenu": "Odstranit řádek",
     "richTextDeleteTableMenu": "Odstranit tabulku",
+    "richTextToolbarMoreButtonAriaLabel": "More options",
     "attachmentMoreMenu": "Další možnosti"
   },
   "mentionPopover": {
@@ -199,7 +200,27 @@
     "blockedWarningText": "Tato zpráva se odstranila kvůli zásadám organizace.",
     "blockedWarningLinkText": "Podrobnosti",
     "attachmentCardGroupMessage": "Zpráva obsahuje {attachmentCount} přílohu",
-    "messageDeletedAnnouncementAriaLabel": "Zpráva se odstranila."
+    "messageDeletedAnnouncementAriaLabel": "Zpráva se odstranila.",
+    "richTextBoldTooltip": "Tučné",
+    "richTextItalicTooltip": "Kurzíva",
+    "richTextUnderlineTooltip": "Podtržení",
+    "richTextBulletListTooltip": "Seznam s odrážkami",
+    "richTextNumberListTooltip": "Číslovaný seznam",
+    "richTextIncreaseIndentTooltip": "Zvětšit odsazení",
+    "richTextDecreaseIndentTooltip": "Zmenšit odsazení",
+    "richTextInsertTableTooltip": "Vložit tabulku",
+    "richTextFormatButtonTooltip": "Formát",
+    "richTextInsertRowOrColumnMenu": "Vložit",
+    "richTextInsertTableMenuTitle": "Vložit {column} x {row} tabulka",
+    "richTextInsertRowAboveMenu": "Vložit nad",
+    "richTextInsertRowBelowMenu": "Vložit pod",
+    "richTextInsertColumnLeftMenu": "Vložit vlevo",
+    "richTextInsertColumnRightMenu": "Vložit vpravo",
+    "richTextDeleteRowOrColumnMenu": "Odstranit",
+    "richTextDeleteColumnMenu": "Odstranit sloupec",
+    "richTextDeleteRowMenu": "Odstranit řádek",
+    "richTextDeleteTableMenu": "Odstranit tabulku",
+    "richTextToolbarMoreButtonAriaLabel": "More options"
   },
   "errorBar": {
     "unableToReachChatService": "Jste offline",

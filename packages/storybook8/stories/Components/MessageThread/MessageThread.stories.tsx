@@ -285,7 +285,11 @@ const meta: Meta<typeof MessageThreadComponent> = {
     onUpdateMessage: hiddenControl,
     onDeleteMessage: hiddenControl,
     disableEditing: hiddenControl,
-    richTextEditor: hiddenControl
+    richTextEditor: hiddenControl,
+    // hide unnecessary props since we "send message with attachments" option
+    onRenderAttachmentDownloads: hiddenControl,
+    attachmentOptions: hiddenControl,
+    onSendMessage: hiddenControl
   }
 };
 
