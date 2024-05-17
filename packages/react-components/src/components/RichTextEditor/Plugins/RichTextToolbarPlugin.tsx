@@ -57,12 +57,14 @@ export class RichTextToolbarPlugin implements EditorPlugin {
   private updateFormat(): void {
     if (this.editor && this.onFormatChanged) {
       const newFormatState = getFormatState(this.editor);
+      // use keys from the format that has more keys or the new format state if there is no current format state
+      const keys =
+        !this.formatState || getObjectKeys(newFormatState).length > getObjectKeys(this.formatState).length
+          ? getObjectKeys(newFormatState)
+          : getObjectKeys(this.formatState);
       // check if there is any difference between the new format state and the current format state
       // otherwise the states will produce new objects every time even when the format state is the same
-      if (
-        !this.formatState ||
-        getObjectKeys(newFormatState).some((key) => newFormatState[key] !== this.formatState?.[key])
-      ) {
+      if (!this.formatState || keys.some((key) => newFormatState[key] !== this.formatState?.[key])) {
         this.formatState = newFormatState;
         this.onFormatChanged(newFormatState);
       }
