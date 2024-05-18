@@ -88,8 +88,6 @@ module.exports = {
     'spotlight',
     // Feature for end of call survey
     'end-of-call-survey',
-    // Feature for PPT Live for teams meeting
-    'ppt-live',
     // feature for hiding attendee name in the teams meeting
     "hide-attendee-name",
     // Join meeting with meetingId and passcode

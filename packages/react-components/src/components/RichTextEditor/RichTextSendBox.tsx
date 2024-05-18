@@ -226,6 +226,13 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     setContentValue(newValue);
   }, []);
 
+  const hasContent = useMemo(() => {
+    // get plain text content from the editor to check if the message is empty
+    // as the content may contain tags even when the content is empty
+    const plainTextContent = editorComponentRef.current?.getPlainContent();
+    return sanitizeText(contentValue ?? '').length > 0 && sanitizeText(plainTextContent ?? '').length > 0;
+  }, [contentValue]);
+
   /* @conditional-compile-remove(attachment-upload) */
   const toAttachmentMetadata = useCallback((attachmentsWithProgress: AttachmentMetadataInProgress[] | undefined) => {
     return attachmentsWithProgress
@@ -256,14 +263,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     }
 
     const message = contentValue;
-    // get plain text content from the editor to check if the message is empty
-    // as the content may contain tags even when the content is empty
-    const plainTextContent = editorComponentRef.current?.getPlainContent();
-    const hasContent = !isContentEmpty({
-      plainTextContent,
-      content: message,
-      placeholder: strings.placeholderText
-    });
+
     // we don't want to send empty messages including spaces, newlines, tabs
     // Message can be empty if there is a valid attachment upload
     if (hasContent || /* @conditional-compile-remove(attachment-upload) */ isAttachmentUploadCompleted(attachments)) {
@@ -287,7 +287,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     /* @conditional-compile-remove(attachment-upload) */
     attachments,
     contentValue,
-    strings.placeholderText,
+    hasContent,
     /* @conditional-compile-remove(attachment-upload) */
     strings.attachmentUploadsPendingError,
     onSendMessage,
@@ -312,17 +312,6 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     attachmentUploadsPendingError,
     systemMessage
   ]);
-
-  const hasContent = useMemo(() => {
-    // get plain text content from the editor to check if the message is empty
-    // as the content may contain tags even when the content is empty
-    const plainTextContent = editorComponentRef.current?.getPlainContent();
-    return !isContentEmpty({
-      plainTextContent: plainTextContent,
-      content: contentValue,
-      placeholder: strings.placeholderText
-    });
-  }, [contentValue, strings.placeholderText]);
 
   const onRenderSendIcon = useCallback(
     (isHover: boolean) => {
@@ -432,9 +421,6 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     <Stack>
       <RichTextSendBoxErrors {...sendBoxErrorsProps} />
       <RichTextInputBoxComponent
-        // in case when format bar is shown, the editor is re-rendered that causes the content to be lost
-        // setting the content will ensure that the latest content is used when editor is re-rendered
-        content={contentValue}
         placeholderText={strings.placeholderText}
         autoFocus={autoFocus}
         onChange={setContent}
@@ -452,29 +438,4 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
       />
     </Stack>
   );
-};
-
-/**
- * Checks if the content of the rich text editor is empty.
- *
- * @param {Object} params - The parameters for the function.
- * @param {string | undefined} params.plainTextContent - The plain text content of the editor.
- * @param {string} params.content - The HTML content of the editor.
- * @param {string} params.placeholder - The placeholder text of the editor.
- * @returns {boolean} - True if the content is empty, false otherwise.
- */
-const isContentEmpty = ({
-  plainTextContent,
-  content,
-  placeholder
-}: {
-  plainTextContent: string | undefined;
-  content: string;
-  placeholder: string;
-}): boolean => {
-  // RoosterJS returns placeholder text as plain text when the editor is empty and in this case,
-  // plainTextContent contains only placeholder text but content doesn't include the placeholder text
-  // this needs to be reviewed after migration to the content model packages.
-  const plainTextContainsPlaceholderOnly = plainTextContent === placeholder && !content.includes(placeholder);
-  return plainTextContainsPlaceholderOnly || sanitizeText(plainTextContent ?? '').length === 0;
 };

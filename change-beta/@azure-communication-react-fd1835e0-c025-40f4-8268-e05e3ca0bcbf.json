@@ -1,0 +1,9 @@
+{
+  "type": "patch",
+  "area": "fix",
+  "workstream": "MessageThread",
+  "comment": "Fix width for code snippets sent in messages",
+  "packageName": "@azure/communication-react",
+  "email": "98852890+vhuseinova-msft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

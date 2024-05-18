@@ -19982,6 +19982,43 @@ packages:
       color: 3.2.1
     dev: false
 
+  /roosterjs-content-model-api@9.3.0:
+    resolution: {integrity: sha512-/8zJb6eExve/PiqUoMA38F4i0+U5oQOoFbzXV+60a8L124ktcN22JfgSF53rxlD/9V0A3ss4IjUnfkAoKmMUzw==}
+    dependencies:
+      roosterjs-content-model-dom: 9.3.0
+      roosterjs-content-model-types: 9.3.0
+      tslib: 2.6.2
+    dev: false
+
+  /roosterjs-content-model-core@9.3.0:
+    resolution: {integrity: sha512-kuZ7TK51C+cVQR4CX77BH0heL4bDfuwd8C6F76pHsUIQYen2qhqRqargXKV47+FvlaQ/6GtbdLsSSmeb5QGIAg==}
+    dependencies:
+      roosterjs-content-model-dom: 9.3.0
+      roosterjs-content-model-types: 9.3.0
+      tslib: 2.6.2
+    dev: false
+
+  /roosterjs-content-model-dom@9.3.0:
+    resolution: {integrity: sha512-CE69itpMQhtvjA1uSdLRUo5EIp3/R0kXulgNp3RXmB2oa/f9zUXkaSU9RbdySG7Nuyp1nltto4TSikhj2YnlXA==}
+    dependencies:
+      roosterjs-content-model-types: 9.3.0
+      tslib: 2.6.2
+    dev: false
+
+  /roosterjs-content-model-plugins@9.3.0:
+    resolution: {integrity: sha512-HksPLjIfF6C3XqYoDNl9mh5G7MLbrxHRPvsMU5e6QAVefLlTeGIatpMMkglDjyRvKyzJNYjtBrqkSZ6aeuK0nw==}
+    dependencies:
+      roosterjs-content-model-api: 9.3.0
+      roosterjs-content-model-core: 9.3.0
+      roosterjs-content-model-dom: 9.3.0
+      roosterjs-content-model-types: 9.3.0
+      tslib: 2.6.2
+    dev: false
+
+  /roosterjs-content-model-types@9.3.0:
+    resolution: {integrity: sha512-nRJrvVCcREjyhDMbwcoiWc9bIw3/Ize3xdXDFXfOwInCRZiMfnd+kMIra1ajPlpkHjQlfmbQeug3I8Git0C9uQ==}
+    dev: false
+
   /roosterjs-editor-api@8.62.0:
     resolution: {integrity: sha512-q/uzfPkXQzaGOzSTjDqI/nwEfl59WBfyvyW9tF2dgmqjq+ZH9BAwkRbCb8Qgtz3wkRLuUUzzHIKzIhTvxvcFWQ==}
     dependencies:
@@ -23405,7 +23442,7 @@ packages:
     dev: false
 
   file:projects/acs-ui-common.tgz:
-    resolution: {integrity: sha512-Oo4lezGtwUfa1Fje8l0EU4UpVqEbeJo15f2G0E8gxDgrm5pxeukZBBZGUmAfIl5G8wlEGvlKHf99HeZzdPJ0fw==, tarball: file:projects/acs-ui-common.tgz}
+    resolution: {integrity: sha512-7elq4rieZspv4L5clA8dAwUeY7bbpA0s/7XvsUe6cKkVweRe/pmrbYd5GSvFErDv+4tLcInngB3FQWKAZd4LRw==, tarball: file:projects/acs-ui-common.tgz}
     name: '@rush-temp/acs-ui-common'
     version: 0.0.0
     dependencies:
@@ -23449,7 +23486,7 @@ packages:
     dev: false
 
   file:projects/calling-component-bindings.tgz:
-    resolution: {integrity: sha512-GCIUdvoVB1FK34qciYPcg56xWbKgb57FS9DdJ245QMMmE/7RZmAGf5ASk7JfOs1AH4oqhdSF2VQ0ytSI76neZg==, tarball: file:projects/calling-component-bindings.tgz}
+    resolution: {integrity: sha512-6oB55hz65cZXoxM1LJvglYSnrMn0In6ljoREWgoUOIQd4gq+JTPESyOjKi0HZO6zJmxVGWT6iDIgXdRv3WUFqg==, tarball: file:projects/calling-component-bindings.tgz}
     name: '@rush-temp/calling-component-bindings'
     version: 0.0.0
     dependencies:
@@ -23496,7 +23533,7 @@ packages:
     dev: false
 
   file:projects/calling-stateful-client.tgz:
-    resolution: {integrity: sha512-VWn0qw8YKZGTs+r9r6EtC1/CJHZrc/n8+k3fyuoeVxT2E5ep+jjZyWosokp/HsoNgA+EA7yzxubav9bMgcTd1g==, tarball: file:projects/calling-stateful-client.tgz}
+    resolution: {integrity: sha512-zE0u4RNiA1Zy8a+3uEqKuWnbToPADGrpoOxE1EYluOxY3a04zSS4/N+v/+0dWpZEz67bS504jrE+786MB+q52A==, tarball: file:projects/calling-stateful-client.tgz}
     name: '@rush-temp/calling-stateful-client'
     version: 0.0.0
     dependencies:
@@ -23543,7 +23580,7 @@ packages:
     dev: false
 
   file:projects/calling.tgz:
-    resolution: {integrity: sha512-r5vuG3uVoFi1hXUATBJ8rOLICMsb3OQzJBqXFMlvfOvdwEB4lhU4sRQERgGIrrfx4nlzHKjlB5K9iqf6Df1ncQ==, tarball: file:projects/calling.tgz}
+    resolution: {integrity: sha512-eYOc5RRbf4kSRo4sW4MEckOiPadsZ332JDxQwSNDuV17sFG3vL4uGofTrTL/+VZ/V+BYW+zs2/tLfaw5eKBLag==, tarball: file:projects/calling.tgz}
     name: '@rush-temp/calling'
     version: 0.0.0
     dependencies:
@@ -23634,7 +23671,7 @@ packages:
     dev: false
 
   file:projects/callwithchat.tgz:
-    resolution: {integrity: sha512-QGPa2xacKm0fpqsCniMhEI9dnrV4A1uB3h7nUf0W81JDJ+EGj3zTWuzHq7t7MxYfwlB1suAb74gsRJmhMs4CYw==, tarball: file:projects/callwithchat.tgz}
+    resolution: {integrity: sha512-PUOJ1pNhqm48BwvdZPnqdDXjKL1tZM+Yj0XOa0qNeiQyQiBne2UnRTGpAXlstDSYl7N91VljGaclQSO7s9pQ7Q==, tarball: file:projects/callwithchat.tgz}
     name: '@rush-temp/callwithchat'
     version: 0.0.0
     dependencies:
@@ -23724,7 +23761,7 @@ packages:
     dev: false
 
   file:projects/chat-component-bindings.tgz:
-    resolution: {integrity: sha512-W6lzouil9LGWW0QUk6Kt9beFNGIchlnBd1X5RCbrn52qWE7gUqHaqEQJdS/EgsU6JOs02Hc+oWX2uhpKyin93A==, tarball: file:projects/chat-component-bindings.tgz}
+    resolution: {integrity: sha512-X76PCFM7oe+yO7KzQNSdZEdWyln81qKOy40ev9vxIVjsFgEy5QmYu2UdBaR6eFNUHto4LT9Y6Ihu57st/XccgQ==, tarball: file:projects/chat-component-bindings.tgz}
     name: '@rush-temp/chat-component-bindings'
     version: 0.0.0
     dependencies:
@@ -23766,7 +23803,7 @@ packages:
     dev: false
 
   file:projects/chat-stateful-client.tgz:
-    resolution: {integrity: sha512-Q7xx3xor5Qpy671eLwZkkY0Mskd7Q/llsl6pqHNOU0mANjUbFwV0QsqcyCS1xck5zm85Y/tOysoZZtcaDktJLA==, tarball: file:projects/chat-stateful-client.tgz}
+    resolution: {integrity: sha512-EjW27c3pv2ZweT6FsikE2X+kL9YC2SrENudCtQT/rfm21UaJl3BsWR8rC0UZtU0dppas/wRo2DCteoEqnTVCyw==, tarball: file:projects/chat-stateful-client.tgz}
     name: '@rush-temp/chat-stateful-client'
     version: 0.0.0
     dependencies:
@@ -23816,7 +23853,7 @@ packages:
     dev: false
 
   file:projects/chat.tgz:
-    resolution: {integrity: sha512-rcdZ8FufKILBGFez/jx9MY4d6UoNJX72NcAmfl/+vnfZtBNyLi4TiZV6TjFKdct3tNMg7OocJ1mKX5FreTxGMg==, tarball: file:projects/chat.tgz}
+    resolution: {integrity: sha512-XZ/bNdpYqfgbJQh+iJOJ3Ch+VXUZzJksgAdsUd2KfTdL9YMqjkqP03bD/tPVAnseykgEaP0UOQ7ld8qh+oH7mQ==, tarball: file:projects/chat.tgz}
     name: '@rush-temp/chat'
     version: 0.0.0
     dependencies:
@@ -23902,7 +23939,7 @@ packages:
     dev: false
 
   file:projects/check-treeshaking.tgz:
-    resolution: {integrity: sha512-9fBDjEiTH8UGxw9gtO3+73vfKKnwlN+AaRJt2OrRoiCsWaRlOw9RELlhnluntnX4NpBn2fRx8ZbmtRPJua2h6Q==, tarball: file:projects/check-treeshaking.tgz}
+    resolution: {integrity: sha512-9itDV9t3UwjIGzkWHm5+iksrInR+ZvM9jaFR1b42jp18cyLu9GoqO5ynivN9dG9z0jSCBpjVtSfPy4xjN1tmDg==, tarball: file:projects/check-treeshaking.tgz}
     name: '@rush-temp/check-treeshaking'
     version: 0.0.0
     dependencies:
@@ -23929,7 +23966,7 @@ packages:
     dev: false
 
   file:projects/check-typescript-regression.tgz:
-    resolution: {integrity: sha512-WlQ2c6gPAjiSV7expUMHu/XMn8cABozuQQmih7UiB1jjImYtPGFmETAYdMtIxu7izWDDA6kb1/zk8YIjF+ZRQQ==, tarball: file:projects/check-typescript-regression.tgz}
+    resolution: {integrity: sha512-ay3Wekj54KPFuLNImNsBoTOcWhaCUVjm+QqAYL09pmllbHUdMJNF84QA14HSyx8XdFaSaRLRyfiNiMztyBkoQQ==, tarball: file:projects/check-typescript-regression.tgz}
     name: '@rush-temp/check-typescript-regression'
     version: 0.0.0
     dependencies:
@@ -23946,7 +23983,7 @@ packages:
     dev: false
 
   file:projects/communication-react.tgz:
-    resolution: {integrity: sha512-ev1mPQMB2LuCrpB68/eANaEG9LMfQPdz/GkkomSBcWa4ptypjG3Olp2gbe7VsGiBd0FzG2PusYYEUSHhN7lLug==, tarball: file:projects/communication-react.tgz}
+    resolution: {integrity: sha512-lHzDy1tPFxT6mjdh1icjkOUcqlDcaiScUJaGQLjUp4O/mAW5Rq1ybe3EIfBhYT5XNak0X3/VCYiovyDKLOphCQ==, tarball: file:projects/communication-react.tgz}
     name: '@rush-temp/communication-react'
     version: 0.0.0
     dependencies:
@@ -24020,6 +24057,11 @@ packages:
       reselect: 4.1.8
       rimraf: 2.7.1
       rollup: 4.12.1
+      roosterjs-content-model-api: 9.3.0
+      roosterjs-content-model-core: 9.3.0
+      roosterjs-content-model-dom: 9.3.0
+      roosterjs-content-model-plugins: 9.3.0
+      roosterjs-content-model-types: 9.3.0
       roosterjs-editor-api: 8.62.0
       roosterjs-editor-core: 8.62.0
       roosterjs-editor-dom: 8.62.0
@@ -24054,7 +24096,7 @@ packages:
     dev: false
 
   file:projects/component-examples.tgz:
-    resolution: {integrity: sha512-GmAooOu3D+VYPRM7vu85/G4kyeZfJ66F1U2VfIhL1YU2O4jYtrWUVQ/13bzqK10hK8/+UCLxxT4RXjTAbKLqTw==, tarball: file:projects/component-examples.tgz}
+    resolution: {integrity: sha512-VLQnVMNCy0Wa9lCPnbSz8EMEUCn/ab0jP3Jh1uWqC+wgcS3sjYS4QtjGA37woIZK1D38UGWBfehE+8GVURf0ow==, tarball: file:projects/component-examples.tgz}
     name: '@rush-temp/component-examples'
     version: 0.0.0
     dependencies:
@@ -24118,7 +24160,7 @@ packages:
     dev: false
 
   file:projects/config.tgz:
-    resolution: {integrity: sha512-51+awi9aSW825ZmZE/37GH1Se9kKqN7QvK51UqvFCJHK6damdg7VY1VsZ0s59UQUamk0GCS74nAY3s315jn9Zg==, tarball: file:projects/config.tgz}
+    resolution: {integrity: sha512-d973UwVFfS6utol2qX5Zm3aQr32jRzd9jAYgmOaN4UtY+lVLssIOaJrchbjr+Pu1gmp2+GWvbmO2YLt9/XtQbw==, tarball: file:projects/config.tgz}
     name: '@rush-temp/config'
     version: 0.0.0
     dependencies:
@@ -24141,7 +24183,7 @@ packages:
     dev: false
 
   file:projects/fake-backends.tgz:
-    resolution: {integrity: sha512-fWAasNn7do7hqN81h5evu+KJpidrzzycWj+baQ1Q50hi+u9Td4jBj+TXjowjL6dsyNm5iMyRdt7Biu+Iw82UFA==, tarball: file:projects/fake-backends.tgz}
+    resolution: {integrity: sha512-0B9QRJjhS4Sv1BnbDnimApae3UhJLLPySC2RrTmzH0H25uaRMnXPPz4h9powSngqAogGFMWEzpDh4aVn/IE6DA==, tarball: file:projects/fake-backends.tgz}
     name: '@rush-temp/fake-backends'
     version: 0.0.0
     dependencies:
@@ -24195,7 +24237,7 @@ packages:
     dev: false
 
   file:projects/react-components.tgz:
-    resolution: {integrity: sha512-7G3bwPoEt3GOfRk3G315OB7ebjQKS4z6PQR6YCzXqllSs3S3FL/UgD98oJM6u4j2CeAwJ1iwzz8iZcYganQeuA==, tarball: file:projects/react-components.tgz}
+    resolution: {integrity: sha512-54nJUUcpdYTtpSi1ZltzNQsbgg8ZDAuOHNJFJAMqrYgDhe4zYlF8Mp0ubjsD+wHFSb9Nhv+Z/sqHi7zNEudRSg==, tarball: file:projects/react-components.tgz}
     name: '@rush-temp/react-components'
     version: 0.0.0
     dependencies:
@@ -24270,6 +24312,11 @@ packages:
       regenerator-runtime: 0.14.1
       rimraf: 2.7.1
       rollup: 4.12.1
+      roosterjs-content-model-api: 9.3.0
+      roosterjs-content-model-core: 9.3.0
+      roosterjs-content-model-dom: 9.3.0
+      roosterjs-content-model-plugins: 9.3.0
+      roosterjs-content-model-types: 9.3.0
       roosterjs-editor-api: 8.62.0
       roosterjs-editor-core: 8.62.0
       roosterjs-editor-dom: 8.62.0
@@ -24314,7 +24361,7 @@ packages:
     dev: false
 
   file:projects/react-composites.tgz:
-    resolution: {integrity: sha512-kBPr7YXChMNIC1n7fZTv3zkFvGgP+15oc1L8p+ybrYBBcYPakQtYwbLsmSLj6llUhmT6QCIDI8kn1GdPHfWtQA==, tarball: file:projects/react-composites.tgz}
+    resolution: {integrity: sha512-rJ47DkPJqqgi/zcsQSeFV7rC84GPZZOquGSUquzGqnW77iECSC5fQfH8aq47jIXiY+DTdvzxeBKenAn43KE30Q==, tarball: file:projects/react-composites.tgz}
     name: '@rush-temp/react-composites'
     version: 0.0.0
     dependencies:
@@ -24433,7 +24480,7 @@ packages:
     dev: false
 
   file:projects/sample-automation-tests.tgz:
-    resolution: {integrity: sha512-tGwPzMEztT7UiNgD6XkLg2vj2Uv5r92wu3O7MjAoVwG29hVXZ75rDH5kj13yl4SP4LlpUm6D/2SDTEKDW5RTNw==, tarball: file:projects/sample-automation-tests.tgz}
+    resolution: {integrity: sha512-cpRZdwumn0lmRwF+VDvfwD/qxjxYblIP28FLhJ8OLhSVUVzb2pejO55OGSXn8HkH9ZKWMi0LS0YWXrJbhK2A5A==, tarball: file:projects/sample-automation-tests.tgz}
     name: '@rush-temp/sample-automation-tests'
     version: 0.0.0
     dependencies:
@@ -24458,7 +24505,7 @@ packages:
     dev: false
 
   file:projects/sample-static-html-composites.tgz:
-    resolution: {integrity: sha512-FqddapzhBtA58EqoWc6knKnr7tUtTKEoSJEhRc8rJeeib1/Wvmn4SE0DdE9urX04ftCXisP/UI6ci72PSo+/AA==, tarball: file:projects/sample-static-html-composites.tgz}
+    resolution: {integrity: sha512-g73BIqSn7AgdHyN9sxZldodIUQkFuYM/IOK6ybZ+krYBCts7lGpSmFZGR1q8kLzRs3tOczoT2gPWLgJSece5Zw==, tarball: file:projects/sample-static-html-composites.tgz}
     name: '@rush-temp/sample-static-html-composites'
     version: 0.0.0
     dependencies:
@@ -24510,7 +24557,7 @@ packages:
     dev: false
 
   file:projects/scripts.tgz:
-    resolution: {integrity: sha512-bDw92ULh79UtEB3X5e+FZGr0fNIUev0GGLu7uBEQIVgJjigYJGIp6bz01+cVUcNqkP6zKjqrafhWXBkB43ckYw==, tarball: file:projects/scripts.tgz}
+    resolution: {integrity: sha512-etEablx5ljVhADQIRE5hIW0rcgMt2K8eQ1iTjXlDmK7izoFSCbcR8pBD5KRmNGqg47isbtKuNdcjEps6HJrRHg==, tarball: file:projects/scripts.tgz}
     name: '@rush-temp/scripts'
     version: 0.0.0
     dependencies:
@@ -24519,7 +24566,7 @@ packages:
     dev: false
 
   file:projects/server.tgz:
-    resolution: {integrity: sha512-6kI88ZQVCmTKqcAmsMxO//NvbGzBcP3bsBsQWV1fmL9GuxRkK9yqsrWfv1mRkx6RgTKF7fLKcFMqcGgsuiUahA==, tarball: file:projects/server.tgz}
+    resolution: {integrity: sha512-YcxPB5CyUFcFn1v2kduE3FSUQ+JvxPKFeC2+y74VMTSKksK5qkI57tB+aU3TNWytLHKh3fr4g5vgVIO8IJbJsQ==, tarball: file:projects/server.tgz}
     name: '@rush-temp/server'
     version: 0.0.0
     dependencies:
@@ -24590,7 +24637,7 @@ packages:
     dev: false
 
   file:projects/storybook.tgz:
-    resolution: {integrity: sha512-bYyfxtHCW/STrFfaFQNPEakowlYGU/vLEmEnN9G5HFV1EF2ojbrhB4i3MNfLZh29DomopXlKF2aNtYLZ/AX3qg==, tarball: file:projects/storybook.tgz}
+    resolution: {integrity: sha512-N+i4DISnCNj7zOEDNsDd0Re+NFqUzKm01fs2KPTavoKx6Zt9chWWGP/YM8UxQ93QS3OKYFYpeHMfy46DllsmDw==, tarball: file:projects/storybook.tgz}
     name: '@rush-temp/storybook'
     version: 0.0.0
     dependencies:
@@ -24734,7 +24781,7 @@ packages:
     dev: false
 
   file:projects/storybook8.tgz:
-    resolution: {integrity: sha512-9AyefHlqno2a5Yk2LXbsxDA8hrMA8lE3+CvNXYX7L3nRxeahjYOx9bVg0BtB+GR+yXfFPt7SJ6EzlvRPs0JzqA==, tarball: file:projects/storybook8.tgz}
+    resolution: {integrity: sha512-6u4JUpGNiV0F3mM654rvFp+mTaLGQbjcwn8mbJtBCn7e/XIX3yavUnCBgcellY0mVxj7V5zfb4fDUQH5mTdUPg==, tarball: file:projects/storybook8.tgz}
     name: '@rush-temp/storybook8'
     version: 0.0.0
     dependencies:

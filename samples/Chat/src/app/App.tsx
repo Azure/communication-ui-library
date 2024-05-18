@@ -33,6 +33,8 @@ export default (): JSX.Element => {
   const [displayName, setDisplayName] = useState('');
   const [threadId, setThreadId] = useState('');
   const [endpointUrl, setEndpointUrl] = useState('');
+  /* @conditional-compile-remove(rich-text-editor-composite-support) */
+  const [isRichTextEditorEnabled, setIsRichTextEditorEnabled] = useState(false);
 
   const renderPage = (): JSX.Element => {
     switch (page) {
@@ -52,6 +54,8 @@ export default (): JSX.Element => {
             setDisplayName={setDisplayName}
             setThreadId={setThreadId}
             setEndpointUrl={setEndpointUrl}
+            /* @conditional-compile-remove(rich-text-editor-composite-support) */
+            setIsRichTextEditorEnabled={setIsRichTextEditorEnabled}
           />
         );
       }
@@ -72,6 +76,8 @@ export default (): JSX.Element => {
                   setPage('end');
                 }
               }}
+              /* @conditional-compile-remove(rich-text-editor-composite-support) */
+              isRichTextEditorEnabled={isRichTextEditorEnabled}
             />
           );
         }

@@ -291,6 +291,9 @@ export const useChatMessageStyles = makeStyles({
       ...shorthands.borderWidth('1px'),
       ...shorthands.borderColor(tokens.colorNeutralStroke1Selected),
       borderLeftWidth: '4px'
+    },
+    '& code': {
+      whiteSpace: 'pre-wrap'
     }
   },
   bodyWithPlaceholderImage: {
