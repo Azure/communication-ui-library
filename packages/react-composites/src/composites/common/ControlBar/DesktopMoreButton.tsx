@@ -45,6 +45,8 @@ export interface DesktopMoreButtonProps extends ControlBarButtonProps {
   dtmfDialerPresent?: boolean;
   /* @conditional-compile-remove(teams-meeting-conference) */
   teamsMeetingPhoneCallEnable?: boolean;
+  /* @conditional-compile-remove(teams-meeting-conference) */
+  onMeetingPhoneInfoClick?: () => void;
 }
 
 /**
@@ -215,7 +217,7 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
     },
     text: localeStrings.strings.call.phoneCallMoreButtonLabel,
     onClick: () => {
-      setMeetingPhoneNumbersChecked(!meetingPhoneNumbersChecked);
+      props.onMeetingPhoneInfoClick && props.onMeetingPhoneInfoClick();
     },
     iconProps: {
       iconName: 'PhoneNumberButton',

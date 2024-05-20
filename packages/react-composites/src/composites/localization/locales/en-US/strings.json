@@ -136,6 +136,7 @@
     "dtmfDialerMoreButtonLabelOn": "Show dialpad",
     "dtmfDialerMoreButtonLabelOff": "Hide dialpad",
     "phoneCallMoreButtonLabel": "Phone Call",
+    "meetingConferencePhoneInfoModalTitle": "Conference phone info",
     "spokenLanguageStrings": {
       "ar-ae": "Arabic - U.A.E.",
       "ar-sa": "Arabic - Saudi Arabia",

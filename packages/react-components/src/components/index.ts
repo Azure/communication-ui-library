@@ -292,3 +292,6 @@ export * from './Caption';
 export * from './StartCaptionsButton';
 
 export * from './CaptionsSettingsModal';
+
+/* @conditional-compile-remove(teams-meeting-conference) */
+export * from './MeetingConferencePhoneInfo';

@@ -826,6 +826,7 @@ export interface CallCompositeStrings {
     manyParticipantsLeft: string;
     manyUnnamedParticipantsJoined: string;
     manyUnnamedParticipantsLeft: string;
+    meetingConferencePhoneInfoModalTitle: string;
     microphonePermissionDenied: string;
     microphoneToggleInLobbyNotAllowed: string;
     moreButtonCallingLabel: string;
