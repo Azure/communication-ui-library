@@ -247,7 +247,7 @@ export class CallSubscriber {
 
   /* @conditional-compile-remove(teams-meeting-conference) */
   private initTeamsMeetingConference = (): void => {
-    if (this._call.state === 'Connected' && this._call.kind === 'TeamsCall') {
+    if (this._call.state === 'Connected') {
       this._call
         .feature(Features.TeamsMeetingAudioConferencing)
         .getTeamsMeetingAudioConferencingDetails()

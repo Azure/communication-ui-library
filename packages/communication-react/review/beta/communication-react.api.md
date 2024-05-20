@@ -676,6 +676,7 @@ export type CallCompositeIcons = {
     LargeGalleryLayout?: JSX.Element;
     DefaultCustomButton?: JSX.Element;
     DtmfDialpadButton?: JSX.Element;
+    PhoneNumberButton?: JSX.Element;
     PeoplePaneMoreButton?: JSX.Element;
     StopAllSpotlightMenuButton?: JSX.Element;
 };
@@ -861,6 +862,7 @@ export interface CallCompositeStrings {
     peoplePaneTitle: string;
     permissionToReachTargetParticipantNotAllowedMoreDetails?: string;
     permissionToReachTargetParticipantNotAllowedTitle?: string;
+    phoneCallMoreButtonLabel: string;
     privacyPolicy: string;
     rejoinCallButtonLabel: string;
     removeBackgroundEffectButtonLabel?: string;
@@ -2018,6 +2020,7 @@ export type CommonCallControlOptions = {
     };
     exitSpotlightButton?: boolean;
     captionsButton?: boolean;
+    teamsMeetingPhoneCallButton?: boolean;
 };
 
 // @public
@@ -2702,6 +2705,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     LargeGalleryLayout?: JSX.Element | undefined;
     DefaultCustomButton?: JSX.Element | undefined;
     DtmfDialpadButton?: JSX.Element | undefined;
+    PhoneNumberButton?: JSX.Element | undefined;
     PeoplePaneMoreButton?: JSX.Element | undefined;
     StopAllSpotlightMenuButton?: JSX.Element | undefined;
     ChevronLeft?: JSX.Element | undefined;

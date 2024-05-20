@@ -18,7 +18,8 @@ import {
   Video20Filled,
   VideoOff20Filled,
   WifiWarning20Filled,
-  Circle20Regular
+  Circle20Regular,
+  PersonCall20Regular
 } from '@fluentui/react-icons';
 /* @conditional-compile-remove(spotlight) */
 import { MoreHorizontal20Filled, VideoPersonStarOff20Filled } from '@fluentui/react-icons';
@@ -109,6 +110,8 @@ export const COMPOSITE_ONLY_ICONS: CompositeIcons = {
   LargeGalleryLayout: <Table20Regular />,
   DefaultCustomButton: <Circle20Regular />,
   DtmfDialpadButton: <Dialpad20Regular />,
+  /* @conditional-compile-remove(teams-meeting-conference) */
+  PhoneNumberButton: <PersonCall20Regular />,
   /* @conditional-compile-remove(spotlight) */
   PeoplePaneMoreButton: <MoreHorizontal20Filled />,
   /* @conditional-compile-remove(spotlight) */
@@ -249,6 +252,8 @@ export type CallCompositeIcons = {
   LargeGalleryLayout?: JSX.Element;
   DefaultCustomButton?: JSX.Element;
   DtmfDialpadButton?: JSX.Element;
+  /* @conditional-compile-remove(teams-meeting-conference) */
+  PhoneNumberButton?: JSX.Element;
   /* @conditional-compile-remove(spotlight) */
   PeoplePaneMoreButton?: JSX.Element;
   /* @conditional-compile-remove(spotlight) */
