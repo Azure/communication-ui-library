@@ -57,7 +57,7 @@
     "richTextDeleteColumnMenu": "מחק עמודה",
     "richTextDeleteRowMenu": "מחק שורה",
     "richTextDeleteTableMenu": "מחק טבלה",
-    "richTextToolbarMoreButtonAriaLabel": "More options",
+    "richTextToolbarMoreButtonAriaLabel": "אפשרויות נוספות",
     "attachmentMoreMenu": "אפשרויות נוספות"
   },
   "mentionPopover": {
@@ -220,7 +220,7 @@
     "richTextDeleteColumnMenu": "מחק עמודה",
     "richTextDeleteRowMenu": "מחק שורה",
     "richTextDeleteTableMenu": "מחק טבלה",
-    "richTextToolbarMoreButtonAriaLabel": "More options"
+    "richTextToolbarMoreButtonAriaLabel": "אפשרויות נוספות"
   },
   "errorBar": {
     "unableToReachChatService": "אתה נמצא במצב לא מקוון",
