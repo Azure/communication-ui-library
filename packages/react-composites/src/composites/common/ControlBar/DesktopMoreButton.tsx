@@ -82,11 +82,6 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
 
   const [dtmfDialerChecked, setDtmfDialerChecked] = useState<boolean>(props.dtmfDialerPresent ?? false);
 
-  /* @conditional-compile-remove(teams-meeting-conference) */
-  const [meetingPhoneNumbersChecked, setMeetingPhoneNumbersChecked] = useState<boolean>(
-    props.teamsMeetingPhoneCallEnable ?? false
-  );
-
   const moreButtonStrings = useMemo(
     () => ({
       label: localeStrings.strings.call.moreButtonCallingLabel,

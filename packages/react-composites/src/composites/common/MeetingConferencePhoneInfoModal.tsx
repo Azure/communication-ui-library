@@ -13,7 +13,10 @@ export const MeetingConferencePhoneInfoModal = (props: {
 }): JSX.Element => {
   const strings = useLocale().strings.call;
   const modalStrings: _MeetingConferencePhoneInfoModalStrings = {
-    meetingConferencePhoneInfoModalTitle: strings.meetingConferencePhoneInfoModalTitle
+    meetingConferencePhoneInfoModalTitle: strings.meetingConferencePhoneInfoModalTitle,
+    meetingConferencePhoneInfoModalDialIn: strings.meetingConferencePhoneInfoModalDialIn,
+    meetingConferencePhoneInfoModalMeetingId: strings.meetingConferencePhoneInfoModalMeetingId,
+    meetingConferencePhoneInfoModalWait: strings.meetingConferencePhoneInfoModalWait
   };
 
   return (

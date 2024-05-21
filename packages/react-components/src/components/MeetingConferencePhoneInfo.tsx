@@ -18,6 +18,9 @@ import { _preventDismissOnEvent } from '@internal/acs-ui-common';
  */
 export interface _MeetingConferencePhoneInfoModalStrings {
   meetingConferencePhoneInfoModalTitle?: string;
+  meetingConferencePhoneInfoModalDialIn?: string;
+  meetingConferencePhoneInfoModalMeetingId?: string;
+  meetingConferencePhoneInfoModalWait?: string;
 }
 
 /**
@@ -66,8 +69,32 @@ export const _MeetingConferencePhoneInfoModal = (props: _MeetingConferencePhoneI
               iconProps={{ iconName: 'Cancel' }}
               ariaLabel={strings?.meetingConferencePhoneInfoModalTitle}
               onClick={onDismiss}
+              style={{ color: theme.palette.themePrimary }}
+            />
+          </Stack>
+          <Stack>
+            <IconButton
+              iconProps={{ iconName: 'PhoneNumberButton' }}
+              ariaLabel={strings?.meetingConferencePhoneInfoModalDialIn}
               style={{ color: theme.palette.black }}
             />
+            <Text className={titleClassName}>{strings?.meetingConferencePhoneInfoModalDialIn}</Text>
+          </Stack>
+          <Stack>
+            <IconButton
+              iconProps={{ iconName: 'DtmfDialpadButton' }}
+              ariaLabel={strings?.meetingConferencePhoneInfoModalMeetingId}
+              style={{ color: theme.palette.themePrimary }}
+            />
+            <Text className={titleClassName}>{strings?.meetingConferencePhoneInfoModalMeetingId}</Text>
+          </Stack>
+          <Stack>
+            <IconButton
+              iconProps={{ iconName: 'PhoneInfoWait' }}
+              ariaLabel={strings?.meetingConferencePhoneInfoModalWait}
+              style={{ color: theme.palette.themePrimary }}
+            />
+            <Text className={titleClassName}>{strings?.meetingConferencePhoneInfoModalWait}</Text>
           </Stack>
         </Modal>
       }

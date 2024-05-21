@@ -853,4 +853,19 @@ export interface CallCompositeStrings {
    * Phone Info Modal Title
    */
   meetingConferencePhoneInfoModalTitle: string;
+  /* @conditional-compile-remove(teams-meeting-conference) */
+  /**
+   * Phone Info Modal Title
+   */
+  meetingConferencePhoneInfoModalDialIn: string;
+  /* @conditional-compile-remove(teams-meeting-conference) */
+  /**
+   * Phone Info Modal Title
+   */
+  meetingConferencePhoneInfoModalMeetingId: string;
+  /* @conditional-compile-remove(teams-meeting-conference) */
+  /**
+   * Phone Info Modal Title
+   */
+  meetingConferencePhoneInfoModalWait: string;
 }
