@@ -4,31 +4,31 @@ This log was last generated on Tue, 21 May 2024 20:14:27 GMT and should not be m
 
 <!-- Start content -->
 
-## [1.17.0-beta.1](https://github.com/azure/communication-ui-library/tree/@azure/communication-react_v1.17.0-beta.1)
+## [1.17.0-beta.1](https://github.com/azure/communication-ui-library/tree/1.17.0-beta.1)
 
 Tue, 21 May 2024 20:14:27 GMT 
-[Compare changes](https://github.com/azure/communication-ui-library/compare/@azure/communication-react_v1.16.0...@azure/communication-react_v1.17.0-beta.1)
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.16.0...1.17.0-beta.1)
 
 ### Features
-- add view attendee names ([PR #4496](https://github.com/azure/communication-ui-library/pull/4496) by 97124699+prabhjot-msft@users.noreply.github.com)
-- Add notiification for Hide Attendee Names ([PR #4554](https://github.com/azure/communication-ui-library/pull/4554) by 97124699+prabhjot-msft@users.noreply.github.com)
-- Update SDK ref for Hide Attendee Names ([PR #4560](https://github.com/azure/communication-ui-library/pull/4560) by 97124699+prabhjot-msft@users.noreply.github.com)
-- Storybook changes for Hide Attendee Names ([PR #4549](https://github.com/azure/communication-ui-library/pull/4549) by 97124699+prabhjot-msft@users.noreply.github.com)
+
+### File Sharing
+We have made improvements to the file sharing feature in this beta release. The attachment card is now more optimized and you can find the usage instructions in the storybook.
+
+### Rich Text Editor
+This release brings major enhancements to the rich text editor feature. The changes include:
+- Upgrading from Rooster JS v8 to v9
+- Replacing RoosterJS React components with our own components
+
 ### Improvements
-- Update PPTLive experience in story book ([PR #4335](https://github.com/azure/communication-ui-library/pull/4335) by 93549644+ShaunaSong@users.noreply.github.com)
-- Updated Storybook for File Sharing GA Release ([PR #4620](https://github.com/azure/communication-ui-library/pull/4620) by 109105353+jpeng-ms@users.noreply.github.com)
-- Update @azure/communication-calling to 1.24.1 for stable builds, and 1.24.2-beta.1 for beta builds ([PR #4565](https://github.com/azure/communication-ui-library/pull/4565) by 2684369+JamesBurnside@users.noreply.github.com)
-- Migration of the rich text editor functionality from RoosterJs v8 to v9 ([PR #4603](https://github.com/azure/communication-ui-library/pull/4603) by 98852890+vhuseinova-msft@users.noreply.github.com)
-- File Sharing Beta API Refactor ([PR #4564](https://github.com/azure/communication-ui-library/pull/4564) by 109105353+jpeng-ms@users.noreply.github.com)
-- Menu icon behavior fix: ([PR #4584](https://github.com/azure/communication-ui-library/pull/4584) by jiangnanhello@live.com)
-### Bug Fixes
+- Add notification for Hide Attendee Names ([PR #4554](https://github.com/azure/communication-ui-library/pull/4554) by 97124699+prabhjot-msft@users.noreply.github.com)
+- Menu icon behavior improved ([PR #4584](https://github.com/azure/communication-ui-library/pull/4584) by jiangnanhello@live.com)
 - Allow captions to be used when in a adhoc teams call ([PR #4579](https://github.com/azure/communication-ui-library/pull/4579) by dmceachern@microsoft.com)
-- Fix conditional compile build issue ([PR #4514](https://github.com/azure/communication-ui-library/pull/4514) by 96077406+carocao-msft@users.noreply.github.com)
+
+### Bug Fixes
 - Update styles to fix spacing of labeled background effects ([PR #4614](https://github.com/azure/communication-ui-library/pull/4614) by dmceachern@microsoft.com)
-- Add reaction items narratro strings ([PR #4635](https://github.com/azure/communication-ui-library/pull/4635) by dmceachern@microsoft.com)
+- Add reaction items narratror strings ([PR #4635](https://github.com/azure/communication-ui-library/pull/4635) by dmceachern@microsoft.com)
 - Added Missing Message Options for MessageThread Component ([PR #4600](https://github.com/azure/communication-ui-library/pull/4600) by 109105353+jpeng-ms@users.noreply.github.com)
-- Add snippet for video effects ([PR #4285](https://github.com/azure/communication-ui-library/pull/4285) by 97124699+prabhjot-msft@users.noreply.github.com)
-- Fix bug where raise hand's height is the height of video til ([PR #4589](https://github.com/azure/communication-ui-library/pull/4589) by 96077406+carocao-msft@users.noreply.github.com)
+- Fix bug where raise hand's height is the height of video tile ([PR #4589](https://github.com/azure/communication-ui-library/pull/4589) by 96077406+carocao-msft@users.noreply.github.com)
 - Fix for Pin tile icon too small ([PR #4587](https://github.com/azure/communication-ui-library/pull/4587) by 97124699+prabhjot-msft@users.noreply.github.com)
 - Fix crash bug for remote screen share ([PR #4608](https://github.com/azure/communication-ui-library/pull/4608) by jiangnanhello@live.com)
 - Fix bug when there are duplicate captions ([PR #4534](https://github.com/azure/communication-ui-library/pull/4534) by 96077406+carocao-msft@users.noreply.github.com)
