@@ -2003,9 +2003,9 @@ export const createDefaultCallingHandlers: CreateDefaultCallingHandlers;
 export const createDefaultChatHandlers: (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) => ChatHandlers;
 
 // @public
-export const createDefaultTeamsCallingHandlers: (callClient: StatefulCallClient, callAgent: undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCallAgent, deviceManager: StatefulDeviceManager | undefined, call: undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall, options?: {
+export const createDefaultTeamsCallingHandlers: (callClient: StatefulCallClient, callAgent?: TeamsCallAgent, deviceManager?: StatefulDeviceManager, call?: TeamsCall, options?: {
     onResolveVideoBackgroundEffectsDependency?: () => Promise<VideoBackgroundEffectsDependency>;
-}) => never | TeamsCallingHandlers;
+}) => TeamsCallingHandlers;
 
 // @public
 export const createStatefulCallClient: (args: StatefulCallClientArgs, options?: StatefulCallClientOptions) => StatefulCallClient;
@@ -2014,7 +2014,7 @@ export const createStatefulCallClient: (args: StatefulCallClientArgs, options?: 
 export const createStatefulChatClient: (args: StatefulChatClientArgs, options?: StatefulChatClientOptions) => StatefulChatClient;
 
 // @public (undocumented)
-export const createTeamsCallAdapter: ({ userId, credential, locator, options }: TeamsCallAdapterArgs) => Promise<TeamsCallAdapter>;
+export const createTeamsCallAdapter: (args: TeamsCallAdapterArgs) => Promise<TeamsCallAdapter>;
 
 // @public
 export const createTeamsCallAdapterFromClient: (callClient: StatefulCallClient, callAgent: TeamsCallAgent, locator: CallAdapterLocator, options?: TeamsAdapterOptions) => Promise<TeamsCallAdapter>;

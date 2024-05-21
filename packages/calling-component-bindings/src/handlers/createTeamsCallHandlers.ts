@@ -49,13 +49,13 @@ export interface TeamsCallingHandlers extends CommonCallingHandlers {
 export const createDefaultTeamsCallingHandlers = memoizeOne(
   (
     callClient: StatefulCallClient,
-    callAgent: undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCallAgent,
-    deviceManager: StatefulDeviceManager | undefined,
-    call: undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall,
+    callAgent?: TeamsCallAgent,
+    deviceManager?: StatefulDeviceManager,
+    call?: TeamsCall,
     options?: {
       onResolveVideoBackgroundEffectsDependency?: () => Promise<VideoBackgroundEffectsDependency>;
     }
-  ): never | TeamsCallingHandlers => {
+  ): TeamsCallingHandlers => {
     return {
       ...createDefaultCommonCallingHandlers(callClient, deviceManager, call, options),
       onStartCall: (participants, options) => {
