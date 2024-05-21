@@ -238,7 +238,6 @@ const createDefaultCallAdapterState = (role?: ParticipantRole): CallAdapterState
       remoteParticipants: {},
       remoteParticipantsEnded: {},
       raiseHand: { raisedHands: [] },
-      /* @conditional-compile-remove(ppt-live) */
       pptLive: { isActive: false },
       localParticipantReaction: undefined,
       role,
@@ -278,6 +277,7 @@ const createDefaultCallAdapterState = (role?: ParticipantRole): CallAdapterState
       deviceAccess: { video: true, audio: true }
     },
     isTeamsCall: false,
+    isTeamsMeeting: false,
     isRoomsCall: false,
     latestErrors: {}
   };

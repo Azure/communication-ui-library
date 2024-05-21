@@ -20,9 +20,9 @@ import LiveMessage from '../Announcer/LiveMessage';
 /* @conditional-compile-remove(mention) */
 import { defaultOnMentionRender } from './MentionRenderer';
 import DOMPurify from 'dompurify';
-import { _AttachmentDownloadCardsStrings } from '../AttachmentDownloadCards';
+import { _AttachmentDownloadCardsStrings } from '../Attachment/AttachmentDownloadCards';
 /* @conditional-compile-remove(attachment-download) */
-import { AttachmentMetadata } from '../../types';
+import { AttachmentMetadata } from '@internal/acs-ui-common';
 
 type ChatMessageContentProps = {
   message: ChatMessage;

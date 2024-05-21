@@ -20,6 +20,7 @@
     "complianceBannerTranscriptionStopped": "Die Transkription wurde beendet.",
     "configurationPageTitle": "Einen Anruf beginnen",
     "copyInviteLinkButtonLabel": "Einladungslink kopieren",
+    "copyInviteLinkButtonActionedLabel": "Link kopiert",
     "copyInviteLinkActionedAriaLabel": "Gruppeneinladungslink kopiert",
     "defaultPlaceHolder": "Option auswählen",
     "dismissSidePaneButtonLabel": "Schließen",
@@ -244,6 +245,10 @@
       "shareScreen": {
         "lostDueToRoleChangeToAttendee": "Ihre Rolle wurde geändert. Einige Aktionen, z. B. das Teilen von Inhalten, stehen Ihnen nicht zur Verfügung.",
         "grantedDueToRoleChangeToPresenter": "Sie sind Referent. Sie können Inhalte teilen und die Besprechung unterstützen."
+      },
+      "hideAttendeeNames": {
+        "hideAttendeeNameAttendee": "Ihr Name ist für andere Teilnehmer ausgeblendet. Organisatoren und Referenten können Ihren richtigen Namen sehen.",
+        "hideAttendeeNamePresenter": "Teilnehmernamen sind ausgeblendet. Nur Organisatoren und Referenten können Namen sehen, um die Privatsphäre der Teilnehmer zu schützen."
       }
     },
     "surveyTitle": "Helfen Sie uns, besser zu werden.",
@@ -259,7 +264,6 @@
     "tagsSurveyQuestion": "Was hätte besser sein können?",
     "tagsSurveyTextFieldDefaultText": "Sonstiges, bitte angeben",
     "tagsSurveyHelperText": "Überprüfen Sie alle aufgetretenen Probleme",
-    "surveyTextboxDefaultText": "Sonstiges, bitte angeben",
     "endOfSurveyText": "Vielen Dank für Ihr Feedback!",
     "surveyIssues": {
       "overallRating": {
@@ -301,7 +305,7 @@
         "otherIssues": "Ich hatte andere Probleme mit der Bildschirmfreigabe in diesem Anruf."
       }
     },
-    "SurveyIssuesHeadingStrings": {
+    "surveyIssuesHeadingStrings": {
       "overallRating": "Insgesamt",
       "audioRating": "Audio",
       "videoRating": "Video",
@@ -325,7 +329,8 @@
     },
     "exitSpotlightButtonLabel": "Spotlight beenden",
     "exitSpotlightButtonTooltip": "Spotlight beenden",
-    "hangUpConfirmButtonLabel": "Bestätigen",
+    "leaveConfirmButtonLabel": "Beenden",
+    "endCallConfirmButtonLabel": "Gespräch beenden",
     "hangUpCancelButtonLabel": "Abbrechen",
     "leaveConfirmDialogTitle": "Gespräch beenden?",
     "leaveConfirmDialogContent": "Möchten Sie den Anruf wirklich verlassen?",
@@ -345,6 +350,7 @@
     "chatButtonTooltipOpen": "Chat anzeigen",
     "chatPaneTitle": "Chat",
     "copyInviteLinkButtonLabel": "Einladungslink kopieren",
+    "copyInviteLinkButtonActionedLabel": "Link kopiert",
     "copyInviteLinkActionedAriaLabel": "Gruppeneinladungslink kopiert",
     "dismissSidePaneButtonLabel": "Schließen",
     "moreDrawerAudioDeviceMenuTitle": "Audiogerät",
@@ -360,6 +366,8 @@
     "selectedPeopleButtonLabel": "Schaltfläche \"Personen\" ausgewählt",
     "peopleButtonTooltipOpen": "Teilnehmende anzeigen",
     "peopleButtonTooltipClose": "Teilnehmende ausblenden",
+    "peopleButtonTooltipOpenAriaLabel": "Schaltfläche „Personen“, Teilnehmer anzeigen",
+    "peopleButtonTooltipCloseAriaLabel": "Schaltfläche „Personen“, Teilnehmer ausblenden",
     "peoplePaneSubTitle": "In diesem Anruf",
     "peoplePaneTitle": "Personen",
     "pictureInPictureTileAriaLabel": "Videofeeds. Klicken Sie hier, um zum Anrufbildschirm zurückzukehren.",

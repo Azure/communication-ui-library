@@ -89,7 +89,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
 
   const onTextFieldKeyDown = useCallback(
     (ev: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      if (isEnterKeyEventFromCompositionSession(ev)) {
+      if (isEnterKeyEventFromCompositionSession(ev.nativeEvent)) {
         return;
       }
       if (ev.key === 'Enter' && (ev.shiftKey === false || !supportNewline)) {

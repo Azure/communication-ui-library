@@ -27,7 +27,7 @@ export { ChatMessageComponentAsRichTextEditBox } from './ChatMessage/MyMessageCo
 /* @conditional-compile-remove(rich-text-editor) */
 export type { ChatMessageComponentAsRichTextEditBoxProps } from './ChatMessage/MyMessageComponents/ChatMessageComponentAsRichTextEditBox';
 /* @conditional-compile-remove(rich-text-editor) */
-export type { RichTextSendBoxProps, RichTextSendBoxStrings } from './RichTextEditor/RichTextSendBox';
+export type { RichTextSendBoxProps, RichTextSendBoxStrings, RichTextStrings } from './RichTextEditor/RichTextSendBox';
 
 /* @conditional-compile-remove(mention) */
 export type {
@@ -201,21 +201,20 @@ export type {
 export * from './Drawer';
 /* @conditional-compile-remove(attachment-upload) */
 export type { SendBoxErrorBarError } from './SendBoxErrorBar';
-export * from './AttachmentCard';
-export * from './AttachmentCardGroup';
+export * from './Attachment/AttachmentCard';
+export * from './Attachment/AttachmentCardGroup';
 export * from './ModalClone/ModalClone';
-export * from './AttachmentDownloadCards';
-export type { _AttachmentUploadCardsStrings } from './AttachmentUploadCards';
+export * from './Attachment/AttachmentDownloadCards';
+export type { _AttachmentUploadCardsStrings } from './Attachment/AttachmentUploadCards';
 
 export type {
   AttachmentOptions,
   AttachmentUploadOptions,
-  AttachmentMetadata,
-  AttachmentProgressError,
+  AttachmentActionHandler,
   AttachmentSelectionHandler,
+  AttachmentMetadataWrapper,
   AttachmentRemovalHandler,
-  AttachmentUploadTask,
-  AttachmentMetadataWithProgress
+  AttachmentUploadTask
 } from '../types/Attachment';
 
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
@@ -292,3 +291,5 @@ export * from './Caption';
 export * from './StartCaptionsButton';
 
 export * from './CaptionsSettingsModal';
+
+export { _ErrorBoundary } from './ErrorBoundary';

@@ -7,11 +7,11 @@
     "mutedIconLabel": "已静音",
     "displayNamePlaceholder": "未命名的参与者",
     "participantStateRinging": "正在呼叫...",
-    "participantStateHold": "待机音乐",
+    "participantStateHold": "保留",
     "attendeeRole": "与会者"
   },
   "ParticipantList": {
-    "overflowParticipantCount": "+{overflowCount} 个"
+    "overflowParticipantCount": "和另外 {overflowCount} 人"
   },
   "typingIndicator": {
     "singleUser": "{user} 正在键入...",
@@ -27,35 +27,38 @@
     "attachmentUploadsPendingError": "正在上载...请稍候。",
     "removeAttachment": "删除文件",
     "uploading": "正在上传",
-    "uploadCompleted": "已完成上传"
+    "uploadCompleted": "已完成上传",
+    "attachmentMoreMenu": "更多选项"
   },
   "richTextSendBox": {
     "placeholderText": "输入消息",
     "textTooLong": "你的消息长度超过了最大限制。",
     "sendButtonAriaLabel": "发送信息",
-    "attachmentUploadsPendingError": "正在上传...请稍等。",
+    "attachmentUploadsPendingError": "正在上传...请稍候。",
     "removeAttachment": "删除文件",
     "uploading": "正在上传",
     "uploadCompleted": "已完成上传",
-    "boldTooltip": "粗体",
-    "italicTooltip": "斜体",
-    "underlineTooltip": "下划线",
-    "bulletListTooltip": "项目符号列表",
-    "numberListTooltip": "编号列表",
-    "increaseIndentTooltip": "增加缩进量",
-    "decreaseIndentTooltip": "减少缩进量",
-    "insertTableTooltip": "插入表格",
+    "richTextBoldTooltip": "粗体",
+    "richTextItalicTooltip": "斜体",
+    "richTextUnderlineTooltip": "下划线",
+    "richTextBulletListTooltip": "项目符号列表",
+    "richTextNumberListTooltip": "编号列表",
+    "richTextIncreaseIndentTooltip": "增加缩进量",
+    "richTextDecreaseIndentTooltip": "减少缩进量",
+    "richTextInsertTableTooltip": "插入表格",
     "richTextFormatButtonTooltip": "格式",
-    "insertRowOrColumnMenu": "插入",
-    "insertTableMenuTitle": "插入 {column} x {row} 表",
-    "insertRowAboveMenu": "在上方插入",
-    "insertRowBelowMenu": "在下方插入",
-    "insertColumnLeftMenu": "在左侧插入",
-    "insertColumnRightMenu": "在右侧插入",
-    "deleteRowOrColumnMenu": "删除",
-    "deleteColumnMenu": "删除列",
-    "deleteRowMenu": "删除行",
-    "deleteTableMenu": "删除表格"
+    "richTextInsertRowOrColumnMenu": "插入",
+    "richTextInsertTableMenuTitle": "插入 {column} x {row} 表",
+    "richTextInsertRowAboveMenu": "在上方插入",
+    "richTextInsertRowBelowMenu": "在下方插入",
+    "richTextInsertColumnLeftMenu": "在左侧插入",
+    "richTextInsertColumnRightMenu": "在右侧插入",
+    "richTextDeleteRowOrColumnMenu": "删除",
+    "richTextDeleteColumnMenu": "删除列",
+    "richTextDeleteRowMenu": "删除行",
+    "richTextDeleteTableMenu": "删除表格",
+    "richTextToolbarMoreButtonAriaLabel": "More options",
+    "attachmentMoreMenu": "更多选项"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "建议"
@@ -79,7 +82,7 @@
     "label": "退出",
     "tooltipContent": "离开通话",
     "leaveOption": "退出",
-    "endCallOption": "结束通话"
+    "endCallOption": "结束所有人的通话"
   },
   "cameraButton": {
     "onLabel": "相机",
@@ -196,8 +199,28 @@
     "openAttachment": "打开文件",
     "blockedWarningText": "由于组织策略，此消息已被删除。",
     "blockedWarningLinkText": "详细信息",
-    "attachmentCardGroupMessage": "该邮件包含 {attachmentCount} 个附件",
-    "messageDeletedAnnouncementAriaLabel": "邮件已删除"
+    "attachmentCardGroupMessage": "该消息包含 {attachmentCount} 个附件",
+    "messageDeletedAnnouncementAriaLabel": "消息已删除",
+    "richTextBoldTooltip": "粗体",
+    "richTextItalicTooltip": "斜体",
+    "richTextUnderlineTooltip": "下划线",
+    "richTextBulletListTooltip": "项目符号列表",
+    "richTextNumberListTooltip": "编号列表",
+    "richTextIncreaseIndentTooltip": "增加缩进量",
+    "richTextDecreaseIndentTooltip": "减少缩进量",
+    "richTextInsertTableTooltip": "插入表格",
+    "richTextFormatButtonTooltip": "格式",
+    "richTextInsertRowOrColumnMenu": "插入",
+    "richTextInsertTableMenuTitle": "插入 {column} x {row} 表",
+    "richTextInsertRowAboveMenu": "在上方插入",
+    "richTextInsertRowBelowMenu": "在下方插入",
+    "richTextInsertColumnLeftMenu": "在左侧插入",
+    "richTextInsertColumnRightMenu": "在右侧插入",
+    "richTextDeleteRowOrColumnMenu": "删除",
+    "richTextDeleteColumnMenu": "删除列",
+    "richTextDeleteRowMenu": "删除行",
+    "richTextDeleteTableMenu": "删除表格",
+    "richTextToolbarMoreButtonAriaLabel": "More options"
   },
   "errorBar": {
     "unableToReachChatService": "你已脱机",
@@ -221,7 +244,7 @@
     "callMicrophoneMutedBySystem": "系统已将你设为静音。",
     "callMicrophoneUnmutedBySystem": "你的麦克风已恢复，系统已取消静音。",
     "callMacOsMicrophoneAccessDenied": "无法访问麦克风。在 macOS 隐私设置中授予麦克风权限。",
-    "callLocalVideoFreeze": "网络带宽较差。你的视频可能会在通话中为其他人暂停。",
+    "callLocalVideoFreeze": "网络带宽较差。你的视频在会议中的其他人看来可能会卡顿。",
     "callCameraAccessDenied": "无法访问照相机。单击地址栏中的锁定以授予对此网页的权限。",
     "callCameraAccessDeniedSafari": "无法访问照相机。刷新页面以允许权限，或检查此浏览器的设置并验证是否为此网站启用了权限。",
     "callCameraAlreadyInUse": "无法访问照相机。它可能已被其他应用程序使用。",
@@ -234,14 +257,14 @@
     "failedToJoinCallInvalidMeetingLink": "无法加入会议。无效的链接。",
     "cameraFrozenForRemoteParticipants": "通话中的用户在查看视频时遇到问题。请检查你的设备和网络。",
     "unableToStartVideoEffect": "无法应用视频效果。",
-    "startSpotlightWhileMaxParticipantsAreSpotlighted": "无法开发聚焦参与者，因为聚焦的参与者人数已达到上限。"
+    "startSpotlightWhileMaxParticipantsAreSpotlighted": "无法聚焦参与者，因为聚焦的参与者人数已达到上限。"
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "你正在共享你的屏幕",
     "screenShareLoadingMessage": "正在加载 {participant} 的屏幕",
     "localVideoLabel": "你",
     "localVideoCameraSwitcherLabel": "切换相机",
-    "localVideoMovementLabel": "可移动本地视频磁贴",
+    "localVideoMovementLabel": "可移动本地小窗视频",
     "localVideoSelectedDescription": "已选择 {cameraName}",
     "displayNamePlaceholder": "未命名的参与者",
     "fitRemoteParticipantToFrame": "适应帧大小",
@@ -272,7 +295,7 @@
   },
   "videoTile": {
     "participantStateRinging": "正在呼叫...",
-    "participantStateHold": "待机音乐"
+    "participantStateHold": "保留"
   },
   "CameraAndMicrophoneSitePermissionsRequest": {
     "primaryText": "允许{appName}使用你的相机和麦克风",

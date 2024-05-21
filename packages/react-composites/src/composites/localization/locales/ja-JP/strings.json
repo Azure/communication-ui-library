@@ -20,6 +20,7 @@
     "complianceBannerTranscriptionStopped": "トランスクリプトが停止しました。",
     "configurationPageTitle": "通話を開始",
     "copyInviteLinkButtonLabel": "招待用のリンクをコピー",
+    "copyInviteLinkButtonActionedLabel": "リンクをコピーしました",
     "copyInviteLinkActionedAriaLabel": "招待用のリンクがコピーされました",
     "defaultPlaceHolder": "オプションを選択する",
     "dismissSidePaneButtonLabel": "閉じる",
@@ -244,6 +245,10 @@
       "shareScreen": {
         "lostDueToRoleChangeToAttendee": "ロールが変更されました。コンテンツの共有などの一部の操作は利用できません。",
         "grantedDueToRoleChangeToPresenter": "あなたは発表者です。コンテンツの共有と会議の進行を行うことができます。"
+      },
+      "hideAttendeeNames": {
+        "hideAttendeeNameAttendee": "自分の名前は他の出席者には表示されません。開催者と発表者にあなたの名前が表示されます。",
+        "hideAttendeeNamePresenter": "出席者の名前は非表示です。出席者のプライバシーを守るため、開催者と発表者のみ名前を見ることができます。"
       }
     },
     "surveyTitle": "品質向上にご協力ください",
@@ -259,7 +264,6 @@
     "tagsSurveyQuestion": "何が良くなりましたか?",
     "tagsSurveyTextFieldDefaultText": "その他、特定してください",
     "tagsSurveyHelperText": "発生した問題を確認する",
-    "surveyTextboxDefaultText": "その他 (明記してください)",
     "endOfSurveyText": "フィードバックをお送りいただき、ありがとうございます。",
     "surveyIssues": {
       "overallRating": {
@@ -301,7 +305,7 @@
         "otherIssues": "この通話で他の画面共有の問題があった"
       }
     },
-    "SurveyIssuesHeadingStrings": {
+    "surveyIssuesHeadingStrings": {
       "overallRating": "全体",
       "audioRating": "オーディオ",
       "videoRating": "動画",
@@ -325,7 +329,8 @@
     },
     "exitSpotlightButtonLabel": "スポットライトを終了",
     "exitSpotlightButtonTooltip": "スポットライトを終了",
-    "hangUpConfirmButtonLabel": "確認",
+    "leaveConfirmButtonLabel": "退出",
+    "endCallConfirmButtonLabel": "通話の終了",
     "hangUpCancelButtonLabel": "キャンセル",
     "leaveConfirmDialogTitle": "通話から退出しますか?",
     "leaveConfirmDialogContent": "通話から退出してよろしいですか?",
@@ -345,6 +350,7 @@
     "chatButtonTooltipOpen": "チャットを表示",
     "chatPaneTitle": "チャット",
     "copyInviteLinkButtonLabel": "招待用のリンクをコピー",
+    "copyInviteLinkButtonActionedLabel": "リンクをコピーしました",
     "copyInviteLinkActionedAriaLabel": "招待用のリンクがコピーされました",
     "dismissSidePaneButtonLabel": "閉じる",
     "moreDrawerAudioDeviceMenuTitle": "オーディオ デバイス",
@@ -360,6 +366,8 @@
     "selectedPeopleButtonLabel": "[ユーザー] ボタンが選択されました",
     "peopleButtonTooltipOpen": "参加者を表示",
     "peopleButtonTooltipClose": "参加者を非表示",
+    "peopleButtonTooltipOpenAriaLabel": "[ユーザー] ボタン、参加者を表示",
+    "peopleButtonTooltipCloseAriaLabel": "[ユーザー] ボタン、参加者を非表示",
     "peoplePaneSubTitle": "この通話で",
     "peoplePaneTitle": "ユーザー",
     "pictureInPictureTileAriaLabel": "ビデオ フィード。 クリックすると通話画面に戻ります。",

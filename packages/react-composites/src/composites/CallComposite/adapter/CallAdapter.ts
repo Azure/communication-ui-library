@@ -118,7 +118,14 @@ export type CallAdapterClientState = {
   targetCallees?: CommunicationIdentifier[];
   devices: DeviceManagerState;
   endedCall?: CallState;
+  /**
+   * State to track whether the call is a teams call.
+   */
   isTeamsCall: boolean;
+  /**
+   * State to track whether the call is a teams meeting.
+   */
+  isTeamsMeeting: boolean;
   /**
    * State to track whether the call is a rooms call.
    */

@@ -20,6 +20,7 @@
     "complianceBannerTranscriptionStopped": "Avskriften har avslutats.",
     "configurationPageTitle": "Starta ett samtal",
     "copyInviteLinkButtonLabel": "Kopiera inbjudningslänk",
+    "copyInviteLinkButtonActionedLabel": "Länken har kopierats",
     "copyInviteLinkActionedAriaLabel": "Inbjudningslänken har kopierats",
     "defaultPlaceHolder": "Välj ett alternativ",
     "dismissSidePaneButtonLabel": "Stäng",
@@ -244,6 +245,10 @@
       "shareScreen": {
         "lostDueToRoleChangeToAttendee": "Din roll har ändrats. Vissa åtgärder, som att dela innehåll, är inte tillgängliga för dig.",
         "grantedDueToRoleChangeToPresenter": "Du är presentatör. Du kan dela innehåll och underlätta mötet."
+      },
+      "hideAttendeeNames": {
+        "hideAttendeeNameAttendee": "Ditt namn är dolt för andra deltagare. Organisatörer och presentatörer kan se ditt riktiga namn.",
+        "hideAttendeeNamePresenter": "Deltagarnas namn är dolda. Endast organisatörer och presentatörer kan se namn för att skydda deltagarnas integritet."
       }
     },
     "surveyTitle": "Hjälp oss att förbättra",
@@ -259,7 +264,6 @@
     "tagsSurveyQuestion": "Vad kan förbättras?",
     "tagsSurveyTextFieldDefaultText": "Annat, specificera",
     "tagsSurveyHelperText": "Kontrollera eventuella problem som du har upplevt",
-    "surveyTextboxDefaultText": "Annat, specificera",
     "endOfSurveyText": "Tack för din feedback!",
     "surveyIssues": {
       "overallRating": {
@@ -301,7 +305,7 @@
         "otherIssues": "Jag hade andra skärmdelningsproblem i det här samtalet"
       }
     },
-    "SurveyIssuesHeadingStrings": {
+    "surveyIssuesHeadingStrings": {
       "overallRating": "Övergripande",
       "audioRating": "Ljud",
       "videoRating": "Video",
@@ -325,7 +329,8 @@
     },
     "exitSpotlightButtonLabel": "Spotlight",
     "exitSpotlightButtonTooltip": "Spotlight",
-    "hangUpConfirmButtonLabel": "Bekräfta",
+    "leaveConfirmButtonLabel": "Lämna",
+    "endCallConfirmButtonLabel": "Avsluta samtal",
     "hangUpCancelButtonLabel": "Avbryt",
     "leaveConfirmDialogTitle": "Vill du lämna samtalet?",
     "leaveConfirmDialogContent": "Vill du lämna samtalet?",
@@ -345,6 +350,7 @@
     "chatButtonTooltipOpen": "Visa chatt",
     "chatPaneTitle": "Chatt",
     "copyInviteLinkButtonLabel": "Kopiera inbjudningslänk",
+    "copyInviteLinkButtonActionedLabel": "Länken har kopierats",
     "copyInviteLinkActionedAriaLabel": "Inbjudningslänken har kopierats",
     "dismissSidePaneButtonLabel": "Stäng",
     "moreDrawerAudioDeviceMenuTitle": "Ljudenhet",
@@ -360,6 +366,8 @@
     "selectedPeopleButtonLabel": "Knappen Kontakter har valts",
     "peopleButtonTooltipOpen": "Visa deltagare",
     "peopleButtonTooltipClose": "Dölj deltagare",
+    "peopleButtonTooltipOpenAriaLabel": "Knappen Personer, visa deltagare",
+    "peopleButtonTooltipCloseAriaLabel": "Knappen Personer, dölj deltagare",
     "peoplePaneSubTitle": "I det här samtalet",
     "peoplePaneTitle": "Personer",
     "pictureInPictureTileAriaLabel": "Videofeeds. Klicka för att återgå till samtalsskärmen.",
