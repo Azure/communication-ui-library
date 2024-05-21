@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import React, { useCallback, useMemo } from 'react';
-import { Stack } from '@fluentui/react';
+import { FocusTrapZone, Stack } from '@fluentui/react';
 import {
   containerContextStyles,
   paneBodyContainer,
@@ -97,34 +97,36 @@ export const SidePane = (props: SidePaneProps): JSX.Element => {
   }
 
   return (
-    <Stack verticalFill grow styles={paneStyles} data-ui-id="SidePane" tokens={props.mobileView ? {} : sidePaneTokens}>
-      {HeaderToRender}
-      <Stack.Item verticalFill grow styles={paneBodyContainer}>
-        <Stack verticalFill styles={scrollableContainer}>
-          {ContentRender && (
-            <Stack.Item verticalFill styles={scrollableContainerContents}>
-              <Stack styles={containerContextStyles}>
-                <ContentRender />
-              </Stack>
-            </Stack.Item>
-          )}
-          {OverrideContentRender && (
-            <Stack.Item
-              verticalFill
-              styles={
-                !overrideSidePane?.isActive && overrideSidePane?.persistRenderingWhenClosed
-                  ? hiddenStyles
-                  : scrollableContainerContents
-              }
-            >
-              <Stack styles={containerContextStyles}>
-                <OverrideContentRender />
-              </Stack>
-            </Stack.Item>
-          )}
-        </Stack>
-      </Stack.Item>
-    </Stack>
+    <FocusTrapZone isClickableOutsideFocusTrap>
+      <Stack verticalFill grow styles={paneStyles} data-ui-id="SidePane" tokens={props.mobileView ? {} : sidePaneTokens}>
+        {HeaderToRender}
+        <Stack.Item verticalFill grow styles={paneBodyContainer}>
+          <Stack verticalFill styles={scrollableContainer}>
+            {ContentRender && (
+              <Stack.Item verticalFill styles={scrollableContainerContents}>
+                <Stack styles={containerContextStyles}>
+                  <ContentRender />
+                </Stack>
+              </Stack.Item>
+            )}
+            {OverrideContentRender && (
+              <Stack.Item
+                verticalFill
+                styles={
+                  !overrideSidePane?.isActive && overrideSidePane?.persistRenderingWhenClosed
+                    ? hiddenStyles
+                    : scrollableContainerContents
+                }
+              >
+                <Stack styles={containerContextStyles}>
+                  <OverrideContentRender />
+                </Stack>
+              </Stack.Item>
+            )}
+          </Stack>
+        </Stack.Item>
+      </Stack>
+    </FocusTrapZone>
   );
 };
 
