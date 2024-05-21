@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import React, { useCallback, useEffect, useMemo } from 'react';
+import React, { createRef, useCallback, useEffect, useMemo } from 'react';
 import { SidePaneRenderer, useIsParticularSidePaneOpen } from './SidePaneProvider';
 import { SidePaneHeader } from '../../../common/SidePaneHeader';
 
@@ -52,6 +52,7 @@ export const useVideoEffectsPane = (
   }, [closePane, locale.strings, mobileView]);
 
   const latestVideoEffectError = latestErrors.find((error) => error.type === 'unableToStartVideoEffect');
+  const updateFocusHandle = useMemo(() => createRef<{ focus: () => void }>(), []);
 
   const onRenderContent = useCallback((): JSX.Element => {
     return (
@@ -63,9 +64,10 @@ export const useVideoEffectsPane = (
 
           latestVideoEffectError && onDismissError?.(latestVideoEffectError);
         }}
+        updateFocusHandle={updateFocusHandle}
       />
     );
-  }, [latestVideoEffectError, onDismissError]);
+  }, [latestVideoEffectError, onDismissError, updateFocusHandle]);
 
   const sidePaneRenderer: SidePaneRenderer = useMemo(
     () => ({
@@ -78,7 +80,10 @@ export const useVideoEffectsPane = (
 
   const openPane = useCallback(() => {
     updateSidePaneRenderer(sidePaneRenderer);
-  }, [sidePaneRenderer, updateSidePaneRenderer]);
+
+    // Run in a setTimeout as it must be called only once the imperative handle is available
+    setTimeout(() => updateFocusHandle.current?.focus(), 0);
+  }, [sidePaneRenderer, updateSidePaneRenderer, updateFocusHandle]);
 
   const isOpen = useIsParticularSidePaneOpen(VIDEO_EFFECTS_SIDE_PANE_ID);
 
