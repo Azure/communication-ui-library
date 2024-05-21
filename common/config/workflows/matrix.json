@@ -1,13 +1,7 @@
 {
-    "include": [
-        {
-            "flavor": "stable",
-            "coverage_gist_id": "d1528e50153e6f7ea569040d7b437abb"
-        },
-        {
-            "flavor": "beta",
-            "coverage_gist_id": "67224b1799c92f0e1cd2da24798e4dd5"
-        }
-
-    ]
+  "include": [
+    {
+      "flavor": "beta-release"
+    }
+  ]
 }
