@@ -20,6 +20,7 @@
     "complianceBannerTranscriptionStopped": "Zakończono transkrypcję.",
     "configurationPageTitle": "Rozpocznij rozmowę",
     "copyInviteLinkButtonLabel": "Kopiuj link do zaproszenia",
+    "copyInviteLinkButtonActionedLabel": "Skopiowano link",
     "copyInviteLinkActionedAriaLabel": "Skopiowano link do zaproszenia",
     "defaultPlaceHolder": "Wybierz opcję",
     "dismissSidePaneButtonLabel": "Zamknij",
@@ -244,6 +245,10 @@
       "shareScreen": {
         "lostDueToRoleChangeToAttendee": "Rola została zmieniona. Niektóre akcje, takie jak udostępnianie zawartości, nie będą dla Ciebie dostępne.",
         "grantedDueToRoleChangeToPresenter": "Jesteś osobą prowadzącą. Możesz udostępniać zawartość i prowadzić spotkanie."
+      },
+      "hideAttendeeNames": {
+        "hideAttendeeNameAttendee": "Twoje imię i nazwisko jest ukryte przed innymi uczestnikami. Organizatorzy i osoby prowadzące mogą zobaczyć Twoje prawdziwe imię.",
+        "hideAttendeeNamePresenter": "Imiona i nazwiska uczestników są ukryte. Tylko organizatorzy i osoby prowadzące mogą wyświetlać imiona i nazwiska, aby chronić prywatność uczestników."
       }
     },
     "surveyTitle": "Pomóż nam w ulepszaniu",
@@ -259,7 +264,6 @@
     "tagsSurveyQuestion": "Co można było zrobić lepiej?",
     "tagsSurveyTextFieldDefaultText": "Inny — prosimy określić",
     "tagsSurveyHelperText": "Sprawdź wszelkie napotkane problemy",
-    "surveyTextboxDefaultText": "Inna odpowiedź, podaj szczegóły",
     "endOfSurveyText": "Dziękujemy za opinię!",
     "surveyIssues": {
       "overallRating": {
@@ -301,7 +305,7 @@
         "otherIssues": "Wystąpiły inne problemy z udostępnianiem ekranu podczas tej rozmowy"
       }
     },
-    "SurveyIssuesHeadingStrings": {
+    "surveyIssuesHeadingStrings": {
       "overallRating": "Ogólne",
       "audioRating": "Dźwięk",
       "videoRating": "Wideo",
@@ -325,7 +329,8 @@
     },
     "exitSpotlightButtonLabel": "Wyjdź z ważnych informacji",
     "exitSpotlightButtonTooltip": "Wyjdź z ważnych informacji",
-    "hangUpConfirmButtonLabel": "Potwierdź",
+    "leaveConfirmButtonLabel": "Opuść",
+    "endCallConfirmButtonLabel": "Zakończ połączenie",
     "hangUpCancelButtonLabel": "Anuluj",
     "leaveConfirmDialogTitle": "Opuścić połączenie?",
     "leaveConfirmDialogContent": "Czy na pewno chcesz opuścić rozmowę?",
@@ -345,6 +350,7 @@
     "chatButtonTooltipOpen": "Pokaż czat",
     "chatPaneTitle": "Czat",
     "copyInviteLinkButtonLabel": "Kopiuj link do zaproszenia",
+    "copyInviteLinkButtonActionedLabel": "Skopiowano link",
     "copyInviteLinkActionedAriaLabel": "Skopiowano link do zaproszenia",
     "dismissSidePaneButtonLabel": "Zamknij",
     "moreDrawerAudioDeviceMenuTitle": "Urządzenie audio",
@@ -360,6 +366,8 @@
     "selectedPeopleButtonLabel": "Wybrano przycisk Kontakty",
     "peopleButtonTooltipOpen": "Pokaż uczestników",
     "peopleButtonTooltipClose": "Ukryj uczestników",
+    "peopleButtonTooltipOpenAriaLabel": "Przycisk Kontakty, Pokaż uczestników",
+    "peopleButtonTooltipCloseAriaLabel": "Przycisk Kontakty, Ukryj uczestników",
     "peoplePaneSubTitle": "W tej rozmowie",
     "peoplePaneTitle": "Osoby",
     "pictureInPictureTileAriaLabel": "Kanały wideo. Kliknij, aby powrócić do ekranu rozmowy.",

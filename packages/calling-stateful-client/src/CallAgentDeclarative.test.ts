@@ -247,7 +247,11 @@ describe('declarative call agent', () => {
 
     expect(Object.keys(context.getState().calls).length).toBe(1);
 
-    mockCall.callEndReason = { code: 1, /* @conditional-compile-remove(calling-beta-sdk) */ resultCategories: [] };
+    mockCall.callEndReason = {
+      code: 1,
+      /* @conditional-compile-remove(calling-beta-sdk) */ resultCategories: [],
+      /* @conditional-compile-remove(calling-beta-sdk) */ message: ''
+    };
     mockCallAgent.calls = [];
     mockCallAgent.emit('callsUpdated', { added: [], removed: [mockCall] });
 

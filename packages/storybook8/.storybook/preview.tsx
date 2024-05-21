@@ -2,35 +2,26 @@
 // Licensed under the MIT License.
 
 import { FluentThemeProvider, LocalizationProvider } from '@azure/communication-react';
-import { Anchor, DocsContainer } from '@storybook/addon-docs';
 import React from 'react';
-import {
-  COMPONENT_FOLDER_PREFIX,
-  COMPOSITE_FOLDER_PREFIX,
-  EXAMPLES_FOLDER_PREFIX,
-  CONCEPTS_FOLDER_PREFIX,
-  STATEFUL_CLIENT_PREFIX
-} from '../stories/constants';
+
 import { THEMES } from '../stories/themes';
 import { LOCALES } from '../stories/locales'
 
 export const parameters = {
   layout: 'fullscreen',
   docs: {
-    container: props => (
-      <DocsContainer context={props.context}>
-        <Anchor storyId={props.context.id} />
-        {props.children}
-      </DocsContainer>
-    ),
+    toc: {
+        title: 'On this page',
+        headingSelector: 'h2, h3'
+      }
   },
   options: {
-    // storySort: {
+    storySort: {
       order: [
         'Overview',
         'Use Cases',
         'Feedback',
-        COMPOSITE_FOLDER_PREFIX,
+        'Composites',
         [
           'Get Started',
           'CallWithChatComposite',
@@ -39,7 +30,7 @@ export const parameters = {
           'Adapters',
           'Cross-Framework Support',
         ],
-        COMPONENT_FOLDER_PREFIX,
+        'UI Components',
         [
           'Overview',
           'Get Started',
@@ -54,7 +45,7 @@ export const parameters = {
           'Participant Item',
           'Participant List',
         ],
-        CONCEPTS_FOLDER_PREFIX,
+        'Concepts',
         [
           'Styling',
           'Theming',
@@ -72,7 +63,7 @@ export const parameters = {
           'Transfer',
           'Video Effects'
         ],
-        EXAMPLES_FOLDER_PREFIX,
+        'Examples',
         [
           "Device Settings",
           "Local Preview",
@@ -85,7 +76,7 @@ export const parameters = {
           ],
           "Incoming Call Alerts"
         ],  
-        STATEFUL_CLIENT_PREFIX,
+        'Stateful Client',
         [
           'Overview',
           'Get Started (Call)',
@@ -99,13 +90,6 @@ export const parameters = {
           ],
         ],
       ]
-    // }
-  },
-  viewMode: 'docs',
-  previewTabs: {
-    'storybook/docs/panel': { index: -1 },
-    'canvas': {
-      title: 'Preview'
     }
   }
 };
@@ -154,20 +138,7 @@ const withLocalization = (Story: any, context: any) => {
   }
 };
 
-const withCenterStory = (Story: any) => {
-  return (
-    <div style={{
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      height: '100vh'
-    }}>
-      <Story />
-    </div>
-  );
-};
-
-export const decorators = [withCenterStory, withThemeProvider, withLocalization];
+export const decorators = [withThemeProvider, withLocalization];
 
 export const globalTypes = {
   theme: {

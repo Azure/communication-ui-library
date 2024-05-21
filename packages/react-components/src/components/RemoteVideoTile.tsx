@@ -196,11 +196,18 @@ export const _RemoteVideoTile = React.memo(
       return displayName;
     };
 
-    const reactionOverlay = (
+    const formatInitialsName = (): string | undefined => {
+      if (remoteParticipant.displayName && attendeeRoleString) {
+        return _formatString(remoteParticipant.displayName, { AttendeeRole: attendeeRoleString });
+      }
+      return remoteParticipant.displayName;
+    };
+
+    const reactionOverlay = reactionResources && (
       <MeetingReactionOverlay
         overlayMode="grid-tiles"
         reaction={remoteParticipant.reaction}
-        reactionResources={reactionResources!}
+        reactionResources={reactionResources}
       />
     );
 
@@ -215,7 +222,7 @@ export const _RemoteVideoTile = React.memo(
         <VideoTile
           key={userId}
           userId={userId}
-          initialsName={remoteParticipant.displayName ?? ''}
+          initialsName={formatInitialsName() ?? ''}
           renderElement={renderVideoStreamElement}
           displayName={displayName}
           onRenderPlaceholder={onRenderAvatar}

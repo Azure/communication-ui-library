@@ -72,9 +72,9 @@ const getDocs: () => JSX.Element = () => {
       <Heading>Display Attachment Uploads</Heading>
       <DetailedBetaBanner />
       <Description>
-        SendBox component provides UI for displaying AttachmentMetadataWithProgress in the SendBox. This allows
-        developers to implement a file sharing feature using the pure UI component with minimal effort. Developers can
-        write their own attachment upload logic and utilize the UI provided by SendBox.
+        SendBox component provides UI for displaying AttachmentMetadataInProgress in the SendBox. This allows developers
+        to implement a file sharing feature using the pure UI component with minimal effort. Developers can write their
+        own attachment upload logic and utilize the UI provided by SendBox.
       </Description>
       <Canvas mdxSource={AttachmentUploadsExampleText}>
         <AttachmentUploadsExample />
@@ -111,9 +111,9 @@ const SendBoxStory = (args): JSX.Element => {
     <div style={{ width: '31.25rem' }}>
       <SendBoxComponent
         disabled={args.disabled}
-        onSendMessage={async (message) => {
+        onSendMessage={async (message, options) => {
           timeoutRef.current = setTimeout(() => {
-            alert(`sent message: ${message} `);
+            alert(`sent message: "${message}" with options ${JSON.stringify(options)}`);
           }, delayForSendButton);
         }}
         onTyping={(): Promise<void> => {
@@ -121,6 +121,14 @@ const SendBoxStory = (args): JSX.Element => {
           return Promise.resolve();
         }}
         systemMessage={args.hasWarning ? args.warningMessage : undefined}
+        attachments={
+          args.hasAttachments
+            ? [{ id: 'f2d1fce73c98', name: 'file1.txt', progress: 1, url: 'https://www.bing.com' }]
+            : undefined
+        }
+        onCancelAttachmentUpload={(attachmentId) => {
+          window.alert(`onCancelAttachmentUpload callback is called for attachment id: "${attachmentId}"`);
+        }}
       />
     </div>
   );
@@ -135,9 +143,15 @@ export default {
   title: `${COMPONENT_FOLDER_PREFIX}/Send Box/Send Box`,
   component: SendBoxComponent,
   argTypes: {
+    // hide unnecessary props from storybook controls
+    // since we now have `hasAttachments` for attachments
+    attachments: hiddenControl,
+    onCancelAttachmentUpload: hiddenControl,
+    onRenderAttachmentUploads: hiddenControl,
     disabled: controlsToAdd.disabled,
     hasWarning: controlsToAdd.isSendBoxWithWarning,
     warningMessage: controlsToAdd.sendBoxWarningMessage,
+    hasAttachments: controlsToAdd.isSendBoxWithAttachments,
     // Hiding auto-generated controls
     systemMessage: hiddenControl,
     onSendMessage: hiddenControl,

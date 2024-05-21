@@ -177,6 +177,8 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
     () => ({
       label: callWithChatStrings.peopleButtonLabel,
       selectedLabel: callWithChatStrings.selectedPeopleButtonLabel,
+      tooltipOpenAriaLabel: callWithChatStrings.peopleButtonTooltipOpenAriaLabel,
+      tooltipCloseAriaLabel: callWithChatStrings.peopleButtonTooltipCloseAriaLabel,
       tooltipOffContent: callWithChatStrings.peopleButtonTooltipOpen,
       tooltipOnContent: callWithChatStrings.peopleButtonTooltipClose
     }),
@@ -467,7 +469,9 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                   <PeopleButton
                     checked={props.peopleButtonChecked}
                     ariaLabel={
-                      props.peopleButtonChecked ? peopleButtonStrings?.selectedLabel : peopleButtonStrings?.label
+                      props.peopleButtonChecked
+                        ? peopleButtonStrings?.tooltipCloseAriaLabel
+                        : peopleButtonStrings?.tooltipOpenAriaLabel
                     }
                     showLabel={options.displayType !== 'compact'}
                     onClick={props.onPeopleButtonClicked}

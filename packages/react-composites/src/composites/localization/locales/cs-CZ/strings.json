@@ -20,6 +20,7 @@
     "complianceBannerTranscriptionStopped": "Přepis se zastavil.",
     "configurationPageTitle": "Začít hovor",
     "copyInviteLinkButtonLabel": "Kopírovat odkaz pro pozvání",
+    "copyInviteLinkButtonActionedLabel": "Odkaz byl zkopírován.",
     "copyInviteLinkActionedAriaLabel": "Odkaz pozvánky se zkopíroval",
     "defaultPlaceHolder": "Vyberte jednu možnost",
     "dismissSidePaneButtonLabel": "Zavřít",
@@ -244,6 +245,10 @@
       "shareScreen": {
         "lostDueToRoleChangeToAttendee": "Vaše role se změnila. Některé akce, jako je sdílení obsahu, pro vás nebudou k dispozici.",
         "grantedDueToRoleChangeToPresenter": "Jste prezentující. Můžete sdílet obsah a moderovat schůzku."
+      },
+      "hideAttendeeNames": {
+        "hideAttendeeNameAttendee": "Vaše jméno je před ostatními účastníky skryté. Organizátoři a přednášející uvidí vaše skutečné jméno.",
+        "hideAttendeeNamePresenter": "Jména účastníků jsou skrytá. Pro ochranu soukromí účastníků uvidí jména jenom organizátoři a přednášející."
       }
     },
     "surveyTitle": "Pomozte nám se zlepšovat",
@@ -259,7 +264,6 @@
     "tagsSurveyQuestion": "Co by mohlo být lepší?",
     "tagsSurveyTextFieldDefaultText": "Jiné, upřesněte prosím",
     "tagsSurveyHelperText": "Zkontrolujte všechny problémy, se které jste zaznamenali.",
-    "surveyTextboxDefaultText": "Jiné, upřesněte prosím",
     "endOfSurveyText": "Děkujeme za váš názor!",
     "surveyIssues": {
       "overallRating": {
@@ -301,7 +305,7 @@
         "otherIssues": "Měl(a) jsem jiné problémy se sdílením obrazovky v tomto hovoru"
       }
     },
-    "SurveyIssuesHeadingStrings": {
+    "surveyIssuesHeadingStrings": {
       "overallRating": "Celkem",
       "audioRating": "Zvuk",
       "videoRating": "Video",
@@ -325,7 +329,8 @@
     },
     "exitSpotlightButtonLabel": "Ukončit hlavní výběr",
     "exitSpotlightButtonTooltip": "Ukončit hlavní výběr",
-    "hangUpConfirmButtonLabel": "Potvrdit",
+    "leaveConfirmButtonLabel": "Odejít",
+    "endCallConfirmButtonLabel": "Ukončit hovor",
     "hangUpCancelButtonLabel": "Zrušit",
     "leaveConfirmDialogTitle": "Chcete z hovoru odejít?",
     "leaveConfirmDialogContent": "Opravdu chcete hovor opustit?",
@@ -345,6 +350,7 @@
     "chatButtonTooltipOpen": "Zobrazit chat",
     "chatPaneTitle": "Chat",
     "copyInviteLinkButtonLabel": "Kopírovat odkaz pro pozvání",
+    "copyInviteLinkButtonActionedLabel": "Odkaz byl zkopírován.",
     "copyInviteLinkActionedAriaLabel": "Odkaz pozvánky se zkopíroval",
     "dismissSidePaneButtonLabel": "Zavřít",
     "moreDrawerAudioDeviceMenuTitle": "Zvukové zařízení",
@@ -360,6 +366,8 @@
     "selectedPeopleButtonLabel": "Vybráno tlačítko Lidé",
     "peopleButtonTooltipOpen": "Zobrazit účastníky",
     "peopleButtonTooltipClose": "Skrýt účastníky",
+    "peopleButtonTooltipOpenAriaLabel": "Tlačítko Lidé, Zobrazit účastníky",
+    "peopleButtonTooltipCloseAriaLabel": "Tlačítko Lidé, Skrýt účastníky",
     "peoplePaneSubTitle": "V tomto hovoru",
     "peoplePaneTitle": "Lidé",
     "pictureInPictureTileAriaLabel": "Informační kanály videa. Kliknutím se vrátíte na obrazovku hovoru.",

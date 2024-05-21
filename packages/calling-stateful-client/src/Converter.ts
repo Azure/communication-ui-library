@@ -12,6 +12,10 @@ import { TeamsCaptionsInfo } from '@azure/communication-calling';
 import { CaptionsInfo as AcsCaptionsInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support) */
 import { CallKind } from '@azure/communication-calling';
+/* @conditional-compile-remove(meeting-id) */
+import { TeamsCallInfo } from '@azure/communication-calling';
+/* @conditional-compile-remove(calling-beta-sdk) */
+import { CallInfo } from '@azure/communication-calling';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import {
   CallState,
@@ -121,6 +125,11 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
     }
   }
 
+  let callInfo: TeamsCallInfo | undefined | /* @conditional-compile-remove(calling-beta-sdk) */ CallInfo;
+  if ('info' in call) {
+    callInfo = call.info as TeamsCallInfo | undefined | /* @conditional-compile-remove(calling-beta-sdk) */ CallInfo;
+  }
+
   return {
     id: call.id,
     /* @conditional-compile-remove(teams-identity-support) */
@@ -145,7 +154,6 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
     recording: { isRecordingActive: false },
     /* @conditional-compile-remove(local-recording-notification) */
     localRecording: { isLocalRecordingActive: false },
-    /* @conditional-compile-remove(ppt-live) */
     pptLive: { isActive: false },
     raiseHand: { raisedHands: [] },
     localParticipantReaction: undefined,
@@ -174,7 +182,7 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
     /* @conditional-compile-remove(hide-attendee-name) */
     hideAttendeeNames,
     /* @conditional-compile-remove(meeting-id) */
-    info: _isACSCall(call) ? call.info : _isTeamsCall(call) ? call.info : undefined
+    info: callInfo
   };
 }
 

@@ -124,6 +124,8 @@ export const _VideoEffectsItem = (props: _VideoEffectsItemProps): JSX.Element =>
   const isSelected = props.isSelected ?? false;
   const disabled = props.disabled ?? false;
   const backgroundImage = props.backgroundProps?.url;
+  const iconContainerStyles = mergeStyles({ height: '1.25rem' }, props.styles?.iconContainer);
+  const textContainerStyles = mergeStyles({ height: '1.25rem' }, props.styles?.textContainer);
 
   const containerStyles = useCallback(
     () =>
@@ -161,14 +163,14 @@ export const _VideoEffectsItem = (props: _VideoEffectsItemProps): JSX.Element =>
           componentRef={componentRef}
           autoFocus={props.focusOnMount}
         >
-          <Stack horizontalAlign={'center'} tokens={{ childrenGap: '0.15rem' }}>
+          <Stack horizontalAlign={'center'}>
             {props.iconProps && (
-              <Stack.Item styles={{ root: props.styles?.iconContainer }}>
+              <Stack.Item className={iconContainerStyles}>
                 <Icon {...props.iconProps} />
               </Stack.Item>
             )}
             {props.title && (
-              <Stack.Item styles={{ root: props.styles?.textContainer }}>
+              <Stack.Item className={textContainerStyles}>
                 <Text variant="small">{props.title}</Text>
               </Stack.Item>
             )}

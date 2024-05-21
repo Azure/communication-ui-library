@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 import { Stack, FocusZone, Spinner } from '@fluentui/react';
 import React, { useEffect, useRef, useState, useCallback } from 'react';
-import { _AttachmentUploadCardsStrings } from './AttachmentUploadCards';
 import { _Caption } from './Caption';
 import {
   captionContainerClassName,

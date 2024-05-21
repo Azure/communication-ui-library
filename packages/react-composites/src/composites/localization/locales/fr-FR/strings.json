@@ -20,6 +20,7 @@
     "complianceBannerTranscriptionStopped": "La transcription a pris fin.",
     "configurationPageTitle": "Lancer un appel",
     "copyInviteLinkButtonLabel": "Copier le lien d'invitation",
+    "copyInviteLinkButtonActionedLabel": "Lien copié",
     "copyInviteLinkActionedAriaLabel": "Le lien d’invitation a été copié.",
     "defaultPlaceHolder": "Sélectionnez une option",
     "dismissSidePaneButtonLabel": "Fermer",
@@ -244,6 +245,10 @@
       "shareScreen": {
         "lostDueToRoleChangeToAttendee": "Votre rôle a été modifié. Certaines actions, telles que le partage de contenu, ne seront pas disponibles pour vous.",
         "grantedDueToRoleChangeToPresenter": "Vous êtes présentateur. Vous pouvez partager du contenu et organiser la réunion."
+      },
+      "hideAttendeeNames": {
+        "hideAttendeeNameAttendee": "Votre nom est masqué pour les autres participants. Les organisateurs et les présentateurs peuvent voir votre vrai nom.",
+        "hideAttendeeNamePresenter": "Les noms des participants sont masqués. Afin de protéger la vie privée des participants, seuls les organisateurs et les présentateurs peuvent visualiser les noms."
       }
     },
     "surveyTitle": "Aidez-nous à nous améliorer",
@@ -259,7 +264,6 @@
     "tagsSurveyQuestion": "Que pouvons-nous améliorer ?",
     "tagsSurveyTextFieldDefaultText": "Autre, veuillez préciser",
     "tagsSurveyHelperText": "Cochez les problèmes que vous avez rencontrés",
-    "surveyTextboxDefaultText": "Autre, veuillez préciser",
     "endOfSurveyText": "Merci pour vos commentaires !",
     "surveyIssues": {
       "overallRating": {
@@ -301,7 +305,7 @@
         "otherIssues": "Je rencontre d’autres problèmes de partage d’écran dans cet appel"
       }
     },
-    "SurveyIssuesHeadingStrings": {
+    "surveyIssuesHeadingStrings": {
       "overallRating": "Globale",
       "audioRating": "Audio",
       "videoRating": "Vidéo",
@@ -325,7 +329,8 @@
     },
     "exitSpotlightButtonLabel": "Quitter la mise en évidence",
     "exitSpotlightButtonTooltip": "Quitter la mise en évidence",
-    "hangUpConfirmButtonLabel": "Confirmer",
+    "leaveConfirmButtonLabel": "Partir",
+    "endCallConfirmButtonLabel": "Fin d’appel",
     "hangUpCancelButtonLabel": "Annuler",
     "leaveConfirmDialogTitle": "Quitter l'appel ?",
     "leaveConfirmDialogContent": "Voulez-vous vraiment quitter l’appel ?",
@@ -345,6 +350,7 @@
     "chatButtonTooltipOpen": "Afficher la conversation",
     "chatPaneTitle": "Clavardage",
     "copyInviteLinkButtonLabel": "Copier le lien d'invitation",
+    "copyInviteLinkButtonActionedLabel": "Lien copié",
     "copyInviteLinkActionedAriaLabel": "Le lien d’invitation a été copié.",
     "dismissSidePaneButtonLabel": "Fermer",
     "moreDrawerAudioDeviceMenuTitle": "Périphérique audio",
@@ -360,6 +366,8 @@
     "selectedPeopleButtonLabel": "Bouton Contacts sélectionné",
     "peopleButtonTooltipOpen": "Afficher les participants",
     "peopleButtonTooltipClose": "Masquer les participants",
+    "peopleButtonTooltipOpenAriaLabel": "Bouton Contacts, Afficher les participants",
+    "peopleButtonTooltipCloseAriaLabel": "Bouton Contacts, Masquer les participants",
     "peoplePaneSubTitle": "Pendant cet appel",
     "peoplePaneTitle": "Personnes",
     "pictureInPictureTileAriaLabel": "Flux vidéo. Cliquez pour revenir à l’écran d’appel.",

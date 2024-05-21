@@ -20,6 +20,7 @@
     "complianceBannerTranscriptionStopped": "전사를 중단했습니다.",
     "configurationPageTitle": "통화 시작",
     "copyInviteLinkButtonLabel": "초대 링크 복사",
+    "copyInviteLinkButtonActionedLabel": "링크 복사됨",
     "copyInviteLinkActionedAriaLabel": "초대 링크를 복사함",
     "defaultPlaceHolder": "옵션 선택",
     "dismissSidePaneButtonLabel": "닫기",
@@ -244,6 +245,10 @@
       "shareScreen": {
         "lostDueToRoleChangeToAttendee": "역할이 변경되었습니다. 콘텐츠 공유와 같은 일부 작업은 사용할 수 없습니다.",
         "grantedDueToRoleChangeToPresenter": "귀하는 발표자입니다. 콘텐츠를 공유하고 모임을 활성화할 수 있습니다."
+      },
+      "hideAttendeeNames": {
+        "hideAttendeeNameAttendee": "다른 참석자가 내 이름을 볼 수 없도록 숨겨집니다. 주최자와 발표자는 내 실명을 볼 수 있습니다.",
+        "hideAttendeeNamePresenter": "참석자 이름이 숨겨집니다. 참석자 개인 정보를 보호하기 위해 주최자와 발표자만 이름을 볼 수 있습니다."
       }
     },
     "surveyTitle": "사용자 환경 개선",
@@ -259,7 +264,6 @@
     "tagsSurveyQuestion": "개선할 사항을 알려주세요.",
     "tagsSurveyTextFieldDefaultText": "기타(구체적으로)",
     "tagsSurveyHelperText": "발생한 문제를 확인하세요.",
-    "surveyTextboxDefaultText": "기타(구체적으로)",
     "endOfSurveyText": "피드백을 보내주셔서 감사합니다!",
     "surveyIssues": {
       "overallRating": {
@@ -301,7 +305,7 @@
         "otherIssues": "이 통화에서 다른 화면 공유 문제가 있었습니다."
       }
     },
-    "SurveyIssuesHeadingStrings": {
+    "surveyIssuesHeadingStrings": {
       "overallRating": "전체",
       "audioRating": "오디오",
       "videoRating": "비디오",
@@ -325,7 +329,8 @@
     },
     "exitSpotlightButtonLabel": "스포트라이트 종료",
     "exitSpotlightButtonTooltip": "스포트라이트 종료",
-    "hangUpConfirmButtonLabel": "확인",
+    "leaveConfirmButtonLabel": "나가기",
+    "endCallConfirmButtonLabel": "통화 종료",
     "hangUpCancelButtonLabel": "취소",
     "leaveConfirmDialogTitle": "통화에서 나가시겠습니까?",
     "leaveConfirmDialogContent": "통화에서 나가시겠습니까?",
@@ -345,6 +350,7 @@
     "chatButtonTooltipOpen": "채팅 표시",
     "chatPaneTitle": "채팅",
     "copyInviteLinkButtonLabel": "초대 링크 복사",
+    "copyInviteLinkButtonActionedLabel": "링크 복사됨",
     "copyInviteLinkActionedAriaLabel": "초대 링크를 복사함",
     "dismissSidePaneButtonLabel": "닫기",
     "moreDrawerAudioDeviceMenuTitle": "오디오 장치",
@@ -360,6 +366,8 @@
     "selectedPeopleButtonLabel": "사용자 단추 선택됨",
     "peopleButtonTooltipOpen": "참가자 표시",
     "peopleButtonTooltipClose": "참가자 숨기기",
+    "peopleButtonTooltipOpenAriaLabel": "사용자 단추, 참가자 표시",
+    "peopleButtonTooltipCloseAriaLabel": "사용자 단추, 참가자 숨기기",
     "peoplePaneSubTitle": "이 통화에서",
     "peoplePaneTitle": "사용자",
     "pictureInPictureTileAriaLabel": "비디오 피드입니다. 클릭하면 통화 화면으로 돌아갑니다.",

@@ -20,6 +20,7 @@
     "complianceBannerTranscriptionStopped": "Transkriptio on pysäytetty.",
     "configurationPageTitle": "Aloita puhelu",
     "copyInviteLinkButtonLabel": "Kopioi kutsulinkki",
+    "copyInviteLinkButtonActionedLabel": "Linkki kopioitu",
     "copyInviteLinkActionedAriaLabel": "Kutsulinkki kopioitu",
     "defaultPlaceHolder": "Valitse vaihtoehto",
     "dismissSidePaneButtonLabel": "Sulje",
@@ -244,6 +245,10 @@
       "shareScreen": {
         "lostDueToRoleChangeToAttendee": "Roolisi on muuttunut. Jotkin toiminnot, kuten sisällön jakaminen, eivät ole käytettävissäsi.",
         "grantedDueToRoleChangeToPresenter": "Olet esittäjä. Voit jakaa sisältöä ja johtaa kokousta."
+      },
+      "hideAttendeeNames": {
+        "hideAttendeeNameAttendee": "Nimesi on piilotettu muilta osallistujilta. Järjestäjät ja esittäjät voivat nähdä oikean nimesi.",
+        "hideAttendeeNamePresenter": "Osallistujien nimet on piilotettu. Vain järjestäjät ja esittäjät voivat nähdä nimet osallistujien yksityisyyden suojaamiseksi."
       }
     },
     "surveyTitle": "Auta kehittämään tuotetta",
@@ -259,7 +264,6 @@
     "tagsSurveyQuestion": "Mikä olisi voinut olla paremmin?",
     "tagsSurveyTextFieldDefaultText": "Muu, anna kuvaus",
     "tagsSurveyHelperText": "Tarkista havaitsematsi ongelmat",
-    "surveyTextboxDefaultText": "Muu, anna kuvaus",
     "endOfSurveyText": "Kiitos palautteestasi!",
     "surveyIssues": {
       "overallRating": {
@@ -301,7 +305,7 @@
         "otherIssues": "Minulla oli puhelun aikana muita näytön jakamiseen liittyviä ongelmia"
       }
     },
-    "SurveyIssuesHeadingStrings": {
+    "surveyIssuesHeadingStrings": {
       "overallRating": "Yleinen",
       "audioRating": "Äänet",
       "videoRating": "Video",
@@ -325,7 +329,8 @@
     },
     "exitSpotlightButtonLabel": "Poistu valokeilasta",
     "exitSpotlightButtonTooltip": "Poistu valokeilasta",
-    "hangUpConfirmButtonLabel": "Vahvista",
+    "leaveConfirmButtonLabel": "Poistu",
+    "endCallConfirmButtonLabel": "Lopeta puhelu",
     "hangUpCancelButtonLabel": "Peruuta",
     "leaveConfirmDialogTitle": "Poistutaanko puhelusta?",
     "leaveConfirmDialogContent": "Haluatko varmasti poistua puhelusta?",
@@ -345,6 +350,7 @@
     "chatButtonTooltipOpen": "Näytä keskustelu",
     "chatPaneTitle": "Keskustelu",
     "copyInviteLinkButtonLabel": "Kopioi kutsulinkki",
+    "copyInviteLinkButtonActionedLabel": "Linkki kopioitu",
     "copyInviteLinkActionedAriaLabel": "Kutsulinkki kopioitu",
     "dismissSidePaneButtonLabel": "Sulje",
     "moreDrawerAudioDeviceMenuTitle": "Äänilaite",
@@ -360,6 +366,8 @@
     "selectedPeopleButtonLabel": "Henkilöt-painike valittu",
     "peopleButtonTooltipOpen": "Näytä osallistujat",
     "peopleButtonTooltipClose": "Piilota osallistujat",
+    "peopleButtonTooltipOpenAriaLabel": "Henkilöt-painike, Näytä osallistujat",
+    "peopleButtonTooltipCloseAriaLabel": "Henkilöt-painike, Piilota osallistujat",
     "peoplePaneSubTitle": "Tässä puhelussa",
     "peoplePaneTitle": "Ihmiset",
     "pictureInPictureTileAriaLabel": "Videosyötteet. Palaa puhelunäyttöön napsauttamalla.",

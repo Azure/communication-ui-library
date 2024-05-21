@@ -203,6 +203,11 @@ export const getIsTeamsCall = (state: CallAdapterState): boolean => state.isTeam
 /**
  * @private
  */
+export const getIsTeamsMeeting = (state: CallAdapterState): boolean => state.isTeamsMeeting;
+
+/**
+ * @private
+ */
 export const getLatestErrors = (state: CallAdapterState): AdapterErrors => state.latestErrors;
 
 /**

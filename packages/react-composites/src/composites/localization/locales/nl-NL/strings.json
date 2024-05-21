@@ -20,6 +20,7 @@
     "complianceBannerTranscriptionStopped": "Transcriptie is gestopt.",
     "configurationPageTitle": "Een oproep starten",
     "copyInviteLinkButtonLabel": "Uitnodigingskoppeling kopiëren",
+    "copyInviteLinkButtonActionedLabel": "De koppeling is gekopieerd",
     "copyInviteLinkActionedAriaLabel": "Uitnodigingskoppeling gekopieerd",
     "defaultPlaceHolder": "Een optie selecteren",
     "dismissSidePaneButtonLabel": "Sluiten",
@@ -244,6 +245,10 @@
       "shareScreen": {
         "lostDueToRoleChangeToAttendee": "Uw rol is gewijzigd. Sommige acties, zoals het delen van inhoud, zijn niet beschikbaar voor u.",
         "grantedDueToRoleChangeToPresenter": "U bent een presentator. U kunt inhoud delen en de vergadering vergemakkelijken."
+      },
+      "hideAttendeeNames": {
+        "hideAttendeeNameAttendee": "Uw naam is verborgen voor andere genodigden. Organisatoren en presentatoren kunnen uw echte naam zien.",
+        "hideAttendeeNamePresenter": "Namen van genodigden zijn verborgen. Alleen organisatoren en presentatoren kunnen namen zien om de privacy van deelnemers te beschermen."
       }
     },
     "surveyTitle": "Help mee met verbeteren",
@@ -259,7 +264,6 @@
     "tagsSurveyQuestion": "Wat had beter kunnen zijn?",
     "tagsSurveyTextFieldDefaultText": "Overig, geef een toelichting",
     "tagsSurveyHelperText": "Controleer eventuele problemen die u hebt ondervonden",
-    "surveyTextboxDefaultText": "Overige, geef een toelichting",
     "endOfSurveyText": "Hartelijk dank voor uw feedback.",
     "surveyIssues": {
       "overallRating": {
@@ -301,7 +305,7 @@
         "otherIssues": "Ik had andere problemen met het delen van het scherm in dit gesprek"
       }
     },
-    "SurveyIssuesHeadingStrings": {
+    "surveyIssuesHeadingStrings": {
       "overallRating": "Algemeen",
       "audioRating": "Audio",
       "videoRating": "Video",
@@ -325,7 +329,8 @@
     },
     "exitSpotlightButtonLabel": "Spotlight afsluiten",
     "exitSpotlightButtonTooltip": "Spotlight afsluiten",
-    "hangUpConfirmButtonLabel": "Bevestigen",
+    "leaveConfirmButtonLabel": "Verlaten",
+    "endCallConfirmButtonLabel": "Gesprek beëindigen",
     "hangUpCancelButtonLabel": "Annuleren",
     "leaveConfirmDialogTitle": "Het gesprek verlaten?",
     "leaveConfirmDialogContent": "Weet u zeker dat u het gesprek wilt verlaten?",
@@ -345,6 +350,7 @@
     "chatButtonTooltipOpen": "Chat weergeven",
     "chatPaneTitle": "Chatten",
     "copyInviteLinkButtonLabel": "Uitnodigingskoppeling kopiëren",
+    "copyInviteLinkButtonActionedLabel": "De koppeling is gekopieerd",
     "copyInviteLinkActionedAriaLabel": "Uitnodigingskoppeling gekopieerd",
     "dismissSidePaneButtonLabel": "Sluiten",
     "moreDrawerAudioDeviceMenuTitle": "Audioapparaat",
@@ -360,6 +366,8 @@
     "selectedPeopleButtonLabel": "Knop Personen geselecteerd",
     "peopleButtonTooltipOpen": "Deelnemers weergeven",
     "peopleButtonTooltipClose": "Deelnemers verbergen",
+    "peopleButtonTooltipOpenAriaLabel": "Knop Personen, Deelnemers weergeven",
+    "peopleButtonTooltipCloseAriaLabel": "Knop Personen, Deelnemers verbergen",
     "peoplePaneSubTitle": "In dit gesprek",
     "peoplePaneTitle": "Personen",
     "pictureInPictureTileAriaLabel": "Videofeeds. Klik om terug te keren naar het oproepscherm.",
