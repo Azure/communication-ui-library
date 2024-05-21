@@ -4,7 +4,7 @@
 import { Icon, mergeStyles } from '@fluentui/react';
 import React, { useMemo } from 'react';
 import { _AttachmentCard } from './AttachmentCard';
-import { _AttachmentCardGroup } from './AttachmentCardGroup';
+import { _AttachmentCardGroup, _AttachmentCardGroupLayout } from './AttachmentCardGroup';
 import { AttachmentMetadataInProgress } from '@internal/acs-ui-common';
 import { useLocaleAttachmentCardStringsTrampoline } from '../utils/common';
 
@@ -63,7 +63,7 @@ export const _AttachmentUploadCards = (props: AttachmentUploadCardsProps): JSX.E
   }
 
   return (
-    <_AttachmentCardGroup>
+    <_AttachmentCardGroup attachmentGroupLayout={_AttachmentCardGroupLayout.Flex}>
       {attachments &&
         attachments
           .filter((attachment) => !attachment.error)

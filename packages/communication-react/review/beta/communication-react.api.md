@@ -1388,6 +1388,7 @@ export type CallWithChatCompositeOptions = {
     spotlight?: {
         hideSpotlightButtons?: boolean;
     };
+    richTextEditor?: boolean;
 };
 
 // @public
@@ -1777,6 +1778,7 @@ export type ChatCompositeOptions = {
     topic?: boolean;
     autoFocus?: 'sendBoxTextField';
     attachmentOptions?: AttachmentOptions;
+    richTextEditor?: boolean;
 };
 
 // @public
@@ -1862,6 +1864,9 @@ export interface ChatMessage extends MessageCommon {
     // (undocumented)
     status?: MessageStatus;
 }
+
+// @beta
+export type ChatMessageType = 'text' | 'html';
 
 // @public
 export type ChatMessageWithStatus = ChatMessage_2 & {
@@ -3268,6 +3273,7 @@ export type MessageEditedListener = MessageReceivedListener;
 export type MessageOptions = {
     metadata?: Record<string, string>;
     attachments?: AttachmentMetadata[];
+    type?: ChatMessageType;
 };
 
 // @public
@@ -3280,7 +3286,7 @@ export type MessageProps = {
     onUpdateMessage?: UpdateMessageCallback;
     onCancelEditMessage?: CancelEditCallback;
     onDeleteMessage?: (messageId: string) => Promise<void>;
-    onSendMessage?: (messageId: string) => Promise<void>;
+    onSendMessage?: (content: string, options?: MessageOptions) => Promise<void>;
 };
 
 // @public
@@ -3355,7 +3361,7 @@ export type MessageThreadProps = {
     onUpdateMessage?: UpdateMessageCallback;
     onCancelEditMessage?: CancelEditCallback;
     onDeleteMessage?: (messageId: string) => Promise<void>;
-    onSendMessage?: (content: string) => Promise<void>;
+    onSendMessage?: (content: string, options?: MessageOptions) => Promise<void>;
     disableEditing?: boolean;
     strings?: Partial<MessageThreadStrings>;
     attachmentOptions?: AttachmentOptions;
@@ -3912,6 +3918,7 @@ export interface RichTextStrings {
     richTextInsertTableTooltip: string;
     richTextItalicTooltip: string;
     richTextNumberListTooltip: string;
+    richTextToolbarMoreButtonAriaLabel: string;
     richTextUnderlineTooltip: string;
 }
 

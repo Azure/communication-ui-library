@@ -51,13 +51,15 @@ import { ImageOverlay } from '@internal/react-components';
 import { InlineImage } from '@internal/react-components';
 import { ResourceFetchResult } from '@internal/chat-stateful-client';
 import { AttachmentOptions } from '@internal/react-components';
-import { SendBox } from '@internal/react-components';
 /* @conditional-compile-remove(attachment-upload) */
 import { nanoid } from 'nanoid';
 /* @conditional-compile-remove(attachment-upload) */
 import { AttachmentUploadActionType, AttachmentUpload, AttachmentUploadReducer } from './file-sharing/AttachmentUpload';
 /* @conditional-compile-remove(attachment-upload) */
 import { MessageOptions } from '@internal/acs-ui-common';
+import { SendBoxPicker } from '../common/SendBoxPicker';
+/* @conditional-compile-remove(rich-text-editor-composite-support) */
+import { loadRichTextSendBox } from '../common/SendBoxPicker';
 
 /**
  * @private
@@ -130,8 +132,17 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     fetchData();
   }, [adapter]);
 
+  /* @conditional-compile-remove(rich-text-editor-composite-support) */
+  useEffect(() => {
+    // if rich text editor is enabled, the rich text editor component should be loaded early for good UX
+    if (options?.richTextEditor !== undefined && options.richTextEditor) {
+      // this line is needed to load the Rooster JS dependencies early in the lifecycle
+      // when the rich text editor is enabled
+      loadRichTextSendBox();
+    }
+  }, [options?.richTextEditor]);
+
   const messageThreadProps = usePropsFor(MessageThread);
-  const sendBoxProps = usePropsFor(SendBox);
   const typingIndicatorProps = usePropsFor(TypingIndicator);
   const headerProps = useAdaptedSelector(getHeaderProps);
   const errorBarProps = usePropsFor(ErrorBar);
@@ -412,18 +423,26 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   }, [uploads]);
 
   const onSendMessageHandler = useCallback(
-    async function (content: string, /* @conditional-compile-remove(attachment-upload) */ options?: MessageOptions) {
+    async function (
+      content: string,
+      /* @conditional-compile-remove(attachment-upload) */ /* @conditional-compile-remove(rich-text-editor-composite-support) */ options?: MessageOptions
+    ) {
       /* @conditional-compile-remove(attachment-upload) */
       const attachments = options?.attachments ?? [];
       /* @conditional-compile-remove(attachment-upload) */
       handleUploadAction({ type: AttachmentUploadActionType.Clear });
       /* @conditional-compile-remove(attachment-upload) */
       await adapter.sendMessage(content, {
-        attachments: attachments
+        attachments: attachments,
+        /* @conditional-compile-remove(rich-text-editor-composite-support) */
+        type: options?.type
       });
       /* @conditional-compile-remove(attachment-upload) */
       return;
-      await adapter.sendMessage(content);
+      await adapter.sendMessage(content, {
+        /* @conditional-compile-remove(rich-text-editor-composite-support) */
+        type: options?.type
+      });
     },
     [adapter]
   );
@@ -460,6 +479,8 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             inlineImageOptions={inlineImageOptions}
             numberOfChatMessagesToReload={defaultNumberOfChatMessagesToReload}
             styles={messageThreadStyles}
+            /* @conditional-compile-remove(rich-text-editor-composite-support) */
+            richTextEditor={options?.richTextEditor}
           />
           <Stack className={mergeStyles(sendboxContainerStyles)}>
             <div className={mergeStyles(typingIndicatorContainerStyles)}>
@@ -476,10 +497,11 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
                 </Stack>
               )}
               <Stack grow>
-                <SendBox
-                  {...sendBoxProps}
-                  autoFocus={options?.autoFocus}
+                <SendBoxPicker
                   styles={sendBoxStyles}
+                  autoFocus={options?.autoFocus}
+                  /* @conditional-compile-remove(rich-text-editor-composite-support) */
+                  richTextEditor={options?.richTextEditor}
                   /* @conditional-compile-remove(attachment-upload) */
                   attachments={attachments}
                   /* @conditional-compile-remove(attachment-upload) */
