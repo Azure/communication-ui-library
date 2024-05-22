@@ -32,8 +32,7 @@ jobs:
       - name: Trigger alpha package release pipeline
         run: |
           az extension add --name azure-devops
-          az pipelines release create --definition-id 24728 --org https://dev.azure.com/azure-sdk --project internal --artifact-metadata-list accessLevel=public BlobPath=azure-communication-services/react/npm/err-for-testing registry=https://registry.npmjs.org/ skipDiff=False tag=dev
-
+          az pipelines release create --organization https://dev.azure.com/azure-sdk --project 590cfd2a-581c-4dcb-a12e-6568ce786175 --definition-id 22 --artifact-metadata-list accessLevel=public BlobPath=azure-communication-services/react/npm/err-for-testing registry=https://registry.npmjs.org/ skipDiff=False tag=dev
         # uses: Azure/pipelines@v1.2
         # with:
         #   azure-devops-project-url: 'https://dev.azure.com/azure-sdk/internal'
