@@ -6,6 +6,7 @@ import { makeStyles, shorthands, tokens } from '@fluentui/react-components';
 import { CSSProperties } from 'react';
 import { MESSAGE_STATUS_INDICATOR_SIZE_REM } from './MessageStatusIndicator.styles';
 import { ComponentSlotStyle } from '../../types';
+import { _ATTACHMENT_CARD_MARGIN_IN_PX, _ATTACHMENT_CARD_WIDTH_IN_REM } from './AttachmentCard.styles';
 
 // Minimum chat bubble width. This matches the minimum chat bubble width from FluentUI
 // that can contain a message and a timestamp.
@@ -89,11 +90,7 @@ export const useChatStyles = makeStyles({
  * @private
  */
 export const useChatMessageRenderStyles = makeStyles({
-  rootCommon: {
-    '&:focus-visible': {
-      ...shorthands.outline('0')
-    }
-  },
+  rootCommon: {},
   rootMessage: {
     ...shorthands.padding('0'),
     ...shorthands.margin('0'),
@@ -120,7 +117,10 @@ export const useChatMessageRenderStyles = makeStyles({
     marginBottom: '0',
     backgroundColor: 'transparent',
     maxWidth: '100%',
-    minWidth: `${CHAT_MESSAGE_CONTAINER_MIN_WIDTH_REM}rem`
+    minWidth: `${CHAT_MESSAGE_CONTAINER_MIN_WIDTH_REM}rem`,
+    '&:focus-visible': {
+      outlineStyle: 'auto'
+    }
   },
   bodyMyMessage: {
     width: '100%',
@@ -157,10 +157,7 @@ export const useChatMyMessageStyles = makeStyles({
     gridGap: '0',
     columnGap: '0',
     paddingTop: '0',
-    marginLeft: '0',
-    '&:focus-visible': {
-      ...shorthands.outline('0')
-    }
+    marginLeft: '0'
   },
   body: {
     paddingBottom: '10px',
@@ -180,6 +177,9 @@ export const useChatMyMessageStyles = makeStyles({
     '& msft-mention': {
       color: tokens.colorStatusWarningBackground3,
       fontWeight: 600
+    },
+    '&:focus-visible': {
+      outlineStyle: 'auto'
     }
   },
   bodyAttached: {
@@ -210,6 +210,10 @@ export const useChatMyMessageStyles = makeStyles({
   },
   menuVisible: {
     visibility: 'visible'
+  },
+  multipleAttachments: {
+    width: '100%',
+    maxWidth: `${(_ATTACHMENT_CARD_WIDTH_IN_REM + _ATTACHMENT_CARD_MARGIN_IN_PX) * 2}rem`
   }
 });
 
@@ -235,10 +239,7 @@ export const chatMessageDateStyle: CSSProperties = {
  */
 export const useChatMessageStyles = makeStyles({
   root: {
-    paddingTop: '0',
-    '&:focus-visible': {
-      ...shorthands.outline('0')
-    }
+    paddingTop: '0'
   },
   body: {
     maxWidth: '100%',
@@ -286,6 +287,12 @@ export const useChatMessageStyles = makeStyles({
       ...shorthands.borderWidth('1px'),
       ...shorthands.borderColor(tokens.colorNeutralStroke1Selected),
       borderLeftWidth: '4px'
+    },
+    '& code': {
+      whiteSpace: 'pre-wrap'
+    },
+    '&:focus-visible': {
+      outlineStyle: 'auto'
     }
   },
   bodyWithPlaceholderImage: {
@@ -317,6 +324,9 @@ export const useChatMessageStyles = makeStyles({
   },
   avatarOverlap: {
     marginLeft: `${-AVATAR_MARGIN_LEFT - MESSAGE_AVATAR_OVERLAP_REM}rem`
+  },
+  multipleAttachments: {
+    width: `${(_ATTACHMENT_CARD_WIDTH_IN_REM + _ATTACHMENT_CARD_MARGIN_IN_PX) * 2}rem`
   }
 });
 

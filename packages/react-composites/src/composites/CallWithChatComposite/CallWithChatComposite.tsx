@@ -270,6 +270,15 @@ export type CallWithChatCompositeOptions = {
      */
     hideSpotlightButtons?: boolean;
   };
+
+  /* @conditional-compile-remove(rich-text-editor-composite-support) */
+  /**
+   * enables rich text editor for the edit box
+   * @defaultValue `false`
+   *
+   * @beta
+   */
+  richTextEditor?: boolean;
 };
 
 type CallWithChatScreenProps = {
@@ -349,6 +358,8 @@ type CallWithChatScreenProps = {
   spotlight?: {
     hideSpotlightButtons?: boolean;
   };
+  /* @conditional-compile-remove(rich-text-editor-composite-support) */
+  richTextEditor?: boolean;
 };
 
 const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
@@ -570,15 +581,19 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
           /* @conditional-compile-remove(chat-composite-participant-pane) */
           participantPane: false,
           /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-          attachmentOptions: props.attachmentOptions
+          attachmentOptions: props.attachmentOptions,
+          /* @conditional-compile-remove(rich-text-editor-composite-support) */
+          richTextEditor: props.richTextEditor
         }}
         onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
       />
     ),
     [
       chatAdapter,
-      /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ props.attachmentOptions,
+      /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+      props.attachmentOptions,
       props.onFetchAvatarPersonaData,
+      /* @conditional-compile-remove(rich-text-editor-composite-support) */ props.richTextEditor,
       theme
     ]
   );

@@ -52,7 +52,7 @@ export type {
 } from '../../chat-component-bindings/src';
 
 /* @conditional-compile-remove(attachment-upload) */
-export type { MessageOptions } from '../../acs-ui-common/src';
+export type { MessageOptions, ChatMessageType } from '../../acs-ui-common/src';
 
 export {
   CallClientProvider,

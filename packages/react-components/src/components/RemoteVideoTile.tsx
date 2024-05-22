@@ -203,11 +203,11 @@ export const _RemoteVideoTile = React.memo(
       return remoteParticipant.displayName;
     };
 
-    const reactionOverlay = (
+    const reactionOverlay = reactionResources && (
       <MeetingReactionOverlay
         overlayMode="grid-tiles"
         reaction={remoteParticipant.reaction}
-        reactionResources={reactionResources!}
+        reactionResources={reactionResources}
       />
     );
 
