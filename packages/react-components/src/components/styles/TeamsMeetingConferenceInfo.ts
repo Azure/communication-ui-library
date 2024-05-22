@@ -1,0 +1,66 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
+import { IModalStyles, mergeStyles, Theme } from '@fluentui/react';
+import { _pxToRem } from '@internal/acs-ui-common';
+/**
+ * @private
+ */
+export const themedPhoneInfoModalStyle = (theme: Theme): Partial<IModalStyles> => ({
+  main: {
+    borderRadius: theme.effects.roundedCorner6,
+    padding: _pxToRem(24),
+    width: _pxToRem(600),
+    height: 'fit-content',
+    overflow: 'hidden'
+  }
+});
+
+/**
+ * @private
+ */
+export const titleClassName = mergeStyles({
+  fontWeight: 600,
+  fontSize: _pxToRem(20),
+  lineHeight: _pxToRem(28)
+});
+
+/**
+ * @private
+ */
+export const titleContainerClassName = mergeStyles({
+  paddingBottom: _pxToRem(20)
+});
+
+/**
+ * @private
+ */
+export const dropdownInfoTextStyle = mergeStyles({
+  fontSize: _pxToRem(14),
+  lineHeight: _pxToRem(40)
+});
+
+/**
+ * @private
+ */
+export const phoneInfoIcon = mergeStyles({
+  height: _pxToRem(36),
+  width: _pxToRem(36),
+  marginRight: _pxToRem(12),
+  borderRadius: _pxToRem(18),
+  backgroundColor: 'rgba(0, 120, 212, 0.1)'
+});
+
+/**
+ * @private
+ */
+export const phoneInfoInctructionLine = mergeStyles({
+  marginBottom: _pxToRem(20)
+});
+
+/**
+ * @private
+ */
+export const phoneInfoStep = mergeStyles({
+  minWidth: _pxToRem(150)
+});

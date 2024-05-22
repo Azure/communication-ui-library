@@ -53,7 +53,7 @@ import { isBoolean } from '../utils';
 import { getIsTeamsCall } from '../../CallComposite/selectors/baseSelectors';
 import { callStatusSelector } from '../../CallComposite/selectors/callStatusSelector';
 /* @conditional-compile-remove(teams-meeting-conference) */
-import { MeetingConferencePhoneInfoModal } from '../MeetingConferencePhoneInfoModal';
+import { MeetingConferencePhoneInfoModal, convertConferencePhoneInfo } from '../MeetingConferencePhoneInfoModal';
 
 /**
  * @private
@@ -317,6 +317,9 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
         )}
         {showTeamsMeetingConferenceModal && (
           <MeetingConferencePhoneInfoModal
+            conferencePhoneInfoList={convertConferencePhoneInfo(
+              props.callAdapter.getState().call?.teamsMeetingConference
+            )}
             showMeetingConferencePhoneInfoModal={showTeamsMeetingConferenceModal}
             onDismissMeetingPhoneInfoSettings={onDismissTeamsMeetingConferenceModal}
           />

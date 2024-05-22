@@ -868,4 +868,19 @@ export interface CallCompositeStrings {
    * Phone Info Modal Title
    */
   meetingConferencePhoneInfoModalWait: string;
+  /* @conditional-compile-remove(teams-meeting-conference) */
+  /**
+   * Phone Info Modal Title
+   */
+  meetingConferencePhoneInfoModalToll: string;
+  /* @conditional-compile-remove(teams-meeting-conference) */
+  /**
+   * Phone Info Modal Title
+   */
+  meetingConferencePhoneInfoModalTollFree: string;
+  /* @conditional-compile-remove(teams-meeting-conference) */
+  /**
+   * Phone Info Modal Title
+   */
+  meetingConferencePhoneInfoModalNoPhoneAvailable: string;
 }
