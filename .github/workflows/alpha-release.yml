@@ -41,8 +41,7 @@ jobs:
         run: |
           az extension add --name azure-devops
           az devops configure --defaults organization=https://dev.azure.com/azure-sdk project=590cfd2a-581c-4dcb-a12e-6568ce786175
-          $AccessToken = az account get-access-token --resource 499b84ac-1321-427f-aa17-267ca6975798 --query accessToken -o tsv
-          echo "::set-output name=token::$AccessToken"
+          echo "token=$(az account get-access-token --resource 499b84ac-1321-427f-aa17-267ca6975798 --query accessToken -o tsv)" >> $GITHUB_OUTPUT
 
         # - name: Trigger alpha package release pipeline
         #   run: |
