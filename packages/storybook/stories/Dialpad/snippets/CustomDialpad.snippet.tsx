@@ -6,7 +6,7 @@ import { Dialpad, FluentThemeProvider } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
 import React, { useState } from 'react';
 
-export const CustomDialpadExample: () => JSX.Element = () => {
+export const CustomDialpadExample: (props: { isMobile?: boolean }) => JSX.Element = (props: { isMobile?: boolean }) => {
   const [dtmftone, setDtmftone] = useState('');
   const [buttonValue, setButtonValue] = useState('');
   const [buttonIndex, setButtonIndex] = useState('');
@@ -54,6 +54,7 @@ export const CustomDialpadExample: () => JSX.Element = () => {
           onClickDialpadButton={onClickDialpadButton}
           onChange={onChange}
           disableDtmfPlayback={true}
+          longPressTrigger={props.isMobile ? 'touch' : 'mouseAndTouch'}
         />
       </Stack>
     </FluentThemeProvider>

@@ -5,6 +5,7 @@ import { Dialpad as DialpadComponent, useTheme } from '@azure/communication-reac
 import { mergeStyles } from '@fluentui/react';
 import { Canvas, Description, Heading, Props, Subheading, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
+import MobileDetect from 'mobile-detect';
 import React from 'react';
 import { SingleLineBetaBanner } from '../BetaBanners/SingleLineBetaBanner';
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
@@ -18,6 +19,7 @@ const ExampleDialpadText = require('!!raw-loader!./snippets/Dialpad.snippet.tsx'
 const DialerExampleText = require('!!raw-loader!./snippets/DialpadDialer.snippet.tsx').default;
 
 const getDocs: () => JSX.Element = () => {
+  const isMobile = !!new MobileDetect(window.navigator.userAgent).mobile();
   /* eslint-disable react/no-unescaped-entities */
   return (
     <>
@@ -35,7 +37,7 @@ const getDocs: () => JSX.Element = () => {
         number, or to dial in a new participant into an ongoing call.
       </Description>
       <Canvas mdxSource={DialerExampleText}>
-        <DialerExample />
+        <DialerExample isMobile={isMobile} />
       </Canvas>
       <Subheading>DTMF Mode</Subheading>
       <Description>
@@ -45,7 +47,7 @@ const getDocs: () => JSX.Element = () => {
         dialpad is hidden since you are not able to edit DTMF tones that are sent.
       </Description>
       <Canvas mdxSource={ExampleDialpadText}>
-        <DialpadExample />
+        <DialpadExample isMobile={isMobile} />
       </Canvas>
       <Description>
         Component to render a Dialpad. This component allows numbers and +, *, # input by clicking on dialpad or using
@@ -59,7 +61,7 @@ const getDocs: () => JSX.Element = () => {
         numbers. In this example, the sounds are also disabled.
       </Description>
       <Canvas mdxSource={CustomDialpadText}>
-        <CustomDialpadExample />
+        <CustomDialpadExample isMobile={isMobile} />
       </Canvas>
       <Heading>Dialpad Props</Heading>
       <Props of={DialpadComponent} />
@@ -68,6 +70,7 @@ const getDocs: () => JSX.Element = () => {
 };
 
 const DialpadStory = (): JSX.Element => {
+  const isMobile = !!new MobileDetect(window.navigator.userAgent).mobile();
   const theme = useTheme();
 
   return (
@@ -79,7 +82,7 @@ const DialpadStory = (): JSX.Element => {
         height: '75%'
       })}
     >
-      <DialpadComponent />
+      <DialpadComponent longPressTrigger={isMobile ? 'touch' : 'mouseAndTouch'} />
     </div>
   );
 };
