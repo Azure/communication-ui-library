@@ -15,7 +15,8 @@ import {
   ScreenShareButtonStrings,
   SendBoxStrings,
   TypingIndicatorStrings,
-  VideoGalleryStrings
+  VideoGalleryStrings,
+  NotificationsStrings
 } from '../components';
 
 import { RaiseHandButtonStrings } from '../components';
@@ -108,6 +109,8 @@ export interface ComponentStrings {
   messageStatusIndicator: MessageStatusIndicatorStrings;
   /** Strings for ErroBar */
   errorBar: ErrorBarStrings;
+  /** Strings for Notifications */
+  notifications: NotificationsStrings;
   /** Strings for VideoGallery */
   videoGallery: VideoGalleryStrings;
   /** Strings for Dialpad */

@@ -293,3 +293,7 @@ export * from './StartCaptionsButton';
 export * from './CaptionsSettingsModal';
 
 export { _ErrorBoundary } from './ErrorBoundary';
+
+export * from './NotificationBar';
+
+export * from './Notifications';
