@@ -27,15 +27,31 @@ jobs:
           tenant-id: ${{ secrets.NPM_DEPLOY_AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.NPM_DEPLOY_AZURE_SUBSCRIPTION_ID }}
 
-      # Trigger azure-sdk partner release pipeline
-      # 24728 is the definition id of the `azuresdkpartnerdrops to npm` pipeline
-      - name: Trigger alpha package release pipeline
+      # Get access token to trigger the release pipeline
+      #
+      # Ideally we would use `az pipelines release create` CLI, but it does not support release variables: https://github.com/Azure/azure-cli-extensions/issues/953
+      # Instead, we use the az CLI to generate a PAT and then use that to trigger the release pipeline
+      #
+      # Paramaters:
+      #   Org: https://dev.azure.com/azure-sdk
+      #   Project: 590cfd2a-581c-4dcb-a12e-6568ce786175
+      #   Definition ID: 22 (this is the `azuresdkpartnerdrops to npm` pipeline)
+      - name: Get Azure DevOps Access Token
+        id: az-devops-access-token
         run: |
           az extension add --name azure-devops
-          az pipelines release create --organization https://dev.azure.com/azure-sdk --project 590cfd2a-581c-4dcb-a12e-6568ce786175 --definition-id 22 --artifact-metadata-list accessLevel=public BlobPath=azure-communication-services/react/npm/err-for-testing registry=https://registry.npmjs.org/ skipDiff=False tag=dev
-        # uses: Azure/pipelines@v1.2
-        # with:
-        #   azure-devops-project-url: 'https://dev.azure.com/azure-sdk/internal'
-        #   azure-pipeline-name: 'azuresdkpartnerdrops to npm'
-        #   azure-devops-token: '${{ secrets.AZURE_SDK_RELEASE_PIPELINE_DEVOPS_TOKEN }}'
-        #   azure-pipeline-variables: '{"accessLevel": "public", "BlobPath": "azure-communication-services/react/npm/${{ steps.version.outputs.version }}", "registry": "https://registry.npmjs.org/", "skipDiff": "False", "tag": "dev"}'
+          az devops configure --defaults organization=https://dev.azure.com/azure-sdk project=590cfd2a-581c-4dcb-a12e-6568ce786175
+          $AccessToken = az account get-access-token --resource 499b84ac-1321-427f-aa17-267ca6975798 --query accessToken -o tsv
+          echo "::set-output name=token::$AccessToken"
+
+        # - name: Trigger alpha package release pipeline
+        #   run: |
+        #     az extension add --name azure-devops
+        #     az pipelines release create --organization https://dev.azure.com/azure-sdk --project 590cfd2a-581c-4dcb-a12e-6568ce786175 --definition-id 22 --artifact-metadata-list accessLevel=public BlobPath=azure-communication-services/react/npm/err-for-testing registry=https://registry.npmjs.org/ skipDiff=False tag=dev
+
+        uses: Azure/pipelines@v1.2
+        with:
+          azure-devops-project-url: 'https://dev.azure.com/azure-sdk/internal'
+          azure-pipeline-name: 'azuresdkpartnerdrops to npm'
+          azure-devops-token: ${{ steps.az-devops-access-token.outputs.token }}
+          azure-pipeline-variables: '{"accessLevel": "public", "BlobPath": "azure-communication-services/react/npm/${{ steps.version.outputs.version }}", "registry": "https://registry.npmjs.org/", "skipDiff": "False", "tag": "dev"}'
