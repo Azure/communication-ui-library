@@ -4633,6 +4633,7 @@ export interface VideoGalleryStrings {
     fitRemoteParticipantToFrame: string;
     localVideoCameraSwitcherLabel: string;
     localVideoLabel: string;
+    localVideoMovementAriaLabel: string;
     localVideoMovementLabel: string;
     localVideoSelectedDescription: string;
     pinnedParticipantAnnouncementAriaLabel: string;
@@ -4708,7 +4709,6 @@ export interface VideoTileProps {
     renderElement?: JSX.Element | null;
     showLabel?: boolean;
     showMuteIndicator?: boolean;
-    // (undocumented)
     strings?: VideoTileStrings;
     styles?: VideoTileStylesProps;
     userId?: string;
@@ -4719,8 +4719,9 @@ export interface VideoTilesOptions {
     alwaysShowLabelBackground?: boolean;
 }
 
-// @beta
+// @public
 export interface VideoTileStrings {
+    moreOptionsButtonAriaLabel: string;
     // (undocumented)
     participantStateHold: string;
     // (undocumented)

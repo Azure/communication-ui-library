@@ -348,7 +348,8 @@ export { defaultAttachmentMenuAction } from '../../react-components/src';
 export type { ChatAttachmentType } from '../../react-components/src';
 export type { InlineImageOptions, InlineImage } from '../../react-components/src';
 /* @conditional-compile-remove(PSTN-calls) */
-export type { HoldButtonProps, HoldButtonStrings, VideoTileStrings } from '../../react-components/src';
+export type { HoldButtonProps, HoldButtonStrings } from '../../react-components/src';
+export type { VideoTileStrings } from '../../react-components/src';
 /* @conditional-compile-remove(call-readiness) */
 export type { BrowserPermissionDeniedStrings, BrowserPermissionDeniedProps } from '../../react-components/src';
 /* @conditional-compile-remove(call-readiness) */
