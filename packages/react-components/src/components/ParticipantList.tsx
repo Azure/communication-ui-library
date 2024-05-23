@@ -321,6 +321,10 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
           itemProps: {
             styles: props.styles?.participantItemStyles?.participantSubMenuItemsStyles
           },
+          iconProps: {
+            iconName: 'ContextMenuRemoveParticipant',
+            styles: { root: { lineHeight: 0 } }
+          },
           'data-ui-id': ids.participantListRemoveParticipantButton
         });
       }
