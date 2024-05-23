@@ -103,7 +103,7 @@ jobs:
       - name: Upload tarball to blob storage
         run: az storage blob upload -f "packages/communication-react/release/azure-communication-react-${{ steps.version.outputs.version }}.tgz" -c "drops/azure-communication-services/react/npm/${{ steps.version.outputs.version }}" --account-name azuresdkpartnerdrops --auth-mode login
 
-      # Get access token to trigger the release pipeline
+      # Get access token to trigger the release pipeline based on OIDC login
       #
       # Ideally we would use `az pipelines release create` CLI, but it does not support release variables: https://github.com/Azure/azure-cli-extensions/issues/953
       # Instead, we use the az CLI to generate a PAT and then use that to trigger the release pipeline
