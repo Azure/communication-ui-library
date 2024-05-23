@@ -133,6 +133,7 @@ export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
                 dismissMenu();
               }}
               className={classname}
+              ariaLabel={emojiButtonTooltip.get(emoji)}
             />
           </TooltipHost>
         );

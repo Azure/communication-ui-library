@@ -207,10 +207,10 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
     () =>
       mergeStyles(
         iconContainerStyle,
-        { color: theme.palette.neutralTertiary, marginLeft: 'auto' },
+        { color: theme.palette.neutralSecondary, marginLeft: 'auto' },
         styles?.iconContainer
       ),
-    [theme.palette.neutralTertiary, styles?.iconContainer]
+    [theme.palette.neutralSecondary, styles?.iconContainer]
   );
 
   const onDismissMenu = (): void => {

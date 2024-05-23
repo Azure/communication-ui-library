@@ -1388,6 +1388,7 @@ export type CallWithChatCompositeOptions = {
     spotlight?: {
         hideSpotlightButtons?: boolean;
     };
+    richTextEditor?: boolean;
 };
 
 // @public
@@ -1777,6 +1778,7 @@ export type ChatCompositeOptions = {
     topic?: boolean;
     autoFocus?: 'sendBoxTextField';
     attachmentOptions?: AttachmentOptions;
+    richTextEditor?: boolean;
 };
 
 // @public
@@ -1862,6 +1864,9 @@ export interface ChatMessage extends MessageCommon {
     // (undocumented)
     status?: MessageStatus;
 }
+
+// @beta
+export type ChatMessageType = 'text' | 'html';
 
 // @public
 export type ChatMessageWithStatus = ChatMessage_2 & {
@@ -2551,6 +2556,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     ContextMenuCameraIcon: React_2.JSX.Element;
     ContextMenuMicIcon: React_2.JSX.Element;
     ContextMenuSpeakerIcon: React_2.JSX.Element;
+    ContextMenuRemoveParticipant: React_2.JSX.Element;
     SurveyStarIcon: React_2.JSX.Element;
     SurveyStarIconFilled: React_2.JSX.Element;
     StartSpotlightContextualMenuItem: React_2.JSX.Element;
@@ -2714,6 +2720,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     ContextMenuCameraIcon: React_2.JSX.Element;
     ContextMenuMicIcon: React_2.JSX.Element;
     ContextMenuSpeakerIcon: React_2.JSX.Element;
+    ContextMenuRemoveParticipant: React_2.JSX.Element;
     SurveyStarIcon: React_2.JSX.Element;
     SurveyStarIconFilled: React_2.JSX.Element;
     StartSpotlightContextualMenuItem: React_2.JSX.Element;
@@ -3268,6 +3275,7 @@ export type MessageEditedListener = MessageReceivedListener;
 export type MessageOptions = {
     metadata?: Record<string, string>;
     attachments?: AttachmentMetadata[];
+    type?: ChatMessageType;
 };
 
 // @public
@@ -3280,7 +3288,7 @@ export type MessageProps = {
     onUpdateMessage?: UpdateMessageCallback;
     onCancelEditMessage?: CancelEditCallback;
     onDeleteMessage?: (messageId: string) => Promise<void>;
-    onSendMessage?: (messageId: string) => Promise<void>;
+    onSendMessage?: (content: string, options?: MessageOptions) => Promise<void>;
 };
 
 // @public
@@ -3355,7 +3363,7 @@ export type MessageThreadProps = {
     onUpdateMessage?: UpdateMessageCallback;
     onCancelEditMessage?: CancelEditCallback;
     onDeleteMessage?: (messageId: string) => Promise<void>;
-    onSendMessage?: (content: string) => Promise<void>;
+    onSendMessage?: (content: string, options?: MessageOptions) => Promise<void>;
     disableEditing?: boolean;
     strings?: Partial<MessageThreadStrings>;
     attachmentOptions?: AttachmentOptions;
@@ -3912,6 +3920,7 @@ export interface RichTextStrings {
     richTextInsertTableTooltip: string;
     richTextItalicTooltip: string;
     richTextNumberListTooltip: string;
+    richTextToolbarMoreButtonAriaLabel: string;
     richTextUnderlineTooltip: string;
 }
 

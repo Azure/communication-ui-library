@@ -1,0 +1,9 @@
+{
+  "type": "patch",
+  "area": "fix",
+  "workstream": "Background effects",
+  "comment": "Update styles to fix spacing of labeled background effects",
+  "packageName": "@azure/communication-react",
+  "email": "dmceachern@microsoft.com",
+  "dependentChangeType": "patch"
+}

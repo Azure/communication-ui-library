@@ -74,13 +74,13 @@ const RichTextSendBoxStory = (args): JSX.Element => {
           args.hasAttachments
             ? [
                 {
-                  id: '1',
+                  id: 'f2d1fce73c98',
                   name: 'file1.txt',
                   url: 'https://www.contoso.com/file1.txt',
                   progress: 1
                 },
                 {
-                  id: '2',
+                  id: 'dc3a33ebd321',
                   name: 'file2.docx',
                   url: 'https://www.contoso.com/file2.txt',
                   progress: 1

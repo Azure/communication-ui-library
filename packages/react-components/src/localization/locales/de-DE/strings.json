@@ -57,6 +57,7 @@
     "richTextDeleteColumnMenu": "Spalte löschen",
     "richTextDeleteRowMenu": "Zeile löschen",
     "richTextDeleteTableMenu": "Tabelle löschen",
+    "richTextToolbarMoreButtonAriaLabel": "More options",
     "attachmentMoreMenu": "Mehr Optionen"
   },
   "mentionPopover": {
@@ -199,7 +200,27 @@
     "blockedWarningText": "Diese Nachricht wurde aufgrund einer Organisationsrichtlinie gelöscht.",
     "blockedWarningLinkText": "Details",
     "attachmentCardGroupMessage": "Die Nachricht enthält {attachmentCount} Anlage.",
-    "messageDeletedAnnouncementAriaLabel": "Die Nachricht wurde gelöscht"
+    "messageDeletedAnnouncementAriaLabel": "Die Nachricht wurde gelöscht",
+    "richTextBoldTooltip": "Fett",
+    "richTextItalicTooltip": "Kursiv",
+    "richTextUnderlineTooltip": "Unterstreichen",
+    "richTextBulletListTooltip": "Aufzählungsliste",
+    "richTextNumberListTooltip": "Nummerierte Liste",
+    "richTextIncreaseIndentTooltip": "Einzug vergrößern",
+    "richTextDecreaseIndentTooltip": "Einzug verringern",
+    "richTextInsertTableTooltip": "Tabelle einfügen",
+    "richTextFormatButtonTooltip": "Formatieren",
+    "richTextInsertRowOrColumnMenu": "Einfügen",
+    "richTextInsertTableMenuTitle": "{column} x {row} Tabelle einfügen",
+    "richTextInsertRowAboveMenu": "Oben einfügen",
+    "richTextInsertRowBelowMenu": "Unten einfügen",
+    "richTextInsertColumnLeftMenu": "Links einfügen",
+    "richTextInsertColumnRightMenu": "Rechts einfügen",
+    "richTextDeleteRowOrColumnMenu": "Löschen",
+    "richTextDeleteColumnMenu": "Spalte löschen",
+    "richTextDeleteRowMenu": "Zeile löschen",
+    "richTextDeleteTableMenu": "Tabelle löschen",
+    "richTextToolbarMoreButtonAriaLabel": "More options"
   },
   "errorBar": {
     "unableToReachChatService": "Sie sind offline.",
