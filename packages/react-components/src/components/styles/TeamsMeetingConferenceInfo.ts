@@ -35,7 +35,7 @@ export const titleContainerClassName = mergeStyles({
 /**
  * @private
  */
-export const dropdownInfoTextStyle = mergeStyles({
+export const phoneInfoTextStyle = mergeStyles({
   fontSize: _pxToRem(14),
   lineHeight: _pxToRem(40)
 });

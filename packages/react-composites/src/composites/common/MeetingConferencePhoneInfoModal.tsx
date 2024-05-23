@@ -8,7 +8,6 @@ import {
   _ConferencePhoneInfo
 } from '@internal/react-components';
 import { useLocale } from '../localization';
-import { _captionSettingsSelector } from '@internal/calling-component-bindings';
 import { TeamsMeetingAudioConferencingDetails } from '@azure/communication-calling';
 
 /** @private */

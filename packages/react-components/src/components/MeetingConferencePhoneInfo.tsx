@@ -9,7 +9,7 @@ import {
   themedPhoneInfoModalStyle,
   titleClassName,
   titleContainerClassName,
-  dropdownInfoTextStyle,
+  phoneInfoTextStyle,
   phoneInfoIcon,
   phoneInfoInctructionLine,
   phoneInfoStep
@@ -30,7 +30,7 @@ export interface _ConferencePhoneInfo {
 
 /**
  * @internal
- * strings for captions setting modal
+ * strings for phone info modal
  */
 export interface _MeetingConferencePhoneInfoModalStrings {
   meetingConferencePhoneInfoModalTitle?: string;
@@ -44,7 +44,7 @@ export interface _MeetingConferencePhoneInfoModalStrings {
 
 /**
  * @internal
- * _CaptionsSettingsModal Component Props.
+ * MeetingConferencePhoneInfoModal Component Props.
  */
 export interface _MeetingConferencePhoneInfoModalProps {
   conferencePhoneInfoList: _ConferencePhoneInfo[];
@@ -91,7 +91,7 @@ export const _MeetingConferencePhoneInfoModal = (props: _MeetingConferencePhoneI
           </Stack>
           {conferencePhoneInfoList.length === 0 && (
             <Stack horizontal>
-              <Text className={dropdownInfoTextStyle}>{strings?.meetingConferencePhoneInfoModalNoPhoneAvailable}</Text>
+              <Text className={phoneInfoTextStyle}>{strings?.meetingConferencePhoneInfoModalNoPhoneAvailable}</Text>
             </Stack>
           )}
           {conferencePhoneInfoList.length > 0 && (
@@ -108,14 +108,14 @@ export const _MeetingConferencePhoneInfoModal = (props: _MeetingConferencePhoneI
                       </Stack>
                     </Stack.Item>
                     <Stack.Item>
-                      <Text className={dropdownInfoTextStyle}>{strings?.meetingConferencePhoneInfoModalDialIn}</Text>
+                      <Text className={phoneInfoTextStyle}>{strings?.meetingConferencePhoneInfoModalDialIn}</Text>
                     </Stack.Item>
                   </Stack>
                 </Stack.Item>
                 <Stack.Item className={phoneInfoStep}>
                   {conferencePhoneInfoList.map((phoneNumber, index) => (
                     <Stack.Item key={index}>
-                      <Text className={dropdownInfoTextStyle}>{formatPhoneNumberInfo(phoneNumber, strings)}</Text>
+                      <Text className={phoneInfoTextStyle}>{formatPhoneNumberInfo(phoneNumber, strings)}</Text>
                     </Stack.Item>
                   ))}
                 </Stack.Item>
@@ -136,11 +136,11 @@ export const _MeetingConferencePhoneInfoModal = (props: _MeetingConferencePhoneI
                       />
                     </Stack.Item>
                     <Stack.Item>
-                      <Text className={dropdownInfoTextStyle}>{strings?.meetingConferencePhoneInfoModalMeetingId}</Text>
+                      <Text className={phoneInfoTextStyle}>{strings?.meetingConferencePhoneInfoModalMeetingId}</Text>
                     </Stack.Item>
                   </Stack>
                 </Stack.Item>
-                <Text className={dropdownInfoTextStyle}>{conferencePhoneInfoList[0].conferenceId}#</Text>
+                <Text className={phoneInfoTextStyle}>{conferencePhoneInfoList[0].conferenceId}#</Text>
               </Stack>
               <Stack horizontal horizontalAlign="space-between" verticalAlign="center">
                 <Stack horizontal>
@@ -148,7 +148,7 @@ export const _MeetingConferencePhoneInfoModal = (props: _MeetingConferencePhoneI
                     <Icon iconName="PhoneInfoWait" style={{ color: theme.palette.themePrimary, padding: '8px' }} />
                   </Stack.Item>
                   <Stack.Item>
-                    <Text className={dropdownInfoTextStyle}>{strings?.meetingConferencePhoneInfoModalWait}</Text>
+                    <Text className={phoneInfoTextStyle}>{strings?.meetingConferencePhoneInfoModalWait}</Text>
                   </Stack.Item>
                 </Stack>
               </Stack>
