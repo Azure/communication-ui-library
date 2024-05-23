@@ -166,7 +166,7 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
 
   const strings = { ...localeStrings, ...props.strings };
   const participantStateString = participantStateStringTrampoline(props, strings);
-  const showMenuIcon = !participantStateString && (itemHovered || !menuHidden);
+  const showMenuIcon = !participantStateString && (itemHovered || !menuHidden) && menuItems && menuItems?.length > 0;
 
   // For 'me' show empty name so avatar will get 'Person' icon, when there is no name
   const meAvatarText = displayName?.trim() || '';
