@@ -51,6 +51,7 @@ import { IContextualMenuItem } from '@fluentui/react';
 import { IContextualMenuItemStyles } from '@fluentui/react';
 import { IContextualMenuProps } from '@fluentui/react';
 import { IContextualMenuStyles } from '@fluentui/react';
+import { IIconProps } from '@fluentui/react';
 import { ILinkStyles } from '@fluentui/react';
 import { IMessageBarProps } from '@fluentui/react';
 import { IncomingCall } from '@azure/communication-calling';
@@ -115,6 +116,14 @@ export interface AcceptedTransfer {
 export interface ActiveErrorMessage {
     timestamp?: Date;
     type: ErrorType;
+}
+
+// @beta
+export interface ActiveNotification {
+    autoDismiss?: boolean;
+    onClick?: () => void;
+    onDismiss?: () => void;
+    type: NotificationType;
 }
 
 // @public
@@ -2191,6 +2200,7 @@ export interface ComponentStrings {
     MicrophoneSitePermissionsDenied: SitePermissionsStrings;
     MicrophoneSitePermissionsDeniedSafari: SitePermissionsStrings;
     MicrophoneSitePermissionsRequest: SitePermissionsStrings;
+    notifications: NotificationsStrings;
     participantItem: ParticipantItemStrings;
     ParticipantList: ParticipantListStrings;
     participantsButton: ParticipantsButtonStrings;
@@ -2556,6 +2566,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     ContextMenuCameraIcon: React_2.JSX.Element;
     ContextMenuMicIcon: React_2.JSX.Element;
     ContextMenuSpeakerIcon: React_2.JSX.Element;
+    ContextMenuRemoveParticipant: React_2.JSX.Element;
     SurveyStarIcon: React_2.JSX.Element;
     SurveyStarIconFilled: React_2.JSX.Element;
     StartSpotlightContextualMenuItem: React_2.JSX.Element;
@@ -2719,6 +2730,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     ContextMenuCameraIcon: React_2.JSX.Element;
     ContextMenuMicIcon: React_2.JSX.Element;
     ContextMenuSpeakerIcon: React_2.JSX.Element;
+    ContextMenuRemoveParticipant: React_2.JSX.Element;
     SurveyStarIcon: React_2.JSX.Element;
     SurveyStarIconFilled: React_2.JSX.Element;
     StartSpotlightContextualMenuItem: React_2.JSX.Element;
@@ -3509,6 +3521,77 @@ export interface NetworkDiagnosticsState {
     // (undocumented)
     latest: LatestNetworkDiagnostics;
 }
+
+// @beta
+export const NotificationBar: (props: NotificationBarProps) => JSX.Element;
+
+// @beta
+export interface NotificationBarProps {
+    autoDismiss?: boolean;
+    notificationBarIconProps?: IIconProps;
+    notificationBarStrings?: NotificationBarStrings;
+    onClick?: () => void;
+    onDismiss?: () => void;
+    showStackedEffect?: boolean;
+}
+
+// @beta
+export interface NotificationBarStrings {
+    buttonLabel?: string;
+    closeButtonAriaLabel: string;
+    message?: string;
+    title: string;
+}
+
+// @beta
+export const Notifications: (props: NotificationsProps) => JSX.Element;
+
+// @beta
+export interface NotificationsProps {
+    activeNotifications: ActiveNotification[];
+    maxNotificationsToShow?: number;
+    strings?: NotificationsStrings;
+}
+
+// @beta
+export interface NotificationsStrings {
+    accessDenied: NotificationBarStrings;
+    callCameraAccessDenied: NotificationBarStrings;
+    callCameraAccessDeniedSafari: NotificationBarStrings;
+    callCameraAlreadyInUse: NotificationBarStrings;
+    callLocalVideoFreeze: NotificationBarStrings;
+    callMacOsCameraAccessDenied: NotificationBarStrings;
+    callMacOsMicrophoneAccessDenied: NotificationBarStrings;
+    callMacOsScreenShareAccessDenied: NotificationBarStrings;
+    callMicrophoneAccessDenied: NotificationBarStrings;
+    callMicrophoneAccessDeniedSafari: NotificationBarStrings;
+    callMicrophoneMutedBySystem: NotificationBarStrings;
+    callMicrophoneUnmutedBySystem: NotificationBarStrings;
+    callNetworkQualityLow: NotificationBarStrings;
+    callNoMicrophoneFound: NotificationBarStrings;
+    callNoSpeakerFound: NotificationBarStrings;
+    callVideoRecoveredBySystem: NotificationBarStrings;
+    callVideoStoppedBySystem: NotificationBarStrings;
+    cameraFrozenForRemoteParticipants?: NotificationBarStrings;
+    dismissButtonAriaLabel?: NotificationBarStrings;
+    failedToJoinCallGeneric?: NotificationBarStrings;
+    failedToJoinCallInvalidMeetingLink?: NotificationBarStrings;
+    muteGeneric: NotificationBarStrings;
+    sendMessageGeneric: NotificationBarStrings;
+    sendMessageNotInChatThread: NotificationBarStrings;
+    startScreenShareGeneric: NotificationBarStrings;
+    startSpotlightWhileMaxParticipantsAreSpotlighted: NotificationBarStrings;
+    startVideoGeneric: NotificationBarStrings;
+    stopScreenShareGeneric: NotificationBarStrings;
+    stopVideoGeneric: NotificationBarStrings;
+    unableToReachChatService: NotificationBarStrings;
+    unableToStartVideoEffect?: NotificationBarStrings;
+    unmuteGeneric: NotificationBarStrings;
+    userNotInChatThread: NotificationBarStrings;
+}
+
+// @beta
+export type NotificationType = keyof NotificationsStrings;
 
 // @public
 export type OnFetchProfileCallback = (userId: string, defaultProfile?: Profile) => Promise<Profile | undefined>;
@@ -4632,6 +4715,7 @@ export interface VideoGalleryStrings {
     fitRemoteParticipantToFrame: string;
     localVideoCameraSwitcherLabel: string;
     localVideoLabel: string;
+    localVideoMovementAriaLabel: string;
     localVideoMovementLabel: string;
     localVideoSelectedDescription: string;
     pinnedParticipantAnnouncementAriaLabel: string;
@@ -4707,7 +4791,6 @@ export interface VideoTileProps {
     renderElement?: JSX.Element | null;
     showLabel?: boolean;
     showMuteIndicator?: boolean;
-    // (undocumented)
     strings?: VideoTileStrings;
     styles?: VideoTileStylesProps;
     userId?: string;
@@ -4718,8 +4801,9 @@ export interface VideoTilesOptions {
     alwaysShowLabelBackground?: boolean;
 }
 
-// @beta
+// @public
 export interface VideoTileStrings {
+    moreOptionsButtonAriaLabel: string;
     // (undocumented)
     participantStateHold: string;
     // (undocumented)
