@@ -18,8 +18,11 @@ const CustomDialpadText = require('!!raw-loader!./snippets/CustomDialpad.snippet
 const ExampleDialpadText = require('!!raw-loader!./snippets/Dialpad.snippet.tsx').default;
 const DialerExampleText = require('!!raw-loader!./snippets/DialpadDialer.snippet.tsx').default;
 
+export const isIOS = (): boolean =>
+  /iPad|iPhone|iPod/.test(navigator.platform) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+
 const getDocs: () => JSX.Element = () => {
-  const isMobile = !!new MobileDetect(window.navigator.userAgent).mobile();
+  const isTouchOnlyDevice = !!new MobileDetect(window.navigator.userAgent).mobile() || isIOS();
   /* eslint-disable react/no-unescaped-entities */
   return (
     <>
@@ -37,7 +40,7 @@ const getDocs: () => JSX.Element = () => {
         number, or to dial in a new participant into an ongoing call.
       </Description>
       <Canvas mdxSource={DialerExampleText}>
-        <DialerExample isMobile={isMobile} />
+        <DialerExample isTouchOnlyDevice={isTouchOnlyDevice} />
       </Canvas>
       <Subheading>DTMF Mode</Subheading>
       <Description>
@@ -47,7 +50,7 @@ const getDocs: () => JSX.Element = () => {
         dialpad is hidden since you are not able to edit DTMF tones that are sent.
       </Description>
       <Canvas mdxSource={ExampleDialpadText}>
-        <DialpadExample isMobile={isMobile} />
+        <DialpadExample isTouchOnlyDevice={isTouchOnlyDevice} />
       </Canvas>
       <Description>
         Component to render a Dialpad. This component allows numbers and +, *, # input by clicking on dialpad or using
@@ -61,7 +64,7 @@ const getDocs: () => JSX.Element = () => {
         numbers. In this example, the sounds are also disabled.
       </Description>
       <Canvas mdxSource={CustomDialpadText}>
-        <CustomDialpadExample isMobile={isMobile} />
+        <CustomDialpadExample isTouchOnlyDevice={isTouchOnlyDevice} />
       </Canvas>
       <Heading>Dialpad Props</Heading>
       <Props of={DialpadComponent} />
@@ -70,7 +73,7 @@ const getDocs: () => JSX.Element = () => {
 };
 
 const DialpadStory = (): JSX.Element => {
-  const isMobile = !!new MobileDetect(window.navigator.userAgent).mobile();
+  const isMobile = !!new MobileDetect(window.navigator.userAgent).mobile() || isIOS();
   const theme = useTheme();
 
   return (
