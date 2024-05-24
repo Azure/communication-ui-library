@@ -1856,6 +1856,7 @@ export interface ComponentStrings {
     typingIndicator: TypingIndicatorStrings;
     verticalGallery: VerticalGalleryStrings;
     videoGallery: VideoGalleryStrings;
+    videoTile: VideoTileStrings;
 }
 
 // @public
@@ -3920,6 +3921,7 @@ export interface VideoGalleryStrings {
     fitRemoteParticipantToFrame: string;
     localVideoCameraSwitcherLabel: string;
     localVideoLabel: string;
+    localVideoMovementAriaLabel: string;
     localVideoMovementLabel: string;
     localVideoSelectedDescription: string;
     pinnedParticipantAnnouncementAriaLabel: string;
@@ -3994,6 +3996,7 @@ export interface VideoTileProps {
     renderElement?: JSX.Element | null;
     showLabel?: boolean;
     showMuteIndicator?: boolean;
+    strings?: VideoTileStrings;
     styles?: VideoTileStylesProps;
     userId?: string;
 }
@@ -4001,6 +4004,11 @@ export interface VideoTileProps {
 // @public
 export interface VideoTilesOptions {
     alwaysShowLabelBackground?: boolean;
+}
+
+// @public
+export interface VideoTileStrings {
+    moreOptionsButtonAriaLabel: string;
 }
 
 // @public
