@@ -2,13 +2,40 @@
 // Licensed under the MIT License.
 
 import { Stack } from '@fluentui/react';
+import { Canvas, Description, Heading, Props, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 import { NotificationBar as NotificationBarComponent } from '../../../../react-components/src/components';
 import { COMPONENT_FOLDER_PREFIX } from '../../constants';
-import { hiddenControl } from '../../controlsUtils';
+import { controlsToAdd, hiddenControl } from '../../controlsUtils';
+import { ExampleNotificationBar } from './snippets/ExampleNotificationBar.snippet';
 
-const NotificationBarStory = (): JSX.Element => {
+const ExampleNotificationBarText = require('!!raw-loader!./snippets/ExampleNotificationBar.snippet.tsx').default;
+
+const getDocs: () => JSX.Element = () => {
+  return (
+    <>
+      <Title>Notification Bar</Title>
+      <Description>
+        `Notification Bar` is a container showing notification in a bar format with an icon, title, message, and a
+        button. The message and button is optional.
+      </Description>
+      <Description>
+        Toggle the `autoDismiss` prop to automatically dismiss the notification after 5 seconds. Toggle the
+        `showStackedEffect` prop to show the notification in a stacked effect hinting there are more notifications
+        behind it.
+      </Description>
+      <Heading>Example Notification Bar</Heading>
+      <Canvas mdxSource={ExampleNotificationBarText}>
+        <ExampleNotificationBar />
+      </Canvas>
+      <Heading>Notification Bar Props</Heading>
+      <Props of={NotificationBarComponent} />
+    </>
+  );
+};
+
+const NotificationBarStory = (args): JSX.Element => {
   const containerStyles = {
     width: '100%',
     height: '100%',
@@ -26,8 +53,9 @@ const NotificationBarStory = (): JSX.Element => {
     <Stack verticalFill tokens={{ childrenGap: '5rem' }} style={containerStyles} verticalAlign="space-between">
       <NotificationBarComponent
         notificationBarStrings={strings}
-        notificationBarIconName="ErrorBarCallNetworkQualityLow"
+        notificationBarIconProps="ErrorBarCallNetworkQualityLow"
         onClick={() => alert('joining with phone')}
+        {...args}
       />
     </Stack>
   );
@@ -39,11 +67,19 @@ export const NotificationBar = NotificationBarStory.bind({});
 
 export default {
   id: `${COMPONENT_FOLDER_PREFIX}-internal-NotificationBar`,
-  title: `${COMPONENT_FOLDER_PREFIX}/Internal/NotificationBar/NotificationBar`,
-  component: NotificationBar,
+  title: `${COMPONENT_FOLDER_PREFIX}/Internal/Notifications/NotificationBar`,
+  component: NotificationBarComponent,
   argTypes: {
-    captions: hiddenControl,
-    onRenderAvatar: hiddenControl,
-    isCaptionsOn: hiddenControl
+    notificationBarStrings: hiddenControl,
+    notificationBarIconProps: hiddenControl,
+    autoDismiss: controlsToAdd.isNotificationAutoDismiss,
+    showStackedEffect: controlsToAdd.showNotificationStacked,
+    onClick: hiddenControl,
+    onDismiss: hiddenControl
+  },
+  parameters: {
+    docs: {
+      page: () => getDocs()
+    }
   }
 } as Meta;

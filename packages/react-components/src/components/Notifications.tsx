@@ -1,22 +1,15 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import React, { useEffect, useRef, useState } from 'react';
-import { IMessageBarProps, MessageBar, Stack } from '@fluentui/react';
+import React, { useEffect, useState } from 'react';
+import { Stack } from '@fluentui/react';
 import { useLocale } from '../localization';
-import {
-  DismissedError,
-  dismissError,
-  dropDismissalsForInactiveErrors,
-  errorsToShow,
-  messageBarIconProps,
-  messageBarType
-} from './utils';
+import { NotificationIconProps } from './utils';
 import { NotificationBar, NotificationBarStrings } from './NotificationBar';
 
 /**
  * Props for {@link Notifications}.
- * @public
+ * @beta
  */
 export interface NotificationsProps {
   /**
@@ -28,12 +21,18 @@ export interface NotificationsProps {
    * Currently active notifications.
    */
   activeNotifications: ActiveNotification[];
+
+  /**
+   * Max notifications to show at a time.
+   * @defaultValue 2
+   */
+  maxNotificationsToShow?: number;
 }
 
 /**
  * All strings that may be shown on the UI in the {@link Notifications}.
  *
- * @public
+ * @beta
  */
 export interface NotificationsStrings {
   /**
@@ -214,14 +213,14 @@ export interface NotificationsStrings {
 /**
  * All notifications that can be shown in the {@link Notifications}.
  *
- * @public
+ * @beta
  */
 export type NotificationType = keyof NotificationsStrings;
 
 /**
  * Active notifications to be shown via {@link Notifications}.
  *
- * @public
+ * @beta
  */
 export interface ActiveNotification {
   /**
@@ -229,20 +228,19 @@ export interface ActiveNotification {
    */
   type: NotificationType;
   /**
-   * Name of icon to be shown.
-   */
-  iconName: string;
-  /**
    * Callback called when the button inside notification bar is clicked.
    */
   onClick?: () => void;
+
   /**
-   * The latest timestamp when this notification was observed.
-   *
-   * When available, this is used to track notifications that have already been seen and dismissed
-   * by the user.
+   * Callback called when the notification is dismissed.
    */
-  timestamp?: Date;
+  onDismiss?: () => void;
+
+  /**
+   * If set, notification will automatically dismiss after 5 seconds
+   */
+  autoDismiss?: boolean;
 }
 
 /**
@@ -256,22 +254,48 @@ export interface ActiveNotification {
  *         If the notification recurs, it is shown in the UI.
  *
  *
- * @public
+ * @beta
  */
 export const Notifications = (props: NotificationsProps): JSX.Element => {
   const localeStrings = useLocale().strings.notifications;
   const strings = props.strings ?? localeStrings;
+  const maxNotificationsToShow = props.maxNotificationsToShow ?? 2;
+  const [activeNotifications, setActiveNotifications] = useState<ActiveNotification[]>(props.activeNotifications);
+  useEffect(() => {
+    setActiveNotifications(props.activeNotifications);
+  }, [props.activeNotifications]);
 
   return (
-    <Stack data-ui-id="error-bar-stack">
-      {props.activeNotifications.map((notification, index) => (
-        <NotificationBar
-          key={index}
-          notificationBarStrings={strings[notification.type]}
-          notificationBarIconName={notification.iconName}
-          onClick={() => notification.onClick?.()}
-        />
-      ))}
+    <Stack
+      data-ui-id="notifications-stack"
+      style={{
+        width: 'fit-content'
+      }}
+    >
+      {activeNotifications.map((notification, index) => {
+        if (index < maxNotificationsToShow) {
+          return (
+            <div key={index} style={{ marginBottom: `${index === maxNotificationsToShow - 1 ? 0 : '0.25rem'}` }}>
+              <NotificationBar
+                notificationBarStrings={strings[notification.type]}
+                notificationBarIconProps={NotificationIconProps(notification.type)}
+                onClick={() => notification.onClick?.()}
+                onDismiss={() => {
+                  activeNotifications.splice(index, 1);
+                  setActiveNotifications([...activeNotifications]);
+                  notification.onDismiss && notification.onDismiss();
+                }}
+                showStackedEffect={
+                  index === maxNotificationsToShow - 1 && activeNotifications.length > maxNotificationsToShow
+                }
+                autoDismiss={notification.autoDismiss}
+              />
+            </div>
+          );
+        } else {
+          return <></>;
+        }
+      })}
     </Stack>
   );
 };

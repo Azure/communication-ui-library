@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 import { CustomCallControlButtonProps, ErrorType } from '@azure/communication-react';
+import { NotificationType } from '@azure/communication-react';
 import { PartialTheme } from '@fluentui/react';
 import { DefaultTheme, DarkTheme, TeamsTheme, WordTheme } from '@fluentui/theme-samples';
 import {
@@ -92,6 +93,32 @@ const defaultTypingUsers = [
 ];
 
 const errorOptions: ErrorType[] = [
+  'unableToReachChatService',
+  'accessDenied',
+  'userNotInChatThread',
+  'sendMessageNotInChatThread',
+  'sendMessageGeneric',
+  'startVideoGeneric',
+  'stopVideoGeneric',
+  'muteGeneric',
+  'unmuteGeneric',
+  'startScreenShareGeneric',
+  'stopScreenShareGeneric',
+  'callNetworkQualityLow',
+  'callNoSpeakerFound',
+  'callNoMicrophoneFound',
+  'callMicrophoneAccessDenied',
+  'callMicrophoneMutedBySystem',
+  'callMicrophoneUnmutedBySystem',
+  'callMacOsMicrophoneAccessDenied',
+  'callLocalVideoFreeze',
+  'callCameraAlreadyInUse',
+  'callMacOsCameraAccessDenied',
+  'callMacOsScreenShareAccessDenied',
+  'callVideoStoppedBySystem',
+  'callVideoRecoveredBySystem'
+];
+const notificationOptions: NotificationType[] = [
   'unableToReachChatService',
   'accessDenied',
   'userNotInChatThread',
@@ -366,6 +393,20 @@ export const controlsToAdd = {
   typingUsers: { control: 'object', defaultValue: defaultTypingUsers, name: 'Typing users' },
   isCaptionsFeatureActive: { control: 'boolean', defaultValue: true, name: 'Is captions on' },
   richTextEditor: { control: 'boolean', defaultValue: false, name: 'Enable rich text editor' },
+  isNotificationAutoDismiss: { control: 'boolean', defaultValue: false, name: 'Is auto dismiss on' },
+  showNotificationStacked: { control: 'boolean', defaultValue: false, name: 'Show notification stacked effect' },
+  activeNotifications: {
+    control: 'check',
+    options: notificationOptions,
+    defaultValue: ['accessDenied'],
+    name: 'activeNotifications'
+  },
+  maxNotificationsToShow: {
+    control: 'select',
+    options: [1, 2, 3],
+    defaultValue: '2',
+    name: 'Select max number of notifications to show'
+  },
   userId: {
     control: 'text',
     defaultValue: '',

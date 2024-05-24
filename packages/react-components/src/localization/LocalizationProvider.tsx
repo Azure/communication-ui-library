@@ -15,9 +15,10 @@ import {
   ScreenShareButtonStrings,
   SendBoxStrings,
   TypingIndicatorStrings,
-  VideoGalleryStrings,
-  NotificationsStrings
+  VideoGalleryStrings
 } from '../components';
+/* @conditional-compile-remove(notifications) */
+import { NotificationsStrings } from '../components';
 
 import { RaiseHandButtonStrings } from '../components';
 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
@@ -109,6 +110,7 @@ export interface ComponentStrings {
   messageStatusIndicator: MessageStatusIndicatorStrings;
   /** Strings for ErroBar */
   errorBar: ErrorBarStrings;
+  /* @conditional-compile-remove(notifications) */
   /** Strings for Notifications */
   notifications: NotificationsStrings;
   /** Strings for VideoGallery */

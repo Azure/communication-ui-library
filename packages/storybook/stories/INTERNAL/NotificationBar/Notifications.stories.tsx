@@ -1,50 +1,70 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { Stack } from '@fluentui/react';
+import { mergeStyles, useTheme } from '@fluentui/react';
+import { Canvas, Description, Heading, Props, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
-import {
-  ActiveNotification,
-  Notifications as NotificationsComponent
-} from '../../../../react-components/src/components';
+import { Notifications as NotificationsComponent } from '../../../../react-components/src/components';
 import { COMPONENT_FOLDER_PREFIX } from '../../constants';
-import { hiddenControl } from '../../controlsUtils';
+import { controlsToAdd, hiddenControl } from '../../controlsUtils';
+import { ExampleNotifications } from './snippets/ExampleNotifications.snippet';
 
-const NotificationsStory = (): JSX.Element => {
-  const containerStyles = {
-    width: '100%',
-    height: '100%',
-    padding: '2rem'
-  };
+const ExampleNotificationsText = require('!!raw-loader!./snippets/ExampleNotifications.snippet.tsx').default;
 
-  const activeNotifications: ActiveNotification[] = [
-    {
-      type: 'unableToReachChatService',
-      iconName: 'ErrorBarCallNetworkQualityLow'
-    },
-    {
-      type: 'accessDenied',
-      iconName: 'ErrorBarCallNetworkQualityLow'
-    },
-    {
-      type: 'sendMessageGeneric',
-      iconName: 'ErrorBarCallNetworkQualityLow'
-    },
-    {
-      type: 'sendMessageNotInChatThread',
-      iconName: 'ErrorBarCallNetworkQualityLow'
-    },
-    {
-      type: 'userNotInChatThread',
-      iconName: 'ErrorBarCallNetworkQualityLow'
-    }
-  ];
-
+const getDocs: () => JSX.Element = () => {
+  /* eslint-disable react/no-unescaped-entities */
   return (
-    <Stack verticalFill tokens={{ childrenGap: '5rem' }} style={containerStyles} verticalAlign="space-between">
-      <NotificationsComponent activeNotifications={activeNotifications} />
-    </Stack>
+    <>
+      <Title>Notifications</Title>
+      <Description>
+        `Notifications` is a wrapper on the `NotificationBar` component with additional features for surfacing Azure
+        Communication Services notifications on the UI consistently.
+      </Description>
+      <Heading>Example Notifications</Heading>
+      <Canvas mdxSource={ExampleNotificationsText}>
+        <ExampleNotifications />
+      </Canvas>
+      <Heading>Localization</Heading>
+      <Description>
+        Similar to other UI components in this library, `NotificationsProps` accepts all strings shown on the UI as a
+        `strings` field. The `activeNotifications` field selects from these strings to show in the `Notifications` UI.
+      </Description>
+      <Heading>Dismissed messages</Heading>
+      <Description>
+        User can dismiss the notifications shown by clicking on the X icon. If you wish to dismiss the notifications
+        automatically, simply set the `autoDismiss` field to true for that specific notification.
+      </Description>
+      <Heading>Multiple Notificaionts</Heading>
+      <Description>
+        More than one notification can occur at the same time. The `Notifications` component can show multiple active
+        notifications. To avoid confusing the user, it is important to be mindful to limit the total number of
+        notifications that are shown together by setting the `maxNotificationsToShow` field.
+      </Description>
+      <Heading>Notifications Props</Heading>
+      <Props of={NotificationsComponent} />
+    </>
+  );
+};
+
+const NotificationsStory = (args): JSX.Element => {
+  const theme = useTheme();
+  return (
+    <div
+      className={mergeStyles({
+        background: theme.palette.neutralLighterAlt,
+        padding: '2em',
+        width: '75%',
+        height: '50%'
+      })}
+    >
+      <NotificationsComponent
+        activeNotifications={args.activeNotifications.map((t) => ({
+          type: t
+        }))}
+        maxNotificationsToShow={args.maxNotificationsToShow}
+      />
+    </div>
   );
 };
 
@@ -55,10 +75,15 @@ export const Notifications = NotificationsStory.bind({});
 export default {
   id: `${COMPONENT_FOLDER_PREFIX}-internal-Notifications`,
   title: `${COMPONENT_FOLDER_PREFIX}/Internal/Notifications/Notifications`,
-  component: Notifications,
+  component: NotificationsComponent,
   argTypes: {
-    captions: hiddenControl,
-    onRenderAvatar: hiddenControl,
-    isCaptionsOn: hiddenControl
+    activeNotifications: controlsToAdd.activeNotifications,
+    maxNotificationsToShow: controlsToAdd.maxNotificationsToShow,
+    strings: hiddenControl
+  },
+  parameters: {
+    docs: {
+      page: () => getDocs()
+    }
   }
 } as Meta;
