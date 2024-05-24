@@ -188,6 +188,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
             </Text>
           }
           details={getMessageDetails()}
+          aria-hidden={true}
         >
           {getContent()}
         </FluentChatMessage>
