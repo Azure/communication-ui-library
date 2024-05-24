@@ -1,8 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { CustomCallControlButtonProps, ErrorType } from '@azure/communication-react';
-import { NotificationType } from '@azure/communication-react';
+import { CustomCallControlButtonProps, ErrorType, NotificationType } from '@azure/communication-react';
 import { PartialTheme } from '@fluentui/react';
 import { DefaultTheme, DarkTheme, TeamsTheme, WordTheme } from '@fluentui/theme-samples';
 import {
