@@ -180,6 +180,7 @@ export interface NotificationsStrings {
    * Mac OS specific message shown when system denies sharing local screen on a call.
    */
   callMacOsScreenShareAccessDenied: NotificationBarStrings;
+
   /**
    * Dimiss Notifications button aria label read by screen reader accessibility tools
    */
