@@ -57,7 +57,7 @@
     "richTextDeleteColumnMenu": "Удалить столбец",
     "richTextDeleteRowMenu": "Удалить строку",
     "richTextDeleteTableMenu": "Удалить таблицу",
-    "richTextToolbarMoreButtonAriaLabel": "More options",
+    "richTextToolbarMoreButtonAriaLabel": "Дополнительные параметры",
     "attachmentMoreMenu": "Дополнительные параметры"
   },
   "mentionPopover": {
@@ -220,7 +220,7 @@
     "richTextDeleteColumnMenu": "Удалить столбец",
     "richTextDeleteRowMenu": "Удалить строку",
     "richTextDeleteTableMenu": "Удалить таблицу",
-    "richTextToolbarMoreButtonAriaLabel": "More options"
+    "richTextToolbarMoreButtonAriaLabel": "Дополнительные параметры"
   },
   "errorBar": {
     "unableToReachChatService": "Вы не в сети",
