@@ -8,8 +8,8 @@ import {
   containerStyles,
   hiddenContainerStyles,
   messageTextStyle,
-  notificationIconStyles,
-  titleTextStyle
+  notificationIconClassName,
+  titleTextClassName
 } from './styles/NotificationBar.styles';
 
 /**
@@ -103,11 +103,11 @@ export const NotificationBar = (props: NotificationBarProps): JSX.Element => {
         <Stack horizontal horizontalAlign="space-between">
           <Stack horizontal>
             <Icon
-              className={notificationIconStyles()}
+              className={notificationIconClassName}
               iconName={props.notificationBarIconProps?.iconName ?? 'ErrorBadge'}
               {...props.notificationBarIconProps}
             />
-            <Text className={titleTextStyle(theme)}>{strings?.title}</Text>
+            <Text className={titleTextClassName}>{strings?.title}</Text>
           </Stack>
 
           <IconButton

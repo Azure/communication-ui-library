@@ -18,13 +18,12 @@ export const messageTextStyle = (theme: Theme): string =>
 /**
  * @private
  */
-export const titleTextStyle = (theme: Theme): string =>
-  mergeStyles({
-    fontWeight: 400,
-    fontSize: _pxToRem(14),
-    lineHeight: _pxToRem(16),
-    alignSelf: 'center'
-  });
+export const titleTextClassName = mergeStyles({
+  fontWeight: 400,
+  fontSize: _pxToRem(14),
+  lineHeight: _pxToRem(16),
+  alignSelf: 'center'
+});
 
 /**
  * @private
@@ -54,13 +53,12 @@ export const hiddenContainerStyles = (theme: Theme): string =>
 /**
  * @private
  */
-export const notificationIconStyles = (): string =>
-  mergeStyles({
-    fontSize: '1.25rem',
-    alignSelf: 'center',
-    marginRight: '0.5rem',
-    svg: {
-      width: '1.25rem',
-      height: '1.25rem'
-    }
-  });
+export const notificationIconClassName = mergeStyles({
+  fontSize: '1.25rem',
+  alignSelf: 'center',
+  marginRight: '0.5rem',
+  svg: {
+    width: '1.25rem',
+    height: '1.25rem'
+  }
+});
