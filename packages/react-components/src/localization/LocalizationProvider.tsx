@@ -17,6 +17,8 @@ import {
   TypingIndicatorStrings,
   VideoGalleryStrings
 } from '../components';
+/* @conditional-compile-remove(notifications) */
+import { NotificationsStrings } from '../components';
 
 import { RaiseHandButtonStrings } from '../components';
 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
@@ -30,8 +32,6 @@ import { BrowserPermissionDeniedStrings } from '../components/DevicePermissions/
 import { BrowserPermissionDeniedIOSStrings } from '../components/DevicePermissions/BrowserPermissionDeniedIOS';
 /* @conditional-compile-remove(call-readiness) */ /* @conditional-compile-remove(unsupported-browser) */
 import { UnsupportedBrowserStrings } from '../components/UnsupportedBrowser';
-/* @conditional-compile-remove(one-to-n-calling) */
-// @conditional-compile-remove(PSTN-calls)
 import { VideoTileStrings } from '../components/VideoTile';
 import { COMPONENT_LOCALE_EN_US } from './locales';
 /* @conditional-compile-remove(unsupported-browser) */
@@ -108,12 +108,13 @@ export interface ComponentStrings {
   messageStatusIndicator: MessageStatusIndicatorStrings;
   /** Strings for ErroBar */
   errorBar: ErrorBarStrings;
+  /* @conditional-compile-remove(notifications) */
+  /** Strings for Notifications */
+  notifications: NotificationsStrings;
   /** Strings for VideoGallery */
   videoGallery: VideoGalleryStrings;
   /** Strings for Dialpad */
   dialpad: DialpadStrings;
-  /* @conditional-compile-remove(one-to-n-calling) */
-  // @conditional-compile-remove(PSTN-calls)
   /** Strings for VideoTile */
   videoTile: VideoTileStrings;
   /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
