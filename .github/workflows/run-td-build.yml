@@ -1,11 +1,6 @@
 name: Send strings for translation, and optionally commit back current translations
 
 on:
-  # Runs workflow on commits to important branches
-  # Never commits updated string files back in this mode.
-  push:
-    branches:
-      - main
   workflow_dispatch:
     inputs:
       commit_strings:

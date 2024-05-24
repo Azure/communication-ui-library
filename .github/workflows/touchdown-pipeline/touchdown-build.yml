@@ -1,6 +1,10 @@
 # Touchdown build pipeline
 
-trigger: none
+trigger:
+  branches:
+    include:
+      - main
+
 pr: none
 
 resources:
