@@ -22,7 +22,9 @@ module.exports = {
     // Feature for Rich Text Editor (RTE) composite support
     "rich-text-editor-composite-support",
     // Feature for Rich Text Editor (RTE) image upload support
-    "rich-text-editor-image-upload"
+    "rich-text-editor-image-upload",
+    // Feature for showing notifications
+    "notifications"
   ],
   beta: [
     "call-readiness",
