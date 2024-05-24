@@ -115,7 +115,11 @@ export const LocalAndRemotePIP = (props: LocalAndRemotePIPProps): JSX.Element =>
   const primaryTileProps: _PictureInPictureInPictureTileProps = useMemo(
     () => ({
       children: remoteVideoTileProps ? (
-        <_RemoteVideoTile {...remoteVideoTileProps} strings={locale.component.strings.videoGallery} />
+        <_RemoteVideoTile
+          {...remoteVideoTileProps}
+          strings={locale.component.strings.videoGallery}
+          onLongTouch={() => {}}
+        />
       ) : (
         <_LocalVideoTile {...localVideoTileProps} />
       ),
