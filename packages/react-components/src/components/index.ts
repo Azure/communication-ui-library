@@ -184,9 +184,7 @@ export type { RaiseHandButtonProps, RaiseHandButtonStrings } from './RaiseHandBu
 export { ReactionButton } from './ReactionButton';
 export type { ReactionButtonProps, ReactionButtonStrings } from './ReactionButton';
 export { VideoTile } from './VideoTile';
-export type { VideoTileProps, VideoTileStylesProps } from './VideoTile';
-/* @conditional-compile-remove(PSTN-calls) */
-export type { VideoTileStrings } from './VideoTile';
+export type { VideoTileProps, VideoTileStylesProps, VideoTileStrings } from './VideoTile';
 
 export { _PictureInPictureInPicture } from './PictureInPictureInPicture/PictureInPictureInPicture';
 export type {

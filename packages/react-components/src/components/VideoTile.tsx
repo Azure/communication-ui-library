@@ -41,10 +41,16 @@ import { ReactionResources } from '../types/ReactionTypes';
 
 /**
  * Strings of {@link VideoTile} that can be overridden.
- * @beta
+ * @public
  */
 export interface VideoTileStrings {
+  /** Aria label for announcing the remote video tile drawer menu */
+  moreOptionsButtonAriaLabel: string;
+  /* @conditional-compile-remove(one-to-n-calling) */
+  /* @conditional-compile-remove(PSTN-calls) */
   participantStateRinging: string;
+  /* @conditional-compile-remove(one-to-n-calling) */
+  /* @conditional-compile-remove(PSTN-calls) */
   participantStateHold: string;
 }
 
@@ -152,8 +158,9 @@ export interface VideoTileProps {
    * For example, `Hold` means the participant is on hold.
    */
   participantState?: ParticipantState;
-  /* @conditional-compile-remove(one-to-n-calling) */
-  /* @conditional-compile-remove(PSTN-calls) */
+  /**
+   * Strings to override in the component.
+   */
   strings?: VideoTileStrings;
   /**
    * Display custom menu items in the VideoTile's contextual menu.
@@ -214,6 +221,9 @@ const VideoTileMoreOptionsButton = (props: {
   contextualMenu?: IContextualMenuProps;
   canShowContextMenuButton: boolean;
 }): JSX.Element => {
+  const locale = useLocale();
+  const strings = { ...locale.strings.videoTile };
+
   const { contextualMenu, canShowContextMenuButton } = props;
   if (!contextualMenu) {
     return <></>;
@@ -224,6 +234,7 @@ const VideoTileMoreOptionsButton = (props: {
   return (
     <IconButton
       data-ui-id="video-tile-more-options-button"
+      ariaLabel={strings?.moreOptionsButtonAriaLabel}
       styles={moreButtonStyles}
       menuIconProps={videoTileMoreMenuIconProps}
       menuProps={{ ...videoTileMoreMenuProps, ...contextualMenu }}
