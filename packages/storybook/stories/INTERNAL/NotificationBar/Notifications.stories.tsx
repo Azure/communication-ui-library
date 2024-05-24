@@ -35,7 +35,7 @@ const getDocs: () => JSX.Element = () => {
         User can dismiss the notifications shown by clicking on the X icon. If you wish to dismiss the notifications
         automatically, simply set the `autoDismiss` field to true for that specific notification.
       </Description>
-      <Heading>Multiple Notificaionts</Heading>
+      <Heading>Multiple Notifications</Heading>
       <Description>
         More than one notification can occur at the same time. The `Notifications` component can show multiple active
         notifications. To avoid confusing the user, it is important to be mindful to limit the total number of
