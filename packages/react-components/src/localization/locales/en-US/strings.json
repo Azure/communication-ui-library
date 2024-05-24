@@ -265,6 +265,7 @@
     "localVideoLabel": "You",
     "localVideoCameraSwitcherLabel": "Switch camera",
     "localVideoMovementLabel": "Movable Local Video Tile",
+    "localVideoMovementAriaLabel": "Movable Local Video Tile",
     "localVideoSelectedDescription": "{cameraName} selected",
     "displayNamePlaceholder": "Unnamed participant",
     "fitRemoteParticipantToFrame": "Fit to frame",
@@ -295,7 +296,8 @@
   },
   "videoTile": {
     "participantStateRinging": "Calling...",
-    "participantStateHold": "On hold"
+    "participantStateHold": "On hold",
+    "moreOptionsButtonAriaLabel": "More Options"
   },
   "CameraAndMicrophoneSitePermissionsRequest": {
     "primaryText": "Allow {appName} to use your camera and microphone",
