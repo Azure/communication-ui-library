@@ -3,6 +3,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { Stack } from '@fluentui/react';
+/* @conditional-compile-remove(notifications) */
 import { useLocale } from '../localization';
 import { NotificationIconProps } from './utils';
 import { NotificationBar, NotificationBarStrings } from './NotificationBar';
@@ -258,8 +259,9 @@ export interface ActiveNotification {
  * @beta
  */
 export const Notifications = (props: NotificationsProps): JSX.Element => {
+  /* @conditional-compile-remove(notifications) */
   const localeStrings = useLocale().strings.notifications;
-  const strings = props.strings ?? localeStrings;
+  const strings = props.strings ?? /* @conditional-compile-remove(notifications) */ localeStrings;
   const maxNotificationsToShow = props.maxNotificationsToShow ?? 2;
   const [activeNotifications, setActiveNotifications] = useState<ActiveNotification[]>(props.activeNotifications);
   useEffect(() => {
@@ -278,7 +280,7 @@ export const Notifications = (props: NotificationsProps): JSX.Element => {
           return (
             <div key={index} style={{ marginBottom: `${index === maxNotificationsToShow - 1 ? 0 : '0.25rem'}` }}>
               <NotificationBar
-                notificationBarStrings={strings[notification.type]}
+                notificationBarStrings={strings ? strings[notification.type] : undefined}
                 notificationBarIconProps={NotificationIconProps(notification.type)}
                 onClick={() => notification.onClick?.()}
                 onDismiss={() => {
