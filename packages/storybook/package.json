@@ -40,7 +40,8 @@
     "resize-observer-polyfill": "^1.5.1",
     "tslib": "^2.5.0",
     "browserslist": "^4.22.2",
-    "uuid": "^9.0.0"
+    "uuid": "^9.0.0",
+    "mobile-detect": "^1.4.5"
   },
   "devDependencies": {
     "@babel/core": "^7.24.5",
