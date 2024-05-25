@@ -57,7 +57,7 @@
     "richTextDeleteColumnMenu": "Odstranit sloupec",
     "richTextDeleteRowMenu": "Odstranit řádek",
     "richTextDeleteTableMenu": "Odstranit tabulku",
-    "richTextToolbarMoreButtonAriaLabel": "More options",
+    "richTextToolbarMoreButtonAriaLabel": "Další možnosti",
     "attachmentMoreMenu": "Další možnosti"
   },
   "mentionPopover": {
@@ -220,7 +220,7 @@
     "richTextDeleteColumnMenu": "Odstranit sloupec",
     "richTextDeleteRowMenu": "Odstranit řádek",
     "richTextDeleteTableMenu": "Odstranit tabulku",
-    "richTextToolbarMoreButtonAriaLabel": "More options"
+    "richTextToolbarMoreButtonAriaLabel": "Další možnosti"
   },
   "errorBar": {
     "unableToReachChatService": "Jste offline",

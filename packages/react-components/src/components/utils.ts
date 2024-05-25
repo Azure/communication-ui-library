@@ -4,6 +4,7 @@
 import { IIconProps, MessageBarType } from '@fluentui/react';
 import { ActiveErrorMessage, ErrorType } from './ErrorBar';
 import { _SupportedSpokenLanguage } from '../types';
+import { NotificationType } from './Notifications';
 
 /**
  * @private
@@ -178,6 +179,37 @@ export const messageBarIconProps = (errorType: ErrorType): IIconProps | undefine
  * @private
  */
 export const customIconName: Partial<{ [key in ErrorType]: string }> = {
+  callNetworkQualityLow: 'ErrorBarCallNetworkQualityLow',
+  callNoSpeakerFound: 'ErrorBarCallNoSpeakerFound',
+  callNoMicrophoneFound: 'ErrorBarCallNoMicrophoneFound',
+  callMicrophoneAccessDenied: 'ErrorBarCallMicrophoneAccessDenied',
+  callMicrophoneAccessDeniedSafari: 'ErrorBarCallMicrophoneAccessDenied',
+  callMicrophoneMutedBySystem: 'ErrorBarCallMicrophoneMutedBySystem',
+  callMicrophoneUnmutedBySystem: 'ErrorBarCallMicrophoneUnmutedBySystem',
+  callMacOsMicrophoneAccessDenied: 'ErrorBarCallMacOsMicrophoneAccessDenied',
+  callLocalVideoFreeze: 'ErrorBarCallLocalVideoFreeze',
+  callCameraAccessDenied: 'ErrorBarCallCameraAccessDenied',
+  callCameraAccessDeniedSafari: 'ErrorBarCallCameraAccessDenied',
+  callCameraAlreadyInUse: 'ErrorBarCallCameraAlreadyInUse',
+  callVideoStoppedBySystem: 'ErrorBarCallVideoStoppedBySystem',
+  callVideoRecoveredBySystem: 'ErrorBarCallVideoRecoveredBySystem',
+  callMacOsCameraAccessDenied: 'ErrorBarCallMacOsCameraAccessDenied'
+};
+
+/**
+ * @private
+ * @param NotificationType
+ * @returns IIconProps | undefined
+ */
+export const NotificationIconProps = (notificationType: NotificationType): IIconProps | undefined => {
+  const iconName = customNotificationIconName[notificationType];
+  return iconName ? { iconName } : undefined;
+};
+
+/**
+ * @private
+ */
+export const customNotificationIconName: Partial<{ [key in NotificationType]: string }> = {
   callNetworkQualityLow: 'ErrorBarCallNetworkQualityLow',
   callNoSpeakerFound: 'ErrorBarCallNoSpeakerFound',
   callNoMicrophoneFound: 'ErrorBarCallNoMicrophoneFound',
