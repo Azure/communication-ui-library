@@ -1,13 +1,10 @@
 {
   "name": "@internal/acs-ui-javascript-loaders",
-  "version": "1.17.0-beta.0",
+  "version": "1.17.0-beta.1",
   "description": "Component bindings specific to components that integrate with the Azure Communication Services Calling JavaScript SDK",
   "module": "dist/dist-esm/index.js",
   "main": "dist/dist-cjs/index.js",
   "types": "dist/dist-esm/index.d.ts",
-  "bin":{
-    "communication-react-build-outbound-call": "bin/build-outbound-call.js"
-  },
   "scripts": {
     "build": "rushx _by-flavor \"rushx _build:by-flavor\"",
     "build:esm": "npm run _if-preprocess && rushx preprocess && tsc -project tsconfig.preprocess.json || (if-env COMMUNICATION_REACT_FLAVOR=beta && tsc)",
@@ -34,8 +31,8 @@
   "license": "ISC",
   "dependencies": {
     "@azure/communication-common": "^2.3.1",
-    "@internal/acs-ui-common": "1.17.0-beta.0",
-    "@internal/react-composites": "1.17.0-beta.0",
+    "@internal/acs-ui-common": "1.17.0-beta.1",
+    "@internal/react-composites": "1.17.0-beta.1",
     "@fluentui/react": "^8.117.1",
     "@azure/logger": "^1.0.4"
   },
