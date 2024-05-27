@@ -14,7 +14,6 @@ import {
   CallAdapter
 } from '@internal/react-composites';
 import { initializeIcons } from '@fluentui/react';
-import { render } from 'react-dom';
 
 /**
  * Props for the OutboundCallComposite that you can use in your application.
