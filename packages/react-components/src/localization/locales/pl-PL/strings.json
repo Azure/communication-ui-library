@@ -57,7 +57,7 @@
     "richTextDeleteColumnMenu": "Usuń kolumnę",
     "richTextDeleteRowMenu": "Usuń wiersz",
     "richTextDeleteTableMenu": "Usuń tabelę",
-    "richTextToolbarMoreButtonAriaLabel": "More options",
+    "richTextToolbarMoreButtonAriaLabel": "Więcej opcji",
     "attachmentMoreMenu": "Więcej opcji"
   },
   "mentionPopover": {
@@ -220,7 +220,7 @@
     "richTextDeleteColumnMenu": "Usuń kolumnę",
     "richTextDeleteRowMenu": "Usuń wiersz",
     "richTextDeleteTableMenu": "Usuń tabelę",
-    "richTextToolbarMoreButtonAriaLabel": "More options"
+    "richTextToolbarMoreButtonAriaLabel": "Więcej opcji"
   },
   "errorBar": {
     "unableToReachChatService": "Jesteś w trybie offline",

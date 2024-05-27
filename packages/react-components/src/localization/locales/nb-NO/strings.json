@@ -57,7 +57,7 @@
     "richTextDeleteColumnMenu": "Slett kolonne",
     "richTextDeleteRowMenu": "Slett rad",
     "richTextDeleteTableMenu": "Slett tabell",
-    "richTextToolbarMoreButtonAriaLabel": "More options",
+    "richTextToolbarMoreButtonAriaLabel": "Flere alternativer",
     "attachmentMoreMenu": "Flere alternativer"
   },
   "mentionPopover": {
@@ -220,7 +220,7 @@
     "richTextDeleteColumnMenu": "Slett kolonne",
     "richTextDeleteRowMenu": "Slett rad",
     "richTextDeleteTableMenu": "Slett tabell",
-    "richTextToolbarMoreButtonAriaLabel": "More options"
+    "richTextToolbarMoreButtonAriaLabel": "Flere alternativer"
   },
   "errorBar": {
     "unableToReachChatService": "Du er frakoblet",
