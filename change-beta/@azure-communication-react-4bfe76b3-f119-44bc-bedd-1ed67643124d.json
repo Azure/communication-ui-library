@@ -1,9 +1,0 @@
-{
-  "type": "patch",
-  "area": "feature",
-  "workstream": "Hide Attendee Names",
-  "comment": "Storybook changes for Hide Attendee Names",
-  "packageName": "@azure/communication-react",
-  "email": "97124699+prabhjot-msft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
