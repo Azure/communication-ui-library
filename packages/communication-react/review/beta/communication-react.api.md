@@ -3158,6 +3158,9 @@ export const lightTheme: PartialTheme & CallingTheme;
 export type LoadingState = 'loading' | 'none';
 
 // @public
+export const loadOuboundCallComposite: (adapterArgs: OutboundCallCompositeProps, htmlElement: HTMLElement | null, props?: CallCompositeOptions) => Promise<CallAdapter>;
+
+// @public
 export const LocalizationProvider: (props: LocalizationProviderProps) => JSX.Element;
 
 // @public
@@ -3536,6 +3539,15 @@ export interface OptionsDevice {
     id: string;
     name: string;
 }
+
+// @public
+export type OutboundCallCompositeProps = {
+    userId: string;
+    token: string;
+    displayName: string;
+    targetCallees: string[] | StartCallIdentifier[];
+    options?: AzureCommunicationCallAdapterOptions;
+};
 
 // @public
 export type OverflowGalleryPosition = 'horizontalBottom' | 'verticalRight' | 'horizontalTop';

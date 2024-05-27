@@ -28,6 +28,9 @@ export type {
   AreParamEqual
 } from '../../acs-ui-common/src';
 
+export { loadOuboundCallComposite } from '../../acs-ui-javascript-loaders/src';
+export type { OutboundCallCompositeProps } from '../../acs-ui-javascript-loaders/src';
+
 // Not to export chat/calling specific hook from binding package
 export type {
   CallClientProviderProps,

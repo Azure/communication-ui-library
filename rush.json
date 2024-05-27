@@ -26,6 +26,11 @@
       "reviewCategory": "internal"
     },
     {
+      "packageName": "@internal/acs-ui-javascript-loaders",
+      "projectFolder": "packages/acs-ui-javascript-loaders",
+      "reviewCategory": "internal"
+    },
+    {
       "packageName": "@azure/communication-react",
       "projectFolder": "packages/communication-react",
       "reviewCategory": "production"
