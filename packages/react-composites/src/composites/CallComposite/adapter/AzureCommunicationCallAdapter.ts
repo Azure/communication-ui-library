@@ -1497,7 +1497,7 @@ export type TeamsAdapterOptions = CommonCallAdapterOptions;
 /**
  * Arguments for creating the Azure Communication Services implementation of {@link TeamsCallAdapter}.
  *
- * @beta
+ * @public
  */
 export type TeamsCallAdapterArgs = {
   userId: MicrosoftTeamsUserIdentifier;
@@ -1624,14 +1624,10 @@ export const _createAzureCommunicationCallAdapterInner = async ({
 
 /* @conditional-compile-remove(teams-identity-support) */
 /**
- * @beta
+ * @public
  */
-export const createTeamsCallAdapter = async ({
-  userId,
-  credential,
-  locator,
-  options
-}: TeamsCallAdapterArgs): Promise<TeamsCallAdapter> => {
+export const createTeamsCallAdapter = async (args: TeamsCallAdapterArgs): Promise<TeamsCallAdapter> => {
+  const { userId, credential, locator, options } = args;
   if (isCommunicationUserIdentifier(userId)) {
     throw new Error(
       'Communication User identifier is not supported by TeamsCallAdapter, please use our AzureCommunicationCallAdapter.'
@@ -1892,7 +1888,7 @@ export const useAzureCommunicationCallAdapter = (
  * Note that you must memoize the arguments to avoid recreating adapter on each render.
  * See storybook for typical usage examples.
  *
- * @beta
+ * @public
  */
 export const useTeamsCallAdapter = (
   /**
@@ -1993,7 +1989,7 @@ export async function createAzureCommunicationCallAdapterFromClient(
  * Useful if you want to keep a reference to {@link StatefulCallClient}.
  * Consider using {@link createAzureCommunicationCallAdapter} for a simpler API.
  *
- * @beta
+ * @public
  */
 export const createTeamsCallAdapterFromClient = async (
   callClient: StatefulCallClient,
