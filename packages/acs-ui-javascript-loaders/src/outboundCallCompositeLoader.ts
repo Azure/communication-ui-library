@@ -36,7 +36,7 @@ export const loadOuboundCallComposite = async function (
   adapterArgs: OutboundCallCompositeProps,
   htmlElement: HTMLElement | null,
   props?: CallCompositeOptions
-): CallAdapter {
+): Promise<CallAdapter | undefined> {
   initializeIcons();
   const { userId, token, displayName, targetCallees, options } = adapterArgs;
   const formattedTargetCallees =
@@ -62,9 +62,10 @@ export const loadOuboundCallComposite = async function (
     createRoot(htmlElement).render(React.createElement(CallComposite, { ...props, adapter }, null));
     return adapter;
   } else {
-    console.warn(
+    console.error(
       'React version is less than 18. Please upgrade to React 18 or alternatively checkout how to use our composites directly here: https://azure.github.io/communication-ui-library/?path=/docs/quickstarts-composites--page'
     );
+    return undefined;
   }
 };
 

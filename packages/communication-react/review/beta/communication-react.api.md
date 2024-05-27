@@ -3158,7 +3158,7 @@ export const lightTheme: PartialTheme & CallingTheme;
 export type LoadingState = 'loading' | 'none';
 
 // @public
-export const loadOuboundCallComposite: (adapterArgs: OutboundCallCompositeProps, htmlElement: HTMLElement | null, props?: CallCompositeOptions) => Promise<CallAdapter>;
+export const loadOuboundCallComposite: (adapterArgs: OutboundCallCompositeProps, htmlElement: HTMLElement | null, props?: CallCompositeOptions) => Promise<CallAdapter | undefined>;
 
 // @public
 export const LocalizationProvider: (props: LocalizationProviderProps) => JSX.Element;
