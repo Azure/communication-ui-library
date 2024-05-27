@@ -51,6 +51,7 @@ import { IContextualMenuItem } from '@fluentui/react';
 import { IContextualMenuItemStyles } from '@fluentui/react';
 import { IContextualMenuProps } from '@fluentui/react';
 import { IContextualMenuStyles } from '@fluentui/react';
+import { IIconProps } from '@fluentui/react';
 import { ILinkStyles } from '@fluentui/react';
 import { IMessageBarProps } from '@fluentui/react';
 import { IncomingCall } from '@azure/communication-calling';
@@ -115,6 +116,14 @@ export interface AcceptedTransfer {
 export interface ActiveErrorMessage {
     timestamp?: Date;
     type: ErrorType;
+}
+
+// @beta
+export interface ActiveNotification {
+    autoDismiss?: boolean;
+    onClick?: () => void;
+    onDismiss?: () => void;
+    type: NotificationType;
 }
 
 // @public
@@ -2191,6 +2200,7 @@ export interface ComponentStrings {
     MicrophoneSitePermissionsDenied: SitePermissionsStrings;
     MicrophoneSitePermissionsDeniedSafari: SitePermissionsStrings;
     MicrophoneSitePermissionsRequest: SitePermissionsStrings;
+    notifications: NotificationsStrings;
     participantItem: ParticipantItemStrings;
     ParticipantList: ParticipantListStrings;
     participantsButton: ParticipantsButtonStrings;
@@ -2373,10 +2383,10 @@ export const createDefaultCallingHandlers: CreateDefaultCallingHandlers;
 // @public
 export const createDefaultChatHandlers: (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) => ChatHandlers;
 
-// @beta
-export const createDefaultTeamsCallingHandlers: (callClient: StatefulCallClient, callAgent: undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCallAgent, deviceManager: StatefulDeviceManager | undefined, call: undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall, options?: {
+// @public
+export const createDefaultTeamsCallingHandlers: (callClient: StatefulCallClient, callAgent?: TeamsCallAgent, deviceManager?: StatefulDeviceManager, call?: TeamsCall, options?: {
     onResolveVideoBackgroundEffectsDependency?: () => Promise<VideoBackgroundEffectsDependency>;
-}) => never | TeamsCallingHandlers;
+}) => TeamsCallingHandlers;
 
 // @public
 export const createStatefulCallClient: (args: StatefulCallClientArgs, options?: StatefulCallClientOptions) => StatefulCallClient;
@@ -2384,10 +2394,10 @@ export const createStatefulCallClient: (args: StatefulCallClientArgs, options?: 
 // @public
 export const createStatefulChatClient: (args: StatefulChatClientArgs, options?: StatefulChatClientOptions) => StatefulChatClient;
 
-// @beta (undocumented)
-export const createTeamsCallAdapter: ({ userId, credential, locator, options }: TeamsCallAdapterArgs) => Promise<TeamsCallAdapter>;
+// @public (undocumented)
+export const createTeamsCallAdapter: (args: TeamsCallAdapterArgs) => Promise<TeamsCallAdapter>;
 
-// @beta
+// @public
 export const createTeamsCallAdapterFromClient: (callClient: StatefulCallClient, callAgent: TeamsCallAgent, locator: CallAdapterLocator, options?: TeamsAdapterOptions) => Promise<TeamsCallAdapter>;
 
 // @public
@@ -2556,6 +2566,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     ContextMenuCameraIcon: React_2.JSX.Element;
     ContextMenuMicIcon: React_2.JSX.Element;
     ContextMenuSpeakerIcon: React_2.JSX.Element;
+    ContextMenuRemoveParticipant: React_2.JSX.Element;
     SurveyStarIcon: React_2.JSX.Element;
     SurveyStarIconFilled: React_2.JSX.Element;
     StartSpotlightContextualMenuItem: React_2.JSX.Element;
@@ -2719,6 +2730,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     ContextMenuCameraIcon: React_2.JSX.Element;
     ContextMenuMicIcon: React_2.JSX.Element;
     ContextMenuSpeakerIcon: React_2.JSX.Element;
+    ContextMenuRemoveParticipant: React_2.JSX.Element;
     SurveyStarIcon: React_2.JSX.Element;
     SurveyStarIconFilled: React_2.JSX.Element;
     StartSpotlightContextualMenuItem: React_2.JSX.Element;
@@ -3510,6 +3522,77 @@ export interface NetworkDiagnosticsState {
     latest: LatestNetworkDiagnostics;
 }
 
+// @beta
+export const NotificationBar: (props: NotificationBarProps) => JSX.Element;
+
+// @beta
+export interface NotificationBarProps {
+    autoDismiss?: boolean;
+    notificationBarIconProps?: IIconProps;
+    notificationBarStrings?: NotificationBarStrings;
+    onClick?: () => void;
+    onDismiss?: () => void;
+    showStackedEffect?: boolean;
+}
+
+// @beta
+export interface NotificationBarStrings {
+    buttonLabel?: string;
+    closeButtonAriaLabel: string;
+    message?: string;
+    title: string;
+}
+
+// @beta
+export const Notifications: (props: NotificationsProps) => JSX.Element;
+
+// @beta
+export interface NotificationsProps {
+    activeNotifications: ActiveNotification[];
+    maxNotificationsToShow?: number;
+    strings?: NotificationsStrings;
+}
+
+// @beta
+export interface NotificationsStrings {
+    accessDenied: NotificationBarStrings;
+    callCameraAccessDenied: NotificationBarStrings;
+    callCameraAccessDeniedSafari: NotificationBarStrings;
+    callCameraAlreadyInUse: NotificationBarStrings;
+    callLocalVideoFreeze: NotificationBarStrings;
+    callMacOsCameraAccessDenied: NotificationBarStrings;
+    callMacOsMicrophoneAccessDenied: NotificationBarStrings;
+    callMacOsScreenShareAccessDenied: NotificationBarStrings;
+    callMicrophoneAccessDenied: NotificationBarStrings;
+    callMicrophoneAccessDeniedSafari: NotificationBarStrings;
+    callMicrophoneMutedBySystem: NotificationBarStrings;
+    callMicrophoneUnmutedBySystem: NotificationBarStrings;
+    callNetworkQualityLow: NotificationBarStrings;
+    callNoMicrophoneFound: NotificationBarStrings;
+    callNoSpeakerFound: NotificationBarStrings;
+    callVideoRecoveredBySystem: NotificationBarStrings;
+    callVideoStoppedBySystem: NotificationBarStrings;
+    cameraFrozenForRemoteParticipants?: NotificationBarStrings;
+    dismissButtonAriaLabel?: NotificationBarStrings;
+    failedToJoinCallGeneric?: NotificationBarStrings;
+    failedToJoinCallInvalidMeetingLink?: NotificationBarStrings;
+    muteGeneric: NotificationBarStrings;
+    sendMessageGeneric: NotificationBarStrings;
+    sendMessageNotInChatThread: NotificationBarStrings;
+    startScreenShareGeneric: NotificationBarStrings;
+    startSpotlightWhileMaxParticipantsAreSpotlighted: NotificationBarStrings;
+    startVideoGeneric: NotificationBarStrings;
+    stopScreenShareGeneric: NotificationBarStrings;
+    stopVideoGeneric: NotificationBarStrings;
+    unableToReachChatService: NotificationBarStrings;
+    unableToStartVideoEffect?: NotificationBarStrings;
+    unmuteGeneric: NotificationBarStrings;
+    userNotInChatThread: NotificationBarStrings;
+}
+
+// @beta
+export type NotificationType = keyof NotificationsStrings;
+
 // @public
 export type OnFetchProfileCallback = (userId: string, defaultProfile?: Profile) => Promise<Profile | undefined>;
 
@@ -4292,17 +4375,16 @@ export interface SystemMessageCommon extends MessageCommon {
 // @public
 export type TeamsAdapterOptions = CommonCallAdapterOptions;
 
-// @beta
+// @public
 export interface TeamsCallAdapter extends CommonCallAdapter {
     // @deprecated
     joinCall(microphoneOn?: boolean): TeamsCall | undefined;
-    // @public
     joinCall(options?: JoinCallOptions): TeamsCall | undefined;
     startCall(participants: string[], options?: StartCallOptions): TeamsCall | undefined;
-    startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): TeamsCall | undefined;
+    startCall(participants: StartCallIdentifier[], options?: StartCallOptions): TeamsCall | undefined;
 }
 
-// @beta
+// @public
 export type TeamsCallAdapterArgs = {
     userId: MicrosoftTeamsUserIdentifier;
     credential: CommunicationTokenCredential;
@@ -4310,7 +4392,7 @@ export type TeamsCallAdapterArgs = {
     options?: TeamsAdapterOptions;
 };
 
-// @beta
+// @public
 export interface TeamsCallingHandlers extends CommonCallingHandlers {
     // (undocumented)
     onStartCall: (participants: CommunicationIdentifier[], options?: StartCallOptions) => undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall;
@@ -4464,13 +4546,13 @@ export const usePropsFor: <Component extends (props: any) => JSX.Element>(compon
 // @public
 export const useSelector: <ParamT extends Selector | undefined>(selector: ParamT, selectorProps?: ParamT extends Selector ? Parameters<ParamT>[1] : undefined, type?: 'calling' | 'chat') => ParamT extends Selector ? ReturnType<ParamT> : undefined;
 
-// @beta
+// @public
 export const useTeamsCall: () => undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall;
 
-// @beta
+// @public
 export const useTeamsCallAdapter: (args: Partial<TeamsCallAdapterArgs>, afterCreate?: (adapter: TeamsCallAdapter) => Promise<TeamsCallAdapter>, beforeDispose?: (adapter: TeamsCallAdapter) => Promise<void>) => TeamsCallAdapter | undefined;
 
-// @beta
+// @public
 export const useTeamsCallAgent: () => undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCallAgent;
 
 // @public
@@ -4633,6 +4715,7 @@ export interface VideoGalleryStrings {
     fitRemoteParticipantToFrame: string;
     localVideoCameraSwitcherLabel: string;
     localVideoLabel: string;
+    localVideoMovementAriaLabel: string;
     localVideoMovementLabel: string;
     localVideoSelectedDescription: string;
     pinnedParticipantAnnouncementAriaLabel: string;
@@ -4708,7 +4791,6 @@ export interface VideoTileProps {
     renderElement?: JSX.Element | null;
     showLabel?: boolean;
     showMuteIndicator?: boolean;
-    // (undocumented)
     strings?: VideoTileStrings;
     styles?: VideoTileStylesProps;
     userId?: string;
@@ -4719,8 +4801,9 @@ export interface VideoTilesOptions {
     alwaysShowLabelBackground?: boolean;
 }
 
-// @beta
+// @public
 export interface VideoTileStrings {
+    moreOptionsButtonAriaLabel: string;
     // (undocumented)
     participantStateHold: string;
     // (undocumented)
