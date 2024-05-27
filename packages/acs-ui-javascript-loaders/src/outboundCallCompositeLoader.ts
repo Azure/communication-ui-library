@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { createRoot } from 'react-dom/client';
 import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import { fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
@@ -10,9 +10,11 @@ import {
   createAzureCommunicationCallAdapter,
   CallCompositeOptions,
   StartCallIdentifier,
-  AzureCommunicationCallAdapterOptions
+  AzureCommunicationCallAdapterOptions,
+  CallAdapter
 } from '@internal/react-composites';
 import { initializeIcons } from '@fluentui/react';
+import { render } from 'react-dom';
 
 /**
  * Props for the OutboundCallComposite that you can use in your application.
@@ -35,7 +37,7 @@ export const loadOuboundCallComposite = async function (
   adapterArgs: OutboundCallCompositeProps,
   htmlElement: HTMLElement | null,
   props?: CallCompositeOptions
-) {
+): CallAdapter {
   initializeIcons();
   const { userId, token, displayName, targetCallees, options } = adapterArgs;
   const formattedTargetCallees =
@@ -56,7 +58,17 @@ export const loadOuboundCallComposite = async function (
   if (!htmlElement) {
     throw new Error('Failed to find the root element');
   }
+  const reactVersion = React.version;
+  if (parseReactVersion(reactVersion)[0] >= 18) {
+    createRoot(htmlElement).render(React.createElement(CallComposite, { ...props, adapter }, null));
+    return adapter;
+  } else {
+    console.warn(
+      'React version is less than 18. Please upgrade to React 18 or alternatively checkout how to use our composites directly here: https://azure.github.io/communication-ui-library/?path=/docs/quickstarts-composites--page'
+    );
+  }
+};
 
-  createRoot(htmlElement).render(React.createElement(CallComposite, { ...props, adapter }, null));
-  return adapter;
+const parseReactVersion = (version: string): number[] => {
+  return version.split('.').map((v) => parseInt(v));
 };
