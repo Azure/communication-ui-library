@@ -411,3 +411,14 @@ export type { SurveyIssues } from '../../react-components/src';
 export type { SurveyIssuesHeadingStrings } from '../../react-components/src';
 /* @conditional-compile-remove(end-of-call-survey) */
 export type { CallSurveyImprovementSuggestions } from '../../react-components/src';
+/* @conditional-compile-remove(notifications) */
+export { Notifications, NotificationBar } from '../../react-components/src';
+/* @conditional-compile-remove(notifications) */
+export type {
+  NotificationsProps,
+  NotificationBarProps,
+  NotificationBarStrings,
+  NotificationsStrings,
+  NotificationType,
+  ActiveNotification
+} from '../../react-components/src';

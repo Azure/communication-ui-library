@@ -238,6 +238,7 @@ const DialpadButton = (props: {
           e.key === 'ArrowDown'
         ) {
           dtmfToneSound.current.stop();
+          return;
         }
         longPressHandlers.onKeyDown();
       }}

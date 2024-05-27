@@ -148,13 +148,13 @@ export const _VideoEffectsItem = (props: _VideoEffectsItemProps): JSX.Element =>
         verticalAlign="center"
         horizontalAlign="center"
         data-ui-id={`video-effects-item`}
-        aria-label={props.ariaLabel ?? props.itemKey}
-        aria-disabled={props.disabled}
       >
         <DefaultButton
           styles={containerStyles()}
           onClick={disabled ? undefined : () => props.onSelect?.(props.itemKey)}
           componentRef={props.componentRef as React.RefObject<IButton>}
+          aria-label={props.ariaLabel ?? props.itemKey}
+          aria-disabled={props.disabled}
         >
           <Stack horizontalAlign={'center'}>
             {props.iconProps && (
