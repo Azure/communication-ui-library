@@ -25,7 +25,9 @@
     "@internal/chat-stateful-client": "1.17.0-beta.0",
     "@internal/calling-stateful-client": "1.17.0-beta.0",
     "@internal/chat-component-bindings": "1.17.0-beta.0",
-    "@internal/calling-component-bindings": "1.17.0-beta.0"
+    "@internal/calling-component-bindings": "1.17.0-beta.0",
+    "@internal/react-composites": "1.17.0-beta.0",
+    "@internal/acs-ui-javascript-loaders": "1.17.0-beta.0"
   },
   "devDependencies": {
     "@babel/core": "^7.24.5",
