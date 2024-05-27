@@ -115,7 +115,6 @@ export const BaseProvider = (
   // which stop polluting global dom tree and increase compatibility with react-full-screen
   const CompositeElement = (
     <FluentThemeProvider fluentTheme={fluentTheme} rtl={rtl}>
-      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
       <Customizer scopedSettings={{ Layer: { hostId: globalLayerHostId } }}>
         <ACSAudioProvider audioContext={compositeAudioContext}>
           <WithBackgroundColor>{props.children}</WithBackgroundColor>
