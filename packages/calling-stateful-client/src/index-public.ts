@@ -43,5 +43,3 @@ export type { ReactionState } from './CallClientState';
 export type { SpotlightCallFeatureState, SpotlightState } from './CallClientState';
 /* @conditional-compile-remove(local-recording-notification) */
 export type { LocalRecordingCallFeatureState } from './CallClientState';
-
-export type { CallAgentCommon, CallCommon, TeamsCall, TeamsCallAgent, IncomingCallCommon } from './BetaToStableTypes';
