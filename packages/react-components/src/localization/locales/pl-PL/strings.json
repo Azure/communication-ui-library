@@ -57,6 +57,7 @@
     "richTextDeleteColumnMenu": "Usuń kolumnę",
     "richTextDeleteRowMenu": "Usuń wiersz",
     "richTextDeleteTableMenu": "Usuń tabelę",
+    "richTextToolbarMoreButtonAriaLabel": "Więcej opcji",
     "attachmentMoreMenu": "Więcej opcji"
   },
   "mentionPopover": {
@@ -199,7 +200,27 @@
     "blockedWarningText": "Ta wiadomość została usunięta ze względu na zasady organizacyjne.",
     "blockedWarningLinkText": "Szczegóły",
     "attachmentCardGroupMessage": "Wiadomość ma {attachmentCount} załącznik",
-    "messageDeletedAnnouncementAriaLabel": "Wiadomość została usunięta"
+    "messageDeletedAnnouncementAriaLabel": "Wiadomość została usunięta",
+    "richTextBoldTooltip": "Pogrubienie",
+    "richTextItalicTooltip": "Kursywa",
+    "richTextUnderlineTooltip": "Podkreślenie",
+    "richTextBulletListTooltip": "Lista punktowana",
+    "richTextNumberListTooltip": "Lista numerowana",
+    "richTextIncreaseIndentTooltip": "Zwiększ wcięcie",
+    "richTextDecreaseIndentTooltip": "Zmniejsz wcięcie",
+    "richTextInsertTableTooltip": "Wstaw tabelę",
+    "richTextFormatButtonTooltip": "Formatowanie",
+    "richTextInsertRowOrColumnMenu": "Wstaw",
+    "richTextInsertTableMenuTitle": "Wstaw tabelę {column} x {row}",
+    "richTextInsertRowAboveMenu": "Wstaw powyżej",
+    "richTextInsertRowBelowMenu": "Wstaw poniżej",
+    "richTextInsertColumnLeftMenu": "Wstaw z lewej",
+    "richTextInsertColumnRightMenu": "Wstaw z prawej",
+    "richTextDeleteRowOrColumnMenu": "Usuń",
+    "richTextDeleteColumnMenu": "Usuń kolumnę",
+    "richTextDeleteRowMenu": "Usuń wiersz",
+    "richTextDeleteTableMenu": "Usuń tabelę",
+    "richTextToolbarMoreButtonAriaLabel": "Więcej opcji"
   },
   "errorBar": {
     "unableToReachChatService": "Jesteś w trybie offline",

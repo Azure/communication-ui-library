@@ -57,6 +57,7 @@
     "richTextDeleteColumnMenu": "Supprimer la colonne",
     "richTextDeleteRowMenu": "Supprimer une ligne",
     "richTextDeleteTableMenu": "Supprimer le tableau",
+    "richTextToolbarMoreButtonAriaLabel": "More options",
     "attachmentMoreMenu": "Plus d’options"
   },
   "mentionPopover": {
@@ -199,7 +200,27 @@
     "blockedWarningText": "Ce message a été supprimé en raison d’une stratégie de l’organisation.",
     "blockedWarningLinkText": "Détails",
     "attachmentCardGroupMessage": "Le message a {attachmentCount} pièce jointe",
-    "messageDeletedAnnouncementAriaLabel": "Le message est supprimé"
+    "messageDeletedAnnouncementAriaLabel": "Le message est supprimé",
+    "richTextBoldTooltip": "Gras",
+    "richTextItalicTooltip": "Italique",
+    "richTextUnderlineTooltip": "Souligner",
+    "richTextBulletListTooltip": "Liste à puces",
+    "richTextNumberListTooltip": "Liste numérotée",
+    "richTextIncreaseIndentTooltip": "Augmenter le retrait",
+    "richTextDecreaseIndentTooltip": "Réduire le retrait",
+    "richTextInsertTableTooltip": "Insérer un tableau",
+    "richTextFormatButtonTooltip": "Format",
+    "richTextInsertRowOrColumnMenu": "Insérer",
+    "richTextInsertTableMenuTitle": "Insérer une table {column} x {row}",
+    "richTextInsertRowAboveMenu": "Insérer au-dessus",
+    "richTextInsertRowBelowMenu": "Insérer l’élément ci-dessous",
+    "richTextInsertColumnLeftMenu": "Insérer à gauche",
+    "richTextInsertColumnRightMenu": "Insérer à droite",
+    "richTextDeleteRowOrColumnMenu": "Supprimer",
+    "richTextDeleteColumnMenu": "Supprimer la colonne",
+    "richTextDeleteRowMenu": "Supprimer une ligne",
+    "richTextDeleteTableMenu": "Supprimer le tableau",
+    "richTextToolbarMoreButtonAriaLabel": "More options"
   },
   "errorBar": {
     "unableToReachChatService": "Vous êtes hors connexion",

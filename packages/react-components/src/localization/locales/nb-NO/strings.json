@@ -57,6 +57,7 @@
     "richTextDeleteColumnMenu": "Slett kolonne",
     "richTextDeleteRowMenu": "Slett rad",
     "richTextDeleteTableMenu": "Slett tabell",
+    "richTextToolbarMoreButtonAriaLabel": "Flere alternativer",
     "attachmentMoreMenu": "Flere alternativer"
   },
   "mentionPopover": {
@@ -199,7 +200,27 @@
     "blockedWarningText": "Denne meldingen ble slettet på grunn av en organisasjonspolicy.",
     "blockedWarningLinkText": "Detaljer",
     "attachmentCardGroupMessage": "Meldingen har {attachmentCount} vedlegg",
-    "messageDeletedAnnouncementAriaLabel": "Meldingen er slettet"
+    "messageDeletedAnnouncementAriaLabel": "Meldingen er slettet",
+    "richTextBoldTooltip": "Fet",
+    "richTextItalicTooltip": "Kursiv",
+    "richTextUnderlineTooltip": "Understreking",
+    "richTextBulletListTooltip": "Punktliste",
+    "richTextNumberListTooltip": "Nummerert liste",
+    "richTextIncreaseIndentTooltip": "Øk innrykk",
+    "richTextDecreaseIndentTooltip": "Reduser innrykk",
+    "richTextInsertTableTooltip": "Sett inn tabell",
+    "richTextFormatButtonTooltip": "Format",
+    "richTextInsertRowOrColumnMenu": "Sett inn",
+    "richTextInsertTableMenuTitle": "Sett inn {column} x {row}-tabell",
+    "richTextInsertRowAboveMenu": "Sett inn ovenfor",
+    "richTextInsertRowBelowMenu": "Sett inn nedenfor",
+    "richTextInsertColumnLeftMenu": "Sett inn til venstre",
+    "richTextInsertColumnRightMenu": "Sett inn til høyre",
+    "richTextDeleteRowOrColumnMenu": "Slett",
+    "richTextDeleteColumnMenu": "Slett kolonne",
+    "richTextDeleteRowMenu": "Slett rad",
+    "richTextDeleteTableMenu": "Slett tabell",
+    "richTextToolbarMoreButtonAriaLabel": "Flere alternativer"
   },
   "errorBar": {
     "unableToReachChatService": "Du er frakoblet",

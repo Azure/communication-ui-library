@@ -57,6 +57,7 @@
     "richTextDeleteColumnMenu": "Excluir coluna",
     "richTextDeleteRowMenu": "Excluir linha",
     "richTextDeleteTableMenu": "Excluir tabela",
+    "richTextToolbarMoreButtonAriaLabel": "More options",
     "attachmentMoreMenu": "Mais Opções"
   },
   "mentionPopover": {
@@ -199,7 +200,27 @@
     "blockedWarningText": "Esta mensagem foi excluída devido à política organizacional.",
     "blockedWarningLinkText": "Detalhes",
     "attachmentCardGroupMessage": "A mensagem tem {attachmentCount} anexo",
-    "messageDeletedAnnouncementAriaLabel": "A mensagem foi excluída"
+    "messageDeletedAnnouncementAriaLabel": "A mensagem foi excluída",
+    "richTextBoldTooltip": "Negrito",
+    "richTextItalicTooltip": "Itálico",
+    "richTextUnderlineTooltip": "Sublinhado",
+    "richTextBulletListTooltip": "Lista com marcadores",
+    "richTextNumberListTooltip": "Lista numerada",
+    "richTextIncreaseIndentTooltip": "Aumentar recuo",
+    "richTextDecreaseIndentTooltip": "Diminuir recuo",
+    "richTextInsertTableTooltip": "Inserir tabela",
+    "richTextFormatButtonTooltip": "Formato",
+    "richTextInsertRowOrColumnMenu": "Inserir",
+    "richTextInsertTableMenuTitle": "Inserir tabela {column} x {row}",
+    "richTextInsertRowAboveMenu": "Inserir acima",
+    "richTextInsertRowBelowMenu": "Inserir abaixo",
+    "richTextInsertColumnLeftMenu": "Inserir à esquerda",
+    "richTextInsertColumnRightMenu": "Inserir à direita",
+    "richTextDeleteRowOrColumnMenu": "Excluir",
+    "richTextDeleteColumnMenu": "Excluir coluna",
+    "richTextDeleteRowMenu": "Excluir linha",
+    "richTextDeleteTableMenu": "Excluir tabela",
+    "richTextToolbarMoreButtonAriaLabel": "More options"
   },
   "errorBar": {
     "unableToReachChatService": "Você está offline",

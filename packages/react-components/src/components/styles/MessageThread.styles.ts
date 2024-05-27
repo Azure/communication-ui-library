@@ -90,11 +90,7 @@ export const useChatStyles = makeStyles({
  * @private
  */
 export const useChatMessageRenderStyles = makeStyles({
-  rootCommon: {
-    '&:focus-visible': {
-      ...shorthands.outline('0')
-    }
-  },
+  rootCommon: {},
   rootMessage: {
     ...shorthands.padding('0'),
     ...shorthands.margin('0'),
@@ -121,7 +117,10 @@ export const useChatMessageRenderStyles = makeStyles({
     marginBottom: '0',
     backgroundColor: 'transparent',
     maxWidth: '100%',
-    minWidth: `${CHAT_MESSAGE_CONTAINER_MIN_WIDTH_REM}rem`
+    minWidth: `${CHAT_MESSAGE_CONTAINER_MIN_WIDTH_REM}rem`,
+    '&:focus-visible': {
+      outlineStyle: 'auto'
+    }
   },
   bodyMyMessage: {
     width: '100%',
@@ -158,10 +157,7 @@ export const useChatMyMessageStyles = makeStyles({
     gridGap: '0',
     columnGap: '0',
     paddingTop: '0',
-    marginLeft: '0',
-    '&:focus-visible': {
-      ...shorthands.outline('0')
-    }
+    marginLeft: '0'
   },
   body: {
     paddingBottom: '10px',
@@ -181,6 +177,9 @@ export const useChatMyMessageStyles = makeStyles({
     '& msft-mention': {
       color: tokens.colorStatusWarningBackground3,
       fontWeight: 600
+    },
+    '&:focus-visible': {
+      outlineStyle: 'auto'
     }
   },
   bodyAttached: {
@@ -240,10 +239,7 @@ export const chatMessageDateStyle: CSSProperties = {
  */
 export const useChatMessageStyles = makeStyles({
   root: {
-    paddingTop: '0',
-    '&:focus-visible': {
-      ...shorthands.outline('0')
-    }
+    paddingTop: '0'
   },
   body: {
     maxWidth: '100%',
@@ -291,6 +287,12 @@ export const useChatMessageStyles = makeStyles({
       ...shorthands.borderWidth('1px'),
       ...shorthands.borderColor(tokens.colorNeutralStroke1Selected),
       borderLeftWidth: '4px'
+    },
+    '& code': {
+      whiteSpace: 'pre-wrap'
+    },
+    '&:focus-visible': {
+      outlineStyle: 'auto'
     }
   },
   bodyWithPlaceholderImage: {

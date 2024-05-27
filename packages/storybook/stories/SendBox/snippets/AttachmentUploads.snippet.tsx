@@ -7,12 +7,12 @@ export const AttachmentUploadsExample: () => JSX.Element = () => (
       <SendBox
         attachments={[
           {
-            id: '1',
+            id: '7e61ebe5ae4a',
             name: 'Sample.pdf',
             progress: 0.75
           },
           {
-            id: '2',
+            id: 'a81018dc2064',
             name: 'SampleXl.xlsx',
             progress: 0.33
           }

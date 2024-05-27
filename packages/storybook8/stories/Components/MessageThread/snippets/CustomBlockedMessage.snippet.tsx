@@ -8,7 +8,7 @@ import {
 } from '@azure/communication-react';
 import React from 'react';
 
-export const MessageThreadWithCustoBlockedmMessageContainerExample: () => JSX.Element = () => {
+export const MessageThreadWithCustomBlockedMessageContainerExample: () => JSX.Element = () => {
   const messageThreadStyle: MessageThreadStyles = {
     blockedMessageContainer: {
       '& i': { paddingTop: '0.25rem' },

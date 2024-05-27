@@ -219,7 +219,8 @@
     "richTextDeleteRowOrColumnMenu": "Delete",
     "richTextDeleteColumnMenu": "Delete column",
     "richTextDeleteRowMenu": "Delete row",
-    "richTextDeleteTableMenu": "Delete table"
+    "richTextDeleteTableMenu": "Delete table",
+    "richTextToolbarMoreButtonAriaLabel": "More options"
   },
   "errorBar": {
     "unableToReachChatService": "You are offline",
@@ -258,12 +259,167 @@
     "unableToStartVideoEffect": "Unable to apply video effect.",
     "startSpotlightWhileMaxParticipantsAreSpotlighted": "Cannot start spotlight on participant(s) because the maximum number of participants are already spotlighted."
   },
+  "notifications": {
+    "unableToReachChatService": {
+      "title": "You are offline.",
+      "closeButtonAriaLabel": "Close"
+    },
+    "accessDenied": {
+      "title": "Unable to access chat services",
+      "message": "Please check the user credentials provided",
+      "closeButtonAriaLabel": "Close"
+    },
+    "userNotInChatThread": {
+      "title": "You are no longer in this chat thread.",
+      "closeButtonAriaLabel": "Close"
+    },
+    "sendMessageNotInChatThread": {
+      "title": "Failed to send message",
+      "message": "You are no longer in this chat thread",
+      "closeButtonAriaLabel": "Close"
+    },
+    "sendMessageGeneric": {
+      "title": "Failed to send message.",
+      "closeButtonAriaLabel": "Close"
+    },
+    "callingNetworkFailure": {
+      "title": "Troubling connecting call",
+      "message": "You seem to be offline. Please check your network connection and try again.",
+      "closeButtonAriaLabel": "Close"
+    },
+    "startVideoGeneric": {
+      "title": "Failed to start video.",
+      "closeButtonAriaLabel": "Close"
+    },
+    "stopVideoGeneric": {
+      "title": "Failed to stop video.",
+      "closeButtonAriaLabel": "Close"
+    },
+    "muteGeneric": {
+      "title": "Failed to mute microphone.",
+      "closeButtonAriaLabel": "Close"
+    },
+    "unmuteGeneric": {
+      "title": "Failed to unmute microphone.",
+      "closeButtonAriaLabel": "Close"
+    },
+    "speakingWhileMuted": {
+      "title": "You're muted.",
+      "closeButtonAriaLabel": "Close"
+    },
+    "startScreenShareGeneric": {
+      "title": "There was an issue starting screen share.",
+      "closeButtonAriaLabel": "Close"
+    },
+    "stopScreenShareGeneric": {
+      "title": "Failed to stop screen sharing.",
+      "closeButtonAriaLabel": "Close"
+    },
+    "callNetworkQualityLow": {
+      "title": "Network quality is low.",
+      "closeButtonAriaLabel": "Close"
+    },
+    "callNoSpeakerFound": {
+      "title": "No speakers or headphones found",
+      "message": "Connect an audio device to hear the call.",
+      "closeButtonAriaLabel": "Close"
+    },
+    "callNoMicrophoneFound": {
+      "title": "No microphones found",
+      "message": "Connect an audio input device.",
+      "closeButtonAriaLabel": "Close"
+    },
+    "callMicrophoneAccessDenied": {
+      "title": "Unable to access microphone",
+      "message": "Click the lock in the address bar to grant permission to this webpage.",
+      "closeButtonAriaLabel": "Close"
+    },
+    "callMicrophoneAccessDeniedSafari": {
+      "title": "Unable to access microphone",
+      "message": "Refresh the page to allow permissions, or check this browser’s settings and verify permissions are enabled for this website.",
+      "closeButtonAriaLabel": "Close"
+    },
+    "callMicrophoneMutedBySystem": {
+      "title": "You are muted by your system.",
+      "closeButtonAriaLabel": "Close"
+    },
+    "callMicrophoneUnmutedBySystem": {
+      "title": "Your microphone recovered and you were unmuted by your system.",
+      "closeButtonAriaLabel": "Close"
+    },
+    "callMacOsMicrophoneAccessDenied": {
+      "title": "Unable to access microphone",
+      "message": "Grant microphone permission in your macOS privacy settings.",
+      "closeButtonAriaLabel": "Close"
+    },
+    "callLocalVideoFreeze": {
+      "title": "Network bandwidth is poor",
+      "message": "Your video may appear paused for others on the call.",
+      "closeButtonAriaLabel": "Close"
+    },
+    "callCameraAccessDenied": {
+      "title": "Unable to access camera",
+      "message": "Click the lock in the address bar to grant permission to this webpage.",
+      "closeButtonAriaLabel": "Close"
+    },
+    "callCameraAccessDeniedSafari": {
+      "title": "Unable to access camera",
+      "message": "Refresh the page to allow permissions, or check this browser’s settings and verify permissions are enabled for this website.",
+      "closeButtonAriaLabel": "Close"
+    },
+    "callCameraAlreadyInUse": {
+      "title": "Unable to access camera",
+      "message": "It may already be in use by another application.",
+      "closeButtonAriaLabel": "Close"
+    },
+    "callVideoStoppedBySystem": {
+      "title": "Your video has been stopped by your system.",
+      "closeButtonAriaLabel": "Close"
+    },
+    "callVideoRecoveredBySystem": {
+      "title": "Your video has resumed.",
+      "closeButtonAriaLabel": "Close"
+    },
+    "callMacOsCameraAccessDenied": {
+      "title": "MacOS is blocking access to your camera",
+      "message": "Update your privacy settings to allow this browser to access your camera.",
+      "closeButtonAriaLabel": "Close"
+    },
+    "callMacOsScreenShareAccessDenied": {
+      "title": "MacOS is blocking screen sharing",
+      "message": "Update your privacy settings to allow this browser to record your screen.",
+      "closeButtonAriaLabel": "Close"
+    },
+    "failedToJoinCallGeneric": {
+      "title": "Failed to join call.",
+      "closeButtonAriaLabel": "Close"
+    },
+    "failedToJoinCallInvalidMeetingLink": {
+      "title": "Unable to join Meeting. Invalid Link.",
+      "closeButtonAriaLabel": "Close"
+    },
+    "cameraFrozenForRemoteParticipants": {
+      "title": "Users in the call are having issues seeing your video",
+      "message": "Please check your devices and network.",
+      "closeButtonAriaLabel": "Close"
+    },
+    "unableToStartVideoEffect": {
+      "title": "Unable to apply video effect.",
+      "closeButtonAriaLabel": "Close"
+    },
+    "startSpotlightWhileMaxParticipantsAreSpotlighted": {
+      "title": "Cannot start spotlight on participant(s)",
+      "message": "The maximum number of participants are already spotlighted.",
+      "closeButtonAriaLabel": "Close"
+    }
+  },
   "videoGallery": {
     "screenIsBeingSharedMessage": "You are sharing your screen",
     "screenShareLoadingMessage": "Loading {participant}'s screen",
     "localVideoLabel": "You",
     "localVideoCameraSwitcherLabel": "Switch camera",
     "localVideoMovementLabel": "Movable Local Video Tile",
+    "localVideoMovementAriaLabel": "Movable Local Video Tile",
     "localVideoSelectedDescription": "{cameraName} selected",
     "displayNamePlaceholder": "Unnamed participant",
     "fitRemoteParticipantToFrame": "Fit to frame",
@@ -294,7 +450,8 @@
   },
   "videoTile": {
     "participantStateRinging": "Calling...",
-    "participantStateHold": "On hold"
+    "participantStateHold": "On hold",
+    "moreOptionsButtonAriaLabel": "More Options"
   },
   "CameraAndMicrophoneSitePermissionsRequest": {
     "primaryText": "Allow {appName} to use your camera and microphone",

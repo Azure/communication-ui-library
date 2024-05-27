@@ -21,10 +21,9 @@ import {
   IDropdownOption
 } from '@fluentui/react';
 import { Divider } from '@fluentui/react-components';
-import { Meta } from '@storybook/react';
+
 import React, { useRef, useState } from 'react';
 
-import { controlsToAdd, hiddenControl } from '../../controlsUtils';
 import {
   GenerateMockNewChatMessage,
   UserOne,
@@ -260,33 +259,4 @@ const MessageThreadStory = (args): JSX.Element => {
   );
 };
 
-export const MessageThread = MessageThreadStory.bind({});
-
-const meta: Meta<typeof MessageThreadComponent> = {
-  title: 'Components/Message Thread',
-  component: MessageThreadComponent,
-  argTypes: {
-    showMessageDate: controlsToAdd.showMessageDate,
-    showMessageStatus: controlsToAdd.showMessageStatus,
-    enableJumpToNewMessageButton: controlsToAdd.enableJumpToNewMessageButton,
-    // Hiding auto-generated controls
-    styles: hiddenControl,
-    strings: hiddenControl,
-    userId: hiddenControl,
-    messages: hiddenControl,
-    disableJumpToNewMessageButton: hiddenControl,
-    numberOfChatMessagesToReload: hiddenControl,
-    onMessageSeen: hiddenControl,
-    onRenderMessageStatus: hiddenControl,
-    onRenderAvatar: hiddenControl,
-    onRenderJumpToNewMessageButton: hiddenControl,
-    onLoadPreviousChatMessages: hiddenControl,
-    onRenderMessage: hiddenControl,
-    onUpdateMessage: hiddenControl,
-    onDeleteMessage: hiddenControl,
-    disableEditing: hiddenControl,
-    richTextEditor: hiddenControl
-  }
-};
-
-export default meta;
+export const Preview = MessageThreadStory.bind({});

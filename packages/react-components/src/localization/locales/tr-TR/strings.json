@@ -57,6 +57,7 @@
     "richTextDeleteColumnMenu": "Sütunu sil",
     "richTextDeleteRowMenu": "Satırı sil",
     "richTextDeleteTableMenu": "Tabloyu sil",
+    "richTextToolbarMoreButtonAriaLabel": "More options",
     "attachmentMoreMenu": "Diğer Seçenekler"
   },
   "mentionPopover": {
@@ -199,7 +200,27 @@
     "blockedWarningText": "Bu ileti kuruluş ilkesi nedeniyle silindi.",
     "blockedWarningLinkText": "Ayrıntılar",
     "attachmentCardGroupMessage": "İletinin {attachmentCount} eki var",
-    "messageDeletedAnnouncementAriaLabel": "İleti silindi"
+    "messageDeletedAnnouncementAriaLabel": "İleti silindi",
+    "richTextBoldTooltip": "Kalın",
+    "richTextItalicTooltip": "İtalik",
+    "richTextUnderlineTooltip": "Altını Çiz",
+    "richTextBulletListTooltip": "Madde işaretli liste",
+    "richTextNumberListTooltip": "Numaralandırılmış liste",
+    "richTextIncreaseIndentTooltip": "Girintiyi artır",
+    "richTextDecreaseIndentTooltip": "Girintiyi azalt",
+    "richTextInsertTableTooltip": "Tablo ekle",
+    "richTextFormatButtonTooltip": "Biçim",
+    "richTextInsertRowOrColumnMenu": "Ekle",
+    "richTextInsertTableMenuTitle": "{column} x {row} tablosunu ekleme",
+    "richTextInsertRowAboveMenu": "Üste ekle",
+    "richTextInsertRowBelowMenu": "Aşağıya ekle",
+    "richTextInsertColumnLeftMenu": "Sola ekle",
+    "richTextInsertColumnRightMenu": "Sağa ekle",
+    "richTextDeleteRowOrColumnMenu": "Sil",
+    "richTextDeleteColumnMenu": "Sütunu sil",
+    "richTextDeleteRowMenu": "Satırı sil",
+    "richTextDeleteTableMenu": "Tabloyu sil",
+    "richTextToolbarMoreButtonAriaLabel": "More options"
   },
   "errorBar": {
     "unableToReachChatService": "Çevrimdışısınız",
