@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import React, { ReactElement } from 'react';
+import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import { fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
