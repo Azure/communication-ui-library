@@ -245,6 +245,15 @@ export const getEndedCallPageProps = (
       }
       break;
   }
+  // keep this at the bottom to catch the scenarios not including the ones above.
+  switch (endedCall?.callEndReason?.code) {
+    case 400:
+      if (locale.strings.call.callRejectedTitle) {
+        title = locale.strings.call.callRejectedTitle;
+        disableStartCallButton = true;
+      }
+      break;
+  }
   return { title, moreDetails, disableStartCallButton, iconName };
 };
 
