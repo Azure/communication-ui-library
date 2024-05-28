@@ -137,6 +137,13 @@ export type AreParamEqual<A extends (props: any) => JSX.Element | undefined, B e
 export type AreTypeEqual<A, B> = A extends B ? (B extends A ? true : false) : false;
 
 // @public
+export interface AttachmentMetadata {
+    id: string;
+    name: string;
+    url: string;
+}
+
+// @public
 export type AvatarPersonaData = {
     text?: string;
     imageUrl?: string;
@@ -1555,6 +1562,7 @@ export type ChatInitializedListener = (event: {
 export interface ChatMessage extends MessageCommon {
     // (undocumented)
     attached?: MessageAttachedStatus;
+    attachments?: AttachmentMetadata[];
     // (undocumented)
     clientMessageId?: string;
     // (undocumented)

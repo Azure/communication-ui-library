@@ -334,12 +334,10 @@ export type {
   AttachmentUploadTask
 } from '../../react-components/src';
 
+export type { AttachmentMetadata } from '../../acs-ui-common/src';
+
 /* @conditional-compile-remove(attachment-upload) */
-export type {
-  AttachmentMetadata,
-  AttachmentMetadataInProgress,
-  AttachmentProgressError
-} from '../../acs-ui-common/src';
+export type { AttachmentMetadataInProgress, AttachmentProgressError } from '../../acs-ui-common/src';
 
 /* @conditional-compile-remove(attachment-download) */
 export type { AttachmentMenuAction, AttachmentDownloadOptions } from '../../react-components/src';
