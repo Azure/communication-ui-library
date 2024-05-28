@@ -173,7 +173,7 @@ export interface AttachmentMenuAction {
     onClick: (attachment: AttachmentMetadata) => Promise<void>;
 }
 
-// @beta
+// @public
 export interface AttachmentMetadata {
     id: string;
     name: string;
@@ -1847,7 +1847,6 @@ export type ChatInitializedListener = (event: {
 export interface ChatMessage extends MessageCommon {
     // (undocumented)
     attached?: MessageAttachedStatus;
-    // @beta
     attachments?: AttachmentMetadata[];
     // (undocumented)
     clientMessageId?: string;
