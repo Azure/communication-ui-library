@@ -1,8 +1,8 @@
 {
   "type": "patch",
   "area": "fix",
-  "workstream": "People pane drawer menu",
-  "comment": "Close drawer menu for remote participant when they are no longer in the call",
+  "workstream": "Icons",
+  "comment": "Increase participant item muted icon size",
   "packageName": "@azure/communication-react",
   "email": "79475487+mgamis-msft@users.noreply.github.com",
   "dependentChangeType": "patch"

@@ -1,8 +1,8 @@
 {
   "type": "patch",
   "area": "fix",
-  "workstream": "Calling Sounds",
-  "comment": "Move internal CallComposite AudioContext to a react context to avoid over creation of audio contexts",
+  "workstream": "PiPiP",
+  "comment": "Remove scaling options for PiPiP in the people and chat panes to stop surprise popup controls",
   "packageName": "@azure/communication-react",
   "email": "94866715+dmceachernmsft@users.noreply.github.com",
   "dependentChangeType": "patch"

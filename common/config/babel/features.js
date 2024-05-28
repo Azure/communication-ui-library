@@ -24,7 +24,9 @@ module.exports = {
     // Feature for Rich Text Editor (RTE) composite support
     "rich-text-editor-composite-support",
     // Feature for Rich Text Editor (RTE) image upload support
-    "rich-text-editor-image-upload"
+    "rich-text-editor-image-upload",
+    // Feature for showing notifications
+    "notifications"
   ],
   beta: [
     "call-readiness",
@@ -59,8 +61,8 @@ module.exports = {
     "PSTN-calls",
     // Adhoc calls to a Teams user.
     "teams-adhoc-call",
-    // Joining calls using teams token
-    "teams-identity-support",
+    // Beta feature for joining calls using teams token
+    "teams-identity-support-beta",
     // Block joining calls if the user is on an unsupported browser
     "unsupported-browser",
     // Feature to show the total number of participants in a call (currently in beta in calling SDK, hence this must be conditionally compiled)
@@ -90,11 +92,13 @@ module.exports = {
     'spotlight',
     // Feature for end of call survey
     'end-of-call-survey',
+    // Joining calls using teams token
+    "teams-identity-support",
     // feature for hiding attendee name in the teams meeting
     "hide-attendee-name",
     // Join meeting with meetingId and passcode
     'meeting-id',
     // Feature for end call options 
-    'end-call-options',
+    'end-call-options'
   ]
 }
