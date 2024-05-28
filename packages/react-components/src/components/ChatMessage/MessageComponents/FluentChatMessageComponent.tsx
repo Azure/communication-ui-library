@@ -87,7 +87,6 @@ export const FluentChatMessageComponent = (props: FluentChatMessageComponentWrap
             actionsForAttachment={actionsForAttachment}
             /* @conditional-compile-remove(mention) */
             mentionDisplayOptions={mentionOptions?.displayOptions}
-            aria-hidden={true}
           />
         );
       }
