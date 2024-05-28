@@ -48,6 +48,7 @@ export interface RichTextEditorProps {
   showRichTextEditorFormatting: boolean;
   styles: RichTextEditorStyleProps;
   autoFocus?: 'sendBoxTextField';
+  textOnly: boolean;
 }
 
 /**
@@ -86,7 +87,8 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     autoFocus,
     onKeyDown,
     onContentModelUpdate,
-    contentModel
+    contentModel,
+    textOnly
   } = props;
   const editor = useRef<IEditor | null>(null);
   const editorDiv = useRef<HTMLDivElement>(null);
@@ -202,12 +204,19 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     setContextMenuProps(null);
   }, []);
 
+  const copyPastePlugin = useMemo(() => {
+    return new CopyPastePlugin();
+  }, []);
+
+  useEffect(() => {
+    copyPastePlugin.textOnly = textOnly;
+  }, [copyPastePlugin, textOnly]);
+
   const plugins: EditorPlugin[] = useMemo(() => {
     const contentEdit = new EditPlugin();
     // AutoFormatPlugin previously was a part of the edit plugin
     const autoFormatPlugin = new AutoFormatPlugin({ autoBullet: true, autoNumbering: true, autoLink: true });
-    const copyPastePlugin = new CopyPastePlugin();
-    const roosterPastePlugin = new PastePlugin(false);
+    const roosterPastePlugin = new PastePlugin(true);
     const shortcutPlugin = new ShortcutPlugin();
     const contextMenuPlugin = new ContextMenuPlugin(onContextMenuRender, onContextMenuDismiss);
     return [
@@ -231,7 +240,8 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     keyboardInputPlugin,
     updatePlugin,
     toolbarPlugin,
-    tableContextMenuPlugin
+    tableContextMenuPlugin,
+    copyPastePlugin
   ]);
 
   useEffect(() => {

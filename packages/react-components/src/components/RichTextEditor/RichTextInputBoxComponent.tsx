@@ -52,6 +52,7 @@ export interface RichTextInputBoxComponentProps {
   isHorizontalLayoutDisabled?: boolean;
   autoFocus?: 'sendBoxTextField';
   onTyping?: () => Promise<void>;
+  textOnly: boolean;
 }
 
 /**
@@ -74,7 +75,8 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
     richTextEditorStyleProps,
     isHorizontalLayoutDisabled = false,
     autoFocus,
-    onTyping
+    onTyping,
+    textOnly
   } = props;
   const theme = useTheme();
   // undefined is used to indicate that the rich text editor toolbar state wasn't changed yet
@@ -201,10 +203,12 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
               styles={richTextEditorStyle}
               autoFocus={autoFocus}
               onContentModelUpdate={onContentModelUpdate}
+              textOnly={textOnly}
             />
           </Stack.Item>
           {
-            /* @conditional-compile-remove(attachment-upload) */ onRenderAttachmentUploads &&
+            /* @conditional-compile-remove(attachment-upload) */ !textOnly &&
+              onRenderAttachmentUploads &&
               onRenderAttachmentUploads()
           }
         </Stack>
