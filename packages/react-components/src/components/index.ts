@@ -27,7 +27,12 @@ export { ChatMessageComponentAsRichTextEditBox } from './ChatMessage/MyMessageCo
 /* @conditional-compile-remove(rich-text-editor) */
 export type { ChatMessageComponentAsRichTextEditBoxProps } from './ChatMessage/MyMessageComponents/ChatMessageComponentAsRichTextEditBox';
 /* @conditional-compile-remove(rich-text-editor) */
-export type { RichTextSendBoxProps, RichTextSendBoxStrings, RichTextStrings } from './RichTextEditor/RichTextSendBox';
+export type {
+  RichTextSendBoxProps,
+  RichTextSendBoxStrings,
+  RichTextStrings,
+  UploadChatImageResult
+} from './RichTextEditor/RichTextSendBox';
 
 /* @conditional-compile-remove(mention) */
 export type {

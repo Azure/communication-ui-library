@@ -3,7 +3,7 @@
 import React, { useCallback, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react';
 import { richTextEditorWrapperStyle, richTextEditorStyle } from '../styles/RichTextEditor.styles';
 import { useTheme } from '../../theming';
-import { RichTextStrings } from './RichTextSendBox';
+import { RichTextStrings, UploadChatImageResult } from './RichTextSendBox';
 import { isDarkThemed } from '../../theming/themeUtils';
 import CopyPastePlugin from './Plugins/CopyPastePlugin';
 import type { ContentModelDocument, EditorPlugin, IEditor } from 'roosterjs-content-model-types';
@@ -48,6 +48,7 @@ export interface RichTextEditorProps {
   showRichTextEditorFormatting: boolean;
   styles: RichTextEditorStyleProps;
   autoFocus?: 'sendBoxTextField';
+  onUploadImage?: (image: Blob, fileName: string) => Promise<UploadChatImageResult>;
 }
 
 /**
@@ -86,7 +87,8 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     autoFocus,
     onKeyDown,
     onContentModelUpdate,
-    contentModel
+    contentModel,
+    onUploadImage
   } = props;
   const editor = useRef<IEditor | null>(null);
   const editorDiv = useRef<HTMLDivElement>(null);
@@ -156,6 +158,10 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     return new UpdateContentPlugin();
   }, []);
 
+  const copyPastePlugin = useMemo(() => {
+    return new CopyPastePlugin();
+  }, []);
+
   useEffect(() => {
     // don't set callback in plugin constructor to update callback without plugin recreation
     updatePlugin.onUpdate = (event: string) => {
@@ -169,6 +175,10 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
       }
     };
   }, [onChange, onContentModelUpdate, updatePlugin]);
+
+  useEffect(() => {
+    copyPastePlugin.onUploadImage = onUploadImage;
+  }, [copyPastePlugin, onUploadImage]);
 
   const keyboardInputPlugin = useMemo(() => {
     return new KeyboardInputPlugin();
@@ -206,7 +216,6 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     const contentEdit = new EditPlugin();
     // AutoFormatPlugin previously was a part of the edit plugin
     const autoFormatPlugin = new AutoFormatPlugin({ autoBullet: true, autoNumbering: true, autoLink: true });
-    const copyPastePlugin = new CopyPastePlugin();
     const roosterPastePlugin = new PastePlugin(false);
     const shortcutPlugin = new ShortcutPlugin();
     const contextMenuPlugin = new ContextMenuPlugin(onContextMenuRender, onContextMenuDismiss);
@@ -230,6 +239,7 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     placeholderPlugin,
     keyboardInputPlugin,
     updatePlugin,
+    copyPastePlugin,
     toolbarPlugin,
     tableContextMenuPlugin
   ]);

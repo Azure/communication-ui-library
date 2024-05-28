@@ -60,6 +60,7 @@ import { MessageOptions } from '@internal/acs-ui-common';
 import { SendBoxPicker } from '../common/SendBoxPicker';
 /* @conditional-compile-remove(rich-text-editor-composite-support) */
 import { loadRichTextSendBox } from '../common/SendBoxPicker';
+import { UploadChatImageResult } from '@azure/communication-chat';
 
 /**
  * @private
@@ -455,6 +456,16 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     },
     [attachmentOptions?.uploadOptions]
   );
+
+  const onUploadImage = useCallback(
+    async (image: Blob, fileName: string): Promise<UploadChatImageResult> => {
+      const result = adapter.uploadImage(image, fileName);
+      console.log('Uploading image...', image);
+      return result;
+    },
+    [adapter]
+  );
+
   return (
     <Stack className={chatContainer} grow>
       {options?.topic !== false && <ChatHeader {...headerProps} />}
@@ -480,7 +491,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             numberOfChatMessagesToReload={defaultNumberOfChatMessagesToReload}
             styles={messageThreadStyles}
             /* @conditional-compile-remove(rich-text-editor-composite-support) */
-            richTextEditor={options?.richTextEditor}
+            richTextEditor={true}
           />
           <Stack className={mergeStyles(sendboxContainerStyles)}>
             <div className={mergeStyles(typingIndicatorContainerStyles)}>
@@ -501,7 +512,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
                   styles={sendBoxStyles}
                   autoFocus={options?.autoFocus}
                   /* @conditional-compile-remove(rich-text-editor-composite-support) */
-                  richTextEditor={options?.richTextEditor}
+                  richTextEditor={true}
                   /* @conditional-compile-remove(attachment-upload) */
                   attachments={attachments}
                   /* @conditional-compile-remove(attachment-upload) */
@@ -509,6 +520,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
                   // we need to overwrite onSendMessage for SendBox because we need to clear attachment state
                   // when submit button is clicked
                   onSendMessage={onSendMessageHandler}
+                  onUploadImage={onUploadImage}
                 />
               </Stack>
               {formFactor !== 'mobile' && <AttachmentButton />}

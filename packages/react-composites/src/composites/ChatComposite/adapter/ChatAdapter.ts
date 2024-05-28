@@ -1,7 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import type { ChatMessage, ChatParticipant, SendMessageOptions } from '@azure/communication-chat';
+import type {
+  ChatMessage,
+  ChatParticipant,
+  SendMessageOptions,
+  UploadChatImageResult
+} from '@azure/communication-chat';
 import type { CommunicationIdentifierKind, CommunicationUserKind } from '@azure/communication-common';
 import { ChatThreadClientState } from '@internal/chat-stateful-client';
 import type { AdapterError, AdapterErrors, AdapterState, Disposable } from '../../common/adapters';
@@ -61,6 +66,7 @@ export interface ChatAdapterThreadManagement {
     content: string,
     options?: SendMessageOptions | /* @conditional-compile-remove(attachment-upload) */ MessageOptions
   ): Promise<void>;
+  uploadImage(image: ArrayBuffer | Blob, imageFilename: string): Promise<UploadChatImageResult>;
   /**
    * Send a read receipt for a message.
    */

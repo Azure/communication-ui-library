@@ -127,7 +127,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
                 downloadOptions: attachmentDownloadOptions
               },
               /* @conditional-compile-remove(rich-text-editor-composite-support) */
-              richTextEditor: isRichTextEditorEnabled
+              richTextEditor: true
             }}
             onFetchAvatarPersonaData={onFetchAvatarPersonaData}
           />
