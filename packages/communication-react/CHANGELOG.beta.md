@@ -1,8 +1,43 @@
 # Change Log - @azure/communication-react
 
-This log was last generated on Tue, 23 Apr 2024 17:54:31 GMT and should not be manually modified.
+This log was last generated on Tue, 21 May 2024 20:14:27 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.17.0-beta.1](https://github.com/azure/communication-ui-library/tree/1.17.0-beta.1)
+
+Tue, 21 May 2024 20:14:27 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.16.0...1.17.0-beta.1)
+
+### Features
+
+### Join Call with Meeting ID/Passcode
+
+We are excited to announce that the Azure Communication Services Web UI Library now supports joining a call with a Meeting Passcode and ID. Currently, Microsoft Teams allows you to require a meeting password for added security and generates a unique meeting ID for each meeting that participants can use to join. This feature now allows users on ACS to join interop Teams calls that have a meeting passcode or an ID generated. This is useful for private calls or events where limited access needs to be granted. Developers can use this functionality today through our composites (e.g CallComposite, CallWithChatComposite) as well as through components.
+
+### File Sharing
+UI library supports file sharing for Teams Interop Scenario in CallWithChatComposite. File sharing capabilities are also supported in ChatComposite in conjunction with your choice of a storage solution. We have made improvements to the file sharing feature in this beta release. The attachment card is now more optimized and you can find the usage instructions in the storybook.
+
+### Rich Text Editor
+This release brings major enhancements to the rich text editor feature. The changes include:
+- Upgrading from Rooster JS v8 to v9
+- Replacing RoosterJS React components with our own components
+
+### Improvements
+- Add notification for Hide Attendee Names ([PR #4554](https://github.com/azure/communication-ui-library/pull/4554) by 97124699+prabhjot-msft@users.noreply.github.com)
+- Menu icon behavior improved ([PR #4584](https://github.com/azure/communication-ui-library/pull/4584) by jiangnanhello@live.com)
+- Allow captions to be used when in a adhoc teams call ([PR #4579](https://github.com/azure/communication-ui-library/pull/4579) by dmceachern@microsoft.com)
+
+### Bug Fixes
+- Update styles to fix spacing of labeled background effects ([PR #4614](https://github.com/azure/communication-ui-library/pull/4614) by dmceachern@microsoft.com)
+- Add reaction items narrator strings ([PR #4635](https://github.com/azure/communication-ui-library/pull/4635) by dmceachern@microsoft.com)
+- Added Missing Message Options for MessageThread Component ([PR #4600](https://github.com/azure/communication-ui-library/pull/4600) by 109105353+jpeng-ms@users.noreply.github.com)
+- Fix bug where raise hand's height is the height of video tile ([PR #4589](https://github.com/azure/communication-ui-library/pull/4589) by 96077406+carocao-msft@users.noreply.github.com)
+- Fix for Pin tile icon too small ([PR #4587](https://github.com/azure/communication-ui-library/pull/4587) by 97124699+prabhjot-msft@users.noreply.github.com)
+- Fix crash bug for remote screen share ([PR #4608](https://github.com/azure/communication-ui-library/pull/4608) by jiangnanhello@live.com)
+- Fix bug when there are duplicate captions ([PR #4534](https://github.com/azure/communication-ui-library/pull/4534) by 96077406+carocao-msft@users.noreply.github.com)
+- Fix width for code snippets sent in messages ([PR #4633](https://github.com/azure/communication-ui-library/pull/4633) by 98852890+vhuseinova-msft@users.noreply.github.com)
+
 
 ## [1.16.0-beta.1](https://github.com/azure/communication-ui-library/tree/1.16.0-beta.1)
 

@@ -89,7 +89,8 @@ export const reduceCallControlsForMobile = (
 enum CallEndReasons {
   LEFT_CALL,
   ACCESS_DENIED,
-  REMOVED_FROM_CALL
+  REMOVED_FROM_CALL,
+  BAD_REQUEST
 }
 
 const getCallEndReason = (call: CallState): CallEndReasons => {
@@ -115,6 +116,11 @@ const getCallEndReason = (call: CallState): CallEndReasons => {
 
   if (call.callEndReason?.subCode && REMOVED_FROM_CALL_SUB_CODES.includes(call.callEndReason.subCode)) {
     return CallEndReasons.REMOVED_FROM_CALL;
+  }
+
+  // If the call end reason code is 400, the call is ended due to a bad request. Keep this line at the bottom right before returning normal left call to catch the scenarios not including the ones above.
+  if (call.callEndReason?.code === 400) {
+    return CallEndReasons.BAD_REQUEST;
   }
 
   if (call.callEndReason) {
@@ -239,6 +245,15 @@ export const getEndedCallPageProps = (
       }
       break;
   }
+  // keep this at the bottom to catch the scenarios not including the ones above.
+  switch (endedCall?.callEndReason?.code) {
+    case 400:
+      if (locale.strings.call.callRejectedTitle) {
+        title = locale.strings.call.callRejectedTitle;
+        disableStartCallButton = true;
+      }
+      break;
+  }
   return { title, moreDetails, disableStartCallButton, iconName };
 };
 
@@ -329,6 +344,8 @@ export const getCallCompositePage: GetCallCompositePageFunction = (
         return 'accessDeniedTeamsMeeting';
       case CallEndReasons.REMOVED_FROM_CALL:
         return 'removedFromCall';
+      case CallEndReasons.BAD_REQUEST:
+        return 'badRequest';
       case CallEndReasons.LEFT_CALL:
         if (previousCall.diagnostics.network.latest.noNetwork) {
           return 'joinCallFailedDueToNoNetwork';

@@ -522,6 +522,19 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
         />
       );
       break;
+    case 'badRequest': {
+      const { title, moreDetails, disableStartCallButton, iconName } = getEndedCallPageProps(locale, endedCall);
+      pageElement = (
+        <NoticePage
+          iconName={iconName}
+          title={title}
+          moreDetails={callees ? '' : moreDetails}
+          dataUiId={'left-call-page'}
+          disableStartCallButton={disableStartCallButton}
+        />
+      );
+      break;
+    }
     case 'leftCall': {
       const { title, moreDetails, disableStartCallButton, iconName } = getEndedCallPageProps(locale, endedCall);
       /* @conditional-compile-remove(end-of-call-survey) */
