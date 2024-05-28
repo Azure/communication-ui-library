@@ -289,9 +289,8 @@ const processHtmlToReact = (props: ChatMessageContentProps): JSX.Element => {
         }
 
         // Transform links to open in new tab
-        if (domNode.name === 'a' && React.isValidElement(reactNode)) {
-          const reactElement = reactNode as JSX.Element;
-          return React.cloneElement(reactElement, {
+        if (domNode.name === 'a' && React.isValidElement<React.AnchorHTMLAttributes<HTMLAnchorElement>>(reactNode)) {
+          return React.cloneElement(reactNode, {
             target: '_blank',
             rel: 'noreferrer noopener'
           });
