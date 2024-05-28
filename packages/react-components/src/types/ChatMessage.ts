@@ -73,7 +73,6 @@ export interface ChatMessage extends MessageCommon {
   metadata?: Record<string, string>;
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   /**
-   * @beta
    * A list of attachments in the message.
    * {@link AttachmentMetadata}
    */

@@ -52,7 +52,7 @@ export function _getKeys<T extends object>(obj: T): (keyof T)[] {
  * a name that represents the name of file, and
  * a URL to download the attachment.
  *
- * @beta
+ * @public
  */
 export interface AttachmentMetadata {
   /**
