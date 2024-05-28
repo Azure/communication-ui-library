@@ -217,6 +217,8 @@ const convertPageStateToString = (state: CallWithChatAdapterState): string => {
   switch (state.page) {
     case 'accessDeniedTeamsMeeting':
       return 'error';
+    case 'badRequest':
+      return 'error';
     case 'leftCall':
       return 'end call';
     case 'removedFromCall':
