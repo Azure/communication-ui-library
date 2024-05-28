@@ -132,6 +132,8 @@ export interface RichTextSendBoxProps {
    * @defaultValue false
    */
   disabled?: boolean;
+
+  /* @conditional-compile-remove(attachment-upload) @conditional-compile-remove(rich-text-editor-image-upload) */
   /**
    * Optional boolean to enable text only mode.
    * When enabled, inline images and attachments won't be added and displayed for the send box.
@@ -195,6 +197,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     attachments,
     /* @conditional-compile-remove(attachment-upload) */
     onCancelAttachmentUpload,
+    /* @conditional-compile-remove(attachment-upload) @conditional-compile-remove(rich-text-editor-image-upload) */
     textOnly = false
   } = props;
 
@@ -442,6 +445,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
         onRenderAttachmentUploads={onRenderAttachmentUploads}
         /* @conditional-compile-remove(attachment-upload) */
         hasAttachments={hasAttachmentUploads}
+        /* @conditional-compile-remove(attachment-upload) @conditional-compile-remove(rich-text-editor-image-upload) */
         textOnly={textOnly}
       />
     </Stack>

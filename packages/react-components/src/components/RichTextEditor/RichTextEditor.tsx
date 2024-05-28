@@ -48,6 +48,7 @@ export interface RichTextEditorProps {
   showRichTextEditorFormatting: boolean;
   styles: RichTextEditorStyleProps;
   autoFocus?: 'sendBoxTextField';
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
   textOnly: boolean;
 }
 
@@ -88,6 +89,7 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     onKeyDown,
     onContentModelUpdate,
     contentModel,
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
     textOnly
   } = props;
   const editor = useRef<IEditor | null>(null);
@@ -208,6 +210,7 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     return new CopyPastePlugin();
   }, []);
 
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
   useEffect(() => {
     copyPastePlugin.textOnly = textOnly;
   }, [copyPastePlugin, textOnly]);

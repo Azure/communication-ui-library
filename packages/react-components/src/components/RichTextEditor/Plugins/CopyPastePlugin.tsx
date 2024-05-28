@@ -9,6 +9,7 @@ import { ContentChangedEventSource, PluginEventType } from '../../utils/RichText
 export default class CopyPastePlugin implements EditorPlugin {
   private editor: IEditor | null = null;
   // don't set value in constructor to be able to update it without plugin recreation
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
   textOnly: boolean = false;
 
   getName(): string {
@@ -22,7 +23,7 @@ export default class CopyPastePlugin implements EditorPlugin {
   dispose(): void {}
 
   onPluginEvent(event: PluginEvent): void {
-    if (this.textOnly) {
+    if (/* @conditional-compile-remove(rich-text-editor-image-upload) */ this.textOnly && true) {
       removeImageElement(event);
     }
     if (this.editor !== null && !this.editor.isDisposed()) {
