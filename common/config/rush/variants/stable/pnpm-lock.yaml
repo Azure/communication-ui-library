@@ -20,6 +20,9 @@ dependencies:
   '@rush-temp/acs-ui-common':
     specifier: file:./projects/acs-ui-common.tgz
     version: file:projects/acs-ui-common.tgz
+  '@rush-temp/acs-ui-javascript-loaders':
+    specifier: file:./projects/acs-ui-javascript-loaders.tgz
+    version: file:projects/acs-ui-javascript-loaders.tgz
   '@rush-temp/calling':
     specifier: file:./projects/calling.tgz
     version: file:projects/calling.tgz
@@ -2497,14 +2500,7 @@ packages:
   /@fluentui/date-time-utilities@8.6.1:
     resolution: {integrity: sha512-F6DAYk0uzboQB1j5YQq5gJPvGSc6L8PjdnSDDkURsHpBUars2pDO5vyOJdnW0vAbU/35Dl4uR0X/Nrkq8lyXyA==}
     dependencies:
-      '@fluentui/set-version': 8.2.15
-      tslib: 2.6.2
-    dev: false
-
-  /@fluentui/dom-utilities@2.2.15:
-    resolution: {integrity: sha512-/s97pTNwcdr+vbbFmlCOMgdPDcm//ZF2qA+XuL/8b+QKusUBAfuD+H+TmqIymqS3jvFKGo3ty+lMg7aYGEYEKw==}
-    dependencies:
-      '@fluentui/set-version': 8.2.15
+      '@fluentui/set-version': 8.2.17
       tslib: 2.6.2
     dev: false
 
@@ -2518,9 +2514,9 @@ packages:
   /@fluentui/font-icons-mdl2@8.5.35(@types/react@18.2.74)(react@18.2.0):
     resolution: {integrity: sha512-wWqMVxOfqKojktyv31ydDgMVTKCG9cB5Etff40etOIIgdq8940oUxeLKocnkPo/AKOSIMJy9aNRTcDkgti7WPw==}
     dependencies:
-      '@fluentui/set-version': 8.2.15
-      '@fluentui/style-utilities': 8.10.6(@types/react@18.2.74)(react@18.2.0)
-      '@fluentui/utilities': 8.15.1(@types/react@18.2.74)(react@18.2.0)
+      '@fluentui/set-version': 8.2.17
+      '@fluentui/style-utilities': 8.10.9(@types/react@18.2.74)(react@18.2.0)
+      '@fluentui/utilities': 8.15.4(@types/react@18.2.74)(react@18.2.0)
       tslib: 2.6.2
     transitivePeerDependencies:
       - '@types/react'
@@ -2533,10 +2529,10 @@ packages:
       '@types/react': '>=16.8.0 <19.0.0'
       react: '>=16.8.0 <19.0.0'
     dependencies:
-      '@fluentui/merge-styles': 8.6.1
-      '@fluentui/set-version': 8.2.15
-      '@fluentui/style-utilities': 8.10.6(@types/react@18.2.74)(react@18.2.0)
-      '@fluentui/utilities': 8.15.1(@types/react@18.2.74)(react@18.2.0)
+      '@fluentui/merge-styles': 8.6.4
+      '@fluentui/set-version': 8.2.17
+      '@fluentui/style-utilities': 8.10.9(@types/react@18.2.74)(react@18.2.0)
+      '@fluentui/utilities': 8.15.4(@types/react@18.2.74)(react@18.2.0)
       '@types/react': 18.2.74
       react: 18.2.0
       tslib: 2.6.2
@@ -2552,13 +2548,6 @@ packages:
     resolution: {integrity: sha512-vaQ+lOveQTdoXJYqDQXWb30udSfTVcIuKk1rV0X0eGAgcHeSDeP1HxMy+OgHOQZH3OiBH4ZYeWxb+tmfiDiygQ==}
     dependencies:
       '@swc/helpers': 0.5.6
-    dev: false
-
-  /@fluentui/merge-styles@8.6.1:
-    resolution: {integrity: sha512-hxzOmuxyp0xE+b9Ugm6EUHDVzSn8bcqISRGYstv4UKOTTJVbaYdldGLhrtTLSuhob3olKHDxxds2Wbq3K7uGRA==}
-    dependencies:
-      '@fluentui/set-version': 8.2.15
-      tslib: 2.6.2
     dev: false
 
   /@fluentui/merge-styles@8.6.4:
@@ -3025,10 +3014,10 @@ packages:
       react: '>=16.8.0 <19.0.0'
     dependencies:
       '@fluentui/keyboard-key': 0.4.15
-      '@fluentui/merge-styles': 8.6.1
-      '@fluentui/set-version': 8.2.15
-      '@fluentui/style-utilities': 8.10.6(@types/react@18.2.74)(react@18.2.0)
-      '@fluentui/utilities': 8.15.1(@types/react@18.2.74)(react@18.2.0)
+      '@fluentui/merge-styles': 8.6.4
+      '@fluentui/set-version': 8.2.17
+      '@fluentui/style-utilities': 8.10.9(@types/react@18.2.74)(react@18.2.0)
+      '@fluentui/utilities': 8.15.4(@types/react@18.2.74)(react@18.2.0)
       '@types/react': 18.2.74
       react: 18.2.0
       tslib: 2.6.2
@@ -3040,9 +3029,9 @@ packages:
       '@types/react': '>=16.8.0 <19.0.0'
       react: '>=16.8.0 <19.0.0'
     dependencies:
-      '@fluentui/react-window-provider': 2.2.19(@types/react@18.2.74)(react@18.2.0)
-      '@fluentui/set-version': 8.2.15
-      '@fluentui/utilities': 8.15.1(@types/react@18.2.74)(react@18.2.0)
+      '@fluentui/react-window-provider': 2.2.21(@types/react@18.2.74)(react@18.2.0)
+      '@fluentui/set-version': 8.2.17
+      '@fluentui/utilities': 8.15.4(@types/react@18.2.74)(react@18.2.0)
       '@types/react': 18.2.74
       react: 18.2.0
       tslib: 2.6.2
@@ -3054,9 +3043,9 @@ packages:
       '@types/react': '>=16.8.0 <19.0.0'
       react: '>=16.8.0 <19.0.0'
     dependencies:
-      '@fluentui/react-window-provider': 2.2.19(@types/react@18.2.74)(react@18.2.0)
-      '@fluentui/set-version': 8.2.15
-      '@fluentui/utilities': 8.15.1(@types/react@18.2.74)(react@18.2.0)
+      '@fluentui/react-window-provider': 2.2.21(@types/react@18.2.74)(react@18.2.0)
+      '@fluentui/set-version': 8.2.17
+      '@fluentui/utilities': 8.15.4(@types/react@18.2.74)(react@18.2.0)
       '@types/react': 18.2.74
       react: 18.2.0
       tslib: 2.6.2
@@ -3957,18 +3946,6 @@ packages:
       react-dom: 18.2.0(react@18.2.0)
     dev: false
 
-  /@fluentui/react-window-provider@2.2.19(@types/react@18.2.74)(react@18.2.0):
-    resolution: {integrity: sha512-1K2ppKkaulLnMD+VvSRw9tufzR/MqGbuP/BKV0vRdyO/pqU+rIhNKj17F3uistJOOSmn+suz4l4wCk4Br5hdKA==}
-    peerDependencies:
-      '@types/react': '>=16.8.0 <19.0.0'
-      react: '>=16.8.0 <19.0.0'
-    dependencies:
-      '@fluentui/set-version': 8.2.15
-      '@types/react': 18.2.74
-      react: 18.2.0
-      tslib: 2.6.2
-    dev: false
-
   /@fluentui/react-window-provider@2.2.21(@types/react@18.2.74)(react@18.2.0):
     resolution: {integrity: sha512-ZrPYPmhLB9TqWu2c4g7L9zJGakcfJ4AYD3rje8lQJzSDftQ3OpM8DoLoe18joGni6yLICSaCVdBfQfoJpFmkHg==}
     peerDependencies:
@@ -3992,15 +3969,15 @@ packages:
       '@fluentui/date-time-utilities': 8.6.1
       '@fluentui/font-icons-mdl2': 8.5.35(@types/react@18.2.74)(react@18.2.0)
       '@fluentui/foundation-legacy': 8.4.1(@types/react@18.2.74)(react@18.2.0)
-      '@fluentui/merge-styles': 8.6.1
+      '@fluentui/merge-styles': 8.6.4
       '@fluentui/react-focus': 8.8.43(@types/react@18.2.74)(react@18.2.0)
       '@fluentui/react-hooks': 8.7.1(@types/react@18.2.74)(react@18.2.0)
       '@fluentui/react-portal-compat-context': 9.0.11(@types/react@18.2.74)(react@18.2.0)
-      '@fluentui/react-window-provider': 2.2.19(@types/react@18.2.74)(react@18.2.0)
-      '@fluentui/set-version': 8.2.15
-      '@fluentui/style-utilities': 8.10.6(@types/react@18.2.74)(react@18.2.0)
-      '@fluentui/theme': 2.6.44(@types/react@18.2.74)(react@18.2.0)
-      '@fluentui/utilities': 8.15.1(@types/react@18.2.74)(react@18.2.0)
+      '@fluentui/react-window-provider': 2.2.21(@types/react@18.2.74)(react@18.2.0)
+      '@fluentui/set-version': 8.2.17
+      '@fluentui/style-utilities': 8.10.9(@types/react@18.2.74)(react@18.2.0)
+      '@fluentui/theme': 2.6.47(@types/react@18.2.74)(react@18.2.0)
+      '@fluentui/utilities': 8.15.4(@types/react@18.2.74)(react@18.2.0)
       '@microsoft/load-themed-styles': 1.10.295
       '@types/react': 18.2.74
       '@types/react-dom': 18.2.23
@@ -4012,38 +3989,18 @@ packages:
   /@fluentui/scheme-utilities@8.3.42(@types/react@18.2.74)(react@18.2.0):
     resolution: {integrity: sha512-3q1ej7hdoJkBw2c9GU90StWMxqHMmuKcpALs67DlpBpJ/3vIOeMumKoS7Yl34AfyUwiz1Dw38TZOhDJ1y2nfxw==}
     dependencies:
-      '@fluentui/set-version': 8.2.15
-      '@fluentui/theme': 2.6.44(@types/react@18.2.74)(react@18.2.0)
+      '@fluentui/set-version': 8.2.17
+      '@fluentui/theme': 2.6.47(@types/react@18.2.74)(react@18.2.0)
       tslib: 2.6.2
     transitivePeerDependencies:
       - '@types/react'
       - react
-    dev: false
-
-  /@fluentui/set-version@8.2.15:
-    resolution: {integrity: sha512-cJjpAeyFXZ7X6zKpEqtWTjyZXcvdBrz9jvBX3BBrqe3ooYaK+2tHE1ezGaS6NGh8R74qOH3z45gbjleHmKGS5g==}
-    dependencies:
-      tslib: 2.6.2
     dev: false
 
   /@fluentui/set-version@8.2.17:
     resolution: {integrity: sha512-AdhnGcw0qAdSJliDYc2sWh+fryeN9FjFw7VVw8/eG1U97k6KmJvAmMMgqcOir1XZgRRnwL4EjSPc5TWYwh5EuQ==}
     dependencies:
       tslib: 2.6.2
-    dev: false
-
-  /@fluentui/style-utilities@8.10.6(@types/react@18.2.74)(react@18.2.0):
-    resolution: {integrity: sha512-SP7bsQ5v9UdVgZCteKo8VMSlnbrtwfuLrXxbnt4uHRRvpee1ZTcFQtqIDCgB9n7z3fcEFFlTgj3NsmYea4i3Sg==}
-    dependencies:
-      '@fluentui/merge-styles': 8.6.1
-      '@fluentui/set-version': 8.2.15
-      '@fluentui/theme': 2.6.44(@types/react@18.2.74)(react@18.2.0)
-      '@fluentui/utilities': 8.15.1(@types/react@18.2.74)(react@18.2.0)
-      '@microsoft/load-themed-styles': 1.10.295
-      tslib: 2.6.2
-    transitivePeerDependencies:
-      - '@types/react'
-      - react
     dev: false
 
   /@fluentui/style-utilities@8.10.9(@types/react@18.2.74)(react@18.2.0):
@@ -4065,27 +4022,13 @@ packages:
     dependencies:
       '@fluentui/react': 8.117.2(@types/react-dom@18.2.23)(@types/react@18.2.74)(react-dom@18.2.0)(react@18.2.0)
       '@fluentui/scheme-utilities': 8.3.42(@types/react@18.2.74)(react@18.2.0)
-      '@fluentui/set-version': 8.2.15
+      '@fluentui/set-version': 8.2.17
       tslib: 2.6.2
     transitivePeerDependencies:
       - '@types/react'
       - '@types/react-dom'
       - react
       - react-dom
-    dev: false
-
-  /@fluentui/theme@2.6.44(@types/react@18.2.74)(react@18.2.0):
-    resolution: {integrity: sha512-d3CppiTHQHoN1Gsxz0aU3SodnLBHBwH6OB+SU3EqSNc9qrjpqAf92MaYD6x3SWIdmqsYbb6qrZmChjzvktm1sw==}
-    peerDependencies:
-      '@types/react': '>=16.8.0 <19.0.0'
-      react: '>=16.8.0 <19.0.0'
-    dependencies:
-      '@fluentui/merge-styles': 8.6.1
-      '@fluentui/set-version': 8.2.15
-      '@fluentui/utilities': 8.15.1(@types/react@18.2.74)(react@18.2.0)
-      '@types/react': 18.2.74
-      react: 18.2.0
-      tslib: 2.6.2
     dev: false
 
   /@fluentui/theme@2.6.47(@types/react@18.2.74)(react@18.2.0):
@@ -4106,20 +4049,6 @@ packages:
     resolution: {integrity: sha512-Gr9G8LIlUhZYX5j6CfDQrofQqsWAz/q54KabWn1tWV/1083WwyoTZXiG1k6b37NnK7Feye7D7Nz+4MNqoKpXGw==}
     dependencies:
       '@swc/helpers': 0.5.6
-    dev: false
-
-  /@fluentui/utilities@8.15.1(@types/react@18.2.74)(react@18.2.0):
-    resolution: {integrity: sha512-9RdPGXmwnAhmVSVD/9F+P5dAQMpiLZudp8tpCYbSCftqtGpDtbWeTX/V9JEtG++fy50V6dpjLDCCOcBu20erAA==}
-    peerDependencies:
-      '@types/react': '>=16.8.0 <19.0.0'
-      react: '>=16.8.0 <19.0.0'
-    dependencies:
-      '@fluentui/dom-utilities': 2.2.15
-      '@fluentui/merge-styles': 8.6.1
-      '@fluentui/set-version': 8.2.15
-      '@types/react': 18.2.74
-      react: 18.2.0
-      tslib: 2.6.2
     dev: false
 
   /@fluentui/utilities@8.15.4(@types/react@18.2.74)(react@18.2.0):
@@ -19900,6 +19829,7 @@ packages:
 
   /rimraf@2.6.3:
     resolution: {integrity: sha512-mwqeW5XsA2qAejG46gYdENaxXjx9onRNCfn7L0duuP4hCuTIi/QO7PDK07KJfp1d+izWPrzEJDcSqBa0OZQriA==}
+    deprecated: Rimraf versions prior to v4 are no longer supported
     hasBin: true
     dependencies:
       glob: 7.2.3
@@ -23495,8 +23425,53 @@ packages:
       - ts-node
     dev: false
 
+  file:projects/acs-ui-javascript-loaders.tgz:
+    resolution: {integrity: sha512-musmJqzcpnA62FV7OuZyfKQyuu19eGOsP9i7QhZv5DTzsBS5P2UPBGNX9Fi6kbvWGWfHCzHO3wEI1zTsDnJQuw==, tarball: file:projects/acs-ui-javascript-loaders.tgz}
+    name: '@rush-temp/acs-ui-javascript-loaders'
+    version: 0.0.0
+    dependencies:
+      '@azure/communication-common': 2.3.1
+      '@azure/logger': 1.0.4
+      '@babel/cli': 7.23.9(@babel/core@7.24.5)
+      '@babel/core': 7.24.5
+      '@fluentui/react': 8.117.2(@types/react-dom@18.2.23)(@types/react@18.2.74)(react-dom@18.2.0)(react@18.2.0)
+      '@types/jest': 29.5.12
+      '@types/react': 18.2.74
+      '@types/react-dom': 18.2.23
+      '@typescript-eslint/eslint-plugin': 6.21.0(@typescript-eslint/parser@6.21.0)(eslint@7.32.0)(typescript@5.4.5)
+      '@typescript-eslint/parser': 6.21.0(eslint@7.32.0)(typescript@5.4.5)
+      copyfiles: 2.4.1
+      cpx: 1.5.0
+      cross-env: 7.0.3
+      env-cmd: 10.1.0
+      eslint: 7.32.0
+      eslint-config-prettier: 6.15.0(eslint@7.32.0)
+      eslint-plugin-header: 3.1.1(eslint@7.32.0)
+      eslint-plugin-import: 2.29.1(eslint@7.32.0)
+      eslint-plugin-jsdoc: 36.1.1(eslint@7.32.0)
+      eslint-plugin-prettier: 3.4.1(eslint-config-prettier@6.15.0)(eslint@7.32.0)(prettier@2.3.1)
+      if-env: 1.0.4
+      jest: 29.7.0(@types/node@20.11.25)(ts-node@10.9.2)
+      prettier: 2.3.1
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+      rimraf: 2.7.1
+      rollup: 4.12.1
+      ts-jest: 29.1.2(@babel/core@7.24.5)(babel-jest@29.7.0)(jest@29.7.0)(typescript@5.4.5)
+      typescript: 5.4.5
+    transitivePeerDependencies:
+      - '@jest/types'
+      - '@types/node'
+      - babel-jest
+      - babel-plugin-macros
+      - esbuild
+      - node-notifier
+      - supports-color
+      - ts-node
+    dev: false
+
   file:projects/calling-component-bindings.tgz:
-    resolution: {integrity: sha512-NeBsmpGG2RMKFmccy2Ka0RAEuVNvT1GNFEXufLkTguVZaOCkL49yqO8zovrE5YIiWqJZlQ5hBurA0W8E9l3wgw==, tarball: file:projects/calling-component-bindings.tgz}
+    resolution: {integrity: sha512-ZCCWATAO2erTZ4OGvJgEinXWpzvLO6atNFjxzjtAXghpZdsd8mpOG8+bmy5gk4DcT7oLBKOm3RCEQSgI8GFiHA==, tarball: file:projects/calling-component-bindings.tgz}
     name: '@rush-temp/calling-component-bindings'
     version: 0.0.0
     dependencies:
@@ -23543,7 +23518,7 @@ packages:
     dev: false
 
   file:projects/calling-stateful-client.tgz:
-    resolution: {integrity: sha512-dIYgH6vLE9B3a5+vOv3no+Ivokl52kyYwjhDvzMwbuX1Etk6Q+TULnyyUAh6xxZ3PQ515eIdXbBd4GKq17dzJw==, tarball: file:projects/calling-stateful-client.tgz}
+    resolution: {integrity: sha512-S7yhQSSCaXPMxj2+HDTwihO49yaR//9qMYw4tTpmHAjXtlUhZey1tnTgTTTHxrzKLrsyomIujbjBqNi0ZQaV7Q==, tarball: file:projects/calling-stateful-client.tgz}
     name: '@rush-temp/calling-stateful-client'
     version: 0.0.0
     dependencies:
@@ -23590,7 +23565,7 @@ packages:
     dev: false
 
   file:projects/calling.tgz:
-    resolution: {integrity: sha512-lqa90E5Dqwp1liNadMbKSB5ACmcLmRfCmwUGg3WQz474OcDgsDLdC/gI0g4PnXaDxD208ze6RZ/rbxpA1QExQA==, tarball: file:projects/calling.tgz}
+    resolution: {integrity: sha512-tkiLApjlfojbIUADrX83RD+Y0CD0J2JoM41r7wAnYZe02F2w849VLKMV9anEE5EMFeh77Jh6JJSRwUcL1P+B/w==, tarball: file:projects/calling.tgz}
     name: '@rush-temp/calling'
     version: 0.0.0
     dependencies:
@@ -23681,7 +23656,7 @@ packages:
     dev: false
 
   file:projects/callwithchat.tgz:
-    resolution: {integrity: sha512-L/CSf/fxm2c7c3C6VQufIQJi0zQzQrVJ+2qrhPqdX6rLZ9amSRgBe0SJmPf9TO82PqsRnl2XGWkEuBYupKKMXg==, tarball: file:projects/callwithchat.tgz}
+    resolution: {integrity: sha512-bpJY5YRsNNvngSjb3VoBGtHveY1+UGEfTK4mf8a4kT5p5PWWUyCqDz0cacym0D+CGgvQ1cGsPzWu9+WrrbXqcA==, tarball: file:projects/callwithchat.tgz}
     name: '@rush-temp/callwithchat'
     version: 0.0.0
     dependencies:
@@ -23771,7 +23746,7 @@ packages:
     dev: false
 
   file:projects/chat-component-bindings.tgz:
-    resolution: {integrity: sha512-X76PCFM7oe+yO7KzQNSdZEdWyln81qKOy40ev9vxIVjsFgEy5QmYu2UdBaR6eFNUHto4LT9Y6Ihu57st/XccgQ==, tarball: file:projects/chat-component-bindings.tgz}
+    resolution: {integrity: sha512-7JDnK2sEJ+YbN9/kzWNAG2su+ysuLj0iBZMqwRBSYsXSYASzUXxHVkE5hXZs7NHIXZ5X++0A9SOSTWF4LHtWAQ==, tarball: file:projects/chat-component-bindings.tgz}
     name: '@rush-temp/chat-component-bindings'
     version: 0.0.0
     dependencies:
@@ -23813,7 +23788,7 @@ packages:
     dev: false
 
   file:projects/chat-stateful-client.tgz:
-    resolution: {integrity: sha512-EjW27c3pv2ZweT6FsikE2X+kL9YC2SrENudCtQT/rfm21UaJl3BsWR8rC0UZtU0dppas/wRo2DCteoEqnTVCyw==, tarball: file:projects/chat-stateful-client.tgz}
+    resolution: {integrity: sha512-BqZ1FhrNJGMfiL3KhSM545MO5N7Z/esTj8gckBO9TY7dzabR2QuEO+fLlc7K8+xC5SBUaLwuJ6kUXFfjYIbW9w==, tarball: file:projects/chat-stateful-client.tgz}
     name: '@rush-temp/chat-stateful-client'
     version: 0.0.0
     dependencies:
@@ -23863,7 +23838,7 @@ packages:
     dev: false
 
   file:projects/chat.tgz:
-    resolution: {integrity: sha512-XZ/bNdpYqfgbJQh+iJOJ3Ch+VXUZzJksgAdsUd2KfTdL9YMqjkqP03bD/tPVAnseykgEaP0UOQ7ld8qh+oH7mQ==, tarball: file:projects/chat.tgz}
+    resolution: {integrity: sha512-EbEpiJ8p7fK3SFXkDcvh1HWXObi67CHKKXy3OKMNRf8ja3vkxL7O8VneQQP628OY6SY1bjIWbH5MSqBchg+0qw==, tarball: file:projects/chat.tgz}
     name: '@rush-temp/chat'
     version: 0.0.0
     dependencies:
@@ -23949,7 +23924,7 @@ packages:
     dev: false
 
   file:projects/check-treeshaking.tgz:
-    resolution: {integrity: sha512-9itDV9t3UwjIGzkWHm5+iksrInR+ZvM9jaFR1b42jp18cyLu9GoqO5ynivN9dG9z0jSCBpjVtSfPy4xjN1tmDg==, tarball: file:projects/check-treeshaking.tgz}
+    resolution: {integrity: sha512-lkJNTwP45twCD4WhedDnv45QARUCN865ujUSQ8XkTghpOBXkoKjvJfvXhMzrfGZiQI3lRSptbsvAGNdxIoFjtQ==, tarball: file:projects/check-treeshaking.tgz}
     name: '@rush-temp/check-treeshaking'
     version: 0.0.0
     dependencies:
@@ -23976,7 +23951,7 @@ packages:
     dev: false
 
   file:projects/check-typescript-regression.tgz:
-    resolution: {integrity: sha512-ay3Wekj54KPFuLNImNsBoTOcWhaCUVjm+QqAYL09pmllbHUdMJNF84QA14HSyx8XdFaSaRLRyfiNiMztyBkoQQ==, tarball: file:projects/check-typescript-regression.tgz}
+    resolution: {integrity: sha512-1RhWANmPhPtFR7wi+fL1rQj5E9Hm/YFy9vcaUqPNVsv+QFEWoixKtruSYKcKNCZfhqO0yDbYODhh26kFbXJEGQ==, tarball: file:projects/check-typescript-regression.tgz}
     name: '@rush-temp/check-typescript-regression'
     version: 0.0.0
     dependencies:
@@ -23993,7 +23968,7 @@ packages:
     dev: false
 
   file:projects/communication-react.tgz:
-    resolution: {integrity: sha512-Dw9OKwagk67dQtx6gyo6AoxEyWdkImsPemJYqCdb5c1qC8Nl1fGJU10YKlXRH004njDP8DLdxpywWVAConfylQ==, tarball: file:projects/communication-react.tgz}
+    resolution: {integrity: sha512-siGM92ymuo9B9ofjU2AII0Tu2G0/DLe6n8F0Plr+cp+4rD7XCnbOqGfa3Z+x2cZ25s0Zmpc/FcvFBRCrOkfiPg==, tarball: file:projects/communication-react.tgz}
     name: '@rush-temp/communication-react'
     version: 0.0.0
     dependencies:
@@ -24106,7 +24081,7 @@ packages:
     dev: false
 
   file:projects/component-examples.tgz:
-    resolution: {integrity: sha512-mza4gurCVzNFbH0RSI7GZIs3/iiazCLrEyM23Wk895wzzTmJyzxxd1l6RcTimmStWg50/Sb1RuCcr98p846Ufg==, tarball: file:projects/component-examples.tgz}
+    resolution: {integrity: sha512-uFp8aQxHNAD/TvqFUtWOuhsbak6/XniQdv1SqmQ32b5AzMCuXY8tOONQ+ycMUQHmjAgxlz52+lzUdOWZi42Pxw==, tarball: file:projects/component-examples.tgz}
     name: '@rush-temp/component-examples'
     version: 0.0.0
     dependencies:
@@ -24193,7 +24168,7 @@ packages:
     dev: false
 
   file:projects/fake-backends.tgz:
-    resolution: {integrity: sha512-0B9QRJjhS4Sv1BnbDnimApae3UhJLLPySC2RrTmzH0H25uaRMnXPPz4h9powSngqAogGFMWEzpDh4aVn/IE6DA==, tarball: file:projects/fake-backends.tgz}
+    resolution: {integrity: sha512-ldQCnW5O+5OT5HGqSaAVNY0QAnybvaQSlXu9vrPVgAvkdRSNaFMmsTmuRmyj/7y9HpXvqVERmvgA1BiPzfb6DQ==, tarball: file:projects/fake-backends.tgz}
     name: '@rush-temp/fake-backends'
     version: 0.0.0
     dependencies:
@@ -24247,7 +24222,7 @@ packages:
     dev: false
 
   file:projects/react-components.tgz:
-    resolution: {integrity: sha512-54nJUUcpdYTtpSi1ZltzNQsbgg8ZDAuOHNJFJAMqrYgDhe4zYlF8Mp0ubjsD+wHFSb9Nhv+Z/sqHi7zNEudRSg==, tarball: file:projects/react-components.tgz}
+    resolution: {integrity: sha512-bpLybcX0pjWryd22PGe+gliQzDp3enCWn+R2G2RelUEO62yoYNyqvCnihUy0I5R3ktAT1RnbedMmaiOk25s1Gw==, tarball: file:projects/react-components.tgz}
     name: '@rush-temp/react-components'
     version: 0.0.0
     dependencies:
@@ -24371,7 +24346,7 @@ packages:
     dev: false
 
   file:projects/react-composites.tgz:
-    resolution: {integrity: sha512-+Q4vozCJ/rrz4plhfD5QdiAzdy3N2t38V/04G6ToY7RiGia/EbCNflW/8A9qC0iTQsjNHBuJSDKJODIpTNFq9w==, tarball: file:projects/react-composites.tgz}
+    resolution: {integrity: sha512-kvxLUf284AYqaOam1ICICR1lp6Lt41h5gVV+7rLA38g2v+RWgi/2D7Nx9g1cKgKpQs5kd0vsH1BCKO/6swu5Pw==, tarball: file:projects/react-composites.tgz}
     name: '@rush-temp/react-composites'
     version: 0.0.0
     dependencies:
@@ -24515,7 +24490,7 @@ packages:
     dev: false
 
   file:projects/sample-static-html-composites.tgz:
-    resolution: {integrity: sha512-hQPWnmLlGSJkji+CFliLb81AfUbtecZb0La90GPGbWL9wxtsgEW8WltWmh06u9m8nzb/pTyihROEUkNtNuQ4ug==, tarball: file:projects/sample-static-html-composites.tgz}
+    resolution: {integrity: sha512-VvFbM2+tgfy2PCsNLio2eqWDPWjuMOg8E11VCz4j7G5huz2gCnWcIoYQ0hAFYcidHlfp1qvAwlrZtTsIKAV7/Q==, tarball: file:projects/sample-static-html-composites.tgz}
     name: '@rush-temp/sample-static-html-composites'
     version: 0.0.0
     dependencies:
@@ -24647,7 +24622,7 @@ packages:
     dev: false
 
   file:projects/storybook.tgz:
-    resolution: {integrity: sha512-3D+jtIOQd/v63yLO/DFPlDybEXqdVmbb7uKYj5/k1O1e9hBStuGnwYYUrd0P0vSuJL7nmnC74J05KJtdBGvYLg==, tarball: file:projects/storybook.tgz}
+    resolution: {integrity: sha512-q2Qmw3nZzs1Nopov/U4HFdqXKHeYBX+JHrMSHYDOefMfbUiR6kueSGG363nPhhHAvCpYqPzhwYBTppwW5TNfjQ==, tarball: file:projects/storybook.tgz}
     name: '@rush-temp/storybook'
     version: 0.0.0
     dependencies:
@@ -24792,7 +24767,7 @@ packages:
     dev: false
 
   file:projects/storybook8.tgz:
-    resolution: {integrity: sha512-kdrfIJ2P8Y/AKhTaox5t78Zi6bpMyxbpNzV270fkeOHaMBf1ZWKFnXjxwOow6R97TCKUpfErNefn2q1aRuR1QQ==, tarball: file:projects/storybook8.tgz}
+    resolution: {integrity: sha512-5qedQXmIqmuC602QvBHyJwaI2VLMr7IzwpOb+x/d1bZ4fbmEccLgkcLXlpypgD6Gk26Di9SF0MAyNKgICNA3mA==, tarball: file:projects/storybook8.tgz}
     name: '@rush-temp/storybook8'
     version: 0.0.0
     dependencies:
