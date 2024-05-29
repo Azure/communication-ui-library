@@ -2,6 +2,20 @@
 // Licensed under the MIT License.
 
 import React from 'react';
+
+const reactVersion = React.version;
+const parseReactVersion = (version: string | undefined): number[] => {
+  if (!version) {
+    return [];
+  }
+  return version.split('.').map((v) => parseInt(v));
+};
+if (parseReactVersion(reactVersion)[0] && parseReactVersion(reactVersion)[0] < 18) {
+  throw new Error(
+    'React version is less than 18. Please upgrade to React 18 or alternatively checkout how to use our composites directly here: https://azure.github.io/communication-ui-library/?path=/docs/quickstarts-composites--page'
+  );
+}
+
 import { createRoot } from 'react-dom/client';
 import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import { fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
@@ -57,18 +71,7 @@ export const loadOuboundCallComposite = async function (
   if (!htmlElement) {
     throw new Error('Failed to find the root element');
   }
-  const reactVersion = React.version;
-  if (parseReactVersion(reactVersion)[0] >= 18) {
-    createRoot(htmlElement).render(React.createElement(CallComposite, { ...props, adapter }, null));
-    return adapter;
-  } else {
-    console.error(
-      'React version is less than 18. Please upgrade to React 18 or alternatively checkout how to use our composites directly here: https://azure.github.io/communication-ui-library/?path=/docs/quickstarts-composites--page'
-    );
-    return undefined;
-  }
-};
 
-const parseReactVersion = (version: string): number[] => {
-  return version.split('.').map((v) => parseInt(v));
+  createRoot(htmlElement).render(React.createElement(CallComposite, { ...props, adapter }, null));
+  return adapter;
 };
