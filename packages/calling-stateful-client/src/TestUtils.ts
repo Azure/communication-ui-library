@@ -212,6 +212,19 @@ export class StubDiagnosticsCallFeatureImpl implements UserFacingDiagnosticsFeat
       /* Stub to appease types */
     }
   };
+  public remote = {
+    getLatest(): RemoteParticipantDiagnosticsData {
+      return {
+        diagnostics: []
+      };
+    },
+    on(): void {
+      /* Stub to appease types */
+    },
+    off(): void {
+      /* Stub to appease types */
+    }
+  };
   dispose(): void {
     /* No state to clean up */
   };
