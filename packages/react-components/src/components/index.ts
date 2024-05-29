@@ -27,7 +27,7 @@ export { ChatMessageComponentAsRichTextEditBox } from './ChatMessage/MyMessageCo
 /* @conditional-compile-remove(rich-text-editor) */
 export type { ChatMessageComponentAsRichTextEditBoxProps } from './ChatMessage/MyMessageComponents/ChatMessageComponentAsRichTextEditBox';
 /* @conditional-compile-remove(rich-text-editor) */
-export type { RichTextSendBoxProps, RichTextSendBoxStrings } from './RichTextEditor/RichTextSendBox';
+export type { RichTextSendBoxProps, RichTextSendBoxStrings, RichTextStrings } from './RichTextEditor/RichTextSendBox';
 
 /* @conditional-compile-remove(mention) */
 export type {
@@ -184,9 +184,7 @@ export type { RaiseHandButtonProps, RaiseHandButtonStrings } from './RaiseHandBu
 export { ReactionButton } from './ReactionButton';
 export type { ReactionButtonProps, ReactionButtonStrings } from './ReactionButton';
 export { VideoTile } from './VideoTile';
-export type { VideoTileProps, VideoTileStylesProps } from './VideoTile';
-/* @conditional-compile-remove(PSTN-calls) */
-export type { VideoTileStrings } from './VideoTile';
+export type { VideoTileProps, VideoTileStylesProps, VideoTileStrings } from './VideoTile';
 
 export { _PictureInPictureInPicture } from './PictureInPictureInPicture/PictureInPictureInPicture';
 export type {
@@ -201,21 +199,20 @@ export type {
 export * from './Drawer';
 /* @conditional-compile-remove(attachment-upload) */
 export type { SendBoxErrorBarError } from './SendBoxErrorBar';
-export * from './AttachmentCard';
-export * from './AttachmentCardGroup';
+export * from './Attachment/AttachmentCard';
+export * from './Attachment/AttachmentCardGroup';
 export * from './ModalClone/ModalClone';
-export * from './AttachmentDownloadCards';
-export type { _AttachmentUploadCardsStrings } from './AttachmentUploadCards';
+export * from './Attachment/AttachmentDownloadCards';
+export type { _AttachmentUploadCardsStrings } from './Attachment/AttachmentUploadCards';
 
 export type {
   AttachmentOptions,
   AttachmentUploadOptions,
-  AttachmentMetadata,
-  AttachmentProgressError,
+  AttachmentActionHandler,
   AttachmentSelectionHandler,
+  AttachmentMetadataWrapper,
   AttachmentRemovalHandler,
-  AttachmentUploadTask,
-  AttachmentMetadataWithProgress
+  AttachmentUploadTask
 } from '../types/Attachment';
 
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
@@ -295,3 +292,9 @@ export * from './CaptionsSettingsModal';
 
 /* @conditional-compile-remove(teams-meeting-conference) */
 export * from './MeetingConferencePhoneInfo';
+
+export { _ErrorBoundary } from './ErrorBoundary';
+/* @conditional-compile-remove(notifications) */
+export * from './NotificationBar';
+/* @conditional-compile-remove(notifications) */
+export * from './Notifications';

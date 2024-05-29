@@ -42,6 +42,8 @@ import {
 import { joinThread } from './utils/joinThread';
 import { getEndpointUrl } from './utils/getEndpointUrl';
 import { refreshToken } from './utils/refreshToken';
+/* @conditional-compile-remove(rich-text-editor-composite-support) */
+import { RichTextEditorToggle } from './RichTextEditorToggle';
 
 // These props are set by the caller of ConfigurationScreen in the JSX and not found in context
 export interface ConfigurationScreenProps {
@@ -51,6 +53,8 @@ export interface ConfigurationScreenProps {
   setDisplayName(displayName: string): void;
   setThreadId(threadId: string): void;
   setEndpointUrl(endpointUrl: string): void;
+  /* @conditional-compile-remove(rich-text-editor-composite-support) */
+  setIsRichTextEditorEnabled(isEnabled: boolean): void;
 }
 
 // ConfigurationScreen states
@@ -194,6 +198,12 @@ export default (props: ConfigurationScreenProps): JSX.Element => {
     return <Spinner label={spinnerLabel} ariaLive="assertive" labelPosition="top" />;
   };
 
+  const richTextEditorToggle = (): JSX.Element => {
+    /* @conditional-compile-remove(rich-text-editor-composite-support) */
+    return <RichTextEditorToggle setRichTextEditorIsEnabled={props.setIsRichTextEditorEnabled} />;
+    return <></>;
+  };
+
   const displayJoinChatArea = (): JSX.Element => {
     return (
       <Stack
@@ -247,6 +257,7 @@ export default (props: ConfigurationScreenProps): JSX.Element => {
             validateName={validateName}
             isEmpty={emptyWarning}
           />
+          {richTextEditorToggle()}
           <PrimaryButton
             disabled={disableJoinChatButton}
             className={buttonStyle}

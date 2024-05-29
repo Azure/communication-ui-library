@@ -20,9 +20,9 @@ import LiveMessage from '../Announcer/LiveMessage';
 /* @conditional-compile-remove(mention) */
 import { defaultOnMentionRender } from './MentionRenderer';
 import DOMPurify from 'dompurify';
-import { _AttachmentDownloadCardsStrings } from '../AttachmentDownloadCards';
+import { _AttachmentDownloadCardsStrings } from '../Attachment/AttachmentDownloadCards';
 /* @conditional-compile-remove(attachment-download) */
-import { AttachmentMetadata } from '../../types';
+import { AttachmentMetadata } from '@internal/acs-ui-common';
 
 type ChatMessageContentProps = {
   message: ChatMessage;
@@ -286,8 +286,14 @@ const processHtmlToReact = (props: ChatMessageContentProps): JSX.Element => {
           return props.inlineImageOptions?.onRenderInlineImage
             ? props.inlineImageOptions.onRenderInlineImage(inlineImageProps, defaultOnRenderInlineImage)
             : defaultOnRenderInlineImage(inlineImageProps);
+        }
 
-          return <img key={imgProps.id as string} {...imgProps} />;
+        // Transform links to open in new tab
+        if (domNode.name === 'a' && React.isValidElement<React.AnchorHTMLAttributes<HTMLAnchorElement>>(reactNode)) {
+          return React.cloneElement(reactNode, {
+            target: '_blank',
+            rel: 'noreferrer noopener'
+          });
         }
       }
       // Pass through the original node
