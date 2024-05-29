@@ -26,7 +26,7 @@ export const useAttachmentCardGroupStyles = makeStyles({
  */
 export const attachmentCardBaseStyles = mergeStyles({
   '& > *': {
-    ...shorthands.margin(`${_pxToRem(_ATTACHMENT_CARD_MARGIN_IN_PX)}`)
+    margin: `${_pxToRem(_ATTACHMENT_CARD_MARGIN_IN_PX)}`
   },
   /**
    * margin for children is overriden by parent stack, so adding left margin for each child
