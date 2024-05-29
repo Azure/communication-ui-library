@@ -13,6 +13,7 @@ import { MobileChatSidePaneTabHeaderProps } from '../../common/TabHeader';
 import { SidePaneRenderer } from '../components/SidePane/SidePaneProvider';
 
 import { CapabilitiesChangeNotificationBarProps } from '../components/CapabilitiesChangedNotificationBar';
+import { BreakoutRoomsNotificationBarProps } from '../components/BreakoutRoomsNotificationBar';
 
 /**
  * @beta
@@ -27,6 +28,7 @@ export interface HoldPageProps {
   onDismissError: (error: ActiveErrorMessage) => void;
 
   capabilitiesChangedNotificationBarProps?: CapabilitiesChangeNotificationBarProps;
+  breakoutRoomsNotificationBarProps?: BreakoutRoomsNotificationBarProps;
 }
 
 /**
@@ -66,6 +68,7 @@ export const HoldPage = (props: HoldPageProps): JSX.Element => {
       mobileChatTabHeader={props.mobileChatTabHeader}
       latestErrors={props.latestErrors}
       onDismissError={props.onDismissError}
+      breakoutRoomsNotificationBarProps={props.breakoutRoomsNotificationBarProps}
     />
   );
 };

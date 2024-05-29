@@ -87,6 +87,7 @@ import {
 } from '../utils/spotlightUtils';
 /* @conditional-compile-remove(acs-close-captions) */
 import { getCaptionsKind, getIsTeamsCall } from '../selectors/baseSelectors';
+import { BreakoutRoomsNotificationBar, BreakoutRoomsNotificationBarProps } from './BreakoutRoomsNotificationBar';
 
 /**
  * @private
@@ -111,6 +112,7 @@ export interface CallArrangementProps {
   userSetGalleryLayout?: VideoGalleryLayout;
 
   capabilitiesChangedNotificationBarProps?: CapabilitiesChangeNotificationBarProps;
+  breakoutRoomsNotificationBarProps?: BreakoutRoomsNotificationBarProps;
   onCloseChatPane?: () => void;
   onSetDialpadPage?: () => void;
   dtmfDialerPresent?: boolean;
@@ -495,6 +497,12 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                             {...props.capabilitiesChangedNotificationBarProps}
                             capabilitiesChangedNotifications={filteredCapabilitesChangedNotifications ?? []}
                           />
+                        </Stack>
+                      )}
+                    {props.breakoutRoomsNotificationBarProps &&
+                      props.breakoutRoomsNotificationBarProps.breakoutRoomsNotifications.length > 0 && (
+                        <Stack styles={bannerNotificationStyles}>
+                          <BreakoutRoomsNotificationBar {...props.breakoutRoomsNotificationBarProps} />
                         </Stack>
                       )}
                     {canUnmute && !!props.mutedNotificationProps && (

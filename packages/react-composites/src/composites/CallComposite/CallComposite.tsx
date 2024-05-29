@@ -21,7 +21,7 @@ import { CallPage } from './pages/CallPage';
 import { ConfigurationPage } from './pages/ConfigurationPage';
 import { NoticePage } from './pages/NoticePage';
 import { useSelector } from './hooks/useSelector';
-import { getEndedCall, getPage, getTargetCallees } from './selectors/baseSelectors';
+import { getAssignedBreakoutRoom, getEndedCall, getPage, getTargetCallees } from './selectors/baseSelectors';
 import { LobbyPage } from './pages/LobbyPage';
 import { TransferPage } from './pages/TransferPage';
 import {
@@ -57,6 +57,8 @@ import { useTrackedCapabilityChangedNotifications } from './utils/TrackCapabilit
 import { useEndedCallConsoleErrors } from './utils/useConsoleErrors';
 import { SurveyPage } from './pages/SurveyPage';
 import { useAudio } from '../common/AudioProvider';
+import { useTrackedBreakoutRoomsNotifications } from './utils/TrackBreakoutRoomsNotifications';
+import { AzureCommunicationCallAdapter } from './adapter/AzureCommunicationCallAdapter';
 
 /**
  * Props for {@link CallComposite}.
@@ -420,6 +422,12 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   const capabilitiesChangedNotificationBarProps =
     useTrackedCapabilityChangedNotifications(capabilitiesChangedInfoAndRole);
 
+  const breakoutRoom = useSelector(getAssignedBreakoutRoom);
+  const breakoutRoomsNotificationBarProps = useTrackedBreakoutRoomsNotifications(
+    breakoutRoom,
+    adapter as AzureCommunicationCallAdapter
+  );
+
   // Track the last dismissed errors of any error kind to prevent errors from re-appearing on subsequent page navigation
   // This works by tracking the most recent timestamp of any active error type.
   // And then tracking when that error type was last dismissed.
@@ -605,6 +613,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           onSetUserSetOverflowGalleryPosition={setUserSetOverflowGalleryPosition}
           userSetOverflowGalleryPosition={userSetOverflowGalleryPosition}
           capabilitiesChangedNotificationBarProps={capabilitiesChangedNotificationBarProps}
+          breakoutRoomsNotificationBarProps={breakoutRoomsNotificationBarProps}
           pinnedParticipants={pinnedParticipants}
           setPinnedParticipants={setPinnedParticipants}
           compositeAudioContext={compositeAudioContext}
@@ -626,6 +635,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
               latestErrors={latestErrors}
               onDismissError={onDismissError}
               capabilitiesChangedNotificationBarProps={capabilitiesChangedNotificationBarProps}
+              breakoutRoomsNotificationBarProps={breakoutRoomsNotificationBarProps}
             />
           }
         </>

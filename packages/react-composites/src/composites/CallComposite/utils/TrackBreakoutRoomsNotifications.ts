@@ -2,15 +2,13 @@
 // Licensed under the MIT License.
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-
-import { CapabilitiesChangeInfo, ParticipantCapabilityName, ParticipantRole } from '@azure/communication-calling';
-
 import {
-  CapabalityChangedNotification,
-  CapabilitiesChangeNotificationBarProps
-} from '../components/CapabilitiesChangedNotificationBar';
-
-import { TrackedCapabilityChangedNotifications } from '../types/CapabilityChangedNotificationTracking';
+  BreakoutRoomsNotification,
+  BreakoutRoomsNotificationBarProps,
+  EventName
+} from '../components/BreakoutRoomsNotificationBar';
+import { BreakoutRoom } from '@azure/communication-calling';
+import { AzureCommunicationCallAdapter } from '../adapter/AzureCommunicationCallAdapter';
 
 /**
  * Create a record for when the notification was most recently dismissed for tracking dismissed notifications.
@@ -18,49 +16,67 @@ import { TrackedCapabilityChangedNotifications } from '../types/CapabilityChange
  * @private
  */
 export const useTrackedBreakoutRoomsNotifications = (
-  capabilitiesChangedAndRoleInfo: CapabilitiesChangedInfoAndRole
-): CapabilitiesChangeNotificationBarProps => {
+  assignedBreakoutRoom?: BreakoutRoom,
+  adapter?: AzureCommunicationCallAdapter
+): BreakoutRoomsNotificationBarProps => {
   const [trackedCapabilityChangedNotifications, setTrackedCapabilityChangedNotifications] =
-    useState<TrackedCapabilityChangedNotifications>({});
+    useState<TrackedBreakoutRoomsNotifications>({});
 
   // Initialize a share screen capability changed notification with 'RoleChanged' reason so that the initial
   // share screen capability changed info from the Calling SDK when joining Teams interop will be ignored because
   // being able to share screen is assumed by default. This is inline with what Teams is doing.
-  const activeNotifications = useRef<LatestCapabilityChangedNotificationRecord>({
-    shareScreen: { capabilityName: 'shareScreen', isPresent: true, changedReason: 'RoleChanged' }
-  });
+  const activeNotifications = useRef<LatestBreakoutRoomsNotificationRecord>({});
 
   useEffect(() => {
-    activeNotifications.current = updateLatestCapabilityChangedNotificationMap(
-      capabilitiesChangedAndRoleInfo,
+    const breakoutRoomNotifications: Partial<Record<EventName, BreakoutRoomsNotification>> = {};
+    if (assignedBreakoutRoom) {
+      breakoutRoomNotifications['assignedBreakoutRoomUpdated'] = {
+        eventName: 'assignedBreakoutRoomUpdated',
+        breakoutRoom: assignedBreakoutRoom,
+        actions:
+          assignedBreakoutRoom.autoMoveParticipantToBreakoutRoom === false
+            ? [
+                {
+                  actionName: 'Join room',
+                  action: async (): Promise<void> => {
+                    const newCall = await assignedBreakoutRoom.join();
+                    adapter?.processNewCall(newCall);
+                  },
+                  dismissAfter: true
+                }
+              ]
+            : undefined
+      };
+    }
+    activeNotifications.current = updateLatestBreakoutRoomsNotificationMap(
+      breakoutRoomNotifications,
       activeNotifications.current
     );
     setTrackedCapabilityChangedNotifications((prev) =>
-      updateTrackedCapabilityChangedNotificationsWithActiveNotifications(
-        prev,
-        Object.values(activeNotifications.current)
-      )
+      updateTrackedBreakoutRoomsNotificationsWithActiveNotifications(prev, Object.values(activeNotifications.current))
     );
-  }, [capabilitiesChangedAndRoleInfo]);
+  }, [assignedBreakoutRoom, adapter]);
 
-  const onDismissCapabilityChangedNotification = useCallback((notification: CapabalityChangedNotification) => {
+  const onDismissBreakoutRoomsNotification = useCallback((notification: BreakoutRoomsNotification) => {
     setTrackedCapabilityChangedNotifications((prev) =>
-      trackCapabilityChangedNotificationAsDismissed(notification.capabilityName, prev)
+      trackCapabilityChangedNotificationAsDismissed(notification.eventName, prev)
     );
   }, []);
 
-  const latestCapabilityChangedNotifications = useMemo(
+  const latestBreakoutRoomsNotifications = useMemo(
     () =>
-      filterLatestCapabilityChangedNotifications(
+      filterLatestBreakoutRoomsNotifications(
         Object.values(activeNotifications.current),
         trackedCapabilityChangedNotifications
       ),
     [trackedCapabilityChangedNotifications]
   );
 
+  console.log('activeNotifications.current: ', activeNotifications.current);
+
   return {
-    capabilitiesChangedNotifications: latestCapabilityChangedNotifications,
-    onDismissNotification: onDismissCapabilityChangedNotification
+    breakoutRoomsNotifications: latestBreakoutRoomsNotifications,
+    onDismissNotification: onDismissBreakoutRoomsNotification
   };
 };
 
@@ -69,12 +85,12 @@ export const useTrackedBreakoutRoomsNotifications = (
  *
  * @private
  */
-export const filterLatestCapabilityChangedNotifications = (
-  activeNotifications: CapabalityChangedNotification[],
-  trackedNotifications: TrackedCapabilityChangedNotifications
-): CapabalityChangedNotification[] => {
+export const filterLatestBreakoutRoomsNotifications = (
+  activeNotifications: BreakoutRoomsNotification[],
+  trackedNotifications: TrackedBreakoutRoomsNotifications
+): BreakoutRoomsNotification[] => {
   const filteredNotifications = activeNotifications.filter((activeNotification) => {
-    const trackedNotification = trackedNotifications[activeNotification.capabilityName];
+    const trackedNotification = trackedNotifications[activeNotification.eventName];
     return (
       !trackedNotification ||
       !trackedNotification.lastDismissedAt ||
@@ -89,16 +105,21 @@ export const filterLatestCapabilityChangedNotifications = (
  *
  * @private
  */
-export const updateTrackedCapabilityChangedNotificationsWithActiveNotifications = (
-  existingTrackedNotifications: TrackedCapabilityChangedNotifications,
-  activeNotifications: CapabalityChangedNotification[]
-): TrackedCapabilityChangedNotifications => {
-  const trackedNotifications: TrackedCapabilityChangedNotifications = {};
+export const updateTrackedBreakoutRoomsNotificationsWithActiveNotifications = (
+  existingTrackedNotifications: TrackedBreakoutRoomsNotifications,
+  activeNotifications: BreakoutRoomsNotification[]
+): TrackedBreakoutRoomsNotifications => {
+  const trackedNotifications: TrackedBreakoutRoomsNotifications = {};
+
+  console.log(
+    'updateTrackedBreakoutRoomsNotificationsWithActiveNotifications activeNotifications: ',
+    activeNotifications
+  );
 
   // Only care about active notifications. If notifications are no longer active we do not track that they have been previously dismissed.
   for (const activeNotification of activeNotifications) {
-    const existingTrackedNotification = existingTrackedNotifications[activeNotification.capabilityName];
-    trackedNotifications[activeNotification.capabilityName] = {
+    const existingTrackedNotification = existingTrackedNotifications[activeNotification.eventName];
+    trackedNotifications[activeNotification.eventName] = {
       mostRecentlyActive:
         activeNotification.timestamp ?? existingTrackedNotification?.mostRecentlyActive ?? new Date(Date.now()),
       lastDismissedAt: existingTrackedNotification?.lastDismissedAt
@@ -114,63 +135,44 @@ export const updateTrackedCapabilityChangedNotificationsWithActiveNotifications 
  * @private
  */
 export const trackCapabilityChangedNotificationAsDismissed = (
-  capabilityName: ParticipantCapabilityName,
-  trackedNotifications: TrackedCapabilityChangedNotifications
-): TrackedCapabilityChangedNotifications => {
+  notificationEvent: EventName,
+  trackedNotifications: TrackedBreakoutRoomsNotifications
+): TrackedBreakoutRoomsNotifications => {
   const now = new Date(Date.now());
-  const existingNotification = trackedNotifications[capabilityName];
+  const existingNotification = trackedNotifications[notificationEvent];
 
+  if (!existingNotification) {
+    return trackedNotifications;
+  }
   return {
     ...trackedNotifications,
-    [capabilityName]: {
+    [notificationEvent]: {
       ...(existingNotification || {}),
       lastDismissedAt: now
     }
   };
 };
 
-interface CapabilitiesChangedInfoAndRole {
-  capabilitiesChangeInfo?: CapabilitiesChangeInfo;
-  participantRole?: ParticipantRole;
-}
+type LatestBreakoutRoomsNotificationRecord = Partial<Record<EventName, BreakoutRoomsNotification>>;
 
-type LatestCapabilityChangedNotificationRecord = Partial<
-  Record<ParticipantCapabilityName, CapabalityChangedNotification>
->;
-
-const updateLatestCapabilityChangedNotificationMap = (
-  capabilitiesChangedInfoAndRole: CapabilitiesChangedInfoAndRole,
-  activeNotifications: LatestCapabilityChangedNotificationRecord
-): LatestCapabilityChangedNotificationRecord => {
-  if (!capabilitiesChangedInfoAndRole.capabilitiesChangeInfo) {
-    return activeNotifications;
-  }
-
-  for (const [capabilityKey, newCapabilityValue] of Object.entries(
-    capabilitiesChangedInfoAndRole.capabilitiesChangeInfo.newValue
-  )) {
-    // Cast is safe because we are iterating over the enum keys on the object.entries where
-    // newCapabilityValue typing is correctly returned. Object.entries limitations
-    // always returns string for the key
-    const capabilityName = capabilityKey as ParticipantCapabilityName;
-    // If the active notification for a capability has the same `isPresent` value and the same reason as the new
-    // capability value from the SDK then we will not create a new notification to avoid redundancy
-    if (
-      activeNotifications[capabilityName] &&
-      newCapabilityValue.isPresent === activeNotifications[capabilityName]?.isPresent &&
-      capabilitiesChangedInfoAndRole.capabilitiesChangeInfo.reason ===
-        activeNotifications[capabilityName]?.changedReason
-    ) {
+const updateLatestBreakoutRoomsNotificationMap = (
+  breakoutRoomsNotifications: Partial<Record<EventName, BreakoutRoomsNotification>>,
+  activeNotifications: LatestBreakoutRoomsNotificationRecord
+): LatestBreakoutRoomsNotificationRecord => {
+  for (const [notificationEvent, breakoutRoomsNotification] of Object.entries(breakoutRoomsNotifications)) {
+    const event = notificationEvent as EventName;
+    if (event && activeNotifications[event]) {
       continue;
     }
-    const newCapabilityChangeNotification: CapabalityChangedNotification = {
-      capabilityName: capabilityName,
-      isPresent: newCapabilityValue.isPresent,
-      changedReason: capabilitiesChangedInfoAndRole.capabilitiesChangeInfo.reason,
-      role: capabilitiesChangedInfoAndRole.participantRole,
-      timestamp: new Date(Date.now())
-    };
-    activeNotifications[capabilityName] = newCapabilityChangeNotification;
+    activeNotifications[event] = breakoutRoomsNotification;
   }
+
   return activeNotifications;
 };
+
+interface NotificationTrackingInfo {
+  mostRecentlyActive: Date;
+  lastDismissedAt?: Date;
+}
+
+type TrackedBreakoutRoomsNotifications = Partial<Record<EventName, NotificationTrackingInfo>>;

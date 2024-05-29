@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { CallState as SDKCallStatus, DominantSpeakersInfo } from '@azure/communication-calling';
+import { CallState as SDKCallStatus, DominantSpeakersInfo, BreakoutRoom } from '@azure/communication-calling';
 import { ParticipantCapabilities } from '@azure/communication-calling';
 import { VideoDeviceInfo, AudioDeviceInfo } from '@azure/communication-calling';
 
@@ -233,3 +233,9 @@ export const getStartTime = (state: CallAdapterState): Date | undefined => state
  */
 export const getSpotlightedParticipants = (state: CallAdapterState): SpotlightedParticipant[] | undefined =>
   state.call?.spotlight?.spotlightedParticipants;
+
+/**
+ * @private
+ */
+export const getAssignedBreakoutRoom = (state: CallAdapterState): BreakoutRoom | undefined =>
+  state.call?.breakoutRooms?.assignedBreakoutRoom;

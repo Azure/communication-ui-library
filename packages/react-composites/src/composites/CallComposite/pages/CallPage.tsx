@@ -33,6 +33,7 @@ import { showDtmfDialer } from '../utils/MediaGalleryUtils';
 import { getTargetCallees } from '../selectors/baseSelectors';
 /* @conditional-compile-remove(spotlight) */
 import { Prompt, PromptProps } from '../components/Prompt';
+import { BreakoutRoomsNotificationBarProps } from '../components/BreakoutRoomsNotificationBar';
 
 /**
  * @private
@@ -50,6 +51,7 @@ export interface CallPageProps {
   onDismissError: (error: ActiveErrorMessage) => void;
   galleryLayout: VideoGalleryLayout;
   capabilitiesChangedNotificationBarProps?: CapabilitiesChangeNotificationBarProps;
+  breakoutRoomsNotificationBarProps?: BreakoutRoomsNotificationBarProps;
   onUserSetGalleryLayoutChange?: (layout: VideoGalleryLayout) => void;
   userSetOverflowGalleryPosition?: 'Responsive' | 'horizontalTop';
   onSetUserSetOverflowGalleryPosition?: (position: 'Responsive' | 'horizontalTop') => void;
@@ -189,6 +191,7 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
         onUserSetGalleryLayoutChange={onUserSetGalleryLayoutChange}
         userSetGalleryLayout={galleryLayout}
         capabilitiesChangedNotificationBarProps={props.capabilitiesChangedNotificationBarProps}
+        breakoutRoomsNotificationBarProps={props.breakoutRoomsNotificationBarProps}
         onSetDialpadPage={() => setDtmfDialerPresent(!dtmfDialerPresent)}
         dtmfDialerPresent={dtmfDialerPresent}
         /* @conditional-compile-remove(spotlight) */
