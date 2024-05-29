@@ -67,12 +67,7 @@ export const config: PlaywrightTestConfig<TestOptions> = {
     }
   ],
   expect: {
-    // composites tests use toMatchSnapshot
     toMatchSnapshot: {
-      maxDiffPixels: 1
-    },
-    // components tests use toHaveScreenshot
-    toHaveScreenshot: {
       maxDiffPixels: 1
     }
   }
