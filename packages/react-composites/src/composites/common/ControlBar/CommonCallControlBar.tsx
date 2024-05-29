@@ -7,6 +7,7 @@ import { CallAdapter } from '../../CallComposite';
 import { PeopleButton } from './PeopleButton';
 import {
   concatStyleSets,
+  DefaultButton,
   IButton,
   IStyle,
   ITheme,
@@ -50,8 +51,10 @@ import { useLocale } from '../../localization';
 /* @conditional-compile-remove(end-call-options) */
 import { isBoolean } from '../utils';
 /* @conditional-compile-remove(end-call-options) */
-import { getIsTeamsCall } from '../../CallComposite/selectors/baseSelectors';
+import { getAssignedBreakoutRoom, getIsTeamsCall } from '../../CallComposite/selectors/baseSelectors';
+/* @conditional-compile-remove(reaction) */
 import { callStatusSelector } from '../../CallComposite/selectors/callStatusSelector';
+import { AzureCommunicationCallAdapter } from '../../CallComposite/adapter/AzureCommunicationCallAdapter';
 
 /**
  * @private
@@ -132,6 +135,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
     useSelector((state) => state.call?.capabilitiesFeature?.capabilities.hangUpForEveryOne.isPresent) ?? true;
   /* @conditional-compile-remove(end-call-options) */
   const isTeams = useSelector(getIsTeamsCall);
+  const assignedBreakoutRoom = useSelector(getAssignedBreakoutRoom);
 
   const handleResize = useCallback((): void => {
     setControlBarButtonsWidth(controlBarContainerRef.current ? controlBarContainerRef.current.offsetWidth : 0);
@@ -465,6 +469,17 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
           <Stack.Item>
             <div ref={sidepaneControlsRef}>
               <Stack horizontal className={!props.mobileView ? mergeStyles(desktopButtonContainerStyle) : undefined}>
+                {
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  assignedBreakoutRoom && assignedBreakoutRoom.state === 'open' && (
+                    <DefaultButton
+                      text="Join room"
+                      onClick={async (): Promise<void> => {
+                        await assignedBreakoutRoom.join();
+                      }}
+                    />
+                  )
+                }
                 {isEnabled(options?.peopleButton) && (
                   <PeopleButton
                     checked={props.peopleButtonChecked}
