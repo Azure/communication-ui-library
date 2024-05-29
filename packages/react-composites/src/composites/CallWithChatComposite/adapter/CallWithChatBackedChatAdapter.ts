@@ -5,7 +5,7 @@ import { CallWithChatAdapter } from './CallWithChatAdapter';
 import { ChatAdapter, ChatAdapterState } from '../../ChatComposite';
 import { ResourceDetails } from '../../ChatComposite';
 /* @conditional-compile-remove(attachment-upload) */
-import { AttachmentMetadata, AttachmentUploadTask } from '@internal/react-components';
+import { MessageOptions } from '@internal/acs-ui-common';
 import { ErrorBarStrings } from '@internal/react-components';
 import { CallWithChatAdapterState } from '../state/CallWithChatAdapterState';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
@@ -30,11 +30,18 @@ export class CallWithChatBackedChatAdapter implements ChatAdapter {
   }
 
   public fetchInitialData = async (): Promise<void> => await this.callWithChatAdapter.fetchInitialData();
-  public sendMessage = async (content: string): Promise<void> => await this.callWithChatAdapter.sendMessage(content);
-  /* @conditional-compile-remove(attachment-upload) */
-  public sendMessageWithAttachments(content: string, attachments: AttachmentMetadata[]): Promise<void> {
-    return this.callWithChatAdapter.sendMessageWithAttachments(content, attachments);
-  }
+  // due to a bug in babel, we can't use arrow function here
+  // affecting conditional-compile-remove(attachment-upload)
+  // have to bind this since the scope of 'this' is lost when the function is passed as a callback
+  sendMessageHandler = async function (
+    this: CallWithChatBackedChatAdapter,
+    content: string,
+    /* @conditional-compile-remove(attachment-upload) */
+    options?: MessageOptions
+  ): Promise<void> {
+    await this.callWithChatAdapter.sendMessage(content, /* @conditional-compile-remove(attachment-upload) */ options);
+  };
+  public sendMessage = this.sendMessageHandler.bind(this);
   public sendReadReceipt = async (chatMessageId: string): Promise<void> =>
     await this.callWithChatAdapter.sendReadReceipt(chatMessageId);
   public sendTypingIndicator = async (): Promise<void> => await this.callWithChatAdapter.sendTypingIndicator();
@@ -83,8 +90,20 @@ export class CallWithChatBackedChatAdapter implements ChatAdapter {
         return this.callWithChatAdapter.off(event, listener);
     }
   };
-  public updateMessage = async (messageId: string, content: string, metadata?: Record<string, string>): Promise<void> =>
-    await this.callWithChatAdapter.updateMessage(messageId, content, metadata);
+
+  // due to a bug in babel, we can't use arrow function here
+  // affecting conditional-compile-remove(attachment-upload)
+  // have to bind this since the scope of 'this' is lost when the function is passed as a callback
+  updateMessageHandler = async function (
+    this: CallWithChatBackedChatAdapter,
+    messageId: string,
+    content: string,
+    options?: Record<string, string> | /* @conditional-compile-remove(attachment-upload) */ MessageOptions
+  ): Promise<void> {
+    await this.callWithChatAdapter.updateMessage(messageId, content, options);
+  };
+
+  public updateMessage = this.updateMessageHandler.bind(this);
   public deleteMessage = async (messageId: string): Promise<void> =>
     await this.callWithChatAdapter.deleteMessage(messageId);
 
@@ -94,41 +113,6 @@ export class CallWithChatBackedChatAdapter implements ChatAdapter {
 
   public setTopic = async (topicName: string): Promise<void> => {
     throw new Error(`Chat Topics are not supported in CallWithChatComposite.`);
-  };
-
-  /* @conditional-compile-remove(attachment-upload) */
-  public registerActiveUploads = (files: File[]): AttachmentUploadTask[] => {
-    return this.callWithChatAdapter.registerActiveUploads(files);
-  };
-
-  /* @conditional-compile-remove(attachment-upload) */
-  public registerCompletedUploads = (metadata: AttachmentMetadata[]): AttachmentUploadTask[] => {
-    return this.callWithChatAdapter.registerCompletedUploads(metadata);
-  };
-
-  /* @conditional-compile-remove(attachment-upload) */
-  public clearUploads = (): void => {
-    this.callWithChatAdapter.clearUploads();
-  };
-
-  /* @conditional-compile-remove(attachment-upload) */
-  public cancelUpload = (id: string): void => {
-    this.callWithChatAdapter.cancelUpload(id);
-  };
-
-  /* @conditional-compile-remove(attachment-upload) */
-  public updateUploadProgress = (id: string, progress: number): void => {
-    this.callWithChatAdapter.updateUploadProgress(id, progress);
-  };
-
-  /* @conditional-compile-remove(attachment-upload) */
-  public updateUploadStatusMessage = (id: string, errorMessage: string): void => {
-    this.callWithChatAdapter.updateUploadStatusMessage(id, errorMessage);
-  };
-
-  /* @conditional-compile-remove(attachment-upload) */
-  public updateUploadMetadata = (id: string, metadata: AttachmentMetadata): void => {
-    this.callWithChatAdapter.updateUploadMetadata(id, metadata);
   };
 
   public async downloadResourceToCache(resourceDetails: ResourceDetails): Promise<void> {
@@ -159,9 +143,7 @@ function chatAdapterStateFromCallWithChatAdapterState(
         typingIndicators: [],
         latestReadTime: new Date()
       },
-      latestErrors: callWithChatAdapterState.latestChatErrors,
-      /* @conditional-compile-remove(attachment-upload) */
-      _attachmentUploads: callWithChatAdapterState._attachmentUploads
+      latestErrors: callWithChatAdapterState.latestChatErrors
     };
   }
 
@@ -169,8 +151,6 @@ function chatAdapterStateFromCallWithChatAdapterState(
     userId: callWithChatAdapterState.userId,
     displayName: callWithChatAdapterState.displayName || '',
     thread: callWithChatAdapterState.chat,
-    latestErrors: callWithChatAdapterState.latestChatErrors,
-    /* @conditional-compile-remove(attachment-upload) */
-    _attachmentUploads: callWithChatAdapterState._attachmentUploads
+    latestErrors: callWithChatAdapterState.latestChatErrors
   };
 }

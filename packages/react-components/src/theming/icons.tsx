@@ -17,7 +17,7 @@ import {
   ErrorCircle16Regular,
   Eye16Regular,
   MicOff16Filled,
-  MicOff16Regular,
+  MicOff20Regular,
   MicOff20Filled,
   Mic16Filled,
   Mic20Filled,
@@ -45,7 +45,8 @@ import {
   Pin20Regular,
   PinOff20Regular,
   ScaleFit20Regular,
-  ScaleFill20Regular
+  ScaleFill20Regular,
+  PersonDelete20Regular
 } from '@fluentui/react-icons';
 /* @conditional-compile-remove(rich-text-editor) */
 import {
@@ -307,7 +308,7 @@ export const DEFAULT_COMPONENT_ICONS = {
   OptionsCamera: <Video20Regular />,
   OptionsMic: <Mic20Regular />,
   OptionsSpeaker: <Speaker220Regular />,
-  ParticipantItemMicOff: <MicOff16Regular />,
+  ParticipantItemMicOff: <MicOff20Regular />,
   ParticipantItemOptions: <></>,
   ParticipantItemOptionsHovered: <MoreHorizontal20Filled />,
   ParticipantItemScreenShareStart: <ShareScreenStart20Filled />,
@@ -359,6 +360,7 @@ export const DEFAULT_COMPONENT_ICONS = {
   ContextMenuCameraIcon: <Video20Regular />,
   ContextMenuMicIcon: <Mic20Regular />,
   ContextMenuSpeakerIcon: <Speaker220Regular />,
+  ContextMenuRemoveParticipant: <PersonDelete20Regular />,
   /* @conditional-compile-remove(end-of-call-survey) */
   SurveyStarIcon: <Star28Regular />,
   /* @conditional-compile-remove(end-of-call-survey) */
