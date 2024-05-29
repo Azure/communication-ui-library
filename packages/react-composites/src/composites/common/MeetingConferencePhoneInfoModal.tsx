@@ -1,15 +1,20 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+/* @conditional-compile-remove(teams-meeting-conference) */
 import React from 'react';
+/* @conditional-compile-remove(teams-meeting-conference) */
 import {
   _MeetingConferencePhoneInfoModal,
   _MeetingConferencePhoneInfoModalStrings,
   _ConferencePhoneInfo
 } from '@internal/react-components';
+/* @conditional-compile-remove(teams-meeting-conference) */
 import { useLocale } from '../localization';
+/* @conditional-compile-remove(teams-meeting-conference) */
 import { TeamsMeetingAudioConferencingDetails } from '@azure/communication-calling';
 
+/* @conditional-compile-remove(teams-meeting-conference) */
 /** @private */
 export const MeetingConferencePhoneInfoModal = (props: {
   conferencePhoneInfoList: _ConferencePhoneInfo[];
@@ -37,6 +42,7 @@ export const MeetingConferencePhoneInfoModal = (props: {
   );
 };
 
+/* @conditional-compile-remove(teams-meeting-conference) */
 /** @private */
 export const convertConferencePhoneInfo = (
   meetingConferencePhoneInfo?: TeamsMeetingAudioConferencingDetails

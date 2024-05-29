@@ -315,15 +315,17 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
             changeCaptionLanguage={props.isCaptionsOn && props.useTeamsCaptions}
           />
         )}
-        {showTeamsMeetingConferenceModal && (
-          <MeetingConferencePhoneInfoModal
-            conferencePhoneInfoList={convertConferencePhoneInfo(
-              props.callAdapter.getState().call?.teamsMeetingConference
-            )}
-            showMeetingConferencePhoneInfoModal={showTeamsMeetingConferenceModal}
-            onDismissMeetingPhoneInfoSettings={onDismissTeamsMeetingConferenceModal}
-          />
-        )}
+        {
+          /* @conditional-compile-remove(teams-meeting-conference) */ showTeamsMeetingConferenceModal && (
+            <MeetingConferencePhoneInfoModal
+              conferencePhoneInfoList={convertConferencePhoneInfo(
+                props.callAdapter.getState().call?.teamsMeetingConference
+              )}
+              showMeetingConferencePhoneInfoModal={showTeamsMeetingConferenceModal}
+              onDismissMeetingPhoneInfoSettings={onDismissTeamsMeetingConferenceModal}
+            />
+          )
+        }
       </CallAdapterProvider>
       <Stack
         horizontal

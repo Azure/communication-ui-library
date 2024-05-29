@@ -18,10 +18,10 @@ import {
   Video20Filled,
   VideoOff20Filled,
   WifiWarning20Filled,
-  Circle20Regular,
-  PersonCall20Regular,
-  Clock20Filled
+  Circle20Regular
 } from '@fluentui/react-icons';
+/* @conditional-compile-remove(teams-meeting-conference) */
+import { PersonCall20Regular, Clock20Filled } from '@fluentui/react-icons';
 /* @conditional-compile-remove(spotlight) */
 import { MoreHorizontal20Filled, VideoPersonStarOff20Filled } from '@fluentui/react-icons';
 
