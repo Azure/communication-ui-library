@@ -373,7 +373,7 @@ export function createMockApiFeatures(
 ): <FeatureT extends CallFeature>(cls: CallFeatureFactory<FeatureT>) => FeatureT {
   return <FeatureT extends CallFeature>(cls: CallFeatureFactory<FeatureT>): FeatureT => {
     for (const [key, feature] of cache.entries()) {
-      if (cls && key.callApiCtor === cls.callApiCtor) {
+      if (cls && key && key.callApiCtor === cls.callApiCtor) {
         return feature as FeatureT;
       }
     }
