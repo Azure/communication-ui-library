@@ -35,7 +35,7 @@ import { RichTextInputBoxComponent } from '../../RichTextEditor/RichTextInputBox
 import { editBoxRichTextEditorStyle, richTextActionButtonsStyle } from '../../styles/RichTextEditor.styles';
 import { RichTextSendBoxErrors } from '../../RichTextEditor/RichTextSendBoxErrors';
 import { useLocale } from '../../../localization';
-/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(attachment-upload) */
 import { FluentV9ThemeProvider } from '../../../theming/FluentV9ThemeProvider';
 /* @conditional-compile-remove(attachment-upload) */
 import { attachmentUploadCardsStyles } from '../../styles/SendBox.styles';
@@ -61,7 +61,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
   const { onCancel, onSubmit, strings, message } = props;
 
   const [textValue, setTextValue] = useState<string>(message.content || '');
-  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(attachment-upload) */
   const [attachmentMetadata, handleAttachmentAction] = useReducer(
     attachmentMetadataReducer,
     getMessageWithAttachmentMetadata(message) ?? []
@@ -175,7 +175,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
     locale.sendBox
   ]);
 
-  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(attachment-upload) */
   const onCancelAttachmentUpload = useCallback((attachmentId: string) => {
     // edit box only capable of removing attachments
     // we need to expand attachment actions
@@ -183,7 +183,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
     handleAttachmentAction({ type: 'remove', id: attachmentId });
   }, []);
 
-  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(attachment-upload) */
   const onRenderAttachmentUploads = useCallback(() => {
     return (
       <Stack className={attachmentUploadCardsStyles}>

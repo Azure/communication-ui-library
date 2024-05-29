@@ -98,7 +98,7 @@ module.exports = {
     'meeting-id',
     // Feature for end call options 
     'end-call-options',
-     // Ability to download files attachments in message thread.
-     "attachment-download"
+    // Ability to download files attachments in message thread.
+    "attachment-download"
   ]
 }
