@@ -37,7 +37,7 @@ export interface ChatCompositeProps extends BaseCompositeProps<ChatCompositeIcon
    * Flags to enable/disable visual elements of the {@link ChatComposite}.
    */
   options?: ChatCompositeOptions;
-  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(attachment-upload) */
   /**
    * Optimizes the composite form factor for either desktop or mobile.
    * @remarks `mobile` is currently only optimized for Portrait mode on mobile devices and does not support landscape.
@@ -112,7 +112,7 @@ export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
     onFetchParticipantMenuItems
   } = props;
 
-  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(attachment-upload) */
   const formFactor = props['formFactor'] || 'desktop';
 
   return (
@@ -120,7 +120,7 @@ export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
       <BaseProvider {...props}>
         <ChatAdapterProvider adapter={adapter}>
           <ChatScreen
-            /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+            /* @conditional-compile-remove(attachment-upload) */
             formFactor={formFactor}
             options={options}
             onFetchAvatarPersonaData={onFetchAvatarPersonaData}
