@@ -43,7 +43,6 @@ export const FluentChatMessageComponent = (props: FluentChatMessageComponentWrap
     styles,
     shouldOverlapAvatarAndMessage,
     onRenderMessage,
-    hideAvatar,
     onRenderAvatar,
     /* @conditional-compile-remove(date-time-customization) */
     onDisplayDateTimeString,
@@ -118,8 +117,8 @@ export const FluentChatMessageComponent = (props: FluentChatMessageComponentWrap
   );
 
   const shouldShowAvatar = useMemo(() => {
-    return hideAvatar ? false : message.attached === 'top' || message.attached === false;
-  }, [message.attached, hideAvatar]);
+    return message.attached === 'top' || message.attached === false;
+  }, [message.attached]);
 
   const attached = useMemo(() => {
     return getFluentUIAttachedValue(message.attached);
@@ -129,15 +128,39 @@ export const FluentChatMessageComponent = (props: FluentChatMessageComponentWrap
     return { className: mergeClasses(chatMessageRenderStyles.rootMessage, chatMessageRenderStyles.rootCommon) };
   }, [chatMessageRenderStyles.rootCommon, chatMessageRenderStyles.rootMessage]);
 
+  const avatar = useMemo(() => {
+    const chatAvatarStyle = shouldShowAvatar ? gutterWithAvatar : gutterWithHiddenAvatar;
+    const personaOptions: IPersona = {
+      hidePersonaDetails: true,
+      size: PersonaSize.size32,
+      text: message.senderDisplayName,
+      showOverflowTooltip: false
+    };
+    let renderedAvatar;
+    if (onRenderAvatar) {
+      const avatarComponent = onRenderAvatar?.(message.senderId, personaOptions);
+      if (!avatarComponent) {
+        return undefined;
+      } else {
+        renderedAvatar = avatarComponent;
+      }
+    }
+    return (
+      <div className={mergeStyles(chatAvatarStyle)}>
+        {renderedAvatar ? renderedAvatar : <Persona {...personaOptions} />}
+      </div>
+    );
+  }, [message.senderDisplayName, message.senderId, onRenderAvatar, shouldShowAvatar]);
+
   const messageBodyProps = useMemo(() => {
     return {
       // chatItemMessageContainer used in className and style prop as style prop can't handle CSS selectors
       className: mergeClasses(
         chatMessageRenderStyles.bodyCommon,
         !shouldShowAvatar
-          ? hideAvatar
-            ? chatMessageRenderStyles.bodyHiddenAvatar
-            : chatMessageRenderStyles.bodyWithoutAvatar
+          ? avatar
+            ? chatMessageRenderStyles.bodyWithoutAvatar
+            : chatMessageRenderStyles.bodyHiddenAvatar
           : chatMessageRenderStyles.bodyWithAvatar,
         shouldOverlapAvatarAndMessage ? chatMessageRenderStyles.avatarOverlap : chatMessageRenderStyles.avatarNoOverlap,
         mergeStyles(styles?.chatItemMessageContainer)
@@ -151,34 +174,16 @@ export const FluentChatMessageComponent = (props: FluentChatMessageComponentWrap
     };
   }, [
     chatMessageRenderStyles.bodyCommon,
-    chatMessageRenderStyles.bodyHiddenAvatar,
     chatMessageRenderStyles.bodyWithoutAvatar,
+    chatMessageRenderStyles.bodyHiddenAvatar,
     chatMessageRenderStyles.bodyWithAvatar,
     chatMessageRenderStyles.avatarOverlap,
     chatMessageRenderStyles.avatarNoOverlap,
     shouldShowAvatar,
-    hideAvatar,
+    avatar,
     shouldOverlapAvatarAndMessage,
     styles?.chatItemMessageContainer
   ]);
-
-  const avatar = useMemo(() => {
-    if (hideAvatar) {
-      return undefined;
-    }
-    const chatAvatarStyle = shouldShowAvatar ? gutterWithAvatar : gutterWithHiddenAvatar;
-    const personaOptions: IPersona = {
-      hidePersonaDetails: true,
-      size: PersonaSize.size32,
-      text: message.senderDisplayName,
-      showOverflowTooltip: false
-    };
-    return (
-      <div className={mergeStyles(chatAvatarStyle)}>
-        {onRenderAvatar ? onRenderAvatar?.(message.senderId, personaOptions) : <Persona {...personaOptions} />}
-      </div>
-    );
-  }, [message.senderDisplayName, message.senderId, onRenderAvatar, shouldShowAvatar, hideAvatar]);
 
   // Fluent UI message components are used here as for default message renderer,
   // timestamp and author name should be shown but they aren't shown for custom renderer.

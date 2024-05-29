@@ -40,7 +40,6 @@ export type ChatMessageComponentWrapperProps = _ChatMessageProps & {
     status?: MessageStatus
   ) => JSX.Element;
   onRenderMessage?: (messageProps: MessageProps, messageRenderer?: MessageRenderer) => JSX.Element;
-  hideAvatar?: boolean;
   onRenderAvatar?: OnRenderAvatarCallback;
   showMessageStatus?: boolean;
   participantCount?: number;
