@@ -1,8 +1,8 @@
 {
   "type": "patch",
   "area": "fix",
-  "workstream": "A11y",
-  "comment": "Fix an accessibility issue where a send box button disabled state wasn't announced",
+  "workstream": "Chat",
+  "comment": "Fix for an issue where links were opened in the same tab",
   "packageName": "@azure/communication-react",
   "email": "98852890+vhuseinova-msft@users.noreply.github.com",
   "dependentChangeType": "patch"

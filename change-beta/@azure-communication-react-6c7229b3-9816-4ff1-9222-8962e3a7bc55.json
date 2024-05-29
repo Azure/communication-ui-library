@@ -1,8 +1,8 @@
 {
   "type": "patch",
-  "area": "fix",
-  "workstream": "People pane drawer menu",
-  "comment": "Close drawer menu for remote participant when they are no longer in the call",
+  "area": "improvement",
+  "workstream": "Calling dependency",
+  "comment": "Upgrade calling stable to 1.24.3",
   "packageName": "@azure/communication-react",
   "email": "79475487+mgamis-msft@users.noreply.github.com",
   "dependentChangeType": "patch"
