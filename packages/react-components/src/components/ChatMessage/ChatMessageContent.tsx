@@ -252,7 +252,6 @@ const defaultOnRenderInlineImage = (inlineImage: InlineImage): JSX.Element => {
   return (
     <img
       key={inlineImage.imageAttributes.id}
-      tabIndex={0}
       data-ui-id={inlineImage.imageAttributes.id}
       {...inlineImage.imageAttributes}
     />

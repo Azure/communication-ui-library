@@ -182,10 +182,6 @@ export const FluentChatMyMessageComponent = (props: FluentChatMessageComponentWr
   const myMessageBodyProps = useMemo(() => {
     return {
       className: mergeClasses(chatMessageRenderStyles.bodyCommon, chatMessageRenderStyles.bodyMyMessage)
-      // make body not focusable to remove repetitions from narrators.
-      // inner components are already focusable
-      // tabIndex: -1,
-      // role: 'none'
     };
   }, [chatMessageRenderStyles.bodyCommon, chatMessageRenderStyles.bodyMyMessage]);
 

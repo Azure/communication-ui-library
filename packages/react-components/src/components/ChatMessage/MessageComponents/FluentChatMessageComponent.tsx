@@ -139,10 +139,6 @@ export const FluentChatMessageComponent = (props: FluentChatMessageComponentWrap
       ),
       style:
         styles?.chatItemMessageContainer !== undefined ? createStyleFromV8Style(styles?.chatItemMessageContainer) : {}
-      // make body not focusable to remove repetitions from narrators.
-      // inner components are already focusable
-      // tabIndex: -1,
-      // role: 'none'
     };
   }, [
     chatMessageRenderStyles.avatarNoOverlap,
