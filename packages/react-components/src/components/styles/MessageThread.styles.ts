@@ -337,16 +337,15 @@ export const useChatMessageCommonStyles = makeStyles({
   body: {
     '& table': {
       backgroundColor: tokens.colorBrandBackgroundInverted,
-      ...shorthands.borderColor(tokens.colorNeutralStroke1Selected),
       borderCollapse: 'collapse',
       tableLayout: 'auto',
       width: '100%',
 
       '& tr': {
-        ...shorthands.border('1px', 'solid', `${tokens.colorNeutralStroke1Selected}`),
+        ...shorthands.border('1px', 'solid', `${tokens.colorNeutralStroke2}`),
 
         '& td': {
-          ...shorthands.border('1px', 'solid', `${tokens.colorNeutralStroke1Selected}`),
+          ...shorthands.border('1px', 'solid', `${tokens.colorNeutralStroke2}`),
           wordBreak: 'normal',
           paddingTop: '0px',
           paddingRight: '5px'
