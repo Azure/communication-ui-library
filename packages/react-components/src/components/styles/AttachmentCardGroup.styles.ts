@@ -14,7 +14,7 @@ export const useAttachmentCardGroupStyles = makeStyles({
     marginTop: '0.25rem'
   },
   singleAttachment: {
-    widtn: `${_ATTACHMENT_CARD_WIDTH_IN_REM}rem`
+    width: `${_ATTACHMENT_CARD_WIDTH_IN_REM}rem`
   },
   multipleAttachments: {
     width: '100%'
