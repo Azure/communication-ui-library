@@ -52,6 +52,10 @@ import { getCallStatus, getCaptionsStatus } from '../selectors/baseSelectors';
 import { drawerContainerStyles } from '../styles/CallComposite.styles';
 import { SidePane } from './SidePane/SidePane';
 import { usePeoplePane } from './SidePane/usePeoplePane';
+/* @conditional-compile-remove(teams-meeting-conference) */
+import { useMeetingPhoneInfoPane } from './SidePane/useMeetingPhoneInfo';
+/* @conditional-compile-remove(teams-meeting-conference) */
+import { convertConferencePhoneInfo } from '../../common/MeetingConferencePhoneInfoModal';
 
 import {
   useVideoEffectsPane,
@@ -161,6 +165,18 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
       setDrawerMenuItems([]);
     }
   }, [participantActioned, remoteParticipants]);
+
+  const conferencePhoneInfo = convertConferencePhoneInfo(adapter.getState().call?.teamsMeetingConference);
+
+  const meetingPhoneInfoPaneProps = useMemo(
+    () => ({
+      updateSidePaneRenderer,
+      mobileView: props.mobileView,
+      conferencePhoneInfo: conferencePhoneInfo
+    }),
+    [updateSidePaneRenderer, props.mobileView, conferencePhoneInfo]
+  );
+
   const peoplePaneProps = useMemo(
     () => ({
       updateSidePaneRenderer,
@@ -269,6 +285,19 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     }
   }, [closePeoplePane, isPeoplePaneOpen, openPeoplePane]);
 
+  const { isMeetingPhoneInfoPaneOpen, openMeetingPhoneInfoPane, closeMeetingPhoneInfoPane } = useMeetingPhoneInfoPane({
+    ...meetingPhoneInfoPaneProps
+  });
+
+  const toggleMeetingPhoneInfoPane = useCallback(() => {
+    console.log('toggleMeetingPhoneInfoPane ' + isMeetingPhoneInfoPaneOpen);
+    if (isMeetingPhoneInfoPaneOpen) {
+      closeMeetingPhoneInfoPane();
+    } else {
+      openMeetingPhoneInfoPane();
+    }
+  }, [closeMeetingPhoneInfoPane, isMeetingPhoneInfoPaneOpen, openMeetingPhoneInfoPane]);
+
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   useEffect(() => {
     if (isInLocalHold) {
@@ -323,6 +352,12 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     setShowDrawer(false);
     togglePeoplePane();
   }, [togglePeoplePane]);
+
+  /* @conditional-compile-remove(teams-meeting-conference) */
+  const onMeetingPhoneInfoClicked = useCallback(() => {
+    setShowDrawer(false);
+    toggleMeetingPhoneInfoPane();
+  }, [toggleMeetingPhoneInfoPane]);
 
   const drawerContainerStylesValue = useMemo(() => drawerContainerStyles(DRAWER_Z_INDEX), []);
 
@@ -453,6 +488,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                 onSetDialpadPage={props.onSetDialpadPage}
                 dtmfDialerPresent={props.dtmfDialerPresent}
                 reactionResources={adapter.getState().reactions}
+                onClickMeetingPhoneInfo={onMeetingPhoneInfoClicked}
               />
             </Stack>
           )}

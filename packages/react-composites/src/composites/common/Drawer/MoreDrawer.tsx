@@ -40,7 +40,9 @@ import { themedToggleButtonStyle } from './MoreDrawer.styles';
 import { _spokenLanguageToCaptionLanguage } from '@internal/react-components';
 import { useAdapter } from '../../CallComposite/adapter/CallAdapterProvider';
 import { useSelector } from '../../CallComposite/hooks/useSelector';
-import { getTargetCallees } from '../../CallComposite/selectors/baseSelectors';
+import { getIsTeamsMeeting, getTargetCallees } from '../../CallComposite/selectors/baseSelectors';
+/* @conditional-compile-remove(teams-meeting-conference) */
+import { getTeamsMeetingCoordinates } from '../../CallComposite/selectors/baseSelectors';
 import { showDtmfDialer } from '../../CallComposite/utils/MediaGalleryUtils';
 import { SpokenLanguageSettingsDrawer } from './SpokenLanguageSettingsDrawer';
 
@@ -150,6 +152,8 @@ export interface MoreDrawerProps extends MoreDrawerDevicesMenuProps {
   useTeamsCaptions?: boolean;
   reactionResources?: ReactionResources;
   onReactionClick?: (reaction: string) => Promise<void>;
+  /* @conditional-compile-remove(teams-meeting-conference) */
+  onClickMeetingPhoneInfo?: () => void;
 }
 
 const inferCallWithChatControlOptions = (
@@ -414,6 +418,30 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
       },
       iconProps: {
         iconName: raiseHandIcon,
+        styles: { root: { lineHeight: 0 } }
+      }
+    });
+  }
+
+  const isTeamsMeeting = getIsTeamsMeeting(callAdapter.getState());
+  const teamsMeetingCoordinates = getTeamsMeetingCoordinates(callAdapter.getState());
+
+  if (
+    drawerSelectionOptions !== false &&
+    isEnabled(drawerSelectionOptions?.teamsMeetingPhoneCallButton) &&
+    isTeamsMeeting &&
+    teamsMeetingCoordinates
+  ) {
+    drawerMenuItems.push({
+      itemKey: 'phoneCallInfoKey',
+      disabled: props.disableButtonsForHoldScreen || isDisabled(drawerSelectionOptions.teamsMeetingPhoneCallButton),
+      text: localeStrings.strings.call.phoneCallMoreButtonLabel,
+      onItemClick: () => {
+        props.onClickMeetingPhoneInfo?.();
+        onLightDismiss();
+      },
+      iconProps: {
+        iconName: 'PhoneNumberButton',
         styles: { root: { lineHeight: 0 } }
       }
     });
