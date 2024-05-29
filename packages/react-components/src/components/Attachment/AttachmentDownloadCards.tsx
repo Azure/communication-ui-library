@@ -181,7 +181,7 @@ const getDefaultMenuActions = (
 };
 
 /**
- * @beta
+ * @public
  *
  * The default menu action for downloading attachments. This action will open the attachment's URL in a new tab.
  */

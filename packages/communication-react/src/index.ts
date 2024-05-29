@@ -325,15 +325,16 @@ export type {
 export type { AttachmentOptions } from '../../react-components/src';
 /* @conditional-compile-remove(attachment-upload) */
 export type { SendBoxErrorBarError } from '../../react-components/src';
+/* @conditional-compile-remove(attachment-download) */
+export type { AttachmentActionHandler } from '../../react-components/src';
 /* @conditional-compile-remove(attachment-upload) */
 export type {
-  AttachmentActionHandler,
   AttachmentSelectionHandler,
   AttachmentRemovalHandler,
   AttachmentUploadOptions,
   AttachmentUploadTask
 } from '../../react-components/src';
-
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 export type { AttachmentMetadata } from '../../acs-ui-common/src';
 
 /* @conditional-compile-remove(attachment-upload) */

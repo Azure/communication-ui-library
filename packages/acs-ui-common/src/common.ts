@@ -46,6 +46,7 @@ export function _getKeys<T extends object>(obj: T): (keyof T)[] {
   return Object.keys(obj) as Array<keyof T>;
 }
 
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 /**
  * Data model that represents a chat message attachment
  * where it contains an ID to uniquely identify the attachment,

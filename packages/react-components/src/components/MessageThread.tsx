@@ -29,7 +29,7 @@ import {
 import { BlockedMessage } from '../types';
 import { MessageStatusIndicatorProps } from './MessageStatusIndicator';
 import { memoizeFnAll, MessageStatus } from '@internal/acs-ui-common';
-/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(attachment-upload) */
 import { MessageOptions } from '@internal/acs-ui-common';
 import { useLocale } from '../localization/LocalizationProvider';
 import { isNarrowWidth, _useContainerWidth } from './utils/responsive';

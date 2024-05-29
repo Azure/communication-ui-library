@@ -4,18 +4,21 @@
 import { ChatMessage } from './ChatMessage';
 import { AttachmentMetadata } from '@internal/acs-ui-common';
 
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 /**
- * @beta
+ * @public
  *
  * Attachment Options that defines behaviour for uploading and downloading attachments.
  */
 export interface AttachmentOptions {
+  /* @conditional-compile-remove(attachment-upload) */
   uploadOptions?: AttachmentUploadOptions;
+  /* @conditional-compile-remove(attachment-download) */
   downloadOptions?: AttachmentDownloadOptions;
 }
 
 /**
- * @beta
+ * @public
  *
  * Attachment download options defines the list of actions that can be performed on an attachment.
  */
@@ -27,7 +30,7 @@ export interface AttachmentDownloadOptions {
 }
 
 /**
- * @beta
+ * @public
  *
  * Attachment menu action defines buttons that can be shown on the attachment card.
  * If there's one action, it will be shown as a button, if there are multiple actions, it will be shown as a dropdown.
@@ -110,7 +113,7 @@ export interface AttachmentUploadTask {
 }
 
 /**
- * @beta
+ * @public
  * A callback function that defines what actions user can perform on an attachment.
  * By default, the UI library would have default actions that opens attachment URL in a new tab.
  * You can override the default actions or add new actions by providing this callback function.

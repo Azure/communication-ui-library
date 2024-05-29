@@ -31,7 +31,7 @@ import {
   getMessageBubbleContent,
   getMessageEditedDetails
 } from '../../utils/ChatMessageComponentUtils';
-/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(attachment-upload) */
 import { doesMessageContainMultipleAttachments } from '../../utils/ChatMessageComponentAsEditBoxUtils';
 
 type ChatMessageComponentAsMessageBubbleProps = {

@@ -10,7 +10,9 @@ import { BlockedMessage } from '../../../types';
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 import { AttachmentMenuAction } from '../../../types/Attachment';
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-import { AttachmentMetadata, MessageOptions } from '@internal/acs-ui-common';
+import { AttachmentMetadata } from '@internal/acs-ui-common';
+/* @conditional-compile-remove(attachment-upload) */
+import { MessageOptions } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(mention) */
 import { MentionOptions } from '../../MentionPopover';
 import { InlineImageOptions } from '../ChatMessageContent';

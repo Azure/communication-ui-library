@@ -395,6 +395,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     [overlayImageItem?.attachmentId]
   );
 
+  /* @conditional-compile-remove(attachment-upload) */
   const AttachmentButton = useCallback(() => {
     /* @conditional-compile-remove(attachment-upload) */
     if (!attachmentOptions?.uploadOptions?.handleAttachmentSelection) {
@@ -492,6 +493,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             </div>
             <Stack horizontal={formFactor === 'mobile'}>
               {formFactor === 'mobile' && (
+                /* @conditional-compile-remove(attachment-upload) */
                 <Stack verticalAlign="center">
                   <AttachmentButton />
                 </Stack>
@@ -511,7 +513,10 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
                   onSendMessage={onSendMessageHandler}
                 />
               </Stack>
-              {formFactor !== 'mobile' && <AttachmentButton />}
+              {formFactor !== 'mobile' && (
+                /* @conditional-compile-remove(attachment-upload) */
+                <AttachmentButton />
+              )}
             </Stack>
           </Stack>
         </Stack>

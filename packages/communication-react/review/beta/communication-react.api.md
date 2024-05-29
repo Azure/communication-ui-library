@@ -154,16 +154,16 @@ export type AreParamEqual<A extends (props: any) => JSX.Element | undefined, B e
 // @public
 export type AreTypeEqual<A, B> = A extends B ? (B extends A ? true : false) : false;
 
-// @beta
+// @public
 export type AttachmentActionHandler = (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[];
 
-// @beta
+// @public
 export interface AttachmentDownloadOptions {
     // (undocumented)
     actionsForAttachment: AttachmentActionHandler;
 }
 
-// @beta
+// @public
 export interface AttachmentMenuAction {
     // (undocumented)
     icon: JSX.Element;
@@ -189,7 +189,7 @@ export interface AttachmentMetadataInProgress {
     url?: string;
 }
 
-// @beta
+// @public
 export interface AttachmentOptions {
     // (undocumented)
     downloadOptions?: AttachmentDownloadOptions;
@@ -2751,7 +2751,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     RichTextTableDeleteMenuIcon: React_2.JSX.Element;
 };
 
-// @beta
+// @public
 export const defaultAttachmentMenuAction: AttachmentMenuAction;
 
 // @beta
