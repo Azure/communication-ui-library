@@ -1147,6 +1147,7 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
                   shouldOverlapAvatarAndMessage={isNarrow}
                   strings={strings}
                   onRenderAvatar={onRenderAvatar}
+                  hideAvatar
                   onRenderMessage={onRenderMessage}
                   onRenderMessageStatus={onRenderMessageStatus}
                   defaultStatusRenderer={defaultStatusRenderer}

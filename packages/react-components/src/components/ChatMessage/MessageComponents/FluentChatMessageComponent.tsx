@@ -43,6 +43,7 @@ export const FluentChatMessageComponent = (props: FluentChatMessageComponentWrap
     styles,
     shouldOverlapAvatarAndMessage,
     onRenderMessage,
+    hideAvatar,
     onRenderAvatar,
     /* @conditional-compile-remove(date-time-customization) */
     onDisplayDateTimeString,
@@ -117,8 +118,8 @@ export const FluentChatMessageComponent = (props: FluentChatMessageComponentWrap
   );
 
   const shouldShowAvatar = useMemo(() => {
-    return message.attached === 'top' || message.attached === false;
-  }, [message.attached]);
+    return hideAvatar ? false : message.attached === 'top' || message.attached === false;
+  }, [message.attached, hideAvatar]);
 
   const attached = useMemo(() => {
     return getFluentUIAttachedValue(message.attached);
@@ -133,7 +134,11 @@ export const FluentChatMessageComponent = (props: FluentChatMessageComponentWrap
       // chatItemMessageContainer used in className and style prop as style prop can't handle CSS selectors
       className: mergeClasses(
         chatMessageRenderStyles.bodyCommon,
-        !shouldShowAvatar ? chatMessageRenderStyles.bodyWithoutAvatar : chatMessageRenderStyles.bodyWithAvatar,
+        !shouldShowAvatar
+          ? hideAvatar
+            ? chatMessageRenderStyles.bodyHiddenAvatar
+            : chatMessageRenderStyles.bodyWithoutAvatar
+          : chatMessageRenderStyles.bodyWithAvatar,
         shouldOverlapAvatarAndMessage ? chatMessageRenderStyles.avatarOverlap : chatMessageRenderStyles.avatarNoOverlap,
         mergeStyles(styles?.chatItemMessageContainer)
       ),
@@ -145,17 +150,22 @@ export const FluentChatMessageComponent = (props: FluentChatMessageComponentWrap
       role: 'none'
     };
   }, [
-    chatMessageRenderStyles.avatarNoOverlap,
-    chatMessageRenderStyles.avatarOverlap,
     chatMessageRenderStyles.bodyCommon,
-    chatMessageRenderStyles.bodyWithAvatar,
+    chatMessageRenderStyles.bodyHiddenAvatar,
     chatMessageRenderStyles.bodyWithoutAvatar,
-    shouldOverlapAvatarAndMessage,
+    chatMessageRenderStyles.bodyWithAvatar,
+    chatMessageRenderStyles.avatarOverlap,
+    chatMessageRenderStyles.avatarNoOverlap,
     shouldShowAvatar,
+    hideAvatar,
+    shouldOverlapAvatarAndMessage,
     styles?.chatItemMessageContainer
   ]);
 
   const avatar = useMemo(() => {
+    if (hideAvatar) {
+      return undefined;
+    }
     const chatAvatarStyle = shouldShowAvatar ? gutterWithAvatar : gutterWithHiddenAvatar;
     const personaOptions: IPersona = {
       hidePersonaDetails: true,
@@ -168,7 +178,7 @@ export const FluentChatMessageComponent = (props: FluentChatMessageComponentWrap
         {onRenderAvatar ? onRenderAvatar?.(message.senderId, personaOptions) : <Persona {...personaOptions} />}
       </div>
     );
-  }, [message.senderDisplayName, message.senderId, onRenderAvatar, shouldShowAvatar]);
+  }, [message.senderDisplayName, message.senderId, onRenderAvatar, shouldShowAvatar, hideAvatar]);
 
   // Fluent UI message components are used here as for default message renderer,
   // timestamp and author name should be shown but they aren't shown for custom renderer.
