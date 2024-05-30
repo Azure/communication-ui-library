@@ -274,7 +274,11 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
         })}
         id={uniqueId}
         aria-labelledby={`${props.ariaLabelledBy} ${uniqueId}`}
-        aria-label={menuItems && menuItems.length > 0 ? ariaDisplayName : ariaDisplayName + ' ' + strings.disabled}
+        aria-label={
+          menuItems && menuItems.length > 0
+            ? ariaDisplayName
+            : strings.disabled.replace('{user}', ariaDisplayName || '')
+        }
       >
         {avatar}
         {me && <Text className={meTextStyle}>{strings.isMeText}</Text>}

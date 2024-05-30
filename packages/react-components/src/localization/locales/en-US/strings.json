@@ -9,7 +9,7 @@
     "participantStateRinging": "Calling...",
     "participantStateHold": "On hold",
     "attendeeRole": "Attendee",
-    "disabled": "Disabled"
+    "disabled": "{user} disabled"
   },
   "ParticipantList": {
     "overflowParticipantCount": "+{overflowCount} more"
