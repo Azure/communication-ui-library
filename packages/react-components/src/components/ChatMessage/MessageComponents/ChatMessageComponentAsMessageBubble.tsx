@@ -170,11 +170,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
           attached={attached}
           key={props.message.messageId}
           root={{
-            className: chatMessageStyles.root,
-            // make body not focusable to remove repetitions from narrators.
-            // inner components are already focusable
-            tabIndex: -1,
-            role: 'none'
+            className: chatMessageStyles.root
           }}
           author={<Text className={chatMessageAuthorStyle}>{message.senderDisplayName}</Text>}
           body={{
