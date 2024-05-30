@@ -60,6 +60,13 @@ export const RichTextInsertTablePane = (props: RichTextInsertTablePaneProps): JS
     [updateSize]
   );
 
+  const onTouchMove = React.useCallback(
+    (e: React.TouchEvent<HTMLButtonElement>) => {
+      updateSize(e.target as HTMLElement);
+    },
+    [updateSize]
+  );
+
   const onClickButton = React.useCallback(() => {
     onClick(createKey(formatRowColumnText(row), formatRowColumnText(column)));
   }, [row, column, onClick]);
@@ -84,6 +91,7 @@ export const RichTextInsertTablePane = (props: RichTextInsertTablePaneProps): JS
             data-row={i}
             data-is-focusable={true}
             onMouseEnter={onMouseEnter}
+            // onTouchMove={onTouchMove}
             aria-label={formatText(item.text ?? '', formatRowColumnText(i), formatRowColumnText(j))}
             data-testid={key}
           />
