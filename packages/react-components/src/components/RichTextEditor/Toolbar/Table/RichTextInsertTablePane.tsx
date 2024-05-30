@@ -60,7 +60,7 @@ export const RichTextInsertTablePane = (props: RichTextInsertTablePaneProps): JS
     [updateSize]
   );
 
-  const onTouchMove = React.useCallback(
+  const onTouchStart = React.useCallback(
     (e: React.TouchEvent<HTMLButtonElement>) => {
       updateSize(e.target as HTMLElement);
     },
@@ -91,7 +91,7 @@ export const RichTextInsertTablePane = (props: RichTextInsertTablePaneProps): JS
             data-row={i}
             data-is-focusable={true}
             onMouseEnter={onMouseEnter}
-            // onTouchMove={onTouchMove}
+            onTouchStart={onTouchStart}
             aria-label={formatText(item.text ?? '', formatRowColumnText(i), formatRowColumnText(j))}
             data-testid={key}
           />

@@ -259,8 +259,6 @@ export const insertTableMenuCellButtonStyles = (theme: Theme): IStyle => {
     border: `solid 1px ${theme.palette.neutralTertiaryAlt}`,
     cursor: 'pointer',
     background: 'transparent'
-    // include border into width value as the parent element has fixed width
-    // boxSizing: 'border-box'
   };
 };
 
@@ -289,12 +287,7 @@ export const insertTableMenuFocusZone = (theme: Theme): string => {
   return mergeStyles({
     display: 'inline-grid',
     gridTemplateColumns: 'auto auto auto auto auto',
-    // lineHeight: '12px',
-    // fixed width is required to show columns in a grid correctly
-    // width: '5rem',
     border: `solid 1px ${theme.palette.neutralTertiaryAlt}`
-    // don't include border into width value as otherwise it may be broken when zoom value is changed
-    // boxSizing: 'content-box'
   });
 };
 
@@ -312,5 +305,5 @@ export const insertTableMenuTitleStyles = mergeStyles({
  * @private
  */
 export const tableContextMenuIconStyles = mergeStyles({
-  marginTop: '6px'
+  marginTop: '0.375rem'
 });
