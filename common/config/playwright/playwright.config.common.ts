@@ -69,6 +69,12 @@ export const config: PlaywrightTestConfig<TestOptions> = {
   expect: {
     toMatchSnapshot: {
       maxDiffPixels: 1
+    },
+    toHaveScreenshot: {
+      // maxDiffPixels: 1,
+      // make stricter comparison for colors, default value was 0.2
+      // which didn't caught some color differences for gray colors
+      threshold: 0.1
     }
   }
 };
