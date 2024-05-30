@@ -15,6 +15,13 @@ export {
   useTeamsCallAdapter
 } from './AzureCommunicationCallAdapter';
 
+/* @conditional-compile-remove(teams-identity-support-beta) */
+export type {
+  TeamsCallAdapterArgsCommon,
+  TeamsOutboundCallAdapterArgs,
+  StartTeamsCallIdentifier
+} from './AzureCommunicationCallAdapter';
+
 export type { TeamsAdapterOptions } from './AzureCommunicationCallAdapter';
 /* @conditional-compile-remove(teams-identity-support) */
 export type { TeamsCallAdapterArgs } from './AzureCommunicationCallAdapter';
