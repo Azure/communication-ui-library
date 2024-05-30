@@ -79,8 +79,6 @@ export interface ParticipantItemStrings {
   /* @conditional-compile-remove(hide-attendee-name) */
   /** String for the attendee role */
   attendeeRole: string;
-  /** String for aria disabled */
-  disabled: string;
 }
 
 /**

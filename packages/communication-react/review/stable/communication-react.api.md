@@ -3049,7 +3049,6 @@ export interface ParticipantItemProps {
 // @public
 export interface ParticipantItemStrings {
     attendeeRole: string;
-    disabled: string;
     displayNamePlaceholder?: string;
     isMeText: string;
     menuTitle: string;

@@ -8,8 +8,7 @@
     "displayNamePlaceholder": "Unnamed participant",
     "participantStateRinging": "Calling...",
     "participantStateHold": "On hold",
-    "attendeeRole": "Attendee",
-    "disabled": "{user} disabled"
+    "attendeeRole": "Attendee"
   },
   "ParticipantList": {
     "overflowParticipantCount": "+{overflowCount} more"
