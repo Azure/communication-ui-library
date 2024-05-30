@@ -100,7 +100,7 @@ export const RichTextInsertTablePane = (props: RichTextInsertTablePaneProps): JS
     }
 
     return items;
-  }, [maxRowsNumber, maxColumnsNumber, column, row, theme, onClickButton, onMouseEnter, item.text]);
+  }, [maxRowsNumber, maxColumnsNumber, column, row, theme, onClickButton, onMouseEnter, onTouchStart, item.text]);
 
   const text = useMemo(() => {
     return formatText(item.text ?? '', formatRowColumnText(row), formatRowColumnText(column));
