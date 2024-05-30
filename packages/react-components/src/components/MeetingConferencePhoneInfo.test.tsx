@@ -1,9 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+/* @conditional-compile-remove(teams-meeting-conference) */
 import { formatPhoneNumber, formatPhoneNumberInfo } from './MeetingConferencePhoneInfo';
+/* @conditional-compile-remove(teams-meeting-conference) */
 import { assert } from 'console';
 
+/* @conditional-compile-remove(teams-meeting-conference) */
 describe('Display phone number in user friendly format', () => {
   test('Empty string should not break code', async () => {
     assert(formatPhoneNumber('') === '');
@@ -15,6 +18,7 @@ describe('Display phone number in user friendly format', () => {
   });
 });
 
+/* @conditional-compile-remove(teams-meeting-conference) */
 describe('Format phone number info based on available data', () => {
   const strings = {
     meetingConferencePhoneInfoModalTollFree: '(Toll Free)',

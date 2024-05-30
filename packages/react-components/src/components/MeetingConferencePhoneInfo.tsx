@@ -1,10 +1,14 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+/* @conditional-compile-remove(teams-meeting-conference) */
 import React, { useCallback } from 'react';
+/* @conditional-compile-remove(teams-meeting-conference) */
 import { useMemo } from 'react';
+/* @conditional-compile-remove(teams-meeting-conference) */
 import { IModalStyles, Modal, Stack, useTheme, Text, IconButton, Icon } from '@fluentui/react';
 
+/* @conditional-compile-remove(teams-meeting-conference) */
 import {
   themedPhoneInfoModalStyle,
   titleClassName,
@@ -14,9 +18,12 @@ import {
   phoneInfoInctructionLine,
   phoneInfoStep
 } from './styles/TeamsMeetingConferenceInfo';
+/* @conditional-compile-remove(teams-meeting-conference) */
 import { _preventDismissOnEvent } from '@internal/acs-ui-common';
+/* @conditional-compile-remove(teams-meeting-conference) */
 import { useLocale } from '../localization';
 
+/* @conditional-compile-remove(teams-meeting-conference) */
 /**
  * @internal
  * Information for conference phone info
@@ -29,6 +36,7 @@ export interface _ConferencePhoneInfo {
   city?: string;
 }
 
+/* @conditional-compile-remove(teams-meeting-conference) */
 /**
  * strings for phone info modal
  * @beta
@@ -64,6 +72,7 @@ export interface MeetingConferencePhoneInfoModalStrings {
   meetingConferencePhoneInfoModalNoPhoneAvailable?: string;
 }
 
+/* @conditional-compile-remove(teams-meeting-conference) */
 /**
  * @internal
  * MeetingConferencePhoneInfoModal Component Props.
@@ -74,6 +83,7 @@ export interface _MeetingConferencePhoneInfoModalProps {
   onDismissMeetingPhoneInfoSettings?: () => void;
 }
 
+/* @conditional-compile-remove(teams-meeting-conference) */
 /**
  * @internal
  * a component for setting spoken languages
@@ -182,6 +192,7 @@ export const _MeetingConferencePhoneInfoModal = (props: _MeetingConferencePhoneI
   );
 };
 
+/* @conditional-compile-remove(teams-meeting-conference) */
 /**
  * @internal
  * format phone number
@@ -196,6 +207,7 @@ export const formatPhoneNumber = (phoneNumber: string): string => {
   return phoneNumber;
 };
 
+/* @conditional-compile-remove(teams-meeting-conference) */
 /**
  * @internal
  * format phone number
