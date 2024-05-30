@@ -79,6 +79,8 @@ export interface ParticipantItemStrings {
   /* @conditional-compile-remove(hide-attendee-name) */
   /** String for the attendee role */
   attendeeRole: string;
+  /** String for aria disabled */
+  disabled: string;
 }
 
 /**
@@ -170,6 +172,9 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
 
   // For 'me' show empty name so avatar will get 'Person' icon, when there is no name
   const meAvatarText = displayName?.trim() || '';
+  const ariaDisplayName = me
+    ? meAvatarText + ' ' + strings.isMeText
+    : displayName?.trim() || strings.displayNamePlaceholder;
 
   const avatarOptions = {
     text: me ? meAvatarText : displayName?.trim() || strings.displayNamePlaceholder,
@@ -269,6 +274,7 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
         })}
         id={uniqueId}
         aria-labelledby={`${props.ariaLabelledBy} ${uniqueId}`}
+        aria-label={menuItems && menuItems.length > 0 ? ariaDisplayName : ariaDisplayName + ' ' + strings.disabled}
       >
         {avatar}
         {me && <Text className={meTextStyle}>{strings.isMeText}</Text>}
