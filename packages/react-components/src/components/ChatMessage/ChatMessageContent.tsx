@@ -286,8 +286,14 @@ const processHtmlToReact = (props: ChatMessageContentProps): JSX.Element => {
           return props.inlineImageOptions?.onRenderInlineImage
             ? props.inlineImageOptions.onRenderInlineImage(inlineImageProps, defaultOnRenderInlineImage)
             : defaultOnRenderInlineImage(inlineImageProps);
+        }
 
-          return <img key={imgProps.id as string} {...imgProps} />;
+        // Transform links to open in new tab
+        if (domNode.name === 'a' && React.isValidElement<React.AnchorHTMLAttributes<HTMLAnchorElement>>(reactNode)) {
+          return React.cloneElement(reactNode, {
+            target: '_blank',
+            rel: 'noreferrer noopener'
+          });
         }
       }
       // Pass through the original node
