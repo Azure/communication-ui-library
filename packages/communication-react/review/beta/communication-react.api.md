@@ -3239,19 +3239,12 @@ export interface MediaDiagnosticsState {
 
 // @beta
 export interface MeetingConferencePhoneInfoModalStrings {
-    // (undocumented)
     meetingConferencePhoneInfoModalDialIn?: string;
-    // (undocumented)
     meetingConferencePhoneInfoModalMeetingId?: string;
-    // (undocumented)
     meetingConferencePhoneInfoModalNoPhoneAvailable?: string;
-    // (undocumented)
     meetingConferencePhoneInfoModalTitle?: string;
-    // (undocumented)
     meetingConferencePhoneInfoModalToll?: string;
-    // (undocumented)
     meetingConferencePhoneInfoModalTollFree?: string;
-    // (undocumented)
     meetingConferencePhoneInfoModalWait?: string;
 }
 

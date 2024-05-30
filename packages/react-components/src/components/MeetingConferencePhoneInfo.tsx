@@ -34,12 +34,33 @@ export interface _ConferencePhoneInfo {
  * @beta
  */
 export interface MeetingConferencePhoneInfoModalStrings {
+  /**
+   * Header for the phone info modal
+   */
   meetingConferencePhoneInfoModalTitle?: string;
+  /**
+   * Phone number instruction
+   */
   meetingConferencePhoneInfoModalDialIn?: string;
+  /**
+   * Meeting ID instruction
+   */
   meetingConferencePhoneInfoModalMeetingId?: string;
+  /**
+   * Wait for phone connection
+   */
   meetingConferencePhoneInfoModalWait?: string;
+  /**
+   * Tool Free Phone Label
+   */
   meetingConferencePhoneInfoModalTollFree?: string;
+  /**
+   * Tool Phone Label
+   */
   meetingConferencePhoneInfoModalToll?: string;
+  /**
+   * No phone number available message
+   */
   meetingConferencePhoneInfoModalNoPhoneAvailable?: string;
 }
 
