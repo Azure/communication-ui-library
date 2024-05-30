@@ -1,27 +1,22 @@
 // webpack.config.js
-const TerserPlugin = require('terser-webpack-plugin');
+const path2 = require('path');
 
 module.exports = {
-  entry: './src/outboundCallCompositeLoader.ts', // Your TypeScript entry point
-  output: {
-    filename: 'outboundCallCompositeLoaderBundle.min.js', // Output file name
-    library: 'outboundCallCompositeLoaderBundle', // Global variable name (accessible in browsers)
-    libraryTarget: 'umd' // Specify UMD format
+  entry: {
+    // chatComposite: './src/chatComposite.js',
+    // callComposite: './src/callComposite.js',
+    outboundCallComposite: '../dist-esm/outboundCallCompositeLoader.js'
+    // callWithChatComposite: './src/callWithChatComposite.js',
   },
+  mode: 'development', // change to 'production' for optimization
   resolve: {
-    extensions: ['.ts', '.js'] // Add '.ts' extension
+    extensions: ['.js']
   },
-  module: {
-    rules: [
-      {
-        test: /\.ts$/,
-        use: 'ts-loader',
-        exclude: /node_modules/
-      }
-    ]
-  },
-  optimization: {
-    minimizer: [new TerserPlugin()] // Minify using Terser
+  output: {
+    filename: '[name].js',
+    path: path2.resolve(__dirname),
+    libraryTarget: 'umd',
+    library: '[name]'
   },
   devtool: 'source-map' // Generate source maps
 };

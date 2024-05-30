@@ -10,6 +10,7 @@
     "build:esm": "npm run _if-preprocess && rushx preprocess && tsc -project tsconfig.preprocess.json || (if-env COMMUNICATION_REACT_FLAVOR=beta && tsc)",
     "build:cjs": "rollup -c  --failAfterWarnings",
     "build:watch": "rushx build",
+    "build:copy-webpack": "cpx \"./dist/dist-esm/*.js\" ./dist/build-javascript && cpx \"./webpack.config.js\" ./dist/build-javascript && cpx \"./scripts/js-bundle-webpack-runner.js\" ./dist/build-javascript",
     "clean": "rimraf dist && rimraf preprocessed",
     "preprocess": "cpx \"./src/**\" ./preprocessed && babel ./src --out-dir ../preprocessed --extensions \".ts,.tsx\" --keep-file-extension --config-file ./.babelrc.js --relative && rimraf ../preprocessed",
     "prettier": "prettier --no-error-on-unmatched-pattern --write --config ../../.prettierrc --ignore-path=../../.prettierignore \"**/*.js\" \"**/*.jsx\" \"**/*.ts\" \"**/*.tsx\"",
@@ -22,7 +23,7 @@
     "lint:quiet": "rushx lint -- --quiet",
     "_if-preprocess": "if-env COMMUNICATION_REACT_FLAVOR=stable || if-env COMMUNICATION_REACT_FLAVOR=beta-release",
     "_if-beta": "if-env COMMUNICATION_REACT_FLAVOR=beta || if-env COMMUNICATION_REACT_FLAVOR=beta-release",
-    "_build:by-flavor": "rushx clean && rushx build:esm",
+    "_build:by-flavor": "rushx clean && rushx build:esm && rushx build:copy-webpack",
     "_by-flavor": "rushx _current-flavor && env-cmd -f ../../common/config/env/.env --use-shell",
     "_current-flavor": "echo You are running under COMMUNICATION_REACT_FLAVOR: && env-cmd -f ../../common/config/env/.env node -p process.env.COMMUNICATION_REACT_FLAVOR",
     "_test:by-flavor": "(npm run _if-preprocess && rushx preprocess || if-env COMMUNICATION_REACT_FLAVOR=beta && echo \"skip preprocess\") && jest"
@@ -66,6 +67,9 @@
     "rimraf": "^2.6.2",
     "rollup": "^4.12.1",
     "ts-jest": "^29.1.2",
-    "typescript": "5.4.5"
+    "typescript": "5.4.5",
+    "webpack": "5.89.0",
+    "webpack-cli": "^5.1.4",
+    "webpack-bundle-analyzer": "^4.5.0"
   }
 }

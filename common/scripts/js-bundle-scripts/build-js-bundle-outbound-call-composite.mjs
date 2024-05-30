@@ -31,3 +31,13 @@ async function setup() {
   }
 
   main();
+
+
+  /**
+   * Figure out how to copy bundled JS and webpack config to directory to be used
+   * 
+   * 
+   * - Run the webpack to bundle the js to umd format
+   * - this would take that output from webpack (in dist?) copy to specified location
+   * - if no location provided it will place in running directory (where they called it from)
+   */
