@@ -47,7 +47,7 @@ import { ImageOverlayStrings } from '../components/ImageOverlay';
 import { ReactionButtonStrings } from '../components';
 /* @conditional-compile-remove(rich-text-editor) */
 import { RichTextSendBoxStrings } from '../components/RichTextEditor/RichTextSendBox';
-/* @conditional-compile-remove(teams-meeting-conferrence) */
+/* @conditional-compile-remove(teams-meeting-conference) */
 import { MeetingConferencePhoneInfoModalStrings } from '../components/MeetingConferencePhoneInfo';
 
 /**
