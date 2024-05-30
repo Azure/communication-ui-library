@@ -3,7 +3,7 @@
 
 import React, { useCallback } from 'react';
 import { useMemo } from 'react';
-import { IModalStyles, Modal, Stack, useTheme, Text, IconButton, Icon } from '@fluentui/react';
+import { IModalStyles, Modal, Stack, useTheme, Text, IconButton, Icon, mergeStyles } from '@fluentui/react';
 
 import {
   themedPhoneInfoModalStyle,
@@ -99,7 +99,7 @@ export const _MeetingConferencePhoneInfoModal = (props: _MeetingConferencePhoneI
               <Stack horizontal horizontalAlign="space-between" className={phoneInfoInctructionLine}>
                 <Stack.Item>
                   <Stack horizontal className={phoneInfoStep}>
-                    <Stack.Item className={phoneInfoIcon}>
+                    <Stack.Item className={phoneInfoIcon(theme)}>
                       <Stack verticalAlign="center" horizontalAlign="center">
                         <Icon
                           iconName="PhoneNumberButton"
@@ -129,7 +129,7 @@ export const _MeetingConferencePhoneInfoModal = (props: _MeetingConferencePhoneI
                 {}
                 <Stack.Item>
                   <Stack horizontal>
-                    <Stack.Item className={phoneInfoIcon}>
+                    <Stack.Item className={phoneInfoIcon(theme)}>
                       <Icon
                         iconName="DtmfDialpadButton"
                         style={{ color: theme.palette.themePrimary, padding: '8px' }}
@@ -144,7 +144,7 @@ export const _MeetingConferencePhoneInfoModal = (props: _MeetingConferencePhoneI
               </Stack>
               <Stack horizontal horizontalAlign="space-between" verticalAlign="center">
                 <Stack horizontal>
-                  <Stack.Item className={phoneInfoIcon}>
+                  <Stack.Item className={phoneInfoIcon(theme)}>
                     <Icon iconName="PhoneInfoWait" style={{ color: theme.palette.themePrimary, padding: '8px' }} />
                   </Stack.Item>
                   <Stack.Item>
