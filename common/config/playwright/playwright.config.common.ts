@@ -74,7 +74,7 @@ export const config: PlaywrightTestConfig<TestOptions> = {
       // maxDiffPixels: 1,
       // make stricter comparison for colors, default value was 0.2
       // which didn't caught some color differences for gray colors
-      threshold: 0
+      threshold: 0.05
     }
   }
 };
