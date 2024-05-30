@@ -3,7 +3,7 @@
 
 import React, { useCallback } from 'react';
 import { useMemo } from 'react';
-import { IModalStyles, Modal, Stack, useTheme, Text, IconButton, Icon, mergeStyles } from '@fluentui/react';
+import { IModalStyles, Modal, Stack, useTheme, Text, IconButton, Icon } from '@fluentui/react';
 
 import {
   themedPhoneInfoModalStyle,
@@ -15,6 +15,7 @@ import {
   phoneInfoStep
 } from './styles/TeamsMeetingConferenceInfo';
 import { _preventDismissOnEvent } from '@internal/acs-ui-common';
+import { useLocale } from '../localization';
 
 /**
  * @internal
@@ -29,10 +30,10 @@ export interface _ConferencePhoneInfo {
 }
 
 /**
- * @internal
  * strings for phone info modal
+ * @beta
  */
-export interface _MeetingConferencePhoneInfoModalStrings {
+export interface MeetingConferencePhoneInfoModalStrings {
   meetingConferencePhoneInfoModalTitle?: string;
   meetingConferencePhoneInfoModalDialIn?: string;
   meetingConferencePhoneInfoModalMeetingId?: string;
@@ -49,7 +50,6 @@ export interface _MeetingConferencePhoneInfoModalStrings {
 export interface _MeetingConferencePhoneInfoModalProps {
   conferencePhoneInfoList: _ConferencePhoneInfo[];
   showModal?: boolean;
-  strings?: _MeetingConferencePhoneInfoModalStrings;
   onDismissMeetingPhoneInfoSettings?: () => void;
 }
 
@@ -58,9 +58,10 @@ export interface _MeetingConferencePhoneInfoModalProps {
  * a component for setting spoken languages
  */
 export const _MeetingConferencePhoneInfoModal = (props: _MeetingConferencePhoneInfoModalProps): JSX.Element => {
-  const { conferencePhoneInfoList, showModal, strings, onDismissMeetingPhoneInfoSettings } = props;
+  const { conferencePhoneInfoList, showModal, onDismissMeetingPhoneInfoSettings } = props;
 
   const theme = useTheme();
+  const strings = useLocale().strings.MeetingConferencePhoneInfo;
 
   const onDismiss = useCallback((): void => {
     if (onDismissMeetingPhoneInfoSettings) {
@@ -180,7 +181,7 @@ export const formatPhoneNumber = (phoneNumber: string): string => {
  */
 export const formatPhoneNumberInfo = (
   phoneNumber: _ConferencePhoneInfo | undefined,
-  strings: _MeetingConferencePhoneInfoModalStrings | undefined
+  strings: MeetingConferencePhoneInfoModalStrings | undefined
 ): string => {
   if (!phoneNumber) {
     return '';

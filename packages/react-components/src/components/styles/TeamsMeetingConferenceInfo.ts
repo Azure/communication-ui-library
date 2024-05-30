@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { IModalStyles, mergeStyles, Theme, IStyle } from '@fluentui/react';
+import { IModalStyles, mergeStyles, Theme } from '@fluentui/react';
 import { _pxToRem } from '@internal/acs-ui-common';
 /**
  * @private
@@ -39,17 +39,6 @@ export const phoneInfoTextStyle = mergeStyles({
   fontSize: _pxToRem(14),
   lineHeight: _pxToRem(40)
 });
-
-/**
- * @private
- */
-// export const phoneInfoIcon = mergeStyles({
-//   height: _pxToRem(36),
-//   width: _pxToRem(36),
-//   marginRight: _pxToRem(12),
-//   borderRadius: _pxToRem(18),
-//   backgroundColor: 'rgba(0, 120, 212, 0.1)'
-// });
 
 /**
  * @private

@@ -4,13 +4,7 @@
 /* @conditional-compile-remove(teams-meeting-conference) */
 import React from 'react';
 /* @conditional-compile-remove(teams-meeting-conference) */
-import {
-  _MeetingConferencePhoneInfoModal,
-  _MeetingConferencePhoneInfoModalStrings,
-  _ConferencePhoneInfo
-} from '@internal/react-components';
-/* @conditional-compile-remove(teams-meeting-conference) */
-import { useLocale } from '../localization';
+import { _MeetingConferencePhoneInfoModal, _ConferencePhoneInfo } from '@internal/react-components';
 /* @conditional-compile-remove(teams-meeting-conference) */
 import { TeamsMeetingAudioConferencingDetails } from '@azure/communication-calling';
 
@@ -21,21 +15,9 @@ export const MeetingConferencePhoneInfoModal = (props: {
   showMeetingConferencePhoneInfoModal: boolean;
   onDismissMeetingPhoneInfoSettings: () => void;
 }): JSX.Element => {
-  const strings = useLocale().strings.call;
-  const modalStrings: _MeetingConferencePhoneInfoModalStrings = {
-    meetingConferencePhoneInfoModalTitle: strings.meetingConferencePhoneInfoModalTitle,
-    meetingConferencePhoneInfoModalDialIn: strings.meetingConferencePhoneInfoModalDialIn,
-    meetingConferencePhoneInfoModalMeetingId: strings.meetingConferencePhoneInfoModalMeetingId,
-    meetingConferencePhoneInfoModalWait: strings.meetingConferencePhoneInfoModalWait,
-    meetingConferencePhoneInfoModalTollFree: strings.meetingConferencePhoneInfoModalTollFree,
-    meetingConferencePhoneInfoModalToll: strings.meetingConferencePhoneInfoModalToll,
-    meetingConferencePhoneInfoModalNoPhoneAvailable: strings.meetingConferencePhoneInfoModalNoPhoneAvailable
-  };
-
   return (
     <_MeetingConferencePhoneInfoModal
       conferencePhoneInfoList={props.conferencePhoneInfoList}
-      strings={modalStrings}
       showModal={props.showMeetingConferencePhoneInfoModal}
       onDismissMeetingPhoneInfoSettings={props.onDismissMeetingPhoneInfoSettings}
     />

@@ -848,39 +848,4 @@ export interface CallCompositeStrings {
    * Error message when the meeting identifier or passcode is invalid
    */
   phoneCallMoreButtonLabel: string;
-  /* @conditional-compile-remove(teams-meeting-conference) */
-  /**
-   * Phone Info Modal Title
-   */
-  meetingConferencePhoneInfoModalTitle: string;
-  /* @conditional-compile-remove(teams-meeting-conference) */
-  /**
-   * Phone Info Modal Title
-   */
-  meetingConferencePhoneInfoModalDialIn: string;
-  /* @conditional-compile-remove(teams-meeting-conference) */
-  /**
-   * Phone Info Modal Title
-   */
-  meetingConferencePhoneInfoModalMeetingId: string;
-  /* @conditional-compile-remove(teams-meeting-conference) */
-  /**
-   * Phone Info Modal Title
-   */
-  meetingConferencePhoneInfoModalWait: string;
-  /* @conditional-compile-remove(teams-meeting-conference) */
-  /**
-   * Phone Info Modal Title
-   */
-  meetingConferencePhoneInfoModalToll: string;
-  /* @conditional-compile-remove(teams-meeting-conference) */
-  /**
-   * Phone Info Modal Title
-   */
-  meetingConferencePhoneInfoModalTollFree: string;
-  /* @conditional-compile-remove(teams-meeting-conference) */
-  /**
-   * Phone Info Modal Title
-   */
-  meetingConferencePhoneInfoModalNoPhoneAvailable: string;
 }

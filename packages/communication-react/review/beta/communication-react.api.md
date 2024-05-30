@@ -820,13 +820,6 @@ export interface CallCompositeStrings {
     manyParticipantsLeft: string;
     manyUnnamedParticipantsJoined: string;
     manyUnnamedParticipantsLeft: string;
-    meetingConferencePhoneInfoModalDialIn: string;
-    meetingConferencePhoneInfoModalMeetingId: string;
-    meetingConferencePhoneInfoModalNoPhoneAvailable: string;
-    meetingConferencePhoneInfoModalTitle: string;
-    meetingConferencePhoneInfoModalToll: string;
-    meetingConferencePhoneInfoModalTollFree: string;
-    meetingConferencePhoneInfoModalWait: string;
     microphonePermissionDenied: string;
     microphoneToggleInLobbyNotAllowed: string;
     moreButtonCallingLabel: string;
@@ -2205,6 +2198,7 @@ export interface ComponentStrings {
     errorBar: ErrorBarStrings;
     holdButton: HoldButtonStrings;
     imageOverlay: ImageOverlayStrings;
+    MeetingConferencePhoneInfo: MeetingConferencePhoneInfoModalStrings;
     mentionPopover: MentionPopoverStrings;
     messageStatusIndicator: MessageStatusIndicatorStrings;
     messageThread: MessageThreadStrings;
@@ -3241,6 +3235,24 @@ export type MediaDiagnosticChangedEvent = MediaDiagnosticChangedEventArgs & {
 export interface MediaDiagnosticsState {
     // (undocumented)
     latest: LatestMediaDiagnostics;
+}
+
+// @beta
+export interface MeetingConferencePhoneInfoModalStrings {
+    // (undocumented)
+    meetingConferencePhoneInfoModalDialIn?: string;
+    // (undocumented)
+    meetingConferencePhoneInfoModalMeetingId?: string;
+    // (undocumented)
+    meetingConferencePhoneInfoModalNoPhoneAvailable?: string;
+    // (undocumented)
+    meetingConferencePhoneInfoModalTitle?: string;
+    // (undocumented)
+    meetingConferencePhoneInfoModalToll?: string;
+    // (undocumented)
+    meetingConferencePhoneInfoModalTollFree?: string;
+    // (undocumented)
+    meetingConferencePhoneInfoModalWait?: string;
 }
 
 // @beta

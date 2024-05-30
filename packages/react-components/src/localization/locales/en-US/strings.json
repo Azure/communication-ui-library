@@ -571,5 +571,14 @@
   "verticalGallery": {
     "leftNavButtonAriaLabel": "previous page",
     "rightNavButtonAriaLabel": "next page"
+  },
+  "MeetingConferencePhoneInfo": {
+    "meetingConferencePhoneInfoModalTitle": "Conference phone info",
+    "meetingConferencePhoneInfoModalDialIn": "Dial number",
+    "meetingConferencePhoneInfoModalMeetingId": "Enter meeting ID",
+    "meetingConferencePhoneInfoModalWait": "Wait to be admitted by organizer",
+    "meetingConferencePhoneInfoModalNoPhoneAvailable": "No phone available",
+    "meetingConferencePhoneInfoModalTollFree": "(Toll-free)",
+    "meetingConferencePhoneInfoModalToll": "(Toll)"
   }
 }
