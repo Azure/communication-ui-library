@@ -51,10 +51,13 @@ import { useLocale } from '../../localization';
 /* @conditional-compile-remove(end-call-options) */
 import { isBoolean } from '../utils';
 /* @conditional-compile-remove(end-call-options) */
-import { getAssignedBreakoutRoom, getIsTeamsCall } from '../../CallComposite/selectors/baseSelectors';
+import {
+  getAssignedBreakoutRoom,
+  getBreakoutRoomSettings,
+  getIsTeamsCall
+} from '../../CallComposite/selectors/baseSelectors';
 /* @conditional-compile-remove(reaction) */
 import { callStatusSelector } from '../../CallComposite/selectors/callStatusSelector';
-import { AzureCommunicationCallAdapter } from '../../CallComposite/adapter/AzureCommunicationCallAdapter';
 
 /**
  * @private
@@ -136,6 +139,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
   /* @conditional-compile-remove(end-call-options) */
   const isTeams = useSelector(getIsTeamsCall);
   const assignedBreakoutRoom = useSelector(getAssignedBreakoutRoom);
+  const breakoutRoomSettings = useSelector(getBreakoutRoomSettings);
 
   const handleResize = useCallback((): void => {
     setControlBarButtonsWidth(controlBarContainerRef.current ? controlBarContainerRef.current.offsetWidth : 0);
@@ -459,6 +463,12 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                         props.callControls?.endCallButton?.hangUpForEveryone === 'endCallOptions'
                       }
                     />
+                    {breakoutRoomSettings && breakoutRoomSettings.disableReturnToMainMeeting === false && (
+                      <DefaultButton
+                        text="Return to main meeting"
+                        onClick={() => props.callAdapter.returnToMainMeeting()}
+                      />
+                    )}
                   </ControlBar>
                 </div>
               </Stack.Item>

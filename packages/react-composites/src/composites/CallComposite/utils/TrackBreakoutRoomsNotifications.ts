@@ -15,10 +15,12 @@ import { AzureCommunicationCallAdapter } from '../adapter/AzureCommunicationCall
  *
  * @private
  */
-export const useTrackedBreakoutRoomsNotifications = (
-  assignedBreakoutRoom?: BreakoutRoom,
-  adapter?: AzureCommunicationCallAdapter
-): BreakoutRoomsNotificationBarProps => {
+export const useTrackedBreakoutRoomsNotifications = (props: {
+  assignedBreakoutRoom?: BreakoutRoom;
+  adapter?: AzureCommunicationCallAdapter;
+}): BreakoutRoomsNotificationBarProps => {
+  const { assignedBreakoutRoom, adapter } = props;
+
   const [trackedCapabilityChangedNotifications, setTrackedCapabilityChangedNotifications] =
     useState<TrackedBreakoutRoomsNotifications>({});
 
@@ -71,8 +73,6 @@ export const useTrackedBreakoutRoomsNotifications = (
       ),
     [trackedCapabilityChangedNotifications]
   );
-
-  console.log('activeNotifications.current: ', activeNotifications.current);
 
   return {
     breakoutRoomsNotifications: latestBreakoutRoomsNotifications,

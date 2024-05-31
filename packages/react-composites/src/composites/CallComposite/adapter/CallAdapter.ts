@@ -191,10 +191,6 @@ export type CallAdapterClientState = {
    * @public
    */
   reactions?: ReactionResources;
-  /**
-   * Call of main meeting. Only defined if current call is a breakout room.
-   */
-  breakoutRoomMainMeeting?: CallState;
 };
 
 /**
@@ -729,6 +725,10 @@ export interface CallAdapterCallOperations {
    * @param userId - Id of the participant to mute
    */
   muteParticipant(userId: string): Promise<void>;
+  /**
+   * Return to main meeting of breakout room
+   */
+  returnToMainMeeting(): Promise<void>;
 }
 
 /**

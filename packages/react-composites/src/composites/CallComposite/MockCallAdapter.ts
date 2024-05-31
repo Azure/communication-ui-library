@@ -211,6 +211,10 @@ export class _MockCallAdapter implements CallAdapter {
   muteParticipant(userId: string): Promise<void> {
     throw Error('muteParticipant not implemented');
   }
+
+  returnToMainMeeting(): Promise<void> {
+    throw Error('returnToMainMeeting not implemented');
+  }
 }
 
 /**

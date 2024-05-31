@@ -422,11 +422,11 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   const capabilitiesChangedNotificationBarProps =
     useTrackedCapabilityChangedNotifications(capabilitiesChangedInfoAndRole);
 
-  const breakoutRoom = useSelector(getAssignedBreakoutRoom);
-  const breakoutRoomsNotificationBarProps = useTrackedBreakoutRoomsNotifications(
-    breakoutRoom,
-    adapter as AzureCommunicationCallAdapter
-  );
+  const assignedBreakoutRoom = useSelector(getAssignedBreakoutRoom);
+  const breakoutRoomsNotificationBarProps = useTrackedBreakoutRoomsNotifications({
+    assignedBreakoutRoom,
+    adapter: adapter as AzureCommunicationCallAdapter
+  });
 
   // Track the last dismissed errors of any error kind to prevent errors from re-appearing on subsequent page navigation
   // This works by tracking the most recent timestamp of any active error type.

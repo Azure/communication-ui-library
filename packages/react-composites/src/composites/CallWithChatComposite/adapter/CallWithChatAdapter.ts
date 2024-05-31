@@ -489,6 +489,10 @@ export interface CallWithChatAdapterManagement {
    * Mute a participant
    */
   muteParticipant(userIds: string): Promise<void>;
+  /**
+   * Return to main meeting
+   */
+  returnToMainMeeting(): Promise<void>;
 }
 
 /**

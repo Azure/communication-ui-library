@@ -13,7 +13,8 @@ import {
   RemoteParticipantState,
   LocalVideoStreamState,
   CallErrors,
-  DiagnosticsCallFeatureState
+  DiagnosticsCallFeatureState,
+  CallState
 } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(spotlight) */
 import { SpotlightCallFeatureState } from '@internal/calling-stateful-client';
@@ -256,4 +257,15 @@ export const getSupportedSpokenLanguages = (
   props: CallingBaseSelectorProps
 ): _SupportedSpokenLanguage[] | undefined => {
   return state.calls[props.callId]?.captionsFeature.supportedSpokenLanguages as _SupportedSpokenLanguage[];
+};
+
+/** @private */
+export const getBreakoutRoomMainMeeting = (
+  state: CallClientState,
+  props: CallingBaseSelectorProps
+): CallState | undefined => {
+  const mainMeetingCallState = Object.values(state.calls).find(
+    (call) => call.breakoutRooms?.assignedBreakoutRoom?.call?.id === props.callId
+  );
+  return mainMeetingCallState;
 };

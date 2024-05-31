@@ -550,6 +550,10 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   public async muteParticipant(userId: string): Promise<void> {
     return this.callAdapter.muteParticipant(userId);
   }
+ 
+  public async returnToMainMeeting(): Promise<void> {
+    return this.callAdapter.returnToMainMeeting();
+  }
 
   on(event: 'callParticipantsJoined', listener: ParticipantsJoinedListener): void;
   on(event: 'callParticipantsLeft', listener: ParticipantsLeftListener): void;

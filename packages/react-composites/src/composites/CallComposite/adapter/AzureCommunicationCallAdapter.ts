@@ -301,10 +301,6 @@ class CallContext {
   public setAcceptedTransferCall(call?: CallState): void {
     this.setState({ ...this.state, acceptedTransferCallState: call });
   }
-
-  public setBreakoutRoomMainMeeting(call?: CallState): void {
-    this.setState({ ...this.state, breakoutRoomMainMeeting: call });
-  }
 }
 
 const findLatestEndedCall = (calls: { [key: string]: CallState }): CallState | undefined => {
@@ -1064,6 +1060,25 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.handlers.onStopAllSpotlight();
   }
 
+  public async returnToMainMeeting(): Promise<void> {
+    const mainMeetingCall = this.callAgent?.calls.find((callAgentCall) => {
+      console.log(
+        'callAgentCall assigned breakout room call id: ',
+        callAgentCall?.feature(Features.BreakoutRooms).assignedBreakoutRoom?.call?.id
+      );
+      console.log('call id: ', this.call?.id);
+      return (
+        this.call && callAgentCall?.feature(Features.BreakoutRooms).assignedBreakoutRoom?.call?.id === this.call.id
+      );
+    });
+    if (mainMeetingCall) {
+      this.leaveCall().then(() => {
+        this.processNewCall(mainMeetingCall);
+        this.resumeCall();
+      });
+    }
+  }
+
   public getState(): CallAdapterState {
     return this.context.getState();
   }
@@ -1336,8 +1351,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const call = (_call as any)['call'];
     console.log('Call adapter breakoutRoomJoined');
-    this.context.setBreakoutRoomMainMeeting(this.context.getState().call);
-    this.processNewCall(call);
+    setTimeout(() => this.processNewCall(call), 5000);
     this.emitter.emit('breakoutRoomJoined', call);
   }
 

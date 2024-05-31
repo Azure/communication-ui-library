@@ -233,6 +233,10 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
   public async muteParticipant(userId: string): Promise<void> {
     return this.callWithChatAdapter.muteParticipant(userId);
   }
+
+  public async returnToMainMeeting(): Promise<void> {
+    return this.callWithChatAdapter.returnToMainMeeting();
+  }
 }
 
 function callAdapterStateFromCallWithChatAdapterState(

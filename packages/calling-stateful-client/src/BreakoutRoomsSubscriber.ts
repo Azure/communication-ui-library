@@ -22,9 +22,7 @@ export class BreakoutRoomsSubscriber {
     this.subscribe();
   }
 
-  public unsubscribe = (): void => {
-    this._breakoutRoomsFeature.off('breakoutRoomSettingsAvailable', this.breakoutRoomSettingsAvailable);
-  };
+  public unsubscribe = (): void => {};
 
   private subscribe(): void {
     this._breakoutRoomsFeature.on('assignedBreakoutRoomUpdated', (_breakoutRoom: BreakoutRoom): void => {
@@ -38,11 +36,14 @@ export class BreakoutRoomsSubscriber {
       const call = (_call as any)['call'];
       console.log('BreakoutRoomsSubscriber breakoutRoomJoined: ', call);
     });
-    this._breakoutRoomsFeature.on('breakoutRoomSettingsAvailable', this.breakoutRoomSettingsAvailable);
-  }
-
-  private breakoutRoomSettingsAvailable(breakoutRoomSettings: BreakoutRoomSettings): void {
-    console.log('BreakoutRoomsSubscriber breakoutRoomSettingsAvailable: ', breakoutRoomSettings);
-    this._context.setBreakoutRoomSettings(this._callIdRef.callId, breakoutRoomSettings);
+    this._breakoutRoomsFeature.on(
+      'breakoutRoomSettingsAvailable',
+      (_breakoutRoomSettings: BreakoutRoomSettings): void => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const breakoutRoomSettings = (_breakoutRoomSettings as any)['breakoutRoomSettings'];
+        console.log('BreakoutRoomsSubscriber breakoutRoomSettingsAvailable: ', breakoutRoomSettings);
+        this._context.setBreakoutRoomSettings(this._callIdRef.callId, breakoutRoomSettings);
+      }
+    );
   }
 }
