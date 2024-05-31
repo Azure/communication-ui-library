@@ -490,7 +490,7 @@ export interface CallWithChatAdapterManagement {
    */
   muteParticipant(userIds: string): Promise<void>;
   /**
-   * Return to main meeting
+   * Return to main meeting of breakout room
    */
   returnToMainMeeting(): Promise<void>;
 }

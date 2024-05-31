@@ -26,6 +26,8 @@ import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { _toCommunicationIdentifier } from '@internal/acs-ui-common';
 import { JoinCallOptions, StartCallIdentifier } from '../../CallComposite/adapter/CallAdapter';
 import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
+import { CallCommon } from '@internal/calling-stateful-client';
+import { AzureCommunicationCallWithChatAdapter } from './AzureCommunicationCallWithChatAdapter';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
@@ -236,6 +238,10 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
 
   public async returnToMainMeeting(): Promise<void> {
     return this.callWithChatAdapter.returnToMainMeeting();
+  }
+
+  public processNewCall(call: CallCommon): void {
+    return (this.callWithChatAdapter as AzureCommunicationCallWithChatAdapter).processNewCall(call);
   }
 }
 
