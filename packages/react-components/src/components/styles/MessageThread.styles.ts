@@ -130,6 +130,10 @@ export const useChatMessageRenderStyles = makeStyles({
     marginLeft: `${AVATAR_MARGIN_LEFT}rem`,
     marginTop: '0'
   },
+  bodyHiddenAvatar: {
+    marginLeft: 0,
+    marginTop: 0
+  },
   bodyWithAvatar: {
     marginLeft: `0`,
     marginTop: '0.75rem'
