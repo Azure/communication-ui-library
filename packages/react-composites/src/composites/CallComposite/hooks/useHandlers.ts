@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import { CommonCallingHandlers } from '@internal/calling-component-bindings';
-/* @conditional-compile-remove(spotlight) */
+/* @conditional-compile-remove(spotlight) */ /* @conditional-compile-remove(soft-mute) */
 import { _ComponentCallingHandlers } from '@internal/calling-component-bindings';
 import { CommonProperties, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { ReactElement } from 'react';
@@ -40,7 +40,7 @@ export const useHandlers = <PropsT>(
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   _component: (props: PropsT) => ReactElement | null
 ): Pick<CommonCallingHandlers, CommonProperties<CommonCallingHandlers, PropsT>> &
-  /* @conditional-compile-remove(spotlight) */ Partial<_ComponentCallingHandlers> => {
+  /* @conditional-compile-remove(spotlight) */ /* @conditional-compile-remove(soft-mute) */ Partial<_ComponentCallingHandlers> => {
   const adapter = useAdapter();
   const capabilities = adapter.getState().call?.capabilitiesFeature?.capabilities;
   return createCompositeHandlers(adapter, capabilities);
@@ -50,7 +50,8 @@ const createCompositeHandlers = memoizeOne(
   (
     adapter: CommonCallAdapter,
     capabilities?: ParticipantCapabilities
-  ): CommonCallingHandlers & /* @conditional-compile-remove(spotlight) */ Partial<_ComponentCallingHandlers> => {
+  ): CommonCallingHandlers &
+    /* @conditional-compile-remove(spotlight) */ /* @conditional-compile-remove(soft-mute) */ Partial<_ComponentCallingHandlers> => {
     return {
       onCreateLocalStreamView: async (options) => {
         return await adapter.createStreamView(undefined, options);
@@ -222,7 +223,11 @@ const createCompositeHandlers = memoizeOne(
         ? async (userIds?: string[]): Promise<void> => {
             await adapter.stopSpotlight(userIds);
           }
-        : undefined
+        : undefined,
+      /* @conditional-compile-remove(soft-mute) */
+      onMuteParticipant: async (userId: string): Promise<void> => {
+        await adapter.muteParticipant(userId);
+      }
     };
   }
 );

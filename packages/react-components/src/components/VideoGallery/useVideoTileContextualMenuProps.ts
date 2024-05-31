@@ -52,6 +52,8 @@ export const useVideoTileContextualMenuProps = (props: {
   maxParticipantsToSpotlight?: number;
   /* @conditional-compile-remove(spotlight) */
   myUserId?: string;
+  /* @conditional-compile-remove(soft-mute) */
+  onMuteParticipant?: (userId: string) => void;
 }): IContextualMenuProps | undefined => {
   const {
     participant,
@@ -68,7 +70,8 @@ export const useVideoTileContextualMenuProps = (props: {
     /* @conditional-compile-remove(spotlight) */ onStartSpotlight,
     /* @conditional-compile-remove(spotlight) */ onStopSpotlight,
     /* @conditional-compile-remove(spotlight) */ maxParticipantsToSpotlight,
-    /* @conditional-compile-remove(spotlight) */ myUserId
+    /* @conditional-compile-remove(spotlight) */ myUserId,
+    /* @conditional-compile-remove(soft-mute) */ onMuteParticipant
   } = props;
   const scalingMode = useMemo(() => {
     return props.participant.videoStream?.scalingMode;
@@ -165,6 +168,21 @@ export const useVideoTileContextualMenuProps = (props: {
         });
       }
     }
+    /* @conditional-compile-remove(soft-mute) */
+    if (onMuteParticipant) {
+      items.push({
+        key: 'mute',
+        text: 'Mute',
+        iconProps: {
+          iconName: 'ContextualMenuMicMutedIcon',
+          styles: { root: { lineHeight: 0 } }
+        },
+        onClick: () => onMuteParticipant(participant.userId),
+        'data-ui-id': 'video-tile-mute-participant',
+        ariaLabel: 'Mute',
+        disabled: participant.isMuted
+      });
+    }
     if (scalingMode) {
       if (scalingMode === 'Crop' && strings?.fitRemoteParticipantToFrame) {
         items.push({
@@ -220,7 +238,9 @@ export const useVideoTileContextualMenuProps = (props: {
     /* @conditional-compile-remove(spotlight) */ onStartSpotlight,
     /* @conditional-compile-remove(spotlight) */ onStopSpotlight,
     /* @conditional-compile-remove(spotlight) */ maxParticipantsToSpotlight,
-    /* @conditional-compile-remove(spotlight) */ myUserId
+    /* @conditional-compile-remove(spotlight) */ myUserId,
+    /* @conditional-compile-remove(soft-mute) */ onMuteParticipant,
+    /* @conditional-compile-remove(soft-mute) */ participant.isMuted
   ]);
 
   return contextualMenuProps;
