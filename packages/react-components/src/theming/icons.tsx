@@ -395,5 +395,7 @@ export const DEFAULT_COMPONENT_ICONS = {
   /* @conditional-compile-remove(rich-text-editor) */
   RichTextTableInsertMenuIcon: <TableAdd20Regular />,
   /* @conditional-compile-remove(rich-text-editor) */
-  RichTextTableDeleteMenuIcon: <TableDismiss20Regular />
+  RichTextTableDeleteMenuIcon: <TableDismiss20Regular />,
+  /* @conditional-compile-remove(soft-mute) */
+  ContextualMenuMicMutedIcon: <MicOff20Regular />
 };
