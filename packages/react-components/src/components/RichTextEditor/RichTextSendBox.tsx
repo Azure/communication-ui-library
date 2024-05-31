@@ -136,7 +136,7 @@ export interface RichTextSendBoxProps {
   /* @conditional-compile-remove(attachment-upload) @conditional-compile-remove(rich-text-editor-image-upload) */
   /**
    * Optional boolean to enable text only mode.
-   * When enabled, inline images and attachments won't be added and displayed for the send box.
+   * When enabled, inline images can't be pasted, and attachments won't be added and displayed for the send box.
    * @defaultValue false
    */
   textOnly?: boolean;
