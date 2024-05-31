@@ -63,7 +63,7 @@ test.describe('Participant list flyout tests', () => {
     await pageClick(page, dataUiId('call-composite-participants-button'));
     await pageClick(page, dataUiId(IDS.participantButtonPeopleMenuItem));
     // click on last person (myself) to remove any hover effect on participant items
-    await pageClick(page, dataUiId('participant-item') + ' >> nth=3');
+    await pageClick(page, dataUiId('participant-item') + ' >> nth=0');
     expect(await stableScreenshot(page)).toMatchSnapshot(`video-gallery-page-participants-flyout-custom-ellipses.png`);
   });
 
