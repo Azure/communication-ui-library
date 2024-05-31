@@ -377,7 +377,7 @@ export const controlsToAdd = {
   },
   sendBoxTextOnlyMode: {
     control: 'boolean',
-    defaultValue: 'false',
+    defaultValue: false,
     name: 'Enable text only mode'
   },
   showChatParticipants: { control: 'boolean', defaultValue: true, name: 'Show Participants Pane' },

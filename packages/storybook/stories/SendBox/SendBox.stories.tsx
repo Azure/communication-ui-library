@@ -111,6 +111,7 @@ const SendBoxStory = (args): JSX.Element => {
     <div style={{ width: '31.25rem' }}>
       <SendBoxComponent
         disabled={args.disabled}
+        textOnly={args.textOnly}
         onSendMessage={async (message, options) => {
           timeoutRef.current = setTimeout(() => {
             alert(`sent message: "${message}" with options ${JSON.stringify(options)}`);
@@ -152,6 +153,7 @@ export default {
     hasWarning: controlsToAdd.isSendBoxWithWarning,
     warningMessage: controlsToAdd.sendBoxWarningMessage,
     hasAttachments: controlsToAdd.isSendBoxWithAttachments,
+    textOnly: controlsToAdd.sendBoxTextOnlyMode,
     // Hiding auto-generated controls
     systemMessage: hiddenControl,
     onSendMessage: hiddenControl,
