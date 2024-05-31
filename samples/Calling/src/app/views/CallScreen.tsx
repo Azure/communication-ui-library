@@ -250,38 +250,38 @@ const convertPageStateToString = (state: CallAdapterState): string => {
 
 const videoBackgroundImages = [
   {
-    key: 'ab1',
+    key: 'contoso',
     url: '/assets/backgrounds/contoso.png',
-    tooltipText: 'Custom Background'
+    tooltipText: 'Contoso Background'
   },
   {
-    key: 'ab2',
+    key: 'pastel',
     url: '/assets/backgrounds/abstract2.jpg',
-    tooltipText: 'Custom Background'
+    tooltipText: 'Pastel Background'
   },
   {
-    key: 'ab3',
+    key: 'rainbow',
     url: '/assets/backgrounds/abstract3.jpg',
-    tooltipText: 'Custom Background'
+    tooltipText: 'Rainbow Background'
   },
   {
-    key: 'ab4',
+    key: 'office',
     url: '/assets/backgrounds/room1.jpg',
-    tooltipText: 'Custom Background'
+    tooltipText: 'Office Background'
   },
   {
-    key: 'ab5',
+    key: 'plant',
     url: '/assets/backgrounds/room2.jpg',
-    tooltipText: 'Custom Background'
+    tooltipText: 'Plant Background'
   },
   {
-    key: 'ab6',
+    key: 'bedroom',
     url: '/assets/backgrounds/room3.jpg',
-    tooltipText: 'Custom Background'
+    tooltipText: 'Bedroom Background'
   },
   {
-    key: 'ab7',
+    key: 'livingroom',
     url: '/assets/backgrounds/room4.jpg',
-    tooltipText: 'Custom Background'
+    tooltipText: 'Living Room Background'
   }
 ];

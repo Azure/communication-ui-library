@@ -90,8 +90,6 @@ module.exports = {
     "video-stream-is-receiving-flag",
     // Feature for spotlight
     'spotlight',
-    // Feature for end of call survey
-    'end-of-call-survey',
     // Joining calls using teams token
     "teams-identity-support",
     // feature for hiding attendee name in the teams meeting
