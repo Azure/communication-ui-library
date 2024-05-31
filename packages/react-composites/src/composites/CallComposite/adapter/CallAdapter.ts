@@ -42,7 +42,7 @@ import type { CommunicationUserIdentifier, PhoneNumberIdentifier } from '@azure/
 import type { AdapterState, Disposable, AdapterError, AdapterErrors } from '../../common/adapters';
 
 import { VideoBackgroundEffectsDependency } from '@internal/calling-component-bindings';
-/* @conditional-compile-remove(end-of-call-survey) */
+
 import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
 import { ReactionResources } from '@internal/react-components';
 
@@ -687,7 +687,6 @@ export interface CallAdapterCallOperations {
    * @public
    */
   updateSelectedVideoBackgroundEffect(selectedVideoBackground: VideoBackgroundEffect): void;
-  /* @conditional-compile-remove(end-of-call-survey) */
   /**
    * Send the end of call survey result
    *

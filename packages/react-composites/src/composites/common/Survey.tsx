@@ -2,50 +2,31 @@
 // Licensed under the MIT License.
 
 import React from 'react';
-/* @conditional-compile-remove(end-of-call-survey) */
 import { useState } from 'react';
-/* @conditional-compile-remove(end-of-call-survey) */
 import { useLocale } from '../localization';
-/* @conditional-compile-remove(end-of-call-survey) */
 import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
-/* @conditional-compile-remove(end-of-call-survey) */
 import { Text, PrimaryButton, Stack, useTheme, DefaultButton } from '@fluentui/react';
-/* @conditional-compile-remove(end-of-call-survey) */
 import { SurveyContent } from './SurveyContent';
-/* @conditional-compile-remove(end-of-call-survey) */
 import { CallSurveyImprovementSuggestions } from '@internal/react-components';
-/* @conditional-compile-remove(end-of-call-survey) */
 import { _pxToRem } from '@internal/acs-ui-common';
-/* @conditional-compile-remove(end-of-call-survey) */
 import { CallCompositeIcons } from './icons';
-/* @conditional-compile-remove(end-of-call-survey) */
 import { NoticePage } from '../CallComposite/pages/NoticePage';
-/* @conditional-compile-remove(end-of-call-survey) */
 import { ThankYouForFeedbackPage } from '../CallComposite/pages/ThankYouForFeedbackPage';
-/* @conditional-compile-remove(end-of-call-survey) */
 import { questionTextStyle, surveyContainerStyle } from './styles/Survey.styles';
 
 /** @private */
 export const Survey = (props: {
-  /* @conditional-compile-remove(end-of-call-survey) */
   iconName?: keyof CallCompositeIcons;
-  /* @conditional-compile-remove(end-of-call-survey) */
   title: string;
-  /* @conditional-compile-remove(end-of-call-survey) */
   moreDetails?: string;
-  /* @conditional-compile-remove(end-of-call-survey) */
   disableStartCallButton?: boolean;
-  /* @conditional-compile-remove(end-of-call-survey) */
   isMobile?: boolean;
-  /* @conditional-compile-remove(end-of-call-survey) */
   onSubmitSurvey?: (survey: CallSurvey) => Promise<CallSurveyResponse | undefined>;
-  /* @conditional-compile-remove(end-of-call-survey) */
   /**
    * Optional callback to redirect users to custom screens when survey is done, note that default end call screen will be shown if this callback is not provided
    * This callback can be used to redirect users to different screens depending on survey state, whether it is submitted, skipped or has a problem when submitting the survey
    */
   onSurveyClosed?: (surveyState: 'sent' | 'skipped' | 'error', surveyError?: string) => void;
-  /* @conditional-compile-remove(end-of-call-survey) */
   onSurveySubmittedCustom?: (
     callId: string,
     surveyId: string,
@@ -64,7 +45,6 @@ export const Survey = (props: {
     improvementSuggestions: CallSurveyImprovementSuggestions
   ) => Promise<void>;
 }): JSX.Element => {
-  /* @conditional-compile-remove(end-of-call-survey) */
   const {
     onSubmitSurvey,
     onSurveySubmittedCustom,
@@ -75,30 +55,20 @@ export const Survey = (props: {
     disableStartCallButton,
     isMobile
   } = props;
-  /* @conditional-compile-remove(end-of-call-survey) */
   const strings = useLocale().strings.call;
-  /* @conditional-compile-remove(end-of-call-survey) */
   const [ratings, setRatings] = useState(0);
-  /* @conditional-compile-remove(end-of-call-survey) */
   const [issuesSelected, setIssuesSelected] = useState<CallSurvey | undefined>();
-  /* @conditional-compile-remove(end-of-call-survey) */
   const [showSubmitFeedbackButton, setShowSubmitFeedbackButton] = useState(false);
-  /* @conditional-compile-remove(end-of-call-survey) */
   const [improvementSuggestions, setImprovementSuggestions] = useState<CallSurveyImprovementSuggestions>({});
 
-  /* @conditional-compile-remove(end-of-call-survey) */
   const [showDefaultAfterSubmitScreen, setShowDefaultAfterSubmitScreen] = useState<boolean>(false);
 
-  /* @conditional-compile-remove(end-of-call-survey) */
   const [showDefaultAfterDismissedScreen, setShowDefaultAfterDismissedScreen] = useState<boolean>(false);
 
-  /* @conditional-compile-remove(end-of-call-survey) */
   const [submitButtonDisabled, setSubmitButtonDisabled] = useState<boolean>(false);
 
-  /* @conditional-compile-remove(end-of-call-survey) */
   const theme = useTheme();
 
-  /* @conditional-compile-remove(end-of-call-survey) */
   return (
     <>
       {showDefaultAfterSubmitScreen && <ThankYouForFeedbackPage iconName={iconName} />}
@@ -214,5 +184,4 @@ export const Survey = (props: {
       )}
     </>
   );
-  return <></>;
 };
