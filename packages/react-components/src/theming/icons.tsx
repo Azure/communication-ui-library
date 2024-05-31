@@ -66,8 +66,6 @@ import {
   TableDismiss20Regular
 } from '@fluentui/react-icons';
 import { Emoji20Regular } from '@fluentui/react-icons';
-/* @conditional-compile-remove(soft-mute) */
-import { MicOff20Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(end-of-call-survey) */
 import { Star28Regular, Star28Filled } from '@fluentui/react-icons';
 import { HandRight20Regular, HandRightOff20Regular } from '@fluentui/react-icons';
