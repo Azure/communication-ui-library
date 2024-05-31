@@ -239,7 +239,8 @@ export const useVideoTileContextualMenuProps = (props: {
     /* @conditional-compile-remove(spotlight) */ onStopSpotlight,
     /* @conditional-compile-remove(spotlight) */ maxParticipantsToSpotlight,
     /* @conditional-compile-remove(spotlight) */ myUserId,
-    /* @conditional-compile-remove(soft-mute) */ onMuteParticipant
+    /* @conditional-compile-remove(soft-mute) */ onMuteParticipant,
+    /* @conditional-compile-remove(soft-mute) */ participant.isMuted
   ]);
 
   return contextualMenuProps;

@@ -702,6 +702,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       /* @conditional-compile-remove(spotlight) */ onStartRemoteSpotlight,
       /* @conditional-compile-remove(spotlight) */ onStopRemoteSpotlight,
       /* @conditional-compile-remove(spotlight) */ maxParticipantsToSpotlight,
+      /* @conditional-compile-remove(soft-mute) */ onMuteParticipant,
       reactionResources,
       videoTilesOptions
     ]
