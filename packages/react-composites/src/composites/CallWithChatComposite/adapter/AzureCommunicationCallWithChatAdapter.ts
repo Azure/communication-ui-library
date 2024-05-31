@@ -24,7 +24,7 @@ import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { DtmfTone } from '@azure/communication-calling';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 /* @conditional-compile-remove(attachment-upload) */
-import { AttachmentMetadata, AttachmentUploadTask } from '@internal/react-components';
+import { MessageOptions } from '@internal/acs-ui-common';
 import {
   ParticipantsJoinedListener,
   ParticipantsLeftListener,
@@ -98,12 +98,8 @@ import {
 import { CapabilitiesChangedListener } from '../../CallComposite/adapter/CallAdapter';
 /* @conditional-compile-remove(spotlight) */
 import { SpotlightChangedListener } from '../../CallComposite/adapter/CallAdapter';
-
 import { VideoBackgroundImage, VideoBackgroundEffect } from '../../CallComposite';
-/* @conditional-compile-remove(end-of-call-survey) */
 import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
-/* @conditional-compile-remove(attachment-upload) */
-import { FileSharingMetadata } from '../../ChatComposite/file-sharing';
 
 type CallWithChatAdapterStateChangedHandler = (newState: CallWithChatAdapterState) => void;
 
@@ -227,8 +223,6 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     this.disposeScreenShareStreamView.bind(this);
     this.fetchInitialData.bind(this);
     this.sendMessage.bind(this);
-    /* @conditional-compile-remove(attachment-upload) */
-    this.sendMessageWithAttachments.bind(this);
     this.sendReadReceipt.bind(this);
     this.sendTypingIndicator.bind(this);
     this.loadPreviousChatMessages.bind(this);
@@ -236,20 +230,6 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     this.deleteMessage.bind(this);
     this.on.bind(this);
     this.off.bind(this);
-    /* @conditional-compile-remove(attachment-upload) */
-    this.registerActiveUploads = this.registerActiveUploads.bind(this);
-    /* @conditional-compile-remove(attachment-upload) */
-    this.registerCompletedUploads = this.registerCompletedUploads.bind(this);
-    /* @conditional-compile-remove(attachment-upload) */
-    this.clearUploads = this.clearUploads.bind(this);
-    /* @conditional-compile-remove(attachment-upload) */
-    this.cancelUpload = this.cancelUpload.bind(this);
-    /* @conditional-compile-remove(attachment-upload) */
-    this.updateUploadProgress = this.updateUploadProgress.bind(this);
-    /* @conditional-compile-remove(attachment-upload) */
-    this.updateUploadStatusMessage = this.updateUploadStatusMessage.bind(this);
-    /* @conditional-compile-remove(attachment-upload) */
-    this.updateUploadMetadata = this.updateUploadMetadata.bind(this);
     this.downloadResourceToCache = this.downloadResourceToCache.bind(this);
     this.removeResourceFromCache = this.removeResourceFromCache.bind(this);
     /* @conditional-compile-remove(PSTN-calls) */
@@ -430,21 +410,13 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     });
   }
   /** Send a chat message. */
-  public async sendMessage(content: string): Promise<void> {
+  public async sendMessage(
+    content: string,
+    /* @conditional-compile-remove(attachment-upload) */
+    options?: MessageOptions
+  ): Promise<void> {
     return await this.executeWithResolvedChatAdapter((adapter) => {
-      return adapter.sendMessage(content);
-    });
-  }
-  /* @conditional-compile-remove(attachment-upload) */
-  /** Send a chat message with attachments. */
-  public async sendMessageWithAttachments(content: string, attachments: AttachmentMetadata[]): Promise<void> {
-    return await this.executeWithResolvedChatAdapter((adapter) => {
-      const fileSharingMetadata: FileSharingMetadata = {
-        fileSharingMetadata: JSON.stringify(attachments)
-      };
-      return adapter.sendMessage(content, {
-        metadata: fileSharingMetadata
-      });
+      return adapter.sendMessage(content, /* @conditional-compile-remove(attachment-upload) */ options);
     });
   }
   /** Send a chat read receipt. */
@@ -469,19 +441,10 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   public async updateMessage(
     messageId: string,
     content: string,
-    metadata?: Record<string, string>,
-    options?: {
-      /* @conditional-compile-remove(attachment-upload) */
-      attachmentMetadata?: AttachmentMetadata[];
-    }
+    options?: Record<string, string> | /* @conditional-compile-remove(attachment-upload) */ MessageOptions
   ): Promise<void> {
     return this.executeWithResolvedChatAdapter((adapter) => {
-      return adapter.updateMessage(
-        messageId,
-        content,
-        metadata,
-        /* @conditional-compile-remove(attachment-upload) */ options
-      );
+      return adapter.updateMessage(messageId, content, options);
     });
   }
   /** Delete an existing message. */
@@ -490,48 +453,6 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
       return adapter.deleteMessage(messageId);
     });
   }
-  /* @conditional-compile-remove(attachment-upload) */
-  public registerActiveUploads = (files: File[]): AttachmentUploadTask[] => {
-    return this.executeWithResolvedChatAdapter((adapter) => {
-      return adapter.registerActiveUploads(files);
-    });
-  };
-  /* @conditional-compile-remove(attachment-upload) */
-  public registerCompletedUploads = (metadata: AttachmentMetadata[]): AttachmentUploadTask[] => {
-    return this.executeWithResolvedChatAdapter((adapter) => {
-      return adapter.registerCompletedUploads(metadata);
-    });
-  };
-  /* @conditional-compile-remove(attachment-upload) */
-  public clearUploads = (): void => {
-    this.executeWithResolvedChatAdapter((adapter) => {
-      adapter.clearUploads();
-    });
-  };
-  /* @conditional-compile-remove(attachment-upload) */
-  public cancelUpload = (id: string): void => {
-    this.executeWithResolvedChatAdapter((adapter) => {
-      adapter.cancelUpload(id);
-    });
-  };
-  /* @conditional-compile-remove(attachment-upload) */
-  public updateUploadProgress = (id: string, progress: number): void => {
-    this.executeWithResolvedChatAdapter((adapter) => {
-      adapter.updateUploadProgress(id, progress);
-    });
-  };
-  /* @conditional-compile-remove(attachment-upload) */
-  public updateUploadStatusMessage = (id: string, errorMessage: string): void => {
-    this.executeWithResolvedChatAdapter((adapter) => {
-      adapter.updateUploadStatusMessage(id, errorMessage);
-    });
-  };
-  /* @conditional-compile-remove(attachment-upload) */
-  public updateUploadMetadata = (id: string, metadata: AttachmentMetadata): void => {
-    this.executeWithResolvedChatAdapter((adapter) => {
-      adapter.updateUploadMetadata(id, metadata);
-    });
-  };
   public async downloadResourceToCache(resourceDetails: ResourceDetails): Promise<void> {
     this.executeWithResolvedChatAdapter((adapter) => {
       adapter.downloadResourceToCache(resourceDetails);
@@ -606,7 +527,6 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   public updateSelectedVideoBackgroundEffect(selectedVideoBackground: VideoBackgroundEffect): void {
     return this.callAdapter.updateSelectedVideoBackgroundEffect(selectedVideoBackground);
   }
-  /* @conditional-compile-remove(end-of-call-survey) */
   public async submitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined> {
     return this.callAdapter.submitSurvey(survey);
   }

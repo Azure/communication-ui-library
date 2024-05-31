@@ -12,9 +12,11 @@ import { InlineImageOptions } from '../ChatMessage/ChatMessageContent';
 import { MessageThreadStrings } from '../MessageThread';
 /* @conditional-compile-remove(mention) */
 import { MentionDisplayOptions } from '../MentionPopover';
-import { _AttachmentDownloadCards } from '../AttachmentDownloadCards';
+import { _AttachmentDownloadCards } from '../Attachment/AttachmentDownloadCards';
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-import { AttachmentMenuAction, AttachmentMetadata } from '../../types/Attachment';
+import { AttachmentMenuAction } from '../../types/Attachment';
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+import { AttachmentMetadata } from '@internal/acs-ui-common';
 import { formatTimeForChatMessage, formatTimestampForChatMessage } from './Datetime';
 import { ComponentLocale } from '../../localization/LocalizationProvider';
 import { chatMessageEditedTagStyle } from '../styles/ChatMessageComponent.styles';
@@ -45,7 +47,7 @@ export function getMessageBubbleContent(
   /**
    * Optional callback to render message attachments in the message component.
    */
-  onRenderAttachmentDownloads?: (userId: string, message: ChatMessage) => JSX.Element,
+  onRenderAttachmentDownloads?: (message: ChatMessage) => JSX.Element,
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   /**
    * Optional callback to define custom actions for attachments.
@@ -61,7 +63,7 @@ export function getMessageBubbleContent(
     );
   }
   return (
-    <div tabIndex={0} className="ui-chat__message__content">
+    <div className="ui-chat__message__content">
       <ChatMessageContent
         message={message}
         strings={strings}
@@ -71,7 +73,7 @@ export function getMessageBubbleContent(
       />
       {
         /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ onRenderAttachmentDownloads
-          ? onRenderAttachmentDownloads(userId, message)
+          ? onRenderAttachmentDownloads(message)
           : defaultOnRenderAttachmentDownloads(
               message,
               strings,
@@ -92,12 +94,13 @@ const defaultOnRenderAttachmentDownloads = (
   strings: MessageThreadStrings,
   actionsForAttachment?: (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[]
 ): JSX.Element | undefined => {
+  const attachments = 'attachments' in message ? message.attachments : undefined;
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-  return ((message as ChatMessage).attachments?.length ?? 0) > 0 ? (
+  return (attachments?.length ?? 0) > 0 ? (
     <_AttachmentDownloadCards
       message={message as ChatMessage}
       /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-      attachments={(message as ChatMessage).attachments}
+      attachments={attachments}
       /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
       actionsForAttachment={actionsForAttachment}
       /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */

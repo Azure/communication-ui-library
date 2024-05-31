@@ -606,7 +606,7 @@ jobs:
         working-directory: packages/storybook8
       - name: Tests
         if: ${{ matrix.flavor == 'beta' || matrix.flavor == 'beta-release' }}
-        run: rushx test
+        run: rushx test-s8
         working-directory: packages/storybook8
 
   build_calling_sample:

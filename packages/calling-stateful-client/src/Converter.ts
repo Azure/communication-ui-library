@@ -154,7 +154,6 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
     recording: { isRecordingActive: false },
     /* @conditional-compile-remove(local-recording-notification) */
     localRecording: { isLocalRecordingActive: false },
-    /* @conditional-compile-remove(ppt-live) */
     pptLive: { isActive: false },
     raiseHand: { raisedHands: [] },
     localParticipantReaction: undefined,
@@ -183,7 +182,9 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
     /* @conditional-compile-remove(hide-attendee-name) */
     hideAttendeeNames,
     /* @conditional-compile-remove(meeting-id) */
-    info: callInfo
+    info: callInfo,
+    /* @conditional-compile-remove(teams-meeting-conference) */
+    teamsMeetingConference: undefined
   };
 }
 

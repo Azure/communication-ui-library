@@ -22,7 +22,6 @@ import type {
   BackgroundBlurConfig,
   ParticipantCapabilities
 } from '@azure/communication-calling';
-/* @conditional-compile-remove(end-of-call-survey) */
 import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import {
@@ -188,7 +187,6 @@ const createCompositeHandlers = memoizeOne(
       onSetCaptionLanguage: async (language) => {
         await adapter.setCaptionLanguage(language);
       },
-      /* @conditional-compile-remove(end-of-call-survey) */
       onSubmitSurvey: async (survey: CallSurvey): Promise<CallSurveyResponse | undefined> => {
         return await adapter.submitSurvey(survey);
       },

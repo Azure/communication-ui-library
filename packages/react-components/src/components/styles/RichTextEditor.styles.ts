@@ -32,7 +32,6 @@ export const richTextEditorWrapperStyle = (theme: Theme, addTopOffset: boolean):
     paddingTop: `${addTopOffset ? '0.5rem' : '0'}`,
     paddingInlineStart: `0.75rem`,
     paddingInlineEnd: `0.75rem`,
-    lineHeight: '1.25rem',
     maxWidth: '100%',
     color: theme.palette.neutralPrimary,
 
@@ -143,7 +142,7 @@ const ribbonButtonRootStyles = (theme: Theme): IStyle => {
 /**
  * @private
  */
-export const ribbonButtonStyle = (theme: Theme): Partial<IButtonStyles> => {
+export const toolbarButtonStyle = (theme: Theme): Partial<IButtonStyles> => {
   return {
     icon: { color: theme.palette.neutralPrimary, height: 'auto' },
     menuIcon: { color: theme.palette.neutralPrimary, height: 'auto' },
@@ -166,7 +165,7 @@ const rootRibbonTableButtonStyle = (theme: Theme): IStyle => {
 /**
  * @private
  */
-export const ribbonTableButtonStyle = (theme: Theme): Partial<IButtonStyles> => {
+export const toolbarTableButtonStyle = (theme: Theme): Partial<IButtonStyles> => {
   return {
     icon: { height: 'auto' },
     menuIcon: { height: 'auto' },
@@ -216,9 +215,9 @@ export const ribbonDividerStyle = (theme: Theme): string => {
 /**
  * @private
  */
-export const ribbonStyle: Partial<ICommandBarStyles> = {
+export const richTextToolbarStyle: Partial<ICommandBarStyles> = {
   // Override for the default white color of the Ribbon component
-  root: { backgroundColor: 'transparent' }
+  root: { backgroundColor: 'transparent', padding: '0px' }
 };
 
 /**
@@ -255,14 +254,11 @@ export const sendBoxRichTextEditorStyle = (isExpanded: boolean): RichTextEditorS
  */
 export const insertTableMenuCellButtonStyles = (theme: Theme): IStyle => {
   return {
-    width: '1rem',
-    height: '1rem',
-    border: `solid 0.0625rem ${theme.palette.neutralTertiaryAlt}`,
-    display: 'inline-block',
+    width: '16px',
+    height: '16px',
+    border: `solid 1px ${theme.palette.neutralTertiaryAlt}`,
     cursor: 'pointer',
-    background: 'transparent',
-    // include border into width value as the parent element has fixed width
-    boxSizing: 'border-box'
+    background: 'transparent'
   };
 };
 
@@ -279,7 +275,7 @@ export const insertTableMenuCellButtonSelectedStyles = (theme: Theme): IStyle =>
  * @private
  */
 export const insertTableMenuTablePane = mergeStyles({
-  padding: '0.5rem 0.625rem 0.75rem 0.625rem',
+  padding: '8px 10px 12px 10px',
   boxSizing: 'content-box',
   minWidth: 'auto'
 });
@@ -289,12 +285,9 @@ export const insertTableMenuTablePane = mergeStyles({
  */
 export const insertTableMenuFocusZone = (theme: Theme): string => {
   return mergeStyles({
-    lineHeight: '12px',
-    // fixed width is required to show columns in a grid correctly
-    width: '5rem',
-    border: `solid 0.0625rem ${theme.palette.neutralTertiaryAlt}`,
-    // don't include border into width value as otherwise it may be broken when zoom value is changed
-    boxSizing: 'content-box'
+    display: 'inline-grid',
+    gridTemplateColumns: 'auto auto auto auto auto',
+    border: `solid 1px ${theme.palette.neutralTertiaryAlt}`
   });
 };
 

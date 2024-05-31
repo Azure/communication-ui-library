@@ -45,10 +45,10 @@ import { useSelector } from '../hooks/useSelector';
 import { callStatusSelector } from '../selectors/callStatusSelector';
 import { CallControlOptions } from '../types/CallControlOptions';
 import { PreparedMoreDrawer } from '../../common/Drawer/PreparedMoreDrawer';
-import { getRemoteParticipants } from '../selectors/baseSelectors';
+import { getIsTeamsMeeting, getRemoteParticipants } from '../selectors/baseSelectors';
 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { getPage } from '../selectors/baseSelectors';
-import { getCallStatus, getIsTeamsCall, getCaptionsStatus } from '../selectors/baseSelectors';
+import { getCallStatus, getCaptionsStatus } from '../selectors/baseSelectors';
 import { drawerContainerStyles } from '../styles/CallComposite.styles';
 import { SidePane } from './SidePane/SidePane';
 import { usePeoplePane } from './SidePane/usePeoplePane';
@@ -86,7 +86,7 @@ import {
   useStopAllSpotlightCallbackWithPrompt
 } from '../utils/spotlightUtils';
 /* @conditional-compile-remove(acs-close-captions) */
-import { getCaptionsKind } from '../selectors/baseSelectors';
+import { getCaptionsKind, getIsTeamsCall } from '../selectors/baseSelectors';
 
 /**
  * @private
@@ -364,8 +364,13 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
 
   /* @conditional-compile-remove(acs-close-captions) */
   const isTeamsCaptions = useSelector(getCaptionsKind) === 'TeamsCaptions';
+  const isTeamsMeeting = useSelector(getIsTeamsMeeting);
+  /* @conditional-compile-remove(acs-close-captions) */
+  const isTeamsCall = useSelector(getIsTeamsCall);
   const useTeamsCaptions =
-    useSelector(getIsTeamsCall) || /* @conditional-compile-remove(acs-close-captions) */ isTeamsCaptions;
+    isTeamsMeeting ||
+    /* @conditional-compile-remove(acs-close-captions) */ isTeamsCall ||
+    /* @conditional-compile-remove(acs-close-captions) */ isTeamsCaptions;
   const hasJoinedCall = useSelector(getCallStatus) === 'Connected';
   const isCaptionsOn = useSelector(getCaptionsStatus);
   const minMaxDragPosition = useMinMaxDragPosition(props.modalLayerHostId);

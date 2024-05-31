@@ -16,7 +16,6 @@ import { InternalCallContext } from './InternalCallContext';
 import { LocalVideoStreamVideoEffectsSubscriber } from './LocalVideoStreamVideoEffectsSubscriber';
 import { ParticipantSubscriber } from './ParticipantSubscriber';
 import { RecordingSubscriber } from './RecordingSubscriber';
-/* @conditional-compile-remove(ppt-live) */
 import { PPTLiveSubscriber } from './PPTLiveSubscriber';
 import { disposeView } from './StreamUtils';
 import { TranscriptionSubscriber } from './TranscriptionSubscriber';
@@ -48,7 +47,6 @@ export class CallSubscriber {
   private _transcriptionSubscriber: TranscriptionSubscriber;
   /* @conditional-compile-remove(local-recording-notification) */
   private _localRecordingSubscriber?: LocalRecordingSubscriber;
-  /* @conditional-compile-remove(ppt-live) */
   private _pptLiveSubscriber: PPTLiveSubscriber;
   private _optimalVideoCountSubscriber: OptimalVideoCountSubscriber;
   private _CaptionsFeatureSubscriber?: CaptionsFeatureSubscriber;
@@ -78,7 +76,6 @@ export class CallSubscriber {
       this._context,
       this._call.feature(Features.Recording)
     );
-    /* @conditional-compile-remove(ppt-live) */
     this._pptLiveSubscriber = new PPTLiveSubscriber(this._callIdRef, this._context, this._call);
     this._transcriptionSubscriber = new TranscriptionSubscriber(
       this._callIdRef,
@@ -122,6 +119,8 @@ export class CallSubscriber {
   private subscribe = (): void => {
     this._call.on('stateChanged', this.stateChanged);
     this._call.on('stateChanged', this.initCaptionSubscriber);
+    /* @conditional-compile-remove(teams-meeting-conference) */
+    this._call.on('stateChanged', this.initTeamsMeetingConference);
     /* @conditional-compile-remove(local-recording-notification) */
     this._call.on('stateChanged', this.initLocalRecordingNotificationSubscriber);
     this._call.on('idChanged', this.idChanged);
@@ -162,6 +161,8 @@ export class CallSubscriber {
     this._call.off('stateChanged', this.initCaptionSubscriber);
     /* @conditional-compile-remove(local-recording-notification) */
     this._call.off('stateChanged', this.initLocalRecordingNotificationSubscriber);
+    /* @conditional-compile-remove(teams-meeting-conference) */
+    this._call.off('stateChanged', this.initTeamsMeetingConference);
     this._call.off('idChanged', this.idChanged);
     this._call.off('isScreenSharingOnChanged', this.isScreenSharingOnChanged);
     this._call.off('remoteParticipantsUpdated', this.remoteParticipantsUpdated);
@@ -196,7 +197,6 @@ export class CallSubscriber {
     /* @conditional-compile-remove(local-recording-notification) */
     this._localRecordingSubscriber?.unsubscribe();
     this._optimalVideoCountSubscriber.unsubscribe();
-    /* @conditional-compile-remove(ppt-live) */
     this._pptLiveSubscriber.unsubscribe();
     this._CaptionsFeatureSubscriber?.unsubscribe();
     this._raiseHandSubscriber?.unsubscribe();
@@ -238,6 +238,19 @@ export class CallSubscriber {
         this._call.feature(Features.Captions)
       );
       this._call.off('stateChanged', this.initCaptionSubscriber);
+    }
+  };
+
+  /* @conditional-compile-remove(teams-meeting-conference) */
+  private initTeamsMeetingConference = (): void => {
+    if (this._call.state === 'Connected' && this._call.kind === 'TeamsCall') {
+      this._call
+        .feature(Features.TeamsMeetingAudioConferencing)
+        .getTeamsMeetingAudioConferencingDetails()
+        .then((teamsMeetingConferenceDetails) => {
+          this._context.setTeamsMeetingConference(this._callIdRef.callId, teamsMeetingConferenceDetails);
+        });
+      this._call.off('stateChanged', this.initTeamsMeetingConference);
     }
   };
 

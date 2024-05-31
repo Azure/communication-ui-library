@@ -71,6 +71,7 @@ export const _RemoteVideoTile = React.memo(
     disablePinMenuItem?: boolean;
     toggleAnnouncerString?: (announcerString: string) => void;
     reactionResources?: ReactionResources;
+    onLongTouch?: (() => void) | undefined;
   }) => {
     const {
       isAvailable,
@@ -206,11 +207,11 @@ export const _RemoteVideoTile = React.memo(
       return remoteParticipant.displayName;
     };
 
-    const reactionOverlay = (
+    const reactionOverlay = reactionResources && (
       <MeetingReactionOverlay
         overlayMode="grid-tiles"
         reaction={remoteParticipant.reaction}
-        reactionResources={reactionResources!}
+        reactionResources={reactionResources}
       />
     );
 
@@ -241,10 +242,15 @@ export const _RemoteVideoTile = React.memo(
           participantState={participantState}
           {...videoTileContextualMenuProps}
           isPinned={props.isPinned}
-          onLongTouch={() =>
-            setDrawerMenuItemProps(
-              convertContextualMenuItemsToDrawerMenuItemProps(contextualMenuProps, () => setDrawerMenuItemProps([]))
-            )
+          onLongTouch={
+            props.onLongTouch
+              ? props.onLongTouch
+              : () =>
+                  setDrawerMenuItemProps(
+                    convertContextualMenuItemsToDrawerMenuItemProps(contextualMenuProps, () =>
+                      setDrawerMenuItemProps([])
+                    )
+                  )
           }
           /* @conditional-compile-remove(spotlight) */
           isSpotlighted={isSpotlighted}

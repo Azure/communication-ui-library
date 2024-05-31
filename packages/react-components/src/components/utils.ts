@@ -4,6 +4,7 @@
 import { IIconProps, MessageBarType } from '@fluentui/react';
 import { ActiveErrorMessage, ErrorType } from './ErrorBar';
 import { _SupportedSpokenLanguage } from '../types';
+import { NotificationType } from './Notifications';
 
 /**
  * @private
@@ -197,6 +198,37 @@ export const customIconName: Partial<{ [key in ErrorType]: string }> = {
 
 /**
  * @private
+ * @param NotificationType
+ * @returns IIconProps | undefined
+ */
+export const NotificationIconProps = (notificationType: NotificationType): IIconProps | undefined => {
+  const iconName = customNotificationIconName[notificationType];
+  return iconName ? { iconName } : undefined;
+};
+
+/**
+ * @private
+ */
+export const customNotificationIconName: Partial<{ [key in NotificationType]: string }> = {
+  callNetworkQualityLow: 'ErrorBarCallNetworkQualityLow',
+  callNoSpeakerFound: 'ErrorBarCallNoSpeakerFound',
+  callNoMicrophoneFound: 'ErrorBarCallNoMicrophoneFound',
+  callMicrophoneAccessDenied: 'ErrorBarCallMicrophoneAccessDenied',
+  callMicrophoneAccessDeniedSafari: 'ErrorBarCallMicrophoneAccessDenied',
+  callMicrophoneMutedBySystem: 'ErrorBarCallMicrophoneMutedBySystem',
+  callMicrophoneUnmutedBySystem: 'ErrorBarCallMicrophoneUnmutedBySystem',
+  callMacOsMicrophoneAccessDenied: 'ErrorBarCallMacOsMicrophoneAccessDenied',
+  callLocalVideoFreeze: 'ErrorBarCallLocalVideoFreeze',
+  callCameraAccessDenied: 'ErrorBarCallCameraAccessDenied',
+  callCameraAccessDeniedSafari: 'ErrorBarCallCameraAccessDenied',
+  callCameraAlreadyInUse: 'ErrorBarCallCameraAlreadyInUse',
+  callVideoStoppedBySystem: 'ErrorBarCallVideoStoppedBySystem',
+  callVideoRecoveredBySystem: 'ErrorBarCallVideoRecoveredBySystem',
+  callMacOsCameraAccessDenied: 'ErrorBarCallMacOsCameraAccessDenied'
+};
+
+/**
+ * @private
  */
 export const isValidString = (string: string | undefined): string is string => {
   return !!string && string.length > 0;
@@ -236,11 +268,9 @@ const SAFARI_COMPOSITION_KEYCODE = 229;
  *
  * @private
  */
-export const isEnterKeyEventFromCompositionSession = (e: React.KeyboardEvent<HTMLElement>): boolean =>
+export const isEnterKeyEventFromCompositionSession = (e: KeyboardEvent): boolean =>
   // Uses KeyCode 229 and which code 229 to determine if the press of the enter key is from a composition session or not (Safari only)
-  e.nativeEvent.isComposing ||
-  e.nativeEvent.keyCode === SAFARI_COMPOSITION_KEYCODE ||
-  e.nativeEvent.which === SAFARI_COMPOSITION_KEYCODE;
+  e.isComposing || e.keyCode === SAFARI_COMPOSITION_KEYCODE || e.which === SAFARI_COMPOSITION_KEYCODE;
 
 /**
  * @private

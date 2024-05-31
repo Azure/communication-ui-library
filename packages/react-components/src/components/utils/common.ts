@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { _AttachmentUploadCardsStrings } from '../AttachmentUploadCards';
+import { _AttachmentUploadCardsStrings } from '../Attachment/AttachmentUploadCards';
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 import { useLocale } from '../../localization';
 import { ParticipantState } from '../../types';

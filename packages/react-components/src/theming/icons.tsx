@@ -17,7 +17,7 @@ import {
   ErrorCircle16Regular,
   Eye16Regular,
   MicOff16Filled,
-  MicOff16Regular,
+  MicOff20Regular,
   MicOff20Filled,
   Mic16Filled,
   Mic20Filled,
@@ -42,10 +42,11 @@ import {
   MicProhibited16Filled,
   VideoProhibited16Filled,
   Pin16Filled,
-  Pin16Regular,
-  PinOff16Regular,
+  Pin20Regular,
+  PinOff20Regular,
   ScaleFit20Regular,
-  ScaleFill20Regular
+  ScaleFill20Regular,
+  PersonDelete20Regular
 } from '@fluentui/react-icons';
 /* @conditional-compile-remove(rich-text-editor) */
 import {
@@ -309,7 +310,7 @@ export const DEFAULT_COMPONENT_ICONS = {
   OptionsCamera: <Video20Regular />,
   OptionsMic: <Mic20Regular />,
   OptionsSpeaker: <Speaker220Regular />,
-  ParticipantItemMicOff: <MicOff16Regular />,
+  ParticipantItemMicOff: <MicOff20Regular />,
   ParticipantItemOptions: <></>,
   ParticipantItemOptionsHovered: <MoreHorizontal20Filled />,
   ParticipantItemScreenShareStart: <ShareScreenStart20Filled />,
@@ -343,8 +344,8 @@ export const DEFAULT_COMPONENT_ICONS = {
   VideoTileMoreOptions: <MoreHorizontal20Filled />,
   VideoTileScaleFit: <ScaleFit20Regular />,
   VideoTileScaleFill: <ScaleFill20Regular />,
-  PinParticipant: <Pin16Regular />,
-  UnpinParticipant: <PinOff16Regular />,
+  PinParticipant: <Pin20Regular />,
+  UnpinParticipant: <PinOff20Regular />,
   SplitButtonPrimaryActionCameraOn: <Video20Filled />,
   SplitButtonPrimaryActionCameraOff: <VideoOff20Filled />,
   SplitButtonPrimaryActionMicUnmuted: <Mic20Filled />,
@@ -361,9 +362,8 @@ export const DEFAULT_COMPONENT_ICONS = {
   ContextMenuCameraIcon: <Video20Regular />,
   ContextMenuMicIcon: <Mic20Regular />,
   ContextMenuSpeakerIcon: <Speaker220Regular />,
-  /* @conditional-compile-remove(end-of-call-survey) */
+  ContextMenuRemoveParticipant: <PersonDelete20Regular />,
   SurveyStarIcon: <Star28Regular />,
-  /* @conditional-compile-remove(end-of-call-survey) */
   SurveyStarIconFilled: <Star28Filled />,
   /* @conditional-compile-remove(spotlight) */
   StartSpotlightContextualMenuItem: <VideoPersonStar20Filled />,

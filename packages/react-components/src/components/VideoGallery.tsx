@@ -92,6 +92,8 @@ export interface VideoGalleryStrings {
   localVideoCameraSwitcherLabel: string;
   /** String for announcing the local video tile can be moved by keyboard controls */
   localVideoMovementLabel: string;
+  /** Aria-label for announcing the local video tile can be moved by keyboard controls */
+  localVideoMovementAriaLabel: string;
   /** String for announcing the selected camera */
   localVideoSelectedDescription: string;
   /** placeholder text for participants who does not have a display name*/
@@ -491,7 +493,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
         styles={localVideoTileContainerStyles}
         key="local-video-tile-key"
         tabIndex={0}
-        aria-label={strings.localVideoMovementLabel}
+        aria-label={strings.localVideoMovementAriaLabel ?? strings.localVideoMovementLabel}
         role={'dialog'}
       >
         <_LocalVideoTile
@@ -720,7 +722,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       localParticipant={localParticipant}
       remoteParticipants={remoteParticipants}
       reactionResources={reactionResources}
-      /* @conditional-compile-remove(ppt-live) */
       isPPTLive={!screenShareParticipant.screenShareStream?.id}
     />
   );

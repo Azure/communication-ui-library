@@ -1,9 +1,0 @@
-{
-  "type": "patch",
-  "area": "fix",
-  "workstream": "Captions",
-  "comment": "Update caption logic to only process current speaker and ignore interceptors until the current speaker stops talking",
-  "packageName": "@azure/communication-react",
-  "email": "96077406+carocao-msft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

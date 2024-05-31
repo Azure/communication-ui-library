@@ -1,9 +1,0 @@
-{
-  "type": "minor",
-  "area": "fix",
-  "workstream": "Click to Call",
-  "comment": "Introduces API to show or hude the dialpad automatically when the call starts",
-  "packageName": "@azure/communication-react",
-  "email": "dmceachern@microsoft.com",
-  "dependentChangeType": "patch"
-}

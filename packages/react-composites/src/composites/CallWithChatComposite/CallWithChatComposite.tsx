@@ -4,7 +4,6 @@
 import React, { useCallback, useState, useMemo, useEffect, useRef } from 'react';
 import { mergeStyles, PartialTheme, Stack, Theme } from '@fluentui/react';
 import { CallCompositePage } from '../CallComposite';
-/* @conditional-compile-remove(end-of-call-survey) */
 import { CallSurvey } from '@azure/communication-calling';
 import { CallState } from '@azure/communication-calling';
 import { callCompositeContainerStyles, compositeOuterContainerStyles } from './styles/CallWithChatCompositeStyles';
@@ -17,7 +16,6 @@ import { BaseProvider, BaseCompositeProps } from '../common/BaseComposite';
 import { CallWithChatCompositeIcons } from '../common/icons';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { CallWithChatAdapterState } from './state/CallWithChatAdapterState';
-/* @conditional-compile-remove(end-of-call-survey) */
 import { CallSurveyImprovementSuggestions } from '@internal/react-components';
 import {
   ParticipantMenuItemsCallback,
@@ -182,7 +180,6 @@ export type CallWithChatCompositeOptions = {
      */
     layout?: VideoGalleryLayout;
   };
-  /* @conditional-compile-remove(end-of-call-survey) */
   /**
    * Options for end of call survey
    */
@@ -270,6 +267,15 @@ export type CallWithChatCompositeOptions = {
      */
     hideSpotlightButtons?: boolean;
   };
+
+  /* @conditional-compile-remove(rich-text-editor-composite-support) */
+  /**
+   * enables rich text editor for the edit box
+   * @defaultValue `false`
+   *
+   * @beta
+   */
+  richTextEditor?: boolean;
 };
 
 type CallWithChatScreenProps = {
@@ -299,7 +305,6 @@ type CallWithChatScreenProps = {
   galleryOptions?: {
     layout?: VideoGalleryLayout;
   };
-  /* @conditional-compile-remove(end-of-call-survey) */
   /**
    * Options for end of call survey
    */
@@ -349,11 +354,12 @@ type CallWithChatScreenProps = {
   spotlight?: {
     hideSpotlightButtons?: boolean;
   };
+  /* @conditional-compile-remove(rich-text-editor-composite-support) */
+  richTextEditor?: boolean;
 };
 
 const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
   const { callWithChatAdapter, fluentTheme, formFactor = 'desktop' } = props;
-  /* @conditional-compile-remove(end-of-call-survey) */
   const { surveyOptions } = props;
   const mobileView = formFactor === 'mobile';
 
@@ -524,7 +530,6 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
 
       galleryOptions: props.galleryOptions,
       localVideoTile: props.localVideoTile,
-      /* @conditional-compile-remove(end-of-call-survey) */
       surveyOptions: surveyOptions,
       branding: {
         logo: props.logo,
@@ -547,11 +552,9 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
       props.onNetworkingTroubleShootingClick,
       /* @conditional-compile-remove(call-readiness) */
       props.onPermissionsTroubleshootingClick,
-
       props.galleryOptions,
       props.localVideoTile,
       props.remoteVideoTileMenuOptions,
-      /* @conditional-compile-remove(end-of-call-survey) */
       surveyOptions,
       props.logo,
       props.backgroundImage,
@@ -570,15 +573,19 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
           /* @conditional-compile-remove(chat-composite-participant-pane) */
           participantPane: false,
           /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-          attachmentOptions: props.attachmentOptions
+          attachmentOptions: props.attachmentOptions,
+          /* @conditional-compile-remove(rich-text-editor-composite-support) */
+          richTextEditor: props.richTextEditor
         }}
         onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
       />
     ),
     [
       chatAdapter,
-      /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ props.attachmentOptions,
+      /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+      props.attachmentOptions,
       props.onFetchAvatarPersonaData,
+      /* @conditional-compile-remove(rich-text-editor-composite-support) */ props.richTextEditor,
       theme
     ]
   );
@@ -685,7 +692,6 @@ export const CallWithChatComposite = (props: CallWithChatCompositeProps): JSX.El
         galleryOptions={options?.galleryOptions}
         logo={options?.branding?.logo}
         backgroundImage={options?.branding?.backgroundImage}
-        /* @conditional-compile-remove(end-of-call-survey) */
         surveyOptions={options?.surveyOptions}
         /* @conditional-compile-remove(spotlight) */
         spotlight={options?.spotlight}

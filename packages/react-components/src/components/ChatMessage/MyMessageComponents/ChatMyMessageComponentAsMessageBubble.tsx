@@ -17,8 +17,10 @@ import { MessageThreadStrings } from '../../MessageThread';
 import { chatMessageActionMenuProps } from '../ChatMessageActionMenu';
 import { ComponentSlotStyle, OnRenderAvatarCallback } from '../../../types';
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-import { AttachmentMenuAction, AttachmentMetadata } from '../../../types/Attachment';
-import { _AttachmentDownloadCards } from '../../AttachmentDownloadCards';
+import { AttachmentMenuAction } from '../../../types/Attachment';
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+import { AttachmentMetadata } from '@internal/acs-ui-common';
+import { _AttachmentDownloadCards } from '../../Attachment/AttachmentDownloadCards';
 import { useLocale } from '../../../localization';
 /* @conditional-compile-remove(mention) */
 import { MentionDisplayOptions } from '../../MentionPopover';
@@ -31,6 +33,8 @@ import {
   getMessageBubbleContent,
   getMessageEditedDetails
 } from '../../utils/ChatMessageComponentUtils';
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+import { doesMessageContainMultipleAttachments } from '../../utils/ChatMessageComponentAsEditBoxUtils';
 
 type ChatMyMessageComponentAsMessageBubbleProps = {
   message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage;
@@ -79,7 +83,7 @@ type ChatMyMessageComponentAsMessageBubbleProps = {
   /**
    * Optional callback to render message attachments in the message component.
    */
-  onRenderAttachmentDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
+  onRenderAttachmentDownloads?: (message: ChatMessage) => JSX.Element;
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   /**
    * Optional callback to define custom actions for attachments.
@@ -170,6 +174,11 @@ const MessageBubble = (props: ChatMyMessageComponentAsMessageBubbleProps): JSX.E
     setChatMessageActionFlyoutTarget(undefined);
   }, [setChatMessageActionFlyoutTarget]);
 
+  /* @conditional-compile-remove(attachment-upload) */
+  const hasMultipleAttachments = useMemo(() => {
+    return doesMessageContainMultipleAttachments(message as ChatMessage);
+  }, [message]);
+
   const getMessageDetails = useCallback(() => {
     if (messageStatus === 'failed') {
       return <div className={chatMessageFailedTagStyle(theme)}>{strings.failToSendTag}</div>;
@@ -224,6 +233,8 @@ const MessageBubble = (props: ChatMyMessageComponentAsMessageBubbleProps): JSX.E
                 ? chatMessageCommonStyles.failed
                 : undefined,
               attached !== 'top' ? chatMyMessageStyles.bodyAttached : undefined,
+              /* @conditional-compile-remove(attachment-upload) */
+              hasMultipleAttachments ? chatMyMessageStyles.multipleAttachments : undefined,
               mergeStyles(messageContainerStyle)
             ),
             style: { ...createStyleFromV8Style(messageContainerStyle) },
@@ -245,20 +256,12 @@ const MessageBubble = (props: ChatMyMessageComponentAsMessageBubbleProps): JSX.E
               // react onFocus is called even when nested component receives focus (i.e. it bubbles)
               // so when focus moves within actionMenu, the `focus` state in chatMessage remains true, and keeps actionMenu visible
               setFocused(true);
-            },
-            // make body not focusable to remove repetitions from narrators.
-            // inner components are already focusable
-            role: 'none',
-            tabIndex: -1
+            }
           }}
           data-ui-id="chat-composite-message"
-          author={
-            <Text className={chatMessageDateStyle} tabIndex={0}>
-              {message.senderDisplayName}
-            </Text>
-          }
+          author={<Text className={chatMessageDateStyle}>{message.senderDisplayName}</Text>}
           timestamp={
-            <Text className={chatMessageDateStyle} data-ui-id={ids.messageTimestamp} tabIndex={0}>
+            <Text className={chatMessageDateStyle} data-ui-id={ids.messageTimestamp}>
               {formattedTimestamp}
             </Text>
           }
