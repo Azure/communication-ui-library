@@ -96,25 +96,18 @@ export const createDefaultCallingHandlers: CreateDefaultCallingHandlers = memoiz
   };
 });
 
-/* @conditional-compile-remove(spotlight) */ /* @conditional-compile-remove(soft-mute) */
+/* @conditional-compile-remove(spotlight) */
 /**
  * Handlers only for calling components
  * @internal
  */
 export interface _ComponentCallingHandlers {
-  /* @conditional-compile-remove(spotlight) */
   /** VideoGallery callback prop to start local spotlight */
   onStartLocalSpotlight: () => Promise<void>;
-  /* @conditional-compile-remove(spotlight) */
   /** VideoGallery callback prop to stop local spotlight */
   onStopLocalSpotlight: () => Promise<void>;
-  /* @conditional-compile-remove(spotlight) */
   /** VideoGallery callback prop to start remote spotlight */
   onStartRemoteSpotlight: (userIds: string[]) => Promise<void>;
-  /* @conditional-compile-remove(spotlight) */
   /** VideoGallery callback prop to stop remote spotlight */
   onStopRemoteSpotlight: (userIds: string[]) => Promise<void>;
-  /* @conditional-compile-remove(soft-mute) */
-  /** VideoGallery callback prop to mute remote participant */
-  onMuteParticipant: (userId: string) => Promise<void>;
 }

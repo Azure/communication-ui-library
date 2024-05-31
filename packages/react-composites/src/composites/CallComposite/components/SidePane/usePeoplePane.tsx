@@ -189,7 +189,7 @@ export const usePeoplePane = (props: {
           key: 'mute',
           text: 'Mute',
           iconProps: {
-            iconName: isMuted ? 'ContextualMenuMicMutedIcon' : 'ContextualMenuMicUnmutedIcon',
+            iconName: 'ContextualMenuMicMutedIcon',
             styles: { root: { lineHeight: 0 } }
           },
           onClick: () => {

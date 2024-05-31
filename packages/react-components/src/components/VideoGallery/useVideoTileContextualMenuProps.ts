@@ -174,7 +174,7 @@ export const useVideoTileContextualMenuProps = (props: {
         key: 'mute',
         text: 'Mute',
         iconProps: {
-          iconName: participant.isMuted ? 'ContextualMenuMicMutedIcon' : 'ContextualMenuMicUnmutedIcon',
+          iconName: 'ContextualMenuMicMutedIcon',
           styles: { root: { lineHeight: 0 } }
         },
         onClick: () => onMuteParticipant(participant.userId),

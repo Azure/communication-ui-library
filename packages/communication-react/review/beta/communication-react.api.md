@@ -2592,7 +2592,6 @@ export const DEFAULT_COMPONENT_ICONS: {
     RichTextInsertTableFilledIcon: React_2.JSX.Element;
     RichTextTableInsertMenuIcon: React_2.JSX.Element;
     RichTextTableDeleteMenuIcon: React_2.JSX.Element;
-    ContextualMenuMicUnmutedIcon: React_2.JSX.Element;
     ContextualMenuMicMutedIcon: React_2.JSX.Element;
 };
 
@@ -2758,7 +2757,6 @@ export const DEFAULT_COMPOSITE_ICONS: {
     RichTextInsertTableFilledIcon: React_2.JSX.Element;
     RichTextTableInsertMenuIcon: React_2.JSX.Element;
     RichTextTableDeleteMenuIcon: React_2.JSX.Element;
-    ContextualMenuMicUnmutedIcon: React_2.JSX.Element;
     ContextualMenuMicMutedIcon: React_2.JSX.Element;
 };
 

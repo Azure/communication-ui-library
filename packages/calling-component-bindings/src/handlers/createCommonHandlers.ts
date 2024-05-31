@@ -35,7 +35,7 @@ import { CommunicationIdentifier } from '@azure/communication-common';
 import { Features } from '@azure/communication-calling';
 import { TeamsCaptions } from '@azure/communication-calling';
 import { Reaction } from '@azure/communication-calling';
-/* @conditional-compile-remove(spotlight) */ /* @conditional-compile-remove(soft-mute) */
+/* @conditional-compile-remove(spotlight) */
 import { _ComponentCallingHandlers } from './createHandlers';
 
 /**
@@ -147,8 +147,7 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
     options?: {
       onResolveVideoBackgroundEffectsDependency?: () => Promise<VideoBackgroundEffectsDependency>;
     }
-  ): CommonCallingHandlers &
-    /* @conditional-compile-remove(soft-mute) */ /* @conditional-compile-remove(spotlight) */ Partial<_ComponentCallingHandlers> => {
+  ): CommonCallingHandlers & /* @conditional-compile-remove(spotlight) */ Partial<_ComponentCallingHandlers> => {
     const onStartLocalVideo = async (): Promise<void> => {
       // Before the call object creates a stream, dispose of any local preview streams.
       // @TODO: is there any way to parent the unparented view to the call object instead
