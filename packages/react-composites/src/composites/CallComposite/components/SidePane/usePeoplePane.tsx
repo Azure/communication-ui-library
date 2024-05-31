@@ -11,6 +11,10 @@ import { AvatarPersonaDataCallback } from '../../../common/AvatarPersona';
 import { IButton } from '@fluentui/react';
 /* @conditional-compile-remove(spotlight) */
 import { IContextualMenuItem, IContextualMenuProps } from '@fluentui/react';
+/* @conditional-compile-remove(soft-mute) */
+import { getRemoteParticipants } from '../../selectors/baseSelectors';
+/* @conditional-compile-remove(soft-mute) */
+import { useSelector } from '../../hooks/useSelector';
 
 const PEOPLE_SIDE_PANE_ID = 'people';
 
@@ -38,6 +42,10 @@ export const usePeoplePane = (props: {
   onStopAllSpotlight?: () => Promise<void>;
   /* @conditional-compile-remove(spotlight) */
   maxParticipantsToSpotlight?: number;
+  /* @conditional-compile-remove(soft-mute) */
+  onMuteParticipant?: (userId: string) => Promise<void>;
+  /* @conditional-compile-remove(soft-mute) */
+  mutedParticipantUserIds?: string[];
 }): {
   openPeoplePane: () => void;
   closePeoplePane: () => void;
@@ -65,7 +73,9 @@ export const usePeoplePane = (props: {
     /* @conditional-compile-remove(spotlight) */
     onStopAllSpotlight,
     /* @conditional-compile-remove(spotlight) */
-    maxParticipantsToSpotlight
+    maxParticipantsToSpotlight,
+    /* @conditional-compile-remove(soft-mute) */
+    onMuteParticipant
   } = props;
 
   const closePane = useCallback(() => {
@@ -74,6 +84,8 @@ export const usePeoplePane = (props: {
   }, [peopleButtonRef, updateSidePaneRenderer]);
 
   const localeStrings = useLocale().strings.call;
+  /* @conditional-compile-remove(soft-mute) */
+  const remoteParticipants = useSelector(getRemoteParticipants);
 
   /* @conditional-compile-remove(spotlight) */
   const sidePaneHeaderMenuProps: IContextualMenuProps = useMemo(() => {
@@ -106,12 +118,15 @@ export const usePeoplePane = (props: {
     [mobileView, closePane, localeStrings]
   );
 
-  /* @conditional-compile-remove(spotlight) */
+  /* @conditional-compile-remove(spotlight) */ /* @conditional-compile-remove(soft-mute) */
   const onFetchParticipantMenuItemsForCallComposite = useCallback(
     (participantId: string, myUserId?: string, defaultMenuItems?: IContextualMenuItem[]): IContextualMenuItem[] => {
       const _defaultMenuItems: IContextualMenuItem[] = defaultMenuItems ?? [];
+      /* @conditional-compile-remove(spotlight) */
       const isSpotlighted = spotlightedParticipantUserIds?.find((p) => p === participantId);
+      /* @conditional-compile-remove(spotlight) */
       const isMe = myUserId === participantId;
+      /* @conditional-compile-remove(spotlight) */
       if (isSpotlighted) {
         const stopSpotlightMenuText = isMe
           ? localeStrings.stopSpotlightOnSelfMenuLabel
@@ -167,6 +182,24 @@ export const usePeoplePane = (props: {
           });
         }
       }
+      /* @conditional-compile-remove(soft-mute) */
+      if (onMuteParticipant && !isMe) {
+        const isMuted = remoteParticipants && remoteParticipants[participantId]?.isMuted;
+        _defaultMenuItems.push({
+          key: 'mute',
+          text: 'Mute',
+          iconProps: {
+            iconName: isMuted ? 'ContextualMenuMicMutedIcon' : 'ContextualMenuMicUnmutedIcon',
+            styles: { root: { lineHeight: 0 } }
+          },
+          onClick: () => {
+            onMuteParticipant(participantId);
+          },
+          'data-ui-id': 'participant-item-mute-participant',
+          ariaLabel: 'Mute',
+          disabled: isMuted
+        });
+      }
       return onFetchParticipantMenuItems
         ? onFetchParticipantMenuItems(participantId, myUserId, _defaultMenuItems)
         : _defaultMenuItems;
@@ -178,6 +211,10 @@ export const usePeoplePane = (props: {
       onStartRemoteSpotlight,
       onStopRemoteSpotlight,
       onFetchParticipantMenuItems,
+      /* @conditional-compile-remove(soft-mute) */
+      onMuteParticipant,
+      /* @conditional-compile-remove(soft-mute) */
+      remoteParticipants,
       localeStrings.stopSpotlightMenuLabel,
       localeStrings.stopSpotlightOnSelfMenuLabel,
       localeStrings.addSpotlightMenuLabel,

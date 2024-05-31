@@ -28,7 +28,7 @@ export type { CommonCallingHandlers } from './handlers/createCommonHandlers';
 export type { CaptionsOptions } from './handlers/createCommonHandlers';
 
 export type { VideoBackgroundEffectsDependency } from './handlers/createCommonHandlers';
-/* @conditional-compile-remove(spotlight) */
+/* @conditional-compile-remove(spotlight) */ /* @conditional-compile-remove(soft-mute) */
 export type { _ComponentCallingHandlers } from './handlers/createHandlers';
 
 export type { CallingHandlersOptions } from './handlers/createHandlers';

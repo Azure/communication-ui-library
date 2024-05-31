@@ -184,6 +184,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   );
 
   const locale = useLocale();
+  const role = adapter.getState().call?.role;
 
   /* @conditional-compile-remove(spotlight) */
   const videoGalleryProps = usePropsFor(VideoGallery);
@@ -197,6 +198,8 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     onStopLocalSpotlight,
     onStartRemoteSpotlight,
     onStopRemoteSpotlight,
+    /* @conditional-compile-remove(soft-mute) */
+    onMuteParticipant,
     spotlightedParticipants,
     maxParticipantsToSpotlight,
     localParticipant
@@ -234,6 +237,19 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     setPromptProps
   );
 
+  const onMuteParticipantPeoplePaneProps = useMemo(() => {
+    /* @conditional-compile-remove(soft-mute) */
+    return {
+      onMuteParticipant: ['Unknown', 'Organizer', 'Presenter', 'Co-organizer'].includes(role ?? '')
+        ? onMuteParticipant
+        : undefined
+    };
+    return {};
+  }, [
+    /* @conditional-compile-remove(soft-mute) */ onMuteParticipant,
+    /* @conditional-compile-remove(soft-mute) */ role
+  ]);
+
   const spotlightPeoplePaneProps = useMemo(() => {
     /* @conditional-compile-remove(spotlight) */
     return {
@@ -259,7 +275,8 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
 
   const { isPeoplePaneOpen, openPeoplePane, closePeoplePane } = usePeoplePane({
     ...peoplePaneProps,
-    ...spotlightPeoplePaneProps
+    ...spotlightPeoplePaneProps,
+    ...onMuteParticipantPeoplePaneProps
   });
   const togglePeoplePane = useCallback(() => {
     if (isPeoplePaneOpen) {
@@ -325,8 +342,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   }, [togglePeoplePane]);
 
   const drawerContainerStylesValue = useMemo(() => drawerContainerStyles(DRAWER_Z_INDEX), []);
-
-  const role = adapter.getState().call?.role;
 
   const canUnmute = role !== 'Consumer' ? true : false;
 

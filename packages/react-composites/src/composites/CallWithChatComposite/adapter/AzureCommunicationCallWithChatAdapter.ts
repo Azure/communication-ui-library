@@ -626,6 +626,11 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     return this.callAdapter.stopAllSpotlight();
   }
 
+  /* @conditional-compile-remove(soft-mute) */
+  public async muteParticipant(userId: string): Promise<void> {
+    return this.callAdapter.muteParticipant(userId);
+  }
+
   on(event: 'callParticipantsJoined', listener: ParticipantsJoinedListener): void;
   on(event: 'callParticipantsLeft', listener: ParticipantsLeftListener): void;
   on(event: 'callEnded', listener: CallEndedListener): void;

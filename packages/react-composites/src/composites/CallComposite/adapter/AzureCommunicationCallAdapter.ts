@@ -552,6 +552,8 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.stopSpotlight.bind(this);
     /* @conditional-compile-remove(spotlight) */
     this.stopAllSpotlight.bind(this);
+    /* @conditional-compile-remove(soft-mute) */
+    this.muteParticipant.bind(this);
   }
 
   public dispose(): void {
@@ -1020,6 +1022,11 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   /* @conditional-compile-remove(end-of-call-survey) */
   public async submitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined> {
     return this.handlers.onSubmitSurvey(survey);
+  }
+
+  /* @conditional-compile-remove(soft-mute) */
+  public async muteParticipant(userId: string): Promise<void> {
+    this.handlers.onMuteParticipant(userId);
   }
 
   /* @conditional-compile-remove(spotlight) */

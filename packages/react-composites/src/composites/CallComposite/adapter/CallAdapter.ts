@@ -703,6 +703,13 @@ export interface CallAdapterCallOperations {
    * Stop all spotlights
    */
   stopAllSpotlight(): Promise<void>;
+  /* @conditional-compile-remove(soft-mute) */
+  /**
+   * Mute a participant
+   *
+   * @param userId - Id of the participant to mute
+   */
+  muteParticipant(userId: string): Promise<void>;
 }
 
 /**

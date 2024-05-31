@@ -40,7 +40,7 @@ import { ErrorBarSelector, errorBarSelector } from '../errorBarSelector';
 import { CommonCallingHandlers } from '../handlers/createCommonHandlers';
 import { reactionButtonSelector } from '../callControlSelectors';
 import { ReactionButton } from '@internal/react-components';
-/* @conditional-compile-remove(spotlight) */
+/* @conditional-compile-remove(spotlight) */ /* @conditional-compile-remove(soft-mute) */
 import { _ComponentCallingHandlers } from '../handlers/createHandlers';
 
 /**
@@ -66,7 +66,8 @@ export const usePropsFor = <Component extends (props: any) => JSX.Element>(
 ): GetSelector<Component> extends (props: any) => any
   ? ReturnType<GetSelector<Component>> &
       Common<
-        CommonCallingHandlers & /* @conditional-compile-remove(spotlight) */ _ComponentCallingHandlers,
+        CommonCallingHandlers &
+          /* @conditional-compile-remove(soft-mute) */ /* @conditional-compile-remove(spotlight) */ _ComponentCallingHandlers,
         Parameters<Component>[0]
       >
   : undefined => {

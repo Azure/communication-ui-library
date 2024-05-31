@@ -22,7 +22,9 @@ module.exports = {
     // Feature for Rich Text Editor (RTE) composite support
     "rich-text-editor-composite-support",
     // Feature for Rich Text Editor (RTE) image upload support
-    "rich-text-editor-image-upload"
+    "rich-text-editor-image-upload",
+    // Soft Mute feature for ACS and Interop calls
+    "soft-mute"
   ],
   beta: [
     "call-readiness",
@@ -76,7 +78,7 @@ module.exports = {
     // Close captions feature for ACS calls
     "acs-close-captions",
     // Feature for Rich Text Editor (RTE) support
-    'rich-text-editor'
+    'rich-text-editor',
   ],
   stable: [
     // Demo feature. Used in live-documentation of conditional compilation.
