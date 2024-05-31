@@ -44,11 +44,11 @@ export const richTextEditorWrapperStyle = (theme: Theme, addTopOffset: boolean):
 
       '& tr': {
         background: 'transparent',
-        border: `1px solid ${theme.palette.neutralLight}`,
+        border: `1px solid ${theme.palette.neutralTertiaryAlt}`,
 
         '& td': {
           background: 'transparent',
-          border: `1px solid ${theme.palette.neutralLight}`,
+          border: `1px solid ${theme.palette.neutralTertiaryAlt}`,
           wordBreak: 'normal',
           padding: '0.125rem 0.25rem',
           verticalAlign: 'top'
