@@ -22,6 +22,7 @@ import {
 import { _preventDismissOnEvent } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(teams-meeting-conference) */
 import { useLocale } from '../localization';
+import { isPossiblePhoneNumber, parsePhoneNumber } from 'libphonenumber-js';
 
 /* @conditional-compile-remove(teams-meeting-conference) */
 /**
@@ -198,11 +199,15 @@ export const _MeetingConferencePhoneInfoModal = (props: _MeetingConferencePhoneI
  * format phone number
  */
 export const formatPhoneNumber = (phoneNumber: string): string => {
-  const cleaned = ('' + phoneNumber).replace(/\D/g, '');
-  const match = cleaned.match(/^(\d{1,2})?(\d{3})(\d{3})(\d{4})$/);
-  if (match) {
-    const intlCode = '+' + match[1] + ' ';
-    return [intlCode, '(', match[2], ') ', match[3], '-', match[4]].join('');
+  if (!phoneNumber) {
+    return '';
+  }
+  let enchantedPhoneNumber = phoneNumber;
+  if (!phoneNumber.startsWith('+')) {
+    enchantedPhoneNumber = `+${phoneNumber}`;
+  }
+  if (isPossiblePhoneNumber(enchantedPhoneNumber)) {
+    return parsePhoneNumber(enchantedPhoneNumber)?.formatInternational() || enchantedPhoneNumber;
   }
   return phoneNumber;
 };
@@ -219,9 +224,14 @@ export const formatPhoneNumberInfo = (
   if (!phoneNumber) {
     return '';
   }
-  const toll = phoneNumber.isTollFree
+  const templateText = phoneNumber.isTollFree
     ? strings?.meetingConferencePhoneInfoModalTollFree
     : strings?.meetingConferencePhoneInfoModalToll;
-  const countryAndCity = [phoneNumber.country, phoneNumber.city].filter((x) => x).join(', ');
-  return [formatPhoneNumber(phoneNumber.phoneNumber), toll, countryAndCity].filter((x) => x).join(' ');
+  return (
+    templateText
+      ?.replace('{phoneNumber}', formatPhoneNumber(phoneNumber.phoneNumber))
+      .replace('{country}', phoneNumber.country || '')
+      .replace('{city}', phoneNumber.city || '')
+      .trim() || ''
+  );
 };

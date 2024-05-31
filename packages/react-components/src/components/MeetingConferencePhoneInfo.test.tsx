@@ -21,8 +21,8 @@ describe('Display phone number in user friendly format', () => {
 /* @conditional-compile-remove(teams-meeting-conference) */
 describe('Format phone number info based on available data', () => {
   const strings = {
-    meetingConferencePhoneInfoModalTollFree: '(Toll Free)',
-    meetingConferencePhoneInfoModalToll: '(Toll)'
+    meetingConferencePhoneInfoModalTollFree: '{phoneNumber} (Toll Free) {country} {city}',
+    meetingConferencePhoneInfoModalToll: '{phoneNumber} (Toll) {country} {city}'
   };
 
   test('No phone info should break app', async () => {
@@ -77,7 +77,7 @@ describe('Format phone number info based on available data', () => {
       formatPhoneNumberInfo(
         { phoneNumber: '12345678900', isTollFree: false, conferenceId: '123', country: 'Canada', city: 'Toronto' },
         strings
-      ) === '+1 (234) 567-8900 (Toll) Canada, Toronto'
+      ) === '+1 (234) 567-8900 (Toll) Canada Toronto'
     );
   });
 });
