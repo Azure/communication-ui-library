@@ -240,7 +240,7 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
     <div
       ref={containerRef}
       role={'menuitem'}
-      aria-disabled={menuItems && menuItems.length > 0 ? false : true}
+      aria-disabled={(menuItems && menuItems.length > 0) || props.onClick ? false : true}
       data-is-focusable={true}
       data-ui-id="participant-item"
       className={mergeStyles(
