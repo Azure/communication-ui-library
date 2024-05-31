@@ -14,7 +14,6 @@ import {
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(soft-mute) */
 import { RemoteParticipant } from '@azure/communication-calling';
-/* @conditional-compile-remove(end-of-call-survey) */
 import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
 import { DtmfTone } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
