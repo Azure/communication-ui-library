@@ -227,6 +227,18 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     [contentValueOverflow, strings.textTooLong]
   );
 
+  // We don't want to show or send attachment in text only mode
+  // Handle attachments is the text only mode in 1 place
+  const attachmentsMemo = useMemo(() => {
+    console.log('attachmentsMemo', textOnly);
+    /* @conditional-compile-remove(attachment-upload) */
+    return textOnly ? [] : attachments ?? [];
+    return [];
+  }, [
+    /* @conditional-compile-remove(attachment-upload) */ attachments,
+    /* @conditional-compile-remove(attachment-upload) */ textOnly
+  ]);
+
   const setContent = useCallback((newValue?: string): void => {
     if (newValue === undefined) {
       return;
@@ -267,7 +279,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     setAttachmentUploadsPendingError(undefined);
 
     /* @conditional-compile-remove(attachment-upload) */
-    if (hasIncompleteAttachmentUploads(attachments)) {
+    if (hasIncompleteAttachmentUploads(attachmentsMemo)) {
       setAttachmentUploadsPendingError({ message: strings.attachmentUploadsPendingError, timestamp: Date.now() });
       return;
     }
@@ -276,13 +288,16 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
 
     // we don't want to send empty messages including spaces, newlines, tabs
     // Message can be empty if there is a valid attachment upload
-    if (hasContent || /* @conditional-compile-remove(attachment-upload) */ isAttachmentUploadCompleted(attachments)) {
+    if (
+      hasContent ||
+      /* @conditional-compile-remove(attachment-upload) */ isAttachmentUploadCompleted(attachmentsMemo)
+    ) {
       onSendMessage(
         message,
         /* @conditional-compile-remove(attachment-upload) */ /* @conditional-compile-remove(rich-text-editor-composite-support) */
         {
           /* @conditional-compile-remove(attachment-upload) */
-          attachments: toAttachmentMetadata(attachments),
+          attachments: toAttachmentMetadata(attachmentsMemo),
           /* @conditional-compile-remove(rich-text-editor-composite-support) */
           type: 'html'
         }
@@ -294,8 +309,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
   }, [
     disabled,
     contentValueOverflow,
-    /* @conditional-compile-remove(attachment-upload) */
-    attachments,
+    attachmentsMemo,
     contentValue,
     hasContent,
     /* @conditional-compile-remove(attachment-upload) */
@@ -311,12 +325,10 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
       !!contentTooLongMessage ||
       /* @conditional-compile-remove(attachment-upload) */
       !!attachmentUploadsPendingError ||
-      /* @conditional-compile-remove(attachment-upload) */
-      !!attachments?.filter((attachmentUpload) => attachmentUpload.error).pop()?.error
+      !!attachmentsMemo?.filter((attachmentUpload) => attachmentUpload.error).pop()?.error
     );
   }, [
-    /* @conditional-compile-remove(attachment-upload) */
-    attachments,
+    attachmentsMemo,
     contentTooLongMessage,
     /* @conditional-compile-remove(attachment-upload) */
     attachmentUploadsPendingError,
@@ -345,7 +357,8 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
 
   const sendBoxErrorsProps: RichTextSendBoxErrorsProps = useMemo(() => {
     /* @conditional-compile-remove(attachment-upload) */
-    const uploadErrorMessage = attachments?.filter((attachmentUpload) => attachmentUpload.error).pop()?.error?.message;
+    const uploadErrorMessage = attachmentsMemo?.filter((attachmentUpload) => attachmentUpload.error).pop()
+      ?.error?.message;
     return {
       /* @conditional-compile-remove(attachment-upload) */
       attachmentUploadsPendingError: attachmentUploadsPendingError,
@@ -360,8 +373,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
       textTooLongMessage: contentTooLongMessage
     };
   }, [
-    /* @conditional-compile-remove(attachment-upload) */
-    attachments,
+    attachmentsMemo,
     contentTooLongMessage,
     /* @conditional-compile-remove(attachment-upload) */
     attachmentUploadsPendingError,
@@ -374,7 +386,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
       <Stack className={attachmentUploadCardsStyles}>
         <FluentV9ThemeProvider v8Theme={theme}>
           <_AttachmentUploadCards
-            attachments={attachments}
+            attachments={attachmentsMemo}
             onCancelAttachmentUpload={onCancelAttachmentUpload}
             strings={{
               removeAttachment: strings.removeAttachment,
@@ -387,7 +399,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
       </Stack>
     );
   }, [
-    attachments,
+    attachmentsMemo,
     onCancelAttachmentUpload,
     strings.removeAttachment,
     strings.uploadCompleted,
@@ -400,11 +412,11 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     return isSendBoxButtonAriaDisabled({
       hasContent,
       /* @conditional-compile-remove(attachment-upload) */ hasCompletedAttachmentUploads:
-        isAttachmentUploadCompleted(attachments),
+        isAttachmentUploadCompleted(attachmentsMemo),
       hasError: hasErrorMessage,
       disabled
     });
-  }, [/* @conditional-compile-remove(attachment-upload) */ attachments, disabled, hasContent, hasErrorMessage]);
+  }, [/* @conditional-compile-remove(attachment-upload) */ attachmentsMemo, disabled, hasContent, hasErrorMessage]);
 
   const sendButton = useMemo(() => {
     return (
@@ -424,8 +436,8 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
 
   /* @conditional-compile-remove(attachment-upload) */
   const hasAttachmentUploads = useMemo(() => {
-    return isAttachmentUploadCompleted(attachments) || hasIncompleteAttachmentUploads(attachments);
-  }, [attachments]);
+    return isAttachmentUploadCompleted(attachmentsMemo) || hasIncompleteAttachmentUploads(attachmentsMemo);
+  }, [attachmentsMemo]);
 
   return (
     <Stack>

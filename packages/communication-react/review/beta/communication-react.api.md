@@ -3977,6 +3977,7 @@ export interface RichTextSendBoxProps {
     onTyping?: () => Promise<void>;
     strings?: Partial<RichTextSendBoxStrings>;
     systemMessage?: string;
+    textOnly?: boolean;
 }
 
 // @beta

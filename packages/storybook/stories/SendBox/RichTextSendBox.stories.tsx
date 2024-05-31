@@ -70,6 +70,7 @@ const RichTextSendBoxStory = (args): JSX.Element => {
     <div style={{ width: '31.25rem', maxWidth: '90%' }}>
       <RichTextSendBoxComponent
         disabled={args.disabled}
+        textOnly={args.textOnly}
         attachments={
           args.hasAttachments
             ? [
@@ -119,6 +120,7 @@ export default {
     hasWarning: controlsToAdd.isSendBoxWithWarning,
     hasAttachments: controlsToAdd.isSendBoxWithAttachments,
     warningMessage: controlsToAdd.sendBoxWarningMessage,
+    textOnly: controlsToAdd.sendBoxTextOnlyMode,
     strings: hiddenControl,
     onRenderAttachmentUploads: hiddenControl,
     attachments: hiddenControl,

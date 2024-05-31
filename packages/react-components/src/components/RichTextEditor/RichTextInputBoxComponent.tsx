@@ -52,7 +52,9 @@ export interface RichTextInputBoxComponentProps {
   isHorizontalLayoutDisabled?: boolean;
   autoFocus?: 'sendBoxTextField';
   onTyping?: () => Promise<void>;
-  /* @conditional-compile-remove(attachment-upload) @conditional-compile-remove(rich-text-editor-image-upload) */
+  // while the attachment button is outside of the input box,
+  // this prop indicates if the editor should accept inline images
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
   textOnly: boolean;
 }
 
@@ -77,7 +79,7 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
     isHorizontalLayoutDisabled = false,
     autoFocus,
     onTyping,
-    /* @conditional-compile-remove(attachment-upload) @conditional-compile-remove(rich-text-editor-image-upload) */
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
     textOnly
   } = props;
   const theme = useTheme();
@@ -210,8 +212,7 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
             />
           </Stack.Item>
           {
-            /* @conditional-compile-remove(attachment-upload) */ !textOnly &&
-              onRenderAttachmentUploads &&
+            /* @conditional-compile-remove(attachment-upload) */ onRenderAttachmentUploads &&
               onRenderAttachmentUploads()
           }
         </Stack>

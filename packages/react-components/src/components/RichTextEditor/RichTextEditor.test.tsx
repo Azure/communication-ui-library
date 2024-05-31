@@ -33,6 +33,8 @@ describe('RichTextEditor should be shown correctly', () => {
         strings={{}}
         showRichTextEditorFormatting={false}
         styles={{ minHeight: '1rem', maxHeight: '1rem' }}
+        /* @conditional-compile-remove(rich-text-editor-image-upload) */
+        textOnly={true}
       />
     );
     const richTextEditor = screen.queryByTestId('rich-text-editor-wrapper');
@@ -48,6 +50,8 @@ describe('RichTextEditor should be shown correctly', () => {
         strings={{}}
         showRichTextEditorFormatting={true}
         styles={{ minHeight: '1rem', maxHeight: '1rem' }}
+        /* @conditional-compile-remove(rich-text-editor-image-upload) */
+        textOnly={true}
       />
     );
     const richTextEditor = screen.queryByTestId('rich-text-editor-wrapper');
@@ -63,6 +67,8 @@ describe('RichTextEditor should be shown correctly', () => {
         strings={{}}
         showRichTextEditorFormatting={true}
         styles={{ minHeight: '1rem', maxHeight: '1rem' }}
+        /* @conditional-compile-remove(rich-text-editor-image-upload) */
+        textOnly={true}
       />
     );
     const boldButton = screen.queryByTestId('rich-text-toolbar-bold-button');
@@ -99,6 +105,8 @@ describe('RichTextEditor should be shown correctly', () => {
           strings={{}}
           showRichTextEditorFormatting={true}
           styles={{ minHeight: '1rem', maxHeight: '1rem' }}
+          /* @conditional-compile-remove(rich-text-editor-image-upload) */
+          textOnly={true}
         />
       </div>
     );

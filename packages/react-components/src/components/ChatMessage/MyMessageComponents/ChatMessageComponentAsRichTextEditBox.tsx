@@ -213,6 +213,8 @@ export const ChatMessageComponentAsRichTextEditBox = (
           isHorizontalLayoutDisabled={true}
           /* @conditional-compile-remove(attachment-upload) */
           onRenderAttachmentUploads={onRenderAttachmentUploads}
+          /* @conditional-compile-remove(rich-text-editor-image-upload) */
+          textOnly={true}
         />
       </Stack>
     );
