@@ -119,12 +119,9 @@ import { DiagnosticsForwarder } from './DiagnosticsForwarder';
 import { useEffect, useRef, useState } from 'react';
 import { CallHandlersOf, createHandlers } from './createHandlers';
 import { createProfileStateModifier, OnFetchProfileCallback } from './OnFetchProfileCallback';
-
 import { getBackgroundEffectFromSelectedEffect } from '../utils';
 import { getSelectedCameraFromAdapterState } from '../utils';
-
 import { VideoBackgroundEffectsDependency } from '@internal/calling-component-bindings';
-/* @conditional-compile-remove(end-of-call-survey) */
 import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
 import { CallingSoundSubscriber } from './CallingSoundSubscriber';
 import { CallingSounds } from './CallAdapter';
@@ -555,11 +552,8 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.setSpokenLanguage.bind(this);
     this.setCaptionLanguage.bind(this);
     this.startVideoBackgroundEffect.bind(this);
-
     this.stopVideoBackgroundEffects.bind(this);
-
     this.updateBackgroundPickerImages.bind(this);
-    /* @conditional-compile-remove(end-of-call-survey) */
     this.submitSurvey.bind(this);
     /* @conditional-compile-remove(spotlight) */
     this.startSpotlight.bind(this);
@@ -567,6 +561,8 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.stopSpotlight.bind(this);
     /* @conditional-compile-remove(spotlight) */
     this.stopAllSpotlight.bind(this);
+    /* @conditional-compile-remove(soft-mute) */
+    this.muteParticipant.bind(this);
   }
 
   public dispose(): void {
@@ -1032,9 +1028,13 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   public async setSpokenLanguage(language: string): Promise<void> {
     this.handlers.onSetSpokenLanguage(language);
   }
-  /* @conditional-compile-remove(end-of-call-survey) */
   public async submitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined> {
     return this.handlers.onSubmitSurvey(survey);
+  }
+
+  /* @conditional-compile-remove(soft-mute) */
+  public async muteParticipant(userId: string): Promise<void> {
+    this.handlers.onMuteParticipant(userId);
   }
 
   /* @conditional-compile-remove(spotlight) */
