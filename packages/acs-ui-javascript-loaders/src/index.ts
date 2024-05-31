@@ -1,5 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-export { loadOuboundCallComposite } from './outboundCallCompositeLoader';
-export type { OutboundCallCompositeProps } from './outboundCallCompositeLoader';
+export { loadOutboundCallComposite } from './outboundCallCompositeLoader';
+export { loadCallComposite } from './callCompositeLoader';
+export type { OutboundCallCompositeLoaderProps } from './outboundCallCompositeLoader';
+export type { CallCompositeLoaderProps } from './callCompositeLoader';

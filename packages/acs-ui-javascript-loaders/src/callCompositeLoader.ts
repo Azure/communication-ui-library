@@ -22,10 +22,10 @@ import { fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import {
   CallComposite,
   createAzureCommunicationCallAdapter,
-  CallCompositeOptions,
-  StartCallIdentifier,
   AzureCommunicationCallAdapterOptions,
-  CallAdapter
+  CallAdapter,
+  CallAdapterLocator,
+  CallCompositeOptions
 } from '@internal/react-composites';
 import { initializeIcons } from '@fluentui/react';
 
@@ -33,11 +33,11 @@ import { initializeIcons } from '@fluentui/react';
  * Props for the OutboundCallComposite that you can use in your application.
  * @public
  */
-export type OutboundCallCompositeLoaderProps = {
+export type CallCompositeLoaderProps = {
   userId: string;
   token: string;
   displayName: string;
-  targetCallees: string[] | StartCallIdentifier[];
+  locator: CallAdapterLocator;
   options?: AzureCommunicationCallAdapterOptions;
 };
 
@@ -46,25 +46,19 @@ export type OutboundCallCompositeLoaderProps = {
  *
  * @public
  */
-export const loadOutboundCallComposite = async function (
-  adapterArgs: OutboundCallCompositeLoaderProps,
+export const loadCallComposite = async function (
+  adapterArgs: CallCompositeLoaderProps,
   htmlElement: HTMLElement | null,
   props?: CallCompositeOptions
 ): Promise<CallAdapter | undefined> {
   initializeIcons();
-  const { userId, token, displayName, targetCallees, options } = adapterArgs;
-  const formattedTargetCallees =
-    typeof targetCallees[0] === 'string'
-      ? (targetCallees as string[]).map((callee: string) => {
-          return fromFlatCommunicationIdentifier(callee);
-        })
-      : undefined;
+  const { userId, token, displayName, locator, options } = adapterArgs;
 
   const adapter = await createAzureCommunicationCallAdapter({
     userId: fromFlatCommunicationIdentifier(userId) as CommunicationUserIdentifier,
     displayName: displayName ?? 'anonymous',
     credential: new AzureCommunicationTokenCredential(token),
-    targetCallees: (formattedTargetCallees as StartCallIdentifier[]) ?? (targetCallees as StartCallIdentifier[]),
+    locator,
     options
   });
 
