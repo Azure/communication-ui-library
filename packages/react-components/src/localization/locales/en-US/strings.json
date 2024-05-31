@@ -579,6 +579,6 @@
     "meetingConferencePhoneInfoModalWait": "Wait to be admitted by organizer",
     "meetingConferencePhoneInfoModalNoPhoneAvailable": "No phone available",
     "meetingConferencePhoneInfoModalDialInValue": "{phoneNumber} (Toll-free) {country}, {city}",
-    "meetingConferencePhoneInfoModalToll": "(Toll)"
+    "meetingConferencePhoneInfoModalToll": "{phoneNumber} (Toll) {country}, {city}"
   }
 }
