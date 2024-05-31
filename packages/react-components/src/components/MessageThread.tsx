@@ -272,6 +272,7 @@ const memoizeAllMessages = memoizeFnAll(
     showMessageStatus: boolean,
     strings: MessageThreadStrings,
     index: number,
+    textOnly: boolean,
     onUpdateMessage?: UpdateMessageCallback,
     onCancelEditMessage?: CancelEditCallback,
     onDeleteMessage?: (messageId: string) => Promise<void>,
@@ -326,7 +327,8 @@ const memoizeAllMessages = memoizeFnAll(
       onDeleteMessage,
       onSendMessage,
       disableEditing,
-      showMessageStatus
+      showMessageStatus,
+      textOnly
     };
   }
 );
@@ -518,6 +520,14 @@ export type MessageThreadProps = {
    */
   disableEditing?: boolean;
 
+  /* @conditional-compile-remove(attachment-upload) @conditional-compile-remove(rich-text-editor-image-upload) */
+  /**
+   * Optional boolean to enable text only mode.
+   * When enabled, inline images can't be pasted, and attachments won't be displayed during the message editing.
+   * @defaultValue false
+   */
+  textOnly?: boolean;
+
   /**
    * Optional strings to override in component
    */
@@ -635,6 +645,7 @@ export type _ChatMessageProps = MessageProps & {
   key: string;
   statusToRender: MessageStatus | undefined;
   showMessageStatus?: boolean;
+  textOnly: boolean;
 };
 
 /**
@@ -697,7 +708,9 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
     /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
     onRenderAttachmentDownloads,
     /* @conditional-compile-remove(rich-text-editor) */
-    richTextEditor = false
+    richTextEditor = false,
+    /* @conditional-compile-remove(attachment-upload) @conditional-compile-remove(rich-text-editor-image-upload) */
+    textOnly = false
   } = props;
   // We need this state to wait for one tick and scroll to bottom after messages have been initialized.
   // Otherwise chatScrollDivRef.current.clientHeight is wrong if we scroll to bottom before messages are initialized.
@@ -1080,6 +1093,7 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
           showMessageStatus,
           strings,
           index,
+          textOnly,
           onUpdateMessage,
           onCancelEditMessage,
           onDeleteMessageCallback,
@@ -1103,7 +1117,8 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
     props.disableEditing,
     showMessageDate,
     showMessageStatus,
-    strings
+    strings,
+    textOnly
   ]);
 
   const classes = useChatStyles();

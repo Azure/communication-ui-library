@@ -50,6 +50,8 @@ export type ChatMessageComponentAsRichTextEditBoxProps = {
   ) => void;
   message: ChatMessage;
   strings: MessageThreadStrings;
+  /* @conditional-compile-remove(rich-text-editor-image-upload) @conditional-compile-remove(attachment-upload) */
+  textOnly: boolean;
 };
 
 /**
@@ -58,7 +60,14 @@ export type ChatMessageComponentAsRichTextEditBoxProps = {
 export const ChatMessageComponentAsRichTextEditBox = (
   props: ChatMessageComponentAsRichTextEditBoxProps
 ): JSX.Element => {
-  const { onCancel, onSubmit, strings, message } = props;
+  const {
+    onCancel,
+    onSubmit,
+    strings,
+    message,
+    /* @conditional-compile-remove(rich-text-editor-image-upload) @conditional-compile-remove(attachment-upload) */
+    textOnly
+  } = props;
 
   const [textValue, setTextValue] = useState<string>(message.content || '');
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
@@ -81,6 +90,13 @@ export const ChatMessageComponentAsRichTextEditBox = (
   const setText = useCallback((newValue?: string): void => {
     setTextValue(newValue ?? '');
   }, []);
+
+  /* @conditional-compile-remove(attachment-upload) */
+  useEffect(() => {
+    handleAttachmentAction({ type: 'reset', attachments: textOnly ? [] : message.attachments ?? [] });
+    // update only when textOnly changes
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [textOnly]);
 
   useEffect(() => {
     editTextFieldRef.current?.focus();
@@ -214,7 +230,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
           /* @conditional-compile-remove(attachment-upload) */
           onRenderAttachmentUploads={onRenderAttachmentUploads}
           /* @conditional-compile-remove(rich-text-editor-image-upload) */
-          textOnly={true}
+          textOnly={textOnly}
         />
       </Stack>
     );

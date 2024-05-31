@@ -99,6 +99,8 @@ type ChatMyMessageComponentProps = {
    * @beta
    */
   richTextEditor?: boolean;
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  textOnly: boolean;
 };
 
 /**
@@ -165,6 +167,7 @@ export const ChatMyMessageComponent = (props: ChatMyMessageComponentProps): JSX.
   if (isEditing && message.messageType === 'chat') {
     return (
       <ChatMessageComponentAsEditBoxPicker
+        textOnly={props.textOnly}
         message={message}
         strings={props.strings}
         onSubmit={onSubmitHandler}

@@ -57,7 +57,8 @@ describe('ChatMessageComponentAsRichTextEditBox tests', () => {
       messageType: 'chat',
       contentType: 'html',
       createdOn: new Date()
-    }
+    },
+    textOnly: true
   };
 
   afterEach(() => {

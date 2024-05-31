@@ -45,6 +45,8 @@ export type ChatMessageComponentAsEditBoxPickerProps = {
   /* @conditional-compile-remove(mention) */
   mentionLookupOptions?: MentionLookupOptions;
   richTextEditor?: boolean;
+  /* @conditional-compile-remove(rich-text-editor-image-upload) @conditional-compile-remove(attachment-upload) */
+  textOnly: boolean;
 };
 
 /**
@@ -52,18 +54,25 @@ export type ChatMessageComponentAsEditBoxPickerProps = {
  */
 export const ChatMessageComponentAsEditBoxPicker = (props: ChatMessageComponentAsEditBoxPickerProps): JSX.Element => {
   /* @conditional-compile-remove(rich-text-editor) */
-  const { richTextEditor } = props;
+  const { richTextEditor, textOnly } = props;
+
+  const message = useMemo(() => {
+    const value = { ...props.message };
+    /* @conditional-compile-remove(attachment-upload) */
+    value.attachments = textOnly ? [] : props.message.attachments || [];
+    return value;
+  }, [props.message, textOnly]);
 
   const simpleEditBox = useMemo(() => {
-    return <ChatMessageComponentAsEditBox {...props} />;
-  }, [props]);
+    return <ChatMessageComponentAsEditBox {...props} message={message} />;
+  }, [message, props]);
 
   /* @conditional-compile-remove(rich-text-editor) */
   if (richTextEditor) {
     return (
       <_ErrorBoundary fallback={simpleEditBox}>
         <Suspense fallback={simpleEditBox}>
-          <ChatMessageComponentAsRichTextEditBox {...props} />
+          <ChatMessageComponentAsRichTextEditBox {...props} message={message} />
         </Suspense>
       </_ErrorBoundary>
     );

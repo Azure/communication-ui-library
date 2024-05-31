@@ -74,7 +74,7 @@ interface Action {
  * i.e. `type Actions = RemoveAction | AddAction | UpdateAction;`
  * @private
  */
-type Actions = RemoveAction;
+type Actions = RemoveAction | ResetAction;
 
 /* @conditional-compile-remove(attachment-upload) */
 /**
@@ -87,12 +87,23 @@ interface RemoveAction extends Action {
 
 /* @conditional-compile-remove(attachment-upload) */
 /**
+ * @private
+ */
+interface ResetAction extends Action {
+  type: 'reset';
+  attachments: AttachmentMetadata[];
+}
+
+/* @conditional-compile-remove(attachment-upload) */
+/**
  * @internal
  */
 export const attachmentMetadataReducer = (state: AttachmentMetadata[], action: Actions): AttachmentMetadata[] => {
   switch (action.type) {
     case 'remove':
       return state.filter((v) => v.id !== action.id);
+    case 'reset':
+      return action.attachments;
     default:
       return state;
   }

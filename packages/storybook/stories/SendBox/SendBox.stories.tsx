@@ -153,7 +153,7 @@ export default {
     hasWarning: controlsToAdd.isSendBoxWithWarning,
     warningMessage: controlsToAdd.sendBoxWarningMessage,
     hasAttachments: controlsToAdd.isSendBoxWithAttachments,
-    textOnly: controlsToAdd.sendBoxTextOnlyMode,
+    textOnly: controlsToAdd.textOnlyMode,
     // Hiding auto-generated controls
     systemMessage: hiddenControl,
     onSendMessage: hiddenControl,

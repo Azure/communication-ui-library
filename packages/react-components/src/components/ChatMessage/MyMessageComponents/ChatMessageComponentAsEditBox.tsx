@@ -54,13 +54,15 @@ export type ChatMessageComponentAsEditBoxProps = {
   strings: MessageThreadStrings;
   /* @conditional-compile-remove(mention) */
   mentionLookupOptions?: MentionLookupOptions;
+  /* @conditional-compile-remove(attachment-upload) */
+  textOnly: boolean;
 };
 
 /**
  * @private
  */
 export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditBoxProps): JSX.Element => {
-  const { onCancel, onSubmit, strings, message } = props;
+  const { onCancel, onSubmit, strings, message, /* @conditional-compile-remove(attachment-upload) */ textOnly } = props;
   /* @conditional-compile-remove(mention) */
   const { mentionLookupOptions } = props;
 
@@ -84,6 +86,13 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
   useEffect(() => {
     editTextFieldRef.current?.focus();
   }, []);
+
+  /* @conditional-compile-remove(attachment-upload) */
+  useEffect(() => {
+    handleAttachmentAction({ type: 'reset', attachments: textOnly ? [] : message.attachments ?? [] });
+    // update only when textOnly changes
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [textOnly]);
 
   const setText = (event?: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string): void => {
     setTextValue(newValue ?? '');

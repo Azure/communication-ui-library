@@ -120,7 +120,7 @@ export default {
     hasWarning: controlsToAdd.isSendBoxWithWarning,
     hasAttachments: controlsToAdd.isSendBoxWithAttachments,
     warningMessage: controlsToAdd.sendBoxWarningMessage,
-    textOnly: controlsToAdd.sendBoxTextOnlyMode,
+    textOnly: controlsToAdd.textOnlyMode,
     strings: hiddenControl,
     onRenderAttachmentUploads: hiddenControl,
     attachments: hiddenControl,

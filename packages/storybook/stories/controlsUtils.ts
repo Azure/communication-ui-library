@@ -375,7 +375,7 @@ export const controlsToAdd = {
     defaultValue: 'Please wait 30 seconds to send new messages',
     name: 'Warning/information message for SendBox'
   },
-  sendBoxTextOnlyMode: {
+  textOnlyMode: {
     control: 'boolean',
     defaultValue: false,
     name: 'Enable text only mode'
