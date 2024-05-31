@@ -2,40 +2,26 @@
 // Licensed under the MIT License.
 
 import React from 'react';
-/* @conditional-compile-remove(end-of-call-survey) */
 import { CallSurvey } from '@azure/communication-calling';
-/* @conditional-compile-remove(end-of-call-survey) */
 import { useHandlers } from '../hooks/useHandlers';
-/* @conditional-compile-remove(end-of-call-survey) */
 import { Survey } from '../../common/Survey';
-/* @conditional-compile-remove(end-of-call-survey) */
 import { CallSurveyImprovementSuggestions } from '@internal/react-components';
-/* @conditional-compile-remove(end-of-call-survey) */
 import { Stack, mergeStyles } from '@fluentui/react';
-/* @conditional-compile-remove(end-of-call-survey) */
 import { containerStyle } from '../styles/NetworkReconnectTile.styles';
-/* @conditional-compile-remove(end-of-call-survey) */
 import { containerItemGap } from '../styles/NoticePage.styles';
-/* @conditional-compile-remove(end-of-call-survey) */
 import { CallCompositeIcons } from '../../common/icons';
 
 /**
  * @private
  */
 export interface SurveyPageProps {
-  /* @conditional-compile-remove(end-of-call-survey) */
   iconName?: keyof CallCompositeIcons;
-  /* @conditional-compile-remove(end-of-call-survey) */
   title: string;
-  /* @conditional-compile-remove(end-of-call-survey) */
   moreDetails?: string;
-  /* @conditional-compile-remove(end-of-call-survey) */
   dataUiId: string;
-  /* @conditional-compile-remove(end-of-call-survey) */
   disableStartCallButton?: boolean;
-  /* @conditional-compile-remove(end-of-call-survey) */
   mobileView?: boolean;
-  /* @conditional-compile-remove(end-of-call-survey) */
+
   /**
    * Options for end of call survey
    */
@@ -81,9 +67,7 @@ export interface SurveyPageProps {
  * @private
  */
 export function SurveyPage(props: SurveyPageProps): JSX.Element {
-  /* @conditional-compile-remove(end-of-call-survey) */
   const handlers = useHandlers(Survey);
-  /* @conditional-compile-remove(end-of-call-survey) */
   return (
     <Stack verticalFill verticalAlign="center" horizontalAlign="center" data-ui-id={props.dataUiId} aria-atomic>
       <Stack className={mergeStyles(containerStyle)} tokens={containerItemGap}>
@@ -97,6 +81,4 @@ export function SurveyPage(props: SurveyPageProps): JSX.Element {
       </Stack>
     </Stack>
   );
-
-  return <></>;
 }
