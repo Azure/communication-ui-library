@@ -12,7 +12,6 @@ import {
   BackgroundBlurConfig,
   BackgroundReplacementConfig
 } from '@azure/communication-calling';
-/* @conditional-compile-remove(end-of-call-survey) */
 import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
 import { DtmfTone } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
@@ -95,7 +94,7 @@ export interface CommonCallingHandlers {
   onStopCaptions: () => Promise<void>;
   onSetSpokenLanguage: (language: string) => Promise<void>;
   onSetCaptionLanguage: (language: string) => Promise<void>;
-  /* @conditional-compile-remove(end-of-call-survey) */
+
   onSubmitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined>;
   /* @conditional-compile-remove(spotlight) */
   onStartSpotlight: (userIds?: string[]) => Promise<void>;
@@ -594,7 +593,7 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       const captionsFeature = call?.feature(Features.Captions).captions as TeamsCaptions;
       await captionsFeature.setCaptionLanguage(language);
     };
-    /* @conditional-compile-remove(end-of-call-survey) */
+
     const onSubmitSurvey = async (survey: CallSurvey): Promise<CallSurveyResponse | undefined> =>
       await call?.feature(Features.CallSurvey).submitSurvey(survey);
     /* @conditional-compile-remove(spotlight) */
@@ -670,17 +669,13 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       onSendDtmfTone,
       /* @conditional-compile-remove(call-readiness) */
       askDevicePermission,
-
       onRemoveVideoBackgroundEffects,
-
       onBlurVideoBackground,
-
       onReplaceVideoBackground,
       onStartCaptions,
       onStopCaptions,
       onSetCaptionLanguage,
       onSetSpokenLanguage,
-      /* @conditional-compile-remove(end-of-call-survey) */
       onSubmitSurvey,
       /* @conditional-compile-remove(spotlight) */
       onStartSpotlight,
