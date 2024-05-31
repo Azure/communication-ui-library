@@ -225,15 +225,15 @@ export type { _ComplianceBannerProps, _ComplianceBannerStrings } from './Complia
 export { Dialpad } from './Dialpad/Dialpad';
 export type { DialpadProps, DialpadStrings, DialpadStyles, DtmfTone } from './Dialpad/Dialpad';
 export type { DialpadMode, LongPressTrigger } from './Dialpad/Dialpad';
-/* @conditional-compile-remove(end-of-call-survey) */
+
 export { _StarSurvey } from './Survey/StarSurvey/StarSurvey';
-/* @conditional-compile-remove(end-of-call-survey) */
+
 export type { _StarSurveyProps, _StarSurveyStrings } from './Survey/StarSurvey/StarSurvey';
-/* @conditional-compile-remove(end-of-call-survey) */
+
 export * from './Survey/SurveyTypes';
-/* @conditional-compile-remove(end-of-call-survey) */
+
 export { _TagsSurvey } from './Survey/TagsSurvey/TagsSurvey';
-/* @conditional-compile-remove(end-of-call-survey) */
+
 export type { _TagsSurveyProps, _TagsSurveyStrings, _IssueCategory, _SurveyTag } from './Survey/TagsSurvey/TagsSurvey';
 /* @conditional-compile-remove(PSTN-calls) */
 export { HoldButton } from './HoldButton';
