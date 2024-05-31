@@ -3377,6 +3377,7 @@ export type MessageThreadProps = {
     onDeleteMessage?: (messageId: string) => Promise<void>;
     onSendMessage?: (content: string, options?: MessageOptions) => Promise<void>;
     disableEditing?: boolean;
+    textOnly?: boolean;
     strings?: Partial<MessageThreadStrings>;
     attachmentOptions?: AttachmentOptions;
     onDisplayDateTimeString?: (messageDate: Date) => string;
@@ -4064,6 +4065,7 @@ export interface SendBoxProps {
     styles?: SendBoxStylesProps;
     supportNewline?: boolean;
     systemMessage?: string;
+    textOnly?: boolean;
 }
 
 // @public
