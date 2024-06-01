@@ -132,6 +132,12 @@ export interface RichTextSendBoxProps {
    * @defaultValue false
    */
   disabled?: boolean;
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  /**
+   * Optional boolean to disable inline images in the text box
+   * @defaultValue false
+   */
+  disableInlineImages?: boolean;
   /**
    * Optional strings to override in component
    */
@@ -188,7 +194,9 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     /* @conditional-compile-remove(attachment-upload) */
     attachments,
     /* @conditional-compile-remove(attachment-upload) */
-    onCancelAttachmentUpload
+    onCancelAttachmentUpload,
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    disableInlineImages = false
   } = props;
 
   const theme = useTheme();
@@ -435,6 +443,8 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
         onRenderAttachmentUploads={onRenderAttachmentUploads}
         /* @conditional-compile-remove(attachment-upload) */
         hasAttachments={hasAttachmentUploads}
+        /* @conditional-compile-remove(rich-text-editor-image-upload) */
+        disableInlineImages={disableInlineImages}
       />
     </Stack>
   );

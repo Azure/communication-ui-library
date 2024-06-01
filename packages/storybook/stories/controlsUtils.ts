@@ -375,6 +375,11 @@ export const controlsToAdd = {
     defaultValue: 'Please wait 30 seconds to send new messages',
     name: 'Warning/information message for SendBox'
   },
+  disableInlineImages: {
+    control: 'boolean',
+    defaultValue: true,
+    name: 'Disable inline images'
+  },
   showChatParticipants: { control: 'boolean', defaultValue: true, name: 'Show Participants Pane' },
   showChatTopic: { control: 'boolean', defaultValue: true, name: 'Show Topic' },
   showErrorBar: { control: 'boolean', defaultValue: true, name: 'Show ErrorBar' },

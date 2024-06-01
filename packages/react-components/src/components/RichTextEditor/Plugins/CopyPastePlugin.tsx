@@ -8,6 +8,9 @@ import { ContentChangedEventSource, PluginEventType } from '../../utils/RichText
  */
 export default class CopyPastePlugin implements EditorPlugin {
   private editor: IEditor | null = null;
+  // don't set value in constructor to be able to update it without plugin recreation
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  disableInlineImages: boolean = false;
 
   getName(): string {
     return 'CopyPastePlugin';
@@ -20,7 +23,10 @@ export default class CopyPastePlugin implements EditorPlugin {
   dispose(): void {}
 
   onPluginEvent(event: PluginEvent): void {
-    removeImageElement(event);
+    if (/* @conditional-compile-remove(rich-text-editor-image-upload) */ this.disableInlineImages && true) {
+      removeImageElement(event);
+    }
+    //TODO: remove the scrolling when nothing is pasted
     if (this.editor !== null && !this.editor.isDisposed()) {
       // scroll the editor to the correct position after pasting content
       scrollToBottomAfterContentPaste(event, this.editor);

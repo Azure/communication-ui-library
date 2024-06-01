@@ -52,6 +52,8 @@ export interface RichTextInputBoxComponentProps {
   isHorizontalLayoutDisabled?: boolean;
   autoFocus?: 'sendBoxTextField';
   onTyping?: () => Promise<void>;
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  disableInlineImages: boolean;
 }
 
 /**
@@ -201,6 +203,8 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
               styles={richTextEditorStyle}
               autoFocus={autoFocus}
               onContentModelUpdate={onContentModelUpdate}
+              /* @conditional-compile-remove(rich-text-editor-image-upload) */
+              disableInlineImages={props.disableInlineImages}
             />
           </Stack.Item>
           {

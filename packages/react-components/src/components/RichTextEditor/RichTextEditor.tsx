@@ -48,6 +48,8 @@ export interface RichTextEditorProps {
   showRichTextEditorFormatting: boolean;
   styles: RichTextEditorStyleProps;
   autoFocus?: 'sendBoxTextField';
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  disableInlineImages: boolean;
 }
 
 /**
@@ -86,7 +88,9 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     autoFocus,
     onKeyDown,
     onContentModelUpdate,
-    contentModel
+    contentModel,
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    disableInlineImages
   } = props;
   const editor = useRef<IEditor | null>(null);
   const editorDiv = useRef<HTMLDivElement>(null);
@@ -126,6 +130,23 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     },
     [onContentModelUpdate]
   );
+
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  useEffect(() => {
+    if (editor.current && disableInlineImages) {
+      editor.current.formatContentModel((model: ContentModelDocument): boolean => {
+        model.blocks.forEach((block) => {
+          if (block.blockType === 'Paragraph') {
+            // remove all images from the content
+            block.segments = block.segments.filter((segment) => segment.segmentType !== 'Image');
+          }
+        });
+        return true;
+      });
+      //reset content model
+      onContentModelUpdate && onContentModelUpdate(editor.current.getContentModelCopy('disconnected'));
+    }
+  }, [onContentModelUpdate, disableInlineImages]);
 
   const toolbarPlugin = React.useMemo(() => {
     return new RichTextToolbarPlugin();
@@ -223,11 +244,19 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     [theme.palette.neutralLight]
   );
 
+  const copyPastePlugin = useMemo(() => {
+    return new CopyPastePlugin();
+  }, []);
+
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  useEffect(() => {
+    copyPastePlugin.disableInlineImages = disableInlineImages;
+  }, [copyPastePlugin, disableInlineImages]);
+
   const plugins: EditorPlugin[] = useMemo(() => {
     const contentEdit = new EditPlugin();
     // AutoFormatPlugin previously was a part of the edit plugin
     const autoFormatPlugin = new AutoFormatPlugin({ autoBullet: true, autoNumbering: true, autoLink: true });
-    const copyPastePlugin = new CopyPastePlugin();
     const roosterPastePlugin = new PastePlugin(false);
     const shortcutPlugin = new ShortcutPlugin();
     const contextMenuPlugin = new ContextMenuPlugin(onContextMenuRender, onContextMenuDismiss);
@@ -251,6 +280,7 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     placeholderPlugin,
     keyboardInputPlugin,
     updatePlugin,
+    copyPastePlugin,
     toolbarPlugin,
     tableContextMenuPlugin
   ]);

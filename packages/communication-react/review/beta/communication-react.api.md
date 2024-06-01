@@ -3979,6 +3979,7 @@ export interface RichTextSendBoxProps {
     attachments?: AttachmentMetadataInProgress[];
     autoFocus?: 'sendBoxTextField';
     disabled?: boolean;
+    disableInlineImages?: boolean;
     onCancelAttachmentUpload?: (attachmentId: string) => void;
     onSendMessage: (content: string, options?: MessageOptions) => Promise<void>;
     onTyping?: () => Promise<void>;
