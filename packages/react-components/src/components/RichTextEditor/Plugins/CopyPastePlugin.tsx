@@ -26,7 +26,7 @@ export default class CopyPastePlugin implements EditorPlugin {
     if (/* @conditional-compile-remove(rich-text-editor-image-upload) */ this.disableInlineImages && true) {
       removeImageElement(event);
     }
-    //TODO: remove the scrolling when nothing is pasted
+
     if (this.editor !== null && !this.editor.isDisposed()) {
       // scroll the editor to the correct position after pasting content
       scrollToBottomAfterContentPaste(event, this.editor);
