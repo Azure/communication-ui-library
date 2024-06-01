@@ -5,6 +5,6 @@
     "outDir": "./dist/dist-esm"
   },
   "typeRoots": ["./node_modules/@types"],
-  "include": ["src/**/*", "src/outboundCallCompositeLoader.ts"],
+  "include": ["src/**/*", "src/outboundCallCompositeLoader.ts", "scripts/**/*"],
   "exclude": ["dist", "node_modules"]
 }

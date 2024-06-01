@@ -24685,7 +24685,7 @@ packages:
     dev: false
 
   file:projects/communication-react.tgz:
-    resolution: {integrity: sha512-siGM92ymuo9B9ofjU2AII0Tu2G0/DLe6n8F0Plr+cp+4rD7XCnbOqGfa3Z+x2cZ25s0Zmpc/FcvFBRCrOkfiPg==, tarball: file:projects/communication-react.tgz}
+    resolution: {integrity: sha512-3CtWxT8+iI0rtjmW311NIKQ/zs5bwtmQY/oWqNGSp4zofS5O+tbHdonNJhAItjXVSuS7g5mgQ/b41tWpzMCDPQ==, tarball: file:projects/communication-react.tgz}
     name: '@rush-temp/communication-react'
     version: 0.0.0
     dependencies:
@@ -24773,6 +24773,9 @@ packages:
       typescript-transform-paths: 3.4.7(typescript@5.4.5)
       use-debounce: 10.0.1(react@18.2.0)
       uuid: 9.0.1
+      webpack: 5.89.0(webpack-cli@5.1.4)
+      webpack-bundle-analyzer: 4.10.2
+      webpack-cli: 5.1.4(webpack-bundle-analyzer@4.10.2)(webpack@5.89.0)
     transitivePeerDependencies:
       - '@jest/globals'
       - '@jest/transform'
@@ -24780,13 +24783,18 @@ packages:
       - '@swc/core'
       - '@swc/wasm'
       - '@types/bun'
+      - '@webpack-cli/generators'
       - babel-jest
       - babel-plugin-macros
+      - bufferutil
       - encoding
       - esbuild
       - node-notifier
       - supports-color
+      - uglify-js
+      - utf-8-validate
       - vitest
+      - webpack-dev-server
     dev: false
 
   file:projects/component-examples.tgz:

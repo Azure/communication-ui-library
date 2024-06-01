@@ -5,7 +5,7 @@ module.exports = {
   entry: {
     // chatComposite: './src/chatComposite.js',
     // callComposite: './src/callComposite.js',
-    outboundCallComposite: '../dist-esm/outboundCallCompositeLoader.js'
+    outboundCallComposite: './dist/dist-esm/acs-ui-javascript-loaders/src/outboundCallCompositeLoader.js'
     // callWithChatComposite: './src/callWithChatComposite.js',
   },
   mode: 'development', // change to 'production' for optimization
