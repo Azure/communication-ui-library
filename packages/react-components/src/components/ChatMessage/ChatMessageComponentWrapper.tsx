@@ -3,7 +3,13 @@
 
 import { MessageStatus } from '@internal/acs-ui-common';
 import React, { useMemo } from 'react';
-import { MessageProps, MessageRenderer, MessageThreadStyles, _ChatMessageProps } from '../MessageThread';
+import {
+  MessageProps,
+  MessageRenderer,
+  MessageThreadStyles,
+  RichTextEditorOptions,
+  _ChatMessageProps
+} from '../MessageThread';
 import { ChatMessage, OnRenderAvatarCallback } from '../../types';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '../../types';
@@ -66,7 +72,7 @@ export type ChatMessageComponentWrapperProps = _ChatMessageProps & {
    */
   actionsForAttachment?: (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[];
   /* @conditional-compile-remove(rich-text-editor) */
-  richTextEditor?: boolean;
+  richTextEditor?: boolean | /* @conditional-compile-remove(rich-text-editor-image-upload) */ RichTextEditorOptions;
 };
 
 /**

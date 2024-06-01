@@ -134,7 +134,7 @@ export interface RichTextSendBoxProps {
   disabled?: boolean;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   /**
-   * Optional boolean to disable inline images in the text box
+   * Optional boolean to disable inline images in the text box.
    * @defaultValue false
    */
   disableInlineImages?: boolean;

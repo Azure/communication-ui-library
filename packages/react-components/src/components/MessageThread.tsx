@@ -555,8 +555,23 @@ export type MessageThreadProps = {
    *
    * @defaultValue `false`
    */
-  richTextEditor?: boolean;
+  richTextEditor?: boolean | /* @conditional-compile-remove(rich-text-editor-image-upload) */ RichTextEditorOptions;
 };
+
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+/**
+ * Options for configuring the rich text editor.
+ *
+ * @beta
+ */
+export interface RichTextEditorOptions {
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  /**
+   * Optional boolean to disable inline images in the text box.
+   * @defaultValue false
+   */
+  disableInlineImages?: boolean;
+}
 
 /**
  * Props to render a single message.
@@ -1162,7 +1177,7 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
                   mentionOptions={mentionOptions}
                   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
                   onRenderAttachmentDownloads={onRenderAttachmentDownloads}
-                  /* @conditional-compile-remove(rich-text-editor) */
+                  /* @conditional-compile-remove(rich-text-editor)  @conditional-compile-remove(rich-text-editor-image-upload) */
                   richTextEditor={richTextEditor}
                 />
               );

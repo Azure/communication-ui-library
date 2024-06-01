@@ -3,7 +3,7 @@
 
 import { _formatString } from '@internal/acs-ui-common';
 import React, { useCallback, useState } from 'react';
-import { MessageThreadStrings, UpdateMessageCallback } from '../../MessageThread';
+import { MessageThreadStrings, RichTextEditorOptions, UpdateMessageCallback } from '../../MessageThread';
 import { ChatMessage, ComponentSlotStyle, OnRenderAvatarCallback } from '../../../types';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '../../../types';
@@ -98,7 +98,7 @@ type ChatMyMessageComponentProps = {
    * Optional flag to enable rich text editor.
    * @beta
    */
-  richTextEditor?: boolean;
+  richTextEditor?: boolean | /* @conditional-compile-remove(rich-text-editor-image-upload) */ RichTextEditorOptions;
 };
 
 /**
@@ -174,7 +174,7 @@ export const ChatMyMessageComponent = (props: ChatMyMessageComponentProps): JSX.
         }}
         /* @conditional-compile-remove(mention) */
         mentionLookupOptions={props.mentionOptions?.lookupOptions}
-        /* @conditional-compile-remove(rich-text-editor) */
+        /* @conditional-compile-remove(rich-text-editor) @conditional-compile-remove(rich-text-editor-image-upload) */
         richTextEditor={props.richTextEditor}
       />
     );

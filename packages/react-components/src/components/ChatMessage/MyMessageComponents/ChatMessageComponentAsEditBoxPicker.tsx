@@ -7,7 +7,7 @@ import { Suspense } from 'react';
 import { ChatMessage } from '../../../types';
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 import { AttachmentMetadata } from '@internal/acs-ui-common';
-import { MessageThreadStrings } from '../../MessageThread';
+import { MessageThreadStrings, RichTextEditorOptions } from '../../MessageThread';
 import { ChatMessageComponentAsEditBox } from './ChatMessageComponentAsEditBox';
 /* @conditional-compile-remove(mention) */
 import { MentionLookupOptions } from '../../MentionPopover';
@@ -44,7 +44,8 @@ export type ChatMessageComponentAsEditBoxPickerProps = {
   strings: MessageThreadStrings;
   /* @conditional-compile-remove(mention) */
   mentionLookupOptions?: MentionLookupOptions;
-  richTextEditor?: boolean;
+  /* @conditional-compile-remove(rich-text-editor) */
+  richTextEditor?: boolean | /* @conditional-compile-remove(rich-text-editor-image-upload) */ RichTextEditorOptions;
 };
 
 /**
@@ -58,12 +59,27 @@ export const ChatMessageComponentAsEditBoxPicker = (props: ChatMessageComponentA
     return <ChatMessageComponentAsEditBox {...props} />;
   }, [props]);
 
+  const disableInlineImages = useMemo(() => {
+    // If richTextEditor is an object, use the disableInlineImages property.
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    if (isRichTextEditorOptions(richTextEditor)) {
+      return richTextEditor.disableInlineImages === undefined ? false : richTextEditor.disableInlineImages;
+    }
+
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    return false;
+
+    return true;
+  }, [
+    /* @conditional-compile-remove(rich-text-editor-image-upload) @conditional-compile-remove(rich-text-editor) */ richTextEditor
+  ]);
+
   /* @conditional-compile-remove(rich-text-editor) */
   if (richTextEditor) {
     return (
       <_ErrorBoundary fallback={simpleEditBox}>
         <Suspense fallback={simpleEditBox}>
-          <ChatMessageComponentAsRichTextEditBox {...props} />
+          <ChatMessageComponentAsRichTextEditBox {...props} disableInlineImages={disableInlineImages} />
         </Suspense>
       </_ErrorBoundary>
     );
@@ -71,3 +87,8 @@ export const ChatMessageComponentAsEditBoxPicker = (props: ChatMessageComponentA
 
   return simpleEditBox;
 };
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function isRichTextEditorOptions(obj: any): obj is RichTextEditorOptions {
+  return obj && typeof obj === 'object' && 'disableInlineImages' in obj;
+}

@@ -50,6 +50,8 @@ export type ChatMessageComponentAsRichTextEditBoxProps = {
   ) => void;
   message: ChatMessage;
   strings: MessageThreadStrings;
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  disableInlineImages: boolean;
 };
 
 /**
@@ -58,7 +60,14 @@ export type ChatMessageComponentAsRichTextEditBoxProps = {
 export const ChatMessageComponentAsRichTextEditBox = (
   props: ChatMessageComponentAsRichTextEditBoxProps
 ): JSX.Element => {
-  const { onCancel, onSubmit, strings, message } = props;
+  const {
+    onCancel,
+    onSubmit,
+    strings,
+    message,
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    disableInlineImages
+  } = props;
 
   const [textValue, setTextValue] = useState<string>(message.content || '');
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
@@ -214,7 +223,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
           /* @conditional-compile-remove(attachment-upload) */
           onRenderAttachmentUploads={onRenderAttachmentUploads}
           /* @conditional-compile-remove(rich-text-editor-image-upload) */
-          disableInlineImages={true}
+          disableInlineImages={disableInlineImages}
         />
       </Stack>
     );

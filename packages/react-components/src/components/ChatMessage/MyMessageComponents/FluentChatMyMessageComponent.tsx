@@ -49,7 +49,7 @@ export const FluentChatMyMessageComponent = (props: FluentChatMessageComponentWr
     actionsForAttachment,
     /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
     onRenderAttachmentDownloads,
-    /* @conditional-compile-remove(rich-text-editor) */
+    /* @conditional-compile-remove(rich-text-editor) @conditional-compile-remove(rich-text-editor-image-upload) */
     richTextEditor
   } = props;
   const chatMessageRenderStyles = useChatMessageRenderStyles();
@@ -92,7 +92,7 @@ export const FluentChatMyMessageComponent = (props: FluentChatMessageComponentWr
             mentionOptions={mentionOptions}
             /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
             actionsForAttachment={actionsForAttachment}
-            /* @conditional-compile-remove(rich-text-editor) */
+            /* @conditional-compile-remove(rich-text-editor) @conditional-compile-remove(rich-text-editor-image-upload) */
             richTextEditor={richTextEditor}
           />
         );
