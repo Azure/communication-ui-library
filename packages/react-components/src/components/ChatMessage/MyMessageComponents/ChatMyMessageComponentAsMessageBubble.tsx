@@ -5,7 +5,11 @@ import { Text, mergeStyles } from '@fluentui/react';
 import { ChatMyMessage } from '@fluentui-contrib/react-chat';
 import { _formatString } from '@internal/acs-ui-common';
 import React, { useCallback, useMemo, useRef, useState } from 'react';
-import { chatMessageDateStyle, chatMessageFailedTagStyle } from '../../styles/ChatMessageComponent.styles';
+import {
+  chatMessageDateStyle,
+  chatMessageFailedTagStyle,
+  chatMessageDateFailedStyle
+} from '../../styles/ChatMessageComponent.styles';
 import { useIdentifiers } from '../../../identifiers/IdentifierProvider';
 import { useTheme } from '../../../theming';
 import { ChatMessageActionFlyout } from '../ChatMessageActionsFlyout';
@@ -269,7 +273,11 @@ const MessageBubble = (props: ChatMyMessageComponentAsMessageBubbleProps): JSX.E
             </Text>
           }
           timestamp={
-            <Text className={chatMessageDateStyle} data-ui-id={ids.messageTimestamp} tabIndex={0}>
+            <Text
+              className={props.message.status === 'failed' ? chatMessageDateFailedStyle(theme) : chatMessageDateStyle}
+              data-ui-id={ids.messageTimestamp}
+              tabIndex={0}
+            >
               {formattedTimestamp}
             </Text>
           }
