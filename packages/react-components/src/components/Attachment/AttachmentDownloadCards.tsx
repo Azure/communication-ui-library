@@ -4,11 +4,11 @@
 import { Icon } from '@fluentui/react';
 import React, { useCallback } from 'react';
 import { useMemo } from 'react';
-/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(attachment-teams) @conditional-compile-remove(attachment-byos) @conditional-compile-remove(attachment-upload) */
 import { useLocale } from '../../localization';
 import { _AttachmentCard } from './AttachmentCard';
 import { _AttachmentCardGroup, _AttachmentCardGroupLayout } from './AttachmentCardGroup';
-/* @conditional-compile-remove(attachment-download) */
+/* @conditional-compile-remove(attachment-teams) @conditional-compile-remove(attachment-byos) */
 import { getAttachmentCountLiveMessage } from '../ChatMessage/ChatMessageContent';
 import { _formatString } from '@internal/acs-ui-common';
 import { AttachmentMenuAction } from '../../types/Attachment';
@@ -25,7 +25,7 @@ import { useAttachmentCardGroupStyles } from '../styles/AttachmentCardGroup.styl
 export type ChatAttachmentType =
   | 'unknown'
   | 'image'
-  | /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ 'file';
+  | /* @conditional-compile-remove(attachment-teams) @conditional-compile-remove(attachment-byos) @conditional-compile-remove(attachment-upload) */ 'file';
 
 /**
  * Strings of _AttachmentDownloadCards that can be overridden.
@@ -98,7 +98,7 @@ export const _AttachmentDownloadCards = (props: _AttachmentDownloadCardsProps): 
 
   const attachmentCardGroupDescription = useMemo(
     () => () => {
-      /* @conditional-compile-remove(attachment-download) */
+      /* @conditional-compile-remove(attachment-teams) @conditional-compile-remove(attachment-byos) */
       return getAttachmentCountLiveMessage(
         attachments ?? [],
         props.strings?.attachmentCardGroupMessage ?? localeStrings.attachmentCardGroupMessage
@@ -149,7 +149,7 @@ export const _AttachmentDownloadCards = (props: _AttachmentDownloadCardsProps): 
  * @private
  */
 const useLocaleStringsTrampoline = (): _AttachmentDownloadCardsStrings => {
-  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(attachment-teams) @conditional-compile-remove(attachment-byos) @conditional-compile-remove(attachment-upload) */
   return useLocale().strings.messageThread;
   return { downloadAttachment: '', openAttachment: '', attachmentCardGroupMessage: '' };
 };

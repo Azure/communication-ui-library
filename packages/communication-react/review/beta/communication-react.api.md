@@ -155,16 +155,16 @@ export type AreParamEqual<A extends (props: any) => JSX.Element | undefined, B e
 // @public
 export type AreTypeEqual<A, B> = A extends B ? (B extends A ? true : false) : false;
 
-// @public
+// @beta
 export type AttachmentActionHandler = (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[];
 
-// @public
+// @beta
 export interface AttachmentDownloadOptions {
     // (undocumented)
     actionsForAttachment: AttachmentActionHandler;
 }
 
-// @public
+// @beta
 export interface AttachmentMenuAction {
     // (undocumented)
     icon: JSX.Element;
@@ -190,7 +190,7 @@ export interface AttachmentMetadataInProgress {
     url?: string;
 }
 
-// @public
+// @beta
 export interface AttachmentOptions {
     // (undocumented)
     downloadOptions?: AttachmentDownloadOptions;
@@ -1728,7 +1728,7 @@ export type ChatAdapterUiState = {
 };
 
 // @public
-export type ChatAttachmentType = 'unknown' | 'image' | /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ 'file';
+export type ChatAttachmentType = 'unknown' | 'image' | /* @conditional-compile-remove(attachment-teams) @conditional-compile-remove(attachment-byos) @conditional-compile-remove(attachment-upload) */ 'file';
 
 // @public
 export type ChatBaseSelectorProps = {

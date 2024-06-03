@@ -14,5 +14,5 @@ export type {
   AttachmentActionHandler
 } from '@internal/react-components';
 
-/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(attachment-byos) @conditional-compile-remove(attachment-upload) */
 export type { AttachmentDownloadOptions } from '@internal/react-components';

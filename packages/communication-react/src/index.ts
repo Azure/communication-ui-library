@@ -321,11 +321,11 @@ export type {
   DtmfTone,
   LongPressTrigger
 } from '../../react-components/src';
-/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(attachment-teams) @conditional-compile-remove(attachment-byos) @conditional-compile-remove(attachment-upload) */
 export type { AttachmentOptions } from '../../react-components/src';
 /* @conditional-compile-remove(attachment-upload) */
 export type { SendBoxErrorBarError } from '../../react-components/src';
-/* @conditional-compile-remove(attachment-download) */
+/* @conditional-compile-remove(attachment-teams) @conditional-compile-remove(attachment-byos) */
 export type { AttachmentActionHandler } from '../../react-components/src';
 /* @conditional-compile-remove(attachment-upload) */
 export type {
@@ -334,15 +334,15 @@ export type {
   AttachmentUploadOptions,
   AttachmentUploadTask
 } from '../../react-components/src';
-/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(attachment-teams) @conditional-compile-remove(attachment-byos) @conditional-compile-remove(attachment-upload) */
 export type { AttachmentMetadata } from '../../acs-ui-common/src';
 
 /* @conditional-compile-remove(attachment-upload) */
 export type { AttachmentMetadataInProgress, AttachmentProgressError } from '../../acs-ui-common/src';
 
-/* @conditional-compile-remove(attachment-download) */
+/* @conditional-compile-remove(attachment-teams) @conditional-compile-remove(attachment-byos) */
 export type { AttachmentMenuAction, AttachmentDownloadOptions } from '../../react-components/src';
-/* @conditional-compile-remove(attachment-download) */
+/* @conditional-compile-remove(attachment-teams) @conditional-compile-remove(attachment-byos) */
 export { defaultAttachmentMenuAction } from '../../react-components/src';
 export type { ChatAttachmentType } from '../../react-components/src';
 export type { InlineImageOptions, InlineImage } from '../../react-components/src';

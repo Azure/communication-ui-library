@@ -78,7 +78,9 @@ module.exports = {
     // Close captions feature for ACS calls
     "acs-close-captions",
     // Feature for Rich Text Editor (RTE) support
-    'rich-text-editor'
+    'rich-text-editor',
+    // Ability to download files attachments in message thread for BYOS.
+    "attachment-byos"
   ],
   stable: [
     // Demo feature. Used in live-documentation of conditional compilation.
@@ -98,7 +100,7 @@ module.exports = {
     'meeting-id',
     // Feature for end call options 
     'end-call-options',
-    // Ability to download files attachments in message thread.
-    "attachment-download"
+     // Ability to download files attachments in message thread for Teams interop.
+     "attachment-teams"
   ]
 }

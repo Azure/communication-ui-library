@@ -86,8 +86,10 @@ import { Backspace20Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(call-readiness) */
 import { Sparkle20Filled, VideoProhibited20Filled, MicProhibited20Filled } from '@fluentui/react-icons';
 
-/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-import { ArrowDownload20Regular, Open20Regular } from '@fluentui/react-icons';
+/* @conditional-compile-remove(attachment-teams) */
+import { Open20Regular } from '@fluentui/react-icons';
+/* @conditional-compile-remove(attachment-byos) @conditional-compile-remove(attachment-upload) */
+import { ArrowDownload20Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(PSTN-calls) */
 import { CallPause20Regular, CallPause20Filled, Play20Regular } from '@fluentui/react-icons';
 import { People20Regular } from '@fluentui/react-icons';
@@ -272,11 +274,11 @@ export const DEFAULT_COMPONENT_ICONS = {
   ReactionButtonIcon: <Emoji20Regular />,
   /* @conditional-compile-remove(attachment-upload) */
   CancelAttachmentUpload: <Dismiss16Regular />,
-  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(attachment-byos) @conditional-compile-remove(attachment-upload) */
   DownloadAttachment: <ArrowDownload20Regular />,
-  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(attachment-teams) @conditional-compile-remove(attachment-byos) @conditional-compile-remove(attachment-upload) */
   OpenAttachment: <Open20Regular />,
-  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(attachment-byos) @conditional-compile-remove(attachment-upload) */
   AttachmentMoreMenu: <MoreHorizontal20Filled />,
   /* @conditional-compile-remove(data-loss-prevention) */
   DataLossPreventionProhibited: <DataLossPreventionProhibited16Regular />,

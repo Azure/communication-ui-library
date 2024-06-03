@@ -9,7 +9,7 @@ import { ChatAdapter } from './adapter/ChatAdapter';
 import { ChatAdapterProvider } from './adapter/ChatAdapterProvider';
 import { chatScreenContainerStyle } from './styles/Chat.styles';
 import { ChatScreen } from './ChatScreen';
-/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(attachment-byos) @conditional-compile-remove(attachment-upload) */
 import { AttachmentOptions } from '@internal/react-components';
 
 /**
@@ -77,7 +77,7 @@ export type ChatCompositeOptions = {
    */
   autoFocus?: 'sendBoxTextField';
 
-  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(attachment-byos) @conditional-compile-remove(attachment-upload) */
   /**
    * Properties for configuring the File Sharing feature.
    * If undefined, file sharing feature will be disabled.
@@ -127,7 +127,7 @@ export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
             onRenderTypingIndicator={onRenderTypingIndicator}
             onRenderMessage={onRenderMessage}
             onFetchParticipantMenuItems={onFetchParticipantMenuItems}
-            /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+            /* @conditional-compile-remove(attachment-byos) @conditional-compile-remove(attachment-upload) */
             attachmentOptions={options?.attachmentOptions}
           />
         </ChatAdapterProvider>
