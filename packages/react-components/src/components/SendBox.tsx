@@ -89,7 +89,7 @@ export interface SendBoxStrings {
    * Aria label to notify user attachment is uploaded.
    */
   uploadCompleted: string;
-  /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
+  /* @conditional-compile-remove(file-sharing-acs) */
   /**
    * Aria label to notify user more attachment action menu.
    */

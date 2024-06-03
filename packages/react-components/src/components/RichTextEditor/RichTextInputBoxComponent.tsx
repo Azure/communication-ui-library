@@ -203,10 +203,7 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
               onContentModelUpdate={onContentModelUpdate}
             />
           </Stack.Item>
-          {
-            /* @conditional-compile-remove(file-sharing-acs) */ onRenderAttachmentUploads &&
-              onRenderAttachmentUploads()
-          }
+          {/* @conditional-compile-remove(file-sharing-acs) */ onRenderAttachmentUploads && onRenderAttachmentUploads()}
         </Stack>
         {actionButtons}
       </Stack>
