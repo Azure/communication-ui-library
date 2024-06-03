@@ -153,7 +153,7 @@ export const _VideoEffectsItem = (props: _VideoEffectsItemProps): JSX.Element =>
           styles={containerStyles()}
           onClick={disabled ? undefined : () => props.onSelect?.(props.itemKey)}
           componentRef={props.componentRef as React.RefObject<IButton>}
-          aria-label={props.ariaLabel ?? props.itemKey}
+          ariaLabel={props.ariaLabel ?? (props.tooltipProps?.content as string) ?? props.itemKey}
           aria-disabled={props.disabled}
         >
           <Stack horizontalAlign={'center'}>

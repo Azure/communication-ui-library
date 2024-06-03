@@ -224,6 +224,12 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
         onStartRemoteSpotlight={hideSpotlightButtons ? undefined : onStartRemoteSpotlightWithPrompt}
         /* @conditional-compile-remove(spotlight) */
         onStopRemoteSpotlight={hideSpotlightButtons ? undefined : onStopRemoteSpotlightWithPrompt}
+        /* @conditional-compile-remove(soft-mute) */
+        onMuteParticipant={
+          ['Unknown', 'Organizer', 'Presenter', 'Co-organizer'].includes(userRole ?? '')
+            ? videoGalleryProps.onMuteParticipant
+            : undefined
+        }
       />
     );
   }, [
