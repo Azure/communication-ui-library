@@ -79,7 +79,7 @@ module.exports = {
     "acs-close-captions",
     // Feature for Rich Text Editor (RTE) support
     'rich-text-editor',
-    // Ability to download files attachments in message thread for BYOS.
+    // Feature to support file sharing in ACS chats
     "file-sharing-acs"
   ],
   stable: [
@@ -98,7 +98,7 @@ module.exports = {
     'meeting-id',
     // Feature for end call options 
     'end-call-options',
-     // Ability to download files attachments in message thread for Teams interop.
+     // Feature to support file sharing in Teams interoperability chats
      "file-sharing-teams-interop"
   ]
 }
