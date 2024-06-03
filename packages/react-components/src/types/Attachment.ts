@@ -11,9 +11,7 @@ import { AttachmentMetadata } from '@internal/acs-ui-common';
  * Attachment Options that defines behaviour for uploading and downloading attachments.
  */
 export interface AttachmentOptions {
-  /* @conditional-compile-remove(file-sharing-acs) */
   uploadOptions?: AttachmentUploadOptions;
-  /* @conditional-compile-remove(file-sharing-acs) */
   downloadOptions?: AttachmentDownloadOptions;
 }
 
