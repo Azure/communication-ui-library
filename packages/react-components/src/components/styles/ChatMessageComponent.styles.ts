@@ -79,7 +79,6 @@ export const chatMessageDateFailedStyle = (theme: Theme): string =>
     fontSize: '0.75rem'
   });
 
-
 /**
  * @private
  */
