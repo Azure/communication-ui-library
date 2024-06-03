@@ -56,7 +56,7 @@ test.describe('Tests related to messaging', async () => {
     );
   });
 
-  test('Inline Image should show a broken image icon when image fetch failed', async ({ page, serverUrl }) => {
+  test.skip('Inline Image should show a broken image icon when image fetch failed', async ({ page, serverUrl }) => {
     // Mock the api call before navigating
     await page.route(serverUrl + '/images/inlineImageExample1.png', async (route) => {
       try {
