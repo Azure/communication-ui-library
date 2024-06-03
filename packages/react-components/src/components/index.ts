@@ -197,7 +197,7 @@ export type {
 } from './PictureInPictureInPicture/PictureInPictureInPictureTile';
 
 export * from './Drawer';
-/* @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(file-sharing-acs) */
 export type { SendBoxErrorBarError } from './SendBoxErrorBar';
 export * from './Attachment/AttachmentCard';
 export * from './Attachment/AttachmentCardGroup';
@@ -205,6 +205,7 @@ export * from './ModalClone/ModalClone';
 export * from './Attachment/AttachmentDownloadCards';
 export type { _AttachmentUploadCardsStrings } from './Attachment/AttachmentUploadCards';
 
+/* @conditional-compile-remove(file-sharing-acs) */
 export type {
   AttachmentOptions,
   AttachmentUploadOptions,
@@ -215,7 +216,7 @@ export type {
   AttachmentUploadTask
 } from '../types/Attachment';
 
-/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(file-sharing-acs) */
 export type { AttachmentMenuAction, AttachmentDownloadOptions } from '../types/Attachment';
 
 export { _useContainerHeight, _useContainerWidth } from './utils/responsive';
