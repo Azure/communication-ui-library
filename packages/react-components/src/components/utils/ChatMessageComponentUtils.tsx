@@ -63,7 +63,7 @@ export function getMessageBubbleContent(
     );
   }
   return (
-    <div tabIndex={0} className="ui-chat__message__content">
+    <div className="ui-chat__message__content">
       <ChatMessageContent
         message={message}
         strings={strings}

@@ -66,7 +66,6 @@ import { SpotlightChangedListener } from '../../CallComposite/adapter/CallAdapte
 
 import { VideoBackgroundImage, VideoBackgroundEffect } from '../../CallComposite';
 
-/* @conditional-compile-remove(end-of-call-survey) */
 import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
 
 /**
@@ -464,7 +463,6 @@ export interface CallWithChatAdapterManagement {
    * @public
    */
   updateSelectedVideoBackgroundEffect(selectedVideoBackground: VideoBackgroundEffect): void;
-  /* @conditional-compile-remove(end-of-call-survey) */
   /**
    * Send the end of call survey result
    *
@@ -486,6 +484,11 @@ export interface CallWithChatAdapterManagement {
    * Stop all spotlights
    */
   stopAllSpotlight(): Promise<void>;
+  /* @conditional-compile-remove(soft-mute) */
+  /**
+   * Mute a participant
+   */
+  muteParticipant(userIds: string): Promise<void>;
 }
 
 /**

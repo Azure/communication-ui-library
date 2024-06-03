@@ -26,7 +26,9 @@ module.exports = {
     // Feature for Rich Text Editor (RTE) image upload support
     "rich-text-editor-image-upload",
     // Feature for showing notifications
-    "notifications"
+    "notifications",
+    // Soft Mute feature for ACS and Interop calls
+    "soft-mute"
   ],
   beta: [
     "call-readiness",
@@ -88,8 +90,6 @@ module.exports = {
     "video-stream-is-receiving-flag",
     // Feature for spotlight
     'spotlight',
-    // Feature for end of call survey
-    'end-of-call-survey',
     // Joining calls using teams token
     "teams-identity-support",
     // feature for hiding attendee name in the teams meeting
