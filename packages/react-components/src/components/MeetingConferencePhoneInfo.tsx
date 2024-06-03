@@ -22,6 +22,7 @@ import {
 import { _preventDismissOnEvent } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(teams-meeting-conference) */
 import { useLocale } from '../localization';
+/* @conditional-compile-remove(teams-meeting-conference) */
 import { isPossiblePhoneNumber, parsePhoneNumber } from 'libphonenumber-js';
 
 /* @conditional-compile-remove(teams-meeting-conference) */
