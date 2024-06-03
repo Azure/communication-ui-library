@@ -3,8 +3,14 @@
 
 /* @conditional-compile-remove(teams-meeting-conference) */
 import { formatPhoneNumber, formatPhoneNumberInfo } from './MeetingConferencePhoneInfo';
-/* @conditional-compile-remove(teams-meeting-conference) */
+
 import { assert } from 'console';
+
+describe('Empty test for stable compilation', () => {
+  test('USA and Canada format', async () => {
+    assert(true);
+  });
+});
 
 /* @conditional-compile-remove(teams-meeting-conference) */
 describe('Display phone number in user friendly format', () => {
