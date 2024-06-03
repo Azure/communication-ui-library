@@ -573,12 +573,12 @@
     "rightNavButtonAriaLabel": "next page"
   },
   "MeetingConferencePhoneInfo": {
-    "meetingConferencePhoneInfoModalTitle": "Conference phone info",
+    "meetingConferencePhoneInfoModalTitle": "Join call from your phone",
     "meetingConferencePhoneInfoModalDialIn": "Dial number",
     "meetingConferencePhoneInfoModalMeetingId": "Enter meeting ID",
     "meetingConferencePhoneInfoModalWait": "Wait to be admitted by organizer",
     "meetingConferencePhoneInfoModalNoPhoneAvailable": "No phone available",
-    "meetingConferencePhoneInfoModalDialInValue": "{phoneNumber} (Toll-free) {country}, {city}",
-    "meetingConferencePhoneInfoModalToll": "{phoneNumber} (Toll) {country}, {city}"
+    "meetingConferencePhoneInfoModalTollFree": "{phoneNumber} (Toll-free) {country} {city}",
+    "meetingConferencePhoneInfoModalToll": "{phoneNumber} (Toll) {country} {city}"
   }
 }

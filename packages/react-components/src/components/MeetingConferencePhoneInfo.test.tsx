@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 /* @conditional-compile-remove(teams-meeting-conference) */
-import { formatPhoneNumber, formatPhoneNumberInfo } from './MeetingConferencePhoneInfo';
+import { formatPhoneNumber, formatPhoneNumberInfo, formatMeetingId } from './MeetingConferencePhoneInfo';
 
 import { assert } from 'console';
 
@@ -85,5 +85,19 @@ describe('Format phone number info based on available data', () => {
         strings
       ) === '+1 (234) 567-8900 (Toll) Canada Toronto'
     );
+  });
+});
+
+/* @conditional-compile-remove(teams-meeting-conference) */
+describe('Format conference id', () => {
+  test('Test empty value', async () => {
+    assert(formatMeetingId('') === '');
+  });
+  test('Test not expected length', async () => {
+    assert(formatMeetingId('123') === '123');
+  });
+
+  test('Test expected value', async () => {
+    assert(formatMeetingId('123456789') === '123 456 789#');
   });
 });

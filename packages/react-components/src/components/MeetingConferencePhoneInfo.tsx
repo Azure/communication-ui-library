@@ -16,7 +16,9 @@ import {
   phoneInfoTextStyle,
   phoneInfoIcon,
   phoneInfoInctructionLine,
-  phoneInfoStep
+  phoneInfoStep,
+  stepTextStyle,
+  infoConnectionLinkStyle
 } from './styles/TeamsMeetingConferenceInfo';
 /* @conditional-compile-remove(teams-meeting-conference) */
 import { _preventDismissOnEvent } from '@internal/acs-ui-common';
@@ -125,7 +127,7 @@ export const _MeetingConferencePhoneInfoModal = (props: _MeetingConferencePhoneI
           </Stack>
           {conferencePhoneInfoList.length === 0 && (
             <Stack horizontal>
-              <Text className={phoneInfoTextStyle}>{strings?.meetingConferencePhoneInfoModalNoPhoneAvailable}</Text>
+              <Text className={stepTextStyle}>{strings?.meetingConferencePhoneInfoModalNoPhoneAvailable}</Text>
             </Stack>
           )}
           {conferencePhoneInfoList.length > 0 && (
@@ -140,9 +142,10 @@ export const _MeetingConferencePhoneInfoModal = (props: _MeetingConferencePhoneI
                           style={{ color: theme.palette.themePrimary, padding: '8px' }}
                         />
                       </Stack>
+                      <Stack className={infoConnectionLinkStyle(theme)}></Stack>
                     </Stack.Item>
                     <Stack.Item>
-                      <Text className={phoneInfoTextStyle}>{strings?.meetingConferencePhoneInfoModalDialIn}</Text>
+                      <Text className={stepTextStyle}>{strings?.meetingConferencePhoneInfoModalDialIn}</Text>
                     </Stack.Item>
                   </Stack>
                 </Stack.Item>
@@ -164,17 +167,20 @@ export const _MeetingConferencePhoneInfoModal = (props: _MeetingConferencePhoneI
                 <Stack.Item>
                   <Stack horizontal>
                     <Stack.Item className={phoneInfoIcon(theme)}>
-                      <Icon
-                        iconName="DtmfDialpadButton"
-                        style={{ color: theme.palette.themePrimary, padding: '8px' }}
-                      />
+                      <Stack verticalAlign="center" horizontalAlign="center">
+                        <Icon
+                          iconName="DtmfDialpadButton"
+                          style={{ color: theme.palette.themePrimary, padding: '8px' }}
+                        />
+                      </Stack>
+                      <Stack className={infoConnectionLinkStyle(theme)}></Stack>
                     </Stack.Item>
                     <Stack.Item>
-                      <Text className={phoneInfoTextStyle}>{strings?.meetingConferencePhoneInfoModalMeetingId}</Text>
+                      <Text className={stepTextStyle}>{strings?.meetingConferencePhoneInfoModalMeetingId}</Text>
                     </Stack.Item>
                   </Stack>
                 </Stack.Item>
-                <Text className={phoneInfoTextStyle}>{conferencePhoneInfoList[0].conferenceId}#</Text>
+                <Text className={phoneInfoTextStyle}>{formatMeetingId(conferencePhoneInfoList[0].conferenceId)}</Text>
               </Stack>
               <Stack horizontal horizontalAlign="space-between" verticalAlign="center">
                 <Stack horizontal>
@@ -182,7 +188,7 @@ export const _MeetingConferencePhoneInfoModal = (props: _MeetingConferencePhoneI
                     <Icon iconName="PhoneInfoWait" style={{ color: theme.palette.themePrimary, padding: '8px' }} />
                   </Stack.Item>
                   <Stack.Item>
-                    <Text className={phoneInfoTextStyle}>{strings?.meetingConferencePhoneInfoModalWait}</Text>
+                    <Text className={stepTextStyle}>{strings?.meetingConferencePhoneInfoModalWait}</Text>
                   </Stack.Item>
                 </Stack>
               </Stack>
@@ -235,4 +241,20 @@ export const formatPhoneNumberInfo = (
       .replace('{city}', phoneNumber.city || '')
       .trim() || ''
   );
+};
+
+/* @conditional-compile-remove(teams-meeting-conference) */
+/**
+ * @internal
+ * format meeting id
+ */
+export const formatMeetingId = (meetingId?: string): string => {
+  if (!meetingId) {
+    return '';
+  }
+  if (meetingId?.length !== 9) {
+    return meetingId;
+  }
+
+  return [meetingId.slice(0, 3), meetingId.slice(3, 6), meetingId.slice(6, 9)].join(' ') + '#';
 };

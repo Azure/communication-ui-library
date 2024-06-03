@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { IModalStyles, mergeStyles, Theme } from '@fluentui/react';
+import { IModalStyles, mergeStyles, Theme, FontWeights } from '@fluentui/react';
 import { _pxToRem } from '@internal/acs-ui-common';
 /**
  * @private
@@ -29,7 +29,15 @@ export const titleClassName = mergeStyles({
  * @private
  */
 export const titleContainerClassName = mergeStyles({
-  paddingBottom: _pxToRem(20)
+  paddingBottom: _pxToRem(30)
+});
+
+/**
+ * @private
+ */
+export const stepTextStyle = mergeStyles({
+  fontSize: _pxToRem(14),
+  lineHeight: _pxToRem(40)
 });
 
 /**
@@ -37,7 +45,8 @@ export const titleContainerClassName = mergeStyles({
  */
 export const phoneInfoTextStyle = mergeStyles({
   fontSize: _pxToRem(14),
-  lineHeight: _pxToRem(40)
+  lineHeight: _pxToRem(40),
+  fontWeight: FontWeights.semibold
 });
 
 /**
@@ -64,5 +73,18 @@ export const phoneInfoInctructionLine = mergeStyles({
  * @private
  */
 export const phoneInfoStep = mergeStyles({
-  minWidth: _pxToRem(150)
+  textAlign: 'right'
 });
+
+/**
+ * @private
+ */
+export const infoConnectionLinkStyle = (theme: Theme): string => {
+  return mergeStyles({
+    background: `${theme.palette.themeLighter}`,
+    width: _pxToRem(2),
+    height: _pxToRem(25),
+    marginLeft: _pxToRem(17),
+    marginTop: _pxToRem(-4)
+  });
+};
