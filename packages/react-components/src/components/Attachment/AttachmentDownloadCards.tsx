@@ -4,7 +4,7 @@
 import { Icon } from '@fluentui/react';
 import React, { useCallback } from 'react';
 import { useMemo } from 'react';
-/* @conditional-compile-remove(attachment-teams) @conditional-compile-remove(attachment-byos) @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(attachment-teams) @conditional-compile-remove(attachment-byos) */
 import { useLocale } from '../../localization';
 import { _AttachmentCard } from './AttachmentCard';
 import { _AttachmentCardGroup, _AttachmentCardGroupLayout } from './AttachmentCardGroup';
@@ -25,7 +25,7 @@ import { useAttachmentCardGroupStyles } from '../styles/AttachmentCardGroup.styl
 export type ChatAttachmentType =
   | 'unknown'
   | 'image'
-  | /* @conditional-compile-remove(attachment-teams) @conditional-compile-remove(attachment-byos) @conditional-compile-remove(attachment-upload) */ 'file';
+  | /* @conditional-compile-remove(attachment-teams) @conditional-compile-remove(attachment-byos) */ 'file';
 
 /**
  * Strings of _AttachmentDownloadCards that can be overridden.
@@ -33,6 +33,7 @@ export type ChatAttachmentType =
  * @internal
  */
 export interface _AttachmentDownloadCardsStrings {
+  /* @conditional-compile-remove(attachment-byos) */
   /** Aria label to notify user when focus is on attachment download button. */
   downloadAttachment: string;
   /** Aria label to notify user when focus is on attachment open button. */
@@ -149,9 +150,14 @@ export const _AttachmentDownloadCards = (props: _AttachmentDownloadCardsProps): 
  * @private
  */
 const useLocaleStringsTrampoline = (): _AttachmentDownloadCardsStrings => {
-  /* @conditional-compile-remove(attachment-teams) @conditional-compile-remove(attachment-byos) @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(attachment-teams) @conditional-compile-remove(attachment-byos) */
   return useLocale().strings.messageThread;
-  return { downloadAttachment: '', openAttachment: '', attachmentCardGroupMessage: '' };
+  return {
+    /* @conditional-compile-remove(attachment-byos) */
+    downloadAttachment: '',
+    openAttachment: '',
+    attachmentCardGroupMessage: ''
+  };
 };
 
 /**
@@ -161,27 +167,41 @@ const getDefaultMenuActions = (
   locale: _AttachmentDownloadCardsStrings,
   chatMessage?: ChatMessage
 ): AttachmentMenuAction[] => {
+  let actionName = locale.openAttachment;
   // if message is sent by a Teams user, we need to use a different icon ("open")
   if (chatMessage?.senderId?.includes('8:orgid:')) {
     return [
       {
-        ...defaultAttachmentMenuAction,
-        name: locale.openAttachment,
-        icon: <Icon iconName="OpenAttachment" />
+        name: actionName,
+        icon: <Icon iconName="OpenAttachment" />,
+        onClick: defaultOnClickHandler
       }
     ];
   }
   // otherwise, use the default icon ("download")
+  /* @conditional-compile-remove(attachment-byos) */
+  actionName = locale.downloadAttachment;
   return [
     {
       ...defaultAttachmentMenuAction,
-      name: locale.downloadAttachment
+      name: actionName
     }
   ];
 };
 
 /**
- * @public
+ *
+ * The default action handler for downloading attachments. This handler will open the attachment's URL in a new tab.
+ */
+const defaultOnClickHandler = (attachment: AttachmentMetadata): Promise<void> => {
+  return new Promise<void>((resolve) => {
+    window.open((attachment as AttachmentMetadata).url, '_blank', 'noopener,noreferrer');
+    resolve();
+  });
+};
+
+/**
+ * @beta
  *
  * The default menu action for downloading attachments. This action will open the attachment's URL in a new tab.
  */
@@ -201,10 +221,5 @@ export const defaultAttachmentMenuAction: AttachmentMenuAction = {
   // this is the icon shown on the right of the attachment card
   icon: <Icon iconName="DownloadAttachment" data-ui-id="attachment-download-card-download-icon" />,
   // this is the action that runs when the icon is clicked
-  onClick: (attachment: AttachmentMetadata) => {
-    return new Promise<void>((resolve) => {
-      window.open((attachment as AttachmentMetadata).url, '_blank', 'noopener,noreferrer');
-      resolve();
-    });
-  }
+  onClick: defaultOnClickHandler
 };

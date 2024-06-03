@@ -1,23 +1,23 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/* @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(attachment-byos) */
 import { AttachmentSelectionHandler, AttachmentUploadOptions, AttachmentUploadTask } from '@azure/communication-react';
-/* @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(attachment-byos) */
 import axios, { AxiosProgressEvent } from 'axios';
-/* @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(attachment-byos) */
 import FormData from 'form-data';
 
-/* @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(attachment-byos) */
 // max file size is 50MB
 const MAX_FILE_SIZE_MB = 50 * 1024 * 1024; // 50MB
-/* @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(attachment-byos) */
 const UNSUPPORTED_FILES = ['exe', 'bat', 'dat'];
-/* @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(attachment-byos) */
 // change this to your own container name
 const CONTAINER_NAME = 'acs-file-sharing-test';
 
-/* @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(attachment-byos) */
 const attachmentSelectionHandler: AttachmentSelectionHandler = async (
   uploadTasks: AttachmentUploadTask[]
 ): Promise<void> => {
@@ -66,7 +66,7 @@ const attachmentSelectionHandler: AttachmentSelectionHandler = async (
     }
   }
 };
-/* @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(attachment-byos) */
 export const attachmentUploadOptions: AttachmentUploadOptions = {
   handleAttachmentSelection: attachmentSelectionHandler
 };

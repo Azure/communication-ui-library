@@ -16,9 +16,9 @@ import { BlockedMessage } from '../../../types/ChatMessage';
 import { MessageThreadStrings } from '../../MessageThread';
 import { chatMessageActionMenuProps } from '../ChatMessageActionMenu';
 import { ComponentSlotStyle, OnRenderAvatarCallback } from '../../../types';
-/* @conditional-compile-remove(attachment-teams) @conditional-compile-remove(attachment-byos) @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(attachment-teams) @conditional-compile-remove(attachment-byos) */
 import { AttachmentMenuAction } from '../../../types/Attachment';
-/* @conditional-compile-remove(attachment-teams) @conditional-compile-remove(attachment-byos) @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(attachment-teams) @conditional-compile-remove(attachment-byos) */
 import { AttachmentMetadata } from '@internal/acs-ui-common';
 import { _AttachmentDownloadCards } from '../../Attachment/AttachmentDownloadCards';
 import { useLocale } from '../../../localization';
@@ -33,7 +33,7 @@ import {
   getMessageBubbleContent,
   getMessageEditedDetails
 } from '../../utils/ChatMessageComponentUtils';
-/* @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(attachment-byos) */
 import { doesMessageContainMultipleAttachments } from '../../utils/ChatMessageComponentAsEditBoxUtils';
 
 type ChatMyMessageComponentAsMessageBubbleProps = {
@@ -79,12 +79,12 @@ type ChatMyMessageComponentAsMessageBubbleProps = {
    * @beta
    */
   inlineImageOptions?: InlineImageOptions;
-  /* @conditional-compile-remove(attachment-teams) @conditional-compile-remove(attachment-byos) @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(attachment-teams) @conditional-compile-remove(attachment-byos) */
   /**
    * Optional callback to render message attachments in the message component.
    */
   onRenderAttachmentDownloads?: (message: ChatMessage) => JSX.Element;
-  /* @conditional-compile-remove(attachment-teams) @conditional-compile-remove(attachment-byos) @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(attachment-teams) @conditional-compile-remove(attachment-byos) */
   /**
    * Optional callback to define custom actions for attachments.
    */
@@ -115,9 +115,9 @@ const MessageBubble = (props: ChatMyMessageComponentAsMessageBubbleProps): JSX.E
     /* @conditional-compile-remove(mention) */
     mentionDisplayOptions,
     onDisplayDateTimeString,
-    /* @conditional-compile-remove(attachment-teams) @conditional-compile-remove(attachment-byos) @conditional-compile-remove(attachment-upload) */
+    /* @conditional-compile-remove(attachment-teams) @conditional-compile-remove(attachment-byos) */
     onRenderAttachmentDownloads,
-    /* @conditional-compile-remove(attachment-teams) @conditional-compile-remove(attachment-byos) @conditional-compile-remove(attachment-upload) */
+    /* @conditional-compile-remove(attachment-teams) @conditional-compile-remove(attachment-byos) */
     actionsForAttachment
   } = props;
 
@@ -174,7 +174,7 @@ const MessageBubble = (props: ChatMyMessageComponentAsMessageBubbleProps): JSX.E
     setChatMessageActionFlyoutTarget(undefined);
   }, [setChatMessageActionFlyoutTarget]);
 
-  /* @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(attachment-byos) */
   const hasMultipleAttachments = useMemo(() => {
     return doesMessageContainMultipleAttachments(message as ChatMessage);
   }, [message]);
@@ -195,17 +195,17 @@ const MessageBubble = (props: ChatMyMessageComponentAsMessageBubbleProps): JSX.E
       inlineImageOptions,
       /* @conditional-compile-remove(mention) */
       mentionDisplayOptions,
-      /* @conditional-compile-remove(attachment-teams) @conditional-compile-remove(attachment-byos) @conditional-compile-remove(attachment-upload) */
+      /* @conditional-compile-remove(attachment-teams) @conditional-compile-remove(attachment-byos) */
       onRenderAttachmentDownloads,
-      /* @conditional-compile-remove(attachment-teams) @conditional-compile-remove(attachment-byos) @conditional-compile-remove(attachment-upload) */
+      /* @conditional-compile-remove(attachment-teams) @conditional-compile-remove(attachment-byos) */
       actionsForAttachment
     );
   }, [
-    /* @conditional-compile-remove(attachment-teams) @conditional-compile-remove(attachment-byos) @conditional-compile-remove(attachment-upload) */ actionsForAttachment,
+    /* @conditional-compile-remove(attachment-teams) @conditional-compile-remove(attachment-byos) */ actionsForAttachment,
     inlineImageOptions,
     /* @conditional-compile-remove(mention) */ mentionDisplayOptions,
     message,
-    /* @conditional-compile-remove(attachment-teams) @conditional-compile-remove(attachment-byos) @conditional-compile-remove(attachment-upload) */ onRenderAttachmentDownloads,
+    /* @conditional-compile-remove(attachment-teams) @conditional-compile-remove(attachment-byos) */ onRenderAttachmentDownloads,
     strings,
     userId
   ]);
@@ -233,7 +233,7 @@ const MessageBubble = (props: ChatMyMessageComponentAsMessageBubbleProps): JSX.E
                 ? chatMessageCommonStyles.failed
                 : undefined,
               attached !== 'top' ? chatMyMessageStyles.bodyAttached : undefined,
-              /* @conditional-compile-remove(attachment-upload) */
+              /* @conditional-compile-remove(attachment-byos) */
               hasMultipleAttachments ? chatMyMessageStyles.multipleAttachments : undefined,
               mergeStyles(messageContainerStyle)
             ),

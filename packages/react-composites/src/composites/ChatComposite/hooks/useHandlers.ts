@@ -8,7 +8,7 @@ import { ReactElement } from 'react';
 import memoizeOne from 'memoize-one';
 import { ChatAdapter } from '../adapter/ChatAdapter';
 import { useAdapter } from '../adapter/ChatAdapterProvider';
-/* @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(attachment-byos) */
 import { MessageOptions } from '@internal/acs-ui-common';
 
 /**
@@ -27,7 +27,7 @@ const createCompositeHandlers = memoizeOne(
     // have to use `any` here so we don't import from Chat SDK
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     onSendMessage: (content: string, options: any) => {
-      /* @conditional-compile-remove(attachment-upload) */
+      /* @conditional-compile-remove(attachment-byos) */
       if (
         options &&
         'attachments' in options &&
@@ -53,17 +53,17 @@ const createCompositeHandlers = memoizeOne(
     onUpdateMessage: function (
       messageId: string,
       content: string,
-      /* @conditional-compile-remove(attachment-upload) */
+      /* @conditional-compile-remove(attachment-byos) */
       options?: MessageOptions
     ) {
-      /* @conditional-compile-remove(attachment-upload) */
+      /* @conditional-compile-remove(attachment-byos) */
       const adapterMessageOptions: MessageOptions = {
         attachments: options?.attachments
       };
       return adapter.updateMessage(
         messageId,
         content,
-        /* @conditional-compile-remove(attachment-upload) */ adapterMessageOptions
+        /* @conditional-compile-remove(attachment-byos) */ adapterMessageOptions
       );
     },
     onDeleteMessage: adapter.deleteMessage

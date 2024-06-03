@@ -49,8 +49,6 @@ module.exports = {
     "dialpad",
     // Data loss prevention feature
     "data-loss-prevention",
-    // Ability to upload files attachments in message thread.
-    "attachment-upload",
     // Mention feature
     "mention",
     // 1 to N Calling feature.

@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/* @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(attachment-byos) */
 import { AttachmentMetadataInProgress } from '@internal/acs-ui-common';
 
 /**
@@ -10,7 +10,7 @@ import { AttachmentMetadataInProgress } from '@internal/acs-ui-common';
 export const MAXIMUM_LENGTH_OF_MESSAGE = 8000;
 const EMPTY_MESSAGE_REGEX = /^\s*$/;
 
-/* @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(attachment-byos) */
 /**
  * @private
  */
@@ -25,7 +25,7 @@ export const hasIncompleteAttachmentUploads = (
   );
 };
 
-/* @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(attachment-byos) */
 /**
  * @private
  */
@@ -64,20 +64,20 @@ export const sanitizeText = (message: string): string => {
  */
 export const isSendBoxButtonAriaDisabled = ({
   hasContent,
-  /* @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(attachment-byos) */
   hasCompletedAttachmentUploads,
   hasError,
   disabled
 }: {
   hasContent: boolean;
-  /* @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(attachment-byos) */
   hasCompletedAttachmentUploads: boolean;
   hasError: boolean;
   disabled: boolean;
 }): boolean => {
   return (
     // no content
-    !(hasContent || /* @conditional-compile-remove(attachment-upload) */ hasCompletedAttachmentUploads) ||
+    !(hasContent || /* @conditional-compile-remove(attachment-byos) */ hasCompletedAttachmentUploads) ||
     //error message exists
     hasError ||
     disabled

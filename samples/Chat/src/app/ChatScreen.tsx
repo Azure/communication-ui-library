@@ -20,7 +20,7 @@ import { createAutoRefreshingCredential } from './utils/credential';
 import { fetchEmojiForUser } from './utils/emojiCache';
 import { getBackgroundColor } from './utils/utils';
 import { useSwitchableFluentTheme } from './theming/SwitchableFluentThemeProvider';
-/* @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(attachment-byos) */
 import { attachmentUploadOptions } from './utils/uploadHandler';
 /* @conditional-compile-remove(attachment-byos) */
 import { attachmentDownloadOptions } from './utils/downloadHandler';
@@ -119,11 +119,9 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
               autoFocus: 'sendBoxTextField',
               /* @conditional-compile-remove(chat-composite-participant-pane) */
               participantPane: !hideParticipants,
-              /* @conditional-compile-remove(attachment-upload) @conditional-compile-remove(attachment-teams) @conditional-compile-remove(attachment-byos) */
+              /* @conditional-compile-remove(attachment-byos) */
               attachmentOptions: {
-                /* @conditional-compile-remove(attachment-upload) */
                 uploadOptions: attachmentUploadOptions,
-                /* @conditional-compile-remove(attachment-byos) */
                 downloadOptions: attachmentDownloadOptions
               },
               /* @conditional-compile-remove(rich-text-editor-composite-support) */

@@ -31,9 +31,9 @@ export type { ResourceDetails } from './adapter/ChatAdapter';
 
 export * from './Strings';
 
-/* @conditional-compile-remove(attachment-byos) @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(attachment-byos) */
 export type { AttachmentOptions, AttachmentMetadata, AttachmentDownloadOptions } from './file-sharing';
-/* @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(attachment-byos) */
 export type {
   AttachmentProgressError,
   AttachmentUploadOptions,

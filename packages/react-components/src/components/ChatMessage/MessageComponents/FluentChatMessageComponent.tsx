@@ -47,17 +47,17 @@ export const FluentChatMessageComponent = (props: FluentChatMessageComponentWrap
     /* @conditional-compile-remove(date-time-customization) */
     onDisplayDateTimeString,
     inlineImageOptions,
-    /* @conditional-compile-remove(attachment-teams) @conditional-compile-remove(attachment-byos) @conditional-compile-remove(attachment-upload) */
+    /* @conditional-compile-remove(attachment-teams) @conditional-compile-remove(attachment-byos) */
     actionsForAttachment,
     userId,
-    /* @conditional-compile-remove(attachment-teams) @conditional-compile-remove(attachment-byos) @conditional-compile-remove(attachment-upload) */
+    /* @conditional-compile-remove(attachment-teams) @conditional-compile-remove(attachment-byos) */
     onRenderAttachmentDownloads,
     /* @conditional-compile-remove(mention) */
     mentionOptions
   } = props;
   const chatMessageRenderStyles = useChatMessageRenderStyles();
 
-  /* @conditional-compile-remove(attachment-teams) @conditional-compile-remove(attachment-byos) @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(attachment-teams) @conditional-compile-remove(attachment-byos) */
   const onRenderAttachmentDownloadsMemo = useMemo(() => {
     return onRenderAttachmentDownloads;
     return undefined;
@@ -74,7 +74,7 @@ export const FluentChatMessageComponent = (props: FluentChatMessageComponentWrap
         return (
           <ChatMessageComponentAsMessageBubble
             {...messageProps}
-            /* @conditional-compile-remove(attachment-teams) @conditional-compile-remove(attachment-byos) @conditional-compile-remove(attachment-upload) */
+            /* @conditional-compile-remove(attachment-teams) @conditional-compile-remove(attachment-byos) */
             onRenderAttachmentDownloads={onRenderAttachmentDownloadsMemo}
             strings={messageProps.strings}
             message={messageProps.message}
@@ -83,7 +83,7 @@ export const FluentChatMessageComponent = (props: FluentChatMessageComponentWrap
             /* @conditional-compile-remove(date-time-customization) */
             onDisplayDateTimeString={onDisplayDateTimeString}
             inlineImageOptions={inlineImageOptions}
-            /* @conditional-compile-remove(attachment-teams) @conditional-compile-remove(attachment-byos) @conditional-compile-remove(attachment-upload) */
+            /* @conditional-compile-remove(attachment-teams) @conditional-compile-remove(attachment-byos) */
             actionsForAttachment={actionsForAttachment}
             /* @conditional-compile-remove(mention) */
             mentionDisplayOptions={mentionOptions?.displayOptions}
@@ -93,14 +93,14 @@ export const FluentChatMessageComponent = (props: FluentChatMessageComponentWrap
       return <></>;
     },
     [
-      /* @conditional-compile-remove(attachment-teams) @conditional-compile-remove(attachment-byos) @conditional-compile-remove(attachment-upload) */
+      /* @conditional-compile-remove(attachment-teams) @conditional-compile-remove(attachment-byos) */
       onRenderAttachmentDownloadsMemo,
       userId,
       shouldOverlapAvatarAndMessage,
       /* @conditional-compile-remove(date-time-customization) */
       onDisplayDateTimeString,
       inlineImageOptions,
-      /* @conditional-compile-remove(attachment-teams) @conditional-compile-remove(attachment-byos) @conditional-compile-remove(attachment-upload) */
+      /* @conditional-compile-remove(attachment-teams) @conditional-compile-remove(attachment-byos) */
       actionsForAttachment,
       /* @conditional-compile-remove(mention) */
       mentionOptions?.displayOptions

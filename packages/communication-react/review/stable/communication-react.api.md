@@ -137,35 +137,10 @@ export type AreParamEqual<A extends (props: any) => JSX.Element | undefined, B e
 export type AreTypeEqual<A, B> = A extends B ? (B extends A ? true : false) : false;
 
 // @public
-export type AttachmentActionHandler = (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[];
-
-// @public
-export interface AttachmentDownloadOptions {
-    // (undocumented)
-    actionsForAttachment: AttachmentActionHandler;
-}
-
-// @public
-export interface AttachmentMenuAction {
-    // (undocumented)
-    icon: JSX.Element;
-    // (undocumented)
-    name: string;
-    // (undocumented)
-    onClick: (attachment: AttachmentMetadata) => Promise<void>;
-}
-
-// @public
 export interface AttachmentMetadata {
     id: string;
     name: string;
     url: string;
-}
-
-// @public
-export interface AttachmentOptions {
-    // (undocumented)
-    downloadOptions?: AttachmentDownloadOptions;
 }
 
 // @public
@@ -1156,7 +1131,6 @@ export type CallWithChatCompositeIcons = {
 // @public
 export type CallWithChatCompositeOptions = {
     callControls?: boolean | CallWithChatControlOptions;
-    attachmentOptions?: AttachmentOptions;
     remoteVideoTileMenuOptions?: RemoteVideoTileMenuOptions;
     localVideoTile?: boolean | LocalVideoTileOptions;
     galleryOptions?: {
@@ -1473,7 +1447,7 @@ export type ChatAdapterUiState = {
 };
 
 // @public
-export type ChatAttachmentType = 'unknown' | 'image' | /* @conditional-compile-remove(attachment-teams) @conditional-compile-remove(attachment-byos) @conditional-compile-remove(attachment-upload) */ 'file';
+export type ChatAttachmentType = 'unknown' | 'image' | /* @conditional-compile-remove(attachment-teams) @conditional-compile-remove(attachment-byos) */ 'file';
 
 // @public
 export type ChatBaseSelectorProps = {
@@ -1531,7 +1505,6 @@ export type ChatCompositeOptions = {
     errorBar?: boolean;
     topic?: boolean;
     autoFocus?: 'sendBoxTextField';
-    attachmentOptions?: AttachmentOptions;
 };
 
 // @public
@@ -2165,9 +2138,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     RaiseHandContextualMenuItem: React_2.JSX.Element;
     LowerHandContextualMenuItem: React_2.JSX.Element;
     ReactionButtonIcon: React_2.JSX.Element;
-    DownloadAttachment: React_2.JSX.Element;
     OpenAttachment: React_2.JSX.Element;
-    AttachmentMoreMenu: React_2.JSX.Element;
     EditBoxCancel: React_2.JSX.Element;
     EditBoxSubmit: React_2.JSX.Element;
     ErrorBarCallCameraAccessDenied: React_2.JSX.Element;
@@ -2332,9 +2303,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     SendBoxAttachFile?: JSX.Element | undefined;
     ChatMessageOptions: React_2.JSX.Element;
     ControlButtonParticipantsContextualMenuItem: React_2.JSX.Element;
-    DownloadAttachment: React_2.JSX.Element;
     OpenAttachment: React_2.JSX.Element;
-    AttachmentMoreMenu: React_2.JSX.Element;
     ErrorBarCallVideoRecoveredBySystem: React_2.JSX.Element;
     ErrorBarCallVideoStoppedBySystem: React_2.JSX.Element;
     MessageResend: React_2.JSX.Element;
@@ -2369,9 +2338,6 @@ export const DEFAULT_COMPOSITE_ICONS: {
     StopSpotlightContextualMenuItem: React_2.JSX.Element;
     VideoTileSpotlighted: React_2.JSX.Element;
 };
-
-// @public
-export const defaultAttachmentMenuAction: AttachmentMenuAction;
 
 // @public
 export type DeviceManagerState = {
@@ -2912,7 +2878,6 @@ export type MessageThreadProps = {
     onSendMessage?: (content: string) => Promise<void>;
     disableEditing?: boolean;
     strings?: Partial<MessageThreadStrings>;
-    attachmentOptions?: AttachmentOptions;
     inlineImageOptions?: InlineImageOptions;
 };
 
@@ -2927,7 +2892,6 @@ export type MessageThreadSelector = (state: ChatClientState, props: ChatBaseSele
 export interface MessageThreadStrings {
     actionMenuMoreOptions?: string;
     attachmentCardGroupMessage: string;
-    downloadAttachment: string;
     editBoxCancelButton: string;
     editBoxPlaceholderText: string;
     editBoxSubmitButton: string;

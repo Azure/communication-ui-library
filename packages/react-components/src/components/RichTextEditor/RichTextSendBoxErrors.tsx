@@ -8,9 +8,9 @@ import { SendBoxErrorBar, SendBoxErrorBarError } from '../SendBoxErrorBar';
  * @private
  */
 export interface RichTextSendBoxErrorsProps {
-  /* @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(attachment-byos) */
   attachmentUploadsPendingError?: SendBoxErrorBarError;
-  /* @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(attachment-byos) */
   attachmentProgressError?: SendBoxErrorBarError;
   systemMessage?: string;
   textTooLongMessage?: string;
@@ -21,9 +21,9 @@ export interface RichTextSendBoxErrorsProps {
  */
 export const RichTextSendBoxErrors = (props: RichTextSendBoxErrorsProps): JSX.Element => {
   const {
-    /* @conditional-compile-remove(attachment-upload) */
+    /* @conditional-compile-remove(attachment-byos) */
     attachmentProgressError,
-    /* @conditional-compile-remove(attachment-upload) */
+    /* @conditional-compile-remove(attachment-byos) */
     attachmentUploadsPendingError,
     systemMessage,
     textTooLongMessage
@@ -57,11 +57,11 @@ export const RichTextSendBoxErrors = (props: RichTextSendBoxErrorsProps): JSX.El
       if (prev) {
         errors.push(prev);
       }
-      /* @conditional-compile-remove(attachment-upload) */
+      /* @conditional-compile-remove(attachment-byos) */
       if (attachmentUploadsPendingError) {
         errors.push(attachmentUploadsPendingError);
       }
-      /* @conditional-compile-remove(attachment-upload) */
+      /* @conditional-compile-remove(attachment-byos) */
       if (attachmentProgressError) {
         errors.push(attachmentProgressError);
       }
@@ -73,8 +73,8 @@ export const RichTextSendBoxErrors = (props: RichTextSendBoxErrorsProps): JSX.El
       return sortedErrors[0];
     });
   }, [
-    /* @conditional-compile-remove(attachment-upload) */ attachmentProgressError,
-    /* @conditional-compile-remove(attachment-upload) */ attachmentUploadsPendingError
+    /* @conditional-compile-remove(attachment-byos) */ attachmentProgressError,
+    /* @conditional-compile-remove(attachment-byos) */ attachmentUploadsPendingError
   ]);
 
   const onDismiss = useCallback(() => {

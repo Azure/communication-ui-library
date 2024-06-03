@@ -8,7 +8,7 @@ import { usePropsFor } from '../ChatComposite/hooks/usePropsFor';
 import { Suspense } from 'react';
 /* @conditional-compile-remove(rich-text-editor-composite-support) */
 import { _ErrorBoundary, RichTextSendBoxProps } from '@internal/react-components';
-/* @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(attachment-byos) */
 import { AttachmentMetadataInProgress, MessageOptions } from '@internal/acs-ui-common';
 
 /* @conditional-compile-remove(rich-text-editor-composite-support) */
@@ -38,13 +38,13 @@ export type SendBoxPickerProps = {
   autoFocus?: 'sendBoxTextField';
   onSendMessage: (
     content: string,
-    /* @conditional-compile-remove(attachment-upload) */ options?: MessageOptions
+    /* @conditional-compile-remove(attachment-byos) */ options?: MessageOptions
   ) => Promise<void>;
   /* @conditional-compile-remove(rich-text-editor-composite-support) */
   richTextEditor?: boolean;
-  /* @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(attachment-byos) */
   attachments?: AttachmentMetadataInProgress[];
-  /* @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(attachment-byos) */
   onCancelAttachmentUpload?: (attachmentId: string) => void;
 };
 

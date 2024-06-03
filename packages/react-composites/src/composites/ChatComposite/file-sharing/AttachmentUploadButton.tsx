@@ -1,12 +1,16 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+/* @conditional-compile-remove(attachment-byos) */
 import { IconButton, mergeStyles, Stack, useTheme } from '@fluentui/react';
+/* @conditional-compile-remove(attachment-byos) */
 import React from 'react';
+/* @conditional-compile-remove(attachment-byos) */
 import { ChatCompositeIcon } from '../../common/icons';
-/* @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(attachment-byos) */
 import { useLocale } from '../../localization';
 
+/* @conditional-compile-remove(attachment-byos) */
 /**
  * Props for {@link AttachmentUploadButton} component.
  * @internal
@@ -34,6 +38,7 @@ export interface AttachmentUploadButtonProps {
   onChange?: (files: FileList | null) => void;
 }
 
+/* @conditional-compile-remove(attachment-byos) */
 /**
  * @internal
  */
@@ -97,13 +102,15 @@ export const AttachmentUploadButton = (props: AttachmentUploadButtonProps): JSX.
   );
 };
 
+/* @conditional-compile-remove(attachment-byos) */
 const SendBoxAttachFileIconTrampoline = (): JSX.Element => {
-  /* @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(attachment-byos) */
   return <ChatCompositeIcon iconName="SendBoxAttachFile" />;
   // Return _some_ available icon, as the real icon is beta-only.
   return <ChatCompositeIcon iconName="EditBoxCancel" />;
 };
 
+/* @conditional-compile-remove(attachment-byos) */
 /**
  * A wrapper to return {@link AttachmentUploadButton} component conditionally.
  * It will return `<></>` for stable builds.
@@ -117,15 +124,16 @@ export const AttachmentUploadButtonWrapper = (
   return (
     <>
       {
-        /* @conditional-compile-remove(attachment-upload) */
+        /* @conditional-compile-remove(attachment-byos) */
         <AttachmentUploadButton {...props} />
       }
     </>
   );
 };
 
+/* @conditional-compile-remove(attachment-byos) */
 const uploadAttachmentButtonStringTrampoline = (): string => {
-  /* @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(attachment-byos) */
   //eslint-disable-next-line react-hooks/rules-of-hooks
   return useLocale().strings.chat.uploadAttachment;
   return '';

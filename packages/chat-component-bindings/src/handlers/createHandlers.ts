@@ -5,11 +5,11 @@ import { PagedAsyncIterableIterator } from '@azure/core-paging';
 import { ReactElement } from 'react';
 import { Common, fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { StatefulChatClient } from '@internal/chat-stateful-client';
-/* @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(attachment-byos) */
 import { ChatAttachment } from '@azure/communication-chat';
 import { ChatMessage, ChatMessageReadReceipt, ChatThreadClient, SendMessageOptions } from '@azure/communication-chat';
 import memoizeOne from 'memoize-one';
-/* @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(attachment-byos) */
 import { MessageOptions } from '@internal/acs-ui-common';
 
 /**
@@ -23,7 +23,7 @@ import { MessageOptions } from '@internal/acs-ui-common';
 export type ChatHandlers = {
   onSendMessage: (
     content: string,
-    options?: SendMessageOptions | /* @conditional-compile-remove(attachment-upload) */ MessageOptions
+    options?: SendMessageOptions | /* @conditional-compile-remove(attachment-byos) */ MessageOptions
   ) => Promise<void>;
   onMessageSeen: (chatMessageId: string) => Promise<void>;
   onTyping: () => Promise<void>;
@@ -33,7 +33,7 @@ export type ChatHandlers = {
   onUpdateMessage: (
     messageId: string,
     content: string,
-    /* @conditional-compile-remove(attachment-upload) */
+    /* @conditional-compile-remove(attachment-byos) */
     options?: MessageOptions
   ) => Promise<void>;
   onDeleteMessage: (messageId: string) => Promise<void>;
@@ -58,13 +58,13 @@ export const createDefaultChatHandlers = memoizeOne(
       // affecting conditional-compile-remove(attachment-upload)
       onSendMessage: async function (
         content: string,
-        options?: SendMessageOptions | /* @conditional-compile-remove(attachment-upload) */ MessageOptions
+        options?: SendMessageOptions | /* @conditional-compile-remove(attachment-byos) */ MessageOptions
       ) {
         const sendMessageRequest = {
           content,
           senderDisplayName: chatClient.getState().displayName
         };
-        /* @conditional-compile-remove(attachment-upload) */
+        /* @conditional-compile-remove(attachment-byos) */
         if (
           options &&
           'attachments' in options &&
@@ -88,10 +88,10 @@ export const createDefaultChatHandlers = memoizeOne(
       onUpdateMessage: async function (
         messageId: string,
         content: string,
-        /* @conditional-compile-remove(attachment-upload) */
+        /* @conditional-compile-remove(attachment-byos) */
         options?: MessageOptions
       ) {
-        /* @conditional-compile-remove(attachment-upload) */
+        /* @conditional-compile-remove(attachment-byos) */
         const updateMessageOptions = {
           content,
           metadata: {
@@ -101,7 +101,7 @@ export const createDefaultChatHandlers = memoizeOne(
         };
         await chatThreadClient.updateMessage(
           messageId,
-          /* @conditional-compile-remove(attachment-upload) */
+          /* @conditional-compile-remove(attachment-byos) */
           updateMessageOptions
         );
       },

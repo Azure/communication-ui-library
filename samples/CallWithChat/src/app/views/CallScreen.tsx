@@ -14,7 +14,7 @@ import {
   CallWithChatAdapter,
   CallWithChatCompositeOptions
 } from '@azure/communication-react';
-/* @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(attachment-byos) */
 import { attachmentUploadOptions } from '../../../../Chat/src/app/utils/uploadHandler';
 
 import { onResolveVideoEffectDependencyLazy, AzureCommunicationCallAdapterOptions } from '@azure/communication-react';
@@ -170,7 +170,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
           hangUpForEveryone: 'endCallOptions'
         }
       },
-      /* @conditional-compile-remove(attachment-upload) */
+      /* @conditional-compile-remove(attachment-byos) */
       attachmentOptions: {
         uploadOptions: attachmentUploadOptions
       }

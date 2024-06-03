@@ -4,14 +4,14 @@
 import { ChatMessage } from './ChatMessage';
 import { AttachmentMetadata } from '@internal/acs-ui-common';
 
-/* @conditional-compile-remove(attachment-byos) @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(attachment-byos) */
 /**
  * @beta
  *
  * Attachment Options that defines behaviour for uploading and downloading attachments.
  */
 export interface AttachmentOptions {
-  /* @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(attachment-byos) */
   uploadOptions?: AttachmentUploadOptions;
   /* @conditional-compile-remove(attachment-byos) */
   downloadOptions?: AttachmentDownloadOptions;

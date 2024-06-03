@@ -7,11 +7,11 @@ import { MessageThreadStrings, UpdateMessageCallback } from '../../MessageThread
 import { ChatMessage, ComponentSlotStyle, OnRenderAvatarCallback } from '../../../types';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '../../../types';
-/* @conditional-compile-remove(attachment-teams) @conditional-compile-remove(attachment-byos) @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(attachment-teams) @conditional-compile-remove(attachment-byos) */
 import { AttachmentMenuAction } from '../../../types/Attachment';
-/* @conditional-compile-remove(attachment-teams) @conditional-compile-remove(attachment-byos) @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(attachment-teams) @conditional-compile-remove(attachment-byos) */
 import { AttachmentMetadata } from '@internal/acs-ui-common';
-/* @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(attachment-byos) */
 import { MessageOptions } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(mention) */
 import { MentionOptions } from '../../MentionPopover';
@@ -38,7 +38,7 @@ type ChatMyMessageComponentProps = {
    */
   onSendMessage?: (
     content: string,
-    /* @conditional-compile-remove(attachment-upload) */
+    /* @conditional-compile-remove(attachment-byos) */
     options?: MessageOptions
   ) => Promise<void>;
   strings: MessageThreadStrings;
@@ -83,13 +83,13 @@ type ChatMyMessageComponentProps = {
    * @beta
    */
   inlineImageOptions?: InlineImageOptions;
-  /* @conditional-compile-remove(attachment-teams) @conditional-compile-remove(attachment-byos) @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(attachment-teams) @conditional-compile-remove(attachment-byos) */
   /**
    * Optional callback to render message attachments in the message component.
    * @beta
    */
   onRenderAttachmentDownloads?: (message: ChatMessage) => JSX.Element;
-  /* @conditional-compile-remove(attachment-teams) @conditional-compile-remove(attachment-byos) @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(attachment-teams) @conditional-compile-remove(attachment-byos) */
   /**
    * Optional callback to define custom actions for attachments.
    * @beta
@@ -125,7 +125,7 @@ export const ChatMyMessageComponent = (props: ChatMyMessageComponentProps): JSX.
   }, [onDeleteMessage, message.messageId, message.messageType, clientMessageId]);
 
   const onResendClick = useCallback(() => {
-    /* @conditional-compile-remove(attachment-upload) */
+    /* @conditional-compile-remove(attachment-byos) */
     const messageOptions = {
       attachments: `attachments` in message ? message.attachments : undefined
     };
@@ -133,7 +133,7 @@ export const ChatMyMessageComponent = (props: ChatMyMessageComponentProps): JSX.
     onSendMessage &&
       onSendMessage(
         content !== undefined ? content : '',
-        /* @conditional-compile-remove(attachment-upload) */
+        /* @conditional-compile-remove(attachment-byos) */
         messageOptions
       );
   }, [onDeleteMessage, clientMessageId, onSendMessage, content, message]);
@@ -143,10 +143,10 @@ export const ChatMyMessageComponent = (props: ChatMyMessageComponentProps): JSX.
     // affecting conditional-compile-remove(attachment-upload)
     async function (
       text: string,
-      /* @conditional-compile-remove(attachment-upload) */
+      /* @conditional-compile-remove(attachment-byos) */
       attachments?: AttachmentMetadata[] | undefined
     ) {
-      /* @conditional-compile-remove(attachment-upload) */
+      /* @conditional-compile-remove(attachment-byos) */
       if (`attachments` in message && attachments) {
         message.attachments = attachments;
       }
@@ -155,7 +155,7 @@ export const ChatMyMessageComponent = (props: ChatMyMessageComponentProps): JSX.
         (await props.onUpdateMessage(
           message.messageId,
           text,
-          /* @conditional-compile-remove(attachment-upload) */
+          /* @conditional-compile-remove(attachment-byos) */
           {
             attachments: attachments
           }

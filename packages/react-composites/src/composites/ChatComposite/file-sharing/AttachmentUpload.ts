@@ -1,9 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+/* @conditional-compile-remove(attachment-byos) */
 import { AttachmentUploadTask, AttachmentSelectionHandler, AttachmentActionHandler } from '@internal/react-components';
+/* @conditional-compile-remove(attachment-byos) */
 import { AttachmentMetadata, AttachmentMetadataInProgress, AttachmentProgressError } from '@internal/acs-ui-common';
 
+/* @conditional-compile-remove(attachment-byos) */
 /**
  * @internal
  */
@@ -23,6 +26,7 @@ export enum AttachmentUploadActionType {
   Clear = 'clear'
 }
 
+/* @conditional-compile-remove(attachment-byos) */
 /**
  * @private
  */
@@ -30,6 +34,7 @@ interface Action {
   type: AttachmentUploadActionType;
 }
 
+/* @conditional-compile-remove(attachment-byos) */
 /**
  * @private
  */
@@ -38,6 +43,7 @@ interface SetAction extends Action {
   newUploads: AttachmentUpload[];
 }
 
+/* @conditional-compile-remove(attachment-byos) */
 /**
  * @private
  */
@@ -47,6 +53,7 @@ interface ProgressAction extends Action {
   progress: number;
 }
 
+/* @conditional-compile-remove(attachment-byos) */
 /**
  * @private
  */
@@ -57,6 +64,7 @@ interface CompleteAction extends Action {
   url: string;
 }
 
+/* @conditional-compile-remove(attachment-byos) */
 /**
  * @private
  */
@@ -66,6 +74,7 @@ interface FailedAction extends Action {
   message: string;
 }
 
+/* @conditional-compile-remove(attachment-byos) */
 /**
  * @private
  */
@@ -74,6 +83,7 @@ interface RemoveAction extends Action {
   id: string;
 }
 
+/* @conditional-compile-remove(attachment-byos) */
 /**
  * @private
  */
@@ -81,11 +91,13 @@ interface ClearAction extends Action {
   type: AttachmentUploadActionType.Clear;
 }
 
+/* @conditional-compile-remove(attachment-byos) */
 /**
  * @private
  */
 type Actions = SetAction | ProgressAction | CompleteAction | FailedAction | RemoveAction | ClearAction;
 
+/* @conditional-compile-remove(attachment-byos) */
 /**
  * @internal
  */
@@ -131,6 +143,7 @@ export const AttachmentUploadReducer = (state: AttachmentUpload[], action: Actio
   }
 };
 
+/* @conditional-compile-remove(attachment-byos) */
 export type {
   AttachmentMetadata,
   AttachmentSelectionHandler,
