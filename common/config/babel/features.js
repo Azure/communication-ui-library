@@ -78,7 +78,7 @@ module.exports = {
     // Feature for Rich Text Editor (RTE) support
     'rich-text-editor',
     // Ability to download files attachments in message thread for BYOS.
-    "attachment-byos"
+    "file-sharing-acs"
   ],
   stable: [
     // Demo feature. Used in live-documentation of conditional compilation.
@@ -99,6 +99,6 @@ module.exports = {
     // Feature for end call options 
     'end-call-options',
      // Ability to download files attachments in message thread for Teams interop.
-     "attachment-teams"
+     "file-sharing-teams-interop"
   ]
 }

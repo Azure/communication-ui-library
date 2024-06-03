@@ -4,11 +4,11 @@
 import { Icon } from '@fluentui/react';
 import React, { useCallback } from 'react';
 import { useMemo } from 'react';
-/* @conditional-compile-remove(attachment-teams) @conditional-compile-remove(attachment-byos) */
+/* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
 import { useLocale } from '../../localization';
 import { _AttachmentCard } from './AttachmentCard';
 import { _AttachmentCardGroup, _AttachmentCardGroupLayout } from './AttachmentCardGroup';
-/* @conditional-compile-remove(attachment-teams) @conditional-compile-remove(attachment-byos) */
+/* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
 import { getAttachmentCountLiveMessage } from '../ChatMessage/ChatMessageContent';
 import { _formatString } from '@internal/acs-ui-common';
 import { AttachmentMenuAction } from '../../types/Attachment';
@@ -25,7 +25,7 @@ import { useAttachmentCardGroupStyles } from '../styles/AttachmentCardGroup.styl
 export type ChatAttachmentType =
   | 'unknown'
   | 'image'
-  | /* @conditional-compile-remove(attachment-teams) @conditional-compile-remove(attachment-byos) */ 'file';
+  | /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */ 'file';
 
 /**
  * Strings of _AttachmentDownloadCards that can be overridden.
@@ -33,7 +33,7 @@ export type ChatAttachmentType =
  * @internal
  */
 export interface _AttachmentDownloadCardsStrings {
-  /* @conditional-compile-remove(attachment-byos) */
+  /* @conditional-compile-remove(file-sharing-acs) */
   /** Aria label to notify user when focus is on attachment download button. */
   downloadAttachment: string;
   /** Aria label to notify user when focus is on attachment open button. */
@@ -99,7 +99,7 @@ export const _AttachmentDownloadCards = (props: _AttachmentDownloadCardsProps): 
 
   const attachmentCardGroupDescription = useMemo(
     () => () => {
-      /* @conditional-compile-remove(attachment-teams) @conditional-compile-remove(attachment-byos) */
+      /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
       return getAttachmentCountLiveMessage(
         attachments ?? [],
         props.strings?.attachmentCardGroupMessage ?? localeStrings.attachmentCardGroupMessage
@@ -150,10 +150,10 @@ export const _AttachmentDownloadCards = (props: _AttachmentDownloadCardsProps): 
  * @private
  */
 const useLocaleStringsTrampoline = (): _AttachmentDownloadCardsStrings => {
-  /* @conditional-compile-remove(attachment-teams) @conditional-compile-remove(attachment-byos) */
+  /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
   return useLocale().strings.messageThread;
   return {
-    /* @conditional-compile-remove(attachment-byos) */
+    /* @conditional-compile-remove(file-sharing-acs) */
     downloadAttachment: '',
     openAttachment: '',
     attachmentCardGroupMessage: ''
@@ -179,7 +179,7 @@ const getDefaultMenuActions = (
     ];
   }
   // otherwise, use the default icon ("download")
-  /* @conditional-compile-remove(attachment-byos) */
+  /* @conditional-compile-remove(file-sharing-acs) */
   actionName = locale.downloadAttachment;
   return [
     {

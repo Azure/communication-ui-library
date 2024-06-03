@@ -1,16 +1,16 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/* @conditional-compile-remove(attachment-byos) */
+/* @conditional-compile-remove(file-sharing-acs) */
 import { IconButton, mergeStyles, Stack, useTheme } from '@fluentui/react';
-/* @conditional-compile-remove(attachment-byos) */
+/* @conditional-compile-remove(file-sharing-acs) */
 import React from 'react';
-/* @conditional-compile-remove(attachment-byos) */
+/* @conditional-compile-remove(file-sharing-acs) */
 import { ChatCompositeIcon } from '../../common/icons';
-/* @conditional-compile-remove(attachment-byos) */
+/* @conditional-compile-remove(file-sharing-acs) */
 import { useLocale } from '../../localization';
 
-/* @conditional-compile-remove(attachment-byos) */
+/* @conditional-compile-remove(file-sharing-acs) */
 /**
  * Props for {@link AttachmentUploadButton} component.
  * @internal
@@ -38,7 +38,7 @@ export interface AttachmentUploadButtonProps {
   onChange?: (files: FileList | null) => void;
 }
 
-/* @conditional-compile-remove(attachment-byos) */
+/* @conditional-compile-remove(file-sharing-acs) */
 /**
  * @internal
  */
@@ -102,15 +102,15 @@ export const AttachmentUploadButton = (props: AttachmentUploadButtonProps): JSX.
   );
 };
 
-/* @conditional-compile-remove(attachment-byos) */
+/* @conditional-compile-remove(file-sharing-acs) */
 const SendBoxAttachFileIconTrampoline = (): JSX.Element => {
-  /* @conditional-compile-remove(attachment-byos) */
+  /* @conditional-compile-remove(file-sharing-acs) */
   return <ChatCompositeIcon iconName="SendBoxAttachFile" />;
   // Return _some_ available icon, as the real icon is beta-only.
   return <ChatCompositeIcon iconName="EditBoxCancel" />;
 };
 
-/* @conditional-compile-remove(attachment-byos) */
+/* @conditional-compile-remove(file-sharing-acs) */
 /**
  * A wrapper to return {@link AttachmentUploadButton} component conditionally.
  * It will return `<></>` for stable builds.
@@ -124,16 +124,16 @@ export const AttachmentUploadButtonWrapper = (
   return (
     <>
       {
-        /* @conditional-compile-remove(attachment-byos) */
+        /* @conditional-compile-remove(file-sharing-acs) */
         <AttachmentUploadButton {...props} />
       }
     </>
   );
 };
 
-/* @conditional-compile-remove(attachment-byos) */
+/* @conditional-compile-remove(file-sharing-acs) */
 const uploadAttachmentButtonStringTrampoline = (): string => {
-  /* @conditional-compile-remove(attachment-byos) */
+  /* @conditional-compile-remove(file-sharing-acs) */
   //eslint-disable-next-line react-hooks/rules-of-hooks
   return useLocale().strings.chat.uploadAttachment;
   return '';

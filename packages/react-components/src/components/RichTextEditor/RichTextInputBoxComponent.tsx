@@ -42,9 +42,9 @@ export interface RichTextInputBoxComponentProps {
   strings: Partial<RichTextSendBoxStrings>;
   disabled: boolean;
   actionComponents: ReactNode;
-  /* @conditional-compile-remove(attachment-byos) */
+  /* @conditional-compile-remove(file-sharing-acs) */
   onRenderAttachmentUploads?: () => JSX.Element;
-  /* @conditional-compile-remove(attachment-byos) */
+  /* @conditional-compile-remove(file-sharing-acs) */
   hasAttachments?: boolean;
   // props for min and max height for the rich text editor
   // otherwise the editor will grow to fit the content
@@ -67,9 +67,9 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
     disabled,
     strings,
     actionComponents,
-    /* @conditional-compile-remove(attachment-byos) */
+    /* @conditional-compile-remove(file-sharing-acs) */
     onRenderAttachmentUploads,
-    /* @conditional-compile-remove(attachment-byos) */
+    /* @conditional-compile-remove(file-sharing-acs) */
     hasAttachments,
     richTextEditorStyleProps,
     isHorizontalLayoutDisabled = false,
@@ -159,12 +159,12 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
     return (
       !isHorizontalLayoutDisabled &&
       !isRichTextEditorToolbarShown &&
-      /* @conditional-compile-remove(attachment-byos) */ !hasAttachments
+      /* @conditional-compile-remove(file-sharing-acs) */ !hasAttachments
     );
   }, [
     isHorizontalLayoutDisabled,
     showRichTextEditorFormatting,
-    /* @conditional-compile-remove(attachment-byos) */ hasAttachments
+    /* @conditional-compile-remove(file-sharing-acs) */ hasAttachments
   ]);
 
   const onContentModelUpdate = useCallback((contentModel: ContentModelDocument | undefined) => {
@@ -204,7 +204,7 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
             />
           </Stack.Item>
           {
-            /* @conditional-compile-remove(attachment-byos) */ onRenderAttachmentUploads &&
+            /* @conditional-compile-remove(file-sharing-acs) */ onRenderAttachmentUploads &&
               onRenderAttachmentUploads()
           }
         </Stack>

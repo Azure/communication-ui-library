@@ -4,7 +4,7 @@
 import { CallWithChatAdapter } from './CallWithChatAdapter';
 import { ChatAdapter, ChatAdapterState } from '../../ChatComposite';
 import { ResourceDetails } from '../../ChatComposite';
-/* @conditional-compile-remove(attachment-byos) */
+/* @conditional-compile-remove(file-sharing-acs) */
 import { MessageOptions } from '@internal/acs-ui-common';
 import { ErrorBarStrings } from '@internal/react-components';
 import { CallWithChatAdapterState } from '../state/CallWithChatAdapterState';
@@ -36,10 +36,10 @@ export class CallWithChatBackedChatAdapter implements ChatAdapter {
   sendMessageHandler = async function (
     this: CallWithChatBackedChatAdapter,
     content: string,
-    /* @conditional-compile-remove(attachment-byos) */
+    /* @conditional-compile-remove(file-sharing-acs) */
     options?: MessageOptions
   ): Promise<void> {
-    await this.callWithChatAdapter.sendMessage(content, /* @conditional-compile-remove(attachment-byos) */ options);
+    await this.callWithChatAdapter.sendMessage(content, /* @conditional-compile-remove(file-sharing-acs) */ options);
   };
   public sendMessage = this.sendMessageHandler.bind(this);
   public sendReadReceipt = async (chatMessageId: string): Promise<void> =>
@@ -98,7 +98,7 @@ export class CallWithChatBackedChatAdapter implements ChatAdapter {
     this: CallWithChatBackedChatAdapter,
     messageId: string,
     content: string,
-    options?: Record<string, string> | /* @conditional-compile-remove(attachment-byos) */ MessageOptions
+    options?: Record<string, string> | /* @conditional-compile-remove(file-sharing-acs) */ MessageOptions
   ): Promise<void> {
     await this.callWithChatAdapter.updateMessage(messageId, content, options);
   };

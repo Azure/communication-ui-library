@@ -4,7 +4,7 @@
 export * from './AttachmentUpload';
 export * from './AttachmentUploadButton';
 
-/* @conditional-compile-remove(attachment-byos) */
+/* @conditional-compile-remove(file-sharing-acs) */
 export type {
   AttachmentOptions,
   AttachmentUploadTask,
@@ -15,5 +15,5 @@ export type {
   AttachmentActionHandler
 } from '@internal/react-components';
 
-/* @conditional-compile-remove(attachment-byos) */
+/* @conditional-compile-remove(file-sharing-acs) */
 export type { AttachmentDownloadOptions } from '@internal/react-components';

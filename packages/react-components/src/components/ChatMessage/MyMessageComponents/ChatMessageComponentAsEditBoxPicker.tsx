@@ -5,7 +5,7 @@ import React, { useMemo } from 'react';
 /* @conditional-compile-remove(rich-text-editor) */
 import { Suspense } from 'react';
 import { ChatMessage } from '../../../types';
-/* @conditional-compile-remove(attachment-teams) @conditional-compile-remove(attachment-byos) */
+/* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
 import { AttachmentMetadata } from '@internal/acs-ui-common';
 import { MessageThreadStrings } from '../../MessageThread';
 import { ChatMessageComponentAsEditBox } from './ChatMessageComponentAsEditBox';
@@ -37,7 +37,7 @@ export type ChatMessageComponentAsEditBoxPickerProps = {
   onCancel?: (messageId: string) => void;
   onSubmit: (
     text: string,
-    /* @conditional-compile-remove(attachment-teams) @conditional-compile-remove(attachment-byos) */
+    /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
     attachmentMetadata?: AttachmentMetadata[]
   ) => void;
   message: ChatMessage;

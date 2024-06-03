@@ -86,9 +86,9 @@ import { Backspace20Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(call-readiness) */
 import { Sparkle20Filled, VideoProhibited20Filled, MicProhibited20Filled } from '@fluentui/react-icons';
 
-/* @conditional-compile-remove(attachment-teams) */
+/* @conditional-compile-remove(file-sharing-teams-interop) */
 import { Open20Regular } from '@fluentui/react-icons';
-/* @conditional-compile-remove(attachment-byos) */
+/* @conditional-compile-remove(file-sharing-acs) */
 import { ArrowDownload20Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(PSTN-calls) */
 import { CallPause20Regular, CallPause20Filled, Play20Regular } from '@fluentui/react-icons';
@@ -272,13 +272,13 @@ export const DEFAULT_COMPONENT_ICONS = {
   RaiseHandContextualMenuItem: <HandRight20Regular />,
   LowerHandContextualMenuItem: <HandRightOff20Regular />,
   ReactionButtonIcon: <Emoji20Regular />,
-  /* @conditional-compile-remove(attachment-byos) */
+  /* @conditional-compile-remove(file-sharing-acs) */
   CancelAttachmentUpload: <Dismiss16Regular />,
-  /* @conditional-compile-remove(attachment-byos) */
+  /* @conditional-compile-remove(file-sharing-acs) */
   DownloadAttachment: <ArrowDownload20Regular />,
-  /* @conditional-compile-remove(attachment-teams) @conditional-compile-remove(attachment-byos) */
+  /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
   OpenAttachment: <Open20Regular />,
-  /* @conditional-compile-remove(attachment-byos) */
+  /* @conditional-compile-remove(file-sharing-acs) */
   AttachmentMoreMenu: <MoreHorizontal20Filled />,
   /* @conditional-compile-remove(data-loss-prevention) */
   DataLossPreventionProhibited: <DataLossPreventionProhibited16Regular />,

@@ -13,17 +13,17 @@ import { isMessageTooLong, isSendBoxButtonAriaDisabled, sanitizeText } from '../
 import { RichTextEditorComponentRef } from './RichTextEditor';
 import { useTheme } from '../../theming';
 import { richTextActionButtonsStyle, sendBoxRichTextEditorStyle } from '../styles/RichTextEditor.styles';
-/* @conditional-compile-remove(attachment-byos) */
+/* @conditional-compile-remove(file-sharing-acs) */
 import { _AttachmentUploadCards } from '../Attachment/AttachmentUploadCards';
-/* @conditional-compile-remove(attachment-byos) */
+/* @conditional-compile-remove(file-sharing-acs) */
 import { AttachmentMetadataInProgress, MessageOptions } from '@internal/acs-ui-common';
-/* @conditional-compile-remove(attachment-byos) */
+/* @conditional-compile-remove(file-sharing-acs) */
 import { isAttachmentUploadCompleted, hasIncompleteAttachmentUploads } from '../utils/SendBoxUtils';
-/* @conditional-compile-remove(attachment-byos) */
+/* @conditional-compile-remove(file-sharing-acs) */
 import { SendBoxErrorBarError } from '../SendBoxErrorBar';
-/* @conditional-compile-remove(attachment-byos) */
+/* @conditional-compile-remove(file-sharing-acs) */
 import { attachmentUploadCardsStyles } from '../styles/SendBox.styles';
-/* @conditional-compile-remove(attachment-byos) */
+/* @conditional-compile-remove(file-sharing-acs) */
 import { FluentV9ThemeProvider } from '../../theming/FluentV9ThemeProvider';
 
 /**
@@ -140,7 +140,7 @@ export interface RichTextSendBoxProps {
    * Optional text for system message above the text box
    */
   systemMessage?: string;
-  /* @conditional-compile-remove(attachment-byos) */
+  /* @conditional-compile-remove(file-sharing-acs) */
   /**
    * Optional array of type {@link AttachmentMetadataInProgress}
    * to render attachments being uploaded in the SendBox.
@@ -152,7 +152,7 @@ export interface RichTextSendBoxProps {
    * When undefined nothing has focus on render
    */
   autoFocus?: 'sendBoxTextField';
-  /* @conditional-compile-remove(attachment-byos) */
+  /* @conditional-compile-remove(file-sharing-acs) */
   /**
    * Optional callback to remove the attachment upload before sending by clicking on
    * cancel icon.
@@ -164,7 +164,7 @@ export interface RichTextSendBoxProps {
    */
   onSendMessage: (
     content: string,
-    /* @conditional-compile-remove(attachment-byos) */
+    /* @conditional-compile-remove(file-sharing-acs) */
     options?: MessageOptions
   ) => Promise<void>;
   /**
@@ -185,9 +185,9 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     autoFocus,
     onSendMessage,
     onTyping,
-    /* @conditional-compile-remove(attachment-byos) */
+    /* @conditional-compile-remove(file-sharing-acs) */
     attachments,
-    /* @conditional-compile-remove(attachment-byos) */
+    /* @conditional-compile-remove(file-sharing-acs) */
     onCancelAttachmentUpload
   } = props;
 
@@ -206,7 +206,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
 
   const [contentValue, setContentValue] = useState('');
   const [contentValueOverflow, setContentValueOverflow] = useState(false);
-  /* @conditional-compile-remove(attachment-byos) */
+  /* @conditional-compile-remove(file-sharing-acs) */
   const [attachmentUploadsPendingError, setAttachmentUploadsPendingError] = useState<SendBoxErrorBarError | undefined>(
     undefined
   );
@@ -233,7 +233,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     return sanitizeText(contentValue ?? '').length > 0 && sanitizeText(plainTextContent ?? '').length > 0;
   }, [contentValue]);
 
-  /* @conditional-compile-remove(attachment-byos) */
+  /* @conditional-compile-remove(file-sharing-acs) */
   const toAttachmentMetadata = useCallback((attachmentsWithProgress: AttachmentMetadataInProgress[] | undefined) => {
     return attachmentsWithProgress
       ?.filter((attachment) => {
@@ -253,10 +253,10 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
       return;
     }
     // Don't send message until all attachments have been uploaded successfully
-    /* @conditional-compile-remove(attachment-byos) */
+    /* @conditional-compile-remove(file-sharing-acs) */
     setAttachmentUploadsPendingError(undefined);
 
-    /* @conditional-compile-remove(attachment-byos) */
+    /* @conditional-compile-remove(file-sharing-acs) */
     if (hasIncompleteAttachmentUploads(attachments)) {
       setAttachmentUploadsPendingError({ message: strings.attachmentUploadsPendingError, timestamp: Date.now() });
       return;
@@ -266,12 +266,12 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
 
     // we don't want to send empty messages including spaces, newlines, tabs
     // Message can be empty if there is a valid attachment upload
-    if (hasContent || /* @conditional-compile-remove(attachment-byos) */ isAttachmentUploadCompleted(attachments)) {
+    if (hasContent || /* @conditional-compile-remove(file-sharing-acs) */ isAttachmentUploadCompleted(attachments)) {
       onSendMessage(
         message,
-        /* @conditional-compile-remove(attachment-byos) */ /* @conditional-compile-remove(rich-text-editor-composite-support) */
+        /* @conditional-compile-remove(file-sharing-acs) */ /* @conditional-compile-remove(rich-text-editor-composite-support) */
         {
-          /* @conditional-compile-remove(attachment-byos) */
+          /* @conditional-compile-remove(file-sharing-acs) */
           attachments: toAttachmentMetadata(attachments),
           /* @conditional-compile-remove(rich-text-editor-composite-support) */
           type: 'html'
@@ -284,14 +284,14 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
   }, [
     disabled,
     contentValueOverflow,
-    /* @conditional-compile-remove(attachment-byos) */
+    /* @conditional-compile-remove(file-sharing-acs) */
     attachments,
     contentValue,
     hasContent,
-    /* @conditional-compile-remove(attachment-byos) */
+    /* @conditional-compile-remove(file-sharing-acs) */
     strings.attachmentUploadsPendingError,
     onSendMessage,
-    /* @conditional-compile-remove(attachment-byos) */
+    /* @conditional-compile-remove(file-sharing-acs) */
     toAttachmentMetadata
   ]);
 
@@ -299,16 +299,16 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     return (
       !!systemMessage ||
       !!contentTooLongMessage ||
-      /* @conditional-compile-remove(attachment-byos) */
+      /* @conditional-compile-remove(file-sharing-acs) */
       !!attachmentUploadsPendingError ||
-      /* @conditional-compile-remove(attachment-byos) */
+      /* @conditional-compile-remove(file-sharing-acs) */
       !!attachments?.filter((attachmentUpload) => attachmentUpload.error).pop()?.error
     );
   }, [
-    /* @conditional-compile-remove(attachment-byos) */
+    /* @conditional-compile-remove(file-sharing-acs) */
     attachments,
     contentTooLongMessage,
-    /* @conditional-compile-remove(attachment-byos) */
+    /* @conditional-compile-remove(file-sharing-acs) */
     attachmentUploadsPendingError,
     systemMessage
   ]);
@@ -321,7 +321,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
           className={sendIconStyle({
             theme,
             hasText: hasContent,
-            /* @conditional-compile-remove(attachment-byos) */
+            /* @conditional-compile-remove(file-sharing-acs) */
             hasAttachment: false,
             hasErrorMessage: hasErrorMessage,
             defaultTextColor: theme.palette.neutralSecondary,
@@ -334,12 +334,12 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
   );
 
   const sendBoxErrorsProps: RichTextSendBoxErrorsProps = useMemo(() => {
-    /* @conditional-compile-remove(attachment-byos) */
+    /* @conditional-compile-remove(file-sharing-acs) */
     const uploadErrorMessage = attachments?.filter((attachmentUpload) => attachmentUpload.error).pop()?.error?.message;
     return {
-      /* @conditional-compile-remove(attachment-byos) */
+      /* @conditional-compile-remove(file-sharing-acs) */
       attachmentUploadsPendingError: attachmentUploadsPendingError,
-      /* @conditional-compile-remove(attachment-byos) */
+      /* @conditional-compile-remove(file-sharing-acs) */
       attachmentProgressError: uploadErrorMessage
         ? {
             message: uploadErrorMessage,
@@ -350,15 +350,15 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
       textTooLongMessage: contentTooLongMessage
     };
   }, [
-    /* @conditional-compile-remove(attachment-byos) */
+    /* @conditional-compile-remove(file-sharing-acs) */
     attachments,
     contentTooLongMessage,
-    /* @conditional-compile-remove(attachment-byos) */
+    /* @conditional-compile-remove(file-sharing-acs) */
     attachmentUploadsPendingError,
     systemMessage
   ]);
 
-  /* @conditional-compile-remove(attachment-byos) */
+  /* @conditional-compile-remove(file-sharing-acs) */
   const onRenderAttachmentUploads = useCallback(() => {
     return (
       <Stack className={attachmentUploadCardsStyles}>
@@ -389,12 +389,12 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
   const isSendBoxButtonAriaDisabledValue = useMemo(() => {
     return isSendBoxButtonAriaDisabled({
       hasContent,
-      /* @conditional-compile-remove(attachment-byos) */ hasCompletedAttachmentUploads:
+      /* @conditional-compile-remove(file-sharing-acs) */ hasCompletedAttachmentUploads:
         isAttachmentUploadCompleted(attachments),
       hasError: hasErrorMessage,
       disabled
     });
-  }, [/* @conditional-compile-remove(attachment-byos) */ attachments, disabled, hasContent, hasErrorMessage]);
+  }, [/* @conditional-compile-remove(file-sharing-acs) */ attachments, disabled, hasContent, hasErrorMessage]);
 
   const sendButton = useMemo(() => {
     return (
@@ -412,7 +412,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     );
   }, [isSendBoxButtonAriaDisabledValue, localeStrings.sendButtonAriaLabel, onRenderSendIcon, sendMessageOnClick]);
 
-  /* @conditional-compile-remove(attachment-byos) */
+  /* @conditional-compile-remove(file-sharing-acs) */
   const hasAttachmentUploads = useMemo(() => {
     return isAttachmentUploadCompleted(attachments) || hasIncompleteAttachmentUploads(attachments);
   }, [attachments]);
@@ -431,9 +431,9 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
         disabled={disabled}
         actionComponents={sendButton}
         richTextEditorStyleProps={sendBoxRichTextEditorStyle}
-        /* @conditional-compile-remove(attachment-byos) */
+        /* @conditional-compile-remove(file-sharing-acs) */
         onRenderAttachmentUploads={onRenderAttachmentUploads}
-        /* @conditional-compile-remove(attachment-byos) */
+        /* @conditional-compile-remove(file-sharing-acs) */
         hasAttachments={hasAttachmentUploads}
       />
     </Stack>
