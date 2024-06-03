@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 import React, { useCallback, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react';
 import { richTextEditorWrapperStyle, richTextEditorStyle } from '../styles/RichTextEditor.styles';
-import { useTheme } from '../../theming';
+import { darkTheme, lightTheme, useTheme } from '../../theming';
 import { RichTextStrings } from './RichTextSendBox';
 import { isDarkThemed } from '../../theming/themeUtils';
 import CopyPastePlugin from './Plugins/CopyPastePlugin';
@@ -92,6 +92,7 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
   const editorDiv = useRef<HTMLDivElement>(null);
   const theme = useTheme();
   const [contextMenuProps, setContextMenuProps] = useState<IContextualMenuProps | null>(null);
+  const tableCellSelectionLightThemeBackgroundColor = useRef<string | undefined>(undefined);
 
   useImperativeHandle(
     ref,
@@ -137,6 +138,16 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
   useEffect(() => {
     editor.current?.setDarkModeState(isDarkThemedValue);
   }, [isDarkThemedValue]);
+
+  // remember light color to correctly set it in the dark theme
+  useEffect(() => {
+    // focus to update selection color for table, otherwise the existing selection color for table won't be updated
+    editor.current?.focus();
+    if (!isDarkThemedValue) {
+      tableCellSelectionLightThemeBackgroundColor.current =
+        lightTheme.palette?.neutralLight ?? theme.palette.neutralLight;
+    }
+  }, [theme.palette.neutralLight, isDarkThemedValue]);
 
   const placeholderPlugin = useMemo(() => {
     return new PlaceholderPlugin('');
@@ -202,6 +213,16 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     setContextMenuProps(null);
   }, []);
 
+  const getDarkColor = useCallback(
+    (lightColor: string, _baseLValue?: number, colorType?: 'text' | 'background' | 'border'): string => {
+      if (lightColor === tableCellSelectionLightThemeBackgroundColor.current && colorType === 'background') {
+        return darkTheme.palette?.neutralLight ?? theme.palette.neutralLight;
+      }
+      return lightColor;
+    },
+    [theme.palette.neutralLight]
+  );
+
   const plugins: EditorPlugin[] = useMemo(() => {
     const contentEdit = new EditPlugin();
     // AutoFormatPlugin previously was a part of the edit plugin
@@ -243,6 +264,7 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
         doNotAdjustEditorColor: true,
         // TODO: confirm the color during inline images implementation
         imageSelectionBorderColor: 'blue',
+        tableCellSelectionBackgroundColor: lightTheme.palette?.neutralLight && theme.palette.neutralLight,
         plugins: plugins,
         initialModel: initialModel,
         defaultModelToDomOptions: {
@@ -251,7 +273,8 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
             border: borderApplier,
             dataset: dataSetApplier
           }
-        }
+        },
+        getDarkColor: getDarkColor
       });
     }
 

@@ -12,7 +12,8 @@ import {
   BackgroundBlurConfig,
   BackgroundReplacementConfig
 } from '@azure/communication-calling';
-/* @conditional-compile-remove(end-of-call-survey) */
+/* @conditional-compile-remove(soft-mute) */
+import { RemoteParticipant } from '@azure/communication-calling';
 import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
 import { DtmfTone } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
@@ -95,7 +96,7 @@ export interface CommonCallingHandlers {
   onStopCaptions: () => Promise<void>;
   onSetSpokenLanguage: (language: string) => Promise<void>;
   onSetCaptionLanguage: (language: string) => Promise<void>;
-  /* @conditional-compile-remove(end-of-call-survey) */
+
   onSubmitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined>;
   /* @conditional-compile-remove(spotlight) */
   onStartSpotlight: (userIds?: string[]) => Promise<void>;
@@ -103,6 +104,8 @@ export interface CommonCallingHandlers {
   onStopSpotlight: (userIds?: string[]) => Promise<void>;
   /* @conditional-compile-remove(spotlight) */
   onStopAllSpotlight: () => Promise<void>;
+  /* @conditional-compile-remove(soft-mute) */
+  onMuteParticipant: (userId: string) => Promise<void>;
 }
 
 /**
@@ -594,7 +597,7 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       const captionsFeature = call?.feature(Features.Captions).captions as TeamsCaptions;
       await captionsFeature.setCaptionLanguage(language);
     };
-    /* @conditional-compile-remove(end-of-call-survey) */
+
     const onSubmitSurvey = async (survey: CallSurvey): Promise<CallSurveyResponse | undefined> =>
       await call?.feature(Features.CallSurvey).submitSurvey(survey);
     /* @conditional-compile-remove(spotlight) */
@@ -610,6 +613,18 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
     /* @conditional-compile-remove(spotlight) */
     const onStopAllSpotlight = async (): Promise<void> => {
       await call?.feature(Features.Spotlight).stopAllSpotlight();
+    };
+    /* @conditional-compile-remove(soft-mute) */
+    const onMuteParticipant = async (userId: string): Promise<void> => {
+      if (call?.remoteParticipants) {
+        call?.remoteParticipants.forEach(async (participant: RemoteParticipant) => {
+          // Using toFlatCommunicationIdentifier to convert the CommunicationIdentifier to string
+          // as _toCommunicationIdentifier(userId) comparison to participant.identifier did not work for this case
+          if (toFlatCommunicationIdentifier(participant.identifier) === userId) {
+            await participant.mute();
+          }
+        });
+      }
     };
     /* @conditional-compile-remove(spotlight) */
     const canStartSpotlight = call?.feature(Features.Capabilities).capabilities.spotlightParticipant.isPresent;
@@ -670,17 +685,13 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       onSendDtmfTone,
       /* @conditional-compile-remove(call-readiness) */
       askDevicePermission,
-
       onRemoveVideoBackgroundEffects,
-
       onBlurVideoBackground,
-
       onReplaceVideoBackground,
       onStartCaptions,
       onStopCaptions,
       onSetCaptionLanguage,
       onSetSpokenLanguage,
-      /* @conditional-compile-remove(end-of-call-survey) */
       onSubmitSurvey,
       /* @conditional-compile-remove(spotlight) */
       onStartSpotlight,
@@ -695,7 +706,9 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       /* @conditional-compile-remove(spotlight) */
       onStartRemoteSpotlight,
       /* @conditional-compile-remove(spotlight) */
-      onStopRemoteSpotlight
+      onStopRemoteSpotlight,
+      /* @conditional-compile-remove(soft-mute) */
+      onMuteParticipant
     };
   }
 );
