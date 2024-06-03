@@ -260,23 +260,14 @@ const MessageBubble = (props: ChatMyMessageComponentAsMessageBubbleProps): JSX.E
               // react onFocus is called even when nested component receives focus (i.e. it bubbles)
               // so when focus moves within actionMenu, the `focus` state in chatMessage remains true, and keeps actionMenu visible
               setFocused(true);
-            },
-            // make body not focusable to remove repetitions from narrators.
-            // inner components are already focusable
-            role: 'none',
-            tabIndex: -1
+            }
           }}
           data-ui-id="chat-composite-message"
-          author={
-            <Text className={chatMessageDateStyle} tabIndex={0}>
-              {message.senderDisplayName}
-            </Text>
-          }
+          author={<Text className={chatMessageDateStyle}>{message.senderDisplayName}</Text>}
           timestamp={
             <Text
               className={props.message.status === 'failed' ? chatMessageDateFailedStyle(theme) : chatMessageDateStyle}
               data-ui-id={ids.messageTimestamp}
-              tabIndex={0}
             >
               {formattedTimestamp}
             </Text>

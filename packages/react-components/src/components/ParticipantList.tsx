@@ -98,6 +98,9 @@ export type ParticipantListProps = {
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   /** Optional callback when rendered ParticipantItem is clicked */
   onParticipantClick?: (participant?: ParticipantListParticipant) => void;
+  /* @conditional-compile-remove(soft-mute) */
+  /** Optional callback to render a context menu to mute a participant */
+  onMuteParticipant?: (userId: string) => Promise<void>;
   styles?: ParticipantListStyles;
   /** Optional value to determine if the tooltip should be shown for participants or not */
   showParticipantOverflowTooltip?: boolean;

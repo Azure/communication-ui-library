@@ -17,6 +17,8 @@ import {
   ScalingMode,
   VideoDeviceInfo
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(teams-meeting-conference) */
+import { TeamsMeetingAudioConferencingDetails } from '@azure/communication-calling';
 /* @conditional-compile-remove(meeting-id) */
 import { TeamsCallInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(calling-beta-sdk) */
@@ -633,6 +635,12 @@ export interface CallState {
    * Proxy of {@link @azure/communication-calling#Call.info}.
    */
   info?: TeamsCallInfo | /* @conditional-compile-remove(calling-beta-sdk) */ CallInfo;
+
+  /* @conditional-compile-remove(teams-meeting-conference) */
+  /**
+   * Proxy of {@link @azure/communication-calling#TeamsMeetingAudioConferencingCallFeature}.
+   */
+  teamsMeetingConference?: TeamsMeetingAudioConferencingDetails;
 }
 
 /**
