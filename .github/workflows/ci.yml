@@ -85,8 +85,10 @@ jobs:
       - name: Check result of flavor switch
         if: ${{ always() && steps.install-dependencies.outcome == 'failure' }}
         run: echo "Failed to install dependencies, please make sure you run `rush update:all-flavors` if dependencies were updated." && exit 1
-      - name: Test
-        run: echo "${{github.event.pull_request.labels[0].name}}"
+      - name: Test 1
+        run: echo "${{!contains( github.event.pull_request.labels.*.name, 'do not need changelog')}}"
+      - name: Test 2
+        run: echo "${{github.event_name == 'pull_request'}}"
       - name: Check the necessary change file has been submitted
         if: ${{ github.event_name == 'pull_request' && !contains( github.event.pull_request.labels.*.name, 'do not need changelog')}}
         run: |
