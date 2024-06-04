@@ -5,7 +5,11 @@ import { Text, mergeStyles } from '@fluentui/react';
 import { ChatMessage as FluentChatMessage } from '@fluentui-contrib/react-chat';
 import { _formatString } from '@internal/acs-ui-common';
 import React, { useCallback, useMemo } from 'react';
-import { chatMessageDateStyle, chatMessageAuthorStyle, chatMessageDateFailedStyle } from '../../styles/ChatMessageComponent.styles';
+import {
+  chatMessageDateStyle,
+  chatMessageAuthorStyle,
+  chatMessageDateFailedStyle
+} from '../../styles/ChatMessageComponent.styles';
 import { useIdentifiers } from '../../../identifiers/IdentifierProvider';
 import { useTheme } from '../../../theming';
 import { InlineImageOptions } from '../ChatMessageContent';
