@@ -21,7 +21,7 @@ import LiveMessage from '../Announcer/LiveMessage';
 import { defaultOnMentionRender } from './MentionRenderer';
 import DOMPurify from 'dompurify';
 import { _AttachmentDownloadCardsStrings } from '../Attachment/AttachmentDownloadCards';
-/* @conditional-compile-remove(attachment-download) */
+/* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
 import { AttachmentMetadata } from '@internal/acs-ui-common';
 
 type ChatMessageContentProps = {
@@ -168,7 +168,7 @@ export const BlockedMessageContent = (props: BlockedMessageContentProps): JSX.El
 
 const extractContentForAllyMessage = (props: ChatMessageContentProps): string => {
   let attachments = undefined;
-  /* @conditional-compile-remove(attachment-download) */
+  /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
   attachments = props.message.attachments;
   if (props.message.content || attachments) {
     // Replace all <img> tags with 'image' for aria.
@@ -188,7 +188,7 @@ const extractContentForAllyMessage = (props: ChatMessageContentProps): string =>
 
     // Inject message attachment count for aria.
     // this is only applying to file attachments not for inline images.
-    /* @conditional-compile-remove(attachment-download) */
+    /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
     if (attachments && attachments.length > 0) {
       const attachmentCardDescription = attachmentCardGroupDescription(props);
       const attachmentTextNode = document.createElement('div');
@@ -225,13 +225,13 @@ const messageContentAriaText = (props: ChatMessageContentProps): string | undefi
       });
 };
 
-/* @conditional-compile-remove(attachment-download) */
+/* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
 const attachmentCardGroupDescription = (props: ChatMessageContentProps): string => {
   const attachments = props.message.attachments;
   return getAttachmentCountLiveMessage(attachments ?? [], props.strings.attachmentCardGroupMessage);
 };
 
-/* @conditional-compile-remove(attachment-download) */
+/* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
 /**
  * @private
  */

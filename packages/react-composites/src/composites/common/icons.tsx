@@ -32,7 +32,7 @@ import { DEFAULT_COMPONENT_ICONS } from '@internal/react-components';
 import React from 'react';
 // eslint-disable-next-line no-restricted-imports
 import { FontIcon, IIconProps, Spinner, SpinnerSize } from '@fluentui/react';
-/* @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(file-sharing-acs) */
 import { Attach20Regular } from '@fluentui/react-icons';
 
 import { VideoBackgroundEffect20Regular, VideoPerson20Filled } from '@fluentui/react-icons';
@@ -87,7 +87,7 @@ export const COMPOSITE_ONLY_ICONS: CompositeIcons = {
   NoticePageRoomNotValid: <Info20Filled />,
   NoticePageCallRejected: <Info20Filled />,
   NoticePageCallTimeout: <Info20Filled />,
-  /* @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(file-sharing-acs) */
   SendBoxAttachFile: <Attach20Regular />,
   /* @conditional-compile-remove(PSTN-calls) */
   PeoplePaneAddPerson: <PersonAdd20Regular />,
@@ -146,7 +146,7 @@ export type ChatCompositeIcons = {
   ParticipantItemOptionsHovered?: JSX.Element;
   SendBoxSend?: JSX.Element;
   SendBoxSendHovered?: JSX.Element;
-  /* @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(file-sharing-acs) */
   SendBoxAttachFile?: JSX.Element;
 };
 
