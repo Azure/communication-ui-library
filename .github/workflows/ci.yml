@@ -8,6 +8,7 @@ on:
       - release/**
   # Presubmit CI on PRs to all branches.
   pull_request:
+    types: [labeled, unlabeled, opened, synchronize, reopened]
   # Allows you to run this workflow manually from the Actions tab.
   workflow_dispatch:
 
@@ -85,19 +86,15 @@ jobs:
       # - name: Check result of flavor switch
       #   if: ${{ always() && steps.install-dependencies.outcome == 'failure' }}
       # run: echo "Failed to install dependencies, please make sure you run `rush update:all-flavors` if dependencies were updated." && exit 1
-      # - name: Check the necessary change file has been submitted
-      #   if: ${{ github.event_name == 'pull_request'}}
-      #   #  && !contains( github.event.pull_request.labels.*.name, 'do not need changelog')}}
-      #   run: |
-      #     git fetch origin main:main --depth=2
-      #     node common/scripts/changelog/check.mjs ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }} ${{ github.event.pull_request }}
-      - name: Check the necessary change file has been submitted
+      - name: Test
         if: ${{ github.event_name == 'pull_request'}}
-        #  && !contains( github.event.pull_request.labels.*.name, 'do not need changelog')}}
         run: |
-          echo ${{ github.event.pull_request }}
-          echo ${{ github.event.pull_request.labels }}
-          echo ${{ github.event.pull_request.labels[0] }}
+          echo ${{!contains( github.event.pull_request.labels.*.name, 'do not need changelog')}}
+      - name: Check the necessary change file has been submitted
+        if: ${{ github.event_name == 'pull_request' && !contains( github.event.pull_request.labels.*.name, 'do not need changelog')}}
+        run: |
+          git fetch origin main:main --depth=2
+          node common/scripts/changelog/check.mjs ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }}
 
 #       # Perform lint check
 #       - name: Run linter
