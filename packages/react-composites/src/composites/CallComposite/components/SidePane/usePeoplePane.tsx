@@ -46,6 +46,10 @@ export const usePeoplePane = (props: {
   onMuteParticipant?: (userId: string) => Promise<void>;
   /* @conditional-compile-remove(soft-mute) */
   mutedParticipantUserIds?: string[];
+  pinnedParticipants?: string[];
+  onPinParticipant?: (userId: string) => void;
+  onUnpinParticipant?: (userId: string) => void;
+  disablePinMenuItem?: boolean;
 }): {
   openPeoplePane: () => void;
   closePeoplePane: () => void;
@@ -75,7 +79,11 @@ export const usePeoplePane = (props: {
     /* @conditional-compile-remove(spotlight) */
     maxParticipantsToSpotlight,
     /* @conditional-compile-remove(soft-mute) */
-    onMuteParticipant
+    onMuteParticipant,
+    pinnedParticipants,
+    onPinParticipant,
+    onUnpinParticipant,
+    disablePinMenuItem
   } = props;
 
   const closePane = useCallback(() => {
@@ -121,11 +129,14 @@ export const usePeoplePane = (props: {
   /* @conditional-compile-remove(spotlight) */ /* @conditional-compile-remove(soft-mute) */
   const onFetchParticipantMenuItemsForCallComposite = useCallback(
     (participantId: string, myUserId?: string, defaultMenuItems?: IContextualMenuItem[]): IContextualMenuItem[] => {
+      let isPinned = pinnedParticipants?.includes(participantId);
       const _defaultMenuItems: IContextualMenuItem[] = defaultMenuItems ?? [];
       /* @conditional-compile-remove(spotlight) */
-      const isSpotlighted = spotlightedParticipantUserIds?.find((p) => p === participantId);
+      const isSpotlighted = spotlightedParticipantUserIds?.includes(participantId);
       /* @conditional-compile-remove(spotlight) */
       const isMe = myUserId === participantId;
+      /* @conditional-compile-remove(spotlight) */
+      isPinned = isSpotlighted ? false : isPinned;
       /* @conditional-compile-remove(spotlight) */
       if (isSpotlighted) {
         const stopSpotlightMenuText = isMe
@@ -200,6 +211,42 @@ export const usePeoplePane = (props: {
           disabled: isMuted
         });
       }
+
+      if (!isMe && isPinned !== undefined) {
+        if (isPinned && onUnpinParticipant && localeStrings?.unpinParticipantForMe) {
+          _defaultMenuItems.push({
+            key: 'unpin',
+            text: localeStrings?.unpinParticipantForMe,
+            iconProps: {
+              iconName: 'UnpinParticipant',
+              styles: { root: { lineHeight: '1rem', textAlign: 'center' } }
+            },
+            onClick: () => {
+              onUnpinParticipant?.(participantId);
+            },
+            'data-ui-id': 'participant-item-unpin-participant-button',
+            ariaLabel: localeStrings.unpinParticipantMenuItemAriaLabel
+          });
+        }
+        if (!isPinned && onPinParticipant && localeStrings?.pinParticipantForMe) {
+          _defaultMenuItems.push({
+            key: 'pin',
+            text: disablePinMenuItem
+              ? localeStrings.pinParticipantForMeLimitReached
+              : localeStrings.pinParticipantForMe,
+            iconProps: {
+              iconName: 'PinParticipant',
+              styles: { root: { lineHeight: '1rem', textAlign: 'center' } }
+            },
+            onClick: () => {
+              onPinParticipant(participantId);
+            },
+            'data-ui-id': 'participant-item-pin-participant-button',
+            disabled: disablePinMenuItem || /* @conditional-compile-remove(spotlight) */ isSpotlighted,
+            ariaLabel: localeStrings.pinParticipantMenuItemAriaLabel
+          });
+        }
+      }
       return onFetchParticipantMenuItems
         ? onFetchParticipantMenuItems(participantId, myUserId, _defaultMenuItems)
         : _defaultMenuItems;
@@ -220,7 +267,16 @@ export const usePeoplePane = (props: {
       localeStrings.addSpotlightMenuLabel,
       localeStrings.startSpotlightMenuLabel,
       localeStrings.spotlightLimitReachedMenuTitle,
-      maxParticipantsToSpotlight
+      maxParticipantsToSpotlight,
+      pinnedParticipants,
+      onPinParticipant,
+      onUnpinParticipant,
+      disablePinMenuItem,
+      localeStrings.pinParticipantForMe,
+      localeStrings.pinParticipantForMeLimitReached,
+      localeStrings.unpinParticipantForMe,
+      localeStrings.unpinParticipantMenuItemAriaLabel,
+      localeStrings.pinParticipantMenuItemAriaLabel
     ]
   );
 
@@ -239,6 +295,7 @@ export const usePeoplePane = (props: {
         setParticipantActioned={setParticipantActioned}
         /* @conditional-compile-remove(spotlight) */
         participantListHeadingMoreButtonProps={sidePaneHeaderMenuProps}
+        pinnedParticipants={pinnedParticipants}
       />
     );
   }, [
@@ -248,7 +305,8 @@ export const usePeoplePane = (props: {
     _onFetchParticipantMenuItems,
     setDrawerMenuItems,
     setParticipantActioned,
-    /* @conditional-compile-remove(spotlight) */ sidePaneHeaderMenuProps
+    /* @conditional-compile-remove(spotlight) */ sidePaneHeaderMenuProps,
+    pinnedParticipants
   ]);
 
   const sidePaneRenderer: SidePaneRenderer = useMemo(

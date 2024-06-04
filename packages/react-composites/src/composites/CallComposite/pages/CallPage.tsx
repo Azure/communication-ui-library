@@ -197,6 +197,8 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
         setPromptProps={setPromptProps}
         /* @conditional-compile-remove(spotlight) */
         hideSpotlightButtons={options?.spotlight?.hideSpotlightButtons}
+        pinnedParticipants={pinnedParticipants}
+        setPinnedParticipants={setPinnedParticipants}
       />
       {
         /* @conditional-compile-remove(spotlight) */

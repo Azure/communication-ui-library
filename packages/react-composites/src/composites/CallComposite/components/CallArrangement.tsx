@@ -120,7 +120,15 @@ export interface CallArrangementProps {
   setPromptProps?: (props: PromptProps) => void;
   /* @conditional-compile-remove(spotlight) */
   hideSpotlightButtons?: boolean;
+  pinnedParticipants?: string[];
+  setPinnedParticipants?: (pinnedParticipants: string[]) => void;
 }
+
+/**
+ * @private
+ * Maximum number of remote video tiles that can be pinned
+ */
+export const MAX_PINNED_REMOTE_VIDEO_TILES = 4;
 
 /**
  * @private
@@ -205,6 +213,37 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     localParticipant
   } = videoGalleryProps;
 
+  const { pinnedParticipants, setPinnedParticipants } = props;
+  const onPinParticipant = useCallback(
+    (userId: string) => {
+      if (pinnedParticipants && pinnedParticipants.length >= MAX_PINNED_REMOTE_VIDEO_TILES) {
+        return;
+      }
+      if (pinnedParticipants && setPinnedParticipants && !pinnedParticipants.includes(userId)) {
+        setPinnedParticipants(pinnedParticipants.concat(userId));
+      }
+    },
+    [pinnedParticipants, setPinnedParticipants]
+  );
+
+  const onUnpinParticipant = useCallback(
+    (userId: string) => {
+      if (pinnedParticipants && setPinnedParticipants) {
+        setPinnedParticipants(pinnedParticipants.filter((participantId) => participantId !== userId));
+      }
+    },
+    [setPinnedParticipants, pinnedParticipants]
+  );
+
+  const pinPeoplePaneProps = useMemo(() => {
+    return {
+      pinnedParticipants: pinnedParticipants,
+      onPinParticipant: onPinParticipant,
+      onUnpinParticipant: onUnpinParticipant,
+      disablePinMenuItem: pinnedParticipants && pinnedParticipants.length >= MAX_PINNED_REMOTE_VIDEO_TILES
+    };
+  }, [onPinParticipant, onUnpinParticipant, pinnedParticipants]);
+
   /* @conditional-compile-remove(spotlight) */
   const { onStartLocalSpotlightWithPrompt, onStopLocalSpotlightWithPrompt } = useLocalSpotlightCallbacksWithPrompt(
     onStartLocalSpotlight,
@@ -276,7 +315,8 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   const { isPeoplePaneOpen, openPeoplePane, closePeoplePane } = usePeoplePane({
     ...peoplePaneProps,
     ...spotlightPeoplePaneProps,
-    ...onMuteParticipantPeoplePaneProps
+    ...onMuteParticipantPeoplePaneProps,
+    ...pinPeoplePaneProps
   });
   const togglePeoplePane = useCallback(() => {
     if (isPeoplePaneOpen) {

@@ -855,6 +855,9 @@ export interface CallCompositeStrings {
     peoplePaneTitle: string;
     permissionToReachTargetParticipantNotAllowedMoreDetails?: string;
     permissionToReachTargetParticipantNotAllowedTitle?: string;
+    pinParticipantForMe: string;
+    pinParticipantForMeLimitReached: string;
+    pinParticipantMenuItemAriaLabel: string;
     privacyPolicy: string;
     rejoinCallButtonLabel: string;
     removeBackgroundEffectButtonLabel?: string;
@@ -914,6 +917,8 @@ export interface CallCompositeStrings {
     unableToResolveTenantTitle?: string;
     unableToStartVideoEffect?: string;
     unnamedParticipantString: string;
+    unpinParticipantForMe: string;
+    unpinParticipantMenuItemAriaLabel: string;
     videoEffectsPaneBackgroundSelectionTitle: string;
     videoEffectsPaneTitle: string;
 }
@@ -1006,6 +1011,7 @@ export type CallParticipantListParticipant = ParticipantListParticipant & {
     raisedHand?: RaisedHand;
     reaction?: Reaction;
     spotlight?: Spotlight;
+    isPinned?: boolean;
 };
 
 // @beta
@@ -3706,6 +3712,7 @@ export type ParticipantListProps = {
     totalParticipantCount?: number;
     strings?: ParticipantListStrings;
     participantAriaLabelledBy?: string;
+    pinnedParticipants?: string[];
 };
 
 // @public

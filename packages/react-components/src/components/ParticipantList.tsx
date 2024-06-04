@@ -112,6 +112,8 @@ export type ParticipantListProps = {
   strings?: ParticipantListStrings;
   /** Optional aria-labelledby prop that prefixes each ParticipantItem aria-label */
   participantAriaLabelledBy?: string;
+  /** List of pinned participants */
+  pinnedParticipants?: string[];
 };
 
 const onRenderParticipantDefault = (
@@ -124,7 +126,8 @@ const onRenderParticipantDefault = (
   onParticipantClick?: (participant?: ParticipantListParticipant) => void,
   showParticipantOverflowTooltip?: boolean,
   participantAriaLabelledBy?: string,
-  theme?: Theme
+  theme?: Theme,
+  pinnedParticipants?: string[]
 ): JSX.Element | null => {
   const callingParticipant = participant as CallParticipantListParticipant;
 
@@ -189,6 +192,10 @@ const onRenderParticipantDefault = (
                 <Icon iconName="ParticipantItemSpotlighted" className={iconStyles} />
               )
             }
+            {pinnedParticipants && pinnedParticipants?.includes(participant.userId) && (
+              <Icon iconName="VideoTilePinned" className={iconStyles} />
+              //VideoTilePinned: <Pin16Filled />,
+            )}
           </Stack>
         )
       : () => null;
@@ -296,7 +303,8 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
     totalParticipantCount,
     /* @conditional-compile-remove(total-participant-count) */
     strings,
-    participantAriaLabelledBy
+    participantAriaLabelledBy,
+    pinnedParticipants
   } = props;
 
   const theme = useTheme();
@@ -376,7 +384,8 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
               props.onParticipantClick,
               showParticipantOverflowTooltip,
               participantAriaLabelledBy,
-              theme
+              theme,
+              pinnedParticipants
             )
       )}
       {

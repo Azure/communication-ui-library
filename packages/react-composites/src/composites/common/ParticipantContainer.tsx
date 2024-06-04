@@ -56,6 +56,7 @@ export const ParticipantListWithHeading = (props: {
   onClickHeadingMoreButton?: () => void;
   /* @conditional-compile-remove(spotlight) */
   headingMoreButtonMenuProps?: IContextualMenuProps;
+  pinnedParticipants?: string[];
 }): JSX.Element => {
   const {
     onFetchAvatarPersonaData,
@@ -64,7 +65,8 @@ export const ParticipantListWithHeading = (props: {
     participantListProps,
     /* @conditional-compile-remove(spotlight) */ headingMoreButtonAriaLabel,
     /* @conditional-compile-remove(spotlight) */ onClickHeadingMoreButton,
-    /* @conditional-compile-remove(spotlight) */ headingMoreButtonMenuProps
+    /* @conditional-compile-remove(spotlight) */ headingMoreButtonMenuProps,
+    pinnedParticipants
   } = props;
   const subheadingUniqueId = useId();
   const theme = useTheme();
@@ -109,6 +111,7 @@ export const ParticipantListWithHeading = (props: {
       <FocusZone className={participantListContainerStyle} shouldFocusOnMount={true}>
         <ParticipantList
           {...participantListProps}
+          pinnedParticipants={pinnedParticipants}
           styles={props.isMobile ? participantListMobileStyle : participantListStyle}
           onRenderAvatar={(userId, options) => (
             <>

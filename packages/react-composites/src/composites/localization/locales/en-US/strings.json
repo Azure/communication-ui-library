@@ -336,7 +336,12 @@
     "leaveConfirmDialogContent": "Are you sure you want to leave the call?",
     "endCallConfirmDialogTitle": "End the call?",
     "endCallConfirmDialogContent": "You'll end the call for everyone.",
-    "invalidMeetingIdentifier": "Invalid meeting ID or passcode"
+    "invalidMeetingIdentifier": "Invalid meeting ID or passcode",
+    "pinParticipantForMe": "Pin for me",
+    "pinParticipantForMeLimitReached": "Pin (limit reached)",
+    "unpinParticipantForMe": "Unpin",
+    "pinParticipantMenuItemAriaLabel": "Pin",
+    "unpinParticipantMenuItemAriaLabel": "Unpin"
   },
   "chat": {
     "chatListHeader": "In this chat",

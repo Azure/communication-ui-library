@@ -42,6 +42,7 @@ export const PeoplePaneContent = (props: {
   mobileView?: boolean;
   /* @conditional-compile-remove(spotlight) */
   participantListHeadingMoreButtonProps?: IContextualMenuProps;
+  pinnedParticipants?: string[];
 }): JSX.Element => {
   const {
     inviteLink,
@@ -148,6 +149,7 @@ export const PeoplePaneContent = (props: {
       onClickHeadingMoreButton={props.mobileView ? setDrawerMenuItemsForParticipantListHeadingMoreButton : undefined}
       /* @conditional-compile-remove(spotlight) */
       headingMoreButtonMenuProps={props.participantListHeadingMoreButtonProps}
+      pinnedParticipants={props.pinnedParticipants}
     />
   );
 

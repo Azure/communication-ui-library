@@ -28,6 +28,8 @@ export type CallParticipantListParticipant = ParticipantListParticipant & {
   /* @conditional-compile-remove(spotlight) */
   /** Whether calling participant is spotlighted **/
   spotlight?: Spotlight;
+  /** Whether calling participant is pinned **/
+  isPinned?: boolean;
 };
 
 /* @conditional-compile-remove(spotlight) */
