@@ -97,7 +97,6 @@ jobs:
         run: |
           echo ${{ toJSON(github.event.pull_request) }}
           echo ${{ toJSON(github.event.pull_request.labels) }}
-          echo ${{ toJSON(github.event.pull_request.labels[0]) }}
 
 #       # Perform lint check
 #       - name: Run linter
