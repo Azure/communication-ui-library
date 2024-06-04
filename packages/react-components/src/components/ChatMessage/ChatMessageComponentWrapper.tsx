@@ -3,13 +3,9 @@
 
 import { MessageStatus } from '@internal/acs-ui-common';
 import React, { useMemo } from 'react';
-import {
-  MessageProps,
-  MessageRenderer,
-  MessageThreadStyles,
-  RichTextEditorOptions,
-  _ChatMessageProps
-} from '../MessageThread';
+import { MessageProps, MessageRenderer, MessageThreadStyles, _ChatMessageProps } from '../MessageThread';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+import { RichTextEditorOptions } from '../MessageThread';
 import { ChatMessage, OnRenderAvatarCallback } from '../../types';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '../../types';

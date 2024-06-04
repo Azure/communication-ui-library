@@ -7,7 +7,9 @@ import { Suspense } from 'react';
 import { ChatMessage } from '../../../types';
 /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
 import { AttachmentMetadata } from '@internal/acs-ui-common';
-import { MessageThreadStrings, RichTextEditorOptions } from '../../MessageThread';
+import { MessageThreadStrings } from '../../MessageThread';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+import { RichTextEditorOptions } from '../../MessageThread';
 import { ChatMessageComponentAsEditBox } from './ChatMessageComponentAsEditBox';
 /* @conditional-compile-remove(mention) */
 import { MentionLookupOptions } from '../../MentionPopover';
@@ -77,6 +79,7 @@ export const ChatMessageComponentAsEditBoxPicker = (props: ChatMessageComponentA
   return simpleEditBox;
 };
 
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function isRichTextEditorOptions(obj: any): obj is RichTextEditorOptions {
   return obj && typeof obj === 'object' && 'onPaste' in obj;

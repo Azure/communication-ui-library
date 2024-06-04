@@ -23,7 +23,7 @@ export default class CopyPastePlugin implements EditorPlugin {
   dispose(): void {}
 
   onPluginEvent(event: PluginEvent): void {
-    handleBeforePasteEvent(event, this.onPaste);
+    handleBeforePasteEvent(event, /* @conditional-compile-remove(rich-text-editor-image-upload) */ this.onPaste);
 
     if (this.editor !== null && !this.editor.isDisposed()) {
       // scroll the editor to the correct position after pasting content

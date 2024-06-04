@@ -3,7 +3,9 @@
 
 import { _formatString } from '@internal/acs-ui-common';
 import React, { useCallback, useState } from 'react';
-import { MessageThreadStrings, RichTextEditorOptions, UpdateMessageCallback } from '../../MessageThread';
+import { MessageThreadStrings, UpdateMessageCallback } from '../../MessageThread';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+import { RichTextEditorOptions } from '../../MessageThread';
 import { ChatMessage, ComponentSlotStyle, OnRenderAvatarCallback } from '../../../types';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '../../../types';
