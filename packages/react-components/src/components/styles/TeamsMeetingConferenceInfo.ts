@@ -83,8 +83,8 @@ export const infoConnectionLinkStyle = (theme: Theme): string => {
   return mergeStyles({
     background: `${theme.palette.themeLighter}`,
     width: _pxToRem(2),
-    height: _pxToRem(25),
-    marginLeft: _pxToRem(17),
-    marginTop: _pxToRem(-4)
+    position: 'relative',
+    left: _pxToRem(18),
+    top: _pxToRem(20)
   });
 };

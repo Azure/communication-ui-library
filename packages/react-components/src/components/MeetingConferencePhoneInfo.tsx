@@ -133,8 +133,9 @@ export const MeetingConferencePhoneInfoModal = (props: MeetingConferencePhoneInf
           {conferencePhoneInfoList.length > 0 && (
             <Stack>
               <Stack horizontal horizontalAlign="space-between" className={phoneInfoInctructionLine}>
-                <Stack.Item>
+                <Stack.Item style={{ display: 'flex' }}>
                   <Stack horizontal className={phoneInfoStep}>
+                    <Stack className={infoConnectionLinkStyle(theme)}></Stack>
                     <Stack.Item className={phoneInfoIcon(theme)}>
                       <Stack verticalAlign="center" horizontalAlign="center">
                         <Icon
@@ -142,7 +143,6 @@ export const MeetingConferencePhoneInfoModal = (props: MeetingConferencePhoneInf
                           style={{ color: theme.palette.themePrimary, padding: '8px' }}
                         />
                       </Stack>
-                      <Stack className={infoConnectionLinkStyle(theme)}></Stack>
                     </Stack.Item>
                     <Stack.Item>
                       <Text className={stepTextStyle}>{strings?.meetingConferencePhoneInfoModalDialIn}</Text>
@@ -164,8 +164,9 @@ export const MeetingConferencePhoneInfoModal = (props: MeetingConferencePhoneInf
                 className={phoneInfoInctructionLine}
               >
                 {}
-                <Stack.Item>
+                <Stack.Item style={{ display: 'flex' }}>
                   <Stack horizontal>
+                    <Stack className={infoConnectionLinkStyle(theme)}></Stack>
                     <Stack.Item className={phoneInfoIcon(theme)}>
                       <Stack verticalAlign="center" horizontalAlign="center">
                         <Icon
@@ -173,7 +174,6 @@ export const MeetingConferencePhoneInfoModal = (props: MeetingConferencePhoneInf
                           style={{ color: theme.palette.themePrimary, padding: '8px' }}
                         />
                       </Stack>
-                      <Stack className={infoConnectionLinkStyle(theme)}></Stack>
                     </Stack.Item>
                     <Stack.Item>
                       <Text className={stepTextStyle}>{strings?.meetingConferencePhoneInfoModalMeetingId}</Text>
