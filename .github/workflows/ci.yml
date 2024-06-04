@@ -95,8 +95,9 @@ jobs:
         if: ${{ github.event_name == 'pull_request'}}
         #  && !contains( github.event.pull_request.labels.*.name, 'do not need changelog')}}
         run: |
-          echo ${{ toJSON(github.event.pull_request) }}
-          echo ${{ toJSON(github.event.pull_request.labels) }}
+          echo ${{ github.event.pull_request }}
+          echo ${{ github.event.pull_request.labels }}
+          echo ${{ github.event.pull_request.labels[0] }}
 
 #       # Perform lint check
 #       - name: Run linter
