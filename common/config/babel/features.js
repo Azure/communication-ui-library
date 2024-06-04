@@ -51,10 +51,6 @@ module.exports = {
     "dialpad",
     // Data loss prevention feature
     "data-loss-prevention",
-    // Ability to download files attachments in message thread.
-    "attachment-download",
-    // Ability to upload files attachments in message thread.
-    "attachment-upload",
     // Mention feature
     "mention",
     // 1 to N Calling feature.
@@ -83,6 +79,8 @@ module.exports = {
     "acs-close-captions",
     // Feature for Rich Text Editor (RTE) support
     'rich-text-editor',
+    // Feature to support file sharing in ACS chats
+    "file-sharing-acs"
   ],
   stable: [
     // Demo feature. Used in live-documentation of conditional compilation.
@@ -99,6 +97,8 @@ module.exports = {
     // Join meeting with meetingId and passcode
     'meeting-id',
     // Feature for end call options 
-    'end-call-options'
+    'end-call-options',
+     // Feature to support file sharing in Teams interoperability chats
+     "file-sharing-teams-interop"
   ]
 }
