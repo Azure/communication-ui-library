@@ -53,7 +53,7 @@ import { isBoolean } from '../utils';
 import { getIsTeamsCall } from '../../CallComposite/selectors/baseSelectors';
 import { callStatusSelector } from '../../CallComposite/selectors/callStatusSelector';
 /* @conditional-compile-remove(teams-meeting-conference) */
-import { MeetingConferencePhoneInfoModal, convertConferencePhoneInfo } from '../MeetingConferencePhoneInfoModal';
+import { MeetingConferencePhoneInfo, convertConferencePhoneInfo } from '../MeetingConferencePhoneInfoModal';
 
 /**
  * @private
@@ -312,7 +312,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
         )}
         {
           /* @conditional-compile-remove(teams-meeting-conference) */ showTeamsMeetingConferenceModal && (
-            <MeetingConferencePhoneInfoModal
+            <MeetingConferencePhoneInfo
               conferencePhoneInfoList={convertConferencePhoneInfo(
                 props.callAdapter.getState().call?.teamsMeetingConference
               )}

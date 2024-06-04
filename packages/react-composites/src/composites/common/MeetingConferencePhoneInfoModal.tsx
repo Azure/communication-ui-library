@@ -4,19 +4,19 @@
 /* @conditional-compile-remove(teams-meeting-conference) */
 import React from 'react';
 /* @conditional-compile-remove(teams-meeting-conference) */
-import { _MeetingConferencePhoneInfoModal, _ConferencePhoneInfo } from '@internal/react-components';
+import { MeetingConferencePhoneInfoModal, ConferencePhoneInfo } from '@internal/react-components';
 /* @conditional-compile-remove(teams-meeting-conference) */
 import { TeamsMeetingAudioConferencingDetails } from '@azure/communication-calling';
 
 /* @conditional-compile-remove(teams-meeting-conference) */
 /** @private */
-export const MeetingConferencePhoneInfoModal = (props: {
-  conferencePhoneInfoList: _ConferencePhoneInfo[];
+export const MeetingConferencePhoneInfo = (props: {
+  conferencePhoneInfoList: ConferencePhoneInfo[];
   showMeetingConferencePhoneInfoModal: boolean;
   onDismissMeetingPhoneInfoSettings: () => void;
 }): JSX.Element => {
   return (
-    <_MeetingConferencePhoneInfoModal
+    <MeetingConferencePhoneInfoModal
       conferencePhoneInfoList={props.conferencePhoneInfoList}
       showModal={props.showMeetingConferencePhoneInfoModal}
       onDismissMeetingPhoneInfoSettings={props.onDismissMeetingPhoneInfoSettings}
@@ -28,7 +28,7 @@ export const MeetingConferencePhoneInfoModal = (props: {
 /** @private */
 export const convertConferencePhoneInfo = (
   meetingConferencePhoneInfo?: TeamsMeetingAudioConferencingDetails
-): _ConferencePhoneInfo[] => {
+): ConferencePhoneInfo[] => {
   if (!meetingConferencePhoneInfo) {
     return [];
   }
