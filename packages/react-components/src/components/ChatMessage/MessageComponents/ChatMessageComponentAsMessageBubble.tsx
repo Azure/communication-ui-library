@@ -184,7 +184,9 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
           data-ui-id="chat-composite-message"
           timestamp={
             <Text
-              className={props.message.status === 'failed' ? chatMessageDateFailedStyle(theme) : chatMessageDateStyle}
+              className={
+                props.message.status === 'failed' ? chatMessageDateFailedStyle(theme) : chatMessageDateStyle(theme)
+              }
               data-ui-id={ids.messageTimestamp}
             >
               {formattedTimestamp}
