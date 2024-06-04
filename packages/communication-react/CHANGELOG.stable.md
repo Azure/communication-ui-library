@@ -1,3 +1,4 @@
+
 # Change Log - @azure/communication-react
 
 This log was last generated on Tue, 04 Jun 2024 05:01:39 GMT and should not be manually modified.
@@ -10,13 +11,23 @@ Tue, 04 Jun 2024 05:01:39 GMT
 [Compare changes](https://github.com/azure/communication-ui-library/compare/1.16.1...1.17.0)
 ### Features
 
-### Custom Teams Endpoint
+### Communication as Teams user
 
-Azure Communication Services UI Library now enables developers to create a customized Teams experience leveraging communcation as a Teams user. Developers can use this functionality today through our composite (e.g CallComposite) as well as through our components
-- Joining calls using Teams identity instead of an external user
-- Leverage your M365 identity in your communications experiences
-- Avoid the lobby. M365 identity users are not anonymous and can join the experience like any other teams user!
-([PR #4530](https://github.com/azure/communication-ui-library/pull/4530) by jiangnanhello@live.com)
+We are excited to announce that the Azure Communication Services Web UI Library now supports Communication as Teams User. This feature allows users to join Teams meetings using a Teams identity. Developers can use this functionality today through the CallComposite and components (useTeamsAgent, useTeamsCall).
+- Build stand-alone ACS applications utilizing existing Teams identities to create M365 rich Communication experiences
+- Developers can create an adapter for Teams and use it in the Call Composite
+- Developers can build deeply customized Communication experiences leveraging UI components and Teams identity
+
+
+### File sharing in Teams meeting chat
+
+Azure Communication Services is proud to introduce file sharing in a Teams meeting chat. Specifically, the Communication user in a Microsoft Teams meeting chat can now receive file attachments from a Teams user in the CallWithChat Composite. The external Communication user is able to:
+- Open file attachment links in a new tab in their browser
+- View, edit or download the files in the new tab
+
+Please note that when the Microsoft Teams user attaches a file to be shared, the file permissions must be set to 'share with external/guest users'. 
+
+Please refer to [External or guest sharing in OneDrive, SharePoint, and Lists - Microsoft Support](https://support.microsoft.com/en-us/office/external-or-guest-sharing-in-onedrive-sharepoint-and-lists-7aa070b8-d094-4921-9dd9-86392f2a79e7) and [Overview of external sharing in SharePoint and OneDrive in Microsoft 365](https://learn.microsoft.com/en-us/sharepoint/external-sharing-overview.)
 
 ### Improvements
 
