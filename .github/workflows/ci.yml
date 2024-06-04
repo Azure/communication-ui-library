@@ -89,6 +89,8 @@ jobs:
         run: echo "${{!contains( github.event.pull_request.labels.*.name, 'do not need changelog')}}"
       - name: Test 2
         run: echo "${{github.event_name == 'pull_request'}}"
+      - name: Test 3
+        run: echo "${{!contains( github.event.pull_request.labels.*.name, 'breaking-change')}}"
       - name: Check the necessary change file has been submitted
         if: ${{ github.event_name == 'pull_request' && !contains( github.event.pull_request.labels.*.name, 'do not need changelog')}}
         run: |
