@@ -29,10 +29,10 @@ import { isPossiblePhoneNumber, parsePhoneNumber } from 'libphonenumber-js';
 
 /* @conditional-compile-remove(teams-meeting-conference) */
 /**
- * @internal
+ * @beta
  * Information for conference phone info
  */
-export interface _ConferencePhoneInfo {
+export interface ConferencePhoneInfo {
   phoneNumber: string;
   conferenceId: string;
   isTollFree: boolean;
@@ -78,21 +78,21 @@ export interface MeetingConferencePhoneInfoModalStrings {
 
 /* @conditional-compile-remove(teams-meeting-conference) */
 /**
- * @internal
+ * @beta
  * MeetingConferencePhoneInfoModal Component Props.
  */
-export interface _MeetingConferencePhoneInfoModalProps {
-  conferencePhoneInfoList: _ConferencePhoneInfo[];
+export interface MeetingConferencePhoneInfoModalProps {
+  conferencePhoneInfoList: ConferencePhoneInfo[];
   showModal?: boolean;
   onDismissMeetingPhoneInfoSettings?: () => void;
 }
 
 /* @conditional-compile-remove(teams-meeting-conference) */
 /**
- * @internal
+ * @beta
  * a component for setting spoken languages
  */
-export const _MeetingConferencePhoneInfoModal = (props: _MeetingConferencePhoneInfoModalProps): JSX.Element => {
+export const MeetingConferencePhoneInfoModal = (props: MeetingConferencePhoneInfoModalProps): JSX.Element => {
   const { conferencePhoneInfoList, showModal, onDismissMeetingPhoneInfoSettings } = props;
 
   const theme = useTheme();
@@ -225,7 +225,7 @@ export const formatPhoneNumber = (phoneNumber: string): string => {
  * format phone number
  */
 export const formatPhoneNumberInfo = (
-  phoneNumber: _ConferencePhoneInfo | undefined,
+  phoneNumber: ConferencePhoneInfo | undefined,
   strings: MeetingConferencePhoneInfoModalStrings | undefined
 ): string => {
   if (!phoneNumber) {
