@@ -59,27 +59,16 @@ export const ChatMessageComponentAsEditBoxPicker = (props: ChatMessageComponentA
     return <ChatMessageComponentAsEditBox {...props} />;
   }, [props]);
 
-  const disableInlineImages = useMemo(() => {
-    // If richTextEditor is an object, use the disableInlineImages property.
-    /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    if (isRichTextEditorOptions(richTextEditor)) {
-      return richTextEditor.disableInlineImages === undefined ? false : richTextEditor.disableInlineImages;
-    }
-
-    /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    return false;
-
-    return true;
-  }, [
-    /* @conditional-compile-remove(rich-text-editor-image-upload) @conditional-compile-remove(rich-text-editor) */ richTextEditor
-  ]);
-
   /* @conditional-compile-remove(rich-text-editor) */
   if (richTextEditor) {
     return (
       <_ErrorBoundary fallback={simpleEditBox}>
         <Suspense fallback={simpleEditBox}>
-          <ChatMessageComponentAsRichTextEditBox {...props} disableInlineImages={disableInlineImages} />
+          <ChatMessageComponentAsRichTextEditBox
+            {...props}
+            /* @conditional-compile-remove(rich-text-editor-image-upload) */
+            onPaste={isRichTextEditorOptions(richTextEditor) ? richTextEditor.onPaste : undefined}
+          />
         </Suspense>
       </_ErrorBoundary>
     );
@@ -90,5 +79,5 @@ export const ChatMessageComponentAsEditBoxPicker = (props: ChatMessageComponentA
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function isRichTextEditorOptions(obj: any): obj is RichTextEditorOptions {
-  return obj && typeof obj === 'object' && 'disableInlineImages' in obj;
+  return obj && typeof obj === 'object' && 'onPaste' in obj;
 }

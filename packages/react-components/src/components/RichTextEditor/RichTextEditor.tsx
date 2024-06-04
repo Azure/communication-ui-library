@@ -49,7 +49,7 @@ export interface RichTextEditorProps {
   styles: RichTextEditorStyleProps;
   autoFocus?: 'sendBoxTextField';
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  disableInlineImages: boolean;
+  onPaste?: (event: { content: DocumentFragment }) => void;
 }
 
 /**
@@ -90,7 +90,7 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     onContentModelUpdate,
     contentModel,
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    disableInlineImages
+    onPaste
   } = props;
   const editor = useRef<IEditor | null>(null);
   const editorDiv = useRef<HTMLDivElement>(null);
@@ -130,23 +130,6 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     },
     [onContentModelUpdate]
   );
-
-  /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  useEffect(() => {
-    if (editor.current && disableInlineImages) {
-      editor.current.formatContentModel((model: ContentModelDocument): boolean => {
-        model.blocks.forEach((block) => {
-          if (block.blockType === 'Paragraph') {
-            // remove all images from the content
-            block.segments = block.segments.filter((segment) => segment.segmentType !== 'Image');
-          }
-        });
-        return true;
-      });
-      //reset content model
-      onContentModelUpdate && onContentModelUpdate(editor.current.getContentModelCopy('disconnected'));
-    }
-  }, [onContentModelUpdate, disableInlineImages]);
 
   const toolbarPlugin = React.useMemo(() => {
     return new RichTextToolbarPlugin();
@@ -250,8 +233,8 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
 
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   useEffect(() => {
-    copyPastePlugin.disableInlineImages = disableInlineImages;
-  }, [copyPastePlugin, disableInlineImages]);
+    copyPastePlugin.onPaste = onPaste;
+  }, [copyPastePlugin, onPaste]);
 
   const plugins: EditorPlugin[] = useMemo(() => {
     const contentEdit = new EditPlugin();

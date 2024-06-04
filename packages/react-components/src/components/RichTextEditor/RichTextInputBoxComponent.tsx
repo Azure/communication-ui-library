@@ -53,7 +53,7 @@ export interface RichTextInputBoxComponentProps {
   autoFocus?: 'sendBoxTextField';
   onTyping?: () => Promise<void>;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  disableInlineImages: boolean;
+  onPaste?: (event: { content: DocumentFragment }) => void;
 }
 
 /**
@@ -204,7 +204,7 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
               autoFocus={autoFocus}
               onContentModelUpdate={onContentModelUpdate}
               /* @conditional-compile-remove(rich-text-editor-image-upload) */
-              disableInlineImages={props.disableInlineImages}
+              onPaste={props.onPaste}
             />
           </Stack.Item>
           {

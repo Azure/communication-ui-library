@@ -606,7 +606,7 @@ const MessageThreadStory = (args): JSX.Element => {
         onRenderMessage={onRenderMessage}
         inlineImageOptions={inlineImageOptions}
         onUpdateMessage={onUpdateMessageCallback}
-        richTextEditor={args.disableInlineImages ? { disableInlineImages: true } : args.richTextEditor}
+        richTextEditor={args.richTextEditor}
         onRenderAvatar={(userId?: string) => {
           return (
             <Persona
@@ -663,7 +663,6 @@ export default {
     showMessageStatus: controlsToAdd.showMessageStatus,
     enableJumpToNewMessageButton: controlsToAdd.enableJumpToNewMessageButton,
     richTextEditor: controlsToAdd.richTextEditor,
-    disableInlineImages: controlsToAdd.disableInlineImages,
     // Hiding auto-generated controls
     styles: hiddenControl,
     strings: hiddenControl,

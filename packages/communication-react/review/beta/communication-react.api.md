@@ -3388,7 +3388,7 @@ export type MessageThreadProps = {
     onDisplayDateTimeString?: (messageDate: Date) => string;
     mentionOptions?: MentionOptions;
     inlineImageOptions?: InlineImageOptions;
-    richTextEditor?: boolean;
+    richTextEditor?: boolean | /* @conditional-compile-remove(rich-text-editor-image-upload) */ RichTextEditorOptions;
 };
 
 // @public
@@ -3972,6 +3972,13 @@ export type ResourceFetchResult = {
 };
 
 // @beta
+export interface RichTextEditorOptions {
+    onPaste?: (event: {
+        content: DocumentFragment;
+    }) => void;
+}
+
+// @beta
 export const RichTextSendBox: (props: RichTextSendBoxProps) => JSX.Element;
 
 // @beta
@@ -3979,8 +3986,10 @@ export interface RichTextSendBoxProps {
     attachments?: AttachmentMetadataInProgress[];
     autoFocus?: 'sendBoxTextField';
     disabled?: boolean;
-    disableInlineImages?: boolean;
     onCancelAttachmentUpload?: (attachmentId: string) => void;
+    onPaste?: (event: {
+        content: DocumentFragment;
+    }) => void;
     onSendMessage: (content: string, options?: MessageOptions) => Promise<void>;
     onTyping?: () => Promise<void>;
     strings?: Partial<RichTextSendBoxStrings>;

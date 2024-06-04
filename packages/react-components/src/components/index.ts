@@ -58,6 +58,9 @@ export type {
   CancelEditCallback
 } from './MessageThread';
 
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+export type { RichTextEditorOptions } from './MessageThread';
+
 export { StreamMedia } from './StreamMedia';
 export type { StreamMediaProps } from './StreamMedia';
 export type { LoadingState } from './StreamMedia';

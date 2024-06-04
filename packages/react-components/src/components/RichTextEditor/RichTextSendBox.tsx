@@ -134,10 +134,9 @@ export interface RichTextSendBoxProps {
   disabled?: boolean;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   /**
-   * Optional boolean to disable inline images in the text box.
-   * @defaultValue false
+   * Optional callback to handle paste event.
    */
-  disableInlineImages?: boolean;
+  onPaste?: (event: { content: DocumentFragment }) => void;
   /**
    * Optional strings to override in component
    */
@@ -196,7 +195,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     /* @conditional-compile-remove(attachment-upload) */
     onCancelAttachmentUpload,
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    disableInlineImages = false
+    onPaste
   } = props;
 
   const theme = useTheme();
@@ -444,7 +443,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
         /* @conditional-compile-remove(attachment-upload) */
         hasAttachments={hasAttachmentUploads}
         /* @conditional-compile-remove(rich-text-editor-image-upload) */
-        disableInlineImages={disableInlineImages}
+        onPaste={onPaste}
       />
     </Stack>
   );

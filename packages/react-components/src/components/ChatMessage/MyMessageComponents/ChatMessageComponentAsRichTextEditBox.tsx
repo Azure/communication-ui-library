@@ -51,7 +51,7 @@ export type ChatMessageComponentAsRichTextEditBoxProps = {
   message: ChatMessage;
   strings: MessageThreadStrings;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  disableInlineImages: boolean;
+  onPaste?: (event: { content: DocumentFragment }) => void;
 };
 
 /**
@@ -66,7 +66,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
     strings,
     message,
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    disableInlineImages
+    onPaste
   } = props;
 
   const [textValue, setTextValue] = useState<string>(message.content || '');
@@ -223,7 +223,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
           /* @conditional-compile-remove(attachment-upload) */
           onRenderAttachmentUploads={onRenderAttachmentUploads}
           /* @conditional-compile-remove(rich-text-editor-image-upload) */
-          disableInlineImages={disableInlineImages}
+          onPaste={onPaste}
         />
       </Stack>
     );

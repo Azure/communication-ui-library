@@ -551,7 +551,7 @@ export type MessageThreadProps = {
 
   /* @conditional-compile-remove(rich-text-editor) */
   /**
-   * enables rich text editor for the edit box
+   * Options to enable rich text editor for the edit box
    *
    * @defaultValue `false`
    */
@@ -567,10 +567,9 @@ export type MessageThreadProps = {
 export interface RichTextEditorOptions {
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   /**
-   * Optional boolean to disable inline images in the text box.
-   * @defaultValue false
+   * Optional callback to handle paste event.
    */
-  disableInlineImages?: boolean;
+  onPaste?: (event: { content: DocumentFragment }) => void;
 }
 
 /**

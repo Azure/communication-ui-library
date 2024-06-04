@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { PluginEvent, PasteType } from 'roosterjs-content-model-types';
+import { PasteType, BeforePasteEvent } from 'roosterjs-content-model-types';
 import { removeImageElement } from './CopyPastePlugin';
 import { PluginEventType } from '../../utils/RichTextEditorUtils';
 
@@ -55,7 +55,7 @@ describe('removeImageElement should work correctly', () => {
     expect(fragment.getElementById(containerId)?.outerHTML).toEqual('<div id="container"><text></text></div>');
   });
 
-  const getPluginEvent = (fragment: DocumentFragment): PluginEvent => {
+  const getPluginEvent = (fragment: DocumentFragment): BeforePasteEvent => {
     return {
       eventType: PluginEventType.BeforePaste,
       clipboardData: {
