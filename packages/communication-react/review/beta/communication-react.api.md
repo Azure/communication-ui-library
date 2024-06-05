@@ -1791,7 +1791,7 @@ export type ChatCompositeOptions = {
     topic?: boolean;
     autoFocus?: 'sendBoxTextField';
     attachmentOptions?: AttachmentOptions;
-    richTextEditor?: boolean;
+    richTextEditor?: RichTextEditorOptions;
 };
 
 // @public
@@ -3387,7 +3387,7 @@ export type MessageThreadProps = {
     onDisplayDateTimeString?: (messageDate: Date) => string;
     mentionOptions?: MentionOptions;
     inlineImageOptions?: InlineImageOptions;
-    richTextEditor?: boolean | /* @conditional-compile-remove(rich-text-editor-image-upload) */ RichTextEditorOptions;
+    richTextEditor?: RichTextEditorOptions;
 };
 
 // @public
