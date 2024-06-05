@@ -270,14 +270,12 @@ export type CallWithChatCompositeOptions = {
     hideSpotlightButtons?: boolean;
   };
 
-  /* @conditional-compile-remove(rich-text-editor-composite-support) */
+  /* @conditional-compile-remove(rich-text-editor) @conditional-compile-remove(rich-text-editor-image-upload) @conditional-compile-remove(rich-text-editor-composite-support) */
   /**
-   * enables rich text editor for the edit box
-   * @defaultValue `false`
-   *
+   * Options to enable rich text editor for the edit box.
    * @beta
    */
-  richTextEditor?: boolean;
+  richTextEditor?: RichTextEditorOptions;
 };
 
 type CallWithChatScreenProps = {
