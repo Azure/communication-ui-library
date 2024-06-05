@@ -46,7 +46,7 @@ export interface NotificationBarProps {
   onClickPrimaryButton?: () => void;
 
   /**
-   * Callback called when the primary button inside notification bar is clicked.
+   * Callback called when the secondary button inside notification bar is clicked.
    */
   onClickSecondaryButton?: () => void;
 
