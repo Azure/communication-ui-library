@@ -8,7 +8,7 @@ import { ChatMessage } from '../../../types';
 /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
 import { AttachmentMetadata } from '@internal/acs-ui-common';
 import { MessageThreadStrings } from '../../MessageThread';
-/* @conditional-compile-remove(rich-text-editor-image-upload) */
+/* @conditional-compile-remove(rich-text-editor) @conditional-compile-remove(rich-text-editor-image-upload) */
 import { RichTextEditorOptions } from '../../MessageThread';
 import { ChatMessageComponentAsEditBox } from './ChatMessageComponentAsEditBox';
 /* @conditional-compile-remove(mention) */
@@ -46,22 +46,22 @@ export type ChatMessageComponentAsEditBoxPickerProps = {
   strings: MessageThreadStrings;
   /* @conditional-compile-remove(mention) */
   mentionLookupOptions?: MentionLookupOptions;
-  /* @conditional-compile-remove(rich-text-editor) */
-  richTextEditor?: boolean | /* @conditional-compile-remove(rich-text-editor-image-upload) */ RichTextEditorOptions;
+  /* @conditional-compile-remove(rich-text-editor) @conditional-compile-remove(rich-text-editor-image-upload) */
+  richTextEditor?: RichTextEditorOptions;
 };
 
 /**
  * @private
  */
 export const ChatMessageComponentAsEditBoxPicker = (props: ChatMessageComponentAsEditBoxPickerProps): JSX.Element => {
-  /* @conditional-compile-remove(rich-text-editor) */
+  /* @conditional-compile-remove(rich-text-editor) @conditional-compile-remove(rich-text-editor-image-upload) */
   const { richTextEditor } = props;
 
   const simpleEditBox = useMemo(() => {
     return <ChatMessageComponentAsEditBox {...props} />;
   }, [props]);
 
-  /* @conditional-compile-remove(rich-text-editor) */
+  /* @conditional-compile-remove(rich-text-editor) @conditional-compile-remove(rich-text-editor-image-upload) */
   if (richTextEditor) {
     return (
       <_ErrorBoundary fallback={simpleEditBox}>
@@ -69,7 +69,7 @@ export const ChatMessageComponentAsEditBoxPicker = (props: ChatMessageComponentA
           <ChatMessageComponentAsRichTextEditBox
             {...props}
             /* @conditional-compile-remove(rich-text-editor-image-upload) */
-            onPaste={isRichTextEditorOptions(richTextEditor) ? richTextEditor.onPaste : undefined}
+            onPaste={richTextEditor?.onPaste}
           />
         </Suspense>
       </_ErrorBoundary>
@@ -78,9 +78,3 @@ export const ChatMessageComponentAsEditBoxPicker = (props: ChatMessageComponentA
 
   return simpleEditBox;
 };
-
-/* @conditional-compile-remove(rich-text-editor-image-upload) */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function isRichTextEditorOptions(obj: any): obj is RichTextEditorOptions {
-  return obj && typeof obj === 'object' && 'onPaste' in obj;
-}

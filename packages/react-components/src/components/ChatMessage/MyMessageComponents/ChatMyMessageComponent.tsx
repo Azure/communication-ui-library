@@ -4,7 +4,7 @@
 import { _formatString } from '@internal/acs-ui-common';
 import React, { useCallback, useState } from 'react';
 import { MessageThreadStrings, UpdateMessageCallback } from '../../MessageThread';
-/* @conditional-compile-remove(rich-text-editor-image-upload) */
+/* @conditional-compile-remove(rich-text-editor) @conditional-compile-remove(rich-text-editor-image-upload) */
 import { RichTextEditorOptions } from '../../MessageThread';
 import { ChatMessage, ComponentSlotStyle, OnRenderAvatarCallback } from '../../../types';
 /* @conditional-compile-remove(data-loss-prevention) */
@@ -97,12 +97,12 @@ type ChatMyMessageComponentProps = {
    * @beta
    */
   actionsForAttachment?: (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[];
-  /* @conditional-compile-remove(rich-text-editor) */
+  /* @conditional-compile-remove(rich-text-editor) @conditional-compile-remove(rich-text-editor-image-upload) */
   /**
    * Optional flag to enable rich text editor.
    * @beta
    */
-  richTextEditor?: boolean | /* @conditional-compile-remove(rich-text-editor-image-upload) */ RichTextEditorOptions;
+  richTextEditor?: RichTextEditorOptions;
 };
 
 /**

@@ -117,7 +117,7 @@ export const FluentChatMyMessageComponent = (props: FluentChatMessageComponentWr
       actionsForAttachment,
       // eslint-disable-next-line react-hooks/exhaustive-deps
       new Date().toDateString(),
-      /* @conditional-compile-remove(rich-text-editor) */
+      /* @conditional-compile-remove(rich-text-editor) @conditional-compile-remove(rich-text-editor-image-upload) */
       richTextEditor
     ]
   );

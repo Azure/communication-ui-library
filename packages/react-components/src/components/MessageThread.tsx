@@ -549,16 +549,15 @@ export type MessageThreadProps = {
    */
   inlineImageOptions?: InlineImageOptions;
 
-  /* @conditional-compile-remove(rich-text-editor) */
+  /* @conditional-compile-remove(rich-text-editor @conditional-compile-remove(rich-text-editor-image-upload) */
   /**
-   * Options to enable rich text editor for the edit box
-   *
-   * @defaultValue `false`
+   * Options to enable rich text editor for the edit box.
+   * @beta
    */
-  richTextEditor?: boolean | /* @conditional-compile-remove(rich-text-editor-image-upload) */ RichTextEditorOptions;
+  richTextEditor?: RichTextEditorOptions;
 };
 
-/* @conditional-compile-remove(rich-text-editor-image-upload) */
+/* @conditional-compile-remove(rich-text-editor) @conditional-compile-remove(rich-text-editor-image-upload) */
 /**
  * Options for configuring the rich text editor.
  *
@@ -710,8 +709,8 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
     attachmentOptions,
     /* @conditional-compile-remove(file-sharing-acs) */
     onRenderAttachmentDownloads,
-    /* @conditional-compile-remove(rich-text-editor) */
-    richTextEditor = false
+    /* @conditional-compile-remove(rich-text-editor) @conditional-compile-remove(rich-text-editor-image-upload) */
+    richTextEditor
   } = props;
   // We need this state to wait for one tick and scroll to bottom after messages have been initialized.
   // Otherwise chatScrollDivRef.current.clientHeight is wrong if we scroll to bottom before messages are initialized.
@@ -743,7 +742,7 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
   const previousMessagesRef = useRef<Message[]>([]);
   // an aria label for Narrator to notify when a message is deleted
   const [deletedMessageAriaLabel, setDeletedMessageAriaLabel] = useState<string | undefined>(undefined);
-  /* @conditional-compile-remove(rich-text-editor) */
+  /* @conditional-compile-remove(rich-text-editor) @conditional-compile-remove(rich-text-editor-image-upload) */
   useEffect(() => {
     // if rich text editor is enabled, the rich text editor component should be loaded early for good UX
     if (richTextEditor !== undefined && richTextEditor) {

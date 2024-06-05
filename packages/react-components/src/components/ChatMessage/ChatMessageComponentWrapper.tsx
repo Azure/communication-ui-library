@@ -4,7 +4,7 @@
 import { MessageStatus } from '@internal/acs-ui-common';
 import React, { useMemo } from 'react';
 import { MessageProps, MessageRenderer, MessageThreadStyles, _ChatMessageProps } from '../MessageThread';
-/* @conditional-compile-remove(rich-text-editor-image-upload) */
+/* @conditional-compile-remove(rich-text-editor) @conditional-compile-remove(rich-text-editor-image-upload) */
 import { RichTextEditorOptions } from '../MessageThread';
 import { ChatMessage, OnRenderAvatarCallback } from '../../types';
 /* @conditional-compile-remove(data-loss-prevention) */
@@ -67,8 +67,8 @@ export type ChatMessageComponentWrapperProps = _ChatMessageProps & {
    * Optional callback to define custom actions for attachments.
    */
   actionsForAttachment?: (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[];
-  /* @conditional-compile-remove(rich-text-editor) */
-  richTextEditor?: boolean | /* @conditional-compile-remove(rich-text-editor-image-upload) */ RichTextEditorOptions;
+  /* @conditional-compile-remove(rich-text-editor) @conditional-compile-remove(rich-text-editor-image-upload) */
+  richTextEditor?: RichTextEditorOptions;
 };
 
 /**
