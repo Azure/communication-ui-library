@@ -25,11 +25,11 @@ export const VideoTileExample: () => JSX.Element = () => {
   const videoStyles = { root: { '& video': { borderRadius: '0rem' } } };
   const [videoStreams, setVideoStreams] = useState<(HTMLElement | null)[]>([]);
   const [isVideoOn, setIsVideoOn] = useState(false);
-  const onStartVideo = async () => {
+  const onStartVideo = async (): Promise<void> => {
     const videoStreamElement = await renderVideoStream();
     setVideoStreams([videoStreamElement]);
   };
-  const onStopVideo = () => {
+  const onStopVideo = (): void => {
     setVideoStreams([]);
   };
 
