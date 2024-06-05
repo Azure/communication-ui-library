@@ -193,8 +193,7 @@ const onRenderParticipantDefault = (
               )
             }
             {pinnedParticipants && pinnedParticipants?.includes(participant.userId) && (
-              <Icon iconName="VideoTilePinned" className={iconStyles} />
-              //VideoTilePinned: <Pin16Filled />,
+              <Icon iconName="ParticipantItemPinned" className={iconStyles} />
             )}
           </Stack>
         )

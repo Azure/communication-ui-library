@@ -1011,7 +1011,6 @@ export type CallParticipantListParticipant = ParticipantListParticipant & {
     raisedHand?: RaisedHand;
     reaction?: Reaction;
     spotlight?: Spotlight;
-    isPinned?: boolean;
 };
 
 // @beta
@@ -2556,6 +2555,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     UnsupportedEnvironmentWarning: React_2.JSX.Element;
     BrowserPermissionDeniedError: React_2.JSX.Element;
     VideoTilePinned: React_2.JSX.Element;
+    ParticipantItemPinned: React_2.JSX.Element;
     VideoTileMoreOptions: React_2.JSX.Element;
     VideoTileScaleFit: React_2.JSX.Element;
     VideoTileScaleFill: React_2.JSX.Element;
@@ -2721,6 +2721,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     UnsupportedEnvironmentWarning: React_2.JSX.Element;
     BrowserPermissionDeniedError: React_2.JSX.Element;
     VideoTilePinned: React_2.JSX.Element;
+    ParticipantItemPinned: React_2.JSX.Element;
     VideoTileMoreOptions: React_2.JSX.Element;
     VideoTileScaleFit: React_2.JSX.Element;
     VideoTileScaleFill: React_2.JSX.Element;
