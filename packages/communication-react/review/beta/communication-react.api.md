@@ -122,7 +122,8 @@ export interface ActiveErrorMessage {
 // @beta
 export interface ActiveNotification {
     autoDismiss?: boolean;
-    onClick?: () => void;
+    onClickPrimaryButton?: () => void;
+    onClickSecondaryButton?: () => void;
     onDismiss?: () => void;
     type: NotificationType;
 }
@@ -3537,16 +3538,18 @@ export interface NotificationBarProps {
     autoDismiss?: boolean;
     notificationBarIconProps?: IIconProps;
     notificationBarStrings?: NotificationBarStrings;
-    onClick?: () => void;
+    onClickPrimaryButton?: () => void;
+    onClickSecondaryButton?: () => void;
     onDismiss?: () => void;
     showStackedEffect?: boolean;
 }
 
 // @beta
 export interface NotificationBarStrings {
-    buttonLabel?: string;
     closeButtonAriaLabel: string;
     message?: string;
+    primaryButtonLabel?: string;
+    secondaryButtonLabel?: string;
     title: string;
 }
 
