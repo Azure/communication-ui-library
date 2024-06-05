@@ -18,10 +18,10 @@ import { parseNewChangeFiles } from "./utils.mjs";
 async function main() {
   const [base, head] = parseArgs(process.argv);
   console.log(base, head)
-  const gitLogStdoutFiles = await exec_output(`git log --name-status main..vhuseinova/changelog-fix`);
+  const gitLogStdoutStableChangeFiles = await exec_output(`git log --name-status ${base}..${head} -- ${path.join(REPO_ROOT, 'change/')}`);
+  const gitLogStdoutFiles = await exec_output(`git log ${base}..${head} -- ${path.join(REPO_ROOT, 'change/')}`);
   console.log('gitLogStdoutFiles', gitLogStdoutFiles)
-  const gitLogStdoutStableChangeFiles = await exec_output(`git log --name-status main..vhuseinova/changelog-fix -- ${path.join(REPO_ROOT, 'change/')}`);
-  const gitLogStdoutBetaChangeFiles = await exec_output(`git log --name-status main..vhuseinova/changelog-fix -- ${path.join(REPO_ROOT, 'change-beta/')}`);
+  const gitLogStdoutBetaChangeFiles = await exec_output(`git log --name-status ${base}..${head} -- ${path.join(REPO_ROOT, 'change-beta/')}`);
 
   const newStableChangeFiles = parseNewChangeFiles(gitLogStdoutStableChangeFiles);
   console.log(`Found ${newStableChangeFiles?.length ?? 0} new stable changefiles.`);
