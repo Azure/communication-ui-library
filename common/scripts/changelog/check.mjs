@@ -19,14 +19,12 @@ async function main() {
   const [base, head] = parseArgs(process.argv);
   console.log(base, head)
   const gitLogStdoutStableChangeFiles = await exec_output(`git log --name-status ${base}..${head} -- ${path.join(REPO_ROOT, 'change/')}`);
-  const gitLogStdoutFiles = await exec_output(`git log ${base}..${head} -- ${path.join(REPO_ROOT, 'change/')}`);
-  console.log('gitLogStdoutFiles', gitLogStdoutFiles)
   const gitLogStdoutBetaChangeFiles = await exec_output(`git log --name-status ${base}..${head} -- ${path.join(REPO_ROOT, 'change-beta/')}`);
 
   const newStableChangeFiles = parseNewChangeFiles(gitLogStdoutStableChangeFiles);
-  console.log(`Found ${newStableChangeFiles?.length ?? 0} new stable changefiles.`);
+  console.log(`Found ${newStableChangeFiles?.length ?? 0} new stable changefiles.`, gitLogStdoutStableChangeFiles);
   const newBetaChangeFiles = parseNewChangeFiles(gitLogStdoutBetaChangeFiles);
-  console.log(`Found ${newBetaChangeFiles?.length ?? 0} new beta changefiles.`);
+  console.log(`Found ${newBetaChangeFiles?.length ?? 0} new beta changefiles.`, gitLogStdoutBetaChangeFiles);
   const newChangeFilesCount = (newStableChangeFiles?.length ?? 0) + (newBetaChangeFiles?.length ?? 0);
 
   if (newChangeFilesCount === 0) {
