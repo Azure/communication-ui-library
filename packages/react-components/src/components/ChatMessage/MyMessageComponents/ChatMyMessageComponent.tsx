@@ -4,6 +4,8 @@
 import { _formatString } from '@internal/acs-ui-common';
 import React, { useCallback, useState } from 'react';
 import { MessageThreadStrings, UpdateMessageCallback } from '../../MessageThread';
+/* @conditional-compile-remove(rich-text-editor) */
+import { RichTextEditorOptions } from '../../MessageThread';
 import { ChatMessage, ComponentSlotStyle, OnRenderAvatarCallback } from '../../../types';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '../../../types';
@@ -100,7 +102,7 @@ type ChatMyMessageComponentProps = {
    * Optional flag to enable rich text editor.
    * @beta
    */
-  richTextEditor?: boolean;
+  richTextEditorOptions?: RichTextEditorOptions;
 };
 
 /**
@@ -177,7 +179,7 @@ export const ChatMyMessageComponent = (props: ChatMyMessageComponentProps): JSX.
         /* @conditional-compile-remove(mention) */
         mentionLookupOptions={props.mentionOptions?.lookupOptions}
         /* @conditional-compile-remove(rich-text-editor) */
-        richTextEditor={props.richTextEditor}
+        richTextEditorOptions={props.richTextEditorOptions}
       />
     );
   } else {
