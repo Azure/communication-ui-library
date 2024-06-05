@@ -594,6 +594,7 @@ const MessageThreadStory = (args): JSX.Element => {
     }
   };
 
+  //TODO: Remove this function when the image upload functionality is implemented
   const removeImageTags = useCallback((event: { content: DocumentFragment }) => {
     event.content.querySelectorAll('img').forEach((image) => {
       // If the image is the only child of its parent, remove all the parents of this img element.
