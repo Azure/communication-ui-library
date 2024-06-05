@@ -91,9 +91,9 @@ export const createDefaultChatHandlers = memoizeOne(
         /* @conditional-compile-remove(file-sharing-acs) */
         options?: MessageOptions
       ) {
-        /* @conditional-compile-remove(file-sharing-acs) */
         const updateMessageOptions = {
           content,
+          /* @conditional-compile-remove(file-sharing-acs) */
           metadata: {
             ...options?.metadata,
             fileSharingMetadata: JSON.stringify(options?.attachments)
@@ -101,7 +101,6 @@ export const createDefaultChatHandlers = memoizeOne(
         };
         await chatThreadClient.updateMessage(
           messageId,
-          /* @conditional-compile-remove(file-sharing-acs) */
           updateMessageOptions
         );
       },
