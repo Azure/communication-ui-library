@@ -52,6 +52,8 @@ export interface RichTextInputBoxComponentProps {
   isHorizontalLayoutDisabled?: boolean;
   autoFocus?: 'sendBoxTextField';
   onTyping?: () => Promise<void>;
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  onPaste?: (event: { content: DocumentFragment }) => void;
 }
 
 /**
@@ -201,6 +203,8 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
               styles={richTextEditorStyle}
               autoFocus={autoFocus}
               onContentModelUpdate={onContentModelUpdate}
+              /* @conditional-compile-remove(rich-text-editor-image-upload) */
+              onPaste={props.onPaste}
             />
           </Stack.Item>
           {/* @conditional-compile-remove(file-sharing-acs) */ onRenderAttachmentUploads && onRenderAttachmentUploads()}

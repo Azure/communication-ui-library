@@ -50,6 +50,8 @@ export type ChatMessageComponentAsRichTextEditBoxProps = {
   ) => void;
   message: ChatMessage;
   strings: MessageThreadStrings;
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  onPaste?: (event: { content: DocumentFragment }) => void;
 };
 
 /**
@@ -58,7 +60,14 @@ export type ChatMessageComponentAsRichTextEditBoxProps = {
 export const ChatMessageComponentAsRichTextEditBox = (
   props: ChatMessageComponentAsRichTextEditBoxProps
 ): JSX.Element => {
-  const { onCancel, onSubmit, strings, message } = props;
+  const {
+    onCancel,
+    onSubmit,
+    strings,
+    message,
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    onPaste
+  } = props;
 
   const [textValue, setTextValue] = useState<string>(message.content || '');
   /* @conditional-compile-remove(file-sharing-acs) */
@@ -213,6 +222,8 @@ export const ChatMessageComponentAsRichTextEditBox = (
           isHorizontalLayoutDisabled={true}
           /* @conditional-compile-remove(file-sharing-acs) */
           onRenderAttachmentUploads={onRenderAttachmentUploads}
+          /* @conditional-compile-remove(rich-text-editor-image-upload) */
+          onPaste={onPaste}
         />
       </Stack>
     );
