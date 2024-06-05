@@ -549,7 +549,7 @@ export type MessageThreadProps = {
    */
   inlineImageOptions?: InlineImageOptions;
 
-  /* @conditional-compile-remove(rich-text-editor @conditional-compile-remove(rich-text-editor-image-upload) */
+  /* @conditional-compile-remove(rich-text-editor) @conditional-compile-remove(rich-text-editor-image-upload) */
   /**
    * Options to enable rich text editor for the edit box.
    * @beta
