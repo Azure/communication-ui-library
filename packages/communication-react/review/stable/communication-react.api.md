@@ -652,6 +652,9 @@ export interface CallCompositeStrings {
     peopleButtonLabel: string;
     peoplePaneMoreButtonAriaLabel: string;
     peoplePaneTitle: string;
+    pinParticipantForMe: string;
+    pinParticipantForMeLimitReached: string;
+    pinParticipantMenuItemAriaLabel: string;
     privacyPolicy: string;
     rejoinCallButtonLabel: string;
     removeBackgroundEffectButtonLabel?: string;
@@ -704,6 +707,8 @@ export interface CallCompositeStrings {
     twoParticipantLeftNoticeString: string;
     unableToStartVideoEffect?: string;
     unnamedParticipantString: string;
+    unpinParticipantForMe: string;
+    unpinParticipantMenuItemAriaLabel: string;
     videoEffectsPaneBackgroundSelectionTitle: string;
     videoEffectsPaneTitle: string;
 }
@@ -2177,6 +2182,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     VideoTileMicOff: React_2.JSX.Element;
     DialpadBackspace: React_2.JSX.Element;
     VideoTilePinned: React_2.JSX.Element;
+    ParticipantItemPinned: React_2.JSX.Element;
     VideoTileMoreOptions: React_2.JSX.Element;
     VideoTileScaleFit: React_2.JSX.Element;
     VideoTileScaleFill: React_2.JSX.Element;
@@ -2310,6 +2316,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     ParticipantItemSpotlighted: React_2.JSX.Element;
     DialpadBackspace: React_2.JSX.Element;
     VideoTilePinned: React_2.JSX.Element;
+    ParticipantItemPinned: React_2.JSX.Element;
     VideoTileMoreOptions: React_2.JSX.Element;
     VideoTileScaleFit: React_2.JSX.Element;
     VideoTileScaleFill: React_2.JSX.Element;
@@ -3103,6 +3110,7 @@ export type ParticipantListProps = {
     styles?: ParticipantListStyles;
     showParticipantOverflowTooltip?: boolean;
     participantAriaLabelledBy?: string;
+    pinnedParticipants?: string[];
 };
 
 // @public
