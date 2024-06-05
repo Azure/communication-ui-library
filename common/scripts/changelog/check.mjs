@@ -18,6 +18,8 @@ import { parseNewChangeFiles } from "./utils.mjs";
 async function main() {
   const [base, head] = parseArgs(process.argv);
   console.log(base, head)
+  const gitstatus = await exec_output(`git status`);
+  console.log(gitstatus);
   const gitLogStdoutStableChangeFiles = await exec_output(`git log --name-status ${base}..${head} -- ${path.join(REPO_ROOT, 'change/')}`);
   const gitLogStdoutBetaChangeFiles = await exec_output(`git log --name-status ${base}..${head} -- ${path.join(REPO_ROOT, 'change-beta/')}`);
 
