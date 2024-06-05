@@ -46,7 +46,8 @@ const NotificationBarStory = (args): JSX.Element => {
     title: 'Poor Network Quality',
     closeButtonAriaLabel: 'Close',
     message: 'Join this call from your phone for better sound. You can continue viewing the meeting on this device.',
-    buttonLabel: 'Join by Phone'
+    primaryButtonLabel: 'Join by Phone',
+    secondaryButtonLabel: 'I will wait :)'
   };
 
   return (
@@ -54,7 +55,8 @@ const NotificationBarStory = (args): JSX.Element => {
       <NotificationBarComponent
         notificationBarStrings={strings}
         notificationBarIconProps="ErrorBarCallNetworkQualityLow"
-        onClick={() => alert('joining with phone')}
+        onClickPrimaryButton={() => alert('Joining with phone')}
+        onClickSecondaryButton={() => alert('I will wait')}
         {...args}
       />
     </Stack>
