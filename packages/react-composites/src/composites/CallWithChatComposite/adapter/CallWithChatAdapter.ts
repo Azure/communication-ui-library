@@ -42,7 +42,7 @@ import { DtmfTone } from '@azure/communication-calling';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 import { SendMessageOptions } from '@azure/communication-chat';
 import { JoinCallOptions } from '../../CallComposite/adapter/CallAdapter';
-/* @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(file-sharing-acs) */
 import { MessageOptions } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(PSTN-calls) */
 import { PhoneNumberIdentifier } from '@azure/communication-common';
@@ -66,7 +66,6 @@ import { SpotlightChangedListener } from '../../CallComposite/adapter/CallAdapte
 
 import { VideoBackgroundImage, VideoBackgroundEffect } from '../../CallComposite';
 
-/* @conditional-compile-remove(end-of-call-survey) */
 import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
 
 /**
@@ -338,7 +337,7 @@ export interface CallWithChatAdapterManagement {
    */
   sendMessage(
     content: string,
-    options?: SendMessageOptions | /* @conditional-compile-remove(attachment-upload) */ MessageOptions
+    options?: SendMessageOptions | /* @conditional-compile-remove(file-sharing-acs) */ MessageOptions
   ): Promise<void>;
   /**
    * Send a read receipt for a message.
@@ -360,7 +359,7 @@ export interface CallWithChatAdapterManagement {
   updateMessage(
     messageId: string,
     content: string,
-    options?: Record<string, string> | /* @conditional-compile-remove(attachment-upload) */ MessageOptions
+    options?: Record<string, string> | /* @conditional-compile-remove(file-sharing-acs) */ MessageOptions
   ): Promise<void>;
   /**
    * Delete a message in the thread.
@@ -464,7 +463,6 @@ export interface CallWithChatAdapterManagement {
    * @public
    */
   updateSelectedVideoBackgroundEffect(selectedVideoBackground: VideoBackgroundEffect): void;
-  /* @conditional-compile-remove(end-of-call-survey) */
   /**
    * Send the end of call survey result
    *
@@ -486,6 +484,11 @@ export interface CallWithChatAdapterManagement {
    * Stop all spotlights
    */
   stopAllSpotlight(): Promise<void>;
+  /* @conditional-compile-remove(soft-mute) */
+  /**
+   * Mute a participant
+   */
+  muteParticipant(userIds: string): Promise<void>;
 }
 
 /**

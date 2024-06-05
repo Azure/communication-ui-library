@@ -44,11 +44,11 @@ export const richTextEditorWrapperStyle = (theme: Theme, addTopOffset: boolean):
 
       '& tr': {
         background: 'transparent',
-        border: `1px solid ${theme.palette.neutralLight}`,
+        border: `1px solid ${theme.palette.neutralTertiaryAlt}`,
 
         '& td': {
           background: 'transparent',
-          border: `1px solid ${theme.palette.neutralLight}`,
+          border: `1px solid ${theme.palette.neutralTertiaryAlt}`,
           wordBreak: 'normal',
           padding: '0.125rem 0.25rem',
           verticalAlign: 'top'
@@ -254,14 +254,11 @@ export const sendBoxRichTextEditorStyle = (isExpanded: boolean): RichTextEditorS
  */
 export const insertTableMenuCellButtonStyles = (theme: Theme): IStyle => {
   return {
-    width: '1rem',
-    height: '1rem',
-    border: `solid 0.0625rem ${theme.palette.neutralTertiaryAlt}`,
-    display: 'inline-block',
+    width: '16px',
+    height: '16px',
+    border: `solid 1px ${theme.palette.neutralTertiaryAlt}`,
     cursor: 'pointer',
-    background: 'transparent',
-    // include border into width value as the parent element has fixed width
-    boxSizing: 'border-box'
+    background: 'transparent'
   };
 };
 
@@ -278,7 +275,7 @@ export const insertTableMenuCellButtonSelectedStyles = (theme: Theme): IStyle =>
  * @private
  */
 export const insertTableMenuTablePane = mergeStyles({
-  padding: '0.5rem 0.625rem 0.75rem 0.625rem',
+  padding: '8px 10px 12px 10px',
   boxSizing: 'content-box',
   minWidth: 'auto'
 });
@@ -288,12 +285,9 @@ export const insertTableMenuTablePane = mergeStyles({
  */
 export const insertTableMenuFocusZone = (theme: Theme): string => {
   return mergeStyles({
-    lineHeight: '12px',
-    // fixed width is required to show columns in a grid correctly
-    width: '5rem',
-    border: `solid 0.0625rem ${theme.palette.neutralTertiaryAlt}`,
-    // don't include border into width value as otherwise it may be broken when zoom value is changed
-    boxSizing: 'content-box'
+    display: 'inline-grid',
+    gridTemplateColumns: 'auto auto auto auto auto',
+    border: `solid 1px ${theme.palette.neutralTertiaryAlt}`
   });
 };
 

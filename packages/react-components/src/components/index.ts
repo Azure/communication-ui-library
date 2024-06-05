@@ -197,7 +197,7 @@ export type {
 } from './PictureInPictureInPicture/PictureInPictureInPictureTile';
 
 export * from './Drawer';
-/* @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(file-sharing-acs) */
 export type { SendBoxErrorBarError } from './SendBoxErrorBar';
 export * from './Attachment/AttachmentCard';
 export * from './Attachment/AttachmentCardGroup';
@@ -205,6 +205,7 @@ export * from './ModalClone/ModalClone';
 export * from './Attachment/AttachmentDownloadCards';
 export type { _AttachmentUploadCardsStrings } from './Attachment/AttachmentUploadCards';
 
+/* @conditional-compile-remove(file-sharing-acs) */
 export type {
   AttachmentOptions,
   AttachmentUploadOptions,
@@ -215,7 +216,7 @@ export type {
   AttachmentUploadTask
 } from '../types/Attachment';
 
-/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(file-sharing-acs) */
 export type { AttachmentMenuAction, AttachmentDownloadOptions } from '../types/Attachment';
 
 export { _useContainerHeight, _useContainerWidth } from './utils/responsive';
@@ -225,15 +226,15 @@ export type { _ComplianceBannerProps, _ComplianceBannerStrings } from './Complia
 export { Dialpad } from './Dialpad/Dialpad';
 export type { DialpadProps, DialpadStrings, DialpadStyles, DtmfTone } from './Dialpad/Dialpad';
 export type { DialpadMode, LongPressTrigger } from './Dialpad/Dialpad';
-/* @conditional-compile-remove(end-of-call-survey) */
+
 export { _StarSurvey } from './Survey/StarSurvey/StarSurvey';
-/* @conditional-compile-remove(end-of-call-survey) */
+
 export type { _StarSurveyProps, _StarSurveyStrings } from './Survey/StarSurvey/StarSurvey';
-/* @conditional-compile-remove(end-of-call-survey) */
+
 export * from './Survey/SurveyTypes';
-/* @conditional-compile-remove(end-of-call-survey) */
+
 export { _TagsSurvey } from './Survey/TagsSurvey/TagsSurvey';
-/* @conditional-compile-remove(end-of-call-survey) */
+
 export type { _TagsSurveyProps, _TagsSurveyStrings, _IssueCategory, _SurveyTag } from './Survey/TagsSurvey/TagsSurvey';
 /* @conditional-compile-remove(PSTN-calls) */
 export { HoldButton } from './HoldButton';

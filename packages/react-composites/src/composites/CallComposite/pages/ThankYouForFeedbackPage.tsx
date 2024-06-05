@@ -2,16 +2,11 @@
 // Licensed under the MIT License.
 
 import React from 'react';
-/* @conditional-compile-remove(end-of-call-survey) */
 import { mergeStyles, Stack, Text } from '@fluentui/react';
-/* @conditional-compile-remove(end-of-call-survey) */
 import { CallCompositeIcon, CallCompositeIcons } from '../../common/icons';
-/* @conditional-compile-remove(end-of-call-survey) */
 import { containerItemGap, containerStyle, titleStyles } from '../styles/NoticePage.styles';
-/* @conditional-compile-remove(end-of-call-survey) */
 import { useLocale } from '../../localization';
 
-/* @conditional-compile-remove(end-of-call-survey) */
 /**
  * @private
  */
@@ -23,12 +18,8 @@ export interface ThankYouForFeedbackPageProps {
  * Page shown after the survey is submitted.
  * @private
  */
-export function ThankYouForFeedbackPage(
-  /* @conditional-compile-remove(end-of-call-survey) */ props: ThankYouForFeedbackPageProps
-): JSX.Element {
-  /* @conditional-compile-remove(end-of-call-survey) */
+export function ThankYouForFeedbackPage(props: ThankYouForFeedbackPageProps): JSX.Element {
   const strings = useLocale().strings.call;
-  /* @conditional-compile-remove(end-of-call-survey) */
   return (
     <Stack verticalFill verticalAlign="center" horizontalAlign="center" data-ui-id={'thank-you-page'} aria-atomic>
       <Stack className={mergeStyles(containerStyle)} tokens={containerItemGap}>
@@ -39,5 +30,4 @@ export function ThankYouForFeedbackPage(
       </Stack>
     </Stack>
   );
-  return <></>;
 }

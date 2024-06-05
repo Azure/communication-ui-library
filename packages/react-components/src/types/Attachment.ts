@@ -4,6 +4,7 @@
 import { ChatMessage } from './ChatMessage';
 import { AttachmentMetadata } from '@internal/acs-ui-common';
 
+/* @conditional-compile-remove(file-sharing-acs) */
 /**
  * @beta
  *

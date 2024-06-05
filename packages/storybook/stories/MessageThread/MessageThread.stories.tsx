@@ -350,7 +350,6 @@ const Docs: () => JSX.Element = () => {
       <div ref={refDisplayAttachments}>
         <Heading>Display Messages with Attachments</Heading>
         <Subtitle>Basic Usage: Default Attachment Rendering</Subtitle>
-        <DetailedBetaBanner />
         <Description>
           The MessageThread component renders message attachments without any additional configuration. Simply provide a
           list of `ChatMessages` with attachments of type `AttachmentMetadata` and the component will render the message

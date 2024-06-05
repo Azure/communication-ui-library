@@ -149,9 +149,14 @@ class ProxyTeamsCaptions implements ProxyHandler<TeamsCaptions> {
       case 'startCaptions':
         return this._context.withAsyncErrorTeedToState(async (...args: Parameters<TeamsCaptions['startCaptions']>) => {
           this._context.setStartCaptionsInProgress(this._call.id, true);
-          const ret = await target.startCaptions(...args);
-          this._context.setSelectedSpokenLanguage(this._call.id, args[0]?.spokenLanguage ?? 'en-us');
-          return ret;
+          try {
+            const ret = await target.startCaptions(...args);
+            this._context.setSelectedSpokenLanguage(this._call.id, args[0]?.spokenLanguage ?? 'en-us');
+            return ret;
+          } catch (e) {
+            this._context.setStartCaptionsInProgress(this._call.id, false);
+            throw e;
+          }
         }, 'Call.feature');
         break;
       case 'stopCaptions':
@@ -204,9 +209,14 @@ class ProxyCaptions implements ProxyHandler<Captions> {
       case 'startCaptions':
         return this._context.withAsyncErrorTeedToState(async (...args: Parameters<TeamsCaptions['startCaptions']>) => {
           this._context.setStartCaptionsInProgress(this._call.id, true);
-          const ret = await target.startCaptions(...args);
-          this._context.setSelectedSpokenLanguage(this._call.id, args[0]?.spokenLanguage ?? 'en-us');
-          return ret;
+          try {
+            const ret = await target.startCaptions(...args);
+            this._context.setSelectedSpokenLanguage(this._call.id, args[0]?.spokenLanguage ?? 'en-us');
+            return ret;
+          } catch (e) {
+            this._context.setStartCaptionsInProgress(this._call.id, false);
+            throw e;
+          }
         }, 'Call.feature');
         break;
       case 'stopCaptions':
