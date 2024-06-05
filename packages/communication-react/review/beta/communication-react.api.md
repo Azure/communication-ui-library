@@ -1401,7 +1401,7 @@ export type CallWithChatCompositeOptions = {
     spotlight?: {
         hideSpotlightButtons?: boolean;
     };
-    richTextEditor?: boolean;
+    richTextEditor?: RichTextEditorOptions;
 };
 
 // @public
