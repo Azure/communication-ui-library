@@ -1,6 +1,12 @@
-import { FluentThemeProvider, StreamMedia, VideoTile, VideoTileStylesProps } from '@azure/communication-react';
-import React from 'react';
-import { useVideoStreams } from '../../utils';
+import {
+  CameraButton,
+  FluentThemeProvider,
+  StreamMedia,
+  VideoTile,
+  VideoTileStylesProps
+} from '@azure/communication-react';
+import React, { useState } from 'react';
+import { renderVideoStream } from '../../utils';
 
 export const VideoTileExample: () => JSX.Element = () => {
   const customStyles: VideoTileStylesProps = {
@@ -17,8 +23,17 @@ export const VideoTileExample: () => JSX.Element = () => {
     }
   };
   const videoStyles = { root: { '& video': { borderRadius: '0rem' } } };
+  const [videoStreams, setVideoStreams] = useState<(HTMLElement | null)[]>([]);
+  const [isVideoOn, setIsVideoOn] = useState(false);
+  const onStartVideo = async () => {
+    const videoStreamElement = await renderVideoStream();
+    setVideoStreams([videoStreamElement]);
+  };
+  const onStopVideo = () => {
+    setVideoStreams([]);
+  };
 
-  const videoStreamElement = useVideoStreams(1)[0];
+  const videoStreamElement = videoStreams[0];
 
   return (
     <FluentThemeProvider>
@@ -32,6 +47,18 @@ export const VideoTileExample: () => JSX.Element = () => {
         isMuted={true}
         styles={customStyles}
       />
+      <CameraButton
+        onClick={() => {
+          if (videoStreams[0]) {
+            onStopVideo();
+            setIsVideoOn(false);
+          } else {
+            onStartVideo();
+            setIsVideoOn(true);
+          }
+        }}
+        checked={isVideoOn}
+      ></CameraButton>
     </FluentThemeProvider>
   );
 };
