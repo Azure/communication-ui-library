@@ -24,7 +24,7 @@ export const MessageThreadWithRichTextEditorExample: () => JSX.Element = () => {
 
   return (
     <FluentThemeProvider>
-      <MessageThread userId={'1'} richTextEditor={true} messages={messages} onUpdateMessage={onUpdateMessage} />
+      <MessageThread userId={'1'} richTextEditor={{}} messages={messages} onUpdateMessage={onUpdateMessage} />
     </FluentThemeProvider>
   );
 };
