@@ -18,7 +18,8 @@ import {
   phoneInfoInctructionLine,
   phoneInfoStep,
   stepTextStyle,
-  infoConnectionLinkStyle
+  infoConnectionLinkStyle,
+  phoneInfoIconStyle
 } from './styles/TeamsMeetingConferenceInfo';
 /* @conditional-compile-remove(teams-meeting-conference) */
 import { _preventDismissOnEvent } from '@internal/acs-ui-common';
@@ -26,19 +27,8 @@ import { _preventDismissOnEvent } from '@internal/acs-ui-common';
 import { useLocale } from '../localization';
 /* @conditional-compile-remove(teams-meeting-conference) */
 import { isPossiblePhoneNumber, parsePhoneNumber } from 'libphonenumber-js';
-
 /* @conditional-compile-remove(teams-meeting-conference) */
-/**
- * @beta
- * Information for conference phone info
- */
-export interface ConferencePhoneInfo {
-  phoneNumber: string;
-  conferenceId: string;
-  isTollFree: boolean;
-  country?: string;
-  city?: string;
-}
+import { _pxToRem } from '@internal/acs-ui-common';
 
 /* @conditional-compile-remove(teams-meeting-conference) */
 /**
@@ -63,13 +53,21 @@ export interface MeetingConferencePhoneInfoModalStrings {
    */
   meetingConferencePhoneInfoModalWait?: string;
   /**
-   * Tool Free Phone Label
+   * Toll Free Phone Label
    */
   meetingConferencePhoneInfoModalTollFree?: string;
   /**
-   * Tool Phone Label
+   * Toll Free Phone Label without geo data
+   */
+  meetingConferencePhoneInfoModalTollFreeWithoutGeoData?: string;
+  /**
+   * Toll Phone Label
    */
   meetingConferencePhoneInfoModalToll?: string;
+  /**
+   * Toll Phone Label without geo data
+   */
+  meetingConferencePhoneInfoModalTollWithoutGeoData?: string;
   /**
    * No phone number available message
    */
@@ -108,94 +106,85 @@ export const MeetingConferencePhoneInfoModal = (props: MeetingConferencePhoneInf
 
   return (
     <>
-      {
-        <Modal
-          titleAriaId={strings?.meetingConferencePhoneInfoModalTitle}
-          isOpen={showModal}
-          onDismiss={onDismiss}
-          isBlocking={true}
-          styles={PhoneInfoModalStyle}
-        >
-          <Stack horizontal horizontalAlign="space-between" verticalAlign="center" className={titleContainerClassName}>
-            <Text className={titleClassName}>{strings?.meetingConferencePhoneInfoModalTitle}</Text>
-            <IconButton
-              iconProps={{ iconName: 'Cancel' }}
-              ariaLabel={strings?.meetingConferencePhoneInfoModalTitle}
-              onClick={onDismiss}
-              style={{ color: theme.palette.black }}
-            />
+      <Modal
+        titleAriaId={strings?.meetingConferencePhoneInfoModalTitle}
+        isOpen={showModal}
+        onDismiss={onDismiss}
+        isBlocking={true}
+        styles={PhoneInfoModalStyle}
+      >
+        <Stack horizontal horizontalAlign="space-between" verticalAlign="center" className={titleContainerClassName}>
+          <Text className={titleClassName}>{strings?.meetingConferencePhoneInfoModalTitle}</Text>
+          <IconButton
+            iconProps={{ iconName: 'Cancel' }}
+            ariaLabel={strings?.meetingConferencePhoneInfoModalTitle}
+            onClick={onDismiss}
+            style={{ color: theme.palette.black }}
+          />
+        </Stack>
+        {conferencePhoneInfoList.length === 0 && (
+          <Stack horizontal>
+            <Text className={stepTextStyle}>{strings?.meetingConferencePhoneInfoModalNoPhoneAvailable}</Text>
           </Stack>
-          {conferencePhoneInfoList.length === 0 && (
-            <Stack horizontal>
-              <Text className={stepTextStyle}>{strings?.meetingConferencePhoneInfoModalNoPhoneAvailable}</Text>
-            </Stack>
-          )}
-          {conferencePhoneInfoList.length > 0 && (
-            <Stack>
-              <Stack horizontal horizontalAlign="space-between" className={phoneInfoInctructionLine}>
-                <Stack.Item style={{ display: 'flex' }}>
-                  <Stack horizontal className={phoneInfoStep}>
-                    <Stack className={infoConnectionLinkStyle(theme)}></Stack>
-                    <Stack.Item className={phoneInfoIcon(theme)}>
-                      <Stack verticalAlign="center" horizontalAlign="center">
-                        <Icon
-                          iconName="PhoneNumberButton"
-                          style={{ color: theme.palette.themePrimary, padding: '8px' }}
-                        />
-                      </Stack>
-                    </Stack.Item>
-                    <Stack.Item>
-                      <Text className={stepTextStyle}>{strings?.meetingConferencePhoneInfoModalDialIn}</Text>
-                    </Stack.Item>
-                  </Stack>
-                </Stack.Item>
-                <Stack.Item className={phoneInfoStep}>
-                  {conferencePhoneInfoList.map((phoneNumber, index) => (
-                    <Stack.Item key={index}>
-                      <Text className={phoneInfoTextStyle}>{formatPhoneNumberInfo(phoneNumber, strings)}</Text>
-                    </Stack.Item>
-                  ))}
-                </Stack.Item>
-              </Stack>
-              <Stack
-                horizontal
-                horizontalAlign="space-between"
-                verticalAlign="center"
-                className={phoneInfoInctructionLine}
-              >
-                {}
-                <Stack.Item style={{ display: 'flex' }}>
-                  <Stack horizontal>
-                    <Stack className={infoConnectionLinkStyle(theme)}></Stack>
-                    <Stack.Item className={phoneInfoIcon(theme)}>
-                      <Stack verticalAlign="center" horizontalAlign="center">
-                        <Icon
-                          iconName="DtmfDialpadButton"
-                          style={{ color: theme.palette.themePrimary, padding: '8px' }}
-                        />
-                      </Stack>
-                    </Stack.Item>
-                    <Stack.Item>
-                      <Text className={stepTextStyle}>{strings?.meetingConferencePhoneInfoModalMeetingId}</Text>
-                    </Stack.Item>
-                  </Stack>
-                </Stack.Item>
-                <Text className={phoneInfoTextStyle}>{formatMeetingId(conferencePhoneInfoList[0].conferenceId)}</Text>
-              </Stack>
-              <Stack horizontal horizontalAlign="space-between" verticalAlign="center">
-                <Stack horizontal>
+        )}
+        {conferencePhoneInfoList.length > 0 && (
+          <Stack>
+            <Stack horizontal horizontalAlign="space-between" className={phoneInfoInctructionLine}>
+              <Stack.Item style={{ display: 'flex' }}>
+                <Stack horizontal className={phoneInfoStep}>
+                  <Stack className={infoConnectionLinkStyle(theme)}></Stack>
                   <Stack.Item className={phoneInfoIcon(theme)}>
-                    <Icon iconName="PhoneInfoWait" style={{ color: theme.palette.themePrimary, padding: '8px' }} />
+                    <Stack verticalAlign="center" horizontalAlign="center">
+                      <Icon iconName="PhoneNumberButton" className={phoneInfoIconStyle(theme)} />
+                    </Stack>
                   </Stack.Item>
                   <Stack.Item>
-                    <Text className={stepTextStyle}>{strings?.meetingConferencePhoneInfoModalWait}</Text>
+                    <Text className={stepTextStyle}>{strings?.meetingConferencePhoneInfoModalDialIn}</Text>
                   </Stack.Item>
                 </Stack>
+              </Stack.Item>
+              <Stack.Item className={phoneInfoStep}>
+                {conferencePhoneInfoList.map((phoneNumber, index) => (
+                  <Stack.Item key={index}>
+                    <Text className={phoneInfoTextStyle}>{formatPhoneNumberInfo(phoneNumber, strings)}</Text>
+                  </Stack.Item>
+                ))}
+              </Stack.Item>
+            </Stack>
+            <Stack
+              horizontal
+              horizontalAlign="space-between"
+              verticalAlign="center"
+              className={phoneInfoInctructionLine}
+            >
+              <Stack.Item style={{ display: 'flex' }}>
+                <Stack horizontal>
+                  <Stack className={infoConnectionLinkStyle(theme)}></Stack>
+                  <Stack.Item className={phoneInfoIcon(theme)}>
+                    <Stack verticalAlign="center" horizontalAlign="center">
+                      <Icon iconName="DtmfDialpadButton" className={phoneInfoIconStyle(theme)} />
+                    </Stack>
+                  </Stack.Item>
+                  <Stack.Item>
+                    <Text className={stepTextStyle}>{strings?.meetingConferencePhoneInfoModalMeetingId}</Text>
+                  </Stack.Item>
+                </Stack>
+              </Stack.Item>
+              <Text className={phoneInfoTextStyle}>{formatMeetingId(conferencePhoneInfoList[0].conferenceId)}</Text>
+            </Stack>
+            <Stack horizontal horizontalAlign="space-between" verticalAlign="center">
+              <Stack horizontal>
+                <Stack.Item className={phoneInfoIcon(theme)} style={{ marginLeft: _pxToRem(2) }}>
+                  <Icon iconName="PhoneInfoWait" className={phoneInfoIconStyle(theme)} />
+                </Stack.Item>
+                <Stack.Item>
+                  <Text className={stepTextStyle}>{strings?.meetingConferencePhoneInfoModalWait}</Text>
+                </Stack.Item>
               </Stack>
             </Stack>
-          )}
-        </Modal>
-      }
+          </Stack>
+        )}
+      </Modal>
     </>
   );
 };
@@ -225,15 +214,16 @@ export const formatPhoneNumber = (phoneNumber: string): string => {
  * format phone number
  */
 export const formatPhoneNumberInfo = (
-  phoneNumber: ConferencePhoneInfo | undefined,
+  phoneNumber: ConferencePhoneInfo,
   strings: MeetingConferencePhoneInfoModalStrings | undefined
 ): string => {
-  if (!phoneNumber) {
-    return '';
-  }
   const templateText = phoneNumber.isTollFree
-    ? strings?.meetingConferencePhoneInfoModalTollFree
-    : strings?.meetingConferencePhoneInfoModalToll;
+    ? phoneNumber.country && phoneNumber.city
+      ? strings?.meetingConferencePhoneInfoModalTollFree
+      : strings?.meetingConferencePhoneInfoModalTollFreeWithoutGeoData
+    : phoneNumber.country && phoneNumber.city
+    ? strings?.meetingConferencePhoneInfoModalToll
+    : strings?.meetingConferencePhoneInfoModalTollWithoutGeoData;
   return (
     templateText
       ?.replace('{phoneNumber}', formatPhoneNumber(phoneNumber.phoneNumber))
@@ -258,3 +248,16 @@ export const formatMeetingId = (meetingId?: string): string => {
 
   return [meetingId.slice(0, 3), meetingId.slice(3, 6), meetingId.slice(6, 9)].join(' ') + '#';
 };
+
+/* @conditional-compile-remove(teams-meeting-conference) */
+/**
+ * @public
+ * Information for conference phone info
+ */
+export interface ConferencePhoneInfo {
+  phoneNumber: string;
+  conferenceId: string;
+  isTollFree: boolean;
+  country?: string;
+  city?: string;
+}

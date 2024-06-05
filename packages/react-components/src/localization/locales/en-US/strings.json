@@ -578,7 +578,9 @@
     "meetingConferencePhoneInfoModalMeetingId": "Enter meeting ID",
     "meetingConferencePhoneInfoModalWait": "Wait to be admitted by organizer",
     "meetingConferencePhoneInfoModalNoPhoneAvailable": "No phone available",
-    "meetingConferencePhoneInfoModalTollFree": "{phoneNumber} (Toll-free) {country} {city}",
-    "meetingConferencePhoneInfoModalToll": "{phoneNumber} (Toll) {country} {city}"
+    "meetingConferencePhoneInfoModalTollFree": "{phoneNumber} (Toll-free) {country}, {city}",
+    "meetingConferencePhoneInfoModalTollFreeWithoutGeoData": "{phoneNumber} (Toll-free)",
+    "meetingConferencePhoneInfoModalToll": "{phoneNumber} (Toll) {country}, {city}",
+    "meetingConferencePhoneInfoModalTollWithoutGeoData": "{phoneNumber} (Toll)"
   }
 }

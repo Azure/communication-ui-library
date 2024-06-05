@@ -49,7 +49,7 @@ import { AcceptedTransfer } from './CallClientState';
 import { callingStatefulLogger } from './Logger';
 import { CallIdHistory } from './CallIdHistory';
 import { LocalVideoStreamVideoEffectsState } from './CallClientState';
-import { convertFromTeamsSDKToCaptionInfoState } from './Converter';
+import { convertConferencePhoneInfo, convertFromTeamsSDKToCaptionInfoState } from './Converter';
 /* @conditional-compile-remove(acs-close-captions) */
 import { convertFromSDKToCaptionInfoState } from './Converter';
 import { convertFromSDKToRaisedHandState } from './Converter';
@@ -570,7 +570,7 @@ export class CallContext {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
-        call.teamsMeetingConference = teamsMeetingConferenceDetails;
+        call.teamsMeetingConference = convertConferencePhoneInfo(teamsMeetingConferenceDetails);
       }
     });
   }

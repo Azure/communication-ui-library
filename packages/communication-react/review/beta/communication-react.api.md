@@ -95,7 +95,6 @@ import { StartCaptionsOptions } from '@azure/communication-calling';
 import { TeamsCall } from '@azure/communication-calling';
 import { TeamsCallAgent } from '@azure/communication-calling';
 import { TeamsCallInfo } from '@azure/communication-calling';
-import { TeamsMeetingAudioConferencingDetails } from '@azure/communication-calling';
 import { TeamsMeetingIdLocator } from '@azure/communication-calling';
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { Theme } from '@fluentui/react';
@@ -1062,7 +1061,7 @@ export interface CallState {
     spotlight?: SpotlightCallFeatureState;
     startTime: Date;
     state: CallState_2;
-    teamsMeetingConference?: TeamsMeetingAudioConferencingDetails;
+    teamsMeetingConference?: ConferencePhoneInfo[];
     totalParticipantCount?: number;
     transcription: TranscriptionCallFeature;
     transfer: TransferFeature;
@@ -2308,6 +2307,20 @@ export interface CompositeStrings {
     call: CallCompositeStrings;
     callWithChat: CallWithChatCompositeStrings;
     chat: ChatCompositeStrings;
+}
+
+// @public
+export interface ConferencePhoneInfo {
+    // (undocumented)
+    city?: string;
+    // (undocumented)
+    conferenceId: string;
+    // (undocumented)
+    country?: string;
+    // (undocumented)
+    isTollFree: boolean;
+    // (undocumented)
+    phoneNumber: string;
 }
 
 // @public

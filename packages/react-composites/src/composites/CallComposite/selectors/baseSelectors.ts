@@ -19,7 +19,7 @@ import {
 } from '@internal/calling-stateful-client';
 import { CaptionsInfo } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(teams-meeting-conference) */
-import { TeamsMeetingAudioConferencingDetails } from '@azure/communication-calling';
+import { ConferencePhoneInfo } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(spotlight) */
 import { SpotlightedParticipant } from '@azure/communication-calling';
 import { CallAdapterState, CallCompositePage } from '../adapter/CallAdapter';
@@ -211,7 +211,7 @@ export const getIsTeamsMeeting = (state: CallAdapterState): boolean => state.isT
 /**
  * @private
  */
-export const getTeamsMeetingCoordinates = (state: CallAdapterState): TeamsMeetingAudioConferencingDetails | undefined =>
+export const getTeamsMeetingCoordinates = (state: CallAdapterState): ConferencePhoneInfo[] | undefined =>
   state.call?.teamsMeetingConference;
 
 /**

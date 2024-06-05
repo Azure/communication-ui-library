@@ -28,15 +28,10 @@ describe('Display phone number in user friendly format', () => {
 describe('Format phone number info based on available data', () => {
   const strings = {
     meetingConferencePhoneInfoModalTollFree: '{phoneNumber} (Toll Free) {country} {city}',
-    meetingConferencePhoneInfoModalToll: '{phoneNumber} (Toll) {country} {city}'
+    meetingConferencePhoneInfoModalToll: '{phoneNumber} (Toll) {country} {city}',
+    meetingConferencePhoneInfoModalTollFreeWithoutGeoData: '{phoneNumber} (Toll Free)',
+    meetingConferencePhoneInfoModalTollWithoutGeoData: '{phoneNumber} (Toll)'
   };
-
-  test('No phone info should break app', async () => {
-    assert(formatPhoneNumberInfo(undefined, strings) === '');
-    assert(
-      formatPhoneNumberInfo({ phoneNumber: '123', isTollFree: false, conferenceId: '123' }, strings) === '123 (Toll)'
-    );
-  });
 
   test('Test toll free and toll label', async () => {
     assert(
