@@ -99,10 +99,7 @@ export const createDefaultChatHandlers = memoizeOne(
             fileSharingMetadata: JSON.stringify(options?.attachments)
           }
         };
-        await chatThreadClient.updateMessage(
-          messageId,
-          updateMessageOptions
-        );
+        await chatThreadClient.updateMessage(messageId, updateMessageOptions);
       },
       onDeleteMessage: async (messageId: string) => {
         await chatThreadClient.deleteMessage(messageId);
