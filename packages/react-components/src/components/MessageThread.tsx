@@ -559,7 +559,7 @@ export type MessageThreadProps = {
 
 /* @conditional-compile-remove(rich-text-editor) @conditional-compile-remove(rich-text-editor-image-upload) */
 /**
- * Options for configuring the rich text editor.
+ * Options for the rich text editor configuration.
  *
  * @beta
  */

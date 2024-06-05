@@ -17,6 +17,8 @@ import { CallWithChatCompositeIcons } from '../common/icons';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { CallWithChatAdapterState } from './state/CallWithChatAdapterState';
 import { CallSurveyImprovementSuggestions } from '@internal/react-components';
+/* @conditional-compile-remove(rich-text-editor-composite-support) @conditional-compile-remove(rich-text-editor-image-upload) @conditional-compile-remove(rich-text-editor) */
+import { RichTextEditorOptions } from '@internal/react-components';
 import {
   ParticipantMenuItemsCallback,
   _useContainerHeight,
@@ -354,8 +356,8 @@ type CallWithChatScreenProps = {
   spotlight?: {
     hideSpotlightButtons?: boolean;
   };
-  /* @conditional-compile-remove(rich-text-editor-composite-support) */
-  richTextEditor?: boolean;
+  /* @conditional-compile-remove(rich-text-editor-composite-support) @conditional-compile-remove(rich-text-editor-image-upload) @conditional-compile-remove(rich-text-editor) */
+  richTextEditor?: RichTextEditorOptions;
 };
 
 const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
@@ -574,7 +576,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
           participantPane: false,
           /* @conditional-compile-remove(file-sharing-acs) */
           attachmentOptions: props.attachmentOptions,
-          /* @conditional-compile-remove(rich-text-editor-composite-support) */
+          /* @conditional-compile-remove(rich-text-editor-composite-support) @conditional-compile-remove(rich-text-editor-image-upload) @conditional-compile-remove(rich-text-editor) */
           richTextEditor: props.richTextEditor
         }}
         onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
