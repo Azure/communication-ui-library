@@ -174,7 +174,7 @@ export interface AttachmentMenuAction {
     onClick: (attachment: AttachmentMetadata) => Promise<void>;
 }
 
-// @beta
+// @public
 export interface AttachmentMetadata {
     id: string;
     name: string;
@@ -416,6 +416,7 @@ export interface CallAdapterCallOperations {
     leaveCall(forEveryone?: boolean): Promise<void>;
     lowerHand(): Promise<void>;
     mute(): Promise<void>;
+    muteParticipant(userId: string): Promise<void>;
     onReactionClick(reaction: Reaction_2): Promise<void>;
     raiseHand(): Promise<void>;
     removeParticipant(userId: string): Promise<void>;
@@ -1102,6 +1103,7 @@ export interface CallWithChatAdapterManagement {
     loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
     lowerHand(): Promise<void>;
     mute(): Promise<void>;
+    muteParticipant(userIds: string): Promise<void>;
     onReactionClick(reaction: Reaction_2): Promise<void>;
     queryCameras(): Promise<VideoDeviceInfo[]>;
     queryMicrophones(): Promise<AudioDeviceInfo[]>;
@@ -1115,7 +1117,7 @@ export interface CallWithChatAdapterManagement {
     // @beta
     resumeCall: () => Promise<void>;
     sendDtmfTone: (dtmfTone: DtmfTone_2) => Promise<void>;
-    sendMessage(content: string, options?: SendMessageOptions | /* @conditional-compile-remove(attachment-upload) */ MessageOptions): Promise<void>;
+    sendMessage(content: string, options?: SendMessageOptions | /* @conditional-compile-remove(file-sharing-acs) */ MessageOptions): Promise<void>;
     sendReadReceipt(chatMessageId: string): Promise<void>;
     sendTypingIndicator(): Promise<void>;
     setCamera(sourceInfo: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void>;
@@ -1139,7 +1141,7 @@ export interface CallWithChatAdapterManagement {
     submitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined>;
     unmute(): Promise<void>;
     updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void;
-    updateMessage(messageId: string, content: string, options?: Record<string, string> | /* @conditional-compile-remove(attachment-upload) */ MessageOptions): Promise<void>;
+    updateMessage(messageId: string, content: string, options?: Record<string, string> | /* @conditional-compile-remove(file-sharing-acs) */ MessageOptions): Promise<void>;
     updateSelectedVideoBackgroundEffect(selectedVideoBackground: VideoBackgroundEffect): void;
 }
 
@@ -1715,11 +1717,11 @@ export interface ChatAdapterThreadManagement {
     loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
     removeParticipant(userId: string): Promise<void>;
     removeResourceFromCache(resourceDetails: ResourceDetails): void;
-    sendMessage(content: string, options?: SendMessageOptions | /* @conditional-compile-remove(attachment-upload) */ MessageOptions): Promise<void>;
+    sendMessage(content: string, options?: SendMessageOptions | /* @conditional-compile-remove(file-sharing-acs) */ MessageOptions): Promise<void>;
     sendReadReceipt(chatMessageId: string): Promise<void>;
     sendTypingIndicator(): Promise<void>;
     setTopic(topicName: string): Promise<void>;
-    updateMessage(messageId: string, content: string, options?: Record<string, string> | /* @conditional-compile-remove(attachment-upload) */ MessageOptions): Promise<void>;
+    updateMessage(messageId: string, content: string, options?: Record<string, string> | /* @conditional-compile-remove(file-sharing-acs) */ MessageOptions): Promise<void>;
 }
 
 // @public
@@ -1728,7 +1730,7 @@ export type ChatAdapterUiState = {
 };
 
 // @public
-export type ChatAttachmentType = 'unknown' | 'image' | /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ 'file';
+export type ChatAttachmentType = 'unknown' | 'image' | /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */ 'file';
 
 // @public
 export type ChatBaseSelectorProps = {
@@ -1830,7 +1832,7 @@ export type ChatErrorTarget = 'ChatClient.createChatThread' | 'ChatClient.delete
 
 // @public
 export type ChatHandlers = {
-    onSendMessage: (content: string, options?: SendMessageOptions | /* @conditional-compile-remove(attachment-upload) */ MessageOptions) => Promise<void>;
+    onSendMessage: (content: string, options?: SendMessageOptions | /* @conditional-compile-remove(file-sharing-acs) */ MessageOptions) => Promise<void>;
     onMessageSeen: (chatMessageId: string) => Promise<void>;
     onTyping: () => Promise<void>;
     onRemoveParticipant: (userId: string) => Promise<void>;
@@ -1849,7 +1851,6 @@ export type ChatInitializedListener = (event: {
 export interface ChatMessage extends MessageCommon {
     // (undocumented)
     attached?: MessageAttachedStatus;
-    // @beta
     attachments?: AttachmentMetadata[];
     // (undocumented)
     clientMessageId?: string;
@@ -2019,6 +2020,8 @@ export interface CommonCallingHandlers {
     onHangUp: (forEveryone?: boolean) => Promise<void>;
     // (undocumented)
     onLowerHand: () => Promise<void>;
+    // (undocumented)
+    onMuteParticipant: (userId: string) => Promise<void>;
     // (undocumented)
     onRaiseHand: () => Promise<void>;
     // (undocumented)
@@ -2588,6 +2591,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     RichTextInsertTableFilledIcon: React_2.JSX.Element;
     RichTextTableInsertMenuIcon: React_2.JSX.Element;
     RichTextTableDeleteMenuIcon: React_2.JSX.Element;
+    ContextualMenuMicMutedIcon: React_2.JSX.Element;
 };
 
 // @public
@@ -2752,6 +2756,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     RichTextInsertTableFilledIcon: React_2.JSX.Element;
     RichTextTableInsertMenuIcon: React_2.JSX.Element;
     RichTextTableDeleteMenuIcon: React_2.JSX.Element;
+    ContextualMenuMicMutedIcon: React_2.JSX.Element;
 };
 
 // @beta
@@ -3601,7 +3606,7 @@ export type OnFetchProfileCallback = (userId: string, defaultProfile?: Profile) 
 // @public
 export type OnRenderAvatarCallback = (
 userId?: string, options?: CustomAvatarOptions,
-defaultOnRender?: (props: CustomAvatarOptions) => JSX.Element) => JSX.Element;
+defaultOnRender?: (props: CustomAvatarOptions) => JSX.Element) => JSX.Element | undefined;
 
 // @public
 export const onResolveVideoEffectDependency: () => Promise<VideoBackgroundEffectsDependency>;
@@ -3695,6 +3700,7 @@ export type ParticipantListProps = {
     onRemoveParticipant?: (userId: string) => void;
     onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
     onParticipantClick?: (participant?: ParticipantListParticipant) => void;
+    onMuteParticipant?: (userId: string) => Promise<void>;
     styles?: ParticipantListStyles;
     showParticipantOverflowTooltip?: boolean;
     totalParticipantCount?: number;
@@ -4650,6 +4656,7 @@ export interface VideoGalleryProps {
     // @deprecated (undocumented)
     onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
     onDisposeRemoteVideoStreamView?: (userId: string) => Promise<void>;
+    onMuteParticipant?: (userId: string) => Promise<void>;
     onPinParticipant?: (userId: string) => void;
     onRenderAvatar?: OnRenderAvatarCallback;
     onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;

@@ -20,9 +20,9 @@ import { createAutoRefreshingCredential } from './utils/credential';
 import { fetchEmojiForUser } from './utils/emojiCache';
 import { getBackgroundColor } from './utils/utils';
 import { useSwitchableFluentTheme } from './theming/SwitchableFluentThemeProvider';
-/* @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(file-sharing-acs) */
 import { attachmentUploadOptions } from './utils/uploadHandler';
-/* @conditional-compile-remove(attachment-download) */
+/* @conditional-compile-remove(file-sharing-acs) */
 import { attachmentDownloadOptions } from './utils/downloadHandler';
 
 // These props are passed in when this component is referenced in JSX and not found in context
@@ -119,11 +119,9 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
               autoFocus: 'sendBoxTextField',
               /* @conditional-compile-remove(chat-composite-participant-pane) */
               participantPane: !hideParticipants,
-              /* @conditional-compile-remove(attachment-upload) @conditional-compile-remove(attachment-download) */
+              /* @conditional-compile-remove(file-sharing-acs) */
               attachmentOptions: {
-                /* @conditional-compile-remove(attachment-upload) */
                 uploadOptions: attachmentUploadOptions,
-                /* @conditional-compile-remove(attachment-download) */
                 downloadOptions: attachmentDownloadOptions
               },
               /* @conditional-compile-remove(rich-text-editor-composite-support) */
