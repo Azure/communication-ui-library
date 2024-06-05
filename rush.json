@@ -66,6 +66,11 @@
       "reviewCategory": "sample"
     },
     {
+      "packageName": "@internal/css-tests",
+      "projectFolder": "samples/CSS-Tests",
+      "reviewCategory": "sample"
+    },
+    {
       "packageName": "@internal/chat",
       "projectFolder": "samples/Chat",
       "reviewCategory": "sample"
