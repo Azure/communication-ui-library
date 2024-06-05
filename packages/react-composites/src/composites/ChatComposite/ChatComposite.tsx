@@ -92,7 +92,7 @@ export type ChatCompositeOptions = {
    * Options to enable rich text editor for the edit box.
    * @beta
    */
-  richTextEditor?: RichTextEditorOptions;
+  richTextEditorOptions?: RichTextEditorOptions;
 };
 
 /**

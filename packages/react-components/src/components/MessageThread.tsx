@@ -554,7 +554,7 @@ export type MessageThreadProps = {
    * Options to enable rich text editor for the edit box.
    * @beta
    */
-  richTextEditor?: RichTextEditorOptions;
+  richTextEditorOptions?: RichTextEditorOptions;
 };
 
 /* @conditional-compile-remove(rich-text-editor) */
@@ -710,7 +710,7 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
     /* @conditional-compile-remove(file-sharing-acs) */
     onRenderAttachmentDownloads,
     /* @conditional-compile-remove(rich-text-editor) */
-    richTextEditor
+    richTextEditorOptions
   } = props;
   // We need this state to wait for one tick and scroll to bottom after messages have been initialized.
   // Otherwise chatScrollDivRef.current.clientHeight is wrong if we scroll to bottom before messages are initialized.
@@ -745,12 +745,12 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
   /* @conditional-compile-remove(rich-text-editor) */
   useEffect(() => {
     // if rich text editor is enabled, the rich text editor component should be loaded early for good UX
-    if (richTextEditor !== undefined) {
+    if (richTextEditorOptions !== undefined) {
       // this line is needed to load the Rooster JS dependencies early in the lifecycle
       // when the rich text editor is enabled
       loadChatMessageComponentAsRichTextEditBox();
     }
-  }, [richTextEditor]);
+  }, [richTextEditorOptions]);
 
   const onDeleteMessageCallback = useCallback(
     async (messageId: string): Promise<void> => {
@@ -1176,7 +1176,7 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
                   /* @conditional-compile-remove(file-sharing-acs) */
                   onRenderAttachmentDownloads={onRenderAttachmentDownloads}
                   /* @conditional-compile-remove(rich-text-editor) */
-                  richTextEditor={richTextEditor}
+                  richTextEditorOptions={richTextEditorOptions}
                 />
               );
             })}

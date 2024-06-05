@@ -396,7 +396,7 @@ const Docs: () => JSX.Element = () => {
         <Source code={mentionTag} />
         <Description>
           The MessageThread component also supports mentioning users when editing a message if the `lookupOptions` under
-          the `mentionOptions` property is provided. However, if the `richTextEditor` property is set to true, the
+          the `mentionOptions` property is provided. However, if the `richTextEditorOptions` property is set, the
           `lookupOptions` will be ignored.
         </Description>
         <Canvas mdxSource={MessageWithCustomMentionRendererText}>
@@ -409,8 +409,8 @@ const Docs: () => JSX.Element = () => {
         <DetailedBetaBanner />
         <Description>
           The following example shows how to enable rich text editor for message editing by providing the
-          `richTextEditor` property. Rich text editor does not support mentioning users at the moment. By setting
-          `richTextEditor` property to true, the `lookupOptions` under the `mentionOptions` property will be ignored.
+          `richTextEditorOptions` property. Rich text editor does not support mentioning users at the moment. By setting
+          `richTextEditorOptions` property, the `lookupOptions` under the `mentionOptions` property will be ignored.
         </Description>
         <Canvas mdxSource={MessageThreadWithRichTextEditorText}>
           <MessageThreadWithRichTextEditorExample />
@@ -620,7 +620,7 @@ const MessageThreadStory = (args): JSX.Element => {
         onRenderMessage={onRenderMessage}
         inlineImageOptions={inlineImageOptions}
         onUpdateMessage={onUpdateMessageCallback}
-        richTextEditor={args.richTextEditor ? { onPaste: removeImageTags } : undefined}
+        richTextEditorOptions={args.richTextEditor ? { onPaste: removeImageTags } : undefined}
         onRenderAvatar={(userId?: string) => {
           return (
             <Persona

@@ -1401,7 +1401,7 @@ export type CallWithChatCompositeOptions = {
     spotlight?: {
         hideSpotlightButtons?: boolean;
     };
-    richTextEditor?: RichTextEditorOptions;
+    richTextEditorOptions?: RichTextEditorOptions;
 };
 
 // @public
@@ -1791,7 +1791,7 @@ export type ChatCompositeOptions = {
     topic?: boolean;
     autoFocus?: 'sendBoxTextField';
     attachmentOptions?: AttachmentOptions;
-    richTextEditor?: RichTextEditorOptions;
+    richTextEditorOptions?: RichTextEditorOptions;
 };
 
 // @public
@@ -3387,7 +3387,7 @@ export type MessageThreadProps = {
     onDisplayDateTimeString?: (messageDate: Date) => string;
     mentionOptions?: MentionOptions;
     inlineImageOptions?: InlineImageOptions;
-    richTextEditor?: RichTextEditorOptions;
+    richTextEditorOptions?: RichTextEditorOptions;
 };
 
 // @public

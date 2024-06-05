@@ -43,7 +43,7 @@ export type SendBoxPickerProps = {
     /* @conditional-compile-remove(file-sharing-acs) */ options?: MessageOptions
   ) => Promise<void>;
   /* @conditional-compile-remove(rich-text-editor-composite-support) @conditional-compile-remove(rich-text-editor) */
-  richTextEditor?: RichTextEditorOptions;
+  richTextEditorOptions?: RichTextEditorOptions;
   /* @conditional-compile-remove(file-sharing-acs) */
   attachments?: AttachmentMetadataInProgress[];
   /* @conditional-compile-remove(file-sharing-acs) */
@@ -56,15 +56,15 @@ export type SendBoxPickerProps = {
 export const SendBoxPicker = (props: SendBoxPickerProps): JSX.Element => {
   const {
     /* @conditional-compile-remove(rich-text-editor-composite-support) @conditional-compile-remove(rich-text-editor) */
-    richTextEditor
+    richTextEditorOptions
   } = props;
 
   const sendBoxProps = usePropsFor(SendBox);
 
   /* @conditional-compile-remove(rich-text-editor-composite-support) @conditional-compile-remove(rich-text-editor) */
   const isRichTextEditorEnabled = useMemo(() => {
-    return richTextEditor !== undefined;
-  }, [richTextEditor]);
+    return richTextEditorOptions !== undefined;
+  }, [richTextEditorOptions]);
 
   const sendBox = useMemo(() => <SendBox {...sendBoxProps} {...props} />, [props, sendBoxProps]);
 
