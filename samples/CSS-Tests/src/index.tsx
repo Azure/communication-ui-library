@@ -3,7 +3,7 @@
 
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import './index.css';
+import './output.css';
 import App from './app/App';
 import { SwitchableFluentThemeProvider } from './app/theming/SwitchableFluentThemeProvider';
 import { initReactRenderTracker } from './app/utils/AppUtils';

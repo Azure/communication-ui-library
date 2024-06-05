@@ -119,3 +119,6 @@ samples/Server/sample-dist/
 samples/Calling/sample-dist/
 samples/CallWithChat/sample-dist/
 samples/Chat/sample-dist/
+
+# post-compile css
+output.css
