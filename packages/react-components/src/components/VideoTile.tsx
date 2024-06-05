@@ -390,25 +390,28 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
   return (
     <Stack
       data-ui-id={ids.videoTile}
-      className={mergeStyles(
-        rootStyles,
-        {
-          background: theme.palette.neutralLighter,
-          borderRadius: theme.effects.roundedCorner4
-        },
-        (isSpeaking || raisedHand) && {
-          '&::after': {
-            content: `''`,
-            position: 'absolute',
-            border: `0.25rem solid ${isSpeaking ? theme.palette.themePrimary : raisedHandBackgroundColor}`,
-            borderRadius: theme.effects.roundedCorner4,
-            width: '100%',
-            height: '100%',
-            pointerEvents: 'none'
-          }
-        },
-        styles?.root
-      )}
+      className={
+        'acr-video-tile ' +
+        mergeStyles(
+          rootStyles,
+          {
+            background: theme.palette.neutralLighter,
+            borderRadius: theme.effects.roundedCorner4
+          },
+          (isSpeaking || raisedHand) && {
+            '&::after': {
+              content: `''`,
+              position: 'absolute',
+              border: `0.25rem solid ${isSpeaking ? theme.palette.themePrimary : raisedHandBackgroundColor}`,
+              borderRadius: theme.effects.roundedCorner4,
+              width: '100%',
+              height: '100%',
+              pointerEvents: 'none'
+            }
+          },
+          styles?.root
+        )
+      }
       {...longPressHandlers}
     >
       <div ref={videoTileRef} style={{ width: '100%', height: '100%' }} {...hoverHandlers} data-is-focusable={true}>

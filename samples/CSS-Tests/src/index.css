@@ -30,3 +30,7 @@ body {
 .ui-provider {
   height: 0;
 }
+
+.acr-video-tile {
+  background: rebeccapurple;
+}
