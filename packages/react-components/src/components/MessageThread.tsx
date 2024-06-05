@@ -549,7 +549,7 @@ export type MessageThreadProps = {
    */
   inlineImageOptions?: InlineImageOptions;
 
-  /* @conditional-compile-remove(rich-text-editor) @conditional-compile-remove(rich-text-editor-image-upload) */
+  /* @conditional-compile-remove(rich-text-editor) */
   /**
    * Options to enable rich text editor for the edit box.
    * @beta
@@ -557,7 +557,7 @@ export type MessageThreadProps = {
   richTextEditor?: RichTextEditorOptions;
 };
 
-/* @conditional-compile-remove(rich-text-editor) @conditional-compile-remove(rich-text-editor-image-upload) */
+/* @conditional-compile-remove(rich-text-editor) */
 /**
  * Options for the rich text editor configuration.
  *
@@ -709,7 +709,7 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
     attachmentOptions,
     /* @conditional-compile-remove(file-sharing-acs) */
     onRenderAttachmentDownloads,
-    /* @conditional-compile-remove(rich-text-editor) @conditional-compile-remove(rich-text-editor-image-upload) */
+    /* @conditional-compile-remove(rich-text-editor) */
     richTextEditor
   } = props;
   // We need this state to wait for one tick and scroll to bottom after messages have been initialized.
@@ -742,10 +742,10 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
   const previousMessagesRef = useRef<Message[]>([]);
   // an aria label for Narrator to notify when a message is deleted
   const [deletedMessageAriaLabel, setDeletedMessageAriaLabel] = useState<string | undefined>(undefined);
-  /* @conditional-compile-remove(rich-text-editor) @conditional-compile-remove(rich-text-editor-image-upload) */
+  /* @conditional-compile-remove(rich-text-editor) */
   useEffect(() => {
     // if rich text editor is enabled, the rich text editor component should be loaded early for good UX
-    if (richTextEditor !== undefined && richTextEditor) {
+    if (richTextEditor !== undefined) {
       // this line is needed to load the Rooster JS dependencies early in the lifecycle
       // when the rich text editor is enabled
       loadChatMessageComponentAsRichTextEditBox();
@@ -1175,7 +1175,7 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
                   mentionOptions={mentionOptions}
                   /* @conditional-compile-remove(file-sharing-acs) */
                   onRenderAttachmentDownloads={onRenderAttachmentDownloads}
-                  /* @conditional-compile-remove(rich-text-editor)  @conditional-compile-remove(rich-text-editor-image-upload) */
+                  /* @conditional-compile-remove(rich-text-editor) */
                   richTextEditor={richTextEditor}
                 />
               );

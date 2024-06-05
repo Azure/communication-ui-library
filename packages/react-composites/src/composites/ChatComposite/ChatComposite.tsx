@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import { CommunicationParticipant, MessageRenderer, MessageProps } from '@internal/react-components';
-/* @conditional-compile-remove(rich-text-editor-composite-support) @conditional-compile-remove(rich-text-editor-image-upload) @conditional-compile-remove(rich-text-editor) */
+/* @conditional-compile-remove(rich-text-editor-composite-support) @conditional-compile-remove(rich-text-editor) */
 import { RichTextEditorOptions } from '@internal/react-components';
 import React from 'react';
 import { BaseProvider, BaseCompositeProps } from '../common/BaseComposite';
@@ -87,7 +87,7 @@ export type ChatCompositeOptions = {
    */
   attachmentOptions?: AttachmentOptions;
 
-  /* @conditional-compile-remove(rich-text-editor-composite-support) @conditional-compile-remove(rich-text-editor-image-upload) @conditional-compile-remove(rich-text-editor) */
+  /* @conditional-compile-remove(rich-text-editor-composite-support) @conditional-compile-remove(rich-text-editor) */
   /**
    * Options to enable rich text editor for the edit box.
    * @beta
