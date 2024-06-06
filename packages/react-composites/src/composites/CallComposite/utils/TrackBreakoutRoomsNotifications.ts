@@ -17,9 +17,10 @@ import { AzureCommunicationCallAdapter } from '../adapter/AzureCommunicationCall
  */
 export const useTrackedBreakoutRoomsNotifications = (props: {
   assignedBreakoutRoom?: BreakoutRoom;
+  callId?: string;
   adapter?: AzureCommunicationCallAdapter;
 }): BreakoutRoomsNotificationBarProps => {
-  const { assignedBreakoutRoom, adapter } = props;
+  const { assignedBreakoutRoom, callId, adapter } = props;
 
   const [trackedCapabilityChangedNotifications, setTrackedCapabilityChangedNotifications] =
     useState<TrackedBreakoutRoomsNotifications>({});
@@ -28,8 +29,13 @@ export const useTrackedBreakoutRoomsNotifications = (props: {
   // share screen capability changed info from the Calling SDK when joining Teams interop will be ignored because
   // being able to share screen is assumed by default. This is inline with what Teams is doing.
   const activeNotifications = useRef<LatestBreakoutRoomsNotificationRecord>({});
+  const currentCallId = useRef<string | undefined>(callId);
 
   useEffect(() => {
+    if (currentCallId.current !== callId) {
+      activeNotifications.current = {};
+      currentCallId.current = callId;
+    }
     const breakoutRoomNotifications: Partial<Record<EventName, BreakoutRoomsNotification>> = {};
     if (assignedBreakoutRoom) {
       breakoutRoomNotifications['assignedBreakoutRoomUpdated'] = {
@@ -41,8 +47,7 @@ export const useTrackedBreakoutRoomsNotifications = (props: {
                 {
                   actionName: 'Join room',
                   action: async (): Promise<void> => {
-                    const newCall = await assignedBreakoutRoom.join();
-                    adapter?.processNewCall(newCall);
+                    assignedBreakoutRoom.join();
                   },
                   dismissAfter: true
                 }
@@ -57,7 +62,7 @@ export const useTrackedBreakoutRoomsNotifications = (props: {
     setTrackedCapabilityChangedNotifications((prev) =>
       updateTrackedBreakoutRoomsNotificationsWithActiveNotifications(prev, Object.values(activeNotifications.current))
     );
-  }, [assignedBreakoutRoom, adapter]);
+  }, [assignedBreakoutRoom, callId, adapter]);
 
   const onDismissBreakoutRoomsNotification = useCallback((notification: BreakoutRoomsNotification) => {
     setTrackedCapabilityChangedNotifications((prev) =>

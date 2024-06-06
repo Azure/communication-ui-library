@@ -301,6 +301,10 @@ class CallContext {
   public setAcceptedTransferCall(call?: CallState): void {
     this.setState({ ...this.state, acceptedTransferCallState: call });
   }
+
+  public setMainMeeting(call?: CallState): void {
+    this.setState({ ...this.state, mainMeeting: call });
+  }
 }
 
 const findLatestEndedCall = (calls: { [key: string]: CallState }): CallState | undefined => {
@@ -1351,6 +1355,10 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const call = (_call as any)['call'];
     console.log('Call adapter breakoutRoomJoined');
+    const thisCallState = this.call?.id ? this.callClient.getState().calls[this.call.id] : undefined;
+    if (thisCallState) {
+      this.context.setMainMeeting(thisCallState);
+    }
     setTimeout(() => this.processNewCall(call), 5000);
     this.emitter.emit('breakoutRoomJoined', call);
   }

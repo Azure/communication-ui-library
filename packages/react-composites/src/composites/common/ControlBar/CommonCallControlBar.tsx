@@ -485,7 +485,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                     <DefaultButton
                       text="Join room"
                       onClick={async (): Promise<void> => {
-                        await assignedBreakoutRoom.join();
+                        assignedBreakoutRoom.join();
                       }}
                     />
                   )

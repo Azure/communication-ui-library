@@ -1,7 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import type { ChatMessage, ChatParticipant, SendMessageOptions } from '@azure/communication-chat';
+import type {
+  ChatMessage,
+  ChatParticipant,
+  ChatThreadCreatedEvent,
+  SendMessageOptions
+} from '@azure/communication-chat';
 import type { CommunicationIdentifierKind, CommunicationUserKind } from '@azure/communication-common';
 import { ChatThreadClientState } from '@internal/chat-stateful-client';
 import type { AdapterError, AdapterErrors, AdapterState, Disposable } from '../../common/adapters';
@@ -106,6 +111,8 @@ export interface ChatAdapterThreadManagement {
    * Removes a resource from the cache for the given message.
    */
   removeResourceFromCache(resourceDetails: ResourceDetails): void;
+
+  switchChatThread(threadId: string): Promise<void>;
 }
 /**
  * Details required for download a resource to cache.
@@ -160,6 +167,10 @@ export interface ChatAdapterSubscribers {
    * Subscribe function for 'error' event.
    */
   on(event: 'error', listener: (e: AdapterError) => void): void;
+  /**
+   * Subscribe function for 'chatThreadCreated' event.
+   */
+  on(event: 'chatThreadCreated', listener: (e: ChatThreadCreatedEvent) => void): void;
 
   /**
    * Unsubscribe function for 'messageReceived' event.
@@ -197,6 +208,10 @@ export interface ChatAdapterSubscribers {
    * Unsubscribe function for 'error' event.
    */
   off(event: 'error', listener: (e: AdapterError) => void): void;
+  /**
+   * Unsubscribe function for 'chatThreadCreated' event.
+   */
+  off(event: 'chatThreadCreated', listener: (e: ChatThreadCreatedEvent) => void): void;
 }
 
 /**

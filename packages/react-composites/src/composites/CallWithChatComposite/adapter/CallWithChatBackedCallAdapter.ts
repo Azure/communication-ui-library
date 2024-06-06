@@ -240,7 +240,7 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
     return this.callWithChatAdapter.returnToMainMeeting();
   }
 
-  public processNewCall(call: CallCommon): void {
+  public processNewCall(call: CallCommon): Promise<void> {
     return (this.callWithChatAdapter as AzureCommunicationCallWithChatAdapter).processNewCall(call);
   }
 }

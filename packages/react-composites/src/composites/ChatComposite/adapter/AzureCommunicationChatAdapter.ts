@@ -5,6 +5,7 @@ import {
   _createStatefulChatClientInner,
   ChatClientState,
   ChatError,
+  ChatThreadClientState,
   StatefulChatClient
 } from '@internal/chat-stateful-client';
 import { ChatHandlers, createDefaultChatHandlers } from '@internal/chat-component-bindings';
@@ -14,6 +15,8 @@ import type {
   ChatMessageDeletedEvent,
   ChatMessageEditedEvent,
   ChatMessageReceivedEvent,
+  ChatThreadCreatedEvent,
+  ChatThreadItem,
   ChatThreadPropertiesUpdatedEvent,
   ParticipantsAddedEvent,
   ParticipantsRemovedEvent,
@@ -82,6 +85,10 @@ export class ChatContext {
 
   public setError(error: Error): void {
     this.setState({ ...this.state, error });
+  }
+
+  public setThreadId(threadId: string): void {
+    this.threadId = threadId;
   }
 
   public updateClientState(clientState: ChatClientState): void {
@@ -192,6 +199,37 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     await this.asyncTeeErrorToEventEmitter(async () => {
       return await this.handlers.onSendMessage(content, options);
     });
+  }
+
+  async switchChatThread(threadId: string): Promise<void> {
+    let attempt = 0;
+    while (++attempt <= 20) {
+      const chatThreads = this.chatClient.getState().threads;
+      console.log(
+        `Finding thread Id ${threadId} in list of chat threads ${Object.keys(chatThreads)} on attempt #${attempt}...`
+      );
+      if (Object.keys(chatThreads).find((chatThread) => chatThread === threadId)) {
+        try {
+          const chatThreadClient = this.chatClient.getChatThreadClient(threadId);
+          await chatThreadClient.listParticipants();
+          await chatThreadClient.listMessages();
+          await chatThreadClient.getProperties();
+          break;
+        } catch (e) {
+          continue;
+        }
+      }
+      await new Promise((_) => setTimeout(_, 1000));
+    }
+
+    const chatThreadClient = this.chatClient.getChatThreadClient(threadId);
+    if (chatThreadClient) {
+      this.chatThreadClient = chatThreadClient;
+      this.context.setThreadId(threadId);
+      this.context.updateClientState(this.chatClient.getState());
+      this.handlers = createDefaultChatHandlers(this.chatClient, this.chatThreadClient);
+      this.subscribeAllEvents();
+    }
   }
 
   async sendReadReceipt(chatMessageId: string): Promise<void> {
@@ -341,6 +379,11 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     this.emitter.emit('topicChanged', { topic: event.properties.topic });
   }
 
+  private chatThreadCreatedListener(event: ChatThreadCreatedEvent): void {
+    console.log('Chat adapter chatThreadCreated event emitted');
+    this.emitter.emit('chatThreadCreated', event);
+  }
+
   private subscribeAllEvents(): void {
     this.chatClient.on('chatThreadPropertiesUpdated', this.chatThreadPropertiesUpdatedListener.bind(this));
     this.chatClient.on('participantsAdded', this.participantsAddedListener.bind(this));
@@ -350,6 +393,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     this.chatClient.on('chatMessageDeleted', this.messageDeletedListener.bind(this));
     this.chatClient.on('readReceiptReceived', this.messageReadListener.bind(this));
     this.chatClient.on('participantsRemoved', this.participantsRemovedListener.bind(this));
+    this.chatClient.on('chatThreadCreated', this.chatThreadCreatedListener.bind(this));
   }
 
   private unsubscribeAllEvents(): void {
@@ -361,6 +405,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     this.chatClient.off('chatMessageDeleted', this.messageDeletedListener.bind(this));
     this.chatClient.off('readReceiptReceived', this.messageReadListener.bind(this));
     this.chatClient.off('participantsRemoved', this.participantsRemovedListener.bind(this));
+    this.chatClient.off('chatThreadCreated', this.chatThreadCreatedListener.bind(this));
   }
 
   on(event: 'messageReceived', listener: MessageReceivedListener): void;
@@ -371,6 +416,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   on(event: 'participantsAdded', listener: ParticipantsAddedListener): void;
   on(event: 'participantsRemoved', listener: ParticipantsRemovedListener): void;
   on(event: 'topicChanged', listener: TopicChangedListener): void;
+  on(event: 'chatThreadCreated', listener: (e: ChatThreadCreatedEvent) => void): void;
   on(event: 'error', listener: (e: AdapterError) => void): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -386,6 +432,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   off(event: 'participantsAdded', listener: ParticipantsAddedListener): void;
   off(event: 'participantsRemoved', listener: ParticipantsRemovedListener): void;
   off(event: 'topicChanged', listener: TopicChangedListener): void;
+  off(event: 'chatThreadCreated', listener: (e: ChatThreadCreatedEvent) => void): void;
   off(event: 'error', listener: (e: AdapterError) => void): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

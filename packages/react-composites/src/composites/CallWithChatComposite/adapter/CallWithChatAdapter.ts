@@ -613,4 +613,5 @@ export type CallWithChatEvent =
   | 'messageRead'
   | 'chatParticipantsAdded'
   | 'chatParticipantsRemoved'
-  | 'chatInitialized';
+  | 'chatInitialized'
+  | 'chatThreadCreated';

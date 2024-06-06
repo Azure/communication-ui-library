@@ -38,6 +38,7 @@ import { ChatMessage as ChatMessage_2 } from '@azure/communication-chat';
 import { ChatMessageReadReceipt } from '@azure/communication-chat';
 import { ChatParticipant } from '@azure/communication-chat';
 import { ChatThreadClient } from '@azure/communication-chat';
+import type { ChatThreadCreatedEvent } from '@azure/communication-chat';
 import { CommunicationIdentifier } from '@azure/communication-common';
 import { CommunicationIdentifierKind } from '@azure/communication-common';
 import { CommunicationTokenCredential } from '@azure/communication-common';
@@ -480,6 +481,7 @@ export type CallAdapterClientState = {
     hideAttendeeNames?: boolean;
     sounds?: CallingSounds;
     reactions?: ReactionResources;
+    mainMeeting?: CallState;
 };
 
 // @public
@@ -1300,6 +1302,8 @@ export interface CallWithChatClientState {
     isTeamsMeeting: boolean;
     latestCallErrors: AdapterErrors;
     latestChatErrors: AdapterErrors;
+    // (undocumented)
+    mainMeeting?: CallState;
     onResolveVideoEffectDependency?: () => Promise<VideoBackgroundEffectsDependency>;
     reactions?: ReactionResources;
     selectedVideoBackgroundEffect?: VideoBackgroundEffect;
@@ -1487,7 +1491,7 @@ export interface CallWithChatControlOptions extends CommonCallControlOptions {
 }
 
 // @public
-export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'selectedMicrophoneChanged' | 'selectedSpeakerChanged' | 'isCaptionsActiveChanged' | 'captionsReceived' | 'isCaptionLanguageChanged' | 'isSpokenLanguageChanged' | 'capabilitiesChanged' | /* @conditional-compile-remove(spotlight) */ 'spotlightChanged' | 'assignedBreakoutRoomUpdated' | 'breakoutRoomSettingsAvailable' | 'messageReceived' | 'messageEdited' | 'messageDeleted' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved' | 'chatInitialized';
+export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'selectedMicrophoneChanged' | 'selectedSpeakerChanged' | 'isCaptionsActiveChanged' | 'captionsReceived' | 'isCaptionLanguageChanged' | 'isSpokenLanguageChanged' | 'capabilitiesChanged' | /* @conditional-compile-remove(spotlight) */ 'spotlightChanged' | 'assignedBreakoutRoomUpdated' | 'breakoutRoomSettingsAvailable' | 'messageReceived' | 'messageEdited' | 'messageDeleted' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved' | 'chatInitialized' | 'chatThreadCreated';
 
 // @beta
 export const CameraAndMicrophoneSitePermissions: (props: CameraAndMicrophoneSitePermissionsProps) => JSX.Element;
@@ -1720,6 +1724,7 @@ export interface ChatAdapterSubscribers {
     off(event: 'participantsRemoved', listener: ParticipantsRemovedListener): void;
     off(event: 'topicChanged', listener: TopicChangedListener): void;
     off(event: 'error', listener: (e: AdapterError) => void): void;
+    off(event: 'chatThreadCreated', listener: (e: ChatThreadCreatedEvent) => void): void;
     on(event: 'messageReceived', listener: MessageReceivedListener): void;
     on(event: 'messageEdited', listener: MessageEditedListener): void;
     on(event: 'messageDeleted', listener: MessageDeletedListener): void;
@@ -1729,6 +1734,7 @@ export interface ChatAdapterSubscribers {
     on(event: 'participantsRemoved', listener: ParticipantsRemovedListener): void;
     on(event: 'topicChanged', listener: TopicChangedListener): void;
     on(event: 'error', listener: (e: AdapterError) => void): void;
+    on(event: 'chatThreadCreated', listener: (e: ChatThreadCreatedEvent) => void): void;
 }
 
 // @public

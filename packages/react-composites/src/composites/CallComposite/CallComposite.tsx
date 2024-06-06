@@ -21,7 +21,7 @@ import { CallPage } from './pages/CallPage';
 import { ConfigurationPage } from './pages/ConfigurationPage';
 import { NoticePage } from './pages/NoticePage';
 import { useSelector } from './hooks/useSelector';
-import { getAssignedBreakoutRoom, getEndedCall, getPage, getTargetCallees } from './selectors/baseSelectors';
+import { getAssignedBreakoutRoom, getCallId, getEndedCall, getPage, getTargetCallees } from './selectors/baseSelectors';
 import { LobbyPage } from './pages/LobbyPage';
 import { TransferPage } from './pages/TransferPage';
 import {
@@ -423,8 +423,10 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
     useTrackedCapabilityChangedNotifications(capabilitiesChangedInfoAndRole);
 
   const assignedBreakoutRoom = useSelector(getAssignedBreakoutRoom);
+  const callId = useSelector(getCallId);
   const breakoutRoomsNotificationBarProps = useTrackedBreakoutRoomsNotifications({
     assignedBreakoutRoom,
+    callId,
     adapter: adapter as AzureCommunicationCallAdapter
   });
 

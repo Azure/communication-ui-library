@@ -58,6 +58,7 @@ import {
 import {
   _createAzureCommunicationChatAdapterInner,
   _createLazyAzureCommunicationChatAdapterInner,
+  AzureCommunicationChatAdapter,
   createAzureCommunicationChatAdapterFromClient
 } from '../../ChatComposite/adapter/AzureCommunicationChatAdapter';
 import { EventEmitter } from 'events';
@@ -72,10 +73,7 @@ import { getChatThreadFromTeamsLink } from './parseTeamsUrl';
 import { AdapterError } from '../../common/adapters';
 
 /* @conditional-compile-remove(teams-adhoc-call) */
-import {
-  AzureCommunicationCallAdapter,
-  CallParticipantsLocator
-} from '../../CallComposite/adapter/AzureCommunicationCallAdapter';
+import { CallParticipantsLocator } from '../../CallComposite/adapter/AzureCommunicationCallAdapter';
 
 import { _createAzureCommunicationCallAdapterInner } from '../../CallComposite/adapter/AzureCommunicationCallAdapter';
 
@@ -83,7 +81,7 @@ import {
   CallAdapterLocator,
   createAzureCommunicationCallAdapterFromClient
 } from '../../CallComposite/adapter/AzureCommunicationCallAdapter';
-import { CallCommon, StatefulCallClient } from '@internal/calling-stateful-client';
+import { StatefulCallClient } from '@internal/calling-stateful-client';
 import { StatefulChatClient } from '@internal/chat-stateful-client';
 import { ChatThreadClient } from '@azure/communication-chat';
 import { useEffect, useRef, useState } from 'react';
@@ -103,6 +101,7 @@ import { CapabilitiesChangedListener } from '../../CallComposite/adapter/CallAda
 import { SpotlightChangedListener } from '../../CallComposite/adapter/CallAdapter';
 import { VideoBackgroundImage, VideoBackgroundEffect } from '../../CallComposite';
 import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
+import { CallCommon } from '@internal/calling-stateful-client';
 
 type CallWithChatAdapterStateChangedHandler = (newState: CallWithChatAdapterState) => void;
 
@@ -178,6 +177,12 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     };
 
     this.callAdapter.onStateChange(onCallStateChange);
+    this.callAdapter.on('breakoutRoomJoined', (call: CallCommon) => {
+      const threadId = this.callAdapter.getState().mainMeeting?.breakoutRooms?.assignedBreakoutRoom?.threadId;
+      if (threadId) {
+        (this.chatAdapter as AzureCommunicationChatAdapter).switchChatThread(threadId);
+      }
+    });
     this.onCallStateChange = onCallStateChange;
   }
 
@@ -553,9 +558,14 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   public async muteParticipant(userId: string): Promise<void> {
     return this.callAdapter.muteParticipant(userId);
   }
- 
+
   public async returnToMainMeeting(): Promise<void> {
-    return this.callAdapter.returnToMainMeeting();
+    const threadId = this.callAdapter.getState().mainMeeting?.info?.threadId;
+    if (threadId) {
+      (this.chatAdapter as AzureCommunicationChatAdapter).switchChatThread(threadId).then(() => {
+        this.callAdapter.returnToMainMeeting();
+      });
+    }
   }
 
   on(event: 'callParticipantsJoined', listener: ParticipantsJoinedListener): void;

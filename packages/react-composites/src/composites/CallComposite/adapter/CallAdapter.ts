@@ -191,6 +191,8 @@ export type CallAdapterClientState = {
    * @public
    */
   reactions?: ReactionResources;
+
+  mainMeeting?: CallState;
 };
 
 /**

@@ -90,6 +90,8 @@ export interface CallWithChatClientState {
    * Reaction resources to render in meetings
    * */
   reactions?: ReactionResources;
+
+  mainMeeting?: CallState;
 }
 
 /**
