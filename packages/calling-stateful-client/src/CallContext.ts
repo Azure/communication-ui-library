@@ -14,6 +14,8 @@ import { RaisedHand } from '@azure/communication-calling';
 
 /* @conditional-compile-remove(teams-meeting-conference) */
 import { TeamsMeetingAudioConferencingDetails } from '@azure/communication-calling';
+/* @conditional-compile-remove(teams-meeting-conference) */
+import { convertConferencePhoneInfo } from './Converter';
 
 import { CapabilitiesChangeInfo, ParticipantCapabilities } from '@azure/communication-calling';
 import { TeamsCaptionsInfo } from '@azure/communication-calling';
@@ -49,7 +51,7 @@ import { AcceptedTransfer } from './CallClientState';
 import { callingStatefulLogger } from './Logger';
 import { CallIdHistory } from './CallIdHistory';
 import { LocalVideoStreamVideoEffectsState } from './CallClientState';
-import { convertConferencePhoneInfo, convertFromTeamsSDKToCaptionInfoState } from './Converter';
+import { convertFromTeamsSDKToCaptionInfoState } from './Converter';
 /* @conditional-compile-remove(acs-close-captions) */
 import { convertFromSDKToCaptionInfoState } from './Converter';
 import { convertFromSDKToRaisedHandState } from './Converter';
