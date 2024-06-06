@@ -1,14 +1,14 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/* @conditional-compile-remove(rich-text-editor-composite-support) */
+/* @conditional-compile-remove(rich-text-editor-composite-support) @conditional-compile-remove(rich-text-editor) */
 import React from 'react';
-/* @conditional-compile-remove(rich-text-editor-composite-support) */
+/* @conditional-compile-remove(rich-text-editor-composite-support) @conditional-compile-remove(rich-text-editor) */
 import { usePropsFor } from '../ChatComposite/hooks/usePropsFor';
-/* @conditional-compile-remove(rich-text-editor-composite-support) */
+/* @conditional-compile-remove(rich-text-editor-composite-support) @conditional-compile-remove(rich-text-editor) */
 import { RichTextSendBox, RichTextSendBoxProps } from '@internal/react-components';
 
-/* @conditional-compile-remove(rich-text-editor-composite-support) */
+/* @conditional-compile-remove(rich-text-editor-composite-support) @conditional-compile-remove(rich-text-editor) */
 /**
  * @private
  *

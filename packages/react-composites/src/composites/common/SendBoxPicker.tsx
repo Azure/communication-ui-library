@@ -6,14 +6,14 @@ import { SendBox, SendBoxStylesProps } from '@internal/react-components';
 /* @conditional-compile-remove(rich-text-editor-composite-support) @conditional-compile-remove(rich-text-editor) */
 import { RichTextEditorOptions } from '@internal/react-components';
 import { usePropsFor } from '../ChatComposite/hooks/usePropsFor';
-/* @conditional-compile-remove(rich-text-editor-composite-support) */
+/* @conditional-compile-remove(rich-text-editor-composite-support) @conditional-compile-remove(rich-text-editor) */
 import { Suspense } from 'react';
-/* @conditional-compile-remove(rich-text-editor-composite-support) */
+/* @conditional-compile-remove(rich-text-editor-composite-support) @conditional-compile-remove(rich-text-editor) */
 import { _ErrorBoundary, RichTextSendBoxProps } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing-acs) */
 import { AttachmentMetadataInProgress, MessageOptions } from '@internal/acs-ui-common';
 
-/* @conditional-compile-remove(rich-text-editor-composite-support) */
+/* @conditional-compile-remove(rich-text-editor-composite-support) @conditional-compile-remove(rich-text-editor) */
 /**
  * Wrapper for RichTextSendBox component to allow us to use usePropsFor with richTextSendBox with lazy loading
  */
@@ -26,7 +26,7 @@ const RichTextSendBoxWrapper = React.lazy(() =>
  * Use this function to load RoosterJS dependencies early in the lifecycle.
  * It should be the same import as used for lazy loading.
  *
-/* @conditional-compile-remove(rich-text-editor-composite-support)
+/* @conditional-compile-remove(rich-text-editor-composite-support) @conditional-compile-remove(rich-text-editor)
  */
 export const loadRichTextSendBox = (): Promise<{
   default: React.ComponentType<RichTextSendBoxProps>;
