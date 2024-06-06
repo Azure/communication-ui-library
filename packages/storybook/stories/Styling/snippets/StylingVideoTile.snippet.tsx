@@ -1,5 +1,6 @@
 import {
   CameraButton,
+  ControlBar,
   FluentThemeProvider,
   StreamMedia,
   VideoTile,
@@ -7,6 +8,7 @@ import {
 } from '@azure/communication-react';
 import React, { useState } from 'react';
 import { renderVideoStream } from '../../utils';
+import { Stack } from '@fluentui/react';
 
 export const VideoTileExample: () => JSX.Element = () => {
   const customStyles: VideoTileStylesProps = {
@@ -37,28 +39,32 @@ export const VideoTileExample: () => JSX.Element = () => {
 
   return (
     <FluentThemeProvider>
-      <VideoTile
-        renderElement={
-          // NOTE: Replace with your own video provider. (An html element with video stream)
-          <StreamMedia styles={videoStyles} videoStreamElement={videoStreamElement} />
-        }
-        displayName={'Jack Reacher'}
-        isMirrored={true}
-        isMuted={true}
-        styles={customStyles}
-      />
-      <CameraButton
-        onClick={() => {
-          if (videoStreams[0]) {
-            onStopVideo();
-            setIsVideoOn(false);
-          } else {
-            onStartVideo();
-            setIsVideoOn(true);
+      <Stack style={{ width: '400px' }}>
+        <VideoTile
+          renderElement={
+            // NOTE: Replace with your own video provider. (An html element with video stream)
+            <StreamMedia styles={videoStyles} videoStreamElement={videoStreamElement} />
           }
-        }}
-        checked={isVideoOn}
-      ></CameraButton>
+          displayName={'Jack Reacher'}
+          isMirrored={true}
+          isMuted={true}
+          styles={customStyles}
+        />
+        <ControlBar layout="floatingBottom">
+          <CameraButton
+            onClick={() => {
+              if (videoStreams[0]) {
+                onStopVideo();
+                setIsVideoOn(false);
+              } else {
+                onStartVideo();
+                setIsVideoOn(true);
+              }
+            }}
+            checked={isVideoOn}
+          ></CameraButton>
+        </ControlBar>
+      </Stack>
     </FluentThemeProvider>
   );
 };
