@@ -86,10 +86,8 @@ export type { CapabilitiesChangedListener } from './adapter';
 
 export type { CapabilityChangedNotificationStrings } from './components/CapabilitiesChangedNotificationBar';
 
-/* @conditional-compile-remove(spotlight) */
 export type { SpotlightChangedListener } from './adapter';
 
 export type { CallingSounds, SoundEffect } from './adapter';
 
-/* @conditional-compile-remove(spotlight) */
 export type { SpotlightPromptStrings } from './components/Prompt';

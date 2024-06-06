@@ -68,7 +68,7 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
     overflowGalleryPosition = 'horizontalBottom',
     pinnedParticipantUserIds = [],
     localVideoTileSize,
-    /* @conditional-compile-remove(spotlight) */ spotlightedParticipantUserIds
+    spotlightedParticipantUserIds
   } = props;
 
   const theme = useTheme();
@@ -91,7 +91,7 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
       : childrenPerPage.current,
     pinnedParticipantUserIds,
     layout: 'floatingLocalVideo',
-    /* @conditional-compile-remove(spotlight) */ spotlightedParticipantUserIds
+    spotlightedParticipantUserIds
   });
 
   let activeVideoStreams = 0;

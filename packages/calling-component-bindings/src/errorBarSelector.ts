@@ -176,7 +176,6 @@ export const errorBarSelector: ErrorBarSelector = createSelector(
       appendActiveErrorIfDefined(activeErrorMessages, latestErrors, 'CallAgent.join', 'failedToJoinCallGeneric');
     }
 
-    /* @conditional-compile-remove(spotlight) */
     if (
       latestErrors['Call.feature']?.message.match(
         /Call\.feature: startSpotlight failed\. \d+ is the max number of participants that can be Spotlighted/g

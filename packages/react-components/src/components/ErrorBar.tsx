@@ -224,7 +224,6 @@ export interface ErrorBarStrings {
    * Unable to start effect
    */
   unableToStartVideoEffect?: string;
-  /* @conditional-compile-remove(spotlight) */
   /**
    * An error message when starting spotlight while max participants are spotlighted
    */

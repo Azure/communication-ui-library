@@ -39,7 +39,6 @@ export type { AcceptedTransfer, TransferFeatureState as TransferFeature } from '
 export type { OptimalVideoCountFeatureState } from './CallClientState';
 export type { PPTLiveCallFeatureState } from './CallClientState';
 export type { ReactionState } from './CallClientState';
-/* @conditional-compile-remove(spotlight) */
 export type { SpotlightCallFeatureState, SpotlightState } from './CallClientState';
 /* @conditional-compile-remove(local-recording-notification) */
 export type { LocalRecordingCallFeatureState } from './CallClientState';

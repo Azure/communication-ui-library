@@ -54,7 +54,6 @@ import { convertFromTeamsSDKToCaptionInfoState } from './Converter';
 import { convertFromSDKToCaptionInfoState } from './Converter';
 import { convertFromSDKToRaisedHandState } from './Converter';
 import { ReactionMessage } from '@azure/communication-calling';
-/* @conditional-compile-remove(spotlight) */
 import { SpotlightedParticipant } from '@azure/communication-calling';
 /* @conditional-compile-remove(local-recording-notification) */
 import { LocalRecordingInfo } from '@azure/communication-calling';
@@ -548,7 +547,6 @@ export class CallContext {
     });
   }
 
-  /* @conditional-compile-remove(spotlight) */
   public setSpotlight(
     callId: string,
     spotlightedParticipants: SpotlightedParticipant[],
@@ -575,7 +573,6 @@ export class CallContext {
     });
   }
 
-  /* @conditional-compile-remove(spotlight) */
   public setParticipantSpotlighted(callId: string, spotlightedParticipant: SpotlightedParticipant): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
@@ -594,7 +591,6 @@ export class CallContext {
     });
   }
 
-  /* @conditional-compile-remove(spotlight) */
   public setParticipantNotSpotlighted(callId: string, spotlightedParticipant: SpotlightedParticipant): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];

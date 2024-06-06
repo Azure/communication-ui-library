@@ -1202,7 +1202,7 @@ export interface CallWithChatControlOptions extends CommonCallControlOptions {
 }
 
 // @public
-export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'selectedMicrophoneChanged' | 'selectedSpeakerChanged' | 'isCaptionsActiveChanged' | 'captionsReceived' | 'isCaptionLanguageChanged' | 'isSpokenLanguageChanged' | 'capabilitiesChanged' | /* @conditional-compile-remove(spotlight) */ 'spotlightChanged' | 'messageReceived' | 'messageEdited' | 'messageDeleted' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved' | 'chatInitialized';
+export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'selectedMicrophoneChanged' | 'selectedSpeakerChanged' | 'isCaptionsActiveChanged' | 'captionsReceived' | 'isCaptionLanguageChanged' | 'isSpokenLanguageChanged' | 'capabilitiesChanged' |  'spotlightChanged' | 'messageReceived' | 'messageEdited' | 'messageDeleted' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved' | 'chatInitialized';
 
 // @public
 export const CameraButton: (props: CameraButtonProps) => JSX.Element;
