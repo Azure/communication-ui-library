@@ -121,7 +121,8 @@ export interface ActiveErrorMessage {
 // @beta
 export interface ActiveNotification {
     autoDismiss?: boolean;
-    onClick?: () => void;
+    onClickPrimaryButton?: () => void;
+    onClickSecondaryButton?: () => void;
     onDismiss?: () => void;
     type: NotificationType;
 }
@@ -1403,7 +1404,7 @@ export type CallWithChatCompositeOptions = {
     spotlight?: {
         hideSpotlightButtons?: boolean;
     };
-    richTextEditor?: boolean;
+    richTextEditorOptions?: RichTextEditorOptions;
 };
 
 // @public
@@ -1793,7 +1794,7 @@ export type ChatCompositeOptions = {
     topic?: boolean;
     autoFocus?: 'sendBoxTextField';
     attachmentOptions?: AttachmentOptions;
-    richTextEditor?: boolean;
+    richTextEditorOptions?: RichTextEditorOptions;
 };
 
 // @public
@@ -3418,7 +3419,7 @@ export type MessageThreadProps = {
     onDisplayDateTimeString?: (messageDate: Date) => string;
     mentionOptions?: MentionOptions;
     inlineImageOptions?: InlineImageOptions;
-    richTextEditor?: boolean;
+    richTextEditorOptions?: RichTextEditorOptions;
 };
 
 // @public
@@ -3568,16 +3569,18 @@ export interface NotificationBarProps {
     autoDismiss?: boolean;
     notificationBarIconProps?: IIconProps;
     notificationBarStrings?: NotificationBarStrings;
-    onClick?: () => void;
+    onClickPrimaryButton?: () => void;
+    onClickSecondaryButton?: () => void;
     onDismiss?: () => void;
     showStackedEffect?: boolean;
 }
 
 // @beta
 export interface NotificationBarStrings {
-    buttonLabel?: string;
     closeButtonAriaLabel: string;
     message?: string;
+    primaryButtonLabel?: string;
+    secondaryButtonLabel?: string;
     title: string;
 }
 
@@ -4002,6 +4005,13 @@ export type ResourceFetchResult = {
 };
 
 // @beta
+export interface RichTextEditorOptions {
+    onPaste?: (event: {
+        content: DocumentFragment;
+    }) => void;
+}
+
+// @beta
 export const RichTextSendBox: (props: RichTextSendBoxProps) => JSX.Element;
 
 // @beta
@@ -4010,6 +4020,9 @@ export interface RichTextSendBoxProps {
     autoFocus?: 'sendBoxTextField';
     disabled?: boolean;
     onCancelAttachmentUpload?: (attachmentId: string) => void;
+    onPaste?: (event: {
+        content: DocumentFragment;
+    }) => void;
     onSendMessage: (content: string, options?: MessageOptions) => Promise<void>;
     onTyping?: () => Promise<void>;
     strings?: Partial<RichTextSendBoxStrings>;

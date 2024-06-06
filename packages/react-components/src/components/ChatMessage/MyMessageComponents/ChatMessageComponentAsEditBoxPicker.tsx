@@ -8,6 +8,8 @@ import { ChatMessage } from '../../../types';
 /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
 import { AttachmentMetadata } from '@internal/acs-ui-common';
 import { MessageThreadStrings } from '../../MessageThread';
+/* @conditional-compile-remove(rich-text-editor) */
+import { RichTextEditorOptions } from '../../MessageThread';
 import { ChatMessageComponentAsEditBox } from './ChatMessageComponentAsEditBox';
 /* @conditional-compile-remove(mention) */
 import { MentionLookupOptions } from '../../MentionPopover';
@@ -44,7 +46,8 @@ export type ChatMessageComponentAsEditBoxPickerProps = {
   strings: MessageThreadStrings;
   /* @conditional-compile-remove(mention) */
   mentionLookupOptions?: MentionLookupOptions;
-  richTextEditor?: boolean;
+  /* @conditional-compile-remove(rich-text-editor) */
+  richTextEditorOptions?: RichTextEditorOptions;
 };
 
 /**
@@ -52,18 +55,22 @@ export type ChatMessageComponentAsEditBoxPickerProps = {
  */
 export const ChatMessageComponentAsEditBoxPicker = (props: ChatMessageComponentAsEditBoxPickerProps): JSX.Element => {
   /* @conditional-compile-remove(rich-text-editor) */
-  const { richTextEditor } = props;
+  const { richTextEditorOptions } = props;
 
   const simpleEditBox = useMemo(() => {
     return <ChatMessageComponentAsEditBox {...props} />;
   }, [props]);
 
   /* @conditional-compile-remove(rich-text-editor) */
-  if (richTextEditor) {
+  if (richTextEditorOptions) {
     return (
       <_ErrorBoundary fallback={simpleEditBox}>
         <Suspense fallback={simpleEditBox}>
-          <ChatMessageComponentAsRichTextEditBox {...props} />
+          <ChatMessageComponentAsRichTextEditBox
+            {...props}
+            /* @conditional-compile-remove(rich-text-editor-image-upload) */
+            onPaste={richTextEditorOptions?.onPaste}
+          />
         </Suspense>
       </_ErrorBoundary>
     );

@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import React, { useState } from 'react';
-import { Icon, IconButton, PrimaryButton, Stack, useTheme, Text, IIconProps } from '@fluentui/react';
+import { Icon, IconButton, PrimaryButton, Stack, useTheme, Text, IIconProps, DefaultButton } from '@fluentui/react';
 import { cancelIcon } from './styles/ImageOverlay.style';
 import {
   containerStyles,
@@ -41,9 +41,14 @@ export interface NotificationBarProps {
   showStackedEffect?: boolean;
 
   /**
-   * Callback called when the button inside notification bar is clicked.
+   * Callback called when the primary button inside notification bar is clicked.
    */
-  onClick?: () => void;
+  onClickPrimaryButton?: () => void;
+
+  /**
+   * Callback called when the secondary button inside notification bar is clicked.
+   */
+  onClickSecondaryButton?: () => void;
 
   /**
    * Callback called when the notification is dismissed.
@@ -70,9 +75,13 @@ export interface NotificationBarStrings {
    */
   message?: string;
   /**
-   * Notification bar button label
+   * Notification bar primary button label
    */
-  buttonLabel?: string;
+  primaryButtonLabel?: string;
+  /**
+   * Notification bar secondary button label
+   */
+  secondaryButtonLabel?: string;
 }
 
 /**
@@ -118,11 +127,18 @@ export const NotificationBar = (props: NotificationBarProps): JSX.Element => {
           />
         </Stack>
         <Text className={messageTextStyle(theme)}>{strings?.message}</Text>
-        {strings?.buttonLabel && (
-          <PrimaryButton onClick={props.onClick} style={{ marginTop: '1rem' }}>
-            {strings?.buttonLabel}
-          </PrimaryButton>
-        )}
+        <Stack horizontal horizontalAlign="space-evenly">
+          {strings?.secondaryButtonLabel && (
+            <DefaultButton onClick={props.onClickSecondaryButton} style={{ marginTop: '1rem' }}>
+              {strings?.secondaryButtonLabel}
+            </DefaultButton>
+          )}
+          {strings?.primaryButtonLabel && (
+            <PrimaryButton onClick={props.onClickPrimaryButton} style={{ marginTop: '1rem' }}>
+              {strings?.primaryButtonLabel}
+            </PrimaryButton>
+          )}
+        </Stack>
       </Stack>
       {props.showStackedEffect && <Stack className={hiddenContainerStyles(theme)}></Stack>}
     </Stack>

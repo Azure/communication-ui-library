@@ -50,7 +50,7 @@ export const FluentChatMyMessageComponent = (props: FluentChatMessageComponentWr
     /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
     onRenderAttachmentDownloads,
     /* @conditional-compile-remove(rich-text-editor) */
-    richTextEditor
+    richTextEditorOptions
   } = props;
   const chatMessageRenderStyles = useChatMessageRenderStyles();
   /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
@@ -93,7 +93,7 @@ export const FluentChatMyMessageComponent = (props: FluentChatMessageComponentWr
             /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
             actionsForAttachment={actionsForAttachment}
             /* @conditional-compile-remove(rich-text-editor) */
-            richTextEditor={richTextEditor}
+            richTextEditorOptions={richTextEditorOptions}
           />
         );
       }
@@ -118,7 +118,7 @@ export const FluentChatMyMessageComponent = (props: FluentChatMessageComponentWr
       // eslint-disable-next-line react-hooks/exhaustive-deps
       new Date().toDateString(),
       /* @conditional-compile-remove(rich-text-editor) */
-      richTextEditor
+      richTextEditorOptions
     ]
   );
 
