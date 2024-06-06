@@ -21,6 +21,7 @@ import { emojiStyles, reactionEmojiMenuStyles, reactionToolTipHostStyle } from '
 import { isDarkThemed } from '../theming/themeUtils';
 import { ReactionResources } from '..';
 import { getEmojiFrameCount } from './VideoGallery/utils/videoGalleryLayoutUtils';
+import { _preventDismissOnEvent } from '@internal/acs-ui-common';
 
 /**
  * Props for {@link ReactionButton}.
@@ -151,7 +152,8 @@ export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
       className={mergeStyles(styles, props.styles)}
       menuProps={{
         shouldFocusOnMount: true,
-        items: emojiList
+        items: emojiList,
+        calloutProps: { preventDismissOnEvent: _preventDismissOnEvent }
       }}
       onRenderIcon={props.onRenderIcon ?? onRenderIcon}
       strings={strings}
