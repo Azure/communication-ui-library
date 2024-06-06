@@ -134,8 +134,7 @@ export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
               }}
               className={classname}
               aria-label={emojiButtonTooltip.get(emoji)}
-            >
-            </div>
+            ></div>
           </TooltipHost>
         );
       })}
