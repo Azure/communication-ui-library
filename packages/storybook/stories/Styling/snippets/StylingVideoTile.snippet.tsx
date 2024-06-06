@@ -6,9 +6,9 @@ import {
   VideoTile,
   VideoTileStylesProps
 } from '@azure/communication-react';
+import { Stack } from '@fluentui/react';
 import React, { useState } from 'react';
 import { renderVideoStream } from '../../utils';
-import { Stack } from '@fluentui/react';
 
 export const VideoTileExample: () => JSX.Element = () => {
   const customStyles: VideoTileStylesProps = {
