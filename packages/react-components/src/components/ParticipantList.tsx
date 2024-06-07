@@ -218,7 +218,7 @@ const onRenderParticipantDefault = (
       presence={presence}
       onRenderIcon={onRenderIcon}
       onRenderAvatar={onRenderAvatarWithRaiseHand}
-      onClick={() => onParticipantClick?.(participant)}
+      onClick={onParticipantClick ? () => onParticipantClick?.(participant) : undefined}
       showParticipantOverflowTooltip={showParticipantOverflowTooltip}
       /* @conditional-compile-remove(one-to-n-calling) */
       /* @conditional-compile-remove(PSTN-calls) */
