@@ -371,7 +371,6 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
       props.onRenderAttachmentUploads()
     ) : (
       <Stack className={attachmentUploadCardsStyles}>
-        <FluentV9ThemeProvider v8Theme={theme}>
         <FluentV9ThemeProvider v8Theme={theme} className={customStyles.root}>
           <_AttachmentUploadCards
             attachments={attachments}
