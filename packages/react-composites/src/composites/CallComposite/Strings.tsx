@@ -825,4 +825,9 @@ export interface CallCompositeStrings {
    * Error message when the meeting identifier or passcode is invalid
    */
   invalidMeetingIdentifier: string;
+  /* @conditional-compile-remove(teams-meeting-conference) */
+  /**
+   * Error message when the meeting identifier or passcode is invalid
+   */
+  phoneCallMoreButtonLabel: string;
 }
