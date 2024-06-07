@@ -6,7 +6,6 @@ import {
   DefaultPalette,
   IButtonStyles,
   ICalloutContentStyles,
-  IconButton,
   IContextualMenuItem,
   mergeStyles,
   Theme,
@@ -126,15 +125,16 @@ export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
             styles={reactionToolTipHostStyle()}
             calloutProps={{ ...calloutProps }}
           >
-            <IconButton
+            <div
+              role="menuitem"
               key={index}
               onClick={() => {
                 props.onReactionClick(emoji);
                 dismissMenu();
               }}
               className={classname}
-              ariaLabel={emojiButtonTooltip.get(emoji)}
-            />
+              aria-label={emojiButtonTooltip.get(emoji)}
+            ></div>
           </TooltipHost>
         );
       })}
