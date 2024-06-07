@@ -6,7 +6,9 @@ import { RichTextInputBoxComponent } from './RichTextInputBoxComponent';
 import { Icon, Stack } from '@fluentui/react';
 import { useLocale } from '../../localization';
 import { SendBoxStrings } from '../SendBox';
-import { sendIconStyle, useCustomStyles } from '../styles/SendBox.styles';
+import { sendIconStyle } from '../styles/SendBox.styles';
+/* @conditional-compile-remove(file-sharing-acs) */
+import { useV9CustomStyles } from '../styles/SendBox.styles';
 import { InputBoxButton } from '../InputBoxButton';
 import { RichTextSendBoxErrors, RichTextSendBoxErrorsProps } from './RichTextSendBoxErrors';
 import { isMessageTooLong, isSendBoxButtonAriaDisabled, sanitizeText } from '../utils/SendBoxUtils';
@@ -219,7 +221,8 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
   );
   const editorComponentRef = useRef<RichTextEditorComponentRef>(null);
 
-  const customStyles = useCustomStyles();
+  /* @conditional-compile-remove(file-sharing-acs) */
+  const customV9Styles = useV9CustomStyles();
 
   const contentTooLongMessage = useMemo(
     () => (contentValueOverflow ? strings.textTooLong : undefined),
@@ -371,7 +374,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
   const onRenderAttachmentUploads = useCallback(() => {
     return (
       <Stack className={attachmentUploadCardsStyles}>
-        <FluentV9ThemeProvider v8Theme={theme} className={customStyles.root}>
+        <FluentV9ThemeProvider v8Theme={theme} className={customV9Styles.clearBackground}>
           <_AttachmentUploadCards
             attachments={attachments}
             onCancelAttachmentUpload={onCancelAttachmentUpload}
@@ -388,7 +391,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     );
   }, [
     theme,
-    customStyles.root,
+    customV9Styles.clearBackground,
     attachments,
     onCancelAttachmentUpload,
     strings.removeAttachment,

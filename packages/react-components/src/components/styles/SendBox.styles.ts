@@ -85,9 +85,9 @@ export const attachmentUploadCardsStyles = mergeStyles({
 /**
  * @private
  */
-export const useCustomStyles = makeStyles({
-  root: {
-    backgroundColor: 'rgb(0,0,0,0)'
+export const useV9CustomStyles = makeStyles({
+  clearBackground: {
+    backgroundColor: 'transparent'
   }
 });
 

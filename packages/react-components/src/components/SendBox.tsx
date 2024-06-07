@@ -3,13 +3,9 @@
 
 import React, { useState, useMemo, useCallback } from 'react';
 import { IStyle, ITextField, mergeStyles, concatStyleSets, Icon, Stack } from '@fluentui/react';
-import {
-  sendButtonStyle,
-  sendIconStyle,
-  sendBoxWrapperStyles,
-  borderAndBoxShadowStyle,
-  useCustomStyles
-} from './styles/SendBox.styles';
+import { sendButtonStyle, sendIconStyle, sendBoxWrapperStyles, borderAndBoxShadowStyle } from './styles/SendBox.styles';
+/* @conditional-compile-remove(file-sharing-acs) */
+import { useV9CustomStyles } from './styles/SendBox.styles';
 import { BaseCustomStyles } from '../types';
 import { useTheme } from '../theming';
 import { useLocale } from '../localization';
@@ -226,7 +222,8 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
 
   const sendTextFieldRef = React.useRef<ITextField>(null);
 
-  const customStyles = useCustomStyles();
+  /* @conditional-compile-remove(file-sharing-acs) */
+  const customV9Styles = useV9CustomStyles();
 
   /* @conditional-compile-remove(file-sharing-acs) */
   const [attachmentUploadsPendingError, setAttachmentUploadsPendingError] = useState<SendBoxErrorBarError | undefined>(
@@ -377,7 +374,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
       props.onRenderAttachmentUploads()
     ) : (
       <Stack className={attachmentUploadCardsStyles}>
-        <FluentV9ThemeProvider v8Theme={theme} className={customStyles.root}>
+        <FluentV9ThemeProvider v8Theme={theme} className={customV9Styles.clearBackground}>
           <_AttachmentUploadCards
             attachments={attachments}
             onCancelAttachmentUpload={props.onCancelAttachmentUpload}
@@ -396,7 +393,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     attachments,
     props,
     theme,
-    customStyles.root,
+    customV9Styles.clearBackground,
     localeStrings.removeAttachment,
     localeStrings.uploading,
     localeStrings.uploadCompleted,
