@@ -3,7 +3,13 @@
 
 import React, { useState, useMemo, useCallback } from 'react';
 import { IStyle, ITextField, mergeStyles, concatStyleSets, Icon, Stack } from '@fluentui/react';
-import { sendButtonStyle, sendIconStyle, sendBoxWrapperStyles, borderAndBoxShadowStyle, useCustomStyles } from './styles/SendBox.styles';
+import {
+  sendButtonStyle,
+  sendIconStyle,
+  sendBoxWrapperStyles,
+  borderAndBoxShadowStyle,
+  useCustomStyles
+} from './styles/SendBox.styles';
 import { BaseCustomStyles } from '../types';
 import { useTheme } from '../theming';
 import { useLocale } from '../localization';
