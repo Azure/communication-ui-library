@@ -1,9 +1,0 @@
-{
-  "type": "patch",
-  "area": "improvement",
-  "workstream": "",
-  "comment": "Menu icon behavior fix:",
-  "packageName": "@azure/communication-react",
-  "email": "jiangnanhello@live.com",
-  "dependentChangeType": "patch"
-}
