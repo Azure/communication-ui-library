@@ -96,7 +96,6 @@ export const createDefaultCallingHandlers: CreateDefaultCallingHandlers = memoiz
   };
 });
 
-/* @conditional-compile-remove(spotlight) */
 /**
  * Handlers only for calling components
  * @internal
