@@ -77,6 +77,10 @@ export const editorTextBoxButtonStyle: IStyle = {
  * @private
  */
 export const attachmentUploadCardsStyles = mergeStyles({
+  '& > *': {
+    // overwriting the background color set by Fluent UI
+    backgroundColor: 'rgb(0,0,0,0) !important'
+  },
   margin: '0 0.25rem 0.25rem 0.25rem',
   overflow: 'auto'
 });

@@ -379,6 +379,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
               uploadCompleted: props.strings?.uploadCompleted ?? localeStrings.uploadCompleted,
               attachmentMoreMenu: props.strings?.attachmentMoreMenu ?? localeStrings.attachmentMoreMenu
             }}
+            disabled={disabled}
           />
         </FluentV9ThemeProvider>
       </Stack>
@@ -390,7 +391,8 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     localeStrings.removeAttachment,
     localeStrings.uploading,
     localeStrings.uploadCompleted,
-    localeStrings.attachmentMoreMenu
+    localeStrings.attachmentMoreMenu,
+    disabled
   ]);
 
   return (

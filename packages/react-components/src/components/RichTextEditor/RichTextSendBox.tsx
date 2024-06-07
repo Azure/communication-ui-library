@@ -379,18 +379,20 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
               uploadCompleted: strings.uploadCompleted,
               attachmentMoreMenu: strings.attachmentMoreMenu
             }}
+            disabled={disabled}
           />
         </FluentV9ThemeProvider>
       </Stack>
     );
   }, [
+    theme,
     attachments,
     onCancelAttachmentUpload,
     strings.removeAttachment,
-    strings.uploadCompleted,
     strings.uploading,
+    strings.uploadCompleted,
     strings.attachmentMoreMenu,
-    theme
+    disabled
   ]);
 
   const isSendBoxButtonAriaDisabledValue = useMemo(() => {
