@@ -3,7 +3,7 @@
 
 import React, { useState, useMemo, useCallback } from 'react';
 import { IStyle, ITextField, mergeStyles, concatStyleSets, Icon, Stack } from '@fluentui/react';
-import { sendButtonStyle, sendIconStyle, sendBoxWrapperStyles, borderAndBoxShadowStyle } from './styles/SendBox.styles';
+import { sendButtonStyle, sendIconStyle, sendBoxWrapperStyles, borderAndBoxShadowStyle, useCustomStyles } from './styles/SendBox.styles';
 import { BaseCustomStyles } from '../types';
 import { useTheme } from '../theming';
 import { useLocale } from '../localization';
@@ -220,6 +220,8 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
 
   const sendTextFieldRef = React.useRef<ITextField>(null);
 
+  const customStyles = useCustomStyles();
+
   /* @conditional-compile-remove(file-sharing-acs) */
   const [attachmentUploadsPendingError, setAttachmentUploadsPendingError] = useState<SendBoxErrorBarError | undefined>(
     undefined
@@ -370,6 +372,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     ) : (
       <Stack className={attachmentUploadCardsStyles}>
         <FluentV9ThemeProvider v8Theme={theme}>
+        <FluentV9ThemeProvider v8Theme={theme} className={customStyles.root}>
           <_AttachmentUploadCards
             attachments={attachments}
             onCancelAttachmentUpload={props.onCancelAttachmentUpload}
@@ -388,6 +391,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     attachments,
     props,
     theme,
+    customStyles.root,
     localeStrings.removeAttachment,
     localeStrings.uploading,
     localeStrings.uploadCompleted,
