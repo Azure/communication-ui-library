@@ -420,3 +420,5 @@ export type {
   NotificationType,
   ActiveNotification
 } from '../../react-components/src';
+/* @conditional-compile-remove(teams-meeting-conference) */
+export type { MeetingConferencePhoneInfoModalStrings } from '../../react-components/src';

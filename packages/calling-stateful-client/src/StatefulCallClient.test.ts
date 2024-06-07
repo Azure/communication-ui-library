@@ -691,7 +691,7 @@ describe('errors should be reported correctly from Call when', () => {
     const { client, callId } = await prepareCallWithFeatures(
       createMockApiFeatures(new Map([[Features.TeamsMeetingAudioConferencing, conference]]))
     );
-    expect(client.getState().calls[callId]?.teamsMeetingConference).toBeUndefined();
+    expect(client.getState().calls[callId]?.teamsMeetingConference).toStrictEqual([]);
   });
 });
 

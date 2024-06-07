@@ -52,6 +52,8 @@ import { isBoolean } from '../utils';
 /* @conditional-compile-remove(end-call-options) */
 import { getIsTeamsCall } from '../../CallComposite/selectors/baseSelectors';
 import { callStatusSelector } from '../../CallComposite/selectors/callStatusSelector';
+/* @conditional-compile-remove(teams-meeting-conference) */
+import { MeetingConferencePhoneInfoModal } from '@internal/react-components';
 
 /**
  * @private
@@ -125,6 +127,8 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
   const options = inferCommonCallControlOptions(props.mobileView, props.callControls);
 
   const [showCaptionsSettingsModal, setShowCaptionsSettingsModal] = useState(false);
+  /* @conditional-compile-remove(teams-meeting-conference) */
+  const [showTeamsMeetingConferenceModal, setShowTeamsMeetingConferenceModal] = useState(false);
 
   /* @conditional-compile-remove(end-call-options) */
   // If the hangup capability is not present, we default to true
@@ -173,6 +177,12 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
   const onDismissCaptionsSettings = useCallback((): void => {
     setShowCaptionsSettingsModal(false);
   }, []);
+
+  /* @conditional-compile-remove(teams-meeting-conference) */
+  const toggleTeamsMeetingConferenceModal = useCallback((): void => {
+    setShowTeamsMeetingConferenceModal(!showTeamsMeetingConferenceModal);
+  }, [showTeamsMeetingConferenceModal]);
+
   const peopleButtonStrings = useMemo(
     () => ({
       label: callWithChatStrings.peopleButtonLabel,
@@ -273,6 +283,9 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
     props.isCaptionsSupported &&
     /* @conditional-compile-remove(acs-close-captions) */ isEnabled(options.captionsButton);
 
+  /* @conditional-compile-remove(teams-meeting-conference) */
+  const showTeamsMeetingPhoneCallButton = isEnabled(options?.teamsMeetingPhoneCallButton);
+
   const showDesktopMoreButton =
     isEnabled(options?.moreButton) &&
     (false ||
@@ -297,6 +310,15 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
             changeCaptionLanguage={props.isCaptionsOn && props.useTeamsCaptions}
           />
         )}
+        {
+          /* @conditional-compile-remove(teams-meeting-conference) */ showTeamsMeetingConferenceModal && (
+            <MeetingConferencePhoneInfoModal
+              conferencePhoneInfoList={props.callAdapter.getState().call?.teamsMeetingConference ?? []}
+              showModal={showTeamsMeetingConferenceModal}
+              onDismissMeetingPhoneInfoSettings={toggleTeamsMeetingConferenceModal}
+            />
+          )
+        }
       </CallAdapterProvider>
       <Stack
         horizontal
@@ -439,6 +461,10 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                         userSetGalleryLayout={props.userSetGalleryLayout}
                         dtmfDialerPresent={props.dtmfDialerPresent}
                         onSetDialpadPage={props.onSetDialpadPage}
+                        /* @conditional-compile-remove(teams-meeting-conference) */
+                        teamsMeetingPhoneCallEnable={showTeamsMeetingPhoneCallButton}
+                        /* @conditional-compile-remove(teams-meeting-conference) */
+                        onMeetingPhoneInfoClick={toggleTeamsMeetingConferenceModal}
                       />
                     )}
                     <EndCall
