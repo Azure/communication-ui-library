@@ -16,15 +16,11 @@ export {
 } from './AzureCommunicationCallAdapter';
 
 /* @conditional-compile-remove(teams-identity-support-beta) */
-export type {
-  TeamsCallAdapterArgsCommon,
-  TeamsOutboundCallAdapterArgs,
-  StartTeamsCallIdentifier
-} from './AzureCommunicationCallAdapter';
+export type { TeamsOutboundCallAdapterArgs, StartTeamsCallIdentifier } from './AzureCommunicationCallAdapter';
 
 export type { TeamsAdapterOptions } from './AzureCommunicationCallAdapter';
 /* @conditional-compile-remove(teams-identity-support) */
-export type { TeamsCallAdapterArgs } from './AzureCommunicationCallAdapter';
+export type { TeamsCallAdapterArgsCommon, TeamsCallAdapterArgs } from './AzureCommunicationCallAdapter';
 
 export type { OnFetchProfileCallback, Profile } from './OnFetchProfileCallback';
 export type {

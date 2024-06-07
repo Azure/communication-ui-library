@@ -1675,6 +1675,8 @@ export const createTeamsCallAdapter = async (
   const callAgent = await callClient.createTeamsCallAgent(credential, {
     undefined
   });
+
+  /* @conditional-compile-remove(teams-identity-support-beta) */
   if ('targetCallees' in args) {
     return createTeamsCallAdapterFromClient(callClient, callAgent, args.targetCallees, options);
   }
@@ -1816,6 +1818,7 @@ function useAzureCommunicationCallAdapterGeneric<
           }
           creatingAdapterRef.current = true;
           if (targetCallees) {
+            /* @conditional-compile-remove(teams-identity-support-beta) */
             newAdapter = (await createTeamsCallAdapter({
               credential,
               userId: userId as MicrosoftTeamsUserIdentifier,
@@ -1942,7 +1945,9 @@ export const useTeamsCallAdapter = (
    * Allows arguments to be undefined so that you can respect the rule-of-hooks and pass in arguments
    * as they are created. The adapter is only created when all arguments are defined.
    */
-  args: Partial<TeamsCallAdapterArgs | TeamsOutboundCallAdapterArgs>,
+  args: Partial<
+    TeamsCallAdapterArgs | /* @conditional-compile-remove(teams-identity-support-beta) */ TeamsOutboundCallAdapterArgs
+  >,
   /**
    * Optional callback to modify the adapter once it is created.
    *
@@ -2039,7 +2044,9 @@ export async function createAzureCommunicationCallAdapterFromClient(
 export const createTeamsCallAdapterFromClient = async (
   callClient: StatefulCallClient,
   callAgent: TeamsCallAgent,
-  locator: CallAdapterLocator | StartTeamsCallIdentifier[],
+  locator:
+    | CallAdapterLocator
+    | /* @conditional-compile-remove(teams-identity-support-beta) */ StartTeamsCallIdentifier[],
   options?: TeamsAdapterOptions
 ): Promise<TeamsCallAdapter> => {
   const deviceManager = (await callClient.getDeviceManager()) as StatefulDeviceManager;
