@@ -37,9 +37,9 @@
   "dependencies": {
     "@fluentui/react": "^8.117.1",
     "@fluentui/react-components": "^9.47.3",
-    "@fluentui/react-file-type-icons": "8.11.9",
+    "@fluentui/react-file-type-icons": "8.11.14",
     "@fluentui/react-hooks": "^8.7.0",
-    "@fluentui/react-icons": "^2.0.239",
+    "@fluentui/react-icons": "^2.0.242",
     "@fluentui/react-window-provider": "^2.2.21",
     "@fluentui-contrib/react-chat": "0.1.9",
     "@griffel/react": "^1.5.22",
