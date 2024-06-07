@@ -25,6 +25,7 @@ import { createAutoRefreshingCredential } from '../utils/credential';
 import { WEB_APP_TITLE } from '../utils/constants';
 import { useIsMobile } from '../utils/useIsMobile';
 import { isIOS } from '../utils/utils';
+import { joinThread } from '../utils/joinThread';
 
 export interface CallScreenProps {
   token: string;
@@ -141,6 +142,18 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
           console.log(`Call Id: ${callIdRef.current}`);
         }
       });
+
+      /* send add participant request to chat only after call is connected */
+      const joinThreadWhenCallConnected = async (): Promise<void> => {
+        if (adapter.getState().call?.state === 'Connected' && locator && 'chatThreadId' in locator) {
+          adapter.offStateChange(joinThreadWhenCallConnected);
+          console.log('Joining chat thread');
+          joinThread(locator.chatThreadId, userId.communicationUserId, displayName);
+        }
+      };
+
+      adapter.onStateChange(joinThreadWhenCallConnected);
+
       return adapter;
     },
     [callIdRef]
