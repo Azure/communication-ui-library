@@ -633,6 +633,12 @@ export interface CallState {
    * Proxy of {@link @azure/communication-calling#Call.info}.
    */
   info?: TeamsCallInfo | /* @conditional-compile-remove(calling-beta-sdk) */ CallInfo;
+
+  /* @conditional-compile-remove(teams-meeting-conference) */
+  /**
+   * Proxy of {@link @azure/communication-calling#TeamsMeetingAudioConferencingCallFeature}.
+   */
+  teamsMeetingConference?: ConferencePhoneInfo[];
 }
 
 /**
@@ -955,4 +961,16 @@ export interface NetworkDiagnosticsState {
  */
 export interface MediaDiagnosticsState {
   latest: LatestMediaDiagnostics;
+}
+
+/**
+ * @public
+ * Information for conference phone info
+ */
+export interface ConferencePhoneInfo {
+  phoneNumber: string;
+  conferenceId: string;
+  isTollFree: boolean;
+  country?: string;
+  city?: string;
 }

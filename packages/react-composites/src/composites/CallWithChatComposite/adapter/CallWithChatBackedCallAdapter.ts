@@ -25,7 +25,6 @@ import { CommunicationIdentifier, isPhoneNumberIdentifier, PhoneNumberIdentifier
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { _toCommunicationIdentifier } from '@internal/acs-ui-common';
 import { JoinCallOptions, StartCallIdentifier } from '../../CallComposite/adapter/CallAdapter';
-/* @conditional-compile-remove(end-of-call-survey) */
 import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -212,7 +211,6 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
   public updateSelectedVideoBackgroundEffect(selectedVideoBackground: VideoBackgroundEffect): void {
     return this.callWithChatAdapter.updateSelectedVideoBackgroundEffect(selectedVideoBackground);
   }
-  /* @conditional-compile-remove(end-of-call-survey) */
   public async submitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined> {
     return this.callWithChatAdapter.submitSurvey(survey);
   }
@@ -229,6 +227,11 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
   /* @conditional-compile-remove(spotlight) */
   public async stopAllSpotlight(): Promise<void> {
     return this.callWithChatAdapter.stopAllSpotlight();
+  }
+
+  /* @conditional-compile-remove(soft-mute) */
+  public async muteParticipant(userId: string): Promise<void> {
+    return this.callWithChatAdapter.muteParticipant(userId);
   }
 }
 

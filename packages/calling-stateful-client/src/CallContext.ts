@@ -12,6 +12,11 @@ import {
 } from '@azure/communication-calling';
 import { RaisedHand } from '@azure/communication-calling';
 
+/* @conditional-compile-remove(teams-meeting-conference) */
+import { TeamsMeetingAudioConferencingDetails } from '@azure/communication-calling';
+/* @conditional-compile-remove(teams-meeting-conference) */
+import { convertConferencePhoneInfo } from './Converter';
+
 import { CapabilitiesChangeInfo, ParticipantCapabilities } from '@azure/communication-calling';
 import { TeamsCaptionsInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(acs-close-captions) */
@@ -182,6 +187,8 @@ export class CallContext {
         existingCall.captionsFeature.currentCaptionLanguage = call.captionsFeature.currentCaptionLanguage;
         /* @conditional-compile-remove(meeting-id) */
         existingCall.info = call.info;
+        /* @conditional-compile-remove(teams-meeting-conference) */
+        existingCall.teamsMeetingConference = call.teamsMeetingConference;
       } else {
         draft.calls[latestCallId] = call;
       }
@@ -553,6 +560,19 @@ export class CallContext {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
         call.spotlight = { ...call.spotlight, spotlightedParticipants, maxParticipantsToSpotlight };
+      }
+    });
+  }
+
+  /* @conditional-compile-remove(teams-meeting-conference) */
+  public setTeamsMeetingConference(
+    callId: string,
+    teamsMeetingConferenceDetails: TeamsMeetingAudioConferencingDetails
+  ): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        call.teamsMeetingConference = convertConferencePhoneInfo(teamsMeetingConferenceDetails);
       }
     });
   }
