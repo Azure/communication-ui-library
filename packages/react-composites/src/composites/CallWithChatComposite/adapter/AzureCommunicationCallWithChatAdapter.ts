@@ -23,7 +23,7 @@ import { StartCaptionsOptions } from '@azure/communication-calling';
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { DtmfTone } from '@azure/communication-calling';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
-/* @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(file-sharing-acs) */
 import { MessageOptions } from '@internal/acs-ui-common';
 import {
   ParticipantsJoinedListener,
@@ -411,11 +411,11 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   /** Send a chat message. */
   public async sendMessage(
     content: string,
-    /* @conditional-compile-remove(attachment-upload) */
+    /* @conditional-compile-remove(file-sharing-acs) */
     options?: MessageOptions
   ): Promise<void> {
     return await this.executeWithResolvedChatAdapter((adapter) => {
-      return adapter.sendMessage(content, /* @conditional-compile-remove(attachment-upload) */ options);
+      return adapter.sendMessage(content, /* @conditional-compile-remove(file-sharing-acs) */ options);
     });
   }
   /** Send a chat read receipt. */
@@ -440,7 +440,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   public async updateMessage(
     messageId: string,
     content: string,
-    options?: Record<string, string> | /* @conditional-compile-remove(attachment-upload) */ MessageOptions
+    options?: Record<string, string> | /* @conditional-compile-remove(file-sharing-acs) */ MessageOptions
   ): Promise<void> {
     return this.executeWithResolvedChatAdapter((adapter) => {
       return adapter.updateMessage(messageId, content, options);

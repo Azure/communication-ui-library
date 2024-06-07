@@ -14,6 +14,8 @@ import { RaisedHand } from '@azure/communication-calling';
 
 /* @conditional-compile-remove(teams-meeting-conference) */
 import { TeamsMeetingAudioConferencingDetails } from '@azure/communication-calling';
+/* @conditional-compile-remove(teams-meeting-conference) */
+import { convertConferencePhoneInfo } from './Converter';
 
 import { CapabilitiesChangeInfo, ParticipantCapabilities } from '@azure/communication-calling';
 import { TeamsCaptionsInfo } from '@azure/communication-calling';
@@ -568,7 +570,7 @@ export class CallContext {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
-        call.teamsMeetingConference = teamsMeetingConferenceDetails;
+        call.teamsMeetingConference = convertConferencePhoneInfo(teamsMeetingConferenceDetails);
       }
     });
   }

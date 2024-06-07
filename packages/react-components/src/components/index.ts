@@ -58,6 +58,9 @@ export type {
   CancelEditCallback
 } from './MessageThread';
 
+/* @conditional-compile-remove(rich-text-editor) */
+export type { RichTextEditorOptions } from './MessageThread';
+
 export { StreamMedia } from './StreamMedia';
 export type { StreamMediaProps } from './StreamMedia';
 export type { LoadingState } from './StreamMedia';
@@ -197,7 +200,7 @@ export type {
 } from './PictureInPictureInPicture/PictureInPictureInPictureTile';
 
 export * from './Drawer';
-/* @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(file-sharing-acs) */
 export type { SendBoxErrorBarError } from './SendBoxErrorBar';
 export * from './Attachment/AttachmentCard';
 export * from './Attachment/AttachmentCardGroup';
@@ -205,6 +208,7 @@ export * from './ModalClone/ModalClone';
 export * from './Attachment/AttachmentDownloadCards';
 export type { _AttachmentUploadCardsStrings } from './Attachment/AttachmentUploadCards';
 
+/* @conditional-compile-remove(file-sharing-acs) */
 export type {
   AttachmentOptions,
   AttachmentUploadOptions,
@@ -215,7 +219,7 @@ export type {
   AttachmentUploadTask
 } from '../types/Attachment';
 
-/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(file-sharing-acs) */
 export type { AttachmentMenuAction, AttachmentDownloadOptions } from '../types/Attachment';
 
 export { _useContainerHeight, _useContainerWidth } from './utils/responsive';
@@ -289,6 +293,9 @@ export * from './Caption';
 export * from './StartCaptionsButton';
 
 export * from './CaptionsSettingsModal';
+
+/* @conditional-compile-remove(teams-meeting-conference) */
+export * from './MeetingConferencePhoneInfo';
 
 export { _ErrorBoundary } from './ErrorBoundary';
 /* @conditional-compile-remove(notifications) */

@@ -229,9 +229,14 @@ export interface ActiveNotification {
    */
   type: NotificationType;
   /**
-   * Callback called when the button inside notification bar is clicked.
+   * Callback called when the primary button inside notification bar is clicked.
    */
-  onClick?: () => void;
+  onClickPrimaryButton?: () => void;
+
+  /**
+   * Callback called when the primary button inside notification bar is clicked.
+   */
+  onClickSecondaryButton?: () => void;
 
   /**
    * Callback called when the notification is dismissed.
@@ -281,7 +286,8 @@ export const Notifications = (props: NotificationsProps): JSX.Element => {
               <NotificationBar
                 notificationBarStrings={strings ? strings[notification.type] : undefined}
                 notificationBarIconProps={NotificationIconProps(notification.type)}
-                onClick={() => notification.onClick?.()}
+                onClickPrimaryButton={() => notification.onClickPrimaryButton?.()}
+                onClickSecondaryButton={() => notification.onClickSecondaryButton?.()}
                 onDismiss={() => {
                   activeNotifications.splice(index, 1);
                   setActiveNotifications([...activeNotifications]);

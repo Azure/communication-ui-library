@@ -40,6 +40,8 @@ import { VideoEffectName } from '@azure/communication-calling';
 import { LocalVideoStreamVideoEffectsState } from './CallClientState';
 import { RaisedHand } from '@azure/communication-calling';
 import { RaisedHandState } from './CallClientState';
+import { TeamsMeetingAudioConferencingDetails } from '@azure/communication-calling';
+import { ConferencePhoneInfo } from './CallClientState';
 
 /**
  * @private
@@ -183,7 +185,7 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
     /* @conditional-compile-remove(meeting-id) */
     info: callInfo,
     /* @conditional-compile-remove(teams-meeting-conference) */
-    teamsMeetingConference: undefined
+    teamsMeetingConference: []
   };
 }
 
@@ -248,4 +250,32 @@ export function convertFromSDKToRaisedHandState(raisedHand: RaisedHand): RaisedH
   return {
     raisedHandOrderPosition: raisedHand.order
   };
+}
+
+/** @private */
+export function convertConferencePhoneInfo(
+  meetingConferencePhoneInfo?: TeamsMeetingAudioConferencingDetails
+): ConferencePhoneInfo[] {
+  if (!meetingConferencePhoneInfo) {
+    return [];
+  }
+
+  return meetingConferencePhoneInfo.phoneNumbers.flatMap((phoneNumber) => {
+    const common = {
+      conferenceId: meetingConferencePhoneInfo.phoneConferenceId,
+      country: phoneNumber.countryName,
+      city: phoneNumber.cityName,
+      phoneNumber: '',
+      isTollFree: false
+    };
+    const toll = Object.assign({}, common);
+    toll.phoneNumber = phoneNumber.tollPhoneNumber?.phoneNumber ?? '';
+    toll.isTollFree = false;
+
+    const tollFree = Object.assign({}, common);
+    tollFree.phoneNumber = phoneNumber.tollFreePhoneNumber?.phoneNumber ?? '';
+    tollFree.isTollFree = true;
+
+    return [toll, tollFree].filter((phoneInfo) => phoneInfo.phoneNumber);
+  });
 }

@@ -116,4 +116,10 @@ export type CommonCallControlOptions = {
    * @defaultValue true
    */
   captionsButton?: boolean;
+  /* @conditional-compile-remove(teams-meeting-conference) */
+  /**
+   * Show, meeting conference phone information.
+   * @defaultValue true
+   */
+  teamsMeetingPhoneCallButton?: boolean;
 };
