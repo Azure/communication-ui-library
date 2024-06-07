@@ -54,7 +54,7 @@ export type {
   ChatBaseSelectorProps
 } from '../../chat-component-bindings/src';
 
-/* @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(file-sharing-acs) */
 export type { MessageOptions, ChatMessageType } from '../../acs-ui-common/src';
 
 export {
@@ -324,32 +324,33 @@ export type {
   DtmfTone,
   LongPressTrigger
 } from '../../react-components/src';
-/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(file-sharing-acs) */
 export type { AttachmentOptions } from '../../react-components/src';
-/* @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(file-sharing-acs) */
 export type { SendBoxErrorBarError } from '../../react-components/src';
-/* @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(file-sharing-acs) */
+export type { AttachmentActionHandler } from '../../react-components/src';
+/* @conditional-compile-remove(file-sharing-acs) */
 export type {
-  AttachmentActionHandler,
   AttachmentSelectionHandler,
   AttachmentRemovalHandler,
   AttachmentUploadOptions,
   AttachmentUploadTask
 } from '../../react-components/src';
+/* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
+export type { AttachmentMetadata } from '../../acs-ui-common/src';
 
-/* @conditional-compile-remove(attachment-upload) */
-export type {
-  AttachmentMetadata,
-  AttachmentMetadataInProgress,
-  AttachmentProgressError
-} from '../../acs-ui-common/src';
+/* @conditional-compile-remove(file-sharing-acs) */
+export type { AttachmentMetadataInProgress, AttachmentProgressError } from '../../acs-ui-common/src';
 
-/* @conditional-compile-remove(attachment-download) */
+/* @conditional-compile-remove(file-sharing-acs) */
 export type { AttachmentMenuAction, AttachmentDownloadOptions } from '../../react-components/src';
-/* @conditional-compile-remove(attachment-download) */
+/* @conditional-compile-remove(file-sharing-acs) */
 export { defaultAttachmentMenuAction } from '../../react-components/src';
 export type { ChatAttachmentType } from '../../react-components/src';
 export type { InlineImageOptions, InlineImage } from '../../react-components/src';
+/* @conditional-compile-remove(rich-text-editor) */
+export type { RichTextEditorOptions } from '../../react-components/src';
 /* @conditional-compile-remove(PSTN-calls) */
 export type { HoldButtonProps, HoldButtonStrings } from '../../react-components/src';
 export type { VideoTileStrings } from '../../react-components/src';
@@ -422,3 +423,5 @@ export type {
   NotificationType,
   ActiveNotification
 } from '../../react-components/src';
+/* @conditional-compile-remove(teams-meeting-conference) */
+export type { MeetingConferencePhoneInfoModalStrings } from '../../react-components/src';

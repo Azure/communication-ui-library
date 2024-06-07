@@ -207,6 +207,10 @@ export class _MockCallAdapter implements CallAdapter {
   stopAllSpotlight(): Promise<void> {
     throw Error('stopAllSpotlight not implemented');
   }
+  /* @conditional-compile-remove(soft-mute) */ // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  muteParticipant(userId: string): Promise<void> {
+    throw Error('muteParticipant not implemented');
+  }
 }
 
 /**
