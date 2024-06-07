@@ -20,6 +20,8 @@ import {
   WifiWarning20Filled,
   Circle20Regular
 } from '@fluentui/react-icons';
+/* @conditional-compile-remove(teams-meeting-conference) */
+import { PersonCall20Regular, Clock20Filled } from '@fluentui/react-icons';
 /* @conditional-compile-remove(spotlight) */
 import { MoreHorizontal20Filled, VideoPersonStarOff20Filled } from '@fluentui/react-icons';
 
@@ -32,7 +34,7 @@ import { DEFAULT_COMPONENT_ICONS } from '@internal/react-components';
 import React from 'react';
 // eslint-disable-next-line no-restricted-imports
 import { FontIcon, IIconProps, Spinner, SpinnerSize } from '@fluentui/react';
-/* @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(file-sharing-acs) */
 import { Attach20Regular } from '@fluentui/react-icons';
 
 import { VideoBackgroundEffect20Regular, VideoPerson20Filled } from '@fluentui/react-icons';
@@ -87,7 +89,7 @@ export const COMPOSITE_ONLY_ICONS: CompositeIcons = {
   NoticePageRoomNotValid: <Info20Filled />,
   NoticePageCallRejected: <Info20Filled />,
   NoticePageCallTimeout: <Info20Filled />,
-  /* @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(file-sharing-acs) */
   SendBoxAttachFile: <Attach20Regular />,
   /* @conditional-compile-remove(PSTN-calls) */
   PeoplePaneAddPerson: <PersonAdd20Regular />,
@@ -109,6 +111,10 @@ export const COMPOSITE_ONLY_ICONS: CompositeIcons = {
   LargeGalleryLayout: <Table20Regular />,
   DefaultCustomButton: <Circle20Regular />,
   DtmfDialpadButton: <Dialpad20Regular />,
+  /* @conditional-compile-remove(teams-meeting-conference) */
+  PhoneNumberButton: <PersonCall20Regular />,
+  /* @conditional-compile-remove(teams-meeting-conference) */
+  PhoneInfoWait: <Clock20Filled />,
   /* @conditional-compile-remove(spotlight) */
   PeoplePaneMoreButton: <MoreHorizontal20Filled />,
   /* @conditional-compile-remove(spotlight) */
@@ -146,7 +152,7 @@ export type ChatCompositeIcons = {
   ParticipantItemOptionsHovered?: JSX.Element;
   SendBoxSend?: JSX.Element;
   SendBoxSendHovered?: JSX.Element;
-  /* @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(file-sharing-acs) */
   SendBoxAttachFile?: JSX.Element;
 };
 
@@ -249,6 +255,10 @@ export type CallCompositeIcons = {
   LargeGalleryLayout?: JSX.Element;
   DefaultCustomButton?: JSX.Element;
   DtmfDialpadButton?: JSX.Element;
+  /* @conditional-compile-remove(teams-meeting-conference) */
+  PhoneNumberButton?: JSX.Element;
+  /* @conditional-compile-remove(teams-meeting-conference) */
+  PhoneInfoWait?: JSX.Element;
   /* @conditional-compile-remove(spotlight) */
   PeoplePaneMoreButton?: JSX.Element;
   /* @conditional-compile-remove(spotlight) */

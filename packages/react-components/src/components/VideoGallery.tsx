@@ -313,6 +313,11 @@ export interface VideoGalleryProps {
    * Additional Options for Video Tiles
    */
   videoTilesOptions?: VideoTilesOptions;
+  /* @conditional-compile-remove(soft-mute) */
+  /**
+   * This callback is to mute a remote participant
+   */
+  onMuteParticipant?: (userId: string) => Promise<void>;
 }
 
 /**
@@ -401,7 +406,9 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     /* @conditional-compile-remove(spotlight) */
     maxParticipantsToSpotlight,
     reactionResources,
-    videoTilesOptions
+    videoTilesOptions,
+    /* @conditional-compile-remove(soft-mute) */
+    onMuteParticipant
   } = props;
 
   const ids = useIdentifiers();
@@ -670,6 +677,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           /* @conditional-compile-remove(spotlight) */
           maxParticipantsToSpotlight={maxParticipantsToSpotlight}
           reactionResources={reactionResources}
+          /* @conditional-compile-remove(soft-mute) */
+          onMuteParticipant={onMuteParticipant}
         />
       );
     },
@@ -693,6 +702,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       /* @conditional-compile-remove(spotlight) */ onStartRemoteSpotlight,
       /* @conditional-compile-remove(spotlight) */ onStopRemoteSpotlight,
       /* @conditional-compile-remove(spotlight) */ maxParticipantsToSpotlight,
+      /* @conditional-compile-remove(soft-mute) */ onMuteParticipant,
       reactionResources,
       videoTilesOptions
     ]

@@ -571,5 +571,16 @@
   "verticalGallery": {
     "leftNavButtonAriaLabel": "previous page",
     "rightNavButtonAriaLabel": "next page"
+  },
+  "MeetingConferencePhoneInfo": {
+    "meetingConferencePhoneInfoModalTitle": "Join call from your phone",
+    "meetingConferencePhoneInfoModalDialIn": "Dial number",
+    "meetingConferencePhoneInfoModalMeetingId": "Enter meeting ID",
+    "meetingConferencePhoneInfoModalWait": "Wait to be admitted by organizer",
+    "meetingConferencePhoneInfoModalNoPhoneAvailable": "No phone available",
+    "meetingConferencePhoneInfoModalTollFree": "{phoneNumber} (Toll-free) {country}, {city}",
+    "meetingConferencePhoneInfoModalTollFreeWithoutGeoData": "{phoneNumber} (Toll-free)",
+    "meetingConferencePhoneInfoModalToll": "{phoneNumber} (Toll) {country}, {city}",
+    "meetingConferencePhoneInfoModalTollWithoutGeoData": "{phoneNumber} (Toll)"
   }
 }

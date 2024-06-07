@@ -683,6 +683,16 @@ describe('errors should be reported correctly from Call when', () => {
       expect(client.getState().latestErrors['Call.stopScreenSharing']).toBeDefined();
     }
   });
+
+  /* @conditional-compile-remove(teams-meeting-conference) */
+  test('Conference call is undefined in acs to acs calls', async () => {
+    const conference = addMockEmitter({ name: 'Conference' });
+
+    const { client, callId } = await prepareCallWithFeatures(
+      createMockApiFeatures(new Map([[Features.TeamsMeetingAudioConferencing, conference]]))
+    );
+    expect(client.getState().calls[callId]?.teamsMeetingConference).toStrictEqual([]);
+  });
 });
 
 interface PreparedCall {
