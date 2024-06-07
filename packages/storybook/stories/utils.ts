@@ -3,7 +3,11 @@
 
 import { useEffect, useRef, useState } from 'react';
 
-const renderVideoStream = async (scalingMode?: string): Promise<HTMLElement | null> => {
+/**
+ * Renders a video stream from the user's camera. The video stream will be rendered in a video element with the given
+ * @returns
+ */
+export const renderVideoStream = async (scalingMode?: string): Promise<HTMLElement | null> => {
   if (navigator.mediaDevices?.getUserMedia) {
     const video = document.createElement('video');
     video.autoplay = true;
