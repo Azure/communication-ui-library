@@ -819,17 +819,17 @@ export interface CallCompositeStrings {
    * Menu text shown in Participant Item contextual menu for pinning a remote participant's video tile
    *
    */
-  pinParticipantForMe: string;
+  pinParticipantMenuLabel: string;
   /**
    * Menu text shown in Participant Item contextual menu when pinning limit is reached
    *
    */
-  pinParticipantForMeLimitReached: string;
+  pinParticipantLimitReachedMenuLabel: string;
   /**
    * Menu text shown in Participant Item contextual menu for unpinning a remote participant's video tile
    *
    */
-  unpinParticipantForMe: string;
+  unpinParticipantMenuLabel: string;
   /**
    * Aria label for unpin participant menu item of remote participant
    */

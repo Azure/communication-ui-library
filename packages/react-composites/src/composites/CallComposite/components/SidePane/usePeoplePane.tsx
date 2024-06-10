@@ -192,10 +192,10 @@ export const usePeoplePane = (props: {
       }
 
       if (!isMe && isPinned !== undefined) {
-        if (isPinned && onUnpinParticipant && localeStrings?.unpinParticipantForMe) {
+        if (isPinned && onUnpinParticipant && localeStrings?.unpinParticipantMenuLabel) {
           _defaultMenuItems.push({
             key: 'unpin',
-            text: localeStrings?.unpinParticipantForMe,
+            text: localeStrings?.unpinParticipantMenuLabel,
             iconProps: {
               iconName: 'UnpinParticipant',
               styles: { root: { lineHeight: '1rem', textAlign: 'center' } }
@@ -207,12 +207,12 @@ export const usePeoplePane = (props: {
             ariaLabel: localeStrings.unpinParticipantMenuItemAriaLabel
           });
         }
-        if (!isPinned && onPinParticipant && localeStrings?.pinParticipantForMe) {
+        if (!isPinned && onPinParticipant && localeStrings?.pinParticipantMenuLabel) {
           _defaultMenuItems.push({
             key: 'pin',
             text: disablePinMenuItem
-              ? localeStrings.pinParticipantForMeLimitReached
-              : localeStrings.pinParticipantForMe,
+              ? localeStrings.pinParticipantLimitReachedMenuLabel
+              : localeStrings.pinParticipantMenuLabel,
             iconProps: {
               iconName: 'PinParticipant',
               styles: { root: { lineHeight: '1rem', textAlign: 'center' } }
@@ -251,9 +251,9 @@ export const usePeoplePane = (props: {
       onPinParticipant,
       onUnpinParticipant,
       disablePinMenuItem,
-      localeStrings.pinParticipantForMe,
-      localeStrings.pinParticipantForMeLimitReached,
-      localeStrings.unpinParticipantForMe,
+      localeStrings.pinParticipantMenuLabel,
+      localeStrings.pinParticipantLimitReachedMenuLabel,
+      localeStrings.unpinParticipantMenuLabel,
       localeStrings.unpinParticipantMenuItemAriaLabel,
       localeStrings.pinParticipantMenuItemAriaLabel
     ]

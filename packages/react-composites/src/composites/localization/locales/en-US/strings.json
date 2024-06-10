@@ -338,9 +338,9 @@
     "endCallConfirmDialogTitle": "End the call?",
     "endCallConfirmDialogContent": "You'll end the call for everyone.",
     "invalidMeetingIdentifier": "Invalid meeting ID or passcode",
-    "pinParticipantForMe": "Pin for me",
-    "pinParticipantForMeLimitReached": "Pin (limit reached)",
-    "unpinParticipantForMe": "Unpin",
+    "pinParticipantMenuLabel": "Pin for me",
+    "pinParticipantLimitReachedMenuLabel": "Pin (limit reached)",
+    "unpinParticipantMenuLabel": "Unpin",
     "pinParticipantMenuItemAriaLabel": "Pin",
     "unpinParticipantMenuItemAriaLabel": "Unpin"
   },
