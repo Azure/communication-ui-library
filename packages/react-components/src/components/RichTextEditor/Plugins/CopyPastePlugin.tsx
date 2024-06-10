@@ -93,6 +93,15 @@ export const scrollToBottomAfterContentPaste = (event: PluginEvent, editor: IEdi
       // translate the scroll position from being relative to the document to being relative to the viewport.
       // 3. add the top position of the cursor (containerRect.top) to moves the scroll position to the cursor's position.
       const updatedScrollTop = scrollContainer.scrollTop - scrollContainerRect.top + cursorRect.top;
+      console.log(
+        'scrollContainer.scrollTop',
+        scrollContainer.scrollTop,
+        'scrollContainerRect.top',
+        scrollContainerRect.top,
+        'cursorRect.top',
+        cursorRect.top
+      );
+      console.log('updatedScrollTop', updatedScrollTop);
       scrollContainer.scrollTo({
         top: updatedScrollTop,
         behavior: 'smooth'
