@@ -16,8 +16,6 @@ export const convertChatMessage = (
   return {
     ...message,
     clientMessageId: clientMessageId,
-    status,
-    /* @conditional-compile-remove(data-loss-prevention) */
-    policyViolationStatus: message.policyViolation?.result === 'contentBlocked'
+    status
   };
 };

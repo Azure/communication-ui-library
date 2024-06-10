@@ -1887,7 +1887,6 @@ export type ChatMessageType = 'text' | 'html';
 export type ChatMessageWithStatus = ChatMessage_2 & {
     clientMessageId?: string;
     status: MessageStatus;
-    policyViolationStatus?: boolean;
     resourceCache?: Record<string, ResourceFetchResult>;
 };
 
