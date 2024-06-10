@@ -42,7 +42,7 @@ import { DtmfTone } from '@azure/communication-calling';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 import { SendMessageOptions, UploadChatImageResult } from '@azure/communication-chat';
 import { JoinCallOptions } from '../../CallComposite/adapter/CallAdapter';
-/* @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(file-sharing-acs) */
 import { MessageOptions } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(PSTN-calls) */
 import { PhoneNumberIdentifier } from '@azure/communication-common';
@@ -61,12 +61,10 @@ import {
 } from '../../CallComposite/adapter/CallAdapter';
 
 import { CapabilitiesChangedListener } from '../../CallComposite/adapter/CallAdapter';
-/* @conditional-compile-remove(spotlight) */
 import { SpotlightChangedListener } from '../../CallComposite/adapter/CallAdapter';
 
 import { VideoBackgroundImage, VideoBackgroundEffect } from '../../CallComposite';
 
-/* @conditional-compile-remove(end-of-call-survey) */
 import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
 
 /**
@@ -338,7 +336,7 @@ export interface CallWithChatAdapterManagement {
    */
   sendMessage(
     content: string,
-    options?: SendMessageOptions | /* @conditional-compile-remove(attachment-upload) */ MessageOptions
+    options?: SendMessageOptions | /* @conditional-compile-remove(file-sharing-acs) */ MessageOptions
   ): Promise<void>;
   uploadImage(image: ArrayBuffer | Blob, imageFilename: string): Promise<UploadChatImageResult>;
   /**
@@ -361,7 +359,7 @@ export interface CallWithChatAdapterManagement {
   updateMessage(
     messageId: string,
     content: string,
-    options?: Record<string, string> | /* @conditional-compile-remove(attachment-upload) */ MessageOptions
+    options?: Record<string, string> | /* @conditional-compile-remove(file-sharing-acs) */ MessageOptions
   ): Promise<void>;
   /**
    * Delete a message in the thread.
@@ -465,28 +463,29 @@ export interface CallWithChatAdapterManagement {
    * @public
    */
   updateSelectedVideoBackgroundEffect(selectedVideoBackground: VideoBackgroundEffect): void;
-  /* @conditional-compile-remove(end-of-call-survey) */
   /**
    * Send the end of call survey result
    *
    * @public
    */
   submitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined>;
-  /* @conditional-compile-remove(spotlight) */
   /**
    * Start spotlight
    */
   startSpotlight(userIds?: string[]): Promise<void>;
-  /* @conditional-compile-remove(spotlight) */
   /**
    * Stop spotlight
    */
   stopSpotlight(userIds?: string[]): Promise<void>;
-  /* @conditional-compile-remove(spotlight) */
   /**
    * Stop all spotlights
    */
   stopAllSpotlight(): Promise<void>;
+  /* @conditional-compile-remove(soft-mute) */
+  /**
+   * Mute a participant
+   */
+  muteParticipant(userIds: string): Promise<void>;
 }
 
 /**
@@ -511,7 +510,6 @@ export interface CallWithChatAdapterSubscriptions {
   on(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
   on(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
   on(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
-  /* @conditional-compile-remove(spotlight) */
   on(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
   off(event: 'callEnded', listener: CallEndedListener): void;
   off(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
@@ -529,7 +527,6 @@ export interface CallWithChatAdapterSubscriptions {
   off(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
   off(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
   off(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
-  /* @conditional-compile-remove(spotlight) */
   off(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
 
   // Chat subscriptions
@@ -597,7 +594,7 @@ export type CallWithChatEvent =
   | 'isCaptionLanguageChanged'
   | 'isSpokenLanguageChanged'
   | 'capabilitiesChanged'
-  | /* @conditional-compile-remove(spotlight) */ 'spotlightChanged'
+  | 'spotlightChanged'
   | 'messageReceived'
   | 'messageEdited'
   | 'messageDeleted'

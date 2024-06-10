@@ -14,7 +14,7 @@ import {
   CallWithChatAdapter,
   CallWithChatCompositeOptions
 } from '@azure/communication-react';
-/* @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(file-sharing-acs) */
 import { attachmentUploadOptions } from '../../../../Chat/src/app/utils/uploadHandler';
 
 import { onResolveVideoEffectDependencyLazy, AzureCommunicationCallAdapterOptions } from '@azure/communication-react';
@@ -170,7 +170,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
           hangUpForEveryone: 'endCallOptions'
         }
       },
-      /* @conditional-compile-remove(attachment-upload) */
+      /* @conditional-compile-remove(file-sharing-acs) */
       attachmentOptions: {
         uploadOptions: attachmentUploadOptions
       }
@@ -216,6 +216,8 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
 const convertPageStateToString = (state: CallWithChatAdapterState): string => {
   switch (state.page) {
     case 'accessDeniedTeamsMeeting':
+      return 'error';
+    case 'badRequest':
       return 'error';
     case 'leftCall':
       return 'end call';

@@ -90,11 +90,7 @@ export const useChatStyles = makeStyles({
  * @private
  */
 export const useChatMessageRenderStyles = makeStyles({
-  rootCommon: {
-    '&:focus-visible': {
-      ...shorthands.outline('0')
-    }
-  },
+  rootCommon: {},
   rootMessage: {
     ...shorthands.padding('0'),
     ...shorthands.margin('0'),
@@ -121,7 +117,10 @@ export const useChatMessageRenderStyles = makeStyles({
     marginBottom: '0',
     backgroundColor: 'transparent',
     maxWidth: '100%',
-    minWidth: `${CHAT_MESSAGE_CONTAINER_MIN_WIDTH_REM}rem`
+    minWidth: `${CHAT_MESSAGE_CONTAINER_MIN_WIDTH_REM}rem`,
+    '&:focus-visible': {
+      outlineStyle: 'auto'
+    }
   },
   bodyMyMessage: {
     width: '100%',
@@ -130,6 +129,10 @@ export const useChatMessageRenderStyles = makeStyles({
   bodyWithoutAvatar: {
     marginLeft: `${AVATAR_MARGIN_LEFT}rem`,
     marginTop: '0'
+  },
+  bodyHiddenAvatar: {
+    marginLeft: 0,
+    marginTop: 0
   },
   bodyWithAvatar: {
     marginLeft: `0`,
@@ -158,10 +161,7 @@ export const useChatMyMessageStyles = makeStyles({
     gridGap: '0',
     columnGap: '0',
     paddingTop: '0',
-    marginLeft: '0',
-    '&:focus-visible': {
-      ...shorthands.outline('0')
-    }
+    marginLeft: '0'
   },
   body: {
     paddingBottom: '10px',
@@ -181,6 +181,9 @@ export const useChatMyMessageStyles = makeStyles({
     '& msft-mention': {
       color: tokens.colorStatusWarningBackground3,
       fontWeight: 600
+    },
+    '&:focus-visible': {
+      outlineStyle: 'auto'
     }
   },
   bodyAttached: {
@@ -240,10 +243,7 @@ export const chatMessageDateStyle: CSSProperties = {
  */
 export const useChatMessageStyles = makeStyles({
   root: {
-    paddingTop: '0',
-    '&:focus-visible': {
-      ...shorthands.outline('0')
-    }
+    paddingTop: '0'
   },
   body: {
     maxWidth: '100%',
@@ -294,6 +294,9 @@ export const useChatMessageStyles = makeStyles({
     },
     '& code': {
       whiteSpace: 'pre-wrap'
+    },
+    '&:focus-visible': {
+      outlineStyle: 'auto'
     }
   },
   bodyWithPlaceholderImage: {
@@ -338,16 +341,15 @@ export const useChatMessageCommonStyles = makeStyles({
   body: {
     '& table': {
       backgroundColor: tokens.colorBrandBackgroundInverted,
-      ...shorthands.borderColor(tokens.colorNeutralStroke1Selected),
       borderCollapse: 'collapse',
       tableLayout: 'auto',
       width: '100%',
 
       '& tr': {
-        ...shorthands.border('1px', 'solid', `${tokens.colorNeutralStroke1Selected}`),
+        ...shorthands.border('1px', 'solid', `${tokens.colorNeutralStroke2}`),
 
         '& td': {
-          ...shorthands.border('1px', 'solid', `${tokens.colorNeutralStroke1Selected}`),
+          ...shorthands.border('1px', 'solid', `${tokens.colorNeutralStroke2}`),
           wordBreak: 'normal',
           paddingTop: '0px',
           paddingRight: '5px'

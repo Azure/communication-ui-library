@@ -98,6 +98,9 @@ export type ParticipantListProps = {
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   /** Optional callback when rendered ParticipantItem is clicked */
   onParticipantClick?: (participant?: ParticipantListParticipant) => void;
+  /* @conditional-compile-remove(soft-mute) */
+  /** Optional callback to render a context menu to mute a participant */
+  onMuteParticipant?: (userId: string) => Promise<void>;
   styles?: ParticipantListStyles;
   /** Optional value to determine if the tooltip should be shown for participants or not */
   showParticipantOverflowTooltip?: boolean;
@@ -181,11 +184,7 @@ const onRenderParticipantDefault = (
             {callingParticipant.isMuted && (
               <Icon iconName="ParticipantItemMicOff" className={iconStyles} ariaLabel={strings.mutedIconLabel} />
             )}
-            {
-              /* @conditional-compile-remove(spotlight) */ callingParticipant.spotlight && (
-                <Icon iconName="ParticipantItemSpotlighted" className={iconStyles} />
-              )
-            }
+            {callingParticipant.spotlight && <Icon iconName="ParticipantItemSpotlighted" className={iconStyles} />}
           </Stack>
         )
       : () => null;
@@ -215,7 +214,7 @@ const onRenderParticipantDefault = (
       presence={presence}
       onRenderIcon={onRenderIcon}
       onRenderAvatar={onRenderAvatarWithRaiseHand}
-      onClick={() => onParticipantClick?.(participant)}
+      onClick={onParticipantClick ? () => onParticipantClick?.(participant) : undefined}
       showParticipantOverflowTooltip={showParticipantOverflowTooltip}
       /* @conditional-compile-remove(one-to-n-calling) */
       /* @conditional-compile-remove(PSTN-calls) */
@@ -320,6 +319,10 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
           onClick: () => onRemoveParticipant(participant.userId),
           itemProps: {
             styles: props.styles?.participantItemStyles?.participantSubMenuItemsStyles
+          },
+          iconProps: {
+            iconName: 'ContextMenuRemoveParticipant',
+            styles: { root: { lineHeight: 0 } }
           },
           'data-ui-id': ids.participantListRemoveParticipantButton
         });

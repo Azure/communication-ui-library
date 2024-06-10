@@ -25,7 +25,6 @@ import { OptimalVideoCountSubscriber } from './OptimalVideoCountSubscriber';
 
 import { CapabilitiesSubscriber } from './CapabilitiesSubscriber';
 import { ReactionSubscriber } from './ReactionSubscriber';
-/* @conditional-compile-remove(spotlight) */
 import { SpotlightSubscriber } from './SpotlightSubscriber';
 /* @conditional-compile-remove(local-recording-notification) */
 import { LocalRecordingSubscriber } from './LocalRecordingSubscriber';
@@ -56,7 +55,6 @@ export class CallSubscriber {
   private _localVideoStreamVideoEffectsSubscribers: Map<string, LocalVideoStreamVideoEffectsSubscriber>;
 
   private _capabilitiesSubscriber: CapabilitiesSubscriber;
-  /* @conditional-compile-remove(spotlight) */
   private _spotlightSubscriber: SpotlightSubscriber;
 
   constructor(call: CallCommon, context: CallContext, internalContext: InternalCallContext) {
@@ -106,7 +104,6 @@ export class CallSubscriber {
       this._call.feature(Features.Capabilities)
     );
 
-    /* @conditional-compile-remove(spotlight) */
     this._spotlightSubscriber = new SpotlightSubscriber(
       this._callIdRef,
       this._context,
@@ -119,6 +116,8 @@ export class CallSubscriber {
   private subscribe = (): void => {
     this._call.on('stateChanged', this.stateChanged);
     this._call.on('stateChanged', this.initCaptionSubscriber);
+    /* @conditional-compile-remove(teams-meeting-conference) */
+    this._call.on('stateChanged', this.initTeamsMeetingConference);
     /* @conditional-compile-remove(local-recording-notification) */
     this._call.on('stateChanged', this.initLocalRecordingNotificationSubscriber);
     this._call.on('idChanged', this.idChanged);
@@ -159,6 +158,8 @@ export class CallSubscriber {
     this._call.off('stateChanged', this.initCaptionSubscriber);
     /* @conditional-compile-remove(local-recording-notification) */
     this._call.off('stateChanged', this.initLocalRecordingNotificationSubscriber);
+    /* @conditional-compile-remove(teams-meeting-conference) */
+    this._call.off('stateChanged', this.initTeamsMeetingConference);
     this._call.off('idChanged', this.idChanged);
     this._call.off('isScreenSharingOnChanged', this.isScreenSharingOnChanged);
     this._call.off('remoteParticipantsUpdated', this.remoteParticipantsUpdated);
@@ -199,7 +200,6 @@ export class CallSubscriber {
 
     this._capabilitiesSubscriber.unsubscribe();
     this._reactionSubscriber?.unsubscribe();
-    /* @conditional-compile-remove(spotlight) */
     this._spotlightSubscriber.unsubscribe();
   };
 
@@ -234,6 +234,19 @@ export class CallSubscriber {
         this._call.feature(Features.Captions)
       );
       this._call.off('stateChanged', this.initCaptionSubscriber);
+    }
+  };
+
+  /* @conditional-compile-remove(teams-meeting-conference) */
+  private initTeamsMeetingConference = (): void => {
+    if (this._call.state === 'Connected') {
+      this._call
+        .feature(Features.TeamsMeetingAudioConferencing)
+        .getTeamsMeetingAudioConferencingDetails()
+        .then((teamsMeetingConferenceDetails) => {
+          this._context.setTeamsMeetingConference(this._callIdRef.callId, teamsMeetingConferenceDetails);
+        });
+      this._call.off('stateChanged', this.initTeamsMeetingConference);
     }
   };
 

@@ -57,7 +57,7 @@
     "richTextDeleteColumnMenu": "Poista sarake",
     "richTextDeleteRowMenu": "Poista rivi",
     "richTextDeleteTableMenu": "Poista taulukko",
-    "richTextToolbarMoreButtonAriaLabel": "More options",
+    "richTextToolbarMoreButtonAriaLabel": "Lisää asetuksia",
     "attachmentMoreMenu": "Lisää asetuksia"
   },
   "mentionPopover": {
@@ -220,7 +220,7 @@
     "richTextDeleteColumnMenu": "Poista sarake",
     "richTextDeleteRowMenu": "Poista rivi",
     "richTextDeleteTableMenu": "Poista taulukko",
-    "richTextToolbarMoreButtonAriaLabel": "More options"
+    "richTextToolbarMoreButtonAriaLabel": "Lisää asetuksia"
   },
   "errorBar": {
     "unableToReachChatService": "Olet offline-tilassa",

@@ -166,7 +166,7 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
 
   const strings = { ...localeStrings, ...props.strings };
   const participantStateString = participantStateStringTrampoline(props, strings);
-  const showMenuIcon = !me && !participantStateString && (itemHovered || !menuHidden);
+  const showMenuIcon = !participantStateString && (itemHovered || !menuHidden) && menuItems && menuItems?.length > 0;
 
   // For 'me' show empty name so avatar will get 'Person' icon, when there is no name
   const meAvatarText = displayName?.trim() || '';
@@ -207,10 +207,10 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
     () =>
       mergeStyles(
         iconContainerStyle,
-        { color: theme.palette.neutralTertiary, marginLeft: 'auto' },
+        { color: theme.palette.neutralSecondary, marginLeft: 'auto' },
         styles?.iconContainer
       ),
-    [theme.palette.neutralTertiary, styles?.iconContainer]
+    [theme.palette.neutralSecondary, styles?.iconContainer]
   );
 
   const onDismissMenu = (): void => {
@@ -240,6 +240,7 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
     <div
       ref={containerRef}
       role={'menuitem'}
+      aria-disabled={(menuItems && menuItems.length > 0) || props.onClick ? false : true}
       data-is-focusable={true}
       data-ui-id="participant-item"
       className={mergeStyles(

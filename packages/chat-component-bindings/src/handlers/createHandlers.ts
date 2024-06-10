@@ -9,7 +9,7 @@ import { StatefulChatClient } from '@internal/chat-stateful-client';
 import { ChatAttachment, UploadChatImageResult } from '@azure/communication-chat';
 import { ChatMessage, ChatMessageReadReceipt, ChatThreadClient, SendMessageOptions } from '@azure/communication-chat';
 import memoizeOne from 'memoize-one';
-/* @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(file-sharing-acs) */
 import { MessageOptions } from '@internal/acs-ui-common';
 
 /**
@@ -23,7 +23,7 @@ import { MessageOptions } from '@internal/acs-ui-common';
 export type ChatHandlers = {
   onSendMessage: (
     content: string,
-    options?: SendMessageOptions | /* @conditional-compile-remove(attachment-upload) */ MessageOptions
+    options?: SendMessageOptions | /* @conditional-compile-remove(file-sharing-acs) */ MessageOptions
   ) => Promise<void>;
   onUploadImage: (image: ArrayBuffer | Blob, imageFilename: string) => Promise<UploadChatImageResult>;
   onMessageSeen: (chatMessageId: string) => Promise<void>;
@@ -34,7 +34,7 @@ export type ChatHandlers = {
   onUpdateMessage: (
     messageId: string,
     content: string,
-    /* @conditional-compile-remove(attachment-upload) */
+    /* @conditional-compile-remove(file-sharing-acs) */
     options?: MessageOptions
   ) => Promise<void>;
   onDeleteMessage: (messageId: string) => Promise<void>;
@@ -59,22 +59,13 @@ export const createDefaultChatHandlers = memoizeOne(
       // affecting conditional-compile-remove(attachment-upload)
       onSendMessage: async function (
         content: string,
-        options?: SendMessageOptions | /* @conditional-compile-remove(attachment-upload) */ MessageOptions
+        options?: SendMessageOptions | /* @conditional-compile-remove(file-sharing-acs) */ MessageOptions
       ) {
         const sendMessageRequest = {
           content,
           senderDisplayName: chatClient.getState().displayName
         };
-        // options = {...options, attachments:
-        //   [
-        //     {
-        //       id: imageResult.id,
-        //       name: 'imageResult.jpg',
-        //       attachmentType: 'image'
-        //     }
-        //   ]
-        // }
-        /* @conditional-compile-remove(attachment-upload) */
+        /* @conditional-compile-remove(file-sharing-acs) */
         if (
           options &&
           'attachments' in options &&
@@ -103,22 +94,18 @@ export const createDefaultChatHandlers = memoizeOne(
       onUpdateMessage: async function (
         messageId: string,
         content: string,
-        /* @conditional-compile-remove(attachment-upload) */
+        /* @conditional-compile-remove(file-sharing-acs) */
         options?: MessageOptions
       ) {
-        /* @conditional-compile-remove(attachment-upload) */
         const updateMessageOptions = {
           content,
+          /* @conditional-compile-remove(file-sharing-acs) */
           metadata: {
             ...options?.metadata,
             fileSharingMetadata: JSON.stringify(options?.attachments)
           }
         };
-        await chatThreadClient.updateMessage(
-          messageId,
-          /* @conditional-compile-remove(attachment-upload) */
-          updateMessageOptions
-        );
+        await chatThreadClient.updateMessage(messageId, updateMessageOptions);
       },
       onDeleteMessage: async (messageId: string) => {
         await chatThreadClient.deleteMessage(messageId);

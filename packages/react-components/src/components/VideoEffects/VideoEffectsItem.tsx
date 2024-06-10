@@ -14,7 +14,7 @@ import {
   TooltipHost,
   useTheme
 } from '@fluentui/react';
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback } from 'react';
 import { videoEffectsItemContainerStyles } from './VideoEffectsItem.styles';
 
 /**
@@ -87,9 +87,11 @@ export interface _VideoEffectsItemProps {
   styles?: _VideoEffectsItemStyles;
 
   /**
-   * Should focus on mounting of the picker item
+   * Imperative handle for calling focus()
    */
-  focusOnMount?: boolean;
+  componentRef?: React.RefObject<{
+    focus: () => void;
+  }>;
 }
 
 /**
@@ -138,14 +140,6 @@ export const _VideoEffectsItem = (props: _VideoEffectsItemProps): JSX.Element =>
     [backgroundImage, disabled, isSelected, theme]
   );
 
-  const componentRef = React.createRef<IButton>();
-
-  useEffect(() => {
-    if (props.focusOnMount && componentRef.current) {
-      componentRef.current.focus();
-    }
-  }, [componentRef, props.focusOnMount]);
-
   return (
     <TooltipHost {...props.tooltipProps}>
       <Stack
@@ -154,14 +148,13 @@ export const _VideoEffectsItem = (props: _VideoEffectsItemProps): JSX.Element =>
         verticalAlign="center"
         horizontalAlign="center"
         data-ui-id={`video-effects-item`}
-        aria-label={props.ariaLabel ?? props.itemKey}
-        aria-disabled={props.disabled}
       >
         <DefaultButton
           styles={containerStyles()}
           onClick={disabled ? undefined : () => props.onSelect?.(props.itemKey)}
-          componentRef={componentRef}
-          autoFocus={props.focusOnMount}
+          componentRef={props.componentRef as React.RefObject<IButton>}
+          ariaLabel={props.ariaLabel ?? (props.tooltipProps?.content as string) ?? props.itemKey}
+          aria-disabled={props.disabled}
         >
           <Stack horizontalAlign={'center'}>
             {props.iconProps && (

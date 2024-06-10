@@ -1,6 +1,14 @@
-import { FluentThemeProvider, StreamMedia, VideoTile, VideoTileStylesProps } from '@azure/communication-react';
-import React from 'react';
-import { useVideoStreams } from '../../utils';
+import {
+  CameraButton,
+  ControlBar,
+  FluentThemeProvider,
+  StreamMedia,
+  VideoTile,
+  VideoTileStylesProps
+} from '@azure/communication-react';
+import { Stack } from '@fluentui/react';
+import React, { useState } from 'react';
+import { renderVideoStream } from '../../utils';
 
 export const VideoTileExample: () => JSX.Element = () => {
   const customStyles: VideoTileStylesProps = {
@@ -17,21 +25,46 @@ export const VideoTileExample: () => JSX.Element = () => {
     }
   };
   const videoStyles = { root: { '& video': { borderRadius: '0rem' } } };
+  const [videoStreams, setVideoStreams] = useState<(HTMLElement | null)[]>([]);
+  const [isVideoOn, setIsVideoOn] = useState(false);
+  const onStartVideo = async (): Promise<void> => {
+    const videoStreamElement = await renderVideoStream();
+    setVideoStreams([videoStreamElement]);
+  };
+  const onStopVideo = (): void => {
+    setVideoStreams([]);
+  };
 
-  const videoStreamElement = useVideoStreams(1)[0];
+  const videoStreamElement = videoStreams[0];
 
   return (
     <FluentThemeProvider>
-      <VideoTile
-        renderElement={
-          // NOTE: Replace with your own video provider. (An html element with video stream)
-          <StreamMedia styles={videoStyles} videoStreamElement={videoStreamElement} />
-        }
-        displayName={'Jack Reacher'}
-        isMirrored={true}
-        isMuted={true}
-        styles={customStyles}
-      />
+      <Stack style={{ width: '400px' }}>
+        <VideoTile
+          renderElement={
+            // NOTE: Replace with your own video provider. (An html element with video stream)
+            <StreamMedia styles={videoStyles} videoStreamElement={videoStreamElement} />
+          }
+          displayName={'Jack Reacher'}
+          isMirrored={true}
+          isMuted={true}
+          styles={customStyles}
+        />
+        <ControlBar layout="floatingBottom">
+          <CameraButton
+            onClick={() => {
+              if (videoStreams[0]) {
+                onStopVideo();
+                setIsVideoOn(false);
+              } else {
+                onStartVideo();
+                setIsVideoOn(true);
+              }
+            }}
+            checked={isVideoOn}
+          ></CameraButton>
+        </ControlBar>
+      </Stack>
     </FluentThemeProvider>
   );
 };

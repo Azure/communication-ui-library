@@ -3,12 +3,14 @@
 
 import React, { useMemo } from 'react';
 import { SendBox, SendBoxStylesProps } from '@internal/react-components';
+/* @conditional-compile-remove(rich-text-editor-composite-support) @conditional-compile-remove(rich-text-editor) */
+import { RichTextEditorOptions } from '@internal/react-components';
 import { usePropsFor } from '../ChatComposite/hooks/usePropsFor';
 /* @conditional-compile-remove(rich-text-editor-composite-support) */
 import { Suspense } from 'react';
 /* @conditional-compile-remove(rich-text-editor-composite-support) */
 import { _ErrorBoundary, RichTextSendBoxProps } from '@internal/react-components';
-/* @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(file-sharing-acs) */
 import { AttachmentMetadataInProgress, MessageOptions } from '@internal/acs-ui-common';
 import { UploadChatImageResult } from '@azure/communication-chat';
 
@@ -39,13 +41,13 @@ export type SendBoxPickerProps = {
   autoFocus?: 'sendBoxTextField';
   onSendMessage: (
     content: string,
-    /* @conditional-compile-remove(attachment-upload) */ options?: MessageOptions
+    /* @conditional-compile-remove(file-sharing-acs) */ options?: MessageOptions
   ) => Promise<void>;
-  /* @conditional-compile-remove(rich-text-editor-composite-support) */
-  richTextEditor?: boolean;
-  /* @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(rich-text-editor-composite-support) @conditional-compile-remove(rich-text-editor) */
+  richTextEditorOptions?: RichTextEditorOptions;
+  /* @conditional-compile-remove(file-sharing-acs) */
   attachments?: AttachmentMetadataInProgress[];
-  /* @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(file-sharing-acs) */
   onCancelAttachmentUpload?: (attachmentId: string) => void;
   /* @conditional-compile-remove(rich-text-editor) */
   onUploadImage?: (image: Blob, fileName: string) => Promise<UploadChatImageResult>;
@@ -56,20 +58,20 @@ export type SendBoxPickerProps = {
  */
 export const SendBoxPicker = (props: SendBoxPickerProps): JSX.Element => {
   const {
-    /* @conditional-compile-remove(rich-text-editor-composite-support) */
-    richTextEditor
+    /* @conditional-compile-remove(rich-text-editor-composite-support) @conditional-compile-remove(rich-text-editor) */
+    richTextEditorOptions
   } = props;
 
   const sendBoxProps = usePropsFor(SendBox);
 
-  /* @conditional-compile-remove(rich-text-editor-composite-support) */
+  /* @conditional-compile-remove(rich-text-editor-composite-support) @conditional-compile-remove(rich-text-editor) */
   const isRichTextEditorEnabled = useMemo(() => {
-    return richTextEditor;
-  }, [richTextEditor]);
+    return richTextEditorOptions !== undefined;
+  }, [richTextEditorOptions]);
 
   const sendBox = useMemo(() => <SendBox {...sendBoxProps} {...props} />, [props, sendBoxProps]);
 
-  /* @conditional-compile-remove(rich-text-editor-composite-support) */
+  /* @conditional-compile-remove(rich-text-editor-composite-support) @conditional-compile-remove(rich-text-editor) */
   if (isRichTextEditorEnabled) {
     return (
       <_ErrorBoundary fallback={sendBox}>

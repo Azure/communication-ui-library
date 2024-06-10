@@ -38,7 +38,7 @@ import { AdapterError } from '../../common/adapters';
 import { useEffect, useRef, useState } from 'react';
 import { _isValidIdentifier } from '@internal/acs-ui-common';
 import { TEAMS_LIMITATION_LEARN_MORE, UNSUPPORTED_CHAT_THREAD_TYPE } from '../../common/constants';
-/* @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(file-sharing-acs) */
 import { MessageOptions } from '@internal/acs-ui-common';
 
 /**
@@ -98,7 +98,7 @@ export class ChatContext {
       latestErrors: clientState.latestErrors
     };
 
-    /* @conditional-compile-remove(attachment-upload) */
+    /* @conditional-compile-remove(file-sharing-acs) */
     updatedState = { ...updatedState };
 
     this.setState(updatedState);
@@ -189,7 +189,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
 
   async sendMessage(
     content: string,
-    options?: SendMessageOptions | /* @conditional-compile-remove(attachment-upload) */ MessageOptions
+    options?: SendMessageOptions | /* @conditional-compile-remove(file-sharing-acs) */ MessageOptions
   ): Promise<void> {
     await this.asyncTeeErrorToEventEmitter(async () => {
       return await this.handlers.onSendMessage(content, options);
@@ -235,12 +235,12 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   async updateMessage(
     messageId: string,
     content: string,
-    options?: Record<string, string> | /* @conditional-compile-remove(attachment-upload) */ MessageOptions
+    options?: Record<string, string> | /* @conditional-compile-remove(file-sharing-acs) */ MessageOptions
   ): Promise<void> {
     return await this.asyncTeeErrorToEventEmitter(async () => {
-      /* @conditional-compile-remove(attachment-upload) */
+      /* @conditional-compile-remove(file-sharing-acs) */
       const messageOptions: MessageOptions = {};
-      /* @conditional-compile-remove(attachment-upload) */
+      /* @conditional-compile-remove(file-sharing-acs) */
       if (
         options &&
         // if options.attachments is an array or undefined (for removal all attachments),
@@ -249,7 +249,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
       ) {
         messageOptions.attachments = options.attachments ?? [];
       }
-      /* @conditional-compile-remove(attachment-upload) */
+      /* @conditional-compile-remove(file-sharing-acs) */
       if (
         options &&
         // if options.metadata is provided, we need to add it in MessageOptions
@@ -258,14 +258,14 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
       ) {
         messageOptions.metadata = options.metadata;
       }
-      /* @conditional-compile-remove(attachment-upload) */
+      /* @conditional-compile-remove(file-sharing-acs) */
       if (options && !('attachments' in options) && !('metadata' in options)) {
         // if options don't have attachments or metadata,
         // then it is a Record<string, string>
-        /* @conditional-compile-remove(attachment-upload) */
+        /* @conditional-compile-remove(file-sharing-acs) */
         return await this.handlers.onUpdateMessage(messageId, content, options);
       }
-      /* @conditional-compile-remove(attachment-upload) */
+      /* @conditional-compile-remove(file-sharing-acs) */
       return await this.handlers.onUpdateMessage(messageId, content, messageOptions);
       // metadata is never used in the current stable
       return await this.handlers.onUpdateMessage(messageId, content);

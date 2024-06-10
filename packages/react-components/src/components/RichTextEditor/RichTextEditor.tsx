@@ -2,11 +2,16 @@
 // Licensed under the MIT License.
 import React, { useCallback, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react';
 import { richTextEditorWrapperStyle, richTextEditorStyle } from '../styles/RichTextEditor.styles';
-import { useTheme } from '../../theming';
-import { RichTextStrings, UploadChatImageResult } from './RichTextSendBox';
+import { darkTheme, lightTheme, useTheme } from '../../theming';
+import { RichTextStrings } from './RichTextSendBox';
 import { isDarkThemed } from '../../theming/themeUtils';
 import CopyPastePlugin from './Plugins/CopyPastePlugin';
-import type { ContentModelDocument, EditorPlugin, IEditor } from 'roosterjs-content-model-types';
+import type {
+  ContentModelDocument,
+  EditorPlugin,
+  IEditor,
+  ShallowMutableContentModelDocument
+} from 'roosterjs-content-model-types';
 import { createModelFromHtml, Editor, exportContent } from 'roosterjs-content-model-core';
 import { createParagraph, createSelectionMarker, setSelection } from 'roosterjs-content-model-dom';
 import { KeyboardInputPlugin } from './Plugins/KeyboardInputPlugin';
@@ -48,7 +53,8 @@ export interface RichTextEditorProps {
   showRichTextEditorFormatting: boolean;
   styles: RichTextEditorStyleProps;
   autoFocus?: 'sendBoxTextField';
-  onUploadImage?: (image: Blob, fileName: string) => Promise<UploadChatImageResult>;
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  onPaste?: (event: { content: DocumentFragment }) => void;
 }
 
 /**
@@ -88,12 +94,14 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     onKeyDown,
     onContentModelUpdate,
     contentModel,
-    onUploadImage
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    onPaste
   } = props;
   const editor = useRef<IEditor | null>(null);
   const editorDiv = useRef<HTMLDivElement>(null);
   const theme = useTheme();
   const [contextMenuProps, setContextMenuProps] = useState<IContextualMenuProps | null>(null);
+  const tableCellSelectionLightThemeBackgroundColor = useRef<string | undefined>(undefined);
 
   useImperativeHandle(
     ref,
@@ -106,9 +114,10 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
         },
         setEmptyContent() {
           if (editor.current) {
+            editor.current.formatContentModel;
             // remove all content from the editor and update the model
             // ContentChanged event will be sent by RoosterJS automatically
-            editor.current.formatContentModel((model: ContentModelDocument): boolean => {
+            editor.current.formatContentModel((model: ShallowMutableContentModelDocument): boolean => {
               model.blocks = [];
               return true;
             });
@@ -139,6 +148,16 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
   useEffect(() => {
     editor.current?.setDarkModeState(isDarkThemedValue);
   }, [isDarkThemedValue]);
+
+  // remember light color to correctly set it in the dark theme
+  useEffect(() => {
+    // focus to update selection color for table, otherwise the existing selection color for table won't be updated
+    editor.current?.focus();
+    if (!isDarkThemedValue) {
+      tableCellSelectionLightThemeBackgroundColor.current =
+        lightTheme.palette?.neutralLight ?? theme.palette.neutralLight;
+    }
+  }, [theme.palette.neutralLight, isDarkThemedValue]);
 
   const placeholderPlugin = useMemo(() => {
     return new PlaceholderPlugin('');
@@ -212,6 +231,25 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     setContextMenuProps(null);
   }, []);
 
+  const getDarkColor = useCallback(
+    (lightColor: string, _baseLValue?: number, colorType?: 'text' | 'background' | 'border'): string => {
+      if (lightColor === tableCellSelectionLightThemeBackgroundColor.current && colorType === 'background') {
+        return darkTheme.palette?.neutralLight ?? theme.palette.neutralLight;
+      }
+      return lightColor;
+    },
+    [theme.palette.neutralLight]
+  );
+
+  const copyPastePlugin = useMemo(() => {
+    return new CopyPastePlugin();
+  }, []);
+
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  useEffect(() => {
+    copyPastePlugin.onPaste = onPaste;
+  }, [copyPastePlugin, onPaste]);
+
   const plugins: EditorPlugin[] = useMemo(() => {
     const contentEdit = new EditPlugin();
     // AutoFormatPlugin previously was a part of the edit plugin
@@ -253,6 +291,7 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
         doNotAdjustEditorColor: true,
         // TODO: confirm the color during inline images implementation
         imageSelectionBorderColor: 'blue',
+        tableCellSelectionBackgroundColor: lightTheme.palette?.neutralLight && theme.palette.neutralLight,
         plugins: plugins,
         initialModel: initialModel,
         defaultModelToDomOptions: {
@@ -261,7 +300,8 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
             border: borderApplier,
             dataset: dataSetApplier
           }
-        }
+        },
+        getDarkColor: getDarkColor
       });
     }
 

@@ -2,6 +2,596 @@
   "name": "@azure/communication-react",
   "entries": [
     {
+      "date": "Tue, 04 Jun 2024 05:01:39 GMT",
+      "tag": "@azure/communication-react_v1.17.0",
+      "version": "1.17.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "73612854+palatter@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "ffef1ef3d0441e82289b4a57460a87b05abda5ae",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Resolve issue with table size selection on mobile"
+          },
+          {
+            "author": "79475487+mgamis-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "8482618ee43c733a65cf382c45e0c72e3f4bf20d",
+            "area": "fix",
+            "workstream": "ParticipantList",
+            "comment": "Fix local participant item to show menu icon when hovered"
+          },
+          {
+            "author": "98852890+vhuseinova-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "2fcad5a42929524b3b42c78549182bd365ba9c39",
+            "area": "improvement",
+            "workstream": "RTE",
+            "comment": "Migration of the rich text editor functionality from RoosterJs v8 to v9"
+          },
+          {
+            "author": "73612854+palatter@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "e80358144c6ab4e5308bec168ecd611e1ddaaa49",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Resolve issue where message does not have outline when using keyboard navigation."
+          },
+          {
+            "author": "73612854+palatter@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "50a6335a4804a23d3223de389c94504c7dca0bf3",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Status icon should not be keyboard tab navigable, only by voiceover navigation."
+          },
+          {
+            "author": "dmceachern@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "d76eaf3c763b713d78801a372087caad75f9b9ec",
+            "area": "fix",
+            "workstream": "Background effects",
+            "comment": "Update styles to fix spacing of labeled background effects"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "bf95326a13d956cca5e4ec6fc341e576a5ae99e0",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Fix screen reader announcement when the user goes on hold in the Call Composite"
+          },
+          {
+            "author": "dmceachern@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "c98610a158f452f7a9e6e06f2448ea3288a1be77",
+            "area": "fix",
+            "workstream": "A11y",
+            "comment": "Add reaction items narratro strings"
+          },
+          {
+            "author": "79475487+mgamis-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "5f1ddbdeda41357058829280c29dce96be702495",
+            "area": "improvement",
+            "workstream": "Calling dependency",
+            "comment": "Upgrade calling stable to 1.24.3"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "885ab062342e7e182dbfb03c92c07d27d566165c",
+            "area": "fix",
+            "workstream": "PiPiP",
+            "comment": "Remove scaling options for PiPiP in the people and chat panes to stop surprise popup controls"
+          },
+          {
+            "author": "98852890+vhuseinova-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "d6b934d459a0fab72f560f92369174bbe73d504e",
+            "area": "fix",
+            "workstream": "Chat",
+            "comment": "Fix for an issue where links were opened in the same tab"
+          },
+          {
+            "author": "109105353+jpeng-ms@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "cbcb039fdb97f7d9f1fc38b2b6e4457db2fa3376",
+            "area": "fix",
+            "workstream": "File Sharing",
+            "comment": "Added Missing Message Options for MessageThread Component"
+          },
+          {
+            "author": "dmceachern@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "320ba574aaf22f3d14d858ba0fd480189e645d0a",
+            "area": "fix",
+            "workstream": "A11y",
+            "comment": "Update priority of aria label strings to use visual labels before tool tips to help users using voice controls"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "f3319f38441851bb8104fd4d96114d48791860fb",
+            "area": "fix",
+            "workstream": "Video Effects",
+            "comment": "Add snippet for video effects"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "23eec760bfc08b067b4f7c416fd9d3d5faa074d2",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Fix VideoEffects Pane reseting focus when an item is selected"
+          },
+          {
+            "author": "109105353+jpeng-ms@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "f6af8c5d9799feb2e8beab7a08d4b177b82481e3",
+            "area": "improvement",
+            "workstream": "File Sharing",
+            "comment": "File Sharing Beta API Refactor"
+          },
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "050401f926fce46536a1563a8e3afa2cb831fbca",
+            "area": "fix",
+            "workstream": "Raise Hand",
+            "comment": "Fix bug where raise hand's height is the height of video til"
+          },
+          {
+            "author": "3941071+emlynmac@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "8ac2a168378be3b5bd2a943884ce1e9cfbcda6d8",
+            "area": "fix",
+            "workstream": "A11y",
+            "comment": "Ensure send box errors are announced when using a screen reader."
+          },
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "144f752f57587c1100cb30b4ec5400f446aa078b",
+            "area": "fix",
+            "workstream": "Captions",
+            "comment": "Fix bug where captions UI stuck at start captions spinner when failed to start captions"
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@azure/communication-react",
+            "commit": "f177f92e067704a7d42026f7768682f9e19808e7",
+            "area": "improvement",
+            "workstream": "",
+            "comment": "Menu icon behavior fix:"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "a0bb4e210225db25a0b3c59e93658c22f26bcb80",
+            "area": "fix",
+            "workstream": "Accessibility",
+            "comment": "Change icon colors for accessibility contrast requirements"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "c2e649a94e99bdae690bc57fb6469a09648c032e",
+            "area": "fix",
+            "workstream": "Video Tile",
+            "comment": "Fix for Pin tile icon too small"
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@azure/communication-react",
+            "commit": "d7dcb9085583cdd38c9201e43f801f219b0ddd02",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Fix crash bug for remote screen share"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "0bfe50a2b745c747534a9488fb77ad51139e674e",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Fix aria-allowed-attr errors on call composite announcer component, and on video effects selectable items"
+          },
+          {
+            "author": "73612854+palatter@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "62fde71d6228384c5729e1c67a1f2e8359d96e8b",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Tabbing/keyboard navigation fixes for the messagethread"
+          },
+          {
+            "author": "79475487+mgamis-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "79c7405eb5745cd762681a0abce3e82c880c7198",
+            "area": "fix",
+            "workstream": "Icons",
+            "comment": "Increase participant item muted icon size"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "c2f55f7e99e95d7f192071b17f5b373f314b95a5",
+            "area": "improvement",
+            "workstream": "Update Calling beta to 1.26.1-beta.1 and stable to 1.25.1",
+            "comment": "Update Calling beta to 1.26.1-beta.1 and stable to 1.25.1"
+          },
+          {
+            "author": "98852890+vhuseinova-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "7025b337456585117bc48bc28e3b3444f45edbe2",
+            "area": "fix",
+            "workstream": "MessageThread",
+            "comment": "Fix width for code snippets sent in messages"
+          },
+          {
+            "author": "dmceachern@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "94f8da7ce824e715f2268515fe91f7d391d8c2b6",
+            "area": "fix",
+            "workstream": "Video Effects",
+            "comment": "Update aria label behavior to better represent the background to be selected"
+          },
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "590d7ebc939e766b562a60484b720db5a04f5237",
+            "area": "fix",
+            "workstream": "End Call Screen",
+            "comment": "Fixed bug when call ended due to wrong links/ids users are lead to normal end call screen with survey"
+          },
+          {
+            "author": "79475487+mgamis-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "0be11942a678a7fab0a46717f550bd04350a44a8",
+            "area": "improvement",
+            "workstream": "Calling dependency",
+            "comment": "Upgrade calling beta to 1.25.2-beta.2"
+          },
+          {
+            "author": "98852890+vhuseinova-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "e8969e867a89ea400fbd1f0278a74c76052fab0f",
+            "area": "improvement",
+            "workstream": "RTE",
+            "comment": "Update table border and selection colors for rich text editor and messages"
+          },
+          {
+            "author": "9044372+JoshuaLai@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "525583801ca7dc4676ca6290b9239a2bb781aa28",
+            "area": "fix",
+            "workstream": "accessibility",
+            "comment": "changing menu item div to aria-disabled"
+          }
+        ],
+        "minor": [
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@azure/communication-react",
+            "commit": "21e138c70b306adce08801a5d51511be48fa2721",
+            "area": "feature",
+            "workstream": "Log in as Teams Identity",
+            "comment": "GA CTE - Fix some stable build problems - FIx api changes from sdk"
+          },
+          {
+            "author": "79475487+mgamis-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "e1e3d4074bc8811b230775b1959e1e28b6dcfaf7",
+            "area": "fix",
+            "workstream": "Icons",
+            "comment": "Add context menu icon for removing participant"
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@azure/communication-react",
+            "commit": "21e138c70b306adce08801a5d51511be48fa2721",
+            "area": "feature",
+            "workstream": "Teams Identity GA",
+            "comment": "GA CTE - Fix some stable build problems - FIx api changes from sdk"
+          },
+          {
+            "author": "109105353+jpeng-ms@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "181f4dbee2cb3dd31c03b44cf8ad1fd7dd9edf87",
+            "area": "improvement",
+            "workstream": "File Sharing",
+            "comment": "Updated Storybook for File Sharing GA Release"
+          },
+          {
+            "author": "dmceachern@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "fd4a6aa062e4a1018c160ea51f2374b61bb0effd",
+            "area": "fix",
+            "workstream": "Captions",
+            "comment": "Allow captions to be used when in a adhoc teams call"
+          },
+          {
+            "author": "77021369+jimchou-dev@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "b6d930e0b39eaa507ddeaea73ece7a8dab0e0e38",
+            "area": "feature",
+            "workstream": "attachment-download",
+            "comment": "Make AttachmentMetadata api public"
+          },
+          {
+            "author": "3941071+emlynmac@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "2be13b6abcb937257cb295789292399ec83ed55b",
+            "area": "improvement",
+            "workstream": "MessageThread Component",
+            "comment": "Allow onRenderAvatar to return undefined to hide avatar"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 21 May 2024 20:14:27 GMT",
+      "tag": "@azure/communication-react_v1.17.0-beta.1",
+      "version": "1.17.0-beta.1",
+      "comments": {
+        "minor": [
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "f38730c76ae52b5f878004a37a2ad49604b9bbe7",
+            "area": "feature",
+            "workstream": "Hide Attendee Names",
+            "comment": "add view attendee names"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "33bae4f27ea67fb931ba08831f72fc6fbb514a74",
+            "area": "feature",
+            "workstream": "Hide Attendee Names",
+            "comment": "Add notiification for Hide Attendee Names"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "177cfc75ae820e33d5de57fbf562bd3f650e8dfb",
+            "area": "feature",
+            "workstream": "Hide Attendee Names",
+            "comment": "Update SDK ref for Hide Attendee Names"
+          },
+          {
+            "author": "93549644+ShaunaSong@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "f47de1d6f14d27aaaa915e327e7d113e989b9c54",
+            "area": "improvement",
+            "workstream": "Update PPTLive experience in story book",
+            "comment": "Update PPTLive experience in story book"
+          },
+          {
+            "author": "109105353+jpeng-ms@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "181f4dbee2cb3dd31c03b44cf8ad1fd7dd9edf87",
+            "area": "improvement",
+            "workstream": "File Sharing",
+            "comment": "Updated Storybook for File Sharing GA Release"
+          },
+          {
+            "author": "dmceachern@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "fd4a6aa062e4a1018c160ea51f2374b61bb0effd",
+            "area": "fix",
+            "workstream": "Captions",
+            "comment": "Allow captions to be used when in a adhoc teams call"
+          },
+          {
+            "author": "dmceachern@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "6b1e9c08313511a8651d8109a039dd587660576c",
+            "area": "fix",
+            "workstream": "Click to Call",
+            "comment": "Introduces API to show or hude the dialpad automatically when the call starts"
+          }
+        ],
+        "patch": [
+          {
+            "author": "98852890+vhuseinova-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "27edcdb81c4bee66cc048a5af004b01a35f39963",
+            "area": "fix",
+            "workstream": "A11y",
+            "comment": "Fix an accessibility issue where a send box button disabled state wasn't announced"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "a1eb77af831ae5f6163088bd706a55fb6c435127",
+            "area": "fix",
+            "workstream": "Hide Attendee Names",
+            "comment": "Fix for drawer menu display name not localized"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "37a583c1e44f25e7fe6027f0a3e69ee8994249da",
+            "area": "improvement",
+            "workstream": "",
+            "comment": "Update @azure/communication-calling to 1.24.1 for stable builds, and 1.24.2-beta.1 for beta builds"
+          },
+          {
+            "author": "98852890+vhuseinova-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "2fcad5a42929524b3b42c78549182bd365ba9c39",
+            "area": "improvement",
+            "workstream": "RTE",
+            "comment": "Migration of the rich text editor functionality from RoosterJs v8 to v9"
+          },
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "44839a0179e0cb6e50f7d9debfe863c19a182054",
+            "area": "fix",
+            "workstream": "Fix build issue",
+            "comment": "Fix conditional compile build issue"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "704f2ade244dc2629e21cf598022b80f5259da35",
+            "area": "feature",
+            "workstream": "Hide Attendee Names",
+            "comment": "Storybook changes for Hide Attendee Names"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "c805ef98e2fea59be17f1c4aba9f336516643eca",
+            "area": "fix",
+            "workstream": "Hide Attendee Names",
+            "comment": "FIx for wrong initials in remote video tile"
+          },
+          {
+            "author": "dmceachern@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "d76eaf3c763b713d78801a372087caad75f9b9ec",
+            "area": "fix",
+            "workstream": "Background effects",
+            "comment": "Update styles to fix spacing of labeled background effects"
+          },
+          {
+            "author": "dmceachern@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "c98610a158f452f7a9e6e06f2448ea3288a1be77",
+            "area": "fix",
+            "workstream": "A11y",
+            "comment": "Add reaction items narratro strings"
+          },
+          {
+            "author": "109105353+jpeng-ms@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "cbcb039fdb97f7d9f1fc38b2b6e4457db2fa3376",
+            "area": "fix",
+            "workstream": "File Sharing",
+            "comment": "Added Missing Message Options for MessageThread Component"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "f3319f38441851bb8104fd4d96114d48791860fb",
+            "area": "fix",
+            "workstream": "Video Effects",
+            "comment": "Add snippet for video effects"
+          },
+          {
+            "author": "109105353+jpeng-ms@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "f6af8c5d9799feb2e8beab7a08d4b177b82481e3",
+            "area": "improvement",
+            "workstream": "File Sharing",
+            "comment": "File Sharing Beta API Refactor"
+          },
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "050401f926fce46536a1563a8e3afa2cb831fbca",
+            "area": "fix",
+            "workstream": "Raise Hand",
+            "comment": "Fix bug where raise hand's height is the height of video til"
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@azure/communication-react",
+            "commit": "f177f92e067704a7d42026f7768682f9e19808e7",
+            "area": "improvement",
+            "workstream": "",
+            "comment": "Menu icon behavior fix:"
+          },
+          {
+            "author": "79475487+mgamis-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "566d21c4d1f0bcfc6546109383c2fb8bc76d34cc",
+            "area": "fix",
+            "workstream": "People pane drawer menu",
+            "comment": "Close drawer menu for remote participant when they are no longer in the call"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "c246342c593fb347fb845b0453a5f41389741f3c",
+            "area": "fix",
+            "workstream": "Accessibility",
+            "comment": "People button aria label now indicates selected state action"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "c2e649a94e99bdae690bc57fb6469a09648c032e",
+            "area": "fix",
+            "workstream": "Video Tile",
+            "comment": "Fix for Pin tile icon too small"
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@azure/communication-react",
+            "commit": "d7dcb9085583cdd38c9201e43f801f219b0ddd02",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Fix crash bug for remote screen share"
+          },
+          {
+            "author": "79475487+mgamis-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "c6d0e7deebebd5e7a88fa3baf8f2ed4e8dc7edae",
+            "area": "fix",
+            "workstream": "Scaling mode",
+            "comment": "Update default scaling mode to Crop when selecting a camera"
+          },
+          {
+            "author": "109105353+jpeng-ms@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "fe31f0606eb0f1b22c6b794801df834711336ca8",
+            "area": "fix",
+            "workstream": "Inline Image",
+            "comment": "Fix the issue where aria label contains spacial chars"
+          },
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "02420bf5d56dec58c367624ce34eb071b6e5ab2b",
+            "area": "fix",
+            "workstream": "Captions",
+            "comment": "Fix bug when there are duplicate captions"
+          },
+          {
+            "author": "79475487+mgamis-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "659a73ff672688006700587e10434ae48be6fcfb",
+            "area": "improvement",
+            "workstream": "Copy invite link button",
+            "comment": "Add callout on Copy Invite Link button or Add People button when invite link is copied"
+          },
+          {
+            "author": "98852890+vhuseinova-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "7025b337456585117bc48bc28e3b3444f45edbe2",
+            "area": "fix",
+            "workstream": "MessageThread",
+            "comment": "Fix width for code snippets sent in messages"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "c6882007f389c19e79e977512aa1fb646d091e07",
+            "area": "fix",
+            "workstream": "Calling Sounds",
+            "comment": "Move internal CallComposite AudioContext to a react context to avoid over creation of audio contexts"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 06 May 2024 20:38:24 GMT",
       "tag": "@azure/communication-react_v1.16.0",
       "version": "1.16.0",

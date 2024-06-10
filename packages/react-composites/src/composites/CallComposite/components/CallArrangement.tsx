@@ -16,7 +16,6 @@ import {
   useTheme
 } from '@internal/react-components';
 import { VideoGalleryLayout } from '@internal/react-components';
-/* @conditional-compile-remove(spotlight) */
 import { VideoGallery } from '@internal/react-components';
 import React, { useMemo, useRef, useState } from 'react';
 import { useEffect } from 'react';
@@ -75,11 +74,8 @@ import {
   CapabilitiesChangeNotificationBarProps
 } from './CapabilitiesChangedNotificationBar';
 import { useLocale } from '../../localization';
-/* @conditional-compile-remove(spotlight) */
 import { usePropsFor } from '../hooks/usePropsFor';
-/* @conditional-compile-remove(spotlight) */
 import { PromptProps } from './Prompt';
-/* @conditional-compile-remove(spotlight) */
 import {
   useLocalSpotlightCallbacksWithPrompt,
   useRemoteSpotlightCallbacksWithPrompt,
@@ -114,11 +110,11 @@ export interface CallArrangementProps {
   onCloseChatPane?: () => void;
   onSetDialpadPage?: () => void;
   dtmfDialerPresent?: boolean;
-  /* @conditional-compile-remove(spotlight) */
+
   setIsPromptOpen?: (isOpen: boolean) => void;
-  /* @conditional-compile-remove(spotlight) */
+
   setPromptProps?: (props: PromptProps) => void;
-  /* @conditional-compile-remove(spotlight) */
+
   hideSpotlightButtons?: boolean;
 }
 
@@ -184,25 +180,20 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   );
 
   const locale = useLocale();
-
-  /* @conditional-compile-remove(spotlight) */
+  const role = adapter.getState().call?.role;
   const videoGalleryProps = usePropsFor(VideoGallery);
-
-  /* @conditional-compile-remove(spotlight) */
   const { setPromptProps, setIsPromptOpen, hideSpotlightButtons } = props;
-
-  /* @conditional-compile-remove(spotlight) */
   const {
     onStartLocalSpotlight,
     onStopLocalSpotlight,
     onStartRemoteSpotlight,
     onStopRemoteSpotlight,
+    /* @conditional-compile-remove(soft-mute) */
+    onMuteParticipant,
     spotlightedParticipants,
     maxParticipantsToSpotlight,
     localParticipant
   } = videoGalleryProps;
-
-  /* @conditional-compile-remove(spotlight) */
   const { onStartLocalSpotlightWithPrompt, onStopLocalSpotlightWithPrompt } = useLocalSpotlightCallbacksWithPrompt(
     onStartLocalSpotlight,
     onStopLocalSpotlight,
@@ -210,7 +201,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     setPromptProps
   );
 
-  /* @conditional-compile-remove(spotlight) */
   const { onStartRemoteSpotlightWithPrompt, onStopRemoteSpotlightWithPrompt } = useRemoteSpotlightCallbacksWithPrompt(
     onStartRemoteSpotlight,
     onStopRemoteSpotlight,
@@ -218,24 +208,33 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     setPromptProps
   );
 
-  /* @conditional-compile-remove(spotlight) */
   const canRemoveSpotlight =
     adapter.getState().call?.capabilitiesFeature?.capabilities.removeParticipantsSpotlight.isPresent;
-  /* @conditional-compile-remove(spotlight) */
   const stopAllSpotlight = useMemo(
     () => (canRemoveSpotlight ? () => adapter.stopAllSpotlight() : undefined),
     [canRemoveSpotlight, adapter]
   );
 
-  /* @conditional-compile-remove(spotlight) */
   const { stopAllSpotlightWithPrompt } = useStopAllSpotlightCallbackWithPrompt(
     stopAllSpotlight,
     setIsPromptOpen,
     setPromptProps
   );
 
+  const onMuteParticipantPeoplePaneProps = useMemo(() => {
+    /* @conditional-compile-remove(soft-mute) */
+    return {
+      onMuteParticipant: ['Unknown', 'Organizer', 'Presenter', 'Co-organizer'].includes(role ?? '')
+        ? onMuteParticipant
+        : undefined
+    };
+    return {};
+  }, [
+    /* @conditional-compile-remove(soft-mute) */ onMuteParticipant,
+    /* @conditional-compile-remove(soft-mute) */ role
+  ]);
+
   const spotlightPeoplePaneProps = useMemo(() => {
-    /* @conditional-compile-remove(spotlight) */
     return {
       spotlightedParticipantUserIds: spotlightedParticipants,
       onStartLocalSpotlight: hideSpotlightButtons ? undefined : onStartLocalSpotlightWithPrompt,
@@ -247,19 +246,20 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     };
     return {};
   }, [
-    /* @conditional-compile-remove(spotlight) */ hideSpotlightButtons,
-    /* @conditional-compile-remove(spotlight) */ maxParticipantsToSpotlight,
-    /* @conditional-compile-remove(spotlight) */ onStartLocalSpotlightWithPrompt,
-    /* @conditional-compile-remove(spotlight) */ onStartRemoteSpotlightWithPrompt,
-    /* @conditional-compile-remove(spotlight) */ onStopLocalSpotlightWithPrompt,
-    /* @conditional-compile-remove(spotlight) */ onStopRemoteSpotlightWithPrompt,
-    /* @conditional-compile-remove(spotlight) */ stopAllSpotlightWithPrompt,
-    /* @conditional-compile-remove(spotlight) */ spotlightedParticipants
+    hideSpotlightButtons,
+    maxParticipantsToSpotlight,
+    onStartLocalSpotlightWithPrompt,
+    onStartRemoteSpotlightWithPrompt,
+    onStopLocalSpotlightWithPrompt,
+    onStopRemoteSpotlightWithPrompt,
+    stopAllSpotlightWithPrompt,
+    spotlightedParticipants
   ]);
 
   const { isPeoplePaneOpen, openPeoplePane, closePeoplePane } = usePeoplePane({
     ...peoplePaneProps,
-    ...spotlightPeoplePaneProps
+    ...spotlightPeoplePaneProps,
+    ...onMuteParticipantPeoplePaneProps
   });
   const togglePeoplePane = useCallback(() => {
     if (isPeoplePaneOpen) {
@@ -325,8 +325,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   }, [togglePeoplePane]);
 
   const drawerContainerStylesValue = useMemo(() => drawerContainerStyles(DRAWER_Z_INDEX), []);
-
-  const role = adapter.getState().call?.role;
 
   const canUnmute = role !== 'Consumer' ? true : false;
 
@@ -427,7 +425,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                   dtmfDialerPresent={props.dtmfDialerPresent}
                   peopleButtonRef={peopleButtonRef}
                   cameraButtonRef={cameraButtonRef}
-                  /* @conditional-compile-remove(spotlight) */
                   onStopLocalSpotlight={
                     !hideSpotlightButtons && localParticipant.spotlight ? onStopLocalSpotlightWithPrompt : undefined
                   }

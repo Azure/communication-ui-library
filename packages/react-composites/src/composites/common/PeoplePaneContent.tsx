@@ -1,9 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { IContextualMenuItem, Stack } from '@fluentui/react';
-/* @conditional-compile-remove(spotlight) */
-import { IContextualMenuProps } from '@fluentui/react';
+import { IContextualMenuItem, IContextualMenuProps, Stack } from '@fluentui/react';
 import {
   ParticipantList,
   ParticipantListParticipant,
@@ -40,7 +38,6 @@ export const PeoplePaneContent = (props: {
   setDrawerMenuItems: (drawerMenuItems: _DrawerMenuItemProps[]) => void;
   setParticipantActioned?: (userId: string) => void;
   mobileView?: boolean;
-  /* @conditional-compile-remove(spotlight) */
   participantListHeadingMoreButtonProps?: IContextualMenuProps;
 }): JSX.Element => {
   const {
@@ -48,7 +45,7 @@ export const PeoplePaneContent = (props: {
     onFetchParticipantMenuItems,
     setDrawerMenuItems,
     setParticipantActioned,
-    /* @conditional-compile-remove(spotlight) */ participantListHeadingMoreButtonProps
+    participantListHeadingMoreButtonProps
   } = props;
   const adapter = useAdapter();
   const localeStrings = useLocale();
@@ -115,7 +112,6 @@ export const PeoplePaneContent = (props: {
     setParticipantActioned
   ]);
 
-  /* @conditional-compile-remove(spotlight) */
   const setDrawerMenuItemsForParticipantListHeadingMoreButton = useMemo(() => {
     const drawerMenuItems = participantListHeadingMoreButtonProps?.items.map((contextualMenu: IContextualMenuItem) =>
       convertContextualMenuItemToDrawerMenuItem(contextualMenu, () => setDrawerMenuItems([]))
@@ -142,11 +138,8 @@ export const PeoplePaneContent = (props: {
       onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
       onFetchParticipantMenuItems={props.mobileView ? undefined : onFetchParticipantMenuItems}
       title={strings.peoplePaneSubTitle}
-      /* @conditional-compile-remove(spotlight) */
       headingMoreButtonAriaLabel={localeStrings.strings.call.peoplePaneMoreButtonAriaLabel}
-      /* @conditional-compile-remove(spotlight) */
       onClickHeadingMoreButton={props.mobileView ? setDrawerMenuItemsForParticipantListHeadingMoreButton : undefined}
-      /* @conditional-compile-remove(spotlight) */
       headingMoreButtonMenuProps={props.participantListHeadingMoreButtonProps}
     />
   );
@@ -218,7 +211,8 @@ const createDefaultContextualMenuItems = (
         }
       },
       iconProps: {
-        iconName: 'UserRemove'
+        iconName: 'ContextMenuRemoveParticipant',
+        styles: { root: { lineHeight: 0 } }
       },
       'data-ui-id': 'participant-list-remove-participant-button'
     });

@@ -28,10 +28,8 @@ export type { CommonCallingHandlers } from './handlers/createCommonHandlers';
 export type { CaptionsOptions } from './handlers/createCommonHandlers';
 
 export type { VideoBackgroundEffectsDependency } from './handlers/createCommonHandlers';
-/* @conditional-compile-remove(spotlight) */
-export type { _ComponentCallingHandlers } from './handlers/createHandlers';
 
-export type { CallingHandlersOptions } from './handlers/createHandlers';
+export type { _ComponentCallingHandlers, CallingHandlersOptions } from './handlers/createHandlers';
 /* @conditional-compile-remove(teams-identity-support) */
 export { useTeamsCall, useTeamsCallAgent } from './providers';
 
@@ -52,9 +50,7 @@ export type { GetSelector as GetCallingSelector, EmptySelector } from './hooks/u
 export { useSelector as useCallingSelector } from './hooks/useSelector';
 export { useHandlers as useCallingHandlers } from './hooks/useHandlers';
 
-export { _isInCall, _isPreviewOn, _isInLobbyOrConnecting } from './utils/callUtils';
-/* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(spotlight) */
-export { _updateUserDisplayNames } from './utils/callUtils';
+export { _isInCall, _isPreviewOn, _isInLobbyOrConnecting, _updateUserDisplayNames } from './utils/callUtils';
 /* @conditional-compile-remove(unsupported-browser) */
 export { _getEnvironmentInfo } from './utils/callUtils';
 

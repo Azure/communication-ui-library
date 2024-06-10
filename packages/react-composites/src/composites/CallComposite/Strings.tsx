@@ -2,11 +2,8 @@
 // Licensed under the MIT License.
 
 import { SpokenLanguageStrings, CaptionLanguageStrings } from '@internal/react-components';
-/* @conditional-compile-remove(end-of-call-survey) */
 import { SurveyIssues, SurveyIssuesHeadingStrings } from '@internal/react-components';
-
 import { CapabilityChangedNotificationStrings } from './components/CapabilitiesChangedNotificationBar';
-/* @conditional-compile-remove(spotlight) */
 import { SpotlightPromptStrings } from './components/Prompt';
 
 /**
@@ -254,32 +251,26 @@ export interface CallCompositeStrings {
    * Label for menu item to remove participant
    */
   removeMenuLabel: string;
-  /* @conditional-compile-remove(spotlight) */
   /**
    * Label for menu item to start spotlight on participant
    */
   startSpotlightMenuLabel: string;
-  /* @conditional-compile-remove(spotlight) */
   /**
    * Label for menu item to add spotlight on participant
    */
   addSpotlightMenuLabel: string;
-  /* @conditional-compile-remove(spotlight) */
   /**
    * Label for menu item to stop spotlight on participant
    */
   stopSpotlightMenuLabel: string;
-  /* @conditional-compile-remove(spotlight) */
   /**
    * Label for menu item to stop spotlight on local user
    */
   stopSpotlightOnSelfMenuLabel: string;
-  /* @conditional-compile-remove(spotlight) */
   /**
    * Label for menu item to stop spotlight on local user
    */
   spotlightLimitReachedMenuTitle: string;
-  /* @conditional-compile-remove(spotlight) */
   /**
    * Label for menu item to stop all spotlight
    */
@@ -660,82 +651,66 @@ export interface CallCompositeStrings {
    * All strings for capability changed notification
    */
   capabilityChangedNotification?: CapabilityChangedNotificationStrings;
-  /* @conditional-compile-remove(end-of-call-survey) */
   /**
    * Title for the survey
    */
   surveyTitle: string;
-  /* @conditional-compile-remove(end-of-call-survey) */
   /**
    * Helper text to explain what the survey is for
    */
   starSurveyHelperText: string;
-  /* @conditional-compile-remove(end-of-call-survey) */
   /**
    * Helper text displayed below survey question after user select one star
    */
   starSurveyOneStarText: string;
-  /* @conditional-compile-remove(end-of-call-survey) */
   /**
    * Helper text displayed below survey question after user select two star
    */
   starSurveyTwoStarText: string;
-  /* @conditional-compile-remove(end-of-call-survey) */
   /**
    * Helper text displayed below survey question after user select three star
    */
   starSurveyThreeStarText: string;
-  /* @conditional-compile-remove(end-of-call-survey) */
   /**
    * Helper text displayed below survey question after user select four star
    */
   starSurveyFourStarText: string;
-  /* @conditional-compile-remove(end-of-call-survey) */
   /**
    * Helper text displayed below survey question after user select five star
    */
   starSurveyFiveStarText: string;
-  /* @conditional-compile-remove(end-of-call-survey) */
   /**
    * Aria Label for each individual star rating
    */
   starRatingAriaLabel: string;
-  /* @conditional-compile-remove(end-of-call-survey) */
   /**
    * Tags Survey Question
    */
   tagsSurveyQuestion: string;
-  /* @conditional-compile-remove(end-of-call-survey) */
   /**
    * Default text for free form text field inside tags survey
    */
   tagsSurveyTextFieldDefaultText: string;
-  /* @conditional-compile-remove(end-of-call-survey) */
   /**
    * Tags Survey helper text
    */
   tagsSurveyHelperText: string;
-  /* @conditional-compile-remove(end-of-call-survey) */
   /**
    * Confirm button label for survey
    */
   surveyConfirmButtonLabel: string;
-  /* @conditional-compile-remove(end-of-call-survey) */
   /**
    * Cancel button label for survey
    */
   surveySkipButtonLabel: string;
-  /* @conditional-compile-remove(end-of-call-survey) */
   /**
    * Thank you text appeared on screen after survey is submitted
    */
   endOfSurveyText: string;
-  /* @conditional-compile-remove(end-of-call-survey) */
   /**
    * Corresponding texts to each call issue
    */
   surveyIssues: SurveyIssues;
-  /* @conditional-compile-remove(end-of-call-survey) */
   /**
    * Corresponding texts to each call category
    */
@@ -788,17 +763,14 @@ export interface CallCompositeStrings {
    * Label to hide the dtmf dialer in the more button menu
    */
   dtmfDialerMoreButtonLabelOff?: string;
-  /* @conditional-compile-remove(spotlight) */
   /**
    * Strings for spotlight prompt
    */
   spotlightPrompt: SpotlightPromptStrings;
-  /* @conditional-compile-remove(spotlight) */
   /**
    * Label for button to exit spotlight
    */
   exitSpotlightButtonLabel: string;
-  /* @conditional-compile-remove(spotlight) */
   /**
    * Tooltip for button to exit spotlight
    */
@@ -843,4 +815,9 @@ export interface CallCompositeStrings {
    * Error message when the meeting identifier or passcode is invalid
    */
   invalidMeetingIdentifier: string;
+  /* @conditional-compile-remove(teams-meeting-conference) */
+  /**
+   * Error message when the meeting identifier or passcode is invalid
+   */
+  phoneCallMoreButtonLabel: string;
 }

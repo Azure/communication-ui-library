@@ -22,15 +22,10 @@ export const useVideoTileContextualMenuProps = (props: {
     unpinParticipantMenuItemAriaLabel?: string;
     pinnedParticipantAnnouncementAriaLabel?: string;
     unpinnedParticipantAnnouncementAriaLabel?: string;
-    /* @conditional-compile-remove(spotlight) */
     startSpotlightVideoTileMenuLabel?: string;
-    /* @conditional-compile-remove(spotlight) */
     addSpotlightVideoTileMenuLabel?: string;
-    /* @conditional-compile-remove(spotlight) */
     stopSpotlightVideoTileMenuLabel?: string;
-    /* @conditional-compile-remove(spotlight) */
     stopSpotlightOnSelfVideoTileMenuLabel?: string;
-    /* @conditional-compile-remove(spotlight) */
     spotlightLimitReachedMenuTitle?: string;
   };
   view?: { updateScalingMode: (scalingMode: ViewScalingMode) => Promise<void> };
@@ -40,18 +35,14 @@ export const useVideoTileContextualMenuProps = (props: {
   onUpdateScalingMode?: (userId: string, scalingMode: ViewScalingMode) => void;
   disablePinMenuItem?: boolean;
   toggleAnnouncerString?: (announcerString: string) => void;
-  /* @conditional-compile-remove(spotlight) */
   isSpotlighted?: boolean;
-  /* @conditional-compile-remove(spotlight) */
   spotlightedParticipantUserIds?: string[];
-  /* @conditional-compile-remove(spotlight) */
   onStartSpotlight?: (userIds: string[]) => void;
-  /* @conditional-compile-remove(spotlight) */
   onStopSpotlight?: (userIds: string[]) => void;
-  /* @conditional-compile-remove(spotlight) */
   maxParticipantsToSpotlight?: number;
-  /* @conditional-compile-remove(spotlight) */
   myUserId?: string;
+  /* @conditional-compile-remove(soft-mute) */
+  onMuteParticipant?: (userId: string) => void;
 }): IContextualMenuProps | undefined => {
   const {
     participant,
@@ -63,12 +54,13 @@ export const useVideoTileContextualMenuProps = (props: {
     onUpdateScalingMode,
     disablePinMenuItem,
     toggleAnnouncerString,
-    /* @conditional-compile-remove(spotlight) */ spotlightedParticipantUserIds = [],
-    /* @conditional-compile-remove(spotlight) */ isSpotlighted,
-    /* @conditional-compile-remove(spotlight) */ onStartSpotlight,
-    /* @conditional-compile-remove(spotlight) */ onStopSpotlight,
-    /* @conditional-compile-remove(spotlight) */ maxParticipantsToSpotlight,
-    /* @conditional-compile-remove(spotlight) */ myUserId
+    spotlightedParticipantUserIds = [],
+    isSpotlighted,
+    onStartSpotlight,
+    onStopSpotlight,
+    maxParticipantsToSpotlight,
+    myUserId,
+    /* @conditional-compile-remove(soft-mute) */ onMuteParticipant
   } = props;
   const scalingMode = useMemo(() => {
     return props.participant.videoStream?.scalingMode;
@@ -119,12 +111,12 @@ export const useVideoTileContextualMenuProps = (props: {
             pinActionString && toggleAnnouncerString?.(pinActionString);
           },
           'data-ui-id': 'video-tile-pin-participant-button',
-          disabled: disablePinMenuItem || /* @conditional-compile-remove(spotlight) */ isSpotlighted,
+          disabled: disablePinMenuItem || isSpotlighted,
           ariaLabel: pinActionString
         });
       }
     }
-    /* @conditional-compile-remove(spotlight) */
+
     if (isSpotlighted) {
       const stopSpotlightMenuLabel =
         myUserId === participant.userId
@@ -164,6 +156,21 @@ export const useVideoTileContextualMenuProps = (props: {
           title: maxSpotlightedParticipantsReached ? strings?.spotlightLimitReachedMenuTitle : undefined
         });
       }
+    }
+    /* @conditional-compile-remove(soft-mute) */
+    if (onMuteParticipant) {
+      items.push({
+        key: 'mute',
+        text: 'Mute',
+        iconProps: {
+          iconName: 'ContextualMenuMicMutedIcon',
+          styles: { root: { lineHeight: 0 } }
+        },
+        onClick: () => onMuteParticipant(participant.userId),
+        'data-ui-id': 'video-tile-mute-participant',
+        ariaLabel: 'Mute',
+        disabled: participant.isMuted
+      });
     }
     if (scalingMode) {
       if (scalingMode === 'Crop' && strings?.fitRemoteParticipantToFrame) {
@@ -215,12 +222,14 @@ export const useVideoTileContextualMenuProps = (props: {
     participant.displayName,
     disablePinMenuItem,
     toggleAnnouncerString,
-    /* @conditional-compile-remove(spotlight) */ spotlightedParticipantUserIds,
-    /* @conditional-compile-remove(spotlight) */ isSpotlighted,
-    /* @conditional-compile-remove(spotlight) */ onStartSpotlight,
-    /* @conditional-compile-remove(spotlight) */ onStopSpotlight,
-    /* @conditional-compile-remove(spotlight) */ maxParticipantsToSpotlight,
-    /* @conditional-compile-remove(spotlight) */ myUserId
+    spotlightedParticipantUserIds,
+    isSpotlighted,
+    onStartSpotlight,
+    onStopSpotlight,
+    maxParticipantsToSpotlight,
+    myUserId,
+    /* @conditional-compile-remove(soft-mute) */ onMuteParticipant,
+    /* @conditional-compile-remove(soft-mute) */ participant.isMuted
   ]);
 
   return contextualMenuProps;

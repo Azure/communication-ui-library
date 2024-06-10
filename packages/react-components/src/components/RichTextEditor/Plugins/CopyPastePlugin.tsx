@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-import type { PluginEvent, EditorPlugin, IEditor } from 'roosterjs-content-model-types';
+import type { PluginEvent, EditorPlugin, IEditor, BeforePasteEvent } from 'roosterjs-content-model-types';
 import { ContentChangedEventSource, PluginEventType } from '../../utils/RichTextEditorUtils';
 import { blob } from 'stream/consumers';
 
@@ -9,7 +9,9 @@ import { blob } from 'stream/consumers';
  */
 export default class CopyPastePlugin implements EditorPlugin {
   private editor: IEditor | null = null;
-  onUploadImage: ((image: Blob, fileName: string) => void) | undefined = undefined;
+  // don't set value in constructor to be able to update it without plugin recreation
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  onPaste?: (event: { content: DocumentFragment }) => void;
 
   getName(): string {
     return 'CopyPastePlugin';
@@ -22,8 +24,7 @@ export default class CopyPastePlugin implements EditorPlugin {
   dispose(): void {}
 
   onPluginEvent(event: PluginEvent): void {
-    // removeImageElement(event);
-    handleInlineImage(event, this.onUploadImage);
+    handleBeforePasteEvent(event, /* @conditional-compile-remove(rich-text-editor-image-upload) */ this.onPaste);
 
     if (this.editor !== null && !this.editor.isDisposed()) {
       // scroll the editor to the correct position after pasting content
@@ -31,6 +32,24 @@ export default class CopyPastePlugin implements EditorPlugin {
     }
   }
 }
+
+const handleBeforePasteEvent = (
+  event: PluginEvent,
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */ onPaste?: (event: {
+    content: DocumentFragment;
+  }) => void
+): void => {
+  if (event.eventType === PluginEventType.BeforePaste && event.pasteType === 'normal') {
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    onPaste?.({ content: event.fragment });
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    return;
+
+    // the initial behavior
+    // removes inline image elements from the pasted content when rich-text-editor-image-upload not available
+    removeImageElement(event as BeforePasteEvent);
+  }
+};
 
 /**
  * @internal
@@ -86,7 +105,7 @@ const base64ToBlob = (dataURI: string): Blob => {
  */
 export const removeImageElement = (event: PluginEvent): void => {
   // We don't support the pasting options such as paste as image yet.
-  if (event.eventType === PluginEventType.BeforePaste && event.pasteType === 'normal') {
+  if (event.pasteType === 'normal') {
     event.fragment.querySelectorAll('img').forEach((image) => {
       // If the image is the only child of its parent, remove all the parents of this img element.
       let parentNode: HTMLElement | null = image.parentElement;

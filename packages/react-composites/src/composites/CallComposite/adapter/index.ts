@@ -15,9 +15,12 @@ export {
   useTeamsCallAdapter
 } from './AzureCommunicationCallAdapter';
 
+/* @conditional-compile-remove(teams-identity-support-beta) */
+export type { TeamsOutboundCallAdapterArgs, StartTeamsCallIdentifier } from './AzureCommunicationCallAdapter';
+
 export type { TeamsAdapterOptions } from './AzureCommunicationCallAdapter';
 /* @conditional-compile-remove(teams-identity-support) */
-export type { TeamsCallAdapterArgs } from './AzureCommunicationCallAdapter';
+export type { TeamsCallAdapterArgsCommon, TeamsCallAdapterArgs } from './AzureCommunicationCallAdapter';
 
 export type { OnFetchProfileCallback, Profile } from './OnFetchProfileCallback';
 export type {
@@ -71,7 +74,6 @@ export type { TransferAcceptedListener } from './CallAdapter';
 
 export type { CapabilitiesChangedListener } from './CallAdapter';
 
-/* @conditional-compile-remove(spotlight) */
 export type { SpotlightChangedListener } from './CallAdapter';
 
 /* @conditional-compile-remove(teams-identity-support) */

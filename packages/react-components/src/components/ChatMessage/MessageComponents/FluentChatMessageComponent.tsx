@@ -47,17 +47,17 @@ export const FluentChatMessageComponent = (props: FluentChatMessageComponentWrap
     /* @conditional-compile-remove(date-time-customization) */
     onDisplayDateTimeString,
     inlineImageOptions,
-    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+    /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
     actionsForAttachment,
     userId,
-    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+    /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
     onRenderAttachmentDownloads,
     /* @conditional-compile-remove(mention) */
     mentionOptions
   } = props;
   const chatMessageRenderStyles = useChatMessageRenderStyles();
 
-  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
   const onRenderAttachmentDownloadsMemo = useMemo(() => {
     return onRenderAttachmentDownloads;
     return undefined;
@@ -74,7 +74,7 @@ export const FluentChatMessageComponent = (props: FluentChatMessageComponentWrap
         return (
           <ChatMessageComponentAsMessageBubble
             {...messageProps}
-            /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+            /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
             onRenderAttachmentDownloads={onRenderAttachmentDownloadsMemo}
             strings={messageProps.strings}
             message={messageProps.message}
@@ -83,7 +83,7 @@ export const FluentChatMessageComponent = (props: FluentChatMessageComponentWrap
             /* @conditional-compile-remove(date-time-customization) */
             onDisplayDateTimeString={onDisplayDateTimeString}
             inlineImageOptions={inlineImageOptions}
-            /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+            /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
             actionsForAttachment={actionsForAttachment}
             /* @conditional-compile-remove(mention) */
             mentionDisplayOptions={mentionOptions?.displayOptions}
@@ -93,14 +93,14 @@ export const FluentChatMessageComponent = (props: FluentChatMessageComponentWrap
       return <></>;
     },
     [
-      /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+      /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
       onRenderAttachmentDownloadsMemo,
       userId,
       shouldOverlapAvatarAndMessage,
       /* @conditional-compile-remove(date-time-customization) */
       onDisplayDateTimeString,
       inlineImageOptions,
-      /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+      /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
       actionsForAttachment,
       /* @conditional-compile-remove(mention) */
       mentionOptions?.displayOptions
@@ -128,33 +128,6 @@ export const FluentChatMessageComponent = (props: FluentChatMessageComponentWrap
     return { className: mergeClasses(chatMessageRenderStyles.rootMessage, chatMessageRenderStyles.rootCommon) };
   }, [chatMessageRenderStyles.rootCommon, chatMessageRenderStyles.rootMessage]);
 
-  const messageBodyProps = useMemo(() => {
-    return {
-      // chatItemMessageContainer used in className and style prop as style prop can't handle CSS selectors
-      className: mergeClasses(
-        chatMessageRenderStyles.bodyCommon,
-        !shouldShowAvatar ? chatMessageRenderStyles.bodyWithoutAvatar : chatMessageRenderStyles.bodyWithAvatar,
-        shouldOverlapAvatarAndMessage ? chatMessageRenderStyles.avatarOverlap : chatMessageRenderStyles.avatarNoOverlap,
-        mergeStyles(styles?.chatItemMessageContainer)
-      ),
-      style:
-        styles?.chatItemMessageContainer !== undefined ? createStyleFromV8Style(styles?.chatItemMessageContainer) : {},
-      // make body not focusable to remove repetitions from narrators.
-      // inner components are already focusable
-      tabIndex: -1,
-      role: 'none'
-    };
-  }, [
-    chatMessageRenderStyles.avatarNoOverlap,
-    chatMessageRenderStyles.avatarOverlap,
-    chatMessageRenderStyles.bodyCommon,
-    chatMessageRenderStyles.bodyWithAvatar,
-    chatMessageRenderStyles.bodyWithoutAvatar,
-    shouldOverlapAvatarAndMessage,
-    shouldShowAvatar,
-    styles?.chatItemMessageContainer
-  ]);
-
   const avatar = useMemo(() => {
     const chatAvatarStyle = shouldShowAvatar ? gutterWithAvatar : gutterWithHiddenAvatar;
     const personaOptions: IPersona = {
@@ -163,12 +136,50 @@ export const FluentChatMessageComponent = (props: FluentChatMessageComponentWrap
       text: message.senderDisplayName,
       showOverflowTooltip: false
     };
+    let renderedAvatar;
+    if (onRenderAvatar) {
+      const avatarComponent = onRenderAvatar?.(message.senderId, personaOptions);
+      if (!avatarComponent) {
+        return undefined;
+      } else {
+        renderedAvatar = avatarComponent;
+      }
+    }
     return (
       <div className={mergeStyles(chatAvatarStyle)}>
-        {onRenderAvatar ? onRenderAvatar?.(message.senderId, personaOptions) : <Persona {...personaOptions} />}
+        {renderedAvatar ? renderedAvatar : <Persona {...personaOptions} />}
       </div>
     );
   }, [message.senderDisplayName, message.senderId, onRenderAvatar, shouldShowAvatar]);
+
+  const messageBodyProps = useMemo(() => {
+    return {
+      // chatItemMessageContainer used in className and style prop as style prop can't handle CSS selectors
+      className: mergeClasses(
+        chatMessageRenderStyles.bodyCommon,
+        !shouldShowAvatar
+          ? avatar
+            ? chatMessageRenderStyles.bodyWithoutAvatar
+            : chatMessageRenderStyles.bodyHiddenAvatar
+          : chatMessageRenderStyles.bodyWithAvatar,
+        shouldOverlapAvatarAndMessage ? chatMessageRenderStyles.avatarOverlap : chatMessageRenderStyles.avatarNoOverlap,
+        mergeStyles(styles?.chatItemMessageContainer)
+      ),
+      style:
+        styles?.chatItemMessageContainer !== undefined ? createStyleFromV8Style(styles?.chatItemMessageContainer) : {}
+    };
+  }, [
+    chatMessageRenderStyles.bodyCommon,
+    chatMessageRenderStyles.bodyWithoutAvatar,
+    chatMessageRenderStyles.bodyHiddenAvatar,
+    chatMessageRenderStyles.bodyWithAvatar,
+    chatMessageRenderStyles.avatarOverlap,
+    chatMessageRenderStyles.avatarNoOverlap,
+    shouldShowAvatar,
+    avatar,
+    shouldOverlapAvatarAndMessage,
+    styles?.chatItemMessageContainer
+  ]);
 
   // Fluent UI message components are used here as for default message renderer,
   // timestamp and author name should be shown but they aren't shown for custom renderer.
