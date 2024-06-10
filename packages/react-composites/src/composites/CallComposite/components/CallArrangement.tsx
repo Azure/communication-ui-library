@@ -53,8 +53,6 @@ import { SidePane } from './SidePane/SidePane';
 import { usePeoplePane } from './SidePane/usePeoplePane';
 /* @conditional-compile-remove(teams-meeting-conference) */
 import { useMeetingPhoneInfoPane } from './SidePane/useMeetingPhoneInfo';
-/* @conditional-compile-remove(teams-meeting-conference) */
-import { convertConferencePhoneInfo } from '../../common/MeetingConferencePhoneInfoModal';
 
 import {
   useVideoEffectsPane,
@@ -162,7 +160,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     }
   }, [participantActioned, remoteParticipants]);
 
-  const conferencePhoneInfo = convertConferencePhoneInfo(adapter.getState().call?.teamsMeetingConference);
+  const conferencePhoneInfo = adapter.getState().call?.teamsMeetingConference;
 
   const meetingPhoneInfoPaneProps = useMemo(
     () => ({

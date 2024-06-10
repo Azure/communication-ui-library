@@ -6,11 +6,7 @@ import { _DrawerMenuItemProps } from '@internal/react-components';
 import React from 'react';
 import { peoplePaneContainerTokens } from '../common/styles/ParticipantContainer.styles';
 import { peoplePaneContainerStyle } from './styles/PeoplePaneContent.styles';
-import {
-  _ConferencePhoneInfo,
-  _MeetingConferencePhoneInfoModalStrings,
-  formatPhoneNumberInfo
-} from '@internal/react-components';
+import { ConferencePhoneInfo, formatPhoneNumberInfo } from '@internal/react-components';
 import {
   phoneInfoTextStyle,
   phoneInfoIcon,
@@ -24,11 +20,11 @@ import { useLocale } from '../localization';
  */
 export const MeetingPhoneInfoPaneContent = (props: {
   mobileView?: boolean;
-  conferencePhoneInfoList?: _ConferencePhoneInfo[];
+  conferencePhoneInfoList?: ConferencePhoneInfo[];
 }): JSX.Element => {
   const { conferencePhoneInfoList } = props;
   const theme = useTheme();
-  const localeStrings = useLocale();
+  const localeStrings = useLocale().component.strings.MeetingConferencePhoneInfo;
 
   if (props.mobileView) {
     return (
@@ -40,9 +36,7 @@ export const MeetingPhoneInfoPaneContent = (props: {
       >
         {(conferencePhoneInfoList === undefined || conferencePhoneInfoList.length === 0) && (
           <Stack horizontal>
-            <Text className={phoneInfoTextStyle}>
-              {localeStrings.strings.call.meetingConferencePhoneInfoModalNoPhoneAvailable}
-            </Text>
+            <Text className={phoneInfoTextStyle}>{localeStrings.meetingConferencePhoneInfoModalNoPhoneAvailable}</Text>
           </Stack>
         )}
         {conferencePhoneInfoList && conferencePhoneInfoList.length > 0 && (
@@ -59,18 +53,14 @@ export const MeetingPhoneInfoPaneContent = (props: {
                     </Stack>
                   </Stack.Item>
                   <Stack.Item>
-                    <Text className={phoneInfoTextStyle}>
-                      {localeStrings.strings.call.meetingConferencePhoneInfoModalDialIn}
-                    </Text>
+                    <Text className={phoneInfoTextStyle}>{localeStrings.meetingConferencePhoneInfoModalDialIn}</Text>
                   </Stack.Item>
                 </Stack>
               </Stack.Item>
               <Stack.Item className={phoneInfoStep}>
                 {conferencePhoneInfoList.map((phoneNumber, index) => (
                   <Stack.Item key={index}>
-                    <Text className={phoneInfoTextStyle}>
-                      {formatPhoneNumberInfo(phoneNumber, localeStrings.strings.call)}
-                    </Text>
+                    <Text className={phoneInfoTextStyle}>{formatPhoneNumberInfo(phoneNumber, localeStrings)}</Text>
                   </Stack.Item>
                 ))}
               </Stack.Item>
@@ -88,9 +78,7 @@ export const MeetingPhoneInfoPaneContent = (props: {
                     <Icon iconName="DtmfDialpadButton" style={{ color: theme.palette.themePrimary, padding: '8px' }} />
                   </Stack.Item>
                   <Stack.Item>
-                    <Text className={phoneInfoTextStyle}>
-                      {localeStrings.strings.call.meetingConferencePhoneInfoModalMeetingId}
-                    </Text>
+                    <Text className={phoneInfoTextStyle}>{localeStrings.meetingConferencePhoneInfoModalMeetingId}</Text>
                   </Stack.Item>
                 </Stack>
               </Stack.Item>
@@ -102,9 +90,7 @@ export const MeetingPhoneInfoPaneContent = (props: {
                   <Icon iconName="PhoneInfoWait" style={{ color: theme.palette.themePrimary, padding: '8px' }} />
                 </Stack.Item>
                 <Stack.Item>
-                  <Text className={phoneInfoTextStyle}>
-                    {localeStrings.strings.call.meetingConferencePhoneInfoModalWait}
-                  </Text>
+                  <Text className={phoneInfoTextStyle}>{localeStrings.meetingConferencePhoneInfoModalWait}</Text>
                 </Stack.Item>
               </Stack>
             </Stack>

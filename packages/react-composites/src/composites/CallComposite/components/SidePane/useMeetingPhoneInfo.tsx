@@ -6,7 +6,7 @@ import { SidePaneRenderer, useIsParticularSidePaneOpen } from './SidePaneProvide
 import { SidePaneHeader } from '../../../common/SidePaneHeader';
 import { MeetingPhoneInfoPaneContent } from '../../../common/MeetingPhoneInfoPaneContent';
 import { useLocale } from '../../../localization';
-import { _ConferencePhoneInfo } from '@internal/react-components';
+import { ConferencePhoneInfo } from '@internal/react-components';
 
 const SIDE_PANE_ID = 'Meeting Phone Info';
 
@@ -14,7 +14,7 @@ const SIDE_PANE_ID = 'Meeting Phone Info';
 export const useMeetingPhoneInfoPane = (props: {
   updateSidePaneRenderer: (renderer: SidePaneRenderer | undefined) => void;
   mobileView?: boolean;
-  conferencePhoneInfo?: _ConferencePhoneInfo[];
+  conferencePhoneInfo?: ConferencePhoneInfo[];
 }): {
   openMeetingPhoneInfoPane: () => void;
   closeMeetingPhoneInfoPane: () => void;
@@ -26,18 +26,19 @@ export const useMeetingPhoneInfoPane = (props: {
     updateSidePaneRenderer(undefined);
   }, [updateSidePaneRenderer]);
 
-  const localeStrings = useLocale().strings.call;
+  const localeStrings = useLocale().component.strings.MeetingConferencePhoneInfo;
+  const callStrings = useLocale().strings.call;
 
   const onRenderHeader = useCallback(
     () => (
       <SidePaneHeader
         onClose={closePane}
         headingText={localeStrings.meetingConferencePhoneInfoModalTitle}
-        dismissSidePaneButtonAriaLabel={localeStrings.dismissSidePaneButtonLabel}
+        dismissSidePaneButtonAriaLabel={callStrings.dismissSidePaneButtonLabel}
         mobileView={mobileView ?? false}
       />
     ),
-    [mobileView, closePane, localeStrings]
+    [mobileView, closePane, localeStrings, callStrings]
   );
 
   const onRenderContent = useCallback((): JSX.Element => {
