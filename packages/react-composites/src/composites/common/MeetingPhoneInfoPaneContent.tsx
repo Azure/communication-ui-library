@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 /* @conditional-compile-remove(teams-meeting-conference) */
+// eslint-disable-next-line no-restricted-imports
 import { Stack, Text, useTheme, Icon } from '@fluentui/react';
 /* @conditional-compile-remove(teams-meeting-conference) */
 import { _DrawerMenuItemProps } from '@internal/react-components';

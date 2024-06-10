@@ -51,7 +51,7 @@ export const useMeetingPhoneInfoPane = (props: {
 
   const onRenderContent = useCallback((): JSX.Element => {
     return <MeetingPhoneInfoPaneContent mobileView={mobileView} conferencePhoneInfoList={conferencePhoneInfo} />;
-  }, [mobileView]);
+  }, [mobileView, conferencePhoneInfo]);
 
   const sidePaneRenderer: SidePaneRenderer = useMemo(
     () => ({
