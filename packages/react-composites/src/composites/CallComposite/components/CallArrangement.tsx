@@ -160,8 +160,10 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     }
   }, [participantActioned, remoteParticipants]);
 
+  /* @conditional-compile-remove(teams-meeting-conference) */
   const conferencePhoneInfo = adapter.getState().call?.teamsMeetingConference;
 
+  /* @conditional-compile-remove(teams-meeting-conference) */
   const meetingPhoneInfoPaneProps = useMemo(
     () => ({
       updateSidePaneRenderer,
@@ -283,12 +285,13 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     }
   }, [closePeoplePane, isPeoplePaneOpen, openPeoplePane]);
 
+  /* @conditional-compile-remove(teams-meeting-conference) */
   const { isMeetingPhoneInfoPaneOpen, openMeetingPhoneInfoPane, closeMeetingPhoneInfoPane } = useMeetingPhoneInfoPane({
     ...meetingPhoneInfoPaneProps
   });
 
+  /* @conditional-compile-remove(teams-meeting-conference) */
   const toggleMeetingPhoneInfoPane = useCallback(() => {
-    console.log('toggleMeetingPhoneInfoPane ' + isMeetingPhoneInfoPaneOpen);
     if (isMeetingPhoneInfoPaneOpen) {
       closeMeetingPhoneInfoPane();
     } else {
@@ -483,6 +486,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                 onSetDialpadPage={props.onSetDialpadPage}
                 dtmfDialerPresent={props.dtmfDialerPresent}
                 reactionResources={adapter.getState().reactions}
+                /* @conditional-compile-remove(teams-meeting-conference) */
                 onClickMeetingPhoneInfo={onMeetingPhoneInfoClicked}
               />
             </Stack>

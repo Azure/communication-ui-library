@@ -40,9 +40,9 @@ import { themedToggleButtonStyle } from './MoreDrawer.styles';
 import { _spokenLanguageToCaptionLanguage } from '@internal/react-components';
 import { useAdapter } from '../../CallComposite/adapter/CallAdapterProvider';
 import { useSelector } from '../../CallComposite/hooks/useSelector';
-import { getIsTeamsMeeting, getTargetCallees } from '../../CallComposite/selectors/baseSelectors';
+import { getTargetCallees } from '../../CallComposite/selectors/baseSelectors';
 /* @conditional-compile-remove(teams-meeting-conference) */
-import { getTeamsMeetingCoordinates } from '../../CallComposite/selectors/baseSelectors';
+import { getTeamsMeetingCoordinates, getIsTeamsMeeting } from '../../CallComposite/selectors/baseSelectors';
 import { showDtmfDialer } from '../../CallComposite/utils/MediaGalleryUtils';
 import { SpokenLanguageSettingsDrawer } from './SpokenLanguageSettingsDrawer';
 
@@ -423,9 +423,12 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
     });
   }
 
+  /* @conditional-compile-remove(teams-meeting-conference) */
   const isTeamsMeeting = getIsTeamsMeeting(callAdapter.getState());
+  /* @conditional-compile-remove(teams-meeting-conference) */
   const teamsMeetingCoordinates = getTeamsMeetingCoordinates(callAdapter.getState());
 
+  /* @conditional-compile-remove(teams-meeting-conference) */
   if (
     drawerSelectionOptions !== false &&
     isEnabled(drawerSelectionOptions?.teamsMeetingPhoneCallButton) &&

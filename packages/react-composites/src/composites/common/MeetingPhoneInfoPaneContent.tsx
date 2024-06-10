@@ -1,20 +1,29 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+/* @conditional-compile-remove(teams-meeting-conference) */
 import { Stack, Text, useTheme, Icon } from '@fluentui/react';
+/* @conditional-compile-remove(teams-meeting-conference) */
 import { _DrawerMenuItemProps } from '@internal/react-components';
+/* @conditional-compile-remove(teams-meeting-conference) */
 import React from 'react';
+/* @conditional-compile-remove(teams-meeting-conference) */
 import { peoplePaneContainerTokens } from '../common/styles/ParticipantContainer.styles';
+/* @conditional-compile-remove(teams-meeting-conference) */
 import { peoplePaneContainerStyle } from './styles/PeoplePaneContent.styles';
+/* @conditional-compile-remove(teams-meeting-conference) */
 import { ConferencePhoneInfo, formatPhoneNumberInfo } from '@internal/react-components';
+/* @conditional-compile-remove(teams-meeting-conference) */
 import {
   phoneInfoTextStyle,
   phoneInfoIcon,
   phoneInfoInctructionLine,
   phoneInfoStep
 } from './styles/TeamsMeetingConferenceInfo.style';
+/* @conditional-compile-remove(teams-meeting-conference) */
 import { useLocale } from '../localization';
 
+/* @conditional-compile-remove(teams-meeting-conference) */
 /**
  * @private
  */
