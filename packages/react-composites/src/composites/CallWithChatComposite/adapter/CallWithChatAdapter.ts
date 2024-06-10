@@ -61,7 +61,6 @@ import {
 } from '../../CallComposite/adapter/CallAdapter';
 
 import { CapabilitiesChangedListener } from '../../CallComposite/adapter/CallAdapter';
-/* @conditional-compile-remove(spotlight) */
 import { SpotlightChangedListener } from '../../CallComposite/adapter/CallAdapter';
 
 import { VideoBackgroundImage, VideoBackgroundEffect } from '../../CallComposite';
@@ -469,17 +468,14 @@ export interface CallWithChatAdapterManagement {
    * @public
    */
   submitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined>;
-  /* @conditional-compile-remove(spotlight) */
   /**
    * Start spotlight
    */
   startSpotlight(userIds?: string[]): Promise<void>;
-  /* @conditional-compile-remove(spotlight) */
   /**
    * Stop spotlight
    */
   stopSpotlight(userIds?: string[]): Promise<void>;
-  /* @conditional-compile-remove(spotlight) */
   /**
    * Stop all spotlights
    */
@@ -513,7 +509,6 @@ export interface CallWithChatAdapterSubscriptions {
   on(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
   on(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
   on(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
-  /* @conditional-compile-remove(spotlight) */
   on(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
   off(event: 'callEnded', listener: CallEndedListener): void;
   off(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
@@ -531,7 +526,6 @@ export interface CallWithChatAdapterSubscriptions {
   off(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
   off(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
   off(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
-  /* @conditional-compile-remove(spotlight) */
   off(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
 
   // Chat subscriptions
@@ -599,7 +593,7 @@ export type CallWithChatEvent =
   | 'isCaptionLanguageChanged'
   | 'isSpokenLanguageChanged'
   | 'capabilitiesChanged'
-  | /* @conditional-compile-remove(spotlight) */ 'spotlightChanged'
+  | 'spotlightChanged'
   | 'messageReceived'
   | 'messageEdited'
   | 'messageDeleted'

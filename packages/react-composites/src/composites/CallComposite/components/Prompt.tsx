@@ -72,7 +72,6 @@ const modalStyles = { main: { padding: '1.5rem ', maxWidth: '30rem' } };
 
 const buttonTextStyles: IButtonStyles = { label: { fontSize: '0.875rem' } };
 
-/* @conditional-compile-remove(spotlight) */
 /**
  * Strings used in prompt related to spotlight
  * @public
