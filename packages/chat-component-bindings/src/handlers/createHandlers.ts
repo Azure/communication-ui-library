@@ -5,9 +5,12 @@ import { PagedAsyncIterableIterator } from '@azure/core-paging';
 import { ReactElement } from 'react';
 import { Common, fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { StatefulChatClient } from '@internal/chat-stateful-client';
+/* @conditional-compile-remove(file-sharing-acs) */
+import { ChatAttachment } from '@azure/communication-chat';
 import { ChatMessage, ChatMessageReadReceipt, ChatThreadClient, SendMessageOptions } from '@azure/communication-chat';
 import memoizeOne from 'memoize-one';
-import { AttachmentMetadata } from '@internal/react-components';
+/* @conditional-compile-remove(file-sharing-acs) */
+import { MessageOptions } from '@internal/acs-ui-common';
 
 /**
  * Object containing all the handlers required for chat components.
@@ -18,7 +21,10 @@ import { AttachmentMetadata } from '@internal/react-components';
  * @public
  */
 export type ChatHandlers = {
-  onSendMessage: (content: string, options?: SendMessageOptions) => Promise<void>;
+  onSendMessage: (
+    content: string,
+    options?: SendMessageOptions | /* @conditional-compile-remove(file-sharing-acs) */ MessageOptions
+  ) => Promise<void>;
   onMessageSeen: (chatMessageId: string) => Promise<void>;
   onTyping: () => Promise<void>;
   onRemoveParticipant: (userId: string) => Promise<void>;
@@ -27,12 +33,8 @@ export type ChatHandlers = {
   onUpdateMessage: (
     messageId: string,
     content: string,
-    /* @conditional-compile-remove(attachment-upload) */
-    options?: {
-      /* @conditional-compile-remove(attachment-upload) */
-      metadata?: Record<string, string>;
-      attachmentMetadata?: AttachmentMetadata[];
-    }
+    /* @conditional-compile-remove(file-sharing-acs) */
+    options?: MessageOptions
   ) => Promise<void>;
   onDeleteMessage: (messageId: string) => Promise<void>;
 };
@@ -52,32 +54,52 @@ export const createDefaultChatHandlers = memoizeOne(
     let messageIterator: PagedAsyncIterableIterator<ChatMessage> | undefined = undefined;
     let readReceiptIterator: PagedAsyncIterableIterator<ChatMessageReadReceipt> | undefined = undefined;
     return {
-      onSendMessage: async (content: string, options?: SendMessageOptions) => {
+      // due to a bug in babel, we can't use arrow function here
+      // affecting conditional-compile-remove(attachment-upload)
+      onSendMessage: async function (
+        content: string,
+        options?: SendMessageOptions | /* @conditional-compile-remove(file-sharing-acs) */ MessageOptions
+      ) {
         const sendMessageRequest = {
           content,
           senderDisplayName: chatClient.getState().displayName
         };
-        await chatThreadClient.sendMessage(sendMessageRequest, options);
+        /* @conditional-compile-remove(file-sharing-acs) */
+        if (
+          options &&
+          'attachments' in options &&
+          options.attachments &&
+          options.attachments[0] &&
+          !(options.attachments[0] as ChatAttachment).attachmentType
+        ) {
+          const chatSDKOptions = {
+            metadata: {
+              ...options?.metadata,
+              fileSharingMetadata: JSON.stringify(options?.attachments)
+            }
+          };
+          await chatThreadClient.sendMessage(sendMessageRequest, chatSDKOptions);
+          return;
+        }
+        await chatThreadClient.sendMessage(sendMessageRequest, options as SendMessageOptions);
       },
-      onUpdateMessage: async (
+      // due to a bug in babel, we can't use arrow function here
+      // affecting conditional-compile-remove(attachment-upload)
+      onUpdateMessage: async function (
         messageId: string,
         content: string,
-        /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-        options?: {
-          metadata?: Record<string, string>;
-          attachmentMetadata?: AttachmentMetadata[];
-        }
-      ) => {
-        let updatedMetadata: Record<string, string> | undefined = {};
-        /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-        updatedMetadata = options?.metadata ? { ...options.metadata } : {};
-        /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-        // need to set fileSharingMetadata explicitly to empty array to remove existing attachments
-        // setting it to undefined or empty object will not remove the existing attachments
-        if (updatedMetadata?.fileSharingMetadata) {
-          updatedMetadata.fileSharingMetadata = JSON.stringify(options?.attachmentMetadata ?? []);
-        }
-        await chatThreadClient.updateMessage(messageId, { content, metadata: updatedMetadata });
+        /* @conditional-compile-remove(file-sharing-acs) */
+        options?: MessageOptions
+      ) {
+        const updateMessageOptions = {
+          content,
+          /* @conditional-compile-remove(file-sharing-acs) */
+          metadata: {
+            ...options?.metadata,
+            fileSharingMetadata: JSON.stringify(options?.attachments)
+          }
+        };
+        await chatThreadClient.updateMessage(messageId, updateMessageOptions);
       },
       onDeleteMessage: async (messageId: string) => {
         await chatThreadClient.deleteMessage(messageId);

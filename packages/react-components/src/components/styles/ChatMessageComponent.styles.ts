@@ -58,19 +58,27 @@ export const iconWrapperStyle = (theme: ITheme, isSubMenuOpen: boolean): IIconSt
 /**
  * @private
  */
-export const chatMessageDateStyle = mergeStyles({
-  color: tokens.colorNeutralForeground2,
-  fontWeight: FontWeights.regular,
-  fontSize: '0.75rem'
-});
+export const chatMessageDateStyle = (theme: Theme): string =>
+  mergeStyles({
+    color: theme.palette.neutralSecondary,
+    fontWeight: FontWeights.regular,
+    fontSize: '0.75rem'
+  });
 
 /**
  * @private
  */
-export const chatMessageAuthorStyle = mergeStyles({
-  fontWeight: FontWeights.semibold,
-  fontSize: '0.75rem'
-});
+export const chatMessageAuthorStyle = mergeStyles({ fontWeight: FontWeights.semibold, fontSize: '0.75rem' });
+
+/**
+ * @private
+ */
+export const chatMessageDateFailedStyle = (theme: Theme): string =>
+  mergeStyles({
+    color: theme.palette.neutralPrimaryAlt,
+    fontWeight: FontWeights.regular,
+    fontSize: '0.75rem'
+  });
 
 /**
  * @private

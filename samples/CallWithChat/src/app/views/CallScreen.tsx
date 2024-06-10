@@ -14,6 +14,8 @@ import {
   CallWithChatAdapter,
   CallWithChatCompositeOptions
 } from '@azure/communication-react';
+/* @conditional-compile-remove(file-sharing-acs) */
+import { attachmentUploadOptions } from '../../../../Chat/src/app/utils/uploadHandler';
 
 import { onResolveVideoEffectDependencyLazy, AzureCommunicationCallAdapterOptions } from '@azure/communication-react';
 import { Spinner } from '@fluentui/react';
@@ -167,6 +169,10 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
         endCallButton: {
           hangUpForEveryone: 'endCallOptions'
         }
+      },
+      /* @conditional-compile-remove(file-sharing-acs) */
+      attachmentOptions: {
+        uploadOptions: attachmentUploadOptions
       }
     }),
     [shouldHideScreenShare]
@@ -210,6 +216,8 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
 const convertPageStateToString = (state: CallWithChatAdapterState): string => {
   switch (state.page) {
     case 'accessDeniedTeamsMeeting':
+      return 'error';
+    case 'badRequest':
       return 'error';
     case 'leftCall':
       return 'end call';

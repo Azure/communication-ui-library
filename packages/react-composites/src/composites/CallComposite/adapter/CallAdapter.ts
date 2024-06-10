@@ -42,7 +42,7 @@ import type { CommunicationUserIdentifier, PhoneNumberIdentifier } from '@azure/
 import type { AdapterState, Disposable, AdapterError, AdapterErrors } from '../../common/adapters';
 
 import { VideoBackgroundEffectsDependency } from '@internal/calling-component-bindings';
-/* @conditional-compile-remove(end-of-call-survey) */
+
 import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
 import { ReactionResources } from '@internal/react-components';
 
@@ -62,7 +62,8 @@ export type CallCompositePage =
   | 'lobby'
   | 'removedFromCall'
   | /* @conditional-compile-remove(unsupported-browser) */ 'unsupportedEnvironment'
-  | 'transferring';
+  | 'transferring'
+  | 'badRequest';
 
 /**
  * Subset of CallCompositePages that represent an end call state.
@@ -686,7 +687,6 @@ export interface CallAdapterCallOperations {
    * @public
    */
   updateSelectedVideoBackgroundEffect(selectedVideoBackground: VideoBackgroundEffect): void;
-  /* @conditional-compile-remove(end-of-call-survey) */
   /**
    * Send the end of call survey result
    *
@@ -710,6 +710,13 @@ export interface CallAdapterCallOperations {
    * Stop all spotlights
    */
   stopAllSpotlight(): Promise<void>;
+  /* @conditional-compile-remove(soft-mute) */
+  /**
+   * Mute a participant
+   *
+   * @param userId - Id of the participant to mute
+   */
+  muteParticipant(userId: string): Promise<void>;
 }
 
 /**
@@ -1116,15 +1123,13 @@ export interface CallAdapter extends CommonCallAdapter {
 /**
  * An Adapter interface specific for Teams identity which extends {@link CommonCallAdapter}.
  *
- * @beta
+ * @public
  */
 export interface TeamsCallAdapter extends CommonCallAdapter {
   /**
    * Join the call with microphone initially on/off.
    * @deprecated Use joinCall(options?:JoinCallOptions) instead.
    * @param microphoneOn - Whether microphone is initially enabled
-   *
-   * @beta
    */
   joinCall(microphoneOn?: boolean): TeamsCall | undefined;
   /**
@@ -1143,14 +1148,13 @@ export interface TeamsCallAdapter extends CommonCallAdapter {
    *
    * @param participants - An array of participant ids to join
    *
-   * @beta
+   * @public
    */
   startCall(participants: string[], options?: StartCallOptions): TeamsCall | undefined;
-  /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Start the call.
    * @param participants - An array of {@link @azure/communication-common#CommunicationIdentifier} to be called
-   * @beta
+   * @public
    */
-  startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): TeamsCall | undefined;
+  startCall(participants: StartCallIdentifier[], options?: StartCallOptions): TeamsCall | undefined;
 }

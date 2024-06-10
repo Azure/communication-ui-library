@@ -4,11 +4,17 @@
 import { _formatString } from '@internal/acs-ui-common';
 import React, { useCallback, useState } from 'react';
 import { MessageThreadStrings, UpdateMessageCallback } from '../../MessageThread';
+/* @conditional-compile-remove(rich-text-editor) */
+import { RichTextEditorOptions } from '../../MessageThread';
 import { ChatMessage, ComponentSlotStyle, OnRenderAvatarCallback } from '../../../types';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '../../../types';
-/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-import { AttachmentMenuAction, AttachmentMetadata } from '../../../types/Attachment';
+/* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
+import { AttachmentMenuAction } from '../../../types/Attachment';
+/* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
+import { AttachmentMetadata } from '@internal/acs-ui-common';
+/* @conditional-compile-remove(file-sharing-acs) */
+import { MessageOptions } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(mention) */
 import { MentionOptions } from '../../MentionPopover';
 import { InlineImageOptions } from '../ChatMessageContent';
@@ -32,7 +38,11 @@ type ChatMyMessageComponentProps = {
    * Callback to send a message
    * @param content The message content to send
    */
-  onSendMessage?: (content: string) => Promise<void>;
+  onSendMessage?: (
+    content: string,
+    /* @conditional-compile-remove(file-sharing-acs) */
+    options?: MessageOptions
+  ) => Promise<void>;
   strings: MessageThreadStrings;
   messageStatus?: string;
   /**
@@ -75,14 +85,16 @@ type ChatMyMessageComponentProps = {
    * @beta
    */
   inlineImageOptions?: InlineImageOptions;
-  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
   /**
    * Optional callback to render message attachments in the message component.
+   * @beta
    */
-  onRenderAttachmentDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
-  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  onRenderAttachmentDownloads?: (message: ChatMessage) => JSX.Element;
+  /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
   /**
    * Optional callback to define custom actions for attachments.
+   * @beta
    */
   actionsForAttachment?: (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[];
   /* @conditional-compile-remove(rich-text-editor) */
@@ -90,7 +102,7 @@ type ChatMyMessageComponentProps = {
    * Optional flag to enable rich text editor.
    * @beta
    */
-  richTextEditor?: boolean;
+  richTextEditorOptions?: RichTextEditorOptions;
 };
 
 /**
@@ -113,30 +125,53 @@ export const ChatMyMessageComponent = (props: ChatMyMessageComponentProps): JSX.
       onDeleteMessage(clientMessageId);
     }
   }, [onDeleteMessage, message.messageId, message.messageType, clientMessageId]);
-  const onResendClick = useCallback(() => {
-    onDeleteMessage && clientMessageId && onDeleteMessage(clientMessageId);
-    onSendMessage && onSendMessage(content !== undefined ? content : '');
-  }, [clientMessageId, content, onSendMessage, onDeleteMessage]);
 
+  const onResendClick = useCallback(() => {
+    /* @conditional-compile-remove(file-sharing-acs) */
+    const messageOptions = {
+      attachments: `attachments` in message ? message.attachments : undefined
+    };
+    onDeleteMessage && clientMessageId && onDeleteMessage(clientMessageId);
+    onSendMessage &&
+      onSendMessage(
+        content !== undefined ? content : '',
+        /* @conditional-compile-remove(file-sharing-acs) */
+        messageOptions
+      );
+  }, [onDeleteMessage, clientMessageId, onSendMessage, content, message]);
+
+  const onSubmitHandler = useCallback(
+    // due to a bug in babel, we can't use arrow function here
+    // affecting conditional-compile-remove(attachment-upload)
+    async function (
+      text: string,
+      /* @conditional-compile-remove(file-sharing-acs) */
+      attachments?: AttachmentMetadata[] | undefined
+    ) {
+      /* @conditional-compile-remove(file-sharing-acs) */
+      if (`attachments` in message && attachments) {
+        message.attachments = attachments;
+      }
+      props.onUpdateMessage &&
+        message.messageId &&
+        (await props.onUpdateMessage(
+          message.messageId,
+          text,
+          /* @conditional-compile-remove(file-sharing-acs) */
+          {
+            attachments: attachments
+          }
+        ));
+      setIsEditing(false);
+    },
+    [message, props]
+  );
   if (isEditing && message.messageType === 'chat') {
     return (
       <ChatMessageComponentAsEditBoxPicker
         message={message}
         strings={props.strings}
-        onSubmit={async (text, metadata, options) => {
-          props.onUpdateMessage &&
-            message.messageId &&
-            (await props.onUpdateMessage(
-              message.messageId,
-              text,
-              /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-              {
-                metadata: metadata,
-                attachmentMetadata: options?.attachmentMetadata
-              }
-            ));
-          setIsEditing(false);
-        }}
+        onSubmit={onSubmitHandler}
         onCancel={(messageId) => {
           props.onCancelEditMessage && props.onCancelEditMessage(messageId);
           setIsEditing(false);
@@ -144,7 +179,7 @@ export const ChatMyMessageComponent = (props: ChatMyMessageComponentProps): JSX.
         /* @conditional-compile-remove(mention) */
         mentionLookupOptions={props.mentionOptions?.lookupOptions}
         /* @conditional-compile-remove(rich-text-editor) */
-        richTextEditor={props.richTextEditor}
+        richTextEditorOptions={props.richTextEditorOptions}
       />
     );
   } else {

@@ -17,7 +17,7 @@ import {
   ErrorCircle16Regular,
   Eye16Regular,
   MicOff16Filled,
-  MicOff16Regular,
+  MicOff20Regular,
   MicOff20Filled,
   Mic16Filled,
   Mic20Filled,
@@ -45,7 +45,8 @@ import {
   Pin20Regular,
   PinOff20Regular,
   ScaleFit20Regular,
-  ScaleFill20Regular
+  ScaleFill20Regular,
+  PersonDelete20Regular
 } from '@fluentui/react-icons';
 /* @conditional-compile-remove(rich-text-editor) */
 import {
@@ -65,7 +66,6 @@ import {
   TableDismiss20Regular
 } from '@fluentui/react-icons';
 import { Emoji20Regular } from '@fluentui/react-icons';
-/* @conditional-compile-remove(end-of-call-survey) */
 import { Star28Regular, Star28Filled } from '@fluentui/react-icons';
 import { HandRight20Regular, HandRightOff20Regular } from '@fluentui/react-icons';
 import {
@@ -85,8 +85,10 @@ import { Backspace20Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(call-readiness) */
 import { Sparkle20Filled, VideoProhibited20Filled, MicProhibited20Filled } from '@fluentui/react-icons';
 
-/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-import { ArrowDownload20Regular, Open20Regular } from '@fluentui/react-icons';
+/* @conditional-compile-remove(file-sharing-teams-interop) */
+import { Open20Regular } from '@fluentui/react-icons';
+/* @conditional-compile-remove(file-sharing-acs) */
+import { ArrowDownload20Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(PSTN-calls) */
 import { CallPause20Regular, CallPause20Filled, Play20Regular } from '@fluentui/react-icons';
 import { People20Regular } from '@fluentui/react-icons';
@@ -269,13 +271,13 @@ export const DEFAULT_COMPONENT_ICONS = {
   RaiseHandContextualMenuItem: <HandRight20Regular />,
   LowerHandContextualMenuItem: <HandRightOff20Regular />,
   ReactionButtonIcon: <Emoji20Regular />,
-  /* @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(file-sharing-acs) */
   CancelAttachmentUpload: <Dismiss16Regular />,
-  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(file-sharing-acs) */
   DownloadAttachment: <ArrowDownload20Regular />,
-  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
   OpenAttachment: <Open20Regular />,
-  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(file-sharing-acs) */
   AttachmentMoreMenu: <MoreHorizontal20Filled />,
   /* @conditional-compile-remove(data-loss-prevention) */
   DataLossPreventionProhibited: <DataLossPreventionProhibited16Regular />,
@@ -307,7 +309,7 @@ export const DEFAULT_COMPONENT_ICONS = {
   OptionsCamera: <Video20Regular />,
   OptionsMic: <Mic20Regular />,
   OptionsSpeaker: <Speaker220Regular />,
-  ParticipantItemMicOff: <MicOff16Regular />,
+  ParticipantItemMicOff: <MicOff20Regular />,
   ParticipantItemOptions: <></>,
   ParticipantItemOptionsHovered: <MoreHorizontal20Filled />,
   ParticipantItemScreenShareStart: <ShareScreenStart20Filled />,
@@ -359,9 +361,8 @@ export const DEFAULT_COMPONENT_ICONS = {
   ContextMenuCameraIcon: <Video20Regular />,
   ContextMenuMicIcon: <Mic20Regular />,
   ContextMenuSpeakerIcon: <Speaker220Regular />,
-  /* @conditional-compile-remove(end-of-call-survey) */
+  ContextMenuRemoveParticipant: <PersonDelete20Regular />,
   SurveyStarIcon: <Star28Regular />,
-  /* @conditional-compile-remove(end-of-call-survey) */
   SurveyStarIconFilled: <Star28Filled />,
   /* @conditional-compile-remove(spotlight) */
   StartSpotlightContextualMenuItem: <VideoPersonStar20Filled />,
@@ -396,5 +397,7 @@ export const DEFAULT_COMPONENT_ICONS = {
   /* @conditional-compile-remove(rich-text-editor) */
   RichTextTableInsertMenuIcon: <TableAdd20Regular />,
   /* @conditional-compile-remove(rich-text-editor) */
-  RichTextTableDeleteMenuIcon: <TableDismiss20Regular />
+  RichTextTableDeleteMenuIcon: <TableDismiss20Regular />,
+  /* @conditional-compile-remove(soft-mute) */
+  ContextualMenuMicMutedIcon: <MicOff20Regular />
 };

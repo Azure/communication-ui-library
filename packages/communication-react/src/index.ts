@@ -51,6 +51,9 @@ export type {
   ChatBaseSelectorProps
 } from '../../chat-component-bindings/src';
 
+/* @conditional-compile-remove(file-sharing-acs) */
+export type { MessageOptions, ChatMessageType } from '../../acs-ui-common/src';
+
 export {
   CallClientProvider,
   CallAgentProvider,
@@ -304,7 +307,7 @@ export type {
 /* @conditional-compile-remove(rich-text-editor) */
 export { RichTextSendBox } from '../../react-components/src';
 /* @conditional-compile-remove(rich-text-editor) */
-export type { RichTextSendBoxProps, RichTextSendBoxStrings } from '../../react-components/src';
+export type { RichTextSendBoxProps, RichTextSendBoxStrings, RichTextStrings } from '../../react-components/src';
 /* @conditional-compile-remove(spotlight) */
 export type { Spotlight } from '../../react-components/src';
 export type { ImageOverlayProps, ImageOverlayStrings } from '../../react-components/src';
@@ -318,28 +321,36 @@ export type {
   DtmfTone,
   LongPressTrigger
 } from '../../react-components/src';
-/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-export type { AttachmentMetadata, AttachmentOptions } from '../../react-components/src';
-/* @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(file-sharing-acs) */
+export type { AttachmentOptions } from '../../react-components/src';
+/* @conditional-compile-remove(file-sharing-acs) */
 export type { SendBoxErrorBarError } from '../../react-components/src';
-/* @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(file-sharing-acs) */
+export type { AttachmentActionHandler } from '../../react-components/src';
+/* @conditional-compile-remove(file-sharing-acs) */
 export type {
-  AttachmentProgressError,
   AttachmentSelectionHandler,
   AttachmentRemovalHandler,
   AttachmentUploadOptions,
-  AttachmentUploadTask,
-  AttachmentMetadataWithProgress
+  AttachmentUploadTask
 } from '../../react-components/src';
+/* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
+export type { AttachmentMetadata } from '../../acs-ui-common/src';
 
-/* @conditional-compile-remove(attachment-download) */
+/* @conditional-compile-remove(file-sharing-acs) */
+export type { AttachmentMetadataInProgress, AttachmentProgressError } from '../../acs-ui-common/src';
+
+/* @conditional-compile-remove(file-sharing-acs) */
 export type { AttachmentMenuAction, AttachmentDownloadOptions } from '../../react-components/src';
-/* @conditional-compile-remove(attachment-download) */
+/* @conditional-compile-remove(file-sharing-acs) */
 export { defaultAttachmentMenuAction } from '../../react-components/src';
 export type { ChatAttachmentType } from '../../react-components/src';
 export type { InlineImageOptions, InlineImage } from '../../react-components/src';
+/* @conditional-compile-remove(rich-text-editor) */
+export type { RichTextEditorOptions } from '../../react-components/src';
 /* @conditional-compile-remove(PSTN-calls) */
-export type { HoldButtonProps, HoldButtonStrings, VideoTileStrings } from '../../react-components/src';
+export type { HoldButtonProps, HoldButtonStrings } from '../../react-components/src';
+export type { VideoTileStrings } from '../../react-components/src';
 /* @conditional-compile-remove(call-readiness) */
 export type { BrowserPermissionDeniedStrings, BrowserPermissionDeniedProps } from '../../react-components/src';
 /* @conditional-compile-remove(call-readiness) */
@@ -392,9 +403,20 @@ export type {
 } from '../../react-components/src';
 
 export type { SpokenLanguageStrings, CaptionLanguageStrings } from '../../react-components/src';
-/* @conditional-compile-remove(end-of-call-survey) */
+
 export type { SurveyIssues } from '../../react-components/src';
-/* @conditional-compile-remove(end-of-call-survey) */
+
 export type { SurveyIssuesHeadingStrings } from '../../react-components/src';
-/* @conditional-compile-remove(end-of-call-survey) */
+
 export type { CallSurveyImprovementSuggestions } from '../../react-components/src';
+/* @conditional-compile-remove(notifications) */
+export { Notifications, NotificationBar } from '../../react-components/src';
+/* @conditional-compile-remove(notifications) */
+export type {
+  NotificationsProps,
+  NotificationBarProps,
+  NotificationBarStrings,
+  NotificationsStrings,
+  NotificationType,
+  ActiveNotification
+} from '../../react-components/src';

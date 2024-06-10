@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/* @conditional-compile-remove(attachment-upload) */
-import { AttachmentMetadataWithProgress } from '../../types/Attachment';
+/* @conditional-compile-remove(file-sharing-acs) */
+import { AttachmentMetadataInProgress } from '@internal/acs-ui-common';
 
 /**
  * @private
@@ -10,12 +10,12 @@ import { AttachmentMetadataWithProgress } from '../../types/Attachment';
 export const MAXIMUM_LENGTH_OF_MESSAGE = 8000;
 const EMPTY_MESSAGE_REGEX = /^\s*$/;
 
-/* @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(file-sharing-acs) */
 /**
  * @private
  */
 export const hasIncompleteAttachmentUploads = (
-  attachmentsWithProgress: AttachmentMetadataWithProgress[] | undefined
+  attachmentsWithProgress: AttachmentMetadataInProgress[] | undefined
 ): boolean => {
   return !!(
     attachmentsWithProgress?.length &&
@@ -25,12 +25,12 @@ export const hasIncompleteAttachmentUploads = (
   );
 };
 
-/* @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(file-sharing-acs) */
 /**
  * @private
  */
-export const hasCompletedAttachmentUploads = (
-  attachmentsWithProgress: AttachmentMetadataWithProgress[] | undefined
+export const isAttachmentUploadCompleted = (
+  attachmentsWithProgress: AttachmentMetadataInProgress[] | undefined
 ): boolean => {
   return !!attachmentsWithProgress?.find((attachment) => !attachment.error);
 };
@@ -64,20 +64,20 @@ export const sanitizeText = (message: string): string => {
  */
 export const isSendBoxButtonAriaDisabled = ({
   hasContent,
-  /* @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(file-sharing-acs) */
   hasCompletedAttachmentUploads,
   hasError,
   disabled
 }: {
   hasContent: boolean;
-  /* @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(file-sharing-acs) */
   hasCompletedAttachmentUploads: boolean;
   hasError: boolean;
   disabled: boolean;
 }): boolean => {
   return (
     // no content
-    !(hasContent || /* @conditional-compile-remove(attachment-upload) */ hasCompletedAttachmentUploads) ||
+    !(hasContent || /* @conditional-compile-remove(file-sharing-acs) */ hasCompletedAttachmentUploads) ||
     //error message exists
     hasError ||
     disabled

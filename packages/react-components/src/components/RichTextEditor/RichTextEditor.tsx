@@ -1,39 +1,27 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-import React, { useCallback, useEffect, useImperativeHandle, useMemo, useRef } from 'react';
-import { ContentEdit, Watermark } from 'roosterjs-editor-plugins';
-import { Editor } from 'roosterjs-editor-core';
-import type { DefaultFormat, EditorOptions, IEditor } from 'roosterjs-editor-types-compatible';
-import {
-  CompatibleContentPosition,
-  CompatibleGetContentMode,
-  CompatiblePositionType
-} from 'roosterjs-editor-types-compatible';
-import {
-  Rooster,
-  createUpdateContentPlugin,
-  UpdateMode,
-  createRibbonPlugin,
-  Ribbon,
-  createContextMenuPlugin
-} from 'roosterjs-react';
-import {
-  ribbonButtonStyle,
-  ribbonOverflowButtonStyle,
-  ribbonStyle,
-  richTextEditorWrapperStyle,
-  richTextEditorStyle
-} from '../styles/RichTextEditor.styles';
-import { useTheme } from '../../theming';
-import { ribbonButtons } from './Buttons/RichTextRibbonButtons';
-import { RichTextSendBoxStrings } from './RichTextSendBox';
+import React, { useCallback, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react';
+import { richTextEditorWrapperStyle, richTextEditorStyle } from '../styles/RichTextEditor.styles';
+import { darkTheme, lightTheme, useTheme } from '../../theming';
+import { RichTextStrings } from './RichTextSendBox';
 import { isDarkThemed } from '../../theming/themeUtils';
-import { ribbonButtonsStrings } from '../utils/RichTextEditorStringsUtils';
-import { createTableEditMenuProvider } from './Buttons/Table/RichTextTableContextMenu';
 import CopyPastePlugin from './Plugins/CopyPastePlugin';
+import type { ContentModelDocument, EditorPlugin, IEditor } from 'roosterjs-content-model-types';
+import { createModelFromHtml, Editor, exportContent } from 'roosterjs-content-model-core';
+import { createParagraph, createSelectionMarker, setSelection } from 'roosterjs-content-model-dom';
+import { KeyboardInputPlugin } from './Plugins/KeyboardInputPlugin';
+import { AutoFormatPlugin, EditPlugin, PastePlugin, ShortcutPlugin } from 'roosterjs-content-model-plugins';
+import { UpdateContentPlugin, UpdateEvent } from './Plugins/UpdateContentPlugin';
+import { RichTextToolbar } from './Toolbar/RichTextToolbar';
+import { RichTextToolbarPlugin } from './Plugins/RichTextToolbarPlugin';
+import { ContextMenuPlugin } from './Plugins/ContextMenuPlugin';
+import { TableEditContextMenuProvider } from './Plugins/TableEditContextMenuProvider';
+import { borderApplier, dataSetApplier } from '../utils/RichTextEditorUtils';
+import { ContextualMenu, IContextualMenuItem, IContextualMenuProps } from '@fluentui/react';
+import PlaceholderPlugin from './Plugins/PlaceholderPlugin';
 
 /**
- * Props for {@link RichTextEditor}.
+ * Style props for {@link RichTextEditor}.
  *
  * @private
  */
@@ -50,22 +38,20 @@ export interface RichTextEditorStyleProps {
 export interface RichTextEditorProps {
   // the initial content of editor that is set when editor is created (e.g. when editing a message)
   initialContent?: string;
-  // the current content of the editor
-  content?: string;
   onChange: (newValue?: string) => void;
-  onKeyDown?: (ev: React.KeyboardEvent<HTMLElement>) => void;
+  onKeyDown?: (ev: KeyboardEvent) => void;
+  // update the current content of the rich text editor
+  onContentModelUpdate?: (contentModel: ContentModelDocument | undefined) => void;
+  contentModel?: ContentModelDocument | undefined;
   placeholderText?: string;
-  strings: Partial<RichTextSendBoxStrings>;
+  strings: Partial<RichTextStrings>;
   showRichTextEditorFormatting: boolean;
   styles: RichTextEditorStyleProps;
   autoFocus?: 'sendBoxTextField';
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  onPaste?: (event: { content: DocumentFragment }) => void;
 }
 
-/**
- * Props for {@link RichTextEditor}.
- *
- * @beta
- */
 /**
  * Represents a reference to the RichTextEditor component.
  */
@@ -93,11 +79,25 @@ export interface RichTextEditorComponentRef {
  * @beta
  */
 export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichTextEditorProps>((props, ref) => {
-  const { initialContent, onChange, placeholderText, strings, showRichTextEditorFormatting, content, autoFocus } =
-    props;
+  const {
+    initialContent,
+    onChange,
+    placeholderText,
+    strings,
+    showRichTextEditorFormatting,
+    autoFocus,
+    onKeyDown,
+    onContentModelUpdate,
+    contentModel,
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    onPaste
+  } = props;
   const editor = useRef<IEditor | null>(null);
-  const contentValue = useRef<string | undefined>(content);
+  const editorDiv = useRef<HTMLDivElement>(null);
   const theme = useTheme();
+  const [contextMenuProps, setContextMenuProps] = useState<IContextualMenuProps | null>(null);
+  const tableCellSelectionLightThemeBackgroundColor = useRef<string | undefined>(undefined);
+
   useImperativeHandle(
     ref,
     () => {
@@ -109,143 +109,246 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
         },
         setEmptyContent() {
           if (editor.current) {
-            editor.current.setContent('');
+            // remove all content from the editor and update the model
+            // ContentChanged event will be sent by RoosterJS automatically
+            editor.current.formatContentModel((model: ContentModelDocument): boolean => {
+              model.blocks = [];
+              return true;
+            });
+            //reset content model
+            onContentModelUpdate && onContentModelUpdate(undefined);
           }
         },
         getPlainContent() {
-          return editor?.current?.getContent(CompatibleGetContentMode.PlainTextFast);
+          if (editor.current) {
+            return exportContent(editor.current, 'PlainTextFast');
+          } else {
+            return undefined;
+          }
         }
       };
     },
-    []
+    [onContentModelUpdate]
   );
 
-  const ribbonPlugin = React.useMemo(() => {
-    return createRibbonPlugin();
+  const toolbarPlugin = React.useMemo(() => {
+    return new RichTextToolbarPlugin();
   }, []);
 
-  const editorCreator = useCallback(
-    (div: HTMLDivElement, options: EditorOptions) => {
-      const editorValue = new Editor(div, options);
-      // this is to fix issue when editor is created or re-rendered and has existing text
-      // Content model package has a correct behavior and this fix can be deleted
-      if (contentValue.current !== undefined && contentValue.current.length > 0) {
-        // in case if initialContent is not empty, RoosterJS doesn't set caret position to the end.
-        focusAndUpdateContent(editorValue, contentValue.current);
-      } else if (initialContent !== undefined && initialContent.length > 0) {
-        // changing layout in rich text send box cause the editor to be recreated
-        // to keep the content, we need to set messageContent to the current content
-        focusAndUpdateContent(editorValue, initialContent);
-      }
-      editor.current = editorValue;
-      return editorValue;
-    },
-    // trigger force editor reset when strings are changed to update context menu strings
-    // see RosterJS documentation for 'editorCreator' for more details
-    // the editorCreator callback shouldn't be updated when the initialContent is changed
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [strings]
-  );
+  const isDarkThemedValue = useMemo(() => {
+    return isDarkThemed(theme);
+  }, [theme]);
 
-  const placeholderPlugin = React.useMemo(() => {
-    return new Watermark('');
+  useEffect(() => {
+    editor.current?.setDarkModeState(isDarkThemedValue);
+  }, [isDarkThemedValue]);
+
+  // remember light color to correctly set it in the dark theme
+  useEffect(() => {
+    // focus to update selection color for table, otherwise the existing selection color for table won't be updated
+    editor.current?.focus();
+    if (!isDarkThemedValue) {
+      tableCellSelectionLightThemeBackgroundColor.current =
+        lightTheme.palette?.neutralLight ?? theme.palette.neutralLight;
+    }
+  }, [theme.palette.neutralLight, isDarkThemedValue]);
+
+  const placeholderPlugin = useMemo(() => {
+    return new PlaceholderPlugin('');
   }, []);
 
   useEffect(() => {
     if (placeholderText !== undefined) {
-      placeholderPlugin.updateWatermark(placeholderText);
+      placeholderPlugin.updatePlaceholder(placeholderText);
     }
   }, [placeholderPlugin, placeholderText]);
 
-  const plugins = useMemo(() => {
-    // contextPlugin and tableEditMenuProvider allow to show insert/delete menu for the table
-    const contextPlugin = createContextMenuPlugin();
-    const tableEditMenuProvider = createTableEditMenuProvider(strings);
-    const contentEdit = new ContentEdit();
-    const updateContentPlugin = createUpdateContentPlugin(
-      UpdateMode.OnContentChangedEvent | UpdateMode.OnUserInput,
-      (content: string) => {
-        onChange && onChange(content);
+  const toolbar = useMemo(() => {
+    return <RichTextToolbar plugin={toolbarPlugin} strings={strings} />;
+  }, [strings, toolbarPlugin]);
+
+  const updatePlugin = useMemo(() => {
+    return new UpdateContentPlugin();
+  }, []);
+
+  useEffect(() => {
+    // don't set callback in plugin constructor to update callback without plugin recreation
+    updatePlugin.onUpdate = (event: string) => {
+      if (editor.current === null) {
+        return;
       }
-    );
-    const copyPastePlugin = new CopyPastePlugin();
-    return [
-      contentEdit,
-      placeholderPlugin,
-      updateContentPlugin,
-      ribbonPlugin,
-      contextPlugin,
-      tableEditMenuProvider,
-      copyPastePlugin
-    ];
-  }, [onChange, placeholderPlugin, ribbonPlugin, strings]);
-
-  const ribbon = useMemo(() => {
-    const buttons = ribbonButtons(theme);
-
-    return (
-      <Ribbon
-        styles={ribbonStyle}
-        buttons={buttons}
-        plugin={ribbonPlugin}
-        overflowButtonProps={{
-          styles: ribbonButtonStyle(theme),
-          menuProps: {
-            items: [], // CommandBar will determine items rendered in overflow
-            isBeakVisible: false,
-            styles: ribbonOverflowButtonStyle(theme)
-          }
-        }}
-        strings={ribbonButtonsStrings(strings)}
-        data-testid={'rich-text-editor-ribbon'}
-      />
-    );
-  }, [strings, ribbonPlugin, theme]);
-
-  const defaultFormat: DefaultFormat = useMemo(() => {
-    // without setting any styles, text input is not handled properly for tables (when insert or paste one in the editor)
-    // because of https://github.com/microsoft/roosterjs/blob/14dbb947e3ae94580109cbd05e48ceb05327c4dc/packages/roosterjs-editor-core/lib/corePlugins/TypeInContainerPlugin.ts#L75
-    // this issue is fixed for content model package
-    return {
-      backgroundColor: 'transparent'
+      if (event === UpdateEvent.Blur || event === UpdateEvent.Dispose) {
+        onContentModelUpdate && onContentModelUpdate(editor.current.getContentModelCopy('disconnected'));
+      } else {
+        onChange && onChange(exportContent(editor.current));
+      }
     };
+  }, [onChange, onContentModelUpdate, updatePlugin]);
+
+  const keyboardInputPlugin = useMemo(() => {
+    return new KeyboardInputPlugin();
+  }, []);
+
+  useEffect(() => {
+    // don't set callback in plugin constructor to update callback without plugin recreation
+    keyboardInputPlugin.onKeyDown = onKeyDown;
+  }, [keyboardInputPlugin, onKeyDown]);
+
+  const tableContextMenuPlugin = useMemo(() => {
+    return new TableEditContextMenuProvider();
+  }, []);
+
+  useEffect(() => {
+    tableContextMenuPlugin.updateStrings(strings);
+  }, [tableContextMenuPlugin, strings]);
+
+  const onContextMenuRender = useCallback(
+    (container: HTMLElement, items: IContextualMenuItem[], onDismiss: () => void): void => {
+      setContextMenuProps({
+        items: items,
+        target: container,
+        onDismiss: onDismiss
+      });
+    },
+    []
+  );
+
+  const onContextMenuDismiss = useCallback((): void => {
+    setContextMenuProps(null);
+  }, []);
+
+  const getDarkColor = useCallback(
+    (lightColor: string, _baseLValue?: number, colorType?: 'text' | 'background' | 'border'): string => {
+      if (lightColor === tableCellSelectionLightThemeBackgroundColor.current && colorType === 'background') {
+        return darkTheme.palette?.neutralLight ?? theme.palette.neutralLight;
+      }
+      return lightColor;
+    },
+    [theme.palette.neutralLight]
+  );
+
+  const copyPastePlugin = useMemo(() => {
+    return new CopyPastePlugin();
+  }, []);
+
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  useEffect(() => {
+    copyPastePlugin.onPaste = onPaste;
+  }, [copyPastePlugin, onPaste]);
+
+  const plugins: EditorPlugin[] = useMemo(() => {
+    const contentEdit = new EditPlugin();
+    // AutoFormatPlugin previously was a part of the edit plugin
+    const autoFormatPlugin = new AutoFormatPlugin({ autoBullet: true, autoNumbering: true, autoLink: true });
+    const roosterPastePlugin = new PastePlugin(false);
+    const shortcutPlugin = new ShortcutPlugin();
+    const contextMenuPlugin = new ContextMenuPlugin(onContextMenuRender, onContextMenuDismiss);
+    return [
+      placeholderPlugin,
+      keyboardInputPlugin,
+      contentEdit,
+      autoFormatPlugin,
+      updatePlugin,
+      copyPastePlugin,
+      roosterPastePlugin,
+      toolbarPlugin,
+      shortcutPlugin,
+      // contextPlugin and tableEditMenuProvider allow to show insert/delete menu for the table
+      contextMenuPlugin,
+      tableContextMenuPlugin
+    ];
+  }, [
+    onContextMenuRender,
+    onContextMenuDismiss,
+    placeholderPlugin,
+    keyboardInputPlugin,
+    updatePlugin,
+    copyPastePlugin,
+    toolbarPlugin,
+    tableContextMenuPlugin
+  ]);
+
+  useEffect(() => {
+    const initialModel = createEditorInitialModel(initialContent, contentModel);
+    if (editorDiv.current) {
+      editor.current = new Editor(editorDiv.current, {
+        inDarkMode: isDarkThemedValue,
+        // doNotAdjustEditorColor is used to disable default color and background color for Rooster component
+        doNotAdjustEditorColor: true,
+        // TODO: confirm the color during inline images implementation
+        imageSelectionBorderColor: 'blue',
+        tableCellSelectionBackgroundColor: lightTheme.palette?.neutralLight && theme.palette.neutralLight,
+        plugins: plugins,
+        initialModel: initialModel,
+        defaultModelToDomOptions: {
+          formatApplierOverride: {
+            // apply border and dataset formats for table
+            border: borderApplier,
+            dataset: dataSetApplier
+          }
+        },
+        getDarkColor: getDarkColor
+      });
+    }
+
+    if (autoFocus === 'sendBoxTextField') {
+      editor.current?.focus();
+    }
+
+    return () => {
+      if (editor.current) {
+        editor.current.dispose();
+        editor.current = null;
+      }
+    };
+    // don't update the editor on deps update as everything is handled in separate hooks or plugins
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <div data-testid={'rich-text-editor-wrapper'}>
-      {showRichTextEditorFormatting && ribbon}
+      {showRichTextEditorFormatting && toolbar}
       <div className={richTextEditorWrapperStyle(theme, !showRichTextEditorFormatting)}>
-        <Rooster
-          defaultFormat={defaultFormat}
-          inDarkMode={isDarkThemed(theme)}
-          plugins={plugins}
-          className={richTextEditorStyle(props.styles)}
-          editorCreator={editorCreator}
-          // TODO: confirm the color during inline images implementation
-          imageSelectionBorderColor={'blue'}
-          // doNotAdjustEditorColor is used to fix the default background color for Rooster component
-          doNotAdjustEditorColor={true}
+        {/* div that is used by Rooster JS as a parent of the editor */}
+        <div
+          ref={editorDiv}
+          tabIndex={0}
+          role="textbox"
+          aria-multiline="true"
           data-testid={'rooster-rich-text-editor'}
-          // if we don't use 'allowKeyboardEventPropagation' only the enter key is caught
-          onKeyDown={props.onKeyDown}
-          focusOnInit={autoFocus === 'sendBoxTextField'}
+          className={richTextEditorStyle(props.styles)}
         />
       </div>
+      {contextMenuProps && <ContextualMenu {...contextMenuProps} calloutProps={{ isBeakVisible: false }} />}
     </div>
   );
 });
 
-const focusAndUpdateContent = (editor: Editor, content: string): void => {
-  // setting focus before setting content, works for Chrome and Edge but not Safari
-  editor.setContent(content);
-  // this is a recommended way (by RoosterJS team) to set focus at the end of the text
-  // RoosterJS v9 has this issue fixed and this code can be removed
-  // CompatibleContentPosition.DomEnd shouldn't be used here as it set focus after the editor div
-  editor.insertContent('<span id="focus-position-span"></span>', { position: CompatibleContentPosition.End });
-  const elements = editor.queryElements('#focus-position-span');
-  if (elements.length > 0) {
-    const placeholder = editor.queryElements('#focus-position-span')[0];
-    editor.select(placeholder, CompatiblePositionType.Before);
-    placeholder.remove();
+const createEditorInitialModel = (
+  initialContent?: string,
+  contentModel?: ContentModelDocument
+): ContentModelDocument | undefined => {
+  if (contentModel) {
+    // contentModel is the current content of the editor
+    return contentModel;
+  } else {
+    const initialContentValue = initialContent;
+    const initialModel =
+      initialContentValue && initialContentValue.length > 0 ? createModelFromHtml(initialContentValue) : undefined;
+    if (initialModel && initialModel.blocks.length > 0) {
+      // lastBlock should have blockType = paragraph, otherwise add a new paragraph
+      // to set focus to the end of the content
+      let lastBlock = initialModel.blocks[initialModel.blocks.length - 1];
+      if (lastBlock?.blockType === 'Paragraph') {
+        // now lastBlock is paragraph
+      } else {
+        lastBlock = createParagraph(true);
+        initialModel.blocks.push(lastBlock);
+      }
+      const marker = createSelectionMarker();
+      lastBlock.segments.push(marker);
+      setSelection(initialModel, marker);
+    }
+    return initialModel;
   }
 };

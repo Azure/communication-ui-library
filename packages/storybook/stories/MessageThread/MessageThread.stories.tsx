@@ -21,9 +21,9 @@ import {
   IDropdownOption
 } from '@fluentui/react';
 import { Divider } from '@fluentui/react-components';
-import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs';
+import { Canvas, Description, Heading, Props, Source, Subtitle, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { DetailedBetaBanner } from '../BetaBanners/DetailedBetaBanner';
 import { SingleLineBetaBanner } from '../BetaBanners/SingleLineBetaBanner';
 
@@ -54,6 +54,7 @@ import { MessageThreadWithCustomTimestampExample } from './snippets/CustomTimest
 import { DefaultMessageThreadExample } from './snippets/Default.snippet';
 import { MessageThreadWithMessageStatusIndicatorExample } from './snippets/MessageStatusIndicator.snippet';
 import { MessageWithAttachment } from './snippets/MessageWithAttachment.snippet';
+import { MessageWithAttachmentFromTeams } from './snippets/MessageWithAttachmentFromTeams.snippet';
 import { MessageWithCustomAttachment } from './snippets/MessageWithCustomAttachment.snippet';
 import { MessageWithCustomMentionRenderer } from './snippets/MessageWithCustomMentionRenderer.snippet';
 import { MessageThreadWithSystemMessagesExample } from './snippets/SystemMessages.snippet';
@@ -80,6 +81,8 @@ const DefaultMessageThreadExampleText = require('!!raw-loader!./snippets/Default
 const MessageThreadWithMessageStatusIndicatorExampleText =
   require('!!raw-loader!./snippets/MessageStatusIndicator.snippet.tsx').default;
 const MessageWithAttachmentText = require('!!raw-loader!./snippets/MessageWithAttachment.snippet.tsx').default;
+const MessageWithAttachmentFromTeamsText =
+  require('!!raw-loader!./snippets/MessageWithAttachmentFromTeams.snippet.tsx').default;
 const MessageWithCustomAttachmentText =
   require('!!raw-loader!./snippets/MessageWithCustomAttachment.snippet.tsx').default;
 const MessageWithCustomMentionRendererText =
@@ -346,19 +349,36 @@ const Docs: () => JSX.Element = () => {
 
       <div ref={refDisplayAttachments}>
         <Heading>Display Messages with Attachments</Heading>
-        <DetailedBetaBanner />
+        <Subtitle>Basic Usage: Default Attachment Rendering</Subtitle>
         <Description>
-          The MessageThread component supports rendering of message attachments, including multiple ways to customize
-          it. Developers can opt to use the default attachment rendering by not providing `attachmentOptions`. In the
-          following example, the default attachment rendering is shown with an attachment on the first chat message. By
-          default, the browser `window.open` method will be called with the target URL.
+          The MessageThread component renders message attachments without any additional configuration. Simply provide a
+          list of `ChatMessages` with attachments of type `AttachmentMetadata` and the component will render the message
+          content along with associated attachments.
+        </Description>
+        <Description>
+          By default, the button associated with the attachment card will open the attachment in a new tab.
+          Specifically, `window.open` method will be called for target `URL` defined in `AttachmentMetadata`.
         </Description>
         <Canvas mdxSource={MessageWithAttachmentText}>
           <MessageWithAttachment />
         </Canvas>
         <Description>
-          The `attachmentOptions` allows the attachmentCard to be customized in multiple ways. For example, developers
-          can have a custom icon, label for the button and custom `onClick` callback.
+          If the identity of message sender is a Microsoft Teams user, the attachment will be rendered with an `open`
+          icon shown below.
+        </Description>
+        <Canvas mdxSource={MessageWithAttachmentFromTeamsText}>
+          <MessageWithAttachmentFromTeams />
+        </Canvas>
+        <Subtitle>Advanced Usage: Customizing Attachment Rendering</Subtitle>
+        <DetailedBetaBanner />
+        <Description>
+          The MessageThread component also supports multiple ways to customize the rendering. You can leverage the
+          `attachmentOptions.downloadOptions` props to provide a dynamic list of menu action buttons that will be based
+          on properties of the attachment or the chat message associated with it. Moreover, you can also opt to provide
+          a static list for all secanrios.
+        </Description>
+        <Description>
+          For example, the following code snippet demonstrates how to customize the download options for attachments.
         </Description>
         <Canvas mdxSource={MessageWithCustomAttachmentText}>
           <MessageWithCustomAttachment />
@@ -376,7 +396,7 @@ const Docs: () => JSX.Element = () => {
         <Source code={mentionTag} />
         <Description>
           The MessageThread component also supports mentioning users when editing a message if the `lookupOptions` under
-          the `mentionOptions` property is provided. However, if the `richTextEditor` property is set to true, the
+          the `mentionOptions` property is provided. However, if the `richTextEditorOptions` property is set, the
           `lookupOptions` will be ignored.
         </Description>
         <Canvas mdxSource={MessageWithCustomMentionRendererText}>
@@ -389,8 +409,8 @@ const Docs: () => JSX.Element = () => {
         <DetailedBetaBanner />
         <Description>
           The following example shows how to enable rich text editor for message editing by providing the
-          `richTextEditor` property. Rich text editor does not support mentioning users at the moment. By setting
-          `richTextEditor` property to true, the `lookupOptions` under the `mentionOptions` property will be ignored.
+          `richTextEditorOptions` property. Rich text editor does not support mentioning users at the moment. By setting
+          `richTextEditorOptions` property, the `lookupOptions` under the `mentionOptions` property will be ignored.
         </Description>
         <Canvas mdxSource={MessageThreadWithRichTextEditorText}>
           <MessageThreadWithRichTextEditorExample />
@@ -573,6 +593,21 @@ const MessageThreadStory = (args): JSX.Element => {
         console.log('Invalid message type');
     }
   };
+
+  //TODO: Remove this function when the image upload functionality is implemented
+  const removeImageTags = useCallback((event: { content: DocumentFragment }) => {
+    event.content.querySelectorAll('img').forEach((image) => {
+      // If the image is the only child of its parent, remove all the parents of this img element.
+      let parentNode: HTMLElement | null = image.parentElement;
+      let currentNode: HTMLElement = image;
+      while (parentNode?.childNodes.length === 1) {
+        currentNode = parentNode;
+        parentNode = parentNode.parentElement;
+      }
+      currentNode?.remove();
+    });
+  }, []);
+
   return (
     <Stack verticalFill style={MessageThreadStoryContainerStyles} tokens={{ childrenGap: '1rem' }}>
       <MessageThreadComponent
@@ -585,7 +620,7 @@ const MessageThreadStory = (args): JSX.Element => {
         onRenderMessage={onRenderMessage}
         inlineImageOptions={inlineImageOptions}
         onUpdateMessage={onUpdateMessageCallback}
-        richTextEditor={args.richTextEditor}
+        richTextEditorOptions={args.richTextEditor ? { onPaste: removeImageTags } : undefined}
         onRenderAvatar={(userId?: string) => {
           return (
             <Persona
@@ -657,7 +692,11 @@ export default {
     onRenderMessage: hiddenControl,
     onUpdateMessage: hiddenControl,
     onDeleteMessage: hiddenControl,
-    disableEditing: hiddenControl
+    disableEditing: hiddenControl,
+    // hide unnecessary props since we "send message with attachments" option
+    onRenderAttachmentDownloads: hiddenControl,
+    attachmentOptions: hiddenControl,
+    onSendMessage: hiddenControl
   },
   parameters: {
     docs: {

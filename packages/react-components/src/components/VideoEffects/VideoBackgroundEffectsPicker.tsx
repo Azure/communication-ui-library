@@ -54,13 +54,11 @@ export interface _VideoBackgroundEffectsPickerProps {
   styles?: _VideoBackgroundEffectsPickerStyles;
 
   /**
-   * Used only for jest tests. If `true`, the autofocus-on-mount will be ignored when the component mounts.
-   * If not, jest tries to cleanup after the first render pass, but the component throws an error because
-   * it tries to display a tooltip after that render pass and after the component is cleaned up.
-   *
-   * This can be removed once: https://github.com/microsoft/fluentui/issues/30896 is fixed.
+   * Imperative handle for calling focus()
    */
-  ignoreFocusOnMount?: boolean;
+  componentRef?: React.RefObject<{
+    focus: () => void;
+  }>;
 }
 
 /**
@@ -151,7 +149,7 @@ export const _VideoBackgroundEffectsPicker = (props: _VideoBackgroundEffectsPick
                   {...option}
                   itemKey={option.itemKey}
                   key={option.itemKey}
-                  focusOnMount={true && !props.ignoreFocusOnMount}
+                  componentRef={props.componentRef}
                 />
               );
             }
