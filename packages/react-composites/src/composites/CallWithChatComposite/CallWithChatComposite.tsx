@@ -671,7 +671,13 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
 export const CallWithChatComposite = (props: CallWithChatCompositeProps): JSX.Element => {
   const { adapter, fluentTheme, rtl, formFactor, joinInvitationURL, options } = props;
   return (
-    <BaseProvider fluentTheme={fluentTheme} rtl={rtl} locale={props.locale} icons={props.icons}>
+    <BaseProvider
+      fluentTheme={fluentTheme}
+      rtl={rtl}
+      locale={props.locale}
+      icons={props.icons}
+      formFactor={props.formFactor}
+    >
       <CallWithChatScreen
         {...props}
         /* @conditional-compile-remove(call-readiness) */
