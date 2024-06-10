@@ -75,7 +75,7 @@ export const _ComplianceBanner = (props: _ComplianceBannerProps): JSX.Element =>
 
   // [3]: Transition the state machine again to deal with some end-states.
   if (
-    shouldUpdateCached &&
+    !shouldUpdateCached &&
     cachedProps.current.latestStringState.callRecordState === 'stopped' &&
     cachedProps.current.latestStringState.callTranscribeState === 'stopped'
   ) {
