@@ -136,13 +136,6 @@
     "dtmfDialerMoreButtonLabelOn": "Show dialpad",
     "dtmfDialerMoreButtonLabelOff": "Hide dialpad",
     "phoneCallMoreButtonLabel": "Phone Call",
-    "meetingConferencePhoneInfoModalTitle": "Conference phone info",
-    "meetingConferencePhoneInfoModalDialIn": "Dial number",
-    "meetingConferencePhoneInfoModalMeetingId": "Enter meeting ID",
-    "meetingConferencePhoneInfoModalWait": "Wait to be admitted by organizer",
-    "meetingConferencePhoneInfoModalNoPhoneAvailable": "No phone available",
-    "meetingConferencePhoneInfoModalTollFree": "(Toll-free)",
-    "meetingConferencePhoneInfoModalToll": "(Toll)",
     "spokenLanguageStrings": {
       "ar-ae": "Arabic - U.A.E.",
       "ar-sa": "Arabic - Saudi Arabia",

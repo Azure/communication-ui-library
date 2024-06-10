@@ -2,7 +2,7 @@
   "type": "patch",
   "area": "fix",
   "workstream": "accessibility",
-  "comment": "changing menu item div to aria-disabled",
+  "comment": "pass in undefined if there is no onParticipant defined",
   "packageName": "@azure/communication-react",
   "email": "9044372+JoshuaLai@users.noreply.github.com",
   "dependentChangeType": "patch"

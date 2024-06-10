@@ -17,8 +17,6 @@ import {
   ScalingMode,
   VideoDeviceInfo
 } from '@azure/communication-calling';
-/* @conditional-compile-remove(teams-meeting-conference) */
-import { TeamsMeetingAudioConferencingDetails } from '@azure/communication-calling';
 /* @conditional-compile-remove(meeting-id) */
 import { TeamsCallInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(calling-beta-sdk) */
@@ -35,7 +33,6 @@ import { CallKind } from '@azure/communication-calling';
 import { EnvironmentInfo } from '@azure/communication-calling';
 import { CommunicationIdentifierKind } from '@azure/communication-common';
 import { ReactionMessage } from '@azure/communication-calling';
-/* @conditional-compile-remove(spotlight) */
 import { SpotlightedParticipant } from '@azure/communication-calling';
 /* @conditional-compile-remove(local-recording-notification) */
 import { LocalRecordingInfo, RecordingInfo } from '@azure/communication-calling';
@@ -158,7 +155,6 @@ export interface CapabilitiesFeatureState {
   latestCapabilitiesChangeInfo: CapabilitiesChangeInfo;
 }
 
-/* @conditional-compile-remove(spotlight) */
 /**
  * State only version of {@link @azure/communication-calling#SpotlightCallFeature}
  *
@@ -179,7 +175,6 @@ export interface SpotlightCallFeatureState {
   maxParticipantsToSpotlight: number;
 }
 
-/* @conditional-compile-remove(spotlight) */
 /**
  * Spotlight state with order
  *
@@ -458,7 +453,6 @@ export interface RemoteParticipantState {
    * @public
    */
   reactionState?: ReactionState;
-  /* @conditional-compile-remove(spotlight) */
   /**
    * Proxy of {@link @azure/communication-calling#SpotlightCallFeature.spotlightedParticipants}.
    */
@@ -625,7 +619,6 @@ export interface CallState {
    * Hide attendee names in teams meeting
    */
   hideAttendeeNames?: boolean;
-  /* @conditional-compile-remove(spotlight) */
   /**
    * Proxy of {@link @azure/communication-calling#SpotlightCallFeature}.
    */
@@ -640,7 +633,7 @@ export interface CallState {
   /**
    * Proxy of {@link @azure/communication-calling#TeamsMeetingAudioConferencingCallFeature}.
    */
-  teamsMeetingConference?: TeamsMeetingAudioConferencingDetails;
+  teamsMeetingConference?: ConferencePhoneInfo[];
 }
 
 /**
@@ -963,4 +956,16 @@ export interface NetworkDiagnosticsState {
  */
 export interface MediaDiagnosticsState {
   latest: LatestMediaDiagnostics;
+}
+
+/**
+ * @public
+ * Information for conference phone info
+ */
+export interface ConferencePhoneInfo {
+  phoneNumber: string;
+  conferenceId: string;
+  isTollFree: boolean;
+  country?: string;
+  city?: string;
 }

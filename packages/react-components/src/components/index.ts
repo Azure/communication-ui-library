@@ -296,3 +296,9 @@ export * from './CaptionsSettingsModal';
 
 /* @conditional-compile-remove(teams-meeting-conference) */
 export * from './MeetingConferencePhoneInfo';
+
+export { _ErrorBoundary } from './ErrorBoundary';
+/* @conditional-compile-remove(notifications) */
+export * from './NotificationBar';
+/* @conditional-compile-remove(notifications) */
+export * from './Notifications';

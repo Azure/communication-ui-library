@@ -22,9 +22,9 @@ import {
   PersonCall20Regular,
   Clock20Filled
 } from '@fluentui/react-icons';
-/* @conditional-compile-remove(spotlight) */
+/* @conditional-compile-remove(teams-meeting-conference) */
+import { PersonCall20Regular, Clock20Filled } from '@fluentui/react-icons';
 import { MoreHorizontal20Filled, VideoPersonStarOff20Filled } from '@fluentui/react-icons';
-
 import { MicProhibited20Filled, VideoProhibited20Filled } from '@fluentui/react-icons';
 import { Grid20Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(PSTN-calls) */
@@ -70,7 +70,6 @@ export const COMPOSITE_ONLY_ICONS: CompositeIcons = {
   ControlButtonCameraProhibited: <VideoProhibited20Filled />,
 
   ControlButtonMicProhibited: <MicProhibited20Filled />,
-  /* @conditional-compile-remove(spotlight) */
   ControlButtonExitSpotlight: <VideoPersonStarOff20Filled />,
   ControlBarPeopleButton: <People20Regular />,
   MoreDrawerMicrophones: <Mic20Regular />,
@@ -115,9 +114,7 @@ export const COMPOSITE_ONLY_ICONS: CompositeIcons = {
   PhoneNumberButton: <PersonCall20Regular />,
   /* @conditional-compile-remove(teams-meeting-conference) */
   PhoneInfoWait: <Clock20Filled />,
-  /* @conditional-compile-remove(spotlight) */
   PeoplePaneMoreButton: <MoreHorizontal20Filled />,
-  /* @conditional-compile-remove(spotlight) */
   StopAllSpotlightMenuButton: <VideoPersonStarOff20Filled />
 };
 
@@ -189,7 +186,6 @@ export type CallCompositeIcons = {
   ControlButtonMicProhibited?: JSX.Element;
   ControlButtonRaiseHand?: JSX.Element;
   ControlButtonLowerHand?: JSX.Element;
-  /* @conditional-compile-remove(spotlight) */
   ControlButtonExitSpotlight?: JSX.Element;
   RaiseHandContextualMenuItem?: JSX.Element;
   ReactionContextualMenuItem?: JSX.Element;
@@ -259,9 +255,7 @@ export type CallCompositeIcons = {
   PhoneNumberButton?: JSX.Element;
   /* @conditional-compile-remove(teams-meeting-conference) */
   PhoneInfoWait?: JSX.Element;
-  /* @conditional-compile-remove(spotlight) */
   PeoplePaneMoreButton?: JSX.Element;
-  /* @conditional-compile-remove(spotlight) */
   StopAllSpotlightMenuButton?: JSX.Element;
 };
 
@@ -365,10 +359,7 @@ export type CallWithChatCompositeIcons = {
   // Icons common to Call and Chat.
   ParticipantItemOptions?: JSX.Element;
   ParticipantItemOptionsHovered?: JSX.Element;
-
-  /* @conditional-compile-remove(spotlight) */
   PeoplePaneMoreButton?: JSX.Element;
-  /* @conditional-compile-remove(spotlight) */
   StopAllSpotlightMenuButton?: JSX.Element;
 };
 

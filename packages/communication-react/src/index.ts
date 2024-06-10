@@ -308,7 +308,6 @@ export type {
 export { RichTextSendBox } from '../../react-components/src';
 /* @conditional-compile-remove(rich-text-editor) */
 export type { RichTextSendBoxProps, RichTextSendBoxStrings, RichTextStrings } from '../../react-components/src';
-/* @conditional-compile-remove(spotlight) */
 export type { Spotlight } from '../../react-components/src';
 export type { ImageOverlayProps, ImageOverlayStrings } from '../../react-components/src';
 /* @conditional-compile-remove(data-loss-prevention) */
@@ -420,3 +419,5 @@ export type {
   NotificationType,
   ActiveNotification
 } from '../../react-components/src';
+/* @conditional-compile-remove(teams-meeting-conference) */
+export type { MeetingConferencePhoneInfoModalStrings } from '../../react-components/src';

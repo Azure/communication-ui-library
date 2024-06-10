@@ -43,9 +43,7 @@ import { Reaction } from '../../CallComposite/components/buttons/Reaction';
 import { useSelector } from '../../CallComposite/hooks/useSelector';
 import { capabilitySelector } from '../../CallComposite/selectors/capabilitySelector';
 import { DtmfDialpadButton } from './DtmfDialerButton';
-/* @conditional-compile-remove(spotlight) */
 import { ExitSpotlightButton } from '../ExitSpotlightButton';
-/* @conditional-compile-remove(spotlight) */
 import { useLocale } from '../../localization';
 /* @conditional-compile-remove(end-call-options) */
 import { isBoolean } from '../utils';
@@ -53,7 +51,7 @@ import { isBoolean } from '../utils';
 import { getIsTeamsCall } from '../../CallComposite/selectors/baseSelectors';
 import { callStatusSelector } from '../../CallComposite/selectors/callStatusSelector';
 /* @conditional-compile-remove(teams-meeting-conference) */
-import { MeetingConferencePhoneInfoModal, convertConferencePhoneInfo } from '../MeetingConferencePhoneInfoModal';
+import { MeetingConferencePhoneInfoModal } from '@internal/react-components';
 
 /**
  * @private
@@ -81,7 +79,6 @@ export interface CommonCallControlBarProps {
   videoBackgroundPickerRef?: React.RefObject<IButton>;
   onSetDialpadPage?: () => void;
   dtmfDialerPresent?: boolean;
-  /* @conditional-compile-remove(spotlight) */
   onStopLocalSpotlight?: () => void;
   useTeamsCaptions?: boolean;
 }
@@ -179,14 +176,9 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
   }, []);
 
   /* @conditional-compile-remove(teams-meeting-conference) */
-  const openTeamsMeetingConferenceModal = useCallback((): void => {
-    setShowTeamsMeetingConferenceModal(true);
-  }, []);
-
-  /* @conditional-compile-remove(teams-meeting-conference) */
-  const onDismissTeamsMeetingConferenceModal = useCallback((): void => {
-    setShowTeamsMeetingConferenceModal(false);
-  }, []);
+  const toggleTeamsMeetingConferenceModal = useCallback((): void => {
+    setShowTeamsMeetingConferenceModal(!showTeamsMeetingConferenceModal);
+  }, [showTeamsMeetingConferenceModal]);
 
   const peopleButtonStrings = useMemo(
     () => ({
@@ -206,9 +198,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
     }),
     [callWithChatStrings]
   );
-  /* @conditional-compile-remove(spotlight) */
   const callStrings = useLocale().strings.call;
-  /* @conditional-compile-remove(spotlight) */
   const exitSpotlightButtonStrings = useMemo(
     () => ({
       label: callStrings.exitSpotlightButtonLabel,
@@ -281,7 +271,6 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
 
   const cameraButtonIsEnabled = isEnabled(options?.cameraButton);
 
-  /* @conditional-compile-remove(spotlight) */
   const showExitSpotlightButton = options?.exitSpotlightButton !== false;
 
   const showCaptionsButton =
@@ -315,15 +304,15 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
             changeCaptionLanguage={props.isCaptionsOn && props.useTeamsCaptions}
           />
         )}
-        {showTeamsMeetingConferenceModal && (
-          <MeetingConferencePhoneInfoModal
-            conferencePhoneInfoList={convertConferencePhoneInfo(
-              props.callAdapter.getState().call?.teamsMeetingConference
-            )}
-            showMeetingConferencePhoneInfoModal={showTeamsMeetingConferenceModal}
-            onDismissMeetingPhoneInfoSettings={onDismissTeamsMeetingConferenceModal}
-          />
-        )}
+        {
+          /* @conditional-compile-remove(teams-meeting-conference) */ showTeamsMeetingConferenceModal && (
+            <MeetingConferencePhoneInfoModal
+              conferencePhoneInfoList={props.callAdapter.getState().call?.teamsMeetingConference ?? []}
+              showModal={showTeamsMeetingConferenceModal}
+              onDismissMeetingPhoneInfoSettings={toggleTeamsMeetingConferenceModal}
+            />
+          )
+        }
       </CallAdapterProvider>
       <Stack
         horizontal
@@ -406,17 +395,14 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                         }}
                       />
                     )}
-                    {
-                      /* @conditional-compile-remove(spotlight) */ showExitSpotlightButton &&
-                        props.onStopLocalSpotlight && (
-                          <ExitSpotlightButton
-                            displayType={options.displayType}
-                            onClick={props.onStopLocalSpotlight}
-                            styles={commonButtonStyles}
-                            strings={exitSpotlightButtonStrings}
-                          />
-                        )
-                    }
+                    {showExitSpotlightButton && props.onStopLocalSpotlight && (
+                      <ExitSpotlightButton
+                        displayType={options.displayType}
+                        onClick={props.onStopLocalSpotlight}
+                        styles={commonButtonStyles}
+                        strings={exitSpotlightButtonStrings}
+                      />
+                    )}
                     {screenShareButtonIsEnabled && (
                       <ScreenShare
                         option={options.screenShareButton}
@@ -469,7 +455,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                         /* @conditional-compile-remove(teams-meeting-conference) */
                         teamsMeetingPhoneCallEnable={showTeamsMeetingPhoneCallButton}
                         /* @conditional-compile-remove(teams-meeting-conference) */
-                        onMeetingPhoneInfoClick={openTeamsMeetingConferenceModal}
+                        onMeetingPhoneInfoClick={toggleTeamsMeetingConferenceModal}
                       />
                     )}
                     <EndCall
