@@ -172,7 +172,6 @@ export interface VideoTileProps {
    * Callback triggered by video tile on touch and hold.
    */
   onLongTouch?: () => void;
-  /* @conditional-compile-remove(spotlight) */
   /**
    * If true, the video tile will show the spotlighted icon.
    */
@@ -257,7 +256,6 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     initialsName,
     isMirrored,
     isMuted,
-    /* @conditional-compile-remove(spotlight) */
     isSpotlighted,
     isPinned,
     onRenderPlaceholder,
@@ -463,14 +461,11 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
                   <Icon iconName="VideoTileMicOff" />
                 </Stack>
               )}
-              {
-                /* @conditional-compile-remove(spotlight) */
-                isSpotlighted && (
-                  <Stack className={mergeStyles(iconContainerStyle)}>
-                    <Icon iconName="VideoTileSpotlighted" />
-                  </Stack>
-                )
-              }
+              {isSpotlighted && (
+                <Stack className={mergeStyles(iconContainerStyle)}>
+                  <Icon iconName="VideoTileSpotlighted" />
+                </Stack>
+              )}
               {isPinned && (
                 <Stack className={mergeStyles(iconContainerStyle)}>
                   <Icon iconName="VideoTilePinned" className={mergeStyles(pinIconStyle)} />

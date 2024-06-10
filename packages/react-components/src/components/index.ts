@@ -58,6 +58,9 @@ export type {
   CancelEditCallback
 } from './MessageThread';
 
+/* @conditional-compile-remove(rich-text-editor) */
+export type { RichTextEditorOptions } from './MessageThread';
+
 export { StreamMedia } from './StreamMedia';
 export type { StreamMediaProps } from './StreamMedia';
 export type { LoadingState } from './StreamMedia';
@@ -290,6 +293,9 @@ export * from './Caption';
 export * from './StartCaptionsButton';
 
 export * from './CaptionsSettingsModal';
+
+/* @conditional-compile-remove(teams-meeting-conference) */
+export * from './MeetingConferencePhoneInfo';
 
 export { _ErrorBoundary } from './ErrorBoundary';
 /* @conditional-compile-remove(notifications) */

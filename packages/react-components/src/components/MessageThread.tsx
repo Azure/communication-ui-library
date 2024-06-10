@@ -551,12 +551,25 @@ export type MessageThreadProps = {
 
   /* @conditional-compile-remove(rich-text-editor) */
   /**
-   * enables rich text editor for the edit box
-   *
-   * @defaultValue `false`
+   * Options to enable rich text editor for the edit box.
+   * @beta
    */
-  richTextEditor?: boolean;
+  richTextEditorOptions?: RichTextEditorOptions;
 };
+
+/* @conditional-compile-remove(rich-text-editor) */
+/**
+ * Options for the rich text editor configuration.
+ *
+ * @beta
+ */
+export interface RichTextEditorOptions {
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  /**
+   * Optional callback to handle paste event.
+   */
+  onPaste?: (event: { content: DocumentFragment }) => void;
+}
 
 /**
  * Props to render a single message.
@@ -697,7 +710,7 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
     /* @conditional-compile-remove(file-sharing-acs) */
     onRenderAttachmentDownloads,
     /* @conditional-compile-remove(rich-text-editor) */
-    richTextEditor = false
+    richTextEditorOptions
   } = props;
   // We need this state to wait for one tick and scroll to bottom after messages have been initialized.
   // Otherwise chatScrollDivRef.current.clientHeight is wrong if we scroll to bottom before messages are initialized.
@@ -732,12 +745,12 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
   /* @conditional-compile-remove(rich-text-editor) */
   useEffect(() => {
     // if rich text editor is enabled, the rich text editor component should be loaded early for good UX
-    if (richTextEditor !== undefined && richTextEditor) {
+    if (richTextEditorOptions !== undefined) {
       // this line is needed to load the Rooster JS dependencies early in the lifecycle
       // when the rich text editor is enabled
       loadChatMessageComponentAsRichTextEditBox();
     }
-  }, [richTextEditor]);
+  }, [richTextEditorOptions]);
 
   const onDeleteMessageCallback = useCallback(
     async (messageId: string): Promise<void> => {
@@ -1163,7 +1176,7 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
                   /* @conditional-compile-remove(file-sharing-acs) */
                   onRenderAttachmentDownloads={onRenderAttachmentDownloads}
                   /* @conditional-compile-remove(rich-text-editor) */
-                  richTextEditor={richTextEditor}
+                  richTextEditorOptions={richTextEditorOptions}
                 />
               );
             })}

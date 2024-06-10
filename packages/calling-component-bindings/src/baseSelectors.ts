@@ -13,10 +13,9 @@ import {
   RemoteParticipantState,
   LocalVideoStreamState,
   CallErrors,
-  DiagnosticsCallFeatureState
+  DiagnosticsCallFeatureState,
+  SpotlightCallFeatureState
 } from '@internal/calling-stateful-client';
-/* @conditional-compile-remove(spotlight) */
-import { SpotlightCallFeatureState } from '@internal/calling-stateful-client';
 import { ReactionState } from '@internal/calling-stateful-client';
 import { CaptionsInfo } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(acs-close-captions) */
@@ -100,7 +99,6 @@ export const getLocalParticipantRaisedHand = (
   return state.calls[props.callId]?.raiseHand?.localParticipantRaisedHand;
 };
 
-/* @conditional-compile-remove(spotlight) */
 /**
  * @private
  */

@@ -8,13 +8,11 @@ import {
   participantListStack,
   participantListStyle,
   participantListWrapper,
-  displayNameStyles
+  displayNameStyles,
+  headingMoreButtonStyles
 } from './styles/ParticipantContainer.styles';
-/* @conditional-compile-remove(spotlight) */
-import { headingMoreButtonStyles } from './styles/ParticipantContainer.styles';
 import { ParticipantList, ParticipantListProps, ParticipantMenuItemsCallback } from '@internal/react-components';
 import { FocusZone, Stack, Text, useTheme } from '@fluentui/react';
-/* @conditional-compile-remove(spotlight) */
 import { DefaultButton, IContextualMenuProps } from '@fluentui/react';
 import { AvatarPersona, AvatarPersonaDataCallback } from './AvatarPersona';
 import { useId } from '@fluentui/react-hooks';
@@ -50,11 +48,8 @@ export const ParticipantListWithHeading = (props: {
   isMobile?: boolean;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
-  /* @conditional-compile-remove(spotlight) */
   headingMoreButtonAriaLabel?: string;
-  /* @conditional-compile-remove(spotlight) */
   onClickHeadingMoreButton?: () => void;
-  /* @conditional-compile-remove(spotlight) */
   headingMoreButtonMenuProps?: IContextualMenuProps;
   pinnedParticipants?: string[];
 }): JSX.Element => {
@@ -63,9 +58,9 @@ export const ParticipantListWithHeading = (props: {
     onFetchParticipantMenuItems,
     title,
     participantListProps,
-    /* @conditional-compile-remove(spotlight) */ headingMoreButtonAriaLabel,
-    /* @conditional-compile-remove(spotlight) */ onClickHeadingMoreButton,
-    /* @conditional-compile-remove(spotlight) */ headingMoreButtonMenuProps,
+    headingMoreButtonAriaLabel,
+    onClickHeadingMoreButton,
+    headingMoreButtonMenuProps,
     pinnedParticipants
   } = props;
   const subheadingUniqueId = useId();
@@ -92,21 +87,19 @@ export const ParticipantListWithHeading = (props: {
             /* @conditional-compile-remove(total-participant-count) */ totalParticipantCount
           )}
         </Stack.Item>
-        {
-          /* @conditional-compile-remove(spotlight) */ (onClickHeadingMoreButton ||
-            (headingMoreButtonMenuProps?.items && headingMoreButtonMenuProps.items.length > 0)) && (
-            <Stack.Item>
-              <DefaultButton
-                ariaLabel={headingMoreButtonAriaLabel}
-                styles={headingMoreButtonStyles(theme)}
-                iconProps={{ iconName: 'PeoplePaneMoreButton' }}
-                onClick={onClickHeadingMoreButton ? () => onClickHeadingMoreButton() : undefined}
-                menuProps={props.onClickHeadingMoreButton ? undefined : props.headingMoreButtonMenuProps}
-                onRenderMenuIcon={() => null}
-              />
-            </Stack.Item>
-          )
-        }
+        {(onClickHeadingMoreButton ||
+          (headingMoreButtonMenuProps?.items && headingMoreButtonMenuProps.items.length > 0)) && (
+          <Stack.Item>
+            <DefaultButton
+              ariaLabel={headingMoreButtonAriaLabel}
+              styles={headingMoreButtonStyles(theme)}
+              iconProps={{ iconName: 'PeoplePaneMoreButton' }}
+              onClick={onClickHeadingMoreButton ? () => onClickHeadingMoreButton() : undefined}
+              menuProps={props.onClickHeadingMoreButton ? undefined : props.headingMoreButtonMenuProps}
+              onRenderMenuIcon={() => null}
+            />
+          </Stack.Item>
+        )}
       </Stack>
       <FocusZone className={participantListContainerStyle} shouldFocusOnMount={true}>
         <ParticipantList

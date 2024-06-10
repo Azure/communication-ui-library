@@ -132,6 +132,11 @@ export interface RichTextSendBoxProps {
    * @defaultValue false
    */
   disabled?: boolean;
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  /**
+   * Optional callback to handle paste event.
+   */
+  onPaste?: (event: { content: DocumentFragment }) => void;
   /**
    * Optional strings to override in component
    */
@@ -188,7 +193,9 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     /* @conditional-compile-remove(file-sharing-acs) */
     attachments,
     /* @conditional-compile-remove(file-sharing-acs) */
-    onCancelAttachmentUpload
+    onCancelAttachmentUpload,
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    onPaste
   } = props;
 
   const theme = useTheme();
@@ -435,6 +442,8 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
         onRenderAttachmentUploads={onRenderAttachmentUploads}
         /* @conditional-compile-remove(file-sharing-acs) */
         hasAttachments={hasAttachmentUploads}
+        /* @conditional-compile-remove(rich-text-editor-image-upload) */
+        onPaste={onPaste}
       />
     </Stack>
   );
