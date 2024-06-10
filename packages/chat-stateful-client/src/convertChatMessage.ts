@@ -18,11 +18,6 @@ export const convertChatMessage = (
     clientMessageId: clientMessageId,
     status,
     /* @conditional-compile-remove(data-loss-prevention) */
-    policyViolation: !!(
-      message.sender?.kind === 'microsoftTeamsUser' &&
-      !!message.editedOn &&
-      message.content?.message === '' &&
-      message.content.attachments?.length === 0
-    )
+    policyViolationStatus: message.policyViolation?.result === 'contentBlocked'
   };
 };

@@ -26,7 +26,7 @@ export const messageTemplate: ChatMessageWithStatus = {
   version: '',
   status: 'delivered',
   /* @conditional-compile-remove(data-loss-prevention) */
-  policyViolation: false
+  policyViolationStatus: false
 };
 
 /**

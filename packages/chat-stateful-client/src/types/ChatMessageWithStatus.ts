@@ -16,7 +16,7 @@ export type ChatMessageWithStatus = ChatMessage & {
   clientMessageId?: string;
   status: MessageStatus;
   /* @conditional-compile-remove(data-loss-prevention) */
-  policyViolation?: boolean;
+  policyViolationStatus?: boolean;
   resourceCache?: Record<string, ResourceFetchResult>;
 };
 /**

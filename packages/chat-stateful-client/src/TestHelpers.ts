@@ -98,7 +98,7 @@ export const messageTemplate: ChatMessageWithStatus = {
   version: '',
   status: 'delivered',
   /* @conditional-compile-remove(data-loss-prevention) */
-  policyViolation: false
+  policyViolationStatus: false
 };
 /**
  * @private
@@ -118,7 +118,7 @@ export const messageTemplateWithResourceCache: ChatMessageWithStatus = {
   version: '',
   status: 'delivered',
   /* @conditional-compile-remove(data-loss-prevention) */
-  policyViolation: false,
+  policyViolationStatus: false,
   resourceCache: { resource1Url: { sourceUrl: 'blob:resource1' }, resource2Url: { sourceUrl: 'blob:resource2' } }
 };
 /**
