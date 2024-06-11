@@ -61,7 +61,7 @@ import { MessageOptions } from '@internal/acs-ui-common';
 import { SendBoxPicker } from '../common/SendBoxPicker';
 /* @conditional-compile-remove(rich-text-editor-composite-support) */
 import { loadRichTextSendBox } from '../common/SendBoxPicker';
-import { UploadChatImageResult } from '@azure/communication-chat';
+// import { UploadChatImageResult } from '@azure/communication-chat';
 
 /**
  * @private
@@ -113,6 +113,8 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     attachmentOptions,
     formFactor
   } = props;
+
+  console.log('ChatScreen options:', options?.richTextEditorOptions?.onPaste);
 
   const defaultNumberOfChatMessagesToReload = 5;
   /* @conditional-compile-remove(file-sharing-acs) */
@@ -458,14 +460,14 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     [attachmentOptions?.uploadOptions]
   );
 
-  const onUploadImage = useCallback(
-    async (image: Blob, fileName: string): Promise<UploadChatImageResult> => {
-      const result = adapter.uploadImage(image, fileName);
-      console.log('Uploading image...', image);
-      return result;
-    },
-    [adapter]
-  );
+  // const onUploadImage = useCallback(
+  //   async (image: Blob, fileName: string): Promise<UploadChatImageResult> => {
+  //     const result = adapter.uploadImage(image, fileName);
+  //     console.log('Uploading image...', image);
+  //     return result;
+  //   },
+  //   [adapter]
+  // );
 
   return (
     <Stack className={chatContainer} grow>
@@ -522,7 +524,6 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
                   // we need to overwrite onSendMessage for SendBox because we need to clear attachment state
                   // when submit button is clicked
                   onSendMessage={onSendMessageHandler}
-                  onUploadImage={onUploadImage}
                 />
               </Stack>
               {formFactor !== 'mobile' && (

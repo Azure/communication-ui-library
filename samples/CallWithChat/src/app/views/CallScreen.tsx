@@ -161,6 +161,34 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
 
   const shouldHideScreenShare = isMobileSession || isIOS();
 
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  const removeImageTags = useCallback(
+    (event: { content: DocumentFragment }) => {
+      alert('call removeImageTags');
+      console.log('removeImageTags');
+      const threadCreatedBy = adapter?.getState().chat?.properties?.createdBy;
+      // .getState();
+      // .thread.properties?.createdBy;
+      console.log('Leah: ::: adapter---', threadCreatedBy);
+      const allowImagePasting = threadCreatedBy?.kind !== 'communicationUser';
+      // console.log('Leah: ::: adapter allowImagePasting', allowImagePasting);
+      if (allowImagePasting) {
+        return;
+      }
+      event.content.querySelectorAll('img').forEach((image) => {
+        // If the image is the only child of its parent, remove all the parents of this img element.
+        let parentNode: HTMLElement | null = image.parentElement;
+        let currentNode: HTMLElement = image;
+        while (parentNode?.childNodes.length === 1) {
+          currentNode = parentNode;
+          parentNode = parentNode.parentElement;
+        }
+        currentNode?.remove();
+      });
+    },
+    [adapter]
+  );
+
   const options: CallWithChatCompositeOptions = useMemo(
     () => ({
       callControls: {
@@ -173,9 +201,12 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
       /* @conditional-compile-remove(file-sharing-acs) */
       attachmentOptions: {
         uploadOptions: attachmentUploadOptions
+      },
+      richTextEditorOptions: {
+        onPaste: removeImageTags
       }
     }),
-    [shouldHideScreenShare]
+    [removeImageTags, shouldHideScreenShare]
   );
 
   // Dispose of the adapter in the window's before unload event.

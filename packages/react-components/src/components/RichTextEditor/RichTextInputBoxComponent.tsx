@@ -4,7 +4,7 @@
 import React, { ReactNode, useCallback, useEffect, useMemo, useState } from 'react';
 import { BaseCustomStyles } from '../../types';
 import { RichTextEditor, RichTextEditorComponentRef, RichTextEditorStyleProps } from './RichTextEditor';
-import { RichTextSendBoxStrings, UploadChatImageResult } from './RichTextSendBox';
+import { RichTextSendBoxStrings } from './RichTextSendBox';
 import { useTheme } from '../../theming';
 import { Icon, Stack } from '@fluentui/react';
 import { InputBoxButton } from '../InputBoxButton';
@@ -77,8 +77,10 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
     isHorizontalLayoutDisabled = false,
     autoFocus,
     onTyping,
-    onUploadImage
+    onPaste
   } = props;
+  console.log('input onPaste', onPaste);
+
   const theme = useTheme();
   // undefined is used to indicate that the rich text editor toolbar state wasn't changed yet
   const [showRichTextEditorFormatting, setShowRichTextEditorFormatting] = useState<boolean | undefined>(undefined);

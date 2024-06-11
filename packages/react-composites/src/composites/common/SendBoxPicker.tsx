@@ -12,7 +12,7 @@ import { Suspense } from 'react';
 import { _ErrorBoundary, RichTextSendBoxProps } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing-acs) */
 import { AttachmentMetadataInProgress, MessageOptions } from '@internal/acs-ui-common';
-import { UploadChatImageResult } from '@azure/communication-chat';
+// import { UploadChatImageResult } from '@azure/communication-chat';
 
 /* @conditional-compile-remove(rich-text-editor-composite-support) */
 /**
@@ -50,7 +50,7 @@ export type SendBoxPickerProps = {
   /* @conditional-compile-remove(file-sharing-acs) */
   onCancelAttachmentUpload?: (attachmentId: string) => void;
   /* @conditional-compile-remove(rich-text-editor) */
-  onUploadImage?: (image: Blob, fileName: string) => Promise<UploadChatImageResult>;
+  // onUploadImage?: (image: Blob, fileName: string) => Promise<UploadChatImageResult>;
 };
 
 /**

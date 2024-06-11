@@ -195,10 +195,6 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     };
   }, [onChange, onContentModelUpdate, updatePlugin]);
 
-  useEffect(() => {
-    copyPastePlugin.onUploadImage = onUploadImage;
-  }, [copyPastePlugin, onUploadImage]);
-
   const keyboardInputPlugin = useMemo(() => {
     return new KeyboardInputPlugin();
   }, []);
@@ -241,12 +237,10 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     [theme.palette.neutralLight]
   );
 
-  const copyPastePlugin = useMemo(() => {
-    return new CopyPastePlugin();
-  }, []);
-
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   useEffect(() => {
+    console.log('onPaste callback', onPaste);
+
     copyPastePlugin.onPaste = onPaste;
   }, [copyPastePlugin, onPaste]);
 

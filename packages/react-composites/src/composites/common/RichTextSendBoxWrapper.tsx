@@ -17,6 +17,8 @@ import { RichTextSendBox, RichTextSendBoxProps } from '@internal/react-component
  */
 export const RichTextSendBoxWrapper = (props: RichTextSendBoxProps): JSX.Element => {
   const richTextSendBoxProps = usePropsFor(RichTextSendBox);
+  console.log('RichTextSendBoxWrapper', richTextSendBoxProps, props);
+  // return <RichTextSendBox {...richTextSendBoxProps} {...props} />;
 
-  return <RichTextSendBox {...richTextSendBoxProps} {...props} />;
+  return <RichTextSendBox {...richTextSendBoxProps} {...props} onPaste={props.richTextEditorOptions.onPaste} />;
 };

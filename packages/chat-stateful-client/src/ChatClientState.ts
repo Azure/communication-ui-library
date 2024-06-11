@@ -86,6 +86,7 @@ export type ChatThreadClientState = {
  */
 export type ChatThreadProperties = {
   topic?: string;
+  createdBy?: CommunicationIdentifierKind;
 };
 
 /**

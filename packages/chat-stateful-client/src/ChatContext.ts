@@ -130,12 +130,16 @@ export class ChatContext {
   }
 
   public setThread(threadId: string, threadState: ChatThreadClientState): void {
+    console.log('Leah setThread', threadId, threadState);
+
     this.modifyState((draft: ChatClientState) => {
       draft.threads[threadId] = threadState;
     });
   }
 
   public createThread(threadId: string, properties?: ChatThreadProperties): void {
+    console.log('Leah createThread', threadId, properties);
+
     this.modifyState((draft: ChatClientState) => {
       draft.threads[threadId] = {
         chatMessages: {},
@@ -157,6 +161,8 @@ export class ChatContext {
   }
 
   public createThreadIfNotExist(threadId: string, properties?: ChatThreadProperties): boolean {
+    console.log('Leah if not exsit', properties);
+
     const exists = Object.prototype.hasOwnProperty.call(this.getState().threads, threadId);
     if (!exists) {
       this.createThread(threadId, properties);

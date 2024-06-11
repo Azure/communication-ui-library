@@ -17,8 +17,8 @@ import type {
   ChatThreadPropertiesUpdatedEvent,
   ParticipantsAddedEvent,
   ParticipantsRemovedEvent,
-  ReadReceiptReceivedEvent,
-  UploadChatImageResult
+  ReadReceiptReceivedEvent
+  // UploadChatImageResult
 } from '@azure/communication-chat';
 import { toFlatCommunicationIdentifier, _TelemetryImplementationHint } from '@internal/acs-ui-common';
 import EventEmitter from 'events';
@@ -143,7 +143,6 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     this.dispose = this.dispose.bind(this);
     this.fetchInitialData = this.fetchInitialData.bind(this);
     this.sendMessage = this.sendMessage.bind(this);
-    this.uploadImage = this.uploadImage.bind(this);
     this.sendReadReceipt = this.sendReadReceipt.bind(this);
     this.sendTypingIndicator = this.sendTypingIndicator.bind(this);
     this.updateMessage = this.updateMessage.bind(this);
@@ -196,11 +195,11 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     });
   }
 
-  async uploadImage(image: ArrayBuffer | Blob, imageFilename: string): Promise<UploadChatImageResult> {
-    return await this.asyncTeeErrorToEventEmitter(async () => {
-      return await this.handlers.onUploadImage(image, imageFilename);
-    });
-  }
+  // async uploadImage(image: ArrayBuffer | Blob, imageFilename: string): Promise<UploadChatImageResult> {
+  //   return await this.asyncTeeErrorToEventEmitter(async () => {
+  //     return await this.handlers.onUploadImage(image, imageFilename);
+  //   });
+  // }
 
   async sendReadReceipt(chatMessageId: string): Promise<void> {
     await this.asyncTeeErrorToEventEmitter(async () => {
@@ -416,6 +415,8 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
 const convertEventToChatMessage = (
   event: ChatMessageReceivedEvent | ChatMessageEditedEvent | ChatMessageDeletedEvent
 ): ChatMessage => {
+  // statefulChatClient.getChatThreadClient().getProperties()
+
   return {
     id: event.id,
     version: event.version,

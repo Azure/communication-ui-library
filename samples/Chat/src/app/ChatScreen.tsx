@@ -99,24 +99,36 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   }, [adapter]);
 
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  const removeImageTags = useCallback((event: { content: DocumentFragment }) => {
-    event.content.querySelectorAll('img').forEach((image) => {
-      // If the image is the only child of its parent, remove all the parents of this img element.
-      let parentNode: HTMLElement | null = image.parentElement;
-      let currentNode: HTMLElement = image;
-      while (parentNode?.childNodes.length === 1) {
-        currentNode = parentNode;
-        parentNode = parentNode.parentElement;
+  const removeImageTags = useCallback(
+    (event: { content: DocumentFragment }) => {
+      alert('removeImageTags');
+      console.log('removeImageTags');
+      const threadCreatedBy = adapter?.getState().thread.properties?.createdBy;
+      console.log('Leah: ::: adapter', threadCreatedBy);
+      const allowImagePasting = threadCreatedBy?.kind !== 'communicationUser';
+      console.log('Leah: ::: adapter allowImagePasting', allowImagePasting);
+      if (allowImagePasting) {
+        return;
       }
-      currentNode?.remove();
-    });
-  }, []);
+      event.content.querySelectorAll('img').forEach((image) => {
+        // If the image is the only child of its parent, remove all the parents of this img element.
+        let parentNode: HTMLElement | null = image.parentElement;
+        let currentNode: HTMLElement = image;
+        while (parentNode?.childNodes.length === 1) {
+          currentNode = parentNode;
+          parentNode = parentNode.parentElement;
+        }
+        currentNode?.remove();
+      });
+    },
+    [adapter]
+  );
 
   /* @conditional-compile-remove(rich-text-editor-composite-support) @conditional-compile-remove(rich-text-editor) */
   const richTextEditorOptions = useMemo(() => {
     return isRichTextEditorEnabled
       ? {
-          /* @conditional-compile-remove(rich-text-editor-image-upload) */ onPaste: removeImageTags
+          onPaste: removeImageTags
         }
       : undefined;
   }, [isRichTextEditorEnabled, removeImageTags]);

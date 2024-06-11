@@ -670,6 +670,8 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
  */
 export const CallWithChatComposite = (props: CallWithChatCompositeProps): JSX.Element => {
   const { adapter, fluentTheme, rtl, formFactor, joinInvitationURL, options } = props;
+  console.log('CallWithChatComposite: ', props.options?.richTextEditorOptions);
+
   return (
     <BaseProvider fluentTheme={fluentTheme} rtl={rtl} locale={props.locale} icons={props.icons}>
       <CallWithChatScreen
@@ -690,6 +692,7 @@ export const CallWithChatComposite = (props: CallWithChatCompositeProps): JSX.El
         backgroundImage={options?.branding?.backgroundImage}
         surveyOptions={options?.surveyOptions}
         spotlight={options?.spotlight}
+        richTextEditorOptions={options?.richTextEditorOptions}
       />
     </BaseProvider>
   );

@@ -26,7 +26,6 @@ import { attachmentUploadCardsStyles } from '../styles/SendBox.styles';
 /* @conditional-compile-remove(file-sharing-acs) */
 import { FluentV9ThemeProvider } from '../../theming/FluentV9ThemeProvider';
 import { ChatAttachmentType } from '../Attachment/AttachmentDownloadCards';
-import { upload } from '@testing-library/user-event/dist/types/utility';
 
 /**
  * Strings of {@link RichTextSendBox} that can be overridden.
@@ -122,16 +121,6 @@ export interface RichTextStrings {
    */
   richTextToolbarMoreButtonAriaLabel: string;
 }
-/**
- * Props for {@link RichTextSendBox}.
- *
- * @beta
- */
-export interface UploadChatImageResult {
-  attachmentType?: ChatAttachmentType;
-  id: string;
-  name?: string;
-}
 
 /**
  * Props for {@link RichTextSendBox}.
@@ -189,7 +178,6 @@ export interface RichTextSendBoxProps {
    * Optional callback called when user is typing
    */
   onTyping?: () => Promise<void>;
-  onUploadImage?: (image: Blob, fileName: string) => Promise<UploadChatImageResult>;
 }
 
 /**
@@ -211,6 +199,8 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
     onPaste
   } = props;
+
+  console.log('Leah: ::: RichTextSendBox props', props.onPaste);
 
   const theme = useTheme();
   const locale = useLocale();
@@ -238,11 +228,31 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     [contentValueOverflow, strings.textTooLong]
   );
 
+  // const [pastedImages, setPastedImages] = useState<PastedImage[]>([]);
+
+  // const handleOnPaste = useCallback(
+  //   (event, defaultOnPasteImage) => {
+  //     // if (event.eventType === PluginEventType.BeforePaste && event.pasteType === 'normal') {
+  //     //   event.fragment.querySelectorAll('img').forEach((image) => {
+  //     //     const result = onPasteImage && onPasteImage(image);
+  //     //     console.log('Leah: ::: sendbox pasted image result', result);
+
+  //     //     setPastedImages([...pastedImages, result]);
+  //     //   });
+  //     // }
+  //     const contentCount = onPaste && onPaste(event);
+  //     isMessageTooLong(contentCount);
+  //   },
+  //   [pastedImages]
+  // );
+
   const setContent = useCallback((newValue?: string): void => {
     if (newValue === undefined) {
       return;
     }
 
+    // const processedContent = handleInlineImages(newValue);
+    // const newCount = without src
     setContentValueOverflow(isMessageTooLong(newValue.length));
     setContentValue(newValue);
   }, []);
@@ -269,6 +279,42 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
       });
   }, []);
 
+  // const handleInlineImages = useCallback(() => {
+  //   // contentValue
+  //   const parsedContent = DOMPurify.sanitize(contentValue ?? '', {
+  //     ALLOWED_TAGS: ['img'],
+  //     RETURN_DOM_FRAGMENT: true
+  //   });
+  //   let content = '';
+  //   const imageAttachments = [];
+  //   // const imageAttachments: ChatAttachment[] | undefined = [];
+  //   for (const child of parsedContent.children) {
+  //     const imageNode = child as HTMLImageElement;
+  //     const id = 'imageId' + Math.random();
+
+  //     const attachment = {
+  //       id: id,
+  //       // attachmentType: 'image',
+  //       name: 'image.png',
+  //       url: imageNode.src
+  //     };
+
+  //     imageNode.id = id;
+  //     imageNode.src = 'https://via.placeholder.com/150';
+  //     parsedContent.replaceChild(imageNode, child);
+
+  //     const div = document.createElement('div');
+  //     div.appendChild(parsedContent.cloneNode(true));
+  //     const newContent = div.innerHTML;
+  //     content = newContent;
+  //     console.log(div.innerHTML); //output should be '<p>test</p>'
+  //     console.log('5. Leah: ::: content after upload', newContent);
+
+  //     imageAttachments.push(attachment);
+  //   }
+  //   return { processedContent: content, imageAttachments: imageAttachments };
+  // }, [contentValue]);
+
   const sendMessageOnClick = useCallback((): void => {
     if (disabled || contentValueOverflow) {
       return;
@@ -288,6 +334,24 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     // we don't want to send empty messages including spaces, newlines, tabs
     // Message can be empty if there is a valid attachment upload
     if (hasContent || /* @conditional-compile-remove(file-sharing-acs) */ isAttachmentUploadCompleted(attachments)) {
+      // if (hasContent || /* @conditional-compile-remove(attachment-upload) */ isAttachmentUploadCompleted(attachments)) {
+      // const { processedContent, imageAttachments } = handleInlineImages();
+      console.log('Leah: ::: before sending content', message);
+
+      // const fileAttachments = toAttachmentMetadata(attachments);
+      // const imageAttachments = [];
+      // pastedImages.forEach((image) => {
+      //   const attachment = {
+      //     id: image.internalId,
+      //     name: image.name,
+      //     url: image.blob,
+      //     type: 'image'
+      //   };
+      //   imageAttachments.push(attachment);
+      // });
+      // console.log('sendbox attachments', imageAttachments);
+      // console.log('sendbox attachments concat', [...(fileAttachments || []), ...(imageAttachments || [])]);
+
       onSendMessage(
         message,
         /* @conditional-compile-remove(file-sharing-acs) */ /* @conditional-compile-remove(rich-text-editor-composite-support) */

@@ -4,8 +4,8 @@
 import type {
   ChatMessage,
   ChatParticipant,
-  SendMessageOptions,
-  UploadChatImageResult
+  SendMessageOptions
+  // UploadChatImageResult
 } from '@azure/communication-chat';
 import type { CommunicationIdentifierKind, CommunicationUserKind } from '@azure/communication-common';
 import { ChatThreadClientState } from '@internal/chat-stateful-client';
@@ -66,7 +66,7 @@ export interface ChatAdapterThreadManagement {
     content: string,
     options?: SendMessageOptions | /* @conditional-compile-remove(file-sharing-acs) */ MessageOptions
   ): Promise<void>;
-  uploadImage(image: ArrayBuffer | Blob, imageFilename: string): Promise<UploadChatImageResult>;
+  // uploadImage(image: ArrayBuffer | Blob, imageFilename: string): Promise<UploadChatImageResult>;
   /**
    * Send a read receipt for a message.
    */
