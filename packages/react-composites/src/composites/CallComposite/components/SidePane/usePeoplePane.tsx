@@ -300,7 +300,6 @@ export const usePeoplePane = (props: {
 
   // Update pane renderer if it is open and the openPane dep changes
   useEffect(() => {
-    console.log('useEffect for meeting phone info pane open ' + isOpen);
     if (isOpen) {
       openPane();
     }

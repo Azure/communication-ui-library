@@ -1,8 +1,27 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { IModalStyles, mergeStyles, Theme, FontWeights } from '@fluentui/react';
+import { IModalStyles, mergeStyles, Theme, FontWeights, IStackTokens, IStackItemStyles } from '@fluentui/react';
 import { _pxToRem } from '@internal/acs-ui-common';
+
+/**
+ * @private
+ */
+export const phoneInfoContainerTokens: IStackTokens = {
+  childrenGap: '0.5rem'
+};
+
+/**
+ * @private
+ */
+export const phoneInfoContainerStyle: IStackItemStyles = {
+  root: {
+    position: 'relative',
+    maxHeight: '100%',
+    overflow: 'hidden'
+  }
+};
+
 /**
  * @private
  */

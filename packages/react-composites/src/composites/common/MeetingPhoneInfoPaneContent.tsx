@@ -9,10 +9,6 @@ import { _DrawerMenuItemProps } from '@internal/react-components';
 /* @conditional-compile-remove(teams-meeting-conference) */
 import React from 'react';
 /* @conditional-compile-remove(teams-meeting-conference) */
-import { peoplePaneContainerTokens } from '../common/styles/ParticipantContainer.styles';
-/* @conditional-compile-remove(teams-meeting-conference) */
-import { peoplePaneContainerStyle } from './styles/PeoplePaneContent.styles';
-/* @conditional-compile-remove(teams-meeting-conference) */
 import { ConferencePhoneInfo, formatPhoneNumberInfo } from '@internal/react-components';
 /* @conditional-compile-remove(teams-meeting-conference) */
 import {
@@ -21,7 +17,9 @@ import {
   phoneInfoInctructionLine,
   phoneInfoStep,
   phoneInfoIconStyle,
-  phoneInfoLabelStyle
+  phoneInfoLabelStyle,
+  phoneInfoContainerTokens,
+  phoneInfoContainerStyle
 } from './styles/TeamsMeetingConferenceInfo.style';
 /* @conditional-compile-remove(teams-meeting-conference) */
 import { useLocale } from '../localization';
@@ -42,8 +40,8 @@ export const MeetingPhoneInfoPaneContent = (props: {
     return (
       <Stack
         verticalFill
-        styles={peoplePaneContainerStyle}
-        tokens={peoplePaneContainerTokens}
+        styles={phoneInfoContainerStyle}
+        tokens={phoneInfoContainerTokens}
         data-ui-id="phone-info-pane-content"
       >
         {(conferencePhoneInfoList === undefined || conferencePhoneInfoList.length === 0) && (
@@ -118,8 +116,8 @@ export const MeetingPhoneInfoPaneContent = (props: {
   return (
     <Stack
       verticalFill
-      styles={peoplePaneContainerStyle}
-      tokens={peoplePaneContainerTokens}
+      styles={phoneInfoContainerStyle}
+      tokens={phoneInfoContainerTokens}
       data-ui-id="phone-info-pane-content"
     ></Stack>
   );

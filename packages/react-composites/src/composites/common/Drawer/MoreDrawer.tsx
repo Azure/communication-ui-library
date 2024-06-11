@@ -437,7 +437,7 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   ) {
     drawerMenuItems.push({
       itemKey: 'phoneCallInfoKey',
-      disabled: props.disableButtonsForHoldScreen || isDisabled(drawerSelectionOptions.teamsMeetingPhoneCallButton),
+      disabled: isDisabled(drawerSelectionOptions.teamsMeetingPhoneCallButton),
       text: localeStrings.strings.call.phoneCallMoreButtonLabel,
       onItemClick: () => {
         props.onClickMeetingPhoneInfo?.();
