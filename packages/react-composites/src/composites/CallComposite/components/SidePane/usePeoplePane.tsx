@@ -38,6 +38,10 @@ export const usePeoplePane = (props: {
   onMuteParticipant?: (userId: string) => Promise<void>;
   /* @conditional-compile-remove(soft-mute) */
   mutedParticipantUserIds?: string[];
+  pinnedParticipants?: string[];
+  onPinParticipant?: (userId: string) => void;
+  onUnpinParticipant?: (userId: string) => void;
+  disablePinMenuItem?: boolean;
 }): {
   openPeoplePane: () => void;
   closePeoplePane: () => void;
@@ -60,7 +64,11 @@ export const usePeoplePane = (props: {
     onStopAllSpotlight,
     maxParticipantsToSpotlight,
     /* @conditional-compile-remove(soft-mute) */
-    onMuteParticipant
+    onMuteParticipant,
+    pinnedParticipants,
+    onPinParticipant,
+    onUnpinParticipant,
+    disablePinMenuItem
   } = props;
 
   const closePane = useCallback(() => {
@@ -104,9 +112,11 @@ export const usePeoplePane = (props: {
 
   const onFetchParticipantMenuItemsForCallComposite = useCallback(
     (participantId: string, myUserId?: string, defaultMenuItems?: IContextualMenuItem[]): IContextualMenuItem[] => {
+      let isPinned = pinnedParticipants?.includes(participantId);
       const _defaultMenuItems: IContextualMenuItem[] = defaultMenuItems ?? [];
-      const isSpotlighted = spotlightedParticipantUserIds?.find((p) => p === participantId);
+      const isSpotlighted = spotlightedParticipantUserIds?.includes(participantId);
       const isMe = myUserId === participantId;
+      isPinned = isSpotlighted ? false : isPinned;
       if (isSpotlighted) {
         const stopSpotlightMenuText = isMe
           ? localeStrings.stopSpotlightOnSelfMenuLabel
@@ -180,6 +190,42 @@ export const usePeoplePane = (props: {
           disabled: isMuted
         });
       }
+
+      if (!isMe && isPinned !== undefined) {
+        if (isPinned && onUnpinParticipant && localeStrings?.unpinParticipantMenuLabel) {
+          _defaultMenuItems.push({
+            key: 'unpin',
+            text: localeStrings?.unpinParticipantMenuLabel,
+            iconProps: {
+              iconName: 'UnpinParticipant',
+              styles: { root: { lineHeight: '1rem', textAlign: 'center' } }
+            },
+            onClick: () => {
+              onUnpinParticipant?.(participantId);
+            },
+            'data-ui-id': 'participant-item-unpin-participant-button',
+            ariaLabel: localeStrings.unpinParticipantMenuItemAriaLabel
+          });
+        }
+        if (!isPinned && onPinParticipant && localeStrings?.pinParticipantMenuLabel) {
+          _defaultMenuItems.push({
+            key: 'pin',
+            text: disablePinMenuItem
+              ? localeStrings.pinParticipantLimitReachedMenuLabel
+              : localeStrings.pinParticipantMenuLabel,
+            iconProps: {
+              iconName: 'PinParticipant',
+              styles: { root: { lineHeight: '1rem', textAlign: 'center' } }
+            },
+            onClick: () => {
+              onPinParticipant(participantId);
+            },
+            'data-ui-id': 'participant-item-pin-participant-button',
+            disabled: disablePinMenuItem || isSpotlighted,
+            ariaLabel: localeStrings.pinParticipantMenuItemAriaLabel
+          });
+        }
+      }
       return onFetchParticipantMenuItems
         ? onFetchParticipantMenuItems(participantId, myUserId, _defaultMenuItems)
         : _defaultMenuItems;
@@ -200,7 +246,16 @@ export const usePeoplePane = (props: {
       localeStrings.addSpotlightMenuLabel,
       localeStrings.startSpotlightMenuLabel,
       localeStrings.spotlightLimitReachedMenuTitle,
-      maxParticipantsToSpotlight
+      maxParticipantsToSpotlight,
+      pinnedParticipants,
+      onPinParticipant,
+      onUnpinParticipant,
+      disablePinMenuItem,
+      localeStrings.pinParticipantMenuLabel,
+      localeStrings.pinParticipantLimitReachedMenuLabel,
+      localeStrings.unpinParticipantMenuLabel,
+      localeStrings.unpinParticipantMenuItemAriaLabel,
+      localeStrings.pinParticipantMenuItemAriaLabel
     ]
   );
 
@@ -214,6 +269,7 @@ export const usePeoplePane = (props: {
         mobileView={mobileView}
         setParticipantActioned={setParticipantActioned}
         participantListHeadingMoreButtonProps={sidePaneHeaderMenuProps}
+        pinnedParticipants={pinnedParticipants}
       />
     );
   }, [
@@ -223,7 +279,8 @@ export const usePeoplePane = (props: {
     onFetchParticipantMenuItemsForCallComposite,
     setDrawerMenuItems,
     setParticipantActioned,
-    sidePaneHeaderMenuProps
+    sidePaneHeaderMenuProps,
+    pinnedParticipants
   ]);
 
   const sidePaneRenderer: SidePaneRenderer = useMemo(
