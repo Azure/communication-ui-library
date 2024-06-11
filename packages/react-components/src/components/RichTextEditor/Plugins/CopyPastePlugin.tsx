@@ -110,5 +110,6 @@ export const scrollToBottomAfterContentPaste = (event: PluginEvent): void => {
     tempElement.scrollIntoView({
       block: 'center'
     });
+    tempElement.remove();
   }
 };
