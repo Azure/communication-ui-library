@@ -138,12 +138,12 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   /* @conditional-compile-remove(rich-text-editor-composite-support) */
   useEffect(() => {
     // if rich text editor is enabled, the rich text editor component should be loaded early for good UX
-    if (options?.richTextEditorOptions !== undefined) {
+    if (options?.richTextEditor) {
       // this line is needed to load the Rooster JS dependencies early in the lifecycle
       // when the rich text editor is enabled
       loadRichTextSendBox();
     }
-  }, [options?.richTextEditorOptions]);
+  }, [options?.richTextEditor]);
 
   const messageThreadProps = usePropsFor(MessageThread);
   const typingIndicatorProps = usePropsFor(TypingIndicator);
@@ -481,7 +481,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             numberOfChatMessagesToReload={defaultNumberOfChatMessagesToReload}
             styles={messageThreadStyles}
             /* @conditional-compile-remove(rich-text-editor-composite-support) @conditional-compile-remove(rich-text-editor) */
-            richTextEditorOptions={options?.richTextEditorOptions}
+            richTextEditorOptions={options?.richTextEditor ? {} : undefined}
           />
           <Stack className={mergeStyles(sendboxContainerStyles)}>
             <div className={mergeStyles(typingIndicatorContainerStyles)}>
@@ -503,7 +503,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
                   styles={sendBoxStyles}
                   autoFocus={options?.autoFocus}
                   /* @conditional-compile-remove(rich-text-editor-composite-support) */
-                  richTextEditorOptions={options?.richTextEditorOptions}
+                  richTextEditorOptions={options?.richTextEditor ? {} : undefined}
                   /* @conditional-compile-remove(file-sharing-acs) */
                   attachments={attachments}
                   /* @conditional-compile-remove(file-sharing-acs) */
