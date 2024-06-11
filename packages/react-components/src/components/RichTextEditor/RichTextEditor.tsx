@@ -6,7 +6,12 @@ import { darkTheme, lightTheme, useTheme } from '../../theming';
 import { RichTextStrings } from './RichTextSendBox';
 import { isDarkThemed } from '../../theming/themeUtils';
 import CopyPastePlugin from './Plugins/CopyPastePlugin';
-import type { ContentModelDocument, EditorPlugin, IEditor } from 'roosterjs-content-model-types';
+import type {
+  ContentModelDocument,
+  EditorPlugin,
+  IEditor,
+  ShallowMutableContentModelDocument
+} from 'roosterjs-content-model-types';
 import { createModelFromHtml, Editor, exportContent } from 'roosterjs-content-model-core';
 import { createParagraph, createSelectionMarker, setSelection } from 'roosterjs-content-model-dom';
 import { KeyboardInputPlugin } from './Plugins/KeyboardInputPlugin';
@@ -109,9 +114,10 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
         },
         setEmptyContent() {
           if (editor.current) {
+            editor.current.formatContentModel;
             // remove all content from the editor and update the model
             // ContentChanged event will be sent by RoosterJS automatically
-            editor.current.formatContentModel((model: ContentModelDocument): boolean => {
+            editor.current.formatContentModel((model: ShallowMutableContentModelDocument): boolean => {
               model.blocks = [];
               return true;
             });
