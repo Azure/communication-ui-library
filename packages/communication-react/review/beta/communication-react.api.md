@@ -1409,7 +1409,7 @@ export type CallWithChatCompositeOptions = {
     spotlight?: {
         hideSpotlightButtons?: boolean;
     };
-    richTextEditorOptions?: RichTextEditorOptions;
+    richTextEditor?: boolean;
 };
 
 // @public
@@ -1799,7 +1799,7 @@ export type ChatCompositeOptions = {
     topic?: boolean;
     autoFocus?: 'sendBoxTextField';
     attachmentOptions?: AttachmentOptions;
-    richTextEditorOptions?: RichTextEditorOptions;
+    richTextEditor?: boolean;
 };
 
 // @public

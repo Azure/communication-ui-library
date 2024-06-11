@@ -98,29 +98,6 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     return () => window.removeEventListener('beforeunload', disposeAdapter);
   }, [adapter]);
 
-  /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  const removeImageTags = useCallback((event: { content: DocumentFragment }) => {
-    event.content.querySelectorAll('img').forEach((image) => {
-      // If the image is the only child of its parent, remove all the parents of this img element.
-      let parentNode: HTMLElement | null = image.parentElement;
-      let currentNode: HTMLElement = image;
-      while (parentNode?.childNodes.length === 1) {
-        currentNode = parentNode;
-        parentNode = parentNode.parentElement;
-      }
-      currentNode?.remove();
-    });
-  }, []);
-
-  /* @conditional-compile-remove(rich-text-editor-composite-support) @conditional-compile-remove(rich-text-editor) */
-  const richTextEditorOptions = useMemo(() => {
-    return isRichTextEditorEnabled
-      ? {
-          /* @conditional-compile-remove(rich-text-editor-image-upload) */ onPaste: removeImageTags
-        }
-      : undefined;
-  }, [isRichTextEditorEnabled, removeImageTags]);
-
   if (adapter) {
     const onFetchAvatarPersonaData = (userId: string): Promise<AvatarPersonaData> =>
       fetchEmojiForUser(userId).then(
@@ -147,8 +124,8 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
                 uploadOptions: attachmentUploadOptions,
                 downloadOptions: attachmentDownloadOptions
               },
-              /* @conditional-compile-remove(rich-text-editor-composite-support) @conditional-compile-remove(rich-text-editor) */
-              richTextEditorOptions: richTextEditorOptions
+              /* @conditional-compile-remove(rich-text-editor-composite-support) */
+              richTextEditor: isRichTextEditorEnabled
             }}
             onFetchAvatarPersonaData={onFetchAvatarPersonaData}
           />
