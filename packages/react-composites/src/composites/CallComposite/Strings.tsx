@@ -815,6 +815,29 @@ export interface CallCompositeStrings {
    * Error message when the meeting identifier or passcode is invalid
    */
   invalidMeetingIdentifier: string;
+  /**
+   * Menu text shown in Participant Item contextual menu for pinning a remote participant's video tile
+   *
+   */
+  pinParticipantMenuLabel: string;
+  /**
+   * Menu text shown in Participant Item contextual menu when pinning limit is reached
+   *
+   */
+  pinParticipantLimitReachedMenuLabel: string;
+  /**
+   * Menu text shown in Participant Item contextual menu for unpinning a remote participant's video tile
+   *
+   */
+  unpinParticipantMenuLabel: string;
+  /**
+   * Aria label for unpin participant menu item of remote participant
+   */
+  unpinParticipantMenuItemAriaLabel: string;
+  /**
+   * Aria label to announce when remote participant is pinned
+   */
+  pinParticipantMenuItemAriaLabel: string;
   /* @conditional-compile-remove(teams-meeting-conference) */
   /**
    * Error message when the meeting identifier or passcode is invalid

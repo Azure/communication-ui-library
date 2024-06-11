@@ -17,8 +17,6 @@ import { CallWithChatCompositeIcons } from '../common/icons';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { CallWithChatAdapterState } from './state/CallWithChatAdapterState';
 import { CallSurveyImprovementSuggestions } from '@internal/react-components';
-/* @conditional-compile-remove(rich-text-editor-composite-support) @conditional-compile-remove(rich-text-editor) */
-import { RichTextEditorOptions } from '@internal/react-components';
 import {
   ParticipantMenuItemsCallback,
   _useContainerHeight,
@@ -269,12 +267,14 @@ export type CallWithChatCompositeOptions = {
     hideSpotlightButtons?: boolean;
   };
 
-  /* @conditional-compile-remove(rich-text-editor) @conditional-compile-remove(rich-text-editor-composite-support) */
+  /* @conditional-compile-remove(rich-text-editor-composite-support) */
   /**
-   * Options to enable rich text editor for the edit box.
+   * Enables rich text editor for the send and edit boxes
+   * @defaultValue `false`
+   *
    * @beta
    */
-  richTextEditorOptions?: RichTextEditorOptions;
+  richTextEditor?: boolean;
 };
 
 type CallWithChatScreenProps = {
@@ -352,8 +352,8 @@ type CallWithChatScreenProps = {
   spotlight?: {
     hideSpotlightButtons?: boolean;
   };
-  /* @conditional-compile-remove(rich-text-editor-composite-support) @conditional-compile-remove(rich-text-editor) */
-  richTextEditorOptions?: RichTextEditorOptions;
+  /* @conditional-compile-remove(rich-text-editor-composite-support) */
+  richTextEditor?: boolean;
 };
 
 const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
@@ -570,18 +570,17 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
           participantPane: false,
           /* @conditional-compile-remove(file-sharing-acs) */
           attachmentOptions: props.attachmentOptions,
-          /* @conditional-compile-remove(rich-text-editor-composite-support) @conditional-compile-remove(rich-text-editor) */
-          richTextEditorOptions: props.richTextEditorOptions
+          /* @conditional-compile-remove(rich-text-editor-composite-support) */
+          richTextEditor: props.richTextEditor
         }}
         onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
       />
     ),
     [
       chatAdapter,
-      /* @conditional-compile-remove(file-sharing-acs) */
-      props.attachmentOptions,
+      /* @conditional-compile-remove(file-sharing-acs) */ props.attachmentOptions,
       props.onFetchAvatarPersonaData,
-      /* @conditional-compile-remove(rich-text-editor-composite-support) */ props.richTextEditorOptions,
+      /* @conditional-compile-remove(rich-text-editor-composite-support) */ props.richTextEditor,
       theme
     ]
   );
