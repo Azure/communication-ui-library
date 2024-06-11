@@ -504,7 +504,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             inlineImageOptions={inlineImageOptions}
             numberOfChatMessagesToReload={defaultNumberOfChatMessagesToReload}
             styles={messageThreadStyles}
-            /* @conditional-compile-remove(rich-text-editor-composite-support) @conditional-compile-remove(rich-text-editor) */
+            /* @conditional-compile-remove(rich-text-editor-composite-support) */
             richTextEditorOptions={richTextEditorOptions}
           />
           <Stack className={mergeStyles(sendboxContainerStyles)}>
