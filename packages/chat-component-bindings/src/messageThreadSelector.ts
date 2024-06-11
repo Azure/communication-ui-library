@@ -45,7 +45,7 @@ const memoizedAllConvertChatMessage = memoizeFnAll(
   ): Message => {
     const messageType = chatMessage.type.toLowerCase();
     /* @conditional-compile-remove(data-loss-prevention) */
-    if (chatMessage.policyViolation) {
+    if (chatMessage.policyViolation?.result === 'contentBlocked') {
       return convertToUiBlockedMessage(chatMessage, userId, isSeen, isLargeGroup);
     }
     if (
@@ -368,7 +368,7 @@ const isMessageValidToRender = (message: ChatMessageWithStatus): boolean => {
     return true;
   }
   /* @conditional-compile-remove(data-loss-prevention) */
-  if (message.policyViolation) {
+  if (message.policyViolation?.result === 'contentBlocked') {
     return true;
   }
   return !!(message.content && message.content?.message !== '');
