@@ -127,7 +127,7 @@ export const chatMessageMenuStyle = mergeStyles({
   height: 'max-content',
   cursor: 'pointer',
   overflow: 'hidden',
-  '-webkit-tap-highlight-color': 'rgba(255, 255, 255, 0)' // Disable tap highlight on Android
+  '-webkit-tap-highlight-color': 'transparent' // Disable tap highlight on Android
 });
 
 /**
