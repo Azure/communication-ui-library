@@ -52,7 +52,9 @@ export class EventSubscriber {
       sequenceId: '', // Note: there is a bug in chatMessageReceived event that it is missing sequenceId
       createdOn: new Date(event.createdOn),
       editedOn: 'editedOn' in event ? event.editedOn : undefined,
-      metadata: event.metadata
+      metadata: event.metadata,
+      /* @conditional-compile-remove(data-loss-prevention) */
+      policyViolation: 'policyViolation' in event ? event.policyViolation : undefined
     });
   };
 
