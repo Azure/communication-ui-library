@@ -53,6 +53,7 @@ export class EventSubscriber {
       createdOn: new Date(event.createdOn),
       editedOn: 'editedOn' in event ? event.editedOn : undefined,
       metadata: event.metadata,
+      /* @conditional-compile-remove(data-loss-prevention) */
       policyViolation: 'policyViolation' in event ? event.policyViolation : undefined
     });
   };
