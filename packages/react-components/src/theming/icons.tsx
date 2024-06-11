@@ -42,6 +42,7 @@ import {
   MicProhibited16Filled,
   VideoProhibited16Filled,
   Pin16Filled,
+  Pin20Filled,
   Pin20Regular,
   PinOff20Regular,
   ScaleFit20Regular,
@@ -338,6 +339,7 @@ export const DEFAULT_COMPONENT_ICONS = {
   /* @conditional-compile-remove(call-readiness) */
   BrowserPermissionDeniedError: <BrowserPermissionDenied20Filled />,
   VideoTilePinned: <Pin16Filled />,
+  ParticipantItemPinned: <Pin20Filled />,
   VideoTileMoreOptions: <MoreHorizontal20Filled />,
   VideoTileScaleFit: <ScaleFit20Regular />,
   VideoTileScaleFill: <ScaleFill20Regular />,
