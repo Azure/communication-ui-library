@@ -578,7 +578,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
     ),
     [
       chatAdapter,
-      props.attachmentOptions,
+      /* @conditional-compile-remove(file-sharing-acs) */ props.attachmentOptions,
       props.onFetchAvatarPersonaData,
       /* @conditional-compile-remove(rich-text-editor-composite-support) */ props.richTextEditor,
       theme
