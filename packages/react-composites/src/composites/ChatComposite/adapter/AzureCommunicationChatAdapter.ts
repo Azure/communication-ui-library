@@ -408,6 +408,8 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
 const convertEventToChatMessage = (
   event: ChatMessageReceivedEvent | ChatMessageEditedEvent | ChatMessageDeletedEvent
 ): ChatMessage => {
+  // statefulChatClient.getChatThreadClient().getProperties()
+
   return {
     id: event.id,
     version: event.version,

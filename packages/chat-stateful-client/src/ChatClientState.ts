@@ -86,6 +86,8 @@ export type ChatThreadClientState = {
  */
 export type ChatThreadProperties = {
   topic?: string;
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  createdBy?: CommunicationIdentifierKind;
 };
 
 /**

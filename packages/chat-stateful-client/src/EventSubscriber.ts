@@ -117,6 +117,7 @@ export class EventSubscriber {
   ): Promise<void> => {
     for await (const message of this.chatClient
       .getChatThreadClient(threadId)
+      // .getStatefulChatThreadClient()
       .listMessages({ startTime: new Date(Date.now() - maxSyncTimeInMs) })) {
       if (message.type === actionType) {
         this.chatContext.setChatMessage(threadId, { ...message, status: 'delivered' });
@@ -161,6 +162,7 @@ export class EventSubscriber {
   private onChatThreadCreated = (event: ChatThreadCreatedEvent): void => {
     const properties = {
       topic: event.properties.topic
+      // createBy: event.properties.createdBy
     };
     if (!this.chatContext.createThreadIfNotExist(event.threadId, properties)) {
       this.chatContext.updateThread(event.threadId, properties);
