@@ -19,7 +19,9 @@ import {
   phoneInfoTextStyle,
   phoneInfoIcon,
   phoneInfoInctructionLine,
-  phoneInfoStep
+  phoneInfoStep,
+  phoneInfoIconStyle,
+  phoneInfoLabelStyle
 } from './styles/TeamsMeetingConferenceInfo.style';
 /* @conditional-compile-remove(teams-meeting-conference) */
 import { useLocale } from '../localization';
@@ -54,16 +56,13 @@ export const MeetingPhoneInfoPaneContent = (props: {
             <Stack horizontal horizontalAlign="space-between" className={phoneInfoInctructionLine}>
               <Stack.Item>
                 <Stack horizontal className={phoneInfoStep}>
-                  <Stack.Item className={phoneInfoIcon}>
+                  <Stack.Item className={phoneInfoIcon(theme)}>
                     <Stack verticalAlign="center" horizontalAlign="center">
-                      <Icon
-                        iconName="PhoneNumberButton"
-                        style={{ color: theme.palette.themePrimary, padding: '8px' }}
-                      />
+                      <Icon iconName="PhoneNumberButton" className={phoneInfoIconStyle(theme)} />
                     </Stack>
                   </Stack.Item>
                   <Stack.Item>
-                    <Text className={phoneInfoTextStyle}>{localeStrings.meetingConferencePhoneInfoModalDialIn}</Text>
+                    <Text className={phoneInfoLabelStyle}>{localeStrings.meetingConferencePhoneInfoModalDialIn}</Text>
                   </Stack.Item>
                 </Stack>
               </Stack.Item>
@@ -81,26 +80,32 @@ export const MeetingPhoneInfoPaneContent = (props: {
               verticalAlign="center"
               className={phoneInfoInctructionLine}
             >
-              {}
               <Stack.Item>
                 <Stack horizontal>
-                  <Stack.Item className={phoneInfoIcon}>
-                    <Icon iconName="DtmfDialpadButton" style={{ color: theme.palette.themePrimary, padding: '8px' }} />
+                  <Stack.Item className={phoneInfoIcon(theme)}>
+                    <Icon iconName="DtmfDialpadButton" className={phoneInfoIconStyle(theme)} />
                   </Stack.Item>
                   <Stack.Item>
-                    <Text className={phoneInfoTextStyle}>{localeStrings.meetingConferencePhoneInfoModalMeetingId}</Text>
+                    <Text className={phoneInfoLabelStyle}>
+                      {localeStrings.meetingConferencePhoneInfoModalMeetingId}
+                    </Text>
                   </Stack.Item>
                 </Stack>
               </Stack.Item>
               <Text className={phoneInfoTextStyle}>{conferencePhoneInfoList[0].conferenceId}#</Text>
             </Stack>
-            <Stack horizontal horizontalAlign="space-between" verticalAlign="center">
+            <Stack
+              horizontal
+              horizontalAlign="space-between"
+              verticalAlign="center"
+              className={phoneInfoInctructionLine}
+            >
               <Stack horizontal>
-                <Stack.Item className={phoneInfoIcon}>
-                  <Icon iconName="PhoneInfoWait" style={{ color: theme.palette.themePrimary, padding: '8px' }} />
+                <Stack.Item className={phoneInfoIcon(theme)}>
+                  <Icon iconName="PhoneInfoWait" className={phoneInfoIconStyle(theme)} />
                 </Stack.Item>
                 <Stack.Item>
-                  <Text className={phoneInfoTextStyle}>{localeStrings.meetingConferencePhoneInfoModalWait}</Text>
+                  <Text className={phoneInfoLabelStyle}>{localeStrings.meetingConferencePhoneInfoModalWait}</Text>
                 </Stack.Item>
               </Stack>
             </Stack>
