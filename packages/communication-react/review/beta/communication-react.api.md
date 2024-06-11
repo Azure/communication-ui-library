@@ -1926,6 +1926,7 @@ export type ChatThreadClientState = {
 // @public
 export type ChatThreadProperties = {
     topic?: string;
+    createdBy?: CommunicationIdentifierKind;
 };
 
 // @public
