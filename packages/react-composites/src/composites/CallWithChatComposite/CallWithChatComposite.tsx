@@ -269,7 +269,7 @@ export type CallWithChatCompositeOptions = {
 
   /* @conditional-compile-remove(rich-text-editor-composite-support) */
   /**
-   * enables rich text editor for the edit box
+   * Enables rich text editor for the send and edit boxes
    * @defaultValue `false`
    *
    * @beta
