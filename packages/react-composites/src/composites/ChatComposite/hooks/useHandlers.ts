@@ -45,6 +45,7 @@ const createCompositeHandlers = memoizeOne(
       }
       return adapter.sendMessage(content, options);
     },
+    onUploadImage: adapter.uploadImage,
     onLoadPreviousChatMessages: adapter.loadPreviousChatMessages,
     onMessageSeen: adapter.sendReadReceipt,
     onTyping: adapter.sendTypingIndicator,

@@ -25,6 +25,8 @@ import { SendBoxErrorBarError } from '../SendBoxErrorBar';
 import { attachmentUploadCardsStyles } from '../styles/SendBox.styles';
 /* @conditional-compile-remove(file-sharing-acs) */
 import { FluentV9ThemeProvider } from '../../theming/FluentV9ThemeProvider';
+import { ChatAttachmentType } from '../Attachment/AttachmentDownloadCards';
+import { upload } from '@testing-library/user-event/dist/types/utility';
 
 /**
  * Strings of {@link RichTextSendBox} that can be overridden.
@@ -120,6 +122,16 @@ export interface RichTextStrings {
    */
   richTextToolbarMoreButtonAriaLabel: string;
 }
+/**
+ * Props for {@link RichTextSendBox}.
+ *
+ * @beta
+ */
+export interface UploadChatImageResult {
+  attachmentType?: ChatAttachmentType;
+  id: string;
+  name?: string;
+}
 
 /**
  * Props for {@link RichTextSendBox}.
@@ -152,6 +164,7 @@ export interface RichTextSendBoxProps {
    * @beta
    */
   attachments?: AttachmentMetadataInProgress[];
+  // inlineImages: string[];
   /**
    * enumerable to determine if the input box has focus on render or not.
    * When undefined nothing has focus on render
@@ -176,6 +189,7 @@ export interface RichTextSendBoxProps {
    * Optional callback called when user is typing
    */
   onTyping?: () => Promise<void>;
+  onUploadImage?: (image: Blob, fileName: string) => Promise<UploadChatImageResult>;
 }
 
 /**
@@ -423,6 +437,17 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
   const hasAttachmentUploads = useMemo(() => {
     return isAttachmentUploadCompleted(attachments) || hasIncompleteAttachmentUploads(attachments);
   }, [attachments]);
+
+  // const [imageResult, setImageResult] = useState<UploadChatImageResult | undefined>(undefined);
+
+  // const handleOnUploadImage = useCallback(
+  //   (image: string, imageFilename: string): void => {
+  //     const result = onUploadImage && onUploadImage(image, imageFilename);
+  //     console.log('Leah: ::: imageResult', result);
+  //     // setImageResult(result);
+  //   },
+  //   [onUploadImage]
+  // );
 
   return (
     <Stack>

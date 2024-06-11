@@ -70,6 +70,8 @@ export interface InlineImageOptions {
     inlineImage: InlineImage,
     defaultOnRender: (inlineImage: InlineImage) => JSX.Element
   ) => JSX.Element;
+  // only RTE
+  onUploadImage?: (image: ArrayBuffer | Blob, imageFilename: string) => Promise<void>;
 }
 
 /** @private */

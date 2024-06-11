@@ -177,6 +177,10 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     return new UpdateContentPlugin();
   }, []);
 
+  const copyPastePlugin = useMemo(() => {
+    return new CopyPastePlugin();
+  }, []);
+
   useEffect(() => {
     // don't set callback in plugin constructor to update callback without plugin recreation
     updatePlugin.onUpdate = (event: string) => {
@@ -190,6 +194,10 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
       }
     };
   }, [onChange, onContentModelUpdate, updatePlugin]);
+
+  useEffect(() => {
+    copyPastePlugin.onUploadImage = onUploadImage;
+  }, [copyPastePlugin, onUploadImage]);
 
   const keyboardInputPlugin = useMemo(() => {
     return new KeyboardInputPlugin();
