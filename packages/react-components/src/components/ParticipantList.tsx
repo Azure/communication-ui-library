@@ -184,11 +184,7 @@ const onRenderParticipantDefault = (
             {callingParticipant.isMuted && (
               <Icon iconName="ParticipantItemMicOff" className={iconStyles} ariaLabel={strings.mutedIconLabel} />
             )}
-            {
-              /* @conditional-compile-remove(spotlight) */ callingParticipant.spotlight && (
-                <Icon iconName="ParticipantItemSpotlighted" className={iconStyles} />
-              )
-            }
+            {callingParticipant.spotlight && <Icon iconName="ParticipantItemSpotlighted" className={iconStyles} />}
           </Stack>
         )
       : () => null;
@@ -218,7 +214,7 @@ const onRenderParticipantDefault = (
       presence={presence}
       onRenderIcon={onRenderIcon}
       onRenderAvatar={onRenderAvatarWithRaiseHand}
-      onClick={() => onParticipantClick?.(participant)}
+      onClick={onParticipantClick ? () => onParticipantClick?.(participant) : undefined}
       showParticipantOverflowTooltip={showParticipantOverflowTooltip}
       /* @conditional-compile-remove(one-to-n-calling) */
       /* @conditional-compile-remove(PSTN-calls) */

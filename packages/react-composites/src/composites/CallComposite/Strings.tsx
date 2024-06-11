@@ -4,7 +4,6 @@
 import { SpokenLanguageStrings, CaptionLanguageStrings } from '@internal/react-components';
 import { SurveyIssues, SurveyIssuesHeadingStrings } from '@internal/react-components';
 import { CapabilityChangedNotificationStrings } from './components/CapabilitiesChangedNotificationBar';
-/* @conditional-compile-remove(spotlight) */
 import { SpotlightPromptStrings } from './components/Prompt';
 
 /**
@@ -252,32 +251,26 @@ export interface CallCompositeStrings {
    * Label for menu item to remove participant
    */
   removeMenuLabel: string;
-  /* @conditional-compile-remove(spotlight) */
   /**
    * Label for menu item to start spotlight on participant
    */
   startSpotlightMenuLabel: string;
-  /* @conditional-compile-remove(spotlight) */
   /**
    * Label for menu item to add spotlight on participant
    */
   addSpotlightMenuLabel: string;
-  /* @conditional-compile-remove(spotlight) */
   /**
    * Label for menu item to stop spotlight on participant
    */
   stopSpotlightMenuLabel: string;
-  /* @conditional-compile-remove(spotlight) */
   /**
    * Label for menu item to stop spotlight on local user
    */
   stopSpotlightOnSelfMenuLabel: string;
-  /* @conditional-compile-remove(spotlight) */
   /**
    * Label for menu item to stop spotlight on local user
    */
   spotlightLimitReachedMenuTitle: string;
-  /* @conditional-compile-remove(spotlight) */
   /**
    * Label for menu item to stop all spotlight
    */
@@ -770,17 +763,14 @@ export interface CallCompositeStrings {
    * Label to hide the dtmf dialer in the more button menu
    */
   dtmfDialerMoreButtonLabelOff?: string;
-  /* @conditional-compile-remove(spotlight) */
   /**
    * Strings for spotlight prompt
    */
   spotlightPrompt: SpotlightPromptStrings;
-  /* @conditional-compile-remove(spotlight) */
   /**
    * Label for button to exit spotlight
    */
   exitSpotlightButtonLabel: string;
-  /* @conditional-compile-remove(spotlight) */
   /**
    * Tooltip for button to exit spotlight
    */
@@ -825,4 +815,9 @@ export interface CallCompositeStrings {
    * Error message when the meeting identifier or passcode is invalid
    */
   invalidMeetingIdentifier: string;
+  /* @conditional-compile-remove(teams-meeting-conference) */
+  /**
+   * Error message when the meeting identifier or passcode is invalid
+   */
+  phoneCallMoreButtonLabel: string;
 }

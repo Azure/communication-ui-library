@@ -1,8 +1,8 @@
 {
   "type": "patch",
   "area": "fix",
-  "workstream": "Raise Hand",
-  "comment": "Fix bug where raise hand's height is the height of video til",
+  "workstream": "Reactions",
+  "comment": "Fixed bug where reactions is dismissed when receiving new captions",
   "packageName": "@azure/communication-react",
   "email": "96077406+carocao-msft@users.noreply.github.com",
   "dependentChangeType": "patch"

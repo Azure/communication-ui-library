@@ -10,7 +10,6 @@ import { PropertyChangedEvent, CaptionsCallFeature } from '@azure/communication-
 import { Captions } from '@azure/communication-calling';
 import { TeamsCaptions } from '@azure/communication-calling';
 import { TransferCallFeature, TransferAcceptedEvent, TransferEventArgs } from '@azure/communication-calling';
-/* @conditional-compile-remove(spotlight) */
 import { SpotlightCallFeature } from '@azure/communication-calling';
 /**
  * @private
@@ -117,7 +116,6 @@ export abstract class ProxyCallCommon implements ProxyHandler<CallCommon> {
             const proxyFeature = new ProxyTransferCallFeature(this._context, target);
             return new Proxy(transferFeature, proxyFeature);
           }
-          /* @conditional-compile-remove(spotlight) */
           if (args[0] === Features.Spotlight) {
             const spotlightFeature = target.feature(Features.Spotlight);
             const proxyFeature = new ProxySpotlightCallFeature(this._context);
@@ -242,7 +240,6 @@ class ProxyCaptions implements ProxyHandler<Captions> {
   }
 }
 
-/* @conditional-compile-remove(spotlight) */
 /**
  * @private
  */
