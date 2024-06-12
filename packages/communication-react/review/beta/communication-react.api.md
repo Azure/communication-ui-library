@@ -1409,7 +1409,7 @@ export type CallWithChatCompositeOptions = {
     spotlight?: {
         hideSpotlightButtons?: boolean;
     };
-    richTextEditorOptions?: RichTextEditorOptions;
+    richTextEditor?: boolean;
 };
 
 // @public
@@ -1799,7 +1799,7 @@ export type ChatCompositeOptions = {
     topic?: boolean;
     autoFocus?: 'sendBoxTextField';
     attachmentOptions?: AttachmentOptions;
-    richTextEditorOptions?: RichTextEditorOptions;
+    richTextEditor?: boolean;
 };
 
 // @public
@@ -1892,7 +1892,6 @@ export type ChatMessageType = 'text' | 'html';
 export type ChatMessageWithStatus = ChatMessage_2 & {
     clientMessageId?: string;
     status: MessageStatus;
-    policyViolation?: boolean;
     resourceCache?: Record<string, ResourceFetchResult>;
 };
 
