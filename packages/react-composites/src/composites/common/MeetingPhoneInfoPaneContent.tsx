@@ -76,7 +76,7 @@ export const MeetingPhoneInfoPaneContent = (props: {
               horizontal
               horizontalAlign="space-between"
               verticalAlign="center"
-              className={phoneInfoInctructionLine}
+              className={phoneInfoInsctructionLine}
             >
               <Stack.Item>
                 <Stack horizontal>
