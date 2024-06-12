@@ -188,6 +188,8 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
         setIsPromptOpen={setIsPromptOpen}
         setPromptProps={setPromptProps}
         hideSpotlightButtons={options?.spotlight?.hideSpotlightButtons}
+        pinnedParticipants={pinnedParticipants}
+        setPinnedParticipants={setPinnedParticipants}
       />
       {<Prompt isOpen={isPromptOpen} onDismiss={() => setIsPromptOpen(false)} {...promptProps} />}
     </>
