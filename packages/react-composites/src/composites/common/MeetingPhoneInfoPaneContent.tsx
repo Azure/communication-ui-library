@@ -14,7 +14,7 @@ import { ConferencePhoneInfo, formatPhoneNumberInfo } from '@internal/react-comp
 import {
   phoneInfoTextStyle,
   phoneInfoIcon,
-  phoneInfoInctructionLine,
+  phoneInfoInstructionLine,
   phoneInfoStep,
   phoneInfoIconStyle,
   phoneInfoLabelStyle,
@@ -51,7 +51,7 @@ export const MeetingPhoneInfoPaneContent = (props: {
         )}
         {conferencePhoneInfoList && conferencePhoneInfoList.length > 0 && (
           <Stack>
-            <Stack horizontal horizontalAlign="space-between" className={phoneInfoInctructionLine}>
+            <Stack horizontal horizontalAlign="space-between" className={phoneInfoInstructionLine}>
               <Stack.Item>
                 <Stack horizontal className={phoneInfoStep}>
                   <Stack.Item className={phoneInfoIcon(theme)}>
@@ -76,7 +76,7 @@ export const MeetingPhoneInfoPaneContent = (props: {
               horizontal
               horizontalAlign="space-between"
               verticalAlign="center"
-              className={phoneInfoInsctructionLine}
+              className={phoneInfoInstructionLine}
             >
               <Stack.Item>
                 <Stack horizontal>
@@ -96,7 +96,7 @@ export const MeetingPhoneInfoPaneContent = (props: {
               horizontal
               horizontalAlign="space-between"
               verticalAlign="center"
-              className={phoneInfoInctructionLine}
+              className={phoneInfoInstructionLine}
             >
               <Stack horizontal>
                 <Stack.Item className={phoneInfoIcon(theme)}>

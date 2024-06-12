@@ -84,7 +84,7 @@ export const phoneInfoIcon = (theme: Theme): string => {
 /**
  * @private
  */
-export const phoneInfoInctructionLine = mergeStyles({
+export const phoneInfoInstructionLine = mergeStyles({
   padding: '0.5rem 1rem'
 });
 
