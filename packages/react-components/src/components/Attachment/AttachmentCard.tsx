@@ -199,14 +199,18 @@ const MappedMenuItems = (
         <TooltipHost content={localeStrings.attachmentMoreMenu}>
           <MenuTrigger>
             <ToolbarButton
-              icon={<Icon iconName="AttachmentMoreMenu" aria-label={localeStrings.attachmentMoreMenu} role="button" />}
+              aria-label={localeStrings.attachmentMoreMenu}
+              role="button"
+              icon={<Icon iconName="AttachmentMoreMenu" />}
             />
           </MenuTrigger>
         </TooltipHost>
         <MenuPopover>
-          <MenuList>
+          <MenuList role="menu">
             {menuActions.map((menuItem, index) => (
               <MenuItem
+                ariaLabel={menuItem.name}
+                role="menuitem"
                 key={index}
                 icon={menuItem.icon}
                 onClick={async () => {
