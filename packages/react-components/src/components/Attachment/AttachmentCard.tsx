@@ -124,6 +124,7 @@ export const _AttachmentCard = (props: _AttachmentCardProps): JSX.Element => {
                     imageFileType: 'svg'
                   }).iconName
                 }
+                role="img"
               />
             </div>
           }
@@ -181,6 +182,7 @@ const MappedMenuItems = (
     <TooltipHost content={menuActions[0].name}>
       <ToolbarButton
         aria-label={menuActions[0].name}
+        role="tooltip"
         icon={menuActions[0].icon}
         onClick={() => {
           try {
@@ -197,7 +199,7 @@ const MappedMenuItems = (
         <TooltipHost content={localeStrings.attachmentMoreMenu}>
           <MenuTrigger>
             <ToolbarButton
-              icon={<Icon iconName="AttachmentMoreMenu" aria-label={localeStrings.attachmentMoreMenu} />}
+              icon={<Icon iconName="AttachmentMoreMenu" aria-label={localeStrings.attachmentMoreMenu} role="button" />}
             />
           </MenuTrigger>
         </TooltipHost>

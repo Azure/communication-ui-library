@@ -54,6 +54,7 @@ export const _AttachmentCardGroup = (props: _AttachmentCardGroupProps): JSX.Elem
         attachmentGroupLayout === _AttachmentCardGroupLayout.Grid ? attachmentCardGirdLayout : attachmentCardFlexLayout
       )}
       aria-label={ariaLabel}
+      role="list"
     >
       {children}
     </Stack>
