@@ -78,7 +78,7 @@ export const _AttachmentUploadCards = (props: AttachmentUploadCardsProps): JSX.E
                     <div
                       aria-label={removeAttachmentButtonString()}
                       data-testid="attachment-upload-card-remove"
-                      role="button"
+                      role="img"
                     >
                       <Icon iconName="CancelAttachmentUpload" className={mergeStyles(actionIconStyle)} />
                     </div>
