@@ -114,7 +114,7 @@ export const _AttachmentCard = (props: _AttachmentCardProps): JSX.Element => {
         <CardHeader
           className={attachmentCardStyles.content}
           image={
-            <div className={attachmentCardStyles.fileIcon}>
+            <div className={attachmentCardStyles.fileIcon} role="img">
               <Icon
                 data-ui-id={'attachmenttype-icon'}
                 iconName={
@@ -124,7 +124,6 @@ export const _AttachmentCard = (props: _AttachmentCardProps): JSX.Element => {
                     imageFileType: 'svg'
                   }).iconName
                 }
-                role="img"
               />
             </div>
           }
@@ -206,11 +205,10 @@ const MappedMenuItems = (
           </MenuTrigger>
         </TooltipHost>
         <MenuPopover>
-          <MenuList role="menu">
+          <MenuList>
             {menuActions.map((menuItem, index) => (
               <MenuItem
                 aria-label={menuItem.name}
-                role="menuitem"
                 key={index}
                 icon={menuItem.icon}
                 onClick={async () => {
