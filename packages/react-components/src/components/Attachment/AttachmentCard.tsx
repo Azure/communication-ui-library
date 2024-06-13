@@ -209,7 +209,7 @@ const MappedMenuItems = (
           <MenuList role="menu">
             {menuActions.map((menuItem, index) => (
               <MenuItem
-                ariaLabel={menuItem.name}
+                aria-label={menuItem.name}
                 role="menuitem"
                 key={index}
                 icon={menuItem.icon}
