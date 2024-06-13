@@ -43,7 +43,7 @@
   "devDependencies": {
     "@azure/communication-signaling": "1.0.0-beta.27 || 1.0.0-beta.26",
     "@babel/cli": "^7.23.9",
-    "@babel/core": "^7.24.5",
+    "@babel/core": "^7.24.7",
     "@types/jest": "^29.5.11",
     "@types/react": "18.2.74",
     "@typescript-eslint/eslint-plugin": "^6.19.1",
@@ -63,7 +63,7 @@
     "prettier": "2.3.1",
     "rimraf": "^2.6.2",
     "rollup": "^4.12.1",
-    "ts-jest": "^29.1.2",
+    "ts-jest": "^29.1.4",
     "typescript": "5.4.5"
   }
 }
