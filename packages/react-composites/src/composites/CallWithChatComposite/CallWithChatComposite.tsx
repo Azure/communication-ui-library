@@ -17,8 +17,6 @@ import { CallWithChatCompositeIcons } from '../common/icons';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { CallWithChatAdapterState } from './state/CallWithChatAdapterState';
 import { CallSurveyImprovementSuggestions } from '@internal/react-components';
-/* @conditional-compile-remove(rich-text-editor-composite-support) @conditional-compile-remove(rich-text-editor) */
-import { RichTextEditorOptions } from '@internal/react-components';
 import {
   ParticipantMenuItemsCallback,
   _useContainerHeight,
@@ -258,7 +256,6 @@ export type CallWithChatCompositeOptions = {
       url: string;
     };
   };
-  /* @conditional-compile-remove(spotlight) */
   /**
    * Options for settings related to spotlight.
    */
@@ -270,12 +267,14 @@ export type CallWithChatCompositeOptions = {
     hideSpotlightButtons?: boolean;
   };
 
-  /* @conditional-compile-remove(rich-text-editor) @conditional-compile-remove(rich-text-editor-composite-support) */
+  /* @conditional-compile-remove(rich-text-editor-composite-support) */
   /**
-   * Options to enable rich text editor for the edit box.
+   * Enables rich text editor for the send and edit boxes
+   * @defaultValue `false`
+   *
    * @beta
    */
-  richTextEditorOptions?: RichTextEditorOptions;
+  richTextEditor?: boolean;
 };
 
 type CallWithChatScreenProps = {
@@ -350,12 +349,11 @@ type CallWithChatScreenProps = {
   backgroundImage?: {
     url: string;
   };
-  /* @conditional-compile-remove(spotlight) */
   spotlight?: {
     hideSpotlightButtons?: boolean;
   };
-  /* @conditional-compile-remove(rich-text-editor-composite-support) @conditional-compile-remove(rich-text-editor) */
-  richTextEditorOptions?: RichTextEditorOptions;
+  /* @conditional-compile-remove(rich-text-editor-composite-support) */
+  richTextEditor?: boolean;
 };
 
 const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
@@ -535,7 +533,6 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
         logo: props.logo,
         backgroundImage: props.backgroundImage
       },
-      /* @conditional-compile-remove(spotlight) */
       spotlight: props.spotlight
     }),
     [
@@ -558,7 +555,6 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
       surveyOptions,
       props.logo,
       props.backgroundImage,
-      /* @conditional-compile-remove(spotlight) */
       props.spotlight
     ]
   );
@@ -574,18 +570,17 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
           participantPane: false,
           /* @conditional-compile-remove(file-sharing-acs) */
           attachmentOptions: props.attachmentOptions,
-          /* @conditional-compile-remove(rich-text-editor-composite-support) @conditional-compile-remove(rich-text-editor) */
-          richTextEditorOptions: props.richTextEditorOptions
+          /* @conditional-compile-remove(rich-text-editor-composite-support) */
+          richTextEditor: props.richTextEditor
         }}
         onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
       />
     ),
     [
       chatAdapter,
-      /* @conditional-compile-remove(file-sharing-acs) */
-      props.attachmentOptions,
+      /* @conditional-compile-remove(file-sharing-acs) */ props.attachmentOptions,
       props.onFetchAvatarPersonaData,
-      /* @conditional-compile-remove(rich-text-editor-composite-support) */ props.richTextEditorOptions,
+      /* @conditional-compile-remove(rich-text-editor-composite-support) */ props.richTextEditor,
       theme
     ]
   );
@@ -675,7 +670,13 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
 export const CallWithChatComposite = (props: CallWithChatCompositeProps): JSX.Element => {
   const { adapter, fluentTheme, rtl, formFactor, joinInvitationURL, options } = props;
   return (
-    <BaseProvider fluentTheme={fluentTheme} rtl={rtl} locale={props.locale} icons={props.icons}>
+    <BaseProvider
+      fluentTheme={fluentTheme}
+      rtl={rtl}
+      locale={props.locale}
+      icons={props.icons}
+      formFactor={props.formFactor}
+    >
       <CallWithChatScreen
         {...props}
         /* @conditional-compile-remove(call-readiness) */
@@ -693,7 +694,6 @@ export const CallWithChatComposite = (props: CallWithChatCompositeProps): JSX.El
         logo={options?.branding?.logo}
         backgroundImage={options?.branding?.backgroundImage}
         surveyOptions={options?.surveyOptions}
-        /* @conditional-compile-remove(spotlight) */
         spotlight={options?.spotlight}
       />
     </BaseProvider>

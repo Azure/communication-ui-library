@@ -20,7 +20,6 @@ import {
 import { CaptionsInfo } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(teams-meeting-conference) */
 import { ConferencePhoneInfo } from '@internal/calling-stateful-client';
-/* @conditional-compile-remove(spotlight) */
 import { SpotlightedParticipant } from '@azure/communication-calling';
 import { CallAdapterState, CallCompositePage } from '../adapter/CallAdapter';
 
@@ -236,7 +235,6 @@ export const getTargetCallees = (state: CallAdapterState): CommunicationIdentifi
  */
 export const getStartTime = (state: CallAdapterState): Date | undefined => state.call?.startTime;
 
-/* @conditional-compile-remove(spotlight) */
 /**
  * @private
  */

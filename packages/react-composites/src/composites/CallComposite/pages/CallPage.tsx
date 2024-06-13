@@ -31,7 +31,6 @@ import { CapabilitiesChangeNotificationBarProps } from '../components/Capabiliti
 import { DtmfDialpadPage } from './DtmfDialpadPage';
 import { showDtmfDialer } from '../utils/MediaGalleryUtils';
 import { getTargetCallees } from '../selectors/baseSelectors';
-/* @conditional-compile-remove(spotlight) */
 import { Prompt, PromptProps } from '../components/Prompt';
 
 /**
@@ -104,9 +103,7 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
   const callControlOptions = mobileView ? reduceCallControlsForMobile(options?.callControls) : options?.callControls;
 
   const drawerMenuHostId = useId('drawerMenuHost');
-  /* @conditional-compile-remove(spotlight) */
   const [isPromptOpen, setIsPromptOpen] = useState<boolean>(false);
-  /* @conditional-compile-remove(spotlight) */
   const [promptProps, setPromptProps] = useState<PromptProps>();
 
   const onRenderGalleryContentTrampoline = (): JSX.Element => {
@@ -140,11 +137,8 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
           userSetGalleryLayout={galleryLayout}
           pinnedParticipants={pinnedParticipants}
           setPinnedParticipants={setPinnedParticipants}
-          /* @conditional-compile-remove(spotlight) */
           setIsPromptOpen={setIsPromptOpen}
-          /* @conditional-compile-remove(spotlight) */
           setPromptProps={setPromptProps}
-          /* @conditional-compile-remove(spotlight) */
           hideSpotlightButtons={options?.spotlight?.hideSpotlightButtons}
           videoTilesOptions={options?.videoTilesOptions}
         />
@@ -191,17 +185,13 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
         capabilitiesChangedNotificationBarProps={props.capabilitiesChangedNotificationBarProps}
         onSetDialpadPage={() => setDtmfDialerPresent(!dtmfDialerPresent)}
         dtmfDialerPresent={dtmfDialerPresent}
-        /* @conditional-compile-remove(spotlight) */
         setIsPromptOpen={setIsPromptOpen}
-        /* @conditional-compile-remove(spotlight) */
         setPromptProps={setPromptProps}
-        /* @conditional-compile-remove(spotlight) */
         hideSpotlightButtons={options?.spotlight?.hideSpotlightButtons}
+        pinnedParticipants={pinnedParticipants}
+        setPinnedParticipants={setPinnedParticipants}
       />
-      {
-        /* @conditional-compile-remove(spotlight) */
-        <Prompt isOpen={isPromptOpen} onDismiss={() => setIsPromptOpen(false)} {...promptProps} />
-      }
+      {<Prompt isOpen={isPromptOpen} onDismiss={() => setIsPromptOpen(false)} {...promptProps} />}
     </>
   );
 };

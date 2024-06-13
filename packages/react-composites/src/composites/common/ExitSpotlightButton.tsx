@@ -1,16 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/* @conditional-compile-remove(spotlight) */
 import React from 'react';
-/* @conditional-compile-remove(spotlight) */
 import { ControlBarButton, ControlBarButtonStrings, ControlBarButtonStyles } from '@internal/react-components';
-/* @conditional-compile-remove(spotlight) */
 import { CallControlDisplayType } from './types/CommonCallControlOptions';
-/* @conditional-compile-remove(spotlight) */
 import { _HighContrastAwareIcon } from '@internal/react-components';
 
-/* @conditional-compile-remove(spotlight) */
 /**
  * @private
  */

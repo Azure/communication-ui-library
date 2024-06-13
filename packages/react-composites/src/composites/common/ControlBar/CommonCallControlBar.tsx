@@ -43,9 +43,7 @@ import { Reaction } from '../../CallComposite/components/buttons/Reaction';
 import { useSelector } from '../../CallComposite/hooks/useSelector';
 import { capabilitySelector } from '../../CallComposite/selectors/capabilitySelector';
 import { DtmfDialpadButton } from './DtmfDialerButton';
-/* @conditional-compile-remove(spotlight) */
 import { ExitSpotlightButton } from '../ExitSpotlightButton';
-/* @conditional-compile-remove(spotlight) */
 import { useLocale } from '../../localization';
 /* @conditional-compile-remove(end-call-options) */
 import { isBoolean } from '../utils';
@@ -81,7 +79,6 @@ export interface CommonCallControlBarProps {
   videoBackgroundPickerRef?: React.RefObject<IButton>;
   onSetDialpadPage?: () => void;
   dtmfDialerPresent?: boolean;
-  /* @conditional-compile-remove(spotlight) */
   onStopLocalSpotlight?: () => void;
   useTeamsCaptions?: boolean;
 }
@@ -201,9 +198,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
     }),
     [callWithChatStrings]
   );
-  /* @conditional-compile-remove(spotlight) */
   const callStrings = useLocale().strings.call;
-  /* @conditional-compile-remove(spotlight) */
   const exitSpotlightButtonStrings = useMemo(
     () => ({
       label: callStrings.exitSpotlightButtonLabel,
@@ -276,7 +271,6 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
 
   const cameraButtonIsEnabled = isEnabled(options?.cameraButton);
 
-  /* @conditional-compile-remove(spotlight) */
   const showExitSpotlightButton = options?.exitSpotlightButton !== false;
 
   const showCaptionsButton =
@@ -401,17 +395,14 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                         }}
                       />
                     )}
-                    {
-                      /* @conditional-compile-remove(spotlight) */ showExitSpotlightButton &&
-                        props.onStopLocalSpotlight && (
-                          <ExitSpotlightButton
-                            displayType={options.displayType}
-                            onClick={props.onStopLocalSpotlight}
-                            styles={commonButtonStyles}
-                            strings={exitSpotlightButtonStrings}
-                          />
-                        )
-                    }
+                    {showExitSpotlightButton && props.onStopLocalSpotlight && (
+                      <ExitSpotlightButton
+                        displayType={options.displayType}
+                        onClick={props.onStopLocalSpotlight}
+                        styles={commonButtonStyles}
+                        strings={exitSpotlightButtonStrings}
+                      />
+                    )}
                     {screenShareButtonIsEnabled && (
                       <ScreenShare
                         option={options.screenShareButton}

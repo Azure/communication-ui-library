@@ -114,19 +114,14 @@ export interface VideoGalleryStrings {
   pinnedParticipantAnnouncementAriaLabel: string;
   /** Aria label to announce when remote participant's video tile is unpinned */
   unpinnedParticipantAnnouncementAriaLabel: string;
-  /* @conditional-compile-remove(spotlight) */
   /** Menu text shown in Video Tile contextual menu to start spotlight on participant's video tile */
   startSpotlightVideoTileMenuLabel: string;
-  /* @conditional-compile-remove(spotlight) */
   /** Menu text shown in Video Tile contextual menu to add spotlight to participant's video tile */
   addSpotlightVideoTileMenuLabel: string;
-  /* @conditional-compile-remove(spotlight) */
   /** Menu title for start spotlight menu item when spotlight limit is reached */
   spotlightLimitReachedMenuTitle: string;
-  /* @conditional-compile-remove(spotlight) */
   /** Menu text shown in Video Tile contextual menu to stop spotlight on participant's video tile */
   stopSpotlightVideoTileMenuLabel: string;
-  /* @conditional-compile-remove(spotlight) */
   /** Menu text shown in Video Tile contextual menu to stop spotlight on local user's video tile */
   stopSpotlightOnSelfVideoTileMenuLabel: string;
   /* @conditional-compile-remove(hide-attendee-name) */
@@ -257,32 +252,26 @@ export interface VideoGalleryProps {
    * This callback will be called when a participant video tile is un-pinned.
    */
   onUnpinParticipant?: (userId: string) => void;
-  /* @conditional-compile-remove(spotlight) */
   /**
    * List of spotlighted participant userIds.
    */
   spotlightedParticipants?: string[];
-  /* @conditional-compile-remove(spotlight) */
   /**
    * This callback is to start spotlight for local participant video tile.
    */
   onStartLocalSpotlight?: () => Promise<void>;
-  /* @conditional-compile-remove(spotlight) */
   /**
    * This callback is to stop spotlight for local participant video tile.
    */
   onStartRemoteSpotlight?: (userIds: string[]) => Promise<void>;
-  /* @conditional-compile-remove(spotlight) */
   /**
    * This callback is to start spotlight for remote participant video tiles.
    */
   onStopLocalSpotlight?: () => Promise<void>;
-  /* @conditional-compile-remove(spotlight) */
   /**
    * This callback is to stop spotlight for remote participant video tiles.
    */
   onStopRemoteSpotlight?: (userIds: string[]) => Promise<void>;
-  /* @conditional-compile-remove(spotlight) */
   /**
    * Maximum participants that can be spotlighted
    */
@@ -393,17 +382,11 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     remoteVideoTileMenu = DEFAULT_REMOTE_VIDEO_TILE_MENU_OPTIONS,
     overflowGalleryPosition = 'horizontalBottom',
     localVideoTileSize = 'followDeviceOrientation',
-    /* @conditional-compile-remove(spotlight) */
     spotlightedParticipants,
-    /* @conditional-compile-remove(spotlight) */
     onStartLocalSpotlight,
-    /* @conditional-compile-remove(spotlight) */
     onStartRemoteSpotlight,
-    /* @conditional-compile-remove(spotlight) */
     onStopLocalSpotlight,
-    /* @conditional-compile-remove(spotlight) */
     onStopRemoteSpotlight,
-    /* @conditional-compile-remove(spotlight) */
     maxParticipantsToSpotlight,
     reactionResources,
     videoTilesOptions,
@@ -470,7 +453,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       return onRenderLocalVideoTile(localParticipant);
     }
 
-    /* @conditional-compile-remove(spotlight) */
     const isSpotlighted = !!localParticipant.spotlight;
 
     const localVideoTileStyles = concatStyleSets(
@@ -517,21 +499,13 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           styles={localVideoTileStyles}
           raisedHand={localParticipant.raisedHand}
           reaction={localParticipant.reaction}
-          /* @conditional-compile-remove(spotlight) */
           spotlightedParticipantUserIds={spotlightedParticipants}
-          /* @conditional-compile-remove(spotlight) */
           isSpotlighted={isSpotlighted}
-          /* @conditional-compile-remove(spotlight) */
           onStartSpotlight={onStartLocalSpotlight}
-          /* @conditional-compile-remove(spotlight) */
           onStopSpotlight={onStopLocalSpotlight}
-          /* @conditional-compile-remove(spotlight) */
           maxParticipantsToSpotlight={maxParticipantsToSpotlight}
-          /* @conditional-compile-remove(spotlight) */
           menuKind={remoteVideoTileMenu ? (remoteVideoTileMenu.kind === 'drawer' ? 'drawer' : 'contextual') : undefined}
-          /* @conditional-compile-remove(spotlight) */
           drawerMenuHostId={drawerMenuHostId}
-          /* @conditional-compile-remove(spotlight) */
           strings={strings}
           reactionResources={reactionResources}
         />
@@ -554,19 +528,12 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     localVideoTileSize,
     layout,
     showLocalVideoTileLabel,
-    /* @conditional-compile-remove(spotlight) */
     spotlightedParticipants,
-    /* @conditional-compile-remove(spotlight) */
     onStartLocalSpotlight,
-    /* @conditional-compile-remove(spotlight) */
     onStopLocalSpotlight,
-    /* @conditional-compile-remove(spotlight) */
     maxParticipantsToSpotlight,
-    /* @conditional-compile-remove(spotlight) */
     remoteVideoTileMenu,
-    /* @conditional-compile-remove(spotlight) */
     strings,
-    /* @conditional-compile-remove(spotlight) */
     drawerMenuHostId,
     reactionResources,
     videoTilesOptions
@@ -614,9 +581,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       const remoteVideoStream = participant.videoStream;
       const selectedScalingMode = remoteVideoStream ? selectedScalingModeState[participant.userId] : undefined;
       let isPinned = pinnedParticipants?.includes(participant.userId);
-      /* @conditional-compile-remove(spotlight) */
       const isSpotlighted = !!participant.spotlight;
-      /* @conditional-compile-remove(spotlight) */
       isPinned = isSpotlighted ? false : isPinned;
 
       const createViewOptions = (): VideoStreamOptions | undefined => {
@@ -666,15 +631,10 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           isPinned={isPinned}
           disablePinMenuItem={pinnedParticipants.length >= MAX_PINNED_REMOTE_VIDEO_TILES}
           toggleAnnouncerString={toggleAnnouncerString}
-          /* @conditional-compile-remove(spotlight) */
           spotlightedParticipantUserIds={spotlightedParticipants}
-          /* @conditional-compile-remove(spotlight) */
           isSpotlighted={isSpotlighted}
-          /* @conditional-compile-remove(spotlight) */
           onStartSpotlight={onStartRemoteSpotlight}
-          /* @conditional-compile-remove(spotlight) */
           onStopSpotlight={onStopRemoteSpotlight}
-          /* @conditional-compile-remove(spotlight) */
           maxParticipantsToSpotlight={maxParticipantsToSpotlight}
           reactionResources={reactionResources}
           /* @conditional-compile-remove(soft-mute) */
@@ -698,10 +658,10 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       onUnpinParticipant,
       toggleAnnouncerString,
       onUpdateScalingMode,
-      /* @conditional-compile-remove(spotlight) */ spotlightedParticipants,
-      /* @conditional-compile-remove(spotlight) */ onStartRemoteSpotlight,
-      /* @conditional-compile-remove(spotlight) */ onStopRemoteSpotlight,
-      /* @conditional-compile-remove(spotlight) */ maxParticipantsToSpotlight,
+      spotlightedParticipants,
+      onStartRemoteSpotlight,
+      onStopRemoteSpotlight,
+      maxParticipantsToSpotlight,
       /* @conditional-compile-remove(soft-mute) */ onMuteParticipant,
       reactionResources,
       videoTilesOptions
@@ -749,7 +709,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       pinnedParticipantUserIds: pinnedParticipants,
       overflowGalleryPosition,
       localVideoTileSize,
-      /* @conditional-compile-remove(spotlight) */ spotlightedParticipantUserIds: spotlightedParticipants
+      spotlightedParticipantUserIds: spotlightedParticipants
     }),
     [
       remoteParticipants,
@@ -767,7 +727,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       pinnedParticipants,
       overflowGalleryPosition,
       localVideoTileSize,
-      /* @conditional-compile-remove(spotlight) */ spotlightedParticipants
+      spotlightedParticipants
     ]
   );
 

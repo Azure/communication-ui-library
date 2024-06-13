@@ -138,12 +138,12 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   /* @conditional-compile-remove(rich-text-editor-composite-support) */
   useEffect(() => {
     // if rich text editor is enabled, the rich text editor component should be loaded early for good UX
-    if (options?.richTextEditorOptions !== undefined) {
+    if (options?.richTextEditor) {
       // this line is needed to load the Rooster JS dependencies early in the lifecycle
       // when the rich text editor is enabled
       loadRichTextSendBox();
     }
-  }, [options?.richTextEditorOptions]);
+  }, [options?.richTextEditor]);
 
   const messageThreadProps = usePropsFor(MessageThread);
   const typingIndicatorProps = usePropsFor(TypingIndicator);
@@ -456,6 +456,30 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     },
     [attachmentOptions?.uploadOptions]
   );
+
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  const removeImageTags = useCallback((event: { content: DocumentFragment }) => {
+    event.content.querySelectorAll('img').forEach((image) => {
+      // If the image is the only child of its parent, remove all the parents of this img element.
+      let parentNode: HTMLElement | null = image.parentElement;
+      let currentNode: HTMLElement = image;
+      while (parentNode?.childNodes.length === 1) {
+        currentNode = parentNode;
+        parentNode = parentNode.parentElement;
+      }
+      currentNode?.remove();
+    });
+  }, []);
+
+  /* @conditional-compile-remove(rich-text-editor-composite-support) */
+  const richTextEditorOptions = useMemo(() => {
+    return options?.richTextEditor
+      ? {
+          /* @conditional-compile-remove(rich-text-editor-image-upload) */ onPaste: removeImageTags
+        }
+      : undefined;
+  }, [options?.richTextEditor, removeImageTags]);
+
   return (
     <Stack className={chatContainer} grow>
       {options?.topic !== false && <ChatHeader {...headerProps} />}
@@ -480,8 +504,8 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             inlineImageOptions={inlineImageOptions}
             numberOfChatMessagesToReload={defaultNumberOfChatMessagesToReload}
             styles={messageThreadStyles}
-            /* @conditional-compile-remove(rich-text-editor-composite-support) @conditional-compile-remove(rich-text-editor) */
-            richTextEditorOptions={options?.richTextEditorOptions}
+            /* @conditional-compile-remove(rich-text-editor-composite-support) */
+            richTextEditorOptions={richTextEditorOptions}
           />
           <Stack className={mergeStyles(sendboxContainerStyles)}>
             <div className={mergeStyles(typingIndicatorContainerStyles)}>
@@ -503,7 +527,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
                   styles={sendBoxStyles}
                   autoFocus={options?.autoFocus}
                   /* @conditional-compile-remove(rich-text-editor-composite-support) */
-                  richTextEditorOptions={options?.richTextEditorOptions}
+                  richTextEditorOptions={richTextEditorOptions}
                   /* @conditional-compile-remove(file-sharing-acs) */
                   attachments={attachments}
                   /* @conditional-compile-remove(file-sharing-acs) */

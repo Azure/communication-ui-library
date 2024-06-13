@@ -1,18 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/* @conditional-compile-remove(spotlight) */
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
-/* @conditional-compile-remove(spotlight) */
 import { RemoteParticipantState } from '@internal/calling-stateful-client';
-/* @conditional-compile-remove(spotlight) */
 import * as reselect from 'reselect';
-/* @conditional-compile-remove(spotlight) */
 import { getRemoteParticipants, getSpotlightedParticipants } from './baseSelectors';
-/* @conditional-compile-remove(spotlight) */
 import { _updateUserDisplayNames, _videoGalleryRemoteParticipantsMemo } from '@internal/calling-component-bindings';
 
-/* @conditional-compile-remove(spotlight) */
 /**
  * Get the first remote participant that is spotlighted if any
  *
@@ -31,7 +25,6 @@ export const getFirstSpotlightedRemoteParticipant = reselect.createSelector(
   }
 );
 
-/* @conditional-compile-remove(spotlight) */
 const findFirstSpotlightedRemoteParticipant = (
   remoteParticipants: { [keys: string]: RemoteParticipantState },
   spotlightedParticipantUserIds: string[]
