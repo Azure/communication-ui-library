@@ -182,7 +182,7 @@ const MappedMenuItems = (
     <TooltipHost content={menuActions[0].name}>
       <ToolbarButton
         aria-label={menuActions[0].name}
-        role="tooltip"
+        role="button"
         icon={menuActions[0].icon}
         onClick={() => {
           try {
