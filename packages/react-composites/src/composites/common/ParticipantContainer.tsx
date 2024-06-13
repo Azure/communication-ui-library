@@ -119,12 +119,7 @@ export const ParticipantListWithHeading = (props: {
               />
               {options?.text && (
                 <div style={displayNameStyles}>
-                  <TooltipHost
-                    content={options?.text}
-                    id={tooltipId}
-                    calloutProps={{ gapSpace: 0 }}
-                    overflowMode={TooltipOverflowMode.Parent}
-                  >
+                  <TooltipHost content={options?.text} id={tooltipId} overflowMode={TooltipOverflowMode.Parent}>
                     <Text nowrap={false} aria-labelledby={tooltipId}>
                       {options?.text}
                     </Text>
