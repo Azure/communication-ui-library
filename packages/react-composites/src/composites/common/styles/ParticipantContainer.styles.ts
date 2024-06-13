@@ -169,12 +169,11 @@ export const participantListMobileStyle: ParticipantListStyles = {
 /**
  * @private
  */
-export const displayNameStyles: ITextStyles = {
-  root: {
-    padding: '0.5rem',
-    textOverflow: 'ellipsis',
-    overflow: 'hidden'
-  }
+export const displayNameStyles = {
+  padding: '0.5rem',
+  textOverflow: 'ellipsis',
+  overflow: 'hidden',
+  whiteSpace: 'nowrap'
 };
 
 /**
