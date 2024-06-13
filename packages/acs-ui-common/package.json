@@ -30,17 +30,17 @@
   "license": "MIT",
   "dependencies": {
     "@azure/communication-common": "^2.3.1",
-    "@azure/logger": "^1.0.4"
+    "@azure/logger": "^1.1.2"
   },
   "peerDependencies": {
     "react": ">=16.8.0 <19.0.0",
     "@types/react": ">=16.8.0 <19.0.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.23.9",
+    "@babel/cli": "^7.24.7",
     "@babel/core": "^7.24.7",
     "@types/jest": "^29.5.11",
-    "@types/react": "18.2.74",
+    "@types/react": "18.3.3",
     "@typescript-eslint/eslint-plugin": "^6.19.1",
     "@typescript-eslint/parser": "^6.19.1",
     "copyfiles": "^2.4.1",
@@ -56,9 +56,9 @@
     "if-env": "^1.0.4",
     "jest": "29.7.0",
     "prettier": "2.3.1",
-    "react": "18.2.0",
+    "react": "18.3.1",
     "rimraf": "^2.6.2",
-    "rollup": "^4.12.1",
+    "rollup": "^4.18.0",
     "ts-jest": "^29.1.4",
     "typescript": "5.4.5"
   }
