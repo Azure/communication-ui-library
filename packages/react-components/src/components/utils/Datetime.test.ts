@@ -83,7 +83,7 @@ describe('datetime tests', () => {
         createMockDate({ year: 2000, month: 10, day: 10, hour: 5, min: 0 }),
         COMPONENT_LOCALE_EN_US.strings.messageThread
       )
-    ).toEqual('Yesterday 4:00 AM');
+    ).toEqual('Yesterday 4:00 a.m.');
   });
 
   test('datetime.formatTimestampForChatMessage should format date from same week properly', () => {
@@ -93,7 +93,7 @@ describe('datetime tests', () => {
         createMockDate({ year: 2000, month: 10, day: 10, hour: 5, min: 0 }),
         COMPONENT_LOCALE_EN_US.strings.messageThread
       )
-    ).toEqual('Wednesday 4:00 AM');
+    ).toEqual('Wednesday 4:00 a.m.');
   });
 
   test('datetime.formatTimestampForChatMessage should format date from long time ago properly', () => {
@@ -104,6 +104,6 @@ describe('datetime tests', () => {
         createMockDate({ year: 2000, month: 10, day: 10, hour: 5, min: 0 }),
         COMPONENT_LOCALE_EN_US.strings.messageThread
       )
-    ).toEqual(`${messageDate.toLocaleDateString()} 4:00 AM`);
+    ).toEqual(`${messageDate.toLocaleDateString()} 4:00 a.m.`);
   });
 });
