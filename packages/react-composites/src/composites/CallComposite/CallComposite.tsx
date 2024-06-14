@@ -462,6 +462,14 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   const leavePageStyle = useMemo(() => leavingPageStyle(palette), [palette]);
   let pageElement: JSX.Element | undefined;
   const [pinnedParticipants, setPinnedParticipants] = useState<string[]>([]);
+  const getLatestErrorsTrampoline = ():
+    | ActiveErrorMessage[]
+    | /* @conditional-compile-remove(notifications) */ ActiveNotification[] => {
+    /* @conditional-compile-remove(notifications) */
+    return latestInCallErrors;
+    return latestErrors;
+  };
+
   switch (page) {
     case 'configuration':
       pageElement = (
@@ -587,7 +595,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           options={props.options}
           updateSidePaneRenderer={setSidePaneRenderer}
           mobileChatTabHeader={props.mobileChatTabHeader}
-          latestErrors={getLatestErrorsTrampoline(latestErrors, latestInCallErrors)}
+          latestErrors={getLatestErrorsTrampoline()}
           onDismissError={onDismissError}
           capabilitiesChangedNotificationBarProps={capabilitiesChangedNotificationBarProps}
         />
@@ -602,7 +610,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           updateSidePaneRenderer={setSidePaneRenderer}
           mobileChatTabHeader={props.mobileChatTabHeader}
           onFetchAvatarPersonaData={onFetchAvatarPersonaData}
-          latestErrors={getLatestErrorsTrampoline(latestErrors, latestInCallErrors)}
+          latestErrors={getLatestErrorsTrampoline()}
           onDismissError={onDismissError}
           capabilitiesChangedNotificationBarProps={capabilitiesChangedNotificationBarProps}
         />
@@ -620,7 +628,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           updateSidePaneRenderer={setSidePaneRenderer}
           mobileChatTabHeader={props.mobileChatTabHeader}
           onCloseChatPane={props.onCloseChatPane}
-          latestErrors={getLatestErrorsTrampoline(latestErrors, latestInCallErrors)}
+          latestErrors={getLatestErrorsTrampoline()}
           onDismissError={onDismissError}
           galleryLayout={userSetGalleryLayout}
           onUserSetGalleryLayoutChange={setUserSetGalleryLayout}
@@ -645,7 +653,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
               options={props.options}
               updateSidePaneRenderer={setSidePaneRenderer}
               mobileChatTabHeader={props.mobileChatTabHeader}
-              latestErrors={getLatestErrorsTrampoline(latestErrors, latestInCallErrors)}
+              latestErrors={getLatestErrorsTrampoline()}
               onDismissError={onDismissError}
               capabilitiesChangedNotificationBarProps={capabilitiesChangedNotificationBarProps}
             />
@@ -766,14 +774,4 @@ const getQueryOptions = (options: { role?: ParticipantRole }): PermissionConstra
     };
   }
   return { video: true, audio: true };
-};
-
-const getLatestErrorsTrampoline = (
-  stableErrors: ActiveErrorMessage[],
-  /* @conditional-compile-remove(notifications) */
-  betaErrors: ActiveNotification[]
-): ActiveErrorMessage[] | /* @conditional-compile-remove(notifications) */ ActiveNotification[] => {
-  /* @conditional-compile-remove(notifications) */
-  return betaErrors;
-  return stableErrors;
 };

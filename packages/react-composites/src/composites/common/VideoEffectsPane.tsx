@@ -162,7 +162,7 @@ const VideoEffectsPaneTrampoline = (
   updateFocusHandle: React.RefObject<{
     focus: () => void;
   }>,
-  activeVideoEffectError?: ActiveErrorMessage | ActiveNotification,
+  activeVideoEffectError?: ActiveErrorMessage | /* @conditional-compile-remove(notifications) */ ActiveNotification,
   selectableVideoEffects?: _VideoEffectsItemProps[],
   onEffectChange?: (effectKey: string) => Promise<void>
 ): JSX.Element => {

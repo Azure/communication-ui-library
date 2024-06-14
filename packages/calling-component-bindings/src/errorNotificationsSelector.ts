@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-
+/* @conditional-compile-remove(notifications) */
 import {
   CallingBaseSelectorProps,
   getDeviceManager,
@@ -8,10 +8,15 @@ import {
   getLatestErrors,
   getEnvironmentInfo
 } from './baseSelectors';
+/* @conditional-compile-remove(notifications) */
 import { ActiveNotification, NotificationType } from '@internal/react-components';
+/* @conditional-compile-remove(notifications) */
 import { createSelector } from 'reselect';
+/* @conditional-compile-remove(notifications) */
 import { CallClientState, CallErrors, CallErrorTarget } from '@internal/calling-stateful-client';
+/* @conditional-compile-remove(notifications) */
 import { DiagnosticQuality } from '@azure/communication-calling';
+/* @conditional-compile-remove(notifications) */
 /**
  * Selector type for {@link Notification} component.
  *
@@ -23,7 +28,7 @@ export type ErrorNotificationsSelector = (
 ) => {
   activeErrorMessages: ActiveNotification[];
 };
-
+/* @conditional-compile-remove(notifications) */
 /**
  * Select the active errors from the state for the `Notification` component.
  *
@@ -188,7 +193,7 @@ export const errorNotificationsSelector: ErrorNotificationsSelector = createSele
     return { activeErrorMessages: activeErrorMessages };
   }
 );
-
+/* @conditional-compile-remove(notifications) */
 const appendActiveErrorIfDefined = (
   activeErrorMessages: ActiveNotification[],
   latestErrors: CallErrors,
