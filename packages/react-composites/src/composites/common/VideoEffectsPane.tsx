@@ -3,6 +3,9 @@
 
 import React from 'react';
 
+/* @conditional-compile-remove(notifications) */
+import { useState } from 'react';
+
 import { useCallback, useMemo } from 'react';
 
 import { MessageBar, MessageBarType, Stack, mergeStyles } from '@fluentui/react';
@@ -27,6 +30,8 @@ import { useAdapter } from '../CallComposite/adapter/CallAdapterProvider';
 
 import { localVideoSelector } from '../CallComposite/selectors/localVideoStreamSelector';
 import { ActiveVideoEffect } from '../CallComposite/components/SidePane/useVideoEffectsPane';
+/* @conditional-compile-remove(notifications) */
+import { ActiveNotification, NotificationBar, NotificationBarStrings } from '@internal/react-components';
 
 /**
  * Pane that is used to show video effects button
@@ -34,19 +39,16 @@ import { ActiveVideoEffect } from '../CallComposite/components/SidePane/useVideo
  */
 /** @beta */
 export const VideoEffectsPaneContent = (props: {
-  activeVideoEffectError?: ActiveErrorMessage;
-  onDismissError: (error: ActiveErrorMessage) => void;
+  activeVideoEffectError?: ActiveErrorMessage | /* @conditional-compile-remove(notifications) */ ActiveNotification;
+  onDismissError: (
+    error: ActiveErrorMessage | /* @conditional-compile-remove(notifications) */ ActiveNotification
+  ) => void;
   activeVideoEffectChange: (effect: ActiveVideoEffect) => void;
   updateFocusHandle: React.RefObject<{
     focus: () => void;
   }>;
 }): JSX.Element => {
-  const {
-    onDismissError,
-    activeVideoEffectError,
-
-    activeVideoEffectChange
-  } = props;
+  const { onDismissError, activeVideoEffectError, activeVideoEffectChange } = props;
 
   const locale = useLocale();
 
@@ -154,11 +156,13 @@ export const VideoEffectsPaneContent = (props: {
 };
 
 const VideoEffectsPaneTrampoline = (
-  onDismissError: (error: ActiveErrorMessage) => void,
+  onDismissError: (
+    error: ActiveErrorMessage | /* @conditional-compile-remove(notifications) */ ActiveNotification
+  ) => void,
   updateFocusHandle: React.RefObject<{
     focus: () => void;
   }>,
-  activeVideoEffectError?: ActiveErrorMessage,
+  activeVideoEffectError?: ActiveErrorMessage | ActiveNotification,
   selectableVideoEffects?: _VideoEffectsItemProps[],
   onEffectChange?: (effectKey: string) => Promise<void>
 ): JSX.Element => {
@@ -169,19 +173,74 @@ const VideoEffectsPaneTrampoline = (
   const showWarning = !isCameraOn && selectedEffect !== 'none';
 
   const locale = useLocale();
+  /* @conditional-compile-remove(notifications) */
+  const videoEffectErrorStrings: NotificationBarStrings = {
+    title: locale.strings.call.unableToStartVideoEffect ?? '',
+    closeButtonAriaLabel: locale.strings.call.close
+  };
+  /* @conditional-compile-remove(notifications) */
+  const warningStrings: NotificationBarStrings = {
+    title: locale.strings.call.cameraOffBackgroundEffectWarningText ?? '',
+    closeButtonAriaLabel: locale.strings.call.close
+  };
+
+  /* @conditional-compile-remove(notifications) */
+  const [errorNotificationDismissed, setErrorNotificationDismissed] = useState(false);
+  /* @conditional-compile-remove(notifications) */
+  const [warningNotificationDismissed, setWarningNotificationDismissed] = useState(false);
+
+  const videoEffectErrorTrampoline = (): JSX.Element => {
+    /* @conditional-compile-remove(notifications) */
+    return (
+      <>
+        {activeVideoEffectError && isCameraOn && !errorNotificationDismissed && (
+          <NotificationBar
+            onDismiss={() => {
+              if (activeVideoEffectError) {
+                onDismissError(activeVideoEffectError);
+              }
+              setErrorNotificationDismissed(true);
+            }}
+            notificationBarStrings={videoEffectErrorStrings}
+          />
+        )}
+        {showWarning && !warningNotificationDismissed && (
+          <NotificationBar
+            onDismiss={() => {
+              setWarningNotificationDismissed(true);
+            }}
+            notificationBarStrings={warningStrings}
+          />
+        )}
+      </>
+    );
+
+    return (
+      <>
+        {activeVideoEffectError && isCameraOn && (
+          <MessageBar
+            messageBarType={MessageBarType.error}
+            onDismiss={() => {
+              if (activeVideoEffectError) {
+                onDismissError(activeVideoEffectError);
+              }
+            }}
+          >
+            {locale.strings.call.unableToStartVideoEffect}
+          </MessageBar>
+        )}
+        {showWarning && (
+          <MessageBar messageBarType={MessageBarType.warning}>
+            {locale.strings.call.cameraOffBackgroundEffectWarningText}
+          </MessageBar>
+        )}
+      </>
+    );
+  };
 
   return (
     <Stack tokens={{ childrenGap: '0.75rem' }} className={mergeStyles({ paddingLeft: '0.5rem' })}>
-      {activeVideoEffectError && isCameraOn && (
-        <MessageBar messageBarType={MessageBarType.error} onDismiss={() => onDismissError(activeVideoEffectError)}>
-          {locale.strings.call.unableToStartVideoEffect}
-        </MessageBar>
-      )}
-      {showWarning && (
-        <MessageBar messageBarType={MessageBarType.warning}>
-          {locale.strings.call.cameraOffBackgroundEffectWarningText}
-        </MessageBar>
-      )}
+      {videoEffectErrorTrampoline()}
       <_VideoBackgroundEffectsPicker
         label={locale.strings.call.videoEffectsPaneBackgroundSelectionTitle}
         styles={backgroundPickerStyles}
