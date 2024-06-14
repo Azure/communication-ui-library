@@ -51,7 +51,7 @@
     "@azure/core-paging": "^1.5.0",
     "@azure/core-rest-pipeline": "^1.13.0",
     "@azure/logger": "^1.0.4",
-    "@fluentui/react-file-type-icons": "8.11.15",
+    "@fluentui/react-file-type-icons": "8.11.9",
     "@fluentui/react-hooks": "^8.8.7",
     "@fluentui/react-icons": "^2.0.242",
     "@fluentui/react": "^8.118.8",
