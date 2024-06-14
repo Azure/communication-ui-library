@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 /* @conditional-compile-remove(file-sharing-acs) */
-import { IconButton, mergeStyles, Stack, useTheme } from '@fluentui/react';
+import { IconButton, mergeStyles, Stack, TooltipHost, useTheme } from '@fluentui/react';
 /* @conditional-compile-remove(file-sharing-acs) */
 import React from 'react';
 /* @conditional-compile-remove(file-sharing-acs) */
@@ -69,6 +69,8 @@ export const AttachmentUploadButton = (props: AttachmentUploadButtonProps): JSX.
     }
   });
 
+  const sendbox = document?.querySelector(`[id="sendbox"]`) as HTMLTextAreaElement;
+
   return (
     <>
       <Stack
@@ -79,13 +81,20 @@ export const AttachmentUploadButton = (props: AttachmentUploadButtonProps): JSX.
           inputRef.current?.click();
         }}
       >
-        <IconButton className={iconButtonClassName} ariaLabel={uploadAttachmentButtonStringTrampoline()}>
-          <SendBoxAttachFileIconTrampoline />
-        </IconButton>
+        <TooltipHost content={uploadAttachmentButtonStringTrampoline()} data-ui-id="chat-composite-message-tooltip">
+          <IconButton
+            className={iconButtonClassName}
+            ariaLabel={uploadAttachmentButtonStringTrampoline()}
+            autoFocus={false}
+          >
+            <SendBoxAttachFileIconTrampoline />
+          </IconButton>
+        </TooltipHost>
       </Stack>
       <input
         data-testid="attachment-upload-button"
         ref={inputRef}
+        autoFocus={false}
         hidden
         multiple={!disableMultipleUploads}
         accept={supportedMediaTypes.join(',')}
@@ -96,6 +105,8 @@ export const AttachmentUploadButton = (props: AttachmentUploadButtonProps): JSX.
         }}
         onChange={(e) => {
           onChange && onChange(e.currentTarget.files);
+          // to ensure focus is landed back to input box after file selection
+          sendbox.focus();
         }}
       />
     </>
