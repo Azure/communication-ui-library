@@ -87,6 +87,10 @@ import {
 } from '../utils/spotlightUtils';
 /* @conditional-compile-remove(acs-close-captions) */
 import { getCaptionsKind, getIsTeamsCall } from '../selectors/baseSelectors';
+/* @conditional-compile-remove(soft-mute) */
+import { useHandlers } from '../hooks/useHandlers';
+/* @conditional-compile-remove(soft-mute) */
+import { MoreDrawer } from '../../common/Drawer/MoreDrawer';
 
 /**
  * @private
@@ -189,6 +193,9 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   /* @conditional-compile-remove(spotlight) */
   const videoGalleryProps = usePropsFor(VideoGallery);
 
+  /* @conditional-compile-remove(soft-mute) */
+  const muteAllHandlers = useHandlers(MoreDrawer);
+
   /* @conditional-compile-remove(spotlight) */
   const { setPromptProps, setIsPromptOpen, hideSpotlightButtons } = props;
 
@@ -242,12 +249,17 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     return {
       onMuteParticipant: ['Unknown', 'Organizer', 'Presenter', 'Co-organizer'].includes(role ?? '')
         ? onMuteParticipant
+        : undefined,
+      onMuteAllRemoteParticipants: ['Unknown', 'Organizer', 'Presenter', 'Co-organizer'].includes(role ?? '')
+        ? muteAllHandlers.onMuteAllRemoteParticipants
         : undefined
     };
     return {};
   }, [
     /* @conditional-compile-remove(soft-mute) */ onMuteParticipant,
-    /* @conditional-compile-remove(soft-mute) */ role
+    /* @conditional-compile-remove(soft-mute) */ role,
+    /* @conditional-compile-remove(soft-mute) */ muteAllHandlers.onMuteAllRemoteParticipants,
+    /* @conditional-compile-remove(soft-mute) */ remoteParticipants
   ]);
 
   const spotlightPeoplePaneProps = useMemo(() => {

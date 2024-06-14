@@ -336,7 +336,12 @@
     "leaveConfirmDialogContent": "Are you sure you want to leave the call?",
     "endCallConfirmDialogTitle": "End the call?",
     "endCallConfirmDialogContent": "You'll end the call for everyone.",
-    "invalidMeetingIdentifier": "Invalid meeting ID or passcode"
+    "invalidMeetingIdentifier": "Invalid meeting ID or passcode",
+    "muteAllMenuLabel": "Mute all",
+    "muteAllDialogTitle": "Mute everyone?",
+    "muteAllDialogContent": "This will mute everyone in the meeting but you.",
+    "muteAllConfirmButtonLabel": "Mute all",
+    "muteAllCancelButtonLabel": "Cancel"
   },
   "chat": {
     "chatListHeader": "In this chat",

@@ -15,6 +15,7 @@ import { IContextualMenuItem, IContextualMenuProps } from '@fluentui/react';
 import { getRemoteParticipants } from '../../selectors/baseSelectors';
 /* @conditional-compile-remove(soft-mute) */
 import { useSelector } from '../../hooks/useSelector';
+import { Prompt } from '../Prompt';
 
 const PEOPLE_SIDE_PANE_ID = 'people';
 
@@ -45,7 +46,7 @@ export const usePeoplePane = (props: {
   /* @conditional-compile-remove(soft-mute) */
   onMuteParticipant?: (userId: string) => Promise<void>;
   /* @conditional-compile-remove(soft-mute) */
-  mutedParticipantUserIds?: string[];
+  onMuteAllRemoteParticipants?: () => Promise<void>;
 }): {
   openPeoplePane: () => void;
   closePeoplePane: () => void;
@@ -75,7 +76,9 @@ export const usePeoplePane = (props: {
     /* @conditional-compile-remove(spotlight) */
     maxParticipantsToSpotlight,
     /* @conditional-compile-remove(soft-mute) */
-    onMuteParticipant
+    onMuteParticipant,
+    /* @conditional-compile-remove(soft-mute) */
+    onMuteAllRemoteParticipants,
   } = props;
 
   const closePane = useCallback(() => {
@@ -86,10 +89,31 @@ export const usePeoplePane = (props: {
   const localeStrings = useLocale().strings.call;
   /* @conditional-compile-remove(soft-mute) */
   const remoteParticipants = useSelector(getRemoteParticipants);
+  /* @conditional-compile-remove(soft-mute) */
+  const [showMuteAllPrompt, setShowMuteAllPrompt] = React.useState(false);
+  /* @conditional-compile-remove(soft-mute) */
+  const muteAllPromptLabels = useMemo(
+    () => ({
+      confirmButtonLabel: localeStrings.muteAllConfirmButtonLabel,
+      heading: localeStrings.muteAllDialogTitle,
+      text: localeStrings.muteAllDialogContent,
+      cancelButtonLabel: localeStrings.muteAllCancelButtonLabel
+    }),
+    []
+  );
 
-  /* @conditional-compile-remove(spotlight) */
+  /* @conditional-compile-remove(soft-mute) */
+  const onMuteAllPromptConfirm = useCallback(() => {
+    onMuteAllRemoteParticipants && onMuteAllRemoteParticipants();
+    setShowMuteAllPrompt(false);
+  },
+  [onMuteAllRemoteParticipants, setShowMuteAllPrompt]);
+  
+
+  /* @conditional-compile-remove(spotlight) */ /* @conditional-compile-remove(soft-mute) */
   const sidePaneHeaderMenuProps: IContextualMenuProps = useMemo(() => {
     const menuItems: IContextualMenuItem[] = [];
+    /* @conditional-compile-remove(spotlight) */
     if (onStopAllSpotlight && spotlightedParticipantUserIds && spotlightedParticipantUserIds.length > 0) {
       menuItems.push({
         key: 'stopAllSpotlightKey',
@@ -101,10 +125,44 @@ export const usePeoplePane = (props: {
         ariaLabel: localeStrings.stopAllSpotlightMenuLabel
       });
     }
+    /* @conditional-compile-remove(soft-mute) */
+    if (onMuteAllRemoteParticipants && remoteParticipants) {
+      let isAllMuted = true;
+      if (remoteParticipants) {
+        for (const participant of Object.values(remoteParticipants)) {
+          if (!participant.isMuted) {
+            isAllMuted = false;
+            break;
+          }
+        }
+      }
+      menuItems.push({
+        key: 'muteAllRemoteParticipants',
+        text: localeStrings.muteAllMenuLabel,
+        iconProps: {
+          iconName: 'ContextualMenuMicMutedIcon',
+          styles: { root: { lineHeight: 0 } }
+        },
+        onClick: () => {
+          setShowMuteAllPrompt(true);
+        },
+        'data-ui-id': 'participant-item-mute-all-remote-participants',
+        ariaLabel: localeStrings.muteAllMenuLabel,
+        disabled: isAllMuted
+      });
+    }
     return {
       items: menuItems
     };
-  }, [onStopAllSpotlight, spotlightedParticipantUserIds, localeStrings.stopAllSpotlightMenuLabel]);
+  }, [
+    /* @conditional-compile-remove(spotlight) */ onStopAllSpotlight,
+    /* @conditional-compile-remove(spotlight) */ spotlightedParticipantUserIds,
+    /* @conditional-compile-remove(spotlight) */ localeStrings.stopAllSpotlightMenuLabel,
+    /* @conditional-compile-remove(soft-mute) */ localeStrings.muteAllMenuLabel,
+    /* @conditional-compile-remove(soft-mute) */ onMuteAllRemoteParticipants,
+    /* @conditional-compile-remove(soft-mute) */ remoteParticipants,
+    /* @conditional-compile-remove(soft-mute) */ setShowMuteAllPrompt
+  ]);
 
   const onRenderHeader = useCallback(
     () => (
@@ -230,16 +288,28 @@ export const usePeoplePane = (props: {
 
   const onRenderContent = useCallback((): JSX.Element => {
     return (
-      <PeoplePaneContent
-        inviteLink={inviteLink}
-        onFetchAvatarPersonaData={onFetchAvatarPersonaData}
-        onFetchParticipantMenuItems={_onFetchParticipantMenuItems}
-        setDrawerMenuItems={setDrawerMenuItems}
-        mobileView={mobileView}
-        setParticipantActioned={setParticipantActioned}
-        /* @conditional-compile-remove(spotlight) */
-        participantListHeadingMoreButtonProps={sidePaneHeaderMenuProps}
-      />
+      <>
+        {
+        /* @conditional-compile-remove(soft-mute) */
+        <Prompt
+          {...muteAllPromptLabels}
+          styles={{ main: { minWidth: '22.5rem', padding: '1.5rem' } }}
+          onConfirm={() => onMuteAllPromptConfirm()}
+          isOpen={showMuteAllPrompt}
+          onCancel={() => setShowMuteAllPrompt(false)}
+        />
+      }
+        <PeoplePaneContent
+          inviteLink={inviteLink}
+          onFetchAvatarPersonaData={onFetchAvatarPersonaData}
+          onFetchParticipantMenuItems={_onFetchParticipantMenuItems}
+          setDrawerMenuItems={setDrawerMenuItems}
+          mobileView={mobileView}
+          setParticipantActioned={setParticipantActioned}
+          /* @conditional-compile-remove(spotlight) */
+          participantListHeadingMoreButtonProps={sidePaneHeaderMenuProps}
+        />
+      </>
     );
   }, [
     inviteLink,
@@ -248,7 +318,11 @@ export const usePeoplePane = (props: {
     _onFetchParticipantMenuItems,
     setDrawerMenuItems,
     setParticipantActioned,
-    /* @conditional-compile-remove(spotlight) */ sidePaneHeaderMenuProps
+    /* @conditional-compile-remove(spotlight) */ sidePaneHeaderMenuProps,
+    /* @conditional-compile-remove(soft-mute) */ showMuteAllPrompt,
+    /* @conditional-compile-remove(soft-mute) */ setShowMuteAllPrompt,
+    /* @conditional-compile-remove(soft-mute) */ onMuteAllRemoteParticipants,
+    /* @conditional-compile-remove(soft-mute) */ muteAllPromptLabels
   ]);
 
   const sidePaneRenderer: SidePaneRenderer = useMemo(

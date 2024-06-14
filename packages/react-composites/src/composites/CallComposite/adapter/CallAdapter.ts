@@ -717,6 +717,11 @@ export interface CallAdapterCallOperations {
    * @param userId - Id of the participant to mute
    */
   muteParticipant(userId: string): Promise<void>;
+  /* @conditional-compile-remove(soft-mute) */
+  /**
+   * Mute All participants
+   */
+  muteAllRemoteParticipants(): Promise<void>;
 }
 
 /**

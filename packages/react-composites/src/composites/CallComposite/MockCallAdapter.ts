@@ -211,6 +211,10 @@ export class _MockCallAdapter implements CallAdapter {
   muteParticipant(userId: string): Promise<void> {
     throw Error('muteParticipant not implemented');
   }
+  /* @conditional-compile-remove(soft-mute) */ // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  muteAllRemoteParticipants(): Promise<void> {
+    throw Error('muteAllRemoteParticipants not implemented');
+  }
 }
 
 /**

@@ -233,6 +233,11 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
   public async muteParticipant(userId: string): Promise<void> {
     return this.callWithChatAdapter.muteParticipant(userId);
   }
+
+  /* @conditional-compile-remove(soft-mute) */
+  public async muteAllRemoteParticipants(): Promise<void> {
+    return this.callWithChatAdapter.muteAllRemoteParticipants();
+  }
 }
 
 function callAdapterStateFromCallWithChatAdapterState(

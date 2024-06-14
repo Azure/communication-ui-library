@@ -825,4 +825,29 @@ export interface CallCompositeStrings {
    * Error message when the meeting identifier or passcode is invalid
    */
   invalidMeetingIdentifier: string;
+  /* @conditional-compile-remove(soft-mute) */
+  /**
+   * Label for mute all remote participants menu item in People Pane
+   */
+  muteAllMenuLabel: string;
+  /* @conditional-compile-remove(soft-mute) */
+  /**
+   * Label for mute all prompt title
+   */
+  muteAllDialogTitle: string;
+  /* @conditional-compile-remove(soft-mute) */
+  /**
+   * Label for mute all prompt content
+   */
+  muteAllDialogContent: string;
+  /* @conditional-compile-remove(soft-mute) */
+  /**
+   * Label for mute all confirm button
+   */
+  muteAllConfirmButtonLabel: string;
+  /* @conditional-compile-remove(soft-mute) */
+  /**
+   * Label for mute all cancel button
+   */
+  muteAllCancelButtonLabel: string; 
 }
