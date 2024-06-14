@@ -12,7 +12,7 @@ import {
   headingMoreButtonStyles
 } from './styles/ParticipantContainer.styles';
 import { ParticipantList, ParticipantListProps, ParticipantMenuItemsCallback } from '@internal/react-components';
-import { FocusZone, Stack, Text, useTheme } from '@fluentui/react';
+import { FocusZone, Stack, Text, TooltipHost, TooltipOverflowMode, getId, useTheme } from '@fluentui/react';
 import { DefaultButton, IContextualMenuProps } from '@fluentui/react';
 import { AvatarPersona, AvatarPersonaDataCallback } from './AvatarPersona';
 import { useId } from '@fluentui/react-hooks';
@@ -67,6 +67,7 @@ export const ParticipantListWithHeading = (props: {
   const theme = useTheme();
   /* @conditional-compile-remove(total-participant-count) */
   const totalParticipantCount = participantListProps.totalParticipantCount;
+  const tooltipId: string = getId('text-tooltip');
   const subheadingStyleThemed = useMemo(
     () => ({
       root: {
@@ -117,9 +118,13 @@ export const ParticipantListWithHeading = (props: {
                 allowActiveBorder={true}
               />
               {options?.text && (
-                <Text nowrap={true} styles={displayNameStyles}>
-                  {options?.text}
-                </Text>
+                <div style={displayNameStyles}>
+                  <TooltipHost content={options?.text} id={tooltipId} overflowMode={TooltipOverflowMode.Parent}>
+                    <Text nowrap={false} aria-labelledby={tooltipId}>
+                      {options?.text}
+                    </Text>
+                  </TooltipHost>
+                </div>
               )}
             </>
           )}
