@@ -10,7 +10,7 @@ import { useLocale } from '../../localization';
  * @private
  */
 export interface MutedNotificationProps {
-  speakingWhileMuted: boolean;
+  speakingWhileMuted?: boolean;
 }
 
 /**

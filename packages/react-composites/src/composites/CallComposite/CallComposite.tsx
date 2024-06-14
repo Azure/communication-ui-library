@@ -57,6 +57,10 @@ import { useTrackedCapabilityChangedNotifications } from './utils/TrackCapabilit
 import { useEndedCallConsoleErrors } from './utils/useConsoleErrors';
 import { SurveyPage } from './pages/SurveyPage';
 import { useAudio } from '../common/AudioProvider';
+/* @conditional-compile-remove(teams-meeting-conference) */
+import { connectionLostBannerSelector } from './selectors/connectionLostSelector';
+/* @conditional-compile-remove(teams-meeting-conference) */
+import { useConnectionLostNotifications } from './components/ConnectionLostNotificationBar';
 
 /**
  * Props for {@link CallComposite}.
@@ -419,6 +423,9 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   const capabilitiesChangedNotificationBarProps =
     useTrackedCapabilityChangedNotifications(capabilitiesChangedInfoAndRole);
 
+  const connectionLostFlag = useSelector(connectionLostBannerSelector);
+  const connectionLostBannerProps = useConnectionLostNotifications(connectionLostFlag.connectionLost);
+
   // Track the last dismissed errors of any error kind to prevent errors from re-appearing on subsequent page navigation
   // This works by tracking the most recent timestamp of any active error type.
   // And then tracking when that error type was last dismissed.
@@ -608,6 +615,8 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           setPinnedParticipants={setPinnedParticipants}
           compositeAudioContext={compositeAudioContext}
           disableAutoShowDtmfDialer={props.options?.disableAutoShowDtmfDialer}
+          /* @conditional-compile-remove(teams-meeting-conference) */
+          connectionLostBannerProps={connectionLostBannerProps}
         />
       );
       break;

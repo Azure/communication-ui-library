@@ -32,6 +32,7 @@ import { DtmfDialpadPage } from './DtmfDialpadPage';
 import { showDtmfDialer } from '../utils/MediaGalleryUtils';
 import { getTargetCallees } from '../selectors/baseSelectors';
 import { Prompt, PromptProps } from '../components/Prompt';
+import { ConnectionLostBannerProps } from '../components/ConnectionLostNotificationBar';
 
 /**
  * @private
@@ -57,6 +58,8 @@ export interface CallPageProps {
   setPinnedParticipants?: (pinnedParticipants: string[]) => void;
   compositeAudioContext?: AudioContext;
   disableAutoShowDtmfDialer?: boolean;
+  /* @conditional-compile-remove(teams-meeting-conference) */
+  connectionLostBannerProps?: ConnectionLostBannerProps;
 }
 
 /**
@@ -190,6 +193,8 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
         hideSpotlightButtons={options?.spotlight?.hideSpotlightButtons}
         pinnedParticipants={pinnedParticipants}
         setPinnedParticipants={setPinnedParticipants}
+        /* @conditional-compile-remove(teams-meeting-conference) */
+        connectionLostBannerProps={props.connectionLostBannerProps}
       />
       {<Prompt isOpen={isPromptOpen} onDismiss={() => setIsPromptOpen(false)} {...promptProps} />}
     </>
