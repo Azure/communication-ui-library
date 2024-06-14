@@ -14,6 +14,7 @@ import { IContextualMenuItem, IContextualMenuProps } from '@fluentui/react';
 import { getRemoteParticipants } from '../../selectors/baseSelectors';
 /* @conditional-compile-remove(soft-mute) */
 import { useSelector } from '../../hooks/useSelector';
+/* @conditional-compile-remove(soft-mute) */
 import { Prompt } from '../Prompt';
 
 const PEOPLE_SIDE_PANE_ID = 'people';
@@ -106,7 +107,6 @@ export const usePeoplePane = (props: {
     setShowMuteAllPrompt(false);
   }, [onMuteAllRemoteParticipants, setShowMuteAllPrompt]);
 
-  /* @conditional-compile-remove(soft-mute) */
   const sidePaneHeaderMenuProps: IContextualMenuProps = useMemo(() => {
     const menuItems: IContextualMenuItem[] = [];
     if (onStopAllSpotlight && spotlightedParticipantUserIds && spotlightedParticipantUserIds.length > 0) {
