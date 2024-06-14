@@ -185,8 +185,8 @@
     "failToSendTag": "Failed to send",
     "editedTag": "Edited",
     "liveAuthorIntro": "{author} says",
-    "messageContentAriaText": "{author} said {message}",
-    "messageContentMineAriaText": "You said {message}",
+    "messageContentAriaText": "{status} {author} said {message}",
+    "messageContentMineAriaText": "{status} You said {message}",
     "editBoxTextLimit": "Your message is over the limit of {limitNumber} characters",
     "editBoxPlaceholderText": "Edit your message",
     "newMessagesIndicator": "New messages",
@@ -572,5 +572,16 @@
   "verticalGallery": {
     "leftNavButtonAriaLabel": "previous page",
     "rightNavButtonAriaLabel": "next page"
+  },
+  "MeetingConferencePhoneInfo": {
+    "meetingConferencePhoneInfoModalTitle": "Join call from your phone",
+    "meetingConferencePhoneInfoModalDialIn": "Dial number",
+    "meetingConferencePhoneInfoModalMeetingId": "Enter meeting ID",
+    "meetingConferencePhoneInfoModalWait": "Wait to be admitted by organizer",
+    "meetingConferencePhoneInfoModalNoPhoneAvailable": "No phone available",
+    "meetingConferencePhoneInfoModalTollFree": "{phoneNumber} (Toll-free) {country}, {city}",
+    "meetingConferencePhoneInfoModalTollFreeWithoutGeoData": "{phoneNumber} (Toll-free)",
+    "meetingConferencePhoneInfoModalToll": "{phoneNumber} (Toll) {country}, {city}",
+    "meetingConferencePhoneInfoModalTollWithoutGeoData": "{phoneNumber} (Toll)"
   }
 }

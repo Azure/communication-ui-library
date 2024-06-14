@@ -36,7 +36,6 @@ import {
   VideoOptions,
   Call
 } from '@azure/communication-calling';
-/* @conditional-compile-remove(spotlight) */
 import { SpotlightedParticipant } from '@azure/communication-calling';
 /* @conditional-compile-remove(meeting-id) */
 import { TeamsMeetingIdLocator } from '@azure/communication-calling';
@@ -76,9 +75,7 @@ import {
 } from './CallAdapter';
 import { ReactionResources } from '@internal/react-components';
 import { TransferAcceptedListener } from './CallAdapter';
-
 import { CapabilitiesChangedListener } from './CallAdapter';
-/* @conditional-compile-remove(spotlight) */
 import { SpotlightChangedListener } from './CallAdapter';
 
 import {
@@ -555,11 +552,8 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.stopVideoBackgroundEffects.bind(this);
     this.updateBackgroundPickerImages.bind(this);
     this.submitSurvey.bind(this);
-    /* @conditional-compile-remove(spotlight) */
     this.startSpotlight.bind(this);
-    /* @conditional-compile-remove(spotlight) */
     this.stopSpotlight.bind(this);
-    /* @conditional-compile-remove(spotlight) */
     this.stopAllSpotlight.bind(this);
     /* @conditional-compile-remove(soft-mute) */
     this.muteParticipant.bind(this);
@@ -1044,17 +1038,14 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.handlers.onMuteAllRemoteParticipants();
   }
 
-  /* @conditional-compile-remove(spotlight) */
   public async startSpotlight(userIds?: string[]): Promise<void> {
     this.handlers.onStartSpotlight(userIds);
   }
 
-  /* @conditional-compile-remove(spotlight) */
   public async stopSpotlight(userIds?: string[]): Promise<void> {
     this.handlers.onStopSpotlight(userIds);
   }
 
-  /* @conditional-compile-remove(spotlight) */
   public async stopAllSpotlight(): Promise<void> {
     this.handlers.onStopAllSpotlight();
   }
@@ -1090,7 +1081,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   on(event: 'transferAccepted', listener: TransferAcceptedListener): void;
   on(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
   on(event: 'roleChanged', listener: PropertyChangedEvent): void;
-  /* @conditional-compile-remove(spotlight) */
   on(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -1168,7 +1158,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
 
     this.call?.feature(Features.Transfer).on('transferAccepted', this.transferAccepted.bind(this));
     this.call?.feature(Features.Capabilities).on('capabilitiesChanged', this.capabilitiesChanged.bind(this));
-    /* @conditional-compile-remove(spotlight) */
     this.call?.feature(Features.Spotlight).on('spotlightChanged', this.spotlightChanged.bind(this));
   }
 
@@ -1305,7 +1294,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.emitter.emit('roleChanged');
   }
 
-  /* @conditional-compile-remove(spotlight) */
   private spotlightChanged(args: { added: SpotlightedParticipant[]; removed: SpotlightedParticipant[] }): void {
     this.emitter.emit('spotlightChanged', args);
   }
@@ -1342,7 +1330,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   off(event: 'transferAccepted', listener: TransferAcceptedListener): void;
   off(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
   off(event: 'roleChanged', listener: PropertyChangedEvent): void;
-  /* @conditional-compile-remove(spotlight) */
   off(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -1501,21 +1488,50 @@ export type AzureCommunicationOutboundCallAdapterArgs = {
 export type TeamsAdapterOptions = CommonCallAdapterOptions;
 
 /**
+ * Common part of args to create the Azure Communication Services implementation of {@link TeamsCallAdapter}.
+ *
+ * @public
+ */
+export type TeamsCallAdapterArgsCommon = {
+  userId: MicrosoftTeamsUserIdentifier;
+  credential: CommunicationTokenCredential;
+  options?: TeamsAdapterOptions;
+};
+
+/**
  * Arguments for creating the Azure Communication Services implementation of {@link TeamsCallAdapter}.
  *
  * @public
  */
-export type TeamsCallAdapterArgs = {
-  userId: MicrosoftTeamsUserIdentifier;
-  credential: CommunicationTokenCredential;
+export type TeamsCallAdapterArgs = TeamsCallAdapterArgsCommon & {
   locator:
     | TeamsMeetingLinkLocator
     | /* @conditional-compile-remove(teams-adhoc-call) */ /* @conditional-compile-remove(PSTN-calls) */ CallParticipantsLocator
     | /* @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator;
-  /**
-   * Optional parameters for the {@link TeamsCallAdapter} created
-   */
-  options?: TeamsAdapterOptions;
+};
+
+/* @conditional-compile-remove(teams-identity-support-beta) */
+/**
+ * Parameter to start a call using a Teams user identity.
+ *
+ * @beta
+ */
+export type StartTeamsCallIdentifier =
+  | MicrosoftTeamsUserIdentifier
+  | PhoneNumberIdentifier
+  | MicrosoftTeamsAppIdentifier
+  | UnknownIdentifier;
+
+/* @conditional-compile-remove(teams-identity-support-beta) */
+/**
+ * Arguments for creating the Azure Communication Services implementation of {@link TeamsCallAdapter}.
+ *
+ * This is used to create an outbound call scenarios.
+ *
+ * @beta
+ */
+export type TeamsOutboundCallAdapterArgs = TeamsCallAdapterArgsCommon & {
+  targetCallees: StartTeamsCallIdentifier[];
 };
 
 /**
@@ -1570,7 +1586,6 @@ export async function createAzureCommunicationCallAdapter(
     targetCallees: (args as AzureCommunicationOutboundCallAdapterArgs).targetCallees,
     /* @conditional-compile-remove(PSTN-calls) */
     alternateCallerId: args.alternateCallerId,
-
     options: args.options
   });
 }
@@ -1632,8 +1647,12 @@ export const _createAzureCommunicationCallAdapterInner = async ({
 /**
  * @public
  */
-export const createTeamsCallAdapter = async (args: TeamsCallAdapterArgs): Promise<TeamsCallAdapter> => {
-  const { userId, credential, locator, options } = args;
+export const createTeamsCallAdapter = async (
+  args:
+    | TeamsCallAdapterArgs
+    | /* @conditional-compile-remove(teams-identity-support-beta) */ TeamsOutboundCallAdapterArgs
+): Promise<TeamsCallAdapter> => {
+  const { userId, credential, options } = args;
   if (isCommunicationUserIdentifier(userId)) {
     throw new Error(
       'Communication User identifier is not supported by TeamsCallAdapter, please use our AzureCommunicationCallAdapter.'
@@ -1649,7 +1668,13 @@ export const createTeamsCallAdapter = async (args: TeamsCallAdapterArgs): Promis
   const callAgent = await callClient.createTeamsCallAgent(credential, {
     undefined
   });
-  const adapter = createTeamsCallAdapterFromClient(callClient, callAgent, locator, options);
+
+  /* @conditional-compile-remove(teams-identity-support-beta) */
+  if ('targetCallees' in args) {
+    return createTeamsCallAdapterFromClient(callClient, callAgent, args.targetCallees, options);
+  }
+
+  const adapter = createTeamsCallAdapterFromClient(callClient, callAgent, args.locator, options);
   return adapter;
 };
 
@@ -1785,13 +1810,23 @@ function useAzureCommunicationCallAdapterGeneric<
             return;
           }
           creatingAdapterRef.current = true;
-          /* @conditional-compile-remove(teams-identity-support) */
-          newAdapter = (await createTeamsCallAdapter({
-            credential,
-            locator: locator as TeamsMeetingLinkLocator,
-            userId: userId as MicrosoftTeamsUserIdentifier,
-            options
-          })) as Adapter;
+          if (targetCallees) {
+            /* @conditional-compile-remove(teams-identity-support-beta) */
+            newAdapter = (await createTeamsCallAdapter({
+              credential,
+              userId: userId as MicrosoftTeamsUserIdentifier,
+              targetCallees: targetCallees as StartTeamsCallIdentifier[],
+              options
+            })) as Adapter;
+          } else {
+            /* @conditional-compile-remove(teams-identity-support) */
+            newAdapter = (await createTeamsCallAdapter({
+              credential,
+              locator: locator as TeamsMeetingLinkLocator,
+              userId: userId as MicrosoftTeamsUserIdentifier,
+              options
+            })) as Adapter;
+          }
         } else {
           throw new Error('Unreachable code, unknown adapterKind');
         }
@@ -1903,7 +1938,9 @@ export const useTeamsCallAdapter = (
    * Allows arguments to be undefined so that you can respect the rule-of-hooks and pass in arguments
    * as they are created. The adapter is only created when all arguments are defined.
    */
-  args: Partial<TeamsCallAdapterArgs>,
+  args: Partial<
+    TeamsCallAdapterArgs | /* @conditional-compile-remove(teams-identity-support-beta) */ TeamsOutboundCallAdapterArgs
+  >,
   /**
    * Optional callback to modify the adapter once it is created.
    *
@@ -2000,7 +2037,9 @@ export async function createAzureCommunicationCallAdapterFromClient(
 export const createTeamsCallAdapterFromClient = async (
   callClient: StatefulCallClient,
   callAgent: TeamsCallAgent,
-  locator: CallAdapterLocator,
+  locator:
+    | CallAdapterLocator
+    | /* @conditional-compile-remove(teams-identity-support-beta) */ StartTeamsCallIdentifier[],
   options?: TeamsAdapterOptions
 ): Promise<TeamsCallAdapter> => {
   const deviceManager = (await callClient.getDeviceManager()) as StatefulDeviceManager;
@@ -2010,7 +2049,11 @@ export const createTeamsCallAdapterFromClient = async (
   }
   /* @conditional-compile-remove(unsupported-browser) */
   await callClient.feature(Features.DebugInfo).getEnvironmentInfo();
-  return new AzureCommunicationCallAdapter(callClient, locator, callAgent, deviceManager, options);
+  if (Array.isArray(locator)) {
+    return new AzureCommunicationCallAdapter(callClient, locator, callAgent, deviceManager, options);
+  } else {
+    return new AzureCommunicationCallAdapter(callClient, locator, callAgent, deviceManager, options);
+  }
 };
 
 const isCallError = (e: Error): e is CallError => {

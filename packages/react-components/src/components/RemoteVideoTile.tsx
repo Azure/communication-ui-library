@@ -62,11 +62,11 @@ export const _RemoteVideoTile = React.memo(
     onUnpinParticipant?: (userId: string) => void;
     onUpdateScalingMode?: (userId: string, scalingMode: ViewScalingMode) => void;
     isPinned?: boolean;
-    /* @conditional-compile-remove(spotlight) */ spotlightedParticipantUserIds?: string[];
-    /* @conditional-compile-remove(spotlight) */ isSpotlighted?: boolean;
-    /* @conditional-compile-remove(spotlight) */ onStartSpotlight?: (userIds: string[]) => void;
-    /* @conditional-compile-remove(spotlight) */ onStopSpotlight?: (userIds: string[]) => void;
-    /* @conditional-compile-remove(spotlight) */ maxParticipantsToSpotlight?: number;
+    spotlightedParticipantUserIds?: string[];
+    isSpotlighted?: boolean;
+    onStartSpotlight?: (userIds: string[]) => void;
+    onStopSpotlight?: (userIds: string[]) => void;
+    maxParticipantsToSpotlight?: number;
     /* @conditional-compile-remove(soft-mute) */ onMuteParticipant?: (userId: string) => void;
     disablePinMenuItem?: boolean;
     toggleAnnouncerString?: (announcerString: string) => void;
@@ -90,11 +90,11 @@ export const _RemoteVideoTile = React.memo(
       isPinned,
       onPinParticipant,
       onUnpinParticipant,
-      /* @conditional-compile-remove(spotlight) */ spotlightedParticipantUserIds,
-      /* @conditional-compile-remove(spotlight) */ isSpotlighted,
-      /* @conditional-compile-remove(spotlight) */ onStartSpotlight,
-      /* @conditional-compile-remove(spotlight) */ onStopSpotlight,
-      /* @conditional-compile-remove(spotlight) */ maxParticipantsToSpotlight,
+      spotlightedParticipantUserIds,
+      isSpotlighted,
+      onStartSpotlight,
+      onStopSpotlight,
+      maxParticipantsToSpotlight,
       /* @conditional-compile-remove(soft-mute) */ onMuteParticipant,
       onUpdateScalingMode,
       disablePinMenuItem,
@@ -143,11 +143,11 @@ export const _RemoteVideoTile = React.memo(
       onUpdateScalingMode,
       disablePinMenuItem,
       toggleAnnouncerString,
-      /* @conditional-compile-remove(spotlight) */ spotlightedParticipantUserIds,
-      /* @conditional-compile-remove(spotlight) */ isSpotlighted,
-      /* @conditional-compile-remove(spotlight) */ onStartSpotlight,
-      /* @conditional-compile-remove(spotlight) */ onStopSpotlight,
-      /* @conditional-compile-remove(spotlight) */ maxParticipantsToSpotlight,
+      spotlightedParticipantUserIds,
+      isSpotlighted,
+      onStartSpotlight,
+      onStopSpotlight,
+      maxParticipantsToSpotlight,
       /* @conditional-compile-remove(soft-mute) */ onMuteParticipant
     });
 
@@ -252,7 +252,6 @@ export const _RemoteVideoTile = React.memo(
                     )
                   )
           }
-          /* @conditional-compile-remove(spotlight) */
           isSpotlighted={isSpotlighted}
           overlay={reactionOverlay}
         />

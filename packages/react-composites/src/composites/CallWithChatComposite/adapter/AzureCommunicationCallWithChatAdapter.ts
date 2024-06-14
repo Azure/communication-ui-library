@@ -23,7 +23,7 @@ import { StartCaptionsOptions } from '@azure/communication-calling';
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { DtmfTone } from '@azure/communication-calling';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
-/* @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(file-sharing-acs) */
 import { MessageOptions } from '@internal/acs-ui-common';
 import {
   ParticipantsJoinedListener,
@@ -96,7 +96,6 @@ import {
 } from '../../CallComposite/adapter/CallAdapter';
 
 import { CapabilitiesChangedListener } from '../../CallComposite/adapter/CallAdapter';
-/* @conditional-compile-remove(spotlight) */
 import { SpotlightChangedListener } from '../../CallComposite/adapter/CallAdapter';
 import { VideoBackgroundImage, VideoBackgroundEffect } from '../../CallComposite';
 import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
@@ -412,11 +411,11 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   /** Send a chat message. */
   public async sendMessage(
     content: string,
-    /* @conditional-compile-remove(attachment-upload) */
+    /* @conditional-compile-remove(file-sharing-acs) */
     options?: MessageOptions
   ): Promise<void> {
     return await this.executeWithResolvedChatAdapter((adapter) => {
-      return adapter.sendMessage(content, /* @conditional-compile-remove(attachment-upload) */ options);
+      return adapter.sendMessage(content, /* @conditional-compile-remove(file-sharing-acs) */ options);
     });
   }
   /** Send a chat read receipt. */
@@ -441,7 +440,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   public async updateMessage(
     messageId: string,
     content: string,
-    options?: Record<string, string> | /* @conditional-compile-remove(attachment-upload) */ MessageOptions
+    options?: Record<string, string> | /* @conditional-compile-remove(file-sharing-acs) */ MessageOptions
   ): Promise<void> {
     return this.executeWithResolvedChatAdapter((adapter) => {
       return adapter.updateMessage(messageId, content, options);
@@ -531,17 +530,14 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     return this.callAdapter.submitSurvey(survey);
   }
 
-  /* @conditional-compile-remove(spotlight) */
   public async startSpotlight(userIds?: string[]): Promise<void> {
     return this.callAdapter.startSpotlight(userIds);
   }
 
-  /* @conditional-compile-remove(spotlight) */
   public async stopSpotlight(userIds?: string[]): Promise<void> {
     return this.callAdapter.stopSpotlight(userIds);
   }
 
-  /* @conditional-compile-remove(spotlight) */
   public async stopAllSpotlight(): Promise<void> {
     return this.callAdapter.stopAllSpotlight();
   }
@@ -581,7 +577,6 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   on(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
 
   on(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
-  /* @conditional-compile-remove(spotlight) */
   on(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
 
   on(event: 'chatInitialized', listener: ChatInitializedListener): void;
@@ -705,11 +700,8 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   off(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
   off(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
   off(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
-
   off(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
-  /* @conditional-compile-remove(spotlight) */
   off(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
-
   off(event: 'chatInitialized', listener: ChatInitializedListener): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -224,7 +224,6 @@ export interface ErrorBarStrings {
    * Unable to start effect
    */
   unableToStartVideoEffect?: string;
-  /* @conditional-compile-remove(spotlight) */
   /**
    * An error message when starting spotlight while max participants are spotlighted
    */
@@ -324,7 +323,7 @@ export const ErrorBar = (props: ErrorBarProps): JSX.Element => {
               ? setDismissedErrors(dismissError(dismissedErrors, error))
               : props.onDismissError?.(error)
           }
-          dismissButtonAriaLabel={strings.dismissButtonAriaLabel}
+          dismissButtonAriaLabel={`${strings[error.type]}, ${strings.dismissButtonAriaLabel}`}
           dismissIconProps={{ iconName: 'ErrorBarClear' }}
         >
           {strings[error.type]}

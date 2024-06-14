@@ -23,7 +23,7 @@ import {
 import { Divider } from '@fluentui/react-components';
 import { Canvas, Description, Heading, Props, Source, Subtitle, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { DetailedBetaBanner } from '../BetaBanners/DetailedBetaBanner';
 import { SingleLineBetaBanner } from '../BetaBanners/SingleLineBetaBanner';
 
@@ -350,7 +350,6 @@ const Docs: () => JSX.Element = () => {
       <div ref={refDisplayAttachments}>
         <Heading>Display Messages with Attachments</Heading>
         <Subtitle>Basic Usage: Default Attachment Rendering</Subtitle>
-        <DetailedBetaBanner />
         <Description>
           The MessageThread component renders message attachments without any additional configuration. Simply provide a
           list of `ChatMessages` with attachments of type `AttachmentMetadata` and the component will render the message
@@ -397,7 +396,7 @@ const Docs: () => JSX.Element = () => {
         <Source code={mentionTag} />
         <Description>
           The MessageThread component also supports mentioning users when editing a message if the `lookupOptions` under
-          the `mentionOptions` property is provided. However, if the `richTextEditor` property is set to true, the
+          the `mentionOptions` property is provided. However, if the `richTextEditorOptions` property is set, the
           `lookupOptions` will be ignored.
         </Description>
         <Canvas mdxSource={MessageWithCustomMentionRendererText}>
@@ -410,8 +409,8 @@ const Docs: () => JSX.Element = () => {
         <DetailedBetaBanner />
         <Description>
           The following example shows how to enable rich text editor for message editing by providing the
-          `richTextEditor` property. Rich text editor does not support mentioning users at the moment. By setting
-          `richTextEditor` property to true, the `lookupOptions` under the `mentionOptions` property will be ignored.
+          `richTextEditorOptions` property. Rich text editor does not support mentioning users at the moment. By setting
+          `richTextEditorOptions` property, the `lookupOptions` under the `mentionOptions` property will be ignored.
         </Description>
         <Canvas mdxSource={MessageThreadWithRichTextEditorText}>
           <MessageThreadWithRichTextEditorExample />
@@ -594,6 +593,21 @@ const MessageThreadStory = (args): JSX.Element => {
         console.log('Invalid message type');
     }
   };
+
+  //TODO: Remove this function when the image upload functionality is implemented
+  const removeImageTags = useCallback((event: { content: DocumentFragment }) => {
+    event.content.querySelectorAll('img').forEach((image) => {
+      // If the image is the only child of its parent, remove all the parents of this img element.
+      let parentNode: HTMLElement | null = image.parentElement;
+      let currentNode: HTMLElement = image;
+      while (parentNode?.childNodes.length === 1) {
+        currentNode = parentNode;
+        parentNode = parentNode.parentElement;
+      }
+      currentNode?.remove();
+    });
+  }, []);
+
   return (
     <Stack verticalFill style={MessageThreadStoryContainerStyles} tokens={{ childrenGap: '1rem' }}>
       <MessageThreadComponent
@@ -606,7 +620,7 @@ const MessageThreadStory = (args): JSX.Element => {
         onRenderMessage={onRenderMessage}
         inlineImageOptions={inlineImageOptions}
         onUpdateMessage={onUpdateMessageCallback}
-        richTextEditor={args.richTextEditor}
+        richTextEditorOptions={args.richTextEditor ? { onPaste: removeImageTags } : undefined}
         onRenderAvatar={(userId?: string) => {
           return (
             <Persona

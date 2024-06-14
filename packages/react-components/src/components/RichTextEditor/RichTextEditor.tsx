@@ -6,7 +6,12 @@ import { darkTheme, lightTheme, useTheme } from '../../theming';
 import { RichTextStrings } from './RichTextSendBox';
 import { isDarkThemed } from '../../theming/themeUtils';
 import CopyPastePlugin from './Plugins/CopyPastePlugin';
-import type { ContentModelDocument, EditorPlugin, IEditor } from 'roosterjs-content-model-types';
+import type {
+  ContentModelDocument,
+  EditorPlugin,
+  IEditor,
+  ShallowMutableContentModelDocument
+} from 'roosterjs-content-model-types';
 import { createModelFromHtml, Editor, exportContent } from 'roosterjs-content-model-core';
 import { createParagraph, createSelectionMarker, setSelection } from 'roosterjs-content-model-dom';
 import { KeyboardInputPlugin } from './Plugins/KeyboardInputPlugin';
@@ -48,6 +53,8 @@ export interface RichTextEditorProps {
   showRichTextEditorFormatting: boolean;
   styles: RichTextEditorStyleProps;
   autoFocus?: 'sendBoxTextField';
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  onPaste?: (event: { content: DocumentFragment }) => void;
 }
 
 /**
@@ -86,7 +93,9 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     autoFocus,
     onKeyDown,
     onContentModelUpdate,
-    contentModel
+    contentModel,
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    onPaste
   } = props;
   const editor = useRef<IEditor | null>(null);
   const editorDiv = useRef<HTMLDivElement>(null);
@@ -105,9 +114,10 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
         },
         setEmptyContent() {
           if (editor.current) {
+            editor.current.formatContentModel;
             // remove all content from the editor and update the model
             // ContentChanged event will be sent by RoosterJS automatically
-            editor.current.formatContentModel((model: ContentModelDocument): boolean => {
+            editor.current.formatContentModel((model: ShallowMutableContentModelDocument): boolean => {
               model.blocks = [];
               return true;
             });
@@ -223,11 +233,19 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     [theme.palette.neutralLight]
   );
 
+  const copyPastePlugin = useMemo(() => {
+    return new CopyPastePlugin();
+  }, []);
+
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  useEffect(() => {
+    copyPastePlugin.onPaste = onPaste;
+  }, [copyPastePlugin, onPaste]);
+
   const plugins: EditorPlugin[] = useMemo(() => {
     const contentEdit = new EditPlugin();
     // AutoFormatPlugin previously was a part of the edit plugin
     const autoFormatPlugin = new AutoFormatPlugin({ autoBullet: true, autoNumbering: true, autoLink: true });
-    const copyPastePlugin = new CopyPastePlugin();
     const roosterPastePlugin = new PastePlugin(false);
     const shortcutPlugin = new ShortcutPlugin();
     const contextMenuPlugin = new ContextMenuPlugin(onContextMenuRender, onContextMenuDismiss);
@@ -251,6 +269,7 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     placeholderPlugin,
     keyboardInputPlugin,
     updatePlugin,
+    copyPastePlugin,
     toolbarPlugin,
     tableContextMenuPlugin
   ]);

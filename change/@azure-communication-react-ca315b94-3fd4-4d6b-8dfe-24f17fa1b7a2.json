@@ -1,9 +1,0 @@
-{
-  "type": "minor",
-  "area": "improvement",
-  "workstream": "MessageThread Component",
-  "comment": "Allow onRenderAvatar to return undefined to hide avatar",
-  "packageName": "@azure/communication-react",
-  "email": "3941071+emlynmac@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
