@@ -69,8 +69,6 @@ export const AttachmentUploadButton = (props: AttachmentUploadButtonProps): JSX.
     }
   });
 
-  const sendbox = document?.querySelector(`[id="sendbox"]`) as HTMLTextAreaElement;
-
   return (
     <>
       <Stack
@@ -105,8 +103,6 @@ export const AttachmentUploadButton = (props: AttachmentUploadButtonProps): JSX.
         }}
         onChange={(e) => {
           onChange && onChange(e.currentTarget.files);
-          // to ensure focus is landed back to input box after file selection
-          sendbox.focus();
         }}
       />
     </>

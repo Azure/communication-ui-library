@@ -219,6 +219,16 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   /* @conditional-compile-remove(file-sharing-acs) */
   const attachmentUploadButtonOnChange = useCallback(
     (files: FileList | null): void => {
+      // look up sendbox by ID for now, we will use `useRef`
+      // once attachment button is moved inside of send box component
+      let sendBox = document?.querySelector(`[id="sendbox"]`) as HTMLTextAreaElement;
+      /* @conditional-compile-remove(rich-text-editor-composite-support) */
+      if (props.options?.richTextEditor) {
+        sendBox = document?.querySelector(`[id="richTextSendBox"]`) as HTMLTextAreaElement;
+      }
+      // set send box on focus after file selection per A11y requirement
+      sendBox?.focus();
+
       if (!files) {
         return;
       }
@@ -254,7 +264,11 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       handleUploadAction({ type: AttachmentUploadActionType.Set, newUploads });
       attachmentOptions?.uploadOptions?.handleAttachmentSelection(newUploads);
     },
-    [attachmentOptions?.uploadOptions]
+    [
+      attachmentOptions?.uploadOptions,
+      /* @conditional-compile-remove(rich-text-editor-composite-support) */
+      props.options?.richTextEditor
+    ]
   );
 
   /* @conditional-compile-remove(file-sharing-acs) */
