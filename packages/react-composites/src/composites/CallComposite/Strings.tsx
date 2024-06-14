@@ -867,5 +867,5 @@ export interface CallCompositeStrings {
   /**
    * Label for mute all cancel button
    */
-  muteAllCancelButtonLabel: string; 
+  muteAllCancelButtonLabel: string;
 }

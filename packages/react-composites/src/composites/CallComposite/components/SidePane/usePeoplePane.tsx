@@ -71,7 +71,7 @@ export const usePeoplePane = (props: {
     onUnpinParticipant,
     disablePinMenuItem,
     /* @conditional-compile-remove(soft-mute) */
-    onMuteAllRemoteParticipants,
+    onMuteAllRemoteParticipants
   } = props;
 
   const closePane = useCallback(() => {
@@ -92,16 +92,19 @@ export const usePeoplePane = (props: {
       text: localeStrings.muteAllDialogContent,
       cancelButtonLabel: localeStrings.muteAllCancelButtonLabel
     }),
-    []
+    [
+      localeStrings.muteAllConfirmButtonLabel,
+      localeStrings.muteAllDialogTitle,
+      localeStrings.muteAllDialogContent,
+      localeStrings.muteAllCancelButtonLabel
+    ]
   );
 
   /* @conditional-compile-remove(soft-mute) */
   const onMuteAllPromptConfirm = useCallback(() => {
     onMuteAllRemoteParticipants && onMuteAllRemoteParticipants();
     setShowMuteAllPrompt(false);
-  },
-  [onMuteAllRemoteParticipants, setShowMuteAllPrompt]);
-  
+  }, [onMuteAllRemoteParticipants, setShowMuteAllPrompt]);
 
   /* @conditional-compile-remove(soft-mute) */
   const sidePaneHeaderMenuProps: IContextualMenuProps = useMemo(() => {
@@ -321,15 +324,15 @@ export const usePeoplePane = (props: {
     return (
       <>
         {
-        /* @conditional-compile-remove(soft-mute) */
-        <Prompt
-          {...muteAllPromptLabels}
-          styles={{ main: { minWidth: '22.5rem', padding: '1.5rem' } }}
-          onConfirm={() => onMuteAllPromptConfirm()}
-          isOpen={showMuteAllPrompt}
-          onCancel={() => setShowMuteAllPrompt(false)}
-        />
-      }
+          /* @conditional-compile-remove(soft-mute) */
+          <Prompt
+            {...muteAllPromptLabels}
+            styles={{ main: { minWidth: '22.5rem', padding: '1.5rem' } }}
+            onConfirm={() => onMuteAllPromptConfirm()}
+            isOpen={showMuteAllPrompt}
+            onCancel={() => setShowMuteAllPrompt(false)}
+          />
+        }
         <PeoplePaneContent
           inviteLink={inviteLink}
           onFetchAvatarPersonaData={onFetchAvatarPersonaData}
@@ -337,8 +340,8 @@ export const usePeoplePane = (props: {
           setDrawerMenuItems={setDrawerMenuItems}
           mobileView={mobileView}
           setParticipantActioned={setParticipantActioned}
-            participantListHeadingMoreButtonProps={sidePaneHeaderMenuProps}
-        pinnedParticipants={pinnedParticipants}
+          participantListHeadingMoreButtonProps={sidePaneHeaderMenuProps}
+          pinnedParticipants={pinnedParticipants}
         />
       </>
     );
@@ -353,8 +356,8 @@ export const usePeoplePane = (props: {
     pinnedParticipants,
     /* @conditional-compile-remove(soft-mute) */ showMuteAllPrompt,
     /* @conditional-compile-remove(soft-mute) */ setShowMuteAllPrompt,
-    /* @conditional-compile-remove(soft-mute) */ onMuteAllRemoteParticipants,
-    /* @conditional-compile-remove(soft-mute) */ muteAllPromptLabels
+    /* @conditional-compile-remove(soft-mute) */ muteAllPromptLabels,
+    /* @conditional-compile-remove(soft-mute) */ onMuteAllPromptConfirm
   ]);
 
   const sidePaneRenderer: SidePaneRenderer = useMemo(

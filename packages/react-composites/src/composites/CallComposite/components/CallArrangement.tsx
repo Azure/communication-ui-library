@@ -296,8 +296,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   }, [
     /* @conditional-compile-remove(soft-mute) */ onMuteParticipant,
     /* @conditional-compile-remove(soft-mute) */ role,
-    /* @conditional-compile-remove(soft-mute) */ muteAllHandlers.onMuteAllRemoteParticipants,
-    /* @conditional-compile-remove(soft-mute) */ remoteParticipants
+    /* @conditional-compile-remove(soft-mute) */ muteAllHandlers.onMuteAllRemoteParticipants
   ]);
 
   const spotlightPeoplePaneProps = useMemo(() => {
