@@ -7,6 +7,7 @@ import { IMessageBarProps } from '@fluentui/react';
 import { NotificationBar } from '@internal/react-components';
 /* @conditional-compile-remove(teams-meeting-conference) */
 import React, { useEffect, useMemo, useState } from 'react';
+import { useLocale } from '../../localization';
 
 /* @conditional-compile-remove(teams-meeting-conference) */
 /**
@@ -14,6 +15,7 @@ import React, { useEffect, useMemo, useState } from 'react';
  */
 export interface ConnectionLostBannerProps extends IMessageBarProps {
   connectionLost: boolean;
+  userClosedConnectionLostBanner: boolean;
   onDismissNotification?: () => void;
   onPrimaryButtonClick?: () => void;
 }
@@ -23,7 +25,11 @@ export interface ConnectionLostBannerProps extends IMessageBarProps {
  *
  * @private
  */
-export const useConnectionLostNotifications = (connectionLostFlag: boolean): ConnectionLostBannerProps => {
+export const useConnectionLostNotifications = (
+  connectionLostFlag: boolean,
+  userClosedConnectionLostBanner: boolean,
+  setUserClosedConnectionLostBanner: (userClosedConnectionLostBanner: boolean) => void
+): ConnectionLostBannerProps => {
   const [currentConnectionLost, setCurrentConnectionLost] = useState<boolean>(false);
 
   useEffect(() => {
@@ -34,17 +40,10 @@ export const useConnectionLostNotifications = (connectionLostFlag: boolean): Con
   const connectionLost = useMemo(() => currentConnectionLost, [currentConnectionLost]);
 
   return {
-    connectionLost: connectionLost
+    connectionLost: connectionLost,
+    userClosedConnectionLostBanner: userClosedConnectionLostBanner,
+    onDismissNotification: () => setUserClosedConnectionLostBanner(true)
   };
-};
-
-/* @conditional-compile-remove(teams-meeting-conference) */
-/**
- * Default dehavior to close Banner
- * @private
- */
-export const onDismissNotification = (props: ConnectionLostBannerProps): void => {
-  props.connectionLost = false;
 };
 
 /* @conditional-compile-remove(teams-meeting-conference) */
@@ -53,19 +52,21 @@ export const onDismissNotification = (props: ConnectionLostBannerProps): void =>
  * @beta
  */
 export const ConnectionLostNotificationBar = (props: ConnectionLostBannerProps): JSX.Element => {
-  const strings = {
-    title: 'Poor Network Quality',
-    closeButtonAriaLabel: 'Close',
-    message: 'Join this call from your phone for better sound. You can continue viewing the meeting on this device.',
-    primaryButtonLabel: 'Join by Phone'
+  const localeStrings = useLocale().component.strings.MeetingConferencePhoneInfo;
+
+  const barStrings = {
+    title: localeStrings.lostConnectionBarTitle ? localeStrings.lostConnectionBarTitle : '',
+    closeButtonAriaLabel: localeStrings.lostConnectionBarClose ? localeStrings.lostConnectionBarClose : '',
+    message: localeStrings.lostConnectionBarMessage ? localeStrings.lostConnectionBarMessage : '',
+    primaryButtonLabel: localeStrings.lostConnectionBarJoin ? localeStrings.lostConnectionBarJoin : ''
   };
 
   return (
     <NotificationBar
-      notificationBarStrings={strings}
+      notificationBarStrings={barStrings}
       notificationBarIconProps={{ iconName: 'ErrorBarCallNetworkQualityLow' }}
       onClickPrimaryButton={() => props.onPrimaryButtonClick && props.onPrimaryButtonClick()}
-      onDismiss={() => (props.onDismissNotification && props.onDismissNotification()) || onDismissNotification(props)}
+      onDismiss={() => props.onDismissNotification && props.onDismissNotification()}
     />
   );
 };

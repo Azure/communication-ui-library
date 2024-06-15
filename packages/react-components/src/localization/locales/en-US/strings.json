@@ -578,9 +578,13 @@
     "meetingConferencePhoneInfoModalMeetingId": "Enter meeting ID",
     "meetingConferencePhoneInfoModalWait": "Wait to be admitted by organizer",
     "meetingConferencePhoneInfoModalNoPhoneAvailable": "No phone available",
-    "meetingConferencePhoneInfoModalTollFree": "{phoneNumber} (Toll-free) {country}, {city}",
-    "meetingConferencePhoneInfoModalTollFreeWithoutGeoData": "{phoneNumber} (Toll-free)",
-    "meetingConferencePhoneInfoModalToll": "{phoneNumber} (Toll) {country}, {city}",
-    "meetingConferencePhoneInfoModalTollWithoutGeoData": "{phoneNumber} (Toll)"
+    "meetingConferencePhoneInfoModalTollFree": "(Toll-free) {country}, {city}",
+    "meetingConferencePhoneInfoModalTollFreeWithoutGeoData": "(Toll-free)",
+    "meetingConferencePhoneInfoModalToll": "(Toll) {country}, {city}",
+    "meetingConferencePhoneInfoModalTollWithoutGeoData": "(Toll)",
+    "lostConnectionBarTitle": "Poor Network Quality",
+    "lostConnectionBarClose": "Close",
+    "lostConnectionBarMessage": "Join this call from your phone for better sound. You can continue viewing the meeting on this device.",
+    "lostConnectionBarJoin": "Join by Phone"
   }
 }

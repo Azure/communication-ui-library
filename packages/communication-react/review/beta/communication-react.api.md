@@ -3265,6 +3265,10 @@ export interface MediaDiagnosticsState {
 
 // @beta
 export interface MeetingConferencePhoneInfoModalStrings {
+    lostConnectionBarClose?: string;
+    lostConnectionBarJoin?: string;
+    lostConnectionBarMessage?: string;
+    lostConnectionBarTitle?: string;
     meetingConferencePhoneInfoModalDialIn?: string;
     meetingConferencePhoneInfoModalMeetingId?: string;
     meetingConferencePhoneInfoModalNoPhoneAvailable?: string;

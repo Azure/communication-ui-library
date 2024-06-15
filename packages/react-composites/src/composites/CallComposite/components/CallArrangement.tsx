@@ -578,7 +578,8 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                       <MutedNotification {...props.mutedNotificationProps} />
                     )}
                     {props.connectionLostBannerProps &&
-                      isNetworkHealthy(props.connectionLostBannerProps.connectionLost) && (
+                      isNetworkHealthy(props.connectionLostBannerProps.connectionLost) &&
+                      !props.connectionLostBannerProps.userClosedConnectionLostBanner && (
                         <Stack styles={bannerNotificationStyles}>
                           <ConnectionLostNotificationBar
                             {...props.connectionLostBannerProps}

@@ -61,6 +61,8 @@ import { useAudio } from '../common/AudioProvider';
 import { connectionLostBannerSelector } from './selectors/connectionLostSelector';
 /* @conditional-compile-remove(teams-meeting-conference) */
 import { useConnectionLostNotifications } from './components/ConnectionLostNotificationBar';
+/* @conditional-compile-remove(teams-meeting-conference) */
+import { isNetworkHealthy } from './pages/CallPage';
 
 /**
  * Props for {@link CallComposite}.
@@ -424,7 +426,17 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
     useTrackedCapabilityChangedNotifications(capabilitiesChangedInfoAndRole);
 
   const connectionLostFlag = useSelector(connectionLostBannerSelector);
-  const connectionLostBannerProps = useConnectionLostNotifications(connectionLostFlag.connectionLost);
+  const [userClosedConnectionLostBanner, setUserClosedConnectionLostBanner] = useState(false);
+  useEffect(() => {
+    if (!isNetworkHealthy(connectionLostFlag.connectionLost)) {
+      setUserClosedConnectionLostBanner(false);
+    }
+  }, [connectionLostFlag]);
+  const connectionLostBannerProps = useConnectionLostNotifications(
+    connectionLostFlag.connectionLost,
+    userClosedConnectionLostBanner,
+    setUserClosedConnectionLostBanner
+  );
 
   // Track the last dismissed errors of any error kind to prevent errors from re-appearing on subsequent page navigation
   // This works by tracking the most recent timestamp of any active error type.
