@@ -135,6 +135,7 @@
     "dtmfDialerButtonTooltipOff": "Скрыть панель набора номера",
     "dtmfDialerMoreButtonLabelOn": "Показать панель набора номера",
     "dtmfDialerMoreButtonLabelOff": "Скрыть панель набора номера",
+    "phoneCallMoreButtonLabel": "Звонок",
     "spokenLanguageStrings": {
       "ar-ae": "Арабский (ОАЭ)",
       "ar-sa": "Арабский (Саудовская Аравия)",
@@ -336,7 +337,12 @@
     "leaveConfirmDialogContent": "Вы действительно хотите покинуть звонок?",
     "endCallConfirmDialogTitle": "Завершить звонок?",
     "endCallConfirmDialogContent": "Вы завершите звонок для всех пользователей.",
-    "invalidMeetingIdentifier": "Недопустимый идентификатор собрания или секретный код"
+    "invalidMeetingIdentifier": "Недопустимый идентификатор собрания или секретный код",
+    "pinParticipantMenuLabel": "Закрепить для меня",
+    "pinParticipantLimitReachedMenuLabel": "Закрепить (достигнуто ограничение)",
+    "unpinParticipantMenuLabel": "Открепить",
+    "pinParticipantMenuItemAriaLabel": "Закрепить",
+    "unpinParticipantMenuItemAriaLabel": "Открепить"
   },
   "chat": {
     "chatListHeader": "В этом чате",

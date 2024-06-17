@@ -135,6 +135,7 @@
     "dtmfDialerButtonTooltipOff": "다이얼패드 숨기기",
     "dtmfDialerMoreButtonLabelOn": "다이얼패드 표시",
     "dtmfDialerMoreButtonLabelOff": "다이얼패드 숨기기",
+    "phoneCallMoreButtonLabel": "전화 통화",
     "spokenLanguageStrings": {
       "ar-ae": "아랍어 - 아랍에미리트",
       "ar-sa": "아라비아어 - 사우디 아라비아",
@@ -336,7 +337,12 @@
     "leaveConfirmDialogContent": "통화에서 나가시겠습니까?",
     "endCallConfirmDialogTitle": "통화를 종료하시겠습니까?",
     "endCallConfirmDialogContent": "모든 사용자의 통화가 종료됩니다.",
-    "invalidMeetingIdentifier": "유효하지 않은 모임 ID 또는 암호"
+    "invalidMeetingIdentifier": "유효하지 않은 모임 ID 또는 암호",
+    "pinParticipantMenuLabel": "Pin for me",
+    "pinParticipantLimitReachedMenuLabel": "Pin (limit reached)",
+    "unpinParticipantMenuLabel": "Unpin",
+    "pinParticipantMenuItemAriaLabel": "Pin",
+    "unpinParticipantMenuItemAriaLabel": "Unpin"
   },
   "chat": {
     "chatListHeader": "채팅 참가자",
