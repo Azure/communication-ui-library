@@ -180,8 +180,8 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     this.callAdapter.onStateChange(onCallStateChange);
     this.callAdapter.on('breakoutRoomJoined', (call: CallCommon) => {
       const threadId = this.callAdapter.getState().mainMeeting?.breakoutRooms?.assignedBreakoutRoom?.threadId;
-      if (threadId) {
-        (this.chatAdapter as AzureCommunicationChatAdapter).switchChatThread(threadId);
+      if (threadId && this.chatAdapter) {
+        this.chatAdapter.switchChatThread(threadId);
       }
     });
     // When call ended is a breakout room and 'return to main meeting' setting is not disabled then switch
@@ -192,9 +192,10 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
       if (
         threadId &&
         breakoutRoom.state === 'closed' &&
-        this.callAdapter.getState().breakoutRoomSettings?.disableReturnToMainMeeting === false
+        this.callAdapter.getState().breakoutRoomSettings?.disableReturnToMainMeeting === false &&
+        this.chatAdapter
       ) {
-        (this.chatAdapter as AzureCommunicationChatAdapter).switchChatThread(threadId);
+        this.chatAdapter.switchChatThread(threadId);
       }
     });
     this.onCallStateChange = onCallStateChange;
@@ -580,6 +581,10 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
         this.callAdapter.returnToMainMeeting();
       });
     }
+  }
+
+  public async switchChatThread(chatThreadId: string): Promise<void> {
+    this.chatAdapter?.switchChatThread(chatThreadId);
   }
 
   on(event: 'callParticipantsJoined', listener: ParticipantsJoinedListener): void;

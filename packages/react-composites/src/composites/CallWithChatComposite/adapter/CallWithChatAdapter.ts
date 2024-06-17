@@ -493,6 +493,10 @@ export interface CallWithChatAdapterManagement {
    * Return to main meeting of breakout room
    */
   returnToMainMeeting(): Promise<void>;
+  /**
+   * Switch chat thread
+   */
+  switchChatThread(chatThreadId: string): Promise<void>;
 }
 
 /**

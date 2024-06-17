@@ -13,6 +13,7 @@ import { ChatAdapterState } from '../../ChatComposite';
 import { AdapterErrors } from '../../common/adapters';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
+import { BreakoutRoomSettings } from '@azure/communication-calling';
 import { ReactionResources } from '@internal/react-components';
 
 /**
@@ -92,6 +93,8 @@ export interface CallWithChatClientState {
   reactions?: ReactionResources;
 
   mainMeeting?: CallState;
+
+  breakoutRoomSettings?: BreakoutRoomSettings;
 }
 
 /**

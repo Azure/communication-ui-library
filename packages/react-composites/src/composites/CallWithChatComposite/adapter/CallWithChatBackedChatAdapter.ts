@@ -47,6 +47,8 @@ export class CallWithChatBackedChatAdapter implements ChatAdapter {
   public sendTypingIndicator = async (): Promise<void> => await this.callWithChatAdapter.sendTypingIndicator();
   public removeParticipant = async (userId: string): Promise<void> =>
     await this.callWithChatAdapter.removeParticipant(userId);
+  public switchChatThread = async (chatThreadId: string): Promise<void> =>
+    await this.callWithChatAdapter.switchChatThread(chatThreadId);
   public loadPreviousChatMessages = async (messagesToLoad: number): Promise<boolean> =>
     await this.callWithChatAdapter.loadPreviousChatMessages(messagesToLoad);
   public dispose = (): void => this.callWithChatAdapter.dispose();

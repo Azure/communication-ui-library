@@ -5,7 +5,6 @@ import {
   _createStatefulChatClientInner,
   ChatClientState,
   ChatError,
-  ChatThreadClientState,
   StatefulChatClient
 } from '@internal/chat-stateful-client';
 import { ChatHandlers, createDefaultChatHandlers } from '@internal/chat-component-bindings';
@@ -16,7 +15,6 @@ import type {
   ChatMessageEditedEvent,
   ChatMessageReceivedEvent,
   ChatThreadCreatedEvent,
-  ChatThreadItem,
   ChatThreadPropertiesUpdatedEvent,
   ParticipantsAddedEvent,
   ParticipantsRemovedEvent,

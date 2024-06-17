@@ -435,7 +435,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
 
     this.context.onCallEnded((endCallData) => {
       const mainMeeting = this.context.getState().mainMeeting;
-      const breakoutRoom = mainMeeting?.breakoutRooms.assignedBreakoutRoom;
+      const breakoutRoom = mainMeeting?.breakoutRooms?.assignedBreakoutRoom;
       // Return to main meeting because breakout room call is ended because it is closed
       if (
         breakoutRoom &&
