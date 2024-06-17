@@ -135,6 +135,7 @@
     "dtmfDialerButtonTooltipOff": "إخفاء لوحة الطلب",
     "dtmfDialerMoreButtonLabelOn": "عرض لوحة الطلب",
     "dtmfDialerMoreButtonLabelOff": "إخفاء لوحة الطلب",
+    "phoneCallMoreButtonLabel": "مكالمة هاتفية",
     "spokenLanguageStrings": {
       "ar-ae": "العربية - الإمارات العربية المتحدة",
       "ar-sa": "العربية - السعودية",
@@ -336,7 +337,12 @@
     "leaveConfirmDialogContent": "هل تريد بالتأكيد مغادرة المكالمة؟",
     "endCallConfirmDialogTitle": "هل تريد إنهاء المكالمة؟",
     "endCallConfirmDialogContent": "ستنهي المكالمة لدى الجميع.",
-    "invalidMeetingIdentifier": "معرف اجتماع أو رمز مرور غير صالح"
+    "invalidMeetingIdentifier": "معرف اجتماع أو رمز مرور غير صالح",
+    "pinParticipantMenuLabel": "Pin for me",
+    "pinParticipantLimitReachedMenuLabel": "Pin (limit reached)",
+    "unpinParticipantMenuLabel": "Unpin",
+    "pinParticipantMenuItemAriaLabel": "Pin",
+    "unpinParticipantMenuItemAriaLabel": "Unpin"
   },
   "chat": {
     "chatListHeader": "في هذه الدردشة",

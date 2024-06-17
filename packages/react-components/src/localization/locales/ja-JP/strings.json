@@ -259,12 +259,167 @@
     "unableToStartVideoEffect": "ビデオ効果を適用できません。",
     "startSpotlightWhileMaxParticipantsAreSpotlighted": "最大数の参加者に既にスポットライトが設定されているため、参加者にスポットライトを開始できません。"
   },
+  "notifications": {
+    "unableToReachChatService": {
+      "title": "オフラインです。",
+      "closeButtonAriaLabel": "閉じる"
+    },
+    "accessDenied": {
+      "title": "チャット サービスにアクセスできません",
+      "message": "指定されたユーザー資格情報をチェックしてください",
+      "closeButtonAriaLabel": "閉じる"
+    },
+    "userNotInChatThread": {
+      "title": "このチャット スレッドに参加しなくなりました。",
+      "closeButtonAriaLabel": "閉じる"
+    },
+    "sendMessageNotInChatThread": {
+      "title": "メッセージを送信できませんでした。",
+      "message": "このチャット スレッドにはもう参加していません",
+      "closeButtonAriaLabel": "閉じる"
+    },
+    "sendMessageGeneric": {
+      "title": "メッセージを送信できませんでした。",
+      "closeButtonAriaLabel": "閉じる"
+    },
+    "callingNetworkFailure": {
+      "title": "通話の接続に問題があります",
+      "message": "オフラインのようです。ネットワーク接続をチェックしてから、もう一度お試しください。",
+      "closeButtonAriaLabel": "閉じる"
+    },
+    "startVideoGeneric": {
+      "title": "ビデオを開始できませんでした。",
+      "closeButtonAriaLabel": "閉じる"
+    },
+    "stopVideoGeneric": {
+      "title": "ビデオを停止できませんでした。",
+      "closeButtonAriaLabel": "閉じる"
+    },
+    "muteGeneric": {
+      "title": "マイクをミュートできませんでした。",
+      "closeButtonAriaLabel": "閉じる"
+    },
+    "unmuteGeneric": {
+      "title": "マイクのミュートを解除できませんでした。",
+      "closeButtonAriaLabel": "閉じる"
+    },
+    "speakingWhileMuted": {
+      "title": "ミュートにしています。",
+      "closeButtonAriaLabel": "閉じる"
+    },
+    "startScreenShareGeneric": {
+      "title": "画面共有の開始中に問題が発生しました。",
+      "closeButtonAriaLabel": "閉じる"
+    },
+    "stopScreenShareGeneric": {
+      "title": "画面の共有を停止できませんでした。",
+      "closeButtonAriaLabel": "閉じる"
+    },
+    "callNetworkQualityLow": {
+      "title": "ネットワークの品質が低くなっています。",
+      "closeButtonAriaLabel": "閉じる"
+    },
+    "callNoSpeakerFound": {
+      "title": "スピーカーまたはヘッドフォンが見つかりません",
+      "message": "音声デバイスを接続して通話を聞いてください。",
+      "closeButtonAriaLabel": "閉じる"
+    },
+    "callNoMicrophoneFound": {
+      "title": "マイクが見つかりません",
+      "message": "オーディオ入力デバイスを接続します。",
+      "closeButtonAriaLabel": "閉じる"
+    },
+    "callMicrophoneAccessDenied": {
+      "title": "マイクにアクセスできません",
+      "message": "アドレス バーのロックをクリックして、この Web ページにアクセス許可を付与します。",
+      "closeButtonAriaLabel": "閉じる"
+    },
+    "callMicrophoneAccessDeniedSafari": {
+      "title": "マイクにアクセスできません",
+      "message": "ページを更新してアクセス許可を可能にするか、このブラウザーの設定を確認し、この Web サイトのアクセス許可が有効になっていることを確認してください。",
+      "closeButtonAriaLabel": "閉じる"
+    },
+    "callMicrophoneMutedBySystem": {
+      "title": "システムによってミュートになっています。",
+      "closeButtonAriaLabel": "閉じる"
+    },
+    "callMicrophoneUnmutedBySystem": {
+      "title": "マイクが回復し、システムによってミュートが解除されました。",
+      "closeButtonAriaLabel": "閉じる"
+    },
+    "callMacOsMicrophoneAccessDenied": {
+      "title": "マイクにアクセスできません",
+      "message": "macOS のプライバシー設定でマイクへのアクセス許可を付与します。",
+      "closeButtonAriaLabel": "閉じる"
+    },
+    "callLocalVideoFreeze": {
+      "title": "ネットワーク帯域幅が貧弱です",
+      "message": "通話中に他のユーザーのビデオが一時停止している可能性があります。",
+      "closeButtonAriaLabel": "閉じる"
+    },
+    "callCameraAccessDenied": {
+      "title": "カメラにアクセスできません",
+      "message": "アドレス バーのロックをクリックして、この Web ページにアクセス許可を付与します。",
+      "closeButtonAriaLabel": "閉じる"
+    },
+    "callCameraAccessDeniedSafari": {
+      "title": "カメラにアクセスできません",
+      "message": "ページを更新してアクセス許可を可能にするか、このブラウザーの設定を確認し、この Web サイトのアクセス許可が有効になっていることを確認してください。",
+      "closeButtonAriaLabel": "閉じる"
+    },
+    "callCameraAlreadyInUse": {
+      "title": "カメラにアクセスできません",
+      "message": "別のアプリケーションによって既に使用されている可能性があります。",
+      "closeButtonAriaLabel": "閉じる"
+    },
+    "callVideoStoppedBySystem": {
+      "title": "ビデオはシステムによって停止されました。",
+      "closeButtonAriaLabel": "閉じる"
+    },
+    "callVideoRecoveredBySystem": {
+      "title": "ビデオが再開されました。",
+      "closeButtonAriaLabel": "閉じる"
+    },
+    "callMacOsCameraAccessDenied": {
+      "title": "MacOS がカメラへのアクセスをブロックしています",
+      "message": "プライバシー設定を更新して、このブラウザーがカメラにアクセスできるようにします。",
+      "closeButtonAriaLabel": "閉じる"
+    },
+    "callMacOsScreenShareAccessDenied": {
+      "title": "MacOS で画面共有がブロックされています",
+      "message": "プライバシー設定を更新して、このブラウザーで画面を録画できるようにします。",
+      "closeButtonAriaLabel": "閉じる"
+    },
+    "failedToJoinCallGeneric": {
+      "title": "通話に参加できませんでした",
+      "closeButtonAriaLabel": "閉じる"
+    },
+    "failedToJoinCallInvalidMeetingLink": {
+      "title": "会議に参加できません。リンクが無効です。",
+      "closeButtonAriaLabel": "閉じる"
+    },
+    "cameraFrozenForRemoteParticipants": {
+      "title": "通話中のユーザーにビデオの表示で問題が発生しています",
+      "message": "デバイスとネットワークをチェックしてください。",
+      "closeButtonAriaLabel": "閉じる"
+    },
+    "unableToStartVideoEffect": {
+      "title": "ビデオ効果を適用できません。",
+      "closeButtonAriaLabel": "閉じる"
+    },
+    "startSpotlightWhileMaxParticipantsAreSpotlighted": {
+      "title": "参加者にスポットライトを開始できません",
+      "message": "参加者の最大数は既にスポットライトが設定されています。",
+      "closeButtonAriaLabel": "閉じる"
+    }
+  },
   "videoGallery": {
     "screenIsBeingSharedMessage": "画面を共有しています",
     "screenShareLoadingMessage": "{participant} の画面を読み込んでいます",
     "localVideoLabel": "自分",
     "localVideoCameraSwitcherLabel": "カメラを切り替え",
     "localVideoMovementLabel": "移動可能なローカル ビデオ タイル",
+    "localVideoMovementAriaLabel": "移動可能なローカル ビデオ タイル",
     "localVideoSelectedDescription": "{cameraName} が選択されました。",
     "displayNamePlaceholder": "名前のない参加者",
     "fitRemoteParticipantToFrame": "フレームに収める",
@@ -295,7 +450,8 @@
   },
   "videoTile": {
     "participantStateRinging": "呼び出し中...",
-    "participantStateHold": "保留中"
+    "participantStateHold": "保留中",
+    "moreOptionsButtonAriaLabel": "その他のオプション"
   },
   "CameraAndMicrophoneSitePermissionsRequest": {
     "primaryText": "{appName}にカメラとマイクの使用を許可する",
@@ -415,5 +571,16 @@
   "verticalGallery": {
     "leftNavButtonAriaLabel": "前のページ",
     "rightNavButtonAriaLabel": "次のページ"
+  },
+  "MeetingConferencePhoneInfo": {
+    "meetingConferencePhoneInfoModalTitle": "電話から通話に参加",
+    "meetingConferencePhoneInfoModalDialIn": "ダイヤル番号",
+    "meetingConferencePhoneInfoModalMeetingId": "会議 ID の入力",
+    "meetingConferencePhoneInfoModalWait": "開催者に許可されるのを待つ",
+    "meetingConferencePhoneInfoModalNoPhoneAvailable": "利用可能な電話がありません",
+    "meetingConferencePhoneInfoModalTollFree": "{phoneNumber} (フリーダイヤル) {country}、{city}",
+    "meetingConferencePhoneInfoModalTollFreeWithoutGeoData": "{phoneNumber} (フリーダイヤル)",
+    "meetingConferencePhoneInfoModalToll": "{phoneNumber} (有料) {country}、{city}",
+    "meetingConferencePhoneInfoModalTollWithoutGeoData": "{phoneNumber} (有料)"
   }
 }
