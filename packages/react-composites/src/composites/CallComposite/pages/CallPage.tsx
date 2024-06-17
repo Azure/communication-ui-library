@@ -167,7 +167,7 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
         modalLayerHostId={props.modalLayerHostId}
         onRenderGalleryContent={() =>
           _isInCall(callStatus) ? (
-            !isNetworkHealthy(networkReconnectTileProps.networkReconnectValue) ? (
+            isNetworkHealthy(networkReconnectTileProps.networkReconnectValue) ? (
               onRenderGalleryContentTrampoline()
             ) : (
               <NetworkReconnectTile {...networkReconnectTileProps} />

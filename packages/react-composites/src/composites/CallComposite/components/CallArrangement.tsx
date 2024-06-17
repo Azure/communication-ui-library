@@ -517,7 +517,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                   onStopLocalSpotlight={
                     !hideSpotlightButtons && localParticipant.spotlight ? onStopLocalSpotlightWithPrompt : undefined
                   }
-                  /* @conditional-compile-remove(teams-meetings-conference) */
+                  /* @conditional-compile-remove(teams-meeting-conference) */
                   onToggleTeamsMeetingConferenceModal={toggleTeamsMeetingConferenceModal}
                   /* @conditional-compile-remove(teams-meeting-conference) */
                   teamsMeetingConferenceModalPresent={showTeamsMeetingConferenceModal}
@@ -578,7 +578,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                       <MutedNotification {...props.mutedNotificationProps} />
                     )}
                     {props.connectionLostBannerProps &&
-                      isNetworkHealthy(props.connectionLostBannerProps.connectionLost) &&
+                      !isNetworkHealthy(props.connectionLostBannerProps.connectionLost) &&
                       !props.connectionLostBannerProps.userClosedConnectionLostBanner && (
                         <Stack styles={bannerNotificationStyles}>
                           <ConnectionLostNotificationBar
