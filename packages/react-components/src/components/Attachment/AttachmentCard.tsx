@@ -136,20 +136,26 @@ export const _AttachmentCard = (props: _AttachmentCardProps): JSX.Element => {
                   target: '#attachment-' + attachment.id
                 }}
               >
-                <Text className={attachmentCardStyles.title} title={attachment.name}>
-                  {attachment.name}
-                </Text>
+                <div className={attachmentCardStyles.fileNameLabel}>
+                  <Text className={attachmentCardStyles.title} aria-label={attachment.name}>
+                    {attachment.name}
+                  </Text>
+                </div>
               </TooltipHost>
             </div>
           }
-          action={MappedMenuItems(
-            menuActions,
-            {
-              ...attachment,
-              url: attachment.url ?? ''
-            },
-            onActionHandlerFailed
-          )}
+          action={
+            <div className={attachmentCardStyles.focusState}>
+              {MappedMenuItems(
+                menuActions,
+                {
+                  ...attachment,
+                  url: attachment.url ?? ''
+                },
+                onActionHandlerFailed
+              )}
+            </div>
+          }
         />
       </Card>
       {isUploadInProgress ? (

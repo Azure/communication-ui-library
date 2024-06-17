@@ -135,6 +135,7 @@
     "dtmfDialerButtonTooltipOff": "Ocultar teclado de discagem",
     "dtmfDialerMoreButtonLabelOn": "Mostrar teclado de discagem",
     "dtmfDialerMoreButtonLabelOff": "Ocultar teclado de discagem",
+    "phoneCallMoreButtonLabel": "Chamada Telefônica",
     "spokenLanguageStrings": {
       "ar-ae": "Árabe - Emirados Árabes Unidos",
       "ar-sa": "Árabe - Arábia Saudita",
@@ -336,7 +337,12 @@
     "leaveConfirmDialogContent": "Tem certeza de que deseja sair da chamada?",
     "endCallConfirmDialogTitle": "Encerrar a chamada?",
     "endCallConfirmDialogContent": "Você encerrará a chamada para todos.",
-    "invalidMeetingIdentifier": "ID ou senha de reunião inválida"
+    "invalidMeetingIdentifier": "ID ou senha de reunião inválida",
+    "pinParticipantMenuLabel": "Pin for me",
+    "pinParticipantLimitReachedMenuLabel": "Pin (limit reached)",
+    "unpinParticipantMenuLabel": "Unpin",
+    "pinParticipantMenuItemAriaLabel": "Pin",
+    "unpinParticipantMenuItemAriaLabel": "Unpin"
   },
   "chat": {
     "chatListHeader": "Neste chat",

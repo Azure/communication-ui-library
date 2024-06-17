@@ -135,6 +135,7 @@
     "dtmfDialerButtonTooltipOff": "Toetsenblok verbergen",
     "dtmfDialerMoreButtonLabelOn": "Toetsenblok weergeven",
     "dtmfDialerMoreButtonLabelOff": "Toetsenblok verbergen",
+    "phoneCallMoreButtonLabel": "Oproep",
     "spokenLanguageStrings": {
       "ar-ae": "Arabisch - Verenigde Arabische Emiraten",
       "ar-sa": "Arabisch - Saudi-Arabië",
@@ -336,7 +337,12 @@
     "leaveConfirmDialogContent": "Weet u zeker dat u het gesprek wilt verlaten?",
     "endCallConfirmDialogTitle": "Het gesprek beëindigen?",
     "endCallConfirmDialogContent": "U beëindigt het gesprek voor iedereen.",
-    "invalidMeetingIdentifier": "Ongeldige vergaderings-id of wachtwoordcode"
+    "invalidMeetingIdentifier": "Ongeldige vergaderings-id of wachtwoordcode",
+    "pinParticipantMenuLabel": "Voor mij vastmaken",
+    "pinParticipantLimitReachedMenuLabel": "Pin (limiet bereikt)",
+    "unpinParticipantMenuLabel": "Losmaken",
+    "pinParticipantMenuItemAriaLabel": "Vastmaken",
+    "unpinParticipantMenuItemAriaLabel": "Losmaken"
   },
   "chat": {
     "chatListHeader": "In deze chat",

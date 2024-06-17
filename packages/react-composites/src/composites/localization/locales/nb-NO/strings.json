@@ -135,6 +135,7 @@
     "dtmfDialerButtonTooltipOff": "Skjul numerisk tastatur",
     "dtmfDialerMoreButtonLabelOn": "Vis numerisk tastatur",
     "dtmfDialerMoreButtonLabelOff": "Skjul numerisk tastatur",
+    "phoneCallMoreButtonLabel": "Telefonsamtale",
     "spokenLanguageStrings": {
       "ar-ae": "Arabisk – De forente arabiske emirater",
       "ar-sa": "Arabisk – Saudi-Arabia",
@@ -336,7 +337,12 @@
     "leaveConfirmDialogContent": "Er du sikker på at du vil forlate samtalen?",
     "endCallConfirmDialogTitle": "Avslutt samtalen?",
     "endCallConfirmDialogContent": "Du avslutter møtet for alle.",
-    "invalidMeetingIdentifier": "Ugyldig møte-ID eller passord"
+    "invalidMeetingIdentifier": "Ugyldig møte-ID eller passord",
+    "pinParticipantMenuLabel": "Fest for meg",
+    "pinParticipantLimitReachedMenuLabel": "Fest (grensen er nådd)",
+    "unpinParticipantMenuLabel": "Løsne",
+    "pinParticipantMenuItemAriaLabel": "Fest",
+    "unpinParticipantMenuItemAriaLabel": "Løsne"
   },
   "chat": {
     "chatListHeader": "I denne chatten",
