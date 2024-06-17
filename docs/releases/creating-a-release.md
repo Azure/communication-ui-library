@@ -94,7 +94,7 @@ Both beta and stable releases follow a two-step workflow, aided by GitHub action
 
 ### Step 1.1: Create a Pre-release Branch
 
-We want to create a pre-release branch because this branch will act as a place to perform actions like bumping package versions, grooming the changelog, and performing string translations. This branch will be the place that the release branch is created from before it is merged back into main.
+We want to create a pre-release branch because this branch will act as a place to perform actions like bumping package versions, grooming the changelog, and performing string translations. This branch will be the place that the release branch is created from before it is merged back into main. **Note:** Be sure to look at the `package.json` of the `communication-react` package to determine which bump type you will need for your release.
 
 Use the [create-prerelease-branch](https://github.com/Azure/communication-ui-library/actions/workflows/create-prerelease-branch.yml) GitHub action to trigger the release preparation workflow.
 
