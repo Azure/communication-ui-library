@@ -136,15 +136,12 @@ export class MockCallAdapter implements CallAdapter {
   setSpokenLanguage(): Promise<void> {
     throw Error('setSpokenLanguage not implemented');
   }
-  /* @conditional-compile-remove(spotlight) */
   startSpotlight(): Promise<void> {
     throw Error('startSpotlight not implemented');
   }
-  /* @conditional-compile-remove(spotlight) */
   stopSpotlight(): Promise<void> {
     throw Error('stopSpotlight not implemented');
   }
-  /* @conditional-compile-remove(spotlight) */
   stopAllSpotlight(): Promise<void> {
     throw Error('stopAllSpotlight not implemented');
   }

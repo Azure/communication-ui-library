@@ -2,8 +2,8 @@
   "type": "patch",
   "area": "fix",
   "workstream": "A11y",
-  "comment": "Add reaction items narratro strings",
+  "comment": "Disable highlight of context menu on touch event in Android",
   "packageName": "@azure/communication-react",
-  "email": "dmceachern@microsoft.com",
+  "email": "3941071+emlynmac@users.noreply.github.com",
   "dependentChangeType": "patch"
 }

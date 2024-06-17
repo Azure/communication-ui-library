@@ -42,6 +42,7 @@ import {
   MicProhibited16Filled,
   VideoProhibited16Filled,
   Pin16Filled,
+  Pin20Filled,
   Pin20Regular,
   PinOff20Regular,
   ScaleFit20Regular,
@@ -99,7 +100,6 @@ import { Prohibited16Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(unsupported-browser) */
 import { Warning20Filled } from '@fluentui/react-icons';
 
-/* @conditional-compile-remove(spotlight) */
 import { VideoPersonStar20Filled, VideoPersonStarOff20Filled } from '@fluentui/react-icons';
 
 import { _pxToRem } from '@internal/acs-ui-common';
@@ -313,7 +313,6 @@ export const DEFAULT_COMPONENT_ICONS = {
   ParticipantItemOptions: <></>,
   ParticipantItemOptionsHovered: <MoreHorizontal20Filled />,
   ParticipantItemScreenShareStart: <ShareScreenStart20Filled />,
-  /* @conditional-compile-remove(spotlight) */
   ParticipantItemSpotlighted: <VideoPersonStar20Filled />,
   /* @conditional-compile-remove(PSTN-calls) */
   HoldCallContextualMenuItem: <CallPause20Regular />,
@@ -340,6 +339,7 @@ export const DEFAULT_COMPONENT_ICONS = {
   /* @conditional-compile-remove(call-readiness) */
   BrowserPermissionDeniedError: <BrowserPermissionDenied20Filled />,
   VideoTilePinned: <Pin16Filled />,
+  ParticipantItemPinned: <Pin20Filled />,
   VideoTileMoreOptions: <MoreHorizontal20Filled />,
   VideoTileScaleFit: <ScaleFit20Regular />,
   VideoTileScaleFill: <ScaleFill20Regular />,
@@ -364,11 +364,8 @@ export const DEFAULT_COMPONENT_ICONS = {
   ContextMenuRemoveParticipant: <PersonDelete20Regular />,
   SurveyStarIcon: <Star28Regular />,
   SurveyStarIconFilled: <Star28Filled />,
-  /* @conditional-compile-remove(spotlight) */
   StartSpotlightContextualMenuItem: <VideoPersonStar20Filled />,
-  /* @conditional-compile-remove(spotlight) */
   StopSpotlightContextualMenuItem: <VideoPersonStarOff20Filled />,
-  /* @conditional-compile-remove(spotlight) */
   VideoTileSpotlighted: <VideoPersonStar20Filled style={{ height: '16px', width: '16px' }} />,
   /* @conditional-compile-remove(rich-text-editor) */
   RichTextBoldButtonIcon: <TextBold20Regular />,

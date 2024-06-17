@@ -1,15 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import {
-  IStackStyles,
-  IStackItemStyles,
-  IStackTokens,
-  mergeStyles,
-  Theme,
-  ITextStyles,
-  IButtonStyles
-} from '@fluentui/react';
+import { IStackStyles, IStackItemStyles, IStackTokens, mergeStyles, Theme, IButtonStyles } from '@fluentui/react';
 import { ParticipantListStyles } from '@internal/react-components';
 import { CHAT_CONTAINER_ZINDEX } from '../../ChatComposite/styles/Chat.styles';
 
@@ -169,12 +161,11 @@ export const participantListMobileStyle: ParticipantListStyles = {
 /**
  * @private
  */
-export const displayNameStyles: ITextStyles = {
-  root: {
-    padding: '0.5rem',
-    textOverflow: 'ellipsis',
-    overflow: 'hidden'
-  }
+export const displayNameStyles = {
+  padding: '0.5rem',
+  textOverflow: 'ellipsis',
+  overflow: 'hidden',
+  whiteSpace: 'nowrap'
 };
 
 /**

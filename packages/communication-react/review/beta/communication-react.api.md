@@ -867,6 +867,9 @@ export interface CallCompositeStrings {
     permissionToReachTargetParticipantNotAllowedMoreDetails?: string;
     permissionToReachTargetParticipantNotAllowedTitle?: string;
     phoneCallMoreButtonLabel: string;
+    pinParticipantLimitReachedMenuLabel: string;
+    pinParticipantMenuItemAriaLabel: string;
+    pinParticipantMenuLabel: string;
     privacyPolicy: string;
     rejoinCallButtonLabel: string;
     removeBackgroundEffectButtonLabel?: string;
@@ -926,6 +929,8 @@ export interface CallCompositeStrings {
     unableToResolveTenantTitle?: string;
     unableToStartVideoEffect?: string;
     unnamedParticipantString: string;
+    unpinParticipantMenuItemAriaLabel: string;
+    unpinParticipantMenuLabel: string;
     videoEffectsPaneBackgroundSelectionTitle: string;
     videoEffectsPaneTitle: string;
 }
@@ -1413,7 +1418,7 @@ export type CallWithChatCompositeOptions = {
     spotlight?: {
         hideSpotlightButtons?: boolean;
     };
-    richTextEditorOptions?: RichTextEditorOptions;
+    richTextEditor?: boolean;
 };
 
 // @public
@@ -1477,7 +1482,7 @@ export interface CallWithChatControlOptions extends CommonCallControlOptions {
 }
 
 // @public
-export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'selectedMicrophoneChanged' | 'selectedSpeakerChanged' | 'isCaptionsActiveChanged' | 'captionsReceived' | 'isCaptionLanguageChanged' | 'isSpokenLanguageChanged' | 'capabilitiesChanged' | /* @conditional-compile-remove(spotlight) */ 'spotlightChanged' | 'messageReceived' | 'messageEdited' | 'messageDeleted' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved' | 'chatInitialized';
+export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'selectedMicrophoneChanged' | 'selectedSpeakerChanged' | 'isCaptionsActiveChanged' | 'captionsReceived' | 'isCaptionLanguageChanged' | 'isSpokenLanguageChanged' | 'capabilitiesChanged' | 'spotlightChanged' | 'messageReceived' | 'messageEdited' | 'messageDeleted' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved' | 'chatInitialized';
 
 // @beta
 export const CameraAndMicrophoneSitePermissions: (props: CameraAndMicrophoneSitePermissionsProps) => JSX.Element;
@@ -1803,7 +1808,7 @@ export type ChatCompositeOptions = {
     topic?: boolean;
     autoFocus?: 'sendBoxTextField';
     attachmentOptions?: AttachmentOptions;
-    richTextEditorOptions?: RichTextEditorOptions;
+    richTextEditor?: boolean;
 };
 
 // @public
@@ -1896,7 +1901,6 @@ export type ChatMessageType = 'text' | 'html';
 export type ChatMessageWithStatus = ChatMessage_2 & {
     clientMessageId?: string;
     status: MessageStatus;
-    policyViolation?: boolean;
     resourceCache?: Record<string, ResourceFetchResult>;
 };
 
@@ -1936,6 +1940,7 @@ export type ChatThreadClientState = {
 // @public
 export type ChatThreadProperties = {
     topic?: string;
+    createdBy?: CommunicationIdentifierKind;
 };
 
 // @public
@@ -2578,6 +2583,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     UnsupportedEnvironmentWarning: React_2.JSX.Element;
     BrowserPermissionDeniedError: React_2.JSX.Element;
     VideoTilePinned: React_2.JSX.Element;
+    ParticipantItemPinned: React_2.JSX.Element;
     VideoTileMoreOptions: React_2.JSX.Element;
     VideoTileScaleFit: React_2.JSX.Element;
     VideoTileScaleFill: React_2.JSX.Element;
@@ -2745,6 +2751,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     UnsupportedEnvironmentWarning: React_2.JSX.Element;
     BrowserPermissionDeniedError: React_2.JSX.Element;
     VideoTilePinned: React_2.JSX.Element;
+    ParticipantItemPinned: React_2.JSX.Element;
     VideoTileMoreOptions: React_2.JSX.Element;
     VideoTileScaleFit: React_2.JSX.Element;
     VideoTileScaleFill: React_2.JSX.Element;
@@ -3766,6 +3773,7 @@ export type ParticipantListProps = {
     totalParticipantCount?: number;
     strings?: ParticipantListStrings;
     participantAriaLabelledBy?: string;
+    pinnedParticipants?: string[];
 };
 
 // @public

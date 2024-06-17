@@ -1,8 +1,8 @@
 {
-  "type": "patch",
+  "type": "minor",
   "area": "fix",
-  "workstream": "Video Effects",
-  "comment": "Add snippet for video effects",
+  "workstream": "Pinning",
+  "comment": "Add pinning to participant list",
   "packageName": "@azure/communication-react",
   "email": "97124699+prabhjot-msft@users.noreply.github.com",
   "dependentChangeType": "patch"

@@ -1,8 +1,8 @@
 {
   "type": "patch",
-  "area": "improvement",
+  "area": "fix",
   "workstream": "RTE",
-  "comment": "Migration of the rich text editor functionality from RoosterJs v8 to v9",
+  "comment": "Fix an issue where rich text editor wasn't scrolled content correctly when a new content was pasted",
   "packageName": "@azure/communication-react",
   "email": "98852890+vhuseinova-msft@users.noreply.github.com",
   "dependentChangeType": "patch"
