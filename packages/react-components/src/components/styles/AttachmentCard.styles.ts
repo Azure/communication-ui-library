@@ -41,6 +41,16 @@ export const useAttachmentCardStyles = makeStyles({
   },
   title: {
     width: '100%'
+  },
+  focusState: {
+    '& > * button:focus': {
+      border: `black solid ${_pxToRem(1)}`
+    }
+  },
+  fileNameLabel: {
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+    overflowX: 'clip'
   }
 });
 
