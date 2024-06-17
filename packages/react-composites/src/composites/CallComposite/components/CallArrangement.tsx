@@ -57,8 +57,6 @@ import { useMeetingPhoneInfoPane } from './SidePane/useMeetingPhoneInfo';
 import { getTeamsMeetingCoordinates } from '../selectors/baseSelectors';
 /* @conditional-compile-remove(teams-meeting-conference) */
 import { ConnectionLostNotificationBar, ConnectionLostBannerProps } from './ConnectionLostNotificationBar';
-/* @conditional-compile-remove(teams-meeting-conference) */
-import { isNetworkHealthy } from '../pages/CallPage';
 
 import {
   useVideoEffectsPane,
@@ -579,7 +577,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                     )}
                     {
                       /* @conditional-compile-remove(teams-meeting-conference) */ props.connectionLostBannerProps &&
-                        !isNetworkHealthy(props.connectionLostBannerProps.connectionLost) &&
                         !props.connectionLostBannerProps.userClosedConnectionLostBanner && (
                           <Stack styles={bannerNotificationStyles}>
                             <ConnectionLostNotificationBar
