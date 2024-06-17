@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 import React, { useCallback, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react';
 import { richTextEditorWrapperStyle, richTextEditorStyle } from '../styles/RichTextEditor.styles';
-import { darkTheme, lightTheme, useTheme } from '../../theming';
+import { useTheme } from '../../theming';
 import { RichTextStrings } from './RichTextSendBox';
 import { isDarkThemed } from '../../theming/themeUtils';
 import CopyPastePlugin from './Plugins/CopyPastePlugin';
@@ -23,7 +23,7 @@ import { ContextMenuPlugin } from './Plugins/ContextMenuPlugin';
 import { TableEditContextMenuProvider } from './Plugins/TableEditContextMenuProvider';
 import { borderApplier, dataSetApplier } from '../utils/RichTextEditorUtils';
 import { ContextualMenu, IContextualMenuItem, IContextualMenuProps } from '@fluentui/react';
-import PlaceholderPlugin from './Plugins/PlaceholderPlugin';
+import { PlaceholderPlugin } from './Plugins/PlaceholderPlugin';
 
 /**
  * Style props for {@link RichTextEditor}.
@@ -101,7 +101,6 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
   const editorDiv = useRef<HTMLDivElement>(null);
   const theme = useTheme();
   const [contextMenuProps, setContextMenuProps] = useState<IContextualMenuProps | null>(null);
-  const tableCellSelectionLightThemeBackgroundColor = useRef<string | undefined>(undefined);
 
   useImperativeHandle(
     ref,
@@ -149,19 +148,17 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     editor.current?.setDarkModeState(isDarkThemedValue);
   }, [isDarkThemedValue]);
 
-  // remember light color to correctly set it in the dark theme
-  useEffect(() => {
-    // focus to update selection color for table, otherwise the existing selection color for table won't be updated
-    editor.current?.focus();
-    if (!isDarkThemedValue) {
-      tableCellSelectionLightThemeBackgroundColor.current =
-        lightTheme.palette?.neutralLight ?? theme.palette.neutralLight;
-    }
-  }, [theme.palette.neutralLight, isDarkThemedValue]);
-
   const placeholderPlugin = useMemo(() => {
-    return new PlaceholderPlugin('');
-  }, []);
+    const textColor = theme.palette?.neutralSecondary;
+    return new PlaceholderPlugin(
+      '',
+      textColor
+        ? {
+            textColor: textColor
+          }
+        : undefined
+    );
+  }, [theme]);
 
   useEffect(() => {
     if (placeholderText !== undefined) {
@@ -223,16 +220,6 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     setContextMenuProps(null);
   }, []);
 
-  const getDarkColor = useCallback(
-    (lightColor: string, _baseLValue?: number, colorType?: 'text' | 'background' | 'border'): string => {
-      if (lightColor === tableCellSelectionLightThemeBackgroundColor.current && colorType === 'background') {
-        return darkTheme.palette?.neutralLight ?? theme.palette.neutralLight;
-      }
-      return lightColor;
-    },
-    [theme.palette.neutralLight]
-  );
-
   const copyPastePlugin = useMemo(() => {
     return new CopyPastePlugin();
   }, []);
@@ -283,7 +270,7 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
         doNotAdjustEditorColor: true,
         // TODO: confirm the color during inline images implementation
         imageSelectionBorderColor: 'blue',
-        tableCellSelectionBackgroundColor: lightTheme.palette?.neutralLight && theme.palette.neutralLight,
+        tableCellSelectionBackgroundColor: theme.palette.neutralLight,
         plugins: plugins,
         initialModel: initialModel,
         defaultModelToDomOptions: {
@@ -292,8 +279,7 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
             border: borderApplier,
             dataset: dataSetApplier
           }
-        },
-        getDarkColor: getDarkColor
+        }
       });
     }
 
@@ -309,7 +295,7 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     };
     // don't update the editor on deps update as everything is handled in separate hooks or plugins
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [theme, plugins]);
 
   return (
     <div data-testid={'rich-text-editor-wrapper'}>

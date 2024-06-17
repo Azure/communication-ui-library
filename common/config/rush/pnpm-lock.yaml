@@ -19999,41 +19999,41 @@ packages:
       color: 3.2.1
     dev: false
 
-  /roosterjs-content-model-api@9.5.0:
-    resolution: {integrity: sha512-WVv92SIcnsBn2Dw6rCmtDdAUcy1KF6jgdZag9W2NSG7NKGKFtksjPBlYUofUw99trBXTNl+kD0m/Qe6TKoumkA==}
+  /roosterjs-content-model-api@9.6.0:
+    resolution: {integrity: sha512-Hnr7yp8OzLRmKpTd3D6OQLMVgfBWFz8iPbRVr/pSudFSjiesLu9K0+zeq0t98c+TqvO5c9XQUouarKEiq1kb+Q==}
     dependencies:
-      roosterjs-content-model-dom: 9.5.0
-      roosterjs-content-model-types: 9.5.0
+      roosterjs-content-model-dom: 9.6.0
+      roosterjs-content-model-types: 9.6.0
       tslib: 2.6.2
     dev: false
 
-  /roosterjs-content-model-core@9.5.0:
-    resolution: {integrity: sha512-dKzgzKvUYgIeTJfY5rR0V+RwrMI6muUyrdDMyKlJHnohHxSbS9yrYTRG6PW9h1P0TZop2TjWFHXntu9AxzLBHA==}
+  /roosterjs-content-model-core@9.6.0:
+    resolution: {integrity: sha512-QQinqImCO4UVOUXVWSenPTk+It20BRKxepvki4rMD/kkE4AE8EEQQJ6h8wEkH6bsnDO4AfYij/vpjY3DUA23gg==}
     dependencies:
-      roosterjs-content-model-dom: 9.5.0
-      roosterjs-content-model-types: 9.5.0
+      roosterjs-content-model-dom: 9.6.0
+      roosterjs-content-model-types: 9.6.0
       tslib: 2.6.2
     dev: false
 
-  /roosterjs-content-model-dom@9.5.0:
-    resolution: {integrity: sha512-HCU7wDzOxLB7Yy6MZCLGzuud/tOFThCmnvzQz8xmW8DLcq5P7Xo1EJii0StgY+kBim4FSdHqqmj/f5fqxgHO5w==}
+  /roosterjs-content-model-dom@9.6.0:
+    resolution: {integrity: sha512-GP7ep3Dd2oYLjHWvJFIzFySfgEvfZP7mc9PSncc3wlY+QzB0h0PwR0j8Lyt4oJiWx7QS3YetR/DxaGXbuQCY9g==}
     dependencies:
-      roosterjs-content-model-types: 9.5.0
+      roosterjs-content-model-types: 9.6.0
       tslib: 2.6.2
     dev: false
 
-  /roosterjs-content-model-plugins@9.5.0:
-    resolution: {integrity: sha512-JkEOFDMM+nFCk5mivUzb8j2aE6kI5nihu+LMDegzB2rVgeBL+qnBd20KWLCdLQ1g3m/qncraEq7mgkHZfVRmzA==}
+  /roosterjs-content-model-plugins@9.6.1:
+    resolution: {integrity: sha512-WfY7i1buxZ7QOO6eXVTxzLijnNx03iNmNELtGJhn3gfD/uElvC51NEzjua7nZAyyMrC/vvtQW7Cqrby0EltOmQ==}
     dependencies:
-      roosterjs-content-model-api: 9.5.0
-      roosterjs-content-model-core: 9.5.0
-      roosterjs-content-model-dom: 9.5.0
-      roosterjs-content-model-types: 9.5.0
+      roosterjs-content-model-api: 9.6.0
+      roosterjs-content-model-core: 9.6.0
+      roosterjs-content-model-dom: 9.6.0
+      roosterjs-content-model-types: 9.6.0
       tslib: 2.6.2
     dev: false
 
-  /roosterjs-content-model-types@9.5.0:
-    resolution: {integrity: sha512-S18sPWnmRaGX1I0XEmb5pC0/O8uisP29LvuBnfG+XwMJVb6GxR+tD1jHs0BiaJiy8TTAjBChHVjKWZ5l2a/nWg==}
+  /roosterjs-content-model-types@9.6.0:
+    resolution: {integrity: sha512-3/j/wUElT4kEqVktCPR4Xr70mw0FLqTvehcahQ3Lh8lhgUUwfo931QlS6Zs9VwlD7s5icdnUPHH7lxReS3z46A==}
     dev: false
 
   /roosterjs-editor-api@8.62.0:
@@ -24000,7 +24000,7 @@ packages:
     dev: false
 
   file:projects/communication-react.tgz:
-    resolution: {integrity: sha512-IL2wJj34EeYB0XmNir1EBa6CFXguVHKpOP31BRGfunPjs2VG1eu1gK5y5nf8noMM+s/IwdKE14pCNouimMXfLw==, tarball: file:projects/communication-react.tgz}
+    resolution: {integrity: sha512-zvz+AiHfers/NrlXv1iYyRYqxlsOFQ/CzDlCEeLDstKY+zW64dbRfU8+MrhqH7VofSFDvsp402CrwtIh1HQY4g==, tarball: file:projects/communication-react.tgz}
     name: '@rush-temp/communication-react'
     version: 0.0.0
     dependencies:
@@ -24075,11 +24075,11 @@ packages:
       reselect: 4.1.8
       rimraf: 2.7.1
       rollup: 4.12.1
-      roosterjs-content-model-api: 9.5.0
-      roosterjs-content-model-core: 9.5.0
-      roosterjs-content-model-dom: 9.5.0
-      roosterjs-content-model-plugins: 9.5.0
-      roosterjs-content-model-types: 9.5.0
+      roosterjs-content-model-api: 9.6.0
+      roosterjs-content-model-core: 9.6.0
+      roosterjs-content-model-dom: 9.6.0
+      roosterjs-content-model-plugins: 9.6.1
+      roosterjs-content-model-types: 9.6.0
       roosterjs-editor-api: 8.62.0
       roosterjs-editor-core: 8.62.0
       roosterjs-editor-dom: 8.62.0
@@ -24255,7 +24255,7 @@ packages:
     dev: false
 
   file:projects/react-components.tgz:
-    resolution: {integrity: sha512-BtN2SJK/NdzALmZrfo6Kr6N2473Xw38elrgKnUO4HDtVoFCKPg/AwX0ln/6kJ5i4FkFFkXtGCUpxJjyyUWXMFw==, tarball: file:projects/react-components.tgz}
+    resolution: {integrity: sha512-U8l64vdqD8h+S1Oe32ixQsaHDfZkuvs8aVuylebYlIbJqvj7M1ppmofR/hWpT+Qx0WW6kDgwEJR0Hz8g7VsZCQ==, tarball: file:projects/react-components.tgz}
     name: '@rush-temp/react-components'
     version: 0.0.0
     dependencies:
@@ -24331,11 +24331,11 @@ packages:
       regenerator-runtime: 0.14.1
       rimraf: 2.7.1
       rollup: 4.12.1
-      roosterjs-content-model-api: 9.5.0
-      roosterjs-content-model-core: 9.5.0
-      roosterjs-content-model-dom: 9.5.0
-      roosterjs-content-model-plugins: 9.5.0
-      roosterjs-content-model-types: 9.5.0
+      roosterjs-content-model-api: 9.6.0
+      roosterjs-content-model-core: 9.6.0
+      roosterjs-content-model-dom: 9.6.0
+      roosterjs-content-model-plugins: 9.6.1
+      roosterjs-content-model-types: 9.6.0
       roosterjs-editor-api: 8.62.0
       roosterjs-editor-core: 8.62.0
       roosterjs-editor-dom: 8.62.0
