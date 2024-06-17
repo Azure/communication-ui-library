@@ -13,7 +13,8 @@ import {
   PropertyChangedEvent,
   TeamsMeetingLinkLocator,
   StartCallOptions,
-  VideoDeviceInfo
+  VideoDeviceInfo,
+  BreakoutRoom
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(meeting-id) */
 import { TeamsMeetingIdLocator } from '@azure/communication-calling';
@@ -180,6 +181,19 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     this.callAdapter.on('breakoutRoomJoined', (call: CallCommon) => {
       const threadId = this.callAdapter.getState().mainMeeting?.breakoutRooms?.assignedBreakoutRoom?.threadId;
       if (threadId) {
+        (this.chatAdapter as AzureCommunicationChatAdapter).switchChatThread(threadId);
+      }
+    });
+    // When call ended is a breakout room and 'return to main meeting' setting is not disabled then switch
+    // chat thread to main meeting chat thread
+    this.callAdapter.on('assignedBreakoutRoomUpdated', (breakoutRoom: BreakoutRoom) => {
+      const mainMeeting = this.callAdapter.getState().mainMeeting;
+      const threadId = mainMeeting?.info?.threadId;
+      if (
+        threadId &&
+        breakoutRoom.state === 'closed' &&
+        this.callAdapter.getState().breakoutRoomSettings?.disableReturnToMainMeeting === false
+      ) {
         (this.chatAdapter as AzureCommunicationChatAdapter).switchChatThread(threadId);
       }
     });

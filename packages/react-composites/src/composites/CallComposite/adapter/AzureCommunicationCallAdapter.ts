@@ -305,6 +305,10 @@ class CallContext {
   public setMainMeeting(call?: CallState): void {
     this.setState({ ...this.state, mainMeeting: call });
   }
+
+  public setBreakoutRoomSettings(breakoutRoomSettings?: BreakoutRoomSettings): void {
+    this.setState({ ...this.state, breakoutRoomSettings });
+  }
 }
 
 const findLatestEndedCall = (calls: { [key: string]: CallState }): CallState | undefined => {
@@ -429,7 +433,19 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
       this.targetCallees
     );
 
-    this.context.onCallEnded((endCallData) => this.emitter.emit('callEnded', endCallData));
+    this.context.onCallEnded((endCallData) => {
+      const mainMeeting = this.context.getState().mainMeeting;
+      const breakoutRoom = mainMeeting?.breakoutRooms.assignedBreakoutRoom;
+      // Return to main meeting because breakout room call is ended because it is closed
+      if (
+        breakoutRoom &&
+        breakoutRoom.state === 'closed' &&
+        this.context.getState().breakoutRoomSettings?.disableReturnToMainMeeting === false
+      ) {
+        this.returnToMainMeeting();
+      }
+      this.emitter.emit('callEnded', endCallData);
+    });
 
     const onStateChange = (clientState: CallClientState): void => {
       // unsubscribe when the instance gets disposed
@@ -1066,14 +1082,8 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
 
   public async returnToMainMeeting(): Promise<void> {
     const mainMeetingCall = this.callAgent?.calls.find((callAgentCall) => {
-      console.log(
-        'callAgentCall assigned breakout room call id: ',
-        callAgentCall?.feature(Features.BreakoutRooms).assignedBreakoutRoom?.call?.id
-      );
-      console.log('call id: ', this.call?.id);
-      return (
-        this.call && callAgentCall?.feature(Features.BreakoutRooms).assignedBreakoutRoom?.call?.id === this.call.id
-      );
+      const mainMeeting = this.context.getState().mainMeeting;
+      return mainMeeting?.id && mainMeeting.id === callAgentCall.id;
     });
     if (mainMeetingCall) {
       this.leaveCall().then(() => {
@@ -1347,7 +1357,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   private assignedBreakoutRoomUpdated(_breakoutRoom: BreakoutRoom): void {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const breakoutRoom = (_breakoutRoom as any)['breakoutRoom'];
-    console.log('Call adapter assignedBreakoutRoomUpdated');
     this.emitter.emit('assignedBreakoutRoomUpdated', breakoutRoom);
   }
 
@@ -1366,6 +1375,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   private breakoutRoomSettingsAvailable(_breakoutRoomSettings: BreakoutRoomSettings): void {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const breakoutRoomSettings = (_breakoutRoomSettings as any)['breakoutRoomSettings'];
+    this.context.setBreakoutRoomSettings(breakoutRoomSettings);
     this.emitter.emit('breakoutRoomSettingsAvailable', breakoutRoomSettings);
   }
 

@@ -9,6 +9,7 @@ import type {
   BackgroundBlurConfig,
   BackgroundReplacementConfig,
   BreakoutRoomJoinedListener,
+  BreakoutRoomSettings,
   BreakoutRoomSettingsAvailableListener
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(reaction) */
@@ -193,6 +194,8 @@ export type CallAdapterClientState = {
   reactions?: ReactionResources;
 
   mainMeeting?: CallState;
+
+  breakoutRoomSettings?: BreakoutRoomSettings;
 };
 
 /**
