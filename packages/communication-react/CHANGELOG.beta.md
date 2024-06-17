@@ -1,8 +1,44 @@
 # Change Log - @azure/communication-react
 
-This log was last generated on Tue, 21 May 2024 20:14:27 GMT and should not be manually modified.
+This log was last generated on Mon, 17 Jun 2024 16:27:12 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.18.0-beta.1](https://github.com/azure/communication-ui-library/tree/@azure/communication-react_v1.18.0-beta.1)
+
+Mon, 17 Jun 2024 16:27:12 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@azure/communication-react_v1.17.0...@azure/communication-react_v1.18.0-beta.1)
+
+### Features
+- GA CTE - Fix some stable build problems - FIx api changes from sdk ([PR #4530](https://github.com/azure/communication-ui-library/pull/4530) by jiangnanhello@live.com)
+- GA CTE - Fix some stable build problems - FIx api changes from sdk ([PR #4530](https://github.com/azure/communication-ui-library/pull/4530) by jiangnanhello@live.com)
+- Make AttachmentMetadata api public ([PR #4689](https://github.com/azure/communication-ui-library/pull/4689) by 77021369+jimchou-dev@users.noreply.github.com)
+- Version bumping communication-chat ([PR #4717](https://github.com/azure/communication-ui-library/pull/4717) by 9044372+JoshuaLai@users.noreply.github.com)
+- Soft Mute Participants in the call ([commit](https://github.com/azure/communication-ui-library/commit/not available) by edwardlee@microsoft.com)
+- Notification components to show notifications in the UI ([commit](https://github.com/azure/communication-ui-library/commit/not available) by 96077406+carocao-msft@users.noreply.github.com)
+- Add 1:n call to CTE beta ([commit](https://github.com/azure/communication-ui-library/commit/not available) by jiangnanhello@live.com)
+- Add primary and secondary buttons to notification bar ([commit](https://github.com/azure/communication-ui-library/commit/not available) by 96077406+carocao-msft@users.noreply.github.com)
+### Improvements
+- Upgrade calling stable to 1.24.3 ([PR #4660](https://github.com/azure/communication-ui-library/pull/4660) by 79475487+mgamis-msft@users.noreply.github.com)
+- Update Calling beta to 1.26.1-beta.1 and stable to 1.25.1 ([PR #4684](https://github.com/azure/communication-ui-library/pull/4684) by 97124699+prabhjot-msft@users.noreply.github.com)
+- Upgrade calling beta to 1.25.2-beta.2 ([PR #4659](https://github.com/azure/communication-ui-library/pull/4659) by 79475487+mgamis-msft@users.noreply.github.com)
+- Update table border and selection colors for rich text editor and messages ([PR #4675](https://github.com/azure/communication-ui-library/pull/4675) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- Removed Beta Banner for File Sharing Feature ([PR #4692](https://github.com/azure/communication-ui-library/pull/4692) by 109105353+jpeng-ms@users.noreply.github.com)
+### Bug Fixes
+- Fixed bug where reactions is dismissed when receiving new captions ([PR #4707](https://github.com/azure/communication-ui-library/pull/4707) by 96077406+carocao-msft@users.noreply.github.com)
+- Updating accessibility to include status in the value ([PR #4729](https://github.com/azure/communication-ui-library/pull/4729) by 9044372+JoshuaLai@users.noreply.github.com)
+- Update the color of time stamp to meet the contrast requirement from a11y ([PR #4688](https://github.com/azure/communication-ui-library/pull/4688) by longamy@microsoft.com)
+- Disable highlight of context menu on touch event in Android ([PR #4726](https://github.com/azure/communication-ui-library/pull/4726) by 3941071+emlynmac@users.noreply.github.com)
+- Use display name from participant list for captions speaker display name to keep naming consisitent between different UI  ([PR #4703](https://github.com/azure/communication-ui-library/pull/4703) by 96077406+carocao-msft@users.noreply.github.com)
+- Fixed the issue where user cannot update message content ([PR #4701](https://github.com/azure/communication-ui-library/pull/4701) by 109105353+jpeng-ms@users.noreply.github.com)
+- Remove the themeV8 version for the link color ([PR #4691](https://github.com/azure/communication-ui-library/pull/4691) by longamy@microsoft.com)
+- Add message context to aria label ([PR #4695](https://github.com/azure/communication-ui-library/pull/4695) by 3941071+emlynmac@users.noreply.github.com)
+- update captions test to have user id match with participant list id ([PR #4706](https://github.com/azure/communication-ui-library/pull/4706) by 96077406+carocao-msft@users.noreply.github.com)
+- Fix an issue where rich text editor wasn't scrolled content correctly when a new content was pasted ([PR #4720](https://github.com/azure/communication-ui-library/pull/4720) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- pass in undefined if there is no onParticipant defined ([PR #4714](https://github.com/azure/communication-ui-library/pull/4714) by 9044372+JoshuaLai@users.noreply.github.com)
+- Add pinning to participant list ([PR #4699](https://github.com/azure/communication-ui-library/pull/4699) by 97124699+prabhjot-msft@users.noreply.github.com)
+- Fix feature.on not existing problem ([commit](https://github.com/azure/communication-ui-library/commit/not available) by jiangnanhello@live.com)
+
 
 ## [1.17.0-beta.1](https://github.com/azure/communication-ui-library/tree/1.17.0-beta.1)
 
