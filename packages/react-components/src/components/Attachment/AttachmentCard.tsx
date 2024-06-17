@@ -114,7 +114,7 @@ export const _AttachmentCard = (props: _AttachmentCardProps): JSX.Element => {
         <CardHeader
           className={attachmentCardStyles.content}
           image={
-            <div className={attachmentCardStyles.fileIcon} role="img">
+            <div className={attachmentCardStyles.fileIcon}>
               <Icon
                 data-ui-id={'attachmenttype-icon'}
                 iconName={
