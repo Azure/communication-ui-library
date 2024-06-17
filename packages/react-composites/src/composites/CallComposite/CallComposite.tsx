@@ -425,13 +425,17 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   const capabilitiesChangedNotificationBarProps =
     useTrackedCapabilityChangedNotifications(capabilitiesChangedInfoAndRole);
 
+  /* @conditional-compile-remove(teams-meeting-conference) */
   const connectionLostFlag = useSelector(connectionLostBannerSelector);
+  /* @conditional-compile-remove(teams-meeting-conference) */
   const [userClosedConnectionLostBanner, setUserClosedConnectionLostBanner] = useState(false);
+  /* @conditional-compile-remove(teams-meeting-conference) */
   useEffect(() => {
     if (!isNetworkHealthy(connectionLostFlag.connectionLost)) {
       setUserClosedConnectionLostBanner(false);
     }
   }, [connectionLostFlag]);
+  /* @conditional-compile-remove(teams-meeting-conference) */
   const connectionLostBannerProps = useConnectionLostNotifications(
     connectionLostFlag.connectionLost,
     userClosedConnectionLostBanner,

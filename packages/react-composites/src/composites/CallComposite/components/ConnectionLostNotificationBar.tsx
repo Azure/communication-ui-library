@@ -7,6 +7,7 @@ import { IMessageBarProps } from '@fluentui/react';
 import { NotificationBar } from '@internal/react-components';
 /* @conditional-compile-remove(teams-meeting-conference) */
 import React, { useEffect, useMemo, useState } from 'react';
+/* @conditional-compile-remove(teams-meeting-conference) */
 import { useLocale } from '../../localization';
 
 /* @conditional-compile-remove(teams-meeting-conference) */
@@ -20,6 +21,7 @@ export interface ConnectionLostBannerProps extends IMessageBarProps {
   onPrimaryButtonClick?: () => void;
 }
 
+/* @conditional-compile-remove(teams-meeting-conference) */
 /**
  * Create a record for when the notification was most recently dismissed for tracking dismissed notifications.
  *

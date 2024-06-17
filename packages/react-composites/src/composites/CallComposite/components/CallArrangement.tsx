@@ -577,16 +577,18 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                     {canUnmute && !!props.mutedNotificationProps && (
                       <MutedNotification {...props.mutedNotificationProps} />
                     )}
-                    {props.connectionLostBannerProps &&
-                      !isNetworkHealthy(props.connectionLostBannerProps.connectionLost) &&
-                      !props.connectionLostBannerProps.userClosedConnectionLostBanner && (
-                        <Stack styles={bannerNotificationStyles}>
-                          <ConnectionLostNotificationBar
-                            {...props.connectionLostBannerProps}
-                            onPrimaryButtonClick={toggleTeamsMeetingConferenceModal}
-                          />
-                        </Stack>
-                      )}
+                    {
+                      /* @conditional-compile-remove(teams-meeting-conference) */ props.connectionLostBannerProps &&
+                        !isNetworkHealthy(props.connectionLostBannerProps.connectionLost) &&
+                        !props.connectionLostBannerProps.userClosedConnectionLostBanner && (
+                          <Stack styles={bannerNotificationStyles}>
+                            <ConnectionLostNotificationBar
+                              {...props.connectionLostBannerProps}
+                              onPrimaryButtonClick={toggleTeamsMeetingConferenceModal}
+                            />
+                          </Stack>
+                        )
+                    }
                   </Stack.Item>
                   {renderGallery && props.onRenderGalleryContent && props.onRenderGalleryContent()}
                   {true &&

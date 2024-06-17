@@ -32,6 +32,7 @@ import { DtmfDialpadPage } from './DtmfDialpadPage';
 import { showDtmfDialer } from '../utils/MediaGalleryUtils';
 import { getTargetCallees } from '../selectors/baseSelectors';
 import { Prompt, PromptProps } from '../components/Prompt';
+/* @conditional-compile-remove(teams-meeting-conference) */
 import { ConnectionLostBannerProps } from '../components/ConnectionLostNotificationBar';
 
 /**

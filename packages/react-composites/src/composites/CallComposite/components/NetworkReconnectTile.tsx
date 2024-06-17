@@ -19,6 +19,7 @@ import { useHandlers } from '../hooks/useHandlers';
 import { CallCompositeIcon } from '../../common/icons';
 /* @conditional-compile-remove(teams-meeting-conference) */
 import { getTeamsMeetingCoordinates, getIsTeamsMeeting } from '../selectors/baseSelectors';
+/* @conditional-compile-remove(teams-meeting-conference) */
 import { useSelector } from '../hooks/useSelector';
 /* @conditional-compile-remove(teams-meeting-conference) */
 import {
