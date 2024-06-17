@@ -217,17 +217,28 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const userId = toFlatCommunicationIdentifier(adapter.getState().userId);
 
   /* @conditional-compile-remove(file-sharing-acs) */
+  const setKeyboardFocusAfterFileSelection = useCallback(() => {
+    // look up sendbox by ID for now, we will use `useRef`
+    // once attachment button is moved inside of send box component
+    // see ADO workitem #3764245
+    /* @conditional-compile-remove(rich-text-editor-composite-support) */
+    if (props.options?.richTextEditor) {
+      const richTextSendBox = document?.querySelector(`[id="richTextSendBox"]`) as HTMLDivElement;
+      richTextSendBox?.focus();
+      return;
+    }
+    const sendBox = document?.querySelector(`[id="sendbox"]`) as HTMLTextAreaElement;
+    // set send box on focus after file selection per A11y requirement
+    sendBox?.focus();
+  }, [
+    /* @conditional-compile-remove(rich-text-editor-composite-support) */
+    props.options?.richTextEditor
+  ]);
+
+  /* @conditional-compile-remove(file-sharing-acs) */
   const attachmentUploadButtonOnChange = useCallback(
     (files: FileList | null): void => {
-      // look up sendbox by ID for now, we will use `useRef`
-      // once attachment button is moved inside of send box component
-      let sendBox = document?.querySelector(`[id="sendbox"]`) as HTMLTextAreaElement;
-      /* @conditional-compile-remove(rich-text-editor-composite-support) */
-      if (props.options?.richTextEditor) {
-        sendBox = document?.querySelector(`[id="richTextSendBox"]`) as HTMLTextAreaElement;
-      }
-      // set send box on focus after file selection per A11y requirement
-      sendBox?.focus();
+      setKeyboardFocusAfterFileSelection();
 
       if (!files) {
         return;
@@ -264,11 +275,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       handleUploadAction({ type: AttachmentUploadActionType.Set, newUploads });
       attachmentOptions?.uploadOptions?.handleAttachmentSelection(newUploads);
     },
-    [
-      attachmentOptions?.uploadOptions,
-      /* @conditional-compile-remove(rich-text-editor-composite-support) */
-      props.options?.richTextEditor
-    ]
+    [attachmentOptions?.uploadOptions, setKeyboardFocusAfterFileSelection]
   );
 
   /* @conditional-compile-remove(file-sharing-acs) */
