@@ -11,7 +11,11 @@ Mon, 17 Jun 2024 16:27:12 GMT
 
 ### Features
 
-- Data Loss Prevention support has been enabled in the Composites for Teams interoperability scenarios. When enabled in Teams, DLP policies can be applied to prevent sensitive information from being shared in chat messages.
+#### Data Loss Prevention (DLP) Message Support - Public Preview
+
+- Data Loss Prevention (DLP) support has been enabled in the Composite for Teams interoperability scenarios. When enabled in Teams, DLP policies can be applied to prevent sensitive information from being shared in chat messages.
+
+#### Video Pinning - Public Preview
 
 - UI library has been updated to include functionality for pinning a video tile from the participant list, in addition to the existing video gallery pinning feature.
 
