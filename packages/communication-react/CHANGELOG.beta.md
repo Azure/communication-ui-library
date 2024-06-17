@@ -11,9 +11,9 @@ Mon, 17 Jun 2024 16:27:12 GMT
 
 ### Features
 
-- Enable Data Loss Prevention in the Composites for Teams interoperability scenarios ([PR #4717](https://github.com/azure/communication-ui-library/pull/4717) by 9044372+JoshuaLai@users.noreply.github.com)
+- Data Loss Prevention support has been enabled in the Composites for Teams interoperability scenarios. When enabled in Teams, DLP policies can be applied to prevent sensitive information from being shared in chat messages.
 
-- Add video pinning to participant list ([PR #4699](https://github.com/azure/communication-ui-library/pull/4699) by <97124699+prabhjot-msft@users.noreply.github.com>)
+- UI library has been updated to include functionality for pinning a video tile from the participant list, in addition to the existing video gallery pinning feature.
 
 ### Improvements
 
@@ -21,11 +21,11 @@ Mon, 17 Jun 2024 16:27:12 GMT
 
 ### Bug Fixes
 
-- Fixed bug where reactions are dismissed when receiving new captions ([PR #4707](https://github.com/azure/communication-ui-library/pull/4707) by 96077406+carocao-msft@users.noreply.github.com)
+- Fix an issue where reactions are dismissed when receiving new captions ([PR #4707](https://github.com/azure/communication-ui-library/pull/4707) by 96077406+carocao-msft@users.noreply.github.com)
 - Update the color of message time stamps to meet a11y contrast requirements ([PR #4688](https://github.com/azure/communication-ui-library/pull/4688) by longamy@microsoft.com)
 - Disable highlight of message context menu on touch event on Android ([PR #4726](https://github.com/azure/communication-ui-library/pull/4726) by 3941071+emlynmac@users.noreply.github.com)
 - Use display name from participant list for captions speaker display name ([PR #4703](https://github.com/azure/communication-ui-library/pull/4703) by 96077406+carocao-msft@users.noreply.github.com)
-- Fixed the issue where user cannot update message content ([PR #4701](https://github.com/azure/communication-ui-library/pull/4701) by 109105353+jpeng-ms@users.noreply.github.com)
+- Fix an issue where user cannot update message content ([PR #4701](https://github.com/azure/communication-ui-library/pull/4701) by 109105353+jpeng-ms@users.noreply.github.com)
 - Fix an issue where rich the text editor content wasn't scrolled correctly when new content is pasted ([PR #4720](https://github.com/azure/communication-ui-library/pull/4720) by <98852890+vhuseinova-msft@users.noreply.github.com>)
 
 ## [1.17.0-beta.1](https://github.com/azure/communication-ui-library/tree/1.17.0-beta.1)
