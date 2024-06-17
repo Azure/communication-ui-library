@@ -57,7 +57,7 @@
     "form-data": "^4.0.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.24.5",
+    "@babel/core": "^7.24.7",
     "@babel/eslint-parser": "^7.22.15",
     "@types/jest": "^29.5.11",
     "@types/json-stringify-safe": "^5.0.3",
@@ -79,7 +79,7 @@
     "eslint-plugin-jsx-a11y": "^6.8.0",
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-react-hooks": "^4.6.2",
-    "eslint-plugin-react": "^7.34.1",
+    "eslint-plugin-react": "^7.34.2",
     "eslint": "^7.7.0",
     "html-webpack-plugin": "^5.3.1",
     "husky": "^8.0.3",
@@ -98,6 +98,6 @@
     "webpack-dev-server": "4.15.1",
     "webpack": "5.89.0",
     "webpack-bundle-analyzer": "^4.5.0",
-    "@babel/cli": "^7.23.9"
+    "@babel/cli": "^7.24.7"
   }
 }

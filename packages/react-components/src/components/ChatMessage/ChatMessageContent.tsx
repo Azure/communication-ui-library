@@ -217,9 +217,11 @@ const messageContentAriaText = (props: ChatMessageContentProps): string | undefi
   const message = extractContentForAllyMessage(props);
   return props.message.mine
     ? _formatString(props.strings.messageContentMineAriaText, {
+        status: props.message.status ?? '',
         message: message
       })
     : _formatString(props.strings.messageContentAriaText, {
+        status: props.message.status ?? '',
         author: `${props.message.senderDisplayName}`,
         message: message
       });
