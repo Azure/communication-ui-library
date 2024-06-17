@@ -187,6 +187,7 @@ const MappedMenuItems = (
     <TooltipHost content={menuActions[0].name}>
       <ToolbarButton
         aria-label={menuActions[0].name}
+        role="button"
         icon={menuActions[0].icon}
         onClick={() => {
           try {
@@ -203,7 +204,9 @@ const MappedMenuItems = (
         <TooltipHost content={localeStrings.attachmentMoreMenu}>
           <MenuTrigger>
             <ToolbarButton
-              icon={<Icon iconName="AttachmentMoreMenu" aria-label={localeStrings.attachmentMoreMenu} />}
+              aria-label={localeStrings.attachmentMoreMenu}
+              role="button"
+              icon={<Icon iconName="AttachmentMoreMenu" />}
             />
           </MenuTrigger>
         </TooltipHost>
@@ -211,6 +214,7 @@ const MappedMenuItems = (
           <MenuList>
             {menuActions.map((menuItem, index) => (
               <MenuItem
+                aria-label={menuItem.name}
                 key={index}
                 icon={menuItem.icon}
                 onClick={async () => {
