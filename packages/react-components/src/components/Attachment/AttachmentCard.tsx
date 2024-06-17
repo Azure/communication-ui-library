@@ -136,7 +136,7 @@ export const _AttachmentCard = (props: _AttachmentCardProps): JSX.Element => {
                   target: '#attachment-' + attachment.id
                 }}
               >
-                <div className={attachmentCardStyles.fileNameLabel} tabIndex={0}>
+                <div className={attachmentCardStyles.fileNameLabel}>
                   <Text className={attachmentCardStyles.title} aria-label={attachment.name}>
                     {attachment.name}
                   </Text>
