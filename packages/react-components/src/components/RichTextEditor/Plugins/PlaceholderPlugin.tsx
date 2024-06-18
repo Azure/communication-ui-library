@@ -1,12 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 import { WatermarkPlugin } from 'roosterjs-content-model-plugins';
-import type { /*PluginEvent, EditorPlugin,*/ IEditor } from 'roosterjs-content-model-types';
+import type { IEditor } from 'roosterjs-content-model-types';
 
 /**
  * PlaceholderPlugin is a plugin for displaying placeholder and handle localization for it in the editor.
  */
-export default class PlaceholderPlugin extends WatermarkPlugin {
+export class PlaceholderPlugin extends WatermarkPlugin {
   private isPlaceholderShown: boolean = false;
   private editorValue: IEditor | null = null;
 
