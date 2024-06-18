@@ -27,6 +27,8 @@ export const useVideoTileContextualMenuProps = (props: {
     stopSpotlightVideoTileMenuLabel?: string;
     stopSpotlightOnSelfVideoTileMenuLabel?: string;
     spotlightLimitReachedMenuTitle?: string;
+    /* @conditional-compile-remove(soft-mute) */
+    muteParticipantMenuItemLabel?: string;
   };
   view?: { updateScalingMode: (scalingMode: ViewScalingMode) => Promise<void> };
   isPinned?: boolean;
@@ -158,17 +160,17 @@ export const useVideoTileContextualMenuProps = (props: {
       }
     }
     /* @conditional-compile-remove(soft-mute) */
-    if (onMuteParticipant) {
+    if (onMuteParticipant && strings?.muteParticipantMenuItemLabel) {
       items.push({
         key: 'mute',
-        text: 'Mute',
+        text: strings?.muteParticipantMenuItemLabel,
         iconProps: {
           iconName: 'ContextualMenuMicMutedIcon',
           styles: { root: { lineHeight: 0 } }
         },
         onClick: () => onMuteParticipant(participant.userId),
         'data-ui-id': 'video-tile-mute-participant',
-        ariaLabel: 'Mute',
+        ariaLabel: strings?.muteParticipantMenuItemLabel,
         disabled: participant.isMuted
       });
     }

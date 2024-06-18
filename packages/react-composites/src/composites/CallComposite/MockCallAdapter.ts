@@ -210,6 +210,10 @@ export class _MockCallAdapter implements CallAdapter {
   muteParticipant(userId: string): Promise<void> {
     throw Error('muteParticipant not implemented');
   }
+  /* @conditional-compile-remove(soft-mute) */
+  muteAllRemoteParticipants(): Promise<void> {
+    throw Error('muteAllRemoteParticipants not implemented');
+  }
 }
 
 /**

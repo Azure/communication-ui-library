@@ -342,7 +342,12 @@
     "pinParticipantLimitReachedMenuLabel": "Pin (limit reached)",
     "unpinParticipantMenuLabel": "Unpin",
     "pinParticipantMenuItemAriaLabel": "Pin",
-    "unpinParticipantMenuItemAriaLabel": "Unpin"
+    "unpinParticipantMenuItemAriaLabel": "Unpin",
+    "muteAllMenuLabel": "Mute all",
+    "muteAllDialogTitle": "Mute everyone?",
+    "muteAllDialogContent": "This will mute everyone in the meeting but you.",
+    "muteAllConfirmButtonLabel": "Mute all",
+    "muteAllCancelButtonLabel": "Cancel"
   },
   "chat": {
     "chatListHeader": "In this chat",
