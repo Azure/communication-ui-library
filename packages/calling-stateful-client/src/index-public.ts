@@ -30,6 +30,8 @@ export type { RaisedHandState } from './CallClientState';
 export type { DeclarativeCallAgent, IncomingCallManagement } from './CallAgentDeclarative';
 /* @conditional-compile-remove(one-to-n-calling) */
 export type { DeclarativeIncomingCall } from './IncomingCallDeclarative';
+/* @conditional-compile-remove(teams-identity-support) */
+export type { DeclarativeTeamsCallAgent } from './TeamsCallAgentDeclarative';
 
 export type { LocalVideoStreamVideoEffectsState } from './CallClientState';
 
