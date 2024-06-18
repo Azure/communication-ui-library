@@ -114,6 +114,9 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   } = props;
 
   const defaultNumberOfChatMessagesToReload = 5;
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  const MAX_INLINE_IMAGE_UPLOAD_SIZE_MB = 20;
+  const SUPPORTED_FILES: Array<string> = ['jpg', 'jpeg', 'png', 'gif', 'heic', 'webp'];
   /* @conditional-compile-remove(file-sharing-acs) */
   const [downloadErrorMessage, setDownloadErrorMessage] = React.useState('');
   const [overlayImageItem, setOverlayImageItem] = useState<OverlayImageItem>();
@@ -215,6 +218,118 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   }, [styles?.sendBox]);
 
   const userId = toFlatCommunicationIdentifier(adapter.getState().userId);
+
+  const fetchBlobData = async (
+    resource: string | URL | Request,
+    options: { timeout?: number; headers?: Headers; abortController: AbortController }
+  ): Promise<Response> => {
+    // default timeout is 30 seconds
+    const { timeout = 30000, abortController } = options;
+
+    const id = setTimeout(() => {
+      abortController.abort();
+    }, timeout);
+
+    const response = await fetch(resource, {
+      ...options,
+      signal: abortController.signal
+    });
+    clearTimeout(id);
+    return response;
+  };
+
+  const getInlineImageData = useCallback(async (image: string): Promise<Blob | undefined> => {
+    const blobImage: Blob | undefined = undefined;
+    if (image.startsWith('blob')) {
+      const res = await fetchBlobData(image, { abortController: new AbortController() });
+      const blobImage = res.body;
+      console.log('blobImage', typeof blobImage);
+    } else if (image.startsWith('http')) {
+      const res = await fetchBlobData(image, { abortController: new AbortController() });
+      const blobImage = res.body;
+      console.log('remote url blobImage', typeof blobImage);
+    }
+    return blobImage;
+  }, []);
+
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  const inlineImageUploadHandler = useCallback(async (uploadTasks: AttachmentUpload[]): Promise<void> => {
+    for (const task of uploadTasks) {
+      // const fileName = task.metadata.name;
+      // const fileExtension = task.file?.name.split('.').pop() ?? '';
+      const image: Blob | undefined = task.image;
+      console.log('inlineImageUploadHandler', image);
+
+      if (image && image.size > MAX_INLINE_IMAGE_UPLOAD_SIZE_MB) {
+        task.notifyUploadFailed(
+          `"${task.image}" is too big. Select a file under ${MAX_INLINE_IMAGE_UPLOAD_SIZE_MB}MB.`
+        );
+        continue;
+      }
+
+      // if (!SUPPORTED_FILES.includes(fileExtension)) {
+      //   task.notifyUploadFailed(`Uploading ".${'png'}" files is not allowed.`);
+      //   continue;
+      // }
+
+      try {
+        // const response = await adapter.uploadImage(image, fileName);
+        // const randomId = Math.random().toString(16).slice(2);
+        // task.notifyUploadCompleted(randomId, response.data.url);
+      } catch (error) {
+        console.error(error);
+        task.notifyUploadFailed('Unable to upload inline image. Please try again later.');
+      }
+    }
+  }, []);
+
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  const onUploadInlineImage = useCallback(
+    (image: string, fileName: string): void => {
+      console.log('Chat Screen Uploading image...', image);
+
+      if (!image) {
+        return;
+      }
+      const imageData = getInlineImageData(image);
+      if (!imageData) {
+        return;
+      }
+      // Get image, change to tasks, store locally and pass back to Contoso
+      const taskId = nanoid();
+      const uploadTask: AttachmentUpload = {
+        image: imageData,
+        taskId,
+        metadata: {
+          id: taskId,
+          name: fileName,
+          progress: 0
+        },
+        notifyUploadProgressChanged: (value: number) => {
+          handleUploadAction({ type: AttachmentUploadActionType.Progress, taskId, progress: value });
+        },
+        notifyUploadCompleted: (id: string, url: string) => {
+          handleUploadAction({ type: AttachmentUploadActionType.Completed, taskId, id, url });
+        },
+        notifyUploadFailed: (message: string) => {
+          handleUploadAction({ type: AttachmentUploadActionType.Failed, taskId, message });
+          // remove the failed upload task when error banner is auto dismissed after 10 seconds
+          // so the banner won't be shown again on UI re-rendering.
+          setTimeout(() => {
+            handleUploadAction({ type: AttachmentUploadActionType.Remove, id: taskId });
+          }, 10 * 1000);
+        }
+      };
+
+      const newUploads = [uploadTask];
+      handleUploadAction({ type: AttachmentUploadActionType.Set, newUploads });
+      inlineImageUploadHandler(newUploads);
+      // const result = adapter.uploadImage(image, fileName);
+      // console.log('Uploading image...', image);
+      // return result;
+    },
+    [getInlineImageData, inlineImageUploadHandler]
+  );
 
   /* @conditional-compile-remove(file-sharing-acs) */
   const attachmentUploadButtonOnChange = useCallback(
@@ -535,6 +650,8 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
                   // we need to overwrite onSendMessage for SendBox because we need to clear attachment state
                   // when submit button is clicked
                   onSendMessage={onSendMessageHandler}
+                  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+                  onUploadImage={onUploadInlineImage}
                 />
               </Stack>
               {formFactor !== 'mobile' && (

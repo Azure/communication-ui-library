@@ -11,6 +11,8 @@ export default class CopyPastePlugin implements EditorPlugin {
   // don't set value in constructor to be able to update it without plugin recreation
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   onPaste?: (event: { content: DocumentFragment }) => void;
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  onUploadImage?: (image: string, fileName: string) => void;
 
   getName(): string {
     return 'CopyPastePlugin';
@@ -24,7 +26,8 @@ export default class CopyPastePlugin implements EditorPlugin {
 
   onPluginEvent(event: PluginEvent): void {
     handleBeforePasteEvent(event, /* @conditional-compile-remove(rich-text-editor-image-upload) */ this.onPaste);
-
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    handleInlineImage(event, this.onUploadImage);
     if (this.editor !== null && !this.editor.isDisposed()) {
       // scroll the editor to the correct position after pasting content
       scrollToBottomAfterContentPaste(event);
@@ -48,6 +51,39 @@ const handleBeforePasteEvent = (
     // removes inline image elements from the pasted content when rich-text-editor-image-upload not available
     removeImageElement(event as BeforePasteEvent);
   }
+};
+
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+/**
+ * @internal
+ * Exported only for unit testing
+ */
+export const handleInlineImage = (
+  event: PluginEvent,
+  onUploadImage?: (image: string, fileName: string) => void
+): void => {
+  // We don't support the pasting options such as paste as image yet.
+  if (event.eventType === PluginEventType.BeforePaste && event.pasteType === 'normal') {
+    event.fragment.querySelectorAll('img').forEach((image) => {
+      const blobImage = base64ToBlob(image.src);
+      const blobUrl = URL.createObjectURL(blobImage);
+      onUploadImage && onUploadImage(blobUrl, 'image.png');
+
+      image.src = blobUrl;
+      image.alt = image.alt || 'image';
+    });
+  }
+};
+
+const base64ToBlob = (dataURI: string): Blob => {
+  const byteString = atob(dataURI.split(',')[1]);
+  const arrayBuffer = new ArrayBuffer(byteString.length);
+  const uint8Array = new Uint8Array(arrayBuffer);
+
+  for (let i = 0; i < byteString.length; i++) {
+    uint8Array[i] = byteString.charCodeAt(i);
+  }
+  return new Blob([arrayBuffer], { type: 'image/jpeg' });
 };
 
 /**

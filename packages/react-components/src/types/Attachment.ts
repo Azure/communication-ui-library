@@ -90,6 +90,7 @@ export interface AttachmentUploadTask {
    * HTML {@link File} object for the uploaded attachment.
    */
   file?: File;
+  image?: Blob;
   /**
    * Update the progress of the upload changed.
    * A upload is considered complete when the progress reaches 1.

@@ -25,6 +25,7 @@ import { SendBoxErrorBarError } from '../SendBoxErrorBar';
 import { attachmentUploadCardsStyles } from '../styles/SendBox.styles';
 /* @conditional-compile-remove(file-sharing-acs) */
 import { FluentV9ThemeProvider } from '../../theming/FluentV9ThemeProvider';
+import { ChatAttachmentType } from '../Attachment/AttachmentDownloadCards';
 
 /**
  * Strings of {@link RichTextSendBox} that can be overridden.
@@ -152,6 +153,7 @@ export interface RichTextSendBoxProps {
    * @beta
    */
   attachments?: AttachmentMetadataInProgress[];
+  // uploadInlineImages: string[];
   /**
    * enumerable to determine if the input box has focus on render or not.
    * When undefined nothing has focus on render
@@ -176,6 +178,8 @@ export interface RichTextSendBoxProps {
    * Optional callback called when user is typing
    */
   onTyping?: () => Promise<void>;
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  onUploadImage?: (image: string, fileName: string) => void;
 }
 
 /**
@@ -195,7 +199,9 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     /* @conditional-compile-remove(file-sharing-acs) */
     onCancelAttachmentUpload,
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    onPaste
+    onPaste,
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    onUploadImage
   } = props;
 
   const theme = useTheme();
@@ -424,6 +430,17 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     return isAttachmentUploadCompleted(attachments) || hasIncompleteAttachmentUploads(attachments);
   }, [attachments]);
 
+  // const [imageResult, setImageResult] = useState<UploadChatImageResult | undefined>(undefined);
+
+  // const handleOnUploadImage = useCallback(
+  //   (image: string, imageFilename: string): void => {
+  //     const result = onUploadImage && onUploadImage(image, imageFilename);
+  //     console.log('Leah: ::: imageResult', result);
+  //     // setImageResult(result);
+  //   },
+  //   [onUploadImage]
+  // );
+
   return (
     <Stack>
       <RichTextSendBoxErrors {...sendBoxErrorsProps} />
@@ -444,6 +461,8 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
         hasAttachments={hasAttachmentUploads}
         /* @conditional-compile-remove(rich-text-editor-image-upload) */
         onPaste={onPaste}
+        /* @conditional-compile-remove(rich-text-editor-image-upload) */
+        onUploadImage={onUploadImage}
       />
     </Stack>
   );

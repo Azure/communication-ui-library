@@ -48,6 +48,8 @@ export type SendBoxPickerProps = {
   attachments?: AttachmentMetadataInProgress[];
   /* @conditional-compile-remove(file-sharing-acs) */
   onCancelAttachmentUpload?: (attachmentId: string) => void;
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  onUploadImage?: (image: string, fileName: string) => void;
 };
 
 /**
