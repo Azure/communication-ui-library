@@ -101,6 +101,7 @@ import { Theme } from '@fluentui/react';
 import { TransferEventArgs } from '@azure/communication-calling';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-chat';
 import { UnknownIdentifier } from '@azure/communication-common';
+import { UploadChatImageResult as UploadChatImageResult_2 } from '@azure/communication-chat';
 import { VideoDeviceInfo } from '@azure/communication-calling';
 import { VideoEffectName } from '@azure/communication-calling';
 import { VideoStreamRenderer } from '@azure/communication-calling';
@@ -1151,6 +1152,8 @@ export interface CallWithChatAdapterManagement {
     updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void;
     updateMessage(messageId: string, content: string, options?: Record<string, string> | /* @conditional-compile-remove(file-sharing-acs) */ MessageOptions): Promise<void>;
     updateSelectedVideoBackgroundEffect(selectedVideoBackground: VideoBackgroundEffect): void;
+    // (undocumented)
+    uploadImage(image: ArrayBuffer | Blob, imageFilename: string): Promise<UploadChatImageResult_2>;
 }
 
 // @public
@@ -1730,6 +1733,9 @@ export interface ChatAdapterThreadManagement {
     sendTypingIndicator(): Promise<void>;
     setTopic(topicName: string): Promise<void>;
     updateMessage(messageId: string, content: string, options?: Record<string, string> | /* @conditional-compile-remove(file-sharing-acs) */ MessageOptions): Promise<void>;
+    updateMessage(messageId: string, content: string, options?: Record<string, string> | /* @conditional-compile-remove(attachment-upload) */ MessageOptions): Promise<void>;
+    // (undocumented)
+    uploadImage(image: ArrayBuffer | Blob, imageFilename: string): Promise<UploadChatImageResult_2>;
 }
 
 // @public
@@ -1841,6 +1847,8 @@ export type ChatErrorTarget = 'ChatClient.createChatThread' | 'ChatClient.delete
 // @public
 export type ChatHandlers = {
     onSendMessage: (content: string, options?: SendMessageOptions | /* @conditional-compile-remove(file-sharing-acs) */ MessageOptions) => Promise<void>;
+    onSendMessage: (content: string, options?: SendMessageOptions | /* @conditional-compile-remove(attachment-upload) */ MessageOptions) => Promise<void>;
+    onUploadImage: (image: ArrayBuffer | Blob, imageFilename: string) => Promise<UploadChatImageResult_2>;
     onMessageSeen: (chatMessageId: string) => Promise<void>;
     onTyping: () => Promise<void>;
     onRemoveParticipant: (userId: string) => Promise<void>;
@@ -4035,6 +4043,8 @@ export interface RichTextSendBoxProps {
     }) => void;
     onSendMessage: (content: string, options?: MessageOptions) => Promise<void>;
     onTyping?: () => Promise<void>;
+    // (undocumented)
+    onUploadImage?: (image: Blob, fileName: string) => Promise<UploadChatImageResult>;
     strings?: Partial<RichTextSendBoxStrings>;
     systemMessage?: string;
 }
@@ -4586,6 +4596,16 @@ export interface UnsupportedOperatingSystemStrings {
 
 // @public
 export type UpdateMessageCallback = (messageId: string, content: string, options?: MessageOptions) => Promise<void>;
+
+// @beta
+export interface UploadChatImageResult {
+    // (undocumented)
+    attachmentType?: ChatAttachmentType;
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    name?: string;
+}
 
 // @public
 export const useAzureCommunicationCallAdapter: (args: Partial<AzureCommunicationCallAdapterArgs | AzureCommunicationOutboundCallAdapterArgs>, afterCreate?: (adapter: CallAdapter) => Promise<CallAdapter>, beforeDispose?: (adapter: CallAdapter) => Promise<void>) => CallAdapter | undefined;

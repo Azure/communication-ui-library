@@ -25,7 +25,6 @@ import { SendBoxErrorBarError } from '../SendBoxErrorBar';
 import { attachmentUploadCardsStyles } from '../styles/SendBox.styles';
 /* @conditional-compile-remove(file-sharing-acs) */
 import { FluentV9ThemeProvider } from '../../theming/FluentV9ThemeProvider';
-import { ChatAttachmentType } from '../Attachment/AttachmentDownloadCards';
 
 /**
  * Strings of {@link RichTextSendBox} that can be overridden.

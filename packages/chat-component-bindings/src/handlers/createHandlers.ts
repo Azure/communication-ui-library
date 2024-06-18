@@ -6,7 +6,7 @@ import { ReactElement } from 'react';
 import { Common, fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { StatefulChatClient } from '@internal/chat-stateful-client';
 /* @conditional-compile-remove(file-sharing-acs) */
-import { ChatAttachment } from '@azure/communication-chat';
+import { ChatAttachment, UploadChatImageResult } from '@azure/communication-chat';
 import { ChatMessage, ChatMessageReadReceipt, ChatThreadClient, SendMessageOptions } from '@azure/communication-chat';
 import memoizeOne from 'memoize-one';
 /* @conditional-compile-remove(file-sharing-acs) */
@@ -25,6 +25,7 @@ export type ChatHandlers = {
     content: string,
     options?: SendMessageOptions | /* @conditional-compile-remove(file-sharing-acs) */ MessageOptions
   ) => Promise<void>;
+  onUploadImage: (image: ArrayBuffer | Blob, imageFilename: string) => Promise<UploadChatImageResult>;
   onMessageSeen: (chatMessageId: string) => Promise<void>;
   onTyping: () => Promise<void>;
   onRemoveParticipant: (userId: string) => Promise<void>;
@@ -65,6 +66,16 @@ export const createDefaultChatHandlers = memoizeOne(
           senderDisplayName: chatClient.getState().displayName
         };
         /* @conditional-compile-remove(file-sharing-acs) */
+        // options = {...options, attachments:
+        //   [
+        //     {
+        //       id: imageResult.id,
+        //       name: 'imageResult.jpg',
+        //       attachmentType: 'image'
+        //     }
+        //   ]
+        // }
+        /* @conditional-compile-remove(attachment-upload) */
         if (
           options &&
           'attachments' in options &&
@@ -82,6 +93,11 @@ export const createDefaultChatHandlers = memoizeOne(
           return;
         }
         await chatThreadClient.sendMessage(sendMessageRequest, options as SendMessageOptions);
+      },
+      onUploadImage: async function (image: ArrayBuffer | Blob, imageFilename: string): Promise<UploadChatImageResult> {
+        const imageResult = await chatThreadClient.uploadImage(image, imageFilename);
+        console.log('Leah: ::: imageResult', imageResult);
+        return imageResult;
       },
       // due to a bug in babel, we can't use arrow function here
       // affecting conditional-compile-remove(attachment-upload)
