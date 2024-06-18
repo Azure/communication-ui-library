@@ -5,6 +5,8 @@ import { DiagnosticQuality } from '@azure/communication-calling';
 import { useId } from '@fluentui/react-hooks';
 import { _isInCall } from '@internal/calling-component-bindings';
 import { ActiveErrorMessage, ErrorBar, ParticipantMenuItemsCallback } from '@internal/react-components';
+/* @conditional-compile-remove(notifications) */
+import { ActiveNotification } from '@internal/react-components';
 import { VideoGalleryLayout } from '@internal/react-components';
 import React from 'react';
 import { useState } from 'react';
@@ -47,8 +49,10 @@ export interface CallPageProps {
   updateSidePaneRenderer: (renderer: SidePaneRenderer | undefined) => void;
   mobileChatTabHeader?: MobileChatSidePaneTabHeaderProps;
   options?: CallCompositeOptions;
-  latestErrors: ActiveErrorMessage[];
-  onDismissError: (error: ActiveErrorMessage) => void;
+  latestErrors: ActiveErrorMessage[] | /* @conditional-compile-remove(notifications) */ ActiveNotification[];
+  onDismissError: (
+    error: ActiveErrorMessage | /* @conditional-compile-remove(notifications) */ ActiveNotification
+  ) => void;
   galleryLayout: VideoGalleryLayout;
   capabilitiesChangedNotificationBarProps?: CapabilitiesChangeNotificationBarProps;
   onUserSetGalleryLayoutChange?: (layout: VideoGalleryLayout) => void;
@@ -94,7 +98,6 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
   const mutedNotificationProps = useSelector(mutedNotificationSelector);
   const networkReconnectTileProps = useSelector(networkReconnectTileSelector);
   const remoteParticipantsConnected = useSelector(getRemoteParticipantsConnectedSelector);
-
   const callees = useSelector(getTargetCallees);
   const renderDtmfDialerFromStart = showDtmfDialer(callees, remoteParticipantsConnected);
   const [dtmfDialerPresent, setDtmfDialerPresent] = useState<boolean>(
@@ -156,6 +159,8 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
         id={drawerMenuHostId}
         complianceBannerProps={{ ...complianceBannerProps, strings }}
         errorBarProps={options?.errorBar !== false && errorBarProps}
+        /* @conditional-compile-remove(notifications) */
+        showErrorNotifications={options?.errorBar ?? true}
         mutedNotificationProps={mutedNotificationProps}
         callControlProps={{
           callInvitationURL: callInvitationURL,
