@@ -35,7 +35,6 @@ export const useConnectionLostNotifications = (
   const [currentConnectionLost, setCurrentConnectionLost] = useState<boolean>(false);
 
   useEffect(() => {
-    console.log('useConnectionLostNotifications: connectionLostFlag: ', connectionLostFlag);
     setCurrentConnectionLost(connectionLostFlag);
   }, [connectionLostFlag]);
 

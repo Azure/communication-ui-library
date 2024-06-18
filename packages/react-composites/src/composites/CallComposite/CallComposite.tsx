@@ -63,8 +63,6 @@ import { useAudio } from '../common/AudioProvider';
 import { connectionLostBannerSelector } from './selectors/connectionLostSelector';
 /* @conditional-compile-remove(teams-meeting-conference) */
 import { useConnectionLostNotifications } from './components/ConnectionLostNotificationBar';
-/* @conditional-compile-remove(teams-meeting-conference) */
-import { isNetworkHealthy } from './pages/CallPage';
 /* @conditional-compile-remove(notifications) */
 import { errorNotificationsSelector } from '@internal/calling-component-bindings';
 /* @conditional-compile-remove(notifications) */
