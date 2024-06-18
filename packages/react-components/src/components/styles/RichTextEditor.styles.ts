@@ -124,16 +124,26 @@ const ribbonOverflowButtonRootStyles = (theme: Theme): IStyle => {
   };
 };
 
-const ribbonButtonRootStyles = (theme: Theme): IStyle => {
+const ribbonButtonRootStyles = (iconColor: string, hoverIconColor: string): IStyle => {
   return {
     backgroundColor: 'transparent',
     selectors: {
-      // Icon's color doesn't work here because of the specificity
+      // media query applies only if the device allows real hover interactions
+      // and hover styles are not applied on touch- only devices where the hover state cannot be accurately detected
+      '@media (hover: hover)': {
+        ':hover .ms-Button-icon': {
+          color: hoverIconColor
+        },
+        ':hover .ms-Button-menuIcon': {
+          color: hoverIconColor
+        }
+      },
+      // the classes needs here to apply to styles for icons because of the specificity
       '.ms-Button-icon': {
-        color: theme.palette.themePrimary
+        color: iconColor
       },
       '.ms-Button-menuIcon': {
-        color: theme.palette.themePrimary
+        color: iconColor
       }
     }
   };
@@ -147,13 +157,14 @@ export const toolbarButtonStyle = (theme: Theme): Partial<IButtonStyles> => {
     icon: { color: theme.palette.neutralPrimary, height: 'auto' },
     menuIcon: { color: theme.palette.neutralPrimary, height: 'auto' },
     root: { minWidth: 'auto', backgroundColor: 'transparent' },
-    rootChecked: ribbonButtonRootStyles(theme),
-    rootHovered: ribbonButtonRootStyles(theme),
-    rootCheckedHovered: ribbonButtonRootStyles(theme),
-    rootCheckedPressed: ribbonButtonRootStyles(theme),
-    rootPressed: ribbonButtonRootStyles(theme),
-    rootExpanded: ribbonButtonRootStyles(theme),
-    rootExpandedHovered: ribbonButtonRootStyles(theme)
+    rootChecked: ribbonButtonRootStyles(theme.palette.themePrimary, theme.palette.themePrimary),
+    // there is a bug for Android where the press action is considered hover sometimes
+    rootHovered: ribbonButtonRootStyles(theme.palette.neutralPrimary, theme.palette.themePrimary),
+    rootCheckedHovered: ribbonButtonRootStyles(theme.palette.themePrimary, theme.palette.themePrimary),
+    rootCheckedPressed: ribbonButtonRootStyles(theme.palette.themePrimary, theme.palette.themePrimary),
+    rootPressed: ribbonButtonRootStyles(theme.palette.themePrimary, theme.palette.themePrimary),
+    rootExpanded: ribbonButtonRootStyles(theme.palette.themePrimary, theme.palette.themePrimary),
+    rootExpandedHovered: ribbonButtonRootStyles(theme.palette.themePrimary, theme.palette.themePrimary)
   };
 };
 
