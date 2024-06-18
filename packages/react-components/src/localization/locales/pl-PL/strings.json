@@ -259,12 +259,167 @@
     "unableToStartVideoEffect": "Nie można zastosować efektu wideo.",
     "startSpotlightWhileMaxParticipantsAreSpotlighted": "Nie można rozpocząć wyróżnienia uczestników, ponieważ maksymalna liczba uczestników jest już wyróżniona."
   },
+  "notifications": {
+    "unableToReachChatService": {
+      "title": "Jesteś w trybie offline.",
+      "closeButtonAriaLabel": "Zamknij"
+    },
+    "accessDenied": {
+      "title": "Nie można uzyskać dostępu do usług czatu",
+      "message": "Sprawdź podane poświadczenia użytkownika",
+      "closeButtonAriaLabel": "Zamknij"
+    },
+    "userNotInChatThread": {
+      "title": "Nie jesteś już w tym wątku czatu.",
+      "closeButtonAriaLabel": "Zamknij"
+    },
+    "sendMessageNotInChatThread": {
+      "title": "Nie udało się wysłać wiadomości",
+      "message": "Nie jesteś już w tym wątku czatu",
+      "closeButtonAriaLabel": "Zamknij"
+    },
+    "sendMessageGeneric": {
+      "title": "Nie można wysłać wiadomości.",
+      "closeButtonAriaLabel": "Zamknij"
+    },
+    "callingNetworkFailure": {
+      "title": "Problemy z łączeniem rozmowy",
+      "message": "Wygląda na to, że jesteś w trybie offline. Sprawdź połączenie sieciowe i spróbuj ponownie.",
+      "closeButtonAriaLabel": "Zamknij"
+    },
+    "startVideoGeneric": {
+      "title": "Nie można uruchomić wideo.",
+      "closeButtonAriaLabel": "Zamknij"
+    },
+    "stopVideoGeneric": {
+      "title": "Nie można zatrzymać wideo.",
+      "closeButtonAriaLabel": "Zamknij"
+    },
+    "muteGeneric": {
+      "title": "Nie można wyciszyć mikrofonu.",
+      "closeButtonAriaLabel": "Zamknij"
+    },
+    "unmuteGeneric": {
+      "title": "Nie można wyłączyć wyciszenia mikrofonu.",
+      "closeButtonAriaLabel": "Zamknij"
+    },
+    "speakingWhileMuted": {
+      "title": "Twoje wyciszenie jest włączone.",
+      "closeButtonAriaLabel": "Zamknij"
+    },
+    "startScreenShareGeneric": {
+      "title": "Wystąpił problem podczas uruchamiania udostępniania ekranu.",
+      "closeButtonAriaLabel": "Zamknij"
+    },
+    "stopScreenShareGeneric": {
+      "title": "Nie można zatrzymać udostępniania ekranu.",
+      "closeButtonAriaLabel": "Zamknij"
+    },
+    "callNetworkQualityLow": {
+      "title": "Niska jakość sieci.",
+      "closeButtonAriaLabel": "Zamknij"
+    },
+    "callNoSpeakerFound": {
+      "title": "Nie odnaleziono głośników ani słuchawek",
+      "message": "Podłącz urządzenie audio, aby usłyszeć rozmowę.",
+      "closeButtonAriaLabel": "Zamknij"
+    },
+    "callNoMicrophoneFound": {
+      "title": "Nie znaleziono mikrofonów",
+      "message": "Podłącz urządzenie wejściowe dźwięku.",
+      "closeButtonAriaLabel": "Zamknij"
+    },
+    "callMicrophoneAccessDenied": {
+      "title": "Brak dostępu do mikrofonu",
+      "message": "Kliknij blokadę na pasku adresu, aby udzielić uprawnienia do tej strony sieci Web.",
+      "closeButtonAriaLabel": "Zamknij"
+    },
+    "callMicrophoneAccessDeniedSafari": {
+      "title": "Brak dostępu do mikrofonu",
+      "message": "Odśwież stronę, aby zezwolić na uprawnienia, lub sprawdź ustawienia tej przeglądarki i sprawdź, czy uprawnienia są włączone dla tej witryny internetowej.",
+      "closeButtonAriaLabel": "Zamknij"
+    },
+    "callMicrophoneMutedBySystem": {
+      "title": "System wyciszył Cię.",
+      "closeButtonAriaLabel": "Zamknij"
+    },
+    "callMicrophoneUnmutedBySystem": {
+      "title": "Mikrofon został odzyskany i system wyłączył wyciszenie.",
+      "closeButtonAriaLabel": "Zamknij"
+    },
+    "callMacOsMicrophoneAccessDenied": {
+      "title": "Brak dostępu do mikrofonu",
+      "message": "Udziel uprawnienia do mikrofonu w ustawieniach prywatności systemu macOS.",
+      "closeButtonAriaLabel": "Zamknij"
+    },
+    "callLocalVideoFreeze": {
+      "title": "Przepustowość sieci jest słaba",
+      "message": "Twoje wideo może być wstrzymane dla innych osób podczas rozmowy.",
+      "closeButtonAriaLabel": "Zamknij"
+    },
+    "callCameraAccessDenied": {
+      "title": "Brak dostępu do aparatu",
+      "message": "Kliknij blokadę na pasku adresu, aby udzielić uprawnienia do tej strony sieci Web.",
+      "closeButtonAriaLabel": "Zamknij"
+    },
+    "callCameraAccessDeniedSafari": {
+      "title": "Brak dostępu do aparatu",
+      "message": "Odśwież stronę, aby zezwolić na uprawnienia, lub sprawdź ustawienia tej przeglądarki i sprawdź, czy uprawnienia są włączone dla tej witryny internetowej.",
+      "closeButtonAriaLabel": "Zamknij"
+    },
+    "callCameraAlreadyInUse": {
+      "title": "Brak dostępu do aparatu",
+      "message": "Być może jest już używany przez inną aplikację.",
+      "closeButtonAriaLabel": "Zamknij"
+    },
+    "callVideoStoppedBySystem": {
+      "title": "Wideo zostało zatrzymane przez system.",
+      "closeButtonAriaLabel": "Zamknij"
+    },
+    "callVideoRecoveredBySystem": {
+      "title": "Wideo zostało wznowione.",
+      "closeButtonAriaLabel": "Zamknij"
+    },
+    "callMacOsCameraAccessDenied": {
+      "title": "System MacOS blokuje dostęp do kamery",
+      "message": "Zaktualizuj ustawienia prywatności, aby zezwolić tej przeglądarce na dostęp do kamery.",
+      "closeButtonAriaLabel": "Zamknij"
+    },
+    "callMacOsScreenShareAccessDenied": {
+      "title": "System MacOS blokuje udostępnianie ekranu",
+      "message": "Zaktualizuj ustawienia prywatności, aby zezwolić tej przeglądarce na rejestrowanie ekranu.",
+      "closeButtonAriaLabel": "Zamknij"
+    },
+    "failedToJoinCallGeneric": {
+      "title": "Nie można dołączyć do rozmowy.",
+      "closeButtonAriaLabel": "Zamknij"
+    },
+    "failedToJoinCallInvalidMeetingLink": {
+      "title": "Nie można dołączyć do spotkania. Nieprawidłowy link.",
+      "closeButtonAriaLabel": "Zamknij"
+    },
+    "cameraFrozenForRemoteParticipants": {
+      "title": "Użytkownicy w trakcie rozmowy mają problemy z wyświetleniem Twojego wideo",
+      "message": "Sprawdź urządzenia i sieć.",
+      "closeButtonAriaLabel": "Zamknij"
+    },
+    "unableToStartVideoEffect": {
+      "title": "Nie można zastosować efektu wideo.",
+      "closeButtonAriaLabel": "Zamknij"
+    },
+    "startSpotlightWhileMaxParticipantsAreSpotlighted": {
+      "title": "Nie można rozpocząć wyróżniania uczestników",
+      "message": "Maksymalna liczba uczestników jest już wyróżniona.",
+      "closeButtonAriaLabel": "Zamknij"
+    }
+  },
   "videoGallery": {
     "screenIsBeingSharedMessage": "Udostępniasz ekran",
     "screenShareLoadingMessage": "Ładowanie ekranu uczestnika {participant}",
     "localVideoLabel": "Ty",
     "localVideoCameraSwitcherLabel": "Przełącz kamerę",
     "localVideoMovementLabel": "Ruchomy lokalny kafelek wideo",
+    "localVideoMovementAriaLabel": "Ruchomy lokalny kafelek wideo",
     "localVideoSelectedDescription": "Wybrano kamerę {cameraName}",
     "displayNamePlaceholder": "Uczestnik bez nazwy",
     "fitRemoteParticipantToFrame": "Dopasuj do ramki",
@@ -295,7 +450,8 @@
   },
   "videoTile": {
     "participantStateRinging": "Trwa łączenie…",
-    "participantStateHold": "Zawieszony"
+    "participantStateHold": "Zawieszony",
+    "moreOptionsButtonAriaLabel": "Więcej opcji"
   },
   "CameraAndMicrophoneSitePermissionsRequest": {
     "primaryText": "Zezwalaj {appName} na używanie kamery i mikrofonu",
@@ -415,5 +571,16 @@
   "verticalGallery": {
     "leftNavButtonAriaLabel": "poprzednia strona",
     "rightNavButtonAriaLabel": "następna strona"
+  },
+  "MeetingConferencePhoneInfo": {
+    "meetingConferencePhoneInfoModalTitle": "Dołącz do połączenia z Twojego telefonu",
+    "meetingConferencePhoneInfoModalDialIn": "Wybierz numer",
+    "meetingConferencePhoneInfoModalMeetingId": "Wprowadź identyfikator spotkania",
+    "meetingConferencePhoneInfoModalWait": "Zaczekaj na wpuszczenie przez organizatora",
+    "meetingConferencePhoneInfoModalNoPhoneAvailable": "Brak dostępnego telefonu",
+    "meetingConferencePhoneInfoModalTollFree": "{phoneNumber} (połączenie bezpłatne) {country}, {city}",
+    "meetingConferencePhoneInfoModalTollFreeWithoutGeoData": "{phoneNumber} (połączenie bezpłatne)",
+    "meetingConferencePhoneInfoModalToll": "{phoneNumber} (połączenie płatne) {country}, {city}",
+    "meetingConferencePhoneInfoModalTollWithoutGeoData": "{phoneNumber} (połączenie płatne)"
   }
 }
