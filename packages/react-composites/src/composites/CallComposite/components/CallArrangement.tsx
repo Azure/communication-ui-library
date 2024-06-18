@@ -15,6 +15,8 @@ import {
   ErrorBarProps,
   useTheme
 } from '@internal/react-components';
+/* @conditional-compile-remove(notifications) */
+import { ActiveNotification, Notifications } from '@internal/react-components';
 import { VideoGalleryLayout } from '@internal/react-components';
 import { VideoGallery } from '@internal/react-components';
 import React, { useMemo, useRef, useState } from 'react';
@@ -99,6 +101,8 @@ export interface CallArrangementProps {
   id?: string;
   complianceBannerProps: _ComplianceBannerProps;
   errorBarProps: ErrorBarProps | false;
+  /* @conditional-compile-remove(notifications) */
+  showErrorNotifications: boolean;
   mutedNotificationProps?: MutedNotificationProps;
   callControlProps: CallControlsProps;
   onRenderGalleryContent: () => JSX.Element;
@@ -108,8 +112,10 @@ export interface CallArrangementProps {
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   updateSidePaneRenderer: (renderer: SidePaneRenderer | undefined) => void;
   mobileChatTabHeader?: MobileChatSidePaneTabHeaderProps;
-  latestErrors: ActiveErrorMessage[];
-  onDismissError: (error: ActiveErrorMessage) => void;
+  latestErrors: ActiveErrorMessage[] | /* @conditional-compile-remove(notifications) */ ActiveNotification[];
+  onDismissError: (
+    error: ActiveErrorMessage | /* @conditional-compile-remove(notifications) */ ActiveNotification
+  ) => void;
   onUserSetOverflowGalleryPositionChange?: (position: 'Responsive' | 'horizontalTop') => void;
   onUserSetGalleryLayoutChange?: (layout: VideoGalleryLayout) => void;
   userSetGalleryLayout?: VideoGalleryLayout;
@@ -416,19 +422,38 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
 
   let filteredLatestErrors: ActiveErrorMessage[] = props.errorBarProps !== false ? props.latestErrors : [];
 
+  /* @conditional-compile-remove(notifications) */
+  let filteredLatestErrorNotifications: ActiveNotification[] = props.showErrorNotifications
+    ? (props.latestErrors as ActiveNotification[])
+    : [];
+
   const isCameraOn = useSelector(localVideoSelector).isAvailable;
 
   // TODO: move this logic to the error bar selector once role is plumbed from the headless SDK
-  if (role === 'Consumer' && props.errorBarProps) {
+  if (
+    role === 'Consumer' &&
+    (props.errorBarProps || /* @conditional-compile-remove(notifications) */ props.showErrorNotifications)
+  ) {
     filteredLatestErrors = filteredLatestErrors.filter(
+      (e) => e.type !== 'callCameraAccessDenied' && e.type !== 'callCameraAccessDeniedSafari'
+    );
+    /* @conditional-compile-remove(notifications) */
+    filteredLatestErrorNotifications = filteredLatestErrorNotifications.filter(
       (e) => e.type !== 'callCameraAccessDenied' && e.type !== 'callCameraAccessDeniedSafari'
     );
   }
 
   const isVideoPaneOpen = useIsParticularSidePaneOpen(VIDEO_EFFECTS_SIDE_PANE_ID);
 
-  if ((isVideoPaneOpen || !isCameraOn) && props.errorBarProps) {
+  if (
+    (isVideoPaneOpen || !isCameraOn) &&
+    (props.errorBarProps || /* @conditional-compile-remove(notifications) */ props.showErrorNotifications)
+  ) {
     filteredLatestErrors = filteredLatestErrors.filter((e) => e.type !== 'unableToStartVideoEffect');
+    /* @conditional-compile-remove(notifications) */
+    filteredLatestErrorNotifications = filteredLatestErrorNotifications.filter(
+      (e) => e.type !== 'unableToStartVideoEffect'
+    );
   }
 
   /* @conditional-compile-remove(acs-close-captions) */
@@ -455,6 +480,35 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
       )
     : props.capabilitiesChangedNotificationBarProps?.capabilitiesChangedNotifications;
 
+  const errorNotificationTrampoline = (): JSX.Element => {
+    /* @conditional-compile-remove(notifications) */
+    return (
+      <>
+        {props.showErrorNotifications && (
+          <Stack styles={bannerNotificationStyles} horizontalAlign="center" verticalAlign="center">
+            <Notifications
+              onDismissNotification={props.onDismissError}
+              activeNotifications={filteredLatestErrorNotifications}
+            />
+          </Stack>
+        )}
+      </>
+    );
+
+    return (
+      <>
+        {props.errorBarProps !== false && (
+          <Stack styles={bannerNotificationStyles}>
+            <ErrorBar
+              {...props.errorBarProps}
+              onDismissError={props.onDismissError}
+              activeErrorMessages={filteredLatestErrors}
+            />
+          </Stack>
+        )}
+      </>
+    );
+  };
   return (
     <div ref={containerRef} className={mergeStyles(containerDivStyles)} id={props.id}>
       <Stack verticalFill horizontalAlign="stretch" className={containerClassName} data-ui-id={props.dataUiId}>
@@ -549,15 +603,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                     <Stack styles={bannerNotificationStyles}>
                       <_ComplianceBanner {...props.complianceBannerProps} />
                     </Stack>
-                    {props.errorBarProps !== false && (
-                      <Stack styles={bannerNotificationStyles}>
-                        <ErrorBar
-                          {...props.errorBarProps}
-                          onDismissError={props.onDismissError}
-                          activeErrorMessages={filteredLatestErrors}
-                        />
-                      </Stack>
-                    )}
+                    {errorNotificationTrampoline()}
                     {props.capabilitiesChangedNotificationBarProps &&
                       props.capabilitiesChangedNotificationBarProps.capabilitiesChangedNotifications.length > 0 && (
                         <Stack styles={bannerNotificationStyles}>

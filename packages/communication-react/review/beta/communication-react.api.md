@@ -124,6 +124,7 @@ export interface ActiveNotification {
     onClickPrimaryButton?: () => void;
     onClickSecondaryButton?: () => void;
     onDismiss?: () => void;
+    timestamp?: Date;
     type: NotificationType;
 }
 
@@ -3608,13 +3609,14 @@ export const Notifications: (props: NotificationsProps) => JSX.Element;
 // @beta
 export interface NotificationsProps {
     activeNotifications: ActiveNotification[];
+    ignorePremountNotifications?: boolean;
     maxNotificationsToShow?: number;
+    onDismissNotification?: (dismissedNotifications: ActiveNotification) => void;
     strings?: NotificationsStrings;
 }
 
 // @beta
 export interface NotificationsStrings {
-    accessDenied: NotificationBarStrings;
     callCameraAccessDenied: NotificationBarStrings;
     callCameraAccessDeniedSafari: NotificationBarStrings;
     callCameraAlreadyInUse: NotificationBarStrings;
@@ -3636,17 +3638,13 @@ export interface NotificationsStrings {
     failedToJoinCallGeneric?: NotificationBarStrings;
     failedToJoinCallInvalidMeetingLink?: NotificationBarStrings;
     muteGeneric: NotificationBarStrings;
-    sendMessageGeneric: NotificationBarStrings;
-    sendMessageNotInChatThread: NotificationBarStrings;
     startScreenShareGeneric: NotificationBarStrings;
     startSpotlightWhileMaxParticipantsAreSpotlighted: NotificationBarStrings;
     startVideoGeneric: NotificationBarStrings;
     stopScreenShareGeneric: NotificationBarStrings;
     stopVideoGeneric: NotificationBarStrings;
-    unableToReachChatService: NotificationBarStrings;
     unableToStartVideoEffect?: NotificationBarStrings;
     unmuteGeneric: NotificationBarStrings;
-    userNotInChatThread: NotificationBarStrings;
 }
 
 // @beta
