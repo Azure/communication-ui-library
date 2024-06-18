@@ -214,6 +214,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
           await chatThreadClient.getProperties();
           break;
         } catch (e) {
+          await new Promise((_) => setTimeout(_, 1000));
           continue;
         }
       }
