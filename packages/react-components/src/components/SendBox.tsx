@@ -2,8 +2,15 @@
 // Licensed under the MIT License.
 
 import React, { useState, useMemo, useCallback } from 'react';
-import { IStyle, ITextField, mergeStyles, concatStyleSets, Icon, Stack } from '@fluentui/react';
-import { sendButtonStyle, sendIconStyle, sendBoxWrapperStyles, borderAndBoxShadowStyle } from './styles/SendBox.styles';
+import { IStyle, ITextField, mergeStyles, concatStyleSets, Icon, Stack, FontIcon } from '@fluentui/react';
+import {
+  sendButtonStyle,
+  sendIconStyle,
+  sendBoxWrapperStyles,
+  borderAndBoxShadowStyle,
+  uploadButtonStyle,
+  uploadButtonDividerStyle
+} from './styles/SendBox.styles';
 /* @conditional-compile-remove(file-sharing-acs) */
 import { useV9CustomStyles } from './styles/SendBox.styles';
 import { BaseCustomStyles } from '../types';
@@ -301,6 +308,13 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     [styles?.sendMessageIconContainer]
   );
 
+  const mergedUploadButtonStyle = useMemo(
+    () => mergeStyles(sendButtonStyle, styles?.sendMessageIconContainer, uploadButtonStyle),
+    [styles?.sendMessageIconContainer]
+  );
+
+  const mergedDividerButtonStyle = useMemo(() => mergeStyles(uploadButtonDividerStyle(theme)), [theme]);
+
   const mergedStyles = useMemo(() => concatStyleSets(styles), [styles]);
 
   const mergedSendIconStyle = useMemo(
@@ -454,20 +468,38 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
           /* @conditional-compile-remove(mention) */
           mentionLookupOptions={mentionLookupOptions}
         >
-          <InputBoxButton
-            onRenderIcon={onRenderSendIcon}
-            onClick={(e) => {
-              if (!textValueOverflow) {
-                sendMessageOnClick();
-              }
-              e.stopPropagation();
-            }}
-            id={'sendIconWrapper'}
-            className={mergedSendButtonStyle}
-            ariaLabel={localeStrings.sendButtonAriaLabel}
-            tooltipContent={localeStrings.sendButtonAriaLabel}
-            ariaDisabled={isSendBoxButtonAriaDisabledValue}
-          />
+          <>
+            <Stack horizontal={true}>
+              <InputBoxButton
+                onClick={(e) => {
+                  alert('future code goes here to call onFileSelection callback to begin uploading');
+                }}
+                id={'sendIconWrapper'}
+                className={mergedUploadButtonStyle}
+                ariaLabel={localeStrings.sendButtonAriaLabel}
+                tooltipContent={'Upload Files'}
+                ariaDisabled={isSendBoxButtonAriaDisabledValue}
+                onRenderIcon={() => {
+                  return <FontIcon iconName="SendBoxAttachFile" />;
+                }}
+              />
+              <Icon iconName="RichTextDividerIcon" className={mergedDividerButtonStyle} />
+              <InputBoxButton
+                onRenderIcon={onRenderSendIcon}
+                onClick={(e) => {
+                  if (!textValueOverflow) {
+                    sendMessageOnClick();
+                  }
+                  e.stopPropagation();
+                }}
+                id={'sendIconWrapper'}
+                className={mergedSendButtonStyle}
+                ariaLabel={localeStrings.sendButtonAriaLabel}
+                tooltipContent={localeStrings.sendButtonAriaLabel}
+                ariaDisabled={isSendBoxButtonAriaDisabledValue}
+              />
+            </Stack>
+          </>
         </InputBoxComponent>
         {
           /* @conditional-compile-remove(file-sharing-acs) */

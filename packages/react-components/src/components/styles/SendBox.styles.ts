@@ -37,6 +37,30 @@ export const sendButtonStyle = mergeStyles({
 /**
  * @private
  */
+export const uploadButtonStyle = mergeStyles({
+  '> span': {
+    marginTop: '2px'
+  }
+});
+
+/**
+ * @private
+ */
+export const uploadButtonDividerStyle = (theme: Theme): string => {
+  return mergeStyles({
+    color: theme.palette.neutralQuaternaryAlt,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'relative',
+    pointerEvents: 'none',
+    userFocus: 'none'
+  });
+};
+
+/**
+ * @private
+ */
 export const sendIconStyle = (props: {
   theme: Theme;
   hasText: boolean;
