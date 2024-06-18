@@ -135,6 +135,7 @@
     "dtmfDialerButtonTooltipOff": "Ukryj klawiaturę numeryczną",
     "dtmfDialerMoreButtonLabelOn": "Pokaż klawiaturę numeryczną",
     "dtmfDialerMoreButtonLabelOff": "Ukryj klawiaturę numeryczną",
+    "phoneCallMoreButtonLabel": "Rozmowa telefoniczna",
     "spokenLanguageStrings": {
       "ar-ae": "arabski — Zjednoczone Emiraty Arabskie",
       "ar-sa": "arabski — Arabia Saudyjska",
@@ -336,7 +337,12 @@
     "leaveConfirmDialogContent": "Czy na pewno chcesz opuścić rozmowę?",
     "endCallConfirmDialogTitle": "Zakończyć połączenie?",
     "endCallConfirmDialogContent": "Zakończysz połączenie dla wszystkich.",
-    "invalidMeetingIdentifier": "Nieprawidłowy identyfikator spotkania lub kod dostępu"
+    "invalidMeetingIdentifier": "Nieprawidłowy identyfikator spotkania lub kod dostępu",
+    "pinParticipantMenuLabel": "Przypnij dla mnie",
+    "pinParticipantLimitReachedMenuLabel": "Przypięcie (osiągnięto limit)",
+    "unpinParticipantMenuLabel": "Odepnij",
+    "pinParticipantMenuItemAriaLabel": "Przypnij",
+    "unpinParticipantMenuItemAriaLabel": "Odepnij"
   },
   "chat": {
     "chatListHeader": "W tym czacie",

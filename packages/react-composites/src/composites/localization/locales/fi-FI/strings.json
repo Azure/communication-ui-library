@@ -135,6 +135,7 @@
     "dtmfDialerButtonTooltipOff": "Piilota valintapaneeli",
     "dtmfDialerMoreButtonLabelOn": "Näytä valintapaneeli",
     "dtmfDialerMoreButtonLabelOff": "Piilota valintapaneeli",
+    "phoneCallMoreButtonLabel": "Puhelu",
     "spokenLanguageStrings": {
       "ar-ae": "arabia – Arabiemiirikunnat",
       "ar-sa": "arabia – Saudi-Arabia",
@@ -336,7 +337,12 @@
     "leaveConfirmDialogContent": "Haluatko varmasti poistua puhelusta?",
     "endCallConfirmDialogTitle": "Lopetetaanko puhelu?",
     "endCallConfirmDialogContent": "Puhelu lopetetaan kaikkien osallistujien osalta.",
-    "invalidMeetingIdentifier": "Virheellinen kokoustunnus tai tunnuskoodi"
+    "invalidMeetingIdentifier": "Virheellinen kokoustunnus tai tunnuskoodi",
+    "pinParticipantMenuLabel": "Pin for me",
+    "pinParticipantLimitReachedMenuLabel": "Pin (limit reached)",
+    "unpinParticipantMenuLabel": "Unpin",
+    "pinParticipantMenuItemAriaLabel": "Pin",
+    "unpinParticipantMenuItemAriaLabel": "Unpin"
   },
   "chat": {
     "chatListHeader": "Tässä keskustelussa",
