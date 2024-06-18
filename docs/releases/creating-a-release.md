@@ -100,7 +100,7 @@ Use the [create-prerelease-branch](https://github.com/Azure/communication-ui-lib
 
 1. Options for this workflow:
     1. Branch - This is the branch that the release will be created from. Default option is from `main`.
-    1. Get current version from [communication-react package.json](https://github.com/Azure/communication-ui-library/blob/main/packages/communication-react/package.json).
+    1. **Note:** Get current version from [communication-react package.json](https://github.com/Azure/communication-ui-library/blob/main/packages/communication-react/package.json).
     1. Use this version as the basis for making your decision in the next step.
     1. Bump Type - This is the type of release that will be created, the options for this are:
         - `beta-release-major` - Choose this option when you want to release from `1.2.0 -> 2.0.0-beta.1`
