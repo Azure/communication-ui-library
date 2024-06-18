@@ -259,12 +259,167 @@
     "unableToStartVideoEffect": "Videotehosteen käyttäminen ei onnistu.",
     "startSpotlightWhileMaxParticipantsAreSpotlighted": "Osallistujien korostusta ei voi aloittaa, koska enimmäismäärä osallistujia on jo valokeilassa."
   },
+  "notifications": {
+    "unableToReachChatService": {
+      "title": "Olet offline-tilassa.",
+      "closeButtonAriaLabel": "Sulje"
+    },
+    "accessDenied": {
+      "title": "Keskustelupalveluita ei voi käyttää",
+      "message": "Tarkista käyttäjästä annetut tunnistetiedot",
+      "closeButtonAriaLabel": "Sulje"
+    },
+    "userNotInChatThread": {
+      "title": "Et ole enää tässä keskusteluketjussa.",
+      "closeButtonAriaLabel": "Sulje"
+    },
+    "sendMessageNotInChatThread": {
+      "title": "Viestin lähettäminen epäonnistui",
+      "message": "Et ole enää mukana tässä keskusteluketjussa",
+      "closeButtonAriaLabel": "Sulje"
+    },
+    "sendMessageGeneric": {
+      "title": "Viestin lähettäminen epäonnistui.",
+      "closeButtonAriaLabel": "Sulje"
+    },
+    "callingNetworkFailure": {
+      "title": "Ongelma puhelun yhdistämisessä",
+      "message": "Olet ilmeisesti offline-tilassa. Tarkista verkkoyhteys ja yritä uudelleen.",
+      "closeButtonAriaLabel": "Sulje"
+    },
+    "startVideoGeneric": {
+      "title": "Videon käynnistäminen epäonnistui.",
+      "closeButtonAriaLabel": "Sulje"
+    },
+    "stopVideoGeneric": {
+      "title": "Videon pysäyttäminen epäonnistui.",
+      "closeButtonAriaLabel": "Sulje"
+    },
+    "muteGeneric": {
+      "title": "Mikrofonin mykistäminen epäonnistui.",
+      "closeButtonAriaLabel": "Sulje"
+    },
+    "unmuteGeneric": {
+      "title": "Mikrofonin mykistyksen poistaminen epäonnistui.",
+      "closeButtonAriaLabel": "Sulje"
+    },
+    "speakingWhileMuted": {
+      "title": "Ääni on mykistetty.",
+      "closeButtonAriaLabel": "Sulje"
+    },
+    "startScreenShareGeneric": {
+      "title": "Näytön jakamisen aloittamisessa ilmeni ongelma.",
+      "closeButtonAriaLabel": "Sulje"
+    },
+    "stopScreenShareGeneric": {
+      "title": "Näytön jakamisen lopettaminen epäonnistui.",
+      "closeButtonAriaLabel": "Sulje"
+    },
+    "callNetworkQualityLow": {
+      "title": "Verkkoyhteyden laatu on huono.",
+      "closeButtonAriaLabel": "Sulje"
+    },
+    "callNoSpeakerFound": {
+      "title": "Kaiuttimia tai kuulokkeita ei löytynyt.",
+      "message": "Yhdistä äänilaite voidaksesi kuulla puhelun.",
+      "closeButtonAriaLabel": "Sulje"
+    },
+    "callNoMicrophoneFound": {
+      "title": "Mikrofoneja ei löytynyt",
+      "message": "Yhdistä äänensyöttölaite.",
+      "closeButtonAriaLabel": "Sulje"
+    },
+    "callMicrophoneAccessDenied": {
+      "title": "Mikrofonia ei voi käyttää",
+      "message": "Myönnä käyttöoikeus tälle verkkosivulle napsauttamalla osoiterivillä olevaa lukkoa.",
+      "closeButtonAriaLabel": "Sulje"
+    },
+    "callMicrophoneAccessDeniedSafari": {
+      "title": "Mikrofonia ei voi käyttää",
+      "message": "Salli käyttöoikeudet päivittämällä sivu tai tarkista tämän selaimen asetukset ja varmista, että käyttöoikeudet on otettu käyttöön tässä sivustossa.",
+      "closeButtonAriaLabel": "Sulje"
+    },
+    "callMicrophoneMutedBySystem": {
+      "title": "Järjestelmäasetuksen perusteella sinut on mykistetty.",
+      "closeButtonAriaLabel": "Sulje"
+    },
+    "callMicrophoneUnmutedBySystem": {
+      "title": "Mikrofonisi palautui käyttöön ja järjestelmä on poistanut sen mykistyksen.",
+      "closeButtonAriaLabel": "Sulje"
+    },
+    "callMacOsMicrophoneAccessDenied": {
+      "title": "Mikrofonia ei voi käyttää",
+      "message": "Myönnä mikrofonin käyttöoikeus macOS:n tietosuoja-asetuksissa.",
+      "closeButtonAriaLabel": "Sulje"
+    },
+    "callLocalVideoFreeze": {
+      "title": "Verkon kaistanleveys on heikko",
+      "message": "Videokuvasi saattaa näkyä keskeytettynä puhelun muille osallistujille.",
+      "closeButtonAriaLabel": "Sulje"
+    },
+    "callCameraAccessDenied": {
+      "title": "Kameraa ei voi käyttää",
+      "message": "Myönnä käyttöoikeus tälle verkkosivulle napsauttamalla osoiterivillä olevaa lukkoa.",
+      "closeButtonAriaLabel": "Sulje"
+    },
+    "callCameraAccessDeniedSafari": {
+      "title": "Kameraa ei voi käyttää",
+      "message": "Salli käyttöoikeudet päivittämällä sivu tai tarkista tämän selaimen asetukset ja varmista, että käyttöoikeudet on otettu käyttöön tässä sivustossa.",
+      "closeButtonAriaLabel": "Sulje"
+    },
+    "callCameraAlreadyInUse": {
+      "title": "Kameraa ei voi käyttää",
+      "message": "Toinen sovellus saattaa jo käyttää sitä.",
+      "closeButtonAriaLabel": "Sulje"
+    },
+    "callVideoStoppedBySystem": {
+      "title": "Järjestelmä on pysäyttänyt videosi.",
+      "closeButtonAriaLabel": "Sulje"
+    },
+    "callVideoRecoveredBySystem": {
+      "title": "Videosi näytetään jälleen.",
+      "closeButtonAriaLabel": "Sulje"
+    },
+    "callMacOsCameraAccessDenied": {
+      "title": "MacOS estää kameran käytön",
+      "message": "Päivitä tietosuoja-asetukset, jotta selain voi käyttää kameraasi.",
+      "closeButtonAriaLabel": "Sulje"
+    },
+    "callMacOsScreenShareAccessDenied": {
+      "title": "MacOS estää näytön jakamisen",
+      "message": "Päivitä tietosuoja-asetukset, jotta selain voi tallentaa, mitä näytölläsi tapahtuu.",
+      "closeButtonAriaLabel": "Sulje"
+    },
+    "failedToJoinCallGeneric": {
+      "title": "Puheluun liittyminen epäonnistui.",
+      "closeButtonAriaLabel": "Sulje"
+    },
+    "failedToJoinCallInvalidMeetingLink": {
+      "title": "Kokoukseen liittyminen ei onnistu. Linkki on virheellinen.",
+      "closeButtonAriaLabel": "Sulje"
+    },
+    "cameraFrozenForRemoteParticipants": {
+      "title": "Puhelun muilla osallistujilla on videokuvasi näkymiseen liittyviä ongelmia",
+      "message": "Tarkista laitteesi ja verkkosi.",
+      "closeButtonAriaLabel": "Sulje"
+    },
+    "unableToStartVideoEffect": {
+      "title": "Videotehosteen käyttäminen ei onnistu.",
+      "closeButtonAriaLabel": "Sulje"
+    },
+    "startSpotlightWhileMaxParticipantsAreSpotlighted": {
+      "title": "Osallistujien valokeilaa ei voi aloittaa",
+      "message": "Enimmäismäärä osallistujia on jo valokeilassa.",
+      "closeButtonAriaLabel": "Sulje"
+    }
+  },
   "videoGallery": {
     "screenIsBeingSharedMessage": "Näyttösi jaetaan parhaillaan",
     "screenShareLoadingMessage": "Ladataan käyttäjän {participant} näyttöä",
     "localVideoLabel": "Sinä",
     "localVideoCameraSwitcherLabel": "Vaihda kameraa",
     "localVideoMovementLabel": "Siirrettävä paikallisen videon ruutu",
+    "localVideoMovementAriaLabel": "Siirrettävä paikallisen videon ruutu",
     "localVideoSelectedDescription": "{cameraName} on valittu",
     "displayNamePlaceholder": "Nimetön osallistuja",
     "fitRemoteParticipantToFrame": "Sovita kehykseen",
@@ -295,7 +450,8 @@
   },
   "videoTile": {
     "participantStateRinging": "Soitetaan...",
-    "participantStateHold": "Pidossa"
+    "participantStateHold": "Pidossa",
+    "moreOptionsButtonAriaLabel": "Lisää asetuksia"
   },
   "CameraAndMicrophoneSitePermissionsRequest": {
     "primaryText": "Salli {appName} käyttää kameraa ja mikrofonia",
@@ -415,5 +571,16 @@
   "verticalGallery": {
     "leftNavButtonAriaLabel": "edellinen sivu",
     "rightNavButtonAriaLabel": "seuraava sivu"
+  },
+  "MeetingConferencePhoneInfo": {
+    "meetingConferencePhoneInfoModalTitle": "Liity puheluun puhelimestasi",
+    "meetingConferencePhoneInfoModalDialIn": "Valitse numero",
+    "meetingConferencePhoneInfoModalMeetingId": "Anna kokoustunnus",
+    "meetingConferencePhoneInfoModalWait": "Odota, että järjestäjä ottaa sinut vastaan",
+    "meetingConferencePhoneInfoModalNoPhoneAvailable": "Puhelinta ei ole käytettävissä",
+    "meetingConferencePhoneInfoModalTollFree": "{phoneNumber} (maksuton) {country}, {city}",
+    "meetingConferencePhoneInfoModalTollFreeWithoutGeoData": "{phoneNumber} (maksuton)",
+    "meetingConferencePhoneInfoModalToll": "{phoneNumber} (maksullinen) {country}, {city}",
+    "meetingConferencePhoneInfoModalTollWithoutGeoData": "{phoneNumber} (maksullinen)"
   }
 }

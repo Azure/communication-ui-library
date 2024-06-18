@@ -136,20 +136,26 @@ export const _AttachmentCard = (props: _AttachmentCardProps): JSX.Element => {
                   target: '#attachment-' + attachment.id
                 }}
               >
-                <Text className={attachmentCardStyles.title} title={attachment.name}>
-                  {attachment.name}
-                </Text>
+                <div className={attachmentCardStyles.fileNameLabel}>
+                  <Text className={attachmentCardStyles.title} aria-label={attachment.name}>
+                    {attachment.name}
+                  </Text>
+                </div>
               </TooltipHost>
             </div>
           }
-          action={MappedMenuItems(
-            menuActions,
-            {
-              ...attachment,
-              url: attachment.url ?? ''
-            },
-            onActionHandlerFailed
-          )}
+          action={
+            <div className={attachmentCardStyles.focusState}>
+              {MappedMenuItems(
+                menuActions,
+                {
+                  ...attachment,
+                  url: attachment.url ?? ''
+                },
+                onActionHandlerFailed
+              )}
+            </div>
+          }
         />
       </Card>
       {isUploadInProgress ? (
@@ -181,6 +187,7 @@ const MappedMenuItems = (
     <TooltipHost content={menuActions[0].name}>
       <ToolbarButton
         aria-label={menuActions[0].name}
+        role="button"
         icon={menuActions[0].icon}
         onClick={() => {
           try {
@@ -197,7 +204,9 @@ const MappedMenuItems = (
         <TooltipHost content={localeStrings.attachmentMoreMenu}>
           <MenuTrigger>
             <ToolbarButton
-              icon={<Icon iconName="AttachmentMoreMenu" aria-label={localeStrings.attachmentMoreMenu} />}
+              aria-label={localeStrings.attachmentMoreMenu}
+              role="button"
+              icon={<Icon iconName="AttachmentMoreMenu" />}
             />
           </MenuTrigger>
         </TooltipHost>
@@ -205,6 +214,7 @@ const MappedMenuItems = (
           <MenuList>
             {menuActions.map((menuItem, index) => (
               <MenuItem
+                aria-label={menuItem.name}
                 key={index}
                 icon={menuItem.icon}
                 onClick={async () => {

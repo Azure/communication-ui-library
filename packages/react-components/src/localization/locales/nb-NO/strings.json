@@ -259,12 +259,167 @@
     "unableToStartVideoEffect": "Kan ikke bruke videoeffekt.",
     "startSpotlightWhileMaxParticipantsAreSpotlighted": "Kan ikke starte rampelys på deltaker(e) fordi maksimalt antall deltakere allerede er satt i rampelyset."
   },
+  "notifications": {
+    "unableToReachChatService": {
+      "title": "Du er frakoblet.",
+      "closeButtonAriaLabel": "Lukk"
+    },
+    "accessDenied": {
+      "title": "Får ikke tilgang til chattetjenester",
+      "message": "Kontroller den angitte brukerlegitimasjonen",
+      "closeButtonAriaLabel": "Lukk"
+    },
+    "userNotInChatThread": {
+      "title": "Du er ikke lenger i denne chattetråden.",
+      "closeButtonAriaLabel": "Lukk"
+    },
+    "sendMessageNotInChatThread": {
+      "title": "Kan ikke sende melding",
+      "message": "Du er ikke lenger i denne chattetråden",
+      "closeButtonAriaLabel": "Lukk"
+    },
+    "sendMessageGeneric": {
+      "title": "Kan ikke sende meldingen.",
+      "closeButtonAriaLabel": "Lukk"
+    },
+    "callingNetworkFailure": {
+      "title": "Problemer med å koble til samtalen",
+      "message": "Du ser ut til å være frakoblet. Kontroller nettverkstilkoblingen, og prøv på nytt.",
+      "closeButtonAriaLabel": "Lukk"
+    },
+    "startVideoGeneric": {
+      "title": "Kan ikke starte video.",
+      "closeButtonAriaLabel": "Lukk"
+    },
+    "stopVideoGeneric": {
+      "title": "Kan ikke stoppe video.",
+      "closeButtonAriaLabel": "Lukk"
+    },
+    "muteGeneric": {
+      "title": "Kan ikke dempe mikrofonen.",
+      "closeButtonAriaLabel": "Lukk"
+    },
+    "unmuteGeneric": {
+      "title": "Kan ikke oppheve demping av mikrofon.",
+      "closeButtonAriaLabel": "Lukk"
+    },
+    "speakingWhileMuted": {
+      "title": "Du er dempet.",
+      "closeButtonAriaLabel": "Lukk"
+    },
+    "startScreenShareGeneric": {
+      "title": "Det oppstod et problem under start av skjermdeling.",
+      "closeButtonAriaLabel": "Lukk"
+    },
+    "stopScreenShareGeneric": {
+      "title": "Kan ikke stoppe skjermdeling.",
+      "closeButtonAriaLabel": "Lukk"
+    },
+    "callNetworkQualityLow": {
+      "title": "Nettverkskvaliteten er lav.",
+      "closeButtonAriaLabel": "Lukk"
+    },
+    "callNoSpeakerFound": {
+      "title": "Finner ingen høyttalere eller hodetelefoner",
+      "message": "Koble til en lydenhet for å høre samtalen.",
+      "closeButtonAriaLabel": "Lukk"
+    },
+    "callNoMicrophoneFound": {
+      "title": "Finner ingen mikrofoner",
+      "message": "Koble til en lydinndataenhet.",
+      "closeButtonAriaLabel": "Lukk"
+    },
+    "callMicrophoneAccessDenied": {
+      "title": "Får ikke tilgang til mikrofonen",
+      "message": "Klikk låsen i adresselinjen for å gi tillatelse til denne nettsiden.",
+      "closeButtonAriaLabel": "Lukk"
+    },
+    "callMicrophoneAccessDeniedSafari": {
+      "title": "Får ikke tilgang til mikrofonen",
+      "message": "Oppdater siden for å tillate tillatelser, eller kontroller innstillingene for denne nettleseren, og kontroller at tillatelser er aktivert for dette nettstedet.",
+      "closeButtonAriaLabel": "Lukk"
+    },
+    "callMicrophoneMutedBySystem": {
+      "title": "Du er dempet av systemet.",
+      "closeButtonAriaLabel": "Lukk"
+    },
+    "callMicrophoneUnmutedBySystem": {
+      "title": "Mikrofonen ble gjenopprettet, og dempingen ble opphevet av systemet.",
+      "closeButtonAriaLabel": "Lukk"
+    },
+    "callMacOsMicrophoneAccessDenied": {
+      "title": "Får ikke tilgang til mikrofonen",
+      "message": "Gi mikrofontillatelse i personverninnstillingene for macOS.",
+      "closeButtonAriaLabel": "Lukk"
+    },
+    "callLocalVideoFreeze": {
+      "title": "Nettverksbåndbredden er dårlig",
+      "message": "Videoen kan være midlertidig stanset for andre i samtalen.",
+      "closeButtonAriaLabel": "Lukk"
+    },
+    "callCameraAccessDenied": {
+      "title": "Får ikke tilgang til kamera",
+      "message": "Klikk låsen i adresselinjen for å gi tillatelse til denne nettsiden.",
+      "closeButtonAriaLabel": "Lukk"
+    },
+    "callCameraAccessDeniedSafari": {
+      "title": "Får ikke tilgang til kamera",
+      "message": "Oppdater siden for å tillate tillatelser, eller kontroller innstillingene for denne nettleseren, og kontroller at tillatelser er aktivert for dette nettstedet.",
+      "closeButtonAriaLabel": "Lukk"
+    },
+    "callCameraAlreadyInUse": {
+      "title": "Får ikke tilgang til kamera",
+      "message": "Det kan allerede være i bruk av et annet program.",
+      "closeButtonAriaLabel": "Lukk"
+    },
+    "callVideoStoppedBySystem": {
+      "title": "Videoen er stoppet av systemet.",
+      "closeButtonAriaLabel": "Lukk"
+    },
+    "callVideoRecoveredBySystem": {
+      "title": "Videoen er gjenopptatt.",
+      "closeButtonAriaLabel": "Lukk"
+    },
+    "callMacOsCameraAccessDenied": {
+      "title": "MacOS blokkerer tilgang til kameraet",
+      "message": "Oppdater personverninnstillingene for å gi denne nettleseren tilgang til kameraet.",
+      "closeButtonAriaLabel": "Lukk"
+    },
+    "callMacOsScreenShareAccessDenied": {
+      "title": "MacOS blokkerer skjermdeling",
+      "message": "Oppdater personverninnstillingene for å tillate at denne nettleseren registrerer skjermen.",
+      "closeButtonAriaLabel": "Lukk"
+    },
+    "failedToJoinCallGeneric": {
+      "title": "Kan ikke bli med i samtalen.",
+      "closeButtonAriaLabel": "Lukk"
+    },
+    "failedToJoinCallInvalidMeetingLink": {
+      "title": "Kan ikke bli med i møtet. Ugyldig kobling.",
+      "closeButtonAriaLabel": "Lukk"
+    },
+    "cameraFrozenForRemoteParticipants": {
+      "title": "Brukere i samtalen har problemer med å se videoen",
+      "message": "Kontroller enhetene og nettverket.",
+      "closeButtonAriaLabel": "Lukk"
+    },
+    "unableToStartVideoEffect": {
+      "title": "Kan ikke bruke videoeffekt.",
+      "closeButtonAriaLabel": "Lukk"
+    },
+    "startSpotlightWhileMaxParticipantsAreSpotlighted": {
+      "title": "Kan ikke begynne å sette deltaker(e) i rampelyset",
+      "message": "Maksimalt antall deltakere er allerede satt i rampelyset.",
+      "closeButtonAriaLabel": "Lukk"
+    }
+  },
   "videoGallery": {
     "screenIsBeingSharedMessage": "Du deler skjermen",
     "screenShareLoadingMessage": "Laster inn skjermen til {participant}",
     "localVideoLabel": "Du",
     "localVideoCameraSwitcherLabel": "Bytt kamera",
     "localVideoMovementLabel": "Flyttbar lokal videoflis",
+    "localVideoMovementAriaLabel": "Flyttbar lokal videoflis",
     "localVideoSelectedDescription": "{cameraName} valgt",
     "displayNamePlaceholder": "Deltaker uten navn",
     "fitRemoteParticipantToFrame": "Tilpass til ramme",
@@ -295,7 +450,8 @@
   },
   "videoTile": {
     "participantStateRinging": "Ringer ...",
-    "participantStateHold": "På vent"
+    "participantStateHold": "På vent",
+    "moreOptionsButtonAriaLabel": "Flere alternativer"
   },
   "CameraAndMicrophoneSitePermissionsRequest": {
     "primaryText": "Tillat {appName} å bruke kameraet og mikrofonen",
@@ -415,5 +571,16 @@
   "verticalGallery": {
     "leftNavButtonAriaLabel": "forrige side",
     "rightNavButtonAriaLabel": "neste side"
+  },
+  "MeetingConferencePhoneInfo": {
+    "meetingConferencePhoneInfoModalTitle": "Bli med i samtalen fra telefonen",
+    "meetingConferencePhoneInfoModalDialIn": "Slå nummer",
+    "meetingConferencePhoneInfoModalMeetingId": "Skriv inn møte-ID",
+    "meetingConferencePhoneInfoModalWait": "Vent på å bli godtatt inn av arrangøren",
+    "meetingConferencePhoneInfoModalNoPhoneAvailable": "Ingen telefon tilgjengelig",
+    "meetingConferencePhoneInfoModalTollFree": "{phoneNumber} (Gratis) {country}, {city}",
+    "meetingConferencePhoneInfoModalTollFreeWithoutGeoData": "{phoneNumber} (Gratis)",
+    "meetingConferencePhoneInfoModalToll": "{phoneNumber} (Nummer med avgift) {country}, {city}",
+    "meetingConferencePhoneInfoModalTollWithoutGeoData": "{phoneNumber} (Nummer med avgift)"
   }
 }
