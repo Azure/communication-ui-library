@@ -9,6 +9,6 @@ import { getUserFacingDiagnostics } from './baseSelectors';
  */
 export const connectionLostBannerSelector = reselect.createSelector([getUserFacingDiagnostics], (diagnostics) => {
   return {
-    connectionLost: !!diagnostics?.network.latest.networkReconnect?.value
+    connectionLost: !!diagnostics?.network.latest.networkReceiveQuality?.value
   };
 });
