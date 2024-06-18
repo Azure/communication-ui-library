@@ -6,7 +6,8 @@ import {
   getDeviceManager,
   getDiagnostics,
   getLatestErrors,
-  getEnvironmentInfo
+  getEnvironmentInfo,
+  getTeamsMeetingConference
 } from './baseSelectors';
 import { ActiveErrorMessage, ErrorType } from '@internal/react-components';
 import { createSelector } from 'reselect';
@@ -37,12 +38,13 @@ export type ErrorBarSelector = (
  * @public
  */
 export const errorBarSelector: ErrorBarSelector = createSelector(
-  [getLatestErrors, getDiagnostics, getDeviceManager, getEnvironmentInfo],
+  [getLatestErrors, getDiagnostics, getDeviceManager, getEnvironmentInfo, getTeamsMeetingConference],
   (
     latestErrors: CallErrors,
     diagnostics,
     deviceManager,
-    environmentInfo
+    environmentInfo,
+    meetingConference
   ): { activeErrorMessages: ActiveErrorMessage[] } => {
     // The order in which the errors are returned is significant: The `ErrorBar` shows errors on the UI in that order.
     // There are several options for the ordering:
@@ -67,7 +69,9 @@ export const errorBarSelector: ErrorBarSelector = createSelector(
 
     // Errors reported via diagnostics are more reliable than from API method failures, so process those first.
     if (
-      diagnostics?.network.latest.networkReceiveQuality?.value === DiagnosticQuality.Bad ||
+      (meetingConference &&
+        meetingConference.length && // Teams meeting has separate notification with phone information
+        diagnostics?.network.latest.networkReceiveQuality?.value === DiagnosticQuality.Bad) ||
       diagnostics?.network.latest.networkReceiveQuality?.value === DiagnosticQuality.Poor
     ) {
       activeErrorMessages.push({ type: 'callNetworkQualityLow' });
