@@ -58,7 +58,7 @@ test.describe('Error bar tests', async () => {
  * @param page - the page where the first error shall be dismissed
  */
 const dismissFirstErrorOnErrorBar = async (page: Page): Promise<void> => {
-  const errorBarStack = await waitForSelector(page, dataUiId('error-bar-stack'));
+  const errorBarStack = await waitForSelector(page, dataUiId('notifications-stack'));
   const errorBarFirstButton = await errorBarStack.$('[type="button"]');
   await errorBarFirstButton?.click();
 };
