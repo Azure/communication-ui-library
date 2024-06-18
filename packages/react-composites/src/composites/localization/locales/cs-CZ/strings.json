@@ -135,6 +135,7 @@
     "dtmfDialerButtonTooltipOff": "Skrýt číselník",
     "dtmfDialerMoreButtonLabelOn": "Zobrazit číselník",
     "dtmfDialerMoreButtonLabelOff": "Skrýt číselník",
+    "phoneCallMoreButtonLabel": "Telefonní hovor",
     "spokenLanguageStrings": {
       "ar-ae": "Arabština - Spojené arabské emiráty",
       "ar-sa": "Arabština - Saúdská Arábie",
@@ -336,7 +337,12 @@
     "leaveConfirmDialogContent": "Opravdu chcete hovor opustit?",
     "endCallConfirmDialogTitle": "Chcete hovor ukončit?",
     "endCallConfirmDialogContent": "Hovor ukončíte pro všechny.",
-    "invalidMeetingIdentifier": "Neplatné ID schůzky nebo heslo"
+    "invalidMeetingIdentifier": "Neplatné ID schůzky nebo heslo",
+    "pinParticipantMenuLabel": "Připnout pro mě",
+    "pinParticipantLimitReachedMenuLabel": "Připnout (dosáhlo se limitu)",
+    "unpinParticipantMenuLabel": "Odepnout",
+    "pinParticipantMenuItemAriaLabel": "Připnout",
+    "unpinParticipantMenuItemAriaLabel": "Odepnout"
   },
   "chat": {
     "chatListHeader": "V tomto chatu",

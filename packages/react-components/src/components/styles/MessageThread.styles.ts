@@ -346,10 +346,10 @@ export const useChatMessageCommonStyles = makeStyles({
       width: '100%',
 
       '& tr': {
-        ...shorthands.border('1px', 'solid', `${tokens.colorNeutralStroke2}`),
+        ...shorthands.border('1px', 'solid', `${tokens.colorNeutralStrokeAccessible}`),
 
         '& td': {
-          ...shorthands.border('1px', 'solid', `${tokens.colorNeutralStroke2}`),
+          ...shorthands.border('1px', 'solid', `${tokens.colorNeutralStrokeAccessible}`),
           wordBreak: 'normal',
           paddingTop: '0px',
           paddingRight: '5px'
