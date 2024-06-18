@@ -259,12 +259,167 @@
     "unableToStartVideoEffect": "Kan video-effect niet toepassen.",
     "startSpotlightWhileMaxParticipantsAreSpotlighted": "Kan de deelnemer(s) niet in de spotlight plaatsen omdat het maximum aantal deelnemers in de spotlight is bereikt."
   },
+  "notifications": {
+    "unableToReachChatService": {
+      "title": "U bent offline.",
+      "closeButtonAriaLabel": "Sluiten"
+    },
+    "accessDenied": {
+      "title": "Geen toegang tot chatservices",
+      "message": "Controleer de opgegeven gebruikersreferenties",
+      "closeButtonAriaLabel": "Sluiten"
+    },
+    "userNotInChatThread": {
+      "title": "U bevindt zich niet meer in deze chatthread.",
+      "closeButtonAriaLabel": "Sluiten"
+    },
+    "sendMessageNotInChatThread": {
+      "title": "Bericht verzenden mislukt",
+      "message": "U bent niet meer aanwezig in deze chatthread",
+      "closeButtonAriaLabel": "Sluiten"
+    },
+    "sendMessageGeneric": {
+      "title": "Verzenden van bericht is mislukt.",
+      "closeButtonAriaLabel": "Sluiten"
+    },
+    "callingNetworkFailure": {
+      "title": "Bezig met verbinden van gesprek",
+      "message": "U lijkt offline te zijn. Controleer de netwerkverbinding en probeer het opnieuw.",
+      "closeButtonAriaLabel": "Sluiten"
+    },
+    "startVideoGeneric": {
+      "title": "Kan video niet starten.",
+      "closeButtonAriaLabel": "Sluiten"
+    },
+    "stopVideoGeneric": {
+      "title": "Kan video niet stoppen",
+      "closeButtonAriaLabel": "Sluiten"
+    },
+    "muteGeneric": {
+      "title": "Kan microfoon niet dempen.",
+      "closeButtonAriaLabel": "Sluiten"
+    },
+    "unmuteGeneric": {
+      "title": "Kan dempen van microfoon niet opheffen.",
+      "closeButtonAriaLabel": "Sluiten"
+    },
+    "speakingWhileMuted": {
+      "title": "Uw geluid is gedempt.",
+      "closeButtonAriaLabel": "Sluiten"
+    },
+    "startScreenShareGeneric": {
+      "title": "Er is een probleem opgetreden bij het starten van scherm delen.",
+      "closeButtonAriaLabel": "Sluiten"
+    },
+    "stopScreenShareGeneric": {
+      "title": "Kan scherm delen niet stoppen.",
+      "closeButtonAriaLabel": "Sluiten"
+    },
+    "callNetworkQualityLow": {
+      "title": "De netwerkkwaliteit is laag.",
+      "closeButtonAriaLabel": "Sluiten"
+    },
+    "callNoSpeakerFound": {
+      "title": "Geen luidsprekers of hoofdtelefoon gevonden",
+      "message": "Sluit een audioapparaat aan om het gesprek te beluisteren.",
+      "closeButtonAriaLabel": "Sluiten"
+    },
+    "callNoMicrophoneFound": {
+      "title": "Geen microfoons gevonden",
+      "message": "Sluit een audio-invoerapparaat aan.",
+      "closeButtonAriaLabel": "Sluiten"
+    },
+    "callMicrophoneAccessDenied": {
+      "title": "Geen toegang tot microfoon",
+      "message": "Klik op de vergrendeling in de adresbalk om toestemming te verlenen aan deze webpagina.",
+      "closeButtonAriaLabel": "Sluiten"
+    },
+    "callMicrophoneAccessDeniedSafari": {
+      "title": "Geen toegang tot microfoon",
+      "message": "Vernieuw de pagina om machtigingen toe te staan of controleer de instellingen van deze browser en controleer of machtigingen zijn ingeschakeld voor deze website.",
+      "closeButtonAriaLabel": "Sluiten"
+    },
+    "callMicrophoneMutedBySystem": {
+      "title": "U bent gedempt door jouw systeem.",
+      "closeButtonAriaLabel": "Sluiten"
+    },
+    "callMicrophoneUnmutedBySystem": {
+      "title": "De microfoon is hersteld en het dempen van de microfoon is door het systeem opgeheven.",
+      "closeButtonAriaLabel": "Sluiten"
+    },
+    "callMacOsMicrophoneAccessDenied": {
+      "title": "Geen toegang tot microfoon",
+      "message": "Verleen microfoonmachtiging in de privacyinstellingen voor macOS.",
+      "closeButtonAriaLabel": "Sluiten"
+    },
+    "callLocalVideoFreeze": {
+      "title": "De netwerkbandbreedte is slecht",
+      "message": "Uw video wordt mogelijk onderbroken weergegeven voor anderen in het gesprek.",
+      "closeButtonAriaLabel": "Sluiten"
+    },
+    "callCameraAccessDenied": {
+      "title": "Geen toegang tot camera",
+      "message": "Klik op de vergrendeling in de adresbalk om toestemming te verlenen aan deze webpagina.",
+      "closeButtonAriaLabel": "Sluiten"
+    },
+    "callCameraAccessDeniedSafari": {
+      "title": "Geen toegang tot camera",
+      "message": "Vernieuw de pagina om machtigingen toe te staan of controleer de instellingen van deze browser en controleer of machtigingen zijn ingeschakeld voor deze website.",
+      "closeButtonAriaLabel": "Sluiten"
+    },
+    "callCameraAlreadyInUse": {
+      "title": "Geen toegang tot camera",
+      "message": "Het wordt mogelijk al gebruikt door een andere toepassing.",
+      "closeButtonAriaLabel": "Sluiten"
+    },
+    "callVideoStoppedBySystem": {
+      "title": "Uw video is gestopt door uw systeem.",
+      "closeButtonAriaLabel": "Sluiten"
+    },
+    "callVideoRecoveredBySystem": {
+      "title": "Uw video is hervat.",
+      "closeButtonAriaLabel": "Sluiten"
+    },
+    "callMacOsCameraAccessDenied": {
+      "title": "MacOS blokkeert de toegang tot uw camera",
+      "message": "Werk uw privacyinstellingen bij zodat deze browser toegang heeft tot uw camera.",
+      "closeButtonAriaLabel": "Sluiten"
+    },
+    "callMacOsScreenShareAccessDenied": {
+      "title": "Scherm delen wordt geblokkeerd door macOS",
+      "message": "Werk uw privacyinstellingen bij zodat deze browser uw scherm kan opnemen.",
+      "closeButtonAriaLabel": "Sluiten"
+    },
+    "failedToJoinCallGeneric": {
+      "title": "Deelnemen aan gesprek mislukt.",
+      "closeButtonAriaLabel": "Sluiten"
+    },
+    "failedToJoinCallInvalidMeetingLink": {
+      "title": "Kan niet deelnemen aan vergadering. Ongeldige koppeling.",
+      "closeButtonAriaLabel": "Sluiten"
+    },
+    "cameraFrozenForRemoteParticipants": {
+      "title": "Gebruikers in het gesprek ondervinden problemen bij het zien van uw video",
+      "message": "Controleer uw apparaten en netwerk.",
+      "closeButtonAriaLabel": "Sluiten"
+    },
+    "unableToStartVideoEffect": {
+      "title": "Kan video-effect niet toepassen.",
+      "closeButtonAriaLabel": "Sluiten"
+    },
+    "startSpotlightWhileMaxParticipantsAreSpotlighted": {
+      "title": "Kan spotlight niet starten op deelnemer(s)",
+      "message": "Het maximum aantal deelnemers is al gespotlight.",
+      "closeButtonAriaLabel": "Sluiten"
+    }
+  },
   "videoGallery": {
     "screenIsBeingSharedMessage": "U deelt uw scherm",
     "screenShareLoadingMessage": "Scherm van {participant} laden",
     "localVideoLabel": "U",
     "localVideoCameraSwitcherLabel": "Camera wisselen",
     "localVideoMovementLabel": "Tegel voor verwisselbare lokale video",
+    "localVideoMovementAriaLabel": "Tegel voor verwisselbare lokale video",
     "localVideoSelectedDescription": "{cameraName} geselecteerd",
     "displayNamePlaceholder": "Naamloze deelnemer",
     "fitRemoteParticipantToFrame": "Aanpassen aan frame",
@@ -295,7 +450,8 @@
   },
   "videoTile": {
     "participantStateRinging": "Bellen...",
-    "participantStateHold": "In de wacht"
+    "participantStateHold": "In de wacht",
+    "moreOptionsButtonAriaLabel": "Meer opties"
   },
   "CameraAndMicrophoneSitePermissionsRequest": {
     "primaryText": "Toestaan dat {appName} uw camera en microfoon gebruikt",
@@ -415,5 +571,16 @@
   "verticalGallery": {
     "leftNavButtonAriaLabel": "vorige pagina",
     "rightNavButtonAriaLabel": "volgende pagina"
+  },
+  "MeetingConferencePhoneInfo": {
+    "meetingConferencePhoneInfoModalTitle": "Deelnemen aan gesprek vanaf uw telefoon",
+    "meetingConferencePhoneInfoModalDialIn": "Kiesnummer",
+    "meetingConferencePhoneInfoModalMeetingId": "Vergadering-id invoeren",
+    "meetingConferencePhoneInfoModalWait": "Wachten om toegelaten te worden door organisator",
+    "meetingConferencePhoneInfoModalNoPhoneAvailable": "Geen telefoon beschikbaar",
+    "meetingConferencePhoneInfoModalTollFree": "{phoneNumber} (gratis) {country}, {city}",
+    "meetingConferencePhoneInfoModalTollFreeWithoutGeoData": "{phoneNumber} (gratis)",
+    "meetingConferencePhoneInfoModalToll": "{phoneNumber} (niet-gratis) {country}, {city}",
+    "meetingConferencePhoneInfoModalTollWithoutGeoData": "{phoneNumber} (niet-gratis)"
   }
 }

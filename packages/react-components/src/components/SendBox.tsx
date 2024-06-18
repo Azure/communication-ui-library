@@ -4,6 +4,8 @@
 import React, { useState, useMemo, useCallback } from 'react';
 import { IStyle, ITextField, mergeStyles, concatStyleSets, Icon, Stack } from '@fluentui/react';
 import { sendButtonStyle, sendIconStyle, sendBoxWrapperStyles, borderAndBoxShadowStyle } from './styles/SendBox.styles';
+/* @conditional-compile-remove(file-sharing-acs) */
+import { useV9CustomStyles } from './styles/SendBox.styles';
 import { BaseCustomStyles } from '../types';
 import { useTheme } from '../theming';
 import { useLocale } from '../localization';
@@ -221,6 +223,9 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
   const sendTextFieldRef = React.useRef<ITextField>(null);
 
   /* @conditional-compile-remove(file-sharing-acs) */
+  const customV9Styles = useV9CustomStyles();
+
+  /* @conditional-compile-remove(file-sharing-acs) */
   const [attachmentUploadsPendingError, setAttachmentUploadsPendingError] = useState<SendBoxErrorBarError | undefined>(
     undefined
   );
@@ -369,7 +374,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
       props.onRenderAttachmentUploads()
     ) : (
       <Stack className={attachmentUploadCardsStyles}>
-        <FluentV9ThemeProvider v8Theme={theme}>
+        <FluentV9ThemeProvider v8Theme={theme} className={customV9Styles.clearBackground}>
           <_AttachmentUploadCards
             attachments={attachments}
             onCancelAttachmentUpload={props.onCancelAttachmentUpload}
@@ -379,6 +384,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
               uploadCompleted: props.strings?.uploadCompleted ?? localeStrings.uploadCompleted,
               attachmentMoreMenu: props.strings?.attachmentMoreMenu ?? localeStrings.attachmentMoreMenu
             }}
+            disabled={disabled}
           />
         </FluentV9ThemeProvider>
       </Stack>
@@ -387,10 +393,12 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     attachments,
     props,
     theme,
+    customV9Styles.clearBackground,
     localeStrings.removeAttachment,
     localeStrings.uploading,
     localeStrings.uploadCompleted,
-    localeStrings.attachmentMoreMenu
+    localeStrings.attachmentMoreMenu,
+    disabled
   ]);
 
   return (

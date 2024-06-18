@@ -101,6 +101,8 @@ export interface CommonCallingHandlers {
   onStopAllSpotlight: () => Promise<void>;
   /* @conditional-compile-remove(soft-mute) */
   onMuteParticipant: (userId: string) => Promise<void>;
+  /* @conditional-compile-remove(soft-mute) */
+  onMuteAllRemoteParticipants: () => Promise<void>;
 }
 
 /**
@@ -618,6 +620,10 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
         });
       }
     };
+    /* @conditional-compile-remove(soft-mute) */
+    const onMuteAllRemoteParticipants = async (): Promise<void> => {
+      call?.muteAllRemoteParticipants();
+    };
     const canStartSpotlight = call?.feature(Features.Capabilities).capabilities.spotlightParticipant.isPresent;
     const canRemoveSpotlight = call?.feature(Features.Capabilities).capabilities.removeParticipantsSpotlight.isPresent;
     const onStartLocalSpotlight = canStartSpotlight
@@ -687,7 +693,9 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       onStartRemoteSpotlight,
       onStopRemoteSpotlight,
       /* @conditional-compile-remove(soft-mute) */
-      onMuteParticipant
+      onMuteParticipant,
+      /* @conditional-compile-remove(soft-mute) */
+      onMuteAllRemoteParticipants
     };
   }
 );
