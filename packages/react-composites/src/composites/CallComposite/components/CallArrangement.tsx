@@ -577,6 +577,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                     )}
                     {
                       /* @conditional-compile-remove(teams-meeting-conference) */ props.connectionLostBannerProps &&
+                        props.connectionLostBannerProps.connectionLost &&
                         !props.connectionLostBannerProps.userClosedConnectionLostBanner && (
                           <Stack styles={bannerNotificationStyles}>
                             <ConnectionLostNotificationBar
