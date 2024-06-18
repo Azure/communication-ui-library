@@ -95,6 +95,7 @@ import { getCaptionsKind, getIsTeamsCall } from '../selectors/baseSelectors';
 import { useHandlers } from '../hooks/useHandlers';
 /* @conditional-compile-remove(soft-mute) */
 import { MoreDrawer } from '../../common/Drawer/MoreDrawer';
+import { connect } from 'http2';
 
 /**
  * @private
@@ -634,6 +635,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                     {
                       /* @conditional-compile-remove(teams-meeting-conference) */ props.connectionLostBannerProps &&
                         props.connectionLostBannerProps.connectionLost &&
+                        isTeamsCall &&
                         !props.connectionLostBannerProps.userClosedConnectionLostBanner && (
                           <Stack styles={bannerNotificationStyles}>
                             <ConnectionLostNotificationBar

@@ -22,6 +22,7 @@ test.describe('User Facing Diagnostics tests', async () => {
 
   test('Tile should be showing when network reconnect is bad ', async ({ page, serverUrl }) => {
     const initialState = defaultMockCallAdapterState();
+    initialState.isTeamsMeeting = true;
     setNetworkDiagnostic(initialState, {
       networkReconnect: { value: DiagnosticQuality.Bad, valueType: 'DiagnosticQuality' }
     });
