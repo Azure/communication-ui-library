@@ -57,7 +57,7 @@
     "richTextDeleteColumnMenu": "حذف العمود",
     "richTextDeleteRowMenu": "حذف الصف",
     "richTextDeleteTableMenu": "حذف الجدول",
-    "richTextToolbarMoreButtonAriaLabel": "More options",
+    "richTextToolbarMoreButtonAriaLabel": "خيارات إضافية",
     "attachmentMoreMenu": "خيارات إضافية"
   },
   "mentionPopover": {
@@ -220,7 +220,7 @@
     "richTextDeleteColumnMenu": "حذف العمود",
     "richTextDeleteRowMenu": "حذف الصف",
     "richTextDeleteTableMenu": "حذف الجدول",
-    "richTextToolbarMoreButtonAriaLabel": "More options"
+    "richTextToolbarMoreButtonAriaLabel": "خيارات إضافية"
   },
   "errorBar": {
     "unableToReachChatService": "أنت غير متصل",
@@ -259,12 +259,167 @@
     "unableToStartVideoEffect": "يتعذر تطبيق تأثير الفيديو.",
     "startSpotlightWhileMaxParticipantsAreSpotlighted": "لا يمكن بدء تسليط الضوء على المشاركين (المشاركين) لأنه تم بالفعل تسليط الضوء على الحد الأقصى لعدد المشاركين."
   },
+  "notifications": {
+    "unableToReachChatService": {
+      "title": "أنت غير متصل.",
+      "closeButtonAriaLabel": "إغلاق"
+    },
+    "accessDenied": {
+      "title": "غير قادر على الوصول إلى خدمات الدردشة",
+      "message": "الرجاء التحقق من بيانات اعتماد المستخدم المقدمة",
+      "closeButtonAriaLabel": "إغلاق"
+    },
+    "userNotInChatThread": {
+      "title": "لم تعد في مؤشر ترابط الدردشة هذا.",
+      "closeButtonAriaLabel": "إغلاق"
+    },
+    "sendMessageNotInChatThread": {
+      "title": "فشل إرسال الرسالة",
+      "message": "لم تعد مضمناً في هذا ترابط الدردشة هذا",
+      "closeButtonAriaLabel": "إغلاق"
+    },
+    "sendMessageGeneric": {
+      "title": "فشل إرسال الرسالة.",
+      "closeButtonAriaLabel": "إغلاق"
+    },
+    "callingNetworkFailure": {
+      "title": "مكالمة مزعجة",
+      "message": "يبدو أنك غير متصل. الرجاء التحقق من اتصال الشبكة والمحاولة مرة أخرى.",
+      "closeButtonAriaLabel": "إغلاق"
+    },
+    "startVideoGeneric": {
+      "title": "فشل بدء الفيديو.",
+      "closeButtonAriaLabel": "إغلاق"
+    },
+    "stopVideoGeneric": {
+      "title": "فشل إيقاف الفيديو.",
+      "closeButtonAriaLabel": "إغلاق"
+    },
+    "muteGeneric": {
+      "title": "فشل كتم صوت الميكروفون.",
+      "closeButtonAriaLabel": "إغلاق"
+    },
+    "unmuteGeneric": {
+      "title": "فشل إلغاء كتم صوت الميكروفون",
+      "closeButtonAriaLabel": "إغلاق"
+    },
+    "speakingWhileMuted": {
+      "title": "تم كتم صوتك.",
+      "closeButtonAriaLabel": "إغلاق"
+    },
+    "startScreenShareGeneric": {
+      "title": "حدثت مشكلة أثناء بدء مشاركة الشاشة.",
+      "closeButtonAriaLabel": "إغلاق"
+    },
+    "stopScreenShareGeneric": {
+      "title": "فشل إيقاف مشاركة الشاشة",
+      "closeButtonAriaLabel": "إغلاق"
+    },
+    "callNetworkQualityLow": {
+      "title": "جودة الشبكة مقبولة.",
+      "closeButtonAriaLabel": "إغلاق"
+    },
+    "callNoSpeakerFound": {
+      "title": "لم يتم العثور على سماعات أو سماعات رأس",
+      "message": "قم بتوصيل جهاز صوت لسماع المكالمة.",
+      "closeButtonAriaLabel": "إغلاق"
+    },
+    "callNoMicrophoneFound": {
+      "title": "لم يتم العثور على ميكروفونات",
+      "message": "قم بتوصيل جهاز إدخال صوت.",
+      "closeButtonAriaLabel": "إغلاق"
+    },
+    "callMicrophoneAccessDenied": {
+      "title": "يتعذر الوصول إلى الميكروفون",
+      "message": "انقر فوق التأمين في شريط العناوين لمنح الإذن لصفحة ويب هذه.",
+      "closeButtonAriaLabel": "إغلاق"
+    },
+    "callMicrophoneAccessDeniedSafari": {
+      "title": "يتعذر الوصول إلى الميكروفون",
+      "message": "قم بتحديث الصفحة للسماح بالأذونات، أو تحقق من إعدادات هذا المستعرض وتحقق من تمكين الأذونات لموقع الويب هذا.",
+      "closeButtonAriaLabel": "إغلاق"
+    },
+    "callMicrophoneMutedBySystem": {
+      "title": "تم كتم صوتك بواسطة النظام.",
+      "closeButtonAriaLabel": "إغلاق"
+    },
+    "callMicrophoneUnmutedBySystem": {
+      "title": "تم استرداد الميكروفون وتم إلغاء كتم صوتك من قبل النظام.",
+      "closeButtonAriaLabel": "إغلاق"
+    },
+    "callMacOsMicrophoneAccessDenied": {
+      "title": "يتعذر الوصول إلى الميكروفون",
+      "message": "امنح الميكروفون إذنا في إعدادات خصوصية macOS.",
+      "closeButtonAriaLabel": "إغلاق"
+    },
+    "callLocalVideoFreeze": {
+      "title": "النطاق الترددي للشبكة ضعيف.",
+      "message": "قد يظهر الفيديو متوقفا مؤقتا للآخرين في المكالمة.",
+      "closeButtonAriaLabel": "إغلاق"
+    },
+    "callCameraAccessDenied": {
+      "title": "تعذر الوصول إلى الكاميرا",
+      "message": "انقر فوق التأمين في شريط العناوين لمنح الإذن لصفحة ويب هذه.",
+      "closeButtonAriaLabel": "إغلاق"
+    },
+    "callCameraAccessDeniedSafari": {
+      "title": "تعذر الوصول إلى الكاميرا",
+      "message": "قم بتحديث الصفحة للسماح بالأذونات، أو تحقق من إعدادات هذا المستعرض وتحقق من تمكين الأذونات لموقع الويب هذا.",
+      "closeButtonAriaLabel": "إغلاق"
+    },
+    "callCameraAlreadyInUse": {
+      "title": "تعذر الوصول إلى الكاميرا",
+      "message": "قد يكون قيد الاستخدام بالفعل بواسطة تطبيق آخر.",
+      "closeButtonAriaLabel": "إغلاق"
+    },
+    "callVideoStoppedBySystem": {
+      "title": "تم إيقاف الفيديو الخاص بك من قبل النظام.",
+      "closeButtonAriaLabel": "إغلاق"
+    },
+    "callVideoRecoveredBySystem": {
+      "title": "تم استئناف الفيديو الخاص بك.",
+      "closeButtonAriaLabel": "إغلاق"
+    },
+    "callMacOsCameraAccessDenied": {
+      "title": "يقوم MacOS بحظر الوصول إلى الكاميرا",
+      "message": "قم بتحديث إعدادات الخصوصية للسماح لهذا المستعرض بالوصول إلى الكاميرا.",
+      "closeButtonAriaLabel": "إغلاق"
+    },
+    "callMacOsScreenShareAccessDenied": {
+      "title": "يقوم MacOS بحظر مشاركة الشاشة",
+      "message": "قم بتحديث إعدادات الخصوصية للسماح لهذا المستعرض بتسجيل الشاشة.",
+      "closeButtonAriaLabel": "إغلاق"
+    },
+    "failedToJoinCallGeneric": {
+      "title": "فشل في الانضمام إلى المكالمة.",
+      "closeButtonAriaLabel": "إغلاق"
+    },
+    "failedToJoinCallInvalidMeetingLink": {
+      "title": "تعذر الانضمام إلى الاجتماع. ارتباط غير صالح.",
+      "closeButtonAriaLabel": "إغلاق"
+    },
+    "cameraFrozenForRemoteParticipants": {
+      "title": "يواجه المستخدمون في المكالمة مشكلات في رؤية الفيديو الخاص بك.",
+      "message": "الرجاء التحقق من أجهزتك وشبكتك.",
+      "closeButtonAriaLabel": "إغلاق"
+    },
+    "unableToStartVideoEffect": {
+      "title": "يتعذر تطبيق تأثير الفيديو.",
+      "closeButtonAriaLabel": "إغلاق"
+    },
+    "startSpotlightWhileMaxParticipantsAreSpotlighted": {
+      "title": "يتعذر بدء تسليط ضوء على المشاركين.",
+      "message": "يتم تسليط الضوء على الحد الأقصى لعدد المشاركين بالفعل.",
+      "closeButtonAriaLabel": "إغلاق"
+    }
+  },
   "videoGallery": {
     "screenIsBeingSharedMessage": "أنت تشارك شاشتك",
     "screenShareLoadingMessage": "يتم الآن تحميل شاشة {participant}",
     "localVideoLabel": "أنت",
     "localVideoCameraSwitcherLabel": "تبديل الكاميرا",
     "localVideoMovementLabel": "لوحة فيديو محلية قابلة للنقل",
+    "localVideoMovementAriaLabel": "لوحة فيديو محلية قابلة للنقل",
     "localVideoSelectedDescription": "تم تحديد {cameraName}",
     "displayNamePlaceholder": "مشارك غير مسمى",
     "fitRemoteParticipantToFrame": "الملاءمة داخل إطار",
@@ -295,7 +450,8 @@
   },
   "videoTile": {
     "participantStateRinging": "يتم الآن الاتصال...",
-    "participantStateHold": "قيد الانتظار"
+    "participantStateHold": "قيد الانتظار",
+    "moreOptionsButtonAriaLabel": "خيارات إضافية"
   },
   "CameraAndMicrophoneSitePermissionsRequest": {
     "primaryText": "السماح {appName} باستخدام الكاميرا والميكروفون لديك",
@@ -415,5 +571,16 @@
   "verticalGallery": {
     "leftNavButtonAriaLabel": "الصفحة السابقة",
     "rightNavButtonAriaLabel": "الصفحة التالية"
+  },
+  "MeetingConferencePhoneInfo": {
+    "meetingConferencePhoneInfoModalTitle": "الانضمام إلى مكالمة من هاتفك",
+    "meetingConferencePhoneInfoModalDialIn": "رقم الاتصال",
+    "meetingConferencePhoneInfoModalMeetingId": "أدخل معرف الاجتماع",
+    "meetingConferencePhoneInfoModalWait": "انتظر حتى يتم القبول من قبل المنظم",
+    "meetingConferencePhoneInfoModalNoPhoneAvailable": "لا يتوفر هاتف",
+    "meetingConferencePhoneInfoModalTollFree": "{phoneNumber} (رقم مجاني) {country}، {city}",
+    "meetingConferencePhoneInfoModalTollFreeWithoutGeoData": "{phoneNumber} (رقم مجاني)",
+    "meetingConferencePhoneInfoModalToll": "{country} {phoneNumber} (رقم غير مجاني)، {city}",
+    "meetingConferencePhoneInfoModalTollWithoutGeoData": "{phoneNumber} (رقم غير مجاني)"
   }
 }

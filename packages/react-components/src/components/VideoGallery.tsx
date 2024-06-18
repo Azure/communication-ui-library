@@ -127,6 +127,9 @@ export interface VideoGalleryStrings {
   /* @conditional-compile-remove(hide-attendee-name) */
   /** String for the attendee role */
   attendeeRole: string;
+  /* @conditional-compile-remove(soft-mute) */
+  /** Menu text shown in Video Tile contextual menu to mute a remote participant */
+  muteParticipantMenuItemLabel: string;
 }
 
 /**

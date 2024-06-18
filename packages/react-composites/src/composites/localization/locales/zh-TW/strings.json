@@ -135,6 +135,7 @@
     "dtmfDialerButtonTooltipOff": "隱藏撥號盤",
     "dtmfDialerMoreButtonLabelOn": "顯示撥號盤",
     "dtmfDialerMoreButtonLabelOff": "隱藏撥號盤",
+    "phoneCallMoreButtonLabel": "電話",
     "spokenLanguageStrings": {
       "ar-ae": "阿拉伯文 - 阿拉伯聯合大公國",
       "ar-sa": "阿拉伯文 - 沙烏地阿拉伯",
@@ -336,7 +337,12 @@
     "leaveConfirmDialogContent": "確定要離開此通話?",
     "endCallConfirmDialogTitle": "結束通話?",
     "endCallConfirmDialogContent": "您將結束所有人的通話。",
-    "invalidMeetingIdentifier": "會議標識碼或密碼無效"
+    "invalidMeetingIdentifier": "會議標識碼或密碼無效",
+    "pinParticipantMenuLabel": "Pin for me",
+    "pinParticipantLimitReachedMenuLabel": "Pin (limit reached)",
+    "unpinParticipantMenuLabel": "Unpin",
+    "pinParticipantMenuItemAriaLabel": "Pin",
+    "unpinParticipantMenuItemAriaLabel": "Unpin"
   },
   "chat": {
     "chatListHeader": "在此聊天中",

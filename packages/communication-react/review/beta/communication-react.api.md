@@ -124,6 +124,7 @@ export interface ActiveNotification {
     onClickPrimaryButton?: () => void;
     onClickSecondaryButton?: () => void;
     onDismiss?: () => void;
+    timestamp?: Date;
     type: NotificationType;
 }
 
@@ -416,6 +417,7 @@ export interface CallAdapterCallOperations {
     leaveCall(forEveryone?: boolean): Promise<void>;
     lowerHand(): Promise<void>;
     mute(): Promise<void>;
+    muteAllRemoteParticipants(): Promise<void>;
     muteParticipant(userId: string): Promise<void>;
     onReactionClick(reaction: Reaction_2): Promise<void>;
     raiseHand(): Promise<void>;
@@ -831,6 +833,11 @@ export interface CallCompositeStrings {
     moreButtonGalleryPositionToggleLabel?: string;
     moreButtonGallerySpeakerLayoutLabel?: string;
     moreButtonLargeGalleryDefaultLayoutLabel?: string;
+    muteAllCancelButtonLabel: string;
+    muteAllConfirmButtonLabel: string;
+    muteAllDialogContent: string;
+    muteAllDialogTitle: string;
+    muteAllMenuLabel: string;
     mutedMessage: string;
     networkReconnectMoreDetails: string;
     networkReconnectTitle: string;
@@ -1111,6 +1118,7 @@ export interface CallWithChatAdapterManagement {
     loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
     lowerHand(): Promise<void>;
     mute(): Promise<void>;
+    muteAllRemoteParticipants(): Promise<void>;
     muteParticipant(userIds: string): Promise<void>;
     onReactionClick(reaction: Reaction_2): Promise<void>;
     queryCameras(): Promise<VideoDeviceInfo[]>;
@@ -2029,6 +2037,8 @@ export interface CommonCallingHandlers {
     onHangUp: (forEveryone?: boolean) => Promise<void>;
     // (undocumented)
     onLowerHand: () => Promise<void>;
+    // (undocumented)
+    onMuteAllRemoteParticipants: () => Promise<void>;
     // (undocumented)
     onMuteParticipant: (userId: string) => Promise<void>;
     // (undocumented)
@@ -3599,13 +3609,14 @@ export const Notifications: (props: NotificationsProps) => JSX.Element;
 // @beta
 export interface NotificationsProps {
     activeNotifications: ActiveNotification[];
+    ignorePremountNotifications?: boolean;
     maxNotificationsToShow?: number;
+    onDismissNotification?: (dismissedNotifications: ActiveNotification) => void;
     strings?: NotificationsStrings;
 }
 
 // @beta
 export interface NotificationsStrings {
-    accessDenied: NotificationBarStrings;
     callCameraAccessDenied: NotificationBarStrings;
     callCameraAccessDeniedSafari: NotificationBarStrings;
     callCameraAlreadyInUse: NotificationBarStrings;
@@ -3627,17 +3638,13 @@ export interface NotificationsStrings {
     failedToJoinCallGeneric?: NotificationBarStrings;
     failedToJoinCallInvalidMeetingLink?: NotificationBarStrings;
     muteGeneric: NotificationBarStrings;
-    sendMessageGeneric: NotificationBarStrings;
-    sendMessageNotInChatThread: NotificationBarStrings;
     startScreenShareGeneric: NotificationBarStrings;
     startSpotlightWhileMaxParticipantsAreSpotlighted: NotificationBarStrings;
     startVideoGeneric: NotificationBarStrings;
     stopScreenShareGeneric: NotificationBarStrings;
     stopVideoGeneric: NotificationBarStrings;
-    unableToReachChatService: NotificationBarStrings;
     unableToStartVideoEffect?: NotificationBarStrings;
     unmuteGeneric: NotificationBarStrings;
-    userNotInChatThread: NotificationBarStrings;
 }
 
 // @beta
@@ -4793,6 +4800,7 @@ export interface VideoGalleryStrings {
     localVideoMovementAriaLabel: string;
     localVideoMovementLabel: string;
     localVideoSelectedDescription: string;
+    muteParticipantMenuItemLabel: string;
     pinnedParticipantAnnouncementAriaLabel: string;
     pinParticipantForMe: string;
     pinParticipantMenuItemAriaLabel: string;

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 import { IStyle, mergeStyles, Theme } from '@fluentui/react';
+import { makeStyles } from '@fluentui/react-components';
 
 /**
  * @private
@@ -79,6 +80,15 @@ export const editorTextBoxButtonStyle: IStyle = {
 export const attachmentUploadCardsStyles = mergeStyles({
   margin: '0 0.25rem 0.25rem 0.25rem',
   overflow: 'auto'
+});
+
+/**
+ * @private
+ */
+export const useV9CustomStyles = makeStyles({
+  clearBackground: {
+    backgroundColor: 'transparent'
+  }
 });
 
 /**
