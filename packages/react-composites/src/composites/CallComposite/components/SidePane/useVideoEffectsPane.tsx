@@ -9,19 +9,23 @@ import { useLocale } from '../../../localization';
 import { VideoEffectsPaneContent } from '../../../common/VideoEffectsPane';
 import { ActiveErrorMessage } from '@internal/react-components';
 import { IButton } from '@fluentui/react';
+/* @conditional-compile-remove(notifications) */
+import { ActiveNotification } from '@internal/react-components';
 
 /** @private */
 export const VIDEO_EFFECTS_SIDE_PANE_ID = 'videoeffects';
 
 /** @private */
-export const VIDEO_EFFECTS_SIDE_PANE_WIDTH_REM = 17.5;
+export const VIDEO_EFFECTS_SIDE_PANE_WIDTH_REM = 22;
 
 /** @private */
 export const useVideoEffectsPane = (
   updateSidePaneRenderer: (renderer: SidePaneRenderer | undefined) => void,
   mobileView: boolean,
-  latestErrors: ActiveErrorMessage[],
-  onDismissError: (error: ActiveErrorMessage) => void,
+  latestErrors: ActiveErrorMessage[] | /* @conditional-compile-remove(notifications) */ ActiveNotification[],
+  onDismissError: (
+    error: ActiveErrorMessage | /* @conditional-compile-remove(notifications) */ ActiveNotification
+  ) => void,
   cameraButtonRef?: React.RefObject<IButton>
 ): {
   openVideoEffectsPane: () => void;

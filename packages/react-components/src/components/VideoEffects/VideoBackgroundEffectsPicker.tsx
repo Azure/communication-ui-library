@@ -141,6 +141,7 @@ export const _VideoBackgroundEffectsPicker = (props: _VideoBackgroundEffectsPick
           key={rowIndex}
           tokens={{ childrenGap: '0.5rem' }}
           data-ui-id="video-effects-picker-row"
+          horizontalAlign="center"
         >
           {options.map((option, i) => {
             if (i === 0 && rowIndex === 0) {
