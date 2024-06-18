@@ -95,7 +95,6 @@ import { getCaptionsKind, getIsTeamsCall } from '../selectors/baseSelectors';
 import { useHandlers } from '../hooks/useHandlers';
 /* @conditional-compile-remove(soft-mute) */
 import { MoreDrawer } from '../../common/Drawer/MoreDrawer';
-import { connect } from 'http2';
 
 /**
  * @private
