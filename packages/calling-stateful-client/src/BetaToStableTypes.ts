@@ -15,7 +15,6 @@ import {
   TeamsCall as TeamsCallBeta,
   CallCommon as CallCommonBeta,
   CallAgentCommon as CallAgentCommonBeta,
-  TeamsCallAgent as TeamsCallAgentBeta,
   IncomingCallCommon as IncomingCallCommonBeta
 } from '@azure/communication-calling';
 
@@ -35,11 +34,6 @@ export type CallAgentCommon = CallAgent | /* @conditional-compile-remove(teams-i
  * @beta
  */
 export type TeamsCall = never | /* @conditional-compile-remove(teams-identity-support) */ TeamsCallBeta;
-
-/**
- * @beta
- */
-export type TeamsCallAgent = never | /* @conditional-compile-remove(teams-identity-support) */ TeamsCallAgentBeta;
 
 /**
  * @public
