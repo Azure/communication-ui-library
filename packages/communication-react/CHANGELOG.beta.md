@@ -4,7 +4,7 @@ This log was last generated on Mon, 17 Jun 2024 16:27:12 GMT and should not be m
 
 <!-- Start content -->
 
-## [1.18.0-beta.1](https://github.com/azure/communication-ui-library/tree/@azure/communication-react_v1.18.0-beta.1)
+## [1.18.0-beta.1](https://github.com/azure/communication-ui-library/tree/1.18.0-beta.1)
 
 Mon, 17 Jun 2024 16:27:12 GMT
 [Compare changes](https://github.com/azure/communication-ui-library/compare/1.17.0...1.18.0-beta.1)
