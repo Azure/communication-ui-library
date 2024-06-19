@@ -432,7 +432,19 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   /* @conditional-compile-remove(teams-meeting-conference) */
   const badNetworkQualityFlag = useSelector(badNetworkQualityBannerSelector);
   /* @conditional-compile-remove(teams-meeting-conference) */
-  const badNetworkQualityBannerProps = useBadNetworkQualityNotifications(badNetworkQualityFlag.isPoorNetworkQuality);
+  const [userClosedBadQualityBanner, setUserClosedBadQualityBanner] = useState(false);
+  /* @conditional-compile-remove(teams-meeting-conference) */
+  useEffect(() => {
+    if (badNetworkQualityFlag.isPoorNetworkQuality && userClosedBadQualityBanner) {
+      setUserClosedBadQualityBanner(false);
+    }
+  }, [badNetworkQualityFlag.isPoorNetworkQuality]);
+  /* @conditional-compile-remove(teams-meeting-conference) */
+  const badNetworkQualityBannerProps = useBadNetworkQualityNotifications(
+    badNetworkQualityFlag.isPoorNetworkQuality,
+    userClosedBadQualityBanner,
+    setUserClosedBadQualityBanner
+  );
 
   // Track the last dismissed errors of any error kind to prevent errors from re-appearing on subsequent page navigation
   // This works by tracking the most recent timestamp of any active error type.

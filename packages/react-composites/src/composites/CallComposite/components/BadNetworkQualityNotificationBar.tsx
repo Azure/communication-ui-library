@@ -16,6 +16,7 @@ import { useLocale } from '../../localization';
  */
 export interface BadNetworkQualityBannerProps extends IMessageBarProps {
   isPoorNetworkQuality: boolean;
+  userClosedConnectionLostBanner: boolean;
   onDismissNotification?: () => void;
   onPrimaryButtonClick?: () => void;
 }
@@ -26,7 +27,11 @@ export interface BadNetworkQualityBannerProps extends IMessageBarProps {
  *
  * @private
  */
-export const useBadNetworkQualityNotifications = (connectionLostFlag: boolean): BadNetworkQualityBannerProps => {
+export const useBadNetworkQualityNotifications = (
+  connectionLostFlag: boolean,
+  userClosedConnectionLostBanner: boolean,
+  setUserClosedConnectionLostBanner: (userClosedConnectionLostBanner: boolean) => void
+): BadNetworkQualityBannerProps => {
   const [currentConnectionLost, setCurrentConnectionLost] = useState<boolean>(false);
 
   useEffect(() => {
@@ -36,7 +41,9 @@ export const useBadNetworkQualityNotifications = (connectionLostFlag: boolean): 
   const connectionLost = useMemo(() => currentConnectionLost, [currentConnectionLost]);
 
   return {
-    isPoorNetworkQuality: connectionLost
+    isPoorNetworkQuality: connectionLost,
+    userClosedConnectionLostBanner: userClosedConnectionLostBanner,
+    onDismissNotification: () => setUserClosedConnectionLostBanner(true)
   };
 };
 

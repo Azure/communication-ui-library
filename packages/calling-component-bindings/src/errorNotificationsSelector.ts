@@ -8,6 +8,8 @@ import {
   getLatestErrors,
   getEnvironmentInfo
 } from './baseSelectors';
+/* @conditional-compile-remove(teams-meeting-conference) */
+import { getTeamsMeetingConference } from './baseSelectors';
 /* @conditional-compile-remove(notifications) */
 import { ActiveNotification, NotificationType } from '@internal/react-components';
 /* @conditional-compile-remove(notifications) */
@@ -39,12 +41,19 @@ export type ErrorNotificationsSelector = (
  * @beta
  */
 export const errorNotificationsSelector: ErrorNotificationsSelector = createSelector(
-  [getLatestErrors, getDiagnostics, getDeviceManager, getEnvironmentInfo],
+  [
+    getLatestErrors,
+    getDiagnostics,
+    getDeviceManager,
+    getEnvironmentInfo,
+    /* @conditional-compile-remove(teams-meeting-conference) */ getTeamsMeetingConference
+  ],
   (
     latestErrors: CallErrors,
     diagnostics,
     deviceManager,
-    environmentInfo
+    environmentInfo,
+    meetingConference
   ): { activeErrorMessages: ActiveNotification[] } => {
     // The order in which the errors are returned is significant: The `Notification` shows errors on the UI in that order.
     // There are several options for the ordering:
@@ -68,8 +77,14 @@ export const errorNotificationsSelector: ErrorNotificationsSelector = createSele
     };
 
     // Errors reported via diagnostics are more reliable than from API method failures, so process those first.
+    let isTeamsMeetingWithPhones = false;
+    /* @conditional-compile-remove(teams-meeting-conference) */
+    if (meetingConference && meetingConference.length > 0) {
+      isTeamsMeetingWithPhones = true;
+    }
     if (
-      diagnostics?.network.latest.networkReceiveQuality?.value === DiagnosticQuality.Bad ||
+      (!isTeamsMeetingWithPhones && // Teams meeting with conference phones has separate notification
+        diagnostics?.network.latest.networkReceiveQuality?.value === DiagnosticQuality.Bad) ||
       diagnostics?.network.latest.networkReceiveQuality?.value === DiagnosticQuality.Poor
     ) {
       activeErrorMessages.push({ type: 'callNetworkQualityLow' });
