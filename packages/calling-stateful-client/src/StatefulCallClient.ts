@@ -229,7 +229,6 @@ class ProxyCallClient implements ProxyHandler<CallClient> {
             // createCallAgent will throw an exception if the previous callAgent was not disposed. If the previous
             // callAgent was disposed then it would have unsubscribed to events so we can just create a new declarative
             // callAgent if the createCallAgent succeeds.
-            console.log(args);
             const callAgent = await target.createTeamsCallAgent(...args);
             this._callAgent = teamsCallAgentDeclaratify(callAgent, this._context, this._internalContext);
             this._context.setCallAgent({
