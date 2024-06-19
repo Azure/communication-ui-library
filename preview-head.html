@@ -1,0 +1,119 @@
+<style>
+    /* the !importants are a result of computed selectors - will need to re-visit */
+    /* the computed selectors come from something to do with story book and their style sheets */
+    /* Escape hatches only seem to work on selectors that have story book formatting - .sbdocs.sbdocs-h1 for example */
+    /* !important is used to force some of the styles that go onto elements that do not get these special selectors */
+
+    .sbdocs.sbdocs-h1,
+    .sbdocs.sbdocs-h2,
+    .sbdocs.sbdocs-h3,
+    .sbdocs.sbdocs-p {
+        font-family: "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        color: #000000;
+    }
+
+    .ms-StackItem>.sbdocs.sbdocs-h1:first-of-type {
+        margin-top: 0.5rem !important;
+    }
+
+    .sbdocs.sbdocs-h1,
+    h1.sbdocs-title,
+    .sbdocs.sbdocs-h1:first-of-type,
+    .sbdocs.sbdocs-content>.sbdocs.sbdocs-title {
+        color: #000000;
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin: 4rem 0rem 2rem !important; 
+        letter-spacing: -0.03em;
+    }
+
+    .sbdocs.sbdocs-h2,
+    .sbdocs.sbdocs-h2:first-of-type {
+        color: #000000;
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin: 3rem 0rem 1.5rem;
+        padding: 3rem 0rem 0rem;
+        border-top: 0.0625rem solid #EDEBE9;
+        border-bottom: none;
+        letter-spacing: -0.02em;
+    }
+
+    .sbdocs.sbdocs-h3,
+    .sbdocs.sbdocs-h3:first-of-type {
+        color: #000000;
+        font-size: 1rem;
+        font-weight: 600;
+        margin: 2rem 0rem 0.75rem;
+        letter-spacing: -0.02em;
+    }
+
+    .sbdocs.sbdocs-p {
+        font-size: 0.875rem;
+        line-height: 1.5rem;
+        margin: 1rem 0rem;
+    }
+
+    .list-content {
+        color: #000000;
+    }
+
+    /* Important: Need to exclude the class .prismjs to ensure that canvas code always has a black BG  */
+    pre:not(.prismjs) {
+        background-color: #faf9f8 !important;
+        border: 0rem;
+        border-bottom: none;
+    }
+
+    tr,
+    table.docblock-argstable {
+        text-align: left;
+    }
+
+    th {
+        background-color: #faf9f8;
+        text-align: left;
+    }
+
+    table.docblock-argstable tbody tr:nth-of-type(2n),
+    table.docblock-argstable-body:nth-of-type(2n) {
+        background-color: #faf9f8 !important;
+    }
+
+    .sbdocs.sbdocs-preview,
+    .docblock-argstable-body,
+    .docblock-argstable-head,
+    .docblock-source {
+        box-shadow: none !important;
+        border: 0.0625rem solid rgba(0, 0, 0, .1);
+    }
+
+    .sbdocs.sbdocs-preview,
+    div.docblock-source {
+        margin: 1rem 0rem;
+    }
+
+    td {
+        background: inherit !important;
+    }
+
+    tbody,
+    thead {
+
+        border-radius: 0rem !important;
+    }
+
+    .sbdocs.sbdocs-wrapper {
+        padding: 0rem 4rem;
+        padding-bottom: 4rem;
+    }
+
+    body {
+        background: #faf9f8;
+        color: #605e5c;
+    }
+
+    figure {
+        margin: 0rem;
+    }
+</style>
