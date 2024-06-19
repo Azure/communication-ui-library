@@ -135,7 +135,7 @@ export interface CallArrangementProps {
   pinnedParticipants?: string[];
   setPinnedParticipants?: (pinnedParticipants: string[]) => void;
   /* @conditional-compile-remove(teams-meeting-conference) */
-  connectionLostBannerProps?: BadNetworkQualityBannerProps;
+  badNetworkQualityBannerProps?: BadNetworkQualityBannerProps;
 }
 
 /**
@@ -632,12 +632,12 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                       <MutedNotification {...props.mutedNotificationProps} />
                     )}
                     {
-                      /* @conditional-compile-remove(teams-meeting-conference) */ props.connectionLostBannerProps &&
-                        props.connectionLostBannerProps.isPoorNetworkQuality &&
+                      /* @conditional-compile-remove(teams-meeting-conference) */ props.badNetworkQualityBannerProps &&
+                        props.badNetworkQualityBannerProps.isPoorNetworkQuality &&
                         isTeamsCall && (
                           <Stack styles={bannerNotificationStyles}>
                             <BadNetworkQualityNotificationBar
-                              {...props.connectionLostBannerProps}
+                              {...props.badNetworkQualityBannerProps}
                               onPrimaryButtonClick={toggleTeamsMeetingConferenceModal}
                             />
                           </Stack>

@@ -430,9 +430,9 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
     useTrackedCapabilityChangedNotifications(capabilitiesChangedInfoAndRole);
 
   /* @conditional-compile-remove(teams-meeting-conference) */
-  const connectionLostFlag = useSelector(badNetworkQualityBannerSelector);
+  const badNetworkQualityFlag = useSelector(badNetworkQualityBannerSelector);
   /* @conditional-compile-remove(teams-meeting-conference) */
-  const connectionLostBannerProps = useBadNetworkQualityNotifications(connectionLostFlag.isPoorNetworkQuality);
+  const badNetworkQualityBannerProps = useBadNetworkQualityNotifications(badNetworkQualityFlag.isPoorNetworkQuality);
 
   // Track the last dismissed errors of any error kind to prevent errors from re-appearing on subsequent page navigation
   // This works by tracking the most recent timestamp of any active error type.
@@ -649,7 +649,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           compositeAudioContext={compositeAudioContext}
           disableAutoShowDtmfDialer={props.options?.disableAutoShowDtmfDialer}
           /* @conditional-compile-remove(teams-meeting-conference) */
-          connectionLostBannerProps={connectionLostBannerProps}
+          badNetworkQualityBannerProps={badNetworkQualityBannerProps}
         />
       );
       break;
