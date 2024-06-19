@@ -11,7 +11,6 @@ import {
   StatefulCallClient,
   StatefulDeviceManager,
   TeamsCall,
-  TeamsCallAgent as BetaTeamsCallAgent,
   _isACSCall,
   _isTeamsCall
 } from '@internal/calling-stateful-client';
@@ -122,7 +121,7 @@ import { VideoBackgroundEffectsDependency } from '@internal/calling-component-bi
 import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
 import { CallingSoundSubscriber } from './CallingSoundSubscriber';
 import { CallingSounds } from './CallAdapter';
-type CallTypeOf<AgentType extends CallAgent | BetaTeamsCallAgent> = AgentType extends CallAgent ? Call : TeamsCall;
+type CallTypeOf<AgentType extends CallAgent | TeamsCallAgent> = AgentType extends CallAgent ? Call : TeamsCall;
 
 /** Context of call, which is a centralized context for all state updates */
 class CallContext {
@@ -330,7 +329,7 @@ export type AdapterStateModifier = (state: CallAdapterState) => CallAdapterState
 /**
  * @private
  */
-export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTeamsCallAgent = CallAgent>
+export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCallAgent = CallAgent>
   implements CommonCallAdapter
 {
   private callClient: StatefulCallClient;
