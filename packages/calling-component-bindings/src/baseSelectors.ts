@@ -258,6 +258,7 @@ export const getSupportedSpokenLanguages = (
   return state.calls[props.callId]?.captionsFeature.supportedSpokenLanguages as _SupportedSpokenLanguage[];
 };
 
+/* @conditional-compile-remove(teams-meeting-conference) */
 /** @private */
 export const getTeamsMeetingConference = (
   state: CallClientState,
