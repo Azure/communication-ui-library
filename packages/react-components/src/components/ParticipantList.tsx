@@ -152,8 +152,10 @@ const onRenderParticipantDefault = (
 
   const callingPalette = (theme as unknown as CallingTheme).callingPalette;
 
+  const isPinned = pinnedParticipants && pinnedParticipants?.includes(participant.userId);
+
   const onRenderIcon =
-    callingParticipant?.isScreenSharing || callingParticipant?.isMuted || callingParticipant?.raisedHand
+    callingParticipant?.isScreenSharing || callingParticipant?.isMuted || callingParticipant?.raisedHand || isPinned
       ? () => (
           <Stack horizontal={true} tokens={{ childrenGap: '0.5rem' }}>
             {callingParticipant.raisedHand && (
@@ -189,9 +191,7 @@ const onRenderParticipantDefault = (
             )}
             {callingParticipant.spotlight && <Icon iconName="ParticipantItemSpotlighted" className={iconStyles} />}
 
-            {pinnedParticipants && pinnedParticipants?.includes(participant.userId) && (
-              <Icon iconName="ParticipantItemPinned" className={iconStyles} />
-            )}
+            {isPinned && <Icon iconName="ParticipantItemPinned" className={iconStyles} />}
           </Stack>
         )
       : () => null;
