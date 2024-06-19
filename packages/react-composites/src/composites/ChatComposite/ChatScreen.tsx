@@ -123,6 +123,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const [isImageOverlayOpen, setIsImageOverlayOpen] = useState<boolean>(false);
   /* @conditional-compile-remove(file-sharing-acs) */
   const [uploads, handleUploadAction] = useReducer(AttachmentUploadReducer, []);
+  const [inlineImageUploads, handleInlineImageUploadAction] = useReducer(AttachmentUploadReducer, []);
 
   const adapter = useAdapter();
   const theme = useTheme();
@@ -242,56 +243,60 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     const blobImage: Blob | undefined = undefined;
     if (image.startsWith('blob')) {
       const res = await fetchBlobData(image, { abortController: new AbortController() });
-      const blobImage = res.body;
+      const blobImage = await res.blob();
       console.log('blobImage', typeof blobImage);
+      return blobImage;
     } else if (image.startsWith('http')) {
       const res = await fetchBlobData(image, { abortController: new AbortController() });
-      const blobImage = res.body;
+      const blobImage = await res.blob();
       console.log('remote url blobImage', typeof blobImage);
+      return blobImage;
     }
     return blobImage;
   }, []);
 
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  const inlineImageUploadHandler = useCallback(async (uploadTasks: AttachmentUpload[]): Promise<void> => {
-    for (const task of uploadTasks) {
-      // const fileName = task.metadata.name;
-      // const fileExtension = task.file?.name.split('.').pop() ?? '';
-      const image: Blob | undefined = task.image;
-      console.log('inlineImageUploadHandler', image);
+  const inlineImageUploadHandler = useCallback(
+    async (uploadTasks: AttachmentUpload[]): Promise<void> => {
+      for (const task of uploadTasks) {
+        // const fileName = task.metadata.name;
+        // const fileExtension = task.file?.name.split('.').pop() ?? '';
+        const image: Blob | undefined = task.image;
+        console.log('inlineImageUploadHandler', image);
 
-      if (image && image.size > MAX_INLINE_IMAGE_UPLOAD_SIZE_MB) {
-        task.notifyUploadFailed(
-          `"${task.image}" is too big. Select a file under ${MAX_INLINE_IMAGE_UPLOAD_SIZE_MB}MB.`
-        );
-        continue;
+        if (image && image.size > MAX_INLINE_IMAGE_UPLOAD_SIZE_MB * 1024 * 1024) {
+          task.notifyUploadFailed(
+            `"${task.image}" is too big. Select a file under ${MAX_INLINE_IMAGE_UPLOAD_SIZE_MB}MB.`
+          );
+          continue;
+        }
+
+        // if (!SUPPORTED_FILES.includes(fileExtension)) {
+        //   task.notifyUploadFailed(`Uploading ".${'png'}" files is not allowed.`);
+        //   continue;
+        // }
+
+        try {
+          const response = await adapter.uploadImage(image, 'fileName.png');
+          console.log('upload result:', response);
+
+          task.notifyUploadCompleted(response.id, task.metadata.url);
+        } catch (error) {
+          console.error(error);
+          task.notifyUploadFailed('Unable to upload inline image. Please try again later.');
+        }
       }
-
-      // if (!SUPPORTED_FILES.includes(fileExtension)) {
-      //   task.notifyUploadFailed(`Uploading ".${'png'}" files is not allowed.`);
-      //   continue;
-      // }
-
-      try {
-        // const response = await adapter.uploadImage(image, fileName);
-        // const randomId = Math.random().toString(16).slice(2);
-        // task.notifyUploadCompleted(randomId, response.data.url);
-      } catch (error) {
-        console.error(error);
-        task.notifyUploadFailed('Unable to upload inline image. Please try again later.');
-      }
-    }
-  }, []);
+    },
+    [adapter]
+  );
 
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   const onUploadInlineImage = useCallback(
-    (image: string, fileName: string): void => {
-      console.log('Chat Screen Uploading image...', image);
-
+    async (image: string, fileName: string): Promise<void> => {
       if (!image) {
         return;
       }
-      const imageData = getInlineImageData(image);
+      const imageData = await getInlineImageData(image);
       if (!imageData) {
         return;
       }
@@ -303,30 +308,28 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
         metadata: {
           id: taskId,
           name: fileName,
+          url: image,
           progress: 0
         },
         notifyUploadProgressChanged: (value: number) => {
-          handleUploadAction({ type: AttachmentUploadActionType.Progress, taskId, progress: value });
+          handleInlineImageUploadAction({ type: AttachmentUploadActionType.Progress, taskId, progress: value });
         },
         notifyUploadCompleted: (id: string, url: string) => {
-          handleUploadAction({ type: AttachmentUploadActionType.Completed, taskId, id, url });
+          handleInlineImageUploadAction({ type: AttachmentUploadActionType.Completed, taskId, id, url });
         },
         notifyUploadFailed: (message: string) => {
-          handleUploadAction({ type: AttachmentUploadActionType.Failed, taskId, message });
+          handleInlineImageUploadAction({ type: AttachmentUploadActionType.Failed, taskId, message });
           // remove the failed upload task when error banner is auto dismissed after 10 seconds
           // so the banner won't be shown again on UI re-rendering.
           setTimeout(() => {
-            handleUploadAction({ type: AttachmentUploadActionType.Remove, id: taskId });
+            handleInlineImageUploadAction({ type: AttachmentUploadActionType.Remove, id: taskId });
           }, 10 * 1000);
         }
       };
 
       const newUploads = [uploadTask];
-      handleUploadAction({ type: AttachmentUploadActionType.Set, newUploads });
+      handleInlineImageUploadAction({ type: AttachmentUploadActionType.Set, newUploads });
       inlineImageUploadHandler(newUploads);
-      // const result = adapter.uploadImage(image, fileName);
-      // console.log('Uploading image...', image);
-      // return result;
     },
     [getInlineImageData, inlineImageUploadHandler]
   );
@@ -538,6 +541,10 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     return uploads?.map((v) => v.metadata);
   }, [uploads]);
 
+  const uploadInlineImages = useMemo(() => {
+    return inlineImageUploads?.map((v) => v.metadata);
+  }, [inlineImageUploads]);
+
   const onSendMessageHandler = useCallback(
     async function (
       content: string,
@@ -652,6 +659,8 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
                   onSendMessage={onSendMessageHandler}
                   /* @conditional-compile-remove(rich-text-editor-image-upload) */
                   onUploadImage={onUploadInlineImage}
+                  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+                  uploadInlineImages={uploadInlineImages}
                 />
               </Stack>
               {formFactor !== 'mobile' && (

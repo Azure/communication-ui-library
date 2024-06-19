@@ -50,6 +50,8 @@ export type SendBoxPickerProps = {
   onCancelAttachmentUpload?: (attachmentId: string) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   onUploadImage?: (image: string, fileName: string) => void;
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  uploadInlineImages?: AttachmentMetadataInProgress[];
 };
 
 /**
