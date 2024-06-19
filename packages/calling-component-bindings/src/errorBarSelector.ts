@@ -6,9 +6,10 @@ import {
   getDeviceManager,
   getDiagnostics,
   getLatestErrors,
-  getEnvironmentInfo,
-  getTeamsMeetingConference
+  getEnvironmentInfo
 } from './baseSelectors';
+/* @conditional-compile-remove(teams-meeting-conference) */
+import { getTeamsMeetingConference } from './baseSelectors';
 import { ActiveErrorMessage, ErrorType } from '@internal/react-components';
 import { createSelector } from 'reselect';
 import { CallClientState, CallErrors, CallErrorTarget } from '@internal/calling-stateful-client';
@@ -38,12 +39,19 @@ export type ErrorBarSelector = (
  * @public
  */
 export const errorBarSelector: ErrorBarSelector = createSelector(
-  [getLatestErrors, getDiagnostics, getDeviceManager, getEnvironmentInfo, getTeamsMeetingConference],
+  [
+    getLatestErrors,
+    getDiagnostics,
+    getDeviceManager,
+    getEnvironmentInfo,
+    /* @conditional-compile-remove(teams-meeting-conference) */ getTeamsMeetingConference
+  ],
   (
     latestErrors: CallErrors,
     diagnostics,
     deviceManager,
     environmentInfo,
+    /* @conditional-compile-remove(teams-meeting-conference) */
     meetingConference
   ): { activeErrorMessages: ActiveErrorMessage[] } => {
     // The order in which the errors are returned is significant: The `ErrorBar` shows errors on the UI in that order.
@@ -68,11 +76,15 @@ export const errorBarSelector: ErrorBarSelector = createSelector(
     };
 
     // Errors reported via diagnostics are more reliable than from API method failures, so process those first.
+    let isTeamsMeetingWithPhones = false;
+    /* @conditional-compile-remove(teams-meeting-conference) */
+    if (meetingConference && meetingConference.length > 0) {
+      isTeamsMeetingWithPhones = true;
+    }
     if (
-      (meetingConference &&
-        meetingConference.length == 0 && // Teams meeting with conference phones has separate notification
-        diagnostics?.network.latest.networkReceiveQuality?.value === DiagnosticQuality.Bad) ||
-      diagnostics?.network.latest.networkReceiveQuality?.value === DiagnosticQuality.Poor
+      !isTeamsMeetingWithPhones && // Teams meeting with conference phones has separate notification
+      (diagnostics?.network.latest.networkReceiveQuality?.value === DiagnosticQuality.Bad ||
+        diagnostics?.network.latest.networkReceiveQuality?.value === DiagnosticQuality.Poor)
     ) {
       activeErrorMessages.push({ type: 'callNetworkQualityLow' });
     }
