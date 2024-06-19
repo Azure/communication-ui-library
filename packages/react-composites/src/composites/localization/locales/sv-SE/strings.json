@@ -135,6 +135,7 @@
     "dtmfDialerButtonTooltipOff": "Dölj knappsatsen",
     "dtmfDialerMoreButtonLabelOn": "Visa knappsats",
     "dtmfDialerMoreButtonLabelOff": "Dölj knappsatsen",
+    "phoneCallMoreButtonLabel": "Telefonsamtal",
     "spokenLanguageStrings": {
       "ar-ae": "Arabiska – Förenade Arabemiraten",
       "ar-sa": "Arabiska – Saudiarabien",
@@ -336,7 +337,12 @@
     "leaveConfirmDialogContent": "Vill du lämna samtalet?",
     "endCallConfirmDialogTitle": "Vill du avsluta samtalet?",
     "endCallConfirmDialogContent": "Du avslutar samtalet för alla.",
-    "invalidMeetingIdentifier": "Ogiltigt mötes-ID eller lösenord"
+    "invalidMeetingIdentifier": "Ogiltigt mötes-ID eller lösenord",
+    "pinParticipantMenuLabel": "Pin for me",
+    "pinParticipantLimitReachedMenuLabel": "Pin (limit reached)",
+    "unpinParticipantMenuLabel": "Unpin",
+    "pinParticipantMenuItemAriaLabel": "Pin",
+    "unpinParticipantMenuItemAriaLabel": "Unpin"
   },
   "chat": {
     "chatListHeader": "I den här chatten",

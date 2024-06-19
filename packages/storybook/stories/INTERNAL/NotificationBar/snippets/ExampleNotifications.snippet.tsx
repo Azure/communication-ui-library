@@ -5,21 +5,21 @@ import React from 'react';
 export const ExampleNotifications = (): JSX.Element => {
   const activeNotifications: ActiveNotification[] = [
     {
-      type: 'unableToReachChatService',
+      type: 'failedToJoinCallGeneric',
       autoDismiss: true
     },
     {
-      type: 'accessDenied',
+      type: 'startVideoGeneric',
       autoDismiss: true
     },
     {
-      type: 'sendMessageGeneric'
+      type: 'stopVideoGeneric'
     },
     {
-      type: 'sendMessageNotInChatThread'
+      type: 'muteGeneric'
     },
     {
-      type: 'userNotInChatThread'
+      type: 'unmuteGeneric'
     }
   ];
 

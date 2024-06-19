@@ -1,11 +1,17 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Stack } from '@fluentui/react';
 /* @conditional-compile-remove(notifications) */
 import { useLocale } from '../localization';
-import { NotificationIconProps } from './utils';
+import {
+  DismissedNotification,
+  NotificationIconProps,
+  dismissNotification,
+  dropDismissalsForInactiveNotifications,
+  notificationsToShow
+} from './utils';
 import { NotificationBar, NotificationBarStrings } from './NotificationBar';
 
 /**
@@ -28,6 +34,24 @@ export interface NotificationsProps {
    * @defaultValue 2
    */
   maxNotificationsToShow?: number;
+
+  /**
+   * Callback called when the dismiss button is triggered.
+   * Use this to control notifications shown when they dismissed by the user.
+   * Note this onDismiss function will affect all notifications in the same stack
+   */
+  onDismissNotification?: (dismissedNotifications: ActiveNotification) => void;
+
+  /**
+   * If set, notifications with {@link ActiveNotification.timestamp} older than the time this component is mounted
+   * are not shown.
+   *
+   * This is useful when using the {@link Notifications} with a stateful client that handles more than one call
+   * or chat thread. Set this prop to ignore notifications from previous call or chat.
+   *
+   * @defaultValue false
+   */
+  ignorePremountNotifications?: boolean;
 }
 
 /**
@@ -36,39 +60,6 @@ export interface NotificationsProps {
  * @beta
  */
 export interface NotificationsStrings {
-  /**
-   * Unable to reach Chat service.
-   *
-   * This can mean:
-   *   - Incorrect Azure Communication Services endpoint was provided.
-   *   - User's network connection is down.
-   */
-  unableToReachChatService: NotificationBarStrings;
-
-  /**
-   * User does not have access to the Chat service.
-   * This usually means that either the Azure Communication Services endpiont or the token provided are incorrect.
-   */
-  accessDenied: NotificationBarStrings;
-
-  /**
-   * User is no longer on the thread.
-   *
-   * See also: {@link NotificationsStrings.sendMessageNotInChatThread} for a more specific error.
-   */
-  userNotInChatThread: NotificationBarStrings;
-
-  /**
-   * Sending message failed because user is no longer on the thread.
-   */
-  sendMessageNotInChatThread: NotificationBarStrings;
-
-  /**
-   * A generic message when sending message fails.
-   * Prefer more specific error strings when possible.
-   */
-  sendMessageGeneric: NotificationBarStrings;
-
   /**
    * A generic message when starting video fails.
    */
@@ -247,6 +238,14 @@ export interface ActiveNotification {
    * If set, notification will automatically dismiss after 5 seconds
    */
   autoDismiss?: boolean;
+
+  /**
+   * The latest timestamp when this notification was observed.
+   *
+   * When available, this is used to track notifications that have already been seen and dismissed
+   * by the user.
+   */
+  timestamp?: Date;
 }
 
 /**
@@ -267,10 +266,29 @@ export const Notifications = (props: NotificationsProps): JSX.Element => {
   const localeStrings = useLocale().strings.notifications;
   const strings = props.strings ?? /* @conditional-compile-remove(notifications) */ localeStrings;
   const maxNotificationsToShow = props.maxNotificationsToShow ?? 2;
-  const [activeNotifications, setActiveNotifications] = useState<ActiveNotification[]>(props.activeNotifications);
+
+  const trackDismissedNotificationsInternally = !props.onDismissNotification;
+
+  // Timestamp for when this comopnent is first mounted.
+  // Never updated through the lifecycle of this component.
+  const mountTimestamp = useRef(new Date(Date.now()));
+
+  const [dismissedNotifications, setDismissedNotifications] = useState<DismissedNotification[]>([]);
+
+  // dropDismissalsForInactiveNotifications only returns a new object if `dismissedErrors` actually changes.
+  // Without this behaviour, this `useEffect` block would cause a render loop.
   useEffect(() => {
-    setActiveNotifications(props.activeNotifications);
-  }, [props.activeNotifications]);
+    trackDismissedNotificationsInternally &&
+      setDismissedNotifications(
+        dropDismissalsForInactiveNotifications(props.activeNotifications, dismissedNotifications)
+      );
+  }, [props.activeNotifications, dismissedNotifications, trackDismissedNotificationsInternally]);
+
+  const activeNotifications = notificationsToShow(
+    props.activeNotifications,
+    dismissedNotifications,
+    props.ignorePremountNotifications ? mountTimestamp.current : undefined
+  );
 
   return (
     <Stack
@@ -289,8 +307,9 @@ export const Notifications = (props: NotificationsProps): JSX.Element => {
                 onClickPrimaryButton={() => notification.onClickPrimaryButton?.()}
                 onClickSecondaryButton={() => notification.onClickSecondaryButton?.()}
                 onDismiss={() => {
-                  activeNotifications.splice(index, 1);
-                  setActiveNotifications([...activeNotifications]);
+                  trackDismissedNotificationsInternally
+                    ? setDismissedNotifications(dismissNotification(dismissedNotifications, notification))
+                    : props.onDismissNotification?.(notification);
                   notification.onDismiss && notification.onDismiss();
                 }}
                 showStackedEffect={

@@ -135,6 +135,7 @@
     "dtmfDialerButtonTooltipOff": "Nascondi tastierino",
     "dtmfDialerMoreButtonLabelOn": "Mostra tastiera",
     "dtmfDialerMoreButtonLabelOff": "Nascondi tastierino",
+    "phoneCallMoreButtonLabel": "Chiamata telefonica",
     "spokenLanguageStrings": {
       "ar-ae": "Arabo - Emirati Arabi Uniti",
       "ar-sa": "Arabo - Arabia Saudita",
@@ -336,7 +337,12 @@
     "leaveConfirmDialogContent": "Vuoi abbandonare la chiamata?",
     "endCallConfirmDialogTitle": "Vuoi terminare la chiamata?",
     "endCallConfirmDialogContent": "La chiamata terminerà per tutti gli utenti.",
-    "invalidMeetingIdentifier": "ID riunione o passcode non valido"
+    "invalidMeetingIdentifier": "ID riunione o passcode non valido",
+    "pinParticipantMenuLabel": "Pin for me",
+    "pinParticipantLimitReachedMenuLabel": "Pin (limit reached)",
+    "unpinParticipantMenuLabel": "Unpin",
+    "pinParticipantMenuItemAriaLabel": "Pin",
+    "unpinParticipantMenuItemAriaLabel": "Unpin"
   },
   "chat": {
     "chatListHeader": "In questa chat",
