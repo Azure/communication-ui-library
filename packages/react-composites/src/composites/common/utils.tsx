@@ -38,7 +38,7 @@ export const useMinMaxDragPosition = (modalLayerHostId: string, rtl?: boolean): 
               : MODAL_PIP_DEFAULT_PX.rightPositionPx - modalHostWidth + MODAL_PIP_DEFAULT_PX.widthPx,
             y: -1 * modalHostHeight + MODAL_PIP_DEFAULT_PX.heightPx + MODAL_PIP_DEFAULT_PX.bottomPositionPx
           },
-    [modalHostWidth, rtl]
+    [modalHostHeight, modalHostWidth, rtl]
   );
   const maxDragPosition: _ICoordinates | undefined = useMemo(
     () =>
