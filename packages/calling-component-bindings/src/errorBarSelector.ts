@@ -70,7 +70,7 @@ export const errorBarSelector: ErrorBarSelector = createSelector(
     // Errors reported via diagnostics are more reliable than from API method failures, so process those first.
     if (
       (meetingConference &&
-        meetingConference.length && // Teams meeting has separate notification with phone information
+        meetingConference.length == 0 && // Teams meeting with conference phones has separate notification
         diagnostics?.network.latest.networkReceiveQuality?.value === DiagnosticQuality.Bad) ||
       diagnostics?.network.latest.networkReceiveQuality?.value === DiagnosticQuality.Poor
     ) {
