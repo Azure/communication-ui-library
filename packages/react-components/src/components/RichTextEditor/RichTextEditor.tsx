@@ -310,6 +310,7 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
           aria-multiline="true"
           data-testid={'rooster-rich-text-editor'}
           className={richTextEditorStyle(props.styles)}
+          aria-label={placeholderText}
         />
       </div>
       {contextMenuProps && <ContextualMenu {...contextMenuProps} calloutProps={{ isBeakVisible: false }} />}
