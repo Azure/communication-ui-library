@@ -20,7 +20,18 @@ test.describe('User Facing Diagnostics tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot('banner-when-speaking-while-muted.png');
   });
 
-  test('Meeting phone info tile should be showing when network reconnect is bad ', async ({ page, serverUrl }) => {
+  test('Tile should be showing when network reconnect is bad ', async ({ page, serverUrl }) => {
+    const initialState = defaultMockCallAdapterState();
+    setNetworkDiagnostic(initialState, {
+      networkReconnect: { value: DiagnosticQuality.Bad, valueType: 'DiagnosticQuality' }
+    });
+    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
+
+    await waitForSelector(page, dataUiId('call-composite-hangup-button'));
+    expect(await stableScreenshot(page)).toMatchSnapshot('tile-when-ufd-network-reconnect-is-bad.png');
+  });
+
+  test('Teams meeting phone info notification in case of bad network connection ', async ({ page, serverUrl }) => {
     const initialState = defaultMockCallAdapterState();
     initialState.isTeamsMeeting = true;
     if (initialState.call) {
@@ -33,23 +44,12 @@ test.describe('User Facing Diagnostics tests', async () => {
       ];
     }
     setNetworkDiagnostic(initialState, {
-      networkReconnect: { value: DiagnosticQuality.Bad, valueType: 'DiagnosticQuality' }
-    });
-    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
-
-    await waitForSelector(page, dataUiId('call-composite-hangup-button'));
-    expect(await stableScreenshot(page)).toMatchSnapshot('tile-when-ufd-network-reconnect-is-bad.png');
-  });
-
-  test('Bad network banner popup when connection is bad ', async ({ page, serverUrl }) => {
-    const initialState = defaultMockCallAdapterState();
-    setNetworkDiagnostic(initialState, {
       networkReceiveQuality: { value: DiagnosticQuality.Bad, valueType: 'DiagnosticQuality' }
     });
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
 
     await waitForSelector(page, dataUiId('call-composite-hangup-button'));
-    expect(await stableScreenshot(page)).toMatchSnapshot('tile-when-ufd-network-quality-is-bad.png');
+    expect(await stableScreenshot(page)).toMatchSnapshot('tile-when-teams-meeting-ufd-network-quality-is-bad.png');
   });
 
   test('Error bar should be showing when camera freezes ', async ({ page, serverUrl }) => {
