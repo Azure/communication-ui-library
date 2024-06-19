@@ -36,7 +36,7 @@ export const useMinMaxDragPosition = (modalLayerHostId: string, rtl?: boolean): 
             x: rtl
               ? -1 * MODAL_PIP_DEFAULT_PX.rightPositionPx
               : MODAL_PIP_DEFAULT_PX.rightPositionPx - modalHostWidth + MODAL_PIP_DEFAULT_PX.widthPx,
-            y: -1 * MODAL_PIP_DEFAULT_PX.topPositionPx
+            y: -1 * modalHostHeight + MODAL_PIP_DEFAULT_PX.heightPx + MODAL_PIP_DEFAULT_PX.bottomPositionPx
           },
     [modalHostWidth, rtl]
   );
@@ -48,7 +48,7 @@ export const useMinMaxDragPosition = (modalLayerHostId: string, rtl?: boolean): 
             x: rtl
               ? modalHostWidth - MODAL_PIP_DEFAULT_PX.rightPositionPx - MODAL_PIP_DEFAULT_PX.widthPx
               : MODAL_PIP_DEFAULT_PX.rightPositionPx,
-            y: modalHostHeight - MODAL_PIP_DEFAULT_PX.topPositionPx - MODAL_PIP_DEFAULT_PX.heightPx
+            y: MODAL_PIP_DEFAULT_PX.bottomPositionPx
           },
     [modalHostHeight, modalHostWidth, rtl]
   );
