@@ -14,24 +14,19 @@ import { useLocale } from '../../localization';
 /**
  * @private
  */
-export interface ConnectionLostBannerProps extends IMessageBarProps {
-  connectionLost: boolean;
-  userClosedConnectionLostBanner: boolean;
+export interface BadNetworkQualityBannerProps extends IMessageBarProps {
+  isPoorNetworkQuality: boolean;
   onDismissNotification?: () => void;
   onPrimaryButtonClick?: () => void;
 }
 
 /* @conditional-compile-remove(teams-meeting-conference) */
 /**
- * Create a record for when the notification was most recently dismissed for tracking dismissed notifications.
+ * Create a record for bad network when the notification recieved.
  *
  * @private
  */
-export const useConnectionLostNotifications = (
-  connectionLostFlag: boolean,
-  userClosedConnectionLostBanner: boolean,
-  setUserClosedConnectionLostBanner: (userClosedConnectionLostBanner: boolean) => void
-): ConnectionLostBannerProps => {
+export const useBadNetworkQualityNotifications = (connectionLostFlag: boolean): BadNetworkQualityBannerProps => {
   const [currentConnectionLost, setCurrentConnectionLost] = useState<boolean>(false);
 
   useEffect(() => {
@@ -41,9 +36,7 @@ export const useConnectionLostNotifications = (
   const connectionLost = useMemo(() => currentConnectionLost, [currentConnectionLost]);
 
   return {
-    connectionLost: connectionLost,
-    userClosedConnectionLostBanner: userClosedConnectionLostBanner,
-    onDismissNotification: () => setUserClosedConnectionLostBanner(true)
+    isPoorNetworkQuality: connectionLost
   };
 };
 
@@ -52,14 +45,14 @@ export const useConnectionLostNotifications = (
  * Connection lost notification bar during teams meeting, which provides a message to use PSTN option.
  * @beta
  */
-export const ConnectionLostNotificationBar = (props: ConnectionLostBannerProps): JSX.Element => {
+export const BadNetworkQualityNotificationBar = (props: BadNetworkQualityBannerProps): JSX.Element => {
   const localeStrings = useLocale().component.strings.MeetingConferencePhoneInfo;
 
   const barStrings = {
-    title: localeStrings.lostConnectionBarTitle ? localeStrings.lostConnectionBarTitle : '',
-    closeButtonAriaLabel: localeStrings.lostConnectionBarClose ? localeStrings.lostConnectionBarClose : '',
-    message: localeStrings.lostConnectionBarMessage ? localeStrings.lostConnectionBarMessage : '',
-    primaryButtonLabel: localeStrings.lostConnectionBarJoin ? localeStrings.lostConnectionBarJoin : ''
+    title: localeStrings.badQualityBarTitle ? localeStrings.badQualityBarTitle : '',
+    closeButtonAriaLabel: localeStrings.badQualityBarClose ? localeStrings.badQualityBarClose : '',
+    message: localeStrings.badQualityBarMessage ? localeStrings.badQualityBarMessage : '',
+    primaryButtonLabel: localeStrings.badQualityBarJoin ? localeStrings.badQualityBarJoin : ''
   };
 
   return (

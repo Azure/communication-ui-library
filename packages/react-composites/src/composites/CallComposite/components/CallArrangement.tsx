@@ -58,7 +58,7 @@ import { useMeetingPhoneInfoPane } from './SidePane/useMeetingPhoneInfo';
 /* @conditional-compile-remove(teams-meeting-conference) */
 import { getTeamsMeetingCoordinates } from '../selectors/baseSelectors';
 /* @conditional-compile-remove(teams-meeting-conference) */
-import { ConnectionLostNotificationBar, ConnectionLostBannerProps } from './ConnectionLostNotificationBar';
+import { BadNetworkQualityNotificationBar, BadNetworkQualityBannerProps } from './BadNetworkQualityNotificationBar';
 
 import {
   useVideoEffectsPane,
@@ -135,7 +135,7 @@ export interface CallArrangementProps {
   pinnedParticipants?: string[];
   setPinnedParticipants?: (pinnedParticipants: string[]) => void;
   /* @conditional-compile-remove(teams-meeting-conference) */
-  connectionLostBannerProps?: ConnectionLostBannerProps;
+  badNetworkQualityBannerProps?: BadNetworkQualityBannerProps;
 }
 
 /**
@@ -632,13 +632,12 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                       <MutedNotification {...props.mutedNotificationProps} />
                     )}
                     {
-                      /* @conditional-compile-remove(teams-meeting-conference) */ props.connectionLostBannerProps &&
-                        props.connectionLostBannerProps.connectionLost &&
-                        isTeamsCall &&
-                        !props.connectionLostBannerProps.userClosedConnectionLostBanner && (
+                      /* @conditional-compile-remove(teams-meeting-conference) */ props.badNetworkQualityBannerProps &&
+                        props.badNetworkQualityBannerProps.isPoorNetworkQuality &&
+                        isTeamsCall && (
                           <Stack styles={bannerNotificationStyles}>
-                            <ConnectionLostNotificationBar
-                              {...props.connectionLostBannerProps}
+                            <BadNetworkQualityNotificationBar
+                              {...props.badNetworkQualityBannerProps}
                               onPrimaryButtonClick={toggleTeamsMeetingConferenceModal}
                             />
                           </Stack>

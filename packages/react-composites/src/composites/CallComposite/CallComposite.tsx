@@ -60,9 +60,9 @@ import { useEndedCallConsoleErrors } from './utils/useConsoleErrors';
 import { SurveyPage } from './pages/SurveyPage';
 import { useAudio } from '../common/AudioProvider';
 /* @conditional-compile-remove(teams-meeting-conference) */
-import { connectionLostBannerSelector } from './selectors/connectionLostSelector';
+import { badNetworkQualityBannerSelector } from './selectors/badNetworkQualitySelector';
 /* @conditional-compile-remove(teams-meeting-conference) */
-import { useConnectionLostNotifications } from './components/ConnectionLostNotificationBar';
+import { useBadNetworkQualityNotifications } from './components/BadNetworkQualityNotificationBar';
 /* @conditional-compile-remove(notifications) */
 import { errorNotificationsSelector } from '@internal/calling-component-bindings';
 /* @conditional-compile-remove(notifications) */
@@ -430,15 +430,9 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
     useTrackedCapabilityChangedNotifications(capabilitiesChangedInfoAndRole);
 
   /* @conditional-compile-remove(teams-meeting-conference) */
-  const connectionLostFlag = useSelector(connectionLostBannerSelector);
+  const badNetworkQualityFlag = useSelector(badNetworkQualityBannerSelector);
   /* @conditional-compile-remove(teams-meeting-conference) */
-  const [userClosedConnectionLostBanner, setUserClosedConnectionLostBanner] = useState(false);
-  /* @conditional-compile-remove(teams-meeting-conference) */
-  const connectionLostBannerProps = useConnectionLostNotifications(
-    connectionLostFlag.connectionLost,
-    userClosedConnectionLostBanner,
-    setUserClosedConnectionLostBanner
-  );
+  const badNetworkQualityBannerProps = useBadNetworkQualityNotifications(badNetworkQualityFlag.isPoorNetworkQuality);
 
   // Track the last dismissed errors of any error kind to prevent errors from re-appearing on subsequent page navigation
   // This works by tracking the most recent timestamp of any active error type.
@@ -655,7 +649,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           compositeAudioContext={compositeAudioContext}
           disableAutoShowDtmfDialer={props.options?.disableAutoShowDtmfDialer}
           /* @conditional-compile-remove(teams-meeting-conference) */
-          connectionLostBannerProps={connectionLostBannerProps}
+          badNetworkQualityBannerProps={badNetworkQualityBannerProps}
         />
       );
       break;
