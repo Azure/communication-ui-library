@@ -79,9 +79,11 @@ export const errorBarSelector: ErrorBarSelector = createSelector(
     let isTeamsMeetingWithPhones = false;
     /* @conditional-compile-remove(teams-meeting-conference) */
     console.log('zdor initial conference ' + meetingConference);
+    /* @conditional-compile-remove(teams-meeting-conference) */
     if (meetingConference && meetingConference.length > 0) {
       isTeamsMeetingWithPhones = true;
     }
+    /* @conditional-compile-remove(teams-meeting-conference) */
     console.log('zdor initial flag ' + isTeamsMeetingWithPhones);
     if (
       !isTeamsMeetingWithPhones && // Teams meeting with conference phones has separate notification
