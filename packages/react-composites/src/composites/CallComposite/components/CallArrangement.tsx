@@ -58,7 +58,7 @@ import { useMeetingPhoneInfoPane } from './SidePane/useMeetingPhoneInfo';
 /* @conditional-compile-remove(teams-meeting-conference) */
 import { getTeamsMeetingCoordinates } from '../selectors/baseSelectors';
 /* @conditional-compile-remove(teams-meeting-conference) */
-import { ConnectionLostNotificationBar, ConnectionLostBannerProps } from './ConnectionLostNotificationBar';
+import { BadNetworkQualityNotificationBar, BadNetworkQualityBannerProps } from './BadNetworkQualityNotificationBar';
 
 import {
   useVideoEffectsPane,
@@ -135,7 +135,7 @@ export interface CallArrangementProps {
   pinnedParticipants?: string[];
   setPinnedParticipants?: (pinnedParticipants: string[]) => void;
   /* @conditional-compile-remove(teams-meeting-conference) */
-  connectionLostBannerProps?: ConnectionLostBannerProps;
+  connectionLostBannerProps?: BadNetworkQualityBannerProps;
 }
 
 /**
@@ -633,11 +633,10 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                     )}
                     {
                       /* @conditional-compile-remove(teams-meeting-conference) */ props.connectionLostBannerProps &&
-                        props.connectionLostBannerProps.connectionLost &&
-                        isTeamsCall &&
-                        !props.connectionLostBannerProps.userClosedConnectionLostBanner && (
+                        props.connectionLostBannerProps.isPoorNetworkQuality &&
+                        isTeamsCall && (
                           <Stack styles={bannerNotificationStyles}>
-                            <ConnectionLostNotificationBar
+                            <BadNetworkQualityNotificationBar
                               {...props.connectionLostBannerProps}
                               onPrimaryButtonClick={toggleTeamsMeetingConferenceModal}
                             />

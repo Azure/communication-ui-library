@@ -35,7 +35,7 @@ import { showDtmfDialer } from '../utils/MediaGalleryUtils';
 import { getTargetCallees } from '../selectors/baseSelectors';
 import { Prompt, PromptProps } from '../components/Prompt';
 /* @conditional-compile-remove(teams-meeting-conference) */
-import { ConnectionLostBannerProps } from '../components/ConnectionLostNotificationBar';
+import { BadNetworkQualityBannerProps } from '../components/BadNetworkQualityNotificationBar';
 
 /**
  * @private
@@ -64,7 +64,7 @@ export interface CallPageProps {
   compositeAudioContext?: AudioContext;
   disableAutoShowDtmfDialer?: boolean;
   /* @conditional-compile-remove(teams-meeting-conference) */
-  connectionLostBannerProps?: ConnectionLostBannerProps;
+  connectionLostBannerProps?: BadNetworkQualityBannerProps;
 }
 
 /**
