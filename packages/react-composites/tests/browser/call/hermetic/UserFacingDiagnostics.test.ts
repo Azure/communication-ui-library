@@ -31,6 +31,7 @@ test.describe('User Facing Diagnostics tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot('tile-when-ufd-network-reconnect-is-bad.png');
   });
 
+  /* @conditional-compile-remove(teams-meeting-conference) */
   test('Teams meeting phone info tile should be showing when network reconnect is bad ', async ({
     page,
     serverUrl
@@ -55,6 +56,18 @@ test.describe('User Facing Diagnostics tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot('tile-when-teams-tile-when-ufd-network-reconnect-is-bad.png');
   });
 
+  test('Tile notification in case of bad network connection ', async ({ page, serverUrl }) => {
+    const initialState = defaultMockCallAdapterState();
+    setNetworkDiagnostic(initialState, {
+      networkReceiveQuality: { value: DiagnosticQuality.Bad, valueType: 'DiagnosticQuality' }
+    });
+    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
+
+    await waitForSelector(page, dataUiId('call-composite-hangup-button'));
+    expect(await stableScreenshot(page)).toMatchSnapshot('tile-when-ufd-network-quality-is-bad.png');
+  });
+
+  /* @conditional-compile-remove(teams-meeting-conference) */
   test('Teams meeting phone info notification in case of bad network connection ', async ({ page, serverUrl }) => {
     const initialState = defaultMockCallAdapterState();
     initialState.isTeamsMeeting = true;
