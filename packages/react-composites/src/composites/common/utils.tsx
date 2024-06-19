@@ -30,7 +30,7 @@ export const useMinMaxDragPosition = (modalLayerHostId: string, rtl?: boolean): 
   const modalHostHeight = _useContainerHeight(modalHostRef);
   const minDragPosition: _ICoordinates | undefined = useMemo(
     () =>
-      modalHostWidth === undefined
+      modalHostWidth === undefined || modalHostHeight === undefined
         ? undefined
         : {
             x: rtl
@@ -42,7 +42,7 @@ export const useMinMaxDragPosition = (modalLayerHostId: string, rtl?: boolean): 
   );
   const maxDragPosition: _ICoordinates | undefined = useMemo(
     () =>
-      modalHostWidth === undefined || modalHostHeight === undefined
+      modalHostWidth === undefined
         ? undefined
         : {
             x: rtl
@@ -50,7 +50,7 @@ export const useMinMaxDragPosition = (modalLayerHostId: string, rtl?: boolean): 
               : MODAL_PIP_DEFAULT_PX.rightPositionPx,
             y: MODAL_PIP_DEFAULT_PX.bottomPositionPx
           },
-    [modalHostHeight, modalHostWidth, rtl]
+    [modalHostWidth, rtl]
   );
 
   return { minDragPosition: minDragPosition, maxDragPosition: maxDragPosition };
