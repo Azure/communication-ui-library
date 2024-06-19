@@ -141,7 +141,6 @@ export const usePeoplePane = (props: {
         onClick: () => {
           setShowMuteAllPrompt(true);
         },
-        'data-ui-id': 'participant-item-mute-all-remote-participants',
         ariaLabel: localeStrings.muteAllMenuLabel,
         disabled: isAllMuted
       });
