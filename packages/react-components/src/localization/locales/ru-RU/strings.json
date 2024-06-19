@@ -259,12 +259,167 @@
     "unableToStartVideoEffect": "Не удалось применить эффект видео.",
     "startSpotlightWhileMaxParticipantsAreSpotlighted": "Не удается запустить закрепление участников, так как достигнуто предельное число закрепленных участников."
   },
+  "notifications": {
+    "unableToReachChatService": {
+      "title": "Вы не в сети.",
+      "closeButtonAriaLabel": "Закрыть"
+    },
+    "accessDenied": {
+      "title": "Не удается получить доступ к службам чата",
+      "message": "Проверьте предоставленные учетные данные пользователя",
+      "closeButtonAriaLabel": "Закрыть"
+    },
+    "userNotInChatThread": {
+      "title": "Вы больше не находитесь в цепочке этого чата.",
+      "closeButtonAriaLabel": "Закрыть"
+    },
+    "sendMessageNotInChatThread": {
+      "title": "Не удалось отправить сообщение.",
+      "message": "Вы больше не находитесь в цепочке этого чата",
+      "closeButtonAriaLabel": "Закрыть"
+    },
+    "sendMessageGeneric": {
+      "title": "Не удалось отправить сообщение.",
+      "closeButtonAriaLabel": "Закрыть"
+    },
+    "callingNetworkFailure": {
+      "title": "Проблемы с подключением к телефону",
+      "message": "Похоже, вы не в сети. Проверка сетевое подключение и повторите попытку.",
+      "closeButtonAriaLabel": "Закрыть"
+    },
+    "startVideoGeneric": {
+      "title": "Не удалось запустить видео.",
+      "closeButtonAriaLabel": "Закрыть"
+    },
+    "stopVideoGeneric": {
+      "title": "Не удалось остановить видео.",
+      "closeButtonAriaLabel": "Закрыть"
+    },
+    "muteGeneric": {
+      "title": "Не удалось отключить микрофон.",
+      "closeButtonAriaLabel": "Закрыть"
+    },
+    "unmuteGeneric": {
+      "title": "Не удалось включить микрофон.",
+      "closeButtonAriaLabel": "Закрыть"
+    },
+    "speakingWhileMuted": {
+      "title": "Ваш микрофон отключен.",
+      "closeButtonAriaLabel": "Закрыть"
+    },
+    "startScreenShareGeneric": {
+      "title": "Возникла проблема с запуском демонстрации экрана.",
+      "closeButtonAriaLabel": "Закрыть"
+    },
+    "stopScreenShareGeneric": {
+      "title": "Не удалось остановить демонстрацию экрана.",
+      "closeButtonAriaLabel": "Закрыть"
+    },
+    "callNetworkQualityLow": {
+      "title": "Качество работы сети: низкое.",
+      "closeButtonAriaLabel": "Закрыть"
+    },
+    "callNoSpeakerFound": {
+      "title": "Динамики и наушники не найдены",
+      "message": "Подключите звуковое устройство, чтобы прослушать звонок.",
+      "closeButtonAriaLabel": "Закрыть"
+    },
+    "callNoMicrophoneFound": {
+      "title": "Микрофоны не найдены",
+      "message": "Подключите устройство ввода звука.",
+      "closeButtonAriaLabel": "Закрыть"
+    },
+    "callMicrophoneAccessDenied": {
+      "title": "Не удается получить доступ к микрофону",
+      "message": "Щелкните блокировку в адресной строке, чтобы предоставить разрешение на доступ к этой веб-странице.",
+      "closeButtonAriaLabel": "Закрыть"
+    },
+    "callMicrophoneAccessDeniedSafari": {
+      "title": "Не удается получить доступ к микрофону",
+      "message": "Обновите страницу, чтобы предоставить разрешения, или проверьте параметры браузера и включите разрешения для этого веб-сайта.",
+      "closeButtonAriaLabel": "Закрыть"
+    },
+    "callMicrophoneMutedBySystem": {
+      "title": "Система отключила ваш микрофон.",
+      "closeButtonAriaLabel": "Закрыть"
+    },
+    "callMicrophoneUnmutedBySystem": {
+      "title": "Микрофон восстановлен, и система включила ваш звук.",
+      "closeButtonAriaLabel": "Закрыть"
+    },
+    "callMacOsMicrophoneAccessDenied": {
+      "title": "Не удается получить доступ к микрофону",
+      "message": "Предоставьте разрешение на доступ к микрофону в параметрах конфиденциальности macOS.",
+      "closeButtonAriaLabel": "Закрыть"
+    },
+    "callLocalVideoFreeze": {
+      "title": "Низкая пропускная способность сети",
+      "message": "Ваше видео может отображаться как приостановленное для других участников звонка.",
+      "closeButtonAriaLabel": "Закрыть"
+    },
+    "callCameraAccessDenied": {
+      "title": "Не удается получить доступ к камере",
+      "message": "Щелкните блокировку в адресной строке, чтобы предоставить разрешение на доступ к этой веб-странице.",
+      "closeButtonAriaLabel": "Закрыть"
+    },
+    "callCameraAccessDeniedSafari": {
+      "title": "Не удается получить доступ к камере",
+      "message": "Обновите страницу, чтобы предоставить разрешения, или проверьте параметры браузера и включите разрешения для этого веб-сайта.",
+      "closeButtonAriaLabel": "Закрыть"
+    },
+    "callCameraAlreadyInUse": {
+      "title": "Не удается получить доступ к камере",
+      "message": "Возможно, оно уже используется другим приложением.",
+      "closeButtonAriaLabel": "Закрыть"
+    },
+    "callVideoStoppedBySystem": {
+      "title": "Воспроизведение видео остановлено системой.",
+      "closeButtonAriaLabel": "Закрыть"
+    },
+    "callVideoRecoveredBySystem": {
+      "title": "Воспроизведение видео возобновлено.",
+      "closeButtonAriaLabel": "Закрыть"
+    },
+    "callMacOsCameraAccessDenied": {
+      "title": "MacOS блокирует доступ к камере",
+      "message": "Обновите параметры конфиденциальности, чтобы разрешить этому браузеру доступ к камере.",
+      "closeButtonAriaLabel": "Закрыть"
+    },
+    "callMacOsScreenShareAccessDenied": {
+      "title": "MacOS блокирует совместное использование экрана",
+      "message": "Обновите параметры конфиденциальности, чтобы разрешить этому браузеру записывать ваш экран.",
+      "closeButtonAriaLabel": "Закрыть"
+    },
+    "failedToJoinCallGeneric": {
+      "title": "Не удалось присоединиться к вызову.",
+      "closeButtonAriaLabel": "Закрыть"
+    },
+    "failedToJoinCallInvalidMeetingLink": {
+      "title": "Не удалось присоединиться к собранию. Недопустимая ссылка.",
+      "closeButtonAriaLabel": "Закрыть"
+    },
+    "cameraFrozenForRemoteParticipants": {
+      "title": "У пользователей звонка возникли проблемы с просмотром видео",
+      "message": "Проверьте свои устройства и сеть.",
+      "closeButtonAriaLabel": "Закрыть"
+    },
+    "unableToStartVideoEffect": {
+      "title": "Не удалось применить эффект видео.",
+      "closeButtonAriaLabel": "Закрыть"
+    },
+    "startSpotlightWhileMaxParticipantsAreSpotlighted": {
+      "title": "Не удается запустить интересное для участников",
+      "message": "Максимальное число участников уже в фокусе.",
+      "closeButtonAriaLabel": "Закрыть"
+    }
+  },
   "videoGallery": {
     "screenIsBeingSharedMessage": "Вы демонстрируете свой экран",
     "screenShareLoadingMessage": "Загрузка экрана пользователя {participant}",
     "localVideoLabel": "Вы",
     "localVideoCameraSwitcherLabel": "Переключить камеру",
     "localVideoMovementLabel": "Перемещаемая локальная плитка видео",
+    "localVideoMovementAriaLabel": "Перемещаемая локальная плитка видео",
     "localVideoSelectedDescription": "Выбрана камера {cameraName}",
     "displayNamePlaceholder": "Участник без имени",
     "fitRemoteParticipantToFrame": "Вписать в кадр",
@@ -295,7 +450,8 @@
   },
   "videoTile": {
     "participantStateRinging": "Выполняется вызов...",
-    "participantStateHold": "На удержании"
+    "participantStateHold": "На удержании",
+    "moreOptionsButtonAriaLabel": "Дополнительные параметры"
   },
   "CameraAndMicrophoneSitePermissionsRequest": {
     "primaryText": "Разрешить {appName} использовать камеру и микрофон",
@@ -415,5 +571,16 @@
   "verticalGallery": {
     "leftNavButtonAriaLabel": "предыдущая страница",
     "rightNavButtonAriaLabel": "следующая страница"
+  },
+  "MeetingConferencePhoneInfo": {
+    "meetingConferencePhoneInfoModalTitle": "Присоединиться к вызову с телефона",
+    "meetingConferencePhoneInfoModalDialIn": "Набрать номер",
+    "meetingConferencePhoneInfoModalMeetingId": "Введите идентификатор собрания",
+    "meetingConferencePhoneInfoModalWait": "Подождите, пока организатор допустит вас",
+    "meetingConferencePhoneInfoModalNoPhoneAvailable": "Нет доступных телефонов",
+    "meetingConferencePhoneInfoModalTollFree": "{phoneNumber} (бесплатный) {country}, {city}",
+    "meetingConferencePhoneInfoModalTollFreeWithoutGeoData": "{phoneNumber} (бесплатный)",
+    "meetingConferencePhoneInfoModalToll": "{phoneNumber} (платный) {country}, {city}",
+    "meetingConferencePhoneInfoModalTollWithoutGeoData": "{phoneNumber} (платный)"
   }
 }

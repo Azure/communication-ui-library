@@ -135,6 +135,7 @@
     "dtmfDialerButtonTooltipOff": "隐藏拨号盘",
     "dtmfDialerMoreButtonLabelOn": "显示拨号盘",
     "dtmfDialerMoreButtonLabelOff": "隐藏拨号盘",
+    "phoneCallMoreButtonLabel": "电话呼叫",
     "spokenLanguageStrings": {
       "ar-ae": "阿拉伯语 - 阿拉伯联合酋长国",
       "ar-sa": "阿拉伯语 - 沙特阿拉伯",
@@ -336,7 +337,12 @@
     "leaveConfirmDialogContent": "是否确实要离开此聊天?",
     "endCallConfirmDialogTitle": "结束通话?",
     "endCallConfirmDialogContent": "你将结束所有人的通话。",
-    "invalidMeetingIdentifier": "会议 ID 或密码无效"
+    "invalidMeetingIdentifier": "会议 ID 或密码无效",
+    "pinParticipantMenuLabel": "Pin for me",
+    "pinParticipantLimitReachedMenuLabel": "Pin (limit reached)",
+    "unpinParticipantMenuLabel": "Unpin",
+    "pinParticipantMenuItemAriaLabel": "Pin",
+    "unpinParticipantMenuItemAriaLabel": "Unpin"
   },
   "chat": {
     "chatListHeader": "在此聊天中",

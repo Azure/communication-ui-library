@@ -2,8 +2,8 @@
   "type": "patch",
   "area": "fix",
   "workstream": "A11y",
-  "comment": "Add message context to aria label",
+  "comment": "Update dark theme color to inverted",
   "packageName": "@azure/communication-react",
-  "email": "3941071+emlynmac@users.noreply.github.com",
+  "email": "longamy@microsoft.com",
   "dependentChangeType": "patch"
 }

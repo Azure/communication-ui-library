@@ -1,9 +1,0 @@
-{
-  "type": "minor",
-  "area": "feature",
-  "workstream": "Log in as Teams Identity",
-  "comment": "GA CTE - Fix some stable build problems - FIx api changes from sdk",
-  "packageName": "@azure/communication-react",
-  "email": "jiangnanhello@live.com",
-  "dependentChangeType": "patch"
-}

@@ -1,8 +1,8 @@
 {
   "type": "prerelease",
   "area": "feature",
-  "workstream": "Notification components to show notifications in the UI",
-  "comment": "Notification components to show notifications in the UI",
+  "workstream": "Notifications",
+  "comment": "Error notifications in composite",
   "packageName": "@azure/communication-react",
   "email": "96077406+carocao-msft@users.noreply.github.com",
   "dependentChangeType": "patch"

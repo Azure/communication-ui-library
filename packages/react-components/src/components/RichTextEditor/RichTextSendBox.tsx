@@ -7,6 +7,8 @@ import { Icon, Stack } from '@fluentui/react';
 import { useLocale } from '../../localization';
 import { SendBoxStrings } from '../SendBox';
 import { sendIconStyle } from '../styles/SendBox.styles';
+/* @conditional-compile-remove(file-sharing-acs) */
+import { useV9CustomStyles } from '../styles/SendBox.styles';
 import { InputBoxButton } from '../InputBoxButton';
 import { RichTextSendBoxErrors, RichTextSendBoxErrorsProps } from './RichTextSendBoxErrors';
 import { isMessageTooLong, isSendBoxButtonAriaDisabled, sanitizeText } from '../utils/SendBoxUtils';
@@ -230,6 +232,9 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
   );
   const editorComponentRef = useRef<RichTextEditorComponentRef>(null);
 
+  /* @conditional-compile-remove(file-sharing-acs) */
+  const customV9Styles = useV9CustomStyles();
+
   const contentTooLongMessage = useMemo(
     () => (contentValueOverflow ? strings.textTooLong : undefined),
     [contentValueOverflow, strings.textTooLong]
@@ -439,7 +444,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
   const onRenderAttachmentUploads = useCallback(() => {
     return (
       <Stack className={attachmentUploadCardsStyles}>
-        <FluentV9ThemeProvider v8Theme={theme}>
+        <FluentV9ThemeProvider v8Theme={theme} className={customV9Styles.clearBackground}>
           <_AttachmentUploadCards
             attachments={attachments}
             onCancelAttachmentUpload={onCancelAttachmentUpload}
@@ -449,18 +454,21 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
               uploadCompleted: strings.uploadCompleted,
               attachmentMoreMenu: strings.attachmentMoreMenu
             }}
+            disabled={disabled}
           />
         </FluentV9ThemeProvider>
       </Stack>
     );
   }, [
+    theme,
+    customV9Styles.clearBackground,
     attachments,
     onCancelAttachmentUpload,
     strings.removeAttachment,
-    strings.uploadCompleted,
     strings.uploading,
+    strings.uploadCompleted,
     strings.attachmentMoreMenu,
-    theme
+    disabled
   ]);
 
   const isSendBoxButtonAriaDisabledValue = useMemo(() => {

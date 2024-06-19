@@ -1,9 +1,0 @@
-{
-  "type": "patch",
-  "area": "fix",
-  "workstream": "\"accessibility update\"",
-  "comment": "Update the color of time stamp to meet the contrast requirement from a11y",
-  "packageName": "@azure/communication-react",
-  "email": "longamy@microsoft.com",
-  "dependentChangeType": "patch"
-}

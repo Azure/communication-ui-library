@@ -2,7 +2,7 @@
   "type": "patch",
   "area": "fix",
   "workstream": "",
-  "comment": "Status icon should not be keyboard tab navigable, only by voiceover navigation.",
+  "comment": "Resolve A11Y issue where show richTextEditor button didn't have aria-expanded attribute",
   "packageName": "@azure/communication-react",
   "email": "73612854+palatter@users.noreply.github.com",
   "dependentChangeType": "patch"

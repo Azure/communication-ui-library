@@ -486,6 +486,11 @@ export interface CallWithChatAdapterManagement {
    * Mute a participant
    */
   muteParticipant(userIds: string): Promise<void>;
+  /* @conditional-compile-remove(soft-mute) */
+  /**
+   * Mute a participant
+   */
+  muteAllRemoteParticipants(): Promise<void>;
 }
 
 /**

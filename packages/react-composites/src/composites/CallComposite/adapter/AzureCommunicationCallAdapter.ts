@@ -557,6 +557,8 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.stopAllSpotlight.bind(this);
     /* @conditional-compile-remove(soft-mute) */
     this.muteParticipant.bind(this);
+    /* @conditional-compile-remove(soft-mute) */
+    this.muteAllRemoteParticipants.bind(this);
   }
 
   public dispose(): void {
@@ -1029,6 +1031,11 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   /* @conditional-compile-remove(soft-mute) */
   public async muteParticipant(userId: string): Promise<void> {
     this.handlers.onMuteParticipant(userId);
+  }
+
+  /* @conditional-compile-remove(soft-mute) */
+  public async muteAllRemoteParticipants(): Promise<void> {
+    this.handlers.onMuteAllRemoteParticipants();
   }
 
   public async startSpotlight(userIds?: string[]): Promise<void> {

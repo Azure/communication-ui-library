@@ -1,8 +1,8 @@
 {
   "type": "patch",
-  "area": "improvement",
+  "area": "fix",
   "workstream": "RTE",
-  "comment": "Update table border and selection colors for rich text editor and messages",
+  "comment": "Fix for rich text editor toolbar buttons hover state on Android devices",
   "packageName": "@azure/communication-react",
   "email": "98852890+vhuseinova-msft@users.noreply.github.com",
   "dependentChangeType": "patch"

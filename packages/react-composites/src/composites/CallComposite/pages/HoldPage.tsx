@@ -54,6 +54,8 @@ export const HoldPage = (props: HoldPageProps): JSX.Element => {
     <CallArrangement
       complianceBannerProps={{ strings }}
       errorBarProps={props.options?.errorBar !== false && errorBarProps}
+      /* @conditional-compile-remove(notifications) */
+      showErrorNotifications={props.options?.errorBar ?? true}
       callControlProps={{
         options: callControlOptions,
         increaseFlyoutItemSize: props.mobileView
