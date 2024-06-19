@@ -575,6 +575,8 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       const attachments = options?.attachments ?? [];
       /* @conditional-compile-remove(file-sharing-acs) */
       handleUploadAction({ type: AttachmentUploadActionType.Clear });
+      handleInlineImageUploadAction({ type: AttachmentUploadActionType.Clear });
+
       /* @conditional-compile-remove(file-sharing-acs) */
       await adapter.sendMessage(content, {
         attachments: attachments,

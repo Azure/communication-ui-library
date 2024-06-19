@@ -262,19 +262,23 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
   }, [contentValue]);
 
   /* @conditional-compile-remove(file-sharing-acs) */
-  const toAttachmentMetadata = useCallback((attachmentsWithProgress: AttachmentMetadataInProgress[] | undefined) => {
-    return attachmentsWithProgress
-      ?.filter((attachment) => {
-        return !('error' in attachment) && !attachment.error?.message;
-      })
-      .map((attachment) => {
-        return {
-          id: attachment.id,
-          name: attachment.name
-          // url: attachment.url ?? ''
-        };
-      });
-  }, []);
+  const toAttachmentMetadata = useCallback(
+    (attachmentsWithProgress: AttachmentMetadataInProgress[] | undefined, attachmentType?: 'image') => {
+      return attachmentsWithProgress
+        ?.filter((attachment) => {
+          return !('error' in attachment) && !attachment.error?.message;
+        })
+        .map((attachment) => {
+          return {
+            id: attachment.id,
+            name: attachment.name,
+            url: attachment.url ?? '',
+            attachmentType: attachmentType
+          };
+        });
+    },
+    []
+  );
 
   const addUploadedImagesToMessage = useCallback(
     (message: string, uploadInlineImages: AttachmentMetadataInProgress[]): string => {
@@ -312,7 +316,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
       }
       // Don't send message until all attachments have been uploaded successfully
       /* @conditional-compile-remove(file-sharing-acs) */
-      // setAttachmentUploadsPendingError(undefined);
+      setAttachmentUploadsPendingError(undefined);
 
       console.log('Leah: ::: uploadInlineImages', uploadInlineImages);
 
@@ -343,10 +347,14 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
         /* @conditional-compile-remove(file-sharing-acs) */ isAttachmentUploadCompleted(attachments) ||
         /* @conditional-compile-remove(rich-text-editor-image-upload) */ isAttachmentUploadCompleted(uploadInlineImages)
       ) {
-        let attachmentArray = attachments;
+        let attachmentArray;
         if (uploadInlineImages) {
           message = addUploadedImagesToMessage(message, uploadInlineImages);
-          attachmentArray = attachments?.concat(uploadInlineImages);
+          attachmentArray = toAttachmentMetadata(attachments);
+          const imageArray = toAttachmentMetadata(uploadInlineImages, 'image');
+          if (imageArray) {
+            attachmentArray = attachmentArray?.concat(imageArray);
+          }
         }
 
         onSendMessage(
@@ -354,7 +362,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
           /* @conditional-compile-remove(file-sharing-acs) */ /* @conditional-compile-remove(rich-text-editor-composite-support) */
           {
             /* @conditional-compile-remove(file-sharing-acs) */
-            attachments: toAttachmentMetadata(attachmentArray),
+            attachments: attachmentArray,
             /* @conditional-compile-remove(rich-text-editor-composite-support) */
             type: 'html'
           }
