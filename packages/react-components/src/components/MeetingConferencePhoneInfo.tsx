@@ -74,24 +74,24 @@ export interface MeetingConferencePhoneInfoModalStrings {
   meetingConferencePhoneInfoModalNoPhoneAvailable?: string;
 
   /**
-   * Connection lost bar title
+   * Bad quality bar title
    */
-  lostConnectionBarTitle?: string;
+  badQualityBarTitle?: string;
 
   /**
-   * Connection lost bar message
+   * Bad quality bar message
    */
-  lostConnectionBarMessage?: string;
+  badQualityBarMessage?: string;
 
   /**
-   * Connection lost bar close button aria label
+   * Bad quality bar close button aria label
    */
-  lostConnectionBarClose?: string;
+  badQualityBarClose?: string;
 
   /**
-   * Connection lost bar join button label
+   * Bad quality bar join button label
    */
-  lostConnectionBarJoin?: string;
+  badQualityBarJoin?: string;
 }
 
 /* @conditional-compile-remove(teams-meeting-conference) */

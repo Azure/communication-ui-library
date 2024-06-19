@@ -3275,10 +3275,10 @@ export interface MediaDiagnosticsState {
 
 // @beta
 export interface MeetingConferencePhoneInfoModalStrings {
-    lostConnectionBarClose?: string;
-    lostConnectionBarJoin?: string;
-    lostConnectionBarMessage?: string;
-    lostConnectionBarTitle?: string;
+    badQualityBarClose?: string;
+    badQualityBarJoin?: string;
+    badQualityBarMessage?: string;
+    badQualityBarTitle?: string;
     meetingConferencePhoneInfoModalDialIn?: string;
     meetingConferencePhoneInfoModalMeetingId?: string;
     meetingConferencePhoneInfoModalNoPhoneAvailable?: string;

@@ -56,10 +56,10 @@ export const ConnectionLostNotificationBar = (props: ConnectionLostBannerProps):
   const localeStrings = useLocale().component.strings.MeetingConferencePhoneInfo;
 
   const barStrings = {
-    title: localeStrings.lostConnectionBarTitle ? localeStrings.lostConnectionBarTitle : '',
-    closeButtonAriaLabel: localeStrings.lostConnectionBarClose ? localeStrings.lostConnectionBarClose : '',
-    message: localeStrings.lostConnectionBarMessage ? localeStrings.lostConnectionBarMessage : '',
-    primaryButtonLabel: localeStrings.lostConnectionBarJoin ? localeStrings.lostConnectionBarJoin : ''
+    title: localeStrings.badQualityBarTitle ? localeStrings.badQualityBarTitle : '',
+    closeButtonAriaLabel: localeStrings.badQualityBarClose ? localeStrings.badQualityBarClose : '',
+    message: localeStrings.badQualityBarMessage ? localeStrings.badQualityBarMessage : '',
+    primaryButtonLabel: localeStrings.badQualityBarJoin ? localeStrings.badQualityBarJoin : ''
   };
 
   return (
