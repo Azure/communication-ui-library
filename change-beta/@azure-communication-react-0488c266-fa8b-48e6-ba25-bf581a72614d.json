@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "area": "feature",
-  "workstream": "",
-  "comment": "Add 1:n call to CTE beta",
-  "packageName": "@azure/communication-react",
-  "email": "jiangnanhello@live.com",
-  "dependentChangeType": "patch"
-}
