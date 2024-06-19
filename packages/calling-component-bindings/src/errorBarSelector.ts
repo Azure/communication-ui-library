@@ -78,9 +78,11 @@ export const errorBarSelector: ErrorBarSelector = createSelector(
     // Errors reported via diagnostics are more reliable than from API method failures, so process those first.
     let isTeamsMeetingWithPhones = false;
     /* @conditional-compile-remove(teams-meeting-conference) */
+    console.log('zdor initial conference ' + meetingConference);
     if (meetingConference && meetingConference.length > 0) {
       isTeamsMeetingWithPhones = true;
     }
+    console.log('zdor initial flag ' + isTeamsMeetingWithPhones);
     if (
       !isTeamsMeetingWithPhones && // Teams meeting with conference phones has separate notification
       (diagnostics?.network.latest.networkReceiveQuality?.value === DiagnosticQuality.Bad ||
