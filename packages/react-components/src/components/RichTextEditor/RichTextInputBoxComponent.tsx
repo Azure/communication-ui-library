@@ -122,6 +122,7 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
             tooltipContent={strings.richTextFormatButtonTooltip}
             className={richTextActionButtonsStyle}
             data-testId={'rich-text-input-box-format-button'}
+            ariaExpanded={showRichTextEditorFormatting}
           />
           <Icon iconName="RichTextDividerIcon" className={richTextActionButtonsDividerStyle(theme)} />
           {actionComponents}
