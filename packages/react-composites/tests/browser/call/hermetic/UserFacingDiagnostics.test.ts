@@ -20,9 +20,18 @@ test.describe('User Facing Diagnostics tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot('banner-when-speaking-while-muted.png');
   });
 
-  test('Tile should be showing when network reconnect is bad ', async ({ page, serverUrl }) => {
+  test('Meeting phone info tile should be showing when network reconnect is bad ', async ({ page, serverUrl }) => {
     const initialState = defaultMockCallAdapterState();
     initialState.isTeamsMeeting = true;
+    if (initialState.call) {
+      initialState.call.teamsMeetingConference = [
+        {
+          phoneNumber: '1234567890',
+          conferenceId: '',
+          isTollFree: false
+        }
+      ];
+    }
     setNetworkDiagnostic(initialState, {
       networkReconnect: { value: DiagnosticQuality.Bad, valueType: 'DiagnosticQuality' }
     });
