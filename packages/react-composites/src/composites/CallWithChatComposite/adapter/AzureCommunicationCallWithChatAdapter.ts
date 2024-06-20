@@ -59,7 +59,6 @@ import {
 import {
   _createAzureCommunicationChatAdapterInner,
   _createLazyAzureCommunicationChatAdapterInner,
-  AzureCommunicationChatAdapter,
   createAzureCommunicationChatAdapterFromClient
 } from '../../ChatComposite/adapter/AzureCommunicationChatAdapter';
 import { EventEmitter } from 'events';
@@ -576,8 +575,8 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
 
   public async returnToMainMeeting(): Promise<void> {
     const threadId = this.callAdapter.getState().mainMeeting?.info?.threadId;
-    if (threadId) {
-      (this.chatAdapter as AzureCommunicationChatAdapter).switchChatThread(threadId).then(() => {
+    if (threadId && this.chatAdapter) {
+      this.chatAdapter.switchChatThread(threadId).then(() => {
         this.callAdapter.returnToMainMeeting();
       });
     }

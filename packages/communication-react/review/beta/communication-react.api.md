@@ -482,6 +482,7 @@ export type CallAdapterClientState = {
     sounds?: CallingSounds;
     reactions?: ReactionResources;
     mainMeeting?: CallState;
+    breakoutRoomSettings?: BreakoutRoomSettings;
 };
 
 // @public
@@ -1163,6 +1164,7 @@ export interface CallWithChatAdapterManagement {
     stopSpotlight(userIds?: string[]): Promise<void>;
     stopVideoBackgroundEffects(): Promise<void>;
     submitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined>;
+    switchChatThread(chatThreadId: string): Promise<void>;
     unmute(): Promise<void>;
     updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void;
     updateMessage(messageId: string, content: string, options?: Record<string, string> | /* @conditional-compile-remove(attachment-upload) */ MessageOptions): Promise<void>;
@@ -1292,6 +1294,8 @@ export interface CallWithChatAdapterUiState {
 // @public
 export interface CallWithChatClientState {
     alternateCallerId?: string | undefined;
+    // (undocumented)
+    breakoutRoomSettings?: BreakoutRoomSettings;
     call?: CallState;
     chat?: ChatThreadClientState;
     devices: DeviceManagerState;
@@ -1749,6 +1753,8 @@ export interface ChatAdapterThreadManagement {
     sendReadReceipt(chatMessageId: string): Promise<void>;
     sendTypingIndicator(): Promise<void>;
     setTopic(topicName: string): Promise<void>;
+    // (undocumented)
+    switchChatThread(threadId: string): Promise<void>;
     updateMessage(messageId: string, content: string, options?: Record<string, string> | /* @conditional-compile-remove(attachment-upload) */ MessageOptions): Promise<void>;
 }
 
