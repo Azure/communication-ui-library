@@ -226,7 +226,6 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
 
   const userId = toFlatCommunicationIdentifier(adapter.getState().userId);
 
-  // TODO: Move to adapter
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   const fetchBlobData = useCallback(
     async (
@@ -266,15 +265,16 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
 
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   const inlineImageUploadHandler = useCallback(
-    async (uploadTasks: AttachmentUploadTask[]): Promise<void> => {
+    async (uploadTasks: AttachmentUpload[]): Promise<void> => {
       for (const task of uploadTasks) {
-        const image: Blob | undefined = task.image;
+        const uploadTask = task as AttachmentUploadTask;
+        const image: Blob | undefined = uploadTask.image;
         if (!image) {
-          task.notifyUploadFailed(`Image data for "${task.metadata?.name}" is not provided.`);
+          uploadTask.notifyUploadFailed(`Image data for "${task.metadata?.name}" is not provided.`);
           continue;
         }
         if (image && image.size > MAX_INLINE_IMAGE_UPLOAD_SIZE_MB * 1024 * 1024) {
-          task.notifyUploadFailed(
+          uploadTask.notifyUploadFailed(
             `"${task.metadata?.name}" is too big. Select a file under ${MAX_INLINE_IMAGE_UPLOAD_SIZE_MB}MB.`
           );
           continue;
@@ -283,16 +283,16 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
         const SUPPORTED_FILES: Array<string> = ['jpg', 'jpeg', 'png', 'gif', 'heic', 'webp'];
         const imageExtension = task.metadata?.name.split('.').pop() ?? '';
         if (!SUPPORTED_FILES.includes(imageExtension)) {
-          task.notifyUploadFailed(`Uploading ".${imageExtension}" image is not allowed.`);
+          uploadTask.notifyUploadFailed(`Uploading ".${imageExtension}" image is not allowed.`);
           continue;
         }
 
         try {
           const response = await adapter.uploadImage(image, task.metadata?.name);
-          task.notifyUploadCompleted(response.id, task.metadata.url || '');
+          uploadTask.notifyUploadCompleted(response.id, task.metadata.url || '');
         } catch (error) {
           console.error(error);
-          task.notifyUploadFailed('Unable to upload inline image. Please try again later.');
+          uploadTask.notifyUploadFailed('Unable to upload inline image. Please try again later.');
         }
       }
     },
