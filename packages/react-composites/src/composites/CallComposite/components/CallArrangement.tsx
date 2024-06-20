@@ -639,7 +639,9 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                           <Stack styles={bannerNotificationStyles}>
                             <BadNetworkQualityNotificationBar
                               {...props.badNetworkQualityBannerProps}
-                              onPrimaryButtonClick={toggleTeamsMeetingConferenceModal}
+                              onPrimaryButtonClick={
+                                props.mobileView ? toggleMeetingPhoneInfoPane : toggleTeamsMeetingConferenceModal
+                              }
                             />
                           </Stack>
                         )
