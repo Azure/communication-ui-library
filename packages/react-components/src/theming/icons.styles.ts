@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { IStackStyles, IStyle, mergeStyles, Theme } from '@fluentui/react';
+import { IStackStyles, IStyle, Theme } from '@fluentui/react';
 
 /** @private */
 export const scaledIconStyles = (theme: Theme): IStyle => {
@@ -26,9 +26,3 @@ export const sitePermissionIconBackgroundStyle = (theme: Theme): IStackStyles =>
     }
   };
 };
-
-/** @private */
-export const dataLossIconStyle = mergeStyles({
-  width: '1.25rem',
-  height: '1.25rem'
-});

@@ -9,7 +9,7 @@ import Linkify from 'react-linkify';
 import { ChatMessage } from '../../types/ChatMessage';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '../../types/ChatMessage';
-import { Link, mergeStyles } from '@fluentui/react';
+import { Link } from '@fluentui/react';
 /* @conditional-compile-remove(mention) */
 import { MentionDisplayOptions, Mention } from '../MentionPopover';
 
@@ -23,7 +23,8 @@ import DOMPurify from 'dompurify';
 import { _AttachmentDownloadCardsStrings } from '../Attachment/AttachmentDownloadCards';
 /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
 import { AttachmentMetadata } from '@internal/acs-ui-common';
-import { dataLossIconStyle } from '../../theming/icons.styles';
+/* @conditional-compile-remove(data-loss-prevention) */
+import { dataLossIconStyle } from '../styles/MessageThread.styles';
 
 type ChatMessageContentProps = {
   message: ChatMessage;
