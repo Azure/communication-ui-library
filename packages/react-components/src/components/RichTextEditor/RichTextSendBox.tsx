@@ -405,7 +405,9 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
       /* @conditional-compile-remove(file-sharing-acs) */
       !!attachmentUploadsPendingError ||
       /* @conditional-compile-remove(file-sharing-acs) */
-      !!attachments?.filter((attachmentUpload) => attachmentUpload.error).pop()?.error
+      !!attachments?.filter((attachmentUpload) => attachmentUpload.error).pop()?.error ||
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */
+      !!uploadInlineImages?.filter((image) => image.error).pop()?.error
     );
   }, [
     /* @conditional-compile-remove(file-sharing-acs) */
@@ -413,7 +415,9 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     contentTooLongMessage,
     /* @conditional-compile-remove(file-sharing-acs) */
     attachmentUploadsPendingError,
-    systemMessage
+    systemMessage,
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    uploadInlineImages
   ]);
 
   const onRenderSendIcon = useCallback(

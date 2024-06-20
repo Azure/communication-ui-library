@@ -55,7 +55,13 @@ import { AttachmentOptions } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing-acs) */
 import { nanoid } from 'nanoid';
 /* @conditional-compile-remove(file-sharing-acs) */
-import { AttachmentUploadActionType, AttachmentUpload, AttachmentUploadReducer } from './file-sharing/AttachmentUpload';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+import {
+  AttachmentUploadActionType,
+  AttachmentUpload,
+  AttachmentUploadReducer,
+  AttachmentUploadTask
+} from './file-sharing/AttachmentUpload';
 /* @conditional-compile-remove(file-sharing-acs) */
 import { MessageOptions } from '@internal/acs-ui-common';
 import { SendBoxPicker } from '../common/SendBoxPicker';
@@ -116,8 +122,6 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const defaultNumberOfChatMessagesToReload = 5;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   const MAX_INLINE_IMAGE_UPLOAD_SIZE_MB = 20;
-  /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  const SUPPORTED_FILES: Array<string> = ['jpg', 'jpeg', 'png', 'gif', 'heic', 'webp'];
   /* @conditional-compile-remove(file-sharing-acs) */
   const [downloadErrorMessage, setDownloadErrorMessage] = React.useState('');
   const [overlayImageItem, setOverlayImageItem] = useState<OverlayImageItem>();
@@ -224,39 +228,45 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
 
   // TODO: Move to adapter
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  const fetchBlobData = async (
-    resource: string | URL | Request,
-    options: { timeout?: number; headers?: Headers; abortController: AbortController }
-  ): Promise<Response> => {
-    // default timeout is 30 seconds
-    const { timeout = 30000, abortController } = options;
+  const fetchBlobData = useCallback(
+    async (
+      resource: string | URL | Request,
+      options: { timeout?: number; headers?: Headers; abortController: AbortController }
+    ): Promise<Response> => {
+      // default timeout is 30 seconds
+      const { timeout = 30000, abortController } = options;
 
-    const id = setTimeout(() => {
-      abortController.abort();
-    }, timeout);
+      const id = setTimeout(() => {
+        abortController.abort();
+      }, timeout);
 
-    const response = await fetch(resource, {
-      ...options,
-      signal: abortController.signal
-    });
-    clearTimeout(id);
-    return response;
-  };
+      const response = await fetch(resource, {
+        ...options,
+        signal: abortController.signal
+      });
+      clearTimeout(id);
+      return response;
+    },
+    []
+  );
 
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  const getInlineImageData = useCallback(async (image: string): Promise<Blob | undefined> => {
-    const blobImage: Blob | undefined = undefined;
-    if (image.startsWith('blob') || image.startsWith('http')) {
-      const res = await fetchBlobData(image, { abortController: new AbortController() });
-      const blobImage = await res.blob();
+  const getInlineImageData = useCallback(
+    async (image: string): Promise<Blob | undefined> => {
+      const blobImage: Blob | undefined = undefined;
+      if (image.startsWith('blob') || image.startsWith('http')) {
+        const res = await fetchBlobData(image, { abortController: new AbortController() });
+        const blobImage = await res.blob();
+        return blobImage;
+      }
       return blobImage;
-    }
-    return blobImage;
-  }, []);
+    },
+    [fetchBlobData]
+  );
 
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   const inlineImageUploadHandler = useCallback(
-    async (uploadTasks: AttachmentUpload[]): Promise<void> => {
+    async (uploadTasks: AttachmentUploadTask[]): Promise<void> => {
       for (const task of uploadTasks) {
         const image: Blob | undefined = task.image;
         if (!image) {
@@ -269,6 +279,8 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
           );
           continue;
         }
+
+        const SUPPORTED_FILES: Array<string> = ['jpg', 'jpeg', 'png', 'gif', 'heic', 'webp'];
         const imageExtension = task.metadata?.name.split('.').pop() ?? '';
         if (!SUPPORTED_FILES.includes(imageExtension)) {
           task.notifyUploadFailed(`Uploading ".${imageExtension}" image is not allowed.`);
@@ -284,7 +296,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
         }
       }
     },
-    [SUPPORTED_FILES, adapter]
+    [adapter]
   );
 
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
