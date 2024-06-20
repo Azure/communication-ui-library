@@ -53,7 +53,7 @@ export const errorNotificationsSelector: ErrorNotificationsSelector = createSele
     diagnostics,
     deviceManager,
     environmentInfo,
-    meetingConference
+    /* @conditional-compile-remove(teams-meeting-conference) */ meetingConference
   ): { activeErrorMessages: ActiveNotification[] } => {
     // The order in which the errors are returned is significant: The `Notification` shows errors on the UI in that order.
     // There are several options for the ordering:

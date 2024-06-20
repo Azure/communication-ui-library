@@ -435,10 +435,10 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   const [userClosedBadQualityBanner, setUserClosedBadQualityBanner] = useState(false);
   /* @conditional-compile-remove(teams-meeting-conference) */
   useEffect(() => {
-    if (badNetworkQualityFlag.isPoorNetworkQuality && userClosedBadQualityBanner) {
+    if (badNetworkQualityFlag.isPoorNetworkQuality) {
       setUserClosedBadQualityBanner(false);
     }
-  }, [badNetworkQualityFlag.isPoorNetworkQuality, userClosedBadQualityBanner]);
+  }, [badNetworkQualityFlag.isPoorNetworkQuality]);
   /* @conditional-compile-remove(teams-meeting-conference) */
   const badNetworkQualityBannerProps = useBadNetworkQualityNotifications(
     badNetworkQualityFlag.isPoorNetworkQuality,
