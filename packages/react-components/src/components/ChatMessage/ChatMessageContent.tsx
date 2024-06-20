@@ -9,7 +9,7 @@ import Linkify from 'react-linkify';
 import { ChatMessage } from '../../types/ChatMessage';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '../../types/ChatMessage';
-import { Link } from '@fluentui/react';
+import { Link, mergeStyles } from '@fluentui/react';
 /* @conditional-compile-remove(mention) */
 import { MentionDisplayOptions, Mention } from '../MentionPopover';
 
@@ -23,6 +23,7 @@ import DOMPurify from 'dompurify';
 import { _AttachmentDownloadCardsStrings } from '../Attachment/AttachmentDownloadCards';
 /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
 import { AttachmentMetadata } from '@internal/acs-ui-common';
+import { dataLossIconStyle } from '../../theming/icons.styles';
 
 type ChatMessageContentProps = {
   message: ChatMessage;
@@ -135,7 +136,9 @@ const MessageContentAsText = (props: ChatMessageContentProps): JSX.Element => {
  * @private
  */
 export const BlockedMessageContent = (props: BlockedMessageContentProps): JSX.Element => {
-  const Icon: JSX.Element = <FontIcon iconName={'DataLossPreventionProhibited'} />;
+  const Icon: JSX.Element = (
+    <FontIcon className={mergeStyles(dataLossIconStyle)} iconName={'DataLossPreventionProhibited'} />
+  );
   const blockedMessage =
     props.message.warningText === undefined ? props.strings.blockedWarningText : props.message.warningText;
   const blockedMessageLink = props.message.link;
