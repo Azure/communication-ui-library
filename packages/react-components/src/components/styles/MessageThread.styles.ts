@@ -447,3 +447,9 @@ export const loadPreviousMessageButtonStyle = mergeStyles({
 export const DownIconStyle = mergeStyles({
   marginRight: '0.5em'
 });
+
+/** @private */
+export const dataLossIconStyle = mergeStyles({
+  width: '1.25rem',
+  height: '1.25rem'
+});
