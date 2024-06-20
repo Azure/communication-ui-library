@@ -81,6 +81,7 @@ export const handleInlineImage = (
   }
 };
 
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
 const base64ToBlob = (dataURI: string): Blob => {
   const byteString = atob(dataURI.split(',')[1]);
   const arrayBuffer = new ArrayBuffer(byteString.length);

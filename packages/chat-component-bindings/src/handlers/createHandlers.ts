@@ -69,7 +69,7 @@ export const createDefaultChatHandlers = memoizeOne(
           content,
           senderDisplayName: chatClient.getState().displayName
         };
-        /* @conditional-compile-remove(attachment-upload) */
+        /* @conditional-compile-remove(file-sharing-acs) */
         /* @conditional-compile-remove(rich-text-editor-image-upload) */
         if (
           options &&
