@@ -1,8 +1,8 @@
 {
   "type": "patch",
   "area": "fix",
-  "workstream": "Chat",
-  "comment": "Fix for an issue where links were opened in the same tab",
+  "workstream": "RTE",
+  "comment": "Fix for rich text editor toolbar buttons hover state on Android devices",
   "packageName": "@azure/communication-react",
   "email": "98852890+vhuseinova-msft@users.noreply.github.com",
   "dependentChangeType": "patch"

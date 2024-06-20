@@ -124,6 +124,7 @@ export interface ActiveNotification {
     onClickPrimaryButton?: () => void;
     onClickSecondaryButton?: () => void;
     onDismiss?: () => void;
+    timestamp?: Date;
     type: NotificationType;
 }
 
@@ -2513,6 +2514,9 @@ export type DeclarativeCallAgent = CallAgent & IncomingCallManagement;
 export type DeclarativeIncomingCall = IncomingCall;
 
 // @public
+export type DeclarativeTeamsCallAgent = TeamsCallAgent & IncomingCallManagement;
+
+// @public
 export const DEFAULT_COMPONENT_ICONS: {
     ChatMessageOptions: React_2.JSX.Element;
     ControlButtonCameraOff: React_2.JSX.Element;
@@ -3608,13 +3612,14 @@ export const Notifications: (props: NotificationsProps) => JSX.Element;
 // @beta
 export interface NotificationsProps {
     activeNotifications: ActiveNotification[];
+    ignorePremountNotifications?: boolean;
     maxNotificationsToShow?: number;
+    onDismissNotification?: (dismissedNotifications: ActiveNotification) => void;
     strings?: NotificationsStrings;
 }
 
 // @beta
 export interface NotificationsStrings {
-    accessDenied: NotificationBarStrings;
     callCameraAccessDenied: NotificationBarStrings;
     callCameraAccessDeniedSafari: NotificationBarStrings;
     callCameraAlreadyInUse: NotificationBarStrings;
@@ -3636,17 +3641,13 @@ export interface NotificationsStrings {
     failedToJoinCallGeneric?: NotificationBarStrings;
     failedToJoinCallInvalidMeetingLink?: NotificationBarStrings;
     muteGeneric: NotificationBarStrings;
-    sendMessageGeneric: NotificationBarStrings;
-    sendMessageNotInChatThread: NotificationBarStrings;
     startScreenShareGeneric: NotificationBarStrings;
     startSpotlightWhileMaxParticipantsAreSpotlighted: NotificationBarStrings;
     startVideoGeneric: NotificationBarStrings;
     stopScreenShareGeneric: NotificationBarStrings;
     stopVideoGeneric: NotificationBarStrings;
-    unableToReachChatService: NotificationBarStrings;
     unableToStartVideoEffect?: NotificationBarStrings;
     unmuteGeneric: NotificationBarStrings;
-    userNotInChatThread: NotificationBarStrings;
 }
 
 // @beta
@@ -4317,6 +4318,7 @@ export type StartTeamsCallIdentifier = MicrosoftTeamsUserIdentifier | PhoneNumbe
 // @public
 export interface StatefulCallClient extends CallClient {
     createCallAgent(...args: Parameters<CallClient['createCallAgent']>): Promise<DeclarativeCallAgent>;
+    createTeamsCallAgent(...args: Parameters<CallClient['createTeamsCallAgent']>): Promise<DeclarativeTeamsCallAgent>;
     createView(callId: string | undefined, participantId: CommunicationIdentifier | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState, options?: CreateViewOptions): Promise<CreateViewResult | undefined>;
     disposeView(callId: string | undefined, participantId: CommunicationIdentifier | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState): void;
     getState(): CallClientState;

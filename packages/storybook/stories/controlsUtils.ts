@@ -118,11 +118,6 @@ const errorOptions: ErrorType[] = [
   'callVideoRecoveredBySystem'
 ];
 const notificationOptions: NotificationType[] = [
-  'unableToReachChatService',
-  'accessDenied',
-  'userNotInChatThread',
-  'sendMessageNotInChatThread',
-  'sendMessageGeneric',
   'startVideoGeneric',
   'stopVideoGeneric',
   'muteGeneric',
@@ -397,7 +392,7 @@ export const controlsToAdd = {
   activeNotifications: {
     control: 'check',
     options: notificationOptions,
-    defaultValue: ['accessDenied'],
+    defaultValue: ['startVideoGeneric'],
     name: 'activeNotifications'
   },
   maxNotificationsToShow: {

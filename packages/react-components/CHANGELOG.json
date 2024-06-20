@@ -2,6 +2,21 @@
   "name": "@internal/react-components",
   "entries": [
     {
+      "date": "Mon, 17 Jun 2024 16:27:16 GMT",
+      "tag": "@internal/react-components_v1.18.0-beta.1",
+      "version": "1.18.0-beta.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@internal/react-components",
+            "comment": "Bump @internal/acs-ui-common to v1.18.0-beta.1",
+            "commit": "426b6a0ff8c54594e1fe935d7a2678023563c9dc"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 04 Jun 2024 05:01:43 GMT",
       "tag": "@internal/react-components_v1.17.0",
       "version": "1.17.0",

@@ -2,7 +2,7 @@
   "type": "patch",
   "area": "fix",
   "workstream": "accessibility",
-  "comment": "Updating accessibility to include status in the value",
+  "comment": "Accessibility title on Image Overlay reading out heading",
   "packageName": "@azure/communication-react",
   "email": "9044372+JoshuaLai@users.noreply.github.com",
   "dependentChangeType": "patch"

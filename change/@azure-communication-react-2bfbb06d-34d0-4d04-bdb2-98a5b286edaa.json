@@ -2,8 +2,8 @@
   "type": "patch",
   "area": "fix",
   "workstream": "A11y",
-  "comment": "Disable highlight of context menu on touch event in Android",
+  "comment": "Update dark theme color to inverted",
   "packageName": "@azure/communication-react",
-  "email": "3941071+emlynmac@users.noreply.github.com",
+  "email": "longamy@microsoft.com",
   "dependentChangeType": "patch"
 }
