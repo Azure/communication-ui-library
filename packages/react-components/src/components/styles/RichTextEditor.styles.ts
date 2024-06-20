@@ -265,8 +265,8 @@ export const sendBoxRichTextEditorStyle = (isExpanded: boolean): RichTextEditorS
  */
 export const insertTableMenuCellButtonStyles = (theme: Theme): IStyle => {
   return {
-    width: '16px',
-    height: '16px',
+    width: '24px',
+    height: '24px',
     border: `solid 1px ${theme.palette.neutralTertiaryAlt}`,
     cursor: 'pointer',
     background: 'transparent'
