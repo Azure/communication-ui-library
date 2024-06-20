@@ -54,6 +54,7 @@ export interface RichTextInputBoxComponentProps {
   onTyping?: () => Promise<void>;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   onPaste?: (event: { content: DocumentFragment }) => void;
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
   onUploadImage?: (image: string, fileName: string) => void;
 }
 

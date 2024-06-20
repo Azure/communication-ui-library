@@ -9,6 +9,7 @@ import { MessageOptions } from '@internal/acs-ui-common';
 import { ErrorBarStrings } from '@internal/react-components';
 import { CallWithChatAdapterState } from '../state/CallWithChatAdapterState';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { UploadChatImageResult } from '@azure/communication-chat';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -42,6 +43,7 @@ export class CallWithChatBackedChatAdapter implements ChatAdapter {
   ): Promise<void> {
     await this.callWithChatAdapter.sendMessage(content, /* @conditional-compile-remove(file-sharing-acs) */ options);
   };
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
   uploadImageHandler = async function (
     this: CallWithChatBackedChatAdapter,
     image: ArrayBuffer | Blob,
@@ -50,6 +52,7 @@ export class CallWithChatBackedChatAdapter implements ChatAdapter {
     return await this.callWithChatAdapter.uploadImage(image, fileName);
   };
   public sendMessage = this.sendMessageHandler.bind(this);
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
   public uploadImage = this.uploadImageHandler.bind(this);
   public sendReadReceipt = async (chatMessageId: string): Promise<void> =>
     await this.callWithChatAdapter.sendReadReceipt(chatMessageId);

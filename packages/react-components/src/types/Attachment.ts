@@ -90,6 +90,10 @@ export interface AttachmentUploadTask {
    * HTML {@link File} object for the uploaded attachment.
    */
   file?: File;
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  /**
+   * {@link Blob} object for the uploaded inline image.
+   */
   image?: Blob;
   /**
    * Update the progress of the upload changed.

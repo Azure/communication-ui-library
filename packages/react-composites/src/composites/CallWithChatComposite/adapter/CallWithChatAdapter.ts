@@ -40,7 +40,9 @@ import { StartCaptionsOptions } from '@azure/communication-calling';
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { DtmfTone } from '@azure/communication-calling';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
-import { SendMessageOptions, UploadChatImageResult } from '@azure/communication-chat';
+import { SendMessageOptions } from '@azure/communication-chat';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+import { UploadChatImageResult } from '@azure/communication-chat';
 import { JoinCallOptions } from '../../CallComposite/adapter/CallAdapter';
 /* @conditional-compile-remove(file-sharing-acs) */
 import { MessageOptions } from '@internal/acs-ui-common';
@@ -338,6 +340,12 @@ export interface CallWithChatAdapterManagement {
     content: string,
     options?: SendMessageOptions | /* @conditional-compile-remove(file-sharing-acs) */ MessageOptions
   ): Promise<void>;
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  /**
+   * Upload an inline image for a message.
+   *
+   * @beta
+   */
   uploadImage(image: ArrayBuffer | Blob, imageFilename: string): Promise<UploadChatImageResult>;
   /**
    * Send a read receipt for a message.

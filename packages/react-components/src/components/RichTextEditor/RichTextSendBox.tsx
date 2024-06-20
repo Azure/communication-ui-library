@@ -1,7 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+import { useEffect } from 'react';
 import { RichTextInputBoxComponent } from './RichTextInputBoxComponent';
 import { Icon, Stack } from '@fluentui/react';
 import { useLocale } from '../../localization';
@@ -27,7 +29,9 @@ import { SendBoxErrorBarError } from '../SendBoxErrorBar';
 import { attachmentUploadCardsStyles } from '../styles/SendBox.styles';
 /* @conditional-compile-remove(file-sharing-acs) */
 import { FluentV9ThemeProvider } from '../../theming/FluentV9ThemeProvider';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
 import parse, { HTMLReactParserOptions, Element as DOMElement, attributesToProps, domToReact } from 'html-react-parser';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { renderToString } from 'react-dom/server';
 
 /**
@@ -156,7 +160,6 @@ export interface RichTextSendBoxProps {
    * @beta
    */
   attachments?: AttachmentMetadataInProgress[];
-  // uploadInlineImages: string[];
   /**
    * enumerable to determine if the input box has focus on render or not.
    * When undefined nothing has focus on render
@@ -182,8 +185,17 @@ export interface RichTextSendBoxProps {
    */
   onTyping?: () => Promise<void>;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  /**
+   * Optional callback to upload an inline image in the rich text editor.
+   * @beta
+   */
   onUploadImage?: (image: string, fileName: string) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  /**
+   * Optional array of type {@link AttachmentMetadataInProgress}
+   * to render inline images being uploaded in the RichTextSendBox.
+   * @beta
+   */
   uploadInlineImages?: AttachmentMetadataInProgress[];
 }
 
@@ -240,9 +252,9 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     [contentValueOverflow, strings.textTooLong]
   );
 
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
   useEffect(() => {
-    // check errors of too large etc
-    console.log('Leah: ::: uploadInlineImages useEffect', uploadInlineImages);
+    // TODO: Check errors of image too large or image type not supported
   }, [uploadInlineImages]);
 
   const setContent = useCallback((newValue?: string): void => {
@@ -262,8 +274,12 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
   }, [contentValue]);
 
   /* @conditional-compile-remove(file-sharing-acs) */
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
   const toAttachmentMetadata = useCallback(
-    (attachmentsWithProgress: AttachmentMetadataInProgress[] | undefined, attachmentType?: 'image') => {
+    (
+      attachmentsWithProgress: AttachmentMetadataInProgress[] | undefined,
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */ attachmentType?: 'image'
+    ) => {
       return attachmentsWithProgress
         ?.filter((attachment) => {
           return !('error' in attachment) && !attachment.error?.message;
@@ -273,6 +289,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
             id: attachment.id,
             name: attachment.name,
             url: attachment.url ?? '',
+            /* @conditional-compile-remove(rich-text-editor-image-upload) */
             attachmentType: attachmentType
           };
         });
@@ -280,12 +297,11 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     []
   );
 
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
   const addUploadedImagesToMessage = useCallback(
     (message: string, uploadInlineImages: AttachmentMetadataInProgress[]): string => {
       const options: HTMLReactParserOptions = {
-        transform(reactNode, domNode) {
-          console.log('reactNode', reactNode);
-
+        transform(_, domNode) {
           if (domNode instanceof DOMElement && domNode.attribs) {
             // Transform inline images
             if (domNode.name && domNode.name === 'img' && domNode.attribs) {
@@ -295,15 +311,12 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
               domNode.attribs['src'] = '';
             }
           }
-          // Pass through the original node
           return domToReact([domNode]) as JSX.Element;
         }
       };
       const parsedContent = parse(message ?? '', options);
-      console.log('parsedContent', parsedContent);
       const newMessage = renderToString(parsedContent);
 
-      console.log('newMessage', newMessage);
       return newMessage;
     },
     []
@@ -318,8 +331,6 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
       /* @conditional-compile-remove(file-sharing-acs) */
       setAttachmentUploadsPendingError(undefined);
 
-      console.log('Leah: ::: uploadInlineImages', uploadInlineImages);
-
       /* @conditional-compile-remove(file-sharing-acs) */
       /* @conditional-compile-remove(rich-text-editor-image-upload) */
       if (
@@ -332,12 +343,6 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
         return;
       }
 
-      /* @conditional-compile-remove(rich-text-editor-image-upload) */
-      // if (hasIncompleteAttachmentUploads(uploadInlineImages)) {
-      //   setAttachmentUploadsPendingError({ message: strings.attachmentUploadsPendingError, timestamp: Date.now() });
-      //   return;
-      // }
-
       let message = contentValue;
 
       // we don't want to send empty messages including spaces, newlines, tabs
@@ -347,10 +352,12 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
         /* @conditional-compile-remove(file-sharing-acs) */ isAttachmentUploadCompleted(attachments) ||
         /* @conditional-compile-remove(rich-text-editor-image-upload) */ isAttachmentUploadCompleted(uploadInlineImages)
       ) {
-        let attachmentArray;
+        /* @conditional-compile-remove(file-sharing-acs) */
+        let attachmentArray = toAttachmentMetadata(attachments);
+
+        /* @conditional-compile-remove(rich-text-editor-image-upload) */
         if (uploadInlineImages) {
           message = addUploadedImagesToMessage(message, uploadInlineImages);
-          attachmentArray = toAttachmentMetadata(attachments);
           const imageArray = toAttachmentMetadata(uploadInlineImages, 'image');
           if (imageArray) {
             attachmentArray = attachmentArray?.concat(imageArray);
@@ -362,6 +369,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
           /* @conditional-compile-remove(file-sharing-acs) */ /* @conditional-compile-remove(rich-text-editor-composite-support) */
           {
             /* @conditional-compile-remove(file-sharing-acs) */
+            /* @conditional-compile-remove(rich-text-editor-image-upload) */
             attachments: attachmentArray,
             /* @conditional-compile-remove(rich-text-editor-composite-support) */
             type: 'html'
@@ -375,12 +383,18 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     [
       disabled,
       contentValueOverflow,
+      /* @conditional-compile-remove(file-sharing-acs) */
       attachments,
       contentValue,
       hasContent,
+      /* @conditional-compile-remove(file-sharing-acs) */
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */
       strings.attachmentUploadsPendingError,
       onSendMessage,
+      /* @conditional-compile-remove(file-sharing-acs) */
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */
       toAttachmentMetadata,
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */
       addUploadedImagesToMessage
     ]
   );
@@ -494,7 +508,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
       <InputBoxButton
         onRenderIcon={onRenderSendIcon}
         onClick={(e) => {
-          sendMessageOnClick(uploadInlineImages);
+          sendMessageOnClick(/* @conditional-compile-remove(rich-text-editor-image-upload) */ uploadInlineImages);
           e.stopPropagation(); // Prevents the click from bubbling up and triggering a focus event on the chat.
         }}
         className={richTextActionButtonsStyle}
@@ -516,17 +530,6 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     return isAttachmentUploadCompleted(attachments) || hasIncompleteAttachmentUploads(attachments);
   }, [attachments]);
 
-  // const [imageResult, setImageResult] = useState<UploadChatImageResult | undefined>(undefined);
-
-  // const handleOnUploadImage = useCallback(
-  //   (image: string, imageFilename: string): void => {
-  //     const result = onUploadImage && onUploadImage(image, imageFilename);
-  //     console.log('Leah: ::: imageResult', result);
-  //     // setImageResult(result);
-  //   },
-  //   [onUploadImage]
-  // );
-
   return (
     <Stack>
       <RichTextSendBoxErrors {...sendBoxErrorsProps} />
@@ -534,7 +537,9 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
         placeholderText={strings.placeholderText}
         autoFocus={autoFocus}
         onChange={setContent}
-        onEnterKeyDown={sendMessageOnClick}
+        onEnterKeyDown={() =>
+          sendMessageOnClick(/* @conditional-compile-remove(rich-text-editor-image-upload) */ uploadInlineImages)
+        }
         onTyping={onTyping}
         editorComponentRef={editorComponentRef}
         strings={strings}

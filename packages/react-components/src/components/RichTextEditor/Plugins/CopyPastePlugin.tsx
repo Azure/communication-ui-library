@@ -65,12 +65,18 @@ export const handleInlineImage = (
   // We don't support the pasting options such as paste as image yet.
   if (event.eventType === PluginEventType.BeforePaste && event.pasteType === 'normal') {
     event.fragment.querySelectorAll('img').forEach((image) => {
+      if (!image.src.startsWith('data:image/')) {
+        return;
+      }
+      const clipboardImage = event.clipboardData.image;
+      const fileName = clipboardImage?.name || clipboardImage?.type.replace('/', '.') || 'image.png';
       const blobImage = base64ToBlob(image.src);
       const blobUrl = URL.createObjectURL(blobImage);
-      onUploadImage && onUploadImage(blobUrl, 'image.png');
+      onUploadImage && onUploadImage(blobUrl, fileName);
 
       image.src = blobUrl;
       image.alt = image.alt || 'image';
+      image.style.width = '200px'; // TODO: change the value after getting the design spec
     });
   }
 };
@@ -83,7 +89,7 @@ const base64ToBlob = (dataURI: string): Blob => {
   for (let i = 0; i < byteString.length; i++) {
     uint8Array[i] = byteString.charCodeAt(i);
   }
-  return new Blob([arrayBuffer], { type: 'image/jpeg' });
+  return new Blob([arrayBuffer]);
 };
 
 /**

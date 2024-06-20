@@ -82,7 +82,9 @@ import {
 } from '../../CallComposite/adapter/AzureCommunicationCallAdapter';
 import { StatefulCallClient } from '@internal/calling-stateful-client';
 import { StatefulChatClient } from '@internal/chat-stateful-client';
-import { ChatThreadClient, UploadChatImageResult } from '@azure/communication-chat';
+import { ChatThreadClient } from '@azure/communication-chat';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+import { UploadChatImageResult } from '@azure/communication-chat';
 import { useEffect, useRef, useState } from 'react';
 import { _toCommunicationIdentifier, _TelemetryImplementationHint } from '@internal/acs-ui-common';
 import { JoinCallOptions, StartCallIdentifier } from '../../CallComposite/adapter/CallAdapter';
@@ -222,6 +224,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     this.disposeScreenShareStreamView.bind(this);
     this.fetchInitialData.bind(this);
     this.sendMessage.bind(this);
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
     this.uploadImage.bind(this);
     this.sendReadReceipt.bind(this);
     this.sendTypingIndicator.bind(this);
@@ -419,6 +422,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
       return adapter.sendMessage(content, /* @conditional-compile-remove(file-sharing-acs) */ options);
     });
   }
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
   /** Upload a chat image. */
   public async uploadImage(image: ArrayBuffer | Blob, imageFileName: string): Promise<UploadChatImageResult> {
     return await this.executeWithResolvedChatAdapter((adapter) => {

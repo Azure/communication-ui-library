@@ -17,9 +17,10 @@ import type {
   ChatThreadPropertiesUpdatedEvent,
   ParticipantsAddedEvent,
   ParticipantsRemovedEvent,
-  ReadReceiptReceivedEvent,
-  UploadChatImageResult
+  ReadReceiptReceivedEvent
 } from '@azure/communication-chat';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+import type { UploadChatImageResult } from '@azure/communication-chat';
 import { toFlatCommunicationIdentifier, _TelemetryImplementationHint } from '@internal/acs-ui-common';
 import EventEmitter from 'events';
 import {
@@ -143,6 +144,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     this.dispose = this.dispose.bind(this);
     this.fetchInitialData = this.fetchInitialData.bind(this);
     this.sendMessage = this.sendMessage.bind(this);
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
     this.uploadImage = this.uploadImage.bind(this);
     this.sendReadReceipt = this.sendReadReceipt.bind(this);
     this.sendTypingIndicator = this.sendTypingIndicator.bind(this);
@@ -196,6 +198,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     });
   }
 
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
   async uploadImage(image: ArrayBuffer | Blob, imageFilename: string): Promise<UploadChatImageResult> {
     return await this.asyncTeeErrorToEventEmitter(async () => {
       return await this.handlers.onUploadImage(image, imageFilename);

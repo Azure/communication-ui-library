@@ -196,6 +196,7 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     };
   }, [onChange, onContentModelUpdate, updatePlugin]);
 
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
   useEffect(() => {
     copyPastePlugin.onUploadImage = onUploadImage;
   }, [copyPastePlugin, onUploadImage]);
@@ -231,16 +232,6 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
   const onContextMenuDismiss = useCallback((): void => {
     setContextMenuProps(null);
   }, []);
-
-  const getDarkColor = useCallback(
-    (lightColor: string, _baseLValue?: number, colorType?: 'text' | 'background' | 'border'): string => {
-      if (lightColor === tableCellSelectionLightThemeBackgroundColor.current && colorType === 'background') {
-        return darkTheme.palette?.neutralLight ?? theme.palette.neutralLight;
-      }
-      return lightColor;
-    },
-    [theme.palette.neutralLight]
-  );
 
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   useEffect(() => {
