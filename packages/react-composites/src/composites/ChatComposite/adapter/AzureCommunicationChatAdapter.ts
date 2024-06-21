@@ -146,6 +146,8 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     this.sendMessage = this.sendMessage.bind(this);
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
     this.uploadImage = this.uploadImage.bind(this);
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    this.deleteImage = this.deleteImage.bind(this);
     this.sendReadReceipt = this.sendReadReceipt.bind(this);
     this.sendTypingIndicator = this.sendTypingIndicator.bind(this);
     this.updateMessage = this.updateMessage.bind(this);
@@ -202,6 +204,13 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   async uploadImage(image: ArrayBuffer | Blob, imageFilename: string): Promise<UploadChatImageResult> {
     return await this.asyncTeeErrorToEventEmitter(async () => {
       return await this.handlers.onUploadImage(image, imageFilename);
+    });
+  }
+
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  async deleteImage(imageId: string): Promise<void> {
+    return await this.asyncTeeErrorToEventEmitter(async () => {
+      return await this.handlers.onDeleteImage(imageId);
     });
   }
 

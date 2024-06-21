@@ -3,6 +3,7 @@
 
 import type { EditorPlugin, IEditor, PluginEvent } from 'roosterjs-content-model-types';
 import { PluginEventType } from '../../utils/RichTextEditorUtils';
+import { AttachmentMetadataInProgress } from '@internal/acs-ui-common';
 
 /**
  * An update mode to indicate when the content update happens
@@ -63,6 +64,9 @@ export class UpdateContentPlugin implements EditorPlugin {
 
       case PluginEventType.ContentChanged:
         this.onUpdate(UpdateEvent.ContentChanged);
+        // this.onDeleteImage(uploadImages);
+        console.log('ContentChanged', event);
+
         break;
 
       case PluginEventType.Input:
@@ -77,4 +81,6 @@ export class UpdateContentPlugin implements EditorPlugin {
     }
     this.onUpdate(UpdateEvent.Blur);
   };
+
+  // private onDeleteImage = (uploadImages: AttachmentMetadataInProgress[]): void => {};
 }

@@ -226,6 +226,8 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     this.sendMessage.bind(this);
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
     this.uploadImage.bind(this);
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    this.deleteImage.bind(this);
     this.sendReadReceipt.bind(this);
     this.sendTypingIndicator.bind(this);
     this.loadPreviousChatMessages.bind(this);
@@ -427,6 +429,13 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   public async uploadImage(image: ArrayBuffer | Blob, imageFileName: string): Promise<UploadChatImageResult> {
     return await this.executeWithResolvedChatAdapter((adapter) => {
       return adapter.uploadImage(image, imageFileName);
+    });
+  }
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  /** Delete a chat image. */
+  public async deleteImage(imageId: string): Promise<void> {
+    return await this.executeWithResolvedChatAdapter((adapter) => {
+      return adapter.deleteImage(imageId);
     });
   }
   /** Send a chat read receipt. */

@@ -57,6 +57,8 @@ export interface RichTextEditorProps {
   onPaste?: (event: { content: DocumentFragment }) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   onUploadImage?: (image: string, fileName: string) => void;
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  onDelete?: (editor: IEditor) => void;
 }
 
 /**
@@ -99,7 +101,9 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
     onPaste,
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    onUploadImage
+    onUploadImage,
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    onDelete
   } = props;
   const editor = useRef<IEditor | null>(null);
   const editorDiv = useRef<HTMLDivElement>(null);
@@ -208,7 +212,8 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
   useEffect(() => {
     // don't set callback in plugin constructor to update callback without plugin recreation
     keyboardInputPlugin.onKeyDown = onKeyDown;
-  }, [keyboardInputPlugin, onKeyDown]);
+    keyboardInputPlugin.onDelete = onDelete;
+  }, [keyboardInputPlugin, onDelete, onKeyDown]);
 
   const tableContextMenuPlugin = useMemo(() => {
     return new TableEditContextMenuProvider();

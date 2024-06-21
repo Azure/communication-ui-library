@@ -30,6 +30,8 @@ export type ChatHandlers = {
   ) => Promise<void>;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   onUploadImage: (image: ArrayBuffer | Blob, imageFilename: string) => Promise<UploadChatImageResult>;
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  onDeleteImage: (imageId: string) => Promise<void>;
   onMessageSeen: (chatMessageId: string) => Promise<void>;
   onTyping: () => Promise<void>;
   onRemoveParticipant: (userId: string) => Promise<void>;
@@ -94,6 +96,11 @@ export const createDefaultChatHandlers = memoizeOne(
       onUploadImage: async function (image: ArrayBuffer | Blob, imageFilename: string): Promise<UploadChatImageResult> {
         const imageResult = await chatThreadClient.uploadImage(image, imageFilename);
         return imageResult;
+      },
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */
+      onDeleteImage: async function (imageId: string): Promise<void> {
+        await chatThreadClient.deleteImage(imageId);
+        return;
       },
       // due to a bug in babel, we can't use arrow function here
       // affecting conditional-compile-remove(attachment-upload)

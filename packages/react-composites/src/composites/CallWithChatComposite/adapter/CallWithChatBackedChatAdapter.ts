@@ -51,9 +51,15 @@ export class CallWithChatBackedChatAdapter implements ChatAdapter {
   ): Promise<UploadChatImageResult> {
     return await this.callWithChatAdapter.uploadImage(image, fileName);
   };
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  deleteImageHandler = async function (this: CallWithChatBackedChatAdapter, imageId: string): Promise<void> {
+    return await this.callWithChatAdapter.deleteImage(imageId);
+  };
   public sendMessage = this.sendMessageHandler.bind(this);
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   public uploadImage = this.uploadImageHandler.bind(this);
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  public deleteImage = this.deleteImageHandler.bind(this);
   public sendReadReceipt = async (chatMessageId: string): Promise<void> =>
     await this.callWithChatAdapter.sendReadReceipt(chatMessageId);
   public sendTypingIndicator = async (): Promise<void> => await this.callWithChatAdapter.sendTypingIndicator();

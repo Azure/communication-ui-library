@@ -43,7 +43,7 @@ import {
 import { participantListContainerPadding } from '../common/styles/ParticipantContainer.styles';
 /* @conditional-compile-remove(chat-composite-participant-pane) */
 import { ChatScreenPeoplePane } from './ChatScreenPeoplePane';
-import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
+import { AttachmentMetadataInProgress, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(file-sharing-acs) */
 import { AttachmentDownloadErrorBar } from './AttachmentDownloadErrorBar';
 import { _AttachmentDownloadCards } from '@internal/react-components';
@@ -130,6 +130,10 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const [uploads, handleUploadAction] = useReducer(AttachmentUploadReducer, []);
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   const [inlineImageUploads, handleInlineImageUploadAction] = useReducer(AttachmentUploadReducer, []);
+
+  useEffect(() => {
+    console.log('inlineImageUploads state changed', inlineImageUploads);
+  }, [inlineImageUploads]);
 
   const adapter = useAdapter();
   const theme = useTheme();
@@ -323,6 +327,8 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
           handleInlineImageUploadAction({ type: AttachmentUploadActionType.Progress, taskId, progress: value });
         },
         notifyUploadCompleted: (id: string, url: string) => {
+          console.log('upload completed', id);
+
           handleInlineImageUploadAction({ type: AttachmentUploadActionType.Completed, taskId, id, url });
         },
         notifyUploadFailed: (message: string) => {
@@ -340,6 +346,28 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       inlineImageUploadHandler(newUploads);
     },
     [getInlineImageData, inlineImageUploadHandler]
+  );
+
+  const onCancelInlineImageUploadHandler = useCallback(
+    (imageId: string) => {
+      // TODO: remove local blob
+      const imageUpload = inlineImageUploads.find((upload) => upload.metadata.id === imageId);
+      const uploadId = imageUpload?.metadata.id;
+      if (!uploadId) {
+        return;
+      }
+      if (imageUpload?.metadata.error) {
+        // TODO
+        return;
+      } else if (!imageUpload?.metadata.progress || imageUpload?.metadata.progress < 1) {
+        // cancel the upload
+        handleInlineImageUploadAction({ type: AttachmentUploadActionType.Remove, id: uploadId });
+      } else if (imageUpload?.metadata.progress === 1) {
+        adapter.deleteImage(imageId);
+        handleInlineImageUploadAction({ type: AttachmentUploadActionType.Remove, id: uploadId });
+      }
+    },
+    [adapter, inlineImageUploads]
   );
 
   /* @conditional-compile-remove(file-sharing-acs) */
@@ -586,6 +614,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       handleUploadAction({ type: AttachmentUploadActionType.Clear });
       /* @conditional-compile-remove(rich-text-editor-image-upload) */
       handleInlineImageUploadAction({ type: AttachmentUploadActionType.Clear });
+      console.log('After clear', inlineImageUploads);
 
       /* @conditional-compile-remove(file-sharing-acs) */
       await adapter.sendMessage(content, {
@@ -694,6 +723,8 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
                   onUploadImage={onUploadInlineImage}
                   /* @conditional-compile-remove(rich-text-editor-image-upload) */
                   uploadInlineImages={uploadInlineImages}
+                  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+                  onCancelInlineImageUpload={onCancelInlineImageUploadHandler}
                 />
               </Stack>
               {formFactor !== 'mobile' && (
