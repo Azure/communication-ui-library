@@ -466,7 +466,10 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                         !props.mobileView &&
                         isHangUpForEveryoneAllowed &&
                         !isTeams && // Temporary disable it for Teams call, since capability does not give the right value
-                        props.callControls?.endCallButton?.hangUpForEveryone === 'endCallOptions'
+                        props.callControls?.endCallButton?.hangUpForEveryone === 'endCallOptions' &&
+                        // Only show the end call menu when the call is connected, user should not be able to end the call for everyone
+                        // when they are not actively in the call to communicate they will.
+                        callState.callStatus === 'Connected'
                       }
                     />
                   </ControlBar>
