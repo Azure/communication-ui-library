@@ -127,8 +127,6 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
   /* @conditional-compile-remove(teams-meeting-conference) */
   const [showTeamsMeetingConferenceModal, setShowTeamsMeetingConferenceModal] = useState(false);
 
-  const adapterState = props.callAdapter.getState();
-
   /* @conditional-compile-remove(end-call-options) */
   // If the hangup capability is not present, we default to true
   const isHangUpForEveryoneAllowed =
@@ -474,7 +472,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                         props.callControls?.endCallButton?.hangUpForEveryone === 'endCallOptions' &&
                         // Only show the end call menu when the call is connected, user should not be able to end the call for everyone
                         // when they are not actively in the call to communicate they will.
-                        adapterState.call?.state === 'Connected'
+                        callState.callStatus === 'Connected'
                       }
                     />
                   </ControlBar>
