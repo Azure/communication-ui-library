@@ -72,6 +72,26 @@ export interface MeetingConferencePhoneInfoModalStrings {
    * No phone number available message
    */
   meetingConferencePhoneInfoModalNoPhoneAvailable?: string;
+
+  /**
+   * Bad quality bar title
+   */
+  badQualityBarTitle?: string;
+
+  /**
+   * Bad quality bar message
+   */
+  badQualityBarMessage?: string;
+
+  /**
+   * Bad quality bar close button aria label
+   */
+  badQualityBarClose?: string;
+
+  /**
+   * Bad quality bar join button label
+   */
+  badQualityBarJoin?: string;
 }
 
 /* @conditional-compile-remove(teams-meeting-conference) */
@@ -146,7 +166,8 @@ export const MeetingConferencePhoneInfoModal = (props: MeetingConferencePhoneInf
               <Stack.Item className={phoneInfoStep}>
                 {conferencePhoneInfoList.map((phoneNumber, index) => (
                   <Stack.Item key={index}>
-                    <Text className={phoneInfoTextStyle}>{formatPhoneNumberInfo(phoneNumber, strings)}</Text>
+                    <Text className={phoneInfoTextStyle}>{formatPhoneNumber(phoneNumber.phoneNumber)}</Text>
+                    <Text className={phoneInfoTextStyle}> {formatPhoneNumberInfo(phoneNumber, strings)}</Text>
                   </Stack.Item>
                 ))}
               </Stack.Item>
@@ -206,6 +227,15 @@ export const formatPhoneNumber = (phoneNumber: string): string => {
     return parsePhoneNumber(enchantedPhoneNumber)?.formatInternational() || enchantedPhoneNumber;
   }
   return phoneNumber;
+};
+
+/* @conditional-compile-remove(teams-meeting-conference) */
+/**
+ * @internal
+ * format phone number link
+ */
+export const formatPhoneNumberLink = (phoneNumber: ConferencePhoneInfo): string => {
+  return `tel:+${phoneNumber.phoneNumber},,${phoneNumber.conferenceId}#`;
 };
 
 /* @conditional-compile-remove(teams-meeting-conference) */

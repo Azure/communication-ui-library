@@ -81,6 +81,10 @@ export interface CommonCallControlBarProps {
   dtmfDialerPresent?: boolean;
   onStopLocalSpotlight?: () => void;
   useTeamsCaptions?: boolean;
+  /* @conditional-compile-remove(teams-meeting-conference) */
+  onToggleTeamsMeetingConferenceModal?: () => void;
+  /* @conditional-compile-remove(teams-meeting-conference) */
+  teamsMeetingConferenceModalPresent?: boolean;
 }
 
 const inferCommonCallControlOptions = (
@@ -124,8 +128,6 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
   const options = inferCommonCallControlOptions(props.mobileView, props.callControls);
 
   const [showCaptionsSettingsModal, setShowCaptionsSettingsModal] = useState(false);
-  /* @conditional-compile-remove(teams-meeting-conference) */
-  const [showTeamsMeetingConferenceModal, setShowTeamsMeetingConferenceModal] = useState(false);
 
   /* @conditional-compile-remove(end-call-options) */
   // If the hangup capability is not present, we default to true
@@ -174,11 +176,6 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
   const onDismissCaptionsSettings = useCallback((): void => {
     setShowCaptionsSettingsModal(false);
   }, []);
-
-  /* @conditional-compile-remove(teams-meeting-conference) */
-  const toggleTeamsMeetingConferenceModal = useCallback((): void => {
-    setShowTeamsMeetingConferenceModal(!showTeamsMeetingConferenceModal);
-  }, [showTeamsMeetingConferenceModal]);
 
   const peopleButtonStrings = useMemo(
     () => ({
@@ -305,11 +302,11 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
           />
         )}
         {
-          /* @conditional-compile-remove(teams-meeting-conference) */ showTeamsMeetingConferenceModal && (
+          /* @conditional-compile-remove(teams-meeting-conference) */ props.teamsMeetingConferenceModalPresent && (
             <MeetingConferencePhoneInfoModal
               conferencePhoneInfoList={props.callAdapter.getState().call?.teamsMeetingConference ?? []}
-              showModal={showTeamsMeetingConferenceModal}
-              onDismissMeetingPhoneInfoSettings={toggleTeamsMeetingConferenceModal}
+              showModal={props.teamsMeetingConferenceModalPresent}
+              onDismissMeetingPhoneInfoSettings={props.onToggleTeamsMeetingConferenceModal}
             />
           )
         }
@@ -455,7 +452,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                         /* @conditional-compile-remove(teams-meeting-conference) */
                         teamsMeetingPhoneCallEnable={showTeamsMeetingPhoneCallButton}
                         /* @conditional-compile-remove(teams-meeting-conference) */
-                        onMeetingPhoneInfoClick={toggleTeamsMeetingConferenceModal}
+                        onMeetingPhoneInfoClick={props.onToggleTeamsMeetingConferenceModal}
                       />
                     )}
                     <EndCall
