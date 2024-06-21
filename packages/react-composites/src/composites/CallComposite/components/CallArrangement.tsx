@@ -57,6 +57,8 @@ import { usePeoplePane } from './SidePane/usePeoplePane';
 import { useMeetingPhoneInfoPane } from './SidePane/useMeetingPhoneInfo';
 /* @conditional-compile-remove(teams-meeting-conference) */
 import { getTeamsMeetingCoordinates } from '../selectors/baseSelectors';
+/* @conditional-compile-remove(teams-meeting-conference) */
+import { BadNetworkQualityNotificationBar, BadNetworkQualityBannerProps } from './BadNetworkQualityNotificationBar';
 
 import {
   useVideoEffectsPane,
@@ -132,6 +134,8 @@ export interface CallArrangementProps {
   hideSpotlightButtons?: boolean;
   pinnedParticipants?: string[];
   setPinnedParticipants?: (pinnedParticipants: string[]) => void;
+  /* @conditional-compile-remove(teams-meeting-conference) */
+  badNetworkQualityBannerProps?: BadNetworkQualityBannerProps;
 }
 
 /**
@@ -229,6 +233,33 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     maxParticipantsToSpotlight,
     localParticipant
   } = videoGalleryProps;
+
+  /* @conditional-compile-remove(teams-meeting-conference) */
+  const [showTeamsMeetingConferenceModal, setShowTeamsMeetingConferenceModal] = useState(false);
+  /* @conditional-compile-remove(teams-meeting-conference) */
+  const toggleTeamsMeetingConferenceModal = useCallback((): void => {
+    setShowTeamsMeetingConferenceModal(!showTeamsMeetingConferenceModal);
+  }, [showTeamsMeetingConferenceModal]);
+
+  /* @conditional-compile-remove(teams-meeting-conference) */
+  const { isMeetingPhoneInfoPaneOpen, openMeetingPhoneInfoPane, closeMeetingPhoneInfoPane } = useMeetingPhoneInfoPane({
+    ...meetingPhoneInfoPaneProps
+  });
+
+  /* @conditional-compile-remove(teams-meeting-conference) */
+  const toggleMeetingPhoneInfoPane = useCallback(() => {
+    if (isMeetingPhoneInfoPaneOpen) {
+      closeMeetingPhoneInfoPane();
+    } else {
+      openMeetingPhoneInfoPane();
+    }
+  }, [closeMeetingPhoneInfoPane, isMeetingPhoneInfoPaneOpen, openMeetingPhoneInfoPane]);
+
+  /* @conditional-compile-remove(teams-meeting-conference) */
+  const onMeetingPhoneInfoClicked = useCallback(() => {
+    setShowDrawer(false);
+    toggleMeetingPhoneInfoPane();
+  }, [toggleMeetingPhoneInfoPane]);
 
   const { pinnedParticipants, setPinnedParticipants } = props;
   const onPinParticipant = useCallback(
@@ -341,20 +372,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     }
   }, [closePeoplePane, isPeoplePaneOpen, openPeoplePane]);
 
-  /* @conditional-compile-remove(teams-meeting-conference) */
-  const { isMeetingPhoneInfoPaneOpen, openMeetingPhoneInfoPane, closeMeetingPhoneInfoPane } = useMeetingPhoneInfoPane({
-    ...meetingPhoneInfoPaneProps
-  });
-
-  /* @conditional-compile-remove(teams-meeting-conference) */
-  const toggleMeetingPhoneInfoPane = useCallback(() => {
-    if (isMeetingPhoneInfoPaneOpen) {
-      closeMeetingPhoneInfoPane();
-    } else {
-      openMeetingPhoneInfoPane();
-    }
-  }, [closeMeetingPhoneInfoPane, isMeetingPhoneInfoPaneOpen, openMeetingPhoneInfoPane]);
-
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   useEffect(() => {
     if (isInLocalHold) {
@@ -409,12 +426,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     setShowDrawer(false);
     togglePeoplePane();
   }, [togglePeoplePane]);
-
-  /* @conditional-compile-remove(teams-meeting-conference) */
-  const onMeetingPhoneInfoClicked = useCallback(() => {
-    setShowDrawer(false);
-    toggleMeetingPhoneInfoPane();
-  }, [toggleMeetingPhoneInfoPane]);
 
   const drawerContainerStylesValue = useMemo(() => drawerContainerStyles(DRAWER_Z_INDEX), []);
 
@@ -568,6 +579,10 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                   onStopLocalSpotlight={
                     !hideSpotlightButtons && localParticipant.spotlight ? onStopLocalSpotlightWithPrompt : undefined
                   }
+                  /* @conditional-compile-remove(teams-meeting-conference) */
+                  onToggleTeamsMeetingConferenceModal={toggleTeamsMeetingConferenceModal}
+                  /* @conditional-compile-remove(teams-meeting-conference) */
+                  teamsMeetingConferenceModalPresent={showTeamsMeetingConferenceModal}
                 />
               )}
             </Stack>
@@ -616,6 +631,18 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                     {canUnmute && !!props.mutedNotificationProps && (
                       <MutedNotification {...props.mutedNotificationProps} />
                     )}
+                    {
+                      /* @conditional-compile-remove(teams-meeting-conference) */ props.badNetworkQualityBannerProps &&
+                        props.badNetworkQualityBannerProps.isPoorNetworkQuality &&
+                        isTeamsCall && (
+                          <Stack styles={bannerNotificationStyles}>
+                            <BadNetworkQualityNotificationBar
+                              {...props.badNetworkQualityBannerProps}
+                              onPrimaryButtonClick={toggleTeamsMeetingConferenceModal}
+                            />
+                          </Stack>
+                        )
+                    }
                   </Stack.Item>
                   {renderGallery && props.onRenderGalleryContent && props.onRenderGalleryContent()}
                   {true &&
