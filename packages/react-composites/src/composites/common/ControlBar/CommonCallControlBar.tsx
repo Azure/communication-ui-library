@@ -471,6 +471,11 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                         !isTeams && // Temporary disable it for Teams call, since capability does not give the right value
                         props.callControls?.endCallButton?.hangUpForEveryone === 'endCallOptions'
                       }
+                      disableEndCallModal={
+                        !isBoolean(props.callControls) &&
+                        !isBoolean(props.callControls?.endCallButton) &&
+                        props.callControls?.endCallButton?.disableEndCallModal
+                      }
                     />
                   </ControlBar>
                 </div>

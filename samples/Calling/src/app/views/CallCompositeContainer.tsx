@@ -26,7 +26,8 @@ export const CallCompositeContainer = (props: CallCompositeContainerProps): JSX.
         screenShareButton: shouldHideScreenShare ? false : undefined,
         /* @conditional-compile-remove(end-call-options) */
         endCallButton: {
-          hangUpForEveryone: 'endCallOptions'
+          hangUpForEveryone: 'endCallOptions',
+          disableEndCallModal: true
         }
       },
       autoShowDtmfDialer: true
