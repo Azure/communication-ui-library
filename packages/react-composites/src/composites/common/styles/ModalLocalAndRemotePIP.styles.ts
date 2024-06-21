@@ -24,7 +24,7 @@ export type ModalLocalAndRemotePIPStyles = { modal?: Partial<IModalStyles> };
  */
 export const MODAL_PIP_DEFAULT_PX = {
   rightPositionPx: 16,
-  topPositionPx: 52,
+  bottomPositionPx: 64,
   widthPx: 88,
   heightPx: 128
 };
@@ -42,7 +42,7 @@ export const getPipStyles = (theme: ITheme): ModalLocalAndRemotePIPStyles => ({
       ...(theme.rtl
         ? { left: _pxToRem(MODAL_PIP_DEFAULT_PX.rightPositionPx) }
         : { right: _pxToRem(MODAL_PIP_DEFAULT_PX.rightPositionPx) }),
-      top: _pxToRem(MODAL_PIP_DEFAULT_PX.topPositionPx)
+      bottom: _pxToRem(MODAL_PIP_DEFAULT_PX.bottomPositionPx)
     }
   }
 });

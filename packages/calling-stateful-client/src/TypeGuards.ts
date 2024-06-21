@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { Call, CallAgent } from '@azure/communication-calling';
-import { CallAgentCommon, CallCommon, TeamsCall, TeamsCallAgent } from './BetaToStableTypes';
+import { Call, CallAgent, TeamsCallAgent } from '@azure/communication-calling';
+import { CallAgentCommon, CallCommon, TeamsCall } from './BetaToStableTypes';
 
 /**
  * @internal
