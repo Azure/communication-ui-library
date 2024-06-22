@@ -434,15 +434,15 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     );
 
     this.context.onCallEnded((endCallData) => {
-      const mainMeeting = this.context.getState().mainMeeting;
+      const mainMeeting = this.getState().mainMeeting;
       const breakoutRoom = mainMeeting?.breakoutRooms?.assignedBreakoutRoom;
       // Return to main meeting because breakout room call is ended because it is closed
       if (
         breakoutRoom &&
         breakoutRoom.state === 'closed' &&
-        this.context.getState().breakoutRoomSettings?.disableReturnToMainMeeting === false
+        this.getState().breakoutRoomSettings?.disableReturnToMainMeeting === false
       ) {
-        this.returnToMainMeeting();
+        setTimeout(() => this.returnToMainMeeting(), 10000);
       }
       this.emitter.emit('callEnded', endCallData);
     });
@@ -1082,14 +1082,19 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
 
   public async returnToMainMeeting(): Promise<void> {
     const mainMeetingCall = this.callAgent?.calls.find((callAgentCall) => {
-      const mainMeeting = this.context.getState().mainMeeting;
+      const mainMeeting = this.getState().mainMeeting;
       return mainMeeting?.id && mainMeeting.id === callAgentCall.id;
     });
     if (mainMeetingCall) {
-      this.leaveCall().then(() => {
+      if (this.getState().call) {
+        this.leaveCall().then(() => {
+          this.processNewCall(mainMeetingCall);
+          this.resumeCall();
+        });
+      } else {
         this.processNewCall(mainMeetingCall);
         this.resumeCall();
-      });
+      }
     }
   }
 
