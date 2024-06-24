@@ -159,7 +159,10 @@ test.describe('Rooms Participant ParticipantItem tests for different roles', asy
     await expectMuteAllMenuItem(page);
   });
   // @conditional-compile-remove(soft-mute)
-  test('Mute button participant item disabled for muted remote participants for Presenter', async ({ page, serverUrl }) => {
+  test('Mute button participant item disabled for muted remote participants for Presenter', async ({
+    page,
+    serverUrl
+  }) => {
     const displayNames = ['Tony Hawk', 'Marie Curie', 'Gal Gadot'];
     const participants = displayNames.map((name) => defaultMockRemoteParticipant(name));
     for (const participant of participants) {

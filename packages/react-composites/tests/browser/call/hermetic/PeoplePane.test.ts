@@ -212,7 +212,7 @@ test.describe('Participant list side pane tests', () => {
     test.skip(!participantListShownAsSidePane(testInfo));
 
     await page.goto(
-      buildUrlWithMockAdapter(serverUrl, participantListInitialState({remoteIsMuted: true}), {
+      buildUrlWithMockAdapter(serverUrl, participantListInitialState({ remoteIsMuted: true }), {
         callInvitationUrl: 'testUrl'
       })
     );
@@ -343,7 +343,7 @@ test.describe('Participant list full screen pane with drawer tests', () => {
     test.skip(!participantListShownAsFullScreenPane(testInfo));
 
     await page.goto(
-      buildUrlWithMockAdapter(serverUrl, participantListInitialState({remoteIsMuted: true}), {
+      buildUrlWithMockAdapter(serverUrl, participantListInitialState({ remoteIsMuted: true }), {
         callInvitationUrl: 'testUrl'
       })
     );
@@ -370,7 +370,7 @@ test.describe('Participant list full screen pane with drawer tests', () => {
       participant.isMuted = true;
     }
     const initialState = defaultMockCallAdapterState(participants);
-    
+
     await page.goto(
       buildUrlWithMockAdapter(serverUrl, initialState, {
         callInvitationUrl: 'testUrl'
@@ -410,7 +410,7 @@ const participantListInitialState = (options?: {
     };
   }
   if (options?.remoteIsMuted) {
-    remoteParticipant1.isMuted = options?.remoteIsMuted
+    remoteParticipant1.isMuted = options?.remoteIsMuted;
   }
 
   const initialState = defaultMockCallAdapterState(
