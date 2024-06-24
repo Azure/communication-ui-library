@@ -1976,6 +1976,7 @@ export type CommonCallControlOptions = {
     };
     endCallButton?: boolean | /* @conditional-compile-remove(end-call-options) */ {
         hangUpForEveryone?: false | 'endCallOptions';
+        disableEndCallModal?: boolean;
     };
     microphoneButton?: boolean | /* @conditional-compile-remove(PSTN-calls) */ {
         disabled: boolean;
@@ -3278,6 +3279,10 @@ export interface MediaDiagnosticsState {
 
 // @beta
 export interface MeetingConferencePhoneInfoModalStrings {
+    badQualityBarClose?: string;
+    badQualityBarJoin?: string;
+    badQualityBarMessage?: string;
+    badQualityBarTitle?: string;
     meetingConferencePhoneInfoModalDialIn?: string;
     meetingConferencePhoneInfoModalMeetingId?: string;
     meetingConferencePhoneInfoModalNoPhoneAvailable?: string;
