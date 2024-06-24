@@ -37,7 +37,7 @@
     "@babel/core": "^7.24.7",
     "@playwright/test": "~1.39.0",
     "@types/copy-webpack-plugin": "^6.4.0",
-    "@types/node": "^20.14.2",
+    "@types/node": "^20.14.8",
     "@types/node-static": "^0.7.7",
     "@types/react": "18.2.74",
     "@types/react-dom": "18.2.23",
