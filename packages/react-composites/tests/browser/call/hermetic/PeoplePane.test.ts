@@ -339,7 +339,7 @@ test.describe('Participant list full screen pane with drawer tests', () => {
   });
 
   // @conditional-compile-remove(soft-mute)
-  test.only('Mute menu item disabled for user that is already muted', async ({ page, serverUrl }, testInfo) => {
+  test('Mute menu item disabled for user that is already muted', async ({ page, serverUrl }, testInfo) => {
     test.skip(!participantListShownAsFullScreenPane(testInfo));
 
     await page.goto(
