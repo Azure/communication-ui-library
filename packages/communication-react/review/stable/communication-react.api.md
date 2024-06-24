@@ -1670,6 +1670,7 @@ export type CommonCallControlOptions = {
     cameraButton?: boolean;
     endCallButton?: boolean | /* @conditional-compile-remove(end-call-options) */ {
         hangUpForEveryone?: false | 'endCallOptions';
+        disableEndCallModal?: boolean;
     };
     microphoneButton?: boolean;
     devicesButton?: boolean;

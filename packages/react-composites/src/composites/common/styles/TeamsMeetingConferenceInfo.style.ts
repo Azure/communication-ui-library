@@ -102,6 +102,21 @@ export const phoneInfoStep = mergeStyles({
 export const phoneInfoIconStyle = (theme: Theme): string => {
   return mergeStyles({
     padding: _pxToRem(8),
-    color: `${theme.palette.themePrimary}`
+    color: `${theme.palette.themePrimary}`,
+    zIndex: 2
+  });
+};
+
+/**
+ * @private
+ */
+export const infoConnectionLinkStyle = (theme: Theme): string => {
+  return mergeStyles({
+    background: `${theme.palette.themeLighter}`,
+    width: _pxToRem(2),
+    position: 'relative',
+    left: _pxToRem(19),
+    top: _pxToRem(20),
+    zIndex: 1
   });
 };
