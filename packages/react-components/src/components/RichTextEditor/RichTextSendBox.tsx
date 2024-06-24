@@ -275,7 +275,11 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
   }, []);
 
   const onChangeHandler = useCallback(
-    (newValue?: string, imageSrcArray?: Array<string>) => {
+    (
+      newValue?: string,
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */ imageSrcArray?: Array<string>
+    ) => {
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */
       if (imageSrcArray && uploadInlineImages && uploadInlineImages?.length > 0) {
         uploadInlineImages?.map((uploadImage) => {
           if (uploadImage.url && !imageSrcArray?.includes(uploadImage.url)) {
@@ -286,7 +290,11 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
 
       setContent(newValue);
     },
-    [onCancelInlineImageUpload, setContent, uploadInlineImages]
+    [
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */ onCancelInlineImageUpload,
+      setContent,
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */ uploadInlineImages
+    ]
   );
 
   const hasContent = useMemo(() => {
@@ -378,9 +386,6 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
       /* @conditional-compile-remove(file-sharing-acs) */ isAttachmentUploadCompleted(attachments) ||
       /* @conditional-compile-remove(rich-text-editor-image-upload) */ isAttachmentUploadCompleted(uploadInlineImages)
     ) {
-      console.log('image count', uploadInlineImages?.length, uploadInlineImages);
-      console.log('attachment count', attachments?.length, attachments);
-
       /* @conditional-compile-remove(file-sharing-acs) */
       let attachmentArray = toAttachmentMetadata(attachments);
 

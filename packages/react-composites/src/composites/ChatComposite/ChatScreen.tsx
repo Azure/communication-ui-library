@@ -43,7 +43,7 @@ import {
 import { participantListContainerPadding } from '../common/styles/ParticipantContainer.styles';
 /* @conditional-compile-remove(chat-composite-participant-pane) */
 import { ChatScreenPeoplePane } from './ChatScreenPeoplePane';
-import { AttachmentMetadataInProgress, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
+import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(file-sharing-acs) */
 import { AttachmentDownloadErrorBar } from './AttachmentDownloadErrorBar';
 import { _AttachmentDownloadCards } from '@internal/react-components';
@@ -130,10 +130,6 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const [uploads, handleUploadAction] = useReducer(AttachmentUploadReducer, []);
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   const [inlineImageUploads, handleInlineImageUploadAction] = useReducer(AttachmentUploadReducer, []);
-
-  useEffect(() => {
-    console.log('inlineImageUploads state changed', inlineImageUploads);
-  }, [inlineImageUploads]);
 
   const adapter = useAdapter();
   const theme = useTheme();
@@ -348,6 +344,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     [getInlineImageData, inlineImageUploadHandler]
   );
 
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
   const onCancelInlineImageUploadHandler = useCallback(
     (imageId: string) => {
       const imageUpload = inlineImageUploads.find((upload) => upload.metadata.id === imageId);
