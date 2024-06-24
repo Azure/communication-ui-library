@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { concatStyleSets } from '@fluentui/react';
+import { IContextualMenuProps, concatStyleSets } from '@fluentui/react';
 import { ControlBarButtonStyles, EndCallButton } from '@internal/react-components';
 import React, { useMemo } from 'react';
 /* @conditional-compile-remove(end-call-options) */
@@ -13,6 +13,7 @@ import { groupCallLeaveButtonCompressedStyle, groupCallLeaveButtonStyle } from '
 import { Prompt } from '../Prompt';
 /* @conditional-compile-remove(end-call-options) */
 import { useLocale } from '../../../localization';
+import { _preventDismissOnEvent as preventDismissOnEvent } from '@internal/acs-ui-common';
 
 /** @private */
 export const EndCall = (props: {
@@ -22,6 +23,7 @@ export const EndCall = (props: {
   /* @conditional-compile-remove(end-call-options) */
   enableEndCallMenu?: boolean;
   disableEndCallModal?: boolean;
+  leaveBreakoutRoom?: () => Promise<void>;
 }): JSX.Element => {
   const compactMode = props.displayType === 'compact';
   const hangUpButtonProps = usePropsFor(EndCallButton);
@@ -103,6 +105,36 @@ export const EndCall = (props: {
       ),
     [compactMode, props.styles]
   );
+  const breakoutRoomMenuProps: IContextualMenuProps = {
+    items: [
+      {
+        key: 'leaveRoom',
+        text: 'Leave room',
+        title: 'Leave room',
+        onClick: () => {
+          props.leaveBreakoutRoom?.();
+        }
+      },
+      {
+        key: 'leaveMeeting',
+        text: 'Leave meeting',
+        title: 'Leave meeting',
+        onClick: () => {
+          onHangUp(false);
+        }
+      }
+    ],
+    styles: props.styles,
+    calloutProps: {
+      styles: {
+        root: {
+          maxWidth: '95%'
+        }
+      },
+      preventDismissOnEvent
+    }
+  };
+
   return (
     <>
       {
@@ -125,6 +157,7 @@ export const EndCall = (props: {
         showLabel={!compactMode}
         /* @conditional-compile-remove(end-call-options) */
         enableEndCallMenu={props.enableEndCallMenu ?? false}
+        menuProps={props.leaveBreakoutRoom ? breakoutRoomMenuProps : undefined}
       />
     </>
   );

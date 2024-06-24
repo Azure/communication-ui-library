@@ -7,12 +7,12 @@ import { CallAdapter } from '../../CallComposite';
 import { PeopleButton } from './PeopleButton';
 import {
   concatStyleSets,
-  DefaultButton,
   IButton,
   IStyle,
   ITheme,
   mergeStyles,
   mergeStyleSets,
+  PrimaryButton,
   Stack,
   useTheme
 } from '@fluentui/react';
@@ -273,6 +273,12 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
     !capabilitiesSelector?.capabilities ||
     capabilitiesSelector.capabilities.useReactions.isPresent;
 
+  const canReturnToMainMeeting = breakoutRoomSettings && breakoutRoomSettings.disableReturnToMainMeeting === false;
+  const leaveBreakoutRoom = useMemo(
+    () => (canReturnToMainMeeting ? () => props.callAdapter.returnToMainMeeting() : undefined),
+    [canReturnToMainMeeting, props.callAdapter]
+  );
+
   // when options is false then we want to hide the whole control bar.
   if (options === false) {
     return <></>;
@@ -359,6 +365,18 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                 */}
                 <div ref={controlBarContainerRef}>
                   <ControlBar layout={props.displayVertical ? 'vertical' : 'horizontal'} styles={centerContainerStyles}>
+                    {
+                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                      assignedBreakoutRoom && assignedBreakoutRoom.state === 'open' && (
+                        <PrimaryButton
+                          text="Join breakout room"
+                          onClick={async (): Promise<void> => {
+                            assignedBreakoutRoom.join();
+                          }}
+                          styles={commonButtonStyles}
+                        />
+                      )
+                    }
                     {microphoneButtonIsEnabled && (
                       <Microphone
                         displayType={options.displayType}
@@ -480,6 +498,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                       styles={endCallButtonStyles}
                       /* @conditional-compile-remove(end-call-options) */
                       enableEndCallMenu={
+                        !canReturnToMainMeeting &&
                         !isBoolean(props.callControls) &&
                         !isBoolean(props.callControls?.endCallButton) &&
                         !props.mobileView &&
@@ -495,13 +514,8 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                         !isBoolean(props.callControls?.endCallButton) &&
                         props.callControls?.endCallButton?.disableEndCallModal
                       }
+                      leaveBreakoutRoom={canReturnToMainMeeting ? leaveBreakoutRoom : undefined}
                     />
-                    {breakoutRoomSettings && breakoutRoomSettings.disableReturnToMainMeeting === false && (
-                      <DefaultButton
-                        text="Return to main meeting"
-                        onClick={() => props.callAdapter.returnToMainMeeting()}
-                      />
-                    )}
                   </ControlBar>
                 </div>
               </Stack.Item>
@@ -512,17 +526,6 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
           <Stack.Item>
             <div ref={sidepaneControlsRef}>
               <Stack horizontal className={!props.mobileView ? mergeStyles(desktopButtonContainerStyle) : undefined}>
-                {
-                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                  assignedBreakoutRoom && assignedBreakoutRoom.state === 'open' && (
-                    <DefaultButton
-                      text="Join room"
-                      onClick={async (): Promise<void> => {
-                        assignedBreakoutRoom.join();
-                      }}
-                    />
-                  )
-                }
                 {isEnabled(options?.peopleButton) && (
                   <PeopleButton
                     checked={props.peopleButtonChecked}
