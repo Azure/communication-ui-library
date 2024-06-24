@@ -57,8 +57,6 @@ export interface RichTextEditorProps {
   onPaste?: (event: { content: DocumentFragment }) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   onUploadImage?: (image: string, fileName: string) => void;
-  /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  onDelete?: (editor: IEditor) => void;
 }
 
 /**
@@ -190,8 +188,6 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
       if (editor.current === null) {
         return;
       }
-      console.log('onContent change', exportContent(editor.current));
-
       if (event === UpdateEvent.Blur || event === UpdateEvent.Dispose) {
         onContentModelUpdate && onContentModelUpdate(editor.current.getContentModelCopy('disconnected'));
       } else {

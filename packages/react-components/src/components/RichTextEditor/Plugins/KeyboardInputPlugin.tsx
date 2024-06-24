@@ -21,9 +21,7 @@ export class KeyboardInputPlugin implements EditorPlugin {
 
   onPluginEvent(event: PluginEvent): void {
     if (this.onKeyDown && event.eventType === PluginEventType.KeyDown && event.rawEvent instanceof KeyboardEvent) {
-      if (event.rawEvent.key === 'Backspace' || event.rawEvent.key === 'Delete') {
-        this.onKeyDown(event.rawEvent);
-      }
+      this.onKeyDown(event.rawEvent);
     }
   }
 }

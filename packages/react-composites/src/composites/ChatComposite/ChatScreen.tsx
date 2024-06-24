@@ -350,21 +350,15 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
 
   const onCancelInlineImageUploadHandler = useCallback(
     (imageId: string) => {
-      // TODO: remove local blob
       const imageUpload = inlineImageUploads.find((upload) => upload.metadata.id === imageId);
       const uploadId = imageUpload?.metadata.id;
       if (!uploadId) {
         return;
       }
-      if (imageUpload?.metadata.error) {
-        // TODO
-        return;
-      } else if (!imageUpload?.metadata.progress || imageUpload?.metadata.progress < 1) {
-        // cancel the upload
-        handleInlineImageUploadAction({ type: AttachmentUploadActionType.Remove, id: uploadId });
-      } else if (imageUpload?.metadata.progress === 1) {
+      handleInlineImageUploadAction({ type: AttachmentUploadActionType.Remove, id: uploadId });
+      // TODO: remove local blob
+      if (imageUpload?.metadata.progress === 1) {
         adapter.deleteImage(imageId);
-        handleInlineImageUploadAction({ type: AttachmentUploadActionType.Remove, id: uploadId });
       }
     },
     [adapter, inlineImageUploads]
@@ -614,7 +608,6 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       handleUploadAction({ type: AttachmentUploadActionType.Clear });
       /* @conditional-compile-remove(rich-text-editor-image-upload) */
       handleInlineImageUploadAction({ type: AttachmentUploadActionType.Clear });
-      console.log('After clear', inlineImageUploads);
 
       /* @conditional-compile-remove(file-sharing-acs) */
       await adapter.sendMessage(content, {

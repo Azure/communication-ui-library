@@ -407,7 +407,6 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
       setContentValue('');
       editorComponentRef.current?.setEmptyContent();
       editorComponentRef.current?.focus();
-      console.log('------Sent-----');
     }
   }, [
     disabled,
