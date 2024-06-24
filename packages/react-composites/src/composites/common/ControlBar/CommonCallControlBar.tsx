@@ -471,6 +471,11 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                         // when they are not actively in the call to communicate they will.
                         callState.callStatus === 'Connected'
                       }
+                      disableEndCallModal={
+                        !isBoolean(props.callControls) &&
+                        !isBoolean(props.callControls?.endCallButton) &&
+                        props.callControls?.endCallButton?.disableEndCallModal
+                      }
                     />
                   </ControlBar>
                 </div>
