@@ -434,16 +434,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     );
 
     this.context.onCallEnded((endCallData) => {
-      const mainMeeting = this.getState().mainMeeting;
-      const breakoutRoom = mainMeeting?.breakoutRooms?.assignedBreakoutRoom;
-      // Return to main meeting because breakout room call is ended because it is closed
-      if (
-        breakoutRoom &&
-        breakoutRoom.state === 'closed' &&
-        this.getState().breakoutRoomSettings?.disableReturnToMainMeeting === false
-      ) {
-        setTimeout(() => this.returnToMainMeeting(), 10000);
-      }
       this.emitter.emit('callEnded', endCallData);
     });
 
@@ -497,6 +487,14 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
             const transferCall = _callAgent.calls.find((call: Call) => call.id === latestAcceptedTransfer?.callId);
             if (transferCall) {
               this.processNewCall(transferCall);
+              return;
+            }
+            const mainMeeting = this.getState().mainMeeting;
+            const breakoutRoom = mainMeeting?.breakoutRooms?.assignedBreakoutRoom;
+            // Return to main meeting because breakout room call is ended because it is closed
+            if (removedCallState.id === this.call.id && breakoutRoom?.state === 'closed') {
+              setTimeout(() => this.returnToMainMeeting(), 10000);
+              return;
             }
           }
         }
