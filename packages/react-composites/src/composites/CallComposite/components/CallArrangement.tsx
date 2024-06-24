@@ -642,6 +642,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                               onPrimaryButtonClick={
                                 props.mobileView ? toggleMeetingPhoneInfoPane : toggleTeamsMeetingConferenceModal
                               }
+                            />
                           </Stack>
                         )
                     }
