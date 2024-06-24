@@ -98,7 +98,7 @@ test.describe('VideoGallery tests', async () => {
   });
 
   // @conditional-compile-remove(soft-mute)
-  test.only('Remote video tile mute menu button should be disabled when user is muted', async ({
+  test('Remote video tile mute menu button should be disabled when user is muted', async ({
     page,
     serverUrl
   }, testInfo) => {
