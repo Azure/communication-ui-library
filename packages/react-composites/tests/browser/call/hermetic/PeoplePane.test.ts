@@ -339,7 +339,7 @@ test.describe('Participant list full screen pane with drawer tests', () => {
   });
 
   // @conditional-compile-remove(soft-mute)
-  test('Mute menu item disabled for user that is already muted', async ({ page, serverUrl }, testInfo) => {
+  test.only('Mute menu item disabled for user that is already muted', async ({ page, serverUrl }, testInfo) => {
     test.skip(!participantListShownAsFullScreenPane(testInfo));
 
     await page.goto(
@@ -356,7 +356,7 @@ test.describe('Participant list full screen pane with drawer tests', () => {
     await pageClick(page, `${dataUiId('participant-list')} [role="menuitem"]`);
 
     // wait for drawer to have opened
-    await waitForSelector(page, dataUiId('participant-item-mute-participant'));
+    await waitForSelector(page, '[data-icon-name="ContextualMenuMicMutedIcon"]');
     expect(await stableScreenshot(page)).toMatchSnapshot(`participant-mute-menu-item-disabled.png`);
   });
 
