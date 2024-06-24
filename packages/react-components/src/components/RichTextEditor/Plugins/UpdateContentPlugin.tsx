@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 import type { EditorPlugin, IEditor, PluginEvent } from 'roosterjs-content-model-types';
+import type { Keys } from 'roosterjs-editor-types';
 import { PluginEventType } from '../../utils/RichTextEditorUtils';
 
 /**
@@ -66,14 +67,16 @@ export class UpdateContentPlugin implements EditorPlugin {
       case PluginEventType.ContentChanged:
         if (
           event.source.toLowerCase() === 'cut' ||
-          (event.source.toLowerCase() === 'keyboard' && (event.data === 8 || event.data === 46))
+          (event.source.toLowerCase() === 'keyboard' && (event.data === Keys.BACKSPACE || event.data === Keys.DELETE))
         ) {
-          imageSrcArray = [];
           event.contentModel?.blocks.map((block) => {
             if (block.blockType === 'Paragraph') {
               const segments = block.segments;
               segments.map((segment) => {
                 if (segment.segmentType === 'Image') {
+                  if (!imageSrcArray) {
+                    imageSrcArray = [];
+                  }
                   imageSrcArray?.push(segment.src);
                 }
               });

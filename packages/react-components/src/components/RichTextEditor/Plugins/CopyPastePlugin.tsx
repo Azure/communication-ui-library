@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 import type { PluginEvent, EditorPlugin, IEditor, BeforePasteEvent } from 'roosterjs-content-model-types';
 import { ContentChangedEventSource, PluginEventType } from '../../utils/RichTextEditorUtils';
+import { base64ToBlob } from '@internal/acs-ui-common';
 
 /**
  * CopyPastePlugin is a plugin for handling copy and paste events in the editor.
@@ -12,7 +13,7 @@ export default class CopyPastePlugin implements EditorPlugin {
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   onPaste?: (event: { content: DocumentFragment }) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  onUploadImage?: (image: string, fileName: string) => void;
+  onUploadImage?: (imageUrl: string, imageFileName: string) => void;
 
   getName(): string {
     return 'CopyPastePlugin';
@@ -62,35 +63,25 @@ export const handleInlineImage = (
   event: PluginEvent,
   onUploadImage?: (image: string, fileName: string) => void
 ): void => {
-  // We don't support the pasting options such as paste as image yet.
-  if (event.eventType === PluginEventType.BeforePaste && event.pasteType === 'normal') {
+  if (event.eventType === PluginEventType.BeforePaste && event.pasteType === 'normal' && onUploadImage) {
     event.fragment.querySelectorAll('img').forEach((image) => {
-      if (!image.src.startsWith('data:image/')) {
-        return;
-      }
       const clipboardImage = event.clipboardData.image;
       const fileName = clipboardImage?.name || clipboardImage?.type.replace('/', '.') || 'image.png';
-      const blobImage = base64ToBlob(image.src);
-      const blobUrl = URL.createObjectURL(blobImage);
-      onUploadImage && onUploadImage(blobUrl, fileName);
+      // If the image src is an external url, call the onUploadImage callback with the url.
+      let imageUrl = image.src;
+      if (image.src.startsWith('data:image/')) {
+        const blobImage = base64ToBlob(image.src);
+        imageUrl = URL.createObjectURL(blobImage);
+      }
 
-      image.src = blobUrl;
+      onUploadImage(imageUrl, fileName);
+
+      image.src = imageUrl;
       image.alt = image.alt || 'image';
-      image.style.width = '200px'; // TODO: change the value after getting the design spec
+      image.style.width = '119px';
+      image.style.height = '119px';
     });
   }
-};
-
-/* @conditional-compile-remove(rich-text-editor-image-upload) */
-const base64ToBlob = (dataURI: string): Blob => {
-  const byteString = atob(dataURI.split(',')[1]);
-  const arrayBuffer = new ArrayBuffer(byteString.length);
-  const uint8Array = new Uint8Array(arrayBuffer);
-
-  for (let i = 0; i < byteString.length; i++) {
-    uint8Array[i] = byteString.charCodeAt(i);
-  }
-  return new Blob([arrayBuffer]);
 };
 
 /**
@@ -98,7 +89,6 @@ const base64ToBlob = (dataURI: string): Blob => {
  * Exported only for unit testing
  */
 export const removeImageElement = (event: BeforePasteEvent): void => {
-  // We don't support the pasting options such as paste as image yet.
   if (event.pasteType === 'normal') {
     event.fragment.querySelectorAll('img').forEach((image) => {
       // If the image is the only child of its parent, remove all the parents of this img element.

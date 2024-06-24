@@ -590,7 +590,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   }, [uploads]);
 
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  const uploadInlineImages = useMemo(() => {
+  const imageUploadsInProgress = useMemo(() => {
     return inlineImageUploads?.map((v) => v.metadata);
   }, [inlineImageUploads]);
 
@@ -712,7 +712,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
                   /* @conditional-compile-remove(rich-text-editor-image-upload) */
                   onUploadImage={onUploadInlineImage}
                   /* @conditional-compile-remove(rich-text-editor-image-upload) */
-                  uploadInlineImages={uploadInlineImages}
+                  imageUploadsInProgress={imageUploadsInProgress}
                   /* @conditional-compile-remove(rich-text-editor-image-upload) */
                   onCancelInlineImageUpload={onCancelInlineImageUploadHandler}
                 />

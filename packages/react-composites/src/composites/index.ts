@@ -28,6 +28,8 @@ export { COMPOSITE_LOCALE_ZH_CN } from './localization/locales/zh-CN/CompositeLo
 export { COMPOSITE_LOCALE_ZH_TW } from './localization/locales/zh-TW/CompositeLocale';
 
 export type { CallControlDisplayType, CommonCallControlOptions } from './common/types/CommonCallControlOptions';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+export type { UploadChatImageResult } from './common/types/Types';
 
 export type { AvatarPersonaData, AvatarPersonaDataCallback } from './common/AvatarPersona';
 export { COMPOSITE_ONLY_ICONS, DEFAULT_COMPOSITE_ICONS } from './common/icons';

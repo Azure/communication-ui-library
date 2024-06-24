@@ -12,6 +12,7 @@ export { _getApplicationId } from './telemetry';
 export { _formatString } from './localizationUtils';
 export { _safeJSONStringify } from './safeStringify';
 export { _convertPxToRem, _convertRemToPx, _preventDismissOnEvent, _getKeys } from './common';
+export { base64ToBlob } from './dataConversion';
 
 export type { Common, CommonProperties } from './commonProperties';
 export type { CallbackType, FunctionWithKey } from './memoizeFnAll';

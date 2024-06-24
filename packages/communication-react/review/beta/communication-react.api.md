@@ -4053,10 +4053,10 @@ export interface RichTextSendBoxProps {
     }) => void;
     onSendMessage: (content: string, options?: MessageOptions) => Promise<void>;
     onTyping?: () => Promise<void>;
-    onUploadImage?: (image: string, fileName: string) => void;
+    onUploadImage?: (imageUrl: string, imageFileName: string) => void;
     strings?: Partial<RichTextSendBoxStrings>;
     systemMessage?: string;
-    uploadInlineImages?: AttachmentMetadataInProgress[];
+    imageUploadsInProgress?: AttachmentMetadataInProgress[];
 }
 
 // @beta
