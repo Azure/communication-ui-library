@@ -68,7 +68,7 @@
     "@storybook/storybook-deployer": "^2.8.16",
     "@storybook/test-runner": "^0.17.0",
     "@storybook/theming": "^8.0.6",
-    "@testing-library/jest-dom": "^6.4.5",
+    "@testing-library/jest-dom": "^6.4.6",
     "@types/jest": "^29.5.11",
     "@types/json-stringify-safe": "^5.0.3",
     "@types/node": "^20.14.8",
