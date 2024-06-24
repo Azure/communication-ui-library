@@ -1103,6 +1103,8 @@ export interface CallWithChatAdapterManagement {
     allowUnsupportedBrowserVersion(): void;
     askDevicePermission(constrain: PermissionConstraints): Promise<void>;
     createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void | CreateVideoStreamViewResult>;
+    // @beta
+    deleteImage(imageId: string): Promise<void>;
     deleteMessage(messageId: string): Promise<void>;
     disposeLocalVideoStreamView(): Promise<void>;
     disposeRemoteVideoStreamView(remoteUserId: string): Promise<void>;
@@ -1731,6 +1733,7 @@ export interface ChatAdapterSubscribers {
 
 // @public
 export interface ChatAdapterThreadManagement {
+    deleteImage(imageId: string): Promise<void>;
     deleteMessage(messageId: string): Promise<void>;
     downloadResourceToCache(resourceDetails: ResourceDetails): Promise<void>;
     fetchInitialData(): Promise<void>;
@@ -1855,6 +1858,7 @@ export type ChatErrorTarget = 'ChatClient.createChatThread' | 'ChatClient.delete
 export type ChatHandlers = {
     onSendMessage: (content: string, options?: SendMessageOptions | /* @conditional-compile-remove(file-sharing-acs) */ MessageOptions) => Promise<void>;
     onUploadImage: (image: ArrayBuffer | Blob, imageFilename: string) => Promise<UploadChatImageResult>;
+    onDeleteImage: (imageId: string) => Promise<void>;
     onMessageSeen: (chatMessageId: string) => Promise<void>;
     onTyping: () => Promise<void>;
     onRemoveParticipant: (userId: string) => Promise<void>;
@@ -4043,6 +4047,7 @@ export interface RichTextSendBoxProps {
     autoFocus?: 'sendBoxTextField';
     disabled?: boolean;
     onCancelAttachmentUpload?: (attachmentId: string) => void;
+    onCancelInlineImageUpload?: (imageId: string) => void;
     onPaste?: (event: {
         content: DocumentFragment;
     }) => void;
