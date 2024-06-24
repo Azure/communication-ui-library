@@ -21,6 +21,7 @@ export const EndCall = (props: {
   mobileView?: boolean;
   /* @conditional-compile-remove(end-call-options) */
   enableEndCallMenu?: boolean;
+  disableEndCallModal?: boolean;
 }): JSX.Element => {
   const compactMode = props.displayType === 'compact';
   const hangUpButtonProps = usePropsFor(EndCallButton);
@@ -119,7 +120,7 @@ export const EndCall = (props: {
         data-ui-id="call-composite-hangup-button"
         {...hangUpButtonProps}
         /* @conditional-compile-remove(end-call-options) */
-        onHangUp={hangUpOverride}
+        onHangUp={props.disableEndCallModal ? onHangUp : hangUpOverride}
         styles={styles}
         showLabel={!compactMode}
         /* @conditional-compile-remove(end-call-options) */
