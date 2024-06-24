@@ -3,7 +3,6 @@
 
 import type { EditorPlugin, IEditor, PluginEvent } from 'roosterjs-content-model-types';
 import { PluginEventType } from '../../utils/RichTextEditorUtils';
-import { AttachmentMetadataInProgress } from '@internal/acs-ui-common';
 
 /**
  * An update mode to indicate when the content update happens
@@ -23,7 +22,7 @@ export class UpdateContentPlugin implements EditorPlugin {
   private editor: IEditor | null = null;
   private disposer: (() => void) | null = null;
   // don't set callback in constructor to be able to update callback without plugin recreation
-  onUpdate: ((event: UpdateEvent) => void) | null = null;
+  onUpdate: ((event: UpdateEvent, imageSrcArray?: Array<string>) => void) | null = null;
 
   getName(): string {
     return 'UpdateContentPlugin';
@@ -53,6 +52,8 @@ export class UpdateContentPlugin implements EditorPlugin {
     if (this.onUpdate === null) {
       return;
     }
+    let imageSrcArray: Array<string> | undefined;
+
     switch (event.eventType) {
       case PluginEventType.EditorReady:
         this.onUpdate(UpdateEvent.Init);
@@ -63,10 +64,25 @@ export class UpdateContentPlugin implements EditorPlugin {
         break;
 
       case PluginEventType.ContentChanged:
-        this.onUpdate(UpdateEvent.ContentChanged);
-        // this.onDeleteImage(uploadImages);
-        console.log('ContentChanged', event);
-
+        if (
+          event.source.toLowerCase() === 'cut' ||
+          (event.source.toLowerCase() === 'keyboard' && (event.data === 8 || event.data === 46))
+        ) {
+          imageSrcArray = [];
+          event.contentModel?.blocks.map((block) => {
+            if (block.blockType === 'Paragraph') {
+              const segments = block.segments;
+              segments.map((segment) => {
+                if (segment.segmentType === 'Image') {
+                  imageSrcArray?.push(segment.src);
+                }
+              });
+            }
+          });
+        } else {
+          imageSrcArray = undefined;
+        }
+        this.onUpdate(UpdateEvent.ContentChanged, imageSrcArray);
         break;
 
       case PluginEventType.Input:
@@ -81,6 +97,4 @@ export class UpdateContentPlugin implements EditorPlugin {
     }
     this.onUpdate(UpdateEvent.Blur);
   };
-
-  // private onDeleteImage = (uploadImages: AttachmentMetadataInProgress[]): void => {};
 }

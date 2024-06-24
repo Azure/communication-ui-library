@@ -33,8 +33,6 @@ import { FluentV9ThemeProvider } from '../../theming/FluentV9ThemeProvider';
 import parse, { HTMLReactParserOptions, Element as DOMElement, attributesToProps, domToReact } from 'html-react-parser';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { renderToString } from 'react-dom/server';
-import { IEditor } from 'roosterjs-content-model-types';
-import { iterateSelections } from 'roosterjs-content-model-dom';
 
 /**
  * Strings of {@link RichTextSendBox} that can be overridden.
@@ -276,34 +274,27 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     setContentValue(newValue);
   }, []);
 
+  const onChangeHandler = useCallback(
+    (newValue?: string, imageSrcArray?: Array<string>) => {
+      if (imageSrcArray && uploadInlineImages && uploadInlineImages?.length > 0) {
+        uploadInlineImages?.map((uploadImage) => {
+          if (uploadImage.url && !imageSrcArray?.includes(uploadImage.url)) {
+            onCancelInlineImageUpload?.(uploadImage.id);
+          }
+        });
+      }
+
+      setContent(newValue);
+    },
+    [onCancelInlineImageUpload, setContent, uploadInlineImages]
+  );
+
   const hasContent = useMemo(() => {
     // get plain text content from the editor to check if the message is empty
     // as the content may contain tags even when the content is empty
     const plainTextContent = editorComponentRef.current?.getPlainContent();
     return sanitizeText(contentValue ?? '').length > 0 && sanitizeText(plainTextContent ?? '').length > 0;
   }, [contentValue]);
-
-  /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  const onDelete = useCallback(
-    (editor: IEditor) => {
-      editor?.formatContentModel((model) => {
-        iterateSelections(model, (_, __, block, segments) => {
-          segments?.forEach((segment) => {
-            if (segment.segmentType === 'Image' && block?.blockType === 'Paragraph') {
-              const imageLocalUrl = segment.src;
-              uploadInlineImages?.map((uploadImage) => {
-                if (uploadImage.url === imageLocalUrl) {
-                  onCancelInlineImageUpload?.(uploadImage.id);
-                }
-              });
-            }
-          });
-        });
-        return false;
-      });
-    },
-    [onCancelInlineImageUpload, uploadInlineImages]
-  );
 
   /* @conditional-compile-remove(file-sharing-acs) */
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
@@ -573,7 +564,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
       <RichTextInputBoxComponent
         placeholderText={strings.placeholderText}
         autoFocus={autoFocus}
-        onChange={setContent}
+        onChange={onChangeHandler}
         onEnterKeyDown={sendMessageOnClick}
         onTyping={onTyping}
         editorComponentRef={editorComponentRef}
@@ -589,8 +580,6 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
         onPaste={onPaste}
         /* @conditional-compile-remove(rich-text-editor-image-upload) */
         onUploadImage={onUploadImage}
-        /* @conditional-compile-remove(rich-text-editor-image-upload) */
-        onDelete={onDelete}
       />
     </Stack>
   );

@@ -35,7 +35,7 @@ export interface RichTextInputBoxComponentProps {
   placeholderText?: string;
   // the initial content of editor that is set when editor is created (e.g. when editing a message)
   initialContent?: string;
-  onChange: (newValue?: string) => void;
+  onChange: (newValue?: string, imageSrcArray?: Array<string>) => void;
   onEnterKeyDown?: () => void;
   editorComponentRef: React.RefObject<RichTextEditorComponentRef>;
   // Partial needs to be removed when the rich text editor feature goes to GA
@@ -56,8 +56,6 @@ export interface RichTextInputBoxComponentProps {
   onPaste?: (event: { content: DocumentFragment }) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   onUploadImage?: (image: string, fileName: string) => void;
-  /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  onDelete?: (editor: IEditor) => void;
 }
 
 /**
@@ -82,9 +80,7 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
     autoFocus,
     onTyping,
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    onUploadImage,
-    /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    onDelete
+    onUploadImage
   } = props;
   const theme = useTheme();
   // undefined is used to indicate that the rich text editor toolbar state wasn't changed yet
@@ -216,8 +212,6 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
               onPaste={props.onPaste}
               /* @conditional-compile-remove(rich-text-editor-image-upload) */
               onUploadImage={onUploadImage}
-              /* @conditional-compile-remove(rich-text-editor-image-upload) */
-              onDelete={onDelete}
             />
           </Stack.Item>
           {/* @conditional-compile-remove(file-sharing-acs) */ onRenderAttachmentUploads && onRenderAttachmentUploads()}

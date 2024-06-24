@@ -43,7 +43,7 @@ export interface RichTextEditorStyleProps {
 export interface RichTextEditorProps {
   // the initial content of editor that is set when editor is created (e.g. when editing a message)
   initialContent?: string;
-  onChange: (newValue?: string) => void;
+  onChange: (newValue?: string, imageSrcArray?: Array<string>) => void;
   onKeyDown?: (ev: KeyboardEvent) => void;
   // update the current content of the rich text editor
   onContentModelUpdate?: (contentModel: ContentModelDocument | undefined) => void;
@@ -101,9 +101,7 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
     onPaste,
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    onUploadImage,
-    /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    onDelete
+    onUploadImage
   } = props;
   const editor = useRef<IEditor | null>(null);
   const editorDiv = useRef<HTMLDivElement>(null);
@@ -188,14 +186,16 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
 
   useEffect(() => {
     // don't set callback in plugin constructor to update callback without plugin recreation
-    updatePlugin.onUpdate = (event: string) => {
+    updatePlugin.onUpdate = (event: string, imageSrcArray?: Array<string>) => {
       if (editor.current === null) {
         return;
       }
+      console.log('onContent change', exportContent(editor.current));
+
       if (event === UpdateEvent.Blur || event === UpdateEvent.Dispose) {
         onContentModelUpdate && onContentModelUpdate(editor.current.getContentModelCopy('disconnected'));
       } else {
-        onChange && onChange(exportContent(editor.current));
+        onChange && onChange(exportContent(editor.current), imageSrcArray);
       }
     };
   }, [onChange, onContentModelUpdate, updatePlugin]);
@@ -212,8 +212,7 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
   useEffect(() => {
     // don't set callback in plugin constructor to update callback without plugin recreation
     keyboardInputPlugin.onKeyDown = onKeyDown;
-    keyboardInputPlugin.onDelete = onDelete;
-  }, [keyboardInputPlugin, onDelete, onKeyDown]);
+  }, [keyboardInputPlugin, onKeyDown]);
 
   const tableContextMenuPlugin = useMemo(() => {
     return new TableEditContextMenuProvider();
