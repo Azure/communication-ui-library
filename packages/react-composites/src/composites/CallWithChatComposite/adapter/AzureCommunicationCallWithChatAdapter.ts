@@ -13,8 +13,7 @@ import {
   PropertyChangedEvent,
   TeamsMeetingLinkLocator,
   StartCallOptions,
-  VideoDeviceInfo,
-  BreakoutRoom
+  VideoDeviceInfo
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(meeting-id) */
 import { TeamsMeetingIdLocator } from '@azure/communication-calling';
@@ -173,17 +172,15 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     }
 
     const onCallStateChange = (newCallAdapterState: CallAdapterState): void => {
-      const callAdapterState = this.callAdapter.getState();
       const chatAdapterState = this.chatAdapter?.getState();
-      const mainMeeting = callAdapterState.mainMeeting;
+      const mainMeeting = newCallAdapterState.mainMeeting;
       const threadId = mainMeeting?.info?.threadId;
       if (
-        callAdapterState.call?.id &&
-        callAdapterState.call.id === mainMeeting?.id &&
-        callAdapterState.breakoutRoomSettings?.disableReturnToMainMeeting === false &&
         threadId &&
         this.chatAdapter &&
-        chatAdapterState?.thread.threadId !== threadId
+        chatAdapterState?.thread.threadId !== threadId &&
+        newCallAdapterState.call?.id &&
+        newCallAdapterState.call.id === mainMeeting?.id
       ) {
         this.chatAdapter?.switchChatThread(threadId);
       }
@@ -574,12 +571,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   }
 
   public async returnToMainMeeting(): Promise<void> {
-    const threadId = this.callAdapter.getState().mainMeeting?.info?.threadId;
-    if (threadId && this.chatAdapter) {
-      this.chatAdapter.switchChatThread(threadId).then(() => {
-        this.callAdapter.returnToMainMeeting();
-      });
-    }
+    return this.callAdapter.returnToMainMeeting();
   }
 
   public async switchChatThread(chatThreadId: string): Promise<void> {
