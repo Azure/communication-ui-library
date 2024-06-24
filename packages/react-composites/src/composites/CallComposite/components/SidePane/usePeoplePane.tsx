@@ -132,6 +132,7 @@ export const usePeoplePane = (props: {
         }
       }
       menuItems.push({
+        ['data-ui-id']: 'people-pane-mute-all-remote-participants',
         key: 'muteAllRemoteParticipants',
         text: localeStrings.muteAllMenuLabel,
         iconProps: {

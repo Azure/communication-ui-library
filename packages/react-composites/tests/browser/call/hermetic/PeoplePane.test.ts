@@ -206,6 +206,8 @@ test.describe('Participant list side pane tests', () => {
     await waitForSelector(page, dataUiId('people-pane-content'));
     expect(await stableScreenshot(page)).toMatchSnapshot('people-pane-with-error-bar.png');
   });
+
+  // @conditional-compile-remove(soft-mute)
   test('Mute menu item disabled for user that is already muted', async ({ page, serverUrl }, testInfo) => {
     test.skip(!participantListShownAsSidePane(testInfo));
 
@@ -226,6 +228,7 @@ test.describe('Participant list side pane tests', () => {
     expect(await stableScreenshot(page)).toMatchSnapshot(`participant-mute-menu-item-disabled.png`);
   });
 
+  // @conditional-compile-remove(soft-mute)
   test('People pane header more options menu', async ({ page, serverUrl }, testInfo) => {
     test.skip(!participantListShownAsSidePane(testInfo));
 
@@ -247,7 +250,7 @@ test.describe('Participant list side pane tests', () => {
     await waitForSelector(page, dataUiId('people-pane-mute-all-remote-participants'));
     expect(await stableScreenshot(page)).toMatchSnapshot(`people-pane-header-more-options.png`);
   });
-
+  // @conditional-compile-remove(soft-mute)
   test('Mute all menu item disabled for user that is already muted', async ({ page, serverUrl }, testInfo) => {
     test.skip(!participantListShownAsSidePane(testInfo));
 
@@ -335,6 +338,7 @@ test.describe('Participant list full screen pane with drawer tests', () => {
     expect(await stableScreenshot(page)).toMatchSnapshot(`participant-menu-item-flyout.png`);
   });
 
+  // @conditional-compile-remove(soft-mute)
   test('Mute menu item disabled for user that is already muted', async ({ page, serverUrl }, testInfo) => {
     test.skip(!participantListShownAsFullScreenPane(testInfo));
 
@@ -356,11 +360,19 @@ test.describe('Participant list full screen pane with drawer tests', () => {
     expect(await stableScreenshot(page)).toMatchSnapshot(`participant-mute-menu-item-disabled.png`);
   });
 
+  // @conditional-compile-remove(soft-mute)
   test('Mute all menu item disabled for user that is already muted', async ({ page, serverUrl }, testInfo) => {
     test.skip(!participantListShownAsFullScreenPane(testInfo));
 
+    const displayNames = ['Tony Hawk', 'Marie Curie', 'Gal Gadot'];
+    const participants = displayNames.map((name) => defaultMockRemoteParticipant(name));
+    for (const participant of participants) {
+      participant.isMuted = true;
+    }
+    const initialState = defaultMockCallAdapterState(participants);
+    
     await page.goto(
-      buildUrlWithMockAdapter(serverUrl, participantListInitialState({remoteIsMuted: true}), {
+      buildUrlWithMockAdapter(serverUrl, initialState, {
         callInvitationUrl: 'testUrl'
       })
     );
@@ -372,7 +384,7 @@ test.describe('Participant list full screen pane with drawer tests', () => {
     await pageClick(page, dataUiId('people-pane-header-more-button'));
 
     // wait for drawer to have opened
-    await waitForSelector(page, dataUiId(`[data-icon-name="ContextualMenuMicMutedIcon"]`));
+    await waitForSelector(page, `[data-icon-name="ContextualMenuMicMutedIcon"]`);
     expect(await stableScreenshot(page)).toMatchSnapshot(`people-pane-mute-all-menu-item-disabled.png`);
   });
 });
