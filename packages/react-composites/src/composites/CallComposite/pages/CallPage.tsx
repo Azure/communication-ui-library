@@ -34,8 +34,6 @@ import { DtmfDialpadPage } from './DtmfDialpadPage';
 import { showDtmfDialer } from '../utils/MediaGalleryUtils';
 import { getTargetCallees } from '../selectors/baseSelectors';
 import { Prompt, PromptProps } from '../components/Prompt';
-/* @conditional-compile-remove(teams-meeting-conference) */
-import { BadNetworkQualityBannerProps } from '../components/BadNetworkQualityNotificationBar';
 
 /**
  * @private
@@ -63,8 +61,6 @@ export interface CallPageProps {
   setPinnedParticipants?: (pinnedParticipants: string[]) => void;
   compositeAudioContext?: AudioContext;
   disableAutoShowDtmfDialer?: boolean;
-  /* @conditional-compile-remove(teams-meeting-conference) */
-  badNetworkQualityBannerProps?: BadNetworkQualityBannerProps;
 }
 
 /**
@@ -176,7 +172,7 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
             isNetworkHealthy(networkReconnectTileProps.networkReconnectValue) ? (
               onRenderGalleryContentTrampoline()
             ) : (
-              <NetworkReconnectTile {...networkReconnectTileProps} />
+              <NetworkReconnectTile {...{ ...networkReconnectTileProps, isMobile: mobileView }} />
             )
           ) : (
             <></>
@@ -199,8 +195,6 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
         hideSpotlightButtons={options?.spotlight?.hideSpotlightButtons}
         pinnedParticipants={pinnedParticipants}
         setPinnedParticipants={setPinnedParticipants}
-        /* @conditional-compile-remove(teams-meeting-conference) */
-        badNetworkQualityBannerProps={props.badNetworkQualityBannerProps}
       />
       {<Prompt isOpen={isPromptOpen} onDismiss={() => setIsPromptOpen(false)} {...promptProps} />}
     </>

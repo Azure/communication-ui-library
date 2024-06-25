@@ -57,8 +57,6 @@ import { usePeoplePane } from './SidePane/usePeoplePane';
 import { useMeetingPhoneInfoPane } from './SidePane/useMeetingPhoneInfo';
 /* @conditional-compile-remove(teams-meeting-conference) */
 import { getTeamsMeetingCoordinates } from '../selectors/baseSelectors';
-/* @conditional-compile-remove(teams-meeting-conference) */
-import { BadNetworkQualityNotificationBar, BadNetworkQualityBannerProps } from './BadNetworkQualityNotificationBar';
 
 import {
   useVideoEffectsPane,
@@ -134,8 +132,6 @@ export interface CallArrangementProps {
   hideSpotlightButtons?: boolean;
   pinnedParticipants?: string[];
   setPinnedParticipants?: (pinnedParticipants: string[]) => void;
-  /* @conditional-compile-remove(teams-meeting-conference) */
-  badNetworkQualityBannerProps?: BadNetworkQualityBannerProps;
 }
 
 /**
@@ -631,18 +627,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                     {canUnmute && !!props.mutedNotificationProps && (
                       <MutedNotification {...props.mutedNotificationProps} />
                     )}
-                    {
-                      /* @conditional-compile-remove(teams-meeting-conference) */ props.badNetworkQualityBannerProps &&
-                        props.badNetworkQualityBannerProps.isPoorNetworkQuality &&
-                        isTeamsCall && (
-                          <Stack styles={bannerNotificationStyles}>
-                            <BadNetworkQualityNotificationBar
-                              {...props.badNetworkQualityBannerProps}
-                              onPrimaryButtonClick={toggleTeamsMeetingConferenceModal}
-                            />
-                          </Stack>
-                        )
-                    }
                   </Stack.Item>
                   {renderGallery && props.onRenderGalleryContent && props.onRenderGalleryContent()}
                   {true &&

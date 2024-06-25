@@ -27,49 +27,48 @@ describe('Display phone number in user friendly format', () => {
 /* @conditional-compile-remove(teams-meeting-conference) */
 describe('Format phone number info based on available data', () => {
   const strings = {
-    meetingConferencePhoneInfoModalTollFree: '{phoneNumber} (Toll Free) {country} {city}',
-    meetingConferencePhoneInfoModalToll: '{phoneNumber} (Toll) {country} {city}',
-    meetingConferencePhoneInfoModalTollFreeWithoutGeoData: '{phoneNumber} (Toll Free)',
-    meetingConferencePhoneInfoModalTollWithoutGeoData: '{phoneNumber} (Toll)'
+    meetingConferencePhoneInfoModalTollFree: '{phoneNumber} (Toll Free)',
+    meetingConferencePhoneInfoModalToll: '{phoneNumber} (Toll)',
+    meetingConferencePhoneInfoModalTollGeoData: '{phoneNumber} {country} {city}'
   };
 
   test('Test toll free and toll label', async () => {
     assert(
-      formatPhoneNumberInfo({ phoneNumber: '123', isTollFree: false, conferenceId: '123' }, strings) === '123 (Toll)'
+      formatPhoneNumberInfo(
+        { phoneNumber: '123', isTollFree: false, conferenceId: '123', country: 'USA', city: 'Seattle' },
+        strings
+      ) === '123 USA Seattle'
     );
     assert(
       formatPhoneNumberInfo({ phoneNumber: '123', isTollFree: true, conferenceId: '123' }, strings) ===
-        '123 (Toll Free)'
+        '123 USA Seattle'
     );
   });
 
   test('Test USA format', async () => {
     assert(
-      formatPhoneNumberInfo({ phoneNumber: '12345678900', isTollFree: false, conferenceId: '123' }, strings) ===
-        '+1 (234) 567-8900 (Toll)'
-    );
-  });
-
-  test('Test USA format', async () => {
-    assert(
-      formatPhoneNumberInfo({ phoneNumber: '12345678900', isTollFree: false, conferenceId: '123' }, strings) ===
-        '+1 (234) 567-8900 (Toll)'
+      formatPhoneNumberInfo(
+        { phoneNumber: '12345678900', isTollFree: false, conferenceId: '123', country: 'USA', city: 'Seattle' },
+        strings
+      ) === '+1 (234) 567-8900 USA Seattle'
     );
   });
 
   test('Test non USA format', async () => {
     assert(
-      formatPhoneNumberInfo({ phoneNumber: '442890123490', isTollFree: false, conferenceId: '123' }, strings) ===
-        '+44 (289) 012-3490 (Toll)'
+      formatPhoneNumberInfo(
+        { phoneNumber: '442890123490', isTollFree: false, conferenceId: '123', country: 'USA', city: 'Seattle' },
+        strings
+      ) === '+44 (289) 012-3490 USA Seattle'
     );
   });
 
   test('Test with available country info', async () => {
     assert(
       formatPhoneNumberInfo(
-        { phoneNumber: '12345678900', isTollFree: false, conferenceId: '123', country: 'Canada' },
+        { phoneNumber: '12345678900', isTollFree: false, conferenceId: '123', country: 'Canada', city: 'Toronto' },
         strings
-      ) === '+1 (234) 567-8900 (Toll) Canada'
+      ) === '+1 (234) 567-8900 Canada Toronto'
     );
   });
 
@@ -78,7 +77,7 @@ describe('Format phone number info based on available data', () => {
       formatPhoneNumberInfo(
         { phoneNumber: '12345678900', isTollFree: false, conferenceId: '123', country: 'Canada', city: 'Toronto' },
         strings
-      ) === '+1 (234) 567-8900 (Toll) Canada Toronto'
+      ) === '+1 (234) 567-8900 Canada Toronto'
     );
   });
 });
