@@ -92,6 +92,7 @@ export const ParticipantListWithHeading = (props: {
           (headingMoreButtonMenuProps?.items && headingMoreButtonMenuProps.items.length > 0)) && (
           <Stack.Item>
             <DefaultButton
+              data-ui-id="people-pane-header-more-button"
               ariaLabel={headingMoreButtonAriaLabel}
               styles={headingMoreButtonStyles(theme)}
               iconProps={{ iconName: 'PeoplePaneMoreButton' }}
