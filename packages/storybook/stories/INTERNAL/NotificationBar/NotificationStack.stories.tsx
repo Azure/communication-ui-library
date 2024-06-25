@@ -41,7 +41,7 @@ const getDocs: () => JSX.Element = () => {
         The `NotificationStack` component internally tracks dismissed notifications and only shows a `Notification` for
         notifications that have not been dismissed. When `activeNotifications` include a timestamp, notifications that
         occur after the latest dismissal are shown on the UI. When `activeNotifications` do not include a timestamp, a
-        dismissed notification is only shown on the UI if it is removed from the active notifications and then occurs
+        dismissed notification is only shown on the UI if it is removed from the active notifications and if it occurs
         again.
       </Description>
       <Heading>Multiple Notification Stack</Heading>
