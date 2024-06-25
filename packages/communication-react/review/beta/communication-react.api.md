@@ -3285,8 +3285,7 @@ export interface MeetingConferencePhoneInfoModalStrings {
     meetingConferencePhoneInfoModalTitle?: string;
     meetingConferencePhoneInfoModalToll?: string;
     meetingConferencePhoneInfoModalTollFree?: string;
-    meetingConferencePhoneInfoModalTollFreeWithoutGeoData?: string;
-    meetingConferencePhoneInfoModalTollWithoutGeoData?: string;
+    meetingConferencePhoneInfoModalTollGeoData?: string;
     meetingConferencePhoneInfoModalWait?: string;
 }
 
