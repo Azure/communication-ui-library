@@ -4,7 +4,7 @@
 import React from 'react';
 import { VideoGalleryStream, useTheme } from '@internal/react-components';
 import { ExpandedLocalVideoTile } from './ExpandedLocalVideoTile';
-import { Link, mergeStyles, Stack, Text } from '@fluentui/react';
+import { mergeStyles, Stack, Text } from '@fluentui/react';
 /* @conditional-compile-remove(teams-meeting-conference) */
 // eslint-disable-next-line no-restricted-imports
 import { Icon } from '@fluentui/react';
@@ -37,6 +37,8 @@ import {
 import { formatPhoneNumberInfo, formatPhoneNumber, formatPhoneNumberLink } from '@internal/react-components';
 /* @conditional-compile-remove(teams-meeting-conference) */
 import { _pxToRem } from '@internal/acs-ui-common';
+/* @conditional-compile-remove(teams-meeting-conference) */
+import { Link } from '@fluentui/react';
 
 /**
  * @private
