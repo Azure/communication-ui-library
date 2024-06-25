@@ -1,7 +1,7 @@
-import { NotificationBar } from '@internal/react-components';
+import { Notification } from '@internal/react-components';
 import React from 'react';
 
-export const ExampleNotificationBar = (): JSX.Element => {
+export const ExampleNotification = (): JSX.Element => {
   const strings = {
     title: 'Poor Network Quality',
     closeButtonAriaLabel: 'Close',
@@ -11,9 +11,9 @@ export const ExampleNotificationBar = (): JSX.Element => {
   };
 
   return (
-    <NotificationBar
-      notificationBarStrings={strings}
-      notificationBarIconProps={{ iconName: 'ErrorBarCallNetworkQualityLow' }}
+    <Notification
+      notificationStrings={strings}
+      notificationIconProps={{ iconName: 'ErrorBarCallNetworkQualityLow' }}
       onClickPrimaryButton={() => alert('Joining with phone')}
       onClickSecondaryButton={() => alert('I will wait')}
     />

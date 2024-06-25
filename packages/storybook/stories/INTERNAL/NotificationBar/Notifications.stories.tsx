@@ -5,49 +5,50 @@ import { mergeStyles, useTheme } from '@fluentui/react';
 import { Canvas, Description, Heading, Props, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
-import { Notifications as NotificationsComponent } from '../../../../react-components/src/components';
+import { NotificationStack as NotificationStackComponent } from '../../../../react-components/src/components';
 import { COMPONENT_FOLDER_PREFIX } from '../../constants';
 import { controlsToAdd, hiddenControl } from '../../controlsUtils';
-import { ExampleNotifications } from './snippets/ExampleNotifications.snippet';
+import { ExampleNotificationStack } from './snippets/ExampleNotificationStack.snippet';
 
-const ExampleNotificationsText = require('!!raw-loader!./snippets/ExampleNotifications.snippet.tsx').default;
+const ExampleNotificationStackText = require('!!raw-loader!./snippets/ExampleNotificationStack.snippet.tsx').default;
 
 const getDocs: () => JSX.Element = () => {
   /* eslint-disable react/no-unescaped-entities */
   return (
     <>
-      <Title>Notifications</Title>
+      <Title>Notification Stack</Title>
       <Description>
-        `Notifications` is a wrapper on the `NotificationBar` component with additional features for surfacing Azure
+        `Notification Stack` is a wrapper on the `Notification` component with additional features for surfacing Azure
         Communication Services notifications on the UI consistently.
       </Description>
-      <Heading>Example Notifications</Heading>
-      <Canvas mdxSource={ExampleNotificationsText}>
-        <ExampleNotifications />
+      <Heading>Example Notification Stack</Heading>
+      <Canvas mdxSource={ExampleNotificationStackText}>
+        <ExampleNotificationStack />
       </Canvas>
       <Heading>Localization</Heading>
       <Description>
-        Similar to other UI components in this library, `NotificationsProps` accepts all strings shown on the UI as a
-        `strings` field. The `activeNotifications` field selects from these strings to show in the `Notifications` UI.
+        Similar to other UI components in this library, `NotificationStackProps` accepts all strings shown on the UI as
+        a `strings` field. The `activeNotifications` field selects from these strings to show in the `NotificationStack`
+        UI.
       </Description>
       <Heading>Dismissed messages</Heading>
       <Description>
         User can dismiss the notifications shown by clicking on the X icon. If you wish to dismiss the notifications
         automatically, simply set the `autoDismiss` field to true for that specific notification.
       </Description>
-      <Heading>Multiple Notifications</Heading>
+      <Heading>Multiple Notification Stack</Heading>
       <Description>
-        More than one notification can occur at the same time. The `Notifications` component can show multiple active
-        notifications. To avoid confusing the user, it is important to be mindful to limit the total number of
-        notifications that are shown together by setting the `maxNotificationsToShow` field.
+        More than one notification can occur at the same time. The `NotificationStack` component can show multiple
+        active notifications. To avoid confusing the user, it is important to be mindful to limit the total number of
+        notifications that are shown together by setting the `maxNotificationStackToShow` field.
       </Description>
-      <Heading>Notifications Props</Heading>
-      <Props of={NotificationsComponent} />
+      <Heading>Notification Stack Props</Heading>
+      <Props of={NotificationStackComponent} />
     </>
   );
 };
 
-const NotificationsStory = (args): JSX.Element => {
+const NotificationStackStory = (args): JSX.Element => {
   const theme = useTheme();
   return (
     <div
@@ -58,7 +59,7 @@ const NotificationsStory = (args): JSX.Element => {
         height: '50%'
       })}
     >
-      <NotificationsComponent
+      <NotificationStackComponent
         activeNotifications={args.activeNotifications.map((t) => ({
           type: t
         }))}
@@ -70,12 +71,12 @@ const NotificationsStory = (args): JSX.Element => {
 
 // This must be the only named export from this module, and must be named to match the storybook path suffix.
 // This ensures that storybook hoists the story instead of creating a folder with a single entry.
-export const Notifications = NotificationsStory.bind({});
+export const NotificationStack = NotificationStackStory.bind({});
 
 export default {
-  id: `${COMPONENT_FOLDER_PREFIX}-internal-Notifications`,
-  title: `${COMPONENT_FOLDER_PREFIX}/Internal/Notifications/Notifications`,
-  component: NotificationsComponent,
+  id: `${COMPONENT_FOLDER_PREFIX}-internal-NotificationStack`,
+  title: `${COMPONENT_FOLDER_PREFIX}/Internal/NotificationStack/NotificationStack`,
+  component: NotificationStackComponent,
   argTypes: {
     activeNotifications: controlsToAdd.activeNotifications,
     maxNotificationsToShow: controlsToAdd.maxNotificationsToShow,
