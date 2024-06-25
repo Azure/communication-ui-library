@@ -62,6 +62,7 @@ import { MessageOptions } from '@internal/acs-ui-common';
 import { SendBoxPicker } from '../common/SendBoxPicker';
 /* @conditional-compile-remove(rich-text-editor-composite-support) */
 import { loadRichTextSendBox } from '../common/SendBoxPicker';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { ImageUpload } from './image-upload/ImageUpload';
 
 /**

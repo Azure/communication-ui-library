@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 import type { PluginEvent, EditorPlugin, IEditor, BeforePasteEvent } from 'roosterjs-content-model-types';
 import { ContentChangedEventSource, PluginEventType } from '../../utils/RichTextEditorUtils';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { _base64ToBlob } from '@internal/acs-ui-common';
 
 /**

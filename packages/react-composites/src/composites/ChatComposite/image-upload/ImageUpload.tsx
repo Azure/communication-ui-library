@@ -1,19 +1,24 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { Dispatch, useCallback, useReducer } from 'react';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
 import {
   AttachmentUpload,
   AttachmentUploadActionType,
   AttachmentUploadReducer,
-  AttachmentUploadTask
+  AttachmentUploadTask,
+  Actions
 } from '../file-sharing/AttachmentUpload';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { useAdapter } from '../adapter/ChatAdapterProvider';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { nanoid } from 'nanoid';
-import { Actions } from '../file-sharing/AttachmentUpload';
 
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
 /**
- * @internal
+ * @private
  */
 export const ImageUpload = (): [
   AttachmentUpload[],
@@ -60,7 +65,6 @@ export const ImageUpload = (): [
     [fetchBlobData]
   );
 
-  /* @conditional-compile-remove(rich-text-editor-image-upload) */
   const inlineImageUploadHandler = useCallback(
     async (uploadTasks: AttachmentUpload[]): Promise<void> => {
       for (const task of uploadTasks) {
@@ -96,7 +100,6 @@ export const ImageUpload = (): [
     [adapter]
   );
 
-  /* @conditional-compile-remove(rich-text-editor-image-upload) */
   const onUploadInlineImage = useCallback(
     async (image: string, fileName: string): Promise<void> => {
       if (!image) {
@@ -141,7 +144,6 @@ export const ImageUpload = (): [
     [getInlineImageData, inlineImageUploadHandler]
   );
 
-  /* @conditional-compile-remove(rich-text-editor-image-upload) */
   const onCancelInlineImageUploadHandler = useCallback(
     (imageId: string) => {
       const imageUpload = inlineImageUploads.find((upload) => upload.metadata.id === imageId);
