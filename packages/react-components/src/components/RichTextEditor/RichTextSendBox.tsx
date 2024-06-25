@@ -579,8 +579,6 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
         onPaste={onPaste}
         /* @conditional-compile-remove(rich-text-editor-image-upload) */
         onUploadImage={onUploadImage}
-        /* @conditional-compile-remove(rich-text-editor-image-upload) */
-        imageUploadsInProgress={imageUploadsInProgress}
       />
     </Stack>
   );

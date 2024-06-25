@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 import type { PluginEvent, EditorPlugin, IEditor, BeforePasteEvent } from 'roosterjs-content-model-types';
 import { ContentChangedEventSource, PluginEventType } from '../../utils/RichTextEditorUtils';
-import { base64ToBlob } from '@internal/acs-ui-common';
+import { _base64ToBlob } from '@internal/acs-ui-common';
 
 /**
  * CopyPastePlugin is a plugin for handling copy and paste events in the editor.
@@ -70,7 +70,7 @@ export const handleInlineImage = (
       // If the image src is an external url, call the onUploadImage callback with the url.
       let imageUrl = image.src;
       if (image.src.startsWith('data:image/')) {
-        const blobImage = base64ToBlob(image.src);
+        const blobImage = _base64ToBlob(image.src);
         imageUrl = URL.createObjectURL(blobImage);
       }
 

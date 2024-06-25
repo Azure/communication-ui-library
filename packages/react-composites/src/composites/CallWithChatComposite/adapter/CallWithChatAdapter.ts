@@ -42,7 +42,7 @@ import { DtmfTone } from '@azure/communication-calling';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 import { SendMessageOptions } from '@azure/communication-chat';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
-import { UploadChatImageResult } from '../../common/types/Types';
+import { UploadChatImageResult } from '@internal/acs-ui-common';
 import { JoinCallOptions } from '../../CallComposite/adapter/CallAdapter';
 /* @conditional-compile-remove(file-sharing-acs) */
 import { MessageOptions } from '@internal/acs-ui-common';

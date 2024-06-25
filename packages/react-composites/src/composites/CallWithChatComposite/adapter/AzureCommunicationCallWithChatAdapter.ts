@@ -84,7 +84,7 @@ import { StatefulCallClient } from '@internal/calling-stateful-client';
 import { StatefulChatClient } from '@internal/chat-stateful-client';
 import { ChatThreadClient } from '@azure/communication-chat';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
-import { UploadChatImageResult } from '../../common/types/Types';
+import { UploadChatImageResult } from '@internal/acs-ui-common';
 import { useEffect, useRef, useState } from 'react';
 import { _toCommunicationIdentifier, _TelemetryImplementationHint } from '@internal/acs-ui-common';
 import { JoinCallOptions, StartCallIdentifier } from '../../CallComposite/adapter/CallAdapter';

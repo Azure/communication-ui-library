@@ -20,7 +20,7 @@ import type {
   ReadReceiptReceivedEvent
 } from '@azure/communication-chat';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
-import type { UploadChatImageResult } from '@azure/communication-chat';
+import type { UploadChatImageResult } from '@internal/acs-ui-common';
 import { toFlatCommunicationIdentifier, _TelemetryImplementationHint } from '@internal/acs-ui-common';
 import EventEmitter from 'events';
 import {

@@ -8,7 +8,7 @@ import { StatefulChatClient } from '@internal/chat-stateful-client';
 /* @conditional-compile-remove(file-sharing-acs) */
 import { ChatAttachment } from '@azure/communication-chat';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
-import { UploadChatImageResult } from '@azure/communication-chat';
+import { UploadChatImageResult } from '@internal/acs-ui-common';
 import { ChatMessage, ChatMessageReadReceipt, ChatThreadClient, SendMessageOptions } from '@azure/communication-chat';
 import memoizeOne from 'memoize-one';
 /* @conditional-compile-remove(file-sharing-acs) */

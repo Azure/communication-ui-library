@@ -101,7 +101,6 @@ import { Theme } from '@fluentui/react';
 import { TransferEventArgs } from '@azure/communication-calling';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-chat';
 import { UnknownIdentifier } from '@azure/communication-common';
-import { UploadChatImageResult } from '@azure/communication-chat';
 import { VideoDeviceInfo } from '@azure/communication-calling';
 import { VideoEffectName } from '@azure/communication-calling';
 import { VideoStreamRenderer } from '@azure/communication-calling';
@@ -295,6 +294,9 @@ export type AzureCommunicationOutboundCallAdapterArgs = {
     alternateCallerId?: string;
     options?: AzureCommunicationCallAdapterOptions;
 };
+
+// @internal
+export const _base64ToBlob: (dataURI: string) => Blob;
 
 // @public
 export interface BaseCompositeProps<TIcons extends Record<string, JSX.Element>> {
@@ -4046,6 +4048,7 @@ export interface RichTextSendBoxProps {
     attachments?: AttachmentMetadataInProgress[];
     autoFocus?: 'sendBoxTextField';
     disabled?: boolean;
+    imageUploadsInProgress?: AttachmentMetadataInProgress[];
     onCancelAttachmentUpload?: (attachmentId: string) => void;
     onCancelInlineImageUpload?: (imageId: string) => void;
     onPaste?: (event: {
@@ -4056,7 +4059,6 @@ export interface RichTextSendBoxProps {
     onUploadImage?: (imageUrl: string, imageFileName: string) => void;
     strings?: Partial<RichTextSendBoxStrings>;
     systemMessage?: string;
-    imageUploadsInProgress?: AttachmentMetadataInProgress[];
 }
 
 // @beta
@@ -4606,6 +4608,13 @@ export interface UnsupportedOperatingSystemStrings {
 
 // @public
 export type UpdateMessageCallback = (messageId: string, content: string, options?: MessageOptions) => Promise<void>;
+
+// @beta
+export type UploadChatImageResult = {
+    id: string;
+    attachmentType?: 'image' | 'file' | 'unknown';
+    name?: string;
+};
 
 // @public
 export const useAzureCommunicationCallAdapter: (args: Partial<AzureCommunicationCallAdapterArgs | AzureCommunicationOutboundCallAdapterArgs>, afterCreate?: (adapter: CallAdapter) => Promise<CallAdapter>, beforeDispose?: (adapter: CallAdapter) => Promise<void>) => CallAdapter | undefined;

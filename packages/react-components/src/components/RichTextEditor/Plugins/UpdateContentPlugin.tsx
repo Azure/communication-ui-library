@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 import type { EditorPlugin, IEditor, PluginEvent } from 'roosterjs-content-model-types';
-import type { Keys } from 'roosterjs-editor-types';
 import { PluginEventType } from '../../utils/RichTextEditorUtils';
 
 /**
@@ -14,6 +13,11 @@ export enum UpdateEvent {
   ContentChanged = 'ContentChanged',
   UserInput = 'UserInput',
   Blur = 'Blur'
+}
+
+const enum Keys {
+  BACKSPACE = 8,
+  DELETE = 46
 }
 
 /**

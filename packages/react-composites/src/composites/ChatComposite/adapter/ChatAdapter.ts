@@ -3,7 +3,7 @@
 
 import type { ChatMessage, ChatParticipant, SendMessageOptions } from '@azure/communication-chat';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
-import type { UploadChatImageResult } from '@azure/communication-chat';
+import type { UploadChatImageResult } from '@internal/acs-ui-common';
 import type { CommunicationIdentifierKind, CommunicationUserKind } from '@azure/communication-common';
 import { ChatThreadClientState } from '@internal/chat-stateful-client';
 import type { AdapterError, AdapterErrors, AdapterState, Disposable } from '../../common/adapters';
