@@ -111,6 +111,24 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     };
   }, []);
 
+  // Update stale mobile browsers
+  useEffect(() => {
+    /**
+     * We want to make sure that the page is up to date. If for example a browser is dismissed
+     * on mobile, the page will be stale when opened again. This event listener will reload the page
+     */
+    window.addEventListener('pageshow', (event) => {
+      if (event.persisted) {
+        window.location.reload();
+      }
+    });
+    return () => {
+      window.removeEventListener('pageshow', () => {
+        window.location.reload();
+      });
+    };
+  }, []);
+
   const callIdRef = useRef<string>();
   const { currentTheme, currentRtl } = useSwitchableFluentTheme();
   const isMobileSession = useIsMobile();
