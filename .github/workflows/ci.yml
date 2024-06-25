@@ -232,7 +232,7 @@ jobs:
 
   in-progress-feature-validation:
     needs: get_matrix
-    name: Check if in progress feature can be removed separately
+    name: Check if in progress feature can be removed separately (${{ matrix.flavor }})
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     runs-on: ubuntu-latest
