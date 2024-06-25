@@ -232,7 +232,7 @@ jobs:
 
   in-progress-feature-validation:
     needs: get_matrix
-    name: Check if in progress feature can be removed separately
+    name: Check if in progress feature can be removed separately (${{ matrix.flavor }})
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     runs-on: ubuntu-latest
@@ -547,7 +547,7 @@ jobs:
 
   build_storybook:
     needs: get_matrix
-    name: Build Storybook
+    name: Build Storybook (${{ matrix.flavor }})
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     runs-on: ubuntu-latest
@@ -578,7 +578,7 @@ jobs:
   build_storybook8:
     needs: [get_matrix, files_changed]
     if: needs.files_changed.outputs.storybook8_changes == 'true'
-    name: Build Storybook v8
+    name: Build Storybook v8 (${{ matrix.flavor }})
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     runs-on: ubuntu-latest
