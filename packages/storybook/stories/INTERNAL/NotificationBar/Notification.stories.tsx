@@ -53,8 +53,8 @@ const NotificationStory = (args): JSX.Element => {
   return (
     <Stack verticalFill tokens={{ childrenGap: '5rem' }} style={containerStyles} verticalAlign="space-between">
       <NotificationComponent
-        notificationBarStrings={strings}
-        notificationBarIconProps="ErrorBarCallNetworkQualityLow"
+        notificationStrings={strings}
+        notificationIconProps="ErrorBarCallNetworkQualityLow"
         onClickPrimaryButton={() => alert('Joining with phone')}
         onClickSecondaryButton={() => alert('I will wait')}
         {...args}
