@@ -102,7 +102,7 @@ Another common cause for this error is using strict mode in your application. Pl
 ## Mobile browser refresh
 
 This is an issue when using a mobile browser and the user closes the browser. When they do this
-the browser will load the page cached which all of the subscriptions will be lost. To fix this as the
+the browser will load the page cached but all of the subscriptions will be lost. To fix this as the
 developer you will need to force the browser to refresh the page, this can be done with the following snippet:
 
 ```Typescript
@@ -124,6 +124,6 @@ useEffect(() => {
 }, []);
 ```
 
-This `useEffect` will add and event listener for the `pageshow` event, this event when triggered
-will share if the page is persisted or `cached`. If the page is cached we will reload the app so the
+This `useEffect` will add an event listener for the `pageshow` event, this event when triggered
+will share if the page is persisted or cached. If the page is cached we will reload the app so the
 user can rejoin the call.
