@@ -59,8 +59,12 @@ import { useTrackedCapabilityChangedNotifications } from './utils/TrackCapabilit
 import { useEndedCallConsoleErrors } from './utils/useConsoleErrors';
 import { SurveyPage } from './pages/SurveyPage';
 import { useAudio } from '../common/AudioProvider';
+/* @conditional-compile-remove(teams-meeting-conference) */
+import { badNetworkQualityBannerSelector } from './selectors/badNetworkQualitySelector';
+/* @conditional-compile-remove(teams-meeting-conference) */
+import { useBadNetworkQualityNotifications } from './components/BadNetworkQualityNotificationBar';
 /* @conditional-compile-remove(notifications) */
-import { errorNotificationStackSelector } from '@internal/calling-component-bindings';
+import { errorNotificationsStackSelector } from '@internal/calling-component-bindings';
 /* @conditional-compile-remove(notifications) */
 import { useAdaptedSelector } from './hooks/useAdaptedSelector';
 
@@ -447,7 +451,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   // And then tracking when that error type was last dismissed.
   const activeErrors = usePropsFor(ErrorBar).activeErrorMessages;
   /* @conditional-compile-remove(notifications) */
-  const activeInCallErrors = useAdaptedSelector(errorNotificationStackSelector).activeErrorMessages;
+  const activeInCallErrors = useAdaptedSelector(errorNotificationsStackSelector).activeErrorMessages;
   const [trackedErrors, setTrackedErrors] = useState<TrackedErrors>({} as TrackedErrors);
   /* @conditional-compile-remove(notifications) */
   const [trackedInCallErrors, setTrackedInCallErrors] = useState<TrackedErrors>({} as TrackedErrors);
@@ -656,6 +660,8 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           setPinnedParticipants={setPinnedParticipants}
           compositeAudioContext={compositeAudioContext}
           disableAutoShowDtmfDialer={props.options?.disableAutoShowDtmfDialer}
+          /* @conditional-compile-remove(teams-meeting-conference) */
+          badNetworkQualityBannerProps={badNetworkQualityBannerProps}
         />
       );
       break;

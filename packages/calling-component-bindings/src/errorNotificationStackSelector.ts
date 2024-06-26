@@ -40,7 +40,7 @@ export type ErrorNotificationStackSelector = (
  *
  * @beta
  */
-export const errorNotificationsSelector: ErrorNotificationsSelector = createSelector(
+export const errorNotificationsStackSelector: ErrorNotificationStackSelector = createSelector(
   [
     getLatestErrors,
     getDiagnostics,

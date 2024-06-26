@@ -57,6 +57,8 @@ import { usePeoplePane } from './SidePane/usePeoplePane';
 import { useMeetingPhoneInfoPane } from './SidePane/useMeetingPhoneInfo';
 /* @conditional-compile-remove(teams-meeting-conference) */
 import { getTeamsMeetingCoordinates } from '../selectors/baseSelectors';
+/* @conditional-compile-remove(teams-meeting-conference) */
+import { BadNetworkQualityNotificationBar, BadNetworkQualityBannerProps } from './BadNetworkQualityNotificationBar';
 
 import {
   useVideoEffectsPane,
@@ -132,6 +134,8 @@ export interface CallArrangementProps {
   hideSpotlightButtons?: boolean;
   pinnedParticipants?: string[];
   setPinnedParticipants?: (pinnedParticipants: string[]) => void;
+  /* @conditional-compile-remove(teams-meeting-conference) */
+  badNetworkQualityBannerProps?: BadNetworkQualityBannerProps;
 }
 
 /**

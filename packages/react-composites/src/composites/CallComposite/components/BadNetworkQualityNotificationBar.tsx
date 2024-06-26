@@ -4,7 +4,7 @@
 /* @conditional-compile-remove(teams-meeting-conference) */
 import { IMessageBarProps } from '@fluentui/react';
 /* @conditional-compile-remove(teams-meeting-conference) */
-import { NotificationBar } from '@internal/react-components';
+import { Notification } from '@internal/react-components';
 /* @conditional-compile-remove(teams-meeting-conference) */
 import React, { useEffect, useMemo, useState } from 'react';
 /* @conditional-compile-remove(teams-meeting-conference) */
@@ -63,9 +63,9 @@ export const BadNetworkQualityNotificationBar = (props: BadNetworkQualityBannerP
   };
 
   return (
-    <NotificationBar
-      notificationBarStrings={barStrings}
-      notificationBarIconProps={{ iconName: 'ErrorBarCallNetworkQualityLow' }}
+    <Notification
+      notificationStrings={barStrings}
+      notificationIconProps={{ iconName: 'ErrorBarCallNetworkQualityLow' }}
       onClickPrimaryButton={() => props.onPrimaryButtonClick && props.onPrimaryButtonClick()}
       onDismiss={() => props.onDismissNotification && props.onDismissNotification()}
     />
