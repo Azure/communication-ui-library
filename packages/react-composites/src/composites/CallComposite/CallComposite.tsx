@@ -59,6 +59,7 @@ import { SurveyPage } from './pages/SurveyPage';
 import { useAudio } from '../common/AudioProvider';
 import { useTrackedBreakoutRoomsNotifications } from './utils/TrackBreakoutRoomsNotifications';
 import { AzureCommunicationCallAdapter } from './adapter/AzureCommunicationCallAdapter';
+import { BreakoutRoomClosedPage } from './pages/BreakoutRoomClosedPage';
 
 /**
  * Props for {@link CallComposite}.
@@ -620,6 +621,21 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           setPinnedParticipants={setPinnedParticipants}
           compositeAudioContext={compositeAudioContext}
           disableAutoShowDtmfDialer={props.options?.disableAutoShowDtmfDialer}
+        />
+      );
+      break;
+    case 'breakoutRoomEnded':
+      pageElement = (
+        <BreakoutRoomClosedPage
+          mobileView={props.mobileView}
+          modalLayerHostId={props.modalLayerHostId}
+          options={props.options}
+          updateSidePaneRenderer={setSidePaneRenderer}
+          mobileChatTabHeader={props.mobileChatTabHeader}
+          onFetchAvatarPersonaData={onFetchAvatarPersonaData}
+          latestErrors={latestErrors}
+          onDismissError={onDismissError}
+          capabilitiesChangedNotificationBarProps={capabilitiesChangedNotificationBarProps}
         />
       );
       break;

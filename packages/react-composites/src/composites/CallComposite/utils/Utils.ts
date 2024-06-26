@@ -7,7 +7,7 @@ import { CallControlOptions } from '../types/CallControlOptions';
 import { CallState, RemoteParticipantState } from '@internal/calling-stateful-client';
 import { isPhoneNumberIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(unsupported-browser) */
-import { EnvironmentInfo } from '@azure/communication-calling';
+import { BreakoutRoomSettings, EnvironmentInfo } from '@azure/communication-calling';
 import { AdapterStateModifier, CallAdapterLocator } from '../adapter/AzureCommunicationCallAdapter';
 
 import { VideoBackgroundEffectsDependency } from '@internal/calling-component-bindings';
@@ -268,6 +268,8 @@ type GetCallCompositePageFunction = ((
     call: CallState | undefined,
     previousCall: CallState | undefined,
     transferCall?: CallState,
+    mainMeeting?: CallState,
+    breakoutRoomSettings?: BreakoutRoomSettings,
     /* @conditional-compile-remove(unsupported-browser) */ unsupportedBrowserInfo?: {
       environmentInfo?: EnvironmentInfo;
       unsupportedBrowserVersionOptedIn?: boolean;
@@ -290,6 +292,8 @@ export const getCallCompositePage: GetCallCompositePageFunction = (
   call,
   previousCall?,
   transferCall?: CallState,
+  mainMeeting?: CallState,
+  breakoutRoomSettings?: BreakoutRoomSettings,
   unsupportedBrowserInfo?: {
     /* @conditional-compile-remove(unsupported-browser) */
     environmentInfo?: EnvironmentInfo;
@@ -308,6 +312,20 @@ export const getCallCompositePage: GetCallCompositePageFunction = (
 
   if (transferCall !== undefined) {
     return 'transferring';
+  }
+
+  if (call?.state === 'Disconnecting' && breakoutRoomSettings?.disableReturnToMainMeeting === false) {
+    return 'breakoutRoomEnded';
+  }
+  if (
+    mainMeeting?.breakoutRooms?.assignedBreakoutRoom?.state === 'closed' &&
+    breakoutRoomSettings?.disableReturnToMainMeeting === false
+  ) {
+    if (call && mainMeeting?.breakoutRooms?.assignedBreakoutRoom?.call?.id === call.id) {
+      return 'breakoutRoomEnded';
+    } else if (!call && previousCall && mainMeeting?.breakoutRooms?.assignedBreakoutRoom?.call === undefined) {
+      return 'breakoutRoomEnded';
+    }
   }
 
   if (call) {

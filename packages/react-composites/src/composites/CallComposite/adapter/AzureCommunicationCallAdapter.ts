@@ -255,6 +255,8 @@ class CallContext {
       call,
       latestEndedCall,
       transferCall,
+      this.getState().mainMeeting,
+      this.getState().breakoutRoomSettings,
       /* @conditional-compile-remove(unsupported-browser) */ environmentInfo
     );
     if (!IsCallEndedPage(oldPage) && IsCallEndedPage(newPage)) {

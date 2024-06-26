@@ -248,5 +248,10 @@ export const getAssignedBreakoutRoom = (state: CallAdapterState): BreakoutRoom |
 /**
  * @private
  */
+export const getMainMeeting = (state: CallAdapterState): CallState | undefined => state.mainMeeting;
+
+/**
+ * @private
+ */
 export const getBreakoutRoomSettings = (state: CallAdapterState): BreakoutRoomSettings | undefined =>
   state.call?.breakoutRooms?.breakoutRoomSettings;

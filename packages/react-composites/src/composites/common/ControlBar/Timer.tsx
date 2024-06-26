@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 // eslint-disable-next-line no-restricted-imports
-import { FontIcon, IStyle, ITextStyles, Stack, Text, Theme, mergeStyles, useTheme } from '@fluentui/react';
+import { FontIcon, ITextStyles, Stack, Text, Theme, mergeStyles, useTheme } from '@fluentui/react';
 import { _pxToRem } from '@internal/acs-ui-common';
 import React, { useState } from 'react';
 import { getReadableTime } from '../../CallComposite/utils/timerUtils';
