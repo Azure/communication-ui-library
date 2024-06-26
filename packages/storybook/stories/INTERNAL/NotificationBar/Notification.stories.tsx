@@ -69,7 +69,7 @@ export const Notification = NotificationStory.bind({});
 
 export default {
   id: `${COMPONENT_FOLDER_PREFIX}-internal-Notification`,
-  title: `${COMPONENT_FOLDER_PREFIX}/Internal/NotificationStack/Notification`,
+  title: `${COMPONENT_FOLDER_PREFIX}/Internal/Notifications/Notification`,
   component: NotificationComponent,
   argTypes: {
     notificationStrings: hiddenControl,
