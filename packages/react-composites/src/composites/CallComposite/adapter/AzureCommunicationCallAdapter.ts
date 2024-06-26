@@ -11,7 +11,6 @@ import {
   StatefulCallClient,
   StatefulDeviceManager,
   TeamsCall,
-  TeamsCallAgent as BetaTeamsCallAgent,
   _isACSCall,
   _isTeamsCall
 } from '@internal/calling-stateful-client';
@@ -122,7 +121,7 @@ import { VideoBackgroundEffectsDependency } from '@internal/calling-component-bi
 import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
 import { CallingSoundSubscriber } from './CallingSoundSubscriber';
 import { CallingSounds } from './CallAdapter';
-type CallTypeOf<AgentType extends CallAgent | BetaTeamsCallAgent> = AgentType extends CallAgent ? Call : TeamsCall;
+type CallTypeOf<AgentType extends CallAgent | TeamsCallAgent> = AgentType extends CallAgent ? Call : TeamsCall;
 
 /** Context of call, which is a centralized context for all state updates */
 class CallContext {
@@ -330,7 +329,7 @@ export type AdapterStateModifier = (state: CallAdapterState) => CallAdapterState
 /**
  * @private
  */
-export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTeamsCallAgent = CallAgent>
+export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCallAgent = CallAgent>
   implements CommonCallAdapter
 {
   private callClient: StatefulCallClient;
@@ -422,7 +421,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
         callClient.offStateChange(onStateChange);
         return;
       }
-
       // `updateClientState` searches for the current call from all the calls in the state using a cached `call.id`
       // from the call object. `call.id` can change during a call. We must update the cached `call.id` before
       // calling `updateClientState` so that we find the correct state object for the call even when `call.id`
@@ -430,6 +428,11 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
       // https://github.com/Azure/communication-ui-library/pull/1820
       if (this.call?.id) {
         this.context.setCurrentCallId(this.call.id);
+      }
+
+      // if the call hits the connected state we want to pause all calling sounds if playing.
+      if (this.call?.state === 'Connected' && this.callingSoundSubscriber?.playingSounds) {
+        this.callingSoundSubscriber.pauseSounds();
       }
 
       // If the call connects we need to clean up any previous unparentedViews

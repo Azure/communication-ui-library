@@ -157,6 +157,20 @@ export interface StatefulCallClient extends CallClient {
    * @public
    */
   createCallAgent(...args: Parameters<CallClient['createCallAgent']>): Promise<DeclarativeCallAgent>;
+
+  /* @conditional-compile-remove(teams-identity-support) */
+  /**
+   * The TeamsCallAgent is used to handle calls.
+   * To create the TeamsCallAgent, pass a CommunicationTokenCredential object provided from SDK.
+   * - The CallClient can only have one active TeamsCallAgent instance at a time.
+   * - You can create a new CallClient instance to create a new TeamsCallAgent.
+   * - You can dispose of a CallClient's current active TeamsCallAgent, and call the CallClient's
+   *   createTeamsCallAgent() method again to create a new TeamsCallAgent.
+   * @param tokenCredential - The token credential. Use AzureCommunicationTokenCredential from `@azure/communication-common` to create a credential.
+   * @param options - The TeamsCallAgentOptions for additional options like display name.
+   * @public
+   */
+  createTeamsCallAgent(...args: Parameters<CallClient['createTeamsCallAgent']>): Promise<DeclarativeTeamsCallAgent>;
 }
 
 /**

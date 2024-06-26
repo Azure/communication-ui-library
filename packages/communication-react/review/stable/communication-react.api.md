@@ -1670,6 +1670,7 @@ export type CommonCallControlOptions = {
     cameraButton?: boolean;
     endCallButton?: boolean | /* @conditional-compile-remove(end-call-options) */ {
         hangUpForEveryone?: false | 'endCallOptions';
+        disableEndCallModal?: boolean;
     };
     microphoneButton?: boolean;
     devicesButton?: boolean;
@@ -2124,6 +2125,9 @@ export interface CustomMessage extends MessageCommon {
 
 // @public
 export const darkTheme: PartialTheme & CallingTheme;
+
+// @public
+export type DeclarativeTeamsCallAgent = TeamsCallAgent;
 
 // @public
 export const DEFAULT_COMPONENT_ICONS: {
@@ -3570,6 +3574,7 @@ export type StartCallIdentifier = (MicrosoftTeamsAppIdentifier | UnknownIdentifi
 
 // @public
 export interface StatefulCallClient extends CallClient {
+    createTeamsCallAgent(...args: Parameters<CallClient['createTeamsCallAgent']>): Promise<DeclarativeTeamsCallAgent>;
     createView(callId: string | undefined, participantId: CommunicationIdentifier | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState, options?: CreateViewOptions): Promise<CreateViewResult | undefined>;
     disposeView(callId: string | undefined, participantId: CommunicationIdentifier | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState): void;
     getState(): CallClientState;

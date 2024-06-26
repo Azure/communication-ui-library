@@ -259,7 +259,7 @@
     "unableToStartVideoEffect": "Unable to apply video effect.",
     "startSpotlightWhileMaxParticipantsAreSpotlighted": "Cannot start spotlight on participant(s) because the maximum number of participants are already spotlighted."
   },
-  "notifications": {
+  "notificationStack": {
     "callingNetworkFailure": {
       "title": "Troubling connecting call",
       "message": "You seem to be offline. Please check your network connection and try again.",
@@ -557,9 +557,13 @@
     "meetingConferencePhoneInfoModalMeetingId": "Enter meeting ID",
     "meetingConferencePhoneInfoModalWait": "Wait to be admitted by organizer",
     "meetingConferencePhoneInfoModalNoPhoneAvailable": "No phone available",
-    "meetingConferencePhoneInfoModalTollFree": "{phoneNumber} (Toll-free) {country}, {city}",
-    "meetingConferencePhoneInfoModalTollFreeWithoutGeoData": "{phoneNumber} (Toll-free)",
-    "meetingConferencePhoneInfoModalToll": "{phoneNumber} (Toll) {country}, {city}",
-    "meetingConferencePhoneInfoModalTollWithoutGeoData": "{phoneNumber} (Toll)"
+    "meetingConferencePhoneInfoModalTollFree": "(Toll-free) {country}, {city}",
+    "meetingConferencePhoneInfoModalTollFreeWithoutGeoData": "(Toll-free)",
+    "meetingConferencePhoneInfoModalToll": "(Toll) {country}, {city}",
+    "meetingConferencePhoneInfoModalTollWithoutGeoData": "(Toll)",
+    "badQualityBarTitle": "Poor Network Quality",
+    "badQualityBarClose": "Close",
+    "badQualityBarMessage": "Join this call from your phone for better sound. You can continue viewing the meeting on this device.",
+    "badQualityBarJoin": "Join by Phone"
   }
 }
