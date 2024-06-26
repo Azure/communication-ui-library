@@ -27,10 +27,6 @@ import { SendBoxErrorBarError } from '../SendBoxErrorBar';
 import { attachmentUploadCardsStyles } from '../styles/SendBox.styles';
 /* @conditional-compile-remove(file-sharing-acs) */
 import { FluentV9ThemeProvider } from '../../theming/FluentV9ThemeProvider';
-/* @conditional-compile-remove(rich-text-editor-image-upload) */
-import parse, { HTMLReactParserOptions, Element as DOMElement, attributesToProps, domToReact } from 'html-react-parser';
-/* @conditional-compile-remove(rich-text-editor-image-upload) */
-import { renderToString } from 'react-dom/server';
 
 /**
  * Strings of {@link RichTextSendBox} that can be overridden.
@@ -329,22 +325,12 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   const addUploadedImagesToMessage = useCallback(
     (message: string, uploadInlineImages: AttachmentMetadataInProgress[]): string => {
-      const options: HTMLReactParserOptions = {
-        transform(_, domNode) {
-          if (domNode instanceof DOMElement && domNode.attribs) {
-            // Transform inline images
-            if (domNode.name && domNode.name === 'img' && domNode.attribs) {
-              domNode.attribs['aria-label'] = domNode.attribs.name;
-              const imgProps = attributesToProps(domNode.attribs);
-              domNode.attribs['id'] = uploadInlineImages.find((image) => image.url === imgProps.src)?.id ?? '';
-              domNode.attribs['src'] = '';
-            }
-          }
-          return domToReact([domNode]) as JSX.Element;
-        }
-      };
-      const parsedContent = parse(message ?? '', options);
-      const newMessage = renderToString(parsedContent);
+      const document = new DOMParser().parseFromString(message ?? '', 'text/html');
+      document.querySelectorAll('img').forEach((img) => {
+        img.id = uploadInlineImages.find((imageUpload) => imageUpload.url === img.src)?.id ?? '';
+        img.src = '';
+      });
+      const newMessage = document.body.innerHTML;
       return newMessage;
     },
     []
