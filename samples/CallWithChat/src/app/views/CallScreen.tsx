@@ -181,9 +181,10 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
 
   /* @conditional-compile-remove(file-sharing-acs) */
   const attachmentOptions = useMemo(() => {
-    // if it is a teams meeting chat, disable file sharing by hiding the upload button
-    // since BYOS file sharing in interop chat is not supported currently
-    if (locator && isTeamsMeetingLinkLocator(locator)) {
+    // Returning undefined for none group call locators
+    // This includes teams meeting link and teams meeting id locators
+    // Because BYOS file sharing in interop chat is not supported currently
+    if (locator && !isGroupCallLocator(locator)) {
       return undefined;
     }
     return {
