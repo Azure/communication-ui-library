@@ -36,6 +36,14 @@ const getDocs: () => JSX.Element = () => {
         User can dismiss the notifications shown by clicking on the X icon. If you wish to dismiss the notifications
         automatically, simply set the `autoDismiss` field to true for that specific notification.
       </Description>
+      <Heading>Tracking dismissed messages</Heading>
+      <Description>
+        The `NotificationStack` component internally tracks dismissed notifications and only shows a `Notification` for
+        notifications that have not been dismissed. When `activeNotifications` include a timestamp, notifications that
+        occur after the latest dismissal are shown on the UI. When `activeNotifications` do not include a timestamp, a
+        dismissed notification is only shown on the UI if it is removed from the active notifications and if it occurs
+        again.
+      </Description>
       <Heading>Multiple Notification Stack</Heading>
       <Description>
         More than one notification can occur at the same time. The `NotificationStack` component can show multiple
@@ -75,7 +83,7 @@ export const NotificationStack = NotificationStackStory.bind({});
 
 export default {
   id: `${COMPONENT_FOLDER_PREFIX}-internal-NotificationStack`,
-  title: `${COMPONENT_FOLDER_PREFIX}/Internal/NotificationStack/NotificationStack`,
+  title: `${COMPONENT_FOLDER_PREFIX}/Internal/Notifications/NotificationStack`,
   component: NotificationStackComponent,
   argTypes: {
     activeNotifications: controlsToAdd.activeNotifications,
