@@ -45,6 +45,8 @@ export const BreakoutRoomClosedPage = (
         complianceBannerProps={{ strings }}
         // Ignore errors from before current call. This avoids old errors from showing up when a user re-joins a call.
         errorBarProps={props.options?.errorBar !== false && errorBarProps}
+        /* @conditional-compile-remove(notifications) */
+        showErrorNotifications={false}
         callControlProps={{
           options: callControlOptions,
           increaseFlyoutItemSize: props.mobileView

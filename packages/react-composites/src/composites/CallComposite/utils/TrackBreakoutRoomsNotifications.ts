@@ -8,7 +8,6 @@ import {
   EventName
 } from '../components/BreakoutRoomsNotificationBar';
 import { BreakoutRoom } from '@azure/communication-calling';
-import { AzureCommunicationCallAdapter } from '../adapter/AzureCommunicationCallAdapter';
 
 /**
  * Create a record for when the notification was most recently dismissed for tracking dismissed notifications.
@@ -18,9 +17,8 @@ import { AzureCommunicationCallAdapter } from '../adapter/AzureCommunicationCall
 export const useTrackedBreakoutRoomsNotifications = (props: {
   assignedBreakoutRoom?: BreakoutRoom;
   callId?: string;
-  adapter?: AzureCommunicationCallAdapter;
 }): BreakoutRoomsNotificationBarProps => {
-  const { assignedBreakoutRoom, callId, adapter } = props;
+  const { assignedBreakoutRoom, callId } = props;
 
   const [trackedCapabilityChangedNotifications, setTrackedCapabilityChangedNotifications] =
     useState<TrackedBreakoutRoomsNotifications>({});
@@ -62,7 +60,7 @@ export const useTrackedBreakoutRoomsNotifications = (props: {
     setTrackedCapabilityChangedNotifications((prev) =>
       updateTrackedBreakoutRoomsNotificationsWithActiveNotifications(prev, Object.values(activeNotifications.current))
     );
-  }, [assignedBreakoutRoom, callId, adapter]);
+  }, [assignedBreakoutRoom, callId]);
 
   const onDismissBreakoutRoomsNotification = useCallback((notification: BreakoutRoomsNotification) => {
     setTrackedCapabilityChangedNotifications((prev) =>

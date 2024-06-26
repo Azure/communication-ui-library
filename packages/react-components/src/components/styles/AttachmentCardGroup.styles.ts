@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { makeStyles, shorthands } from '@fluentui/react-components';
+import { makeStyles } from '@fluentui/react-components';
 import { _ATTACHMENT_CARD_MARGIN_IN_PX, _ATTACHMENT_CARD_WIDTH_IN_REM } from './AttachmentCard.styles';
 import { _pxToRem } from '@internal/acs-ui-common';
 import { mergeStyles } from '@fluentui/react';
@@ -14,7 +14,7 @@ export const useAttachmentCardGroupStyles = makeStyles({
     marginTop: '0.25rem'
   },
   singleAttachment: {
-    widtn: `${_ATTACHMENT_CARD_WIDTH_IN_REM}rem`
+    width: `${_ATTACHMENT_CARD_WIDTH_IN_REM}rem`
   },
   multipleAttachments: {
     width: '100%'
@@ -26,7 +26,7 @@ export const useAttachmentCardGroupStyles = makeStyles({
  */
 export const attachmentCardBaseStyles = mergeStyles({
   '& > *': {
-    ...shorthands.margin(`${_pxToRem(_ATTACHMENT_CARD_MARGIN_IN_PX)}`)
+    margin: `${_pxToRem(_ATTACHMENT_CARD_MARGIN_IN_PX)}`
   },
   /**
    * margin for children is overriden by parent stack, so adding left margin for each child
@@ -50,4 +50,13 @@ export const attachmentCardGirdLayout = mergeStyles({
 export const attachmentCardFlexLayout = mergeStyles({
   display: 'flex',
   flexWrap: 'wrap'
+});
+
+/**
+ * @private
+ */
+export const attachmentGroupDisabled = mergeStyles({
+  opacity: '0.5',
+  userSelect: 'none',
+  pointerEvents: 'none'
 });

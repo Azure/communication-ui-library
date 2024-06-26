@@ -185,8 +185,8 @@
     "failToSendTag": "Failed to send",
     "editedTag": "Edited",
     "liveAuthorIntro": "{author} says",
-    "messageContentAriaText": "{author} said {message}",
-    "messageContentMineAriaText": "You said {message}",
+    "messageContentAriaText": "{status} {author} said {message}",
+    "messageContentMineAriaText": "{status} You said {message}",
     "editBoxTextLimit": "Your message is over the limit of {limitNumber} characters",
     "editBoxPlaceholderText": "Edit your message",
     "newMessagesIndicator": "New messages",
@@ -260,28 +260,6 @@
     "startSpotlightWhileMaxParticipantsAreSpotlighted": "Cannot start spotlight on participant(s) because the maximum number of participants are already spotlighted."
   },
   "notifications": {
-    "unableToReachChatService": {
-      "title": "You are offline.",
-      "closeButtonAriaLabel": "Close"
-    },
-    "accessDenied": {
-      "title": "Unable to access chat services",
-      "message": "Please check the user credentials provided",
-      "closeButtonAriaLabel": "Close"
-    },
-    "userNotInChatThread": {
-      "title": "You are no longer in this chat thread.",
-      "closeButtonAriaLabel": "Close"
-    },
-    "sendMessageNotInChatThread": {
-      "title": "Failed to send message",
-      "message": "You are no longer in this chat thread",
-      "closeButtonAriaLabel": "Close"
-    },
-    "sendMessageGeneric": {
-      "title": "Failed to send message.",
-      "closeButtonAriaLabel": "Close"
-    },
     "callingNetworkFailure": {
       "title": "Troubling connecting call",
       "message": "You seem to be offline. Please check your network connection and try again.",
@@ -436,7 +414,8 @@
     "spotlightLimitReachedMenuTitle": "Spotlight limit reached",
     "stopSpotlightVideoTileMenuLabel": "Stop spotlighting",
     "stopSpotlightOnSelfVideoTileMenuLabel": "Exit spotlight",
-    "attendeeRole": "Attendee"
+    "attendeeRole": "Attendee",
+    "muteParticipantMenuItemLabel": "Mute"
   },
   "dialpad": {
     "placeholderText": "Enter phone number",
@@ -571,5 +550,20 @@
   "verticalGallery": {
     "leftNavButtonAriaLabel": "previous page",
     "rightNavButtonAriaLabel": "next page"
+  },
+  "MeetingConferencePhoneInfo": {
+    "meetingConferencePhoneInfoModalTitle": "Join call from your phone",
+    "meetingConferencePhoneInfoModalDialIn": "Dial number",
+    "meetingConferencePhoneInfoModalMeetingId": "Enter meeting ID",
+    "meetingConferencePhoneInfoModalWait": "Wait to be admitted by organizer",
+    "meetingConferencePhoneInfoModalNoPhoneAvailable": "No phone available",
+    "meetingConferencePhoneInfoModalTollFree": "(Toll-free) {country}, {city}",
+    "meetingConferencePhoneInfoModalTollFreeWithoutGeoData": "(Toll-free)",
+    "meetingConferencePhoneInfoModalToll": "(Toll) {country}, {city}",
+    "meetingConferencePhoneInfoModalTollWithoutGeoData": "(Toll)",
+    "badQualityBarTitle": "Poor Network Quality",
+    "badQualityBarClose": "Close",
+    "badQualityBarMessage": "Join this call from your phone for better sound. You can continue viewing the meeting on this device.",
+    "badQualityBarJoin": "Join by Phone"
   }
 }

@@ -44,7 +44,7 @@ import { SidePaneHeader } from '../common/SidePaneHeader';
 import { CallControlOptions } from '../CallComposite/types/CallControlOptions';
 import { useUnreadMessagesTracker } from './ChatButton/useUnreadMessagesTracker';
 import { VideoGalleryLayout } from '@internal/react-components';
-/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(file-sharing-acs) */
 import { AttachmentOptions } from '@internal/react-components';
 
 /**
@@ -100,7 +100,7 @@ export type CallWithChatCompositeOptions = {
    * If using the boolean values, true will cause default behavior across the whole control bar. False hides the whole control bar.
    */
   callControls?: boolean | CallWithChatControlOptions;
-  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(file-sharing-acs) */
   /**
    * Properties for configuring the File Sharing feature.
    * If undefined, file sharing feature will be disabled.
@@ -256,7 +256,6 @@ export type CallWithChatCompositeOptions = {
       url: string;
     };
   };
-  /* @conditional-compile-remove(spotlight) */
   /**
    * Options for settings related to spotlight.
    */
@@ -270,7 +269,7 @@ export type CallWithChatCompositeOptions = {
 
   /* @conditional-compile-remove(rich-text-editor-composite-support) */
   /**
-   * enables rich text editor for the edit box
+   * Enables rich text editor for the send and edit boxes
    * @defaultValue `false`
    *
    * @beta
@@ -286,7 +285,7 @@ type CallWithChatScreenProps = {
   callControls?: boolean | CallWithChatControlOptions;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
-  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(file-sharing-acs) */
   attachmentOptions?: AttachmentOptions;
   rtl?: boolean;
   /* @conditional-compile-remove(call-readiness) */
@@ -350,7 +349,6 @@ type CallWithChatScreenProps = {
   backgroundImage?: {
     url: string;
   };
-  /* @conditional-compile-remove(spotlight) */
   spotlight?: {
     hideSpotlightButtons?: boolean;
   };
@@ -535,7 +533,6 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
         logo: props.logo,
         backgroundImage: props.backgroundImage
       },
-      /* @conditional-compile-remove(spotlight) */
       spotlight: props.spotlight
     }),
     [
@@ -558,7 +555,6 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
       surveyOptions,
       props.logo,
       props.backgroundImage,
-      /* @conditional-compile-remove(spotlight) */
       props.spotlight
     ]
   );
@@ -572,7 +568,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
           topic: false,
           /* @conditional-compile-remove(chat-composite-participant-pane) */
           participantPane: false,
-          /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+          /* @conditional-compile-remove(file-sharing-acs) */
           attachmentOptions: props.attachmentOptions,
           /* @conditional-compile-remove(rich-text-editor-composite-support) */
           richTextEditor: props.richTextEditor
@@ -582,8 +578,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
     ),
     [
       chatAdapter,
-      /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-      props.attachmentOptions,
+      /* @conditional-compile-remove(file-sharing-acs) */ props.attachmentOptions,
       props.onFetchAvatarPersonaData,
       /* @conditional-compile-remove(rich-text-editor-composite-support) */ props.richTextEditor,
       theme
@@ -675,7 +670,13 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
 export const CallWithChatComposite = (props: CallWithChatCompositeProps): JSX.Element => {
   const { adapter, fluentTheme, rtl, formFactor, joinInvitationURL, options } = props;
   return (
-    <BaseProvider fluentTheme={fluentTheme} rtl={rtl} locale={props.locale} icons={props.icons}>
+    <BaseProvider
+      fluentTheme={fluentTheme}
+      rtl={rtl}
+      locale={props.locale}
+      icons={props.icons}
+      formFactor={props.formFactor}
+    >
       <CallWithChatScreen
         {...props}
         /* @conditional-compile-remove(call-readiness) */
@@ -686,14 +687,13 @@ export const CallWithChatComposite = (props: CallWithChatCompositeProps): JSX.El
         joinInvitationURL={joinInvitationURL}
         fluentTheme={fluentTheme}
         remoteVideoTileMenuOptions={options?.remoteVideoTileMenuOptions}
-        /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+        /* @conditional-compile-remove(file-sharing-acs) */
         attachmentOptions={options?.attachmentOptions}
         localVideoTile={options?.localVideoTile}
         galleryOptions={options?.galleryOptions}
         logo={options?.branding?.logo}
         backgroundImage={options?.branding?.backgroundImage}
         surveyOptions={options?.surveyOptions}
-        /* @conditional-compile-remove(spotlight) */
         spotlight={options?.spotlight}
       />
     </BaseProvider>

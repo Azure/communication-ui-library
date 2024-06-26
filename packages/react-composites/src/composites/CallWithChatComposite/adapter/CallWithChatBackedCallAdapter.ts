@@ -214,17 +214,15 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
   public async submitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined> {
     return this.callWithChatAdapter.submitSurvey(survey);
   }
-  /* @conditional-compile-remove(spotlight) */
+
   public async startSpotlight(userIds?: string[]): Promise<void> {
     return this.callWithChatAdapter.startSpotlight(userIds);
   }
 
-  /* @conditional-compile-remove(spotlight) */
   public async stopSpotlight(userIds?: string[]): Promise<void> {
     return this.callWithChatAdapter.stopSpotlight(userIds);
   }
 
-  /* @conditional-compile-remove(spotlight) */
   public async stopAllSpotlight(): Promise<void> {
     return this.callWithChatAdapter.stopAllSpotlight();
   }
@@ -232,6 +230,11 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
   /* @conditional-compile-remove(soft-mute) */
   public async muteParticipant(userId: string): Promise<void> {
     return this.callWithChatAdapter.muteParticipant(userId);
+  }
+
+  /* @conditional-compile-remove(soft-mute) */
+  public async muteAllRemoteParticipants(): Promise<void> {
+    return this.callWithChatAdapter.muteAllRemoteParticipants();
   }
 
   public async returnToMainMeeting(): Promise<void> {

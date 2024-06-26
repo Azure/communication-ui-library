@@ -259,12 +259,167 @@
     "unableToStartVideoEffect": "Nelze použít efekt videa.",
     "startSpotlightWhileMaxParticipantsAreSpotlighted": "Nelze zahájit vytváření hlavního výběru účastníků, protože je již v hlavním výběru maximální počet účastníků."
   },
+  "notifications": {
+    "unableToReachChatService": {
+      "title": "Jste offline.",
+      "closeButtonAriaLabel": "Zavřít"
+    },
+    "accessDenied": {
+      "title": "Nejde získat přístup k chatovacím službám",
+      "message": "Zkontrolujte prosím zadané přihlašovací údaje uživatele",
+      "closeButtonAriaLabel": "Zavřít"
+    },
+    "userNotInChatThread": {
+      "title": "Už nejste v tomto vlákně chatu.",
+      "closeButtonAriaLabel": "Zavřít"
+    },
+    "sendMessageNotInChatThread": {
+      "title": "Zprávu se nepovedlo odeslat",
+      "message": "Už nejste v tomto vlákně chatu",
+      "closeButtonAriaLabel": "Zavřít"
+    },
+    "sendMessageGeneric": {
+      "title": "Nepovedlo se odeslat zprávu.",
+      "closeButtonAriaLabel": "Zavřít"
+    },
+    "callingNetworkFailure": {
+      "title": "Při připojování hovoru došlo k potížím",
+      "message": "Zdá se, že jste offline. Zkontrolujte si prosím síťové připojení a zkuste to znovu.",
+      "closeButtonAriaLabel": "Zavřít"
+    },
+    "startVideoGeneric": {
+      "title": "Video se nepovedlo spustit.",
+      "closeButtonAriaLabel": "Zavřít"
+    },
+    "stopVideoGeneric": {
+      "title": "Video se nepovedlo zastavit.",
+      "closeButtonAriaLabel": "Zavřít"
+    },
+    "muteGeneric": {
+      "title": "Nepovedlo se ztlumit mikrofon.",
+      "closeButtonAriaLabel": "Zavřít"
+    },
+    "unmuteGeneric": {
+      "title": "Nepovedlo se zrušit ztlumení mikrofonu.",
+      "closeButtonAriaLabel": "Zavřít"
+    },
+    "speakingWhileMuted": {
+      "title": "Jste ztlumení.",
+      "closeButtonAriaLabel": "Zavřít"
+    },
+    "startScreenShareGeneric": {
+      "title": "Při spouštění sdílení obrazovky došlo k problému.",
+      "closeButtonAriaLabel": "Zavřít"
+    },
+    "stopScreenShareGeneric": {
+      "title": "Nepovedlo se zastavit sdílení obrazovky.",
+      "closeButtonAriaLabel": "Zavřít"
+    },
+    "callNetworkQualityLow": {
+      "title": "Kvalita sítě je nízká.",
+      "closeButtonAriaLabel": "Zavřít"
+    },
+    "callNoSpeakerFound": {
+      "title": "Nenašly se žádné reproduktory ani sluchátka",
+      "message": "Připojte zvukové zařízení, abyste slyšeli hovor.",
+      "closeButtonAriaLabel": "Zavřít"
+    },
+    "callNoMicrophoneFound": {
+      "title": "Nenašly se žádné mikrofony",
+      "message": "Připojte vstupní zvukové zařízení.",
+      "closeButtonAriaLabel": "Zavřít"
+    },
+    "callMicrophoneAccessDenied": {
+      "title": "Nepovedlo se získat přístup k mikrofonu",
+      "message": "Kliknutím na zámek na panelu Adresa udělte oprávnění k této webové stránce.",
+      "closeButtonAriaLabel": "Zavřít"
+    },
+    "callMicrophoneAccessDeniedSafari": {
+      "title": "Nepovedlo se získat přístup k mikrofonu",
+      "message": "Aktualizujte stránku, abyste povolili oprávnění, nebo zkontrolujte nastavení tohoto prohlížeče a ověřte, jestli jsou pro tento web povolená oprávnění.",
+      "closeButtonAriaLabel": "Zavřít"
+    },
+    "callMicrophoneMutedBySystem": {
+      "title": "Systém vás ztlumil.",
+      "closeButtonAriaLabel": "Zavřít"
+    },
+    "callMicrophoneUnmutedBySystem": {
+      "title": "Váš mikrofon se obnovil a systém vám zrušil ztlumení.",
+      "closeButtonAriaLabel": "Zavřít"
+    },
+    "callMacOsMicrophoneAccessDenied": {
+      "title": "Nepovedlo se získat přístup k mikrofonu",
+      "message": "Udělte v nastavení ochrany osobních údajů pro macOS oprávnění k mikrofonu.",
+      "closeButtonAriaLabel": "Zavřít"
+    },
+    "callLocalVideoFreeze": {
+      "title": "Šířka pásma sítě je nekvalitní",
+      "message": "Vaše video se může zobrazovat jako pozastavené pro ostatní účastníky hovoru.",
+      "closeButtonAriaLabel": "Zavřít"
+    },
+    "callCameraAccessDenied": {
+      "title": "Nejde získat přístup ke kameře",
+      "message": "Kliknutím na zámek na panelu Adresa udělte oprávnění k této webové stránce.",
+      "closeButtonAriaLabel": "Zavřít"
+    },
+    "callCameraAccessDeniedSafari": {
+      "title": "Nejde získat přístup ke kameře",
+      "message": "Aktualizujte stránku, abyste povolili oprávnění, nebo zkontrolujte nastavení tohoto prohlížeče a ověřte, jestli jsou pro tento web povolená oprávnění.",
+      "closeButtonAriaLabel": "Zavřít"
+    },
+    "callCameraAlreadyInUse": {
+      "title": "Nejde získat přístup ke kameře",
+      "message": "Je možné, že ji už používá jiná aplikace.",
+      "closeButtonAriaLabel": "Zavřít"
+    },
+    "callVideoStoppedBySystem": {
+      "title": "Vaše video bylo zastaveno systémem.",
+      "closeButtonAriaLabel": "Zavřít"
+    },
+    "callVideoRecoveredBySystem": {
+      "title": "Vaše video se obnovilo.",
+      "closeButtonAriaLabel": "Zavřít"
+    },
+    "callMacOsCameraAccessDenied": {
+      "title": "MacOS blokuje přístup k vaší kameře",
+      "message": "Aktualizujte si nastavení ochrany osobních údajů, aby tento prohlížeč měl přístup k vaší kameře.",
+      "closeButtonAriaLabel": "Zavřít"
+    },
+    "callMacOsScreenShareAccessDenied": {
+      "title": "MacOS blokuje sdílení obrazovky",
+      "message": "Aktualizujte nastavení ochrany osobních údajů, aby tento prohlížeč mohl nahrávat vaši obrazovku.",
+      "closeButtonAriaLabel": "Zavřít"
+    },
+    "failedToJoinCallGeneric": {
+      "title": "K hovoru se nepovedlo připojit.",
+      "closeButtonAriaLabel": "Zavřít"
+    },
+    "failedToJoinCallInvalidMeetingLink": {
+      "title": "Ke schůzce se nelze připojit. Neplatný odkaz.",
+      "closeButtonAriaLabel": "Zavřít"
+    },
+    "cameraFrozenForRemoteParticipants": {
+      "title": "Uživatelé v hovoru mají problémy s zobrazením vašeho videa",
+      "message": "Zkontrolujte prosím svá zařízení a síť.",
+      "closeButtonAriaLabel": "Zavřít"
+    },
+    "unableToStartVideoEffect": {
+      "title": "Nelze použít efekt videa.",
+      "closeButtonAriaLabel": "Zavřít"
+    },
+    "startSpotlightWhileMaxParticipantsAreSpotlighted": {
+      "title": "Nelze spustit hlavní výběr u účastník(a/ů).",
+      "message": "Maximální počet účastníků je už vybraný.",
+      "closeButtonAriaLabel": "Zavřít"
+    }
+  },
   "videoGallery": {
     "screenIsBeingSharedMessage": "Sdílíte obrazovku",
     "screenShareLoadingMessage": "Načítání obrazovky {participant}",
     "localVideoLabel": "Vy",
     "localVideoCameraSwitcherLabel": "Přepnout kameru",
     "localVideoMovementLabel": "Dlaždice s místním videem s možností přesunutí",
+    "localVideoMovementAriaLabel": "Dlaždice s místním videem s možností přesunutí",
     "localVideoSelectedDescription": "{cameraName} vybráno",
     "displayNamePlaceholder": "Nepojmenovaný účastník",
     "fitRemoteParticipantToFrame": "Přizpůsobit rámečku",
@@ -295,7 +450,8 @@
   },
   "videoTile": {
     "participantStateRinging": "Volání…",
-    "participantStateHold": "Pozastavený hovor"
+    "participantStateHold": "Pozastavený hovor",
+    "moreOptionsButtonAriaLabel": "Další možnosti"
   },
   "CameraAndMicrophoneSitePermissionsRequest": {
     "primaryText": "Povolit aplikaci {appName} používat kameru a mikrofon",
@@ -415,5 +571,16 @@
   "verticalGallery": {
     "leftNavButtonAriaLabel": "předchozí stránka",
     "rightNavButtonAriaLabel": "další stránka"
+  },
+  "MeetingConferencePhoneInfo": {
+    "meetingConferencePhoneInfoModalTitle": "Připojit se k hovoru z vašeho telefonu",
+    "meetingConferencePhoneInfoModalDialIn": "Vytočit číslo",
+    "meetingConferencePhoneInfoModalMeetingId": "Zadejte ID schůzky",
+    "meetingConferencePhoneInfoModalWait": "Počkejte na přijetí organizátorem",
+    "meetingConferencePhoneInfoModalNoPhoneAvailable": "Není k dispozici žádný telefon.",
+    "meetingConferencePhoneInfoModalTollFree": "{phoneNumber} (Bezplatná linka) {country}, {city}",
+    "meetingConferencePhoneInfoModalTollFreeWithoutGeoData": "{phoneNumber} (Bezplatná linka)",
+    "meetingConferencePhoneInfoModalToll": "{phoneNumber} (Placená linka) {country}, {city}",
+    "meetingConferencePhoneInfoModalTollWithoutGeoData": "{phoneNumber} (Placená linka)"
   }
 }

@@ -57,7 +57,7 @@
     "richTextDeleteColumnMenu": "删除列",
     "richTextDeleteRowMenu": "删除行",
     "richTextDeleteTableMenu": "删除表格",
-    "richTextToolbarMoreButtonAriaLabel": "More options",
+    "richTextToolbarMoreButtonAriaLabel": "更多选项",
     "attachmentMoreMenu": "更多选项"
   },
   "mentionPopover": {
@@ -220,7 +220,7 @@
     "richTextDeleteColumnMenu": "删除列",
     "richTextDeleteRowMenu": "删除行",
     "richTextDeleteTableMenu": "删除表格",
-    "richTextToolbarMoreButtonAriaLabel": "More options"
+    "richTextToolbarMoreButtonAriaLabel": "更多选项"
   },
   "errorBar": {
     "unableToReachChatService": "你已脱机",
@@ -259,12 +259,167 @@
     "unableToStartVideoEffect": "无法应用视频效果。",
     "startSpotlightWhileMaxParticipantsAreSpotlighted": "无法聚焦参与者，因为聚焦的参与者人数已达到上限。"
   },
+  "notifications": {
+    "unableToReachChatService": {
+      "title": "你处于脱机状态。",
+      "closeButtonAriaLabel": "关闭"
+    },
+    "accessDenied": {
+      "title": "无法访问聊天服务",
+      "message": "请检查提供的用户凭据",
+      "closeButtonAriaLabel": "关闭"
+    },
+    "userNotInChatThread": {
+      "title": "你不再在此聊天线程中。",
+      "closeButtonAriaLabel": "关闭"
+    },
+    "sendMessageNotInChatThread": {
+      "title": "无法发送消息",
+      "message": "你不再处于此聊天会话中",
+      "closeButtonAriaLabel": "关闭"
+    },
+    "sendMessageGeneric": {
+      "title": "无法发送邮件。",
+      "closeButtonAriaLabel": "关闭"
+    },
+    "callingNetworkFailure": {
+      "title": "连接呼叫时遇到问题",
+      "message": "你似乎处于脱机状态。请检查网络连接，然后重试。",
+      "closeButtonAriaLabel": "关闭"
+    },
+    "startVideoGeneric": {
+      "title": "无法启动视频。",
+      "closeButtonAriaLabel": "关闭"
+    },
+    "stopVideoGeneric": {
+      "title": "无法停止视频。",
+      "closeButtonAriaLabel": "关闭"
+    },
+    "muteGeneric": {
+      "title": "无法将麦克风静音。",
+      "closeButtonAriaLabel": "关闭"
+    },
+    "unmuteGeneric": {
+      "title": "无法取消麦克风静音。",
+      "closeButtonAriaLabel": "关闭"
+    },
+    "speakingWhileMuted": {
+      "title": "你已静音。",
+      "closeButtonAriaLabel": "关闭"
+    },
+    "startScreenShareGeneric": {
+      "title": "启动屏幕共享时出现问题。",
+      "closeButtonAriaLabel": "关闭"
+    },
+    "stopScreenShareGeneric": {
+      "title": "无法停止屏幕共享。",
+      "closeButtonAriaLabel": "关闭"
+    },
+    "callNetworkQualityLow": {
+      "title": "网络质量低。",
+      "closeButtonAriaLabel": "关闭"
+    },
+    "callNoSpeakerFound": {
+      "title": "找不到扬声器或耳机",
+      "message": "连接音频设备以收听呼叫。",
+      "closeButtonAriaLabel": "关闭"
+    },
+    "callNoMicrophoneFound": {
+      "title": "未找到麦克风",
+      "message": "连接音频输入设备。",
+      "closeButtonAriaLabel": "关闭"
+    },
+    "callMicrophoneAccessDenied": {
+      "title": "无法访问麦克风",
+      "message": "单击地址栏中的锁定以授予对此网页的权限。",
+      "closeButtonAriaLabel": "关闭"
+    },
+    "callMicrophoneAccessDeniedSafari": {
+      "title": "无法访问麦克风",
+      "message": "刷新页面以允许权限，或检查此浏览器的设置并验证是否为此网站启用了权限。",
+      "closeButtonAriaLabel": "关闭"
+    },
+    "callMicrophoneMutedBySystem": {
+      "title": "系统已将你设为静音。",
+      "closeButtonAriaLabel": "关闭"
+    },
+    "callMicrophoneUnmutedBySystem": {
+      "title": "你的麦克风已恢复，系统已取消静音。",
+      "closeButtonAriaLabel": "关闭"
+    },
+    "callMacOsMicrophoneAccessDenied": {
+      "title": "无法访问麦克风",
+      "message": "在 macOS 隐私设置中授予麦克风权限。",
+      "closeButtonAriaLabel": "关闭"
+    },
+    "callLocalVideoFreeze": {
+      "title": "网络带宽较差",
+      "message": "您的视频可能会对通话中的其他人暂停。",
+      "closeButtonAriaLabel": "关闭"
+    },
+    "callCameraAccessDenied": {
+      "title": "无法访问摄像头",
+      "message": "单击地址栏中的锁定以授予对此网页的权限。",
+      "closeButtonAriaLabel": "关闭"
+    },
+    "callCameraAccessDeniedSafari": {
+      "title": "无法访问摄像头",
+      "message": "刷新页面以允许权限，或检查此浏览器的设置并验证是否为此网站启用了权限。",
+      "closeButtonAriaLabel": "关闭"
+    },
+    "callCameraAlreadyInUse": {
+      "title": "无法访问摄像头",
+      "message": "它可能已被其他应用程序使用。",
+      "closeButtonAriaLabel": "关闭"
+    },
+    "callVideoStoppedBySystem": {
+      "title": "你的系统已停止你的视频。",
+      "closeButtonAriaLabel": "关闭"
+    },
+    "callVideoRecoveredBySystem": {
+      "title": "你的视频已恢复。",
+      "closeButtonAriaLabel": "关闭"
+    },
+    "callMacOsCameraAccessDenied": {
+      "title": "MacOS 正在阻止对摄像头的访问",
+      "message": "更新你的隐私设置以允许此浏览器访问你的相机。",
+      "closeButtonAriaLabel": "关闭"
+    },
+    "callMacOsScreenShareAccessDenied": {
+      "title": "MacOS 正在阻止屏幕共享",
+      "message": "更新你的隐私设置以允许此浏览器录制你的屏幕。",
+      "closeButtonAriaLabel": "关闭"
+    },
+    "failedToJoinCallGeneric": {
+      "title": "未能加入通话。",
+      "closeButtonAriaLabel": "关闭"
+    },
+    "failedToJoinCallInvalidMeetingLink": {
+      "title": "无法加入会议。无效的链接。",
+      "closeButtonAriaLabel": "关闭"
+    },
+    "cameraFrozenForRemoteParticipants": {
+      "title": "通话中的用户在查看视频时遇到问题",
+      "message": "请检查你的设备和网络。",
+      "closeButtonAriaLabel": "关闭"
+    },
+    "unableToStartVideoEffect": {
+      "title": "无法应用视频效果。",
+      "closeButtonAriaLabel": "关闭"
+    },
+    "startSpotlightWhileMaxParticipantsAreSpotlighted": {
+      "title": "无法在参与者上启动聚焦",
+      "message": "已聚焦的最大参与者数。",
+      "closeButtonAriaLabel": "关闭"
+    }
+  },
   "videoGallery": {
     "screenIsBeingSharedMessage": "你正在共享你的屏幕",
     "screenShareLoadingMessage": "正在加载 {participant} 的屏幕",
     "localVideoLabel": "你",
     "localVideoCameraSwitcherLabel": "切换相机",
     "localVideoMovementLabel": "可移动本地小窗视频",
+    "localVideoMovementAriaLabel": "可移动本地小窗视频",
     "localVideoSelectedDescription": "已选择 {cameraName}",
     "displayNamePlaceholder": "未命名的参与者",
     "fitRemoteParticipantToFrame": "适应帧大小",
@@ -295,7 +450,8 @@
   },
   "videoTile": {
     "participantStateRinging": "正在呼叫...",
-    "participantStateHold": "保留"
+    "participantStateHold": "保留",
+    "moreOptionsButtonAriaLabel": "更多选项"
   },
   "CameraAndMicrophoneSitePermissionsRequest": {
     "primaryText": "允许{appName}使用你的相机和麦克风",
@@ -415,5 +571,16 @@
   "verticalGallery": {
     "leftNavButtonAriaLabel": "上一页",
     "rightNavButtonAriaLabel": "下一页"
+  },
+  "MeetingConferencePhoneInfo": {
+    "meetingConferencePhoneInfoModalTitle": "从手机加入呼叫",
+    "meetingConferencePhoneInfoModalDialIn": "拨号号码",
+    "meetingConferencePhoneInfoModalMeetingId": "输入会议 ID",
+    "meetingConferencePhoneInfoModalWait": "等待组织者接受",
+    "meetingConferencePhoneInfoModalNoPhoneAvailable": "没有可用的电话",
+    "meetingConferencePhoneInfoModalTollFree": "{phoneNumber}(免费){country}，{city}",
+    "meetingConferencePhoneInfoModalTollFreeWithoutGeoData": "{phoneNumber}(免费)",
+    "meetingConferencePhoneInfoModalToll": "{phoneNumber}(收费){country}，{city}",
+    "meetingConferencePhoneInfoModalTollWithoutGeoData": "{phoneNumber}(收费)"
   }
 }

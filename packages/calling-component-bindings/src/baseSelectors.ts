@@ -14,16 +14,17 @@ import {
   LocalVideoStreamState,
   CallErrors,
   DiagnosticsCallFeatureState,
+  SpotlightCallFeatureState,
   CallState
 } from '@internal/calling-stateful-client';
-/* @conditional-compile-remove(spotlight) */
-import { SpotlightCallFeatureState } from '@internal/calling-stateful-client';
 import { ReactionState } from '@internal/calling-stateful-client';
 import { CaptionsInfo } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(acs-close-captions) */
 import { CaptionsKind } from '@azure/communication-calling';
 import { RaisedHandState } from '@internal/calling-stateful-client';
 import { _SupportedCaptionLanguage, _SupportedSpokenLanguage } from '@internal/react-components';
+/* @conditional-compile-remove(teams-meeting-conference) */
+import { ConferencePhoneInfo } from '@internal/calling-stateful-client';
 
 /**
  * Common props used to reference calling declarative client state.
@@ -101,7 +102,6 @@ export const getLocalParticipantRaisedHand = (
   return state.calls[props.callId]?.raiseHand?.localParticipantRaisedHand;
 };
 
-/* @conditional-compile-remove(spotlight) */
 /**
  * @private
  */
@@ -257,6 +257,15 @@ export const getSupportedSpokenLanguages = (
   props: CallingBaseSelectorProps
 ): _SupportedSpokenLanguage[] | undefined => {
   return state.calls[props.callId]?.captionsFeature.supportedSpokenLanguages as _SupportedSpokenLanguage[];
+};
+
+/* @conditional-compile-remove(teams-meeting-conference) */
+/** @private */
+export const getTeamsMeetingConference = (
+  state: CallClientState,
+  props: CallingBaseSelectorProps
+): ConferencePhoneInfo[] | undefined => {
+  return state.calls[props.callId]?.teamsMeetingConference;
 };
 
 /** @private */

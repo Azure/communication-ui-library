@@ -24,10 +24,10 @@
      * instead of the latest version.
      */
     // "some-library": "1.2.3"
-    "@azure/communication-calling": "1.25.2-beta.2",
+    "@azure/communication-calling": "1.26.1-beta.1",
     "@azure/communication-common": "2.3.0",
-    "@azure/communication-chat": "1.6.0-beta.1",
-    "@azure/communication-signaling": "1.0.0-beta.23",
+    "@azure/communication-chat": "1.6.0-beta.2",
+    "@azure/communication-signaling": "1.0.0-beta.27",
   },
 
   /**
@@ -55,10 +55,10 @@
    * This design avoids unnecessary churn in this file.
    */
   "allowedAlternativeVersions": {
-    "@azure/communication-calling": ["1.25.2-beta.2"],
+    "@azure/communication-calling": ["1.26.1-beta.1"],
     "@azure/communication-common": ["2.3.0"],
-    "@azure/communication-chat": ["1.6.0-beta.1"],
-    "@azure/communication-signaling": ["1.0.0-beta.23"],
+    "@azure/communication-chat": ["1.6.0-beta.2"],
+    "@azure/communication-signaling": ["1.0.0-beta.27"],
     "@storybook/addon-actions": ["^8.0.6"],
     "@storybook/addon-controls": ["^8.0.6"],
     "@storybook/addon-docs": ["^8.0.6"],

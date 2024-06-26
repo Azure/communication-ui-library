@@ -135,6 +135,7 @@
     "dtmfDialerButtonTooltipOff": "ダイヤル パッドを非表示",
     "dtmfDialerMoreButtonLabelOn": "ダイヤルパッドを表示",
     "dtmfDialerMoreButtonLabelOff": "ダイヤル パッドを非表示",
+    "phoneCallMoreButtonLabel": "電話での通話",
     "spokenLanguageStrings": {
       "ar-ae": "アラビア語 - U.A.E.",
       "ar-sa": "アラビア語 - サウジアラビア",
@@ -336,7 +337,12 @@
     "leaveConfirmDialogContent": "通話から退出してよろしいですか?",
     "endCallConfirmDialogTitle": "通話を終了しますか?",
     "endCallConfirmDialogContent": "全員に対する通話が終了されます。",
-    "invalidMeetingIdentifier": "無効なミーティング ID またはパスコード"
+    "invalidMeetingIdentifier": "無効なミーティング ID またはパスコード",
+    "pinParticipantMenuLabel": "自分用にピン留め",
+    "pinParticipantLimitReachedMenuLabel": "ピン留め (上限に達しました)",
+    "unpinParticipantMenuLabel": "ピン留めを外す",
+    "pinParticipantMenuItemAriaLabel": "ピン留めします",
+    "unpinParticipantMenuItemAriaLabel": "ピン留めを外す"
   },
   "chat": {
     "chatListHeader": "このチャット内",

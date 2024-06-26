@@ -30,6 +30,8 @@ export type { RaisedHandState } from './CallClientState';
 export type { DeclarativeCallAgent, IncomingCallManagement } from './CallAgentDeclarative';
 /* @conditional-compile-remove(one-to-n-calling) */
 export type { DeclarativeIncomingCall } from './IncomingCallDeclarative';
+/* @conditional-compile-remove(teams-identity-support) */
+export type { DeclarativeTeamsCallAgent } from './TeamsCallAgentDeclarative';
 
 export type { LocalVideoStreamVideoEffectsState } from './CallClientState';
 
@@ -39,9 +41,9 @@ export type { AcceptedTransfer, TransferFeatureState as TransferFeature } from '
 export type { OptimalVideoCountFeatureState } from './CallClientState';
 export type { PPTLiveCallFeatureState } from './CallClientState';
 export type { ReactionState } from './CallClientState';
-/* @conditional-compile-remove(spotlight) */
 export type { SpotlightCallFeatureState, SpotlightState } from './CallClientState';
 /* @conditional-compile-remove(local-recording-notification) */
 export type { LocalRecordingCallFeatureState } from './CallClientState';
-
+/* @conditional-compile-remove(teams-meeting-conference) */
+export type { ConferencePhoneInfo } from './CallClientState';
 export type { BreakoutRoomsState } from './CallClientState';

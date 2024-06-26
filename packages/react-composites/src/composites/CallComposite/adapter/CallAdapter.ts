@@ -15,7 +15,6 @@ import type {
 /* @conditional-compile-remove(reaction) */
 import { Reaction } from '@azure/communication-calling';
 import type { CapabilitiesChangeInfo } from '@azure/communication-calling';
-/* @conditional-compile-remove(spotlight) */
 import type { SpotlightedParticipant } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support) */
 import { TeamsCall } from '@azure/communication-calling';
@@ -419,7 +418,6 @@ export type TransferAcceptedListener = (event: TransferEventArgs) => void;
  */
 export type CapabilitiesChangedListener = (data: CapabilitiesChangeInfo) => void;
 
-/* @conditional-compile-remove(spotlight) */
 /**
  * Callback for {@link CallAdapterSubscribers} 'spotlightChanged' event.
  *
@@ -707,19 +705,16 @@ export interface CallAdapterCallOperations {
    * @public
    */
   submitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined>;
-  /* @conditional-compile-remove(spotlight) */
   /**
    * Start spotlight for local and remote participants by their user ids.
    * If no array of user ids is passed then action is performed on local participant.
    */
   startSpotlight(userIds?: string[]): Promise<void>;
-  /* @conditional-compile-remove(spotlight) */
   /**
    * Stop spotlight for local and remote participants by their user ids.
    * If no array of user ids is passed then action is performed on local participant.
    */
   stopSpotlight(userIds?: string[]): Promise<void>;
-  /* @conditional-compile-remove(spotlight) */
   /**
    * Stop all spotlights
    */
@@ -731,6 +726,11 @@ export interface CallAdapterCallOperations {
    * @param userId - Id of the participant to mute
    */
   muteParticipant(userId: string): Promise<void>;
+  /* @conditional-compile-remove(soft-mute) */
+  /**
+   * Mute All participants
+   */
+  muteAllRemoteParticipants(): Promise<void>;
   /**
    * Return to main meeting of breakout room
    */
@@ -914,7 +914,6 @@ export interface CallAdapterSubscribers {
    * Subscribe function for 'roleChanged' event.
    */
   on(event: 'roleChanged', listener: PropertyChangedEvent): void;
-  /* @conditional-compile-remove(spotlight) */
   /**
    * Subscribe function for 'spotlightChanged' event.
    */
@@ -1008,7 +1007,6 @@ export interface CallAdapterSubscribers {
    * Unsubscribe function for 'roleChanged' event.
    */
   off(event: 'roleChanged', listener: PropertyChangedEvent): void;
-  /* @conditional-compile-remove(spotlight) */
   /**
    * Unsubscribe function for 'spotlightChanged' event.
    */

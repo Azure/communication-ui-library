@@ -9,6 +9,8 @@ import {
   useTheme,
   VideoTilesOptions
 } from '@internal/react-components';
+/* @conditional-compile-remove(notifications) */
+import { ActiveNotification } from '@internal/react-components';
 import { CallSurveyImprovementSuggestions } from '@internal/react-components';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
@@ -57,8 +59,15 @@ import { useTrackedCapabilityChangedNotifications } from './utils/TrackCapabilit
 import { useEndedCallConsoleErrors } from './utils/useConsoleErrors';
 import { SurveyPage } from './pages/SurveyPage';
 import { useAudio } from '../common/AudioProvider';
+/* @conditional-compile-remove(teams-meeting-conference) */
+import { badNetworkQualityBannerSelector } from './selectors/badNetworkQualitySelector';
+/* @conditional-compile-remove(teams-meeting-conference) */
+import { useBadNetworkQualityNotifications } from './components/BadNetworkQualityNotificationBar';
+/* @conditional-compile-remove(notifications) */
+import { errorNotificationsSelector } from '@internal/calling-component-bindings';
+/* @conditional-compile-remove(notifications) */
+import { useAdaptedSelector } from './hooks/useAdaptedSelector';
 import { useTrackedBreakoutRoomsNotifications } from './utils/TrackBreakoutRoomsNotifications';
-import { AzureCommunicationCallAdapter } from './adapter/AzureCommunicationCallAdapter';
 import { BreakoutRoomClosedPage } from './pages/BreakoutRoomClosedPage';
 
 /**
@@ -322,7 +331,6 @@ export type CallCompositeOptions = {
       url: string;
     };
   };
-  /* @conditional-compile-remove(spotlight) */
   /**
    * Options for settings related to spotlight.
    */
@@ -423,26 +431,47 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   const capabilitiesChangedNotificationBarProps =
     useTrackedCapabilityChangedNotifications(capabilitiesChangedInfoAndRole);
 
+  /* @conditional-compile-remove(teams-meeting-conference) */
+  const badNetworkQualityFlag = useSelector(badNetworkQualityBannerSelector);
+  /* @conditional-compile-remove(teams-meeting-conference) */
+  const badNetworkQualityBannerProps = useBadNetworkQualityNotifications(badNetworkQualityFlag.isPoorNetworkQuality);
+
   const assignedBreakoutRoom = useSelector(getAssignedBreakoutRoom);
   const callId = useSelector(getCallId);
   const breakoutRoomsNotificationBarProps = useTrackedBreakoutRoomsNotifications({
     assignedBreakoutRoom,
-    callId,
-    adapter: adapter as AzureCommunicationCallAdapter
+    callId
   });
 
   // Track the last dismissed errors of any error kind to prevent errors from re-appearing on subsequent page navigation
   // This works by tracking the most recent timestamp of any active error type.
   // And then tracking when that error type was last dismissed.
   const activeErrors = usePropsFor(ErrorBar).activeErrorMessages;
+  /* @conditional-compile-remove(notifications) */
+  const activeInCallErrors = useAdaptedSelector(errorNotificationsSelector).activeErrorMessages;
   const [trackedErrors, setTrackedErrors] = useState<TrackedErrors>({} as TrackedErrors);
+  /* @conditional-compile-remove(notifications) */
+  const [trackedInCallErrors, setTrackedInCallErrors] = useState<TrackedErrors>({} as TrackedErrors);
   useEffect(() => {
     setTrackedErrors((prev) => updateTrackedErrorsWithActiveErrors(prev, activeErrors));
-  }, [activeErrors]);
-  const onDismissError = useCallback((error: ActiveErrorMessage) => {
-    setTrackedErrors((prev) => trackErrorAsDismissed(error.type, prev));
-  }, []);
+    /* @conditional-compile-remove(notifications) */
+    setTrackedInCallErrors((prev) => updateTrackedErrorsWithActiveErrors(prev, activeInCallErrors));
+  }, [activeErrors, /* @conditional-compile-remove(notifications) */ activeInCallErrors]);
+  const onDismissError = useCallback(
+    (error: ActiveErrorMessage | /* @conditional-compile-remove(notifications) */ ActiveNotification) => {
+      setTrackedErrors((prev) => trackErrorAsDismissed(error.type, prev));
+      /* @conditional-compile-remove(notifications) */
+      setTrackedInCallErrors((prev) => trackErrorAsDismissed(error.type, prev));
+    },
+    []
+  );
   const latestErrors = useMemo(() => filterLatestErrors(activeErrors, trackedErrors), [activeErrors, trackedErrors]);
+  /* @conditional-compile-remove(notifications) */
+  const latestInCallErrors = useMemo(
+    () => filterLatestErrors(activeInCallErrors, trackedInCallErrors),
+    [activeInCallErrors, trackedInCallErrors]
+  ) as ActiveNotification[];
+
   const callees = useSelector(getTargetCallees) as StartCallIdentifier[];
   const locale = useLocale();
   const palette = useTheme().palette;
@@ -451,6 +480,14 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   const leavePageStyle = useMemo(() => leavingPageStyle(palette), [palette]);
   let pageElement: JSX.Element | undefined;
   const [pinnedParticipants, setPinnedParticipants] = useState<string[]>([]);
+  const getLatestErrorsTrampoline = ():
+    | ActiveErrorMessage[]
+    | /* @conditional-compile-remove(notifications) */ ActiveNotification[] => {
+    /* @conditional-compile-remove(notifications) */
+    return latestInCallErrors;
+    return latestErrors;
+  };
+
   switch (page) {
     case 'configuration':
       pageElement = (
@@ -576,7 +613,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           options={props.options}
           updateSidePaneRenderer={setSidePaneRenderer}
           mobileChatTabHeader={props.mobileChatTabHeader}
-          latestErrors={latestErrors}
+          latestErrors={getLatestErrorsTrampoline()}
           onDismissError={onDismissError}
           capabilitiesChangedNotificationBarProps={capabilitiesChangedNotificationBarProps}
         />
@@ -591,7 +628,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           updateSidePaneRenderer={setSidePaneRenderer}
           mobileChatTabHeader={props.mobileChatTabHeader}
           onFetchAvatarPersonaData={onFetchAvatarPersonaData}
-          latestErrors={latestErrors}
+          latestErrors={getLatestErrorsTrampoline()}
           onDismissError={onDismissError}
           capabilitiesChangedNotificationBarProps={capabilitiesChangedNotificationBarProps}
         />
@@ -609,7 +646,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           updateSidePaneRenderer={setSidePaneRenderer}
           mobileChatTabHeader={props.mobileChatTabHeader}
           onCloseChatPane={props.onCloseChatPane}
-          latestErrors={latestErrors}
+          latestErrors={getLatestErrorsTrampoline()}
           onDismissError={onDismissError}
           galleryLayout={userSetGalleryLayout}
           onUserSetGalleryLayoutChange={setUserSetGalleryLayout}
@@ -621,6 +658,8 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           setPinnedParticipants={setPinnedParticipants}
           compositeAudioContext={compositeAudioContext}
           disableAutoShowDtmfDialer={props.options?.disableAutoShowDtmfDialer}
+          /* @conditional-compile-remove(teams-meeting-conference) */
+          badNetworkQualityBannerProps={badNetworkQualityBannerProps}
         />
       );
       break;
@@ -650,7 +689,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
               options={props.options}
               updateSidePaneRenderer={setSidePaneRenderer}
               mobileChatTabHeader={props.mobileChatTabHeader}
-              latestErrors={latestErrors}
+              latestErrors={getLatestErrorsTrampoline()}
               onDismissError={onDismissError}
               capabilitiesChangedNotificationBarProps={capabilitiesChangedNotificationBarProps}
               breakoutRoomsNotificationBarProps={breakoutRoomsNotificationBarProps}

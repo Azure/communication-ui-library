@@ -25,7 +25,6 @@ import { OptimalVideoCountSubscriber } from './OptimalVideoCountSubscriber';
 
 import { CapabilitiesSubscriber } from './CapabilitiesSubscriber';
 import { ReactionSubscriber } from './ReactionSubscriber';
-/* @conditional-compile-remove(spotlight) */
 import { SpotlightSubscriber } from './SpotlightSubscriber';
 /* @conditional-compile-remove(local-recording-notification) */
 import { LocalRecordingSubscriber } from './LocalRecordingSubscriber';
@@ -57,7 +56,6 @@ export class CallSubscriber {
   private _localVideoStreamVideoEffectsSubscribers: Map<string, LocalVideoStreamVideoEffectsSubscriber>;
 
   private _capabilitiesSubscriber: CapabilitiesSubscriber;
-  /* @conditional-compile-remove(spotlight) */
   private _spotlightSubscriber: SpotlightSubscriber;
 
   private _breakoutRoomsSubscriber: BreakoutRoomsSubscriber;
@@ -109,7 +107,6 @@ export class CallSubscriber {
       this._call.feature(Features.Capabilities)
     );
 
-    /* @conditional-compile-remove(spotlight) */
     this._spotlightSubscriber = new SpotlightSubscriber(
       this._callIdRef,
       this._context,
@@ -212,7 +209,6 @@ export class CallSubscriber {
 
     this._capabilitiesSubscriber.unsubscribe();
     this._reactionSubscriber?.unsubscribe();
-    /* @conditional-compile-remove(spotlight) */
     this._spotlightSubscriber.unsubscribe();
 
     this._breakoutRoomsSubscriber.unsubscribe();
@@ -254,7 +250,7 @@ export class CallSubscriber {
 
   /* @conditional-compile-remove(teams-meeting-conference) */
   private initTeamsMeetingConference = (): void => {
-    if (this._call.state === 'Connected' && this._call.kind === 'TeamsCall') {
+    if (this._call.state === 'Connected') {
       this._call
         .feature(Features.TeamsMeetingAudioConferencing)
         .getTeamsMeetingAudioConferencingDetails()
