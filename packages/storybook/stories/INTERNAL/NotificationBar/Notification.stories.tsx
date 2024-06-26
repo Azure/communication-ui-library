@@ -5,37 +5,37 @@ import { Stack } from '@fluentui/react';
 import { Canvas, Description, Heading, Props, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
-import { NotificationBar as NotificationBarComponent } from '../../../../react-components/src/components';
+import { Notification as NotificationComponent } from '../../../../react-components/src/components';
 import { COMPONENT_FOLDER_PREFIX } from '../../constants';
 import { controlsToAdd, hiddenControl } from '../../controlsUtils';
-import { ExampleNotificationBar } from './snippets/ExampleNotificationBar.snippet';
+import { ExampleNotification } from './snippets/ExampleNotification.snippet';
 
-const ExampleNotificationBarText = require('!!raw-loader!./snippets/ExampleNotificationBar.snippet.tsx').default;
+const ExampleNotificationText = require('!!raw-loader!./snippets/ExampleNotification.snippet.tsx').default;
 
 const getDocs: () => JSX.Element = () => {
   return (
     <>
-      <Title>Notification Bar</Title>
+      <Title>Notification</Title>
       <Description>
-        `Notification Bar` is a container showing notification in a bar format with an icon, title, message, and a
-        button. The message and button is optional.
+        `Notification` is a container showing notification in a bar format with an icon, title, message, and 2 buttons.
+        The message and buttons are optional.
       </Description>
       <Description>
         Toggle the `autoDismiss` prop to automatically dismiss the notification after 5 seconds. Toggle the
         `showStackedEffect` prop to show the notification in a stacked effect hinting there are more notifications
         behind it.
       </Description>
-      <Heading>Example Notification Bar</Heading>
-      <Canvas mdxSource={ExampleNotificationBarText}>
-        <ExampleNotificationBar />
+      <Heading>Example Notification</Heading>
+      <Canvas mdxSource={ExampleNotificationText}>
+        <ExampleNotification />
       </Canvas>
-      <Heading>Notification Bar Props</Heading>
-      <Props of={NotificationBarComponent} />
+      <Heading>Notification Props</Heading>
+      <Props of={NotificationComponent} />
     </>
   );
 };
 
-const NotificationBarStory = (args): JSX.Element => {
+const NotificationStory = (args): JSX.Element => {
   const containerStyles = {
     width: '100%',
     height: '100%',
@@ -52,9 +52,9 @@ const NotificationBarStory = (args): JSX.Element => {
 
   return (
     <Stack verticalFill tokens={{ childrenGap: '5rem' }} style={containerStyles} verticalAlign="space-between">
-      <NotificationBarComponent
-        notificationBarStrings={strings}
-        notificationBarIconProps="ErrorBarCallNetworkQualityLow"
+      <NotificationComponent
+        notificationStrings={strings}
+        notificationIconProps="ErrorBarCallNetworkQualityLow"
         onClickPrimaryButton={() => alert('Joining with phone')}
         onClickSecondaryButton={() => alert('I will wait')}
         {...args}
@@ -65,15 +65,15 @@ const NotificationBarStory = (args): JSX.Element => {
 
 // This must be the only named export from this module, and must be named to match the storybook path suffix.
 // This ensures that storybook hoists the story instead of creating a folder with a single entry.
-export const NotificationBar = NotificationBarStory.bind({});
+export const Notification = NotificationStory.bind({});
 
 export default {
-  id: `${COMPONENT_FOLDER_PREFIX}-internal-NotificationBar`,
-  title: `${COMPONENT_FOLDER_PREFIX}/Internal/Notifications/NotificationBar`,
-  component: NotificationBarComponent,
+  id: `${COMPONENT_FOLDER_PREFIX}-internal-Notification`,
+  title: `${COMPONENT_FOLDER_PREFIX}/Internal/NotificationStack/Notification`,
+  component: NotificationComponent,
   argTypes: {
-    notificationBarStrings: hiddenControl,
-    notificationBarIconProps: hiddenControl,
+    notificationStrings: hiddenControl,
+    notificationIconProps: hiddenControl,
     autoDismiss: controlsToAdd.isNotificationAutoDismiss,
     showStackedEffect: controlsToAdd.showNotificationStacked,
     onClick: hiddenControl,
