@@ -18,7 +18,7 @@ import {
   VideoGalleryStrings
 } from '../components';
 /* @conditional-compile-remove(notifications) */
-import { NotificationsStrings } from '../components';
+import { NotificationStackStrings } from '../components';
 
 import { RaiseHandButtonStrings } from '../components';
 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
@@ -111,8 +111,8 @@ export interface ComponentStrings {
   /** Strings for ErroBar */
   errorBar: ErrorBarStrings;
   /* @conditional-compile-remove(notifications) */
-  /** Strings for Notifications */
-  notifications: NotificationsStrings;
+  /** Strings for NotificationStack */
+  notificationStack: NotificationStackStrings;
   /** Strings for VideoGallery */
   videoGallery: VideoGalleryStrings;
   /** Strings for Dialpad */

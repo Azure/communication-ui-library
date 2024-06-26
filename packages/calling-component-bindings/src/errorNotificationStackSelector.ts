@@ -24,7 +24,7 @@ import { DiagnosticQuality } from '@azure/communication-calling';
  *
  * @beta
  */
-export type ErrorNotificationsSelector = (
+export type ErrorNotificationStackSelector = (
   state: CallClientState,
   props: CallingBaseSelectorProps
 ) => {

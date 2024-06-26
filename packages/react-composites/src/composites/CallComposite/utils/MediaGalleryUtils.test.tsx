@@ -3,13 +3,12 @@
 
 import { toFlatCommunicationIdentifier, _formatString } from '@internal/acs-ui-common';
 import { CallState, RemoteParticipantState } from '@internal/calling-stateful-client';
-import React, { useState } from 'react';
+import React, { act, useState } from 'react';
 import { COMPOSITE_LOCALE_EN_US } from '../../localization/locales';
 import { LocalizationProvider } from '../../localization/LocalizationProvider';
 import { CallAdapterProvider } from '../adapter/CallAdapterProvider';
 import { _MockCallAdapter } from '../MockCallAdapter';
 import { useParticipantChangedAnnouncement } from './MediaGalleryUtils';
-import { act } from 'react-dom/test-utils';
 import { initializeIcons } from '@fluentui/react';
 import { CommunicationUserKind } from '@azure/communication-common';
 import { render } from '@testing-library/react';

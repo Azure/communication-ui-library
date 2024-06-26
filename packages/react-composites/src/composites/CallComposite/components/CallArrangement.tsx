@@ -16,7 +16,7 @@ import {
   useTheme
 } from '@internal/react-components';
 /* @conditional-compile-remove(notifications) */
-import { ActiveNotification, Notifications } from '@internal/react-components';
+import { ActiveNotification, NotificationStack } from '@internal/react-components';
 import { VideoGalleryLayout } from '@internal/react-components';
 import { VideoGallery } from '@internal/react-components';
 import React, { useMemo, useRef, useState } from 'react';
@@ -57,8 +57,6 @@ import { usePeoplePane } from './SidePane/usePeoplePane';
 import { useMeetingPhoneInfoPane } from './SidePane/useMeetingPhoneInfo';
 /* @conditional-compile-remove(teams-meeting-conference) */
 import { getTeamsMeetingCoordinates } from '../selectors/baseSelectors';
-/* @conditional-compile-remove(teams-meeting-conference) */
-import { BadNetworkQualityNotificationBar, BadNetworkQualityBannerProps } from './BadNetworkQualityNotificationBar';
 
 import {
   useVideoEffectsPane,
@@ -134,8 +132,6 @@ export interface CallArrangementProps {
   hideSpotlightButtons?: boolean;
   pinnedParticipants?: string[];
   setPinnedParticipants?: (pinnedParticipants: string[]) => void;
-  /* @conditional-compile-remove(teams-meeting-conference) */
-  badNetworkQualityBannerProps?: BadNetworkQualityBannerProps;
 }
 
 /**
@@ -497,7 +493,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
       <>
         {props.showErrorNotifications && (
           <Stack styles={bannerNotificationStyles} horizontalAlign="center" verticalAlign="center">
-            <Notifications
+            <NotificationStack
               onDismissNotification={props.onDismissError}
               activeNotifications={filteredLatestErrorNotifications}
             />

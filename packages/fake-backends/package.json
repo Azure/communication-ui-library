@@ -29,7 +29,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@azure/communication-chat": "1.6.0-beta.2 || ^1.5.0",
+    "@azure/communication-chat": "1.6.0-beta.3 || ^1.5.0",
     "@azure/communication-common": "^2.3.1",
     "@azure/communication-signaling": "1.0.0-beta.27 || 1.0.0-beta.26",
     "@azure/core-paging": "^1.5.0",
@@ -63,7 +63,7 @@
     "prettier": "2.3.1",
     "rimraf": "^2.6.2",
     "rollup": "^4.12.1",
-    "ts-jest": "^29.1.2",
+    "ts-jest": "^29.1.5",
     "typescript": "5.4.5",
     "webpack": "5.89.0"
   }

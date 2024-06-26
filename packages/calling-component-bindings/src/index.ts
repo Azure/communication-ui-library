@@ -11,9 +11,9 @@ export type { ParticipantsButtonSelector } from './participantsButtonSelector';
 export type { VideoGallerySelector } from './videoGallerySelector';
 export type { ErrorBarSelector } from './errorBarSelector';
 /* @conditional-compile-remove(notifications) */
-export type { ErrorNotificationsSelector } from './errorNotificationsSelector';
+export type { ErrorNotificationStackSelector } from './errorNotificationStackSelector';
 /* @conditional-compile-remove(notifications) */
-export { errorNotificationsSelector } from './errorNotificationsSelector';
+export { errorNotificationStackSelector } from './errorNotificationStackSelector';
 /* @conditional-compile-remove(PSTN-calls) */
 export type { HoldButtonSelector } from './callControlSelectors';
 
