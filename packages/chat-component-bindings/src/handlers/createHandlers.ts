@@ -28,7 +28,7 @@ export type ChatHandlers = {
     options?: SendMessageOptions | /* @conditional-compile-remove(file-sharing-acs) */ MessageOptions
   ) => Promise<void>;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  onUploadImage: (image: ArrayBuffer | Blob, imageFilename: string) => Promise<UploadChatImageResult>;
+  onUploadImage: (image: Blob, imageFilename: string) => Promise<UploadChatImageResult>;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   onDeleteImage: (imageId: string) => Promise<void>;
   onMessageSeen: (chatMessageId: string) => Promise<void>;
@@ -92,7 +92,7 @@ export const createDefaultChatHandlers = memoizeOne(
         await chatThreadClient.sendMessage(sendMessageRequest, options as SendMessageOptions);
       },
       /* @conditional-compile-remove(rich-text-editor-image-upload) */
-      onUploadImage: async function (image: ArrayBuffer | Blob, imageFilename: string): Promise<UploadChatImageResult> {
+      onUploadImage: async function (image: Blob, imageFilename: string): Promise<UploadChatImageResult> {
         const imageResult = await chatThreadClient.uploadImage(image, imageFilename);
         return imageResult;
       },

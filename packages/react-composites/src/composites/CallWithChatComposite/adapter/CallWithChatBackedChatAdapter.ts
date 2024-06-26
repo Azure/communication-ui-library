@@ -46,7 +46,7 @@ export class CallWithChatBackedChatAdapter implements ChatAdapter {
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   uploadImageHandler = async function (
     this: CallWithChatBackedChatAdapter,
-    image: ArrayBuffer | Blob,
+    image: Blob,
     fileName: string
   ): Promise<UploadChatImageResult> {
     return await this.callWithChatAdapter.uploadImage(image, fileName);

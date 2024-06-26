@@ -426,7 +426,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   }
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   /** Upload a chat image. */
-  public async uploadImage(image: ArrayBuffer | Blob, imageFileName: string): Promise<UploadChatImageResult> {
+  public async uploadImage(image: Blob, imageFileName: string): Promise<UploadChatImageResult> {
     return await this.executeWithResolvedChatAdapter((adapter) => {
       return adapter.uploadImage(image, imageFileName);
     });

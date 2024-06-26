@@ -201,7 +201,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   }
 
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  async uploadImage(image: ArrayBuffer | Blob, imageFilename: string): Promise<UploadChatImageResult> {
+  async uploadImage(image: Blob, imageFilename: string): Promise<UploadChatImageResult> {
     return await this.asyncTeeErrorToEventEmitter(async () => {
       return await this.handlers.onUploadImage(image, imageFilename);
     });

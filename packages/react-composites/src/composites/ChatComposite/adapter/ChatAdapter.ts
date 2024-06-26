@@ -67,7 +67,7 @@ export interface ChatAdapterThreadManagement {
   /**
    * Upload an inline image for a message.
    */
-  uploadImage(image: ArrayBuffer | Blob, imageFilename: string): Promise<UploadChatImageResult>;
+  uploadImage(image: Blob, imageFilename: string): Promise<UploadChatImageResult>;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   /**
    * Delete an inline image for a message.
