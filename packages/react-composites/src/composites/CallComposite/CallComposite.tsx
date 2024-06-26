@@ -60,7 +60,7 @@ import { useEndedCallConsoleErrors } from './utils/useConsoleErrors';
 import { SurveyPage } from './pages/SurveyPage';
 import { useAudio } from '../common/AudioProvider';
 /* @conditional-compile-remove(notifications) */
-import { errorNotificationsSelector } from '@internal/calling-component-bindings';
+import { errorNotificationStackSelector } from '@internal/calling-component-bindings';
 /* @conditional-compile-remove(notifications) */
 import { useAdaptedSelector } from './hooks/useAdaptedSelector';
 
@@ -430,7 +430,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   // And then tracking when that error type was last dismissed.
   const activeErrors = usePropsFor(ErrorBar).activeErrorMessages;
   /* @conditional-compile-remove(notifications) */
-  const activeInCallErrors = useAdaptedSelector(errorNotificationsSelector).activeErrorMessages;
+  const activeInCallErrors = useAdaptedSelector(errorNotificationStackSelector).activeErrorMessages;
   const [trackedErrors, setTrackedErrors] = useState<TrackedErrors>({} as TrackedErrors);
   /* @conditional-compile-remove(notifications) */
   const [trackedInCallErrors, setTrackedInCallErrors] = useState<TrackedErrors>({} as TrackedErrors);
