@@ -2546,7 +2546,6 @@ export interface ErrorBarStrings {
     startVideoGeneric: string;
     stopScreenShareGeneric: string;
     stopVideoGeneric: string;
-    teamsMeetingCallNetworkQualityLow: string;
     unableToReachChatService: string;
     unableToStartVideoEffect?: string;
     unmuteGeneric: string;
