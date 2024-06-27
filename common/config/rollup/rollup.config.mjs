@@ -6,12 +6,11 @@ import json from '@rollup/plugin-json';
 import sourcemaps from 'rollup-plugin-sourcemaps';
 import svg from 'rollup-plugin-svg';
 
-export default (packageJson, extraDependencies) => ({
+export default (packageJson) => ({
   context: 'window',
   external: [
     ...(packageJson.dependencies ? Object.keys(packageJson.dependencies) : []),
-    ...(packageJson.peerDependencies ? Object.keys(packageJson.peerDependencies) : []),
-    ...(extraDependencies || [])
+    ...(packageJson.peerDependencies ? Object.keys(packageJson.peerDependencies) : [])
   ],
   input: './dist/dist-esm/index.js',
   output: {

@@ -60,10 +60,8 @@ export type SendBoxPickerProps = {
  * @private
  */
 export const SendBoxPicker = (props: SendBoxPickerProps): JSX.Element => {
-  const {
-    /* @conditional-compile-remove(rich-text-editor-composite-support) */
-    richTextEditorOptions
-  } = props;
+  /* @conditional-compile-remove(rich-text-editor-composite-support) */
+  const { richTextEditorOptions } = props;
 
   const sendBoxProps = usePropsFor(SendBox);
 

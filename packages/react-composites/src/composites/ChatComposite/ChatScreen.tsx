@@ -479,7 +479,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
         type: options?.type
       });
     },
-    [adapter]
+    [adapter, /* @conditional-compile-remove(rich-text-editor-image-upload) */ handleInlineImageUploadAction]
   );
 
   /* @conditional-compile-remove(file-sharing-acs) */
