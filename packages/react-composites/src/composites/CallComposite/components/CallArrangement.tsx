@@ -40,6 +40,8 @@ import {
   CONTROL_BAR_Z_INDEX,
   DRAWER_Z_INDEX
 } from '../styles/CallPage.styles';
+/* @conditional-compile-remove(notifications) */
+import { notificationStackStyles } from '../styles/CallPage.styles';
 import { MutedNotification, MutedNotificationProps } from './MutedNotification';
 import { CallAdapter } from '../adapter';
 import { useSelector } from '../hooks/useSelector';
@@ -499,7 +501,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     return (
       <>
         {props.showErrorNotifications && (
-          <Stack styles={bannerNotificationStyles} horizontalAlign="center" verticalAlign="center">
+          <Stack styles={notificationStackStyles} horizontalAlign="center" verticalAlign="center">
             <NotificationStack
               onDismissNotification={props.onDismissError}
               activeNotifications={filteredLatestErrorNotifications}
@@ -640,7 +642,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                     {errorNotificationTrampoline()}
                     {
                       /* @conditional-compile-remove(notifications) */ props.latestNotifications && (
-                        <Stack styles={bannerNotificationStyles} horizontalAlign="center" verticalAlign="center">
+                        <Stack styles={notificationStackStyles} horizontalAlign="center" verticalAlign="center">
                           <NotificationStack activeNotifications={props.latestNotifications} />
                         </Stack>
                       )
