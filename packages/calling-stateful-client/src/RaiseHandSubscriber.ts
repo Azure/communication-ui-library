@@ -5,6 +5,7 @@ import { RaiseHandCallFeature, RaisedHandChangedEvent } from '@azure/communicati
 import { CallContext } from './CallContext';
 import { CallIdRef } from './CallIdRef';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
+
 /**
  * @private
  */
