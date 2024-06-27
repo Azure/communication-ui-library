@@ -22,7 +22,7 @@ import { DiagnosticQuality } from '@azure/communication-calling';
  *
  * @beta
  */
-export type ErrorNotificationsSelector = (
+export type ErrorNotificationStackSelector = (
   state: CallClientState,
   props: CallingBaseSelectorProps
 ) => {
@@ -38,7 +38,7 @@ export type ErrorNotificationsSelector = (
  *
  * @beta
  */
-export const errorNotificationsSelector: ErrorNotificationsSelector = createSelector(
+export const errorNotificationStackSelector: ErrorNotificationStackSelector = createSelector(
   [getLatestErrors, getDiagnostics, getDeviceManager, getEnvironmentInfo],
   (
     latestErrors: CallErrors,

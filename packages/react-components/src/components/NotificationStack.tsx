@@ -12,17 +12,17 @@ import {
   dropDismissalsForInactiveNotifications,
   notificationsToShow
 } from './utils';
-import { NotificationBar, NotificationBarStrings } from './NotificationBar';
+import { Notification, NotificationStrings } from './Notification';
 
 /**
- * Props for {@link Notifications}.
+ * Props for {@link NotificationStack}.
  * @beta
  */
-export interface NotificationsProps {
+export interface NotificationStackProps {
   /**
    * Strings shown on the UI on errors.
    */
-  strings?: NotificationsStrings;
+  strings?: NotificationStackStrings;
 
   /**
    * Currently active notifications.
@@ -46,7 +46,7 @@ export interface NotificationsProps {
    * If set, notifications with {@link ActiveNotification.timestamp} older than the time this component is mounted
    * are not shown.
    *
-   * This is useful when using the {@link Notifications} with a stateful client that handles more than one call
+   * This is useful when using the {@link NotificationStack} with a stateful client that handles more than one call
    * or chat thread. Set this prop to ignore notifications from previous call or chat.
    *
    * @defaultValue false
@@ -55,162 +55,162 @@ export interface NotificationsProps {
 }
 
 /**
- * All strings that may be shown on the UI in the {@link Notifications}.
+ * All strings that may be shown on the UI in the {@link NotificationStack}.
  *
  * @beta
  */
-export interface NotificationsStrings {
+export interface NotificationStackStrings {
   /**
    * A generic message when starting video fails.
    */
-  startVideoGeneric: NotificationBarStrings;
+  startVideoGeneric: NotificationStrings;
 
   /**
    * A generic message when starting video fails.
    */
-  stopVideoGeneric: NotificationBarStrings;
+  stopVideoGeneric: NotificationStrings;
 
   /**
    * A generic message when muting microphone fails.
    */
-  muteGeneric: NotificationBarStrings;
+  muteGeneric: NotificationStrings;
 
   /**
    * A generic message when unmuting microphone fails.
    */
-  unmuteGeneric: NotificationBarStrings;
+  unmuteGeneric: NotificationStrings;
 
   /**
    * A generic message when starting screenshare fails.
    */
-  startScreenShareGeneric: NotificationBarStrings;
+  startScreenShareGeneric: NotificationStrings;
 
   /**
    * A generic message when stopping screenshare fails.
    */
-  stopScreenShareGeneric: NotificationBarStrings;
+  stopScreenShareGeneric: NotificationStrings;
 
   /**
    * Message shown when poor network quality is detected during a call.
    */
-  callNetworkQualityLow: NotificationBarStrings;
+  callNetworkQualityLow: NotificationStrings;
 
   /**
    * Message shown on failure to detect audio output devices.
    */
-  callNoSpeakerFound: NotificationBarStrings;
+  callNoSpeakerFound: NotificationStrings;
 
   /**
    * Message shown on failure to detect audio input devices.
    */
-  callNoMicrophoneFound: NotificationBarStrings;
+  callNoMicrophoneFound: NotificationStrings;
 
   /**
    * Message shown when microphone can be enumerated but access is blocked by the system.
    */
-  callMicrophoneAccessDenied: NotificationBarStrings;
+  callMicrophoneAccessDenied: NotificationStrings;
 
   /**
    * Message shown when microphone can be enumerated but access is blocked by the system, for safari browsers
    */
-  callMicrophoneAccessDeniedSafari: NotificationBarStrings;
+  callMicrophoneAccessDeniedSafari: NotificationStrings;
 
   /**
    * Message shown when microphone is muted by the system (not by local or remote participants)
    */
-  callMicrophoneMutedBySystem: NotificationBarStrings;
+  callMicrophoneMutedBySystem: NotificationStrings;
 
   /**
    * Message shown when microphone is unmuted by the system (not by local or remote participants).
    * This typically occurs if the system recovers from an unexpected mute.
    */
-  callMicrophoneUnmutedBySystem: NotificationBarStrings;
+  callMicrophoneUnmutedBySystem: NotificationStrings;
 
   /**
    * Mac OS specific message shown when microphone can be enumerated but access is
    * blocked by the system.
    */
-  callMacOsMicrophoneAccessDenied: NotificationBarStrings;
+  callMacOsMicrophoneAccessDenied: NotificationStrings;
 
   /**
    * Message shown when poor network causes local video stream to be frozen.
    */
-  callLocalVideoFreeze: NotificationBarStrings;
+  callLocalVideoFreeze: NotificationStrings;
 
   /**
    * Message shown when camera can be enumerated but access is blocked by the system.
    */
-  callCameraAccessDenied: NotificationBarStrings;
+  callCameraAccessDenied: NotificationStrings;
 
   /**
    * Message shown when camera can be enumerated but access is blocked by the system, for safari browsers
    */
-  callCameraAccessDeniedSafari: NotificationBarStrings;
+  callCameraAccessDeniedSafari: NotificationStrings;
 
   /**
    * Message shown when local video fails to start because camera is already in use by
    * another applciation.
    */
-  callCameraAlreadyInUse: NotificationBarStrings;
+  callCameraAlreadyInUse: NotificationStrings;
 
   /**
    * Message shown when local video is stopped by the system (not by local or remote participants)
    */
-  callVideoStoppedBySystem: NotificationBarStrings;
+  callVideoStoppedBySystem: NotificationStrings;
 
   /**
    * Message shown when local video was recovered by the system (not by the local participant)
    */
-  callVideoRecoveredBySystem: NotificationBarStrings;
+  callVideoRecoveredBySystem: NotificationStrings;
 
   /**
    * Mac OS specific message shown when system denies access to camera.
    */
-  callMacOsCameraAccessDenied: NotificationBarStrings;
+  callMacOsCameraAccessDenied: NotificationStrings;
 
   /**
    * Mac OS specific message shown when system denies sharing local screen on a call.
    */
-  callMacOsScreenShareAccessDenied: NotificationBarStrings;
+  callMacOsScreenShareAccessDenied: NotificationStrings;
 
   /**
    * Dimiss Notifications button aria label read by screen reader accessibility tools
    */
-  dismissButtonAriaLabel?: NotificationBarStrings;
+  dismissButtonAriaLabel?: NotificationStrings;
 
   /**
    * An error message when joining a call fails.
    */
-  failedToJoinCallGeneric?: NotificationBarStrings;
+  failedToJoinCallGeneric?: NotificationStrings;
 
   /**
    * An error message when joining a call fails specifically due to an invalid meeting link.
    */
-  failedToJoinCallInvalidMeetingLink?: NotificationBarStrings;
+  failedToJoinCallInvalidMeetingLink?: NotificationStrings;
   /**
    * Error string letting you know remote participants see a frozen stream for you.
    */
-  cameraFrozenForRemoteParticipants?: NotificationBarStrings;
+  cameraFrozenForRemoteParticipants?: NotificationStrings;
 
   /**
    * Unable to start effect
    */
-  unableToStartVideoEffect?: NotificationBarStrings;
+  unableToStartVideoEffect?: NotificationStrings;
   /**
    * An error message when starting spotlight while max participants are spotlighted
    */
-  startSpotlightWhileMaxParticipantsAreSpotlighted: NotificationBarStrings;
+  startSpotlightWhileMaxParticipantsAreSpotlighted: NotificationStrings;
 }
 
 /**
- * All notifications that can be shown in the {@link Notifications}.
+ * All notifications that can be shown in the {@link NotificationStack}.
  *
  * @beta
  */
-export type NotificationType = keyof NotificationsStrings;
+export type NotificationType = keyof NotificationStackStrings;
 
 /**
- * Active notifications to be shown via {@link Notifications}.
+ * Active notifications to be shown via {@link NotificationStack}.
  *
  * @beta
  */
@@ -250,8 +250,8 @@ export interface ActiveNotification {
 
 /**
  * A component to show notifications on the UI.
- * All strings that can be shown are accepted as the {@link NotificationsProps.strings} so that they can be localized.
- * Active notifications are selected by {@link NotificationsProps.activeNotifications}.
+ * All strings that can be shown are accepted as the {@link NotificationStackProps.strings} so that they can be localized.
+ * Active notifications are selected by {@link NotificationStackProps.activeNotifications}.
  *
  * This component internally tracks dismissed by the user.
  *   * Notifications that have an associated timestamp: The notification is shown on the UI again if it occurs after being dismissed.
@@ -261,9 +261,9 @@ export interface ActiveNotification {
  *
  * @beta
  */
-export const Notifications = (props: NotificationsProps): JSX.Element => {
+export const NotificationStack = (props: NotificationStackProps): JSX.Element => {
   /* @conditional-compile-remove(notifications) */
-  const localeStrings = useLocale().strings.notifications;
+  const localeStrings = useLocale().strings.notificationStack;
   const strings = props.strings ?? /* @conditional-compile-remove(notifications) */ localeStrings;
   const maxNotificationsToShow = props.maxNotificationsToShow ?? 2;
 
@@ -301,9 +301,9 @@ export const Notifications = (props: NotificationsProps): JSX.Element => {
         if (index < maxNotificationsToShow) {
           return (
             <div key={index} style={{ marginBottom: `${index === maxNotificationsToShow - 1 ? 0 : '0.25rem'}` }}>
-              <NotificationBar
-                notificationBarStrings={strings ? strings[notification.type] : undefined}
-                notificationBarIconProps={NotificationIconProps(notification.type)}
+              <Notification
+                notificationStrings={strings ? strings[notification.type] : undefined}
+                notificationIconProps={NotificationIconProps(notification.type)}
                 onClickPrimaryButton={() => notification.onClickPrimaryButton?.()}
                 onClickSecondaryButton={() => notification.onClickSecondaryButton?.()}
                 onDismiss={() => {
