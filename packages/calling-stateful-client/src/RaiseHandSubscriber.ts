@@ -1,10 +1,16 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { RaiseHandCallFeature, RaisedHandChangedEvent } from '@azure/communication-calling';
+import { RaiseHandCallFeature, RaisedHandChangedEvent, DiagnosticQuality } from '@azure/communication-calling';
 import { CallContext } from './CallContext';
 import { CallIdRef } from './CallIdRef';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
+
+import {
+  DiagnosticChangedEventArgs,
+  LatestDiagnosticValue,
+  NetworkDiagnosticChangedEventArgs
+} from '@azure/communication-calling';
 /**
  * @private
  */
@@ -40,6 +46,12 @@ export class RaiseHandSubscriber {
         raisedHand
       );
     }
+
+    this.networkDiagnosticsChanged({
+      value: DiagnosticQuality.Bad,
+      valueType: 'DiagnosticQuality',
+      diagnostic: 'networkReceiveQuality'
+    });
   };
 
   private loweredHand = (event: RaisedHandChangedEvent): void => {
@@ -50,5 +62,29 @@ export class RaiseHandSubscriber {
       toFlatCommunicationIdentifier(event.identifier),
       undefined
     );
+
+    this.networkDiagnosticsChanged({
+      value: DiagnosticQuality.Good,
+      valueType: 'DiagnosticQuality',
+      diagnostic: 'networkReceiveQuality'
+    });
   };
+
+  private networkDiagnosticsChanged(args: NetworkDiagnosticChangedEventArgs): void {
+    this._context.modifyState((state) => {
+      const call = state.calls[this._callIdRef.callId];
+      if (call === undefined) {
+        return;
+      }
+      const network = call.diagnostics?.network.latest;
+      if (network) {
+        network[args.diagnostic] = this.latestFromEvent(args);
+      }
+    });
+  }
+
+  private latestFromEvent = (args: DiagnosticChangedEventArgs): LatestDiagnosticValue => ({
+    value: args.value,
+    valueType: args.valueType
+  });
 }
