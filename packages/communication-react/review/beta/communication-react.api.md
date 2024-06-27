@@ -3284,18 +3284,13 @@ export interface MediaDiagnosticsState {
 
 // @beta
 export interface MeetingConferencePhoneInfoModalStrings {
-    badQualityBarClose?: string;
-    badQualityBarJoin?: string;
-    badQualityBarMessage?: string;
-    badQualityBarTitle?: string;
     meetingConferencePhoneInfoModalDialIn?: string;
     meetingConferencePhoneInfoModalMeetingId?: string;
     meetingConferencePhoneInfoModalNoPhoneAvailable?: string;
     meetingConferencePhoneInfoModalTitle?: string;
     meetingConferencePhoneInfoModalToll?: string;
     meetingConferencePhoneInfoModalTollFree?: string;
-    meetingConferencePhoneInfoModalTollFreeWithoutGeoData?: string;
-    meetingConferencePhoneInfoModalTollWithoutGeoData?: string;
+    meetingConferencePhoneInfoModalTollGeoData?: string;
     meetingConferencePhoneInfoModalWait?: string;
 }
 

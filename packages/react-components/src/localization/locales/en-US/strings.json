@@ -562,13 +562,8 @@
     "meetingConferencePhoneInfoModalMeetingId": "Enter meeting ID",
     "meetingConferencePhoneInfoModalWait": "Wait to be admitted by organizer",
     "meetingConferencePhoneInfoModalNoPhoneAvailable": "No phone available",
-    "meetingConferencePhoneInfoModalTollFree": "(Toll-free) {country}, {city}",
-    "meetingConferencePhoneInfoModalTollFreeWithoutGeoData": "(Toll-free)",
-    "meetingConferencePhoneInfoModalToll": "(Toll) {country}, {city}",
-    "meetingConferencePhoneInfoModalTollWithoutGeoData": "(Toll)",
-    "badQualityBarTitle": "Poor Network Quality",
-    "badQualityBarClose": "Close",
-    "badQualityBarMessage": "Join this call from your phone for better sound. You can continue viewing the meeting on this device.",
-    "badQualityBarJoin": "Join by Phone"
+    "meetingConferencePhoneInfoModalTollGeoData": "{country}, {city}",
+    "meetingConferencePhoneInfoModalTollFree": "(Toll-free)",
+    "meetingConferencePhoneInfoModalToll": "(Toll)"
   }
 }

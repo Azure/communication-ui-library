@@ -57,41 +57,17 @@ export interface MeetingConferencePhoneInfoModalStrings {
    */
   meetingConferencePhoneInfoModalTollFree?: string;
   /**
-   * Toll Free Phone Label without geo data
-   */
-  meetingConferencePhoneInfoModalTollFreeWithoutGeoData?: string;
-  /**
    * Toll Phone Label
    */
   meetingConferencePhoneInfoModalToll?: string;
   /**
    * Toll Phone Label without geo data
    */
-  meetingConferencePhoneInfoModalTollWithoutGeoData?: string;
+  meetingConferencePhoneInfoModalTollGeoData?: string;
   /**
    * No phone number available message
    */
   meetingConferencePhoneInfoModalNoPhoneAvailable?: string;
-
-  /**
-   * Bad quality bar title
-   */
-  badQualityBarTitle?: string;
-
-  /**
-   * Bad quality bar message
-   */
-  badQualityBarMessage?: string;
-
-  /**
-   * Bad quality bar close button aria label
-   */
-  badQualityBarClose?: string;
-
-  /**
-   * Bad quality bar join button label
-   */
-  badQualityBarJoin?: string;
 }
 
 /* @conditional-compile-remove(teams-meeting-conference) */
@@ -166,7 +142,13 @@ export const MeetingConferencePhoneInfoModal = (props: MeetingConferencePhoneInf
               <Stack.Item className={phoneInfoStep}>
                 {conferencePhoneInfoList.map((phoneNumber, index) => (
                   <Stack.Item key={index}>
-                    <Text className={phoneInfoTextStyle}>{formatPhoneNumber(phoneNumber.phoneNumber)}</Text>
+                    <Text className={phoneInfoTextStyle}>
+                      {formatPhoneNumber(phoneNumber.phoneNumber)}{' '}
+                      {phoneNumber.isTollFree
+                        ? strings.meetingConferencePhoneInfoModalTollFree
+                        : strings.meetingConferencePhoneInfoModalToll}
+                    </Text>
+                    <br />
                     <Text className={phoneInfoTextStyle}> {formatPhoneNumberInfo(phoneNumber, strings)}</Text>
                   </Stack.Item>
                 ))}
@@ -247,13 +229,8 @@ export const formatPhoneNumberInfo = (
   phoneNumber: ConferencePhoneInfo,
   strings: MeetingConferencePhoneInfoModalStrings | undefined
 ): string => {
-  const templateText = phoneNumber.isTollFree
-    ? phoneNumber.country && phoneNumber.city
-      ? strings?.meetingConferencePhoneInfoModalTollFree
-      : strings?.meetingConferencePhoneInfoModalTollFreeWithoutGeoData
-    : phoneNumber.country && phoneNumber.city
-      ? strings?.meetingConferencePhoneInfoModalToll
-      : strings?.meetingConferencePhoneInfoModalTollWithoutGeoData;
+  const templateText =
+    phoneNumber.country && phoneNumber.city ? strings?.meetingConferencePhoneInfoModalTollGeoData : '';
   return (
     templateText
       ?.replace('{phoneNumber}', formatPhoneNumber(phoneNumber.phoneNumber))
