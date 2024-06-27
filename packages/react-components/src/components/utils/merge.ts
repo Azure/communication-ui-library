@@ -17,7 +17,7 @@ export function useShallowMerge<T extends Record<string, unknown>>(
       ({
         ...(target || {}),
         ...(source || {})
-      } as T),
+      }) as T,
     [target, source]
   );
 
