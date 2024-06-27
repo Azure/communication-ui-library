@@ -278,7 +278,8 @@ export const insertTableMenuCellButtonStyles = (theme: Theme): IStyle => {
  */
 export const insertTableMenuCellButtonSelectedStyles = (theme: Theme): IStyle => {
   return {
-    background: theme.palette.themePrimary
+    background: theme.palette.themePrimary,
+    border: `solid 0.5px ${theme.palette.themeLighterAlt}`
   };
 };
 
