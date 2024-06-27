@@ -62,7 +62,7 @@ import { useAudio } from '../common/AudioProvider';
 /* @conditional-compile-remove(teams-meeting-conference) */
 import { badNetworkQualityBannerSelector } from './selectors/badNetworkQualitySelector';
 /* @conditional-compile-remove(teams-meeting-conference) */
-import { useBadNetworkQualityNotifications } from './components/BadNetworkQualityNotificationBar';
+import { useBadNetworkQualityNotifications } from './components/BadNetworkQualityNotification';
 /* @conditional-compile-remove(notifications) */
 import { errorNotificationsStackSelector } from '@internal/calling-component-bindings';
 /* @conditional-compile-remove(notifications) */

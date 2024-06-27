@@ -35,7 +35,7 @@ import { showDtmfDialer } from '../utils/MediaGalleryUtils';
 import { getTargetCallees } from '../selectors/baseSelectors';
 import { Prompt, PromptProps } from '../components/Prompt';
 /* @conditional-compile-remove(teams-meeting-conference) */
-import { BadNetworkQualityBannerProps } from '../components/BadNetworkQualityNotificationBar';
+import { BadNetworkQualityBannerProps } from '../components/BadNetworkQualityNotification';
 
 /**
  * @private

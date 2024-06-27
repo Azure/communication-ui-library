@@ -58,7 +58,7 @@ import { useMeetingPhoneInfoPane } from './SidePane/useMeetingPhoneInfo';
 /* @conditional-compile-remove(teams-meeting-conference) */
 import { getTeamsMeetingCoordinates } from '../selectors/baseSelectors';
 /* @conditional-compile-remove(teams-meeting-conference) */
-import { BadNetworkQualityNotificationBar, BadNetworkQualityBannerProps } from './BadNetworkQualityNotificationBar';
+import { BadNetworkQualityNotification, BadNetworkQualityBannerProps } from './BadNetworkQualityNotification';
 
 import {
   useVideoEffectsPane,
@@ -481,6 +481,16 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   const minMaxDragPosition = useMinMaxDragPosition(props.modalLayerHostId);
   const pipStyles = useMemo(() => getPipStyles(theme), [theme]);
 
+  if (isTeamsMeeting) {
+    filteredLatestErrorNotifications
+      .filter((notification) => notification.type === 'callNetworkQualityLow')
+      .forEach((notification) => {
+        notification.onClickPrimaryButton = props.mobileView
+          ? toggleMeetingPhoneInfoPane
+          : toggleTeamsMeetingConferenceModal;
+      });
+  }
+
   const verticalControlBar =
     props.mobileView && containerWidth && containerHeight && containerWidth / containerHeight > 1 ? true : false;
 
@@ -637,7 +647,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                         !props.badNetworkQualityBannerProps.userClosedConnectionLostBanner &&
                         isTeamsMeeting && (
                           <Stack styles={bannerNotificationStyles}>
-                            <BadNetworkQualityNotificationBar
+                            <BadNetworkQualityNotification
                               {...props.badNetworkQualityBannerProps}
                               onPrimaryButtonClick={
                                 props.mobileView ? toggleMeetingPhoneInfoPane : toggleTeamsMeetingConferenceModal

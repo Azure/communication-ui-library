@@ -83,11 +83,14 @@ export const errorNotificationsStackSelector: ErrorNotificationStackSelector = c
       isTeamsMeetingWithPhones = true;
     }
     if (
-      (!isTeamsMeetingWithPhones && // Teams meeting with conference phones has separate notification
-        diagnostics?.network.latest.networkReceiveQuality?.value === DiagnosticQuality.Bad) ||
+      diagnostics?.network.latest.networkReceiveQuality?.value === DiagnosticQuality.Bad ||
       diagnostics?.network.latest.networkReceiveQuality?.value === DiagnosticQuality.Poor
     ) {
-      activeErrorMessages.push({ type: 'callNetworkQualityLow' });
+      if (isTeamsMeetingWithPhones) {
+        activeErrorMessages.push({ type: 'teamsMeetingCallNetworkQualityLow' });
+      } else {
+        activeErrorMessages.push({ type: 'callNetworkQualityLow' });
+      }
     }
     if (diagnostics?.media.latest.noSpeakerDevicesEnumerated?.value === true) {
       activeErrorMessages.push({ type: 'callNoSpeakerFound' });

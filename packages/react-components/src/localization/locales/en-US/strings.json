@@ -237,6 +237,7 @@
     "startScreenShareGeneric": "There was an issue starting screen share.",
     "stopScreenShareGeneric": "Failed to stop screen sharing",
     "callNetworkQualityLow": "Network quality is low.",
+    "teamsMeetingCallNetworkQualityLow": "Network quality is low.",
     "callNoSpeakerFound": "No speakers or headphones found. Connect an audio device to hear the call.",
     "callNoMicrophoneFound": "No microphones found. Connect an audio input device.",
     "callMicrophoneAccessDenied": "Unable to access microphone. Click the lock in the address bar to grant permission to this webpage.",
@@ -296,6 +297,12 @@
     "callNetworkQualityLow": {
       "title": "Network quality is low.",
       "closeButtonAriaLabel": "Close"
+    },
+    "teamsMeetingCallNetworkQualityLow": {
+      "title": "Network quality is low.",
+      "closeButtonAriaLabel": "Close",
+      "message": "Join this call from your phone for better sound. You can continue viewing the meeting on this device.",
+      "primaryButtonLabel": "Join by Phone"
     },
     "callNoSpeakerFound": {
       "title": "No speakers or headphones found",

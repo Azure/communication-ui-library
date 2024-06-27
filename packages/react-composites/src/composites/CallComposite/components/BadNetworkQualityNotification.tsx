@@ -52,7 +52,7 @@ export const useBadNetworkQualityNotifications = (
  * Connection lost notification bar during teams meeting, which provides a message to use PSTN option.
  * @beta
  */
-export const BadNetworkQualityNotificationBar = (props: BadNetworkQualityBannerProps): JSX.Element => {
+export const BadNetworkQualityNotification = (props: BadNetworkQualityBannerProps): JSX.Element => {
   const localeStrings = useLocale().component.strings.MeetingConferencePhoneInfo;
 
   const barStrings = {

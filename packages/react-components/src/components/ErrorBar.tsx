@@ -125,6 +125,10 @@ export interface ErrorBarStrings {
   callNetworkQualityLow: string;
 
   /**
+   * Message shown when poor network quality is detected during a call.
+   */
+  teamsMeetingCallNetworkQualityLow: string;
+  /**
    * Message shown on failure to detect audio output devices.
    */
   callNoSpeakerFound: string;
