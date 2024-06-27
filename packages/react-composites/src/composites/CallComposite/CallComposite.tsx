@@ -64,7 +64,7 @@ import { badNetworkQualityBannerSelector } from './selectors/badNetworkQualitySe
 /* @conditional-compile-remove(teams-meeting-conference) */
 import { useBadNetworkQualityNotifications } from './components/BadNetworkQualityNotificationBar';
 /* @conditional-compile-remove(notifications) */
-import { errorNotificationStackSelector } from '@internal/calling-component-bindings';
+import { notificationStackSelector } from '@internal/calling-component-bindings';
 /* @conditional-compile-remove(notifications) */
 import { useAdaptedSelector } from './hooks/useAdaptedSelector';
 
@@ -439,7 +439,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   // And then tracking when that error type was last dismissed.
   const activeErrors = usePropsFor(ErrorBar).activeErrorMessages;
   /* @conditional-compile-remove(notifications) */
-  const activeInCallErrors = useAdaptedSelector(errorNotificationStackSelector).activeErrorMessages;
+  const activeInCallErrors = useAdaptedSelector(notificationStackSelector).activeErrorMessages;
   const [trackedErrors, setTrackedErrors] = useState<TrackedErrors>({} as TrackedErrors);
   /* @conditional-compile-remove(notifications) */
   const [trackedInCallErrors, setTrackedInCallErrors] = useState<TrackedErrors>({} as TrackedErrors);
