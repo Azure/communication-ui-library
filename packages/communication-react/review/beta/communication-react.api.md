@@ -3642,6 +3642,7 @@ export interface NotificationStackStrings {
     dismissButtonAriaLabel?: NotificationStrings;
     failedToJoinCallGeneric?: NotificationStrings;
     failedToJoinCallInvalidMeetingLink?: NotificationStrings;
+    mutedByAnotherParticipant: NotificationStrings;
     muteGeneric: NotificationStrings;
     startScreenShareGeneric: NotificationStrings;
     startSpotlightWhileMaxParticipantsAreSpotlighted: NotificationStrings;
