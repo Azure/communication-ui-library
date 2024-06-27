@@ -258,7 +258,7 @@
     "cameraFrozenForRemoteParticipants": "Users in the call are having issues seeing your video. Please check your devices and network.",
     "unableToStartVideoEffect": "Unable to apply video effect.",
     "startSpotlightWhileMaxParticipantsAreSpotlighted": "Cannot start spotlight on participant(s) because the maximum number of participants are already spotlighted.",
-    "mutedByAnotherParticipant": "You were muted by another participant."
+    "mutedByRemoteParticipant": "You were muted by another participant."
   },
   "notificationStack": {
     "callingNetworkFailure": {
@@ -391,7 +391,7 @@
       "message": "The maximum number of participants are already spotlighted.",
       "closeButtonAriaLabel": "Close"
     },
-    "mutedByAnotherParticipant": {
+    "mutedByRemoteParticipant": {
       "title": "You were muted by another participant.",
       "closeButtonAriaLabel": "Close"
     }

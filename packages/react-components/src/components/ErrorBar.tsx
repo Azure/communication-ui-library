@@ -232,9 +232,9 @@ export interface ErrorBarStrings {
 
   /* @conditional-compile-remove(soft-mute) */
   /**
-   * An error message when local user is muted by another participant
+   * An error message when local user is muted by a remote participant
    */
-  mutedByAnotherParticipant: string;
+  mutedByRemoteParticipant: string;
 }
 
 /**

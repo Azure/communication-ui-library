@@ -300,7 +300,7 @@ export const DEFAULT_COMPONENT_ICONS = {
   ErrorBarCallVideoRecoveredBySystem: <Video16Filled />,
   ErrorBarCallVideoStoppedBySystem: <VideoProhibited16Filled />,
   /* @conditional-compile-remove(soft-mute) */
-  ErrorBarMutedByAnotherParticipant: <MicOff16Regular />,
+  ErrorBarMutedByRemoteParticipant: <MicOff16Regular />,
   HorizontalGalleryLeftButton: <GalleryLeftButton />,
   HorizontalGalleryRightButton: <GalleryRightButton />,
   MessageDelivered: <CheckmarkCircle16Regular />,

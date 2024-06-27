@@ -162,7 +162,7 @@ export const notificationStackSelector: NotificationStackSelector = createSelect
     appendActiveErrorIfDefined(activeErrorMessages, latestErrors, 'Call.unmute', 'unmuteGeneric');
 
     /* @conditional-compile-remove(soft-mute) */
-    appendActiveErrorIfDefined(activeErrorMessages, latestErrors, 'Call.mutedByOthers', 'mutedByAnotherParticipant');
+    appendActiveErrorIfDefined(activeErrorMessages, latestErrors, 'Call.mutedByOthers', 'mutedByRemoteParticipant');
 
     appendActiveErrorIfDefined(
       activeErrorMessages,
