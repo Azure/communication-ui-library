@@ -44,8 +44,8 @@ export const SidePane = (props: SidePaneProps): JSX.Element => {
   const paneStyles = renderingOnlyHiddenContent
     ? hiddenStyles
     : props.mobileView
-    ? availableSpaceStyles
-    : widthConstrainedStyles;
+      ? availableSpaceStyles
+      : widthConstrainedStyles;
 
   const Header =
     (overrideSidePane?.isActive ? overrideSidePane.renderer.headerRenderer : sidePaneRenderer?.headerRenderer) ??
