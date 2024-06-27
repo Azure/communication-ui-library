@@ -323,6 +323,7 @@ export const NotificationIconProps = (notificationType: NotificationType): IIcon
  */
 export const customNotificationIconName: Partial<{ [key in NotificationType]: string }> = {
   callNetworkQualityLow: 'ErrorBarCallNetworkQualityLow',
+  teamsMeetingCallNetworkQualityLow: 'ErrorBarCallNetworkQualityLow',
   callNoSpeakerFound: 'ErrorBarCallNoSpeakerFound',
   callNoMicrophoneFound: 'ErrorBarCallNoMicrophoneFound',
   callMicrophoneAccessDenied: 'ErrorBarCallMicrophoneAccessDenied',

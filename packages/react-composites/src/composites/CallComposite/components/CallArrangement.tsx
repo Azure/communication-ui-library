@@ -57,8 +57,6 @@ import { usePeoplePane } from './SidePane/usePeoplePane';
 import { useMeetingPhoneInfoPane } from './SidePane/useMeetingPhoneInfo';
 /* @conditional-compile-remove(teams-meeting-conference) */
 import { getTeamsMeetingCoordinates } from '../selectors/baseSelectors';
-/* @conditional-compile-remove(teams-meeting-conference) */
-import { BadNetworkQualityNotification, BadNetworkQualityBannerProps } from './BadNetworkQualityNotification';
 
 import {
   useVideoEffectsPane,
@@ -134,8 +132,6 @@ export interface CallArrangementProps {
   hideSpotlightButtons?: boolean;
   pinnedParticipants?: string[];
   setPinnedParticipants?: (pinnedParticipants: string[]) => void;
-  /* @conditional-compile-remove(teams-meeting-conference) */
-  badNetworkQualityBannerProps?: BadNetworkQualityBannerProps;
 }
 
 /**
@@ -481,9 +477,10 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   const minMaxDragPosition = useMinMaxDragPosition(props.modalLayerHostId);
   const pipStyles = useMemo(() => getPipStyles(theme), [theme]);
 
+  /* @conditional-compile-remove(notifications) */
   if (isTeamsMeeting) {
     filteredLatestErrorNotifications
-      .filter((notification) => notification.type === 'callNetworkQualityLow')
+      .filter((notification) => notification.type === 'teamsMeetingCallNetworkQualityLow')
       .forEach((notification) => {
         notification.onClickPrimaryButton = props.mobileView
           ? toggleMeetingPhoneInfoPane
@@ -641,21 +638,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                     {canUnmute && !!props.mutedNotificationProps && (
                       <MutedNotification {...props.mutedNotificationProps} />
                     )}
-                    {
-                      /* @conditional-compile-remove(teams-meeting-conference) */ props.badNetworkQualityBannerProps &&
-                        props.badNetworkQualityBannerProps.isPoorNetworkQuality &&
-                        !props.badNetworkQualityBannerProps.userClosedConnectionLostBanner &&
-                        isTeamsMeeting && (
-                          <Stack styles={bannerNotificationStyles}>
-                            <BadNetworkQualityNotification
-                              {...props.badNetworkQualityBannerProps}
-                              onPrimaryButtonClick={
-                                props.mobileView ? toggleMeetingPhoneInfoPane : toggleTeamsMeetingConferenceModal
-                              }
-                            />
-                          </Stack>
-                        )
-                    }
                   </Stack.Item>
                   {renderGallery && props.onRenderGalleryContent && props.onRenderGalleryContent()}
                   {true &&
