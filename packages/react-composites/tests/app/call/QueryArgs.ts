@@ -44,10 +44,10 @@ export function parseQueryArgs(): QueryArgs {
   const localVideoTilePosition = !params.localVideoTilePosition
     ? undefined
     : params.localVideoTilePosition === 'false'
-    ? false
-    : params.localVideoTilePosition === 'floating'
-    ? 'floating'
-    : 'grid';
+      ? false
+      : params.localVideoTilePosition === 'floating'
+        ? 'floating'
+        : 'grid';
 
   return {
     mockCallAdapterState: params.mockCallAdapterState

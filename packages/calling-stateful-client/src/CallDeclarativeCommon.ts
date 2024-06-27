@@ -56,16 +56,14 @@ export abstract class ProxyCallCommon implements ProxyHandler<CallCommon> {
           ...args: Parameters<CallCommon['startScreenSharing']>
         ) {
           return await target.startScreenSharing(...args);
-        },
-        'Call.startScreenSharing');
+        }, 'Call.startScreenSharing');
       }
       case 'stopScreenSharing': {
         return this._context.withAsyncErrorTeedToState(async function (
           ...args: Parameters<CallCommon['stopScreenSharing']>
         ) {
           return await target.stopScreenSharing(...args);
-        },
-        'Call.stopScreenSharing');
+        }, 'Call.stopScreenSharing');
       }
       case 'hold': {
         return this._context.withAsyncErrorTeedToState(async function (...args: Parameters<CallCommon['hold']>) {

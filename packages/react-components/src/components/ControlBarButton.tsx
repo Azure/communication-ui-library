@@ -115,8 +115,8 @@ const DefaultRenderIcon = (props?: ControlBarButtonProps): JSX.Element | null =>
       ? props?.onRenderOnIcon()
       : null
     : props?.onRenderOffIcon
-    ? props?.onRenderOffIcon()
-    : null;
+      ? props?.onRenderOffIcon()
+      : null;
 };
 
 /**
@@ -137,8 +137,8 @@ export const ControlBarButton = (props: ControlBarButtonProps): JSX.Element => {
     (props?.disabled
       ? props?.strings?.tooltipDisabledContent
       : props?.checked
-      ? props?.strings?.tooltipOnContent
-      : props?.strings?.tooltipOffContent);
+        ? props?.strings?.tooltipOnContent
+        : props?.strings?.tooltipOffContent);
 
   const tooltipId = props.tooltipId ?? props.labelKey ? props.labelKey + '-tooltip' : undefined;
 

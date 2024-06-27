@@ -159,8 +159,8 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
           ? props.selectedCamera
             ? props.selectedCamera.id
             : props.cameras
-            ? props.cameras[0]?.id
-            : ''
+              ? props.cameras[0]?.id
+              : ''
           : 'deniedOrUnknown'
       }
       onChange={(event, option, index) => {

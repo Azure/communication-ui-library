@@ -252,8 +252,8 @@ export const formatPhoneNumberInfo = (
       ? strings?.meetingConferencePhoneInfoModalTollFree
       : strings?.meetingConferencePhoneInfoModalTollFreeWithoutGeoData
     : phoneNumber.country && phoneNumber.city
-    ? strings?.meetingConferencePhoneInfoModalToll
-    : strings?.meetingConferencePhoneInfoModalTollWithoutGeoData;
+      ? strings?.meetingConferencePhoneInfoModalToll
+      : strings?.meetingConferencePhoneInfoModalTollWithoutGeoData;
   return (
     templateText
       ?.replace('{phoneNumber}', formatPhoneNumber(phoneNumber.phoneNumber))

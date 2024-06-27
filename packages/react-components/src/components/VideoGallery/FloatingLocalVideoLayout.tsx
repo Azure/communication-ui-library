@@ -142,8 +142,8 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
       return isNarrow
         ? SMALL_FLOATING_MODAL_SIZE_REM
         : isShort
-        ? SHORT_VERTICAL_GALLERY_FLOATING_MODAL_SIZE_REM
-        : VERTICAL_GALLERY_FLOATING_MODAL_SIZE_REM;
+          ? SHORT_VERTICAL_GALLERY_FLOATING_MODAL_SIZE_REM
+          : VERTICAL_GALLERY_FLOATING_MODAL_SIZE_REM;
     }
     if ((overflowGalleryTiles.length > 0 || screenShareComponent) && overflowGalleryPosition === 'horizontalBottom') {
       return localVideoTileSize === '16:9' || !isNarrow ? LARGE_FLOATING_MODAL_SIZE_REM : SMALL_FLOATING_MODAL_SIZE_REM;
