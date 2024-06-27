@@ -717,12 +717,12 @@ export interface CallCompositeStrings {
 export type CallControlDisplayType = 'default' | 'compact';
 
 // @public
-export type CallControlOptions = (CommonCallControlOptions & {
+export type CallControlOptions = CommonCallControlOptions & {
     participantsButton?: boolean | {
         disabled: boolean;
     };
     legacyControlBarExperience?: boolean;
-});
+};
 
 // @public
 export type CallEndedListener = (event: CallAdapterCallEndedEvent) => void;
