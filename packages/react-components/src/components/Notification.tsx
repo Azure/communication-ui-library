@@ -10,23 +10,23 @@ import {
   messageTextStyle,
   notificationIconClassName,
   titleTextClassName
-} from './styles/NotificationBar.styles';
+} from './styles/Notification.styles';
 
 /**
- * Props for {@link NotificationBar}.
+ * Props for {@link Notification}.
  *
  * @beta
  */
-export interface NotificationBarProps {
+export interface NotificationProps {
   /**
    * Notification bar strings;
    */
-  notificationBarStrings?: NotificationBarStrings;
+  notificationStrings?: NotificationStrings;
 
   /**
    * Notification bar icon;
    */
-  notificationBarIconProps?: IIconProps;
+  notificationIconProps?: IIconProps;
 
   /**
    * If set, notifications will automatically dismiss after 5 seconds
@@ -57,11 +57,11 @@ export interface NotificationBarProps {
 }
 
 /**
- * All strings that may be shown on the UI in the {@link NotificationBar}.
+ * All strings that may be shown on the UI in the {@link Notification}.
  *
  * @beta
  */
-export interface NotificationBarStrings {
+export interface NotificationStrings {
   /**
    * Notification bar title.
    */
@@ -89,8 +89,8 @@ export interface NotificationBarStrings {
  *
  * @beta
  */
-export const NotificationBar = (props: NotificationBarProps): JSX.Element => {
-  const strings = props.notificationBarStrings;
+export const Notification = (props: NotificationProps): JSX.Element => {
+  const strings = props.notificationStrings;
   const theme = useTheme();
   const [show, setShow] = useState(true);
 
@@ -113,8 +113,8 @@ export const NotificationBar = (props: NotificationBarProps): JSX.Element => {
           <Stack horizontal>
             <Icon
               className={notificationIconClassName}
-              iconName={props.notificationBarIconProps?.iconName ?? 'ErrorBadge'}
-              {...props.notificationBarIconProps}
+              iconName={props.notificationIconProps?.iconName ?? 'ErrorBadge'}
+              {...props.notificationIconProps}
             />
             <Text className={titleTextClassName}>{strings?.title}</Text>
           </Stack>

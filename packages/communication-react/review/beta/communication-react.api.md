@@ -2228,7 +2228,7 @@ export interface ComponentStrings {
     MicrophoneSitePermissionsDenied: SitePermissionsStrings;
     MicrophoneSitePermissionsDeniedSafari: SitePermissionsStrings;
     MicrophoneSitePermissionsRequest: SitePermissionsStrings;
-    notifications: NotificationsStrings;
+    notificationStack: NotificationStackStrings;
     participantItem: ParticipantItemStrings;
     ParticipantList: ParticipantListStrings;
     participantsButton: ParticipantsButtonStrings;
@@ -3594,13 +3594,14 @@ export interface NetworkDiagnosticsState {
 }
 
 // @beta
-export const NotificationBar: (props: NotificationBarProps) => JSX.Element;
+const Notification_2: (props: NotificationProps) => JSX.Element;
+export { Notification_2 as Notification }
 
 // @beta
-export interface NotificationBarProps {
+export interface NotificationProps {
     autoDismiss?: boolean;
-    notificationBarIconProps?: IIconProps;
-    notificationBarStrings?: NotificationBarStrings;
+    notificationIconProps?: IIconProps;
+    notificationStrings?: NotificationStrings;
     onClickPrimaryButton?: () => void;
     onClickSecondaryButton?: () => void;
     onDismiss?: () => void;
@@ -3608,7 +3609,51 @@ export interface NotificationBarProps {
 }
 
 // @beta
-export interface NotificationBarStrings {
+export const NotificationStack: (props: NotificationStackProps) => JSX.Element;
+
+// @beta
+export interface NotificationStackProps {
+    activeNotifications: ActiveNotification[];
+    ignorePremountNotifications?: boolean;
+    maxNotificationsToShow?: number;
+    onDismissNotification?: (dismissedNotifications: ActiveNotification) => void;
+    strings?: NotificationStackStrings;
+}
+
+// @beta
+export interface NotificationStackStrings {
+    callCameraAccessDenied: NotificationStrings;
+    callCameraAccessDeniedSafari: NotificationStrings;
+    callCameraAlreadyInUse: NotificationStrings;
+    callLocalVideoFreeze: NotificationStrings;
+    callMacOsCameraAccessDenied: NotificationStrings;
+    callMacOsMicrophoneAccessDenied: NotificationStrings;
+    callMacOsScreenShareAccessDenied: NotificationStrings;
+    callMicrophoneAccessDenied: NotificationStrings;
+    callMicrophoneAccessDeniedSafari: NotificationStrings;
+    callMicrophoneMutedBySystem: NotificationStrings;
+    callMicrophoneUnmutedBySystem: NotificationStrings;
+    callNetworkQualityLow: NotificationStrings;
+    callNoMicrophoneFound: NotificationStrings;
+    callNoSpeakerFound: NotificationStrings;
+    callVideoRecoveredBySystem: NotificationStrings;
+    callVideoStoppedBySystem: NotificationStrings;
+    cameraFrozenForRemoteParticipants?: NotificationStrings;
+    dismissButtonAriaLabel?: NotificationStrings;
+    failedToJoinCallGeneric?: NotificationStrings;
+    failedToJoinCallInvalidMeetingLink?: NotificationStrings;
+    muteGeneric: NotificationStrings;
+    startScreenShareGeneric: NotificationStrings;
+    startSpotlightWhileMaxParticipantsAreSpotlighted: NotificationStrings;
+    startVideoGeneric: NotificationStrings;
+    stopScreenShareGeneric: NotificationStrings;
+    stopVideoGeneric: NotificationStrings;
+    unableToStartVideoEffect?: NotificationStrings;
+    unmuteGeneric: NotificationStrings;
+}
+
+// @beta
+export interface NotificationStrings {
     closeButtonAriaLabel: string;
     message?: string;
     primaryButtonLabel?: string;
@@ -3617,52 +3662,7 @@ export interface NotificationBarStrings {
 }
 
 // @beta
-export const Notifications: (props: NotificationsProps) => JSX.Element;
-
-// @beta
-export interface NotificationsProps {
-    activeNotifications: ActiveNotification[];
-    ignorePremountNotifications?: boolean;
-    maxNotificationsToShow?: number;
-    onDismissNotification?: (dismissedNotifications: ActiveNotification) => void;
-    strings?: NotificationsStrings;
-}
-
-// @beta
-export interface NotificationsStrings {
-    callCameraAccessDenied: NotificationBarStrings;
-    callCameraAccessDeniedSafari: NotificationBarStrings;
-    callCameraAlreadyInUse: NotificationBarStrings;
-    callLocalVideoFreeze: NotificationBarStrings;
-    callMacOsCameraAccessDenied: NotificationBarStrings;
-    callMacOsMicrophoneAccessDenied: NotificationBarStrings;
-    callMacOsScreenShareAccessDenied: NotificationBarStrings;
-    callMicrophoneAccessDenied: NotificationBarStrings;
-    callMicrophoneAccessDeniedSafari: NotificationBarStrings;
-    callMicrophoneMutedBySystem: NotificationBarStrings;
-    callMicrophoneUnmutedBySystem: NotificationBarStrings;
-    callNetworkQualityLow: NotificationBarStrings;
-    callNoMicrophoneFound: NotificationBarStrings;
-    callNoSpeakerFound: NotificationBarStrings;
-    callVideoRecoveredBySystem: NotificationBarStrings;
-    callVideoStoppedBySystem: NotificationBarStrings;
-    cameraFrozenForRemoteParticipants?: NotificationBarStrings;
-    dismissButtonAriaLabel?: NotificationBarStrings;
-    failedToJoinCallGeneric?: NotificationBarStrings;
-    failedToJoinCallInvalidMeetingLink?: NotificationBarStrings;
-    mutedByAnotherParticipant: NotificationBarStrings;
-    muteGeneric: NotificationBarStrings;
-    startScreenShareGeneric: NotificationBarStrings;
-    startSpotlightWhileMaxParticipantsAreSpotlighted: NotificationBarStrings;
-    startVideoGeneric: NotificationBarStrings;
-    stopScreenShareGeneric: NotificationBarStrings;
-    stopVideoGeneric: NotificationBarStrings;
-    unableToStartVideoEffect?: NotificationBarStrings;
-    unmuteGeneric: NotificationBarStrings;
-}
-
-// @beta
-export type NotificationType = keyof NotificationsStrings;
+export type NotificationType = keyof NotificationStackStrings;
 
 // @public
 export type OnFetchProfileCallback = (userId: string, defaultProfile?: Profile) => Promise<Profile | undefined>;

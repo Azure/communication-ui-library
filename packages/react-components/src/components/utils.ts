@@ -4,7 +4,7 @@
 import { IIconProps, MessageBarType } from '@fluentui/react';
 import { ActiveErrorMessage, ErrorType } from './ErrorBar';
 import { _SupportedSpokenLanguage } from '../types';
-import { ActiveNotification, NotificationType } from './Notifications';
+import { ActiveNotification, NotificationType } from './NotificationStack';
 
 /**
  * @private

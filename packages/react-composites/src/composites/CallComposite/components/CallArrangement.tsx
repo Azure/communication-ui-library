@@ -16,7 +16,7 @@ import {
   useTheme
 } from '@internal/react-components';
 /* @conditional-compile-remove(notifications) */
-import { ActiveNotification, Notifications } from '@internal/react-components';
+import { ActiveNotification, NotificationStack } from '@internal/react-components';
 import { VideoGalleryLayout } from '@internal/react-components';
 import { VideoGallery } from '@internal/react-components';
 import React, { useMemo, useRef, useState } from 'react';
@@ -497,7 +497,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
       <>
         {props.showErrorNotifications && (
           <Stack styles={bannerNotificationStyles} horizontalAlign="center" verticalAlign="center">
-            <Notifications
+            <NotificationStack
               onDismissNotification={props.onDismissError}
               activeNotifications={filteredLatestErrorNotifications}
             />
