@@ -108,7 +108,7 @@ export interface ComponentStrings {
   imageOverlay: ImageOverlayStrings;
   /** Strings for MessageStatusIndicator */
   messageStatusIndicator: MessageStatusIndicatorStrings;
-  /** Strings for ErroBar */
+  /** Strings for ErrorBar */
   errorBar: ErrorBarStrings;
   /* @conditional-compile-remove(notifications) */
   /** Strings for Notifications */

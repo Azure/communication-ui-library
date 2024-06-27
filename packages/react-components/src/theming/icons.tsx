@@ -49,6 +49,8 @@ import {
   ScaleFill20Regular,
   PersonDelete20Regular
 } from '@fluentui/react-icons';
+/* @conditional-compile-remove(soft-mute) */
+import { MicOff16Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(rich-text-editor) */
 import {
   TextBold20Regular,
@@ -297,6 +299,8 @@ export const DEFAULT_COMPONENT_ICONS = {
   ErrorBarClear: <Dismiss16Regular />,
   ErrorBarCallVideoRecoveredBySystem: <Video16Filled />,
   ErrorBarCallVideoStoppedBySystem: <VideoProhibited16Filled />,
+  /* @conditional-compile-remove(soft-mute) */
+  ErrorBarMutedByAnotherParticipant: <MicOff16Regular />,
   HorizontalGalleryLeftButton: <GalleryLeftButton />,
   HorizontalGalleryRightButton: <GalleryRightButton />,
   MessageDelivered: <CheckmarkCircle16Regular />,

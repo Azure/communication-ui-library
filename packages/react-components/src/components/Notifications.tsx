@@ -200,6 +200,11 @@ export interface NotificationsStrings {
    * An error message when starting spotlight while max participants are spotlighted
    */
   startSpotlightWhileMaxParticipantsAreSpotlighted: NotificationBarStrings;
+  /* @conditional-compile-remove(soft-mute) */
+  /**
+   * Muted by other participant message,
+   */
+  mutedByAnotherParticipant: NotificationBarStrings;
 }
 
 /**

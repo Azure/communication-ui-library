@@ -224,10 +224,17 @@ export interface ErrorBarStrings {
    * Unable to start effect
    */
   unableToStartVideoEffect?: string;
+
   /**
    * An error message when starting spotlight while max participants are spotlighted
    */
   startSpotlightWhileMaxParticipantsAreSpotlighted: string;
+
+  /* @conditional-compile-remove(soft-mute) */
+  /**
+   * An error message when local user is muted by another participant
+   */
+  mutedByAnotherParticipant: string;
 }
 
 /**
