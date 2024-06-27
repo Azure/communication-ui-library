@@ -124,6 +124,7 @@ export interface ErrorBarStrings {
    */
   callNetworkQualityLow: string;
 
+  /* @conditional-compile-remove(teams-meeting-conference) */
   /**
    * Message shown when poor network quality is detected during a call.
    */

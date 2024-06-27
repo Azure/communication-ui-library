@@ -566,10 +566,6 @@
     "meetingConferencePhoneInfoModalNoPhoneAvailable": "No phone available",
     "meetingConferencePhoneInfoModalTollGeoData": "{country}, {city}",
     "meetingConferencePhoneInfoModalTollFree": "(Toll-free)",
-    "meetingConferencePhoneInfoModalToll": "(Toll)",
-    "badQualityBarTitle": "Poor Network Quality",
-    "badQualityBarClose": "Close",
-    "badQualityBarMessage": "Join this call from your phone for better sound. You can continue viewing the meeting on this device.",
-    "badQualityBarJoin": "Join by Phone"
+    "meetingConferencePhoneInfoModalToll": "(Toll)"
   }
 }

@@ -94,6 +94,7 @@ export interface NotificationStackStrings {
    * Message shown when poor network quality is detected during a call.
    */
   callNetworkQualityLow: NotificationStrings;
+  /* @conditional-compile-remove(teams-meeting-conference) */
   /**
    * Message shown when poor network quality is detected during a teams meetings.
    * Contains actions to open phone info modal.

@@ -477,7 +477,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   const minMaxDragPosition = useMinMaxDragPosition(props.modalLayerHostId);
   const pipStyles = useMemo(() => getPipStyles(theme), [theme]);
 
-  /* @conditional-compile-remove(notifications) */
+  /* @conditional-compile-remove(notifications) */ /* @conditional-compile-remove(teams-meeting-conference) */
   if (isTeamsMeeting) {
     filteredLatestErrorNotifications
       .filter((notification) => notification.type === 'teamsMeetingCallNetworkQualityLow')

@@ -68,26 +68,6 @@ export interface MeetingConferencePhoneInfoModalStrings {
    * No phone number available message
    */
   meetingConferencePhoneInfoModalNoPhoneAvailable?: string;
-
-  /**
-   * Bad quality bar title
-   */
-  badQualityBarTitle?: string;
-
-  /**
-   * Bad quality bar message
-   */
-  badQualityBarMessage?: string;
-
-  /**
-   * Bad quality bar close button aria label
-   */
-  badQualityBarClose?: string;
-
-  /**
-   * Bad quality bar join button label
-   */
-  badQualityBarJoin?: string;
 }
 
 /* @conditional-compile-remove(teams-meeting-conference) */
