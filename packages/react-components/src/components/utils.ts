@@ -221,7 +221,7 @@ export const notificationsToShow = (
   dismissedNotifications: DismissedNotification[],
   mountTimestamp?: Date
 ): ActiveNotification[] => {
-  const dismissed: Map<ErrorType, DismissedError> = new Map();
+  const dismissed: Map<NotificationType, DismissedNotification> = new Map();
   for (const notification of dismissedNotifications) {
     dismissed.set(notification.type, notification);
   }
@@ -338,7 +338,9 @@ export const customNotificationIconName: Partial<{ [key in NotificationType]: st
   callVideoRecoveredBySystem: 'ErrorBarCallVideoRecoveredBySystem',
   callMacOsCameraAccessDenied: 'ErrorBarCallMacOsCameraAccessDenied',
   /* @conditional-compile-remove(soft-mute) */
-  mutedByAnotherParticipant: 'ErrorBarMutedByAnotherParticipant'
+  mutedByAnotherParticipant: 'ErrorBarMutedByAnotherParticipant',
+  /* @conditional-compile-remove(notifications) */
+  speakingWhileMuted: 'ErrorBarCallMicrophoneMutedBySystem'
 };
 
 /**

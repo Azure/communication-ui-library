@@ -11,6 +11,8 @@ import {
   ScreenShareButton,
   VideoGallery
 } from '@internal/react-components';
+/* @conditional-compile-remove(notifications) */
+import { NotificationStack } from '@internal/react-components';
 import { Dialpad } from '@internal/react-components';
 /* @conditional-compile-remove(PSTN-calls) */
 import { HoldButton } from '@internal/react-components';
@@ -41,6 +43,8 @@ import { CommonCallingHandlers } from '../handlers/createCommonHandlers';
 import { reactionButtonSelector } from '../callControlSelectors';
 import { ReactionButton } from '@internal/react-components';
 import { _ComponentCallingHandlers } from '../handlers/createHandlers';
+/* @conditional-compile-remove(notifications) */
+import { notificationStackSelector, NotificationStackSelector } from '../notificationStackSelector';
 
 /**
  * Primary hook to get all hooks necessary for a calling Component.
@@ -116,6 +120,8 @@ export type GetSelector<Component extends (props: any) => JSX.Element | undefine
   ? EmptySelector
   : AreEqual<Component, typeof HoldButton> extends true
   ? /* @conditional-compile-remove(PSTN-calls) */ HoldButtonSelector
+  : AreEqual<Component, typeof NotificationStack> extends true
+  ? /* @conditional-compile-remove(notifications) */ NotificationStackSelector
   : undefined;
 
 /**
@@ -132,6 +138,10 @@ export const getSelector = <Component extends (props: any) => JSX.Element | unde
 ): GetSelector<Component> => {
   /* @conditional-compile-remove(PSTN-calls) */
   if (component === HoldButton) {
+    return findConditionalCompiledSelector(component);
+  }
+  /* @conditional-compile-remove(notifications) */
+  if (component === NotificationStack) {
     return findConditionalCompiledSelector(component);
   }
 
@@ -178,5 +188,9 @@ const findConditionalCompiledSelector = (component: (props: any) => JSX.Element 
     case HoldButton:
       /* @conditional-compile-remove(PSTN-calls) */
       return holdButtonSelector;
+    /* @conditional-compile-remove(notifications) */
+    case NotificationStack:
+      /* @conditional-compile-remove(notifications) */
+      return notificationStackSelector;
   }
 };
