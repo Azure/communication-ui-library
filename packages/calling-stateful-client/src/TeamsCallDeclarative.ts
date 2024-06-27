@@ -26,8 +26,7 @@ class ProxyTeamsCall extends ProxyCallCommon implements ProxyHandler<TeamsCall> 
           ...args: Parameters<TeamsCall['addParticipant']>
         ) {
           return await target.addParticipant(...args);
-        },
-        'TeamsCall.addParticipant');
+        }, 'TeamsCall.addParticipant');
       }
       default:
         return super.get(target, prop as any);
