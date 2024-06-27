@@ -22,11 +22,12 @@ import { DiagnosticQuality } from '@azure/communication-calling';
  *
  * @beta
  */
-export type ErrorNotificationStackSelector = (
+export type NotificationStackSelector = (
   state: CallClientState,
   props: CallingBaseSelectorProps
 ) => {
   activeErrorMessages: ActiveNotification[];
+  activeNotifications: ActiveNotification[];
 };
 /* @conditional-compile-remove(notifications) */
 /**
@@ -38,14 +39,14 @@ export type ErrorNotificationStackSelector = (
  *
  * @beta
  */
-export const errorNotificationStackSelector: ErrorNotificationStackSelector = createSelector(
+export const notificationStackSelector: NotificationStackSelector = createSelector(
   [getLatestErrors, getDiagnostics, getDeviceManager, getEnvironmentInfo],
   (
     latestErrors: CallErrors,
     diagnostics,
     deviceManager,
     environmentInfo
-  ): { activeErrorMessages: ActiveNotification[] } => {
+  ): { activeErrorMessages: ActiveNotification[]; activeNotifications: ActiveNotification[] } => {
     // The order in which the errors are returned is significant: The `Notification` shows errors on the UI in that order.
     // There are several options for the ordering:
     //   - Sorted by when the errors happened (latest first / oldest first).
@@ -160,6 +161,9 @@ export const errorNotificationStackSelector: ErrorNotificationStackSelector = cr
 
     appendActiveErrorIfDefined(activeErrorMessages, latestErrors, 'Call.unmute', 'unmuteGeneric');
 
+    /* @conditional-compile-remove(soft-mute) */
+    appendActiveErrorIfDefined(activeErrorMessages, latestErrors, 'Call.mutedByOthers', 'mutedByRemoteParticipant');
+
     appendActiveErrorIfDefined(
       activeErrorMessages,
       latestErrors,
@@ -190,7 +194,10 @@ export const errorNotificationStackSelector: ErrorNotificationStackSelector = cr
         'startSpotlightWhileMaxParticipantsAreSpotlighted'
       );
     }
-    return { activeErrorMessages: activeErrorMessages };
+
+    //below is for active notifications
+    const activeNotifications: ActiveNotification[] = [];
+    return { activeErrorMessages: activeErrorMessages, activeNotifications: activeNotifications };
   }
 );
 /* @conditional-compile-remove(notifications) */
