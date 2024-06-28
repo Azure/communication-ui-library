@@ -7,7 +7,6 @@ import {
   BreakoutRoomsNotificationBarProps,
   EventName
 } from '../components/BreakoutRoomsNotificationBar';
-import { BreakoutRoom } from '@azure/communication-calling';
 
 /**
  * Create a record for when the notification was most recently dismissed for tracking dismissed notifications.
@@ -15,10 +14,10 @@ import { BreakoutRoom } from '@azure/communication-calling';
  * @private
  */
 export const useTrackedBreakoutRoomsNotifications = (props: {
-  assignedBreakoutRoom?: BreakoutRoom;
-  callId?: string;
+  notifications: { target: 'assignedBreakoutRoomUpdated'; messageKey: string; timestamp: Date; callId?: string }[];
+  callId: string;
 }): BreakoutRoomsNotificationBarProps => {
-  const { assignedBreakoutRoom, callId } = props;
+  const { notifications, callId } = props;
 
   const [trackedCapabilityChangedNotifications, setTrackedCapabilityChangedNotifications] =
     useState<TrackedBreakoutRoomsNotifications>({});
@@ -34,47 +33,32 @@ export const useTrackedBreakoutRoomsNotifications = (props: {
       activeNotifications.current = {};
       currentCallId.current = callId;
     }
-    const breakoutRoomNotifications: Partial<Record<EventName, BreakoutRoomsNotification>> = {};
-    if (assignedBreakoutRoom) {
-      breakoutRoomNotifications['assignedBreakoutRoomUpdated'] = {
-        eventName: 'assignedBreakoutRoomUpdated',
-        breakoutRoom: assignedBreakoutRoom,
-        actions:
-          assignedBreakoutRoom.autoMoveParticipantToBreakoutRoom === false
-            ? [
-                {
-                  actionName: 'Join room',
-                  action: async (): Promise<void> => {
-                    assignedBreakoutRoom.join();
-                  },
-                  dismissAfter: true
-                }
-              ]
-            : undefined
-      };
-    }
     activeNotifications.current = updateLatestBreakoutRoomsNotificationMap(
-      breakoutRoomNotifications,
-      activeNotifications.current
+      notifications,
+      activeNotifications.current,
+      callId
     );
     setTrackedCapabilityChangedNotifications((prev) =>
-      updateTrackedBreakoutRoomsNotificationsWithActiveNotifications(prev, Object.values(activeNotifications.current))
+      updateTrackedBreakoutRoomsNotificationsWithActiveNotifications(
+        prev,
+        Object.values(activeNotifications.current[callId] ?? {})
+      )
     );
-  }, [assignedBreakoutRoom, callId]);
+  }, [notifications, callId]);
 
   const onDismissBreakoutRoomsNotification = useCallback((notification: BreakoutRoomsNotification) => {
     setTrackedCapabilityChangedNotifications((prev) =>
-      trackCapabilityChangedNotificationAsDismissed(notification.eventName, prev)
+      trackCapabilityChangedNotificationAsDismissed(notification.target, prev)
     );
   }, []);
 
   const latestBreakoutRoomsNotifications = useMemo(
     () =>
       filterLatestBreakoutRoomsNotifications(
-        Object.values(activeNotifications.current),
+        Object.values(activeNotifications.current[callId] ?? {}),
         trackedCapabilityChangedNotifications
       ),
-    [trackedCapabilityChangedNotifications]
+    [trackedCapabilityChangedNotifications, callId]
   );
 
   return {
@@ -93,7 +77,7 @@ export const filterLatestBreakoutRoomsNotifications = (
   trackedNotifications: TrackedBreakoutRoomsNotifications
 ): BreakoutRoomsNotification[] => {
   const filteredNotifications = activeNotifications.filter((activeNotification) => {
-    const trackedNotification = trackedNotifications[activeNotification.eventName];
+    const trackedNotification = trackedNotifications[activeNotification.target];
     return (
       !trackedNotification ||
       !trackedNotification.lastDismissedAt ||
@@ -114,15 +98,10 @@ export const updateTrackedBreakoutRoomsNotificationsWithActiveNotifications = (
 ): TrackedBreakoutRoomsNotifications => {
   const trackedNotifications: TrackedBreakoutRoomsNotifications = {};
 
-  console.log(
-    'updateTrackedBreakoutRoomsNotificationsWithActiveNotifications activeNotifications: ',
-    activeNotifications
-  );
-
   // Only care about active notifications. If notifications are no longer active we do not track that they have been previously dismissed.
   for (const activeNotification of activeNotifications) {
-    const existingTrackedNotification = existingTrackedNotifications[activeNotification.eventName];
-    trackedNotifications[activeNotification.eventName] = {
+    const existingTrackedNotification = existingTrackedNotifications[activeNotification.target];
+    trackedNotifications[activeNotification.target] = {
       mostRecentlyActive:
         activeNotification.timestamp ?? existingTrackedNotification?.mostRecentlyActive ?? new Date(Date.now()),
       lastDismissedAt: existingTrackedNotification?.lastDismissedAt
@@ -156,21 +135,26 @@ export const trackCapabilityChangedNotificationAsDismissed = (
   };
 };
 
-type LatestBreakoutRoomsNotificationRecord = Partial<Record<EventName, BreakoutRoomsNotification>>;
+type LatestBreakoutRoomsNotificationRecord = Record<string, Partial<Record<EventName, BreakoutRoomsNotification>>>;
 
 const updateLatestBreakoutRoomsNotificationMap = (
-  breakoutRoomsNotifications: Partial<Record<EventName, BreakoutRoomsNotification>>,
-  activeNotifications: LatestBreakoutRoomsNotificationRecord
+  breakoutRoomsNotifications: {
+    target: 'assignedBreakoutRoomUpdated';
+    messageKey: string;
+    timestamp: Date;
+    callId?: string;
+  }[],
+  activeNotificationsByCall: LatestBreakoutRoomsNotificationRecord,
+  callId: string
 ): LatestBreakoutRoomsNotificationRecord => {
-  for (const [notificationEvent, breakoutRoomsNotification] of Object.entries(breakoutRoomsNotifications)) {
-    const event = notificationEvent as EventName;
-    if (event && activeNotifications[event]) {
-      continue;
-    }
-    activeNotifications[event] = breakoutRoomsNotification;
+  for (const breakoutRoomsNotification of breakoutRoomsNotifications) {
+    const _callId = breakoutRoomsNotification.callId ?? callId;
+    const activeNotifications = activeNotificationsByCall[_callId] ?? {};
+    activeNotifications[breakoutRoomsNotification.target] = breakoutRoomsNotification;
+    activeNotificationsByCall[_callId] = activeNotifications;
   }
 
-  return activeNotifications;
+  return activeNotificationsByCall;
 };
 
 interface NotificationTrackingInfo {

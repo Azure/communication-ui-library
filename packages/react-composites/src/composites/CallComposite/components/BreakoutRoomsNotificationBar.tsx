@@ -5,8 +5,6 @@ import React from 'react';
 
 import { IIconProps, IMessageBarProps, MessageBar, MessageBarType, PrimaryButton, Stack } from '@fluentui/react';
 
-import { BreakoutRoom } from '@azure/communication-calling';
-
 /**
  * @private
  */
@@ -27,11 +25,9 @@ export interface BreakoutRoomsNotification {
   /**
    * Name of event
    */
-  eventName: EventName;
-  /**
-   * Breakout room info
-   */
-  breakoutRoom?: BreakoutRoom;
+  target: EventName;
+
+  messageKey: string;
   /**
    * The latest timestamp when this notification was observed.
    *
@@ -56,14 +52,14 @@ export const BreakoutRoomsNotificationBar = (props: BreakoutRoomsNotificationBar
   return (
     <Stack data-ui-id="breakout-rooms-notification-bar-stack">
       {props.breakoutRoomsNotifications.map((notification) => {
-        const message = getNotificationString(notification);
+        const message = notification.messageKey;
         if (!message) {
           return null;
         }
         const iconProps = getCustomMessageBarIconProps(notification);
         return (
           <MessageBar
-            key={notification.eventName}
+            key={notification.target}
             styles={messageBarStyles}
             messageBarType={MessageBarType.warning}
             dismissIconProps={{ iconName: 'ErrorBarClear' }}
@@ -79,24 +75,9 @@ export const BreakoutRoomsNotificationBar = (props: BreakoutRoomsNotificationBar
   );
 };
 
-const getNotificationString = (notification: BreakoutRoomsNotification): string | undefined => {
-  switch (notification.eventName) {
-    case 'assignedBreakoutRoomUpdated':
-      if (notification.breakoutRoom?.state === 'open') {
-        if (notification.breakoutRoom?.autoMoveParticipantToBreakoutRoom === true) {
-          return "We'll move you to your assigned room in 10 seconds.";
-        } else if (notification.breakoutRoom?.autoMoveParticipantToBreakoutRoom === false) {
-          return `You've been assigned to ${notification.breakoutRoom.displayName}.`;
-        }
-      }
-      break;
-  }
-  return undefined;
-};
-
 const getCustomMessageBarIconProps = (notification: BreakoutRoomsNotification): IIconProps | undefined => {
   const iconName: string | undefined = undefined;
-  switch (notification.eventName) {
+  switch (notification.target) {
     default:
       return { iconName, styles: { root: { '> *': { height: '1rem', width: '1rem' } } } };
   }

@@ -288,6 +288,7 @@ const createDefaultCallAdapterState = (role?: ParticipantRole): CallAdapterState
     isTeamsCall: false,
     isTeamsMeeting: false,
     isRoomsCall: false,
-    latestErrors: {}
+    latestErrors: {},
+    latestNotifications: {}
   };
 };

@@ -256,6 +256,7 @@ function callAdapterStateFromCallWithChatAdapterState(
     isTeamsMeeting: callWithChatAdapterState.isTeamsMeeting,
     isRoomsCall: false,
     latestErrors: callWithChatAdapterState.latestCallErrors,
+    latestNotifications: callWithChatAdapterState.latestCallNotifications,
     /* @conditional-compile-remove(PSTN-calls) */
     alternateCallerId: callWithChatAdapterState.alternateCallerId,
     /* @conditional-compile-remove(unsupported-browser) */

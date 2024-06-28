@@ -147,6 +147,19 @@ export type AdapterErrors = {
 };
 
 // @public
+export interface AdapterNotification {
+    // (undocumented)
+    messageKey: string;
+    target: string;
+    timestamp: Date;
+}
+
+// @public
+export type AdapterNotifications = {
+    [target: string]: AdapterNotification;
+};
+
+// @public
 export interface AdapterState<TState> {
     getState(): TState;
     offStateChange(handler: (state: TState) => void): void;
@@ -473,6 +486,7 @@ export type CallAdapterClientState = {
     isTeamsMeeting: boolean;
     isRoomsCall: boolean;
     latestErrors: AdapterErrors;
+    latestNotifications: AdapterNotifications;
     alternateCallerId?: string;
     environmentInfo?: EnvironmentInfo;
     cameraStatus?: 'On' | 'Off';
@@ -613,6 +627,8 @@ export interface CallClientState {
         [key: string]: IncomingCallState;
     };
     latestErrors: CallErrors;
+    // (undocumented)
+    latestNotifications: CallNotifications;
     userId: CommunicationIdentifierKind;
 }
 
@@ -1035,6 +1051,23 @@ export interface CallingTheme {
     };
 }
 
+// @public (undocumented)
+export interface CallNotification {
+    // (undocumented)
+    callId?: string;
+    // (undocumented)
+    messageKey: string;
+    // (undocumented)
+    target: NotificationTarget;
+    // (undocumented)
+    timestamp: Date;
+}
+
+// @public (undocumented)
+export type CallNotifications = {
+    [target in NotificationTarget]: CallNotification;
+};
+
 // @public
 export type CallParticipantListParticipant = ParticipantListParticipant & {
     state: ParticipantState;
@@ -1321,6 +1354,7 @@ export interface CallWithChatClientState {
     isTeamsCall: boolean;
     isTeamsMeeting: boolean;
     latestCallErrors: AdapterErrors;
+    latestCallNotifications: AdapterNotifications;
     latestChatErrors: AdapterErrors;
     // (undocumented)
     mainMeeting?: CallState;
@@ -3688,6 +3722,9 @@ export interface NotificationsStrings {
     unableToStartVideoEffect?: NotificationBarStrings;
     unmuteGeneric: NotificationBarStrings;
 }
+
+// @public (undocumented)
+export type NotificationTarget = 'assignedBreakoutRoomUpdated';
 
 // @beta
 export type NotificationType = keyof NotificationsStrings;

@@ -23,7 +23,7 @@ import { CallPage } from './pages/CallPage';
 import { ConfigurationPage } from './pages/ConfigurationPage';
 import { NoticePage } from './pages/NoticePage';
 import { useSelector } from './hooks/useSelector';
-import { getAssignedBreakoutRoom, getCallId, getEndedCall, getPage, getTargetCallees } from './selectors/baseSelectors';
+import { getCallId, getEndedCall, getPage, getTargetCallees } from './selectors/baseSelectors';
 import { LobbyPage } from './pages/LobbyPage';
 import { TransferPage } from './pages/TransferPage';
 import {
@@ -64,7 +64,7 @@ import { badNetworkQualityBannerSelector } from './selectors/badNetworkQualitySe
 /* @conditional-compile-remove(teams-meeting-conference) */
 import { useBadNetworkQualityNotifications } from './components/BadNetworkQualityNotificationBar';
 /* @conditional-compile-remove(notifications) */
-import { errorNotificationsSelector } from '@internal/calling-component-bindings';
+import { errorNotificationsSelector, notificationsBarSelector } from '@internal/calling-component-bindings';
 /* @conditional-compile-remove(notifications) */
 import { useAdaptedSelector } from './hooks/useAdaptedSelector';
 import { useTrackedBreakoutRoomsNotifications } from './utils/TrackBreakoutRoomsNotifications';
@@ -436,11 +436,11 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   /* @conditional-compile-remove(teams-meeting-conference) */
   const badNetworkQualityBannerProps = useBadNetworkQualityNotifications(badNetworkQualityFlag.isPoorNetworkQuality);
 
-  const assignedBreakoutRoom = useSelector(getAssignedBreakoutRoom);
+  const notifications = useAdaptedSelector(notificationsBarSelector).activeNotifications;
   const callId = useSelector(getCallId);
   const breakoutRoomsNotificationBarProps = useTrackedBreakoutRoomsNotifications({
-    assignedBreakoutRoom,
-    callId
+    notifications,
+    callId: callId ?? ''
   });
 
   // Track the last dismissed errors of any error kind to prevent errors from re-appearing on subsequent page navigation

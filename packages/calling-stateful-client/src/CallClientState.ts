@@ -823,6 +823,8 @@ export interface CallClientState {
    * See documentation of {@Link CallErrors} for details.
    */
   latestErrors: CallErrors;
+
+  latestNotifications: CallNotifications;
   /* @conditional-compile-remove(PSTN-calls) */
   /**
    * A phone number in E.164 format that will be used to represent callers identity.
@@ -939,6 +941,29 @@ export type CallErrorTarget =
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.admitAll'
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.muteAllRemoteParticipants'
   | 'Call.setConstraints';
+
+/**
+ * @public
+ */
+export type CallNotifications = {
+  [target in NotificationTarget]: CallNotification;
+};
+
+/**
+ * @public
+ */
+export interface CallNotification {
+  target: NotificationTarget;
+
+  messageKey: string;
+
+  timestamp: Date;
+
+  callId?: string;
+}
+
+/** @public */
+export type NotificationTarget = 'assignedBreakoutRoomUpdated';
 
 /**
  * State only proxy for {@link @azure/communication-calling#DiagnosticsCallFeature}.

@@ -53,3 +53,30 @@ export interface AdapterError extends Error {
  * @public
  */
 export type AdapterErrors = { [target: string]: AdapterError };
+
+/**
+ * Error reported via error events and stored in adapter state.
+ *
+ * @public
+ */
+export interface AdapterNotification {
+  /**
+   * The operation that failed.
+   */
+  target: string;
+
+  messageKey: string;
+  /**
+   * Timestamp added to the error in the adapter implementation.
+   */
+  timestamp: Date;
+}
+
+/**
+ * Adapters stores the latest error for each operation in the state.
+ *
+ * `target` is an adapter defined string for each unique operation performed by the adapter.
+ *
+ * @public
+ */
+export type AdapterNotifications = { [target: string]: AdapterNotification };

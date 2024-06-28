@@ -13,6 +13,7 @@ import {
   RemoteParticipantState,
   LocalVideoStreamState,
   CallErrors,
+  CallNotifications,
   DiagnosticsCallFeatureState,
   SpotlightCallFeatureState,
   CallState
@@ -170,6 +171,14 @@ export const getIdentifier = (state: CallClientState): string => toFlatCommunica
  * @private
  */
 export const getLatestErrors = (state: CallClientState): CallErrors => state.latestErrors;
+
+/**
+ * @private
+ */
+export const getLatestNotifications = (state: CallClientState): CallNotifications => {
+  console.log('state: ', state);
+  return state.latestNotifications;
+};
 
 /**
  * @private

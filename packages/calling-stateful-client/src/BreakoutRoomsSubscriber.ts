@@ -28,7 +28,24 @@ export class BreakoutRoomsSubscriber {
     this._breakoutRoomsFeature.on('assignedBreakoutRoomUpdated', (_breakoutRoom: BreakoutRoom): void => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const breakoutRoom = (_breakoutRoom as any)['breakoutRoom'];
-      console.log('BreakoutRoomsSubscriber assignedBreakoutRoomUpdated: ', breakoutRoom);
+
+      const currentAssignedBreakoutRoom =
+        this._context.getState().calls[this._callIdRef.callId]?.breakoutRooms?.assignedBreakoutRoom;
+      if (
+        breakoutRoom.state === 'open' &&
+        (currentAssignedBreakoutRoom?.state === 'closed' || currentAssignedBreakoutRoom === undefined)
+      ) {
+        let messageKey = "We'll move you to your assigned room in 10 seconds.";
+        if (breakoutRoom.autoMoveParticipantToBreakoutRoom === false) {
+          messageKey = `You've been assigned to ${breakoutRoom.displayName}.`;
+        }
+        this._context.setLatestNotification('assignedBreakoutRoomUpdated', {
+          target: 'assignedBreakoutRoomUpdated',
+          messageKey: messageKey,
+          timestamp: new Date(Date.now()),
+          callId: this._callIdRef.callId
+        });
+      }
       this._context.setAssignBreakoutRoom(this._callIdRef.callId, breakoutRoom);
     });
     this._breakoutRoomsFeature.on('breakoutRoomJoined', (_call: Call | TeamsCall): void => {

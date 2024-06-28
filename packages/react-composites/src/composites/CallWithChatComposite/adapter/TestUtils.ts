@@ -45,6 +45,7 @@ import {
   CreateViewResult
 } from '@internal/calling-stateful-client';
 import EventEmitter from 'events';
+import { CallNotifications } from '@internal/calling-stateful-client';
 /**
  * @private
  */
@@ -172,7 +173,8 @@ export const createStatefulCallClientMock = (): StatefulCallClient => {
       incomingCalls: {},
       incomingCallsEnded: {},
       userId: userId,
-      latestErrors: {} as CallErrors
+      latestErrors: {} as CallErrors,
+      latestNotifications: {} as CallNotifications
     })
   );
   return statefulCallClient;

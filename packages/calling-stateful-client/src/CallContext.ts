@@ -45,7 +45,10 @@ import {
   CallAgentState,
   CallErrors,
   CallErrorTarget,
-  CallError
+  CallError,
+  NotificationTarget,
+  CallNotification,
+  CallNotifications
 } from './CallClientState';
 import { CaptionsInfo } from './CallClientState';
 import { ReactionState } from './CallClientState';
@@ -111,7 +114,8 @@ export class CallContext {
       userId: userId,
       /* @conditional-compile-remove(unsupported-browser) */ environmentInfo: undefined,
       /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId: alternateCallerId,
-      latestErrors: {} as CallErrors
+      latestErrors: {} as CallErrors,
+      latestNotifications: {} as CallNotifications
     };
     this._emitter = new EventEmitter();
     this._emitter.setMaxListeners(maxListeners);
@@ -1225,6 +1229,12 @@ export class CallContext {
     const callError = toCallError(target, error);
     this.setLatestError(target, callError);
   };
+
+  public setLatestNotification(notificationTarget: NotificationTarget, notification: CallNotification): void {
+    this.modifyState((draft: CallClientState) => {
+      draft.latestNotifications[notificationTarget] = notification;
+    });
+  }
 
   private setLatestError(target: CallErrorTarget, error: CallError): void {
     this.modifyState((draft: CallClientState) => {

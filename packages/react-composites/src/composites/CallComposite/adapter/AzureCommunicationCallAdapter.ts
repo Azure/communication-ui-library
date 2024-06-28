@@ -165,6 +165,7 @@ class CallContext {
       targetCallees: targetCallees as CommunicationIdentifier[],
       page: 'configuration',
       latestErrors: clientState.latestErrors,
+      latestNotifications: clientState.latestNotifications,
       isTeamsCall,
       isTeamsMeeting,
       isRoomsCall,
