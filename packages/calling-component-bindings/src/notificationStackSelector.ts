@@ -162,7 +162,7 @@ export const notificationStackSelector: NotificationStackSelector = createSelect
     appendActiveErrorIfDefined(activeErrorMessages, latestErrors, 'Call.unmute', 'unmuteGeneric');
 
     /* @conditional-compile-remove(soft-mute) */
-    appendActiveErrorIfDefined(activeErrorMessages, latestErrors, 'Call.mutedByOthers', 'mutedByAnotherParticipant');
+    appendActiveErrorIfDefined(activeErrorMessages, latestErrors, 'Call.mutedByOthers', 'mutedByRemoteParticipant');
 
     appendActiveErrorIfDefined(
       activeErrorMessages,
@@ -204,7 +204,6 @@ export const notificationStackSelector: NotificationStackSelector = createSelect
     activeNotifications = activeNotifications.sort(
       (a, b) => (a.timestamp ?? new Date(Date.now())).getDate() - (b.timestamp ?? new Date(Date.now())).getDate()
     );
-
     return { activeErrorMessages: activeErrorMessages, activeNotifications: activeNotifications };
   }
 );

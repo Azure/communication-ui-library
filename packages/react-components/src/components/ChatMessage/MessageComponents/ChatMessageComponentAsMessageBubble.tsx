@@ -154,8 +154,8 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     isBlockedMessage
       ? chatMessageCommonStyles.blocked
       : props.message.status === 'failed'
-      ? chatMessageCommonStyles.failed
-      : undefined,
+        ? chatMessageCommonStyles.failed
+        : undefined,
     shouldOverlapAvatarAndMessage ? chatMessageStyles.avatarOverlap : chatMessageStyles.avatarNoOverlap,
     /* @conditional-compile-remove(file-sharing-acs) */
     hasMultipleAttachments ? chatMessageStyles.multipleAttachments : undefined,

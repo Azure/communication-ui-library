@@ -2558,7 +2558,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     ErrorBarClear: React_2.JSX.Element;
     ErrorBarCallVideoRecoveredBySystem: React_2.JSX.Element;
     ErrorBarCallVideoStoppedBySystem: React_2.JSX.Element;
-    ErrorBarMutedByAnotherParticipant: React_2.JSX.Element;
+    ErrorBarMutedByRemoteParticipant: React_2.JSX.Element;
     HorizontalGalleryLeftButton: React_2.JSX.Element;
     HorizontalGalleryRightButton: React_2.JSX.Element;
     MessageDelivered: React_2.JSX.Element;
@@ -2745,7 +2745,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     DataLossPreventionProhibited: React_2.JSX.Element;
     ErrorBarCallVideoRecoveredBySystem: React_2.JSX.Element;
     ErrorBarCallVideoStoppedBySystem: React_2.JSX.Element;
-    ErrorBarMutedByAnotherParticipant: React_2.JSX.Element;
+    ErrorBarMutedByRemoteParticipant: React_2.JSX.Element;
     MessageResend: React_2.JSX.Element;
     ParticipantItemSpotlighted: React_2.JSX.Element;
     HoldCallContextualMenuItem: React_2.JSX.Element;
@@ -3002,7 +3002,7 @@ export interface ErrorBarStrings {
     dismissButtonAriaLabel?: string;
     failedToJoinCallGeneric?: string;
     failedToJoinCallInvalidMeetingLink?: string;
-    mutedByAnotherParticipant: string;
+    mutedByRemoteParticipant: string;
     muteGeneric: string;
     sendMessageGeneric: string;
     sendMessageNotInChatThread: string;
@@ -3284,18 +3284,13 @@ export interface MediaDiagnosticsState {
 
 // @beta
 export interface MeetingConferencePhoneInfoModalStrings {
-    badQualityBarClose?: string;
-    badQualityBarJoin?: string;
-    badQualityBarMessage?: string;
-    badQualityBarTitle?: string;
     meetingConferencePhoneInfoModalDialIn?: string;
     meetingConferencePhoneInfoModalMeetingId?: string;
     meetingConferencePhoneInfoModalNoPhoneAvailable?: string;
     meetingConferencePhoneInfoModalTitle?: string;
     meetingConferencePhoneInfoModalToll?: string;
     meetingConferencePhoneInfoModalTollFree?: string;
-    meetingConferencePhoneInfoModalTollFreeWithoutGeoData?: string;
-    meetingConferencePhoneInfoModalTollWithoutGeoData?: string;
+    meetingConferencePhoneInfoModalTollGeoData?: string;
     meetingConferencePhoneInfoModalWait?: string;
 }
 
@@ -3648,7 +3643,7 @@ export interface NotificationStackStrings {
     dismissButtonAriaLabel?: NotificationStrings;
     failedToJoinCallGeneric?: NotificationStrings;
     failedToJoinCallInvalidMeetingLink?: NotificationStrings;
-    mutedByAnotherParticipant: NotificationStrings;
+    mutedByRemoteParticipant: NotificationStrings;
     muteGeneric: NotificationStrings;
     speakingWhileMuted: NotificationStrings;
     startScreenShareGeneric: NotificationStrings;

@@ -59,10 +59,10 @@ import { useTrackedCapabilityChangedNotifications } from './utils/TrackCapabilit
 import { useEndedCallConsoleErrors } from './utils/useConsoleErrors';
 import { SurveyPage } from './pages/SurveyPage';
 import { useAudio } from '../common/AudioProvider';
-/* @conditional-compile-remove(teams-meeting-conference) */
-import { badNetworkQualityBannerSelector } from './selectors/badNetworkQualitySelector';
-/* @conditional-compile-remove(teams-meeting-conference) */
-import { useBadNetworkQualityNotifications } from './components/BadNetworkQualityNotificationBar';
+/* @conditional-compile-remove(notifications) */
+import { notificationStackSelector } from '@internal/calling-component-bindings';
+/* @conditional-compile-remove(notifications) */
+import { useAdaptedSelector } from './hooks/useAdaptedSelector';
 
 /**
  * Props for {@link CallComposite}.
@@ -425,11 +425,6 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   const capabilitiesChangedNotificationBarProps =
     useTrackedCapabilityChangedNotifications(capabilitiesChangedInfoAndRole);
 
-  /* @conditional-compile-remove(teams-meeting-conference) */
-  const badNetworkQualityFlag = useSelector(badNetworkQualityBannerSelector);
-  /* @conditional-compile-remove(teams-meeting-conference) */
-  const badNetworkQualityBannerProps = useBadNetworkQualityNotifications(badNetworkQualityFlag.isPoorNetworkQuality);
-
   // Track the last dismissed errors of any error kind to prevent errors from re-appearing on subsequent page navigation
   // This works by tracking the most recent timestamp of any active error type.
   // And then tracking when that error type was last dismissed.
@@ -653,8 +648,6 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           setPinnedParticipants={setPinnedParticipants}
           compositeAudioContext={compositeAudioContext}
           disableAutoShowDtmfDialer={props.options?.disableAutoShowDtmfDialer}
-          /* @conditional-compile-remove(teams-meeting-conference) */
-          badNetworkQualityBannerProps={badNetworkQualityBannerProps}
         />
       );
       break;

@@ -202,9 +202,9 @@ export interface NotificationStackStrings {
   startSpotlightWhileMaxParticipantsAreSpotlighted: NotificationStrings;
   /* @conditional-compile-remove(soft-mute) */
   /**
-   * Muted by other participant message,
+   * Muted by a remote participant message
    */
-  mutedByAnotherParticipant: NotificationStrings;
+  mutedByRemoteParticipant: NotificationStrings;
   /**
    * Speaking while muted message
    */
