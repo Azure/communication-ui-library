@@ -59,10 +59,6 @@ import { useTrackedCapabilityChangedNotifications } from './utils/TrackCapabilit
 import { useEndedCallConsoleErrors } from './utils/useConsoleErrors';
 import { SurveyPage } from './pages/SurveyPage';
 import { useAudio } from '../common/AudioProvider';
-/* @conditional-compile-remove(notifications) */
-import { notificationStackSelector } from '@internal/calling-component-bindings';
-/* @conditional-compile-remove(notifications) */
-import { useAdaptedSelector } from './hooks/useAdaptedSelector';
 
 /**
  * Props for {@link CallComposite}.
