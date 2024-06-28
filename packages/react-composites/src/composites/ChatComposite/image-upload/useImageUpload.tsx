@@ -119,8 +119,6 @@ export const useImageUpload = (): [
           handleInlineImageUploadAction({ type: AttachmentUploadActionType.Progress, taskId, progress: value });
         },
         notifyUploadCompleted: (id: string, url: string) => {
-          console.log('upload completed', id);
-
           handleInlineImageUploadAction({ type: AttachmentUploadActionType.Completed, taskId, id, url });
         },
         notifyUploadFailed: (message: string) => {
