@@ -106,39 +106,35 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
   const theme = useTheme();
   const [contextMenuProps, setContextMenuProps] = useState<IContextualMenuProps | null>(null);
 
-  useImperativeHandle(
-    ref,
-    () => {
-      return {
-        focus() {
-          if (editor.current) {
-            editor.current.focus();
-          }
-        },
-        setEmptyContent() {
-          if (editor.current) {
-            editor.current.formatContentModel;
-            // remove all content from the editor and update the model
-            // ContentChanged event will be sent by RoosterJS automatically
-            editor.current.formatContentModel((model: ShallowMutableContentModelDocument): boolean => {
-              model.blocks = [];
-              return true;
-            });
-            //reset content model
-            onContentModelUpdate && onContentModelUpdate(undefined);
-          }
-        },
-        getPlainContent() {
-          if (editor.current) {
-            return exportContent(editor.current, 'PlainTextFast');
-          } else {
-            return undefined;
-          }
+  useImperativeHandle(ref, () => {
+    return {
+      focus() {
+        if (editor.current) {
+          editor.current.focus();
         }
-      };
-    },
-    [onContentModelUpdate]
-  );
+      },
+      setEmptyContent() {
+        if (editor.current) {
+          editor.current.formatContentModel;
+          // remove all content from the editor and update the model
+          // ContentChanged event will be sent by RoosterJS automatically
+          editor.current.formatContentModel((model: ShallowMutableContentModelDocument): boolean => {
+            model.blocks = [];
+            return true;
+          });
+          //reset content model
+          onContentModelUpdate && onContentModelUpdate(undefined);
+        }
+      },
+      getPlainContent() {
+        if (editor.current) {
+          return exportContent(editor.current, 'PlainTextFast');
+        } else {
+          return undefined;
+        }
+      }
+    };
+  }, [onContentModelUpdate]);
 
   const toolbarPlugin = React.useMemo(() => {
     return new RichTextToolbarPlugin();

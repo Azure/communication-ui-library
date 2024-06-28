@@ -108,8 +108,8 @@ const overlayProps = (
   return inLobby
     ? overlayPropsWaitingToBeAdmitted(strings)
     : outboundCallParticipant
-    ? overlayPropsOutboundCall(strings, outboundCallParticipant)
-    : overlayPropsConnectingToCall(strings);
+      ? overlayPropsOutboundCall(strings, outboundCallParticipant)
+      : overlayPropsConnectingToCall(strings);
 };
 
 const overlayPropsConnectingToCall = (strings: CallCompositeStrings): LobbyOverlayProps => ({

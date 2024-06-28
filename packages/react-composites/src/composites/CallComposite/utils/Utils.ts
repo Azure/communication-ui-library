@@ -566,10 +566,10 @@ export const getBackgroundEffectFromSelectedEffect = (
   selectedEffect?.effectName === 'blur'
     ? VideoBackgroundEffectsDependency.createBackgroundBlurEffect()
     : selectedEffect?.effectName === 'replacement'
-    ? VideoBackgroundEffectsDependency.createBackgroundReplacementEffect({
-        backgroundImageUrl: selectedEffect.backgroundImageUrl
-      })
-    : undefined;
+      ? VideoBackgroundEffectsDependency.createBackgroundReplacementEffect({
+          backgroundImageUrl: selectedEffect.backgroundImageUrl
+        })
+      : undefined;
 
 /**
  * @remarks this logic should mimic the onToggleCamera in the common call handlers.

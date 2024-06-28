@@ -234,8 +234,8 @@ const MessageBubble = (props: ChatMyMessageComponentAsMessageBubbleProps): JSX.E
               isBlockedMessage
                 ? chatMessageCommonStyles.blocked
                 : props.message.status === 'failed'
-                ? chatMessageCommonStyles.failed
-                : undefined,
+                  ? chatMessageCommonStyles.failed
+                  : undefined,
               attached !== 'top' ? chatMyMessageStyles.bodyAttached : undefined,
               /* @conditional-compile-remove(file-sharing-acs) */
               hasMultipleAttachments ? chatMyMessageStyles.multipleAttachments : undefined,
