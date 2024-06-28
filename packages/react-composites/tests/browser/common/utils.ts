@@ -92,13 +92,14 @@ export async function waitForLocator(
  */
 export async function waitForFunction<R>(
   page: Page,
-  pageFunction: PageFunction<R>,
+  pageFunction: PageFunction<unknown, R>,
   arg?: unknown,
   options?: { timeout?: number }
 ): Promise<SmartHandle<R>> {
   return await screenshotOnFailure(
     page,
-    async () => await page.waitForFunction(pageFunction, arg, { timeout: perStepLocalTimeout(), ...options })
+    async () =>
+      await page.waitForFunction<R, unknown>(pageFunction, arg, { timeout: perStepLocalTimeout(), ...options })
   );
 }
 
@@ -393,18 +394,43 @@ export const buildUrl = (
 ): string => `${serverUrl}?${encodeQueryData({ ...user, ...qArgs })}`;
 
 // Unexported types from @playwright/tests package we need
-type PageFunction<R> = string | ((arg: unknown) => R | Promise<R>);
-type SmartHandle<T> = T extends Node ? ElementHandle<T> : JSHandle<T>;
+export type NoHandles<Arg> = Arg extends JSHandle
+  ? never
+  : Arg extends object
+    ? { [Key in keyof Arg]: NoHandles<Arg[Key]> }
+    : Arg;
+export type Unboxed<Arg> =
+  Arg extends ElementHandle<infer T>
+    ? T
+    : Arg extends JSHandle<infer T>
+      ? T
+      : Arg extends NoHandles<Arg>
+        ? Arg
+        : Arg extends [infer A0]
+          ? [Unboxed<A0>]
+          : Arg extends [infer A0, infer A1]
+            ? [Unboxed<A0>, Unboxed<A1>]
+            : Arg extends [infer A0, infer A1, infer A2]
+              ? [Unboxed<A0>, Unboxed<A1>, Unboxed<A2>]
+              : Arg extends [infer A0, infer A1, infer A2, infer A3]
+                ? [Unboxed<A0>, Unboxed<A1>, Unboxed<A2>, Unboxed<A3>]
+                : Arg extends Array<infer T>
+                  ? Array<Unboxed<T>>
+                  : Arg extends object
+                    ? { [Key in keyof Arg]: Unboxed<Arg[Key]> }
+                    : Arg;
+type PageFunction<Arg, R> = string | ((arg: Unboxed<Arg>) => R | Promise<R>);
+type SmartHandle<T> = [T] extends [Node] ? ElementHandle<T> : JSHandle<T>;
 
 /**
- *  Helper function to detect whether a test is for a mobile broswer or not.
+ *  Helper function to detect whether a test is for a mobile browser or not.
  *  TestInfo comes from the playwright config which gives different information about what platform the
  *  test is being run on.
  * */
 export const isTestProfileMobile = (testInfo: TestInfo): boolean => !isTestProfileDesktop(testInfo);
 
 /**
- *  Helper function to detect whether a test is for a mobile broswer or not.
+ *  Helper function to detect whether a test is for a mobile browser or not.
  *  TestInfo comes from the playwright config which gives different information about what platform the
  *  test is being run on.
  * */
