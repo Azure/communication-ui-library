@@ -41,7 +41,7 @@
     "immer": "10.1.1",
     "libphonenumber-js": "^1.11.4",
     "memoize-one": "^5.2.1",
-    "nanoid": "3.3.6",
+    "nanoid": "5.0.7",
     "react-linkify": "^1.0.0-alpha",
     "react-use-draggable-scroll": "^0.4.7",
     "reselect": "^4.0.0",
