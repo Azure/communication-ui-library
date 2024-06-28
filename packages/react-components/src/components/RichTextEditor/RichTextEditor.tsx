@@ -229,7 +229,13 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     const contentEdit = new EditPlugin();
     // AutoFormatPlugin previously was a part of the edit plugin
     const autoFormatPlugin = new AutoFormatPlugin({ autoBullet: true, autoNumbering: true, autoLink: true });
-    const roosterPastePlugin = new PastePlugin(false);
+    const roosterPastePlugin = new PastePlugin(false, {
+      additionalDisallowedTags: ['head', '!doctype', '!cdata', '#comment'],
+      additionalAllowedTags: [],
+      styleSanitizers: {},
+      attributeSanitizers: {}
+    });
+
     const shortcutPlugin = new ShortcutPlugin();
     const contextMenuPlugin = new ContextMenuPlugin(onContextMenuRender, onContextMenuDismiss);
     return [
