@@ -30,7 +30,7 @@
   "license": "MIT",
   "dependencies": {
     "@azure/communication-common": "^2.3.1",
-    "@azure/logger": "^1.0.4",
+    "@azure/logger": "^1.1.2",
     "@internal/acs-ui-common": "1.18.0-beta.1",
     "events": "^3.3.0",
     "immer": "10.1.1"
@@ -40,7 +40,7 @@
   },
   "devDependencies": {
     "@azure/communication-calling": "1.26.1-beta.1 || ^1.25.1",
-    "@azure/core-auth": "^1.4.0",
+    "@azure/core-auth": "^1.7.2",
     "@babel/cli": "^7.24.7",
     "@babel/core": "^7.24.7",
     "@types/jest": "^29.5.11",
