@@ -11,7 +11,12 @@ import { sendIconStyle } from '../styles/SendBox.styles';
 import { useV9CustomStyles } from '../styles/SendBox.styles';
 import { InputBoxButton } from '../InputBoxButton';
 import { RichTextSendBoxErrors, RichTextSendBoxErrorsProps } from './RichTextSendBoxErrors';
-import { isMessageTooLong, isSendBoxButtonAriaDisabled, sanitizeText } from '../utils/SendBoxUtils';
+import {
+  addUploadedImagesToMessage,
+  isMessageTooLong,
+  isSendBoxButtonAriaDisabled,
+  sanitizeText
+} from '../utils/SendBoxUtils';
 import { RichTextEditorComponentRef } from './RichTextEditor';
 import { useTheme } from '../../theming';
 import { richTextActionButtonsStyle, sendBoxRichTextEditorStyle } from '../styles/RichTextEditor.styles';
@@ -189,7 +194,7 @@ export interface RichTextSendBoxProps {
    * Optional callback to upload an inline image in the rich text editor.
    * @beta
    */
-  onUploadImage?: (imageUrl: string, imageFileName: string) => void;
+  onUploadInlineImage?: (imageUrl: string, imageFileName: string) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   /**
    * Optional array of type {@link AttachmentMetadataInProgress}
@@ -218,7 +223,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
     onPaste,
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    onUploadImage,
+    onUploadInlineImage,
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
     imageUploadsInProgress,
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
@@ -271,7 +276,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
       /* @conditional-compile-remove(rich-text-editor-image-upload) */
       if (imageSrcArray && imageUploadsInProgress && imageUploadsInProgress?.length > 0) {
         imageUploadsInProgress?.map((uploadImage) => {
-          if (uploadImage.url && !imageSrcArray?.includes(uploadImage.url)) {
+          if (uploadImage.url && imageSrcArray && !imageSrcArray?.includes(uploadImage.url)) {
             onCancelInlineImageUpload?.(uploadImage.id);
           }
         });
@@ -322,20 +327,6 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     []
   );
 
-  /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  const addUploadedImagesToMessage = useCallback(
-    (message: string, uploadInlineImages: AttachmentMetadataInProgress[]): string => {
-      const document = new DOMParser().parseFromString(message ?? '', 'text/html');
-      document.querySelectorAll('img').forEach((img) => {
-        img.id = uploadInlineImages.find((imageUpload) => imageUpload.url === img.src)?.id ?? '';
-        img.src = '';
-      });
-      const newMessage = document.body.innerHTML;
-      return newMessage;
-    },
-    []
-  );
-
   const sendMessageOnClick = useCallback((): void => {
     if (disabled || contentValueOverflow) {
       return;
@@ -372,9 +363,9 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
 
       /* @conditional-compile-remove(rich-text-editor-image-upload) */
       if (imageUploadsInProgress) {
-        message = addUploadedImagesToMessage(message, imageUploadsInProgress);
         const imageArray = toAttachmentMetadata(imageUploadsInProgress, 'image');
         if (imageArray) {
+          message = addUploadedImagesToMessage(message, imageUploadsInProgress);
           attachmentArray = attachmentArray?.concat(imageArray);
         }
       }
@@ -564,7 +555,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
         /* @conditional-compile-remove(rich-text-editor-image-upload) */
         onPaste={onPaste}
         /* @conditional-compile-remove(rich-text-editor-image-upload) */
-        onUploadImage={onUploadImage}
+        onUploadInlineImage={onUploadInlineImage}
       />
     </Stack>
   );

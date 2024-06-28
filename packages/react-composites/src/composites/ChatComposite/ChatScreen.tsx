@@ -63,7 +63,7 @@ import { SendBoxPicker } from '../common/SendBoxPicker';
 /* @conditional-compile-remove(rich-text-editor-composite-support) */
 import { loadRichTextSendBox } from '../common/SendBoxPicker';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
-import { ImageUpload } from './image-upload/ImageUpload';
+import { useImageUpload } from './image-upload/useImageUpload';
 
 /**
  * @private
@@ -127,7 +127,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const theme = useTheme();
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   const [inlineImageUploads, handleInlineImageUploadAction, onUploadInlineImage, onCancelInlineImageUploadHandler] =
-    ImageUpload();
+    useImageUpload();
 
   useEffect(() => {
     // Initial data should be always fetched by the composite(or external caller) instead of the adapter
@@ -570,7 +570,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
                   // when submit button is clicked
                   onSendMessage={onSendMessageHandler}
                   /* @conditional-compile-remove(rich-text-editor-image-upload) */
-                  onUploadImage={onUploadInlineImage}
+                  onUploadInlineImage={onUploadInlineImage}
                   /* @conditional-compile-remove(rich-text-editor-image-upload) */
                   imageUploadsInProgress={imageUploadsInProgress}
                   /* @conditional-compile-remove(rich-text-editor-image-upload) */

@@ -17,10 +17,41 @@ import { useAdapter } from '../adapter/ChatAdapterProvider';
 import { nanoid } from 'nanoid';
 
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
+const fetchBlobData = async (
+  resource: string | URL | Request,
+  options: { timeout?: number; headers?: Headers; abortController: AbortController }
+): Promise<Response> => {
+  // default timeout is 30 seconds
+  const { timeout = 30000, abortController } = options;
+
+  const id = setTimeout(() => {
+    abortController.abort();
+  }, timeout);
+
+  const response = await fetch(resource, {
+    ...options,
+    signal: abortController.signal
+  });
+  clearTimeout(id);
+  return response;
+};
+
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+const getInlineImageData = async (image: string): Promise<Blob | undefined> => {
+  const blobImage: Blob | undefined = undefined;
+  if (image.startsWith('blob') || image.startsWith('http')) {
+    const res = await fetchBlobData(image, { abortController: new AbortController() });
+    const blobImage = await res.blob();
+    return blobImage;
+  }
+  return blobImage;
+};
+
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
 /**
  * @private
  */
-export const ImageUpload = (): [
+export const useImageUpload = (): [
   AttachmentUpload[],
   Dispatch<Actions>,
   onUploadInlineImage: (image: string, fileName: string) => Promise<void>,
@@ -29,41 +60,6 @@ export const ImageUpload = (): [
   const MAX_INLINE_IMAGE_UPLOAD_SIZE_MB = 20;
   const adapter = useAdapter();
   const [inlineImageUploads, handleInlineImageUploadAction] = useReducer(AttachmentUploadReducer, []);
-
-  const fetchBlobData = useCallback(
-    async (
-      resource: string | URL | Request,
-      options: { timeout?: number; headers?: Headers; abortController: AbortController }
-    ): Promise<Response> => {
-      // default timeout is 30 seconds
-      const { timeout = 30000, abortController } = options;
-
-      const id = setTimeout(() => {
-        abortController.abort();
-      }, timeout);
-
-      const response = await fetch(resource, {
-        ...options,
-        signal: abortController.signal
-      });
-      clearTimeout(id);
-      return response;
-    },
-    []
-  );
-
-  const getInlineImageData = useCallback(
-    async (image: string): Promise<Blob | undefined> => {
-      const blobImage: Blob | undefined = undefined;
-      if (image.startsWith('blob') || image.startsWith('http')) {
-        const res = await fetchBlobData(image, { abortController: new AbortController() });
-        const blobImage = await res.blob();
-        return blobImage;
-      }
-      return blobImage;
-    },
-    [fetchBlobData]
-  );
 
   const inlineImageUploadHandler = useCallback(
     async (uploadTasks: AttachmentUpload[]): Promise<void> => {
@@ -141,7 +137,7 @@ export const ImageUpload = (): [
       handleInlineImageUploadAction({ type: AttachmentUploadActionType.Set, newUploads });
       inlineImageUploadHandler(newUploads);
     },
-    [getInlineImageData, inlineImageUploadHandler]
+    [inlineImageUploadHandler]
   );
 
   const onCancelInlineImageUploadHandler = useCallback(

@@ -49,7 +49,7 @@ export type SendBoxPickerProps = {
   /* @conditional-compile-remove(file-sharing-acs) */
   onCancelAttachmentUpload?: (attachmentId: string) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  onUploadImage?: (imageUrl: string, imageFileName: string) => void;
+  onUploadInlineImage?: (imageUrl: string, imageFileName: string) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   imageUploadsInProgress?: AttachmentMetadataInProgress[];
   /* @conditional-compile-remove(rich-text-editor-image-upload) */

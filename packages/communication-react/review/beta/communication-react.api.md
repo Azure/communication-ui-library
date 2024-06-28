@@ -295,9 +295,6 @@ export type AzureCommunicationOutboundCallAdapterArgs = {
     options?: AzureCommunicationCallAdapterOptions;
 };
 
-// @internal
-export const _base64ToBlob: (dataURI: string) => Blob;
-
 // @public
 export interface BaseCompositeProps<TIcons extends Record<string, JSX.Element>> {
     fluentTheme?: PartialTheme | Theme;
@@ -4065,7 +4062,7 @@ export interface RichTextSendBoxProps {
     }) => void;
     onSendMessage: (content: string, options?: MessageOptions) => Promise<void>;
     onTyping?: () => Promise<void>;
-    onUploadImage?: (imageUrl: string, imageFileName: string) => void;
+    onUploadInlineImage?: (imageUrl: string, imageFileName: string) => void;
     strings?: Partial<RichTextSendBoxStrings>;
     systemMessage?: string;
 }

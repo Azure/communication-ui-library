@@ -55,7 +55,7 @@ export interface RichTextInputBoxComponentProps {
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   onPaste?: (event: { content: DocumentFragment }) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  onUploadImage?: (image: string, fileName: string) => void;
+  onUploadInlineImage?: (imageUrl: string, imageFileName: string) => void;
 }
 
 /**
@@ -80,7 +80,7 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
     autoFocus,
     onTyping,
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    onUploadImage
+    onUploadInlineImage
   } = props;
   const theme = useTheme();
   // undefined is used to indicate that the rich text editor toolbar state wasn't changed yet
@@ -211,7 +211,7 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
               /* @conditional-compile-remove(rich-text-editor-image-upload) */
               onPaste={props.onPaste}
               /* @conditional-compile-remove(rich-text-editor-image-upload) */
-              onUploadImage={onUploadImage}
+              onUploadInlineImage={onUploadInlineImage}
             />
           </Stack.Item>
           {/* @conditional-compile-remove(file-sharing-acs) */ onRenderAttachmentUploads && onRenderAttachmentUploads()}

@@ -56,7 +56,7 @@ export interface RichTextEditorProps {
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   onPaste?: (event: { content: DocumentFragment }) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  onUploadImage?: (image: string, fileName: string) => void;
+  onUploadInlineImage?: (imageUrl: string, imageFileName: string) => void;
 }
 
 /**
@@ -99,7 +99,7 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
     onPaste,
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    onUploadImage
+    onUploadInlineImage
   } = props;
   const editor = useRef<IEditor | null>(null);
   const editorDiv = useRef<HTMLDivElement>(null);
@@ -198,8 +198,8 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
 
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   useEffect(() => {
-    copyPastePlugin.onUploadImage = onUploadImage;
-  }, [copyPastePlugin, onUploadImage]);
+    copyPastePlugin.onUploadInlineImage = onUploadInlineImage;
+  }, [copyPastePlugin, onUploadInlineImage]);
 
   const keyboardInputPlugin = useMemo(() => {
     return new KeyboardInputPlugin();
