@@ -75,6 +75,13 @@ export const MeetingPhoneInfoPaneContent = (props: {
                     <Link className={phoneInfoTextStyle} href={formatPhoneNumberLink(phoneNumber)}>
                       {formatPhoneNumber(phoneNumber.phoneNumber)}
                     </Link>
+                    <Text className={phoneInfoTextStyle}>
+                      {' '}
+                      {phoneNumber.isTollFree
+                        ? localeStrings.meetingConferencePhoneInfoModalTollFree
+                        : localeStrings.meetingConferencePhoneInfoModalToll}
+                    </Text>
+                    <br />
                     <Text className={phoneInfoTextStyle}> {formatPhoneNumberInfo(phoneNumber, localeStrings)}</Text>
                   </Stack.Item>
                 ))}
