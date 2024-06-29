@@ -196,7 +196,14 @@ export const notificationStackSelector: NotificationStackSelector = createSelect
     }
 
     //below is for active notifications
-    const activeNotifications: ActiveNotification[] = [];
+    let activeNotifications: ActiveNotification[] = [];
+    if (diagnostics?.media.latest.speakingWhileMicrophoneIsMuted?.value) {
+      activeNotifications.push({ type: 'speakingWhileMuted', timestamp: new Date(Date.now()), autoDismiss: true });
+    }
+    // sort notifications by timestamp from earliest to latest
+    activeNotifications = activeNotifications.sort(
+      (a, b) => (a.timestamp ?? new Date(Date.now())).getDate() - (b.timestamp ?? new Date(Date.now())).getDate()
+    );
     return { activeErrorMessages: activeErrorMessages, activeNotifications: activeNotifications };
   }
 );
