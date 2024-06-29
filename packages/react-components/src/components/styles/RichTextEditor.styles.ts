@@ -54,6 +54,9 @@ export const richTextEditorWrapperStyle = (theme: Theme, addTopOffset: boolean):
           verticalAlign: 'top'
         }
       }
+    },
+    '& img': {
+      width: '119px'
     }
   });
 };

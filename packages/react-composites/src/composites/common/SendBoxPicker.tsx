@@ -48,16 +48,20 @@ export type SendBoxPickerProps = {
   attachments?: AttachmentMetadataInProgress[];
   /* @conditional-compile-remove(file-sharing-acs) */
   onCancelAttachmentUpload?: (attachmentId: string) => void;
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  onUploadInlineImage?: (imageUrl: string, imageFileName: string) => void;
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  imageUploadsInProgress?: AttachmentMetadataInProgress[];
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  onCancelInlineImageUpload?: (imageId: string) => void;
 };
 
 /**
  * @private
  */
 export const SendBoxPicker = (props: SendBoxPickerProps): JSX.Element => {
-  const {
-    /* @conditional-compile-remove(rich-text-editor-composite-support) */
-    richTextEditorOptions
-  } = props;
+  /* @conditional-compile-remove(rich-text-editor-composite-support) */
+  const { richTextEditorOptions } = props;
 
   const sendBoxProps = usePropsFor(SendBox);
 

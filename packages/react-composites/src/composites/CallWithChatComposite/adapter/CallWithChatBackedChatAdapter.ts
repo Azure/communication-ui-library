@@ -9,6 +9,8 @@ import { MessageOptions } from '@internal/acs-ui-common';
 import { ErrorBarStrings } from '@internal/react-components';
 import { CallWithChatAdapterState } from '../state/CallWithChatAdapterState';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+import { UploadChatImageResult } from '@internal/acs-ui-common';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -41,7 +43,23 @@ export class CallWithChatBackedChatAdapter implements ChatAdapter {
   ): Promise<void> {
     await this.callWithChatAdapter.sendMessage(content, /* @conditional-compile-remove(file-sharing-acs) */ options);
   };
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  uploadImageHandler = async function (
+    this: CallWithChatBackedChatAdapter,
+    image: Blob,
+    fileName: string
+  ): Promise<UploadChatImageResult> {
+    return await this.callWithChatAdapter.uploadImage(image, fileName);
+  };
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  deleteImageHandler = async function (this: CallWithChatBackedChatAdapter, imageId: string): Promise<void> {
+    return await this.callWithChatAdapter.deleteImage(imageId);
+  };
   public sendMessage = this.sendMessageHandler.bind(this);
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  public uploadImage = this.uploadImageHandler.bind(this);
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  public deleteImage = this.deleteImageHandler.bind(this);
   public sendReadReceipt = async (chatMessageId: string): Promise<void> =>
     await this.callWithChatAdapter.sendReadReceipt(chatMessageId);
   public sendTypingIndicator = async (): Promise<void> => await this.callWithChatAdapter.sendTypingIndicator();
