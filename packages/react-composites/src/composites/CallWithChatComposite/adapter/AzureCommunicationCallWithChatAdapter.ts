@@ -9,6 +9,7 @@ import {
   Call,
   CallAgent,
   GroupCallLocator,
+  RoomCallLocator,
   PermissionConstraints,
   PropertyChangedEvent,
   TeamsMeetingLinkLocator,
@@ -967,7 +968,7 @@ export type CommunicationAdapter =
  */
 export interface CallAndChatLocator {
   /** Locator used by {@link createAzureCommunicationCallWithChatAdapter} to locate the call to join */
-  callLocator: GroupCallLocator | /* @conditional-compile-remove(teams-adhoc-call) */ CallParticipantsLocator;
+  callLocator: GroupCallLocator | /* @conditional-compile-remove(teams-adhoc-call) */ CallParticipantsLocator | RoomCallLocator;
   /** Chat thread ID used by {@link createAzureCommunicationCallWithChatAdapter} to locate the chat thread to join */
   chatThreadId: string;
 }
