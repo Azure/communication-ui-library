@@ -14,6 +14,7 @@ import type {
   ChatMessageDeletedEvent,
   ChatMessageEditedEvent,
   ChatMessageReceivedEvent,
+  ChatThreadItem,
   ChatThreadPropertiesUpdatedEvent,
   ParticipantsAddedEvent,
   ParticipantsRemovedEvent,
@@ -113,6 +114,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   private context: ChatContext;
   private handlers: ChatHandlers;
   private emitter: EventEmitter = new EventEmitter();
+  private hasAcceccToThread = false;
 
   constructor(chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) {
     this.bindAllPublicMethods();
@@ -133,6 +135,8 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
 
     this.chatClient.onStateChange(onStateChange);
     this.subscribeAllEvents();
+
+    this.checkIsUserJoinedThread();
   }
 
   private bindAllPublicMethods(): void {
@@ -393,9 +397,35 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     this.emitter.off(event, listener);
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  private executeWithThreadAccess(callback: () => any): any {
+    if (!this.hasAcceccToThread) {
+      console.error('Chat Adapter does not have access to the thread.');
+    } else {
+      return callback();
+    }
+  }
+
+  private checkIsUserJoinedThread(): void {
+    const check = (): void => {
+      const threads = this.chatClient.listChatThreads({ maxPageSize: 100 }).byPage().next();
+      threads.then((threads) => {
+        if (threads.value.filter((thread: ChatThreadItem) => thread.id === this.chatThreadClient.threadId).length > 0) {
+          this.hasAcceccToThread = true;
+        } else {
+          setTimeout(check, 500);
+        }
+      });
+    };
+
+    check();
+  }
+
   private async asyncTeeErrorToEventEmitter<T>(f: () => Promise<T>): Promise<T> {
     try {
-      return await f();
+      return await this.executeWithThreadAccess(() => {
+        return f();
+      });
     } catch (error) {
       if (isChatError(error as Error)) {
         this.emitter.emit('error', error as AdapterError);

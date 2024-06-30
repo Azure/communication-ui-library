@@ -30,7 +30,6 @@ import { CallScreen } from './views/CallScreen';
 import { HomeScreen } from './views/HomeScreen';
 import { UnsupportedBrowserPage } from './views/UnsupportedBrowserPage';
 import { getEndpointUrl } from './utils/getEndpointUrl';
-import { joinThread } from './utils/joinThread';
 import { getThread } from './utils/getThread';
 import { getExistingThreadIdFromURL } from './utils/getThreadId';
 import { WEB_APP_TITLE } from './utils/constants';
@@ -168,7 +167,6 @@ const generateCallWithChatArgs = async (
     const callLocator = callLocatorGen(outboundParticipants);
 
     const chatThreadId = await getThread();
-    await joinThread(chatThreadId, credentials.userId.communicationUserId, displayName);
     ensureJoinableChatThreadPushedToUrl(chatThreadId);
 
     locator = {
