@@ -16,7 +16,11 @@ export interface BreakoutRoomsNotificationBarProps extends IMessageBarProps {
 /**
  * @public
  */
-export type EventName = 'assignedBreakoutRoomUpdated';
+export type NotificationTarget =
+  | 'assignedBreakoutRoomOpened'
+  | 'assignedBreakoutRoomOpenedPromptJoin'
+  | 'assignedBreakoutRoomClosingSoon'
+  | 'assignedBreakoutRoomClosed';
 
 /**
  * @public
@@ -25,7 +29,7 @@ export interface BreakoutRoomsNotification {
   /**
    * Name of event
    */
-  target: EventName;
+  target: NotificationTarget;
 
   messageKey: string;
   /**

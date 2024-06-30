@@ -978,6 +978,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
       onResolveVideoBackgroundEffectsDependency: this.onResolveVideoBackgroundEffectsDependency
     });
     this.subscribeCallEvents();
+    this.context.setAcceptedTransferCall;
   }
 
   private isBlurEffect(effect: VideoBackgroundEffect): effect is VideoBackgroundBlurEffect {
@@ -1372,7 +1373,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     if (thisCallState) {
       this.context.setMainMeeting(thisCallState);
     }
-    setTimeout(() => this.processNewCall(call), 5000);
+    this.processNewCall(call);
     this.emitter.emit('breakoutRoomJoined', call);
   }
 

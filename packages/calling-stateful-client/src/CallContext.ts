@@ -1233,6 +1233,19 @@ export class CallContext {
   public setLatestNotification(notificationTarget: NotificationTarget, notification: CallNotification): void {
     this.modifyState((draft: CallClientState) => {
       draft.latestNotifications[notificationTarget] = notification;
+      draft.latestErrors[notificationTarget] = new CallError(
+        notificationTarget,
+        new CallError(notificationTarget, new Error()),
+        undefined,
+        notification.messageKey
+      );
+    });
+  }
+
+  public deleteLatestNotification(notificationTarget: NotificationTarget): void {
+    this.modifyState((draft: CallClientState) => {
+      delete draft.latestNotifications[notificationTarget];
+      delete draft.latestErrors[notificationTarget];
     });
   }
 

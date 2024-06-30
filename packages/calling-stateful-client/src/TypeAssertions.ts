@@ -40,7 +40,11 @@ type InferredCallErrorTargets =
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.admit'
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.rejectParticipant'
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.muteAllRemoteParticipants'
-  | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.admitAll';
+  | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.admitAll'
+  | 'assignedBreakoutRoomOpened'
+  | 'assignedBreakoutRoomOpenedPromptJoin'
+  | 'assignedBreakoutRoomClosingSoon'
+  | 'assignedBreakoutRoomClosed';
 
 type CallObjectMethodNames<TName extends string, T> = {
   [K in keyof T & string]: `${TName}.${CallMethodName<T, K>}`;

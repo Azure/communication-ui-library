@@ -875,7 +875,9 @@ export class CallError extends Error {
    */
   public timestamp: Date;
 
-  constructor(target: CallErrorTarget, innerError: Error, timestamp?: Date) {
+  public messageKey: string;
+
+  constructor(target: CallErrorTarget, innerError: Error, timestamp?: Date, messageKey?: string) {
     super();
     this.target = target;
     this.innerError = innerError;
@@ -883,6 +885,7 @@ export class CallError extends Error {
     this.timestamp = timestamp ?? new Date(Date.now());
     this.name = 'CallError';
     this.message = `${this.target}: ${this.innerError.message}`;
+    this.messageKey = messageKey ?? this.message;
   }
 }
 
@@ -940,7 +943,11 @@ export type CallErrorTarget =
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.rejectParticipant'
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.admitAll'
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.muteAllRemoteParticipants'
-  | 'Call.setConstraints';
+  | 'Call.setConstraints'
+  | 'assignedBreakoutRoomOpened'
+  | 'assignedBreakoutRoomOpenedPromptJoin'
+  | 'assignedBreakoutRoomClosingSoon'
+  | 'assignedBreakoutRoomClosed';
 
 /**
  * @public
@@ -958,12 +965,14 @@ export interface CallNotification {
   messageKey: string;
 
   timestamp: Date;
-
-  callId?: string;
 }
 
 /** @public */
-export type NotificationTarget = 'assignedBreakoutRoomUpdated';
+export type NotificationTarget =
+  | 'assignedBreakoutRoomOpened'
+  | 'assignedBreakoutRoomOpenedPromptJoin'
+  | 'assignedBreakoutRoomClosingSoon'
+  | 'assignedBreakoutRoomClosed';
 
 /**
  * State only proxy for {@link @azure/communication-calling#DiagnosticsCallFeature}.

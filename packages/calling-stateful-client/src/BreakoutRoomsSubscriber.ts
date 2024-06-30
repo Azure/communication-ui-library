@@ -5,6 +5,7 @@ import { BreakoutRoom, BreakoutRoomSettings, BreakoutRoomsCallFeature, Call } fr
 import { CallContext } from './CallContext';
 import { CallIdRef } from './CallIdRef';
 import { TeamsCall } from './BetaToStableTypes';
+import { NotificationTarget } from './CallClientState';
 
 /**
  * @private
@@ -35,15 +36,16 @@ export class BreakoutRoomsSubscriber {
         breakoutRoom.state === 'open' &&
         (currentAssignedBreakoutRoom?.state === 'closed' || currentAssignedBreakoutRoom === undefined)
       ) {
-        let messageKey = "We'll move you to your assigned room in 10 seconds.";
+        let target: NotificationTarget = 'assignedBreakoutRoomOpened';
+        let messageKey = "We'll move you to your assigned room in 5 seconds.";
         if (breakoutRoom.autoMoveParticipantToBreakoutRoom === false) {
+          target = 'assignedBreakoutRoomOpenedPromptJoin';
           messageKey = `You've been assigned to ${breakoutRoom.displayName}.`;
         }
-        this._context.setLatestNotification('assignedBreakoutRoomUpdated', {
-          target: 'assignedBreakoutRoomUpdated',
+        this._context.setLatestNotification(target, {
+          target,
           messageKey: messageKey,
-          timestamp: new Date(Date.now()),
-          callId: this._callIdRef.callId
+          timestamp: new Date(Date.now())
         });
       }
       this._context.setAssignBreakoutRoom(this._callIdRef.callId, breakoutRoom);
@@ -52,6 +54,8 @@ export class BreakoutRoomsSubscriber {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const call = (_call as any)['call'];
       console.log('BreakoutRoomsSubscriber breakoutRoomJoined: ', call);
+      this._context.deleteLatestNotification('assignedBreakoutRoomOpened');
+      this._context.deleteLatestNotification('assignedBreakoutRoomOpenedPromptJoin');
     });
     this._breakoutRoomsFeature.on(
       'breakoutRoomSettingsAvailable',
