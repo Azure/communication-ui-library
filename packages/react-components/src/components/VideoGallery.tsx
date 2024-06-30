@@ -441,7 +441,14 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     });
   }, [props.pinnedParticipants, props.remoteParticipants]);
   // Use pinnedParticipants from props but if it is not defined use the maintained state of pinned participants
-  const pinnedParticipants = props.pinnedParticipants ?? pinnedParticipantsState;
+  const pinnedParticipants = useMemo(
+    () =>
+      props.pinnedParticipants ??
+      pinnedParticipantsState.filter((pinnedParticipantId) =>
+        remoteParticipants.find((remoteParticipant) => remoteParticipant.userId === pinnedParticipantId)
+      ),
+    [props.pinnedParticipants, pinnedParticipantsState, remoteParticipants]
+  );
 
   const showLocalVideoTileLabel =
     !((localTileNotInGrid && isNarrow) || localVideoTileSize === '9:16') || layout === 'default';
@@ -547,12 +554,12 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       if (pinnedParticipants.length >= MAX_PINNED_REMOTE_VIDEO_TILES) {
         return;
       }
-      if (!pinnedParticipantsState.includes(userId)) {
-        setPinnedParticipantsState(pinnedParticipantsState.concat(userId));
+      if (!pinnedParticipants.includes(userId)) {
+        setPinnedParticipantsState(pinnedParticipants.concat(userId));
       }
       onPinParticipantHandler?.(userId);
     },
-    [pinnedParticipants.length, pinnedParticipantsState, setPinnedParticipantsState, onPinParticipantHandler]
+    [pinnedParticipants, setPinnedParticipantsState, onPinParticipantHandler]
   );
   const onUnpinParticipant = useCallback(
     (userId: string) => {
