@@ -1084,21 +1084,22 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
   }
 
   public async returnToMainMeeting(): Promise<void> {
-    const mainMeetingCall = this.callAgent?.calls.find((callAgentCall) => {
-      const mainMeeting = this.getState().mainMeeting;
-      return mainMeeting?.id && mainMeeting.id === callAgentCall.id;
-    });
-    if (mainMeetingCall) {
+    const breakoutRoomSettings = this.context.getState().call?.breakoutRooms?.breakoutRoomSettings;
+    if (breakoutRoomSettings) {
       if (this.getState().call) {
         this.leaveCall().then(() => {
-          this.processNewCall(mainMeetingCall);
-          this.resumeCall();
+          this.setLocator({ meetingLink: breakoutRoomSettings.mainMeetingUrl });
+          this.joinCall();
         });
       } else {
-        this.processNewCall(mainMeetingCall);
-        this.resumeCall();
+        this.setLocator({ meetingLink: breakoutRoomSettings.mainMeetingUrl });
+        this.joinCall();
       }
     }
+  }
+
+  private setLocator(locator: CallAdapterLocator): void {
+    this.locator = locator;
   }
 
   public getState(): CallAdapterState {
@@ -1362,6 +1363,12 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
   private assignedBreakoutRoomUpdated(_breakoutRoom: BreakoutRoom): void {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const breakoutRoom = (_breakoutRoom as any)['breakoutRoom'];
+    const thisCallState = this.call?.id ? this.callClient.getState().calls[this.call.id] : undefined;
+    if (breakoutRoom.call) {
+      this.context.setMainMeeting(thisCallState);
+    } else {
+      this.context.setMainMeeting(undefined);
+    }
     this.emitter.emit('assignedBreakoutRoomUpdated', breakoutRoom);
   }
 
@@ -1369,11 +1376,14 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const call = (_call as any)['call'];
     console.log('Call adapter breakoutRoomJoined');
-    const thisCallState = this.call?.id ? this.callClient.getState().calls[this.call.id] : undefined;
-    if (thisCallState) {
-      this.context.setMainMeeting(thisCallState);
+    if (this.context.getState().mainMeeting) {
+      this.emitter.emit('breakoutRoomJoined', call);
+      return;
     }
+
+    const oldCall = this.call;
     this.processNewCall(call);
+    oldCall?.hangUp();
     this.emitter.emit('breakoutRoomJoined', call);
   }
 
