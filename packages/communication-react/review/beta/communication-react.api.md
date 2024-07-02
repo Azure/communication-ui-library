@@ -2330,15 +2330,10 @@ export interface CompositeStrings {
 
 // @public
 export interface ConferencePhoneInfo {
-    // (undocumented)
     city?: string;
-    // (undocumented)
     conferenceId: string;
-    // (undocumented)
     country?: string;
-    // (undocumented)
     isTollFree: boolean;
-    // (undocumented)
     phoneNumber: string;
 }
 
@@ -3283,7 +3278,7 @@ export interface MediaDiagnosticsState {
     latest: LatestMediaDiagnostics;
 }
 
-// @beta
+// @public
 export interface MeetingConferencePhoneInfoModalStrings {
     meetingConferencePhoneInfoModalDialIn?: string;
     meetingConferencePhoneInfoModalMeetingId?: string;
