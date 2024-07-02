@@ -61,6 +61,7 @@ import { MessageThreadWithSystemMessagesExample } from './snippets/SystemMessage
 import { MessageThreadWithInlineImageExample } from './snippets/WithInlineImageMessage.snippet';
 import { MessageThreadWithMessageDateExample } from './snippets/WithMessageDate.snippet';
 import { MessageThreadWithRichTextEditorExample } from './snippets/WithRichTextEditor.snippet';
+import { MessageThreadWithWithRichTextEditorOnPasteCallbackExample } from './snippets/WithRichTextEditorOnPasteCallback.snippet';
 
 const MessageThreadWithBlockedMessagesExampleText =
   require('!!raw-loader!./snippets/BlockedMessages.snippet.tsx').default;
@@ -94,6 +95,8 @@ const MessageThreadWithInlineImageExampleText =
   require('!!raw-loader!./snippets/WithInlineImageMessage.snippet.tsx').default;
 const MessageThreadWithMessageDateExampleText = require('!!raw-loader!./snippets/WithMessageDate.snippet.tsx').default;
 const MessageThreadWithRichTextEditorText = require('!!raw-loader!./snippets/WithRichTextEditor.snippet.tsx').default;
+const MessageThreadWithRichTextEditorOnPasteCallabackText =
+  require('!!raw-loader!./snippets/WithRichTextEditorOnPasteCallback.snippet.tsx').default;
 
 const importStatement = `
 import { FluentThemeProvider, MessageThread } from '@azure/communication-react';
@@ -408,12 +411,27 @@ const Docs: () => JSX.Element = () => {
         <Heading>Rich Text Editor Support for Editing Messages</Heading>
         <DetailedBetaBanner />
         <Description>
-          The following example shows how to enable rich text editor for message editing by providing the
+          The following examples show how to enable rich text editor for message editing by providing the
           `richTextEditorOptions` property. Rich text editor does not support mentioning users at the moment. By setting
           `richTextEditorOptions` property, the `lookupOptions` under the `mentionOptions` property will be ignored.
         </Description>
+        <Subtitle>Basic Usage: Enable Rich Text Editor</Subtitle>
+        <Description>
+          Enabling the rich text editor for message editing, without customizing its behavior, can be achieved by
+          setting the richTextEditorOptions.
+        </Description>
         <Canvas mdxSource={MessageThreadWithRichTextEditorText}>
           <MessageThreadWithRichTextEditorExample />
+        </Canvas>
+        <Subtitle>Advanced Usage: Process content on paste for Rich Text Editor</Subtitle>
+        <Description>
+          `richTextEditorOptions` provides `onPaste` callback for custom processing of the pasted content before it's
+          inserted into the rich text editor for message editing. This callback can be used to implement custom paste
+          handling logic tailored to your application's needs. The example below shows how to remove images from pasted
+          content.
+        </Description>
+        <Canvas mdxSource={MessageThreadWithRichTextEditorOnPasteCallabackText}>
+          <MessageThreadWithWithRichTextEditorOnPasteCallbackExample />
         </Canvas>
       </div>
 

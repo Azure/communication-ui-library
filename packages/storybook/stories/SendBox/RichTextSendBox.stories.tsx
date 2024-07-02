@@ -11,11 +11,14 @@ import { COMPONENT_FOLDER_PREFIX } from '../constants';
 import { hiddenControl, controlsToAdd } from '../controlsUtils';
 import { RichTextSendBoxExample } from './snippets/RichTextSendBox.snippet';
 import { RichTextSendBoxAttachmentUploadsExample } from './snippets/RichTextSendBoxAttachmentUploads.snippet';
+import { RichTextSendBoxOnPasteCallbackExample } from './snippets/RichTextSendBoxOnPasteCallback.snippet';
 import { RichTextSendBoxWithSystemMessageExample } from './snippets/RichTextSendBoxWithSystemMessage.snippet';
 
 const RichTextSendBoxExampleText = require('!!raw-loader!./snippets/RichTextSendBox.snippet.tsx').default;
 const RichTextSendBoxAttachmentUploadsExampleText =
   require('!!raw-loader!./snippets/RichTextSendBoxAttachmentUploads.snippet.tsx').default;
+const RichTextSendBoxOnPasteCallbackExampleText =
+  require('!!raw-loader!./snippets/RichTextSendBoxOnPasteCallback.snippet.tsx').default;
 const RichTextSendBoxWithSystemMessageExampleText =
   require('!!raw-loader!./snippets/RichTextSendBoxWithSystemMessage.snippet.tsx').default;
 
@@ -30,21 +33,17 @@ const getDocs: () => JSX.Element = () => {
         Component for composing messages with rich text formatting. RichTextSendBox has a callback for sending typing
         notification when user starts entering text. It also supports an optional message above the rich text editor.
       </Description>
-
       <Heading>Importing</Heading>
       <Source code={importStatement} />
-
       <Heading>Example</Heading>
       <Canvas mdxSource={RichTextSendBoxExampleText}>
         <RichTextSendBoxExample />
       </Canvas>
-
       <Heading>Add a system message</Heading>
       <Description>To add a system message, use the systemMessage property like in the example below.</Description>
       <Canvas mdxSource={RichTextSendBoxWithSystemMessageExampleText}>
         <RichTextSendBoxWithSystemMessageExample />
       </Canvas>
-
       <Heading>Display File Uploads</Heading>
       <DetailedBetaBanner />
       <Description>
@@ -55,7 +54,15 @@ const getDocs: () => JSX.Element = () => {
       <Canvas mdxSource={RichTextSendBoxAttachmentUploadsExampleText}>
         <RichTextSendBoxAttachmentUploadsExample />
       </Canvas>
-
+      <Heading>Process pasted content</Heading>
+      <Description>
+        RichTextSendBox provides `onPaste` callback for custom processing of the pasted content before it's inserted
+        into the RichTextSendBox. This callback can be used to implement custom paste handling logic tailored to your
+        application's needs. The example below shows how to remove images from pasted content.
+      </Description>
+      <Canvas mdxSource={RichTextSendBoxOnPasteCallbackExampleText}>
+        <RichTextSendBoxOnPasteCallbackExample />
+      </Canvas>
       <Heading>Props</Heading>
       <Props of={RichTextSendBoxComponent} />
     </>
@@ -124,7 +131,8 @@ export default {
     attachments: hiddenControl,
     onCancelAttachmentUpload: hiddenControl,
     onSendMessage: hiddenControl,
-    onTyping: hiddenControl
+    onTyping: hiddenControl,
+    onPaste: hiddenControl
   },
   parameters: {
     docs: {
