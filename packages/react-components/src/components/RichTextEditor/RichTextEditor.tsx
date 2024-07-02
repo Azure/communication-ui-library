@@ -21,7 +21,7 @@ import { RichTextToolbar } from './Toolbar/RichTextToolbar';
 import { RichTextToolbarPlugin } from './Plugins/RichTextToolbarPlugin';
 import { ContextMenuPlugin } from './Plugins/ContextMenuPlugin';
 import { TableEditContextMenuProvider } from './Plugins/TableEditContextMenuProvider';
-import { borderApplier, dataSetApplier } from '../utils/RichTextEditorUtils';
+import { borderApplier, dataSetApplier, DefaultSanitizers } from '../utils/RichTextEditorUtils';
 import { ContextualMenu, IContextualMenuItem, IContextualMenuProps } from '@fluentui/react';
 import { PlaceholderPlugin } from './Plugins/PlaceholderPlugin';
 
@@ -232,7 +232,7 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     const roosterPastePlugin = new PastePlugin(false, {
       additionalDisallowedTags: ['head', '!doctype', '!cdata', '#comment'],
       additionalAllowedTags: [],
-      styleSanitizers: {},
+      styleSanitizers: DefaultSanitizers,
       attributeSanitizers: {}
     });
 
