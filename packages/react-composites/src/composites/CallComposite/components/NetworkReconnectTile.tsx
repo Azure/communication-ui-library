@@ -162,21 +162,25 @@ export const NetworkReconnectTile = (props: NetworkReconnectTileProps): JSX.Elem
                     </Stack.Item>
                     <Text className={phoneInfoTextStyle}>{meetingCoordinates[0].conferenceId}#</Text>
                   </Stack>
-                  <Stack
-                    horizontal
-                    horizontalAlign="space-between"
-                    verticalAlign="center"
-                    className={phoneInfoInstructionLine}
-                  >
-                    <Stack horizontal>
-                      <Stack.Item className={phoneInfoIcon(theme)} style={{ marginLeft: _pxToRem(2) }}>
-                        <Icon iconName="PhoneInfoWait" className={phoneInfoIconStyle(theme)} />
-                      </Stack.Item>
-                      <Stack.Item>
-                        <Text className={phoneInfoLabelStyle}>{localeStrings.meetingConferencePhoneInfoModalWait}</Text>
-                      </Stack.Item>
+                  {!props.isMobile && (
+                    <Stack
+                      horizontal
+                      horizontalAlign="space-between"
+                      verticalAlign="center"
+                      className={phoneInfoInstructionLine}
+                    >
+                      <Stack horizontal>
+                        <Stack.Item className={phoneInfoIcon(theme)} style={{ marginLeft: _pxToRem(2) }}>
+                          <Icon iconName="PhoneInfoWait" className={phoneInfoIconStyle(theme)} />
+                        </Stack.Item>
+                        <Stack.Item>
+                          <Text className={phoneInfoLabelStyle}>
+                            {localeStrings.meetingConferencePhoneInfoModalWait}
+                          </Text>
+                        </Stack.Item>
+                      </Stack>
                     </Stack>
-                  </Stack>
+                  )}
                 </Stack>
               )
           }
