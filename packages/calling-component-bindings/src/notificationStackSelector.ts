@@ -8,7 +8,7 @@ import {
   getLatestErrors,
   getEnvironmentInfo
 } from './baseSelectors';
-/* @conditional-compile-remove(teams-meeting-conference) */
+/* @conditional-compile-remove(notifications) */
 import { getTeamsMeetingConference } from './baseSelectors';
 /* @conditional-compile-remove(notifications) */
 import { ActiveNotification, NotificationType } from '@internal/react-components';
