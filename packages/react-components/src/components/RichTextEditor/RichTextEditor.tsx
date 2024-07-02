@@ -8,8 +8,10 @@ import { isDarkThemed } from '../../theming/themeUtils';
 import CopyPastePlugin from './Plugins/CopyPastePlugin';
 import type {
   ContentModelDocument,
+  ContentModelParagraph,
   EditorPlugin,
   IEditor,
+  ReadonlyContentModelBlockGroup,
   ShallowMutableContentModelDocument
 } from 'roosterjs-content-model-types';
 import { createModelFromHtml, Editor, exportContent } from 'roosterjs-content-model-core';
@@ -115,15 +117,18 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
       },
       setEmptyContent() {
         if (editor.current) {
-          editor.current.formatContentModel;
           // remove all content from the editor and update the model
           // ContentChanged event will be sent by RoosterJS automatically
           editor.current.formatContentModel((model: ShallowMutableContentModelDocument): boolean => {
-            model.blocks = [];
+            // Create a new empty paragraph with selection marker
+            // this is needed for correct processing of images after the content is deleted
+            const block = createParagraph(true);
+            setSelectionAfterLastSegment(model, block);
+            model.blocks = [block];
             return true;
           });
           //reset content model
-          onContentModelUpdate && onContentModelUpdate(undefined);
+          onContentModelUpdate && onContentModelUpdate(editor.current.getContentModelCopy('disconnected'));
         }
       },
       getPlainContent() {
@@ -344,10 +349,14 @@ const createEditorInitialModel = (
         lastBlock = createParagraph(true);
         initialModel.blocks.push(lastBlock);
       }
-      const marker = createSelectionMarker();
-      lastBlock.segments.push(marker);
-      setSelection(initialModel, marker);
+      setSelectionAfterLastSegment(initialModel, lastBlock);
     }
     return initialModel;
   }
+};
+
+const setSelectionAfterLastSegment = (model: ReadonlyContentModelBlockGroup, block: ContentModelParagraph): void => {
+  const marker = createSelectionMarker();
+  block.segments.push(marker);
+  setSelection(model, marker);
 };
