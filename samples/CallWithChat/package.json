@@ -39,7 +39,7 @@
     "@azure/communication-chat": "1.6.0-beta.3 || ^1.5.0",
     "@azure/communication-react": "1.18.0-beta.1",
     "@azure/communication-common": "^2.3.1",
-    "@azure/logger": "^1.1.2",
+    "@azure/logger": "^1.0.4",
     "@babel/preset-react": "^7.12.7",
     "@fluentui/react": "^8.119.0",
     "@fluentui/react-file-type-icons": "8.11.17",

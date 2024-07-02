@@ -25,7 +25,7 @@
   "dependencies": {
     "@azure/communication-common": "^2.3.1",
     "@azure/core-paging": "^1.6.2",
-    "@azure/logger": "^1.1.2",
+    "@azure/logger": "^1.0.4",
     "@fluentui/react-components": "^9.54.2",
     "@fluentui/react": "^8.119.0",
     "@fluentui/react-file-type-icons": "8.11.17",
