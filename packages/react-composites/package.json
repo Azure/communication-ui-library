@@ -68,7 +68,7 @@
     "react-linkify": "^1.0.0-alpha",
     "reselect": "^4.0.0",
     "uuid": "^10.0.0",
-    "nanoid": "5.0.7"
+    "nanoid": "^3.3.7"
   },
   "peerDependencies": {
     "@azure/communication-calling": "1.26.1-beta.1 || ^1.25.1",
