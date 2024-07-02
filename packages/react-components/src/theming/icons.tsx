@@ -49,6 +49,7 @@ import {
   ScaleFill20Regular,
   PersonDelete20Regular
 } from '@fluentui/react-icons';
+import { MicOff16Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(rich-text-editor) */
 import {
   TextBold20Regular,
@@ -289,7 +290,7 @@ export const DEFAULT_COMPONENT_ICONS = {
   ErrorBarCallMacOsCameraAccessDenied: <VideoProhibited16Filled />,
   ErrorBarCallMacOsMicrophoneAccessDenied: <MicProhibited16Filled />,
   ErrorBarCallMicrophoneAccessDenied: <MicProhibited16Filled />,
-  ErrorBarCallMicrophoneMutedBySystem: <MicOff16Filled />,
+  ErrorBarCallMicrophoneMutedBySystem: <MicOff16Regular />,
   ErrorBarCallMicrophoneUnmutedBySystem: <Mic16Filled />,
   ErrorBarCallNetworkQualityLow: <WifiWarning16Filled />,
   ErrorBarCallNoMicrophoneFound: <MicProhibited16Filled />,
@@ -297,6 +298,8 @@ export const DEFAULT_COMPONENT_ICONS = {
   ErrorBarClear: <Dismiss16Regular />,
   ErrorBarCallVideoRecoveredBySystem: <Video16Filled />,
   ErrorBarCallVideoStoppedBySystem: <VideoProhibited16Filled />,
+  /* @conditional-compile-remove(soft-mute) */
+  ErrorBarMutedByRemoteParticipant: <MicOff16Regular />,
   HorizontalGalleryLeftButton: <GalleryLeftButton />,
   HorizontalGalleryRightButton: <GalleryRightButton />,
   MessageDelivered: <CheckmarkCircle16Regular />,

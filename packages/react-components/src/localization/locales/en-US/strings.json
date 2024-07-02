@@ -258,7 +258,8 @@
     "failedToJoinCallInvalidMeetingLink": "Unable to join Meeting. Invalid Link.",
     "cameraFrozenForRemoteParticipants": "Users in the call are having issues seeing your video. Please check your devices and network.",
     "unableToStartVideoEffect": "Unable to apply video effect.",
-    "startSpotlightWhileMaxParticipantsAreSpotlighted": "Cannot start spotlight on participant(s) because the maximum number of participants are already spotlighted."
+    "startSpotlightWhileMaxParticipantsAreSpotlighted": "Cannot start spotlight on participant(s) because the maximum number of participants are already spotlighted.",
+    "mutedByRemoteParticipant": "You were muted by another participant."
   },
   "notificationStack": {
     "callingNetworkFailure": {
@@ -395,6 +396,10 @@
     "startSpotlightWhileMaxParticipantsAreSpotlighted": {
       "title": "Cannot start spotlight on participant(s)",
       "message": "The maximum number of participants are already spotlighted.",
+      "closeButtonAriaLabel": "Close"
+    },
+    "mutedByRemoteParticipant": {
+      "title": "You were muted by another participant.",
       "closeButtonAriaLabel": "Close"
     }
   },

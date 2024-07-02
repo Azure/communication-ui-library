@@ -40,6 +40,8 @@ import {
   CONTROL_BAR_Z_INDEX,
   DRAWER_Z_INDEX
 } from '../styles/CallPage.styles';
+/* @conditional-compile-remove(notifications) */
+import { notificationStackStyles } from '../styles/CallPage.styles';
 import { MutedNotification, MutedNotificationProps } from './MutedNotification';
 import { CallAdapter } from '../adapter';
 import { useSelector } from '../hooks/useSelector';
@@ -113,6 +115,8 @@ export interface CallArrangementProps {
   updateSidePaneRenderer: (renderer: SidePaneRenderer | undefined) => void;
   mobileChatTabHeader?: MobileChatSidePaneTabHeaderProps;
   latestErrors: ActiveErrorMessage[] | /* @conditional-compile-remove(notifications) */ ActiveNotification[];
+  /* @conditional-compile-remove(notifications) */
+  latestNotifications?: ActiveNotification[];
   onDismissError: (
     error: ActiveErrorMessage | /* @conditional-compile-remove(notifications) */ ActiveNotification
   ) => void;
@@ -407,7 +411,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   const { openVideoEffectsPane } = useVideoEffectsPane(
     props.updateSidePaneRenderer,
     props.mobileView,
-    props.latestErrors,
+    props.latestErrors as ActiveErrorMessage[],
     props.onDismissError,
     cameraButtonRef
   );
@@ -427,7 +431,8 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
 
   const canUnmute = role !== 'Consumer' ? true : false;
 
-  let filteredLatestErrors: ActiveErrorMessage[] = props.errorBarProps !== false ? props.latestErrors : [];
+  let filteredLatestErrors: ActiveErrorMessage[] =
+    props.errorBarProps !== false ? (props.latestErrors as ActiveErrorMessage[]) : [];
 
   /* @conditional-compile-remove(notifications) */
   let filteredLatestErrorNotifications: ActiveNotification[] = props.showErrorNotifications
@@ -503,7 +508,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     return (
       <>
         {props.showErrorNotifications && (
-          <Stack styles={bannerNotificationStyles} horizontalAlign="center" verticalAlign="center">
+          <Stack styles={notificationStackStyles} horizontalAlign="center" verticalAlign="center">
             <NotificationStack
               onDismissNotification={props.onDismissError}
               activeNotifications={filteredLatestErrorNotifications}
@@ -527,6 +532,22 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
       </>
     );
   };
+
+  const mutedNotificationTrampoline = (): JSX.Element => {
+    /* @conditional-compile-remove(notifications) */
+    return <></>;
+    return (
+      <>
+        {canUnmute && !!props.mutedNotificationProps && (
+          <MutedNotification
+            {...props.mutedNotificationProps}
+            speakingWhileMuted={props.mutedNotificationProps?.speakingWhileMuted ?? false}
+          />
+        )}
+      </>
+    );
+  };
+
   return (
     <div ref={containerRef} className={mergeStyles(containerDivStyles)} id={props.id}>
       <Stack verticalFill horizontalAlign="stretch" className={containerClassName} data-ui-id={props.dataUiId}>
@@ -626,6 +647,13 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                       <_ComplianceBanner {...props.complianceBannerProps} />
                     </Stack>
                     {errorNotificationTrampoline()}
+                    {
+                      /* @conditional-compile-remove(notifications) */ props.latestNotifications && (
+                        <Stack styles={notificationStackStyles} horizontalAlign="center" verticalAlign="center">
+                          <NotificationStack activeNotifications={props.latestNotifications} />
+                        </Stack>
+                      )
+                    }
                     {props.capabilitiesChangedNotificationBarProps &&
                       props.capabilitiesChangedNotificationBarProps.capabilitiesChangedNotifications.length > 0 && (
                         <Stack styles={bannerNotificationStyles}>
@@ -635,9 +663,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                           />
                         </Stack>
                       )}
-                    {canUnmute && !!props.mutedNotificationProps && (
-                      <MutedNotification {...props.mutedNotificationProps} />
-                    )}
+                    {mutedNotificationTrampoline()}
                   </Stack.Item>
                   {renderGallery && props.onRenderGalleryContent && props.onRenderGalleryContent()}
                   {true &&

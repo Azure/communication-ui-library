@@ -157,6 +157,9 @@ export const errorBarSelector: ErrorBarSelector = createSelector(
 
     appendActiveErrorIfDefined(activeErrorMessages, latestErrors, 'Call.unmute', 'unmuteGeneric');
 
+    /* @conditional-compile-remove(soft-mute) */
+    appendActiveErrorIfDefined(activeErrorMessages, latestErrors, 'Call.mutedByOthers', 'mutedByRemoteParticipant');
+
     appendActiveErrorIfDefined(
       activeErrorMessages,
       latestErrors,
