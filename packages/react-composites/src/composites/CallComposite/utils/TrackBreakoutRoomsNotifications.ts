@@ -2,12 +2,9 @@
 // Licensed under the MIT License.
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import {
-  BreakoutRoomsNotification,
-  BreakoutRoomsNotificationBarProps,
-  NotificationTarget
-} from '../components/BreakoutRoomsNotificationBar';
+import { BreakoutRoomsNotificationBarProps } from '../components/BreakoutRoomsNotificationBar';
 import { BreakoutRoom } from '@azure/communication-calling';
+import { ActiveNotification, NotificationsStrings } from '@internal/react-components';
 
 /**
  * Create a record for when the notification was most recently dismissed for tracking dismissed notifications.
@@ -15,7 +12,7 @@ import { BreakoutRoom } from '@azure/communication-calling';
  * @private
  */
 export const useTrackedBreakoutRoomsNotifications = (props: {
-  notifications: { target: NotificationTarget; messageKey: string; timestamp: Date; callId?: string }[];
+  notifications: ActiveNotification[];
   assignedBreakoutRoom?: BreakoutRoom;
 }): BreakoutRoomsNotificationBarProps => {
   const { notifications, assignedBreakoutRoom } = props;
@@ -35,9 +32,9 @@ export const useTrackedBreakoutRoomsNotifications = (props: {
     );
   }, [notifications]);
 
-  const onDismissBreakoutRoomsNotification = useCallback((notification: BreakoutRoomsNotification) => {
+  const onDismissBreakoutRoomsNotification = useCallback((notification: ActiveNotification) => {
     setTrackedCapabilityChangedNotifications((prev) =>
-      trackCapabilityChangedNotificationAsDismissed(notification.target, prev)
+      trackCapabilityChangedNotificationAsDismissed(notification.type, prev)
     );
   }, []);
 
@@ -61,27 +58,17 @@ export const useTrackedBreakoutRoomsNotifications = (props: {
 };
 
 const addActions = (
-  notifications: BreakoutRoomsNotification[],
+  notifications: ActiveNotification[],
   assignedBreakoutRoom: BreakoutRoom | undefined,
-  onDismissBreakoutRoomsNotification: (notification: BreakoutRoomsNotification) => void
-): BreakoutRoomsNotification[] => {
+  onDismissBreakoutRoomsNotification: (notification: ActiveNotification) => void
+): ActiveNotification[] => {
   if (assignedBreakoutRoom === undefined) {
     return notifications;
   }
   return notifications.map((notification) => {
-    if (notification.target === 'assignedBreakoutRoomOpenedPromptJoin') {
-      notification.actions = [
-        {
-          actionName: 'Join room',
-          action: async (): Promise<void> => {
-            assignedBreakoutRoom.join();
-          }
-        },
-        {
-          actionName: 'Later',
-          action: async (): Promise<void> => onDismissBreakoutRoomsNotification(notification)
-        }
-      ];
+    if (notification.type === 'assignedBreakoutRoomOpenedPromptJoin') {
+      notification.onClickPrimaryButton = () => assignedBreakoutRoom.join();
+      notification.onClickSecondaryButton = () => onDismissBreakoutRoomsNotification(notification);
     }
     return notification;
   });
@@ -93,11 +80,11 @@ const addActions = (
  * @private
  */
 export const filterLatestBreakoutRoomsNotifications = (
-  activeNotifications: BreakoutRoomsNotification[],
+  activeNotifications: ActiveNotification[],
   trackedNotifications: TrackedBreakoutRoomsNotifications
-): BreakoutRoomsNotification[] => {
+): ActiveNotification[] => {
   const filteredNotifications = activeNotifications.filter((activeNotification) => {
-    const trackedNotification = trackedNotifications[activeNotification.target];
+    const trackedNotification = trackedNotifications[activeNotification.type];
     return (
       !trackedNotification ||
       !trackedNotification.lastDismissedAt ||
@@ -114,14 +101,14 @@ export const filterLatestBreakoutRoomsNotifications = (
  */
 export const updateTrackedBreakoutRoomsNotificationsWithActiveNotifications = (
   existingTrackedNotifications: TrackedBreakoutRoomsNotifications,
-  activeNotifications: BreakoutRoomsNotification[]
+  activeNotifications: ActiveNotification[]
 ): TrackedBreakoutRoomsNotifications => {
   const trackedNotifications: TrackedBreakoutRoomsNotifications = {};
 
   // Only care about active notifications. If notifications are no longer active we do not track that they have been previously dismissed.
   for (const activeNotification of activeNotifications) {
-    const existingTrackedNotification = existingTrackedNotifications[activeNotification.target];
-    trackedNotifications[activeNotification.target] = {
+    const existingTrackedNotification = existingTrackedNotifications[activeNotification.type];
+    trackedNotifications[activeNotification.type] = {
       mostRecentlyActive:
         activeNotification.timestamp ?? existingTrackedNotification?.mostRecentlyActive ?? new Date(Date.now()),
       lastDismissedAt: existingTrackedNotification?.lastDismissedAt
@@ -137,7 +124,7 @@ export const updateTrackedBreakoutRoomsNotificationsWithActiveNotifications = (
  * @private
  */
 export const trackCapabilityChangedNotificationAsDismissed = (
-  notificationEvent: NotificationTarget,
+  notificationEvent: keyof NotificationsStrings,
   trackedNotifications: TrackedBreakoutRoomsNotifications
 ): TrackedBreakoutRoomsNotifications => {
   const now = new Date(Date.now());
@@ -155,19 +142,15 @@ export const trackCapabilityChangedNotificationAsDismissed = (
   };
 };
 
-type LatestBreakoutRoomsNotificationRecord = Partial<Record<NotificationTarget, BreakoutRoomsNotification>>;
+type LatestBreakoutRoomsNotificationRecord = Partial<Record<keyof NotificationsStrings, ActiveNotification>>;
 
 const convertActiveNotificationsToRecord = (
-  breakoutRoomsNotifications: {
-    target: NotificationTarget;
-    messageKey: string;
-    timestamp: Date;
-  }[],
+  breakoutRoomsNotifications: ActiveNotification[],
   activeNotifications: LatestBreakoutRoomsNotificationRecord
 ): LatestBreakoutRoomsNotificationRecord => {
   activeNotifications = {};
   for (const breakoutRoomsNotification of breakoutRoomsNotifications) {
-    activeNotifications[breakoutRoomsNotification.target] = breakoutRoomsNotification;
+    activeNotifications[breakoutRoomsNotification.type] = breakoutRoomsNotification;
   }
 
   return activeNotifications;
@@ -178,4 +161,4 @@ interface NotificationTrackingInfo {
   lastDismissedAt?: Date;
 }
 
-type TrackedBreakoutRoomsNotifications = Partial<Record<NotificationTarget, NotificationTrackingInfo>>;
+type TrackedBreakoutRoomsNotifications = Partial<Record<keyof NotificationsStrings, NotificationTrackingInfo>>;

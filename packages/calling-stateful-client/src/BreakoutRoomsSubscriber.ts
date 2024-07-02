@@ -37,14 +37,11 @@ export class BreakoutRoomsSubscriber {
         (currentAssignedBreakoutRoom?.state === 'closed' || currentAssignedBreakoutRoom === undefined)
       ) {
         let target: NotificationTarget = 'assignedBreakoutRoomOpened';
-        let messageKey = "We'll move you to your assigned room in 5 seconds.";
         if (breakoutRoom.autoMoveParticipantToBreakoutRoom === false) {
           target = 'assignedBreakoutRoomOpenedPromptJoin';
-          messageKey = `You've been assigned to ${breakoutRoom.displayName}.`;
         }
         this._context.setLatestNotification(target, {
           target,
-          messageKey: messageKey,
           timestamp: new Date(Date.now())
         });
       }

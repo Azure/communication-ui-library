@@ -228,6 +228,10 @@ export interface ErrorBarStrings {
    * An error message when starting spotlight while max participants are spotlighted
    */
   startSpotlightWhileMaxParticipantsAreSpotlighted: string;
+  assignedBreakoutRoomOpened: string;
+  assignedBreakoutRoomOpenedPromptJoin: string;
+  assignedBreakoutRoomClosingSoon: string;
+  assignedBreakoutRoomClosed: string;
 }
 
 /**

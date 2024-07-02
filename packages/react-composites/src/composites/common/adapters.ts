@@ -64,8 +64,6 @@ export interface AdapterNotification {
    * The operation that failed.
    */
   target: string;
-
-  messageKey: string;
   /**
    * Timestamp added to the error in the adapter implementation.
    */

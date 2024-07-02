@@ -200,6 +200,11 @@ export interface NotificationsStrings {
    * An error message when starting spotlight while max participants are spotlighted
    */
   startSpotlightWhileMaxParticipantsAreSpotlighted: NotificationBarStrings;
+
+  assignedBreakoutRoomOpened: NotificationBarStrings;
+  assignedBreakoutRoomOpenedPromptJoin: NotificationBarStrings;
+  assignedBreakoutRoomClosingSoon: NotificationBarStrings;
+  assignedBreakoutRoomClosed: NotificationBarStrings;
 }
 
 /**

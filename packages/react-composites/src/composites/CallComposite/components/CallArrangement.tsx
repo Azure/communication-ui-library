@@ -95,7 +95,7 @@ import { getCaptionsKind, getIsTeamsCall } from '../selectors/baseSelectors';
 import { useHandlers } from '../hooks/useHandlers';
 /* @conditional-compile-remove(soft-mute) */
 import { MoreDrawer } from '../../common/Drawer/MoreDrawer';
-import { BreakoutRoomsNotificationBar, BreakoutRoomsNotificationBarProps } from './BreakoutRoomsNotificationBar';
+import { BreakoutRoomsNotificationBarProps } from './BreakoutRoomsNotificationBar';
 
 /**
  * @private
@@ -159,6 +159,8 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     () => galleryParentContainerStyles(theme.palette.neutralLighterAlt),
     [theme.palette.neutralLighterAlt]
   );
+
+  console.log('breakoutRoomsNotificationBarProps: ', props.breakoutRoomsNotificationBarProps);
 
   const peopleButtonRef = useRef<IButton>(null);
   const cameraButtonRef = useRef<IButton>(null);
@@ -633,7 +635,15 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                     {props.breakoutRoomsNotificationBarProps &&
                       props.breakoutRoomsNotificationBarProps.breakoutRoomsNotifications.length > 0 && (
                         <Stack styles={bannerNotificationStyles}>
-                          <BreakoutRoomsNotificationBar {...props.breakoutRoomsNotificationBarProps} />
+                          <Notifications
+                            activeNotifications={props.breakoutRoomsNotificationBarProps.breakoutRoomsNotifications.map(
+                              (notification) => ({
+                                type: notification.type,
+                                onClickPrimaryButton: notification.onClickPrimaryButton,
+                                onClickSecondaryButton: notification.onClickSecondaryButton
+                              })
+                            )}
+                          />
                         </Stack>
                       )}
                     {canUnmute && !!props.mutedNotificationProps && (
