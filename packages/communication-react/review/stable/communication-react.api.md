@@ -494,6 +494,8 @@ export type CallCompositeIcons = {
     LargeGalleryLayout?: JSX.Element;
     DefaultCustomButton?: JSX.Element;
     DtmfDialpadButton?: JSX.Element;
+    PhoneNumberButton?: JSX.Element;
+    PhoneInfoWait?: JSX.Element;
     PeoplePaneMoreButton?: JSX.Element;
     StopAllSpotlightMenuButton?: JSX.Element;
 };
@@ -652,6 +654,7 @@ export interface CallCompositeStrings {
     peopleButtonLabel: string;
     peoplePaneMoreButtonAriaLabel: string;
     peoplePaneTitle: string;
+    phoneCallMoreButtonLabel: string;
     pinParticipantLimitReachedMenuLabel: string;
     pinParticipantMenuItemAriaLabel: string;
     pinParticipantMenuLabel: string;
@@ -848,6 +851,7 @@ export interface CallState {
     spotlight?: SpotlightCallFeatureState;
     startTime: Date;
     state: CallState_2;
+    teamsMeetingConference?: ConferencePhoneInfo[];
     transcription: TranscriptionCallFeature;
     transfer: TransferFeature;
 }
@@ -1693,6 +1697,7 @@ export type CommonCallControlOptions = {
         disabled: boolean;
     };
     exitSpotlightButton?: boolean;
+    teamsMeetingPhoneCallButton?: boolean;
 };
 
 // @public
@@ -1863,6 +1868,7 @@ export interface ComponentStrings {
     endCallButton: EndCallButtonStrings;
     errorBar: ErrorBarStrings;
     imageOverlay: ImageOverlayStrings;
+    MeetingConferencePhoneInfo: MeetingConferencePhoneInfoModalStrings;
     messageStatusIndicator: MessageStatusIndicatorStrings;
     messageThread: MessageThreadStrings;
     microphoneButton: MicrophoneButtonStrings;
@@ -1958,6 +1964,20 @@ export interface CompositeStrings {
     call: CallCompositeStrings;
     callWithChat: CallWithChatCompositeStrings;
     chat: ChatCompositeStrings;
+}
+
+// @public
+export interface ConferencePhoneInfo {
+    // (undocumented)
+    city?: string;
+    // (undocumented)
+    conferenceId: string;
+    // (undocumented)
+    country?: string;
+    // (undocumented)
+    isTollFree: boolean;
+    // (undocumented)
+    phoneNumber: string;
 }
 
 // @public
@@ -2299,6 +2319,8 @@ export const DEFAULT_COMPOSITE_ICONS: {
     LargeGalleryLayout?: JSX.Element | undefined;
     DefaultCustomButton?: JSX.Element | undefined;
     DtmfDialpadButton?: JSX.Element | undefined;
+    PhoneNumberButton?: JSX.Element | undefined;
+    PhoneInfoWait?: JSX.Element | undefined;
     PeoplePaneMoreButton?: JSX.Element | undefined;
     StopAllSpotlightMenuButton?: JSX.Element | undefined;
     ChevronLeft?: JSX.Element | undefined;
@@ -2776,6 +2798,18 @@ export type MediaDiagnosticChangedEvent = MediaDiagnosticChangedEventArgs & {
 export interface MediaDiagnosticsState {
     // (undocumented)
     latest: LatestMediaDiagnostics;
+}
+
+// @public
+export interface MeetingConferencePhoneInfoModalStrings {
+    meetingConferencePhoneInfoModalDialIn?: string;
+    meetingConferencePhoneInfoModalMeetingId?: string;
+    meetingConferencePhoneInfoModalNoPhoneAvailable?: string;
+    meetingConferencePhoneInfoModalTitle?: string;
+    meetingConferencePhoneInfoModalToll?: string;
+    meetingConferencePhoneInfoModalTollFree?: string;
+    meetingConferencePhoneInfoModalTollGeoData?: string;
+    meetingConferencePhoneInfoModalWait?: string;
 }
 
 // @public

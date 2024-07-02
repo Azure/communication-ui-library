@@ -33,7 +33,6 @@ import { _pxToRem } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(teams-meeting-conference) */
 /**
  * strings for phone info modal
- * @beta
  */
 export interface MeetingConferencePhoneInfoModalStrings {
   /**
