@@ -19,8 +19,6 @@ module.exports = {
     "hide-attendee-name",
     // Demo feature. Used in live-documentation of conditional compilation. Do not use in production code.
     "in-progress-beta-feature-demo",
-    // Get join conference information
-    'teams-meeting-conference',
     // Feature for Rich Text Editor (RTE) composite support
     "rich-text-editor-composite-support",
     // Feature for Rich Text Editor (RTE) image upload support
@@ -80,7 +78,10 @@ module.exports = {
     // Feature for Rich Text Editor (RTE) support
     'rich-text-editor',
     // Feature to support file sharing in ACS chats
-    "file-sharing-acs"
+    "file-sharing-acs",
+    // Get join conference information
+    'teams-meeting-conference'
+
   ],
   stable: [
     // Demo feature. Used in live-documentation of conditional compilation.
