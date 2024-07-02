@@ -493,6 +493,8 @@ jobs:
     needs: get_matrix
     name: 'Components automation test (${{ matrix.flavor }})'
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:

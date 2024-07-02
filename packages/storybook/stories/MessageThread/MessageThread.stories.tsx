@@ -682,6 +682,7 @@ export default {
     enableJumpToNewMessageButton: controlsToAdd.enableJumpToNewMessageButton,
     richTextEditor: controlsToAdd.richTextEditor,
     // Hiding auto-generated controls
+    richTextEditorOptions: hiddenControl,
     styles: hiddenControl,
     strings: hiddenControl,
     userId: hiddenControl,
