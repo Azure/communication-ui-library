@@ -41,7 +41,7 @@ export type NotificationStackSelector = (
  *
  * @beta
  */
-export const errorNotificationStackSelector: ErrorNotificationStackSelector = createSelector(
+export const notificationStackSelector: NotificationStackSelector = createSelector(
   [
     getLatestErrors,
     getDiagnostics,
@@ -55,7 +55,7 @@ export const errorNotificationStackSelector: ErrorNotificationStackSelector = cr
     deviceManager,
     environmentInfo,
     /* @conditional-compile-remove(teams-meeting-conference) */ meetingConference
-  ): { activeErrorMessages: ActiveNotification[] } => {
+  ): { activeErrorMessages: ActiveNotification[]; activeNotifications: ActiveNotification[] } => {
     // The order in which the errors are returned is significant: The `Notification` shows errors on the UI in that order.
     // There are several options for the ordering:
     //   - Sorted by when the errors happened (latest first / oldest first).
