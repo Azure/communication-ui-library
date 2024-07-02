@@ -5441,12 +5441,12 @@ packages:
       - vite
     dev: false
 
-  /@playwright/test@1.45.0:
-    resolution: {integrity: sha512-TVYsfMlGAaxeUllNkywbwek67Ncf8FRGn8ZlRdO291OL3NjG9oMbfVhyP82HQF0CZLMrYsvesqoUekxdWuF9Qw==}
-    engines: {node: '>=18'}
+  /@playwright/test@1.39.0:
+    resolution: {integrity: sha512-3u1iFqgzl7zr004bGPYiN/5EZpRUSFddQBra8Rqll5N0/vfpqlP9I9EXqAoGacuAbX6c9Ulg/Cjqglp5VkK6UQ==}
+    engines: {node: '>=16'}
     hasBin: true
     dependencies:
-      playwright: 1.45.0
+      playwright: 1.39.0
     dev: false
 
   /@pmmmwh/react-refresh-webpack-plugin@0.5.11(react-refresh@0.11.0)(webpack@5.89.0):
@@ -16885,7 +16885,7 @@ packages:
       jest-process-manager: 0.4.0
       jest-runner: 29.7.0
       nyc: 15.1.0
-      playwright-core: 1.39.0
+      playwright-core: 1.45.0
       rimraf: 3.0.2
       uuid: 8.3.2
     transitivePeerDependencies:
@@ -19380,16 +19380,6 @@ packages:
     hasBin: true
     dependencies:
       playwright-core: 1.39.0
-    optionalDependencies:
-      fsevents: 2.3.2
-    dev: false
-
-  /playwright@1.45.0:
-    resolution: {integrity: sha512-4z3ac3plDfYzGB6r0Q3LF8POPR20Z8D0aXcxbJvmfMgSSq1hkcgvFRXJk9rUq5H/MJ0Ktal869hhOdI/zUTeLA==}
-    engines: {node: '>=18'}
-    hasBin: true
-    dependencies:
-      playwright-core: 1.45.0
     optionalDependencies:
       fsevents: 2.3.2
     dev: false
@@ -25040,13 +25030,13 @@ packages:
     dev: false
 
   file:projects/config.tgz:
-    resolution: {integrity: sha512-fYBwsENw+6wLoiWL+5OGAELhSSnwLTW/V28yxmjsE0TnbhMFVpF2sXbNDwYccS/Fz6wb5A5rfn2B0234eSH+Ag==, tarball: file:projects/config.tgz}
+    resolution: {integrity: sha512-HB8CvOFeO6hoqaNet9JijKdaOLU4Lxr6o5TclBDNLP3vcopzqzB4RT1s5aqAP5VDlWelHJB5jwD4gqRGZRaArg==, tarball: file:projects/config.tgz}
     name: '@rush-temp/config'
     version: 0.0.0
     dependencies:
       '@actions/core': 1.10.1
       '@octokit/rest': 19.0.13
-      '@playwright/test': 1.45.0
+      '@playwright/test': 1.39.0
       '@rollup/plugin-commonjs': 25.0.7(rollup@4.18.0)
       '@rollup/plugin-json': 6.1.0(rollup@4.18.0)
       '@types/node': 20.14.9
@@ -25246,7 +25236,7 @@ packages:
     dev: false
 
   file:projects/react-composites.tgz:
-    resolution: {integrity: sha512-f6n0Y0Z5faaMKNETLXuZE3T4tkl8IYkcBfNyXoQ865qswdi+7xJDGFoHtEPB1NhElwMA/ODZSmAO+p/uoKaw5Q==, tarball: file:projects/react-composites.tgz}
+    resolution: {integrity: sha512-35SqLIzXM6Da2Dx+LdDBgYudeG4q9yDSpoDD/FEKUaRm2PxlWFGIKQI3oMb7WCzSShlDorEFD5kpAgaO2YH5OA==, tarball: file:projects/react-composites.tgz}
     name: '@rush-temp/react-composites'
     version: 0.0.0
     dependencies:
@@ -25268,7 +25258,7 @@ packages:
       '@fluentui/react-icons': 2.0.246(react@18.3.1)
       '@microsoft/api-documenter': 7.25.4(@types/node@20.14.9)
       '@microsoft/api-extractor': 7.47.0(@types/node@20.14.9)
-      '@playwright/test': 1.45.0
+      '@playwright/test': 1.39.0
       '@testing-library/jest-dom': 6.4.6(@types/jest@29.5.12)(jest@29.7.0)
       '@testing-library/react': 16.0.0(@testing-library/dom@9.3.4)(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
       '@types/copy-webpack-plugin': 6.4.3
@@ -25368,7 +25358,7 @@ packages:
     dev: false
 
   file:projects/sample-automation-tests.tgz:
-    resolution: {integrity: sha512-TyLAvjKuL3CBMO4zOJQs9umkd5edEtsGEWteExjHDkQ6nndEbpINk2uR2wFJs0cunWkwHzUKIsd1dDCZPZPgrQ==, tarball: file:projects/sample-automation-tests.tgz}
+    resolution: {integrity: sha512-ElACY9QqGgxEZiOiEY3dCu15TpGo/gxgE/8lrGfyKA20us0MmiDm5yDCdkO/i/HG10LZsgwIG1rsBa/c+ZiDdA==, tarball: file:projects/sample-automation-tests.tgz}
     name: '@rush-temp/sample-automation-tests'
     version: 0.0.0
     dependencies:
@@ -25376,7 +25366,7 @@ packages:
       '@azure/communication-chat': 1.5.0
       '@azure/communication-common': 2.3.1
       '@azure/communication-identity': 1.3.1
-      '@playwright/test': 1.45.0
+      '@playwright/test': 1.39.0
       '@types/node': 20.14.9
       '@types/node-static': 0.7.11
       cross-env: 7.0.3
@@ -25393,7 +25383,7 @@ packages:
     dev: false
 
   file:projects/sample-static-html-composites.tgz:
-    resolution: {integrity: sha512-UfR3wIi4mAI3jwQMrzwVpizWJWJ8o7udCTcHRTwc+DOE5WPWTcN/kFPyFkJ083fvgan9YYXpvi8dLxQwBBEhlg==, tarball: file:projects/sample-static-html-composites.tgz}
+    resolution: {integrity: sha512-UxWaEiwW5abDA5Kzo4djmIkS9AF6sWWH1SKqje/oLjjtbhgfyCjAJM2JdRK5y6S14ZuZw5UOcqqlaBx2IqDoUQ==, tarball: file:projects/sample-static-html-composites.tgz}
     name: '@rush-temp/sample-static-html-composites'
     version: 0.0.0
     dependencies:
@@ -25404,7 +25394,7 @@ packages:
       '@babel/cli': 7.24.7(@babel/core@7.24.7)
       '@babel/core': 7.24.7
       '@fluentui/react': 8.119.0(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
-      '@playwright/test': 1.45.0
+      '@playwright/test': 1.39.0
       '@types/copy-webpack-plugin': 6.4.3
       '@types/node': 20.14.9
       '@types/node-static': 0.7.11
