@@ -496,7 +496,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
             const breakoutRoom = mainMeeting?.breakoutRooms?.assignedBreakoutRoom;
             // Return to main meeting because breakout room call is ended because it is closed
             if (removedCallState.id === this.call.id && breakoutRoom?.state === 'closed') {
-              setTimeout(() => this.returnToMainMeeting(), 10000);
+              this.returnToMainMeeting();
               return;
             }
           }

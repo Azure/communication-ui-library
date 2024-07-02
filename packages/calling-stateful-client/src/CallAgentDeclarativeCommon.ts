@@ -98,6 +98,16 @@ export abstract class ProxyCallAgentCommon {
       } else {
         removedStatefulCall.push(this.callDeclaratify(call, this._context));
       }
+      // const endedBreakoutRoomCall = Object.values(this._context.getState().callsEnded).find((endedCall) => {
+      //   return endedCall.id === call.id && !!endedCall.breakoutRooms?.breakoutRoomSettings;
+      // });
+      // if (endedBreakoutRoomCall) {
+      //   this._context.setLatestNotification('assignedBreakoutRoomClosed', {
+      //     target: 'assignedBreakoutRoomClosed',
+      //     messageKey: 'Breakout room has closed',
+      //     timestamp: new Date(Date.now())
+      //   });
+      // }
     }
 
     for (const externalCallsUpdatedListener of this._externalCallsUpdatedListeners) {
