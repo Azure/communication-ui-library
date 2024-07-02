@@ -58,7 +58,7 @@ export interface RichTextEditorProps {
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   onPaste?: (event: { content: DocumentFragment }) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  onUploadImage?: (image: string, fileName: string) => void;
+  onUploadInlineImage?: (imageUrl: string, imageFileName: string) => void;
 }
 
 /**
@@ -101,49 +101,74 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
     onPaste,
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    onUploadImage
+    onUploadInlineImage
   } = props;
   const editor = useRef<IEditor | null>(null);
   const editorDiv = useRef<HTMLDivElement>(null);
   const theme = useTheme();
   const [contextMenuProps, setContextMenuProps] = useState<IContextualMenuProps | null>(null);
 
-  useImperativeHandle(
-    ref,
-    () => {
-      return {
-        focus() {
-          if (editor.current) {
-            editor.current.focus();
-          }
-        },
-        setEmptyContent() {
-          if (editor.current) {
-            // remove all content from the editor and update the model
-            // ContentChanged event will be sent by RoosterJS automatically
-            editor.current.formatContentModel((model: ShallowMutableContentModelDocument): boolean => {
-              // Create a new empty paragraph with selection marker
-              // this is needed for correct processing of images after the content is deleted
-              const block = createParagraph(true);
-              setSelectionAfterLastSegment(model, block);
-              model.blocks = [block];
-              return true;
-            });
-            //reset content model
-            onContentModelUpdate && onContentModelUpdate(editor.current.getContentModelCopy('disconnected'));
-          }
-        },
-        getPlainContent() {
-          if (editor.current) {
-            return exportContent(editor.current, 'PlainTextFast');
-          } else {
-            return undefined;
-          }
+  useImperativeHandle(ref, () => {
+    return {
+      focus() {
+        if (editor.current) {
+          editor.current.focus();
         }
-      };
-    },
-    [onContentModelUpdate]
-  );
+      },
+      setEmptyContent() {
+        if (editor.current) {
+          editor.current.formatContentModel;
+          // remove all content from the editor and update the model
+          // ContentChanged event will be sent by RoosterJS automatically
+          editor.current.formatContentModel((model: ShallowMutableContentModelDocument): boolean => {
+            model.blocks = [];
+            return true;
+          });
+          //reset content model
+          onContentModelUpdate && onContentModelUpdate(undefined);
+        }
+      },
+      getPlainContent() {
+        if (editor.current) {
+          return exportContent(editor.current, 'PlainTextFast');
+        } else {
+          return undefined;
+        }
+      }
+    };
+  }, [onContentModelUpdate]);
+  useImperativeHandle(ref, () => {
+    return {
+      focus() {
+        if (editor.current) {
+          editor.current.focus();
+        }
+      },
+      setEmptyContent() {
+        if (editor.current) {
+          // remove all content from the editor and update the model
+          // ContentChanged event will be sent by RoosterJS automatically
+          editor.current.formatContentModel((model: ShallowMutableContentModelDocument): boolean => {
+            // Create a new empty paragraph with selection marker
+            // this is needed for correct processing of images after the content is deleted
+            const block = createParagraph(true);
+            setSelectionAfterLastSegment(model, block);
+            model.blocks = [block];
+            return true;
+          });
+          //reset content model
+          onContentModelUpdate && onContentModelUpdate(editor.current.getContentModelCopy('disconnected'));
+        }
+      },
+      getPlainContent() {
+        if (editor.current) {
+          return exportContent(editor.current, 'PlainTextFast');
+        } else {
+          return undefined;
+        }
+      }
+    };
+  }, [onContentModelUpdate]);
 
   const toolbarPlugin = React.useMemo(() => {
     return new RichTextToolbarPlugin();
@@ -203,8 +228,8 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
 
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   useEffect(() => {
-    copyPastePlugin.onUploadImage = onUploadImage;
-  }, [copyPastePlugin, onUploadImage]);
+    copyPastePlugin.onUploadInlineImage = onUploadInlineImage;
+  }, [copyPastePlugin, onUploadInlineImage]);
 
   const keyboardInputPlugin = useMemo(() => {
     return new KeyboardInputPlugin();

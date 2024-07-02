@@ -14,7 +14,7 @@ export default class CopyPastePlugin implements EditorPlugin {
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   onPaste?: (event: { content: DocumentFragment }) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  onUploadImage?: (imageUrl: string, imageFileName: string) => void;
+  onUploadInlineImage?: (imageUrl: string, imageFileName: string) => void;
 
   getName(): string {
     return 'CopyPastePlugin';
@@ -29,7 +29,7 @@ export default class CopyPastePlugin implements EditorPlugin {
   onPluginEvent(event: PluginEvent): void {
     handleBeforePasteEvent(event, /* @conditional-compile-remove(rich-text-editor-image-upload) */ this.onPaste);
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    handleInlineImage(event, this.onUploadImage);
+    handleInlineImage(event, this.onUploadInlineImage);
     if (this.editor !== null && !this.editor.isDisposed()) {
       // scroll the editor to the correct position after pasting content
       scrollToBottomAfterContentPaste(event);
@@ -62,25 +62,24 @@ const handleBeforePasteEvent = (
  */
 export const handleInlineImage = (
   event: PluginEvent,
-  onUploadImage?: (image: string, fileName: string) => void
+  onUploadInlineImage?: (image: string, fileName: string) => void
 ): void => {
-  if (event.eventType === PluginEventType.BeforePaste && event.pasteType === 'normal' && onUploadImage) {
+  if (event.eventType === PluginEventType.BeforePaste && event.pasteType === 'normal' && onUploadInlineImage) {
     event.fragment.querySelectorAll('img').forEach((image) => {
       const clipboardImage = event.clipboardData.image;
       const fileName = clipboardImage?.name || clipboardImage?.type.replace('/', '.') || 'image.png';
-      // If the image src is an external url, call the onUploadImage callback with the url.
+      // If the image src is an external url, call the onUploadInlineImage callback with the url.
       let imageUrl = image.src;
       if (image.src.startsWith('data:image/')) {
         const blobImage = _base64ToBlob(image.src);
         imageUrl = URL.createObjectURL(blobImage);
       }
 
-      onUploadImage(imageUrl, fileName);
+      onUploadInlineImage(imageUrl, fileName);
 
       image.src = imageUrl;
       image.alt = image.alt || 'image';
-      image.style.width = '119px';
-      image.style.height = '119px';
+      image.style.width = '119px'; // TODO: find a way to get the original width and height of the image
     });
   }
 };
