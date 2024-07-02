@@ -33,6 +33,7 @@ import { _pxToRem } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(teams-meeting-conference) */
 /**
  * strings for phone info modal
+ * @public
  */
 export interface MeetingConferencePhoneInfoModalStrings {
   /**
@@ -71,7 +72,7 @@ export interface MeetingConferencePhoneInfoModalStrings {
 
 /* @conditional-compile-remove(teams-meeting-conference) */
 /**
- * @beta
+ * @public
  * MeetingConferencePhoneInfoModal Component Props.
  */
 export interface MeetingConferencePhoneInfoModalProps {
@@ -82,7 +83,7 @@ export interface MeetingConferencePhoneInfoModalProps {
 
 /* @conditional-compile-remove(teams-meeting-conference) */
 /**
- * @beta
+ * @public
  * a component for setting spoken languages
  */
 export const MeetingConferencePhoneInfoModal = (props: MeetingConferencePhoneInfoModalProps): JSX.Element => {

@@ -1968,15 +1968,10 @@ export interface CompositeStrings {
 
 // @public
 export interface ConferencePhoneInfo {
-    // (undocumented)
     city?: string;
-    // (undocumented)
     conferenceId: string;
-    // (undocumented)
     country?: string;
-    // (undocumented)
     isTollFree: boolean;
-    // (undocumented)
     phoneNumber: string;
 }
 
