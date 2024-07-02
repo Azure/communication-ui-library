@@ -78,7 +78,7 @@ module.exports = {
     // Feature for Rich Text Editor (RTE) support
     'rich-text-editor',
     // Feature to support file sharing in ACS chats
-    "file-sharing-acs",
+    "file-sharing-acs"
   ],
   stable: [
     // Demo feature. Used in live-documentation of conditional compilation.
