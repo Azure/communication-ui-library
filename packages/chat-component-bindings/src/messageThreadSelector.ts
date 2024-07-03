@@ -137,10 +137,12 @@ const processChatMessageContent = (message: ChatMessageWithStatus): string | und
         if (attachmentPreviewUrl) {
           const resourceCache = message.resourceCache?.[attachmentPreviewUrl];
           const src = getResourceSourceUrl(resourceCache);
-          if (!src) {
+          // if in error state
+          if (src === undefined) {
             const brokenImageView = getBrokenImageViewNode();
             img.parentElement?.replaceChild(brokenImageView, img);
           } else {
+            // else in loading or success state
             img.setAttribute('src', src);
           }
         }
@@ -169,9 +171,11 @@ const generateImageAttachmentImgHtml = (message: ChatMessageWithStatus, attachme
     const contentType = extractAttachmentContentTypeFromName(attachment.name);
     const resourceCache = message.resourceCache?.[attachment.previewUrl];
     const src = getResourceSourceUrl(resourceCache);
-    if (!src) {
+    // if in error state
+    if (src === undefined) {
       return `\r\n<p>${getBrokenImageViewNode()}</p>`;
     }
+    // else in loading or success state
     return `\r\n<p><img alt="image" src="${src}" itemscope="${contentType}" id="${attachment.id}"></p>`;
   }
 
@@ -179,12 +183,17 @@ const generateImageAttachmentImgHtml = (message: ChatMessageWithStatus, attachme
 };
 
 const getResourceSourceUrl = (result?: ResourceFetchResult): string | undefined => {
-  // if result contains valid sourceUrl, return it as a valid image src
-  // otherwise, return undefined
-  if (result && !result.error && result.sourceUrl) {
-    return result.sourceUrl;
+  if (result) {
+    if (!result.error && result.sourceUrl) {
+      // return sourceUrl for success state
+      return result.sourceUrl;
+    } else {
+      // return undefined for error state
+      return undefined;
+    }
   }
-  return undefined;
+  // return empty string for loading state
+  return '';
 };
 
 const extractAttachmentContentTypeFromName = (name?: string): string => {
