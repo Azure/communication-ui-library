@@ -205,6 +205,10 @@ export interface NotificationStackStrings {
    * Muted by a remote participant message
    */
   mutedByRemoteParticipant: NotificationStrings;
+  /**
+   * Speaking while muted message
+   */
+  speakingWhileMuted: NotificationStrings;
 }
 
 /**
