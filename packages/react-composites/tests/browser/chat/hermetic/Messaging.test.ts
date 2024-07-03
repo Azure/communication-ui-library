@@ -5,6 +5,8 @@ import { expect } from '@playwright/test';
 import { sendMessage, waitForMessageDelivered } from '../../common/chatTestHelpers';
 import { dataUiId, stableScreenshot, waitForChatCompositeToLoad } from '../../common/utils';
 import { TEST_PARTICIPANTS, buildUrlForChatAppUsingFakeAdapter, test } from './fixture';
+import { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
+import { nanoid } from 'nanoid';
 
 const TEST_MESSAGE = 'No, sir, this will not do.';
 
@@ -60,16 +62,23 @@ test.describe('Tests related to messaging', async () => {
     // Mock the api call before navigating
     await page.route(serverUrl + '/images/inlineImageExample1.png', async (route) => {
       await route.fulfill({
-        status: 404
+        status: 400
       });
     });
 
     await waitForChatCompositeToLoad(page);
 
+    const teamsUser: MicrosoftTeamsUserIdentifier = {
+      rawId: '00000000-0000-0000-0000-000000000000',
+      microsoftTeamsUserId: '8:orgid:00000000-0000-0000-0000-000000000000',
+      isAnonymous: false,
+      cloud: 'public'
+    };
+
     await page.goto(
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
         localParticipant: TEST_PARTICIPANTS[1],
-        remoteParticipants: [TEST_PARTICIPANTS[0], TEST_PARTICIPANTS[2]],
+        remoteParticipants: [{ id: teamsUser, displayName: 'Teams User' }],
         localParticipantPosition: 1,
         sendRemoteInlineImageMessage: true
       })
