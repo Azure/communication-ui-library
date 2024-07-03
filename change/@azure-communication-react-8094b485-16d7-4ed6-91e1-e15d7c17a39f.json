@@ -1,9 +1,0 @@
-{
-  "type": "patch",
-  "area": "feature",
-  "workstream": "Storybook V8 Migration",
-  "comment": "Migrate Video Tile to V8",
-  "packageName": "@azure/communication-react",
-  "email": "97124699+prabhjot-msft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
