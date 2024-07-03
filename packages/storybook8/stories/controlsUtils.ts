@@ -269,6 +269,7 @@ export const controlsToAdd = {
   isScreenSharing: { control: 'boolean', defaultValue: false, name: 'Is screen sharing' },
   isRaisedHand: { control: 'boolean', defaultValue: false, name: 'Is Raised Hand' },
   isSendBoxWithWarning: { control: 'boolean', defaultValue: false, name: 'Has warning/information message' },
+  isSendBoxWithAttachments: { control: 'boolean', defaultValue: false, name: 'Has attachments' },
   isVideoAvailable: { control: 'boolean', defaultValue: true, name: 'Is video available' },
   isVideoMirrored: { control: 'boolean', defaultValue: false, name: 'Is video mirrored' },
   isVideoReady: { control: 'boolean', defaultValue: false, name: 'Is Video ready' },
