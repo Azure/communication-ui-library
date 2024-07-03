@@ -170,7 +170,7 @@ const generateImageAttachmentImgHtml = (message: ChatMessageWithStatus, attachme
     const resourceCache = message.resourceCache?.[attachment.previewUrl];
     const src = getResourceSourceUrl(resourceCache);
     if (!src) {
-      return `\r\n<p>${getBrokenImageViewNode()}</p>`
+      return `\r\n<p>${getBrokenImageViewNode()}</p>`;
     }
     return `\r\n<p><img alt="image" src="${src}" itemscope="${contentType}" id="${attachment.id}"></p>`;
   }
@@ -182,8 +182,8 @@ const getResourceSourceUrl = (result?: ResourceFetchResult): string | undefined 
   let src;
   if (result) {
     //if (result.error || !result.sourceUrl) {
-      // In case of an error we set src to some invalid value to show broken image
-      // src = 'blob://';
+    // In case of an error we set src to some invalid value to show broken image
+    // src = 'blob://';
     /*} else {
       src = result.sourceUrl;
     }*/
