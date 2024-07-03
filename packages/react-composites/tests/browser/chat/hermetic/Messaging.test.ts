@@ -59,11 +59,9 @@ test.describe('Tests related to messaging', async () => {
   test('Inline Image should show a broken image icon when image fetch failed', async ({ page, serverUrl }) => {
     // Mock the api call before navigating
     await page.route(serverUrl + '/images/inlineImageExample1.png', async (route) => {
-      try {
-        await route.fulfill({ status: 404, contentType: 'text/html' });
-      } catch (error) {
-        console.error('Failed at fulfill on route, Error: ', error);
-      }
+      await route.fulfill({
+        status: 404
+      });
     });
 
     await waitForChatCompositeToLoad(page);
