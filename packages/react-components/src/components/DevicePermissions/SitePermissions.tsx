@@ -81,8 +81,8 @@ export const CameraAndMicrophoneSitePermissions = (props: CameraAndMicrophoneSit
         ? locale.CameraAndMicrophoneSitePermissionsDeniedSafari
         : locale.CameraAndMicrophoneSitePermissionsDenied
       : props.kind === 'request'
-      ? locale.CameraAndMicrophoneSitePermissionsRequest
-      : locale.CameraAndMicrophoneSitePermissionsCheck,
+        ? locale.CameraAndMicrophoneSitePermissionsRequest
+        : locale.CameraAndMicrophoneSitePermissionsCheck,
     props.strings
   );
 
@@ -143,8 +143,8 @@ export const MicrophoneSitePermissions = (props: MicrophoneSitePermissionsProps)
         ? locale.MicrophoneSitePermissionsDeniedSafari
         : locale.MicrophoneSitePermissionsDenied
       : props.kind === 'request'
-      ? locale.MicrophoneSitePermissionsRequest
-      : locale.MicrophoneSitePermissionsCheck,
+        ? locale.MicrophoneSitePermissionsRequest
+        : locale.MicrophoneSitePermissionsCheck,
     props.strings
   );
 
@@ -198,8 +198,8 @@ export const CameraSitePermissions = (props: CameraSitePermissionsProps): JSX.El
         ? locale.CameraSitePermissionsDeniedSafari
         : locale.CameraSitePermissionsDenied
       : props.kind === 'request'
-      ? locale.CameraSitePermissionsRequest
-      : locale.CameraSitePermissionsCheck,
+        ? locale.CameraSitePermissionsRequest
+        : locale.CameraSitePermissionsCheck,
     props.strings
   );
 

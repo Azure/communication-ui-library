@@ -1,8 +1,8 @@
 import { Stack } from '@fluentui/react';
-import { ActiveNotification, Notifications } from '@internal/react-components';
+import { ActiveNotification, NotificationStack } from '@internal/react-components';
 import React from 'react';
 
-export const ExampleNotifications = (): JSX.Element => {
+export const ExampleNotificationStack = (): JSX.Element => {
   const activeNotifications: ActiveNotification[] = [
     {
       type: 'failedToJoinCallGeneric',
@@ -25,7 +25,7 @@ export const ExampleNotifications = (): JSX.Element => {
 
   return (
     <Stack verticalFill tokens={{ childrenGap: '5rem' }} verticalAlign="space-between">
-      <Notifications activeNotifications={activeNotifications} />
+      <NotificationStack activeNotifications={activeNotifications} />
     </Stack>
   );
 };

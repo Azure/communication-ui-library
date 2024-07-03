@@ -132,6 +132,7 @@ export const usePeoplePane = (props: {
         }
       }
       menuItems.push({
+        ['data-ui-id']: 'people-pane-mute-all-remote-participants',
         key: 'muteAllRemoteParticipants',
         text: localeStrings.muteAllMenuLabel,
         iconProps: {
@@ -141,7 +142,6 @@ export const usePeoplePane = (props: {
         onClick: () => {
           setShowMuteAllPrompt(true);
         },
-        'data-ui-id': 'participant-item-mute-all-remote-participants',
         ariaLabel: localeStrings.muteAllMenuLabel,
         disabled: isAllMuted
       });
@@ -185,10 +185,10 @@ export const usePeoplePane = (props: {
         const onStopSpotlight = isMe
           ? onStopLocalSpotlight
           : onStopRemoteSpotlight
-          ? () => {
-              onStopRemoteSpotlight([participantId]);
-            }
-          : undefined;
+            ? () => {
+                onStopRemoteSpotlight([participantId]);
+              }
+            : undefined;
         if (onStopSpotlight && stopSpotlightMenuText) {
           _defaultMenuItems.push({
             key: 'stop-spotlight',
@@ -214,10 +214,10 @@ export const usePeoplePane = (props: {
         const onStartSpotlight = isMe
           ? onStartLocalSpotlight
           : onStartRemoteSpotlight
-          ? () => {
-              onStartRemoteSpotlight([participantId]);
-            }
-          : undefined;
+            ? () => {
+                onStartRemoteSpotlight([participantId]);
+              }
+            : undefined;
         if (onStartSpotlight && startSpotlightMenuText) {
           _defaultMenuItems.push({
             key: 'start-spotlight',

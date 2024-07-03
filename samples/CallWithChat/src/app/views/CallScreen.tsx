@@ -111,6 +111,24 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     };
   }, []);
 
+  // Update stale mobile browsers
+  useEffect(() => {
+    /**
+     * We want to make sure that the page is up to date. If for example a browser is dismissed
+     * on mobile, the page will be stale when opened again. This event listener will reload the page
+     */
+    window.addEventListener('pageshow', (event) => {
+      if (event.persisted) {
+        window.location.reload();
+      }
+    });
+    return () => {
+      window.removeEventListener('pageshow', () => {
+        window.location.reload();
+      });
+    };
+  }, []);
+
   const callIdRef = useRef<string>();
   const { currentTheme, currentRtl } = useSwitchableFluentTheme();
   const isMobileSession = useIsMobile();
@@ -161,6 +179,19 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
 
   const shouldHideScreenShare = isMobileSession || isIOS();
 
+  /* @conditional-compile-remove(file-sharing-acs) */
+  const attachmentOptions = useMemo(() => {
+    // Returning undefined for none group call locators
+    // This includes teams meeting link and teams meeting id locators
+    // Because BYOS file sharing in interop chat is not supported currently
+    if (locator && !isGroupCallLocator(locator)) {
+      return undefined;
+    }
+    return {
+      uploadOptions: attachmentUploadOptions
+    };
+  }, [locator]);
+
   const options: CallWithChatCompositeOptions = useMemo(
     () => ({
       callControls: {
@@ -171,11 +202,13 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
         }
       },
       /* @conditional-compile-remove(file-sharing-acs) */
-      attachmentOptions: {
-        uploadOptions: attachmentUploadOptions
-      }
+      attachmentOptions: attachmentOptions
     }),
-    [shouldHideScreenShare]
+    [
+      /* @conditional-compile-remove(file-sharing-acs) */
+      attachmentOptions,
+      shouldHideScreenShare
+    ]
   );
 
   // Dispose of the adapter in the window's before unload event.

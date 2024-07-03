@@ -421,7 +421,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
         callClient.offStateChange(onStateChange);
         return;
       }
-
       // `updateClientState` searches for the current call from all the calls in the state using a cached `call.id`
       // from the call object. `call.id` can change during a call. We must update the cached `call.id` before
       // calling `updateClientState` so that we find the correct state object for the call even when `call.id`
@@ -429,6 +428,11 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
       // https://github.com/Azure/communication-ui-library/pull/1820
       if (this.call?.id) {
         this.context.setCurrentCallId(this.call.id);
+      }
+
+      // if the call hits the connected state we want to pause all calling sounds if playing.
+      if (this.call?.state === 'Connected' && this.callingSoundSubscriber?.playingSounds) {
+        this.callingSoundSubscriber.pauseSounds();
       }
 
       // If the call connects we need to clean up any previous unparentedViews
@@ -1081,6 +1085,8 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
   on(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
   on(event: 'roleChanged', listener: PropertyChangedEvent): void;
   on(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
+  /* @conditional-compile-remove(soft-mute) */
+  on(event: 'mutedByOthers', listener: PropertyChangedEvent): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public on(event: string, listener: (e: any) => void): void {
@@ -1330,6 +1336,8 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
   off(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
   off(event: 'roleChanged', listener: PropertyChangedEvent): void;
   off(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
+  /* @conditional-compile-remove(soft-mute) */
+  off(event: 'mutedByOthers', listener: PropertyChangedEvent): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public off(event: string, listener: (e: any) => void): void {
