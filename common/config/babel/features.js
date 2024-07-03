@@ -24,9 +24,7 @@ module.exports = {
     // Feature for Rich Text Editor (RTE) image upload support
     "rich-text-editor-image-upload",
     // Feature for showing notifications
-    "notifications",
-    // Soft Mute feature for ACS and Interop calls
-    "soft-mute"
+    "notifications"
   ],
   beta: [
     "call-readiness",
@@ -78,7 +76,9 @@ module.exports = {
     // Feature for Rich Text Editor (RTE) support
     'rich-text-editor',
     // Feature to support file sharing in ACS chats
-    "file-sharing-acs"
+    "file-sharing-acs",
+    // Soft Mute feature for ACS and Interop calls
+    "soft-mute"
   ],
   stable: [
     // Demo feature. Used in live-documentation of conditional compilation.
@@ -94,8 +94,8 @@ module.exports = {
     'meeting-id',
     // Feature for end call options 
     'end-call-options',
-     // Feature to support file sharing in Teams interoperability chats
-     "file-sharing-teams-interop",
+    // Feature to support file sharing in Teams interoperability chats
+    "file-sharing-teams-interop",
     // Get join conference information
     'teams-meeting-conference'
   ]
