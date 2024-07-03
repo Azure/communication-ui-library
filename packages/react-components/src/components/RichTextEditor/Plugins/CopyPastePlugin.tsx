@@ -32,7 +32,11 @@ export default class CopyPastePlugin implements EditorPlugin {
   }
 }
 
-const handleBeforePasteEvent = (
+/**
+ * @internal
+ * Exported only for unit testing
+ */
+export const handleBeforePasteEvent = (
   event: PluginEvent,
   /* @conditional-compile-remove(rich-text-editor-image-upload) */ onPaste?: (event: {
     content: DocumentFragment;
