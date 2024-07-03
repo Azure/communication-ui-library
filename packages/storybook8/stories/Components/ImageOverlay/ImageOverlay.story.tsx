@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { FluentThemeProvider, ImageOverlay } from '@azure/communication-react';
+import { FluentThemeProvider, ImageOverlay as ImageOverlayComponent } from '@azure/communication-react';
 import React, { useState } from 'react';
 
 const ImageOverlayStory = (args: { showTitle: string | undefined; setAltText: string | undefined }): JSX.Element => {
@@ -18,7 +18,7 @@ const ImageOverlayStory = (args: { showTitle: string | undefined; setAltText: st
       <div style={{ width: '31.25rem' }}>
         <img alt="image" src="images/inlineImageExample1.png" onClick={imgClickedHandler} />
       </div>
-      <ImageOverlay
+      <ImageOverlayComponent
         isOpen={overlayImageSrc !== undefined}
         imageSrc={overlayImageSrc || ''}
         title={args.showTitle}
@@ -34,4 +34,4 @@ const ImageOverlayStory = (args: { showTitle: string | undefined; setAltText: st
   );
 };
 
-export const Preview = ImageOverlayStory.bind({});
+export const ImageOverlay = ImageOverlayStory.bind({});

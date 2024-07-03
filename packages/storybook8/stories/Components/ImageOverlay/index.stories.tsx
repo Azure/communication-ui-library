@@ -4,10 +4,10 @@
 import { ImageOverlay as ImageOverlayComponent } from '@azure/communication-react';
 import { Meta } from '@storybook/react';
 
+import { controlsForImageOverlay, hiddenControl } from '../../controlsUtils';
 import { ImageOverlayExample } from './snippets/ImageOverlay.snippet';
-import { controlsToAdd, hiddenControl } from './utils';
 
-export { Preview } from './ImageOverlay.story';
+export { ImageOverlay } from './ImageOverlay.story';
 
 export const ImageOverlaySnippetDocsOnly = {
   render: ImageOverlayExample
@@ -18,8 +18,8 @@ const meta: Meta = {
   component: ImageOverlayComponent,
   argTypes: {
     // Custom Controls
-    showTitle: controlsToAdd.showTitle,
-    setAltText: controlsToAdd.setAltText,
+    showTitle: controlsForImageOverlay.showTitle,
+    setAltText: controlsForImageOverlay.setAltText,
     // Hidden controls
     isOpen: hiddenControl,
     imageSrc: hiddenControl,
