@@ -34,8 +34,6 @@ import { DtmfDialpadPage } from './DtmfDialpadPage';
 import { showDtmfDialer } from '../utils/MediaGalleryUtils';
 import { getTargetCallees } from '../selectors/baseSelectors';
 import { Prompt, PromptProps } from '../components/Prompt';
-/* @conditional-compile-remove(teams-meeting-conference) */
-import { BadNetworkQualityBannerProps } from '../components/BadNetworkQualityNotificationBar';
 
 /**
  * @private
@@ -50,6 +48,8 @@ export interface CallPageProps {
   mobileChatTabHeader?: MobileChatSidePaneTabHeaderProps;
   options?: CallCompositeOptions;
   latestErrors: ActiveErrorMessage[] | /* @conditional-compile-remove(notifications) */ ActiveNotification[];
+  /* @conditional-compile-remove(notifications) */
+  latestNotifications: ActiveNotification[];
   onDismissError: (
     error: ActiveErrorMessage | /* @conditional-compile-remove(notifications) */ ActiveNotification
   ) => void;
@@ -63,8 +63,6 @@ export interface CallPageProps {
   setPinnedParticipants?: (pinnedParticipants: string[]) => void;
   compositeAudioContext?: AudioContext;
   disableAutoShowDtmfDialer?: boolean;
-  /* @conditional-compile-remove(teams-meeting-conference) */
-  badNetworkQualityBannerProps?: BadNetworkQualityBannerProps;
 }
 
 /**
@@ -85,7 +83,9 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
     pinnedParticipants,
     setPinnedParticipants,
     compositeAudioContext,
-    disableAutoShowDtmfDialer = false
+    disableAutoShowDtmfDialer = false,
+    /* @conditional-compile-remove(notifications) */
+    latestNotifications
   } = props;
 
   // To use useProps to get these states, we need to create another file wrapping Call,
@@ -122,7 +122,7 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
           options={props.options}
           updateSidePaneRenderer={props.updateSidePaneRenderer}
           mobileChatTabHeader={props.mobileChatTabHeader}
-          latestErrors={props.latestErrors}
+          latestErrors={props.latestErrors as ActiveErrorMessage[]}
           onDismissError={props.onDismissError}
           capabilitiesChangedNotificationBarProps={props.capabilitiesChangedNotificationBarProps}
           onSetDialpadPage={() => setDtmfDialerPresent(!dtmfDialerPresent)}
@@ -176,7 +176,10 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
             isNetworkHealthy(networkReconnectTileProps.networkReconnectValue) ? (
               onRenderGalleryContentTrampoline()
             ) : (
-              <NetworkReconnectTile {...networkReconnectTileProps} />
+              <NetworkReconnectTile
+                {...networkReconnectTileProps}
+                /* /* @conditional-compile-remove(teams-meeting-conference) */ isMobile={mobileView}
+              />
             )
           ) : (
             <></>
@@ -187,6 +190,8 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
         onCloseChatPane={onCloseChatPane}
         dataUiId={'call-page'}
         latestErrors={props.latestErrors}
+        /* @conditional-compile-remove(notifications) */
+        latestNotifications={latestNotifications}
         onDismissError={props.onDismissError}
         onUserSetOverflowGalleryPositionChange={onSetUserSetOverflowGalleryPosition}
         onUserSetGalleryLayoutChange={onUserSetGalleryLayoutChange}
@@ -199,8 +204,6 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
         hideSpotlightButtons={options?.spotlight?.hideSpotlightButtons}
         pinnedParticipants={pinnedParticipants}
         setPinnedParticipants={setPinnedParticipants}
-        /* @conditional-compile-remove(teams-meeting-conference) */
-        badNetworkQualityBannerProps={props.badNetworkQualityBannerProps}
       />
       {<Prompt isOpen={isPromptOpen} onDismiss={() => setIsPromptOpen(false)} {...promptProps} />}
     </>
