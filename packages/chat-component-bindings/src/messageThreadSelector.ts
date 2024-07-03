@@ -136,7 +136,13 @@ const processChatMessageContent = (message: ChatMessageWithStatus): string | und
         const attachmentPreviewUrl = attachments.find((attachment) => attachment.id === img.id)?.previewUrl;
         if (attachmentPreviewUrl) {
           const resourceCache = message.resourceCache?.[attachmentPreviewUrl];
-          img.src = getResourceSourceUrl(resourceCache);
+          const src = getResourceSourceUrl(resourceCache);
+          if (!src) {
+            const brokenImageView = getBrokenImageViewNode();
+            img.parentElement?.replaceChild(brokenImageView, img);
+          } else {
+            img.setAttribute('src', src);
+          }
         }
       });
       content = document.body.innerHTML;
@@ -163,22 +169,24 @@ const generateImageAttachmentImgHtml = (message: ChatMessageWithStatus, attachme
     const contentType = extractAttachmentContentTypeFromName(attachment.name);
     const resourceCache = message.resourceCache?.[attachment.previewUrl];
     const src = getResourceSourceUrl(resourceCache);
-
+    if (!src) {
+      return `\r\n<p>${getBrokenImageViewNode()}</p>`
+    }
     return `\r\n<p><img alt="image" src="${src}" itemscope="${contentType}" id="${attachment.id}"></p>`;
   }
 
   return '';
 };
 
-const getResourceSourceUrl = (result?: ResourceFetchResult): string => {
-  let src = '';
+const getResourceSourceUrl = (result?: ResourceFetchResult): string | undefined => {
+  let src;
   if (result) {
-    if (result.error || !result.sourceUrl) {
+    //if (result.error || !result.sourceUrl) {
       // In case of an error we set src to some invalid value to show broken image
-      src = 'blob://';
-    } else {
+      // src = 'blob://';
+    /*} else {
       src = result.sourceUrl;
-    }
+    }*/
   }
   return src;
 };
@@ -360,6 +368,13 @@ const sanitizedMessageContentType = (type: string): MessageContentType => {
     ? lowerCaseType
     : 'unknown';
 };
+
+const getBrokenImageViewNode = (): HTMLDivElement => {
+  const wrapper = document.createElement('div');
+  wrapper.setAttribute('id', 'broken-image-wrapper');
+  return wrapper;
+};
+
 const isMessageValidToRender = (message: ChatMessageWithStatus): boolean => {
   if (message.deletedOn) {
     return false;
