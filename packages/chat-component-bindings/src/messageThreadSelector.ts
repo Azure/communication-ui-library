@@ -179,16 +179,12 @@ const generateImageAttachmentImgHtml = (message: ChatMessageWithStatus, attachme
 };
 
 const getResourceSourceUrl = (result?: ResourceFetchResult): string | undefined => {
-  let src;
-  if (result) {
-    //if (result.error || !result.sourceUrl) {
-    // In case of an error we set src to some invalid value to show broken image
-    // src = 'blob://';
-    /*} else {
-      src = result.sourceUrl;
-    }*/
+  // if result contains valid sourceUrl, return it as a valid image src
+  // otherwise, return undefined
+  if (result && !result.error && result.sourceUrl) {
+    return result.sourceUrl;
   }
-  return src;
+  return undefined;
 };
 
 const extractAttachmentContentTypeFromName = (name?: string): string => {
