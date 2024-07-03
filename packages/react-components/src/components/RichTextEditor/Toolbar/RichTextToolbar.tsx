@@ -263,6 +263,8 @@ const getCommandBarItem = ({
   dataTestId: string;
 }): ICommandBarItemProps => {
   return {
+    role: canCheck ? 'menuitemcheckbox' : 'menuitem',
+    'aria-checked': canCheck ? checked : undefined, // `menuitem` role doesn't support `aria-checked`
     'data-testid': dataTestId,
     key: key,
     iconProps: { iconName: icon },

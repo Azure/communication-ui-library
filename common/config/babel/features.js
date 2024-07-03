@@ -94,8 +94,8 @@ module.exports = {
     'meeting-id',
     // Feature for end call options 
     'end-call-options',
-     // Feature to support file sharing in Teams interoperability chats
-     "file-sharing-teams-interop",
+    // Feature to support file sharing in Teams interoperability chats
+    "file-sharing-teams-interop",
     // Get join conference information
     'teams-meeting-conference'
   ]
