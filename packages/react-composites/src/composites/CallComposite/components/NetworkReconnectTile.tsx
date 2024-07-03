@@ -149,7 +149,7 @@ export const NetworkReconnectTile = (props: NetworkReconnectTileProps): JSX.Elem
                   >
                     <Stack.Item>
                       <Stack horizontal>
-                        <Stack className={infoConnectionLinkStyle(theme)}></Stack>
+                        {!props.isMobile && <Stack className={infoConnectionLinkStyle(theme)}></Stack>}
                         <Stack.Item className={phoneInfoIcon(theme)}>
                           <Icon iconName="DtmfDialpadButton" className={phoneInfoIconStyle(theme)} />
                         </Stack.Item>
