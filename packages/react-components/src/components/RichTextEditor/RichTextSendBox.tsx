@@ -11,12 +11,9 @@ import { sendIconStyle } from '../styles/SendBox.styles';
 import { useV9CustomStyles } from '../styles/SendBox.styles';
 import { InputBoxButton } from '../InputBoxButton';
 import { RichTextSendBoxErrors, RichTextSendBoxErrorsProps } from './RichTextSendBoxErrors';
-import {
-  addUploadedImagesToMessage,
-  isMessageTooLong,
-  isSendBoxButtonAriaDisabled,
-  sanitizeText
-} from '../utils/SendBoxUtils';
+import { isMessageTooLong, isSendBoxButtonAriaDisabled, sanitizeText } from '../utils/SendBoxUtils';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+import { addUploadedImagesToMessage } from '../utils/SendBoxUtils';
 import { RichTextEditorComponentRef } from './RichTextEditor';
 import { useTheme } from '../../theming';
 import { richTextActionButtonsStyle, sendBoxRichTextEditorStyle } from '../styles/RichTextEditor.styles';
@@ -400,9 +397,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     /* @conditional-compile-remove(file-sharing-acs) */
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
     toAttachmentMetadata,
-    onSendMessage,
-    /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    addUploadedImagesToMessage
+    onSendMessage
   ]);
 
   const hasErrorMessage = useMemo(() => {
