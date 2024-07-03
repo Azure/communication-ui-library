@@ -60,7 +60,7 @@ test.describe('Tests related to messaging', async () => {
     // Mock the api call before navigating
     await page.route(serverUrl + '/images/inlineImageExample1.png', async (route) => {
       try {
-        await route.fulfill({ status: 300, contentType: 'text/html' });
+        await route.fulfill({ status: 404, contentType: 'text/html' });
       } catch (error) {
         console.error('Failed at fulfill on route, Error: ', error);
       }
