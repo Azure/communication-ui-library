@@ -50,18 +50,18 @@ export const verticalGalleryContainerStyle = (
         paddingBottom: '0.5rem'
       }
     : !isNarrow && isShort
-    ? {
-        width: `${SHORT_VERTICAL_GALLERY_TILE_SIZE_REM.width}rem`,
-        height: shouldFloatLocalVideo
-          ? `calc(100% - ${SHORT_VERTICAL_GALLERY_FLOATING_MODAL_SIZE_REM.height}rem)`
-          : '100%',
-        paddingBottom: '0.5rem'
-      }
-    : {
-        width: `${VERTICAL_GALLERY_TILE_SIZE_REM.width}rem`,
-        height: shouldFloatLocalVideo ? `calc(100% - ${VERTICAL_GALLERY_FLOATING_MODAL_SIZE_REM.height}rem)` : '100%',
-        paddingBottom: '0.5rem'
-      };
+      ? {
+          width: `${SHORT_VERTICAL_GALLERY_TILE_SIZE_REM.width}rem`,
+          height: shouldFloatLocalVideo
+            ? `calc(100% - ${SHORT_VERTICAL_GALLERY_FLOATING_MODAL_SIZE_REM.height}rem)`
+            : '100%',
+          paddingBottom: '0.5rem'
+        }
+      : {
+          width: `${VERTICAL_GALLERY_TILE_SIZE_REM.width}rem`,
+          height: shouldFloatLocalVideo ? `calc(100% - ${VERTICAL_GALLERY_FLOATING_MODAL_SIZE_REM.height}rem)` : '100%',
+          paddingBottom: '0.5rem'
+        };
 };
 
 /**

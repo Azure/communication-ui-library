@@ -343,7 +343,7 @@ export const createMockLocalVideoStream = (): LocalVideoStream =>
     switchSource: Promise.resolve,
 
     feature: () => createMockVideoEffectsAPI()
-  } as unknown as LocalVideoStream);
+  }) as unknown as LocalVideoStream;
 
 /**
  * @private

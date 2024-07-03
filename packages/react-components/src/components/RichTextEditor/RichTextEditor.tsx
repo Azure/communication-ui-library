@@ -102,39 +102,35 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
   const theme = useTheme();
   const [contextMenuProps, setContextMenuProps] = useState<IContextualMenuProps | null>(null);
 
-  useImperativeHandle(
-    ref,
-    () => {
-      return {
-        focus() {
-          if (editor.current) {
-            editor.current.focus();
-          }
-        },
-        setEmptyContent() {
-          if (editor.current) {
-            editor.current.formatContentModel;
-            // remove all content from the editor and update the model
-            // ContentChanged event will be sent by RoosterJS automatically
-            editor.current.formatContentModel((model: ShallowMutableContentModelDocument): boolean => {
-              model.blocks = [];
-              return true;
-            });
-            //reset content model
-            onContentModelUpdate && onContentModelUpdate(undefined);
-          }
-        },
-        getPlainContent() {
-          if (editor.current) {
-            return exportContent(editor.current, 'PlainTextFast');
-          } else {
-            return undefined;
-          }
+  useImperativeHandle(ref, () => {
+    return {
+      focus() {
+        if (editor.current) {
+          editor.current.focus();
         }
-      };
-    },
-    [onContentModelUpdate]
-  );
+      },
+      setEmptyContent() {
+        if (editor.current) {
+          editor.current.formatContentModel;
+          // remove all content from the editor and update the model
+          // ContentChanged event will be sent by RoosterJS automatically
+          editor.current.formatContentModel((model: ShallowMutableContentModelDocument): boolean => {
+            model.blocks = [];
+            return true;
+          });
+          //reset content model
+          onContentModelUpdate && onContentModelUpdate(undefined);
+        }
+      },
+      getPlainContent() {
+        if (editor.current) {
+          return exportContent(editor.current, 'PlainTextFast');
+        } else {
+          return undefined;
+        }
+      }
+    };
+  }, [onContentModelUpdate]);
 
   const toolbarPlugin = React.useMemo(() => {
     return new RichTextToolbarPlugin();
@@ -230,7 +226,7 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
   }, [copyPastePlugin, onPaste]);
 
   const plugins: EditorPlugin[] = useMemo(() => {
-    const contentEdit = new EditPlugin();
+    const contentEdit = new EditPlugin({ handleTabKey: false });
     // AutoFormatPlugin previously was a part of the edit plugin
     const autoFormatPlugin = new AutoFormatPlugin({ autoBullet: true, autoNumbering: true, autoLink: true });
     const roosterPastePlugin = new PastePlugin(false);
