@@ -3,14 +3,15 @@
 
 import React from 'react';
 
-import { IIconProps, IMessageBarProps, MessageBar, MessageBarType, PrimaryButton, Stack } from '@fluentui/react';
+import { IMessageBarProps, Stack } from '@fluentui/react';
+import { ActiveNotification, Notifications } from '@internal/react-components';
 
 /**
  * @private
  */
 export interface BreakoutRoomsNotificationBarProps extends IMessageBarProps {
-  breakoutRoomsNotifications: BreakoutRoomsNotification[];
-  onDismissNotification: (notification: BreakoutRoomsNotification) => void;
+  breakoutRoomsNotifications: ActiveNotification[];
+  onDismissNotification: (notification: ActiveNotification) => void;
 }
 
 /**
@@ -29,7 +30,7 @@ export interface BreakoutRoomsNotification {
   /**
    * Name of event
    */
-  target: NotificationTarget;
+  type: NotificationTarget;
 
   messageKey: string;
   /**
@@ -40,11 +41,9 @@ export interface BreakoutRoomsNotification {
    */
   timestamp?: Date;
 
-  actions?: {
-    actionName: string;
-    action: (notification?: BreakoutRoomsNotification) => Promise<void>;
-    dismissAfter?: boolean;
-  }[];
+  onClickPrimaryButton?: () => void;
+
+  onClickSecondaryButton?: () => void;
 }
 
 /**
@@ -52,79 +51,24 @@ export interface BreakoutRoomsNotification {
  * @private
  */
 export const BreakoutRoomsNotificationBar = (props: BreakoutRoomsNotificationBarProps): JSX.Element => {
-  console.log('BreakoutRoomsNotificationBar props: ', props.breakoutRoomsNotifications);
   return (
-    <Stack data-ui-id="breakout-rooms-notification-bar-stack">
-      {props.breakoutRoomsNotifications.map((notification) => {
-        const message = notification.messageKey;
-        if (!message) {
-          return null;
+    <Stack
+      data-ui-id="breakout-rooms-notification-bar-stack"
+      styles={{
+        root: {
+          innerText: {
+            alignSelf: 'center'
+          }
         }
-        const iconProps = getCustomMessageBarIconProps(notification);
-        return (
-          <MessageBar
-            key={notification.target}
-            styles={messageBarStyles}
-            messageBarType={MessageBarType.warning}
-            dismissIconProps={{ iconName: 'ErrorBarClear' }}
-            onDismiss={() => props.onDismissNotification(notification)}
-            messageBarIconProps={iconProps}
-            actions={getActions(notification, props.onDismissNotification)}
-          >
-            {message}
-          </MessageBar>
-        );
-      })}
+      }}
+    >
+      <Notifications
+        activeNotifications={props.breakoutRoomsNotifications.map((notification) => ({
+          type: notification.type,
+          onClickPrimaryButton: notification.onClickPrimaryButton,
+          onClickSecondaryButton: notification.onClickSecondaryButton
+        }))}
+      />
     </Stack>
   );
-};
-
-const getCustomMessageBarIconProps = (notification: BreakoutRoomsNotification): IIconProps | undefined => {
-  const iconName: string | undefined = undefined;
-  switch (notification.target) {
-    default:
-      return { iconName, styles: { root: { '> *': { height: '1rem', width: '1rem' } } } };
-  }
-};
-
-const getActions = (
-  notification: BreakoutRoomsNotification,
-  onDismissNotification: (notification: BreakoutRoomsNotification) => void
-): JSX.Element | undefined => {
-  console.log('getActions notification: ', notification);
-  if (!notification.actions || notification.actions.length === 0) {
-    return undefined;
-  }
-  return (
-    <Stack horizontal>
-      {notification.actions.map((action) => (
-        <PrimaryButton
-          key={action.actionName}
-          text={action.actionName}
-          onClick={() => {
-            action.action();
-            if (action.dismissAfter) {
-              onDismissNotification(notification);
-            }
-          }}
-        />
-      ))}
-    </Stack>
-  );
-};
-
-const messageBarStyles = {
-  innerText: {
-    alignSelf: 'center'
-  },
-  icon: {
-    height: 0
-  },
-  content: {
-    lineHeight: 'inherit'
-  },
-  dismissal: {
-    height: 0,
-    paddingTop: '0.8rem'
-  }
 };

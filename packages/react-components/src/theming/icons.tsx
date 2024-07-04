@@ -47,7 +47,8 @@ import {
   PinOff20Regular,
   ScaleFit20Regular,
   ScaleFill20Regular,
-  PersonDelete20Regular
+  PersonDelete20Regular,
+  ConferenceRoom20Regular
 } from '@fluentui/react-icons';
 /* @conditional-compile-remove(rich-text-editor) */
 import {
@@ -306,6 +307,10 @@ export const DEFAULT_COMPONENT_ICONS = {
   MessageResend: <ArrowClockwise16Regular />,
   MessageSeen: <Eye16Regular />,
   MessageSending: <Circle16Regular />,
+  NotificationBarBreakoutRoomOpened: <></>,
+  NotificationBarBreakoutRoomPromptJoin: <ConferenceRoom20Regular />,
+  NotificationBarBreakoutRoomClosingSoon: <ConferenceRoom20Regular />,
+  NotificationBarBreakoutRoomClosed: <></>,
   OptionsCamera: <Video20Regular />,
   OptionsMic: <Mic20Regular />,
   OptionsSpeaker: <Speaker220Regular />,

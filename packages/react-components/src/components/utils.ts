@@ -336,7 +336,11 @@ export const customNotificationIconName: Partial<{ [key in NotificationType]: st
   callCameraAlreadyInUse: 'ErrorBarCallCameraAlreadyInUse',
   callVideoStoppedBySystem: 'ErrorBarCallVideoStoppedBySystem',
   callVideoRecoveredBySystem: 'ErrorBarCallVideoRecoveredBySystem',
-  callMacOsCameraAccessDenied: 'ErrorBarCallMacOsCameraAccessDenied'
+  callMacOsCameraAccessDenied: 'ErrorBarCallMacOsCameraAccessDenied',
+  assignedBreakoutRoomOpened: 'NotificationBarBreakoutRoomOpened',
+  assignedBreakoutRoomOpenedPromptJoin: 'NotificationBarBreakoutRoomPromptJoin',
+  assignedBreakoutRoomClosingSoon: 'NotificationBarBreakoutRoom',
+  assignedBreakoutRoomClosed: 'NotificationBarBreakoutRoomClosed'
 };
 
 /**

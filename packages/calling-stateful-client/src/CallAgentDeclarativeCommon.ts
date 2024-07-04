@@ -104,7 +104,6 @@ export abstract class ProxyCallAgentCommon {
       // if (endedBreakoutRoomCall) {
       //   this._context.setLatestNotification('assignedBreakoutRoomClosed', {
       //     target: 'assignedBreakoutRoomClosed',
-      //     messageKey: 'Breakout room has closed',
       //     timestamp: new Date(Date.now())
       //   });
       // }

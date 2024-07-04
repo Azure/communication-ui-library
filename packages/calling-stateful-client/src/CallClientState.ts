@@ -875,9 +875,7 @@ export class CallError extends Error {
    */
   public timestamp: Date;
 
-  public messageKey: string;
-
-  constructor(target: CallErrorTarget, innerError: Error, timestamp?: Date, messageKey?: string) {
+  constructor(target: CallErrorTarget, innerError: Error, timestamp?: Date) {
     super();
     this.target = target;
     this.innerError = innerError;
@@ -885,7 +883,6 @@ export class CallError extends Error {
     this.timestamp = timestamp ?? new Date(Date.now());
     this.name = 'CallError';
     this.message = `${this.target}: ${this.innerError.message}`;
-    this.messageKey = messageKey ?? this.message;
   }
 }
 
@@ -961,8 +958,6 @@ export type CallNotifications = {
  */
 export interface CallNotification {
   target: NotificationTarget;
-
-  messageKey: string;
 
   timestamp: Date;
 }

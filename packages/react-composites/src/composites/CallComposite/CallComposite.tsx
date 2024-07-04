@@ -23,7 +23,7 @@ import { CallPage } from './pages/CallPage';
 import { ConfigurationPage } from './pages/ConfigurationPage';
 import { NoticePage } from './pages/NoticePage';
 import { useSelector } from './hooks/useSelector';
-import { getAssignedBreakoutRoom, getEndedCall, getPage, getTargetCallees } from './selectors/baseSelectors';
+import { getEndedCall, getPage, getTargetCallees } from './selectors/baseSelectors';
 import { LobbyPage } from './pages/LobbyPage';
 import { TransferPage } from './pages/TransferPage';
 import {
@@ -437,10 +437,8 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   const badNetworkQualityBannerProps = useBadNetworkQualityNotifications(badNetworkQualityFlag.isPoorNetworkQuality);
 
   const notifications = useAdaptedSelector(notificationsBarSelector).activeNotifications;
-  const assignedBreakoutRoom = useSelector(getAssignedBreakoutRoom);
   const breakoutRoomsNotificationBarProps = useTrackedBreakoutRoomsNotifications({
-    notifications,
-    assignedBreakoutRoom
+    notifications
   });
 
   // Track the last dismissed errors of any error kind to prevent errors from re-appearing on subsequent page navigation

@@ -1236,8 +1236,7 @@ export class CallContext {
       draft.latestErrors[notificationTarget] = new CallError(
         notificationTarget,
         new CallError(notificationTarget, new Error()),
-        undefined,
-        notification.messageKey
+        undefined
       );
     });
   }

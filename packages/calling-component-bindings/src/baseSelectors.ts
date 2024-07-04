@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-import { DominantSpeakersInfo } from '@azure/communication-calling';
+import { BreakoutRoom, DominantSpeakersInfo } from '@azure/communication-calling';
 
 import { ParticipantCapabilities } from '@azure/communication-calling';
 /* @conditional-compile-remove(unsupported-browser) */
@@ -286,4 +286,12 @@ export const getBreakoutRoomMainMeeting = (
     (call) => call.breakoutRooms?.assignedBreakoutRoom?.call?.id === props.callId
   );
   return mainMeetingCallState;
+};
+
+/** @private */
+export const getAssignedBreakoutRoom = (
+  state: CallClientState,
+  props: CallingBaseSelectorProps
+): BreakoutRoom | undefined => {
+  return state.calls[props.callId]?.breakoutRooms?.assignedBreakoutRoom;
 };

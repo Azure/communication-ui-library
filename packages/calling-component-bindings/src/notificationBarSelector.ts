@@ -1,9 +1,17 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { CallingBaseSelectorProps, getLatestErrors, getLatestNotifications } from './baseSelectors';
+import { BreakoutRoom } from '@azure/communication-calling';
+import {
+  CallingBaseSelectorProps,
+  getAssignedBreakoutRoom,
+  getLatestErrors,
+  getLatestNotifications
+} from './baseSelectors';
+import { CallNotification } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(teams-meeting-conference) */
-import { CallClientState, CallErrors, CallNotifications, NotificationTarget } from '@internal/calling-stateful-client';
+import { CallClientState, CallErrors, CallNotifications } from '@internal/calling-stateful-client';
+import { ActiveNotification } from '@internal/react-components';
 import { createSelector } from 'reselect';
 
 /**
@@ -13,31 +21,32 @@ export type NotificationBarSelector = (
   state: CallClientState,
   props: CallingBaseSelectorProps
 ) => {
-  activeNotifications: {
-    target: NotificationTarget;
-    messageKey: string;
-    timestamp: Date;
-    callId?: string;
-  }[];
+  activeNotifications: ActiveNotification[];
 };
 
 /**
  * @public
  */
 export const notificationsBarSelector: NotificationBarSelector = createSelector(
-  [getLatestNotifications, getLatestErrors],
+  [getLatestNotifications, getLatestErrors, getAssignedBreakoutRoom],
   (
     latestNotifications: CallNotifications,
-    latestErrors: CallErrors
+    latestErrors: CallErrors,
+    assignedBreakoutRoom: BreakoutRoom | undefined
   ): {
-    activeNotifications: {
-      target: NotificationTarget;
-      messageKey: string;
-      timestamp: Date;
-      callId?: string;
-    }[];
+    activeNotifications: ActiveNotification[];
   } => {
-    const notifications = Object.values(latestErrors as CallNotifications);
+    const notifications: ActiveNotification[] = Object.values(latestErrors as CallNotifications).map(
+      (notification: CallNotification) => ({
+        type: notification.target,
+        timestamp: notification.timestamp
+      })
+    );
+    notifications.forEach((notification) => {
+      if (notification.type === 'assignedBreakoutRoomOpenedPromptJoin' && assignedBreakoutRoom) {
+        notification.onClickPrimaryButton = () => assignedBreakoutRoom.join();
+      }
+    });
     console.log('notifications: ', notifications);
     return { activeNotifications: notifications };
   }
