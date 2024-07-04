@@ -5,8 +5,6 @@ import { expect } from '@playwright/test';
 import { sendMessage, waitForMessageDelivered } from '../../common/chatTestHelpers';
 import { dataUiId, stableScreenshot, waitForChatCompositeToLoad } from '../../common/utils';
 import { TEST_PARTICIPANTS, buildUrlForChatAppUsingFakeAdapter, test } from './fixture';
-import { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
-import { nanoid } from 'nanoid';
 
 const TEST_MESSAGE = 'No, sir, this will not do.';
 
