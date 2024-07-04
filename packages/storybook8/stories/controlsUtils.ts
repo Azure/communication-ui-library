@@ -142,11 +142,15 @@ export const orientationArg = {
   defaultValue: 'landscape'
 };
 
+export const controlsForImageOverlay = {
+  showTitle: { control: 'text', name: 'Set Title' },
+  setAltText: { control: 'text', name: 'Set Alt Text' }
+};
+
 export const controlsToAdd = {
   alternateCallerId: {
     control: 'text',
     description: 'added',
-    defaultValue: '',
     name: 'Alternate CallerID',
     type: { name: 'string', required: true }
   },
