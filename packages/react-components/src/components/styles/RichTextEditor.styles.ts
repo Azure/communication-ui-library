@@ -267,7 +267,7 @@ export const insertTableMenuCellButtonStyles = (theme: Theme): IStyle => {
   return {
     width: '24px',
     height: '24px',
-    border: `solid 0.5px ${theme.palette.neutralSecondary}`,
+    border: `solid 0.5px ${theme.palette.neutralSecondaryAlt}`,
     cursor: 'pointer',
     background: 'transparent'
   };
@@ -278,7 +278,8 @@ export const insertTableMenuCellButtonStyles = (theme: Theme): IStyle => {
  */
 export const insertTableMenuCellButtonSelectedStyles = (theme: Theme): IStyle => {
   return {
-    background: theme.palette.themePrimary
+    background: theme.palette.themePrimary,
+    border: `solid 0.5px ${theme.palette.themeLighterAlt}`
   };
 };
 
@@ -298,7 +299,7 @@ export const insertTableMenuFocusZone = (theme: Theme): string => {
   return mergeStyles({
     display: 'inline-grid',
     gridTemplateColumns: 'auto auto auto auto auto',
-    border: `solid 0.5px ${theme.palette.neutralSecondary}`
+    border: `solid 0.5px ${theme.palette.neutralSecondaryAlt}`
   });
 };
 
