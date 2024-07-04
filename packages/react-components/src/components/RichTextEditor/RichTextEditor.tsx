@@ -226,7 +226,7 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
   }, [copyPastePlugin, onPaste]);
 
   const plugins: EditorPlugin[] = useMemo(() => {
-    const contentEdit = new EditPlugin();
+    const contentEdit = new EditPlugin({ handleTabKey: false });
     // AutoFormatPlugin previously was a part of the edit plugin
     const autoFormatPlugin = new AutoFormatPlugin({ autoBullet: true, autoNumbering: true, autoLink: true });
     const roosterPastePlugin = new PastePlugin(false, {

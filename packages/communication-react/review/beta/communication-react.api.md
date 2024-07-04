@@ -1121,7 +1121,7 @@ export interface CallWithChatAdapterManagement {
     lowerHand(): Promise<void>;
     mute(): Promise<void>;
     muteAllRemoteParticipants(): Promise<void>;
-    muteParticipant(userIds: string): Promise<void>;
+    muteParticipant(userId: string): Promise<void>;
     onReactionClick(reaction: Reaction_2): Promise<void>;
     queryCameras(): Promise<VideoDeviceInfo[]>;
     queryMicrophones(): Promise<AudioDeviceInfo[]>;
@@ -2330,15 +2330,10 @@ export interface CompositeStrings {
 
 // @public
 export interface ConferencePhoneInfo {
-    // (undocumented)
     city?: string;
-    // (undocumented)
     conferenceId: string;
-    // (undocumented)
     country?: string;
-    // (undocumented)
     isTollFree: boolean;
-    // (undocumented)
     phoneNumber: string;
 }
 
@@ -3282,7 +3277,7 @@ export interface MediaDiagnosticsState {
     latest: LatestMediaDiagnostics;
 }
 
-// @beta
+// @public
 export interface MeetingConferencePhoneInfoModalStrings {
     meetingConferencePhoneInfoModalDialIn?: string;
     meetingConferencePhoneInfoModalMeetingId?: string;
