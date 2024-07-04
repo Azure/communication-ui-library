@@ -142,11 +142,15 @@ export const orientationArg = {
   defaultValue: 'landscape'
 };
 
+export const controlsForImageOverlay = {
+  showTitle: { control: 'text', name: 'Set Title' },
+  setAltText: { control: 'text', name: 'Set Alt Text' }
+};
+
 export const controlsToAdd = {
   alternateCallerId: {
     control: 'text',
     description: 'added',
-    defaultValue: '',
     name: 'Alternate CallerID',
     type: { name: 'string', required: true }
   },
@@ -239,7 +243,7 @@ export const controlsToAdd = {
     name: 'Request Status'
   },
   disabled: { control: 'boolean', defaultValue: false, name: 'Disable component' },
-  displayName: { control: 'text', defaultValue: 'John Smith', name: 'Display Name' },
+  displayName: { control: 'text', name: 'Display Name' },
   enableJumpToNewMessageButton: { control: 'boolean', defaultValue: true, name: 'Enable Jump To New Message' },
   endpointUrl: {
     control: 'text',
@@ -265,13 +269,13 @@ export const controlsToAdd = {
     name: 'Mute all participants option'
   },
   isMuted: { control: 'boolean', defaultValue: false, name: 'Is muted' },
-  isSpeaking: { control: 'boolean', defaultValue: false, name: 'Is Speaking' },
+  isSpeaking: { control: 'boolean', name: 'Is Speaking' },
   isScreenSharing: { control: 'boolean', defaultValue: false, name: 'Is screen sharing' },
   isRaisedHand: { control: 'boolean', defaultValue: false, name: 'Is Raised Hand' },
   isSendBoxWithWarning: { control: 'boolean', defaultValue: false, name: 'Has warning/information message' },
   isVideoAvailable: { control: 'boolean', defaultValue: true, name: 'Is video available' },
-  isVideoMirrored: { control: 'boolean', defaultValue: false, name: 'Is video mirrored' },
-  isVideoReady: { control: 'boolean', defaultValue: false, name: 'Is Video ready' },
+  isVideoMirrored: { control: 'boolean', name: 'Is video mirrored' },
+  isVideoReady: { control: 'boolean', name: 'Is video ready' },
   layoutHeight: {
     control: {
       type: 'range',
@@ -352,10 +356,10 @@ export const controlsToAdd = {
   showChatTopic: { control: 'boolean', defaultValue: true, name: 'Show Topic' },
   showErrorBar: { control: 'boolean', defaultValue: true, name: 'Show ErrorBar' },
   showLabel: { control: 'boolean', defaultValue: false, name: 'Show label' },
-  showVideoTileLabel: { control: 'boolean', defaultValue: true, name: 'Show label' },
+  showVideoTileLabel: { control: 'boolean', name: 'Show label' },
   showMessageDate: { control: 'boolean', defaultValue: true, name: 'Enable Message Date' },
   showMessageStatus: { control: 'boolean', defaultValue: true, name: 'Enable Message Status Indicator' },
-  showMuteIndicator: { control: 'boolean', defaultValue: true, name: 'Show Mute/UnMute Indicator' },
+  showMuteIndicator: { control: 'boolean', name: 'Show Mute/UnMute Indicator' },
   speakers: { control: 'object', defaultValue: defaultControlsSpeakers, name: 'Speakers' },
   teamsMeetingLink: { control: 'text', defaultValue: '', name: 'Teams meeting link' },
   theme: { control: 'radio', options: themeChoices, defaultValue: 'Default', name: 'Theme' },
@@ -386,8 +390,8 @@ export const controlsToAdd = {
     defaultValue: 'followDeviceOrientation',
     name: 'Local Video Tile Size'
   },
-  videoTileHeight: { control: { type: 'range', min: 80, max: 800, step: 10 }, defaultValue: 300, name: 'Height (px)' },
-  videoTileWidth: { control: { type: 'range', min: 100, max: 1200, step: 10 }, defaultValue: 400, name: 'Width (px)' },
+  videoTileHeight: { control: { type: 'range', min: 80, max: 800, step: 10 }, name: 'Height (px)' },
+  videoTileWidth: { control: { type: 'range', min: 100, max: 1200, step: 10 }, name: 'Width (px)' },
   callWithChatControlOptions: {
     control: 'object',
     defaultValue: {
