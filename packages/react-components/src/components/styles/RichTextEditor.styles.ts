@@ -267,7 +267,7 @@ export const insertTableMenuCellButtonStyles = (theme: Theme): IStyle => {
   return {
     width: '24px',
     height: '24px',
-    border: `solid 1px ${theme.palette.neutralSecondary}`,
+    border: `solid 1px ${theme.palette.neutralSecondaryAlt}`,
     cursor: 'pointer',
     background: 'transparent'
   };
@@ -299,7 +299,7 @@ export const insertTableMenuFocusZone = (theme: Theme): string => {
   return mergeStyles({
     display: 'inline-grid',
     gridTemplateColumns: 'auto auto auto auto auto',
-    border: `solid 1px ${theme.palette.neutralSecondary}`
+    border: `solid 1px ${theme.palette.neutralSecondaryAlt}`
   });
 };
 
