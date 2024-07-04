@@ -62,28 +62,21 @@ test.describe('Tests related to messaging', async () => {
     // Mock the api call before navigating
     await page.route(serverUrl + '/images/inlineImageExample1.png', async (route) => {
       await route.fulfill({
-        status: 400
+        status: 404
       });
     });
 
     await waitForChatCompositeToLoad(page);
 
-    const teamsUser: MicrosoftTeamsUserIdentifier = {
-      rawId: '00000000-0000-0000-0000-000000000000',
-      microsoftTeamsUserId: '8:orgid:00000000-0000-0000-0000-000000000000',
-      isAnonymous: false,
-      cloud: 'public'
-    };
-
     await page.goto(
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
         localParticipant: TEST_PARTICIPANTS[1],
-        remoteParticipants: [{ id: teamsUser, displayName: 'Teams User' }],
+        remoteParticipants: [TEST_PARTICIPANTS[0], TEST_PARTICIPANTS[1], TEST_PARTICIPANTS[2]],
         localParticipantPosition: 1,
         sendRemoteInlineImageMessage: true
       })
     );
-    await page.locator(dataUiId('SomeImageId1')).hover();
+    await page.locator(dataUiId('broken-image-icon')).hover();
     expect(await stableScreenshot(page, { stubMessageTimestamps: true })).toMatchSnapshot(
       'messaging-inline-image-broken-image.png'
     );

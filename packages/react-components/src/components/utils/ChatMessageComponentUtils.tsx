@@ -21,6 +21,8 @@ import { formatTimeForChatMessage, formatTimestampForChatMessage } from './Datet
 import { ComponentLocale } from '../../localization/LocalizationProvider';
 import { chatMessageEditedTagStyle } from '../styles/ChatMessageComponent.styles';
 import { Theme } from '@fluentui/react';
+import { ImageOff48Regular } from '@fluentui/react-icons';
+import { renderToStaticMarkup } from 'react-dom/server';
 
 /** @private
  * Return the string value for the FluentUI message attached prop based on the message's attached status.
@@ -161,4 +163,13 @@ export const getMessageEditedDetails = (
     return <div className={chatMessageEditedTagStyle(theme)}>{editedTag}</div>;
   }
   return undefined;
+};
+
+/**
+ * @private
+ */
+export const getFluentImageOffIcon = (): string => {
+  const icon = <ImageOff48Regular />;
+  const element = renderToStaticMarkup(icon);
+  return element;
 };

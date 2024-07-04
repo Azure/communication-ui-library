@@ -7,6 +7,7 @@ import { CSSProperties } from 'react';
 import { MESSAGE_STATUS_INDICATOR_SIZE_REM } from './MessageStatusIndicator.styles';
 import { ComponentSlotStyle } from '../../types';
 import { _ATTACHMENT_CARD_MARGIN_IN_PX, _ATTACHMENT_CARD_WIDTH_IN_REM } from './AttachmentCard.styles';
+import { getFluentImageOffIcon } from '../utils/ChatMessageComponentUtils';
 
 // Minimum chat bubble width. This matches the minimum chat bubble width from FluentUI
 // that can contain a message and a timestamp.
@@ -316,7 +317,7 @@ export const useChatMessageStyles = makeStyles({
       left: '0',
       display: 'block'
     },
-    '& #broken-image-wrapper': {
+    '& .broken-image-wrapper': {
       width: '12rem',
       height: '12rem',
       marginTop: '0.75rem',
@@ -326,9 +327,9 @@ export const useChatMessageStyles = makeStyles({
       outline: `1px solid ${tokens.colorNeutralForegroundDisabled}`,
       backgroundColor: tokens.colorNeutralBackground2
     },
-    '& #broken-image-wrapper:after': {
-      content: '""',
-      maskImage: `url("data:image/svg+xml,%3Csvg width='3rem' height='3rem' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg' fill='currentColor'%3E%3Cpath d='M2.85 2.15a.5.5 0 1 0-.7.7l1.4 1.41A2.99 2.99 0 0 0 3 6v8a3 3 0 0 0 3 3h8c.65 0 1.25-.2 1.74-.55l1.4 1.4a.5.5 0 0 0 .71-.7l-15-15Zm6.56 7.97a1.5 1.5 0 0 0-.46.31l-4.67 4.59A2 2 0 0 1 4 14V6a2 2 0 0 1 .28-1.02l5.13 5.14ZM6 16a2 2 0 0 1-1.01-.27l4.66-4.58c.2-.2.5-.2.7 0l4.66 4.58A2 2 0 0 1 14 16H6ZM16 6v7.88l.9.9A3 3 0 0 0 17 14V6a3 3 0 0 0-3-3H6a3 3 0 0 0-.78.1l.9.9H14a2 2 0 0 1 2 2Zm-2 1.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0Zm-1 0a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0Z' fill='currentColor' /%3E%3C/svg%3E");`,
+    '& .broken-image-wrapper:after': {
+      content: `''`,
+      maskImage: `url("data:image/svg+xml;utf8,${encodeURIComponent(getFluentImageOffIcon())}")`,
       width: '3rem',
       height: '3rem',
       backgroundColor: `${tokens.colorNeutralForeground2}`
