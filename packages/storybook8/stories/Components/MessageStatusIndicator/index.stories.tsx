@@ -3,7 +3,7 @@
 
 import { MessageStatusIndicator as MessageStatusIndicatorComponent } from '@azure/communication-react';
 import { Meta } from '@storybook/react';
-import { hiddenControl } from '../../controlsUtils';
+import { controlsToAdd, hiddenControl } from '../../controlsUtils';
 import { MessageStatusIndicatorExample } from './snippets/MessageStatusIndicator.snippet';
 export { MessageStatusIndicator } from './MessageStatusIndicator.story';
 
@@ -15,6 +15,12 @@ const meta: Meta = {
   component: MessageStatusIndicatorComponent,
   title: 'Components/Message Status Indicator',
   argTypes: {
+    status: controlsToAdd.messageStatus,
+    deliveredTooltipText: controlsToAdd.messageDeliveredTooltipText,
+    sendingTooltipText: controlsToAdd.messageSendingTooltipText,
+    seenTooltipText: controlsToAdd.messageSeenTooltipText,
+    readByTooltipText: controlsToAdd.messageReadByTooltipText,
+    failedToSendTooltipText: controlsToAdd.messageFailedToSendTooltipText,
     // Hide default controls
     readCount: hiddenControl,
     onToggleToolTip: hiddenControl,
