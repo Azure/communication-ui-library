@@ -1,0 +1,47 @@
+import { Canvas, Markdown, Meta, ArgTypes } from '@storybook/blocks';
+import * as ImageOverlayStories from './index.stories';
+
+import ImageOverlayStoriesExampleText from '!!raw-loader!./snippets/ImageOverlay.snippet.tsx';
+import { ImageOverlay } from '@internal/react-components';
+
+<Meta of={ImageOverlayStories} />
+
+# Image Overlay
+
+Component to display image in a overlay. The overlay launches as a modal, it takes focus from the page or app and require users to interact with them.
+
+## Importing
+
+```ts
+import { ImageOverlay } from '@azure/communication-react';
+```
+
+## Example
+
+Component will render a fullscreen modal using a set image source.
+
+<Canvas of={ImageOverlayStories.ImageOverlaySnippetDocsOnly} source={{ code: ImageOverlayStoriesExampleText }} />
+
+## Cover iOS safe area
+
+To have the image overlay cover the safeArea on iOS devices, we can add `viewport-fit=cover` to the viewport meta tag of the app.
+
+```ts
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+```
+
+## Props
+
+<Markdown>
+  {`
+| Prop | Type | Description |
+| ---- | ---- | ----------- |
+| isOpen | boolean | Boolean that controls whether the modal is displayed. |
+| imageSrc | string | Image source used to display the image in a large scale. |
+| altText (Optional) | string | Optional string used as a alt text for the image. @default 'image' |
+| title (Optional) | string | Optional string used as the title of the image and displayed on the top left corner of the ImageOverlay. |
+| titleIcon (Optional) | JSX.Element | Optional JSX element used as a title icon and displayed to the left of the title element. |
+| onDismiss | () => void | Callback to invoke when the ImageOverlay modal is dismissed. |
+| onDownloadButtonClicked (Optional) | (imageSrc: string) => void | Optional callback called when the download button is clicked. If not provided, the download button will not be rendered. |
+`}
+</Markdown>
