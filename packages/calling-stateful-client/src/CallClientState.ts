@@ -964,9 +964,24 @@ export interface MediaDiagnosticsState {
  * Information for conference phone info
  */
 export interface ConferencePhoneInfo {
+  /**
+   * Phone number for the conference
+   */
   phoneNumber: string;
+  /**
+   * Conference id for the conference
+   */
   conferenceId: string;
+  /**
+   * Is toll free phone number
+   */
   isTollFree: boolean;
+  /**
+   * phone number country
+   */
   country?: string;
+  /**
+   * phone number city
+   */
   city?: string;
 }

@@ -94,6 +94,8 @@ export type {
 export type { HoldButtonSelector } from '../../calling-component-bindings/src';
 
 export type { RaiseHandButtonSelector } from '../../calling-component-bindings/src';
+/* @conditional-compile-remove(notifications) */
+export type { NotificationStackSelector } from '../../calling-component-bindings/src';
 
 export {
   ChatClientProvider,
