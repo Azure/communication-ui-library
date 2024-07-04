@@ -139,7 +139,7 @@ const processChatMessageContent = (message: ChatMessageWithStatus): string | und
           const src = getResourceSourceUrl(resourceCache);
           // if in error state
           if (src === undefined) {
-            const brokenImageView = getBrokenImageViewNode();
+            const brokenImageView = getBrokenImageViewNode(img);
             img.parentElement?.replaceChild(brokenImageView, img);
           } else {
             // else in loading or success state
@@ -374,8 +374,11 @@ const sanitizedMessageContentType = (type: string): MessageContentType => {
     : 'unknown';
 };
 
-const getBrokenImageViewNode = (): HTMLDivElement => {
+const getBrokenImageViewNode = (img: HTMLDivElement | undefined): HTMLDivElement => {
   const wrapper = document.createElement('div');
+  Array.from(img?.attributes ?? []).forEach(attr => {
+    wrapper.setAttribute(attr.nodeName, attr.nodeValue ?? '');
+  })
   wrapper.setAttribute('class', 'broken-image-wrapper');
   wrapper.setAttribute('data-ui-id', 'broken-image-icon');
   return wrapper;
