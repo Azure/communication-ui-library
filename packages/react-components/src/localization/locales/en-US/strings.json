@@ -220,7 +220,8 @@
     "richTextDeleteColumnMenu": "Delete column",
     "richTextDeleteRowMenu": "Delete row",
     "richTextDeleteTableMenu": "Delete table",
-    "richTextToolbarMoreButtonAriaLabel": "More options"
+    "richTextToolbarMoreButtonAriaLabel": "More options",
+    "attachmentUploadsPendingError": "Uploading... Please wait."
   },
   "errorBar": {
     "unableToReachChatService": "You are offline",

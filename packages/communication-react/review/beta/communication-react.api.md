@@ -3469,6 +3469,7 @@ export type MessageThreadSelector = (state: ChatClientState, props: ChatBaseSele
 export interface MessageThreadStrings {
     actionMenuMoreOptions?: string;
     attachmentCardGroupMessage: string;
+    attachmentUploadsPendingError: string;
     blockedWarningLinkText: string;
     blockedWarningText: string;
     downloadAttachment: string;
@@ -4042,9 +4043,12 @@ export type ResourceFetchResult = {
 
 // @beta
 export interface RichTextEditorOptions {
+    imageUploadsInProgress?: AttachmentMetadataInProgress[];
+    onCancelInlineImageUpload?: (imageId: string) => void;
     onPaste?: (event: {
         content: DocumentFragment;
     }) => void;
+    onUploadInlineImage?: (imageUrl: string, imageFileName: string) => void;
 }
 
 // @beta

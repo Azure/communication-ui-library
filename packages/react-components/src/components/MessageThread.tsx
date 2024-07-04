@@ -29,6 +29,8 @@ import {
 import { BlockedMessage } from '../types';
 import { MessageStatusIndicatorProps } from './MessageStatusIndicator';
 import { memoizeFnAll, MessageStatus } from '@internal/acs-ui-common';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+import { AttachmentMetadataInProgress } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(file-sharing-acs) */
 import { MessageOptions } from '@internal/acs-ui-common';
 import { useLocale } from '../localization/LocalizationProvider';
@@ -231,6 +233,10 @@ export interface MessageThreadStrings {
   /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
   /** String for aria text in attachment card group*/
   attachmentCardGroupMessage: string;
+  /**
+   * Error message indicating that all attachment uploads are not complete.
+   */
+  attachmentUploadsPendingError: string;
 }
 
 /**
@@ -569,6 +575,25 @@ export interface RichTextEditorOptions {
    * Optional callback to handle paste event.
    */
   onPaste?: (event: { content: DocumentFragment }) => void;
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  /**
+   * Optional callback to upload an inline image in the rich text editor.
+   * @beta
+   */
+  onUploadInlineImage?: (imageUrl: string, imageFileName: string) => void;
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  /**
+   * Optional callback to remove the attachment upload or delete the image before sending.
+   * @beta
+   */
+  onCancelInlineImageUpload?: (imageId: string) => void;
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  /**
+   * Optional array of type {@link AttachmentMetadataInProgress}
+   * to render inline images being uploaded in the RichTextSendBox.
+   * @beta
+   */
+  imageUploadsInProgress?: AttachmentMetadataInProgress[];
 }
 
 /**
