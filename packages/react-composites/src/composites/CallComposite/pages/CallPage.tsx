@@ -5,6 +5,8 @@ import { DiagnosticQuality } from '@azure/communication-calling';
 import { useId } from '@fluentui/react-hooks';
 import { _isInCall } from '@internal/calling-component-bindings';
 import { ActiveErrorMessage, ErrorBar, ParticipantMenuItemsCallback } from '@internal/react-components';
+/* @conditional-compile-remove(notifications) */
+import { ActiveNotification } from '@internal/react-components';
 import { VideoGalleryLayout } from '@internal/react-components';
 import React from 'react';
 import { useState } from 'react';
@@ -45,8 +47,12 @@ export interface CallPageProps {
   updateSidePaneRenderer: (renderer: SidePaneRenderer | undefined) => void;
   mobileChatTabHeader?: MobileChatSidePaneTabHeaderProps;
   options?: CallCompositeOptions;
-  latestErrors: ActiveErrorMessage[];
-  onDismissError: (error: ActiveErrorMessage) => void;
+  latestErrors: ActiveErrorMessage[] | /* @conditional-compile-remove(notifications) */ ActiveNotification[];
+  /* @conditional-compile-remove(notifications) */
+  latestNotifications: ActiveNotification[];
+  onDismissError: (
+    error: ActiveErrorMessage | /* @conditional-compile-remove(notifications) */ ActiveNotification
+  ) => void;
   galleryLayout: VideoGalleryLayout;
   capabilitiesChangedNotificationBarProps?: CapabilitiesChangeNotificationBarProps;
   onUserSetGalleryLayoutChange?: (layout: VideoGalleryLayout) => void;
@@ -77,7 +83,9 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
     pinnedParticipants,
     setPinnedParticipants,
     compositeAudioContext,
-    disableAutoShowDtmfDialer = false
+    disableAutoShowDtmfDialer = false,
+    /* @conditional-compile-remove(notifications) */
+    latestNotifications
   } = props;
 
   // To use useProps to get these states, we need to create another file wrapping Call,
@@ -90,7 +98,6 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
   const mutedNotificationProps = useSelector(mutedNotificationSelector);
   const networkReconnectTileProps = useSelector(networkReconnectTileSelector);
   const remoteParticipantsConnected = useSelector(getRemoteParticipantsConnectedSelector);
-
   const callees = useSelector(getTargetCallees);
   const renderDtmfDialerFromStart = showDtmfDialer(callees, remoteParticipantsConnected);
   const [dtmfDialerPresent, setDtmfDialerPresent] = useState<boolean>(
@@ -115,7 +122,7 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
           options={props.options}
           updateSidePaneRenderer={props.updateSidePaneRenderer}
           mobileChatTabHeader={props.mobileChatTabHeader}
-          latestErrors={props.latestErrors}
+          latestErrors={props.latestErrors as ActiveErrorMessage[]}
           onDismissError={props.onDismissError}
           capabilitiesChangedNotificationBarProps={props.capabilitiesChangedNotificationBarProps}
           onSetDialpadPage={() => setDtmfDialerPresent(!dtmfDialerPresent)}
@@ -152,6 +159,8 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
         id={drawerMenuHostId}
         complianceBannerProps={{ ...complianceBannerProps, strings }}
         errorBarProps={options?.errorBar !== false && errorBarProps}
+        /* @conditional-compile-remove(notifications) */
+        showErrorNotifications={options?.errorBar ?? true}
         mutedNotificationProps={mutedNotificationProps}
         callControlProps={{
           callInvitationURL: callInvitationURL,
@@ -167,7 +176,10 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
             isNetworkHealthy(networkReconnectTileProps.networkReconnectValue) ? (
               onRenderGalleryContentTrampoline()
             ) : (
-              <NetworkReconnectTile {...networkReconnectTileProps} />
+              <NetworkReconnectTile
+                {...networkReconnectTileProps}
+                /* /* @conditional-compile-remove(teams-meeting-conference) */ isMobile={mobileView}
+              />
             )
           ) : (
             <></>
@@ -178,6 +190,8 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
         onCloseChatPane={onCloseChatPane}
         dataUiId={'call-page'}
         latestErrors={props.latestErrors}
+        /* @conditional-compile-remove(notifications) */
+        latestNotifications={latestNotifications}
         onDismissError={props.onDismissError}
         onUserSetOverflowGalleryPositionChange={onSetUserSetOverflowGalleryPosition}
         onUserSetGalleryLayoutChange={onUserSetGalleryLayoutChange}

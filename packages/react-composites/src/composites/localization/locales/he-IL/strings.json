@@ -135,6 +135,7 @@
     "dtmfDialerButtonTooltipOff": "הסתר לוח חיוג",
     "dtmfDialerMoreButtonLabelOn": "הצג לוח חיוג",
     "dtmfDialerMoreButtonLabelOff": "הסתר לוח חיוג",
+    "phoneCallMoreButtonLabel": "שיחת טלפון",
     "spokenLanguageStrings": {
       "ar-ae": "ערבית - איחוד האמירויות",
       "ar-sa": "ערבית - ערב הסעודית",
@@ -336,7 +337,12 @@
     "leaveConfirmDialogContent": "האם אתה בטוח שברצונך לעזוב את השיחה?",
     "endCallConfirmDialogTitle": "לסיים את השיחה?",
     "endCallConfirmDialogContent": "פעולה זאת תסיים את השיחה עבור כל המשתתפים.",
-    "invalidMeetingIdentifier": "מזהה פגישה או קוד סיסמה לא חוקיים"
+    "invalidMeetingIdentifier": "מזהה פגישה או קוד סיסמה לא חוקיים",
+    "pinParticipantMenuLabel": "Pin for me",
+    "pinParticipantLimitReachedMenuLabel": "Pin (limit reached)",
+    "unpinParticipantMenuLabel": "Unpin",
+    "pinParticipantMenuItemAriaLabel": "Pin",
+    "unpinParticipantMenuItemAriaLabel": "Unpin"
   },
   "chat": {
     "chatListHeader": "בצ'אט זה",

@@ -3,13 +3,18 @@
 
 /* @conditional-compile-remove(teams-meeting-conference) */
 // eslint-disable-next-line no-restricted-imports
-import { Stack, Text, useTheme, Icon } from '@fluentui/react';
+import { Stack, Text, useTheme, Icon, Link } from '@fluentui/react';
 /* @conditional-compile-remove(teams-meeting-conference) */
 import { _DrawerMenuItemProps } from '@internal/react-components';
 /* @conditional-compile-remove(teams-meeting-conference) */
 import React from 'react';
 /* @conditional-compile-remove(teams-meeting-conference) */
-import { ConferencePhoneInfo, formatPhoneNumberInfo } from '@internal/react-components';
+import {
+  ConferencePhoneInfo,
+  formatPhoneNumberInfo,
+  formatPhoneNumber,
+  formatPhoneNumberLink
+} from '@internal/react-components';
 /* @conditional-compile-remove(teams-meeting-conference) */
 import {
   phoneInfoTextStyle,
@@ -67,7 +72,17 @@ export const MeetingPhoneInfoPaneContent = (props: {
               <Stack.Item className={phoneInfoStep}>
                 {conferencePhoneInfoList.map((phoneNumber, index) => (
                   <Stack.Item key={index}>
-                    <Text className={phoneInfoTextStyle}>{formatPhoneNumberInfo(phoneNumber, localeStrings)}</Text>
+                    <Link className={phoneInfoTextStyle} href={formatPhoneNumberLink(phoneNumber)}>
+                      {formatPhoneNumber(phoneNumber.phoneNumber)}
+                    </Link>
+                    <Text className={phoneInfoTextStyle}>
+                      {' '}
+                      {phoneNumber.isTollFree
+                        ? localeStrings.meetingConferencePhoneInfoModalTollFree
+                        : localeStrings.meetingConferencePhoneInfoModalToll}
+                    </Text>
+                    <br />
+                    <Text className={phoneInfoTextStyle}> {formatPhoneNumberInfo(phoneNumber, localeStrings)}</Text>
                   </Stack.Item>
                 ))}
               </Stack.Item>

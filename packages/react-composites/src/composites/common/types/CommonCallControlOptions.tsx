@@ -47,6 +47,10 @@ export type CommonCallControlOptions = {
          * @defaultValue false
          */
         hangUpForEveryone?: false | 'endCallOptions';
+        /**
+         * Wether to disable the end call confirmation modal.
+         */
+        disableEndCallModal?: boolean;
       };
   /**
    * Show or Hide Microphone button during a call.

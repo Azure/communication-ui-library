@@ -44,11 +44,11 @@ export const richTextEditorWrapperStyle = (theme: Theme, addTopOffset: boolean):
 
       '& tr': {
         background: 'transparent',
-        border: `1px solid ${theme.palette.neutralTertiaryAlt}`,
+        border: `1px solid ${theme.palette.neutralSecondary}`,
 
         '& td': {
           background: 'transparent',
-          border: `1px solid ${theme.palette.neutralTertiaryAlt}`,
+          border: `1px solid ${theme.palette.neutralSecondary}`,
           wordBreak: 'normal',
           padding: '0.125rem 0.25rem',
           verticalAlign: 'top'
@@ -124,16 +124,26 @@ const ribbonOverflowButtonRootStyles = (theme: Theme): IStyle => {
   };
 };
 
-const ribbonButtonRootStyles = (theme: Theme): IStyle => {
+const ribbonButtonRootStyles = (iconColor: string, hoverIconColor: string): IStyle => {
   return {
     backgroundColor: 'transparent',
     selectors: {
-      // Icon's color doesn't work here because of the specificity
+      // media query applies only if the device allows real hover interactions
+      // and hover styles are not applied on touch- only devices where the hover state cannot be accurately detected
+      '@media (hover: hover)': {
+        ':hover .ms-Button-icon': {
+          color: hoverIconColor
+        },
+        ':hover .ms-Button-menuIcon': {
+          color: hoverIconColor
+        }
+      },
+      // the classes needs here to apply to styles for icons because of the specificity
       '.ms-Button-icon': {
-        color: theme.palette.themePrimary
+        color: iconColor
       },
       '.ms-Button-menuIcon': {
-        color: theme.palette.themePrimary
+        color: iconColor
       }
     }
   };
@@ -147,13 +157,14 @@ export const toolbarButtonStyle = (theme: Theme): Partial<IButtonStyles> => {
     icon: { color: theme.palette.neutralPrimary, height: 'auto' },
     menuIcon: { color: theme.palette.neutralPrimary, height: 'auto' },
     root: { minWidth: 'auto', backgroundColor: 'transparent' },
-    rootChecked: ribbonButtonRootStyles(theme),
-    rootHovered: ribbonButtonRootStyles(theme),
-    rootCheckedHovered: ribbonButtonRootStyles(theme),
-    rootCheckedPressed: ribbonButtonRootStyles(theme),
-    rootPressed: ribbonButtonRootStyles(theme),
-    rootExpanded: ribbonButtonRootStyles(theme),
-    rootExpandedHovered: ribbonButtonRootStyles(theme)
+    rootChecked: ribbonButtonRootStyles(theme.palette.themePrimary, theme.palette.themePrimary),
+    // there is a bug for Android where the press action is considered hover sometimes
+    rootHovered: ribbonButtonRootStyles(theme.palette.neutralPrimary, theme.palette.themePrimary),
+    rootCheckedHovered: ribbonButtonRootStyles(theme.palette.themePrimary, theme.palette.themePrimary),
+    rootCheckedPressed: ribbonButtonRootStyles(theme.palette.themePrimary, theme.palette.themePrimary),
+    rootPressed: ribbonButtonRootStyles(theme.palette.themePrimary, theme.palette.themePrimary),
+    rootExpanded: ribbonButtonRootStyles(theme.palette.themePrimary, theme.palette.themePrimary),
+    rootExpandedHovered: ribbonButtonRootStyles(theme.palette.themePrimary, theme.palette.themePrimary)
   };
 };
 
@@ -254,9 +265,9 @@ export const sendBoxRichTextEditorStyle = (isExpanded: boolean): RichTextEditorS
  */
 export const insertTableMenuCellButtonStyles = (theme: Theme): IStyle => {
   return {
-    width: '16px',
-    height: '16px',
-    border: `solid 1px ${theme.palette.neutralTertiaryAlt}`,
+    width: '24px',
+    height: '24px',
+    border: `solid 0.5px ${theme.palette.neutralSecondaryAlt}`,
     cursor: 'pointer',
     background: 'transparent'
   };
@@ -267,7 +278,8 @@ export const insertTableMenuCellButtonStyles = (theme: Theme): IStyle => {
  */
 export const insertTableMenuCellButtonSelectedStyles = (theme: Theme): IStyle => {
   return {
-    background: theme.palette.themePrimary
+    background: theme.palette.themePrimary,
+    border: `solid 0.5px ${theme.palette.themeLighterAlt}`
   };
 };
 
@@ -287,7 +299,7 @@ export const insertTableMenuFocusZone = (theme: Theme): string => {
   return mergeStyles({
     display: 'inline-grid',
     gridTemplateColumns: 'auto auto auto auto auto',
-    border: `solid 1px ${theme.palette.neutralTertiaryAlt}`
+    border: `solid 0.5px ${theme.palette.neutralSecondaryAlt}`
   });
 };
 

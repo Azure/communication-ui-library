@@ -56,20 +56,20 @@ export function BaseApp(props: { queryArgs: QueryArgs; callAdapter?: CallAdapter
     customCallCompositeOptions !== undefined
       ? customCallCompositeOptions
       : queryArgs.injectCustomButtons
-      ? {
-          callControls: {
-            legacyControlBarExperience: true,
-            onFetchCustomButtonProps,
-            // Hide some buttons to keep the mobile-view control bar narrow
-            devicesButton: false,
-            endCallButton: false
+        ? {
+            callControls: {
+              legacyControlBarExperience: true,
+              onFetchCustomButtonProps,
+              // Hide some buttons to keep the mobile-view control bar narrow
+              devicesButton: false,
+              endCallButton: false
+            }
           }
-        }
-      : {
-          callControls: {
-            legacyControlBarExperience: true
-          }
-        };
+        : {
+            callControls: {
+              legacyControlBarExperience: true
+            }
+          };
 
   if (queryArgs.newControlBarExperience) {
     options = {

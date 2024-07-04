@@ -494,6 +494,8 @@ export type CallCompositeIcons = {
     LargeGalleryLayout?: JSX.Element;
     DefaultCustomButton?: JSX.Element;
     DtmfDialpadButton?: JSX.Element;
+    PhoneNumberButton?: JSX.Element;
+    PhoneInfoWait?: JSX.Element;
     PeoplePaneMoreButton?: JSX.Element;
     StopAllSpotlightMenuButton?: JSX.Element;
 };
@@ -652,6 +654,7 @@ export interface CallCompositeStrings {
     peopleButtonLabel: string;
     peoplePaneMoreButtonAriaLabel: string;
     peoplePaneTitle: string;
+    phoneCallMoreButtonLabel: string;
     pinParticipantLimitReachedMenuLabel: string;
     pinParticipantMenuItemAriaLabel: string;
     pinParticipantMenuLabel: string;
@@ -717,12 +720,12 @@ export interface CallCompositeStrings {
 export type CallControlDisplayType = 'default' | 'compact';
 
 // @public
-export type CallControlOptions = (CommonCallControlOptions & {
+export type CallControlOptions = CommonCallControlOptions & {
     participantsButton?: boolean | {
         disabled: boolean;
     };
     legacyControlBarExperience?: boolean;
-});
+};
 
 // @public
 export type CallEndedListener = (event: CallAdapterCallEndedEvent) => void;
@@ -848,6 +851,7 @@ export interface CallState {
     spotlight?: SpotlightCallFeatureState;
     startTime: Date;
     state: CallState_2;
+    teamsMeetingConference?: ConferencePhoneInfo[];
     transcription: TranscriptionCallFeature;
     transfer: TransferFeature;
 }
@@ -1670,6 +1674,7 @@ export type CommonCallControlOptions = {
     cameraButton?: boolean;
     endCallButton?: boolean | /* @conditional-compile-remove(end-call-options) */ {
         hangUpForEveryone?: false | 'endCallOptions';
+        disableEndCallModal?: boolean;
     };
     microphoneButton?: boolean;
     devicesButton?: boolean;
@@ -1692,6 +1697,7 @@ export type CommonCallControlOptions = {
         disabled: boolean;
     };
     exitSpotlightButton?: boolean;
+    teamsMeetingPhoneCallButton?: boolean;
 };
 
 // @public
@@ -1862,6 +1868,7 @@ export interface ComponentStrings {
     endCallButton: EndCallButtonStrings;
     errorBar: ErrorBarStrings;
     imageOverlay: ImageOverlayStrings;
+    MeetingConferencePhoneInfo: MeetingConferencePhoneInfoModalStrings;
     messageStatusIndicator: MessageStatusIndicatorStrings;
     messageThread: MessageThreadStrings;
     microphoneButton: MicrophoneButtonStrings;
@@ -1957,6 +1964,15 @@ export interface CompositeStrings {
     call: CallCompositeStrings;
     callWithChat: CallWithChatCompositeStrings;
     chat: ChatCompositeStrings;
+}
+
+// @public
+export interface ConferencePhoneInfo {
+    city?: string;
+    conferenceId: string;
+    country?: string;
+    isTollFree: boolean;
+    phoneNumber: string;
 }
 
 // @public
@@ -2124,6 +2140,9 @@ export interface CustomMessage extends MessageCommon {
 
 // @public
 export const darkTheme: PartialTheme & CallingTheme;
+
+// @public
+export type DeclarativeTeamsCallAgent = TeamsCallAgent;
 
 // @public
 export const DEFAULT_COMPONENT_ICONS: {
@@ -2295,6 +2314,8 @@ export const DEFAULT_COMPOSITE_ICONS: {
     LargeGalleryLayout?: JSX.Element | undefined;
     DefaultCustomButton?: JSX.Element | undefined;
     DtmfDialpadButton?: JSX.Element | undefined;
+    PhoneNumberButton?: JSX.Element | undefined;
+    PhoneInfoWait?: JSX.Element | undefined;
     PeoplePaneMoreButton?: JSX.Element | undefined;
     StopAllSpotlightMenuButton?: JSX.Element | undefined;
     ChevronLeft?: JSX.Element | undefined;
@@ -2772,6 +2793,18 @@ export type MediaDiagnosticChangedEvent = MediaDiagnosticChangedEventArgs & {
 export interface MediaDiagnosticsState {
     // (undocumented)
     latest: LatestMediaDiagnostics;
+}
+
+// @public
+export interface MeetingConferencePhoneInfoModalStrings {
+    meetingConferencePhoneInfoModalDialIn?: string;
+    meetingConferencePhoneInfoModalMeetingId?: string;
+    meetingConferencePhoneInfoModalNoPhoneAvailable?: string;
+    meetingConferencePhoneInfoModalTitle?: string;
+    meetingConferencePhoneInfoModalToll?: string;
+    meetingConferencePhoneInfoModalTollFree?: string;
+    meetingConferencePhoneInfoModalTollGeoData?: string;
+    meetingConferencePhoneInfoModalWait?: string;
 }
 
 // @public
@@ -3570,6 +3603,7 @@ export type StartCallIdentifier = (MicrosoftTeamsAppIdentifier | UnknownIdentifi
 
 // @public
 export interface StatefulCallClient extends CallClient {
+    createTeamsCallAgent(...args: Parameters<CallClient['createTeamsCallAgent']>): Promise<DeclarativeTeamsCallAgent>;
     createView(callId: string | undefined, participantId: CommunicationIdentifier | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState, options?: CreateViewOptions): Promise<CreateViewResult | undefined>;
     disposeView(callId: string | undefined, participantId: CommunicationIdentifier | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState): void;
     getState(): CallClientState;

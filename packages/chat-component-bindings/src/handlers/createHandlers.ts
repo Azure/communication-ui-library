@@ -76,7 +76,8 @@ export const createDefaultChatHandlers = memoizeOne(
             metadata: {
               ...options?.metadata,
               fileSharingMetadata: JSON.stringify(options?.attachments)
-            }
+            },
+            type: options.type
           };
           await chatThreadClient.sendMessage(sendMessageRequest, chatSDKOptions);
           return;

@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "area": "fix",
-  "workstream": "",
-  "comment": "Fix feature.on not existing problem",
-  "packageName": "@azure/communication-react",
-  "email": "jiangnanhello@live.com",
-  "dependentChangeType": "patch"
-}

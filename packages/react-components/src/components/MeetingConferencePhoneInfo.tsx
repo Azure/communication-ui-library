@@ -33,7 +33,7 @@ import { _pxToRem } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(teams-meeting-conference) */
 /**
  * strings for phone info modal
- * @beta
+ * @public
  */
 export interface MeetingConferencePhoneInfoModalStrings {
   /**
@@ -57,17 +57,13 @@ export interface MeetingConferencePhoneInfoModalStrings {
    */
   meetingConferencePhoneInfoModalTollFree?: string;
   /**
-   * Toll Free Phone Label without geo data
-   */
-  meetingConferencePhoneInfoModalTollFreeWithoutGeoData?: string;
-  /**
    * Toll Phone Label
    */
   meetingConferencePhoneInfoModalToll?: string;
   /**
    * Toll Phone Label without geo data
    */
-  meetingConferencePhoneInfoModalTollWithoutGeoData?: string;
+  meetingConferencePhoneInfoModalTollGeoData?: string;
   /**
    * No phone number available message
    */
@@ -76,7 +72,7 @@ export interface MeetingConferencePhoneInfoModalStrings {
 
 /* @conditional-compile-remove(teams-meeting-conference) */
 /**
- * @beta
+ * @public
  * MeetingConferencePhoneInfoModal Component Props.
  */
 export interface MeetingConferencePhoneInfoModalProps {
@@ -87,7 +83,7 @@ export interface MeetingConferencePhoneInfoModalProps {
 
 /* @conditional-compile-remove(teams-meeting-conference) */
 /**
- * @beta
+ * @public
  * a component for setting spoken languages
  */
 export const MeetingConferencePhoneInfoModal = (props: MeetingConferencePhoneInfoModalProps): JSX.Element => {
@@ -146,7 +142,14 @@ export const MeetingConferencePhoneInfoModal = (props: MeetingConferencePhoneInf
               <Stack.Item className={phoneInfoStep}>
                 {conferencePhoneInfoList.map((phoneNumber, index) => (
                   <Stack.Item key={index}>
-                    <Text className={phoneInfoTextStyle}>{formatPhoneNumberInfo(phoneNumber, strings)}</Text>
+                    <Text className={phoneInfoTextStyle}>
+                      {formatPhoneNumber(phoneNumber.phoneNumber)}{' '}
+                      {phoneNumber.isTollFree
+                        ? strings.meetingConferencePhoneInfoModalTollFree
+                        : strings.meetingConferencePhoneInfoModalToll}
+                    </Text>
+                    <br />
+                    <Text className={phoneInfoTextStyle}> {formatPhoneNumberInfo(phoneNumber, strings)}</Text>
                   </Stack.Item>
                 ))}
               </Stack.Item>
@@ -211,19 +214,23 @@ export const formatPhoneNumber = (phoneNumber: string): string => {
 /* @conditional-compile-remove(teams-meeting-conference) */
 /**
  * @internal
+ * format phone number link
+ */
+export const formatPhoneNumberLink = (phoneNumber: ConferencePhoneInfo): string => {
+  return `tel:+${phoneNumber.phoneNumber},,${phoneNumber.conferenceId}#`;
+};
+
+/* @conditional-compile-remove(teams-meeting-conference) */
+/**
+ * @internal
  * format phone number
  */
 export const formatPhoneNumberInfo = (
   phoneNumber: ConferencePhoneInfo,
   strings: MeetingConferencePhoneInfoModalStrings | undefined
 ): string => {
-  const templateText = phoneNumber.isTollFree
-    ? phoneNumber.country && phoneNumber.city
-      ? strings?.meetingConferencePhoneInfoModalTollFree
-      : strings?.meetingConferencePhoneInfoModalTollFreeWithoutGeoData
-    : phoneNumber.country && phoneNumber.city
-    ? strings?.meetingConferencePhoneInfoModalToll
-    : strings?.meetingConferencePhoneInfoModalTollWithoutGeoData;
+  const templateText =
+    phoneNumber.country && phoneNumber.city ? strings?.meetingConferencePhoneInfoModalTollGeoData : '';
   return (
     templateText
       ?.replace('{phoneNumber}', formatPhoneNumber(phoneNumber.phoneNumber))

@@ -135,6 +135,7 @@
     "dtmfDialerButtonTooltipOff": "Masquez le pavé de numérotation",
     "dtmfDialerMoreButtonLabelOn": "Afficher le pavé numérique",
     "dtmfDialerMoreButtonLabelOff": "Masquez le pavé de numérotation",
+    "phoneCallMoreButtonLabel": "Appel téléphonique",
     "spokenLanguageStrings": {
       "ar-ae": "Arabe – E.A.U.",
       "ar-sa": "Arabe – Arabie saoudite",
@@ -336,7 +337,12 @@
     "leaveConfirmDialogContent": "Voulez-vous vraiment quitter l’appel ?",
     "endCallConfirmDialogTitle": "Mettre fin à l'appel ?",
     "endCallConfirmDialogContent": "Vous mettrez fin à l'appel pour tout le monde.",
-    "invalidMeetingIdentifier": "ID ou code secret de réunion non valide"
+    "invalidMeetingIdentifier": "ID ou code secret de réunion non valide",
+    "pinParticipantMenuLabel": "Pin for me",
+    "pinParticipantLimitReachedMenuLabel": "Pin (limit reached)",
+    "unpinParticipantMenuLabel": "Unpin",
+    "pinParticipantMenuItemAriaLabel": "Pin",
+    "unpinParticipantMenuItemAriaLabel": "Unpin"
   },
   "chat": {
     "chatListHeader": "Dans cette conversation",

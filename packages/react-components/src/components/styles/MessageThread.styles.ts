@@ -346,10 +346,10 @@ export const useChatMessageCommonStyles = makeStyles({
       width: '100%',
 
       '& tr': {
-        ...shorthands.border('1px', 'solid', `${tokens.colorNeutralStroke2}`),
+        ...shorthands.border('1px', 'solid', `${tokens.colorNeutralStrokeAccessible}`),
 
         '& td': {
-          ...shorthands.border('1px', 'solid', `${tokens.colorNeutralStroke2}`),
+          ...shorthands.border('1px', 'solid', `${tokens.colorNeutralStrokeAccessible}`),
           wordBreak: 'normal',
           paddingTop: '0px',
           paddingRight: '5px'
@@ -446,4 +446,10 @@ export const loadPreviousMessageButtonStyle = mergeStyles({
  */
 export const DownIconStyle = mergeStyles({
   marginRight: '0.5em'
+});
+
+/** @private */
+export const dataLossIconStyle = mergeStyles({
+  width: '1.25rem',
+  height: '1.25rem'
 });

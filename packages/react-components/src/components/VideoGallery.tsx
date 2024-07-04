@@ -127,6 +127,9 @@ export interface VideoGalleryStrings {
   /* @conditional-compile-remove(hide-attendee-name) */
   /** String for the attendee role */
   attendeeRole: string;
+  /* @conditional-compile-remove(soft-mute) */
+  /** Menu text shown in Video Tile contextual menu to mute a remote participant */
+  muteParticipantMenuItemLabel: string;
 }
 
 /**
@@ -619,10 +622,10 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
             participant.userId === localParticipant.userId
               ? undefined
               : remoteVideoTileMenu
-              ? remoteVideoTileMenu.kind === 'drawer'
-                ? 'drawer'
-                : 'contextual'
-              : undefined
+                ? remoteVideoTileMenu.kind === 'drawer'
+                  ? 'drawer'
+                  : 'contextual'
+                : undefined
           }
           drawerMenuHostId={drawerMenuHostId}
           onPinParticipant={onPinParticipant}
@@ -690,8 +693,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   const screenShareComponent = remoteScreenShareComponent
     ? remoteScreenShareComponent
     : localParticipant.isScreenSharingOn
-    ? localScreenShareStreamComponent
-    : undefined;
+      ? localScreenShareStreamComponent
+      : undefined;
 
   const layoutProps = useMemo<LayoutProps>(
     () => ({

@@ -118,11 +118,6 @@ const errorOptions: ErrorType[] = [
   'callVideoRecoveredBySystem'
 ];
 const notificationOptions: NotificationType[] = [
-  'unableToReachChatService',
-  'accessDenied',
-  'userNotInChatThread',
-  'sendMessageNotInChatThread',
-  'sendMessageGeneric',
   'startVideoGeneric',
   'stopVideoGeneric',
   'muteGeneric',
@@ -141,7 +136,8 @@ const notificationOptions: NotificationType[] = [
   'callMacOsCameraAccessDenied',
   'callMacOsScreenShareAccessDenied',
   'callVideoStoppedBySystem',
-  'callVideoRecoveredBySystem'
+  'callVideoRecoveredBySystem',
+  'speakingWhileMuted'
 ];
 
 const themeChoices = ['Default', 'Dark', 'Teams', 'Word'];
@@ -397,7 +393,7 @@ export const controlsToAdd = {
   activeNotifications: {
     control: 'check',
     options: notificationOptions,
-    defaultValue: ['accessDenied'],
+    defaultValue: ['startVideoGeneric'],
     name: 'activeNotifications'
   },
   maxNotificationsToShow: {
