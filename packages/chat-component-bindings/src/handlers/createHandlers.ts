@@ -128,12 +128,6 @@ export const createDefaultChatHandlers = memoizeOne(
         /* @conditional-compile-remove(file-sharing-acs) */
         options?: MessageOptions
       ) {
-        /* @conditional-compile-remove(file-sharing-acs) */
-        const fileAttachments = options?.attachments?.filter((attachment) => {
-          const file = attachment as ChatAttachment;
-          return file.attachmentType === undefined;
-        });
-
         /* @conditional-compile-remove(rich-text-editor-image-upload) */
         let imageAttachments: ChatAttachment[] | undefined;
         /* @conditional-compile-remove(rich-text-editor-image-upload) */
@@ -141,7 +135,9 @@ export const createDefaultChatHandlers = memoizeOne(
         const document = new DOMParser().parseFromString(content ?? '', 'text/html');
         /* @conditional-compile-remove(rich-text-editor-image-upload) */
         document.querySelectorAll('img').forEach((img) => {
-          if (imageAttachments === undefined) imageAttachments = [];
+          if (imageAttachments === undefined) {
+            imageAttachments = [];
+          }
           imageAttachments.push({
             id: img.id,
             name: img.name,
@@ -156,7 +152,7 @@ export const createDefaultChatHandlers = memoizeOne(
           /* @conditional-compile-remove(file-sharing-acs) */
           metadata: {
             ...options?.metadata,
-            fileSharingMetadata: JSON.stringify(fileAttachments)
+            fileSharingMetadata: JSON.stringify(options?.attachments)
           },
           /* @conditional-compile-remove(rich-text-editor-image-upload) */
           attachments: imageAttachments,
