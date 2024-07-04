@@ -120,6 +120,8 @@ export interface CallArrangementProps {
   onDismissError: (
     error: ActiveErrorMessage | /* @conditional-compile-remove(notifications) */ ActiveNotification
   ) => void;
+  /* @conditional-compile-remove(notifications) */
+  onDismissNotification?: (notification: ActiveNotification) => void;
   onUserSetOverflowGalleryPositionChange?: (position: 'Responsive' | 'horizontalTop') => void;
   onUserSetGalleryLayoutChange?: (layout: VideoGalleryLayout) => void;
   userSetGalleryLayout?: VideoGalleryLayout;
@@ -537,6 +539,17 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     );
   };
 
+  const complianceBannerTrampoline = (): JSX.Element => {
+    /* @conditional-compile-remove(notifications) */
+    return <></>;
+    return (
+      <Stack styles={bannerNotificationStyles}>
+        {complianceBannerTrampoline()}
+        <_ComplianceBanner {...props.complianceBannerProps} />
+      </Stack>
+    );
+  };
+
   return (
     <div ref={containerRef} className={mergeStyles(containerDivStyles)} id={props.id}>
       <Stack verticalFill horizontalAlign="stretch" className={containerClassName} data-ui-id={props.dataUiId}>
@@ -632,14 +645,16 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
               <Stack.Item styles={callGalleryStyles} grow>
                 <Stack verticalFill styles={mediaGalleryContainerStyles}>
                   <Stack.Item styles={notificationsContainerStyles}>
-                    <Stack styles={bannerNotificationStyles}>
-                      <_ComplianceBanner {...props.complianceBannerProps} />
-                    </Stack>
+                    {complianceBannerTrampoline()}
+
                     {errorNotificationTrampoline()}
                     {
                       /* @conditional-compile-remove(notifications) */ props.latestNotifications && (
                         <Stack styles={notificationStackStyles} horizontalAlign="center" verticalAlign="center">
-                          <NotificationStack activeNotifications={props.latestNotifications} />
+                          <NotificationStack
+                            activeNotifications={props.latestNotifications}
+                            onDismissNotification={props.onDismissNotification}
+                          />
                         </Stack>
                       )
                     }
