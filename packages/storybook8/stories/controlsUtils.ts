@@ -335,7 +335,7 @@ export const controlsToAdd = {
       'Rick, Daryl, Michonne, Dwight, Pam, Michael, Jim, Kevin, Creed, Angela, Andy, Stanley, Meredith, Phyllis, Oscar, Ryan, Kelly, Andy, Toby, Darryl, Gabe, Erin',
     name: 'Remote participants (comma separated)'
   },
-  remoteParticipants: { control: 'object', defaultValue: defaultRemoteParticipants, name: 'Remote participants' },
+  remoteParticipants: { control: 'object', name: 'Remote participants' },
   requiredDisplayName: {
     control: 'text',
     defaultValue: 'John Smith',
