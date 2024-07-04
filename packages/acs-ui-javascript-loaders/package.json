@@ -1,6 +1,6 @@
 {
   "name": "@internal/acs-ui-javascript-loaders",
-  "version": "1.18.0-beta.0",
+  "version": "1.18.0-beta.1",
   "description": "Component bindings specific to components that integrate with the Azure Communication Services Calling JavaScript SDK",
   "module": "dist/dist-esm/index.js",
   "main": "dist/dist-cjs/index.js",
