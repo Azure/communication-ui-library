@@ -272,8 +272,8 @@ export const controlsToAdd = {
   isSpeaking: { control: 'boolean', name: 'Is Speaking' },
   isScreenSharing: { control: 'boolean', defaultValue: false, name: 'Is screen sharing' },
   isRaisedHand: { control: 'boolean', defaultValue: false, name: 'Is Raised Hand' },
-  isSendBoxWithWarning: { control: 'boolean', defaultValue: false, name: 'Has warning/information message' },
-  isSendBoxWithAttachments: { control: 'boolean', defaultValue: false, name: 'Has attachments' },
+  isSendBoxWithWarning: { control: 'boolean', name: 'Has warning/information message' },
+  isSendBoxWithAttachments: { control: 'boolean', name: 'Has attachments' },
   isVideoAvailable: { control: 'boolean', defaultValue: true, name: 'Is video available' },
   isVideoMirrored: { control: 'boolean', name: 'Is video mirrored' },
   isVideoReady: { control: 'boolean', name: 'Is video ready' },
@@ -350,7 +350,6 @@ export const controlsToAdd = {
   },
   sendBoxWarningMessage: {
     control: 'text',
-    defaultValue: 'Please wait 30 seconds to send new messages',
     name: 'Warning/information message for SendBox'
   },
   showChatParticipants: { control: 'boolean', defaultValue: true, name: 'Show Participants Pane' },

@@ -55,6 +55,12 @@ const meta: Meta = {
     onRenderIcon: hiddenControl,
     styles: hiddenControl,
     strings: hiddenControl
+  },
+  args: {
+    disabled: false,
+    hasWarning: false,
+    hasAttachments: false,
+    warningMessage: 'Please wait 30 seconds to send new messages'
   }
 } as Meta<typeof SendBoxComponent>;
 
