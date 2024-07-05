@@ -23,7 +23,8 @@ export const EndCall = (props: {
   /* @conditional-compile-remove(end-call-options) */
   enableEndCallMenu?: boolean;
   disableEndCallModal?: boolean;
-  leaveBreakoutRoom?: () => Promise<void>;
+  returnToMainMeeting?: () => Promise<void>;
+  hangUpMainMeeting?: () => Promise<void>;
 }): JSX.Element => {
   const compactMode = props.displayType === 'compact';
   const hangUpButtonProps = usePropsFor(EndCallButton);
@@ -112,7 +113,7 @@ export const EndCall = (props: {
         text: 'Leave room',
         title: 'Leave room',
         onClick: () => {
-          props.leaveBreakoutRoom?.();
+          props.returnToMainMeeting?.();
         }
       },
       {
@@ -120,7 +121,9 @@ export const EndCall = (props: {
         text: 'Leave meeting',
         title: 'Leave meeting',
         onClick: () => {
-          onHangUp(false);
+          props.hangUpMainMeeting?.().then(() => {
+            onHangUp();
+          });
         }
       }
     ],
@@ -157,7 +160,7 @@ export const EndCall = (props: {
         showLabel={!compactMode}
         /* @conditional-compile-remove(end-call-options) */
         enableEndCallMenu={props.enableEndCallMenu ?? false}
-        menuProps={props.leaveBreakoutRoom ? breakoutRoomMenuProps : undefined}
+        menuProps={props.returnToMainMeeting && props.hangUpMainMeeting ? breakoutRoomMenuProps : undefined}
       />
     </>
   );

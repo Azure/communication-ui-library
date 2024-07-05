@@ -490,10 +490,16 @@ export interface CallWithChatAdapterManagement {
    * Mute a participant
    */
   muteAllRemoteParticipants(): Promise<void>;
+  // move to CommonCallingHandlers
   /**
    * Return to main meeting of breakout room
    */
   returnToMainMeeting(): Promise<void>;
+  // move to CommonCallingHandlers
+  /**
+   * Hang up main meeting of breakout room
+   */
+  hangUpMainMeeting(): Promise<void>;
   /**
    * Switch chat thread
    */

@@ -217,6 +217,10 @@ export class _MockCallAdapter implements CallAdapter {
   returnToMainMeeting(): Promise<void> {
     throw Error('returnToMainMeeting not implemented');
   }
+  // move to
+  hangUpMainMeeting(): Promise<void> {
+    throw Error('hangUpMainMeeting not implemented');
+  }
 }
 
 /**

@@ -575,6 +575,10 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     return this.callAdapter.returnToMainMeeting();
   }
 
+  public async hangUpMainMeeting(): Promise<void> {
+    return this.callAdapter.hangUpMainMeeting();
+  }
+
   public async switchChatThread(chatThreadId: string): Promise<void> {
     this.chatAdapter?.switchChatThread(chatThreadId);
   }

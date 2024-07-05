@@ -742,6 +742,8 @@ export interface CallAdapterCallOperations {
    * Return to main meeting of breakout room
    */
   returnToMainMeeting(): Promise<void>;
+
+  hangUpMainMeeting(): Promise<void>;
 }
 
 /**

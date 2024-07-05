@@ -240,6 +240,10 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
   public async returnToMainMeeting(): Promise<void> {
     return this.callWithChatAdapter.returnToMainMeeting();
   }
+
+  public async hangUpMainMeeting(): Promise<void> {
+    return this.callWithChatAdapter.hangUpMainMeeting();
+  }
 }
 
 function callAdapterStateFromCallWithChatAdapterState(

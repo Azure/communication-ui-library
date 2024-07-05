@@ -274,8 +274,12 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
     capabilitiesSelector.capabilities.useReactions.isPresent;
 
   const canReturnToMainMeeting = breakoutRoomSettings && breakoutRoomSettings.disableReturnToMainMeeting === false;
-  const leaveBreakoutRoom = useMemo(
+  const returnToMainMeeting = useMemo(
     () => (canReturnToMainMeeting ? () => props.callAdapter.returnToMainMeeting() : undefined),
+    [canReturnToMainMeeting, props.callAdapter]
+  );
+  const hangUpMainMeeting = useMemo(
+    () => (canReturnToMainMeeting ? () => props.callAdapter.hangUpMainMeeting() : undefined),
     [canReturnToMainMeeting, props.callAdapter]
   );
 
@@ -366,6 +370,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                 <div ref={controlBarContainerRef}>
                   <ControlBar layout={props.displayVertical ? 'vertical' : 'horizontal'} styles={centerContainerStyles}>
                     {
+                      // DOES NOT UPDATE WHEN CLOSING BREAKOUT ROOM
                       // eslint-disable-next-line @typescript-eslint/no-explicit-any
                       assignedBreakoutRoom && assignedBreakoutRoom.state === 'open' && (
                         <PrimaryButton
@@ -514,7 +519,8 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                         !isBoolean(props.callControls?.endCallButton) &&
                         props.callControls?.endCallButton?.disableEndCallModal
                       }
-                      leaveBreakoutRoom={canReturnToMainMeeting ? leaveBreakoutRoom : undefined}
+                      returnToMainMeeting={canReturnToMainMeeting ? returnToMainMeeting : undefined}
+                      hangUpMainMeeting={canReturnToMainMeeting ? hangUpMainMeeting : undefined}
                     />
                   </ControlBar>
                 </div>

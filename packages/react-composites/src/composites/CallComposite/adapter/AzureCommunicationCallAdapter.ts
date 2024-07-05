@@ -968,7 +968,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     return call;
   }
 
-  public processNewCall(call: CallCommon): void {
+  private processNewCall(call: CallCommon): void {
     this.call = call;
     this.context.setCurrentCallId(call.id);
 
@@ -1098,6 +1098,16 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
         this.processNewCall(mainMeetingCall);
         this.resumeCall();
       }
+    }
+  }
+
+  public async hangUpMainMeeting(): Promise<void> {
+    const mainMeetingCall = this.callAgent?.calls.find((callAgentCall) => {
+      const mainMeeting = this.getState().mainMeeting;
+      return mainMeeting?.id && mainMeeting.id === callAgentCall.id;
+    });
+    if (mainMeetingCall) {
+      mainMeetingCall.hangUp();
     }
   }
 
