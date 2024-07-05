@@ -29,6 +29,8 @@ export interface HoldPageProps {
   onDismissError: (
     error: ActiveErrorMessage | /* @conditional-compile-remove(notifications) */ ActiveNotification
   ) => void;
+  /* @conditional-compile-remove(notifications) */
+  onDismissNotification?: (notification: ActiveNotification) => void;
   capabilitiesChangedNotificationBarProps?: CapabilitiesChangeNotificationBarProps;
   /* @conditional-compile-remove(notifications) */
   latestNotifications: ActiveNotification[];
@@ -75,6 +77,8 @@ export const HoldPage = (props: HoldPageProps): JSX.Element => {
       /* @conditional-compile-remove(notifications) */
       latestNotifications={props.latestNotifications}
       onDismissError={props.onDismissError}
+      /* @conditional-compile-remove(notifications) */
+      onDismissNotification={props.onDismissNotification}
     />
   );
 };

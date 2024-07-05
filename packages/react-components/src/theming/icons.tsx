@@ -79,6 +79,8 @@ import {
 } from '@fluentui/react-icons';
 /* @conditional-compile-remove(call-readiness) */
 import { Important20Filled } from '@fluentui/react-icons';
+/* @conditional-compile-remove(notifications) */
+import { Record16Regular } from '@fluentui/react-icons';
 
 import { VideoBackgroundEffect20Filled, VideoBackgroundEffect20Regular } from '@fluentui/react-icons';
 
@@ -300,6 +302,8 @@ export const DEFAULT_COMPONENT_ICONS = {
   ErrorBarCallVideoStoppedBySystem: <VideoProhibited16Filled />,
   /* @conditional-compile-remove(soft-mute) */
   ErrorBarMutedByRemoteParticipant: <MicOff16Regular />,
+  /* @conditional-compile-remove(notifications) */
+  NotificationBarRecording: <Record16Regular />,
   HorizontalGalleryLeftButton: <GalleryLeftButton />,
   HorizontalGalleryRightButton: <GalleryRightButton />,
   MessageDelivered: <CheckmarkCircle16Regular />,
