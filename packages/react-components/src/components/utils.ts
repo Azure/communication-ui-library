@@ -339,8 +339,23 @@ export const customNotificationIconName: Partial<{ [key in NotificationType]: st
   callMacOsCameraAccessDenied: 'ErrorBarCallMacOsCameraAccessDenied',
   /* @conditional-compile-remove(soft-mute) */
   mutedByRemoteParticipant: 'ErrorBarMutedByRemoteParticipant',
+  speakingWhileMuted: 'ErrorBarCallMicrophoneMutedBySystem',
   /* @conditional-compile-remove(notifications) */
-  speakingWhileMuted: 'ErrorBarCallMicrophoneMutedBySystem'
+  recordingStarted: 'NotificationBarRecording',
+  /* @conditional-compile-remove(notifications) */
+  transcriptionStarted: 'NotificationBarRecording',
+  /* @conditional-compile-remove(notifications) */
+  recordingStopped: 'NotificationBarRecording',
+  /* @conditional-compile-remove(notifications) */
+  transcriptionStopped: 'NotificationBarRecording',
+  /* @conditional-compile-remove(notifications) */
+  recordingAndTranscriptionStarted: 'NotificationBarRecording',
+  /* @conditional-compile-remove(notifications) */
+  recordingAndTranscriptionStopped: 'NotificationBarRecording',
+  /* @conditional-compile-remove(notifications) */
+  recordingStoppedStillTranscribing: 'NotificationBarRecording',
+  /* @conditional-compile-remove(notifications) */
+  transcriptionStoppedStillRecording: 'NotificationBarRecording'
 };
 
 /**

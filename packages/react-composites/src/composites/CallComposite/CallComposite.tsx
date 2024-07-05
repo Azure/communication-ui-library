@@ -45,11 +45,13 @@ import { ParticipantRole, PermissionConstraints } from '@azure/communication-cal
 import { MobileChatSidePaneTabHeaderProps } from '../common/TabHeader';
 import { InjectedSidePaneProps, SidePaneProvider, SidePaneRenderer } from './components/SidePane/SidePaneProvider';
 import {
-  filterLatestErrors,
+  filterLatestNotifications,
   getEndedCallPageProps,
-  trackErrorAsDismissed,
-  updateTrackedErrorsWithActiveErrors
+  trackNotificationAsDismissed,
+  updateTrackedNotificationsWithActiveNotifications
 } from './utils';
+/* @conditional-compile-remove(notifications) */
+import { CachedComplianceNotificationProps, computeComplianceNotification } from './utils';
 import { TrackedNotifications } from './types/ErrorTracking';
 import { usePropsFor } from './hooks/usePropsFor';
 import { deviceCountSelector } from './selectors/deviceCountSelector';
@@ -59,6 +61,8 @@ import { useTrackedCapabilityChangedNotifications } from './utils/TrackCapabilit
 import { useEndedCallConsoleErrors } from './utils/useConsoleErrors';
 import { SurveyPage } from './pages/SurveyPage';
 import { useAudio } from '../common/AudioProvider';
+/* @conditional-compile-remove(notifications) */
+import { complianceBannerSelector } from './selectors/complianceBannerSelector';
 
 /**
  * Props for {@link CallComposite}.
@@ -428,29 +432,80 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   /* @conditional-compile-remove(notifications) */
   const activeInCallErrors = usePropsFor(NotificationStack).activeErrorMessages;
   /* @conditional-compile-remove(notifications) */
-  const activeNotifications = usePropsFor(NotificationStack).activeNotifications;
+  const activeNotificationsFromSelector = usePropsFor(NotificationStack).activeNotifications;
+  /* @conditional-compile-remove(notifications) */
+  const complianceProps = useSelector(complianceBannerSelector);
+  /* @conditional-compile-remove(notifications) */
+  const cachedProps = useRef<CachedComplianceNotificationProps>({
+    latestBooleanState: {
+      callTranscribeState: false,
+      callRecordState: false
+    },
+    latestStringState: {
+      callTranscribeState: 'off',
+      callRecordState: 'off'
+    },
+    lastUpdated: Date.now()
+  });
+  /* @conditional-compile-remove(notifications) */
+  const complianceNotification: ActiveNotification | undefined = useMemo(() => {
+    return computeComplianceNotification(complianceProps, cachedProps);
+  }, [complianceProps, cachedProps]);
 
   const [trackedErrors, setTrackedErrors] = useState<TrackedNotifications>({} as TrackedNotifications);
   /* @conditional-compile-remove(notifications) */
   const [trackedInCallErrors, setTrackedInCallErrors] = useState<TrackedNotifications>({} as TrackedNotifications);
+
+  /* @conditional-compile-remove(notifications) */
+  const [trackedNotifications, setTrackedNotifications] = useState<TrackedNotifications>({} as TrackedNotifications);
+  /* @conditional-compile-remove(notifications) */
+  const [activeNotifications, setActiveNotifications] = useState<ActiveNotification[]>(activeNotificationsFromSelector);
+  /* @conditional-compile-remove(notifications) */
   useEffect(() => {
-    setTrackedErrors((prev) => updateTrackedErrorsWithActiveErrors(prev, activeErrors));
+    if (complianceNotification) {
+      setActiveNotifications([...activeNotificationsFromSelector, complianceNotification]);
+    }
+  }, [complianceNotification, activeNotificationsFromSelector]);
+
+  useEffect(() => {
+    setTrackedErrors((prev) => updateTrackedNotificationsWithActiveNotifications(prev, activeErrors));
     /* @conditional-compile-remove(notifications) */
-    setTrackedInCallErrors((prev) => updateTrackedErrorsWithActiveErrors(prev, activeInCallErrors));
-  }, [activeErrors, /* @conditional-compile-remove(notifications) */ activeInCallErrors]);
+    setTrackedInCallErrors((prev) => updateTrackedNotificationsWithActiveNotifications(prev, activeInCallErrors));
+    /* @conditional-compile-remove(notifications) */
+    setTrackedNotifications((prev) => updateTrackedNotificationsWithActiveNotifications(prev, activeNotifications));
+  }, [
+    activeErrors,
+    /* @conditional-compile-remove(notifications) */ activeInCallErrors,
+    /* @conditional-compile-remove(notifications) */ activeNotifications
+  ]);
+
   const onDismissError = useCallback(
     (error: ActiveErrorMessage | /* @conditional-compile-remove(notifications) */ ActiveNotification) => {
-      setTrackedErrors((prev) => trackErrorAsDismissed(error.type, prev));
+      setTrackedErrors((prev) => trackNotificationAsDismissed(error.type, prev));
       /* @conditional-compile-remove(notifications) */
-      setTrackedInCallErrors((prev) => trackErrorAsDismissed(error.type, prev));
+      setTrackedInCallErrors((prev) => trackNotificationAsDismissed(error.type, prev));
     },
     []
   );
-  const latestErrors = useMemo(() => filterLatestErrors(activeErrors, trackedErrors), [activeErrors, trackedErrors]);
+
+  /* @conditional-compile-remove(notifications) */
+  const onDismissNotification = useCallback((notification: ActiveNotification) => {
+    setTrackedNotifications((prev) => trackNotificationAsDismissed(notification.type, prev));
+  }, []);
+  const latestErrors = useMemo(
+    () => filterLatestNotifications(activeErrors, trackedErrors),
+    [activeErrors, trackedErrors]
+  );
   /* @conditional-compile-remove(notifications) */
   const latestInCallErrors = useMemo(
-    () => filterLatestErrors(activeInCallErrors, trackedInCallErrors),
+    () => filterLatestNotifications(activeInCallErrors, trackedInCallErrors),
     [activeInCallErrors, trackedInCallErrors]
+  ) as ActiveNotification[];
+
+  /* @conditional-compile-remove(notifications) */
+  const latestNotifications = useMemo(
+    () => filterLatestNotifications(activeNotifications, trackedNotifications),
+    [activeNotifications, trackedNotifications]
   ) as ActiveNotification[];
 
   const callees = useSelector(getTargetCallees) as StartCallIdentifier[];
@@ -596,8 +651,10 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           mobileChatTabHeader={props.mobileChatTabHeader}
           latestErrors={getLatestErrorsTrampoline()}
           /* @conditional-compile-remove(notifications) */
-          latestNotifications={activeNotifications}
+          latestNotifications={latestNotifications}
           onDismissError={onDismissError}
+          /* @conditional-compile-remove(notifications) */
+          onDismissNotification={onDismissNotification}
           capabilitiesChangedNotificationBarProps={capabilitiesChangedNotificationBarProps}
         />
       );
@@ -613,8 +670,10 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           onFetchAvatarPersonaData={onFetchAvatarPersonaData}
           latestErrors={getLatestErrorsTrampoline()}
           /* @conditional-compile-remove(notifications) */
-          latestNotifications={activeNotifications}
+          latestNotifications={latestNotifications}
           onDismissError={onDismissError}
+          /* @conditional-compile-remove(notifications) */
+          onDismissNotification={onDismissNotification}
           capabilitiesChangedNotificationBarProps={capabilitiesChangedNotificationBarProps}
         />
       );
@@ -633,8 +692,10 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           onCloseChatPane={props.onCloseChatPane}
           latestErrors={getLatestErrorsTrampoline()}
           /* @conditional-compile-remove(notifications) */
-          latestNotifications={activeNotifications}
+          latestNotifications={latestNotifications}
           onDismissError={onDismissError}
+          /* @conditional-compile-remove(notifications) */
+          onDismissNotification={onDismissNotification}
           galleryLayout={userSetGalleryLayout}
           onUserSetGalleryLayoutChange={setUserSetGalleryLayout}
           onSetUserSetOverflowGalleryPosition={setUserSetOverflowGalleryPosition}
@@ -660,8 +721,10 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
               mobileChatTabHeader={props.mobileChatTabHeader}
               latestErrors={getLatestErrorsTrampoline()}
               /* @conditional-compile-remove(notifications) */
-              latestNotifications={activeNotifications}
+              latestNotifications={latestNotifications}
               onDismissError={onDismissError}
+              /* @conditional-compile-remove(notifications) */
+              onDismissNotification={onDismissNotification}
               capabilitiesChangedNotificationBarProps={capabilitiesChangedNotificationBarProps}
             />
           }
