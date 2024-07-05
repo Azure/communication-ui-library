@@ -45,7 +45,7 @@ export class TableEditContextMenuProvider implements ContextMenuProvider<IContex
   }
 }
 
-export const isTableEditable = (editor: IEditor, node: Node): boolean => {
+const isTableEditable = (editor: IEditor, node: Node): boolean => {
   const domHelper = editor.getDOMHelper();
   const td = domHelper.findClosestElementAncestor(node, 'TD,TH');
   const table = td && domHelper.findClosestElementAncestor(td, 'table');
