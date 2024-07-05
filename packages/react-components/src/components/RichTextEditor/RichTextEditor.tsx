@@ -21,7 +21,7 @@ import { RichTextToolbar } from './Toolbar/RichTextToolbar';
 import { RichTextToolbarPlugin } from './Plugins/RichTextToolbarPlugin';
 import { ContextMenuPlugin } from './Plugins/ContextMenuPlugin';
 import { TableEditContextMenuProvider } from './Plugins/TableEditContextMenuProvider';
-import { borderApplier, dataSetApplier } from '../utils/RichTextEditorUtils';
+import { borderApplier, dataSetApplier, DefaultSanitizers } from '../utils/RichTextEditorUtils';
 import { ContextualMenu, IContextualMenuItem, IContextualMenuProps } from '@fluentui/react';
 import { PlaceholderPlugin } from './Plugins/PlaceholderPlugin';
 
@@ -229,7 +229,13 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     const contentEdit = new EditPlugin({ handleTabKey: false });
     // AutoFormatPlugin previously was a part of the edit plugin
     const autoFormatPlugin = new AutoFormatPlugin({ autoBullet: true, autoNumbering: true, autoLink: true });
-    const roosterPastePlugin = new PastePlugin(false);
+    const roosterPastePlugin = new PastePlugin(false, {
+      additionalDisallowedTags: ['head', '!doctype', '!cdata', '#comment'],
+      additionalAllowedTags: [],
+      styleSanitizers: DefaultSanitizers,
+      attributeSanitizers: {}
+    });
+
     const shortcutPlugin = new ShortcutPlugin();
     const contextMenuPlugin = new ContextMenuPlugin(onContextMenuRender, onContextMenuDismiss);
     return [
