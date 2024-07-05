@@ -80,7 +80,7 @@ const defaultRemoteParticipants = [
   { name: 'Michonne', status: 'Idle', isMuted: false, isScreenSharing: false }
 ];
 
-const defaultTypingUsers = [
+export const defaultTypingUsers = [
   {
     userId: '1',
     displayName: 'User1'
@@ -364,7 +364,6 @@ export const controlsToAdd = {
   teamsMeetingLink: { control: 'text', defaultValue: '', name: 'Teams meeting link' },
   theme: { control: 'radio', options: themeChoices, defaultValue: 'Default', name: 'Theme' },
   token: { control: 'text', defaultValue: '', name: 'Valid token for user', type: { name: 'string', required: true } },
-  typingUsers: { control: 'object', defaultValue: defaultTypingUsers, name: 'Typing users' },
   isCaptionsFeatureActive: { control: 'boolean', defaultValue: true, name: 'Is captions on' },
   userId: {
     control: 'text',
