@@ -20,7 +20,7 @@ import { _AttachmentUploadCards } from '../../Attachment/AttachmentUploadCards';
 /* @conditional-compile-remove(file-sharing-acs) */
 import { AttachmentMetadata } from '@internal/acs-ui-common';
 import { useChatMessageRichTextEditContainerStyles } from '../../styles/ChatMessageComponent.styles';
-import { MAXIMUM_LENGTH_OF_MESSAGE, toAttachmentMetadata } from '../../utils/SendBoxUtils';
+import { MAXIMUM_LENGTH_OF_MESSAGE } from '../../utils/SendBoxUtils';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import {
   cancelInlineImageUpload,
@@ -179,10 +179,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
     // so when user removes all attachments, UI can reflect it instantly
     // if you set it to undefined, the attachments pre-edited would still be there
     // until edit message event is received
-    onSubmit(
-      content,
-      /* @conditional-compile-remove(file-sharing-acs) */ toAttachmentMetadata(attachmentMetadata) || []
-    );
+    onSubmit(content, /* @conditional-compile-remove(file-sharing-acs) */ attachmentMetadata);
   }, [
     submitEnabled,
     /* @conditional-compile-remove(rich-text-editor-image-upload) */

@@ -127,17 +127,17 @@ export const ChatMyMessageComponent = (props: ChatMyMessageComponentProps): JSX.
   }, [onDeleteMessage, message.messageId, message.messageType, clientMessageId]);
 
   const onResendClick = useCallback(() => {
-    /* @conditional-compile-remove(file-sharing-acs) */
-    /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    const attachments = (message as ChatMessage).attachments || [];
-
     onDeleteMessage && clientMessageId && onDeleteMessage(clientMessageId);
     onSendMessage &&
       onSendMessage(
         content !== undefined ? content : '',
         /* @conditional-compile-remove(file-sharing-acs) */
         /* @conditional-compile-remove(rich-text-editor-image-upload) */
-        { attachments, type: props.richTextEditorOptions ? 'html' : 'text' }
+        {
+          /* @conditional-compile-remove(file-sharing-acs) */ attachments:
+            `attachments` in message ? message.attachments : undefined,
+          type: props.richTextEditorOptions ? 'html' : 'text'
+        }
       );
   }, [
     message,
@@ -166,8 +166,9 @@ export const ChatMyMessageComponent = (props: ChatMyMessageComponentProps): JSX.
           message.messageId,
           text,
           /* @conditional-compile-remove(file-sharing-acs) */
+          /* @conditional-compile-remove(rich-text-editor-image-upload) */
           {
-            attachments: attachments,
+            /* @conditional-compile-remove(file-sharing-acs) */ attachments: attachments,
             type: props.richTextEditorOptions ? 'html' : 'text'
           }
         ));

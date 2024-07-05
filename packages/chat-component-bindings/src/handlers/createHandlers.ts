@@ -73,16 +73,25 @@ export const createDefaultChatHandlers = memoizeOne(
           senderDisplayName: chatClient.getState().displayName
         };
 
+        /* @conditional-compile-remove(rich-text-editor-image-upload) */
         const imageAttachments: ChatAttachment[] | undefined = getImageAttachmentsFromHTMLContent(content);
 
-        if (
+        /* @conditional-compile-remove(file-sharing-acs) */
+        const hasAttachments =
           options &&
           'attachments' in options &&
           options.attachments &&
-          /* @conditional-compile-remove(file-sharing-acs) */ ((options.attachments &&
-            options.attachments.length > 0) ||
-            /* @conditional-compile-remove(rich-text-editor-image-upload) */
-            (imageAttachments && imageAttachments.length > 0))
+          options.attachments.length > 0 &&
+          options.attachments[0] &&
+          !(options.attachments[0] as ChatAttachment).attachmentType;
+        /* @conditional-compile-remove(rich-text-editor-image-upload) */
+        const hasImages = options && imageAttachments && imageAttachments.length > 0;
+
+        /* @conditional-compile-remove(file-sharing-acs) */
+        /* @conditional-compile-remove(rich-text-editor-image-upload) */
+        if (
+          /* @conditional-compile-remove(file-sharing-acs) */ hasAttachments ||
+          /* @conditional-compile-remove(rich-text-editor-image-upload) */ hasImages
         ) {
           const chatSDKOptions: SendMessageOptions = {
             metadata: {
@@ -97,7 +106,6 @@ export const createDefaultChatHandlers = memoizeOne(
           await chatThreadClient.sendMessage(sendMessageRequest, chatSDKOptions);
           return;
         }
-
         await chatThreadClient.sendMessage(sendMessageRequest, options as SendMessageOptions);
       },
       /* @conditional-compile-remove(rich-text-editor-image-upload) */

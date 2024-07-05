@@ -131,30 +131,21 @@ export const cancelInlineImageUpload = (
 };
 
 /* @conditional-compile-remove(file-sharing-acs) */
-/* @conditional-compile-remove(rich-text-editor-image-upload) */
 /**
  * @internal
  */
 export const toAttachmentMetadata = (
-  attachmentsWithProgress: AttachmentMetadataInProgress[] | undefined,
-  /* @conditional-compile-remove(rich-text-editor-image-upload) */ attachmentType?: 'image'
+  attachmentsWithProgress: AttachmentMetadataInProgress[] | undefined
 ): AttachmentMetadata[] | undefined => {
   return attachmentsWithProgress
     ?.filter((attachment) => {
       return !('error' in attachment) && !attachment.error?.message;
     })
     .map((attachment) => {
-      let url = attachment.url || '';
-      /* @conditional-compile-remove(rich-text-editor-image-upload) */
-      if (attachmentType === 'image') {
-        url = '';
-      }
       return {
         id: attachment.id,
         name: attachment.name,
-        url,
-        /* @conditional-compile-remove(rich-text-editor-image-upload) */
-        attachmentType: attachmentType
+        url: attachment.url ?? ''
       };
     });
 };

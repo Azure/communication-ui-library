@@ -333,7 +333,6 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
         /* @conditional-compile-remove(file-sharing-acs) */ /* @conditional-compile-remove(rich-text-editor-composite-support) */
         {
           /* @conditional-compile-remove(file-sharing-acs) */
-          /* @conditional-compile-remove(rich-text-editor-image-upload) */
           attachments: toAttachmentMetadata(attachments),
           /* @conditional-compile-remove(rich-text-editor-composite-support) */
           type: 'html'
