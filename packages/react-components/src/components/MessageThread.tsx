@@ -578,20 +578,17 @@ export interface RichTextEditorOptions {
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   /**
    * Optional callback to upload an inline image in the rich text editor.
-   * @beta
    */
   onUploadInlineImage?: (imageUrl: string, imageFileName: string) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   /**
    * Optional callback to remove the attachment upload or delete the image before sending.
-   * @beta
    */
   onCancelInlineImageUpload?: (imageId: string) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   /**
    * Optional array of type {@link AttachmentMetadataInProgress}
    * to render inline images being uploaded in the RichTextSendBox.
-   * @beta
    */
   imageUploadsInProgress?: AttachmentMetadataInProgress[];
 }

@@ -165,13 +165,11 @@ export interface RichTextSendBoxProps {
   /**
    * Optional callback to remove the attachment upload before sending by clicking on
    * cancel icon.
-   * @beta
    */
   onCancelAttachmentUpload?: (attachmentId: string) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   /**
    * Optional callback to remove the attachment upload or delete the image before sending.
-   * @beta
    */
   onCancelInlineImageUpload?: (imageId: string) => void;
   /**
@@ -189,14 +187,12 @@ export interface RichTextSendBoxProps {
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   /**
    * Optional callback to upload an inline image in the rich text editor.
-   * @beta
    */
   onUploadInlineImage?: (imageUrl: string, imageFileName: string) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   /**
    * Optional array of type {@link AttachmentMetadataInProgress}
    * to render inline images being uploaded in the RichTextSendBox.
-   * @beta
    */
   imageUploadsInProgress?: AttachmentMetadataInProgress[];
 }
