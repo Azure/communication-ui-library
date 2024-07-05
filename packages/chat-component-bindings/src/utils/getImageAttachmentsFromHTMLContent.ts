@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { ChatAttachment } from '@azure/communication-chat';
 
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
