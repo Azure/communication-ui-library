@@ -58,6 +58,8 @@ export type {
 
 /* @conditional-compile-remove(file-sharing-acs) */
 export type { MessageOptions, ChatMessageType } from '../../acs-ui-common/src';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+export type { UploadChatImageResult } from '../../acs-ui-common/src';
 
 export {
   CallClientProvider,
