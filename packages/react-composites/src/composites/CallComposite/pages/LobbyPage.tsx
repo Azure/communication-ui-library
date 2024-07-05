@@ -38,6 +38,8 @@ export interface LobbyPageProps {
   onDismissError: (
     error: ActiveErrorMessage | /* @conditional-compile-remove(notifications) */ ActiveNotification
   ) => void;
+  /* @conditional-compile-remove(notifications) */
+  onDismissNotification: (notification: ActiveNotification) => void;
   capabilitiesChangedNotificationBarProps?: CapabilitiesChangeNotificationBarProps;
 }
 
@@ -87,6 +89,8 @@ export const LobbyPage = (props: LobbyPageProps): JSX.Element => {
       onDismissError={props.onDismissError}
       /* @conditional-compile-remove(notifications) */
       latestNotifications={props.latestNotifications}
+      /* @conditional-compile-remove(notifications) */
+      onDismissNotification={props.onDismissNotification}
     />
   );
 };

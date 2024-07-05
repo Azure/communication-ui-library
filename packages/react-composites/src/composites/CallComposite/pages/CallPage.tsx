@@ -53,6 +53,8 @@ export interface CallPageProps {
   onDismissError: (
     error: ActiveErrorMessage | /* @conditional-compile-remove(notifications) */ ActiveNotification
   ) => void;
+  /* @conditional-compile-remove(notifications) */
+  onDismissNotification: (notification: ActiveNotification) => void;
   galleryLayout: VideoGalleryLayout;
   capabilitiesChangedNotificationBarProps?: CapabilitiesChangeNotificationBarProps;
   onUserSetGalleryLayoutChange?: (layout: VideoGalleryLayout) => void;
@@ -85,7 +87,9 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
     compositeAudioContext,
     disableAutoShowDtmfDialer = false,
     /* @conditional-compile-remove(notifications) */
-    latestNotifications
+    latestNotifications,
+    /* @conditional-compile-remove(notifications) */
+    onDismissNotification
   } = props;
 
   // To use useProps to get these states, we need to create another file wrapping Call,
@@ -193,6 +197,8 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
         /* @conditional-compile-remove(notifications) */
         latestNotifications={latestNotifications}
         onDismissError={props.onDismissError}
+        /* @conditional-compile-remove(notifications) */
+        onDismissNotification={onDismissNotification}
         onUserSetOverflowGalleryPositionChange={onSetUserSetOverflowGalleryPosition}
         onUserSetGalleryLayoutChange={onUserSetGalleryLayoutChange}
         userSetGalleryLayout={galleryLayout}
