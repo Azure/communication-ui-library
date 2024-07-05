@@ -25,12 +25,12 @@ const meta: Meta = {
   title: 'Components/Participant Item',
   component: ParticipantItemComponent,
   argTypes: {
-    displayName: { ...controlsToAdd.displayName },
-    isScreenSharing: { ...controlsToAdd.isScreenSharing },
-    isMuted: { ...controlsToAdd.isMuted },
+    displayName: controlsToAdd.displayName,
+    isScreenSharing: controlsToAdd.isScreenSharing,
+    isMuted: controlsToAdd.isMuted,
     me: controlsToAdd.isMe,
     menuItemsStr: controlsToAdd.participantItemMenuItemsStr,
-    isRaisedHand: { ...controlsToAdd.isRaisedHand },
+    isRaisedHand: controlsToAdd.isRaisedHand,
     // Hidden controls
     userId: hiddenControl,
     onRenderAvatar: hiddenControl,
