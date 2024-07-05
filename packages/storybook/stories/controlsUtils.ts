@@ -279,7 +279,7 @@ export const controlsToAdd = {
   font: { control: 'text', defaultValue: 'Monaco, Menlo, Consolas', name: 'Font' },
   gridParticipants: { control: 'object', defaultValue: defaultControlsGridParticipants, name: 'Participants' },
   isCameraEnabled: { control: 'boolean', defaultValue: true, name: 'Is camera available' },
-  isMe: { control: 'boolean', defaultValue: false, name: 'Is You' },
+  isMe: { control: 'boolean', name: 'Is You' },
   isMicrophoneEnabled: { control: 'boolean', defaultValue: true, name: 'Is microphone available' },
   isMuteAllAvailable: {
     control: 'boolean',
@@ -341,7 +341,7 @@ export const controlsToAdd = {
     defaultValue: 'desktop',
     name: 'Form factor'
   },
-  participantItemMenuItemsStr: { control: 'text', defaultValue: 'Mute, Remove', name: 'Menu items (comma separated)' },
+  participantItemMenuItemsStr: { control: 'text', name: 'Menu items (comma separated)' },
   participantNames: {
     control: 'text',
     defaultValue: 'You, Hal Jordan, Barry Allen, Bruce Wayne',
