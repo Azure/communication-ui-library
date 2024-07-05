@@ -45,7 +45,7 @@ jest.mock('../common/RichTextSendBoxWrapper', () => {
   };
 });
 
-describe('ChatAdapter', () => {
+describe('ChatComposite', () => {
   beforeEach(() => {
     // Register icons used in ChatComposite to avoid warnings
     registerIcons({
