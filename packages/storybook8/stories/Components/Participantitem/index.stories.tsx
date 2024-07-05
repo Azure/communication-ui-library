@@ -7,7 +7,7 @@ import { controlsToAdd, hiddenControl } from '../../controlsUtils';
 import { CustomAvatarExample } from './snippets/CustomAvatar.snippet';
 import { CustomIconExample } from './snippets/CustomIcon.snippet';
 import { ParticipantItemExample } from './snippets/ParticipantItem.snippet';
-export { Preview } from './ParticipantItem.story';
+export { ParticipantItem } from './ParticipantItem.story';
 
 export const ParticipantItemSnippetDocsOnly = {
   render: ParticipantItemExample

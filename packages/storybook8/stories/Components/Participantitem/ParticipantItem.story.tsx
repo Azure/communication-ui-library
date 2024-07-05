@@ -50,4 +50,4 @@ const ParticipantItemStory = (args: {
   );
 };
 
-export const Preview = ParticipantItemStory.bind({});
+export const ParticipantItem = ParticipantItemStory.bind({});
