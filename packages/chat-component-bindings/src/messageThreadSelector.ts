@@ -374,7 +374,7 @@ const sanitizedMessageContentType = (type: string): MessageContentType => {
     : 'unknown';
 };
 
-const getBrokenImageViewNode = (img: HTMLDivElement | undefined): HTMLDivElement => {
+const getBrokenImageViewNode = (img?: HTMLDivElement): HTMLDivElement => {
   const wrapper = document.createElement('div');
   Array.from(img?.attributes ?? []).forEach((attr) => {
     wrapper.setAttribute(attr.nodeName, attr.nodeValue ?? '');
