@@ -78,8 +78,11 @@ export const ChatMessageComponentAsEditBoxPicker = (props: ChatMessageComponentA
             {...props}
             /* @conditional-compile-remove(rich-text-editor-image-upload) */
             onPaste={richTextEditorOptions?.onPaste}
+            /* @conditional-compile-remove(rich-text-editor-image-upload) */
             onUploadInlineImage={richTextEditorOptions?.onUploadInlineImage}
+            /* @conditional-compile-remove(rich-text-editor-image-upload) */
             imageUploadsInProgress={richTextEditorOptions?.imageUploadsInProgress}
+            /* @conditional-compile-remove(rich-text-editor-image-upload) */
             onCancelInlineImageUpload={richTextEditorOptions?.onCancelInlineImageUpload}
           />
         </Suspense>
