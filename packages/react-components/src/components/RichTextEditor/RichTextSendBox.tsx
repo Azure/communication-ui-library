@@ -13,7 +13,7 @@ import { InputBoxButton } from '../InputBoxButton';
 import { RichTextSendBoxErrors, RichTextSendBoxErrorsProps } from './RichTextSendBoxErrors';
 import { isMessageTooLong, isSendBoxButtonAriaDisabled, sanitizeText } from '../utils/SendBoxUtils';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
-import { insertAttachmentsAndImages } from '../utils/SendBoxUtils';
+import { insertImagesToContentString, toAttachmentMetadata } from '../utils/SendBoxUtils';
 import { RichTextEditorComponentRef } from './RichTextEditor';
 import { useTheme } from '../../theming';
 import { richTextActionButtonsStyle, sendBoxRichTextEditorStyle } from '../styles/RichTextEditor.styles';
@@ -325,16 +325,8 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
         imageUploadsInProgress
       )
     ) {
-      /* @conditional-compile-remove(file-sharing-acs) */
       /* @conditional-compile-remove(rich-text-editor-image-upload) */
-      const { content, attachmentArray } = insertAttachmentsAndImages(
-        contentValue,
-        /* @conditional-compile-remove(file-sharing-acs) */ attachments,
-        /* @conditional-compile-remove(rich-text-editor-image-upload) */ imageUploadsInProgress
-      );
-
-      /* @conditional-compile-remove(rich-text-editor-image-upload) */
-      message = content;
+      message = insertImagesToContentString(contentValue, imageUploadsInProgress);
 
       onSendMessage(
         message,
@@ -342,7 +334,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
         {
           /* @conditional-compile-remove(file-sharing-acs) */
           /* @conditional-compile-remove(rich-text-editor-image-upload) */
-          attachments: attachmentArray,
+          attachments: toAttachmentMetadata(attachments),
           /* @conditional-compile-remove(rich-text-editor-composite-support) */
           type: 'html'
         }

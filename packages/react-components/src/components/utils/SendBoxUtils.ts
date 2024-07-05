@@ -159,29 +159,17 @@ export const toAttachmentMetadata = (
     });
 };
 
-/* @conditional-compile-remove(file-sharing-acs) */
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 /**
  * @internal
  */
-export const insertAttachmentsAndImages = (
+export const insertImagesToContentString = (
   content: string,
-  attachments: AttachmentMetadataInProgress[] | undefined,
-  imageUploadsInProgress: AttachmentMetadataInProgress[] | undefined
-): { content: string; attachmentArray: AttachmentMetadata[] | undefined } => {
-  if (!attachments && !imageUploadsInProgress) {
-    return { content, attachmentArray: undefined };
+  imageUploadsInProgress?: AttachmentMetadataInProgress[]
+): string => {
+  if (!imageUploadsInProgress || imageUploadsInProgress.length <= 0) {
+    return content;
   }
-  /* @conditional-compile-remove(file-sharing-acs) */
-  let attachmentArray = toAttachmentMetadata(attachments);
-  let newContent = content;
-  /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  if (imageUploadsInProgress) {
-    newContent = addUploadedImagesToMessage(content, imageUploadsInProgress);
-    const imageArray = toAttachmentMetadata(imageUploadsInProgress, 'image');
-    if (imageArray) {
-      attachmentArray = attachmentArray ? attachmentArray?.concat(imageArray) : imageArray;
-    }
-  }
-  return { content: newContent, attachmentArray };
+  const newContent = addUploadedImagesToMessage(content, imageUploadsInProgress);
+  return newContent;
 };

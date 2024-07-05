@@ -131,23 +131,13 @@ export const ChatMyMessageComponent = (props: ChatMyMessageComponentProps): JSX.
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
     const attachments = (message as ChatMessage).attachments || [];
 
-    /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    document.querySelectorAll('img').forEach((img) => {
-      attachments.push({
-        id: img.id,
-        attachmentType: 'image'
-      });
-    });
-
-    /* @conditional-compile-remove(file-sharing-acs) */
-    const messageOptions = { attachments, type: props.richTextEditorOptions ? 'html' : 'text' };
     onDeleteMessage && clientMessageId && onDeleteMessage(clientMessageId);
     onSendMessage &&
       onSendMessage(
         content !== undefined ? content : '',
         /* @conditional-compile-remove(file-sharing-acs) */
         /* @conditional-compile-remove(rich-text-editor-image-upload) */
-        messageOptions
+        { attachments, type: props.richTextEditorOptions ? 'html' : 'text' }
       );
   }, [
     message,
@@ -176,7 +166,10 @@ export const ChatMyMessageComponent = (props: ChatMyMessageComponentProps): JSX.
           message.messageId,
           text,
           /* @conditional-compile-remove(file-sharing-acs) */
-          { attachments: attachments }
+          {
+            attachments: attachments,
+            type: props.richTextEditorOptions ? 'html' : 'text'
+          }
         ));
       setIsEditing(false);
     },
