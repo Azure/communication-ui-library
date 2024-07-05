@@ -222,6 +222,7 @@ export interface AttachmentUploadOptions {
 // @beta
 export interface AttachmentUploadTask {
     file?: File;
+    image?: Blob;
     notifyUploadCompleted: (id: string, url: string) => void;
     notifyUploadFailed: (message: string) => void;
     notifyUploadProgressChanged: (value: number) => void;
@@ -1103,6 +1104,8 @@ export interface CallWithChatAdapterManagement {
     allowUnsupportedBrowserVersion(): void;
     askDevicePermission(constrain: PermissionConstraints): Promise<void>;
     createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void | CreateVideoStreamViewResult>;
+    // @beta
+    deleteImage(imageId: string): Promise<void>;
     deleteMessage(messageId: string): Promise<void>;
     disposeLocalVideoStreamView(): Promise<void>;
     disposeRemoteVideoStreamView(remoteUserId: string): Promise<void>;
@@ -1161,6 +1164,8 @@ export interface CallWithChatAdapterManagement {
     updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void;
     updateMessage(messageId: string, content: string, options?: Record<string, string> | /* @conditional-compile-remove(file-sharing-acs) */ MessageOptions): Promise<void>;
     updateSelectedVideoBackgroundEffect(selectedVideoBackground: VideoBackgroundEffect): void;
+    // @beta
+    uploadImage(image: Blob, imageFilename: string): Promise<UploadChatImageResult>;
 }
 
 // @public
@@ -1729,6 +1734,7 @@ export interface ChatAdapterSubscribers {
 
 // @public
 export interface ChatAdapterThreadManagement {
+    deleteImage(imageId: string): Promise<void>;
     deleteMessage(messageId: string): Promise<void>;
     downloadResourceToCache(resourceDetails: ResourceDetails): Promise<void>;
     fetchInitialData(): Promise<void>;
@@ -1740,6 +1746,7 @@ export interface ChatAdapterThreadManagement {
     sendTypingIndicator(): Promise<void>;
     setTopic(topicName: string): Promise<void>;
     updateMessage(messageId: string, content: string, options?: Record<string, string> | /* @conditional-compile-remove(file-sharing-acs) */ MessageOptions): Promise<void>;
+    uploadImage(image: Blob, imageFilename: string): Promise<UploadChatImageResult>;
 }
 
 // @public
@@ -1851,6 +1858,8 @@ export type ChatErrorTarget = 'ChatClient.createChatThread' | 'ChatClient.delete
 // @public
 export type ChatHandlers = {
     onSendMessage: (content: string, options?: SendMessageOptions | /* @conditional-compile-remove(file-sharing-acs) */ MessageOptions) => Promise<void>;
+    onUploadImage: (image: Blob, imageFilename: string) => Promise<UploadChatImageResult>;
+    onDeleteImage: (imageId: string) => Promise<void>;
     onMessageSeen: (chatMessageId: string) => Promise<void>;
     onTyping: () => Promise<void>;
     onRemoveParticipant: (userId: string) => Promise<void>;
@@ -4058,12 +4067,15 @@ export interface RichTextSendBoxProps {
     attachments?: AttachmentMetadataInProgress[];
     autoFocus?: 'sendBoxTextField';
     disabled?: boolean;
+    imageUploadsInProgress?: AttachmentMetadataInProgress[];
     onCancelAttachmentUpload?: (attachmentId: string) => void;
+    onCancelInlineImageUpload?: (imageId: string) => void;
     onPaste?: (event: {
         content: DocumentFragment;
     }) => void;
     onSendMessage: (content: string, options?: MessageOptions) => Promise<void>;
     onTyping?: () => Promise<void>;
+    onUploadInlineImage?: (imageUrl: string, imageFileName: string) => void;
     strings?: Partial<RichTextSendBoxStrings>;
     systemMessage?: string;
 }
@@ -4616,6 +4628,13 @@ export interface UnsupportedOperatingSystemStrings {
 
 // @public
 export type UpdateMessageCallback = (messageId: string, content: string, options?: MessageOptions) => Promise<void>;
+
+// @beta
+export type UploadChatImageResult = {
+    id: string;
+    attachmentType?: 'image' | 'file' | 'unknown';
+    name?: string;
+};
 
 // @public
 export const useAzureCommunicationCallAdapter: (args: Partial<AzureCommunicationCallAdapterArgs | AzureCommunicationOutboundCallAdapterArgs>, afterCreate?: (adapter: CallAdapter) => Promise<CallAdapter>, beforeDispose?: (adapter: CallAdapter) => Promise<void>) => CallAdapter | undefined;
