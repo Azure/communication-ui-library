@@ -44,6 +44,9 @@ export class BreakoutRoomsSubscriber {
           target,
           timestamp: new Date(Date.now())
         });
+      } else if (breakoutRoom.state === 'closed' && currentAssignedBreakoutRoom?.state === 'closed') {
+        this._context.deleteLatestNotification('assignedBreakoutRoomOpened');
+        this._context.deleteLatestNotification('assignedBreakoutRoomOpenedPromptJoin');
       }
       this._context.setAssignBreakoutRoom(this._callIdRef.callId, breakoutRoom);
     });
