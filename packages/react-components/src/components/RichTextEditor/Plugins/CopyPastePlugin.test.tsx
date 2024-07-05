@@ -2,9 +2,12 @@
 // Licensed under the MIT License.
 
 import { PasteType, BeforePasteEvent } from 'roosterjs-content-model-types';
-import { removeImageElement, handleBeforePasteEvent } from './CopyPastePlugin';
+import { removeImageElement } from './CopyPastePlugin';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+import { handleBeforePasteEvent } from './CopyPastePlugin';
 import { PluginEventType } from '../../utils/RichTextEditorUtils';
 
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
 describe('handleBeforePasteEvent should work correctly', () => {
   test('handleBeforePasteEvent should call onPaste', () => {
     const event = getBeforePastePluginEvent(document.createDocumentFragment());
