@@ -544,7 +544,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     return <></>;
     return (
       <Stack styles={bannerNotificationStyles}>
-        {complianceBannerTrampoline()}
         <_ComplianceBanner {...props.complianceBannerProps} />
       </Stack>
     );
