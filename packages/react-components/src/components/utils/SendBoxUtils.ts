@@ -95,6 +95,9 @@ export const addUploadedImagesToMessage = (
   message: string,
   uploadInlineImages: AttachmentMetadataInProgress[]
 ): string => {
+  if (message === '') {
+    return message;
+  }
   const document = new DOMParser().parseFromString(message ?? '', 'text/html');
   document.querySelectorAll('img').forEach((img) => {
     if (!img.id) {

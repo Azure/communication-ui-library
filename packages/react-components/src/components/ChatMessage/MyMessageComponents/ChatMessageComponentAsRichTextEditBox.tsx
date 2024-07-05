@@ -156,45 +156,41 @@ export const ChatMessageComponentAsRichTextEditBox = (
     return doesMessageContainMultipleAttachments(message);
   }, [message]);
 
-  const onSubmitHandler = useCallback(
-    (e: React.MouseEvent<HTMLDivElement, MouseEvent>): void => {
-      if (!submitEnabled) {
-        return;
-      }
-      // Don't send message until all attachments have been uploaded successfully
-      /* @conditional-compile-remove(rich-text-editor-image-upload) */
-      setAttachmentUploadsPendingError(undefined);
+  const onSubmitHandler = useCallback((): void => {
+    if (!submitEnabled) {
+      return;
+    }
+    // Don't send message until all attachments have been uploaded successfully
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    setAttachmentUploadsPendingError(undefined);
 
-      /* @conditional-compile-remove(rich-text-editor-image-upload) */
-      if (hasIncompleteAttachmentUploads(imageUploadsInProgress)) {
-        setAttachmentUploadsPendingError({ message: strings.attachmentUploadsPendingError, timestamp: Date.now() });
-        return;
-      }
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    if (hasIncompleteAttachmentUploads(imageUploadsInProgress)) {
+      setAttachmentUploadsPendingError({ message: strings.attachmentUploadsPendingError, timestamp: Date.now() });
+      return;
+    }
 
-      let content = textValue;
-      /* @conditional-compile-remove(rich-text-editor-image-upload) */
-      if (imageUploadsInProgress && isAttachmentUploadCompleted(imageUploadsInProgress)) {
-        content = insertAttachmentsAndImages(textValue, undefined, imageUploadsInProgress).content;
-      }
-      // it's very important to pass an empty attachment here
-      // so when user removes all attachments, UI can reflect it instantly
-      // if you set it to undefined, the attachments pre-edited would still be there
-      // until edit message event is received
-      onSubmit(content, /* @conditional-compile-remove(file-sharing-acs) */ attachmentMetadata || []);
-      e.stopPropagation();
-    },
-    [
-      submitEnabled,
-      /* @conditional-compile-remove(rich-text-editor-image-upload) */
-      imageUploadsInProgress,
-      textValue,
-      /* @conditional-compile-remove(rich-text-editor-image-upload) */
-      strings.attachmentUploadsPendingError,
-      onSubmit,
-      /* @conditional-compile-remove(file-sharing-acs) */
-      attachmentMetadata
-    ]
-  );
+    let content = textValue;
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    if (imageUploadsInProgress && isAttachmentUploadCompleted(imageUploadsInProgress)) {
+      content = insertAttachmentsAndImages(textValue, undefined, imageUploadsInProgress).content;
+    }
+    // it's very important to pass an empty attachment here
+    // so when user removes all attachments, UI can reflect it instantly
+    // if you set it to undefined, the attachments pre-edited would still be there
+    // until edit message event is received
+    onSubmit(content, /* @conditional-compile-remove(file-sharing-acs) */ attachmentMetadata || []);
+  }, [
+    submitEnabled,
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    imageUploadsInProgress,
+    textValue,
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    strings.attachmentUploadsPendingError,
+    onSubmit,
+    /* @conditional-compile-remove(file-sharing-acs) */
+    attachmentMetadata
+  ]);
 
   const actionButtons = useMemo(() => {
     return (
@@ -215,7 +211,10 @@ export const ChatMessageComponentAsRichTextEditBox = (
           ariaLabel={strings.editBoxSubmitButton}
           tooltipContent={strings.editBoxSubmitButton}
           onRenderIcon={onRenderThemedSubmitIcon}
-          onClick={onSubmitHandler}
+          onClick={(e) => {
+            onSubmitHandler();
+            e.stopPropagation();
+          }}
           id={'submitIconWrapper'}
           data-testId={strings.editBoxSubmitButton}
         />

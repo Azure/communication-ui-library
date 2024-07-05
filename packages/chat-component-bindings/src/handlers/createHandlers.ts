@@ -140,7 +140,6 @@ export const createDefaultChatHandlers = memoizeOne(
           }
           imageAttachments.push({
             id: img.id,
-            name: img.name,
             attachmentType: 'image'
           });
         });
@@ -155,9 +154,7 @@ export const createDefaultChatHandlers = memoizeOne(
             fileSharingMetadata: JSON.stringify(options?.attachments)
           },
           /* @conditional-compile-remove(rich-text-editor-image-upload) */
-          attachments: imageAttachments,
-          /* @conditional-compile-remove(rich-text-editor-image-upload) */
-          type: options?.type
+          attachments: imageAttachments
         };
         await chatThreadClient.updateMessage(messageId, updateMessageOptions);
       },
