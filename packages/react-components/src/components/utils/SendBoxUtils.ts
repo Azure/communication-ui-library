@@ -39,17 +39,25 @@ export const isAttachmentUploadCompleted = (
 
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 /**
- * @private
+ * @internal
  */
 // Before sending the image, we need to add the image id we get back after uploading the images to the message content.
 export const addUploadedImagesToMessage = (
   message: string,
   uploadInlineImages: AttachmentMetadataInProgress[]
 ): string => {
+  if (message === '') {
+    return message;
+  }
   const document = new DOMParser().parseFromString(message ?? '', 'text/html');
   document.querySelectorAll('img').forEach((img) => {
-    img.id = uploadInlineImages.find((imageUpload) => !imageUpload.error && imageUpload.url === img.src)?.id ?? '';
-    img.src = '';
+    if (!img.id) {
+      const uploadInlineImage = uploadInlineImages.find(
+        (imageUpload) => !imageUpload.error && (imageUpload.url === img.src || imageUpload.id === img.id)
+      );
+      img.id = uploadInlineImage?.id ?? '';
+      img.src = '';
+    }
   });
   const newMessage = document.body.innerHTML;
   return newMessage;
@@ -102,30 +110,6 @@ export const isSendBoxButtonAriaDisabled = ({
     hasError ||
     disabled
   );
-};
-
-/* @conditional-compile-remove(rich-text-editor-image-upload) */
-/**
- * @internal
- */
-// Before sending the image, we need to add the image id we get back after uploading the images to the message content.
-export const addUploadedImagesToMessage = (
-  message: string,
-  uploadInlineImages: AttachmentMetadataInProgress[]
-): string => {
-  if (message === '') {
-    return message;
-  }
-  const document = new DOMParser().parseFromString(message ?? '', 'text/html');
-  document.querySelectorAll('img').forEach((img) => {
-    if (!img.id) {
-      img.id =
-        uploadInlineImages.find((imageUpload) => imageUpload.url === img.src || imageUpload.id === img.id)?.id ?? '';
-      img.src = '';
-    }
-  });
-  const newMessage = document.body.innerHTML;
-  return newMessage;
 };
 
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
