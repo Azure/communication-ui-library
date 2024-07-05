@@ -128,17 +128,35 @@ export const ChatMyMessageComponent = (props: ChatMyMessageComponentProps): JSX.
 
   const onResendClick = useCallback(() => {
     /* @conditional-compile-remove(file-sharing-acs) */
-    const messageOptions = {
-      attachments: `attachments` in message ? message.attachments : undefined
-    };
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    const attachments = (message as ChatMessage).attachments || [];
+
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    document.querySelectorAll('img').forEach((img) => {
+      attachments.push({
+        id: img.id,
+        attachmentType: 'image'
+      });
+    });
+
+    /* @conditional-compile-remove(file-sharing-acs) */
+    const messageOptions = { attachments, type: props.richTextEditorOptions ? 'html' : 'text' };
     onDeleteMessage && clientMessageId && onDeleteMessage(clientMessageId);
     onSendMessage &&
       onSendMessage(
         content !== undefined ? content : '',
         /* @conditional-compile-remove(file-sharing-acs) */
+        /* @conditional-compile-remove(rich-text-editor-image-upload) */
         messageOptions
       );
-  }, [onDeleteMessage, clientMessageId, onSendMessage, content, message]);
+  }, [
+    message,
+    onDeleteMessage,
+    clientMessageId,
+    onSendMessage,
+    content,
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */ props.richTextEditorOptions
+  ]);
 
   const onSubmitHandler = useCallback(
     // due to a bug in babel, we can't use arrow function here

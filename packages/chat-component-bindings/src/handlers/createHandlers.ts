@@ -140,12 +140,9 @@ export const createDefaultChatHandlers = memoizeOne(
           }
           imageAttachments.push({
             id: img.id,
-            name: img.name,
             attachmentType: 'image'
           });
         });
-        /* @conditional-compile-remove(rich-text-editor-image-upload) */
-        content = document.body.innerHTML;
 
         const updateMessageOptions = {
           content,
