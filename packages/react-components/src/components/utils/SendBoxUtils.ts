@@ -37,6 +37,24 @@ export const isAttachmentUploadCompleted = (
   return !!attachmentsWithProgress?.find((attachment) => !attachment.error);
 };
 
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+/**
+ * @private
+ */
+// Before sending the image, we need to add the image id we get back after uploading the images to the message content.
+export const addUploadedImagesToMessage = (
+  message: string,
+  uploadInlineImages: AttachmentMetadataInProgress[]
+): string => {
+  const document = new DOMParser().parseFromString(message ?? '', 'text/html');
+  document.querySelectorAll('img').forEach((img) => {
+    img.id = uploadInlineImages.find((imageUpload) => !imageUpload.error && imageUpload.url === img.src)?.id ?? '';
+    img.src = '';
+  });
+  const newMessage = document.body.innerHTML;
+  return newMessage;
+};
+
 /**
  * @private
  */
