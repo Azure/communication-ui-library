@@ -44,7 +44,7 @@ test.describe('ImageOverlay tests', () => {
     await page.goto(
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
         localParticipant: TEST_PARTICIPANTS[1],
-        remoteParticipants: [TEST_PARTICIPANTS[0], TEST_PARTICIPANTS[1], TEST_PARTICIPANTS[2]],
+        remoteParticipants: [TEST_PARTICIPANTS[0], TEST_PARTICIPANTS[2]],
         localParticipantPosition: 1,
         sendRemoteInlineImageMessage: true
       })

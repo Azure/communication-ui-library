@@ -376,9 +376,9 @@ const sanitizedMessageContentType = (type: string): MessageContentType => {
 
 const getBrokenImageViewNode = (img: HTMLDivElement | undefined): HTMLDivElement => {
   const wrapper = document.createElement('div');
-  Array.from(img?.attributes ?? []).forEach(attr => {
+  Array.from(img?.attributes ?? []).forEach((attr) => {
     wrapper.setAttribute(attr.nodeName, attr.nodeValue ?? '');
-  })
+  });
   wrapper.setAttribute('class', 'broken-image-wrapper');
   wrapper.setAttribute('data-ui-id', 'broken-image-icon');
   return wrapper;
