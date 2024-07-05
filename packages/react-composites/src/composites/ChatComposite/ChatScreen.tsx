@@ -55,12 +55,15 @@ import { AttachmentOptions } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing-acs) */
 import { nanoid } from 'nanoid';
 /* @conditional-compile-remove(file-sharing-acs) */
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { AttachmentUploadActionType, AttachmentUpload, AttachmentUploadReducer } from './file-sharing/AttachmentUpload';
 /* @conditional-compile-remove(file-sharing-acs) */
 import { MessageOptions } from '@internal/acs-ui-common';
 import { SendBoxPicker } from '../common/SendBoxPicker';
 /* @conditional-compile-remove(rich-text-editor-composite-support) */
 import { loadRichTextSendBox } from '../common/SendBoxPicker';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+import { useImageUpload } from './image-upload/useImageUpload';
 
 /**
  * @private
@@ -120,9 +123,11 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const [isImageOverlayOpen, setIsImageOverlayOpen] = useState<boolean>(false);
   /* @conditional-compile-remove(file-sharing-acs) */
   const [uploads, handleUploadAction] = useReducer(AttachmentUploadReducer, []);
-
   const adapter = useAdapter();
   const theme = useTheme();
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  const [inlineImageUploads, handleInlineImageUploadAction, onUploadInlineImage, onCancelInlineImageUploadHandler] =
+    useImageUpload();
 
   useEffect(() => {
     // Initial data should be always fetched by the composite(or external caller) instead of the adapter
@@ -444,6 +449,11 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     return uploads?.map((v) => v.metadata);
   }, [uploads]);
 
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  const imageUploadsInProgress = useMemo(() => {
+    return inlineImageUploads?.map((v) => v.metadata);
+  }, [inlineImageUploads]);
+
   const onSendMessageHandler = useCallback(
     async function (
       content: string,
@@ -453,6 +463,9 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       const attachments = options?.attachments ?? [];
       /* @conditional-compile-remove(file-sharing-acs) */
       handleUploadAction({ type: AttachmentUploadActionType.Clear });
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */
+      handleInlineImageUploadAction({ type: AttachmentUploadActionType.Clear });
+
       /* @conditional-compile-remove(file-sharing-acs) */
       await adapter.sendMessage(content, {
         attachments: attachments,
@@ -466,7 +479,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
         type: options?.type
       });
     },
-    [adapter]
+    [adapter, /* @conditional-compile-remove(rich-text-editor-image-upload) */ handleInlineImageUploadAction]
   );
 
   /* @conditional-compile-remove(file-sharing-acs) */
@@ -556,6 +569,12 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
                   // we need to overwrite onSendMessage for SendBox because we need to clear attachment state
                   // when submit button is clicked
                   onSendMessage={onSendMessageHandler}
+                  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+                  onUploadInlineImage={onUploadInlineImage}
+                  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+                  imageUploadsInProgress={imageUploadsInProgress}
+                  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+                  onCancelInlineImageUpload={onCancelInlineImageUploadHandler}
                 />
               </Stack>
               {formFactor !== 'mobile' && (
