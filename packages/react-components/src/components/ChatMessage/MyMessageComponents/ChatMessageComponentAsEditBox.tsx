@@ -5,8 +5,6 @@ import { concatStyleSets, ITextField, mergeStyles, Stack } from '@fluentui/react
 import { ChatMyMessage } from '@fluentui-contrib/react-chat';
 import { mergeClasses } from '@fluentui/react-components';
 import { _formatString } from '@internal/acs-ui-common';
-/* @conditional-compile-remove(rich-text-editor-image-upload) */
-import { AttachmentMetadataInProgress } from '@internal/acs-ui-common';
 import { useTheme } from '../../../theming/FluentThemeProvider';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 /* @conditional-compile-remove(file-sharing-acs) */
@@ -56,12 +54,6 @@ export type ChatMessageComponentAsEditBoxProps = {
   strings: MessageThreadStrings;
   /* @conditional-compile-remove(mention) */
   mentionLookupOptions?: MentionLookupOptions;
-  /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  onCancelInlineImageUpload?: (imageId: string) => void;
-  /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  onUploadInlineImage?: (imageUrl: string, imageFileName: string) => void;
-  /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  imageUploadsInProgress?: AttachmentMetadataInProgress[];
 };
 
 /**

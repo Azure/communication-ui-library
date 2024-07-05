@@ -82,7 +82,7 @@ export const MessageStatusIndicatorInternal = (props: MessageStatusIndicatorInte
             iconName="MessageFailed"
             iconClassName={mergeStyles(
               MessageStatusIndicatorErrorIconStyle,
-              { color: theme.palette.redDark },
+              { color: isDarkThemed(theme) ? theme.semanticColors.errorText : theme.palette.redDark },
               styles?.root
             )}
             ariaLabel={strings.failedToSendAriaLabel}

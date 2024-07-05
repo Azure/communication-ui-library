@@ -136,7 +136,8 @@ const notificationOptions: NotificationType[] = [
   'callMacOsCameraAccessDenied',
   'callMacOsScreenShareAccessDenied',
   'callVideoStoppedBySystem',
-  'callVideoRecoveredBySystem'
+  'callVideoRecoveredBySystem',
+  'speakingWhileMuted'
 ];
 
 const themeChoices = ['Default', 'Dark', 'Teams', 'Word'];
