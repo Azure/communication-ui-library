@@ -15,6 +15,11 @@ export enum UpdateEvent {
   Blur = 'Blur'
 }
 
+const enum Keys {
+  BACKSPACE = 8,
+  DELETE = 46
+}
+
 /**
  * A plugin to handle content update
  */
@@ -22,7 +27,7 @@ export class UpdateContentPlugin implements EditorPlugin {
   private editor: IEditor | null = null;
   private disposer: (() => void) | null = null;
   // don't set callback in constructor to be able to update callback without plugin recreation
-  onUpdate: ((event: UpdateEvent) => void) | null = null;
+  onUpdate: ((event: UpdateEvent, imageSrcArray?: Array<string>) => void) | null = null;
 
   getName(): string {
     return 'UpdateContentPlugin';
@@ -52,6 +57,8 @@ export class UpdateContentPlugin implements EditorPlugin {
     if (this.onUpdate === null) {
       return;
     }
+    let imageSrcArray: Array<string> | undefined;
+
     switch (event.eventType) {
       case PluginEventType.EditorReady:
         this.onUpdate(UpdateEvent.Init);
@@ -62,7 +69,27 @@ export class UpdateContentPlugin implements EditorPlugin {
         break;
 
       case PluginEventType.ContentChanged:
-        this.onUpdate(UpdateEvent.ContentChanged);
+        if (
+          event.source.toLowerCase() === 'cut' ||
+          (event.source.toLowerCase() === 'keyboard' && (event.data === Keys.BACKSPACE || event.data === Keys.DELETE))
+        ) {
+          event.contentModel?.blocks.map((block) => {
+            if (block.blockType === 'Paragraph') {
+              const segments = block.segments;
+              segments.map((segment) => {
+                if (segment.segmentType === 'Image') {
+                  if (!imageSrcArray) {
+                    imageSrcArray = [];
+                  }
+                  imageSrcArray?.push(segment.src);
+                }
+              });
+            }
+          });
+        } else {
+          imageSrcArray = undefined;
+        }
+        this.onUpdate(UpdateEvent.ContentChanged, imageSrcArray);
         break;
 
       case PluginEventType.Input:
