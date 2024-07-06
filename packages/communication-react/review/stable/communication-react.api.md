@@ -2931,7 +2931,6 @@ export type MessageThreadSelector = (state: ChatClientState, props: ChatBaseSele
 export interface MessageThreadStrings {
     actionMenuMoreOptions?: string;
     attachmentCardGroupMessage: string;
-    attachmentUploadsPendingError: string;
     editBoxCancelButton: string;
     editBoxPlaceholderText: string;
     editBoxSubmitButton: string;
