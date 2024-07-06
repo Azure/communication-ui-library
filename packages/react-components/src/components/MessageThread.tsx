@@ -233,6 +233,7 @@ export interface MessageThreadStrings {
   /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
   /** String for aria text in attachment card group*/
   attachmentCardGroupMessage: string;
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
   /**
    * Error message indicating that all attachment uploads are not complete.
    */
