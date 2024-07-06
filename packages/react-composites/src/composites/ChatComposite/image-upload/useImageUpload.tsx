@@ -148,7 +148,11 @@ export const useImageUpload = (): [
       handleInlineImageUploadAction({ type: AttachmentUploadActionType.Remove, id: uploadId });
       // TODO: remove local blob
       if (imageUpload?.metadata.progress === 1) {
-        adapter.deleteImage(imageId);
+        try {
+          adapter.deleteImage(imageId);
+        } catch (error) {
+          console.error(error);
+        }
       }
     },
     [adapter, inlineImageUploads]
