@@ -572,6 +572,10 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   }
 
   public async returnToMainMeeting(): Promise<void> {
+    const threadId = this.callAdapter.getState().mainMeeting?.info?.threadId;
+    if (threadId) {
+      await this.chatAdapter?.switchChatThread(threadId);
+    }
     return this.callAdapter.returnToMainMeeting();
   }
 
