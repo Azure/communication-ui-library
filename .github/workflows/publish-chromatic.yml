@@ -110,7 +110,7 @@ jobs:
         id: publish_chromatic
         uses: chromaui/action@v1
         with:
-          workingDir: ./packages/storybook
+          workingDir: ./packages/storybook8
           buildScriptName: build:dev
           token: ${{ secrets.GITHUB_TOKEN }}
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
