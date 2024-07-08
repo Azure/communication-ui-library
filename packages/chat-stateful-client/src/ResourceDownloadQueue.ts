@@ -192,6 +192,11 @@ export const fetchImageSource = async (
   }
 
   const response = await fetchWithAuthentication(src, token, options);
+
+  if (response.status >= 400) {
+    throw new Error(`Failed to fetch image source. Status code: ${response.status}`);
+  }
+
   const blob = await response.blob();
 
   return URL.createObjectURL(blob);

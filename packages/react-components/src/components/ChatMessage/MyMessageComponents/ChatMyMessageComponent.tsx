@@ -158,9 +158,7 @@ export const ChatMyMessageComponent = (props: ChatMyMessageComponentProps): JSX.
           message.messageId,
           text,
           /* @conditional-compile-remove(file-sharing-acs) */
-          {
-            attachments: attachments
-          }
+          { attachments: attachments }
         ));
       setIsEditing(false);
     },
