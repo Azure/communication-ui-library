@@ -28,6 +28,11 @@ export type {
   AreParamEqual
 } from '../../acs-ui-common/src';
 
+/* @conditional-compile-remove(composite-js-helpers) */
+export { loadOutboundCallComposite, loadCallComposite } from '../../acs-ui-javascript-loaders/src';
+/* @conditional-compile-remove(composite-js-helpers) */
+export type { OutboundCallCompositeLoaderProps, CallCompositeLoaderProps } from '../../acs-ui-javascript-loaders/src';
+
 // Not to export chat/calling specific hook from binding package
 export type {
   CallClientProviderProps,
