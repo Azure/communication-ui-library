@@ -24,12 +24,11 @@ import { MessageThreadWithInlineImageExample } from './snippets/WithInlineImageM
 import { MessageThreadWithMessageDateExample } from './snippets/WithMessageDate.snippet';
 
 // Main story
-export { Preview } from './MessageThread.story';
+export { MessageThread } from './MessageThread.story';
 
 // Snippet wrapping to stories
 export const BlockedMessagesDocsOnly = {
-  render: MessageThreadWithBlockedMessagesExample,
-  title: '--docs-only'
+  render: MessageThreadWithBlockedMessagesExample
 };
 export const CustomAvatarDocsOnly = {
   render: MessageThreadWithCustomAvatarExample
@@ -109,6 +108,11 @@ const meta: Meta = {
     onRenderAttachmentDownloads: hiddenControl,
     attachmentOptions: hiddenControl,
     onSendMessage: hiddenControl
+  },
+  args: {
+    showMessageDate: true,
+    showMessageStatus: true,
+    enableJumpToNewMessageButton: true
   }
 };
 
