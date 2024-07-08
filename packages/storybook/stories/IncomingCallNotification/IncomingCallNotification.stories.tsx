@@ -25,7 +25,7 @@ const getDocs: () => JSX.Element = () => {
   );
 };
 
-const IncomingCallNotificationStory = (args): JSX.Element => {
+const IncomingCallNotificationStory = (): JSX.Element => {
   return (
     <IncomingCallNotification
       onAcceptWithAudio={function (): void {
