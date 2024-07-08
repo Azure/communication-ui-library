@@ -24173,7 +24173,7 @@ packages:
     dev: false
 
   file:projects/acs-ui-common.tgz:
-    resolution: {integrity: sha512-w542zi+NSUlf/BGDcjjibPN6zNtkeuOhwEwH67LXbuJt3N3kzLliTbKlUb2gB07kmUzkV3nmkalhcBj1NiPkxw==, tarball: file:projects/acs-ui-common.tgz}
+    resolution: {integrity: sha512-RRDB6PD8M8c3WawnuqIIMXJE4oTcat5NkddG6x32TndIEBK/rLd8320QhG2c7f1ORmEg8yNzXnc9X8Ac5tNbkA==, tarball: file:projects/acs-ui-common.tgz}
     name: '@rush-temp/acs-ui-common'
     version: 0.0.0
     dependencies:
@@ -24203,6 +24203,7 @@ packages:
       react: 18.3.1
       rimraf: 2.7.1
       rollup: 4.12.1
+      roosterjs-content-model-types: 9.7.0
       ts-jest: 29.1.5(@babel/core@7.24.7)(babel-jest@29.7.0)(jest@29.7.0)(typescript@5.4.5)
       typescript: 5.4.5
     transitivePeerDependencies:

@@ -14,6 +14,8 @@ export { _safeJSONStringify } from './safeStringify';
 export { _convertPxToRem, _convertRemToPx, _preventDismissOnEvent, _getKeys } from './common';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 export { _base64ToBlob } from './dataConversion';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+export { _removeImageElementFromPastedContent } from './imageUpload';
 
 export type { Common, CommonProperties } from './commonProperties';
 export type { CallbackType, FunctionWithKey } from './memoizeFnAll';

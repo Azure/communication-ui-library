@@ -3,7 +3,7 @@
 import type { PluginEvent, EditorPlugin, IEditor, BeforePasteEvent } from 'roosterjs-content-model-types';
 import { ContentChangedEventSource, PluginEventType } from '../../utils/RichTextEditorUtils';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
-import { _base64ToBlob } from '@internal/acs-ui-common';
+import { _base64ToBlob, _removeImageElementFromPastedContent } from '@internal/acs-ui-common';
 
 /**
  * CopyPastePlugin is a plugin for handling copy and paste events in the editor.
@@ -51,7 +51,7 @@ const handleBeforePasteEvent = (
 
     // the initial behavior
     // removes inline image elements from the pasted content when rich-text-editor-image-upload not available
-    removeImageElement(event as BeforePasteEvent);
+    _removeImageElementFromPastedContent(event as BeforePasteEvent);
   }
 };
 
@@ -80,25 +80,6 @@ export const handleInlineImage = (
       image.src = imageUrl;
       image.alt = image.alt || 'image';
       image.style.width = '119px'; // TODO: find a way to get the original width and height of the image
-    });
-  }
-};
-
-/**
- * @internal
- * Exported only for unit testing
- */
-export const removeImageElement = (event: BeforePasteEvent): void => {
-  if (event.pasteType === 'normal') {
-    event.fragment.querySelectorAll('img').forEach((image) => {
-      // If the image is the only child of its parent, remove all the parents of this img element.
-      let parentNode: HTMLElement | null = image.parentElement;
-      let currentNode: HTMLElement = image;
-      while (parentNode?.childNodes.length === 1) {
-        currentNode = parentNode;
-        parentNode = parentNode.parentElement;
-      }
-      currentNode?.remove();
     });
   }
 };
