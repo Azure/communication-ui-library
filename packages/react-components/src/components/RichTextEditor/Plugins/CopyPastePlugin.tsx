@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-import type { PluginEvent, EditorPlugin, IEditor, BeforePasteEvent } from 'roosterjs-content-model-types';
+import type { PluginEvent, EditorPlugin, IEditor } from 'roosterjs-content-model-types';
 import { ContentChangedEventSource, PluginEventType } from '../../utils/RichTextEditorUtils';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
-import { _base64ToBlob, _removeImageElementFromPastedContent } from '@internal/acs-ui-common';
+import { _base64ToBlob } from '@internal/acs-ui-common';
 
 /**
  * CopyPastePlugin is a plugin for handling copy and paste events in the editor.
@@ -48,10 +48,6 @@ const handleBeforePasteEvent = (
     onPaste?.({ content: event.fragment });
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
     return;
-
-    // the initial behavior
-    // removes inline image elements from the pasted content when rich-text-editor-image-upload not available
-    _removeImageElementFromPastedContent(event as BeforePasteEvent);
   }
 };
 

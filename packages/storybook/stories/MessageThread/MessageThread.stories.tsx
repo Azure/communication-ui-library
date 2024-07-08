@@ -597,6 +597,20 @@ const MessageThreadStory = (args): JSX.Element => {
     }
   };
 
+  //TODO: Remove this function when the image upload functionality is implemented
+  const removeImageTags = useCallback((event: { content: DocumentFragment }) => {
+    event.content.querySelectorAll('img').forEach((image) => {
+      // If the image is the only child of its parent, remove all the parents of this img element.
+      let parentNode: HTMLElement | null = image.parentElement;
+      let currentNode: HTMLElement = image;
+      while (parentNode?.childNodes.length === 1) {
+        currentNode = parentNode;
+        parentNode = parentNode.parentElement;
+      }
+      currentNode?.remove();
+    });
+  }, []);
+
   return (
     <Stack verticalFill style={MessageThreadStoryContainerStyles} tokens={{ childrenGap: '1rem' }}>
       <MessageThreadComponent
@@ -609,7 +623,7 @@ const MessageThreadStory = (args): JSX.Element => {
         onRenderMessage={onRenderMessage}
         inlineImageOptions={inlineImageOptions}
         onUpdateMessage={onUpdateMessageCallback}
-        richTextEditorOptions={args.richTextEditor ? { onPaste: undefined } : undefined}
+        richTextEditorOptions={args.richTextEditor ? { onPaste: removeImageTags } : undefined}
         onRenderAvatar={(userId?: string) => {
           return (
             <Persona
