@@ -1,9 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { PasteType, BeforePasteEvent } from 'roosterjs-content-model-types';
-import { removeImageElement } from './CopyPastePlugin';
-import { PluginEventType } from '../../utils/RichTextEditorUtils';
+import { removeImageTags } from './useImageUpload';
 
 describe('removeImageElement should work correctly', () => {
   test('removeImageElement should remove all image elements when fragment only contains image children', () => {
@@ -15,9 +13,9 @@ describe('removeImageElement should work correctly', () => {
     container.appendChild(document.createElement('img'));
     container.appendChild(document.createElement('img'));
 
-    const event = getPluginEvent(fragment);
+    const event = { content: fragment };
 
-    removeImageElement(event);
+    removeImageTags(event);
     expect(fragment.getElementById(containerId)?.outerHTML).toEqual(undefined);
   });
 
@@ -32,9 +30,9 @@ describe('removeImageElement should work correctly', () => {
     layer3.appendChild(document.createElement('img'));
     layer3.appendChild(document.createElement('img'));
 
-    const event = getPluginEvent(fragment);
+    const event = { content: fragment };
 
-    removeImageElement(event);
+    removeImageTags(event);
     // When a message only contains an image, no content will be pasted.
     expect(fragment.getElementById(containerId)?.outerHTML).toEqual(undefined);
   });
@@ -47,38 +45,11 @@ describe('removeImageElement should work correctly', () => {
     container.appendChild(document.createElement('img'));
     container.appendChild(document.createElement('text'));
 
-    const event = getPluginEvent(fragment);
+    const event = { content: fragment };
 
-    removeImageElement(event);
+    removeImageTags(event);
     expect(fragment.childNodes.length).toEqual(1);
     expect(fragment.firstChild?.childNodes.length).toEqual(1);
     expect(fragment.getElementById(containerId)?.outerHTML).toEqual('<div id="container"><text></text></div>');
   });
-
-  const getPluginEvent = (fragment: DocumentFragment): BeforePasteEvent => {
-    return {
-      eventType: PluginEventType.BeforePaste,
-      clipboardData: {
-        types: ['text/plain', 'text/html'],
-        text: '',
-        rawHtml: '',
-        image: null,
-        customValues: {}
-      },
-      fragment: fragment,
-      htmlBefore: '',
-      htmlAfter: '',
-      htmlAttributes: {},
-      pasteType: 'normal' as PasteType,
-      domToModelOption: {
-        additionalAllowedTags: [],
-        additionalDisallowedTags: [],
-        additionalFormatParsers: {},
-        attributeSanitizers: {},
-        formatParserOverride: {},
-        processorOverride: {},
-        styleSanitizers: {}
-      }
-    };
-  };
 });

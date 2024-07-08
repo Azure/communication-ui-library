@@ -63,7 +63,7 @@ import { SendBoxPicker } from '../common/SendBoxPicker';
 /* @conditional-compile-remove(rich-text-editor-composite-support) */
 import { loadRichTextSendBox } from '../common/SendBoxPicker';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
-import { useImageUpload } from './image-upload/useImageUpload';
+import { removeImageTags, useImageUpload } from './image-upload/useImageUpload';
 
 /**
  * @private
@@ -492,20 +492,6 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   );
 
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  const removeImageTags = useCallback((event: { content: DocumentFragment }) => {
-    event.content.querySelectorAll('img').forEach((image) => {
-      // If the image is the only child of its parent, remove all the parents of this img element.
-      let parentNode: HTMLElement | null = image.parentElement;
-      let currentNode: HTMLElement = image;
-      while (parentNode?.childNodes.length === 1) {
-        currentNode = parentNode;
-        parentNode = parentNode.parentElement;
-      }
-      currentNode?.remove();
-    });
-  }, []);
-
-  /* @conditional-compile-remove(rich-text-editor-image-upload) */
   const onPasteHandler = useCallback(
     (event: { content: DocumentFragment }) => {
       const threadCreatedBy = adapter.getState().thread?.properties?.createdBy;
@@ -513,7 +499,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
         removeImageTags(event);
       }
     },
-    [adapter, removeImageTags]
+    [adapter]
   );
 
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
