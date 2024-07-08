@@ -3165,10 +3165,10 @@ export type IncomingCallManagement = {
     incomingCalls: ReadonlyArray<DeclarativeIncomingCall>;
 };
 
-// @public
+// @beta
 export const IncomingCallNotification: (props: IncomingCallNotificationProps) => JSX.Element;
 
-// @public
+// @beta
 export type IncomingCallNotificationProps = {
     callerName?: string;
     alertText?: string;
@@ -3178,7 +3178,7 @@ export type IncomingCallNotificationProps = {
     onReject: () => void;
 };
 
-// @public
+// @beta
 export type IncomingCallNotificationStrings = {
     incomingCallNotificationPlaceholderId?: string;
     incomingCallNotificationPlaceholderAlert?: string;

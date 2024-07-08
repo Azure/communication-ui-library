@@ -13,11 +13,12 @@ import {
   useTheme
 } from '@fluentui/react';
 import React from 'react';
+/* @conditional-compile-remove(one-to-n-calling) */
 import { useLocale } from '../localization';
 
 /**
  * Strings for the incoming call notification component.
- * @public
+ * @beta
  */
 export type IncomingCallNotificationStrings = {
   /**
@@ -44,7 +45,7 @@ export type IncomingCallNotificationStrings = {
 
 /**
  * Properties for the incoming call notification component.
- * @public
+ * @beta
  */
 export type IncomingCallNotificationProps = {
   /**
@@ -76,11 +77,12 @@ export type IncomingCallNotificationProps = {
 /**
  * A Notification component that is to be used to represent incoming calls to the end user.
  * Allows the user to accept or reject the incoming call.
- * @public
+ * @beta
  */
 export const IncomingCallNotification = (props: IncomingCallNotificationProps): JSX.Element => {
   const { callerName, alertText, avatar, onAcceptWithAudio, onAcceptWithVideo, onReject } = props;
   const theme = useTheme();
+  /* @conditional-compile-remove(one-to-n-calling) */
   const localeStrings = useLocale().strings.IncomingCallNotification;
   return (
     <Stack horizontal verticalAlign="center" styles={incomingCallToastStyle(theme)}>
@@ -96,10 +98,16 @@ export const IncomingCallNotification = (props: IncomingCallNotificationProps): 
 
       <Stack grow={1} horizontalAlign="center" style={{ alignItems: 'flex-start', fontFamily: 'Segoe UI' }}>
         <Stack style={{ fontSize: '0.875rem' }}>
-          <Text>{callerName ?? localeStrings.incomingCallNotificationPlaceholderId}</Text>
+          <Text>
+            {callerName ??
+              /* @conditional-compile-remove(one-to-n-calling) */ localeStrings.incomingCallNotificationPlaceholderId}
+          </Text>
         </Stack>
         <Stack style={{ fontSize: '0.75rem' }}>
-          <Text>{alertText ?? localeStrings.incomingCallNotificationPlaceholderAlert}</Text>
+          <Text>
+            {alertText ??
+              /* @conditional-compile-remove(one-to-n-calling) */ localeStrings.incomingCallNotificationPlaceholderAlert}
+          </Text>
         </Stack>
       </Stack>
 
@@ -108,18 +116,21 @@ export const IncomingCallNotification = (props: IncomingCallNotificationProps): 
           styles={incomingCallRejectButtonStyle(theme)}
           onClick={() => onReject()}
           iconProps={{ iconName: 'IncomingCallNotificationRejectIcon' }}
+          /* @conditional-compile-remove(one-to-n-calling) */
           ariaLabel={localeStrings.incomingCallNoticicationRejectAriaLabel}
         />
         <IconButton
           styles={incomingCallAcceptButtonStyle(theme)}
           onClick={() => onAcceptWithVideo()}
           iconProps={{ iconName: 'IncomingCallNotificationAcceptWithVideoIcon' }}
+          /* @conditional-compile-remove(one-to-n-calling) */
           ariaLabel={localeStrings.incomingCallNoticicationAcceptWithVideoAriaLabel}
         />
         <IconButton
           styles={incomingCallAcceptButtonStyle(theme)}
           onClick={() => onAcceptWithAudio()}
           iconProps={{ iconName: 'IncomingCallNotificationAcceptIcon' }}
+          /* @conditional-compile-remove(one-to-n-calling) */
           ariaLabel={localeStrings.incomingCallNoticicationAcceptWithAudioAriaLabel}
         />
       </Stack>

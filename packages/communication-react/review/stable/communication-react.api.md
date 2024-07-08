@@ -1868,8 +1868,6 @@ export interface ComponentStrings {
     endCallButton: EndCallButtonStrings;
     errorBar: ErrorBarStrings;
     imageOverlay: ImageOverlayStrings;
-    // (undocumented)
-    IncomingCallNotification: IncomingCallNotificationStrings;
     MeetingConferencePhoneInfo: MeetingConferencePhoneInfoModalStrings;
     messageStatusIndicator: MessageStatusIndicatorStrings;
     messageThread: MessageThreadStrings;
@@ -2678,28 +2676,6 @@ export interface ImageOverlayStrings {
     dismissButtonAriaLabel: string;
     downloadButtonLabel: string;
 }
-
-// @public
-export const IncomingCallNotification: (props: IncomingCallNotificationProps) => JSX.Element;
-
-// @public
-export type IncomingCallNotificationProps = {
-    callerName?: string;
-    alertText?: string;
-    avatar?: string;
-    onAcceptWithAudio: () => void;
-    onAcceptWithVideo: () => void;
-    onReject: () => void;
-};
-
-// @public
-export type IncomingCallNotificationStrings = {
-    incomingCallNotificationPlaceholderId?: string;
-    incomingCallNotificationPlaceholderAlert?: string;
-    incomingCallNoticicationAcceptWithAudioAriaLabel?: string;
-    incomingCallNoticicationAcceptWithVideoAriaLabel?: string;
-    incomingCallNoticicationRejectAriaLabel?: string;
-};
 
 // @public
 export interface IncomingCallState {
