@@ -1951,6 +1951,7 @@ export type ChatThreadClientState = {
 export type ChatThreadProperties = {
     topic?: string;
     createdBy?: CommunicationIdentifierKind;
+    messagingPolicy?: MessagingPolicy;
 };
 
 // @public
@@ -3513,6 +3514,11 @@ export interface MessageThreadStyles extends BaseCustomStyles {
     newMessageButtonContainer?: IStyle;
     systemMessageContainer?: ComponentSlotStyle;
 }
+
+// @beta
+export type MessagingPolicy = {
+    textOnlyChat?: boolean;
+};
 
 // @public
 export const MicrophoneButton: (props: MicrophoneButtonProps) => JSX.Element;
