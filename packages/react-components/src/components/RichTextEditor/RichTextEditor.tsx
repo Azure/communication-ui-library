@@ -8,8 +8,10 @@ import { isDarkThemed } from '../../theming/themeUtils';
 import CopyPastePlugin from './Plugins/CopyPastePlugin';
 import type {
   ContentModelDocument,
+  ContentModelParagraph,
   EditorPlugin,
   IEditor,
+  ReadonlyContentModelBlockGroup,
   ShallowMutableContentModelDocument
 } from 'roosterjs-content-model-types';
 import { createModelFromHtml, Editor, exportContent } from 'roosterjs-content-model-core';
@@ -43,7 +45,7 @@ export interface RichTextEditorStyleProps {
 export interface RichTextEditorProps {
   // the initial content of editor that is set when editor is created (e.g. when editing a message)
   initialContent?: string;
-  onChange: (newValue?: string) => void;
+  onChange: (newValue?: string, imageSrcArray?: Array<string>) => void;
   onKeyDown?: (ev: KeyboardEvent) => void;
   // update the current content of the rich text editor
   onContentModelUpdate?: (contentModel: ContentModelDocument | undefined) => void;
@@ -55,6 +57,8 @@ export interface RichTextEditorProps {
   autoFocus?: 'sendBoxTextField';
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   onPaste?: (event: { content: DocumentFragment }) => void;
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  onUploadInlineImage?: (imageUrl: string, imageFileName: string) => void;
 }
 
 /**
@@ -95,7 +99,9 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     onContentModelUpdate,
     contentModel,
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    onPaste
+    onPaste,
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    onUploadInlineImage
   } = props;
   const editor = useRef<IEditor | null>(null);
   const editorDiv = useRef<HTMLDivElement>(null);
@@ -111,15 +117,18 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
       },
       setEmptyContent() {
         if (editor.current) {
-          editor.current.formatContentModel;
           // remove all content from the editor and update the model
           // ContentChanged event will be sent by RoosterJS automatically
           editor.current.formatContentModel((model: ShallowMutableContentModelDocument): boolean => {
-            model.blocks = [];
+            // Create a new empty paragraph with selection marker
+            // this is needed for correct processing of images after the content is deleted
+            const block = createParagraph(true);
+            setSelectionAfterLastSegment(model, block);
+            model.blocks = [block];
             return true;
           });
           //reset content model
-          onContentModelUpdate && onContentModelUpdate(undefined);
+          onContentModelUpdate && onContentModelUpdate(editor.current.getContentModelCopy('disconnected'));
         }
       },
       getPlainContent() {
@@ -170,19 +179,28 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     return new UpdateContentPlugin();
   }, []);
 
+  const copyPastePlugin = useMemo(() => {
+    return new CopyPastePlugin();
+  }, []);
+
   useEffect(() => {
     // don't set callback in plugin constructor to update callback without plugin recreation
-    updatePlugin.onUpdate = (event: string) => {
+    updatePlugin.onUpdate = (event: string, imageSrcArray?: Array<string>) => {
       if (editor.current === null) {
         return;
       }
       if (event === UpdateEvent.Blur || event === UpdateEvent.Dispose) {
         onContentModelUpdate && onContentModelUpdate(editor.current.getContentModelCopy('disconnected'));
       } else {
-        onChange && onChange(exportContent(editor.current));
+        onChange && onChange(exportContent(editor.current), imageSrcArray);
       }
     };
   }, [onChange, onContentModelUpdate, updatePlugin]);
+
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  useEffect(() => {
+    copyPastePlugin.onUploadInlineImage = onUploadInlineImage;
+  }, [copyPastePlugin, onUploadInlineImage]);
 
   const keyboardInputPlugin = useMemo(() => {
     return new KeyboardInputPlugin();
@@ -214,10 +232,6 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
 
   const onContextMenuDismiss = useCallback((): void => {
     setContextMenuProps(null);
-  }, []);
-
-  const copyPastePlugin = useMemo(() => {
-    return new CopyPastePlugin();
   }, []);
 
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
@@ -341,10 +355,14 @@ const createEditorInitialModel = (
         lastBlock = createParagraph(true);
         initialModel.blocks.push(lastBlock);
       }
-      const marker = createSelectionMarker();
-      lastBlock.segments.push(marker);
-      setSelection(initialModel, marker);
+      setSelectionAfterLastSegment(initialModel, lastBlock);
     }
     return initialModel;
   }
+};
+
+const setSelectionAfterLastSegment = (model: ReadonlyContentModelBlockGroup, block: ContentModelParagraph): void => {
+  const marker = createSelectionMarker();
+  block.segments.push(marker);
+  setSelection(model, marker);
 };

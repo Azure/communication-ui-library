@@ -73,14 +73,14 @@ const defaultControlsGridParticipants = [
   }
 ];
 
-const defaultLocalParticipant = [{ name: 'You', status: 'Connected', isMuted: false, isScreenSharing: false }];
-const defaultRemoteParticipants = [
+export const defaultLocalParticipant = [{ name: 'You', status: 'Connected', isMuted: false, isScreenSharing: false }];
+export const defaultRemoteParticipants = [
   { name: 'Rick', status: 'InLobby', isMuted: false, isScreenSharing: false },
   { name: 'Daryl', status: 'Connecting', isMuted: false, isScreenSharing: false },
   { name: 'Michonne', status: 'Idle', isMuted: false, isScreenSharing: false }
 ];
 
-const defaultTypingUsers = [
+export const defaultTypingUsers = [
   {
     userId: '1',
     displayName: 'User1'
@@ -298,7 +298,7 @@ export const controlsToAdd = {
     name: 'Width (px)'
   },
   localParticipantDisplayName: { control: 'text', defaultValue: 'John Doe', name: 'Local Participant displayName' },
-  localParticipant: { control: 'object', defaultValue: defaultLocalParticipant, name: 'Your information' },
+  localParticipant: { control: 'object', name: 'Your information' },
   localVideoInverted: { control: 'boolean', defaultValue: true, name: 'Invert Local Video' },
   localVideoStreamEnabled: { control: 'boolean', defaultValue: true, name: 'Turn Local Video On' },
   messageDeliveredTooltipText: { control: 'text', defaultValue: 'Sent', name: 'Delivered icon tooltip text' },
@@ -335,7 +335,7 @@ export const controlsToAdd = {
       'Rick, Daryl, Michonne, Dwight, Pam, Michael, Jim, Kevin, Creed, Angela, Andy, Stanley, Meredith, Phyllis, Oscar, Ryan, Kelly, Andy, Toby, Darryl, Gabe, Erin',
     name: 'Remote participants (comma separated)'
   },
-  remoteParticipants: { control: 'object', defaultValue: defaultRemoteParticipants, name: 'Remote participants' },
+  remoteParticipants: { control: 'object', name: 'Remote participants' },
   requiredDisplayName: {
     control: 'text',
     defaultValue: 'John Smith',
@@ -364,7 +364,7 @@ export const controlsToAdd = {
   teamsMeetingLink: { control: 'text', defaultValue: '', name: 'Teams meeting link' },
   theme: { control: 'radio', options: themeChoices, defaultValue: 'Default', name: 'Theme' },
   token: { control: 'text', defaultValue: '', name: 'Valid token for user', type: { name: 'string', required: true } },
-  typingUsers: { control: 'object', defaultValue: defaultTypingUsers, name: 'Typing users' },
+  typingUsers: { control: 'object', name: 'Typing users' },
   isCaptionsFeatureActive: { control: 'boolean', defaultValue: true, name: 'Is captions on' },
   userId: {
     control: 'text',
