@@ -142,8 +142,6 @@ const incomingCallToastStyle = (theme: Theme): IStackStyles => {
   return {
     root: {
       minWidth: '20rem',
-      width: '100%',
-      height: '100%',
       opacity: 0.95,
       borderRadius: '0.5rem',
       boxShadow: theme.effects.elevation8,
@@ -166,11 +164,11 @@ const incomingCallAcceptButtonStyle = (theme: Theme): IButtonStyles => {
       borderRadius: '2rem',
       minWidth: '2rem',
       width: '2rem',
-      border: 'none',
-      ':hover, :active': {
-        backgroundColor: theme.palette.green,
-        color: theme.palette.white
-      }
+      border: 'none'
+    },
+    rootHovered: {
+      backgroundColor: theme.palette.green,
+      color: theme.palette.white
     }
   };
 };
@@ -183,11 +181,11 @@ const incomingCallRejectButtonStyle = (theme: Theme): IButtonStyles => {
       borderRadius: '2rem',
       minWidth: '2rem',
       width: '2rem',
-      border: 'none',
-      ':hover, :active': {
-        backgroundColor: theme.palette.red,
-        color: theme.palette.white
-      }
+      border: 'none'
+    },
+    rootHovered: {
+      backgroundColor: theme.palette.red,
+      color: theme.palette.white
     }
   };
 };
