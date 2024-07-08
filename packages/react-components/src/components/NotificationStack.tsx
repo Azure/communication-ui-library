@@ -40,7 +40,7 @@ export interface NotificationStackProps {
    * Use this to control notifications shown when they dismissed by the user.
    * Note this onDismiss function will affect all notifications in the same stack
    */
-  onDismissNotification?: (dismissedNotifications: ActiveNotification) => void;
+  onDismissNotification?: (dismissedNotification: ActiveNotification) => void;
 
   /**
    * If set, notifications with {@link ActiveNotification.timestamp} older than the time this component is mounted
@@ -63,32 +63,32 @@ export interface NotificationStackStrings {
   /**
    * A generic message when starting video fails.
    */
-  startVideoGeneric: NotificationStrings;
+  startVideoGeneric?: NotificationStrings;
 
   /**
    * A generic message when starting video fails.
    */
-  stopVideoGeneric: NotificationStrings;
+  stopVideoGeneric?: NotificationStrings;
 
   /**
    * A generic message when muting microphone fails.
    */
-  muteGeneric: NotificationStrings;
+  muteGeneric?: NotificationStrings;
 
   /**
    * A generic message when unmuting microphone fails.
    */
-  unmuteGeneric: NotificationStrings;
+  unmuteGeneric?: NotificationStrings;
 
   /**
    * A generic message when starting screenshare fails.
    */
-  startScreenShareGeneric: NotificationStrings;
+  startScreenShareGeneric?: NotificationStrings;
 
   /**
    * A generic message when stopping screenshare fails.
    */
-  stopScreenShareGeneric: NotificationStrings;
+  stopScreenShareGeneric?: NotificationStrings;
 
   /**
    * Message shown when poor network quality is detected during a call.
@@ -103,80 +103,80 @@ export interface NotificationStackStrings {
   /**
    * Message shown on failure to detect audio output devices.
    */
-  callNoSpeakerFound: NotificationStrings;
+  callNoSpeakerFound?: NotificationStrings;
 
   /**
    * Message shown on failure to detect audio input devices.
    */
-  callNoMicrophoneFound: NotificationStrings;
+  callNoMicrophoneFound?: NotificationStrings;
 
   /**
    * Message shown when microphone can be enumerated but access is blocked by the system.
    */
-  callMicrophoneAccessDenied: NotificationStrings;
+  callMicrophoneAccessDenied?: NotificationStrings;
 
   /**
    * Message shown when microphone can be enumerated but access is blocked by the system, for safari browsers
    */
-  callMicrophoneAccessDeniedSafari: NotificationStrings;
+  callMicrophoneAccessDeniedSafari?: NotificationStrings;
 
   /**
    * Message shown when microphone is muted by the system (not by local or remote participants)
    */
-  callMicrophoneMutedBySystem: NotificationStrings;
+  callMicrophoneMutedBySystem?: NotificationStrings;
 
   /**
    * Message shown when microphone is unmuted by the system (not by local or remote participants).
    * This typically occurs if the system recovers from an unexpected mute.
    */
-  callMicrophoneUnmutedBySystem: NotificationStrings;
+  callMicrophoneUnmutedBySystem?: NotificationStrings;
 
   /**
    * Mac OS specific message shown when microphone can be enumerated but access is
    * blocked by the system.
    */
-  callMacOsMicrophoneAccessDenied: NotificationStrings;
+  callMacOsMicrophoneAccessDenied?: NotificationStrings;
 
   /**
    * Message shown when poor network causes local video stream to be frozen.
    */
-  callLocalVideoFreeze: NotificationStrings;
+  callLocalVideoFreeze?: NotificationStrings;
 
   /**
    * Message shown when camera can be enumerated but access is blocked by the system.
    */
-  callCameraAccessDenied: NotificationStrings;
+  callCameraAccessDenied?: NotificationStrings;
 
   /**
    * Message shown when camera can be enumerated but access is blocked by the system, for safari browsers
    */
-  callCameraAccessDeniedSafari: NotificationStrings;
+  callCameraAccessDeniedSafari?: NotificationStrings;
 
   /**
    * Message shown when local video fails to start because camera is already in use by
    * another applciation.
    */
-  callCameraAlreadyInUse: NotificationStrings;
+  callCameraAlreadyInUse?: NotificationStrings;
 
   /**
    * Message shown when local video is stopped by the system (not by local or remote participants)
    */
-  callVideoStoppedBySystem: NotificationStrings;
+  callVideoStoppedBySystem?: NotificationStrings;
 
   /**
    * Message shown when local video was recovered by the system (not by the local participant)
    */
-  callVideoRecoveredBySystem: NotificationStrings;
+  callVideoRecoveredBySystem?: NotificationStrings;
 
   /**
    * Mac OS specific message shown when system denies access to camera.
    */
-  callMacOsCameraAccessDenied: NotificationStrings;
+  callMacOsCameraAccessDenied?: NotificationStrings;
 
   /**
    * Mac OS specific message shown when system denies sharing local screen on a call.
    */
-  callMacOsScreenShareAccessDenied: NotificationStrings;
+  callMacOsScreenShareAccessDenied?: NotificationStrings;
 
   /**
    * Dimiss Notifications button aria label read by screen reader accessibility tools
@@ -204,16 +204,48 @@ export interface NotificationStackStrings {
   /**
    * An error message when starting spotlight while max participants are spotlighted
    */
-  startSpotlightWhileMaxParticipantsAreSpotlighted: NotificationStrings;
+  startSpotlightWhileMaxParticipantsAreSpotlighted?: NotificationStrings;
   /* @conditional-compile-remove(soft-mute) */
   /**
    * Muted by a remote participant message
    */
-  mutedByRemoteParticipant: NotificationStrings;
+  mutedByRemoteParticipant?: NotificationStrings;
   /**
    * Speaking while muted message
    */
-  speakingWhileMuted: NotificationStrings;
+  speakingWhileMuted?: NotificationStrings;
+  /**
+   * Recording started message
+   */
+  recordingStarted?: NotificationStrings;
+  /**
+   * Transcription started message
+   */
+  transcriptionStarted?: NotificationStrings;
+  /**
+   * Recording stopped message
+   */
+  recordingStopped?: NotificationStrings;
+  /**
+   * Transcription stopped message
+   */
+  transcriptionStopped?: NotificationStrings;
+  /**
+   * Recording and transcription both started message
+   */
+  recordingAndTranscriptionStarted?: NotificationStrings;
+  /**
+   * Recording and transcription both stopped message
+   */
+  recordingAndTranscriptionStopped?: NotificationStrings;
+  /**
+   * Recording stopped but transcription still going on message
+   */
+  recordingStoppedStillTranscribing?: NotificationStrings;
+  /**
+   *  Transcription stopped but recording still going on message
+   */
+  transcriptionStoppedStillRecording?: NotificationStrings;
 }
 
 /**
