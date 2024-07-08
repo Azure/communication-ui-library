@@ -80,7 +80,7 @@ export const defaultRemoteParticipants = [
   { name: 'Michonne', status: 'Idle', isMuted: false, isScreenSharing: false }
 ];
 
-const defaultTypingUsers = [
+export const defaultTypingUsers = [
   {
     userId: '1',
     displayName: 'User1'
@@ -244,7 +244,7 @@ export const controlsToAdd = {
   },
   disabled: { control: 'boolean', defaultValue: false, name: 'Disable component' },
   displayName: { control: 'text', name: 'Display Name' },
-  enableJumpToNewMessageButton: { control: 'boolean', defaultValue: true, name: 'Enable Jump To New Message' },
+  enableJumpToNewMessageButton: { control: 'boolean', name: 'Enable Jump To New Message' },
   endpointUrl: {
     control: 'text',
     defaultValue: '',
@@ -357,14 +357,14 @@ export const controlsToAdd = {
   showErrorBar: { control: 'boolean', defaultValue: true, name: 'Show ErrorBar' },
   showLabel: { control: 'boolean', defaultValue: false, name: 'Show label' },
   showVideoTileLabel: { control: 'boolean', name: 'Show label' },
-  showMessageDate: { control: 'boolean', defaultValue: true, name: 'Enable Message Date' },
-  showMessageStatus: { control: 'boolean', defaultValue: true, name: 'Enable Message Status Indicator' },
+  showMessageDate: { control: 'boolean', name: 'Enable Message Date' },
+  showMessageStatus: { control: 'boolean', name: 'Enable Message Status Indicator' },
   showMuteIndicator: { control: 'boolean', name: 'Show Mute/UnMute Indicator' },
   speakers: { control: 'object', defaultValue: defaultControlsSpeakers, name: 'Speakers' },
   teamsMeetingLink: { control: 'text', defaultValue: '', name: 'Teams meeting link' },
   theme: { control: 'radio', options: themeChoices, defaultValue: 'Default', name: 'Theme' },
   token: { control: 'text', defaultValue: '', name: 'Valid token for user', type: { name: 'string', required: true } },
-  typingUsers: { control: 'object', defaultValue: defaultTypingUsers, name: 'Typing users' },
+  typingUsers: { control: 'object', name: 'Typing users' },
   isCaptionsFeatureActive: { control: 'boolean', defaultValue: true, name: 'Is captions on' },
   userId: {
     control: 'text',
