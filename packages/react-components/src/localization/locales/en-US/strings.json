@@ -605,5 +605,12 @@
     "meetingConferencePhoneInfoModalTollGeoData": "{country}, {city}",
     "meetingConferencePhoneInfoModalTollFree": "(Toll-free)",
     "meetingConferencePhoneInfoModalToll": "(Toll)"
+  },
+  "IncomingCallNotification": {
+    "incomingCallNotificationPlaceholderId": "Unknown User",
+    "incomingCallNotificationPlaceholderAlert": "Incoming call",
+    "incomingCallNoticicationAcceptWithAudioAriaLabel": "Accept with audio",
+    "incomingCallNoticicationAcceptWithVideoAriaLabel": "Accept with video",
+    "incomingCallNoticicationRejectAriaLabel": "Reject"
   }
 }

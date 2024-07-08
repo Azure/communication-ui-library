@@ -302,3 +302,5 @@ export { _ErrorBoundary } from './ErrorBoundary';
 export * from './Notification';
 /* @conditional-compile-remove(notifications) */
 export * from './NotificationStack';
+
+export * from './IncomingCallNotification';
