@@ -66,7 +66,7 @@ describe('ChatComposite', () => {
     });
   });
 
-  test('Chat Composite should show richTextSendBox if it is enabled', async () => {
+  test('Chat Composite should show RichTextSendBoxWrapper if it is enabled', async () => {
     const mockBaseCompositeProps = {
       fluentTheme: {},
       icons: {},
