@@ -1951,6 +1951,7 @@ export type ChatThreadClientState = {
 export type ChatThreadProperties = {
     topic?: string;
     createdBy?: CommunicationIdentifierKind;
+    messagingPolicy?: MessagingPolicy;
 };
 
 // @public
@@ -3017,6 +3018,7 @@ export interface ErrorBarStrings {
     startVideoGeneric: string;
     stopScreenShareGeneric: string;
     stopVideoGeneric: string;
+    teamsMeetingCallNetworkQualityLow: string;
     unableToReachChatService: string;
     unableToStartVideoEffect?: string;
     unmuteGeneric: string;
@@ -3514,6 +3516,11 @@ export interface MessageThreadStyles extends BaseCustomStyles {
     systemMessageContainer?: ComponentSlotStyle;
 }
 
+// @beta
+export type MessagingPolicy = {
+    textOnlyChat?: boolean;
+};
+
 // @public
 export const MicrophoneButton: (props: MicrophoneButtonProps) => JSX.Element;
 
@@ -3663,6 +3670,7 @@ export interface NotificationStackStrings {
     startVideoGeneric?: NotificationStrings;
     stopScreenShareGeneric?: NotificationStrings;
     stopVideoGeneric?: NotificationStrings;
+    teamsMeetingCallNetworkQualityLow?: NotificationStrings;
     transcriptionStarted?: NotificationStrings;
     transcriptionStopped?: NotificationStrings;
     transcriptionStoppedStillRecording?: NotificationStrings;

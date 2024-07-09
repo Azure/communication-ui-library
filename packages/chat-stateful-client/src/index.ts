@@ -17,3 +17,5 @@ export type {
   ChatThreadProperties,
   ChatErrorTarget
 } from './ChatClientState';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+export type { MessagingPolicy } from './ChatClientState';
