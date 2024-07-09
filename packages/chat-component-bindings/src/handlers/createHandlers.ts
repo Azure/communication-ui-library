@@ -81,7 +81,6 @@ export const createDefaultChatHandlers = memoizeOne(
           options &&
           'attachments' in options &&
           options.attachments &&
-          options.attachments.length > 0 &&
           options.attachments[0] &&
           !(options.attachments[0] as ChatAttachment).attachmentType;
         /* @conditional-compile-remove(rich-text-editor-image-upload) */
@@ -106,6 +105,7 @@ export const createDefaultChatHandlers = memoizeOne(
           await chatThreadClient.sendMessage(sendMessageRequest, chatSDKOptions);
           return;
         }
+
         await chatThreadClient.sendMessage(sendMessageRequest, options as SendMessageOptions);
       },
       /* @conditional-compile-remove(rich-text-editor-image-upload) */
