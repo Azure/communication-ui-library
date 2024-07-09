@@ -1,8 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { removeImageTags } from './useImageUpload';
 
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
 describe('removeImageElement should work correctly', () => {
   test('removeImageElement should remove all image elements when fragment only contains image children', () => {
     const fragment = document.createDocumentFragment();
