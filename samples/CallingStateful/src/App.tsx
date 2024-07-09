@@ -33,13 +33,15 @@ import {
   fromFlatCommunicationIdentifier,
   IncomingCallNotification
 } from '@azure/communication-react';
-import { PrimaryButton, Stack, Text, TextField, initializeIcons, registerIcons } from '@fluentui/react';
+import { PrimaryButton, Stack, Text, Image, TextField, initializeIcons, registerIcons } from '@fluentui/react';
 import { CallingComponents } from './components/CallingComponents';
-
+import heroSVG from './assets/hero.svg';
+import { imgStyle } from './styles/HomeScreen.styles';
 initializeIcons();
 registerIcons({ icons: DEFAULT_COMPONENT_ICONS });
 
 function App() {
+  const imageProps = { src: heroSVG.toString() };
   const [userIdentifier, setUserIdentifier] = useState<CommunicationUserIdentifier>();
   const [userToken, setUserToken] = useState<string>('');
   const [tokenCredential, setTokenCredential] = useState<AzureCommunicationTokenCredential>();
@@ -221,6 +223,7 @@ function App() {
           tokens={{ childrenGap: '1rem' }}
           style={{ width: '30rem', height: '100%', margin: 'auto', paddingTop: '4rem', position: 'relative' }}
         >
+          <Image alt="Welcome to the ACS Calling sample app" className={imgStyle} {...imageProps} />
           <Text styles={{ root: { fontWeight: 700, fontSize: 'large' } }}>login</Text>
           <Text>
             Enter your Teams information if you want to login with CTE. Leave blank if you want to log in with ACS
@@ -248,10 +251,12 @@ function App() {
   return (
     <Stack
       verticalAlign="center"
+      horizontal
       tokens={{ childrenGap: '1rem' }}
       style={{ width: '100%', height: '100vh', margin: 'auto', paddingTop: '4rem', position: 'relative' }}
     >
       <FluentThemeProvider>
+        <Image alt="Welcome to the ACS Calling sample app" className={imgStyle} {...imageProps} />
         {userIdentifier && <Text>your userId: {userIdentifier.communicationUserId}</Text>}
         {teamsIdentityInformation && <Text>your teamsId: {teamsIdentityInformation.identifier}</Text>}
         {statefulCallClient && (
@@ -276,7 +281,7 @@ function App() {
               <IncomingCallNotification
                 callerName={incomingCall.callerInfo.displayName}
                 onAcceptWithAudio={() => onAcceptACSCall(incomingCall)}
-                onAcceptWithVideo={() => onAcceptACSCall(incomingCall)}
+                onAcceptWithVideo={() => onAcceptACSCall(incomingCall, true)}
                 onReject={() => onRejectACSCall(incomingCall)}
               ></IncomingCallNotification>
             ))}
@@ -289,7 +294,7 @@ function App() {
               <IncomingCallNotification
                 callerName={incomingCall.callerInfo.displayName}
                 onAcceptWithAudio={() => onAcceptTeamsCall(incomingCall)}
-                onAcceptWithVideo={() => onAcceptTeamsCall(incomingCall)}
+                onAcceptWithVideo={() => onAcceptTeamsCall(incomingCall, true)}
                 onReject={() => onRejectTeamsCall(incomingCall)}
               ></IncomingCallNotification>
             ))}
