@@ -81,8 +81,25 @@ describe('ChatComposite', () => {
     const mockChatAdapter = createMockChatAdapter();
 
     render(<ChatComposite adapter={mockChatAdapter} {...mockBaseCompositeProps} />);
-    const textToMatch = await screen.findByText(/Mocked RichTextSendboxWrapper/);
-    expect(textToMatch).toBeInTheDocument();
+    expect(await screen.findByText(/Mocked RichTextSendboxWrapper/)).toBeVisible();
+  });
+
+  test('Chat Composite should not show RichTextSendBoxWrapper if it is not enabled', async () => {
+    const mockBaseCompositeProps = {
+      fluentTheme: {},
+      icons: {},
+      locale: COMPOSITE_LOCALE_ZH_TW,
+      rtl: true,
+      onFetchAvatarPersonaData: jest.fn(),
+      options: {
+        richTextEditor: false
+      }
+    };
+
+    const mockChatAdapter = createMockChatAdapter();
+
+    render(<ChatComposite adapter={mockChatAdapter} {...mockBaseCompositeProps} />);
+    expect(screen.findByText(/Mocked RichTextSendboxWrapper/)).rejects.toThrow();
   });
 });
 
