@@ -19,7 +19,7 @@ concurrency:
 
 jobs:
   chromatic_deployment:
-    name: Publish Chromatic
+    name: Publish Chromatic Storybook 6
     runs-on: ubuntu-latest
     permissions:
       packages: write
@@ -79,7 +79,7 @@ jobs:
               body: 'Storybook 6 URL ${{ steps.storybook_url.outputs.url }}'
             })
   chromatic_deployment8:
-    name: Publish Chromatic Storybook8
+    name: Publish Chromatic Storybook 8
     runs-on: ubuntu-latest
     permissions:
       packages: write
@@ -106,7 +106,7 @@ jobs:
       - name: Install Dependencies
         run: rush install --max-install-attempts 3
 
-      - name: Publish Chromatic Storybook8
+      - name: Publish Chromatic Storybook 8
         id: publish_chromatic
         uses: chromaui/action@v1
         with:
