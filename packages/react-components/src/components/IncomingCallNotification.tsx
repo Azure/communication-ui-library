@@ -18,6 +18,7 @@ import { useLocale } from '../localization';
 
 /**
  * Strings for the incoming call notification component.
+ *
  * @beta
  */
 export type IncomingCallNotificationStrings = {
@@ -44,7 +45,32 @@ export type IncomingCallNotificationStrings = {
 };
 
 /**
+ * Styles for the incoming call notification component.
+ *
+ * @beta
+ */
+export type IncomingCallNotificationStyles = {
+  /**
+   * Styles for the accept buttons.
+   */
+  acceptButton?: IButtonStyles;
+  /**
+   * Styles for the reject button.
+   */
+  rejectButton?: IButtonStyles;
+  /**
+   * Styles for the root container.
+   */
+  root?: IStackStyles;
+  /**
+   * Styles for the avatar container.
+   */
+  avatarContainer?: IStackStyles;
+};
+
+/**
  * Properties for the incoming call notification component.
+ *
  * @beta
  */
 export type IncomingCallNotificationProps = {
@@ -59,7 +85,11 @@ export type IncomingCallNotificationProps = {
   /**
    * URL to the avatar image for the user
    */
-  avatar?: string;
+  avatarImage?: string;
+  /**
+   * Callback to render the avatar
+   */
+  onRenderAvatar?: () => JSX.Element;
   /**
    * Callback to accept the call with audio
    */
@@ -72,6 +102,10 @@ export type IncomingCallNotificationProps = {
    * Callback to reject the call
    */
   onReject: () => void;
+  /**
+   * Styles for the incoming call notification component.
+   */
+  styles?: IncomingCallNotificationStyles;
 };
 
 /**
@@ -80,15 +114,18 @@ export type IncomingCallNotificationProps = {
  * @beta
  */
 export const IncomingCallNotification = (props: IncomingCallNotificationProps): JSX.Element => {
-  const { callerName, alertText, avatar, onAcceptWithAudio, onAcceptWithVideo, onReject } = props;
+  const { callerName, alertText, avatarImage, onAcceptWithAudio, onAcceptWithVideo, onReject, styles } = props;
   const theme = useTheme();
   /* @conditional-compile-remove(one-to-n-calling) */
   const localeStrings = useLocale().strings.IncomingCallNotification;
   return (
-    <Stack horizontal verticalAlign="center" styles={incomingCallToastStyle(theme)}>
-      <Stack horizontalAlign="start" styles={incomingCallToastAvatarContainerStyle}>
+    <Stack horizontal verticalAlign="center" styles={styles?.root ? styles.root : incomingCallToastStyle(theme)}>
+      <Stack
+        horizontalAlign="start"
+        styles={styles?.avatarContainer ? styles.avatarContainer : incomingCallToastAvatarContainerStyle}
+      >
         <Persona
-          imageUrl={avatar}
+          imageUrl={avatarImage}
           text={callerName}
           size={PersonaSize.size40}
           hidePersonaDetails={true}
@@ -113,21 +150,21 @@ export const IncomingCallNotification = (props: IncomingCallNotificationProps): 
 
       <Stack horizontal tokens={{ childrenGap: 10 }}>
         <IconButton
-          styles={incomingCallRejectButtonStyle(theme)}
+          styles={styles?.acceptButton ? styles.acceptButton : incomingCallRejectButtonStyle(theme)}
           onClick={() => onReject()}
           iconProps={{ iconName: 'IncomingCallNotificationRejectIcon' }}
           /* @conditional-compile-remove(one-to-n-calling) */
           ariaLabel={localeStrings.incomingCallNoticicationRejectAriaLabel}
         />
         <IconButton
-          styles={incomingCallAcceptButtonStyle(theme)}
+          styles={styles?.acceptButton ? styles.acceptButton : incomingCallAcceptButtonStyle(theme)}
           onClick={() => onAcceptWithVideo()}
           iconProps={{ iconName: 'IncomingCallNotificationAcceptWithVideoIcon' }}
           /* @conditional-compile-remove(one-to-n-calling) */
           ariaLabel={localeStrings.incomingCallNoticicationAcceptWithVideoAriaLabel}
         />
         <IconButton
-          styles={incomingCallAcceptButtonStyle(theme)}
+          styles={styles?.acceptButton ? styles.acceptButton : incomingCallAcceptButtonStyle(theme)}
           onClick={() => onAcceptWithAudio()}
           iconProps={{ iconName: 'IncomingCallNotificationAcceptIcon' }}
           /* @conditional-compile-remove(one-to-n-calling) */
