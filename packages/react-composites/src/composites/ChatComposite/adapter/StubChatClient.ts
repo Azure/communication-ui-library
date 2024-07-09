@@ -15,7 +15,7 @@ import {
 } from '@azure/communication-chat';
 import { PagedAsyncIterableIterator } from '@azure/core-paging';
 /* @conditional-compile-remove(chat-beta-sdk) */
-import { UploadChatImageResult } from '@internal/acs-ui-common';
+import { UploadChatImageResult } from '@azure/communication-chat';
 
 type PublicInterface<T> = { [K in keyof T]: T[K] };
 

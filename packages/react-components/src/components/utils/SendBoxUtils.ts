@@ -3,7 +3,7 @@
 
 /* @conditional-compile-remove(file-sharing-acs) */
 import { AttachmentMetadataInProgress } from '@internal/acs-ui-common';
-/* @conditional-compile-remove(rich-text-editor-image-upload) */
+/* @conditional-compile-remove(file-sharing-acs) */
 import { AttachmentMetadata } from '@internal/acs-ui-common';
 
 /**
