@@ -9,10 +9,9 @@ import { COMPONENT_FOLDER_PREFIX } from '../constants';
 import { IncomingCallNotificationExample } from './snippets/IncomingCallNotification.snippet';
 import { IncomingCallNotificationStylingExample } from './snippets/IncomingCallNotificationStyling.snippet';
 
+const IncomingCallNotificationText = require('!!raw-loader!./snippets/IncomingCallNotification.snippet').default;
 const IncomingCallNotificationStylingText =
   require('!!raw-loader!./snippets/IncomingCallNotificationStyling.snippet').default;
-
-const IncomingCallNotificationText = require('!!raw-loader!./snippets/IncomingCallNotification.snippet').default;
 const getDocs: () => JSX.Element = () => {
   return (
     <>
