@@ -51,7 +51,7 @@ jobs:
         uses: chromaui/action@v1
         with:
           workingDir: ./packages/storybook8
-          buildScriptName: build:dev
+          buildScriptName: build:dev-s8
           token: ${{ secrets.GITHUB_TOKEN }}
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           allowConsoleErrors: true
