@@ -40,6 +40,7 @@ import { Dialpad } from '@azure/communication-react';
 import { Backspace20Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(PSTN-calls) */
 import { useIsMobile } from '../utils/useIsMobile';
+import { RichTextEditorToggle } from './RichTextEditorToggle';
 
 export interface HomeScreenProps {
   startCallHandler(callDetails: {
@@ -49,6 +50,8 @@ export interface HomeScreenProps {
     outboundParticipants?: string[];
     /* @conditional-compile-remove(PSTN-calls) */
     alternateCallerId?: string;
+    /* @conditional-compile-remove(rich-text-editor-composite-support) */
+    isRichTextEditorEnabled?: boolean;
   }): void;
   joiningExistingCall: boolean;
 }
@@ -67,6 +70,9 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
     /* @conditional-compile-remove(PSTN-calls) */
     { key: 'PSTN', text: 'Start a PSTN Call' }
   ];
+
+  /* conditional-compile-remove(rich-text-editor-composite-support) */
+  const [isRichTextEditorEnabled, setIsRichTextEditorEnabled] = useState<boolean>(false);
 
   // Get display name from local storage if available
   const defaultDisplayName = localStorageAvailable ? getDisplayNameFromLocalStorage() : null;
@@ -107,6 +113,12 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
 
   /* @conditional-compile-remove(PSTN-calls) */
   registerIcons({ icons: { DialpadBackspace: <Backspace20Regular /> } });
+
+  const richTextEditorToggle = (): JSX.Element => {
+    /* @conditional-compile-remove(rich-text-editor-composite-support) */
+    return <RichTextEditorToggle setRichTextEditorIsEnabled={setIsRichTextEditorEnabled} />;
+    return <></>;
+  };
 
   /* @conditional-compile-remove(PSTN-calls) */
   const isMobileSession = useIsMobile();
@@ -270,7 +282,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
             }
           </Stack>
           <DisplayNameField defaultName={displayName} setName={setDisplayName} />
-
+          {richTextEditorToggle()}
           <PrimaryButton
             disabled={!buttonEnabled}
             className={buttonStyle}
@@ -287,7 +299,9 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                   meetingLocator,
                   /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
                   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling)  */
-                  outboundParticipants: acsParticipantsToCall ? acsParticipantsToCall : dialpadParticipantToCall
+                  outboundParticipants: acsParticipantsToCall ? acsParticipantsToCall : dialpadParticipantToCall,
+                  /* @conditional-compile-remove(rich-text-editor-composite-support) */
+                  isRichTextEditorEnabled: isRichTextEditorEnabled
                 });
               }
             }}
