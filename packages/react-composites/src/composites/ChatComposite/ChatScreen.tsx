@@ -654,7 +654,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   );
 };
 
-// todo: delete after the function is added to utils
+// TODO-vhuseinova: delete after the function is added to utils
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 const removeImageTags = (event: { content: DocumentFragment }): void => {
   event.content.querySelectorAll('img').forEach((image) => {
