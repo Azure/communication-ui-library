@@ -25124,7 +25124,7 @@ packages:
     dev: false
 
   file:projects/react-composites.tgz:
-    resolution: {integrity: sha512-sfMrFBy9bgawCvLkB64mPspXG7wAbD9+t8em7o/NfqyDaV6mfxkU7aMowOynNHaHqJMxaw9xYzovJgi4vyuPZw==, tarball: file:projects/react-composites.tgz}
+    resolution: {integrity: sha512-/uUTnZXWYotA6kpS86nZPUAxwmhfBPMyvwmr5WWqittsCCNRlVBzQUyzQ88EWowBf95EMwlf9wMa/HG5+jSCyg==, tarball: file:projects/react-composites.tgz}
     name: '@rush-temp/react-composites'
     version: 0.0.0
     dependencies:
@@ -25208,7 +25208,6 @@ packages:
       reselect: 4.1.8
       rimraf: 2.7.1
       rollup: 4.12.1
-      roosterjs-content-model-types: 9.7.0
       shell-quote: 1.8.1
       source-map-explorer: 2.5.3
       style-loader: 2.0.0(webpack@5.89.0)
