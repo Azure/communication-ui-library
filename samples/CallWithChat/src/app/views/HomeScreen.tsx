@@ -282,7 +282,6 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
             }
           </Stack>
           <DisplayNameField defaultName={displayName} setName={setDisplayName} />
-          {richTextEditorToggle()}
           <PrimaryButton
             disabled={!buttonEnabled}
             className={buttonStyle}
@@ -308,6 +307,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
           />
           <div>
             <ThemeSelector label="Theme" horizontal={true} />
+            {richTextEditorToggle()}
           </div>
         </Stack>
       </Stack>
