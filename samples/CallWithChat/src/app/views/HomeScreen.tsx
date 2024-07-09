@@ -119,7 +119,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
     /* @conditional-compile-remove(rich-text-editor-composite-support) */
     return <RichTextEditorToggle setRichTextEditorIsEnabled={setIsRichTextEditorEnabled} />;
     return <></>;
-  }, [setIsRichTextEditorEnabled]);
+  }, [/* @conditional-compile-remove(rich-text-editor-composite-support) */ setIsRichTextEditorEnabled]);
 
   /* @conditional-compile-remove(PSTN-calls) */
   const isMobileSession = useIsMobile();
@@ -308,7 +308,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
           />
           <div>
             <ThemeSelector label="Theme" horizontal={true} />
-            {richTextEditorToggle()}
+            {richTextEditorToggle}
           </div>
         </Stack>
       </Stack>
