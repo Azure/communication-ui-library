@@ -319,7 +319,7 @@ export const ErrorBar = (props: ErrorBarProps): JSX.Element => {
             },
             dismissal: {
               height: '2rem',
-              paddingBottom: '1rem'
+              paddingBottom: '0.8rem'
             }
           }}
           key={error.type}
