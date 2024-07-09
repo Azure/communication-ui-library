@@ -31,7 +31,9 @@ import {
   StatefulCallClient,
   createStatefulCallClient,
   fromFlatCommunicationIdentifier,
-  IncomingCallNotification
+  IncomingCallNotification,
+  DeclarativeCallAgent,
+  DeclarativeTeamsCallAgent
 } from '@azure/communication-react';
 import { PrimaryButton, Stack, Text, Image, TextField, initializeIcons, registerIcons } from '@fluentui/react';
 import { CallingComponents } from './components/CallingComponents';
@@ -43,30 +45,34 @@ registerIcons({ icons: DEFAULT_COMPONENT_ICONS });
 function App() {
   const imageProps = { src: heroSVG.toString() };
   const [userIdentifier, setUserIdentifier] = useState<CommunicationUserIdentifier>();
-  const [userToken, setUserToken] = useState<string>('');
   const [tokenCredential, setTokenCredential] = useState<AzureCommunicationTokenCredential>();
   const [userCredentialFetchError, setUserCredentialFetchError] = useState<boolean>(false);
   const [displayName, setDisplayName] = useState<string>();
   const [isCTEUser, setIsCTEUser] = useState<boolean>();
+  const [numberOfIncomingCalls, setNumberOfIncomingCalls] = useState<number>(0);
   const [teamsIdentityInformation, setTeamsIdentityInformation] = useState<{
     identifier: string | undefined;
     token: string | undefined;
   }>();
 
   const [statefulCallClient, setStatefulCallClient] = useState<StatefulCallClient>();
-  const [callAgent, setCallAgent] = useState<CallAgent | TeamsCallAgent>();
+  const [callAgent, setCallAgent] = useState<DeclarativeCallAgent | DeclarativeTeamsCallAgent>();
   const [call, setCall] = useState<CallCommon>();
-  const [acsIncomingCalls, setAcsIncomingCalls] = useState<IncomingCall[]>([]);
-  const [incomingTeamsCalls, setIncomingTeamsCalls] = useState<TeamsIncomingCall[]>([]);
+  const [acsIncomingCalls, setAcsIncomingCalls] = useState<readonly IncomingCall[]>([]);
+  const [incomingTeamsCalls, setIncomingTeamsCalls] = useState<readonly TeamsIncomingCall[]>([]);
 
   const incomingAcsCallListener: IncomingCallEvent = ({ incomingCall }): void => {
     console.log('Incoming call received: ', incomingCall);
-    setAcsIncomingCalls([...acsIncomingCalls, incomingCall]);
+    if (callAgent) {
+      setAcsIncomingCalls(callAgent.incomingCalls);
+    }
   };
 
   const teamsIncomingCallListener: TeamsIncomingCallEvent = ({ incomingCall }): void => {
     console.log('Incoming call received: ', incomingCall);
-    setIncomingTeamsCalls([...incomingTeamsCalls, incomingCall]);
+    if (callAgent) {
+      setIncomingTeamsCalls(callAgent.incomingCalls);
+    }
   };
 
   const callsUpdatedListener = (event: { added: CallCommon[]; removed: CallCommon[] }) => {
@@ -112,6 +118,10 @@ function App() {
     setAcsIncomingCalls(acsIncomingCalls.filter((call) => call.id !== incomingCall.id));
   };
 
+  useEffect(() => {
+    setNumberOfIncomingCalls(isCTEUser ? incomingTeamsCalls.length : acsIncomingCalls.length);
+  }, [incomingTeamsCalls, acsIncomingCalls]);
+
   const onRejectTeamsCall = (incomingCall: TeamsIncomingCall): void => {
     if (incomingCall) {
       incomingCall.reject();
@@ -141,7 +151,6 @@ function App() {
           const { token, user } = await fetchTokenResponse();
           console.log('Token fetched: ', token);
           console.log('User fetched: ', user);
-          setUserToken(token);
           setUserIdentifier(user);
           setTokenCredential(new AzureCommunicationTokenCredential(token));
         } catch (e) {
@@ -249,13 +258,13 @@ function App() {
   }
 
   return (
-    <Stack
-      verticalAlign="center"
-      horizontal
-      tokens={{ childrenGap: '1rem' }}
-      style={{ width: '100%', height: '100vh', margin: 'auto', paddingTop: '4rem', position: 'relative' }}
-    >
-      <FluentThemeProvider>
+    <FluentThemeProvider>
+      <Stack
+        verticalAlign="center"
+        horizontalAlign="center"
+        tokens={{ childrenGap: '1rem' }}
+        style={{ width: '30rem', height: '100%', margin: 'auto', paddingTop: '4rem', position: 'relative' }}
+      >
         <Image alt="Welcome to the ACS Calling sample app" className={imgStyle} {...imageProps} />
         {userIdentifier && <Text>your userId: {userIdentifier.communicationUserId}</Text>}
         {teamsIdentityInformation && <Text>your teamsId: {teamsIdentityInformation.identifier}</Text>}
@@ -276,7 +285,7 @@ function App() {
         )}
         {acsIncomingCalls.length > 0 && (
           <Stack>
-            <Text variant="large">Incoming calls</Text>
+            <Text variant="large">Incoming calls {numberOfIncomingCalls}</Text>
             {acsIncomingCalls.map((incomingCall) => (
               <IncomingCallNotification
                 callerName={incomingCall.callerInfo.displayName}
@@ -289,7 +298,7 @@ function App() {
         )}
         {incomingTeamsCalls.length > 0 && (
           <Stack>
-            <Text variant="large">Incoming Teams calls</Text>
+            <Text variant="large">Incoming Teams calls {numberOfIncomingCalls}</Text>
             {incomingTeamsCalls.map((incomingCall) => (
               <IncomingCallNotification
                 callerName={incomingCall.callerInfo.displayName}
@@ -300,8 +309,8 @@ function App() {
             ))}
           </Stack>
         )}
-      </FluentThemeProvider>
-    </Stack>
+      </Stack>
+    </FluentThemeProvider>
   );
 }
 
