@@ -3170,33 +3170,34 @@ export type IncomingCallManagement = {
 export const IncomingCallNotification: (props: IncomingCallNotificationProps) => JSX.Element;
 
 // @beta
-export type IncomingCallNotificationProps = {
-    callerName?: string;
+export interface IncomingCallNotificationProps {
     alertText?: string;
     avatarImage?: string;
-    onRenderAvatar?: () => JSX.Element;
+    callerName?: string;
     onAcceptWithAudio: () => void;
     onAcceptWithVideo: () => void;
     onReject: () => void;
+    onRenderAvatar?: () => JSX.Element;
+    personaSize?: number;
     styles?: IncomingCallNotificationStyles;
-};
+}
 
 // @beta
-export type IncomingCallNotificationStrings = {
-    incomingCallNotificationPlaceholderId?: string;
-    incomingCallNotificationPlaceholderAlert?: string;
+export interface IncomingCallNotificationStrings {
     incomingCallNoticicationAcceptWithAudioAriaLabel?: string;
     incomingCallNoticicationAcceptWithVideoAriaLabel?: string;
     incomingCallNoticicationRejectAriaLabel?: string;
-};
+    incomingCallNotificationPlaceholderAlert?: string;
+    incomingCallNotificationPlaceholderId?: string;
+}
 
 // @beta
-export type IncomingCallNotificationStyles = {
+export interface IncomingCallNotificationStyles {
     acceptButton?: IButtonStyles;
+    avatarContainer?: IStackStyles;
     rejectButton?: IButtonStyles;
     root?: IStackStyles;
-    avatarContainer?: IStackStyles;
-};
+}
 
 // @public
 export interface IncomingCallState {

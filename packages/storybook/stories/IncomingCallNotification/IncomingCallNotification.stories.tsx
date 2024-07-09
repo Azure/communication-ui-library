@@ -1,18 +1,18 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { IncomingCallNotification } from '@azure/communication-react';
-import { Canvas, Description, Heading, Subheading, Title } from '@storybook/addon-docs';
+import { IncomingCallNotification as IncomingCallNotificationComponent } from '@azure/communication-react';
+import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
 import { IncomingCallNotificationExample } from './snippets/IncomingCallNotification.snippet';
 import { IncomingCallNotificationStylingExample } from './snippets/IncomingCallNotificationStyling.snippet';
 
-const IncomingCallNotificationText = require('!!raw-loader!./snippets/IncomingCallNotification.snippet').default;
 const IncomingCallNotificationStylingText =
   require('!!raw-loader!./snippets/IncomingCallNotificationStyling.snippet').default;
 
+const IncomingCallNotificationText = require('!!raw-loader!./snippets/IncomingCallNotification.snippet').default;
 const getDocs: () => JSX.Element = () => {
   return (
     <>
@@ -26,18 +26,23 @@ const getDocs: () => JSX.Element = () => {
       </Canvas>
       <Heading>Styling</Heading>
       <Description>
-        Using the `styles` prop, you can customize the look and feel of the Incoming Call Notification
+        Depoending on your use of the incoming call notification you might want to customize it to your needs. On the
+        component we have many different API's to adjust the CSS of the different elements of the component. Below is an
+        example of how you can customize the incoming call notification.
       </Description>
       <Canvas>
         <IncomingCallNotificationStylingExample />
       </Canvas>
+      <Source code={IncomingCallNotificationStylingText}></Source>
+      <Heading>Props</Heading>
+      <Props of={IncomingCallNotificationComponent}></Props>
     </>
   );
 };
 
 const IncomingCallNotificationStory = (): JSX.Element => {
   return (
-    <IncomingCallNotification
+    <IncomingCallNotificationComponent
       onAcceptWithAudio={function (): void {
         alert('Accept with audio');
       }}
@@ -52,7 +57,7 @@ const IncomingCallNotificationStory = (): JSX.Element => {
   );
 };
 
-export const IncomingNotification = IncomingCallNotificationStory.bind({});
+export const IncomingCallNotification = IncomingCallNotificationStory.bind({});
 
 export default {
   id: `${COMPONENT_FOLDER_PREFIX}-IncomingCallNotification`,
