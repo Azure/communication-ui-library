@@ -64,6 +64,7 @@ import { SendBoxPicker } from '../common/SendBoxPicker';
 import { loadRichTextSendBox } from '../common/SendBoxPicker';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { useImageUpload } from './image-upload/useImageUpload';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
 import type { ChatAdapterState } from './adapter/ChatAdapter';
 
 /**
