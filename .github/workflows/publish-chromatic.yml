@@ -47,7 +47,7 @@ jobs:
         run: rush install --max-install-attempts 3
 
       - name: Publish Chromatic Storybook8
-        id: publish_chromatic8
+        id: publish_chromatic
         uses: chromaui/action@v1
         with:
           workingDir: ./packages/storybook8
@@ -60,7 +60,7 @@ jobs:
         id: storybook_url
         # Get the url from chromatic job then remove the iframe.html at the end of the url (this looks like a bug)
         run: |
-          storybookurl=${{ steps.publish_chromatic8.outputs.storybookUrl }}
+          storybookurl=${{ steps.publish_chromatic.outputs.storybookUrl }}
           echo "Storybook URL before: $storybookurl"
           newurl=${storybookurl/%iframe.html}
           echo "Storybook URL after: $newurl"
