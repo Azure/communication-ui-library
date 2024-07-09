@@ -72,7 +72,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
     { key: 'PSTN', text: 'Start a PSTN Call' }
   ];
 
-  /* conditional-compile-remove(rich-text-editor-composite-support) */
+  /* @conditional-compile-remove(rich-text-editor-composite-support) */
   const [isRichTextEditorEnabled, setIsRichTextEditorEnabled] = useState<boolean>(false);
 
   // Get display name from local storage if available
