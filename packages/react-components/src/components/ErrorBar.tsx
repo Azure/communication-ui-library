@@ -323,8 +323,8 @@ export const ErrorBar = (props: ErrorBarProps): JSX.Element => {
               lineHeight: 'inherit'
             },
             dismissal: {
-              height: 0,
-              paddingTop: '0.8rem'
+              height: '2rem',
+              paddingBottom: '0.8rem'
             }
           }}
           key={error.type}
