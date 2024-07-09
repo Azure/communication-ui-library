@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Stack, PrimaryButton, Image, ChoiceGroup, IChoiceGroupOption, Text, TextField } from '@fluentui/react';
 /* @conditional-compile-remove(PSTN-calls) */
 import { registerIcons, Label, Link, Callout, mergeStyles } from '@fluentui/react';
@@ -115,11 +115,11 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   /* @conditional-compile-remove(PSTN-calls) */
   registerIcons({ icons: { DialpadBackspace: <Backspace20Regular /> } });
 
-  const richTextEditorToggle = (): JSX.Element => {
+  const richTextEditorToggle = useMemo((): JSX.Element => {
     /* @conditional-compile-remove(rich-text-editor-composite-support) */
     return <RichTextEditorToggle setRichTextEditorIsEnabled={setIsRichTextEditorEnabled} />;
     return <></>;
-  };
+  }, [setIsRichTextEditorEnabled]);
 
   /* @conditional-compile-remove(PSTN-calls) */
   const isMobileSession = useIsMobile();
