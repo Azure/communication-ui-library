@@ -11,11 +11,10 @@ import {
   ChatThreadItem,
   ChatThreadProperties,
   CreateChatThreadResult,
-  SendChatMessageResult
+  SendChatMessageResult,
+  UploadChatImageResult
 } from '@azure/communication-chat';
 import { PagedAsyncIterableIterator } from '@azure/core-paging';
-/* @conditional-compile-remove(chat-beta-sdk) */
-import { UploadChatImageResult } from '@internal/acs-ui-common';
 
 type PublicInterface<T> = { [K in keyof T]: T[K] };
 
