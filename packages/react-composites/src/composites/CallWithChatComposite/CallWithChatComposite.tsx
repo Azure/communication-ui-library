@@ -586,13 +586,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
         onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
       />
     ),
-    [
-      chatAdapter,
-      /* @conditional-compile-remove(file-sharing-acs) */ props.attachmentOptions,
-      props.onFetchAvatarPersonaData,
-      chatCompositeOptions,
-      theme
-    ]
+    [chatAdapter, props.onFetchAvatarPersonaData, chatCompositeOptions, theme]
   );
 
   const sidePaneHeaderRenderer = useCallback(
