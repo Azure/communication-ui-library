@@ -85,3 +85,8 @@ describe('ChatComposite', () => {
     expect(textToMatch).toBeInTheDocument();
   });
 });
+
+// Remove when rich-text-editor-composite-support is GA
+describe('Empty Test', () => {
+  test.skip('Empty test for Conditional Compile case where no tests are included', (done) => done());
+});
