@@ -193,6 +193,7 @@ betaTest.describe('Attachment tests', () => {
     );
     await page.waitForLoadState();
     await component.evaluate(() => document.fonts.ready);
+    await component.hover();
     await component.getByTestId('chat-composite-message-action-icon').click();
     await component.getByTestId('chat-composite-message-contextual-menu-edit-action').click();
     await expect(component).toHaveScreenshot('attachment-in-messagethread-mymessage-multiple-edit.png');
@@ -227,6 +228,7 @@ betaTest.describe('Attachment tests', () => {
     );
     await page.waitForLoadState();
     await component.evaluate(() => document.fonts.ready);
+    await component.hover();
     await component.getByTestId('chat-composite-message-action-icon').click();
     await component.getByTestId('chat-composite-message-contextual-menu-edit-action').click();
     await expect(component).toHaveScreenshot('attachment-in-messagethread-mymessage-multiple-edit.png');
