@@ -3018,6 +3018,7 @@ export interface ErrorBarStrings {
     startVideoGeneric: string;
     stopScreenShareGeneric: string;
     stopVideoGeneric: string;
+    teamsMeetingCallNetworkQualityLow: string;
     unableToReachChatService: string;
     unableToStartVideoEffect?: string;
     unmuteGeneric: string;
@@ -3669,6 +3670,7 @@ export interface NotificationStackStrings {
     startVideoGeneric?: NotificationStrings;
     stopScreenShareGeneric?: NotificationStrings;
     stopVideoGeneric?: NotificationStrings;
+    teamsMeetingCallNetworkQualityLow?: NotificationStrings;
     transcriptionStarted?: NotificationStrings;
     transcriptionStopped?: NotificationStrings;
     transcriptionStoppedStillRecording?: NotificationStrings;
