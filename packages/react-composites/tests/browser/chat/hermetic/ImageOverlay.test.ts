@@ -35,7 +35,7 @@ test.describe('ImageOverlay tests', () => {
 
     await page.route(serverUrl + '/images/inlineImageExample1-fullSize.png', async (route) => {
       try {
-        await route.fulfill({ status: 300, contentType: 'text/html' });
+        await route.fulfill({ status: 404, contentType: 'text/html' });
       } catch (error) {
         console.error('Failed at fulfill route, Error: ', error);
       }
