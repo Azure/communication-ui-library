@@ -166,11 +166,7 @@ export const ChatMyMessageComponent = (props: ChatMyMessageComponentProps): JSX.
           message.messageId,
           text,
           /* @conditional-compile-remove(file-sharing-acs) */
-          /* @conditional-compile-remove(rich-text-editor-image-upload) */
-          {
-            /* @conditional-compile-remove(file-sharing-acs) */ attachments: attachments,
-            type: props.richTextEditorOptions ? 'html' : 'text'
-          }
+          { attachments: attachments }
         ));
       setIsEditing(false);
     },

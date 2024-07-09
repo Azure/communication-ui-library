@@ -106,6 +106,7 @@ export const createDefaultChatHandlers = memoizeOne(
           await chatThreadClient.sendMessage(sendMessageRequest, chatSDKOptions);
           return;
         }
+
         await chatThreadClient.sendMessage(sendMessageRequest, options as SendMessageOptions);
       },
       /* @conditional-compile-remove(rich-text-editor-image-upload) */
