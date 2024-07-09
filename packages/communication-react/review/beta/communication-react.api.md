@@ -3664,12 +3664,12 @@ export interface NotificationStackStrings {
     startVideoGeneric?: NotificationStrings;
     stopScreenShareGeneric?: NotificationStrings;
     stopVideoGeneric?: NotificationStrings;
+    teamsMeetingCallNetworkQualityLow?: NotificationStrings;
     transcriptionStarted?: NotificationStrings;
     transcriptionStopped?: NotificationStrings;
     transcriptionStoppedStillRecording?: NotificationStrings;
     unableToStartVideoEffect?: NotificationStrings;
     unmuteGeneric?: NotificationStrings;
-    teamsMeetingCallNetworkQualityLow: NotificationStrings;
 }
 
 // @beta
