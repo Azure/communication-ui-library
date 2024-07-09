@@ -111,7 +111,6 @@ import React from 'react';
 import { useTheme } from './FluentThemeProvider';
 /* @conditional-compile-remove(call-readiness) */
 import { sitePermissionIconBackgroundStyle, scaledIconStyles } from './icons.styles';
-import { Call20Filled } from '@fluentui/react-icons';
 
 /**
  * Icons used by the React components exported from this library.
@@ -404,8 +403,5 @@ export const DEFAULT_COMPONENT_ICONS = {
   /* @conditional-compile-remove(rich-text-editor) */
   RichTextTableDeleteMenuIcon: <TableDismiss20Regular />,
   /* @conditional-compile-remove(soft-mute) */
-  ContextualMenuMicMutedIcon: <MicOff20Regular />,
-  IncomingCallNotificationRejectIcon: <CallEnd20Filled />,
-  IncomingCallNotificationAcceptIcon: <Call20Filled />,
-  IncomingCallNotificationAcceptWithVideoIcon: <Video20Filled />
+  ContextualMenuMicMutedIcon: <MicOff20Regular />
 };
