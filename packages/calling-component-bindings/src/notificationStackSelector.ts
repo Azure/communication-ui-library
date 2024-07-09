@@ -9,6 +9,8 @@ import {
   getEnvironmentInfo
 } from './baseSelectors';
 /* @conditional-compile-remove(notifications) */
+import { getTeamsMeetingConference } from './baseSelectors';
+/* @conditional-compile-remove(notifications) */
 import { ActiveNotification, NotificationType } from '@internal/react-components';
 /* @conditional-compile-remove(notifications) */
 import { createSelector } from 'reselect';
@@ -40,12 +42,19 @@ export type NotificationStackSelector = (
  * @beta
  */
 export const notificationStackSelector: NotificationStackSelector = createSelector(
-  [getLatestErrors, getDiagnostics, getDeviceManager, getEnvironmentInfo],
+  [
+    getLatestErrors,
+    getDiagnostics,
+    getDeviceManager,
+    getEnvironmentInfo,
+    /* @conditional-compile-remove(teams-meeting-conference) */ getTeamsMeetingConference
+  ],
   (
     latestErrors: CallErrors,
     diagnostics,
     deviceManager,
-    environmentInfo
+    environmentInfo,
+    /* @conditional-compile-remove(teams-meeting-conference) */ meetingConference
   ): { activeErrorMessages: ActiveNotification[]; activeNotifications: ActiveNotification[] } => {
     // The order in which the errors are returned is significant: The `Notification` shows errors on the UI in that order.
     // There are several options for the ordering:
@@ -69,11 +78,20 @@ export const notificationStackSelector: NotificationStackSelector = createSelect
     };
 
     // Errors reported via diagnostics are more reliable than from API method failures, so process those first.
+    let isTeamsMeetingWithPhones = false;
+    /* @conditional-compile-remove(teams-meeting-conference) */
+    if (meetingConference && meetingConference.length > 0) {
+      isTeamsMeetingWithPhones = true;
+    }
     if (
       diagnostics?.network.latest.networkReceiveQuality?.value === DiagnosticQuality.Bad ||
       diagnostics?.network.latest.networkReceiveQuality?.value === DiagnosticQuality.Poor
     ) {
-      activeErrorMessages.push({ type: 'callNetworkQualityLow' });
+      if (isTeamsMeetingWithPhones) {
+        activeErrorMessages.push({ type: 'teamsMeetingCallNetworkQualityLow' });
+      } else {
+        activeErrorMessages.push({ type: 'callNetworkQualityLow' });
+      }
     }
     if (diagnostics?.media.latest.noSpeakerDevicesEnumerated?.value === true) {
       activeErrorMessages.push({ type: 'callNoSpeakerFound' });
