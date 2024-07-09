@@ -40,6 +40,7 @@ import { Dialpad } from '@azure/communication-react';
 import { Backspace20Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(PSTN-calls) */
 import { useIsMobile } from '../utils/useIsMobile';
+/* @conditional-compile-remove(rich-text-editor-composite-support) */
 import { RichTextEditorToggle } from './RichTextEditorToggle';
 
 export interface HomeScreenProps {
