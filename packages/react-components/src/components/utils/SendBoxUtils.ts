@@ -3,6 +3,7 @@
 
 /* @conditional-compile-remove(file-sharing-acs) */
 import { AttachmentMetadataInProgress } from '@internal/acs-ui-common';
+/* @conditional-compile-remove(file-sharing-acs) */
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { AttachmentMetadata } from '@internal/acs-ui-common';
 
@@ -166,8 +167,8 @@ export const toAttachmentMetadata = (
  */
 export const insertAttachmentsAndImages = (
   content: string,
-  attachments: AttachmentMetadataInProgress[] | undefined,
-  imageUploadsInProgress: AttachmentMetadataInProgress[] | undefined
+  attachments?: AttachmentMetadataInProgress[] | undefined,
+  imageUploadsInProgress?: AttachmentMetadataInProgress[] | undefined
 ): { content: string; attachmentArray: AttachmentMetadata[] | undefined } => {
   if (!attachments && !imageUploadsInProgress) {
     return { content, attachmentArray: undefined };

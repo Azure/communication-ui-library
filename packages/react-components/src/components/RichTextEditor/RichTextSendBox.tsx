@@ -13,6 +13,7 @@ import { InputBoxButton } from '../InputBoxButton';
 import { RichTextSendBoxErrors, RichTextSendBoxErrorsProps } from './RichTextSendBoxErrors';
 import { isMessageTooLong, isSendBoxButtonAriaDisabled, sanitizeText } from '../utils/SendBoxUtils';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
+/* @conditional-compile-remove(file-sharing-acs) */
 import { insertAttachmentsAndImages } from '../utils/SendBoxUtils';
 import { RichTextEditorComponentRef } from './RichTextEditor';
 import { useTheme } from '../../theming';
@@ -323,12 +324,14 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     ) {
       /* @conditional-compile-remove(file-sharing-acs) */
       /* @conditional-compile-remove(rich-text-editor-image-upload) */
-      const { content, attachmentArray } = insertAttachmentsAndImages(
-        contentValue,
-        /* @conditional-compile-remove(file-sharing-acs) */ attachments,
-        /* @conditional-compile-remove(rich-text-editor-image-upload) */ imageUploadsInProgress
-      );
+      const { content, /* @conditional-compile-remove(file-sharing-acs) */ attachmentArray } =
+        insertAttachmentsAndImages(
+          contentValue,
+          /* @conditional-compile-remove(file-sharing-acs) */ attachments,
+          /* @conditional-compile-remove(rich-text-editor-image-upload) */ imageUploadsInProgress
+        );
 
+      /* @conditional-compile-remove(file-sharing-acs) */
       /* @conditional-compile-remove(rich-text-editor-image-upload) */
       message = content;
 

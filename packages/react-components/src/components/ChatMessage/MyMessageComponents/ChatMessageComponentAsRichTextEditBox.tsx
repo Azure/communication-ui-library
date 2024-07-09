@@ -283,7 +283,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
         <RichTextSendBoxErrors
           textTooLongMessage={textTooLongMessage}
           systemMessage={message.failureReason}
-          /* @conditional-compile-remove(file-sharing-acs) */ attachmentUploadsPendingError={
+          /* @conditional-compile-remove(rich-text-editor-image-upload) */ attachmentUploadsPendingError={
             attachmentUploadsPendingError
           }
         />
