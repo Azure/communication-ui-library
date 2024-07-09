@@ -167,6 +167,71 @@ betaTest.describe('Attachment tests', () => {
     await expect(component).toHaveScreenshot('attachment-in-messagethread-mymessage-multiple.png');
   });
 
+  betaTest('MessageThread should show multiple attachments correctly in edit box', async ({ mount, page }) => {
+    const component = await mount(
+      <MessageThread
+        userId={'8:acs:12345'}
+        messages={[
+          {
+            contentType: 'text',
+            messageType: 'chat',
+            messageId: '1234567890',
+            createdOn: new Date('01-01-2024'),
+            senderId: '8:acs:12345',
+            senderDisplayName: 'John Doe',
+            content: 'Hello!',
+            status: 'seen',
+            mine: true,
+            attachments: [
+              { name: 'test1.pdf', id: 'id1', url: 'https://www.contoso.com/test1.pdf' },
+              { name: 'test2.docx', id: 'id2', url: 'https://www.contoso.com/test2.docx' },
+              { name: 'test3.txt', id: 'id3', url: 'https://www.contoso.com/test3.txt' }
+            ]
+          }
+        ]}
+      />
+    );
+    await page.waitForLoadState();
+    await component.evaluate(() => document.fonts.ready);
+    await component.getByTestId('chat-composite-message-action-icon').click();
+    await component.getByTestId('chat-composite-message-contextual-menu-edit-action').click();
+    await expect(component).toHaveScreenshot('attachment-in-messagethread-mymessage-multiple-edit.png');
+  });
+
+  betaTest('MessageThread with RTE should show multiple attachments correctly in edit box', async ({ mount, page }) => {
+    const component = await mount(
+      <MessageThread
+        userId={'8:acs:12345'}
+        richTextEditorOptions={{
+          onPaste: async () => {}
+        }}
+        messages={[
+          {
+            contentType: 'text',
+            messageType: 'chat',
+            messageId: '1234567890',
+            createdOn: new Date('01-01-2024'),
+            senderId: '8:acs:12345',
+            senderDisplayName: 'John Doe',
+            content: 'Hello!',
+            status: 'seen',
+            mine: true,
+            attachments: [
+              { name: 'test1.pdf', id: 'id1', url: 'https://www.contoso.com/test1.pdf' },
+              { name: 'test2.docx', id: 'id2', url: 'https://www.contoso.com/test2.docx' },
+              { name: 'test3.txt', id: 'id3', url: 'https://www.contoso.com/test3.txt' }
+            ]
+          }
+        ]}
+      />
+    );
+    await page.waitForLoadState();
+    await component.evaluate(() => document.fonts.ready);
+    await component.getByTestId('chat-composite-message-action-icon').click();
+    await component.getByTestId('chat-composite-message-contextual-menu-edit-action').click();
+    await expect(component).toHaveScreenshot('attachment-in-messagethread-mymessage-multiple-edit.png');
+  });
+
   betaTest(
     'MessageThread should show single attachments that has sent out with custom action',
     async ({ mount, page }) => {
