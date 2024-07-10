@@ -23,7 +23,11 @@ import { attachmentUploadCardsStyles } from './styles/SendBox.styles';
 /* @conditional-compile-remove(file-sharing-acs) */
 import { SendBoxErrorBarError } from './SendBoxErrorBar';
 /* @conditional-compile-remove(file-sharing-acs) */
-import { isAttachmentUploadCompleted, hasIncompleteAttachmentUploads } from './utils/SendBoxUtils';
+import {
+  isAttachmentUploadCompleted,
+  hasIncompleteAttachmentUploads,
+  toAttachmentMetadata
+} from './utils/SendBoxUtils';
 import {
   MAXIMUM_LENGTH_OF_MESSAGE,
   isMessageTooLong,
@@ -268,21 +272,6 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
       sendTextFieldRef.current?.focus();
     }
   };
-
-  /* @conditional-compile-remove(file-sharing-acs) */
-  const toAttachmentMetadata = useCallback((attachmentsWithProgress: AttachmentMetadataInProgress[] | undefined) => {
-    return attachmentsWithProgress
-      ?.filter((attachment) => {
-        return !('error' in attachment) && !attachment.error?.message;
-      })
-      .map((attachment) => {
-        return {
-          id: attachment.id,
-          name: attachment.name,
-          url: attachment.url ?? ''
-        };
-      });
-  }, []);
 
   const setText = (newValue?: string | undefined): void => {
     if (newValue === undefined) {
