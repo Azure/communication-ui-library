@@ -1,13 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
-import {
-  AzureCommunicationTokenCredential,
-  CommunicationUserIdentifier,
-  MicrosoftTeamsUserIdentifier
-} from '@azure/communication-common';
+import { CommunicationUserIdentifier } from '@azure/communication-common';
 import {
   CallAgent,
   CallCommon,
@@ -18,10 +14,8 @@ import {
   TeamsCall,
   TeamsIncomingCallEvent,
   TeamsIncomingCall,
-  CallClient,
   LocalVideoStream
 } from '@azure/communication-calling';
-import { fetchTokenResponse } from './utils/AppUtils';
 import {
   CallAgentProvider,
   CallClientProvider,
@@ -29,31 +23,27 @@ import {
   DEFAULT_COMPONENT_ICONS,
   FluentThemeProvider,
   StatefulCallClient,
-  createStatefulCallClient,
-  fromFlatCommunicationIdentifier,
   IncomingCallNotification,
   DeclarativeCallAgent,
   DeclarativeTeamsCallAgent
 } from '@azure/communication-react';
-import { PrimaryButton, Stack, Text, Image, TextField, initializeIcons, registerIcons } from '@fluentui/react';
+import { Stack, Text, Image, initializeIcons, registerIcons } from '@fluentui/react';
 import { CallingComponents } from './components/CallingComponents';
 import heroSVG from './assets/hero.svg';
 import { imgStyle } from './styles/HomeScreen.styles';
+import { Login } from './views/Login';
 initializeIcons();
 registerIcons({ icons: DEFAULT_COMPONENT_ICONS });
 
 function App() {
   const imageProps = { src: heroSVG.toString() };
   const [userIdentifier, setUserIdentifier] = useState<CommunicationUserIdentifier>();
-  const [tokenCredential, setTokenCredential] = useState<AzureCommunicationTokenCredential>();
+  const [teamsIdentifier, setTeamsIdentifier] = useState<string>();
+
   const [userCredentialFetchError, setUserCredentialFetchError] = useState<boolean>(false);
-  const [displayName, setDisplayName] = useState<string>();
+
   const [isCTEUser, setIsCTEUser] = useState<boolean>();
   const [numberOfIncomingCalls, setNumberOfIncomingCalls] = useState<number>(0);
-  const [teamsIdentityInformation, setTeamsIdentityInformation] = useState<{
-    identifier: string | undefined;
-    token: string | undefined;
-  }>();
 
   const [statefulCallClient, setStatefulCallClient] = useState<StatefulCallClient>();
   const [callAgent, setCallAgent] = useState<DeclarativeCallAgent | DeclarativeTeamsCallAgent>();
@@ -87,14 +77,6 @@ function App() {
       }
     }
   };
-
-  const clientTest = useCallback((client: CallClient) => {
-    console.log('clientTest', client);
-  }, []);
-
-  if (statefulCallClient) {
-    clientTest(statefulCallClient);
-  }
 
   // Examples for Callback functions for utilizing incomingCall reject and accept.
   const onRejectACSCall = (incomingCall: IncomingCall): void => {
@@ -143,59 +125,6 @@ function App() {
     setIncomingTeamsCalls(incomingTeamsCalls.filter((call) => call.id !== incomingCall.id));
   };
 
-  // Get Azure Communications Service token and Voice app identification from the server.
-  useEffect(() => {
-    (async () => {
-      if (isCTEUser === false) {
-        try {
-          const { token, user } = await fetchTokenResponse();
-          console.log('Token fetched: ', token);
-          console.log('User fetched: ', user);
-          setUserIdentifier(user);
-          setTokenCredential(new AzureCommunicationTokenCredential(token));
-        } catch (e) {
-          console.error(e);
-          setUserCredentialFetchError(true);
-        }
-      }
-    })();
-  }, [isCTEUser]);
-
-  useEffect(() => {
-    if (isCTEUser === true && teamsIdentityInformation?.identifier !== undefined) {
-      setStatefulCallClient(
-        createStatefulCallClient({
-          userId: fromFlatCommunicationIdentifier(teamsIdentityInformation.identifier) as MicrosoftTeamsUserIdentifier
-        })
-      );
-      return;
-    }
-    if (!userIdentifier) return;
-    setStatefulCallClient(createStatefulCallClient({ userId: userIdentifier }));
-  }, [userIdentifier, isCTEUser, teamsIdentityInformation]);
-
-  useEffect(() => {
-    if (callAgent === undefined && statefulCallClient && tokenCredential) {
-      const createCallAgent = async (): Promise<void> => {
-        setCallAgent(await statefulCallClient.createCallAgent(tokenCredential, { displayName }));
-      };
-      createCallAgent();
-      console.log('ACS CallAgent created', callAgent);
-    } else if (callAgent === undefined && statefulCallClient && isCTEUser) {
-      const createTeamsCallAgent = async (): Promise<void> => {
-        if (teamsIdentityInformation?.token !== undefined) {
-          setCallAgent(
-            await statefulCallClient.createTeamsCallAgent(
-              new AzureCommunicationTokenCredential(teamsIdentityInformation.token)
-            )
-          );
-        }
-      };
-      createTeamsCallAgent();
-    }
-    console.log('CallAgent created', callAgent);
-  }, [callAgent, statefulCallClient, tokenCredential, displayName]);
-
   useEffect(() => {
     if (!callAgent) return;
     if (callAgent.kind === 'TeamsCallAgent') {
@@ -224,39 +153,19 @@ function App() {
     return <Text>Failed to fetch user credentials</Text>;
   }
 
-  if (isCTEUser === undefined) {
+  if (statefulCallClient === undefined || callAgent === undefined) {
     return (
-      <FluentThemeProvider>
-        <Stack
-          verticalAlign="center"
-          tokens={{ childrenGap: '1rem' }}
-          style={{ width: '30rem', height: '100%', margin: 'auto', paddingTop: '4rem', position: 'relative' }}
-        >
-          <Image alt="Welcome to the ACS Calling sample app" className={imgStyle} {...imageProps} />
-          <Text styles={{ root: { fontWeight: 700, fontSize: 'large' } }}>login</Text>
-          <Text>
-            Enter your Teams information if you want to login with CTE. Leave blank if you want to log in with ACS
-          </Text>
-          <TextField
-            placeholder="Enter your CTE Id"
-            onChange={(_, value) =>
-              setTeamsIdentityInformation({ identifier: value, token: teamsIdentityInformation?.token })
-            }
-          ></TextField>
-          <TextField
-            placeholder="Enter your CTE Token"
-            onChange={(_, value) =>
-              setTeamsIdentityInformation({ identifier: teamsIdentityInformation?.identifier, token: value })
-            }
-          ></TextField>
-          <PrimaryButton onClick={() => setIsCTEUser(!!teamsIdentityInformation)}>
-            {teamsIdentityInformation ? <Text>Login CTE</Text> : <Text>Login ACS</Text>}
-          </PrimaryButton>
-        </Stack>
-      </FluentThemeProvider>
+      <Login
+        onSetIsCTE={setIsCTEUser}
+        onSetStatefulClient={setStatefulCallClient}
+        onSetCallAgent={setCallAgent}
+        onSetUserIdentifier={setUserIdentifier}
+        headerImageProps={imageProps}
+        setTokenCredentialError={setUserCredentialFetchError}
+        onSetTeamsIdentity={setTeamsIdentifier}
+      />
     );
   }
-
   return (
     <FluentThemeProvider>
       <Stack
@@ -267,7 +176,7 @@ function App() {
       >
         <Image alt="Welcome to the ACS Calling sample app" className={imgStyle} {...imageProps} />
         {userIdentifier && <Text>your userId: {userIdentifier.communicationUserId}</Text>}
-        {teamsIdentityInformation && <Text>your teamsId: {teamsIdentityInformation.identifier}</Text>}
+        {teamsIdentifier && <Text>your teamsId: {teamsIdentifier}</Text>}
         {statefulCallClient && (
           <Stack style={{ width: '100%', height: '100%', margin: 'auto', position: 'relative' }}>
             <CallClientProvider callClient={statefulCallClient}>
