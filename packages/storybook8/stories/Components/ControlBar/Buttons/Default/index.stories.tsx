@@ -33,7 +33,8 @@ const meta: Meta = {
     onRenderOnIcon: hiddenControl,
     onRenderOffIcon: hiddenControl,
     tooltipId: hiddenControl,
-    styles: hiddenControl
+    styles: hiddenControl,
+    disableTooltip: hiddenControl
   },
   args: {
     showLabel: false,
