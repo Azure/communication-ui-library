@@ -32,7 +32,7 @@ export const DevicesButtonExampleDocsOnly = {
 };
 
 const meta: Meta = {
-  title: 'Components/Control Bar',
+  title: 'Components/ControlBar/Control Bar',
   component: ControlBarComponent,
   argTypes: {
     layout: controlsToAdd.controlBarLayout,
@@ -49,19 +49,19 @@ const meta: Meta = {
   args: {
     layout: 'floatingBottom',
     checked: false,
-    showLabel: false
-    // Cameras: [
-    //   { id: 'camera1', name: 'Full HD Webcam' },
-    //   { id: 'camera2', name: 'Macbook Pro Webcam' }
-    // ],
-    // Microphones: [
-    //   { id: 'mic1', name: 'Realtek HD Audio' },
-    //   { id: 'mic2', name: 'Macbook Pro Mic' }
-    // ],
-    // Speakers: [
-    //   { id: 'speaker1', name: 'Realtek HD Audio' },
-    //   { id: 'speaker2', name: 'Macbook Pro Speaker' }
-    // ]
+    showLabel: false,
+    cameras: [
+      { id: 'camera1', name: 'Full HD Webcam' },
+      { id: 'camera2', name: 'Macbook Pro Webcam' }
+    ],
+    microphones: [
+      { id: 'mic1', name: 'Realtek HD Audio' },
+      { id: 'mic2', name: 'Macbook Pro Mic' }
+    ],
+    speakers: [
+      { id: 'speaker1', name: 'Realtek HD Audio' },
+      { id: 'speaker2', name: 'Macbook Pro Speaker' }
+    ]
   }
 };
 export default meta;
