@@ -22,7 +22,6 @@ import { imgStyle } from '../styles/HomeScreen.styles';
 export interface LoginProps {
   onSetUserIdentifier: (user: CommunicationUserIdentifier) => void;
   onSetStatefulClient: (client: StatefulCallClient) => void;
-  onSetIsCTE: (isCTE: boolean) => void;
   onSetCallAgent: (callAgent: DeclarativeCallAgent | DeclarativeTeamsCallAgent) => void;
   onSetTeamsIdentity: (identity: string) => void;
   setTokenCredentialError: (error: boolean) => void;
@@ -31,15 +30,8 @@ export interface LoginProps {
   };
 }
 
-export const Login = (props: LoginProps): JSX.Element => {
-  const {
-    onSetCallAgent,
-    onSetUserIdentifier,
-    onSetIsCTE,
-    onSetStatefulClient,
-    headerImageProps,
-    setTokenCredentialError
-  } = props;
+export const LoginScreen = (props: LoginProps): JSX.Element => {
+  const { onSetCallAgent, onSetUserIdentifier, onSetStatefulClient, headerImageProps, setTokenCredentialError } = props;
   // Get Azure Communications Service token and Voice app identification from the server.
 
   const [userIdentifier, setUserIdentifier] = useState<CommunicationUserIdentifier>();
@@ -116,7 +108,7 @@ export const Login = (props: LoginProps): JSX.Element => {
         style={{ width: '30rem', height: '100%', margin: 'auto', paddingTop: '4rem', position: 'relative' }}
       >
         <Image alt="Welcome to the ACS Calling sample app" className={imgStyle} {...headerImageProps} />
-        <Text styles={{ root: { fontWeight: 700, fontSize: 'large' } }}>login</Text>
+        <Text styles={{ root: { fontWeight: 700, fontSize: 'large' } }}>login CTE</Text>
         <Text>
           Enter your Teams information if you want to login with CTE. Leave blank if you want to log in with ACS
         </Text>
@@ -135,11 +127,11 @@ export const Login = (props: LoginProps): JSX.Element => {
         <PrimaryButton
           onClick={() => {
             setIsCTEUser(!!teamsIdentityInformation);
-            onSetIsCTE(!!teamsIdentityInformation);
           }}
         >
           Login CTE
         </PrimaryButton>
+        <Text styles={{ root: { fontWeight: 700, fontSize: 'large' } }}>login ACS</Text>
         <TextField
           placeholder="Enter your display name"
           onChange={(_, value) => {
@@ -149,7 +141,6 @@ export const Login = (props: LoginProps): JSX.Element => {
         <PrimaryButton
           onClick={() => {
             setIsCTEUser(!!teamsIdentityInformation);
-            onSetIsCTE(!!teamsIdentityInformation);
           }}
         >
           Login ACS

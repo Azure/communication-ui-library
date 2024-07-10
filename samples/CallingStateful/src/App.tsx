@@ -10,28 +10,24 @@ import {
   IncomingCall,
   IncomingCallEvent,
   TeamsCallAgent,
-  Call,
-  TeamsCall,
   TeamsIncomingCallEvent,
   TeamsIncomingCall,
-  LocalVideoStream
+  LocalVideoStream,
+  IncomingCallCommon
 } from '@azure/communication-calling';
 import {
-  CallAgentProvider,
-  CallClientProvider,
-  CallProvider,
   DEFAULT_COMPONENT_ICONS,
   FluentThemeProvider,
   StatefulCallClient,
   IncomingCallNotification,
   DeclarativeCallAgent,
-  DeclarativeTeamsCallAgent
+  DeclarativeTeamsCallAgent,
+  CallClientState
 } from '@azure/communication-react';
-import { Stack, Text, Image, initializeIcons, registerIcons } from '@fluentui/react';
-import { CallingComponents } from './components/CallingComponents';
+import { Stack, Text, initializeIcons, registerIcons } from '@fluentui/react';
 import heroSVG from './assets/hero.svg';
-import { imgStyle } from './styles/HomeScreen.styles';
-import { Login } from './views/Login';
+import { LoginScreen } from './views/Login';
+import { CallScreen } from './views/CallScreen';
 initializeIcons();
 registerIcons({ icons: DEFAULT_COMPONENT_ICONS });
 
@@ -42,26 +38,30 @@ function App() {
 
   const [userCredentialFetchError, setUserCredentialFetchError] = useState<boolean>(false);
 
-  const [isCTEUser, setIsCTEUser] = useState<boolean>();
-  const [numberOfIncomingCalls, setNumberOfIncomingCalls] = useState<number>(0);
-
   const [statefulCallClient, setStatefulCallClient] = useState<StatefulCallClient>();
   const [callAgent, setCallAgent] = useState<DeclarativeCallAgent | DeclarativeTeamsCallAgent>();
   const [call, setCall] = useState<CallCommon>();
-  const [acsIncomingCalls, setAcsIncomingCalls] = useState<readonly IncomingCall[]>([]);
-  const [incomingTeamsCalls, setIncomingTeamsCalls] = useState<readonly TeamsIncomingCall[]>([]);
+  const [incomingCalls, setIncomingCalls] = useState<readonly IncomingCall[] | readonly TeamsIncomingCall[]>([]);
+
+  /**
+   * Helper function to clear the old incoming Calls in the app that are no longer valid.
+   * @param statefulClient
+   */
+  const filterEndedIncomingCalls = (incomingCall: IncomingCallCommon) => {
+    setIncomingCalls(incomingCalls.filter((call) => call.id !== incomingCall.id));
+  };
 
   const incomingAcsCallListener: IncomingCallEvent = ({ incomingCall }): void => {
     console.log('Incoming call received: ', incomingCall);
     if (callAgent) {
-      setAcsIncomingCalls(callAgent.incomingCalls);
+      setIncomingCalls(callAgent.incomingCalls);
     }
   };
 
   const teamsIncomingCallListener: TeamsIncomingCallEvent = ({ incomingCall }): void => {
     console.log('Incoming call received: ', incomingCall);
     if (callAgent) {
-      setIncomingTeamsCalls(callAgent.incomingCalls);
+      setIncomingCalls(callAgent.incomingCalls);
     }
   };
 
@@ -78,52 +78,48 @@ function App() {
     }
   };
 
-  // Examples for Callback functions for utilizing incomingCall reject and accept.
-  const onRejectACSCall = (incomingCall: IncomingCall): void => {
-    if (incomingCall) {
-      incomingCall.reject();
+  /**
+   * We need to check the call client to make sure we are removing any of the notifications that
+   * are no longer valid.
+   */
+  const statefulCallClientStateListener = (state: CallClientState): void => {
+    if (statefulCallClient) {
+      const endedIncomingCalls = Object.keys(state.incomingCallsEnded);
+      setIncomingCalls(incomingCalls.filter((call) => !endedIncomingCalls.includes(call.id)));
     }
-    setAcsIncomingCalls(acsIncomingCalls.filter((call) => call.id !== incomingCall.id));
   };
 
-  const onAcceptACSCall = async (incomingCall: IncomingCall, useVideo?: boolean): Promise<void> => {
+  // Examples for Callback functions for utilizing incomingCall reject and accept.
+  const onRejectCall = (incomingCall: IncomingCall | TeamsIncomingCall): void => {
+    if (incomingCall && callAgent) {
+      incomingCall.reject();
+      filterEndedIncomingCalls(incomingCall);
+    }
+  };
+
+  const onAcceptCall = async (incomingCall: IncomingCall | TeamsIncomingCall, useVideo?: boolean): Promise<void> => {
     const cameras = statefulCallClient?.getState().deviceManager.cameras;
+    console.log(cameras);
     let localVideoStream: LocalVideoStream | undefined;
     if (cameras && useVideo) {
       localVideoStream = new LocalVideoStream(cameras[0]);
     }
-    if (incomingCall) {
+    if (incomingCall && callAgent) {
       await incomingCall.accept(
         localVideoStream ? { videoOptions: { localVideoStreams: [localVideoStream] } } : undefined
       );
+      filterEndedIncomingCalls(incomingCall);
     }
-    setAcsIncomingCalls(acsIncomingCalls.filter((call) => call.id !== incomingCall.id));
   };
 
   useEffect(() => {
-    setNumberOfIncomingCalls(isCTEUser ? incomingTeamsCalls.length : acsIncomingCalls.length);
-  }, [incomingTeamsCalls, acsIncomingCalls]);
-
-  const onRejectTeamsCall = (incomingCall: TeamsIncomingCall): void => {
-    if (incomingCall) {
-      incomingCall.reject();
+    if (statefulCallClient) {
+      statefulCallClient.onStateChange(statefulCallClientStateListener);
     }
-    setIncomingTeamsCalls(incomingTeamsCalls.filter((call) => call.id !== incomingCall.id));
-  };
-
-  const onAcceptTeamsCall = async (incomingCall: TeamsIncomingCall, useVideo?: boolean): Promise<void> => {
-    const cameras = statefulCallClient?.getState().deviceManager.cameras;
-    let localVideoStream: LocalVideoStream | undefined;
-    if (cameras && useVideo) {
-      localVideoStream = new LocalVideoStream(cameras[0]);
-    }
-    if (incomingCall) {
-      await incomingCall.accept(
-        localVideoStream ? { videoOptions: { localVideoStreams: [localVideoStream] } } : undefined
-      );
-    }
-    setIncomingTeamsCalls(incomingTeamsCalls.filter((call) => call.id !== incomingCall.id));
-  };
+    return () => {
+      statefulCallClient?.offStateChange(statefulCallClientStateListener);
+    };
+  }, [statefulCallClient]);
 
   useEffect(() => {
     if (!callAgent) return;
@@ -155,8 +151,7 @@ function App() {
 
   if (statefulCallClient === undefined || callAgent === undefined) {
     return (
-      <Login
-        onSetIsCTE={setIsCTEUser}
+      <LoginScreen
         onSetStatefulClient={setStatefulCallClient}
         onSetCallAgent={setCallAgent}
         onSetUserIdentifier={setUserIdentifier}
@@ -166,61 +161,46 @@ function App() {
       />
     );
   }
+
   return (
     <FluentThemeProvider>
       <Stack
         verticalAlign="center"
         horizontalAlign="center"
         tokens={{ childrenGap: '1rem' }}
-        style={{ width: '30rem', height: '100%', margin: 'auto', paddingTop: '4rem', position: 'relative' }}
+        style={{ width: '100%', height: '40rem', margin: 'auto', paddingTop: '1rem', position: 'relative' }}
       >
-        <Image alt="Welcome to the ACS Calling sample app" className={imgStyle} {...imageProps} />
         {userIdentifier && <Text>your userId: {userIdentifier.communicationUserId}</Text>}
         {teamsIdentifier && <Text>your teamsId: {teamsIdentifier}</Text>}
-        {statefulCallClient && (
-          <Stack style={{ width: '100%', height: '100%', margin: 'auto', position: 'relative' }}>
-            <CallClientProvider callClient={statefulCallClient}>
-              {callAgent && (
-                <CallAgentProvider callAgent={callAgent}>
-                  {call && (
-                    <CallProvider call={call.kind === 'Call' ? (call as Call) : (call as TeamsCall)}>
-                      <CallingComponents></CallingComponents>
-                    </CallProvider>
-                  )}
-                </CallAgentProvider>
-              )}
-            </CallClientProvider>
-          </Stack>
+        {statefulCallClient && callAgent && call && (
+          <CallScreen statefulCallClient={statefulCallClient} callAgent={callAgent} call={call} onSetCall={setCall} />
         )}
-        {acsIncomingCalls.length > 0 && (
-          <Stack>
-            <Text variant="large">Incoming calls {numberOfIncomingCalls}</Text>
-            {acsIncomingCalls.map((incomingCall) => (
-              <IncomingCallNotification
-                callerName={incomingCall.callerInfo.displayName}
-                onAcceptWithAudio={() => onAcceptACSCall(incomingCall)}
-                onAcceptWithVideo={() => onAcceptACSCall(incomingCall, true)}
-                onReject={() => onRejectACSCall(incomingCall)}
-              ></IncomingCallNotification>
-            ))}
-          </Stack>
-        )}
-        {incomingTeamsCalls.length > 0 && (
-          <Stack>
-            <Text variant="large">Incoming Teams calls {numberOfIncomingCalls}</Text>
-            {incomingTeamsCalls.map((incomingCall) => (
-              <IncomingCallNotification
-                callerName={incomingCall.callerInfo.displayName}
-                onAcceptWithAudio={() => onAcceptTeamsCall(incomingCall)}
-                onAcceptWithVideo={() => onAcceptTeamsCall(incomingCall, true)}
-                onReject={() => onRejectTeamsCall(incomingCall)}
-              ></IncomingCallNotification>
-            ))}
-          </Stack>
-        )}
+        <IncomingCallManager incomingCalls={incomingCalls} onAcceptCall={onAcceptCall} onRejectCall={onRejectCall} />
       </Stack>
     </FluentThemeProvider>
   );
 }
 
 export default App;
+
+interface IncomingCallManagerProps {
+  incomingCalls: readonly IncomingCall[] | readonly TeamsIncomingCall[];
+  onAcceptCall: (incomingCall: IncomingCall | TeamsIncomingCall, useVideo?: boolean) => void;
+  onRejectCall: (incomingCall: IncomingCall | TeamsIncomingCall) => void;
+}
+
+const IncomingCallManager = (props: IncomingCallManagerProps): JSX.Element => {
+  const { incomingCalls, onAcceptCall, onRejectCall } = props;
+  return (
+    <Stack style={{ top: 0, position: 'absolute' }}>
+      {incomingCalls.map((incomingCall) => (
+        <IncomingCallNotification
+          callerName={incomingCall.callerInfo.displayName}
+          onAcceptWithAudio={() => onAcceptCall(incomingCall)}
+          onAcceptWithVideo={() => onAcceptCall(incomingCall, true)}
+          onReject={() => onRejectCall(incomingCall)}
+        ></IncomingCallNotification>
+      ))}
+    </Stack>
+  );
+};
