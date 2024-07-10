@@ -13,7 +13,7 @@ import { InputBoxButton } from '../InputBoxButton';
 import { RichTextSendBoxErrors, RichTextSendBoxErrorsProps } from './RichTextSendBoxErrors';
 import { isMessageTooLong, isSendBoxButtonAriaDisabled, sanitizeText } from '../utils/SendBoxUtils';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
-import { insertAttachmentsAndImages } from '../utils/SendBoxUtils';
+import { insertImagesToContentString } from '../utils/SendBoxUtils';
 import { RichTextEditorComponentRef } from './RichTextEditor';
 import { useTheme } from '../../theming';
 import { richTextActionButtonsStyle, sendBoxRichTextEditorStyle } from '../styles/RichTextEditor.styles';
@@ -22,7 +22,11 @@ import { _AttachmentUploadCards } from '../Attachment/AttachmentUploadCards';
 /* @conditional-compile-remove(file-sharing-acs) */
 import { AttachmentMetadataInProgress, MessageOptions } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(file-sharing-acs) */
-import { isAttachmentUploadCompleted, hasIncompleteAttachmentUploads } from '../utils/SendBoxUtils';
+import {
+  isAttachmentUploadCompleted,
+  hasIncompleteAttachmentUploads,
+  toAttachmentMetadata
+} from '../utils/SendBoxUtils';
 /* @conditional-compile-remove(file-sharing-acs) */
 import { SendBoxErrorBarError } from '../SendBoxErrorBar';
 /* @conditional-compile-remove(file-sharing-acs) */
@@ -321,24 +325,15 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
         imageUploadsInProgress
       )
     ) {
-      /* @conditional-compile-remove(file-sharing-acs) */
       /* @conditional-compile-remove(rich-text-editor-image-upload) */
-      const { content, attachmentArray } = insertAttachmentsAndImages(
-        contentValue,
-        /* @conditional-compile-remove(file-sharing-acs) */ attachments,
-        /* @conditional-compile-remove(rich-text-editor-image-upload) */ imageUploadsInProgress
-      );
-
-      /* @conditional-compile-remove(rich-text-editor-image-upload) */
-      message = content;
+      message = insertImagesToContentString(contentValue, imageUploadsInProgress);
 
       onSendMessage(
         message,
         /* @conditional-compile-remove(file-sharing-acs) */ /* @conditional-compile-remove(rich-text-editor-composite-support) */
         {
           /* @conditional-compile-remove(file-sharing-acs) */
-          /* @conditional-compile-remove(rich-text-editor-image-upload) */
-          attachments: attachmentArray,
+          attachments: toAttachmentMetadata(attachments),
           /* @conditional-compile-remove(rich-text-editor-composite-support) */
           type: 'html'
         }
