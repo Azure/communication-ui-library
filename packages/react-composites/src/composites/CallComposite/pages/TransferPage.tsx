@@ -117,6 +117,10 @@ export const TransferPage = (
         mobileChatTabHeader={props.mobileChatTabHeader}
         latestErrors={props.latestErrors}
         onDismissError={props.onDismissError}
+        /* @conditional-compile-remove(notifications) */
+        onDismissNotification={props.onDismissNotification}
+        /* @conditional-compile-remove(notifications) */
+        latestNotifications={props.latestNotifications}
       />
     </Stack>
   );

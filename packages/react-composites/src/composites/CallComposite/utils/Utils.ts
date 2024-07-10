@@ -18,6 +18,8 @@ import { VideoDeviceInfo } from '@azure/communication-calling';
 import { VideoEffectProcessor } from '@azure/communication-calling';
 import { CompositeLocale } from '../../localization';
 import { CallCompositeIcons } from '../../common/icons';
+/* @conditional-compile-remove(notifications) */
+import { ActiveNotification } from '@internal/react-components';
 
 const ACCESS_DENIED_TEAMS_MEETING_SUB_CODE = 5854;
 const REMOTE_PSTN_USER_HUNG_UP = 560000;
@@ -589,3 +591,165 @@ export const getLocatorOrTargetCallees = (
 ): locatorOrTargetCallees is StartCallIdentifier[] => {
   return !!Array.isArray(locatorOrTargetCallees);
 };
+
+/* @conditional-compile-remove(notifications) */
+/**
+ * @private
+ */
+export type ComplianceState = 'on' | 'off' | 'stopped';
+
+/* @conditional-compile-remove(notifications) */
+/**
+ * Return different conditions based on the current and previous state of recording and transcribing
+ *
+ * @param callRecordState - The current call record state: on, off, stopped
+ * @param callTranscribeState - The current call transcribe state: on, off, stopped
+ *
+ * @remarks - The stopped state means: previously on but currently off
+ *
+ * @private
+ */
+export const computeVariant = (
+  callRecordState: ComplianceState,
+  callTranscribeState: ComplianceState
+): ComplianceNotificationVariant => {
+  if (callRecordState === 'on' && callTranscribeState === 'on') {
+    return 'recordingAndTranscriptionStarted';
+  } else if (callRecordState === 'on' && callTranscribeState === 'off') {
+    return 'recordingStarted';
+  } else if (callRecordState === 'off' && callTranscribeState === 'on') {
+    return 'transcriptionStarted';
+  } else if (callRecordState === 'on' && callTranscribeState === 'stopped') {
+    return 'transcriptionStoppedStillRecording';
+  } else if (callRecordState === 'stopped' && callTranscribeState === 'on') {
+    return 'recordingStoppedStillTranscribing';
+  } else if (callRecordState === 'off' && callTranscribeState === 'stopped') {
+    return 'transcriptionStopped';
+  } else if (callRecordState === 'stopped' && callTranscribeState === 'off') {
+    return 'recordingStopped';
+  } else if (callRecordState === 'stopped' && callTranscribeState === 'stopped') {
+    return 'recordingAndTranscriptionStopped';
+  } else {
+    return 'noState';
+  }
+};
+
+/* @conditional-compile-remove(notifications) */
+/**
+ * @private
+ */
+export type ComplianceNotificationVariant =
+  | 'noState'
+  | 'recordingStarted'
+  | 'transcriptionStarted'
+  | 'recordingStopped'
+  | 'transcriptionStopped'
+  | 'recordingAndTranscriptionStarted'
+  | 'recordingAndTranscriptionStopped'
+  | 'recordingStoppedStillTranscribing'
+  | 'transcriptionStoppedStillRecording';
+
+/* @conditional-compile-remove(notifications) */
+/**
+ * @private
+ */
+export type CachedComplianceNotificationProps = {
+  latestBooleanState: {
+    callTranscribeState?: boolean;
+    callRecordState?: boolean;
+  };
+  latestStringState: {
+    callTranscribeState: ComplianceState;
+    callRecordState: ComplianceState;
+  };
+  // Timestamp for the last time cached state was updated.
+  // Represented as milliseconds since epoch (i.e., the value returned by Date.now()).
+  lastUpdated: number;
+};
+
+/* @conditional-compile-remove(notifications) */
+/**
+ * @private
+ */
+export function determineStates(previous: ComplianceState, current: boolean | undefined): ComplianceState {
+  // if current state is on, then return on
+  if (current) {
+    return 'on';
+  }
+  // if current state is off
+  else {
+    // if previous state is on and current state is off, return stopped (on -> off)
+    if (previous === 'on') {
+      return 'stopped';
+    }
+    // otherwise remain previous state unchanged
+    else {
+      return previous;
+    }
+  }
+}
+/* @conditional-compile-remove(notifications) */
+/**
+ * Compute compliance notification based on latest compliance state and cached props.
+ * @private
+ */
+export function computeComplianceNotification(
+  complianceProps: {
+    callTranscribeState: boolean;
+    callRecordState: boolean;
+  },
+  cachedProps: React.MutableRefObject<CachedComplianceNotificationProps>
+): ActiveNotification | undefined {
+  // Only update cached props and variant if there is _some_ change in the latest props.
+  // This ensures that state machine is only updated if there is an actual change in the props.
+  const shouldUpdateCached =
+    complianceProps.callRecordState !== cachedProps.current.latestBooleanState.callRecordState ||
+    complianceProps.callTranscribeState !== cachedProps.current.latestBooleanState.callTranscribeState;
+
+  // The following three operations must be performed in this exact order:
+
+  // [1]: Update cached state to transition the state machine.
+  if (shouldUpdateCached) {
+    cachedProps.current = {
+      latestBooleanState: complianceProps,
+      latestStringState: {
+        callRecordState: determineStates(
+          cachedProps.current.latestStringState.callRecordState,
+          complianceProps.callRecordState
+        ),
+        callTranscribeState: determineStates(
+          cachedProps.current.latestStringState.callTranscribeState,
+          complianceProps.callTranscribeState
+        )
+      },
+      lastUpdated: Date.now()
+    };
+  }
+
+  // [2]: Compute the variant, using the transitioned state machine.
+  const variant = computeVariant(
+    cachedProps.current.latestStringState.callRecordState,
+    cachedProps.current.latestStringState.callTranscribeState
+  );
+
+  // [3]: Transition the state machine again to deal with some end-states.
+  if (
+    !shouldUpdateCached &&
+    cachedProps.current.latestStringState.callRecordState === 'stopped' &&
+    cachedProps.current.latestStringState.callTranscribeState === 'stopped'
+  ) {
+    // When both states are stopped, after displaying message "RECORDING_AND_TRANSCRIPTION_STOPPED", change both states to off (going back to the default state).
+    cachedProps.current.latestStringState.callRecordState = 'off';
+    cachedProps.current.latestStringState.callTranscribeState = 'off';
+  }
+
+  // If the variant is not 'noState', then show the notification.
+  if (variant !== 'noState') {
+    return {
+      type: variant,
+      timestamp: new Date(Date.now())
+    };
+  } else {
+    return undefined;
+  }
+}

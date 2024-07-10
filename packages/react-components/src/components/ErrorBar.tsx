@@ -124,6 +124,11 @@ export interface ErrorBarStrings {
    */
   callNetworkQualityLow: string;
 
+  /* @conditional-compile-remove(teams-meeting-conference) */
+  /**
+   * Message shown when poor network quality is detected during a call.
+   */
+  teamsMeetingCallNetworkQualityLow: string;
   /**
    * Message shown on failure to detect audio output devices.
    */
@@ -318,8 +323,8 @@ export const ErrorBar = (props: ErrorBarProps): JSX.Element => {
               lineHeight: 'inherit'
             },
             dismissal: {
-              height: 0,
-              paddingTop: '0.8rem'
+              height: '2rem',
+              paddingBottom: '0.8rem'
             }
           }}
           key={error.type}

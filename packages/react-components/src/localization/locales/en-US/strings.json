@@ -220,7 +220,8 @@
     "richTextDeleteColumnMenu": "Delete column",
     "richTextDeleteRowMenu": "Delete row",
     "richTextDeleteTableMenu": "Delete table",
-    "richTextToolbarMoreButtonAriaLabel": "More options"
+    "richTextToolbarMoreButtonAriaLabel": "More options",
+    "attachmentUploadsPendingError": "Uploading... Please wait."
   },
   "errorBar": {
     "unableToReachChatService": "You are offline",
@@ -237,6 +238,7 @@
     "startScreenShareGeneric": "There was an issue starting screen share.",
     "stopScreenShareGeneric": "Failed to stop screen sharing",
     "callNetworkQualityLow": "Network quality is low.",
+    "teamsMeetingCallNetworkQualityLow": "Network quality is low.",
     "callNoSpeakerFound": "No speakers or headphones found. Connect an audio device to hear the call.",
     "callNoMicrophoneFound": "No microphones found. Connect an audio input device.",
     "callMicrophoneAccessDenied": "Unable to access microphone. Click the lock in the address bar to grant permission to this webpage.",
@@ -297,6 +299,12 @@
     "callNetworkQualityLow": {
       "title": "Network quality is low.",
       "closeButtonAriaLabel": "Close"
+    },
+    "teamsMeetingCallNetworkQualityLow": {
+      "title": "Network quality is low.",
+      "closeButtonAriaLabel": "Close",
+      "message": "Join this call from your phone for better sound. You can continue viewing the meeting on this device.",
+      "primaryButtonLabel": "Join by Phone"
     },
     "callNoSpeakerFound": {
       "title": "No speakers or headphones found",
@@ -393,6 +401,46 @@
     },
     "mutedByRemoteParticipant": {
       "title": "You were muted by another participant.",
+      "closeButtonAriaLabel": "Close"
+    },
+    "recordingStarted": {
+      "title": "Recording has started.",
+      "message": "By joining, you are giving consent for this meeting to be transcribed.",
+      "closeButtonAriaLabel": "Close"
+    },
+    "transcriptionStarted": {
+      "title": "Transcription has started.",
+      "message": "By joining, you are giving consent for this meeting to be transcribed.",
+      "closeButtonAriaLabel": "Close"
+    },
+    "recordingStopped": {
+      "title": "Recording is being saved.",
+      "message": "Recording has stopped.",
+      "closeButtonAriaLabel": "Close"
+    },
+    "transcriptionStopped": {
+      "title": "Transcription is being saved.",
+      "message": "Transcription has stopped.",
+      "closeButtonAriaLabel": "Close"
+    },
+    "recordingAndTranscriptionStarted": {
+      "title": "Recording and transcription have started.",
+      "message": "By joining, you are giving consent for this meeting to be transcribed.",
+      "closeButtonAriaLabel": "Close"
+    },
+    "recordingAndTranscriptionStopped": {
+      "title": "Recording and transcription are being saved.",
+      "message": "Recording and transcription have stopped.",
+      "closeButtonAriaLabel": "Close"
+    },
+    "recordingStoppedStillTranscribing": {
+      "title": "Recording has stopped.",
+      "message": "You are now only transcribing this meeting.",
+      "closeButtonAriaLabel": "Close"
+    },
+    "transcriptionStoppedStillRecording": {
+      "title": "Transcription has stopped.",
+      "message": "You are now only recording this meeting.",
       "closeButtonAriaLabel": "Close"
     }
   },
@@ -565,5 +613,12 @@
     "meetingConferencePhoneInfoModalTollGeoData": "{country}, {city}",
     "meetingConferencePhoneInfoModalTollFree": "(Toll-free)",
     "meetingConferencePhoneInfoModalToll": "(Toll)"
+  },
+  "IncomingCallNotification": {
+    "incomingCallNotificationPlaceholderId": "Unknown User",
+    "incomingCallNotificationPlaceholderAlert": "Incoming call",
+    "incomingCallNoticicationAcceptWithAudioAriaLabel": "Accept with audio",
+    "incomingCallNoticicationAcceptWithVideoAriaLabel": "Accept with video",
+    "incomingCallNoticicationRejectAriaLabel": "Reject"
   }
 }
