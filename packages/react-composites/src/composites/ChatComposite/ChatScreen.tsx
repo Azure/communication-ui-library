@@ -66,6 +66,8 @@ import { loadRichTextSendBox } from '../common/SendBoxPicker';
 import { useImageUpload } from './ImageUpload/useImageUpload';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { removeImageTags } from './ImageUpload/ImageUploadUtils';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+import type { ChatAdapterState } from './adapter/ChatAdapter';
 
 /**
  * @private
@@ -130,6 +132,20 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   const [inlineImageUploads, handleInlineImageUploadAction, onUploadInlineImage, onCancelInlineImageUploadHandler] =
     useImageUpload();
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  const [textOnlyChat, setTextOnlyChat] = useState(false);
+
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  useEffect(() => {
+    const updateChatState = (newState: ChatAdapterState): void => {
+      setTextOnlyChat(newState.thread.properties?.messagingPolicy?.textOnlyChat === true);
+    };
+    updateChatState(adapter.getState());
+    adapter.onStateChange(updateChatState);
+    return () => {
+      adapter.offStateChange(updateChatState);
+    };
+  }, [adapter]);
 
   useEffect(() => {
     // Initial data should be always fetched by the composite(or external caller) instead of the adapter
@@ -427,8 +443,12 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   );
 
   /* @conditional-compile-remove(file-sharing-acs) */
-  const AttachmentButton = useCallback(() => {
-    if (!attachmentOptions?.uploadOptions?.handleAttachmentSelection) {
+  const attachmentButton = useMemo(() => {
+    if (
+      !attachmentOptions?.uploadOptions?.handleAttachmentSelection ||
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */
+      textOnlyChat
+    ) {
       return null;
     }
     return (
@@ -443,7 +463,9 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     attachmentOptions?.uploadOptions?.handleAttachmentSelection,
     attachmentOptions?.uploadOptions?.supportedMediaTypes,
     attachmentOptions?.uploadOptions?.disableMultipleUploads,
-    attachmentUploadButtonOnChange
+    attachmentUploadButtonOnChange,
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    textOnlyChat
   ]);
 
   /* @conditional-compile-remove(file-sharing-acs) */
@@ -497,7 +519,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const onPasteHandler = useCallback(
     (event: { content: DocumentFragment }) => {
       const threadCreatedBy = adapter.getState().thread?.properties?.createdBy;
-      if (threadCreatedBy?.kind !== 'microsoftTeamsUser') {
+      if (threadCreatedBy?.kind !== 'microsoftTeamsUser' || textOnlyChat) {
         removeImageTags(event);
       }
     },
@@ -584,9 +606,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             <Stack horizontal={formFactor === 'mobile'}>
               {formFactor === 'mobile' && (
                 /* @conditional-compile-remove(file-sharing-acs) */
-                <Stack verticalAlign="center">
-                  <AttachmentButton />
-                </Stack>
+                <Stack verticalAlign="center">{attachmentButton}</Stack>
               )}
               <Stack grow>
                 <SendBoxPicker
@@ -603,10 +623,9 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
                   onSendMessage={onSendMessageHandler}
                 />
               </Stack>
-              {formFactor !== 'mobile' && (
+              {formFactor !== 'mobile' &&
                 /* @conditional-compile-remove(file-sharing-acs) */
-                <AttachmentButton />
-              )}
+                attachmentButton}
             </Stack>
           </Stack>
         </Stack>
