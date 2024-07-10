@@ -49,6 +49,8 @@ import { ReactionButtonStrings } from '../components';
 import { RichTextSendBoxStrings } from '../components/RichTextEditor/RichTextSendBox';
 /* @conditional-compile-remove(teams-meeting-conference) */
 import { MeetingConferencePhoneInfoModalStrings } from '../components/MeetingConferencePhoneInfo';
+/* @conditional-compile-remove(one-to-n-calling) */
+import { IncomingCallNotificationStrings } from '../components/IncomingCallNotification';
 
 /**
  * Locale information for all components exported from this library.
@@ -184,6 +186,8 @@ export interface ComponentStrings {
   /* @conditional-compile-remove(teams-meeting-conference) */
   /** Strings for the MeetingConferencePhoneInfoModal */
   MeetingConferencePhoneInfo: MeetingConferencePhoneInfoModalStrings;
+  /* @conditional-compile-remove(one-to-n-calling) */
+  IncomingCallNotification: IncomingCallNotificationStrings;
 }
 
 /**
