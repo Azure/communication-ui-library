@@ -165,6 +165,11 @@ export { RaiseHandButton } from '../../react-components/src';
 
 export { Dialpad } from '../../react-components/src';
 
+/* @conditional-compile-remove(one-to-n-calling) */
+export { IncomingCallNotification } from '../../react-components/src';
+/* @conditional-compile-remove(one-to-n-calling) */
+export type { IncomingCallNotificationProps, IncomingCallNotificationStrings } from '../../react-components/src';
+
 /* @conditional-compile-remove(call-readiness) */
 export {
   CameraAndMicrophoneSitePermissions,
@@ -382,6 +387,8 @@ export type {
   ChatThreadProperties,
   ChatErrorTarget
 } from '../../chat-stateful-client/src';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+export type { MessagingPolicy } from '../../chat-stateful-client/src';
 
 export type { ResourceFetchResult } from '../../chat-stateful-client/src';
 export * from '../../react-composites/src/index-public';

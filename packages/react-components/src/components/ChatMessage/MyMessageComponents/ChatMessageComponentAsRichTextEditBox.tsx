@@ -5,6 +5,8 @@ import { mergeStyles, Stack } from '@fluentui/react';
 import { ChatMyMessage } from '@fluentui-contrib/react-chat';
 import { mergeClasses } from '@fluentui/react-components';
 import { _formatString } from '@internal/acs-ui-common';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+import { AttachmentMetadataInProgress } from '@internal/acs-ui-common';
 import { useTheme } from '../../../theming';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 /* @conditional-compile-remove(file-sharing-acs) */
@@ -19,6 +21,13 @@ import { _AttachmentUploadCards } from '../../Attachment/AttachmentUploadCards';
 import { AttachmentMetadata } from '@internal/acs-ui-common';
 import { useChatMessageRichTextEditContainerStyles } from '../../styles/ChatMessageComponent.styles';
 import { MAXIMUM_LENGTH_OF_MESSAGE } from '../../utils/SendBoxUtils';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+import {
+  cancelInlineImageUpload,
+  hasIncompleteAttachmentUploads,
+  insertImagesToContentString,
+  isAttachmentUploadCompleted
+} from '../../utils/SendBoxUtils';
 import {
   getMessageState,
   onRenderCancelIcon,
@@ -39,6 +48,8 @@ import { useLocale } from '../../../localization';
 import { FluentV9ThemeProvider } from '../../../theming/FluentV9ThemeProvider';
 /* @conditional-compile-remove(file-sharing-acs) */
 import { attachmentUploadCardsStyles } from '../../styles/SendBox.styles';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+import { SendBoxErrorBarError } from '../../SendBoxErrorBar';
 
 /** @private */
 export type ChatMessageComponentAsRichTextEditBoxProps = {
@@ -52,6 +63,12 @@ export type ChatMessageComponentAsRichTextEditBoxProps = {
   strings: MessageThreadStrings;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   onPaste?: (event: { content: DocumentFragment }) => void;
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  onCancelInlineImageUpload?: (imageId: string) => void;
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  onUploadInlineImage?: (imageUrl: string, imageFileName: string) => void;
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  imageUploadsInProgress?: AttachmentMetadataInProgress[];
 };
 
 /**
@@ -66,7 +83,13 @@ export const ChatMessageComponentAsRichTextEditBox = (
     strings,
     message,
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    onPaste
+    onPaste,
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    onUploadInlineImage,
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    imageUploadsInProgress,
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    onCancelInlineImageUpload
   } = props;
 
   const [textValue, setTextValue] = useState<string>(message.content || '');
@@ -74,6 +97,11 @@ export const ChatMessageComponentAsRichTextEditBox = (
   const [attachmentMetadata, handleAttachmentAction] = useReducer(
     attachmentMetadataReducer,
     getMessageWithAttachmentMetadata(message) ?? []
+  );
+
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  const [attachmentUploadsPendingError, setAttachmentUploadsPendingError] = useState<SendBoxErrorBarError | undefined>(
+    undefined
   );
   const editTextFieldRef = React.useRef<RichTextEditorComponentRef>(null);
   const theme = useTheme();
@@ -128,6 +156,42 @@ export const ChatMessageComponentAsRichTextEditBox = (
     return doesMessageContainMultipleAttachments(message);
   }, [message]);
 
+  const onSubmitHandler = useCallback((): void => {
+    if (!submitEnabled) {
+      return;
+    }
+    // Don't send message until all attachments have been uploaded successfully
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    setAttachmentUploadsPendingError(undefined);
+
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    if (hasIncompleteAttachmentUploads(imageUploadsInProgress)) {
+      setAttachmentUploadsPendingError({ message: strings.attachmentUploadsPendingError, timestamp: Date.now() });
+      return;
+    }
+
+    let content = textValue;
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    if (isAttachmentUploadCompleted(imageUploadsInProgress)) {
+      content = insertImagesToContentString(textValue, imageUploadsInProgress);
+    }
+    // it's very important to pass an empty attachment here
+    // so when user removes all attachments, UI can reflect it instantly
+    // if you set it to undefined, the attachments pre-edited would still be there
+    // until edit message event is received
+    onSubmit(content, /* @conditional-compile-remove(file-sharing-acs) */ attachmentMetadata || []);
+  }, [
+    submitEnabled,
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    imageUploadsInProgress,
+    textValue,
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    strings.attachmentUploadsPendingError,
+    onSubmit,
+    /* @conditional-compile-remove(file-sharing-acs) */
+    attachmentMetadata
+  ]);
+
   const actionButtons = useMemo(() => {
     return (
       <Stack horizontal>
@@ -148,12 +212,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
           tooltipContent={strings.editBoxSubmitButton}
           onRenderIcon={onRenderThemedSubmitIcon}
           onClick={(e) => {
-            // it's very important to pass an empty attachment here
-            // so when user removes all attachments, UI can reflect it instantly
-            // if you set it to undefined, the attachments pre-edited would still be there
-            // until edit message event is received
-            submitEnabled &&
-              onSubmit(textValue, /* @conditional-compile-remove(file-sharing-acs) */ attachmentMetadata);
+            onSubmitHandler();
             e.stopPropagation();
           }}
           id={'submitIconWrapper'}
@@ -162,17 +221,13 @@ export const ChatMessageComponentAsRichTextEditBox = (
       </Stack>
     );
   }, [
-    /* @conditional-compile-remove(file-sharing-acs) */
-    attachmentMetadata,
     message.messageId,
     onCancel,
     onRenderThemedCancelIcon,
     onRenderThemedSubmitIcon,
-    onSubmit,
     strings.editBoxCancelButton,
     strings.editBoxSubmitButton,
-    submitEnabled,
-    textValue
+    onSubmitHandler
   ]);
   const richTextLocaleStrings = useMemo(() => {
     /* @conditional-compile-remove(rich-text-editor) */
@@ -206,13 +261,35 @@ export const ChatMessageComponentAsRichTextEditBox = (
     );
   }, [attachmentMetadata, onCancelAttachmentUpload, theme]);
 
+  const onChangeHandler = useCallback(
+    (
+      content: string | undefined,
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */ imageSrcArray?: Array<string>
+    ) => {
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */
+      cancelInlineImageUpload(imageSrcArray, imageUploadsInProgress, onCancelInlineImageUpload);
+      setText(content);
+    },
+    [
+      setText,
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */ imageUploadsInProgress,
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */ onCancelInlineImageUpload
+    ]
+  );
+
   const getContent = (): JSX.Element => {
     return (
       <Stack className={mergeStyles(editBoxWidthStyles)}>
-        <RichTextSendBoxErrors textTooLongMessage={textTooLongMessage} systemMessage={message.failureReason} />
+        <RichTextSendBoxErrors
+          textTooLongMessage={textTooLongMessage}
+          systemMessage={message.failureReason}
+          /* @conditional-compile-remove(rich-text-editor-image-upload) */ attachmentUploadsPendingError={
+            attachmentUploadsPendingError
+          }
+        />
         <RichTextInputBoxComponent
           placeholderText={strings.editBoxPlaceholderText}
-          onChange={setText}
+          onChange={onChangeHandler}
           editorComponentRef={editTextFieldRef}
           initialContent={message.content}
           strings={richTextLocaleStrings}
@@ -224,6 +301,8 @@ export const ChatMessageComponentAsRichTextEditBox = (
           onRenderAttachmentUploads={onRenderAttachmentUploads}
           /* @conditional-compile-remove(rich-text-editor-image-upload) */
           onPaste={onPaste}
+          /* @conditional-compile-remove(rich-text-editor-image-upload) */
+          onUploadInlineImage={onUploadInlineImage}
         />
       </Stack>
     );

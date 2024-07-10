@@ -9,6 +9,8 @@ import { StatefulChatClient } from '@internal/chat-stateful-client';
 import { ChatAttachment } from '@azure/communication-chat';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { UploadChatImageResult } from '@internal/acs-ui-common';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+import { getImageAttachmentsFromHTMLContent } from '../utils/getImageAttachmentsFromHTMLContent';
 import { ChatMessage, ChatMessageReadReceipt, ChatThreadClient, SendMessageOptions } from '@azure/communication-chat';
 import memoizeOne from 'memoize-one';
 /* @conditional-compile-remove(file-sharing-acs) */
@@ -70,25 +72,40 @@ export const createDefaultChatHandlers = memoizeOne(
           content,
           senderDisplayName: chatClient.getState().displayName
         };
-        /* @conditional-compile-remove(file-sharing-acs) */
+
         /* @conditional-compile-remove(rich-text-editor-image-upload) */
-        if (
+        const imageAttachments: ChatAttachment[] | undefined = getImageAttachmentsFromHTMLContent(content);
+
+        /* @conditional-compile-remove(file-sharing-acs) */
+        const hasAttachments =
           options &&
           'attachments' in options &&
           options.attachments &&
           options.attachments[0] &&
-          !(options.attachments[0] as ChatAttachment).attachmentType
+          !(options.attachments[0] as ChatAttachment).attachmentType;
+        /* @conditional-compile-remove(rich-text-editor-image-upload) */
+        const hasImages = options && imageAttachments && imageAttachments.length > 0;
+
+        /* @conditional-compile-remove(file-sharing-acs) */
+        /* @conditional-compile-remove(rich-text-editor-image-upload) */
+        if (
+          /* @conditional-compile-remove(file-sharing-acs) */ hasAttachments ||
+          /* @conditional-compile-remove(rich-text-editor-image-upload) */ hasImages
         ) {
-          const chatSDKOptions = {
+          const chatSDKOptions: SendMessageOptions = {
             metadata: {
               ...options?.metadata,
-              fileSharingMetadata: JSON.stringify(options?.attachments)
+              /* @conditional-compile-remove(file-sharing-acs) */
+              fileSharingMetadata: JSON.stringify(options.attachments)
             },
+            /* @conditional-compile-remove(rich-text-editor-image-upload) */
+            attachments: imageAttachments,
             type: options.type
           };
           await chatThreadClient.sendMessage(sendMessageRequest, chatSDKOptions);
           return;
         }
+
         await chatThreadClient.sendMessage(sendMessageRequest, options as SendMessageOptions);
       },
       /* @conditional-compile-remove(rich-text-editor-image-upload) */
@@ -109,13 +126,18 @@ export const createDefaultChatHandlers = memoizeOne(
         /* @conditional-compile-remove(file-sharing-acs) */
         options?: MessageOptions
       ) {
+        /* @conditional-compile-remove(rich-text-editor-image-upload) */
+        const imageAttachments: ChatAttachment[] | undefined = getImageAttachmentsFromHTMLContent(content);
+
         const updateMessageOptions = {
           content,
           /* @conditional-compile-remove(file-sharing-acs) */
           metadata: {
             ...options?.metadata,
             fileSharingMetadata: JSON.stringify(options?.attachments)
-          }
+          },
+          /* @conditional-compile-remove(rich-text-editor-image-upload) */
+          attachments: imageAttachments
         };
         await chatThreadClient.updateMessage(messageId, updateMessageOptions);
       },
