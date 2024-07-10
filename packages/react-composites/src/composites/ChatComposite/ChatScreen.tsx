@@ -523,7 +523,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
         removeImageTags(event);
       }
     },
-    [adapter]
+    [adapter, textOnlyChat]
   );
 
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
