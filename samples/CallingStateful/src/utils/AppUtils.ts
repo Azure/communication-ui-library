@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { StartCallIdentifier } from '@azure/communication-react';
 import { CommunicationUserIdentifier } from '@azure/communication-common';

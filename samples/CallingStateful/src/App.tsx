@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import './App.css';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import {
@@ -31,7 +31,7 @@ import { IncomingCallManager } from './components/IncomingCallManager';
 initializeIcons();
 registerIcons({ icons: DEFAULT_COMPONENT_ICONS });
 
-function App() {
+function App(): JSX.Element {
   const imageProps = { src: heroSVG.toString() };
   const [userIdentifier, setUserIdentifier] = useState<CommunicationUserIdentifier>();
   const [teamsIdentifier, setTeamsIdentifier] = useState<string>();
@@ -47,47 +47,62 @@ function App() {
    * Helper function to clear the old incoming Calls in the app that are no longer valid.
    * @param statefulClient
    */
-  const filterEndedIncomingCalls = (incomingCall: IncomingCallCommon) => {
-    setIncomingCalls(incomingCalls.filter((call) => call.id !== incomingCall.id));
-  };
+  const filterEndedIncomingCalls = useCallback(
+    (incomingCall: IncomingCallCommon): void => {
+      setIncomingCalls(incomingCalls.filter((call) => call.id !== incomingCall.id));
+    },
+    [incomingCalls]
+  );
 
-  const incomingAcsCallListener: IncomingCallEvent = ({ incomingCall }): void => {
-    console.log('Incoming call received: ', incomingCall);
-    if (callAgent) {
-      setIncomingCalls(callAgent.incomingCalls);
-    }
-  };
-
-  const teamsIncomingCallListener: TeamsIncomingCallEvent = ({ incomingCall }): void => {
-    console.log('Incoming call received: ', incomingCall);
-    if (callAgent) {
-      setIncomingCalls(callAgent.incomingCalls);
-    }
-  };
-
-  const callsUpdatedListener = (event: { added: CallCommon[]; removed: CallCommon[] }) => {
-    if (event.added.length > 0) {
-      if (call && call.state !== 'Disconnected') {
-        call.hold();
+  const incomingAcsCallListener: IncomingCallEvent = useCallback(
+    ({ incomingCall }): void => {
+      console.log('Incoming call received: ', incomingCall);
+      if (callAgent) {
+        setIncomingCalls(callAgent.incomingCalls);
       }
-      setCall(event.added[0]);
-    } else if (event.removed.length > 0) {
-      if (event.removed[0] === call) {
-        setCall(undefined);
+    },
+    [callAgent]
+  );
+
+  const teamsIncomingCallListener: TeamsIncomingCallEvent = useCallback(
+    ({ incomingCall }): void => {
+      console.log('Incoming call received: ', incomingCall);
+      if (callAgent) {
+        setIncomingCalls(callAgent.incomingCalls);
       }
-    }
-  };
+    },
+    [callAgent]
+  );
+
+  const callsUpdatedListener = useCallback(
+    (event: { added: CallCommon[]; removed: CallCommon[] }): void => {
+      if (event.added.length > 0) {
+        if (call && call.state !== 'Disconnected') {
+          call.hold();
+        }
+        setCall(event.added[0]);
+      } else if (event.removed.length > 0) {
+        if (event.removed[0] === call) {
+          setCall(undefined);
+        }
+      }
+    },
+    [call, setCall]
+  );
 
   /**
    * We need to check the call client to make sure we are removing any of the notifications that
    * are no longer valid.
    */
-  const statefulCallClientStateListener = (state: CallClientState): void => {
-    if (statefulCallClient) {
-      const endedIncomingCalls = Object.keys(state.incomingCallsEnded);
-      setIncomingCalls(incomingCalls.filter((call) => !endedIncomingCalls.includes(call.id)));
-    }
-  };
+  const statefulCallClientStateListener = useCallback(
+    (state: CallClientState): void => {
+      if (statefulCallClient) {
+        const endedIncomingCalls = Object.keys(state.incomingCallsEnded);
+        setIncomingCalls(incomingCalls.filter((call) => !endedIncomingCalls.includes(call.id)));
+      }
+    },
+    [statefulCallClient, incomingCalls]
+  );
 
   // Examples for Callback functions for utilizing incomingCall reject and accept.
   const onRejectCall = (incomingCall: IncomingCall | TeamsIncomingCall): void => {
@@ -119,10 +134,12 @@ function App() {
     return () => {
       statefulCallClient?.offStateChange(statefulCallClientStateListener);
     };
-  }, [statefulCallClient]);
+  }, [statefulCallClient, statefulCallClientStateListener]);
 
   useEffect(() => {
-    if (!callAgent) return;
+    if (!callAgent) {
+      return;
+    }
     if (callAgent.kind === 'TeamsCallAgent') {
       console.log('Subscribing to teams events');
       (callAgent as TeamsCallAgent).on('callsUpdated', callsUpdatedListener);
@@ -143,7 +160,7 @@ function App() {
     } else {
       throw new Error('Unknown call agent kind');
     }
-  }, [callAgent, call]);
+  }, [callAgent, call, callsUpdatedListener, incomingAcsCallListener, teamsIncomingCallListener]);
 
   if (userCredentialFetchError) {
     return <Text>Failed to fetch user credentials</Text>;

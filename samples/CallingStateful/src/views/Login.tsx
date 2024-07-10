@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import {
   AzureCommunicationTokenCredential,
@@ -68,7 +68,7 @@ export const LoginScreen = (props: LoginProps): JSX.Element => {
         }
       }
     })();
-  }, [isCTE]);
+  }, [isCTE, setTokenCredentialError, onSetUserIdentifier, setUserIdentifier]);
 
   useEffect(() => {
     if (isCTE === true && teamsIdentityInformation?.identifier !== undefined) {
@@ -80,11 +80,13 @@ export const LoginScreen = (props: LoginProps): JSX.Element => {
       onSetTeamsIdentity(teamsIdentityInformation.identifier);
       return;
     }
-    if (!userIdentifier) return;
+    if (!userIdentifier) {
+      return;
+    }
     const statefulClient = createStatefulCallClient({ userId: userIdentifier });
     setStatefulCallClient(statefulClient);
     onSetStatefulClient(statefulClient);
-  }, [userIdentifier, isCTE, teamsIdentityInformation]);
+  }, [userIdentifier, isCTE, teamsIdentityInformation, onSetStatefulClient, onSetTeamsIdentity]);
 
   useEffect(() => {
     if (!isCTE && callAgent === undefined && statefulCallClient && tokenCredential && displayName) {
@@ -106,7 +108,7 @@ export const LoginScreen = (props: LoginProps): JSX.Element => {
       };
       createTeamsCallAgent();
     }
-  }, [callAgent, statefulCallClient, tokenCredential, displayName]);
+  }, [callAgent, statefulCallClient, tokenCredential, displayName, isCTE, teamsIdentityInformation, onSetCallAgent]);
 
   return (
     <FluentThemeProvider>

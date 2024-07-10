@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
 import { IncomingCall, TeamsIncomingCall } from '@azure/communication-calling';
 import { IncomingCallNotification } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
@@ -23,6 +26,7 @@ export const IncomingCallManager = (props: IncomingCallManagerProps): JSX.Elemen
     <Stack style={{ top: 0, position: 'absolute' }}>
       {incomingCalls.map((incomingCall) => (
         <IncomingCallNotification
+          key={incomingCall.id}
           callerName={incomingCall.callerInfo.displayName}
           onAcceptWithAudio={() => onAcceptCall(incomingCall)}
           onAcceptWithVideo={() => onAcceptCall(incomingCall, true)}
