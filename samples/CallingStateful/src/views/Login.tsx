@@ -31,7 +31,14 @@ export interface LoginProps {
 }
 
 export const LoginScreen = (props: LoginProps): JSX.Element => {
-  const { onSetCallAgent, onSetUserIdentifier, onSetStatefulClient, headerImageProps, setTokenCredentialError } = props;
+  const {
+    onSetCallAgent,
+    onSetUserIdentifier,
+    onSetTeamsIdentity,
+    onSetStatefulClient,
+    headerImageProps,
+    setTokenCredentialError
+  } = props;
   // Get Azure Communications Service token and Voice app identification from the server.
 
   const [userIdentifier, setUserIdentifier] = useState<CommunicationUserIdentifier>();
@@ -65,11 +72,12 @@ export const LoginScreen = (props: LoginProps): JSX.Element => {
 
   useEffect(() => {
     if (isCTE === true && teamsIdentityInformation?.identifier !== undefined) {
-      onSetStatefulClient(
-        createStatefulCallClient({
-          userId: fromFlatCommunicationIdentifier(teamsIdentityInformation.identifier) as MicrosoftTeamsUserIdentifier
-        })
-      );
+      const statefulClient = createStatefulCallClient({
+        userId: fromFlatCommunicationIdentifier(teamsIdentityInformation.identifier) as MicrosoftTeamsUserIdentifier
+      });
+      onSetStatefulClient(statefulClient);
+      setStatefulCallClient(statefulClient);
+      onSetTeamsIdentity(teamsIdentityInformation.identifier);
       return;
     }
     if (!userIdentifier) return;
