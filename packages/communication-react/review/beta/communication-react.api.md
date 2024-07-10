@@ -2238,6 +2238,8 @@ export interface ComponentStrings {
     errorBar: ErrorBarStrings;
     holdButton: HoldButtonStrings;
     imageOverlay: ImageOverlayStrings;
+    // (undocumented)
+    IncomingCallNotification: IncomingCallNotificationStrings;
     MeetingConferencePhoneInfo: MeetingConferencePhoneInfoModalStrings;
     mentionPopover: MentionPopoverStrings;
     messageStatusIndicator: MessageStatusIndicatorStrings;
@@ -2649,6 +2651,9 @@ export const DEFAULT_COMPONENT_ICONS: {
     RichTextTableInsertMenuIcon: React_2.JSX.Element;
     RichTextTableDeleteMenuIcon: React_2.JSX.Element;
     ContextualMenuMicMutedIcon: React_2.JSX.Element;
+    IncomingCallNotificationRejectIcon: React_2.JSX.Element;
+    IncomingCallNotificationAcceptIcon: React_2.JSX.Element;
+    IncomingCallNotificationAcceptWithVideoIcon: React_2.JSX.Element;
 };
 
 // @public
@@ -2819,6 +2824,9 @@ export const DEFAULT_COMPOSITE_ICONS: {
     RichTextTableInsertMenuIcon: React_2.JSX.Element;
     RichTextTableDeleteMenuIcon: React_2.JSX.Element;
     ContextualMenuMicMutedIcon: React_2.JSX.Element;
+    IncomingCallNotificationRejectIcon: React_2.JSX.Element;
+    IncomingCallNotificationAcceptIcon: React_2.JSX.Element;
+    IncomingCallNotificationAcceptWithVideoIcon: React_2.JSX.Element;
 };
 
 // @beta
@@ -3166,6 +3174,28 @@ export const imageOverlayTheme: PartialTheme;
 // @beta
 export type IncomingCallManagement = {
     incomingCalls: ReadonlyArray<DeclarativeIncomingCall>;
+};
+
+// @beta
+export const IncomingCallNotification: (props: IncomingCallNotificationProps) => JSX.Element;
+
+// @beta
+export type IncomingCallNotificationProps = {
+    callerName?: string;
+    alertText?: string;
+    avatar?: string;
+    onAcceptWithAudio: () => void;
+    onAcceptWithVideo: () => void;
+    onReject: () => void;
+};
+
+// @beta
+export type IncomingCallNotificationStrings = {
+    incomingCallNotificationPlaceholderId?: string;
+    incomingCallNotificationPlaceholderAlert?: string;
+    incomingCallNoticicationAcceptWithAudioAriaLabel?: string;
+    incomingCallNoticicationAcceptWithVideoAriaLabel?: string;
+    incomingCallNoticicationRejectAriaLabel?: string;
 };
 
 // @public
@@ -3695,7 +3725,7 @@ export interface NotificationStackStrings {
 
 // @beta
 export interface NotificationStrings {
-    closeButtonAriaLabel: string;
+    dismissButtonAriaLabel: string;
     message?: string;
     primaryButtonLabel?: string;
     secondaryButtonLabel?: string;

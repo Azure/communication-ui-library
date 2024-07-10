@@ -44,7 +44,7 @@ const NotificationStory = (args): JSX.Element => {
 
   const strings = {
     title: 'Poor Network Quality',
-    closeButtonAriaLabel: 'Close',
+    dismissButtonAriaLabel: 'Close',
     message: 'Join this call from your phone for better sound. You can continue viewing the meeting on this device.',
     primaryButtonLabel: 'Join by Phone',
     secondaryButtonLabel: 'I will wait :)'

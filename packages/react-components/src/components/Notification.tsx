@@ -67,9 +67,9 @@ export interface NotificationStrings {
    */
   title: string;
   /**
-   * Notification bar close button aria label
+   * Notification bar dismiss button aria label
    */
-  closeButtonAriaLabel: string;
+  dismissButtonAriaLabel: string;
   /**
    * Notification bar message.
    */
@@ -121,7 +121,7 @@ export const Notification = (props: NotificationProps): JSX.Element => {
 
           <IconButton
             iconProps={cancelIcon}
-            ariaLabel={strings?.closeButtonAriaLabel}
+            ariaLabel={strings?.dismissButtonAriaLabel}
             aria-live={'polite'}
             onClick={props.onDismiss}
           />
