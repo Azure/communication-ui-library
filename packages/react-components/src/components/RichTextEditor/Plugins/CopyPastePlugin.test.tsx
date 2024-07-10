@@ -45,3 +45,5 @@ const getBeforePastePluginEvent = (fragment: DocumentFragment): BeforePasteEvent
     }
   };
 };
+
+test('Placeholder test to avoid empty test suite. Remove this after rich-text-editor-image-upload is stabilized', () => {});
