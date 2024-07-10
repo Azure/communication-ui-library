@@ -19,7 +19,6 @@ import {
   DEFAULT_COMPONENT_ICONS,
   FluentThemeProvider,
   StatefulCallClient,
-  IncomingCallNotification,
   DeclarativeCallAgent,
   DeclarativeTeamsCallAgent,
   CallClientState
@@ -28,6 +27,7 @@ import { Stack, Text, initializeIcons, registerIcons } from '@fluentui/react';
 import heroSVG from './assets/hero.svg';
 import { LoginScreen } from './views/Login';
 import { CallScreen } from './views/CallScreen';
+import { IncomingCallManager } from './components/IncomingCallManager';
 initializeIcons();
 registerIcons({ icons: DEFAULT_COMPONENT_ICONS });
 
@@ -182,25 +182,3 @@ function App() {
 }
 
 export default App;
-
-interface IncomingCallManagerProps {
-  incomingCalls: readonly IncomingCall[] | readonly TeamsIncomingCall[];
-  onAcceptCall: (incomingCall: IncomingCall | TeamsIncomingCall, useVideo?: boolean) => void;
-  onRejectCall: (incomingCall: IncomingCall | TeamsIncomingCall) => void;
-}
-
-const IncomingCallManager = (props: IncomingCallManagerProps): JSX.Element => {
-  const { incomingCalls, onAcceptCall, onRejectCall } = props;
-  return (
-    <Stack style={{ top: 0, position: 'absolute' }}>
-      {incomingCalls.map((incomingCall) => (
-        <IncomingCallNotification
-          callerName={incomingCall.callerInfo.displayName}
-          onAcceptWithAudio={() => onAcceptCall(incomingCall)}
-          onAcceptWithVideo={() => onAcceptCall(incomingCall, true)}
-          onReject={() => onRejectCall(incomingCall)}
-        ></IncomingCallNotification>
-      ))}
-    </Stack>
-  );
-};
