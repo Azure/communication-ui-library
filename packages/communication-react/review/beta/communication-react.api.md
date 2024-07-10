@@ -3710,7 +3710,7 @@ export interface NotificationStackStrings {
 
 // @beta
 export interface NotificationStrings {
-    closeButtonAriaLabel: string;
+    dismissButtonAriaLabel: string;
     message?: string;
     primaryButtonLabel?: string;
     secondaryButtonLabel?: string;
