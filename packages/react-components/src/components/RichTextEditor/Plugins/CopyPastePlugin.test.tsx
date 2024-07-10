@@ -1,9 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { PasteType, BeforePasteEvent } from 'roosterjs-content-model-types';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { handleBeforePasteEvent } from './CopyPastePlugin';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { PluginEventType } from '../../utils/RichTextEditorUtils';
 
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
@@ -16,6 +18,7 @@ describe('handleBeforePasteEvent should work correctly', () => {
   });
 });
 
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
 const getBeforePastePluginEvent = (fragment: DocumentFragment): BeforePasteEvent => {
   return {
     eventType: PluginEventType.BeforePaste,
