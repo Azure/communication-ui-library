@@ -2,7 +2,8 @@
 // Licensed under the MIT License.
 
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
-import { removeImageTags } from './useImageUpload';
+import test from 'node:test';
+import { removeImageTags } from './ImageUploadUtils';
 
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 describe('removeImageElement should work correctly', () => {
@@ -55,3 +56,5 @@ describe('removeImageElement should work correctly', () => {
     expect(fragment.getElementById(containerId)?.outerHTML).toEqual('<div id="container"><text></text></div>');
   });
 });
+
+test('Placeholder test to avoid empty test suite. Remove this after rich-text-editor-image-upload is stabilized', () => {});

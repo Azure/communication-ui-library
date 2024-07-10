@@ -63,7 +63,9 @@ import { SendBoxPicker } from '../common/SendBoxPicker';
 /* @conditional-compile-remove(rich-text-editor-composite-support) */
 import { loadRichTextSendBox } from '../common/SendBoxPicker';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
-import { removeImageTags, useImageUpload } from './image-upload/useImageUpload';
+import { useImageUpload } from './ImageUpload/useImageUpload';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+import { removeImageTags } from './ImageUpload/ImageUploadUtils';
 
 /**
  * @private
@@ -599,12 +601,6 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
                   // we need to overwrite onSendMessage for SendBox because we need to clear attachment state
                   // when submit button is clicked
                   onSendMessage={onSendMessageHandler}
-                  /* @conditional-compile-remove(rich-text-editor-image-upload) */
-                  onUploadInlineImage={onUploadInlineImage}
-                  /* @conditional-compile-remove(rich-text-editor-image-upload) */
-                  imageUploadsInProgress={imageUploadsInProgress}
-                  /* @conditional-compile-remove(rich-text-editor-image-upload) */
-                  onCancelInlineImageUpload={onCancelInlineImageUploadHandler}
                 />
               </Stack>
               {formFactor !== 'mobile' && (
