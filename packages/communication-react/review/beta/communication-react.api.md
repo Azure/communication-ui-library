@@ -1952,6 +1952,7 @@ export type ChatThreadClientState = {
 export type ChatThreadProperties = {
     topic?: string;
     createdBy?: CommunicationIdentifierKind;
+    messagingPolicy?: MessagingPolicy;
 };
 
 // @public
@@ -3026,6 +3027,7 @@ export interface ErrorBarStrings {
     startVideoGeneric: string;
     stopScreenShareGeneric: string;
     stopVideoGeneric: string;
+    teamsMeetingCallNetworkQualityLow: string;
     unableToReachChatService: string;
     unableToStartVideoEffect?: string;
     unmuteGeneric: string;
@@ -3170,6 +3172,7 @@ export type IncomingCallManagement = {
 export const IncomingCallNotification: (props: IncomingCallNotificationProps) => JSX.Element;
 
 // @beta
+<<<<<<< HEAD
 export interface IncomingCallNotificationProps {
     alertText?: string;
     avatarImage?: string;
@@ -3198,6 +3201,25 @@ export interface IncomingCallNotificationStyles {
     rejectButton?: IButtonStyles;
     root?: IStackStyles;
 }
+=======
+export type IncomingCallNotificationProps = {
+    callerName?: string;
+    alertText?: string;
+    avatar?: string;
+    onAcceptWithAudio: () => void;
+    onAcceptWithVideo: () => void;
+    onReject: () => void;
+};
+
+// @beta
+export type IncomingCallNotificationStrings = {
+    incomingCallNotificationPlaceholderId?: string;
+    incomingCallNotificationPlaceholderAlert?: string;
+    incomingCallNoticicationAcceptWithAudioAriaLabel?: string;
+    incomingCallNoticicationAcceptWithVideoAriaLabel?: string;
+    incomingCallNoticicationRejectAriaLabel?: string;
+};
+>>>>>>> ef1af1b6f5814dc6835e7027e19d4eacf5b80488
 
 // @public
 export interface IncomingCallState {
@@ -3556,6 +3578,11 @@ export interface MessageThreadStyles extends BaseCustomStyles {
     systemMessageContainer?: ComponentSlotStyle;
 }
 
+// @beta
+export type MessagingPolicy = {
+    textOnlyChat?: boolean;
+};
+
 // @public
 export const MicrophoneButton: (props: MicrophoneButtonProps) => JSX.Element;
 
@@ -3705,6 +3732,7 @@ export interface NotificationStackStrings {
     startVideoGeneric?: NotificationStrings;
     stopScreenShareGeneric?: NotificationStrings;
     stopVideoGeneric?: NotificationStrings;
+    teamsMeetingCallNetworkQualityLow?: NotificationStrings;
     transcriptionStarted?: NotificationStrings;
     transcriptionStopped?: NotificationStrings;
     transcriptionStoppedStillRecording?: NotificationStrings;
@@ -3714,7 +3742,7 @@ export interface NotificationStackStrings {
 
 // @beta
 export interface NotificationStrings {
-    closeButtonAriaLabel: string;
+    dismissButtonAriaLabel: string;
     message?: string;
     primaryButtonLabel?: string;
     secondaryButtonLabel?: string;

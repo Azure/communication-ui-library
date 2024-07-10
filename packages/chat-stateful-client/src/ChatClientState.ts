@@ -88,6 +88,20 @@ export type ChatThreadProperties = {
   topic?: string;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   createdBy?: CommunicationIdentifierKind;
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  messagingPolicy?: MessagingPolicy;
+};
+
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+/**
+ *
+ * Messaging policy of a chat thread.
+ *
+ * @beta
+ */
+export type MessagingPolicy = {
+  /** Boolean to track whether or not messages are restricted to only text. */
+  textOnlyChat?: boolean;
 };
 
 /**
