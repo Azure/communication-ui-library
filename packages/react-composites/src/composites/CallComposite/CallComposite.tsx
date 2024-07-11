@@ -432,7 +432,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   /* @conditional-compile-remove(notifications) */
   const activeInCallErrors = usePropsFor(NotificationStack).activeErrorMessages;
   /* @conditional-compile-remove(notifications) */
-  const activeNotificationsFromSelector = usePropsFor(NotificationStack).activeNotifications;
+  const activeNotifications = usePropsFor(NotificationStack).activeNotifications;
   /* @conditional-compile-remove(notifications) */
   const complianceProps = useSelector(complianceBannerSelector);
   /* @conditional-compile-remove(notifications) */
@@ -451,6 +451,28 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   const complianceNotification: ActiveNotification | undefined = useMemo(() => {
     return computeComplianceNotification(complianceProps, cachedProps);
   }, [complianceProps, cachedProps]);
+  /* @conditional-compile-remove(notifications) */
+  useEffect(() => {
+    if (complianceNotification) {
+      activeNotifications.forEach((notification, index) => {
+        if (
+          [
+            'recordingStarted',
+            'transcriptionStarted',
+            'recordingStopped',
+            'transcriptionStopped',
+            'recordingAndTranscriptionStarted',
+            'recordingAndTranscriptionStopped',
+            'recordingStoppedStillTranscribing',
+            'transcriptionStoppedStillRecording'
+          ].includes(activeNotifications[index].type)
+        ) {
+          activeNotifications.splice(index, 1);
+        }
+      });
+      activeNotifications.push(complianceNotification);
+    }
+  }, [complianceNotification, activeNotifications]);
 
   const [trackedErrors, setTrackedErrors] = useState<TrackedNotifications>({} as TrackedNotifications);
   /* @conditional-compile-remove(notifications) */
@@ -458,14 +480,6 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
 
   /* @conditional-compile-remove(notifications) */
   const [trackedNotifications, setTrackedNotifications] = useState<TrackedNotifications>({} as TrackedNotifications);
-  /* @conditional-compile-remove(notifications) */
-  const [activeNotifications, setActiveNotifications] = useState<ActiveNotification[]>(activeNotificationsFromSelector);
-  /* @conditional-compile-remove(notifications) */
-  useEffect(() => {
-    if (complianceNotification) {
-      setActiveNotifications([...activeNotificationsFromSelector, complianceNotification]);
-    }
-  }, [complianceNotification, activeNotificationsFromSelector]);
 
   useEffect(() => {
     setTrackedErrors((prev) => updateTrackedNotificationsWithActiveNotifications(prev, activeErrors));
