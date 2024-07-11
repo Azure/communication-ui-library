@@ -324,7 +324,7 @@ export const useChatMessageStyles = makeStyles({
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      ...shorthands.outline('1px', 'solid', tokens.colorNeutralForegroundDisabled),
+      outline: `1px solid ${tokens.colorNeutralForegroundDisabled}`,
       backgroundColor: tokens.colorNeutralBackground2
     },
     '& .broken-image-wrapper:after': {
