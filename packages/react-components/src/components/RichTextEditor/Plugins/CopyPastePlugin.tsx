@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 import type { PluginEvent, EditorPlugin, IEditor, BeforePasteEvent } from 'roosterjs-content-model-types';
 import { ContentChangedEventSource, PluginEventType } from '../../utils/RichTextEditorUtils';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+import { _base64ToBlob } from '@internal/acs-ui-common';
 
 /**
  * CopyPastePlugin is a plugin for handling copy and paste events in the editor.
@@ -11,6 +13,8 @@ export default class CopyPastePlugin implements EditorPlugin {
   // don't set value in constructor to be able to update it without plugin recreation
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   onPaste?: (event: { content: DocumentFragment }) => void;
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  onUploadInlineImage?: (imageUrl: string, imageFileName: string) => void;
 
   getName(): string {
     return 'CopyPastePlugin';
@@ -24,7 +28,8 @@ export default class CopyPastePlugin implements EditorPlugin {
 
   onPluginEvent(event: PluginEvent): void {
     handleBeforePasteEvent(event, /* @conditional-compile-remove(rich-text-editor-image-upload) */ this.onPaste);
-
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    handleInlineImage(event, this.onUploadInlineImage);
     if (this.editor !== null && !this.editor.isDisposed()) {
       // scroll the editor to the correct position after pasting content
       scrollToBottomAfterContentPaste(event);
@@ -32,7 +37,11 @@ export default class CopyPastePlugin implements EditorPlugin {
   }
 }
 
-const handleBeforePasteEvent = (
+/**
+ * @internal
+ * Exported only for unit testing
+ */
+export const handleBeforePasteEvent = (
   event: PluginEvent,
   /* @conditional-compile-remove(rich-text-editor-image-upload) */ onPaste?: (event: {
     content: DocumentFragment;
@@ -50,12 +59,40 @@ const handleBeforePasteEvent = (
   }
 };
 
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+/**
+ * @internal
+ * Exported only for unit testing
+ */
+export const handleInlineImage = (
+  event: PluginEvent,
+  onUploadInlineImage?: (image: string, fileName: string) => void
+): void => {
+  if (event.eventType === PluginEventType.BeforePaste && event.pasteType === 'normal' && onUploadInlineImage) {
+    event.fragment.querySelectorAll('img').forEach((image) => {
+      const clipboardImage = event.clipboardData.image;
+      const fileName = clipboardImage?.name || clipboardImage?.type.replace('/', '.') || 'image.png';
+      // If the image src is an external url, call the onUploadInlineImage callback with the url.
+      let imageUrl = image.src;
+      if (image.src.startsWith('data:image/')) {
+        const blobImage = _base64ToBlob(image.src);
+        imageUrl = URL.createObjectURL(blobImage);
+      }
+
+      onUploadInlineImage(imageUrl, fileName);
+
+      image.src = imageUrl;
+      image.alt = image.alt || 'image';
+      image.style.width = '119px'; // TODO: find a way to get the original width and height of the image
+    });
+  }
+};
+
 /**
  * @internal
  * Exported only for unit testing
  */
 export const removeImageElement = (event: BeforePasteEvent): void => {
-  // We don't support the pasting options such as paste as image yet.
   if (event.pasteType === 'normal') {
     event.fragment.querySelectorAll('img').forEach((image) => {
       // If the image is the only child of its parent, remove all the parents of this img element.

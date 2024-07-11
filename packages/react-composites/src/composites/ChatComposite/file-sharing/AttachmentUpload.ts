@@ -95,7 +95,7 @@ interface ClearAction extends Action {
 /**
  * @private
  */
-type Actions = SetAction | ProgressAction | CompleteAction | FailedAction | RemoveAction | ClearAction;
+export type Actions = SetAction | ProgressAction | CompleteAction | FailedAction | RemoveAction | ClearAction;
 
 /* @conditional-compile-remove(file-sharing-acs) */
 /**

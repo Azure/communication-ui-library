@@ -259,4 +259,4 @@ const MessageThreadStory = (args): JSX.Element => {
   );
 };
 
-export const Preview = MessageThreadStory.bind({});
+export const MessageThread = MessageThreadStory.bind({});

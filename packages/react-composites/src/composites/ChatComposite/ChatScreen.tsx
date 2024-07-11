@@ -55,12 +55,17 @@ import { AttachmentOptions } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing-acs) */
 import { nanoid } from 'nanoid';
 /* @conditional-compile-remove(file-sharing-acs) */
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { AttachmentUploadActionType, AttachmentUpload, AttachmentUploadReducer } from './file-sharing/AttachmentUpload';
 /* @conditional-compile-remove(file-sharing-acs) */
 import { MessageOptions } from '@internal/acs-ui-common';
 import { SendBoxPicker } from '../common/SendBoxPicker';
 /* @conditional-compile-remove(rich-text-editor-composite-support) */
 import { loadRichTextSendBox } from '../common/SendBoxPicker';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+import { useImageUpload } from './image-upload/useImageUpload';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+import type { ChatAdapterState } from './adapter/ChatAdapter';
 
 /**
  * @private
@@ -120,9 +125,25 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const [isImageOverlayOpen, setIsImageOverlayOpen] = useState<boolean>(false);
   /* @conditional-compile-remove(file-sharing-acs) */
   const [uploads, handleUploadAction] = useReducer(AttachmentUploadReducer, []);
-
   const adapter = useAdapter();
   const theme = useTheme();
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  const [inlineImageUploads, handleInlineImageUploadAction, onUploadInlineImage, onCancelInlineImageUploadHandler] =
+    useImageUpload();
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  const [textOnlyChat, setTextOnlyChat] = useState(false);
+
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  useEffect(() => {
+    const updateChatState = (newState: ChatAdapterState): void => {
+      setTextOnlyChat(newState.thread.properties?.messagingPolicy?.textOnlyChat === true);
+    };
+    updateChatState(adapter.getState());
+    adapter.onStateChange(updateChatState);
+    return () => {
+      adapter.offStateChange(updateChatState);
+    };
+  }, [adapter]);
 
   useEffect(() => {
     // Initial data should be always fetched by the composite(or external caller) instead of the adapter
@@ -420,8 +441,12 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   );
 
   /* @conditional-compile-remove(file-sharing-acs) */
-  const AttachmentButton = useCallback(() => {
-    if (!attachmentOptions?.uploadOptions?.handleAttachmentSelection) {
+  const attachmentButton = useMemo(() => {
+    if (
+      !attachmentOptions?.uploadOptions?.handleAttachmentSelection ||
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */
+      textOnlyChat
+    ) {
       return null;
     }
     return (
@@ -436,13 +461,20 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     attachmentOptions?.uploadOptions?.handleAttachmentSelection,
     attachmentOptions?.uploadOptions?.supportedMediaTypes,
     attachmentOptions?.uploadOptions?.disableMultipleUploads,
-    attachmentUploadButtonOnChange
+    attachmentUploadButtonOnChange,
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    textOnlyChat
   ]);
 
   /* @conditional-compile-remove(file-sharing-acs) */
   const attachments = useMemo(() => {
     return uploads?.map((v) => v.metadata);
   }, [uploads]);
+
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  const imageUploadsInProgress = useMemo(() => {
+    return inlineImageUploads?.map((v) => v.metadata);
+  }, [inlineImageUploads]);
 
   const onSendMessageHandler = useCallback(
     async function (
@@ -453,6 +485,9 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       const attachments = options?.attachments ?? [];
       /* @conditional-compile-remove(file-sharing-acs) */
       handleUploadAction({ type: AttachmentUploadActionType.Clear });
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */
+      handleInlineImageUploadAction({ type: AttachmentUploadActionType.Clear });
+
       /* @conditional-compile-remove(file-sharing-acs) */
       await adapter.sendMessage(content, {
         attachments: attachments,
@@ -466,8 +501,22 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
         type: options?.type
       });
     },
-    [adapter]
+    [adapter, /* @conditional-compile-remove(rich-text-editor-image-upload) */ handleInlineImageUploadAction]
   );
+
+  const onUpdateMessageHandler = useCallback(
+    async (messageId: string, content: string) => {
+      await messageThreadProps.onUpdateMessage(messageId, content);
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */
+      handleInlineImageUploadAction({ type: AttachmentUploadActionType.Clear });
+    },
+    [/* @conditional-compile-remove(rich-text-editor-image-upload) */ handleInlineImageUploadAction, messageThreadProps]
+  );
+
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  const onCancelEditMessageHandler = useCallback(() => {
+    handleInlineImageUploadAction({ type: AttachmentUploadActionType.Clear });
+  }, [handleInlineImageUploadAction]);
 
   /* @conditional-compile-remove(file-sharing-acs) */
   const onCancelUploadHandler = useCallback(
@@ -478,28 +527,32 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     [attachmentOptions?.uploadOptions]
   );
 
-  /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  const removeImageTags = useCallback((event: { content: DocumentFragment }) => {
-    event.content.querySelectorAll('img').forEach((image) => {
-      // If the image is the only child of its parent, remove all the parents of this img element.
-      let parentNode: HTMLElement | null = image.parentElement;
-      let currentNode: HTMLElement = image;
-      while (parentNode?.childNodes.length === 1) {
-        currentNode = parentNode;
-        parentNode = parentNode.parentElement;
-      }
-      currentNode?.remove();
-    });
-  }, []);
-
   /* @conditional-compile-remove(rich-text-editor-composite-support) */
   const richTextEditorOptions = useMemo(() => {
     return options?.richTextEditor
       ? {
-          /* @conditional-compile-remove(rich-text-editor-image-upload) */ onPaste: removeImageTags
+          /* @conditional-compile-remove(rich-text-editor-image-upload) */ onPaste: textOnlyChat
+            ? removeImageTags
+            : undefined,
+          /* @conditional-compile-remove(rich-text-editor-image-upload) */
+          onUploadInlineImage: onUploadInlineImage,
+          /* @conditional-compile-remove(rich-text-editor-image-upload) */
+          imageUploadsInProgress: imageUploadsInProgress,
+          /* @conditional-compile-remove(rich-text-editor-image-upload) */
+          onCancelInlineImageUpload: onCancelInlineImageUploadHandler
         }
       : undefined;
-  }, [options?.richTextEditor, removeImageTags]);
+  }, [
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    imageUploadsInProgress,
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    onCancelInlineImageUploadHandler,
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    onUploadInlineImage,
+    options?.richTextEditor,
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    textOnlyChat
+  ]);
 
   return (
     <Stack className={chatContainer} grow>
@@ -518,6 +571,9 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
           }
           <MessageThread
             {...messageThreadProps}
+            onUpdateMessage={onUpdateMessageHandler}
+            /* @conditional-compile-remove(rich-text-editor-image-upload) */
+            onCancelEditMessage={onCancelEditMessageHandler}
             onRenderAvatar={onRenderAvatarCallback}
             onRenderMessage={onRenderMessage}
             /* @conditional-compile-remove(file-sharing-acs) */
@@ -539,9 +595,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             <Stack horizontal={formFactor === 'mobile'}>
               {formFactor === 'mobile' && (
                 /* @conditional-compile-remove(file-sharing-acs) */
-                <Stack verticalAlign="center">
-                  <AttachmentButton />
-                </Stack>
+                <Stack verticalAlign="center">{attachmentButton}</Stack>
               )}
               <Stack grow>
                 <SendBoxPicker
@@ -556,12 +610,17 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
                   // we need to overwrite onSendMessage for SendBox because we need to clear attachment state
                   // when submit button is clicked
                   onSendMessage={onSendMessageHandler}
+                  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+                  onUploadInlineImage={onUploadInlineImage}
+                  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+                  imageUploadsInProgress={imageUploadsInProgress}
+                  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+                  onCancelInlineImageUpload={onCancelInlineImageUploadHandler}
                 />
               </Stack>
-              {formFactor !== 'mobile' && (
+              {formFactor !== 'mobile' &&
                 /* @conditional-compile-remove(file-sharing-acs) */
-                <AttachmentButton />
-              )}
+                attachmentButton}
             </Stack>
           </Stack>
         </Stack>
@@ -594,4 +653,19 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       )}
     </Stack>
   );
+};
+
+// TODO-vhuseinova: delete after the function is added to utils
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+const removeImageTags = (event: { content: DocumentFragment }): void => {
+  event.content.querySelectorAll('img').forEach((image) => {
+    // If the image is the only child of its parent, remove all the parents of this img element.
+    let parentNode: HTMLElement | null = image.parentElement;
+    let currentNode: HTMLElement = image;
+    while (parentNode?.childNodes.length === 1) {
+      currentNode = parentNode;
+      parentNode = parentNode.parentElement;
+    }
+    currentNode?.remove();
+  });
 };

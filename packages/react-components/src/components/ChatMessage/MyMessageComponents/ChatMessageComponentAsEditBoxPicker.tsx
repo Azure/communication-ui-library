@@ -7,6 +7,8 @@ import { Suspense } from 'react';
 import { ChatMessage } from '../../../types';
 /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
 import { AttachmentMetadata } from '@internal/acs-ui-common';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+import { AttachmentMetadataInProgress } from '@internal/acs-ui-common';
 import { MessageThreadStrings } from '../../MessageThread';
 /* @conditional-compile-remove(rich-text-editor) */
 import { RichTextEditorOptions } from '../../MessageThread';
@@ -48,6 +50,12 @@ export type ChatMessageComponentAsEditBoxPickerProps = {
   mentionLookupOptions?: MentionLookupOptions;
   /* @conditional-compile-remove(rich-text-editor) */
   richTextEditorOptions?: RichTextEditorOptions;
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  onCancelInlineImageUpload?: (imageId: string) => void;
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  onUploadInlineImage?: (imageUrl: string, imageFileName: string) => void;
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  imageUploadsInProgress?: AttachmentMetadataInProgress[];
 };
 
 /**
@@ -70,6 +78,12 @@ export const ChatMessageComponentAsEditBoxPicker = (props: ChatMessageComponentA
             {...props}
             /* @conditional-compile-remove(rich-text-editor-image-upload) */
             onPaste={richTextEditorOptions?.onPaste}
+            /* @conditional-compile-remove(rich-text-editor-image-upload) */
+            onUploadInlineImage={richTextEditorOptions?.onUploadInlineImage}
+            /* @conditional-compile-remove(rich-text-editor-image-upload) */
+            imageUploadsInProgress={richTextEditorOptions?.imageUploadsInProgress}
+            /* @conditional-compile-remove(rich-text-editor-image-upload) */
+            onCancelInlineImageUpload={richTextEditorOptions?.onCancelInlineImageUpload}
           />
         </Suspense>
       </_ErrorBoundary>
