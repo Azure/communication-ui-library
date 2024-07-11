@@ -8,3 +8,5 @@
 dist/dist-esm/mocks/
 **/*.test.*
 **/*.spec.*
+
+preprocessed/node_modules
