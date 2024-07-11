@@ -6,6 +6,7 @@ import {
   AvatarPersonaData,
   ChatAdapter,
   ChatComposite,
+  MessageThread,
   fromFlatCommunicationIdentifier,
   toFlatCommunicationIdentifier,
   useAzureCommunicationChatAdapter
@@ -110,34 +111,21 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
           })
       );
     return (
-      <Stack className={chatScreenContainerStyle}>
-        <Stack.Item className={chatCompositeContainerStyle} role="main">
-          <ChatComposite
-            adapter={adapter}
-            fluentTheme={currentTheme.theme}
-            options={{
-              autoFocus: 'sendBoxTextField',
-              /* @conditional-compile-remove(chat-composite-participant-pane) */
-              participantPane: !hideParticipants,
-              /* @conditional-compile-remove(file-sharing-acs) */
-              attachmentOptions: {
-                uploadOptions: attachmentUploadOptions,
-                downloadOptions: attachmentDownloadOptions
-              },
-              /* @conditional-compile-remove(rich-text-editor-composite-support) */
-              richTextEditor: isRichTextEditorEnabled
-            }}
-            onFetchAvatarPersonaData={onFetchAvatarPersonaData}
-          />
-        </Stack.Item>
-        <ChatHeader
-          /* @conditional-compile-remove(chat-composite-participant-pane) */
-          isParticipantsDisplayed={hideParticipants !== true}
-          onEndChat={() => adapter.removeParticipant(userId)}
-          /* @conditional-compile-remove(chat-composite-participant-pane) */
-          setHideParticipants={setHideParticipants}
-        />
-      </Stack>
+      <MessageThread
+        messages={[
+          {
+            messageType: 'chat',
+            messageId: Math.random().toString(),
+            content:
+              '<p>Check out this image:&nbsp;</p>\r\n<p><img alt="image" src="" itemscope="png" width="250" height="375" id="SomeImageId" style="vertical-align:bottom"></p><p>&nbsp;</p>\r\n',
+            createdOn: new Date('2020-04-13T00:00:00.000+07:01'),
+            mine: false,
+            attached: false,
+            contentType: 'html'
+          }
+        ]}
+        userId={'dsfsdagdfgdfsgdfs'}
+      />
     );
   }
   return <>Initializing...</>;
