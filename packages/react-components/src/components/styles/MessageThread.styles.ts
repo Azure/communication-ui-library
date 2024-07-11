@@ -187,6 +187,7 @@ export const useChatMyMessageStyles = makeStyles({
       outlineStyle: 'auto'
     }
   },
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
   bodyWithPlaceholderImage: {
     '& img[src=""]': {
       width: '12rem',
