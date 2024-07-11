@@ -2,8 +2,16 @@
 // Licensed under the MIT License.
 
 import { CallAgent } from '@azure/communication-calling';
-import { CommunicationIdentifier, isPhoneNumberIdentifier, PhoneNumberIdentifier } from '@azure/communication-common';
-import { Dialpad } from '@azure/communication-react';
+import {
+  CommunicationIdentifier,
+  CommunicationUserIdentifier,
+  isMicrosoftTeamsAppIdentifier,
+  isMicrosoftTeamsUserIdentifier,
+  isPhoneNumberIdentifier,
+  MicrosoftTeamsUserIdentifier,
+  PhoneNumberIdentifier
+} from '@azure/communication-common';
+import { Dialpad, fromFlatCommunicationIdentifier } from '@azure/communication-react';
 import { PrimaryButton, Stack, TextField } from '@fluentui/react';
 import React, { useState } from 'react';
 
@@ -20,23 +28,37 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
       <TextField
         label="ACS or Teams user ID"
         placeholder="Enter the userId you want to call"
-        onChange={(_, value) => setTargetParticipants([{ communicationUserId: value || '' }])}
+        onChange={(_, value: string) => {
+          const id = fromFlatCommunicationIdentifier(value);
+          if (isMicrosoftTeamsUserIdentifier(id)) {
+            setTargetParticipants([{ microsoftTeamsUserId: value || '' }]);
+          } else if (isMicrosoftTeamsAppIdentifier(id)) {
+            setTargetParticipants([{ teamsAppId: value || '' }]);
+          } else {
+            setTargetParticipants([{ communicationUserId: value || '' }]);
+          }
+        }}
       ></TextField>
       <TextField
         label="Alternate Caller Id"
         placeholder="Enter the alternate caller id"
-        onChange={(_, value) => setAlternateCallerId(value || '')}
+        onChange={(_, value: string) => setAlternateCallerId(value || '')}
       ></TextField>
       <Dialpad onChange={(value) => setTargetParticipants([{ phoneNumber: value }])}></Dialpad>
       <PrimaryButton
         onClick={() => {
+          console.log('targetParticipants', targetParticipants);
           if (targetParticipants && targetParticipants.length > 0) {
             if (isPhoneNumberIdentifier(targetParticipants[0]) && alternateCallerId) {
               (callAgent as CallAgent).startCall(targetParticipants as PhoneNumberIdentifier[], {
                 alternateCallerId: { phoneNumber: alternateCallerId }
               });
             } else {
-              (callAgent as CallAgent).startCall(targetParticipants);
+              if (isMicrosoftTeamsUserIdentifier(targetParticipants[0])) {
+                (callAgent as CallAgent).startCall(targetParticipants as MicrosoftTeamsUserIdentifier[]);
+              } else {
+                (callAgent as CallAgent).startCall(targetParticipants as CommunicationUserIdentifier[]);
+              }
             }
           }
         }}
