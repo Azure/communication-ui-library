@@ -189,6 +189,8 @@ export const useChatMyMessageStyles = makeStyles({
   },
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   bodyWithPlaceholderImage: {
+    // Adding width and height to the placeholder image only for myMessages
+    // because inline images sent from ACS doesn't have width and height in the image tag
     '& img[src=""]': {
       width: '12rem',
       height: '12rem'
