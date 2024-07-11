@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
-import test from 'node:test';
-/* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { removeImageTags } from './ImageUploadUtils';
 
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
