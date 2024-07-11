@@ -231,6 +231,8 @@ const MessageBubble = (props: ChatMyMessageComponentAsMessageBubbleProps): JSX.E
             className: mergeClasses(
               chatMessageCommonStyles.body,
               chatMyMessageStyles.body,
+              /* @conditional-compile-remove(rich-text-editor-image-upload) */
+              chatMyMessageStyles.bodyWithPlaceholderImage,
               isBlockedMessage
                 ? chatMessageCommonStyles.blocked
                 : props.message.status === 'failed'

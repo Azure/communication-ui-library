@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import { IButtonStyles, mergeStyles } from '@fluentui/react';
-import { makeStyles, shorthands, tokens } from '@fluentui/react-components';
+import { GriffelStyle, makeStyles, shorthands, tokens } from '@fluentui/react-components';
 import { CSSProperties } from 'react';
 import { MESSAGE_STATUS_INDICATOR_SIZE_REM } from './MessageStatusIndicator.styles';
 import { ComponentSlotStyle } from '../../types';
@@ -147,6 +147,42 @@ export const useChatMessageRenderStyles = makeStyles({
   }
 });
 
+const bodyWithPlaceholderImage: GriffelStyle = {
+  '& img[src=""]': {
+    display: 'block',
+    position: 'relative',
+    marginBottom: '5px'
+  },
+  '& img[src=""]:after': {
+    backgroundColor: tokens.colorNeutralBackground1Selected,
+    content: `url("data:image/gif;base64,R0lGODlhAQABAAAAACw=")`,
+    backgroundSize: 'center',
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    top: '0',
+    left: '0',
+    display: 'block'
+  },
+  '& .broken-image-wrapper': {
+    width: '12rem',
+    height: '12rem',
+    marginTop: '0.75rem',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    outline: `1px solid ${tokens.colorNeutralForegroundDisabled}`,
+    backgroundColor: tokens.colorNeutralBackground2
+  },
+  '& .broken-image-wrapper:after': {
+    content: `''`,
+    maskImage: `url("data:image/svg+xml,%3Csvg width='3rem' height='3rem' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg' fill='currentColor'%3E%3Cpath d='${ERROR_IMAGE_SVG_PATH}' fill='currentColor' /%3E%3C/svg%3E");`,
+    width: '3rem',
+    height: '3rem',
+    backgroundColor: `${tokens.colorNeutralForeground2}`
+  }
+};
+
 /**
  * @private
  */
@@ -187,6 +223,8 @@ export const useChatMyMessageStyles = makeStyles({
       outlineStyle: 'auto'
     }
   },
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  bodyWithPlaceholderImage,
   bodyAttached: {
     marginTop: '0.125rem'
   },
@@ -300,41 +338,7 @@ export const useChatMessageStyles = makeStyles({
       outlineStyle: 'auto'
     }
   },
-  bodyWithPlaceholderImage: {
-    '& img[src=""]': {
-      display: 'block',
-      position: 'relative',
-      marginBottom: '5px'
-    },
-    '& img[src=""]:after': {
-      backgroundColor: tokens.colorNeutralBackground1Selected,
-      content: `url("data:image/gif;base64,R0lGODlhAQABAAAAACw=")`,
-      backgroundSize: 'center',
-      position: 'absolute',
-      width: '100%',
-      height: '100%',
-      top: '0',
-      left: '0',
-      display: 'block'
-    },
-    '& .broken-image-wrapper': {
-      width: '12rem',
-      height: '12rem',
-      marginTop: '0.75rem',
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      outline: `1px solid ${tokens.colorNeutralForegroundDisabled}`,
-      backgroundColor: tokens.colorNeutralBackground2
-    },
-    '& .broken-image-wrapper:after': {
-      content: `''`,
-      maskImage: `url("data:image/svg+xml,%3Csvg width='3rem' height='3rem' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg' fill='currentColor'%3E%3Cpath d='${ERROR_IMAGE_SVG_PATH}' fill='currentColor' /%3E%3C/svg%3E");`,
-      width: '3rem',
-      height: '3rem',
-      backgroundColor: `${tokens.colorNeutralForeground2}`
-    }
-  },
+  bodyWithPlaceholderImage,
   bodyWithoutAvatar: {
     marginTop: '0.125rem'
   },
