@@ -12,13 +12,14 @@ import '@testing-library/jest-dom';
 /* @conditional-compile-remove(rich-text-editor-composite-support) */
 import { COMPOSITE_LOCALE_ZH_TW } from '../localization/locales/zh-TW/CompositeLocale';
 /* @conditional-compile-remove(rich-text-editor-composite-support) */
-import { ChatComposite } from './ChatComposite';
+import { ChatComposite, ChatCompositeProps } from './ChatComposite';
 /* @conditional-compile-remove(rich-text-editor-composite-support) */
 import React from 'react';
 /* @conditional-compile-remove(rich-text-editor-composite-support) */
 import { RichTextSendBoxProps } from '@internal/react-components';
 /* @conditional-compile-remove(rich-text-editor-composite-support) */
 import { RichTextSendBoxWrapper } from '../common/RichTextSendBoxWrapper';
+import { removeImageTags } from './ImageUpload/ImageUploadUtils';
 
 // Mock the richTextSendBoxWrapper component as it's lazy loaded in ChatComposite
 /* @conditional-compile-remove(rich-text-editor-composite-support) */
@@ -30,7 +31,7 @@ const mockedRichTextSendBoxWrapper = jest.mocked(RichTextSendBoxWrapper);
 
 /* @conditional-compile-remove(rich-text-editor-composite-support) */
 describe('ChatComposite', () => {
-  function createMockChatAdapter(): ChatAdapter {
+  const createMockChatAdapter = (): ChatAdapter => {
     const chatAdapter = {} as ChatAdapter;
     chatAdapter.onStateChange = jest.fn();
     chatAdapter.offStateChange = jest.fn();
@@ -52,7 +53,7 @@ describe('ChatComposite', () => {
       })
     );
     return chatAdapter;
-  }
+  };
 
   beforeEach(() => {
     jest.restoreAllMocks();
@@ -106,7 +107,7 @@ describe('ChatComposite', () => {
 
 /* @conditional-compile-remove(rich-text-editor-composite-support) */
 describe('ChatComposite - text only mode', () => {
-  function createMockChatAdapter(textOnlyChat: boolean): ChatAdapter {
+  const createMockChatAdapter = (textOnlyChat: boolean): ChatAdapter => {
     const chatAdapter = {} as ChatAdapter;
     chatAdapter.onStateChange = jest.fn();
     chatAdapter.offStateChange = jest.fn();
@@ -114,7 +115,8 @@ describe('ChatComposite - text only mode', () => {
     chatAdapter.loadPreviousChatMessages = jest.fn();
     chatAdapter.getState = jest.fn(
       (): ChatAdapterState => ({
-        userId: { kind: 'communicationUser', communicationUserId: 'test' },
+        //Text only mode is available for Teams meetings only
+        userId: { kind: 'microsoftTeamsUser', microsoftTeamsUserId: 'test' },
         displayName: 'test',
         thread: {
           chatMessages: {},
@@ -123,28 +125,34 @@ describe('ChatComposite - text only mode', () => {
           readReceipts: [],
           typingIndicators: [],
           latestReadTime: new Date(),
-          properties: { messagingPolicy: { textOnlyChat: textOnlyChat } }
+          properties: {
+            messagingPolicy: { textOnlyChat: textOnlyChat },
+            createdBy: { kind: 'microsoftTeamsUser', microsoftTeamsUserId: 'test' }
+          }
         },
         latestErrors: {}
       })
     );
     return chatAdapter;
-  }
+  };
 
-  const mockBaseCompositeProps = {
-    fluentTheme: {},
-    icons: {},
-    locale: COMPOSITE_LOCALE_ZH_TW,
-    rtl: true,
-    onFetchAvatarPersonaData: jest.fn(),
-    options: {
-      richTextEditor: true,
-      attachmentOptions: {
-        uploadOptions: {
-          handleAttachmentSelection: () => {}
+  const mockBaseCompositeProps = (adapter: ChatAdapter, richTextEditor: boolean): ChatCompositeProps => {
+    return {
+      adapter: adapter,
+      fluentTheme: {},
+      icons: {},
+      locale: COMPOSITE_LOCALE_ZH_TW,
+      rtl: true,
+      onFetchAvatarPersonaData: jest.fn(),
+      options: {
+        richTextEditor: richTextEditor,
+        attachmentOptions: {
+          uploadOptions: {
+            handleAttachmentSelection: () => {}
+          }
         }
       }
-    }
+    };
   };
 
   beforeEach(() => {
@@ -167,20 +175,26 @@ describe('ChatComposite - text only mode', () => {
     }
     mockedRichTextSendBoxWrapper.mockImplementation(Wrapper);
     const mockChatAdapter = createMockChatAdapter(true);
-    render(<ChatComposite adapter={mockChatAdapter} {...mockBaseCompositeProps} />);
+    render(<ChatComposite {...mockBaseCompositeProps(mockChatAdapter, true)} />);
     await screen.findByTestId('rich-text-editor-test');
     expect(onPaste).toBeDefined();
     if (onPaste !== undefined) {
       const onPasteFunction = onPaste as (event: { content: DocumentFragment }) => void;
-      expect(onPasteFunction.toString()).toBe(removeImageTags.toString());
+      expect(onPasteFunction).toBe(removeImageTags);
     } else {
       fail('onPaste is undefined');
     }
   });
 
-  test('Chat Composite should not show attachments button when text only mode is on', async () => {
+  test('Chat Composite with rich text send box should not show attachments button when text only mode is on', async () => {
     const mockChatAdapter = createMockChatAdapter(true);
-    render(<ChatComposite adapter={mockChatAdapter} {...mockBaseCompositeProps} />);
+    render(<ChatComposite {...mockBaseCompositeProps(mockChatAdapter, true)} />);
+    expect(screen.queryByTestId('attachment-upload-button')).toBeNull();
+  });
+
+  test('Chat Composite with plain text send box should not show attachments button when text only mode is on', async () => {
+    const mockChatAdapter = createMockChatAdapter(true);
+    render(<ChatComposite {...mockBaseCompositeProps(mockChatAdapter, false)} />);
     expect(screen.queryByTestId('attachment-upload-button')).toBeNull();
   });
 
@@ -193,14 +207,21 @@ describe('ChatComposite - text only mode', () => {
     }
     mockedRichTextSendBoxWrapper.mockImplementation(Wrapper);
     const mockChatAdapter = createMockChatAdapter(false);
-    render(<ChatComposite adapter={mockChatAdapter} {...mockBaseCompositeProps} />);
+    render(<ChatComposite {...mockBaseCompositeProps(mockChatAdapter, true)} />);
     await screen.findByTestId('rich-text-editor-test');
     expect(onPaste).toBeUndefined();
   });
 
-  test('Chat Composite should show attachments button when text only mode is off', async () => {
+  test('Chat Composite with rich text send box should show attachments button when text only mode is off', async () => {
     const mockChatAdapter = createMockChatAdapter(false);
-    render(<ChatComposite adapter={mockChatAdapter} {...mockBaseCompositeProps} />);
+    render(<ChatComposite {...mockBaseCompositeProps(mockChatAdapter, true)} />);
+    const attachmentsButton = await screen.findByTestId('attachment-upload-button');
+    expect(attachmentsButton).toBeDefined();
+  });
+
+  test('Chat Composite with plain text send box should show attachments button when text only mode is off', async () => {
+    const mockChatAdapter = createMockChatAdapter(false);
+    render(<ChatComposite {...mockBaseCompositeProps(mockChatAdapter, false)} />);
     const attachmentsButton = await screen.findByTestId('attachment-upload-button');
     expect(attachmentsButton).toBeDefined();
   });
@@ -210,17 +231,3 @@ describe('ChatComposite - text only mode', () => {
 describe('Empty Test', () => {
   test.skip('Empty test for Conditional Compile case where no tests are included', (done) => done());
 });
-
-/* @conditional-compile-remove(rich-text-editor-image-upload) */
-const removeImageTags = (event: { content: DocumentFragment }): void => {
-  event.content.querySelectorAll('img').forEach((image) => {
-    // If the image is the only child of its parent, remove all the parents of this img element.
-    let parentNode: HTMLElement | null = image.parentElement;
-    let currentNode: HTMLElement = image;
-    while (parentNode?.childNodes.length === 1) {
-      currentNode = parentNode;
-      parentNode = parentNode.parentElement;
-    }
-    currentNode?.remove();
-  });
-};

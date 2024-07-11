@@ -134,13 +134,18 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     useImageUpload();
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   const [textOnlyChat, setTextOnlyChat] = useState(false);
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  const [isACSChat, setACSChat] = useState(false);
 
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   useEffect(() => {
     const updateChatState = (newState: ChatAdapterState): void => {
       setTextOnlyChat(newState.thread.properties?.messagingPolicy?.textOnlyChat === true);
+      setACSChat(newState.thread.properties?.createdBy?.kind !== 'microsoftTeamsUser');
     };
+    // set initial state for textOnlyChat and isACSChat
     updateChatState(adapter.getState());
+
     adapter.onStateChange(updateChatState);
     return () => {
       adapter.offStateChange(updateChatState);
@@ -516,17 +521,6 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   );
 
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  const onPasteHandler = useCallback(
-    (event: { content: DocumentFragment }) => {
-      const threadCreatedBy = adapter.getState().thread?.properties?.createdBy;
-      if (threadCreatedBy?.kind !== 'microsoftTeamsUser' || textOnlyChat) {
-        removeImageTags(event);
-      }
-    },
-    [adapter, textOnlyChat]
-  );
-
-  /* @conditional-compile-remove(rich-text-editor-image-upload) */
   const onCancelEditMessageHandler = useCallback(() => {
     handleInlineImageUploadAction({ type: AttachmentUploadActionType.Clear });
   }, [handleInlineImageUploadAction]);
@@ -542,9 +536,10 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
 
   /* @conditional-compile-remove(rich-text-editor-composite-support) */
   const richTextEditorOptions = useMemo(() => {
+    const onPasteCallback = isACSChat || textOnlyChat ? removeImageTags : undefined;
     return options?.richTextEditor
       ? {
-          /* @conditional-compile-remove(rich-text-editor-image-upload) */ onPaste: onPasteHandler,
+          /* @conditional-compile-remove(rich-text-editor-image-upload) */ onPaste: onPasteCallback,
           /* @conditional-compile-remove(rich-text-editor-image-upload) */
           onUploadInlineImage: onUploadInlineImage,
           /* @conditional-compile-remove(rich-text-editor-image-upload) */
@@ -561,7 +556,9 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
     onUploadInlineImage,
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    onPasteHandler,
+    isACSChat,
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    textOnlyChat,
     options?.richTextEditor
   ]);
 
