@@ -1,27 +1,26 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import {
-  AzureCommunicationTokenCredential,
-  CommunicationUserIdentifier,
-  MicrosoftTeamsUserIdentifier
-} from '@azure/communication-common';
+/* @conditional-compile-remove(one-to-n-calling) */
+import { AzureCommunicationTokenCredential } from '@azure/communication-common';
+import { CommunicationUserIdentifier, MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 import React, { useEffect, useState } from 'react';
 import { fetchTokenResponse } from '../utils/AppUtils';
 import {
-  DeclarativeCallAgent,
-  DeclarativeTeamsCallAgent,
   FluentThemeProvider,
   StatefulCallClient,
   createStatefulCallClient,
   fromFlatCommunicationIdentifier
 } from '@azure/communication-react';
+/* @conditional-compile-remove(one-to-n-calling) */
+import { DeclarativeCallAgent, DeclarativeTeamsCallAgent } from '@azure/communication-react';
 import { Stack, Image, Text, TextField, PrimaryButton } from '@fluentui/react';
 import { imgStyle } from '../styles/HomeScreen.styles';
 
 export interface LoginProps {
   onSetUserIdentifier: (user: CommunicationUserIdentifier) => void;
   onSetStatefulClient: (client: StatefulCallClient) => void;
+  /* @conditional-compile-remove(one-to-n-calling) */
   onSetCallAgent: (callAgent: DeclarativeCallAgent | DeclarativeTeamsCallAgent) => void;
   onSetTeamsIdentity: (identity: string) => void;
   setTokenCredentialError: (error: boolean) => void;
@@ -32,6 +31,7 @@ export interface LoginProps {
 
 export const LoginScreen = (props: LoginProps): JSX.Element => {
   const {
+    /* @conditional-compile-remove(one-to-n-calling) */
     onSetCallAgent,
     onSetUserIdentifier,
     onSetTeamsIdentity,
@@ -42,8 +42,11 @@ export const LoginScreen = (props: LoginProps): JSX.Element => {
   // Get Azure Communications Service token and Voice app identification from the server.
 
   const [userIdentifier, setUserIdentifier] = useState<CommunicationUserIdentifier>();
+  /* @conditional-compile-remove(one-to-n-calling) */
   const [callAgent, setCallAgent] = useState<DeclarativeCallAgent | DeclarativeTeamsCallAgent>();
+  /* @conditional-compile-remove(one-to-n-calling) */
   const [displayName, setDisplayName] = useState<string>();
+  /* @conditional-compile-remove(one-to-n-calling) */
   const [tokenCredential, setTokenCredential] = useState<AzureCommunicationTokenCredential>();
   const [statefulCallClient, setStatefulCallClient] = useState<StatefulCallClient>();
 
@@ -52,6 +55,7 @@ export const LoginScreen = (props: LoginProps): JSX.Element => {
     identifier: string | undefined;
     token: string | undefined;
   }>();
+
   useEffect(() => {
     (async () => {
       if (isCTE === false) {
@@ -61,6 +65,7 @@ export const LoginScreen = (props: LoginProps): JSX.Element => {
           console.log('User fetched: ', user);
           setUserIdentifier(user);
           onSetUserIdentifier(user);
+          /* @conditional-compile-remove(one-to-n-calling) */
           setTokenCredential(new AzureCommunicationTokenCredential(token));
         } catch (e) {
           console.error(e);
@@ -71,23 +76,35 @@ export const LoginScreen = (props: LoginProps): JSX.Element => {
   }, [isCTE, setTokenCredentialError, onSetUserIdentifier, setUserIdentifier]);
 
   useEffect(() => {
-    if (isCTE === true && teamsIdentityInformation?.identifier !== undefined) {
-      const statefulClient = createStatefulCallClient({
-        userId: fromFlatCommunicationIdentifier(teamsIdentityInformation.identifier) as MicrosoftTeamsUserIdentifier
-      });
-      onSetStatefulClient(statefulClient);
+    if (statefulCallClient === undefined) {
+      if (isCTE === true && teamsIdentityInformation?.identifier !== undefined) {
+        const statefulClient = createStatefulCallClient({
+          userId: fromFlatCommunicationIdentifier(teamsIdentityInformation.identifier) as MicrosoftTeamsUserIdentifier
+        });
+        onSetStatefulClient(statefulClient);
+        setStatefulCallClient(statefulClient);
+        onSetTeamsIdentity(teamsIdentityInformation.identifier);
+        return;
+      }
+      if (!userIdentifier) {
+        return;
+      }
+      const statefulClient = createStatefulCallClient({ userId: userIdentifier });
       setStatefulCallClient(statefulClient);
-      onSetTeamsIdentity(teamsIdentityInformation.identifier);
-      return;
+      onSetStatefulClient(statefulClient);
     }
-    if (!userIdentifier) {
-      return;
-    }
-    const statefulClient = createStatefulCallClient({ userId: userIdentifier });
-    setStatefulCallClient(statefulClient);
-    onSetStatefulClient(statefulClient);
-  }, [userIdentifier, isCTE, teamsIdentityInformation, onSetStatefulClient, onSetTeamsIdentity]);
+    console.log('Stateful client created', statefulCallClient);
+  }, [
+    userIdentifier,
+    isCTE,
+    teamsIdentityInformation,
+    onSetStatefulClient,
+    onSetTeamsIdentity,
+    setStatefulCallClient,
+    statefulCallClient
+  ]);
 
+  /* @conditional-compile-remove(one-to-n-calling) */
   useEffect(() => {
     if (!isCTE && callAgent === undefined && statefulCallClient && tokenCredential && displayName) {
       const createCallAgent = async (): Promise<void> => {
@@ -145,6 +162,7 @@ export const LoginScreen = (props: LoginProps): JSX.Element => {
         <TextField
           placeholder="Enter your display name"
           onChange={(_, value) => {
+            /* @conditional-compile-remove(one-to-n-calling) */
             setDisplayName(value);
           }}
         ></TextField>

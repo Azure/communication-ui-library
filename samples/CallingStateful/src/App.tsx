@@ -5,24 +5,22 @@ import React, { useCallback, useEffect, useState } from 'react';
 import './App.css';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import {
-  CallAgent,
   CallCommon,
   IncomingCall,
-  IncomingCallEvent,
-  TeamsCallAgent,
-  TeamsIncomingCallEvent,
   TeamsIncomingCall,
   LocalVideoStream,
   IncomingCallCommon
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(one-to-n-calling) */
+import { IncomingCallEvent, TeamsIncomingCallEvent } from '@azure/communication-calling';
 import {
   DEFAULT_COMPONENT_ICONS,
   FluentThemeProvider,
   StatefulCallClient,
-  DeclarativeCallAgent,
-  DeclarativeTeamsCallAgent,
   CallClientState
 } from '@azure/communication-react';
+/* @conditional-compile-remove(one-to-n-calling) */
+import { DeclarativeCallAgent, DeclarativeTeamsCallAgent } from '@azure/communication-react';
 import { Stack, Text, initializeIcons, registerIcons } from '@fluentui/react';
 import heroSVG from './assets/hero.svg';
 import { LoginScreen } from './views/Login';
@@ -39,6 +37,7 @@ function App(): JSX.Element {
   const [userCredentialFetchError, setUserCredentialFetchError] = useState<boolean>(false);
 
   const [statefulCallClient, setStatefulCallClient] = useState<StatefulCallClient>();
+  /* @conditional-compile-remove(one-to-n-calling) */
   const [callAgent, setCallAgent] = useState<DeclarativeCallAgent | DeclarativeTeamsCallAgent>();
   const [call, setCall] = useState<CallCommon>();
   const [incomingCalls, setIncomingCalls] = useState<readonly IncomingCall[] | readonly TeamsIncomingCall[]>([]);
@@ -54,6 +53,7 @@ function App(): JSX.Element {
     [incomingCalls]
   );
 
+  /* @conditional-compile-remove(one-to-n-calling) */
   const incomingAcsCallListener: IncomingCallEvent = useCallback(
     ({ incomingCall }): void => {
       console.log('Incoming call received: ', incomingCall);
@@ -64,6 +64,7 @@ function App(): JSX.Element {
     [callAgent]
   );
 
+  /* @conditional-compile-remove(one-to-n-calling) */
   const teamsIncomingCallListener: TeamsIncomingCallEvent = useCallback(
     ({ incomingCall }): void => {
       console.log('Incoming call received: ', incomingCall);
@@ -106,7 +107,7 @@ function App(): JSX.Element {
 
   // Examples for Callback functions for utilizing incomingCall reject and accept.
   const onRejectCall = (incomingCall: IncomingCall | TeamsIncomingCall): void => {
-    if (incomingCall && callAgent) {
+    if (incomingCall && /* @conditional-compile-remove(one-to-n-calling) */ callAgent) {
       incomingCall.reject();
       filterEndedIncomingCalls(incomingCall);
     }
@@ -119,7 +120,7 @@ function App(): JSX.Element {
     if (cameras && useVideo) {
       localVideoStream = new LocalVideoStream(cameras[0]);
     }
-    if (incomingCall && callAgent) {
+    if (incomingCall && /* @conditional-compile-remove(one-to-n-calling) */ callAgent) {
       await incomingCall.accept(
         localVideoStream ? { videoOptions: { localVideoStreams: [localVideoStream] } } : undefined
       );
@@ -137,39 +138,55 @@ function App(): JSX.Element {
   }, [statefulCallClient, statefulCallClientStateListener]);
 
   useEffect(() => {
+    /* @conditional-compile-remove(one-to-n-calling) */
     if (!callAgent) {
       return;
     }
+    /* @conditional-compile-remove(one-to-n-calling) */
     if (callAgent.kind === 'TeamsCallAgent') {
       console.log('Subscribing to teams events');
-      (callAgent as TeamsCallAgent).on('callsUpdated', callsUpdatedListener);
-      (callAgent as TeamsCallAgent).on('incomingCall', teamsIncomingCallListener);
+      /* @conditional-compile-remove(one-to-n-calling) */
+      (callAgent as DeclarativeTeamsCallAgent).on('callsUpdated', callsUpdatedListener);
+      /* @conditional-compile-remove(one-to-n-calling) */
+      (callAgent as DeclarativeTeamsCallAgent).on('incomingCall', teamsIncomingCallListener);
       return () => {
-        (callAgent as TeamsCallAgent).off('incomingCall', teamsIncomingCallListener);
-        (callAgent as TeamsCallAgent).off('callsUpdated', callsUpdatedListener);
+        /* @conditional-compile-remove(one-to-n-calling) */
+        (callAgent as DeclarativeTeamsCallAgent).off('incomingCall', teamsIncomingCallListener);
+        /* @conditional-compile-remove(one-to-n-calling) */
+        (callAgent as DeclarativeTeamsCallAgent).off('callsUpdated', callsUpdatedListener);
       };
     } else if (callAgent.kind === 'CallAgent') {
       console.log('subscribing to ACS CallAgent events');
-      // there is an issue here with the kind prop that requires this casting..
-      (callAgent as CallAgent).on('incomingCall', incomingAcsCallListener);
-      (callAgent as CallAgent).on('callsUpdated', callsUpdatedListener);
+      /* @conditional-compile-remove(one-to-n-calling) */
+      (callAgent as DeclarativeCallAgent).on('incomingCall', incomingAcsCallListener);
+      /* @conditional-compile-remove(one-to-n-calling) */
+      (callAgent as DeclarativeCallAgent).on('callsUpdated', callsUpdatedListener);
       return () => {
-        (callAgent as CallAgent).off('incomingCall', incomingAcsCallListener);
-        (callAgent as CallAgent).off('callsUpdated', callsUpdatedListener);
+        /* @conditional-compile-remove(one-to-n-calling) */
+        (callAgent as DeclarativeCallAgent).off('incomingCall', incomingAcsCallListener);
+        /* @conditional-compile-remove(one-to-n-calling) */
+        (callAgent as DeclarativeCallAgent).off('callsUpdated', callsUpdatedListener);
       };
     } else {
       throw new Error('Unknown call agent kind');
     }
-  }, [callAgent, call, callsUpdatedListener, incomingAcsCallListener, teamsIncomingCallListener]);
+  }, [
+    /* @conditional-compile-remove(one-to-n-calling) */ callAgent,
+    call,
+    callsUpdatedListener,
+    /* @conditional-compile-remove(one-to-n-calling) */ incomingAcsCallListener,
+    /* @conditional-compile-remove(one-to-n-calling) */ teamsIncomingCallListener
+  ]);
 
   if (userCredentialFetchError) {
     return <Text>Failed to fetch user credentials</Text>;
   }
 
-  if (statefulCallClient === undefined || callAgent === undefined) {
+  if (statefulCallClient === undefined || /* @conditional-compile-remove(one-to-n-calling) */ callAgent === undefined) {
     return (
       <LoginScreen
         onSetStatefulClient={setStatefulCallClient}
+        /* @conditional-compile-remove(one-to-n-calling) */
         onSetCallAgent={setCallAgent}
         onSetUserIdentifier={setUserIdentifier}
         headerImageProps={imageProps}
@@ -189,8 +206,13 @@ function App(): JSX.Element {
       >
         {userIdentifier && <Text>your userId: {userIdentifier.communicationUserId}</Text>}
         {teamsIdentifier && <Text>your teamsId: {teamsIdentifier}</Text>}
-        {statefulCallClient && callAgent && call && (
-          <CallScreen statefulCallClient={statefulCallClient} callAgent={callAgent} call={call} onSetCall={setCall} />
+        {statefulCallClient && /* @conditional-compile-remove(one-to-n-calling) */ callAgent && call && (
+          <CallScreen
+            statefulCallClient={statefulCallClient}
+            /* @conditional-compile-remove(one-to-n-calling) */ callAgent={callAgent}
+            /* @conditional-compile-remove(one-to-n-calling) */ call={call}
+            /* @conditional-compile-remove(one-to-n-calling) */ onSetCall={setCall}
+          />
         )}
         <IncomingCallManager incomingCalls={incomingCalls} onAcceptCall={onAcceptCall} onRejectCall={onRejectCall} />
       </Stack>
