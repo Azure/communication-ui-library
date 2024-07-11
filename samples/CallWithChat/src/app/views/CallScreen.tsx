@@ -36,6 +36,7 @@ export interface CallScreenProps {
     | TeamsMeetingLinkLocator
     | /* @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator;
   /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId?: string;
+  /* @conditional-compile-remove(rich-text-editor-composite-support) */ isRichTextEditorEnabled?: boolean;
 }
 
 export const CallScreen = (props: CallScreenProps): JSX.Element => {
@@ -45,7 +46,8 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     displayName,
     endpoint,
     locator,
-    /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId
+    /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
+    /* @conditional-compile-remove(rich-text-editor-composite-support) */ isRichTextEditorEnabled
   } = props;
 
   const callAdapterOptions: AzureCommunicationCallAdapterOptions = useMemo(() => {
@@ -202,11 +204,15 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
         }
       },
       /* @conditional-compile-remove(file-sharing-acs) */
-      attachmentOptions: attachmentOptions
+      attachmentOptions: attachmentOptions,
+      /* @conditional-compile-remove(rich-text-editor-composite-support) */
+      richTextEditor: isRichTextEditorEnabled
     }),
     [
       /* @conditional-compile-remove(file-sharing-acs) */
       attachmentOptions,
+      /* @conditional-compile-remove(rich-text-editor-composite-support) */
+      isRichTextEditorEnabled,
       shouldHideScreenShare
     ]
   );
@@ -233,7 +239,6 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
   ) {
     callInvitationUrl = undefined;
   }
-
   return (
     <CallWithChatComposite
       adapter={adapter}
