@@ -472,6 +472,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
       });
       activeNotifications.push(complianceNotification);
     }
+    setTrackedNotifications((prev) => updateTrackedNotificationsWithActiveNotifications(prev, activeNotifications));
   }, [complianceNotification, activeNotifications]);
 
   const [trackedErrors, setTrackedErrors] = useState<TrackedNotifications>({} as TrackedNotifications);
@@ -485,13 +486,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
     setTrackedErrors((prev) => updateTrackedNotificationsWithActiveNotifications(prev, activeErrors));
     /* @conditional-compile-remove(notifications) */
     setTrackedInCallErrors((prev) => updateTrackedNotificationsWithActiveNotifications(prev, activeInCallErrors));
-    /* @conditional-compile-remove(notifications) */
-    setTrackedNotifications((prev) => updateTrackedNotificationsWithActiveNotifications(prev, activeNotifications));
-  }, [
-    activeErrors,
-    /* @conditional-compile-remove(notifications) */ activeInCallErrors,
-    /* @conditional-compile-remove(notifications) */ activeNotifications
-  ]);
+  }, [activeErrors, /* @conditional-compile-remove(notifications) */ activeInCallErrors]);
 
   const onDismissError = useCallback(
     (error: ActiveErrorMessage | /* @conditional-compile-remove(notifications) */ ActiveNotification) => {
@@ -517,10 +512,14 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   ) as ActiveNotification[];
 
   /* @conditional-compile-remove(notifications) */
-  const latestNotifications = useMemo(
-    () => filterLatestNotifications(activeNotifications, trackedNotifications),
-    [activeNotifications, trackedNotifications]
-  ) as ActiveNotification[];
+  const latestNotifications = useMemo(() => {
+    const result = filterLatestNotifications(activeNotifications, trackedNotifications);
+    // sort notifications by timestamp from earliest to latest
+    result.sort(
+      (a, b) => (a.timestamp ?? new Date(Date.now())).getTime() - (b.timestamp ?? new Date(Date.now())).getTime()
+    );
+    return result;
+  }, [activeNotifications, trackedNotifications]) as ActiveNotification[];
 
   const callees = useSelector(getTargetCallees) as StartCallIdentifier[];
   const locale = useLocale();
