@@ -261,8 +261,7 @@ export const useChatMessageStyles = makeStyles({
       fontWeight: tokens.fontWeightSemibold
     },
     '& img': {
-      maxWidth: '100% !important', // Add !important to make sure it won't be overridden by style defined in element
-      height: 'auto !important'
+      maxWidth: '100% !important' // Add !important to make sure it won't be overridden by style defined in element
     },
     '& video': {
       maxWidth: '100% !important', // Add !important to make sure it won't be overridden by style defined in element
@@ -301,9 +300,11 @@ export const useChatMessageStyles = makeStyles({
   },
   bodyWithPlaceholderImage: {
     '& img[src=""]': {
-      display: 'block',
+      fontSize: '0',
+      backgroundColor: tokens.colorNeutralBackground1Selected,
       position: 'relative',
-      marginBottom: '5px'
+      clipPath: 'inset(0.6px)',
+      display: 'flex'
     },
     '& img[src=""]:after': {
       backgroundColor: tokens.colorNeutralBackground1Selected,
