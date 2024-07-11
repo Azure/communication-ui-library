@@ -24,7 +24,9 @@ module.exports = {
     // Feature for Rich Text Editor (RTE) image upload support
     "rich-text-editor-image-upload",
     // Feature for showing notifications
-    "notifications"
+    "notifications",
+    // feature for adding JS helpers to the UI library API
+    "composite-js-helpers",
   ],
   beta: [
     "call-readiness",
