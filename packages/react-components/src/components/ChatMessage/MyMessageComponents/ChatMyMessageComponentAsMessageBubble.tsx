@@ -232,6 +232,7 @@ const MessageBubble = (props: ChatMyMessageComponentAsMessageBubbleProps): JSX.E
               chatMessageCommonStyles.body,
               chatMyMessageStyles.body,
               /* @conditional-compile-remove(rich-text-editor-image-upload) */
+              chatMessageCommonStyles.bodyWithPlaceholderImage,
               chatMyMessageStyles.bodyWithPlaceholderImage,
               isBlockedMessage
                 ? chatMessageCommonStyles.blocked
