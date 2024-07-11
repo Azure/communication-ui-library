@@ -19,6 +19,7 @@ import React from 'react';
 import { RichTextSendBoxProps } from '@internal/react-components';
 /* @conditional-compile-remove(rich-text-editor-composite-support) */
 import { RichTextSendBoxWrapper } from '../common/RichTextSendBoxWrapper';
+/* @conditional-compile-remove(rich-text-editor-composite-support) */
 import { removeImageTags } from './ImageUpload/ImageUploadUtils';
 
 // Mock the richTextSendBoxWrapper component as it's lazy loaded in ChatComposite
@@ -26,7 +27,9 @@ import { removeImageTags } from './ImageUpload/ImageUploadUtils';
 function MockedRichTextSendBoxWrapperComponent(): JSX.Element {
   return <div data-testid="rich-text-editor-test">Mocked RichTextSendboxWrapper</div>;
 }
+/* @conditional-compile-remove(rich-text-editor-composite-support) */
 jest.mock('../common/RichTextSendBoxWrapper');
+/* @conditional-compile-remove(rich-text-editor-composite-support) */
 const mockedRichTextSendBoxWrapper = jest.mocked(RichTextSendBoxWrapper);
 
 /* @conditional-compile-remove(rich-text-editor-composite-support) */
