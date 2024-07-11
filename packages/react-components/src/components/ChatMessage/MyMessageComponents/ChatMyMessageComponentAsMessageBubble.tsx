@@ -242,7 +242,7 @@ const MessageBubble = (props: ChatMyMessageComponentAsMessageBubbleProps): JSX.E
                   : undefined,
               attached !== 'top' ? chatMyMessageStyles.bodyAttached : undefined,
               /* @conditional-compile-remove(file-sharing-acs) */
-              hasMultipleAttachments ? chatMyMessageStyles.multipleAttachments : undefined,
+              hasMultipleAttachments ? chatMyMessageStyles.multipleAttachmentsInViewing : undefined,
               mergeStyles(messageContainerStyle)
             ),
             style: { ...createStyleFromV8Style(messageContainerStyle) },

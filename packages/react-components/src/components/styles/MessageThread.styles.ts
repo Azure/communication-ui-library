@@ -225,9 +225,15 @@ export const useChatMyMessageStyles = makeStyles({
   menuVisible: {
     visibility: 'visible'
   },
-  multipleAttachments: {
+  multipleAttachmentsInViewing: {
     width: '100%',
     maxWidth: `${(_ATTACHMENT_CARD_WIDTH_IN_REM + _ATTACHMENT_CARD_MARGIN_IN_PX) * 2}rem`
+  },
+  multipleAttachmentsInEditing: {
+    // when in editing state, the chat message width should not be
+    // limited by content length but occupying the full width instead
+    width: '100%',
+    float: 'right'
   }
 });
 
