@@ -370,7 +370,8 @@ export const controlsToAdd = {
     control: 'text',
     defaultValue: '',
     name: 'User identifier for user',
-    type: { name: 'string', required: true }
+    type: { name: 'string', required: true },
+    value: ''
   },
   videoGallerylayout: {
     control: 'select',
