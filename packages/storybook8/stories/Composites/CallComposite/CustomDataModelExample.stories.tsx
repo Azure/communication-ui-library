@@ -3,13 +3,12 @@
 
 import { CallComposite } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
-import { Meta } from '@storybook/react/types-6-0';
+import { Meta } from '@storybook/react';
 import React, { useMemo } from 'react';
 import { v1 as createGUID } from 'uuid';
-import { COMPOSITE_FOLDER_PREFIX, compositeExperienceContainerStyle } from '../constants';
-import { defaultCallCompositeHiddenControls, controlsToAdd, ArgsFrom } from '../controlsUtils';
-import { compositeLocale } from '../localizationUtils';
-import { Docs } from './CallCompositeDocs';
+import { compositeExperienceContainerStyle } from '../../constants';
+import { defaultCallCompositeHiddenControls, controlsToAdd, ArgsFrom } from '../../controlsUtils';
+import { compositeLocale } from '../../localizationUtils';
 import { CustomDataModelExampleContainer } from './snippets/CustomDataModelExampleContainer.snippet';
 import { ConfigHintBanner } from './snippets/Utils';
 
@@ -22,7 +21,7 @@ const storyControls = {
   callInvitationURL: controlsToAdd.callInvitationURL
 };
 
-const CustomDataModelStory = (args: ArgsFrom<typeof storyControls>, context): JSX.Element => {
+const CustomDataModelStory = (args: ArgsFrom<typeof storyControls>, context: any): JSX.Element => {
   const {
     globals: { locale }
   } = context;
@@ -61,20 +60,22 @@ const CustomDataModelStory = (args: ArgsFrom<typeof storyControls>, context): JS
 
 export const CustomDataModelExample = CustomDataModelStory.bind({});
 
-export default {
-  id: `${COMPOSITE_FOLDER_PREFIX}-call-customdatamodelexample`,
-  title: `${COMPOSITE_FOLDER_PREFIX}/CallComposite/Custom Data Model Example`,
+const meta: Meta = {
+  title: 'Composites/CallComposite/Custom Data Model Example',
   component: CallComposite,
   argTypes: {
     ...storyControls,
     // Hiding auto-generated controls
     ...defaultCallCompositeHiddenControls
   },
-  parameters: {
-    docs: {
-      //Prevent Docs auto scroll to top
-      container: null,
-      page: () => Docs()
-    }
+  args: {
+    userId: '',
+    token: '',
+    displayName: 'John Smith',
+    avatarInitials: 'A B',
+    compositeFormFactor: 'desktop',
+    callInvitationURL: ''
   }
-} as Meta;
+};
+
+export default meta;

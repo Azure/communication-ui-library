@@ -3,13 +3,12 @@
 
 import { CallComposite } from '@azure/communication-react';
 import { PartialTheme, Stack } from '@fluentui/react';
-import { Meta } from '@storybook/react/types-6-0';
+import { Meta } from '@storybook/react';
 import React, { useMemo } from 'react';
 import { v1 as createGUID } from 'uuid';
-import { COMPOSITE_FOLDER_PREFIX, compositeExperienceContainerStyle } from '../constants';
-import { defaultCallCompositeHiddenControls, controlsToAdd, getControlledTheme, ArgsFrom } from '../controlsUtils';
-import { compositeLocale } from '../localizationUtils';
-import { Docs } from './CallCompositeDocs';
+import { compositeExperienceContainerStyle } from '../../constants';
+import { defaultCallCompositeHiddenControls, controlsToAdd, getControlledTheme, ArgsFrom } from '../../controlsUtils';
+import { compositeLocale } from '../../localizationUtils';
 import { ContosoCallContainer } from './snippets/Container.snippet';
 import { ConfigHintBanner } from './snippets/Utils';
 
@@ -23,7 +22,7 @@ const storyControls = {
   callInvitationURL: controlsToAdd.callInvitationURL
 };
 
-const ThemeExampleStory = (args: ArgsFrom<typeof storyControls>, context): JSX.Element => {
+const ThemeExampleStory = (args: ArgsFrom<typeof storyControls>, context: any): JSX.Element => {
   const {
     globals: { locale }
   } = context;
@@ -69,20 +68,22 @@ const ThemeExampleStory = (args: ArgsFrom<typeof storyControls>, context): JSX.E
 
 export const ThemeExample = ThemeExampleStory.bind({});
 
-export default {
-  id: `${COMPOSITE_FOLDER_PREFIX}-call-themeexample`,
-  title: `${COMPOSITE_FOLDER_PREFIX}/CallComposite/Theme Example`,
+const meta: Meta = {
+  title: 'Composites/CallComposite/Theme Example',
   component: CallComposite,
   argTypes: {
     ...storyControls,
     // Hiding auto-generated controls
     ...defaultCallCompositeHiddenControls
   },
-  parameters: {
-    docs: {
-      //Prevent Docs auto scroll to top
-      container: null,
-      page: () => Docs()
-    }
+  args: {
+    userId: '',
+    token: '',
+    displayName: 'John Smith',
+    theme: 'Default',
+    font: 'Monaco, Menlo, Consolas',
+    compositeFormFactor: 'desktop',
+    callInvitationURL: ''
   }
-} as Meta;
+};
+export default meta;

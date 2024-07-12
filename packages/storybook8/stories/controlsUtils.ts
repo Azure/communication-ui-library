@@ -491,7 +491,9 @@ export const defaultCallCompositeHiddenControls = {
   options: hiddenControl,
   callInvitationUrl: hiddenControl,
   formFactor: hiddenControl, // formFactor is hidden by default and compositeFormFactor is used as a prop instead to workaround a bug where formFactor is not put in the correct order when the controls are generated
-  role: hiddenControl // TODO: once role work is complete this should be added as a drop down control
+  role: hiddenControl, // TODO: once role work is complete this should be added as a drop down control
+  icons: hiddenControl,
+  onFetchParticipantMenuItems: hiddenControl
 };
 
 export const defaultChatCompositeHiddenControls = {
