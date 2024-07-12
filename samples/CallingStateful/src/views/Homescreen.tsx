@@ -5,7 +5,6 @@ import { CallAgent } from '@azure/communication-calling';
 import {
   CommunicationIdentifier,
   CommunicationUserIdentifier,
-  isMicrosoftTeamsAppIdentifier,
   isMicrosoftTeamsUserIdentifier,
   isPhoneNumberIdentifier,
   MicrosoftTeamsUserIdentifier,
