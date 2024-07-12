@@ -8,6 +8,7 @@ import React from 'react';
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
 import { IncomingCallNotificationExample } from './snippets/IncomingCallNotification.snippet';
 import { IncomingCallNotificationStylingExample } from './snippets/IncomingCallNotificationStyling.snippet';
+import { SingleLineBetaBanner } from '../BetaBanners/SingleLineBetaBanner';
 
 const IncomingCallNotificationText = require('!!raw-loader!./snippets/IncomingCallNotification.snippet').default;
 const IncomingCallNotificationStylingText =
@@ -16,6 +17,7 @@ const getDocs: () => JSX.Element = () => {
   return (
     <>
       <Title>Incoming Call Notifiation Component</Title>
+      <SingleLineBetaBanner />
       <Description>
         The incoming Call notification component is used to provide information to your users when they are recieving a
         call. This UI component is to be used to represent a single incoming call.
