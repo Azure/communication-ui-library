@@ -1,8 +1,8 @@
 {
   "type": "patch",
   "area": "fix",
-  "workstream": "Update paddings and theme handling for rich text editor toolbar",
-  "comment": "Removed commented code",
+  "workstream": "RTE",
+  "comment": "Update paddings and theme handling for rich text editor toolbar",
   "packageName": "@azure/communication-react",
   "email": "98852890+vhuseinova-msft@users.noreply.github.com",
   "dependentChangeType": "patch"
