@@ -4,7 +4,6 @@
 import { TeamsCallAgent } from '@azure/communication-calling';
 import { CallCommon, CallAgentCommon } from './BetaToStableTypes';
 /* @conditional-compile-remove(one-to-n-calling) */
-import { IncomingCallManagement } from './CallAgentDeclarative';
 import { clearCallRelatedState, DeclarativeCallCommon, ProxyCallAgentCommon } from './CallAgentDeclarativeCommon';
 import { CallContext } from './CallContext';
 /* @conditional-compile-remove(teams-identity-support) */
@@ -12,13 +11,28 @@ import { _isTeamsCall, _isTeamsCallAgent } from './TypeGuards';
 import { InternalCallContext } from './InternalCallContext';
 /* @conditional-compile-remove(teams-identity-support) */
 import { teamsCallDeclaratify } from './TeamsCallDeclarative';
+/* @conditional-compile-remove(teams-identity-support) */
+import { DeclarativeTeamsIncomingCall } from './TeamsIncomingCallDeclarative';
+
+/**
+ * @beta
+ * Proxies the {@link @azure/communication-calling#TeamsIncomingCall} interface.
+ */
+export type TeamsIncomingCallManagement = {
+  /**
+   * @beta
+   * @Remark This attribute doesn't exist on the {@link @azure/communication-calling#TeamsCallAgent} interface.
+   * @returns readonly array of {@link DeclarativeTeamsIncomingCall}
+   */
+  incomingCalls: ReadonlyArray<DeclarativeTeamsIncomingCall>;
+};
 
 /**
  * @public
  * `DeclarativeTeamsCallAgent` extends and proxies the {@link @azure/communication-calling#TeamsCallAgent}
  */
 export type DeclarativeTeamsCallAgent = TeamsCallAgent &
-  /* @conditional-compile-remove(one-to-n-calling) */ IncomingCallManagement;
+  /* @conditional-compile-remove(one-to-n-calling) */ TeamsIncomingCallManagement;
 
 /**
  * ProxyTeamsCallAgent proxies TeamsCallAgent and saves any returned state in the given context. It will subscribe to all state
