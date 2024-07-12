@@ -63,7 +63,9 @@ import { SendBoxPicker } from '../common/SendBoxPicker';
 /* @conditional-compile-remove(rich-text-editor-composite-support) */
 import { loadRichTextSendBox } from '../common/SendBoxPicker';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
-import { useImageUpload } from './image-upload/useImageUpload';
+import { useImageUpload } from './ImageUpload/useImageUpload';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+import { removeImageTags } from './ImageUpload/ImageUploadUtils';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import type { ChatAdapterState } from './adapter/ChatAdapter';
 
@@ -514,6 +516,17 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   );
 
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  const onPasteHandler = useCallback(
+    (event: { content: DocumentFragment }) => {
+      const threadCreatedBy = adapter.getState().thread?.properties?.createdBy;
+      if (threadCreatedBy?.kind !== 'microsoftTeamsUser' || textOnlyChat) {
+        removeImageTags(event);
+      }
+    },
+    [adapter, textOnlyChat]
+  );
+
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
   const onCancelEditMessageHandler = useCallback(() => {
     handleInlineImageUploadAction({ type: AttachmentUploadActionType.Clear });
   }, [handleInlineImageUploadAction]);
@@ -531,9 +544,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const richTextEditorOptions = useMemo(() => {
     return options?.richTextEditor
       ? {
-          /* @conditional-compile-remove(rich-text-editor-image-upload) */ onPaste: textOnlyChat
-            ? removeImageTags
-            : undefined,
+          /* @conditional-compile-remove(rich-text-editor-image-upload) */ onPaste: onPasteHandler,
           /* @conditional-compile-remove(rich-text-editor-image-upload) */
           onUploadInlineImage: onUploadInlineImage,
           /* @conditional-compile-remove(rich-text-editor-image-upload) */
@@ -549,9 +560,9 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     onCancelInlineImageUploadHandler,
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
     onUploadInlineImage,
-    options?.richTextEditor,
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    textOnlyChat
+    onPasteHandler,
+    options?.richTextEditor
   ]);
 
   return (
@@ -610,12 +621,6 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
                   // we need to overwrite onSendMessage for SendBox because we need to clear attachment state
                   // when submit button is clicked
                   onSendMessage={onSendMessageHandler}
-                  /* @conditional-compile-remove(rich-text-editor-image-upload) */
-                  onUploadInlineImage={onUploadInlineImage}
-                  /* @conditional-compile-remove(rich-text-editor-image-upload) */
-                  imageUploadsInProgress={imageUploadsInProgress}
-                  /* @conditional-compile-remove(rich-text-editor-image-upload) */
-                  onCancelInlineImageUpload={onCancelInlineImageUploadHandler}
                 />
               </Stack>
               {formFactor !== 'mobile' &&
@@ -653,19 +658,4 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       )}
     </Stack>
   );
-};
-
-// TODO-vhuseinova: delete after the function is added to utils
-/* @conditional-compile-remove(rich-text-editor-image-upload) */
-const removeImageTags = (event: { content: DocumentFragment }): void => {
-  event.content.querySelectorAll('img').forEach((image) => {
-    // If the image is the only child of its parent, remove all the parents of this img element.
-    let parentNode: HTMLElement | null = image.parentElement;
-    let currentNode: HTMLElement = image;
-    while (parentNode?.childNodes.length === 1) {
-      currentNode = parentNode;
-      parentNode = parentNode.parentElement;
-    }
-    currentNode?.remove();
-  });
 };
