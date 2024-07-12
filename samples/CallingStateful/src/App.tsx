@@ -88,6 +88,7 @@ function App(): JSX.Element {
       } else if (event.removed.length > 0) {
         if (event.removed[0] === call) {
           setCall(undefined);
+          console.log(call.id, call.callEndReason);
         }
       }
     },
