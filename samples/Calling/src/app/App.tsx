@@ -55,7 +55,7 @@ const App = (): JSX.Element => {
 
   // Call details to join a call - these are collected from the user on the home screen
   const [callLocator, setCallLocator] = useState<CallAdapterLocator>();
-  const [targetCallees, setTargetCallees] = useState<StartCallIdentifier[]>([]);
+  const [targetCallees, setTargetCallees] = useState<StartCallIdentifier[] | undefined>(undefined);
   const [displayName, setDisplayName] = useState<string>('');
 
   /* @conditional-compile-remove(teams-identity-support) */
