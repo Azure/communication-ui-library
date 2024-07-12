@@ -123,7 +123,7 @@ export const cancelInlineImageUpload = (
 ): void => {
   if (imageSrcArray && imageUploadsInProgress && imageUploadsInProgress?.length > 0) {
     imageUploadsInProgress?.map((uploadImage) => {
-      if (uploadImage.url && imageSrcArray && !imageSrcArray?.includes(uploadImage.url)) {
+      if (uploadImage.url && !imageSrcArray?.includes(uploadImage.url)) {
         onCancelInlineImageUpload?.(uploadImage.id);
       }
     });

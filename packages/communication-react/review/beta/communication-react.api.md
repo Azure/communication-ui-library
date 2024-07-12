@@ -59,6 +59,7 @@ import { IPersonaStyleProps } from '@fluentui/react';
 import { IPersonaStyles } from '@fluentui/react';
 import { IRawStyle } from '@fluentui/react';
 import { IRenderFunction } from '@fluentui/react';
+import { IStackStyles } from '@fluentui/react';
 import { IStyle } from '@fluentui/react';
 import { IStyleFunctionOrObject } from '@fluentui/react';
 import { ITextFieldStyles } from '@fluentui/react';
@@ -3180,23 +3181,34 @@ export type IncomingCallManagement = {
 export const IncomingCallNotification: (props: IncomingCallNotificationProps) => JSX.Element;
 
 // @beta
-export type IncomingCallNotificationProps = {
-    callerName?: string;
+export interface IncomingCallNotificationProps {
     alertText?: string;
-    avatar?: string;
+    avatarImage?: string;
+    callerName?: string;
     onAcceptWithAudio: () => void;
     onAcceptWithVideo: () => void;
     onReject: () => void;
-};
+    onRenderAvatar?: () => JSX.Element;
+    personaSize?: number;
+    styles?: IncomingCallNotificationStyles;
+}
 
 // @beta
-export type IncomingCallNotificationStrings = {
-    incomingCallNotificationPlaceholderId?: string;
-    incomingCallNotificationPlaceholderAlert?: string;
+export interface IncomingCallNotificationStrings {
     incomingCallNoticicationAcceptWithAudioAriaLabel?: string;
     incomingCallNoticicationAcceptWithVideoAriaLabel?: string;
     incomingCallNoticicationRejectAriaLabel?: string;
-};
+    incomingCallNotificationPlaceholderAlert?: string;
+    incomingCallNotificationPlaceholderId?: string;
+}
+
+// @beta
+export interface IncomingCallNotificationStyles {
+    acceptButton?: IButtonStyles;
+    avatarContainer?: IStackStyles;
+    rejectButton?: IButtonStyles;
+    root?: IStackStyles;
+}
 
 // @public
 export interface IncomingCallState {
