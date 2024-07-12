@@ -22,7 +22,7 @@ import { DiagnosticQuality } from '@azure/communication-calling';
 /**
  * Selector type for {@link Notification} component.
  *
- * @beta
+ * @public
  */
 export type NotificationStackSelector = (
   state: CallClientState,
@@ -39,7 +39,7 @@ export type NotificationStackSelector = (
  *   - `ErrorType` is never repeated in the returned errors.
  *   - Errors are returned in a fixed order by `ErrorType`.
  *
- * @beta
+ * @public
  */
 export const notificationStackSelector: NotificationStackSelector = createSelector(
   [
