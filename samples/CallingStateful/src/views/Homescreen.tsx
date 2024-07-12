@@ -36,18 +36,11 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
         <TextField
           label="ACS or Teams user ID"
           placeholder="Enter the userId you want to call"
-          onChange={(_, value: string) => {
-            const ids: string[] = value.split(',');
+          onChange={(_, value: string | undefined) => {
+            const ids: string[] = !!value ? value.split(',') : [];
             let newParticipants: CommunicationIdentifier[] = [];
             ids.forEach((id) => {
-              const identifier = fromFlatCommunicationIdentifier(id);
-              if (isMicrosoftTeamsUserIdentifier(identifier)) {
-                newParticipants = newParticipants.concat([{ microsoftTeamsUserId: id || '' }]);
-              } else if (isMicrosoftTeamsAppIdentifier(identifier)) {
-                newParticipants = newParticipants.concat([{ teamsAppId: id || '' }]);
-              } else {
-                newParticipants = newParticipants.concat([{ communicationUserId: id || '' }]);
-              }
+              newParticipants = newParticipants.concat([fromFlatCommunicationIdentifier(id)]);
             });
             setTargetParticipants(newParticipants);
           }}
@@ -55,7 +48,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
         <TextField
           label="Alternate Caller Id"
           placeholder="Enter the alternate caller id"
-          onChange={(_, value: string) => setAlternateCallerId(value || '')}
+          onChange={(_, value: string | undefined) => setAlternateCallerId(value || '')}
         ></TextField>
         <Dialpad onChange={(value) => setTargetParticipants([{ phoneNumber: value }])}></Dialpad>
         <PrimaryButton
