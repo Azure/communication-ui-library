@@ -338,11 +338,16 @@
     "endCallConfirmDialogTitle": "Vuoi terminare la chiamata?",
     "endCallConfirmDialogContent": "La chiamata terminerà per tutti gli utenti.",
     "invalidMeetingIdentifier": "ID riunione o passcode non valido",
-    "pinParticipantMenuLabel": "Pin for me",
-    "pinParticipantLimitReachedMenuLabel": "Pin (limit reached)",
-    "unpinParticipantMenuLabel": "Unpin",
-    "pinParticipantMenuItemAriaLabel": "Pin",
-    "unpinParticipantMenuItemAriaLabel": "Unpin"
+    "pinParticipantMenuLabel": "Aggiungi per me",
+    "pinParticipantLimitReachedMenuLabel": "Segnaposto (limite raggiunto)",
+    "unpinParticipantMenuLabel": "Rimuovere dall’alto",
+    "pinParticipantMenuItemAriaLabel": "Aggiungi in alto",
+    "unpinParticipantMenuItemAriaLabel": "Rimuovere dall’alto",
+    "muteAllMenuLabel": "Disattivare l'audio di tutti",
+    "muteAllDialogTitle": "Disattivare l'audio di tutti?",
+    "muteAllDialogContent": "Questa operazione disattiverà l'audio di tutte le persone nella riunione, tranne te.",
+    "muteAllConfirmButtonLabel": "Disattivare l'audio di tutti",
+    "muteAllCancelButtonLabel": "Annullare"
   },
   "chat": {
     "chatListHeader": "In questa chat",

@@ -185,8 +185,8 @@
     "failToSendTag": "Inte skickat",
     "editedTag": "Redigerad",
     "liveAuthorIntro": "{author} säger",
-    "messageContentAriaText": "{author} sa {message}",
-    "messageContentMineAriaText": "Du sa {message}",
+    "messageContentAriaText": "{status} {author} sa {message}",
+    "messageContentMineAriaText": "{status} Du sa {message}",
     "editBoxTextLimit": "Meddelandet överskrider gränsen på {limitNumber} tecken",
     "editBoxPlaceholderText": "Redigera meddelandet",
     "newMessagesIndicator": "Nya meddelanden",
@@ -220,7 +220,8 @@
     "richTextDeleteColumnMenu": "Ta bort kolumn",
     "richTextDeleteRowMenu": "Ta bort rad",
     "richTextDeleteTableMenu": "Ta bort tabell",
-    "richTextToolbarMoreButtonAriaLabel": "Fler alternativ"
+    "richTextToolbarMoreButtonAriaLabel": "Fler alternativ",
+    "attachmentUploadsPendingError": "Laddar upp... Var god vänta."
   },
   "errorBar": {
     "unableToReachChatService": "Du är offline",
@@ -237,6 +238,7 @@
     "startScreenShareGeneric": "Det uppstod ett problem när skärmdelningen skulle startas.",
     "stopScreenShareGeneric": "Det gick inte att stoppa skärmdelning",
     "callNetworkQualityLow": "Nätverkskvaliteten är låg.",
+    "teamsMeetingCallNetworkQualityLow": "Nätverkskvaliteten är låg.",
     "callNoSpeakerFound": "Inga högtalare eller hörlurar hittades. Anslut en ljudenhet för att höra samtalet.",
     "callNoMicrophoneFound": "Inga mikrofoner hittades. Anslut en ljudinmatningsenhet.",
     "callMicrophoneAccessDenied": "Det går inte att komma åt mikrofonen. Klicka på låset i adressfältet om du vill bevilja behörighet till den här webbsidan.",
@@ -257,160 +259,189 @@
     "failedToJoinCallInvalidMeetingLink": "Det går inte att ansluta till mötet. Ogiltig länk.",
     "cameraFrozenForRemoteParticipants": "Användare i samtalet har problem med att se din video. Kontrollera dina enheter och nätverk.",
     "unableToStartVideoEffect": "Det går inte att tillämpa videoeffekten.",
-    "startSpotlightWhileMaxParticipantsAreSpotlighted": "Det går inte att starta spotlight på deltagare eftersom det maximala antalet deltagare redan är uppmärksammat."
+    "startSpotlightWhileMaxParticipantsAreSpotlighted": "Det går inte att starta spotlight på deltagare eftersom det maximala antalet deltagare redan är uppmärksammat.",
+    "mutedByRemoteParticipant": "You were muted by another participant."
   },
-  "notifications": {
-    "unableToReachChatService": {
-      "title": "Du är offline.",
-      "closeButtonAriaLabel": "Stäng"
-    },
-    "accessDenied": {
-      "title": "Det går inte att komma åt chatttjänster",
-      "message": "Kontrollera de angivna användarautentiseringsuppgifterna",
-      "closeButtonAriaLabel": "Stäng"
-    },
-    "userNotInChatThread": {
-      "title": "Du är inte längre i den här chatttråden.",
-      "closeButtonAriaLabel": "Stäng"
-    },
-    "sendMessageNotInChatThread": {
-      "title": "Meddelandet inte skickat",
-      "message": "Du är inte längre i den här chatttråden",
-      "closeButtonAriaLabel": "Stäng"
-    },
-    "sendMessageGeneric": {
-      "title": "Det gick inte att skicka meddelandet.",
-      "closeButtonAriaLabel": "Stäng"
-    },
+  "notificationStack": {
     "callingNetworkFailure": {
-      "title": "Störande anslutningssamtal",
-      "message": "Du verkar vara offline. Kontrollera nätverksanslutningen och försök igen.",
-      "closeButtonAriaLabel": "Stäng"
+      "title": "Troubling connecting call",
+      "message": "You seem to be offline. Please check your network connection and try again.",
+      "dismissButtonAriaLabel": "Stäng"
     },
     "startVideoGeneric": {
-      "title": "Det gick inte att starta videon.",
-      "closeButtonAriaLabel": "Stäng"
+      "title": "Failed to start video.",
+      "dismissButtonAriaLabel": "Stäng"
     },
     "stopVideoGeneric": {
-      "title": "Det gick inte att stoppa videon.",
-      "closeButtonAriaLabel": "Stäng"
+      "title": "Failed to stop video.",
+      "dismissButtonAriaLabel": "Stäng"
     },
     "muteGeneric": {
-      "title": "Det gick inte att stänga av mikrofonen.",
-      "closeButtonAriaLabel": "Stäng"
+      "title": "Failed to mute microphone.",
+      "dismissButtonAriaLabel": "Stäng"
     },
     "unmuteGeneric": {
-      "title": "Det gick inte att slå på mikrofonen.",
-      "closeButtonAriaLabel": "Stäng"
+      "title": "Failed to unmute microphone.",
+      "dismissButtonAriaLabel": "Stäng"
     },
     "speakingWhileMuted": {
-      "title": "Din mikrofon har stängts av.",
-      "closeButtonAriaLabel": "Stäng"
+      "title": "You're muted.",
+      "dismissButtonAriaLabel": "Stäng"
     },
     "startScreenShareGeneric": {
-      "title": "Det uppstod ett problem när skärmdelningen skulle startas.",
-      "closeButtonAriaLabel": "Stäng"
+      "title": "There was an issue starting screen share.",
+      "dismissButtonAriaLabel": "Stäng"
     },
     "stopScreenShareGeneric": {
-      "title": "Det gick inte att stoppa skärmdelningen.",
-      "closeButtonAriaLabel": "Stäng"
+      "title": "Failed to stop screen sharing.",
+      "dismissButtonAriaLabel": "Stäng"
     },
     "callNetworkQualityLow": {
+      "title": "Network quality is low.",
+      "dismissButtonAriaLabel": "Stäng"
+    },
+    "teamsMeetingCallNetworkQualityLow": {
       "title": "Nätverkskvaliteten är låg.",
-      "closeButtonAriaLabel": "Stäng"
+      "dismissButtonAriaLabel": "Stäng",
+      "message": "Anslut till det här samtalet från din telefon för bättre ljud. Du kan fortsätta att visa mötet på den här enheten.",
+      "primaryButtonLabel": "Anslut via telefon"
     },
     "callNoSpeakerFound": {
-      "title": "Inga högtalare eller hörlurar hittades",
-      "message": "Anslut en ljudenhet för att höra samtalet.",
-      "closeButtonAriaLabel": "Stäng"
+      "title": "No speakers or headphones found",
+      "message": "Connect an audio device to hear the call.",
+      "dismissButtonAriaLabel": "Stäng"
     },
     "callNoMicrophoneFound": {
-      "title": "Inga mikrofoner hittades",
-      "message": "Anslut en ljudinmatningsenhet.",
-      "closeButtonAriaLabel": "Stäng"
+      "title": "No microphones found",
+      "message": "Connect an audio input device.",
+      "dismissButtonAriaLabel": "Stäng"
     },
     "callMicrophoneAccessDenied": {
-      "title": "Det går inte att komma åt mikrofonen",
-      "message": "Klicka på låset i adressfältet om du vill bevilja behörighet till den här webbsidan.",
-      "closeButtonAriaLabel": "Stäng"
+      "title": "Unable to access microphone",
+      "message": "Click the lock in the address bar to grant permission to this webpage.",
+      "dismissButtonAriaLabel": "Stäng"
     },
     "callMicrophoneAccessDeniedSafari": {
-      "title": "Det går inte att komma åt mikrofonen",
-      "message": "Uppdatera sidan om du vill tillåta behörigheter, eller kontrollera webbläsarens inställningar och kontrollera att behörigheter är aktiverade för den här webbplatsen.",
-      "closeButtonAriaLabel": "Stäng"
+      "title": "Unable to access microphone",
+      "message": "Refresh the page to allow permissions, or check this browser’s settings and verify permissions are enabled for this website.",
+      "dismissButtonAriaLabel": "Stäng"
     },
     "callMicrophoneMutedBySystem": {
-      "title": "Du är avstängt av systemet.",
-      "closeButtonAriaLabel": "Stäng"
+      "title": "You are muted by your system.",
+      "dismissButtonAriaLabel": "Stäng"
     },
     "callMicrophoneUnmutedBySystem": {
-      "title": "Mikrofonen har återställts och datorn har slagit på ljudet.",
-      "closeButtonAriaLabel": "Stäng"
+      "title": "Your microphone recovered and you were unmuted by your system.",
+      "dismissButtonAriaLabel": "Stäng"
     },
     "callMacOsMicrophoneAccessDenied": {
-      "title": "Det går inte att komma åt mikrofonen",
-      "message": "Bevilja mikrofonbehörighet i dina macOS-sekretessinställningar.",
-      "closeButtonAriaLabel": "Stäng"
+      "title": "Unable to access microphone",
+      "message": "Grant microphone permission in your macOS privacy settings.",
+      "dismissButtonAriaLabel": "Stäng"
     },
     "callLocalVideoFreeze": {
-      "title": "Nätverksbandbredden är dålig",
-      "message": "Din video kan visas pausad för andra i samtalet.",
-      "closeButtonAriaLabel": "Stäng"
+      "title": "Network bandwidth is poor",
+      "message": "Your video may appear paused for others on the call.",
+      "dismissButtonAriaLabel": "Stäng"
     },
     "callCameraAccessDenied": {
-      "title": "Det går inte att komma åt kameran",
-      "message": "Klicka på låset i adressfältet om du vill bevilja behörighet till den här webbsidan.",
-      "closeButtonAriaLabel": "Stäng"
+      "title": "Unable to access camera",
+      "message": "Click the lock in the address bar to grant permission to this webpage.",
+      "dismissButtonAriaLabel": "Stäng"
     },
     "callCameraAccessDeniedSafari": {
-      "title": "Det går inte att komma åt kameran",
-      "message": "Uppdatera sidan om du vill tillåta behörigheter, eller kontrollera webbläsarens inställningar och kontrollera att behörigheter är aktiverade för den här webbplatsen.",
-      "closeButtonAriaLabel": "Stäng"
+      "title": "Unable to access camera",
+      "message": "Refresh the page to allow permissions, or check this browser’s settings and verify permissions are enabled for this website.",
+      "dismissButtonAriaLabel": "Stäng"
     },
     "callCameraAlreadyInUse": {
-      "title": "Det går inte att komma åt kameran",
-      "message": "Den kanske redan används av ett annat program.",
-      "closeButtonAriaLabel": "Stäng"
+      "title": "Unable to access camera",
+      "message": "It may already be in use by another application.",
+      "dismissButtonAriaLabel": "Stäng"
     },
     "callVideoStoppedBySystem": {
-      "title": "Din video har stoppats av systemet.",
-      "closeButtonAriaLabel": "Stäng"
+      "title": "Your video has been stopped by your system.",
+      "dismissButtonAriaLabel": "Stäng"
     },
     "callVideoRecoveredBySystem": {
-      "title": "Videon har återupptagits.",
-      "closeButtonAriaLabel": "Stäng"
+      "title": "Your video has resumed.",
+      "dismissButtonAriaLabel": "Stäng"
     },
     "callMacOsCameraAccessDenied": {
-      "title": "MacOS blockerar åtkomsten till kameran",
-      "message": "Uppdatera dina sekretessinställningar så att den här webbläsaren får åtkomst till kameran.",
-      "closeButtonAriaLabel": "Stäng"
+      "title": "MacOS is blocking access to your camera",
+      "message": "Update your privacy settings to allow this browser to access your camera.",
+      "dismissButtonAriaLabel": "Stäng"
     },
     "callMacOsScreenShareAccessDenied": {
-      "title": "MacOS blockerar skärmdelning",
-      "message": "Uppdatera dina sekretessinställningar så att den här webbläsaren kan spela in din skärm.",
-      "closeButtonAriaLabel": "Stäng"
+      "title": "MacOS is blocking screen sharing",
+      "message": "Update your privacy settings to allow this browser to record your screen.",
+      "dismissButtonAriaLabel": "Stäng"
     },
     "failedToJoinCallGeneric": {
-      "title": "Det gick inte att ansluta till samtalet.",
-      "closeButtonAriaLabel": "Stäng"
+      "title": "Failed to join call.",
+      "dismissButtonAriaLabel": "Stäng"
     },
     "failedToJoinCallInvalidMeetingLink": {
-      "title": "Det går inte att ansluta till mötet. Ogiltig länk.",
-      "closeButtonAriaLabel": "Stäng"
+      "title": "Unable to join Meeting. Invalid Link.",
+      "dismissButtonAriaLabel": "Stäng"
     },
     "cameraFrozenForRemoteParticipants": {
-      "title": "Användare i samtalet har problem med att se din video",
-      "message": "Kontrollera dina enheter och nätverk.",
-      "closeButtonAriaLabel": "Stäng"
+      "title": "Users in the call are having issues seeing your video",
+      "message": "Please check your devices and network.",
+      "dismissButtonAriaLabel": "Stäng"
     },
     "unableToStartVideoEffect": {
-      "title": "Det går inte att tillämpa videoeffekten.",
-      "closeButtonAriaLabel": "Stäng"
+      "title": "Unable to apply video effect.",
+      "dismissButtonAriaLabel": "Stäng"
     },
     "startSpotlightWhileMaxParticipantsAreSpotlighted": {
-      "title": "Det går inte att starta spotlight på deltagare",
-      "message": "Det maximala antalet deltagare är redan uppmärksammat.",
-      "closeButtonAriaLabel": "Stäng"
+      "title": "Cannot start spotlight on participant(s)",
+      "message": "The maximum number of participants are already spotlighted.",
+      "dismissButtonAriaLabel": "Stäng"
+    },
+    "mutedByRemoteParticipant": {
+      "title": "You were muted by another participant.",
+      "dismissButtonAriaLabel": "Stäng"
+    },
+    "recordingStarted": {
+      "title": "Inspelningen har startat.",
+      "message": "Genom att ansluta ger du ditt medgivande för att det här mötet ska transkriberas.",
+      "dismissButtonAriaLabel": "Stäng"
+    },
+    "transcriptionStarted": {
+      "title": "Transkriptionen har startat.",
+      "message": "Genom att ansluta ger du ditt medgivande för att det här mötet ska transkriberas.",
+      "dismissButtonAriaLabel": "Stäng"
+    },
+    "recordingStopped": {
+      "title": "Inspelningen sparas.",
+      "message": "Inspelningen har stoppats.",
+      "dismissButtonAriaLabel": "Stäng"
+    },
+    "transcriptionStopped": {
+      "title": "Transkriptionen sparas.",
+      "message": "Transkriptionen har avslutats.",
+      "dismissButtonAriaLabel": "Stäng"
+    },
+    "recordingAndTranscriptionStarted": {
+      "title": "Inspelning och avskrift har startats.",
+      "message": "Genom att ansluta ger du ditt medgivande för att det här mötet ska transkriberas.",
+      "dismissButtonAriaLabel": "Stäng"
+    },
+    "recordingAndTranscriptionStopped": {
+      "title": "Inspelning och transkription sparas.",
+      "message": "Inspelning och avskrift har avslutats.",
+      "dismissButtonAriaLabel": "Stäng"
+    },
+    "recordingStoppedStillTranscribing": {
+      "title": "Inspelningen har stoppats.",
+      "message": "Nu transkriberar du bara det här mötet.",
+      "dismissButtonAriaLabel": "Stäng"
+    },
+    "transcriptionStoppedStillRecording": {
+      "title": "Transkriptionen har avslutats.",
+      "message": "Du spelar nu bara in det här mötet.",
+      "dismissButtonAriaLabel": "Stäng"
     }
   },
   "videoGallery": {
@@ -419,7 +450,7 @@
     "localVideoLabel": "Du",
     "localVideoCameraSwitcherLabel": "Växla kamera",
     "localVideoMovementLabel": "Flyttbar lokal videopanel",
-    "localVideoMovementAriaLabel": "Flyttbar lokal videopanel",
+    "localVideoMovementAriaLabel": "Movable Local Video Tile",
     "localVideoSelectedDescription": "{cameraName} har valts",
     "displayNamePlaceholder": "Namnlös deltagare",
     "fitRemoteParticipantToFrame": "Anpassa till ruta",
@@ -436,7 +467,8 @@
     "spotlightLimitReachedMenuTitle": "Spotlight-gränsen har nåtts",
     "stopSpotlightVideoTileMenuLabel": "Sluta uppmärksamma",
     "stopSpotlightOnSelfVideoTileMenuLabel": "Spotlight",
-    "attendeeRole": "Deltagare"
+    "attendeeRole": "Deltagare",
+    "muteParticipantMenuItemLabel": "Mute"
   },
   "dialpad": {
     "placeholderText": "Ange telefonnummer",
@@ -451,7 +483,7 @@
   "videoTile": {
     "participantStateRinging": "Ringer...",
     "participantStateHold": "Parkerat",
-    "moreOptionsButtonAriaLabel": "Fler alternativ"
+    "moreOptionsButtonAriaLabel": "More Options"
   },
   "CameraAndMicrophoneSitePermissionsRequest": {
     "primaryText": "Tillåt {appName} använda kameran och mikrofonen",
@@ -573,14 +605,20 @@
     "rightNavButtonAriaLabel": "nästa sida"
   },
   "MeetingConferencePhoneInfo": {
-    "meetingConferencePhoneInfoModalTitle": "Anslut till samtal från din telefon",
-    "meetingConferencePhoneInfoModalDialIn": "Slå nummer",
-    "meetingConferencePhoneInfoModalMeetingId": "Ange mötes-ID",
-    "meetingConferencePhoneInfoModalWait": "Vänta på att få tillträde av organisatören",
-    "meetingConferencePhoneInfoModalNoPhoneAvailable": "Ingen telefon är tillgänglig",
-    "meetingConferencePhoneInfoModalTollFree": "{phoneNumber} (avgiftsfritt) {country}, {city}",
-    "meetingConferencePhoneInfoModalTollFreeWithoutGeoData": "{phoneNumber} (avgiftsfritt)",
-    "meetingConferencePhoneInfoModalToll": "{phoneNumber} (avgiftsbelagt) {country}, {city}",
-    "meetingConferencePhoneInfoModalTollWithoutGeoData": "{phoneNumber} (avgiftsbelagt)"
+    "meetingConferencePhoneInfoModalTitle": "Join call from your phone",
+    "meetingConferencePhoneInfoModalDialIn": "Dial number",
+    "meetingConferencePhoneInfoModalMeetingId": "Enter meeting ID",
+    "meetingConferencePhoneInfoModalWait": "Wait to be admitted by organizer",
+    "meetingConferencePhoneInfoModalNoPhoneAvailable": "No phone available",
+    "meetingConferencePhoneInfoModalTollGeoData": "{country}, {city}",
+    "meetingConferencePhoneInfoModalTollFree": "(Toll-free)",
+    "meetingConferencePhoneInfoModalToll": "(Toll)"
+  },
+  "IncomingCallNotification": {
+    "incomingCallNotificationPlaceholderId": "Okänd användare",
+    "incomingCallNotificationPlaceholderAlert": "Inkommande samtal",
+    "incomingCallNoticicationAcceptWithAudioAriaLabel": "Acceptera med ljud",
+    "incomingCallNoticicationAcceptWithVideoAriaLabel": "Acceptera med video",
+    "incomingCallNoticicationRejectAriaLabel": "Avvisa"
   }
 }
