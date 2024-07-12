@@ -29,14 +29,19 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
         label="ACS or Teams user ID"
         placeholder="Enter the userId you want to call"
         onChange={(_, value: string) => {
-          const id = fromFlatCommunicationIdentifier(value);
-          if (isMicrosoftTeamsUserIdentifier(id)) {
-            setTargetParticipants([{ microsoftTeamsUserId: value || '' }]);
-          } else if (isMicrosoftTeamsAppIdentifier(id)) {
-            setTargetParticipants([{ teamsAppId: value || '' }]);
-          } else {
-            setTargetParticipants([{ communicationUserId: value || '' }]);
-          }
+          const ids: string[] = value.split(',');
+          let newParticipants: CommunicationIdentifier[] = [];
+          ids.forEach((id) => {
+            const identifier = fromFlatCommunicationIdentifier(id);
+            if (isMicrosoftTeamsUserIdentifier(identifier)) {
+              newParticipants = newParticipants.concat([{ microsoftTeamsUserId: id || '' }]);
+            } else if (isMicrosoftTeamsAppIdentifier(identifier)) {
+              newParticipants = newParticipants.concat([{ teamsAppId: id || '' }]);
+            } else {
+              newParticipants = newParticipants.concat([{ communicationUserId: id || '' }]);
+            }
+          });
+          setTargetParticipants(newParticipants);
         }}
       ></TextField>
       <TextField
