@@ -3,7 +3,7 @@
 
 /* @conditional-compile-remove(file-sharing-acs) */
 import { AttachmentMetadataInProgress } from '@internal/acs-ui-common';
-/* @conditional-compile-remove(rich-text-editor-image-upload) */
+/* @conditional-compile-remove(file-sharing-acs) */
 import { AttachmentMetadata } from '@internal/acs-ui-common';
 
 /**
@@ -123,7 +123,7 @@ export const cancelInlineImageUpload = (
 ): void => {
   if (imageSrcArray && imageUploadsInProgress && imageUploadsInProgress?.length > 0) {
     imageUploadsInProgress?.map((uploadImage) => {
-      if (uploadImage.url && imageSrcArray && !imageSrcArray?.includes(uploadImage.url)) {
+      if (uploadImage.url && !imageSrcArray?.includes(uploadImage.url)) {
         onCancelInlineImageUpload?.(uploadImage.id);
       }
     });
@@ -131,57 +131,36 @@ export const cancelInlineImageUpload = (
 };
 
 /* @conditional-compile-remove(file-sharing-acs) */
-/* @conditional-compile-remove(rich-text-editor-image-upload) */
 /**
  * @internal
  */
 export const toAttachmentMetadata = (
-  attachmentsWithProgress: AttachmentMetadataInProgress[] | undefined,
-  /* @conditional-compile-remove(rich-text-editor-image-upload) */ attachmentType?: 'image'
+  attachmentsWithProgress: AttachmentMetadataInProgress[] | undefined
 ): AttachmentMetadata[] | undefined => {
   return attachmentsWithProgress
     ?.filter((attachment) => {
       return !('error' in attachment) && !attachment.error?.message;
     })
     .map((attachment) => {
-      let url = attachment.url || '';
-      /* @conditional-compile-remove(rich-text-editor-image-upload) */
-      if (attachmentType === 'image') {
-        url = '';
-      }
       return {
         id: attachment.id,
         name: attachment.name,
-        url,
-        /* @conditional-compile-remove(rich-text-editor-image-upload) */
-        attachmentType: attachmentType
+        url: attachment.url ?? ''
       };
     });
 };
 
-/* @conditional-compile-remove(file-sharing-acs) */
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 /**
  * @internal
  */
-export const insertAttachmentsAndImages = (
+export const insertImagesToContentString = (
   content: string,
-  attachments: AttachmentMetadataInProgress[] | undefined,
-  imageUploadsInProgress: AttachmentMetadataInProgress[] | undefined
-): { content: string; attachmentArray: AttachmentMetadata[] | undefined } => {
-  if (!attachments && !imageUploadsInProgress) {
-    return { content, attachmentArray: undefined };
+  imageUploadsInProgress?: AttachmentMetadataInProgress[]
+): string => {
+  if (!imageUploadsInProgress || imageUploadsInProgress.length <= 0) {
+    return content;
   }
-  /* @conditional-compile-remove(file-sharing-acs) */
-  let attachmentArray = toAttachmentMetadata(attachments);
-  let newContent = content;
-  /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  if (imageUploadsInProgress) {
-    newContent = addUploadedImagesToMessage(content, imageUploadsInProgress);
-    const imageArray = toAttachmentMetadata(imageUploadsInProgress, 'image');
-    if (imageArray) {
-      attachmentArray = attachmentArray ? attachmentArray?.concat(imageArray) : imageArray;
-    }
-  }
-  return { content: newContent, attachmentArray };
+  const newContent = addUploadedImagesToMessage(content, imageUploadsInProgress);
+  return newContent;
 };

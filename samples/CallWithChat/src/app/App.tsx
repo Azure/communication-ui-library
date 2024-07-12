@@ -55,6 +55,7 @@ interface CallWithChatArgs {
     | TeamsMeetingLinkLocator
     | /* @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator;
   /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId?: string;
+  /* @conditional-compile-remove(rich-text-editor-composite-support) */ isRichTextEditorEnabled?: boolean;
 }
 type AppPages = 'home' | 'call' | 'error';
 
@@ -89,7 +90,8 @@ const App = (): JSX.Element => {
                 homeScreenDetails.displayName,
                 homeScreenDetails?.meetingLocator,
                 /* @conditional-compile-remove(PSTN-calls) */ homeScreenDetails.alternateCallerId,
-                /* @conditional-compile-remove(PSTN-calls) */ homeScreenDetails.outboundParticipants
+                /* @conditional-compile-remove(PSTN-calls) */ homeScreenDetails.outboundParticipants,
+                /* @conditional-compile-remove(rich-text-editor-composite-support) */ homeScreenDetails.isRichTextEditorEnabled
               );
               setCallWithChatArgs(callWithChatArgs);
             } catch (e) {
@@ -120,6 +122,8 @@ const App = (): JSX.Element => {
           endpoint={callWithChatArgs.endpointUrl}
           /* @conditional-compile-remove(PSTN-calls) */
           alternateCallerId={callWithChatArgs.alternateCallerId}
+          /* @conditional-compile-remove(rich-text-editor-composite-support) */
+          isRichTextEditorEnabled={callWithChatArgs.isRichTextEditorEnabled}
         />
       );
     }
@@ -137,7 +141,9 @@ const generateCallWithChatArgs = async (
   /* @conditional-compile-remove(PSTN-calls) */
   alternateCallerId?: string,
   /* @conditional-compile-remove(PSTN-calls) */
-  outboundParticipants?: string[]
+  outboundParticipants?: string[],
+  /* @conditional-compile-remove(rich-text-editor-composite-support) */
+  isRichTextEditorEnabled?: boolean
 ): Promise<CallWithChatArgs> => {
   const { token, user } = await fetchTokenResponse();
   const credentials = { userId: user, token: token };
@@ -182,7 +188,8 @@ const generateCallWithChatArgs = async (
     endpointUrl,
     credentials,
     locator,
-    /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId
+    /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
+    /* @conditional-compile-remove(rich-text-editor-composite-support) */ isRichTextEditorEnabled
   };
 };
 
