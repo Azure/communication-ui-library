@@ -164,3 +164,19 @@ export const insertImagesToContentString = (
   const newContent = addUploadedImagesToMessage(content, imageUploadsInProgress);
   return newContent;
 };
+
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+/**
+ * @internal
+ */
+export const removeBrokenImageContent = (content: string): string => {
+  const document = new DOMParser().parseFromString(content, 'text/html');
+  document.querySelectorAll('img').forEach((img) => {
+    if (img.className === 'broken-image-wrapper') {
+      img.removeAttribute('class');
+      img.removeAttribute('src');
+      img.removeAttribute('data-ui-id');
+    }
+  });
+  return document.body.innerHTML;
+};

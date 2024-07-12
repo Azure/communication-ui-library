@@ -26,7 +26,8 @@ import {
   cancelInlineImageUpload,
   hasIncompleteAttachmentUploads,
   insertImagesToContentString,
-  isAttachmentUploadCompleted
+  isAttachmentUploadCompleted,
+  removeBrokenImageContent
 } from '../../utils/SendBoxUtils';
 import {
   getMessageState,
@@ -50,6 +51,8 @@ import { FluentV9ThemeProvider } from '../../../theming/FluentV9ThemeProvider';
 import { attachmentUploadCardsStyles } from '../../styles/SendBox.styles';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { SendBoxErrorBarError } from '../../SendBoxErrorBar';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+import { BROKEN_IMAGE_SVG_DATA } from '../../styles/Common.style';
 
 /** @private */
 export type ChatMessageComponentAsRichTextEditBoxProps = {
@@ -92,7 +95,31 @@ export const ChatMessageComponentAsRichTextEditBox = (
     onCancelInlineImageUpload
   } = props;
 
-  const [textValue, setTextValue] = useState<string>(message.content || '');
+  const initialContent = useMemo(() => {
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    const content = message.content;
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    const document = new DOMParser().parseFromString(content ?? '', 'text/html');
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    document.querySelectorAll('.broken-image-wrapper').forEach((brokenImage) => {
+      const imageElement = document.createElement('img');
+      const attributes = brokenImage.attributes;
+      for (const attribute of attributes) {
+        // if (attribute.name !== 'data-ui-id' && attribute.name !== 'class') {
+        imageElement.setAttribute(attribute.name, attribute.value);
+        // }
+      }
+
+      imageElement.src = BROKEN_IMAGE_SVG_DATA;
+      brokenImage.parentElement?.replaceChild(imageElement, brokenImage);
+    });
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    return document.body.innerHTML;
+    return message.content;
+  }, [message]);
+
+  const [textValue, setTextValue] = useState<string>(initialContent || '');
+
   /* @conditional-compile-remove(file-sharing-acs) */
   const [attachmentMetadata, handleAttachmentAction] = useReducer(
     attachmentMetadataReducer,
@@ -171,6 +198,8 @@ export const ChatMessageComponentAsRichTextEditBox = (
     }
 
     let content = textValue;
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    content = removeBrokenImageContent(textValue);
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
     if (isAttachmentUploadCompleted(imageUploadsInProgress)) {
       content = insertImagesToContentString(textValue, imageUploadsInProgress);
@@ -291,7 +320,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
           placeholderText={strings.editBoxPlaceholderText}
           onChange={onChangeHandler}
           editorComponentRef={editTextFieldRef}
-          initialContent={message.content}
+          initialContent={initialContent}
           strings={richTextLocaleStrings}
           disabled={false}
           actionComponents={actionButtons}
