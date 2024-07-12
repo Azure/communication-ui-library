@@ -191,6 +191,7 @@ const incomingCallToastStyle = (theme: Theme): IStackStyles => {
     root: {
       minWidth: '20rem',
       maxWidth: '40rem',
+      background: theme.palette.white,
       opacity: 0.95,
       borderRadius: '0.5rem',
       boxShadow: theme.effects.elevation8,
