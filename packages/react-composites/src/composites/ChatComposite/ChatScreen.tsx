@@ -68,6 +68,8 @@ import { useImageUpload } from './ImageUpload/useImageUpload';
 import { removeImageTags } from './ImageUpload/ImageUploadUtils';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import type { ChatAdapterState } from './adapter/ChatAdapter';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+import { isMicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 
 /**
  * @private
@@ -135,13 +137,15 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   const [textOnlyChat, setTextOnlyChat] = useState(false);
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  const [isACSChat, setACSChat] = useState(false);
+  const [isACSChat, setIsACSChat] = useState(false);
 
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   useEffect(() => {
     const updateChatState = (newState: ChatAdapterState): void => {
       setTextOnlyChat(newState.thread.properties?.messagingPolicy?.textOnlyChat === true);
-      setACSChat(newState.thread.properties?.createdBy?.kind !== 'microsoftTeamsUser');
+      if (newState.thread.properties?.createdBy) {
+        setIsACSChat(!isMicrosoftTeamsUserIdentifier(newState.thread.properties?.createdBy));
+      }
     };
     // set initial state for textOnlyChat and isACSChat
     updateChatState(adapter.getState());
