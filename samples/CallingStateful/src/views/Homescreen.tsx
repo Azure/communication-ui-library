@@ -12,64 +12,73 @@ import {
   PhoneNumberIdentifier
 } from '@azure/communication-common';
 import { Dialpad, fromFlatCommunicationIdentifier } from '@azure/communication-react';
-import { PrimaryButton, Stack, TextField } from '@fluentui/react';
+import { PrimaryButton, Stack, TextField, Image } from '@fluentui/react';
 import React, { useState } from 'react';
+import { imgStyle } from '../styles/HomeScreen.styles';
 
 export interface HomeScreenProps {
   callAgent: CallAgent;
+  headerImageProps?: {
+    src?: string;
+  };
 }
 
 export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
-  const { callAgent } = props;
+  const { callAgent, headerImageProps } = props;
   const [targetParticipants, setTargetParticipants] = useState<CommunicationIdentifier[]>();
   const [alternateCallerId, setAlternateCallerId] = useState<string>();
   return (
-    <Stack tokens={{ childrenGap: '1rem' }} style={{ width: '20rem' }}>
-      <TextField
-        label="ACS or Teams user ID"
-        placeholder="Enter the userId you want to call"
-        onChange={(_, value: string) => {
-          const ids: string[] = value.split(',');
-          let newParticipants: CommunicationIdentifier[] = [];
-          ids.forEach((id) => {
-            const identifier = fromFlatCommunicationIdentifier(id);
-            if (isMicrosoftTeamsUserIdentifier(identifier)) {
-              newParticipants = newParticipants.concat([{ microsoftTeamsUserId: id || '' }]);
-            } else if (isMicrosoftTeamsAppIdentifier(identifier)) {
-              newParticipants = newParticipants.concat([{ teamsAppId: id || '' }]);
-            } else {
-              newParticipants = newParticipants.concat([{ communicationUserId: id || '' }]);
-            }
-          });
-          setTargetParticipants(newParticipants);
-        }}
-      ></TextField>
-      <TextField
-        label="Alternate Caller Id"
-        placeholder="Enter the alternate caller id"
-        onChange={(_, value: string) => setAlternateCallerId(value || '')}
-      ></TextField>
-      <Dialpad onChange={(value) => setTargetParticipants([{ phoneNumber: value }])}></Dialpad>
-      <PrimaryButton
-        onClick={() => {
-          console.log('targetParticipants', targetParticipants);
-          if (targetParticipants && targetParticipants.length > 0) {
-            if (isPhoneNumberIdentifier(targetParticipants[0]) && alternateCallerId) {
-              (callAgent as CallAgent).startCall(targetParticipants as PhoneNumberIdentifier[], {
-                alternateCallerId: { phoneNumber: alternateCallerId }
-              });
-            } else {
-              if (isMicrosoftTeamsUserIdentifier(targetParticipants[0])) {
-                (callAgent as CallAgent).startCall(targetParticipants as MicrosoftTeamsUserIdentifier[]);
+    <Stack horizontal tokens={{ childrenGap: '1rem' }}>
+      <Stack verticalAlign="center">
+        <Image alt="Welcome to the ACS Calling sample app" className={imgStyle} {...headerImageProps} />
+      </Stack>
+      <Stack tokens={{ childrenGap: '1rem' }} style={{ width: '20rem' }}>
+        <TextField
+          label="ACS or Teams user ID"
+          placeholder="Enter the userId you want to call"
+          onChange={(_, value: string) => {
+            const ids: string[] = value.split(',');
+            let newParticipants: CommunicationIdentifier[] = [];
+            ids.forEach((id) => {
+              const identifier = fromFlatCommunicationIdentifier(id);
+              if (isMicrosoftTeamsUserIdentifier(identifier)) {
+                newParticipants = newParticipants.concat([{ microsoftTeamsUserId: id || '' }]);
+              } else if (isMicrosoftTeamsAppIdentifier(identifier)) {
+                newParticipants = newParticipants.concat([{ teamsAppId: id || '' }]);
               } else {
-                (callAgent as CallAgent).startCall(targetParticipants as CommunicationUserIdentifier[]);
+                newParticipants = newParticipants.concat([{ communicationUserId: id || '' }]);
+              }
+            });
+            setTargetParticipants(newParticipants);
+          }}
+        ></TextField>
+        <TextField
+          label="Alternate Caller Id"
+          placeholder="Enter the alternate caller id"
+          onChange={(_, value: string) => setAlternateCallerId(value || '')}
+        ></TextField>
+        <Dialpad onChange={(value) => setTargetParticipants([{ phoneNumber: value }])}></Dialpad>
+        <PrimaryButton
+          onClick={() => {
+            console.log('targetParticipants', targetParticipants);
+            if (targetParticipants && targetParticipants.length > 0) {
+              if (isPhoneNumberIdentifier(targetParticipants[0]) && alternateCallerId) {
+                (callAgent as CallAgent).startCall(targetParticipants as PhoneNumberIdentifier[], {
+                  alternateCallerId: { phoneNumber: alternateCallerId }
+                });
+              } else {
+                if (isMicrosoftTeamsUserIdentifier(targetParticipants[0])) {
+                  (callAgent as CallAgent).startCall(targetParticipants as MicrosoftTeamsUserIdentifier[]);
+                } else {
+                  (callAgent as CallAgent).startCall(targetParticipants as CommunicationUserIdentifier[]);
+                }
               }
             }
-          }
-        }}
-      >
-        Start Call
-      </PrimaryButton>
+          }}
+        >
+          Start Call
+        </PrimaryButton>
+      </Stack>
     </Stack>
   );
 };
