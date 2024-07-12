@@ -22,9 +22,8 @@ export const richTextEditorStyle = (props: { minHeight: string; maxHeight: strin
 /**
  * @private
  */
-export const richTextEditorWrapperStyle = (theme: Theme, addTopOffset: boolean): string => {
+export const richTextEditorWrapperStyle = (theme: Theme): string => {
   return mergeStyles({
-    // paddingTop: `${addTopOffset ? '0.5rem' : '0'}`,
     paddingInlineStart: `0.75rem`,
     paddingInlineEnd: `0.75rem`,
     maxWidth: '100%',

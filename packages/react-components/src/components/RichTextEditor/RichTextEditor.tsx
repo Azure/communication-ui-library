@@ -332,7 +332,7 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
   return (
     <div data-testid={'rich-text-editor-wrapper'}>
       {showRichTextEditorFormatting && toolbar}
-      <div className={richTextEditorWrapperStyle(theme, !showRichTextEditorFormatting)}>
+      <div className={richTextEditorWrapperStyle(theme)}>
         {/* div that is used by Rooster JS as a parent of the editor */}
         <div
           id="richTextSendBox"
