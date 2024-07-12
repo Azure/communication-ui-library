@@ -13,7 +13,7 @@ import { InputBoxButton } from '../InputBoxButton';
 import { RichTextSendBoxErrors, RichTextSendBoxErrorsProps } from './RichTextSendBoxErrors';
 import { isMessageTooLong, isSendBoxButtonAriaDisabled, sanitizeText } from '../utils/SendBoxUtils';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
-import { insertImagesToContentString } from '../utils/SendBoxUtils';
+import { insertImagesToContentString, cancelInlineImageUpload } from '../utils/SendBoxUtils';
 import { RichTextEditorComponentRef } from './RichTextEditor';
 import { useTheme } from '../../theming';
 import { richTextActionButtonsStyle, sendBoxRichTextEditorStyle } from '../styles/RichTextEditor.styles';
@@ -271,14 +271,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
       /* @conditional-compile-remove(rich-text-editor-image-upload) */ imageSrcArray?: Array<string>
     ) => {
       /* @conditional-compile-remove(rich-text-editor-image-upload) */
-      if (imageSrcArray && imageUploadsInProgress && imageUploadsInProgress?.length > 0) {
-        imageUploadsInProgress?.map((uploadImage) => {
-          if (uploadImage.url && imageSrcArray && !imageSrcArray?.includes(uploadImage.url)) {
-            onCancelInlineImageUpload?.(uploadImage.id);
-          }
-        });
-      }
-
+      cancelInlineImageUpload(imageSrcArray, imageUploadsInProgress, onCancelInlineImageUpload);
       setContent(newValue);
     },
     [

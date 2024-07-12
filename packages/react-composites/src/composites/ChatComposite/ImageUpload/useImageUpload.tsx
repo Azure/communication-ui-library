@@ -15,37 +15,8 @@ import {
 import { useAdapter } from '../adapter/ChatAdapterProvider';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { nanoid } from 'nanoid';
-
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
-const fetchBlobData = async (
-  resource: string | URL | Request,
-  options: { timeout?: number; headers?: Headers; abortController: AbortController }
-): Promise<Response> => {
-  // default timeout is 30 seconds
-  const { timeout = 30000, abortController } = options;
-
-  const id = setTimeout(() => {
-    abortController.abort();
-  }, timeout);
-
-  const response = await fetch(resource, {
-    ...options,
-    signal: abortController.signal
-  });
-  clearTimeout(id);
-  return response;
-};
-
-/* @conditional-compile-remove(rich-text-editor-image-upload) */
-const getInlineImageData = async (image: string): Promise<Blob | undefined> => {
-  const blobImage: Blob | undefined = undefined;
-  if (image.startsWith('blob') || image.startsWith('http')) {
-    const res = await fetchBlobData(image, { abortController: new AbortController() });
-    const blobImage = await res.blob();
-    return blobImage;
-  }
-  return blobImage;
-};
+import { getInlineImageData } from './ImageUploadUtils';
 
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 /**
@@ -148,7 +119,11 @@ export const useImageUpload = (): [
       handleInlineImageUploadAction({ type: AttachmentUploadActionType.Remove, id: uploadId });
       // TODO: remove local blob
       if (imageUpload?.metadata.progress === 1) {
-        adapter.deleteImage(imageId);
+        try {
+          adapter.deleteImage(imageId);
+        } catch (error) {
+          console.error(error);
+        }
       }
     },
     [adapter, inlineImageUploads]
