@@ -5,10 +5,10 @@ import { IncomingCallNotification as IncomingCallNotificationComponent } from '@
 import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
+import { SingleLineBetaBanner } from '../BetaBanners/SingleLineBetaBanner';
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
 import { IncomingCallNotificationExample } from './snippets/IncomingCallNotification.snippet';
 import { IncomingCallNotificationStylingExample } from './snippets/IncomingCallNotificationStyling.snippet';
-import { SingleLineBetaBanner } from '../BetaBanners/SingleLineBetaBanner';
 
 const IncomingCallNotificationText = require('!!raw-loader!./snippets/IncomingCallNotification.snippet').default;
 const IncomingCallNotificationStylingText =
