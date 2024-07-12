@@ -25,9 +25,9 @@ const getDocs: () => JSX.Element = () => {
       </Canvas>
       <Heading>Styling</Heading>
       <Description>
-        Depending on your use of incoming call notification you might want to customize it to your needs. The
-        component includes API's to adjust the CSS on many different elements of the component. Below is an
-        example of how you can customize incoming call notification.
+        Depending on your use of incoming call notification you might want to customize it to your needs. The component
+        includes API's to adjust the CSS on many different elements of the component. Below is an example of how you can
+        customize incoming call notification.
       </Description>
       <Canvas>
         <IncomingCallNotificationStylingExample />
