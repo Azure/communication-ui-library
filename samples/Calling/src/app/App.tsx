@@ -126,7 +126,7 @@ const App = (): JSX.Element => {
                 return fromFlatCommunicationIdentifier(user);
               });
               callLocator = undefined;
-              setTargetCallees(outboundUsers ?? []);
+              setTargetCallees(outboundUsers);
             }
 
             if (callDetails.option === 'TeamsAdhoc') {
@@ -134,7 +134,7 @@ const App = (): JSX.Element => {
                 return fromFlatCommunicationIdentifier(user) as StartCallIdentifier;
               });
               callLocator = undefined;
-              setTargetCallees(outboundTeamsUsers ?? []);
+              setTargetCallees(outboundTeamsUsers);
             }
 
             // There is an API call involved with creating a room so lets only create one if we know we have to
