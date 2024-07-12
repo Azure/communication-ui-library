@@ -26,6 +26,7 @@ import { TableEditContextMenuProvider } from './Plugins/TableEditContextMenuProv
 import { borderApplier, dataSetApplier, DefaultSanitizers } from '../utils/RichTextEditorUtils';
 import { ContextualMenu, IContextualMenuItem, IContextualMenuProps } from '@fluentui/react';
 import { PlaceholderPlugin } from './Plugins/PlaceholderPlugin';
+import { setDirection } from 'roosterjs-content-model-api';
 
 /**
  * Style props for {@link RichTextEditor}.
@@ -312,6 +313,14 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     // don't update the editor on deps update as everything is handled in separate hooks or plugins
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [theme, plugins]);
+
+  useEffect(() => {
+    if (editor.current) {
+      // should be set after the hook where editor is created as the editor might be null
+      // setDirection will cause the focus change back to the editor, that's why it's not part of that hook
+      setDirection(editor.current, theme.rtl ? 'rtl' : 'ltr');
+    }
+  }, [theme.rtl]);
 
   return (
     <div data-testid={'rich-text-editor-wrapper'}>

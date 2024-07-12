@@ -15,12 +15,7 @@ export const richTextEditorStyle = (props: { minHeight: string; maxHeight: strin
     minHeight: props.minHeight,
     maxHeight: props.maxHeight,
     maxWidth: '100%',
-    // this is needed to fix an issue when text has some indentation, indentation uses blockquote tag and
-    // it gets both horizontal margins because of the user agent stylesheet
-    // remove this code when RoosterJS content model packages are used as they use different approach for indentation
-    '& blockquote': {
-      marginInlineEnd: '0'
-    }
+    paddingTop: '0.5rem'
   });
 };
 
@@ -29,7 +24,7 @@ export const richTextEditorStyle = (props: { minHeight: string; maxHeight: strin
  */
 export const richTextEditorWrapperStyle = (theme: Theme, addTopOffset: boolean): string => {
   return mergeStyles({
-    paddingTop: `${addTopOffset ? '0.5rem' : '0'}`,
+    // paddingTop: `${addTopOffset ? '0.5rem' : '0'}`,
     paddingInlineStart: `0.75rem`,
     paddingInlineEnd: `0.75rem`,
     maxWidth: '100%',
@@ -116,7 +111,7 @@ const ribbonOverflowButtonRootStyles = (theme: Theme): IStyle => {
       },
       '.ribbon-table-button-regular-icon': {
         display: 'inline-block',
-        margin: '-0.25rem 0.25rem 0 0.25rem',
+        margin: '0 0.25rem 0 0.25rem',
         width: '1.25rem',
         height: '1.25rem'
       },
@@ -157,8 +152,8 @@ const ribbonButtonRootStyles = (iconColor: string, hoverIconColor: string): ISty
  */
 export const toolbarButtonStyle = (theme: Theme): Partial<IButtonStyles> => {
   return {
-    icon: { color: theme.palette.neutralPrimary, height: 'auto' },
-    menuIcon: { color: theme.palette.neutralPrimary, height: 'auto' },
+    icon: { color: theme.palette.neutralPrimary, height: 'auto', paddingTop: '0.25rem' },
+    menuIcon: { color: theme.palette.neutralPrimary, height: 'auto', paddingTop: '0.25rem' },
     root: { minWidth: 'auto', backgroundColor: 'transparent' },
     rootChecked: ribbonButtonRootStyles(theme.palette.themePrimary, theme.palette.themePrimary),
     // there is a bug for Android where the press action is considered hover sometimes
@@ -200,14 +195,14 @@ const ribbonTableButtonRootStyles = (theme: Theme, isSelected: boolean): IStyle 
       '.ribbon-table-button-regular-icon': {
         width: '1.25rem',
         height: '1.25rem',
-        margin: '-0.25rem 0.25rem 0 0.25rem',
+        margin: '0 0.25rem 0 0.25rem',
         color: theme.palette.neutralPrimary,
         display: isSelected ? 'none' : 'inline-block'
       },
       '.ribbon-table-button-filled-icon': {
         width: '1.25rem',
         height: '1.25rem',
-        margin: '-0.25rem 0.25rem 0 0.25rem',
+        margin: '0 0.25rem 0 0.25rem',
         color: theme.palette.themePrimary,
         display: isSelected ? 'inline-block' : 'none'
       }
@@ -222,7 +217,7 @@ export const ribbonDividerStyle = (theme: Theme): string => {
   return mergeStyles({
     color: theme.palette.neutralQuaternaryAlt,
     margin: '0 -0.5rem',
-    paddingTop: '0.5rem'
+    paddingTop: '0.25rem'
   });
 };
 
@@ -231,7 +226,7 @@ export const ribbonDividerStyle = (theme: Theme): string => {
  */
 export const richTextToolbarStyle: Partial<ICommandBarStyles> = {
   // Override for the default white color of the Ribbon component
-  root: { backgroundColor: 'transparent', padding: '0px' }
+  root: { backgroundColor: 'transparent', padding: '0.25rem 0 0 0', height: '2rem' }
 };
 
 /**
