@@ -525,6 +525,17 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   );
 
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  const onPasteHandler = useCallback(
+    (event: { content: DocumentFragment }) => {
+      const threadCreatedBy = adapter.getState().thread?.properties?.createdBy;
+      if (threadCreatedBy?.kind !== 'microsoftTeamsUser' || textOnlyChat) {
+        removeImageTags(event);
+      }
+    },
+    [adapter, textOnlyChat]
+  );
+
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
   const onCancelEditMessageHandler = useCallback(() => {
     handleInlineImageUploadAction({ type: AttachmentUploadActionType.Clear });
   }, [handleInlineImageUploadAction]);
