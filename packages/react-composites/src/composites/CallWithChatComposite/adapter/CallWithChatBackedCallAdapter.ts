@@ -271,6 +271,8 @@ function callAdapterStateFromCallWithChatAdapterState(
     onResolveVideoEffectDependency: callWithChatAdapterState.onResolveVideoEffectDependency,
 
     selectedVideoBackgroundEffect: callWithChatAdapterState.selectedVideoBackgroundEffect,
-    reactions: callWithChatAdapterState.reactions
+    reactions: callWithChatAdapterState.reactions,
+    mainMeeting: callWithChatAdapterState.mainMeeting,
+    breakoutRoomSettings: callWithChatAdapterState.breakoutRoomSettings
   };
 }

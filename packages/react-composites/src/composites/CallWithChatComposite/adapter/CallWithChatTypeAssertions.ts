@@ -87,11 +87,12 @@ type CallWithChatClientStateInternal = Omit<
   | 'videoBackgroundImages'
   | 'selectedVideoBackgroundEffect'
   | 'acceptedTransferCallState'
-  | 'breakoutRoomMainMeeting'
   | 'cameraStatus'
   | 'sounds'
   | 'isRoomsCall'
   | 'targetCallees'
+  | 'mainMeeting'
+  | 'breakoutRoomSettings'
 >;
 
 const CallWithChatClientStateTypeAssertion = (value: CallWithChatClientState): CallWithChatClientStateInternal => value;

@@ -23,7 +23,7 @@ import { CallPage } from './pages/CallPage';
 import { ConfigurationPage } from './pages/ConfigurationPage';
 import { NoticePage } from './pages/NoticePage';
 import { useSelector } from './hooks/useSelector';
-import { getEndedCall, getPage, getTargetCallees } from './selectors/baseSelectors';
+import { getEndedCall, getMainMeeting, getPage, getTargetCallees } from './selectors/baseSelectors';
 import { LobbyPage } from './pages/LobbyPage';
 import { TransferPage } from './pages/TransferPage';
 import {
@@ -354,6 +354,7 @@ type MainScreenProps = {
   onSidePaneIdChange?: (sidePaneId: string | undefined) => void;
   mobileChatTabHeader?: MobileChatSidePaneTabHeaderProps;
   onCloseChatPane?: () => void;
+  setRemoteParticipants?: (remoteParticipants: Record<string, { role?: string }>) => void;
 };
 
 const isShowing = (overrideSidePane?: InjectedSidePaneProps): boolean => {
@@ -384,7 +385,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
     hasMicrophones
   ]);
 
-  const { callInvitationUrl, onFetchAvatarPersonaData, onFetchParticipantMenuItems } = props;
+  const { callInvitationUrl, onFetchAvatarPersonaData, onFetchParticipantMenuItems, setRemoteParticipants } = props;
   const page = useSelector(getPage);
   const endedCall = useSelector(getEndedCall);
 
@@ -435,6 +436,12 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   const badNetworkQualityFlag = useSelector(badNetworkQualityBannerSelector);
   /* @conditional-compile-remove(teams-meeting-conference) */
   const badNetworkQualityBannerProps = useBadNetworkQualityNotifications(badNetworkQualityFlag.isPoorNetworkQuality);
+
+  const mainMeeting = useSelector(getMainMeeting);
+
+  useEffect(() => {
+    setRemoteParticipants?.(mainMeeting?.remoteParticipants ?? {});
+  }, [setRemoteParticipants, mainMeeting]);
 
   const notifications = useAdaptedSelector(notificationsBarSelector).activeNotifications;
   const breakoutRoomsNotificationBarProps = useTrackedBreakoutRoomsNotifications({
@@ -748,6 +755,7 @@ export interface InternalCallCompositeProps {
   onCloseChatPane?: () => void;
   // legacy property to avoid breaking change
   mobileChatTabHeader?: MobileChatSidePaneTabHeaderProps;
+  setRemoteParticipants?: (remoteParticipants: Record<string, { role?: string }>) => void;
 }
 
 /** @private */
@@ -783,6 +791,7 @@ export const CallCompositeInner = (props: CallCompositeProps & InternalCallCompo
             overrideSidePane={props.overrideSidePane}
             mobileChatTabHeader={props.mobileChatTabHeader}
             onCloseChatPane={props.onCloseChatPane}
+            setRemoteParticipants={props.setRemoteParticipants}
           />
           {
             // This layer host is for ModalLocalAndRemotePIP in SidePane. This LayerHost cannot be inside the SidePane

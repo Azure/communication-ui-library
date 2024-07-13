@@ -136,7 +136,9 @@ export function callWithChatAdapterStateFromBackingStates(callAdapter: CallAdapt
     /* @conditional-compile-remove(hide-attendee-name) */
     /** Hide attendee names in teams meeting */
     hideAttendeeNames: callAdapterState.hideAttendeeNames,
-    reactions: callAdapterState.reactions
+    reactions: callAdapterState.reactions,
+    mainMeeting: callAdapterState.mainMeeting,
+    breakoutRoomSettings: callAdapterState.breakoutRoomSettings
   };
 }
 
@@ -178,6 +180,8 @@ export function mergeCallAdapterStateIntoCallWithChatAdapterState(
 
     onResolveVideoEffectDependency: callAdapterState.onResolveVideoEffectDependency,
 
-    selectedVideoBackgroundEffect: callAdapterState.selectedVideoBackgroundEffect
+    selectedVideoBackgroundEffect: callAdapterState.selectedVideoBackgroundEffect,
+    mainMeeting: callAdapterState.mainMeeting,
+    breakoutRoomSettings: callAdapterState.breakoutRoomSettings
   };
 }

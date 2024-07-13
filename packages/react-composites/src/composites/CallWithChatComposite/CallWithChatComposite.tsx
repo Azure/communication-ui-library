@@ -3,6 +3,8 @@
 
 import React, { useCallback, useState, useMemo, useEffect, useRef } from 'react';
 import { mergeStyles, PartialTheme, Stack, Theme } from '@fluentui/react';
+// eslint-disable-next-line no-restricted-imports
+import { FontIcon } from '@fluentui/react';
 import { CallCompositePage } from '../CallComposite';
 import { CallSurvey } from '@azure/communication-calling';
 import { CallState } from '@azure/communication-calling';
@@ -16,7 +18,12 @@ import { BaseProvider, BaseCompositeProps } from '../common/BaseComposite';
 import { CallWithChatCompositeIcons } from '../common/icons';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { CallWithChatAdapterState } from './state/CallWithChatAdapterState';
-import { CallSurveyImprovementSuggestions } from '@internal/react-components';
+import {
+  CallSurveyImprovementSuggestions,
+  ChatMessage,
+  MessageProps,
+  MessageRenderer
+} from '@internal/react-components';
 import {
   ParticipantMenuItemsCallback,
   _useContainerHeight,
@@ -559,6 +566,34 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
     ]
   );
 
+  const [remoteParticipants, setRemoteParticipants] = useState<Record<string, { role?: string }>>({});
+
+  const onRenderMessage: (messageProps: MessageProps, defaultOnRender?: MessageRenderer) => JSX.Element = useCallback(
+    (messageProps: MessageProps, defaultOnRender?: MessageRenderer) => {
+      const chatMessage = messageProps.message as ChatMessage;
+      const chatMessageSenderId = chatMessage?.senderId;
+      if (remoteParticipants && chatMessageSenderId) {
+        const messageSender = remoteParticipants[chatMessageSenderId];
+        if (messageSender?.role && ['Organizer', 'Co-organizer'].includes(messageSender?.role)) {
+          return (
+            <Stack horizontal className={mergeStyles({ display: 'flex', alignItems: 'center' })}>
+              {defaultOnRender?.(messageProps)}
+              <FontIcon
+                iconName="Important"
+                className={mergeStyles({
+                  fontSize: 20,
+                  color: theme.palette.red
+                })}
+              />
+            </Stack>
+          );
+        }
+      }
+      return defaultOnRender ? defaultOnRender(messageProps) : <div>{chatMessage.content}</div>;
+    },
+    [remoteParticipants, theme.palette.red]
+  );
+
   const onRenderChatContent = useCallback(
     (): JSX.Element => (
       <ChatComposite
@@ -574,6 +609,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
           richTextEditor: props.richTextEditor
         }}
         onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
+        onRenderMessage={onRenderMessage}
       />
     ),
     [
@@ -581,7 +617,8 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
       /* @conditional-compile-remove(file-sharing-acs) */ props.attachmentOptions,
       props.onFetchAvatarPersonaData,
       /* @conditional-compile-remove(rich-text-editor-composite-support) */ props.richTextEditor,
-      theme
+      theme,
+      onRenderMessage
     ]
   );
 
@@ -654,6 +691,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
               onSidePaneIdChange={onSidePaneIdChange}
               mobileChatTabHeader={chatTabHeaderProps}
               onCloseChatPane={closeChat}
+              setRemoteParticipants={setRemoteParticipants}
             />
           </Stack.Item>
         </Stack>

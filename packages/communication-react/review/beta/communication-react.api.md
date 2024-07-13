@@ -148,8 +148,6 @@ export type AdapterErrors = {
 
 // @public
 export interface AdapterNotification {
-    // (undocumented)
-    messageKey: string;
     target: string;
     timestamp: Date;
 }
@@ -439,6 +437,8 @@ export interface CallAdapterCallOperations {
     disposeScreenShareStreamView(remoteUserId: string): Promise<void>;
     // @deprecated
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
+    // (undocumented)
+    hangUpMainMeeting(): Promise<void>;
     // @beta
     holdCall(): Promise<void>;
     leaveCall(forEveryone?: boolean): Promise<void>;
@@ -629,6 +629,8 @@ export interface CallClientState {
     latestErrors: CallErrors;
     // (undocumented)
     latestNotifications: CallNotifications;
+    // (undocumented)
+    mainMeeting?: CallState;
     userId: CommunicationIdentifierKind;
 }
 
@@ -1005,7 +1007,7 @@ export type CallErrors = {
 };
 
 // @public
-export type CallErrorTarget = 'Call.addParticipant' | 'Call.dispose' | 'Call.feature' | 'Call.hangUp' | 'Call.hold' | 'Call.mute' | 'Call.muteIncomingAudio' | 'Call.off' | 'Call.on' | 'Call.removeParticipant' | 'Call.resume' | 'Call.sendDtmf' | 'Call.startAudio' | 'Call.startScreenSharing' | 'Call.startVideo' | 'Call.stopScreenSharing' | 'Call.stopAudio' | 'Call.stopVideo' | 'Call.unmute' | 'Call.unmuteIncomingAudio' | 'CallAgent.dispose' | 'CallAgent.feature' | 'CallAgent.join' | 'CallAgent.off' | 'CallAgent.on' | 'CallAgent.startCall' | 'CallClient.createCallAgent' | 'CallClient.createTeamsCallAgent' | 'CallClient.feature' | 'CallClient.getDeviceManager' | /* @conditional-compile-remove(calling-beta-sdk) */ 'CallClient.getEnvironmentInfo' | 'DeviceManager.askDevicePermission' | 'DeviceManager.getCameras' | 'DeviceManager.getMicrophones' | 'DeviceManager.getSpeakers' | 'DeviceManager.off' | 'DeviceManager.on' | 'DeviceManager.selectMicrophone' | 'DeviceManager.selectSpeaker' | 'IncomingCall.accept' | 'IncomingCall.reject' | /* @conditional-compile-remove(calling-beta-sdk) */ /* @conditional-compile-remove(teams-identity-support) */ 'TeamsCall.addParticipant' | 'VideoEffectsFeature.startEffects' | /* @conditional-compile-remove(calling-beta-sdk) */ 'CallAgent.handlePushNotification' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.admit' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.rejectParticipant' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.admitAll' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.muteAllRemoteParticipants' | 'Call.setConstraints';
+export type CallErrorTarget = 'Call.addParticipant' | 'Call.dispose' | 'Call.feature' | 'Call.hangUp' | 'Call.hold' | 'Call.mute' | 'Call.muteIncomingAudio' | 'Call.off' | 'Call.on' | 'Call.removeParticipant' | 'Call.resume' | 'Call.sendDtmf' | 'Call.startAudio' | 'Call.startScreenSharing' | 'Call.startVideo' | 'Call.stopScreenSharing' | 'Call.stopAudio' | 'Call.stopVideo' | 'Call.unmute' | 'Call.unmuteIncomingAudio' | 'CallAgent.dispose' | 'CallAgent.feature' | 'CallAgent.join' | 'CallAgent.off' | 'CallAgent.on' | 'CallAgent.startCall' | 'CallClient.createCallAgent' | 'CallClient.createTeamsCallAgent' | 'CallClient.feature' | 'CallClient.getDeviceManager' | /* @conditional-compile-remove(calling-beta-sdk) */ 'CallClient.getEnvironmentInfo' | 'DeviceManager.askDevicePermission' | 'DeviceManager.getCameras' | 'DeviceManager.getMicrophones' | 'DeviceManager.getSpeakers' | 'DeviceManager.off' | 'DeviceManager.on' | 'DeviceManager.selectMicrophone' | 'DeviceManager.selectSpeaker' | 'IncomingCall.accept' | 'IncomingCall.reject' | /* @conditional-compile-remove(calling-beta-sdk) */ /* @conditional-compile-remove(teams-identity-support) */ 'TeamsCall.addParticipant' | 'VideoEffectsFeature.startEffects' | /* @conditional-compile-remove(calling-beta-sdk) */ 'CallAgent.handlePushNotification' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.admit' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.rejectParticipant' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.admitAll' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.muteAllRemoteParticipants' | 'Call.setConstraints' | 'assignedBreakoutRoomOpened' | 'assignedBreakoutRoomOpenedPromptJoin' | 'assignedBreakoutRoomClosingSoon' | 'assignedBreakoutRoomClosed';
 
 // @public
 export type CallIdChangedListener = (event: {
@@ -1053,10 +1055,6 @@ export interface CallingTheme {
 
 // @public (undocumented)
 export interface CallNotification {
-    // (undocumented)
-    callId?: string;
-    // (undocumented)
-    messageKey: string;
     // (undocumented)
     target: NotificationTarget;
     // (undocumented)
@@ -1166,6 +1164,7 @@ export interface CallWithChatAdapterManagement {
     // (undocumented)
     downloadResourceToCache(resourceDetails: ResourceDetails): Promise<void>;
     fetchInitialData(): Promise<void>;
+    hangUpMainMeeting(): Promise<void>;
     // @beta
     holdCall: () => Promise<void>;
     // @deprecated
@@ -2633,6 +2632,10 @@ export const DEFAULT_COMPONENT_ICONS: {
     MessageResend: React_2.JSX.Element;
     MessageSeen: React_2.JSX.Element;
     MessageSending: React_2.JSX.Element;
+    NotificationBarBreakoutRoomOpened: React_2.JSX.Element;
+    NotificationBarBreakoutRoomPromptJoin: React_2.JSX.Element;
+    NotificationBarBreakoutRoomClosingSoon: React_2.JSX.Element;
+    NotificationBarBreakoutRoomClosed: React_2.JSX.Element;
     OptionsCamera: React_2.JSX.Element;
     OptionsMic: React_2.JSX.Element;
     OptionsSpeaker: React_2.JSX.Element;
@@ -2811,6 +2814,10 @@ export const DEFAULT_COMPOSITE_ICONS: {
     ErrorBarCallVideoRecoveredBySystem: React_2.JSX.Element;
     ErrorBarCallVideoStoppedBySystem: React_2.JSX.Element;
     MessageResend: React_2.JSX.Element;
+    NotificationBarBreakoutRoomOpened: React_2.JSX.Element;
+    NotificationBarBreakoutRoomPromptJoin: React_2.JSX.Element;
+    NotificationBarBreakoutRoomClosingSoon: React_2.JSX.Element;
+    NotificationBarBreakoutRoomClosed: React_2.JSX.Element;
     ParticipantItemSpotlighted: React_2.JSX.Element;
     HoldCallContextualMenuItem: React_2.JSX.Element;
     HoldCallButton: React_2.JSX.Element;
@@ -3046,6 +3053,14 @@ export interface ErrorBarProps extends IMessageBarProps {
 // @public
 export interface ErrorBarStrings {
     accessDenied: string;
+    // (undocumented)
+    assignedBreakoutRoomClosed: string;
+    // (undocumented)
+    assignedBreakoutRoomClosingSoon: string;
+    // (undocumented)
+    assignedBreakoutRoomOpened: string;
+    // (undocumented)
+    assignedBreakoutRoomOpenedPromptJoin: string;
     callCameraAccessDenied: string;
     callCameraAccessDeniedSafari: string;
     callCameraAlreadyInUse: string;
@@ -3693,6 +3708,14 @@ export interface NotificationsProps {
 
 // @beta
 export interface NotificationsStrings {
+    // (undocumented)
+    assignedBreakoutRoomClosed: NotificationBarStrings;
+    // (undocumented)
+    assignedBreakoutRoomClosingSoon: NotificationBarStrings;
+    // (undocumented)
+    assignedBreakoutRoomOpened: NotificationBarStrings;
+    // (undocumented)
+    assignedBreakoutRoomOpenedPromptJoin: NotificationBarStrings;
     callCameraAccessDenied: NotificationBarStrings;
     callCameraAccessDeniedSafari: NotificationBarStrings;
     callCameraAlreadyInUse: NotificationBarStrings;
@@ -3724,7 +3747,7 @@ export interface NotificationsStrings {
 }
 
 // @public (undocumented)
-export type NotificationTarget = 'assignedBreakoutRoomUpdated';
+export type NotificationTarget = 'assignedBreakoutRoomOpened' | 'assignedBreakoutRoomOpenedPromptJoin' | 'assignedBreakoutRoomClosingSoon' | 'assignedBreakoutRoomClosed';
 
 // @beta
 export type NotificationType = keyof NotificationsStrings;
