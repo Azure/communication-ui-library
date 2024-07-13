@@ -10,7 +10,9 @@ import {
   TeamsIncomingCall,
   LocalVideoStream,
   IncomingCallCommon,
-  CallAgent
+  CallAgent,
+  TeamsCall,
+  Call
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(one-to-n-calling) */
 import { IncomingCallEvent, TeamsIncomingCallEvent } from '@azure/communication-calling';
@@ -28,6 +30,7 @@ import { LoginScreen } from './views/Login';
 import { CallScreen } from './views/CallScreen';
 import { IncomingCallManager } from './components/IncomingCallManager';
 import { HomeScreen } from './views/Homescreen';
+import { CallManager } from './components/CallManager';
 
 initializeIcons();
 registerIcons({ icons: DEFAULT_COMPONENT_ICONS });
@@ -42,7 +45,8 @@ function App(): JSX.Element {
   const [statefulCallClient, setStatefulCallClient] = useState<StatefulCallClient>();
   /* @conditional-compile-remove(one-to-n-calling) */
   const [callAgent, setCallAgent] = useState<DeclarativeCallAgent | DeclarativeTeamsCallAgent>();
-  const [call, setCall] = useState<CallCommon>();
+  const [call, setCall] = useState<Call | TeamsCall>();
+  const [calls, setCalls] = useState<Call[] | TeamsCall[]>([]);
   const [incomingCalls, setIncomingCalls] = useState<readonly IncomingCall[] | readonly TeamsIncomingCall[]>([]);
 
   /**
@@ -91,6 +95,7 @@ function App(): JSX.Element {
           console.log(call.id, call.callEndReason);
         }
       }
+      setCalls((callAgent?.calls as Call[] | TeamsCall[]) || []);
     },
     [call, setCall]
   );
@@ -205,22 +210,43 @@ function App(): JSX.Element {
       <Stack
         verticalAlign="center"
         horizontalAlign="center"
+        horizontal
         tokens={{ childrenGap: '1rem' }}
-        style={{ width: '100%', height: '40rem', margin: 'auto', paddingTop: '1rem', position: 'relative' }}
+        style={{ width: '100%', height: '40rem', paddingTop: '1rem', position: 'relative' }}
       >
-        {userIdentifier && <Text>your userId: {userIdentifier.communicationUserId}</Text>}
-        {teamsIdentifier && <Text>your teamsId: {teamsIdentifier}</Text>}
-        {statefulCallClient && callAgent && !call && (
-          <HomeScreen callAgent={callAgent as CallAgent} headerImageProps={imageProps}></HomeScreen>
-        )}
-        {statefulCallClient && /* @conditional-compile-remove(one-to-n-calling) */ callAgent && call && (
-          <CallScreen
-            statefulCallClient={statefulCallClient}
-            /* @conditional-compile-remove(one-to-n-calling) */ callAgent={callAgent}
-            /* @conditional-compile-remove(one-to-n-calling) */ call={call}
-            /* @conditional-compile-remove(one-to-n-calling) */ onSetCall={setCall}
-          />
-        )}
+        <Stack style={{ width: '80%', height: '100%' }}>
+          {userIdentifier && <Text>your userId: {userIdentifier.communicationUserId}</Text>}
+          {teamsIdentifier && <Text>your teamsId: {teamsIdentifier}</Text>}
+          {statefulCallClient && callAgent && !call && (
+            <HomeScreen callAgent={callAgent as CallAgent} headerImageProps={imageProps}></HomeScreen>
+          )}
+          {statefulCallClient && /* @conditional-compile-remove(one-to-n-calling) */ callAgent && call && (
+            <Stack style={{ height: '40rem' }}>
+              <CallScreen
+                statefulCallClient={statefulCallClient}
+                /* @conditional-compile-remove(one-to-n-calling) */ callAgent={callAgent}
+                /* @conditional-compile-remove(one-to-n-calling) */ call={call}
+              />
+            </Stack>
+          )}
+        </Stack>
+        <Stack style={{ width: '20%', height: '100%', position: 'relative' }}>
+          <Stack.Item style={{ top: '1rem', width: '100%', height: '100%', position: 'absolute' }}>
+            <CallManager
+              activeCall={call}
+              calls={calls}
+              onSetActiveCall={function (call: CallCommon): void {
+                throw new Error('Function not implemented.');
+              }}
+              onSetCallHoldState={function (call: CallCommon): void {
+                throw new Error('Function not implemented.');
+              }}
+              onEndCall={function (call: CallCommon): void {
+                throw new Error('Function not implemented.');
+              }}
+            />
+          </Stack.Item>
+        </Stack>
         <IncomingCallManager incomingCalls={incomingCalls} onAcceptCall={onAcceptCall} onRejectCall={onRejectCall} />
       </Stack>
     </FluentThemeProvider>
