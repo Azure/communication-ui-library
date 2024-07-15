@@ -15,7 +15,7 @@ import {
 /**
  * Props for {@link Notification}.
  *
- * @beta
+ * @public
  */
 export interface NotificationProps {
   /**
@@ -59,7 +59,7 @@ export interface NotificationProps {
 /**
  * All strings that may be shown on the UI in the {@link Notification}.
  *
- * @beta
+ * @public
  */
 export interface NotificationStrings {
   /**
@@ -87,7 +87,7 @@ export interface NotificationStrings {
 /**
  * A component to show notification messages on the UI.
  *
- * @beta
+ * @public
  */
 export const Notification = (props: NotificationProps): JSX.Element => {
   const strings = props.notificationStrings;

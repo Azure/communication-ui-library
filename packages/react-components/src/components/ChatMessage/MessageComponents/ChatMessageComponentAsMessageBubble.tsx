@@ -150,7 +150,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     chatMessageCommonStyles.body,
     chatMessageStyles.body,
     // disable placeholder functionality for GA releases as it might confuse users
-    chatMessageStyles.bodyWithPlaceholderImage,
+    chatMessageCommonStyles.bodyWithPlaceholderImage,
     isBlockedMessage
       ? chatMessageCommonStyles.blocked
       : props.message.status === 'failed'

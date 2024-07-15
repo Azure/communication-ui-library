@@ -63,9 +63,13 @@ import { SendBoxPicker } from '../common/SendBoxPicker';
 /* @conditional-compile-remove(rich-text-editor-composite-support) */
 import { loadRichTextSendBox } from '../common/SendBoxPicker';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
-import { useImageUpload } from './image-upload/useImageUpload';
+import { useImageUpload } from './ImageUpload/useImageUpload';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+import { removeImageTags } from './ImageUpload/ImageUploadUtils';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import type { ChatAdapterState } from './adapter/ChatAdapter';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+import { isMicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 
 /**
  * @private
@@ -132,13 +136,20 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     useImageUpload();
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   const [textOnlyChat, setTextOnlyChat] = useState(false);
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  const [isACSChat, setIsACSChat] = useState(false);
 
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   useEffect(() => {
     const updateChatState = (newState: ChatAdapterState): void => {
       setTextOnlyChat(newState.thread.properties?.messagingPolicy?.textOnlyChat === true);
+      if (newState.thread.properties?.createdBy) {
+        setIsACSChat(!isMicrosoftTeamsUserIdentifier(newState.thread.properties?.createdBy));
+      }
     };
+    // set initial state for textOnlyChat and isACSChat
     updateChatState(adapter.getState());
+
     adapter.onStateChange(updateChatState);
     return () => {
       adapter.offStateChange(updateChatState);
@@ -529,11 +540,10 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
 
   /* @conditional-compile-remove(rich-text-editor-composite-support) */
   const richTextEditorOptions = useMemo(() => {
+    const onPasteCallback = isACSChat || textOnlyChat ? removeImageTags : undefined;
     return options?.richTextEditor
       ? {
-          /* @conditional-compile-remove(rich-text-editor-image-upload) */ onPaste: textOnlyChat
-            ? removeImageTags
-            : undefined,
+          /* @conditional-compile-remove(rich-text-editor-image-upload) */ onPaste: onPasteCallback,
           /* @conditional-compile-remove(rich-text-editor-image-upload) */
           onUploadInlineImage: onUploadInlineImage,
           /* @conditional-compile-remove(rich-text-editor-image-upload) */
@@ -549,9 +559,11 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     onCancelInlineImageUploadHandler,
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
     onUploadInlineImage,
-    options?.richTextEditor,
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    textOnlyChat
+    isACSChat,
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    textOnlyChat,
+    options?.richTextEditor
   ]);
 
   return (
@@ -610,12 +622,6 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
                   // we need to overwrite onSendMessage for SendBox because we need to clear attachment state
                   // when submit button is clicked
                   onSendMessage={onSendMessageHandler}
-                  /* @conditional-compile-remove(rich-text-editor-image-upload) */
-                  onUploadInlineImage={onUploadInlineImage}
-                  /* @conditional-compile-remove(rich-text-editor-image-upload) */
-                  imageUploadsInProgress={imageUploadsInProgress}
-                  /* @conditional-compile-remove(rich-text-editor-image-upload) */
-                  onCancelInlineImageUpload={onCancelInlineImageUploadHandler}
                 />
               </Stack>
               {formFactor !== 'mobile' &&
@@ -653,19 +659,4 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       )}
     </Stack>
   );
-};
-
-// TODO-vhuseinova: delete after the function is added to utils
-/* @conditional-compile-remove(rich-text-editor-image-upload) */
-const removeImageTags = (event: { content: DocumentFragment }): void => {
-  event.content.querySelectorAll('img').forEach((image) => {
-    // If the image is the only child of its parent, remove all the parents of this img element.
-    let parentNode: HTMLElement | null = image.parentElement;
-    let currentNode: HTMLElement = image;
-    while (parentNode?.childNodes.length === 1) {
-      currentNode = parentNode;
-      parentNode = parentNode.parentElement;
-    }
-    currentNode?.remove();
-  });
 };

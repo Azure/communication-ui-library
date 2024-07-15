@@ -25,7 +25,7 @@ import { MAXIMUM_LENGTH_OF_MESSAGE } from '../../utils/SendBoxUtils';
 import {
   cancelInlineImageUpload,
   hasIncompleteAttachmentUploads,
-  insertAttachmentsAndImages,
+  insertImagesToContentString,
   isAttachmentUploadCompleted
 } from '../../utils/SendBoxUtils';
 import {
@@ -172,8 +172,8 @@ export const ChatMessageComponentAsRichTextEditBox = (
 
     let content = textValue;
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    if (imageUploadsInProgress && isAttachmentUploadCompleted(imageUploadsInProgress)) {
-      content = insertAttachmentsAndImages(textValue, undefined, imageUploadsInProgress).content;
+    if (isAttachmentUploadCompleted(imageUploadsInProgress)) {
+      content = insertImagesToContentString(textValue, imageUploadsInProgress);
     }
     // it's very important to pass an empty attachment here
     // so when user removes all attachments, UI can reflect it instantly
@@ -283,7 +283,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
         <RichTextSendBoxErrors
           textTooLongMessage={textTooLongMessage}
           systemMessage={message.failureReason}
-          /* @conditional-compile-remove(file-sharing-acs) */ attachmentUploadsPendingError={
+          /* @conditional-compile-remove(rich-text-editor-image-upload) */ attachmentUploadsPendingError={
             attachmentUploadsPendingError
           }
         />
@@ -316,7 +316,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
         className: mergeClasses(
           chatMyMessageStyles.root,
           /* @conditional-compile-remove(file-sharing-acs) */
-          hasMultipleAttachments ? chatMyMessageStyles.multipleAttachments : undefined
+          hasMultipleAttachments ? chatMyMessageStyles.multipleAttachmentsInEditing : undefined
         )
       }}
       body={{
