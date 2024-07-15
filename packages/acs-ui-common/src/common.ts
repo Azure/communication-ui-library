@@ -23,7 +23,7 @@ export const _convertPxToRem = (px: number): number => {
 
 const getBrowserFontSizeInPx = (): number => {
   let fontSizeInPx = parseFloat(getComputedStyle(document.documentElement).fontSize);
-  // If font size is not a number, default to 16px
+  // If browser font size is not a number, default to 16 px
   if (Number.isNaN(fontSizeInPx)) {
     fontSizeInPx = 16;
   }
