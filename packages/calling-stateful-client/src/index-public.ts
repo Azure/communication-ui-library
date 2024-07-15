@@ -31,7 +31,9 @@ export type { DeclarativeCallAgent, IncomingCallManagement } from './CallAgentDe
 /* @conditional-compile-remove(one-to-n-calling) */
 export type { DeclarativeIncomingCall } from './IncomingCallDeclarative';
 /* @conditional-compile-remove(teams-identity-support) */
-export type { DeclarativeTeamsCallAgent } from './TeamsCallAgentDeclarative';
+export type { DeclarativeTeamsIncomingCall } from './TeamsIncomingCallDeclarative';
+/* @conditional-compile-remove(teams-identity-support) */
+export type { DeclarativeTeamsCallAgent, TeamsIncomingCallManagement } from './TeamsCallAgentDeclarative';
 
 export type { LocalVideoStreamVideoEffectsState } from './CallClientState';
 

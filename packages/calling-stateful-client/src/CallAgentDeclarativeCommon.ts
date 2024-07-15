@@ -1,7 +1,13 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { Call, CallAgent, CallEndReason, CollectionUpdatedEvent } from '@azure/communication-calling';
+import {
+  Call,
+  CallAgent,
+  CallEndReason,
+  CollectionUpdatedEvent,
+  TeamsIncomingCall
+} from '@azure/communication-calling';
 
 import { IncomingCallCommon, CallAgentCommon, CallCommon } from './BetaToStableTypes';
 
@@ -15,6 +21,7 @@ import { DeclarativeIncomingCall, incomingCallDeclaratify } from './IncomingCall
 import { IncomingCallSubscriber } from './IncomingCallSubscriber';
 import { InternalCallContext } from './InternalCallContext';
 import { disposeAllViews, disposeAllViewsFromCall } from './StreamUtils';
+import { DeclarativeTeamsIncomingCall, teamsIncomingCallDeclaratify } from './TeamsIncomingCallDeclarative';
 
 /**
  *
@@ -37,7 +44,7 @@ export abstract class ProxyCallAgentCommon {
   private _internalContext: InternalCallContext;
   private _callSubscribers: Map<CallCommon, CallSubscriber>;
   private _incomingCallSubscribers: Map<string, IncomingCallSubscriber>;
-  private _declarativeIncomingCalls: Map<string, DeclarativeIncomingCall>;
+  private _declarativeIncomingCalls: Map<string, DeclarativeIncomingCall | DeclarativeTeamsIncomingCall>;
   private _declarativeCalls: Map<CallCommon, DeclarativeCallCommon>;
   private _externalCallsUpdatedListeners: Set<CollectionUpdatedEvent<CallCommon>>;
 
@@ -46,7 +53,7 @@ export abstract class ProxyCallAgentCommon {
     this._internalContext = internalContext;
     this._callSubscribers = new Map<Call, CallSubscriber>();
     this._incomingCallSubscribers = new Map<string, IncomingCallSubscriber>();
-    this._declarativeIncomingCalls = new Map<string, DeclarativeIncomingCall>();
+    this._declarativeIncomingCalls = new Map<string, DeclarativeIncomingCall>(); // this would be the new common type
     this._declarativeCalls = new Map<Call, DeclarativeCall>();
     this._externalCallsUpdatedListeners = new Set<CollectionUpdatedEvent<CallCommon>>();
   }
@@ -123,8 +130,16 @@ export abstract class ProxyCallAgentCommon {
         new IncomingCallSubscriber(incomingCall, this.setIncomingCallEnded)
       );
     }
-    this._declarativeIncomingCalls.set(incomingCall.id, incomingCallDeclaratify(incomingCall, this._context));
-    this._context.setIncomingCall(convertSdkIncomingCallToDeclarativeIncomingCall(incomingCall));
+    if (incomingCall.kind === 'TeamsIncomingCall') {
+      this._declarativeIncomingCalls.set(
+        incomingCall.id,
+        teamsIncomingCallDeclaratify(incomingCall as TeamsIncomingCall, this._context)
+      );
+      this._context.setIncomingCall(convertSdkIncomingCallToDeclarativeIncomingCall(incomingCall));
+    } else {
+      this._declarativeIncomingCalls.set(incomingCall.id, incomingCallDeclaratify(incomingCall, this._context));
+      this._context.setIncomingCall(convertSdkIncomingCallToDeclarativeIncomingCall(incomingCall));
+    }
   };
 
   protected addCall = (call: CallCommon): DeclarativeCallCommon => {
