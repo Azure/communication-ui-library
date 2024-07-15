@@ -4,7 +4,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { BreakoutRoomsNotificationBarProps } from '../components/BreakoutRoomsNotificationBar';
 import { BreakoutRoom } from '@azure/communication-calling';
-import { ActiveNotification, NotificationsStrings } from '@internal/react-components';
+import { ActiveNotification, NotificationStackStrings } from '@internal/react-components';
 
 /**
  * Create a record for when the notification was most recently dismissed for tracking dismissed notifications.
@@ -118,7 +118,7 @@ export const updateTrackedBreakoutRoomsNotificationsWithActiveNotifications = (
  * @private
  */
 export const trackCapabilityChangedNotificationAsDismissed = (
-  notificationEvent: keyof NotificationsStrings,
+  notificationEvent: keyof NotificationStackStrings,
   trackedNotifications: TrackedBreakoutRoomsNotifications
 ): TrackedBreakoutRoomsNotifications => {
   const now = new Date(Date.now());
@@ -136,7 +136,7 @@ export const trackCapabilityChangedNotificationAsDismissed = (
   };
 };
 
-type LatestBreakoutRoomsNotificationRecord = Partial<Record<keyof NotificationsStrings, ActiveNotification>>;
+type LatestBreakoutRoomsNotificationRecord = Partial<Record<keyof NotificationStackStrings, ActiveNotification>>;
 
 const convertActiveNotificationsToRecord = (
   breakoutRoomsNotifications: ActiveNotification[],
@@ -155,4 +155,4 @@ interface NotificationTrackingInfo {
   lastDismissedAt?: Date;
 }
 
-type TrackedBreakoutRoomsNotifications = Partial<Record<keyof NotificationsStrings, NotificationTrackingInfo>>;
+type TrackedBreakoutRoomsNotifications = Partial<Record<keyof NotificationStackStrings, NotificationTrackingInfo>>;

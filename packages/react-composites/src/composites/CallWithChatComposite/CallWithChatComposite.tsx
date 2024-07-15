@@ -13,7 +13,7 @@ import { CallWithChatAdapter } from './adapter/CallWithChatAdapter';
 import { CallWithChatBackedCallAdapter } from './adapter/CallWithChatBackedCallAdapter';
 import { CallWithChatBackedChatAdapter } from './adapter/CallWithChatBackedChatAdapter';
 import { CallAdapter } from '../CallComposite';
-import { ChatComposite, ChatAdapter } from '../ChatComposite';
+import { ChatComposite, ChatAdapter, ChatCompositeOptions } from '../ChatComposite';
 import { BaseProvider, BaseCompositeProps } from '../common/BaseComposite';
 import { CallWithChatCompositeIcons } from '../common/icons';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
@@ -566,6 +566,24 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
     ]
   );
 
+  const chatCompositeOptions: ChatCompositeOptions = useMemo(
+    () => ({
+      topic: false,
+      /* @conditional-compile-remove(chat-composite-participant-pane) */
+      participantPane: false,
+      /* @conditional-compile-remove(file-sharing-acs) */
+      attachmentOptions: props.attachmentOptions,
+      /* @conditional-compile-remove(rich-text-editor-composite-support) */
+      richTextEditor: props.richTextEditor
+    }),
+    [
+      /* @conditional-compile-remove(file-sharing-acs) */
+      props.attachmentOptions,
+      /* @conditional-compile-remove(rich-text-editor-composite-support) */
+      props.richTextEditor
+    ]
+  );
+
   const [remoteParticipants, setRemoteParticipants] = useState<Record<string, { role?: string }>>({});
 
   const onRenderMessage: (messageProps: MessageProps, defaultOnRender?: MessageRenderer) => JSX.Element = useCallback(
@@ -599,27 +617,12 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
       <ChatComposite
         adapter={chatAdapter}
         fluentTheme={theme}
-        options={{
-          topic: false,
-          /* @conditional-compile-remove(chat-composite-participant-pane) */
-          participantPane: false,
-          /* @conditional-compile-remove(file-sharing-acs) */
-          attachmentOptions: props.attachmentOptions,
-          /* @conditional-compile-remove(rich-text-editor-composite-support) */
-          richTextEditor: props.richTextEditor
-        }}
+        options={chatCompositeOptions}
         onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
         onRenderMessage={onRenderMessage}
       />
     ),
-    [
-      chatAdapter,
-      /* @conditional-compile-remove(file-sharing-acs) */ props.attachmentOptions,
-      props.onFetchAvatarPersonaData,
-      /* @conditional-compile-remove(rich-text-editor-composite-support) */ props.richTextEditor,
-      theme,
-      onRenderMessage
-    ]
+    [chatAdapter, props.onFetchAvatarPersonaData, chatCompositeOptions, theme, onRenderMessage]
   );
 
   const sidePaneHeaderRenderer = useCallback(
@@ -733,6 +736,8 @@ export const CallWithChatComposite = (props: CallWithChatCompositeProps): JSX.El
         backgroundImage={options?.branding?.backgroundImage}
         surveyOptions={options?.surveyOptions}
         spotlight={options?.spotlight}
+        /* @conditional-compile-remove(rich-text-editor-composite-support) */
+        richTextEditor={options?.richTextEditor}
       />
     </BaseProvider>
   );

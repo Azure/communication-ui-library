@@ -927,6 +927,11 @@ export interface CallAdapterSubscribers {
    * Subscribe function for 'spotlightChanged' event.
    */
   on(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
+  /* @conditional-compile-remove(soft-mute) */
+  /**
+   * Subscribe function for 'mutedByOthers' event.
+   */
+  on(event: 'mutedByOthers', listener: PropertyChangedEvent): void;
   /**
    * Subscribe function for 'assignedBreakoutRoomUpdated' event.
    */
@@ -939,6 +944,7 @@ export interface CallAdapterSubscribers {
    * Subscribe function for 'breakoutRoomSettingsAvailable' event.
    */
   on(event: 'breakoutRoomSettingsAvailable', listener: BreakoutRoomSettingsAvailableListener): void;
+
   /**
    * Unsubscribe function for 'participantsJoined' event.
    */
@@ -1020,6 +1026,11 @@ export interface CallAdapterSubscribers {
    * Unsubscribe function for 'spotlightChanged' event.
    */
   off(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
+  /* @conditional-compile-remove(soft-mute) */
+  /**
+   * Unsubscribe function for 'mutedByOthers' event.
+   */
+  off(event: 'mutedByOthers', listener: PropertyChangedEvent): void;
   /**
    * Unsubscribe function for 'assignedBreakoutRoomUpdated' event.
    */

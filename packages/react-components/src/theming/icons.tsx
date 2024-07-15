@@ -50,6 +50,7 @@ import {
   PersonDelete20Regular,
   ConferenceRoom20Regular
 } from '@fluentui/react-icons';
+import { MicOff16Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(rich-text-editor) */
 import {
   TextBold20Regular,
@@ -79,6 +80,8 @@ import {
 } from '@fluentui/react-icons';
 /* @conditional-compile-remove(call-readiness) */
 import { Important20Filled } from '@fluentui/react-icons';
+/* @conditional-compile-remove(notifications) */
+import { Record16Regular } from '@fluentui/react-icons';
 
 import { VideoBackgroundEffect20Filled, VideoBackgroundEffect20Regular } from '@fluentui/react-icons';
 
@@ -109,6 +112,8 @@ import React from 'react';
 import { useTheme } from './FluentThemeProvider';
 /* @conditional-compile-remove(call-readiness) */
 import { sitePermissionIconBackgroundStyle, scaledIconStyles } from './icons.styles';
+/* @conditional-compile-remove(one-to-n-calling) */
+import { Call20Filled } from '@fluentui/react-icons';
 
 /**
  * Icons used by the React components exported from this library.
@@ -290,7 +295,7 @@ export const DEFAULT_COMPONENT_ICONS = {
   ErrorBarCallMacOsCameraAccessDenied: <VideoProhibited16Filled />,
   ErrorBarCallMacOsMicrophoneAccessDenied: <MicProhibited16Filled />,
   ErrorBarCallMicrophoneAccessDenied: <MicProhibited16Filled />,
-  ErrorBarCallMicrophoneMutedBySystem: <MicOff16Filled />,
+  ErrorBarCallMicrophoneMutedBySystem: <MicOff16Regular />,
   ErrorBarCallMicrophoneUnmutedBySystem: <Mic16Filled />,
   ErrorBarCallNetworkQualityLow: <WifiWarning16Filled />,
   ErrorBarCallNoMicrophoneFound: <MicProhibited16Filled />,
@@ -298,6 +303,10 @@ export const DEFAULT_COMPONENT_ICONS = {
   ErrorBarClear: <Dismiss16Regular />,
   ErrorBarCallVideoRecoveredBySystem: <Video16Filled />,
   ErrorBarCallVideoStoppedBySystem: <VideoProhibited16Filled />,
+  /* @conditional-compile-remove(soft-mute) */
+  ErrorBarMutedByRemoteParticipant: <MicOff16Regular />,
+  /* @conditional-compile-remove(notifications) */
+  NotificationBarRecording: <Record16Regular />,
   HorizontalGalleryLeftButton: <GalleryLeftButton />,
   HorizontalGalleryRightButton: <GalleryRightButton />,
   MessageDelivered: <CheckmarkCircle16Regular />,
@@ -401,5 +410,11 @@ export const DEFAULT_COMPONENT_ICONS = {
   /* @conditional-compile-remove(rich-text-editor) */
   RichTextTableDeleteMenuIcon: <TableDismiss20Regular />,
   /* @conditional-compile-remove(soft-mute) */
-  ContextualMenuMicMutedIcon: <MicOff20Regular />
+  ContextualMenuMicMutedIcon: <MicOff20Regular />,
+  /* @conditional-compile-remove(one-to-n-calling) */
+  IncomingCallNotificationRejectIcon: <CallEnd20Filled />,
+  /* @conditional-compile-remove(one-to-n-calling) */
+  IncomingCallNotificationAcceptIcon: <Call20Filled />,
+  /* @conditional-compile-remove(one-to-n-calling) */
+  IncomingCallNotificationAcceptWithVideoIcon: <Video20Filled />
 };

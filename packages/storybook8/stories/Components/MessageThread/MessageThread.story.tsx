@@ -40,9 +40,8 @@ import {
 } from './placeholdermessages';
 
 const MessageThreadStory = (args): JSX.Element => {
-  const [chatMessages, setChatMessages] = useState<(SystemMessage | CustomMessage | ChatMessage)[]>(
-    GenerateMockChatMessages()
-  );
+  const [chatMessages, setChatMessages] =
+    useState<(SystemMessage | CustomMessage | ChatMessage)[]>(GenerateMockChatMessages());
   const dropdownMenuOptions = [
     { key: 'newMessage', text: 'New Message' },
     { key: 'newMessageOthers', text: 'New Message from others' },
@@ -121,8 +120,12 @@ const MessageThreadStory = (args): JSX.Element => {
     return Promise.resolve();
   };
 
-  const [overlayImageItem, setOverlayImageItem] =
-    useState<{ imageSrc: string; title: string; titleIcon: JSX.Element; downloadAttachmentname: string }>();
+  const [overlayImageItem, setOverlayImageItem] = useState<{
+    imageSrc: string;
+    title: string;
+    titleIcon: JSX.Element;
+    downloadAttachmentname: string;
+  }>();
 
   const onInlineImageClicked = (attachmentId: string, messageId: string): Promise<void> => {
     const messages = chatMessages?.filter((message) => {
@@ -259,4 +262,4 @@ const MessageThreadStory = (args): JSX.Element => {
   );
 };
 
-export const Preview = MessageThreadStory.bind({});
+export const MessageThread = MessageThreadStory.bind({});

@@ -4,7 +4,7 @@
 import React from 'react';
 
 import { IMessageBarProps, Stack } from '@fluentui/react';
-import { ActiveNotification, Notifications } from '@internal/react-components';
+import { ActiveNotification, NotificationStack } from '@internal/react-components';
 
 /**
  * @private
@@ -62,7 +62,7 @@ export const BreakoutRoomsNotificationBar = (props: BreakoutRoomsNotificationBar
         }
       }}
     >
-      <Notifications
+      <NotificationStack
         activeNotifications={props.breakoutRoomsNotifications.map((notification) => ({
           type: notification.type,
           onClickPrimaryButton: notification.onClickPrimaryButton,

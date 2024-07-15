@@ -17,8 +17,7 @@ import {
   RemoteVideoStream,
   TranscriptionCallFeature,
   CallFeatureFactory,
-  CallFeature,
-  RemoteParticipantDiagnosticsData
+  CallFeature
 } from '@azure/communication-calling';
 import { RaiseHandCallFeature, RaisedHandListener, RaisedHand } from '@azure/communication-calling';
 import { CollectionUpdatedEvent, RecordingInfo } from '@azure/communication-calling';
@@ -32,6 +31,8 @@ import { CallClientState } from './CallClientState';
 import { CallContext } from './CallContext';
 import { InternalCallContext } from './InternalCallContext';
 import { createStatefulCallClientWithDeps, StatefulCallClient } from './StatefulCallClient';
+/* @conditional-compile-remove(calling-beta-sdk) */
+import { RemoteParticipantDiagnosticsData } from '@azure/communication-calling';
 
 let backupFreezeFunction: typeof Object.freeze;
 
@@ -189,7 +190,7 @@ export class MockTranscriptionCallFeatureImpl implements TranscriptionCallFeatur
  * @private
  */
 export class StubDiagnosticsCallFeatureImpl implements UserFacingDiagnosticsFeature {
-  public name = 'Diagnosticss';
+  public name = 'Diagnostics';
   public media = {
     getLatest(): LatestMediaDiagnostics {
       return {};
@@ -212,11 +213,13 @@ export class StubDiagnosticsCallFeatureImpl implements UserFacingDiagnosticsFeat
       /* Stub to appease types */
     }
   };
+  dispose(): void {
+    /* No state to clean up */
+  }
+  /* @conditional-compile-remove(calling-beta-sdk) */
   public remote = {
     getLatest(): RemoteParticipantDiagnosticsData {
-      return {
-        diagnostics: []
-      };
+      return { diagnostics: [] };
     },
     on(): void {
       /* Stub to appease types */
@@ -224,9 +227,6 @@ export class StubDiagnosticsCallFeatureImpl implements UserFacingDiagnosticsFeat
     off(): void {
       /* Stub to appease types */
     }
-  };
-  dispose(): void {
-    /* No state to clean up */
   };
 }
 
@@ -357,7 +357,7 @@ export const createMockLocalVideoStream = (): LocalVideoStream =>
     switchSource: Promise.resolve,
 
     feature: () => createMockVideoEffectsAPI()
-  } as unknown as LocalVideoStream);
+  }) as unknown as LocalVideoStream;
 
 /**
  * @private

@@ -34,15 +34,19 @@ import {
   infoConnectionLinkStyle
 } from '../../common/styles/TeamsMeetingConferenceInfo.style';
 /* @conditional-compile-remove(teams-meeting-conference) */
-import { formatPhoneNumberInfo, formatPhoneNumber } from '@internal/react-components';
+import { formatPhoneNumberInfo, formatPhoneNumber, formatPhoneNumberLink } from '@internal/react-components';
 /* @conditional-compile-remove(teams-meeting-conference) */
 import { _pxToRem } from '@internal/acs-ui-common';
+/* @conditional-compile-remove(teams-meeting-conference) */
+import { Link } from '@fluentui/react';
 
 /**
  * @private
  */
 export interface NetworkReconnectTileProps {
   localParticipantVideoStream: VideoGalleryStream;
+  /* @conditional-compile-remove(teams-meeting-conference) */
+  isMobile?: boolean;
 }
 
 /**
@@ -97,9 +101,9 @@ export const NetworkReconnectTile = (props: NetworkReconnectTileProps): JSX.Elem
                     <Text className={titleClassName}>{localeStrings.meetingConferencePhoneInfoModalTitle}</Text>
                   </Stack>
                   <Stack horizontal horizontalAlign="space-between" className={phoneInfoInstructionLine}>
+                    <Stack className={infoConnectionLinkStyle(theme)}></Stack>
                     <Stack.Item>
                       <Stack horizontal className={phoneInfoStep}>
-                        <Stack className={infoConnectionLinkStyle(theme)}></Stack>
                         <Stack.Item className={phoneInfoIcon(theme)}>
                           <Stack verticalAlign="center" horizontalAlign="center">
                             <Icon iconName="PhoneNumberButton" className={phoneInfoIconStyle(theme)} />
@@ -115,7 +119,20 @@ export const NetworkReconnectTile = (props: NetworkReconnectTileProps): JSX.Elem
                     <Stack.Item className={phoneInfoStep}>
                       {meetingCoordinates.map((phoneNumber, index) => (
                         <Stack.Item key={index}>
-                          <Text className={phoneInfoTextStyle}>{formatPhoneNumber(phoneNumber.phoneNumber)}</Text>
+                          <Text className={phoneInfoTextStyle}>
+                            {props.isMobile && (
+                              <Link className={phoneInfoTextStyle} href={formatPhoneNumberLink(phoneNumber)}>
+                                {formatPhoneNumber(phoneNumber.phoneNumber)}
+                              </Link>
+                            )}
+                            {!props.isMobile && (
+                              <Text className={phoneInfoTextStyle}>{formatPhoneNumber(phoneNumber.phoneNumber)}</Text>
+                            )}{' '}
+                            {phoneNumber.isTollFree
+                              ? localeStrings.meetingConferencePhoneInfoModalTollFree
+                              : localeStrings.meetingConferencePhoneInfoModalToll}
+                          </Text>
+                          <br />
                           <Text className={phoneInfoTextStyle}>
                             {' '}
                             {formatPhoneNumberInfo(phoneNumber, localeStrings)}
@@ -132,7 +149,7 @@ export const NetworkReconnectTile = (props: NetworkReconnectTileProps): JSX.Elem
                   >
                     <Stack.Item>
                       <Stack horizontal>
-                        <Stack className={infoConnectionLinkStyle(theme)}></Stack>
+                        {!props.isMobile && <Stack className={infoConnectionLinkStyle(theme)}></Stack>}
                         <Stack.Item className={phoneInfoIcon(theme)}>
                           <Icon iconName="DtmfDialpadButton" className={phoneInfoIconStyle(theme)} />
                         </Stack.Item>
@@ -145,21 +162,25 @@ export const NetworkReconnectTile = (props: NetworkReconnectTileProps): JSX.Elem
                     </Stack.Item>
                     <Text className={phoneInfoTextStyle}>{meetingCoordinates[0].conferenceId}#</Text>
                   </Stack>
-                  <Stack
-                    horizontal
-                    horizontalAlign="space-between"
-                    verticalAlign="center"
-                    className={phoneInfoInstructionLine}
-                  >
-                    <Stack horizontal>
-                      <Stack.Item className={phoneInfoIcon(theme)} style={{ marginLeft: _pxToRem(2) }}>
-                        <Icon iconName="PhoneInfoWait" className={phoneInfoIconStyle(theme)} />
-                      </Stack.Item>
-                      <Stack.Item>
-                        <Text className={phoneInfoLabelStyle}>{localeStrings.meetingConferencePhoneInfoModalWait}</Text>
-                      </Stack.Item>
+                  {!props.isMobile && (
+                    <Stack
+                      horizontal
+                      horizontalAlign="space-between"
+                      verticalAlign="center"
+                      className={phoneInfoInstructionLine}
+                    >
+                      <Stack horizontal>
+                        <Stack.Item className={phoneInfoIcon(theme)} style={{ marginLeft: _pxToRem(2) }}>
+                          <Icon iconName="PhoneInfoWait" className={phoneInfoIconStyle(theme)} />
+                        </Stack.Item>
+                        <Stack.Item>
+                          <Text className={phoneInfoLabelStyle}>
+                            {localeStrings.meetingConferencePhoneInfoModalWait}
+                          </Text>
+                        </Stack.Item>
+                      </Stack>
                     </Stack>
-                  </Stack>
+                  )}
                 </Stack>
               )
           }

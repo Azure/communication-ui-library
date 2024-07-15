@@ -41,6 +41,8 @@ import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { DtmfTone } from '@azure/communication-calling';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 import { SendMessageOptions } from '@azure/communication-chat';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+import { UploadChatImageResult } from '@internal/acs-ui-common';
 import { JoinCallOptions } from '../../CallComposite/adapter/CallAdapter';
 /* @conditional-compile-remove(file-sharing-acs) */
 import { MessageOptions } from '@internal/acs-ui-common';
@@ -338,6 +340,20 @@ export interface CallWithChatAdapterManagement {
     content: string,
     options?: SendMessageOptions | /* @conditional-compile-remove(file-sharing-acs) */ MessageOptions
   ): Promise<void>;
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  /**
+   * Upload an inline image for a message.
+   *
+   * @beta
+   */
+  uploadImage(image: Blob, imageFilename: string): Promise<UploadChatImageResult>;
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  /**
+   * Delete an inline image for a message.
+   *
+   * @beta
+   */
+  deleteImage(imageId: string): Promise<void>;
   /**
    * Send a read receipt for a message.
    *
@@ -484,7 +500,7 @@ export interface CallWithChatAdapterManagement {
   /**
    * Mute a participant
    */
-  muteParticipant(userIds: string): Promise<void>;
+  muteParticipant(userId: string): Promise<void>;
   /* @conditional-compile-remove(soft-mute) */
   /**
    * Mute a participant

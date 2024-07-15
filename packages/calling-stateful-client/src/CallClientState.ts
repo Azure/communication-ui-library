@@ -939,7 +939,8 @@ export type CallErrorTarget =
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.admit'
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.rejectParticipant'
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.admitAll'
-  | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.muteAllRemoteParticipants'
+  | /* @conditional-compile-remove(soft-mute) */ 'Call.mutedByOthers'
+  | 'Call.muteAllRemoteParticipants'
   | 'Call.setConstraints'
   | 'assignedBreakoutRoomOpened'
   | 'assignedBreakoutRoomOpenedPromptJoin'
@@ -1009,9 +1010,24 @@ export interface MediaDiagnosticsState {
  * Information for conference phone info
  */
 export interface ConferencePhoneInfo {
+  /**
+   * Phone number for the conference
+   */
   phoneNumber: string;
+  /**
+   * Conference id for the conference
+   */
   conferenceId: string;
+  /**
+   * Is toll free phone number
+   */
   isTollFree: boolean;
+  /**
+   * phone number country
+   */
   country?: string;
+  /**
+   * phone number city
+   */
   city?: string;
 }

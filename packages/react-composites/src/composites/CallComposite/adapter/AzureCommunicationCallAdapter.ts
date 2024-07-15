@@ -1143,6 +1143,8 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
   on(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
   on(event: 'roleChanged', listener: PropertyChangedEvent): void;
   on(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
+  /* @conditional-compile-remove(soft-mute) */
+  on(event: 'mutedByOthers', listener: PropertyChangedEvent): void;
 
   on(event: 'assignedBreakoutRoomUpdated', listener: AssignedBreakoutRoomUpdatedListener): void;
   on(event: 'breakoutRoomJoined', listener: BreakoutRoomJoinedListener): void;
@@ -1427,6 +1429,8 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
   off(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
   off(event: 'roleChanged', listener: PropertyChangedEvent): void;
   off(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
+  /* @conditional-compile-remove(soft-mute) */
+  off(event: 'mutedByOthers', listener: PropertyChangedEvent): void;
 
   off(event: 'assignedBreakoutRoomUpdated', listener: AssignedBreakoutRoomUpdatedListener): void;
   off(event: 'breakoutRoomJoined', listener: BreakoutRoomJoinedListener): void;

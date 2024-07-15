@@ -18,7 +18,7 @@ import {
   VideoGalleryStrings
 } from '../components';
 /* @conditional-compile-remove(notifications) */
-import { NotificationsStrings } from '../components';
+import { NotificationStackStrings } from '../components';
 
 import { RaiseHandButtonStrings } from '../components';
 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
@@ -49,6 +49,8 @@ import { ReactionButtonStrings } from '../components';
 import { RichTextSendBoxStrings } from '../components/RichTextEditor/RichTextSendBox';
 /* @conditional-compile-remove(teams-meeting-conference) */
 import { MeetingConferencePhoneInfoModalStrings } from '../components/MeetingConferencePhoneInfo';
+/* @conditional-compile-remove(one-to-n-calling) */
+import { IncomingCallNotificationStrings } from '../components/IncomingCallNotification';
 
 /**
  * Locale information for all components exported from this library.
@@ -108,11 +110,11 @@ export interface ComponentStrings {
   imageOverlay: ImageOverlayStrings;
   /** Strings for MessageStatusIndicator */
   messageStatusIndicator: MessageStatusIndicatorStrings;
-  /** Strings for ErroBar */
+  /** Strings for ErrorBar */
   errorBar: ErrorBarStrings;
   /* @conditional-compile-remove(notifications) */
-  /** Strings for Notifications */
-  notifications: NotificationsStrings;
+  /** Strings for NotificationStack */
+  notificationStack: NotificationStackStrings;
   /** Strings for VideoGallery */
   videoGallery: VideoGalleryStrings;
   /** Strings for Dialpad */
@@ -184,6 +186,8 @@ export interface ComponentStrings {
   /* @conditional-compile-remove(teams-meeting-conference) */
   /** Strings for the MeetingConferencePhoneInfoModal */
   MeetingConferencePhoneInfo: MeetingConferencePhoneInfoModalStrings;
+  /* @conditional-compile-remove(one-to-n-calling) */
+  IncomingCallNotification: IncomingCallNotificationStrings;
 }
 
 /**

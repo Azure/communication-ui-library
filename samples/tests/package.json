@@ -21,7 +21,7 @@
   "license": "MIT",
   "dependencies": {
     "@azure/communication-calling": "file:/workspaces/communication-ui-library/skype-spool-sdk-1.0.0.tgz",
-    "@azure/communication-chat": "1.6.0-beta.2 || ^1.5.0",
+    "@azure/communication-chat": "1.6.0-beta.3 || ^1.5.0",
     "@azure/communication-common": "^2.3.1",
     "uuid": "^9.0.0",
     "cross-env": "^7.0.3"
