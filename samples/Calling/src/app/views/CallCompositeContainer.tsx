@@ -3,7 +3,7 @@
 
 import { GroupCallLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { CallAdapterLocator, CallComposite, CallCompositeOptions, CommonCallAdapter } from '@azure/communication-react';
-import { mergeStyles, PrimaryButton, Spinner, Stack } from '@fluentui/react';
+import { Spinner } from '@fluentui/react';
 import React, { useEffect, useMemo } from 'react';
 import { useSwitchableFluentTheme } from '../theming/SwitchableFluentThemeProvider';
 import { useIsMobile } from '../utils/useIsMobile';
@@ -34,8 +34,6 @@ export const CallCompositeContainer = (props: CallCompositeContainerProps): JSX.
       });
     };
   }, []);
-
-  const [showApp, setShowApp] = React.useState(true);
 
   const options: CallCompositeOptions = useMemo(
     () => ({
@@ -73,26 +71,14 @@ export const CallCompositeContainer = (props: CallCompositeContainerProps): JSX.
   }
 
   return (
-    <Stack className={mergeStyles({ width: '100%', height: '100%' })}>
-      <PrimaryButton onClick={() => setShowApp(!showApp)}>{showApp ? 'Hide session' : 'Back to session'}</PrimaryButton>
-      <PrimaryButton
-        onClick={() => {
-          document.documentElement.setAttribute('style', 'font-size: large');
-        }}
-      >
-        {'Change font size'}
-      </PrimaryButton>
-      {showApp && (
-        <CallComposite
-          adapter={adapter}
-          fluentTheme={currentTheme.theme}
-          rtl={currentRtl}
-          callInvitationUrl={callInvitationUrl}
-          formFactor={isMobileSession ? 'mobile' : 'desktop'}
-          options={options}
-        />
-      )}
-    </Stack>
+    <CallComposite
+      adapter={adapter}
+      fluentTheme={currentTheme.theme}
+      rtl={currentRtl}
+      callInvitationUrl={callInvitationUrl}
+      formFactor={isMobileSession ? 'mobile' : 'desktop'}
+      options={options}
+    />
   );
 };
 
