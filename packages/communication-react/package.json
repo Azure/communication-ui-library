@@ -92,9 +92,10 @@
     "_if-preprocess": "if-env COMMUNICATION_REACT_FLAVOR=stable || if-env COMMUNICATION_REACT_FLAVOR=beta-release",
     "_if-beta": "if-env COMMUNICATION_REACT_FLAVOR=beta || if-env COMMUNICATION_REACT_FLAVOR=beta-release",
     "_api-extractor:by-flavor": "if-env COMMUNICATION_REACT_FLAVOR=stable && api-extractor run -c api-extractor.stable.json --local || (rushx _if-beta && api-extractor run --local)",
-    "_build:by-flavor": "rushx clean && rushx build:esm && rushx build:cjs && rushx _api-extractor:by-flavor",
+    "_build:by-flavor": "rushx clean && rushx build:esm && rushx build:cjs && rushx _api-extractor:by-flavor && rushx copy-bundles",
     "_current-flavor": "echo You are running under COMMUNICATION_REACT_FLAVOR: && env-cmd -f ../../common/config/env/.env node -p process.env.COMMUNICATION_REACT_FLAVOR",
-    "_by-flavor": "rushx _current-flavor && env-cmd -f ../../common/config/env/.env --use-shell"
+    "_by-flavor": "rushx _current-flavor && env-cmd -f ../../common/config/env/.env --use-shell",
+    "copy-bundles": "cpx \"../acs-ui-javascript-loaders/dist/dist-bundle/**\" \"./dist/dist-esm/acs-ui-javascript-loaders/src/bundle\""
   },
   "devDependencies": {
     "@azure/communication-calling": "1.27.1-beta.1 || ^1.26.1",

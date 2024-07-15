@@ -22,10 +22,11 @@
       "lint:quiet": "rushx lint -- --quiet",
       "_if-preprocess": "if-env COMMUNICATION_REACT_FLAVOR=stable || if-env COMMUNICATION_REACT_FLAVOR=beta-release",
       "_if-beta": "if-env COMMUNICATION_REACT_FLAVOR=beta || if-env COMMUNICATION_REACT_FLAVOR=beta-release",
-      "_build:by-flavor": "rushx clean && rushx build:esm",
+      "_build:by-flavor": "rushx clean && rushx build:esm && rushx generate-bundles",
       "_by-flavor": "rushx _current-flavor && env-cmd -f ../../common/config/env/.env --use-shell",
       "_current-flavor": "echo You are running under COMMUNICATION_REACT_FLAVOR: && env-cmd -f ../../common/config/env/.env node -p process.env.COMMUNICATION_REACT_FLAVOR",
-      "_test:by-flavor": "(npm run _if-preprocess && rushx preprocess || if-env COMMUNICATION_REACT_FLAVOR=beta && echo \"skip preprocess\") && jest"
+      "_test:by-flavor": "(npm run _if-preprocess && rushx preprocess || if-env COMMUNICATION_REACT_FLAVOR=beta && echo \"skip preprocess\") && jest",
+      "generate-bundles": "node ./scripts/js-bundle-webpack-runner.js"
     },
     "author": "",
     "license": "ISC",
