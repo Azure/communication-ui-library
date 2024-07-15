@@ -357,8 +357,10 @@ export const useChatMessageCommonStyles = makeStyles({
   },
   bodyWithPlaceholderImage: {
     '& img[src=""]': {
-      fontSize: '0',
       backgroundColor: tokens.colorNeutralBackground1Selected,
+      // this ensures safari won't have default rendering when image source
+      // becomes invalid such as empty string in this case
+      fontSize: '0',
       position: 'relative',
       clipPath: 'inset(0.3px)',
       display: 'flex'
