@@ -318,11 +318,13 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
   useEffect(() => {
     const themeDirectionValue = themeDirection(theme);
     // check that editor exists and theme was actually changed
+    // as format.direction will be undefined if setDirection is not called
     if (editor.current && previousThemeDirection.current !== themeDirectionValue) {
       const format = getFormatState(editor.current);
       if (format.direction !== themeDirectionValue) {
         // should be set after the hook where editor is created as the editor might be null
-        // setDirection will cause the focus change back to the editor, that's why it's not part of the create editor hook
+        // setDirection will cause the focus change back to the editor and this might not be what we want to do (autoFocus prop)
+        // that's why it's not part of the create editor hook
         setDirection(editor.current, theme.rtl ? 'rtl' : 'ltr');
       }
       previousThemeDirection.current = themeDirectionValue;
