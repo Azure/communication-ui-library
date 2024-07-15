@@ -570,7 +570,7 @@ export class CallContext {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
-        call.teamsMeetingConference = convertConferencePhoneInfo(teamsMeetingConferenceDetails);
+        call.teamsMeetingConference = { conferencePhones: convertConferencePhoneInfo(teamsMeetingConferenceDetails) };
       }
     });
   }

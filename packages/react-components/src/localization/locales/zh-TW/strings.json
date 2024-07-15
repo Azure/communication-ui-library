@@ -572,7 +572,7 @@
     "leftNavButtonAriaLabel": "上一頁",
     "rightNavButtonAriaLabel": "下一頁"
   },
-  "MeetingConferencePhoneInfo": {
+  "meetingConferencePhoneInfo": {
     "meetingConferencePhoneInfoModalTitle": "從您的電話加入通話",
     "meetingConferencePhoneInfoModalDialIn": "撥號號碼",
     "meetingConferencePhoneInfoModalMeetingId": "輸入會議識別碼",

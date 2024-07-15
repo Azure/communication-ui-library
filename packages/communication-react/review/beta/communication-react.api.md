@@ -677,7 +677,9 @@ export type CallCompositeIcons = {
     DefaultCustomButton?: JSX.Element;
     DtmfDialpadButton?: JSX.Element;
     PhoneNumberButton?: JSX.Element;
-    PhoneInfoWait?: JSX.Element;
+    JoinByPhoneDialStep?: JSX.Element;
+    JoinByPhoneConferenceIdIcon?: JSX.Element;
+    JoinByPhoneWaitToBeAdmittedIcon?: JSX.Element;
     PeoplePaneMoreButton?: JSX.Element;
     StopAllSpotlightMenuButton?: JSX.Element;
 };
@@ -1087,7 +1089,9 @@ export interface CallState {
     spotlight?: SpotlightCallFeatureState;
     startTime: Date;
     state: CallState_2;
-    teamsMeetingConference?: ConferencePhoneInfo[];
+    teamsMeetingConference?: {
+        conferencePhones: ConferencePhoneInfo[];
+    };
     totalParticipantCount?: number;
     transcription: TranscriptionCallFeature;
     transfer: TransferFeature;
@@ -2241,7 +2245,7 @@ export interface ComponentStrings {
     imageOverlay: ImageOverlayStrings;
     // (undocumented)
     IncomingCallNotification: IncomingCallNotificationStrings;
-    MeetingConferencePhoneInfo: MeetingConferencePhoneInfoModalStrings;
+    meetingConferencePhoneInfo: MeetingConferencePhoneInfoModalStrings;
     mentionPopover: MentionPopoverStrings;
     messageStatusIndicator: MessageStatusIndicatorStrings;
     messageThread: MessageThreadStrings;
@@ -2745,7 +2749,9 @@ export const DEFAULT_COMPOSITE_ICONS: {
     DefaultCustomButton?: JSX.Element | undefined;
     DtmfDialpadButton?: JSX.Element | undefined;
     PhoneNumberButton?: JSX.Element | undefined;
-    PhoneInfoWait?: JSX.Element | undefined;
+    JoinByPhoneDialStep?: JSX.Element | undefined;
+    JoinByPhoneConferenceIdIcon?: JSX.Element | undefined;
+    JoinByPhoneWaitToBeAdmittedIcon?: JSX.Element | undefined;
     PeoplePaneMoreButton?: JSX.Element | undefined;
     StopAllSpotlightMenuButton?: JSX.Element | undefined;
     ChevronLeft?: JSX.Element | undefined;
@@ -3349,14 +3355,14 @@ export interface MediaDiagnosticsState {
 
 // @public
 export interface MeetingConferencePhoneInfoModalStrings {
-    meetingConferencePhoneInfoModalDialIn?: string;
-    meetingConferencePhoneInfoModalMeetingId?: string;
-    meetingConferencePhoneInfoModalNoPhoneAvailable?: string;
-    meetingConferencePhoneInfoModalTitle?: string;
-    meetingConferencePhoneInfoModalToll?: string;
-    meetingConferencePhoneInfoModalTollFree?: string;
-    meetingConferencePhoneInfoModalTollGeoData?: string;
-    meetingConferencePhoneInfoModalWait?: string;
+    meetingConferencePhoneInfoModalDialIn: string;
+    meetingConferencePhoneInfoModalMeetingId: string;
+    meetingConferencePhoneInfoModalNoPhoneAvailable: string;
+    meetingConferencePhoneInfoModalTitle: string;
+    meetingConferencePhoneInfoModalToll: string;
+    meetingConferencePhoneInfoModalTollFree: string;
+    meetingConferencePhoneInfoModalTollGeoData: string;
+    meetingConferencePhoneInfoModalWait: string;
 }
 
 // @beta

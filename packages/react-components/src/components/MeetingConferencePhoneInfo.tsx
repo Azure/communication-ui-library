@@ -39,35 +39,35 @@ export interface MeetingConferencePhoneInfoModalStrings {
   /**
    * Header for the phone info modal
    */
-  meetingConferencePhoneInfoModalTitle?: string;
+  meetingConferencePhoneInfoModalTitle: string;
   /**
    * Phone number instruction
    */
-  meetingConferencePhoneInfoModalDialIn?: string;
+  meetingConferencePhoneInfoModalDialIn: string;
   /**
    * Meeting ID instruction
    */
-  meetingConferencePhoneInfoModalMeetingId?: string;
+  meetingConferencePhoneInfoModalMeetingId: string;
   /**
    * Wait for phone connection
    */
-  meetingConferencePhoneInfoModalWait?: string;
+  meetingConferencePhoneInfoModalWait: string;
   /**
    * Toll Free Phone Label
    */
-  meetingConferencePhoneInfoModalTollFree?: string;
+  meetingConferencePhoneInfoModalTollFree: string;
   /**
    * Toll Phone Label
    */
-  meetingConferencePhoneInfoModalToll?: string;
+  meetingConferencePhoneInfoModalToll: string;
   /**
    * Toll Phone Label without geo data
    */
-  meetingConferencePhoneInfoModalTollGeoData?: string;
+  meetingConferencePhoneInfoModalTollGeoData: string;
   /**
    * No phone number available message
    */
-  meetingConferencePhoneInfoModalNoPhoneAvailable?: string;
+  meetingConferencePhoneInfoModalNoPhoneAvailable: string;
 }
 
 /* @conditional-compile-remove(teams-meeting-conference) */
@@ -90,7 +90,7 @@ export const MeetingConferencePhoneInfoModal = (props: MeetingConferencePhoneInf
   const { conferencePhoneInfoList, showModal, onDismissMeetingPhoneInfoSettings } = props;
 
   const theme = useTheme();
-  const strings = useLocale().strings.MeetingConferencePhoneInfo;
+  const strings = useLocale().strings.meetingConferencePhoneInfo;
 
   const onDismiss = useCallback((): void => {
     if (onDismissMeetingPhoneInfoSettings) {
@@ -131,7 +131,7 @@ export const MeetingConferencePhoneInfoModal = (props: MeetingConferencePhoneInf
                   <Stack className={infoConnectionLinkStyle(theme)}></Stack>
                   <Stack.Item className={phoneInfoIcon(theme)}>
                     <Stack verticalAlign="center" horizontalAlign="center">
-                      <Icon iconName="PhoneNumberButton" className={phoneInfoIconStyle(theme)} />
+                      <Icon iconName="JoinByPhoneDialStep" className={phoneInfoIconStyle(theme)} />
                     </Stack>
                   </Stack.Item>
                   <Stack.Item>
@@ -165,7 +165,7 @@ export const MeetingConferencePhoneInfoModal = (props: MeetingConferencePhoneInf
                   <Stack className={infoConnectionLinkStyle(theme)}></Stack>
                   <Stack.Item className={phoneInfoIcon(theme)}>
                     <Stack verticalAlign="center" horizontalAlign="center">
-                      <Icon iconName="DtmfDialpadButton" className={phoneInfoIconStyle(theme)} />
+                      <Icon iconName="JoinByPhoneConferenceIdIcon" className={phoneInfoIconStyle(theme)} />
                     </Stack>
                   </Stack.Item>
                   <Stack.Item>
@@ -178,7 +178,7 @@ export const MeetingConferencePhoneInfoModal = (props: MeetingConferencePhoneInf
             <Stack horizontal horizontalAlign="space-between" verticalAlign="center">
               <Stack horizontal>
                 <Stack.Item className={phoneInfoIcon(theme)} style={{ marginLeft: _pxToRem(2) }}>
-                  <Icon iconName="PhoneInfoWait" className={phoneInfoIconStyle(theme)} />
+                  <Icon iconName="JoinByPhoneWaitToBeAdmittedIcon" className={phoneInfoIconStyle(theme)} />
                 </Stack.Item>
                 <Stack.Item>
                   <Text className={stepTextStyle}>{strings?.meetingConferencePhoneInfoModalWait}</Text>
