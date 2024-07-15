@@ -8,7 +8,7 @@
  * @returns units of pixels
  */
 export const _convertRemToPx = (rem: number): number => {
-  return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
+  return rem * getBrowserFontSizeInPx();
 };
 
 /**
@@ -18,7 +18,16 @@ export const _convertRemToPx = (rem: number): number => {
  * @returns units of rem
  */
 export const _convertPxToRem = (px: number): number => {
-  return px / parseFloat(getComputedStyle(document.documentElement).fontSize);
+  return px / getBrowserFontSizeInPx();
+};
+
+const getBrowserFontSizeInPx = (): number => {
+  let fontSizeInPx = parseFloat(getComputedStyle(document.documentElement).fontSize);
+  // If font size is not a number, default to 16px
+  if (Number.isNaN(fontSizeInPx)) {
+    fontSizeInPx = 16;
+  }
+  return fontSizeInPx;
 };
 
 /**
