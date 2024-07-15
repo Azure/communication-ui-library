@@ -2538,8 +2538,8 @@ packages:
     resolution: {integrity: sha512-9TANp6GPoMtYzQdt54kfAyMmz1+osLlXdg2ENroU7zzrtflTLrrC/lgrIfaSe+Wu0b89GKccT7vxXA0MoAIO+Q==}
     dev: false
 
-  /@fluentui-contrib/react-chat@0.1.9(@fluentui/react-components@9.47.4)(@fluentui/react-icons@2.0.245)(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1):
-    resolution: {integrity: sha512-pE23uQZYTiQ+6pX4Qn1qh+v7dwX7iDprIyigj09nkRlUsj/LyVXFoT4nCMIn0RdSDzQlVoitKxiXliGop8g/LQ==}
+  /@fluentui-contrib/react-chat@0.1.10(@fluentui/react-components@9.47.4)(@fluentui/react-icons@2.0.245)(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1):
+    resolution: {integrity: sha512-H4kmeMhSX1h6Rt673ZnJ34rW//VXhYLbsoW5dr+N496UkdEQm1nQRvXInEfdV//+czbzAeYOatE3td+WoPwBUw==}
     peerDependencies:
       '@fluentui/react-components': '>=9.25.1 <10.0.0'
       '@fluentui/react-icons': '>=2.0.204 <3.0.0'
@@ -24799,7 +24799,7 @@ packages:
     dev: false
 
   file:projects/communication-react.tgz:
-    resolution: {integrity: sha512-7xxsPMwEhu9hw/OJ8YZTmOtCiVkLWyCcBKLWy2n1S9rQ8jxoNv9k4PK17aj7tOX2AilLVH+07hzeXGeOKwlggg==, tarball: file:projects/communication-react.tgz}
+    resolution: {integrity: sha512-fQqr2DNH63k/Wp9HpSV7v2eSGIQ2Uo5mei48JNT0Bdltf+gBKyt2pJh6m7QnqtHmS7+mtDAZSClNVTl/S0SVUA==, tarball: file:projects/communication-react.tgz}
     name: '@rush-temp/communication-react'
     version: 0.0.0
     dependencies:
@@ -24814,7 +24814,7 @@ packages:
       '@azure/logger': 1.0.4
       '@babel/cli': 7.24.7(@babel/core@7.24.7)
       '@babel/core': 7.24.7
-      '@fluentui-contrib/react-chat': 0.1.9(@fluentui/react-components@9.47.4)(@fluentui/react-icons@2.0.245)(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
+      '@fluentui-contrib/react-chat': 0.1.10(@fluentui/react-components@9.47.4)(@fluentui/react-icons@2.0.245)(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
       '@fluentui/react': 8.117.2(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
       '@fluentui/react-components': 9.47.4(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)(scheduler@0.23.0)
       '@fluentui/react-file-type-icons': 8.11.16(@types/react@18.3.3)(react@18.3.1)
@@ -25062,14 +25062,14 @@ packages:
     dev: false
 
   file:projects/react-components.tgz:
-    resolution: {integrity: sha512-llo7QPmaB/XwjFfkg/DlwIypADA40yH8puQHL0RCxiCOX7L3NtoRS9bjWIQ9S8mpGd+Ll638j3he8oiNorSj6A==, tarball: file:projects/react-components.tgz}
+    resolution: {integrity: sha512-x7dKnICPtz8AMqHf9n47s4gPJhK4e/f9RWY4yKvc4Oy1uIfO77u9iVsJZcpbGh9W0y4tqdzvAmlrLi1dC7TTZg==, tarball: file:projects/react-components.tgz}
     name: '@rush-temp/react-components'
     version: 0.0.0
     dependencies:
       '@babel/cli': 7.24.7(@babel/core@7.24.7)
       '@babel/core': 7.24.7
       '@babel/preset-env': 7.23.9(@babel/core@7.24.7)
-      '@fluentui-contrib/react-chat': 0.1.9(@fluentui/react-components@9.47.4)(@fluentui/react-icons@2.0.245)(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
+      '@fluentui-contrib/react-chat': 0.1.10(@fluentui/react-components@9.47.4)(@fluentui/react-icons@2.0.245)(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
       '@fluentui/react': 8.117.2(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
       '@fluentui/react-components': 9.47.4(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)(scheduler@0.23.0)
       '@fluentui/react-file-type-icons': 8.11.16(@types/react@18.3.3)(react@18.3.1)
