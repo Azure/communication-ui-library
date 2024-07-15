@@ -122,9 +122,9 @@ jobs:
         uses: Azure/pipelines@v1.2
         with:
           azure-devops-project-url: 'https://dev.azure.com/azure-sdk/internal'
-          azure-pipeline-name: 'azuresdkpartnerdrops to npm'
+          azure-pipeline-name: 'js - partner-release'
           azure-devops-token: ${{ steps.az-devops-access-token.outputs.token }}
-          azure-pipeline-variables: '{"accessLevel": "public", "BlobPath": "azure-communication-services/react/npm/${{ steps.version.outputs.version }}", "registry": "https://registry.npmjs.org/", "skipDiff": "False", "tag": "dev"}'
+          azure-pipeline-variables: '{"BlobPath": "azure-communication-services/react/npm/${{ steps.version.outputs.version }}", "Tag": "dev"}'
 
       # Push git tags
       - name: Create and push git tags
