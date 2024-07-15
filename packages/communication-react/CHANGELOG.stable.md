@@ -1,9 +1,63 @@
-
 # Change Log - @azure/communication-react
 
-This log was last generated on Tue, 04 Jun 2024 05:01:39 GMT and should not be manually modified.
+This log was last generated on Mon, 15 Jul 2024 18:16:36 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.18.0](https://github.com/azure/communication-ui-library/tree/1.18.0)
+
+Mon, 15 Jul 2024 18:16:36 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.18.0-beta.1...1.18.0)
+
+### Features
+- Add disable option for end call modal ([PR #4771](https://github.com/azure/communication-ui-library/pull/4771) by dmceachern@microsoft.com)
+- Added new broken image view for inline image feature ([PR #4812](https://github.com/azure/communication-ui-library/pull/4812) by 109105353+jpeng-ms@users.noreply.github.com)
+- Allows for the creation of a TeamsCallAgent with our StatefulCallClient ([PR #4752](https://github.com/azure/communication-ui-library/pull/4752) by dmceachern@microsoft.com)
+- Version bumping communication-chat ([PR #4717](https://github.com/azure/communication-ui-library/pull/4717) by 9044372+JoshuaLai@users.noreply.github.com)
+### Improvements
+- Removed Beta Banner for File Sharing Feature ([PR #4692](https://github.com/azure/communication-ui-library/pull/4692) by 109105353+jpeng-ms@users.noreply.github.com)
+- Added preprocessed folders to lint ignore list ([PR #4788](https://github.com/azure/communication-ui-library/pull/4788) by 109105353+jpeng-ms@users.noreply.github.com)
+- Add more disallowed tags for pasting content in rich text editor ([PR #4796](https://github.com/azure/communication-ui-library/pull/4796) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- Add `aria-checked` for rich text editor toolbar menu items ([PR #4787](https://github.com/azure/communication-ui-library/pull/4787) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- Update table border width in insert table menu for rich text editor to 1px ([PR #4816](https://github.com/azure/communication-ui-library/pull/4816) by 98852890+vhuseinova-msft@users.noreply.github.com)
+### Bug Fixes
+- Add pinning to participant list ([PR #4699](https://github.com/azure/communication-ui-library/pull/4699) by 97124699+prabhjot-msft@users.noreply.github.com)
+- Resolve A11Y issue with rich text editor border color contrast. ([PR #4783](https://github.com/azure/communication-ui-library/pull/4783) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- Only allow the user to end the call for everyone if they are acitvely in the call ([PR #4768](https://github.com/azure/communication-ui-library/pull/4768) by dmceachern@microsoft.com)
+- Added Aria Roles for A11y ([PR #4731](https://github.com/azure/communication-ui-library/pull/4731) by 109105353+jpeng-ms@users.noreply.github.com)
+- Updated CallWithChat sample to disable BYOS file sharing in Teams calls ([PR #4786](https://github.com/azure/communication-ui-library/pull/4786) by 109105353+jpeng-ms@users.noreply.github.com)
+- update captions test to have user id match with participant list id ([PR #4706](https://github.com/azure/communication-ui-library/pull/4706) by 96077406+carocao-msft@users.noreply.github.com)
+- Add missing aria label for placeholder on editor ([PR #4750](https://github.com/azure/communication-ui-library/pull/4750) by 73612854+palatter@users.noreply.github.com)
+- Resolve A11Y issue where show richTextEditor button didn't have aria-expanded attribute ([PR #4759](https://github.com/azure/communication-ui-library/pull/4759) by 73612854+palatter@users.noreply.github.com)
+- Accessibility title on Image Overlay reading out heading ([PR #4763](https://github.com/azure/communication-ui-library/pull/4763) by 9044372+JoshuaLai@users.noreply.github.com)
+- Fix an issue where rich text editor wasn't scrolled content correctly when a new content was pasted ([PR #4720](https://github.com/azure/communication-ui-library/pull/4720) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- pass in undefined if there is no onParticipant defined ([PR #4714](https://github.com/azure/communication-ui-library/pull/4714) by 9044372+JoshuaLai@users.noreply.github.com)
+- Update dark theme color to inverted ([PR #4736](https://github.com/azure/communication-ui-library/pull/4736) by longamy@microsoft.com)
+- Update roosterjs version and set tabbing to be ignored by editor for A11Y ([PR #4804](https://github.com/azure/communication-ui-library/pull/4804) by 73612854+palatter@users.noreply.github.com)
+- Fixed bug where reactions is dismissed when receiving new captions ([PR #4707](https://github.com/azure/communication-ui-library/pull/4707) by 96077406+carocao-msft@users.noreply.github.com)
+- Fix missing pinned icon when it is the only icon for a remote participant ([PR #4751](https://github.com/azure/communication-ui-library/pull/4751) by 79475487+mgamis-msft@users.noreply.github.com)
+- Updating accessibility to include status in the value ([PR #4729](https://github.com/azure/communication-ui-library/pull/4729) by 9044372+JoshuaLai@users.noreply.github.com)
+- Fix for rich text editor toolbar buttons hover state on Android devices ([PR #4748](https://github.com/azure/communication-ui-library/pull/4748) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- Fix Error Bar dismiss button's height for better accessibility ([PR #4830](https://github.com/azure/communication-ui-library/pull/4830) by 107075081+Leah-Xia-Microsoft@users.noreply.github.com)
+- Resolve issue where placeholder didn't always hide. ([PR #4844](https://github.com/azure/communication-ui-library/pull/4844) by palatter@microsoft.com)
+- Update the color of time stamp to meet the contrast requirement from a11y ([PR #4688](https://github.com/azure/communication-ui-library/pull/4688) by longamy@microsoft.com)
+- Disable highlight of context menu on touch event in Android ([PR #4726](https://github.com/azure/communication-ui-library/pull/4726) by 3941071+emlynmac@users.noreply.github.com)
+- Fixed the issue where chat message bubble has an incorrect margin in editing state ([PR #4832](https://github.com/azure/communication-ui-library/pull/4832) by 109105353+jpeng-ms@users.noreply.github.com)
+- Added Disable Styling to Attachment Cards ([PR #4711](https://github.com/azure/communication-ui-library/pull/4711) by 109105353+jpeng-ms@users.noreply.github.com)
+- Fix participant pane title to h2 ([PR #4842](https://github.com/azure/communication-ui-library/pull/4842) by 77021369+jimchou-dev@users.noreply.github.com)
+- Use display name from participant list for captions speaker display name to keep naming consisitent between different UI  ([PR #4703](https://github.com/azure/communication-ui-library/pull/4703) by 96077406+carocao-msft@users.noreply.github.com)
+- Resolve A11Y issue with rich text editor table size selection color contrast. ([PR #4767](https://github.com/azure/communication-ui-library/pull/4767) by palatter@microsoft.com)
+- Fixed the issue where Rich Text Editor cannot send rich text with file attachments ([PR #4747](https://github.com/azure/communication-ui-library/pull/4747) by 109105353+jpeng-ms@users.noreply.github.com)
+- Update the dark theme for fail sending icon ([PR #4811](https://github.com/azure/communication-ui-library/pull/4811) by longamy@microsoft.com)
+- Fixed the issue where user cannot update message content ([PR #4701](https://github.com/azure/communication-ui-library/pull/4701) by 109105353+jpeng-ms@users.noreply.github.com)
+- Fix for a11y issues for selection and placeholder text color in rich text editor ([PR #4743](https://github.com/azure/communication-ui-library/pull/4743) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- Resolve issue around rich text editor table size selection buttons. ([PR #4766](https://github.com/azure/communication-ui-library/pull/4766) by palatter@microsoft.com)
+- Remove the themeV8 version for the link color ([PR #4691](https://github.com/azure/communication-ui-library/pull/4691) by longamy@microsoft.com)
+- Update rich text editor border table size selection color for A11y ([PR #4790](https://github.com/azure/communication-ui-library/pull/4790) by 73612854+palatter@users.noreply.github.com)
+- Add message context to aria label ([PR #4695](https://github.com/azure/communication-ui-library/pull/4695) by 3941071+emlynmac@users.noreply.github.com)
+- Update DLP message styling ([PR #4765](https://github.com/azure/communication-ui-library/pull/4765) by longamy@microsoft.com)
+- Stop all sounds when call connects ([PR #4772](https://github.com/azure/communication-ui-library/pull/4772) by dmceachern@microsoft.com)
+
 
 ## [1.17.0](https://github.com/azure/communication-ui-library/tree/@azure/communication-react_v1.17.0)
 
