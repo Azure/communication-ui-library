@@ -124,7 +124,7 @@ jobs:
           azure-devops-project-url: 'https://dev.azure.com/azure-sdk/internal'
           azure-pipeline-name: 'js - partner-release'
           azure-devops-token: ${{ steps.az-devops-access-token.outputs.token }}
-          azure-pipeline-variables: '{"BlobPath": "azure-communication-services/react/npm/${{ steps.version.outputs.version }}", "Tag": "dev"}'
+          azure-pipeline-variables: '{"BlobPath": "\"azure-communication-services/react/npm/${{ steps.version.outputs.version }}\"", "Tag": "\"dev\""}'
 
       # Push git tags
       - name: Create and push git tags
