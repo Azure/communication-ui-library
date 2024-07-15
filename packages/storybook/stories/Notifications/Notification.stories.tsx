@@ -5,9 +5,9 @@ import { Stack } from '@fluentui/react';
 import { Canvas, Description, Heading, Props, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
-import { Notification as NotificationComponent } from '../../../../react-components/src/components';
-import { COMPONENT_FOLDER_PREFIX } from '../../constants';
-import { controlsToAdd, hiddenControl } from '../../controlsUtils';
+import { Notification as NotificationComponent } from '../../../react-components/src/components';
+import { COMPONENT_FOLDER_PREFIX } from '../constants';
+import { controlsToAdd, hiddenControl } from '../controlsUtils';
 import { ExampleNotification } from './snippets/ExampleNotification.snippet';
 
 const ExampleNotificationText = require('!!raw-loader!./snippets/ExampleNotification.snippet.tsx').default;
@@ -68,8 +68,8 @@ const NotificationStory = (args): JSX.Element => {
 export const Notification = NotificationStory.bind({});
 
 export default {
-  id: `${COMPONENT_FOLDER_PREFIX}-internal-Notification`,
-  title: `${COMPONENT_FOLDER_PREFIX}/Internal/Notifications/Notification`,
+  id: `${COMPONENT_FOLDER_PREFIX}-Notification`,
+  title: `${COMPONENT_FOLDER_PREFIX}/Notifications/Notification`,
   component: NotificationComponent,
   argTypes: {
     notificationStrings: hiddenControl,

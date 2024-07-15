@@ -22,7 +22,7 @@ import { DiagnosticQuality } from '@azure/communication-calling';
 /**
  * Selector type for {@link Notification} component.
  *
- * @beta
+ * @public
  */
 export type NotificationStackSelector = (
   state: CallClientState,
@@ -39,7 +39,7 @@ export type NotificationStackSelector = (
  *   - `ErrorType` is never repeated in the returned errors.
  *   - Errors are returned in a fixed order by `ErrorType`.
  *
- * @beta
+ * @public
  */
 export const notificationStackSelector: NotificationStackSelector = createSelector(
   [
@@ -214,14 +214,10 @@ export const notificationStackSelector: NotificationStackSelector = createSelect
     }
 
     //below is for active notifications
-    let activeNotifications: ActiveNotification[] = [];
+    const activeNotifications: ActiveNotification[] = [];
     if (diagnostics?.media.latest.speakingWhileMicrophoneIsMuted?.value) {
       activeNotifications.push({ type: 'speakingWhileMuted', timestamp: new Date(Date.now()), autoDismiss: true });
     }
-    // sort notifications by timestamp from earliest to latest
-    activeNotifications = activeNotifications.sort(
-      (a, b) => (a.timestamp ?? new Date(Date.now())).getDate() - (b.timestamp ?? new Date(Date.now())).getDate()
-    );
     return { activeErrorMessages: activeErrorMessages, activeNotifications: activeNotifications };
   }
 );

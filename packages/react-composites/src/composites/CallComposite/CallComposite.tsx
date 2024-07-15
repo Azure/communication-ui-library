@@ -432,7 +432,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   /* @conditional-compile-remove(notifications) */
   const activeInCallErrors = usePropsFor(NotificationStack).activeErrorMessages;
   /* @conditional-compile-remove(notifications) */
-  const activeNotificationsFromSelector = usePropsFor(NotificationStack).activeNotifications;
+  const activeNotifications = usePropsFor(NotificationStack).activeNotifications;
   /* @conditional-compile-remove(notifications) */
   const complianceProps = useSelector(complianceBannerSelector);
   /* @conditional-compile-remove(notifications) */
@@ -451,6 +451,29 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   const complianceNotification: ActiveNotification | undefined = useMemo(() => {
     return computeComplianceNotification(complianceProps, cachedProps);
   }, [complianceProps, cachedProps]);
+  /* @conditional-compile-remove(notifications) */
+  useEffect(() => {
+    if (complianceNotification) {
+      activeNotifications.forEach((notification, index) => {
+        if (
+          [
+            'recordingStarted',
+            'transcriptionStarted',
+            'recordingStopped',
+            'transcriptionStopped',
+            'recordingAndTranscriptionStarted',
+            'recordingAndTranscriptionStopped',
+            'recordingStoppedStillTranscribing',
+            'transcriptionStoppedStillRecording'
+          ].includes(activeNotifications[index].type)
+        ) {
+          activeNotifications.splice(index, 1);
+        }
+      });
+      activeNotifications.push(complianceNotification);
+    }
+    setTrackedNotifications((prev) => updateTrackedNotificationsWithActiveNotifications(prev, activeNotifications));
+  }, [complianceNotification, activeNotifications]);
 
   const [trackedErrors, setTrackedErrors] = useState<TrackedNotifications>({} as TrackedNotifications);
   /* @conditional-compile-remove(notifications) */
@@ -458,26 +481,12 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
 
   /* @conditional-compile-remove(notifications) */
   const [trackedNotifications, setTrackedNotifications] = useState<TrackedNotifications>({} as TrackedNotifications);
-  /* @conditional-compile-remove(notifications) */
-  const [activeNotifications, setActiveNotifications] = useState<ActiveNotification[]>(activeNotificationsFromSelector);
-  /* @conditional-compile-remove(notifications) */
-  useEffect(() => {
-    if (complianceNotification) {
-      setActiveNotifications([...activeNotificationsFromSelector, complianceNotification]);
-    }
-  }, [complianceNotification, activeNotificationsFromSelector]);
 
   useEffect(() => {
     setTrackedErrors((prev) => updateTrackedNotificationsWithActiveNotifications(prev, activeErrors));
     /* @conditional-compile-remove(notifications) */
     setTrackedInCallErrors((prev) => updateTrackedNotificationsWithActiveNotifications(prev, activeInCallErrors));
-    /* @conditional-compile-remove(notifications) */
-    setTrackedNotifications((prev) => updateTrackedNotificationsWithActiveNotifications(prev, activeNotifications));
-  }, [
-    activeErrors,
-    /* @conditional-compile-remove(notifications) */ activeInCallErrors,
-    /* @conditional-compile-remove(notifications) */ activeNotifications
-  ]);
+  }, [activeErrors, /* @conditional-compile-remove(notifications) */ activeInCallErrors]);
 
   const onDismissError = useCallback(
     (error: ActiveErrorMessage | /* @conditional-compile-remove(notifications) */ ActiveNotification) => {
@@ -503,10 +512,14 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   ) as ActiveNotification[];
 
   /* @conditional-compile-remove(notifications) */
-  const latestNotifications = useMemo(
-    () => filterLatestNotifications(activeNotifications, trackedNotifications),
-    [activeNotifications, trackedNotifications]
-  ) as ActiveNotification[];
+  const latestNotifications = useMemo(() => {
+    const result = filterLatestNotifications(activeNotifications, trackedNotifications);
+    // sort notifications by timestamp from earliest to latest
+    result.sort(
+      (a, b) => (a.timestamp ?? new Date(Date.now())).getTime() - (b.timestamp ?? new Date(Date.now())).getTime()
+    );
+    return result;
+  }, [activeNotifications, trackedNotifications]) as ActiveNotification[];
 
   const callees = useSelector(getTargetCallees) as StartCallIdentifier[];
   const locale = useLocale();
