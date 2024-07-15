@@ -5,9 +5,9 @@ import { mergeStyles, useTheme } from '@fluentui/react';
 import { Canvas, Description, Heading, Props, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
-import { NotificationStack as NotificationStackComponent } from '../../../../react-components/src/components';
-import { COMPONENT_FOLDER_PREFIX } from '../../constants';
-import { controlsToAdd, hiddenControl } from '../../controlsUtils';
+import { NotificationStack as NotificationStackComponent } from '../../../react-components/src/components';
+import { COMPONENT_FOLDER_PREFIX } from '../constants';
+import { controlsToAdd, hiddenControl } from '../controlsUtils';
 import { ExampleNotificationStack } from './snippets/ExampleNotificationStack.snippet';
 
 const ExampleNotificationStackText = require('!!raw-loader!./snippets/ExampleNotificationStack.snippet.tsx').default;
@@ -48,7 +48,7 @@ const getDocs: () => JSX.Element = () => {
       <Description>
         More than one notification can occur at the same time. The `NotificationStack` component can show multiple
         active notifications. To avoid confusing the user, it is important to be mindful to limit the total number of
-        notifications that are shown together by setting the `maxNotificationStackToShow` field.
+        notifications that are shown together by setting the `maxNotificationsToShow` field.
       </Description>
       <Heading>Notification Stack Props</Heading>
       <Props of={NotificationStackComponent} />
@@ -82,8 +82,8 @@ const NotificationStackStory = (args): JSX.Element => {
 export const NotificationStack = NotificationStackStory.bind({});
 
 export default {
-  id: `${COMPONENT_FOLDER_PREFIX}-internal-NotificationStack`,
-  title: `${COMPONENT_FOLDER_PREFIX}/Internal/Notifications/NotificationStack`,
+  id: `${COMPONENT_FOLDER_PREFIX}-NotificationStack`,
+  title: `${COMPONENT_FOLDER_PREFIX}/Notifications/NotificationStack`,
   component: NotificationStackComponent,
   argTypes: {
     activeNotifications: controlsToAdd.activeNotifications,

@@ -119,7 +119,7 @@ export interface ActiveErrorMessage {
     type: ErrorType;
 }
 
-// @beta
+// @public
 export interface ActiveNotification {
     autoDismiss?: boolean;
     onClickPrimaryButton?: () => void;
@@ -3659,11 +3659,11 @@ export interface NetworkDiagnosticsState {
     latest: LatestNetworkDiagnostics;
 }
 
-// @beta
+// @public
 const Notification_2: (props: NotificationProps) => JSX.Element;
 export { Notification_2 as Notification }
 
-// @beta
+// @public
 export interface NotificationProps {
     autoDismiss?: boolean;
     notificationIconProps?: IIconProps;
@@ -3674,10 +3674,10 @@ export interface NotificationProps {
     showStackedEffect?: boolean;
 }
 
-// @beta
+// @public
 export const NotificationStack: (props: NotificationStackProps) => JSX.Element;
 
-// @beta
+// @public
 export interface NotificationStackProps {
     activeNotifications: ActiveNotification[];
     ignorePremountNotifications?: boolean;
@@ -3686,13 +3686,13 @@ export interface NotificationStackProps {
     strings?: NotificationStackStrings;
 }
 
-// @beta
+// @public
 export type NotificationStackSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
     activeErrorMessages: ActiveNotification[];
     activeNotifications: ActiveNotification[];
 };
 
-// @beta
+// @public
 export interface NotificationStackStrings {
     callCameraAccessDenied?: NotificationStrings;
     callCameraAccessDeniedSafari?: NotificationStrings;
@@ -3735,7 +3735,7 @@ export interface NotificationStackStrings {
     unmuteGeneric?: NotificationStrings;
 }
 
-// @beta
+// @public
 export interface NotificationStrings {
     dismissButtonAriaLabel: string;
     message?: string;
@@ -3744,7 +3744,7 @@ export interface NotificationStrings {
     title: string;
 }
 
-// @beta
+// @public
 export type NotificationType = keyof NotificationStackStrings;
 
 // @public

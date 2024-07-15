@@ -1,5 +1,5 @@
+import { ActiveNotification, NotificationStack } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
-import { ActiveNotification, NotificationStack } from '@internal/react-components';
 import React from 'react';
 
 export const ExampleNotificationStack = (): JSX.Element => {
