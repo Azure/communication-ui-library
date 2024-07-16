@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
 import {
   Action,
   AttachmentUpload,
@@ -12,14 +13,14 @@ import {
   ClearAction
 } from '../file-sharing/AttachmentUpload';
 
-/* @conditional-compile-remove(file-sharing-acs) */
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
 /**
  * @private
  */
 export interface ImageAction {
   messageId: string;
 }
-/* @conditional-compile-remove(file-sharing-acs) */
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
 /**
  * @private
  */
@@ -28,37 +29,37 @@ interface ImageSetAction extends Action, ImageAction {
   newUploads: AttachmentUpload[];
 }
 
-/* @conditional-compile-remove(file-sharing-acs) */
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
 /**
  * @private
  */
 interface ImageProgressAction extends ProgressAction, ImageAction {}
 
-/* @conditional-compile-remove(file-sharing-acs) */
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
 /**
  * @private
  */
 interface ImageCompleteAction extends CompleteAction, ImageAction {}
 
-/* @conditional-compile-remove(file-sharing-acs) */
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
 /**
  * @private
  */
 interface ImageFailedAction extends FailedAction, ImageAction {}
 
-/* @conditional-compile-remove(file-sharing-acs) */
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
 /**
  * @private
  */
 interface ImageRemoveAction extends RemoveAction, ImageAction {}
 
-/* @conditional-compile-remove(file-sharing-acs) */
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
 /**
  * @private
  */
 interface ImageClearAction extends ClearAction, ImageAction {}
 
-/* @conditional-compile-remove(file-sharing-acs) */
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
 /**
  * @private
  */
@@ -70,7 +71,7 @@ export type ImageActions =
   | ImageRemoveAction
   | ImageClearAction;
 
-/* @conditional-compile-remove(file-sharing-acs) */
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
 /**
  * @internal
  */
