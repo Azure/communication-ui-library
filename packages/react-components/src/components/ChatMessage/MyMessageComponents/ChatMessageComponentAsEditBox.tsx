@@ -232,7 +232,7 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
         className: mergeClasses(
           chatMyMessageStyles.root,
           /* @conditional-compile-remove(file-sharing-acs) */
-          hasMultipleAttachments ? chatMyMessageStyles.multipleAttachments : undefined
+          hasMultipleAttachments ? chatMyMessageStyles.multipleAttachmentsInEditing : undefined
         )
       }}
       body={{

@@ -59,6 +59,7 @@ import { IPersonaStyleProps } from '@fluentui/react';
 import { IPersonaStyles } from '@fluentui/react';
 import { IRawStyle } from '@fluentui/react';
 import { IRenderFunction } from '@fluentui/react';
+import { IStackStyles } from '@fluentui/react';
 import { IStyle } from '@fluentui/react';
 import { IStyleFunctionOrObject } from '@fluentui/react';
 import { ITextFieldStyles } from '@fluentui/react';
@@ -118,7 +119,7 @@ export interface ActiveErrorMessage {
     type: ErrorType;
 }
 
-// @beta
+// @public
 export interface ActiveNotification {
     autoDismiss?: boolean;
     onClickPrimaryButton?: () => void;
@@ -679,6 +680,15 @@ export type CallCompositeIcons = {
     PhoneInfoWait?: JSX.Element;
     PeoplePaneMoreButton?: JSX.Element;
     StopAllSpotlightMenuButton?: JSX.Element;
+};
+
+// @public
+export type CallCompositeLoaderProps = {
+    userId: string;
+    token: string;
+    displayName: string;
+    locator: CallAdapterLocator;
+    options?: AzureCommunicationCallAdapterOptions;
 };
 
 // @public
@@ -3171,23 +3181,34 @@ export type IncomingCallManagement = {
 export const IncomingCallNotification: (props: IncomingCallNotificationProps) => JSX.Element;
 
 // @beta
-export type IncomingCallNotificationProps = {
-    callerName?: string;
+export interface IncomingCallNotificationProps {
     alertText?: string;
-    avatar?: string;
+    avatarImage?: string;
+    callerName?: string;
     onAcceptWithAudio: () => void;
     onAcceptWithVideo: () => void;
     onReject: () => void;
-};
+    onRenderAvatar?: () => JSX.Element;
+    personaSize?: number;
+    styles?: IncomingCallNotificationStyles;
+}
 
 // @beta
-export type IncomingCallNotificationStrings = {
-    incomingCallNotificationPlaceholderId?: string;
-    incomingCallNotificationPlaceholderAlert?: string;
+export interface IncomingCallNotificationStrings {
     incomingCallNoticicationAcceptWithAudioAriaLabel?: string;
     incomingCallNoticicationAcceptWithVideoAriaLabel?: string;
     incomingCallNoticicationRejectAriaLabel?: string;
-};
+    incomingCallNotificationPlaceholderAlert?: string;
+    incomingCallNotificationPlaceholderId?: string;
+}
+
+// @beta
+export interface IncomingCallNotificationStyles {
+    acceptButton?: IButtonStyles;
+    avatarContainer?: IStackStyles;
+    rejectButton?: IButtonStyles;
+    root?: IStackStyles;
+}
 
 // @public
 export interface IncomingCallState {
@@ -3257,7 +3278,13 @@ export interface JumpToNewMessageButtonProps {
 export const lightTheme: PartialTheme & CallingTheme;
 
 // @public
+export const loadCallComposite: (adapterArgs: CallCompositeLoaderProps, htmlElement: HTMLElement | null, props?: CallCompositeOptions) => Promise<CallAdapter | undefined>;
+
+// @public
 export type LoadingState = 'loading' | 'none';
+
+// @public
+export const loadOutboundCallComposite: (adapterArgs: OutboundCallCompositeLoaderProps, htmlElement: HTMLElement | null, props?: CallCompositeOptions) => Promise<CallAdapter | undefined>;
 
 // @public
 export const LocalizationProvider: (props: LocalizationProviderProps) => JSX.Element;
@@ -3632,11 +3659,11 @@ export interface NetworkDiagnosticsState {
     latest: LatestNetworkDiagnostics;
 }
 
-// @beta
+// @public
 const Notification_2: (props: NotificationProps) => JSX.Element;
 export { Notification_2 as Notification }
 
-// @beta
+// @public
 export interface NotificationProps {
     autoDismiss?: boolean;
     notificationIconProps?: IIconProps;
@@ -3647,10 +3674,10 @@ export interface NotificationProps {
     showStackedEffect?: boolean;
 }
 
-// @beta
+// @public
 export const NotificationStack: (props: NotificationStackProps) => JSX.Element;
 
-// @beta
+// @public
 export interface NotificationStackProps {
     activeNotifications: ActiveNotification[];
     ignorePremountNotifications?: boolean;
@@ -3659,13 +3686,13 @@ export interface NotificationStackProps {
     strings?: NotificationStackStrings;
 }
 
-// @beta
+// @public
 export type NotificationStackSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
     activeErrorMessages: ActiveNotification[];
     activeNotifications: ActiveNotification[];
 };
 
-// @beta
+// @public
 export interface NotificationStackStrings {
     callCameraAccessDenied?: NotificationStrings;
     callCameraAccessDeniedSafari?: NotificationStrings;
@@ -3708,7 +3735,7 @@ export interface NotificationStackStrings {
     unmuteGeneric?: NotificationStrings;
 }
 
-// @beta
+// @public
 export interface NotificationStrings {
     dismissButtonAriaLabel: string;
     message?: string;
@@ -3717,7 +3744,7 @@ export interface NotificationStrings {
     title: string;
 }
 
-// @beta
+// @public
 export type NotificationType = keyof NotificationStackStrings;
 
 // @public
@@ -3744,6 +3771,15 @@ export interface OptionsDevice {
     id: string;
     name: string;
 }
+
+// @public
+export type OutboundCallCompositeLoaderProps = {
+    userId: string;
+    token: string;
+    displayName: string;
+    targetCallees: string[] | StartCallIdentifier[];
+    options?: AzureCommunicationCallAdapterOptions;
+};
 
 // @public
 export type OverflowGalleryPosition = 'horizontalBottom' | 'verticalRight' | 'horizontalTop';
