@@ -211,7 +211,7 @@ export const getIsTeamsMeeting = (state: CallAdapterState): boolean => state.isT
  * @private
  */
 export const getTeamsMeetingCoordinates = (state: CallAdapterState): ConferencePhoneInfo[] | undefined =>
-  state.call?.teamsMeetingConference;
+  state.call?.meetingConference?.conferencePhones;
 
 /**
  * @private
