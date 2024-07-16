@@ -24,8 +24,9 @@ import { RichTextToolbarPlugin } from './Plugins/RichTextToolbarPlugin';
 import { ContextMenuPlugin } from './Plugins/ContextMenuPlugin';
 import { TableEditContextMenuProvider } from './Plugins/TableEditContextMenuProvider';
 import { borderApplier, dataSetApplier, DefaultSanitizers } from '../utils/RichTextEditorUtils';
-import { ContextualMenu, IContextualMenuItem, IContextualMenuProps } from '@fluentui/react';
+import { ContextualMenu, IContextualMenuItem, IContextualMenuProps, Theme } from '@fluentui/react';
 import { PlaceholderPlugin } from './Plugins/PlaceholderPlugin';
+import { getFormatState, setDirection } from 'roosterjs-content-model-api';
 
 /**
  * Style props for {@link RichTextEditor}.
@@ -107,6 +108,7 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
   const editorDiv = useRef<HTMLDivElement>(null);
   const theme = useTheme();
   const [contextMenuProps, setContextMenuProps] = useState<IContextualMenuProps | null>(null);
+  const previousThemeDirection = useRef(themeDirection(theme));
 
   useImperativeHandle(ref, () => {
     return {
@@ -313,10 +315,26 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [theme, plugins]);
 
+  useEffect(() => {
+    const themeDirectionValue = themeDirection(theme);
+    // check that editor exists and theme was actually changed
+    // as format.direction will be undefined if setDirection is not called
+    if (editor.current && previousThemeDirection.current !== themeDirectionValue) {
+      const format = getFormatState(editor.current);
+      if (format.direction !== themeDirectionValue) {
+        // should be set after the hook where editor is created as the editor might be null
+        // setDirection will cause the focus change back to the editor and this might not be what we want to do (autoFocus prop)
+        // that's why it's not part of the create editor hook
+        setDirection(editor.current, theme.rtl ? 'rtl' : 'ltr');
+      }
+      previousThemeDirection.current = themeDirectionValue;
+    }
+  }, [theme]);
+
   return (
     <div data-testid={'rich-text-editor-wrapper'}>
       {showRichTextEditorFormatting && toolbar}
-      <div className={richTextEditorWrapperStyle(theme, !showRichTextEditorFormatting)}>
+      <div className={richTextEditorWrapperStyle(theme)}>
         {/* div that is used by Rooster JS as a parent of the editor */}
         <div
           id="richTextSendBox"
@@ -365,4 +383,8 @@ const setSelectionAfterLastSegment = (model: ReadonlyContentModelBlockGroup, blo
   const marker = createSelectionMarker();
   block.segments.push(marker);
   setSelection(model, marker);
+};
+
+const themeDirection = (theme: Theme): 'rtl' | 'ltr' => {
+  return theme.rtl ? 'rtl' : 'ltr';
 };

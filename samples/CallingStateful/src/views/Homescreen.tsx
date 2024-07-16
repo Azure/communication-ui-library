@@ -36,7 +36,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
           label="ACS or Teams user ID"
           placeholder="Enter the userId you want to call"
           onChange={(_, value: string | undefined) => {
-            const ids: string[] = !!value ? value.split(',') : [];
+            const ids: string[] = value ? value.split(',') : [];
             let newParticipants: CommunicationIdentifier[] = [];
             ids.forEach((id) => {
               newParticipants = newParticipants.concat([fromFlatCommunicationIdentifier(id)]);
