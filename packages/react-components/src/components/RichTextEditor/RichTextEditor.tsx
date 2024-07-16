@@ -17,13 +17,19 @@ import type {
 import { createModelFromHtml, Editor, exportContent } from 'roosterjs-content-model-core';
 import { createParagraph, createSelectionMarker, setSelection } from 'roosterjs-content-model-dom';
 import { KeyboardInputPlugin } from './Plugins/KeyboardInputPlugin';
-import { AutoFormatPlugin, EditPlugin, PastePlugin, ShortcutPlugin } from 'roosterjs-content-model-plugins';
+import {
+  AutoFormatPlugin,
+  EditPlugin,
+  PastePlugin,
+  ShortcutPlugin,
+  DefaultSanitizers
+} from 'roosterjs-content-model-plugins';
 import { UpdateContentPlugin, UpdateEvent } from './Plugins/UpdateContentPlugin';
 import { RichTextToolbar } from './Toolbar/RichTextToolbar';
 import { RichTextToolbarPlugin } from './Plugins/RichTextToolbarPlugin';
 import { ContextMenuPlugin } from './Plugins/ContextMenuPlugin';
 import { TableEditContextMenuProvider } from './Plugins/TableEditContextMenuProvider';
-import { borderApplier, dataSetApplier, DefaultSanitizers } from '../utils/RichTextEditorUtils';
+import { borderApplier, dataSetApplier } from '../utils/RichTextEditorUtils';
 import { ContextualMenu, IContextualMenuItem, IContextualMenuProps, Theme } from '@fluentui/react';
 import { PlaceholderPlugin } from './Plugins/PlaceholderPlugin';
 import { getFormatState, setDirection } from 'roosterjs-content-model-api';
