@@ -103,7 +103,6 @@ export const useImageUpload = (): [
     ): Promise<AttachmentUpload | undefined> => {
       const imageData = await getInlineImageData(image);
       if (!imageData) {
-        console.warn('Cannot upload image due to invalid image url');
         return;
       }
       const taskId = nanoid();
