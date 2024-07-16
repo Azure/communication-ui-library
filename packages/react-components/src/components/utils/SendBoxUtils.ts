@@ -172,6 +172,10 @@ export const insertImagesToContentString = (
 export const removeBrokenImageContent = (content: string): string => {
   const document = new DOMParser().parseFromString(content, 'text/html');
   document.querySelectorAll('img').forEach((img) => {
+    // Before submitting/resend the message, we need to trim the unnecessary attributes such as src,
+    // which is set to a local svg of a broken image icon at this point.
+    // Once message is submitted/resent, it will be fetched again and might not be a broken image anymore,
+    // That's why we need to remove the class and data-ui-id attribute of 'broken-image-wrapper'
     if (img.className === 'broken-image-wrapper') {
       img.removeAttribute('class');
       img.removeAttribute('src');

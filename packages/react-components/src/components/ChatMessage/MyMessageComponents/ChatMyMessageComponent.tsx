@@ -130,7 +130,7 @@ export const ChatMyMessageComponent = (props: ChatMyMessageComponentProps): JSX.
 
   const onResendClick = useCallback(() => {
     onDeleteMessage && clientMessageId && onDeleteMessage(clientMessageId);
-    let newContent = content !== undefined ? content : '';
+    let newContent = content ?? '';
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
     newContent = removeBrokenImageContent(newContent);
     onSendMessage &&
