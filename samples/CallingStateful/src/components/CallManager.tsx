@@ -18,25 +18,33 @@ export const CallManager = (props: CallManagerProps): JSX.Element => {
   const theme = useTheme();
   return (
     <Stack verticalAlign={'start'} styles={callManagerContainerStyle(theme)}>
-      <Text variant="xLarge">Active Calls</Text>
+      <Text variant="xLarge">Calls</Text>
       <Stack>
         {activeCall && (
-          <CallItem call={activeCall} onSetResume={onSetResume} isActiveCall={true} onSetHold={onSetHold} />
+          <Stack>
+            <Text variant="large">Active Call</Text>
+            <CallItem call={activeCall} onSetResume={onSetResume} isActiveCall={true} onSetHold={onSetHold} />
+          </Stack>
         )}
-        {calls.map((call) => {
-          if (call.id === activeCall?.id) {
-            return;
-          }
-          return (
-            <CallItem
-              key={call.id}
-              call={call}
-              onSetResume={onSetResume}
-              isActiveCall={call.id === activeCall?.id}
-              onSetHold={onSetHold}
-            />
-          );
-        })}
+        {
+          <Stack>
+            {calls && calls.length > 1 && <Text variant="large">Other Calls</Text>}
+            {calls.map((call) => {
+              if (call.id === activeCall?.id) {
+                return;
+              }
+              return (
+                <CallItem
+                  key={call.id}
+                  call={call}
+                  onSetResume={onSetResume}
+                  isActiveCall={call.id === activeCall?.id}
+                  onSetHold={onSetHold}
+                />
+              );
+            })}
+          </Stack>
+        }
       </Stack>
     </Stack>
   );

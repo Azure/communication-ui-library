@@ -25,7 +25,7 @@ export const IncomingCallManager = (props: IncomingCallManagerProps): JSX.Elemen
   /* @conditional-compile-remove(one-to-n-calling) */
   const { incomingCalls, onAcceptCall, onRejectCall } = props;
   return (
-    <Stack style={{ top: 0, position: 'absolute' }}>
+    <Stack style={{ top: 0, right: 0, position: 'absolute' }}>
       {
         /* @conditional-compile-remove(one-to-n-calling) */ incomingCalls.map((incomingCall) => (
           <IncomingCallNotification

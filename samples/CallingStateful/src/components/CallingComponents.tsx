@@ -44,7 +44,7 @@ export const CallingComponents = (): JSX.Element => {
   return (
     <Stack style={{ height: '100%' }}>
       {videoGalleryProps && (
-        <Stack style={{ height: '100%' }}>
+        <Stack verticalAlign="center" style={{ height: '100%' }}>
           <VideoGallery
             {...videoGalleryProps}
             styles={VideoGalleryStyles}
@@ -52,14 +52,16 @@ export const CallingComponents = (): JSX.Element => {
             localVideoViewOptions={localVideoViewOptions}
             remoteVideoViewOptions={remoteVideoViewOptions}
           />
+          <Stack>
+            <ControlBar layout={'floatingBottom'}>
+              {cameraProps && <CameraButton {...cameraProps} />}
+              {microphoneProps && <MicrophoneButton {...microphoneProps} />}
+              {screenShareProps && <ScreenShareButton {...screenShareProps} />}
+              {endCallProps && <EndCallButton {...endCallProps} onHangUp={onHangup} />}
+            </ControlBar>
+          </Stack>
         </Stack>
       )}
-      <ControlBar layout={'dockedBottom'}>
-        {cameraProps && <CameraButton {...cameraProps} />}
-        {microphoneProps && <MicrophoneButton {...microphoneProps} />}
-        {screenShareProps && <ScreenShareButton {...screenShareProps} />}
-        {endCallProps && <EndCallButton {...endCallProps} onHangUp={onHangup} />}
-      </ControlBar>
     </Stack>
   );
 };

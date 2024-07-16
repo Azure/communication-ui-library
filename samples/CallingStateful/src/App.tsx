@@ -207,21 +207,15 @@ function App(): JSX.Element {
 
   return (
     <FluentThemeProvider>
-      <Stack
-        verticalAlign="center"
-        horizontalAlign="center"
-        horizontal
-        tokens={{ childrenGap: '1rem' }}
-        style={{ width: '100%', height: '40rem', paddingTop: '1rem', position: 'relative' }}
-      >
-        <Stack style={{ width: '80%', height: '100%' }}>
+      <Stack horizontal tokens={{ childrenGap: '1rem' }} style={{ margin: '1rem', position: 'relative' }}>
+        <Stack style={{ width: '100%', height: '100%' }}>
           {userIdentifier && <Text>your userId: {userIdentifier.communicationUserId}</Text>}
           {teamsIdentifier && <Text>your teamsId: {teamsIdentifier}</Text>}
           {statefulCallClient && callAgent && !call && (
             <HomeScreen callAgent={callAgent as CallAgent} headerImageProps={imageProps}></HomeScreen>
           )}
           {statefulCallClient && /* @conditional-compile-remove(one-to-n-calling) */ callAgent && call && (
-            <Stack style={{ height: '40rem' }}>
+            <Stack style={{ height: '40rem', width: '100%' }}>
               <CallScreen
                 statefulCallClient={statefulCallClient}
                 /* @conditional-compile-remove(one-to-n-calling) */ callAgent={callAgent}
@@ -230,30 +224,32 @@ function App(): JSX.Element {
             </Stack>
           )}
         </Stack>
-        <Stack style={{ width: '20%', height: '100%', position: 'relative' }}>
-          <Stack.Item style={{ top: '1rem', width: '100%', height: '100%', position: 'absolute' }}>
-            <CallManager
-              activeCall={call}
-              calls={calls}
-              onSetResume={function (newCall: Call | TeamsCall): void {
-                if (call) {
-                  call.hold();
-                  newCall.resume();
-                  setCall(newCall);
-                } else {
-                  newCall.resume();
-                  setCall(newCall);
-                }
-              }}
-              onSetHold={function (callToHold: Call | TeamsCall): void {
-                callToHold.hold();
-              }}
-              onEndCall={function (callCallToEnd: Call | TeamsCall): void {
-                callCallToEnd.hangUp();
-              }}
-            />
-          </Stack.Item>
-        </Stack>
+        {calls.length > 0 && (
+          <Stack style={{ width: '20%', height: '100%' }}>
+            <Stack.Item style={{ width: '100%', height: '30rem' }}>
+              <CallManager
+                activeCall={call}
+                calls={calls}
+                onSetResume={function (newCall: Call | TeamsCall): void {
+                  if (call) {
+                    call.hold();
+                    newCall.resume();
+                    setCall(newCall);
+                  } else {
+                    newCall.resume();
+                    setCall(newCall);
+                  }
+                }}
+                onSetHold={function (callToHold: Call | TeamsCall): void {
+                  callToHold.hold();
+                }}
+                onEndCall={function (callCallToEnd: Call | TeamsCall): void {
+                  callCallToEnd.hangUp();
+                }}
+              />
+            </Stack.Item>
+          </Stack>
+        )}
         <IncomingCallManager incomingCalls={incomingCalls} onAcceptCall={onAcceptCall} onRejectCall={onRejectCall} />
       </Stack>
     </FluentThemeProvider>

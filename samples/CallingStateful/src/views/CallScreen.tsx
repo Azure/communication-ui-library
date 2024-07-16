@@ -31,7 +31,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     statefulCallClient
   } = props;
   return (
-    <Stack style={{ height: 'inherit' }}>
+    <Stack style={{ minHeight: '10rem', maxHeight: '80rem', height: '100%' }}>
       <CallClientProvider callClient={statefulCallClient}>
         {
           /* @conditional-compile-remove(one-to-n-calling) */ callAgent && (
