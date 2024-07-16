@@ -1,20 +1,20 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { Call, CallAgent } from '@azure/communication-calling';
 import { AzureCommunicationTokenCredential } from '@azure/communication-common';
 import {
-  CallAgentProvider,
+  FluentThemeProvider,
+  DEFAULT_COMPONENT_ICONS,
   CallClientProvider,
+  CallAgentProvider,
   CallProvider,
   createStatefulCallClient,
-  DEFAULT_COMPONENT_ICONS,
-  FluentThemeProvider,
   StatefulCallClient
 } from '@azure/communication-react';
-import { initializeIcons, registerIcons } from '@fluentui/react';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import CallingComponents from './components/CallingComponents';
+import { initializeIcons, registerIcons } from '@fluentui/react';
+import { Call, CallAgent, Features, TeamsCall } from '@azure/communication-calling';
 
 initializeIcons();
 registerIcons({ icons: DEFAULT_COMPONENT_ICONS });
@@ -28,6 +28,8 @@ function App(): JSX.Element {
   const [statefulCallClient, setStatefulCallClient] = useState<StatefulCallClient>();
   const [callAgent, setCallAgent] = useState<CallAgent>();
   const [call, setCall] = useState<Call>();
+  // breakout rooms
+  const [mainMeetingCall, setMainMeetingCall] = useState<Call>();
 
   useEffect(() => {
     const statefulCallClient = createStatefulCallClient({
@@ -62,6 +64,55 @@ function App(): JSX.Element {
     }
   }, [callAgent]);
 
+  // breakout rooms
+  const onBreakoutRoomJoined = useCallback(
+    (breakoutRoomCall: Call | TeamsCall) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const _breakoutRoomCall = (breakoutRoomCall as any)['call'];
+      if (_breakoutRoomCall) {
+        setMainMeetingCall(call);
+        setCall(_breakoutRoomCall);
+      }
+    },
+    [call, setMainMeetingCall, setCall]
+  );
+
+  // breakout rooms
+  const returnToMainMeeting = useCallback(async () => {
+    if (mainMeetingCall) {
+      setCall(mainMeetingCall);
+    }
+  }, [mainMeetingCall, setCall]);
+
+  // breakout rooms
+  const hangUpMainMeeting = useCallback(async () => {
+    if (mainMeetingCall) {
+      await mainMeetingCall.hangUp();
+      setMainMeetingCall(undefined);
+    }
+  }, [mainMeetingCall, setMainMeetingCall]);
+
+  // breakout rooms
+  useEffect(() => {
+    if (call) {
+      subscribeToCallEvents(call, onBreakoutRoomJoined);
+    }
+  }, [call, onBreakoutRoomJoined]);
+
+  // breakout rooms
+  callAgent?.on('callsUpdated', (args: { added: Call[]; removed: Call[] }) => {
+    const removedCall = args.removed.find((removedCall) => removedCall.id === call?.id);
+    if (removedCall) {
+      // Return to main meeting because breakout room call is ended because it is closed
+      if (
+        removedCall.id === call?.id &&
+        mainMeetingCall?.feature(Features.BreakoutRooms).assignedBreakoutRoom?.state === 'closed'
+      ) {
+        returnToMainMeeting();
+      }
+    }
+  });
+
   return (
     <FluentThemeProvider>
       <>
@@ -71,7 +122,13 @@ function App(): JSX.Element {
               <CallAgentProvider callAgent={callAgent}>
                 {call && (
                   <CallProvider call={call}>
-                    <CallingComponents />
+                    <CallingComponents
+                      hangUpMainMeeting={hangUpMainMeeting}
+                      returnToMainMeeting={async () => {
+                        await returnToMainMeeting();
+                        mainMeetingCall?.resume();
+                      }}
+                    />
                   </CallProvider>
                 )}
               </CallAgentProvider>
@@ -82,5 +139,16 @@ function App(): JSX.Element {
     </FluentThemeProvider>
   );
 }
+
+// breakout rooms
+const subscribeToCallEvents = (
+  call: Call | TeamsCall,
+  onBreakoutRoomJoined: (breakoutRoomCall: Call | TeamsCall) => void
+): void => {
+  const breakoutRooms = call.feature(Features.BreakoutRooms);
+  if (breakoutRooms) {
+    breakoutRooms.on('breakoutRoomJoined', onBreakoutRoomJoined);
+  }
+};
 
 export default App;
