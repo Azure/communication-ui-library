@@ -13,7 +13,7 @@ betaTest.describe('ImageOverlay tests', () => {
       messageType: 'chat',
       senderId: 'user3',
       content:
-        '<p>How should I design my new house?</p><p><img alt="image" src="images/inlineImageExample1.png" itemscope="png" width="166.5625" height="250" id="SomeImageId1" style="vertical-align:bottom"></p><p><img alt="image" src="images/inlineImageExample2.png" itemscope="png" width="374.53183520599254" height="250" id="SomeImageId2" style="vertical-align:bottom"></p><p>&nbsp;</p>',
+        '<p>How should I design my new house?</p><p><img alt="image" src="images/inlineImageExample1.png" itemscope="png" width="166" height="250" id="SomeImageId1" style="vertical-align:bottom; aspect-ratio: 166 / 250;"></p><p><img alt="image" src="images/inlineImageExample2.png" itemscope="png" width="374" height="250" id="SomeImageId2" style="vertical-align:bottom; aspect-ratio: 374 / 250"></p><p>&nbsp;</p>',
       senderDisplayName: 'Miguel Garcia',
       messageId: Math.random().toString(),
       createdOn: new Date('2019-04-13T00:00:00.000+08:09'),
