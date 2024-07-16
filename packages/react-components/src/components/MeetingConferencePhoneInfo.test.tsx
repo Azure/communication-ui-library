@@ -29,7 +29,12 @@ describe('Format phone number info based on available data', () => {
   const strings = {
     meetingConferencePhoneInfoModalTollFree: '{phoneNumber} (Toll Free)',
     meetingConferencePhoneInfoModalToll: '{phoneNumber} (Toll)',
-    meetingConferencePhoneInfoModalTollGeoData: '{phoneNumber} {country} {city}'
+    meetingConferencePhoneInfoModalTollGeoData: '{phoneNumber} {country} {city}',
+    meetingConferencePhoneInfoModalTitle: '',
+    meetingConferencePhoneInfoModalDialIn: '',
+    meetingConferencePhoneInfoModalMeetingId: '',
+    meetingConferencePhoneInfoModalWait: '',
+    meetingConferencePhoneInfoModalNoPhoneAvailable: ''
   };
 
   test('Test toll free and toll label', async () => {
