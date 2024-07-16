@@ -7,15 +7,10 @@ import {
   EndCallButton,
   MicrophoneButton,
   ParticipantsButton,
-  ScreenShareButton,
-  DEFAULT_COMPONENT_ICONS
+  ScreenShareButton
 } from '@azure/communication-react';
-import { initializeIcons, registerIcons } from '@fluentui/react';
 import React from 'react';
 import { DevicesButtonWithKnobs } from '../Buttons/Devices/snippets/DevicesButtonWithKnobs.snippet';
-
-initializeIcons();
-registerIcons({ icons: DEFAULT_COMPONENT_ICONS });
 
 const mockParticipants: CallParticipantListParticipant[] = [
   {

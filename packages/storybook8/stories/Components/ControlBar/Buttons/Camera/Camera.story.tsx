@@ -1,13 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { CameraButton, CameraButtonProps, DEFAULT_COMPONENT_ICONS } from '@azure/communication-react';
-import { initializeIcons, registerIcons } from '@fluentui/react';
+import { CameraButton, CameraButtonProps } from '@azure/communication-react';
 import React, { useState } from 'react';
 import { defaultControlsCameras } from '../../../../controlsUtils';
-
-initializeIcons();
-registerIcons({ icons: DEFAULT_COMPONENT_ICONS });
 
 const CameraStory = (args: any): JSX.Element => {
   return <CameraButtonWithDevices {...args} />;
