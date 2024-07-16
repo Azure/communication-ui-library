@@ -35,7 +35,7 @@ const main = async () => {
   const packageVersion = process.argv[2];
   const packageName = `@azure/communication-react`
   const startTime = new Date();
-  while((new Date() - startTime) > TIMEOUT_TIME_MS) {
+  while((new Date() - startTime) < TIMEOUT_TIME_MS) {
     try {
       const response = await checkNpm(packageName, packageVersion);
       console.log('responseCode: ', response.statusCode);
