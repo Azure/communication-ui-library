@@ -111,7 +111,7 @@ export const COMPOSITE_ONLY_ICONS: CompositeIcons = {
   /* @conditional-compile-remove(teams-meeting-conference) */
   PhoneNumberButton: <PersonCall20Regular />,
   /* @conditional-compile-remove(teams-meeting-conference) */
-  JoinByPhoneDialStep: <PersonCall20Regular />,
+  JoinByPhoneDialStepIcon: <PersonCall20Regular />,
   /* @conditional-compile-remove(teams-meeting-conference) */
   JoinByPhoneConferenceIdIcon: <Dialpad20Regular />,
   /* @conditional-compile-remove(teams-meeting-conference) */
@@ -256,7 +256,7 @@ export type CallCompositeIcons = {
   /* @conditional-compile-remove(teams-meeting-conference) */
   PhoneNumberButton?: JSX.Element;
   /* @conditional-compile-remove(teams-meeting-conference) */
-  JoinByPhoneDialStep?: JSX.Element;
+  JoinByPhoneDialStepIcon?: JSX.Element;
   /* @conditional-compile-remove(teams-meeting-conference) */
   JoinByPhoneConferenceIdIcon?: JSX.Element;
   /* @conditional-compile-remove(teams-meeting-conference) */

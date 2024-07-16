@@ -131,7 +131,7 @@ export const MeetingConferencePhoneInfoModal = (props: MeetingConferencePhoneInf
                   <Stack className={infoConnectionLinkStyle(theme)}></Stack>
                   <Stack.Item className={phoneInfoIcon(theme)}>
                     <Stack verticalAlign="center" horizontalAlign="center">
-                      <Icon iconName="JoinByPhoneDialStep" className={phoneInfoIconStyle(theme)} />
+                      <Icon iconName="JoinByPhoneDialStepIcon" className={phoneInfoIconStyle(theme)} />
                     </Stack>
                   </Stack.Item>
                   <Stack.Item>

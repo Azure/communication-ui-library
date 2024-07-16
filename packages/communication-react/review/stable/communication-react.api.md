@@ -506,7 +506,7 @@ export type CallCompositeIcons = {
     DefaultCustomButton?: JSX.Element;
     DtmfDialpadButton?: JSX.Element;
     PhoneNumberButton?: JSX.Element;
-    JoinByPhoneDialStep?: JSX.Element;
+    JoinByPhoneDialStepIcon?: JSX.Element;
     JoinByPhoneConferenceIdIcon?: JSX.Element;
     JoinByPhoneWaitToBeAdmittedIcon?: JSX.Element;
     PeoplePaneMoreButton?: JSX.Element;
@@ -2332,7 +2332,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     DefaultCustomButton?: JSX.Element | undefined;
     DtmfDialpadButton?: JSX.Element | undefined;
     PhoneNumberButton?: JSX.Element | undefined;
-    JoinByPhoneDialStep?: JSX.Element | undefined;
+    JoinByPhoneDialStepIcon?: JSX.Element | undefined;
     JoinByPhoneConferenceIdIcon?: JSX.Element | undefined;
     JoinByPhoneWaitToBeAdmittedIcon?: JSX.Element | undefined;
     PeoplePaneMoreButton?: JSX.Element | undefined;
