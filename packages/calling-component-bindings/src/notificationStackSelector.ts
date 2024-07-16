@@ -84,7 +84,6 @@ export const notificationStackSelector: NotificationStackSelector = createSelect
       isTeamsMeetingWithPhones = true;
     }
     if (
-      true ||
       diagnostics?.network.latest.networkReceiveQuality?.value === DiagnosticQuality.Bad ||
       diagnostics?.network.latest.networkReceiveQuality?.value === DiagnosticQuality.Poor
     ) {
