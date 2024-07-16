@@ -6,37 +6,37 @@ import { IStackStyles, PrimaryButton, Stack, Text, Theme, useTheme } from '@flue
 import React, { useEffect, useState } from 'react';
 
 export interface CallManagerProps {
-  onSetActiveCall: (call: Call | TeamsCall) => void;
+  onSetResume: (call: Call | TeamsCall) => void;
   calls: Call[] | TeamsCall[];
   activeCall?: Call | TeamsCall;
-  onSetCallHoldState: (call: Call | TeamsCall) => void;
+  onSetHold: (call: Call | TeamsCall) => void;
   onEndCall: (call: Call | TeamsCall) => void;
 }
 
 export const CallManager = (props: CallManagerProps): JSX.Element => {
-  const { onSetActiveCall, calls, onSetCallHoldState, activeCall } = props;
+  const { onSetResume, calls, onSetHold, activeCall } = props;
   const theme = useTheme();
   return (
     <Stack verticalAlign={'start'} styles={callManagerContainerStyle(theme)}>
       <Text variant="xLarge">Active Calls</Text>
       <Stack>
         {activeCall && (
-          <CallItem
-            call={activeCall}
-            onSetActiveCall={onSetActiveCall}
-            isActiveCall={true}
-            onSetCallHoldState={onSetCallHoldState}
-          />
+          <CallItem call={activeCall} onSetResume={onSetResume} isActiveCall={true} onSetHold={onSetHold} />
         )}
-        {calls.map((call) => (
-          <CallItem
-            key={call.id}
-            call={call}
-            onSetActiveCall={onSetActiveCall}
-            isActiveCall={call.id === activeCall?.id}
-            onSetCallHoldState={onSetCallHoldState}
-          />
-        ))}
+        {calls.map((call) => {
+          if (call.id === activeCall?.id) {
+            return;
+          }
+          return (
+            <CallItem
+              key={call.id}
+              call={call}
+              onSetResume={onSetResume}
+              isActiveCall={call.id === activeCall?.id}
+              onSetHold={onSetHold}
+            />
+          );
+        })}
       </Stack>
     </Stack>
   );
@@ -45,12 +45,12 @@ export const CallManager = (props: CallManagerProps): JSX.Element => {
 interface CallItemProps {
   call: Call | TeamsCall;
   isActiveCall: boolean;
-  onSetActiveCall: (call: Call | TeamsCall) => void;
-  onSetCallHoldState: (call: Call | TeamsCall) => void;
+  onSetResume: (call: Call | TeamsCall) => void;
+  onSetHold: (call: Call | TeamsCall) => void;
 }
 
 const CallItem = (props: CallItemProps): JSX.Element => {
-  const { call, onSetActiveCall, onSetCallHoldState } = props;
+  const { call, onSetResume, onSetHold } = props;
 
   const [callTitle, setCallTitle] = useState<string>('');
 
@@ -76,8 +76,8 @@ const CallItem = (props: CallItemProps): JSX.Element => {
         {call.state ? <Text>{call.state}</Text> : null}
       </Stack>
       <Stack horizontal tokens={{ childrenGap: '1rem' }}>
-        <PrimaryButton onClick={() => onSetActiveCall(call)}>Resume</PrimaryButton>
-        <PrimaryButton onClick={() => onSetCallHoldState(call)}>Hold</PrimaryButton>
+        <PrimaryButton onClick={() => onSetResume(call)}>Resume</PrimaryButton>
+        <PrimaryButton onClick={() => onSetHold(call)}>Hold</PrimaryButton>
       </Stack>
     </Stack>
   );

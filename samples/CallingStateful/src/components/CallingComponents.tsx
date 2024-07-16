@@ -42,9 +42,9 @@ export const CallingComponents = (): JSX.Element => {
   }
 
   return (
-    <Stack>
+    <Stack style={{ height: '100%' }}>
       {videoGalleryProps && (
-        <Stack>
+        <Stack style={{ height: '100%' }}>
           <VideoGallery
             {...videoGalleryProps}
             styles={VideoGalleryStyles}
@@ -54,7 +54,7 @@ export const CallingComponents = (): JSX.Element => {
           />
         </Stack>
       )}
-      <ControlBar layout={'floatingBottom'}>
+      <ControlBar layout={'dockedBottom'}>
         {cameraProps && <CameraButton {...cameraProps} />}
         {microphoneProps && <MicrophoneButton {...microphoneProps} />}
         {screenShareProps && <ScreenShareButton {...screenShareProps} />}

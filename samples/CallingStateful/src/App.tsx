@@ -10,7 +10,6 @@ import {
   TeamsIncomingCall,
   LocalVideoStream,
   IncomingCallCommon,
-  CallAgent,
   TeamsCall,
   Call
 } from '@azure/communication-calling';
@@ -48,7 +47,7 @@ function App(): JSX.Element {
   const [callAgent, setCallAgent] = useState<DeclarativeCallAgent | DeclarativeTeamsCallAgent>();
   const [call, setCall] = useState<Call | TeamsCall>();
   const [calls, setCalls] = useState<Call[] | TeamsCall[]>([]);
-  const [incomingCalls, setIncomingCalls] = useState<readonly IncomingCall[] | readonly TeamsIncomingCall[]>([]);
+  const [incomingCalls, setIncomingCalls] = useState<IncomingCall[] | TeamsIncomingCall[]>([]);
 
   /**
    * Helper function to clear the old incoming Calls in the app that are no longer valid.
@@ -56,7 +55,10 @@ function App(): JSX.Element {
    */
   const filterEndedIncomingCalls = useCallback(
     (incomingCall: IncomingCallCommon): void => {
-      setIncomingCalls(incomingCalls.filter((call) => call.id !== incomingCall.id));
+      console.log(incomingCalls);
+      const newIncomingCalls = incomingCalls.filter((call) => call.id !== incomingCall.id);
+      console.log(newIncomingCalls);
+      setIncomingCalls(newIncomingCalls);
     },
     [incomingCalls]
   );
@@ -65,22 +67,18 @@ function App(): JSX.Element {
   const incomingAcsCallListener: IncomingCallEvent = useCallback(
     ({ incomingCall }): void => {
       console.log('Incoming call received: ', incomingCall);
-      if (callAgent) {
-        setIncomingCalls(callAgent.incomingCalls);
-      }
+      setIncomingCalls((incomingCalls as IncomingCall[]).concat([incomingCall]));
     },
-    [callAgent]
+    [incomingCalls]
   );
 
   /* @conditional-compile-remove(one-to-n-calling) */
   const teamsIncomingCallListener: TeamsIncomingCallEvent = useCallback(
     ({ incomingCall }): void => {
       console.log('Incoming call received: ', incomingCall);
-      if (callAgent) {
-        setIncomingCalls(callAgent.incomingCalls);
-      }
+      setIncomingCalls((incomingCalls as TeamsIncomingCall[]).concat([incomingCall]));
     },
-    [callAgent]
+    [incomingCalls]
   );
 
   const callsUpdatedListener = useCallback(
@@ -89,7 +87,7 @@ function App(): JSX.Element {
         if (call && call.state !== 'Disconnected') {
           call.hold();
         }
-        setCall(event.added[0]);
+        setCall(event.added[0] as Call | TeamsCall);
       } else if (event.removed.length > 0) {
         if (event.removed[0] === call) {
           setCall(undefined);
@@ -109,6 +107,7 @@ function App(): JSX.Element {
     (state: CallClientState): void => {
       if (statefulCallClient) {
         const endedIncomingCalls = Object.keys(state.incomingCallsEnded);
+        console.log('Incoming calls ended: ', endedIncomingCalls);
         setIncomingCalls(incomingCalls.filter((call) => !endedIncomingCalls.includes(call.id)));
       }
     },
@@ -236,14 +235,21 @@ function App(): JSX.Element {
             <CallManager
               activeCall={call}
               calls={calls}
-              onSetActiveCall={function (call: CallCommon): void {
-                throw new Error('Function not implemented.');
+              onSetResume={function (newCall: Call | TeamsCall): void {
+                if (call) {
+                  call.hold();
+                  newCall.resume();
+                  setCall(newCall);
+                } else {
+                  newCall.resume();
+                  setCall(newCall);
+                }
               }}
-              onSetCallHoldState={function (call: CallCommon): void {
-                throw new Error('Function not implemented.');
+              onSetHold={function (callToHold: Call | TeamsCall): void {
+                callToHold.hold();
               }}
-              onEndCall={function (call: CallCommon): void {
-                throw new Error('Function not implemented.');
+              onEndCall={function (callCallToEnd: Call | TeamsCall): void {
+                callCallToEnd.hangUp();
               }}
             />
           </Stack.Item>
