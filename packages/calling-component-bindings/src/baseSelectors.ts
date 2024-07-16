@@ -260,9 +260,9 @@ export const getSupportedSpokenLanguages = (
 
 /* @conditional-compile-remove(teams-meeting-conference) */
 /** @private */
-export const getTeamsMeetingConferencePhones = (
+export const getMeetingConferencePhones = (
   state: CallClientState,
   props: CallingBaseSelectorProps
 ): ConferencePhoneInfo[] | undefined => {
-  return state.calls[props.callId]?.teamsMeetingConference?.conferencePhones;
+  return state.calls[props.callId]?.meetingConference?.conferencePhones;
 };

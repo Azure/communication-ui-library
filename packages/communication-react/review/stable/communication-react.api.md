@@ -849,6 +849,9 @@ export interface CallState {
     kind: CallKind;
     localParticipantReaction?: ReactionState;
     localVideoStreams: LocalVideoStreamState[];
+    meetingConference?: {
+        conferencePhones: ConferencePhoneInfo[];
+    };
     optimalVideoCount: OptimalVideoCountFeatureState;
     pptLive: PPTLiveCallFeatureState;
     raiseHand: RaiseHandCallFeature;
@@ -864,9 +867,6 @@ export interface CallState {
     spotlight?: SpotlightCallFeatureState;
     startTime: Date;
     state: CallState_2;
-    teamsMeetingConference?: {
-        conferencePhones: ConferencePhoneInfo[];
-    };
     transcription: TranscriptionCallFeature;
     transfer: TransferFeature;
 }

@@ -304,9 +304,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
         {
           /* @conditional-compile-remove(teams-meeting-conference) */ props.teamsMeetingConferenceModalPresent && (
             <MeetingConferencePhoneInfoModal
-              conferencePhoneInfoList={
-                props.callAdapter.getState().call?.teamsMeetingConference?.conferencePhones ?? []
-              }
+              conferencePhoneInfoList={props.callAdapter.getState().call?.meetingConference?.conferencePhones ?? []}
               showModal={props.teamsMeetingConferenceModalPresent}
               onDismissMeetingPhoneInfoSettings={props.onToggleTeamsMeetingConferenceModal}
             />

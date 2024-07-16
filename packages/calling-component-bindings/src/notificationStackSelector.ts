@@ -9,7 +9,7 @@ import {
   getEnvironmentInfo
 } from './baseSelectors';
 /* @conditional-compile-remove(notifications) */
-import { getTeamsMeetingConferencePhones } from './baseSelectors';
+import { getMeetingConferencePhones } from './baseSelectors';
 /* @conditional-compile-remove(notifications) */
 import { ActiveNotification, NotificationType } from '@internal/react-components';
 /* @conditional-compile-remove(notifications) */
@@ -47,7 +47,7 @@ export const notificationStackSelector: NotificationStackSelector = createSelect
     getDiagnostics,
     getDeviceManager,
     getEnvironmentInfo,
-    /* @conditional-compile-remove(teams-meeting-conference) */ getTeamsMeetingConferencePhones
+    /* @conditional-compile-remove(teams-meeting-conference) */ getMeetingConferencePhones
   ],
   (
     latestErrors: CallErrors,
@@ -84,6 +84,7 @@ export const notificationStackSelector: NotificationStackSelector = createSelect
       isTeamsMeetingWithPhones = true;
     }
     if (
+      true ||
       diagnostics?.network.latest.networkReceiveQuality?.value === DiagnosticQuality.Bad ||
       diagnostics?.network.latest.networkReceiveQuality?.value === DiagnosticQuality.Poor
     ) {

@@ -185,7 +185,7 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
     /* @conditional-compile-remove(meeting-id) */
     info: callInfo,
     /* @conditional-compile-remove(teams-meeting-conference) */
-    teamsMeetingConference: { conferencePhones: [] }
+    meetingConference: { conferencePhones: [] }
   };
 }
 
