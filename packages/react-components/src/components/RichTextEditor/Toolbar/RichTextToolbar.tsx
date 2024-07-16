@@ -110,14 +110,19 @@ export const RichTextToolbar = (props: RichTextToolbarProps): JSX.Element => {
       icon: 'RichTextBulletListButtonIcon',
       onClick: () => {
         plugin.onToolbarButtonClick((editor) => {
+          const isBullet = formatState?.isBullet;
           toggleBullet(editor);
+          // the bulleted list was added
+          if (!isBullet) {
+            editor.announce({ text: strings.richTextBulletedListAppliedAnnouncement });
+          }
         });
       },
       text: strings.richTextBulletListTooltip,
       checked: formatState !== undefined && formatState?.isBullet === true,
       theme: theme
     });
-  }, [formatState, plugin, strings.richTextBulletListTooltip, theme]);
+  }, [formatState, plugin, strings.richTextBulletListTooltip, strings.richTextBulletedListAppliedAnnouncement, theme]);
 
   const numberListButton: ICommandBarItemProps = useMemo(() => {
     return getCommandBarItem({
@@ -126,14 +131,19 @@ export const RichTextToolbar = (props: RichTextToolbarProps): JSX.Element => {
       icon: 'RichTextNumberListButtonIcon',
       onClick: () => {
         plugin.onToolbarButtonClick((editor) => {
+          const isNumbering = formatState?.isNumbering;
           toggleNumbering(editor);
+          // the numbered list was added
+          if (!isNumbering) {
+            editor.announce({ text: strings.richTextNumberedListAppliedAnnouncement });
+          }
         });
       },
       text: strings.richTextNumberListTooltip,
       checked: formatState !== undefined && formatState?.isNumbering === true,
       theme: theme
     });
-  }, [formatState, plugin, strings.richTextNumberListTooltip, theme]);
+  }, [formatState, plugin, strings.richTextNumberListTooltip, strings.richTextNumberedListAppliedAnnouncement, theme]);
 
   const indentDecreaseButton: ICommandBarItemProps = useMemo(() => {
     return getCommandBarItem({

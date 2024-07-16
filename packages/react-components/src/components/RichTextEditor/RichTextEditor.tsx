@@ -12,7 +12,8 @@ import type {
   EditorPlugin,
   IEditor,
   ReadonlyContentModelBlockGroup,
-  ShallowMutableContentModelDocument
+  ShallowMutableContentModelDocument,
+  KnownAnnounceStrings
 } from 'roosterjs-content-model-types';
 import { createModelFromHtml, Editor, exportContent } from 'roosterjs-content-model-core';
 import { createParagraph, createSelectionMarker, setSelection } from 'roosterjs-content-model-dom';
@@ -303,7 +304,8 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
             border: borderApplier,
             dataset: dataSetApplier
           }
-        }
+        },
+        announcerStringGetter: announcerStringGetter
       });
     }
 
@@ -336,6 +338,20 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
       previousThemeDirection.current = themeDirectionValue;
     }
   }, [theme]);
+
+  const announcerStringGetter = useCallback(
+    (key: KnownAnnounceStrings): string => {
+      switch (key) {
+        case 'announceListItemBullet':
+          return strings.richTextNewBulletedListItemAnnouncement ?? '';
+        case 'announceListItemNumbering':
+          return strings.richTextNewNumberedListItemAnnouncement ?? '';
+        case 'announceOnFocusLastCell':
+          return '';
+      }
+    },
+    [strings.richTextNewBulletedListItemAnnouncement, strings.richTextNewNumberedListItemAnnouncement]
+  );
 
   return (
     <div data-testid={'rich-text-editor-wrapper'}>
