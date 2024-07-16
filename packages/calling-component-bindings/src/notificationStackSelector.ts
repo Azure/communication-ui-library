@@ -9,7 +9,7 @@ import {
   getEnvironmentInfo
 } from './baseSelectors';
 /* @conditional-compile-remove(notifications) */
-import { getTeamsMeetingConference } from './baseSelectors';
+import { getMeetingConferencePhones } from './baseSelectors';
 /* @conditional-compile-remove(notifications) */
 import { ActiveNotification, NotificationType } from '@internal/react-components';
 /* @conditional-compile-remove(notifications) */
@@ -47,7 +47,7 @@ export const notificationStackSelector: NotificationStackSelector = createSelect
     getDiagnostics,
     getDeviceManager,
     getEnvironmentInfo,
-    /* @conditional-compile-remove(teams-meeting-conference) */ getTeamsMeetingConference
+    /* @conditional-compile-remove(teams-meeting-conference) */ getMeetingConferencePhones
   ],
   (
     latestErrors: CallErrors,
