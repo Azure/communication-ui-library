@@ -199,7 +199,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
       return;
     }
 
-    const content = textValue;
+    let content = textValue;
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
     content = removeBrokenImageContent(textValue);
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
