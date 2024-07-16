@@ -20,10 +20,11 @@ initializeIcons();
 registerIcons({ icons: DEFAULT_COMPONENT_ICONS });
 
 function App(): JSX.Element {
-  const userAccessToken = '<Azure Communication Services Resource Access Token>';
-  const userId = '<User Id associated to the token>';
-  const meetingLink = '<Meeting link>';
-  const displayName = '<Display Name>';
+  const userAccessToken =
+    'eyJhbGciOiJSUzI1NiIsImtpZCI6IjYwNUVCMzFEMzBBMjBEQkRBNTMxODU2MkM4QTM2RDFCMzIyMkE2MTkiLCJ4NXQiOiJZRjZ6SFRDaURiMmxNWVZpeUtOdEd6SWlwaGsiLCJ0eXAiOiJKV1QifQ.eyJza3lwZWlkIjoiYWNzOmI2YWFkYTFmLTBiMWQtNDdhYy04NjZmLTkxYWFlMDBhMWQwMV8wMDAwMDAyMS01Mjc3LWU0ODEtMDhjOC0zZTNhMGQwMDljYTUiLCJzY3AiOjE3OTIsImNzaSI6IjE3MjA5ODMxMDkiLCJleHAiOjE3MjEwNjk1MDksInJnbiI6ImFtZXIiLCJhY3NTY29wZSI6ImNoYXQsdm9pcCIsInJlc291cmNlSWQiOiJiNmFhZGExZi0wYjFkLTQ3YWMtODY2Zi05MWFhZTAwYTFkMDEiLCJyZXNvdXJjZUxvY2F0aW9uIjoidW5pdGVkc3RhdGVzIiwiaWF0IjoxNzIwOTgzMTA5fQ.cIuIWvDddyZbTxdYHaZzFzR8l7s0VZWcCVMygfbkLpUqtPz40dmB0WFWWuiTIS5qkDnIMYjZewyhPF7n7MVjI0fFu2QnFbPvdtaNEpt5QaH73F1tz8yvJHlSpECuZGtiBL7mxMbunZ3MJLMMdWIPLfU4HLxTZLFDB1RymAGLR6jDbeqSy3FAcbLc6LdUAQjHcXGvdErQhhErXATctLhZ8sut8y58cXWvZNIciKvHRljlAicRtnW8Y4b_JkFUhFj4ZYP8m0sS0yysP-GyTCATvgH_fMtlrTx_dyWsRlbBuJGtzbJL9y4fj01J07SI82RsGElvQHHQLc6uHrsqH5syoA';
+  const userId = '8:acs:b6aada1f-0b1d-47ac-866f-91aae00a1d01_00000021-5277-e481-08c8-3e3a0d009ca5';
+  const meetingLink = 'https://teams.microsoft.com/meet/288407690174?p=yHs62K';
+  const displayName = 'Test';
 
   const [statefulCallClient, setStatefulCallClient] = useState<StatefulCallClient>();
   const [callAgent, setCallAgent] = useState<CallAgent>();
