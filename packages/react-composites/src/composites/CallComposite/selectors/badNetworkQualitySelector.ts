@@ -14,7 +14,9 @@ import { DiagnosticQuality } from '@azure/communication-calling';
  */
 export const badNetworkQualityBannerSelector = reselect.createSelector([getUserFacingDiagnostics], (diagnostics) => {
   return {
-    isPoorNetworkQuality: isNetworkQualityPoor(diagnostics?.network.latest.networkReceiveQuality?.value)
+    isPoorNetworkQuality:
+      isNetworkQualityPoor(diagnostics?.network.latest.networkReceiveQuality?.value) ||
+      isNetworkQualityPoor(diagnostics?.network.latest.networkSendQuality?.value)
   };
 });
 

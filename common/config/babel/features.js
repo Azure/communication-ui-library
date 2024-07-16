@@ -23,8 +23,8 @@ module.exports = {
     "rich-text-editor-composite-support",
     // Feature for Rich Text Editor (RTE) image upload support
     "rich-text-editor-image-upload",
-    // Feature for showing notifications
-    "notifications"
+    // feature for adding JS helpers to the UI library API
+    "composite-js-helpers",
   ],
   beta: [
     "call-readiness",
@@ -97,6 +97,8 @@ module.exports = {
     // Feature to support file sharing in Teams interoperability chats
     "file-sharing-teams-interop",
     // Get join conference information
-    'teams-meeting-conference'
+    'teams-meeting-conference',
+    // Feature for showing notifications
+    "notifications"
   ]
 }

@@ -76,7 +76,7 @@ export const GenerateMockNewChatMessageWithInlineImage = (): ChatMessage => {
     ...UserThree,
     messageId: Math.random().toString(),
     content:
-      '<p>Check out this image:&nbsp;</p>\r\n<p><img alt="image" src="images/inlineImageExample1.png" itemscope="png" width="250" height="375" id="SomeImageId" style="vertical-align:bottom"></p><p>&nbsp;</p>\r\n',
+      '<p>Check out this image:&nbsp;</p>\r\n<p><img alt="image" src="images/inlineImageExample1.png" itemscope="png" width="250" height="375" id="SomeImageId" style="vertical-align:bottom; aspect-ratio: 250 / 375;"></p><p>&nbsp;</p>\r\n',
     createdOn: new Date('2020-04-13T00:00:00.000+07:01'),
     mine: false,
     attached: false,
@@ -93,6 +93,7 @@ export const GenerateMockNewChatMessageWithAttachment = (): ChatMessage => {
     createdOn: new Date('2020-04-13T00:00:00.000+07:01'),
     mine: true,
     attached: false,
+    status: 'seen' as MessageStatus,
     contentType: 'text',
     attachments: [
       {

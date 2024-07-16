@@ -572,7 +572,7 @@
     "leftNavButtonAriaLabel": "předchozí stránka",
     "rightNavButtonAriaLabel": "další stránka"
   },
-  "MeetingConferencePhoneInfo": {
+  "meetingConferencePhoneInfo": {
     "meetingConferencePhoneInfoModalTitle": "Připojit se k hovoru z vašeho telefonu",
     "meetingConferencePhoneInfoModalDialIn": "Vytočit číslo",
     "meetingConferencePhoneInfoModalMeetingId": "Zadejte ID schůzky",

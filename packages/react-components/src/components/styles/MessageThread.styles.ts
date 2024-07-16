@@ -7,6 +7,7 @@ import { CSSProperties } from 'react';
 import { MESSAGE_STATUS_INDICATOR_SIZE_REM } from './MessageStatusIndicator.styles';
 import { ComponentSlotStyle } from '../../types';
 import { _ATTACHMENT_CARD_MARGIN_IN_PX, _ATTACHMENT_CARD_WIDTH_IN_REM } from './AttachmentCard.styles';
+import { ERROR_IMAGE_SVG_PATH } from './Common.style';
 
 // Minimum chat bubble width. This matches the minimum chat bubble width from FluentUI
 // that can contain a message and a timestamp.
@@ -186,6 +187,15 @@ export const useChatMyMessageStyles = makeStyles({
       outlineStyle: 'auto'
     }
   },
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  bodyWithPlaceholderImage: {
+    // Adding width and height to the placeholder image only for myMessages
+    // because inline images sent from ACS doesn't have width and height in the image tag
+    '& img[src=""]': {
+      width: '12rem',
+      height: '12rem'
+    }
+  },
   bodyAttached: {
     marginTop: '0.125rem'
   },
@@ -215,9 +225,15 @@ export const useChatMyMessageStyles = makeStyles({
   menuVisible: {
     visibility: 'visible'
   },
-  multipleAttachments: {
+  multipleAttachmentsInViewing: {
     width: '100%',
     maxWidth: `${(_ATTACHMENT_CARD_WIDTH_IN_REM + _ATTACHMENT_CARD_MARGIN_IN_PX) * 2}rem`
+  },
+  multipleAttachmentsInEditing: {
+    // when in editing state, the chat message width should not be
+    // limited by content length but occupying the full width instead
+    width: '100%',
+    float: 'right'
   }
 });
 
@@ -299,24 +315,6 @@ export const useChatMessageStyles = makeStyles({
       outlineStyle: 'auto'
     }
   },
-  bodyWithPlaceholderImage: {
-    '& img[src=""]': {
-      display: 'block',
-      position: 'relative',
-      marginBottom: '5px'
-    },
-    '& img[src=""]:after': {
-      backgroundColor: tokens.colorNeutralBackground1Selected,
-      content: `url("data:image/gif;base64,R0lGODlhAQABAAAAACw=")`,
-      backgroundSize: 'center',
-      position: 'absolute',
-      width: '100%',
-      height: '100%',
-      top: '0',
-      left: '0',
-      display: 'block'
-    }
-  },
   bodyWithoutAvatar: {
     marginTop: '0.125rem'
   },
@@ -355,6 +353,45 @@ export const useChatMessageCommonStyles = makeStyles({
           paddingRight: '5px'
         }
       }
+    }
+  },
+  bodyWithPlaceholderImage: {
+    '& img[src=""]': {
+      backgroundColor: tokens.colorNeutralBackground1Selected,
+      // this ensures safari won't have default rendering when image source
+      // becomes invalid such as empty string in this case
+      fontSize: '0',
+      position: 'relative',
+      clipPath: 'inset(0.3px)',
+      display: 'flex'
+    },
+    '& img[src=""]:after': {
+      backgroundColor: tokens.colorNeutralBackground1Selected,
+      content: `url("data:image/gif;base64,R0lGODlhAQABAAAAACw=")`,
+      backgroundSize: 'center',
+      position: 'absolute',
+      width: '100%',
+      height: '100%',
+      top: '0',
+      left: '0',
+      display: 'block'
+    },
+    '& .broken-image-wrapper': {
+      width: '12rem',
+      height: '12rem',
+      marginTop: '0.75rem',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      ...shorthands.outline('1px', 'solid', tokens.colorNeutralForegroundDisabled),
+      backgroundColor: tokens.colorNeutralBackground2
+    },
+    '& .broken-image-wrapper:after': {
+      content: `''`,
+      maskImage: `url("data:image/svg+xml,%3Csvg width='3rem' height='3rem' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg' fill='currentColor'%3E%3Cpath d='${ERROR_IMAGE_SVG_PATH}' fill='currentColor' /%3E%3C/svg%3E");`,
+      width: '3rem',
+      height: '3rem',
+      backgroundColor: `${tokens.colorNeutralForeground2}`
     }
   },
   failed: {

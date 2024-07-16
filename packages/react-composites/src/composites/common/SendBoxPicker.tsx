@@ -48,16 +48,23 @@ export type SendBoxPickerProps = {
   attachments?: AttachmentMetadataInProgress[];
   /* @conditional-compile-remove(file-sharing-acs) */
   onCancelAttachmentUpload?: (attachmentId: string) => void;
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  onUploadInlineImage?: (imageUrl: string, imageFileName: string) => void;
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  imageUploadsInProgress?: AttachmentMetadataInProgress[];
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  onCancelInlineImageUpload?: (imageId: string) => void;
 };
 
 /**
  * @private
  */
 export const SendBoxPicker = (props: SendBoxPickerProps): JSX.Element => {
-  const {
-    /* @conditional-compile-remove(rich-text-editor-composite-support) */
-    richTextEditorOptions
-  } = props;
+  /* @conditional-compile-remove(rich-text-editor-composite-support) */
+  const { richTextEditorOptions } = props;
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  const { onPaste, onUploadInlineImage, imageUploadsInProgress, onCancelInlineImageUpload } =
+    richTextEditorOptions || {};
 
   const sendBoxProps = usePropsFor(SendBox);
 
@@ -73,7 +80,13 @@ export const SendBoxPicker = (props: SendBoxPickerProps): JSX.Element => {
     return (
       <_ErrorBoundary fallback={sendBox}>
         <Suspense fallback={sendBox}>
-          <RichTextSendBoxWrapper {...props} />
+          <RichTextSendBoxWrapper
+            {...props}
+            onPaste={onPaste}
+            onUploadInlineImage={onUploadInlineImage}
+            imageUploadsInProgress={imageUploadsInProgress}
+            onCancelInlineImageUpload={onCancelInlineImageUpload}
+          />
         </Suspense>
       </_ErrorBoundary>
     );

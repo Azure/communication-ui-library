@@ -633,7 +633,7 @@ export interface CallState {
   /**
    * Proxy of {@link @azure/communication-calling#TeamsMeetingAudioConferencingCallFeature}.
    */
-  teamsMeetingConference?: ConferencePhoneInfo[];
+  meetingConference?: { conferencePhones: ConferencePhoneInfo[] };
 }
 
 /**
@@ -920,8 +920,8 @@ export type CallErrorTarget =
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.admit'
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.rejectParticipant'
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.admitAll'
-  | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.muteAllRemoteParticipants'
   | /* @conditional-compile-remove(soft-mute) */ 'Call.mutedByOthers'
+  | 'Call.muteAllRemoteParticipants'
   | 'Call.setConstraints';
 
 /**
