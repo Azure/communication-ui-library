@@ -65,7 +65,7 @@ export const addUploadedImagesToMessage = async (
         // imageElement?.setAttribute('style', `aspect-ratio: ${imageElement.width} / ${imageElement.height};`);
         img.id = uploadInlineImage?.id ?? '';
         img.src = '';
-        img.width = imageElement.width; // might not be needed since we have set it at line 62
+        img.width = imageElement.width;
         img.height = imageElement.height;
         img.style.aspectRatio = `${imageElement.width} / ${imageElement.height}`;
         resolve();
