@@ -160,7 +160,31 @@ jobs:
           git push --tags
 
       - name: Check if npm package published successfully
-        run: node common/scripts/poll-npm-package-published.mjs ${{ steps.version.outputs.version }}
+        run: |
+          POLL_INTERVAL_SEC=60 # 60 seconds
+          TIMEOUT_TIME_SEC=3600 # 60 minutes
+          GET_REQUEST_TIMEOUT_SEC=5
+          PACKAGE_NAME="@azure/communication-react"
+          VERSION="${{ steps.version.outputs.version }}"
+
+          start_time=$(date +%s)
+
+          while (( $(date +%s) - $start_time < $TIMEOUT_TIME_SEC )); do
+            response=$(curl --max-time $GET_REQUEST_TIMEOUT_SEC -s -o /dev/null -w "%{http_code}" https://registry.npmjs.org/$PACKAGE_NAME/$VERSION)
+            echo "Pinging: https://registry.npmjs.org/$PACKAGE_NAME/$VERSION"
+            echo "responseCode: $response"
+            
+            if [ $response -eq 200 ]; then
+              echo "Successfully found npm package"
+              exit 0
+            fi
+            
+            echo "Sleeping for a bit..."
+            sleep $POLL_INTERVAL_SEC
+          done
+
+          echo "Failed to find package on the npm registry"
+          exit 1
 
   check_failure:
     runs-on: ubuntu-latest
