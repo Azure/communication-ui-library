@@ -35,20 +35,24 @@ const main = async () => {
   const packageVersion = process.argv[2];
   const packageName = `@azure/communication-react`
   const startTime = new Date();
-  while(true) {
-    const response = await checkNpm(packageName, packageVersion);
-    console.log('responseCode: ', response.statusCode);
+  while((new Date() - startTime) > TIMEOUT_TIME_MS) {
+    try {
+      const response = await checkNpm(packageName, packageVersion);
+      console.log('responseCode: ', response.statusCode);
 
-    if (response.statusCode === 200) {
-      console.log("Successfully found npm package")
-      process.exit(0);
-    } else if ((new Date() - startTime) > TIMEOUT_TIME_MS) {
-      throw new Error('Failed to find package on the npm registry');
-    } else {
-      console.log('Sleeping for a bit...');
-      await sleep(POLL_INTERVAL_MS);
+      if (response.statusCode === 200) {
+        console.log("Successfully found npm package")
+        process.exit(0);
+      }
+    } catch (error) {
+      console.error('Error: ', error);
     }
+
+    console.log('Sleeping for a bit...');
+    await sleep(POLL_INTERVAL_MS);
   }
+
+  throw new Error('Failed to find package on the npm registry');
 };
 
 await main();
