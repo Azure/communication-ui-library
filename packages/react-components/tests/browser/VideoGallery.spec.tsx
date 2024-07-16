@@ -14,7 +14,7 @@ test.describe.only('VGL - VideoGallery tests', () => {
 
   test('VideoGallery with only audio participants and dominant speakers', async ({ mount }) => {
     const localParticipant: VideoGalleryLocalParticipant = { userId: 'test' };
-    let remoteParticipants: VideoGalleryRemoteParticipant[] = Array.from({ length: 10 }, (_, i) => i + 1).map((i) => ({
+    const remoteParticipants: VideoGalleryRemoteParticipant[] = Array.from({ length: 10 }, (_, i) => i + 1).map((i) => ({
       userId: `${i}`,
       displayName: `${i}`
     }));
@@ -81,7 +81,7 @@ test.describe.only('VGL - VideoGallery tests', () => {
 
   test('VideoGallery with screen share on and dominant speakers', async ({ mount }) => {
     const localParticipant: VideoGalleryLocalParticipant = { userId: 'test' };
-    let remoteParticipants: VideoGalleryRemoteParticipant[] = Array.from({ length: 10 }, (_, i) => i + 1).map((i) => ({
+    const remoteParticipants: VideoGalleryRemoteParticipant[] = Array.from({ length: 10 }, (_, i) => i + 1).map((i) => ({
       userId: `${i}`,
       displayName: `${i}`
     }));
