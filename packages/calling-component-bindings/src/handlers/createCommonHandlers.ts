@@ -624,8 +624,9 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
     const onMuteAllRemoteParticipants = async (): Promise<void> => {
       call?.muteAllRemoteParticipants();
     };
-    const canStartSpotlight = call?.feature(Features.Capabilities).capabilities.spotlightParticipant.isPresent;
-    const canRemoveSpotlight = call?.feature(Features.Capabilities).capabilities.removeParticipantsSpotlight.isPresent;
+    const canStartSpotlight = call?.feature?.(Features.Capabilities).capabilities.spotlightParticipant.isPresent;
+    const canRemoveSpotlight = call?.feature?.(Features.Capabilities).capabilities.removeParticipantsSpotlight
+      .isPresent;
     const onStartLocalSpotlight = canStartSpotlight
       ? async (): Promise<void> => {
           await call?.feature(Features.Spotlight).startSpotlight();
