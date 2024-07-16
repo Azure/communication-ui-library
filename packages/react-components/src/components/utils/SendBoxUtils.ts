@@ -64,6 +64,7 @@ export const addUploadedImagesToMessage = async (
         img.width = imageElement.width;
         img.height = imageElement.height;
         img.style.aspectRatio = `${imageElement.width} / ${imageElement.height}`;
+        // Clear maxWidth and maxHeight styles so that they can set in the style attribute
         img.style.maxWidth = '';
         img.style.maxHeight = '';
         resolve();
