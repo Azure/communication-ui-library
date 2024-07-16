@@ -103,28 +103,8 @@ jobs:
       - name: Upload tarball to blob storage
         run: az storage blob upload -f "packages/communication-react/release/azure-communication-react-${{ steps.version.outputs.version }}.tgz" -c "drops/azure-communication-services/react/npm/${{ steps.version.outputs.version }}" --account-name azuresdkpartnerdrops --auth-mode login
 
-      # Get access token to trigger the release pipeline based on OIDC login
-      #
-      # Ideally we would use `az pipelines release create` CLI, but it does not support release variables: https://github.com/Azure/azure-cli-extensions/issues/953
-      # Instead, we use the az CLI to generate a PAT and then use that to trigger the release pipeline
-      #
-      # NOTES:
-      #   - 590cfd2a-581c-4dcb-a12e-6568ce786175 is the GUID of the Azure Partner Pipelines ADO project
-      #   - 499b84ac-1321-427f-aa17-267ca6975798 is generic GUID of Azure DevOps resource
-      - name: Get Azure DevOps Access Token
-        id: az-devops-access-token
-        run: |
-          az extension add --name azure-devops
-          az devops configure --defaults organization=https://dev.azure.com/azure-sdk project=590cfd2a-581c-4dcb-a12e-6568ce786175
-          echo "token=$(az account get-access-token --resource 499b84ac-1321-427f-aa17-267ca6975798 --query accessToken -o tsv)" >> $GITHUB_OUTPUT
-
       - name: Trigger alpha package release pipeline
-        uses: Azure/pipelines@v1.2
-        with:
-          azure-devops-project-url: 'https://dev.azure.com/azure-sdk/internal'
-          azure-pipeline-name: 'js - partner-release'
-          azure-devops-token: ${{ steps.az-devops-access-token.outputs.token }}
-          azure-pipeline-variables: '{"BlobPath": "\"azure-communication-services/react/npm/${{ steps.version.outputs.version }}\"", "Tag": "\"dev\""}'
+        run: az pipelines run --name 'js - partner-release' --org 'https://dev.azure.com/azure-sdk' --project 'internal' --parameters BlobPath=azure-communication-services/react/npm/${{ steps.version.outputs.version }} Tag=dev
 
       # Push git tags
       - name: Create and push git tags
