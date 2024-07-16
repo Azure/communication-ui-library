@@ -28,6 +28,11 @@ export type {
   AreParamEqual
 } from '../../acs-ui-common/src';
 
+/* @conditional-compile-remove(composite-js-helpers) */
+export { loadOutboundCallComposite, loadCallComposite } from '../../acs-ui-javascript-loaders/src';
+/* @conditional-compile-remove(composite-js-helpers) */
+export type { OutboundCallCompositeLoaderProps, CallCompositeLoaderProps } from '../../acs-ui-javascript-loaders/src';
+
 // Not to export chat/calling specific hook from binding package
 export type {
   CallClientProviderProps,
@@ -168,7 +173,11 @@ export { Dialpad } from '../../react-components/src';
 /* @conditional-compile-remove(one-to-n-calling) */
 export { IncomingCallNotification } from '../../react-components/src';
 /* @conditional-compile-remove(one-to-n-calling) */
-export type { IncomingCallNotificationProps, IncomingCallNotificationStrings } from '../../react-components/src';
+export type {
+  IncomingCallNotificationProps,
+  IncomingCallNotificationStrings,
+  IncomingCallNotificationStyles
+} from '../../react-components/src';
 
 /* @conditional-compile-remove(call-readiness) */
 export {

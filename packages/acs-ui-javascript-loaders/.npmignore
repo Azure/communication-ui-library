@@ -1,0 +1,12 @@
+# Disallow everything by default so new files aren't accidently included:
+*
+
+# Allow dist folder, this is the folder that should be packed and published:
+!dist/**/*
+
+# Exceptions in the dist folder that should still be disallowed:
+dist/dist-esm/mocks/
+**/*.test.*
+**/*.spec.*
+
+preprocessed/node_modules
