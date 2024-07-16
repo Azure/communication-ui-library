@@ -15,8 +15,8 @@ module.exports = {
     extensions: ['.js']
   },
   output: {
-    filename: '[name].js',
-    path: path.resolve(__dirname, './dist/dist-bundle'),
+    filename: '[name].bundle.js',
+    path: path.resolve(__dirname, './dist/dist-esm'),
     libraryTarget: 'umd',
     library: '[name]'
   },
