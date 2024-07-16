@@ -189,7 +189,7 @@ export const useChatMyMessageStyles = makeStyles({
     '& img': {
       maxWidth: '100%',
       height: 'auto'
-    },
+    }
   },
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   bodyWithPlaceholderImage: {
