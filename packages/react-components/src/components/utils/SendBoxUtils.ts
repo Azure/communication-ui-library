@@ -123,7 +123,7 @@ export const cancelInlineImageUpload = (
 ): void => {
   if (imageSrcArray && imageUploadsInProgress && imageUploadsInProgress?.length > 0) {
     imageUploadsInProgress?.map((uploadImage) => {
-      if (uploadImage.url && imageSrcArray && !imageSrcArray?.includes(uploadImage.url)) {
+      if (uploadImage.url && !imageSrcArray?.includes(uploadImage.url)) {
         onCancelInlineImageUpload?.(uploadImage.id);
       }
     });
@@ -163,4 +163,24 @@ export const insertImagesToContentString = (
   }
   const newContent = addUploadedImagesToMessage(content, imageUploadsInProgress);
   return newContent;
+};
+
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+/**
+ * @internal
+ */
+export const removeBrokenImageContent = (content: string): string => {
+  const document = new DOMParser().parseFromString(content, 'text/html');
+  document.querySelectorAll('img').forEach((img) => {
+    // Before submitting/resend the message, we need to trim the unnecessary attributes such as src,
+    // which is set to a local svg of a broken image icon at this point.
+    // Once message is submitted/resent, it will be fetched again and might not be a broken image anymore,
+    // That's why we need to remove the class and data-ui-id attribute of 'broken-image-wrapper'
+    if (img.className === 'broken-image-wrapper') {
+      img.removeAttribute('class');
+      img.removeAttribute('src');
+      img.removeAttribute('data-ui-id');
+    }
+  });
+  return document.body.innerHTML;
 };

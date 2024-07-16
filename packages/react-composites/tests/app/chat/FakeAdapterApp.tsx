@@ -145,7 +145,7 @@ const sendRemoteInlineImageMessage = (
     sequenceId: `${thread.messages.length}`,
     version: '0',
     content: {
-      message: `<p>Test</p><p><img alt="image" src="${imgSrcPreview}" itemscope="png" width="200" height="300" id="SomeImageId1" style="vertical-align:bottom"></p><p>&nbsp;</p>`,
+      message: `<p>Test</p><p><img alt="image" src="${imgSrcPreview}" itemscope="png" width="200" height="300" id="SomeImageId1" style="vertical-align:bottom; aspect-ratio: 200 / 300;"></p><p>&nbsp;</p>`,
       attachments: [
         {
           id: 'SomeImageId1',
