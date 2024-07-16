@@ -58,19 +58,18 @@ export const addUploadedImagesToMessage = async (
       const imageElement = new Image();
       imageElement.src = img.src;
       imageElement.onload = () => {
-        // imageElement is a copy of original img element, so changes won't be refected
-        // have to made changes to 'img' instead
-        // imageElement?.setAttribute('width', imageElement.width.toString());
-        // imageElement?.setAttribute('height', imageElement.height.toString());
-        // imageElement?.setAttribute('style', `aspect-ratio: ${imageElement.width} / ${imageElement.height};`);
+        // imageElement is a copy of original img element, so changes need to be made to the original img element
         img.id = uploadInlineImage?.id ?? '';
         img.src = '';
         img.width = imageElement.width;
         img.height = imageElement.height;
         img.style.aspectRatio = `${imageElement.width} / ${imageElement.height}`;
+        img.style.maxWidth = '100%';
+        img.style.height = 'auto';
         resolve();
       };
       imageElement.onerror = () => {
+        console.log('Error loading image', img.src);
         rejects();
       };
     });
