@@ -185,7 +185,11 @@ export const useChatMyMessageStyles = makeStyles({
     },
     '&:focus-visible': {
       outlineStyle: 'auto'
-    }
+    },
+    '& img': {
+      maxWidth: '100%',
+      height: 'auto'
+    },
   },
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   bodyWithPlaceholderImage: {
