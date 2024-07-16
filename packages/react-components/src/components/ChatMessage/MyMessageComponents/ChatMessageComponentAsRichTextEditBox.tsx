@@ -199,9 +199,8 @@ export const ChatMessageComponentAsRichTextEditBox = (
       return;
     }
 
-    let content = textValue;
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    content = removeBrokenImageContent(textValue);
+    const content = removeBrokenImageContent(textValue);
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
     if (isAttachmentUploadCompleted(imageUploadsInProgress)) {
       insertImagesToContentString(textValue, imageUploadsInProgress, (content) => {
