@@ -109,6 +109,6 @@ const addList = async (listButtonLabel: string, component: Locator): Promise<voi
   // the tests are fast and sometimes UI state for "decrease indent" button doesn't have enough time to update
   // this call is to fix it
   // click is not used as it might set cursor to incorrect position
-  editor.focus();
+  editor.hover();
   await editor.pressSequentially('Third line');
 };
