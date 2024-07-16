@@ -32,7 +32,7 @@
     "@fluentui/react-hooks": "^8.7.0",
     "@fluentui/react-icons": "^2.0.245",
     "@fluentui/react-window-provider": "^2.2.27",
-    "@fluentui-contrib/react-chat": "0.1.9",
+    "@fluentui-contrib/react-chat": "0.1.10",
     "@griffel/react": "^1.5.23",
     "copy-to-clipboard": "^3.3.1",
     "dompurify": "^3.1.5",

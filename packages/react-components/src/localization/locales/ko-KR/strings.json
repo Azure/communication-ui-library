@@ -572,7 +572,7 @@
     "leftNavButtonAriaLabel": "이전 페이지",
     "rightNavButtonAriaLabel": "다음 페이지"
   },
-  "MeetingConferencePhoneInfo": {
+  "meetingConferencePhoneInfo": {
     "meetingConferencePhoneInfoModalTitle": "내 전화에서 통화 참가",
     "meetingConferencePhoneInfoModalDialIn": "전화 걸기",
     "meetingConferencePhoneInfoModalMeetingId": "모임 ID 입력",

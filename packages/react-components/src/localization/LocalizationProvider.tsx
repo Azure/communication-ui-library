@@ -185,7 +185,7 @@ export interface ComponentStrings {
   ParticipantList: ParticipantListStrings;
   /* @conditional-compile-remove(teams-meeting-conference) */
   /** Strings for the MeetingConferencePhoneInfoModal */
-  MeetingConferencePhoneInfo: MeetingConferencePhoneInfoModalStrings;
+  meetingConferencePhoneInfo: MeetingConferencePhoneInfoModalStrings;
   /* @conditional-compile-remove(one-to-n-calling) */
   IncomingCallNotification: IncomingCallNotificationStrings;
 }

@@ -58,7 +58,7 @@ export const NetworkReconnectTile = (props: NetworkReconnectTileProps): JSX.Elem
   const palette = useTheme().palette;
   const strings = useLocale().strings.call;
   /* @conditional-compile-remove(teams-meeting-conference) */
-  const localeStrings = useLocale().component.strings.MeetingConferencePhoneInfo;
+  const localeStrings = useLocale().component.strings.meetingConferencePhoneInfo;
   /* @conditional-compile-remove(teams-meeting-conference) */
   const theme = useTheme();
 
@@ -106,7 +106,7 @@ export const NetworkReconnectTile = (props: NetworkReconnectTileProps): JSX.Elem
                       <Stack horizontal className={phoneInfoStep}>
                         <Stack.Item className={phoneInfoIcon(theme)}>
                           <Stack verticalAlign="center" horizontalAlign="center">
-                            <Icon iconName="PhoneNumberButton" className={phoneInfoIconStyle(theme)} />
+                            <Icon iconName="JoinByPhoneDialStepIcon" className={phoneInfoIconStyle(theme)} />
                           </Stack>
                         </Stack.Item>
                         <Stack.Item>
@@ -151,7 +151,7 @@ export const NetworkReconnectTile = (props: NetworkReconnectTileProps): JSX.Elem
                       <Stack horizontal>
                         {!props.isMobile && <Stack className={infoConnectionLinkStyle(theme)}></Stack>}
                         <Stack.Item className={phoneInfoIcon(theme)}>
-                          <Icon iconName="DtmfDialpadButton" className={phoneInfoIconStyle(theme)} />
+                          <Icon iconName="JoinByPhoneConferenceIdIcon" className={phoneInfoIconStyle(theme)} />
                         </Stack.Item>
                         <Stack.Item>
                           <Text className={phoneInfoLabelStyle}>
@@ -171,7 +171,7 @@ export const NetworkReconnectTile = (props: NetworkReconnectTileProps): JSX.Elem
                     >
                       <Stack horizontal>
                         <Stack.Item className={phoneInfoIcon(theme)} style={{ marginLeft: _pxToRem(2) }}>
-                          <Icon iconName="PhoneInfoWait" className={phoneInfoIconStyle(theme)} />
+                          <Icon iconName="JoinByPhoneWaitToBeAdmittedIcon" className={phoneInfoIconStyle(theme)} />
                         </Stack.Item>
                         <Stack.Item>
                           <Text className={phoneInfoLabelStyle}>

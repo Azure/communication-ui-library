@@ -572,7 +572,7 @@
     "leftNavButtonAriaLabel": "предыдущая страница",
     "rightNavButtonAriaLabel": "следующая страница"
   },
-  "MeetingConferencePhoneInfo": {
+  "meetingConferencePhoneInfo": {
     "meetingConferencePhoneInfoModalTitle": "Присоединиться к вызову с телефона",
     "meetingConferencePhoneInfoModalDialIn": "Набрать номер",
     "meetingConferencePhoneInfoModalMeetingId": "Введите идентификатор собрания",

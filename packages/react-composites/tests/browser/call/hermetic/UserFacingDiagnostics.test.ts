@@ -39,13 +39,15 @@ test.describe('User Facing Diagnostics tests', async () => {
     const initialState = defaultMockCallAdapterState();
     initialState.isTeamsMeeting = true;
     if (initialState.call) {
-      initialState.call.teamsMeetingConference = [
-        {
-          phoneNumber: '1234567890',
-          conferenceId: '',
-          isTollFree: false
-        }
-      ];
+      initialState.call.meetingConference = {
+        conferencePhones: [
+          {
+            phoneNumber: '1234567890',
+            conferenceId: '',
+            isTollFree: false
+          }
+        ]
+      };
     }
     setNetworkDiagnostic(initialState, {
       networkReconnect: { value: DiagnosticQuality.Bad, valueType: 'DiagnosticQuality' }
@@ -74,13 +76,15 @@ test.describe('User Facing Diagnostics tests', async () => {
     console.log('zdor initial state ' + initialState);
     if (initialState.call) {
       console.log('zdor initial state call ' + initialState.call);
-      initialState.call.teamsMeetingConference = [
-        {
-          phoneNumber: '1234567890',
-          conferenceId: '',
-          isTollFree: false
-        }
-      ];
+      initialState.call.meetingConference = {
+        conferencePhones: [
+          {
+            phoneNumber: '1234567890',
+            conferenceId: '',
+            isTollFree: false
+          }
+        ]
+      };
     }
     setNetworkDiagnostic(initialState, {
       networkReceiveQuality: { value: DiagnosticQuality.Bad, valueType: 'DiagnosticQuality' }
