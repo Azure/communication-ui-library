@@ -23,7 +23,7 @@ import { useChatMessageRichTextEditContainerStyles } from '../../styles/ChatMess
 import { MAXIMUM_LENGTH_OF_MESSAGE } from '../../utils/SendBoxUtils';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import {
-  cancelInlineImageUpload,
+  cancelInlineImageUploadForEditBox,
   hasIncompleteAttachmentUploads,
   insertImagesToContentString,
   isAttachmentUploadCompleted
@@ -64,11 +64,11 @@ export type ChatMessageComponentAsRichTextEditBoxProps = {
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   onPaste?: (event: { content: DocumentFragment }) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  onCancelInlineImageUpload?: (imageId: string) => void;
+  onCancelInlineImageUpload?: (imageId: string, messageId: string) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  onUploadInlineImage?: (imageUrl: string, imageFileName: string) => void;
+  onUploadInlineImage?: (imageUrl: string, imageFileName: string, messageId: string) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  imageUploadsInProgress?: AttachmentMetadataInProgress[];
+  imageUploadsInProgress?: Record<string, AttachmentMetadataInProgress[]>;
 };
 
 /**
@@ -165,15 +165,17 @@ export const ChatMessageComponentAsRichTextEditBox = (
     setAttachmentUploadsPendingError(undefined);
 
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    if (hasIncompleteAttachmentUploads(imageUploadsInProgress)) {
+    const imageUploadsInProgressForMessage = imageUploadsInProgress && imageUploadsInProgress[message.messageId];
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    if (hasIncompleteAttachmentUploads(imageUploadsInProgressForMessage)) {
       setAttachmentUploadsPendingError({ message: strings.attachmentUploadsPendingError, timestamp: Date.now() });
       return;
     }
 
     let content = textValue;
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    if (isAttachmentUploadCompleted(imageUploadsInProgress)) {
-      content = insertImagesToContentString(textValue, imageUploadsInProgress);
+    if (isAttachmentUploadCompleted(imageUploadsInProgressForMessage)) {
+      content = insertImagesToContentString(textValue, imageUploadsInProgressForMessage);
     }
     // it's very important to pass an empty attachment here
     // so when user removes all attachments, UI can reflect it instantly
@@ -189,7 +191,9 @@ export const ChatMessageComponentAsRichTextEditBox = (
     strings.attachmentUploadsPendingError,
     onSubmit,
     /* @conditional-compile-remove(file-sharing-acs) */
-    attachmentMetadata
+    attachmentMetadata,
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    message.messageId
   ]);
 
   const actionButtons = useMemo(() => {
@@ -267,13 +271,19 @@ export const ChatMessageComponentAsRichTextEditBox = (
       /* @conditional-compile-remove(rich-text-editor-image-upload) */ imageSrcArray?: Array<string>
     ) => {
       /* @conditional-compile-remove(rich-text-editor-image-upload) */
-      cancelInlineImageUpload(imageSrcArray, imageUploadsInProgress, onCancelInlineImageUpload);
+      cancelInlineImageUploadForEditBox(
+        imageSrcArray,
+        imageUploadsInProgress,
+        message.messageId,
+        onCancelInlineImageUpload
+      );
       setText(content);
     },
     [
       setText,
       /* @conditional-compile-remove(rich-text-editor-image-upload) */ imageUploadsInProgress,
-      /* @conditional-compile-remove(rich-text-editor-image-upload) */ onCancelInlineImageUpload
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */ onCancelInlineImageUpload,
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */ message.messageId
     ]
   );
 
@@ -302,7 +312,9 @@ export const ChatMessageComponentAsRichTextEditBox = (
           /* @conditional-compile-remove(rich-text-editor-image-upload) */
           onPaste={onPaste}
           /* @conditional-compile-remove(rich-text-editor-image-upload) */
-          onUploadInlineImage={onUploadInlineImage}
+          onUploadInlineImage={(imageUrl: string, imageFileName: string) => {
+            onUploadInlineImage && onUploadInlineImage(imageUrl, imageFileName, message.messageId);
+          }}
         />
       </Stack>
     );

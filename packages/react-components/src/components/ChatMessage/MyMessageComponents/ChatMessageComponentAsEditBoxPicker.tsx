@@ -11,7 +11,7 @@ import { AttachmentMetadata } from '@internal/acs-ui-common';
 import { AttachmentMetadataInProgress } from '@internal/acs-ui-common';
 import { MessageThreadStrings } from '../../MessageThread';
 /* @conditional-compile-remove(rich-text-editor) */
-import { RichTextEditorOptions } from '../../MessageThread';
+import { RichTextEditBoxOptions } from '../../MessageThread';
 import { ChatMessageComponentAsEditBox } from './ChatMessageComponentAsEditBox';
 /* @conditional-compile-remove(mention) */
 import { MentionLookupOptions } from '../../MentionPopover';
@@ -49,13 +49,13 @@ export type ChatMessageComponentAsEditBoxPickerProps = {
   /* @conditional-compile-remove(mention) */
   mentionLookupOptions?: MentionLookupOptions;
   /* @conditional-compile-remove(rich-text-editor) */
-  richTextEditorOptions?: RichTextEditorOptions;
+  richTextEditorOptions?: RichTextEditBoxOptions;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  onCancelInlineImageUpload?: (imageId: string) => void;
+  onCancelInlineImageUpload?: (imageId: string, messageId: string) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  onUploadInlineImage?: (imageUrl: string, imageFileName: string) => void;
+  onUploadInlineImage?: (imageUrl: string, imageFileName: string, messageId: string) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  imageUploadsInProgress?: AttachmentMetadataInProgress[];
+  imageUploadsInProgress?: Record<string, AttachmentMetadataInProgress[]>;
 };
 
 /**

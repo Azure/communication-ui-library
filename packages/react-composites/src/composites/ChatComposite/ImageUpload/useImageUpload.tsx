@@ -2,35 +2,62 @@
 // Licensed under the MIT License.
 
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
-import { Dispatch, useCallback, useReducer } from 'react';
+import { Dispatch, useCallback, useMemo, useReducer } from 'react';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
-import {
-  AttachmentUpload,
-  AttachmentUploadActionType,
-  AttachmentUploadReducer,
-  AttachmentUploadTask,
-  Actions
-} from '../file-sharing/AttachmentUpload';
+import { AttachmentUpload, AttachmentUploadActionType, AttachmentUploadTask } from '../file-sharing/AttachmentUpload';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { useAdapter } from '../adapter/ChatAdapterProvider';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { nanoid } from 'nanoid';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { getInlineImageData } from './ImageUploadUtils';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+import { ImageActions, ImageUploadReducer } from './ImageUploadReducer';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+import { AttachmentMetadataInProgress } from '@internal/acs-ui-common';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+import { SEND_BOX_UPLOADS_KEY_VALUE } from '../../common/constants';
 
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 /**
  * @private
  */
 export const useImageUpload = (): [
-  AttachmentUpload[],
-  Dispatch<Actions>,
-  onUploadInlineImage: (image: string, fileName: string) => Promise<void>,
-  onCancelInlineImageUploadHandler: (imageId: string) => void
+  Record<string, AttachmentMetadataInProgress[]> | undefined,
+  AttachmentMetadataInProgress[] | undefined,
+  Dispatch<ImageActions>,
+  Dispatch<ImageActions>,
+  onUploadInlineImageForEditBox: (image: string, fileName: string, messageId: string) => Promise<void>,
+  onUploadInlineImageForSendBox: (image: string, fileName: string) => Promise<void>,
+  onCancelInlineImageUploadHandlerForEditBox: (imageId: string, messageId: string) => void,
+  onCancelInlineImageUploadHandlerForSendBox: (imageId: string) => void
 ] => {
   const MAX_INLINE_IMAGE_UPLOAD_SIZE_MB = 20;
   const adapter = useAdapter();
-  const [inlineImageUploads, handleInlineImageUploadAction] = useReducer(AttachmentUploadReducer, []);
+  const [editBoxInlineImageUploads, handleEditBoxInlineImageUploadAction] = useReducer(ImageUploadReducer, undefined);
+  const [sendBoxInlineImageUploads, handleSendBoxInlineImageUploadAction] = useReducer(ImageUploadReducer, undefined);
+
+  const editBoxImageUploadsInProgress: Record<string, AttachmentMetadataInProgress[]> | undefined = useMemo(() => {
+    if (!editBoxInlineImageUploads) {
+      return;
+    }
+    const messageIds = Object.keys(editBoxInlineImageUploads || {});
+    const imageUploadsInProgress: Record<string, AttachmentMetadataInProgress[]> = {};
+    messageIds.map((messageId) => {
+      const messageUploads = editBoxInlineImageUploads[messageId].map((upload) => {
+        return upload.metadata;
+      });
+      imageUploadsInProgress[messageId] = messageUploads;
+    });
+    return imageUploadsInProgress;
+  }, [editBoxInlineImageUploads]);
+
+  const sendBoxImageUploadsInProgress: AttachmentMetadataInProgress[] | undefined = useMemo(() => {
+    if (!sendBoxInlineImageUploads) {
+      return;
+    }
+    return sendBoxInlineImageUploads[SEND_BOX_UPLOADS_KEY_VALUE]?.map((upload) => upload.metadata);
+  }, [sendBoxInlineImageUploads]);
 
   const inlineImageUploadHandler = useCallback(
     async (uploadTasks: AttachmentUpload[]): Promise<void> => {
@@ -67,13 +94,16 @@ export const useImageUpload = (): [
     [adapter]
   );
 
-  const onUploadInlineImage = useCallback(
-    async (image: string, fileName: string): Promise<void> => {
-      if (!image) {
-        return;
-      }
+  const generateUploadTask = useCallback(
+    async (
+      image: string,
+      fileName: string,
+      messageId: string,
+      inlineImageUploadActionHandler: Dispatch<ImageActions>
+    ): Promise<AttachmentUpload | undefined> => {
       const imageData = await getInlineImageData(image);
       if (!imageData) {
+        console.warn('Cannot upload image due to invalid image url');
         return;
       }
       const taskId = nanoid();
@@ -87,36 +117,97 @@ export const useImageUpload = (): [
           progress: 0
         },
         notifyUploadProgressChanged: (value: number) => {
-          handleInlineImageUploadAction({ type: AttachmentUploadActionType.Progress, taskId, progress: value });
+          inlineImageUploadActionHandler({
+            type: AttachmentUploadActionType.Progress,
+            taskId,
+            progress: value,
+            messageId
+          });
         },
         notifyUploadCompleted: (id: string, url: string) => {
-          handleInlineImageUploadAction({ type: AttachmentUploadActionType.Completed, taskId, id, url });
+          inlineImageUploadActionHandler({
+            type: AttachmentUploadActionType.Completed,
+            taskId,
+            id,
+            url,
+            messageId
+          });
         },
         notifyUploadFailed: (message: string) => {
-          handleInlineImageUploadAction({ type: AttachmentUploadActionType.Failed, taskId, message });
+          inlineImageUploadActionHandler({ type: AttachmentUploadActionType.Failed, taskId, message, messageId });
           // remove the failed upload task when error banner is auto dismissed after 10 seconds
           // so the banner won't be shown again on UI re-rendering.
           setTimeout(() => {
-            handleInlineImageUploadAction({ type: AttachmentUploadActionType.Remove, id: taskId });
+            inlineImageUploadActionHandler({ type: AttachmentUploadActionType.Remove, id: taskId, messageId });
           }, 10 * 1000);
         }
       };
-
-      const newUploads = [uploadTask];
-      handleInlineImageUploadAction({ type: AttachmentUploadActionType.Set, newUploads });
-      inlineImageUploadHandler(newUploads);
+      return uploadTask;
     },
-    [inlineImageUploadHandler]
+    []
   );
 
-  const onCancelInlineImageUploadHandler = useCallback(
-    (imageId: string) => {
-      const imageUpload = inlineImageUploads.find((upload) => upload.metadata.id === imageId);
-      const uploadId = imageUpload?.metadata.id;
-      if (!uploadId) {
+  const onUploadInlineImageForEditBox = useCallback(
+    async (image: string, fileName: string, messageId: string): Promise<void> => {
+      const uploadTask: AttachmentUpload | undefined = await generateUploadTask(
+        image,
+        fileName,
+        messageId,
+        handleEditBoxInlineImageUploadAction
+      );
+      if (!uploadTask) {
         return;
       }
-      handleInlineImageUploadAction({ type: AttachmentUploadActionType.Remove, id: uploadId });
+
+      handleEditBoxInlineImageUploadAction({
+        type: AttachmentUploadActionType.Set,
+        newUploads: [uploadTask],
+        messageId
+      });
+      inlineImageUploadHandler([uploadTask]);
+    },
+    [generateUploadTask, inlineImageUploadHandler]
+  );
+
+  const onUploadInlineImageForSendBox = useCallback(
+    async (image: string, fileName: string): Promise<void> => {
+      const uploadTask: AttachmentUpload | undefined = await generateUploadTask(
+        image,
+        fileName,
+        SEND_BOX_UPLOADS_KEY_VALUE,
+        handleSendBoxInlineImageUploadAction
+      );
+
+      if (!uploadTask) {
+        return;
+      }
+
+      handleSendBoxInlineImageUploadAction({
+        type: AttachmentUploadActionType.Set,
+        newUploads: [uploadTask],
+        messageId: SEND_BOX_UPLOADS_KEY_VALUE
+      });
+      inlineImageUploadHandler([uploadTask]);
+    },
+    [generateUploadTask, inlineImageUploadHandler]
+  );
+
+  const cancelInlineImageUpload = useCallback(
+    (
+      imageId: string,
+      imageUpload: AttachmentUpload | undefined,
+      messageId: string,
+      inlineImageUploadActionHandler: Dispatch<ImageActions>
+    ) => {
+      if (!imageUpload || !imageUpload?.metadata.id) {
+        return;
+      }
+
+      inlineImageUploadActionHandler({
+        type: AttachmentUploadActionType.Remove,
+        id: imageUpload?.metadata.id,
+        messageId
+      });
       // TODO: remove local blob
       if (imageUpload?.metadata.progress === 1) {
         try {
@@ -126,7 +217,43 @@ export const useImageUpload = (): [
         }
       }
     },
-    [adapter, inlineImageUploads]
+    [adapter]
   );
-  return [inlineImageUploads, handleInlineImageUploadAction, onUploadInlineImage, onCancelInlineImageUploadHandler];
+
+  const onCancelInlineImageUploadHandlerForEditBox = useCallback(
+    (imageId: string, messageId: string) => {
+      if (!editBoxInlineImageUploads) {
+        return;
+      }
+      const imageUpload = editBoxInlineImageUploads[messageId].find((upload) => upload.metadata.id === imageId);
+
+      cancelInlineImageUpload(imageId, imageUpload, messageId, handleEditBoxInlineImageUploadAction);
+    },
+    [cancelInlineImageUpload, editBoxInlineImageUploads]
+  );
+
+  const onCancelInlineImageUploadHandlerForSendBox = useCallback(
+    (imageId: string) => {
+      if (!sendBoxInlineImageUploads) {
+        return;
+      }
+      const imageUpload = sendBoxInlineImageUploads[SEND_BOX_UPLOADS_KEY_VALUE].find(
+        (upload) => upload.metadata.id === imageId
+      );
+
+      cancelInlineImageUpload(imageId, imageUpload, SEND_BOX_UPLOADS_KEY_VALUE, handleSendBoxInlineImageUploadAction);
+    },
+    [cancelInlineImageUpload, sendBoxInlineImageUploads]
+  );
+
+  return [
+    editBoxImageUploadsInProgress,
+    sendBoxImageUploadsInProgress,
+    handleEditBoxInlineImageUploadAction,
+    handleSendBoxInlineImageUploadAction,
+    onUploadInlineImageForEditBox,
+    onUploadInlineImageForSendBox,
+    onCancelInlineImageUploadHandlerForEditBox,
+    onCancelInlineImageUploadHandlerForSendBox
+  ];
 };

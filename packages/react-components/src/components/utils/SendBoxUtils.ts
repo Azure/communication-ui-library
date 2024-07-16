@@ -119,15 +119,49 @@ export const isSendBoxButtonAriaDisabled = ({
 export const cancelInlineImageUpload = (
   imageSrcArray: string[] | undefined,
   imageUploadsInProgress: AttachmentMetadataInProgress[] | undefined,
-  onCancelInlineImageUpload?: (id: string) => void
+  messageId?: string,
+  sendBoxOnCancelInlineImageUpload?: (id: string) => void,
+  editBoxOnCancelInlineImageUpload?: (id: string, messageId: string) => void
 ): void => {
   if (imageSrcArray && imageUploadsInProgress && imageUploadsInProgress?.length > 0) {
     imageUploadsInProgress?.map((uploadImage) => {
       if (uploadImage.url && !imageSrcArray?.includes(uploadImage.url)) {
-        onCancelInlineImageUpload?.(uploadImage.id);
+        sendBoxOnCancelInlineImageUpload && sendBoxOnCancelInlineImageUpload(uploadImage.id);
+        editBoxOnCancelInlineImageUpload && editBoxOnCancelInlineImageUpload(uploadImage.id, messageId || '');
       }
     });
   }
+};
+
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+/**
+ * @internal
+ */
+export const cancelInlineImageUploadForSendBox = (
+  imageSrcArray: string[] | undefined,
+  imageUploadsInProgress: AttachmentMetadataInProgress[] | undefined,
+  onCancelInlineImageUpload?: (id: string) => void
+): void => {
+  cancelInlineImageUpload(imageSrcArray, imageUploadsInProgress, undefined, onCancelInlineImageUpload, undefined);
+};
+
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+/**
+ * @internal
+ */
+export const cancelInlineImageUploadForEditBox = (
+  imageSrcArray: string[] | undefined,
+  imageUploadsInProgress: Record<string, AttachmentMetadataInProgress[]> | undefined,
+  messageId: string,
+  onCancelInlineImageUpload?: (id: string, messageId: string) => void
+): void => {
+  cancelInlineImageUpload(
+    imageSrcArray,
+    imageUploadsInProgress?.[messageId],
+    messageId,
+    undefined,
+    onCancelInlineImageUpload
+  );
 };
 
 /* @conditional-compile-remove(file-sharing-acs) */

@@ -26,13 +26,17 @@ const fetchBlobData = async (
  * @private
  */
 export const getInlineImageData = async (image: string): Promise<Blob | undefined> => {
-  const blobImage: Blob | undefined = undefined;
   if (image.startsWith('blob') || image.startsWith('http')) {
-    const res = await fetchBlobData(image, { abortController: new AbortController() });
-    const blobImage = await res.blob();
-    return blobImage;
+    try {
+      const res = await fetchBlobData(image, { abortController: new AbortController() });
+      const blobImage = await res.blob();
+      return blobImage;
+    } catch (error) {
+      console.error('Error fetching image data', error);
+      return;
+    }
   }
-  return blobImage;
+  return;
 };
 
 /* @conditional-compile-remove(rich-text-editor-image-upload) */

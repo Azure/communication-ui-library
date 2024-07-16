@@ -52,7 +52,7 @@ import { InlineImageOptions } from './ChatMessage/ChatMessageContent';
 import { MessageStatusIndicatorInternal } from './MessageStatusIndicatorInternal';
 import { Announcer } from './Announcer';
 /* @conditional-compile-remove(rich-text-editor) */
-import { RichTextStrings } from './RichTextEditor/RichTextSendBox';
+import { RichTextEditorOptions, RichTextStrings } from './RichTextEditor/RichTextSendBox';
 /* @conditional-compile-remove(rich-text-editor) */
 import { loadChatMessageComponentAsRichTextEditBox } from './ChatMessage/MyMessageComponents/ChatMessageComponentAsEditBoxPicker';
 
@@ -561,37 +561,32 @@ export type MessageThreadProps = {
    * Options to enable rich text editor for the edit box.
    * @beta
    */
-  richTextEditorOptions?: RichTextEditorOptions;
+  richTextEditorOptions?: RichTextEditBoxOptions;
 };
 
 /* @conditional-compile-remove(rich-text-editor) */
 /**
- * Options for the rich text editor configuration.
+ * Options for the rich text editor edit box configuration.
  *
  * @beta
  */
-export interface RichTextEditorOptions {
-  /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  /**
-   * Optional callback to handle paste event.
-   */
-  onPaste?: (event: { content: DocumentFragment }) => void;
+export interface RichTextEditBoxOptions extends RichTextEditorOptions {
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   /**
    * Optional callback to upload an inline image in the rich text editor.
    */
-  onUploadInlineImage?: (imageUrl: string, imageFileName: string) => void;
+  onUploadInlineImage?: (imageUrl: string, imageFileName: string, messageId: string) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   /**
    * Optional callback to remove the attachment upload or delete the image before sending.
    */
-  onCancelInlineImageUpload?: (imageId: string) => void;
+  onCancelInlineImageUpload?: (imageId: string, messageId: string) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   /**
-   * Optional array of type {@link AttachmentMetadataInProgress}
-   * to render inline images being uploaded in the RichTextSendBox.
+   * Optional Record of type {@link AttachmentMetadataInProgress}
+   * to render inline images being uploaded in the MessageThread's edit box.
    */
-  imageUploadsInProgress?: AttachmentMetadataInProgress[];
+  imageUploadsInProgress?: Record<string, AttachmentMetadataInProgress[]>;
 }
 
 /**
