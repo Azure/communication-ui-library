@@ -34,7 +34,7 @@ export const useMeetingPhoneInfoPane = (props: {
     updateSidePaneRenderer(undefined);
   }, [updateSidePaneRenderer]);
 
-  const localeStrings = useLocale().component.strings.MeetingConferencePhoneInfo;
+  const localeStrings = useLocale().component.strings.meetingConferencePhoneInfo;
   const callStrings = useLocale().strings.call;
 
   const onRenderHeader = useCallback(

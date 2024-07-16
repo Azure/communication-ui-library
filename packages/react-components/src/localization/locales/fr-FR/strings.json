@@ -572,7 +572,7 @@
     "leftNavButtonAriaLabel": "page précédente",
     "rightNavButtonAriaLabel": "page suivante"
   },
-  "MeetingConferencePhoneInfo": {
+  "meetingConferencePhoneInfo": {
     "meetingConferencePhoneInfoModalTitle": "Rejoindre l’appel à partir de votre téléphone",
     "meetingConferencePhoneInfoModalDialIn": "Composer le numéro",
     "meetingConferencePhoneInfoModalMeetingId": "Entrer l’ID de réunion",

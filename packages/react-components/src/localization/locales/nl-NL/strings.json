@@ -572,7 +572,7 @@
     "leftNavButtonAriaLabel": "vorige pagina",
     "rightNavButtonAriaLabel": "volgende pagina"
   },
-  "MeetingConferencePhoneInfo": {
+  "meetingConferencePhoneInfo": {
     "meetingConferencePhoneInfoModalTitle": "Deelnemen aan gesprek vanaf uw telefoon",
     "meetingConferencePhoneInfoModalDialIn": "Kiesnummer",
     "meetingConferencePhoneInfoModalMeetingId": "Vergadering-id invoeren",
