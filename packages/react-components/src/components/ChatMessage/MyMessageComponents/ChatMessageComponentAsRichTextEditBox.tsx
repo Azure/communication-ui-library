@@ -100,11 +100,11 @@ export const ChatMessageComponentAsRichTextEditBox = (
     const content = message.content;
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
     const document = new DOMParser().parseFromString(content ?? '', 'text/html');
-    /* @conditional-compile-remove(rich-text-editor-image-upload) */
     // The broken image element is a div element with all the attributes of the original image element.
     // We need to convert it to a img element so the Rooster knows how to render it.
     // And we need to copy over all the attributes such as id, width, etc.
     // which is needed for sending the message with the images correctly.
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
     document.querySelectorAll('.broken-image-wrapper').forEach((brokenImage) => {
       const imageElement = document.createElement('img');
       const attributes = brokenImage.attributes;
