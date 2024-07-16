@@ -11,7 +11,7 @@ import process from "process";
  */
 
 const POLL_INTERVAL_MS = 30000; // 30 seconds in milliseconds
-const TIMEOUT_TIME_MS = 15 * 60 * 1000; // 15 minutes in milliseconds
+const TIMEOUT_TIME_MS = 60 * 60 * 1000; // 60 minutes in milliseconds
 const GET_REQUEST_TIMEOUT_MS = 5000;
 
 const GET_REQUEST_OPTIONS = {
