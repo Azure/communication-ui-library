@@ -42,23 +42,40 @@ export const isAttachmentUploadCompleted = (
  * @internal
  */
 // Before sending the image, we need to add the image id we get back after uploading the images to the message content.
-export const addUploadedImagesToMessage = (
+export const addUploadedImagesToMessage = async (
   message: string,
   uploadInlineImages: AttachmentMetadataInProgress[]
-): string => {
+): Promise<string> => {
   if (message === '') {
     return message;
   }
   const document = new DOMParser().parseFromString(message ?? '', 'text/html');
-  document.querySelectorAll('img').forEach((img) => {
-    if (!img.id) {
+  const imagesPromise = Array.from(document.querySelectorAll('img')).map((img) => {
+    return new Promise<void>((resolve, rejects) => {
       const uploadInlineImage = uploadInlineImages.find(
         (imageUpload) => !imageUpload.error && (imageUpload.url === img.src || imageUpload.id === img.id)
       );
-      img.id = uploadInlineImage?.id ?? '';
-      img.src = '';
-    }
+      const imageElement = new Image();
+      imageElement.src = img.src;
+      imageElement.onload = () => {
+        // imageElement is a copy of original img element, so changes won't be refected
+        // have to made changes to 'img' instead
+        // imageElement?.setAttribute('width', imageElement.width.toString());
+        // imageElement?.setAttribute('height', imageElement.height.toString());
+        // imageElement?.setAttribute('style', `aspect-ratio: ${imageElement.width} / ${imageElement.height};`);
+        img.id = uploadInlineImage?.id ?? '';
+        img.src = '';
+        img.width = imageElement.width; // might not be needed since we have set it at line 62
+        img.height = imageElement.height;
+        img.style.aspectRatio = `${imageElement.width} / ${imageElement.height}`;
+        resolve();
+      };
+      imageElement.onerror = () => {
+        rejects();
+      };
+    });
   });
+  await Promise.all(imagesPromise);
   const newMessage = document.body.innerHTML;
   return newMessage;
 };
@@ -154,13 +171,14 @@ export const toAttachmentMetadata = (
 /**
  * @internal
  */
-export const insertImagesToContentString = (
+export const insertImagesToContentString = async (
   content: string,
-  imageUploadsInProgress?: AttachmentMetadataInProgress[]
-): string => {
+  imageUploadsInProgress?: AttachmentMetadataInProgress[],
+  onCompleted?: (content: string) => void
+): Promise<void> => {
   if (!imageUploadsInProgress || imageUploadsInProgress.length <= 0) {
-    return content;
+    onCompleted?.(content);
   }
-  const newContent = addUploadedImagesToMessage(content, imageUploadsInProgress);
-  return newContent;
+  const newContent = await addUploadedImagesToMessage(content, imageUploadsInProgress ?? []);
+  onCompleted?.(newContent);
 };

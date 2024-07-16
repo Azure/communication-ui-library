@@ -308,7 +308,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
       return;
     }
 
-    let message = contentValue;
+    // const message = contentValue;
     // we don't want to send empty messages including spaces, newlines, tabs
     // Message can be empty if there is a valid attachment upload
     if (
@@ -319,21 +319,21 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
       )
     ) {
       /* @conditional-compile-remove(rich-text-editor-image-upload) */
-      message = insertImagesToContentString(contentValue, imageUploadsInProgress);
-
-      onSendMessage(
-        message,
-        /* @conditional-compile-remove(file-sharing-acs) */ /* @conditional-compile-remove(rich-text-editor-composite-support) */
-        {
-          /* @conditional-compile-remove(file-sharing-acs) */
-          attachments: toAttachmentMetadata(attachments),
-          /* @conditional-compile-remove(rich-text-editor-composite-support) */
-          type: 'html'
-        }
-      );
-      setContentValue('');
-      editorComponentRef.current?.setEmptyContent();
-      editorComponentRef.current?.focus();
+      insertImagesToContentString(contentValue, imageUploadsInProgress, (content: string) => {
+        onSendMessage(
+          content,
+          /* @conditional-compile-remove(file-sharing-acs) */ /* @conditional-compile-remove(rich-text-editor-composite-support) */
+          {
+            /* @conditional-compile-remove(file-sharing-acs) */
+            attachments: toAttachmentMetadata(attachments),
+            /* @conditional-compile-remove(rich-text-editor-composite-support) */
+            type: 'html'
+          }
+        );
+        setContentValue('');
+        editorComponentRef.current?.setEmptyContent();
+        editorComponentRef.current?.focus();
+      });
     }
   }, [
     disabled,
