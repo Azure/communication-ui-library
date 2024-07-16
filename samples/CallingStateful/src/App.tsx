@@ -97,7 +97,7 @@ function App(): JSX.Element {
       }
       setCalls((callAgent?.calls as Call[] | TeamsCall[]) || []);
     },
-    [call, setCall]
+    [call, callAgent?.calls]
   );
 
   /**
