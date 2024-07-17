@@ -318,21 +318,38 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
       )
     ) {
       /* @conditional-compile-remove(rich-text-editor-image-upload) */
-      insertImagesToContentString(contentValue, imageUploadsInProgress, (content: string) => {
-        onSendMessage(
-          content,
-          /* @conditional-compile-remove(file-sharing-acs) */ /* @conditional-compile-remove(rich-text-editor-composite-support) */
-          {
-            /* @conditional-compile-remove(file-sharing-acs) */
-            attachments: toAttachmentMetadata(attachments),
-            /* @conditional-compile-remove(rich-text-editor-composite-support) */
-            type: 'html'
-          }
-        );
-        setContentValue('');
-        editorComponentRef.current?.setEmptyContent();
-        editorComponentRef.current?.focus();
-      });
+      if (isAttachmentUploadCompleted(imageUploadsInProgress)) {
+        insertImagesToContentString(contentValue, imageUploadsInProgress, (content: string) => {
+          onSendMessage(
+            content,
+            /* @conditional-compile-remove(file-sharing-acs) */ /* @conditional-compile-remove(rich-text-editor-composite-support) */
+            {
+              /* @conditional-compile-remove(file-sharing-acs) */
+              attachments: toAttachmentMetadata(attachments),
+              /* @conditional-compile-remove(rich-text-editor-composite-support) */
+              type: 'html'
+            }
+          );
+          setContentValue('');
+          editorComponentRef.current?.setEmptyContent();
+          editorComponentRef.current?.focus();
+        });
+        return;
+      }
+
+      onSendMessage(
+        contentValue,
+        /* @conditional-compile-remove(file-sharing-acs) */ /* @conditional-compile-remove(rich-text-editor-composite-support) */
+        {
+          /* @conditional-compile-remove(file-sharing-acs) */
+          attachments: toAttachmentMetadata(attachments),
+          /* @conditional-compile-remove(rich-text-editor-composite-support) */
+          type: 'html'
+        }
+      );
+      setContentValue('');
+      editorComponentRef.current?.setEmptyContent();
+      editorComponentRef.current?.focus();
     }
   }, [
     disabled,
