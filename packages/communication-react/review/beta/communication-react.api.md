@@ -3580,9 +3580,9 @@ export interface MessageThreadStyles extends BaseCustomStyles {
 }
 
 // @beta
-export type MessagingPolicy = {
+export interface MessagingPolicy {
     textOnlyChat?: boolean;
-};
+}
 
 // @public
 export const MicrophoneButton: (props: MicrophoneButtonProps) => JSX.Element;
