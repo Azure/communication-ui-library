@@ -4,8 +4,6 @@
 import { MessageStatus } from '@internal/acs-ui-common';
 import React, { useMemo } from 'react';
 import { MessageProps, MessageRenderer, MessageThreadStyles, _ChatMessageProps } from '../MessageThread';
-/* @conditional-compile-remove(rich-text-editor) */
-import { RichTextEditBoxOptions } from '../MessageThread';
 import { ChatMessage, OnRenderAvatarCallback } from '../../types';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '../../types';
@@ -13,6 +11,8 @@ import { BlockedMessage } from '../../types';
 import { AttachmentMenuAction } from '../../types/Attachment';
 /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
 import { AttachmentMetadata } from '@internal/acs-ui-common';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+import { AttachmentMetadataInProgress } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(mention) */
 import { MentionOptions } from '../MentionPopover';
 import { MessageStatusIndicatorProps } from '../MessageStatusIndicator';
@@ -67,8 +67,16 @@ export type ChatMessageComponentWrapperProps = _ChatMessageProps & {
    * Optional callback to define custom actions for attachments.
    */
   actionsForAttachment?: (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[];
-  /* @conditional-compile-remove(rich-text-editor) */
-  richTextEditorOptions?: RichTextEditBoxOptions;
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  isRichTextEditorEnabled?: boolean;
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  onPaste?: (event: { content: DocumentFragment }) => void;
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  onCancelInlineImageUpload?: (imageId: string, messageId: string) => void;
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  onUploadInlineImage?: (imageUrl: string, imageFileName: string, messageId: string) => void;
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  imageUploadsInProgress?: AttachmentMetadataInProgress[];
 };
 
 /**

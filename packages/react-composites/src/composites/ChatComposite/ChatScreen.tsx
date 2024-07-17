@@ -135,7 +135,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const theme = useTheme();
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   const [
-    editBoxImageUploadsInProgress,
+    editBoxMessagesImageUploadsInProgress,
     sendBoxImageUploadsInProgress,
     handleEditBoxInlineImageUploadAction,
     handleSendBoxInlineImageUploadAction,
@@ -577,14 +577,14 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
           /* @conditional-compile-remove(rich-text-editor-image-upload) */
           onUploadInlineImage: onUploadInlineImageForEditBox,
           /* @conditional-compile-remove(rich-text-editor-image-upload) */
-          imageUploadsInProgress: editBoxImageUploadsInProgress,
+          messagesImageUploadsInProgress: editBoxMessagesImageUploadsInProgress,
           /* @conditional-compile-remove(rich-text-editor-image-upload) */
           onCancelInlineImageUpload: onCancelInlineImageUploadHandlerForEditBox
         }
       : undefined;
   }, [
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    editBoxImageUploadsInProgress,
+    editBoxMessagesImageUploadsInProgress,
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
     onCancelInlineImageUploadHandlerForEditBox,
     /* @conditional-compile-remove(rich-text-editor-image-upload) */

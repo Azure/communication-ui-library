@@ -586,7 +586,7 @@ export interface RichTextEditBoxOptions extends RichTextEditorOptions {
    * Optional Record of type {@link AttachmentMetadataInProgress}
    * to render inline images being uploaded in the MessageThread's edit box.
    */
-  imageUploadsInProgress?: Record<string, AttachmentMetadataInProgress[]>;
+  messagesImageUploadsInProgress?: Record<string, AttachmentMetadataInProgress[]>;
 }
 
 /**
@@ -1193,8 +1193,19 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
                   mentionOptions={mentionOptions}
                   /* @conditional-compile-remove(file-sharing-acs) */
                   onRenderAttachmentDownloads={onRenderAttachmentDownloads}
-                  /* @conditional-compile-remove(rich-text-editor) */
-                  richTextEditorOptions={richTextEditorOptions}
+                  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+                  isRichTextEditorEnabled={!!richTextEditorOptions}
+                  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+                  onPaste={richTextEditorOptions?.onPaste}
+                  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+                  onUploadInlineImage={richTextEditorOptions?.onUploadInlineImage}
+                  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+                  imageUploadsInProgress={
+                    richTextEditorOptions?.messagesImageUploadsInProgress &&
+                    richTextEditorOptions?.messagesImageUploadsInProgress[message.message.messageId]
+                  }
+                  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+                  onCancelInlineImageUpload={richTextEditorOptions?.onCancelInlineImageUpload}
                 />
               );
             })}

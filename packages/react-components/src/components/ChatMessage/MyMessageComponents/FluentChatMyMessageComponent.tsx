@@ -49,8 +49,16 @@ export const FluentChatMyMessageComponent = (props: FluentChatMessageComponentWr
     actionsForAttachment,
     /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
     onRenderAttachmentDownloads,
-    /* @conditional-compile-remove(rich-text-editor) */
-    richTextEditorOptions
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    isRichTextEditorEnabled,
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    onPaste,
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    imageUploadsInProgress,
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    onCancelInlineImageUpload,
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    onUploadInlineImage
   } = props;
   const chatMessageRenderStyles = useChatMessageRenderStyles();
   /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
@@ -92,8 +100,16 @@ export const FluentChatMyMessageComponent = (props: FluentChatMessageComponentWr
             mentionOptions={mentionOptions}
             /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
             actionsForAttachment={actionsForAttachment}
-            /* @conditional-compile-remove(rich-text-editor) */
-            richTextEditorOptions={richTextEditorOptions}
+            /* @conditional-compile-remove(rich-text-editor-image-upload) */
+            isRichTextEditorEnabled={isRichTextEditorEnabled}
+            /* @conditional-compile-remove(rich-text-editor-image-upload) */
+            onPaste={onPaste}
+            /* @conditional-compile-remove(rich-text-editor-image-upload) */
+            onCancelInlineImageUpload={onCancelInlineImageUpload}
+            /* @conditional-compile-remove(rich-text-editor-image-upload) */
+            onUploadInlineImage={onUploadInlineImage}
+            /* @conditional-compile-remove(rich-text-editor-image-upload) */
+            imageUploadsInProgress={imageUploadsInProgress}
           />
         );
       }
@@ -117,8 +133,16 @@ export const FluentChatMyMessageComponent = (props: FluentChatMessageComponentWr
       actionsForAttachment,
       // eslint-disable-next-line react-hooks/exhaustive-deps
       new Date().toDateString(),
-      /* @conditional-compile-remove(rich-text-editor) */
-      richTextEditorOptions
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */
+      isRichTextEditorEnabled,
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */
+      onPaste,
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */
+      onCancelInlineImageUpload,
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */
+      onUploadInlineImage,
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */
+      imageUploadsInProgress
     ]
   );
 

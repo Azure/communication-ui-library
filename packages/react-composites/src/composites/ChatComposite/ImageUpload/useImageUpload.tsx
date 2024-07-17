@@ -37,20 +37,21 @@ export const useImageUpload = (): [
   const [editBoxInlineImageUploads, handleEditBoxInlineImageUploadAction] = useReducer(ImageUploadReducer, undefined);
   const [sendBoxInlineImageUploads, handleSendBoxInlineImageUploadAction] = useReducer(ImageUploadReducer, undefined);
 
-  const editBoxImageUploadsInProgress: Record<string, AttachmentMetadataInProgress[]> | undefined = useMemo(() => {
-    if (!editBoxInlineImageUploads) {
-      return;
-    }
-    const messageIds = Object.keys(editBoxInlineImageUploads || {});
-    const imageUploadsInProgress: Record<string, AttachmentMetadataInProgress[]> = {};
-    messageIds.map((messageId) => {
-      const messageUploads = editBoxInlineImageUploads[messageId].map((upload) => {
-        return upload.metadata;
+  const editBoxMessagesImageUploadsInProgress: Record<string, AttachmentMetadataInProgress[]> | undefined =
+    useMemo(() => {
+      if (!editBoxInlineImageUploads) {
+        return;
+      }
+      const messageIds = Object.keys(editBoxInlineImageUploads || {});
+      const messagesImageUploadsInProgress: Record<string, AttachmentMetadataInProgress[]> = {};
+      messageIds.map((messageId) => {
+        const messageUploads = editBoxInlineImageUploads[messageId].map((upload) => {
+          return upload.metadata;
+        });
+        messagesImageUploadsInProgress[messageId] = messageUploads;
       });
-      imageUploadsInProgress[messageId] = messageUploads;
-    });
-    return imageUploadsInProgress;
-  }, [editBoxInlineImageUploads]);
+      return messagesImageUploadsInProgress;
+    }, [editBoxInlineImageUploads]);
 
   const sendBoxImageUploadsInProgress: AttachmentMetadataInProgress[] | undefined = useMemo(() => {
     if (!sendBoxInlineImageUploads) {
@@ -246,7 +247,7 @@ export const useImageUpload = (): [
   );
 
   return [
-    editBoxImageUploadsInProgress,
+    editBoxMessagesImageUploadsInProgress,
     sendBoxImageUploadsInProgress,
     handleEditBoxInlineImageUploadAction,
     handleSendBoxInlineImageUploadAction,

@@ -10,8 +10,6 @@ import { AttachmentMetadata } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { AttachmentMetadataInProgress } from '@internal/acs-ui-common';
 import { MessageThreadStrings } from '../../MessageThread';
-/* @conditional-compile-remove(rich-text-editor) */
-import { RichTextEditBoxOptions } from '../../MessageThread';
 import { ChatMessageComponentAsEditBox } from './ChatMessageComponentAsEditBox';
 /* @conditional-compile-remove(mention) */
 import { MentionLookupOptions } from '../../MentionPopover';
@@ -48,49 +46,32 @@ export type ChatMessageComponentAsEditBoxPickerProps = {
   strings: MessageThreadStrings;
   /* @conditional-compile-remove(mention) */
   mentionLookupOptions?: MentionLookupOptions;
-  /* @conditional-compile-remove(rich-text-editor) */
-  richTextEditorOptions?: RichTextEditBoxOptions;
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  isRichTextEditorEnabled?: boolean;
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  onPaste?: (event: { content: DocumentFragment }) => void;
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  onCancelInlineImageUpload?: (imageId: string, messageId: string) => void;
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  onUploadInlineImage?: (imageUrl: string, imageFileName: string, messageId: string) => void;
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  imageUploadsInProgress?: AttachmentMetadataInProgress[];
 };
 
 /**
  * @private
  */
 export const ChatMessageComponentAsEditBoxPicker = (props: ChatMessageComponentAsEditBoxPickerProps): JSX.Element => {
-  /* @conditional-compile-remove(rich-text-editor) */
-  const { richTextEditorOptions } = props;
-
   const simpleEditBox = useMemo(() => {
     return <ChatMessageComponentAsEditBox {...props} />;
   }, [props]);
 
-  /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  const imageUploadsInProgressForMessage = useMemo(() => {
-    const messageId = props.message.messageId;
-    if (!richTextEditorOptions?.imageUploadsInProgress || !messageId) {
-      return;
-    }
-    if (!richTextEditorOptions.imageUploadsInProgress || !messageId) {
-      return;
-    }
-    return richTextEditorOptions.imageUploadsInProgress[messageId];
-  }, [richTextEditorOptions?.imageUploadsInProgress, props.message.messageId]);
-
   /* @conditional-compile-remove(rich-text-editor) */
-  if (richTextEditorOptions) {
+  if (props.isRichTextEditorEnabled) {
     return (
       <_ErrorBoundary fallback={simpleEditBox}>
         <Suspense fallback={simpleEditBox}>
-          <ChatMessageComponentAsRichTextEditBox
-            {...props}
-            /* @conditional-compile-remove(rich-text-editor-image-upload) */
-            onPaste={richTextEditorOptions?.onPaste}
-            /* @conditional-compile-remove(rich-text-editor-image-upload) */
-            onUploadInlineImage={richTextEditorOptions?.onUploadInlineImage}
-            /* @conditional-compile-remove(rich-text-editor-image-upload) */
-            imageUploadsInProgress={imageUploadsInProgressForMessage}
-            /* @conditional-compile-remove(rich-text-editor-image-upload) */
-            onCancelInlineImageUpload={richTextEditorOptions?.onCancelInlineImageUpload}
-          />
+          <ChatMessageComponentAsRichTextEditBox {...props} />
         </Suspense>
       </_ErrorBoundary>
     );
