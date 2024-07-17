@@ -1,35 +1,22 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+import { ChatComposite } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
 import { Meta } from '@storybook/react';
 import React, { useState, useEffect } from 'react';
 import { compositeExperienceContainerStyle } from '../../constants';
 import { defaultChatCompositeHiddenControls, controlsToAdd, ArgsFrom } from '../../controlsUtils';
 import { compositeLocale } from '../../localizationUtils';
-import { ContosoChatContainer } from './snippets/Container.snippet';
-import {
-  ChatCompositeSetupProps,
-  ConfigHintBanner,
-  addParrotBotToThread,
-  createThreadAndAddUser
-} from './snippets/Utils';
+import { ContosoChatContainer, ContainerProps } from './snippets/CustomBehaviorExampleContainer';
+import { ConfigHintBanner, addParrotBotToThread, createThreadAndAddUser } from './snippets/Utils';
 
 const messageArray = [
-  'Hello ACS!',
-  'Congratulations! You can see this message because you successfully passed in the Identity & User Tokens!',
-  'In production environment, it is recommended to issue tokens in server side.',
-  'You can also issue a token by creating your own server and input them in required tab below.',
+  'Welcome to an example on how to add powerful customizations to the ChatComposite',
+  'In this example, Contoso intercepts the messages being sent by the local user and CAPITALIZES THEM ALL.',
+  'The adapter pattern allows for very powerful customizations, should you need them.',
   'Have fun!'
 ];
-
-const defaultControlsValues = {
-  displayName: 'John Smith',
-  showErrorBar: true,
-  showParticipants: true,
-  showTopic: true,
-  compositeFormFactor: 'desktop'
-};
 
 const storyControls = {
   userId: controlsToAdd.userId,
@@ -37,22 +24,18 @@ const storyControls = {
   botId: controlsToAdd.botUserId,
   botToken: controlsToAdd.botToken,
   endpointUrl: controlsToAdd.endpointUrl,
-  displayName: controlsToAdd.requiredDisplayName,
-  showErrorBar: controlsToAdd.showErrorBar,
-  showParticipants: controlsToAdd.showChatParticipants,
-  showTopic: controlsToAdd.showChatTopic,
-  compositeFormFactor: controlsToAdd.formFactor
+  displayName: controlsToAdd.requiredDisplayName
 };
 
-const BasicStory = (args: ArgsFrom<typeof storyControls>, context): JSX.Element => {
+const CustomBehaviorStory = (args: ArgsFrom<typeof storyControls>, context): JSX.Element => {
   const {
     globals: { locale }
   } = context;
-  const [containerProps, setContainerProps] = useState<ChatCompositeSetupProps>();
+  const [containerProps, setContainerProps] = useState<ContainerProps>();
 
   useEffect(() => {
     const fetchToken = async (): Promise<void> => {
-      if (args.userId && args.token && args.botId && args.botToken && args.endpointUrl && args.displayName) {
+      if (args.token && args.userId && args.botId && args.botToken && args.endpointUrl && args.displayName) {
         const newProps = await createThreadAndAddUser(args.userId, args.token, args.endpointUrl, args.displayName);
         await addParrotBotToThread(
           args.token,
@@ -62,7 +45,7 @@ const BasicStory = (args: ArgsFrom<typeof storyControls>, context): JSX.Element 
           newProps.threadId,
           messageArray
         );
-        setContainerProps(newProps);
+        setContainerProps({ userId: { communicationUserId: newProps.userIdentifier }, ...newProps });
       } else {
         setContainerProps(undefined);
       }
@@ -76,12 +59,8 @@ const BasicStory = (args: ArgsFrom<typeof storyControls>, context): JSX.Element 
         <ContosoChatContainer
           fluentTheme={context.theme}
           rtl={context.globals.rtl === 'rtl'}
-          {...containerProps}
           locale={compositeLocale(locale)}
-          errorBar={args.showErrorBar}
-          participants={args.showParticipants}
-          topic={args.showTopic}
-          formFactor={args.compositeFormFactor}
+          {...containerProps}
         />
       ) : (
         <ConfigHintBanner />
@@ -90,19 +69,20 @@ const BasicStory = (args: ArgsFrom<typeof storyControls>, context): JSX.Element 
   );
 };
 
-export const BasicExample = BasicStory.bind({});
+export const CustomBehaviorExample = CustomBehaviorStory.bind({});
 
-const meta: Meta<typeof BasicStory> = {
-  title: 'Composites/ChatComposite/Basic Example',
-  component: BasicStory,
+export default {
+  title: 'Composites/ChatComposite/Custom Behavior Example',
+  component: CustomBehaviorStory,
   argTypes: {
     ...storyControls,
-    // Hiding auto-generated controls
     ...defaultChatCompositeHiddenControls
   },
+  parameters: {
+    useMaxHeightParent: true,
+    useMaxWidthParent: true
+  },
   args: {
-    ...defaultControlsValues
+    displayName: 'John Smith'
   }
-};
-
-export default meta;
+} as Meta;
