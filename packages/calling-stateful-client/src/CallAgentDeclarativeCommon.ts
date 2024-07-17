@@ -53,7 +53,7 @@ export abstract class ProxyCallAgentCommon {
     this._internalContext = internalContext;
     this._callSubscribers = new Map<Call, CallSubscriber>();
     this._incomingCallSubscribers = new Map<string, IncomingCallSubscriber>();
-    this._declarativeIncomingCalls = new Map<string, DeclarativeIncomingCall>(); // this would be the new common type
+    this._declarativeIncomingCalls = new Map<string, DeclarativeIncomingCall>();
     this._declarativeCalls = new Map<Call, DeclarativeCall>();
     this._externalCallsUpdatedListeners = new Set<CollectionUpdatedEvent<CallCommon>>();
   }
