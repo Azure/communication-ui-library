@@ -31,7 +31,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
       <Stack verticalAlign="center">
         <Image alt="Welcome to the ACS Calling sample app" className={imgStyle} {...headerImageProps} />
       </Stack>
-      <Stack tokens={{ childrenGap: '1rem' }} style={{ width: '20rem' }}>
+      <Stack tokens={{ childrenGap: '1rem' }} style={{ minWidth: '20rem', margin: 'auto' }}>
         <TextField
           label="ACS or Teams user ID"
           placeholder="Enter the userId you want to call"
