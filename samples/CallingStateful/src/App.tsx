@@ -88,7 +88,6 @@ function App(): JSX.Element {
       } else if (event.removed.length > 0) {
         if (event.removed[0] === call) {
           setCall(undefined);
-          console.log(call.id, call.callEndReason);
         }
       }
     },
@@ -119,7 +118,6 @@ function App(): JSX.Element {
 
   const onAcceptCall = async (incomingCall: IncomingCall | TeamsIncomingCall, useVideo?: boolean): Promise<void> => {
     const cameras = statefulCallClient?.getState().deviceManager.cameras;
-    console.log(cameras);
     let localVideoStream: LocalVideoStream | undefined;
     if (cameras && useVideo) {
       localVideoStream = new LocalVideoStream(cameras[0]);
