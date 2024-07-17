@@ -100,11 +100,11 @@ export type ChatThreadProperties = {
  * @beta
  */
 export interface MessagingPolicy {
-  /** 
-   * Boolean to track whether or not messages are restricted to only text. 
+  /**
+   * Boolean to track whether or not messages are restricted to only text.
    * */
   textOnlyChat?: boolean;
-};
+}
 
 /**
  * Errors teed from API calls to the Chat SDK.
