@@ -572,7 +572,7 @@
     "leftNavButtonAriaLabel": "上一页",
     "rightNavButtonAriaLabel": "下一页"
   },
-  "MeetingConferencePhoneInfo": {
+  "meetingConferencePhoneInfo": {
     "meetingConferencePhoneInfoModalTitle": "从手机加入呼叫",
     "meetingConferencePhoneInfoModalDialIn": "拨号号码",
     "meetingConferencePhoneInfoModalMeetingId": "输入会议 ID",

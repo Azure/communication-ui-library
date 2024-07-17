@@ -73,21 +73,17 @@ export class UpdateContentPlugin implements EditorPlugin {
           event.source.toLowerCase() === 'cut' ||
           (event.source.toLowerCase() === 'keyboard' && (event.data === Keys.BACKSPACE || event.data === Keys.DELETE))
         ) {
+          imageSrcArray = [];
           event.contentModel?.blocks.map((block) => {
             if (block.blockType === 'Paragraph') {
               const segments = block.segments;
               segments.map((segment) => {
                 if (segment.segmentType === 'Image') {
-                  if (!imageSrcArray) {
-                    imageSrcArray = [];
-                  }
                   imageSrcArray?.push(segment.src);
                 }
               });
             }
           });
-        } else {
-          imageSrcArray = undefined;
         }
         this.onUpdate(UpdateEvent.ContentChanged, imageSrcArray);
         break;

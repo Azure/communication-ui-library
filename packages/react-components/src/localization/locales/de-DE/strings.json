@@ -572,7 +572,7 @@
     "leftNavButtonAriaLabel": "Vorherige Seite",
     "rightNavButtonAriaLabel": "Nächste Seite"
   },
-  "MeetingConferencePhoneInfo": {
+  "meetingConferencePhoneInfo": {
     "meetingConferencePhoneInfoModalTitle": "Von Ihrem Telefon aus an Anruf teilnehmen",
     "meetingConferencePhoneInfoModalDialIn": "Nummer wählen",
     "meetingConferencePhoneInfoModalMeetingId": "Besprechungs-ID eingeben",
