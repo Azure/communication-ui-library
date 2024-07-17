@@ -572,7 +572,7 @@
     "leftNavButtonAriaLabel": "edellinen sivu",
     "rightNavButtonAriaLabel": "seuraava sivu"
   },
-  "MeetingConferencePhoneInfo": {
+  "meetingConferencePhoneInfo": {
     "meetingConferencePhoneInfoModalTitle": "Liity puheluun puhelimestasi",
     "meetingConferencePhoneInfoModalDialIn": "Valitse numero",
     "meetingConferencePhoneInfoModalMeetingId": "Anna kokoustunnus",

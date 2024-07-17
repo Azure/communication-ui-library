@@ -572,7 +572,7 @@
     "leftNavButtonAriaLabel": "önceki sayfa",
     "rightNavButtonAriaLabel": "sonraki sayfa"
   },
-  "MeetingConferencePhoneInfo": {
+  "meetingConferencePhoneInfo": {
     "meetingConferencePhoneInfoModalTitle": "Telefonunuzdan aramaya katılın",
     "meetingConferencePhoneInfoModalDialIn": "Numarayı çevirin",
     "meetingConferencePhoneInfoModalMeetingId": "Toplantı kimliğini girin",

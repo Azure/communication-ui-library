@@ -9,7 +9,7 @@ import {
   getEnvironmentInfo
 } from './baseSelectors';
 /* @conditional-compile-remove(notifications) */
-import { getTeamsMeetingConference } from './baseSelectors';
+import { getMeetingConferencePhones } from './baseSelectors';
 /* @conditional-compile-remove(notifications) */
 import { ActiveNotification, NotificationType } from '@internal/react-components';
 /* @conditional-compile-remove(notifications) */
@@ -22,7 +22,7 @@ import { DiagnosticQuality } from '@azure/communication-calling';
 /**
  * Selector type for {@link Notification} component.
  *
- * @beta
+ * @public
  */
 export type NotificationStackSelector = (
   state: CallClientState,
@@ -39,7 +39,7 @@ export type NotificationStackSelector = (
  *   - `ErrorType` is never repeated in the returned errors.
  *   - Errors are returned in a fixed order by `ErrorType`.
  *
- * @beta
+ * @public
  */
 export const notificationStackSelector: NotificationStackSelector = createSelector(
   [
@@ -47,7 +47,7 @@ export const notificationStackSelector: NotificationStackSelector = createSelect
     getDiagnostics,
     getDeviceManager,
     getEnvironmentInfo,
-    /* @conditional-compile-remove(teams-meeting-conference) */ getTeamsMeetingConference
+    /* @conditional-compile-remove(teams-meeting-conference) */ getMeetingConferencePhones
   ],
   (
     latestErrors: CallErrors,

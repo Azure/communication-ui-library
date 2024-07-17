@@ -572,7 +572,7 @@
     "leftNavButtonAriaLabel": "página anterior",
     "rightNavButtonAriaLabel": "próxima página"
   },
-  "MeetingConferencePhoneInfo": {
+  "meetingConferencePhoneInfo": {
     "meetingConferencePhoneInfoModalTitle": "Participar da chamada pelo seu telefone",
     "meetingConferencePhoneInfoModalDialIn": "Número de discagem",
     "meetingConferencePhoneInfoModalMeetingId": "Inserir a ID da reunião",
