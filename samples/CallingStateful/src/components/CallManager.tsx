@@ -16,6 +16,9 @@ export interface CallManagerProps {
 export const CallManager = (props: CallManagerProps): JSX.Element => {
   const { onSetResume, calls, onSetHold, activeCall } = props;
   const theme = useTheme();
+
+  const otherCalls = calls.filter((call) => call.id !== activeCall?.id);
+
   return (
     <Stack verticalAlign={'start'} styles={callManagerContainerStyle(theme)}>
       <Text variant="xLarge">Calls</Text>
@@ -28,8 +31,8 @@ export const CallManager = (props: CallManagerProps): JSX.Element => {
         )}
         {
           <Stack>
-            {calls && calls.length > 1 && <Text variant="large">Other Calls</Text>}
-            {calls.map((call) => {
+            {otherCalls && otherCalls.length > 1 && <Text variant="large">Other Calls</Text>}
+            {otherCalls.map((call) => {
               if (call.id === activeCall?.id) {
                 return;
               }
@@ -71,7 +74,7 @@ const CallItem = (props: CallItemProps): JSX.Element => {
         setCallTitle(names[0]);
       } else if (names.length > 1) {
         setCallTitle(names.join(', '));
-      } else if (names.length === 0) {
+      } else {
         setCallTitle('Unknown');
       }
     }

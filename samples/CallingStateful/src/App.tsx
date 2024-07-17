@@ -55,9 +55,7 @@ function App(): JSX.Element {
    */
   const filterEndedIncomingCalls = useCallback(
     (incomingCall: IncomingCallCommon): void => {
-      console.log(incomingCalls);
       const newIncomingCalls = incomingCalls.filter((call) => call.id !== incomingCall.id);
-      console.log(newIncomingCalls);
       setIncomingCalls(newIncomingCalls);
     },
     [incomingCalls]
