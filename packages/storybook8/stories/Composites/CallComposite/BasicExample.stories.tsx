@@ -60,7 +60,7 @@ const BasicStory = (args: ArgsFrom<typeof storyControls>, context: any): JSX.Ele
 export const BasicExample = BasicStory.bind({});
 
 const meta: Meta = {
-  title: 'Composites/CallComposite/Basic Example',
+  title: 'Composites/CallComposite',
   component: CallComposite,
   argTypes: {
     ...storyControls,

@@ -47,7 +47,7 @@ const JoinExistingCallAsTeamsUserStory = (args: ArgsFrom<typeof storyControls>, 
 export const JoinExistingCallAsTeamsUser = JoinExistingCallAsTeamsUserStory.bind({});
 
 const meta: Meta = {
-  title: 'Composites/CallComposite/Join Existing Call as Teams User',
+  title: 'Composites/CallComposite',
   component: CallComposite,
   argTypes: {
     ...storyControls,
