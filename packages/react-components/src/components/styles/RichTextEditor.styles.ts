@@ -48,9 +48,6 @@ export const richTextEditorWrapperStyle = (theme: Theme): string => {
           verticalAlign: 'top'
         }
       }
-    },
-    '& img': {
-      width: '119px'
     }
   });
 };
