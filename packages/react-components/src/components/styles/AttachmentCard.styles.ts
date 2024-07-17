@@ -34,7 +34,6 @@ export const useAttachmentCardStyles = makeStyles({
   },
   content: {
     '> div': {
-      width: '100%',
       overflow: 'hidden',
       textOverflow: 'ellipsis'
     }
