@@ -14,6 +14,7 @@ export type {
   DeviceManagerState,
   DiagnosticsCallFeatureState,
   IncomingCallState,
+  TeamsIncomingCallState,
   LocalVideoStreamState,
   MediaDiagnosticsState,
   NetworkDiagnosticsState,

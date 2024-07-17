@@ -14,7 +14,9 @@ import {
   LocalVideoStreamState,
   CallErrors,
   DiagnosticsCallFeatureState,
-  SpotlightCallFeatureState
+  SpotlightCallFeatureState,
+  IncomingCallState,
+  TeamsIncomingCallState
 } from '@internal/calling-stateful-client';
 import { ReactionState } from '@internal/calling-stateful-client';
 import { CaptionsInfo } from '@internal/calling-stateful-client';
@@ -265,4 +267,22 @@ export const getTeamsMeetingConference = (
   props: CallingBaseSelectorProps
 ): ConferencePhoneInfo[] | undefined => {
   return state.calls[props.callId]?.teamsMeetingConference;
+};
+
+/**
+ * selector for retrieving the incoming calls from state
+ * @returns the incoming calls in the call client state
+ * @beta
+ */
+export const getIncomingCalls = (state: CallClientState): IncomingCallState[] | TeamsIncomingCallState[] => {
+  return Object.values(state.incomingCalls);
+};
+
+/**
+ * selector for retrieving the incoming calls that have been removed from state
+ * @returns the incoming calls that have been removed
+ * @beta
+ */
+export const getRemovedIncomingCalls = (state: CallClientState): IncomingCallState[] | TeamsIncomingCallState[] => {
+  return Object.values(state.incomingCallsEnded);
 };

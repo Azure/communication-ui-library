@@ -5,7 +5,9 @@ import {
   RemoteParticipant as SdkRemoteParticipant,
   RemoteVideoStream as SdkRemoteVideoStream,
   LocalVideoStream as SdkLocalVideoStream,
-  VideoStreamRendererView
+  VideoStreamRendererView,
+  TeamsIncomingCall,
+  IncomingCall
 } from '@azure/communication-calling';
 import { TeamsCaptionsInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(acs-close-captions) */
@@ -23,6 +25,7 @@ import {
   RemoteVideoStreamState as DeclarativeRemoteVideoStream,
   LocalVideoStreamState as DeclarativeLocalVideoStream,
   IncomingCallState as DeclarativeIncomingCall,
+  TeamsIncomingCallState as DeclarativeTeamsIncomingCall,
   VideoStreamRendererViewState as DeclarativeVideoStreamRendererView
 } from './CallClientState';
 import { CaptionsInfo } from './CallClientState';
@@ -192,13 +195,28 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
 /**
  * @private
  */
-export function convertSdkIncomingCallToDeclarativeIncomingCall(call: IncomingCallCommon): DeclarativeIncomingCall {
-  return {
-    id: call.id,
-    callerInfo: call.callerInfo,
-    startTime: new Date(),
-    endTime: undefined
-  };
+export function convertSdkIncomingCallToDeclarativeIncomingCall(
+  call: IncomingCallCommon
+): DeclarativeIncomingCall | DeclarativeTeamsIncomingCall {
+  if (call.kind === 'TeamsIncomingCall') {
+    return {
+      id: call.id,
+      kind: call.kind,
+      info: (call as TeamsIncomingCall).info,
+      callerInfo: call.callerInfo,
+      startTime: new Date(),
+      endTime: undefined
+    };
+  } else {
+    return {
+      id: call.id,
+      kind: call.kind,
+      info: (call as IncomingCall).info,
+      callerInfo: call.callerInfo,
+      startTime: new Date(),
+      endTime: undefined
+    };
+  }
 }
 
 /**

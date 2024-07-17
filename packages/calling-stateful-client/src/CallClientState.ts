@@ -9,6 +9,7 @@ import {
   CallState as CallStatus,
   DeviceAccess,
   DominantSpeakersInfo,
+  IncomingCallKind,
   LatestMediaDiagnostics,
   LatestNetworkDiagnostics,
   MediaStreamType,
@@ -676,7 +677,53 @@ export interface IncomingCallState {
    */
   id: string;
   /**
+   * Proxy of {@link @azure/communication-calling#IncomingCallCommon.kind}
+   */
+  kind: IncomingCallKind;
+  /**
+   * Proxy of {@link @azure/communication-calling#IncomingCall.callInfo}.
+   */
+  info: CallInfo;
+  /**
    * Proxy of {@link @azure/communication-calling#IncomingCall.callerInfo}.
+   */
+  callerInfo: CallerInfo;
+  /**
+   * Set to the state returned by 'callEnded' event on {@link @azure/communication-calling#IncomingCall} when received.
+   * This property is added by the stateful layer and is not a proxy of SDK state.
+   */
+  callEndReason?: CallEndReason;
+  /**
+   * Stores the local date when the call started on the client. This property is added by the stateful layer and is not
+   * a proxy of SDK state.
+   */
+  startTime: Date;
+  /**
+   * Stores the local date when the call ended on the client. This property is added by the stateful layer and is not a
+   * proxy of SDK state. It is undefined if the call is not ended yet.
+   */
+  endTime?: Date;
+}
+
+/**
+ * State only version of {@link @azure/communication-calling#TeamsIncomingCall}
+ * @beta
+ */
+export interface TeamsIncomingCallState {
+  /**
+   * Proxy of {@link @azure/communication-calling#TeamsIncomingCall.id}.
+   */
+  id: string;
+  /**
+   * Proxy of {@link @azure/communication-calling#TeamsIncomingCall.teamsCallInfo}.
+   */
+  info: TeamsCallInfo;
+  /**
+   * Proxy of {@link @azure/communication-calling#IncomingCallCommon.kind}
+   */
+  kind: IncomingCallKind;
+  /**
+   * Proxy of {@link @azure/communication-calling#TeamsIncomingCall.callerInfo}.
    */
   callerInfo: CallerInfo;
   /**
@@ -778,14 +825,14 @@ export interface CallClientState {
    * Proxy of {@link @azure/communication-calling#IncomingCall} as an object with {@link IncomingCall} fields.
    * It is keyed by {@link @azure/communication-calling#IncomingCall.id}.
    */
-  incomingCalls: { [key: string]: IncomingCallState };
+  incomingCalls: { [key: string]: IncomingCallState | TeamsIncomingCallState };
   /**
    * Incoming Calls that have ended are stored here so the callEndReason could be checked.
    * It is an as an object with {@link @azure/communication-calling#Call.id} keys and {@link IncomingCall} values.
    *
    * Only {@link MAX_CALL_HISTORY_LENGTH} Calls are kept in the history. Oldest calls are evicted if required.
    */
-  incomingCallsEnded: { [key: string]: IncomingCallState };
+  incomingCallsEnded: { [key: string]: IncomingCallState | TeamsIncomingCallState };
   /**
    * Proxy of {@link @azure/communication-calling#DeviceManager}. Please review {@link DeviceManagerState}.
    */

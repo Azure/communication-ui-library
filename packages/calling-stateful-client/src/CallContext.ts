@@ -43,7 +43,8 @@ import {
   CallAgentState,
   CallErrors,
   CallErrorTarget,
-  CallError
+  CallError,
+  TeamsIncomingCallState
 } from './CallClientState';
 import { CaptionsInfo } from './CallClientState';
 import { ReactionState } from './CallClientState';
@@ -863,7 +864,7 @@ export class CallContext {
     });
   }
 
-  public setIncomingCall(call: IncomingCallState): void {
+  public setIncomingCall(call: IncomingCallState | TeamsIncomingCallState): void {
     this.modifyState((draft: CallClientState) => {
       const existingCall = draft.incomingCalls[call.id];
       if (existingCall) {
