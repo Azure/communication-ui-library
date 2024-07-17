@@ -199,20 +199,21 @@ export const ChatMessageComponentAsRichTextEditBox = (
       return;
     }
 
+    let content = textValue;
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    const content = removeBrokenImageContent(textValue);
+    content = removeBrokenImageContent(content);
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
     if (isAttachmentUploadCompleted(imageUploadsInProgress)) {
       insertImagesToContentString(textValue, imageUploadsInProgress, (content) => {
         onSubmit(content, /* @conditional-compile-remove(file-sharing-acs) */ attachmentMetadata || []);
       });
-    } else {
-      // it's very important to pass an empty attachment here
-      // so when user removes all attachments, UI can reflect it instantly
-      // if you set it to undefined, the attachments pre-edited would still be there
-      // until edit message event is received
-      onSubmit(content, /* @conditional-compile-remove(file-sharing-acs) */ attachmentMetadata || []);
+      return;
     }
+    // it's very important to pass an empty attachment here
+    // so when user removes all attachments, UI can reflect it instantly
+    // if you set it to undefined, the attachments pre-edited would still be there
+    // until edit message event is received
+    onSubmit(content, /* @conditional-compile-remove(file-sharing-acs) */ attachmentMetadata || []);
   }, [
     submitEnabled,
     /* @conditional-compile-remove(rich-text-editor-image-upload) */

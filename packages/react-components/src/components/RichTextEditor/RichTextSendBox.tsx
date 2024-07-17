@@ -308,7 +308,6 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
       return;
     }
 
-    // const message = contentValue;
     // we don't want to send empty messages including spaces, newlines, tabs
     // Message can be empty if there is a valid attachment upload
     if (
