@@ -57,7 +57,6 @@ export const useAttachmentCardStyles = makeStyles({
  * @private
  */
 export const attachmentNameContainerClassName = mergeStyles({
-  marginTop: _pxToRem(5),
   overflow: 'hidden',
   textOverflow: 'ellipsis',
   span: {
