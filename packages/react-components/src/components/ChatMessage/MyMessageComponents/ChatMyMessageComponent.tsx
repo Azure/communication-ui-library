@@ -20,8 +20,6 @@ import { MentionOptions } from '../../MentionPopover';
 import { InlineImageOptions } from '../ChatMessageContent';
 import { ChatMyMessageComponentAsMessageBubble } from './ChatMyMessageComponentAsMessageBubble';
 import { ChatMessageComponentAsEditBoxPicker } from './ChatMessageComponentAsEditBoxPicker';
-/* @conditional-compile-remove(rich-text-editor-image-upload) */
-import { removeBrokenImageContent } from '../../utils/SendBoxUtils';
 
 type ChatMyMessageComponentProps = {
   message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage;
@@ -130,12 +128,9 @@ export const ChatMyMessageComponent = (props: ChatMyMessageComponentProps): JSX.
 
   const onResendClick = useCallback(() => {
     onDeleteMessage && clientMessageId && onDeleteMessage(clientMessageId);
-    let newContent = content ?? '';
-    /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    newContent = removeBrokenImageContent(newContent);
     onSendMessage &&
       onSendMessage(
-        newContent,
+        content !== undefined ? content : '',
         /* @conditional-compile-remove(file-sharing-acs) */
         /* @conditional-compile-remove(rich-text-editor-image-upload) */
         {

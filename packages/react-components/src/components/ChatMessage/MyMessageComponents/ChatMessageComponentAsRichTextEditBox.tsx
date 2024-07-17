@@ -26,8 +26,7 @@ import {
   cancelInlineImageUpload,
   hasIncompleteAttachmentUploads,
   insertImagesToContentString,
-  isAttachmentUploadCompleted,
-  removeBrokenImageContent
+  isAttachmentUploadCompleted
 } from '../../utils/SendBoxUtils';
 import {
   getMessageState,
@@ -51,8 +50,6 @@ import { FluentV9ThemeProvider } from '../../../theming/FluentV9ThemeProvider';
 import { attachmentUploadCardsStyles } from '../../styles/SendBox.styles';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { SendBoxErrorBarError } from '../../SendBoxErrorBar';
-/* @conditional-compile-remove(rich-text-editor-image-upload) */
-import { BROKEN_IMAGE_SVG_DATA } from '../../styles/Common.style';
 
 /** @private */
 export type ChatMessageComponentAsRichTextEditBoxProps = {
@@ -95,33 +92,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
     onCancelInlineImageUpload
   } = props;
 
-  const initialContent = useMemo(() => {
-    /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    const content = message.content;
-    /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    const document = new DOMParser().parseFromString(content ?? '', 'text/html');
-    // The broken image element is a div element with all the attributes of the original image element.
-    // We need to convert it to a img element so the Rooster knows how to render it.
-    // And we need to copy over all the attributes such as id, width, etc.
-    // which is needed for sending the message with the images correctly.
-    /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    document.querySelectorAll('.broken-image-wrapper').forEach((brokenImage) => {
-      const imageElement = document.createElement('img');
-      const attributes = brokenImage.attributes;
-      for (const attribute of attributes) {
-        imageElement.setAttribute(attribute.name, attribute.value);
-      }
-
-      imageElement.src = BROKEN_IMAGE_SVG_DATA;
-      brokenImage.parentElement?.replaceChild(imageElement, brokenImage);
-    });
-    /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    return document.body.innerHTML;
-    return message.content;
-  }, [message]);
-
-  const [textValue, setTextValue] = useState<string>(initialContent || '');
-
+  const [textValue, setTextValue] = useState<string>(message.content || '');
   /* @conditional-compile-remove(file-sharing-acs) */
   const [attachmentMetadata, handleAttachmentAction] = useReducer(
     attachmentMetadataReducer,
@@ -200,8 +171,6 @@ export const ChatMessageComponentAsRichTextEditBox = (
     }
 
     let content = textValue;
-    /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    content = removeBrokenImageContent(textValue);
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
     if (isAttachmentUploadCompleted(imageUploadsInProgress)) {
       content = insertImagesToContentString(textValue, imageUploadsInProgress);
@@ -322,7 +291,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
           placeholderText={strings.editBoxPlaceholderText}
           onChange={onChangeHandler}
           editorComponentRef={editTextFieldRef}
-          initialContent={initialContent}
+          initialContent={message.content}
           strings={richTextLocaleStrings}
           disabled={false}
           actionComponents={actionButtons}
