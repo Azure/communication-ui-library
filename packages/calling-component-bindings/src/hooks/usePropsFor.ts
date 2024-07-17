@@ -9,7 +9,8 @@ import {
   DevicesButton,
   ParticipantList,
   ScreenShareButton,
-  VideoGallery
+  VideoGallery,
+  IncomingCallStack
 } from '@internal/react-components';
 /* @conditional-compile-remove(notifications) */
 import { NotificationStack } from '@internal/react-components';
@@ -120,7 +121,9 @@ export type GetSelector<Component extends (props: any) => JSX.Element | undefine
                         ? /* @conditional-compile-remove(PSTN-calls) */ HoldButtonSelector
                         : AreEqual<Component, typeof NotificationStack> extends true
                           ? /* @conditional-compile-remove(notifications) */ NotificationStackSelector
-                          : undefined;
+                          : AreEqual<Component, typeof IncomingCallStack> extends true
+                            ? /* @conditional-compile-remove(one-to-n-calling) */ NotificationStackSelector
+                            : undefined;
 
 /**
  * Get the selector for a specified component.
@@ -189,6 +192,10 @@ const findConditionalCompiledSelector = (component: (props: any) => JSX.Element 
     /* @conditional-compile-remove(notifications) */
     case NotificationStack:
       /* @conditional-compile-remove(notifications) */
+      return notificationStackSelector;
+    /* @conditional-compile-remove(one-to-n-calling) */
+    case IncomingCallStack:
+      /* @conditional-compile-remove(one-to-n-calling) */
       return notificationStackSelector;
   }
 };

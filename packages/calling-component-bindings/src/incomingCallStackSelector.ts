@@ -9,7 +9,7 @@ import { createSelector } from 'reselect';
  * Selector to get the active and removed incoming calls.
  * @beta
  */
-export type IncomingCallNotificationStackSelector = (state: CallClientState) => {
+export type IncomingCallStackSelector = (state: CallClientState) => {
   activeIncomingCalls: IncomingCallState[] | TeamsIncomingCallState[];
   removedIncomingCalls: IncomingCallState[] | TeamsIncomingCallState[];
 };
@@ -18,7 +18,7 @@ export type IncomingCallNotificationStackSelector = (state: CallClientState) => 
  * Select the active and removed incoming calls from the stateful client for the IncomingCallNotificationStackComponent.
  * @beta
  */
-export const incomingCallNotificationStackSelector: IncomingCallNotificationStackSelector = createSelector(
+export const incomingCallStackSelector: IncomingCallStackSelector = createSelector(
   [getIncomingCalls, getRemovedIncomingCalls],
   (
     incomingCalls,

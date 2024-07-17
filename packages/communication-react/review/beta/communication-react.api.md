@@ -55,6 +55,7 @@ import { IIconProps } from '@fluentui/react';
 import { ILinkStyles } from '@fluentui/react';
 import { IMessageBarProps } from '@fluentui/react';
 import { IncomingCall } from '@azure/communication-calling';
+import { IncomingCallKind } from '@azure/communication-calling';
 import { IPersonaStyleProps } from '@fluentui/react';
 import { IPersonaStyles } from '@fluentui/react';
 import { IRawStyle } from '@fluentui/react';
@@ -118,6 +119,16 @@ export interface AcceptedTransfer {
 export interface ActiveErrorMessage {
     timestamp?: Date;
     type: ErrorType;
+}
+
+// @beta
+export interface ActiveIncomingCall {
+    callerInfo: {
+        displayName: string;
+    };
+    endTime: Date;
+    id: string;
+    startTime: Date;
 }
 
 // @public
@@ -589,10 +600,10 @@ export interface CallClientState {
     deviceManager: DeviceManagerState;
     environmentInfo?: EnvironmentInfo;
     incomingCalls: {
-        [key: string]: IncomingCallState;
+        [key: string]: IncomingCallState | TeamsIncomingCallState;
     };
     incomingCallsEnded: {
-        [key: string]: IncomingCallState;
+        [key: string]: IncomingCallState | TeamsIncomingCallState;
     };
     latestErrors: CallErrors;
     userId: CommunicationIdentifierKind;
@@ -3065,7 +3076,7 @@ export interface FluentThemeProviderProps {
 export const fromFlatCommunicationIdentifier: (id: string) => CommunicationIdentifier;
 
 // @public
-export type GetCallingSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof VideoGallery> extends true ? VideoGallerySelector : AreEqual<Component, typeof DevicesButton> extends true ? DevicesButtonSelector : AreEqual<Component, typeof MicrophoneButton> extends true ? MicrophoneButtonSelector : AreEqual<Component, typeof CameraButton> extends true ? CameraButtonSelector : AreEqual<Component, typeof ScreenShareButton> extends true ? ScreenShareButtonSelector : AreEqual<Component, typeof ParticipantList> extends true ? ParticipantListSelector : AreEqual<Component, typeof ParticipantsButton> extends true ? ParticipantsButtonSelector : AreEqual<Component, typeof EndCallButton> extends true ? EmptySelector : AreEqual<Component, typeof ErrorBar> extends true ? CallErrorBarSelector : AreEqual<Component, typeof Dialpad> extends true ? EmptySelector : AreEqual<Component, typeof HoldButton> extends true ? HoldButtonSelector : AreEqual<Component, typeof NotificationStack> extends true ? NotificationStackSelector : undefined;
+export type GetCallingSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof VideoGallery> extends true ? VideoGallerySelector : AreEqual<Component, typeof DevicesButton> extends true ? DevicesButtonSelector : AreEqual<Component, typeof MicrophoneButton> extends true ? MicrophoneButtonSelector : AreEqual<Component, typeof CameraButton> extends true ? CameraButtonSelector : AreEqual<Component, typeof ScreenShareButton> extends true ? ScreenShareButtonSelector : AreEqual<Component, typeof ParticipantList> extends true ? ParticipantListSelector : AreEqual<Component, typeof ParticipantsButton> extends true ? ParticipantsButtonSelector : AreEqual<Component, typeof EndCallButton> extends true ? EmptySelector : AreEqual<Component, typeof ErrorBar> extends true ? CallErrorBarSelector : AreEqual<Component, typeof Dialpad> extends true ? EmptySelector : AreEqual<Component, typeof HoldButton> extends true ? HoldButtonSelector : AreEqual<Component, typeof NotificationStack> extends true ? NotificationStackSelector : AreEqual<Component, typeof IncomingCallStack> extends true ? NotificationStackSelector : undefined;
 
 // @public
 export const getCallingSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetCallingSelector<Component>;
@@ -3214,12 +3225,25 @@ export interface IncomingCallNotificationStyles {
     root?: IStackStyles;
 }
 
+// @beta
+export const IncomingCallStack: (props: IncomingCallStackProps) => JSX.Element;
+
+// @beta
+export interface IncomingCallStackProps {
+    incomingCalls: ActiveIncomingCall[];
+    onAcceptCall: (incomingCallId: string, useVideo?: boolean) => void;
+    onRejectCall: (incomingCallId: string) => void;
+    removedIncomingCalls: ActiveIncomingCall[];
+}
+
 // @public
 export interface IncomingCallState {
     callEndReason?: CallEndReason;
     callerInfo: CallerInfo;
     endTime?: Date;
     id: string;
+    info: CallInfo;
+    kind: IncomingCallKind;
     startTime: Date;
 }
 
@@ -4595,6 +4619,17 @@ export interface TeamsCallingHandlers extends CommonCallingHandlers {
 export type TeamsIncomingCallManagement = {
     incomingCalls: ReadonlyArray<DeclarativeTeamsIncomingCall>;
 };
+
+// @beta
+export interface TeamsIncomingCallState {
+    callEndReason?: CallEndReason;
+    callerInfo: CallerInfo;
+    endTime?: Date;
+    id: string;
+    info: TeamsCallInfo;
+    kind: IncomingCallKind;
+    startTime: Date;
+}
 
 // @beta
 export type TeamsOutboundCallAdapterArgs = TeamsCallAdapterArgsCommon & {

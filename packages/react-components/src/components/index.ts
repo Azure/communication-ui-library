@@ -304,3 +304,5 @@ export * from './Notification';
 export * from './NotificationStack';
 /* @conditional-compile-remove(one-to-n-calling) */
 export * from './IncomingCallNotification';
+/* @conditional-compile-remove(one-to-n-calling) */
+export * from './IncomingCallStack';

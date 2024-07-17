@@ -171,12 +171,14 @@ export { RaiseHandButton } from '../../react-components/src';
 export { Dialpad } from '../../react-components/src';
 
 /* @conditional-compile-remove(one-to-n-calling) */
-export { IncomingCallNotification } from '../../react-components/src';
+export { IncomingCallNotification, IncomingCallStack } from '../../react-components/src';
 /* @conditional-compile-remove(one-to-n-calling) */
 export type {
   IncomingCallNotificationProps,
   IncomingCallNotificationStrings,
-  IncomingCallNotificationStyles
+  IncomingCallNotificationStyles,
+  IncomingCallStackProps,
+  ActiveIncomingCall
 } from '../../react-components/src';
 
 /* @conditional-compile-remove(call-readiness) */
