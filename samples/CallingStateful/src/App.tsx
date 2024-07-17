@@ -119,7 +119,6 @@ function App(): JSX.Element {
 
   const onAcceptCall = async (incomingCall: IncomingCall | TeamsIncomingCall, useVideo?: boolean): Promise<void> => {
     const cameras = statefulCallClient?.getState().deviceManager.cameras;
-    console.log(cameras);
     let localVideoStream: LocalVideoStream | undefined;
     if (cameras && useVideo) {
       localVideoStream = new LocalVideoStream(cameras[0]);
