@@ -16,7 +16,7 @@ import { Notification, NotificationStrings } from './Notification';
 
 /**
  * Props for {@link NotificationStack}.
- * @beta
+ * @public
  */
 export interface NotificationStackProps {
   /**
@@ -57,7 +57,7 @@ export interface NotificationStackProps {
 /**
  * All strings that may be shown on the UI in the {@link NotificationStack}.
  *
- * @beta
+ * @public
  */
 export interface NotificationStackStrings {
   /**
@@ -251,14 +251,14 @@ export interface NotificationStackStrings {
 /**
  * All notifications that can be shown in the {@link NotificationStack}.
  *
- * @beta
+ * @public
  */
 export type NotificationType = keyof NotificationStackStrings;
 
 /**
  * Active notifications to be shown via {@link NotificationStack}.
  *
- * @beta
+ * @public
  */
 export interface ActiveNotification {
   /**
@@ -305,7 +305,7 @@ export interface ActiveNotification {
  *         If the notification recurs, it is shown in the UI.
  *
  *
- * @beta
+ * @public
  */
 export const NotificationStack = (props: NotificationStackProps): JSX.Element => {
   /* @conditional-compile-remove(notifications) */

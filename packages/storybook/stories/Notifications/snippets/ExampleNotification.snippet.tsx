@@ -1,4 +1,4 @@
-import { Notification } from '@internal/react-components';
+import { Notification } from '@azure/communication-react';
 import React from 'react';
 
 export const ExampleNotification = (): JSX.Element => {

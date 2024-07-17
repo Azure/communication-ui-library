@@ -179,7 +179,7 @@ const findSelector = (component: (props: any) => JSX.Element | undefined): any =
   return undefined;
 };
 
-/* @conditional-compile-remove(PSTN-calls) */
+/* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(notifications) */
 const findConditionalCompiledSelector = (component: (props: any) => JSX.Element | undefined): any => {
   switch (component) {
     /* @conditional-compile-remove(PSTN-calls) */
