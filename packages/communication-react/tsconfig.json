@@ -10,7 +10,8 @@
       "@internal/calling-stateful-client": ["../../calling-stateful-client/src/index"],
       "@internal/chat-stateful-client": ["../../chat-stateful-client/src/index"],
       "@internal/react-components": ["../../react-components/src/index"],
-      "@internal/react-composites": ["../../react-composites/src/index-public"]
+      "@internal/react-composites": ["../../react-composites/src/index-public"],
+      "@internal/acs-javascript-loaders": ["../../acs-ui-javascript-loaders/src/index"]
     },
     "plugins": [
       { "transform": "typescript-transform-paths" },

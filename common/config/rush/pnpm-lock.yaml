@@ -9704,7 +9704,7 @@ packages:
       webpack-cli: 5.x.x
     dependencies:
       webpack: 5.89.0(webpack-cli@5.1.4)
-      webpack-cli: 5.1.4(webpack-bundle-analyzer@4.10.1)(webpack-dev-server@4.15.2)(webpack@5.89.0)
+      webpack-cli: 5.1.4(webpack-bundle-analyzer@4.10.1)(webpack@5.89.0)
     dev: false
 
   /@webpack-cli/info@2.0.2(webpack-cli@5.1.4)(webpack@5.89.0):
@@ -9715,7 +9715,7 @@ packages:
       webpack-cli: 5.x.x
     dependencies:
       webpack: 5.89.0(webpack-cli@5.1.4)
-      webpack-cli: 5.1.4(webpack-bundle-analyzer@4.10.1)(webpack-dev-server@4.15.2)(webpack@5.89.0)
+      webpack-cli: 5.1.4(webpack-bundle-analyzer@4.10.1)(webpack@5.89.0)
     dev: false
 
   /@webpack-cli/serve@2.0.5(webpack-cli@5.1.4)(webpack-dev-server@4.15.2)(webpack@5.89.0):
@@ -23696,7 +23696,7 @@ packages:
       tapable: 2.2.1
       terser-webpack-plugin: 5.3.10(webpack@5.89.0)
       watchpack: 2.4.0
-      webpack-cli: 5.1.4(webpack-bundle-analyzer@4.10.1)(webpack-dev-server@4.15.2)(webpack@5.89.0)
+      webpack-cli: 5.1.4(webpack-bundle-analyzer@4.10.1)(webpack@5.89.0)
       webpack-sources: 3.2.3
     transitivePeerDependencies:
       - '@swc/core'
@@ -24192,7 +24192,7 @@ packages:
     dev: false
 
   file:projects/acs-ui-javascript-loaders.tgz:
-    resolution: {integrity: sha512-IBkQXz3etOm+hW5tBDnkDxJXiAxNs0FLN1cHNgTIBWb46yVyhcvqEReHS+jdcP6IdYTa3OriDCj1T2k68Ga+pA==, tarball: file:projects/acs-ui-javascript-loaders.tgz}
+    resolution: {integrity: sha512-UearK+Ih7+lyRzfpXJC+sttwTc5x9plWEELNitZaLZaz2wayxaZila5g8fV+4e4c/4rUPvJfPtaUrQTESPaYIA==, tarball: file:projects/acs-ui-javascript-loaders.tgz}
     name: '@rush-temp/acs-ui-javascript-loaders'
     version: 0.0.0
     dependencies:
@@ -24225,17 +24225,26 @@ packages:
       rollup: 4.12.1
       ts-jest: 29.1.5(@babel/core@7.24.7)(babel-jest@29.7.0)(jest@29.7.0)(typescript@5.4.5)
       typescript: 5.4.5
+      webpack: 5.89.0(webpack-cli@5.1.4)
+      webpack-bundle-analyzer: 4.10.1
+      webpack-cli: 5.1.4(webpack-bundle-analyzer@4.10.1)(webpack@5.89.0)
     transitivePeerDependencies:
       - '@jest/transform'
       - '@jest/types'
+      - '@swc/core'
       - '@types/eslint'
       - '@types/node'
+      - '@webpack-cli/generators'
       - babel-jest
       - babel-plugin-macros
+      - bufferutil
       - esbuild
       - node-notifier
       - supports-color
       - ts-node
+      - uglify-js
+      - utf-8-validate
+      - webpack-dev-server
     dev: false
 
   file:projects/calling-component-bindings.tgz:
