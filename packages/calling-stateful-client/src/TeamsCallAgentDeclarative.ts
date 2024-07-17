@@ -3,7 +3,6 @@
 
 import { TeamsCallAgent } from '@azure/communication-calling';
 import { CallCommon, CallAgentCommon } from './BetaToStableTypes';
-/* @conditional-compile-remove(one-to-n-calling) */
 import { clearCallRelatedState, DeclarativeCallCommon, ProxyCallAgentCommon } from './CallAgentDeclarativeCommon';
 import { CallContext } from './CallContext';
 /* @conditional-compile-remove(teams-identity-support) */
@@ -11,9 +10,10 @@ import { _isTeamsCall, _isTeamsCallAgent } from './TypeGuards';
 import { InternalCallContext } from './InternalCallContext';
 /* @conditional-compile-remove(teams-identity-support) */
 import { teamsCallDeclaratify } from './TeamsCallDeclarative';
-/* @conditional-compile-remove(teams-identity-support) */
+/* @conditional-compile-remove(one-to-n-calling) */
 import { DeclarativeTeamsIncomingCall } from './TeamsIncomingCallDeclarative';
 
+/* @conditional-compile-remove(one-to-n-calling) */
 /**
  * @beta
  * Proxies the {@link @azure/communication-calling#TeamsIncomingCall} interface.
