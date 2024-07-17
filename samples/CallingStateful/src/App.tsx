@@ -12,7 +12,7 @@ import {
   IncomingCallCommon
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(one-to-n-calling) */
-import { IncomingCallEvent, TeamsIncomingCallEvent } from '@azure/communication-calling';
+import { IncomingCallEvent, TeamsIncomingCallEvent, CallAgent } from '@azure/communication-calling';
 import {
   DEFAULT_COMPONENT_ICONS,
   FluentThemeProvider,
@@ -26,6 +26,9 @@ import heroSVG from './assets/hero.svg';
 import { LoginScreen } from './views/Login';
 import { CallScreen } from './views/CallScreen';
 import { IncomingCallManager } from './components/IncomingCallManager';
+/* @conditional-compile-remove(one-to-n-calling) */
+import { HomeScreen } from './views/Homescreen';
+
 initializeIcons();
 registerIcons({ icons: DEFAULT_COMPONENT_ICONS });
 
@@ -115,7 +118,6 @@ function App(): JSX.Element {
 
   const onAcceptCall = async (incomingCall: IncomingCall | TeamsIncomingCall, useVideo?: boolean): Promise<void> => {
     const cameras = statefulCallClient?.getState().deviceManager.cameras;
-    console.log(cameras);
     let localVideoStream: LocalVideoStream | undefined;
     if (cameras && useVideo) {
       localVideoStream = new LocalVideoStream(cameras[0]);
@@ -206,6 +208,11 @@ function App(): JSX.Element {
       >
         {userIdentifier && <Text>your userId: {userIdentifier.communicationUserId}</Text>}
         {teamsIdentifier && <Text>your teamsId: {teamsIdentifier}</Text>}
+        {
+          /* @conditional-compile-remove(one-to-n-calling) */ statefulCallClient && callAgent && !call && (
+            <HomeScreen callAgent={callAgent as CallAgent} headerImageProps={imageProps}></HomeScreen>
+          )
+        }
         {statefulCallClient && /* @conditional-compile-remove(one-to-n-calling) */ callAgent && call && (
           <CallScreen
             statefulCallClient={statefulCallClient}
