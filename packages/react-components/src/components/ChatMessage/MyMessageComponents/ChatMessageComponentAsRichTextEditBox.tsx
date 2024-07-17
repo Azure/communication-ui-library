@@ -23,7 +23,7 @@ import { useChatMessageRichTextEditContainerStyles } from '../../styles/ChatMess
 import { MAXIMUM_LENGTH_OF_MESSAGE } from '../../utils/SendBoxUtils';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import {
-  cancelInlineImageUploadForEditBox,
+  cancelInlineImageUpload,
   hasIncompleteAttachmentUploads,
   insertImagesToContentString,
   isAttachmentUploadCompleted,
@@ -71,7 +71,7 @@ export type ChatMessageComponentAsRichTextEditBoxProps = {
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   onUploadInlineImage?: (imageUrl: string, imageFileName: string, messageId: string) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  imageUploadsInProgress?: Record<string, AttachmentMetadataInProgress[]>;
+  imageUploadsInProgress?: AttachmentMetadataInProgress[];
 };
 
 /**
@@ -138,6 +138,11 @@ export const ChatMessageComponentAsRichTextEditBox = (
     return getMessageState(textValue, /* @conditional-compile-remove(file-sharing-acs) */ attachmentMetadata ?? []);
   }, [/* @conditional-compile-remove(file-sharing-acs) */ attachmentMetadata, textValue]);
 
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  const imageUploadErrorMessage = useMemo(() => {
+    return imageUploadsInProgress?.filter((image) => image.error).pop()?.error?.message;
+  }, [imageUploadsInProgress]);
+
   const submitEnabled = messageState === 'OK';
 
   const editContainerStyles = useChatMessageRichTextEditContainerStyles();
@@ -194,9 +199,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
     setAttachmentUploadsPendingError(undefined);
 
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    const imageUploadsInProgressForMessage = imageUploadsInProgress && imageUploadsInProgress[message.messageId];
-    /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    if (hasIncompleteAttachmentUploads(imageUploadsInProgressForMessage)) {
+    if (hasIncompleteAttachmentUploads(imageUploadsInProgress)) {
       setAttachmentUploadsPendingError({ message: strings.attachmentUploadsPendingError, timestamp: Date.now() });
       return;
     }
@@ -205,8 +208,8 @@ export const ChatMessageComponentAsRichTextEditBox = (
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
     content = removeBrokenImageContent(textValue);
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    if (isAttachmentUploadCompleted(imageUploadsInProgressForMessage)) {
-      content = insertImagesToContentString(textValue, imageUploadsInProgressForMessage);
+    if (isAttachmentUploadCompleted(imageUploadsInProgress)) {
+      content = insertImagesToContentString(textValue, imageUploadsInProgress);
     }
     // it's very important to pass an empty attachment here
     // so when user removes all attachments, UI can reflect it instantly
@@ -222,9 +225,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
     strings.attachmentUploadsPendingError,
     onSubmit,
     /* @conditional-compile-remove(file-sharing-acs) */
-    attachmentMetadata,
-    /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    message.messageId
+    attachmentMetadata
   ]);
 
   const actionButtons = useMemo(() => {
@@ -302,11 +303,12 @@ export const ChatMessageComponentAsRichTextEditBox = (
       /* @conditional-compile-remove(rich-text-editor-image-upload) */ imageSrcArray?: Array<string>
     ) => {
       /* @conditional-compile-remove(rich-text-editor-image-upload) */
-      cancelInlineImageUploadForEditBox(
+      cancelInlineImageUpload(
         imageSrcArray,
         imageUploadsInProgress,
         message.messageId,
-        onCancelInlineImageUpload
+        onCancelInlineImageUpload,
+        undefined
       );
       setText(content);
     },
@@ -326,6 +328,15 @@ export const ChatMessageComponentAsRichTextEditBox = (
           systemMessage={message.failureReason}
           /* @conditional-compile-remove(rich-text-editor-image-upload) */ attachmentUploadsPendingError={
             attachmentUploadsPendingError
+          }
+          /* @conditional-compile-remove(rich-text-editor-image-upload) */
+          attachmentProgressError={
+            imageUploadErrorMessage
+              ? {
+                  message: imageUploadErrorMessage,
+                  timestamp: Date.now()
+                }
+              : undefined
           }
         />
         <RichTextInputBoxComponent

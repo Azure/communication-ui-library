@@ -50,12 +50,6 @@ export type ChatMessageComponentAsEditBoxPickerProps = {
   mentionLookupOptions?: MentionLookupOptions;
   /* @conditional-compile-remove(rich-text-editor) */
   richTextEditorOptions?: RichTextEditBoxOptions;
-  /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  onCancelInlineImageUpload?: (imageId: string, messageId: string) => void;
-  /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  onUploadInlineImage?: (imageUrl: string, imageFileName: string, messageId: string) => void;
-  /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  imageUploadsInProgress?: Record<string, AttachmentMetadataInProgress[]>;
 };
 
 /**
@@ -69,6 +63,18 @@ export const ChatMessageComponentAsEditBoxPicker = (props: ChatMessageComponentA
     return <ChatMessageComponentAsEditBox {...props} />;
   }, [props]);
 
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  const imageUploadsInProgressForMessage = useMemo(() => {
+    const messageId = props.message.messageId;
+    if (!richTextEditorOptions?.imageUploadsInProgress || !messageId) {
+      return;
+    }
+    if (!richTextEditorOptions.imageUploadsInProgress || !messageId) {
+      return;
+    }
+    return richTextEditorOptions.imageUploadsInProgress[messageId];
+  }, [richTextEditorOptions?.imageUploadsInProgress, props.message.messageId]);
+
   /* @conditional-compile-remove(rich-text-editor) */
   if (richTextEditorOptions) {
     return (
@@ -81,7 +87,7 @@ export const ChatMessageComponentAsEditBoxPicker = (props: ChatMessageComponentA
             /* @conditional-compile-remove(rich-text-editor-image-upload) */
             onUploadInlineImage={richTextEditorOptions?.onUploadInlineImage}
             /* @conditional-compile-remove(rich-text-editor-image-upload) */
-            imageUploadsInProgress={richTextEditorOptions?.imageUploadsInProgress}
+            imageUploadsInProgress={imageUploadsInProgressForMessage}
             /* @conditional-compile-remove(rich-text-editor-image-upload) */
             onCancelInlineImageUpload={richTextEditorOptions?.onCancelInlineImageUpload}
           />

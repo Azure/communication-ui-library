@@ -13,7 +13,7 @@ import { InputBoxButton } from '../InputBoxButton';
 import { RichTextSendBoxErrors, RichTextSendBoxErrorsProps } from './RichTextSendBoxErrors';
 import { isMessageTooLong, isSendBoxButtonAriaDisabled, sanitizeText } from '../utils/SendBoxUtils';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
-import { insertImagesToContentString, cancelInlineImageUploadForSendBox } from '../utils/SendBoxUtils';
+import { insertImagesToContentString, cancelInlineImageUpload } from '../utils/SendBoxUtils';
 import { RichTextEditorComponentRef } from './RichTextEditor';
 import { useTheme } from '../../theming';
 import { richTextActionButtonsStyle, sendBoxRichTextEditorStyle } from '../styles/RichTextEditor.styles';
@@ -310,7 +310,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
       /* @conditional-compile-remove(rich-text-editor-image-upload) */ imageSrcArray?: Array<string>
     ) => {
       /* @conditional-compile-remove(rich-text-editor-image-upload) */
-      cancelInlineImageUploadForSendBox(imageSrcArray, imageUploadsInProgress, onCancelInlineImageUpload);
+      cancelInlineImageUpload(imageSrcArray, imageUploadsInProgress, undefined, undefined, onCancelInlineImageUpload);
       setContent(newValue);
     },
     [
@@ -434,13 +434,18 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
   const sendBoxErrorsProps: RichTextSendBoxErrorsProps = useMemo(() => {
     /* @conditional-compile-remove(file-sharing-acs) */
     const uploadErrorMessage = attachments?.filter((attachmentUpload) => attachmentUpload.error).pop()?.error?.message;
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    const imageUploadErrorMessage = imageUploadsInProgress?.filter((image) => image.error).pop()?.error?.message;
+    const errorMessage =
+      uploadErrorMessage /* @conditional-compile-remove(rich-text-editor-image-upload) */ || imageUploadErrorMessage;
     return {
       /* @conditional-compile-remove(file-sharing-acs) */
       attachmentUploadsPendingError: attachmentUploadsPendingError,
+
       /* @conditional-compile-remove(file-sharing-acs) */
-      attachmentProgressError: uploadErrorMessage
+      attachmentProgressError: errorMessage
         ? {
-            message: uploadErrorMessage,
+            message: errorMessage,
             timestamp: Date.now()
           }
         : undefined,
@@ -453,6 +458,8 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     contentTooLongMessage,
     /* @conditional-compile-remove(file-sharing-acs) */
     attachmentUploadsPendingError,
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    imageUploadsInProgress,
     systemMessage
   ]);
 
