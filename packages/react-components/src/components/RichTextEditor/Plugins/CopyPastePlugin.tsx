@@ -79,7 +79,6 @@ export const handleInlineImage = (
 
       image.src = imageUrl;
       image.alt = image.alt || 'image';
-      image.style.width = '119px'; // TODO: find a way to get the original width and height of the image
     });
   }
 };
