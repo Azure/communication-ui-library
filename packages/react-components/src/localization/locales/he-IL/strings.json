@@ -572,7 +572,7 @@
     "leftNavButtonAriaLabel": "הדף הקודם",
     "rightNavButtonAriaLabel": "הדף הבא"
   },
-  "MeetingConferencePhoneInfo": {
+  "meetingConferencePhoneInfo": {
     "meetingConferencePhoneInfoModalTitle": "הצטרף לשיחה מהטלפון שלך",
     "meetingConferencePhoneInfoModalDialIn": "חייג למספר",
     "meetingConferencePhoneInfoModalMeetingId": "הזן מזהה פגישה",

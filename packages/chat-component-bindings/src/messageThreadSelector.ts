@@ -145,6 +145,7 @@ const processChatMessageContent = (message: ChatMessageWithStatus): string | und
             // else in loading or success state
             img.setAttribute('src', src);
           }
+          setImageWidthAndHeight(img);
         }
       });
       content = document.body.innerHTML;
@@ -206,6 +207,16 @@ const extractAttachmentContentTypeFromName = (name?: string): string => {
   }
   const contentType = name.substring(indexOfLastDot + 1);
   return contentType;
+};
+
+const setImageWidthAndHeight = (img?: HTMLImageElement): void => {
+  if (img) {
+    // define aspect ratio explicitly to prevent image not being displayed correctly
+    // in safari, this includes image placeholder for loading state
+    const width = img.width;
+    const height = img.height;
+    img.style.aspectRatio = `${width}/${height}`;
+  }
 };
 
 /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
