@@ -7,7 +7,7 @@ import { fromFlatCommunicationIdentifier, StartCallIdentifier } from '@azure/com
 /* @conditional-compile-remove(teams-identity-support) */
 import { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 import { setLogLevel } from '@azure/logger';
-import { initializeIcons, Spinner } from '@fluentui/react';
+import { initializeIcons, Spinner, Stack } from '@fluentui/react';
 import { CallAdapterLocator } from '@azure/communication-react';
 import React, { useEffect, useState } from 'react';
 import {
@@ -207,7 +207,11 @@ const App = (): JSX.Element => {
         (!targetCallees && !callLocator)
       ) {
         document.title = `credentials - ${WEB_APP_TITLE}`;
-        return <Spinner label={'Getting user credentials from server'} ariaLive="assertive" labelPosition="top" />;
+        return (
+          <Stack horizontalAlign="center" verticalAlign="center" styles={{ root: { height: '100%' } }}>
+            <Spinner label={'Getting user credentials from server'} ariaLive="assertive" labelPosition="top" />
+          </Stack>
+        );
       }
       return (
         <CallScreen
