@@ -317,39 +317,31 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
         imageUploadsInProgress
       )
     ) {
+      const sendMessage = (content: string): void => {
+        onSendMessage(
+          content,
+          /* @conditional-compile-remove(file-sharing-acs) */ /* @conditional-compile-remove(rich-text-editor-composite-support) */
+          {
+            /* @conditional-compile-remove(file-sharing-acs) */
+            attachments: toAttachmentMetadata(attachments),
+            /* @conditional-compile-remove(rich-text-editor-composite-support) */
+            type: 'html'
+          }
+        );
+        setContentValue('');
+        editorComponentRef.current?.setEmptyContent();
+        editorComponentRef.current?.focus();
+      };
+
       /* @conditional-compile-remove(rich-text-editor-image-upload) */
       if (isAttachmentUploadCompleted(imageUploadsInProgress)) {
         insertImagesToContentString(contentValue, imageUploadsInProgress, (content: string) => {
-          onSendMessage(
-            content,
-            /* @conditional-compile-remove(file-sharing-acs) */ /* @conditional-compile-remove(rich-text-editor-composite-support) */
-            {
-              /* @conditional-compile-remove(file-sharing-acs) */
-              attachments: toAttachmentMetadata(attachments),
-              /* @conditional-compile-remove(rich-text-editor-composite-support) */
-              type: 'html'
-            }
-          );
-          setContentValue('');
-          editorComponentRef.current?.setEmptyContent();
-          editorComponentRef.current?.focus();
+          sendMessage(content);
         });
         return;
       }
 
-      onSendMessage(
-        contentValue,
-        /* @conditional-compile-remove(file-sharing-acs) */ /* @conditional-compile-remove(rich-text-editor-composite-support) */
-        {
-          /* @conditional-compile-remove(file-sharing-acs) */
-          attachments: toAttachmentMetadata(attachments),
-          /* @conditional-compile-remove(rich-text-editor-composite-support) */
-          type: 'html'
-        }
-      );
-      setContentValue('');
-      editorComponentRef.current?.setEmptyContent();
-      editorComponentRef.current?.focus();
+      sendMessage(contentValue);
     }
   }, [
     disabled,
