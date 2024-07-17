@@ -604,7 +604,7 @@
     "leftNavButtonAriaLabel": "previous page",
     "rightNavButtonAriaLabel": "next page"
   },
-  "MeetingConferencePhoneInfo": {
+  "meetingConferencePhoneInfo": {
     "meetingConferencePhoneInfoModalTitle": "Join call from your phone",
     "meetingConferencePhoneInfoModalDialIn": "Dial number",
     "meetingConferencePhoneInfoModalMeetingId": "Enter meeting ID",
