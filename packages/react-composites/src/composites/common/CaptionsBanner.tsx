@@ -37,7 +37,9 @@ export const CaptionsBanner = (props: {
   };
 
   const containerClassName = mergeStyles({
-    position: 'relative'
+    position: 'absolute',
+    height: '100%',
+    width: '100%'
   });
 
   const floatingChildClassName = mergeStyles({

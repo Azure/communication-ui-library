@@ -739,7 +739,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       return <FocusedContentLayout {...layoutProps} />;
     }
     if (layout === 'floatingLocalVideo') {
-      return <FloatingLocalVideoLayout {...layoutProps} />;
+      return <FloatingLocalVideoLayout {...layoutProps} styles={{ gridLayout: { root: { display: 'none' } } }} />;
     }
 
     if (layout === 'speaker') {

@@ -56,8 +56,13 @@ export const captionContainerClassName = mergeStyles({
 export const captionsBannerClassName = (formFactor: 'default' | 'compact'): string => {
   return mergeStyles({
     overflowX: 'hidden',
-    height: formFactor === 'compact' ? '4.5rem' : '8.75rem',
+    // height: formFactor === 'compact' ? '4.5rem' : '8.75rem',
     overflowY: 'auto',
+    height: '100%',
+    width: '100%',
+    position: 'absolute',
+    backgroundColor: 'white',
+    left: 0,
     ...scrollbarStyles
   });
 };
@@ -68,7 +73,11 @@ export const captionsBannerClassName = (formFactor: 'default' | 'compact'): stri
 export const loadingBannerStyles = (formFactor: 'default' | 'compact'): IStackStyles => {
   return {
     root: {
-      height: formFactor === 'compact' ? '4.5rem' : '8.75rem'
+      // height: formFactor === 'compact' ? '4.5rem' : '8.75rem'
+      height: '100%',
+      width: '100%',
+      position: 'absolute',
+      left: 0
     }
   };
 };

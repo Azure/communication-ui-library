@@ -89,17 +89,21 @@ export const _CaptionsBanner = (props: _CaptionsBannerProps): JSX.Element => {
 
   useEffect(() => {
     // only auto scroll to bottom is already is at bottom of scroll before new caption comes in
-    if (isAtBottomOfScroll) {
-      scrollToBottom();
-    }
+    // if (isAtBottomOfScroll) {
+    scrollToBottom();
+    // }
   }, [captions, isAtBottomOfScroll]);
 
   return (
     <>
       {startCaptionsInProgress && (
-        <FocusZone as="ul" className={captionsContainerClassName}>
+        <FocusZone as="ul" className={captionsContainerClassName} data-ui-id="captions-banner">
           {isCaptionsOn && (
-            <div ref={captionsScrollDivRef} className={captionsBannerClassName(formFactor)}>
+            <div
+              ref={captionsScrollDivRef}
+              className={captionsBannerClassName(formFactor)}
+              data-ui-id="captions-banner-inner"
+            >
               {captions.map((caption) => {
                 return (
                   <div key={caption.id} className={captionContainerClassName} data-is-focusable={true}>
