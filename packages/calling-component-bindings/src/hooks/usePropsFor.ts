@@ -46,6 +46,7 @@ import { ReactionButton } from '@internal/react-components';
 import { _ComponentCallingHandlers } from '../handlers/createHandlers';
 /* @conditional-compile-remove(notifications) */
 import { notificationStackSelector, NotificationStackSelector } from '../notificationStackSelector';
+import { incomingCallStackSelector, IncomingCallStackSelector } from '../incomingCallStackSelector';
 
 /**
  * Primary hook to get all hooks necessary for a calling Component.
@@ -122,7 +123,7 @@ export type GetSelector<Component extends (props: any) => JSX.Element | undefine
                         : AreEqual<Component, typeof NotificationStack> extends true
                           ? /* @conditional-compile-remove(notifications) */ NotificationStackSelector
                           : AreEqual<Component, typeof IncomingCallStack> extends true
-                            ? /* @conditional-compile-remove(one-to-n-calling) */ NotificationStackSelector
+                            ? /* @conditional-compile-remove(one-to-n-calling) */ IncomingCallStackSelector
                             : undefined;
 
 /**
@@ -143,6 +144,10 @@ export const getSelector = <Component extends (props: any) => JSX.Element | unde
   }
   /* @conditional-compile-remove(notifications) */
   if (component === NotificationStack) {
+    return findConditionalCompiledSelector(component);
+  }
+  /* @conditional-compile-remove(one-to-n-calling) */
+  if (component === IncomingCallStack) {
     return findConditionalCompiledSelector(component);
   }
 
@@ -196,6 +201,6 @@ const findConditionalCompiledSelector = (component: (props: any) => JSX.Element 
     /* @conditional-compile-remove(one-to-n-calling) */
     case IncomingCallStack:
       /* @conditional-compile-remove(one-to-n-calling) */
-      return notificationStackSelector;
+      return incomingCallStackSelector;
   }
 };

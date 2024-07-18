@@ -4,20 +4,16 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import './App.css';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
-import {
-  CallCommon,
-  IncomingCall,
-  TeamsIncomingCall,
-  LocalVideoStream,
-  IncomingCallCommon
-} from '@azure/communication-calling';
+import { CallCommon, IncomingCall, TeamsIncomingCall } from '@azure/communication-calling';
 /* @conditional-compile-remove(one-to-n-calling) */
 import { IncomingCallEvent, TeamsIncomingCallEvent, CallAgent } from '@azure/communication-calling';
 import {
   DEFAULT_COMPONENT_ICONS,
   FluentThemeProvider,
   StatefulCallClient,
-  CallClientState
+  CallClientState,
+  CallClientProvider,
+  CallAgentProvider
 } from '@azure/communication-react';
 /* @conditional-compile-remove(one-to-n-calling) */
 import { DeclarativeCallAgent, DeclarativeTeamsCallAgent } from '@azure/communication-react';
@@ -25,7 +21,6 @@ import { Stack, Text, initializeIcons, registerIcons } from '@fluentui/react';
 import heroSVG from './assets/hero.svg';
 import { LoginScreen } from './views/Login';
 import { CallScreen } from './views/CallScreen';
-import { IncomingCallManager } from './components/IncomingCallManager';
 /* @conditional-compile-remove(one-to-n-calling) */
 import { HomeScreen } from './views/Homescreen';
 
@@ -45,16 +40,16 @@ function App(): JSX.Element {
   const [call, setCall] = useState<CallCommon>();
   const [incomingCalls, setIncomingCalls] = useState<readonly IncomingCall[] | readonly TeamsIncomingCall[]>([]);
 
-  /**
-   * Helper function to clear the old incoming Calls in the app that are no longer valid.
-   * @param statefulClient
-   */
-  const filterEndedIncomingCalls = useCallback(
-    (incomingCall: IncomingCallCommon): void => {
-      setIncomingCalls(incomingCalls.filter((call) => call.id !== incomingCall.id));
-    },
-    [incomingCalls]
-  );
+  // /**
+  //  * Helper function to clear the old incoming Calls in the app that are no longer valid.
+  //  * @param statefulClient
+  //  */
+  // const filterEndedIncomingCalls = useCallback(
+  //   (incomingCall: IncomingCallCommon): void => {
+  //     setIncomingCalls(incomingCalls.filter((call) => call.id !== incomingCall.id));
+  //   },
+  //   [incomingCalls]
+  // );
 
   /* @conditional-compile-remove(one-to-n-calling) */
   const incomingAcsCallListener: IncomingCallEvent = useCallback(
@@ -109,28 +104,28 @@ function App(): JSX.Element {
     [statefulCallClient, incomingCalls]
   );
 
-  // Examples for Callback functions for utilizing incomingCall reject and accept.
-  const onRejectCall = (incomingCall: IncomingCall | TeamsIncomingCall): void => {
-    if (incomingCall && /* @conditional-compile-remove(one-to-n-calling) */ callAgent) {
-      incomingCall.reject();
-      filterEndedIncomingCalls(incomingCall);
-    }
-  };
+  // // Examples for Callback functions for utilizing incomingCall reject and accept.
+  // const onRejectCall = (incomingCall: IncomingCall | TeamsIncomingCall): void => {
+  //   if (incomingCall && /* @conditional-compile-remove(one-to-n-calling) */ callAgent) {
+  //     incomingCall.reject();
+  //     filterEndedIncomingCalls(incomingCall);
+  //   }
+  // };
 
-  const onAcceptCall = async (incomingCall: IncomingCall | TeamsIncomingCall, useVideo?: boolean): Promise<void> => {
-    const cameras = statefulCallClient?.getState().deviceManager.cameras;
-    console.log(cameras);
-    let localVideoStream: LocalVideoStream | undefined;
-    if (cameras && useVideo) {
-      localVideoStream = new LocalVideoStream(cameras[0]);
-    }
-    if (incomingCall && /* @conditional-compile-remove(one-to-n-calling) */ callAgent) {
-      await incomingCall.accept(
-        localVideoStream ? { videoOptions: { localVideoStreams: [localVideoStream] } } : undefined
-      );
-      filterEndedIncomingCalls(incomingCall);
-    }
-  };
+  // const onAcceptCall = async (incomingCall: IncomingCall | TeamsIncomingCall, useVideo?: boolean): Promise<void> => {
+  //   const cameras = statefulCallClient?.getState().deviceManager.cameras;
+  //   console.log(cameras);
+  //   let localVideoStream: LocalVideoStream | undefined;
+  //   if (cameras && useVideo) {
+  //     localVideoStream = new LocalVideoStream(cameras[0]);
+  //   }
+  //   if (incomingCall && /* @conditional-compile-remove(one-to-n-calling) */ callAgent) {
+  //     await incomingCall.accept(
+  //       localVideoStream ? { videoOptions: { localVideoStreams: [localVideoStream] } } : undefined
+  //     );
+  //     filterEndedIncomingCalls(incomingCall);
+  //   }
+  // };
 
   useEffect(() => {
     if (statefulCallClient) {
@@ -202,29 +197,30 @@ function App(): JSX.Element {
 
   return (
     <FluentThemeProvider>
-      <Stack
-        verticalAlign="center"
-        horizontalAlign="center"
-        tokens={{ childrenGap: '1rem' }}
-        style={{ width: '100%', height: '40rem', margin: 'auto', paddingTop: '1rem', position: 'relative' }}
-      >
-        {userIdentifier && <Text>your userId: {userIdentifier.communicationUserId}</Text>}
-        {teamsIdentifier && <Text>your teamsId: {teamsIdentifier}</Text>}
-        {
-          /* @conditional-compile-remove(one-to-n-calling) */ statefulCallClient && callAgent && !call && (
-            <HomeScreen callAgent={callAgent as CallAgent} headerImageProps={imageProps}></HomeScreen>
-          )
-        }
-        {statefulCallClient && /* @conditional-compile-remove(one-to-n-calling) */ callAgent && call && (
-          <CallScreen
-            statefulCallClient={statefulCallClient}
-            /* @conditional-compile-remove(one-to-n-calling) */ callAgent={callAgent}
-            /* @conditional-compile-remove(one-to-n-calling) */ call={call}
-            /* @conditional-compile-remove(one-to-n-calling) */ onSetCall={setCall}
-          />
-        )}
-        <IncomingCallManager incomingCalls={incomingCalls} onAcceptCall={onAcceptCall} onRejectCall={onRejectCall} />
-      </Stack>
+      <CallClientProvider callClient={statefulCallClient}>
+        <CallAgentProvider callAgent={callAgent}>
+          <Stack
+            verticalAlign="center"
+            horizontalAlign="center"
+            tokens={{ childrenGap: '1rem' }}
+            style={{ width: '100%', height: '40rem', margin: 'auto', paddingTop: '1rem', position: 'relative' }}
+          >
+            {userIdentifier && <Text>your userId: {userIdentifier.communicationUserId}</Text>}
+            {teamsIdentifier && <Text>your teamsId: {teamsIdentifier}</Text>}
+            {
+              /* @conditional-compile-remove(one-to-n-calling) */ statefulCallClient && callAgent && !call && (
+                <HomeScreen callAgent={callAgent as CallAgent} headerImageProps={imageProps}></HomeScreen>
+              )
+            }
+            {statefulCallClient && /* @conditional-compile-remove(one-to-n-calling) */ callAgent && call && (
+              <CallScreen
+                /* @conditional-compile-remove(one-to-n-calling) */ call={call}
+                /* @conditional-compile-remove(one-to-n-calling) */ onSetCall={setCall}
+              />
+            )}
+          </Stack>
+        </CallAgentProvider>
+      </CallClientProvider>
     </FluentThemeProvider>
   );
 }

@@ -31,7 +31,7 @@ export interface ActiveIncomingCall {
   /**
    * End time of the incoming call.
    */
-  endTime: Date;
+  endTime?: Date;
 }
 
 /**
@@ -42,7 +42,7 @@ export interface IncomingCallStackProps {
   /**
    * List of incoming calls.
    */
-  incomingCalls: ActiveIncomingCall[];
+  activeIncomingCalls: ActiveIncomingCall[];
   /**
    * List of incoming calls that have ended.
    */
@@ -70,19 +70,25 @@ export interface IncomingCallStackProps {
  */
 export const IncomingCallStack = (props: IncomingCallStackProps): JSX.Element => {
   /* @conditional-compile-remove(one-to-n-calling) */
-  const { incomingCalls, onAcceptCall, onRejectCall } = props;
+  const { activeIncomingCalls, removedIncomingCalls, onAcceptCall, onRejectCall } = props;
   return (
     <Stack style={{ top: 0, position: 'absolute' }}>
       {
-        /* @conditional-compile-remove(one-to-n-calling) */ incomingCalls.map((incomingCall) => (
-          <IncomingCallNotification
-            key={incomingCall.id}
-            callerName={incomingCall.callerInfo.displayName}
-            onAcceptWithAudio={() => onAcceptCall(incomingCall.id)}
-            onAcceptWithVideo={() => onAcceptCall(incomingCall.id, true)}
-            onReject={() => onRejectCall(incomingCall.id)}
-          ></IncomingCallNotification>
-        ))
+        /* @conditional-compile-remove(one-to-n-calling) */ activeIncomingCalls.map((incomingCall) => {
+          if (!removedIncomingCalls.some((call) => call.id === incomingCall.id)) {
+            return (
+              <IncomingCallNotification
+                key={incomingCall.id}
+                callerName={incomingCall.callerInfo.displayName}
+                onAcceptWithAudio={() => onAcceptCall(incomingCall.id)}
+                onAcceptWithVideo={() => onAcceptCall(incomingCall.id, true)}
+                onReject={() => onRejectCall(incomingCall.id)}
+              ></IncomingCallNotification>
+            );
+          } else {
+            return null;
+          }
+        })
       }
     </Stack>
   );

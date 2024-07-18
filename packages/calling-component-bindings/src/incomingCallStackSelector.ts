@@ -4,14 +4,15 @@
 import { CallClientState, IncomingCallState, TeamsIncomingCallState } from '@internal/calling-stateful-client';
 import { getIncomingCalls, getRemovedIncomingCalls } from './baseSelectors';
 import { createSelector } from 'reselect';
+import { ActiveIncomingCall } from '@internal/react-components';
 
 /**
  * Selector to get the active and removed incoming calls.
  * @beta
  */
 export type IncomingCallStackSelector = (state: CallClientState) => {
-  activeIncomingCalls: IncomingCallState[] | TeamsIncomingCallState[];
-  removedIncomingCalls: IncomingCallState[] | TeamsIncomingCallState[];
+  activeIncomingCalls: ActiveIncomingCall[];
+  removedIncomingCalls: ActiveIncomingCall[];
 };
 
 /**
@@ -24,12 +25,35 @@ export const incomingCallStackSelector: IncomingCallStackSelector = createSelect
     incomingCalls,
     removedIncomingCalls
   ): {
-    activeIncomingCalls: IncomingCallState[] | TeamsIncomingCallState[];
-    removedIncomingCalls: IncomingCallState[] | TeamsIncomingCallState[];
+    activeIncomingCalls: ActiveIncomingCall[];
+    removedIncomingCalls: ActiveIncomingCall[];
   } => {
+    // Convert incoming call state to active incoming call
+    const componentIncomingCalls = incomingCalls.map((incomingCall: IncomingCallState | TeamsIncomingCallState) => {
+      return {
+        id: incomingCall.id,
+        callerInfo: {
+          displayName: incomingCall.callerInfo.displayName || 'Unknown Caller'
+        },
+        startTime: incomingCall.startTime,
+        endTime: incomingCall.endTime
+      };
+    });
+    const componentRemovedIncomingCalls = removedIncomingCalls.map(
+      (incomingCall: IncomingCallState | TeamsIncomingCallState) => {
+        return {
+          id: incomingCall.id,
+          callerInfo: {
+            displayName: incomingCall.callerInfo.displayName || 'Unknown Caller'
+          },
+          startTime: incomingCall.startTime,
+          endTime: incomingCall.endTime
+        };
+      }
+    );
     return {
-      activeIncomingCalls: incomingCalls,
-      removedIncomingCalls: removedIncomingCalls
+      activeIncomingCalls: componentIncomingCalls,
+      removedIncomingCalls: componentRemovedIncomingCalls
     };
   }
 );
