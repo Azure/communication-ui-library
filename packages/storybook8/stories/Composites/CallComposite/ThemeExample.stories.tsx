@@ -69,7 +69,7 @@ const ThemeExampleStory = (args: ArgsFrom<typeof storyControls>, context: any): 
 export const ThemeExample = ThemeExampleStory.bind({});
 
 const meta: Meta = {
-  title: 'Composites/CallComposite',
+  title: 'Composites/CallComposite/Theme Example',
   component: CallComposite,
   argTypes: {
     ...storyControls,
