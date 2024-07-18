@@ -112,6 +112,7 @@ export const isSendBoxButtonAriaDisabled = ({
   );
 };
 
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
 interface CancelInlineImageUploadProps {
   imageSrcArray: string[] | undefined;
   imageUploadsInProgress: AttachmentMetadataInProgress[] | undefined;
