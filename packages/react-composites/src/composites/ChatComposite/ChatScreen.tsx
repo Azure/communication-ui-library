@@ -63,15 +63,23 @@ import { SendBoxPicker } from '../common/SendBoxPicker';
 /* @conditional-compile-remove(rich-text-editor-composite-support) */
 import { loadRichTextSendBox } from '../common/SendBoxPicker';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
-import { useImageUpload } from './ImageUpload/useImageUpload';
-/* @conditional-compile-remove(rich-text-editor-image-upload) */
-import { removeImageTags } from './ImageUpload/ImageUploadUtils';
+import {
+  getEditBoxMessagesImageUploadsInProgress,
+  getSendBoxImageUploadsInProgress,
+  onCancelInlineImageUploadHandlerForEditBox,
+  onCancelInlineImageUploadHandlerForSendBox,
+  onUploadInlineImageForEditBox,
+  onUploadInlineImageForSendBox,
+  removeImageTags
+} from './ImageUpload/ImageUploadUtils';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import type { ChatAdapterState } from './adapter/ChatAdapter';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { isMicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { SEND_BOX_UPLOADS_KEY_VALUE } from '../common/constants';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+import { ImageUploadReducer } from './ImageUpload/ImageUploadReducer';
 
 /**
  * @private
@@ -134,20 +142,13 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const adapter = useAdapter();
   const theme = useTheme();
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  const [
-    editBoxMessagesImageUploadsInProgress,
-    sendBoxImageUploadsInProgress,
-    handleEditBoxInlineImageUploadAction,
-    handleSendBoxInlineImageUploadAction,
-    onUploadInlineImageForEditBox,
-    onUploadInlineImageForSendBox,
-    onCancelInlineImageUploadHandlerForEditBox,
-    onCancelInlineImageUploadHandlerForSendBox
-  ] = useImageUpload();
-  /* @conditional-compile-remove(rich-text-editor-image-upload) */
   const [textOnlyChat, setTextOnlyChat] = useState(false);
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   const [isACSChat, setIsACSChat] = useState(false);
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  const [editBoxInlineImageUploads, handleEditBoxInlineImageUploadAction] = useReducer(ImageUploadReducer, undefined);
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  const [sendBoxInlineImageUploads, handleSendBoxInlineImageUploadAction] = useReducer(ImageUploadReducer, undefined);
 
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   useEffect(() => {
@@ -575,23 +576,34 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
           /* @conditional-compile-remove(rich-text-editor-image-upload) */
           ...richTextEditorOptions,
           /* @conditional-compile-remove(rich-text-editor-image-upload) */
-          onUploadInlineImage: onUploadInlineImageForEditBox,
+          onUploadInlineImage: (imageUrl: string, imageFileName: string, messageId: string) => {
+            onUploadInlineImageForEditBox(
+              imageUrl,
+              imageFileName,
+              messageId,
+              adapter,
+              handleEditBoxInlineImageUploadAction
+            );
+          },
           /* @conditional-compile-remove(rich-text-editor-image-upload) */
-          messagesImageUploadsInProgress: editBoxMessagesImageUploadsInProgress,
+          messagesImageUploadsInProgress: getEditBoxMessagesImageUploadsInProgress(editBoxInlineImageUploads),
           /* @conditional-compile-remove(rich-text-editor-image-upload) */
-          onCancelInlineImageUpload: onCancelInlineImageUploadHandlerForEditBox
+          onCancelInlineImageUpload: (imageId: string, messageId: string) => {
+            onCancelInlineImageUploadHandlerForEditBox(
+              imageId,
+              messageId,
+              editBoxInlineImageUploads,
+              adapter,
+              handleEditBoxInlineImageUploadAction
+            );
+          }
         }
       : undefined;
   }, [
-    /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    editBoxMessagesImageUploadsInProgress,
-    /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    onCancelInlineImageUploadHandlerForEditBox,
-    /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    onUploadInlineImageForEditBox,
-    /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    richTextEditorOptions,
-    options?.richTextEditor
+    options?.richTextEditor,
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */ richTextEditorOptions,
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */ editBoxInlineImageUploads,
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */ adapter
   ]);
 
   /* @conditional-compile-remove(rich-text-editor-composite-support) */
@@ -601,23 +613,28 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
           /* @conditional-compile-remove(rich-text-editor-image-upload) */
           ...richTextEditorOptions,
           /* @conditional-compile-remove(rich-text-editor-image-upload) */
-          onUploadInlineImage: onUploadInlineImageForSendBox,
+          onUploadInlineImage: (imageUrl: string, imageFileName: string) => {
+            onUploadInlineImageForSendBox(imageUrl, imageFileName, adapter, handleSendBoxInlineImageUploadAction);
+          },
+          // onUploadInlineImageForSendBox,
           /* @conditional-compile-remove(rich-text-editor-image-upload) */
-          imageUploadsInProgress: sendBoxImageUploadsInProgress,
+          imageUploadsInProgress: getSendBoxImageUploadsInProgress(sendBoxInlineImageUploads),
           /* @conditional-compile-remove(rich-text-editor-image-upload) */
-          onCancelInlineImageUpload: onCancelInlineImageUploadHandlerForSendBox
+          onCancelInlineImageUpload: (imageId: string) => {
+            onCancelInlineImageUploadHandlerForSendBox(
+              imageId,
+              sendBoxInlineImageUploads,
+              adapter,
+              handleSendBoxInlineImageUploadAction
+            );
+          }
         }
       : undefined;
   }, [
-    /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    sendBoxImageUploadsInProgress,
-    /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    onUploadInlineImageForSendBox,
-    /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    onCancelInlineImageUploadHandlerForSendBox,
-    /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    richTextEditorOptions,
-    options?.richTextEditor
+    options?.richTextEditor,
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */ richTextEditorOptions,
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */ sendBoxInlineImageUploads,
+    adapter
   ]);
 
   return (
