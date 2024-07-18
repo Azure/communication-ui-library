@@ -634,7 +634,7 @@ export interface CallState {
   /**
    * Proxy of {@link @azure/communication-calling#TeamsMeetingAudioConferencingCallFeature}.
    */
-  teamsMeetingConference?: ConferencePhoneInfo[];
+  meetingConference?: { conferencePhones: ConferencePhoneInfo[] };
 }
 
 /**

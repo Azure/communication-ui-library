@@ -689,7 +689,9 @@ export type CallCompositeIcons = {
     DefaultCustomButton?: JSX.Element;
     DtmfDialpadButton?: JSX.Element;
     PhoneNumberButton?: JSX.Element;
-    PhoneInfoWait?: JSX.Element;
+    JoinByPhoneDialStepIcon?: JSX.Element;
+    JoinByPhoneConferenceIdIcon?: JSX.Element;
+    JoinByPhoneWaitToBeAdmittedIcon?: JSX.Element;
     PeoplePaneMoreButton?: JSX.Element;
     StopAllSpotlightMenuButton?: JSX.Element;
 };
@@ -1088,6 +1090,9 @@ export interface CallState {
     localParticipantReaction?: ReactionState;
     localRecording: LocalRecordingCallFeatureState;
     localVideoStreams: LocalVideoStreamState[];
+    meetingConference?: {
+        conferencePhones: ConferencePhoneInfo[];
+    };
     optimalVideoCount: OptimalVideoCountFeatureState;
     pptLive: PPTLiveCallFeatureState;
     raiseHand: RaiseHandCallFeature;
@@ -1103,7 +1108,6 @@ export interface CallState {
     spotlight?: SpotlightCallFeatureState;
     startTime: Date;
     state: CallState_2;
-    teamsMeetingConference?: ConferencePhoneInfo[];
     totalParticipantCount?: number;
     transcription: TranscriptionCallFeature;
     transfer: TransferFeature;
@@ -2257,7 +2261,7 @@ export interface ComponentStrings {
     imageOverlay: ImageOverlayStrings;
     // (undocumented)
     IncomingCallNotification: IncomingCallNotificationStrings;
-    MeetingConferencePhoneInfo: MeetingConferencePhoneInfoModalStrings;
+    meetingConferencePhoneInfo: MeetingConferencePhoneInfoModalStrings;
     mentionPopover: MentionPopoverStrings;
     messageStatusIndicator: MessageStatusIndicatorStrings;
     messageThread: MessageThreadStrings;
@@ -2764,7 +2768,9 @@ export const DEFAULT_COMPOSITE_ICONS: {
     DefaultCustomButton?: JSX.Element | undefined;
     DtmfDialpadButton?: JSX.Element | undefined;
     PhoneNumberButton?: JSX.Element | undefined;
-    PhoneInfoWait?: JSX.Element | undefined;
+    JoinByPhoneDialStepIcon?: JSX.Element | undefined;
+    JoinByPhoneConferenceIdIcon?: JSX.Element | undefined;
+    JoinByPhoneWaitToBeAdmittedIcon?: JSX.Element | undefined;
     PeoplePaneMoreButton?: JSX.Element | undefined;
     StopAllSpotlightMenuButton?: JSX.Element | undefined;
     ChevronLeft?: JSX.Element | undefined;
@@ -3387,14 +3393,14 @@ export interface MediaDiagnosticsState {
 
 // @public
 export interface MeetingConferencePhoneInfoModalStrings {
-    meetingConferencePhoneInfoModalDialIn?: string;
-    meetingConferencePhoneInfoModalMeetingId?: string;
-    meetingConferencePhoneInfoModalNoPhoneAvailable?: string;
-    meetingConferencePhoneInfoModalTitle?: string;
-    meetingConferencePhoneInfoModalToll?: string;
-    meetingConferencePhoneInfoModalTollFree?: string;
-    meetingConferencePhoneInfoModalTollGeoData?: string;
-    meetingConferencePhoneInfoModalWait?: string;
+    meetingConferencePhoneInfoModalDialIn: string;
+    meetingConferencePhoneInfoModalMeetingId: string;
+    meetingConferencePhoneInfoModalNoPhoneAvailable: string;
+    meetingConferencePhoneInfoModalTitle: string;
+    meetingConferencePhoneInfoModalToll: string;
+    meetingConferencePhoneInfoModalTollFree: string;
+    meetingConferencePhoneInfoModalTollGeoData: string;
+    meetingConferencePhoneInfoModalWait: string;
 }
 
 // @beta
@@ -3612,9 +3618,9 @@ export interface MessageThreadStyles extends BaseCustomStyles {
 }
 
 // @beta
-export type MessagingPolicy = {
+export interface MessagingPolicy {
     textOnlyChat?: boolean;
-};
+}
 
 // @public
 export const MicrophoneButton: (props: MicrophoneButtonProps) => JSX.Element;

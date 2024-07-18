@@ -572,7 +572,7 @@
     "leftNavButtonAriaLabel": "forrige side",
     "rightNavButtonAriaLabel": "neste side"
   },
-  "MeetingConferencePhoneInfo": {
+  "meetingConferencePhoneInfo": {
     "meetingConferencePhoneInfoModalTitle": "Bli med i samtalen fra telefonen",
     "meetingConferencePhoneInfoModalDialIn": "Slå nummer",
     "meetingConferencePhoneInfoModalMeetingId": "Skriv inn møte-ID",

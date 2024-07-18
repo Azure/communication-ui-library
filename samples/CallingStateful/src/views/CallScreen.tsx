@@ -14,7 +14,7 @@ export interface CallScreenProps {
   /* @conditional-compile-remove(one-to-n-calling) */
   call: CallCommon;
   /* @conditional-compile-remove(one-to-n-calling) */
-  onSetCall: (call: CallCommon) => void;
+  onSetCall: (call: Call | TeamsCall) => void;
 }
 
 export const CallScreen = (props: CallScreenProps): JSX.Element => {

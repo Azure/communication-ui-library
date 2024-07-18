@@ -188,7 +188,7 @@ export class CallContext {
         /* @conditional-compile-remove(meeting-id) */
         existingCall.info = call.info;
         /* @conditional-compile-remove(teams-meeting-conference) */
-        existingCall.teamsMeetingConference = call.teamsMeetingConference;
+        existingCall.meetingConference = call.meetingConference;
       } else {
         draft.calls[latestCallId] = call;
       }
@@ -571,7 +571,7 @@ export class CallContext {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
-        call.teamsMeetingConference = convertConferencePhoneInfo(teamsMeetingConferenceDetails);
+        call.meetingConference = { conferencePhones: convertConferencePhoneInfo(teamsMeetingConferenceDetails) };
       }
     });
   }
