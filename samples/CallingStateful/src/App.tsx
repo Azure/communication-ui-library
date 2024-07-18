@@ -39,36 +39,6 @@ function App(): JSX.Element {
   const [callAgent, setCallAgent] = useState<DeclarativeCallAgent | DeclarativeTeamsCallAgent>();
   const [call, setCall] = useState<Call | TeamsCall>();
   const [calls, setCalls] = useState<Call[] | TeamsCall[]>([]);
-  // const [incomingCalls, setIncomingCalls] = useState<IncomingCall[] | TeamsIncomingCall[]>([]);
-
-  // /**
-  //  * Helper function to clear the old incoming Calls in the app that are no longer valid.
-  //  * @param statefulClient
-  //  */
-  // const filterEndedIncomingCalls = useCallback(
-  //   (incomingCall: IncomingCallCommon): void => {
-  //     setIncomingCalls(incomingCalls.filter((call) => call.id !== incomingCall.id));
-  //   },
-  //   [incomingCalls]
-  // );
-
-  // // /* @conditional-compile-remove(one-to-n-calling) */
-  // const incomingAcsCallListener: IncomingCallEvent = useCallback(
-  //   ({ incomingCall }): void => {
-  //     console.log('Incoming call received: ', incomingCall);
-  //     setIncomingCalls((incomingCalls as IncomingCall[]).concat([incomingCall]));
-  //   },
-  //   [incomingCalls]
-  // );
-
-  // /* @conditional-compile-remove(one-to-n-calling) */
-  // const teamsIncomingCallListener: TeamsIncomingCallEvent = useCallback(
-  //   ({ incomingCall }): void => {
-  //     console.log('Incoming call received: ', incomingCall);
-  //     setIncomingCalls((incomingCalls as TeamsIncomingCall[]).concat([incomingCall]));
-  //   },
-  //   [incomingCalls]
-  // );
 
   const callsUpdatedListener = useCallback(
     (event: { added: CallCommon[]; removed: CallCommon[] }): void => {
@@ -89,52 +59,6 @@ function App(): JSX.Element {
     [call, callAgent?.calls]
   );
 
-  // /**
-  //  * We need to check the call client to make sure we are removing any of the notifications that
-  //  * are no longer valid.
-  //  */
-  // const statefulCallClientStateListener = useCallback(
-  //   (state: CallClientState): void => {
-  //     if (statefulCallClient) {
-  //       const endedIncomingCalls = Object.keys(state.incomingCallsEnded);
-  //       setIncomingCalls(incomingCalls.filter((call) => !endedIncomingCalls.includes(call.id)));
-  //     }
-  //   },
-  //   [statefulCallClient, incomingCalls]
-  // );
-
-  // // Examples for Callback functions for utilizing incomingCall reject and accept.
-  // const onRejectCall = (incomingCall: IncomingCall | TeamsIncomingCall): void => {
-  //   if (incomingCall && /* @conditional-compile-remove(one-to-n-calling) */ callAgent) {
-  //     incomingCall.reject();
-  //     filterEndedIncomingCalls(incomingCall);
-  //   }
-  // };
-
-  // const onAcceptCall = async (incomingCall: IncomingCall | TeamsIncomingCall, useVideo?: boolean): Promise<void> => {
-  //   const cameras = statefulCallClient?.getState().deviceManager.cameras;
-  //   console.log(cameras);
-  //   let localVideoStream: LocalVideoStream | undefined;
-  //   if (cameras && useVideo) {
-  //     localVideoStream = new LocalVideoStream(cameras[0]);
-  //   }
-  //   if (incomingCall && /* @conditional-compile-remove(one-to-n-calling) */ callAgent) {
-  //     await incomingCall.accept(
-  //       localVideoStream ? { videoOptions: { localVideoStreams: [localVideoStream] } } : undefined
-  //     );
-  //     filterEndedIncomingCalls(incomingCall);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   if (statefulCallClient) {
-  //     statefulCallClient.onStateChange(statefulCallClientStateListener);
-  //   }
-  //   return () => {
-  //     statefulCallClient?.offStateChange(statefulCallClientStateListener);
-  //   };
-  // }, [statefulCallClient, statefulCallClientStateListener]);
-
   useEffect(() => {
     /* @conditional-compile-remove(one-to-n-calling) */
     if (!callAgent) {
@@ -153,10 +77,7 @@ function App(): JSX.Element {
       console.log('subscribing to ACS CallAgent events');
       /* @conditional-compile-remove(one-to-n-calling) */
       (callAgent as DeclarativeCallAgent).on('callsUpdated', callsUpdatedListener);
-      // (callAgent as DeclarativeCallAgent).on('incomingCall', incomingAcsCallListener);
       return () => {
-        /* @conditional-compile-remove(one-to-n-calling) */
-        // (callAgent as DeclarativeCallAgent).off('incomingCall', incomingAcsCallListener);
         /* @conditional-compile-remove(one-to-n-calling) */
         (callAgent as DeclarativeCallAgent).off('callsUpdated', callsUpdatedListener);
       };
