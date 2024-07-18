@@ -5,12 +5,10 @@ import { CallState, DeviceManagerState } from '@internal/calling-stateful-client
 import { CaptionsInfo } from '@internal/calling-stateful-client';
 
 import type {
-  AssignedBreakoutRoomUpdatedListener,
   BackgroundBlurConfig,
   BackgroundReplacementConfig,
-  BreakoutRoomJoinedListener,
   BreakoutRoomSettings,
-  BreakoutRoomSettingsAvailableListener
+  BreakoutRoomsUpdatedListener
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(reaction) */
 import { Reaction } from '@azure/communication-calling';
@@ -933,17 +931,9 @@ export interface CallAdapterSubscribers {
    */
   on(event: 'mutedByOthers', listener: PropertyChangedEvent): void;
   /**
-   * Subscribe function for 'assignedBreakoutRoomUpdated' event.
+   * Subscribe function for 'breakoutRoomsUpdated' event.
    */
-  on(event: 'assignedBreakoutRoomUpdated', listener: AssignedBreakoutRoomUpdatedListener): void;
-  /**
-   * Subscribe function for 'breakoutRoomJoined' event.
-   */
-  on(event: 'breakoutRoomJoined', listener: BreakoutRoomJoinedListener): void;
-  /**
-   * Subscribe function for 'breakoutRoomSettingsAvailable' event.
-   */
-  on(event: 'breakoutRoomSettingsAvailable', listener: BreakoutRoomSettingsAvailableListener): void;
+  on(event: 'breakoutRoomsUpdated', listener: BreakoutRoomsUpdatedListener): void;
 
   /**
    * Unsubscribe function for 'participantsJoined' event.
@@ -1032,17 +1022,9 @@ export interface CallAdapterSubscribers {
    */
   off(event: 'mutedByOthers', listener: PropertyChangedEvent): void;
   /**
-   * Unsubscribe function for 'assignedBreakoutRoomUpdated' event.
+   * Unsubscribe function for 'breakoutRoomsUpdated' event.
    */
-  off(event: 'assignedBreakoutRoomUpdated', listener: AssignedBreakoutRoomUpdatedListener): void;
-  /**
-   * Unsubscribe function for 'breakoutRoomJoined' event.
-   */
-  off(event: 'breakoutRoomJoined', listener: BreakoutRoomJoinedListener): void;
-  /**
-   * Unsubscribe function for 'breakoutRoomSettingsAvailable' event.
-   */
-  off(event: 'breakoutRoomSettingsAvailable', listener: BreakoutRoomSettingsAvailableListener): void;
+  off(event: 'breakoutRoomsUpdated', listener: BreakoutRoomsUpdatedListener): void;
 }
 
 // This type remains for non-breaking change reason

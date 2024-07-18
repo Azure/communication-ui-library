@@ -13,7 +13,8 @@ import {
   PropertyChangedEvent,
   TeamsMeetingLinkLocator,
   StartCallOptions,
-  VideoDeviceInfo
+  VideoDeviceInfo,
+  BreakoutRoomsEventData
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(meeting-id) */
 import { TeamsMeetingIdLocator } from '@azure/communication-calling';
@@ -101,7 +102,6 @@ import { CapabilitiesChangedListener } from '../../CallComposite/adapter/CallAda
 import { SpotlightChangedListener } from '../../CallComposite/adapter/CallAdapter';
 import { VideoBackgroundImage, VideoBackgroundEffect } from '../../CallComposite';
 import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
-import { CallCommon } from '@internal/calling-stateful-client';
 
 type CallWithChatAdapterStateChangedHandler = (newState: CallWithChatAdapterState) => void;
 
@@ -173,6 +173,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     }
 
     const onCallStateChange = (newCallAdapterState: CallAdapterState): void => {
+      // This code is to join the main meeting chat thread when going back to the main meeting from a breakout room
       const chatAdapterState = this.chatAdapter?.getState();
       const mainMeeting = newCallAdapterState.mainMeeting;
       const threadId = mainMeeting?.info?.threadId;
@@ -183,16 +184,18 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
         newCallAdapterState.call?.id &&
         newCallAdapterState.call.id === mainMeeting?.id
       ) {
-        this.chatAdapter?.switchChatThread(threadId);
+        this.switchChatThread(threadId);
       }
       this.context.updateClientStateWithCallState(newCallAdapterState);
     };
 
     this.callAdapter.onStateChange(onCallStateChange);
-    this.callAdapter.on('breakoutRoomJoined', (call: CallCommon) => {
-      const threadId = this.callAdapter.getState().mainMeeting?.breakoutRooms?.assignedBreakoutRoom?.threadId;
-      if (threadId && this.chatAdapter) {
-        this.chatAdapter.switchChatThread(threadId);
+    this.callAdapter.on('breakoutRoomsUpdated', (eventData: BreakoutRoomsEventData) => {
+      if (eventData.type === 'join') {
+        const threadId = this.callAdapter.getState().mainMeeting?.breakoutRooms?.assignedBreakoutRoom?.threadId;
+        if (threadId && this.chatAdapter) {
+          this.switchChatThread(threadId);
+        }
       }
     });
     this.onCallStateChange = onCallStateChange;
@@ -594,7 +597,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   public async returnToMainMeeting(): Promise<void> {
     const threadId = this.callAdapter.getState().mainMeeting?.info?.threadId;
     if (threadId) {
-      await this.chatAdapter?.switchChatThread(threadId);
+      await this.switchChatThread(threadId);
     }
     return this.callAdapter.returnToMainMeeting();
   }

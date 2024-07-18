@@ -46,13 +46,11 @@ import { TransferEventArgs } from '@azure/communication-calling';
 import { StartCaptionsOptions, TeamsCaptionsInfo } from '@azure/communication-calling';
 
 import type {
-  AssignedBreakoutRoomUpdatedListener,
   BackgroundBlurConfig,
   BackgroundReplacementConfig,
-  BreakoutRoom,
-  BreakoutRoomJoinedListener,
   BreakoutRoomSettings,
-  BreakoutRoomSettingsAvailableListener
+  BreakoutRoomsEventData,
+  BreakoutRoomsUpdatedListener
 } from '@azure/communication-calling';
 
 import type { CapabilitiesChangeInfo } from '@azure/communication-calling';
@@ -1088,15 +1086,15 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
       const mainMeeting = this.getState().mainMeeting;
       return mainMeeting?.id && mainMeeting.id === callAgentCall.id;
     });
+    console.log('DEBUG returnToMainMeeting mainMeetingCall: ', mainMeetingCall);
     if (mainMeetingCall) {
-      if (this.getState().call) {
-        this.leaveCall().then(() => {
-          this.processNewCall(mainMeetingCall);
-          this.resumeCall();
-        });
-      } else {
-        this.processNewCall(mainMeetingCall);
-        this.resumeCall();
+      const breakoutRoomCall = this.call;
+      console.log('DEBUG breakoutRoomCall.id before: ', breakoutRoomCall?.id);
+      this.processNewCall(mainMeetingCall);
+      await this.resumeCall();
+      console.log('DEBUG breakoutRoomCall.id after: ', breakoutRoomCall?.id);
+      if (breakoutRoomCall?.state === 'Connected') {
+        breakoutRoomCall.hangUp();
       }
     }
   }
@@ -1145,10 +1143,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
   on(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
   /* @conditional-compile-remove(soft-mute) */
   on(event: 'mutedByOthers', listener: PropertyChangedEvent): void;
-
-  on(event: 'assignedBreakoutRoomUpdated', listener: AssignedBreakoutRoomUpdatedListener): void;
-  on(event: 'breakoutRoomJoined', listener: BreakoutRoomJoinedListener): void;
-  on(event: 'breakoutRoomSettingsAvailable', listener: BreakoutRoomSettingsAvailableListener): void;
+  on(event: 'breakoutRoomsUpdated', listener: BreakoutRoomsUpdatedListener): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public on(event: string, listener: (e: any) => void): void {
@@ -1228,9 +1223,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     this.call?.feature(Features.Spotlight).on('spotlightChanged', this.spotlightChanged.bind(this));
     const breakoutRoomsFeature = this.call?.feature(Features.BreakoutRooms);
     if (breakoutRoomsFeature) {
-      breakoutRoomsFeature.on('assignedBreakoutRoomUpdated', this.assignedBreakoutRoomUpdated.bind(this));
-      breakoutRoomsFeature.on('breakoutRoomJoined', this.breakoutRoomJoined.bind(this));
-      breakoutRoomsFeature.on('breakoutRoomSettingsAvailable', this.breakoutRoomSettingsAvailable.bind(this));
+      breakoutRoomsFeature.on('breakoutRoomsUpdated', this.breakoutRoomsUpdated.bind(this));
     }
   }
 
@@ -1371,29 +1364,21 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     this.emitter.emit('spotlightChanged', args);
   }
 
-  private assignedBreakoutRoomUpdated(_breakoutRoom: BreakoutRoom): void {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const breakoutRoom = (_breakoutRoom as any)['breakoutRoom'];
-    this.emitter.emit('assignedBreakoutRoomUpdated', breakoutRoom);
+  private breakoutRoomsUpdated(eventData: BreakoutRoomsEventData): void {
+    if (eventData.type === 'join') {
+      this.breakoutRoomJoined(eventData.data as Call | TeamsCall);
+    } else if (eventData.type === 'breakoutRoomSettings') {
+      this.context.setBreakoutRoomSettings(eventData.data as BreakoutRoomSettings);
+    }
+    this.emitter.emit('breakoutRoomsUpdated', eventData);
   }
 
-  private breakoutRoomJoined(_call: Call | TeamsCall): void {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const call = (_call as any)['call'];
-    console.log('Call adapter breakoutRoomJoined');
+  private breakoutRoomJoined(call: Call | TeamsCall): void {
     const thisCallState = this.call?.id ? this.callClient.getState().calls[this.call.id] : undefined;
     if (thisCallState) {
       this.context.setMainMeeting(thisCallState);
     }
     this.processNewCall(call);
-    this.emitter.emit('breakoutRoomJoined', call);
-  }
-
-  private breakoutRoomSettingsAvailable(_breakoutRoomSettings: BreakoutRoomSettings): void {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const breakoutRoomSettings = (_breakoutRoomSettings as any)['breakoutRoomSettings'];
-    this.context.setBreakoutRoomSettings(breakoutRoomSettings);
-    this.emitter.emit('breakoutRoomSettingsAvailable', breakoutRoomSettings);
   }
 
   private callIdChanged(): void {
@@ -1431,10 +1416,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
   off(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
   /* @conditional-compile-remove(soft-mute) */
   off(event: 'mutedByOthers', listener: PropertyChangedEvent): void;
-
-  off(event: 'assignedBreakoutRoomUpdated', listener: AssignedBreakoutRoomUpdatedListener): void;
-  off(event: 'breakoutRoomJoined', listener: BreakoutRoomJoinedListener): void;
-  off(event: 'breakoutRoomSettingsAvailable', listener: BreakoutRoomSettingsAvailableListener): void;
+  off(event: 'breakoutRoomsUpdated', listener: BreakoutRoomsUpdatedListener): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public off(event: string, listener: (e: any) => void): void {

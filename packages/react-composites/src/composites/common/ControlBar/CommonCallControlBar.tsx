@@ -144,6 +144,8 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
   const isTeams = useSelector(getIsTeamsCall);
   const assignedBreakoutRoom = useSelector(getAssignedBreakoutRoom);
   const breakoutRoomSettings = useSelector(getBreakoutRoomSettings);
+  console.log('ControlBar assignedBreakoutRoom: ', assignedBreakoutRoom);
+  console.log('ControlBar breakoutRoomSettings: ', breakoutRoomSettings);
 
   const handleResize = useCallback((): void => {
     setControlBarButtonsWidth(controlBarContainerRef.current ? controlBarContainerRef.current.offsetWidth : 0);

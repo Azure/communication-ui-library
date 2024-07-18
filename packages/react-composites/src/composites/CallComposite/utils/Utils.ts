@@ -358,6 +358,14 @@ export const getCallCompositePage: GetCallCompositePageFunction = (
   }
 
   if (previousCall) {
+    console.log(
+      'DEBUG mainMeeting?.breakoutRooms?.assignedBreakoutRoom?.state: ',
+      mainMeeting?.breakoutRooms?.assignedBreakoutRoom?.state
+    );
+    console.log(
+      'DEBUG breakoutRoomSettings?.disableReturnToMainMeeting: ',
+      breakoutRoomSettings?.disableReturnToMainMeeting
+    );
     const reason = getCallEndReason(previousCall);
     switch (reason) {
       case CallEndReasons.ACCESS_DENIED:

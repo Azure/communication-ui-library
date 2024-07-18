@@ -210,7 +210,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     while (++attempt <= 20) {
       const chatThreads = this.chatClient.getState().threads;
       console.log(
-        `Finding thread Id ${threadId} in list of chat threads ${Object.keys(chatThreads)} on attempt #${attempt}...`
+        `DEBUG Finding thread Id ${threadId} in list of chat threads ${Object.keys(chatThreads)} on attempt #${attempt}...`
       );
       if (Object.keys(chatThreads).find((chatThread) => chatThread === threadId)) {
         try {
