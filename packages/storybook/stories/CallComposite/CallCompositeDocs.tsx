@@ -282,7 +282,6 @@ export const Docs: () => JSX.Element = () => {
       </Description>
       <Source code="<CallComposite options={{ callControls: { endCallButton: { disableEndCallModal: true } } }} />"></Source>
       <Heading>Customize Local Video Tile</Heading>
-      <SingleLineBetaBanner version={'1.7.0-beta.1'} />
       <Description>
         Just like customizing the control bar we have some configuration options for the local video tile. These
         controls are to help facilitate different calling experiences like creating an audio only call.
