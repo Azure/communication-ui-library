@@ -13668,7 +13668,7 @@ packages:
       - supports-color
     dev: false
 
-  /eslint-plugin-prettier@5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.3):
+  /eslint-plugin-prettier@5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.2):
     resolution: {integrity: sha512-C9GCVAs4Eq7ZC/XFQHITLiHJxQngdtraXaM+LoUFoFp/lHNl2Zn8f3WQbe9HvTBBQ9YnKFB0/2Ajdqwo5D1EAw==}
     engines: {node: ^14.18.0 || >=16.0.0}
     peerDependencies:
@@ -13684,7 +13684,7 @@ packages:
     dependencies:
       eslint: 8.57.0
       eslint-config-prettier: 9.1.0(eslint@8.57.0)
-      prettier: 3.3.3
+      prettier: 3.3.2
       prettier-linter-helpers: 1.0.0
       synckit: 0.8.8
     dev: false
@@ -19603,6 +19603,12 @@ packages:
     hasBin: true
     dev: false
 
+  /prettier@3.3.2:
+    resolution: {integrity: sha512-rAVeHYMcv8ATV5d508CFdn+8/pHPpXeIid1DdrPwXnaAdH7cqjVbpJaT5eq4yRAFU/lsbwYwSF/n5iNrdJHPQA==}
+    engines: {node: '>=14'}
+    hasBin: true
+    dev: false
+
   /prettier@3.3.3:
     resolution: {integrity: sha512-i2tDNA0O5IrMO757lfrdQZCc2jPNDVntV0m/+4whiDfWaTKfMNgR7Qz0NAeGz/nRqF4m5/6CLzbP4/liHt12Ew==}
     engines: {node: '>=14'}
@@ -19660,7 +19666,7 @@ packages:
     engines: {node: '>= 0.8'}
     dev: false
 
-  /pretty-quick@4.0.0(prettier@3.3.3):
+  /pretty-quick@4.0.0(prettier@3.3.2):
     resolution: {integrity: sha512-M+2MmeufXb/M7Xw3Afh1gxcYpj+sK0AxEfnfF958ktFeAyi5MsKY5brymVURQLgPLV1QaF5P4pb2oFJ54H3yzQ==}
     engines: {node: '>=14'}
     hasBin: true
@@ -19673,7 +19679,7 @@ packages:
       mri: 1.2.0
       picocolors: 1.0.0
       picomatch: 3.0.1
-      prettier: 3.3.3
+      prettier: 3.3.2
       tslib: 2.6.2
     dev: false
 
@@ -24346,7 +24352,7 @@ packages:
     dev: false
 
   file:projects/acs-ui-common.tgz:
-    resolution: {integrity: sha512-iI29poVKsx6jK6HAdeyGKgMog4EoevrE/sexBPYKvFlyRgNZMOQiNsWCPwuwfCvILslFbbEErfB41/att8ul+w==, tarball: file:projects/acs-ui-common.tgz}
+    resolution: {integrity: sha512-36aUZX+24nr5DmBNeRzos1T23jw+FYN0P5oao5Qay1O6dY5HsrSlodnXO3jmPKViN5XBnWydgMFRnEYWgOdjVg==, tarball: file:projects/acs-ui-common.tgz}
     name: '@rush-temp/acs-ui-common'
     version: 0.0.0
     dependencies:
@@ -24369,10 +24375,10 @@ packages:
       eslint-plugin-header: 3.1.1(eslint@8.57.0)
       eslint-plugin-import: 2.29.1(eslint@8.57.0)
       eslint-plugin-jsdoc: 36.1.1(eslint@8.57.0)
-      eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.3)
+      eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.2)
       if-env: 1.0.4
       jest: 29.7.0(@types/node@20.14.11)(ts-node@10.9.2)
-      prettier: 3.3.3
+      prettier: 3.3.2
       react: 18.3.1
       rimraf: 2.7.1
       rollup: 4.12.1
@@ -24392,7 +24398,7 @@ packages:
     dev: false
 
   file:projects/acs-ui-javascript-loaders.tgz:
-    resolution: {integrity: sha512-ZXqvKjpbi9YkH+Zn2aF5nTGkNWsD7kkCcGiIE4BN3pvAs2rFe4rqm5Z/lhzAvipt9QAusJaw03VqD7ldbrF/CQ==, tarball: file:projects/acs-ui-javascript-loaders.tgz}
+    resolution: {integrity: sha512-fCW1RUFnYoeo6JHpClm6aZmpz7T4EClozncGuyifvdgA7akpTnub/mhasL+uVt2IK6+UyedH5LDGFRYm97+PTw==, tarball: file:projects/acs-ui-javascript-loaders.tgz}
     name: '@rush-temp/acs-ui-javascript-loaders'
     version: 0.0.0
     dependencies:
@@ -24415,10 +24421,10 @@ packages:
       eslint-plugin-header: 3.1.1(eslint@8.57.0)
       eslint-plugin-import: 2.29.1(eslint@8.57.0)
       eslint-plugin-jsdoc: 36.1.1(eslint@8.57.0)
-      eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.3)
+      eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.2)
       if-env: 1.0.4
       jest: 29.7.0(@types/node@20.14.11)(ts-node@10.9.2)
-      prettier: 3.3.3
+      prettier: 3.3.2
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
       rimraf: 2.7.1
@@ -24439,7 +24445,7 @@ packages:
     dev: false
 
   file:projects/calling-component-bindings.tgz:
-    resolution: {integrity: sha512-GWsUPtgG+dv/8yGSgg8SkPtVhG1hazYmeSaUmVZEfMFthinRO26WrlilNqZsYhHz3EY8jZgBZc/N4IwmtJL3/Q==, tarball: file:projects/calling-component-bindings.tgz}
+    resolution: {integrity: sha512-8ioQlDQVqeaoWKXYnpNf5K5vtecY/qGzIIk/B6jPa7O2y30qVWGEfUou8ITzWSOD//6hmg9ITE/Y0nm7iM5dKQ==, tarball: file:projects/calling-component-bindings.tgz}
     name: '@rush-temp/calling-component-bindings'
     version: 0.0.0
     dependencies:
@@ -24463,11 +24469,11 @@ packages:
       eslint-plugin-header: 3.1.1(eslint@8.57.0)
       eslint-plugin-import: 2.29.1(eslint@8.57.0)
       eslint-plugin-jsdoc: 36.1.1(eslint@8.57.0)
-      eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.3)
+      eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.2)
       if-env: 1.0.4
       jest: 29.7.0(@types/node@20.14.11)(ts-node@10.9.2)
       memoize-one: 5.2.1
-      prettier: 3.3.3
+      prettier: 3.3.2
       react: 18.3.1
       reselect: 4.1.8
       rimraf: 2.7.1
@@ -24488,7 +24494,7 @@ packages:
     dev: false
 
   file:projects/calling-stateful-client.tgz:
-    resolution: {integrity: sha512-yFjlAisG4bk88ze1+BtchRmAwFMXEfEFAo+LATfiIlwdL/dVoQMuRug5iUGGy4ECh5wfHSYlq1QetsZXR9ok7A==, tarball: file:projects/calling-stateful-client.tgz}
+    resolution: {integrity: sha512-f6e6Qcwu4LGTyjiDdXT6S2RRjsKM7zlIUbjFh06pNaPO8+2Le8ed/Htp1JIiO65FF2pgAo/ZfU3MXeevHb3pFw==, tarball: file:projects/calling-stateful-client.tgz}
     name: '@rush-temp/calling-stateful-client'
     version: 0.0.0
     dependencies:
@@ -24513,12 +24519,12 @@ packages:
       eslint-plugin-header: 3.1.1(eslint@8.57.0)
       eslint-plugin-import: 2.29.1(eslint@8.57.0)
       eslint-plugin-jsdoc: 36.1.1(eslint@8.57.0)
-      eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.3)
+      eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.2)
       events: 3.3.0
       if-env: 1.0.4
       immer: 10.1.1
       jest: 29.7.0(@types/node@20.14.11)(ts-node@10.9.2)
-      prettier: 3.3.3
+      prettier: 3.3.2
       rimraf: 2.7.1
       rollup: 4.12.1
       ts-jest: 29.1.5(@babel/core@7.24.9)(babel-jest@29.7.0)(jest@29.7.0)(typescript@5.4.5)
@@ -24537,7 +24543,7 @@ packages:
     dev: false
 
   file:projects/calling.tgz:
-    resolution: {integrity: sha512-ZmtbxdCEit02gGIoxlmH6tzYBunhKWqxFVs0FmQN1KS4H1mY5yNHxdvLkkn/fdTgcZ3QauXp6tLTdEWc+ynYng==, tarball: file:projects/calling.tgz}
+    resolution: {integrity: sha512-UIYsngnicquSzYR9HdvYjQv3FTZrRsYssm2T+sOOE3O7bkQS74iGFtJwEPoTH+Yhmy7nMzEKhz7dcApJxXvLvg==, tarball: file:projects/calling.tgz}
     name: '@rush-temp/calling'
     version: 0.0.0
     dependencies:
@@ -24576,7 +24582,7 @@ packages:
       eslint-plugin-header: 3.1.1(eslint@8.57.0)
       eslint-plugin-import: 2.29.1(eslint@8.57.0)
       eslint-plugin-jsx-a11y: 6.8.0(eslint@8.57.0)
-      eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.3)
+      eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.2)
       eslint-plugin-react: 7.34.4(eslint@8.57.0)
       eslint-plugin-react-hooks: 4.6.2(eslint@8.57.0)
       follow-redirects: 1.15.3
@@ -24589,8 +24595,8 @@ packages:
       mobile-detect: 1.4.5
       nanoid: 3.3.6
       node-fetch: 2.6.7
-      prettier: 3.3.3
-      pretty-quick: 4.0.0(prettier@3.3.3)
+      prettier: 3.3.2
+      pretty-quick: 4.0.0(prettier@3.3.2)
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
       react-router-dom: 5.3.4(react@18.3.1)
@@ -24631,7 +24637,7 @@ packages:
     dev: false
 
   file:projects/callingstateful.tgz:
-    resolution: {integrity: sha512-t7tL6Ko22t9ize1NYu49NRXd4LkRUYstuDPBT5G4xiPMCGLV07B16J9nlDaSS+dKWiZ4XApG7Ri8myAJ3cf/2w==, tarball: file:projects/callingstateful.tgz}
+    resolution: {integrity: sha512-vUY+z1yzs6sVvalW1s585aGI1pZe0q0C3ipEcGQlH56HUOWmsHr3N8+taUV6mDT6ya2YskOyHijmsxsIvUV9Qw==, tarball: file:projects/callingstateful.tgz}
     name: '@rush-temp/callingstateful'
     version: 0.0.0
     dependencies:
@@ -24670,7 +24676,7 @@ packages:
       eslint-plugin-header: 3.1.1(eslint@8.57.0)
       eslint-plugin-import: 2.29.1(eslint@8.57.0)
       eslint-plugin-jsx-a11y: 6.8.0(eslint@8.57.0)
-      eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.3)
+      eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.2)
       eslint-plugin-react: 7.34.4(eslint@8.57.0)
       eslint-plugin-react-hooks: 4.6.2(eslint@8.57.0)
       follow-redirects: 1.15.3
@@ -24683,8 +24689,8 @@ packages:
       mobile-detect: 1.4.5
       nanoid: 3.3.6
       node-fetch: 2.6.7
-      prettier: 3.3.3
-      pretty-quick: 4.0.0(prettier@3.3.3)
+      prettier: 3.3.2
+      pretty-quick: 4.0.0(prettier@3.3.2)
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
       react-router-dom: 5.3.4(react@18.3.1)
@@ -24725,7 +24731,7 @@ packages:
     dev: false
 
   file:projects/callwithchat.tgz:
-    resolution: {integrity: sha512-9/XtLAfRzKk8U9TyT0DbTnhRXs6N5mdwptuHkxSsKSQjYVK8sHkjOsSSZYrJQCE1tO2YMStazKtQnuRyQm2DdA==, tarball: file:projects/callwithchat.tgz}
+    resolution: {integrity: sha512-LQ7iIN2oSnaldmxFj0U6DveaqTnH9d/ZjB7EXLIEayEXpoUYUAgG+JkQYwXEpMVUgFQQRTVstwKLwaIe8H6BsA==, tarball: file:projects/callwithchat.tgz}
     name: '@rush-temp/callwithchat'
     version: 0.0.0
     dependencies:
@@ -24766,7 +24772,7 @@ packages:
       eslint-plugin-header: 3.1.1(eslint@8.57.0)
       eslint-plugin-import: 2.29.1(eslint@8.57.0)
       eslint-plugin-jsx-a11y: 6.8.0(eslint@8.57.0)
-      eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.3)
+      eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.2)
       eslint-plugin-react: 7.34.4(eslint@8.57.0)
       eslint-plugin-react-hooks: 4.6.2(eslint@8.57.0)
       html-webpack-plugin: 5.6.0(webpack@5.89.0)
@@ -24776,8 +24782,8 @@ packages:
       jest-junit: 16.0.0
       merge: 2.1.1
       mobile-detect: 1.4.5
-      prettier: 3.3.3
-      pretty-quick: 4.0.0(prettier@3.3.3)
+      prettier: 3.3.2
+      pretty-quick: 4.0.0(prettier@3.3.2)
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
       react-router-dom: 5.3.4(react@18.3.1)
@@ -24818,7 +24824,7 @@ packages:
     dev: false
 
   file:projects/chat-component-bindings.tgz:
-    resolution: {integrity: sha512-0IsC6GAF8E+ap5nZ4bzuzo+MiWxGATFw/xvUA2rCRGC4XZ8wCshr31eoavXG1e1AvgVJ5/XSa91nRIQ6D/Dq2Q==, tarball: file:projects/chat-component-bindings.tgz}
+    resolution: {integrity: sha512-06k2mp3aoLBy1/eoDJJHVpErMaXKLx4sNmftSrJAyIRZ9w6s0uB+GrbfHj25Py3Xif++DzMcoJUyESYI0qkb5g==, tarball: file:projects/chat-component-bindings.tgz}
     name: '@rush-temp/chat-component-bindings'
     version: 0.0.0
     dependencies:
@@ -24840,11 +24846,11 @@ packages:
       eslint-plugin-header: 3.1.1(eslint@8.57.0)
       eslint-plugin-import: 2.29.1(eslint@8.57.0)
       eslint-plugin-jsdoc: 36.1.1(eslint@8.57.0)
-      eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.3)
+      eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.2)
       if-env: 1.0.4
       jest: 29.7.0(@types/node@20.14.11)(ts-node@10.9.2)
       memoize-one: 5.2.1
-      prettier: 3.3.3
+      prettier: 3.3.2
       react: 18.3.1
       reselect: 4.1.8
       rimraf: 2.7.1
@@ -24861,7 +24867,7 @@ packages:
     dev: false
 
   file:projects/chat-stateful-client.tgz:
-    resolution: {integrity: sha512-nF/cXPEgkWRnZUr5lIr94ig6VUy2e8xuGJLegMJAE3e/9fYe8JW6HCde12qmJaUcWdbphuBwoKod1kfXr+MUQg==, tarball: file:projects/chat-stateful-client.tgz}
+    resolution: {integrity: sha512-OSBgd/mWQK64xNuhPpdwC4PkW8TMwQnso42+4A0bD17JyaxopBbQrtj/s1Z5Q6GCvNUbXtOafRQe+Q3MOBNtTg==, tarball: file:projects/chat-stateful-client.tgz}
     name: '@rush-temp/chat-stateful-client'
     version: 0.0.0
     dependencies:
@@ -24887,13 +24893,13 @@ packages:
       eslint-plugin-header: 3.1.1(eslint@8.57.0)
       eslint-plugin-import: 2.29.1(eslint@8.57.0)
       eslint-plugin-jsdoc: 36.1.1(eslint@8.57.0)
-      eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.3)
+      eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.2)
       events: 3.3.0
       if-env: 1.0.4
       immer: 10.1.1
       jest: 29.7.0(@types/node@20.14.11)(ts-node@10.9.2)
       nanoid: 3.3.6
-      prettier: 3.3.3
+      prettier: 3.3.2
       rimraf: 2.7.1
       rollup: 4.12.1
       ts-jest: 29.1.5(@babel/core@7.24.9)(babel-jest@29.7.0)(jest@29.7.0)(typescript@5.4.5)
@@ -24913,7 +24919,7 @@ packages:
     dev: false
 
   file:projects/chat.tgz:
-    resolution: {integrity: sha512-qeY99KGkC+hNtC2KnNgwbQKARBPIC9ZSox45hKHd2BrbBcjnKGk3DoHiMO55aG19zE9AX84B5q+29BEgR3XIRg==, tarball: file:projects/chat.tgz}
+    resolution: {integrity: sha512-/P480j75O0+jW3yadm4F70vk4oIIYaOsz1/0xESGQgC8QpQ+AQ8JkYK/BA6Sr8fC0uPWXeEMlq0OIi4WbokIfA==, tarball: file:projects/chat.tgz}
     name: '@rush-temp/chat'
     version: 0.0.0
     dependencies:
@@ -24949,7 +24955,7 @@ packages:
       eslint-plugin-header: 3.1.1(eslint@8.57.0)
       eslint-plugin-import: 2.29.1(eslint@8.57.0)
       eslint-plugin-jsx-a11y: 6.8.0(eslint@8.57.0)
-      eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.3)
+      eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.2)
       eslint-plugin-react: 7.34.4(eslint@8.57.0)
       eslint-plugin-react-hooks: 4.6.2(eslint@8.57.0)
       form-data: 4.0.0
@@ -24961,8 +24967,8 @@ packages:
       jest-junit: 16.0.0
       json-stringify-safe: 5.0.1
       mobile-detect: 1.4.5
-      prettier: 3.3.3
-      pretty-quick: 4.0.0(prettier@3.3.3)
+      prettier: 3.3.2
+      pretty-quick: 4.0.0(prettier@3.3.2)
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
       react-linkify: 1.0.0-alpha
@@ -25002,7 +25008,7 @@ packages:
     dev: false
 
   file:projects/check-treeshaking.tgz:
-    resolution: {integrity: sha512-+cbd0raAFZHXTko2URMKX7MGYh0at2tNJ5j+u8HoYLRQSQ52s4oh7BWYCe46VPs7R3UeblU1ePhGkWXqlwd2sw==, tarball: file:projects/check-treeshaking.tgz}
+    resolution: {integrity: sha512-ACjcNGXUTinnEG4VQCs2cUzgpPzS7f0HYTKdeNnV4P682tMFsO3awc3t8Rei/M5YH3Gc4XDuuSdhCahhY+M2Iw==, tarball: file:projects/check-treeshaking.tgz}
     name: '@rush-temp/check-treeshaking'
     version: 0.0.0
     dependencies:
@@ -25013,8 +25019,8 @@ packages:
       eslint-config-prettier: 9.1.0(eslint@8.57.0)
       eslint-plugin-header: 3.1.1(eslint@8.57.0)
       eslint-plugin-import: 2.29.1(eslint@8.57.0)
-      eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.3)
-      prettier: 3.3.3
+      eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.2)
+      prettier: 3.3.2
       rimraf: 2.7.1
       webpack: 5.89.0(webpack-cli@5.1.4)
       webpack-cli: 5.1.4(webpack-bundle-analyzer@4.10.1)(webpack@5.89.0)
@@ -25030,7 +25036,7 @@ packages:
     dev: false
 
   file:projects/check-typescript-regression.tgz:
-    resolution: {integrity: sha512-TYuiME5vfipdsu5945TgyNsHJ/jms/IEqe8xj22hz986of27w2+OJITrZIqs/+LLiOv5S781Rpu/5kuuMb1CYQ==, tarball: file:projects/check-typescript-regression.tgz}
+    resolution: {integrity: sha512-LkG04jku3WaBnGFoRDYhtkeKuBLT18k11zI7AFDP27g8Jbb4SZfQUHpjmfSfrYY8havJgdzokftO26cQbVRGxQ==, tarball: file:projects/check-typescript-regression.tgz}
     name: '@rush-temp/check-typescript-regression'
     version: 0.0.0
     dependencies:
@@ -25038,8 +25044,8 @@ packages:
       eslint-config-prettier: 9.1.0(eslint@8.57.0)
       eslint-plugin-header: 3.1.1(eslint@8.57.0)
       eslint-plugin-import: 2.29.1(eslint@8.57.0)
-      eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.3)
-      prettier: 3.3.3
+      eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.2)
+      prettier: 3.3.2
       rimraf: 2.7.1
       typescript: 4.6.3
     transitivePeerDependencies:
@@ -25048,7 +25054,7 @@ packages:
     dev: false
 
   file:projects/communication-react.tgz:
-    resolution: {integrity: sha512-vsWbZg3WOUJA7CiIVlY7wwEtrldImQHAFeXpygy2ZdiwGQlKI3XmNVEflYQKAAnmObSiSZ5ddMQ7KOU3yrlOtg==, tarball: file:projects/communication-react.tgz}
+    resolution: {integrity: sha512-87D1BbKI56krtELa0IRB3jp3z1xjd1k2HJV0oOquNoUMqw/Vgp/agRMAGo0Yx92j206EMYiKbkUXtxP+hv8LVA==, tarball: file:projects/communication-react.tgz}
     name: '@rush-temp/communication-react'
     version: 0.0.0
     dependencies:
@@ -25098,7 +25104,7 @@ packages:
       eslint-plugin-header: 3.1.1(eslint@8.57.0)
       eslint-plugin-import: 2.29.1(eslint@8.57.0)
       eslint-plugin-jsx-a11y: 6.8.0(eslint@8.57.0)
-      eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.3)
+      eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.2)
       eslint-plugin-react: 7.34.4(eslint@8.57.0)
       eslint-plugin-react-hooks: 4.6.2(eslint@8.57.0)
       events: 3.3.0
@@ -25111,8 +25117,8 @@ packages:
       memoize-one: 5.2.1
       nanoid: 3.3.6
       node-forge: 1.3.1
-      prettier: 3.3.3
-      pretty-quick: 4.0.0(prettier@3.3.3)
+      prettier: 3.3.2
+      pretty-quick: 4.0.0(prettier@3.3.2)
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
       react-is: 18.3.1
@@ -25165,7 +25171,7 @@ packages:
     dev: false
 
   file:projects/component-examples.tgz:
-    resolution: {integrity: sha512-bbqU66xoH0q/zX4B2TzgiWDBFmGert5vcG9h3eUueXyJOot+B/FdbdQu4ZNvLfm4eWTMNV8rsa+TJPSK/P5dmg==, tarball: file:projects/component-examples.tgz}
+    resolution: {integrity: sha512-ogI3us+H4Im/U+qe8pgsUI9ijCCt+Q6acaBWeenoN6AH02eT205Eu9IZyHsxJF0LAjbcbwfZgphe/CMCp7XEOg==, tarball: file:projects/component-examples.tgz}
     name: '@rush-temp/component-examples'
     version: 0.0.0
     dependencies:
@@ -25193,14 +25199,14 @@ packages:
       eslint-plugin-header: 3.1.1(eslint@8.57.0)
       eslint-plugin-import: 2.29.1(eslint@8.57.0)
       eslint-plugin-jsx-a11y: 6.8.0(eslint@8.57.0)
-      eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.3)
+      eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.2)
       eslint-plugin-react: 7.34.4(eslint@8.57.0)
       eslint-plugin-react-hooks: 4.6.2(eslint@8.57.0)
       html-webpack-plugin: 5.6.0(webpack@5.89.0)
       husky: 8.0.3
       if-env: 1.0.4
-      prettier: 3.3.3
-      pretty-quick: 4.0.0(prettier@3.3.3)
+      prettier: 3.3.2
+      pretty-quick: 4.0.0(prettier@3.3.2)
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
       rimraf: 2.7.1
@@ -25255,7 +25261,7 @@ packages:
     dev: false
 
   file:projects/fake-backends.tgz:
-    resolution: {integrity: sha512-dNaNkSnOJRpZERvBuoL51f/TG4k10HDS3t5UvXHCG5hxA+I9qqlXRs6i5p1wWVfQoMsBI6h/N1ZXzIm91rlD1Q==, tarball: file:projects/fake-backends.tgz}
+    resolution: {integrity: sha512-cfIAOvwXRttUDgYNUAIAlNBqLzXQalWijMgYf2wseEOZ+xXbBppuY9DGtUbwC5ER7h2vkNl5TVlxz6B8DZeYAQ==, tarball: file:projects/fake-backends.tgz}
     name: '@rush-temp/fake-backends'
     version: 0.0.0
     dependencies:
@@ -25282,13 +25288,13 @@ packages:
       eslint-plugin-header: 3.1.1(eslint@8.57.0)
       eslint-plugin-import: 2.29.1(eslint@8.57.0)
       eslint-plugin-jsdoc: 36.1.1(eslint@8.57.0)
-      eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.3)
+      eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.2)
       events: 3.3.0
       if-env: 1.0.4
       immer: 10.1.1
       jest: 29.7.0(@types/node@20.14.11)(ts-node@10.9.2)
       nanoid: 3.3.6
-      prettier: 3.3.3
+      prettier: 3.3.2
       rimraf: 2.7.1
       rollup: 4.12.1
       ts-jest: 29.1.5(@babel/core@7.24.9)(babel-jest@29.7.0)(jest@29.7.0)(typescript@5.4.5)
@@ -25311,7 +25317,7 @@ packages:
     dev: false
 
   file:projects/react-components.tgz:
-    resolution: {integrity: sha512-aS34jw/Kkfo/w4eeHj4iWqCyTBH5b7QC/7MSqLkzoi3ZdruNNGKdvfROy/mqxrzJEAa+xVaJ2VHRhuRsHvGQCw==, tarball: file:projects/react-components.tgz}
+    resolution: {integrity: sha512-ReTgKN5rJJLYC6fflSb1YFFIuMSIfdehoduKJORfxy9pvVOZfrPaw7p4Ul3Hvqz9dnIHVEiw9DSAvPcnNlGvzA==, tarball: file:projects/react-components.tgz}
     name: '@rush-temp/react-components'
     version: 0.0.0
     dependencies:
@@ -25362,7 +25368,7 @@ packages:
       eslint-plugin-import: 2.29.1(eslint@8.57.0)
       eslint-plugin-jsdoc: 36.1.1(eslint@8.57.0)
       eslint-plugin-jsx-a11y: 6.8.0(eslint@8.57.0)
-      eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.3)
+      eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.2)
       eslint-plugin-react: 7.34.4(eslint@8.57.0)
       eslint-plugin-react-hooks: 4.6.2(eslint@8.57.0)
       html-react-parser: 5.1.12(@types/react@18.3.3)(react@18.3.1)
@@ -25377,8 +25383,8 @@ packages:
       nan: 2.19.0
       node-forge: 1.3.1
       playwright-core: 1.39.0
-      prettier: 3.3.3
-      pretty-quick: 4.0.0(prettier@3.3.3)
+      prettier: 3.3.2
+      pretty-quick: 4.0.0(prettier@3.3.2)
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
       react-is: 18.3.1
@@ -25438,7 +25444,7 @@ packages:
     dev: false
 
   file:projects/react-composites.tgz:
-    resolution: {integrity: sha512-6pSdxs4i2uBW5BgUlKw700ZtuuXZk8irY8g0K+LIhEKBlh7Arn3GC+wGod5GwtIlCyCEh/nrwGDgn/KMUlhHqA==, tarball: file:projects/react-composites.tgz}
+    resolution: {integrity: sha512-J+TBW0HumEXu8NFDRcc8VGc83KzM2CLil2LfMRknNdQ/bra4TJBKJHZisKXMCcXC+jYkZnjB5+7CJwTNgAjz/A==, tarball: file:projects/react-composites.tgz}
     name: '@rush-temp/react-composites'
     version: 0.0.0
     dependencies:
@@ -25494,7 +25500,7 @@ packages:
       eslint-plugin-import: 2.29.1(eslint@8.57.0)
       eslint-plugin-jsdoc: 36.1.1(eslint@8.57.0)
       eslint-plugin-jsx-a11y: 6.8.0(eslint@8.57.0)
-      eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.3)
+      eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.2)
       eslint-plugin-react: 7.34.4(eslint@8.57.0)
       eslint-plugin-react-hooks: 4.6.2(eslint@8.57.0)
       events: 3.3.0
@@ -25512,8 +25518,8 @@ packages:
       nan: 2.19.0
       nanoid: 3.3.6
       node-forge: 1.3.1
-      prettier: 3.3.3
-      pretty-quick: 4.0.0(prettier@3.3.3)
+      prettier: 3.3.2
+      pretty-quick: 4.0.0(prettier@3.3.2)
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
       react-is: 18.3.1
@@ -25585,7 +25591,7 @@ packages:
     dev: false
 
   file:projects/sample-static-html-composites.tgz:
-    resolution: {integrity: sha512-S1Z2aC35ZdD8j0XIyomDRdTJVwrdfZWlpMAT4IUBAzhXyMfteof72NnAAe+K3FAdHgzGBYDB39Nr0Ce1fYcHhg==, tarball: file:projects/sample-static-html-composites.tgz}
+    resolution: {integrity: sha512-MM7ICoy2cijgIz9coOLXdDWtrRFStmvgCGmzez61lMMsQLQq8UkV4O6yf2KH0FV2U97jUVDBFMKCTNWn644m8g==, tarball: file:projects/sample-static-html-composites.tgz}
     name: '@rush-temp/sample-static-html-composites'
     version: 0.0.0
     dependencies:
@@ -25646,7 +25652,7 @@ packages:
     dev: false
 
   file:projects/server.tgz:
-    resolution: {integrity: sha512-6gC34foTUp3uWTkm0Mc0vo4w3xAlKE1OzQuPiibfPofAS6hmZFxf6x9SvdtaCjPs7qmq/yM6JbO/pTJeYfZwBw==, tarball: file:projects/server.tgz}
+    resolution: {integrity: sha512-vLBEDB5j+QDpRj3HmbEP8+tGG+AXWGPzprNHFf34SM1X4q4X+4oouf1Fmmk2i4mSS+OOQDPhWZ+FtfCu/BDiLg==, tarball: file:projects/server.tgz}
     name: '@rush-temp/server'
     version: 0.0.0
     dependencies:
@@ -25678,7 +25684,7 @@ packages:
       eslint-plugin-flowtype: 8.0.3(eslint@8.57.0)
       eslint-plugin-header: 3.1.1(eslint@8.57.0)
       eslint-plugin-import: 2.29.1(eslint@8.57.0)
-      eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.3)
+      eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.2)
       express: 4.18.3
       http-errors: 1.8.1
       husky: 8.0.3
@@ -25687,8 +25693,8 @@ packages:
       morgan: 1.10.0
       multer: 1.4.5-lts.1
       node-fetch: 2.6.7
-      prettier: 3.3.3
-      pretty-quick: 4.0.0(prettier@3.3.3)
+      prettier: 3.3.2
+      pretty-quick: 4.0.0(prettier@3.3.2)
       rimraf: 2.7.1
       supertest: 6.3.4
       ts-jest: 29.1.5(jest@29.7.0)(typescript@5.4.5)
@@ -25721,7 +25727,7 @@ packages:
     dev: false
 
   file:projects/storybook.tgz:
-    resolution: {integrity: sha512-7HyDKLiEr6n45iOCdcqTwsa5dqEk++jMH9RiEDmFy83Jp9VYRUIRXuE/qmRk1IhvCi8Uq49ZhimbMFgAmSrqlA==, tarball: file:projects/storybook.tgz}
+    resolution: {integrity: sha512-wS0qngj89MZ81657MV1+CPoLHwAyy7Wj7udS5BdrySbCd6MzK2Qunz3GlSqequ5W/hbyUpOG3r+X5M+NzRLtmA==, tarball: file:projects/storybook.tgz}
     name: '@rush-temp/storybook'
     version: 0.0.0
     dependencies:
@@ -25784,7 +25790,7 @@ packages:
       eslint-plugin-import: 2.29.1(eslint@8.57.0)
       eslint-plugin-jsx-a11y: 6.8.0(eslint@8.57.0)
       eslint-plugin-mdx: 1.16.0(eslint@8.57.0)
-      eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.3)
+      eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.2)
       eslint-plugin-react: 7.34.4(eslint@8.57.0)
       eslint-plugin-react-hooks: 4.6.2(eslint@8.57.0)
       husky: 8.0.3
@@ -25796,8 +25802,8 @@ packages:
       nan: 2.19.0
       node-forge: 1.3.1
       preact: 10.19.6
-      prettier: 3.3.3
-      pretty-quick: 4.0.0(prettier@3.3.3)
+      prettier: 3.3.2
+      pretty-quick: 4.0.0(prettier@3.3.2)
       raw-loader: 4.0.2(webpack@5.89.0)
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
@@ -25868,7 +25874,7 @@ packages:
     dev: false
 
   file:projects/storybook8.tgz:
-    resolution: {integrity: sha512-N3uq/eFJXTOWNeyg6q84txp93Yv/umZl0MQCZ/qTpl5T5Z0a/HzqNjQlR90UemB+ipasGeW2jQJxRJrWhmHYkQ==, tarball: file:projects/storybook8.tgz}
+    resolution: {integrity: sha512-bNXzrRfz74qgCJrfAUIXf9NEjHbt0Tyc7a2cVV9OrZW/WwfB3J4iEksMZ3BauGOZI1YoJajuZB45x09hWlQ23g==, tarball: file:projects/storybook8.tgz}
     name: '@rush-temp/storybook8'
     version: 0.0.0
     dependencies:
@@ -25930,7 +25936,7 @@ packages:
       eslint-plugin-import: 2.29.1(eslint@8.57.0)
       eslint-plugin-jsx-a11y: 6.8.0(eslint@8.57.0)
       eslint-plugin-mdx: 1.16.0(eslint@8.57.0)
-      eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.3)
+      eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.2)
       eslint-plugin-react: 7.34.4(eslint@8.57.0)
       eslint-plugin-react-hooks: 4.6.2(eslint@8.57.0)
       husky: 8.0.3
@@ -25941,8 +25947,8 @@ packages:
       nan: 2.19.0
       node-forge: 1.3.1
       preact: 10.19.6
-      prettier: 3.3.3
-      pretty-quick: 4.0.0(prettier@3.3.3)
+      prettier: 3.3.2
+      pretty-quick: 4.0.0(prettier@3.3.2)
       raw-loader: 4.0.2(webpack@5.89.0)
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
