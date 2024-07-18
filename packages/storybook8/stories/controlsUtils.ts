@@ -163,7 +163,6 @@ export const controlsToAdd = {
   botAvatar: { control: 'radio', options: botAvatars, defaultValue: 'Default', name: 'Bot Avatar' },
   botChatTopic: {
     control: 'text',
-    defaultValue: 'Chat with a friendly bot',
     name: 'Chat Topic',
     type: { name: 'string', required: true }
   },

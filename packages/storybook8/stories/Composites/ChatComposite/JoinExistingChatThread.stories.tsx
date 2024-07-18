@@ -18,6 +18,10 @@ const storyControls = {
   threadId: controlsToAdd.chatThreadId
 };
 
+const defaultControlsValues = {
+  displayName: 'John Smith'
+};
+
 const JoinExistingChatThreadStory = (args: ArgsFrom<typeof storyControls>, context): JSX.Element => {
   const {
     globals: { locale }
@@ -53,7 +57,8 @@ const meta: Meta<typeof JoinExistingChatThreadStory> = {
     ...storyControls,
     // Hiding auto-generated controls
     ...defaultChatCompositeHiddenControls
-  }
+  },
+  args: defaultControlsValues
 };
 
 export default meta;
