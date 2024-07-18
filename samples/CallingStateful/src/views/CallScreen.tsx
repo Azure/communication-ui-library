@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 /* @conditional-compile-remove(one-to-n-calling) */
-import { CallProvider } from '@azure/communication-react';
+import { CallProvider, IncomingCallStack, usePropsFor } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
 /* @conditional-compile-remove(one-to-n-calling) */
 import CallingComponents from '../components/CallingComponents';
@@ -19,6 +19,7 @@ export interface CallScreenProps {
 
 export const CallScreen = (props: CallScreenProps): JSX.Element => {
   const { /* @conditional-compile-remove(one-to-n-calling) */ call } = props;
+  const incomingCallStackProps = usePropsFor(IncomingCallStack);
   return (
     <Stack style={{ width: '100%', height: '100%', margin: 'auto', position: 'relative' }}>
       <>
@@ -27,8 +28,8 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
             <CallingComponents></CallingComponents>
           </CallProvider>
         )}
-        )
       </>
+      <IncomingCallStack {...incomingCallStackProps}></IncomingCallStack>
     </Stack>
   );
 };

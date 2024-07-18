@@ -6,7 +6,7 @@ import './App.css';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { Call, CallCommon, IncomingCall, TeamsCall, TeamsIncomingCall } from '@azure/communication-calling';
 /* @conditional-compile-remove(one-to-n-calling) */
-import { IncomingCallEvent, TeamsIncomingCallEvent, CallAgent } from '@azure/communication-calling';
+import { CallAgent } from '@azure/communication-calling';
 import {
   DEFAULT_COMPONENT_ICONS,
   FluentThemeProvider,
@@ -53,23 +53,23 @@ function App(): JSX.Element {
   //   [incomingCalls]
   // );
 
-  /* @conditional-compile-remove(one-to-n-calling) */
-  const incomingAcsCallListener: IncomingCallEvent = useCallback(
-    ({ incomingCall }): void => {
-      console.log('Incoming call received: ', incomingCall);
-      setIncomingCalls((incomingCalls as IncomingCall[]).concat([incomingCall]));
-    },
-    [incomingCalls]
-  );
+  // /* @conditional-compile-remove(one-to-n-calling) */
+  // const incomingAcsCallListener: IncomingCallEvent = useCallback(
+  //   ({ incomingCall }): void => {
+  //     console.log('Incoming call received: ', incomingCall);
+  //     setIncomingCalls((incomingCalls as IncomingCall[]).concat([incomingCall]));
+  //   },
+  //   [incomingCalls]
+  // );
 
-  /* @conditional-compile-remove(one-to-n-calling) */
-  const teamsIncomingCallListener: TeamsIncomingCallEvent = useCallback(
-    ({ incomingCall }): void => {
-      console.log('Incoming call received: ', incomingCall);
-      setIncomingCalls((incomingCalls as TeamsIncomingCall[]).concat([incomingCall]));
-    },
-    [incomingCalls]
-  );
+  // /* @conditional-compile-remove(one-to-n-calling) */
+  // const teamsIncomingCallListener: TeamsIncomingCallEvent = useCallback(
+  //   ({ incomingCall }): void => {
+  //     console.log('Incoming call received: ', incomingCall);
+  //     setIncomingCalls((incomingCalls as TeamsIncomingCall[]).concat([incomingCall]));
+  //   },
+  //   [incomingCalls]
+  // );
 
   const callsUpdatedListener = useCallback(
     (event: { added: CallCommon[]; removed: CallCommon[] }): void => {
@@ -146,36 +146,24 @@ function App(): JSX.Element {
       console.log('Subscribing to teams events');
       /* @conditional-compile-remove(one-to-n-calling) */
       (callAgent as DeclarativeTeamsCallAgent).on('callsUpdated', callsUpdatedListener);
-      /* @conditional-compile-remove(one-to-n-calling) */
-      (callAgent as DeclarativeTeamsCallAgent).on('incomingCall', teamsIncomingCallListener);
       return () => {
-        /* @conditional-compile-remove(one-to-n-calling) */
-        (callAgent as DeclarativeTeamsCallAgent).off('incomingCall', teamsIncomingCallListener);
         /* @conditional-compile-remove(one-to-n-calling) */
         (callAgent as DeclarativeTeamsCallAgent).off('callsUpdated', callsUpdatedListener);
       };
     } else if (callAgent.kind === 'CallAgent') {
       console.log('subscribing to ACS CallAgent events');
       /* @conditional-compile-remove(one-to-n-calling) */
-      (callAgent as DeclarativeCallAgent).on('incomingCall', incomingAcsCallListener);
-      /* @conditional-compile-remove(one-to-n-calling) */
       (callAgent as DeclarativeCallAgent).on('callsUpdated', callsUpdatedListener);
       return () => {
         /* @conditional-compile-remove(one-to-n-calling) */
-        (callAgent as DeclarativeCallAgent).off('incomingCall', incomingAcsCallListener);
+        // (callAgent as DeclarativeCallAgent).off('incomingCall', incomingAcsCallListener);
         /* @conditional-compile-remove(one-to-n-calling) */
         (callAgent as DeclarativeCallAgent).off('callsUpdated', callsUpdatedListener);
       };
     } else {
       throw new Error('Unknown call agent kind');
     }
-  }, [
-    /* @conditional-compile-remove(one-to-n-calling) */ callAgent,
-    call,
-    callsUpdatedListener,
-    /* @conditional-compile-remove(one-to-n-calling) */ incomingAcsCallListener,
-    /* @conditional-compile-remove(one-to-n-calling) */ teamsIncomingCallListener
-  ]);
+  }, [/* @conditional-compile-remove(one-to-n-calling) */ callAgent, call, callsUpdatedListener]);
 
   if (userCredentialFetchError) {
     return <Text>Failed to fetch user credentials</Text>;
@@ -199,52 +187,54 @@ function App(): JSX.Element {
     <FluentThemeProvider>
       <CallClientProvider callClient={statefulCallClient}>
         <CallAgentProvider callAgent={callAgent}>
-          <Stack
-            verticalAlign="center"
-            horizontalAlign="center"
-            tokens={{ childrenGap: '1rem' }}
-            style={{ width: '100%', height: '40rem', margin: 'auto', paddingTop: '1rem', position: 'relative' }}
-          >
-            {userIdentifier && <Text>your userId: {userIdentifier.communicationUserId}</Text>}
-            {teamsIdentifier && <Text>your teamsId: {teamsIdentifier}</Text>}
-            {
-              /* @conditional-compile-remove(one-to-n-calling) */ statefulCallClient && callAgent && !call && (
-                <HomeScreen callAgent={callAgent as CallAgent} headerImageProps={imageProps}></HomeScreen>
-              )
-            }
-            {statefulCallClient && /* @conditional-compile-remove(one-to-n-calling) */ callAgent && call && (
-              <CallScreen
-                /* @conditional-compile-remove(one-to-n-calling) */ call={call}
-                /* @conditional-compile-remove(one-to-n-calling) */ onSetCall={setCall}
-              />
+          <Stack horizontal>
+            <Stack
+              verticalAlign="center"
+              horizontalAlign="center"
+              tokens={{ childrenGap: '1rem' }}
+              style={{ width: '100%', height: '40rem', margin: 'auto', paddingTop: '1rem', position: 'relative' }}
+            >
+              {userIdentifier && <Text>your userId: {userIdentifier.communicationUserId}</Text>}
+              {teamsIdentifier && <Text>your teamsId: {teamsIdentifier}</Text>}
+              {
+                /* @conditional-compile-remove(one-to-n-calling) */ statefulCallClient && callAgent && !call && (
+                  <HomeScreen callAgent={callAgent as CallAgent} headerImageProps={imageProps}></HomeScreen>
+                )
+              }
+              {statefulCallClient && /* @conditional-compile-remove(one-to-n-calling) */ callAgent && call && (
+                <CallScreen
+                  /* @conditional-compile-remove(one-to-n-calling) */ call={call}
+                  /* @conditional-compile-remove(one-to-n-calling) */ onSetCall={setCall}
+                />
+              )}
+            </Stack>
+            {calls.length > 0 && (
+              <Stack style={{ minWidth: '15rem', height: '100%', paddingTop: '3rem' }}>
+                <Stack.Item style={{ width: '100%', height: '30rem' }}>
+                  <CallManager
+                    activeCall={call}
+                    calls={calls}
+                    onSetResume={function (newCall: Call | TeamsCall): void {
+                      if (call) {
+                        call.hold();
+                        newCall.resume();
+                        setCall(newCall);
+                      } else {
+                        newCall.resume();
+                        setCall(newCall);
+                      }
+                    }}
+                    onSetHold={function (callToHold: Call | TeamsCall): void {
+                      callToHold.hold();
+                    }}
+                    onEndCall={function (callCallToEnd: Call | TeamsCall): void {
+                      callCallToEnd.hangUp();
+                    }}
+                  />
+                </Stack.Item>
+              </Stack>
             )}
           </Stack>
-          {calls.length > 0 && (
-            <Stack style={{ width: '20%', height: '100%' }}>
-              <Stack.Item style={{ width: '100%', height: '30rem' }}>
-                <CallManager
-                  activeCall={call}
-                  calls={calls}
-                  onSetResume={function (newCall: Call | TeamsCall): void {
-                    if (call) {
-                      call.hold();
-                      newCall.resume();
-                      setCall(newCall);
-                    } else {
-                      newCall.resume();
-                      setCall(newCall);
-                    }
-                  }}
-                  onSetHold={function (callToHold: Call | TeamsCall): void {
-                    callToHold.hold();
-                  }}
-                  onEndCall={function (callCallToEnd: Call | TeamsCall): void {
-                    callCallToEnd.hangUp();
-                  }}
-                />
-              </Stack.Item>
-            </Stack>
-          )}
         </CallAgentProvider>
       </CallClientProvider>
     </FluentThemeProvider>
