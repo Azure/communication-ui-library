@@ -4,14 +4,13 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import './App.css';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
-import { Call, CallCommon, IncomingCall, TeamsCall, TeamsIncomingCall } from '@azure/communication-calling';
+import { Call, CallCommon, TeamsCall } from '@azure/communication-calling';
 /* @conditional-compile-remove(one-to-n-calling) */
 import { CallAgent } from '@azure/communication-calling';
 import {
   DEFAULT_COMPONENT_ICONS,
   FluentThemeProvider,
   StatefulCallClient,
-  CallClientState,
   CallClientProvider,
   CallAgentProvider
 } from '@azure/communication-react';
@@ -40,7 +39,7 @@ function App(): JSX.Element {
   const [callAgent, setCallAgent] = useState<DeclarativeCallAgent | DeclarativeTeamsCallAgent>();
   const [call, setCall] = useState<Call | TeamsCall>();
   const [calls, setCalls] = useState<Call[] | TeamsCall[]>([]);
-  const [incomingCalls, setIncomingCalls] = useState<IncomingCall[] | TeamsIncomingCall[]>([]);
+  // const [incomingCalls, setIncomingCalls] = useState<IncomingCall[] | TeamsIncomingCall[]>([]);
 
   // /**
   //  * Helper function to clear the old incoming Calls in the app that are no longer valid.
@@ -53,7 +52,7 @@ function App(): JSX.Element {
   //   [incomingCalls]
   // );
 
-  // /* @conditional-compile-remove(one-to-n-calling) */
+  // // /* @conditional-compile-remove(one-to-n-calling) */
   // const incomingAcsCallListener: IncomingCallEvent = useCallback(
   //   ({ incomingCall }): void => {
   //     console.log('Incoming call received: ', incomingCall);
@@ -78,6 +77,7 @@ function App(): JSX.Element {
           call.hold();
         }
         setCall(event.added[0] as Call | TeamsCall);
+        console.log(event.added[0].id);
       } else if (event.removed.length > 0) {
         if (event.removed[0] === call) {
           setCall(undefined);
@@ -89,20 +89,19 @@ function App(): JSX.Element {
     [call, callAgent?.calls]
   );
 
-  /**
-   * We need to check the call client to make sure we are removing any of the notifications that
-   * are no longer valid.
-   */
-  const statefulCallClientStateListener = useCallback(
-    (state: CallClientState): void => {
-      if (statefulCallClient) {
-        const endedIncomingCalls = Object.keys(state.incomingCallsEnded);
-        console.log('Incoming calls ended: ', endedIncomingCalls);
-        setIncomingCalls(incomingCalls.filter((call) => !endedIncomingCalls.includes(call.id)));
-      }
-    },
-    [statefulCallClient, incomingCalls]
-  );
+  // /**
+  //  * We need to check the call client to make sure we are removing any of the notifications that
+  //  * are no longer valid.
+  //  */
+  // const statefulCallClientStateListener = useCallback(
+  //   (state: CallClientState): void => {
+  //     if (statefulCallClient) {
+  //       const endedIncomingCalls = Object.keys(state.incomingCallsEnded);
+  //       setIncomingCalls(incomingCalls.filter((call) => !endedIncomingCalls.includes(call.id)));
+  //     }
+  //   },
+  //   [statefulCallClient, incomingCalls]
+  // );
 
   // // Examples for Callback functions for utilizing incomingCall reject and accept.
   // const onRejectCall = (incomingCall: IncomingCall | TeamsIncomingCall): void => {
@@ -127,14 +126,14 @@ function App(): JSX.Element {
   //   }
   // };
 
-  useEffect(() => {
-    if (statefulCallClient) {
-      statefulCallClient.onStateChange(statefulCallClientStateListener);
-    }
-    return () => {
-      statefulCallClient?.offStateChange(statefulCallClientStateListener);
-    };
-  }, [statefulCallClient, statefulCallClientStateListener]);
+  // useEffect(() => {
+  //   if (statefulCallClient) {
+  //     statefulCallClient.onStateChange(statefulCallClientStateListener);
+  //   }
+  //   return () => {
+  //     statefulCallClient?.offStateChange(statefulCallClientStateListener);
+  //   };
+  // }, [statefulCallClient, statefulCallClientStateListener]);
 
   useEffect(() => {
     /* @conditional-compile-remove(one-to-n-calling) */
@@ -154,6 +153,7 @@ function App(): JSX.Element {
       console.log('subscribing to ACS CallAgent events');
       /* @conditional-compile-remove(one-to-n-calling) */
       (callAgent as DeclarativeCallAgent).on('callsUpdated', callsUpdatedListener);
+      // (callAgent as DeclarativeCallAgent).on('incomingCall', incomingAcsCallListener);
       return () => {
         /* @conditional-compile-remove(one-to-n-calling) */
         // (callAgent as DeclarativeCallAgent).off('incomingCall', incomingAcsCallListener);

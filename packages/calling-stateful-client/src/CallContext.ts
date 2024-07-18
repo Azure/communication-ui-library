@@ -193,6 +193,10 @@ export class CallContext {
         draft.calls[latestCallId] = call;
       }
     });
+    /**
+     * We want to remove the incoming call that matches the call if there is one
+     */
+    this.removeIncomingCall(call.id);
   }
 
   public removeCall(callId: string): void {

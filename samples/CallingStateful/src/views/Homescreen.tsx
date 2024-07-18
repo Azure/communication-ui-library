@@ -27,7 +27,6 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const [targetParticipants, setTargetParticipants] = useState<CommunicationIdentifier[]>();
   const [alternateCallerId, setAlternateCallerId] = useState<string>();
   const incomingCallStackProps = usePropsFor(IncomingCallStack);
-  console.log('incomingCallStackProps', incomingCallStackProps);
   return (
     <Stack horizontal tokens={{ childrenGap: '1rem' }}>
       <Stack verticalAlign="center">
