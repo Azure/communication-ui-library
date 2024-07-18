@@ -608,7 +608,7 @@
     "meetingConferencePhoneInfoModalTitle": "Join call from your phone",
     "meetingConferencePhoneInfoModalDialIn": "Dial number",
     "meetingConferencePhoneInfoModalMeetingId": "Enter meeting ID",
-    "meetingConferencePhoneInfoModalWait": "Wait to be admitted by organizer",
+    "meetingConferencePhoneInfoModalWait": "Wait to be admitted by organiser",
     "meetingConferencePhoneInfoModalNoPhoneAvailable": "No phone available",
     "meetingConferencePhoneInfoModalTollGeoData": "{country}, {city}",
     "meetingConferencePhoneInfoModalTollFree": "(Toll-free)",

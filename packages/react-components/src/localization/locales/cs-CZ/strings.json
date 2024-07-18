@@ -605,14 +605,14 @@
     "rightNavButtonAriaLabel": "další stránka"
   },
   "meetingConferencePhoneInfo": {
-    "meetingConferencePhoneInfoModalTitle": "Join call from your phone",
-    "meetingConferencePhoneInfoModalDialIn": "Dial number",
-    "meetingConferencePhoneInfoModalMeetingId": "Enter meeting ID",
-    "meetingConferencePhoneInfoModalWait": "Wait to be admitted by organizer",
-    "meetingConferencePhoneInfoModalNoPhoneAvailable": "No phone available",
+    "meetingConferencePhoneInfoModalTitle": "Připojit se k hovoru z vašeho telefonu",
+    "meetingConferencePhoneInfoModalDialIn": "Vytočit číslo",
+    "meetingConferencePhoneInfoModalMeetingId": "Zadejte ID schůzky",
+    "meetingConferencePhoneInfoModalWait": "Počkejte na přijetí organizátorem",
+    "meetingConferencePhoneInfoModalNoPhoneAvailable": "Není k dispozici žádný telefon.",
     "meetingConferencePhoneInfoModalTollGeoData": "{country}, {city}",
-    "meetingConferencePhoneInfoModalTollFree": "(Toll-free)",
-    "meetingConferencePhoneInfoModalToll": "(Toll)"
+    "meetingConferencePhoneInfoModalTollFree": "(Bezplatné)",
+    "meetingConferencePhoneInfoModalToll": "(Placené)"
   },
   "IncomingCallNotification": {
     "incomingCallNotificationPlaceholderId": "Neznámý uživatel",

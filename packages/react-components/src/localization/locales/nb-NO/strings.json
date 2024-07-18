@@ -605,14 +605,14 @@
     "rightNavButtonAriaLabel": "neste side"
   },
   "meetingConferencePhoneInfo": {
-    "meetingConferencePhoneInfoModalTitle": "Join call from your phone",
-    "meetingConferencePhoneInfoModalDialIn": "Dial number",
-    "meetingConferencePhoneInfoModalMeetingId": "Enter meeting ID",
-    "meetingConferencePhoneInfoModalWait": "Wait to be admitted by organizer",
-    "meetingConferencePhoneInfoModalNoPhoneAvailable": "No phone available",
-    "meetingConferencePhoneInfoModalTollGeoData": "{country}, {city}",
-    "meetingConferencePhoneInfoModalTollFree": "(Toll-free)",
-    "meetingConferencePhoneInfoModalToll": "(Toll)"
+    "meetingConferencePhoneInfoModalTitle": "Bli med i samtalen fra telefonen",
+    "meetingConferencePhoneInfoModalDialIn": "Slå nummer",
+    "meetingConferencePhoneInfoModalMeetingId": "Skriv inn møte-ID",
+    "meetingConferencePhoneInfoModalWait": "Vent på å bli godtatt inn av arrangøren",
+    "meetingConferencePhoneInfoModalNoPhoneAvailable": "Ingen telefon tilgjengelig",
+    "meetingConferencePhoneInfoModalTollGeoData": "{city}, {country}",
+    "meetingConferencePhoneInfoModalTollFree": "(gratis)",
+    "meetingConferencePhoneInfoModalToll": "(nummer med avgift)"
   },
   "IncomingCallNotification": {
     "incomingCallNotificationPlaceholderId": "Ukjent bruker",

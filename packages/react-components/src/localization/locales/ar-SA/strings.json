@@ -260,44 +260,44 @@
     "cameraFrozenForRemoteParticipants": "يواجه المستخدمون في المكالمة مشكلات في رؤية الفيديو الخاص بك. الرجاء التحقق من أجهزتك وشبكتك.",
     "unableToStartVideoEffect": "يتعذر تطبيق تأثير الفيديو.",
     "startSpotlightWhileMaxParticipantsAreSpotlighted": "لا يمكن بدء تسليط الضوء على المشاركين (المشاركين) لأنه تم بالفعل تسليط الضوء على الحد الأقصى لعدد المشاركين.",
-    "mutedByRemoteParticipant": "You were muted by another participant."
+    "mutedByRemoteParticipant": "تم كتم صوتك من قبل مشارك آخر."
   },
   "notificationStack": {
     "callingNetworkFailure": {
-      "title": "Troubling connecting call",
-      "message": "You seem to be offline. Please check your network connection and try again.",
+      "title": "مكالمة مزعجة",
+      "message": "يبدو أنك غير متصل. الرجاء التحقق من اتصال الشبكة والمحاولة مرة أخرى.",
       "dismissButtonAriaLabel": "إغلاق"
     },
     "startVideoGeneric": {
-      "title": "Failed to start video.",
+      "title": "فشل بدء الفيديو.",
       "dismissButtonAriaLabel": "إغلاق"
     },
     "stopVideoGeneric": {
-      "title": "Failed to stop video.",
+      "title": "فشل إيقاف الفيديو.",
       "dismissButtonAriaLabel": "إغلاق"
     },
     "muteGeneric": {
-      "title": "Failed to mute microphone.",
+      "title": "فشل كتم صوت الميكروفون.",
       "dismissButtonAriaLabel": "إغلاق"
     },
     "unmuteGeneric": {
-      "title": "Failed to unmute microphone.",
+      "title": "فشل إلغاء كتم صوت الميكروفون.",
       "dismissButtonAriaLabel": "إغلاق"
     },
     "speakingWhileMuted": {
-      "title": "You're muted.",
+      "title": "تم كتم صوتك.",
       "dismissButtonAriaLabel": "إغلاق"
     },
     "startScreenShareGeneric": {
-      "title": "There was an issue starting screen share.",
+      "title": "حدثت مشكلة أثناء بدء مشاركة الشاشة.",
       "dismissButtonAriaLabel": "إغلاق"
     },
     "stopScreenShareGeneric": {
-      "title": "Failed to stop screen sharing.",
+      "title": "فشل إيقاف مشاركة الشاشة",
       "dismissButtonAriaLabel": "إغلاق"
     },
     "callNetworkQualityLow": {
-      "title": "Network quality is low.",
+      "title": "جودة الشبكة مقبولة.",
       "dismissButtonAriaLabel": "إغلاق"
     },
     "teamsMeetingCallNetworkQualityLow": {
@@ -307,100 +307,100 @@
       "primaryButtonLabel": "انضمام عبر الهاتف"
     },
     "callNoSpeakerFound": {
-      "title": "No speakers or headphones found",
-      "message": "Connect an audio device to hear the call.",
+      "title": "لم يتم العثور على سماعات أو سماعات رأس",
+      "message": "قم بتوصيل جهاز صوت لسماع المكالمة.",
       "dismissButtonAriaLabel": "إغلاق"
     },
     "callNoMicrophoneFound": {
-      "title": "No microphones found",
-      "message": "Connect an audio input device.",
+      "title": "لم يتم العثور على ميكروفونات",
+      "message": "قم بتوصيل جهاز إدخال صوت.",
       "dismissButtonAriaLabel": "إغلاق"
     },
     "callMicrophoneAccessDenied": {
-      "title": "Unable to access microphone",
-      "message": "Click the lock in the address bar to grant permission to this webpage.",
+      "title": "يتعذر الوصول إلى الميكروفون",
+      "message": "انقر فوق التأمين في شريط العناوين لمنح الإذن لصفحة ويب هذه.",
       "dismissButtonAriaLabel": "إغلاق"
     },
     "callMicrophoneAccessDeniedSafari": {
-      "title": "Unable to access microphone",
-      "message": "Refresh the page to allow permissions, or check this browser’s settings and verify permissions are enabled for this website.",
+      "title": "يتعذر الوصول إلى الميكروفون",
+      "message": "قم بتحديث الصفحة للسماح بالأذونات، أو تحقق من إعدادات هذا المستعرض وتحقق من تمكين الأذونات لموقع الويب هذا.",
       "dismissButtonAriaLabel": "إغلاق"
     },
     "callMicrophoneMutedBySystem": {
-      "title": "You are muted by your system.",
+      "title": "تم كتم صوتك بواسطة النظام.",
       "dismissButtonAriaLabel": "إغلاق"
     },
     "callMicrophoneUnmutedBySystem": {
-      "title": "Your microphone recovered and you were unmuted by your system.",
+      "title": "تم استرداد الميكروفون وتم إلغاء كتم صوتك من قبل النظام.",
       "dismissButtonAriaLabel": "إغلاق"
     },
     "callMacOsMicrophoneAccessDenied": {
-      "title": "Unable to access microphone",
-      "message": "Grant microphone permission in your macOS privacy settings.",
+      "title": "يتعذر الوصول إلى الميكروفون",
+      "message": "امنح الميكروفون إذنا في إعدادات خصوصية macOS.",
       "dismissButtonAriaLabel": "إغلاق"
     },
     "callLocalVideoFreeze": {
-      "title": "Network bandwidth is poor",
-      "message": "Your video may appear paused for others on the call.",
+      "title": "النطاق الترددي للشبكة ضعيف.",
+      "message": "قد يظهر الفيديو متوقفا مؤقتا للآخرين في المكالمة.",
       "dismissButtonAriaLabel": "إغلاق"
     },
     "callCameraAccessDenied": {
-      "title": "Unable to access camera",
-      "message": "Click the lock in the address bar to grant permission to this webpage.",
+      "title": "تعذر الوصول إلى الكاميرا",
+      "message": "انقر فوق التأمين في شريط العناوين لمنح الإذن لصفحة ويب هذه.",
       "dismissButtonAriaLabel": "إغلاق"
     },
     "callCameraAccessDeniedSafari": {
-      "title": "Unable to access camera",
-      "message": "Refresh the page to allow permissions, or check this browser’s settings and verify permissions are enabled for this website.",
+      "title": "تعذر الوصول إلى الكاميرا",
+      "message": "قم بتحديث الصفحة للسماح بالأذونات، أو تحقق من إعدادات هذا المستعرض وتحقق من تمكين الأذونات لموقع الويب هذا.",
       "dismissButtonAriaLabel": "إغلاق"
     },
     "callCameraAlreadyInUse": {
-      "title": "Unable to access camera",
-      "message": "It may already be in use by another application.",
+      "title": "تعذر الوصول إلى الكاميرا",
+      "message": "قد يكون قيد الاستخدام بالفعل بواسطة تطبيق آخر.",
       "dismissButtonAriaLabel": "إغلاق"
     },
     "callVideoStoppedBySystem": {
-      "title": "Your video has been stopped by your system.",
+      "title": "تم إيقاف الفيديو الخاص بك من قبل النظام.",
       "dismissButtonAriaLabel": "إغلاق"
     },
     "callVideoRecoveredBySystem": {
-      "title": "Your video has resumed.",
+      "title": "تم استئناف الفيديو الخاص بك.",
       "dismissButtonAriaLabel": "إغلاق"
     },
     "callMacOsCameraAccessDenied": {
-      "title": "MacOS is blocking access to your camera",
-      "message": "Update your privacy settings to allow this browser to access your camera.",
+      "title": "يقوم MacOS بحظر الوصول إلى الكاميرا",
+      "message": "قم بتحديث إعدادات الخصوصية للسماح لهذا المستعرض بالوصول إلى الكاميرا.",
       "dismissButtonAriaLabel": "إغلاق"
     },
     "callMacOsScreenShareAccessDenied": {
-      "title": "MacOS is blocking screen sharing",
-      "message": "Update your privacy settings to allow this browser to record your screen.",
+      "title": "يقوم MacOS بحظر مشاركة الشاشة",
+      "message": "قم بتحديث إعدادات الخصوصية للسماح لهذا المستعرض بتسجيل الشاشة.",
       "dismissButtonAriaLabel": "إغلاق"
     },
     "failedToJoinCallGeneric": {
-      "title": "Failed to join call.",
+      "title": "فشل الانضمام إلى المكالمة.",
       "dismissButtonAriaLabel": "إغلاق"
     },
     "failedToJoinCallInvalidMeetingLink": {
-      "title": "Unable to join Meeting. Invalid Link.",
+      "title": "تعذر الانضمام إلى الاجتماع. ارتباط غير صالح.",
       "dismissButtonAriaLabel": "إغلاق"
     },
     "cameraFrozenForRemoteParticipants": {
-      "title": "Users in the call are having issues seeing your video",
-      "message": "Please check your devices and network.",
+      "title": "يواجه المستخدمون في المكالمة مشكلات في رؤية الفيديو الخاص بك.",
+      "message": "الرجاء التحقق من أجهزتك وشبكتك.",
       "dismissButtonAriaLabel": "إغلاق"
     },
     "unableToStartVideoEffect": {
-      "title": "Unable to apply video effect.",
+      "title": "يتعذر تطبيق تأثير الفيديو.",
       "dismissButtonAriaLabel": "إغلاق"
     },
     "startSpotlightWhileMaxParticipantsAreSpotlighted": {
-      "title": "Cannot start spotlight on participant(s)",
-      "message": "The maximum number of participants are already spotlighted.",
+      "title": "يتعذر بدء تسليط ضوء على المشاركين.",
+      "message": "يتم تسليط الضوء على الحد الأقصى لعدد المشاركين بالفعل.",
       "dismissButtonAriaLabel": "إغلاق"
     },
     "mutedByRemoteParticipant": {
-      "title": "You were muted by another participant.",
+      "title": "تم كتم صوتك من قبل مشارك آخر.",
       "dismissButtonAriaLabel": "إغلاق"
     },
     "recordingStarted": {
@@ -450,7 +450,7 @@
     "localVideoLabel": "أنت",
     "localVideoCameraSwitcherLabel": "تبديل الكاميرا",
     "localVideoMovementLabel": "لوحة فيديو محلية قابلة للنقل",
-    "localVideoMovementAriaLabel": "Movable Local Video Tile",
+    "localVideoMovementAriaLabel": "لوحة فيديو محلية قابلة للنقل",
     "localVideoSelectedDescription": "تم تحديد {cameraName}",
     "displayNamePlaceholder": "مشارك غير مسمى",
     "fitRemoteParticipantToFrame": "الملاءمة داخل إطار",
@@ -468,7 +468,7 @@
     "stopSpotlightVideoTileMenuLabel": "التوقف عن تسليط الضوء",
     "stopSpotlightOnSelfVideoTileMenuLabel": "الخروج من وضع تسليط الضوء",
     "attendeeRole": "الحضور",
-    "muteParticipantMenuItemLabel": "Mute"
+    "muteParticipantMenuItemLabel": "كتم الصوت"
   },
   "dialpad": {
     "placeholderText": "أدخل رقم الهاتف",
@@ -483,7 +483,7 @@
   "videoTile": {
     "participantStateRinging": "يتم الآن الاتصال...",
     "participantStateHold": "قيد الانتظار",
-    "moreOptionsButtonAriaLabel": "More Options"
+    "moreOptionsButtonAriaLabel": "خيارات إضافية"
   },
   "CameraAndMicrophoneSitePermissionsRequest": {
     "primaryText": "السماح {appName} باستخدام الكاميرا والميكروفون لديك",
@@ -605,14 +605,14 @@
     "rightNavButtonAriaLabel": "الصفحة التالية"
   },
   "meetingConferencePhoneInfo": {
-    "meetingConferencePhoneInfoModalTitle": "Join call from your phone",
-    "meetingConferencePhoneInfoModalDialIn": "Dial number",
-    "meetingConferencePhoneInfoModalMeetingId": "Enter meeting ID",
-    "meetingConferencePhoneInfoModalWait": "Wait to be admitted by organizer",
-    "meetingConferencePhoneInfoModalNoPhoneAvailable": "No phone available",
-    "meetingConferencePhoneInfoModalTollGeoData": "{country}, {city}",
-    "meetingConferencePhoneInfoModalTollFree": "(Toll-free)",
-    "meetingConferencePhoneInfoModalToll": "(Toll)"
+    "meetingConferencePhoneInfoModalTitle": "الانضمام إلى مكالمة من هاتفك",
+    "meetingConferencePhoneInfoModalDialIn": "رقم الاتصال",
+    "meetingConferencePhoneInfoModalMeetingId": "أدخل معرف الاجتماع",
+    "meetingConferencePhoneInfoModalWait": "انتظر حتى يتم القبول من قبل المنظم",
+    "meetingConferencePhoneInfoModalNoPhoneAvailable": "لا يتوفر هاتف",
+    "meetingConferencePhoneInfoModalTollGeoData": "{country}، {city}",
+    "meetingConferencePhoneInfoModalTollFree": "(رقم مجاني)",
+    "meetingConferencePhoneInfoModalToll": "(الرقم غير المجاني)"
   },
   "IncomingCallNotification": {
     "incomingCallNotificationPlaceholderId": "مستخدم غير معروف",

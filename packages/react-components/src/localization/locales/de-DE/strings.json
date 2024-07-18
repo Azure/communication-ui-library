@@ -605,14 +605,14 @@
     "rightNavButtonAriaLabel": "Nächste Seite"
   },
   "meetingConferencePhoneInfo": {
-    "meetingConferencePhoneInfoModalTitle": "Join call from your phone",
-    "meetingConferencePhoneInfoModalDialIn": "Dial number",
-    "meetingConferencePhoneInfoModalMeetingId": "Enter meeting ID",
-    "meetingConferencePhoneInfoModalWait": "Wait to be admitted by organizer",
-    "meetingConferencePhoneInfoModalNoPhoneAvailable": "No phone available",
+    "meetingConferencePhoneInfoModalTitle": "Von Ihrem Telefon aus an Anruf teilnehmen",
+    "meetingConferencePhoneInfoModalDialIn": "Nummer wählen",
+    "meetingConferencePhoneInfoModalMeetingId": "Besprechungs-ID eingeben",
+    "meetingConferencePhoneInfoModalWait": "Warten Sie, bis sie vom Organisator zugelassen werden.",
+    "meetingConferencePhoneInfoModalNoPhoneAvailable": "Kein Telefon verfügbar",
     "meetingConferencePhoneInfoModalTollGeoData": "{country}, {city}",
-    "meetingConferencePhoneInfoModalTollFree": "(Toll-free)",
-    "meetingConferencePhoneInfoModalToll": "(Toll)"
+    "meetingConferencePhoneInfoModalTollFree": "(Gebührenfrei)",
+    "meetingConferencePhoneInfoModalToll": "(Gebührenpflichtig)"
   },
   "IncomingCallNotification": {
     "incomingCallNotificationPlaceholderId": "Unbekannter Benutzer",

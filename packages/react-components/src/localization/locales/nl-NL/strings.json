@@ -605,14 +605,14 @@
     "rightNavButtonAriaLabel": "volgende pagina"
   },
   "meetingConferencePhoneInfo": {
-    "meetingConferencePhoneInfoModalTitle": "Join call from your phone",
-    "meetingConferencePhoneInfoModalDialIn": "Dial number",
-    "meetingConferencePhoneInfoModalMeetingId": "Enter meeting ID",
-    "meetingConferencePhoneInfoModalWait": "Wait to be admitted by organizer",
-    "meetingConferencePhoneInfoModalNoPhoneAvailable": "No phone available",
+    "meetingConferencePhoneInfoModalTitle": "Deelnemen aan gesprek vanaf uw telefoon",
+    "meetingConferencePhoneInfoModalDialIn": "Kiesnummer",
+    "meetingConferencePhoneInfoModalMeetingId": "Vergadering-id invoeren",
+    "meetingConferencePhoneInfoModalWait": "Wachten om toegelaten te worden door organisator",
+    "meetingConferencePhoneInfoModalNoPhoneAvailable": "Geen telefoon beschikbaar",
     "meetingConferencePhoneInfoModalTollGeoData": "{country}, {city}",
-    "meetingConferencePhoneInfoModalTollFree": "(Toll-free)",
-    "meetingConferencePhoneInfoModalToll": "(Toll)"
+    "meetingConferencePhoneInfoModalTollFree": "(Gratis)",
+    "meetingConferencePhoneInfoModalToll": "(niet-gratis)"
   },
   "IncomingCallNotification": {
     "incomingCallNotificationPlaceholderId": "Onbekende gebruiker",

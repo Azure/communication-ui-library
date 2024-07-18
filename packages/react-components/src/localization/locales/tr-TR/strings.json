@@ -605,14 +605,14 @@
     "rightNavButtonAriaLabel": "sonraki sayfa"
   },
   "meetingConferencePhoneInfo": {
-    "meetingConferencePhoneInfoModalTitle": "Join call from your phone",
-    "meetingConferencePhoneInfoModalDialIn": "Dial number",
-    "meetingConferencePhoneInfoModalMeetingId": "Enter meeting ID",
-    "meetingConferencePhoneInfoModalWait": "Wait to be admitted by organizer",
-    "meetingConferencePhoneInfoModalNoPhoneAvailable": "No phone available",
+    "meetingConferencePhoneInfoModalTitle": "Telefonunuzdan aramaya katılın",
+    "meetingConferencePhoneInfoModalDialIn": "Numarayı çevirin",
+    "meetingConferencePhoneInfoModalMeetingId": "Toplantı kimliğini girin",
+    "meetingConferencePhoneInfoModalWait": "Düzenleyici tarafından kabul etmek için bekleyin",
+    "meetingConferencePhoneInfoModalNoPhoneAvailable": "Kullanılabilir telefon yok",
     "meetingConferencePhoneInfoModalTollGeoData": "{country}, {city}",
-    "meetingConferencePhoneInfoModalTollFree": "(Toll-free)",
-    "meetingConferencePhoneInfoModalToll": "(Toll)"
+    "meetingConferencePhoneInfoModalTollFree": "(Ücretsiz)",
+    "meetingConferencePhoneInfoModalToll": "(Ücretli)"
   },
   "IncomingCallNotification": {
     "incomingCallNotificationPlaceholderId": "Bilinmeyen Kullanıcı",

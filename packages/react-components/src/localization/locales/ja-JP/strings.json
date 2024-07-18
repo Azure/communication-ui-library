@@ -605,14 +605,14 @@
     "rightNavButtonAriaLabel": "次のページ"
   },
   "meetingConferencePhoneInfo": {
-    "meetingConferencePhoneInfoModalTitle": "Join call from your phone",
-    "meetingConferencePhoneInfoModalDialIn": "Dial number",
-    "meetingConferencePhoneInfoModalMeetingId": "Enter meeting ID",
-    "meetingConferencePhoneInfoModalWait": "Wait to be admitted by organizer",
-    "meetingConferencePhoneInfoModalNoPhoneAvailable": "No phone available",
-    "meetingConferencePhoneInfoModalTollGeoData": "{country}, {city}",
-    "meetingConferencePhoneInfoModalTollFree": "(Toll-free)",
-    "meetingConferencePhoneInfoModalToll": "(Toll)"
+    "meetingConferencePhoneInfoModalTitle": "電話から通話に参加",
+    "meetingConferencePhoneInfoModalDialIn": "ダイヤル番号",
+    "meetingConferencePhoneInfoModalMeetingId": "会議 ID の入力",
+    "meetingConferencePhoneInfoModalWait": "開催者に許可されるのを待つ",
+    "meetingConferencePhoneInfoModalNoPhoneAvailable": "利用可能な電話がありません",
+    "meetingConferencePhoneInfoModalTollGeoData": "{country}、{city}",
+    "meetingConferencePhoneInfoModalTollFree": "(無料電話番号)",
+    "meetingConferencePhoneInfoModalToll": "(有料電話番号)"
   },
   "IncomingCallNotification": {
     "incomingCallNotificationPlaceholderId": "不明なユーザー",

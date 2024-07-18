@@ -605,14 +605,14 @@
     "rightNavButtonAriaLabel": "다음 페이지"
   },
   "meetingConferencePhoneInfo": {
-    "meetingConferencePhoneInfoModalTitle": "Join call from your phone",
-    "meetingConferencePhoneInfoModalDialIn": "Dial number",
-    "meetingConferencePhoneInfoModalMeetingId": "Enter meeting ID",
-    "meetingConferencePhoneInfoModalWait": "Wait to be admitted by organizer",
-    "meetingConferencePhoneInfoModalNoPhoneAvailable": "No phone available",
+    "meetingConferencePhoneInfoModalTitle": "내 전화에서 통화 참가",
+    "meetingConferencePhoneInfoModalDialIn": "전화 걸기",
+    "meetingConferencePhoneInfoModalMeetingId": "모임 ID 입력",
+    "meetingConferencePhoneInfoModalWait": "이끌이가 허가할 때까지 기다리세요.",
+    "meetingConferencePhoneInfoModalNoPhoneAvailable": "사용할 수 있는 전화 없음",
     "meetingConferencePhoneInfoModalTollGeoData": "{country}, {city}",
-    "meetingConferencePhoneInfoModalTollFree": "(Toll-free)",
-    "meetingConferencePhoneInfoModalToll": "(Toll)"
+    "meetingConferencePhoneInfoModalTollFree": "(무료)",
+    "meetingConferencePhoneInfoModalToll": "(유료)"
   },
   "IncomingCallNotification": {
     "incomingCallNotificationPlaceholderId": "알 수 없는 사용자",

@@ -605,14 +605,14 @@
     "rightNavButtonAriaLabel": "следующая страница"
   },
   "meetingConferencePhoneInfo": {
-    "meetingConferencePhoneInfoModalTitle": "Join call from your phone",
-    "meetingConferencePhoneInfoModalDialIn": "Dial number",
-    "meetingConferencePhoneInfoModalMeetingId": "Enter meeting ID",
-    "meetingConferencePhoneInfoModalWait": "Wait to be admitted by organizer",
-    "meetingConferencePhoneInfoModalNoPhoneAvailable": "No phone available",
+    "meetingConferencePhoneInfoModalTitle": "Присоединиться к вызову с телефона",
+    "meetingConferencePhoneInfoModalDialIn": "Набрать номер",
+    "meetingConferencePhoneInfoModalMeetingId": "Введите идентификатор собрания",
+    "meetingConferencePhoneInfoModalWait": "Подождите, пока организатор допустит вас",
+    "meetingConferencePhoneInfoModalNoPhoneAvailable": "Нет доступных телефонов",
     "meetingConferencePhoneInfoModalTollGeoData": "{country}, {city}",
-    "meetingConferencePhoneInfoModalTollFree": "(Toll-free)",
-    "meetingConferencePhoneInfoModalToll": "(Toll)"
+    "meetingConferencePhoneInfoModalTollFree": "(бесплатный)",
+    "meetingConferencePhoneInfoModalToll": "(платный)"
   },
   "IncomingCallNotification": {
     "incomingCallNotificationPlaceholderId": "Неизвестный пользователь",

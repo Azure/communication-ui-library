@@ -605,14 +605,14 @@
     "rightNavButtonAriaLabel": "הדף הבא"
   },
   "meetingConferencePhoneInfo": {
-    "meetingConferencePhoneInfoModalTitle": "Join call from your phone",
-    "meetingConferencePhoneInfoModalDialIn": "Dial number",
-    "meetingConferencePhoneInfoModalMeetingId": "Enter meeting ID",
-    "meetingConferencePhoneInfoModalWait": "Wait to be admitted by organizer",
-    "meetingConferencePhoneInfoModalNoPhoneAvailable": "No phone available",
+    "meetingConferencePhoneInfoModalTitle": "הצטרף לשיחה מהטלפון שלך",
+    "meetingConferencePhoneInfoModalDialIn": "חייג למספר",
+    "meetingConferencePhoneInfoModalMeetingId": "הזן מזהה פגישה",
+    "meetingConferencePhoneInfoModalWait": "המתן עד שהמארגן יכניס אותך",
+    "meetingConferencePhoneInfoModalNoPhoneAvailable": "אין טלפון זמין",
     "meetingConferencePhoneInfoModalTollGeoData": "{country}, {city}",
-    "meetingConferencePhoneInfoModalTollFree": "(Toll-free)",
-    "meetingConferencePhoneInfoModalToll": "(Toll)"
+    "meetingConferencePhoneInfoModalTollFree": "(שיחת חינם)",
+    "meetingConferencePhoneInfoModalToll": "(בתשלום)"
   },
   "IncomingCallNotification": {
     "incomingCallNotificationPlaceholderId": "משתמש לא ידוע",

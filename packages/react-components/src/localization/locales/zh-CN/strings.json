@@ -605,14 +605,14 @@
     "rightNavButtonAriaLabel": "下一页"
   },
   "meetingConferencePhoneInfo": {
-    "meetingConferencePhoneInfoModalTitle": "Join call from your phone",
-    "meetingConferencePhoneInfoModalDialIn": "Dial number",
-    "meetingConferencePhoneInfoModalMeetingId": "Enter meeting ID",
-    "meetingConferencePhoneInfoModalWait": "Wait to be admitted by organizer",
-    "meetingConferencePhoneInfoModalNoPhoneAvailable": "No phone available",
-    "meetingConferencePhoneInfoModalTollGeoData": "{country}, {city}",
-    "meetingConferencePhoneInfoModalTollFree": "(Toll-free)",
-    "meetingConferencePhoneInfoModalToll": "(Toll)"
+    "meetingConferencePhoneInfoModalTitle": "从手机加入呼叫",
+    "meetingConferencePhoneInfoModalDialIn": "拨号号码",
+    "meetingConferencePhoneInfoModalMeetingId": "输入会议 ID",
+    "meetingConferencePhoneInfoModalWait": "等待组织者接受",
+    "meetingConferencePhoneInfoModalNoPhoneAvailable": "没有可用的电话",
+    "meetingConferencePhoneInfoModalTollGeoData": "{country}，{city}",
+    "meetingConferencePhoneInfoModalTollFree": "(免费电话)",
+    "meetingConferencePhoneInfoModalToll": "(收费电话)"
   },
   "IncomingCallNotification": {
     "incomingCallNotificationPlaceholderId": "未知用户",

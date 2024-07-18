@@ -605,14 +605,14 @@
     "rightNavButtonAriaLabel": "nästa sida"
   },
   "meetingConferencePhoneInfo": {
-    "meetingConferencePhoneInfoModalTitle": "Join call from your phone",
-    "meetingConferencePhoneInfoModalDialIn": "Dial number",
-    "meetingConferencePhoneInfoModalMeetingId": "Enter meeting ID",
-    "meetingConferencePhoneInfoModalWait": "Wait to be admitted by organizer",
-    "meetingConferencePhoneInfoModalNoPhoneAvailable": "No phone available",
+    "meetingConferencePhoneInfoModalTitle": "Anslut till samtal från din telefon",
+    "meetingConferencePhoneInfoModalDialIn": "Slå nummer",
+    "meetingConferencePhoneInfoModalMeetingId": "Ange mötes-ID",
+    "meetingConferencePhoneInfoModalWait": "Vänta på att få tillträde av organisatören",
+    "meetingConferencePhoneInfoModalNoPhoneAvailable": "Ingen telefon är tillgänglig",
     "meetingConferencePhoneInfoModalTollGeoData": "{country}, {city}",
-    "meetingConferencePhoneInfoModalTollFree": "(Toll-free)",
-    "meetingConferencePhoneInfoModalToll": "(Toll)"
+    "meetingConferencePhoneInfoModalTollFree": "(Avgiftsfritt)",
+    "meetingConferencePhoneInfoModalToll": "(Avgiftsbelagt)"
   },
   "IncomingCallNotification": {
     "incomingCallNotificationPlaceholderId": "Okänd användare",

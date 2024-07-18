@@ -605,14 +605,14 @@
     "rightNavButtonAriaLabel": "seuraava sivu"
   },
   "meetingConferencePhoneInfo": {
-    "meetingConferencePhoneInfoModalTitle": "Join call from your phone",
-    "meetingConferencePhoneInfoModalDialIn": "Dial number",
-    "meetingConferencePhoneInfoModalMeetingId": "Enter meeting ID",
-    "meetingConferencePhoneInfoModalWait": "Wait to be admitted by organizer",
-    "meetingConferencePhoneInfoModalNoPhoneAvailable": "No phone available",
+    "meetingConferencePhoneInfoModalTitle": "Liity puheluun puhelimestasi",
+    "meetingConferencePhoneInfoModalDialIn": "Valitse numero",
+    "meetingConferencePhoneInfoModalMeetingId": "Anna kokoustunnus",
+    "meetingConferencePhoneInfoModalWait": "Odota, että järjestäjä ottaa sinut vastaan",
+    "meetingConferencePhoneInfoModalNoPhoneAvailable": "Puhelinta ei ole käytettävissä",
     "meetingConferencePhoneInfoModalTollGeoData": "{country}, {city}",
-    "meetingConferencePhoneInfoModalTollFree": "(Toll-free)",
-    "meetingConferencePhoneInfoModalToll": "(Toll)"
+    "meetingConferencePhoneInfoModalTollFree": "(Maksuton)",
+    "meetingConferencePhoneInfoModalToll": "(Maksullinen)"
   },
   "IncomingCallNotification": {
     "incomingCallNotificationPlaceholderId": "Tuntematon käyttäjä",
