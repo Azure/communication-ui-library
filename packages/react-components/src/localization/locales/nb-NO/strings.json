@@ -260,44 +260,44 @@
     "cameraFrozenForRemoteParticipants": "Brukere i samtalen har problemer med å se videoen. Kontroller enhetene og nettverket.",
     "unableToStartVideoEffect": "Kan ikke bruke videoeffekt.",
     "startSpotlightWhileMaxParticipantsAreSpotlighted": "Kan ikke starte rampelys på deltaker(e) fordi maksimalt antall deltakere allerede er satt i rampelyset.",
-    "mutedByRemoteParticipant": "You were muted by another participant."
+    "mutedByRemoteParticipant": "Du har blitt dempet av en annen deltaker."
   },
   "notificationStack": {
     "callingNetworkFailure": {
-      "title": "Troubling connecting call",
-      "message": "You seem to be offline. Please check your network connection and try again.",
+      "title": "Problemer med å koble til samtalen",
+      "message": "Du ser ut til å være frakoblet. Kontroller nettverkstilkoblingen, og prøv på nytt.",
       "dismissButtonAriaLabel": "Lukk"
     },
     "startVideoGeneric": {
-      "title": "Failed to start video.",
+      "title": "Kan ikke starte video.",
       "dismissButtonAriaLabel": "Lukk"
     },
     "stopVideoGeneric": {
-      "title": "Failed to stop video.",
+      "title": "Kan ikke stoppe video.",
       "dismissButtonAriaLabel": "Lukk"
     },
     "muteGeneric": {
-      "title": "Failed to mute microphone.",
+      "title": "Kan ikke dempe mikrofonen.",
       "dismissButtonAriaLabel": "Lukk"
     },
     "unmuteGeneric": {
-      "title": "Failed to unmute microphone.",
+      "title": "Kan ikke oppheve demping av mikrofon.",
       "dismissButtonAriaLabel": "Lukk"
     },
     "speakingWhileMuted": {
-      "title": "You're muted.",
+      "title": "Du er dempet.",
       "dismissButtonAriaLabel": "Lukk"
     },
     "startScreenShareGeneric": {
-      "title": "There was an issue starting screen share.",
+      "title": "Det oppstod et problem under start av skjermdeling.",
       "dismissButtonAriaLabel": "Lukk"
     },
     "stopScreenShareGeneric": {
-      "title": "Failed to stop screen sharing.",
+      "title": "Kan ikke stoppe skjermdeling.",
       "dismissButtonAriaLabel": "Lukk"
     },
     "callNetworkQualityLow": {
-      "title": "Network quality is low.",
+      "title": "Nettverkskvaliteten er lav.",
       "dismissButtonAriaLabel": "Lukk"
     },
     "teamsMeetingCallNetworkQualityLow": {
@@ -307,100 +307,100 @@
       "primaryButtonLabel": "Bli med via telefon"
     },
     "callNoSpeakerFound": {
-      "title": "No speakers or headphones found",
-      "message": "Connect an audio device to hear the call.",
+      "title": "Finner ingen høyttalere eller hodetelefoner",
+      "message": "Koble til en lydenhet for å høre samtalen.",
       "dismissButtonAriaLabel": "Lukk"
     },
     "callNoMicrophoneFound": {
-      "title": "No microphones found",
-      "message": "Connect an audio input device.",
+      "title": "Finner ingen mikrofoner",
+      "message": "Koble til en lydinndataenhet.",
       "dismissButtonAriaLabel": "Lukk"
     },
     "callMicrophoneAccessDenied": {
-      "title": "Unable to access microphone",
-      "message": "Click the lock in the address bar to grant permission to this webpage.",
+      "title": "Får ikke tilgang til mikrofonen",
+      "message": "Klikk låsen i adresselinjen for å gi tillatelse til denne nettsiden.",
       "dismissButtonAriaLabel": "Lukk"
     },
     "callMicrophoneAccessDeniedSafari": {
-      "title": "Unable to access microphone",
-      "message": "Refresh the page to allow permissions, or check this browser’s settings and verify permissions are enabled for this website.",
+      "title": "Får ikke tilgang til mikrofonen",
+      "message": "Oppdater siden for å tillate tillatelser, eller kontroller innstillingene for denne nettleseren, og kontroller at tillatelser er aktivert for dette nettstedet.",
       "dismissButtonAriaLabel": "Lukk"
     },
     "callMicrophoneMutedBySystem": {
-      "title": "You are muted by your system.",
+      "title": "Du er dempet av systemet.",
       "dismissButtonAriaLabel": "Lukk"
     },
     "callMicrophoneUnmutedBySystem": {
-      "title": "Your microphone recovered and you were unmuted by your system.",
+      "title": "Mikrofonen ble gjenopprettet, og dempingen ble opphevet av systemet.",
       "dismissButtonAriaLabel": "Lukk"
     },
     "callMacOsMicrophoneAccessDenied": {
-      "title": "Unable to access microphone",
-      "message": "Grant microphone permission in your macOS privacy settings.",
+      "title": "Får ikke tilgang til mikrofonen",
+      "message": "Gi mikrofontillatelse i personverninnstillingene for macOS.",
       "dismissButtonAriaLabel": "Lukk"
     },
     "callLocalVideoFreeze": {
-      "title": "Network bandwidth is poor",
-      "message": "Your video may appear paused for others on the call.",
+      "title": "Nettverksbåndbredden er dårlig",
+      "message": "Videoen kan være midlertidig stanset for andre i samtalen.",
       "dismissButtonAriaLabel": "Lukk"
     },
     "callCameraAccessDenied": {
-      "title": "Unable to access camera",
-      "message": "Click the lock in the address bar to grant permission to this webpage.",
+      "title": "Får ikke tilgang til kamera",
+      "message": "Klikk låsen i adresselinjen for å gi tillatelse til denne nettsiden.",
       "dismissButtonAriaLabel": "Lukk"
     },
     "callCameraAccessDeniedSafari": {
-      "title": "Unable to access camera",
-      "message": "Refresh the page to allow permissions, or check this browser’s settings and verify permissions are enabled for this website.",
+      "title": "Får ikke tilgang til kamera",
+      "message": "Oppdater siden for å tillate tillatelser, eller kontroller innstillingene for denne nettleseren, og kontroller at tillatelser er aktivert for dette nettstedet.",
       "dismissButtonAriaLabel": "Lukk"
     },
     "callCameraAlreadyInUse": {
-      "title": "Unable to access camera",
-      "message": "It may already be in use by another application.",
+      "title": "Får ikke tilgang til kamera",
+      "message": "Det kan allerede være i bruk av et annet program.",
       "dismissButtonAriaLabel": "Lukk"
     },
     "callVideoStoppedBySystem": {
-      "title": "Your video has been stopped by your system.",
+      "title": "Videoen er stoppet av systemet.",
       "dismissButtonAriaLabel": "Lukk"
     },
     "callVideoRecoveredBySystem": {
-      "title": "Your video has resumed.",
+      "title": "Videoen er gjenopptatt.",
       "dismissButtonAriaLabel": "Lukk"
     },
     "callMacOsCameraAccessDenied": {
-      "title": "MacOS is blocking access to your camera",
-      "message": "Update your privacy settings to allow this browser to access your camera.",
+      "title": "MacOS blokkerer tilgang til kameraet",
+      "message": "Oppdater personverninnstillingene for å gi denne nettleseren tilgang til kameraet.",
       "dismissButtonAriaLabel": "Lukk"
     },
     "callMacOsScreenShareAccessDenied": {
-      "title": "MacOS is blocking screen sharing",
-      "message": "Update your privacy settings to allow this browser to record your screen.",
+      "title": "MacOS blokkerer skjermdeling",
+      "message": "Oppdater personverninnstillingene for å tillate at denne nettleseren registrerer skjermen.",
       "dismissButtonAriaLabel": "Lukk"
     },
     "failedToJoinCallGeneric": {
-      "title": "Failed to join call.",
+      "title": "Kan ikke bli med i samtalen.",
       "dismissButtonAriaLabel": "Lukk"
     },
     "failedToJoinCallInvalidMeetingLink": {
-      "title": "Unable to join Meeting. Invalid Link.",
+      "title": "Kan ikke bli med i møtet. Ugyldig kobling.",
       "dismissButtonAriaLabel": "Lukk"
     },
     "cameraFrozenForRemoteParticipants": {
-      "title": "Users in the call are having issues seeing your video",
-      "message": "Please check your devices and network.",
+      "title": "Brukere i samtalen har problemer med å se videoen",
+      "message": "Kontroller enhetene og nettverket.",
       "dismissButtonAriaLabel": "Lukk"
     },
     "unableToStartVideoEffect": {
-      "title": "Unable to apply video effect.",
+      "title": "Kan ikke bruke videoeffekt.",
       "dismissButtonAriaLabel": "Lukk"
     },
     "startSpotlightWhileMaxParticipantsAreSpotlighted": {
-      "title": "Cannot start spotlight on participant(s)",
-      "message": "The maximum number of participants are already spotlighted.",
+      "title": "Kan ikke begynne å sette deltaker(e) i rampelyset",
+      "message": "Maksimalt antall deltakere er allerede satt i rampelyset.",
       "dismissButtonAriaLabel": "Lukk"
     },
     "mutedByRemoteParticipant": {
-      "title": "You were muted by another participant.",
+      "title": "Du har blitt dempet av en annen deltaker.",
       "dismissButtonAriaLabel": "Lukk"
     },
     "recordingStarted": {
@@ -450,7 +450,7 @@
     "localVideoLabel": "Du",
     "localVideoCameraSwitcherLabel": "Bytt kamera",
     "localVideoMovementLabel": "Flyttbar lokal videoflis",
-    "localVideoMovementAriaLabel": "Movable Local Video Tile",
+    "localVideoMovementAriaLabel": "Flyttbar lokal videoflis",
     "localVideoSelectedDescription": "{cameraName} valgt",
     "displayNamePlaceholder": "Deltaker uten navn",
     "fitRemoteParticipantToFrame": "Tilpass til ramme",
@@ -468,7 +468,7 @@
     "stopSpotlightVideoTileMenuLabel": "Fjern fra rampelyset",
     "stopSpotlightOnSelfVideoTileMenuLabel": "Rampelys av",
     "attendeeRole": "Deltaker",
-    "muteParticipantMenuItemLabel": "Mute"
+    "muteParticipantMenuItemLabel": "Demp"
   },
   "dialpad": {
     "placeholderText": "Skriv inn telefonnummeret",
@@ -483,7 +483,7 @@
   "videoTile": {
     "participantStateRinging": "Ringer ...",
     "participantStateHold": "På vent",
-    "moreOptionsButtonAriaLabel": "More Options"
+    "moreOptionsButtonAriaLabel": "Flere alternativer"
   },
   "CameraAndMicrophoneSitePermissionsRequest": {
     "primaryText": "Tillat {appName} å bruke kameraet og mikrofonen",

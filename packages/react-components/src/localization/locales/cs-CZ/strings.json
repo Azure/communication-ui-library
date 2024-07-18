@@ -260,44 +260,44 @@
     "cameraFrozenForRemoteParticipants": "Uživatelé v hovoru mají problémy s zobrazením vašeho videa. Zkontrolujte prosím svá zařízení a síť.",
     "unableToStartVideoEffect": "Nelze použít efekt videa.",
     "startSpotlightWhileMaxParticipantsAreSpotlighted": "Nelze zahájit vytváření hlavního výběru účastníků, protože je již v hlavním výběru maximální počet účastníků.",
-    "mutedByRemoteParticipant": "You were muted by another participant."
+    "mutedByRemoteParticipant": "Byli jste ztlumení jiným účastníkem."
   },
   "notificationStack": {
     "callingNetworkFailure": {
-      "title": "Troubling connecting call",
-      "message": "You seem to be offline. Please check your network connection and try again.",
+      "title": "Při připojování hovoru došlo k potížím",
+      "message": "Zdá se, že jste offline. Zkontrolujte si prosím síťové připojení a zkuste to znovu.",
       "dismissButtonAriaLabel": "Zavřít"
     },
     "startVideoGeneric": {
-      "title": "Failed to start video.",
+      "title": "Video se nepovedlo spustit.",
       "dismissButtonAriaLabel": "Zavřít"
     },
     "stopVideoGeneric": {
-      "title": "Failed to stop video.",
+      "title": "Video se nepovedlo zastavit.",
       "dismissButtonAriaLabel": "Zavřít"
     },
     "muteGeneric": {
-      "title": "Failed to mute microphone.",
+      "title": "Nepovedlo se ztlumit mikrofon.",
       "dismissButtonAriaLabel": "Zavřít"
     },
     "unmuteGeneric": {
-      "title": "Failed to unmute microphone.",
+      "title": "Nepovedlo se zrušit ztlumení mikrofonu.",
       "dismissButtonAriaLabel": "Zavřít"
     },
     "speakingWhileMuted": {
-      "title": "You're muted.",
+      "title": "Jste ztlumení.",
       "dismissButtonAriaLabel": "Zavřít"
     },
     "startScreenShareGeneric": {
-      "title": "There was an issue starting screen share.",
+      "title": "Při spouštění sdílení obrazovky došlo k problému.",
       "dismissButtonAriaLabel": "Zavřít"
     },
     "stopScreenShareGeneric": {
-      "title": "Failed to stop screen sharing.",
+      "title": "Nepovedlo se zastavit sdílení obrazovky.",
       "dismissButtonAriaLabel": "Zavřít"
     },
     "callNetworkQualityLow": {
-      "title": "Network quality is low.",
+      "title": "Kvalita sítě je nízká.",
       "dismissButtonAriaLabel": "Zavřít"
     },
     "teamsMeetingCallNetworkQualityLow": {
@@ -307,100 +307,100 @@
       "primaryButtonLabel": "Připojit telefonem"
     },
     "callNoSpeakerFound": {
-      "title": "No speakers or headphones found",
-      "message": "Connect an audio device to hear the call.",
+      "title": "Nenašly se žádné reproduktory ani sluchátka",
+      "message": "Připojte zvukové zařízení, abyste slyšeli hovor.",
       "dismissButtonAriaLabel": "Zavřít"
     },
     "callNoMicrophoneFound": {
-      "title": "No microphones found",
-      "message": "Connect an audio input device.",
+      "title": "Nenašly se žádné mikrofony",
+      "message": "Připojte vstupní zvukové zařízení.",
       "dismissButtonAriaLabel": "Zavřít"
     },
     "callMicrophoneAccessDenied": {
-      "title": "Unable to access microphone",
-      "message": "Click the lock in the address bar to grant permission to this webpage.",
+      "title": "Nepovedlo se získat přístup k mikrofonu",
+      "message": "Kliknutím na zámek na panelu Adresa udělte oprávnění k této webové stránce.",
       "dismissButtonAriaLabel": "Zavřít"
     },
     "callMicrophoneAccessDeniedSafari": {
-      "title": "Unable to access microphone",
-      "message": "Refresh the page to allow permissions, or check this browser’s settings and verify permissions are enabled for this website.",
+      "title": "Nepovedlo se získat přístup k mikrofonu",
+      "message": "Aktualizujte stránku, abyste povolili oprávnění, nebo zkontrolujte nastavení tohoto prohlížeče a ověřte, jestli jsou pro tento web povolená oprávnění.",
       "dismissButtonAriaLabel": "Zavřít"
     },
     "callMicrophoneMutedBySystem": {
-      "title": "You are muted by your system.",
+      "title": "Systém vás ztlumil.",
       "dismissButtonAriaLabel": "Zavřít"
     },
     "callMicrophoneUnmutedBySystem": {
-      "title": "Your microphone recovered and you were unmuted by your system.",
+      "title": "Váš mikrofon se obnovil a systém vám zrušil ztlumení.",
       "dismissButtonAriaLabel": "Zavřít"
     },
     "callMacOsMicrophoneAccessDenied": {
-      "title": "Unable to access microphone",
-      "message": "Grant microphone permission in your macOS privacy settings.",
+      "title": "Nepovedlo se získat přístup k mikrofonu",
+      "message": "Udělte v nastavení ochrany osobních údajů pro macOS oprávnění k mikrofonu.",
       "dismissButtonAriaLabel": "Zavřít"
     },
     "callLocalVideoFreeze": {
-      "title": "Network bandwidth is poor",
-      "message": "Your video may appear paused for others on the call.",
+      "title": "Šířka pásma sítě je nekvalitní",
+      "message": "Vaše video se může zobrazovat jako pozastavené pro ostatní účastníky hovoru.",
       "dismissButtonAriaLabel": "Zavřít"
     },
     "callCameraAccessDenied": {
-      "title": "Unable to access camera",
-      "message": "Click the lock in the address bar to grant permission to this webpage.",
+      "title": "Nejde získat přístup ke kameře",
+      "message": "Kliknutím na zámek na panelu Adresa udělte oprávnění k této webové stránce.",
       "dismissButtonAriaLabel": "Zavřít"
     },
     "callCameraAccessDeniedSafari": {
-      "title": "Unable to access camera",
-      "message": "Refresh the page to allow permissions, or check this browser’s settings and verify permissions are enabled for this website.",
+      "title": "Nejde získat přístup ke kameře",
+      "message": "Aktualizujte stránku, abyste povolili oprávnění, nebo zkontrolujte nastavení tohoto prohlížeče a ověřte, jestli jsou pro tento web povolená oprávnění.",
       "dismissButtonAriaLabel": "Zavřít"
     },
     "callCameraAlreadyInUse": {
-      "title": "Unable to access camera",
-      "message": "It may already be in use by another application.",
+      "title": "Nejde získat přístup ke kameře",
+      "message": "Je možné, že ji už používá jiná aplikace.",
       "dismissButtonAriaLabel": "Zavřít"
     },
     "callVideoStoppedBySystem": {
-      "title": "Your video has been stopped by your system.",
+      "title": "Vaše video bylo zastaveno systémem.",
       "dismissButtonAriaLabel": "Zavřít"
     },
     "callVideoRecoveredBySystem": {
-      "title": "Your video has resumed.",
+      "title": "Vaše video se obnovilo.",
       "dismissButtonAriaLabel": "Zavřít"
     },
     "callMacOsCameraAccessDenied": {
-      "title": "MacOS is blocking access to your camera",
-      "message": "Update your privacy settings to allow this browser to access your camera.",
+      "title": "MacOS blokuje přístup k vaší kameře",
+      "message": "Aktualizujte si nastavení ochrany osobních údajů, aby tento prohlížeč měl přístup k vaší kameře.",
       "dismissButtonAriaLabel": "Zavřít"
     },
     "callMacOsScreenShareAccessDenied": {
-      "title": "MacOS is blocking screen sharing",
-      "message": "Update your privacy settings to allow this browser to record your screen.",
+      "title": "MacOS blokuje sdílení obrazovky",
+      "message": "Aktualizujte nastavení ochrany osobních údajů, aby tento prohlížeč mohl nahrávat vaši obrazovku.",
       "dismissButtonAriaLabel": "Zavřít"
     },
     "failedToJoinCallGeneric": {
-      "title": "Failed to join call.",
+      "title": "K hovoru se nepovedlo připojit.",
       "dismissButtonAriaLabel": "Zavřít"
     },
     "failedToJoinCallInvalidMeetingLink": {
-      "title": "Unable to join Meeting. Invalid Link.",
+      "title": "Ke schůzce se nelze připojit. Neplatný odkaz.",
       "dismissButtonAriaLabel": "Zavřít"
     },
     "cameraFrozenForRemoteParticipants": {
-      "title": "Users in the call are having issues seeing your video",
-      "message": "Please check your devices and network.",
+      "title": "Uživatelé v hovoru mají problémy s zobrazením vašeho videa",
+      "message": "Zkontrolujte prosím svá zařízení a síť.",
       "dismissButtonAriaLabel": "Zavřít"
     },
     "unableToStartVideoEffect": {
-      "title": "Unable to apply video effect.",
+      "title": "Nelze použít efekt videa.",
       "dismissButtonAriaLabel": "Zavřít"
     },
     "startSpotlightWhileMaxParticipantsAreSpotlighted": {
-      "title": "Cannot start spotlight on participant(s)",
-      "message": "The maximum number of participants are already spotlighted.",
+      "title": "Nelze spustit hlavní výběr u účastník(a/ů).",
+      "message": "Maximální počet účastníků je už vybraný.",
       "dismissButtonAriaLabel": "Zavřít"
     },
     "mutedByRemoteParticipant": {
-      "title": "You were muted by another participant.",
+      "title": "Byli jste ztlumení jiným účastníkem.",
       "dismissButtonAriaLabel": "Zavřít"
     },
     "recordingStarted": {
@@ -450,7 +450,7 @@
     "localVideoLabel": "Vy",
     "localVideoCameraSwitcherLabel": "Přepnout kameru",
     "localVideoMovementLabel": "Dlaždice s místním videem s možností přesunutí",
-    "localVideoMovementAriaLabel": "Movable Local Video Tile",
+    "localVideoMovementAriaLabel": "Dlaždice s místním videem s možností přesunutí",
     "localVideoSelectedDescription": "{cameraName} vybráno",
     "displayNamePlaceholder": "Nepojmenovaný účastník",
     "fitRemoteParticipantToFrame": "Přizpůsobit rámečku",
@@ -468,7 +468,7 @@
     "stopSpotlightVideoTileMenuLabel": "Zastavit přidávání do hlavního výběru",
     "stopSpotlightOnSelfVideoTileMenuLabel": "Ukončit hlavní výběr",
     "attendeeRole": "Účastník",
-    "muteParticipantMenuItemLabel": "Mute"
+    "muteParticipantMenuItemLabel": "Ztlumit"
   },
   "dialpad": {
     "placeholderText": "Zadejte telefonní číslo",
@@ -483,7 +483,7 @@
   "videoTile": {
     "participantStateRinging": "Volání…",
     "participantStateHold": "Pozastavený hovor",
-    "moreOptionsButtonAriaLabel": "More Options"
+    "moreOptionsButtonAriaLabel": "Další možnosti"
   },
   "CameraAndMicrophoneSitePermissionsRequest": {
     "primaryText": "Povolit aplikaci {appName} používat kameru a mikrofon",

@@ -260,44 +260,44 @@
     "cameraFrozenForRemoteParticipants": "通话中的用户在查看视频时遇到问题。请检查你的设备和网络。",
     "unableToStartVideoEffect": "无法应用视频效果。",
     "startSpotlightWhileMaxParticipantsAreSpotlighted": "无法聚焦参与者，因为聚焦的参与者人数已达到上限。",
-    "mutedByRemoteParticipant": "You were muted by another participant."
+    "mutedByRemoteParticipant": "另一个参与者已将你静音。"
   },
   "notificationStack": {
     "callingNetworkFailure": {
-      "title": "Troubling connecting call",
-      "message": "You seem to be offline. Please check your network connection and try again.",
+      "title": "连接通话时遇到问题",
+      "message": "你似乎处于脱机状态。请检查网络连接，然后重试。",
       "dismissButtonAriaLabel": "关闭"
     },
     "startVideoGeneric": {
-      "title": "Failed to start video.",
+      "title": "无法启动视频。",
       "dismissButtonAriaLabel": "关闭"
     },
     "stopVideoGeneric": {
-      "title": "Failed to stop video.",
+      "title": "无法停止视频。",
       "dismissButtonAriaLabel": "关闭"
     },
     "muteGeneric": {
-      "title": "Failed to mute microphone.",
+      "title": "无法将麦克风静音。",
       "dismissButtonAriaLabel": "关闭"
     },
     "unmuteGeneric": {
-      "title": "Failed to unmute microphone.",
+      "title": "无法取消麦克风静音。",
       "dismissButtonAriaLabel": "关闭"
     },
     "speakingWhileMuted": {
-      "title": "You're muted.",
+      "title": "你已静音。",
       "dismissButtonAriaLabel": "关闭"
     },
     "startScreenShareGeneric": {
-      "title": "There was an issue starting screen share.",
+      "title": "启动屏幕共享时出现问题。",
       "dismissButtonAriaLabel": "关闭"
     },
     "stopScreenShareGeneric": {
-      "title": "Failed to stop screen sharing.",
+      "title": "无法停止屏幕共享。",
       "dismissButtonAriaLabel": "关闭"
     },
     "callNetworkQualityLow": {
-      "title": "Network quality is low.",
+      "title": "网络质量低。",
       "dismissButtonAriaLabel": "关闭"
     },
     "teamsMeetingCallNetworkQualityLow": {
@@ -307,100 +307,100 @@
       "primaryButtonLabel": "通过电话加入"
     },
     "callNoSpeakerFound": {
-      "title": "No speakers or headphones found",
-      "message": "Connect an audio device to hear the call.",
+      "title": "找不到扬声器或耳机",
+      "message": "连接音频设备以收听呼叫。",
       "dismissButtonAriaLabel": "关闭"
     },
     "callNoMicrophoneFound": {
-      "title": "No microphones found",
-      "message": "Connect an audio input device.",
+      "title": "未找到麦克风",
+      "message": "连接音频输入设备。",
       "dismissButtonAriaLabel": "关闭"
     },
     "callMicrophoneAccessDenied": {
-      "title": "Unable to access microphone",
-      "message": "Click the lock in the address bar to grant permission to this webpage.",
+      "title": "无法访问麦克风",
+      "message": "单击地址栏中的锁定以授予对此网页的权限。",
       "dismissButtonAriaLabel": "关闭"
     },
     "callMicrophoneAccessDeniedSafari": {
-      "title": "Unable to access microphone",
-      "message": "Refresh the page to allow permissions, or check this browser’s settings and verify permissions are enabled for this website.",
+      "title": "无法访问麦克风",
+      "message": "刷新页面以允许权限，或检查此浏览器的设置并验证是否为此网站启用了权限。",
       "dismissButtonAriaLabel": "关闭"
     },
     "callMicrophoneMutedBySystem": {
-      "title": "You are muted by your system.",
+      "title": "系统已将你设为静音。",
       "dismissButtonAriaLabel": "关闭"
     },
     "callMicrophoneUnmutedBySystem": {
-      "title": "Your microphone recovered and you were unmuted by your system.",
+      "title": "你的麦克风已恢复，系统已取消静音。",
       "dismissButtonAriaLabel": "关闭"
     },
     "callMacOsMicrophoneAccessDenied": {
-      "title": "Unable to access microphone",
-      "message": "Grant microphone permission in your macOS privacy settings.",
+      "title": "无法访问麦克风",
+      "message": "在 macOS 隐私设置中授予麦克风权限。",
       "dismissButtonAriaLabel": "关闭"
     },
     "callLocalVideoFreeze": {
-      "title": "Network bandwidth is poor",
-      "message": "Your video may appear paused for others on the call.",
+      "title": "网络带宽较差",
+      "message": "您的视频可能会对通话中的其他人暂停。",
       "dismissButtonAriaLabel": "关闭"
     },
     "callCameraAccessDenied": {
-      "title": "Unable to access camera",
-      "message": "Click the lock in the address bar to grant permission to this webpage.",
+      "title": "无法访问摄像头",
+      "message": "单击地址栏中的锁定以授予对此网页的权限。",
       "dismissButtonAriaLabel": "关闭"
     },
     "callCameraAccessDeniedSafari": {
-      "title": "Unable to access camera",
-      "message": "Refresh the page to allow permissions, or check this browser’s settings and verify permissions are enabled for this website.",
+      "title": "无法访问摄像头",
+      "message": "刷新页面以允许权限，或检查此浏览器的设置并验证是否为此网站启用了权限。",
       "dismissButtonAriaLabel": "关闭"
     },
     "callCameraAlreadyInUse": {
-      "title": "Unable to access camera",
-      "message": "It may already be in use by another application.",
+      "title": "无法访问摄像头",
+      "message": "它可能已被其他应用程序使用。",
       "dismissButtonAriaLabel": "关闭"
     },
     "callVideoStoppedBySystem": {
-      "title": "Your video has been stopped by your system.",
+      "title": "你的系统已停止你的视频。",
       "dismissButtonAriaLabel": "关闭"
     },
     "callVideoRecoveredBySystem": {
-      "title": "Your video has resumed.",
+      "title": "你的视频已恢复。",
       "dismissButtonAriaLabel": "关闭"
     },
     "callMacOsCameraAccessDenied": {
-      "title": "MacOS is blocking access to your camera",
-      "message": "Update your privacy settings to allow this browser to access your camera.",
+      "title": "MacOS 正在阻止对摄像头的访问",
+      "message": "更新你的隐私设置以允许此浏览器访问你的相机。",
       "dismissButtonAriaLabel": "关闭"
     },
     "callMacOsScreenShareAccessDenied": {
-      "title": "MacOS is blocking screen sharing",
-      "message": "Update your privacy settings to allow this browser to record your screen.",
+      "title": "MacOS 正在阻止屏幕共享",
+      "message": "更新你的隐私设置以允许此浏览器录制你的屏幕。",
       "dismissButtonAriaLabel": "关闭"
     },
     "failedToJoinCallGeneric": {
-      "title": "Failed to join call.",
+      "title": "无法加入通话。",
       "dismissButtonAriaLabel": "关闭"
     },
     "failedToJoinCallInvalidMeetingLink": {
-      "title": "Unable to join Meeting. Invalid Link.",
+      "title": "无法加入会议。无效的链接。",
       "dismissButtonAriaLabel": "关闭"
     },
     "cameraFrozenForRemoteParticipants": {
-      "title": "Users in the call are having issues seeing your video",
-      "message": "Please check your devices and network.",
+      "title": "通话中的用户在查看视频时遇到问题",
+      "message": "请检查你的设备和网络。",
       "dismissButtonAriaLabel": "关闭"
     },
     "unableToStartVideoEffect": {
-      "title": "Unable to apply video effect.",
+      "title": "无法应用视频效果。",
       "dismissButtonAriaLabel": "关闭"
     },
     "startSpotlightWhileMaxParticipantsAreSpotlighted": {
-      "title": "Cannot start spotlight on participant(s)",
-      "message": "The maximum number of participants are already spotlighted.",
+      "title": "无法在参与者上启动聚焦",
+      "message": "已聚焦的最大参与者数。",
       "dismissButtonAriaLabel": "关闭"
     },
     "mutedByRemoteParticipant": {
-      "title": "You were muted by another participant.",
+      "title": "另一个参与者已将你静音。",
       "dismissButtonAriaLabel": "关闭"
     },
     "recordingStarted": {
@@ -450,7 +450,7 @@
     "localVideoLabel": "你",
     "localVideoCameraSwitcherLabel": "切换相机",
     "localVideoMovementLabel": "可移动本地小窗视频",
-    "localVideoMovementAriaLabel": "Movable Local Video Tile",
+    "localVideoMovementAriaLabel": "可移动本地小窗视频",
     "localVideoSelectedDescription": "已选择 {cameraName}",
     "displayNamePlaceholder": "未命名的参与者",
     "fitRemoteParticipantToFrame": "适应帧大小",
@@ -468,7 +468,7 @@
     "stopSpotlightVideoTileMenuLabel": "停止聚焦",
     "stopSpotlightOnSelfVideoTileMenuLabel": "退出聚焦",
     "attendeeRole": "与会者",
-    "muteParticipantMenuItemLabel": "Mute"
+    "muteParticipantMenuItemLabel": "静音"
   },
   "dialpad": {
     "placeholderText": "输入电话号码",
@@ -483,7 +483,7 @@
   "videoTile": {
     "participantStateRinging": "正在呼叫...",
     "participantStateHold": "保留",
-    "moreOptionsButtonAriaLabel": "More Options"
+    "moreOptionsButtonAriaLabel": "更多选项"
   },
   "CameraAndMicrophoneSitePermissionsRequest": {
     "primaryText": "允许{appName}使用你的相机和麦克风",

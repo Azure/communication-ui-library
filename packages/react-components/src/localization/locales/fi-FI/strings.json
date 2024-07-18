@@ -260,44 +260,44 @@
     "cameraFrozenForRemoteParticipants": "Puhelun käyttäjillä on videokuvan näkymiseen liittyviä ongelmia. Tarkista laitteesi ja verkkosi.",
     "unableToStartVideoEffect": "Videotehosteen käyttäminen ei onnistu.",
     "startSpotlightWhileMaxParticipantsAreSpotlighted": "Osallistujien korostusta ei voi aloittaa, koska enimmäismäärä osallistujia on jo valokeilassa.",
-    "mutedByRemoteParticipant": "You were muted by another participant."
+    "mutedByRemoteParticipant": "Toinen osallistuja mykisti sinut."
   },
   "notificationStack": {
     "callingNetworkFailure": {
-      "title": "Troubling connecting call",
-      "message": "You seem to be offline. Please check your network connection and try again.",
+      "title": "Ongelma puhelun yhdistämisessä",
+      "message": "Olet ilmeisesti offline-tilassa. Tarkista verkkoyhteys ja yritä uudelleen.",
       "dismissButtonAriaLabel": "Sulje"
     },
     "startVideoGeneric": {
-      "title": "Failed to start video.",
+      "title": "Videon käynnistäminen epäonnistui.",
       "dismissButtonAriaLabel": "Sulje"
     },
     "stopVideoGeneric": {
-      "title": "Failed to stop video.",
+      "title": "Videon pysäyttäminen epäonnistui.",
       "dismissButtonAriaLabel": "Sulje"
     },
     "muteGeneric": {
-      "title": "Failed to mute microphone.",
+      "title": "Mikrofonin mykistäminen epäonnistui.",
       "dismissButtonAriaLabel": "Sulje"
     },
     "unmuteGeneric": {
-      "title": "Failed to unmute microphone.",
+      "title": "Mikrofonin mykistyksen poistaminen epäonnistui.",
       "dismissButtonAriaLabel": "Sulje"
     },
     "speakingWhileMuted": {
-      "title": "You're muted.",
+      "title": "Ääni on mykistetty.",
       "dismissButtonAriaLabel": "Sulje"
     },
     "startScreenShareGeneric": {
-      "title": "There was an issue starting screen share.",
+      "title": "Näytön jakamisen aloittamisessa ilmeni ongelma.",
       "dismissButtonAriaLabel": "Sulje"
     },
     "stopScreenShareGeneric": {
-      "title": "Failed to stop screen sharing.",
+      "title": "Näytön jakamisen lopettaminen epäonnistui.",
       "dismissButtonAriaLabel": "Sulje"
     },
     "callNetworkQualityLow": {
-      "title": "Network quality is low.",
+      "title": "Verkkoyhteyden laatu on huono.",
       "dismissButtonAriaLabel": "Sulje"
     },
     "teamsMeetingCallNetworkQualityLow": {
@@ -307,100 +307,100 @@
       "primaryButtonLabel": "Liity puhelimella"
     },
     "callNoSpeakerFound": {
-      "title": "No speakers or headphones found",
-      "message": "Connect an audio device to hear the call.",
+      "title": "Kaiuttimia tai kuulokkeita ei löytynyt.",
+      "message": "Yhdistä äänilaite voidaksesi kuulla puhelun.",
       "dismissButtonAriaLabel": "Sulje"
     },
     "callNoMicrophoneFound": {
-      "title": "No microphones found",
-      "message": "Connect an audio input device.",
+      "title": "Mikrofoneja ei löytynyt",
+      "message": "Yhdistä äänensyöttölaite.",
       "dismissButtonAriaLabel": "Sulje"
     },
     "callMicrophoneAccessDenied": {
-      "title": "Unable to access microphone",
-      "message": "Click the lock in the address bar to grant permission to this webpage.",
+      "title": "Mikrofonia ei voi käyttää",
+      "message": "Myönnä käyttöoikeus tälle verkkosivulle napsauttamalla osoiterivillä olevaa lukkoa.",
       "dismissButtonAriaLabel": "Sulje"
     },
     "callMicrophoneAccessDeniedSafari": {
-      "title": "Unable to access microphone",
-      "message": "Refresh the page to allow permissions, or check this browser’s settings and verify permissions are enabled for this website.",
+      "title": "Mikrofonia ei voi käyttää",
+      "message": "Salli käyttöoikeudet päivittämällä sivu tai tarkista tämän selaimen asetukset ja varmista, että käyttöoikeudet on otettu käyttöön tässä sivustossa.",
       "dismissButtonAriaLabel": "Sulje"
     },
     "callMicrophoneMutedBySystem": {
-      "title": "You are muted by your system.",
+      "title": "Järjestelmäasetuksen perusteella sinut on mykistetty.",
       "dismissButtonAriaLabel": "Sulje"
     },
     "callMicrophoneUnmutedBySystem": {
-      "title": "Your microphone recovered and you were unmuted by your system.",
+      "title": "Mikrofonisi palautui käyttöön ja järjestelmä on poistanut sen mykistyksen.",
       "dismissButtonAriaLabel": "Sulje"
     },
     "callMacOsMicrophoneAccessDenied": {
-      "title": "Unable to access microphone",
-      "message": "Grant microphone permission in your macOS privacy settings.",
+      "title": "Mikrofonia ei voi käyttää",
+      "message": "Myönnä mikrofonin käyttöoikeus macOS:n tietosuoja-asetuksissa.",
       "dismissButtonAriaLabel": "Sulje"
     },
     "callLocalVideoFreeze": {
-      "title": "Network bandwidth is poor",
-      "message": "Your video may appear paused for others on the call.",
+      "title": "Verkon kaistanleveys on heikko",
+      "message": "Videokuvasi saattaa näkyä keskeytettynä puhelun muille osallistujille.",
       "dismissButtonAriaLabel": "Sulje"
     },
     "callCameraAccessDenied": {
-      "title": "Unable to access camera",
-      "message": "Click the lock in the address bar to grant permission to this webpage.",
+      "title": "Kameraa ei voi käyttää",
+      "message": "Myönnä käyttöoikeus tälle verkkosivulle napsauttamalla osoiterivillä olevaa lukkoa.",
       "dismissButtonAriaLabel": "Sulje"
     },
     "callCameraAccessDeniedSafari": {
-      "title": "Unable to access camera",
-      "message": "Refresh the page to allow permissions, or check this browser’s settings and verify permissions are enabled for this website.",
+      "title": "Kameraa ei voi käyttää",
+      "message": "Salli käyttöoikeudet päivittämällä sivu tai tarkista tämän selaimen asetukset ja varmista, että käyttöoikeudet on otettu käyttöön tässä sivustossa.",
       "dismissButtonAriaLabel": "Sulje"
     },
     "callCameraAlreadyInUse": {
-      "title": "Unable to access camera",
-      "message": "It may already be in use by another application.",
+      "title": "Kameraa ei voi käyttää",
+      "message": "Toinen sovellus saattaa jo käyttää sitä.",
       "dismissButtonAriaLabel": "Sulje"
     },
     "callVideoStoppedBySystem": {
-      "title": "Your video has been stopped by your system.",
+      "title": "Järjestelmä on pysäyttänyt videosi.",
       "dismissButtonAriaLabel": "Sulje"
     },
     "callVideoRecoveredBySystem": {
-      "title": "Your video has resumed.",
+      "title": "Videosi näytetään jälleen.",
       "dismissButtonAriaLabel": "Sulje"
     },
     "callMacOsCameraAccessDenied": {
-      "title": "MacOS is blocking access to your camera",
-      "message": "Update your privacy settings to allow this browser to access your camera.",
+      "title": "MacOS estää kameran käytön",
+      "message": "Päivitä tietosuoja-asetukset, jotta selain voi käyttää kameraasi.",
       "dismissButtonAriaLabel": "Sulje"
     },
     "callMacOsScreenShareAccessDenied": {
-      "title": "MacOS is blocking screen sharing",
-      "message": "Update your privacy settings to allow this browser to record your screen.",
+      "title": "MacOS estää näytön jakamisen",
+      "message": "Päivitä tietosuoja-asetukset, jotta selain voi tallentaa, mitä näytölläsi tapahtuu.",
       "dismissButtonAriaLabel": "Sulje"
     },
     "failedToJoinCallGeneric": {
-      "title": "Failed to join call.",
+      "title": "Puheluun liittyminen epäonnistui.",
       "dismissButtonAriaLabel": "Sulje"
     },
     "failedToJoinCallInvalidMeetingLink": {
-      "title": "Unable to join Meeting. Invalid Link.",
+      "title": "Kokoukseen liittyminen ei onnistu. Linkki on virheellinen.",
       "dismissButtonAriaLabel": "Sulje"
     },
     "cameraFrozenForRemoteParticipants": {
-      "title": "Users in the call are having issues seeing your video",
-      "message": "Please check your devices and network.",
+      "title": "Puhelun muilla osallistujilla on videokuvasi näkymiseen liittyviä ongelmia",
+      "message": "Tarkista laitteesi ja verkkosi.",
       "dismissButtonAriaLabel": "Sulje"
     },
     "unableToStartVideoEffect": {
-      "title": "Unable to apply video effect.",
+      "title": "Videotehosteen käyttäminen ei onnistu.",
       "dismissButtonAriaLabel": "Sulje"
     },
     "startSpotlightWhileMaxParticipantsAreSpotlighted": {
-      "title": "Cannot start spotlight on participant(s)",
-      "message": "The maximum number of participants are already spotlighted.",
+      "title": "Osallistujien valokeilaa ei voi aloittaa",
+      "message": "Enimmäismäärä osallistujia on jo valokeilassa.",
       "dismissButtonAriaLabel": "Sulje"
     },
     "mutedByRemoteParticipant": {
-      "title": "You were muted by another participant.",
+      "title": "Toinen osallistuja mykisti sinut.",
       "dismissButtonAriaLabel": "Sulje"
     },
     "recordingStarted": {
@@ -450,7 +450,7 @@
     "localVideoLabel": "Sinä",
     "localVideoCameraSwitcherLabel": "Vaihda kameraa",
     "localVideoMovementLabel": "Siirrettävä paikallisen videon ruutu",
-    "localVideoMovementAriaLabel": "Movable Local Video Tile",
+    "localVideoMovementAriaLabel": "Siirrettävä paikallisen videon ruutu",
     "localVideoSelectedDescription": "{cameraName} on valittu",
     "displayNamePlaceholder": "Nimetön osallistuja",
     "fitRemoteParticipantToFrame": "Sovita kehykseen",
@@ -468,7 +468,7 @@
     "stopSpotlightVideoTileMenuLabel": "Poista valokeilasta",
     "stopSpotlightOnSelfVideoTileMenuLabel": "Valokeila",
     "attendeeRole": "Osallistuja",
-    "muteParticipantMenuItemLabel": "Mute"
+    "muteParticipantMenuItemLabel": "Mykistä"
   },
   "dialpad": {
     "placeholderText": "Anna puhelinnumero",
@@ -483,7 +483,7 @@
   "videoTile": {
     "participantStateRinging": "Soitetaan...",
     "participantStateHold": "Pidossa",
-    "moreOptionsButtonAriaLabel": "More Options"
+    "moreOptionsButtonAriaLabel": "Lisää asetuksia"
   },
   "CameraAndMicrophoneSitePermissionsRequest": {
     "primaryText": "Salli {appName} käyttää kameraa ja mikrofonia",

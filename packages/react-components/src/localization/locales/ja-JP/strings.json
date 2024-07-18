@@ -260,44 +260,44 @@
     "cameraFrozenForRemoteParticipants": "通話のユーザーにビデオの表示で問題が発生しています。デバイスとネットワークを確認してください。",
     "unableToStartVideoEffect": "ビデオ効果を適用できません。",
     "startSpotlightWhileMaxParticipantsAreSpotlighted": "最大数の参加者に既にスポットライトが設定されているため、参加者にスポットライトを開始できません。",
-    "mutedByRemoteParticipant": "You were muted by another participant."
+    "mutedByRemoteParticipant": "他の参加者によってミュートにされました。"
   },
   "notificationStack": {
     "callingNetworkFailure": {
-      "title": "Troubling connecting call",
-      "message": "You seem to be offline. Please check your network connection and try again.",
+      "title": "通話の接続に問題があります",
+      "message": "オフラインのようです。ネットワーク接続を確認して、もう一度お試しください。",
       "dismissButtonAriaLabel": "閉じる"
     },
     "startVideoGeneric": {
-      "title": "Failed to start video.",
+      "title": "ビデオを開始できませんでした。",
       "dismissButtonAriaLabel": "閉じる"
     },
     "stopVideoGeneric": {
-      "title": "Failed to stop video.",
+      "title": "ビデオを停止できませんでした。",
       "dismissButtonAriaLabel": "閉じる"
     },
     "muteGeneric": {
-      "title": "Failed to mute microphone.",
+      "title": "マイクをミュートできませんでした。",
       "dismissButtonAriaLabel": "閉じる"
     },
     "unmuteGeneric": {
-      "title": "Failed to unmute microphone.",
+      "title": "マイクのミュートを解除できませんでした。",
       "dismissButtonAriaLabel": "閉じる"
     },
     "speakingWhileMuted": {
-      "title": "You're muted.",
+      "title": "ミュートにしています。",
       "dismissButtonAriaLabel": "閉じる"
     },
     "startScreenShareGeneric": {
-      "title": "There was an issue starting screen share.",
+      "title": "画面共有の開始中に問題が発生しました。",
       "dismissButtonAriaLabel": "閉じる"
     },
     "stopScreenShareGeneric": {
-      "title": "Failed to stop screen sharing.",
+      "title": "画面の共有を停止できませんでした。",
       "dismissButtonAriaLabel": "閉じる"
     },
     "callNetworkQualityLow": {
-      "title": "Network quality is low.",
+      "title": "ネットワークの品質が低くなっています。",
       "dismissButtonAriaLabel": "閉じる"
     },
     "teamsMeetingCallNetworkQualityLow": {
@@ -307,100 +307,100 @@
       "primaryButtonLabel": "電話で参加"
     },
     "callNoSpeakerFound": {
-      "title": "No speakers or headphones found",
-      "message": "Connect an audio device to hear the call.",
+      "title": "スピーカーまたはヘッドフォンが見つかりません",
+      "message": "音声デバイスを接続して通話を聞いてください。",
       "dismissButtonAriaLabel": "閉じる"
     },
     "callNoMicrophoneFound": {
-      "title": "No microphones found",
-      "message": "Connect an audio input device.",
+      "title": "マイクが見つかりません",
+      "message": "オーディオ入力デバイスを接続します。",
       "dismissButtonAriaLabel": "閉じる"
     },
     "callMicrophoneAccessDenied": {
-      "title": "Unable to access microphone",
-      "message": "Click the lock in the address bar to grant permission to this webpage.",
+      "title": "マイクにアクセスできません",
+      "message": "アドレス バーのロックをクリックして、この Web ページにアクセス許可を付与します。",
       "dismissButtonAriaLabel": "閉じる"
     },
     "callMicrophoneAccessDeniedSafari": {
-      "title": "Unable to access microphone",
-      "message": "Refresh the page to allow permissions, or check this browser’s settings and verify permissions are enabled for this website.",
+      "title": "マイクにアクセスできません",
+      "message": "ページを更新してアクセス許可を可能にするか、このブラウザーの設定を確認し、この Web サイトのアクセス許可が有効になっていることを確認してください。",
       "dismissButtonAriaLabel": "閉じる"
     },
     "callMicrophoneMutedBySystem": {
-      "title": "You are muted by your system.",
+      "title": "システムによってミュートになっています。",
       "dismissButtonAriaLabel": "閉じる"
     },
     "callMicrophoneUnmutedBySystem": {
-      "title": "Your microphone recovered and you were unmuted by your system.",
+      "title": "マイクが回復し、システムによってミュートが解除されました。",
       "dismissButtonAriaLabel": "閉じる"
     },
     "callMacOsMicrophoneAccessDenied": {
-      "title": "Unable to access microphone",
-      "message": "Grant microphone permission in your macOS privacy settings.",
+      "title": "マイクにアクセスできません",
+      "message": "macOS のプライバシー設定でマイクへのアクセス許可を付与します。",
       "dismissButtonAriaLabel": "閉じる"
     },
     "callLocalVideoFreeze": {
-      "title": "Network bandwidth is poor",
-      "message": "Your video may appear paused for others on the call.",
+      "title": "ネットワーク帯域幅が貧弱です",
+      "message": "通話中に他のユーザーのビデオが一時停止している可能性があります。",
       "dismissButtonAriaLabel": "閉じる"
     },
     "callCameraAccessDenied": {
-      "title": "Unable to access camera",
-      "message": "Click the lock in the address bar to grant permission to this webpage.",
+      "title": "カメラにアクセスできません",
+      "message": "アドレス バーのロックをクリックして、この Web ページにアクセス許可を付与します。",
       "dismissButtonAriaLabel": "閉じる"
     },
     "callCameraAccessDeniedSafari": {
-      "title": "Unable to access camera",
-      "message": "Refresh the page to allow permissions, or check this browser’s settings and verify permissions are enabled for this website.",
+      "title": "カメラにアクセスできません",
+      "message": "ページを更新してアクセス許可を可能にするか、このブラウザーの設定を確認し、この Web サイトのアクセス許可が有効になっていることを確認してください。",
       "dismissButtonAriaLabel": "閉じる"
     },
     "callCameraAlreadyInUse": {
-      "title": "Unable to access camera",
-      "message": "It may already be in use by another application.",
+      "title": "カメラにアクセスできません",
+      "message": "別のアプリケーションによって既に使用されている可能性があります。",
       "dismissButtonAriaLabel": "閉じる"
     },
     "callVideoStoppedBySystem": {
-      "title": "Your video has been stopped by your system.",
+      "title": "ビデオはシステムによって停止されました。",
       "dismissButtonAriaLabel": "閉じる"
     },
     "callVideoRecoveredBySystem": {
-      "title": "Your video has resumed.",
+      "title": "ビデオが再開されました。",
       "dismissButtonAriaLabel": "閉じる"
     },
     "callMacOsCameraAccessDenied": {
-      "title": "MacOS is blocking access to your camera",
-      "message": "Update your privacy settings to allow this browser to access your camera.",
+      "title": "MacOS がカメラへのアクセスをブロックしています",
+      "message": "プライバシー設定を更新して、このブラウザーがカメラにアクセスできるようにします。",
       "dismissButtonAriaLabel": "閉じる"
     },
     "callMacOsScreenShareAccessDenied": {
-      "title": "MacOS is blocking screen sharing",
-      "message": "Update your privacy settings to allow this browser to record your screen.",
+      "title": "MacOS で画面共有がブロックされています",
+      "message": "プライバシー設定を更新して、このブラウザーで画面を録画できるようにします。",
       "dismissButtonAriaLabel": "閉じる"
     },
     "failedToJoinCallGeneric": {
-      "title": "Failed to join call.",
+      "title": "通話に参加できませんでした。",
       "dismissButtonAriaLabel": "閉じる"
     },
     "failedToJoinCallInvalidMeetingLink": {
-      "title": "Unable to join Meeting. Invalid Link.",
+      "title": "会議に参加できません。リンクが無効です。",
       "dismissButtonAriaLabel": "閉じる"
     },
     "cameraFrozenForRemoteParticipants": {
-      "title": "Users in the call are having issues seeing your video",
-      "message": "Please check your devices and network.",
+      "title": "通話中のユーザーにビデオの表示で問題が発生しています",
+      "message": "デバイスとネットワークをチェックしてください。",
       "dismissButtonAriaLabel": "閉じる"
     },
     "unableToStartVideoEffect": {
-      "title": "Unable to apply video effect.",
+      "title": "ビデオ効果を適用できません。",
       "dismissButtonAriaLabel": "閉じる"
     },
     "startSpotlightWhileMaxParticipantsAreSpotlighted": {
-      "title": "Cannot start spotlight on participant(s)",
-      "message": "The maximum number of participants are already spotlighted.",
+      "title": "参加者にスポットライトを開始できません",
+      "message": "参加者の最大数は既にスポットライトが設定されています。",
       "dismissButtonAriaLabel": "閉じる"
     },
     "mutedByRemoteParticipant": {
-      "title": "You were muted by another participant.",
+      "title": "他の参加者によってミュートにされました。",
       "dismissButtonAriaLabel": "閉じる"
     },
     "recordingStarted": {
@@ -450,7 +450,7 @@
     "localVideoLabel": "自分",
     "localVideoCameraSwitcherLabel": "カメラを切り替え",
     "localVideoMovementLabel": "移動可能なローカル ビデオ タイル",
-    "localVideoMovementAriaLabel": "Movable Local Video Tile",
+    "localVideoMovementAriaLabel": "移動可能なローカル ビデオ タイル",
     "localVideoSelectedDescription": "{cameraName} が選択されました。",
     "displayNamePlaceholder": "名前のない参加者",
     "fitRemoteParticipantToFrame": "フレームに収める",
@@ -468,7 +468,7 @@
     "stopSpotlightVideoTileMenuLabel": "スポットライトの設定を解除",
     "stopSpotlightOnSelfVideoTileMenuLabel": "スポットライトを終了",
     "attendeeRole": "出席者",
-    "muteParticipantMenuItemLabel": "Mute"
+    "muteParticipantMenuItemLabel": "ミュート"
   },
   "dialpad": {
     "placeholderText": "電話番号を入力してください",
@@ -483,7 +483,7 @@
   "videoTile": {
     "participantStateRinging": "呼び出し中...",
     "participantStateHold": "保留中",
-    "moreOptionsButtonAriaLabel": "More Options"
+    "moreOptionsButtonAriaLabel": "その他のオプション"
   },
   "CameraAndMicrophoneSitePermissionsRequest": {
     "primaryText": "{appName}にカメラとマイクの使用を許可する",

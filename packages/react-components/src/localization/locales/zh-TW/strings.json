@@ -260,44 +260,44 @@
     "cameraFrozenForRemoteParticipants": "通話中的使用者在觀看您的視訊時發生問題。請檢查您的裝置和網路。",
     "unableToStartVideoEffect": "無法套用視訊效果。",
     "startSpotlightWhileMaxParticipantsAreSpotlighted": "無法啟動參與者的焦點，因為參與者人數已達焦點上限。",
-    "mutedByRemoteParticipant": "You were muted by another participant."
+    "mutedByRemoteParticipant": "另一位參與者已將您設為靜音。"
   },
   "notificationStack": {
     "callingNetworkFailure": {
-      "title": "Troubling connecting call",
-      "message": "You seem to be offline. Please check your network connection and try again.",
+      "title": "接通電話時發生問題",
+      "message": "您似乎已離線。請檢查您的網路連線，然後再試一次。",
       "dismissButtonAriaLabel": "關閉"
     },
     "startVideoGeneric": {
-      "title": "Failed to start video.",
+      "title": "無法啟動影片。",
       "dismissButtonAriaLabel": "關閉"
     },
     "stopVideoGeneric": {
-      "title": "Failed to stop video.",
+      "title": "無法停止影片。",
       "dismissButtonAriaLabel": "關閉"
     },
     "muteGeneric": {
-      "title": "Failed to mute microphone.",
+      "title": "無法將麥克風設為靜音。",
       "dismissButtonAriaLabel": "關閉"
     },
     "unmuteGeneric": {
-      "title": "Failed to unmute microphone.",
+      "title": "無法將麥克風取消靜音。",
       "dismissButtonAriaLabel": "關閉"
     },
     "speakingWhileMuted": {
-      "title": "You're muted.",
+      "title": "已將您設為靜音。",
       "dismissButtonAriaLabel": "關閉"
     },
     "startScreenShareGeneric": {
-      "title": "There was an issue starting screen share.",
+      "title": "啟動畫面分享時發生問題。",
       "dismissButtonAriaLabel": "關閉"
     },
     "stopScreenShareGeneric": {
-      "title": "Failed to stop screen sharing.",
+      "title": "無法停止螢幕畫面分享。",
       "dismissButtonAriaLabel": "關閉"
     },
     "callNetworkQualityLow": {
-      "title": "Network quality is low.",
+      "title": "網路品質不佳。",
       "dismissButtonAriaLabel": "關閉"
     },
     "teamsMeetingCallNetworkQualityLow": {
@@ -307,100 +307,100 @@
       "primaryButtonLabel": "使用電話加入"
     },
     "callNoSpeakerFound": {
-      "title": "No speakers or headphones found",
-      "message": "Connect an audio device to hear the call.",
+      "title": "找不到喇叭或耳機",
+      "message": "連接音訊裝置以聆聽通話。",
       "dismissButtonAriaLabel": "關閉"
     },
     "callNoMicrophoneFound": {
-      "title": "No microphones found",
-      "message": "Connect an audio input device.",
+      "title": "找不到麥克風",
+      "message": "請連結音訊輸入裝置。",
       "dismissButtonAriaLabel": "關閉"
     },
     "callMicrophoneAccessDenied": {
-      "title": "Unable to access microphone",
-      "message": "Click the lock in the address bar to grant permission to this webpage.",
+      "title": "無法存取麥克風",
+      "message": "按兩下網址列中的鎖定以授與此網頁的許可權。",
       "dismissButtonAriaLabel": "關閉"
     },
     "callMicrophoneAccessDeniedSafari": {
-      "title": "Unable to access microphone",
-      "message": "Refresh the page to allow permissions, or check this browser’s settings and verify permissions are enabled for this website.",
+      "title": "無法存取麥克風",
+      "message": "重新整理頁面以允許許可權，或檢查此瀏覽器的設定，並確認已啟用此網站的權限。",
       "dismissButtonAriaLabel": "關閉"
     },
     "callMicrophoneMutedBySystem": {
-      "title": "You are muted by your system.",
+      "title": "系統已將您設為靜音。",
       "dismissButtonAriaLabel": "關閉"
     },
     "callMicrophoneUnmutedBySystem": {
-      "title": "Your microphone recovered and you were unmuted by your system.",
+      "title": "您的麥克風已復原，系統已取消您的靜音。",
       "dismissButtonAriaLabel": "關閉"
     },
     "callMacOsMicrophoneAccessDenied": {
-      "title": "Unable to access microphone",
-      "message": "Grant microphone permission in your macOS privacy settings.",
+      "title": "無法存取麥克風",
+      "message": "在您的macOS隱私權設定中授與麥克風許可權。",
       "dismissButtonAriaLabel": "關閉"
     },
     "callLocalVideoFreeze": {
-      "title": "Network bandwidth is poor",
-      "message": "Your video may appear paused for others on the call.",
+      "title": "網路頻寬不佳",
+      "message": "通話中的其他人可能會暫停您的視訊。",
       "dismissButtonAriaLabel": "關閉"
     },
     "callCameraAccessDenied": {
-      "title": "Unable to access camera",
-      "message": "Click the lock in the address bar to grant permission to this webpage.",
+      "title": "無法存取相機",
+      "message": "按兩下網址列中的鎖定以授與此網頁的許可權。",
       "dismissButtonAriaLabel": "關閉"
     },
     "callCameraAccessDeniedSafari": {
-      "title": "Unable to access camera",
-      "message": "Refresh the page to allow permissions, or check this browser’s settings and verify permissions are enabled for this website.",
+      "title": "無法存取相機",
+      "message": "重新整理頁面以允許許可權，或檢查此瀏覽器的設定，並確認已啟用此網站的權限。",
       "dismissButtonAriaLabel": "關閉"
     },
     "callCameraAlreadyInUse": {
-      "title": "Unable to access camera",
-      "message": "It may already be in use by another application.",
+      "title": "無法存取相機",
+      "message": "其他應用程式可能已在使用它。",
       "dismissButtonAriaLabel": "關閉"
     },
     "callVideoStoppedBySystem": {
-      "title": "Your video has been stopped by your system.",
+      "title": "您的影片已遭系統停止。",
       "dismissButtonAriaLabel": "關閉"
     },
     "callVideoRecoveredBySystem": {
-      "title": "Your video has resumed.",
+      "title": "您的影片已恢復播放。",
       "dismissButtonAriaLabel": "關閉"
     },
     "callMacOsCameraAccessDenied": {
-      "title": "MacOS is blocking access to your camera",
-      "message": "Update your privacy settings to allow this browser to access your camera.",
+      "title": "MacOS 禁止存取您的相機",
+      "message": "更新您的隱私權設定，以允許此瀏覽器存取您的相機。",
       "dismissButtonAriaLabel": "關閉"
     },
     "callMacOsScreenShareAccessDenied": {
-      "title": "MacOS is blocking screen sharing",
-      "message": "Update your privacy settings to allow this browser to record your screen.",
+      "title": "MacOS 正在封鎖螢幕畫面分享",
+      "message": "更新您的隱私權設定，以允許此瀏覽器錄製您的螢幕。",
       "dismissButtonAriaLabel": "關閉"
     },
     "failedToJoinCallGeneric": {
-      "title": "Failed to join call.",
+      "title": "無法加入通話。",
       "dismissButtonAriaLabel": "關閉"
     },
     "failedToJoinCallInvalidMeetingLink": {
-      "title": "Unable to join Meeting. Invalid Link.",
+      "title": "無法加入會議。連結無效。",
       "dismissButtonAriaLabel": "關閉"
     },
     "cameraFrozenForRemoteParticipants": {
-      "title": "Users in the call are having issues seeing your video",
-      "message": "Please check your devices and network.",
+      "title": "通話中的用戶在觀看您的視訊時發生問題",
+      "message": "請檢查您的裝置和網路。",
       "dismissButtonAriaLabel": "關閉"
     },
     "unableToStartVideoEffect": {
-      "title": "Unable to apply video effect.",
+      "title": "無法套用視訊效果。",
       "dismissButtonAriaLabel": "關閉"
     },
     "startSpotlightWhileMaxParticipantsAreSpotlighted": {
-      "title": "Cannot start spotlight on participant(s)",
-      "message": "The maximum number of participants are already spotlighted.",
+      "title": "無法在參與者上啟動焦點",
+      "message": "參與者人數上限已成為焦點。",
       "dismissButtonAriaLabel": "關閉"
     },
     "mutedByRemoteParticipant": {
-      "title": "You were muted by another participant.",
+      "title": "另一位參與者已將您設為靜音。",
       "dismissButtonAriaLabel": "關閉"
     },
     "recordingStarted": {
@@ -450,7 +450,7 @@
     "localVideoLabel": "您",
     "localVideoCameraSwitcherLabel": "切換相機",
     "localVideoMovementLabel": "可移動本機視訊磚",
-    "localVideoMovementAriaLabel": "Movable Local Video Tile",
+    "localVideoMovementAriaLabel": "可移動的區域影片標題",
     "localVideoSelectedDescription": "已選取 {cameraName}",
     "displayNamePlaceholder": "未命名的參與者",
     "fitRemoteParticipantToFrame": "調整成畫面大小",
@@ -468,7 +468,7 @@
     "stopSpotlightVideoTileMenuLabel": "停止聚焦",
     "stopSpotlightOnSelfVideoTileMenuLabel": "結束聚焦",
     "attendeeRole": "出席者",
-    "muteParticipantMenuItemLabel": "Mute"
+    "muteParticipantMenuItemLabel": "靜音"
   },
   "dialpad": {
     "placeholderText": "輸入電話號碼",
@@ -483,7 +483,7 @@
   "videoTile": {
     "participantStateRinging": "撥號中...",
     "participantStateHold": "電話保留",
-    "moreOptionsButtonAriaLabel": "More Options"
+    "moreOptionsButtonAriaLabel": "其他選項"
   },
   "CameraAndMicrophoneSitePermissionsRequest": {
     "primaryText": "允許 {appName} 使用您的相機和麥克風",

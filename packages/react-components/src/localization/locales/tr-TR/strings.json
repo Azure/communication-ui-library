@@ -260,44 +260,44 @@
     "cameraFrozenForRemoteParticipants": "Aramadaki kullanıcılar videonuzu görmekte sorun yaşıyor. Lütfen cihazlarınızı ve ağlarınızı kontrol edin.",
     "unableToStartVideoEffect": "Video efekti uygulanamıyor.",
     "startSpotlightWhileMaxParticipantsAreSpotlighted": "Öne çıkarılan katılımcı sayısı zaten üst sınırı geçtiğinden katılımcılarda öne çıkarma özelliği başlatılamıyor.",
-    "mutedByRemoteParticipant": "You were muted by another participant."
+    "mutedByRemoteParticipant": "Başka bir katılımcı tarafından sessize alındınız."
   },
   "notificationStack": {
     "callingNetworkFailure": {
-      "title": "Troubling connecting call",
-      "message": "You seem to be offline. Please check your network connection and try again.",
+      "title": "Arama bağlanırken sorun oluştu",
+      "message": "Çevrimdışı görünüyorsunuz. Lütfen ağ bağlantınızı denetleyin ve yeniden deneyin.",
       "dismissButtonAriaLabel": "Kapat"
     },
     "startVideoGeneric": {
-      "title": "Failed to start video.",
+      "title": "Video başlatılamadı.",
       "dismissButtonAriaLabel": "Kapat"
     },
     "stopVideoGeneric": {
-      "title": "Failed to stop video.",
+      "title": "Video durdurulamadı.",
       "dismissButtonAriaLabel": "Kapat"
     },
     "muteGeneric": {
-      "title": "Failed to mute microphone.",
+      "title": "Mikrofonun sesi kapatılamadı.",
       "dismissButtonAriaLabel": "Kapat"
     },
     "unmuteGeneric": {
-      "title": "Failed to unmute microphone.",
+      "title": "Mikrofonun sesi açılamadı.",
       "dismissButtonAriaLabel": "Kapat"
     },
     "speakingWhileMuted": {
-      "title": "You're muted.",
+      "title": "Sesiniz kapatıldı.",
       "dismissButtonAriaLabel": "Kapat"
     },
     "startScreenShareGeneric": {
-      "title": "There was an issue starting screen share.",
+      "title": "Ekran paylaşımı başlatılırken bir sorun oluştu.",
       "dismissButtonAriaLabel": "Kapat"
     },
     "stopScreenShareGeneric": {
-      "title": "Failed to stop screen sharing.",
+      "title": "Ekran paylaşımı durdurulamadı.",
       "dismissButtonAriaLabel": "Kapat"
     },
     "callNetworkQualityLow": {
-      "title": "Network quality is low.",
+      "title": "Ağ kalitesi düşük.",
       "dismissButtonAriaLabel": "Kapat"
     },
     "teamsMeetingCallNetworkQualityLow": {
@@ -307,100 +307,100 @@
       "primaryButtonLabel": "Telefonla Katıl"
     },
     "callNoSpeakerFound": {
-      "title": "No speakers or headphones found",
-      "message": "Connect an audio device to hear the call.",
+      "title": "Hoparlör veya kulaklık yok",
+      "message": "Aramayı dinlemek için bir ses aygıtı bağlayın.",
       "dismissButtonAriaLabel": "Kapat"
     },
     "callNoMicrophoneFound": {
-      "title": "No microphones found",
-      "message": "Connect an audio input device.",
+      "title": "Mikrofon bulunamadı",
+      "message": "Ses giriş cihazı bağlayın.",
       "dismissButtonAriaLabel": "Kapat"
     },
     "callMicrophoneAccessDenied": {
-      "title": "Unable to access microphone",
-      "message": "Click the lock in the address bar to grant permission to this webpage.",
+      "title": "Mikrofona erişilemiyor",
+      "message": "Bu web sayfası için izin vermek için adres çubuğundaki kilidi tıklatın.",
       "dismissButtonAriaLabel": "Kapat"
     },
     "callMicrophoneAccessDeniedSafari": {
-      "title": "Unable to access microphone",
-      "message": "Refresh the page to allow permissions, or check this browser’s settings and verify permissions are enabled for this website.",
+      "title": "Mikrofona erişilemiyor",
+      "message": "İzin vermek için sayfayı yenileyin veya bu tarayıcının ayarlarını denetleyin ve bu web sitesi için izinlerin etkinleştirildiğinden emin olun.",
       "dismissButtonAriaLabel": "Kapat"
     },
     "callMicrophoneMutedBySystem": {
-      "title": "You are muted by your system.",
+      "title": "Sisteminiz tarafından sessize alındınız.",
       "dismissButtonAriaLabel": "Kapat"
     },
     "callMicrophoneUnmutedBySystem": {
-      "title": "Your microphone recovered and you were unmuted by your system.",
+      "title": "Mikrofonunuz kurtarıldı ve sisteminiz tarafından sesiniz açıldı.",
       "dismissButtonAriaLabel": "Kapat"
     },
     "callMacOsMicrophoneAccessDenied": {
-      "title": "Unable to access microphone",
-      "message": "Grant microphone permission in your macOS privacy settings.",
+      "title": "Mikrofona erişilemiyor",
+      "message": "macOS gizlilik ayarlarınıza mikrofon izni verin.",
       "dismissButtonAriaLabel": "Kapat"
     },
     "callLocalVideoFreeze": {
-      "title": "Network bandwidth is poor",
-      "message": "Your video may appear paused for others on the call.",
+      "title": "Ağ bant genişliği düşük",
+      "message": "Görüntülü aramada başkaları için duraklatılmış görünüyor olabilir.",
       "dismissButtonAriaLabel": "Kapat"
     },
     "callCameraAccessDenied": {
-      "title": "Unable to access camera",
-      "message": "Click the lock in the address bar to grant permission to this webpage.",
+      "title": "Kameraya erişilemiyor",
+      "message": "Bu web sayfası için izin vermek için adres çubuğundaki kilidi tıklatın.",
       "dismissButtonAriaLabel": "Kapat"
     },
     "callCameraAccessDeniedSafari": {
-      "title": "Unable to access camera",
-      "message": "Refresh the page to allow permissions, or check this browser’s settings and verify permissions are enabled for this website.",
+      "title": "Kameraya erişilemiyor",
+      "message": "İzin vermek için sayfayı yenileyin veya bu tarayıcının ayarlarını denetleyin ve bu web sitesi için izinlerin etkinleştirildiğinden emin olun.",
       "dismissButtonAriaLabel": "Kapat"
     },
     "callCameraAlreadyInUse": {
-      "title": "Unable to access camera",
-      "message": "It may already be in use by another application.",
+      "title": "Kameraya erişilemiyor",
+      "message": "Başka bir uygulama tarafından zaten kullanılıyor olabilir.",
       "dismissButtonAriaLabel": "Kapat"
     },
     "callVideoStoppedBySystem": {
-      "title": "Your video has been stopped by your system.",
+      "title": "Videonuz sisteminiz tarafından durduruldu.",
       "dismissButtonAriaLabel": "Kapat"
     },
     "callVideoRecoveredBySystem": {
-      "title": "Your video has resumed.",
+      "title": "Videonuz devam ediyor.",
       "dismissButtonAriaLabel": "Kapat"
     },
     "callMacOsCameraAccessDenied": {
-      "title": "MacOS is blocking access to your camera",
-      "message": "Update your privacy settings to allow this browser to access your camera.",
+      "title": "MacOS kameranıza erişimi engelliyor",
+      "message": "Bu tarayıcının kameranıza erişmesine izin vermek için gizlilik ayarlarınızı güncelleştirin.",
       "dismissButtonAriaLabel": "Kapat"
     },
     "callMacOsScreenShareAccessDenied": {
-      "title": "MacOS is blocking screen sharing",
-      "message": "Update your privacy settings to allow this browser to record your screen.",
+      "title": "MacOS ekran paylaşımını engelliyor",
+      "message": "Bu tarayıcının ekranınızı kaydetmesini izin vermek için gizlilik ayarlarınızı güncelleştirin.",
       "dismissButtonAriaLabel": "Kapat"
     },
     "failedToJoinCallGeneric": {
-      "title": "Failed to join call.",
+      "title": "Aramaya katılınamadı.",
       "dismissButtonAriaLabel": "Kapat"
     },
     "failedToJoinCallInvalidMeetingLink": {
-      "title": "Unable to join Meeting. Invalid Link.",
+      "title": "Toplantıya katılınamıyor. Geçersiz Bağlantı.",
       "dismissButtonAriaLabel": "Kapat"
     },
     "cameraFrozenForRemoteParticipants": {
-      "title": "Users in the call are having issues seeing your video",
-      "message": "Please check your devices and network.",
+      "title": "Aramadaki kullanıcılar videonuzu görmekte sorun yaşıyor",
+      "message": "Lütfen cihazlarınızı ve ağlarınızı kontrol edin.",
       "dismissButtonAriaLabel": "Kapat"
     },
     "unableToStartVideoEffect": {
-      "title": "Unable to apply video effect.",
+      "title": "Video efekti uygulanamıyor.",
       "dismissButtonAriaLabel": "Kapat"
     },
     "startSpotlightWhileMaxParticipantsAreSpotlighted": {
-      "title": "Cannot start spotlight on participant(s)",
-      "message": "The maximum number of participants are already spotlighted.",
+      "title": "Katılımcılarda öne çıkarma özelliği başlatılamıyor",
+      "message": "Maksimum katılımcı sayısı zaten öne çıkarıldı.",
       "dismissButtonAriaLabel": "Kapat"
     },
     "mutedByRemoteParticipant": {
-      "title": "You were muted by another participant.",
+      "title": "Başka bir katılımcı tarafından sessize alındınız.",
       "dismissButtonAriaLabel": "Kapat"
     },
     "recordingStarted": {
@@ -450,7 +450,7 @@
     "localVideoLabel": "Siz",
     "localVideoCameraSwitcherLabel": "Kamerayı değiştir",
     "localVideoMovementLabel": "Taşınabilir Yerel Video Kutucuğu",
-    "localVideoMovementAriaLabel": "Movable Local Video Tile",
+    "localVideoMovementAriaLabel": "Taşınabilir Yerel Video Kutucuğu",
     "localVideoSelectedDescription": "{cameraName} seçildi",
     "displayNamePlaceholder": "Adsız katılımcı",
     "fitRemoteParticipantToFrame": "Çerçeveye sığdır",
@@ -468,7 +468,7 @@
     "stopSpotlightVideoTileMenuLabel": "Öne çıkarmayı durdur",
     "stopSpotlightOnSelfVideoTileMenuLabel": "Öne çıkarmadan çık",
     "attendeeRole": "Katılımcı",
-    "muteParticipantMenuItemLabel": "Mute"
+    "muteParticipantMenuItemLabel": "Sesi kapat"
   },
   "dialpad": {
     "placeholderText": "Telefon numarası gir",
@@ -483,7 +483,7 @@
   "videoTile": {
     "participantStateRinging": "Aranıyor...",
     "participantStateHold": "Beklemede",
-    "moreOptionsButtonAriaLabel": "More Options"
+    "moreOptionsButtonAriaLabel": "Diğer Seçenekler"
   },
   "CameraAndMicrophoneSitePermissionsRequest": {
     "primaryText": "{appName} uygulamasının kameranızı ve mikrofonunuzu kullanmasına izin verin",

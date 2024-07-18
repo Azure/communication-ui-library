@@ -260,44 +260,44 @@
     "cameraFrozenForRemoteParticipants": "Los usuarios de la llamada tienen problemas para ver el vídeo. Compruebe los dispositivos y la red.",
     "unableToStartVideoEffect": "No se puede aplicar el efecto de vídeo.",
     "startSpotlightWhileMaxParticipantsAreSpotlighted": "No se puede iniciar el primer plano en los participantes porque el número máximo de participantes ya está puesto en primer plano.",
-    "mutedByRemoteParticipant": "You were muted by another participant."
+    "mutedByRemoteParticipant": "Otro participante lo ha silenciado."
   },
   "notificationStack": {
     "callingNetworkFailure": {
-      "title": "Troubling connecting call",
-      "message": "You seem to be offline. Please check your network connection and try again.",
+      "title": "Llamada de conexión perturbadora",
+      "message": "Parece que estás desconectado. Compruebe la conexión de red e inténtelo de nuevo.",
       "dismissButtonAriaLabel": "Cerrar"
     },
     "startVideoGeneric": {
-      "title": "Failed to start video.",
+      "title": "No se pudo iniciar el vídeo.",
       "dismissButtonAriaLabel": "Cerrar"
     },
     "stopVideoGeneric": {
-      "title": "Failed to stop video.",
+      "title": "No se pudo detener el vídeo.",
       "dismissButtonAriaLabel": "Cerrar"
     },
     "muteGeneric": {
-      "title": "Failed to mute microphone.",
+      "title": "No se pudo silenciar el micrófono.",
       "dismissButtonAriaLabel": "Cerrar"
     },
     "unmuteGeneric": {
-      "title": "Failed to unmute microphone.",
+      "title": "No se pudo reactivar el micrófono.",
       "dismissButtonAriaLabel": "Cerrar"
     },
     "speakingWhileMuted": {
-      "title": "You're muted.",
+      "title": "Estás silenciado.",
       "dismissButtonAriaLabel": "Cerrar"
     },
     "startScreenShareGeneric": {
-      "title": "There was an issue starting screen share.",
+      "title": "Hubo un problema al iniciar la pantalla compartida.",
       "dismissButtonAriaLabel": "Cerrar"
     },
     "stopScreenShareGeneric": {
-      "title": "Failed to stop screen sharing.",
+      "title": "No se pudo detener la pantalla compartida.",
       "dismissButtonAriaLabel": "Cerrar"
     },
     "callNetworkQualityLow": {
-      "title": "Network quality is low.",
+      "title": "La calidad de la red es baja.",
       "dismissButtonAriaLabel": "Cerrar"
     },
     "teamsMeetingCallNetworkQualityLow": {
@@ -307,100 +307,100 @@
       "primaryButtonLabel": "Unirse por Teléfono"
     },
     "callNoSpeakerFound": {
-      "title": "No speakers or headphones found",
-      "message": "Connect an audio device to hear the call.",
+      "title": "No se encontraron altavoces ni auriculares",
+      "message": "Conecta un dispositivo de audio para escuchar la llamada.",
       "dismissButtonAriaLabel": "Cerrar"
     },
     "callNoMicrophoneFound": {
-      "title": "No microphones found",
-      "message": "Connect an audio input device.",
+      "title": "No se han encontrado micrófonos",
+      "message": "Conecta un dispositivo de entrada de audio.",
       "dismissButtonAriaLabel": "Cerrar"
     },
     "callMicrophoneAccessDenied": {
-      "title": "Unable to access microphone",
-      "message": "Click the lock in the address bar to grant permission to this webpage.",
+      "title": "No se puede acceder al micrófono",
+      "message": "Haga clic en el bloqueo de la barra de direcciones para conceder permiso a esta página web.",
       "dismissButtonAriaLabel": "Cerrar"
     },
     "callMicrophoneAccessDeniedSafari": {
-      "title": "Unable to access microphone",
-      "message": "Refresh the page to allow permissions, or check this browser’s settings and verify permissions are enabled for this website.",
+      "title": "No se puede acceder al micrófono",
+      "message": "Actualice la página para permitir permisos o compruebe la configuración de este explorador y compruebe que los permisos estén habilitados para este sitio web.",
       "dismissButtonAriaLabel": "Cerrar"
     },
     "callMicrophoneMutedBySystem": {
-      "title": "You are muted by your system.",
+      "title": "Su sistema ha silenciado su audio.",
       "dismissButtonAriaLabel": "Cerrar"
     },
     "callMicrophoneUnmutedBySystem": {
-      "title": "Your microphone recovered and you were unmuted by your system.",
+      "title": "Su micrófono se ha recuperado y el sistema ha activado el audio.",
       "dismissButtonAriaLabel": "Cerrar"
     },
     "callMacOsMicrophoneAccessDenied": {
-      "title": "Unable to access microphone",
-      "message": "Grant microphone permission in your macOS privacy settings.",
+      "title": "No se puede acceder al micrófono",
+      "message": "Conceda permiso al micrófono en la configuración de privacidad de macOS.",
       "dismissButtonAriaLabel": "Cerrar"
     },
     "callLocalVideoFreeze": {
-      "title": "Network bandwidth is poor",
-      "message": "Your video may appear paused for others on the call.",
+      "title": "El ancho de banda de red es deficiente",
+      "message": "Es posible que el vídeo aparezca pausado para otros usuarios en la llamada.",
       "dismissButtonAriaLabel": "Cerrar"
     },
     "callCameraAccessDenied": {
-      "title": "Unable to access camera",
-      "message": "Click the lock in the address bar to grant permission to this webpage.",
+      "title": "No se puede acceder a la cámara",
+      "message": "Haga clic en el bloqueo de la barra de direcciones para conceder permiso a esta página web.",
       "dismissButtonAriaLabel": "Cerrar"
     },
     "callCameraAccessDeniedSafari": {
-      "title": "Unable to access camera",
-      "message": "Refresh the page to allow permissions, or check this browser’s settings and verify permissions are enabled for this website.",
+      "title": "No se puede acceder a la cámara",
+      "message": "Actualice la página para permitir permisos o compruebe la configuración de este explorador y compruebe que los permisos estén habilitados para este sitio web.",
       "dismissButtonAriaLabel": "Cerrar"
     },
     "callCameraAlreadyInUse": {
-      "title": "Unable to access camera",
-      "message": "It may already be in use by another application.",
+      "title": "No se puede acceder a la cámara",
+      "message": "Puede que ya la esté usando otra aplicación.",
       "dismissButtonAriaLabel": "Cerrar"
     },
     "callVideoStoppedBySystem": {
-      "title": "Your video has been stopped by your system.",
+      "title": "El sistema ha detenido el vídeo.",
       "dismissButtonAriaLabel": "Cerrar"
     },
     "callVideoRecoveredBySystem": {
-      "title": "Your video has resumed.",
+      "title": "El vídeo se ha reanudado.",
       "dismissButtonAriaLabel": "Cerrar"
     },
     "callMacOsCameraAccessDenied": {
-      "title": "MacOS is blocking access to your camera",
-      "message": "Update your privacy settings to allow this browser to access your camera.",
+      "title": "MacOS está bloqueando el acceso a la cámara",
+      "message": "Actualiza la configuración de privacidad para permitir que este explorador acceda a la cámara.",
       "dismissButtonAriaLabel": "Cerrar"
     },
     "callMacOsScreenShareAccessDenied": {
-      "title": "MacOS is blocking screen sharing",
-      "message": "Update your privacy settings to allow this browser to record your screen.",
+      "title": "MacOS está bloqueando la pantalla compartida",
+      "message": "Actualice la configuración de privacidad para permitir que este explorador grabe la pantalla.",
       "dismissButtonAriaLabel": "Cerrar"
     },
     "failedToJoinCallGeneric": {
-      "title": "Failed to join call.",
+      "title": "No se pudo unir a la llamada.",
       "dismissButtonAriaLabel": "Cerrar"
     },
     "failedToJoinCallInvalidMeetingLink": {
-      "title": "Unable to join Meeting. Invalid Link.",
+      "title": "No se puede unir a la reunión. Vínculo no válido.",
       "dismissButtonAriaLabel": "Cerrar"
     },
     "cameraFrozenForRemoteParticipants": {
-      "title": "Users in the call are having issues seeing your video",
-      "message": "Please check your devices and network.",
+      "title": "Los usuarios de la llamada tienen problemas para ver el vídeo",
+      "message": "Compruebe los dispositivos y la red.",
       "dismissButtonAriaLabel": "Cerrar"
     },
     "unableToStartVideoEffect": {
-      "title": "Unable to apply video effect.",
+      "title": "No se puede aplicar el efecto de vídeo.",
       "dismissButtonAriaLabel": "Cerrar"
     },
     "startSpotlightWhileMaxParticipantsAreSpotlighted": {
-      "title": "Cannot start spotlight on participant(s)",
-      "message": "The maximum number of participants are already spotlighted.",
+      "title": "No se puede poner primer plano a los participantes",
+      "message": "Ya está puesto en primer plano el número máximo de participantes.",
       "dismissButtonAriaLabel": "Cerrar"
     },
     "mutedByRemoteParticipant": {
-      "title": "You were muted by another participant.",
+      "title": "Otro participante lo ha silenciado.",
       "dismissButtonAriaLabel": "Cerrar"
     },
     "recordingStarted": {
@@ -450,7 +450,7 @@
     "localVideoLabel": "Tú",
     "localVideoCameraSwitcherLabel": "Cambiar de cámara",
     "localVideoMovementLabel": "Mosaico de vídeo local movible",
-    "localVideoMovementAriaLabel": "Movable Local Video Tile",
+    "localVideoMovementAriaLabel": "Mosaico de vídeo local movible",
     "localVideoSelectedDescription": "{cameraName} seleccionada",
     "displayNamePlaceholder": "Participante sin nombre",
     "fitRemoteParticipantToFrame": "Ajustar al marco",
@@ -468,7 +468,7 @@
     "stopSpotlightVideoTileMenuLabel": "Dejar de poner en primer plano",
     "stopSpotlightOnSelfVideoTileMenuLabel": "Primer plano",
     "attendeeRole": "Asistente",
-    "muteParticipantMenuItemLabel": "Mute"
+    "muteParticipantMenuItemLabel": "Silenciar"
   },
   "dialpad": {
     "placeholderText": "Introduzca el número de teléfono",
@@ -483,7 +483,7 @@
   "videoTile": {
     "participantStateRinging": "Llamando...",
     "participantStateHold": "En espera",
-    "moreOptionsButtonAriaLabel": "More Options"
+    "moreOptionsButtonAriaLabel": "Más opciones"
   },
   "CameraAndMicrophoneSitePermissionsRequest": {
     "primaryText": "Permitir que {appName} usen la cámara y el micrófono",

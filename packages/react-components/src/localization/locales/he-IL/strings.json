@@ -260,44 +260,44 @@
     "cameraFrozenForRemoteParticipants": "משתמשים בשיחה נתקלים בבעיות בהצגת הווידאו שלך. בדוק את המכשירים ואת הרשת שלך.",
     "unableToStartVideoEffect": "לא ניתן להחיל אפקט וידאו.",
     "startSpotlightWhileMaxParticipantsAreSpotlighted": "אין אפשרות להפעיל זרקור על משתתפים מכיוון שכבר יש זרקורים על המספר המרבי של משתתפים.",
-    "mutedByRemoteParticipant": "You were muted by another participant."
+    "mutedByRemoteParticipant": "השתקת משתתף אחר."
   },
   "notificationStack": {
     "callingNetworkFailure": {
-      "title": "Troubling connecting call",
-      "message": "You seem to be offline. Please check your network connection and try again.",
+      "title": "בעיה בחיבור השיחה",
+      "message": "נראה שאתה במצב לא מקוון. בדוק את חיבור הרשת שלך ונסה שוב.",
       "dismissButtonAriaLabel": "סגור"
     },
     "startVideoGeneric": {
-      "title": "Failed to start video.",
+      "title": "הפעלת סרטון הווידאו נכשלה.",
       "dismissButtonAriaLabel": "סגור"
     },
     "stopVideoGeneric": {
-      "title": "Failed to stop video.",
+      "title": "הפסקת הווידאו נכשלה.",
       "dismissButtonAriaLabel": "סגור"
     },
     "muteGeneric": {
-      "title": "Failed to mute microphone.",
+      "title": "השתקת המיקרופון נכשלה.",
       "dismissButtonAriaLabel": "סגור"
     },
     "unmuteGeneric": {
-      "title": "Failed to unmute microphone.",
+      "title": "ביטול השתקת המיקרופון נכשל.",
       "dismissButtonAriaLabel": "סגור"
     },
     "speakingWhileMuted": {
-      "title": "You're muted.",
+      "title": "אתה מושתק.",
       "dismissButtonAriaLabel": "סגור"
     },
     "startScreenShareGeneric": {
-      "title": "There was an issue starting screen share.",
+      "title": "הייתה בעיה בהפעלת שיתוף מסך.",
       "dismissButtonAriaLabel": "סגור"
     },
     "stopScreenShareGeneric": {
-      "title": "Failed to stop screen sharing.",
+      "title": "הפסקת שיתוף המסכים נכשלה.",
       "dismissButtonAriaLabel": "סגור"
     },
     "callNetworkQualityLow": {
-      "title": "Network quality is low.",
+      "title": "איכות הרשת נמוכה.",
       "dismissButtonAriaLabel": "סגור"
     },
     "teamsMeetingCallNetworkQualityLow": {
@@ -307,100 +307,100 @@
       "primaryButtonLabel": "הצטרף בטלפון"
     },
     "callNoSpeakerFound": {
-      "title": "No speakers or headphones found",
-      "message": "Connect an audio device to hear the call.",
+      "title": "לא נמצאו רמקולים או אוזניות",
+      "message": "חבר התקן שמע כדי לשמוע את השיחה.",
       "dismissButtonAriaLabel": "סגור"
     },
     "callNoMicrophoneFound": {
-      "title": "No microphones found",
-      "message": "Connect an audio input device.",
+      "title": "לא נמצאו מיקרופונים",
+      "message": "חבר התקן קלט שמע.",
       "dismissButtonAriaLabel": "סגור"
     },
     "callMicrophoneAccessDenied": {
-      "title": "Unable to access microphone",
-      "message": "Click the lock in the address bar to grant permission to this webpage.",
+      "title": "לא ניתן לגשת למיקרופון",
+      "message": "לחץ על הנעילה בשורת הכתובת כדי להעניק הרשאה לדף אינטרנט זה.",
       "dismissButtonAriaLabel": "סגור"
     },
     "callMicrophoneAccessDeniedSafari": {
-      "title": "Unable to access microphone",
-      "message": "Refresh the page to allow permissions, or check this browser’s settings and verify permissions are enabled for this website.",
+      "title": "לא ניתן לגשת למיקרופון",
+      "message": "רענן את הדף כדי לאפשר הרשאות, או בדוק את ההגדרות של דפדפן זה וודא שהרשאות זמינות עבור אתר אינטרנט זה.",
       "dismissButtonAriaLabel": "סגור"
     },
     "callMicrophoneMutedBySystem": {
-      "title": "You are muted by your system.",
+      "title": "אתה מושתק על-ידי המערכת שלך.",
       "dismissButtonAriaLabel": "סגור"
     },
     "callMicrophoneUnmutedBySystem": {
-      "title": "Your microphone recovered and you were unmuted by your system.",
+      "title": "המיקרופון שלך התאושש והמערכת שלך ביטלה את ההשתקה.",
       "dismissButtonAriaLabel": "סגור"
     },
     "callMacOsMicrophoneAccessDenied": {
-      "title": "Unable to access microphone",
-      "message": "Grant microphone permission in your macOS privacy settings.",
+      "title": "לא ניתן לגשת למיקרופון",
+      "message": "הענק הרשאת מיקרופון בהגדרות הפרטיות של macOS.",
       "dismissButtonAriaLabel": "סגור"
     },
     "callLocalVideoFreeze": {
-      "title": "Network bandwidth is poor",
-      "message": "Your video may appear paused for others on the call.",
+      "title": "רוחב הפס של הרשת גרוע",
+      "message": "ייתכן שהווידאו שלך יופיע מושהה עבור אנשים אחרים בשיחה.",
       "dismissButtonAriaLabel": "סגור"
     },
     "callCameraAccessDenied": {
-      "title": "Unable to access camera",
-      "message": "Click the lock in the address bar to grant permission to this webpage.",
+      "title": "לא ניתן לגשת למצלמה",
+      "message": "לחץ על הנעילה בשורת הכתובת כדי להעניק הרשאה לדף אינטרנט זה.",
       "dismissButtonAriaLabel": "סגור"
     },
     "callCameraAccessDeniedSafari": {
-      "title": "Unable to access camera",
-      "message": "Refresh the page to allow permissions, or check this browser’s settings and verify permissions are enabled for this website.",
+      "title": "לא ניתן לגשת למצלמה",
+      "message": "רענן את הדף כדי לאפשר הרשאות, או בדוק את ההגדרות של דפדפן זה וודא שהרשאות זמינות עבור אתר אינטרנט זה.",
       "dismissButtonAriaLabel": "סגור"
     },
     "callCameraAlreadyInUse": {
-      "title": "Unable to access camera",
-      "message": "It may already be in use by another application.",
+      "title": "לא ניתן לגשת למצלמה",
+      "message": "ייתכן שהוא כבר נמצא בשימוש על-ידי יישום אחר.",
       "dismissButtonAriaLabel": "סגור"
     },
     "callVideoStoppedBySystem": {
-      "title": "Your video has been stopped by your system.",
+      "title": "הווידאו שלך הופסק על-ידי המערכת.",
       "dismissButtonAriaLabel": "סגור"
     },
     "callVideoRecoveredBySystem": {
-      "title": "Your video has resumed.",
+      "title": "הווידאו שלך התחדש.",
       "dismissButtonAriaLabel": "סגור"
     },
     "callMacOsCameraAccessDenied": {
-      "title": "MacOS is blocking access to your camera",
-      "message": "Update your privacy settings to allow this browser to access your camera.",
+      "title": "MacOS חוסם את הגישה למצלמה שלך",
+      "message": "עדכן את הגדרות הפרטיות שלך כדי לאפשר לדפדפן זה לגשת למצלמה שלך.",
       "dismissButtonAriaLabel": "סגור"
     },
     "callMacOsScreenShareAccessDenied": {
-      "title": "MacOS is blocking screen sharing",
-      "message": "Update your privacy settings to allow this browser to record your screen.",
+      "title": "MacOS חוסם שיתוף מסכים",
+      "message": "עדכן את הגדרות הפרטיות שלך כדי לאפשר לדפדפן זה להקליט את המסך שלך.",
       "dismissButtonAriaLabel": "סגור"
     },
     "failedToJoinCallGeneric": {
-      "title": "Failed to join call.",
+      "title": "הצטרפות לשיחה נכשלה.",
       "dismissButtonAriaLabel": "סגור"
     },
     "failedToJoinCallInvalidMeetingLink": {
-      "title": "Unable to join Meeting. Invalid Link.",
+      "title": "לא ניתן להצטרף לפגישה. קישור לא חוקי.",
       "dismissButtonAriaLabel": "סגור"
     },
     "cameraFrozenForRemoteParticipants": {
-      "title": "Users in the call are having issues seeing your video",
-      "message": "Please check your devices and network.",
+      "title": "משתמשים בשיחה נתקלים בבעיות בהצגת הווידאו שלך",
+      "message": "בדוק את המכשירים ואת הרשת שלך.",
       "dismissButtonAriaLabel": "סגור"
     },
     "unableToStartVideoEffect": {
-      "title": "Unable to apply video effect.",
+      "title": "לא ניתן להחיל אפקט וידאו.",
       "dismissButtonAriaLabel": "סגור"
     },
     "startSpotlightWhileMaxParticipantsAreSpotlighted": {
-      "title": "Cannot start spotlight on participant(s)",
-      "message": "The maximum number of participants are already spotlighted.",
+      "title": "אין אפשרות להפעיל זרקור על משתתפים",
+      "message": "מספר המשתתפים המרבי כבר מודגש.",
       "dismissButtonAriaLabel": "סגור"
     },
     "mutedByRemoteParticipant": {
-      "title": "You were muted by another participant.",
+      "title": "השתקת משתתף אחר.",
       "dismissButtonAriaLabel": "סגור"
     },
     "recordingStarted": {
@@ -450,7 +450,7 @@
     "localVideoLabel": "אתה",
     "localVideoCameraSwitcherLabel": "החלף מצלמה",
     "localVideoMovementLabel": "אריח וידאו מקומי נשלף",
-    "localVideoMovementAriaLabel": "Movable Local Video Tile",
+    "localVideoMovementAriaLabel": "אריח וידאו מקומי נשלף",
     "localVideoSelectedDescription": "{cameraName} נבחר",
     "displayNamePlaceholder": "משתתף ללא שם",
     "fitRemoteParticipantToFrame": "התאם למסגרת",
@@ -468,7 +468,7 @@
     "stopSpotlightVideoTileMenuLabel": "הפסק להציב זרקור",
     "stopSpotlightOnSelfVideoTileMenuLabel": "צא מזרקור",
     "attendeeRole": "משתתף",
-    "muteParticipantMenuItemLabel": "Mute"
+    "muteParticipantMenuItemLabel": "השתק"
   },
   "dialpad": {
     "placeholderText": "הזן מספר טלפון",
@@ -483,7 +483,7 @@
   "videoTile": {
     "participantStateRinging": "מתקשר...",
     "participantStateHold": "בהמתנה",
-    "moreOptionsButtonAriaLabel": "More Options"
+    "moreOptionsButtonAriaLabel": "אפשרויות נוספות"
   },
   "CameraAndMicrophoneSitePermissionsRequest": {
     "primaryText": "אפשר {appName} להשתמש במצלמה ובמיקרופון שלך",
