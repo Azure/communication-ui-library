@@ -112,17 +112,26 @@ export const isSendBoxButtonAriaDisabled = ({
   );
 };
 
+interface CancelInlineImageUploadProps {
+  imageSrcArray: string[] | undefined;
+  imageUploadsInProgress: AttachmentMetadataInProgress[] | undefined;
+  messageId?: string;
+  editBoxOnCancelInlineImageUpload?: (id: string, messageId: string) => void;
+  sendBoxOnCancelInlineImageUpload?: (id: string) => void;
+}
+
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 /**
  * @internal
  */
-export const cancelInlineImageUpload = (
-  imageSrcArray: string[] | undefined,
-  imageUploadsInProgress: AttachmentMetadataInProgress[] | undefined,
-  messageId?: string,
-  editBoxOnCancelInlineImageUpload?: (id: string, messageId: string) => void,
-  sendBoxOnCancelInlineImageUpload?: (id: string) => void
-): void => {
+export const cancelInlineImageUpload = (props: CancelInlineImageUploadProps): void => {
+  const {
+    imageSrcArray,
+    imageUploadsInProgress,
+    messageId,
+    editBoxOnCancelInlineImageUpload,
+    sendBoxOnCancelInlineImageUpload
+  } = props;
   if (imageSrcArray && imageUploadsInProgress && imageUploadsInProgress?.length > 0) {
     imageUploadsInProgress?.map((uploadImage) => {
       if (uploadImage.url && !imageSrcArray?.includes(uploadImage.url)) {

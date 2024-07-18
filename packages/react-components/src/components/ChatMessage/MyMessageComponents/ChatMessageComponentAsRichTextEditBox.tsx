@@ -303,13 +303,13 @@ export const ChatMessageComponentAsRichTextEditBox = (
       /* @conditional-compile-remove(rich-text-editor-image-upload) */ imageSrcArray?: Array<string>
     ) => {
       /* @conditional-compile-remove(rich-text-editor-image-upload) */
-      cancelInlineImageUpload(
+      cancelInlineImageUpload({
         imageSrcArray,
         imageUploadsInProgress,
-        message.messageId,
-        onCancelInlineImageUpload,
-        undefined
-      );
+        messageId: message.messageId,
+        editBoxOnCancelInlineImageUpload: onCancelInlineImageUpload,
+        sendBoxOnCancelInlineImageUpload: undefined
+      });
       setText(content);
     },
     [

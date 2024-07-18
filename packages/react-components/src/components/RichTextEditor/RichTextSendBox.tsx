@@ -310,7 +310,13 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
       /* @conditional-compile-remove(rich-text-editor-image-upload) */ imageSrcArray?: Array<string>
     ) => {
       /* @conditional-compile-remove(rich-text-editor-image-upload) */
-      cancelInlineImageUpload(imageSrcArray, imageUploadsInProgress, undefined, undefined, onCancelInlineImageUpload);
+      cancelInlineImageUpload({
+        imageSrcArray,
+        imageUploadsInProgress,
+        messageId: undefined,
+        editBoxOnCancelInlineImageUpload: undefined,
+        sendBoxOnCancelInlineImageUpload: onCancelInlineImageUpload
+      });
       setContent(newValue);
     },
     [
