@@ -43,9 +43,10 @@ import {
   CallAgentState,
   CallErrors,
   CallErrorTarget,
-  CallError,
-  TeamsIncomingCallState
+  CallError
 } from './CallClientState';
+/* @conditional-compile-remove(one-to-n-calling) */
+import { TeamsIncomingCallState } from './CallClientState';
 import { CaptionsInfo } from './CallClientState';
 import { ReactionState } from './CallClientState';
 import { AcceptedTransfer } from './CallClientState';
@@ -868,7 +869,9 @@ export class CallContext {
     });
   }
 
-  public setIncomingCall(call: IncomingCallState | TeamsIncomingCallState): void {
+  public setIncomingCall(
+    call: IncomingCallState | /* @conditional-compile-remove(one-to-n-calling) */ TeamsIncomingCallState
+  ): void {
     this.modifyState((draft: CallClientState) => {
       const existingCall = draft.incomingCalls[call.id];
       if (existingCall) {

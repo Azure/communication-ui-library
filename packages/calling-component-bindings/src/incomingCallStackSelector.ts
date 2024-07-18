@@ -1,7 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { CallClientState, IncomingCallState, TeamsIncomingCallState } from '@internal/calling-stateful-client';
+import { CallClientState, IncomingCallState } from '@internal/calling-stateful-client';
+/* @conditional-compile-remove(one-to-n-calling) */
+import { TeamsIncomingCallState } from '@internal/calling-stateful-client';
 import { getIncomingCalls, getRemovedIncomingCalls } from './baseSelectors';
 import { createSelector } from 'reselect';
 import { ActiveIncomingCall } from '@internal/react-components';
@@ -29,18 +31,24 @@ export const incomingCallStackSelector: IncomingCallStackSelector = createSelect
     removedIncomingCalls: ActiveIncomingCall[];
   } => {
     // Convert incoming call state to active incoming call
-    const componentIncomingCalls = incomingCalls.map((incomingCall: IncomingCallState | TeamsIncomingCallState) => {
-      return {
-        id: incomingCall.id,
-        callerInfo: {
-          displayName: incomingCall.callerInfo.displayName || 'Unknown Caller'
-        },
-        startTime: incomingCall.startTime,
-        endTime: incomingCall.endTime
-      };
-    });
+    const componentIncomingCalls = incomingCalls.map(
+      (
+        incomingCall: IncomingCallState | /* @conditional-compile-remove(one-to-n-calling) */ TeamsIncomingCallState
+      ) => {
+        return {
+          id: incomingCall.id,
+          callerInfo: {
+            displayName: incomingCall.callerInfo.displayName || 'Unknown Caller'
+          },
+          startTime: incomingCall.startTime,
+          endTime: incomingCall.endTime
+        };
+      }
+    );
     const componentRemovedIncomingCalls = removedIncomingCalls.map(
-      (incomingCall: IncomingCallState | TeamsIncomingCallState) => {
+      (
+        incomingCall: IncomingCallState | /* @conditional-compile-remove(one-to-n-calling) */ TeamsIncomingCallState
+      ) => {
         return {
           id: incomingCall.id,
           callerInfo: {

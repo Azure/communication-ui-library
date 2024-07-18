@@ -1,7 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { LocalVideoStream, StartCallOptions } from '@azure/communication-calling';
+import { StartCallOptions } from '@azure/communication-calling';
+/* @conditional-compile-remove(one-to-n-calling) */
+import { LocalVideoStream } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support) */
@@ -14,11 +16,9 @@ import {
 /* @conditional-compile-remove(PSTN-calls) */
 import { isPhoneNumberIdentifier } from '@azure/communication-common';
 import { Common, _toCommunicationIdentifier } from '@internal/acs-ui-common';
-import {
-  DeclarativeTeamsCallAgent,
-  StatefulCallClient,
-  StatefulDeviceManager
-} from '@internal/calling-stateful-client';
+import { StatefulCallClient, StatefulDeviceManager } from '@internal/calling-stateful-client';
+/* @conditional-compile-remove(one-to-n-calling) */
+import { DeclarativeTeamsCallAgent, IncomingCallCommon } from '@internal/calling-stateful-client';
 import memoizeOne from 'memoize-one';
 import { ReactElement } from 'react';
 import { isTeamsCallParticipants } from '../utils/callUtils';
@@ -119,14 +119,14 @@ export const createDefaultTeamsCallingHandlers = memoizeOne(
         await call?.removeParticipant(participant);
       },
       /* @conditional-compile-remove(one-to-n-calling) */
-      async onAcceptCall(incomingCallId: string, useVideo?: boolean): Promise<void> {
+      onAcceptCall: async (incomingCallId: string, useVideo?: boolean): Promise<void> => {
         const cameras = await deviceManager?.getCameras();
         let localVideoStream: LocalVideoStream | undefined;
         if (cameras && useVideo) {
           localVideoStream = new LocalVideoStream(cameras[0]);
         }
         const incomingCall = (callAgent as DeclarativeTeamsCallAgent)?.incomingCalls.find(
-          (incomingCall) => incomingCall.id === incomingCallId
+          (incomingCall: IncomingCallCommon) => incomingCall.id === incomingCallId
         );
         if (incomingCall) {
           incomingCall.accept(
@@ -136,9 +136,9 @@ export const createDefaultTeamsCallingHandlers = memoizeOne(
         return Promise.resolve();
       },
       /* @conditional-compile-remove(one-to-n-calling) */
-      async onRejectCall(incomingCallId: string): Promise<void> {
+      onRejectCall: async (incomingCallId: string): Promise<void> => {
         const incomingCall = (callAgent as DeclarativeTeamsCallAgent)?.incomingCalls.find(
-          (incomingCall) => incomingCall.id === incomingCallId
+          (incomingCall: IncomingCallCommon) => incomingCall.id === incomingCallId
         );
         if (incomingCall) {
           incomingCall.reject();

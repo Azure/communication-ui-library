@@ -9,9 +9,10 @@ import {
   DevicesButton,
   ParticipantList,
   ScreenShareButton,
-  VideoGallery,
-  IncomingCallStack
+  VideoGallery
 } from '@internal/react-components';
+/* @conditional-compile-remove(one-to-n-calling) */
+import { IncomingCallStack } from '@internal/react-components';
 /* @conditional-compile-remove(notifications) */
 import { NotificationStack } from '@internal/react-components';
 import { Dialpad } from '@internal/react-components';
@@ -46,6 +47,7 @@ import { ReactionButton } from '@internal/react-components';
 import { _ComponentCallingHandlers } from '../handlers/createHandlers';
 /* @conditional-compile-remove(notifications) */
 import { notificationStackSelector, NotificationStackSelector } from '../notificationStackSelector';
+/* @conditional-compile-remove(one-to-n-calling) */
 import { incomingCallStackSelector, IncomingCallStackSelector } from '../incomingCallStackSelector';
 
 /**

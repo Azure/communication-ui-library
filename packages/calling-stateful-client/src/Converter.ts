@@ -6,9 +6,10 @@ import {
   RemoteVideoStream as SdkRemoteVideoStream,
   LocalVideoStream as SdkLocalVideoStream,
   VideoStreamRendererView,
-  TeamsIncomingCall,
   IncomingCall
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(one-to-n-calling) */
+import { TeamsIncomingCall } from '@azure/communication-calling';
 import { TeamsCaptionsInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(acs-close-captions) */
 import { CaptionsInfo as AcsCaptionsInfo } from '@azure/communication-calling';
@@ -25,10 +26,11 @@ import {
   RemoteVideoStreamState as DeclarativeRemoteVideoStream,
   LocalVideoStreamState as DeclarativeLocalVideoStream,
   IncomingCallState as DeclarativeIncomingCall,
-  TeamsIncomingCallState as DeclarativeTeamsIncomingCall,
   VideoStreamRendererViewState as DeclarativeVideoStreamRendererView
 } from './CallClientState';
 import { CaptionsInfo } from './CallClientState';
+/* @conditional-compile-remove(one-to-n-calling) */
+import { TeamsIncomingCallState as DeclarativeTeamsIncomingCall } from './CallClientState';
 
 /* @conditional-compile-remove(teams-identity-support) */ /* @conditional-compile-remove(meeting-id) */
 import { _isACSCall } from './TypeGuards';
@@ -197,7 +199,8 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
  */
 export function convertSdkIncomingCallToDeclarativeIncomingCall(
   call: IncomingCallCommon
-): DeclarativeIncomingCall | DeclarativeTeamsIncomingCall {
+): DeclarativeIncomingCall | /* @conditional-compile-remove(one-to-n-calling) */ DeclarativeTeamsIncomingCall {
+  /* @conditional-compile-remove(one-to-n-calling) */
   if (call.kind === 'TeamsIncomingCall') {
     return {
       id: call.id,
@@ -217,6 +220,14 @@ export function convertSdkIncomingCallToDeclarativeIncomingCall(
       endTime: undefined
     };
   }
+  return {
+    id: call.id,
+    kind: call.kind,
+    info: (call as IncomingCall).info,
+    callerInfo: call.callerInfo,
+    startTime: new Date(),
+    endTime: undefined
+  };
 }
 
 /**
