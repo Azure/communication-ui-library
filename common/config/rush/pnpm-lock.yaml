@@ -8806,8 +8806,8 @@ packages:
       react-dom: 18.3.1(react@18.3.1)
     dev: false
 
-  /@testing-library/user-event@14.4.3(@testing-library/dom@9.3.4):
-    resolution: {integrity: sha512-kCUc5MEwaEMakkO5x7aoD+DLi02ehmEM2QCGWvNqAS1dV/fAvORWEjnjsEIvml59M7Y5kCkWN6fCCyPOe8OL6Q==}
+  /@testing-library/user-event@14.5.2(@testing-library/dom@9.3.4):
+    resolution: {integrity: sha512-YAh82Wh4TIrxYLmfGcixwD18oIjyC1pFQC2Y01F2lzV2HTMiYrI0nze0FD0ocB//CKS/7jIUgae+adPqxK5yCQ==}
     engines: {node: '>=12', npm: '>=6'}
     peerDependencies:
       '@testing-library/dom': '>=7.21.4'
@@ -25239,7 +25239,7 @@ packages:
     dev: false
 
   file:projects/react-components.tgz:
-    resolution: {integrity: sha512-Fwkuv3kCOJiDtrI2JrTk+XG2pcg0EBusbRWEHIkYcdY+tgiv0Gb/+gZtEi0SDbqYIKZ9wmZUYYR6uXDpJ5tekw==, tarball: file:projects/react-components.tgz}
+    resolution: {integrity: sha512-gHpcCQUKuBEvZHqMtXP6xtAv7fJbbVL3fbzRfBiOZ7GObqtBDbaWcMDszYMuwZ3WgCfSTy2IdQ2R54mYkMImEA==, tarball: file:projects/react-components.tgz}
     name: '@rush-temp/react-components'
     version: 0.0.0
     dependencies:
@@ -25261,7 +25261,7 @@ packages:
       '@testing-library/dom': 9.3.4
       '@testing-library/jest-dom': 6.4.6(@types/jest@29.5.12)(jest@29.7.0)
       '@testing-library/react': 16.0.0(@testing-library/dom@9.3.4)(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
-      '@testing-library/user-event': 14.4.3(@testing-library/dom@9.3.4)
+      '@testing-library/user-event': 14.5.2(@testing-library/dom@9.3.4)
       '@types/dompurify': 3.0.5
       '@types/jest': 29.5.12
       '@types/json-stringify-safe': 5.0.3
