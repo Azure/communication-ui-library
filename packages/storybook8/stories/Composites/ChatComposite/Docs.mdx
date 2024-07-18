@@ -1,7 +1,9 @@
 import { Canvas, Meta, Source } from '@storybook/blocks';
+import { Stack } from '@fluentui/react';
 import { SingleLineBetaBanner } from '../../BetaBanners/SingleLineBetaBanner';
 
 import { JoinExistingChatThread } from './JoinExistingChatThread.stories';
+import { overviewPageImagesStackStyle } from '../../constants';
 import containerText from '!!raw-loader!./snippets/Container.snippet.tsx';
 import customDataModelExampleContainerText from '!!raw-loader!./snippets/CustomDataModelExampleContainer.snippet.tsx';
 import customDateTimeFormatExampleText from '!!raw-loader!./snippets/CustomDateTimeFormat.snippet.tsx';
@@ -16,14 +18,17 @@ typing indicators, whether the message has been successfully delivered or read, 
 leaving the chat are displayed to the user as part of the chat thread. Here is a visual example of Chat
 composite.
 
-<img
-  style={{ width: '100%' }}
-  src="images/chatComposite_NoParticipantsList.png"
-  alt="Chat composite with the participants list"
-/>
-
-Note that ChatComposite has a min width and height of respectively 17.5rem and 20rem (280px x 320px, with
-default rem at 16px).
+<Stack style={overviewPageImagesStackStyle}>
+  <Stack.Item align="center">
+    <img
+      style={{ width: '100%' }}
+      src="images/chatComposite_NoParticipantsList.png"
+      alt="Chat composite with the participants list"
+    />
+  </Stack.Item>
+</Stack>
+Note that ChatComposite has a min width and height of respectively 17.5rem and 20rem (280px x 320px, with default rem at
+16px).
 
 ## Basic Usage
 
@@ -32,6 +37,8 @@ react component to the backend APIs.
 
 The key thing to note is that initialization of `ChatAdapter` is asynchronous. Thus, the initialization step
 requires special handling, as the example code below shows.
+
+<Source code={containerText} />
 
 ## Prerequisites
 
@@ -71,8 +78,8 @@ we support hiding the `Topic Header`:
 ## Participant Pane
 
 <SingleLineBetaBanner />
-You can also show a `Participant Pane` to the right hand side of the chat that has support for removing users. The Participant
-pane is a `beta` feature. Currently it does not support mobile views and is subject to breaking changes.
+You can also show a `Participant Pane` to the right hand side of the chat that has support for removing users. The
+Participant pane is a `beta` feature. Currently it does not support mobile views and is subject to breaking changes.
 
 ```ts
   // Caution: the Participant Pane is a beta feature
