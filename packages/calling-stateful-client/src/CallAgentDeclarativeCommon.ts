@@ -21,7 +21,7 @@ import { DeclarativeIncomingCall, incomingCallDeclaratify } from './IncomingCall
 import { IncomingCallSubscriber } from './IncomingCallSubscriber';
 import { InternalCallContext } from './InternalCallContext';
 import { disposeAllViews, disposeAllViewsFromCall } from './StreamUtils';
-import { DeclarativeTeamsIncomingCall, teamsIncomingCallDeclaratify } from './TeamsIncomingCallDeclarative';
+import { teamsIncomingCallDeclaratify } from './TeamsIncomingCallDeclarative';
 
 /**
  *
@@ -44,7 +44,7 @@ export abstract class ProxyCallAgentCommon {
   private _internalContext: InternalCallContext;
   private _callSubscribers: Map<CallCommon, CallSubscriber>;
   private _incomingCallSubscribers: Map<string, IncomingCallSubscriber>;
-  private _declarativeIncomingCalls: Map<string, DeclarativeIncomingCall | DeclarativeTeamsIncomingCall>;
+  private _declarativeIncomingCalls: Map<string, IncomingCallCommon>;
   private _declarativeCalls: Map<CallCommon, DeclarativeCallCommon>;
   private _externalCallsUpdatedListeners: Set<CollectionUpdatedEvent<CallCommon>>;
 
