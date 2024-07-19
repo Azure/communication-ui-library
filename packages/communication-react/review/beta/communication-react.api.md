@@ -4169,6 +4169,7 @@ export interface RichTextSendBoxStrings extends RichTextStrings, SendBoxStrings 
 // @beta
 export interface RichTextStrings {
     richTextBoldTooltip: string;
+    richTextBulletedListAppliedAnnouncement: string;
     richTextBulletListTooltip: string;
     richTextDecreaseIndentTooltip: string;
     richTextDeleteColumnMenu: string;
@@ -4185,6 +4186,9 @@ export interface RichTextStrings {
     richTextInsertTableMenuTitle: string;
     richTextInsertTableTooltip: string;
     richTextItalicTooltip: string;
+    richTextNewBulletedListItemAnnouncement: string;
+    richTextNewNumberedListItemAnnouncement: string;
+    richTextNumberedListAppliedAnnouncement: string;
     richTextNumberListTooltip: string;
     richTextToolbarMoreButtonAriaLabel: string;
     richTextUnderlineTooltip: string;

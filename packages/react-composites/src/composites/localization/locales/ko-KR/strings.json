@@ -338,11 +338,16 @@
     "endCallConfirmDialogTitle": "통화를 종료하시겠습니까?",
     "endCallConfirmDialogContent": "모든 사용자의 통화가 종료됩니다.",
     "invalidMeetingIdentifier": "유효하지 않은 모임 ID 또는 암호",
-    "pinParticipantMenuLabel": "Pin for me",
-    "pinParticipantLimitReachedMenuLabel": "Pin (limit reached)",
-    "unpinParticipantMenuLabel": "Unpin",
-    "pinParticipantMenuItemAriaLabel": "Pin",
-    "unpinParticipantMenuItemAriaLabel": "Unpin"
+    "pinParticipantMenuLabel": "고정",
+    "pinParticipantLimitReachedMenuLabel": "고정(제한에 도달함)",
+    "unpinParticipantMenuLabel": "고정 해제",
+    "pinParticipantMenuItemAriaLabel": "고정",
+    "unpinParticipantMenuItemAriaLabel": "고정 해제",
+    "muteAllMenuLabel": "모두 음소거",
+    "muteAllDialogTitle": "모든 사용자를 음소거하시겠습니까?",
+    "muteAllDialogContent": "나를 제외한 모임 참여자를 모두 음소거합니다.",
+    "muteAllConfirmButtonLabel": "모두 음소거",
+    "muteAllCancelButtonLabel": "취소"
   },
   "chat": {
     "chatListHeader": "채팅 참가자",
