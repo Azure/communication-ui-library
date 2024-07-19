@@ -96,6 +96,7 @@ import { StartCaptionsOptions } from '@azure/communication-calling';
 import { TeamsCall } from '@azure/communication-calling';
 import { TeamsCallAgent } from '@azure/communication-calling';
 import { TeamsCallInfo } from '@azure/communication-calling';
+import { TeamsIncomingCall } from '@azure/communication-calling';
 import { TeamsMeetingIdLocator } from '@azure/communication-calling';
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { Theme } from '@fluentui/react';
@@ -2534,11 +2535,8 @@ export const darkTheme: PartialTheme & CallingTheme;
 // @beta
 export type DeclarativeCallAgent = CallAgent & IncomingCallManagement;
 
-// @beta
-export type DeclarativeIncomingCall = IncomingCall;
-
 // @public
-export type DeclarativeTeamsCallAgent = TeamsCallAgent & IncomingCallManagement;
+export type DeclarativeTeamsCallAgent = TeamsCallAgent & TeamsIncomingCallManagement;
 
 // @public
 export const DEFAULT_COMPONENT_ICONS: {
@@ -3180,7 +3178,7 @@ export const imageOverlayTheme: PartialTheme;
 
 // @beta
 export type IncomingCallManagement = {
-    incomingCalls: ReadonlyArray<DeclarativeIncomingCall>;
+    incomingCalls: ReadonlyArray<IncomingCall>;
 };
 
 // @beta
@@ -4607,6 +4605,11 @@ export interface TeamsCallingHandlers extends CommonCallingHandlers {
     // (undocumented)
     onStartCall: (participants: CommunicationIdentifier[], options?: StartCallOptions) => undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall;
 }
+
+// @beta
+export type TeamsIncomingCallManagement = {
+    incomingCalls: ReadonlyArray<TeamsIncomingCall>;
+};
 
 // @beta
 export type TeamsOutboundCallAdapterArgs = TeamsCallAdapterArgsCommon & {
