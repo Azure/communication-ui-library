@@ -154,14 +154,6 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     return new RichTextToolbarPlugin();
   }, []);
 
-  const isDarkThemedValue = useMemo(() => {
-    return isDarkThemed(theme);
-  }, [theme]);
-
-  useEffect(() => {
-    editor.current?.setDarkModeState(isDarkThemedValue);
-  }, [isDarkThemedValue]);
-
   const placeholderPlugin = useMemo(() => {
     const textColor = theme.palette?.neutralSecondary;
     return new PlaceholderPlugin(
@@ -286,11 +278,25 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     tableContextMenuPlugin
   ]);
 
+  const announcerStringGetter = useCallback(
+    (key: KnownAnnounceStrings): string => {
+      switch (key) {
+        case 'announceListItemBullet':
+          return strings.richTextNewBulletedListItemAnnouncement ?? '';
+        case 'announceListItemNumbering':
+          return strings.richTextNewNumberedListItemAnnouncement ?? '';
+        case 'announceOnFocusLastCell':
+          return '';
+      }
+    },
+    [strings.richTextNewBulletedListItemAnnouncement, strings.richTextNewNumberedListItemAnnouncement]
+  );
+
   useEffect(() => {
     const initialModel = createEditorInitialModel(initialContent, contentModel);
     if (editorDiv.current) {
       editor.current = new Editor(editorDiv.current, {
-        inDarkMode: isDarkThemedValue,
+        inDarkMode: isDarkThemed(theme),
         // doNotAdjustEditorColor is used to disable default color and background color for Rooster component
         doNotAdjustEditorColor: true,
         // TODO: confirm the color during inline images implementation
@@ -321,7 +327,7 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     };
     // don't update the editor on deps update as everything is handled in separate hooks or plugins
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [theme, plugins]);
+  }, [theme, plugins, announcerStringGetter]);
 
   useEffect(() => {
     const themeDirectionValue = themeDirection(theme);
@@ -338,20 +344,6 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
       previousThemeDirection.current = themeDirectionValue;
     }
   }, [theme]);
-
-  const announcerStringGetter = useCallback(
-    (key: KnownAnnounceStrings): string => {
-      switch (key) {
-        case 'announceListItemBullet':
-          return strings.richTextNewBulletedListItemAnnouncement ?? '';
-        case 'announceListItemNumbering':
-          return strings.richTextNewNumberedListItemAnnouncement ?? '';
-        case 'announceOnFocusLastCell':
-          return '';
-      }
-    },
-    [strings.richTextNewBulletedListItemAnnouncement, strings.richTextNewNumberedListItemAnnouncement]
-  );
 
   return (
     <div data-testid={'rich-text-editor-wrapper'}>
