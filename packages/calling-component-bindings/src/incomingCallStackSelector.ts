@@ -36,12 +36,10 @@ export const incomingCallStackSelector: IncomingCallStackSelector = createSelect
         incomingCall: IncomingCallState | /* @conditional-compile-remove(one-to-n-calling) */ TeamsIncomingCallState
       ) => {
         return {
-          id: incomingCall.id,
+          ...incomingCall,
           callerInfo: {
             displayName: incomingCall.callerInfo.displayName || 'Unknown Caller'
-          },
-          startTime: incomingCall.startTime,
-          endTime: incomingCall.endTime
+          }
         };
       }
     );
@@ -50,12 +48,10 @@ export const incomingCallStackSelector: IncomingCallStackSelector = createSelect
         incomingCall: IncomingCallState | /* @conditional-compile-remove(one-to-n-calling) */ TeamsIncomingCallState
       ) => {
         return {
-          id: incomingCall.id,
+          ...incomingCall,
           callerInfo: {
             displayName: incomingCall.callerInfo.displayName || 'Unknown Caller'
-          },
-          startTime: incomingCall.startTime,
-          endTime: incomingCall.endTime
+          }
         };
       }
     );

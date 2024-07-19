@@ -197,7 +197,9 @@ export class CallContext {
     /**
      * We want to remove the incoming call that matches the call if there is one
      */
-    this.removeIncomingCall(call.id);
+    if (this._state.incomingCalls[call.id]) {
+      this.removeIncomingCall(call.id);
+    }
   }
 
   public removeCall(callId: string): void {
