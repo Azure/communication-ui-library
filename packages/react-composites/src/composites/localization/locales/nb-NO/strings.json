@@ -342,7 +342,12 @@
     "pinParticipantLimitReachedMenuLabel": "Fest (grensen er nådd)",
     "unpinParticipantMenuLabel": "Løsne",
     "pinParticipantMenuItemAriaLabel": "Fest",
-    "unpinParticipantMenuItemAriaLabel": "Løsne"
+    "unpinParticipantMenuItemAriaLabel": "Løsne",
+    "muteAllMenuLabel": "Demp alle",
+    "muteAllDialogTitle": "Vil du dempe alle?",
+    "muteAllDialogContent": "Dette demper alle i møtet, bortsett fra deg selv.",
+    "muteAllConfirmButtonLabel": "Demp alle",
+    "muteAllCancelButtonLabel": "Avbryt"
   },
   "chat": {
     "chatListHeader": "I denne chatten",
