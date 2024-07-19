@@ -9,7 +9,7 @@ import {
   IncomingCall
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(one-to-n-calling) */
-import { TeamsIncomingCall } from '@azure/communication-calling';
+import { TeamsIncomingCall, IncomingCallCommon } from '@azure/communication-calling';
 import { TeamsCaptionsInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(acs-close-captions) */
 import { CaptionsInfo as AcsCaptionsInfo } from '@azure/communication-calling';
@@ -36,7 +36,7 @@ import { TeamsIncomingCallState as DeclarativeTeamsIncomingCall } from './CallCl
 import { _isACSCall } from './TypeGuards';
 /* @conditional-compile-remove(meeting-id) */ /* @conditional-compile-remove(acs-close-captions) */
 import { _isTeamsCall } from './TypeGuards';
-import { CallCommon, IncomingCallCommon } from './BetaToStableTypes';
+import { CallCommon } from './BetaToStableTypes';
 
 import { Features } from '@azure/communication-calling';
 

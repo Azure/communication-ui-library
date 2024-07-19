@@ -3,7 +3,7 @@
 
 import { Call, CallAgent, StartCallOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(one-to-n-calling) */
-import { LocalVideoStream } from '@azure/communication-calling';
+import { LocalVideoStream, IncomingCallCommon } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
@@ -16,7 +16,7 @@ import { CommunicationIdentifier } from '@azure/communication-common';
 
 import { _toCommunicationIdentifier } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(one-to-n-calling) */
-import { DeclarativeCallAgent, IncomingCallCommon } from '@internal/calling-stateful-client';
+import { DeclarativeCallAgent } from '@internal/calling-stateful-client';
 import { StatefulCallClient, StatefulDeviceManager } from '@internal/calling-stateful-client';
 import memoizeOne from 'memoize-one';
 import { isACSCallParticipants } from '../utils/callUtils';
@@ -103,18 +103,19 @@ export const createDefaultCallingHandlers: CreateDefaultCallingHandlers = memoiz
     },
     /* @conditional-compile-remove(one-to-n-calling) */
     onAcceptCall: async (incomingCallId: string, useVideo?: boolean): Promise<void> => {
-      const cameras = await deviceManager?.getCameras();
+      const camera = await callClient?.getState().deviceManager.selectedCamera;
       let localVideoStream: LocalVideoStream | undefined;
-      if (cameras && useVideo) {
-        localVideoStream = new LocalVideoStream(cameras[0]);
+      if (camera && useVideo) {
+        localVideoStream = new LocalVideoStream(camera);
       }
       const incomingCall = (callAgent as DeclarativeCallAgent)?.incomingCalls.find(
         (incomingCall: IncomingCallCommon) => incomingCall.id === incomingCallId
       );
       if (incomingCall) {
-        incomingCall.accept(localVideoStream ? { videoOptions: { localVideoStreams: [localVideoStream] } } : undefined);
+        await incomingCall.accept(
+          localVideoStream ? { videoOptions: { localVideoStreams: [localVideoStream] } } : undefined
+        );
       }
-      return Promise.resolve();
     },
     /* @conditional-compile-remove(one-to-n-calling) */
     onRejectCall: async (incomingCallId: string): Promise<void> => {
@@ -122,9 +123,8 @@ export const createDefaultCallingHandlers: CreateDefaultCallingHandlers = memoiz
         (incomingCall: IncomingCallCommon) => incomingCall.id === incomingCallId
       );
       if (incomingCall) {
-        incomingCall.reject();
+        await incomingCall.reject();
       }
-      return Promise.resolve();
     }
   };
 });

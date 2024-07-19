@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { StartCallOptions } from '@azure/communication-calling';
+import { StartCallOptions, IncomingCallCommon } from '@azure/communication-calling';
 /* @conditional-compile-remove(one-to-n-calling) */
 import { LocalVideoStream } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
@@ -18,7 +18,7 @@ import { isPhoneNumberIdentifier } from '@azure/communication-common';
 import { Common, _toCommunicationIdentifier } from '@internal/acs-ui-common';
 import { StatefulCallClient, StatefulDeviceManager } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(one-to-n-calling) */
-import { DeclarativeTeamsCallAgent, IncomingCallCommon } from '@internal/calling-stateful-client';
+import { DeclarativeTeamsCallAgent } from '@internal/calling-stateful-client';
 import memoizeOne from 'memoize-one';
 import { ReactElement } from 'react';
 import { isTeamsCallParticipants } from '../utils/callUtils';
@@ -120,20 +120,19 @@ export const createDefaultTeamsCallingHandlers = memoizeOne(
       },
       /* @conditional-compile-remove(one-to-n-calling) */
       onAcceptCall: async (incomingCallId: string, useVideo?: boolean): Promise<void> => {
-        const cameras = await deviceManager?.getCameras();
+        const camera = await callClient?.getState().deviceManager.selectedCamera;
         let localVideoStream: LocalVideoStream | undefined;
-        if (cameras && useVideo) {
-          localVideoStream = new LocalVideoStream(cameras[0]);
+        if (camera && useVideo) {
+          localVideoStream = new LocalVideoStream(camera);
         }
         const incomingCall = (callAgent as DeclarativeTeamsCallAgent)?.incomingCalls.find(
           (incomingCall: IncomingCallCommon) => incomingCall.id === incomingCallId
         );
         if (incomingCall) {
-          incomingCall.accept(
+          await incomingCall.accept(
             localVideoStream ? { videoOptions: { localVideoStreams: [localVideoStream] } } : undefined
           );
         }
-        return Promise.resolve();
       },
       /* @conditional-compile-remove(one-to-n-calling) */
       onRejectCall: async (incomingCallId: string): Promise<void> => {
@@ -141,9 +140,8 @@ export const createDefaultTeamsCallingHandlers = memoizeOne(
           (incomingCall: IncomingCallCommon) => incomingCall.id === incomingCallId
         );
         if (incomingCall) {
-          incomingCall.reject();
+          await incomingCall.reject();
         }
-        return Promise.resolve();
       }
     };
   }

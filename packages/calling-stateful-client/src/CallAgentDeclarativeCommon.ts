@@ -7,10 +7,11 @@ import {
   CallEndReason,
   CollectionUpdatedEvent,
   IncomingCall,
-  TeamsIncomingCall
+  TeamsIncomingCall,
+  IncomingCallCommon
 } from '@azure/communication-calling';
 
-import { IncomingCallCommon, CallAgentCommon, CallCommon } from './BetaToStableTypes';
+import { CallAgentCommon, CallCommon } from './BetaToStableTypes';
 
 /* @conditional-compile-remove(teams-identity-support) */
 import { TeamsCallAgent } from '@azure/communication-calling';
