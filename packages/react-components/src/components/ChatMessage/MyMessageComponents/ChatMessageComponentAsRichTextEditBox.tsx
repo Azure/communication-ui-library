@@ -67,9 +67,9 @@ export type ChatMessageComponentAsRichTextEditBoxProps = {
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   onPaste?: (event: { content: DocumentFragment }) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  onCancelInlineImageUpload?: (imageId: string) => void;
+  onCancelInlineImageUpload?: (imageId: string, messageId: string) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  onUploadInlineImage?: (imageUrl: string, imageFileName: string) => void;
+  onUploadInlineImage?: (imageUrl: string, imageFileName: string, messageId: string) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   imageUploadsInProgress?: AttachmentMetadataInProgress[];
 };
@@ -137,6 +137,11 @@ export const ChatMessageComponentAsRichTextEditBox = (
   const messageState = useMemo(() => {
     return getMessageState(textValue, /* @conditional-compile-remove(file-sharing-acs) */ attachmentMetadata ?? []);
   }, [/* @conditional-compile-remove(file-sharing-acs) */ attachmentMetadata, textValue]);
+
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  const imageUploadErrorMessage = useMemo(() => {
+    return imageUploadsInProgress?.filter((image) => image.error).pop()?.error?.message;
+  }, [imageUploadsInProgress]);
 
   const submitEnabled = messageState === 'OK';
 
@@ -301,13 +306,20 @@ export const ChatMessageComponentAsRichTextEditBox = (
       /* @conditional-compile-remove(rich-text-editor-image-upload) */ imageSrcArray?: Array<string>
     ) => {
       /* @conditional-compile-remove(rich-text-editor-image-upload) */
-      cancelInlineImageUpload(imageSrcArray, imageUploadsInProgress, onCancelInlineImageUpload);
+      cancelInlineImageUpload({
+        imageSrcArray,
+        imageUploadsInProgress,
+        messageId: message.messageId,
+        editBoxOnCancelInlineImageUpload: onCancelInlineImageUpload,
+        sendBoxOnCancelInlineImageUpload: undefined
+      });
       setText(content);
     },
     [
       setText,
       /* @conditional-compile-remove(rich-text-editor-image-upload) */ imageUploadsInProgress,
-      /* @conditional-compile-remove(rich-text-editor-image-upload) */ onCancelInlineImageUpload
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */ onCancelInlineImageUpload,
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */ message.messageId
     ]
   );
 
@@ -319,6 +331,15 @@ export const ChatMessageComponentAsRichTextEditBox = (
           systemMessage={message.failureReason}
           /* @conditional-compile-remove(rich-text-editor-image-upload) */ attachmentUploadsPendingError={
             attachmentUploadsPendingError
+          }
+          /* @conditional-compile-remove(rich-text-editor-image-upload) */
+          attachmentProgressError={
+            imageUploadErrorMessage
+              ? {
+                  message: imageUploadErrorMessage,
+                  timestamp: Date.now()
+                }
+              : undefined
           }
         />
         <RichTextInputBoxComponent
@@ -336,7 +357,9 @@ export const ChatMessageComponentAsRichTextEditBox = (
           /* @conditional-compile-remove(rich-text-editor-image-upload) */
           onPaste={onPaste}
           /* @conditional-compile-remove(rich-text-editor-image-upload) */
-          onUploadInlineImage={onUploadInlineImage}
+          onUploadInlineImage={(imageUrl: string, imageFileName: string) => {
+            onUploadInlineImage && onUploadInlineImage(imageUrl, imageFileName, message.messageId);
+          }}
         />
       </Stack>
     );

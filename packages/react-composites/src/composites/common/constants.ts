@@ -18,3 +18,8 @@ export const TEAMS_LIMITATION_LEARN_MORE =
  * Changing this value will require updating the API documentation.
  */
 export const CHAT_CONTAINER_MIN_WIDTH_REM = 17.5;
+
+/**
+ * @private
+ */
+export const SEND_BOX_UPLOADS_KEY_VALUE = 'send-box';
