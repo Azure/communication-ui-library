@@ -324,7 +324,6 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
       return;
     }
 
-    let message = contentValue;
     // we don't want to send empty messages including spaces, newlines, tabs
     // Message can be empty if there is a valid attachment upload
     if (
@@ -334,22 +333,31 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
         imageUploadsInProgress
       )
     ) {
-      /* @conditional-compile-remove(rich-text-editor-image-upload) */
-      message = insertImagesToContentString(contentValue, imageUploadsInProgress);
+      const sendMessage = (content: string): void => {
+        onSendMessage(
+          content,
+          /* @conditional-compile-remove(file-sharing-acs) */ /* @conditional-compile-remove(rich-text-editor-composite-support) */
+          {
+            /* @conditional-compile-remove(file-sharing-acs) */
+            attachments: toAttachmentMetadata(attachments),
+            /* @conditional-compile-remove(rich-text-editor-composite-support) */
+            type: 'html'
+          }
+        );
+        setContentValue('');
+        editorComponentRef.current?.setEmptyContent();
+        editorComponentRef.current?.focus();
+      };
 
-      onSendMessage(
-        message,
-        /* @conditional-compile-remove(file-sharing-acs) */ /* @conditional-compile-remove(rich-text-editor-composite-support) */
-        {
-          /* @conditional-compile-remove(file-sharing-acs) */
-          attachments: toAttachmentMetadata(attachments),
-          /* @conditional-compile-remove(rich-text-editor-composite-support) */
-          type: 'html'
-        }
-      );
-      setContentValue('');
-      editorComponentRef.current?.setEmptyContent();
-      editorComponentRef.current?.focus();
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */
+      if (isAttachmentUploadCompleted(imageUploadsInProgress)) {
+        insertImagesToContentString(contentValue, imageUploadsInProgress, (content: string) => {
+          sendMessage(content);
+        });
+        return;
+      }
+
+      sendMessage(contentValue);
     }
   }, [
     disabled,

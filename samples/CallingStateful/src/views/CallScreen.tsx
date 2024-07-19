@@ -22,8 +22,6 @@ export interface CallScreenProps {
   /* @conditional-compile-remove(one-to-n-calling) */
   callAgent: DeclarativeCallAgent | DeclarativeTeamsCallAgent;
   statefulCallClient: StatefulCallClient;
-  /* @conditional-compile-remove(one-to-n-calling) */
-  onSetCall: (call: CallCommon) => void;
 }
 
 export const CallScreen = (props: CallScreenProps): JSX.Element => {
@@ -33,21 +31,19 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     statefulCallClient
   } = props;
   return (
-    <Stack style={{ width: '100%', height: '100%', margin: 'auto', position: 'relative' }}>
+    <Stack style={{ minHeight: '10rem', maxHeight: '80rem', height: '100%' }}>
       <CallClientProvider callClient={statefulCallClient}>
-        <>
-          {
-            /* @conditional-compile-remove(one-to-n-calling) */ callAgent && (
-              <CallAgentProvider callAgent={callAgent}>
-                {call && (
-                  <CallProvider call={call.kind === 'Call' ? (call as Call) : (call as TeamsCall)}>
-                    <CallingComponents></CallingComponents>
-                  </CallProvider>
-                )}
-              </CallAgentProvider>
-            )
-          }
-        </>
+        {
+          /* @conditional-compile-remove(one-to-n-calling) */ callAgent && (
+            <CallAgentProvider callAgent={callAgent}>
+              {call && (
+                <CallProvider call={call.kind === 'Call' ? (call as Call) : (call as TeamsCall)}>
+                  <CallingComponents></CallingComponents>
+                </CallProvider>
+              )}
+            </CallAgentProvider>
+          )
+        }
       </CallClientProvider>
     </Stack>
   );
