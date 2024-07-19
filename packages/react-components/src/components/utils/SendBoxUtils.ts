@@ -42,23 +42,40 @@ export const isAttachmentUploadCompleted = (
  * @internal
  */
 // Before sending the image, we need to add the image id we get back after uploading the images to the message content.
-export const addUploadedImagesToMessage = (
+export const addUploadedImagesToMessage = async (
   message: string,
   uploadInlineImages: AttachmentMetadataInProgress[]
-): string => {
+): Promise<string> => {
   if (message === '') {
     return message;
   }
   const document = new DOMParser().parseFromString(message ?? '', 'text/html');
-  document.querySelectorAll('img').forEach((img) => {
-    if (!img.id) {
+  const imagesPromise = Array.from(document.querySelectorAll('img')).map((img) => {
+    return new Promise<void>((resolve, rejects) => {
       const uploadInlineImage = uploadInlineImages.find(
         (imageUpload) => !imageUpload.error && (imageUpload.url === img.src || imageUpload.id === img.id)
       );
-      img.id = uploadInlineImage?.id ?? '';
-      img.src = '';
-    }
+      const imageElement = new Image();
+      imageElement.src = img.src;
+      imageElement.onload = () => {
+        // imageElement is a copy of original img element, so changes need to be made to the original img element
+        img.id = uploadInlineImage?.id ?? '';
+        img.src = '';
+        img.width = imageElement.width;
+        img.height = imageElement.height;
+        img.style.aspectRatio = `${imageElement.width} / ${imageElement.height}`;
+        // Clear maxWidth and maxHeight styles so that they can set in the style attribute
+        img.style.maxWidth = '';
+        img.style.maxHeight = '';
+        resolve();
+      };
+      imageElement.onerror = () => {
+        console.log('Error loading image', img.src);
+        rejects();
+      };
+    });
   });
+  await Promise.all(imagesPromise);
   const newMessage = document.body.innerHTML;
   return newMessage;
 };
@@ -154,13 +171,34 @@ export const toAttachmentMetadata = (
 /**
  * @internal
  */
-export const insertImagesToContentString = (
+export const insertImagesToContentString = async (
   content: string,
-  imageUploadsInProgress?: AttachmentMetadataInProgress[]
-): string => {
+  imageUploadsInProgress?: AttachmentMetadataInProgress[],
+  onCompleted?: (content: string) => void
+): Promise<void> => {
   if (!imageUploadsInProgress || imageUploadsInProgress.length <= 0) {
-    return content;
+    onCompleted?.(content);
   }
-  const newContent = addUploadedImagesToMessage(content, imageUploadsInProgress);
-  return newContent;
+  const newContent = await addUploadedImagesToMessage(content, imageUploadsInProgress ?? []);
+  onCompleted?.(newContent);
+};
+
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+/**
+ * @internal
+ */
+export const removeBrokenImageContent = (content: string): string => {
+  const document = new DOMParser().parseFromString(content, 'text/html');
+  document.querySelectorAll('img').forEach((img) => {
+    // Before submitting/resend the message, we need to trim the unnecessary attributes such as src,
+    // which is set to a local svg of a broken image icon at this point.
+    // Once message is submitted/resent, it will be fetched again and might not be a broken image anymore,
+    // That's why we need to remove the class and data-ui-id attribute of 'broken-image-wrapper'
+    if (img.className === 'broken-image-wrapper') {
+      img.removeAttribute('class');
+      img.removeAttribute('src');
+      img.removeAttribute('data-ui-id');
+    }
+  });
+  return document.body.innerHTML;
 };
