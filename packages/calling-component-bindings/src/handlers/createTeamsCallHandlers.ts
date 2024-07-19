@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { StartCallOptions, IncomingCallCommon } from '@azure/communication-calling';
+import { StartCallOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(one-to-n-calling) */
-import { LocalVideoStream } from '@azure/communication-calling';
+import { LocalVideoStream, IncomingCallCommon } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support) */

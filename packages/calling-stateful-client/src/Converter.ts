@@ -6,10 +6,11 @@ import {
   RemoteVideoStream as SdkRemoteVideoStream,
   LocalVideoStream as SdkLocalVideoStream,
   VideoStreamRendererView,
-  IncomingCall
+  IncomingCall,
+  IncomingCallCommon
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(one-to-n-calling) */
-import { TeamsIncomingCall, IncomingCallCommon } from '@azure/communication-calling';
+import { TeamsIncomingCall } from '@azure/communication-calling';
 import { TeamsCaptionsInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(acs-close-captions) */
 import { CaptionsInfo as AcsCaptionsInfo } from '@azure/communication-calling';
