@@ -28,7 +28,9 @@ export const richTextEditorWrapperStyle = (theme: Theme): string => {
     paddingInlineEnd: `0.75rem`,
     maxWidth: '100%',
     color: theme.palette.neutralPrimary,
-
+    '& img': {
+      margin: '0.2rem'
+    },
     '& table': {
       background: 'transparent',
       borderCollapse: 'collapse',
