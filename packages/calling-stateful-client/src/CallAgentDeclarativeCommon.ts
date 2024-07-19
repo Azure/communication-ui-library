@@ -22,7 +22,8 @@ import { IncomingCallSubscriber } from './IncomingCallSubscriber';
 import { InternalCallContext } from './InternalCallContext';
 import { disposeAllViews, disposeAllViewsFromCall } from './StreamUtils';
 import { _isTeamsIncomingCall } from './TypeGuards';
-import { incomingCallDeclaratify, teamsIncomingCallDeclaratify } from './IncomingCallDeclarative';
+import { incomingCallDeclaratify } from './IncomingCallDeclarative';
+import { teamsIncomingCallDeclaratify } from './TeamsIncomingCallDeclarative';
 
 /**
  *

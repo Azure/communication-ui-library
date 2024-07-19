@@ -1,13 +1,13 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { IncomingCall, TeamsIncomingCall } from '@azure/communication-calling';
+import { IncomingCall } from '@azure/communication-calling';
 import { CallContext } from './CallContext';
 
 /**
  * @private
  */
-export class ProxyIncomingCall implements ProxyHandler<IncomingCall | TeamsIncomingCall> {
+export class ProxyIncomingCall implements ProxyHandler<IncomingCall> {
   private _context: CallContext;
 
   constructor(context: CallContext) {
@@ -17,16 +17,12 @@ export class ProxyIncomingCall implements ProxyHandler<IncomingCall | TeamsIncom
   public get<P extends keyof IncomingCall>(target: IncomingCall, prop: P): any {
     switch (prop) {
       case 'accept': {
-        return this._context.withAsyncErrorTeedToState(async function (
-          ...args: Parameters<(IncomingCall | TeamsIncomingCall)['accept']>
-        ) {
+        return this._context.withAsyncErrorTeedToState(async function (...args: Parameters<IncomingCall['accept']>) {
           return await target.accept(...args);
         }, 'IncomingCall.accept');
       }
       case 'reject': {
-        return this._context.withAsyncErrorTeedToState(async function (
-          ...args: Parameters<(IncomingCall | TeamsIncomingCall)['reject']>
-        ) {
+        return this._context.withAsyncErrorTeedToState(async function (...args: Parameters<IncomingCall['reject']>) {
           return await target.reject(...args);
         }, 'IncomingCall.reject');
       }
@@ -42,19 +38,6 @@ export class ProxyIncomingCall implements ProxyHandler<IncomingCall | TeamsIncom
  * @returns proxied IncomingCall
  */
 export const incomingCallDeclaratify = (incomingCall: IncomingCall, context: CallContext): IncomingCall => {
-  const proxyIncomingCall = new ProxyIncomingCall(context);
-  return new Proxy(incomingCall, proxyIncomingCall);
-};
-
-/**
- * Creates a declarative TeamsIncomingCall by proxying TeamsIncomingCall using ProxyIncomingCall.
- * @param incomingCall - TeamsIncomingCall from SDK
- * @returns proxied TeamsIncomingCall
- */
-export const teamsIncomingCallDeclaratify = (
-  incomingCall: TeamsIncomingCall,
-  context: CallContext
-): TeamsIncomingCall => {
   const proxyIncomingCall = new ProxyIncomingCall(context);
   return new Proxy(incomingCall, proxyIncomingCall);
 };
