@@ -12,7 +12,8 @@ import {
   FluentThemeProvider,
   StatefulCallClient,
   CallClientProvider,
-  CallAgentProvider
+  CallAgentProvider,
+  CallProvider
 } from '@azure/communication-react';
 /* @conditional-compile-remove(one-to-n-calling) */
 import { DeclarativeCallAgent, DeclarativeTeamsCallAgent } from '@azure/communication-react';
@@ -83,7 +84,7 @@ function App(): JSX.Element {
     } else {
       throw new Error('Unknown call agent kind');
     }
-  }, [/* @conditional-compile-remove(one-to-n-calling) */ callAgent, call, callsUpdatedListener]);
+  }, [/* @conditional-compile-remove(one-to-n-calling) */ callAgent, callsUpdatedListener]);
 
   if (userCredentialFetchError) {
     return <Text>Failed to fetch user credentials</Text>;
@@ -122,10 +123,12 @@ function App(): JSX.Element {
                 )
               }
               {statefulCallClient && /* @conditional-compile-remove(one-to-n-calling) */ callAgent && call && (
-                <CallScreen
-                  /* @conditional-compile-remove(one-to-n-calling) */ call={call}
-                  /* @conditional-compile-remove(one-to-n-calling) */ onSetCall={setCall}
-                />
+                <CallProvider call={call.kind === 'Call' ? (call as Call) : (call as TeamsCall)}>
+                  <CallScreen
+                    /* @conditional-compile-remove(one-to-n-calling) */ call={call}
+                    /* @conditional-compile-remove(one-to-n-calling) */ onSetCall={setCall}
+                  />
+                </CallProvider>
               )}
             </Stack>
             {calls.length > 0 && (

@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 /* @conditional-compile-remove(one-to-n-calling) */
-import { CallProvider, IncomingCallStack, usePropsFor } from '@azure/communication-react';
+import { IncomingCallStack, usePropsFor } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
 /* @conditional-compile-remove(one-to-n-calling) */
 import CallingComponents from '../components/CallingComponents';
@@ -22,13 +22,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
   const incomingCallStackProps = usePropsFor(IncomingCallStack);
   return (
     <Stack style={{ width: '100%', height: '100%', margin: 'auto', position: 'relative' }}>
-      <>
-        {call && (
-          <CallProvider call={call.kind === 'Call' ? (call as Call) : (call as TeamsCall)}>
-            <CallingComponents />
-          </CallProvider>
-        )}
-      </>
+      <>{call && <CallingComponents />}</>
       <IncomingCallStack {...incomingCallStackProps} />
     </Stack>
   );
