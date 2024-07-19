@@ -166,6 +166,22 @@ export interface RichTextStrings {
    * Text for the rich text toolbar more button.
    */
   richTextToolbarMoreButtonAriaLabel: string;
+  /**
+   * Text for announcement when a new bulleted list item is added.
+   */
+  richTextNewBulletedListItemAnnouncement: string;
+  /**
+   * Text for announcement when a new numbered list item is added.
+   */
+  richTextNewNumberedListItemAnnouncement: string;
+  /**
+   * Text for announcement when the bulleted list style is applied.
+   */
+  richTextBulletedListAppliedAnnouncement: string;
+  /**
+   * Text for announcement when the numbered list style is applied.
+   */
+  richTextNumberedListAppliedAnnouncement: string;
 }
 
 /**

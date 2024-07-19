@@ -12,7 +12,8 @@ import type {
   EditorPlugin,
   IEditor,
   ReadonlyContentModelBlockGroup,
-  ShallowMutableContentModelDocument
+  ShallowMutableContentModelDocument,
+  KnownAnnounceStrings
 } from 'roosterjs-content-model-types';
 import { createModelFromHtml, Editor, exportContent } from 'roosterjs-content-model-core';
 import {
@@ -23,13 +24,19 @@ import {
   setSelection
 } from 'roosterjs-content-model-dom';
 import { KeyboardInputPlugin } from './Plugins/KeyboardInputPlugin';
-import { AutoFormatPlugin, EditPlugin, PastePlugin, ShortcutPlugin } from 'roosterjs-content-model-plugins';
+import {
+  AutoFormatPlugin,
+  EditPlugin,
+  PastePlugin,
+  ShortcutPlugin,
+  DefaultSanitizers
+} from 'roosterjs-content-model-plugins';
 import { UpdateContentPlugin, UpdateEvent } from './Plugins/UpdateContentPlugin';
 import { RichTextToolbar } from './Toolbar/RichTextToolbar';
 import { RichTextToolbarPlugin } from './Plugins/RichTextToolbarPlugin';
 import { ContextMenuPlugin } from './Plugins/ContextMenuPlugin';
 import { TableEditContextMenuProvider } from './Plugins/TableEditContextMenuProvider';
-import { borderApplier, dataSetApplier, DefaultSanitizers } from '../utils/RichTextEditorUtils';
+import { borderApplier, dataSetApplier } from '../utils/RichTextEditorUtils';
 import { ContextualMenu, IContextualMenuItem, IContextualMenuProps, Theme } from '@fluentui/react';
 import { PlaceholderPlugin } from './Plugins/PlaceholderPlugin';
 import { getFormatState, setDirection } from 'roosterjs-content-model-api';
@@ -151,14 +158,6 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
   const toolbarPlugin = React.useMemo(() => {
     return new RichTextToolbarPlugin();
   }, []);
-
-  const isDarkThemedValue = useMemo(() => {
-    return isDarkThemed(theme);
-  }, [theme]);
-
-  useEffect(() => {
-    editor.current?.setDarkModeState(isDarkThemedValue);
-  }, [isDarkThemedValue]);
 
   const placeholderPlugin = useMemo(() => {
     const textColor = theme.palette?.neutralSecondary;
@@ -284,15 +283,28 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     tableContextMenuPlugin
   ]);
 
+  const announcerStringGetter = useCallback(
+    (key: KnownAnnounceStrings): string => {
+      switch (key) {
+        case 'announceListItemBullet':
+          return strings.richTextNewBulletedListItemAnnouncement ?? '';
+        case 'announceListItemNumbering':
+          return strings.richTextNewNumberedListItemAnnouncement ?? '';
+        case 'announceOnFocusLastCell':
+          return '';
+      }
+    },
+    [strings.richTextNewBulletedListItemAnnouncement, strings.richTextNewNumberedListItemAnnouncement]
+  );
+
   useEffect(() => {
     const initialModel = createEditorInitialModel(initialContent, contentModel);
     if (editorDiv.current) {
       editor.current = new Editor(editorDiv.current, {
-        inDarkMode: isDarkThemedValue,
+        inDarkMode: isDarkThemed(theme),
         // doNotAdjustEditorColor is used to disable default color and background color for Rooster component
         doNotAdjustEditorColor: true,
-        // TODO: confirm the color during inline images implementation
-        imageSelectionBorderColor: 'blue',
+        imageSelectionBorderColor: theme.palette.themePrimary,
         tableCellSelectionBackgroundColor: theme.palette.neutralLight,
         plugins: plugins,
         initialModel: initialModel,
@@ -302,7 +314,8 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
             border: borderApplier,
             dataset: dataSetApplier
           }
-        }
+        },
+        announcerStringGetter: announcerStringGetter
       });
     }
 
@@ -318,7 +331,7 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     };
     // don't update the editor on deps update as everything is handled in separate hooks or plugins
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [theme, plugins]);
+  }, [theme, plugins, announcerStringGetter]);
 
   useEffect(() => {
     const themeDirectionValue = themeDirection(theme);
