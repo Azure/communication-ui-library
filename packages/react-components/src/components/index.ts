@@ -59,7 +59,9 @@ export type {
 } from './MessageThread';
 
 /* @conditional-compile-remove(rich-text-editor) */
-export type { RichTextEditorOptions } from './MessageThread';
+export type { RichTextEditorOptions, RichTextSendBoxOptions } from './RichTextEditor/RichTextSendBox';
+/* @conditional-compile-remove(rich-text-editor) */
+export type { RichTextEditBoxOptions } from './MessageThread';
 
 export { StreamMedia } from './StreamMedia';
 export type { StreamMediaProps } from './StreamMedia';
