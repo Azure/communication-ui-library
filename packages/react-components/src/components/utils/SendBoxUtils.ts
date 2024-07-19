@@ -198,6 +198,8 @@ export const removeBrokenImageContent = (content: string): string => {
       img.removeAttribute('class');
       img.removeAttribute('src');
       img.removeAttribute('data-ui-id');
+      img.style.width = '';
+      img.style.height = '';
     }
   });
   return document.body.innerHTML;

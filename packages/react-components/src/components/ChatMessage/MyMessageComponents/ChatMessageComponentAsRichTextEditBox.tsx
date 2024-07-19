@@ -113,6 +113,8 @@ export const ChatMessageComponentAsRichTextEditBox = (
       }
 
       imageElement.src = BROKEN_IMAGE_SVG_DATA;
+      imageElement.style.width = '3rem';
+      imageElement.style.height = '3rem';
       brokenImage.parentElement?.replaceChild(imageElement, brokenImage);
     });
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
