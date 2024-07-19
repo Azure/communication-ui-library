@@ -11,7 +11,7 @@ import { InternalCallContext } from './InternalCallContext';
 /* @conditional-compile-remove(teams-identity-support) */
 import { teamsCallDeclaratify } from './TeamsCallDeclarative';
 /* @conditional-compile-remove(one-to-n-calling) */
-import { DeclarativeTeamsIncomingCall } from './TeamsIncomingCallDeclarative';
+import { DeclarativeTeamsIncomingCall } from './IncomingCallDeclarative';
 
 /* @conditional-compile-remove(one-to-n-calling) */
 /**

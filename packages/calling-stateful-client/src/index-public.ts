@@ -31,7 +31,7 @@ export type { DeclarativeCallAgent, IncomingCallManagement } from './CallAgentDe
 /* @conditional-compile-remove(one-to-n-calling) */
 export type { DeclarativeIncomingCall } from './IncomingCallDeclarative';
 /* @conditional-compile-remove(one-to-n-calling) */
-export type { DeclarativeTeamsIncomingCall } from './TeamsIncomingCallDeclarative';
+export type { DeclarativeTeamsIncomingCall } from './IncomingCallDeclarative';
 /* @conditional-compile-remove(teams-identity-support) */
 export type { DeclarativeTeamsCallAgent } from './TeamsCallAgentDeclarative';
 /* @conditional-compile-remove(one-to-n-calling) */

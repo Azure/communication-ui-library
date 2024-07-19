@@ -21,7 +21,8 @@ import { DeclarativeIncomingCall, incomingCallDeclaratify } from './IncomingCall
 import { IncomingCallSubscriber } from './IncomingCallSubscriber';
 import { InternalCallContext } from './InternalCallContext';
 import { disposeAllViews, disposeAllViewsFromCall } from './StreamUtils';
-import { teamsIncomingCallDeclaratify } from './TeamsIncomingCallDeclarative';
+import { teamsIncomingCallDeclaratify } from './IncomingCallDeclarative';
+import { _isTeamsIncomingCall } from './TypeGuards';
 
 /**
  *
@@ -130,7 +131,7 @@ export abstract class ProxyCallAgentCommon {
         new IncomingCallSubscriber(incomingCall, this.setIncomingCallEnded)
       );
     }
-    if (incomingCall.kind === 'TeamsIncomingCall') {
+    if (_isTeamsIncomingCall(incomingCall)) {
       this._declarativeIncomingCalls.set(
         incomingCall.id,
         teamsIncomingCallDeclaratify(incomingCall as TeamsIncomingCall, this._context)
