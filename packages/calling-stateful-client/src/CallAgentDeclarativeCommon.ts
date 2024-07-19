@@ -6,6 +6,7 @@ import {
   CallAgent,
   CallEndReason,
   CollectionUpdatedEvent,
+  IncomingCall,
   TeamsIncomingCall
 } from '@azure/communication-calling';
 
@@ -17,12 +18,11 @@ import { CallContext } from './CallContext';
 import { DeclarativeCall } from './CallDeclarative';
 import { CallSubscriber } from './CallSubscriber';
 import { convertSdkCallToDeclarativeCall, convertSdkIncomingCallToDeclarativeIncomingCall } from './Converter';
-import { DeclarativeIncomingCall, incomingCallDeclaratify } from './IncomingCallDeclarative';
 import { IncomingCallSubscriber } from './IncomingCallSubscriber';
 import { InternalCallContext } from './InternalCallContext';
 import { disposeAllViews, disposeAllViewsFromCall } from './StreamUtils';
-import { teamsIncomingCallDeclaratify } from './IncomingCallDeclarative';
 import { _isTeamsIncomingCall } from './TypeGuards';
+import { incomingCallDeclaratify, teamsIncomingCallDeclaratify } from './IncomingCallDeclarative';
 
 /**
  *
@@ -45,7 +45,7 @@ export abstract class ProxyCallAgentCommon {
   private _internalContext: InternalCallContext;
   private _callSubscribers: Map<CallCommon, CallSubscriber>;
   private _incomingCallSubscribers: Map<string, IncomingCallSubscriber>;
-  private _declarativeIncomingCalls: Map<string, IncomingCallCommon>;
+  private _incomingCalls: Map<string, IncomingCallCommon>;
   private _declarativeCalls: Map<CallCommon, DeclarativeCallCommon>;
   private _externalCallsUpdatedListeners: Set<CollectionUpdatedEvent<CallCommon>>;
 
@@ -54,7 +54,7 @@ export abstract class ProxyCallAgentCommon {
     this._internalContext = internalContext;
     this._callSubscribers = new Map<Call, CallSubscriber>();
     this._incomingCallSubscribers = new Map<string, IncomingCallSubscriber>();
-    this._declarativeIncomingCalls = new Map<string, DeclarativeIncomingCall>();
+    this._incomingCalls = new Map<string, IncomingCallCommon>();
     this._declarativeCalls = new Map<Call, DeclarativeCall>();
     this._externalCallsUpdatedListeners = new Set<CollectionUpdatedEvent<CallCommon>>();
   }
@@ -71,7 +71,7 @@ export abstract class ProxyCallAgentCommon {
       incomingCallSubscriber.unsubscribe();
     }
     this._incomingCallSubscribers.clear();
-    this._declarativeIncomingCalls.clear();
+    this._incomingCalls.clear();
 
     for (const [_, declarativeCall] of this._declarativeCalls.entries()) {
       declarativeCall.unsubscribe();
@@ -119,7 +119,7 @@ export abstract class ProxyCallAgentCommon {
       incomingCallSubscriber.unsubscribe();
       this._incomingCallSubscribers.delete(incomingCallId);
     }
-    this._declarativeIncomingCalls.delete(incomingCallId);
+    this._incomingCalls.delete(incomingCallId);
     this._context.setIncomingCallEnded(incomingCallId, callEndReason);
   };
 
@@ -132,13 +132,13 @@ export abstract class ProxyCallAgentCommon {
       );
     }
     if (_isTeamsIncomingCall(incomingCall)) {
-      this._declarativeIncomingCalls.set(
+      this._incomingCalls.set(
         incomingCall.id,
         teamsIncomingCallDeclaratify(incomingCall as TeamsIncomingCall, this._context)
       );
       this._context.setIncomingCall(convertSdkIncomingCallToDeclarativeIncomingCall(incomingCall));
     } else {
-      this._declarativeIncomingCalls.set(incomingCall.id, incomingCallDeclaratify(incomingCall, this._context));
+      this._incomingCalls.set(incomingCall.id, incomingCallDeclaratify(incomingCall as IncomingCall, this._context));
       this._context.setIncomingCall(convertSdkIncomingCallToDeclarativeIncomingCall(incomingCall));
     }
   };
@@ -250,7 +250,7 @@ export abstract class ProxyCallAgentCommon {
        * 3. Use `callAgent.incomingCalls` and filter an incoming call ID to get a declarative incoming call object
        */
       case 'incomingCalls': {
-        return Array.from(this._declarativeIncomingCalls.values());
+        return Array.from(this._incomingCalls.values());
       }
       default:
         return Reflect.get(target, prop);

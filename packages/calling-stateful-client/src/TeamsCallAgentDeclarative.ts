@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 import { TeamsCallAgent } from '@azure/communication-calling';
+/* @conditional-compile-remove(one-to-n-calling) */
+import { TeamsIncomingCall } from '@azure/communication-calling';
 import { CallCommon, CallAgentCommon } from './BetaToStableTypes';
 import { clearCallRelatedState, DeclarativeCallCommon, ProxyCallAgentCommon } from './CallAgentDeclarativeCommon';
 import { CallContext } from './CallContext';
@@ -10,8 +12,6 @@ import { _isTeamsCall, _isTeamsCallAgent } from './TypeGuards';
 import { InternalCallContext } from './InternalCallContext';
 /* @conditional-compile-remove(teams-identity-support) */
 import { teamsCallDeclaratify } from './TeamsCallDeclarative';
-/* @conditional-compile-remove(one-to-n-calling) */
-import { DeclarativeTeamsIncomingCall } from './IncomingCallDeclarative';
 
 /* @conditional-compile-remove(one-to-n-calling) */
 /**
@@ -24,7 +24,7 @@ export type TeamsIncomingCallManagement = {
    * @Remark This attribute doesn't exist on the {@link @azure/communication-calling#TeamsCallAgent} interface.
    * @returns readonly array of {@link DeclarativeTeamsIncomingCall}
    */
-  incomingCalls: ReadonlyArray<DeclarativeTeamsIncomingCall>;
+  incomingCalls: ReadonlyArray<TeamsIncomingCall>;
 };
 
 /**
