@@ -1,29 +1,15 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-
-// import { CallComposite } from '@azure/communication-react';
+import { CallComposite } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
 import { Meta } from '@storybook/react';
 import React, { useMemo } from 'react';
 import { v1 as createGUID } from 'uuid';
 import { compositeExperienceContainerStyle } from '../../constants';
-import { /*defaultCallCompositeHiddenControls,*/ controlsToAdd, ArgsFrom } from '../../controlsUtils';
+import { ArgsFrom, controlsToAdd, defaultCallCompositeHiddenControls } from '../../controlsUtils';
 import { compositeLocale } from '../../localizationUtils';
 import { ContosoCallContainer } from './snippets/Container.snippet';
 import { ConfigHintBanner } from './snippets/Utils';
-
-const meta: Meta<typeof BasicStory> = {
-  // id: `${COMPOSITE_FOLDER_PREFIX}-call-basicexample`,
-  title: 'Composites/CallComposite/LiveExample'
-  // component: CallComposite,
-  // argTypes: {
-  //   ...storyControls,
-  //   // Hiding auto-generated controls
-  //   ...defaultCallCompositeHiddenControls
-  // }
-};
-
-export default meta;
 
 const storyControls = {
   userId: controlsToAdd.userId,
@@ -34,7 +20,7 @@ const storyControls = {
   errorBar: controlsToAdd.showErrorBar
 };
 
-const BasicStory = (args: ArgsFrom<typeof storyControls>, context): JSX.Element => {
+const BasicStory = (args: ArgsFrom<typeof storyControls>, context: any): JSX.Element => {
   const {
     globals: { locale }
   } = context;
@@ -71,4 +57,24 @@ const BasicStory = (args: ArgsFrom<typeof storyControls>, context): JSX.Element 
   );
 };
 
-export const LiveExample = BasicStory.bind({});
+export const BasicExample = BasicStory.bind({});
+
+const meta: Meta = {
+  title: 'Composites/CallComposite',
+  component: CallComposite,
+  argTypes: {
+    ...storyControls,
+    // Hiding auto-generated controls
+    ...defaultCallCompositeHiddenControls
+  },
+  args: {
+    userId: '',
+    token: '',
+    displayName: 'John Smith',
+    callInvitationURL: '',
+    compositeFormFactor: 'desktop',
+    errorBar: true
+  }
+};
+
+export default meta;

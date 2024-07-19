@@ -30,10 +30,6 @@ export type { RaiseHandCallFeatureState as RaiseHandCallFeature } from './CallCl
 export type { RaisedHandState } from './CallClientState';
 /* @conditional-compile-remove(one-to-n-calling) */
 export type { DeclarativeCallAgent, IncomingCallManagement } from './CallAgentDeclarative';
-/* @conditional-compile-remove(one-to-n-calling) */
-export type { DeclarativeIncomingCall } from './IncomingCallDeclarative';
-/* @conditional-compile-remove(one-to-n-calling) */
-export type { DeclarativeTeamsIncomingCall } from './TeamsIncomingCallDeclarative';
 /* @conditional-compile-remove(teams-identity-support) */
 export type { DeclarativeTeamsCallAgent } from './TeamsCallAgentDeclarative';
 /* @conditional-compile-remove(one-to-n-calling) */

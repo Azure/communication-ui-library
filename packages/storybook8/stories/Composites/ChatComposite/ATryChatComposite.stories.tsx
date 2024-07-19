@@ -27,6 +27,14 @@ const storyControls = {
   compositeFormFactor: controlsToAdd.formFactor
 };
 
+const defaultControlsValues = {
+  topic: 'Chat with a friendly bot',
+  displayName: 'John Smith',
+  showParticipants: true,
+  showTopic: true,
+  compositeFormFactor: 'desktop'
+};
+
 const TryChatCompositeStory = (args: ArgsFrom<typeof storyControls>, context): JSX.Element => {
   const {
     globals: { locale }
@@ -70,6 +78,9 @@ const meta: Meta<typeof TryChatCompositeStory> = {
     ...storyControls,
     // Hiding auto-generated controls
     ...defaultChatCompositeHiddenControls
+  },
+  args: {
+    ...defaultControlsValues
   }
 };
 

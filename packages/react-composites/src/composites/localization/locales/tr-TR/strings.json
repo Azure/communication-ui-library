@@ -342,7 +342,12 @@
     "pinParticipantLimitReachedMenuLabel": "Sabitleme (sınıra ulaşıldı)",
     "unpinParticipantMenuLabel": "Sabitlemeyi kaldır",
     "pinParticipantMenuItemAriaLabel": "Sabitle",
-    "unpinParticipantMenuItemAriaLabel": "Sabitlemeyi kaldır"
+    "unpinParticipantMenuItemAriaLabel": "Sabitlemeyi kaldır",
+    "muteAllMenuLabel": "Tümünü sessize al",
+    "muteAllDialogTitle": "Herkesi sessize almak mı istiyorsunuz?",
+    "muteAllDialogContent": "Bu, toplantıda sizin dışınızdaki herkesi sessize alır.",
+    "muteAllConfirmButtonLabel": "Tümünü sessize al",
+    "muteAllCancelButtonLabel": "İptal"
   },
   "chat": {
     "chatListHeader": "Bu sohbette",

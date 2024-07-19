@@ -2550,14 +2550,8 @@ export const darkTheme: PartialTheme & CallingTheme;
 // @beta
 export type DeclarativeCallAgent = CallAgent & IncomingCallManagement;
 
-// @beta
-export type DeclarativeIncomingCall = IncomingCall;
-
 // @public
 export type DeclarativeTeamsCallAgent = TeamsCallAgent & TeamsIncomingCallManagement;
-
-// @beta
-export type DeclarativeTeamsIncomingCall = TeamsIncomingCall;
 
 // @public
 export const DEFAULT_COMPONENT_ICONS: {
@@ -3199,7 +3193,7 @@ export const imageOverlayTheme: PartialTheme;
 
 // @beta
 export type IncomingCallManagement = {
-    incomingCalls: ReadonlyArray<DeclarativeIncomingCall>;
+    incomingCalls: ReadonlyArray<IncomingCall>;
 };
 
 // @beta
@@ -4209,6 +4203,7 @@ export interface RichTextSendBoxStrings extends RichTextStrings, SendBoxStrings 
 // @beta
 export interface RichTextStrings {
     richTextBoldTooltip: string;
+    richTextBulletedListAppliedAnnouncement: string;
     richTextBulletListTooltip: string;
     richTextDecreaseIndentTooltip: string;
     richTextDeleteColumnMenu: string;
@@ -4225,6 +4220,9 @@ export interface RichTextStrings {
     richTextInsertTableMenuTitle: string;
     richTextInsertTableTooltip: string;
     richTextItalicTooltip: string;
+    richTextNewBulletedListItemAnnouncement: string;
+    richTextNewNumberedListItemAnnouncement: string;
+    richTextNumberedListAppliedAnnouncement: string;
     richTextNumberListTooltip: string;
     richTextToolbarMoreButtonAriaLabel: string;
     richTextUnderlineTooltip: string;
@@ -4637,7 +4635,7 @@ export interface TeamsCallingHandlers extends CommonCallingHandlers {
 
 // @beta
 export type TeamsIncomingCallManagement = {
-    incomingCalls: ReadonlyArray<DeclarativeTeamsIncomingCall>;
+    incomingCalls: ReadonlyArray<TeamsIncomingCall>;
 };
 
 // @beta
