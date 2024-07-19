@@ -304,8 +304,7 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
         inDarkMode: isDarkThemed(theme),
         // doNotAdjustEditorColor is used to disable default color and background color for Rooster component
         doNotAdjustEditorColor: true,
-        // TODO: confirm the color during inline images implementation
-        imageSelectionBorderColor: 'blue',
+        imageSelectionBorderColor: theme.palette.themePrimary,
         tableCellSelectionBackgroundColor: theme.palette.neutralLight,
         plugins: plugins,
         initialModel: initialModel,
