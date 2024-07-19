@@ -110,11 +110,15 @@ export const RichTextToolbar = (props: RichTextToolbarProps): JSX.Element => {
       icon: 'RichTextBulletListButtonIcon',
       onClick: () => {
         plugin.onToolbarButtonClick((editor) => {
+          // check the format state to see if the bulleted list is already applied
           const isBullet = formatState?.isBullet;
           toggleBullet(editor);
           // the bulleted list was added
           if (!isBullet) {
-            editor.announce({ text: strings.richTextBulletedListAppliedAnnouncement });
+            setTimeout(() => {
+              // a small delay and polite aria live are needed for MacOS VoiceOver to announce the change
+              editor.announce({ ariaLiveMode: 'polite', text: strings.richTextBulletedListAppliedAnnouncement });
+            }, 50);
           }
         });
       },
@@ -131,11 +135,15 @@ export const RichTextToolbar = (props: RichTextToolbarProps): JSX.Element => {
       icon: 'RichTextNumberListButtonIcon',
       onClick: () => {
         plugin.onToolbarButtonClick((editor) => {
+          // check the format state to see if the numbered list is already applied
           const isNumbering = formatState?.isNumbering;
           toggleNumbering(editor);
           // the numbered list was added
           if (!isNumbering) {
-            editor.announce({ text: strings.richTextNumberedListAppliedAnnouncement });
+            // a small delay and polite aria live are needed for MacOS VoiceOver to announce the change
+            setTimeout(() => {
+              editor.announce({ ariaLiveMode: 'polite', text: strings.richTextNumberedListAppliedAnnouncement });
+            }, 50);
           }
         });
       },
