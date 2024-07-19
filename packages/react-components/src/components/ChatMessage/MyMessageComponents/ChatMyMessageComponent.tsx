@@ -99,7 +99,7 @@ type ChatMyMessageComponentProps = {
    * @beta
    */
   actionsForAttachment?: (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[];
-  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  /* @conditional-compile-remove(rich-text-editor) */
   isRichTextEditorEnabled?: boolean;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   onPaste?: (event: { content: DocumentFragment }) => void;
@@ -145,6 +145,7 @@ export const ChatMyMessageComponent = (props: ChatMyMessageComponentProps): JSX.
         {
           /* @conditional-compile-remove(file-sharing-acs) */ attachments:
             `attachments` in message ? message.attachments : undefined,
+          /* @conditional-compile-remove(rich-text-editor) */
           type: props.isRichTextEditorEnabled ? 'html' : 'text'
         }
       );
@@ -154,7 +155,7 @@ export const ChatMyMessageComponent = (props: ChatMyMessageComponentProps): JSX.
     clientMessageId,
     onSendMessage,
     content,
-    /* @conditional-compile-remove(rich-text-editor-image-upload) */ props.isRichTextEditorEnabled
+    /* @conditional-compile-remove(rich-text-editor) */ props.isRichTextEditorEnabled
   ]);
 
   const onSubmitHandler = useCallback(
@@ -193,7 +194,7 @@ export const ChatMyMessageComponent = (props: ChatMyMessageComponentProps): JSX.
         }}
         /* @conditional-compile-remove(mention) */
         mentionLookupOptions={props.mentionOptions?.lookupOptions}
-        /* @conditional-compile-remove(rich-text-editor-image-upload) */
+        /* @conditional-compile-remove(rich-text-editor) */
         isRichTextEditorEnabled={props.isRichTextEditorEnabled}
         /* @conditional-compile-remove(rich-text-editor-image-upload) */
         onPaste={props.onPaste}

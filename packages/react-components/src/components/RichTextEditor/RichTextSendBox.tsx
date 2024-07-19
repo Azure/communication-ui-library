@@ -452,7 +452,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     const imageUploadErrorMessage = imageUploadsInProgress?.filter((image) => image.error).pop()?.error?.message;
     /* @conditional-compile-remove(file-sharing-acs) */
     const errorMessage =
-      uploadErrorMessage /* @conditional-compile-remove(rich-text-editor-image-upload) */ || imageUploadErrorMessage;
+      uploadErrorMessage || /* @conditional-compile-remove(rich-text-editor-image-upload) */ imageUploadErrorMessage;
     return {
       /* @conditional-compile-remove(file-sharing-acs) */
       attachmentUploadsPendingError: attachmentUploadsPendingError,

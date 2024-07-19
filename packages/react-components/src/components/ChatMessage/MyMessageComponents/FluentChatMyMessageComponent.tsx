@@ -49,7 +49,7 @@ export const FluentChatMyMessageComponent = (props: FluentChatMessageComponentWr
     actionsForAttachment,
     /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
     onRenderAttachmentDownloads,
-    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    /* @conditional-compile-remove(rich-text-editor) */
     isRichTextEditorEnabled,
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
     onPaste,
@@ -100,7 +100,7 @@ export const FluentChatMyMessageComponent = (props: FluentChatMessageComponentWr
             mentionOptions={mentionOptions}
             /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
             actionsForAttachment={actionsForAttachment}
-            /* @conditional-compile-remove(rich-text-editor-image-upload) */
+            /* @conditional-compile-remove(rich-text-editor) */
             isRichTextEditorEnabled={isRichTextEditorEnabled}
             /* @conditional-compile-remove(rich-text-editor-image-upload) */
             onPaste={onPaste}
@@ -133,7 +133,7 @@ export const FluentChatMyMessageComponent = (props: FluentChatMessageComponentWr
       actionsForAttachment,
       // eslint-disable-next-line react-hooks/exhaustive-deps
       new Date().toDateString(),
-      /* @conditional-compile-remove(rich-text-editor-image-upload) */
+      /* @conditional-compile-remove(rich-text-editor) */
       isRichTextEditorEnabled,
       /* @conditional-compile-remove(rich-text-editor-image-upload) */
       onPaste,

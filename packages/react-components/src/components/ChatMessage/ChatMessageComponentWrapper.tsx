@@ -67,7 +67,7 @@ export type ChatMessageComponentWrapperProps = _ChatMessageProps & {
    * Optional callback to define custom actions for attachments.
    */
   actionsForAttachment?: (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[];
-  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  /* @conditional-compile-remove(rich-text-editor) */
   isRichTextEditorEnabled?: boolean;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   onPaste?: (event: { content: DocumentFragment }) => void;

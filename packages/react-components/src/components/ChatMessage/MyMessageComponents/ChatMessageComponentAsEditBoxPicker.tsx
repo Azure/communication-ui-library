@@ -46,7 +46,7 @@ export type ChatMessageComponentAsEditBoxPickerProps = {
   strings: MessageThreadStrings;
   /* @conditional-compile-remove(mention) */
   mentionLookupOptions?: MentionLookupOptions;
-  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  /* @conditional-compile-remove(rich-text-editor) */
   isRichTextEditorEnabled?: boolean;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   onPaste?: (event: { content: DocumentFragment }) => void;

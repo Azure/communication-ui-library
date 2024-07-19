@@ -1193,7 +1193,7 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
                   mentionOptions={mentionOptions}
                   /* @conditional-compile-remove(file-sharing-acs) */
                   onRenderAttachmentDownloads={onRenderAttachmentDownloads}
-                  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+                  /* @conditional-compile-remove(rich-text-editor) */
                   isRichTextEditorEnabled={!!richTextEditorOptions}
                   /* @conditional-compile-remove(rich-text-editor-image-upload) */
                   onPaste={richTextEditorOptions?.onPaste}
