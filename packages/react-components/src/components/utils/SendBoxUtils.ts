@@ -55,6 +55,12 @@ export const addUploadedImagesToMessage = async (
       const uploadInlineImage = uploadInlineImages.find(
         (imageUpload) => !imageUpload.error && (imageUpload.url === img.src || imageUpload.id === img.id)
       );
+      // The message might content images that comes with the message before editing, those images are not in the uploadInlineImages array.
+      // This function should only modify the message content for images in the uploadInlineImages array.
+      if (!uploadInlineImage) {
+        resolve();
+        return;
+      }
       const imageElement = new Image();
       imageElement.src = img.src;
       imageElement.onload = () => {
