@@ -207,7 +207,6 @@ export const ChatMessageComponentAsRichTextEditBox = (
       insertImagesToContentString(textValue, imageUploadsInProgress, (content) => {
         onSubmit(content, /* @conditional-compile-remove(file-sharing-acs) */ attachmentMetadata || []);
       });
-      return;
     }
     // it's very important to pass an empty attachment here
     // so when user removes all attachments, UI can reflect it instantly
