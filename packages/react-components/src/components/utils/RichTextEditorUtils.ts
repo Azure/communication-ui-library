@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import type { BorderFormat, DatasetFormat, ModelToDomContext, ValueSanitizer } from 'roosterjs-content-model-types';
+import type { BorderFormat, DatasetFormat, ModelToDomContext } from 'roosterjs-content-model-types';
 
 /**
  * Plugin event type for RoosterJS plugins
@@ -58,27 +58,4 @@ export const dataSetApplier = (format: DatasetFormat, element: HTMLElement, cont
     // apply default formats for all other cases
     context.defaultFormatAppliers.dataset(format, element, context);
   }
-};
-
-// divParagraphSanitizer and DefaultSanitizers should be deleted from here and used as part of PastePlugin instead (from roosterjs packages)
-// https://github.com/microsoft/roosterjs/issues/2737
-/**
- * @private
- */
-const divParagraphSanitizer = (value: string, tagName: string): string | null => {
-  const tag = tagName.toLowerCase();
-  if (tag === 'div' || tag === 'p') {
-    return null;
-  }
-  return value;
-};
-
-/**
- * @private
- */
-export const DefaultSanitizers: Record<string, ValueSanitizer> = {
-  width: divParagraphSanitizer,
-  height: divParagraphSanitizer,
-  'inline-size': divParagraphSanitizer,
-  'block-size': divParagraphSanitizer
 };
