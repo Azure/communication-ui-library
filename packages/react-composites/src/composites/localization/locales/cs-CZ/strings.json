@@ -342,7 +342,12 @@
     "pinParticipantLimitReachedMenuLabel": "Připnout (dosáhlo se limitu)",
     "unpinParticipantMenuLabel": "Odepnout",
     "pinParticipantMenuItemAriaLabel": "Připnout",
-    "unpinParticipantMenuItemAriaLabel": "Odepnout"
+    "unpinParticipantMenuItemAriaLabel": "Odepnout",
+    "muteAllMenuLabel": "Ztlumit všechny",
+    "muteAllDialogTitle": "Chcete všechny ztlumit?",
+    "muteAllDialogContent": "Ztlumí všechny účastníky schůzky kromě vás.",
+    "muteAllConfirmButtonLabel": "Ztlumit všechny",
+    "muteAllCancelButtonLabel": "Zrušit"
   },
   "chat": {
     "chatListHeader": "V tomto chatu",
