@@ -3616,8 +3616,8 @@ packages:
       react: 18.2.0
     dev: false
 
-  /@fluentui/react-portal-compat-context@9.0.11(@types/react@18.3.3)(react@18.3.1):
-    resolution: {integrity: sha512-ubvW/ej0O+Pago9GH3mPaxzUgsNnBoqvghNamWjyKvZIViyaXUG6+sgcAl721R+qGAFac+A20akI5qDJz/xtdg==}
+  /@fluentui/react-portal-compat-context@9.0.12(@types/react@18.3.3)(react@18.3.1):
+    resolution: {integrity: sha512-5AVXWX9GnbvwnJZYUb4LSIF7BsI/N8oTI6+7Yn0w6B3yaWykA8Menlz757X5tgVBjouEj4Eom+AoVvA7u8gPDA==}
     peerDependencies:
       '@types/react': '>=16.14.0 <19.0.0'
       react: '>=16.14.0 <19.0.0'
@@ -4393,8 +4393,8 @@ packages:
       tslib: 2.6.2
     dev: false
 
-  /@fluentui/react@8.119.1(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1):
-    resolution: {integrity: sha512-+H7obZ05o9QPvYwHH/JS2mM7rlSYXHzNt2eilH1l41BQCgi69pX7wU/cugfPraUX7BocaPrAFzSNzBK9d6wsUw==}
+  /@fluentui/react@8.119.2(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1):
+    resolution: {integrity: sha512-qM0VyxEc0vNniVC1minxMpDeZtQWekwG6F8X78AWbVRhawBIcdTv4asYKt8cnXmtgSSsuHno7sOKGEFgOd57Pg==}
     peerDependencies:
       '@types/react': '>=16.8.0 <19.0.0'
       '@types/react-dom': '>=16.8.0 <19.0.0'
@@ -4407,7 +4407,7 @@ packages:
       '@fluentui/merge-styles': 8.6.12
       '@fluentui/react-focus': 8.9.10(@types/react@18.3.3)(react@18.3.1)
       '@fluentui/react-hooks': 8.8.10(@types/react@18.3.3)(react@18.3.1)
-      '@fluentui/react-portal-compat-context': 9.0.11(@types/react@18.3.3)(react@18.3.1)
+      '@fluentui/react-portal-compat-context': 9.0.12(@types/react@18.3.3)(react@18.3.1)
       '@fluentui/react-window-provider': 2.2.27(@types/react@18.3.3)(react@18.3.1)
       '@fluentui/set-version': 8.2.23
       '@fluentui/style-utilities': 8.10.18(@types/react@18.3.3)(react@18.3.1)
@@ -4425,7 +4425,7 @@ packages:
     resolution: {integrity: sha512-3q1ej7hdoJkBw2c9GU90StWMxqHMmuKcpALs67DlpBpJ/3vIOeMumKoS7Yl34AfyUwiz1Dw38TZOhDJ1y2nfxw==}
     dependencies:
       '@fluentui/set-version': 8.2.23
-      '@fluentui/theme': 2.6.56(@types/react@18.3.3)(react@18.3.1)
+      '@fluentui/theme': 2.6.44(@types/react@18.3.3)(react@18.3.1)
       tslib: 2.6.2
     transitivePeerDependencies:
       - '@types/react'
@@ -4475,7 +4475,7 @@ packages:
   /@fluentui/theme-samples@8.7.123(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1):
     resolution: {integrity: sha512-aRr99fq0HNzsG68fJjHBbZSkxDe1BA/hpprCgJj7P69jFJbf2V1GBWXQfoTDPj/PZKS80qlJLo6M+B7yHaet+A==}
     dependencies:
-      '@fluentui/react': 8.119.1(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
+      '@fluentui/react': 8.119.2(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
       '@fluentui/scheme-utilities': 8.3.42(@types/react@18.3.3)(react@18.3.1)
       '@fluentui/set-version': 8.2.15
       tslib: 2.6.2
@@ -4497,6 +4497,20 @@ packages:
       '@fluentui/utilities': 8.15.1(@types/react@18.2.74)(react@18.2.0)
       '@types/react': 18.2.74
       react: 18.2.0
+      tslib: 2.6.2
+    dev: false
+
+  /@fluentui/theme@2.6.44(@types/react@18.3.3)(react@18.3.1):
+    resolution: {integrity: sha512-d3CppiTHQHoN1Gsxz0aU3SodnLBHBwH6OB+SU3EqSNc9qrjpqAf92MaYD6x3SWIdmqsYbb6qrZmChjzvktm1sw==}
+    peerDependencies:
+      '@types/react': '>=16.8.0 <19.0.0'
+      react: '>=16.8.0 <19.0.0'
+    dependencies:
+      '@fluentui/merge-styles': 8.6.12
+      '@fluentui/set-version': 8.2.23
+      '@fluentui/utilities': 8.15.12(@types/react@18.3.3)(react@18.3.1)
+      '@types/react': 18.3.3
+      react: 18.3.1
       tslib: 2.6.2
     dev: false
 
@@ -4531,6 +4545,21 @@ packages:
       '@fluentui/set-version': 8.2.15
       '@types/react': 18.2.74
       react: 18.2.0
+      tslib: 2.6.2
+    dev: false
+
+  /@fluentui/utilities@8.15.12(@types/react@18.3.3)(react@18.3.1):
+    resolution: {integrity: sha512-rDykd3jdIgeIT8vxW66JVS2kipCD2P+NXmjG/uKiRe/OylPSdv0KcewkwcysFYN6XkdVZ/FEKHVRUjD1ejRnxQ==}
+    peerDependencies:
+      '@types/react': '>=16.8.0 <19.0.0'
+      react: '>=16.8.0 <19.0.0'
+    dependencies:
+      '@fluentui/dom-utilities': 2.3.7
+      '@fluentui/merge-styles': 8.6.12
+      '@fluentui/react-window-provider': 2.2.27(@types/react@18.3.3)(react@18.3.1)
+      '@fluentui/set-version': 8.2.23
+      '@types/react': 18.3.3
+      react: 18.3.1
       tslib: 2.6.2
     dev: false
 
@@ -20740,41 +20769,41 @@ packages:
       color: 3.2.1
     dev: false
 
-  /roosterjs-content-model-api@9.7.0:
-    resolution: {integrity: sha512-rsss6dPn31LDHPMeiQFpCmLfO7/mvGuBV164RqxhobO5E5DWuyujjCdihDsOBBKkqXLntuaLL2XcNI0z/uScgw==}
+  /roosterjs-content-model-api@9.8.1:
+    resolution: {integrity: sha512-5nL11iogalRErbV5tpMAxKVVqBxvOv3dbVR3UhkxgZlB2ekJxLDwkuu5ZIfiTcypxR8hREOcqB4lkaTlX28RkA==}
     dependencies:
-      roosterjs-content-model-dom: 9.7.0
-      roosterjs-content-model-types: 9.7.0
+      roosterjs-content-model-dom: 9.8.1
+      roosterjs-content-model-types: 9.8.1
       tslib: 2.6.2
     dev: false
 
-  /roosterjs-content-model-core@9.7.0:
-    resolution: {integrity: sha512-MbbUz6QqMyXm9wpycbyZ2H+RseVKOFqlmxCXhVxIjGRufO2iEsDNBtxJAMB5jxTLfz67kRSrI/wxpLEwVnmVCg==}
+  /roosterjs-content-model-core@9.8.1:
+    resolution: {integrity: sha512-VXm6ZJUvbbNEYNm/3uETWJRDgAB3EE+GCittOAjECQ0SVWIcqUU7GisH4NJTNBVVyTTE37Lo1PWXu6GSIEwK9g==}
     dependencies:
-      roosterjs-content-model-dom: 9.7.0
-      roosterjs-content-model-types: 9.7.0
+      roosterjs-content-model-dom: 9.8.1
+      roosterjs-content-model-types: 9.8.1
       tslib: 2.6.2
     dev: false
 
-  /roosterjs-content-model-dom@9.7.0:
-    resolution: {integrity: sha512-PXo7l6iBylFMAnlnw3Jbn4ZiZGTWcbxAROI/kJdEnVBS1Ff/QOB0PMTS2G6IWnC+mHTtybUencvcJCeqVv5uNg==}
+  /roosterjs-content-model-dom@9.8.1:
+    resolution: {integrity: sha512-hQm009mdLsQrk4xgPOWCaVUbsoYCex9Ip+CCawqiIyew2iuPrIW1XT4pa4k/QfvJi2KWi742DdzAhGtrd0d27A==}
     dependencies:
-      roosterjs-content-model-types: 9.7.0
+      roosterjs-content-model-types: 9.8.1
       tslib: 2.6.2
     dev: false
 
-  /roosterjs-content-model-plugins@9.7.0:
-    resolution: {integrity: sha512-HR04ekWCsbJJh+odqQNUOtG3zDfWfXdbqC/5HzF8BL+x24TUi/lbE4UFNn8mYC22+/x8Erdi2xogWRQ91nBB5w==}
+  /roosterjs-content-model-plugins@9.8.1:
+    resolution: {integrity: sha512-WBguyNS/gB38k/n7iGXUuPHK0R1rvgJ17oVQO6bhMyUsXGitGjOZeIqZ8x07PXbVjMzRl8vCm5eWvambKOOaHA==}
     dependencies:
-      roosterjs-content-model-api: 9.7.0
-      roosterjs-content-model-core: 9.7.0
-      roosterjs-content-model-dom: 9.7.0
-      roosterjs-content-model-types: 9.7.0
+      roosterjs-content-model-api: 9.8.1
+      roosterjs-content-model-core: 9.8.1
+      roosterjs-content-model-dom: 9.8.1
+      roosterjs-content-model-types: 9.8.1
       tslib: 2.6.2
     dev: false
 
-  /roosterjs-content-model-types@9.7.0:
-    resolution: {integrity: sha512-kI0xC0eVAeFhmuvTTkqOOfNjTQlRbAsv8e1+Xik90xKKFpo5dv8kkntL1vGUKqd5MW/hf2nYpWpYFaONzVN39A==}
+  /roosterjs-content-model-types@9.8.1:
+    resolution: {integrity: sha512-e3GZAOPKWCBmTByDe9jayh5nk4PytZA81BqsQDFWSx0fCGBw8dPBbvE820zWt7I3Nw1X3OAq0RRzTyBUwT310A==}
     dev: false
 
   /roosterjs-editor-api@8.62.0:
@@ -24328,7 +24357,7 @@ packages:
       '@azure/logger': 1.0.4
       '@babel/cli': 7.24.7(@babel/core@7.24.7)
       '@babel/core': 7.24.7
-      '@fluentui/react': 8.119.1(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
+      '@fluentui/react': 8.119.2(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
       '@types/jest': 29.5.12
       '@types/react': 18.3.3
       '@types/react-dom': 18.3.0
@@ -24479,7 +24508,7 @@ packages:
       '@babel/eslint-parser': 7.23.10(@babel/core@7.24.7)(eslint@8.57.0)
       '@babel/preset-env': 7.23.9(@babel/core@7.24.7)
       '@babel/preset-react': 7.23.3(@babel/core@7.24.7)
-      '@fluentui/react': 8.119.1(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
+      '@fluentui/react': 8.119.2(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
       '@fluentui/react-hooks': 8.8.10(@types/react@18.3.3)(react@18.3.1)
       '@fluentui/react-icons': 2.0.249(react@18.3.1)
       '@types/jest': 29.5.12
@@ -24573,7 +24602,7 @@ packages:
       '@babel/eslint-parser': 7.23.10(@babel/core@7.24.7)(eslint@8.57.0)
       '@babel/preset-env': 7.23.9(@babel/core@7.24.7)
       '@babel/preset-react': 7.23.3(@babel/core@7.24.7)
-      '@fluentui/react': 8.119.1(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
+      '@fluentui/react': 8.119.2(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
       '@fluentui/react-hooks': 8.8.10(@types/react@18.3.3)(react@18.3.1)
       '@fluentui/react-icons': 2.0.249(react@18.3.1)
       '@types/jest': 29.5.12
@@ -24668,7 +24697,7 @@ packages:
       '@babel/eslint-parser': 7.23.10(@babel/core@7.24.7)(eslint@8.57.0)
       '@babel/preset-env': 7.23.9(@babel/core@7.24.7)
       '@babel/preset-react': 7.23.3(@babel/core@7.24.7)
-      '@fluentui/react': 8.119.1(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
+      '@fluentui/react': 8.119.2(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
       '@fluentui/react-file-type-icons': 8.11.18(@types/react@18.3.3)(react@18.3.1)
       '@fluentui/react-icons': 2.0.249(react@18.3.1)
       '@types/jest': 29.5.12
@@ -24853,7 +24882,7 @@ packages:
       '@babel/cli': 7.24.7(@babel/core@7.24.7)
       '@babel/core': 7.24.7
       '@babel/eslint-parser': 7.23.10(@babel/core@7.24.7)(eslint@8.57.0)
-      '@fluentui/react': 8.119.1(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
+      '@fluentui/react': 8.119.2(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
       '@fluentui/react-file-type-icons': 8.11.18(@types/react@18.3.3)(react@18.3.1)
       '@fluentui/react-icons': 2.0.249(react@18.3.1)
       '@types/jest': 29.5.12
@@ -24976,7 +25005,7 @@ packages:
     dev: false
 
   file:projects/communication-react.tgz:
-    resolution: {integrity: sha512-fV4osfklp1ITAkWHJKbpd7lQHhPbvfNIYGZATJDdo/TDlJ3B4Rscb8CQyR1/9qj8oJ35Z32nYFvvaAzjidWUfg==, tarball: file:projects/communication-react.tgz}
+    resolution: {integrity: sha512-HtKlJVfIRw8G7rNfEmCL0ORP5AhAJ9fgPXUOOcfD/EuaBZ1RePjYi15nKzALSWZtE84KblJpP/XjiH6zXhEWyA==, tarball: file:projects/communication-react.tgz}
     name: '@rush-temp/communication-react'
     version: 0.0.0
     dependencies:
@@ -24992,7 +25021,7 @@ packages:
       '@babel/cli': 7.24.7(@babel/core@7.24.7)
       '@babel/core': 7.24.7
       '@fluentui-contrib/react-chat': 0.1.10(@fluentui/react-components@9.54.5)(@fluentui/react-icons@2.0.249)(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
-      '@fluentui/react': 8.119.1(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
+      '@fluentui/react': 8.119.2(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
       '@fluentui/react-components': 9.54.5(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)(scheduler@0.23.0)
       '@fluentui/react-file-type-icons': 8.11.18(@types/react@18.3.3)(react@18.3.1)
       '@fluentui/react-hooks': 8.8.10(@types/react@18.3.3)(react@18.3.1)
@@ -25051,11 +25080,11 @@ packages:
       reselect: 4.1.8
       rimraf: 2.7.1
       rollup: 4.12.1
-      roosterjs-content-model-api: 9.7.0
-      roosterjs-content-model-core: 9.7.0
-      roosterjs-content-model-dom: 9.7.0
-      roosterjs-content-model-plugins: 9.7.0
-      roosterjs-content-model-types: 9.7.0
+      roosterjs-content-model-api: 9.8.1
+      roosterjs-content-model-core: 9.8.1
+      roosterjs-content-model-dom: 9.8.1
+      roosterjs-content-model-plugins: 9.8.1
+      roosterjs-content-model-types: 9.8.1
       roosterjs-editor-api: 8.62.0
       roosterjs-editor-core: 8.62.0
       roosterjs-editor-dom: 8.62.0
@@ -25103,7 +25132,7 @@ packages:
       '@azure/communication-identity': 1.3.0
       '@babel/core': 7.24.7
       '@babel/eslint-parser': 7.23.10(@babel/core@7.24.7)(eslint@8.57.0)
-      '@fluentui/react': 8.119.1(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
+      '@fluentui/react': 8.119.2(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
       '@types/react': 18.3.3
       '@types/react-dom': 18.3.0
       '@types/uuid': 9.0.8
@@ -25239,7 +25268,7 @@ packages:
     dev: false
 
   file:projects/react-components.tgz:
-    resolution: {integrity: sha512-XR1ZV4HWpBl4Yut79SgTJdcFTXxRkRfnKZYLkjtiA8Xzd8GsRdeBTbEH2PRSS8F8H8bO38O3LEX2Gb6Xb4gaiA==, tarball: file:projects/react-components.tgz}
+    resolution: {integrity: sha512-1WddRAe5YZn+ibQ9B0t5r60Ri6acKBfIuT7mDCFWzGucK2JzwwdOPMd5anI+OA8tr45U2lByygSsSeXlCVVoaA==, tarball: file:projects/react-components.tgz}
     name: '@rush-temp/react-components'
     version: 0.0.0
     dependencies:
@@ -25247,7 +25276,7 @@ packages:
       '@babel/core': 7.24.7
       '@babel/preset-env': 7.23.9(@babel/core@7.24.7)
       '@fluentui-contrib/react-chat': 0.1.10(@fluentui/react-components@9.54.5)(@fluentui/react-icons@2.0.249)(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
-      '@fluentui/react': 8.119.1(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
+      '@fluentui/react': 8.119.2(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
       '@fluentui/react-components': 9.54.5(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)(scheduler@0.23.0)
       '@fluentui/react-file-type-icons': 8.11.18(@types/react@18.3.3)(react@18.3.1)
       '@fluentui/react-hooks': 8.8.10(@types/react@18.3.3)(react@18.3.1)
@@ -25315,11 +25344,11 @@ packages:
       regenerator-runtime: 0.14.1
       rimraf: 2.7.1
       rollup: 4.12.1
-      roosterjs-content-model-api: 9.7.0
-      roosterjs-content-model-core: 9.7.0
-      roosterjs-content-model-dom: 9.7.0
-      roosterjs-content-model-plugins: 9.7.0
-      roosterjs-content-model-types: 9.7.0
+      roosterjs-content-model-api: 9.8.1
+      roosterjs-content-model-core: 9.8.1
+      roosterjs-content-model-dom: 9.8.1
+      roosterjs-content-model-plugins: 9.8.1
+      roosterjs-content-model-types: 9.8.1
       roosterjs-editor-api: 8.62.0
       roosterjs-editor-core: 8.62.0
       roosterjs-editor-dom: 8.62.0
@@ -25382,7 +25411,7 @@ packages:
       '@babel/cli': 7.24.7(@babel/core@7.24.7)
       '@babel/core': 7.24.7
       '@babel/preset-env': 7.23.9(@babel/core@7.24.7)
-      '@fluentui/react': 8.119.1(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
+      '@fluentui/react': 8.119.2(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
       '@fluentui/react-file-type-icons': 8.11.18(@types/react@18.3.3)(react@18.3.1)
       '@fluentui/react-hooks': 8.8.10(@types/react@18.3.3)(react@18.3.1)
       '@fluentui/react-icons': 2.0.249(react@18.3.1)
@@ -25523,7 +25552,7 @@ packages:
       '@azure/communication-identity': 1.3.0
       '@babel/cli': 7.24.7(@babel/core@7.24.7)
       '@babel/core': 7.24.7
-      '@fluentui/react': 8.119.1(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
+      '@fluentui/react': 8.119.2(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
       '@playwright/test': 1.39.0
       '@types/copy-webpack-plugin': 6.4.3
       '@types/node': 20.14.8
@@ -25659,7 +25688,7 @@ packages:
       '@azure/communication-identity': 1.3.0
       '@babel/core': 7.24.7
       '@babel/preset-env': 7.23.9(@babel/core@7.24.7)
-      '@fluentui/react': 8.119.1(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
+      '@fluentui/react': 8.119.2(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
       '@fluentui/react-components': 9.54.5(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)(scheduler@0.23.0)
       '@fluentui/react-file-type-icons': 8.11.18(@types/react@18.3.3)(react@18.3.1)
       '@fluentui/react-hooks': 8.8.10(@types/react@18.3.3)(react@18.3.1)
@@ -25806,7 +25835,7 @@ packages:
       '@azure/communication-identity': 1.3.0
       '@babel/core': 7.24.7
       '@babel/preset-env': 7.23.9(@babel/core@7.24.7)
-      '@fluentui/react': 8.119.1(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
+      '@fluentui/react': 8.119.2(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
       '@fluentui/react-components': 9.54.5(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)(scheduler@0.23.0)
       '@fluentui/react-file-type-icons': 8.11.18(@types/react@18.3.3)(react@18.3.1)
       '@fluentui/react-hooks': 8.8.10(@types/react@18.3.3)(react@18.3.1)
