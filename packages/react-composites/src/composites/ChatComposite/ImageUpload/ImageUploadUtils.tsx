@@ -108,6 +108,7 @@ export const getSendBoxImageUploadsInProgress = (
   return sendBoxInlineImageUploads[SEND_BOX_UPLOADS_KEY_VALUE]?.map((upload) => upload.metadata);
 };
 
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
 const inlineImageUploadHandler = async (uploadTasks: AttachmentUpload[], adapter: ChatAdapter): Promise<void> => {
   for (const task of uploadTasks) {
     const uploadTask = task as AttachmentUploadTask;
@@ -140,6 +141,7 @@ const inlineImageUploadHandler = async (uploadTasks: AttachmentUpload[], adapter
   }
 };
 
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
 const generateUploadTask = async (
   image: string,
   fileName: string,
