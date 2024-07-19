@@ -31,7 +31,8 @@ import {
 import { CaptionsInfo } from './CallClientState';
 /* @conditional-compile-remove(one-to-n-calling) */
 import { TeamsIncomingCallState as DeclarativeTeamsIncomingCall } from './CallClientState';
-
+/* @conditional-compile-remove(one-to-n-calling) */
+import { _isTeamsIncomingCall } from './TypeGuards';
 /* @conditional-compile-remove(teams-identity-support) */ /* @conditional-compile-remove(meeting-id) */
 import { _isACSCall } from './TypeGuards';
 /* @conditional-compile-remove(meeting-id) */ /* @conditional-compile-remove(acs-close-captions) */
@@ -201,7 +202,7 @@ export function convertSdkIncomingCallToDeclarativeIncomingCall(
   call: IncomingCallCommon
 ): DeclarativeIncomingCall | /* @conditional-compile-remove(one-to-n-calling) */ DeclarativeTeamsIncomingCall {
   /* @conditional-compile-remove(one-to-n-calling) */
-  if (call.kind === 'TeamsIncomingCall') {
+  if (_isTeamsIncomingCall(call)) {
     return {
       id: call.id,
       kind: call.kind,

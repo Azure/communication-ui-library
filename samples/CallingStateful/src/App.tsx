@@ -47,7 +47,6 @@ function App(): JSX.Element {
           call.hold();
         }
         setCall(event.added[0] as Call | TeamsCall);
-        console.log(event.added[0].id);
       } else if (event.removed.length > 0) {
         if (event.removed[0] === call) {
           setCall(undefined);

@@ -25,11 +25,11 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
       <>
         {call && (
           <CallProvider call={call.kind === 'Call' ? (call as Call) : (call as TeamsCall)}>
-            <CallingComponents></CallingComponents>
+            <CallingComponents />
           </CallProvider>
         )}
       </>
-      <IncomingCallStack {...incomingCallStackProps}></IncomingCallStack>
+      <IncomingCallStack {...incomingCallStackProps} />
     </Stack>
   );
 };
