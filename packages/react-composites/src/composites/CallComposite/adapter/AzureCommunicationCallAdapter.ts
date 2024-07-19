@@ -48,6 +48,7 @@ import { StartCaptionsOptions, TeamsCaptionsInfo } from '@azure/communication-ca
 import type {
   BackgroundBlurConfig,
   BackgroundReplacementConfig,
+  BreakoutRoom,
   BreakoutRoomSettings,
   BreakoutRoomsEventData,
   BreakoutRoomsUpdatedListener
@@ -1086,13 +1087,10 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
       const mainMeeting = this.getState().mainMeeting;
       return mainMeeting?.id && mainMeeting.id === callAgentCall.id;
     });
-    console.log('DEBUG returnToMainMeeting mainMeetingCall: ', mainMeetingCall);
     if (mainMeetingCall) {
       const breakoutRoomCall = this.call;
-      console.log('DEBUG breakoutRoomCall.id before: ', breakoutRoomCall?.id);
       this.processNewCall(mainMeetingCall);
       await this.resumeCall();
-      console.log('DEBUG breakoutRoomCall.id after: ', breakoutRoomCall?.id);
       if (breakoutRoomCall?.state === 'Connected') {
         breakoutRoomCall.hangUp();
       }
@@ -1365,12 +1363,33 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
   }
 
   private breakoutRoomsUpdated(eventData: BreakoutRoomsEventData): void {
-    if (eventData.type === 'join') {
+    if (eventData.type === 'assignedBreakoutRoom') {
+      this.assignedBreakoutRoomUpdated(eventData.data as BreakoutRoom);
+    } else if (eventData.type === 'join') {
       this.breakoutRoomJoined(eventData.data as Call | TeamsCall);
     } else if (eventData.type === 'breakoutRoomSettings') {
       this.context.setBreakoutRoomSettings(eventData.data as BreakoutRoomSettings);
     }
     this.emitter.emit('breakoutRoomsUpdated', eventData);
+  }
+
+  private assignedBreakoutRoomUpdated(breakoutRoom: BreakoutRoom): void {
+    const mainMeeting = Object.values(this.callClient.getState().calls).find(
+      (call) => call.breakoutRooms?.assignedBreakoutRoom?.call?.id === this.call?.id
+    );
+    if (mainMeeting) {
+      if (breakoutRoom.state === 'open') {
+        setTimeout(
+          () =>
+            this.call?.hangUp().then(() => {
+              breakoutRoom.join();
+            }),
+          5000
+        );
+      } else {
+        setTimeout(() => this.returnToMainMeeting(), 5000);
+      }
+    }
   }
 
   private breakoutRoomJoined(call: Call | TeamsCall): void {

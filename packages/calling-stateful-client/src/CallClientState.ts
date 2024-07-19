@@ -944,6 +944,7 @@ export type CallErrorTarget =
   | 'Call.setConstraints'
   | 'assignedBreakoutRoomOpened'
   | 'assignedBreakoutRoomOpenedPromptJoin'
+  | 'assignedBreakoutRoomChanged'
   | 'assignedBreakoutRoomClosingSoon'
   | 'assignedBreakoutRoomClosed';
 
@@ -967,6 +968,7 @@ export interface CallNotification {
 export type NotificationTarget =
   | 'assignedBreakoutRoomOpened'
   | 'assignedBreakoutRoomOpenedPromptJoin'
+  | 'assignedBreakoutRoomChanged'
   | 'assignedBreakoutRoomClosingSoon'
   | 'assignedBreakoutRoomClosed';
 

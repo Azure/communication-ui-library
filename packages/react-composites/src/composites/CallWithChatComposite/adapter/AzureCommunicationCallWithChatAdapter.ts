@@ -184,7 +184,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
         newCallAdapterState.call?.id &&
         newCallAdapterState.call.id === mainMeeting?.id
       ) {
-        this.switchChatThread(threadId);
+        // this.switchChatThread(threadId);
       }
       this.context.updateClientStateWithCallState(newCallAdapterState);
     };
@@ -194,7 +194,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
       if (eventData.type === 'join') {
         const threadId = this.callAdapter.getState().mainMeeting?.breakoutRooms?.assignedBreakoutRoom?.threadId;
         if (threadId && this.chatAdapter) {
-          this.switchChatThread(threadId);
+          // this.switchChatThread(threadId);
         }
       }
     });
@@ -597,7 +597,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   public async returnToMainMeeting(): Promise<void> {
     const threadId = this.callAdapter.getState().mainMeeting?.info?.threadId;
     if (threadId) {
-      await this.switchChatThread(threadId);
+      // await this.switchChatThread(threadId);
     }
     return this.callAdapter.returnToMainMeeting();
   }

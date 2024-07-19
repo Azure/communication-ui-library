@@ -46,16 +46,26 @@ export class BreakoutRoomsSubscriber {
   };
 
   private onAssignedBreakoutRoomUpdated = (breakoutRoom: BreakoutRoom): void => {
-    const currentAssignedBreakoutRoom =
-      this._context.getState().calls[this._callIdRef.callId]?.breakoutRooms?.assignedBreakoutRoom;
-    if (
+    const callState = this._context.getState().calls[this._callIdRef.callId];
+    const currentAssignedBreakoutRoom = callState?.breakoutRooms?.assignedBreakoutRoom;
+    const mainMeeting = Object.values(this._context.getState().calls).find(
+      (call) => call.breakoutRooms?.assignedBreakoutRoom
+    );
+    if (callState === undefined && mainMeeting) {
+      if (breakoutRoom.state === 'open') {
+        this._context.setLatestNotification('assignedBreakoutRoomChanged', {
+          target: 'assignedBreakoutRoomChanged',
+          timestamp: new Date(Date.now())
+        });
+      }
+    } else if (
       breakoutRoom.state === 'open' &&
       (currentAssignedBreakoutRoom?.state === 'closed' || currentAssignedBreakoutRoom === undefined)
     ) {
-      let target: NotificationTarget = 'assignedBreakoutRoomOpened';
-      if (breakoutRoom.autoMoveParticipantToBreakoutRoom === false) {
-        target = 'assignedBreakoutRoomOpenedPromptJoin';
-      }
+      const target: NotificationTarget =
+        breakoutRoom.autoMoveParticipantToBreakoutRoom === false
+          ? 'assignedBreakoutRoomOpenedPromptJoin'
+          : 'assignedBreakoutRoomOpened';
       this._context.setLatestNotification(target, {
         target,
         timestamp: new Date(Date.now())
@@ -63,6 +73,7 @@ export class BreakoutRoomsSubscriber {
     } else if (breakoutRoom.state === 'closed' && currentAssignedBreakoutRoom?.state === 'closed') {
       this._context.deleteLatestNotification('assignedBreakoutRoomOpened');
       this._context.deleteLatestNotification('assignedBreakoutRoomOpenedPromptJoin');
+      this._context.deleteLatestNotification('assignedBreakoutRoomChanged');
     }
     this._context.setAssignBreakoutRoom(this._callIdRef.callId, breakoutRoom);
   };
@@ -71,6 +82,7 @@ export class BreakoutRoomsSubscriber {
     console.log('BreakoutRoomsSubscriber: onBreakoutRoomJoined', call);
     this._context.deleteLatestNotification('assignedBreakoutRoomOpened');
     this._context.deleteLatestNotification('assignedBreakoutRoomOpenedPromptJoin');
+    this._context.deleteLatestNotification('assignedBreakoutRoomChanged');
   };
 
   private onBreakoutRoomSettingsUpdated = (breakoutRoomSettings: BreakoutRoomSettings): void => {

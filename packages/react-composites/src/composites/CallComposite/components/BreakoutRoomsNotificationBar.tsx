@@ -20,6 +20,7 @@ export interface BreakoutRoomsNotificationBarProps extends IMessageBarProps {
 export type NotificationTarget =
   | 'assignedBreakoutRoomOpened'
   | 'assignedBreakoutRoomOpenedPromptJoin'
+  | 'assignedBreakoutRoomChanged'
   | 'assignedBreakoutRoomClosingSoon'
   | 'assignedBreakoutRoomClosed';
 
