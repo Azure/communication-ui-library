@@ -16,7 +16,13 @@ import type {
   KnownAnnounceStrings
 } from 'roosterjs-content-model-types';
 import { createModelFromHtml, Editor, exportContent } from 'roosterjs-content-model-core';
-import { createParagraph, createSelectionMarker, setSelection } from 'roosterjs-content-model-dom';
+import {
+  createBr,
+  createEmptyModel,
+  createParagraph,
+  createSelectionMarker,
+  setSelection
+} from 'roosterjs-content-model-dom';
 import { KeyboardInputPlugin } from './Plugins/KeyboardInputPlugin';
 import {
   AutoFormatPlugin,
@@ -131,9 +137,8 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
           editor.current.formatContentModel((model: ShallowMutableContentModelDocument): boolean => {
             // Create a new empty paragraph with selection marker
             // this is needed for correct processing of images after the content is deleted
-            const block = createParagraph(true);
-            setSelectionAfterLastSegment(model, block);
-            model.blocks = [block];
+            const newModel = createEmptyModel();
+            model.blocks = newModel.blocks;
             return true;
           });
           //reset content model
@@ -380,14 +385,17 @@ const createEditorInitialModel = (
     if (initialModel && initialModel.blocks.length > 0) {
       // lastBlock should have blockType = paragraph, otherwise add a new paragraph
       // to set focus to the end of the content
-      let lastBlock = initialModel.blocks[initialModel.blocks.length - 1];
+      const lastBlock = initialModel.blocks[initialModel.blocks.length - 1];
       if (lastBlock?.blockType === 'Paragraph') {
         // now lastBlock is paragraph
+        setSelectionAfterLastSegment(initialModel, lastBlock);
       } else {
-        lastBlock = createParagraph(true);
-        initialModel.blocks.push(lastBlock);
+        const block = createParagraph(false);
+        initialModel.blocks.push(block);
+        setSelectionAfterLastSegment(initialModel, block);
+        // add content to the paragraph, otherwise height might be calculated incorrectly
+        block.segments.push(createBr());
       }
-      setSelectionAfterLastSegment(initialModel, lastBlock);
     }
     return initialModel;
   }
