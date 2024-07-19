@@ -138,7 +138,7 @@ export abstract class ProxyCallAgentCommon {
         teamsIncomingCallDeclaratify(incomingCall as TeamsIncomingCall, this._context)
       );
     } else {
-      this._incomingCalls.set(incomingCall.id, incomingCallDeclaratify(incomingCall, this._context));
+      this._incomingCalls.set(incomingCall.id, incomingCallDeclaratify(incomingCall as IncomingCall, this._context));
     }
     this._context.setIncomingCall(convertSdkIncomingCallToDeclarativeIncomingCall(incomingCall));
   };
