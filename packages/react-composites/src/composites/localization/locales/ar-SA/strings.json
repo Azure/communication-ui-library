@@ -338,11 +338,16 @@
     "endCallConfirmDialogTitle": "هل تريد إنهاء المكالمة؟",
     "endCallConfirmDialogContent": "ستنهي المكالمة لدى الجميع.",
     "invalidMeetingIdentifier": "معرف اجتماع أو رمز مرور غير صالح",
-    "pinParticipantMenuLabel": "Pin for me",
-    "pinParticipantLimitReachedMenuLabel": "Pin (limit reached)",
-    "unpinParticipantMenuLabel": "Unpin",
-    "pinParticipantMenuItemAriaLabel": "Pin",
-    "unpinParticipantMenuItemAriaLabel": "Unpin"
+    "pinParticipantMenuLabel": "تثبيت نيابة عني",
+    "pinParticipantLimitReachedMenuLabel": "تثبيت (تم بلوغ الحد الأقصى)",
+    "unpinParticipantMenuLabel": "إزالة التثبيت",
+    "pinParticipantMenuItemAriaLabel": "تثبيت",
+    "unpinParticipantMenuItemAriaLabel": "إزالة التثبيت",
+    "muteAllMenuLabel": "كتم صوت الجميع",
+    "muteAllDialogTitle": "هل تريد كتم صوت الجميع؟",
+    "muteAllDialogContent": "سيؤدي ذلك إلى كتم صوت الجميع في الاجتماع باستثننائك.",
+    "muteAllConfirmButtonLabel": "كتم صوت الجميع",
+    "muteAllCancelButtonLabel": "إلغاء"
   },
   "chat": {
     "chatListHeader": "في هذه الدردشة",
