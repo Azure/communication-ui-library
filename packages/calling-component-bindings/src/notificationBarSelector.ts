@@ -2,15 +2,10 @@
 // Licensed under the MIT License.
 
 import { BreakoutRoom } from '@azure/communication-calling';
-import {
-  CallingBaseSelectorProps,
-  getAssignedBreakoutRoom,
-  getLatestErrors,
-  getLatestNotifications
-} from './baseSelectors';
 import { CallNotification } from '@internal/calling-stateful-client';
+import { CallingBaseSelectorProps, getAssignedBreakoutRoom, getLatestNotifications } from './baseSelectors';
 /* @conditional-compile-remove(teams-meeting-conference) */
-import { CallClientState, CallErrors, CallNotifications } from '@internal/calling-stateful-client';
+import { CallClientState, CallNotifications } from '@internal/calling-stateful-client';
 import { ActiveNotification } from '@internal/react-components';
 import { createSelector } from 'reselect';
 
@@ -28,15 +23,14 @@ export type NotificationBarSelector = (
  * @public
  */
 export const notificationsBarSelector: NotificationBarSelector = createSelector(
-  [getLatestNotifications, getLatestErrors, getAssignedBreakoutRoom],
+  [getLatestNotifications, getAssignedBreakoutRoom],
   (
     latestNotifications: CallNotifications,
-    latestErrors: CallErrors,
     assignedBreakoutRoom: BreakoutRoom | undefined
   ): {
     activeNotifications: ActiveNotification[];
   } => {
-    const notifications: ActiveNotification[] = Object.values(latestErrors as CallNotifications).map(
+    const notifications: ActiveNotification[] = Object.values(latestNotifications).map(
       (notification: CallNotification) => ({
         type: notification.target,
         timestamp: notification.timestamp

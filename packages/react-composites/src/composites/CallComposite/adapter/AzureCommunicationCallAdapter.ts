@@ -273,6 +273,7 @@ class CallContext {
         endedCall: latestEndedCall,
         devices: clientState.deviceManager,
         latestErrors: clientState.latestErrors,
+        latestNotifications: clientState.latestNotifications,
         cameraStatus:
           call?.localVideoStreams.find((s) => s.mediaStreamType === 'Video') ||
           clientState.deviceManager.unparentedViews.find((s) => s.mediaStreamType === 'Video')

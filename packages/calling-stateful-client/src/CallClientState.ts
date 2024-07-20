@@ -941,12 +941,7 @@ export type CallErrorTarget =
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.admitAll'
   | /* @conditional-compile-remove(soft-mute) */ 'Call.mutedByOthers'
   | 'Call.muteAllRemoteParticipants'
-  | 'Call.setConstraints'
-  | 'assignedBreakoutRoomOpened'
-  | 'assignedBreakoutRoomOpenedPromptJoin'
-  | 'assignedBreakoutRoomChanged'
-  | 'assignedBreakoutRoomClosingSoon'
-  | 'assignedBreakoutRoomClosed';
+  | 'Call.setConstraints';
 
 /**
  * @public

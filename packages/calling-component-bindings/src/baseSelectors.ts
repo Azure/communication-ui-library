@@ -175,10 +175,7 @@ export const getLatestErrors = (state: CallClientState): CallErrors => state.lat
 /**
  * @private
  */
-export const getLatestNotifications = (state: CallClientState): CallNotifications => {
-  console.log('state: ', state);
-  return state.latestNotifications;
-};
+export const getLatestNotifications = (state: CallClientState): CallNotifications => state.latestNotifications;
 
 /**
  * @private
