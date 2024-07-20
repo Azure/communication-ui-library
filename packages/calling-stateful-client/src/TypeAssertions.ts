@@ -43,6 +43,7 @@ type InferredCallErrorTargets =
   | /* @conditional-compile-remove(soft-mute) */ 'Call.mutedByOthers'
   | 'assignedBreakoutRoomOpened'
   | 'assignedBreakoutRoomOpenedPromptJoin'
+  | 'assignedBreakoutRoomChanged'
   | 'assignedBreakoutRoomClosingSoon'
   | 'assignedBreakoutRoomClosed';
 

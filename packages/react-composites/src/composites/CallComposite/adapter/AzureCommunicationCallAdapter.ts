@@ -491,13 +491,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
               this.processNewCall(transferCall);
               return;
             }
-            const mainMeeting = this.getState().mainMeeting;
-            const breakoutRoom = mainMeeting?.breakoutRooms?.assignedBreakoutRoom;
-            // Return to main meeting because breakout room call is ended because it is closed
-            if (removedCallState.id === this.call.id && breakoutRoom?.state === 'closed') {
-              this.returnToMainMeeting();
-              return;
-            }
           }
         }
       };
@@ -1375,19 +1368,28 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
 
   private assignedBreakoutRoomUpdated(breakoutRoom: BreakoutRoom): void {
     const mainMeeting = Object.values(this.callClient.getState().calls).find(
-      (call) => call.breakoutRooms?.assignedBreakoutRoom?.call?.id === this.call?.id
+      (call) => call.id === this.context.getState().mainMeeting?.id
     );
-    if (mainMeeting) {
-      if (breakoutRoom.state === 'open') {
-        setTimeout(
-          () =>
-            this.call?.hangUp().then(() => {
-              breakoutRoom.join();
-            }),
-          5000
-        );
+    if (breakoutRoom.state === 'open') {
+      if (mainMeeting?.breakoutRooms?.assignedBreakoutRoom?.call) {
+        if (mainMeeting.breakoutRooms.assignedBreakoutRoom.call.id !== this.call?.id) {
+          // Switch breakout rooms
+          setTimeout(
+            () =>
+              this.call?.hangUp().then(() => {
+                breakoutRoom.join();
+              }),
+            5000
+          );
+        }
+      }
+    } else {
+      if (mainMeeting?.breakoutRooms?.assignedBreakoutRoom?.call) {
+        if (mainMeeting.breakoutRooms.assignedBreakoutRoom.call.id !== this.call?.id) {
+          setTimeout(() => this.returnToMainMeeting(), 5000);
+        }
       } else {
-        setTimeout(() => this.returnToMainMeeting(), 5000);
+        this.returnToMainMeeting();
       }
     }
   }

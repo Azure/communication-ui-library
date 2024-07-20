@@ -249,6 +249,7 @@ export interface NotificationStackStrings {
 
   assignedBreakoutRoomOpened?: NotificationStrings;
   assignedBreakoutRoomOpenedPromptJoin?: NotificationStrings;
+  assignedBreakoutRoomChanged?: NotificationStrings;
   assignedBreakoutRoomClosingSoon?: NotificationStrings;
   assignedBreakoutRoomClosed?: NotificationStrings;
 }
