@@ -97,7 +97,9 @@ const meta: Meta = {
     showMessageDate: controlsToAdd.showMessageDate,
     showMessageStatus: controlsToAdd.showMessageStatus,
     enableJumpToNewMessageButton: controlsToAdd.enableJumpToNewMessageButton,
+    richTextEditor: controlsToAdd.richTextEditor,
     // Hiding auto-generated controls
+    richTextEditorOptions: hiddenControl,
     styles: hiddenControl,
     strings: hiddenControl,
     userId: hiddenControl,
@@ -113,7 +115,6 @@ const meta: Meta = {
     onUpdateMessage: hiddenControl,
     onDeleteMessage: hiddenControl,
     disableEditing: hiddenControl,
-    richTextEditor: hiddenControl,
     // hide unnecessary props since we "send message with attachments" option
     onRenderAttachmentDownloads: hiddenControl,
     attachmentOptions: hiddenControl,
