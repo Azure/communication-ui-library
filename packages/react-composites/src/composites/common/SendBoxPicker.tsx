@@ -4,7 +4,7 @@
 import React, { useMemo } from 'react';
 import { SendBox, SendBoxStylesProps } from '@internal/react-components';
 /* @conditional-compile-remove(rich-text-editor-composite-support) */
-import { RichTextEditorOptions } from '@internal/react-components';
+import { RichTextSendBoxOptions } from '@internal/react-components';
 import { usePropsFor } from '../ChatComposite/hooks/usePropsFor';
 /* @conditional-compile-remove(rich-text-editor-composite-support) */
 import { Suspense } from 'react';
@@ -43,17 +43,11 @@ export type SendBoxPickerProps = {
     /* @conditional-compile-remove(file-sharing-acs) */ options?: MessageOptions
   ) => Promise<void>;
   /* @conditional-compile-remove(rich-text-editor-composite-support) */
-  richTextEditorOptions?: RichTextEditorOptions;
+  richTextEditorOptions?: RichTextSendBoxOptions;
   /* @conditional-compile-remove(file-sharing-acs) */
   attachments?: AttachmentMetadataInProgress[];
   /* @conditional-compile-remove(file-sharing-acs) */
   onCancelAttachmentUpload?: (attachmentId: string) => void;
-  /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  onUploadInlineImage?: (imageUrl: string, imageFileName: string) => void;
-  /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  imageUploadsInProgress?: AttachmentMetadataInProgress[];
-  /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  onCancelInlineImageUpload?: (imageId: string) => void;
 };
 
 /**
@@ -82,9 +76,13 @@ export const SendBoxPicker = (props: SendBoxPickerProps): JSX.Element => {
         <Suspense fallback={sendBox}>
           <RichTextSendBoxWrapper
             {...props}
+            /* @conditional-compile-remove(rich-text-editor-image-upload) */
             onPaste={onPaste}
+            /* @conditional-compile-remove(rich-text-editor-image-upload) */
             onUploadInlineImage={onUploadInlineImage}
+            /* @conditional-compile-remove(rich-text-editor-image-upload) */
             imageUploadsInProgress={imageUploadsInProgress}
+            /* @conditional-compile-remove(rich-text-editor-image-upload) */
             onCancelInlineImageUpload={onCancelInlineImageUpload}
           />
         </Suspense>

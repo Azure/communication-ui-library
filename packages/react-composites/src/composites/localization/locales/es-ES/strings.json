@@ -342,7 +342,12 @@
     "pinParticipantLimitReachedMenuLabel": "Pin (límite alcanzado)",
     "unpinParticipantMenuLabel": "Desanclar",
     "pinParticipantMenuItemAriaLabel": "Anclar",
-    "unpinParticipantMenuItemAriaLabel": "Desanclar"
+    "unpinParticipantMenuItemAriaLabel": "Desanclar",
+    "muteAllMenuLabel": "Silenciar todo",
+    "muteAllDialogTitle": "¿Silenciar a todos?",
+    "muteAllDialogContent": "Esto silenciará a todos los participantes de la reunión, excepto usted.",
+    "muteAllConfirmButtonLabel": "Silenciar todo",
+    "muteAllCancelButtonLabel": "Cancelar"
   },
   "chat": {
     "chatListHeader": "En este chat",

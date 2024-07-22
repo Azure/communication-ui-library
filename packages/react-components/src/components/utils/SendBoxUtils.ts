@@ -55,6 +55,12 @@ export const addUploadedImagesToMessage = async (
       const uploadInlineImage = uploadInlineImages.find(
         (imageUpload) => !imageUpload.error && (imageUpload.url === img.src || imageUpload.id === img.id)
       );
+      // The message might content images that comes with the message before editing, those images are not in the uploadInlineImages array.
+      // This function should only modify the message content for images in the uploadInlineImages array.
+      if (!uploadInlineImage) {
+        resolve();
+        return;
+      }
       const imageElement = new Image();
       imageElement.src = img.src;
       imageElement.onload = () => {
@@ -130,18 +136,31 @@ export const isSendBoxButtonAriaDisabled = ({
 };
 
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
+interface CancelInlineImageUploadProps {
+  imageSrcArray: string[] | undefined;
+  imageUploadsInProgress: AttachmentMetadataInProgress[] | undefined;
+  messageId?: string;
+  editBoxOnCancelInlineImageUpload?: (id: string, messageId: string) => void;
+  sendBoxOnCancelInlineImageUpload?: (id: string) => void;
+}
+
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
 /**
  * @internal
  */
-export const cancelInlineImageUpload = (
-  imageSrcArray: string[] | undefined,
-  imageUploadsInProgress: AttachmentMetadataInProgress[] | undefined,
-  onCancelInlineImageUpload?: (id: string) => void
-): void => {
+export const cancelInlineImageUpload = (props: CancelInlineImageUploadProps): void => {
+  const {
+    imageSrcArray,
+    imageUploadsInProgress,
+    messageId,
+    editBoxOnCancelInlineImageUpload,
+    sendBoxOnCancelInlineImageUpload
+  } = props;
   if (imageSrcArray && imageUploadsInProgress && imageUploadsInProgress?.length > 0) {
     imageUploadsInProgress?.map((uploadImage) => {
       if (uploadImage.url && !imageSrcArray?.includes(uploadImage.url)) {
-        onCancelInlineImageUpload?.(uploadImage.id);
+        sendBoxOnCancelInlineImageUpload && sendBoxOnCancelInlineImageUpload(uploadImage.id);
+        editBoxOnCancelInlineImageUpload && editBoxOnCancelInlineImageUpload(uploadImage.id, messageId || '');
       }
     });
   }
@@ -198,6 +217,8 @@ export const removeBrokenImageContent = (content: string): string => {
       img.removeAttribute('class');
       img.removeAttribute('src');
       img.removeAttribute('data-ui-id');
+      img.style.width = '';
+      img.style.height = '';
     }
   });
   return document.body.innerHTML;

@@ -1,8 +1,8 @@
 {
   "type": "patch",
-  "area": "improvement",
+  "area": "fix",
   "workstream": "RTE",
-  "comment": "Add `aria-checked` for rich text editor toolbar menu items",
+  "comment": "Add announcements for applying bulleted/numbered lists in rich text editor and for adding new list items to them",
   "packageName": "@azure/communication-react",
   "email": "98852890+vhuseinova-msft@users.noreply.github.com",
   "dependentChangeType": "patch"

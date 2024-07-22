@@ -1,8 +1,8 @@
 {
-  "type": "minor",
+  "type": "prerelease",
   "area": "feature",
-  "workstream": "End Call Options",
-  "comment": "Add disable option for end call modal",
+  "workstream": "Incoming Calls",
+  "comment": "Update Declarative teams callAgent to use its own typing",
   "packageName": "@azure/communication-react",
   "email": "dmceachern@microsoft.com",
   "dependentChangeType": "patch"
