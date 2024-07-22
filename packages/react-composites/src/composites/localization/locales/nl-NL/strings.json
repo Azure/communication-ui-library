@@ -342,7 +342,12 @@
     "pinParticipantLimitReachedMenuLabel": "Pin (limiet bereikt)",
     "unpinParticipantMenuLabel": "Losmaken",
     "pinParticipantMenuItemAriaLabel": "Vastmaken",
-    "unpinParticipantMenuItemAriaLabel": "Losmaken"
+    "unpinParticipantMenuItemAriaLabel": "Losmaken",
+    "muteAllMenuLabel": "Allen dempen",
+    "muteAllDialogTitle": "Iedereen dempen?",
+    "muteAllDialogContent": "Hiermee wordt iedereen in de vergadering gedempt, behalve u.",
+    "muteAllConfirmButtonLabel": "Allen dempen",
+    "muteAllCancelButtonLabel": "Annuleren"
   },
   "chat": {
     "chatListHeader": "In deze chat",

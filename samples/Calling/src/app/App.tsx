@@ -7,7 +7,7 @@ import { fromFlatCommunicationIdentifier, StartCallIdentifier } from '@azure/com
 /* @conditional-compile-remove(teams-identity-support) */
 import { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 import { setLogLevel } from '@azure/logger';
-import { initializeIcons, Spinner } from '@fluentui/react';
+import { initializeIcons, Spinner, Stack } from '@fluentui/react';
 import { CallAdapterLocator } from '@azure/communication-react';
 import React, { useEffect, useState } from 'react';
 import {
@@ -55,7 +55,7 @@ const App = (): JSX.Element => {
 
   // Call details to join a call - these are collected from the user on the home screen
   const [callLocator, setCallLocator] = useState<CallAdapterLocator>();
-  const [targetCallees, setTargetCallees] = useState<StartCallIdentifier[]>([]);
+  const [targetCallees, setTargetCallees] = useState<StartCallIdentifier[] | undefined>(undefined);
   const [displayName, setDisplayName] = useState<string>('');
 
   /* @conditional-compile-remove(teams-identity-support) */
@@ -126,7 +126,7 @@ const App = (): JSX.Element => {
                 return fromFlatCommunicationIdentifier(user);
               });
               callLocator = undefined;
-              setTargetCallees(outboundUsers ?? []);
+              setTargetCallees(outboundUsers);
             }
 
             if (callDetails.option === 'TeamsAdhoc') {
@@ -134,7 +134,7 @@ const App = (): JSX.Element => {
                 return fromFlatCommunicationIdentifier(user) as StartCallIdentifier;
               });
               callLocator = undefined;
-              setTargetCallees(outboundTeamsUsers ?? []);
+              setTargetCallees(outboundTeamsUsers);
             }
 
             // There is an API call involved with creating a room so lets only create one if we know we have to
@@ -207,7 +207,11 @@ const App = (): JSX.Element => {
         (!targetCallees && !callLocator)
       ) {
         document.title = `credentials - ${WEB_APP_TITLE}`;
-        return <Spinner label={'Getting user credentials from server'} ariaLive="assertive" labelPosition="top" />;
+        return (
+          <Stack horizontalAlign="center" verticalAlign="center" styles={{ root: { height: '100%' } }}>
+            <Spinner label={'Getting user credentials from server'} ariaLive="assertive" labelPosition="top" />
+          </Stack>
+        );
       }
       return (
         <CallScreen

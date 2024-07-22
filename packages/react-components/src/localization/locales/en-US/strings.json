@@ -58,7 +58,11 @@
     "richTextDeleteRowMenu": "Delete row",
     "richTextDeleteTableMenu": "Delete table",
     "richTextToolbarMoreButtonAriaLabel": "More options",
-    "attachmentMoreMenu": "More Options"
+    "attachmentMoreMenu": "More Options",
+    "richTextNewBulletedListItemAnnouncement": "Bullet, new line",
+    "richTextNewNumberedListItemAnnouncement": "{0}, new line",
+    "richTextBulletedListAppliedAnnouncement": "Bulleted list applied",
+    "richTextNumberedListAppliedAnnouncement": "Numbered list applied"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Suggestions"
@@ -221,7 +225,9 @@
     "richTextDeleteRowMenu": "Delete row",
     "richTextDeleteTableMenu": "Delete table",
     "richTextToolbarMoreButtonAriaLabel": "More options",
-    "attachmentUploadsPendingError": "Uploading... Please wait."
+    "attachmentUploadsPendingError": "Uploading... Please wait.",
+    "richTextNewBulletedListItemAnnouncement": "Bullet, new line",
+    "richTextNewNumberedListItemAnnouncement": "{0}, new line"
   },
   "errorBar": {
     "unableToReachChatService": "You are offline",
@@ -604,7 +610,7 @@
     "leftNavButtonAriaLabel": "previous page",
     "rightNavButtonAriaLabel": "next page"
   },
-  "MeetingConferencePhoneInfo": {
+  "meetingConferencePhoneInfo": {
     "meetingConferencePhoneInfoModalTitle": "Join call from your phone",
     "meetingConferencePhoneInfoModalDialIn": "Dial number",
     "meetingConferencePhoneInfoModalMeetingId": "Enter meeting ID",
