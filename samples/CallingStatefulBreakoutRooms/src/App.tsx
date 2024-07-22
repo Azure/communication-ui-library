@@ -66,7 +66,7 @@ function App(): JSX.Element {
     }
   }, [callAgent]);
 
-  // Callback to return to the main meeting from a breakout room
+  // Function to return to the main meeting from a breakout room
   const returnToMainMeeting = useCallback(async () => {
     if (mainMeetingCall) {
       setCall(mainMeetingCall);
@@ -76,15 +76,14 @@ function App(): JSX.Element {
     }
   }, [mainMeetingCall, setCall]);
 
-  // Callback to hang up the main meeting from a breakout room
+  // Function to hang up the main meeting from a breakout room
   const hangUpMainMeeting = useCallback(async () => {
     if (mainMeetingCall) {
       await mainMeetingCall.hangUp();
-      setMainMeetingCall(undefined);
     }
-  }, [mainMeetingCall, setMainMeetingCall]);
+  }, [mainMeetingCall]);
 
-  // Breakout rooms event handler
+  // Breakout rooms update event handler
   const onBreakoutRoomsUpdated = useCallback(
     (eventData: BreakoutRoomsEventData) => {
       if (eventData.type === 'join') {
@@ -94,15 +93,19 @@ function App(): JSX.Element {
         const breakoutRoom = eventData.data as BreakoutRoom;
         const assignedBreakoutRoom = mainMeetingCall?.feature(Features.BreakoutRooms).assignedBreakoutRoom;
         if (breakoutRoom.state === 'open') {
+          // This case covers the scenario when the user is re-assigned to another breakout room that is open.
           if (assignedBreakoutRoom && assignedBreakoutRoom.call && assignedBreakoutRoom.call.id !== call?.id) {
             setCall(assignedBreakoutRoom.call as Call);
           }
         } else {
           if (assignedBreakoutRoom?.call) {
+            // This case covers the scenario where the user is re-assigned breakout room that is closed.
             if (assignedBreakoutRoom.call.id !== call?.id) {
               returnToMainMeeting();
             }
           } else {
+            // This case covers the scenario when the user's assigned breakout room is closed or
+            // when the user is unassigned from a breakout room.
             returnToMainMeeting();
           }
         }
@@ -114,10 +117,7 @@ function App(): JSX.Element {
   // Subscribe to breakout rooms events
   useEffect(() => {
     if (call) {
-      const breakoutRooms = call.feature(Features.BreakoutRooms);
-      if (breakoutRooms) {
-        breakoutRooms.on('breakoutRoomsUpdated', onBreakoutRoomsUpdated);
-      }
+      call.feature(Features.BreakoutRooms)?.on('breakoutRoomsUpdated', onBreakoutRoomsUpdated);
     }
   }, [call, onBreakoutRoomsUpdated]);
 

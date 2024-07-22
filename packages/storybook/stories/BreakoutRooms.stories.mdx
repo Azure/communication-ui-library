@@ -1,0 +1,194 @@
+import { Meta, Source } from '@storybook/addon-docs';
+
+<Meta
+  id="breakout-rooms"
+  title="Concepts/Breakout Rooms"
+  parameters={{ previewTabs: { canvas: { disable: true, hidden: true } } }}
+/>
+
+# Breakout Rooms
+
+## Overview
+
+In Teams meetings, the meeting organizer is able to create smaller meetings called breakout rooms and assign participants to those rooms.
+ACS users are also able to participate in this feature such that they are able to join their assigned breakout rooms.
+
+## Integrating breakout rooms to your stateful application
+
+Breakout rooms is handled automatically in our CallComposite and CallWithChatComposite. But if you are not using composites,
+breakout rooms can be added to your stateful application. To demonstrate the changes needed to do so, we will build off this
+(quickstart)[https://github.com/Azure-Samples/communication-services-javascript-quickstarts/tree/main/ui-library-starting-with-calling-stateful]
+that shows a simple calling app that joins a Teams meeting link. The following steps will guide you through the changes that
+will be applied to two files: `App.tsx` and `CallingComponents.tsx`.
+
+1. The first step is to maintain a state of the main meeting which will be the Teams meeting the user will join. Then we set
+   main meeting in the after joining the Teams meeting
+
+```
+  // Main meeting call is used to return to the main meeting from a breakout room
+  const [mainMeetingCall, setMainMeetingCall] = useState<Call>();
+
+  useEffect(() => {
+    if (callAgent !== undefined) {
+      const call = callAgent.join({ meetingLink });
+      setCall(call);
+      setMainMeetingCall(call);
+    }
+  }, [callAgent]);
+```
+
+2. We need to handle the transition back to the main meeting (the initial Teams call) from the assigned breakout room
+   so we create the function below.
+
+```
+  // Function to return to the main meeting from a breakout room
+  const returnToMainMeeting = useCallback(async () => {
+    if (mainMeetingCall) {
+      setCall(mainMeetingCall);
+      if (mainMeetingCall.state === 'LocalHold') {
+        mainMeetingCall.resume();
+      }
+    }
+  }, [mainMeetingCall, setCall]);
+```
+
+3. We also need a function to hang up the main meeting so that the user can leave the main meeting while they are in
+   the breakout room.
+
+```
+  // Function to hang up the main meeting from a breakout room
+  const hangUpMainMeeting = useCallback(async () => {
+    if (mainMeetingCall) {
+      await mainMeetingCall.hangUp();
+    }
+  }, [mainMeetingCall]);
+```
+
+4. The next step is to create the breakout rooms update event listener. The two type of events we will keep track of is
+   'join' and 'assignedBreakoutRoom'. On a 'join' update, we will set the current call to any newly received breakout room
+   call. Furthermore, on a 'assignedBreakoutRoom' update, we will switch the call to a newly assigned breakout room and also
+   handle returning to the main meeting when the assigned breakout room is closed. We then subscribe to the
+   breakoutRoomsUpdated event using the breakout rooms update listener.
+
+```
+  // Breakout rooms update event handler
+  const onBreakoutRoomsUpdated = useCallback(
+    (eventData: BreakoutRoomsEventData) => {
+      if (eventData.type === 'join') {
+        const breakoutRoomCall = eventData.data as Call;
+        setCall(breakoutRoomCall);
+      } else if (eventData.type === 'assignedBreakoutRoom') {
+        const breakoutRoom = eventData.data as BreakoutRoom;
+        const assignedBreakoutRoom = mainMeetingCall?.feature(Features.BreakoutRooms).assignedBreakoutRoom;
+        if (breakoutRoom.state === 'open') {
+          // This case covers the scenario when the user is re-assigned to another breakout room that is open.
+          if (assignedBreakoutRoom && assignedBreakoutRoom.call && assignedBreakoutRoom.call.id !== call?.id) {
+            setCall(assignedBreakoutRoom.call as Call);
+          }
+        } else {
+          if (assignedBreakoutRoom?.call) {
+            // This case covers the scenario where the user is re-assigned breakout room that is closed.
+            if (assignedBreakoutRoom.call.id !== call?.id) {
+              returnToMainMeeting();
+            }
+          } else {
+            // This case covers the scenario when the user's assigned breakout room is closed or
+            // when the user is unassigned from a breakout room.
+            returnToMainMeeting();
+          }
+        }
+      }
+    },
+    [call, setCall, mainMeetingCall, returnToMainMeeting]
+  );
+
+  // Subscribe to breakout rooms events
+  useEffect(() => {
+    if (call) {
+      call.feature(Features.BreakoutRooms)?.on('breakoutRoomsUpdated', onBreakoutRoomsUpdated);
+    }
+  }, [call, onBreakoutRoomsUpdated]);
+```
+
+5. In the `CallingComponents.tsx` file, we will create two new properties
+
+```
+  export type CallingComponentsProps = {
+    returnToMainMeeting?: () => Promise<void>;
+    hangUpMainMeeting?: () => Promise<void>;
+  };
+
+  export const CallingComponents = (props: CallingComponentsProps): JSX.Element => {...
+```
+
+and then assign the new props to CallingComponents component in `App.tsx`
+
+```
+  <CallingComponents
+    hangUpMainMeeting={hangUpMainMeeting}
+    returnToMainMeeting={returnToMainMeeting}
+  />
+```
+
+6. In the `CallingComponents.tsx` file, we will modify the EndCall button be modified when we are in a breakout room
+   so that the user can return to main meeting (if permitted by the breakout room settings) or leave the meeting
+   altogether.
+
+```
+  const call = useCall();
+
+  // Breakout room menu items are shown only if the breakout room settings allow returning to the main meeting
+  const breakoutRoomMenuProps: IContextualMenuProps | undefined =
+    call?.feature(Features.BreakoutRooms).breakoutRoomSettings?.disableReturnToMainMeeting === false
+      ? {
+          items: [
+            {
+              key: 'leaveRoom',
+              text: 'Leave room',
+              title: 'Leave room',
+              onClick: () => {
+                props.returnToMainMeeting?.();
+              }
+            },
+            {
+              key: 'leaveMeeting',
+              text: 'Leave meeting',
+              title: 'Leave meeting',
+              onClick: () => {
+                props.hangUpMainMeeting?.().then(() => {
+                  onHangup();
+                });
+              }
+            }
+          ]
+        }
+      : undefined;
+
+  <EndCallButton {...endCallProps} onHangUp={onHangup} menuProps={breakoutRoomMenuProps} />
+```
+
+7. You may add notifications `CallingComponents.tsx` which will be helpful to notify the user when transitioning to the
+   breakout room and back to the main meeting. Use `useProps` for NotificationStack component to get the corresponding props
+   and assign the props to NotificationStack component like in the example below. The NotificationStack is wrapped by styled
+   Stack so that it is centered on top the VideoGallery.
+
+```
+  const notificationProps = usePropsFor(NotificationStack);
+
+  <Stack style={{ height: '100vh' }}>
+    <Stack style={{ zIndex: 1, position: 'absolute', top: '2rem', left: '50%', transform: 'translate(-50%, 0)' }}>
+      <NotificationStack {...notificationProps} />
+    </Stack>
+    <VideoGallery
+      {...videoGalleryProps}
+      localVideoViewOptions={localVideoViewOptions}
+      remoteVideoViewOptions={remoteVideoViewOptions}
+    />
+  </Stack>
+```
+
+8. A chat should be included so that the user is able to chat in the Teams meeting as well as any breakout room they
+   join. We suggest creating `ChatComponents.tsx` component so that we can add it to the app and update the chat thread
+   when joining a breakout room.
+
+To be continued...

@@ -14,7 +14,7 @@ import {
   VideoGallery,
   VideoStreamOptions
 } from '@azure/communication-react';
-import { IContextualMenuItem, IContextualMenuProps, Stack } from '@fluentui/react';
+import { IContextualMenuProps, Stack } from '@fluentui/react';
 import React, { useCallback, useState } from 'react';
 
 export type CallingComponentsProps = {
@@ -52,35 +52,30 @@ export const CallingComponents = (props: CallingComponentsProps): JSX.Element =>
     return <CallEnded />;
   }
 
-  // Breakout room menu items
-  const breakoutRoomMenuItems: IContextualMenuItem[] = [];
-  if (props.returnToMainMeeting) {
-    breakoutRoomMenuItems.push({
-      key: 'leaveRoom',
-      text: 'Leave room',
-      title: 'Leave room',
-      onClick: () => {
-        props.returnToMainMeeting?.();
-      }
-    });
-  }
-  if (props.hangUpMainMeeting) {
-    breakoutRoomMenuItems.push({
-      key: 'leaveMeeting',
-      text: 'Leave meeting',
-      title: 'Leave meeting',
-      onClick: () => {
-        props.hangUpMainMeeting?.().then(() => {
-          onHangup();
-        });
-      }
-    });
-  }
-
+  // Breakout room menu items are shown only if the breakout room settings allow returning to the main meeting
   const breakoutRoomMenuProps: IContextualMenuProps | undefined =
     call?.feature(Features.BreakoutRooms).breakoutRoomSettings?.disableReturnToMainMeeting === false
       ? {
-          items: breakoutRoomMenuItems
+          items: [
+            {
+              key: 'leaveRoom',
+              text: 'Leave room',
+              title: 'Leave room',
+              onClick: () => {
+                props.returnToMainMeeting?.();
+              }
+            },
+            {
+              key: 'leaveMeeting',
+              text: 'Leave meeting',
+              title: 'Leave meeting',
+              onClick: () => {
+                props.hangUpMainMeeting?.().then(() => {
+                  onHangup();
+                });
+              }
+            }
+          ]
         }
       : undefined;
 
