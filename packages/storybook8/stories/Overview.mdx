@@ -137,33 +137,23 @@ Understanding these requirements will help you choose the right client library:
 
 Details about feature availability in the [UI Library is available here](./?path=/story/usecases--page), but key trade-offs are summarized below.
 
-<Markdown>
-  {`
 | Client library / SDK  | Implementation Complexity | Customization Ability | Calling | Chat | [Teams Interop](https://docs.microsoft.com/azure/communication-services/concepts/teams-interop) |
 | --------------------- | ------------------------- | --------------------- | ------- | ---- | ----------------------------------------------------------------------------------------------- |
-| Composites            | Low                       | Low                   | ✔       | ✔    | ✔                                                                                               |
-| UI Components         | Medium                    | Medium                | ✔       | ✔    | ✔                                                                                               |
-| Core client libraries | High                      | High                  | ✔       | ✔    | ✔                                                                                               |
-`}
-</Markdown>
+| Composites            | Low                       | Low                   | ✔      | ✔   | ✔                                                                                              |
+| UI Components         | Medium                    | Medium                | ✔      | ✔   | ✔                                                                                              |
+| Core client libraries | High                      | High                  | ✔      | ✔   | ✔                                                                                              |
 
 ## Platform support
 
 For Native Mobile support ([iOS](https://docs.microsoft.com/azure/communication-services/quickstarts/ui-library/get-started-composites?tabs=kotlin&pivots=platform-ios) and [Android](https://docs.microsoft.com/azure/communication-services/quickstarts/ui-library/get-started-composites?tabs=kotlin&pivots=platform-android)), please refer to our [documentation](https://docs.microsoft.com/azure/communication-services/concepts/ui-library/ui-library-overview?pivots=platform-mobile).
 
-<Markdown>
-  {`
-| SDK                             | Windows                         | macOS                            | Ubuntu    | Linux     | Android      | iOS             |
-| ------------------------------- | -----------------------------   | -----------------------------    | --------  | --------  | ----------   | ------------    |
-| [UI SDK - Calling][calling-msv] | Chrome\\*, new Edge             | Chrome\\*, Safari\\*\\*          | Chrome\\* | Chrome\\* | Chrome\\*\\* | Safari\\*\\*\\* |
-| [UI SDK - Chat][chat-msv]       | Firefox\\*, Chrome\\*, new Edge | Firefox\\*, Chrome\\*, Safari\\* | Chrome\\* | Chrome\\* | Chrome\\*    | Safari\\*\\*\\* |
+| SDK                             | Windows                         | macOS                             | Ubuntu     | Linux      | Android      | iOS              |
+| ------------------------------- | ------------------------------- | --------------------------------- | ---------- | ---------- | ------------ | ---------------- |
+| [UI SDK - Calling][calling-msv] | Chrome\\\*, new Edge            | Chrome\\_, Safari\\_\\\*          | Chrome\\\* | Chrome\\\* | Chrome\\_\\_ | Safari\\_\\_\\\* |
+| [UI SDK - Chat][chat-msv]       | Firefox\\_, Chrome\\_, new Edge | Firefox\\_, Chrome\\_, Safari\\\* | Chrome\\\* | Chrome\\\* | Chrome\\\*   | Safari\\_\\_\\\* |
 
 [calling-msv]: https://docs.microsoft.com/en-us/azure/communication-services/concepts/voice-video-calling/calling-sdk-features#javascript-calling-sdk-support-by-os-and-browser
 [chat-msv]: https://docs.microsoft.com/en-us/azure/communication-services/concepts/chat/sdk-features#javascript-chat-sdk-support-by-os-and-browser
-
-`}
-
-</Markdown>
 
 \* The latest version is supported in addition to the
 previous two releases.
