@@ -7,6 +7,7 @@ import {
   ControlBar,
   EndCallButton,
   MicrophoneButton,
+  NotificationStack,
   ScreenShareButton,
   useCall,
   usePropsFor,
@@ -29,6 +30,7 @@ export const CallingComponents = (props: CallingComponentsProps): JSX.Element =>
   const microphoneProps = usePropsFor(MicrophoneButton);
   const screenShareProps = usePropsFor(ScreenShareButton);
   const endCallProps = usePropsFor(EndCallButton);
+  const notificationProps = usePropsFor(NotificationStack);
 
   const [callEnded, setCallEnded] = useState(false);
 
@@ -86,6 +88,9 @@ export const CallingComponents = (props: CallingComponentsProps): JSX.Element =>
     <Stack style={{ height: '100%' }}>
       {videoGalleryProps && (
         <Stack style={{ height: '100vh' }}>
+          <Stack style={{ zIndex: 1, position: 'absolute', top: '2rem', left: '50%', transform: 'translate(-50%, 0)' }}>
+            <NotificationStack {...notificationProps} />
+          </Stack>
           <VideoGallery
             {...videoGalleryProps}
             localVideoViewOptions={localVideoViewOptions}
