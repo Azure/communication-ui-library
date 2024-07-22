@@ -1,20 +1,29 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+import { Features } from '@azure/communication-calling';
 import {
   CameraButton,
   ControlBar,
   EndCallButton,
   MicrophoneButton,
   ScreenShareButton,
+  useCall,
   usePropsFor,
   VideoGallery,
   VideoStreamOptions
 } from '@azure/communication-react';
-import { Stack } from '@fluentui/react';
+import { IContextualMenuItem, IContextualMenuProps, Stack } from '@fluentui/react';
 import React, { useCallback, useState } from 'react';
 
-export const CallingComponents = (): JSX.Element => {
+export type CallingComponentsProps = {
+  returnToMainMeeting?: () => Promise<void>;
+  hangUpMainMeeting?: () => Promise<void>;
+};
+
+export const CallingComponents = (props: CallingComponentsProps): JSX.Element => {
+  const call = useCall();
+
   const videoGalleryProps = usePropsFor(VideoGallery);
   const cameraProps = usePropsFor(CameraButton);
   const microphoneProps = usePropsFor(MicrophoneButton);
@@ -41,6 +50,38 @@ export const CallingComponents = (): JSX.Element => {
     return <CallEnded />;
   }
 
+  // Breakout room menu items
+  const breakoutRoomMenuItems: IContextualMenuItem[] = [];
+  if (props.returnToMainMeeting) {
+    breakoutRoomMenuItems.push({
+      key: 'leaveRoom',
+      text: 'Leave room',
+      title: 'Leave room',
+      onClick: () => {
+        props.returnToMainMeeting?.();
+      }
+    });
+  }
+  if (props.hangUpMainMeeting) {
+    breakoutRoomMenuItems.push({
+      key: 'leaveMeeting',
+      text: 'Leave meeting',
+      title: 'Leave meeting',
+      onClick: () => {
+        props.hangUpMainMeeting?.().then(() => {
+          onHangup();
+        });
+      }
+    });
+  }
+
+  const breakoutRoomMenuProps: IContextualMenuProps | undefined =
+    call?.feature(Features.BreakoutRooms).breakoutRoomSettings?.disableReturnToMainMeeting === false
+      ? {
+          items: breakoutRoomMenuItems
+        }
+      : undefined;
+
   return (
     <Stack style={{ height: '100%' }}>
       {videoGalleryProps && (
@@ -56,7 +97,7 @@ export const CallingComponents = (): JSX.Element => {
         {cameraProps && <CameraButton {...cameraProps} />}
         {microphoneProps && <MicrophoneButton {...microphoneProps} />}
         {screenShareProps && <ScreenShareButton {...screenShareProps} />}
-        {endCallProps && <EndCallButton {...endCallProps} onHangUp={onHangup} />}
+        {endCallProps && <EndCallButton {...endCallProps} onHangUp={onHangup} menuProps={breakoutRoomMenuProps} />}
       </ControlBar>
     </Stack>
   );
