@@ -555,6 +555,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
 
   /* @conditional-compile-remove(rich-text-editor-composite-support) */
   const richTextEditorOptions = useMemo(() => {
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
     const onPasteCallback = isACSChat || textOnlyChat ? removeImageTags : undefined;
     return options?.richTextEditor
       ? {
