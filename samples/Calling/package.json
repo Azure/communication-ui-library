@@ -38,7 +38,7 @@
     "@azure/communication-common": "^2.3.1",
     "@azure/logger": "^1.0.4",
     "@babel/preset-react": "^7.12.7",
-    "@fluentui/react": "^8.119.1",
+    "@fluentui/react": "^8.119.2",
     "@fluentui/react-hooks": "^8.8.10",
     "@fluentui/react-icons": "^2.0.249",
     "@internal/acs-ui-common": "1.18.0-beta.1",
