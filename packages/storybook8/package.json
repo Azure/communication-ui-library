@@ -35,7 +35,7 @@
     "@fluentui/react-file-type-icons": "8.11.18",
     "@fluentui/react-hooks": "^8.8.10",
     "@fluentui/react-icons": "^2.0.249",
-    "@fluentui/react": "^8.119.1",
+    "@fluentui/react": "^8.119.2",
     "@fluentui/theme-samples": "8.7.123",
     "@griffel/react": "^1.5.24",
     "@internal/fake-backends": "1.18.0-beta.1",

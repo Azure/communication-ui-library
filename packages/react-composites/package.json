@@ -54,7 +54,7 @@
     "@fluentui/react-file-type-icons": "8.11.18",
     "@fluentui/react-hooks": "^8.8.10",
     "@fluentui/react-icons": "^2.0.249",
-    "@fluentui/react": "^8.119.1",
+    "@fluentui/react": "^8.119.2",
     "@internal/acs-ui-common": "1.18.0-beta.1",
     "@internal/calling-component-bindings": "1.18.0-beta.1",
     "@internal/calling-stateful-client": "1.18.0-beta.1",
