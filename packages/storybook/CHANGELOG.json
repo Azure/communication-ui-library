@@ -2,6 +2,27 @@
   "name": "@internal/storybook",
   "entries": [
     {
+      "date": "Mon, 15 Jul 2024 18:16:40 GMT",
+      "tag": "@internal/storybook_v1.18.0",
+      "version": "1.18.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@internal/storybook",
+            "comment": "Bump @azure/communication-react to v1.18.0",
+            "commit": "1961bc1b7b27ee99b97c8999898f951aa0dce051"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/storybook",
+            "comment": "Bump @internal/fake-backends to v1.18.0",
+            "commit": "1961bc1b7b27ee99b97c8999898f951aa0dce051"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 17 Jun 2024 16:27:16 GMT",
       "tag": "@internal/storybook_v1.18.0-beta.1",
       "version": "1.18.0-beta.1",

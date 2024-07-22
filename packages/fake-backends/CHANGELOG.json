@@ -2,6 +2,21 @@
   "name": "@internal/fake-backends",
   "entries": [
     {
+      "date": "Mon, 15 Jul 2024 18:16:40 GMT",
+      "tag": "@internal/fake-backends_v1.18.0",
+      "version": "1.18.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@internal/fake-backends",
+            "comment": "Bump @internal/acs-ui-common to v1.18.0",
+            "commit": "1961bc1b7b27ee99b97c8999898f951aa0dce051"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 17 Jun 2024 16:27:16 GMT",
       "tag": "@internal/fake-backends_v1.18.0-beta.1",
       "version": "1.18.0-beta.1",
