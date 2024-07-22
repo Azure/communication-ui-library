@@ -15,7 +15,6 @@ import { SidePaneRenderer } from '../components/SidePane/SidePaneProvider';
 import { CapabilitiesChangeNotificationBarProps } from '../components/CapabilitiesChangedNotificationBar';
 /* @conditional-compile-remove(notifications) */
 import { ActiveNotification } from '@internal/react-components';
-import { BreakoutRoomsNotificationBarProps } from '../components/BreakoutRoomsNotificationBar';
 
 /**
  * @beta
@@ -35,7 +34,6 @@ export interface HoldPageProps {
   capabilitiesChangedNotificationBarProps?: CapabilitiesChangeNotificationBarProps;
   /* @conditional-compile-remove(notifications) */
   latestNotifications: ActiveNotification[];
-  breakoutRoomsNotificationBarProps?: BreakoutRoomsNotificationBarProps;
 }
 
 /**
@@ -81,7 +79,6 @@ export const HoldPage = (props: HoldPageProps): JSX.Element => {
       onDismissError={props.onDismissError}
       /* @conditional-compile-remove(notifications) */
       onDismissNotification={props.onDismissNotification}
-      breakoutRoomsNotificationBarProps={props.breakoutRoomsNotificationBarProps}
     />
   );
 };

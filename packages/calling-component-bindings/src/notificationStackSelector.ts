@@ -6,7 +6,9 @@ import {
   getDeviceManager,
   getDiagnostics,
   getLatestErrors,
-  getEnvironmentInfo
+  getEnvironmentInfo,
+  getLatestNotifications,
+  getAssignedBreakoutRoom
 } from './baseSelectors';
 /* @conditional-compile-remove(notifications) */
 import { getTeamsMeetingConference } from './baseSelectors';
@@ -15,9 +17,9 @@ import { ActiveNotification, NotificationType } from '@internal/react-components
 /* @conditional-compile-remove(notifications) */
 import { createSelector } from 'reselect';
 /* @conditional-compile-remove(notifications) */
-import { CallClientState, CallErrors, CallErrorTarget } from '@internal/calling-stateful-client';
+import { CallClientState, CallErrors, CallErrorTarget, CallNotifications } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(notifications) */
-import { DiagnosticQuality } from '@azure/communication-calling';
+import { BreakoutRoom, DiagnosticQuality } from '@azure/communication-calling';
 /* @conditional-compile-remove(notifications) */
 /**
  * Selector type for {@link Notification} component.
@@ -44,17 +46,21 @@ export type NotificationStackSelector = (
 export const notificationStackSelector: NotificationStackSelector = createSelector(
   [
     getLatestErrors,
+    getLatestNotifications,
     getDiagnostics,
     getDeviceManager,
     getEnvironmentInfo,
-    /* @conditional-compile-remove(teams-meeting-conference) */ getTeamsMeetingConference
+    /* @conditional-compile-remove(teams-meeting-conference) */ getTeamsMeetingConference,
+    getAssignedBreakoutRoom
   ],
   (
     latestErrors: CallErrors,
+    latestNotifications: CallNotifications,
     diagnostics,
     deviceManager,
     environmentInfo,
-    /* @conditional-compile-remove(teams-meeting-conference) */ meetingConference
+    /* @conditional-compile-remove(teams-meeting-conference) */ meetingConference,
+    assignedBreakoutRoom: BreakoutRoom | undefined
   ): { activeErrorMessages: ActiveNotification[]; activeNotifications: ActiveNotification[] } => {
     // The order in which the errors are returned is significant: The `Notification` shows errors on the UI in that order.
     // There are several options for the ordering:
@@ -217,6 +223,28 @@ export const notificationStackSelector: NotificationStackSelector = createSelect
     const activeNotifications: ActiveNotification[] = [];
     if (diagnostics?.media.latest.speakingWhileMicrophoneIsMuted?.value) {
       activeNotifications.push({ type: 'speakingWhileMuted', timestamp: new Date(Date.now()), autoDismiss: true });
+    }
+    if (latestNotifications['assignedBreakoutRoomOpened']) {
+      activeNotifications.push({
+        type: 'assignedBreakoutRoomOpened',
+        timestamp: latestNotifications['assignedBreakoutRoomOpened'].timestamp
+      });
+    }
+    if (latestNotifications['assignedBreakoutRoomOpenedPromptJoin'] && assignedBreakoutRoom) {
+      activeNotifications.push({
+        type: 'assignedBreakoutRoomOpenedPromptJoin',
+        timestamp: latestNotifications['assignedBreakoutRoomOpenedPromptJoin'].timestamp,
+        onClickPrimaryButton: () => assignedBreakoutRoom.join(),
+        metadata: assignedBreakoutRoom.displayName
+          ? { breakoutRoomDisplayName: assignedBreakoutRoom.displayName }
+          : undefined
+      });
+    }
+    if (latestNotifications['assignedBreakoutRoomChanged']) {
+      activeNotifications.push({
+        type: 'assignedBreakoutRoomChanged',
+        timestamp: latestNotifications['assignedBreakoutRoomChanged'].timestamp
+      });
     }
     return { activeErrorMessages: activeErrorMessages, activeNotifications: activeNotifications };
   }

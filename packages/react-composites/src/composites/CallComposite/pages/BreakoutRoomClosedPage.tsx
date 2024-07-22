@@ -13,10 +13,6 @@ import { getDisplayName } from '../selectors/baseSelectors';
 import { pageContainer } from '../styles/TransferPage.styles';
 import { reduceCallControlsForMobile } from '../utils';
 import { LobbyPageProps } from './LobbyPage';
-// import {
-//   BreakoutRoomsNotification,
-//   BreakoutRoomsNotificationBarProps
-// } from '../components/BreakoutRoomsNotificationBar';
 
 /**
  * @private
@@ -42,17 +38,6 @@ export const BreakoutRoomClosedPage = (
     setAnnouncerString('Breakout room closed');
   }, [strings.transferPageNoticeString]);
 
-  // const [breakoutRoomsNotifications, setBreakoutRoomsNotifications] = useState<BreakoutRoomsNotification[]>([
-  //   {
-  //     target: 'assignedBreakoutRoomClosed',
-  //     messageKey: 'Breakout room closed. Returning to main meeting in 10 seconds.'
-  //   }
-  // ]);
-  // const breakoutRoomsNotificationBarProps: BreakoutRoomsNotificationBarProps = {
-  //   breakoutRoomsNotifications: breakoutRoomsNotifications,
-  //   onDismissNotification: () => setBreakoutRoomsNotifications([])
-  // };
-
   return (
     <Stack className={mergeStyles(pageContainer)}>
       <Announcer announcementString={announcerString} ariaLive="polite" />
@@ -73,8 +58,6 @@ export const BreakoutRoomClosedPage = (
         updateSidePaneRenderer={props.updateSidePaneRenderer}
         mobileChatTabHeader={props.mobileChatTabHeader}
         latestErrors={props.latestErrors}
-        //breakoutRoomsNotificationBarProps={props.breakoutRoomsNotificationBarProps}
-        // breakoutRoomsNotificationBarProps={breakoutRoomsNotificationBarProps}
         onDismissError={props.onDismissError}
       />
     </Stack>

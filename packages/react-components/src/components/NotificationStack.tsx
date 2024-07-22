@@ -298,6 +298,8 @@ export interface ActiveNotification {
    * by the user.
    */
   timestamp?: Date;
+
+  metadata?: Record<string, string>;
 }
 
 /**
@@ -351,6 +353,13 @@ export const NotificationStack = (props: NotificationStackProps): JSX.Element =>
     >
       {activeNotifications.map((notification, index) => {
         if (index < maxNotificationsToShow) {
+          const notificationString = strings ? strings[notification.type] : undefined;
+          if (notificationString?.message && notification.metadata?.breakoutRoomDisplayName) {
+            notificationString.message = notificationString.message.replace(
+              '{breakoutRoomDisplayName}',
+              notification.metadata.breakoutRoomDisplayName
+            );
+          }
           return (
             <div key={index} style={{ marginBottom: `${index === maxNotificationsToShow - 1 ? 0 : '0.25rem'}` }}>
               <Notification

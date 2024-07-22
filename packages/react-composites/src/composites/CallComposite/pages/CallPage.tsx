@@ -34,7 +34,6 @@ import { DtmfDialpadPage } from './DtmfDialpadPage';
 import { showDtmfDialer } from '../utils/MediaGalleryUtils';
 import { getTargetCallees } from '../selectors/baseSelectors';
 import { Prompt, PromptProps } from '../components/Prompt';
-import { BreakoutRoomsNotificationBarProps } from '../components/BreakoutRoomsNotificationBar';
 
 /**
  * @private
@@ -58,7 +57,6 @@ export interface CallPageProps {
   onDismissNotification: (notification: ActiveNotification) => void;
   galleryLayout: VideoGalleryLayout;
   capabilitiesChangedNotificationBarProps?: CapabilitiesChangeNotificationBarProps;
-  breakoutRoomsNotificationBarProps?: BreakoutRoomsNotificationBarProps;
   onUserSetGalleryLayoutChange?: (layout: VideoGalleryLayout) => void;
   userSetOverflowGalleryPosition?: 'Responsive' | 'horizontalTop';
   onSetUserSetOverflowGalleryPosition?: (position: 'Responsive' | 'horizontalTop') => void;
@@ -205,7 +203,6 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
         onUserSetGalleryLayoutChange={onUserSetGalleryLayoutChange}
         userSetGalleryLayout={galleryLayout}
         capabilitiesChangedNotificationBarProps={props.capabilitiesChangedNotificationBarProps}
-        breakoutRoomsNotificationBarProps={props.breakoutRoomsNotificationBarProps}
         onSetDialpadPage={() => setDtmfDialerPresent(!dtmfDialerPresent)}
         dtmfDialerPresent={dtmfDialerPresent}
         setIsPromptOpen={setIsPromptOpen}

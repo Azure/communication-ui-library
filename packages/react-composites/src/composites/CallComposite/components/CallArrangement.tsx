@@ -49,7 +49,7 @@ import { useSelector } from '../hooks/useSelector';
 import { callStatusSelector } from '../selectors/callStatusSelector';
 import { CallControlOptions } from '../types/CallControlOptions';
 import { PreparedMoreDrawer } from '../../common/Drawer/PreparedMoreDrawer';
-import { getAssignedBreakoutRoom, getIsTeamsMeeting, getRemoteParticipants } from '../selectors/baseSelectors';
+import { getIsTeamsMeeting, getRemoteParticipants } from '../selectors/baseSelectors';
 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { getPage } from '../selectors/baseSelectors';
 import { getCallStatus, getCaptionsStatus } from '../selectors/baseSelectors';
@@ -96,7 +96,6 @@ import { getCaptionsKind, getIsTeamsCall } from '../selectors/baseSelectors';
 import { useHandlers } from '../hooks/useHandlers';
 /* @conditional-compile-remove(soft-mute) */
 import { MoreDrawer } from '../../common/Drawer/MoreDrawer';
-import { BreakoutRoomsNotificationBarProps } from './BreakoutRoomsNotificationBar';
 
 /**
  * @private
@@ -129,7 +128,6 @@ export interface CallArrangementProps {
   userSetGalleryLayout?: VideoGalleryLayout;
 
   capabilitiesChangedNotificationBarProps?: CapabilitiesChangeNotificationBarProps;
-  breakoutRoomsNotificationBarProps?: BreakoutRoomsNotificationBarProps;
   onCloseChatPane?: () => void;
   onSetDialpadPage?: () => void;
   dtmfDialerPresent?: boolean;
@@ -162,8 +160,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     () => galleryParentContainerStyles(theme.palette.neutralLighterAlt),
     [theme.palette.neutralLighterAlt]
   );
-
-  console.log('breakoutRoomsNotificationBarProps: ', props.breakoutRoomsNotificationBarProps);
 
   const peopleButtonRef = useRef<IButton>(null);
   const cameraButtonRef = useRef<IButton>(null);
@@ -565,19 +561,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     );
   };
 
-  const assignedBreakoutRoom = useSelector(getAssignedBreakoutRoom);
-  const notificationStrings = useMemo<NotificationStackStrings>(() => {
-    const notificationStrings = locale.component.strings.notificationStack;
-    if (notificationStrings.assignedBreakoutRoomOpenedPromptJoin?.message && assignedBreakoutRoom?.displayName) {
-      notificationStrings.assignedBreakoutRoomOpenedPromptJoin.message =
-        notificationStrings.assignedBreakoutRoomOpenedPromptJoin.message.replace(
-          '{breakoutRoomDisplayName}',
-          assignedBreakoutRoom.displayName
-        );
-    }
-    return notificationStrings;
-  }, [locale.component.strings.notificationStack, assignedBreakoutRoom]);
-
   return (
     <div ref={containerRef} className={mergeStyles(containerDivStyles)} id={props.id}>
       <Stack verticalFill horizontalAlign="stretch" className={containerClassName} data-ui-id={props.dataUiId}>
@@ -692,15 +675,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                           <CapabilitiesChangedNotificationBar
                             {...props.capabilitiesChangedNotificationBarProps}
                             capabilitiesChangedNotifications={filteredCapabilitesChangedNotifications ?? []}
-                          />
-                        </Stack>
-                      )}
-                    {props.breakoutRoomsNotificationBarProps &&
-                      props.breakoutRoomsNotificationBarProps.breakoutRoomsNotifications.length > 0 && (
-                        <Stack styles={bannerNotificationStyles} horizontalAlign="center" verticalAlign="center">
-                          <NotificationStack
-                            activeNotifications={props.breakoutRoomsNotificationBarProps.breakoutRoomsNotifications}
-                            strings={notificationStrings}
                           />
                         </Stack>
                       )}

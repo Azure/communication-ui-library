@@ -14,7 +14,6 @@ export type { ErrorBarSelector } from './errorBarSelector';
 export type { NotificationStackSelector } from './notificationStackSelector';
 /* @conditional-compile-remove(notifications) */
 export { notificationStackSelector } from './notificationStackSelector';
-export { notificationsBarSelector } from './notificationBarSelector';
 /* @conditional-compile-remove(PSTN-calls) */
 export type { HoldButtonSelector } from './callControlSelectors';
 

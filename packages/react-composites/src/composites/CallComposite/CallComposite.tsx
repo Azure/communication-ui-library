@@ -63,9 +63,6 @@ import { SurveyPage } from './pages/SurveyPage';
 import { useAudio } from '../common/AudioProvider';
 /* @conditional-compile-remove(notifications) */
 import { complianceBannerSelector } from './selectors/complianceBannerSelector';
-import { notificationsBarSelector } from '@internal/calling-component-bindings';
-import { useAdaptedSelector } from './hooks/useAdaptedSelector';
-import { useTrackedBreakoutRoomsNotifications } from './utils/TrackBreakoutRoomsNotifications';
 import { BreakoutRoomClosedPage } from './pages/BreakoutRoomClosedPage';
 
 /**
@@ -436,11 +433,6 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
     setRemoteParticipants?.(mainMeeting?.remoteParticipants ?? {});
   }, [setRemoteParticipants, mainMeeting]);
 
-  const notifications = useAdaptedSelector(notificationsBarSelector).activeNotifications;
-  const breakoutRoomsNotificationBarProps = useTrackedBreakoutRoomsNotifications({
-    notifications
-  });
-
   // Track the last dismissed errors of any error kind to prevent errors from re-appearing on subsequent page navigation
   // This works by tracking the most recent timestamp of any active error type.
   // And then tracking when that error type was last dismissed.
@@ -730,7 +722,6 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           onSetUserSetOverflowGalleryPosition={setUserSetOverflowGalleryPosition}
           userSetOverflowGalleryPosition={userSetOverflowGalleryPosition}
           capabilitiesChangedNotificationBarProps={capabilitiesChangedNotificationBarProps}
-          breakoutRoomsNotificationBarProps={breakoutRoomsNotificationBarProps}
           pinnedParticipants={pinnedParticipants}
           setPinnedParticipants={setPinnedParticipants}
           compositeAudioContext={compositeAudioContext}
@@ -773,7 +764,6 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
               /* @conditional-compile-remove(notifications) */
               onDismissNotification={onDismissNotification}
               capabilitiesChangedNotificationBarProps={capabilitiesChangedNotificationBarProps}
-              breakoutRoomsNotificationBarProps={breakoutRoomsNotificationBarProps}
             />
           }
         </>
