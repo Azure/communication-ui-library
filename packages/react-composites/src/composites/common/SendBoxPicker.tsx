@@ -76,9 +76,13 @@ export const SendBoxPicker = (props: SendBoxPickerProps): JSX.Element => {
         <Suspense fallback={sendBox}>
           <RichTextSendBoxWrapper
             {...props}
+            /* @conditional-compile-remove(rich-text-editor-image-upload) */
             onPaste={onPaste}
+            /* @conditional-compile-remove(rich-text-editor-image-upload) */
             onUploadInlineImage={onUploadInlineImage}
+            /* @conditional-compile-remove(rich-text-editor-image-upload) */
             imageUploadsInProgress={imageUploadsInProgress}
+            /* @conditional-compile-remove(rich-text-editor-image-upload) */
             onCancelInlineImageUpload={onCancelInlineImageUpload}
           />
         </Suspense>
