@@ -13,7 +13,6 @@ import {
   ActiveErrorMessage,
   ErrorBar,
   ErrorBarProps,
-  NotificationStackStrings,
   useTheme
 } from '@internal/react-components';
 /* @conditional-compile-remove(notifications) */

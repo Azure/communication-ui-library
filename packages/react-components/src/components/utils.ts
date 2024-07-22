@@ -360,6 +360,7 @@ export const customNotificationIconName: Partial<{ [key in NotificationType]: st
   transcriptionStoppedStillRecording: 'NotificationBarRecording',
   assignedBreakoutRoomOpened: 'NotificationBarBreakoutRoomOpened',
   assignedBreakoutRoomOpenedPromptJoin: 'NotificationBarBreakoutRoomPromptJoin',
+  assignedBreakoutRoomChanged: 'NotificationBarBreakoutRoomChanged',
   assignedBreakoutRoomClosingSoon: 'NotificationBarBreakoutRoom',
   assignedBreakoutRoomClosed: 'NotificationBarBreakoutRoomClosed'
 };

@@ -126,6 +126,8 @@ export interface ActiveErrorMessage {
 // @public
 export interface ActiveNotification {
     autoDismiss?: boolean;
+    // (undocumented)
+    metadata?: Record<string, string>;
     onClickPrimaryButton?: () => void;
     onClickSecondaryButton?: () => void;
     onDismiss?: () => void;
@@ -2647,6 +2649,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     MessageSending: React_2.JSX.Element;
     NotificationBarBreakoutRoomOpened: React_2.JSX.Element;
     NotificationBarBreakoutRoomPromptJoin: React_2.JSX.Element;
+    NotificationBarBreakoutRoomChanged: React_2.JSX.Element;
     NotificationBarBreakoutRoomClosingSoon: React_2.JSX.Element;
     NotificationBarBreakoutRoomClosed: React_2.JSX.Element;
     OptionsCamera: React_2.JSX.Element;
@@ -2834,6 +2837,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     MessageResend: React_2.JSX.Element;
     NotificationBarBreakoutRoomOpened: React_2.JSX.Element;
     NotificationBarBreakoutRoomPromptJoin: React_2.JSX.Element;
+    NotificationBarBreakoutRoomChanged: React_2.JSX.Element;
     NotificationBarBreakoutRoomClosingSoon: React_2.JSX.Element;
     NotificationBarBreakoutRoomClosed: React_2.JSX.Element;
     ParticipantItemSpotlighted: React_2.JSX.Element;

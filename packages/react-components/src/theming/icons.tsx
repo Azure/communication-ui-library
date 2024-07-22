@@ -318,6 +318,7 @@ export const DEFAULT_COMPONENT_ICONS = {
   MessageSending: <Circle16Regular />,
   NotificationBarBreakoutRoomOpened: <></>,
   NotificationBarBreakoutRoomPromptJoin: <ConferenceRoom20Regular />,
+  NotificationBarBreakoutRoomChanged: <ConferenceRoom20Regular />,
   NotificationBarBreakoutRoomClosingSoon: <ConferenceRoom20Regular />,
   NotificationBarBreakoutRoomClosed: <></>,
   OptionsCamera: <Video20Regular />,
