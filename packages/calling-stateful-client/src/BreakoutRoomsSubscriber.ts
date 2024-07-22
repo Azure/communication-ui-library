@@ -51,13 +51,11 @@ export class BreakoutRoomsSubscriber {
     const mainMeeting = Object.values(this._context.getState().calls).find(
       (call) => call.breakoutRooms?.assignedBreakoutRoom
     );
-    if (callState === undefined && mainMeeting) {
-      if (breakoutRoom.state === 'open') {
-        this._context.setLatestNotification('assignedBreakoutRoomChanged', {
-          target: 'assignedBreakoutRoomChanged',
-          timestamp: new Date(Date.now())
-        });
-      }
+    if (mainMeeting?.breakoutRooms?.assignedBreakoutRoom?.call && breakoutRoom.state === 'open') {
+      this._context.setLatestNotification('assignedBreakoutRoomChanged', {
+        target: 'assignedBreakoutRoomChanged',
+        timestamp: new Date(Date.now())
+      });
     } else if (
       breakoutRoom.state === 'open' &&
       (currentAssignedBreakoutRoom?.state === 'closed' || currentAssignedBreakoutRoom === undefined)

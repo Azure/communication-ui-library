@@ -1390,6 +1390,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
           setTimeout(() => this.returnToMainMeeting(), 5000);
         }
       } else {
+        // Assigned to a closed breakout room OR unassigned from a breakout room
         this.returnToMainMeeting();
       }
     }
