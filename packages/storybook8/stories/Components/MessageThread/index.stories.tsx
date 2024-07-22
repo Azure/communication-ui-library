@@ -22,6 +22,8 @@ import { MessageWithCustomMentionRenderer } from './snippets/MessageWithCustomMe
 import { MessageThreadWithSystemMessagesExample } from './snippets/SystemMessages.snippet';
 import { MessageThreadWithInlineImageExample } from './snippets/WithInlineImageMessage.snippet';
 import { MessageThreadWithMessageDateExample } from './snippets/WithMessageDate.snippet';
+import { MessageThreadWithRichTextEditorExample } from './snippets/WithRichTextEditor.snippet';
+import { MessageThreadWithWithRichTextEditorOnPasteExample } from './snippets/WithRichTextEditorOnPaste.snippet';
 
 // Main story
 export { MessageThread } from './MessageThread.story';
@@ -77,6 +79,14 @@ export const InlineImageDocsOnly = {
 };
 export const DateExampleDocsOnly = {
   render: MessageThreadWithMessageDateExample
+};
+
+export const RichTextEditorTextDocsOnly = {
+  render: MessageThreadWithRichTextEditorExample
+};
+
+export const RichTextEditorOnPasteTextDocsOnly = {
+  render: MessageThreadWithWithRichTextEditorOnPasteExample
 };
 
 // Main story meta export
