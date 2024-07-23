@@ -7,7 +7,7 @@ export {
   toFlatCommunicationIdentifier,
   _toCommunicationIdentifier,
   _isValidIdentifier,
-  isIdentityMicrosoftTeamsUser
+  _isIdentityMicrosoftTeamsUser
 } from './identifier';
 export { _getApplicationId } from './telemetry';
 export { _formatString } from './localizationUtils';
