@@ -94,11 +94,12 @@ export const RichTextSendBoxErrors = (props: RichTextSendBoxErrorsProps): JSX.El
   ]);
 
   const dismissAfterMs = useMemo(() => {
+    const delayInMs = 10 * 1000;
     // don't dismiss the system message
     if (systemMessage) {
-      return sendBoxError?.message !== systemMessage ? 10 * 1000 : undefined;
+      return sendBoxError?.message !== systemMessage ? delayInMs : undefined;
     }
-    return 10 * 1000;
+    return delayInMs;
   }, [sendBoxError?.message, systemMessage]);
 
   return <SendBoxErrorBar error={sendBoxError} dismissAfterMs={dismissAfterMs} onDismiss={onDismiss} />;
