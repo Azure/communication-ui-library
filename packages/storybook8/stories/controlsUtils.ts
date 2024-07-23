@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { CustomCallControlButtonProps, ErrorType } from '@azure/communication-react';
+import { CustomCallControlButtonProps, ErrorType, NotificationType } from '@azure/communication-react';
 import { PartialTheme } from '@fluentui/react';
 import { DefaultTheme, DarkTheme, TeamsTheme, WordTheme } from '@fluentui/theme-samples';
 import {
@@ -146,6 +146,47 @@ export const controlsForImageOverlay = {
   showTitle: { control: 'text', name: 'Set Title' },
   setAltText: { control: 'text', name: 'Set Alt Text' }
 };
+
+const notificationOptions: NotificationType[] = [
+  'startVideoGeneric',
+  'stopVideoGeneric',
+  'muteGeneric',
+  'unmuteGeneric',
+  'speakingWhileMuted',
+  'startScreenShareGeneric',
+  'stopScreenShareGeneric',
+  'callNetworkQualityLow',
+  'teamsMeetingCallNetworkQualityLow',
+  'callNoSpeakerFound',
+  'callNoMicrophoneFound',
+  'callMicrophoneAccessDenied',
+  'callMicrophoneAccessDeniedSafari',
+  'callMicrophoneMutedBySystem',
+  'callMicrophoneUnmutedBySystem',
+  'callMacOsMicrophoneAccessDenied',
+  'callLocalVideoFreeze',
+  'callCameraAccessDenied',
+  'callCameraAccessDeniedSafari',
+  'callCameraAlreadyInUse',
+  'callVideoStoppedBySystem',
+  'callVideoRecoveredBySystem',
+  'callMacOsCameraAccessDenied',
+  'callMacOsScreenShareAccessDenied',
+  'failedToJoinCallGeneric',
+  'failedToJoinCallInvalidMeetingLink',
+  'cameraFrozenForRemoteParticipants',
+  'unableToStartVideoEffect',
+  'startSpotlightWhileMaxParticipantsAreSpotlighted',
+  'mutedByRemoteParticipant',
+  'recordingStarted',
+  'transcriptionStarted',
+  'recordingStopped',
+  'transcriptionStopped',
+  'recordingAndTranscriptionStarted',
+  'recordingAndTranscriptionStopped',
+  'recordingStoppedStillTranscribing',
+  'transcriptionStoppedStillRecording'
+];
 
 export const controlsToAdd = {
   alternateCallerId: {
@@ -474,6 +515,20 @@ export const controlsToAdd = {
       if: { arg: 'allowRawObjectInput', truthy: false },
       name: 'Inject Max # of Custom Buttons'
     }
+  },
+  isNotificationAutoDismiss: { control: 'boolean', defaultValue: false, name: 'Is auto dismiss on' },
+  showNotificationStacked: { control: 'boolean', defaultValue: false, name: 'Show notification stacked effect' },
+  activeNotifications: {
+    control: 'check',
+    options: notificationOptions,
+    defaultValue: ['startVideoGeneric'],
+    name: 'Active notifications to show'
+  },
+  maxNotificationsToShow: {
+    control: 'select',
+    options: [1, 2, 3],
+    defaultValue: '2',
+    name: 'Select max number of notifications to show'
   }
 };
 
