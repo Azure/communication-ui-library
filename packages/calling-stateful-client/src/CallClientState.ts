@@ -681,6 +681,10 @@ export interface CallInfoState {
    * participant id of the local user
    */
   participantId: string;
+  /**
+   * Differentiator between the Call and TeamsCall types
+   */
+  kind: IncomingCallKind;
 }
 
 /**
@@ -694,10 +698,6 @@ export interface IncomingCallState {
    * Proxy of {@link @azure/communication-calling#IncomingCall.id}.
    */
   id: string;
-  /**
-   * Proxy of {@link @azure/communication-calling#IncomingCallCommon.kind}
-   */
-  kind: IncomingCallKind;
   /**
    * Proxy of {@link @azure/communication-calling#IncomingCall.callInfo}.
    */
@@ -736,10 +736,6 @@ export interface TeamsIncomingCallState {
    * Proxy of {@link @azure/communication-calling#TeamsIncomingCall.teamsCallInfo}.
    */
   info: CallInfoState;
-  /**
-   * Proxy of {@link @azure/communication-calling#IncomingCallCommon.kind}
-   */
-  kind: IncomingCallKind;
   /**
    * Proxy of {@link @azure/communication-calling#TeamsIncomingCall.callerInfo}.
    */

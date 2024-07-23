@@ -27,7 +27,8 @@ import {
   RemoteVideoStreamState as DeclarativeRemoteVideoStream,
   LocalVideoStreamState as DeclarativeLocalVideoStream,
   IncomingCallState as DeclarativeIncomingCall,
-  VideoStreamRendererViewState as DeclarativeVideoStreamRendererView
+  VideoStreamRendererViewState as DeclarativeVideoStreamRendererView,
+  CallInfoState
 } from './CallClientState';
 import { CaptionsInfo } from './CallClientState';
 /* @conditional-compile-remove(one-to-n-calling) */
@@ -204,28 +205,28 @@ export function convertSdkIncomingCallToDeclarativeIncomingCall(
 ): DeclarativeIncomingCall | /* @conditional-compile-remove(one-to-n-calling) */ DeclarativeTeamsIncomingCall {
   /* @conditional-compile-remove(one-to-n-calling) */
   if (_isTeamsIncomingCall(call)) {
+    const newInfo: CallInfoState = { ...(call as TeamsIncomingCall).info, kind: call.kind };
     return {
       id: call.id,
-      kind: call.kind,
-      info: (call as TeamsIncomingCall).info,
+      info: newInfo,
       callerInfo: call.callerInfo,
       startTime: new Date(),
       endTime: undefined
     };
   } else {
+    const newInfo: CallInfoState = { ...(call as IncomingCall).info, kind: call.kind };
     return {
       id: call.id,
-      kind: call.kind,
-      info: (call as IncomingCall).info,
+      info: newInfo,
       callerInfo: call.callerInfo,
       startTime: new Date(),
       endTime: undefined
     };
   }
+  const newInfo: CallInfoState = { ...(call as IncomingCall).info, kind: call.kind };
   return {
     id: call.id,
-    kind: call.kind,
-    info: (call as IncomingCall).info,
+    info: newInfo,
     callerInfo: call.callerInfo,
     startTime: new Date(),
     endTime: undefined
