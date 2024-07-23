@@ -206,7 +206,7 @@ export const insertImagesToContentString = async (
 /**
  * @internal
  */
-export const removeBrokenImageContent = (content: string): string => {
+export const removeBrokenImageContentAndClearImageStyle = (content: string): string => {
   const document = new DOMParser().parseFromString(content, 'text/html');
   document.querySelectorAll('img').forEach((img) => {
     // Before submitting/resend the message, we need to trim the unnecessary attributes such as src,
@@ -217,9 +217,10 @@ export const removeBrokenImageContent = (content: string): string => {
       img.removeAttribute('class');
       img.removeAttribute('src');
       img.removeAttribute('data-ui-id');
-      img.style.width = '';
-      img.style.height = '';
     }
+    // Clear maxWidth and maxHeight styles so that they can set in the style attribute
+    img.style.width = '';
+    img.style.height = '';
   });
   return document.body.innerHTML;
 };
