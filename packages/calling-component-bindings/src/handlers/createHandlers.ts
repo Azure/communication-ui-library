@@ -19,7 +19,9 @@ import { _toCommunicationIdentifier } from '@internal/acs-ui-common';
 import { DeclarativeCallAgent } from '@internal/calling-stateful-client';
 import { StatefulCallClient, StatefulDeviceManager } from '@internal/calling-stateful-client';
 import memoizeOne from 'memoize-one';
-import { createLocalVideoStream, isACSCallParticipants } from '../utils/callUtils';
+import { isACSCallParticipants } from '../utils/callUtils';
+/* @conditional-compile-remove(one-to-n-calling) */
+import { createLocalVideoStream } from '../utils/callUtils';
 import { createDefaultCommonCallingHandlers, CommonCallingHandlers } from './createCommonHandlers';
 
 import { VideoBackgroundEffectsDependency } from './createCommonHandlers';

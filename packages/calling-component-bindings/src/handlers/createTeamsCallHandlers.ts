@@ -21,7 +21,9 @@ import { StatefulCallClient, StatefulDeviceManager } from '@internal/calling-sta
 import { DeclarativeTeamsCallAgent } from '@internal/calling-stateful-client';
 import memoizeOne from 'memoize-one';
 import { ReactElement } from 'react';
-import { createLocalVideoStream, isTeamsCallParticipants } from '../utils/callUtils';
+import { isTeamsCallParticipants } from '../utils/callUtils';
+/* @conditional-compile-remove(one-to-n-calling) */
+import { createLocalVideoStream } from '../utils/callUtils';
 import {
   createDefaultCommonCallingHandlers,
   CommonCallingHandlers,
