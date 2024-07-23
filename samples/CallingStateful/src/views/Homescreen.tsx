@@ -71,7 +71,9 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
         >
           Start Call
         </PrimaryButton>
-        <IncomingCallStack {...incomingCallStackProps} />
+        <Stack style={{ position: 'absolute', top: '0', right: '0' }}>
+          <IncomingCallStack {...incomingCallStackProps} />
+        </Stack>
       </Stack>
     </Stack>
   );

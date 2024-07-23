@@ -23,7 +23,9 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
   return (
     <Stack style={{ width: '100%', height: '100%', margin: 'auto', position: 'relative' }}>
       <>{call && <CallingComponents />}</>
-      <IncomingCallStack {...incomingCallStackProps} />
+      <Stack style={{ position: 'absolute', top: '0', right: '0' }}>
+        <IncomingCallStack {...incomingCallStackProps} />
+      </Stack>
     </Stack>
   );
 };

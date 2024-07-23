@@ -3,7 +3,7 @@
 
 import { Call, CallAgent, StartCallOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(one-to-n-calling) */
-import { LocalVideoStream, IncomingCallCommon } from '@azure/communication-calling';
+import { IncomingCallCommon } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
@@ -19,7 +19,7 @@ import { _toCommunicationIdentifier } from '@internal/acs-ui-common';
 import { DeclarativeCallAgent } from '@internal/calling-stateful-client';
 import { StatefulCallClient, StatefulDeviceManager } from '@internal/calling-stateful-client';
 import memoizeOne from 'memoize-one';
-import { isACSCallParticipants } from '../utils/callUtils';
+import { createLocalVideoStream, isACSCallParticipants } from '../utils/callUtils';
 import { createDefaultCommonCallingHandlers, CommonCallingHandlers } from './createCommonHandlers';
 
 import { VideoBackgroundEffectsDependency } from './createCommonHandlers';
@@ -103,11 +103,7 @@ export const createDefaultCallingHandlers: CreateDefaultCallingHandlers = memoiz
     },
     /* @conditional-compile-remove(one-to-n-calling) */
     onAcceptCall: async (incomingCallId: string, useVideo?: boolean): Promise<void> => {
-      const camera = await callClient?.getState().deviceManager.selectedCamera;
-      let localVideoStream: LocalVideoStream | undefined;
-      if (camera && useVideo) {
-        localVideoStream = new LocalVideoStream(camera);
-      }
+      const localVideoStream = useVideo ? await createLocalVideoStream(callClient) : undefined;
       const incomingCall = (callAgent as DeclarativeCallAgent)?.incomingCalls.find(
         (incomingCall: IncomingCallCommon) => incomingCall.id === incomingCallId
       );

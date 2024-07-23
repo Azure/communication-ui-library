@@ -3,7 +3,7 @@
 
 /* @conditional-compile-remove(one-to-n-calling) */
 import { IncomingCallNotification } from './IncomingCallNotification';
-import { IStackStyles, Stack } from '@fluentui/react';
+import { Stack } from '@fluentui/react';
 import React from 'react';
 
 /**
@@ -33,19 +33,6 @@ export interface ActiveIncomingCall {
    */
   endTime?: Date;
 }
-
-/**
- * Positional props for {@link IncomingCallStack} component.
- * @beta
- */
-export type IncomingCallStackPosition =
-  | 'topLeft'
-  | 'topRight'
-  | 'bottomLeft'
-  | 'bottomRight'
-  | 'topCenter'
-  | 'bottomCenter';
-
 /**
  * Props for the IncomingCallManager component.
  * @beta
@@ -72,10 +59,6 @@ export interface IncomingCallStackProps {
    * @returns - void
    */
   onRejectCall: (incomingCallId: string) => void;
-  /**
-   * Prop to determine the position of the notification stack within their parent
-   */
-  position?: IncomingCallStackPosition;
 }
 
 /**
@@ -86,9 +69,9 @@ export interface IncomingCallStackProps {
  */
 export const IncomingCallStack = (props: IncomingCallStackProps): JSX.Element => {
   /* @conditional-compile-remove(one-to-n-calling) */
-  const { activeIncomingCalls, removedIncomingCalls, onAcceptCall, onRejectCall, position } = props;
+  const { activeIncomingCalls, removedIncomingCalls, onAcceptCall, onRejectCall } = props;
   return (
-    <Stack styles={incomingCallStackContainerStyle(position)}>
+    <Stack>
       {
         /* @conditional-compile-remove(one-to-n-calling) */ activeIncomingCalls
           .filter((incomingCall) => !removedIncomingCalls.some((call) => call.id === incomingCall.id))
@@ -106,66 +89,4 @@ export const IncomingCallStack = (props: IncomingCallStackProps): JSX.Element =>
       }
     </Stack>
   );
-};
-
-const incomingCallStackContainerStyle = (position?: IncomingCallStackPosition): IStackStyles => {
-  switch (position) {
-    case 'topLeft':
-      return {
-        root: {
-          top: 0,
-          left: 0,
-          position: 'absolute'
-        }
-      };
-    case 'topRight':
-      return {
-        root: {
-          top: 0,
-          right: 0,
-          position: 'absolute'
-        }
-      };
-    case 'bottomLeft':
-      return {
-        root: {
-          bottom: 0,
-          left: 0,
-          position: 'absolute'
-        }
-      };
-    case 'bottomRight':
-      return {
-        root: {
-          bottom: 0,
-          right: 0,
-          position: 'absolute'
-        }
-      };
-    case 'topCenter':
-      return {
-        root: {
-          top: 0,
-          left: '50%',
-          transform: 'translateX(-50%)',
-          position: 'absolute'
-        }
-      };
-    case 'bottomCenter':
-      return {
-        root: {
-          bottom: 0,
-          left: '50%',
-          transform: 'translateX(-50%)',
-          position: 'absolute'
-        }
-      };
-    default:
-      return {
-        root: {
-          top: 0,
-          position: 'absolute'
-        }
-      };
-  }
 };
