@@ -529,7 +529,8 @@ export const controlsToAdd = {
     options: [1, 2, 3],
     defaultValue: '2',
     name: 'Select max number of notifications to show'
-  }
+  },
+  richTextEditor: { control: 'boolean', name: 'Enable rich text editor' }
 };
 
 export const hiddenControl = { control: false, table: { disable: true } };
