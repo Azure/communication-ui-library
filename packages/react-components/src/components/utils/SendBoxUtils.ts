@@ -70,7 +70,8 @@ export const addUploadedImagesToMessage = async (
         img.width = imageElement.width;
         img.height = imageElement.height;
         img.style.aspectRatio = `${imageElement.width} / ${imageElement.height}`;
-        // Clear maxWidth and maxHeight styles so that they can set in the style attribute
+        // Clear maxWidth and maxHeight styles that are set by roosterJS.
+        // This is so that they can be set in messageThread styles without using the important flag.
         img.style.maxWidth = '';
         img.style.maxHeight = '';
         resolve();
@@ -206,7 +207,7 @@ export const insertImagesToContentString = async (
 /**
  * @internal
  */
-export const removeBrokenImageContent = (content: string): string => {
+export const removeBrokenImageContentAndClearImageSizeStyles = (content: string): string => {
   const document = new DOMParser().parseFromString(content, 'text/html');
   document.querySelectorAll('img').forEach((img) => {
     // Before submitting/resend the message, we need to trim the unnecessary attributes such as src,
@@ -217,9 +218,11 @@ export const removeBrokenImageContent = (content: string): string => {
       img.removeAttribute('class');
       img.removeAttribute('src');
       img.removeAttribute('data-ui-id');
-      img.style.width = '';
-      img.style.height = '';
     }
+    // Clear maxWidth and maxHeight styles that are set by roosterJS.
+    // This is so that they can be set in messageThread styles without using the important flag.
+    img.style.maxWidth = '';
+    img.style.maxHeight = '';
   });
   return document.body.innerHTML;
 };
