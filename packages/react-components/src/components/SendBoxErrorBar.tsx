@@ -6,7 +6,29 @@ import { MessageBar } from '@fluentui/react';
 import { MessageBarType } from '@fluentui/react';
 import React, { useEffect } from 'react';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
+import { useMemo } from 'react';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { useLocale } from '../localization';
+
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+/**
+ * @beta
+ * Error bar type for {@link SendBoxErrorBarError}
+ */
+export enum SendBoxErrorBarType {
+  /** Info styled MessageBar */
+  info = 0,
+  /** Error styled MessageBar */
+  error = 1,
+  /** Blocked styled MessageBar */
+  blocked = 2,
+  /** SevereWarning styled MessageBar */
+  severeWarning = 3,
+  /** Success styled MessageBar */
+  success = 4,
+  /** Warning styled MessageBar */
+  warning = 5
+}
 
 /**
  * @beta
@@ -23,7 +45,7 @@ export interface SendBoxErrorBarError {
   /**
    * ErrorBar type. Defaults to `warning`.
    */
-  errorBarType?: MessageBarType;
+  errorBarType?: SendBoxErrorBarType;
 }
 
 /**
@@ -72,6 +94,25 @@ export const SendBoxErrorBar = (props: SendBoxErrorBarProps): JSX.Element => {
     };
   }, [dismissAfterMs, onDismiss, error]);
 
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  const messageBarType = useMemo(() => {
+    switch (error?.errorBarType) {
+      case SendBoxErrorBarType.info:
+        return MessageBarType.info;
+      case SendBoxErrorBarType.error:
+        return MessageBarType.error;
+      case SendBoxErrorBarType.blocked:
+        return MessageBarType.blocked;
+      case SendBoxErrorBarType.severeWarning:
+        return MessageBarType.severeWarning;
+      case SendBoxErrorBarType.success:
+        return MessageBarType.success;
+      case SendBoxErrorBarType.warning:
+      default:
+        return MessageBarType.warning;
+    }
+  }, [error]);
+
   if (errorMessage) {
     return (
       <MessageBar
@@ -79,11 +120,11 @@ export const SendBoxErrorBar = (props: SendBoxErrorBarProps): JSX.Element => {
         aria-label={errorMessage}
         data-testid={'send-box-message-bar'}
         /* @conditional-compile-remove(rich-text-editor-image-upload) */
-        messageBarType={error?.errorBarType || MessageBarType.warning}
+        messageBarType={messageBarType}
         /* @conditional-compile-remove(rich-text-editor-image-upload) */
         isMultiline={true}
         /* @conditional-compile-remove(rich-text-editor-image-upload) */
-        key={error?.errorBarType || MessageBarType.warning}
+        key={error?.errorBarType || SendBoxErrorBarType.warning}
         /* @conditional-compile-remove(rich-text-editor-image-upload) */
         onDismiss={onDismiss}
         /* @conditional-compile-remove(rich-text-editor-image-upload) */

@@ -204,6 +204,8 @@ export type {
 export * from './Drawer';
 /* @conditional-compile-remove(file-sharing-acs) */
 export type { SendBoxErrorBarError } from './SendBoxErrorBar';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+export type { SendBoxErrorBarType } from './SendBoxErrorBar';
 export * from './Attachment/AttachmentCard';
 export * from './Attachment/AttachmentCardGroup';
 export * from './ModalClone/ModalClone';

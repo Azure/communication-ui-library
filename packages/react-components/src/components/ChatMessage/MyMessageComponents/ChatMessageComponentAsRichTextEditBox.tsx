@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 
 import { mergeStyles, Stack } from '@fluentui/react';
-/* @conditional-compile-remove(rich-text-editor-image-upload) */
-import { MessageBarType } from '@fluentui/react';
 import { ChatMyMessage } from '@fluentui-contrib/react-chat';
 import { mergeClasses } from '@fluentui/react-components';
 import { _formatString } from '@internal/acs-ui-common';
@@ -52,7 +50,7 @@ import { FluentV9ThemeProvider } from '../../../theming/FluentV9ThemeProvider';
 /* @conditional-compile-remove(file-sharing-acs) */
 import { attachmentUploadCardsStyles } from '../../styles/SendBox.styles';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
-import { SendBoxErrorBarError } from '../../SendBoxErrorBar';
+import { SendBoxErrorBarError, SendBoxErrorBarType } from '../../SendBoxErrorBar';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { BROKEN_IMAGE_SVG_DATA } from '../../styles/Common.style';
 
@@ -207,7 +205,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
       setAttachmentUploadsPendingError({
         message: strings.imageUploadsPendingError,
         timestamp: Date.now(),
-        errorBarType: MessageBarType.info
+        errorBarType: SendBoxErrorBarType.info
       });
       return;
     }
@@ -346,7 +344,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
               ? {
                   message: imageUploadErrorMessage,
                   timestamp: Date.now(),
-                  errorBarType: MessageBarType.error
+                  errorBarType: SendBoxErrorBarType.error
                 }
               : undefined
           }

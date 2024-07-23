@@ -4,8 +4,6 @@
 import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { RichTextInputBoxComponent } from './RichTextInputBoxComponent';
 import { Icon, Stack } from '@fluentui/react';
-/* @conditional-compile-remove(rich-text-editor-image-upload) */
-import { MessageBarType } from '@fluentui/react';
 import { useLocale } from '../../localization';
 import { SendBoxStrings } from '../SendBox';
 import { sendIconStyle } from '../styles/SendBox.styles';
@@ -31,6 +29,8 @@ import {
 } from '../utils/SendBoxUtils';
 /* @conditional-compile-remove(file-sharing-acs) */
 import { SendBoxErrorBarError } from '../SendBoxErrorBar';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+import { SendBoxErrorBarType } from '../SendBoxErrorBar';
 /* @conditional-compile-remove(file-sharing-acs) */
 import { attachmentUploadCardsStyles } from '../styles/SendBox.styles';
 /* @conditional-compile-remove(file-sharing-acs) */
@@ -381,7 +381,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
       setAttachmentUploadsPendingError({
         message: errorMessage,
         timestamp: Date.now(),
-        errorBarType: MessageBarType.info
+        errorBarType: SendBoxErrorBarType.info
       });
       return;
     }
@@ -496,7 +496,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
         ? {
             message: errorMessage,
             timestamp: Date.now(),
-            errorBarType: MessageBarType.error
+            errorBarType: SendBoxErrorBarType.error
           }
         : undefined,
       systemMessage: systemMessage,

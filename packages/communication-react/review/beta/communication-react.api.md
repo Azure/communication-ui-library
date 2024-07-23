@@ -1846,10 +1846,10 @@ export interface ChatCompositeProps extends BaseCompositeProps<ChatCompositeIcon
 // @public
 export interface ChatCompositeStrings {
     chatListHeader: string;
-    uploadImageDataNotProvided: string;
-    uploadImageExtensionIsNotAllowed: string;
-    uploadImageIsTooLarge: string;
-    uploadImageFailed: string;
+    imageDataNotProvided: string;
+    imageExtensionIsNotAllowed: string;
+    imageIsTooLarge: string;
+    unableToUploadImage: string;
     uploadAttachment: string;
 }
 
@@ -4242,9 +4242,19 @@ export const SendBox: (props: SendBoxProps) => JSX.Element;
 
 // @beta
 export interface SendBoxErrorBarError {
-    errorBarType?: MessageBarType;
+    errorBarType?: SendBoxErrorBarType;
     message: string;
     timestamp: number;
+}
+
+// @beta
+export enum SendBoxErrorBarType {
+    blocked = 2,
+    error = 1,
+    info = 0,
+    severeWarning = 3,
+    success = 4,
+    warning = 5
 }
 
 // @public

@@ -83,15 +83,8 @@ export const RichTextSendBoxErrors = (props: RichTextSendBoxErrorsProps): JSX.El
       return;
     }
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    if (attachmentProgressError || attachmentUploadsPendingError) {
-      setSendBoxError(undefined);
-      return;
-    }
-  }, [
-    /* @conditional-compile-remove(rich-text-editor-image-upload) */ attachmentProgressError,
-    /* @conditional-compile-remove(rich-text-editor-image-upload) */ attachmentUploadsPendingError,
-    systemMessage
-  ]);
+    setSendBoxError(undefined);
+  }, [systemMessage]);
 
   const dismissAfterMs = useMemo(() => {
     const delayInMs = 10 * 1000;
