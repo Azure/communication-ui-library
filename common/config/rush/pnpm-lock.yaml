@@ -24775,7 +24775,7 @@ packages:
     dev: false
 
   file:projects/acs-ui-common.tgz:
-    resolution: {integrity: sha512-36aUZX+24nr5DmBNeRzos1T23jw+FYN0P5oao5Qay1O6dY5HsrSlodnXO3jmPKViN5XBnWydgMFRnEYWgOdjVg==, tarball: file:projects/acs-ui-common.tgz}
+    resolution: {integrity: sha512-C1WcEZrMVV6N5wZ98l+OGkKUd4MxlwCKa1DDluEl9hVDQo9kbCzpwPtD8LbutpY/6US67NpIma91qFRImkTYAA==, tarball: file:projects/acs-ui-common.tgz}
     name: '@rush-temp/acs-ui-common'
     version: 0.0.0
     dependencies:
@@ -24803,6 +24803,7 @@ packages:
       jest: 29.7.0(@types/node@20.14.8)(ts-node@10.9.2)
       prettier: 3.3.2
       react: 18.3.1
+      remark-gfm: 4.0.0
       rimraf: 2.7.1
       rollup: 4.12.1
       ts-jest: 29.1.5(@babel/core@7.24.7)(babel-jest@29.7.0)(jest@29.7.0)(typescript@5.4.5)
@@ -24821,7 +24822,7 @@ packages:
     dev: false
 
   file:projects/acs-ui-javascript-loaders.tgz:
-    resolution: {integrity: sha512-H1yhuwLs/YH6GZu8cH8+AnmQ+EWgm/svVm36jN450b0/QbVM7fzF9c/dEND57jwTb7R5ketu2h+uR+PLnx0uag==, tarball: file:projects/acs-ui-javascript-loaders.tgz}
+    resolution: {integrity: sha512-7PbOlZGTt+g2R301WV1FClOfTsZI21t0icbd4gurxfwqeB4+1QDvkTgUD/b58BhjiUYV/pTXTDPmYxAMj5WC+w==, tarball: file:projects/acs-ui-javascript-loaders.tgz}
     name: '@rush-temp/acs-ui-javascript-loaders'
     version: 0.0.0
     dependencies:
@@ -24850,6 +24851,7 @@ packages:
       prettier: 3.3.2
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
+      remark-gfm: 4.0.0
       rimraf: 2.7.1
       rollup: 4.12.1
       ts-jest: 29.1.5(@babel/core@7.24.7)(babel-jest@29.7.0)(jest@29.7.0)(typescript@5.4.5)
@@ -24868,7 +24870,7 @@ packages:
     dev: false
 
   file:projects/calling-component-bindings.tgz:
-    resolution: {integrity: sha512-l1z2wmxDawk6gB8idLwSmSOmAg8DjUNFC+/cibWquB88Kw2gdOFJqzc1wS1HR0I/el/bJGdsFd+SjXf/CAyyKA==, tarball: file:projects/calling-component-bindings.tgz}
+    resolution: {integrity: sha512-EDnVzLNWPWyTmibKWaa07lLNcL30BZDtuwKmH8fs9brygNHo/u55SLt1gWtg8A1sYu3K7ZOF6pPzMeYcVYx4BA==, tarball: file:projects/calling-component-bindings.tgz}
     name: '@rush-temp/calling-component-bindings'
     version: 0.0.0
     dependencies:
@@ -24898,6 +24900,7 @@ packages:
       memoize-one: 5.2.1
       prettier: 3.3.2
       react: 18.3.1
+      remark-gfm: 4.0.0
       reselect: 4.1.8
       rimraf: 2.7.1
       rollup: 4.12.1
@@ -24917,7 +24920,7 @@ packages:
     dev: false
 
   file:projects/calling-stateful-client.tgz:
-    resolution: {integrity: sha512-TIk0SJBHeFKd0mZN+XmnvTA/D8iaFd2EROB+QGz4tQTSNiSH9cUVDmTuJ5BvnVMzlQIhcj15Eh4iFnH69rNx9g==, tarball: file:projects/calling-stateful-client.tgz}
+    resolution: {integrity: sha512-pJ3QKDIvaQsUdGuH6OgQ5tLBlVRzZ9Oij8SAhDC3yY4IsIBC05LxNwCMdE4IZ5XPH80QcjqFLk69RJ+240YzVA==, tarball: file:projects/calling-stateful-client.tgz}
     name: '@rush-temp/calling-stateful-client'
     version: 0.0.0
     dependencies:
@@ -24948,6 +24951,7 @@ packages:
       immer: 10.1.1
       jest: 29.7.0(@types/node@20.14.8)(ts-node@10.9.2)
       prettier: 3.3.2
+      remark-gfm: 4.0.0
       rimraf: 2.7.1
       rollup: 4.12.1
       ts-jest: 29.1.5(@babel/core@7.24.7)(babel-jest@29.7.0)(jest@29.7.0)(typescript@5.4.5)
@@ -24966,7 +24970,7 @@ packages:
     dev: false
 
   file:projects/calling.tgz:
-    resolution: {integrity: sha512-UfKhU2NUSz2CSQDJod2sNL26W7xRGgM0mzw61xzcPDFv4XxcJ/ObxboxTQSYsNd7JfGsh+SMcwI3zi6Ri427iQ==, tarball: file:projects/calling.tgz}
+    resolution: {integrity: sha512-dskmsUn7lL0E7AgEMK0iUz1y9ggB8RIRlmQo0dKpPuwncLgT67mjH+X/46rgHDPWp69uEWuH4Au+JKW6V7oP6A==, tarball: file:projects/calling.tgz}
     name: '@rush-temp/calling'
     version: 0.0.0
     dependencies:
@@ -25023,6 +25027,7 @@ packages:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
       react-router-dom: 5.3.4(react@18.3.1)
+      remark-gfm: 4.0.0
       reselect: 4.1.8
       rimraf: 2.7.1
       shake.js: 1.2.2
@@ -25060,7 +25065,7 @@ packages:
     dev: false
 
   file:projects/callingstateful.tgz:
-    resolution: {integrity: sha512-Si54NhgUzSzod5WpcIJqbWjJlkcye2xm5XUa1Smz6EVOmriQIQQ5PBr9n45mjDAazGF61oD+i36UahmSexs7tQ==, tarball: file:projects/callingstateful.tgz}
+    resolution: {integrity: sha512-6J8E6E95ZAkLss4Y2xyJZRFLKksvuA7GX/4UCRASl24vVDJXpa7VcGBOeENWuywYCWvdQQrNYimm/B5ivoMxYw==, tarball: file:projects/callingstateful.tgz}
     name: '@rush-temp/callingstateful'
     version: 0.0.0
     dependencies:
@@ -25117,6 +25122,7 @@ packages:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
       react-router-dom: 5.3.4(react@18.3.1)
+      remark-gfm: 4.0.0
       reselect: 4.1.8
       rimraf: 2.7.1
       shake.js: 1.2.2
@@ -25154,7 +25160,7 @@ packages:
     dev: false
 
   file:projects/callwithchat.tgz:
-    resolution: {integrity: sha512-DMj917nCY3epffnOHX0NWzD6hUg9OeL94V7x9UK+XCMvLhOnlusJEzU0IYEGXm3wbD3B8xtsXebhz2AhlaxfWg==, tarball: file:projects/callwithchat.tgz}
+    resolution: {integrity: sha512-HMrcv1TY5g76b7UU+y9sWonG8CvZTQENFKI5Msy72V3MwAisEPtzmxXooObtrho8nRL4btDhxkidh4/MsaMhHg==, tarball: file:projects/callwithchat.tgz}
     name: '@rush-temp/callwithchat'
     version: 0.0.0
     dependencies:
@@ -25210,6 +25216,7 @@ packages:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
       react-router-dom: 5.3.4(react@18.3.1)
+      remark-gfm: 4.0.0
       reselect: 4.1.8
       rimraf: 2.7.1
       shake.js: 1.2.2
@@ -25247,7 +25254,7 @@ packages:
     dev: false
 
   file:projects/chat-component-bindings.tgz:
-    resolution: {integrity: sha512-xG7OrXthKetKNH3VGC1/b2NALv5kEaDS1qIY9YT061lh2ti/WVCsXlPWy+vbuABj+0aJW0gPTVpUg4U578yAmw==, tarball: file:projects/chat-component-bindings.tgz}
+    resolution: {integrity: sha512-FCOQTUDEeKvDWK9PHxFpbc9ibQVp8Kjs4yWLHTtiKw/G8OzSlriij0aViFA/j34VwHc5akIhK6OvQKoEil62Ww==, tarball: file:projects/chat-component-bindings.tgz}
     name: '@rush-temp/chat-component-bindings'
     version: 0.0.0
     dependencies:
@@ -25275,6 +25282,7 @@ packages:
       memoize-one: 5.2.1
       prettier: 3.3.2
       react: 18.3.1
+      remark-gfm: 4.0.0
       reselect: 4.1.8
       rimraf: 2.7.1
       rollup: 4.12.1
@@ -25290,7 +25298,7 @@ packages:
     dev: false
 
   file:projects/chat-stateful-client.tgz:
-    resolution: {integrity: sha512-wlRtMwvqk9NqWSALzXg7ThR6xPYAzxdRSHeX020pDp3XlYTQtpKjZwBn83x/fyjY9vCEW+G3nMFNpUzLy2PT/w==, tarball: file:projects/chat-stateful-client.tgz}
+    resolution: {integrity: sha512-NKztNdYav96VFXllyVuLf6n2K45XKkwrlwXklqJyuCw25eFc7B2zkEUuY2NRm5mvEDyZ3S+YxqgF/OzovzW16w==, tarball: file:projects/chat-stateful-client.tgz}
     name: '@rush-temp/chat-stateful-client'
     version: 0.0.0
     dependencies:
@@ -25323,6 +25331,7 @@ packages:
       jest: 29.7.0(@types/node@20.14.8)(ts-node@10.9.2)
       nanoid: 3.3.6
       prettier: 3.3.2
+      remark-gfm: 4.0.0
       rimraf: 2.7.1
       rollup: 4.12.1
       ts-jest: 29.1.5(@babel/core@7.24.7)(babel-jest@29.7.0)(jest@29.7.0)(typescript@5.4.5)
@@ -25342,7 +25351,7 @@ packages:
     dev: false
 
   file:projects/chat.tgz:
-    resolution: {integrity: sha512-tLzBnr5h7UzNCYnnFparLOuSPU0g531w6tHV3jTTZ3Y4dZz4r+BUl1uF7mRRQME9QbT59qfrzDXo087BrtAnGQ==, tarball: file:projects/chat.tgz}
+    resolution: {integrity: sha512-4YPRDZwG6b6GC6jQKnIvb5a9eTGwYhS5HIyQ73BT0yURypybN/inagEcSGgjt89MjG9xva68G2zbIfRwl92muw==, tarball: file:projects/chat.tgz}
     name: '@rush-temp/chat'
     version: 0.0.0
     dependencies:
@@ -25395,6 +25404,7 @@ packages:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
       react-linkify: 1.0.0-alpha
+      remark-gfm: 4.0.0
       reselect: 4.1.8
       rimraf: 2.7.1
       shake.js: 1.2.2
@@ -25431,7 +25441,7 @@ packages:
     dev: false
 
   file:projects/check-treeshaking.tgz:
-    resolution: {integrity: sha512-05alRVrAc6jb+sUVJYjTWFdVAvHwrCotwC9XuiTEdKHiCYxqFdiXuxKeLE5wk/OaG7FEysk3m+XoxuXVEUJlhA==, tarball: file:projects/check-treeshaking.tgz}
+    resolution: {integrity: sha512-ZOIb6Pu5JD+vjGVBAesJjgQ14rJ/McUdFCmnFCt3XHupuq0lUdAncIWpH7HYK9ggsRvEQvWiMGpMKvWBr9DYLA==, tarball: file:projects/check-treeshaking.tgz}
     name: '@rush-temp/check-treeshaking'
     version: 0.0.0
     dependencies:
@@ -25444,6 +25454,7 @@ packages:
       eslint-plugin-import: 2.29.1(eslint@8.57.0)
       eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.2)
       prettier: 3.3.2
+      remark-gfm: 4.0.0
       rimraf: 2.7.1
       webpack: 5.89.0(webpack-cli@5.1.4)
       webpack-cli: 5.1.4(webpack-bundle-analyzer@4.10.1)(webpack@5.89.0)
@@ -25459,7 +25470,7 @@ packages:
     dev: false
 
   file:projects/check-typescript-regression.tgz:
-    resolution: {integrity: sha512-tHDWE/8JLsEGYkK1ooJ4PmSxII/wqeBrIB+oMwmVyDri5IJfnIB5uG2LZpK9D2CWxytQ8B8H5b6mo3wMy7OIyg==, tarball: file:projects/check-typescript-regression.tgz}
+    resolution: {integrity: sha512-jdzR0bVahZY7PQIP3bs7HGDrO/0GDjgTMKve6feX/JJK4PQtd4zmBpPldCessylcfFKi48XsUSyaOEdxxARBBA==, tarball: file:projects/check-typescript-regression.tgz}
     name: '@rush-temp/check-typescript-regression'
     version: 0.0.0
     dependencies:
@@ -25469,6 +25480,7 @@ packages:
       eslint-plugin-import: 2.29.1(eslint@8.57.0)
       eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.2)
       prettier: 3.3.2
+      remark-gfm: 4.0.0
       rimraf: 2.7.1
       typescript: 4.6.3
     transitivePeerDependencies:
@@ -25477,7 +25489,7 @@ packages:
     dev: false
 
   file:projects/communication-react.tgz:
-    resolution: {integrity: sha512-xXIM0i4U1MCZ9cO28iZ6EeAzoNzyDhipUYNaYJOkNWL9VJdIJN4to+33VwWjVmXuW41f8EUkZzH8pNqOPAB7JA==, tarball: file:projects/communication-react.tgz}
+    resolution: {integrity: sha512-mCrATOez9Y6PvGCTE9tx68B/oI08T9N7PqNdch6r/iiXdYccDs449KrSSw3lzc0xJ0YNBmML8g4jEgPNpco9RQ==, tarball: file:projects/communication-react.tgz}
     name: '@rush-temp/communication-react'
     version: 0.0.0
     dependencies:
@@ -25548,6 +25560,7 @@ packages:
       react-linkify: 1.0.0-alpha
       react-use-draggable-scroll: 0.4.7(react@18.3.1)
       regenerator-runtime: 0.14.1
+      remark-gfm: 4.0.0
       renamer: 4.0.0
       reselect: 4.1.8
       rimraf: 2.7.1
@@ -25594,7 +25607,7 @@ packages:
     dev: false
 
   file:projects/component-examples.tgz:
-    resolution: {integrity: sha512-j4p/R4XG6YxuF+qLPPM12nqIUk+PYyJ66N8G8zou+HTOWBin2gONy4uFp3hHs4DVfp/cnZ1HG9lScWrBgZ8fgQ==, tarball: file:projects/component-examples.tgz}
+    resolution: {integrity: sha512-MghktD39NuJIAu7+V6M1P+f+uRJOvmTxznkrxEXsGEb7lxYWNB5AfJPzdMOE7TGu2NrmyGHKA+/GmMr9LWJiwA==, tarball: file:projects/component-examples.tgz}
     name: '@rush-temp/component-examples'
     version: 0.0.0
     dependencies:
@@ -25632,6 +25645,7 @@ packages:
       pretty-quick: 4.0.0(prettier@3.3.2)
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
+      remark-gfm: 4.0.0
       rimraf: 2.7.1
       style-loader: 2.0.0(webpack@5.89.0)
       ts-loader: 8.4.0(typescript@5.4.5)(webpack@5.89.0)
@@ -25661,7 +25675,7 @@ packages:
     dev: false
 
   file:projects/config.tgz:
-    resolution: {integrity: sha512-sQUALoMgzZXT+TaynsZyTiOAtXR59X33/SOnaOvQb1x666rjBZkkkSCCiqAehe85JNzVom4vZU4VsSaijhQhPA==, tarball: file:projects/config.tgz}
+    resolution: {integrity: sha512-FxabYA8jHTGmoaCAFg5MFXqUic/5hxqa2uAt/JQPKPOMr5m9ywaWM+Kt0qgRAaprAHxJ3w+R/vZ8zhQTKqduTA==, tarball: file:projects/config.tgz}
     name: '@rush-temp/config'
     version: 0.0.0
     dependencies:
@@ -25672,6 +25686,7 @@ packages:
       '@rollup/plugin-json': 6.1.0(rollup@4.12.1)
       '@types/node': 20.14.8
       beachball: 2.31.13
+      remark-gfm: 4.0.0
       rollup: 4.12.1
       rollup-plugin-sourcemaps: 0.6.3(@types/node@20.14.8)(rollup@4.12.1)
       rollup-plugin-svg: 2.0.0
@@ -25681,10 +25696,11 @@ packages:
       - '@swc/core'
       - '@swc/wasm'
       - encoding
+      - supports-color
     dev: false
 
   file:projects/fake-backends.tgz:
-    resolution: {integrity: sha512-he0FAr2WNjhCMvMeYbuP45e3e6ggxQ3KYMwkDLOjaC7MyO64HmCMBv9HFsMyrFJnvuHG9YvfuBFMLGLPIH9oTg==, tarball: file:projects/fake-backends.tgz}
+    resolution: {integrity: sha512-tvl50gXaQRGM7XkMuYATALRFN8ecSeWjgU8hD+EfHKQ0aOWjCpsOqjoBl5p06VqT7YcSDOCMEd/Lby3DZQXGHw==, tarball: file:projects/fake-backends.tgz}
     name: '@rush-temp/fake-backends'
     version: 0.0.0
     dependencies:
@@ -25718,6 +25734,7 @@ packages:
       jest: 29.7.0(@types/node@20.14.8)(ts-node@10.9.2)
       nanoid: 3.3.6
       prettier: 3.3.2
+      remark-gfm: 4.0.0
       rimraf: 2.7.1
       rollup: 4.12.1
       ts-jest: 29.1.5(@babel/core@7.24.7)(babel-jest@29.7.0)(jest@29.7.0)(typescript@5.4.5)
@@ -25740,7 +25757,7 @@ packages:
     dev: false
 
   file:projects/react-components.tgz:
-    resolution: {integrity: sha512-QLYD2J1sl/Idp+wj9A5NdafjngAjA8a5afmciI45oQPUpiANH22zOHTrjwKGeVHguXBp+fbw7N98JTdHx11jhQ==, tarball: file:projects/react-components.tgz}
+    resolution: {integrity: sha512-IRg6upspuV5FSVGKm/POzwCWNYda6U/EgJHAOrLd+y5Nz97JnfTn4QCXLZBpSX4r1KoN2qlla4I1zI3QE3vq7g==, tarball: file:projects/react-components.tgz}
     name: '@rush-temp/react-components'
     version: 0.0.0
     dependencies:
@@ -25814,6 +25831,7 @@ packages:
       react-linkify: 1.0.0-alpha
       react-use-draggable-scroll: 0.4.7(react@18.3.1)
       regenerator-runtime: 0.14.1
+      remark-gfm: 4.0.0
       rimraf: 2.7.1
       rollup: 4.12.1
       roosterjs-content-model-api: 9.8.1
@@ -25867,7 +25885,7 @@ packages:
     dev: false
 
   file:projects/react-composites.tgz:
-    resolution: {integrity: sha512-FRpLCxyBE6xCfLcKy+b5zqraCwlYhX3aZlYeysW1mb6JvYNhMXGzh6ds7/Yw4M/e23sDESnGsltsh9q6q0s6ug==, tarball: file:projects/react-composites.tgz}
+    resolution: {integrity: sha512-xIVw5cy472B9q29hIIF6nbDxDhnTPtR6uHFrMuxvbJ9ue7JMoK0dwcGoNejt+27J5wTIO8UZAgrnrb8hDwpd3g==, tarball: file:projects/react-composites.tgz}
     name: '@rush-temp/react-composites'
     version: 0.0.0
     dependencies:
@@ -25948,6 +25966,7 @@ packages:
       react-is: 18.3.1
       react-linkify: 1.0.0-alpha
       regenerator-runtime: 0.14.1
+      remark-gfm: 4.0.0
       reselect: 4.1.8
       rimraf: 2.7.1
       rollup: 4.12.1
@@ -25989,7 +26008,7 @@ packages:
     dev: false
 
   file:projects/sample-automation-tests.tgz:
-    resolution: {integrity: sha512-hhNdTOGEb6EShcPFP+YYFwFa3EGW682GBk2EcfdIGtfC2XdHRvwwZ5ZhjP38rcN2qhTF1hYQ5aRwOITmo/qb8A==, tarball: file:projects/sample-automation-tests.tgz}
+    resolution: {integrity: sha512-YrjWxwp8AwTjPZ3Kcfw+rsqE4/Fib8YutFgXJVI3W2N1g68/xxlPa/zDKlAIkebbkBNllL0r5+nJ7YUcRXSdWg==, tarball: file:projects/sample-automation-tests.tgz}
     name: '@rush-temp/sample-automation-tests'
     version: 0.0.0
     dependencies:
@@ -26005,6 +26024,7 @@ packages:
       env-cmd: 10.1.0
       if-env: 1.0.4
       node-static: 0.7.11
+      remark-gfm: 4.0.0
       rimraf: 2.7.1
       typescript: 5.4.5
       uuid: 9.0.1
@@ -26014,7 +26034,7 @@ packages:
     dev: false
 
   file:projects/sample-static-html-composites.tgz:
-    resolution: {integrity: sha512-j3x4EDxOcoqGFyc4L01z5F86++PmoXF7mBYWj/jTUdFXate+gbWG6Chn/ji/tcEl29upbNVZtMolYM0Pta2H0Q==, tarball: file:projects/sample-static-html-composites.tgz}
+    resolution: {integrity: sha512-/x+4ca1md0/4Xs/UeUKlrewnFmTFQZ7z173hR5Qh8rxyEkLRB+15w8PW5X+DCIlMG3tgaCycOJi2OVIy7aLJJw==, tarball: file:projects/sample-static-html-composites.tgz}
     name: '@rush-temp/sample-static-html-composites'
     version: 0.0.0
     dependencies:
@@ -26045,6 +26065,7 @@ packages:
       node-static: 0.7.11
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
+      remark-gfm: 4.0.0
       rimraf: 2.7.1
       typescript: 5.4.5
       uuid: 9.0.1
@@ -26066,16 +26087,19 @@ packages:
     dev: false
 
   file:projects/scripts.tgz:
-    resolution: {integrity: sha512-etEablx5ljVhADQIRE5hIW0rcgMt2K8eQ1iTjXlDmK7izoFSCbcR8pBD5KRmNGqg47isbtKuNdcjEps6HJrRHg==, tarball: file:projects/scripts.tgz}
+    resolution: {integrity: sha512-LIg1VGs2sOXmpIx2Xc37ZSxFylpXxjpu9vozpu0bl8pjTZvzp3lTzJa8lVrREVG3YPtFrl+g9HSvH7eAMg/9Ng==, tarball: file:projects/scripts.tgz}
     name: '@rush-temp/scripts'
     version: 0.0.0
     dependencies:
       '@types/yargs': 17.0.32
+      remark-gfm: 4.0.0
       yargs: 17.7.2
+    transitivePeerDependencies:
+      - supports-color
     dev: false
 
   file:projects/server.tgz:
-    resolution: {integrity: sha512-6OxEJST5RPzTGG0oVwHYKJN738fN7030kJLQklzryi7aXz7F+ifC4gOt28DSPdqCrQ+KmqN7aEEP7HqxgUGiJg==, tarball: file:projects/server.tgz}
+    resolution: {integrity: sha512-Mt2hPHe13QEE/qNN7LeLACQr5vLf9niNxScTlBBB1FTPF92155z02tpiVeu2dw+XQYHi8/gCs5zmUDxiapKd9w==, tarball: file:projects/server.tgz}
     name: '@rush-temp/server'
     version: 0.0.0
     dependencies:
@@ -26118,6 +26142,7 @@ packages:
       node-fetch: 2.6.7
       prettier: 3.3.2
       pretty-quick: 4.0.0(prettier@3.3.2)
+      remark-gfm: 4.0.0
       rimraf: 2.7.1
       supertest: 6.3.4
       ts-jest: 29.1.5(jest@29.7.0)(typescript@5.4.5)
@@ -26150,7 +26175,7 @@ packages:
     dev: false
 
   file:projects/storybook.tgz:
-    resolution: {integrity: sha512-5OaYTPBK0YHV6iR1WGBuyFatYKHtk4EHaY0AeLOeYL+UsZ7ml9pFbyzRSnR04KRp2QCDJQcotsTM9mSGNpghTA==, tarball: file:projects/storybook.tgz}
+    resolution: {integrity: sha512-8h5BM3x1YrxZ7MEefOpzp0F9TpqKcxuWIJCaAVuhJvcOmYw8iuXSBmrxv7ElRf7m2N08b74LY+YbvTCybMtqmQ==, tarball: file:projects/storybook.tgz}
     name: '@rush-temp/storybook'
     version: 0.0.0
     dependencies:
@@ -26232,6 +26257,7 @@ packages:
       react-dom: 18.3.1(react@18.3.1)
       react-is: 18.3.1
       regenerator-runtime: 0.14.1
+      remark-gfm: 4.0.0
       require-from-string: 2.0.2
       resize-observer-polyfill: 1.5.1
       scheduler: 0.23.0
@@ -26297,7 +26323,7 @@ packages:
     dev: false
 
   file:projects/storybook8.tgz:
-    resolution: {integrity: sha512-OrKMKfLxWtJI/oPfqyq/Rd97T4mUHOY74RFvtmxq+KU0vY/ZOOvLkfrC39RWuwBlwdc/QFzEBg7k40suryEYnw==, tarball: file:projects/storybook8.tgz}
+    resolution: {integrity: sha512-Xk1avfDQ+qnzubk/SUYutJ6oTKH5bRp3Z/HYXKupTuSl0/1FvmBdZxgO4y/ASZAPxrJTR0Gt5GcQdxvH0QkV7w==, tarball: file:projects/storybook8.tgz}
     name: '@rush-temp/storybook8'
     version: 0.0.0
     dependencies:
