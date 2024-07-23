@@ -152,7 +152,7 @@ const getDefaultMenuActions = (
 ): AttachmentMenuAction[] => {
   let actionName = locale.openAttachment;
   // if message is sent by a Teams user, we need to use a different icon ("open")
-  const isTeamsUser = isIdentityMicrosoftTeamsUser(_toCommunicationIdentifier(chatMessage?.senderId ?? ''));
+  const isTeamsUser = isIdentityMicrosoftTeamsUser(chatMessage?.senderId);
   if (isTeamsUser) {
     return [
       {

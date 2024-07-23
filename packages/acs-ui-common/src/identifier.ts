@@ -65,5 +65,13 @@ export const _isValidIdentifier = (identifier: CommunicationIdentifier): boolean
  * Check if given identifier is a Microsoft Teams user.
  *
  * @internal
+ * @param rawId - The rawId of the identifier.
+ * @returns True if the identifier is a Microsoft Teams user. False otherwise.
  */
-export const isIdentityMicrosoftTeamsUser = isMicrosoftTeamsUserIdentifier;
+export const isIdentityMicrosoftTeamsUser = (rawId?: string): boolean => {
+  if (!rawId) {
+    return false;
+  }
+  const identifier = _toCommunicationIdentifier(rawId);
+  return isMicrosoftTeamsUserIdentifier(identifier);
+};
