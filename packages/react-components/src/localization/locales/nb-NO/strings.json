@@ -58,7 +58,11 @@
     "richTextDeleteRowMenu": "Slett rad",
     "richTextDeleteTableMenu": "Slett tabell",
     "richTextToolbarMoreButtonAriaLabel": "Flere alternativer",
-    "attachmentMoreMenu": "Flere alternativer"
+    "attachmentMoreMenu": "Flere alternativer",
+    "richTextNewBulletedListItemAnnouncement": "Punkt, ny linje",
+    "richTextNewNumberedListItemAnnouncement": "{0}, ny linje",
+    "richTextBulletedListAppliedAnnouncement": "Punktliste er brukt",
+    "richTextNumberedListAppliedAnnouncement": "Nummerert liste brukes"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Forslag"
@@ -221,7 +225,9 @@
     "richTextDeleteRowMenu": "Slett rad",
     "richTextDeleteTableMenu": "Slett tabell",
     "richTextToolbarMoreButtonAriaLabel": "Flere alternativer",
-    "attachmentUploadsPendingError": "Laster opp ... Vent litt."
+    "attachmentUploadsPendingError": "Laster opp ... Vent litt.",
+    "richTextNewBulletedListItemAnnouncement": "Punkt, ny linje",
+    "richTextNewNumberedListItemAnnouncement": "{0}, ny linje"
   },
   "errorBar": {
     "unableToReachChatService": "Du er frakoblet",

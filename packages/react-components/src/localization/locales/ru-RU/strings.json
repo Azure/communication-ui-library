@@ -58,7 +58,11 @@
     "richTextDeleteRowMenu": "Удалить строку",
     "richTextDeleteTableMenu": "Удалить таблицу",
     "richTextToolbarMoreButtonAriaLabel": "Дополнительные параметры",
-    "attachmentMoreMenu": "Дополнительные параметры"
+    "attachmentMoreMenu": "Дополнительные параметры",
+    "richTextNewBulletedListItemAnnouncement": "Маркер, новая строка",
+    "richTextNewNumberedListItemAnnouncement": "{0}, новая строка",
+    "richTextBulletedListAppliedAnnouncement": "Применен маркированный список",
+    "richTextNumberedListAppliedAnnouncement": "Применен нумерованный список"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Рекомендации"
@@ -221,7 +225,9 @@
     "richTextDeleteRowMenu": "Удалить строку",
     "richTextDeleteTableMenu": "Удалить таблицу",
     "richTextToolbarMoreButtonAriaLabel": "Дополнительные параметры",
-    "attachmentUploadsPendingError": "Отправка... Подождите."
+    "attachmentUploadsPendingError": "Отправка... Подождите.",
+    "richTextNewBulletedListItemAnnouncement": "Маркер, новая строка",
+    "richTextNewNumberedListItemAnnouncement": "{0}, новая строка"
   },
   "errorBar": {
     "unableToReachChatService": "Вы не в сети",

@@ -58,7 +58,11 @@
     "richTextDeleteRowMenu": "行の削除",
     "richTextDeleteTableMenu": "表の削除",
     "richTextToolbarMoreButtonAriaLabel": "その他のオプション",
-    "attachmentMoreMenu": "その他のオプション"
+    "attachmentMoreMenu": "その他のオプション",
+    "richTextNewBulletedListItemAnnouncement": "行頭文字、改行",
+    "richTextNewNumberedListItemAnnouncement": "{0}、改行",
+    "richTextBulletedListAppliedAnnouncement": "箇条書きが適用されました",
+    "richTextNumberedListAppliedAnnouncement": "番号付きリストが適用されました"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "候補"
@@ -221,7 +225,9 @@
     "richTextDeleteRowMenu": "行の削除",
     "richTextDeleteTableMenu": "テーブルの削除",
     "richTextToolbarMoreButtonAriaLabel": "その他のオプション",
-    "attachmentUploadsPendingError": "アップロードしています...お待ちください。"
+    "attachmentUploadsPendingError": "アップロードしています...お待ちください。",
+    "richTextNewBulletedListItemAnnouncement": "行頭文字、改行",
+    "richTextNewNumberedListItemAnnouncement": "{0}、改行"
   },
   "errorBar": {
     "unableToReachChatService": "オフラインです",

@@ -58,7 +58,11 @@
     "richTextDeleteRowMenu": "Satırı sil",
     "richTextDeleteTableMenu": "Tabloyu sil",
     "richTextToolbarMoreButtonAriaLabel": "Diğer seçenekler",
-    "attachmentMoreMenu": "Diğer Seçenekler"
+    "attachmentMoreMenu": "Diğer Seçenekler",
+    "richTextNewBulletedListItemAnnouncement": "Madde işareti, yeni satır",
+    "richTextNewNumberedListItemAnnouncement": "{0}, yeni satır",
+    "richTextBulletedListAppliedAnnouncement": "Madde işaretli liste uygulandı",
+    "richTextNumberedListAppliedAnnouncement": "Numaralandırılmış liste uygulandı"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Öneriler"
@@ -221,7 +225,9 @@
     "richTextDeleteRowMenu": "Satırı sil",
     "richTextDeleteTableMenu": "Tabloyu sil",
     "richTextToolbarMoreButtonAriaLabel": "Diğer seçenekler",
-    "attachmentUploadsPendingError": "Karşıya yükleniyor... Lütfen bekleyin."
+    "attachmentUploadsPendingError": "Karşıya yükleniyor... Lütfen bekleyin.",
+    "richTextNewBulletedListItemAnnouncement": "Madde işareti, yeni satır",
+    "richTextNewNumberedListItemAnnouncement": "{0}, yeni satır"
   },
   "errorBar": {
     "unableToReachChatService": "Çevrimdışısınız",

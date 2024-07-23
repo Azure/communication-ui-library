@@ -58,7 +58,11 @@
     "richTextDeleteRowMenu": "Excluir linha",
     "richTextDeleteTableMenu": "Excluir tabela",
     "richTextToolbarMoreButtonAriaLabel": "Mais opções",
-    "attachmentMoreMenu": "Mais Opções"
+    "attachmentMoreMenu": "Mais Opções",
+    "richTextNewBulletedListItemAnnouncement": "Com marcadores, nova linha",
+    "richTextNewNumberedListItemAnnouncement": "{0}, Nova linha",
+    "richTextBulletedListAppliedAnnouncement": "Lista com marcadores aplicada",
+    "richTextNumberedListAppliedAnnouncement": "Lista numerada aplicada"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Sugestões"
@@ -221,7 +225,9 @@
     "richTextDeleteRowMenu": "Excluir linha",
     "richTextDeleteTableMenu": "Excluir tabela",
     "richTextToolbarMoreButtonAriaLabel": "Mais opções",
-    "attachmentUploadsPendingError": "Carregando... Aguarde."
+    "attachmentUploadsPendingError": "Carregando... Aguarde.",
+    "richTextNewBulletedListItemAnnouncement": "Com marcadores, nova linha",
+    "richTextNewNumberedListItemAnnouncement": "{0}, Nova linha"
   },
   "errorBar": {
     "unableToReachChatService": "Você está offline",

@@ -58,7 +58,11 @@
     "richTextDeleteRowMenu": "Usuń wiersz",
     "richTextDeleteTableMenu": "Usuń tabelę",
     "richTextToolbarMoreButtonAriaLabel": "Więcej opcji",
-    "attachmentMoreMenu": "Więcej opcji"
+    "attachmentMoreMenu": "Więcej opcji",
+    "richTextNewBulletedListItemAnnouncement": "Punktor, nowy wiersz",
+    "richTextNewNumberedListItemAnnouncement": "{0}, nowy wiersz",
+    "richTextBulletedListAppliedAnnouncement": "Zastosowano listę punktowaną",
+    "richTextNumberedListAppliedAnnouncement": "Zastosowano listę numerowaną"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Sugestie"
@@ -221,7 +225,9 @@
     "richTextDeleteRowMenu": "Usuń wiersz",
     "richTextDeleteTableMenu": "Usuń tabelę",
     "richTextToolbarMoreButtonAriaLabel": "Więcej opcji",
-    "attachmentUploadsPendingError": "Trwa przekazywanie... Czekaj."
+    "attachmentUploadsPendingError": "Trwa przekazywanie... Czekaj.",
+    "richTextNewBulletedListItemAnnouncement": "Punktor, nowy wiersz",
+    "richTextNewNumberedListItemAnnouncement": "{0}, nowy wiersz"
   },
   "errorBar": {
     "unableToReachChatService": "Jesteś w trybie offline",

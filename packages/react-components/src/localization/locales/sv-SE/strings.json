@@ -58,7 +58,11 @@
     "richTextDeleteRowMenu": "Ta bort rad",
     "richTextDeleteTableMenu": "Ta bort tabell",
     "richTextToolbarMoreButtonAriaLabel": "Fler alternativ",
-    "attachmentMoreMenu": "Fler alternativ"
+    "attachmentMoreMenu": "Fler alternativ",
+    "richTextNewBulletedListItemAnnouncement": "Punkt, ny rad",
+    "richTextNewNumberedListItemAnnouncement": "{0}, ny rad",
+    "richTextBulletedListAppliedAnnouncement": "Punktlista tillämpad",
+    "richTextNumberedListAppliedAnnouncement": "Numrerad tillämpad"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Förslag"
@@ -221,7 +225,9 @@
     "richTextDeleteRowMenu": "Ta bort rad",
     "richTextDeleteTableMenu": "Ta bort tabell",
     "richTextToolbarMoreButtonAriaLabel": "Fler alternativ",
-    "attachmentUploadsPendingError": "Laddar upp... Var god vänta."
+    "attachmentUploadsPendingError": "Laddar upp... Var god vänta.",
+    "richTextNewBulletedListItemAnnouncement": "Punkt, ny rad",
+    "richTextNewNumberedListItemAnnouncement": "{0}, ny rad"
   },
   "errorBar": {
     "unableToReachChatService": "Du är offline",

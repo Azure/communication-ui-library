@@ -58,7 +58,11 @@
     "richTextDeleteRowMenu": "Eliminar fila",
     "richTextDeleteTableMenu": "Eliminar tabla",
     "richTextToolbarMoreButtonAriaLabel": "Más opciones",
-    "attachmentMoreMenu": "Más opciones"
+    "attachmentMoreMenu": "Más opciones",
+    "richTextNewBulletedListItemAnnouncement": "Viñeta, nueva línea",
+    "richTextNewNumberedListItemAnnouncement": "{0}, nueva línea",
+    "richTextBulletedListAppliedAnnouncement": "Lista con viñetas aplicada",
+    "richTextNumberedListAppliedAnnouncement": "Lista numerada aplicada"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Sugerencias"
@@ -221,7 +225,9 @@
     "richTextDeleteRowMenu": "Eliminar fila",
     "richTextDeleteTableMenu": "Eliminar tabla",
     "richTextToolbarMoreButtonAriaLabel": "Más opciones",
-    "attachmentUploadsPendingError": "Cargando... Espere."
+    "attachmentUploadsPendingError": "Cargando... Espere.",
+    "richTextNewBulletedListItemAnnouncement": "Viñeta, nueva línea",
+    "richTextNewNumberedListItemAnnouncement": "{0}, nueva línea"
   },
   "errorBar": {
     "unableToReachChatService": "Sin conexión",

@@ -58,7 +58,11 @@
     "richTextDeleteRowMenu": "حذف الصف",
     "richTextDeleteTableMenu": "حذف الجدول",
     "richTextToolbarMoreButtonAriaLabel": "خيارات إضافية",
-    "attachmentMoreMenu": "خيارات إضافية"
+    "attachmentMoreMenu": "خيارات إضافية",
+    "richTextNewBulletedListItemAnnouncement": "رمز نقطي، سطر جديد",
+    "richTextNewNumberedListItemAnnouncement": "{0}، سطر جديد",
+    "richTextBulletedListAppliedAnnouncement": "تم تطبيق قائمة نقطية",
+    "richTextNumberedListAppliedAnnouncement": "تطبيق قائمة ذات تعداد رقمي"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "الاقتراحات"
@@ -221,7 +225,9 @@
     "richTextDeleteRowMenu": "حذف الصف",
     "richTextDeleteTableMenu": "حذف الجدول",
     "richTextToolbarMoreButtonAriaLabel": "خيارات إضافية",
-    "attachmentUploadsPendingError": "يتم الآن التحميل... الرجاء الانتظار."
+    "attachmentUploadsPendingError": "يتم الآن التحميل... الرجاء الانتظار.",
+    "richTextNewBulletedListItemAnnouncement": "رمز نقطي، سطر جديد",
+    "richTextNewNumberedListItemAnnouncement": "{0}، سطر جديد"
   },
   "errorBar": {
     "unableToReachChatService": "أنت غير متصل",

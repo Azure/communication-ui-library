@@ -58,7 +58,11 @@
     "richTextDeleteRowMenu": "刪除列",
     "richTextDeleteTableMenu": "刪除表格",
     "richTextToolbarMoreButtonAriaLabel": "其他選項",
-    "attachmentMoreMenu": "其他選項"
+    "attachmentMoreMenu": "其他選項",
+    "richTextNewBulletedListItemAnnouncement": "項目符號，新行",
+    "richTextNewNumberedListItemAnnouncement": "{0}，新行",
+    "richTextBulletedListAppliedAnnouncement": "已套用項目符號清單",
+    "richTextNumberedListAppliedAnnouncement": "已套用編號清單"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "建議"
@@ -221,7 +225,9 @@
     "richTextDeleteRowMenu": "刪除列",
     "richTextDeleteTableMenu": "刪除表格",
     "richTextToolbarMoreButtonAriaLabel": "其他選項",
-    "attachmentUploadsPendingError": "正在上傳...請稍候。"
+    "attachmentUploadsPendingError": "正在上傳...請稍候。",
+    "richTextNewBulletedListItemAnnouncement": "項目符號，新行",
+    "richTextNewNumberedListItemAnnouncement": "{0}，新行"
   },
   "errorBar": {
     "unableToReachChatService": "您處於離線狀態",

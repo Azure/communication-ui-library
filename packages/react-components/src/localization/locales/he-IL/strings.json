@@ -58,7 +58,11 @@
     "richTextDeleteRowMenu": "מחק שורה",
     "richTextDeleteTableMenu": "מחק טבלה",
     "richTextToolbarMoreButtonAriaLabel": "אפשרויות נוספות",
-    "attachmentMoreMenu": "אפשרויות נוספות"
+    "attachmentMoreMenu": "אפשרויות נוספות",
+    "richTextNewBulletedListItemAnnouncement": "תבליט, שורה חדשה",
+    "richTextNewNumberedListItemAnnouncement": "{0}, שורה חדשה",
+    "richTextBulletedListAppliedAnnouncement": "הוחלה רשימה עם תבליטים",
+    "richTextNumberedListAppliedAnnouncement": "רשימה ממוספרת הוחלה"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "הצעות"
@@ -221,7 +225,9 @@
     "richTextDeleteRowMenu": "מחק שורה",
     "richTextDeleteTableMenu": "מחק טבלה",
     "richTextToolbarMoreButtonAriaLabel": "אפשרויות נוספות",
-    "attachmentUploadsPendingError": "מעלה... המתן."
+    "attachmentUploadsPendingError": "מעלה... המתן.",
+    "richTextNewBulletedListItemAnnouncement": "תבליט, שורה חדשה",
+    "richTextNewNumberedListItemAnnouncement": "{0}, שורה חדשה"
   },
   "errorBar": {
     "unableToReachChatService": "אתה נמצא במצב לא מקוון",

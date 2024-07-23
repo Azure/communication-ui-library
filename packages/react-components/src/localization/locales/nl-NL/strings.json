@@ -58,7 +58,11 @@
     "richTextDeleteRowMenu": "Rij verwijderen",
     "richTextDeleteTableMenu": "Tabel verwijderen",
     "richTextToolbarMoreButtonAriaLabel": "Meer opties",
-    "attachmentMoreMenu": "Meer opties"
+    "attachmentMoreMenu": "Meer opties",
+    "richTextNewBulletedListItemAnnouncement": "Opsommingsteken, nieuwe regel",
+    "richTextNewNumberedListItemAnnouncement": "{0}, nieuwe regel",
+    "richTextBulletedListAppliedAnnouncement": "Lijst met opsommingstekens toegepast",
+    "richTextNumberedListAppliedAnnouncement": "Genummerde lijst is toegepast"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Suggesties"
@@ -221,7 +225,9 @@
     "richTextDeleteRowMenu": "Rij verwijderen",
     "richTextDeleteTableMenu": "Tabel verwijderen",
     "richTextToolbarMoreButtonAriaLabel": "Meer opties",
-    "attachmentUploadsPendingError": "Uploaden... Een ogenblik geduld."
+    "attachmentUploadsPendingError": "Uploaden... Een ogenblik geduld.",
+    "richTextNewBulletedListItemAnnouncement": "Opsommingsteken, nieuwe regel",
+    "richTextNewNumberedListItemAnnouncement": "{0}, nieuwe regel"
   },
   "errorBar": {
     "unableToReachChatService": "U bent offline",
