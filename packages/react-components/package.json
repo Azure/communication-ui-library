@@ -47,7 +47,6 @@
     "copy-to-clipboard": "^3.3.1",
     "dompurify": "^3.1.6",
     "html-react-parser": "^5.1.12",
-    "libphonenumber-js": "^1.11.4",
     "react-linkify": "^1.0.0-alpha",
     "react-use-draggable-scroll": "^0.4.7",
     "roosterjs-content-model-api": "^9.8.1",

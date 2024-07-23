@@ -4,10 +4,15 @@
 /**
  * @private
  */
-export const formatPhoneNumber = (phoneNumber: string): string => {
+export const formatPhoneNumber = (phoneNumber: string, enchant?: boolean): string => {
   // if input value is falsy eg if the user deletes the input, then just return
   if (!phoneNumber) {
     return phoneNumber;
+  }
+
+  // Only enchant North American phone numbers that begin with country code (1)
+  if (enchant && phoneNumber[0] === '1' && phoneNumber.length === 11) {
+    phoneNumber = `+${phoneNumber}`;
   }
 
   // if phone number starts with 1, format like 1 (xxx)xxx-xxxx.

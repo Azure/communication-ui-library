@@ -21,4 +21,10 @@ describe('Dialpad numbers should be formatted based on NA phone format by format
     const result = '(676) 787-6733';
     expect(formatPhoneNumber(number)).toEqual(result);
   });
+
+  test('North America phone number is enchanted', () => {
+    const number = '12345678900';
+    const result = '+1 (234) 567-8900';
+    expect(formatPhoneNumber(number, true)).toEqual(result);
+  });
 });
