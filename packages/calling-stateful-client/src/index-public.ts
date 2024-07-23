@@ -24,7 +24,7 @@ export type {
   VideoStreamRendererViewState
 } from './CallClientState';
 /* @conditional-compile-remove(one-to-n-calling) */
-export type { TeamsIncomingCallState } from './CallClientState';
+export type { TeamsIncomingCallState, CallInfoState } from './CallClientState';
 export type { CreateViewResult } from './StreamUtils';
 export type { RaiseHandCallFeatureState as RaiseHandCallFeature } from './CallClientState';
 export type { RaisedHandState } from './CallClientState';

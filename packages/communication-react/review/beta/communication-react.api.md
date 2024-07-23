@@ -1001,6 +1001,13 @@ export type CallIdChangedListener = (event: {
 }) => void;
 
 // @public
+export interface CallInfoState {
+    groupId?: string;
+    participantId: string;
+    threadId?: string;
+}
+
+// @public
 export type CallingBaseSelectorProps = {
     callId: string;
 };
@@ -3252,7 +3259,7 @@ export interface IncomingCallState {
     callerInfo: CallerInfo;
     endTime?: Date;
     id: string;
-    info: CallInfo;
+    info: CallInfoState;
     kind: IncomingCallKind;
     startTime: Date;
 }
@@ -4655,7 +4662,7 @@ export interface TeamsIncomingCallState {
     callerInfo: CallerInfo;
     endTime?: Date;
     id: string;
-    info: TeamsCallInfo;
+    info: CallInfoState;
     kind: IncomingCallKind;
     startTime: Date;
 }

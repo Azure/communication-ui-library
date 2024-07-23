@@ -665,6 +665,25 @@ export interface AcceptedTransfer {
 }
 
 /**
+ * State to track the types {@link CallInfo} and {@link TeamsCallInfo}
+ * @public
+ */
+export interface CallInfoState {
+  /**
+   * GroupId of the call that you joined
+   */
+  groupId?: string;
+  /**
+   * The teams meeting thread id
+   */
+  threadId?: string;
+  /**
+   * participant id of the local user
+   */
+  participantId: string;
+}
+
+/**
  * State only version of {@link @azure/communication-calling#IncomingCall}. {@link StatefulCallClient} will
  * automatically detect incoming calls and add their state to the state exposed by {@link StatefulCallClient}.
  *
@@ -682,7 +701,7 @@ export interface IncomingCallState {
   /**
    * Proxy of {@link @azure/communication-calling#IncomingCall.callInfo}.
    */
-  info: CallInfo;
+  info: CallInfoState;
   /**
    * Proxy of {@link @azure/communication-calling#IncomingCall.callerInfo}.
    */
@@ -716,7 +735,7 @@ export interface TeamsIncomingCallState {
   /**
    * Proxy of {@link @azure/communication-calling#TeamsIncomingCall.teamsCallInfo}.
    */
-  info: TeamsCallInfo;
+  info: CallInfoState;
   /**
    * Proxy of {@link @azure/communication-calling#IncomingCallCommon.kind}
    */
