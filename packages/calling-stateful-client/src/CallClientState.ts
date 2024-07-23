@@ -17,7 +17,6 @@ import {
   ScalingMode,
   VideoDeviceInfo
 } from '@azure/communication-calling';
-/* @conditional-compile-remove(meeting-id) */
 import { TeamsCallInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(calling-beta-sdk) */
 import { CallInfo } from '@azure/communication-calling';
@@ -623,7 +622,6 @@ export interface CallState {
    * Proxy of {@link @azure/communication-calling#SpotlightCallFeature}.
    */
   spotlight?: SpotlightCallFeatureState;
-  /* @conditional-compile-remove(meeting-id) */
   /**
    * Proxy of {@link @azure/communication-calling#Call.info}.
    */
