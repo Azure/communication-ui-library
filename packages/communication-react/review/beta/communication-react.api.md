@@ -1846,6 +1846,10 @@ export interface ChatCompositeProps extends BaseCompositeProps<ChatCompositeIcon
 // @public
 export interface ChatCompositeStrings {
     chatListHeader: string;
+    imageDataNotProvided: string;
+    imageExtensionIsNotAllowed: string;
+    imageIsTooLarge: string;
+    unableToUploadImage: string;
     uploadAttachment: string;
 }
 
@@ -3529,7 +3533,6 @@ export type MessageThreadSelector = (state: ChatClientState, props: ChatBaseSele
 export interface MessageThreadStrings {
     actionMenuMoreOptions?: string;
     attachmentCardGroupMessage: string;
-    attachmentUploadsPendingError: string;
     blockedWarningLinkText: string;
     blockedWarningText: string;
     downloadAttachment: string;
@@ -3541,6 +3544,7 @@ export interface MessageThreadStrings {
     editMessage: string;
     failToSendTag?: string;
     friday: string;
+    imageUploadsPendingError: string;
     liveAuthorIntro: string;
     messageContentAriaText: string;
     messageContentMineAriaText: string;
@@ -4179,6 +4183,7 @@ export interface RichTextSendBoxStrings extends RichTextStrings, SendBoxStrings 
 
 // @beta
 export interface RichTextStrings {
+    imageUploadsPendingError: string;
     richTextBoldTooltip: string;
     richTextBulletedListAppliedAnnouncement: string;
     richTextBulletListTooltip: string;
@@ -4237,6 +4242,7 @@ export const SendBox: (props: SendBoxProps) => JSX.Element;
 
 // @beta
 export interface SendBoxErrorBarError {
+    errorBarType?: MessageBarType;
     message: string;
     timestamp: number;
 }

@@ -4,6 +4,8 @@
 import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { RichTextInputBoxComponent } from './RichTextInputBoxComponent';
 import { Icon, Stack } from '@fluentui/react';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+import { MessageBarType } from '@fluentui/react';
 import { useLocale } from '../../localization';
 import { SendBoxStrings } from '../SendBox';
 import { sendIconStyle } from '../styles/SendBox.styles';
@@ -182,6 +184,11 @@ export interface RichTextStrings {
    * Text for announcement when the numbered list style is applied.
    */
   richTextNumberedListAppliedAnnouncement: string;
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  /**
+   * Error message indicating image upload is not complete.
+   */
+  imageUploadsPendingError: string;
 }
 
 /**
@@ -357,15 +364,25 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     /* @conditional-compile-remove(file-sharing-acs) */
     setAttachmentUploadsPendingError(undefined);
 
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    const hasIncompleteImageUploads = hasIncompleteAttachmentUploads(imageUploadsInProgress);
     /* @conditional-compile-remove(file-sharing-acs) */
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
     if (
       /* @conditional-compile-remove(file-sharing-acs) */ hasIncompleteAttachmentUploads(attachments) ||
-      /* @conditional-compile-remove(rich-text-editor-image-upload) */ hasIncompleteAttachmentUploads(
-        imageUploadsInProgress
-      )
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */ hasIncompleteImageUploads
     ) {
-      setAttachmentUploadsPendingError({ message: strings.attachmentUploadsPendingError, timestamp: Date.now() });
+      /* @conditional-compile-remove(file-sharing-acs) */
+      let errorMessage = strings.attachmentUploadsPendingError;
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */
+      if (hasIncompleteImageUploads) {
+        errorMessage = strings.imageUploadsPendingError || '';
+      }
+      setAttachmentUploadsPendingError({
+        message: errorMessage,
+        timestamp: Date.now(),
+        errorBarType: MessageBarType.info
+      });
       return;
     }
 
@@ -414,8 +431,9 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     contentValue,
     hasContent,
     /* @conditional-compile-remove(file-sharing-acs) */
-    /* @conditional-compile-remove(rich-text-editor-image-upload) */
     strings.attachmentUploadsPendingError,
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    strings.imageUploadsPendingError,
     onSendMessage
   ]);
 
@@ -477,7 +495,8 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
       attachmentProgressError: errorMessage
         ? {
             message: errorMessage,
-            timestamp: Date.now()
+            timestamp: Date.now(),
+            errorBarType: MessageBarType.error
           }
         : undefined,
       systemMessage: systemMessage,

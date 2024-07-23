@@ -1,8 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { MessageBar, MessageBarType } from '@fluentui/react';
+import { MessageBar } from '@fluentui/react';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+import { MessageBarType } from '@fluentui/react';
 import React, { useEffect } from 'react';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+import { useLocale } from '../localization';
 
 /**
  * @beta
@@ -15,6 +19,11 @@ export interface SendBoxErrorBarError {
    * Unix Timestamp. Preferred generation using `Date.now()`
    */
   timestamp: number;
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  /**
+   * ErrorBar type. Defaults to `warning`.
+   */
+  errorBarType?: MessageBarType;
 }
 
 /**
@@ -39,6 +48,9 @@ export interface SendBoxErrorBarProps {
  */
 export const SendBoxErrorBar = (props: SendBoxErrorBarProps): JSX.Element => {
   const { error, dismissAfterMs, onDismiss } = props;
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  const strings = useLocale().strings.errorBar;
+
   const [errorMessage, setErrorMessage] = React.useState(error?.message);
   // Using `any` because `NodeJS.Timeout` here will cause `declaration error` with jest.
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -66,12 +78,16 @@ export const SendBoxErrorBar = (props: SendBoxErrorBarProps): JSX.Element => {
         role="alert"
         aria-label={errorMessage}
         data-testid={'send-box-message-bar'}
-        messageBarType={MessageBarType.warning}
-        styles={{
-          iconContainer: {
-            display: 'none'
-          }
-        }}
+        /* @conditional-compile-remove(rich-text-editor-image-upload) */
+        messageBarType={error?.errorBarType || MessageBarType.warning}
+        /* @conditional-compile-remove(rich-text-editor-image-upload) */
+        isMultiline={true}
+        /* @conditional-compile-remove(rich-text-editor-image-upload) */
+        key={error?.errorBarType || MessageBarType.warning}
+        /* @conditional-compile-remove(rich-text-editor-image-upload) */
+        onDismiss={onDismiss}
+        /* @conditional-compile-remove(rich-text-editor-image-upload) */
+        dismissButtonAriaLabel={strings.dismissButtonAriaLabel}
       >
         {errorMessage}
       </MessageBar>

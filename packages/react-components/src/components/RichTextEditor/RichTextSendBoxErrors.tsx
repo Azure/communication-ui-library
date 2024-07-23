@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { SendBoxErrorBar, SendBoxErrorBarError } from '../SendBoxErrorBar';
 
 /**
@@ -80,19 +80,28 @@ export const RichTextSendBoxErrors = (props: RichTextSendBoxErrorsProps): JSX.El
   const onDismiss = useCallback(() => {
     if (systemMessage && !isMessageEmpty(systemMessage)) {
       setSendBoxError({ message: systemMessage, timestamp: Date.now() });
+      return;
     }
-  }, [systemMessage]);
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    if (attachmentProgressError || attachmentUploadsPendingError) {
+      setSendBoxError(undefined);
+      return;
+    }
+  }, [
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */ attachmentProgressError,
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */ attachmentUploadsPendingError,
+    systemMessage
+  ]);
 
-  return (
-    <SendBoxErrorBar
-      error={sendBoxError}
-      dismissAfterMs={
-        // don't dismiss the system message
-        systemMessage !== undefined && sendBoxError?.message !== systemMessage ? 10 * 1000 : undefined
-      }
-      onDismiss={onDismiss}
-    />
-  );
+  const dismissAfterMs = useMemo(() => {
+    // don't dismiss the system message
+    if (systemMessage) {
+      return sendBoxError?.message !== systemMessage ? 10 * 1000 : undefined;
+    }
+    return 10 * 1000;
+  }, [sendBoxError?.message, systemMessage]);
+
+  return <SendBoxErrorBar error={sendBoxError} dismissAfterMs={dismissAfterMs} onDismiss={onDismiss} />;
 };
 
 const isMessageEmpty = (message: string): boolean => {

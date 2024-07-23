@@ -351,7 +351,11 @@
   },
   "chat": {
     "chatListHeader": "In this chat",
-    "uploadAttachment": "Upload Attachment"
+    "uploadAttachment": "Upload Attachment",
+    "imageDataNotProvided": "Image data is not provided.",
+    "imageIsTooLarge": "Image is too large. Choose one that's less than {maxImageSize} MB.",
+    "imageExtensionIsNotAllowed": "Uploading .{imageExtension} image is not allowed.",
+    "unableToUploadImage": "Unable to upload image. Please try again later."
   },
   "callWithChat": {
     "chatButtonLabel": "Chat",

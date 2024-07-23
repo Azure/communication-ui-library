@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 import { mergeStyles, Stack } from '@fluentui/react';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+import { MessageBarType } from '@fluentui/react';
 import { ChatMyMessage } from '@fluentui-contrib/react-chat';
 import { mergeClasses } from '@fluentui/react-components';
 import { _formatString } from '@internal/acs-ui-common';
@@ -202,7 +204,11 @@ export const ChatMessageComponentAsRichTextEditBox = (
 
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
     if (hasIncompleteAttachmentUploads(imageUploadsInProgress)) {
-      setAttachmentUploadsPendingError({ message: strings.attachmentUploadsPendingError, timestamp: Date.now() });
+      setAttachmentUploadsPendingError({
+        message: strings.imageUploadsPendingError,
+        timestamp: Date.now(),
+        errorBarType: MessageBarType.info
+      });
       return;
     }
 
@@ -227,7 +233,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
     imageUploadsInProgress,
     textValue,
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    strings.attachmentUploadsPendingError,
+    strings.imageUploadsPendingError,
     onSubmit,
     /* @conditional-compile-remove(file-sharing-acs) */
     attachmentMetadata
@@ -339,7 +345,8 @@ export const ChatMessageComponentAsRichTextEditBox = (
             imageUploadErrorMessage
               ? {
                   message: imageUploadErrorMessage,
-                  timestamp: Date.now()
+                  timestamp: Date.now(),
+                  errorBarType: MessageBarType.error
                 }
               : undefined
           }

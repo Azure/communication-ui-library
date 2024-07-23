@@ -25,7 +25,7 @@ const attachmentSelectionHandler: AttachmentSelectionHandler = async (
     const fileExtension = task.file?.name.split('.').pop() ?? '';
 
     if (task.file && task.file?.size > MAX_FILE_SIZE_MB) {
-      task.notifyUploadFailed(`"${task.file?.name}" is too big. Select a file under 50MB.`);
+      task.notifyUploadFailed(`"${task.file?.name}" is too large. Choose one that's less than 50MB.`);
       continue;
     }
 
