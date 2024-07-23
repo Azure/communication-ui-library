@@ -8,7 +8,7 @@ import { useMemo } from 'react';
 import { useLocale } from '../../localization';
 import { _AttachmentCard } from './AttachmentCard';
 import { _AttachmentCardGroup, _AttachmentCardGroupLayout } from './AttachmentCardGroup';
-import { _formatString, _toCommunicationIdentifier, _isIdentityMicrosoftTeamsUser } from '@internal/acs-ui-common';
+import { _formatString, _isIdentityMicrosoftTeamsUser } from '@internal/acs-ui-common';
 import { AttachmentMenuAction } from '../../types/Attachment';
 import { AttachmentMetadata } from '@internal/acs-ui-common';
 import { ChatMessage } from '../../types';
