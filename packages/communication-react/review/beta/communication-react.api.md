@@ -3240,10 +3240,14 @@ export interface IncomingCallNotificationStyles {
 export const IncomingCallStack: (props: IncomingCallStackProps) => JSX.Element;
 
 // @beta
+export type IncomingCallStackPosition = 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight' | 'topCenter' | 'bottomCenter';
+
+// @beta
 export interface IncomingCallStackProps {
     activeIncomingCalls: ActiveIncomingCall[];
     onAcceptCall: (incomingCallId: string, useVideo?: boolean) => void;
     onRejectCall: (incomingCallId: string) => void;
+    position?: IncomingCallStackPosition;
     removedIncomingCalls: ActiveIncomingCall[];
 }
 

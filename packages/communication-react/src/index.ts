@@ -180,7 +180,8 @@ export type {
   IncomingCallNotificationStrings,
   IncomingCallNotificationStyles,
   IncomingCallStackProps,
-  ActiveIncomingCall
+  ActiveIncomingCall,
+  IncomingCallStackPosition
 } from '../../react-components/src';
 
 /* @conditional-compile-remove(call-readiness) */
