@@ -60,3 +60,10 @@ export const _isValidIdentifier = (identifier: CommunicationIdentifier): boolean
     isUnknownIdentifier(identifier)
   );
 };
+
+/**
+ * Check if given identifier is a Microsoft Teams user.
+ *
+ * @internal
+ */
+export const isIdentityMicrosoftTeamsUser = isMicrosoftTeamsUserIdentifier;
