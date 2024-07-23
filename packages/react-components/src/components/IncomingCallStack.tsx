@@ -74,8 +74,9 @@ export const IncomingCallStack = (props: IncomingCallStackProps): JSX.Element =>
   return (
     <Stack style={{ top: 0, position: 'absolute' }}>
       {
-        /* @conditional-compile-remove(one-to-n-calling) */ activeIncomingCalls.map((incomingCall) => {
-          if (!removedIncomingCalls.some((call) => call.id === incomingCall.id)) {
+        /* @conditional-compile-remove(one-to-n-calling) */ activeIncomingCalls
+          .filter((incomingCall) => !removedIncomingCalls.some((call) => call.id === incomingCall.id))
+          .map((incomingCall) => {
             return (
               <IncomingCallNotification
                 key={incomingCall.id}
@@ -85,10 +86,7 @@ export const IncomingCallStack = (props: IncomingCallStackProps): JSX.Element =>
                 onReject={() => onRejectCall(incomingCall.id)}
               ></IncomingCallNotification>
             );
-          } else {
-            return null;
-          }
-        })
+          })
       }
     </Stack>
   );
