@@ -27,7 +27,7 @@ import { _preventDismissOnEvent } from '@internal/acs-ui-common';
 import { useLocale } from '../localization';
 /* @conditional-compile-remove(teams-meeting-conference) */
 import { _pxToRem } from '@internal/acs-ui-common';
-import { formatPhoneNumber } from './utils/formatPhoneNumber';
+import { _formatPhoneNumber } from './utils/formatPhoneNumber';
 
 /* @conditional-compile-remove(teams-meeting-conference) */
 /**
@@ -142,7 +142,7 @@ export const MeetingConferencePhoneInfoModal = (props: MeetingConferencePhoneInf
                 {conferencePhoneInfoList.map((phoneNumber, index) => (
                   <Stack.Item key={index}>
                     <Text className={phoneInfoTextStyle}>
-                      {formatPhoneNumber(phoneNumber.phoneNumber, true)}{' '}
+                      {_formatPhoneNumber(phoneNumber.phoneNumber, true)}{' '}
                       {phoneNumber.isTollFree
                         ? strings.meetingConferencePhoneInfoModalTollFree
                         : strings.meetingConferencePhoneInfoModalToll}

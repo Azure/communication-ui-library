@@ -2,9 +2,9 @@
 // Licensed under the MIT License.
 
 /**
- * @private
+ * @internal
  */
-export const formatPhoneNumber = (phoneNumber: string, enchant?: boolean): string => {
+export const _formatPhoneNumber = (phoneNumber: string, enchant?: boolean): string => {
   // if input value is falsy eg if the user deletes the input, then just return
   if (!phoneNumber) {
     return phoneNumber;
