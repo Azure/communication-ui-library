@@ -27,7 +27,7 @@ import {
   hasIncompleteAttachmentUploads,
   insertImagesToContentString,
   isAttachmentUploadCompleted,
-  removeBrokenImageContent
+  removeBrokenImageContentAndClearImageSizeStyles
 } from '../../utils/SendBoxUtils';
 import {
   getMessageState,
@@ -212,7 +212,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
 
     let content = textValue;
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    content = removeBrokenImageContent(content);
+    content = removeBrokenImageContentAndClearImageSizeStyles(content);
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
     if (isAttachmentUploadCompleted(imageUploadsInProgress)) {
       insertImagesToContentString(textValue, imageUploadsInProgress, (content) => {
