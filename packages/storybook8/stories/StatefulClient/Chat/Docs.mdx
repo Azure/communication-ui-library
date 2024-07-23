@@ -1,5 +1,5 @@
 import { Stack } from '@fluentui/react';
-import { Markdown, Meta, Source } from '@storybook/addon-docs';
+import { Meta, Source } from '@storybook/addon-docs';
 import ChatAppStateful from '!!raw-loader!./snippets/ChatAppStateful.snippet.tsx';
 import ChatAppStatefulComplete from '!!raw-loader!./snippets/ChatAppStatefulComplete.snippet.tsx';
 import ChatAppStatefulProviders from '!!raw-loader!./snippets/ChatAppStatefulProviders.snippet.tsx';
@@ -82,8 +82,6 @@ npm run start
 
 The following classes and interfaces from the Azure Communication Services UI client library are referenced in this quickstart:
 
-<Markdown>
-  {`
 | Name                                                                                                                            | Description                                                                              |
 | ------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
 | [ChatClient](https://azuresdkdocs.blob.core.windows.net/$web/javascript/azure-communication-chat/1.0.0/classes/chatclient.html) | Low-level chat library client.                                                           |
@@ -91,8 +89,6 @@ The following classes and interfaces from the Azure Communication Services UI cl
 | [ChatClientProvider](./?path=/story/statefulclient-reacthooks-setup--page)                                                      | Provider allows access to the Stateful Chat Client to the components inside of it        |
 | [ChatThreadClientProvider](./?path=/story/statefulclient-reacthooks-setup--page)                                                | Provider allows access to the Stateful Chat Thread Client to the components inside of it |
 | [usePropsFor](./?path=/story/statefulclient-reacthooks-usepropsfor--page)                                                       | Hook to generate required props to enable UI Components                                  |
-`}
-</Markdown>
 
 ## Instantiate Stateful Chat Client and Chat Thread Client
 
