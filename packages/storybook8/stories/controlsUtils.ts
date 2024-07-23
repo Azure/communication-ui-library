@@ -475,7 +475,7 @@ export const controlsToAdd = {
       name: 'Inject Max # of Custom Buttons'
     }
   },
-  richTextEditor: { control: 'boolean', defaultValue: false, name: 'Enable rich text editor' }
+  richTextEditor: { control: 'boolean', name: 'Enable rich text editor' }
 };
 
 export const hiddenControl = { control: false, table: { disable: true } };
