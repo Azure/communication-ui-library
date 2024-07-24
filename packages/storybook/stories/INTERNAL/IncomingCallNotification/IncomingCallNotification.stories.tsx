@@ -13,14 +13,11 @@ import { COMPONENT_FOLDER_PREFIX } from '../../constants';
 import { controlsToAdd } from '../../controlsUtils';
 import { IncomingCallNotificationExample } from './snippets/IncomingCallNotification.snippet';
 import { IncomingCallNotificationStylingExample } from './snippets/IncomingCallNotificationStyling.snippet';
-import { IncomingCallStackExample } from './snippets/IncomingCallStack.snippet';
 
 const IncomingCallNotificationText: string =
   require('!!raw-loader!./snippets/IncomingCallNotification.snippet.tsx').default;
 const IncomingCallNotificationStylingText: string =
   require('!!raw-loader!./snippets/IncomingCallNotificationStyling.snippet.tsx').default;
-const IncomingCallStackExampleText: string =
-  require('!!raw-loader!./snippets/IncomingCallStackPropsExample.snippet.tsx').default;
 const getDocs: () => JSX.Element = () => {
   return (
     <>
