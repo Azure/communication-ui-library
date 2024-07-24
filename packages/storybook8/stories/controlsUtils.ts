@@ -438,36 +438,37 @@ export const controlsToAdd = {
       options: ['undefined', false, true],
       name: 'Show Label'
     },
-    allowRawObjectInput: {
-      control: 'boolean',
-      defaultValue: false,
-      if: { arg: 'injectMaximumNumberOfButtons', truthy: false },
-      name: 'Inject your own buttons'
-    },
-    objectOptions: {
-      control: 'object',
-      if: { arg: 'allowRawObjectInput' },
-      defaultValue: [
-        (): CustomCallControlButtonProps => ({
-          placement: 'primary',
-          strings: {
-            label: 'Custom'
-          }
-        }),
-        (): CustomCallControlButtonProps => ({
-          placement: 'secondary',
-          strings: {
-            label: 'Custom'
-          }
-        }),
-        (): CustomCallControlButtonProps => ({
-          placement: 'overflow',
-          strings: {
-            label: 'Custom'
-          }
-        })
-      ]
-    },
+    // Object injection is converting function consts to string. This is causing errors with this control.
+    // allowRawObjectInput: {
+    //   control: 'boolean',
+    //   defaultValue: false,
+    //   if: { arg: 'injectMaximumNumberOfButtons', truthy: false },
+    //   name: 'Inject your own buttons'
+    // },
+    // objectOptions: {
+    //   control: 'object',
+    //   if: { arg: 'allowRawObjectInput' },
+    //   defaultValue: [
+    //     (): CustomCallControlButtonProps => ({
+    //       placement: 'primary',
+    //       strings: {
+    //         label: 'Custom'
+    //       }
+    //     }),
+    //     (): CustomCallControlButtonProps => ({
+    //       placement: 'secondary',
+    //       strings: {
+    //         label: 'Custom'
+    //       }
+    //     }),
+    //     (): CustomCallControlButtonProps => ({
+    //       placement: 'overflow',
+    //       strings: {
+    //         label: 'Custom'
+    //       }
+    //     })
+    //   ]
+    // },
     injectMaximumNumberOfButtons: {
       control: 'boolean',
       defaultValue: false,
