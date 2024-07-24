@@ -41,8 +41,8 @@
   "devDependencies": {
     "@azure/communication-calling": "1.27.1-beta.2 || ^1.26.2",
     "@azure/core-auth": "^1.4.0",
-    "@babel/cli": "^7.24.7",
-    "@babel/core": "^7.24.7",
+    "@babel/cli": "^7.24.8",
+    "@babel/core": "^7.24.9",
     "@types/jest": "^29.5.11",
     "@types/react": "18.3.3",
     "@typescript-eslint/eslint-plugin": "^7.14.1",
