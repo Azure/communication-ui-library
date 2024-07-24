@@ -4,7 +4,7 @@
 import { NotificationStack as NotificationStackComponent } from '@azure/communication-react';
 import { Meta } from '@storybook/react';
 
-import { controlsToAdd, hiddenControl } from '../../controlsUtils';
+import { controlsToAdd, defaultActiveNotifications, hiddenControl } from '../../controlsUtils';
 import { NotificationStackExample } from './snippets/NotificationStack.snippet';
 
 export { NotificationStack } from './NotificationStack.story';
@@ -21,6 +21,9 @@ const meta: Meta = {
     maxNotificationsToShow: controlsToAdd.maxNotificationsToShow,
     strings: hiddenControl,
     ignorePremountNotifications: hiddenControl
+  },
+  args: {
+    activeNotifications: defaultActiveNotifications
   }
 };
 

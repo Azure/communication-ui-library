@@ -188,6 +188,8 @@ const notificationOptions: NotificationType[] = [
   'transcriptionStoppedStillRecording'
 ];
 
+export const defaultActiveNotifications = [{ type: 'startVideoGeneric' }];
+
 export const controlsToAdd = {
   alternateCallerId: {
     control: 'text',
@@ -521,7 +523,6 @@ export const controlsToAdd = {
   activeNotifications: {
     control: 'check',
     options: notificationOptions,
-    defaultValue: ['startVideoGeneric'],
     name: 'Active notifications to show'
   },
   maxNotificationsToShow: {

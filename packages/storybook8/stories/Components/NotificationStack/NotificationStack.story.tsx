@@ -13,11 +13,9 @@ const NotificationStackStory = (args: {
   activeNotifications: NotificationType[];
   maxNotificationsToShow: number;
 }): JSX.Element => {
-  const activeNotifications: ActiveNotification[] = args.activeNotifications
-    ? args.activeNotifications.map((t) => ({
-        type: t
-      }))
-    : [{ type: 'startVideoGeneric' }];
+  const activeNotifications: ActiveNotification[] = args.activeNotifications.map((t) => ({
+    type: t
+  }));
   return (
     <FluentThemeProvider>
       <div style={{ margin: '1rem' }}>
