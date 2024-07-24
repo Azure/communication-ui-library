@@ -401,7 +401,9 @@ const createEditorInitialModel = (
 };
 
 const setSelectionAfterLastSegment = (model: ReadonlyContentModelBlockGroup, block: ContentModelParagraph): void => {
-  const marker = createSelectionMarker();
+  //selection marker should have the same format as the last segment if any
+  const format = block.segments.length > 0 ? block.segments[block.segments.length - 1].format : undefined;
+  const marker = createSelectionMarker(format);
   block.segments.push(marker);
   setSelection(model, marker);
 };
