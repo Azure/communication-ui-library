@@ -117,9 +117,7 @@ export const SidePane = (props: SidePaneProps): JSX.Element => {
                   : scrollableContainerContents
               }
             >
-              <Stack styles={containerContextStyles}>
-                {OverrideContentRender?.()}
-              </Stack>
+              <Stack styles={containerContextStyles}>{OverrideContentRender?.()}</Stack>
             </Stack.Item>
           )}
         </Stack>

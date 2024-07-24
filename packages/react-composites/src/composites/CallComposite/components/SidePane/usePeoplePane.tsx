@@ -105,7 +105,7 @@ export const usePeoplePane = (props: {
     onMuteAllRemoteParticipants && onMuteAllRemoteParticipants();
     setShowMuteAllPrompt(false);
   }, [onMuteAllRemoteParticipants, setShowMuteAllPrompt]);
-  
+
   const sidePaneHeaderMenuProps: IContextualMenuProps = useMemo(() => {
     const menuItems: IContextualMenuItem[] = [];
     /* @conditional-compile-remove(soft-mute) */
@@ -171,7 +171,7 @@ export const usePeoplePane = (props: {
   );
 
   const onFetchParticipantMenuItemsForCallComposite = useCallback(
-    ( participantId: string, myUserId?: string, defaultMenuItems?: IContextualMenuItem[]): IContextualMenuItem[] => {
+    (participantId: string, myUserId?: string, defaultMenuItems?: IContextualMenuItem[]): IContextualMenuItem[] => {
       let isPinned = pinnedParticipants?.includes(participantId);
       const _defaultMenuItems: IContextualMenuItem[] = [];
       const isSpotlighted = spotlightedParticipantUserIds?.includes(participantId);
