@@ -381,6 +381,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
       setAttachmentUploadsPendingError({
         message: errorMessage,
         timestamp: Date.now(),
+        /* @conditional-compile-remove(rich-text-editor-image-upload) */
         errorBarType: SendBoxErrorBarType.info
       });
       return;
@@ -496,6 +497,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
         ? {
             message: errorMessage,
             timestamp: Date.now(),
+            /* @conditional-compile-remove(rich-text-editor-image-upload) */
             errorBarType: SendBoxErrorBarType.error
           }
         : undefined,
