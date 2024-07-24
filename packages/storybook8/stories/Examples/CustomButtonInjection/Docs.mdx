@@ -2,6 +2,7 @@ import { Canvas, Meta } from '@storybook/blocks';
 import { CustomButtonInjection as CustomButtonInjectionComponent } from './snippets/CustomButtonInjectionTypes';
 import * as CustomButtonInjectionStories from './index.stories';
 import { addCSS } from '../../utils';
+import { initializeIcons } from '@fluentui/react';
 
 import CustomButtonWithAsyncStateExampleText from '!!raw-loader!./snippets/CustomButtonWithAsyncStateText.snippet.tsx';
 import CustomButtonWithStateExampleText from '!!raw-loader!./snippets/CustomButtonWithStateText.snippet.tsx';
@@ -18,6 +19,7 @@ import SecondaryCustomButtonInjectionExampleText from '!!raw-loader!./snippets/S
 
 <div id='custom-button-injection-story'>
 <script> { addCSS('#custom-button-injection-story button[aria-label="Custom"]{ border: 1px solid green; }') } </script>
+<script> {initializeIcons()} </script>
 
 # Custom Button Injection
 
