@@ -120,12 +120,12 @@ const inlineImageUploadHandler = async (
     const uploadTask = task as AttachmentUploadTask;
     const image: Blob | undefined = uploadTask.image;
     if (!image) {
-      uploadTask.notifyUploadFailed(strings.imageDataNotProvided);
+      uploadTask.notifyUploadFailed(strings.uploadImageDataNotProvided);
       continue;
     }
     if (image && image.size > MAX_INLINE_IMAGE_UPLOAD_SIZE_MB * 1024 * 1024) {
       uploadTask.notifyUploadFailed(
-        strings.imageIsTooLarge.replace('{maxImageSize}', `${MAX_INLINE_IMAGE_UPLOAD_SIZE_MB}`)
+        strings.uploadImageIsTooLarge.replace('{maxImageSize}', `${MAX_INLINE_IMAGE_UPLOAD_SIZE_MB}`)
       );
       continue;
     }
@@ -133,7 +133,9 @@ const inlineImageUploadHandler = async (
     const SUPPORTED_FILES: Array<string> = ['jpg', 'jpeg', 'png', 'gif', 'heic', 'webp'];
     const imageExtension = task.metadata?.name.split('.').pop() ?? '';
     if (!SUPPORTED_FILES.includes(imageExtension)) {
-      uploadTask.notifyUploadFailed(strings.imageExtensionIsNotAllowed.replace('{imageExtension}', imageExtension));
+      uploadTask.notifyUploadFailed(
+        strings.uploadImageExtensionIsNotAllowed.replace('{imageExtension}', imageExtension)
+      );
       continue;
     }
 
@@ -142,7 +144,7 @@ const inlineImageUploadHandler = async (
       uploadTask.notifyUploadCompleted(response.id, task.metadata.url || '');
     } catch (error) {
       console.error(error);
-      uploadTask.notifyUploadFailed(strings.unableToUploadImage);
+      uploadTask.notifyUploadFailed(strings.uploadImageFailed);
     }
   }
 };

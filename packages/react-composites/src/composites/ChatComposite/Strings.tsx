@@ -23,20 +23,20 @@ export interface ChatCompositeStrings {
   /**
    * Error Message for image data is not provided for image upload
    */
-  imageDataNotProvided: string;
+  uploadImageDataNotProvided: string;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   /**
    * Error Message for upload image is too large
    */
-  imageIsTooLarge: string;
+  uploadImageIsTooLarge: string;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   /**
    * Error Message for unsupported image extension for image upload
    */
-  imageExtensionIsNotAllowed: string;
+  uploadImageExtensionIsNotAllowed: string;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   /**
    * Error Message for unable to upload image
    */
-  unableToUploadImage: string;
+  uploadImageFailed: string;
 }
