@@ -120,6 +120,8 @@ export interface CallArrangementProps {
   onDismissError: (
     error: ActiveErrorMessage | /* @conditional-compile-remove(notifications) */ ActiveNotification
   ) => void;
+  /* @conditional-compile-remove(notifications) */
+  onDismissNotification?: (notification: ActiveNotification) => void;
   onUserSetOverflowGalleryPositionChange?: (position: 'Responsive' | 'horizontalTop') => void;
   onUserSetGalleryLayoutChange?: (layout: VideoGalleryLayout) => void;
   userSetGalleryLayout?: VideoGalleryLayout;
@@ -482,6 +484,17 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   const minMaxDragPosition = useMinMaxDragPosition(props.modalLayerHostId);
   const pipStyles = useMemo(() => getPipStyles(theme), [theme]);
 
+  /* @conditional-compile-remove(notifications) */
+  if (isTeamsMeeting) {
+    filteredLatestErrorNotifications
+      .filter((notification) => notification.type === 'teamsMeetingCallNetworkQualityLow')
+      .forEach((notification) => {
+        notification.onClickPrimaryButton = props.mobileView
+          ? toggleMeetingPhoneInfoPane
+          : toggleTeamsMeetingConferenceModal;
+      });
+  }
+
   const verticalControlBar =
     props.mobileView && containerWidth && containerHeight && containerWidth / containerHeight > 1 ? true : false;
 
@@ -534,6 +547,16 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
           />
         )}
       </>
+    );
+  };
+
+  const complianceBannerTrampoline = (): JSX.Element => {
+    /* @conditional-compile-remove(notifications) */
+    return <></>;
+    return (
+      <Stack styles={bannerNotificationStyles}>
+        <_ComplianceBanner {...props.complianceBannerProps} />
+      </Stack>
     );
   };
 
@@ -632,14 +655,16 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
               <Stack.Item styles={callGalleryStyles} grow>
                 <Stack verticalFill styles={mediaGalleryContainerStyles}>
                   <Stack.Item styles={notificationsContainerStyles}>
-                    <Stack styles={bannerNotificationStyles}>
-                      <_ComplianceBanner {...props.complianceBannerProps} />
-                    </Stack>
+                    {complianceBannerTrampoline()}
+
                     {errorNotificationTrampoline()}
                     {
                       /* @conditional-compile-remove(notifications) */ props.latestNotifications && (
                         <Stack styles={notificationStackStyles} horizontalAlign="center" verticalAlign="center">
-                          <NotificationStack activeNotifications={props.latestNotifications} />
+                          <NotificationStack
+                            activeNotifications={props.latestNotifications}
+                            onDismissNotification={props.onDismissNotification}
+                          />
                         </Stack>
                       )
                     }

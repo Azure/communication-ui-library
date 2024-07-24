@@ -22,6 +22,10 @@ export class PlaceholderPlugin extends WatermarkPlugin {
   initialize(editor: IEditor): void {
     this.editorValue = editor;
     super.initialize(editor);
+
+    // Hide/show the placeholder as workaround for the placeholder not hiding in some cases
+    this.hide(this.editorValue);
+    this.show(this.editorValue);
   }
   dispose(): void {
     this.editorValue = null;

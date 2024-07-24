@@ -9,6 +9,8 @@ import {
   getEnvironmentInfo
 } from './baseSelectors';
 /* @conditional-compile-remove(notifications) */
+import { getMeetingConferencePhones } from './baseSelectors';
+/* @conditional-compile-remove(notifications) */
 import { ActiveNotification, NotificationType } from '@internal/react-components';
 /* @conditional-compile-remove(notifications) */
 import { createSelector } from 'reselect';
@@ -20,7 +22,7 @@ import { DiagnosticQuality } from '@azure/communication-calling';
 /**
  * Selector type for {@link Notification} component.
  *
- * @beta
+ * @public
  */
 export type NotificationStackSelector = (
   state: CallClientState,
@@ -37,15 +39,22 @@ export type NotificationStackSelector = (
  *   - `ErrorType` is never repeated in the returned errors.
  *   - Errors are returned in a fixed order by `ErrorType`.
  *
- * @beta
+ * @public
  */
 export const notificationStackSelector: NotificationStackSelector = createSelector(
-  [getLatestErrors, getDiagnostics, getDeviceManager, getEnvironmentInfo],
+  [
+    getLatestErrors,
+    getDiagnostics,
+    getDeviceManager,
+    getEnvironmentInfo,
+    /* @conditional-compile-remove(teams-meeting-conference) */ getMeetingConferencePhones
+  ],
   (
     latestErrors: CallErrors,
     diagnostics,
     deviceManager,
-    environmentInfo
+    environmentInfo,
+    /* @conditional-compile-remove(teams-meeting-conference) */ meetingConference
   ): { activeErrorMessages: ActiveNotification[]; activeNotifications: ActiveNotification[] } => {
     // The order in which the errors are returned is significant: The `Notification` shows errors on the UI in that order.
     // There are several options for the ordering:
@@ -69,11 +78,20 @@ export const notificationStackSelector: NotificationStackSelector = createSelect
     };
 
     // Errors reported via diagnostics are more reliable than from API method failures, so process those first.
+    let isTeamsMeetingWithPhones = false;
+    /* @conditional-compile-remove(teams-meeting-conference) */
+    if (meetingConference && meetingConference.length > 0) {
+      isTeamsMeetingWithPhones = true;
+    }
     if (
       diagnostics?.network.latest.networkReceiveQuality?.value === DiagnosticQuality.Bad ||
       diagnostics?.network.latest.networkReceiveQuality?.value === DiagnosticQuality.Poor
     ) {
-      activeErrorMessages.push({ type: 'callNetworkQualityLow' });
+      if (isTeamsMeetingWithPhones) {
+        activeErrorMessages.push({ type: 'teamsMeetingCallNetworkQualityLow' });
+      } else {
+        activeErrorMessages.push({ type: 'callNetworkQualityLow' });
+      }
     }
     if (diagnostics?.media.latest.noSpeakerDevicesEnumerated?.value === true) {
       activeErrorMessages.push({ type: 'callNoSpeakerFound' });
@@ -196,14 +214,10 @@ export const notificationStackSelector: NotificationStackSelector = createSelect
     }
 
     //below is for active notifications
-    let activeNotifications: ActiveNotification[] = [];
+    const activeNotifications: ActiveNotification[] = [];
     if (diagnostics?.media.latest.speakingWhileMicrophoneIsMuted?.value) {
       activeNotifications.push({ type: 'speakingWhileMuted', timestamp: new Date(Date.now()), autoDismiss: true });
     }
-    // sort notifications by timestamp from earliest to latest
-    activeNotifications = activeNotifications.sort(
-      (a, b) => (a.timestamp ?? new Date(Date.now())).getDate() - (b.timestamp ?? new Date(Date.now())).getDate()
-    );
     return { activeErrorMessages: activeErrorMessages, activeNotifications: activeNotifications };
   }
 );

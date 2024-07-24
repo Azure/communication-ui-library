@@ -342,7 +342,12 @@
     "pinParticipantLimitReachedMenuLabel": "Закрепить (достигнуто ограничение)",
     "unpinParticipantMenuLabel": "Открепить",
     "pinParticipantMenuItemAriaLabel": "Закрепить",
-    "unpinParticipantMenuItemAriaLabel": "Открепить"
+    "unpinParticipantMenuItemAriaLabel": "Открепить",
+    "muteAllMenuLabel": "Отключить все микрофоны",
+    "muteAllDialogTitle": "Отключить микрофоны всех участников?",
+    "muteAllDialogContent": "Будут отключены микрофоны всех участников собрания, кроме вас.",
+    "muteAllConfirmButtonLabel": "Отключить все микрофоны",
+    "muteAllCancelButtonLabel": "Отмена"
   },
   "chat": {
     "chatListHeader": "В этом чате",
