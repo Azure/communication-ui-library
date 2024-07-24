@@ -2,11 +2,12 @@
 // Licensed under the MIT License.
 
 import {
+  DefaultButton,
   IButtonStyles,
   IStackStyles,
-  IconButton,
   Persona,
   PersonaSize,
+  PrimaryButton,
   Stack,
   Text,
   Theme,
@@ -138,53 +139,56 @@ export const IncomingCallNotification = (props: IncomingCallNotificationProps): 
   const localeStrings = useLocale().strings.IncomingCallNotification;
   return (
     <Stack
-      horizontal
       tokens={{ childrenGap: '0.5rem' }}
       verticalAlign="center"
       styles={styles?.root ? styles.root : incomingCallToastStyle(theme)}
     >
-      <Stack
-        horizontalAlign="start"
-        styles={styles?.avatarContainer ? styles.avatarContainer : incomingCallToastAvatarContainerStyle}
-      >
-        <Persona
-          imageUrl={avatarImage}
-          text={callerName}
-          size={PersonaSize.size40}
-          coinSize={personaSize}
-          hidePersonaDetails={true}
-          aria-label={callerName}
-        />
+      <Stack horizontal>
+        <Stack
+          horizontalAlign="start"
+          styles={styles?.avatarContainer ? styles.avatarContainer : incomingCallToastAvatarContainerStyle}
+        >
+          <Persona
+            imageUrl={avatarImage}
+            text={callerName}
+            size={PersonaSize.size40}
+            coinSize={personaSize}
+            hidePersonaDetails={true}
+            aria-label={callerName}
+          />
+        </Stack>
+
+        <Stack grow={1} horizontalAlign="center" style={{ alignItems: 'flex-start', fontFamily: 'Segoe UI' }}>
+          <Stack style={{ fontSize: '0.875rem' }}>
+            <Text>
+              {callerName ??
+                strings?.incomingCallNotificationPlaceholderId ??
+                /* @conditional-compile-remove(one-to-n-calling) */ localeStrings.incomingCallNotificationPlaceholderId}
+            </Text>
+          </Stack>
+          <Stack style={{ fontSize: '0.75rem' }}>
+            <Text>
+              {alertText ??
+                strings?.incomingCallNotificationPlaceholderAlert ??
+                /* @conditional-compile-remove(one-to-n-calling) */ localeStrings.incomingCallNotificationPlaceholderAlert}
+            </Text>
+          </Stack>
+        </Stack>
       </Stack>
 
-      <Stack grow={1} horizontalAlign="center" style={{ alignItems: 'flex-start', fontFamily: 'Segoe UI' }}>
-        <Stack style={{ fontSize: '0.875rem' }}>
-          <Text>
-            {callerName ??
-              strings?.incomingCallNotificationPlaceholderId ??
-              /* @conditional-compile-remove(one-to-n-calling) */ localeStrings.incomingCallNotificationPlaceholderId}
-          </Text>
-        </Stack>
-        <Stack style={{ fontSize: '0.75rem' }}>
-          <Text>
-            {alertText ??
-              strings?.incomingCallNotificationPlaceholderAlert ??
-              /* @conditional-compile-remove(one-to-n-calling) */ localeStrings.incomingCallNotificationPlaceholderAlert}
-          </Text>
-        </Stack>
-      </Stack>
-
-      <Stack horizontal tokens={{ childrenGap: 10 }}>
-        <IconButton
-          styles={styles?.rejectButton ? styles.rejectButton : incomingCallRejectButtonStyle(theme)}
-          onClick={() => onReject()}
-          iconProps={{ iconName: 'IncomingCallNotificationRejectIcon' }}
+      <Stack horizontal styles={buttonContainerStyles} tokens={{ childrenGap: 10 }}>
+        <PrimaryButton
+          styles={styles?.acceptButton ? styles.acceptButton : incomingCallAcceptButtonStyle(theme)}
+          onClick={() => onAcceptWithAudio()}
+          iconProps={{ iconName: 'IncomingCallNotificationAcceptIcon' }}
+          label={'Accept'}
           /* @conditional-compile-remove(one-to-n-calling) */
           ariaLabel={
-            strings?.incomingCallNoticicationRejectAriaLabel ?? localeStrings.incomingCallNoticicationRejectAriaLabel
+            strings?.incomingCallNoticicationAcceptWithAudioAriaLabel ??
+            localeStrings.incomingCallNoticicationAcceptWithAudioAriaLabel
           }
         />
-        <IconButton
+        <PrimaryButton
           styles={styles?.acceptButton ? styles.acceptButton : incomingCallAcceptButtonStyle(theme)}
           onClick={() => onAcceptWithVideo()}
           iconProps={{ iconName: 'IncomingCallNotificationAcceptWithVideoIcon' }}
@@ -194,14 +198,14 @@ export const IncomingCallNotification = (props: IncomingCallNotificationProps): 
             localeStrings.incomingCallNoticicationAcceptWithVideoAriaLabel
           }
         />
-        <IconButton
-          styles={styles?.acceptButton ? styles.acceptButton : incomingCallAcceptButtonStyle(theme)}
-          onClick={() => onAcceptWithAudio()}
-          iconProps={{ iconName: 'IncomingCallNotificationAcceptIcon' }}
+        <DefaultButton
+          styles={styles?.rejectButton ? styles.rejectButton : incomingCallRejectButtonStyle(theme)}
+          onClick={() => onReject()}
+          label={'Decline'}
+          iconProps={{ iconName: 'IncomingCallNotificationRejectIcon' }}
           /* @conditional-compile-remove(one-to-n-calling) */
           ariaLabel={
-            strings?.incomingCallNoticicationAcceptWithAudioAriaLabel ??
-            localeStrings.incomingCallNoticicationAcceptWithAudioAriaLabel
+            strings?.incomingCallNoticicationRejectAriaLabel ?? localeStrings.incomingCallNoticicationRejectAriaLabel
           }
         />
       </Stack>
@@ -213,7 +217,7 @@ const incomingCallToastStyle = (theme: Theme): IStackStyles => {
   return {
     root: {
       minWidth: '20rem',
-      maxWidth: '40rem',
+      maxWidth: '25rem',
       background: theme.palette.white,
       opacity: 0.95,
       borderRadius: '0.5rem',
@@ -221,6 +225,14 @@ const incomingCallToastStyle = (theme: Theme): IStackStyles => {
       padding: '1rem'
     }
   };
+};
+
+const buttonContainerStyles: IStackStyles = {
+  root: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  }
 };
 
 const incomingCallToastAvatarContainerStyle: IStackStyles = {
@@ -232,11 +244,9 @@ const incomingCallToastAvatarContainerStyle: IStackStyles = {
 const incomingCallAcceptButtonStyle = (theme: Theme): IButtonStyles => {
   return {
     root: {
-      backgroundColor: theme.palette.greenDark,
+      backgroundColor: theme.palette.green,
       color: theme.palette.white,
-      borderRadius: '2rem',
       minWidth: '2rem',
-      width: '2rem',
       border: 'none'
     },
     rootHovered: {
@@ -251,9 +261,7 @@ const incomingCallRejectButtonStyle = (theme: Theme): IButtonStyles => {
     root: {
       backgroundColor: theme.palette.redDark,
       color: theme.palette.white,
-      borderRadius: '2rem',
       minWidth: '2rem',
-      width: '2rem',
       border: 'none'
     },
     rootHovered: {
