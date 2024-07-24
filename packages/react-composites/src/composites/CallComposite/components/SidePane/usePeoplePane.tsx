@@ -105,7 +105,7 @@ export const usePeoplePane = (props: {
     onMuteAllRemoteParticipants && onMuteAllRemoteParticipants();
     setShowMuteAllPrompt(false);
   }, [onMuteAllRemoteParticipants, setShowMuteAllPrompt]);
-
+  
   const sidePaneHeaderMenuProps: IContextualMenuProps = useMemo(() => {
     const menuItems: IContextualMenuItem[] = [];
     /* @conditional-compile-remove(soft-mute) */
@@ -171,7 +171,7 @@ export const usePeoplePane = (props: {
   );
 
   const onFetchParticipantMenuItemsForCallComposite = useCallback(
-    (participantId: string, myUserId?: string, defaultMenuItems?: IContextualMenuItem[]): IContextualMenuItem[] => {
+    ( participantId: string, myUserId?: string, defaultMenuItems?: IContextualMenuItem[]): IContextualMenuItem[] => {
       let isPinned = pinnedParticipants?.includes(participantId);
       const _defaultMenuItems: IContextualMenuItem[] = [];
       const isSpotlighted = spotlightedParticipantUserIds?.includes(participantId);
@@ -324,12 +324,11 @@ export const usePeoplePane = (props: {
 
   const onRenderContent = useCallback((): JSX.Element => {
     return (
-      <div key="asdfusepeoplepane">
+      <>
         {
           /* @conditional-compile-remove(soft-mute) */
           <Prompt
             {...muteAllPromptLabels}
-            key="mute-all-prompt-asdf"
             styles={{ main: { minWidth: '22.5rem', padding: '1.5rem' } }}
             onConfirm={() => onMuteAllPromptConfirm()}
             isOpen={showMuteAllPrompt}
@@ -337,7 +336,6 @@ export const usePeoplePane = (props: {
           />
         }
         <PeoplePaneContent
-          key="people-pane-content-asdf"
           inviteLink={inviteLink}
           onFetchAvatarPersonaData={onFetchAvatarPersonaData}
           onFetchParticipantMenuItems={onFetchParticipantMenuItemsForCallComposite}
@@ -347,7 +345,7 @@ export const usePeoplePane = (props: {
           participantListHeadingMoreButtonProps={sidePaneHeaderMenuProps}
           pinnedParticipants={pinnedParticipants}
         />
-      </div>
+      </>
     );
   }, [
     inviteLink,
