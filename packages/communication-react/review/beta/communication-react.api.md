@@ -1846,11 +1846,11 @@ export interface ChatCompositeProps extends BaseCompositeProps<ChatCompositeIcon
 // @public
 export interface ChatCompositeStrings {
     chatListHeader: string;
+    uploadAttachment: string;
     uploadImageDataNotProvided: string;
     uploadImageExtensionIsNotAllowed: string;
-    uploadImageIsTooLarge: string;
     uploadImageFailed: string;
-    uploadAttachment: string;
+    uploadImageIsTooLarge: string;
 }
 
 // @public
