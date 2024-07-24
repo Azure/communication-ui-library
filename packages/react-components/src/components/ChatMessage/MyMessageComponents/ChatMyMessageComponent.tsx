@@ -21,7 +21,7 @@ import { InlineImageOptions } from '../ChatMessageContent';
 import { ChatMyMessageComponentAsMessageBubble } from './ChatMyMessageComponentAsMessageBubble';
 import { ChatMessageComponentAsEditBoxPicker } from './ChatMessageComponentAsEditBoxPicker';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
-import { removeBrokenImageContent } from '../../utils/SendBoxUtils';
+import { removeBrokenImageContentAndClearImageSizeStyles } from '../../utils/SendBoxUtils';
 
 type ChatMyMessageComponentProps = {
   message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage;
@@ -136,7 +136,7 @@ export const ChatMyMessageComponent = (props: ChatMyMessageComponentProps): JSX.
     onDeleteMessage && clientMessageId && onDeleteMessage(clientMessageId);
     let newContent = content ?? '';
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    newContent = removeBrokenImageContent(newContent);
+    newContent = removeBrokenImageContentAndClearImageSizeStyles(newContent);
     onSendMessage &&
       onSendMessage(
         newContent,

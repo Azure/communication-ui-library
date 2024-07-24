@@ -11,11 +11,14 @@ import { COMPONENT_FOLDER_PREFIX } from '../constants';
 import { hiddenControl, controlsToAdd } from '../controlsUtils';
 import { RichTextSendBoxExample } from './snippets/RichTextSendBox.snippet';
 import { RichTextSendBoxAttachmentUploadsExample } from './snippets/RichTextSendBoxAttachmentUploads.snippet';
+import { RichTextSendBoxOnPasteCallbackExample } from './snippets/RichTextSendBoxOnPasteCallback.snippet';
 import { RichTextSendBoxWithSystemMessageExample } from './snippets/RichTextSendBoxWithSystemMessage.snippet';
 
 const RichTextSendBoxExampleText = require('!!raw-loader!./snippets/RichTextSendBox.snippet.tsx').default;
 const RichTextSendBoxAttachmentUploadsExampleText =
   require('!!raw-loader!./snippets/RichTextSendBoxAttachmentUploads.snippet.tsx').default;
+const RichTextSendBoxOnPasteCallbackExampleText =
+  require('!!raw-loader!./snippets/RichTextSendBoxOnPasteCallback.snippet.tsx').default;
 const RichTextSendBoxWithSystemMessageExampleText =
   require('!!raw-loader!./snippets/RichTextSendBoxWithSystemMessage.snippet.tsx').default;
 
@@ -54,6 +57,15 @@ const getDocs: () => JSX.Element = () => {
       </Description>
       <Canvas mdxSource={RichTextSendBoxAttachmentUploadsExampleText}>
         <RichTextSendBoxAttachmentUploadsExample />
+      </Canvas>
+      <Heading>Process pasted content</Heading>
+      <Description>
+        RichTextSendBox provides `onPaste` callback for custom processing of the pasted content before it's inserted
+        into the RichTextSendBox. This callback can be used to implement custom paste handling logic tailored to your
+        application's needs. The example below shows how to remove images from pasted content.
+      </Description>
+      <Canvas mdxSource={RichTextSendBoxOnPasteCallbackExampleText}>
+        <RichTextSendBoxOnPasteCallbackExample />
       </Canvas>
 
       <Heading>Props</Heading>
@@ -124,7 +136,8 @@ export default {
     attachments: hiddenControl,
     onCancelAttachmentUpload: hiddenControl,
     onSendMessage: hiddenControl,
-    onTyping: hiddenControl
+    onTyping: hiddenControl,
+    onPaste: hiddenControl
   },
   parameters: {
     docs: {
