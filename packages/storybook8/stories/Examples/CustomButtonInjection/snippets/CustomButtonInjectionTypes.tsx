@@ -5,9 +5,6 @@ export const compositeCanvasContainerStyles = {
   height: '22rem'
 };
 
-export const addCSS = (css: string): string =>
-  (document.head.appendChild(document.createElement('style')).innerHTML = css);
-
 /**
  * Copy of @CustomCallControlButtonProps as displaying props in storybook using package import
  * is not working correctly.
