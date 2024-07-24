@@ -103,9 +103,7 @@ export const SidePane = (props: SidePaneProps): JSX.Element => {
         <Stack verticalFill styles={scrollableContainer}>
           {ContentRender && (
             <Stack.Item verticalFill styles={scrollableContainerContents}>
-              <Stack styles={containerContextStyles}>
-                {ContentRender?.()}
-              </Stack>
+              <Stack styles={containerContextStyles}>{ContentRender?.()}</Stack>
             </Stack.Item>
           )}
           {OverrideContentRender && (
