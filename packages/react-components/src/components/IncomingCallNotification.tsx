@@ -110,6 +110,10 @@ export interface IncomingCallNotificationProps {
    * Styles for the incoming call notification component.
    */
   styles?: IncomingCallNotificationStyles;
+  /**
+   * Strings for the incoming call notification component.
+   */
+  strings?: IncomingCallNotificationStrings;
 }
 
 /**
@@ -118,8 +122,17 @@ export interface IncomingCallNotificationProps {
  * @beta
  */
 export const IncomingCallNotification = (props: IncomingCallNotificationProps): JSX.Element => {
-  const { callerName, alertText, avatarImage, onAcceptWithAudio, onAcceptWithVideo, onReject, personaSize, styles } =
-    props;
+  const {
+    callerName,
+    alertText,
+    avatarImage,
+    onAcceptWithAudio,
+    onAcceptWithVideo,
+    onReject,
+    personaSize,
+    styles,
+    strings
+  } = props;
   const theme = useTheme();
   /* @conditional-compile-remove(one-to-n-calling) */
   const localeStrings = useLocale().strings.IncomingCallNotification;
@@ -148,12 +161,14 @@ export const IncomingCallNotification = (props: IncomingCallNotificationProps): 
         <Stack style={{ fontSize: '0.875rem' }}>
           <Text>
             {callerName ??
+              strings?.incomingCallNotificationPlaceholderId ??
               /* @conditional-compile-remove(one-to-n-calling) */ localeStrings.incomingCallNotificationPlaceholderId}
           </Text>
         </Stack>
         <Stack style={{ fontSize: '0.75rem' }}>
           <Text>
             {alertText ??
+              strings?.incomingCallNotificationPlaceholderAlert ??
               /* @conditional-compile-remove(one-to-n-calling) */ localeStrings.incomingCallNotificationPlaceholderAlert}
           </Text>
         </Stack>
@@ -165,21 +180,29 @@ export const IncomingCallNotification = (props: IncomingCallNotificationProps): 
           onClick={() => onReject()}
           iconProps={{ iconName: 'IncomingCallNotificationRejectIcon' }}
           /* @conditional-compile-remove(one-to-n-calling) */
-          ariaLabel={localeStrings.incomingCallNoticicationRejectAriaLabel}
+          ariaLabel={
+            strings?.incomingCallNoticicationRejectAriaLabel ?? localeStrings.incomingCallNoticicationRejectAriaLabel
+          }
         />
         <IconButton
           styles={styles?.acceptButton ? styles.acceptButton : incomingCallAcceptButtonStyle(theme)}
           onClick={() => onAcceptWithVideo()}
           iconProps={{ iconName: 'IncomingCallNotificationAcceptWithVideoIcon' }}
           /* @conditional-compile-remove(one-to-n-calling) */
-          ariaLabel={localeStrings.incomingCallNoticicationAcceptWithVideoAriaLabel}
+          ariaLabel={
+            strings?.incomingCallNoticicationAcceptWithVideoAriaLabel ??
+            localeStrings.incomingCallNoticicationAcceptWithVideoAriaLabel
+          }
         />
         <IconButton
           styles={styles?.acceptButton ? styles.acceptButton : incomingCallAcceptButtonStyle(theme)}
           onClick={() => onAcceptWithAudio()}
           iconProps={{ iconName: 'IncomingCallNotificationAcceptIcon' }}
           /* @conditional-compile-remove(one-to-n-calling) */
-          ariaLabel={localeStrings.incomingCallNoticicationAcceptWithAudioAriaLabel}
+          ariaLabel={
+            strings?.incomingCallNoticicationAcceptWithAudioAriaLabel ??
+            localeStrings.incomingCallNoticicationAcceptWithAudioAriaLabel
+          }
         />
       </Stack>
     </Stack>

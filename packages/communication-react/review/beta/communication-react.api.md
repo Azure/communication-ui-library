@@ -3217,6 +3217,7 @@ export interface IncomingCallNotificationProps {
     onReject: () => void;
     onRenderAvatar?: () => JSX.Element;
     personaSize?: number;
+    strings?: IncomingCallNotificationStrings;
     styles?: IncomingCallNotificationStyles;
 }
 
@@ -3246,6 +3247,8 @@ export interface IncomingCallStackProps {
     onAcceptCall: (incomingCallId: string, useVideo?: boolean) => void;
     onRejectCall: (incomingCallId: string) => void;
     removedIncomingCalls: ActiveIncomingCall[];
+    strings?: IncomingCallNotificationStrings;
+    styles?: IncomingCallNotificationStyles;
 }
 
 // @beta
