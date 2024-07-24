@@ -1,0 +1,34 @@
+import { Meta } from '@storybook/addon-docs';
+
+<Meta
+  id="inboundcalling"
+  title="Concepts/InboundCalling"
+  parameters={{ previewTabs: { canvas: { disable: true, hidden: true } } }}
+/>
+
+# Inbound Calling
+
+Azure Communication Services UI Library is adding support for Inbound Calling. With this new feature, users will
+be able to see and monitor new incoming calls when signed in to ACS or Teams as a Communication as a Teams User.
+Users will be able to Accept with Audio, Accept with video, and reject incoming calls.
+
+Enabling this feature will allow them see multiple incoming calls allowing the user to service multiple people
+at once best supporting the people that want to get in touch. In any scenario when your user’s are logged in you
+are able to Accept or reject calls based on your user’s needs.
+
+## Incorporating Inbound Calling into your Experience
+
+Currently the UI library exports a series of components like the [Video
+Gallery](./?path=/docs/ui-components-videogallery--video-gallery) or
+[CallControls](./?path=/docs/ui-components-controlbar--control-bar) that allow you to build a Video calling
+experience that you can join through our [stateful client](./?path=/docs/quickstarts-statefulcallclient--page).
+With the introduction of these components we are also allowing you to attach to your experience a way to have
+the calls come to you through these new react components. We are adding this capability with the new
+`IncomingCallStack` and `IncomingCallNotification` Component. These new components will allow you to accept,
+accept with video, or reject the call. Accepting will bring you straight into the call.
+
+## FAQ
+
+- I am having trouble with the Inbound Calling feature, what should I do?
+  - Please reach out to the ACS UI Library team for support. We are here to help you with any issues you may have. You can do this
+    by creating a new issue in the [GitHub repository](https://github.com/Azure/communication-ui-library/issues)
