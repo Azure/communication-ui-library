@@ -1,0 +1,38 @@
+import { Meta, Source } from '@storybook/addon-docs';
+
+<Meta title="Concepts/Adding Sounds" />
+
+import CallingSoundsOptionSnippetText from '!!raw-loader!./snippets/CallingSoundsSnippet.snippet.tsx';
+
+# Adding Sounds to your Communication Experiences
+
+The web is a quiet place and communication experiences are not. This concept is about creating a more rich communication experience by providing event driven sounds to your communication experiences.
+
+## Calling sounds
+
+This feature is designed to empower developers by enabling them to integrate sounds into their calling experiences.
+While the web environment is generally quiet, calling experiences tend to be more dynamic. There are various scenarios in which we aim to incorporate sound
+cues throughout the call's lifecycle to offer users real-time feedback about ongoing events. These include:
+
+<ul>
+  <li>Call Ringing - Call is outgoing to the callee</li>
+  <li>Call Ended - Call ends because you or the callee ended the call</li>
+  <li>Call Busy - Call is rejected by the callee because they are busy and unable to take the call</li>
+</ul>
+
+It is important to note that as the developer you will need to ensure that your mp3 or other sound files are loaded or bundled appropriately in your project.
+Recommended reading for this is found here with these common bundlers:
+
+<ul>
+  <li>
+    <a href="https://webpack.js.org/guides/asset-management/#loading-images">webpack</a>
+  </li>
+  <li>
+    <a href="https://create-react-app.dev/docs/adding-images-fonts-and-files/">create-react-app</a>
+  </li>
+</ul>
+
+We are providing these sound experiences on our `CallComposite` and `CallWithChatComposite`. These sounds are
+applied through the `CallAdapter` options and sounds can be added to the experience with the following snippet.
+
+<Source code={CallingSoundsOptionSnippetText} />
