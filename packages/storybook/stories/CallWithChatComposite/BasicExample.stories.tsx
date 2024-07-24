@@ -19,7 +19,8 @@ const storyControls = {
   endpointUrl: controlsToAdd.endpointUrl,
   displayName: controlsToAdd.requiredDisplayName,
   compositeFormFactor: controlsToAdd.formFactor,
-  callWithChatControlOptions: controlsToAdd.callWithChatControlOptions
+  callWithChatControlOptions: controlsToAdd.callWithChatControlOptions,
+  richTextEditor: controlsToAdd.richTextEditor
 };
 
 const BasicStory = (args: ArgsFrom<typeof storyControls>, context): JSX.Element => {
@@ -43,7 +44,7 @@ const BasicStory = (args: ArgsFrom<typeof storyControls>, context): JSX.Element 
             callLocator,
             chatThreadId
           },
-          compositeOptions: { callControls: args.callWithChatControlOptions },
+          compositeOptions: { callControls: args.callWithChatControlOptions, richTextEditor: args.richTextEditor },
           formFactor: args.compositeFormFactor
         });
       } else {
@@ -57,7 +58,8 @@ const BasicStory = (args: ArgsFrom<typeof storyControls>, context): JSX.Element 
     args.endpointUrl,
     args.displayName,
     args.callWithChatControlOptions,
-    args.compositeFormFactor
+    args.compositeFormFactor,
+    args.richTextEditor
   ]);
 
   return (
