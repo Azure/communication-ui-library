@@ -235,9 +235,9 @@ export interface MessageThreadStrings {
   attachmentCardGroupMessage: string;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   /**
-   * Error message indicating that all attachment uploads are not complete.
+   * Error message indicating that one or more image uploads are not complete.
    */
-  attachmentUploadsPendingError: string;
+  imageUploadsPendingError: string;
 }
 
 /**
