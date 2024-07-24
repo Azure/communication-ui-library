@@ -80,6 +80,8 @@ import { isMicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 import { SEND_BOX_UPLOADS_KEY_VALUE } from '../common/constants';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { ImageUploadReducer } from './ImageUpload/ImageUploadReducer';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+import { useLocale } from '../localization';
 
 /**
  * @private
@@ -141,6 +143,9 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const [uploads, handleUploadAction] = useReducer(AttachmentUploadReducer, []);
   const adapter = useAdapter();
   const theme = useTheme();
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  const localeStrings = useLocale().strings;
+
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   const [textOnlyChat, setTextOnlyChat] = useState(false);
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
@@ -583,7 +588,8 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
               imageFileName,
               messageId,
               adapter,
-              handleEditBoxInlineImageUploadAction
+              handleEditBoxInlineImageUploadAction,
+              localeStrings.chat
             );
           },
           /* @conditional-compile-remove(rich-text-editor-image-upload) */
@@ -604,7 +610,8 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     options?.richTextEditor,
     /* @conditional-compile-remove(rich-text-editor-image-upload) */ richTextEditorOptions,
     /* @conditional-compile-remove(rich-text-editor-image-upload) */ editBoxInlineImageUploads,
-    /* @conditional-compile-remove(rich-text-editor-image-upload) */ adapter
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */ adapter,
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */ localeStrings.chat
   ]);
 
   /* @conditional-compile-remove(rich-text-editor-composite-support) */
@@ -615,7 +622,13 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
           ...richTextEditorOptions,
           /* @conditional-compile-remove(rich-text-editor-image-upload) */
           onUploadInlineImage: (imageUrl: string, imageFileName: string) => {
-            onUploadInlineImageForSendBox(imageUrl, imageFileName, adapter, handleSendBoxInlineImageUploadAction);
+            onUploadInlineImageForSendBox(
+              imageUrl,
+              imageFileName,
+              adapter,
+              handleSendBoxInlineImageUploadAction,
+              localeStrings.chat
+            );
           },
           // onUploadInlineImageForSendBox,
           /* @conditional-compile-remove(rich-text-editor-image-upload) */
@@ -635,6 +648,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     options?.richTextEditor,
     /* @conditional-compile-remove(rich-text-editor-image-upload) */ richTextEditorOptions,
     /* @conditional-compile-remove(rich-text-editor-image-upload) */ sendBoxInlineImageUploads,
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */ localeStrings.chat,
     adapter
   ]);
 
