@@ -15,6 +15,8 @@ import { Dispatch } from 'react';
 import { ImageActions } from './ImageUploadReducer';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { nanoid } from 'nanoid';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+import { ChatCompositeStrings } from '../Strings';
 
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 const MAX_INLINE_IMAGE_UPLOAD_SIZE_MB = 20;
@@ -109,17 +111,21 @@ export const getSendBoxImageUploadsInProgress = (
 };
 
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
-const inlineImageUploadHandler = async (uploadTasks: AttachmentUpload[], adapter: ChatAdapter): Promise<void> => {
+const inlineImageUploadHandler = async (
+  uploadTasks: AttachmentUpload[],
+  adapter: ChatAdapter,
+  strings: ChatCompositeStrings
+): Promise<void> => {
   for (const task of uploadTasks) {
     const uploadTask = task as AttachmentUploadTask;
     const image: Blob | undefined = uploadTask.image;
     if (!image) {
-      uploadTask.notifyUploadFailed(`Image data for "${task.metadata?.name}" is not provided.`);
+      uploadTask.notifyUploadFailed(strings.uploadImageDataNotProvided);
       continue;
     }
     if (image && image.size > MAX_INLINE_IMAGE_UPLOAD_SIZE_MB * 1024 * 1024) {
       uploadTask.notifyUploadFailed(
-        `"${task.metadata?.name}" is too big. Select a file under ${MAX_INLINE_IMAGE_UPLOAD_SIZE_MB}MB.`
+        strings.uploadImageIsTooLarge.replace('{maxImageSize}', `${MAX_INLINE_IMAGE_UPLOAD_SIZE_MB}`)
       );
       continue;
     }
@@ -127,7 +133,9 @@ const inlineImageUploadHandler = async (uploadTasks: AttachmentUpload[], adapter
     const SUPPORTED_FILES: Array<string> = ['jpg', 'jpeg', 'png', 'gif', 'heic', 'webp'];
     const imageExtension = task.metadata?.name.split('.').pop() ?? '';
     if (!SUPPORTED_FILES.includes(imageExtension)) {
-      uploadTask.notifyUploadFailed(`Uploading ".${imageExtension}" image is not allowed.`);
+      uploadTask.notifyUploadFailed(
+        strings.uploadImageExtensionIsNotAllowed.replace('{imageExtension}', imageExtension)
+      );
       continue;
     }
 
@@ -136,7 +144,7 @@ const inlineImageUploadHandler = async (uploadTasks: AttachmentUpload[], adapter
       uploadTask.notifyUploadCompleted(response.id, task.metadata.url || '');
     } catch (error) {
       console.error(error);
-      uploadTask.notifyUploadFailed('Unable to upload inline image. Please try again later.');
+      uploadTask.notifyUploadFailed(strings.uploadImageFailed);
     }
   }
 };
@@ -200,7 +208,8 @@ export const onUploadInlineImageForEditBox = async (
   fileName: string,
   messageId: string,
   adapter: ChatAdapter,
-  handleEditBoxInlineImageUploadAction: Dispatch<ImageActions>
+  handleEditBoxInlineImageUploadAction: Dispatch<ImageActions>,
+  chatCompositeStrings: ChatCompositeStrings
 ): Promise<void> => {
   const uploadTask: AttachmentUpload | undefined = await generateUploadTask(
     image,
@@ -217,7 +226,7 @@ export const onUploadInlineImageForEditBox = async (
     newUploads: [uploadTask],
     messageId
   });
-  inlineImageUploadHandler([uploadTask], adapter);
+  inlineImageUploadHandler([uploadTask], adapter, chatCompositeStrings);
 };
 
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
@@ -228,7 +237,8 @@ export const onUploadInlineImageForSendBox = async (
   image: string,
   fileName: string,
   adapter: ChatAdapter,
-  handleSendBoxInlineImageUploadAction: Dispatch<ImageActions>
+  handleSendBoxInlineImageUploadAction: Dispatch<ImageActions>,
+  chatCompositeStrings: ChatCompositeStrings
 ): Promise<void> => {
   const uploadTask: AttachmentUpload | undefined = await generateUploadTask(
     image,
@@ -246,7 +256,7 @@ export const onUploadInlineImageForSendBox = async (
     newUploads: [uploadTask],
     messageId: SEND_BOX_UPLOADS_KEY_VALUE
   });
-  inlineImageUploadHandler([uploadTask], adapter);
+  inlineImageUploadHandler([uploadTask], adapter, chatCompositeStrings);
 };
 
 /* @conditional-compile-remove(rich-text-editor-image-upload) */

@@ -27,7 +27,7 @@ import {
   hasIncompleteAttachmentUploads,
   insertImagesToContentString,
   isAttachmentUploadCompleted,
-  removeBrokenImageContent
+  removeBrokenImageContentAndClearImageSizeStyles
 } from '../../utils/SendBoxUtils';
 import {
   getMessageState,
@@ -50,7 +50,7 @@ import { FluentV9ThemeProvider } from '../../../theming/FluentV9ThemeProvider';
 /* @conditional-compile-remove(file-sharing-acs) */
 import { attachmentUploadCardsStyles } from '../../styles/SendBox.styles';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
-import { SendBoxErrorBarError } from '../../SendBoxErrorBar';
+import { SendBoxErrorBarError, SendBoxErrorBarType } from '../../SendBoxErrorBar';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { BROKEN_IMAGE_SVG_DATA } from '../../styles/Common.style';
 
@@ -202,13 +202,17 @@ export const ChatMessageComponentAsRichTextEditBox = (
 
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
     if (hasIncompleteAttachmentUploads(imageUploadsInProgress)) {
-      setAttachmentUploadsPendingError({ message: strings.attachmentUploadsPendingError, timestamp: Date.now() });
+      setAttachmentUploadsPendingError({
+        message: strings.imageUploadsPendingError,
+        timestamp: Date.now(),
+        errorBarType: SendBoxErrorBarType.info
+      });
       return;
     }
 
     let content = textValue;
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    content = removeBrokenImageContent(content);
+    content = removeBrokenImageContentAndClearImageSizeStyles(content);
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
     if (isAttachmentUploadCompleted(imageUploadsInProgress)) {
       insertImagesToContentString(textValue, imageUploadsInProgress, (content) => {
@@ -227,7 +231,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
     imageUploadsInProgress,
     textValue,
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    strings.attachmentUploadsPendingError,
+    strings.imageUploadsPendingError,
     onSubmit,
     /* @conditional-compile-remove(file-sharing-acs) */
     attachmentMetadata
@@ -339,7 +343,8 @@ export const ChatMessageComponentAsRichTextEditBox = (
             imageUploadErrorMessage
               ? {
                   message: imageUploadErrorMessage,
-                  timestamp: Date.now()
+                  timestamp: Date.now(),
+                  errorBarType: SendBoxErrorBarType.error
                 }
               : undefined
           }
