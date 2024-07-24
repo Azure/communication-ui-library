@@ -1,9 +1,0 @@
-{
-  "type": "minor",
-  "area": "feature",
-  "workstream": "Inline Image",
-  "comment": "Added new broken image view for inline image feature",
-  "packageName": "@azure/communication-react",
-  "email": "109105353+jpeng-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

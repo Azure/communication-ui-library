@@ -474,7 +474,8 @@ export const controlsToAdd = {
       if: { arg: 'allowRawObjectInput', truthy: false },
       name: 'Inject Max # of Custom Buttons'
     }
-  }
+  },
+  richTextEditor: { control: 'boolean', name: 'Enable rich text editor' }
 };
 
 export const hiddenControl = { control: false, table: { disable: true } };
