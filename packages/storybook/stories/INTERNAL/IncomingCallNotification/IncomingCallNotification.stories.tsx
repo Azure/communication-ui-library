@@ -5,8 +5,8 @@ import { IncomingCallNotification as IncomingCallNotificationComponent } from '@
 import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
-import { SingleLineBetaBanner } from '../BetaBanners/SingleLineBetaBanner';
-import { COMPONENT_FOLDER_PREFIX } from '../constants';
+import { SingleLineBetaBanner } from '../../BetaBanners/SingleLineBetaBanner';
+import { COMPONENT_FOLDER_PREFIX } from '../../constants';
 import { IncomingCallNotificationExample } from './snippets/IncomingCallNotification.snippet';
 import { IncomingCallNotificationStylingExample } from './snippets/IncomingCallNotificationStyling.snippet';
 
@@ -61,8 +61,8 @@ const IncomingCallNotificationStory = (): JSX.Element => {
 export const IncomingCallNotification = IncomingCallNotificationStory.bind({});
 
 export default {
-  id: `${COMPONENT_FOLDER_PREFIX}-IncomingCallNotification`,
-  title: `${COMPONENT_FOLDER_PREFIX}/IncomingCallNotification`,
+  id: `${COMPONENT_FOLDER_PREFIX}-Internal-IncomingCallNotification`,
+  title: `${COMPONENT_FOLDER_PREFIX}/Internal/IncomingCallNotification`,
   component: IncomingCallNotification,
   parameters: {
     docs: {
