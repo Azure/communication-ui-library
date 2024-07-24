@@ -26,7 +26,6 @@ import {
 } from './CallClientState';
 import { CaptionsInfo } from './CallClientState';
 
-/* @conditional-compile-remove(teams-identity-support) */
 import { _isACSCall } from './TypeGuards';
 /* @conditional-compile-remove(acs-close-captions) */
 import { _isTeamsCall } from './TypeGuards';
