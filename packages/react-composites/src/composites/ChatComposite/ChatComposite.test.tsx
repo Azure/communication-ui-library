@@ -20,8 +20,7 @@ import { RichTextSendBoxProps } from '@internal/react-components';
 /* @conditional-compile-remove(rich-text-editor-composite-support) */
 import { RichTextSendBoxWrapper } from '../common/RichTextSendBoxWrapper';
 /* @conditional-compile-remove(rich-text-editor-composite-support) */
-import { removeImageTags } from './ImageUpload/ImageUploadUtils';
-
+import { removeImageTags } from '@internal/acs-ui-common';
 // Mock the richTextSendBoxWrapper component as it's lazy loaded in ChatComposite
 /* @conditional-compile-remove(rich-text-editor-composite-support) */
 function MockedRichTextSendBoxWrapperComponent(): JSX.Element {

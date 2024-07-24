@@ -139,7 +139,7 @@ export const isSendBoxButtonAriaDisabled = ({
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 interface CancelInlineImageUploadProps {
   imageSrcArray: string[] | undefined;
-  imageUploadsInProgress: AttachmentMetadataInProgress[] | undefined;
+  inlineImages: AttachmentMetadataInProgress[] | undefined;
   messageId?: string;
   editBoxOnCancelInlineImageUpload?: (id: string, messageId: string) => void;
   sendBoxOnCancelInlineImageUpload?: (id: string) => void;
@@ -150,15 +150,10 @@ interface CancelInlineImageUploadProps {
  * @internal
  */
 export const cancelInlineImageUpload = (props: CancelInlineImageUploadProps): void => {
-  const {
-    imageSrcArray,
-    imageUploadsInProgress,
-    messageId,
-    editBoxOnCancelInlineImageUpload,
-    sendBoxOnCancelInlineImageUpload
-  } = props;
-  if (imageSrcArray && imageUploadsInProgress && imageUploadsInProgress?.length > 0) {
-    imageUploadsInProgress?.map((uploadImage) => {
+  const { imageSrcArray, inlineImages, messageId, editBoxOnCancelInlineImageUpload, sendBoxOnCancelInlineImageUpload } =
+    props;
+  if (imageSrcArray && inlineImages && inlineImages?.length > 0) {
+    inlineImages?.map((uploadImage) => {
       if (uploadImage.url && !imageSrcArray?.includes(uploadImage.url)) {
         sendBoxOnCancelInlineImageUpload && sendBoxOnCancelInlineImageUpload(uploadImage.id);
         editBoxOnCancelInlineImageUpload && editBoxOnCancelInlineImageUpload(uploadImage.id, messageId || '');
@@ -193,13 +188,13 @@ export const toAttachmentMetadata = (
  */
 export const insertImagesToContentString = async (
   content: string,
-  imageUploadsInProgress?: AttachmentMetadataInProgress[],
+  inlineImages?: AttachmentMetadataInProgress[],
   onCompleted?: (content: string) => void
 ): Promise<void> => {
-  if (!imageUploadsInProgress || imageUploadsInProgress.length <= 0) {
+  if (!inlineImages || inlineImages.length <= 0) {
     onCompleted?.(content);
   }
-  const newContent = await addUploadedImagesToMessage(content, imageUploadsInProgress ?? []);
+  const newContent = await addUploadedImagesToMessage(content, inlineImages ?? []);
   onCompleted?.(newContent);
 };
 

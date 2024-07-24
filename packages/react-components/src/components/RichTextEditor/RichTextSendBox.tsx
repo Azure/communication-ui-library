@@ -68,7 +68,7 @@ export interface RichTextSendBoxOptions extends RichTextEditorOptions {
   /**
    * Optional callback to upload an inline image in the rich text editor.
    */
-  onUploadInlineImage?: (imageUrl: string, imageFileName: string) => void;
+  onInsertInlineImage?: (imageUrl: string, imageFileName: string) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   /**
    * Optional callback to remove the attachment upload or delete the image before sending.
@@ -79,7 +79,7 @@ export interface RichTextSendBoxOptions extends RichTextEditorOptions {
    * Optional Array of type {@link AttachmentMetadataInProgress}
    * to render inline images being uploaded in the RichTextSendBox.
    */
-  imageUploadsInProgress?: AttachmentMetadataInProgress[];
+  inlineImages?: AttachmentMetadataInProgress[];
 }
 
 /**
@@ -254,13 +254,13 @@ export interface RichTextSendBoxProps {
   /**
    * Optional callback to upload an inline image in the rich text editor.
    */
-  onUploadInlineImage?: (imageUrl: string, imageFileName: string) => void;
+  onInsertInlineImage?: (imageUrl: string, imageFileName: string) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   /**
    * Optional array of type {@link AttachmentMetadataInProgress}
    * to render inline images being uploaded in the RichTextSendBox.
    */
-  imageUploadsInProgress?: AttachmentMetadataInProgress[];
+  inlineImages?: AttachmentMetadataInProgress[];
 }
 
 /**
@@ -282,9 +282,9 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
     onPaste,
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    onUploadInlineImage,
+    onInsertInlineImage,
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    imageUploadsInProgress,
+    inlineImages,
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
     onCancelInlineImageUpload
   } = props;
@@ -335,7 +335,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
       /* @conditional-compile-remove(rich-text-editor-image-upload) */
       cancelInlineImageUpload({
         imageSrcArray,
-        imageUploadsInProgress,
+        inlineImages,
         messageId: undefined,
         editBoxOnCancelInlineImageUpload: undefined,
         sendBoxOnCancelInlineImageUpload: onCancelInlineImageUpload
@@ -345,7 +345,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     [
       setContent,
       /* @conditional-compile-remove(rich-text-editor-image-upload) */ onCancelInlineImageUpload,
-      /* @conditional-compile-remove(rich-text-editor-image-upload) */ imageUploadsInProgress
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */ inlineImages
     ]
   );
 
@@ -365,7 +365,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     setAttachmentUploadsPendingError(undefined);
 
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    const hasIncompleteImageUploads = hasIncompleteAttachmentUploads(imageUploadsInProgress);
+    const hasIncompleteImageUploads = hasIncompleteAttachmentUploads(inlineImages);
     /* @conditional-compile-remove(file-sharing-acs) */
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
     if (
@@ -392,9 +392,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     if (
       hasContent ||
       /* @conditional-compile-remove(file-sharing-acs) */ isAttachmentUploadCompleted(attachments) ||
-      /* @conditional-compile-remove(rich-text-editor-image-upload) */ isAttachmentUploadCompleted(
-        imageUploadsInProgress
-      )
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */ isAttachmentUploadCompleted(inlineImages)
     ) {
       const sendMessage = (content: string): void => {
         onSendMessage(
@@ -413,8 +411,8 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
       };
 
       /* @conditional-compile-remove(rich-text-editor-image-upload) */
-      if (isAttachmentUploadCompleted(imageUploadsInProgress)) {
-        insertImagesToContentString(contentValue, imageUploadsInProgress, (content: string) => {
+      if (isAttachmentUploadCompleted(inlineImages)) {
+        insertImagesToContentString(contentValue, inlineImages, (content: string) => {
           sendMessage(content);
         });
         return;
@@ -428,7 +426,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     /* @conditional-compile-remove(file-sharing-acs) */
     attachments,
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    imageUploadsInProgress,
+    inlineImages,
     contentValue,
     hasContent,
     /* @conditional-compile-remove(file-sharing-acs) */
@@ -447,7 +445,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
       /* @conditional-compile-remove(file-sharing-acs) */
       !!attachments?.filter((attachmentUpload) => attachmentUpload.error).pop()?.error ||
       /* @conditional-compile-remove(rich-text-editor-image-upload) */
-      !!imageUploadsInProgress?.filter((image) => image.error).pop()?.error
+      !!inlineImages?.filter((image) => image.error).pop()?.error
     );
   }, [
     /* @conditional-compile-remove(file-sharing-acs) */
@@ -457,7 +455,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     attachmentUploadsPendingError,
     systemMessage,
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    imageUploadsInProgress
+    inlineImages
   ]);
 
   const onRenderSendIcon = useCallback(
@@ -484,7 +482,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     /* @conditional-compile-remove(file-sharing-acs) */
     const uploadErrorMessage = attachments?.filter((attachmentUpload) => attachmentUpload.error).pop()?.error?.message;
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    const imageUploadErrorMessage = imageUploadsInProgress?.filter((image) => image.error).pop()?.error?.message;
+    const imageUploadErrorMessage = inlineImages?.filter((image) => image.error).pop()?.error?.message;
     /* @conditional-compile-remove(file-sharing-acs) */
     const errorMessage =
       uploadErrorMessage || /* @conditional-compile-remove(rich-text-editor-image-upload) */ imageUploadErrorMessage;
@@ -511,7 +509,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     /* @conditional-compile-remove(file-sharing-acs) */
     attachmentUploadsPendingError,
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    imageUploadsInProgress,
+    inlineImages,
     systemMessage
   ]);
 
@@ -598,7 +596,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
         /* @conditional-compile-remove(rich-text-editor-image-upload) */
         onPaste={onPaste}
         /* @conditional-compile-remove(rich-text-editor-image-upload) */
-        onUploadInlineImage={onUploadInlineImage}
+        onInsertInlineImage={onInsertInlineImage}
       />
     </Stack>
   );

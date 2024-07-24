@@ -575,7 +575,7 @@ export interface RichTextEditBoxOptions extends RichTextEditorOptions {
   /**
    * Optional callback to upload an inline image in the rich text editor.
    */
-  onUploadInlineImage?: (imageUrl: string, imageFileName: string, messageId: string) => void;
+  onInsertInlineImage?: (imageUrl: string, imageFileName: string, messageId: string) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   /**
    * Optional callback to remove the attachment upload or delete the image before sending.
@@ -586,7 +586,7 @@ export interface RichTextEditBoxOptions extends RichTextEditorOptions {
    * Optional Record of type {@link AttachmentMetadataInProgress}
    * to render inline images being uploaded in the MessageThread's edit box.
    */
-  messagesImageUploadsInProgress?: Record<string, AttachmentMetadataInProgress[]>;
+  messagesInlineImages?: Record<string, AttachmentMetadataInProgress[]>;
 }
 
 /**
@@ -1198,11 +1198,11 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
                   /* @conditional-compile-remove(rich-text-editor-image-upload) */
                   onPaste={richTextEditorOptions?.onPaste}
                   /* @conditional-compile-remove(rich-text-editor-image-upload) */
-                  onUploadInlineImage={richTextEditorOptions?.onUploadInlineImage}
+                  onInsertInlineImage={richTextEditorOptions?.onInsertInlineImage}
                   /* @conditional-compile-remove(rich-text-editor-image-upload) */
-                  imageUploadsInProgress={
-                    richTextEditorOptions?.messagesImageUploadsInProgress &&
-                    richTextEditorOptions?.messagesImageUploadsInProgress[message.message.messageId]
+                  inlineImages={
+                    richTextEditorOptions?.messagesInlineImages &&
+                    richTextEditorOptions?.messagesInlineImages[message.message.messageId]
                   }
                   /* @conditional-compile-remove(rich-text-editor-image-upload) */
                   onCancelInlineImageUpload={richTextEditorOptions?.onCancelInlineImageUpload}
