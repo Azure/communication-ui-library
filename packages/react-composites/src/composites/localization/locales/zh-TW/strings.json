@@ -351,7 +351,11 @@
   },
   "chat": {
     "chatListHeader": "在此聊天中",
-    "uploadAttachment": "上傳附件"
+    "uploadAttachment": "上傳附件",
+    "uploadImageDataNotProvided": "Image data is not provided.",
+    "uploadImageIsTooLarge": "Image is too large. Choose one that's less than {maxImageSize} MB.",
+    "uploadImageExtensionIsNotAllowed": "Uploading .{imageExtension} image is not allowed.",
+    "uploadImageFailed": "Unable to upload image. Please try again later."
   },
   "callWithChat": {
     "chatButtonLabel": "聊天",

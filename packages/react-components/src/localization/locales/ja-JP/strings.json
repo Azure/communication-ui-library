@@ -35,6 +35,7 @@
     "textTooLong": "メッセージの長さが上限を超えています。",
     "sendButtonAriaLabel": "メッセージの送信",
     "attachmentUploadsPendingError": "アップロード中...お待ちください。",
+    "imageUploadsPendingError": "Image is uploading, please wait.",
     "removeAttachment": "ファイルを削除します",
     "uploading": "アップロード中",
     "uploadCompleted": "アップロード完了",
@@ -226,8 +227,11 @@
     "richTextDeleteTableMenu": "テーブルの削除",
     "richTextToolbarMoreButtonAriaLabel": "その他のオプション",
     "attachmentUploadsPendingError": "アップロードしています...お待ちください。",
+    "imageUploadsPendingError": "Image is uploading, please wait.",
     "richTextNewBulletedListItemAnnouncement": "行頭文字、改行",
-    "richTextNewNumberedListItemAnnouncement": "{0}、改行"
+    "richTextNewNumberedListItemAnnouncement": "{0}、改行",
+    "richTextBulletedListAppliedAnnouncement": "Bulleted list applied",
+    "richTextNumberedListAppliedAnnouncement": "Numbered list applied"
   },
   "errorBar": {
     "unableToReachChatService": "オフラインです",

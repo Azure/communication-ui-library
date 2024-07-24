@@ -35,6 +35,7 @@
     "textTooLong": "메시지 길이가 최대 제한을 초과했습니다.",
     "sendButtonAriaLabel": "메시지 보내기",
     "attachmentUploadsPendingError": "업로드 중... 잠시 기다려 주세요.",
+    "imageUploadsPendingError": "Image is uploading, please wait.",
     "removeAttachment": "파일 제거",
     "uploading": "업로드 중",
     "uploadCompleted": "업로드 완료",
@@ -226,8 +227,11 @@
     "richTextDeleteTableMenu": "표 삭제",
     "richTextToolbarMoreButtonAriaLabel": "옵션 더 보기",
     "attachmentUploadsPendingError": "업로드 중... 잠시 기다려 주세요.",
+    "imageUploadsPendingError": "Image is uploading, please wait.",
     "richTextNewBulletedListItemAnnouncement": "글머리 기호, 새 줄",
-    "richTextNewNumberedListItemAnnouncement": "{0}, 새 줄"
+    "richTextNewNumberedListItemAnnouncement": "{0}, 새 줄",
+    "richTextBulletedListAppliedAnnouncement": "Bulleted list applied",
+    "richTextNumberedListAppliedAnnouncement": "Numbered list applied"
   },
   "errorBar": {
     "unableToReachChatService": "오프라인 상태입니다.",

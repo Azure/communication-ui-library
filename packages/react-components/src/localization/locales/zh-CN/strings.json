@@ -35,6 +35,7 @@
     "textTooLong": "你的消息长度超过了最大限制。",
     "sendButtonAriaLabel": "发送信息",
     "attachmentUploadsPendingError": "正在上传...请稍候。",
+    "imageUploadsPendingError": "Image is uploading, please wait.",
     "removeAttachment": "删除文件",
     "uploading": "正在上传",
     "uploadCompleted": "已完成上传",
@@ -226,8 +227,11 @@
     "richTextDeleteTableMenu": "删除表格",
     "richTextToolbarMoreButtonAriaLabel": "更多选项",
     "attachmentUploadsPendingError": "正在上传...请稍等。",
+    "imageUploadsPendingError": "Image is uploading, please wait.",
     "richTextNewBulletedListItemAnnouncement": "项目符号，新行",
-    "richTextNewNumberedListItemAnnouncement": "{0}，新行"
+    "richTextNewNumberedListItemAnnouncement": "{0}，新行",
+    "richTextBulletedListAppliedAnnouncement": "Bulleted list applied",
+    "richTextNumberedListAppliedAnnouncement": "Numbered list applied"
   },
   "errorBar": {
     "unableToReachChatService": "你已脱机",

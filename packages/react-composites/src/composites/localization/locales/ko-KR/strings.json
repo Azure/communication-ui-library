@@ -351,7 +351,11 @@
   },
   "chat": {
     "chatListHeader": "채팅 참가자",
-    "uploadAttachment": "첨부 파일 업로드"
+    "uploadAttachment": "첨부 파일 업로드",
+    "uploadImageDataNotProvided": "Image data is not provided.",
+    "uploadImageIsTooLarge": "Image is too large. Choose one that's less than {maxImageSize} MB.",
+    "uploadImageExtensionIsNotAllowed": "Uploading .{imageExtension} image is not allowed.",
+    "uploadImageFailed": "Unable to upload image. Please try again later."
   },
   "callWithChat": {
     "chatButtonLabel": "채팅",

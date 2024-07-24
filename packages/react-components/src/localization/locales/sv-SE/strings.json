@@ -35,6 +35,7 @@
     "textTooLong": "Meddelandelängden överskrider maxgränsen.",
     "sendButtonAriaLabel": "Skicka meddelande",
     "attachmentUploadsPendingError": "Laddar upp... Var god vänta.",
+    "imageUploadsPendingError": "Image is uploading, please wait.",
     "removeAttachment": "Ta bort filen",
     "uploading": "Laddar upp",
     "uploadCompleted": "Uppladdningen har slutförts",
@@ -226,8 +227,11 @@
     "richTextDeleteTableMenu": "Ta bort tabell",
     "richTextToolbarMoreButtonAriaLabel": "Fler alternativ",
     "attachmentUploadsPendingError": "Laddar upp... Var god vänta.",
+    "imageUploadsPendingError": "Image is uploading, please wait.",
     "richTextNewBulletedListItemAnnouncement": "Punkt, ny rad",
-    "richTextNewNumberedListItemAnnouncement": "{0}, ny rad"
+    "richTextNewNumberedListItemAnnouncement": "{0}, ny rad",
+    "richTextBulletedListAppliedAnnouncement": "Bulleted list applied",
+    "richTextNumberedListAppliedAnnouncement": "Numbered list applied"
   },
   "errorBar": {
     "unableToReachChatService": "Du är offline",

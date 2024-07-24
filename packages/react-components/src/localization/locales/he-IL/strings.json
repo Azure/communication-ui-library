@@ -35,6 +35,7 @@
     "textTooLong": "אורך ההודעה שלך חורג מהמגבלה המרבית.",
     "sendButtonAriaLabel": "שלח הודעה",
     "attachmentUploadsPendingError": "מעלה... המתן.",
+    "imageUploadsPendingError": "Image is uploading, please wait.",
     "removeAttachment": "הסר קובץ",
     "uploading": "מעלה",
     "uploadCompleted": "ההעלאה הושלמה",
@@ -226,8 +227,11 @@
     "richTextDeleteTableMenu": "מחק טבלה",
     "richTextToolbarMoreButtonAriaLabel": "אפשרויות נוספות",
     "attachmentUploadsPendingError": "מעלה... המתן.",
+    "imageUploadsPendingError": "Image is uploading, please wait.",
     "richTextNewBulletedListItemAnnouncement": "תבליט, שורה חדשה",
-    "richTextNewNumberedListItemAnnouncement": "{0}, שורה חדשה"
+    "richTextNewNumberedListItemAnnouncement": "{0}, שורה חדשה",
+    "richTextBulletedListAppliedAnnouncement": "Bulleted list applied",
+    "richTextNumberedListAppliedAnnouncement": "Numbered list applied"
   },
   "errorBar": {
     "unableToReachChatService": "אתה נמצא במצב לא מקוון",

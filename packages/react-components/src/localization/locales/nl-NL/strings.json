@@ -35,6 +35,7 @@
     "textTooLong": "De lengte van uw bericht overschrijdt de maximumlimiet.",
     "sendButtonAriaLabel": "Bericht verzenden",
     "attachmentUploadsPendingError": "Uploaden... Een ogenblik geduld.",
+    "imageUploadsPendingError": "Image is uploading, please wait.",
     "removeAttachment": "Bestand verwijderen",
     "uploading": "Uploaden",
     "uploadCompleted": "Upload voltooid",
@@ -226,8 +227,11 @@
     "richTextDeleteTableMenu": "Tabel verwijderen",
     "richTextToolbarMoreButtonAriaLabel": "Meer opties",
     "attachmentUploadsPendingError": "Uploaden... Een ogenblik geduld.",
+    "imageUploadsPendingError": "Image is uploading, please wait.",
     "richTextNewBulletedListItemAnnouncement": "Opsommingsteken, nieuwe regel",
-    "richTextNewNumberedListItemAnnouncement": "{0}, nieuwe regel"
+    "richTextNewNumberedListItemAnnouncement": "{0}, nieuwe regel",
+    "richTextBulletedListAppliedAnnouncement": "Bulleted list applied",
+    "richTextNumberedListAppliedAnnouncement": "Numbered list applied"
   },
   "errorBar": {
     "unableToReachChatService": "U bent offline",

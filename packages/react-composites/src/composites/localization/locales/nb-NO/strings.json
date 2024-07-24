@@ -351,7 +351,11 @@
   },
   "chat": {
     "chatListHeader": "I denne chatten",
-    "uploadAttachment": "Last opp vedlegg"
+    "uploadAttachment": "Last opp vedlegg",
+    "uploadImageDataNotProvided": "Image data is not provided.",
+    "uploadImageIsTooLarge": "Image is too large. Choose one that's less than {maxImageSize} MB.",
+    "uploadImageExtensionIsNotAllowed": "Uploading .{imageExtension} image is not allowed.",
+    "uploadImageFailed": "Unable to upload image. Please try again later."
   },
   "callWithChat": {
     "chatButtonLabel": "Chat",

@@ -35,6 +35,7 @@
     "textTooLong": "您的訊息長度超過上限。",
     "sendButtonAriaLabel": "傳送訊息",
     "attachmentUploadsPendingError": "正在上傳...請稍候。",
+    "imageUploadsPendingError": "Image is uploading, please wait.",
     "removeAttachment": "移除檔案",
     "uploading": "正在上傳",
     "uploadCompleted": "上傳完成",
@@ -226,8 +227,11 @@
     "richTextDeleteTableMenu": "刪除表格",
     "richTextToolbarMoreButtonAriaLabel": "其他選項",
     "attachmentUploadsPendingError": "正在上傳...請稍候。",
+    "imageUploadsPendingError": "Image is uploading, please wait.",
     "richTextNewBulletedListItemAnnouncement": "項目符號，新行",
-    "richTextNewNumberedListItemAnnouncement": "{0}，新行"
+    "richTextNewNumberedListItemAnnouncement": "{0}，新行",
+    "richTextBulletedListAppliedAnnouncement": "Bulleted list applied",
+    "richTextNumberedListAppliedAnnouncement": "Numbered list applied"
   },
   "errorBar": {
     "unableToReachChatService": "您處於離線狀態",

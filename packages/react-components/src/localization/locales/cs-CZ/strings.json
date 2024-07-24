@@ -35,6 +35,7 @@
     "textTooLong": "Délka vaší zprávy překračuje maximální limit.",
     "sendButtonAriaLabel": "Poslat zprávu",
     "attachmentUploadsPendingError": "Nahrávání… Počkejte prosím.",
+    "imageUploadsPendingError": "Image is uploading, please wait.",
     "removeAttachment": "Odebrat soubor",
     "uploading": "Nahrávání",
     "uploadCompleted": "Nahrávání se dokončilo",
@@ -226,8 +227,11 @@
     "richTextDeleteTableMenu": "Odstranit tabulku",
     "richTextToolbarMoreButtonAriaLabel": "Další možnosti",
     "attachmentUploadsPendingError": "Nahrávání… Počkejte prosím.",
+    "imageUploadsPendingError": "Image is uploading, please wait.",
     "richTextNewBulletedListItemAnnouncement": "Odrážka, nový řádek",
-    "richTextNewNumberedListItemAnnouncement": "{0}, nový řádek"
+    "richTextNewNumberedListItemAnnouncement": "{0}, nový řádek",
+    "richTextBulletedListAppliedAnnouncement": "Bulleted list applied",
+    "richTextNumberedListAppliedAnnouncement": "Numbered list applied"
   },
   "errorBar": {
     "unableToReachChatService": "Jste offline",

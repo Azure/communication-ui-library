@@ -35,6 +35,7 @@
     "textTooLong": "Your message length is over the maximum limit.",
     "sendButtonAriaLabel": "Send message",
     "attachmentUploadsPendingError": "Uploading... Please wait.",
+    "imageUploadsPendingError": "Image is uploading, please wait.",
     "removeAttachment": "Remove file",
     "uploading": "Uploading",
     "uploadCompleted": "Upload completed",
@@ -226,8 +227,11 @@
     "richTextDeleteTableMenu": "Delete table",
     "richTextToolbarMoreButtonAriaLabel": "More options",
     "attachmentUploadsPendingError": "Uploading... Please wait.",
+    "imageUploadsPendingError": "Image is uploading, please wait.",
     "richTextNewBulletedListItemAnnouncement": "Bullet, new line",
-    "richTextNewNumberedListItemAnnouncement": "{0}, new line"
+    "richTextNewNumberedListItemAnnouncement": "{0}, new line",
+    "richTextBulletedListAppliedAnnouncement": "Bulleted list applied",
+    "richTextNumberedListAppliedAnnouncement": "Numbered list applied"
   },
   "errorBar": {
     "unableToReachChatService": "You are offline",

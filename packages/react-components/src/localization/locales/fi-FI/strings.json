@@ -35,6 +35,7 @@
     "textTooLong": "Viestin pituus ylittää enimmäispituuden.",
     "sendButtonAriaLabel": "Lähetä viesti",
     "attachmentUploadsPendingError": "Ladataan... Odota.",
+    "imageUploadsPendingError": "Image is uploading, please wait.",
     "removeAttachment": "Poista tiedosto",
     "uploading": "Ladataan",
     "uploadCompleted": "Lataus valmis",
@@ -226,8 +227,11 @@
     "richTextDeleteTableMenu": "Poista taulukko",
     "richTextToolbarMoreButtonAriaLabel": "Lisää asetuksia",
     "attachmentUploadsPendingError": "Ladataan palvelimeen... Odota.",
+    "imageUploadsPendingError": "Image is uploading, please wait.",
     "richTextNewBulletedListItemAnnouncement": "Luettelomerkki, uusi rivi",
-    "richTextNewNumberedListItemAnnouncement": "{0}, uusi rivi"
+    "richTextNewNumberedListItemAnnouncement": "{0}, uusi rivi",
+    "richTextBulletedListAppliedAnnouncement": "Bulleted list applied",
+    "richTextNumberedListAppliedAnnouncement": "Numbered list applied"
   },
   "errorBar": {
     "unableToReachChatService": "Olet offline-tilassa",

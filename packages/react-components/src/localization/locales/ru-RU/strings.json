@@ -35,6 +35,7 @@
     "textTooLong": "Длина сообщения превышает максимально допустимую.",
     "sendButtonAriaLabel": "Отправить сообщение",
     "attachmentUploadsPendingError": "Производится отправка... Подождите.",
+    "imageUploadsPendingError": "Image is uploading, please wait.",
     "removeAttachment": "Удалить файл",
     "uploading": "Отправка",
     "uploadCompleted": "Отправка завершена",
@@ -226,8 +227,11 @@
     "richTextDeleteTableMenu": "Удалить таблицу",
     "richTextToolbarMoreButtonAriaLabel": "Дополнительные параметры",
     "attachmentUploadsPendingError": "Отправка... Подождите.",
+    "imageUploadsPendingError": "Image is uploading, please wait.",
     "richTextNewBulletedListItemAnnouncement": "Маркер, новая строка",
-    "richTextNewNumberedListItemAnnouncement": "{0}, новая строка"
+    "richTextNewNumberedListItemAnnouncement": "{0}, новая строка",
+    "richTextBulletedListAppliedAnnouncement": "Bulleted list applied",
+    "richTextNumberedListAppliedAnnouncement": "Numbered list applied"
   },
   "errorBar": {
     "unableToReachChatService": "Вы не в сети",

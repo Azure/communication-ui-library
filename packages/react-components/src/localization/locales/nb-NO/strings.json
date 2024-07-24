@@ -35,6 +35,7 @@
     "textTooLong": "Meldingslengden er over maksimumsgrensen.",
     "sendButtonAriaLabel": "Send melding",
     "attachmentUploadsPendingError": "Laster opp ... Vent litt.",
+    "imageUploadsPendingError": "Image is uploading, please wait.",
     "removeAttachment": "Fjern fil",
     "uploading": "Laster opp",
     "uploadCompleted": "Opplasting fullført",
@@ -226,8 +227,11 @@
     "richTextDeleteTableMenu": "Slett tabell",
     "richTextToolbarMoreButtonAriaLabel": "Flere alternativer",
     "attachmentUploadsPendingError": "Laster opp ... Vent litt.",
+    "imageUploadsPendingError": "Image is uploading, please wait.",
     "richTextNewBulletedListItemAnnouncement": "Punkt, ny linje",
-    "richTextNewNumberedListItemAnnouncement": "{0}, ny linje"
+    "richTextNewNumberedListItemAnnouncement": "{0}, ny linje",
+    "richTextBulletedListAppliedAnnouncement": "Bulleted list applied",
+    "richTextNumberedListAppliedAnnouncement": "Numbered list applied"
   },
   "errorBar": {
     "unableToReachChatService": "Du er frakoblet",

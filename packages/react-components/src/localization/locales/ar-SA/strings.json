@@ -35,6 +35,7 @@
     "textTooLong": "تجاوز طول الرسالة الحد الأقصى.",
     "sendButtonAriaLabel": "إرسال رسالة",
     "attachmentUploadsPendingError": "جارٍ التحميل... الرجاء الانتظار.",
+    "imageUploadsPendingError": "Image is uploading, please wait.",
     "removeAttachment": "إزالة الملف",
     "uploading": "يتم الآن التحميل",
     "uploadCompleted": "اكتمل التحميل",
@@ -226,8 +227,11 @@
     "richTextDeleteTableMenu": "حذف الجدول",
     "richTextToolbarMoreButtonAriaLabel": "خيارات إضافية",
     "attachmentUploadsPendingError": "يتم الآن التحميل... الرجاء الانتظار.",
+    "imageUploadsPendingError": "Image is uploading, please wait.",
     "richTextNewBulletedListItemAnnouncement": "رمز نقطي، سطر جديد",
-    "richTextNewNumberedListItemAnnouncement": "{0}، سطر جديد"
+    "richTextNewNumberedListItemAnnouncement": "{0}، سطر جديد",
+    "richTextBulletedListAppliedAnnouncement": "Bulleted list applied",
+    "richTextNumberedListAppliedAnnouncement": "Numbered list applied"
   },
   "errorBar": {
     "unableToReachChatService": "أنت غير متصل",
