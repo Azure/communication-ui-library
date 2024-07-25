@@ -22,7 +22,6 @@ export const IncomingCallNotificationStylingExample: () => JSX.Element = () => {
           root: {
             background: theme.palette.purpleLight,
             borderRadius: '10px',
-            height: '6rem',
             width: '19rem',
             padding: '1rem',
             boxShadow: theme.effects.elevation16

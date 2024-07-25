@@ -4,6 +4,7 @@
 import {
   DefaultButton,
   IButtonStyles,
+  IconButton,
   IStackStyles,
   Persona,
   PersonaSize,
@@ -16,6 +17,7 @@ import {
 import React from 'react';
 /* @conditional-compile-remove(one-to-n-calling) */
 import { useLocale } from '../localization';
+import { _formatString } from '@internal/acs-ui-common';
 
 /**
  * Strings for the incoming call notification component.
@@ -24,7 +26,7 @@ import { useLocale } from '../localization';
  */
 export interface IncomingCallNotificationStrings {
   /**
-   *Placeholder CallerID for the incoming call notification.
+   * Placeholder CallerID for the incoming call notification.
    */
   incomingCallNotificationPlaceholderId?: string;
   /**
@@ -43,6 +45,18 @@ export interface IncomingCallNotificationStrings {
    * Aria label for the reject button in the incoming call notification.
    */
   incomingCallNoticicationRejectAriaLabel?: string;
+  /**
+   * Label for the accept button in the incoming call notification.
+   */
+  incomingCallNotificationAcceptButtonLabel?: string;
+  /**
+   * Label for the accept with video button in the incoming call notification.
+   */
+  incomingCallNotificationAccceptWithVideoButtonLabel?: string;
+  /**
+   * label for the reject button in the incoming call notification.
+   */
+  incomingCallNotificationRejectButtonLabel?: string;
 }
 
 /**
@@ -108,6 +122,10 @@ export interface IncomingCallNotificationProps {
    */
   onReject: () => void;
   /**
+   * Callback when the notification is dismissed
+   */
+  onDismiss?: () => void;
+  /**
    * Styles for the incoming call notification component.
    */
   styles?: IncomingCallNotificationStyles;
@@ -130,6 +148,7 @@ export const IncomingCallNotification = (props: IncomingCallNotificationProps): 
     onAcceptWithAudio,
     onAcceptWithVideo,
     onReject,
+    onDismiss,
     personaSize,
     styles,
     strings
@@ -137,13 +156,18 @@ export const IncomingCallNotification = (props: IncomingCallNotificationProps): 
   const theme = useTheme();
   /* @conditional-compile-remove(one-to-n-calling) */
   const localeStrings = useLocale().strings.IncomingCallNotification;
+  /* @conditional-compile-remove(one-to-n-calling) */
+  const formattedMessageString =
+    localeStrings.incomingCallNotificationPlaceholderAlert && callerName
+      ? _formatString(localeStrings.incomingCallNotificationPlaceholderAlert, { callerName: callerName })
+      : callerName;
   return (
     <Stack
       tokens={{ childrenGap: '0.5rem' }}
       verticalAlign="center"
       styles={styles?.root ? styles.root : incomingCallToastStyle(theme)}
     >
-      <Stack horizontal>
+      <Stack horizontal verticalAlign="center">
         <Stack
           horizontalAlign="start"
           styles={styles?.avatarContainer ? styles.avatarContainer : incomingCallToastAvatarContainerStyle}
@@ -151,7 +175,7 @@ export const IncomingCallNotification = (props: IncomingCallNotificationProps): 
           <Persona
             imageUrl={avatarImage}
             text={callerName}
-            size={PersonaSize.size40}
+            size={PersonaSize.size24}
             coinSize={personaSize}
             hidePersonaDetails={true}
             aria-label={callerName}
@@ -159,35 +183,31 @@ export const IncomingCallNotification = (props: IncomingCallNotificationProps): 
         </Stack>
 
         <Stack grow={1} horizontalAlign="center" style={{ alignItems: 'flex-start', fontFamily: 'Segoe UI' }}>
-          <Stack style={{ fontSize: '0.875rem' }}>
-            <Text>
-              {callerName ??
-                strings?.incomingCallNotificationPlaceholderId ??
-                /* @conditional-compile-remove(one-to-n-calling) */ localeStrings.incomingCallNotificationPlaceholderId}
-            </Text>
-          </Stack>
           <Stack style={{ fontSize: '0.75rem' }}>
             <Text>
               {alertText ??
                 strings?.incomingCallNotificationPlaceholderAlert ??
-                /* @conditional-compile-remove(one-to-n-calling) */ localeStrings.incomingCallNotificationPlaceholderAlert}
+                /* @conditional-compile-remove(one-to-n-calling) */ formattedMessageString}
             </Text>
           </Stack>
         </Stack>
+        <IconButton iconProps={{ iconName: 'cancel' }} onClick={onDismiss} styles={dismissButtonStyle(theme)} />
       </Stack>
 
       <Stack horizontal styles={buttonContainerStyles} tokens={{ childrenGap: 10 }}>
         <PrimaryButton
           styles={styles?.acceptButton ? styles.acceptButton : incomingCallAcceptButtonStyle(theme)}
           onClick={() => onAcceptWithAudio()}
-          iconProps={{ iconName: 'IncomingCallNotificationAcceptIcon' }}
-          label={'Accept'}
+          iconProps={{ iconName: 'IncomingCallNotificationAcceptIcon', style: { lineHeight: '1rem' } }}
           /* @conditional-compile-remove(one-to-n-calling) */
           ariaLabel={
             strings?.incomingCallNoticicationAcceptWithAudioAriaLabel ??
             localeStrings.incomingCallNoticicationAcceptWithAudioAriaLabel
           }
-        />
+        >
+          {strings?.incomingCallNotificationAcceptButtonLabel ??
+            localeStrings.incomingCallNotificationAcceptButtonLabel}
+        </PrimaryButton>
         <PrimaryButton
           styles={styles?.acceptButton ? styles.acceptButton : incomingCallAcceptButtonStyle(theme)}
           onClick={() => onAcceptWithVideo()}
@@ -197,7 +217,10 @@ export const IncomingCallNotification = (props: IncomingCallNotificationProps): 
             strings?.incomingCallNoticicationAcceptWithVideoAriaLabel ??
             localeStrings.incomingCallNoticicationAcceptWithVideoAriaLabel
           }
-        />
+        >
+          {strings?.incomingCallNotificationAccceptWithVideoButtonLabel ??
+            localeStrings.incomingCallNotificationAccceptWithVideoButtonLabel}
+        </PrimaryButton>
         <DefaultButton
           styles={styles?.rejectButton ? styles.rejectButton : incomingCallRejectButtonStyle(theme)}
           onClick={() => onReject()}
@@ -207,7 +230,10 @@ export const IncomingCallNotification = (props: IncomingCallNotificationProps): 
           ariaLabel={
             strings?.incomingCallNoticicationRejectAriaLabel ?? localeStrings.incomingCallNoticicationRejectAriaLabel
           }
-        />
+        >
+          {strings?.incomingCallNotificationRejectButtonLabel ??
+            localeStrings.incomingCallNotificationRejectButtonLabel}
+        </DefaultButton>
       </Stack>
     </Stack>
   );
@@ -216,8 +242,7 @@ export const IncomingCallNotification = (props: IncomingCallNotificationProps): 
 const incomingCallToastStyle = (theme: Theme): IStackStyles => {
   return {
     root: {
-      minWidth: '20rem',
-      maxWidth: '25rem',
+      width: '20rem',
       background: theme.palette.white,
       opacity: 0.95,
       borderRadius: '0.5rem',
@@ -241,17 +266,31 @@ const incomingCallToastAvatarContainerStyle: IStackStyles = {
   }
 };
 
+const dismissButtonStyle = (theme: Theme): IButtonStyles => {
+  return {
+    root: {
+      color: theme.palette.neutralPrimary,
+      width: '1rem',
+      height: '1rem'
+    },
+    rootHovered: {
+      color: theme.palette.neutralDark
+    }
+  };
+};
+
 const incomingCallAcceptButtonStyle = (theme: Theme): IButtonStyles => {
   return {
     root: {
-      backgroundColor: theme.palette.green,
       color: theme.palette.white,
-      minWidth: '2rem',
-      border: 'none'
+      border: 'none',
+      borderRadius: theme.effects.roundedCorner4
     },
     rootHovered: {
-      backgroundColor: theme.palette.green,
       color: theme.palette.white
+    },
+    icon: {
+      height: '1.25rem'
     }
   };
 };
@@ -259,14 +298,10 @@ const incomingCallAcceptButtonStyle = (theme: Theme): IButtonStyles => {
 const incomingCallRejectButtonStyle = (theme: Theme): IButtonStyles => {
   return {
     root: {
-      backgroundColor: theme.palette.redDark,
-      color: theme.palette.white,
-      minWidth: '2rem',
-      border: 'none'
+      borderRadius: theme.effects.roundedCorner4
     },
-    rootHovered: {
-      backgroundColor: theme.palette.red,
-      color: theme.palette.white
+    icon: {
+      height: '1.25rem'
     }
   };
 };
