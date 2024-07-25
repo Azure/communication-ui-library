@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import { CallSurvey } from '@azure/communication-calling';
-import { CallSurveyImprovementSuggestions } from '@azure/communication-react';
+import { CallSurveyImprovementSuggestions, DEFAULT_COMPONENT_ICONS } from '@azure/communication-react';
 import { Text, PrimaryButton, Stack, Theme, mergeStyles, useTheme } from '@fluentui/react';
 import { initializeIcons, registerIcons } from '@fluentui/react';
 import React, { useState } from 'react';
