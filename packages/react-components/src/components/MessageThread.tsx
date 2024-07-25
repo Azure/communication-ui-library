@@ -573,18 +573,19 @@ export type MessageThreadProps = {
 export interface RichTextEditBoxOptions extends RichTextEditorOptions {
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   /**
-   * Optional callback to upload an inline image in the rich text editor.
+   * Optional callback to handle an inline image that's inserted in the rich text editor.
+   * When not provided, pasting images into rich text editor will be disabled.
    */
   onInsertInlineImage?: (imageUrl: string, imageFileName: string, messageId: string) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   /**
-   * Optional callback to remove the attachment upload or delete the image before sending.
+   * Optional callback to remove the image upload or delete the image from server before sending.
    */
   onCancelInlineImageUpload?: (imageId: string, messageId: string) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   /**
    * Optional Record of type {@link AttachmentMetadataInProgress}
-   * to render inline images being uploaded in the MessageThread's edit box.
+   * to render inline images being inserted in the MessageThread's edit boxes.
    */
   messagesInlineImages?: Record<string, AttachmentMetadataInProgress[]>;
 }

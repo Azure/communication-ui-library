@@ -66,18 +66,19 @@ export interface RichTextEditorOptions {
 export interface RichTextSendBoxOptions extends RichTextEditorOptions {
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   /**
-   * Optional callback to upload an inline image in the rich text editor.
+   * Optional callback to handle an inline image that's inserted in the rich text editor.
+   * When not provided, pasting images into rich text editor will be disabled.
    */
   onInsertInlineImage?: (imageUrl: string, imageFileName: string) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   /**
-   * Optional callback to remove the attachment upload or delete the image before sending.
+   * Optional callback to remove the image upload or delete the image from server before sending.
    */
   onCancelInlineImageUpload?: (imageId: string) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   /**
    * Optional Array of type {@link AttachmentMetadataInProgress}
-   * to render inline images being uploaded in the RichTextSendBox.
+   * to render inline images being inserted in the RichTextSendBox.
    */
   inlineImages?: AttachmentMetadataInProgress[];
 }
@@ -235,7 +236,7 @@ export interface RichTextSendBoxProps {
   onCancelAttachmentUpload?: (attachmentId: string) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   /**
-   * Optional callback to remove the attachment upload or delete the image before sending.
+   * Optional callback to remove the image upload or delete the image from server before sending.
    */
   onCancelInlineImageUpload?: (imageId: string) => void;
   /**
@@ -252,13 +253,14 @@ export interface RichTextSendBoxProps {
   onTyping?: () => Promise<void>;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   /**
-   * Optional callback to upload an inline image in the rich text editor.
+   * Optional callback to handle an inline image that's inserted in the rich text editor.
+   * When not provided, pasting images into rich text editor will be disabled.
    */
   onInsertInlineImage?: (imageUrl: string, imageFileName: string) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   /**
-   * Optional array of type {@link AttachmentMetadataInProgress}
-   * to render inline images being uploaded in the RichTextSendBox.
+   * Optional Array of type {@link AttachmentMetadataInProgress}
+   * to render inline images being inserted in the RichTextSendBox.
    */
   inlineImages?: AttachmentMetadataInProgress[];
 }
