@@ -3214,8 +3214,10 @@ export const IncomingCallNotification: (props: IncomingCallNotificationProps) =>
 
 // @beta
 export interface IncomingCallNotificationProps {
+    acceptOptions: {
+        showAcceptWithVideo: boolean;
+    };
     alertText?: string;
-    allowVideo?: boolean;
     avatarImage?: string;
     callerName?: string;
     onAcceptWithAudio: () => void;
