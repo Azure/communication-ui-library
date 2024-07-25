@@ -4,8 +4,12 @@
 import { CallSurvey } from '@azure/communication-calling';
 import { CallSurveyImprovementSuggestions } from '@azure/communication-react';
 import { Text, PrimaryButton, Stack, Theme, mergeStyles, useTheme } from '@fluentui/react';
+import { initializeIcons, registerIcons } from '@fluentui/react';
 import React, { useState } from 'react';
 import { SurveyContent } from '../../../../../react-composites/src/composites/common/SurveyContent';
+
+initializeIcons();
+registerIcons({ icons: DEFAULT_COMPONENT_ICONS });
 
 export const SurveyExample = (): JSX.Element => {
   const [ratings, setRatings] = useState(0);
