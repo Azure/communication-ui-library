@@ -215,7 +215,10 @@ export const removeBrokenImageContentAndClearImageSizeStyles = (content: string)
       img.removeAttribute('data-ui-id');
     }
     // Clear maxWidth and maxHeight styles that are set by roosterJS.
+    // Clear width and height styles as the width and height is set in attributes
     // This is so that they can be set in messageThread styles without using the important flag.
+    img.style.width = '';
+    img.style.height = '';
     img.style.maxWidth = '';
     img.style.maxHeight = '';
   });
