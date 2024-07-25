@@ -3,7 +3,10 @@
 
 /* @conditional-compile-remove(one-to-n-calling) */
 import { IncomingCallNotification } from './IncomingCallNotification';
+<<<<<<< HEAD
 import { IncomingCallNotificationStyles, IncomingCallNotificationStrings } from './IncomingCallNotification';
+=======
+>>>>>>> 5cc14688510138180c8be0913d3673a161bc58de
 import { Stack } from '@fluentui/react';
 import React from 'react';
 

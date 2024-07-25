@@ -1870,6 +1870,10 @@ export interface ChatCompositeProps extends BaseCompositeProps<ChatCompositeIcon
 export interface ChatCompositeStrings {
     chatListHeader: string;
     uploadAttachment: string;
+    uploadImageDataNotProvided: string;
+    uploadImageExtensionIsNotAllowed: string;
+    uploadImageFailed: string;
+    uploadImageIsTooLarge: string;
 }
 
 // @public
@@ -3251,8 +3255,11 @@ export interface IncomingCallStackProps {
     onAcceptCall: (incomingCallId: string, useVideo?: boolean) => void;
     onRejectCall: (incomingCallId: string) => void;
     removedIncomingCalls: ActiveIncomingCall[];
+<<<<<<< HEAD
     strings?: IncomingCallNotificationStrings;
     styles?: IncomingCallNotificationStyles;
+=======
+>>>>>>> 5cc14688510138180c8be0913d3673a161bc58de
 }
 
 // @beta
@@ -3577,7 +3584,6 @@ export type MessageThreadSelector = (state: ChatClientState, props: ChatBaseSele
 export interface MessageThreadStrings {
     actionMenuMoreOptions?: string;
     attachmentCardGroupMessage: string;
-    attachmentUploadsPendingError: string;
     blockedWarningLinkText: string;
     blockedWarningText: string;
     downloadAttachment: string;
@@ -3589,6 +3595,7 @@ export interface MessageThreadStrings {
     editMessage: string;
     failToSendTag?: string;
     friday: string;
+    imageUploadsPendingError: string;
     liveAuthorIntro: string;
     messageContentAriaText: string;
     messageContentMineAriaText: string;
@@ -4227,6 +4234,7 @@ export interface RichTextSendBoxStrings extends RichTextStrings, SendBoxStrings 
 
 // @beta
 export interface RichTextStrings {
+    imageUploadsPendingError: string;
     richTextBoldTooltip: string;
     richTextBulletedListAppliedAnnouncement: string;
     richTextBulletListTooltip: string;
@@ -4285,8 +4293,19 @@ export const SendBox: (props: SendBoxProps) => JSX.Element;
 
 // @beta
 export interface SendBoxErrorBarError {
+    errorBarType?: SendBoxErrorBarType;
     message: string;
     timestamp: number;
+}
+
+// @beta
+export enum SendBoxErrorBarType {
+    blocked = 2,
+    error = 1,
+    info = 0,
+    severeWarning = 3,
+    success = 4,
+    warning = 5
 }
 
 // @public
