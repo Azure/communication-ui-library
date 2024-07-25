@@ -96,6 +96,7 @@ export const IncomingCallStack = (props: IncomingCallStackProps): JSX.Element =>
                 onAcceptWithAudio={() => onAcceptCall(incomingCall.id)}
                 onAcceptWithVideo={() => onAcceptCall(incomingCall.id, true)}
                 onReject={() => onRejectCall(incomingCall.id)}
+                onDismiss={() => onRejectCall(incomingCall.id)}
                 styles={styles}
                 strings={strings}
                 allowVideo={incomingCall.videoAvailable}
