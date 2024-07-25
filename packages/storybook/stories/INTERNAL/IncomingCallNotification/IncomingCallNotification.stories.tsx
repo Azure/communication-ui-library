@@ -16,7 +16,7 @@ const IncomingCallNotificationStylingText =
 const getDocs: () => JSX.Element = () => {
   return (
     <>
-      <Title>Incoming Call Notifiation Component</Title>
+      <Title>Incoming Call Notification Component</Title>
       <SingleLineBetaBanner />
       <Description>
         The incoming Call notification component is used to provide information to your users when they are recieving a
@@ -54,6 +54,9 @@ const IncomingCallNotificationStory = (): JSX.Element => {
         alert('Rejected');
       }}
       callerName="John Wick"
+      acceptOptions={{
+        showAcceptWithVideo: true
+      }}
     />
   );
 };
