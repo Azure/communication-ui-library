@@ -5,7 +5,6 @@ import React from 'react';
 import { compositeCanvasContainerStyles } from './CustomButtonInjectionTypes';
 import { addCSS } from '../../../utils';
 
-
 //boiler plate for testing
 const maxCustomButtonsForInjection: CustomCallControlButtonCallback[] = [
   () => ({
