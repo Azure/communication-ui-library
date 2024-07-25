@@ -21,7 +21,7 @@ const IncomingCallNotificationStylingText: string =
 const getDocs: () => JSX.Element = () => {
   return (
     <>
-      <Heading>IncomingCallNotification</Heading>
+      <Title>IncomingCallNotification</Title>
       <SingleLineBetaBanner />
       <Description>
         This component is a representation of an incoming call. It will show the name of the caller and allow you to

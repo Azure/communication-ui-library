@@ -14,6 +14,9 @@ export const IncomingCallNotificationExample: () => JSX.Element = () => {
         alert('Rejected');
       }}
       callerName="John Wick"
+      acceptOptions={{
+        showAcceptWithVideo: true
+      }}
     />
   );
 };
