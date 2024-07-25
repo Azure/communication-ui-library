@@ -7,4 +7,4 @@ export { _createStatefulCallClientInner } from './StatefulCallClient';
 
 export { _isACSCall, _isACSCallAgent, _isTeamsCall, _isTeamsCallAgent } from './TypeGuards';
 
-export type { CallAgentCommon, CallCommon, TeamsCall, IncomingCallCommon } from './BetaToStableTypes';
+export type { CallAgentCommon, CallCommon, TeamsCall } from './BetaToStableTypes';
