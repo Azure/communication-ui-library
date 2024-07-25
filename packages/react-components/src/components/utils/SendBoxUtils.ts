@@ -44,7 +44,7 @@ export const isAttachmentUploadCompleted = (
 // Before sending the image, we need to add the image id we get back after uploading the images to the message content.
 export const addUploadedImagesToMessage = async (
   message: string,
-  uploadInlineImages: AttachmentMetadataInProgress[]
+  inlineImages: AttachmentMetadataInProgress[]
 ): Promise<string> => {
   if (message === '') {
     return message;
@@ -52,8 +52,8 @@ export const addUploadedImagesToMessage = async (
   const document = new DOMParser().parseFromString(message ?? '', 'text/html');
   const imagesPromise = Array.from(document.querySelectorAll('img')).map((img) => {
     return new Promise<void>((resolve, rejects) => {
-      const uploadInlineImage = uploadInlineImages.find(
-        (imageUpload) => !imageUpload.error && (imageUpload.url === img.src || imageUpload.id === img.id)
+      const uploadInlineImage = inlineImages.find(
+        (inlineImage) => !inlineImage.error && (inlineImage.url === img.src || inlineImage.id === img.id)
       );
       // The message might content images that comes with the message before editing, those images are not in the uploadInlineImages array.
       // This function should only modify the message content for images in the uploadInlineImages array.
@@ -153,10 +153,10 @@ export const cancelInlineImageUpload = (props: CancelInlineImageUploadProps): vo
   const { imageSrcArray, inlineImages, messageId, editBoxOnCancelInlineImageUpload, sendBoxOnCancelInlineImageUpload } =
     props;
   if (imageSrcArray && inlineImages && inlineImages?.length > 0) {
-    inlineImages?.map((uploadImage) => {
-      if (uploadImage.url && !imageSrcArray?.includes(uploadImage.url)) {
-        sendBoxOnCancelInlineImageUpload && sendBoxOnCancelInlineImageUpload(uploadImage.id);
-        editBoxOnCancelInlineImageUpload && editBoxOnCancelInlineImageUpload(uploadImage.id, messageId || '');
+    inlineImages?.map((inlineImage) => {
+      if (inlineImage.url && !imageSrcArray?.includes(inlineImage.url)) {
+        sendBoxOnCancelInlineImageUpload && sendBoxOnCancelInlineImageUpload(inlineImage.id);
+        editBoxOnCancelInlineImageUpload && editBoxOnCancelInlineImageUpload(inlineImage.id, messageId || '');
       }
     });
   }
