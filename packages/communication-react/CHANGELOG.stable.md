@@ -1,13 +1,20 @@
 # Change Log - @azure/communication-react
 
-This log was last generated on Mon, 15 Jul 2024 18:16:36 GMT and should not be manually modified.
+This log was last generated on Thu, 25 Jul 2024 18:16:36 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.18.1](https://github.com/azure/communication-ui-library/tree/1.18.1)
+
+Thu, 25 Jul 2024 18:16:36 GMT
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.18.1...1.18.0)
+
+Remove use of libphonenumber-js for phone number parsing and formatting.
 
 ## [1.18.0](https://github.com/azure/communication-ui-library/tree/1.18.0)
 
 Mon, 15 Jul 2024 18:16:36 GMT 
-[Compare changes](https://github.com/azure/communication-ui-library/compare/1.18.0-beta.1...1.18.0)
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.18.0...1.17.0)
 
 ### Features
 
