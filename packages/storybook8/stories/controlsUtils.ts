@@ -188,7 +188,7 @@ const notificationOptions: NotificationType[] = [
   'transcriptionStoppedStillRecording'
 ];
 
-export const defaultActiveNotifications = [{ type: 'startVideoGeneric' }];
+export const defaultActiveNotifications = ['callNoSpeakerFound'];
 
 export const controlsToAdd = {
   alternateCallerId: {
