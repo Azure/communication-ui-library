@@ -1,10 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import {
-  IncomingCallNotification as IncomingCallNotificationComponent,
-  IncomingCallStack
-} from '@azure/communication-react';
+import { IncomingCallNotification as IncomingCallNotificationComponent } from '@azure/communication-react';
 import { Canvas, Description, Heading, Props, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
@@ -46,21 +43,22 @@ const getDocs: () => JSX.Element = () => {
   );
 };
 
-const IncomingCallNotificationStory = (args): JSX.Element => {
-  const numberOfCalls = args.maxIncomingCallsToShow;
-  const incomingCalls = args.incomingCalls.slice(0, numberOfCalls);
-  const onAcceptCall = (incomingCallId: string, useVideo?: boolean): void => {
-    alert('Accepted, useVideo: ' + useVideo + ', incomingCallId: ' + incomingCallId);
-  };
-  const onRejectCall = (incomingCallId: string): void => {
-    alert('Rejected, incomingCallId: ' + incomingCallId);
-  };
+const IncomingCallNotificationStory = (): JSX.Element => {
   return (
-    <IncomingCallStack
-      activeIncomingCalls={incomingCalls}
-      removedIncomingCalls={[]}
-      onAcceptCall={onAcceptCall}
-      onRejectCall={onRejectCall}
+    <IncomingCallNotificationComponent
+      onAcceptWithAudio={function (): void {
+        alert('Accept with audio');
+      }}
+      onAcceptWithVideo={function (): void {
+        alert('Accept with video');
+      }}
+      onReject={function (): void {
+        alert('Rejected');
+      }}
+      callerName="John Wick"
+      acceptOptions={{
+        showAcceptWithVideo: true
+      }}
     />
   );
 };
