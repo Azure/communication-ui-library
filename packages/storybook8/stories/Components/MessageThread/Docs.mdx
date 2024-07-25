@@ -1,5 +1,6 @@
 import { Canvas, Description, Meta, Source } from '@storybook/blocks';
 import { SingleLineBetaBanner } from '../../BetaBanners/SingleLineBetaBanner';
+import { DetailedBetaBanner } from '../../BetaBanners/DetailedBetaBanner';
 
 import * as MessageThreadStories from './index.stories';
 
@@ -21,6 +22,8 @@ import ExampleImportantsText from '!!raw-loader!./snippets/placeholdermessages.t
 import MessageThreadWithSystemMessagesExampleText from '!!raw-loader!./snippets/SystemMessages.snippet.tsx';
 import MessageThreadWithInlineImageExampleText from '!!raw-loader!./snippets/WithInlineImageMessage.snippet.tsx';
 import MessageThreadWithMessageDateExampleText from '!!raw-loader!./snippets/WithMessageDate.snippet.tsx';
+import MessageThreadWithRichTextEditorExampleText from '!!raw-loader!./snippets/WithRichTextEditor.snippet.tsx';
+import MessageThreadWithRichTextEditorOnPasteExampleText from '!!raw-loader!./snippets/WithRichTextEditorOnPaste.snippet.tsx';
 
 <Meta of={MessageThreadStories} />
 
@@ -196,4 +199,30 @@ further customization. The HTML Tag is defined:
 <msft-mention id="<id>">Displayable Text</msft-mention>
 ```
 
+The MessageThread component also supports mentioning users when editing a message if the `lookupOptions` under the `mentionOptions` property is provided. However, if the `richTextEditorOptions` property is set, the `lookupOptions` will be ignored.
+
 <Canvas of={MessageThreadStories.CustomMentionsDocsOnly} source={{ code: MessageWithCustomMentionRendererText }} />
+
+## Rich Text Editor Support for Editing Messages
+
+<SingleLineBetaBanner />
+
+The following examples show how to enable rich text editor for message editing by providing the `richTextEditorOptions` property. Rich text editor does not support mentioning users at the moment. By setting `richTextEditorOptions` property, the `lookupOptions` under the `mentionOptions` property will be ignored.
+
+Enabling the rich text editor for message editing, without customizing its behavior, can be achieved by setting the richTextEditorOptions.
+
+<Canvas
+  of={MessageThreadStories.RichTextEditorTextDocsOnly}
+  source={{ code: MessageThreadWithRichTextEditorExampleText }}
+/>
+
+## Process content on paste in Rich Text Editor during message editing
+
+<SingleLineBetaBanner />
+
+`richTextEditorOptions` provides `onPaste` callback for custom processing of the pasted content before it's inserted into the rich text editor for message editing. This callback can be used to implement custom paste handling logic tailored to your application's needs. The example below shows how to remove images from pasted content.
+
+<Canvas
+  of={MessageThreadStories.RichTextEditorOnPasteTextDocsOnly}
+  source={{ code: MessageThreadWithRichTextEditorOnPasteExampleText }}
+/>

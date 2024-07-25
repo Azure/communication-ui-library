@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { CustomCallControlButtonProps, ErrorType } from '@azure/communication-react';
+import { ErrorType } from '@azure/communication-react';
 import { PartialTheme } from '@fluentui/react';
 import { DefaultTheme, DarkTheme, TeamsTheme, WordTheme } from '@fluentui/theme-samples';
 import {
@@ -438,43 +438,45 @@ export const controlsToAdd = {
       options: ['undefined', false, true],
       name: 'Show Label'
     },
-    allowRawObjectInput: {
-      control: 'boolean',
-      defaultValue: false,
-      if: { arg: 'injectMaximumNumberOfButtons', truthy: false },
-      name: 'Inject your own buttons'
-    },
-    objectOptions: {
-      control: 'object',
-      if: { arg: 'allowRawObjectInput' },
-      defaultValue: [
-        (): CustomCallControlButtonProps => ({
-          placement: 'primary',
-          strings: {
-            label: 'Custom'
-          }
-        }),
-        (): CustomCallControlButtonProps => ({
-          placement: 'secondary',
-          strings: {
-            label: 'Custom'
-          }
-        }),
-        (): CustomCallControlButtonProps => ({
-          placement: 'overflow',
-          strings: {
-            label: 'Custom'
-          }
-        })
-      ]
-    },
+    // Object injection is converting function consts to string. This is causing errors with this control.
+    // allowRawObjectInput: {
+    //   control: 'boolean',
+    //   defaultValue: false,
+    //   if: { arg: 'injectMaximumNumberOfButtons', truthy: false },
+    //   name: 'Inject your own buttons'
+    // },
+    // objectOptions: {
+    //   control: 'object',
+    //   if: { arg: 'allowRawObjectInput' },
+    //   defaultValue: [
+    //     (): CustomCallControlButtonProps => ({
+    //       placement: 'primary',
+    //       strings: {
+    //         label: 'Custom'
+    //       }
+    //     }),
+    //     (): CustomCallControlButtonProps => ({
+    //       placement: 'secondary',
+    //       strings: {
+    //         label: 'Custom'
+    //       }
+    //     }),
+    //     (): CustomCallControlButtonProps => ({
+    //       placement: 'overflow',
+    //       strings: {
+    //         label: 'Custom'
+    //       }
+    //     })
+    //   ]
+    // },
     injectMaximumNumberOfButtons: {
       control: 'boolean',
       defaultValue: false,
       if: { arg: 'allowRawObjectInput', truthy: false },
       name: 'Inject Max # of Custom Buttons'
     }
-  }
+  },
+  richTextEditor: { control: 'boolean', name: 'Enable rich text editor' }
 };
 
 export const hiddenControl = { control: false, table: { disable: true } };

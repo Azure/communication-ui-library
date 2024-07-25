@@ -77,7 +77,7 @@ module.exports = {
     "rich-text-editor-image-upload",
     // Feature to support file sharing in ACS chats
     "file-sharing-acs",
-    // Soft Mute feature for ACS and Interop calls
+    // Soft Mute feature for ACS calls and Interop calls
     "soft-mute"
   ],
   stable: [
