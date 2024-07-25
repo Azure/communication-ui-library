@@ -205,8 +205,10 @@ export const IncomingCallNotification = (props: IncomingCallNotificationProps): 
             localeStrings.incomingCallNoticicationAcceptWithAudioAriaLabel
           }
         >
-          {strings?.incomingCallNotificationAcceptButtonLabel ??
-            localeStrings.incomingCallNotificationAcceptButtonLabel}
+          {
+            /* @conditional-compile-remove(one-to-n-calling) */ strings?.incomingCallNotificationAcceptButtonLabel ??
+              localeStrings.incomingCallNotificationAcceptButtonLabel
+          }
         </PrimaryButton>
         <PrimaryButton
           styles={styles?.acceptButton ? styles.acceptButton : incomingCallAcceptButtonStyle(theme)}
@@ -218,8 +220,10 @@ export const IncomingCallNotification = (props: IncomingCallNotificationProps): 
             localeStrings.incomingCallNoticicationAcceptWithVideoAriaLabel
           }
         >
-          {strings?.incomingCallNotificationAccceptWithVideoButtonLabel ??
-            localeStrings.incomingCallNotificationAccceptWithVideoButtonLabel}
+          {
+            /* @conditional-compile-remove(one-to-n-calling) */ strings?.incomingCallNotificationAccceptWithVideoButtonLabel ??
+              localeStrings.incomingCallNotificationAccceptWithVideoButtonLabel
+          }
         </PrimaryButton>
         <DefaultButton
           styles={styles?.rejectButton ? styles.rejectButton : incomingCallRejectButtonStyle(theme)}
@@ -231,8 +235,10 @@ export const IncomingCallNotification = (props: IncomingCallNotificationProps): 
             strings?.incomingCallNoticicationRejectAriaLabel ?? localeStrings.incomingCallNoticicationRejectAriaLabel
           }
         >
-          {strings?.incomingCallNotificationRejectButtonLabel ??
-            localeStrings.incomingCallNotificationRejectButtonLabel}
+          {
+            /* @conditional-compile-remove(one-to-n-calling) */ strings?.incomingCallNotificationRejectButtonLabel ??
+              localeStrings.incomingCallNotificationRejectButtonLabel
+          }
         </DefaultButton>
       </Stack>
     </Stack>

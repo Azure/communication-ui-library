@@ -3214,6 +3214,7 @@ export interface IncomingCallNotificationProps {
     callerName?: string;
     onAcceptWithAudio: () => void;
     onAcceptWithVideo: () => void;
+    onDismiss?: () => void;
     onReject: () => void;
     onRenderAvatar?: () => JSX.Element;
     personaSize?: number;
@@ -3226,8 +3227,11 @@ export interface IncomingCallNotificationStrings {
     incomingCallNoticicationAcceptWithAudioAriaLabel?: string;
     incomingCallNoticicationAcceptWithVideoAriaLabel?: string;
     incomingCallNoticicationRejectAriaLabel?: string;
+    incomingCallNotificationAccceptWithVideoButtonLabel?: string;
+    incomingCallNotificationAcceptButtonLabel?: string;
     incomingCallNotificationPlaceholderAlert?: string;
     incomingCallNotificationPlaceholderId?: string;
+    incomingCallNotificationRejectButtonLabel?: string;
 }
 
 // @beta
