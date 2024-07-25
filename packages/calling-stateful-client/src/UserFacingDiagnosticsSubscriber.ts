@@ -6,7 +6,8 @@ import {
   DiagnosticChangedEventArgs,
   LatestDiagnosticValue,
   MediaDiagnosticChangedEventArgs,
-  NetworkDiagnosticChangedEventArgs
+  NetworkDiagnosticChangedEventArgs,
+  RemoteParticipantDiagnosticsData
 } from '@azure/communication-calling';
 import { CallContext } from './CallContext';
 import { CallIdRef } from './CallIdRef';
@@ -59,6 +60,23 @@ export class UserFacingDiagnosticsSubscriber {
   private subscribe(): void {
     this._diagnostics.network.on('diagnosticChanged', this.networkDiagnosticsChanged.bind(this));
     this._diagnostics.media.on('diagnosticChanged', this.mediaDiagnosticsChanged.bind(this));
+    this._diagnostics.remote.on('diagnosticChanged', this.remoteDiagnosticsChanged.bind(this));
+  }
+
+  private remoteDiagnosticsChanged(args: RemoteParticipantDiagnosticsData): void {
+    this._context.modifyState((state) => {
+      const call = state.calls[this._callIdRef.callId];
+      if (call === undefined) {
+        return;
+      }
+      for (const diagnostic of args.diagnostics) {
+        const { remoteParticipant: _, participantId, ...participantDiagnostic } = diagnostic;
+        const participant = call.remoteParticipants[participantId];
+        if (participant) {
+          participant.diagnostic = participantDiagnostic;
+        }
+      }
+    });
   }
 
   private networkDiagnosticsChanged(args: NetworkDiagnosticChangedEventArgs): void {

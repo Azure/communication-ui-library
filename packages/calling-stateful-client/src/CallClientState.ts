@@ -1,20 +1,26 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import {
+import type {
   AudioDeviceInfo,
   CallDirection,
   CallEndReason,
   CallerInfo,
   CallState as CallStatus,
   DeviceAccess,
+  DiagnosticFlag,
+  DiagnosticQuality,
+  DiagnosticValueType,
   DominantSpeakersInfo,
   LatestMediaDiagnostics,
   LatestNetworkDiagnostics,
+  MediaDiagnosticType,
   MediaStreamType,
+  NetworkDiagnosticType,
   ParticipantRole,
   RemoteParticipantState as RemoteParticipantStatus,
   ScalingMode,
+  ServerDiagnosticType,
   VideoDeviceInfo
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(meeting-id) */
@@ -457,6 +463,10 @@ export interface RemoteParticipantState {
    * Proxy of {@link @azure/communication-calling#SpotlightCallFeature.spotlightedParticipants}.
    */
   spotlight?: SpotlightState;
+  /**
+   * The diagnostic status of RemoteParticipant{@link @azure/communication-calling#RemoteDiagnostics}.
+   */
+  diagnostic?: RemoteDiagnosticState;
 }
 
 /**
@@ -940,6 +950,18 @@ export interface DiagnosticsCallFeatureState {
    */
   media: MediaDiagnosticsState;
 }
+
+/**
+ * State only proxy for {@link @azure/communication-calling#DiagnosticsCallFeature}.
+ *
+ * @beta
+ */
+export declare type RemoteDiagnosticState = {
+  readonly rawId: string;
+  readonly diagnostic: NetworkDiagnosticType | MediaDiagnosticType | ServerDiagnosticType;
+  readonly value: DiagnosticQuality | DiagnosticFlag;
+  readonly valueType: DiagnosticValueType;
+};
 
 /**
  * State only proxy for {@link @azure/communication-calling#NetworkDiagnostics}.
