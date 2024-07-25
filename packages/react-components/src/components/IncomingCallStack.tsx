@@ -33,6 +33,10 @@ export interface ActiveIncomingCall {
    * End time of the incoming call.
    */
   endTime?: Date;
+  /**
+   * Whether or not the call is a voip capable call.
+   */
+  videoAvailable: boolean;
 }
 /**
  * Props for the IncomingCallManager component.
@@ -94,6 +98,7 @@ export const IncomingCallStack = (props: IncomingCallStackProps): JSX.Element =>
                 onReject={() => onRejectCall(incomingCall.id)}
                 styles={styles}
                 strings={strings}
+                allowVideo={incomingCall.videoAvailable}
               ></IncomingCallNotification>
             );
           })

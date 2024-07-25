@@ -129,6 +129,7 @@ export interface ActiveIncomingCall {
     endTime?: Date;
     id: string;
     startTime: Date;
+    videoAvailable: boolean;
 }
 
 // @public
@@ -3214,6 +3215,7 @@ export const IncomingCallNotification: (props: IncomingCallNotificationProps) =>
 // @beta
 export interface IncomingCallNotificationProps {
     alertText?: string;
+    allowVideo?: boolean;
     avatarImage?: string;
     callerName?: string;
     onAcceptWithAudio: () => void;
