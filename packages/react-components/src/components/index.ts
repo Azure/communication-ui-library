@@ -300,6 +300,8 @@ export * from './CaptionsSettingsModal';
 
 /* @conditional-compile-remove(teams-meeting-conference) */
 export * from './MeetingConferencePhoneInfo';
+/* @conditional-compile-remove(teams-meeting-conference) */
+export { _formatPhoneNumber } from './utils/formatPhoneNumber';
 
 export { _ErrorBoundary } from './ErrorBoundary';
 /* @conditional-compile-remove(notifications) */
