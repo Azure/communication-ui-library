@@ -314,7 +314,7 @@ const createMockDeviceManagerWithSpeakers = (
       this.selectedSpeaker = target;
     }
   });
-  return { ...base, ...mixin } as MockDeviceManager;
+  return { ...base, ...mixin, isSpeakerSelectionAvailable: true } as MockDeviceManager;
 };
 
 const cameraWithName = (name: string): VideoDeviceInfo => ({
