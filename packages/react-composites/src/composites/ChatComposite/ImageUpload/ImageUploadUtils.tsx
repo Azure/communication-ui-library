@@ -63,45 +63,28 @@ export const getInlineImageData = async (image: string): Promise<Blob | undefine
 /**
  * @internal
  */
-export const removeImageTags = (event: { content: DocumentFragment }): void => {
-  event.content.querySelectorAll('img').forEach((image) => {
-    // If the image is the only child of its parent, remove all the parents of this img element.
-    let parentNode: HTMLElement | null = image.parentElement;
-    let currentNode: HTMLElement = image;
-    while (parentNode?.childNodes.length === 1) {
-      currentNode = parentNode;
-      parentNode = parentNode.parentElement;
-    }
-    currentNode?.remove();
-  });
-};
-
-/* @conditional-compile-remove(rich-text-editor-image-upload) */
-/**
- * @internal
- */
-export const getEditBoxMessagesImageUploadsInProgress = (
+export const getEditBoxMessagesInlineImages = (
   editBoxInlineImageUploads: Record<string, AttachmentUpload[]> | undefined
 ): Record<string, AttachmentMetadataInProgress[]> | undefined => {
   if (!editBoxInlineImageUploads) {
     return;
   }
   const messageIds = Object.keys(editBoxInlineImageUploads || {});
-  const messagesImageUploadsInProgress: Record<string, AttachmentMetadataInProgress[]> = {};
+  const messagesInlineImages: Record<string, AttachmentMetadataInProgress[]> = {};
   messageIds.map((messageId) => {
     const messageUploads = editBoxInlineImageUploads[messageId].map((upload) => {
       return upload.metadata;
     });
-    messagesImageUploadsInProgress[messageId] = messageUploads;
+    messagesInlineImages[messageId] = messageUploads;
   });
-  return messagesImageUploadsInProgress;
+  return messagesInlineImages;
 };
 
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 /**
  * @internal
  */
-export const getSendBoxImageUploadsInProgress = (
+export const getSendBoxInlineImages = (
   sendBoxInlineImageUploads: Record<string, AttachmentUpload[]> | undefined
 ): AttachmentMetadataInProgress[] | undefined => {
   if (!sendBoxInlineImageUploads) {
@@ -203,7 +186,7 @@ const generateUploadTask = async (
 /**
  * @internal
  */
-export const onUploadInlineImageForEditBox = async (
+export const onInsertInlineImageForEditBox = async (
   image: string,
   fileName: string,
   messageId: string,
@@ -233,7 +216,7 @@ export const onUploadInlineImageForEditBox = async (
 /**
  * @internal
  */
-export const onUploadInlineImageForSendBox = async (
+export const onInsertInlineImageForSendBox = async (
   image: string,
   fileName: string,
   adapter: ChatAdapter,
