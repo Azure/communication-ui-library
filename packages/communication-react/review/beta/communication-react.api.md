@@ -4185,9 +4185,9 @@ export type ResourceFetchResult = {
 
 // @beta
 export interface RichTextEditBoxOptions extends RichTextEditorOptions {
-    messagesImageUploadsInProgress?: Record<string, AttachmentMetadataInProgress[]>;
+    messagesInlineImages?: Record<string, AttachmentMetadataInProgress[]>;
     onCancelInlineImageUpload?: (imageId: string, messageId: string) => void;
-    onUploadInlineImage?: (imageUrl: string, imageFileName: string, messageId: string) => void;
+    onInsertInlineImage?: (imageUrl: string, imageFileName: string, messageId: string) => void;
 }
 
 // @beta
@@ -4202,9 +4202,9 @@ export const RichTextSendBox: (props: RichTextSendBoxProps) => JSX.Element;
 
 // @beta
 export interface RichTextSendBoxOptions extends RichTextEditorOptions {
-    imageUploadsInProgress?: AttachmentMetadataInProgress[];
+    inlineImages?: AttachmentMetadataInProgress[];
     onCancelInlineImageUpload?: (imageId: string) => void;
-    onUploadInlineImage?: (imageUrl: string, imageFileName: string) => void;
+    onInsertInlineImage?: (imageUrl: string, imageFileName: string) => void;
 }
 
 // @beta
@@ -4212,15 +4212,15 @@ export interface RichTextSendBoxProps {
     attachments?: AttachmentMetadataInProgress[];
     autoFocus?: 'sendBoxTextField';
     disabled?: boolean;
-    imageUploadsInProgress?: AttachmentMetadataInProgress[];
+    inlineImages?: AttachmentMetadataInProgress[];
     onCancelAttachmentUpload?: (attachmentId: string) => void;
     onCancelInlineImageUpload?: (imageId: string) => void;
+    onInsertInlineImage?: (imageUrl: string, imageFileName: string) => void;
     onPaste?: (event: {
         content: DocumentFragment;
     }) => void;
     onSendMessage: (content: string, options?: MessageOptions) => Promise<void>;
     onTyping?: () => Promise<void>;
-    onUploadInlineImage?: (imageUrl: string, imageFileName: string) => void;
     strings?: Partial<RichTextSendBoxStrings>;
     systemMessage?: string;
 }
