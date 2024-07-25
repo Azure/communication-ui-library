@@ -346,6 +346,8 @@ export type {
 export type { AttachmentOptions } from '../../react-components/src';
 /* @conditional-compile-remove(file-sharing-acs) */
 export type { SendBoxErrorBarError } from '../../react-components/src';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+export type { SendBoxErrorBarType } from '../../react-components/src';
 /* @conditional-compile-remove(file-sharing-acs) */
 export type { AttachmentActionHandler } from '../../react-components/src';
 /* @conditional-compile-remove(file-sharing-acs) */
