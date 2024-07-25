@@ -14,8 +14,11 @@ import {
   LocalVideoStreamState,
   CallErrors,
   DiagnosticsCallFeatureState,
-  SpotlightCallFeatureState
+  SpotlightCallFeatureState,
+  IncomingCallState
 } from '@internal/calling-stateful-client';
+/* @conditional-compile-remove(one-to-n-calling) */
+import { TeamsIncomingCallState } from '@internal/calling-stateful-client';
 import { ReactionState } from '@internal/calling-stateful-client';
 import { CaptionsInfo } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(acs-close-captions) */
@@ -265,4 +268,26 @@ export const getMeetingConferencePhones = (
   props: CallingBaseSelectorProps
 ): ConferencePhoneInfo[] | undefined => {
   return state.calls[props.callId]?.meetingConference?.conferencePhones;
+};
+
+/**
+ * selector for retrieving the incoming calls from state
+ * @returns the incoming calls in the call client state
+ * @private
+ */
+export const getIncomingCalls = (
+  state: CallClientState
+): IncomingCallState[] | /* @conditional-compile-remove(one-to-n-calling) */ TeamsIncomingCallState[] => {
+  return Object.values(state.incomingCalls);
+};
+
+/**
+ * selector for retrieving the incoming calls that have been removed from state
+ * @returns the incoming calls that have been removed
+ * @private
+ */
+export const getRemovedIncomingCalls = (
+  state: CallClientState
+): IncomingCallState[] | /* @conditional-compile-remove(one-to-n-calling) */ TeamsIncomingCallState[] => {
+  return Object.values(state.incomingCallsEnded);
 };

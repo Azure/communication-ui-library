@@ -54,11 +54,11 @@ export const FluentChatMyMessageComponent = (props: FluentChatMessageComponentWr
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
     onPaste,
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    imageUploadsInProgress,
+    inlineImages,
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
     onCancelInlineImageUpload,
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    onUploadInlineImage
+    onInsertInlineImage
   } = props;
   const chatMessageRenderStyles = useChatMessageRenderStyles();
   /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
@@ -107,9 +107,9 @@ export const FluentChatMyMessageComponent = (props: FluentChatMessageComponentWr
             /* @conditional-compile-remove(rich-text-editor-image-upload) */
             onCancelInlineImageUpload={onCancelInlineImageUpload}
             /* @conditional-compile-remove(rich-text-editor-image-upload) */
-            onUploadInlineImage={onUploadInlineImage}
+            onInsertInlineImage={onInsertInlineImage}
             /* @conditional-compile-remove(rich-text-editor-image-upload) */
-            imageUploadsInProgress={imageUploadsInProgress}
+            inlineImages={inlineImages}
           />
         );
       }
@@ -140,9 +140,9 @@ export const FluentChatMyMessageComponent = (props: FluentChatMessageComponentWr
       /* @conditional-compile-remove(rich-text-editor-image-upload) */
       onCancelInlineImageUpload,
       /* @conditional-compile-remove(rich-text-editor-image-upload) */
-      onUploadInlineImage,
+      onInsertInlineImage,
       /* @conditional-compile-remove(rich-text-editor-image-upload) */
-      imageUploadsInProgress
+      inlineImages
     ]
   );
 
