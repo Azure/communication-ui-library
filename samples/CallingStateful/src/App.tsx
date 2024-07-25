@@ -13,7 +13,10 @@ import {
   StatefulCallClient,
   CallClientProvider,
   CallAgentProvider,
-  CallProvider
+  CallProvider,
+  CallAdapter,
+  createAzureCommunicationCallAdapterFromClient,
+  CallComposite
 } from '@azure/communication-react';
 /* @conditional-compile-remove(one-to-n-calling) */
 import { DeclarativeCallAgent, DeclarativeTeamsCallAgent } from '@azure/communication-react';
@@ -40,6 +43,7 @@ function App(): JSX.Element {
   const [callAgent, setCallAgent] = useState<DeclarativeCallAgent | DeclarativeTeamsCallAgent>();
   const [call, setCall] = useState<Call | TeamsCall>();
   const [calls, setCalls] = useState<Call[] | TeamsCall[]>([]);
+  const [callAdapter, setCallAdapter] = useState<CallAdapter>();
 
   const callsUpdatedListener = useCallback(
     (event: { added: CallCommon[]; removed: CallCommon[] }): void => {
@@ -58,6 +62,21 @@ function App(): JSX.Element {
     },
     [call, callAgent?.calls]
   );
+
+  useEffect(() => {
+    (async () => {
+      if (statefulCallClient) {
+        const adapter = await createAzureCommunicationCallAdapterFromClient(
+          statefulCallClient,
+          callAgent as CallAgent,
+          {
+            groupId: '454cec8e-8c6f-42ea-a2b2-00c812bd376d'
+          }
+        );
+        setCallAdapter(adapter);
+      }
+    })();
+  }, [callAgent, statefulCallClient]);
 
   useEffect(() => {
     /* @conditional-compile-remove(one-to-n-calling) */
@@ -117,19 +136,7 @@ function App(): JSX.Element {
             >
               {userIdentifier && <Text>your userId: {userIdentifier.communicationUserId}</Text>}
               {teamsIdentifier && <Text>your teamsId: {teamsIdentifier}</Text>}
-              {
-                /* @conditional-compile-remove(one-to-n-calling) */ statefulCallClient && callAgent && !call && (
-                  <HomeScreen callAgent={callAgent as CallAgent} headerImageProps={imageProps}></HomeScreen>
-                )
-              }
-              {statefulCallClient && /* @conditional-compile-remove(one-to-n-calling) */ callAgent && call && (
-                <CallProvider call={call.kind === 'Call' ? (call as Call) : (call as TeamsCall)}>
-                  <CallScreen
-                    /* @conditional-compile-remove(one-to-n-calling) */ call={call}
-                    /* @conditional-compile-remove(one-to-n-calling) */ onSetCall={setCall}
-                  />
-                </CallProvider>
-              )}
+              {callAdapter && <CallScreen adapter={callAdapter} />}
             </Stack>
             {calls.length > 0 && (
               <Stack style={{ minWidth: '15rem', height: '100%', paddingTop: '3rem' }}>

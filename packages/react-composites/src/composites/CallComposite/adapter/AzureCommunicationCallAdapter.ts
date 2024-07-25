@@ -470,6 +470,8 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
             if (transferCall) {
               this.processNewCall(transferCall);
             }
+          } else if (args.added[0]) {
+            this.processNewCall(args.added[0]);
           }
         }
       };
