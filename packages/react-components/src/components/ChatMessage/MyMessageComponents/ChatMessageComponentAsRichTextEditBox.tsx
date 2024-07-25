@@ -27,7 +27,7 @@ import {
   hasIncompleteAttachmentUploads,
   insertImagesToContentString,
   isAttachmentUploadCompleted,
-  removeBrokenImageContent
+  removeBrokenImageContentAndClearImageSizeStyles
 } from '../../utils/SendBoxUtils';
 import {
   getMessageState,
@@ -50,7 +50,7 @@ import { FluentV9ThemeProvider } from '../../../theming/FluentV9ThemeProvider';
 /* @conditional-compile-remove(file-sharing-acs) */
 import { attachmentUploadCardsStyles } from '../../styles/SendBox.styles';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
-import { SendBoxErrorBarError } from '../../SendBoxErrorBar';
+import { SendBoxErrorBarError, SendBoxErrorBarType } from '../../SendBoxErrorBar';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { BROKEN_IMAGE_SVG_DATA } from '../../styles/Common.style';
 
@@ -67,9 +67,9 @@ export type ChatMessageComponentAsRichTextEditBoxProps = {
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   onPaste?: (event: { content: DocumentFragment }) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  onCancelInlineImageUpload?: (imageId: string) => void;
+  onCancelInlineImageUpload?: (imageId: string, messageId: string) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  onUploadInlineImage?: (imageUrl: string, imageFileName: string) => void;
+  onUploadInlineImage?: (imageUrl: string, imageFileName: string, messageId: string) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   imageUploadsInProgress?: AttachmentMetadataInProgress[];
 };
@@ -113,6 +113,8 @@ export const ChatMessageComponentAsRichTextEditBox = (
       }
 
       imageElement.src = BROKEN_IMAGE_SVG_DATA;
+      imageElement.style.width = '3rem';
+      imageElement.style.height = '3rem';
       brokenImage.parentElement?.replaceChild(imageElement, brokenImage);
     });
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
@@ -137,6 +139,11 @@ export const ChatMessageComponentAsRichTextEditBox = (
   const messageState = useMemo(() => {
     return getMessageState(textValue, /* @conditional-compile-remove(file-sharing-acs) */ attachmentMetadata ?? []);
   }, [/* @conditional-compile-remove(file-sharing-acs) */ attachmentMetadata, textValue]);
+
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  const imageUploadErrorMessage = useMemo(() => {
+    return imageUploadsInProgress?.filter((image) => image.error).pop()?.error?.message;
+  }, [imageUploadsInProgress]);
 
   const submitEnabled = messageState === 'OK';
 
@@ -195,13 +202,17 @@ export const ChatMessageComponentAsRichTextEditBox = (
 
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
     if (hasIncompleteAttachmentUploads(imageUploadsInProgress)) {
-      setAttachmentUploadsPendingError({ message: strings.attachmentUploadsPendingError, timestamp: Date.now() });
+      setAttachmentUploadsPendingError({
+        message: strings.imageUploadsPendingError,
+        timestamp: Date.now(),
+        errorBarType: SendBoxErrorBarType.info
+      });
       return;
     }
 
     let content = textValue;
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    content = removeBrokenImageContent(content);
+    content = removeBrokenImageContentAndClearImageSizeStyles(content);
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
     if (isAttachmentUploadCompleted(imageUploadsInProgress)) {
       insertImagesToContentString(textValue, imageUploadsInProgress, (content) => {
@@ -220,7 +231,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
     imageUploadsInProgress,
     textValue,
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    strings.attachmentUploadsPendingError,
+    strings.imageUploadsPendingError,
     onSubmit,
     /* @conditional-compile-remove(file-sharing-acs) */
     attachmentMetadata
@@ -301,13 +312,20 @@ export const ChatMessageComponentAsRichTextEditBox = (
       /* @conditional-compile-remove(rich-text-editor-image-upload) */ imageSrcArray?: Array<string>
     ) => {
       /* @conditional-compile-remove(rich-text-editor-image-upload) */
-      cancelInlineImageUpload(imageSrcArray, imageUploadsInProgress, onCancelInlineImageUpload);
+      cancelInlineImageUpload({
+        imageSrcArray,
+        imageUploadsInProgress,
+        messageId: message.messageId,
+        editBoxOnCancelInlineImageUpload: onCancelInlineImageUpload,
+        sendBoxOnCancelInlineImageUpload: undefined
+      });
       setText(content);
     },
     [
       setText,
       /* @conditional-compile-remove(rich-text-editor-image-upload) */ imageUploadsInProgress,
-      /* @conditional-compile-remove(rich-text-editor-image-upload) */ onCancelInlineImageUpload
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */ onCancelInlineImageUpload,
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */ message.messageId
     ]
   );
 
@@ -319,6 +337,16 @@ export const ChatMessageComponentAsRichTextEditBox = (
           systemMessage={message.failureReason}
           /* @conditional-compile-remove(rich-text-editor-image-upload) */ attachmentUploadsPendingError={
             attachmentUploadsPendingError
+          }
+          /* @conditional-compile-remove(rich-text-editor-image-upload) */
+          attachmentProgressError={
+            imageUploadErrorMessage
+              ? {
+                  message: imageUploadErrorMessage,
+                  timestamp: Date.now(),
+                  errorBarType: SendBoxErrorBarType.error
+                }
+              : undefined
           }
         />
         <RichTextInputBoxComponent
@@ -336,7 +364,9 @@ export const ChatMessageComponentAsRichTextEditBox = (
           /* @conditional-compile-remove(rich-text-editor-image-upload) */
           onPaste={onPaste}
           /* @conditional-compile-remove(rich-text-editor-image-upload) */
-          onUploadInlineImage={onUploadInlineImage}
+          onUploadInlineImage={(imageUrl: string, imageFileName: string) => {
+            onUploadInlineImage && onUploadInlineImage(imageUrl, imageFileName, message.messageId);
+          }}
         />
       </Stack>
     );
