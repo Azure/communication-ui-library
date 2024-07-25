@@ -99,7 +99,7 @@ export const IncomingCallStack = (props: IncomingCallStackProps): JSX.Element =>
                 onDismiss={() => onRejectCall(incomingCall.id)}
                 styles={styles}
                 strings={strings}
-                allowVideo={incomingCall.videoAvailable}
+                acceptOptions={{ showAcceptWithVideo: incomingCall.videoAvailable }}
               ></IncomingCallNotification>
             );
           })

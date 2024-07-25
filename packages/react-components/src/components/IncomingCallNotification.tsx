@@ -136,9 +136,11 @@ export interface IncomingCallNotificationProps {
    */
   strings?: IncomingCallNotificationStrings;
   /**
-   * Control for whether to show the accept with video button
+   * Options for whether to show the accept with video button
    */
-  allowVideo?: boolean;
+  acceptOptions: {
+    showAcceptWithVideo: boolean;
+  };
 }
 
 /**
@@ -160,7 +162,7 @@ export const IncomingCallNotification = (props: IncomingCallNotificationProps): 
     styles,
     strings,
     /* @conditional-compile-remove(one-to-n-calling) */
-    allowVideo
+    acceptOptions
   } = props;
   const theme = useTheme();
   /* @conditional-compile-remove(one-to-n-calling) */
@@ -172,7 +174,7 @@ export const IncomingCallNotification = (props: IncomingCallNotificationProps): 
       : callerName;
 
   /* @conditional-compile-remove(one-to-n-calling) */
-  const acceptOptions: IContextualMenuProps | undefined = allowVideo
+  const acceptManuOptions: IContextualMenuProps | undefined = acceptOptions.showAcceptWithVideo
     ? {
         items: [
           {
@@ -237,7 +239,7 @@ export const IncomingCallNotification = (props: IncomingCallNotificationProps): 
             localeStrings.incomingCallNoticicationAcceptWithAudioAriaLabel
           }
           /* @conditional-compile-remove(one-to-n-calling) */
-          menuProps={acceptOptions}
+          menuProps={acceptManuOptions}
         >
           {
             /* @conditional-compile-remove(one-to-n-calling) */ strings?.incomingCallNotificationAcceptButtonLabel ??
