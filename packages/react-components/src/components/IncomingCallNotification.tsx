@@ -182,7 +182,7 @@ export const IncomingCallNotification = (props: IncomingCallNotificationProps): 
           />
         </Stack>
 
-        <Stack grow={1} horizontalAlign="center" style={{ alignItems: 'flex-start', fontFamily: 'Segoe UI' }}>
+        <Stack grow horizontalAlign="center" style={{ alignItems: 'flex-start', fontFamily: 'Segoe UI' }}>
           <Stack style={{ fontSize: '0.75rem' }}>
             <Text>
               {alertText ??
