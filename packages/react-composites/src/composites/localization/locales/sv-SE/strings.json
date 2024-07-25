@@ -352,10 +352,10 @@
   "chat": {
     "chatListHeader": "I den här chatten",
     "uploadAttachment": "Ladda upp bifogad fil",
-    "uploadImageDataNotProvided": "Image data is not provided.",
-    "uploadImageIsTooLarge": "Image is too large. Choose one that's less than {maxImageSize} MB.",
-    "uploadImageExtensionIsNotAllowed": "Uploading .{imageExtension} image is not allowed.",
-    "uploadImageFailed": "Unable to upload image. Please try again later."
+    "uploadImageDataNotProvided": "Bilddata har inte angetts.",
+    "uploadImageIsTooLarge": "Bilden är för stor. Välj en som är mindre än {maxImageSize} MB.",
+    "uploadImageExtensionIsNotAllowed": "Uppladdning av .{imageExtension}-bilder tillåts inte.",
+    "uploadImageFailed": "Det gick inte att ladda upp bilden. Försök igen senare."
   },
   "callWithChat": {
     "chatButtonLabel": "Chatt",

@@ -353,9 +353,9 @@
     "chatListHeader": "Tässä keskustelussa",
     "uploadAttachment": "Lataa liite",
     "uploadImageDataNotProvided": "Image data is not provided.",
-    "uploadImageIsTooLarge": "Image is too large. Choose one that's less than {maxImageSize} MB.",
+    "uploadImageIsTooLarge": "Kuva on liian suuri. Valitse sellainen, jonka koko on alle {maxImageSize} Mt.",
     "uploadImageExtensionIsNotAllowed": "Uploading .{imageExtension} image is not allowed.",
-    "uploadImageFailed": "Unable to upload image. Please try again later."
+    "uploadImageFailed": "Kuvaa ei voi ladata palvelimeen. Yritä myöhemmin uudelleen."
   },
   "callWithChat": {
     "chatButtonLabel": "Keskustelu",

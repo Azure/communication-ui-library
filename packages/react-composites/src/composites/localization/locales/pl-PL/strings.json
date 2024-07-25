@@ -353,9 +353,9 @@
     "chatListHeader": "W tym czacie",
     "uploadAttachment": "Przekaż załącznik",
     "uploadImageDataNotProvided": "Image data is not provided.",
-    "uploadImageIsTooLarge": "Image is too large. Choose one that's less than {maxImageSize} MB.",
+    "uploadImageIsTooLarge": "Obraz jest za duży. Wybierz rozmiar mniejszy niż {maxImageSize} MB.",
     "uploadImageExtensionIsNotAllowed": "Uploading .{imageExtension} image is not allowed.",
-    "uploadImageFailed": "Unable to upload image. Please try again later."
+    "uploadImageFailed": "Nie można przekazać obrazu. Spróbuj ponownie później."
   },
   "callWithChat": {
     "chatButtonLabel": "Czat",

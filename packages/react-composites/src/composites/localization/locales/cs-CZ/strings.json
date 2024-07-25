@@ -353,9 +353,9 @@
     "chatListHeader": "V tomto chatu",
     "uploadAttachment": "Odeslat přílohu",
     "uploadImageDataNotProvided": "Image data is not provided.",
-    "uploadImageIsTooLarge": "Image is too large. Choose one that's less than {maxImageSize} MB.",
+    "uploadImageIsTooLarge": "Obrázek je příliš velký. Zvolte míň než {maxImageSize} MB.",
     "uploadImageExtensionIsNotAllowed": "Uploading .{imageExtension} image is not allowed.",
-    "uploadImageFailed": "Unable to upload image. Please try again later."
+    "uploadImageFailed": "Obrázek nejde nahrát. Zkuste to prosím znovu později."
   },
   "callWithChat": {
     "chatButtonLabel": "Chat",

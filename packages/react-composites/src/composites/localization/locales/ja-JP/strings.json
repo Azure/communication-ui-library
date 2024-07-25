@@ -352,10 +352,10 @@
   "chat": {
     "chatListHeader": "このチャット内",
     "uploadAttachment": "添付ファイルのアップロード",
-    "uploadImageDataNotProvided": "Image data is not provided.",
-    "uploadImageIsTooLarge": "Image is too large. Choose one that's less than {maxImageSize} MB.",
-    "uploadImageExtensionIsNotAllowed": "Uploading .{imageExtension} image is not allowed.",
-    "uploadImageFailed": "Unable to upload image. Please try again later."
+    "uploadImageDataNotProvided": "画像データが提供されていません。",
+    "uploadImageIsTooLarge": "画像が大きすぎます。{maxImageSize} MB 未満のものを選択してください。",
+    "uploadImageExtensionIsNotAllowed": ".{imageExtension} 形式の画像はアップロードできません。",
+    "uploadImageFailed": "画像をアップロードできません。後でもう一度お試しください。"
   },
   "callWithChat": {
     "chatButtonLabel": "チャット",

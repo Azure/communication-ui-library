@@ -230,8 +230,8 @@
     "imageUploadsPendingError": "Image is uploading, please wait.",
     "richTextNewBulletedListItemAnnouncement": "Madde işareti, yeni satır",
     "richTextNewNumberedListItemAnnouncement": "{0}, yeni satır",
-    "richTextBulletedListAppliedAnnouncement": "Bulleted list applied",
-    "richTextNumberedListAppliedAnnouncement": "Numbered list applied"
+    "richTextBulletedListAppliedAnnouncement": "Madde işaretli liste uygulandı",
+    "richTextNumberedListAppliedAnnouncement": "Numaralandırılmış liste uygulandı"
   },
   "errorBar": {
     "unableToReachChatService": "Çevrimdışısınız",

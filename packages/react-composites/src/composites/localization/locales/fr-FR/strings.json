@@ -352,10 +352,10 @@
   "chat": {
     "chatListHeader": "Dans cette conversation",
     "uploadAttachment": "Charger une pièce jointe",
-    "uploadImageDataNotProvided": "Image data is not provided.",
-    "uploadImageIsTooLarge": "Image is too large. Choose one that's less than {maxImageSize} MB.",
-    "uploadImageExtensionIsNotAllowed": "Uploading .{imageExtension} image is not allowed.",
-    "uploadImageFailed": "Unable to upload image. Please try again later."
+    "uploadImageDataNotProvided": "Aucune donnée d'image n'est fournie.",
+    "uploadImageIsTooLarge": "L’image est trop grande. Choisissez une taille inférieure à {maxImageSize} Mo.",
+    "uploadImageExtensionIsNotAllowed": "Il est interdit de télécharger une image .{imageExtension}.",
+    "uploadImageFailed": "Impossible de charger l’image. Veuillez réessayer plus tard."
   },
   "callWithChat": {
     "chatButtonLabel": "Clavardage",

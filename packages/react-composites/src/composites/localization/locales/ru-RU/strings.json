@@ -352,10 +352,10 @@
   "chat": {
     "chatListHeader": "В этом чате",
     "uploadAttachment": "Отправить вложение",
-    "uploadImageDataNotProvided": "Image data is not provided.",
-    "uploadImageIsTooLarge": "Image is too large. Choose one that's less than {maxImageSize} MB.",
-    "uploadImageExtensionIsNotAllowed": "Uploading .{imageExtension} image is not allowed.",
-    "uploadImageFailed": "Unable to upload image. Please try again later."
+    "uploadImageDataNotProvided": "Данные образа не предоставлены.",
+    "uploadImageIsTooLarge": "Изображение слишком велико. Выберите размер меньше {maxImageSize} МБ.",
+    "uploadImageExtensionIsNotAllowed": "Отправка образа .{imageExtension} не разрешена.",
+    "uploadImageFailed": "Не удалось отправить изображение. Повторите попытку позже."
   },
   "callWithChat": {
     "chatButtonLabel": "Чат",

@@ -353,9 +353,9 @@
     "chatListHeader": "Bu sohbette",
     "uploadAttachment": "Eki Karşıya Yükle",
     "uploadImageDataNotProvided": "Image data is not provided.",
-    "uploadImageIsTooLarge": "Image is too large. Choose one that's less than {maxImageSize} MB.",
+    "uploadImageIsTooLarge": "Resim çok büyük. Mb'den küçük bir {maxImageSize} seçin.",
     "uploadImageExtensionIsNotAllowed": "Uploading .{imageExtension} image is not allowed.",
-    "uploadImageFailed": "Unable to upload image. Please try again later."
+    "uploadImageFailed": "Resim karşıya yüklenemiyor. Lütfen daha sonra yeniden deneyin."
   },
   "callWithChat": {
     "chatButtonLabel": "Sohbet",

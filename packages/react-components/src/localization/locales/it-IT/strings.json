@@ -230,8 +230,8 @@
     "imageUploadsPendingError": "Image is uploading, please wait.",
     "richTextNewBulletedListItemAnnouncement": "Punto elenco, nuova riga",
     "richTextNewNumberedListItemAnnouncement": "{0}, nuova riga",
-    "richTextBulletedListAppliedAnnouncement": "Bulleted list applied",
-    "richTextNumberedListAppliedAnnouncement": "Numbered list applied"
+    "richTextBulletedListAppliedAnnouncement": "Elenco puntato applicato",
+    "richTextNumberedListAppliedAnnouncement": "Elenco numerato applicato"
   },
   "errorBar": {
     "unableToReachChatService": "Sei offline",
