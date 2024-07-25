@@ -3255,11 +3255,8 @@ export interface IncomingCallStackProps {
     onAcceptCall: (incomingCallId: string, useVideo?: boolean) => void;
     onRejectCall: (incomingCallId: string) => void;
     removedIncomingCalls: ActiveIncomingCall[];
-<<<<<<< HEAD
     strings?: IncomingCallNotificationStrings;
     styles?: IncomingCallNotificationStyles;
-=======
->>>>>>> 5cc14688510138180c8be0913d3673a161bc58de
 }
 
 // @beta
