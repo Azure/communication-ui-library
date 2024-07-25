@@ -167,7 +167,7 @@ export const IncomingCallNotification = (props: IncomingCallNotificationProps): 
       verticalAlign="center"
       styles={styles?.root ? styles.root : incomingCallToastStyle(theme)}
     >
-      <Stack horizontal verticalAlign="center">
+      <Stack horizontal verticalAlign="center" tokens={{ childrenGap: personaSize ? '0.5rem' : '0rem' }}>
         <Stack
           horizontalAlign="start"
           styles={styles?.avatarContainer ? styles.avatarContainer : incomingCallToastAvatarContainerStyle}

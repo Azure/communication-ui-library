@@ -14,7 +14,7 @@ export const IncomingCallNotificationStylingExample: () => JSX.Element = () => {
       onReject={function (): void {
         alert('Rejected');
       }}
-      personaSize={52}
+      personaSize={54}
       callerName="Dog"
       avatarImage="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExbm8wa2JwYmZlaXg2NzhrbzF4OHlvazVsM3dtMG9iMXhtMXM4eHlzdCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/Fu3OjBQiCs3s0ZuLY3/giphy-downsized.gif"
       styles={{
