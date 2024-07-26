@@ -12,11 +12,11 @@ export const RichTextSendBoxWithInlineImagesExample: () => JSX.Element = () => {
             setInlineImages(undefined);
             return;
           }}
-          onInsertInlineImage={(image: string) => {
+          onInsertInlineImage={(image: string, fileName: string) => {
             const id = inlineImages?.length ? (inlineImages.length + 1).toString() : '1';
             const newImage = {
               id,
-              name: 'image',
+              name: fileName,
               progress: 1,
               url: image,
               error: undefined
