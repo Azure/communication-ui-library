@@ -10,7 +10,7 @@ import {
   MicrosoftTeamsUserIdentifier,
   PhoneNumberIdentifier
 } from '@azure/communication-common';
-import { Dialpad, fromFlatCommunicationIdentifier } from '@azure/communication-react';
+import { Dialpad, fromFlatCommunicationIdentifier, IncomingCallStack, usePropsFor } from '@azure/communication-react';
 import { PrimaryButton, Stack, TextField, Image } from '@fluentui/react';
 import React, { useState } from 'react';
 import { imgStyle } from '../styles/HomeScreen.styles';
@@ -26,6 +26,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const { callAgent, headerImageProps } = props;
   const [targetParticipants, setTargetParticipants] = useState<CommunicationIdentifier[]>();
   const [alternateCallerId, setAlternateCallerId] = useState<string>();
+  const incomingCallStackProps = usePropsFor(IncomingCallStack);
   return (
     <Stack horizontal tokens={{ childrenGap: '1rem' }}>
       <Stack verticalAlign="center">
@@ -70,6 +71,9 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
         >
           Start Call
         </PrimaryButton>
+        <Stack style={{ position: 'absolute', top: '0', right: '0' }}>
+          <IncomingCallStack {...incomingCallStackProps} />
+        </Stack>
       </Stack>
     </Stack>
   );
