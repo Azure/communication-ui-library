@@ -121,7 +121,7 @@ export interface ActiveErrorMessage {
     type: ErrorType;
 }
 
-// @beta
+// @public
 export interface ActiveIncomingCall {
     callerInfo: {
         displayName: string;
@@ -416,7 +416,6 @@ export interface CallAdapterCallManagement extends CallAdapterCallOperations {
 
 // @public
 export interface CallAdapterCallOperations {
-    // @beta
     addParticipant(participant: PhoneNumberIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
     // (undocumented)
     addParticipant(participant: CommunicationUserIdentifier): Promise<void>;
@@ -427,7 +426,6 @@ export interface CallAdapterCallOperations {
     disposeScreenShareStreamView(remoteUserId: string): Promise<void>;
     // @deprecated
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
-    // @beta
     holdCall(): Promise<void>;
     leaveCall(forEveryone?: boolean): Promise<void>;
     lowerHand(): Promise<void>;
@@ -437,9 +435,7 @@ export interface CallAdapterCallOperations {
     onReactionClick(reaction: Reaction_2): Promise<void>;
     raiseHand(): Promise<void>;
     removeParticipant(userId: string): Promise<void>;
-    // @beta
     removeParticipant(participant: CommunicationIdentifier): Promise<void>;
-    // @beta
     resumeCall(): Promise<void>;
     sendDtmfTone(dtmfTone: DtmfTone_2): Promise<void>;
     setCaptionLanguage(language: string): Promise<void>;
@@ -497,7 +493,7 @@ export interface CallAdapterDeviceManagement {
 }
 
 // @public
-export type CallAdapterLocator = TeamsMeetingLinkLocator | GroupCallLocator | RoomCallLocator | /* @conditional-compile-remove(teams-adhoc-call) */ /* @conditional-compile-remove(PSTN-calls) */ CallParticipantsLocator | /* @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator;
+export type CallAdapterLocator = TeamsMeetingLinkLocator | GroupCallLocator | RoomCallLocator | /* @conditional-compile-remove(call-participants-locator) */ CallParticipantsLocator | /* @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator;
 
 // @public
 export type CallAdapterState = CallAdapterUiState & CallAdapterClientState;
@@ -573,7 +569,7 @@ export interface CallAgentState {
 
 // @public
 export interface CallAndChatLocator {
-    callLocator: GroupCallLocator | /* @conditional-compile-remove(teams-adhoc-call) */ CallParticipantsLocator;
+    callLocator: GroupCallLocator | /* @conditional-compile-remove(call-participants-locator) */ CallParticipantsLocator;
     chatThreadId: string;
 }
 
@@ -1136,7 +1132,6 @@ export interface CallWithChatAdapter extends CallWithChatAdapterManagement, Adap
 
 // @public
 export interface CallWithChatAdapterManagement {
-    // @beta
     addParticipant(participant: PhoneNumberIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
     // (undocumented)
     addParticipant(participant: CommunicationUserIdentifier): Promise<void>;
@@ -1153,7 +1148,6 @@ export interface CallWithChatAdapterManagement {
     // (undocumented)
     downloadResourceToCache(resourceDetails: ResourceDetails): Promise<void>;
     fetchInitialData(): Promise<void>;
-    // @beta
     holdCall: () => Promise<void>;
     // @deprecated
     joinCall(microphoneOn?: boolean): Call | undefined;
@@ -1170,11 +1164,9 @@ export interface CallWithChatAdapterManagement {
     querySpeakers(): Promise<AudioDeviceInfo[]>;
     raiseHand(): Promise<void>;
     removeParticipant(userId: string): Promise<void>;
-    // @beta
     removeParticipant(participant: CommunicationIdentifier): Promise<void>;
     // (undocumented)
     removeResourceFromCache(resourceDetails: ResourceDetails): void;
-    // @beta
     resumeCall: () => Promise<void>;
     sendDtmfTone: (dtmfTone: DtmfTone_2) => Promise<void>;
     sendMessage(content: string, options?: SendMessageOptions | /* @conditional-compile-remove(file-sharing-acs) */ MessageOptions): Promise<void>;
@@ -2560,7 +2552,7 @@ export interface CustomMessage extends MessageCommon {
 // @public
 export const darkTheme: PartialTheme & CallingTheme;
 
-// @beta
+// @public
 export type DeclarativeCallAgent = CallAgent & IncomingCallManagement;
 
 // @public
@@ -3119,10 +3111,10 @@ export interface GridLayoutStyles extends BaseCustomStyles {
     children?: IStyle;
 }
 
-// @beta
+// @public
 export const HoldButton: (props: HoldButtonProps) => JSX.Element;
 
-// @beta (undocumented)
+// @public (undocumented)
 export interface HoldButtonProps extends ControlBarButtonProps {
     onToggleHold: () => Promise<void>;
     strings?: HoldButtonStrings;
@@ -3133,7 +3125,7 @@ export type HoldButtonSelector = (state: CallClientState, props: CallingBaseSele
     checked: boolean;
 };
 
-// @beta
+// @public
 export interface HoldButtonStrings {
     offLabel: string;
     onLabel: string;
@@ -3204,15 +3196,15 @@ export interface ImageOverlayStrings {
 // @public
 export const imageOverlayTheme: PartialTheme;
 
-// @beta
+// @public
 export type IncomingCallManagement = {
     incomingCalls: ReadonlyArray<IncomingCall>;
 };
 
-// @beta
+// @public
 export const IncomingCallNotification: (props: IncomingCallNotificationProps) => JSX.Element;
 
-// @beta
+// @public
 export interface IncomingCallNotificationProps {
     acceptOptions: {
         showAcceptWithVideo: boolean;
@@ -3230,7 +3222,7 @@ export interface IncomingCallNotificationProps {
     styles?: IncomingCallNotificationStyles;
 }
 
-// @beta
+// @public
 export interface IncomingCallNotificationStrings {
     incomingCallNoticicationAcceptWithAudioAriaLabel?: string;
     incomingCallNoticicationAcceptWithVideoAriaLabel?: string;
@@ -3242,7 +3234,7 @@ export interface IncomingCallNotificationStrings {
     incomingCallNotificationRejectButtonLabel?: string;
 }
 
-// @beta
+// @public
 export interface IncomingCallNotificationStyles {
     acceptButton?: IButtonStyles;
     avatarContainer?: IStackStyles;
@@ -3250,10 +3242,10 @@ export interface IncomingCallNotificationStyles {
     root?: IStackStyles;
 }
 
-// @beta
+// @public
 export const IncomingCallStack: (props: IncomingCallStackProps) => JSX.Element;
 
-// @beta
+// @public
 export interface IncomingCallStackProps {
     activeIncomingCalls: ActiveIncomingCall[];
     onAcceptCall: (incomingCallId: string, useVideo?: boolean) => void;
@@ -3263,7 +3255,7 @@ export interface IncomingCallStackProps {
     styles?: IncomingCallNotificationStyles;
 }
 
-// @beta
+// @public
 export type IncomingCallStackSelector = (state: CallClientState) => {
     activeIncomingCalls: ActiveIncomingCall[];
     removedIncomingCalls: ActiveIncomingCall[];
@@ -4658,7 +4650,7 @@ export interface TeamsCallAdapter extends CommonCallAdapter {
 
 // @public
 export type TeamsCallAdapterArgs = TeamsCallAdapterArgsCommon & {
-    locator: TeamsMeetingLinkLocator | /* @conditional-compile-remove(teams-adhoc-call) */ /* @conditional-compile-remove(PSTN-calls) */ CallParticipantsLocator | /* @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator;
+    locator: TeamsMeetingLinkLocator | /* @conditional-compile-remove(call-participants-locator) */ CallParticipantsLocator | /* @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator;
 };
 
 // @public
@@ -4678,12 +4670,12 @@ export interface TeamsCallingHandlers extends CommonCallingHandlers {
     onStartCall: (participants: CommunicationIdentifier[], options?: StartCallOptions) => undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall;
 }
 
-// @beta
+// @public
 export type TeamsIncomingCallManagement = {
     incomingCalls: ReadonlyArray<TeamsIncomingCall>;
 };
 
-// @beta
+// @public
 export interface TeamsIncomingCallState {
     callEndReason?: CallEndReason;
     callerInfo: CallerInfo;
@@ -4985,7 +4977,6 @@ export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
     raisedHand?: RaisedHand;
     reaction?: Reaction;
     screenShareStream?: VideoGalleryStream;
-    // @beta
     state?: ParticipantState;
 }
 
