@@ -92,8 +92,6 @@ module.exports = {
     "teams-identity-support",
     // feature for hiding attendee name in the teams meeting
     "hide-attendee-name",
-    // Join meeting with meetingId and passcode
-    'meeting-id',
     // Feature for end call options 
     'end-call-options',
     // Feature to support file sharing in Teams interoperability chats
