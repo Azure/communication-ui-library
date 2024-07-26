@@ -1,0 +1,93 @@
+import { Meta } from '@storybook/addon-docs';
+
+<Meta title="Stateful Client/React Hooks/UsePropsFor" />
+
+# usePropsFor <a name="usePropsFor"></a>
+
+If you are using React Component from our communication-react components, `usePropsFor` is the go-to hook.
+It provides all the required props to power a feature component.
+It subscribes to state changes of stateful clients, gets props designed for your component, and triggers a re-render whenever the props change.
+
+To see a full end-to-end example using usePropsFor, see Getting Started with [Call Stateful Client](./?path=/docs/stateful-client-get-started-call--docs) or [Chat Stateful Client](./?path=/docs/stateful-client-get-started-chat--docs).
+
+## _usePropsFor_ Calling App Example
+
+```tsx
+import React from 'react';
+import { VideoGallery, usePropsFor } from '@azure/communication-react';
+
+export const CallScreen = () => {
+  const props = usePropsFor(VideoGallery);
+  return <VideoGallery {...props} />;
+};
+```
+
+## _usePropsFor_ Chat App Example
+
+```tsx
+import React from 'react';
+import { MessageThread, usePropsFor } from '@azure/communication-react';
+
+export const ChatScreen = () => {
+  const props = usePropsFor(MessageThread);
+  return <MessageThread {...props} />;
+};
+```
+
+`usePropsFor` supports the following components:
+
+_Chat_
+
+- [MessageThread](./?path=/docs/components-message-thread--docs)
+- [SendBox](./?path=/docs/components-sendbox-send-box--docs)
+- [TypingIndicator](./?path=/docs/components-typing-indicator--docs)
+- [ParticipantList](./?path=/docs/components-participant-list--docs)
+
+_Calling_
+
+- [VideoGallery](./?path=/docs/components-video-gallery--docs)
+- [ParticipantList](./?path=/docs/components-participant-list--docs)
+- [CameraButton](./?path=/docs/components-controlbar-buttons-camera--docs)
+- [EndCallButton](./?path=/docs/components-controlbar-buttons-end-call--docs)
+- [MicrophoneButton](./?path=/docs/components-controlbar-buttons-microphone--docs)
+- [DevicesButton](./?path=/docs/components-controlbar-buttons-devices--docs)
+- [ScreenShareButton](./?path=/docs/components-controlbar-buttons-screen-share--docs)
+
+## Choose your target
+
+`usePropsFor()` is context-aware. It picks out props from the relevant Provider for the component. One exception is `ParticipantList` - a component applicable to both chat and calling settings. Thus, `ChatClientProvider` and `CallingClientProvider` both provide props for this component\*. Thus, `usePropsFor()` can not determine which provider should be used to satisfy the props. You must explicitly set the target to use:
+
+_\*only ParticipantList component is shared by both chat and calling_
+
+```tsx
+import React from 'react';
+import { ParticipantList, usePropsFor } from '@azure/communication-react';
+
+// This will show 2 different participantLists in parallel
+export const ParicipantLists = () => {
+  const chatParticipantProps = usePropsFor(ParticipantList, 'chat');
+  const callingParticipantProps = usePropsFor(ParticipantList, 'calling');
+  return (
+    <>
+      <ParticipantList {...chatParticipantProps} />
+      <ParticipantList {...callingParticipantProps} />
+    </>
+  );
+};
+```
+
+## Under the Hood of usePropsFor
+
+`usePropsFor()` is a function that provides all you need to run a component in our library.
+It combines 2 tasks for generating the component's props for you:
+
+1. Finds the right selector designed for the component, then call `useSelector()`
+2. Constructs a set of handlers tailored for the component
+
+## Using usePropsFor with Custom Components
+
+You can use the usePropsFor function for your own custom components by matching the props structure of the supported UI Components.
+By passing the component that matches your custom components prop structure, you can then use the outputted props on your own custom component.
+This means you could build your own `Video Gallery` with a custom layout using our `Grid Layout` and `Video Tile` components, and still leverage our usePropsFor helper.
+In cases, where matching the prop structure is not possible, the stateful clients can still be leveraged to extract and maintain your own props.
+For more information, see [useSelector](./?path=/docs/stateful-client-react-hooks-useselector--docs).
