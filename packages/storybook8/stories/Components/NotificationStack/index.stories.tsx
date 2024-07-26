@@ -19,6 +19,7 @@ const meta: Meta = {
   argTypes: {
     activeNotifications: controlsToAdd.activeNotifications,
     maxNotificationsToShow: controlsToAdd.maxNotificationsToShow,
+    onDismissNotification: hiddenControl,
     strings: hiddenControl,
     ignorePremountNotifications: hiddenControl
   },
