@@ -11,7 +11,7 @@ import { sendIconStyle } from '../styles/SendBox.styles';
 import { useV9CustomStyles } from '../styles/SendBox.styles';
 import { InputBoxButton } from '../InputBoxButton';
 import { RichTextSendBoxErrors, RichTextSendBoxErrorsProps } from './RichTextSendBoxErrors';
-import { insertInlineImage, isMessageTooLong, isSendBoxButtonAriaDisabled, sanitizeText } from '../utils/SendBoxUtils';
+import { isMessageTooLong, isSendBoxButtonAriaDisabled, sanitizeText } from '../utils/SendBoxUtils';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { insertImagesToContentString, cancelInlineImageUpload } from '../utils/SendBoxUtils';
 import { RichTextEditorComponentRef } from './RichTextEditor';
@@ -25,7 +25,8 @@ import { AttachmentMetadataInProgress, MessageOptions } from '@internal/acs-ui-c
 import {
   isAttachmentUploadCompleted,
   hasIncompleteAttachmentUploads,
-  toAttachmentMetadata
+  toAttachmentMetadata,
+  insertInlineImage
 } from '../utils/SendBoxUtils';
 /* @conditional-compile-remove(file-sharing-acs) */
 import { SendBoxErrorBarError } from '../SendBoxErrorBar';
