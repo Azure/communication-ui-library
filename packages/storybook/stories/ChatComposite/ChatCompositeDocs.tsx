@@ -211,7 +211,7 @@ export const Docs: () => JSX.Element = () => {
         <SingleLineBetaBanner />
         <Description>
           The following example show how to enable rich text editor for message editing by providing the
-          `richTextEditor` property. The insert images feature is only supported in the Teams Interop chats. Please try
+          `richTextEditor` property. The insert inline images feature is only supported in the Teams Interop chats. Please try
           it out in the [Join Teams
           Meeting](./?path=/story/composites-call-with-chat-jointeamsmeeting--join-teams-meeting) page.
         </Description>
