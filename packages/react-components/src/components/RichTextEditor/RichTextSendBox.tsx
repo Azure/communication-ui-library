@@ -11,7 +11,7 @@ import { sendIconStyle } from '../styles/SendBox.styles';
 import { useV9CustomStyles } from '../styles/SendBox.styles';
 import { InputBoxButton } from '../InputBoxButton';
 import { RichTextSendBoxErrors, RichTextSendBoxErrorsProps } from './RichTextSendBoxErrors';
-import { isMessageTooLong, isSendBoxButtonAriaDisabled, sanitizeText } from '../utils/SendBoxUtils';
+import { insertInlineImage, isMessageTooLong, isSendBoxButtonAriaDisabled, sanitizeText } from '../utils/SendBoxUtils';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { insertImagesToContentString, cancelInlineImageUpload } from '../utils/SendBoxUtils';
 import { RichTextEditorComponentRef } from './RichTextEditor';
@@ -340,12 +340,21 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
         editBoxOnCancelInlineImageUpload: undefined,
         sendBoxOnCancelInlineImageUpload: onCancelInlineImageUpload
       });
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */
+      insertInlineImage({
+        imageSrcArray,
+        imageUploadsInProgress,
+        messageId: undefined,
+        editBoxOnInsertInlineImage: undefined,
+        sendBoxOnInsertInlineImage: onUploadInlineImage
+      });
       setContent(newValue);
     },
     [
       setContent,
       /* @conditional-compile-remove(rich-text-editor-image-upload) */ onCancelInlineImageUpload,
-      /* @conditional-compile-remove(rich-text-editor-image-upload) */ imageUploadsInProgress
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */ imageUploadsInProgress,
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */ onUploadInlineImage
     ]
   );
 

@@ -20,7 +20,7 @@ import { _AttachmentUploadCards } from '../../Attachment/AttachmentUploadCards';
 /* @conditional-compile-remove(file-sharing-acs) */
 import { AttachmentMetadata } from '@internal/acs-ui-common';
 import { useChatMessageRichTextEditContainerStyles } from '../../styles/ChatMessageComponent.styles';
-import { MAXIMUM_LENGTH_OF_MESSAGE } from '../../utils/SendBoxUtils';
+import { insertInlineImage, MAXIMUM_LENGTH_OF_MESSAGE } from '../../utils/SendBoxUtils';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import {
   cancelInlineImageUpload,
@@ -319,12 +319,21 @@ export const ChatMessageComponentAsRichTextEditBox = (
         editBoxOnCancelInlineImageUpload: onCancelInlineImageUpload,
         sendBoxOnCancelInlineImageUpload: undefined
       });
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */
+      insertInlineImage({
+        imageSrcArray,
+        imageUploadsInProgress,
+        messageId: message.messageId,
+        editBoxOnInsertInlineImage: onUploadInlineImage,
+        sendBoxOnInsertInlineImage: undefined
+      });
       setText(content);
     },
     [
       setText,
       /* @conditional-compile-remove(rich-text-editor-image-upload) */ imageUploadsInProgress,
       /* @conditional-compile-remove(rich-text-editor-image-upload) */ onCancelInlineImageUpload,
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */ onUploadInlineImage,
       /* @conditional-compile-remove(rich-text-editor-image-upload) */ message.messageId
     ]
   );

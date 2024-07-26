@@ -1,8 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import type { EditorPlugin, IEditor, PluginEvent } from 'roosterjs-content-model-types';
+import type { ContentModelDocument, EditorPlugin, IEditor, PluginEvent } from 'roosterjs-content-model-types';
 import { PluginEventType } from '../../utils/RichTextEditorUtils';
+import { ChangeSource } from 'roosterjs-content-model-dom';
 
 /**
  * An update mode to indicate when the content update happens
@@ -70,20 +71,14 @@ export class UpdateContentPlugin implements EditorPlugin {
 
       case PluginEventType.ContentChanged:
         if (
-          event.source.toLowerCase() === 'cut' ||
-          (event.source.toLowerCase() === 'keyboard' && (event.data === Keys.BACKSPACE || event.data === Keys.DELETE))
+          event.source === ChangeSource.Cut ||
+          (event.source === ChangeSource.Keyboard && (event.data === Keys.BACKSPACE || event.data === Keys.DELETE))
         ) {
-          imageSrcArray = [];
-          event.contentModel?.blocks.map((block) => {
-            if (block.blockType === 'Paragraph') {
-              const segments = block.segments;
-              segments.map((segment) => {
-                if (segment.segmentType === 'Image') {
-                  imageSrcArray?.push(segment.src);
-                }
-              });
-            }
-          });
+          imageSrcArray = getImagesSourcesList(event.contentModel);
+        } else if (event.source === ChangeSource.SetContent) {
+          // handle undo/redo
+          // the event doesn't provide contentModel
+          imageSrcArray = getImagesSourcesList(this.editor?.getContentModelCopy('disconnected'));
         }
         this.onUpdate(UpdateEvent.ContentChanged, imageSrcArray);
         break;
@@ -101,3 +96,18 @@ export class UpdateContentPlugin implements EditorPlugin {
     this.onUpdate(UpdateEvent.Blur);
   };
 }
+
+const getImagesSourcesList = (contentModel?: ContentModelDocument): Array<string> => {
+  const imageSrcArray: Array<string> | undefined = [];
+  contentModel?.blocks.map((block) => {
+    if (block.blockType === 'Paragraph') {
+      const segments = block.segments;
+      segments.map((segment) => {
+        if (segment.segmentType === 'Image') {
+          imageSrcArray?.push(segment.src);
+        }
+      });
+    }
+  });
+  return imageSrcArray;
+};
