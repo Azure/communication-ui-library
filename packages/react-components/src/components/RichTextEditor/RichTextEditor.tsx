@@ -72,7 +72,7 @@ export interface RichTextEditorProps {
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   onPaste?: (event: { content: DocumentFragment }) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  onUploadInlineImage?: (imageUrl: string, imageFileName: string) => void;
+  onInsertInlineImage?: (imageUrl: string, imageFileName: string) => void;
 }
 
 /**
@@ -115,7 +115,7 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
     onPaste,
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    onUploadInlineImage
+    onInsertInlineImage
   } = props;
   const editor = useRef<IEditor | null>(null);
   const editorDiv = useRef<HTMLDivElement>(null);
@@ -205,8 +205,8 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
 
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   useEffect(() => {
-    copyPastePlugin.onUploadInlineImage = onUploadInlineImage;
-  }, [copyPastePlugin, onUploadInlineImage]);
+    copyPastePlugin.onInsertInlineImage = onInsertInlineImage;
+  }, [copyPastePlugin, onInsertInlineImage]);
 
   const keyboardInputPlugin = useMemo(() => {
     return new KeyboardInputPlugin();
@@ -401,7 +401,9 @@ const createEditorInitialModel = (
 };
 
 const setSelectionAfterLastSegment = (model: ReadonlyContentModelBlockGroup, block: ContentModelParagraph): void => {
-  const marker = createSelectionMarker();
+  //selection marker should have the same format as the last segment if any
+  const format = block.segments.length > 0 ? block.segments[block.segments.length - 1].format : undefined;
+  const marker = createSelectionMarker(format);
   block.segments.push(marker);
   setSelection(model, marker);
 };

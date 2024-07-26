@@ -810,7 +810,6 @@ export interface CallCompositeStrings {
    * Content of confirm dialog when leaving
    */
   endCallConfirmDialogContent?: string;
-  /* @conditional-compile-remove(meeting-id) */
   /**
    * Error message when the meeting identifier or passcode is invalid
    */

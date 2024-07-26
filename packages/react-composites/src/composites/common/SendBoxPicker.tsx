@@ -57,8 +57,7 @@ export const SendBoxPicker = (props: SendBoxPickerProps): JSX.Element => {
   /* @conditional-compile-remove(rich-text-editor-composite-support) */
   const { richTextEditorOptions } = props;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  const { onPaste, onUploadInlineImage, imageUploadsInProgress, onCancelInlineImageUpload } =
-    richTextEditorOptions || {};
+  const { onPaste, onInsertInlineImage, inlineImages, onCancelInlineImageUpload } = richTextEditorOptions || {};
 
   const sendBoxProps = usePropsFor(SendBox);
 
@@ -76,9 +75,13 @@ export const SendBoxPicker = (props: SendBoxPickerProps): JSX.Element => {
         <Suspense fallback={sendBox}>
           <RichTextSendBoxWrapper
             {...props}
+            /* @conditional-compile-remove(rich-text-editor-image-upload) */
             onPaste={onPaste}
-            onUploadInlineImage={onUploadInlineImage}
-            imageUploadsInProgress={imageUploadsInProgress}
+            /* @conditional-compile-remove(rich-text-editor-image-upload) */
+            onInsertInlineImage={onInsertInlineImage}
+            /* @conditional-compile-remove(rich-text-editor-image-upload) */
+            inlineImages={inlineImages}
+            /* @conditional-compile-remove(rich-text-editor-image-upload) */
             onCancelInlineImageUpload={onCancelInlineImageUpload}
           />
         </Suspense>

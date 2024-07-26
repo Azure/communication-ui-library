@@ -1,0 +1,145 @@
+import { Meta, Markdown } from '@storybook/addon-docs';
+
+<Meta title="Stateful Client/Overview" />
+
+# Overview of Stateful Client
+
+Azure Communication Service UI Library exposes stateful clients for calling and chat.
+Stateful clients are a 1:1 representation of the `CallClient` and `ChatClient` exposed by the underlying low-level calling and chat SDKs.
+They simply add a state layer on top of it to help track state that can be rendered as part of the UI.
+They can be used in the same way as low-level clients would be used, so developers can use it to query the service and handle events (i.e. participant added or message recieved).
+Stateful clients are agnostic to any specific state management framework.
+
+## Component Binding with Stateful Clients
+
+To make it simpler to connect the stateful client with UI Components, the UI Library exposes helpers, [`usePropsFor`](./?path=/docs/statefulclient-reacthooks-usepropsfor--page), to generate props
+These helpers aid in extracting the correct set of props required for different UI Components.
+They expose both data for the UI Components to render such as a message list or a participants remote video, and default handlers for UI Components action such as sending a message.
+
+## Installing Stateful Clients
+
+Use the `npm install` command to install the Azure Communication Services UI Library for JavaScript.
+
+```bash
+
+npm install @azure/communication-react
+
+```
+
+`@azure/communication-react` specifies core Azure Communication Services as `peerDependencies` so that
+you can most consistently use the API from the core libraries in your application. You need to install those libraries as well:
+
+```bash
+
+npm install @azure/communication-calling@1.4.4
+npm install @azure/communication-chat@1.3.2
+
+```
+
+## Calling StatefulClient
+
+Using `createStatefulCallClient`, developer can generate a stateful version of the call client.
+
+```tsx
+import { createStatefulCallClient } from '@azure/communication-react';
+import { AzureCommunicationTokenCredential } from '@azure/communication-common';
+
+const endpointUrl = '<ENDPOINT>';
+const userAccessToken = '<USER_ACCESS_TOKEN>';
+const tokenCredential = new AzureCommunicationTokenCredential(userAccessToken);
+
+const statefulCallClient = createStatefulCallClient({
+  userId: userId,
+});
+
+// You can then use the `statefulCallClient` in the same way as a `CallClient` with a slight variation.
+
+const callAgent = await statefulCallClient.createCallAgent(tokenCredential, {displayName: 'Optional User Name'})
+
+const call = callAgent.join({groupId: <GUID>})
+
+```
+
+To interact with the call, developers have access to `statefulCallClient` and `CallAgent`. The stateful clients are a 1:1 representation.
+For state to be tracked, developers should use the stateful clients to query the service and listen to events.
+
+### Accessing the Device Manager
+
+Through the `statefulCallClient`, developers can access the device manager to query the device available for the call.
+
+```tsx
+const deviceManager = await statefulCallClient.getDeviceManager();
+```
+
+The device manager allows developers to access the local video stream to render for the user ahead of joining a call.
+
+```tsx
+const cameras = await deviceManager.getCameras();
+const camera = cameras[0];
+const localCameraStream = { source: camera, mediaStreamType: 'Video' } as LocalVideoStreamState;
+const { view } = await statefulClient.createView(localCameraStream);
+```
+
+For more information on the `DeviceManager`, see [Device Management](https://docs.microsoft.com/javascript/api/azure-communication-services/@azure/communication-calling/devicemanager?view=azure-communication-services-js)
+
+## Chat StatefulClient
+
+Using the `createStatefulChatClient`, developer can generate a stateful version of the chat client.
+
+```tsx
+import { createStatefulChatClient } from '@azure/communication-react';
+import { AzureCommunicationTokenCredential } from '@azure/communication-common';
+
+const endpointUrl = '<ENDPOINT>';
+const userAccessToken = '<USER_ACCESS_TOKEN>';
+const tokenCredential = new AzureCommunicationTokenCredential(userAccessToken);
+
+const statefulChatClient = createStatefulChatClient({
+  userId: userId,
+  displayName: displayName,
+  endpoint: endpointUrl,
+  credential: tokenCredential
+});
+
+// You can then use the `statefulChatClient` in the same way as a `ChatClient` with a slight variation.
+
+const chatThreadClient = await statefulChatClient.createChatThread({ topic: '' });
+```
+
+To interact with the chat thread, developers have access `statefulChatClient` and `chatThreadClient`. The stateful clients are a 1:1 representation.
+For state to be tracked, developers should use the stateful clients to query the service and listen to events.
+
+### Access the Chat Thread Client
+
+The Chat Thread Client allows developers to access a variety of methods to query participants and send messages to a thread.
+
+```tsx
+const sendMessageRequest = {
+  content: 'Hello! Can you share the deck for the conference?'
+};
+
+let sendMessageOptions = {
+  senderDisplayName: 'Jack',
+  type: 'text'
+};
+const sendChatMessageResult = await chatThreadClient.sendMessage(sendMessageRequest, sendMessageOptions);
+const messageId = sendChatMessageResult.id;
+```
+
+For more information on the `ChatThreadClient`, see [ChatThreadClient](https://azuresdkdocs.blob.core.windows.net/$web/javascript/azure-communication-chat/1.0.0/classes/chatthreadclient.html)
+
+## Capabilities
+
+Stateful clients enable developers to access all the APIs that low-level calling and chat SDKs expose.
+For a complete list of capabilities see [Calling Overview](https://docs.microsoft.com/azure/communication-services/concepts/voice-video-calling/calling-sdk-features) and
+[Chat Overview](https://docs.microsoft.com/azure/communication-services/concepts/chat/sdk-features).
+At a high level, stateful clients allow developers the following capabilities.
+
+| Capabilities               | Example                                                                                                            |
+| -------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| Read state                 | Query the state `statefulClient.state` to access properties such as `statefulClient.state.messsages`               |
+| Handle state event changes | Subscribe to events `statefulClient.onStateChange()` and unsubscribe from events `statefulClient.offStateChange()` |
+| Send commands              | Mute the microphone `statefulClient.mute()`                                                                        |
+
+For more information see [StatefulCallClient interface](https://docs.microsoft.com/javascript/api/@azure/communication-react/statefulcallclient) and
+[StatefulChatClient interface](https://docs.microsoft.com/javascript/api/@azure/communication-react/statefulchatclient).

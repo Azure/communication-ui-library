@@ -7,6 +7,7 @@ Chat/lib
 storybook-static/
 SDK/scripts/
 SDK/cached-package.json
+.cache/
 
 # Output files
 *.tgz

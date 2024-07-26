@@ -3,7 +3,6 @@
 
 import { GroupLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { ParticipantRole, RoomCallLocator } from '@azure/communication-calling';
-/* @conditional-compile-remove(meeting-id) */
 import { TeamsMeetingIdLocator } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-adhoc-call) */ /* @conditional-compile-remove(PSTN-calls) */
 import { CallParticipantsLocator } from '@azure/communication-react';
@@ -99,7 +98,6 @@ export const getTeamsLinkFromUrl = (): TeamsMeetingLinkLocator | undefined => {
   return teamsLink ? { meetingLink: teamsLink } : undefined;
 };
 
-/* @conditional-compile-remove(meeting-id) */
 /**
  * Get teams meeting id and passcode from the url's query params.
  */

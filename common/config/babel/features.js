@@ -19,10 +19,6 @@ module.exports = {
     "hide-attendee-name",
     // Demo feature. Used in live-documentation of conditional compilation. Do not use in production code.
     "in-progress-beta-feature-demo",
-    // Feature for Rich Text Editor (RTE) composite support
-    "rich-text-editor-composite-support",
-    // Feature for Rich Text Editor (RTE) image upload support
-    "rich-text-editor-image-upload",
     // feature for adding JS helpers to the UI library API
     "composite-js-helpers",
   ],
@@ -75,9 +71,13 @@ module.exports = {
     "acs-close-captions",
     // Feature for Rich Text Editor (RTE) support
     'rich-text-editor',
+    // Feature for Rich Text Editor (RTE) composite support
+    "rich-text-editor-composite-support",
+    // Feature for Rich Text Editor (RTE) image upload support
+    "rich-text-editor-image-upload",
     // Feature to support file sharing in ACS chats
     "file-sharing-acs",
-    // Soft Mute feature for ACS and Interop calls
+    // Soft Mute feature for ACS calls and Interop calls
     "soft-mute"
   ],
   stable: [
@@ -90,8 +90,6 @@ module.exports = {
     "teams-identity-support",
     // feature for hiding attendee name in the teams meeting
     "hide-attendee-name",
-    // Join meeting with meetingId and passcode
-    'meeting-id',
     // Feature for end call options 
     'end-call-options',
     // Feature to support file sharing in Teams interoperability chats

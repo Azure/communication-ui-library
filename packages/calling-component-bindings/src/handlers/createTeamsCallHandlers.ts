@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 import { StartCallOptions } from '@azure/communication-calling';
+/* @conditional-compile-remove(one-to-n-calling) */
+import { IncomingCallCommon } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support) */
@@ -15,9 +17,13 @@ import {
 import { isPhoneNumberIdentifier } from '@azure/communication-common';
 import { Common, _toCommunicationIdentifier } from '@internal/acs-ui-common';
 import { StatefulCallClient, StatefulDeviceManager } from '@internal/calling-stateful-client';
+/* @conditional-compile-remove(one-to-n-calling) */
+import { DeclarativeTeamsCallAgent } from '@internal/calling-stateful-client';
 import memoizeOne from 'memoize-one';
 import { ReactElement } from 'react';
 import { isTeamsCallParticipants } from '../utils/callUtils';
+/* @conditional-compile-remove(one-to-n-calling) */
+import { createLocalVideoStream } from '../utils/callUtils';
 import {
   createDefaultCommonCallingHandlers,
   CommonCallingHandlers,
@@ -36,6 +42,10 @@ export interface TeamsCallingHandlers extends CommonCallingHandlers {
     participants: CommunicationIdentifier[],
     options?: StartCallOptions
   ) => undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall;
+  /* @conditional-compile-remove(one-to-n-calling) */
+  onAcceptCall: (incomingCallId: string, useVideo?: boolean) => Promise<void>;
+  /* @conditional-compile-remove(one-to-n-calling) */
+  onRejectCall: (incomingCallId: string) => Promise<void>;
 }
 
 /**
@@ -109,6 +119,27 @@ export const createDefaultTeamsCallingHandlers = memoizeOne(
         }
         /* @conditional-compile-remove(teams-identity-support) */
         await call?.removeParticipant(participant);
+      },
+      /* @conditional-compile-remove(one-to-n-calling) */
+      onAcceptCall: async (incomingCallId: string, useVideo?: boolean): Promise<void> => {
+        const localVideoStream = useVideo ? await createLocalVideoStream(callClient) : undefined;
+        const incomingCall = (callAgent as DeclarativeTeamsCallAgent)?.incomingCalls.find(
+          (incomingCall: IncomingCallCommon) => incomingCall.id === incomingCallId
+        );
+        if (incomingCall) {
+          await incomingCall.accept(
+            localVideoStream ? { videoOptions: { localVideoStreams: [localVideoStream] } } : undefined
+          );
+        }
+      },
+      /* @conditional-compile-remove(one-to-n-calling) */
+      onRejectCall: async (incomingCallId: string): Promise<void> => {
+        const incomingCall = (callAgent as DeclarativeTeamsCallAgent)?.incomingCalls.find(
+          (incomingCall: IncomingCallCommon) => incomingCall.id === incomingCallId
+        );
+        if (incomingCall) {
+          await incomingCall.reject();
+        }
       }
     };
   }

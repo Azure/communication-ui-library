@@ -15,6 +15,8 @@ import { Dispatch } from 'react';
 import { ImageActions } from './ImageUploadReducer';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { nanoid } from 'nanoid';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+import { ChatCompositeStrings } from '../Strings';
 
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 const MAX_INLINE_IMAGE_UPLOAD_SIZE_MB = 20;
@@ -61,45 +63,28 @@ export const getInlineImageData = async (image: string): Promise<Blob | undefine
 /**
  * @internal
  */
-export const removeImageTags = (event: { content: DocumentFragment }): void => {
-  event.content.querySelectorAll('img').forEach((image) => {
-    // If the image is the only child of its parent, remove all the parents of this img element.
-    let parentNode: HTMLElement | null = image.parentElement;
-    let currentNode: HTMLElement = image;
-    while (parentNode?.childNodes.length === 1) {
-      currentNode = parentNode;
-      parentNode = parentNode.parentElement;
-    }
-    currentNode?.remove();
-  });
-};
-
-/* @conditional-compile-remove(rich-text-editor-image-upload) */
-/**
- * @internal
- */
-export const getEditBoxMessagesImageUploadsInProgress = (
+export const getEditBoxMessagesInlineImages = (
   editBoxInlineImageUploads: Record<string, AttachmentUpload[]> | undefined
 ): Record<string, AttachmentMetadataInProgress[]> | undefined => {
   if (!editBoxInlineImageUploads) {
     return;
   }
   const messageIds = Object.keys(editBoxInlineImageUploads || {});
-  const messagesImageUploadsInProgress: Record<string, AttachmentMetadataInProgress[]> = {};
+  const messagesInlineImages: Record<string, AttachmentMetadataInProgress[]> = {};
   messageIds.map((messageId) => {
     const messageUploads = editBoxInlineImageUploads[messageId].map((upload) => {
       return upload.metadata;
     });
-    messagesImageUploadsInProgress[messageId] = messageUploads;
+    messagesInlineImages[messageId] = messageUploads;
   });
-  return messagesImageUploadsInProgress;
+  return messagesInlineImages;
 };
 
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 /**
  * @internal
  */
-export const getSendBoxImageUploadsInProgress = (
+export const getSendBoxInlineImages = (
   sendBoxInlineImageUploads: Record<string, AttachmentUpload[]> | undefined
 ): AttachmentMetadataInProgress[] | undefined => {
   if (!sendBoxInlineImageUploads) {
@@ -109,17 +94,21 @@ export const getSendBoxImageUploadsInProgress = (
 };
 
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
-const inlineImageUploadHandler = async (uploadTasks: AttachmentUpload[], adapter: ChatAdapter): Promise<void> => {
+const inlineImageUploadHandler = async (
+  uploadTasks: AttachmentUpload[],
+  adapter: ChatAdapter,
+  strings: ChatCompositeStrings
+): Promise<void> => {
   for (const task of uploadTasks) {
     const uploadTask = task as AttachmentUploadTask;
     const image: Blob | undefined = uploadTask.image;
     if (!image) {
-      uploadTask.notifyUploadFailed(`Image data for "${task.metadata?.name}" is not provided.`);
+      uploadTask.notifyUploadFailed(strings.uploadImageDataNotProvided);
       continue;
     }
     if (image && image.size > MAX_INLINE_IMAGE_UPLOAD_SIZE_MB * 1024 * 1024) {
       uploadTask.notifyUploadFailed(
-        `"${task.metadata?.name}" is too big. Select a file under ${MAX_INLINE_IMAGE_UPLOAD_SIZE_MB}MB.`
+        strings.uploadImageIsTooLarge.replace('{maxImageSize}', `${MAX_INLINE_IMAGE_UPLOAD_SIZE_MB}`)
       );
       continue;
     }
@@ -127,7 +116,9 @@ const inlineImageUploadHandler = async (uploadTasks: AttachmentUpload[], adapter
     const SUPPORTED_FILES: Array<string> = ['jpg', 'jpeg', 'png', 'gif', 'heic', 'webp'];
     const imageExtension = task.metadata?.name.split('.').pop() ?? '';
     if (!SUPPORTED_FILES.includes(imageExtension)) {
-      uploadTask.notifyUploadFailed(`Uploading ".${imageExtension}" image is not allowed.`);
+      uploadTask.notifyUploadFailed(
+        strings.uploadImageExtensionIsNotAllowed.replace('{imageExtension}', imageExtension)
+      );
       continue;
     }
 
@@ -136,7 +127,7 @@ const inlineImageUploadHandler = async (uploadTasks: AttachmentUpload[], adapter
       uploadTask.notifyUploadCompleted(response.id, task.metadata.url || '');
     } catch (error) {
       console.error(error);
-      uploadTask.notifyUploadFailed('Unable to upload inline image. Please try again later.');
+      uploadTask.notifyUploadFailed(strings.uploadImageFailed);
     }
   }
 };
@@ -195,12 +186,13 @@ const generateUploadTask = async (
 /**
  * @internal
  */
-export const onUploadInlineImageForEditBox = async (
+export const onInsertInlineImageForEditBox = async (
   image: string,
   fileName: string,
   messageId: string,
   adapter: ChatAdapter,
-  handleEditBoxInlineImageUploadAction: Dispatch<ImageActions>
+  handleEditBoxInlineImageUploadAction: Dispatch<ImageActions>,
+  chatCompositeStrings: ChatCompositeStrings
 ): Promise<void> => {
   const uploadTask: AttachmentUpload | undefined = await generateUploadTask(
     image,
@@ -217,18 +209,19 @@ export const onUploadInlineImageForEditBox = async (
     newUploads: [uploadTask],
     messageId
   });
-  inlineImageUploadHandler([uploadTask], adapter);
+  inlineImageUploadHandler([uploadTask], adapter, chatCompositeStrings);
 };
 
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 /**
  * @internal
  */
-export const onUploadInlineImageForSendBox = async (
+export const onInsertInlineImageForSendBox = async (
   image: string,
   fileName: string,
   adapter: ChatAdapter,
-  handleSendBoxInlineImageUploadAction: Dispatch<ImageActions>
+  handleSendBoxInlineImageUploadAction: Dispatch<ImageActions>,
+  chatCompositeStrings: ChatCompositeStrings
 ): Promise<void> => {
   const uploadTask: AttachmentUpload | undefined = await generateUploadTask(
     image,
@@ -246,7 +239,7 @@ export const onUploadInlineImageForSendBox = async (
     newUploads: [uploadTask],
     messageId: SEND_BOX_UPLOADS_KEY_VALUE
   });
-  inlineImageUploadHandler([uploadTask], adapter);
+  inlineImageUploadHandler([uploadTask], adapter, chatCompositeStrings);
 };
 
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
