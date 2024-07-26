@@ -359,7 +359,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
   }, [contentValue]);
 
   const sendMessageOnClick = useCallback((): void => {
-    if (disabled || contentValueOverflow) {
+    if (disabled || hasErrorMessage) {
       return;
     }
     // Don't send message until all attachments have been uploaded successfully
@@ -440,7 +440,6 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
 
   const hasErrorMessage = useMemo(() => {
     return (
-      !!systemMessage ||
       !!contentTooLongMessage ||
       /* @conditional-compile-remove(file-sharing-acs) */
       !!attachmentUploadsPendingError ||
