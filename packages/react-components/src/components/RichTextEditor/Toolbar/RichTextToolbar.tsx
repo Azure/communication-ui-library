@@ -53,6 +53,9 @@ export const RichTextToolbar = (props: RichTextToolbarProps): JSX.Element => {
   useEffect(() => {
     // update the format state on editor events
     plugin.onFormatChanged = setFormatState;
+    // plugin editor ready event may happen before onFormatChanged is set
+    // call update format function to ensure the format state is set
+    plugin.updateFormat();
   }, [plugin]);
 
   const boldButton: ICommandBarItemProps = useMemo(() => {
