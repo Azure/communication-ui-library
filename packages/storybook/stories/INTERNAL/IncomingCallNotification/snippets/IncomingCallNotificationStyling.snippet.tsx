@@ -48,6 +48,9 @@ export const IncomingCallNotificationStylingExample: () => JSX.Element = () => {
           }
         }
       }}
+      acceptOptions={{
+        showAcceptWithVideo: true
+      }}
     />
   );
 };
