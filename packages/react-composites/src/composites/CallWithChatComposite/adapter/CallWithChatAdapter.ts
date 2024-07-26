@@ -399,21 +399,21 @@ export interface CallWithChatAdapterManagement {
   /**
    * Puts the Call in a Localhold.
    *
-   * @beta
+   * @public
    */
   holdCall: () => Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Resumes the call from a LocalHold state.
    *
-   * @beta
+   * @public
    */
   resumeCall: () => Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Adds a new Participant to the call.
    *
-   * @beta
+   * @public
    */
   addParticipant(participant: PhoneNumberIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */
