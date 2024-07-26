@@ -37,15 +37,19 @@ export class BreakoutRoomsSubscriber {
   }
 
   private onBreakoutRoomsUpdated = (eventData: BreakoutRoomsEventData): void => {
+    if (!eventData.data) {
+      return;
+    }
+
     if (eventData.type === 'assignedBreakoutRooms') {
-      this.onAssignedBreakoutRoomUpdated(eventData.data as BreakoutRoom);
+      this.onAssignedBreakoutRoomUpdated(eventData.data);
     } else if (eventData.type === 'breakoutRoomsSettings') {
-      this.onBreakoutRoomSettingsUpdated(eventData.data as BreakoutRoomsSettings);
+      this.onBreakoutRoomSettingsUpdated(eventData.data);
     }
   };
 
   private onAssignedBreakoutRoomUpdated = (breakoutRoom: BreakoutRoom): void => {
-    this._context.setAssignBreakoutRoom(this._callIdRef.callId, breakoutRoom);
+    this._context.setAssignedBreakoutRoom(this._callIdRef.callId, breakoutRoom);
   };
 
   private onBreakoutRoomSettingsUpdated = (breakoutRoomSettings: BreakoutRoomsSettings): void => {

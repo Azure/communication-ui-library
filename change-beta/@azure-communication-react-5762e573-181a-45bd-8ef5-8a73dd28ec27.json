@@ -1,5 +1,5 @@
 {
-  "type": "minor",
+  "type": "prerelease",
   "area": "feature",
   "workstream": "Breakout rooms",
   "comment": "Add breakout rooms to stateful layer and events to CallAdapter and CallWithChatAdapter",
