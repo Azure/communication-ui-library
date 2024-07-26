@@ -5,8 +5,8 @@ import { IncomingCallNotification as IncomingCallNotificationComponent } from '@
 import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
-import { SingleLineBetaBanner } from '../BetaBanners/SingleLineBetaBanner';
-import { COMPONENT_FOLDER_PREFIX } from '../constants';
+import { SingleLineBetaBanner } from '../../BetaBanners/SingleLineBetaBanner';
+import { COMPONENT_FOLDER_PREFIX } from '../../constants';
 import { IncomingCallNotificationExample } from './snippets/IncomingCallNotification.snippet';
 import { IncomingCallNotificationStylingExample } from './snippets/IncomingCallNotificationStyling.snippet';
 
@@ -16,7 +16,7 @@ const IncomingCallNotificationStylingText =
 const getDocs: () => JSX.Element = () => {
   return (
     <>
-      <Title>Incoming Call Notifiation Component</Title>
+      <Title>Incoming Call Notification Component</Title>
       <SingleLineBetaBanner />
       <Description>
         The incoming Call notification component is used to provide information to your users when they are recieving a
@@ -54,6 +54,9 @@ const IncomingCallNotificationStory = (): JSX.Element => {
         alert('Rejected');
       }}
       callerName="John Wick"
+      acceptOptions={{
+        showAcceptWithVideo: true
+      }}
     />
   );
 };
@@ -61,8 +64,8 @@ const IncomingCallNotificationStory = (): JSX.Element => {
 export const IncomingCallNotification = IncomingCallNotificationStory.bind({});
 
 export default {
-  id: `${COMPONENT_FOLDER_PREFIX}-IncomingCallNotification`,
-  title: `${COMPONENT_FOLDER_PREFIX}/IncomingCallNotification`,
+  id: `${COMPONENT_FOLDER_PREFIX}-Internal-IncomingCallNotification`,
+  title: `${COMPONENT_FOLDER_PREFIX}/Internal/IncomingCallNotification`,
   component: IncomingCallNotification,
   parameters: {
     docs: {

@@ -24,7 +24,7 @@
     "placeholderText": "Enter a message",
     "textTooLong": "Your message length is over the maximum limit.",
     "sendButtonAriaLabel": "Send message",
-    "attachmentUploadsPendingError": "Uploading... Please wait.",
+    "attachmentUploadsPendingError": "File is uploading, please wait.",
     "removeAttachment": "Remove file",
     "uploading": "Uploading",
     "uploadCompleted": "Upload completed",
@@ -34,7 +34,8 @@
     "placeholderText": "Enter a message",
     "textTooLong": "Your message length is over the maximum limit.",
     "sendButtonAriaLabel": "Send message",
-    "attachmentUploadsPendingError": "Uploading... Please wait.",
+    "attachmentUploadsPendingError": "File is uploading, please wait.",
+    "imageUploadsPendingError": "Image is uploading, please wait.",
     "removeAttachment": "Remove file",
     "uploading": "Uploading",
     "uploadCompleted": "Upload completed",
@@ -225,9 +226,12 @@
     "richTextDeleteRowMenu": "Delete row",
     "richTextDeleteTableMenu": "Delete table",
     "richTextToolbarMoreButtonAriaLabel": "More options",
-    "attachmentUploadsPendingError": "Uploading... Please wait.",
+    "attachmentUploadsPendingError": "File is uploading, please wait.",
+    "imageUploadsPendingError": "Image is uploading, please wait.",
     "richTextNewBulletedListItemAnnouncement": "Bullet, new line",
-    "richTextNewNumberedListItemAnnouncement": "{0}, new line"
+    "richTextNewNumberedListItemAnnouncement": "{0}, new line",
+    "richTextBulletedListAppliedAnnouncement": "Bulleted list applied",
+    "richTextNumberedListAppliedAnnouncement": "Numbered list applied"
   },
   "errorBar": {
     "unableToReachChatService": "You are offline",
@@ -622,9 +626,12 @@
   },
   "IncomingCallNotification": {
     "incomingCallNotificationPlaceholderId": "Unknown User",
-    "incomingCallNotificationPlaceholderAlert": "Incoming call",
+    "incomingCallNotificationPlaceholderAlert": "{callerName} is calling",
     "incomingCallNoticicationAcceptWithAudioAriaLabel": "Accept with audio",
     "incomingCallNoticicationAcceptWithVideoAriaLabel": "Accept with video",
-    "incomingCallNoticicationRejectAriaLabel": "Reject"
+    "incomingCallNoticicationRejectAriaLabel": "Reject",
+    "incomingCallNotificationAcceptButtonLabel": "Accept",
+    "incomingCallNotificationRejectButtonLabel": "Decline",
+    "incomingCallNotificationAccceptWithVideoButtonLabel": "Accept with Video"
   }
 }
