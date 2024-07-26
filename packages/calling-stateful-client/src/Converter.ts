@@ -16,7 +16,6 @@ import { TeamsCaptionsInfo } from '@azure/communication-calling';
 import { CaptionsInfo as AcsCaptionsInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support) */
 import { CallKind } from '@azure/communication-calling';
-/* @conditional-compile-remove(meeting-id) */
 import { TeamsCallInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(calling-beta-sdk) */
 import { CallInfo } from '@azure/communication-calling';
@@ -35,9 +34,8 @@ import { CaptionsInfo } from './CallClientState';
 import { TeamsIncomingCallState as DeclarativeTeamsIncomingCall } from './CallClientState';
 /* @conditional-compile-remove(one-to-n-calling) */
 import { _isTeamsIncomingCall } from './TypeGuards';
-/* @conditional-compile-remove(teams-identity-support) */ /* @conditional-compile-remove(meeting-id) */
 import { _isACSCall } from './TypeGuards';
-/* @conditional-compile-remove(meeting-id) */ /* @conditional-compile-remove(acs-close-captions) */
+/* @conditional-compile-remove(acs-close-captions) */
 import { _isTeamsCall } from './TypeGuards';
 import { CallCommon } from './BetaToStableTypes';
 
@@ -190,7 +188,6 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
     },
     /* @conditional-compile-remove(hide-attendee-name) */
     hideAttendeeNames,
-    /* @conditional-compile-remove(meeting-id) */
     info: callInfo,
     /* @conditional-compile-remove(teams-meeting-conference) */
     meetingConference: { conferencePhones: [] }
