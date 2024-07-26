@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
-import { removeImageTags } from './ImageUploadUtils';
+import { removeImageTags } from './removeImageTags';
 
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 describe('removeImageElement should work correctly', () => {

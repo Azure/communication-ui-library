@@ -39,7 +39,6 @@
     "events": "^3.3.0",
     "html-react-parser": "^5.1.12",
     "immer": "10.1.1",
-    "libphonenumber-js": "^1.11.4",
     "memoize-one": "^5.2.1",
     "nanoid": "3.3.6",
     "react-linkify": "^1.0.0-alpha",
