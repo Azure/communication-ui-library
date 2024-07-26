@@ -31,7 +31,7 @@ import { initializeIcons } from '@fluentui/react';
 
 /**
  * Props for the OutboundCallComposite that you can use in your application.
- * @public
+ * @beta
  */
 export type OutboundCallCompositeLoaderProps = {
   userId: string;
@@ -44,7 +44,7 @@ export type OutboundCallCompositeLoaderProps = {
 /**
  * Loader function for the OutboundCallComposite that you can use in your application.
  *
- * @public
+ * @beta
  */
 export const loadOutboundCallComposite = async function (
   adapterArgs: OutboundCallCompositeLoaderProps,
