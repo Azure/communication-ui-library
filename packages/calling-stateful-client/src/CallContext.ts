@@ -186,7 +186,6 @@ export class CallContext {
         // We don't update the startTime and endTime if we are updating an existing active call
         existingCall.captionsFeature.currentSpokenLanguage = call.captionsFeature.currentSpokenLanguage;
         existingCall.captionsFeature.currentCaptionLanguage = call.captionsFeature.currentCaptionLanguage;
-        /* @conditional-compile-remove(meeting-id) */
         existingCall.info = call.info;
         /* @conditional-compile-remove(teams-meeting-conference) */
         existingCall.meetingConference = call.meetingConference;
