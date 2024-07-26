@@ -21,8 +21,13 @@ const meta: Meta = {
     notificationIconProps: hiddenControl,
     autoDismiss: controlsToAdd.isNotificationAutoDismiss,
     showStackedEffect: controlsToAdd.showNotificationStacked,
-    onClick: hiddenControl,
+    onClickPrimaryButton: hiddenControl,
+    onClickSecondaryButton: hiddenControl,
     onDismiss: hiddenControl
+  },
+  args: {
+    autoDismiss: false,
+    showStackedEffect: false,
   }
 };
 
