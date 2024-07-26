@@ -22,7 +22,7 @@ import {
 } from '@fluentui/react';
 import { Divider } from '@fluentui/react-components';
 
-import React, { useRef, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 
 import {
   GenerateMockNewChatMessage,
@@ -40,9 +40,8 @@ import {
 } from './placeholdermessages';
 
 const MessageThreadStory = (args): JSX.Element => {
-  const [chatMessages, setChatMessages] = useState<(SystemMessage | CustomMessage | ChatMessage)[]>(
-    GenerateMockChatMessages()
-  );
+  const [chatMessages, setChatMessages] =
+    useState<(SystemMessage | CustomMessage | ChatMessage)[]>(GenerateMockChatMessages());
   const dropdownMenuOptions = [
     { key: 'newMessage', text: 'New Message' },
     { key: 'newMessageOthers', text: 'New Message from others' },
@@ -115,14 +114,22 @@ const MessageThreadStory = (args): JSX.Element => {
     if (message.messageType === 'chat') {
       message.content = content;
       message.editedOn = new Date(Date.now());
+      // args will get string type when value is updated and page is reloaded (without updating switch again)
+      if (args.richTextEditor === true || args.richTextEditor === 'true') {
+        message.contentType = 'html';
+      }
     }
     updatedChatMessages[msgIdx] = message;
     setChatMessages(updatedChatMessages);
     return Promise.resolve();
   };
 
-  const [overlayImageItem, setOverlayImageItem] =
-    useState<{ imageSrc: string; title: string; titleIcon: JSX.Element; downloadAttachmentname: string }>();
+  const [overlayImageItem, setOverlayImageItem] = useState<{
+    imageSrc: string;
+    title: string;
+    titleIcon: JSX.Element;
+    downloadAttachmentname: string;
+  }>();
 
   const onInlineImageClicked = (attachmentId: string, messageId: string): Promise<void> => {
     const messages = chatMessages?.filter((message) => {
@@ -177,6 +184,19 @@ const MessageThreadStory = (args): JSX.Element => {
     }
   };
 
+  const removeImageTags = useCallback((event: { content: DocumentFragment }) => {
+    event.content.querySelectorAll('img').forEach((image) => {
+      // If the image is the only child of its parent, remove all the parents of this img element.
+      let parentNode: HTMLElement | null = image.parentElement;
+      let currentNode: HTMLElement = image;
+      while (parentNode?.childNodes.length === 1) {
+        currentNode = parentNode;
+        parentNode = parentNode.parentElement;
+      }
+      currentNode?.remove();
+    });
+  }, []);
+
   const onSendHandler = (): void => {
     switch (selectedMessageType.key) {
       case 'newMessage':
@@ -216,6 +236,7 @@ const MessageThreadStory = (args): JSX.Element => {
         onRenderMessage={onRenderMessage}
         inlineImageOptions={inlineImageOptions}
         onUpdateMessage={onUpdateMessageCallback}
+        richTextEditorOptions={args.richTextEditor ? { onPaste: removeImageTags } : undefined}
         onRenderAvatar={(userId?: string) => {
           return (
             <Persona

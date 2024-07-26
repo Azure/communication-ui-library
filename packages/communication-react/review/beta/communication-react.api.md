@@ -55,6 +55,7 @@ import { IIconProps } from '@fluentui/react';
 import { ILinkStyles } from '@fluentui/react';
 import { IMessageBarProps } from '@fluentui/react';
 import { IncomingCall } from '@azure/communication-calling';
+import { IncomingCallKind } from '@azure/communication-calling';
 import { IPersonaStyleProps } from '@fluentui/react';
 import { IPersonaStyles } from '@fluentui/react';
 import { IRawStyle } from '@fluentui/react';
@@ -96,6 +97,7 @@ import { StartCaptionsOptions } from '@azure/communication-calling';
 import { TeamsCall } from '@azure/communication-calling';
 import { TeamsCallAgent } from '@azure/communication-calling';
 import { TeamsCallInfo } from '@azure/communication-calling';
+import { TeamsIncomingCall } from '@azure/communication-calling';
 import { TeamsMeetingIdLocator } from '@azure/communication-calling';
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { Theme } from '@fluentui/react';
@@ -120,6 +122,17 @@ export interface ActiveErrorMessage {
 }
 
 // @beta
+export interface ActiveIncomingCall {
+    callerInfo: {
+        displayName: string;
+    };
+    endTime?: Date;
+    id: string;
+    startTime: Date;
+    videoAvailable: boolean;
+}
+
+// @public
 export interface ActiveNotification {
     autoDismiss?: boolean;
     onClickPrimaryButton?: () => void;
@@ -262,7 +275,7 @@ export type AzureCommunicationCallWithChatAdapterArgs = {
     userId: CommunicationUserIdentifier;
     displayName: string;
     credential: CommunicationTokenCredential;
-    locator: CallAndChatLocator | TeamsMeetingLinkLocator | /** @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator;
+    locator: CallAndChatLocator | TeamsMeetingLinkLocator | TeamsMeetingIdLocator;
     alternateCallerId?: string;
     callAdapterOptions?: AzureCommunicationCallAdapterOptions;
 };
@@ -484,7 +497,7 @@ export interface CallAdapterDeviceManagement {
 }
 
 // @public
-export type CallAdapterLocator = TeamsMeetingLinkLocator | GroupCallLocator | RoomCallLocator | /* @conditional-compile-remove(teams-adhoc-call) */ /* @conditional-compile-remove(PSTN-calls) */ CallParticipantsLocator | /* @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator;
+export type CallAdapterLocator = TeamsMeetingLinkLocator | GroupCallLocator | RoomCallLocator | /* @conditional-compile-remove(teams-adhoc-call) */ /* @conditional-compile-remove(PSTN-calls) */ CallParticipantsLocator | TeamsMeetingIdLocator;
 
 // @public
 export type CallAdapterState = CallAdapterUiState & CallAdapterClientState;
@@ -588,10 +601,10 @@ export interface CallClientState {
     deviceManager: DeviceManagerState;
     environmentInfo?: EnvironmentInfo;
     incomingCalls: {
-        [key: string]: IncomingCallState;
+        [key: string]: IncomingCallState | /* @conditional-compile-remove(one-to-n-calling) */ TeamsIncomingCallState;
     };
     incomingCallsEnded: {
-        [key: string]: IncomingCallState;
+        [key: string]: IncomingCallState | /* @conditional-compile-remove(one-to-n-calling) */ TeamsIncomingCallState;
     };
     latestErrors: CallErrors;
     userId: CommunicationIdentifierKind;
@@ -677,7 +690,9 @@ export type CallCompositeIcons = {
     DefaultCustomButton?: JSX.Element;
     DtmfDialpadButton?: JSX.Element;
     PhoneNumberButton?: JSX.Element;
-    PhoneInfoWait?: JSX.Element;
+    JoinByPhoneDialStepIcon?: JSX.Element;
+    JoinByPhoneConferenceIdIcon?: JSX.Element;
+    JoinByPhoneWaitToBeAdmittedIcon?: JSX.Element;
     PeoplePaneMoreButton?: JSX.Element;
     StopAllSpotlightMenuButton?: JSX.Element;
 };
@@ -987,12 +1002,24 @@ export type CallIdChangedListener = (event: {
 }) => void;
 
 // @public
+export interface CallInfoState {
+    groupId?: string;
+    kind: IncomingCallKind;
+    participantId: string;
+    threadId?: string;
+}
+
+// @public
 export type CallingBaseSelectorProps = {
     callId: string;
 };
 
 // @public
 export interface CallingHandlers extends CommonCallingHandlers {
+    // (undocumented)
+    onAcceptCall: (incomingCallId: string, useVideo?: boolean) => Promise<void>;
+    // (undocumented)
+    onRejectCall: (incomingCallId: string) => Promise<void>;
     // (undocumented)
     onStartCall: (participants: CommunicationIdentifier[], options?: StartCallOptions) => Call | undefined;
 }
@@ -1072,6 +1099,9 @@ export interface CallState {
     localParticipantReaction?: ReactionState;
     localRecording: LocalRecordingCallFeatureState;
     localVideoStreams: LocalVideoStreamState[];
+    meetingConference?: {
+        conferencePhones: ConferencePhoneInfo[];
+    };
     optimalVideoCount: OptimalVideoCountFeatureState;
     pptLive: PPTLiveCallFeatureState;
     raiseHand: RaiseHandCallFeature;
@@ -1087,7 +1117,6 @@ export interface CallState {
     spotlight?: SpotlightCallFeatureState;
     startTime: Date;
     state: CallState_2;
-    teamsMeetingConference?: ConferencePhoneInfo[];
     totalParticipantCount?: number;
     transcription: TranscriptionCallFeature;
     transfer: TransferFeature;
@@ -1842,6 +1871,10 @@ export interface ChatCompositeProps extends BaseCompositeProps<ChatCompositeIcon
 export interface ChatCompositeStrings {
     chatListHeader: string;
     uploadAttachment: string;
+    uploadImageDataNotProvided: string;
+    uploadImageExtensionIsNotAllowed: string;
+    uploadImageFailed: string;
+    uploadImageIsTooLarge: string;
 }
 
 // @public
@@ -2241,7 +2274,7 @@ export interface ComponentStrings {
     imageOverlay: ImageOverlayStrings;
     // (undocumented)
     IncomingCallNotification: IncomingCallNotificationStrings;
-    MeetingConferencePhoneInfo: MeetingConferencePhoneInfoModalStrings;
+    meetingConferencePhoneInfo: MeetingConferencePhoneInfoModalStrings;
     mentionPopover: MentionPopoverStrings;
     messageStatusIndicator: MessageStatusIndicatorStrings;
     messageThread: MessageThreadStrings;
@@ -2530,11 +2563,8 @@ export const darkTheme: PartialTheme & CallingTheme;
 // @beta
 export type DeclarativeCallAgent = CallAgent & IncomingCallManagement;
 
-// @beta
-export type DeclarativeIncomingCall = IncomingCall;
-
 // @public
-export type DeclarativeTeamsCallAgent = TeamsCallAgent & IncomingCallManagement;
+export type DeclarativeTeamsCallAgent = TeamsCallAgent & TeamsIncomingCallManagement;
 
 // @public
 export const DEFAULT_COMPONENT_ICONS: {
@@ -2745,7 +2775,9 @@ export const DEFAULT_COMPOSITE_ICONS: {
     DefaultCustomButton?: JSX.Element | undefined;
     DtmfDialpadButton?: JSX.Element | undefined;
     PhoneNumberButton?: JSX.Element | undefined;
-    PhoneInfoWait?: JSX.Element | undefined;
+    JoinByPhoneDialStepIcon?: JSX.Element | undefined;
+    JoinByPhoneConferenceIdIcon?: JSX.Element | undefined;
+    JoinByPhoneWaitToBeAdmittedIcon?: JSX.Element | undefined;
     PeoplePaneMoreButton?: JSX.Element | undefined;
     StopAllSpotlightMenuButton?: JSX.Element | undefined;
     ChevronLeft?: JSX.Element | undefined;
@@ -3061,7 +3093,7 @@ export interface FluentThemeProviderProps {
 export const fromFlatCommunicationIdentifier: (id: string) => CommunicationIdentifier;
 
 // @public
-export type GetCallingSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof VideoGallery> extends true ? VideoGallerySelector : AreEqual<Component, typeof DevicesButton> extends true ? DevicesButtonSelector : AreEqual<Component, typeof MicrophoneButton> extends true ? MicrophoneButtonSelector : AreEqual<Component, typeof CameraButton> extends true ? CameraButtonSelector : AreEqual<Component, typeof ScreenShareButton> extends true ? ScreenShareButtonSelector : AreEqual<Component, typeof ParticipantList> extends true ? ParticipantListSelector : AreEqual<Component, typeof ParticipantsButton> extends true ? ParticipantsButtonSelector : AreEqual<Component, typeof EndCallButton> extends true ? EmptySelector : AreEqual<Component, typeof ErrorBar> extends true ? CallErrorBarSelector : AreEqual<Component, typeof Dialpad> extends true ? EmptySelector : AreEqual<Component, typeof HoldButton> extends true ? HoldButtonSelector : AreEqual<Component, typeof NotificationStack> extends true ? NotificationStackSelector : undefined;
+export type GetCallingSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof VideoGallery> extends true ? VideoGallerySelector : AreEqual<Component, typeof DevicesButton> extends true ? DevicesButtonSelector : AreEqual<Component, typeof MicrophoneButton> extends true ? MicrophoneButtonSelector : AreEqual<Component, typeof CameraButton> extends true ? CameraButtonSelector : AreEqual<Component, typeof ScreenShareButton> extends true ? ScreenShareButtonSelector : AreEqual<Component, typeof ParticipantList> extends true ? ParticipantListSelector : AreEqual<Component, typeof ParticipantsButton> extends true ? ParticipantsButtonSelector : AreEqual<Component, typeof EndCallButton> extends true ? EmptySelector : AreEqual<Component, typeof ErrorBar> extends true ? CallErrorBarSelector : AreEqual<Component, typeof Dialpad> extends true ? EmptySelector : AreEqual<Component, typeof HoldButton> extends true ? HoldButtonSelector : AreEqual<Component, typeof NotificationStack> extends true ? NotificationStackSelector : AreEqual<Component, typeof IncomingCallStack> extends true ? IncomingCallStackSelector : undefined;
 
 // @public
 export const getCallingSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetCallingSelector<Component>;
@@ -3174,7 +3206,7 @@ export const imageOverlayTheme: PartialTheme;
 
 // @beta
 export type IncomingCallManagement = {
-    incomingCalls: ReadonlyArray<DeclarativeIncomingCall>;
+    incomingCalls: ReadonlyArray<IncomingCall>;
 };
 
 // @beta
@@ -3182,14 +3214,19 @@ export const IncomingCallNotification: (props: IncomingCallNotificationProps) =>
 
 // @beta
 export interface IncomingCallNotificationProps {
+    acceptOptions: {
+        showAcceptWithVideo: boolean;
+    };
     alertText?: string;
     avatarImage?: string;
     callerName?: string;
     onAcceptWithAudio: () => void;
     onAcceptWithVideo: () => void;
+    onDismiss?: () => void;
     onReject: () => void;
     onRenderAvatar?: () => JSX.Element;
     personaSize?: number;
+    strings?: IncomingCallNotificationStrings;
     styles?: IncomingCallNotificationStyles;
 }
 
@@ -3198,8 +3235,11 @@ export interface IncomingCallNotificationStrings {
     incomingCallNoticicationAcceptWithAudioAriaLabel?: string;
     incomingCallNoticicationAcceptWithVideoAriaLabel?: string;
     incomingCallNoticicationRejectAriaLabel?: string;
+    incomingCallNotificationAccceptWithVideoButtonLabel?: string;
+    incomingCallNotificationAcceptButtonLabel?: string;
     incomingCallNotificationPlaceholderAlert?: string;
     incomingCallNotificationPlaceholderId?: string;
+    incomingCallNotificationRejectButtonLabel?: string;
 }
 
 // @beta
@@ -3210,12 +3250,32 @@ export interface IncomingCallNotificationStyles {
     root?: IStackStyles;
 }
 
+// @beta
+export const IncomingCallStack: (props: IncomingCallStackProps) => JSX.Element;
+
+// @beta
+export interface IncomingCallStackProps {
+    activeIncomingCalls: ActiveIncomingCall[];
+    onAcceptCall: (incomingCallId: string, useVideo?: boolean) => void;
+    onRejectCall: (incomingCallId: string) => void;
+    removedIncomingCalls: ActiveIncomingCall[];
+    strings?: IncomingCallNotificationStrings;
+    styles?: IncomingCallNotificationStyles;
+}
+
+// @beta
+export type IncomingCallStackSelector = (state: CallClientState) => {
+    activeIncomingCalls: ActiveIncomingCall[];
+    removedIncomingCalls: ActiveIncomingCall[];
+};
+
 // @public
 export interface IncomingCallState {
     callEndReason?: CallEndReason;
     callerInfo: CallerInfo;
     endTime?: Date;
     id: string;
+    info: CallInfoState;
     startTime: Date;
 }
 
@@ -3349,14 +3409,14 @@ export interface MediaDiagnosticsState {
 
 // @public
 export interface MeetingConferencePhoneInfoModalStrings {
-    meetingConferencePhoneInfoModalDialIn?: string;
-    meetingConferencePhoneInfoModalMeetingId?: string;
-    meetingConferencePhoneInfoModalNoPhoneAvailable?: string;
-    meetingConferencePhoneInfoModalTitle?: string;
-    meetingConferencePhoneInfoModalToll?: string;
-    meetingConferencePhoneInfoModalTollFree?: string;
-    meetingConferencePhoneInfoModalTollGeoData?: string;
-    meetingConferencePhoneInfoModalWait?: string;
+    meetingConferencePhoneInfoModalDialIn: string;
+    meetingConferencePhoneInfoModalMeetingId: string;
+    meetingConferencePhoneInfoModalNoPhoneAvailable: string;
+    meetingConferencePhoneInfoModalTitle: string;
+    meetingConferencePhoneInfoModalToll: string;
+    meetingConferencePhoneInfoModalTollFree: string;
+    meetingConferencePhoneInfoModalTollGeoData: string;
+    meetingConferencePhoneInfoModalWait: string;
 }
 
 // @beta
@@ -3511,7 +3571,7 @@ export type MessageThreadProps = {
     onDisplayDateTimeString?: (messageDate: Date) => string;
     mentionOptions?: MentionOptions;
     inlineImageOptions?: InlineImageOptions;
-    richTextEditorOptions?: RichTextEditorOptions;
+    richTextEditorOptions?: RichTextEditBoxOptions;
 };
 
 // @public
@@ -3525,7 +3585,6 @@ export type MessageThreadSelector = (state: ChatClientState, props: ChatBaseSele
 export interface MessageThreadStrings {
     actionMenuMoreOptions?: string;
     attachmentCardGroupMessage: string;
-    attachmentUploadsPendingError: string;
     blockedWarningLinkText: string;
     blockedWarningText: string;
     downloadAttachment: string;
@@ -3537,6 +3596,7 @@ export interface MessageThreadStrings {
     editMessage: string;
     failToSendTag?: string;
     friday: string;
+    imageUploadsPendingError: string;
     liveAuthorIntro: string;
     messageContentAriaText: string;
     messageContentMineAriaText: string;
@@ -3574,9 +3634,9 @@ export interface MessageThreadStyles extends BaseCustomStyles {
 }
 
 // @beta
-export type MessagingPolicy = {
+export interface MessagingPolicy {
     textOnlyChat?: boolean;
-};
+}
 
 // @public
 export const MicrophoneButton: (props: MicrophoneButtonProps) => JSX.Element;
@@ -3659,11 +3719,11 @@ export interface NetworkDiagnosticsState {
     latest: LatestNetworkDiagnostics;
 }
 
-// @beta
+// @public
 const Notification_2: (props: NotificationProps) => JSX.Element;
 export { Notification_2 as Notification }
 
-// @beta
+// @public
 export interface NotificationProps {
     autoDismiss?: boolean;
     notificationIconProps?: IIconProps;
@@ -3674,10 +3734,10 @@ export interface NotificationProps {
     showStackedEffect?: boolean;
 }
 
-// @beta
+// @public
 export const NotificationStack: (props: NotificationStackProps) => JSX.Element;
 
-// @beta
+// @public
 export interface NotificationStackProps {
     activeNotifications: ActiveNotification[];
     ignorePremountNotifications?: boolean;
@@ -3686,13 +3746,13 @@ export interface NotificationStackProps {
     strings?: NotificationStackStrings;
 }
 
-// @beta
+// @public
 export type NotificationStackSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
     activeErrorMessages: ActiveNotification[];
     activeNotifications: ActiveNotification[];
 };
 
-// @beta
+// @public
 export interface NotificationStackStrings {
     callCameraAccessDenied?: NotificationStrings;
     callCameraAccessDeniedSafari?: NotificationStrings;
@@ -3735,7 +3795,7 @@ export interface NotificationStackStrings {
     unmuteGeneric?: NotificationStrings;
 }
 
-// @beta
+// @public
 export interface NotificationStrings {
     dismissButtonAriaLabel: string;
     message?: string;
@@ -3744,7 +3804,7 @@ export interface NotificationStrings {
     title: string;
 }
 
-// @beta
+// @public
 export type NotificationType = keyof NotificationStackStrings;
 
 // @public
@@ -4128,32 +4188,43 @@ export type ResourceFetchResult = {
 };
 
 // @beta
+export interface RichTextEditBoxOptions extends RichTextEditorOptions {
+    messagesInlineImages?: Record<string, AttachmentMetadataInProgress[]>;
+    onCancelInlineImageUpload?: (imageId: string, messageId: string) => void;
+    onInsertInlineImage?: (imageUrl: string, imageFileName: string, messageId: string) => void;
+}
+
+// @beta
 export interface RichTextEditorOptions {
-    imageUploadsInProgress?: AttachmentMetadataInProgress[];
-    onCancelInlineImageUpload?: (imageId: string) => void;
     onPaste?: (event: {
         content: DocumentFragment;
     }) => void;
-    onUploadInlineImage?: (imageUrl: string, imageFileName: string) => void;
 }
 
 // @beta
 export const RichTextSendBox: (props: RichTextSendBoxProps) => JSX.Element;
 
 // @beta
+export interface RichTextSendBoxOptions extends RichTextEditorOptions {
+    inlineImages?: AttachmentMetadataInProgress[];
+    onCancelInlineImageUpload?: (imageId: string) => void;
+    onInsertInlineImage?: (imageUrl: string, imageFileName: string) => void;
+}
+
+// @beta
 export interface RichTextSendBoxProps {
     attachments?: AttachmentMetadataInProgress[];
     autoFocus?: 'sendBoxTextField';
     disabled?: boolean;
-    imageUploadsInProgress?: AttachmentMetadataInProgress[];
+    inlineImages?: AttachmentMetadataInProgress[];
     onCancelAttachmentUpload?: (attachmentId: string) => void;
     onCancelInlineImageUpload?: (imageId: string) => void;
+    onInsertInlineImage?: (imageUrl: string, imageFileName: string) => void;
     onPaste?: (event: {
         content: DocumentFragment;
     }) => void;
     onSendMessage: (content: string, options?: MessageOptions) => Promise<void>;
     onTyping?: () => Promise<void>;
-    onUploadInlineImage?: (imageUrl: string, imageFileName: string) => void;
     strings?: Partial<RichTextSendBoxStrings>;
     systemMessage?: string;
 }
@@ -4164,7 +4235,9 @@ export interface RichTextSendBoxStrings extends RichTextStrings, SendBoxStrings 
 
 // @beta
 export interface RichTextStrings {
+    imageUploadsPendingError: string;
     richTextBoldTooltip: string;
+    richTextBulletedListAppliedAnnouncement: string;
     richTextBulletListTooltip: string;
     richTextDecreaseIndentTooltip: string;
     richTextDeleteColumnMenu: string;
@@ -4181,6 +4254,9 @@ export interface RichTextStrings {
     richTextInsertTableMenuTitle: string;
     richTextInsertTableTooltip: string;
     richTextItalicTooltip: string;
+    richTextNewBulletedListItemAnnouncement: string;
+    richTextNewNumberedListItemAnnouncement: string;
+    richTextNumberedListAppliedAnnouncement: string;
     richTextNumberListTooltip: string;
     richTextToolbarMoreButtonAriaLabel: string;
     richTextUnderlineTooltip: string;
@@ -4218,8 +4294,19 @@ export const SendBox: (props: SendBoxProps) => JSX.Element;
 
 // @beta
 export interface SendBoxErrorBarError {
+    errorBarType?: SendBoxErrorBarType;
     message: string;
     timestamp: number;
+}
+
+// @beta
+export enum SendBoxErrorBarType {
+    blocked = 2,
+    error = 1,
+    info = 0,
+    severeWarning = 3,
+    success = 4,
+    warning = 5
 }
 
 // @public
@@ -4571,7 +4658,7 @@ export interface TeamsCallAdapter extends CommonCallAdapter {
 
 // @public
 export type TeamsCallAdapterArgs = TeamsCallAdapterArgsCommon & {
-    locator: TeamsMeetingLinkLocator | /* @conditional-compile-remove(teams-adhoc-call) */ /* @conditional-compile-remove(PSTN-calls) */ CallParticipantsLocator | /* @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator;
+    locator: TeamsMeetingLinkLocator | /* @conditional-compile-remove(teams-adhoc-call) */ /* @conditional-compile-remove(PSTN-calls) */ CallParticipantsLocator | TeamsMeetingIdLocator;
 };
 
 // @public
@@ -4584,7 +4671,26 @@ export type TeamsCallAdapterArgsCommon = {
 // @public
 export interface TeamsCallingHandlers extends CommonCallingHandlers {
     // (undocumented)
+    onAcceptCall: (incomingCallId: string, useVideo?: boolean) => Promise<void>;
+    // (undocumented)
+    onRejectCall: (incomingCallId: string) => Promise<void>;
+    // (undocumented)
     onStartCall: (participants: CommunicationIdentifier[], options?: StartCallOptions) => undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall;
+}
+
+// @beta
+export type TeamsIncomingCallManagement = {
+    incomingCalls: ReadonlyArray<TeamsIncomingCall>;
+};
+
+// @beta
+export interface TeamsIncomingCallState {
+    callEndReason?: CallEndReason;
+    callerInfo: CallerInfo;
+    endTime?: Date;
+    id: string;
+    info: CallInfoState;
+    startTime: Date;
 }
 
 // @beta

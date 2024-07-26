@@ -338,11 +338,16 @@
     "endCallConfirmDialogTitle": "Lopetetaanko puhelu?",
     "endCallConfirmDialogContent": "Puhelu lopetetaan kaikkien osallistujien osalta.",
     "invalidMeetingIdentifier": "Virheellinen kokoustunnus tai tunnuskoodi",
-    "pinParticipantMenuLabel": "Pin for me",
-    "pinParticipantLimitReachedMenuLabel": "Pin (limit reached)",
-    "unpinParticipantMenuLabel": "Unpin",
-    "pinParticipantMenuItemAriaLabel": "Pin",
-    "unpinParticipantMenuItemAriaLabel": "Unpin"
+    "pinParticipantMenuLabel": "Kiinnitä minulle",
+    "pinParticipantLimitReachedMenuLabel": "Kiinnitä (enimmäisraja saavutettu)",
+    "unpinParticipantMenuLabel": "Poista kiinnitys",
+    "pinParticipantMenuItemAriaLabel": "Kiinnitä",
+    "unpinParticipantMenuItemAriaLabel": "Poista kiinnitys",
+    "muteAllMenuLabel": "Mykistä kaikki",
+    "muteAllDialogTitle": "Mykistetäänkö kaikki?",
+    "muteAllDialogContent": "Tämä toiminto mykistää kaikki muut kokouksen osallistujat paitsi sinut.",
+    "muteAllConfirmButtonLabel": "Mykistä kaikki",
+    "muteAllCancelButtonLabel": "Peruuta"
   },
   "chat": {
     "chatListHeader": "Tässä keskustelussa",

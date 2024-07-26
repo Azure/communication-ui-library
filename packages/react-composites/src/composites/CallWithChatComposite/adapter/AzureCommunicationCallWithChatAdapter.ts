@@ -15,7 +15,6 @@ import {
   StartCallOptions,
   VideoDeviceInfo
 } from '@azure/communication-calling';
-/* @conditional-compile-remove(meeting-id) */
 import { TeamsMeetingIdLocator } from '@azure/communication-calling';
 import { Reaction } from '@azure/communication-calling';
 import { StartCaptionsOptions } from '@azure/communication-calling';
@@ -870,17 +869,11 @@ export class CallAndChatProvider implements ChatThreadProvider {
  */
 export class TeamsMeetingLinkProvider implements ChatThreadProvider {
   public locator: TeamsMeetingLinkLocator;
-  /** @conditional-compile-remove(meeting-id) */
   private callAdapterPromise: Promise<CallAdapter>;
-  /** @conditional-compile-remove(meeting-id) */
   private callAdapterSubscription?: (state: CallAdapterState) => void;
 
-  constructor(
-    locator: TeamsMeetingLinkLocator,
-    /** @conditional-compile-remove(meeting-id) */ callAdapterPromise: Promise<CallAdapter>
-  ) {
+  constructor(locator: TeamsMeetingLinkLocator, callAdapterPromise: Promise<CallAdapter>) {
     this.locator = locator;
-    /** @conditional-compile-remove(meeting-id) */
     this.callAdapterPromise = callAdapterPromise;
   }
 
@@ -889,13 +882,11 @@ export class TeamsMeetingLinkProvider implements ChatThreadProvider {
   }
 
   public getChatThread(): string {
-    /** @conditional-compile-remove(meeting-id) */
     throw new Error('Chat thread ID should be retrieved from call.callInfo using method getChatThreadPromise');
     return getChatThreadFromTeamsLink(this.locator.meetingLink);
   }
 
   public async getChatThreadPromise(): Promise<string> {
-    /** @conditional-compile-remove(meeting-id) */
     {
       // Wait for the call to be connected and get the chat thread ID from `call.callInfo`.
       const chatThreadPromise = new Promise<string>((resolve) => {
@@ -922,7 +913,6 @@ export class TeamsMeetingLinkProvider implements ChatThreadProvider {
   }
 }
 
-/** @conditional-compile-remove(meeting-id) */
 /**
  * Arguments for use in {@link createAzureCommunicationCallWithChatAdapter} to join a Teams meeting using meeting id.
  *
@@ -975,10 +965,7 @@ export class TeamsMeetingIdProvider implements ChatThreadProvider {
  * Combination of available adapters for use in {@link createAzureCommunicationCallWithChatAdapter}.
  * @public
  */
-export type CommunicationAdapter =
-  | CallAndChatProvider
-  | TeamsMeetingLinkProvider
-  | /** @conditional-compile-remove(meeting-id) */ TeamsMeetingIdProvider;
+export type CommunicationAdapter = CallAndChatProvider | TeamsMeetingLinkProvider | TeamsMeetingIdProvider;
 
 /**
  * Arguments for use in {@link createAzureCommunicationCallWithChatAdapter} to join a Call with an associated Chat thread.
@@ -1002,10 +989,7 @@ export type AzureCommunicationCallWithChatAdapterArgs = {
   userId: CommunicationUserIdentifier;
   displayName: string;
   credential: CommunicationTokenCredential;
-  locator:
-    | CallAndChatLocator
-    | TeamsMeetingLinkLocator
-    | /** @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator;
+  locator: CallAndChatLocator | TeamsMeetingLinkLocator | TeamsMeetingIdLocator;
   /* @conditional-compile-remove(PSTN-calls) */
   alternateCallerId?: string;
 
@@ -1257,25 +1241,18 @@ export const _createAzureCommunicationCallWithChatAdapterFromAdapters = (
 ): CallWithChatAdapter => new AzureCommunicationCallWithChatAdapter(callAdapter, chatAdapter);
 
 const isTeamsMeetingLocator = (
-  locator:
-    | CallAndChatLocator
-    | TeamsMeetingLinkLocator
-    | /** @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator
-): locator is TeamsMeetingLinkLocator | /** @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator => {
+  locator: CallAndChatLocator | TeamsMeetingLinkLocator | TeamsMeetingIdLocator
+): locator is TeamsMeetingLinkLocator | TeamsMeetingIdLocator => {
   return 'meetingLink' in locator || 'meetingId' in locator;
 };
 
 const _createChatThreadAdapterInner = (
-  locator:
-    | CallAndChatLocator
-    | TeamsMeetingLinkLocator
-    | /** @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator,
+  locator: CallAndChatLocator | TeamsMeetingLinkLocator | TeamsMeetingIdLocator,
   adapter: Promise<CallAdapter>
 ): ChatThreadProvider => {
   if ('meetingLink' in locator) {
-    return new TeamsMeetingLinkProvider(locator, /** @conditional-compile-remove(meeting-id) */ adapter);
+    return new TeamsMeetingLinkProvider(locator, adapter);
   }
-  /** @conditional-compile-remove(meeting-id) */
   if ('meetingId' in locator) {
     return new TeamsMeetingIdProvider(locator, adapter);
   }

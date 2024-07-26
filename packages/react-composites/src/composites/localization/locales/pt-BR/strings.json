@@ -338,11 +338,16 @@
     "endCallConfirmDialogTitle": "Encerrar a chamada?",
     "endCallConfirmDialogContent": "Você encerrará a chamada para todos.",
     "invalidMeetingIdentifier": "ID ou senha de reunião inválida",
-    "pinParticipantMenuLabel": "Pin for me",
-    "pinParticipantLimitReachedMenuLabel": "Pin (limit reached)",
-    "unpinParticipantMenuLabel": "Unpin",
-    "pinParticipantMenuItemAriaLabel": "Pin",
-    "unpinParticipantMenuItemAriaLabel": "Unpin"
+    "pinParticipantMenuLabel": "Fixar para mim",
+    "pinParticipantLimitReachedMenuLabel": "Fixar (limite alcançado)",
+    "unpinParticipantMenuLabel": "Desafixar",
+    "pinParticipantMenuItemAriaLabel": "Fixar",
+    "unpinParticipantMenuItemAriaLabel": "Desafixar",
+    "muteAllMenuLabel": "Ativar mudo de todos",
+    "muteAllDialogTitle": "Ativar mudo para todos?",
+    "muteAllDialogContent": "Isso ativará o mudo para todas as pessoas na reunião, exceto para você.",
+    "muteAllConfirmButtonLabel": "Ativar mudo de todos",
+    "muteAllCancelButtonLabel": "Cancelar"
   },
   "chat": {
     "chatListHeader": "Neste chat",
