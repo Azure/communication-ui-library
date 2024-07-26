@@ -4,9 +4,10 @@
 import { CallClientState, IncomingCallState } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(one-to-n-calling) */
 import { TeamsIncomingCallState } from '@internal/calling-stateful-client';
-import { getIncomingCalls, getRemovedIncomingCalls } from './baseSelectors';
+import { getDeviceManager, getIncomingCalls, getRemovedIncomingCalls } from './baseSelectors';
 import { createSelector } from 'reselect';
 import { ActiveIncomingCall } from '@internal/react-components';
+import { isPhoneNumberIdentifier } from '@azure/communication-common';
 
 /**
  * Selector to get the active and removed incoming calls.
@@ -22,10 +23,11 @@ export type IncomingCallStackSelector = (state: CallClientState) => {
  * @beta
  */
 export const incomingCallStackSelector: IncomingCallStackSelector = createSelector(
-  [getIncomingCalls, getRemovedIncomingCalls],
+  [getIncomingCalls, getRemovedIncomingCalls, getDeviceManager],
   (
     incomingCalls,
-    removedIncomingCalls
+    removedIncomingCalls,
+    deviceManager
   ): {
     activeIncomingCalls: ActiveIncomingCall[];
     removedIncomingCalls: ActiveIncomingCall[];
@@ -39,7 +41,12 @@ export const incomingCallStackSelector: IncomingCallStackSelector = createSelect
           ...incomingCall,
           callerInfo: {
             displayName: incomingCall.callerInfo.displayName || 'Unknown Caller'
-          }
+          },
+          videoAvailable:
+            (incomingCall.callerInfo.identifier && isPhoneNumberIdentifier(incomingCall.callerInfo.identifier)) ||
+            deviceManager?.cameras.length === 0
+              ? false
+              : true
         };
       }
     );
@@ -51,7 +58,12 @@ export const incomingCallStackSelector: IncomingCallStackSelector = createSelect
           ...incomingCall,
           callerInfo: {
             displayName: incomingCall.callerInfo.displayName || 'Unknown Caller'
-          }
+          },
+          videoAvailable:
+            (incomingCall.callerInfo.identifier && isPhoneNumberIdentifier(incomingCall.callerInfo.identifier)) ||
+            deviceManager?.cameras.length === 0
+              ? false
+              : true
         };
       }
     );
