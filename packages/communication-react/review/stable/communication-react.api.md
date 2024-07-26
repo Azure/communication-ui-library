@@ -277,7 +277,6 @@ export interface CallAdapterCallManagement extends CallAdapterCallOperations {
 
 // @public
 export interface CallAdapterCallOperations {
-    // @beta
     addParticipant(participant: PhoneNumberIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
     // (undocumented)
     addParticipant(participant: CommunicationUserIdentifier): Promise<void>;
@@ -287,7 +286,6 @@ export interface CallAdapterCallOperations {
     disposeScreenShareStreamView(remoteUserId: string): Promise<void>;
     // @deprecated
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
-    // @beta
     holdCall(): Promise<void>;
     leaveCall(forEveryone?: boolean): Promise<void>;
     lowerHand(): Promise<void>;
@@ -295,9 +293,7 @@ export interface CallAdapterCallOperations {
     onReactionClick(reaction: Reaction_2): Promise<void>;
     raiseHand(): Promise<void>;
     removeParticipant(userId: string): Promise<void>;
-    // @beta
     removeParticipant(participant: CommunicationIdentifier): Promise<void>;
-    // @beta
     resumeCall(): Promise<void>;
     sendDtmfTone(dtmfTone: DtmfTone_2): Promise<void>;
     setCaptionLanguage(language: string): Promise<void>;
