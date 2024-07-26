@@ -984,7 +984,6 @@ export interface CallWithChatAdapterManagement {
     querySpeakers(): Promise<AudioDeviceInfo[]>;
     raiseHand(): Promise<void>;
     removeParticipant(userId: string): Promise<void>;
-    // @beta
     removeParticipant(participant: CommunicationIdentifier): Promise<void>;
     // (undocumented)
     removeResourceFromCache(resourceDetails: ResourceDetails): void;
@@ -4346,7 +4345,6 @@ export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
     raisedHand?: RaisedHand;
     reaction?: Reaction;
     screenShareStream?: VideoGalleryStream;
-    // @beta
     state?: ParticipantState;
 }
 

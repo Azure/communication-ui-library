@@ -87,7 +87,7 @@ export interface CallWithChatAdapterManagement {
   /**
    * Remove a participant from the call.
    * @param participant - {@link @azure/communication-common#CommunicationIdentifier} of the participant to be removed
-   * @beta
+   * @public
    */
   removeParticipant(participant: CommunicationIdentifier): Promise<void>;
 
