@@ -4,7 +4,7 @@
 import { StartCallOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(one-to-n-calling) */
 import { IncomingCallCommon } from '@azure/communication-calling';
-/* @conditional-compile-remove(PSTN-calls) */
+/* @conditional-compile-remove(teams-identity-support-beta) */
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support) */
 import { TeamsCall, TeamsCallAgent, TeamsCallAgentOptions } from '@azure/communication-calling';
@@ -13,7 +13,7 @@ import {
   isCommunicationUserIdentifier,
   isMicrosoftTeamsAppIdentifier
 } from '@azure/communication-common';
-/* @conditional-compile-remove(PSTN-calls) */
+/* @conditional-compile-remove(teams-identity-support-beta) */
 import { isPhoneNumberIdentifier } from '@azure/communication-common';
 import { Common, _toCommunicationIdentifier } from '@internal/acs-ui-common';
 import { StatefulCallClient, StatefulDeviceManager } from '@internal/calling-stateful-client';
@@ -84,7 +84,7 @@ export const createDefaultTeamsCallingHandlers = memoizeOne(
 
         return undefined;
       },
-      /* @conditional-compile-remove(PSTN-calls) */
+      /* @conditional-compile-remove(teams-identity-support-beta) */
       onAddParticipant: async (
         userId: string | CommunicationIdentifier,
         options?: AddPhoneNumberOptions

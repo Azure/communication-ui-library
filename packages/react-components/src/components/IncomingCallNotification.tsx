@@ -24,7 +24,7 @@ import { _formatString } from '@internal/acs-ui-common';
 /**
  * Strings for the incoming call notification component.
  *
- * @beta
+ * @public
  */
 export interface IncomingCallNotificationStrings {
   /**
@@ -64,7 +64,7 @@ export interface IncomingCallNotificationStrings {
 /**
  * Styles for the incoming call notification component.
  *
- * @beta
+ * @public
  */
 export interface IncomingCallNotificationStyles {
   /**
@@ -88,7 +88,7 @@ export interface IncomingCallNotificationStyles {
 /**
  * Properties for the incoming call notification component.
  *
- * @beta
+ * @public
  */
 export interface IncomingCallNotificationProps {
   /**
@@ -146,7 +146,7 @@ export interface IncomingCallNotificationProps {
 /**
  * A Notification component that is to be used to represent incoming calls to the end user.
  * Allows the user to accept or reject the incoming call.
- * @beta
+ * @public
  */
 export const IncomingCallNotification = (props: IncomingCallNotificationProps): JSX.Element => {
   const {

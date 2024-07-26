@@ -725,7 +725,7 @@ export interface IncomingCallState {
 
 /**
  * State only version of {@link @azure/communication-calling#TeamsIncomingCall}
- * @beta
+ * @public
  */
 export interface TeamsIncomingCallState {
   /**
