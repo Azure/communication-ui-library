@@ -129,6 +129,7 @@ export interface ActiveIncomingCall {
     endTime?: Date;
     id: string;
     startTime: Date;
+    videoAvailable: boolean;
 }
 
 // @public
@@ -3213,14 +3214,19 @@ export const IncomingCallNotification: (props: IncomingCallNotificationProps) =>
 
 // @beta
 export interface IncomingCallNotificationProps {
+    acceptOptions: {
+        showAcceptWithVideo: boolean;
+    };
     alertText?: string;
     avatarImage?: string;
     callerName?: string;
     onAcceptWithAudio: () => void;
     onAcceptWithVideo: () => void;
+    onDismiss?: () => void;
     onReject: () => void;
     onRenderAvatar?: () => JSX.Element;
     personaSize?: number;
+    strings?: IncomingCallNotificationStrings;
     styles?: IncomingCallNotificationStyles;
 }
 
@@ -3229,8 +3235,11 @@ export interface IncomingCallNotificationStrings {
     incomingCallNoticicationAcceptWithAudioAriaLabel?: string;
     incomingCallNoticicationAcceptWithVideoAriaLabel?: string;
     incomingCallNoticicationRejectAriaLabel?: string;
+    incomingCallNotificationAccceptWithVideoButtonLabel?: string;
+    incomingCallNotificationAcceptButtonLabel?: string;
     incomingCallNotificationPlaceholderAlert?: string;
     incomingCallNotificationPlaceholderId?: string;
+    incomingCallNotificationRejectButtonLabel?: string;
 }
 
 // @beta
@@ -3250,6 +3259,8 @@ export interface IncomingCallStackProps {
     onAcceptCall: (incomingCallId: string, useVideo?: boolean) => void;
     onRejectCall: (incomingCallId: string) => void;
     removedIncomingCalls: ActiveIncomingCall[];
+    strings?: IncomingCallNotificationStrings;
+    styles?: IncomingCallNotificationStyles;
 }
 
 // @beta
