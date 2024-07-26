@@ -77,7 +77,7 @@ export class UpdateContentPlugin implements EditorPlugin {
           imageSrcArray = getImagesSourcesList(event.contentModel);
         } else if (event.source === ChangeSource.SetContent) {
           // handle undo/redo
-          // the event doesn't provide contentModel
+          // the content model will be requested from editor as the event doesn't provide it
           imageSrcArray = getImagesSourcesList(this.editor?.getContentModelCopy('disconnected'));
         }
         this.onUpdate(UpdateEvent.ContentChanged, imageSrcArray);
