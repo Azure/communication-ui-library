@@ -12,7 +12,8 @@ import {
   DEFAULT_COMPONENT_ICONS,
   CallClientProvider,
   FluentThemeProvider,
-  StatefulCallClient
+  StatefulCallClient,
+  CallClientState
 } from '@azure/communication-react';
 /* @conditional-compile-remove(one-to-n-calling) */
 import {
@@ -52,6 +53,27 @@ function App(): JSX.Element {
   /* @conditional-compile-remove(one-to-n-calling) */
   const [calls, setCalls] = useState<Call[] | TeamsCall[]>([]);
 
+  const statefulCallClientUpdatedListener = useCallback(
+    (newStatefulCallClient: CallClientState): void => {
+      if (newStatefulCallClient.callAgent && /* @conditional-compile-remove(one-to-n-calling) */ callAgent?.calls) {
+        /* @conditional-compile-remove(one-to-n-calling) */
+        setCalls((callAgent?.calls as Call[] | TeamsCall[]) || []);
+      }
+    },
+    [/* @conditional-compile-remove(one-to-n-calling) */ callAgent]
+  );
+
+  useEffect(() => {
+    if (statefulCallClient) {
+      statefulCallClient.onStateChange(statefulCallClientUpdatedListener);
+    }
+    return () => {
+      if (statefulCallClient) {
+        statefulCallClient.offStateChange(statefulCallClientUpdatedListener);
+      }
+    };
+  }, [statefulCallClient, statefulCallClientUpdatedListener]);
+
   const callsUpdatedListener = useCallback(
     (event: { added: CallCommon[]; removed: CallCommon[] }): void => {
       if (event.added.length > 0) {
@@ -65,10 +87,8 @@ function App(): JSX.Element {
           console.log(call.id, call.callEndReason);
         }
       }
-      /* @conditional-compile-remove(one-to-n-calling) */
-      setCalls((callAgent?.calls as Call[] | TeamsCall[]) || []);
     },
-    [call, /* @conditional-compile-remove(one-to-n-calling) */ callAgent?.calls]
+    [call]
   );
 
   useEffect(() => {
