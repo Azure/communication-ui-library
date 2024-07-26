@@ -66,7 +66,9 @@ export const addUploadedImagesToMessage = async (
       imageElement.onload = () => {
         // imageElement is a copy of original img element, so changes need to be made to the original img element
         img.id = uploadInlineImage?.id ?? '';
-        img.src = '';
+        if (uploadInlineImage?.url) {
+          img.src = uploadInlineImage.url;
+        }
         img.width = imageElement.width;
         img.height = imageElement.height;
         img.style.aspectRatio = `${imageElement.width} / ${imageElement.height}`;
