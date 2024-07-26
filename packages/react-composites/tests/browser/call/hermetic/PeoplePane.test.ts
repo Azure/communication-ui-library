@@ -22,6 +22,7 @@ import {
 } from '../../common/utils';
 import { IDS } from '../../common/constants';
 import type { MockCallAdapterState } from '../../../common';
+import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 
 const participantListShownAsFlyout = (): boolean => {
   /* @conditional-compile-remove(one-to-n-calling) */
@@ -113,7 +114,7 @@ test.describe('Participant list side pane tests', () => {
     if (!initialState.call) {
       throw new Error('Call state not set in initial state');
     }
-
+    const unnamedParticipant = defaultMockRemoteParticipant('');
     await page.goto(
       buildUrlWithMockAdapter(
         serverUrl,
@@ -124,13 +125,14 @@ test.describe('Participant list side pane tests', () => {
             ...initialState.call,
             remoteParticipants: {
               ...initialState.call?.remoteParticipants,
-              '': defaultMockRemoteParticipant('')
+              [toFlatCommunicationIdentifier(unnamedParticipant.identifier)]: unnamedParticipant
             }
           }
         },
         { callInvitationUrl: 'testUrl' }
       )
     );
+    await waitForSelector(page, dataUiId('call-composite-participants-button'));
     await pageClick(page, dataUiId('call-composite-participants-button'));
     await waitForSelector(page, dataUiId('people-pane-content'));
     expect(await stableScreenshot(page)).toMatchSnapshot(`video-gallery-page-participants-no-displayname.png`);
