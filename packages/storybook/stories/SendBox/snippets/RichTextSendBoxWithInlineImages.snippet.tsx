@@ -9,6 +9,7 @@ export const RichTextSendBoxWithInlineImagesExample: () => JSX.Element = () => {
       <div style={{ width: '31.25rem' }}>
         <RichTextSendBox
           onSendMessage={async () => {
+            setInlineImages(undefined);
             return;
           }}
           onInsertInlineImage={(image: string) => {
@@ -23,7 +24,10 @@ export const RichTextSendBoxWithInlineImagesExample: () => JSX.Element = () => {
             setInlineImages([...(inlineImages ?? []), newImage]);
           }}
           inlineImages={inlineImages}
-          onCancelInlineImageUpload={() => alert('requested to cancel inline image upload')}
+          onCancelInlineImageUpload={(imageId: string) => {
+            const filteredInlineImages = inlineImages?.filter((image) => image.id !== imageId);
+            setInlineImages(filteredInlineImages);
+          }}
         />
       </div>
     </FluentThemeProvider>

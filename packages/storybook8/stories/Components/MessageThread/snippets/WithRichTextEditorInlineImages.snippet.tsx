@@ -24,6 +24,7 @@ export const MessageThreadWithRichTextEditorInlineImagesExample: () => JSX.Eleme
       message.editedOn = new Date(Date.now());
       updatedMessages[index] = message;
       setMessages(updatedMessages);
+      setMessagesInlineImages(undefined);
 
       return Promise.resolve();
     },
@@ -45,8 +46,13 @@ export const MessageThreadWithRichTextEditorInlineImagesExample: () => JSX.Eleme
         setMessagesInlineImages({ ...messagesInlineImages, [messageId]: [...inlineImages, newImage] });
       },
       messageInlineImages: messagesInlineImages,
-      onCancelInlineImageUpload: () => {
-        alert('requested to cancel inline image upload');
+      onCancelInlineImageUpload: (image: string, messageId: string) => {
+        const inlineImages = messagesInlineImages?.[messageId];
+        if (!inlineImages) {
+          return;
+        }
+        const filteredImages = inlineImages.filter((img) => img.url !== image);
+        setMessagesInlineImages({ ...messagesInlineImages, [messageId]: filteredImages });
       }
     };
   }, [messagesInlineImages]);
@@ -58,6 +64,7 @@ export const MessageThreadWithRichTextEditorInlineImagesExample: () => JSX.Eleme
         richTextEditorOptions={richTextEditorOptions}
         messages={messages}
         onUpdateMessage={onUpdateMessage}
+        onCancelEditMessage={() => setMessagesInlineImages(undefined)}
       />
     </FluentThemeProvider>
   );

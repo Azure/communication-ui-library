@@ -120,6 +120,7 @@ const RichTextSendBoxStory = (args): JSX.Element => {
         systemMessage={args.hasWarning ? args.warningMessage : undefined}
         onSendMessage={async (message, options) => {
           timeoutRef.current = setTimeout(() => {
+            setInlineImages(undefined);
             alert(`sent message: ${message} with options ${JSON.stringify(options)}`);
           }, delayForSendButton);
         }}
@@ -142,7 +143,10 @@ const RichTextSendBoxStory = (args): JSX.Element => {
           setInlineImages([...(inlineImages ?? []), newImage]);
         }}
         inlineImages={inlineImages}
-        onCancelInlineImageUpload={() => alert('requested to cancel inline image upload')}
+        onCancelInlineImageUpload={(imageId: string) => {
+          const filteredInlineImages = inlineImages?.filter((image) => image.id !== imageId);
+          setInlineImages(filteredInlineImages);
+        }}
       />
     </div>
   );

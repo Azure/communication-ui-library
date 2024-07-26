@@ -563,6 +563,7 @@ const MessageThreadStory = (args): JSX.Element => {
     }
     updatedChatMessages[msgIdx] = message;
     setChatMessages(updatedChatMessages);
+    setMessagesInlineImages(undefined);
     return Promise.resolve();
   };
 
@@ -641,8 +642,13 @@ const MessageThreadStory = (args): JSX.Element => {
         setMessagesInlineImages({ ...messagesInlineImages, [messageId]: [...inlineImages, newImage] });
       },
       messageInlineImages: messagesInlineImages,
-      onCancelInlineImageUpload: () => {
-        alert('requested to cancel inline image upload');
+      onCancelInlineImageUpload: (image: string, messageId: string) => {
+        const inlineImages = messagesInlineImages?.[messageId];
+        if (!inlineImages) {
+          return;
+        }
+        const filteredImages = inlineImages.filter((img) => img.url !== image);
+        setMessagesInlineImages({ ...messagesInlineImages, [messageId]: filteredImages });
       }
     };
   }, [messagesInlineImages]);
@@ -687,6 +693,7 @@ const MessageThreadStory = (args): JSX.Element => {
         onRenderMessage={onRenderMessage}
         inlineImageOptions={inlineImageOptions}
         onUpdateMessage={onUpdateMessageCallback}
+        onCancelEditMessage={() => setMessagesInlineImages(undefined)}
         richTextEditorOptions={args.richTextEditor ? richTextEditorOptions : undefined}
         onRenderAvatar={(userId?: string) => {
           return (
