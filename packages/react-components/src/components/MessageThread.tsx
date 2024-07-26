@@ -29,6 +29,8 @@ import {
 import { BlockedMessage } from '../types';
 import { MessageStatusIndicatorProps } from './MessageStatusIndicator';
 import { memoizeFnAll, MessageStatus } from '@internal/acs-ui-common';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+import { AttachmentMetadataInProgress } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(file-sharing-acs) */
 import { MessageOptions } from '@internal/acs-ui-common';
 import { useLocale } from '../localization/LocalizationProvider';
@@ -50,7 +52,7 @@ import { InlineImageOptions } from './ChatMessage/ChatMessageContent';
 import { MessageStatusIndicatorInternal } from './MessageStatusIndicatorInternal';
 import { Announcer } from './Announcer';
 /* @conditional-compile-remove(rich-text-editor) */
-import { RichTextStrings } from './RichTextEditor/RichTextSendBox';
+import { RichTextEditorOptions, RichTextStrings } from './RichTextEditor/RichTextSendBox';
 /* @conditional-compile-remove(rich-text-editor) */
 import { loadChatMessageComponentAsRichTextEditBox } from './ChatMessage/MyMessageComponents/ChatMessageComponentAsEditBoxPicker';
 
@@ -231,6 +233,11 @@ export interface MessageThreadStrings {
   /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
   /** String for aria text in attachment card group*/
   attachmentCardGroupMessage: string;
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  /**
+   * Error message indicating that one or more image uploads are not complete.
+   */
+  imageUploadsPendingError: string;
 }
 
 /**
@@ -554,21 +561,33 @@ export type MessageThreadProps = {
    * Options to enable rich text editor for the edit box.
    * @beta
    */
-  richTextEditorOptions?: RichTextEditorOptions;
+  richTextEditorOptions?: RichTextEditBoxOptions;
 };
 
 /* @conditional-compile-remove(rich-text-editor) */
 /**
- * Options for the rich text editor configuration.
+ * Options for the rich text editor edit box configuration.
  *
  * @beta
  */
-export interface RichTextEditorOptions {
+export interface RichTextEditBoxOptions extends RichTextEditorOptions {
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   /**
-   * Optional callback to handle paste event.
+   * Optional callback to handle an inline image that's inserted in the rich text editor.
+   * When not provided, pasting images into rich text editor will be disabled.
    */
-  onPaste?: (event: { content: DocumentFragment }) => void;
+  onInsertInlineImage?: (imageUrl: string, imageFileName: string, messageId: string) => void;
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  /**
+   * Optional callback to remove the image upload or delete the image from server before sending.
+   */
+  onCancelInlineImageUpload?: (imageId: string, messageId: string) => void;
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  /**
+   * Optional Record of type {@link AttachmentMetadataInProgress}
+   * to render inline images being inserted in the MessageThread's edit boxes.
+   */
+  messagesInlineImages?: Record<string, AttachmentMetadataInProgress[]>;
 }
 
 /**
@@ -1176,7 +1195,18 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
                   /* @conditional-compile-remove(file-sharing-acs) */
                   onRenderAttachmentDownloads={onRenderAttachmentDownloads}
                   /* @conditional-compile-remove(rich-text-editor) */
-                  richTextEditorOptions={richTextEditorOptions}
+                  isRichTextEditorEnabled={!!richTextEditorOptions}
+                  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+                  onPaste={richTextEditorOptions?.onPaste}
+                  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+                  onInsertInlineImage={richTextEditorOptions?.onInsertInlineImage}
+                  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+                  inlineImages={
+                    richTextEditorOptions?.messagesInlineImages &&
+                    richTextEditorOptions?.messagesInlineImages[message.message.messageId]
+                  }
+                  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+                  onCancelInlineImageUpload={richTextEditorOptions?.onCancelInlineImageUpload}
                 />
               );
             })}

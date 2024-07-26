@@ -36,7 +36,6 @@ import {
   Call
 } from '@azure/communication-calling';
 import { SpotlightedParticipant } from '@azure/communication-calling';
-/* @conditional-compile-remove(meeting-id) */
 import { TeamsMeetingIdLocator } from '@azure/communication-calling';
 import { Reaction } from '@azure/communication-calling';
 import { TeamsCaptions } from '@azure/communication-calling';
@@ -390,9 +389,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
         ? (locatorOrTargetCalless as CallAdapterLocator)
         : undefined;
     this.deviceManager = deviceManager;
-    const isTeamsMeeting = this.locator
-      ? 'meetingLink' in this.locator || /* @conditional-compile-remove(meeting-id) */ 'meetingId' in this.locator
-      : false;
+    const isTeamsMeeting = this.locator ? 'meetingLink' in this.locator || 'meetingId' in this.locator : false;
     let isTeamsCall: boolean | undefined;
     this.targetCallees?.forEach((callee) => {
       if (isMicrosoftTeamsUserIdentifier(callee) || isMicrosoftTeamsAppIdentifier(callee)) {
@@ -421,7 +418,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
         callClient.offStateChange(onStateChange);
         return;
       }
-
       // `updateClientState` searches for the current call from all the calls in the state using a cached `call.id`
       // from the call object. `call.id` can change during a call. We must update the cached `call.id` before
       // calling `updateClientState` so that we find the correct state object for the call even when `call.id`
@@ -429,6 +425,11 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
       // https://github.com/Azure/communication-ui-library/pull/1820
       if (this.call?.id) {
         this.context.setCurrentCallId(this.call.id);
+      }
+
+      // if the call hits the connected state we want to pause all calling sounds if playing.
+      if (this.call?.state === 'Connected' && this.callingSoundSubscriber?.playingSounds) {
+        this.callingSoundSubscriber.pauseSounds();
       }
 
       // If the call connects we need to clean up any previous unparentedViews
@@ -646,7 +647,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
 
   private _joinCall(audioOptions: AudioOptions, videoOptions: VideoOptions): CallTypeOf<AgentType> {
     const isTeamsMeeting = this.locator ? 'meetingLink' in this.locator : false;
-    /* @conditional-compile-remove(meeting-id) */
     const isTeamsMeetingId = this.locator ? 'meetingId' in this.locator : false;
     const isRoomsCall = this.locator ? 'roomId' in this.locator : false;
 
@@ -658,7 +658,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
           videoOptions
         }) as CallTypeOf<AgentType>;
       }
-      /* @conditional-compile-remove(meeting-id) */
       if (isTeamsMeetingId) {
         return this.callAgent.join(this.locator as TeamsMeetingIdLocator, {
           audioOptions,
@@ -675,7 +674,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
       }) as CallTypeOf<AgentType>;
     }
 
-    /* @conditional-compile-remove(meeting-id) */
     if (isTeamsMeetingId) {
       return this.callAgent.join(this.locator as TeamsMeetingIdLocator, {
         audioOptions,
@@ -1081,6 +1079,8 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
   on(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
   on(event: 'roleChanged', listener: PropertyChangedEvent): void;
   on(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
+  /* @conditional-compile-remove(soft-mute) */
+  on(event: 'mutedByOthers', listener: PropertyChangedEvent): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public on(event: string, listener: (e: any) => void): void {
@@ -1330,6 +1330,8 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
   off(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
   off(event: 'roleChanged', listener: PropertyChangedEvent): void;
   off(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
+  /* @conditional-compile-remove(soft-mute) */
+  off(event: 'mutedByOthers', listener: PropertyChangedEvent): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public off(event: string, listener: (e: any) => void): void {
@@ -1388,7 +1390,7 @@ export type CallAdapterLocator =
   | GroupCallLocator
   | RoomCallLocator
   | /* @conditional-compile-remove(teams-adhoc-call) */ /* @conditional-compile-remove(PSTN-calls) */ CallParticipantsLocator
-  | /* @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator;
+  | TeamsMeetingIdLocator;
 
 /**
  * Common optional parameters to create {@link AzureCommunicationCallAdapter} or {@link TeamsCallAdapter}
@@ -1506,7 +1508,7 @@ export type TeamsCallAdapterArgs = TeamsCallAdapterArgsCommon & {
   locator:
     | TeamsMeetingLinkLocator
     | /* @conditional-compile-remove(teams-adhoc-call) */ /* @conditional-compile-remove(PSTN-calls) */ CallParticipantsLocator
-    | /* @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator;
+    | TeamsMeetingIdLocator;
 };
 
 /* @conditional-compile-remove(teams-identity-support-beta) */

@@ -629,10 +629,10 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
             participant.userId === localParticipant.userId
               ? undefined
               : remoteVideoTileMenu
-              ? remoteVideoTileMenu.kind === 'drawer'
-                ? 'drawer'
-                : 'contextual'
-              : undefined
+                ? remoteVideoTileMenu.kind === 'drawer'
+                  ? 'drawer'
+                  : 'contextual'
+                : undefined
           }
           drawerMenuHostId={drawerMenuHostId}
           onPinParticipant={onPinParticipant}
@@ -700,8 +700,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   const screenShareComponent = remoteScreenShareComponent
     ? remoteScreenShareComponent
     : localParticipant.isScreenSharingOn
-    ? localScreenShareStreamComponent
-    : undefined;
+      ? localScreenShareStreamComponent
+      : undefined;
 
   const layoutProps = useMemo<LayoutProps>(
     () => ({

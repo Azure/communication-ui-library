@@ -2,19 +2,12 @@
 // Licensed under the MIT License.
 
 import { IncomingCall } from '@azure/communication-calling';
-import { IncomingCallCommon } from './BetaToStableTypes';
 import { CallContext } from './CallContext';
-
-/**
- * @beta
- * Proxies the {@link @azure/communication-calling#IncomingCall} interface.
- */
-export type DeclarativeIncomingCall = IncomingCall;
 
 /**
  * @private
  */
-export class ProxyIncomingCall implements ProxyHandler<DeclarativeIncomingCall> {
+export class ProxyIncomingCall implements ProxyHandler<IncomingCall> {
   private _context: CallContext;
 
   constructor(context: CallContext) {
@@ -44,10 +37,7 @@ export class ProxyIncomingCall implements ProxyHandler<DeclarativeIncomingCall> 
  * @param incomingCall - IncomingCall from SDK
  * @returns proxied IncomingCall
  */
-export const incomingCallDeclaratify = (
-  incomingCall: IncomingCallCommon,
-  context: CallContext
-): DeclarativeIncomingCall => {
+export const incomingCallDeclaratify = (incomingCall: IncomingCall, context: CallContext): IncomingCall => {
   const proxyIncomingCall = new ProxyIncomingCall(context);
-  return new Proxy(incomingCall, proxyIncomingCall) as DeclarativeIncomingCall;
+  return new Proxy(incomingCall, proxyIncomingCall);
 };

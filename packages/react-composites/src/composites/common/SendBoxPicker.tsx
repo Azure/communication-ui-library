@@ -4,7 +4,7 @@
 import React, { useMemo } from 'react';
 import { SendBox, SendBoxStylesProps } from '@internal/react-components';
 /* @conditional-compile-remove(rich-text-editor-composite-support) */
-import { RichTextEditorOptions } from '@internal/react-components';
+import { RichTextSendBoxOptions } from '@internal/react-components';
 import { usePropsFor } from '../ChatComposite/hooks/usePropsFor';
 /* @conditional-compile-remove(rich-text-editor-composite-support) */
 import { Suspense } from 'react';
@@ -43,7 +43,7 @@ export type SendBoxPickerProps = {
     /* @conditional-compile-remove(file-sharing-acs) */ options?: MessageOptions
   ) => Promise<void>;
   /* @conditional-compile-remove(rich-text-editor-composite-support) */
-  richTextEditorOptions?: RichTextEditorOptions;
+  richTextEditorOptions?: RichTextSendBoxOptions;
   /* @conditional-compile-remove(file-sharing-acs) */
   attachments?: AttachmentMetadataInProgress[];
   /* @conditional-compile-remove(file-sharing-acs) */
@@ -54,10 +54,10 @@ export type SendBoxPickerProps = {
  * @private
  */
 export const SendBoxPicker = (props: SendBoxPickerProps): JSX.Element => {
-  const {
-    /* @conditional-compile-remove(rich-text-editor-composite-support) */
-    richTextEditorOptions
-  } = props;
+  /* @conditional-compile-remove(rich-text-editor-composite-support) */
+  const { richTextEditorOptions } = props;
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  const { onPaste, onInsertInlineImage, inlineImages, onCancelInlineImageUpload } = richTextEditorOptions || {};
 
   const sendBoxProps = usePropsFor(SendBox);
 
@@ -73,7 +73,17 @@ export const SendBoxPicker = (props: SendBoxPickerProps): JSX.Element => {
     return (
       <_ErrorBoundary fallback={sendBox}>
         <Suspense fallback={sendBox}>
-          <RichTextSendBoxWrapper {...props} />
+          <RichTextSendBoxWrapper
+            {...props}
+            /* @conditional-compile-remove(rich-text-editor-image-upload) */
+            onPaste={onPaste}
+            /* @conditional-compile-remove(rich-text-editor-image-upload) */
+            onInsertInlineImage={onInsertInlineImage}
+            /* @conditional-compile-remove(rich-text-editor-image-upload) */
+            inlineImages={inlineImages}
+            /* @conditional-compile-remove(rich-text-editor-image-upload) */
+            onCancelInlineImageUpload={onCancelInlineImageUpload}
+          />
         </Suspense>
       </_ErrorBoundary>
     );

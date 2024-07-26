@@ -4,7 +4,7 @@
 import { IIconProps, MessageBarType } from '@fluentui/react';
 import { ActiveErrorMessage, ErrorType } from './ErrorBar';
 import { _SupportedSpokenLanguage } from '../types';
-import { ActiveNotification, NotificationType } from './Notifications';
+import { ActiveNotification, NotificationType } from './NotificationStack';
 
 /**
  * @private
@@ -221,7 +221,7 @@ export const notificationsToShow = (
   dismissedNotifications: DismissedNotification[],
   mountTimestamp?: Date
 ): ActiveNotification[] => {
-  const dismissed: Map<ErrorType, DismissedError> = new Map();
+  const dismissed: Map<NotificationType, DismissedNotification> = new Map();
   for (const notification of dismissedNotifications) {
     dismissed.set(notification.type, notification);
   }
@@ -323,6 +323,8 @@ export const NotificationIconProps = (notificationType: NotificationType): IIcon
  */
 export const customNotificationIconName: Partial<{ [key in NotificationType]: string }> = {
   callNetworkQualityLow: 'ErrorBarCallNetworkQualityLow',
+  /* @conditional-compile-remove(teams-meeting-conference) */
+  teamsMeetingCallNetworkQualityLow: 'ErrorBarCallNetworkQualityLow',
   callNoSpeakerFound: 'ErrorBarCallNoSpeakerFound',
   callNoMicrophoneFound: 'ErrorBarCallNoMicrophoneFound',
   callMicrophoneAccessDenied: 'ErrorBarCallMicrophoneAccessDenied',
@@ -336,7 +338,26 @@ export const customNotificationIconName: Partial<{ [key in NotificationType]: st
   callCameraAlreadyInUse: 'ErrorBarCallCameraAlreadyInUse',
   callVideoStoppedBySystem: 'ErrorBarCallVideoStoppedBySystem',
   callVideoRecoveredBySystem: 'ErrorBarCallVideoRecoveredBySystem',
-  callMacOsCameraAccessDenied: 'ErrorBarCallMacOsCameraAccessDenied'
+  callMacOsCameraAccessDenied: 'ErrorBarCallMacOsCameraAccessDenied',
+  /* @conditional-compile-remove(soft-mute) */
+  mutedByRemoteParticipant: 'ErrorBarMutedByRemoteParticipant',
+  speakingWhileMuted: 'ErrorBarCallMicrophoneMutedBySystem',
+  /* @conditional-compile-remove(notifications) */
+  recordingStarted: 'NotificationBarRecording',
+  /* @conditional-compile-remove(notifications) */
+  transcriptionStarted: 'NotificationBarRecording',
+  /* @conditional-compile-remove(notifications) */
+  recordingStopped: 'NotificationBarRecording',
+  /* @conditional-compile-remove(notifications) */
+  transcriptionStopped: 'NotificationBarRecording',
+  /* @conditional-compile-remove(notifications) */
+  recordingAndTranscriptionStarted: 'NotificationBarRecording',
+  /* @conditional-compile-remove(notifications) */
+  recordingAndTranscriptionStopped: 'NotificationBarRecording',
+  /* @conditional-compile-remove(notifications) */
+  recordingStoppedStillTranscribing: 'NotificationBarRecording',
+  /* @conditional-compile-remove(notifications) */
+  transcriptionStoppedStillRecording: 'NotificationBarRecording'
 };
 
 /**

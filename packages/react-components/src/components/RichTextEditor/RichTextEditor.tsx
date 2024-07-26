@@ -8,22 +8,38 @@ import { isDarkThemed } from '../../theming/themeUtils';
 import CopyPastePlugin from './Plugins/CopyPastePlugin';
 import type {
   ContentModelDocument,
+  ContentModelParagraph,
   EditorPlugin,
   IEditor,
-  ShallowMutableContentModelDocument
+  ReadonlyContentModelBlockGroup,
+  ShallowMutableContentModelDocument,
+  KnownAnnounceStrings
 } from 'roosterjs-content-model-types';
 import { createModelFromHtml, Editor, exportContent } from 'roosterjs-content-model-core';
-import { createParagraph, createSelectionMarker, setSelection } from 'roosterjs-content-model-dom';
+import {
+  createBr,
+  createEmptyModel,
+  createParagraph,
+  createSelectionMarker,
+  setSelection
+} from 'roosterjs-content-model-dom';
 import { KeyboardInputPlugin } from './Plugins/KeyboardInputPlugin';
-import { AutoFormatPlugin, EditPlugin, PastePlugin, ShortcutPlugin } from 'roosterjs-content-model-plugins';
+import {
+  AutoFormatPlugin,
+  EditPlugin,
+  PastePlugin,
+  ShortcutPlugin,
+  DefaultSanitizers
+} from 'roosterjs-content-model-plugins';
 import { UpdateContentPlugin, UpdateEvent } from './Plugins/UpdateContentPlugin';
 import { RichTextToolbar } from './Toolbar/RichTextToolbar';
 import { RichTextToolbarPlugin } from './Plugins/RichTextToolbarPlugin';
 import { ContextMenuPlugin } from './Plugins/ContextMenuPlugin';
 import { TableEditContextMenuProvider } from './Plugins/TableEditContextMenuProvider';
 import { borderApplier, dataSetApplier } from '../utils/RichTextEditorUtils';
-import { ContextualMenu, IContextualMenuItem, IContextualMenuProps } from '@fluentui/react';
+import { ContextualMenu, IContextualMenuItem, IContextualMenuProps, Theme } from '@fluentui/react';
 import { PlaceholderPlugin } from './Plugins/PlaceholderPlugin';
+import { getFormatState, setDirection } from 'roosterjs-content-model-api';
 
 /**
  * Style props for {@link RichTextEditor}.
@@ -43,7 +59,7 @@ export interface RichTextEditorStyleProps {
 export interface RichTextEditorProps {
   // the initial content of editor that is set when editor is created (e.g. when editing a message)
   initialContent?: string;
-  onChange: (newValue?: string) => void;
+  onChange: (newValue?: string, imageSrcArray?: Array<string>) => void;
   onKeyDown?: (ev: KeyboardEvent) => void;
   // update the current content of the rich text editor
   onContentModelUpdate?: (contentModel: ContentModelDocument | undefined) => void;
@@ -55,6 +71,8 @@ export interface RichTextEditorProps {
   autoFocus?: 'sendBoxTextField';
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   onPaste?: (event: { content: DocumentFragment }) => void;
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  onInsertInlineImage?: (imageUrl: string, imageFileName: string) => void;
 }
 
 /**
@@ -95,58 +113,51 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     onContentModelUpdate,
     contentModel,
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    onPaste
+    onPaste,
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    onInsertInlineImage
   } = props;
   const editor = useRef<IEditor | null>(null);
   const editorDiv = useRef<HTMLDivElement>(null);
   const theme = useTheme();
   const [contextMenuProps, setContextMenuProps] = useState<IContextualMenuProps | null>(null);
+  const previousThemeDirection = useRef(themeDirection(theme));
 
-  useImperativeHandle(
-    ref,
-    () => {
-      return {
-        focus() {
-          if (editor.current) {
-            editor.current.focus();
-          }
-        },
-        setEmptyContent() {
-          if (editor.current) {
-            editor.current.formatContentModel;
-            // remove all content from the editor and update the model
-            // ContentChanged event will be sent by RoosterJS automatically
-            editor.current.formatContentModel((model: ShallowMutableContentModelDocument): boolean => {
-              model.blocks = [];
-              return true;
-            });
-            //reset content model
-            onContentModelUpdate && onContentModelUpdate(undefined);
-          }
-        },
-        getPlainContent() {
-          if (editor.current) {
-            return exportContent(editor.current, 'PlainTextFast');
-          } else {
-            return undefined;
-          }
+  useImperativeHandle(ref, () => {
+    return {
+      focus() {
+        if (editor.current) {
+          editor.current.focus();
         }
-      };
-    },
-    [onContentModelUpdate]
-  );
+      },
+      setEmptyContent() {
+        if (editor.current) {
+          // remove all content from the editor and update the model
+          // ContentChanged event will be sent by RoosterJS automatically
+          editor.current.formatContentModel((model: ShallowMutableContentModelDocument): boolean => {
+            // Create a new empty paragraph with selection marker
+            // this is needed for correct processing of images after the content is deleted
+            const newModel = createEmptyModel();
+            model.blocks = newModel.blocks;
+            return true;
+          });
+          //reset content model
+          onContentModelUpdate && onContentModelUpdate(editor.current.getContentModelCopy('disconnected'));
+        }
+      },
+      getPlainContent() {
+        if (editor.current) {
+          return exportContent(editor.current, 'PlainTextFast');
+        } else {
+          return undefined;
+        }
+      }
+    };
+  }, [onContentModelUpdate]);
 
   const toolbarPlugin = React.useMemo(() => {
     return new RichTextToolbarPlugin();
   }, []);
-
-  const isDarkThemedValue = useMemo(() => {
-    return isDarkThemed(theme);
-  }, [theme]);
-
-  useEffect(() => {
-    editor.current?.setDarkModeState(isDarkThemedValue);
-  }, [isDarkThemedValue]);
 
   const placeholderPlugin = useMemo(() => {
     const textColor = theme.palette?.neutralSecondary;
@@ -174,19 +185,28 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     return new UpdateContentPlugin();
   }, []);
 
+  const copyPastePlugin = useMemo(() => {
+    return new CopyPastePlugin();
+  }, []);
+
   useEffect(() => {
     // don't set callback in plugin constructor to update callback without plugin recreation
-    updatePlugin.onUpdate = (event: string) => {
+    updatePlugin.onUpdate = (event: string, imageSrcArray?: Array<string>) => {
       if (editor.current === null) {
         return;
       }
       if (event === UpdateEvent.Blur || event === UpdateEvent.Dispose) {
         onContentModelUpdate && onContentModelUpdate(editor.current.getContentModelCopy('disconnected'));
       } else {
-        onChange && onChange(exportContent(editor.current));
+        onChange && onChange(exportContent(editor.current), imageSrcArray);
       }
     };
   }, [onChange, onContentModelUpdate, updatePlugin]);
+
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  useEffect(() => {
+    copyPastePlugin.onInsertInlineImage = onInsertInlineImage;
+  }, [copyPastePlugin, onInsertInlineImage]);
 
   const keyboardInputPlugin = useMemo(() => {
     return new KeyboardInputPlugin();
@@ -220,20 +240,22 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     setContextMenuProps(null);
   }, []);
 
-  const copyPastePlugin = useMemo(() => {
-    return new CopyPastePlugin();
-  }, []);
-
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   useEffect(() => {
     copyPastePlugin.onPaste = onPaste;
   }, [copyPastePlugin, onPaste]);
 
   const plugins: EditorPlugin[] = useMemo(() => {
-    const contentEdit = new EditPlugin();
+    const contentEdit = new EditPlugin({ handleTabKey: false });
     // AutoFormatPlugin previously was a part of the edit plugin
     const autoFormatPlugin = new AutoFormatPlugin({ autoBullet: true, autoNumbering: true, autoLink: true });
-    const roosterPastePlugin = new PastePlugin(false);
+    const roosterPastePlugin = new PastePlugin(false, {
+      additionalDisallowedTags: ['head', '!doctype', '!cdata', '#comment'],
+      additionalAllowedTags: [],
+      styleSanitizers: DefaultSanitizers,
+      attributeSanitizers: {}
+    });
+
     const shortcutPlugin = new ShortcutPlugin();
     const contextMenuPlugin = new ContextMenuPlugin(onContextMenuRender, onContextMenuDismiss);
     return [
@@ -261,15 +283,28 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     tableContextMenuPlugin
   ]);
 
+  const announcerStringGetter = useCallback(
+    (key: KnownAnnounceStrings): string => {
+      switch (key) {
+        case 'announceListItemBullet':
+          return strings.richTextNewBulletedListItemAnnouncement ?? '';
+        case 'announceListItemNumbering':
+          return strings.richTextNewNumberedListItemAnnouncement ?? '';
+        case 'announceOnFocusLastCell':
+          return '';
+      }
+    },
+    [strings.richTextNewBulletedListItemAnnouncement, strings.richTextNewNumberedListItemAnnouncement]
+  );
+
   useEffect(() => {
     const initialModel = createEditorInitialModel(initialContent, contentModel);
     if (editorDiv.current) {
       editor.current = new Editor(editorDiv.current, {
-        inDarkMode: isDarkThemedValue,
+        inDarkMode: isDarkThemed(theme),
         // doNotAdjustEditorColor is used to disable default color and background color for Rooster component
         doNotAdjustEditorColor: true,
-        // TODO: confirm the color during inline images implementation
-        imageSelectionBorderColor: 'blue',
+        imageSelectionBorderColor: theme.palette.themePrimary,
         tableCellSelectionBackgroundColor: theme.palette.neutralLight,
         plugins: plugins,
         initialModel: initialModel,
@@ -279,7 +314,8 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
             border: borderApplier,
             dataset: dataSetApplier
           }
-        }
+        },
+        announcerStringGetter: announcerStringGetter
       });
     }
 
@@ -295,12 +331,28 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     };
     // don't update the editor on deps update as everything is handled in separate hooks or plugins
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [theme, plugins]);
+  }, [theme, plugins, announcerStringGetter]);
+
+  useEffect(() => {
+    const themeDirectionValue = themeDirection(theme);
+    // check that editor exists and theme was actually changed
+    // as format.direction will be undefined if setDirection is not called
+    if (editor.current && previousThemeDirection.current !== themeDirectionValue) {
+      const format = getFormatState(editor.current);
+      if (format.direction !== themeDirectionValue) {
+        // should be set after the hook where editor is created as the editor might be null
+        // setDirection will cause the focus change back to the editor and this might not be what we want to do (autoFocus prop)
+        // that's why it's not part of the create editor hook
+        setDirection(editor.current, theme.rtl ? 'rtl' : 'ltr');
+      }
+      previousThemeDirection.current = themeDirectionValue;
+    }
+  }, [theme]);
 
   return (
     <div data-testid={'rich-text-editor-wrapper'}>
       {showRichTextEditorFormatting && toolbar}
-      <div className={richTextEditorWrapperStyle(theme, !showRichTextEditorFormatting)}>
+      <div className={richTextEditorWrapperStyle(theme)}>
         {/* div that is used by Rooster JS as a parent of the editor */}
         <div
           id="richTextSendBox"
@@ -332,17 +384,30 @@ const createEditorInitialModel = (
     if (initialModel && initialModel.blocks.length > 0) {
       // lastBlock should have blockType = paragraph, otherwise add a new paragraph
       // to set focus to the end of the content
-      let lastBlock = initialModel.blocks[initialModel.blocks.length - 1];
+      const lastBlock = initialModel.blocks[initialModel.blocks.length - 1];
       if (lastBlock?.blockType === 'Paragraph') {
         // now lastBlock is paragraph
+        setSelectionAfterLastSegment(initialModel, lastBlock);
       } else {
-        lastBlock = createParagraph(true);
-        initialModel.blocks.push(lastBlock);
+        const block = createParagraph(false);
+        initialModel.blocks.push(block);
+        setSelectionAfterLastSegment(initialModel, block);
+        // add content to the paragraph, otherwise height might be calculated incorrectly
+        block.segments.push(createBr());
       }
-      const marker = createSelectionMarker();
-      lastBlock.segments.push(marker);
-      setSelection(initialModel, marker);
     }
     return initialModel;
   }
+};
+
+const setSelectionAfterLastSegment = (model: ReadonlyContentModelBlockGroup, block: ContentModelParagraph): void => {
+  //selection marker should have the same format as the last segment if any
+  const format = block.segments.length > 0 ? block.segments[block.segments.length - 1].format : undefined;
+  const marker = createSelectionMarker(format);
+  block.segments.push(marker);
+  setSelection(model, marker);
+};
+
+const themeDirection = (theme: Theme): 'rtl' | 'ltr' => {
+  return theme.rtl ? 'rtl' : 'ltr';
 };

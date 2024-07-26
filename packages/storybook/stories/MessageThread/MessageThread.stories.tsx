@@ -61,6 +61,7 @@ import { MessageThreadWithSystemMessagesExample } from './snippets/SystemMessage
 import { MessageThreadWithInlineImageExample } from './snippets/WithInlineImageMessage.snippet';
 import { MessageThreadWithMessageDateExample } from './snippets/WithMessageDate.snippet';
 import { MessageThreadWithRichTextEditorExample } from './snippets/WithRichTextEditor.snippet';
+import { MessageThreadWithWithRichTextEditorOnPasteCallbackExample } from './snippets/WithRichTextEditorOnPasteCallback.snippet';
 
 const MessageThreadWithBlockedMessagesExampleText =
   require('!!raw-loader!./snippets/BlockedMessages.snippet.tsx').default;
@@ -94,6 +95,8 @@ const MessageThreadWithInlineImageExampleText =
   require('!!raw-loader!./snippets/WithInlineImageMessage.snippet.tsx').default;
 const MessageThreadWithMessageDateExampleText = require('!!raw-loader!./snippets/WithMessageDate.snippet.tsx').default;
 const MessageThreadWithRichTextEditorText = require('!!raw-loader!./snippets/WithRichTextEditor.snippet.tsx').default;
+const MessageThreadWithRichTextEditorOnPasteCallabackText =
+  require('!!raw-loader!./snippets/WithRichTextEditorOnPasteCallback.snippet.tsx').default;
 
 const importStatement = `
 import { FluentThemeProvider, MessageThread } from '@azure/communication-react';
@@ -121,6 +124,7 @@ const Docs: () => JSX.Element = () => {
   const refDisplayAttachments = useRef(null);
   const refMentionOfUsers = useRef(null);
   const refRichTextEditor = useRef(null);
+  const refRichTextEditorOnPaste = useRef(null);
   const refProps = useRef(null);
 
   const scrollToRef = (ref): void => {
@@ -167,6 +171,11 @@ const Docs: () => JSX.Element = () => {
       scrollToRef(refMentionOfUsers);
     } else if (url.includes('rich-text-editor-support-for-editing-messages') && refRichTextEditor.current) {
       scrollToRef(refRichTextEditor);
+    } else if (
+      url.includes('process-content-on-paste-in-rich-text-editor-during-message-editing') &&
+      refRichTextEditorOnPaste.current
+    ) {
+      scrollToRef(refRichTextEditorOnPaste);
     } else if (url.includes('props') && refProps.current) {
       scrollToRef(refProps);
     }
@@ -406,14 +415,30 @@ const Docs: () => JSX.Element = () => {
 
       <div ref={refRichTextEditor}>
         <Heading>Rich Text Editor Support for Editing Messages</Heading>
-        <DetailedBetaBanner />
+        <SingleLineBetaBanner />
         <Description>
-          The following example shows how to enable rich text editor for message editing by providing the
+          The following examples show how to enable rich text editor for message editing by providing the
           `richTextEditorOptions` property. Rich text editor does not support mentioning users at the moment. By setting
           `richTextEditorOptions` property, the `lookupOptions` under the `mentionOptions` property will be ignored.
+          Enabling the rich text editor for message editing, without customizing its behavior, can be achieved by
+          setting the richTextEditorOptions.
         </Description>
         <Canvas mdxSource={MessageThreadWithRichTextEditorText}>
           <MessageThreadWithRichTextEditorExample />
+        </Canvas>
+      </div>
+
+      <div ref={refRichTextEditorOnPaste}>
+        <Heading>Process content on paste in Rich Text Editor during message editing</Heading>
+        <SingleLineBetaBanner />
+        <Description>
+          `richTextEditorOptions` provides `onPaste` callback for custom processing of the pasted content before it's
+          inserted into the rich text editor for message editing. This callback can be used to implement custom paste
+          handling logic tailored to your application's needs. The example below shows how to remove images from pasted
+          content.
+        </Description>
+        <Canvas mdxSource={MessageThreadWithRichTextEditorOnPasteCallabackText}>
+          <MessageThreadWithWithRichTextEditorOnPasteCallbackExample />
         </Canvas>
       </div>
 
@@ -426,9 +451,8 @@ const Docs: () => JSX.Element = () => {
 };
 
 const MessageThreadStory = (args): JSX.Element => {
-  const [chatMessages, setChatMessages] = useState<(SystemMessage | CustomMessage | ChatMessage)[]>(
-    GenerateMockChatMessages()
-  );
+  const [chatMessages, setChatMessages] =
+    useState<(SystemMessage | CustomMessage | ChatMessage)[]>(GenerateMockChatMessages());
   const dropdownMenuOptions = [
     { key: 'newMessage', text: 'New Message' },
     { key: 'newMessageOthers', text: 'New Message from others' },
@@ -501,7 +525,8 @@ const MessageThreadStory = (args): JSX.Element => {
     if (message.messageType === 'chat') {
       message.content = content;
       message.editedOn = new Date(Date.now());
-      if (args.richTextEditor === true) {
+      // args will get string type when value is updated and page is reloaded (without updating switch again)
+      if (args.richTextEditor === true || args.richTextEditor === 'true') {
         message.contentType = 'html';
       }
     }
@@ -510,8 +535,12 @@ const MessageThreadStory = (args): JSX.Element => {
     return Promise.resolve();
   };
 
-  const [overlayImageItem, setOverlayImageItem] =
-    useState<{ imageSrc: string; title: string; titleIcon: JSX.Element; downloadAttachmentname: string }>();
+  const [overlayImageItem, setOverlayImageItem] = useState<{
+    imageSrc: string;
+    title: string;
+    titleIcon: JSX.Element;
+    downloadAttachmentname: string;
+  }>();
 
   const onInlineImageClicked = (attachmentId: string, messageId: string): Promise<void> => {
     const messages = chatMessages?.filter((message) => {
@@ -594,7 +623,6 @@ const MessageThreadStory = (args): JSX.Element => {
     }
   };
 
-  //TODO: Remove this function when the image upload functionality is implemented
   const removeImageTags = useCallback((event: { content: DocumentFragment }) => {
     event.content.querySelectorAll('img').forEach((image) => {
       // If the image is the only child of its parent, remove all the parents of this img element.
@@ -678,6 +706,7 @@ export default {
     enableJumpToNewMessageButton: controlsToAdd.enableJumpToNewMessageButton,
     richTextEditor: controlsToAdd.richTextEditor,
     // Hiding auto-generated controls
+    richTextEditorOptions: hiddenControl,
     styles: hiddenControl,
     strings: hiddenControl,
     userId: hiddenControl,

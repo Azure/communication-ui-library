@@ -3,13 +3,18 @@
 
 /* @conditional-compile-remove(teams-meeting-conference) */
 // eslint-disable-next-line no-restricted-imports
-import { Stack, Text, useTheme, Icon } from '@fluentui/react';
+import { Stack, Text, useTheme, Icon, Link } from '@fluentui/react';
 /* @conditional-compile-remove(teams-meeting-conference) */
 import { _DrawerMenuItemProps } from '@internal/react-components';
 /* @conditional-compile-remove(teams-meeting-conference) */
 import React from 'react';
 /* @conditional-compile-remove(teams-meeting-conference) */
-import { ConferencePhoneInfo, formatPhoneNumberInfo } from '@internal/react-components';
+import {
+  ConferencePhoneInfo,
+  formatPhoneNumberInfo,
+  _formatPhoneNumber,
+  formatPhoneNumberLink
+} from '@internal/react-components';
 /* @conditional-compile-remove(teams-meeting-conference) */
 import {
   phoneInfoTextStyle,
@@ -34,7 +39,7 @@ export const MeetingPhoneInfoPaneContent = (props: {
 }): JSX.Element => {
   const { conferencePhoneInfoList } = props;
   const theme = useTheme();
-  const localeStrings = useLocale().component.strings.MeetingConferencePhoneInfo;
+  const localeStrings = useLocale().component.strings.meetingConferencePhoneInfo;
 
   if (props.mobileView) {
     return (
@@ -56,7 +61,7 @@ export const MeetingPhoneInfoPaneContent = (props: {
                 <Stack horizontal className={phoneInfoStep}>
                   <Stack.Item className={phoneInfoIcon(theme)}>
                     <Stack verticalAlign="center" horizontalAlign="center">
-                      <Icon iconName="PhoneNumberButton" className={phoneInfoIconStyle(theme)} />
+                      <Icon iconName="JoinByPhoneDialStepIcon" className={phoneInfoIconStyle(theme)} />
                     </Stack>
                   </Stack.Item>
                   <Stack.Item>
@@ -67,7 +72,17 @@ export const MeetingPhoneInfoPaneContent = (props: {
               <Stack.Item className={phoneInfoStep}>
                 {conferencePhoneInfoList.map((phoneNumber, index) => (
                   <Stack.Item key={index}>
-                    <Text className={phoneInfoTextStyle}>{formatPhoneNumberInfo(phoneNumber, localeStrings)}</Text>
+                    <Link className={phoneInfoTextStyle} href={formatPhoneNumberLink(phoneNumber)}>
+                      {_formatPhoneNumber(phoneNumber.phoneNumber, true)}
+                    </Link>
+                    <Text className={phoneInfoTextStyle}>
+                      {' '}
+                      {phoneNumber.isTollFree
+                        ? localeStrings.meetingConferencePhoneInfoModalTollFree
+                        : localeStrings.meetingConferencePhoneInfoModalToll}
+                    </Text>
+                    <br />
+                    <Text className={phoneInfoTextStyle}> {formatPhoneNumberInfo(phoneNumber, localeStrings)}</Text>
                   </Stack.Item>
                 ))}
               </Stack.Item>
@@ -81,7 +96,7 @@ export const MeetingPhoneInfoPaneContent = (props: {
               <Stack.Item>
                 <Stack horizontal>
                   <Stack.Item className={phoneInfoIcon(theme)}>
-                    <Icon iconName="DtmfDialpadButton" className={phoneInfoIconStyle(theme)} />
+                    <Icon iconName="JoinByPhoneConferenceIdIcon" className={phoneInfoIconStyle(theme)} />
                   </Stack.Item>
                   <Stack.Item>
                     <Text className={phoneInfoLabelStyle}>
@@ -100,7 +115,7 @@ export const MeetingPhoneInfoPaneContent = (props: {
             >
               <Stack horizontal>
                 <Stack.Item className={phoneInfoIcon(theme)}>
-                  <Icon iconName="PhoneInfoWait" className={phoneInfoIconStyle(theme)} />
+                  <Icon iconName="JoinByPhoneWaitToBeAdmittedIcon" className={phoneInfoIconStyle(theme)} />
                 </Stack.Item>
                 <Stack.Item>
                   <Text className={phoneInfoLabelStyle}>{localeStrings.meetingConferencePhoneInfoModalWait}</Text>

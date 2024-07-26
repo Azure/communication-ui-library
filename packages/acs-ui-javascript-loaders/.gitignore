@@ -1,0 +1,5 @@
+# Build dirs
+build/
+node_modules/
+dist/
+preprocessed/

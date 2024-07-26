@@ -1,7 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-import type { PluginEvent, EditorPlugin, IEditor, BeforePasteEvent } from 'roosterjs-content-model-types';
+import type { PluginEvent, EditorPlugin, IEditor } from 'roosterjs-content-model-types';
 import { ContentChangedEventSource, PluginEventType } from '../../utils/RichTextEditorUtils';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+import { _base64ToBlob } from '@internal/acs-ui-common';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+import { removeImageTags } from '@internal/acs-ui-common';
 
 /**
  * CopyPastePlugin is a plugin for handling copy and paste events in the editor.
@@ -11,6 +15,8 @@ export default class CopyPastePlugin implements EditorPlugin {
   // don't set value in constructor to be able to update it without plugin recreation
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   onPaste?: (event: { content: DocumentFragment }) => void;
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  onInsertInlineImage?: (imageUrl: string, imageFileName: string) => void;
 
   getName(): string {
     return 'CopyPastePlugin';
@@ -23,7 +29,19 @@ export default class CopyPastePlugin implements EditorPlugin {
   dispose(): void {}
 
   onPluginEvent(event: PluginEvent): void {
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    // If onInsertInlineImage is not provided, we should remove the image tags before calling the onPaste callback
+    if (event.eventType === PluginEventType.BeforePaste && event.pasteType === 'normal' && !this.onInsertInlineImage) {
+      removeImageTags({ content: event.fragment });
+    }
+
     handleBeforePasteEvent(event, /* @conditional-compile-remove(rich-text-editor-image-upload) */ this.onPaste);
+
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    // We should handle the onInsertInlineImage after the onPaste callback in case Contosos want to modify the image tags, especially the src attribute.
+    if (this.onInsertInlineImage) {
+      handleInlineImage(event, this.onInsertInlineImage);
+    }
 
     if (this.editor !== null && !this.editor.isDisposed()) {
       // scroll the editor to the correct position after pasting content
@@ -32,7 +50,11 @@ export default class CopyPastePlugin implements EditorPlugin {
   }
 }
 
-const handleBeforePasteEvent = (
+/**
+ * @internal
+ * Exported only for unit testing
+ */
+export const handleBeforePasteEvent = (
   event: PluginEvent,
   /* @conditional-compile-remove(rich-text-editor-image-upload) */ onPaste?: (event: {
     content: DocumentFragment;
@@ -43,29 +65,33 @@ const handleBeforePasteEvent = (
     onPaste?.({ content: event.fragment });
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
     return;
-
-    // the initial behavior
-    // removes inline image elements from the pasted content when rich-text-editor-image-upload not available
-    removeImageElement(event as BeforePasteEvent);
   }
 };
 
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
 /**
  * @internal
  * Exported only for unit testing
  */
-export const removeImageElement = (event: BeforePasteEvent): void => {
-  // We don't support the pasting options such as paste as image yet.
-  if (event.pasteType === 'normal') {
+export const handleInlineImage = (
+  event: PluginEvent,
+  onInsertInlineImage?: (image: string, fileName: string) => void
+): void => {
+  if (event.eventType === PluginEventType.BeforePaste && event.pasteType === 'normal' && onInsertInlineImage) {
     event.fragment.querySelectorAll('img').forEach((image) => {
-      // If the image is the only child of its parent, remove all the parents of this img element.
-      let parentNode: HTMLElement | null = image.parentElement;
-      let currentNode: HTMLElement = image;
-      while (parentNode?.childNodes.length === 1) {
-        currentNode = parentNode;
-        parentNode = parentNode.parentElement;
+      const clipboardImage = event.clipboardData.image;
+      const fileName = clipboardImage?.name || clipboardImage?.type.replace('/', '.') || 'image.png';
+      // If the image src is an external url, call the onInsertInlineImage callback with the url.
+      let imageUrl = image.src;
+      if (image.src.startsWith('data:image/')) {
+        const blobImage = _base64ToBlob(image.src);
+        imageUrl = URL.createObjectURL(blobImage);
       }
-      currentNode?.remove();
+
+      onInsertInlineImage(imageUrl, fileName);
+
+      image.src = imageUrl;
+      image.alt = image.alt || 'image';
     });
   }
 };

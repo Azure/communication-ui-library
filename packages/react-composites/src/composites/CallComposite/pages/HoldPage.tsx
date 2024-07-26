@@ -13,6 +13,8 @@ import { MobileChatSidePaneTabHeaderProps } from '../../common/TabHeader';
 import { SidePaneRenderer } from '../components/SidePane/SidePaneProvider';
 
 import { CapabilitiesChangeNotificationBarProps } from '../components/CapabilitiesChangedNotificationBar';
+/* @conditional-compile-remove(notifications) */
+import { ActiveNotification } from '@internal/react-components';
 
 /**
  * @beta
@@ -23,10 +25,15 @@ export interface HoldPageProps {
   modalLayerHostId: string;
   updateSidePaneRenderer: (renderer: SidePaneRenderer | undefined) => void;
   mobileChatTabHeader?: MobileChatSidePaneTabHeaderProps;
-  latestErrors: ActiveErrorMessage[];
-  onDismissError: (error: ActiveErrorMessage) => void;
-
+  latestErrors: ActiveErrorMessage[] | /* @conditional-compile-remove(notifications) */ ActiveNotification[];
+  onDismissError: (
+    error: ActiveErrorMessage | /* @conditional-compile-remove(notifications) */ ActiveNotification
+  ) => void;
+  /* @conditional-compile-remove(notifications) */
+  onDismissNotification?: (notification: ActiveNotification) => void;
   capabilitiesChangedNotificationBarProps?: CapabilitiesChangeNotificationBarProps;
+  /* @conditional-compile-remove(notifications) */
+  latestNotifications: ActiveNotification[];
 }
 
 /**
@@ -67,7 +74,11 @@ export const HoldPage = (props: HoldPageProps): JSX.Element => {
       updateSidePaneRenderer={props.updateSidePaneRenderer}
       mobileChatTabHeader={props.mobileChatTabHeader}
       latestErrors={props.latestErrors}
+      /* @conditional-compile-remove(notifications) */
+      latestNotifications={props.latestNotifications}
       onDismissError={props.onDismissError}
+      /* @conditional-compile-remove(notifications) */
+      onDismissNotification={props.onDismissNotification}
     />
   );
 };

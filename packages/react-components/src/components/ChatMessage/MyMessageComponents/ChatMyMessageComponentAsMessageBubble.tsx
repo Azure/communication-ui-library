@@ -231,14 +231,18 @@ const MessageBubble = (props: ChatMyMessageComponentAsMessageBubbleProps): JSX.E
             className: mergeClasses(
               chatMessageCommonStyles.body,
               chatMyMessageStyles.body,
+              /* @conditional-compile-remove(rich-text-editor-image-upload) */
+              chatMessageCommonStyles.bodyWithPlaceholderImage,
+              /* @conditional-compile-remove(rich-text-editor-image-upload) */
+              chatMyMessageStyles.bodyWithPlaceholderImage,
               isBlockedMessage
                 ? chatMessageCommonStyles.blocked
                 : props.message.status === 'failed'
-                ? chatMessageCommonStyles.failed
-                : undefined,
+                  ? chatMessageCommonStyles.failed
+                  : undefined,
               attached !== 'top' ? chatMyMessageStyles.bodyAttached : undefined,
               /* @conditional-compile-remove(file-sharing-acs) */
-              hasMultipleAttachments ? chatMyMessageStyles.multipleAttachments : undefined,
+              hasMultipleAttachments ? chatMyMessageStyles.multipleAttachmentsInViewing : undefined,
               mergeStyles(messageContainerStyle)
             ),
             style: { ...createStyleFromV8Style(messageContainerStyle) },

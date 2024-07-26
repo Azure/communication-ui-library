@@ -16,7 +16,7 @@ import {
   useTheme
 } from '@internal/react-components';
 /* @conditional-compile-remove(notifications) */
-import { ActiveNotification, Notifications } from '@internal/react-components';
+import { ActiveNotification, NotificationStack } from '@internal/react-components';
 import { VideoGalleryLayout } from '@internal/react-components';
 import { VideoGallery } from '@internal/react-components';
 import React, { useMemo, useRef, useState } from 'react';
@@ -40,6 +40,8 @@ import {
   CONTROL_BAR_Z_INDEX,
   DRAWER_Z_INDEX
 } from '../styles/CallPage.styles';
+/* @conditional-compile-remove(notifications) */
+import { notificationStackStyles } from '../styles/CallPage.styles';
 import { MutedNotification, MutedNotificationProps } from './MutedNotification';
 import { CallAdapter } from '../adapter';
 import { useSelector } from '../hooks/useSelector';
@@ -113,9 +115,13 @@ export interface CallArrangementProps {
   updateSidePaneRenderer: (renderer: SidePaneRenderer | undefined) => void;
   mobileChatTabHeader?: MobileChatSidePaneTabHeaderProps;
   latestErrors: ActiveErrorMessage[] | /* @conditional-compile-remove(notifications) */ ActiveNotification[];
+  /* @conditional-compile-remove(notifications) */
+  latestNotifications?: ActiveNotification[];
   onDismissError: (
     error: ActiveErrorMessage | /* @conditional-compile-remove(notifications) */ ActiveNotification
   ) => void;
+  /* @conditional-compile-remove(notifications) */
+  onDismissNotification?: (notification: ActiveNotification) => void;
   onUserSetOverflowGalleryPositionChange?: (position: 'Responsive' | 'horizontalTop') => void;
   onUserSetGalleryLayoutChange?: (layout: VideoGalleryLayout) => void;
   userSetGalleryLayout?: VideoGalleryLayout;
@@ -230,6 +236,33 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     localParticipant
   } = videoGalleryProps;
 
+  /* @conditional-compile-remove(teams-meeting-conference) */
+  const [showTeamsMeetingConferenceModal, setShowTeamsMeetingConferenceModal] = useState(false);
+  /* @conditional-compile-remove(teams-meeting-conference) */
+  const toggleTeamsMeetingConferenceModal = useCallback((): void => {
+    setShowTeamsMeetingConferenceModal(!showTeamsMeetingConferenceModal);
+  }, [showTeamsMeetingConferenceModal]);
+
+  /* @conditional-compile-remove(teams-meeting-conference) */
+  const { isMeetingPhoneInfoPaneOpen, openMeetingPhoneInfoPane, closeMeetingPhoneInfoPane } = useMeetingPhoneInfoPane({
+    ...meetingPhoneInfoPaneProps
+  });
+
+  /* @conditional-compile-remove(teams-meeting-conference) */
+  const toggleMeetingPhoneInfoPane = useCallback(() => {
+    if (isMeetingPhoneInfoPaneOpen) {
+      closeMeetingPhoneInfoPane();
+    } else {
+      openMeetingPhoneInfoPane();
+    }
+  }, [closeMeetingPhoneInfoPane, isMeetingPhoneInfoPaneOpen, openMeetingPhoneInfoPane]);
+
+  /* @conditional-compile-remove(teams-meeting-conference) */
+  const onMeetingPhoneInfoClicked = useCallback(() => {
+    setShowDrawer(false);
+    toggleMeetingPhoneInfoPane();
+  }, [toggleMeetingPhoneInfoPane]);
+
   const { pinnedParticipants, setPinnedParticipants } = props;
   const onPinParticipant = useCallback(
     (userId: string) => {
@@ -341,20 +374,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     }
   }, [closePeoplePane, isPeoplePaneOpen, openPeoplePane]);
 
-  /* @conditional-compile-remove(teams-meeting-conference) */
-  const { isMeetingPhoneInfoPaneOpen, openMeetingPhoneInfoPane, closeMeetingPhoneInfoPane } = useMeetingPhoneInfoPane({
-    ...meetingPhoneInfoPaneProps
-  });
-
-  /* @conditional-compile-remove(teams-meeting-conference) */
-  const toggleMeetingPhoneInfoPane = useCallback(() => {
-    if (isMeetingPhoneInfoPaneOpen) {
-      closeMeetingPhoneInfoPane();
-    } else {
-      openMeetingPhoneInfoPane();
-    }
-  }, [closeMeetingPhoneInfoPane, isMeetingPhoneInfoPaneOpen, openMeetingPhoneInfoPane]);
-
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   useEffect(() => {
     if (isInLocalHold) {
@@ -394,7 +413,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   const { openVideoEffectsPane } = useVideoEffectsPane(
     props.updateSidePaneRenderer,
     props.mobileView,
-    props.latestErrors,
+    props.latestErrors as ActiveErrorMessage[],
     props.onDismissError,
     cameraButtonRef
   );
@@ -410,17 +429,12 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     togglePeoplePane();
   }, [togglePeoplePane]);
 
-  /* @conditional-compile-remove(teams-meeting-conference) */
-  const onMeetingPhoneInfoClicked = useCallback(() => {
-    setShowDrawer(false);
-    toggleMeetingPhoneInfoPane();
-  }, [toggleMeetingPhoneInfoPane]);
-
   const drawerContainerStylesValue = useMemo(() => drawerContainerStyles(DRAWER_Z_INDEX), []);
 
   const canUnmute = role !== 'Consumer' ? true : false;
 
-  let filteredLatestErrors: ActiveErrorMessage[] = props.errorBarProps !== false ? props.latestErrors : [];
+  let filteredLatestErrors: ActiveErrorMessage[] =
+    props.errorBarProps !== false ? (props.latestErrors as ActiveErrorMessage[]) : [];
 
   /* @conditional-compile-remove(notifications) */
   let filteredLatestErrorNotifications: ActiveNotification[] = props.showErrorNotifications
@@ -470,6 +484,17 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   const minMaxDragPosition = useMinMaxDragPosition(props.modalLayerHostId);
   const pipStyles = useMemo(() => getPipStyles(theme), [theme]);
 
+  /* @conditional-compile-remove(notifications) */
+  if (isTeamsMeeting) {
+    filteredLatestErrorNotifications
+      .filter((notification) => notification.type === 'teamsMeetingCallNetworkQualityLow')
+      .forEach((notification) => {
+        notification.onClickPrimaryButton = props.mobileView
+          ? toggleMeetingPhoneInfoPane
+          : toggleTeamsMeetingConferenceModal;
+      });
+  }
+
   const verticalControlBar =
     props.mobileView && containerWidth && containerHeight && containerWidth / containerHeight > 1 ? true : false;
 
@@ -485,8 +510,8 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     return (
       <>
         {props.showErrorNotifications && (
-          <Stack styles={bannerNotificationStyles} horizontalAlign="center" verticalAlign="center">
-            <Notifications
+          <Stack styles={notificationStackStyles} horizontalAlign="center" verticalAlign="center">
+            <NotificationStack
               onDismissNotification={props.onDismissError}
               activeNotifications={filteredLatestErrorNotifications}
             />
@@ -509,6 +534,32 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
       </>
     );
   };
+
+  const mutedNotificationTrampoline = (): JSX.Element => {
+    /* @conditional-compile-remove(notifications) */
+    return <></>;
+    return (
+      <>
+        {canUnmute && !!props.mutedNotificationProps && (
+          <MutedNotification
+            {...props.mutedNotificationProps}
+            speakingWhileMuted={props.mutedNotificationProps?.speakingWhileMuted ?? false}
+          />
+        )}
+      </>
+    );
+  };
+
+  const complianceBannerTrampoline = (): JSX.Element => {
+    /* @conditional-compile-remove(notifications) */
+    return <></>;
+    return (
+      <Stack styles={bannerNotificationStyles}>
+        <_ComplianceBanner {...props.complianceBannerProps} />
+      </Stack>
+    );
+  };
+
   return (
     <div ref={containerRef} className={mergeStyles(containerDivStyles)} id={props.id}>
       <Stack verticalFill horizontalAlign="stretch" className={containerClassName} data-ui-id={props.dataUiId}>
@@ -568,6 +619,10 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                   onStopLocalSpotlight={
                     !hideSpotlightButtons && localParticipant.spotlight ? onStopLocalSpotlightWithPrompt : undefined
                   }
+                  /* @conditional-compile-remove(teams-meeting-conference) */
+                  onToggleTeamsMeetingConferenceModal={toggleTeamsMeetingConferenceModal}
+                  /* @conditional-compile-remove(teams-meeting-conference) */
+                  teamsMeetingConferenceModalPresent={showTeamsMeetingConferenceModal}
                 />
               )}
             </Stack>
@@ -600,10 +655,19 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
               <Stack.Item styles={callGalleryStyles} grow>
                 <Stack verticalFill styles={mediaGalleryContainerStyles}>
                   <Stack.Item styles={notificationsContainerStyles}>
-                    <Stack styles={bannerNotificationStyles}>
-                      <_ComplianceBanner {...props.complianceBannerProps} />
-                    </Stack>
+                    {complianceBannerTrampoline()}
+
                     {errorNotificationTrampoline()}
+                    {
+                      /* @conditional-compile-remove(notifications) */ props.latestNotifications && (
+                        <Stack styles={notificationStackStyles} horizontalAlign="center" verticalAlign="center">
+                          <NotificationStack
+                            activeNotifications={props.latestNotifications}
+                            onDismissNotification={props.onDismissNotification}
+                          />
+                        </Stack>
+                      )
+                    }
                     {props.capabilitiesChangedNotificationBarProps &&
                       props.capabilitiesChangedNotificationBarProps.capabilitiesChangedNotifications.length > 0 && (
                         <Stack styles={bannerNotificationStyles}>
@@ -613,9 +677,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                           />
                         </Stack>
                       )}
-                    {canUnmute && !!props.mutedNotificationProps && (
-                      <MutedNotification {...props.mutedNotificationProps} />
-                    )}
+                    {mutedNotificationTrampoline()}
                   </Stack.Item>
                   {renderGallery && props.onRenderGalleryContent && props.onRenderGalleryContent()}
                   {true &&

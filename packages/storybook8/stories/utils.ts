@@ -3,7 +3,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 
-const renderVideoStream = async (scalingMode?: string): Promise<HTMLElement | null> => {
+export const renderVideoStream = async (scalingMode?: string): Promise<HTMLElement | null> => {
   if (navigator.mediaDevices?.getUserMedia) {
     const video = document.createElement('video');
     video.autoplay = true;
@@ -91,3 +91,5 @@ export const useVideoStreams = (numberOfStreams: number): (HTMLElement | null)[]
 
   return videoStreamElements;
 };
+export const addCSS = (css: string): string =>
+  (document.head.appendChild(document.createElement('style')).innerHTML = css);

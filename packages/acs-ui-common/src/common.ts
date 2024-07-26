@@ -8,7 +8,7 @@
  * @returns units of pixels
  */
 export const _convertRemToPx = (rem: number): number => {
-  return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
+  return rem * getBrowserFontSizeInPx();
 };
 
 /**
@@ -18,7 +18,16 @@ export const _convertRemToPx = (rem: number): number => {
  * @returns units of rem
  */
 export const _convertPxToRem = (px: number): number => {
-  return px / parseFloat(getComputedStyle(document.documentElement).fontSize);
+  return px / getBrowserFontSizeInPx();
+};
+
+const getBrowserFontSizeInPx = (): number => {
+  let fontSizeInPx = parseFloat(getComputedStyle(document.documentElement).fontSize);
+  // If browser font size is not a number, default to 16 px
+  if (Number.isNaN(fontSizeInPx)) {
+    fontSizeInPx = 16;
+  }
+  return fontSizeInPx;
 };
 
 /**
@@ -69,6 +78,21 @@ export interface AttachmentMetadata {
    */
   url: string;
 }
+
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+/**
+ * Result payload for uploading an image.
+ *
+ * @beta
+ */
+export type UploadChatImageResult = {
+  /** Id of the image. */
+  id: string;
+  /** The type of attachment. */
+  attachmentType?: 'image' | 'file' | 'unknown';
+  /** The name including file extension type of the attachment. */
+  name?: string;
+};
 
 /**
  * Data model that represents a chat message attachment being uploaded

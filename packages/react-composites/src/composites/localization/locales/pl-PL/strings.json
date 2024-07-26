@@ -342,7 +342,12 @@
     "pinParticipantLimitReachedMenuLabel": "Przypięcie (osiągnięto limit)",
     "unpinParticipantMenuLabel": "Odepnij",
     "pinParticipantMenuItemAriaLabel": "Przypnij",
-    "unpinParticipantMenuItemAriaLabel": "Odepnij"
+    "unpinParticipantMenuItemAriaLabel": "Odepnij",
+    "muteAllMenuLabel": "Wycisz wszystkich",
+    "muteAllDialogTitle": "Wyciszyć wszystkich?",
+    "muteAllDialogContent": "Spowoduje to wyciszenie wszystkich osób na spotkaniu oprócz Ciebie.",
+    "muteAllConfirmButtonLabel": "Wycisz wszystkich",
+    "muteAllCancelButtonLabel": "Anuluj"
   },
   "chat": {
     "chatListHeader": "W tym czacie",

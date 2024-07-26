@@ -24,7 +24,7 @@ jobs:
     permissions: read-all
     steps:
       # Check-out repo
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       # Check if any changes have been pushed to main since last release
       - name: Check latest commit age
@@ -67,19 +67,19 @@ jobs:
       id-token: write
     steps:
       # Check-out repo
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
       # Ensure node version is great enough
       - name: Use Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '20.x'
 
       # Try get node_modules from cache
       - name: Restore node_modules from cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
@@ -150,28 +150,8 @@ jobs:
       - name: Upload tarball to blob storage
         run: az storage blob upload -f "packages/communication-react/release/azure-communication-react-${{ steps.version.outputs.version }}.tgz" -c "drops/azure-communication-services/react/npm/${{ steps.version.outputs.version }}" --account-name azuresdkpartnerdrops --auth-mode login
 
-      # Get access token to trigger the release pipeline based on OIDC login
-      #
-      # Ideally we would use `az pipelines release create` CLI, but it does not support release variables: https://github.com/Azure/azure-cli-extensions/issues/953
-      # Instead, we use the az CLI to generate a PAT and then use that to trigger the release pipeline
-      #
-      # NOTES:
-      #   - 590cfd2a-581c-4dcb-a12e-6568ce786175 is the GUID of the Azure Partner Pipelines ADO project
-      #   - 499b84ac-1321-427f-aa17-267ca6975798 is generic GUID of Azure DevOps resource
-      - name: Get Azure DevOps Access Token
-        id: az-devops-access-token
-        run: |
-          az extension add --name azure-devops
-          az devops configure --defaults organization=https://dev.azure.com/azure-sdk project=590cfd2a-581c-4dcb-a12e-6568ce786175
-          echo "token=$(az account get-access-token --resource 499b84ac-1321-427f-aa17-267ca6975798 --query accessToken -o tsv)" >> $GITHUB_OUTPUT
-
       - name: Trigger alpha package release pipeline
-        uses: Azure/pipelines@v1.2
-        with:
-          azure-devops-project-url: 'https://dev.azure.com/azure-sdk/internal'
-          azure-pipeline-name: 'azuresdkpartnerdrops to npm'
-          azure-devops-token: ${{ steps.az-devops-access-token.outputs.token }}
-          azure-pipeline-variables: '{"accessLevel": "public", "BlobPath": "azure-communication-services/react/npm/${{ steps.version.outputs.version }}", "registry": "https://registry.npmjs.org/", "skipDiff": "False", "tag": "dev"}'
+        run: az pipelines run --name 'js - partner-release' --org 'https://dev.azure.com/azure-sdk' --project 'internal' --parameters BlobPath=azure-communication-services/react/npm/${{ steps.version.outputs.version }} Tag=dev
 
       # Push git tags
       - name: Create and push git tags
@@ -180,7 +160,31 @@ jobs:
           git push --tags
 
       - name: Check if npm package published successfully
-        run: node common/scripts/poll-npm-package-published.mjs ${{ steps.version.outputs.version }}
+        run: |
+          POLL_INTERVAL_SEC=60 # 60 seconds
+          TIMEOUT_TIME_SEC=3600 # 60 minutes
+          GET_REQUEST_TIMEOUT_SEC=5
+          PACKAGE_NAME="@azure/communication-react"
+          VERSION="${{ steps.version.outputs.version }}"
+
+          start_time=$(date +%s)
+
+          while (( $(date +%s) - $start_time < $TIMEOUT_TIME_SEC )); do
+            response=$(curl --max-time $GET_REQUEST_TIMEOUT_SEC -s -o /dev/null -w "%{http_code}" https://registry.npmjs.org/$PACKAGE_NAME/$VERSION)
+            echo "Pinging: https://registry.npmjs.org/$PACKAGE_NAME/$VERSION"
+            echo "responseCode: $response"
+            
+            if [ $response -eq 200 ]; then
+              echo "Successfully found npm package"
+              exit 0
+            fi
+            
+            echo "Sleeping for a bit..."
+            sleep $POLL_INTERVAL_SEC
+          done
+
+          echo "Failed to find package on the npm registry"
+          exit 1
 
   check_failure:
     runs-on: ubuntu-latest

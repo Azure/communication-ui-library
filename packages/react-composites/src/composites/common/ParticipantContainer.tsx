@@ -71,9 +71,12 @@ export const ParticipantListWithHeading = (props: {
   const subheadingStyleThemed = useMemo(
     () => ({
       root: {
-        color: theme.palette.neutralSecondary,
-        margin: props.isMobile ? '0.5rem 1rem' : '0.5rem',
-        fontSize: theme.fonts.smallPlus.fontSize
+        h2: {
+          color: theme.palette.neutralSecondary,
+          margin: props.isMobile ? '0.5rem 1rem' : '0.5rem',
+          fontSize: theme.fonts.smallPlus.fontSize,
+          fontWeight: 'normal'
+        }
       }
     }),
     [theme.palette.neutralSecondary, theme.fonts.smallPlus.fontSize, props.isMobile]
@@ -83,15 +86,18 @@ export const ParticipantListWithHeading = (props: {
     <Stack className={participantListStack}>
       <Stack horizontal horizontalAlign="space-between" verticalAlign="center">
         <Stack.Item grow styles={subheadingStyleThemed} aria-label={title} id={subheadingUniqueId}>
-          {paneTitleTrampoline(
-            title ?? '',
-            /* @conditional-compile-remove(total-participant-count) */ totalParticipantCount
-          )}
+          <h2>
+            {paneTitleTrampoline(
+              title ?? '',
+              /* @conditional-compile-remove(total-participant-count) */ totalParticipantCount
+            )}
+          </h2>
         </Stack.Item>
         {(onClickHeadingMoreButton ||
           (headingMoreButtonMenuProps?.items && headingMoreButtonMenuProps.items.length > 0)) && (
           <Stack.Item>
             <DefaultButton
+              data-ui-id="people-pane-header-more-button"
               ariaLabel={headingMoreButtonAriaLabel}
               styles={headingMoreButtonStyles(theme)}
               iconProps={{ iconName: 'PeoplePaneMoreButton' }}
