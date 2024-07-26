@@ -1,6 +1,6 @@
 import { Meta, Source } from '@storybook/addon-docs';
 import { SingleLineBetaBanner } from '../../BetaBanners/SingleLineBetaBanner';
-import { exampleDisableCaptions } from './ClosedCaptions.tsx';
+import { exampleDisableCaptions } from './snippets/ClosedCaptions.snippet.tsx';
 import { Image, Stack, PrimaryButton } from '@fluentui/react';
 import { overviewPageImagesStackStyle } from '../../constants';
 
@@ -68,7 +68,7 @@ The caption language (Teams Interop Closed Captions) is set to English by defaul
     />
   </Stack.Item>
   <PrimaryButton
-    style={{ width: 'fit-content' }}
+    style={{ width: 'fit-content', color: 'white' }}
     text="Go to CallComposite to see captions in action"
     href="../?path=/story/composites-callcomposite--basic-example"
   />
