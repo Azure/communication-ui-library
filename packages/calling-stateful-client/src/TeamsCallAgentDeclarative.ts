@@ -15,7 +15,7 @@ import { teamsCallDeclaratify } from './TeamsCallDeclarative';
 
 /* @conditional-compile-remove(one-to-n-calling) */
 /**
- * @beta
+ * @public
  * Proxies the {@link @azure/communication-calling#TeamsIncomingCall} interface.
  */
 export type TeamsIncomingCallManagement = {

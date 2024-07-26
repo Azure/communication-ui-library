@@ -45,14 +45,6 @@ module.exports = {
     "data-loss-prevention",
     // Mention feature
     "mention",
-    // 1 to N Calling feature.
-    "one-to-n-calling",
-    // PSTN calls 
-    "PSTN-calls",
-    // Adhoc calls to a Teams user.
-    "teams-adhoc-call",
-    // Beta feature for joining calls using teams token
-    "teams-identity-support-beta",
     // Block joining calls if the user is on an unsupported browser
     "unsupported-browser",
     // Feature to show the total number of participants in a call (currently in beta in calling SDK, hence this must be conditionally compiled)
@@ -61,8 +53,6 @@ module.exports = {
     "calling-environment-info",
     // conditional-compile for new signaling beta
     "signaling-beta",
-    // Feature for tracking beta start call identifier
-    'start-call-beta',
     // Image overlay theme
     'image-overlay-theme',
     // Feature for local recording notification for teams meetings
@@ -77,8 +67,12 @@ module.exports = {
     "rich-text-editor-image-upload",
     // Feature to support file sharing in ACS chats
     "file-sharing-acs",
+    // Beta feature for joining calls using teams token
+    "teams-identity-support-beta",
     // Soft Mute feature for ACS calls and Interop calls
-    "soft-mute"
+    "soft-mute",
+    // feature for tracking the callParticipantsLocator
+    "call-participants-locator",
   ],
   stable: [
     // Demo feature. Used in live-documentation of conditional compilation.
@@ -99,6 +93,14 @@ module.exports = {
     // Get join conference information
     'teams-meeting-conference',
     // Feature for showing notifications
-    "notifications"
+    "notifications",
+    // 1 to N Calling feature.
+    "one-to-n-calling",
+    // PSTN calls 
+    "PSTN-calls",
+    // Adhoc calls to a Teams user.
+    "teams-adhoc-call",
+    // Feature for tracking beta start call identifier
+    'start-call-beta'
   ]
 }

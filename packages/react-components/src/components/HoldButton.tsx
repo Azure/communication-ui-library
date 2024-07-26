@@ -6,7 +6,7 @@ import React from 'react';
 import { _HighContrastAwareIcon } from './HighContrastAwareIcon';
 
 /**
- *@beta
+ *@public
  */
 export interface HoldButtonProps extends ControlBarButtonProps {
   /**
@@ -22,7 +22,7 @@ export interface HoldButtonProps extends ControlBarButtonProps {
 
 /**
  * Strings for the hold button labels
- * @beta
+ * @public
  */
 export interface HoldButtonStrings {
   /**
@@ -50,7 +50,7 @@ export interface HoldButtonStrings {
  *
  * @param props - properties for the hold button.
  * @returns
- * @beta
+ * @public
  */
 export const HoldButton = (props: HoldButtonProps): JSX.Element => {
   const { onToggleHold, strings } = props;
