@@ -13,7 +13,7 @@ export const parseReactVersion = (version: string | undefined): void => {
   const reactVersion = version.split('.').map((v) => parseInt(v));
   if (reactVersion[0] && reactVersion[0] < 18) {
     throw new Error(
-      'React version is less than 18. Please upgrade to React 18 or alternatively checkout how to use our composites directly here: https://azure.github.io/communication-ui-library/?path=/docs/quickstarts-composites--page'
+      'React version is less than 18. Please upgrade to React 18 or alternatively checkout how to use our composites directly here: https://aka.ms/acsstorybook'
     );
   }
 };
