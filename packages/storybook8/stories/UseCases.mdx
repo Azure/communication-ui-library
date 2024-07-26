@@ -1,0 +1,105 @@
+import { Meta } from '@storybook/addon-docs';
+import { SingleLineBetaBanner } from './BetaBanners/SingleLineBetaBanner';
+
+<Meta title="Use Cases" />
+
+# UI Library Use Cases
+
+UI Library supports many use cases across calling and chat experiences.
+These capabilities are available through UI Components and Composites.
+For Composites, these capabilities are built directly in and exposed when the composite is integrated into an application.
+For UI Components, these capabilities are exposed through a combination of UI functionality and underlying stateful libraries.
+To take full advantage of these capabilities, we recommend using the UI Components with the stateful call and chat client libraries.
+
+## Calling Use Cases
+
+| Area                                                                                            | Use Cases                                                                                                                                                   |
+| ----------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Call Types                                                                                      | [Join a Teams Meeting](#teams-interoperability)                                                                                                             |
+|                                                                                                 | Join Azure Communication Services call with Group Id                                                                                                        |
+| [Teams Interop](https://docs.microsoft.com/azure/communication-services/concepts/teams-interop) | Call Lobby                                                                                                                                                  |
+|                                                                                                 | Transcription and recording alert banner                                                                                                                    |
+| Call Controls                                                                                   | Mute/unmute call                                                                                                                                            |
+|                                                                                                 | Video on/off on call                                                                                                                                        |
+|                                                                                                 | Screen Sharing                                                                                                                                              |
+|                                                                                                 | End call                                                                                                                                                    |
+| Participant Gallery                                                                             | Remote participants are divided into audio and video participants                                                                                           |
+|                                                                                                 | Dominant speaker capabilities sort participants to show who is speaking                                                                                     |
+|                                                                                                 | Video preview available throughout call for local user                                                                                                      |
+|                                                                                                 | Default avatars available when video is off                                                                                                                 |
+|                                                                                                 | Shared screen content displayed on participant gallery                                                                                                      |
+|                                                                                                 | Menu option to pin remote participants                                                                                                                      |
+|                                                                                                 | Menu option to change video stream rendering of remote participants                                                                                         |
+| Call configuration                                                                              | Microphone device management                                                                                                                                |
+|                                                                                                 | Camera device management                                                                                                                                    |
+|                                                                                                 | Speaker device management                                                                                                                                   |
+|                                                                                                 | Local preview available for user to check video                                                                                                             |
+| Participants                                                                                    | Participant roster                                                                                                                                          |
+| Diagnostics                                                                                     | [User Facing Diagnostics (UFD)](https://docs.microsoft.com/azure/communication-services/concepts/voice-video-calling/user-facing-diagnostics) are available |
+
+## Chat Use Cases
+
+| Area         | Azure Communication Services Chat                                                                                                            | Teams Interoperability Chat                                                                                                               |
+| ------------ | -------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| Chat types   | Join an Azure Communication Services chat thread                                                                                             | Join a Microsoft Teams meeting chat                                                                                                       |
+| Chat actions | Send and receive text messages                                                                                                               | Send and receive text messages                                                                                                            |
+|              | Receive rich text messages                                                                                                                   | Receive rich text messages                                                                                                                |
+|              | -                                                                                                                                            | [Receive inline images\*](https://learn.microsoft.com/en-us/azure/communication-services/tutorials/inline-image-tutorial-interop-chat)    |
+|              | [Send and receive file attachments](https://learn.microsoft.com/en-us/azure/communication-services/tutorials/file-sharing-tutorial-acs-chat) | [Receive file attachments\*](https://learn.microsoft.com/en-us/azure/communication-services/tutorials/file-sharing-tutorial-interop-chat) |
+| Chat events  | Send and receive typing indicators                                                                                                           | Send and receive typing indicators\*\*                                                                                                    |
+|              | Send and receive read receipts                                                                                                               | Send and receive read receipts                                                                                                            |
+|              | Show when a participant is added or removed                                                                                                  | Show when a participant is added or removed                                                                                               |
+| Participants | Show a participant roster                                                                                                                    | Show a participant roster                                                                                                                 |
+
+\*Inline image and file attachment support are currently in public preview. Preview APIs and SDKs are provided without a service-level agreement. We recommend that you don't use them for production workloads. Some features might not be supported, or they might have constrained capabilities. For more information, review Supplemental Terms of Use for Microsoft Azure Previews.
+
+\*\*The display name of typing event from the Teams user might not be shown properly.
+
+## Teams Interoperability
+
+For [Teams Interop](https://docs.microsoft.com/azure/communication-services/concepts/teams-interop) scenarios, developers can use UI Library Components to join Teams meetings through Azure Communication Services.
+To enable Teams Interop, developers can either use calling and chat composites directly or use UI Components to build a custom experience.
+When enabling applications with both calling and chat, its important to remember that the chat client can't be initialized until the participant has been admitted to the call.
+Once admitted, the chat client can be initialized to join the meeting chat thread.
+See the diagram below for guidance:
+
+![Teams Interop pattern for calling and chat](images/teams-interop-pattern.png)
+
+When using UI Components to deliver Teams Interop experiences, UI Library provides examples for key pieces of the experience.
+For example:
+
+- [Lobby Example](./?path=/story/examples-teamsinterop-lobby--lobby): Sample lobby for participant to wait to be admitted to the call.
+- [Compliance banner](./?path=/story/examples-teamsinterop-compliancebanner--compliance-banner): Sample banner to show the user whether the call is being recorded or not.
+- [Teams Theme](./?path=/story/examples-themes-teams--teams): Sample theme that makes the UI Library looks like Microsoft Teams.
+
+<SingleLineBetaBanner content="The following features are currently in public preview" />
+
+- [File Sharing](https://learn.microsoft.com/en-us/azure/communication-services/tutorials/file-sharing-tutorial-interop-chat): Feature allows Teams users to share file attachments as part of chat messages.
+- [Inline Images](https://learn.microsoft.com/en-us/azure/communication-services/tutorials/inline-image-tutorial-interop-chat): Feature allows Teams users to attach images as part of chat messages.
+
+## Customization
+
+UI Library exposes patterns for developers to modify components to fit the look and feel of their application.
+These capabilities are a key area of differentiation between Composites and UI Components, where Composites provide less customization options in favor of a simpler integration experience.
+
+| Use Case                                            | Composites | UI Components |
+| --------------------------------------------------- | ---------- | ------------- |
+| Fluent based Theming                                | ✔         | ✔            |
+| Experience layout is composable                     |            | ✔            |
+| CSS Styling can be used to modify style properties  |            | ✔            |
+| Participant gallery layout can be modified          |            | ✔            |
+| Icons can be replaced                               | ✔         | ✔            |
+| Call control layout can be modified                 | ✔         | ✔            |
+| Data models can be injected to modify user metadata | ✔         | ✔            |
+
+## Observability
+
+As part of the decoupled state management architecture of the UI Library, developers are able to access the stateful calling and chat clients directly.
+Developers can hook into the stateful client to read the state, handle events and override behavior to pass onto the UI Components.
+
+| Use Case                                         | Composites | UI Components | Example                                                                      |
+| ------------------------------------------------ | ---------- | ------------- | ---------------------------------------------------------------------------- |
+| Call/Chat client state can be accessed           | ✔         | ✔            | Check whether a all is connected or see the participants in a thread         |
+| Commands can be sent to the call and chat client | ✔         | ✔            | Mute or Unmute the call client or send messages on behalf of the user        |
+| Client events can be accessed and handled        | ✔         | ✔            | Handle a participant join a call or intercept a message coming into a thread |
+| UI events can be accessed and handled            | ✔         | ✔            | Handle mute button click or chat send button to add your own logic           |
