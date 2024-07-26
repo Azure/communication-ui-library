@@ -1,0 +1,151 @@
+import { Meta, Source } from '@storybook/addon-docs';
+import { CompletedComponentsApp } from './snippets/CompletedComponentsApp.story';
+import AppText from '!!raw-loader!./snippets/App.snippet.tsx';
+import CallingComponentsText from '!!raw-loader!./snippets/CallingComponents.tsx';
+import ChatComponentsText from '!!raw-loader!./snippets/ChatComponents.tsx';
+import CompletedComponentsAppText from '!!raw-loader!./snippets/CompletedComponentsApp.story.tsx';
+
+<Meta title="Components/Get Started" />
+
+# Quickstart: Get started with UI Components
+
+Get started with Azure Communication Services by using the UI Library to quickly integrate communication experiences into your applications. In this quickstart, you'll learn how to integrate UI Library base components into your application to build communication experiences.
+
+UI Library components come in two flavors: UI and Composite.
+
+- **UI components** represent discrete communication capabilities; they're the basic building blocks that can be used to build complex communication experiences.
+- **Composite components** are turn-key experiences for common communication scenarios that have been built using **base components** as building blocks and packaged to be easily integrated into applications.
+
+## Download the code
+
+You can find the completed code for this quickstart here: [Get started with UI Components](https://github.com/Azure-Samples/communication-services-javascript-quickstarts/tree/main/ui-library-quickstart-ui-components)
+
+## Prerequisites
+
+- An Azure account with an active subscription. [Create an account for free](https://azure.microsoft.com/free/?WT.mc_id=A261C142F).
+- [Node.js](https://nodejs.org/) Active LTS and Maintenance LTS versions (Node 18.0.0 and above).
+
+## Setting Up
+
+UI Library requires a React environment to be setup. Next we will do that.
+
+### Install the Package
+
+Use the `npm install` command to install the Azure Communication Services UI Library for JavaScript.
+
+```bash
+
+npm install @azure/communication-react
+
+```
+
+`@azure/communication-react` specifies core Azure Communication Services as `peerDependencies` so that
+you can most consistently use the API from the core libraries in your application. You need to install those libraries as well:
+
+```bash
+
+npm install @azure/communication-calling
+npm install @azure/communication-chat
+
+```
+
+### Run Create React App
+
+Let's test the Create React App installation by running:
+
+```bash
+
+npm run start
+
+```
+
+## Object Model
+
+The following classes and interfaces handle some of the major features of the Azure Communication Services UI client library:
+
+| Name                                                                        | Description                                                                              |
+| --------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| [FluentThemeProvider](./?path=/docs/concepts-theming--docs)                 | Provider that controls Theming on the components. Can be used to override theme          |
+| [GridLayout](./?path=/story/components-grid-layout--grid-layout)            | Base component that organizes video tiles into a grid                                    |
+| [VideoTile](./?path=/story/components-video-tile--video-tile)               | Base component to render participants either with or without video                       |
+| [ControlBar](./?path=/story/components-controlbar-control-bar--control-bar) | Base component to control call including mute, video, share screen                       |
+| [MessageThread](./?path=/story/components-message-thread--message-thread)   | Base component that renders a chat thread with typing indicators, read receipts, etc.    |
+| [SendBox](./?path=/story/components-sendbox-send-box--send-box)             | Base component that allows user to input messages that will be sent to the joined thread |
+
+## Set Up Fluent Theme Provider and Icons
+
+The `FluentThemeProvider` is a required wrapper around the UI Library components to provide theming that makes the components look amazing!
+It is in charge of allowing developer customize the theme of the components as well. Check out [Theming](./?path=/docs/concepts-theming--docs) for more information. `FluentThemeProvider` defaults to using light theme.
+
+`App.tsx`
+
+<Source code={AppText} />
+
+Inside the `FluentThemeProvider`, you can add additional components.
+Next we'll use various UI components to showcase a sample experience.
+You can customize the layout of these components and add any other custom components that you want to render with them.
+
+## Calling UI Components
+
+For Calling, we'll use the [`GridLayout`](./?path=/story/components-grid-layout--grid-layout) and [`ControlBar`](./?path=/story/components-controlbar-control-bar--control-bar) components.
+To start, in the `src` folder, create a new file called `CallingComponents.tsx`.
+Here we'll initialize a function component that will hold our base components to then import in `App.tsx`.
+You can add extra layout and styling around the components.
+
+`CallingComponents.tsx`
+
+<Source code={CallingComponentsText} />
+
+For this example, we added one [`VideoTile`](./?path=/story/components-video-tile--video-tile) to the grid, but more can be added.
+
+## Chat UI Components
+
+For Chat, we will use the [`MessageThread`](./?path=/story/components-message-thread--message-thread) and [`SendBox`](./?path=/story/components-sendbox-send-box--send-box) components.
+To start, in the `src` folder, create a new file called `ChatComponents.tsx`.
+Here we'll initialize a function component that will hold our base components to then import in `App.tsx`.
+
+`ChatComponents.tsx`
+
+<Source code={ChatComponentsText} />
+
+## Add Calling and Chat Components
+
+Back in the `App.tsx` file, we will now add the components to the `FluentThemeProvider` like shown below.
+
+`App.tsx`
+
+<Source code={CompletedComponentsAppText} />
+<div>
+  <CompletedComponentsApp />
+</div>
+
+## Run Quickstart
+
+To run the code above use the command:
+
+```console
+
+npm run start
+
+```
+
+## Troubleshooting
+
+See the [troubleshooting page](./?path=/docs/concepts-troubleshooting--docs) for some common problems and recommended solutions.
+
+## Clean Up Resources
+
+If you want to clean up and remove a Communication Services subscription, you can delete the resource or resource group.
+Deleting the resource group also deletes any other resources associated with it.
+Learn more about [cleaning up resources](https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp#clean-up-resources).
+
+## Next Steps
+
+- [Try UI Library Stateful Call Client](./?path=/docs/stateful-client-get-started-call--docs)
+- [Try UI Library Stateful Chat Client](./?path=/docs/stateful-client-get-started-chat--docs)
+
+For more information, see the following resources:
+
+- [UI Library Use Cases](./?path=/docs/use-cases--docs)
+- [UI Library Styling](./?path=/docs/concepts-styling--docs)
+- [UI Library Theming](./?path=/docs/concepts-theming--docs)
