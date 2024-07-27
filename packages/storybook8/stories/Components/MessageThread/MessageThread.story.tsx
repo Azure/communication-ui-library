@@ -24,7 +24,7 @@ import {
 } from '@fluentui/react';
 import { Divider } from '@fluentui/react-components';
 
-import React, { useCallback, useMemo, useRef, useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 
 import {
   GenerateMockNewChatMessage,
@@ -204,7 +204,7 @@ const MessageThreadStory = (args): JSX.Element => {
         };
         setMessagesInlineImages({ ...messagesInlineImages, [messageId]: [...inlineImages, newImage] });
       },
-      messageInlineImages: messagesInlineImages,
+      messagesInlineImages: messagesInlineImages,
       onCancelInlineImageUpload: (image: string, messageId: string) => {
         const inlineImages = messagesInlineImages?.[messageId];
         if (!inlineImages) {

@@ -46,7 +46,7 @@ export const MessageThreadWithRichTextEditorInlineImagesExample: () => JSX.Eleme
         };
         setMessagesInlineImages({ ...messagesInlineImages, [messageId]: [...inlineImages, newImage] });
       },
-      messageInlineImages: messagesInlineImages,
+      messagesInlineImages: messagesInlineImages,
       onCancelInlineImageUpload: (image: string, messageId: string) => {
         const inlineImages = messagesInlineImages?.[messageId];
         if (!inlineImages) {

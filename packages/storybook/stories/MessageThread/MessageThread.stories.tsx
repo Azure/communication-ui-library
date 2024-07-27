@@ -641,7 +641,7 @@ const MessageThreadStory = (args): JSX.Element => {
         };
         setMessagesInlineImages({ ...messagesInlineImages, [messageId]: [...inlineImages, newImage] });
       },
-      messageInlineImages: messagesInlineImages,
+      messagesInlineImages: messagesInlineImages,
       onCancelInlineImageUpload: (image: string, messageId: string) => {
         const inlineImages = messagesInlineImages?.[messageId];
         if (!inlineImages) {
