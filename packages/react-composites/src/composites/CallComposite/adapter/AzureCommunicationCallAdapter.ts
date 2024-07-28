@@ -290,11 +290,6 @@ class CallContext {
   public setAcceptedTransferCall(call?: CallState): void {
     this.setState({ ...this.state, acceptedTransferCallState: call });
   }
-
-  /* @conditional-compile-remove(breakout-rooms) */
-  public setMainMeetingCallId(callId?: string): void {
-    this.setState({ ...this.state, mainMeetingCallId: callId });
-  }
 }
 
 const findLatestEndedCall = (calls: { [key: string]: CallState }): CallState | undefined => {
@@ -1056,10 +1051,18 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
 
   /* @conditional-compile-remove(breakout-rooms) */
   public async returnToMainMeeting(): Promise<void> {
+    if (this.call === undefined) {
+      return;
+    }
+    // Find call state of current call from stateful layer
+    const callState = this.call
+      ? Object.values(this.callClient.getState().calls).find((call) => call.id === this.call?.id)
+      : undefined;
+    // Find main meeting call from call agent from the this call state
     const mainMeetingCall = this.callAgent?.calls.find((callAgentCall) => {
-      const mainMeetingId = this.getState().mainMeetingCallId;
-      return mainMeetingId && mainMeetingId === callAgentCall.id;
+      return callAgentCall.id === callState?.breakoutRooms?.mainMeetingCallId;
     });
+    // If a main meeting call exists then process that call and resume
     if (mainMeetingCall) {
       this.processNewCall(mainMeetingCall);
       await this.resumeCall();
@@ -1346,9 +1349,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
 
   /* @conditional-compile-remove(breakout-rooms) */
   private breakoutRoomJoined(call: Call | TeamsCall): void {
-    if (this.getState().mainMeetingCallId === undefined) {
-      this.context.setMainMeetingCallId(this.call?.id);
-    }
     this.processNewCall(call);
   }
 

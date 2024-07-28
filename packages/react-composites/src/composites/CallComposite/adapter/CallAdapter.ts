@@ -184,11 +184,6 @@ export type CallAdapterClientState = {
    * @public
    */
   reactions?: ReactionResources;
-  /* @conditional-compile-remove(breakout-rooms) */
-  /**
-   * Id of call to return to after leaving a breakout room
-   */
-  mainMeetingCallId?: string;
 };
 
 /**

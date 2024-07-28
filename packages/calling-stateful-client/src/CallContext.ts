@@ -631,6 +631,16 @@ export class CallContext {
   }
 
   /* @conditional-compile-remove(breakout-rooms) */
+  public setBreakoutRoomMainMeetingCallId(callId: string, breakoutRoomCallId: string): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(breakoutRoomCallId)];
+      if (call) {
+        call.breakoutRooms = { ...call.breakoutRooms, mainMeetingCallId: callId };
+      }
+    });
+  }
+
+  /* @conditional-compile-remove(breakout-rooms) */
   public setBreakoutRoomSettings(callId: string, breakoutRoomSettings: BreakoutRoomsSettings): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
