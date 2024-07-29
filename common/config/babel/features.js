@@ -22,7 +22,9 @@ module.exports = {
     // feature for adding JS helpers to the UI library API
     "composite-js-helpers",
      // Deep Noise Suppression feature
-    "DNS"
+    "DNS",
+    // feature for breakout rooms
+    "breakout-rooms",
   ],
   beta: [
     "call-readiness",

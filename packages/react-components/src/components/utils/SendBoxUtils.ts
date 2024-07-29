@@ -66,7 +66,9 @@ export const addUploadedImagesToMessage = async (
       imageElement.onload = () => {
         // imageElement is a copy of original img element, so changes need to be made to the original img element
         img.id = uploadInlineImage?.id ?? '';
-        img.src = '';
+        if (uploadInlineImage?.url) {
+          img.src = uploadInlineImage.url;
+        }
         img.width = imageElement.width;
         img.height = imageElement.height;
         img.style.aspectRatio = `${imageElement.width} / ${imageElement.height}`;
@@ -215,7 +217,10 @@ export const removeBrokenImageContentAndClearImageSizeStyles = (content: string)
       img.removeAttribute('data-ui-id');
     }
     // Clear maxWidth and maxHeight styles that are set by roosterJS.
+    // Clear width and height styles as the width and height is set in attributes
     // This is so that they can be set in messageThread styles without using the important flag.
+    img.style.width = '';
+    img.style.height = '';
     img.style.maxWidth = '';
     img.style.maxHeight = '';
   });
