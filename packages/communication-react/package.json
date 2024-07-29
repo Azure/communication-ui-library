@@ -39,7 +39,6 @@
     "events": "^3.3.0",
     "html-react-parser": "^5.1.12",
     "immer": "10.1.1",
-    "libphonenumber-js": "^1.11.4",
     "memoize-one": "^5.2.1",
     "nanoid": "3.3.6",
     "react-linkify": "^1.0.0-alpha",
@@ -55,7 +54,7 @@
     "uuid": "^9.0.0"
   },
   "peerDependencies": {
-    "@azure/communication-calling": "1.27.1-beta.1 || ^1.26.1",
+    "@azure/communication-calling": "1.28.1-beta.1 || ^1.27.2",
     "@azure/communication-calling-effects": "1.0.1",
     "@azure/communication-chat": "1.6.0-beta.3 || >=1.5.1",
     "@types/react": ">=16.8.0 <19.0.0",
@@ -97,7 +96,7 @@
     "_by-flavor": "rushx _current-flavor && env-cmd -f ../../common/config/env/.env --use-shell"
   },
   "devDependencies": {
-    "@azure/communication-calling": "1.27.1-beta.1 || ^1.26.1",
+    "@azure/communication-calling": "1.28.1-beta.1 || ^1.27.2",
     "@azure/communication-calling-effects": "1.0.1",
     "@azure/core-auth": "^1.4.0",
     "@babel/cli": "^7.24.7",
