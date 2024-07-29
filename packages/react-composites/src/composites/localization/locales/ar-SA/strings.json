@@ -352,9 +352,9 @@
   "chat": {
     "chatListHeader": "في هذه الدردشة",
     "uploadAttachment": "تحميل المرفق",
-    "uploadImageDataNotProvided": "Image data is not provided.",
+    "uploadImageDataNotProvided": "لم يتم توفير بيانات الصورة.",
     "uploadImageIsTooLarge": "الصورة كبيرة جدا. اختر جهازا أقل من {maxImageSize} ميغابايت.",
-    "uploadImageExtensionIsNotAllowed": "Uploading .{imageExtension} image is not allowed.",
+    "uploadImageExtensionIsNotAllowed": "تحميل الصورة .{imageExtension} غير مسموح به.",
     "uploadImageFailed": "تعذر تحميل الصورة. الرجاء المحاولة مرة أخرى لاحقا."
   },
   "callWithChat": {

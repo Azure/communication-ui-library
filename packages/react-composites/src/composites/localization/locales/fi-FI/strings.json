@@ -352,9 +352,9 @@
   "chat": {
     "chatListHeader": "Tässä keskustelussa",
     "uploadAttachment": "Lataa liite",
-    "uploadImageDataNotProvided": "Image data is not provided.",
+    "uploadImageDataNotProvided": "Kuvatietoja ei ole annettu.",
     "uploadImageIsTooLarge": "Kuva on liian suuri. Valitse sellainen, jonka koko on alle {maxImageSize} Mt.",
-    "uploadImageExtensionIsNotAllowed": "Uploading .{imageExtension} image is not allowed.",
+    "uploadImageExtensionIsNotAllowed": ".{imageExtension}-kuvan lataamista ei sallita.",
     "uploadImageFailed": "Kuvaa ei voi ladata palvelimeen. Yritä myöhemmin uudelleen."
   },
   "callWithChat": {

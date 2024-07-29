@@ -352,9 +352,9 @@
   "chat": {
     "chatListHeader": "En este chat",
     "uploadAttachment": "Cargar datos adjuntos",
-    "uploadImageDataNotProvided": "Image data is not provided.",
+    "uploadImageDataNotProvided": "No se proporcionaron datos de imagen.",
     "uploadImageIsTooLarge": "La imagen es demasiado grande. Elige uno que sea inferior a {maxImageSize} MB.",
-    "uploadImageExtensionIsNotAllowed": "Uploading .{imageExtension} image is not allowed.",
+    "uploadImageExtensionIsNotAllowed": "No se permite cargar una imagen .{imageExtension}.",
     "uploadImageFailed": "No se puede cargar la imagen. Vuelva a intentarlo más tarde."
   },
   "callWithChat": {

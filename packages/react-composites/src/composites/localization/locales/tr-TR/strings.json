@@ -352,9 +352,9 @@
   "chat": {
     "chatListHeader": "Bu sohbette",
     "uploadAttachment": "Eki Karşıya Yükle",
-    "uploadImageDataNotProvided": "Image data is not provided.",
+    "uploadImageDataNotProvided": "Görüntü verileri sağlanmadı.",
     "uploadImageIsTooLarge": "Resim çok büyük. Mb'den küçük bir {maxImageSize} seçin.",
-    "uploadImageExtensionIsNotAllowed": "Uploading .{imageExtension} image is not allowed.",
+    "uploadImageExtensionIsNotAllowed": ".{imageExtension} görüntüsünün karşıya yüklemesine izin verilmiyor.",
     "uploadImageFailed": "Resim karşıya yüklenemiyor. Lütfen daha sonra yeniden deneyin."
   },
   "callWithChat": {

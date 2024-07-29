@@ -230,8 +230,8 @@
     "imageUploadsPendingError": "A imagem está sendo carregada, aguarde.",
     "richTextNewBulletedListItemAnnouncement": "Com marcadores, nova linha",
     "richTextNewNumberedListItemAnnouncement": "{0}, Nova linha",
-    "richTextBulletedListAppliedAnnouncement": "Bulleted list applied",
-    "richTextNumberedListAppliedAnnouncement": "Numbered list applied"
+    "richTextBulletedListAppliedAnnouncement": "Lista com marcadores aplicada",
+    "richTextNumberedListAppliedAnnouncement": "Lista numerada aplicada"
   },
   "errorBar": {
     "unableToReachChatService": "Você está offline",

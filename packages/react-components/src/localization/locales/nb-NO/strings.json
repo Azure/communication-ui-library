@@ -230,8 +230,8 @@
     "imageUploadsPendingError": "Bildet lastes opp. Vent litt.",
     "richTextNewBulletedListItemAnnouncement": "Punkt, ny linje",
     "richTextNewNumberedListItemAnnouncement": "{0}, ny linje",
-    "richTextBulletedListAppliedAnnouncement": "Bulleted list applied",
-    "richTextNumberedListAppliedAnnouncement": "Numbered list applied"
+    "richTextBulletedListAppliedAnnouncement": "Punktliste er brukt",
+    "richTextNumberedListAppliedAnnouncement": "Nummerert liste brukes"
   },
   "errorBar": {
     "unableToReachChatService": "Du er frakoblet",

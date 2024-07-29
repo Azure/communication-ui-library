@@ -230,8 +230,8 @@
     "imageUploadsPendingError": "התמונה בהעלאה, נא המתן.",
     "richTextNewBulletedListItemAnnouncement": "תבליט, שורה חדשה",
     "richTextNewNumberedListItemAnnouncement": "{0}, שורה חדשה",
-    "richTextBulletedListAppliedAnnouncement": "Bulleted list applied",
-    "richTextNumberedListAppliedAnnouncement": "Numbered list applied"
+    "richTextBulletedListAppliedAnnouncement": "הוחלה רשימה עם תבליטים",
+    "richTextNumberedListAppliedAnnouncement": "רשימה ממוספרת הוחלה"
   },
   "errorBar": {
     "unableToReachChatService": "אתה נמצא במצב לא מקוון",
