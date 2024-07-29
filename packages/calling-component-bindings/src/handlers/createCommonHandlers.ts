@@ -12,6 +12,8 @@ import {
   BackgroundBlurConfig,
   BackgroundReplacementConfig
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(DNS) */
+import { AudioEffectsStartConfig, AudioEffectsStopConfig } from '@azure/communication-calling';
 /* @conditional-compile-remove(soft-mute) */
 import { RemoteParticipant } from '@azure/communication-calling';
 import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
@@ -90,6 +92,10 @@ export interface CommonCallingHandlers {
   onBlurVideoBackground: (backgroundBlurConfig?: BackgroundBlurConfig) => Promise<void>;
 
   onReplaceVideoBackground: (backgroundReplacementConfig: BackgroundReplacementConfig) => Promise<void>;
+  /* @conditional-compile-remove(DNS) */
+  onStartNoiseSuppressionEffect: (audioEffects: AudioEffectsStartConfig) => Promise<void>;
+  /* @conditional-compile-remove(DNS) */
+  onStopNoiseSuppressionEffect: (audioEffects: AudioEffectsStopConfig) => Promise<void>;
   onStartCaptions: (options?: CaptionsOptions) => Promise<void>;
   onStopCaptions: () => Promise<void>;
   onSetSpokenLanguage: (language: string) => Promise<void>;
@@ -578,6 +584,30 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       }
     };
 
+    /* @conditional-compile-remove(DNS) */
+    const onStartNoiseSuppressionEffect = async (audioEffects: AudioEffectsStartConfig): Promise<void> => {
+      const stream = call?.localAudioStreams.find((stream) => stream.mediaStreamType === 'Audio');
+      if (stream && audioEffects && audioEffects.noiseSuppression) {
+        console.log('start noise suppression- active effects', stream.feature(Features.AudioEffects).activeEffects);
+        const audioEffectsFeature = stream.feature(Features.AudioEffects);
+        const isNoiseSuppressionSupported = await audioEffectsFeature.isSupported(audioEffects.noiseSuppression);
+        if (isNoiseSuppressionSupported) {
+          return await audioEffectsFeature.startEffects(audioEffects);
+        } else {
+          throw new Error('Deep Noise Suppression is not supported on this platform.');
+        }
+      }
+    };
+
+    /* @conditional-compile-remove(DNS) */
+    const onStopNoiseSuppressionEffect = async (audioEffects: AudioEffectsStopConfig): Promise<void> => {
+      const stream = call?.localAudioStreams.find((stream) => stream.mediaStreamType === 'Audio');
+      if (stream && audioEffects && audioEffects.noiseSuppression) {
+        console.log('stop noise suppression - active effects', stream.feature(Features.AudioEffects).activeEffects);
+        return await stream.feature(Features.AudioEffects).stopEffects(audioEffects);
+      }
+    };
+
     const onStartCaptions = async (options?: CaptionsOptions): Promise<void> => {
       const captionsFeature = call?.feature(Features.Captions).captions;
       await captionsFeature?.startCaptions(options);
@@ -680,6 +710,10 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       onRemoveVideoBackgroundEffects,
       onBlurVideoBackground,
       onReplaceVideoBackground,
+      /* @conditional-compile-remove(DNS) */
+      onStartNoiseSuppressionEffect,
+      /* @conditional-compile-remove(DNS) */
+      onStopNoiseSuppressionEffect,
       onStartCaptions,
       onStopCaptions,
       onSetCaptionLanguage,

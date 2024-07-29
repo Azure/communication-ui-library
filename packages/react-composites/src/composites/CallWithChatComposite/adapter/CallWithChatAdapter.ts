@@ -472,6 +472,21 @@ export interface CallWithChatAdapterManagement {
    */
   updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void;
 
+  /* @conditional-compile-remove(DNS) */
+  /**
+   * Start the noise suppression effect.
+   *
+   * @beta
+   */
+  startNoiseSuppressionEffect(): Promise<void>;
+  /* @conditional-compile-remove(DNS) */
+  /**
+   * Start the noise suppression effect.
+   *
+   * @beta
+   */
+  stopNoiseSuppressionEffect(): Promise<void>;
+
   /**
    * Update the selected video background effect
    *
