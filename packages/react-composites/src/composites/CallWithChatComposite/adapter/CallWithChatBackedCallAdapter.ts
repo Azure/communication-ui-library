@@ -236,6 +236,11 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
   public async muteAllRemoteParticipants(): Promise<void> {
     return this.callWithChatAdapter.muteAllRemoteParticipants();
   }
+
+  /* @conditional-compile-remove(breakout-rooms) */
+  public async returnToMainMeeting(): Promise<void> {
+    return this.callWithChatAdapter.returnToMainMeeting();
+  }
 }
 
 function callAdapterStateFromCallWithChatAdapterState(

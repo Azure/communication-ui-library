@@ -184,6 +184,11 @@ export type CallAdapterClientState = {
    * @public
    */
   reactions?: ReactionResources;
+  /* @conditional-compile-remove(breakout-rooms) */
+  /**
+   * Id of call to return to after leaving a breakout room
+   */
+  mainMeetingCallId?: string;
 };
 
 /**
@@ -719,6 +724,11 @@ export interface CallAdapterCallOperations {
    * Mute All participants
    */
   muteAllRemoteParticipants(): Promise<void>;
+  /* @conditional-compile-remove(breakout-rooms) */
+  /**
+   * Return to main meeting of breakout room
+   */
+  returnToMainMeeting(): Promise<void>;
 }
 
 /**

@@ -508,6 +508,11 @@ export interface CallWithChatAdapterManagement {
    * Mute a participant
    */
   muteAllRemoteParticipants(): Promise<void>;
+  /* @conditional-compile-remove(breakout-rooms) */
+  /**
+   * Return to main meeting of breakout room
+   */
+  returnToMainMeeting(): Promise<void>;
 }
 
 /**

@@ -54,7 +54,7 @@ import { Features } from '@azure/communication-calling';
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { DtmfTone } from '@azure/communication-calling';
 /* @conditional-compile-remove(breakout-rooms) */
-import type { BreakoutRoomsEventData, BreakoutRoomsUpdatedListener } from '@azure/communication-calling';
+import type { BreakoutRoom, BreakoutRoomsEventData, BreakoutRoomsUpdatedListener } from '@azure/communication-calling';
 import { EventEmitter } from 'events';
 import {
   CommonCallAdapter,
@@ -289,6 +289,11 @@ class CallContext {
 
   public setAcceptedTransferCall(call?: CallState): void {
     this.setState({ ...this.state, acceptedTransferCallState: call });
+  }
+
+  /* @conditional-compile-remove(breakout-rooms) */
+  public setMainMeetingCallId(callId?: string): void {
+    this.setState({ ...this.state, mainMeetingCallId: callId });
   }
 }
 
@@ -1049,6 +1054,18 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     this.handlers.onStopAllSpotlight();
   }
 
+  /* @conditional-compile-remove(breakout-rooms) */
+  public async returnToMainMeeting(): Promise<void> {
+    const mainMeetingCall = this.callAgent?.calls.find((callAgentCall) => {
+      const mainMeetingId = this.getState().mainMeetingCallId;
+      return mainMeetingId && mainMeetingId === callAgentCall.id;
+    });
+    if (mainMeetingCall) {
+      this.processNewCall(mainMeetingCall);
+      await this.resumeCall();
+    }
+  }
+
   public getState(): CallAdapterState {
     return this.context.getState();
   }
@@ -1309,8 +1326,32 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
 
   /* @conditional-compile-remove(breakout-rooms) */
   private breakoutRoomsUpdated(eventData: BreakoutRoomsEventData): void {
+    if (eventData.data) {
+      if (eventData.type === 'assignedBreakoutRooms') {
+        this.assignedBreakoutRoomUpdated(eventData.data);
+      } else if (eventData.type === 'join') {
+        this.breakoutRoomJoined(eventData.data);
+      }
+    }
+
     this.emitter.emit('breakoutRoomsUpdated', eventData);
   }
+
+  /* @conditional-compile-remove(breakout-rooms) */
+  private assignedBreakoutRoomUpdated(breakoutRoom: BreakoutRoom): void {
+    if (breakoutRoom.state === 'closed') {
+      this.returnToMainMeeting();
+    }
+  }
+
+  /* @conditional-compile-remove(breakout-rooms) */
+  private breakoutRoomJoined(call: Call | TeamsCall): void {
+    if (this.getState().mainMeetingCallId === undefined) {
+      this.context.setMainMeetingCallId(this.call?.id);
+    }
+    this.processNewCall(call);
+  }
+
   private callIdChanged(): void {
     this.call?.id && this.emitter.emit('callIdChanged', { callId: this.call.id });
   }

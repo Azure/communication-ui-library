@@ -452,6 +452,7 @@ export interface CallAdapterCallOperations {
     removeParticipant(participant: CommunicationIdentifier): Promise<void>;
     // @beta
     resumeCall(): Promise<void>;
+    returnToMainMeeting(): Promise<void>;
     sendDtmfTone(dtmfTone: DtmfTone_2): Promise<void>;
     setCaptionLanguage(language: string): Promise<void>;
     setSpokenLanguage(language: string): Promise<void>;
@@ -494,6 +495,7 @@ export type CallAdapterClientState = {
     hideAttendeeNames?: boolean;
     sounds?: CallingSounds;
     reactions?: ReactionResources;
+    mainMeetingCallId?: string;
 };
 
 // @public
@@ -1190,6 +1192,7 @@ export interface CallWithChatAdapterManagement {
     removeResourceFromCache(resourceDetails: ResourceDetails): void;
     // @beta
     resumeCall: () => Promise<void>;
+    returnToMainMeeting(): Promise<void>;
     sendDtmfTone: (dtmfTone: DtmfTone_2) => Promise<void>;
     sendMessage(content: string, options?: SendMessageOptions | /* @conditional-compile-remove(file-sharing-acs) */ MessageOptions): Promise<void>;
     sendReadReceipt(chatMessageId: string): Promise<void>;
@@ -1358,6 +1361,7 @@ export interface CallWithChatClientState {
     isTeamsMeeting: boolean;
     latestCallErrors: AdapterErrors;
     latestChatErrors: AdapterErrors;
+    mainMeetingCallId?: string;
     onResolveVideoEffectDependency?: () => Promise<VideoBackgroundEffectsDependency>;
     reactions?: ReactionResources;
     selectedVideoBackgroundEffect?: VideoBackgroundEffect;
