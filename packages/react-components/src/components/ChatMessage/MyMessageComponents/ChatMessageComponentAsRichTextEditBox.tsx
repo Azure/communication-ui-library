@@ -364,9 +364,13 @@ export const ChatMessageComponentAsRichTextEditBox = (
           /* @conditional-compile-remove(rich-text-editor-image-upload) */
           onPaste={onPaste}
           /* @conditional-compile-remove(rich-text-editor-image-upload) */
-          onInsertInlineImage={(imageUrl: string, imageFileName: string) => {
-            onInsertInlineImage && onInsertInlineImage(imageUrl, imageFileName, message.messageId);
-          }}
+          onInsertInlineImage={
+            onInsertInlineImage
+              ? (imageUrl: string, imageFileName: string) => {
+                  onInsertInlineImage(imageUrl, imageFileName, message.messageId);
+                }
+              : undefined
+          }
         />
       </Stack>
     );
