@@ -56,12 +56,5 @@ module.exports = {
 
   // Specifies the memory limit for workers before they are recycled and
   // is primarily a work- around for https://github.com/jestjs/jest/issues/11956
-  workerIdleMemoryLimit: 0.85,
-
-  moduleNameMapper: {
-    // Force modules to resolve with the CJS entry point, because Jest does not support package.json.exports. See https://github.com/uuidjs/uuid/issues/451
-    '^uuid$': require.resolve('uuid'),
-    '^nanoid$': require.resolve('nanoid'),
-    '@azure/logger$': require.resolve('@azure/logger')
-  },
+  workerIdleMemoryLimit: 0.85
 };
