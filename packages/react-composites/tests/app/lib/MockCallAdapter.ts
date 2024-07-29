@@ -153,6 +153,10 @@ export class MockCallAdapter implements CallAdapter {
   muteAllRemoteParticipants(): Promise<void> {
     throw Error('muteAllRemoteParticipants not implemented');
   }
+  /* @conditional-compile-remove(breakout-rooms) */
+  returnToMainMeeting(): Promise<void> {
+    throw Error('muteAllRemoteParticipants not implemented');
+  }
 
   async setCamera(sourceInfo: VideoDeviceInfo): Promise<void> {
     this.modifyState((draft: CallAdapterState) => {
