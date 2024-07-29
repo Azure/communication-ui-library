@@ -44,7 +44,7 @@ export const isAttachmentUploadCompleted = (
 // Before sending the image, we need to add the image id we get back after uploading the images to the message content.
 export const addUploadedImagesToMessage = async (
   message: string,
-  uploadInlineImages: AttachmentMetadataInProgress[]
+  inlineImages: AttachmentMetadataInProgress[]
 ): Promise<string> => {
   if (message === '') {
     return message;
@@ -52,8 +52,8 @@ export const addUploadedImagesToMessage = async (
   const document = new DOMParser().parseFromString(message ?? '', 'text/html');
   const imagesPromise = Array.from(document.querySelectorAll('img')).map((img) => {
     return new Promise<void>((resolve, rejects) => {
-      const uploadInlineImage = uploadInlineImages.find(
-        (imageUpload) => !imageUpload.error && (imageUpload.url === img.src || imageUpload.id === img.id)
+      const uploadInlineImage = inlineImages.find(
+        (inlineImage) => !inlineImage.error && (inlineImage.url === img.src || inlineImage.id === img.id)
       );
       // The message might content images that comes with the message before editing, those images are not in the uploadInlineImages array.
       // This function should only modify the message content for images in the uploadInlineImages array.
@@ -66,7 +66,9 @@ export const addUploadedImagesToMessage = async (
       imageElement.onload = () => {
         // imageElement is a copy of original img element, so changes need to be made to the original img element
         img.id = uploadInlineImage?.id ?? '';
-        img.src = '';
+        if (uploadInlineImage?.url) {
+          img.src = uploadInlineImage.url;
+        }
         img.width = imageElement.width;
         img.height = imageElement.height;
         img.style.aspectRatio = `${imageElement.width} / ${imageElement.height}`;
@@ -139,7 +141,7 @@ export const isSendBoxButtonAriaDisabled = ({
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 interface CancelInlineImageUploadProps {
   imageSrcArray: string[] | undefined;
-  imageUploadsInProgress: AttachmentMetadataInProgress[] | undefined;
+  inlineImages: AttachmentMetadataInProgress[] | undefined;
   messageId?: string;
   editBoxOnCancelInlineImageUpload?: (id: string, messageId: string) => void;
   sendBoxOnCancelInlineImageUpload?: (id: string) => void;
@@ -150,18 +152,13 @@ interface CancelInlineImageUploadProps {
  * @internal
  */
 export const cancelInlineImageUpload = (props: CancelInlineImageUploadProps): void => {
-  const {
-    imageSrcArray,
-    imageUploadsInProgress,
-    messageId,
-    editBoxOnCancelInlineImageUpload,
-    sendBoxOnCancelInlineImageUpload
-  } = props;
-  if (imageSrcArray && imageUploadsInProgress && imageUploadsInProgress?.length > 0) {
-    imageUploadsInProgress?.map((uploadImage) => {
-      if (uploadImage.url && !imageSrcArray?.includes(uploadImage.url)) {
-        sendBoxOnCancelInlineImageUpload && sendBoxOnCancelInlineImageUpload(uploadImage.id);
-        editBoxOnCancelInlineImageUpload && editBoxOnCancelInlineImageUpload(uploadImage.id, messageId || '');
+  const { imageSrcArray, inlineImages, messageId, editBoxOnCancelInlineImageUpload, sendBoxOnCancelInlineImageUpload } =
+    props;
+  if (imageSrcArray && inlineImages && inlineImages?.length > 0) {
+    inlineImages?.map((inlineImage) => {
+      if (inlineImage.url && !imageSrcArray?.includes(inlineImage.url)) {
+        sendBoxOnCancelInlineImageUpload && sendBoxOnCancelInlineImageUpload(inlineImage.id);
+        editBoxOnCancelInlineImageUpload && editBoxOnCancelInlineImageUpload(inlineImage.id, messageId || '');
       }
     });
   }
@@ -193,13 +190,13 @@ export const toAttachmentMetadata = (
  */
 export const insertImagesToContentString = async (
   content: string,
-  imageUploadsInProgress?: AttachmentMetadataInProgress[],
+  inlineImages?: AttachmentMetadataInProgress[],
   onCompleted?: (content: string) => void
 ): Promise<void> => {
-  if (!imageUploadsInProgress || imageUploadsInProgress.length <= 0) {
+  if (!inlineImages || inlineImages.length <= 0) {
     onCompleted?.(content);
   }
-  const newContent = await addUploadedImagesToMessage(content, imageUploadsInProgress ?? []);
+  const newContent = await addUploadedImagesToMessage(content, inlineImages ?? []);
   onCompleted?.(newContent);
 };
 
@@ -220,7 +217,10 @@ export const removeBrokenImageContentAndClearImageSizeStyles = (content: string)
       img.removeAttribute('data-ui-id');
     }
     // Clear maxWidth and maxHeight styles that are set by roosterJS.
+    // Clear width and height styles as the width and height is set in attributes
     // This is so that they can be set in messageThread styles without using the important flag.
+    img.style.width = '';
+    img.style.height = '';
     img.style.maxWidth = '';
     img.style.maxHeight = '';
   });

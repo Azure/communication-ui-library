@@ -142,7 +142,9 @@ class ProxyDeviceManager implements ProxyHandler<DeviceManager> {
 
   private audioDevicesUpdated = async (): Promise<void> => {
     this._context.setDeviceManagerMicrophones(dedupeById(await this._deviceManager.getMicrophones()));
-    this._context.setDeviceManagerSpeakers(dedupeById(await this._deviceManager.getSpeakers()));
+    if (this._deviceManager.isSpeakerSelectionAvailable) {
+      this._context.setDeviceManagerSpeakers(dedupeById(await this._deviceManager.getSpeakers()));
+    }
   };
 
   private selectedMicrophoneChanged = (): void => {

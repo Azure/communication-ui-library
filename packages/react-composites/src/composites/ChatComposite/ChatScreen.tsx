@@ -44,6 +44,8 @@ import { participantListContainerPadding } from '../common/styles/ParticipantCon
 /* @conditional-compile-remove(chat-composite-participant-pane) */
 import { ChatScreenPeoplePane } from './ChatScreenPeoplePane';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+import { removeImageTags } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(file-sharing-acs) */
 import { AttachmentDownloadErrorBar } from './AttachmentDownloadErrorBar';
 import { _AttachmentDownloadCards } from '@internal/react-components';
@@ -64,13 +66,12 @@ import { SendBoxPicker } from '../common/SendBoxPicker';
 import { loadRichTextSendBox } from '../common/SendBoxPicker';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import {
-  getEditBoxMessagesImageUploadsInProgress,
-  getSendBoxImageUploadsInProgress,
+  getEditBoxMessagesInlineImages,
+  getSendBoxInlineImages,
   onCancelInlineImageUploadHandlerForEditBox,
   onCancelInlineImageUploadHandlerForSendBox,
-  onUploadInlineImageForEditBox,
-  onUploadInlineImageForSendBox,
-  removeImageTags
+  onInsertInlineImageForEditBox,
+  onInsertInlineImageForSendBox
 } from './ImageUpload/ImageUploadUtils';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import type { ChatAdapterState } from './adapter/ChatAdapter';
@@ -582,8 +583,8 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
           /* @conditional-compile-remove(rich-text-editor-image-upload) */
           ...richTextEditorOptions,
           /* @conditional-compile-remove(rich-text-editor-image-upload) */
-          onUploadInlineImage: (imageUrl: string, imageFileName: string, messageId: string) => {
-            onUploadInlineImageForEditBox(
+          onInsertInlineImage: (imageUrl: string, imageFileName: string, messageId: string) => {
+            onInsertInlineImageForEditBox(
               imageUrl,
               imageFileName,
               messageId,
@@ -593,7 +594,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             );
           },
           /* @conditional-compile-remove(rich-text-editor-image-upload) */
-          messagesImageUploadsInProgress: getEditBoxMessagesImageUploadsInProgress(editBoxInlineImageUploads),
+          messagesInlineImages: getEditBoxMessagesInlineImages(editBoxInlineImageUploads),
           /* @conditional-compile-remove(rich-text-editor-image-upload) */
           onCancelInlineImageUpload: (imageId: string, messageId: string) => {
             onCancelInlineImageUploadHandlerForEditBox(
@@ -621,8 +622,8 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
           /* @conditional-compile-remove(rich-text-editor-image-upload) */
           ...richTextEditorOptions,
           /* @conditional-compile-remove(rich-text-editor-image-upload) */
-          onUploadInlineImage: (imageUrl: string, imageFileName: string) => {
-            onUploadInlineImageForSendBox(
+          onInsertInlineImage: (imageUrl: string, imageFileName: string) => {
+            onInsertInlineImageForSendBox(
               imageUrl,
               imageFileName,
               adapter,
@@ -630,9 +631,8 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
               localeStrings.chat
             );
           },
-          // onUploadInlineImageForSendBox,
           /* @conditional-compile-remove(rich-text-editor-image-upload) */
-          imageUploadsInProgress: getSendBoxImageUploadsInProgress(sendBoxInlineImageUploads),
+          inlineImages: getSendBoxInlineImages(sendBoxInlineImageUploads),
           /* @conditional-compile-remove(rich-text-editor-image-upload) */
           onCancelInlineImageUpload: (imageId: string) => {
             onCancelInlineImageUploadHandlerForSendBox(
