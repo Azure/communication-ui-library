@@ -583,10 +583,10 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
           /* @conditional-compile-remove(rich-text-editor-image-upload) */
           ...richTextEditorOptions,
           /* @conditional-compile-remove(rich-text-editor-image-upload) */
-          onInsertInlineImage: (imageUrl: string, imageFileName: string, messageId: string) => {
+          onInsertInlineImage: (imageUrl: string, messageId: string, imageFileName?: string) => {
             onInsertInlineImageForEditBox(
               imageUrl,
-              imageFileName,
+              imageFileName || '',
               messageId,
               adapter,
               handleEditBoxInlineImageUploadAction,
@@ -622,10 +622,10 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
           /* @conditional-compile-remove(rich-text-editor-image-upload) */
           ...richTextEditorOptions,
           /* @conditional-compile-remove(rich-text-editor-image-upload) */
-          onInsertInlineImage: (imageUrl: string, imageFileName: string) => {
+          onInsertInlineImage: (imageUrl: string, imageFileName?: string) => {
             onInsertInlineImageForSendBox(
               imageUrl,
-              imageFileName,
+              imageFileName || '',
               adapter,
               handleSendBoxInlineImageUploadAction,
               localeStrings.chat

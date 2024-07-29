@@ -6,6 +6,8 @@ import { ContentChangedEventSource, PluginEventType } from '../../utils/RichText
 import { _base64ToBlob } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { removeImageTags } from '@internal/acs-ui-common';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+import { v1 as generateGUID } from 'uuid';
 
 /**
  * CopyPastePlugin is a plugin for handling copy and paste events in the editor.
@@ -16,7 +18,7 @@ export default class CopyPastePlugin implements EditorPlugin {
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   onPaste?: (event: { content: DocumentFragment }) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  onInsertInlineImage?: (imageUrl: string, imageFileName: string) => void;
+  onInsertInlineImage?: (imageUrl: string, imageFileName?: string) => void;
 
   getName(): string {
     return 'CopyPastePlugin';
@@ -75,7 +77,7 @@ export const handleBeforePasteEvent = (
  */
 export const handleInlineImage = (
   event: PluginEvent,
-  onInsertInlineImage?: (image: string, fileName: string) => void
+  onInsertInlineImage?: (image: string, fileName?: string) => void
 ): void => {
   if (event.eventType === PluginEventType.BeforePaste && event.pasteType === 'normal' && onInsertInlineImage) {
     event.fragment.querySelectorAll('img').forEach((image) => {
@@ -88,10 +90,11 @@ export const handleInlineImage = (
         imageUrl = URL.createObjectURL(blobImage);
       }
 
-      onInsertInlineImage(imageUrl, fileName);
-
       image.src = imageUrl;
       image.alt = image.alt || 'image';
+      image.id = generateGUID();
+
+      onInsertInlineImage(imageUrl, fileName);
     });
   }
 };

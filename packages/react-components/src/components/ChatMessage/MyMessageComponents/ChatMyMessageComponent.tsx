@@ -106,7 +106,7 @@ type ChatMyMessageComponentProps = {
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   onCancelInlineImageUpload?: (imageId: string, messageId: string) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  onInsertInlineImage?: (imageUrl: string, imageFileName: string, messageId: string) => void;
+  onInsertInlineImage?: (imageUrl: string, messageId: string, imageFileName?: string) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   inlineImages?: AttachmentMetadataInProgress[];
 };

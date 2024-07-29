@@ -22,6 +22,8 @@ import {
   richTextBorderBoxStyle
 } from '../styles/RichTextInputBoxComponent.styles';
 import type { ContentModelDocument } from 'roosterjs-content-model-types';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+import { InlineImageAttributes } from '../utils/RichTextEditorUtils';
 
 /**
  * @private
@@ -35,7 +37,11 @@ export interface RichTextInputBoxComponentProps {
   placeholderText?: string;
   // the initial content of editor that is set when editor is created (e.g. when editing a message)
   initialContent?: string;
-  onChange: (newValue?: string, imageSrcArray?: Array<string>) => void;
+  onChange: (
+    newValue?: string,
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */ addedInlineImages?: Array<InlineImageAttributes>,
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */ removedInlineImages?: Array<InlineImageAttributes>
+  ) => void;
   onEnterKeyDown?: () => void;
   editorComponentRef: React.RefObject<RichTextEditorComponentRef>;
   // Partial needs to be removed when the rich text editor feature goes to GA
@@ -55,7 +61,7 @@ export interface RichTextInputBoxComponentProps {
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   onPaste?: (event: { content: DocumentFragment }) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  onInsertInlineImage?: (imageUrl: string, imageFileName: string) => void;
+  onInsertInlineImage?: (imageUrl: string, imageFileName?: string) => void;
 }
 
 /**

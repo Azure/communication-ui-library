@@ -5,6 +5,8 @@
 import { AttachmentMetadataInProgress } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(file-sharing-acs) */
 import { AttachmentMetadata } from '@internal/acs-ui-common';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+import { InlineImageAttributes } from './RichTextEditorUtils';
 
 /**
  * @private
@@ -42,22 +44,20 @@ export const isAttachmentUploadCompleted = (
  * @internal
  */
 // Before sending the image, we need to add the image id we get back after uploading the images to the message content.
-export const addUploadedImagesToMessage = async (
+export const updateStylesOfInlineImages = async (
   message: string,
-  inlineImages: AttachmentMetadataInProgress[]
+  addedInlineImages: InlineImageAttributes[]
 ): Promise<string> => {
   if (message === '') {
     return message;
   }
+  const addedInlineImagesIds = addedInlineImages.map((addedInlineImage) => addedInlineImage.id);
   const document = new DOMParser().parseFromString(message ?? '', 'text/html');
   const imagesPromise = Array.from(document.querySelectorAll('img')).map((img) => {
     return new Promise<void>((resolve, rejects) => {
-      const uploadInlineImage = inlineImages.find(
-        (inlineImage) => !inlineImage.error && (inlineImage.url === img.src || inlineImage.id === img.id)
-      );
       // The message might content images that comes with the message before editing, those images are not in the uploadInlineImages array.
       // This function should only modify the message content for images in the uploadInlineImages array.
-      if (!uploadInlineImage) {
+      if (!addedInlineImagesIds.includes(img.id)) {
         resolve();
         return;
       }
@@ -65,10 +65,6 @@ export const addUploadedImagesToMessage = async (
       imageElement.src = img.src;
       imageElement.onload = () => {
         // imageElement is a copy of original img element, so changes need to be made to the original img element
-        img.id = uploadInlineImage?.id ?? '';
-        if (uploadInlineImage?.url) {
-          img.src = uploadInlineImage.url;
-        }
         img.width = imageElement.width;
         img.height = imageElement.height;
         img.style.aspectRatio = `${imageElement.width} / ${imageElement.height}`;
@@ -140,8 +136,7 @@ export const isSendBoxButtonAriaDisabled = ({
 
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 interface CancelInlineImageUploadProps {
-  imageSrcArray: string[] | undefined;
-  inlineImages: AttachmentMetadataInProgress[] | undefined;
+  removedInlineImages?: InlineImageAttributes[];
   messageId?: string;
   editBoxOnCancelInlineImageUpload?: (id: string, messageId: string) => void;
   sendBoxOnCancelInlineImageUpload?: (id: string) => void;
@@ -152,16 +147,11 @@ interface CancelInlineImageUploadProps {
  * @internal
  */
 export const cancelInlineImageUpload = (props: CancelInlineImageUploadProps): void => {
-  const { imageSrcArray, inlineImages, messageId, editBoxOnCancelInlineImageUpload, sendBoxOnCancelInlineImageUpload } =
-    props;
-  if (imageSrcArray && inlineImages && inlineImages?.length > 0) {
-    inlineImages?.map((inlineImage) => {
-      if (inlineImage.url && !imageSrcArray?.includes(inlineImage.url)) {
-        sendBoxOnCancelInlineImageUpload && sendBoxOnCancelInlineImageUpload(inlineImage.id);
-        editBoxOnCancelInlineImageUpload && editBoxOnCancelInlineImageUpload(inlineImage.id, messageId || '');
-      }
-    });
-  }
+  const { removedInlineImages, messageId, editBoxOnCancelInlineImageUpload, sendBoxOnCancelInlineImageUpload } = props;
+  removedInlineImages?.map((removedInlineImage: InlineImageAttributes) => {
+    sendBoxOnCancelInlineImageUpload && sendBoxOnCancelInlineImageUpload(removedInlineImage.id);
+    editBoxOnCancelInlineImageUpload && editBoxOnCancelInlineImageUpload(removedInlineImage.id, messageId || '');
+  });
 };
 
 /* @conditional-compile-remove(file-sharing-acs) */
@@ -188,15 +178,12 @@ export const toAttachmentMetadata = (
 /**
  * @internal
  */
-export const insertImagesToContentString = async (
+export const modifyInlineImagesInContentString = async (
   content: string,
-  inlineImages?: AttachmentMetadataInProgress[],
+  addedInlineImages: InlineImageAttributes[],
   onCompleted?: (content: string) => void
 ): Promise<void> => {
-  if (!inlineImages || inlineImages.length <= 0) {
-    onCompleted?.(content);
-  }
-  const newContent = await addUploadedImagesToMessage(content, inlineImages ?? []);
+  const newContent = await updateStylesOfInlineImages(content, addedInlineImages);
   onCompleted?.(newContent);
 };
 

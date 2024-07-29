@@ -13,7 +13,7 @@ import { InputBoxButton } from '../InputBoxButton';
 import { RichTextSendBoxErrors, RichTextSendBoxErrorsProps } from './RichTextSendBoxErrors';
 import { isMessageTooLong, isSendBoxButtonAriaDisabled, sanitizeText } from '../utils/SendBoxUtils';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
-import { insertImagesToContentString, cancelInlineImageUpload } from '../utils/SendBoxUtils';
+import { modifyInlineImagesInContentString, cancelInlineImageUpload } from '../utils/SendBoxUtils';
 import { RichTextEditorComponentRef } from './RichTextEditor';
 import { useTheme } from '../../theming';
 import { richTextActionButtonsStyle, sendBoxRichTextEditorStyle } from '../styles/RichTextEditor.styles';
@@ -35,6 +35,8 @@ import { SendBoxErrorBarType } from '../SendBoxErrorBar';
 import { attachmentUploadCardsStyles } from '../styles/SendBox.styles';
 /* @conditional-compile-remove(file-sharing-acs) */
 import { FluentV9ThemeProvider } from '../../theming/FluentV9ThemeProvider';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+import { InlineImageAttributes } from '../utils/RichTextEditorUtils';
 
 /**
  * Strings of {@link RichTextSendBox} that can be overridden.
@@ -69,7 +71,7 @@ export interface RichTextSendBoxOptions extends RichTextEditorOptions {
    * Optional callback to handle an inline image that's inserted in the rich text editor.
    * When not provided, pasting images into rich text editor will be disabled.
    */
-  onInsertInlineImage?: (imageUrl: string, imageFileName: string) => void;
+  onInsertInlineImage?: (imageUrl: string, imageFileName?: string) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   /**
    * Optional callback to remove the image upload or delete the image from server before sending.
@@ -256,7 +258,7 @@ export interface RichTextSendBoxProps {
    * Optional callback to handle an inline image that's inserted in the rich text editor.
    * When not provided, pasting images into rich text editor will be disabled.
    */
-  onInsertInlineImage?: (imageUrl: string, imageFileName: string) => void;
+  onInsertInlineImage?: (imageUrl: string, imageFileName?: string) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   /**
    * Optional Array of type {@link AttachmentMetadataInProgress}
@@ -310,6 +312,8 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
   const [attachmentUploadsPendingError, setAttachmentUploadsPendingError] = useState<SendBoxErrorBarError | undefined>(
     undefined
   );
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  const [addedInlineImages, setAddedInlineImages] = useState<Array<InlineImageAttributes>>([]);
   const editorComponentRef = useRef<RichTextEditorComponentRef>(null);
 
   /* @conditional-compile-remove(file-sharing-acs) */
@@ -332,23 +336,22 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
   const onChangeHandler = useCallback(
     (
       newValue?: string,
-      /* @conditional-compile-remove(rich-text-editor-image-upload) */ imageSrcArray?: Array<string>
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */ addedInlineImages?: Array<InlineImageAttributes>,
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */ removedInlineImages?: Array<InlineImageAttributes>
     ) => {
       /* @conditional-compile-remove(rich-text-editor-image-upload) */
+      addedInlineImages && setAddedInlineImages(addedInlineImages);
+
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */
       cancelInlineImageUpload({
-        imageSrcArray,
-        inlineImages,
+        removedInlineImages,
         messageId: undefined,
         editBoxOnCancelInlineImageUpload: undefined,
         sendBoxOnCancelInlineImageUpload: onCancelInlineImageUpload
       });
       setContent(newValue);
     },
-    [
-      setContent,
-      /* @conditional-compile-remove(rich-text-editor-image-upload) */ onCancelInlineImageUpload,
-      /* @conditional-compile-remove(rich-text-editor-image-upload) */ inlineImages
-    ]
+    [setContent, /* @conditional-compile-remove(rich-text-editor-image-upload) */ onCancelInlineImageUpload]
   );
 
   const hasContent = useMemo(() => {
@@ -410,11 +413,12 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
         setContentValue('');
         editorComponentRef.current?.setEmptyContent();
         editorComponentRef.current?.focus();
+        setAddedInlineImages([]);
       };
 
       /* @conditional-compile-remove(rich-text-editor-image-upload) */
       if (isAttachmentUploadCompleted(inlineImages)) {
-        insertImagesToContentString(contentValue, inlineImages, (content: string) => {
+        modifyInlineImagesInContentString(contentValue, addedInlineImages, (content: string) => {
           sendMessage(content);
         });
         return;
@@ -429,6 +433,8 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     attachments,
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
     inlineImages,
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    addedInlineImages,
     contentValue,
     hasContent,
     /* @conditional-compile-remove(file-sharing-acs) */

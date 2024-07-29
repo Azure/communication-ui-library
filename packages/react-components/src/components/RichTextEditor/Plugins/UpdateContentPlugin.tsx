@@ -15,11 +15,6 @@ export enum UpdateEvent {
   Blur = 'Blur'
 }
 
-const enum Keys {
-  BACKSPACE = 8,
-  DELETE = 46
-}
-
 /**
  * A plugin to handle content update
  */
@@ -57,7 +52,6 @@ export class UpdateContentPlugin implements EditorPlugin {
     if (this.onUpdate === null) {
       return;
     }
-    let imageSrcArray: Array<string> | undefined;
 
     switch (event.eventType) {
       case PluginEventType.EditorReady:
@@ -69,23 +63,7 @@ export class UpdateContentPlugin implements EditorPlugin {
         break;
 
       case PluginEventType.ContentChanged:
-        if (
-          event.source.toLowerCase() === 'cut' ||
-          (event.source.toLowerCase() === 'keyboard' && (event.data === Keys.BACKSPACE || event.data === Keys.DELETE))
-        ) {
-          imageSrcArray = [];
-          event.contentModel?.blocks.map((block) => {
-            if (block.blockType === 'Paragraph') {
-              const segments = block.segments;
-              segments.map((segment) => {
-                if (segment.segmentType === 'Image') {
-                  imageSrcArray?.push(segment.src);
-                }
-              });
-            }
-          });
-        }
-        this.onUpdate(UpdateEvent.ContentChanged, imageSrcArray);
+        this.onUpdate(UpdateEvent.ContentChanged);
         break;
 
       case PluginEventType.Input:

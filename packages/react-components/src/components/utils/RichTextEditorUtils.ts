@@ -26,6 +26,12 @@ export enum ContentChangedEventSource {
   Paste = 'Paste'
 }
 
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+/**
+ * @internal
+ */
+export type InlineImageAttributes = Record<string, string>;
+
 /**
  * Applies the border format to the specified element.
  * If the element is an HTMLTableCellElement, it skips setting editing info
@@ -58,4 +64,74 @@ export const dataSetApplier = (format: DatasetFormat, element: HTMLElement, cont
     // apply default formats for all other cases
     context.defaultFormatAppliers.dataset(format, element, context);
   }
+};
+
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+/**
+ * @internal
+ */
+export const getPreviousInlineImages = (content?: string): Array<InlineImageAttributes> => {
+  if (!content) {
+    return [];
+  }
+  const previousInlineImages: Array<InlineImageAttributes> = [];
+  const document = new DOMParser().parseFromString(content ?? '', 'text/html');
+  Array.from(document.querySelectorAll('img')).map((img) => {
+    const imageAttributes = getInlineImageAttributes(img);
+    previousInlineImages.push(imageAttributes);
+  });
+  return previousInlineImages;
+};
+
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+/**
+ * @internal
+ */
+export const getRemovedInlineImages = (
+  content: string,
+  previousInlineImages: Array<InlineImageAttributes>
+): InlineImageAttributes[] => {
+  const removedInlineImages: InlineImageAttributes[] = [];
+  const document = new DOMParser().parseFromString(content ?? '', 'text/html');
+  const currentContentIds = Array.from(document.querySelectorAll('img')).map((img) => img.id);
+  previousInlineImages = previousInlineImages?.filter((img) => !currentContentIds?.includes(img.id));
+
+  previousInlineImages.map((imgAttributes) => {
+    removedInlineImages.push(imgAttributes);
+  });
+  return removedInlineImages;
+};
+
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+/**
+ * @internal
+ */
+export const getAddedInlineImages = (
+  content: string,
+  previousInlineImages: Array<InlineImageAttributes>
+): InlineImageAttributes[] => {
+  const addedInlineImages: InlineImageAttributes[] = [];
+  const document = new DOMParser().parseFromString(content ?? '', 'text/html');
+  Array.from(document.querySelectorAll('img')).map((img) => {
+    if (!previousInlineImages?.find((imgAttributes) => img.id === imgAttributes.id)) {
+      const imageAttributes = getInlineImageAttributes(img);
+      addedInlineImages.push(imageAttributes);
+    }
+  });
+  return addedInlineImages;
+};
+
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+/**
+ * @internal
+ */
+export const getInlineImageAttributes = (image: HTMLImageElement): InlineImageAttributes => {
+  const imageAttributes: Record<string, string> = {};
+  image.getAttributeNames().map((attrName) => {
+    const attrValue = image.getAttribute(attrName);
+    if (attrValue) {
+      imageAttributes[attrName] = attrValue;
+    }
+  });
+  return imageAttributes;
 };
