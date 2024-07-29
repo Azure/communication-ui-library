@@ -82,7 +82,7 @@ export const handleInlineImage = (
   if (event.eventType === PluginEventType.BeforePaste && event.pasteType === 'normal' && onInsertInlineImage) {
     event.fragment.querySelectorAll('img').forEach((image) => {
       const clipboardImage = event.clipboardData.image;
-      const fileName = clipboardImage?.name || clipboardImage?.type.replace('/', '.') || 'image.png';
+      const fileName = clipboardImage?.name || clipboardImage?.type.replace('/', '.');
       // If the image src is an external url, call the onInsertInlineImage callback with the url.
       let imageUrl = image.src;
       if (image.src.startsWith('data:image/')) {
