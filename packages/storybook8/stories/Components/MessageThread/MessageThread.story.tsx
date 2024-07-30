@@ -9,7 +9,9 @@ import {
   SystemMessage,
   MessageRenderer,
   ImageOverlay,
-  InlineImage
+  InlineImage,
+  RichTextEditBoxOptions,
+  AttachmentMetadataInProgress
 } from '@azure/communication-react';
 import {
   Persona,
@@ -22,7 +24,7 @@ import {
 } from '@fluentui/react';
 import { Divider } from '@fluentui/react-components';
 
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 
 import {
   GenerateMockNewChatMessage,
@@ -42,6 +44,9 @@ import {
 const MessageThreadStory = (args): JSX.Element => {
   const [chatMessages, setChatMessages] =
     useState<(SystemMessage | CustomMessage | ChatMessage)[]>(GenerateMockChatMessages());
+  const [messagesInlineImages, setMessagesInlineImages] = useState<
+    Record<string, AttachmentMetadataInProgress[]> | undefined
+  >();
   const dropdownMenuOptions = [
     { key: 'newMessage', text: 'New Message' },
     { key: 'newMessageOthers', text: 'New Message from others' },
@@ -121,6 +126,7 @@ const MessageThreadStory = (args): JSX.Element => {
     }
     updatedChatMessages[msgIdx] = message;
     setChatMessages(updatedChatMessages);
+    setMessagesInlineImages(undefined);
     return Promise.resolve();
   };
 
@@ -184,18 +190,31 @@ const MessageThreadStory = (args): JSX.Element => {
     }
   };
 
-  const removeImageTags = useCallback((event: { content: DocumentFragment }) => {
-    event.content.querySelectorAll('img').forEach((image) => {
-      // If the image is the only child of its parent, remove all the parents of this img element.
-      let parentNode: HTMLElement | null = image.parentElement;
-      let currentNode: HTMLElement = image;
-      while (parentNode?.childNodes.length === 1) {
-        currentNode = parentNode;
-        parentNode = parentNode.parentElement;
+  const richTextEditorOptions: RichTextEditBoxOptions = useMemo(() => {
+    return {
+      onInsertInlineImage: (image: string, fileName: string, messageId: string) => {
+        const inlineImages = messagesInlineImages?.[messageId] ?? [];
+        const id = Math.floor(Math.random() * 1000000).toString();
+        const newImage: AttachmentMetadataInProgress = {
+          id,
+          name: fileName,
+          progress: 1,
+          url: image,
+          error: undefined
+        };
+        setMessagesInlineImages({ ...messagesInlineImages, [messageId]: [...inlineImages, newImage] });
+      },
+      messagesInlineImages: messagesInlineImages,
+      onCancelInlineImageUpload: (image: string, messageId: string) => {
+        const inlineImages = messagesInlineImages?.[messageId];
+        if (!inlineImages) {
+          return;
+        }
+        const filteredImages = inlineImages.filter((img) => img.url !== image);
+        setMessagesInlineImages({ ...messagesInlineImages, [messageId]: filteredImages });
       }
-      currentNode?.remove();
-    });
-  }, []);
+    };
+  }, [messagesInlineImages]);
 
   const onSendHandler = (): void => {
     switch (selectedMessageType.key) {
@@ -236,7 +255,8 @@ const MessageThreadStory = (args): JSX.Element => {
         onRenderMessage={onRenderMessage}
         inlineImageOptions={inlineImageOptions}
         onUpdateMessage={onUpdateMessageCallback}
-        richTextEditorOptions={args.richTextEditor ? { onPaste: removeImageTags } : undefined}
+        onCancelEditMessage={() => setMessagesInlineImages(undefined)}
+        richTextEditorOptions={args.richTextEditor ? richTextEditorOptions : undefined}
         onRenderAvatar={(userId?: string) => {
           return (
             <Persona

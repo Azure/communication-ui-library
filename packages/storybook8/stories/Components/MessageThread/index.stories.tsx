@@ -23,6 +23,7 @@ import { MessageThreadWithSystemMessagesExample } from './snippets/SystemMessage
 import { MessageThreadWithInlineImageExample } from './snippets/WithInlineImageMessage.snippet';
 import { MessageThreadWithMessageDateExample } from './snippets/WithMessageDate.snippet';
 import { MessageThreadWithRichTextEditorExample } from './snippets/WithRichTextEditor.snippet';
+import { MessageThreadWithRichTextEditorInlineImagesExample } from './snippets/WithRichTextEditorInlineImages.snippet';
 import { MessageThreadWithWithRichTextEditorOnPasteExample } from './snippets/WithRichTextEditorOnPaste.snippet';
 
 // Main story
@@ -83,6 +84,10 @@ export const DateExampleDocsOnly = {
 
 export const RichTextEditorTextDocsOnly = {
   render: MessageThreadWithRichTextEditorExample
+};
+
+export const RichTextEditorInlineImagesTextDocsOnly = {
+  render: MessageThreadWithRichTextEditorInlineImagesExample
 };
 
 export const RichTextEditorOnPasteTextDocsOnly = {
