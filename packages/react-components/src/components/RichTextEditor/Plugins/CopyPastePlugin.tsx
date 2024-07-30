@@ -1,7 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 import type { PluginEvent, EditorPlugin, IEditor } from 'roosterjs-content-model-types';
-import { ContentChangedEventSource, getInlineImageAttributes, PluginEventType } from '../../utils/RichTextEditorUtils';
+import { ContentChangedEventSource, PluginEventType } from '../../utils/RichTextEditorUtils';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+import { getInlineImageAttributes } from '../../utils/RichTextEditorUtils';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { _base64ToBlob } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
