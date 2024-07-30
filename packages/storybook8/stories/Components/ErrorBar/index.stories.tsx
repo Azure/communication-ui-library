@@ -19,7 +19,9 @@ const meta: Meta = {
     errorTypes: controlsToAdd.errorTypes,
     // Hiding auto-generated controls
     strings: hiddenControl,
-    activeErrorMessages: hiddenControl
+    activeErrorMessages: hiddenControl,
+    ignorePremountErrors: hiddenControl,
+    onDismissError: hiddenControl
   },
   args: {
     errorTypes: ['accessDenied']
