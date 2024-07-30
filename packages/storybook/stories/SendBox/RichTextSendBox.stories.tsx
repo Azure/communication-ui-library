@@ -131,11 +131,11 @@ const RichTextSendBoxStory = (args): JSX.Element => {
           console.log(`sending typing notifications`);
           return Promise.resolve();
         }}
-        onInsertInlineImage={(image: string, fileName: string) => {
+        onInsertInlineImage={(image: string, imageFileName?: string) => {
           const id = inlineImages?.length ? (inlineImages.length + 1).toString() : '1';
           const newImage = {
             id,
-            name: fileName,
+            name: imageFileName ?? 'image.png',
             progress: 1,
             url: image,
             error: undefined
@@ -143,8 +143,8 @@ const RichTextSendBoxStory = (args): JSX.Element => {
           setInlineImages([...(inlineImages ?? []), newImage]);
         }}
         inlineImages={inlineImages}
-        onCancelInlineImageUpload={(imageId: string) => {
-          const filteredInlineImages = inlineImages?.filter((image) => image.id !== imageId);
+        onCancelInlineImageUpload={(imageAttributes: Record<string, string>) => {
+          const filteredInlineImages = inlineImages?.filter((image) => image.id !== imageAttributes.id);
           setInlineImages(filteredInlineImages);
         }}
       />

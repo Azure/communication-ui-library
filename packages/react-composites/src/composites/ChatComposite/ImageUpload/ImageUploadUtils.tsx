@@ -247,13 +247,20 @@ export const onInsertInlineImageForSendBox = async (
  * @internal
  */
 export const cancelInlineImageUpload = (
-  imageId: string,
-  imageUpload: AttachmentUpload | undefined,
+  imageAttributes: Record<string, string>,
+  imageUploads: Record<string, AttachmentUpload[]> | undefined,
   messageId: string,
   inlineImageUploadActionHandler: Dispatch<ImageActions>,
   adapter: ChatAdapter
 ): void => {
+  if (!imageUploads || !imageUploads[messageId]) {
+    messageId !== SEND_BOX_UPLOADS_KEY_VALUE && deleteInlineImageFromServer(imageAttributes.id, adapter);
+    return;
+  }
+  const imageUpload = imageUploads[messageId].find((upload) => upload.metadata.url === imageAttributes.src);
+
   if (!imageUpload || !imageUpload?.metadata.id) {
+    messageId !== SEND_BOX_UPLOADS_KEY_VALUE && deleteInlineImageFromServer(imageAttributes.id, adapter);
     return;
   }
 
@@ -264,55 +271,43 @@ export const cancelInlineImageUpload = (
   });
   // TODO: remove local blob
   if (imageUpload?.metadata.progress === 1) {
-    try {
-      adapter.deleteImage(imageId);
-    } catch (error) {
-      console.error(error);
+    deleteInlineImageFromServer(imageAttributes.id, adapter);
+  }
+};
+
+const deleteInlineImageFromServer = (imageId: string, adapter: ChatAdapter): void => {
+  try {
+    adapter.deleteImage(imageId);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+/**
+ * @internal
+ */
+export const updateContentStringWithUploadedInlineImages = (
+  content: string,
+  imageUploads: Record<string, AttachmentUpload[]> | undefined,
+  messageId: string = SEND_BOX_UPLOADS_KEY_VALUE
+): string => {
+  if (!imageUploads) {
+    return content;
+  }
+  const messageUploads = imageUploads[messageId];
+  const document = new DOMParser().parseFromString(content ?? '', 'text/html');
+  document.querySelectorAll('img').forEach((img) => {
+    const uploadInlineImage = messageUploads.find(
+      (upload) => !upload.metadata.error && upload.metadata.progress === 1 && upload.metadata.url === img.src
+    );
+
+    if (uploadInlineImage) {
+      img.id = uploadInlineImage.metadata.id;
+      img.src = uploadInlineImage.metadata.url ?? img.src;
     }
-  }
-};
+  });
+  content = document.body.innerHTML;
 
-/* @conditional-compile-remove(rich-text-editor-image-upload) */
-/**
- * @internal
- */
-export const onCancelInlineImageUploadHandlerForEditBox = (
-  imageId: string,
-  messageId: string,
-  editBoxInlineImageUploads: Record<string, AttachmentUpload[]> | undefined,
-  adapter: ChatAdapter,
-  handleEditBoxInlineImageUploadAction: Dispatch<ImageActions>
-): void => {
-  if (!editBoxInlineImageUploads) {
-    return;
-  }
-  const imageUpload = editBoxInlineImageUploads[messageId].find((upload) => upload.metadata.id === imageId);
-
-  cancelInlineImageUpload(imageId, imageUpload, messageId, handleEditBoxInlineImageUploadAction, adapter);
-};
-
-/* @conditional-compile-remove(rich-text-editor-image-upload) */
-/**
- * @internal
- */
-export const onCancelInlineImageUploadHandlerForSendBox = (
-  imageId: string,
-  sendBoxInlineImageUploads: Record<string, AttachmentUpload[]> | undefined,
-  adapter: ChatAdapter,
-  handleSendBoxInlineImageUploadAction: Dispatch<ImageActions>
-): void => {
-  if (!sendBoxInlineImageUploads) {
-    return;
-  }
-  const imageUpload = sendBoxInlineImageUploads[SEND_BOX_UPLOADS_KEY_VALUE].find(
-    (upload) => upload.metadata.id === imageId
-  );
-
-  cancelInlineImageUpload(
-    imageId,
-    imageUpload,
-    SEND_BOX_UPLOADS_KEY_VALUE,
-    handleSendBoxInlineImageUploadAction,
-    adapter
-  );
+  return content;
 };

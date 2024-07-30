@@ -34,12 +34,12 @@ export const MessageThreadWithRichTextEditorInlineImagesExample: () => JSX.Eleme
 
   const richTextEditorOptions: RichTextEditBoxOptions = useMemo(() => {
     return {
-      onInsertInlineImage: (image: string, fileName: string, messageId: string) => {
+      onInsertInlineImage: (image: string, messageId: string, imageFileName?: string) => {
         const inlineImages = messagesInlineImages?.[messageId] ?? [];
         const id = Math.floor(Math.random() * 1000000).toString();
         const newImage: AttachmentMetadataInProgress = {
           id,
-          name: 'image',
+          name: imageFileName || 'image.png',
           progress: 1,
           url: image,
           error: undefined
@@ -47,12 +47,12 @@ export const MessageThreadWithRichTextEditorInlineImagesExample: () => JSX.Eleme
         setMessagesInlineImages({ ...messagesInlineImages, [messageId]: [...inlineImages, newImage] });
       },
       messagesInlineImages: messagesInlineImages,
-      onCancelInlineImageUpload: (image: string, messageId: string) => {
+      onCancelInlineImageUpload: (imageAttributes: Record<string, string>, messageId: string) => {
         const inlineImages = messagesInlineImages?.[messageId];
         if (!inlineImages) {
           return;
         }
-        const filteredImages = inlineImages.filter((img) => img.url !== image);
+        const filteredImages = inlineImages.filter((img) => img.id !== imageAttributes.id);
         setMessagesInlineImages({ ...messagesInlineImages, [messageId]: filteredImages });
       }
     };

@@ -23,7 +23,6 @@ import { useChatMessageRichTextEditContainerStyles } from '../../styles/ChatMess
 import { MAXIMUM_LENGTH_OF_MESSAGE } from '../../utils/SendBoxUtils';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import {
-  cancelInlineImageUpload,
   hasIncompleteAttachmentUploads,
   modifyInlineImagesInContentString,
   removeBrokenImageContentAndClearImageSizeStyles
@@ -68,7 +67,7 @@ export type ChatMessageComponentAsRichTextEditBoxProps = {
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   onPaste?: (event: { content: DocumentFragment }) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  onCancelInlineImageUpload?: (imageId: string, messageId: string) => void;
+  onCancelInlineImageUpload?: (imageAttributes: Record<string, string>, messageId: string) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   onInsertInlineImage?: (imageUrl: string, messageId: string, imageFileName?: string) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
@@ -320,11 +319,8 @@ export const ChatMessageComponentAsRichTextEditBox = (
       /* @conditional-compile-remove(rich-text-editor-image-upload) */
       addedInlineImages && setAddedInlineImages(addedInlineImages);
       /* @conditional-compile-remove(rich-text-editor-image-upload) */
-      cancelInlineImageUpload({
-        removedInlineImages,
-        messageId: message.messageId,
-        editBoxOnCancelInlineImageUpload: onCancelInlineImageUpload,
-        sendBoxOnCancelInlineImageUpload: undefined
+      removedInlineImages?.map((removedInlineImage: InlineImageAttributes) => {
+        onCancelInlineImageUpload && onCancelInlineImageUpload(removedInlineImage, message.messageId);
       });
       setText(content);
     },

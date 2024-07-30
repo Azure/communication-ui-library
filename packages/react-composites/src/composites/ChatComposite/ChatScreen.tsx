@@ -17,6 +17,8 @@ import {
   TypingIndicatorStylesProps,
   useTheme
 } from '@internal/react-components';
+/* @conditional-compile-remove(rich-text-editor) */
+import { RichTextEditBoxOptions, RichTextSendBoxOptions } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing-acs) */
 import { ChatMessage } from '@internal/react-components';
 import React, { useCallback, useEffect, useMemo } from 'react';
@@ -66,12 +68,12 @@ import { SendBoxPicker } from '../common/SendBoxPicker';
 import { loadRichTextSendBox } from '../common/SendBoxPicker';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import {
+  cancelInlineImageUpload,
   getEditBoxMessagesInlineImages,
   getSendBoxInlineImages,
-  onCancelInlineImageUploadHandlerForEditBox,
-  onCancelInlineImageUploadHandlerForSendBox,
   onInsertInlineImageForEditBox,
-  onInsertInlineImageForSendBox
+  onInsertInlineImageForSendBox,
+  updateContentStringWithUploadedInlineImages
 } from './ImageUpload/ImageUploadUtils';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import type { ChatAdapterState } from './adapter/ChatAdapter';
@@ -504,6 +506,8 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       content: string,
       /* @conditional-compile-remove(file-sharing-acs) */ /* @conditional-compile-remove(rich-text-editor-composite-support) */ options?: MessageOptions
     ) {
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */
+      content = updateContentStringWithUploadedInlineImages(content, sendBoxInlineImageUploads);
       /* @conditional-compile-remove(file-sharing-acs) */
       const attachments = options?.attachments ?? [];
       /* @conditional-compile-remove(file-sharing-acs) */
@@ -527,17 +531,24 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
         type: options?.type
       });
     },
-    [adapter, /* @conditional-compile-remove(rich-text-editor-image-upload) */ handleSendBoxInlineImageUploadAction]
+    [
+      adapter,
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */ handleSendBoxInlineImageUploadAction,
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */ sendBoxInlineImageUploads
+    ]
   );
 
   const onUpdateMessageHandler = useCallback(
     async (messageId: string, content: string) => {
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */
+      content = updateContentStringWithUploadedInlineImages(content, editBoxInlineImageUploads, messageId);
       await messageThreadProps.onUpdateMessage(messageId, content);
       /* @conditional-compile-remove(rich-text-editor-image-upload) */
       handleEditBoxInlineImageUploadAction({ type: AttachmentUploadActionType.Clear, messageId });
     },
     [
       /* @conditional-compile-remove(rich-text-editor-image-upload) */ handleEditBoxInlineImageUploadAction,
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */ editBoxInlineImageUploads,
       messageThreadProps
     ]
   );
@@ -577,7 +588,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   ]);
 
   /* @conditional-compile-remove(rich-text-editor-composite-support) */
-  const richTextEditBoxOptions = useMemo(() => {
+  const richTextEditBoxOptions: RichTextEditBoxOptions | undefined = useMemo(() => {
     return options?.richTextEditor
       ? {
           /* @conditional-compile-remove(rich-text-editor-image-upload) */
@@ -596,13 +607,13 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
           /* @conditional-compile-remove(rich-text-editor-image-upload) */
           messagesInlineImages: getEditBoxMessagesInlineImages(editBoxInlineImageUploads),
           /* @conditional-compile-remove(rich-text-editor-image-upload) */
-          onCancelInlineImageUpload: (imageId: string, messageId: string) => {
-            onCancelInlineImageUploadHandlerForEditBox(
-              imageId,
-              messageId,
+          onCancelInlineImageUpload: (imageAttributes: Record<string, string>, messageId: string) => {
+            cancelInlineImageUpload(
+              imageAttributes,
               editBoxInlineImageUploads,
-              adapter,
-              handleEditBoxInlineImageUploadAction
+              messageId,
+              handleEditBoxInlineImageUploadAction,
+              adapter
             );
           }
         }
@@ -616,7 +627,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   ]);
 
   /* @conditional-compile-remove(rich-text-editor-composite-support) */
-  const richTextSendBoxOptions = useMemo(() => {
+  const richTextSendBoxOptions: RichTextSendBoxOptions | undefined = useMemo(() => {
     return options?.richTextEditor
       ? {
           /* @conditional-compile-remove(rich-text-editor-image-upload) */
@@ -625,7 +636,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
           onInsertInlineImage: (imageUrl: string, imageFileName?: string) => {
             onInsertInlineImageForSendBox(
               imageUrl,
-              imageFileName || '',
+              imageFileName || 'image.png',
               adapter,
               handleSendBoxInlineImageUploadAction,
               localeStrings.chat
@@ -634,12 +645,13 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
           /* @conditional-compile-remove(rich-text-editor-image-upload) */
           inlineImages: getSendBoxInlineImages(sendBoxInlineImageUploads),
           /* @conditional-compile-remove(rich-text-editor-image-upload) */
-          onCancelInlineImageUpload: (imageId: string) => {
-            onCancelInlineImageUploadHandlerForSendBox(
-              imageId,
+          onCancelInlineImageUpload: (imageAttributes: Record<string, string>) => {
+            cancelInlineImageUpload(
+              imageAttributes,
               sendBoxInlineImageUploads,
-              adapter,
-              handleSendBoxInlineImageUploadAction
+              SEND_BOX_UPLOADS_KEY_VALUE,
+              handleSendBoxInlineImageUploadAction,
+              adapter
             );
           }
         }

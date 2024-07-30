@@ -3,6 +3,7 @@
 
 import type { EditorPlugin, IEditor, PluginEvent } from 'roosterjs-content-model-types';
 import { PluginEventType } from '../../utils/RichTextEditorUtils';
+import { ChangeSource } from 'roosterjs-content-model-dom';
 
 /**
  * An update mode to indicate when the content update happens
@@ -15,6 +16,11 @@ export enum UpdateEvent {
   Blur = 'Blur'
 }
 
+const enum Keys {
+  BACKSPACE = 8,
+  DELETE = 46
+}
+
 /**
  * A plugin to handle content update
  */
@@ -22,7 +28,7 @@ export class UpdateContentPlugin implements EditorPlugin {
   private editor: IEditor | null = null;
   private disposer: (() => void) | null = null;
   // don't set callback in constructor to be able to update callback without plugin recreation
-  onUpdate: ((event: UpdateEvent, imageSrcArray?: Array<string>) => void) | null = null;
+  onUpdate: ((event: UpdateEvent, shouldUpdateInlineImages?: boolean) => void) | null = null;
 
   getName(): string {
     return 'UpdateContentPlugin';
@@ -63,6 +69,13 @@ export class UpdateContentPlugin implements EditorPlugin {
         break;
 
       case PluginEventType.ContentChanged:
+        if (
+          event.source === ChangeSource.Cut ||
+          event.source === ChangeSource.Paste ||
+          (event.source === ChangeSource.Keyboard && (event.data === Keys.BACKSPACE || event.data === Keys.DELETE))
+        ) {
+          this.onUpdate(UpdateEvent.ContentChanged, true);
+        }
         this.onUpdate(UpdateEvent.ContentChanged);
         break;
 

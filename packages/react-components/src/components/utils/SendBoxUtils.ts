@@ -134,26 +134,6 @@ export const isSendBoxButtonAriaDisabled = ({
   );
 };
 
-/* @conditional-compile-remove(rich-text-editor-image-upload) */
-interface CancelInlineImageUploadProps {
-  removedInlineImages?: InlineImageAttributes[];
-  messageId?: string;
-  editBoxOnCancelInlineImageUpload?: (id: string, messageId: string) => void;
-  sendBoxOnCancelInlineImageUpload?: (id: string) => void;
-}
-
-/* @conditional-compile-remove(rich-text-editor-image-upload) */
-/**
- * @internal
- */
-export const cancelInlineImageUpload = (props: CancelInlineImageUploadProps): void => {
-  const { removedInlineImages, messageId, editBoxOnCancelInlineImageUpload, sendBoxOnCancelInlineImageUpload } = props;
-  removedInlineImages?.map((removedInlineImage: InlineImageAttributes) => {
-    sendBoxOnCancelInlineImageUpload && sendBoxOnCancelInlineImageUpload(removedInlineImage.id);
-    editBoxOnCancelInlineImageUpload && editBoxOnCancelInlineImageUpload(removedInlineImage.id, messageId || '');
-  });
-};
-
 /* @conditional-compile-remove(file-sharing-acs) */
 /**
  * @internal

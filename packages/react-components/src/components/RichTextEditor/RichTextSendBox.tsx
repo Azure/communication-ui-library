@@ -13,7 +13,7 @@ import { InputBoxButton } from '../InputBoxButton';
 import { RichTextSendBoxErrors, RichTextSendBoxErrorsProps } from './RichTextSendBoxErrors';
 import { isMessageTooLong, isSendBoxButtonAriaDisabled, sanitizeText } from '../utils/SendBoxUtils';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
-import { modifyInlineImagesInContentString, cancelInlineImageUpload } from '../utils/SendBoxUtils';
+import { modifyInlineImagesInContentString } from '../utils/SendBoxUtils';
 import { RichTextEditorComponentRef } from './RichTextEditor';
 import { useTheme } from '../../theming';
 import { richTextActionButtonsStyle, sendBoxRichTextEditorStyle } from '../styles/RichTextEditor.styles';
@@ -76,7 +76,7 @@ export interface RichTextSendBoxOptions extends RichTextEditorOptions {
   /**
    * Optional callback to remove the image upload or delete the image from server before sending.
    */
-  onCancelInlineImageUpload?: (imageId: string) => void;
+  onCancelInlineImageUpload?: (imageAttributes: Record<string, string>) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   /**
    * Optional Array of type {@link AttachmentMetadataInProgress}
@@ -240,7 +240,7 @@ export interface RichTextSendBoxProps {
   /**
    * Optional callback to remove the image upload or delete the image from server before sending.
    */
-  onCancelInlineImageUpload?: (imageId: string) => void;
+  onCancelInlineImageUpload?: (imageAttributes: Record<string, string>) => void;
   /**
    * Callback function used when the send button is clicked.
    */
@@ -343,12 +343,10 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
       addedInlineImages && setAddedInlineImages(addedInlineImages);
 
       /* @conditional-compile-remove(rich-text-editor-image-upload) */
-      cancelInlineImageUpload({
-        removedInlineImages,
-        messageId: undefined,
-        editBoxOnCancelInlineImageUpload: undefined,
-        sendBoxOnCancelInlineImageUpload: onCancelInlineImageUpload
-      });
+      removedInlineImages?.map(
+        (removedInlineImage: InlineImageAttributes) =>
+          onCancelInlineImageUpload && onCancelInlineImageUpload(removedInlineImage)
+      );
       setContent(newValue);
     },
     [setContent, /* @conditional-compile-remove(rich-text-editor-image-upload) */ onCancelInlineImageUpload]

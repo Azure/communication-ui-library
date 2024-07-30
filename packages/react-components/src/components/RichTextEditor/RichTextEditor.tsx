@@ -200,7 +200,10 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
 
   useEffect(() => {
     // don't set callback in plugin constructor to update callback without plugin recreation
-    updatePlugin.onUpdate = (event: string) => {
+    updatePlugin.onUpdate = (
+      event: string,
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */ shouldUpdateInlineImages?: boolean
+    ) => {
       if (editor.current === null) {
         return;
       }
@@ -209,16 +212,26 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
       } else {
         const content = exportContent(editor.current);
         /* @conditional-compile-remove(rich-text-editor-image-upload) */
-        // We cannot get the added images directly from the copyPastePlugin because the onUpdate is called before we can set an internal state.
-        const addedInlineImages: InlineImageAttributes[] = getAddedInlineImages(content, previousInlineImages);
+        let addedInlineImages: InlineImageAttributes[] = [];
         /* @conditional-compile-remove(rich-text-editor-image-upload) */
-        const removedInlineImages: InlineImageAttributes[] = getRemovedInlineImages(content, previousInlineImages);
+        let removedInlineImages: InlineImageAttributes[] = [];
+        /* @conditional-compile-remove(rich-text-editor-image-upload) */
+        if (shouldUpdateInlineImages) {
+          /* @conditional-compile-remove(rich-text-editor-image-upload) */
+          // We cannot get the added images directly from the copyPastePlugin because the onUpdate is called before we can set an internal state.
+          addedInlineImages = getAddedInlineImages(content, previousInlineImages);
+          /* @conditional-compile-remove(rich-text-editor-image-upload) */
+          removedInlineImages = getRemovedInlineImages(content, previousInlineImages);
+        }
+
         onChange &&
           onChange(
             exportContent(editor.current),
             /* @conditional-compile-remove(rich-text-editor-image-upload) */ addedInlineImages,
             /* @conditional-compile-remove(rich-text-editor-image-upload) */ removedInlineImages
           );
+
+        /* @conditional-compile-remove(rich-text-editor-image-upload) */
         setPreviousInlineImages(getPreviousInlineImages(content));
       }
     };
