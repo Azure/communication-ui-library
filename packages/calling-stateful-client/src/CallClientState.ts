@@ -197,7 +197,7 @@ export interface SpotlightState {
 export interface BreakoutRoomsState {
   assignedBreakoutRoom?: BreakoutRoom;
   breakoutRoomSettings?: BreakoutRoomsSettings;
-  mainMeetingCallId?: string;
+  breakoutRoomOriginCallId?: string;
 }
 
 /**

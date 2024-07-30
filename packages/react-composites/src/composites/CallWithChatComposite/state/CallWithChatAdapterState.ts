@@ -94,7 +94,7 @@ export interface CallWithChatClientState {
   /**
    * Id of call to return to after leaving a breakout room
    */
-  mainMeetingCallId?: string;
+  breakoutRoomOriginCallId?: string;
 }
 
 /**

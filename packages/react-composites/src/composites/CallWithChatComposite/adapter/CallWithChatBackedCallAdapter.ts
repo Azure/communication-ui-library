@@ -238,8 +238,8 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
   }
 
   /* @conditional-compile-remove(breakout-rooms) */
-  public async returnToMainMeeting(): Promise<void> {
-    return this.callWithChatAdapter.returnToMainMeeting();
+  public async returnFromBreakoutRoom(): Promise<void> {
+    return this.callWithChatAdapter.returnFromBreakoutRoom();
   }
 }
 

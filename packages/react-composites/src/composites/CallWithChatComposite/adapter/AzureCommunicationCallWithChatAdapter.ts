@@ -574,8 +574,8 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   }
 
   /* @conditional-compile-remove(breakout-rooms) */
-  public async returnToMainMeeting(): Promise<void> {
-    return this.callAdapter.returnToMainMeeting();
+  public async returnFromBreakoutRoom(): Promise<void> {
+    return this.callAdapter.returnFromBreakoutRoom();
   }
 
   on(event: 'callParticipantsJoined', listener: ParticipantsJoinedListener): void;

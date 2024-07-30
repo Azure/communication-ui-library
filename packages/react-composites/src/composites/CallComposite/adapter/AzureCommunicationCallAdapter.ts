@@ -1050,7 +1050,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
   }
 
   /* @conditional-compile-remove(breakout-rooms) */
-  public async returnToMainMeeting(): Promise<void> {
+  public async returnFromBreakoutRoom(): Promise<void> {
     if (this.call === undefined) {
       return;
     }
@@ -1060,7 +1060,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
       : undefined;
     // Find main meeting call from call agent from the this call state
     const mainMeetingCall = this.callAgent?.calls.find((callAgentCall) => {
-      return callAgentCall.id === callState?.breakoutRooms?.mainMeetingCallId;
+      return callAgentCall.id === callState?.breakoutRooms?.breakoutRoomOriginCallId;
     });
     // If a main meeting call exists then process that call and resume
     if (mainMeetingCall) {
@@ -1343,7 +1343,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
   /* @conditional-compile-remove(breakout-rooms) */
   private assignedBreakoutRoomUpdated(breakoutRoom: BreakoutRoom): void {
     if (breakoutRoom.state === 'closed') {
-      this.returnToMainMeeting();
+      this.returnFromBreakoutRoom();
     }
   }
 

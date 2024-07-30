@@ -215,8 +215,8 @@ export class _MockCallAdapter implements CallAdapter {
     throw Error('muteAllRemoteParticipants not implemented');
   }
   /* @conditional-compile-remove(breakout-rooms) */
-  returnToMainMeeting(): Promise<void> {
-    throw Error('returnToMainMeeting not implemented');
+  returnFromBreakoutRoom(): Promise<void> {
+    throw Error('returnFromBreakoutRoom not implemented');
   }
 }
 

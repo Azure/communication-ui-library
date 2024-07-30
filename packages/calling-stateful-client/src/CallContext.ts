@@ -631,11 +631,11 @@ export class CallContext {
   }
 
   /* @conditional-compile-remove(breakout-rooms) */
-  public setBreakoutRoomMainMeetingCallId(callId: string, breakoutRoomCallId: string): void {
+  public setBreakoutRoomOriginCallId(callId: string, breakoutRoomCallId: string): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(breakoutRoomCallId)];
       if (call) {
-        call.breakoutRooms = { ...call.breakoutRooms, mainMeetingCallId: callId };
+        call.breakoutRooms = { ...call.breakoutRooms, breakoutRoomOriginCallId: callId };
       }
     });
   }

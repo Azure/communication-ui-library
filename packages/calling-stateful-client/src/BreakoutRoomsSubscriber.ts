@@ -57,7 +57,7 @@ export class BreakoutRoomsSubscriber {
   };
 
   private onBreakoutRoomsJoined = (call: Call | TeamsCall): void => {
-    this._context.setBreakoutRoomMainMeetingCallId(this._callIdRef.callId, call.id);
+    this._context.setBreakoutRoomOriginCallId(this._callIdRef.callId, call.id);
   };
 
   private onBreakoutRoomSettingsUpdated = (breakoutRoomSettings: BreakoutRoomsSettings): void => {
