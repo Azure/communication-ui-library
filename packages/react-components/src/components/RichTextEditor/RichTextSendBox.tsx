@@ -447,7 +447,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
   }, [
     contentTooLongMessage,
     /* @conditional-compile-remove(file-sharing-acs) */
-    attachmentUploadsPendingError,
+    attachmentUploadsPendingError
   ]);
 
   const onRenderSendIcon = useCallback(
@@ -544,7 +544,12 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
       hasError: hasErrorMessageThatPreventsSubmit,
       disabled
     });
-  }, [/* @conditional-compile-remove(file-sharing-acs) */ attachments, disabled, hasContent, hasErrorMessageThatPreventsSubmit]);
+  }, [
+    /* @conditional-compile-remove(file-sharing-acs) */ attachments,
+    disabled,
+    hasContent,
+    hasErrorMessageThatPreventsSubmit
+  ]);
 
   const sendButton = useMemo(() => {
     return (
