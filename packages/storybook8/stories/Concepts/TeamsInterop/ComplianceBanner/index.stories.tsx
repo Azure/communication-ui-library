@@ -11,5 +11,6 @@ export default {
   argTypes: {
     callRecordState: { control: 'boolean', defaultValue: false, name: 'Is recording on?' },
     callTranscribeState: { control: 'boolean', defaultValue: false, name: 'Is transcription on?' }
-  }
+  },
+  args: {}
 } as Meta;
