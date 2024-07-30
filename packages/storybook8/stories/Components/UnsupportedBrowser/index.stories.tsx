@@ -15,8 +15,6 @@ export const UnsupportedEnvironmentModalsDocsOnly = {
   render: UnsupportedEnvironmentModals
 };
 
-export { UnsupportedBrowser } from './UnsupportedBrowser.story';
-
 const meta: Meta = {
   title: 'Components/Unsupported Browser',
   component: UnsupportedBrowserComponent,
