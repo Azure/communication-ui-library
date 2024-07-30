@@ -47,6 +47,8 @@ import {
   CallErrorTarget,
   CallError
 } from './CallClientState';
+/* @conditional-compile-remove(breakout-rooms) */
+import { NotificationTarget, CallNotification, CallNotifications } from './CallClientState';
 /* @conditional-compile-remove(one-to-n-calling) */
 import { TeamsIncomingCallState } from './CallClientState';
 import { CaptionsInfo } from './CallClientState';
@@ -113,7 +115,8 @@ export class CallContext {
       userId: userId,
       /* @conditional-compile-remove(unsupported-browser) */ environmentInfo: undefined,
       /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId: alternateCallerId,
-      latestErrors: {} as CallErrors
+      latestErrors: {} as CallErrors,
+      /* @conditional-compile-remove(breakout-rooms) */ latestNotifications: {} as CallNotifications
     };
     this._emitter = new EventEmitter();
     this._emitter.setMaxListeners(maxListeners);
@@ -1247,6 +1250,20 @@ export class CallContext {
   private setLatestError(target: CallErrorTarget, error: CallError): void {
     this.modifyState((draft: CallClientState) => {
       draft.latestErrors[target] = error;
+    });
+  }
+
+  /* @conditional-compile-remove(breakout-rooms) */
+  public setLatestNotification(notificationTarget: NotificationTarget, notification: CallNotification): void {
+    this.modifyState((draft: CallClientState) => {
+      draft.latestNotifications[notification.target] = notification;
+    });
+  }
+
+  /* @conditional-compile-remove(breakout-rooms) */
+  public deleteLatestNotification(notificationTarget: NotificationTarget): void {
+    this.modifyState((draft: CallClientState) => {
+      delete draft.latestNotifications[notificationTarget];
     });
   }
 }

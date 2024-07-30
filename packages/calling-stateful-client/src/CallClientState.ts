@@ -889,6 +889,13 @@ export interface CallClientState {
    * See documentation of {@Link CallErrors} for details.
    */
   latestErrors: CallErrors;
+  /* @conditional-compile-remove(breakout-rooms) */
+  /**
+   * Stores the latest notifications.
+   *
+   * See documentation of {@Link CallNotifications} for details.
+   */
+  latestNotifications: CallNotifications;
   /* @conditional-compile-remove(PSTN-calls) */
   /**
    * A phone number in E.164 format that will be used to represent callers identity.
@@ -1006,6 +1013,33 @@ export type CallErrorTarget =
   | /* @conditional-compile-remove(soft-mute) */ 'Call.mutedByOthers'
   | 'Call.muteAllRemoteParticipants'
   | 'Call.setConstraints';
+
+/* @conditional-compile-remove(breakout-rooms) */
+/**
+ * @public
+ */
+export type CallNotifications = {
+  [target in NotificationTarget]: CallNotification;
+};
+
+/* @conditional-compile-remove(breakout-rooms) */
+/**
+ * @public
+ */
+export interface CallNotification {
+  target: NotificationTarget;
+
+  timestamp: Date;
+}
+
+/* @conditional-compile-remove(breakout-rooms) */
+/** @public */
+export type NotificationTarget =
+  | 'assignedBreakoutRoomOpened'
+  | 'assignedBreakoutRoomOpenedPromptJoin'
+  | 'assignedBreakoutRoomChanged'
+  | 'assignedBreakoutRoomClosingSoon'
+  | 'assignedBreakoutRoomClosed';
 
 /**
  * State only proxy for {@link @azure/communication-calling#DiagnosticsCallFeature}.

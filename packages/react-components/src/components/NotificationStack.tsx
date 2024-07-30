@@ -243,9 +243,34 @@ export interface NotificationStackStrings {
    */
   recordingStoppedStillTranscribing?: NotificationStrings;
   /**
-   *  Transcription stopped but recording still going on message
+   * Transcription stopped but recording still going on message
    */
   transcriptionStoppedStillRecording?: NotificationStrings;
+  /* @conditional-compile-remove(breakout-rooms) */
+  /**
+   * Message shown in notification when the user will be automatically to their assigned breakout room that is opened
+   */
+  assignedBreakoutRoomOpened?: NotificationStrings;
+  /* @conditional-compile-remove(breakout-rooms) */
+  /**
+   * Message shown in notification when the user is prompted to join their assigned breakout room that is opened
+   */
+  assignedBreakoutRoomOpenedPromptJoin?: NotificationStrings;
+  /* @conditional-compile-remove(breakout-rooms) */
+  /**
+   * Message shown in notification when the user is assigned breakout room is changed
+   */
+  assignedBreakoutRoomChanged?: NotificationStrings;
+  /* @conditional-compile-remove(breakout-rooms) */
+  /**
+   * Message shown in notification when the user's assigned breakout room is closing soon
+   */
+  assignedBreakoutRoomClosingSoon?: NotificationStrings;
+  /* @conditional-compile-remove(breakout-rooms) */
+  /**
+   * Message shown in notification when the user's assigned breakout room is closed
+   */
+  assignedBreakoutRoomClosed?: NotificationStrings;
 }
 
 /**
@@ -292,6 +317,13 @@ export interface ActiveNotification {
    * by the user.
    */
   timestamp?: Date;
+  /* @conditional-compile-remove(breakout-rooms) */
+  /**
+   * Metadata for the notification.
+   */
+  metadata?: {
+    breakoutRoom?: { assignedBreakoutRoomDisplayName?: string };
+  };
 }
 
 /**
@@ -345,6 +377,15 @@ export const NotificationStack = (props: NotificationStackProps): JSX.Element =>
     >
       {activeNotifications.map((notification, index) => {
         if (index < maxNotificationsToShow) {
+          /* @conditional-compile-remove(breakout-rooms) */
+          const notificationString = strings ? strings[notification.type] : undefined;
+          /* @conditional-compile-remove(breakout-rooms) */
+          if (notificationString?.message && notification.metadata?.breakoutRoom?.assignedBreakoutRoomDisplayName) {
+            notificationString.message = notificationString.message.replace(
+              '{breakoutRoomDisplayName}',
+              notification.metadata?.breakoutRoom?.assignedBreakoutRoomDisplayName
+            );
+          }
           return (
             <div key={index} style={{ marginBottom: `${index === maxNotificationsToShow - 1 ? 0 : '0.25rem'}` }}>
               <Notification
