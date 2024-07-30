@@ -67,8 +67,8 @@ const getDocs: () => JSX.Element = () => {
         The RichTextSendBox component provides an `onInsertInlineImage` callback to handle an inline image that is
         inserted into the RichTextSendBox component. This callback can be used to implement custom logic, such as
         uploading the image to a server. After processing each inserted image in the callback, the results should be
-        passed back to the component through the `inlineImages` prop. This prop will be used to render inline images in
-        the RichTextSendBox and send them with the message.
+        passed back to the component through the `inlineImagesWithProgress` prop. This prop will be used to render
+        inline images in the RichTextSendBox and send them with the message.
       </Description>
       <Canvas mdxSource={RichTextSendBoxWithInlineImagesExampleText}>
         <RichTextSendBoxWithInlineImagesExample />
@@ -93,7 +93,7 @@ const getDocs: () => JSX.Element = () => {
 const RichTextSendBoxStory = (args): JSX.Element => {
   const timeoutRef = React.useRef<NodeJS.Timeout>();
   const delayForSendButton = 300;
-  const [inlineImages, setInlineImages] = useState<AttachmentMetadataInProgress[] | undefined>();
+  const [inlineImagesWithProgress, setInlineImages] = useState<AttachmentMetadataInProgress[] | undefined>();
 
   return (
     <div style={{ width: '31.25rem', maxWidth: '90%' }}>
@@ -132,7 +132,7 @@ const RichTextSendBoxStory = (args): JSX.Element => {
           return Promise.resolve();
         }}
         onInsertInlineImage={(image: string, imageFileName?: string) => {
-          const id = inlineImages?.length ? (inlineImages.length + 1).toString() : '1';
+          const id = inlineImagesWithProgress?.length ? (inlineImagesWithProgress.length + 1).toString() : '1';
           const newImage = {
             id,
             name: imageFileName ?? 'image.png',
@@ -140,11 +140,11 @@ const RichTextSendBoxStory = (args): JSX.Element => {
             url: image,
             error: undefined
           };
-          setInlineImages([...(inlineImages ?? []), newImage]);
+          setInlineImages([...(inlineImagesWithProgress ?? []), newImage]);
         }}
-        inlineImages={inlineImages}
+        inlineImagesWithProgress={inlineImagesWithProgress}
         onRemoveInlineImage={(imageAttributes: Record<string, string>) => {
-          const filteredInlineImages = inlineImages?.filter((image) => image.id !== imageAttributes.id);
+          const filteredInlineImages = inlineImagesWithProgress?.filter((image) => image.id !== imageAttributes.id);
           setInlineImages(filteredInlineImages);
         }}
       />

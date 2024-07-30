@@ -579,7 +579,7 @@ export interface RichTextEditBoxOptions extends RichTextEditorOptions {
   onInsertInlineImage?: (imageUrl: string, messageId: string, imageFileName?: string) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   /**
-   * Optional callback to remove the image upload or delete the image from server before sending.
+   * Optional callback invoked after inline image is removed from the UI.
    */
   onRemoveInlineImage?: (imageAttributes: Record<string, string>, messageId: string) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
