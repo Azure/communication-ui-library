@@ -1352,7 +1352,6 @@ export interface CallWithChatAdapterUiState {
 // @public
 export interface CallWithChatClientState {
     alternateCallerId?: string | undefined;
-    breakoutRoomOriginCallId?: string;
     call?: CallState;
     chat?: ChatThreadClientState;
     devices: DeviceManagerState;

@@ -90,11 +90,6 @@ export interface CallWithChatClientState {
    * Reaction resources to render in meetings
    * */
   reactions?: ReactionResources;
-  /* @conditional-compile-remove(breakout-rooms) */
-  /**
-   * Id of call to return to after leaving a breakout room
-   */
-  breakoutRoomOriginCallId?: string;
 }
 
 /**
