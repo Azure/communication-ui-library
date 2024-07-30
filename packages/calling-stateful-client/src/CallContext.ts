@@ -11,6 +11,8 @@ import {
   VideoDeviceInfo
 } from '@azure/communication-calling';
 import { RaisedHand } from '@azure/communication-calling';
+/* @conditional-compile-remove(breakout-rooms) */
+import { BreakoutRoom, BreakoutRoomsSettings } from '@azure/communication-calling';
 
 /* @conditional-compile-remove(teams-meeting-conference) */
 import { TeamsMeetingAudioConferencingDetails } from '@azure/communication-calling';
@@ -614,6 +616,26 @@ export class CallContext {
         ) {
           call.spotlight.localParticipantSpotlight = undefined;
         }
+      }
+    });
+  }
+
+  /* @conditional-compile-remove(breakout-rooms) */
+  public setAssignedBreakoutRoom(callId: string, breakoutRoom: BreakoutRoom): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        call.breakoutRooms = { ...call.breakoutRooms, assignedBreakoutRoom: breakoutRoom };
+      }
+    });
+  }
+
+  /* @conditional-compile-remove(breakout-rooms) */
+  public setBreakoutRoomSettings(callId: string, breakoutRoomSettings: BreakoutRoomsSettings): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        call.breakoutRooms = { ...call.breakoutRooms, breakoutRoomSettings: breakoutRoomSettings };
       }
     });
   }
