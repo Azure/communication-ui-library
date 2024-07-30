@@ -19,12 +19,13 @@ export interface CallScreenProps {
 
 export const CallScreen = (props: CallScreenProps): JSX.Element => {
   const { /* @conditional-compile-remove(one-to-n-calling) */ call } = props;
+  /* @conditional-compile-remove(one-to-n-calling) */
   const incomingCallStackProps = usePropsFor(IncomingCallStack);
   return (
     <Stack style={{ width: '100%', height: '100%', margin: 'auto', position: 'relative' }}>
-      <>{call && <CallingComponents />}</>
+      <>{/* @conditional-compile-remove(one-to-n-calling) */ call && <CallingComponents />}</>
       <Stack style={{ position: 'absolute', top: '0', right: '0' }}>
-        <IncomingCallStack {...incomingCallStackProps} />
+        {/* @conditional-compile-remove(one-to-n-calling) */ <IncomingCallStack {...incomingCallStackProps} />}
       </Stack>
     </Stack>
   );
