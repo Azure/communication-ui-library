@@ -24,7 +24,7 @@
     "placeholderText": "メッセージを入力",
     "textTooLong": "メッセージの長さが上限を超えています。",
     "sendButtonAriaLabel": "メッセージの送信",
-    "attachmentUploadsPendingError": "アップロード中です... お待ちください。",
+    "attachmentUploadsPendingError": "ファイルをアップロードしています。お待ちください。",
     "removeAttachment": "ファイルの削除",
     "uploading": "アップロード中",
     "uploadCompleted": "アップロードが完了しました",
@@ -34,7 +34,8 @@
     "placeholderText": "メッセージを入力してください",
     "textTooLong": "メッセージの長さが上限を超えています。",
     "sendButtonAriaLabel": "メッセージの送信",
-    "attachmentUploadsPendingError": "アップロード中...お待ちください。",
+    "attachmentUploadsPendingError": "ファイルをアップロードしています。お待ちください。",
+    "imageUploadsPendingError": "画像をアップロードしています。お待ちください。",
     "removeAttachment": "ファイルを削除します",
     "uploading": "アップロード中",
     "uploadCompleted": "アップロード完了",
@@ -58,7 +59,11 @@
     "richTextDeleteRowMenu": "行の削除",
     "richTextDeleteTableMenu": "表の削除",
     "richTextToolbarMoreButtonAriaLabel": "その他のオプション",
-    "attachmentMoreMenu": "その他のオプション"
+    "attachmentMoreMenu": "その他のオプション",
+    "richTextNewBulletedListItemAnnouncement": "行頭文字、改行",
+    "richTextNewNumberedListItemAnnouncement": "{0}、改行",
+    "richTextBulletedListAppliedAnnouncement": "箇条書きが適用されました",
+    "richTextNumberedListAppliedAnnouncement": "番号付きリストが適用されました"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "候補"
@@ -221,7 +226,12 @@
     "richTextDeleteRowMenu": "行の削除",
     "richTextDeleteTableMenu": "テーブルの削除",
     "richTextToolbarMoreButtonAriaLabel": "その他のオプション",
-    "attachmentUploadsPendingError": "アップロードしています...お待ちください。"
+    "attachmentUploadsPendingError": "ファイルをアップロードしています。お待ちください。",
+    "imageUploadsPendingError": "画像をアップロードしています。お待ちください。",
+    "richTextNewBulletedListItemAnnouncement": "行頭文字、改行",
+    "richTextNewNumberedListItemAnnouncement": "{0}、改行",
+    "richTextBulletedListAppliedAnnouncement": "箇条書きが適用されました",
+    "richTextNumberedListAppliedAnnouncement": "番号付きリストが適用されました"
   },
   "errorBar": {
     "unableToReachChatService": "オフラインです",
