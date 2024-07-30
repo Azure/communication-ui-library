@@ -116,7 +116,7 @@ export const createDefaultChatHandlers = memoizeOne(
       /* @conditional-compile-remove(rich-text-editor-image-upload) */
       onDeleteImage: async function (imageId: string): Promise<void> {
         try {
-          await chatThreadClient.deleteMessage(imageId);
+          await chatThreadClient.deleteImage(imageId);
         } catch (e) {
           console.log(`Error deleting image message: ${e}`);
         }
