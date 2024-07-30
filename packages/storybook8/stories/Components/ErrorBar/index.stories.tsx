@@ -20,6 +20,9 @@ const meta: Meta = {
     // Hiding auto-generated controls
     strings: hiddenControl,
     activeErrorMessages: hiddenControl
+  },
+  args: {
+    errorTypes: ['accessDenied']
   }
 };
 

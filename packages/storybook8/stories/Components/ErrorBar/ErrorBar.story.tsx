@@ -24,7 +24,7 @@ const ErrorBarStory = (args: any): JSX.Element => {
       })}
     >
       <ErrorBarComponent
-        activeErrorMessages={args.errorTypes?.map((t: any) => ({ type: t, timestamp: new Date(Date.now()) }))}
+        activeErrorMessages={args.errorTypes.map((t: any) => ({ type: t, timestamp: new Date(Date.now()) }))}
       />
     </div>
   );
