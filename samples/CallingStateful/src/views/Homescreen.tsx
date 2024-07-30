@@ -10,7 +10,9 @@ import {
   MicrosoftTeamsUserIdentifier,
   PhoneNumberIdentifier
 } from '@azure/communication-common';
-import { Dialpad, fromFlatCommunicationIdentifier, IncomingCallStack, usePropsFor } from '@azure/communication-react';
+import { Dialpad, fromFlatCommunicationIdentifier } from '@azure/communication-react';
+/* @conditional-compile-remove(one-to-n-calling) */
+import { IncomingCallStack, usePropsFor } from '@azure/communication-react';
 import { PrimaryButton, Stack, TextField, Image } from '@fluentui/react';
 import React, { useState } from 'react';
 import { imgStyle } from '../styles/HomeScreen.styles';
@@ -26,6 +28,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const { callAgent, headerImageProps } = props;
   const [targetParticipants, setTargetParticipants] = useState<CommunicationIdentifier[]>();
   const [alternateCallerId, setAlternateCallerId] = useState<string>();
+  /* @conditional-compile-remove(one-to-n-calling) */
   const incomingCallStackProps = usePropsFor(IncomingCallStack);
   return (
     <Stack horizontal tokens={{ childrenGap: '1rem' }}>
@@ -72,7 +75,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
           Start Call
         </PrimaryButton>
         <Stack style={{ position: 'absolute', top: '0', right: '0' }}>
-          <IncomingCallStack {...incomingCallStackProps} />
+          {/* @conditional-compile-remove(one-to-n-calling) */ <IncomingCallStack {...incomingCallStackProps} />}
         </Stack>
       </Stack>
     </Stack>
