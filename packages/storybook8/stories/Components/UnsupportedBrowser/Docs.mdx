@@ -1,10 +1,13 @@
 import { Canvas, Description, Meta, Source } from '@storybook/blocks';
 import { UnsupportedBrowser as UnsupportedBrowserComponent } from '@azure/communication-react';
 import * as UnsupportedBrowserStories from './index.stories';
+import { SingleLineBetaBanner } from '../../BetaBanners/SingleLineBetaBanner';
 import UnsupportedBrowserExamples from '!!raw-loader!./snippets/UnsupportedBrowserExamples.snippet.tsx';
 import UnsupportedEnvironmentModals from '!!raw-loader!./snippets/UnsupportedEnvironmentModal.snippet.tsx';
 
 <Meta of={UnsupportedBrowserStories} components={UnsupportedBrowserComponent} />
+
+<SingleLineBetaBanner />
 
 # Unsupported Browser
 
