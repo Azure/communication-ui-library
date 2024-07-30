@@ -1,17 +1,22 @@
 import { Meta } from '@storybook/react';
-import { Lobby } from './Lobby.story';
+import { Lobby as LobbyComponent } from './Lobby.story';
 import { controlsToAdd } from '../utils/controlsUtils';
 
-export const LobbyDocsOnly = {
-  render: Lobby
+export const Lobby = {
+  render: LobbyComponent
 };
 
 export default {
   title: 'Concepts/Teams Interop/Lobby',
-  component: Lobby,
+  component: LobbyComponent,
   argTypes: {
     callStateText: controlsToAdd.callStateText,
     callStateSubText: controlsToAdd.callStateSubText,
     isVideoReady: controlsToAdd.isVideoReady
+  },
+  args: {
+    callStateText: 'Connecting to the call',
+    callStateSubText: 'Please wait while we connect you to the call',
+    isVideoReady: false
   }
 } as Meta;

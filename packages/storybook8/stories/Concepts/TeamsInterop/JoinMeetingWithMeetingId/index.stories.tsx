@@ -1,14 +1,17 @@
 import { Meta } from '@storybook/react';
-import { JoinMeetingWithMeetingId, storyControls } from './JoinMeetingWithMeetingId.story';
+import {
+  JoinMeetingWithMeetingId as JoinMeetingWithMeetingIdComponent,
+  storyControls
+} from './JoinMeetingWithMeetingId.story';
 import { defaultCallWithChatCompositeHiddenControls } from '../utils/controlsUtils';
 
-export const JoinMeetingWithMeetingIdDocsOnly = {
-  render: JoinMeetingWithMeetingId
+export const JoinMeetingWithMeetingId = {
+  render: JoinMeetingWithMeetingIdComponent
 };
 
 export default {
   title: 'Concepts/Teams Interop/Join Meeting With Meeting Id',
-  component: JoinMeetingWithMeetingId,
+  component: JoinMeetingWithMeetingIdComponent,
   argTypes: {
     ...storyControls,
     ...defaultCallWithChatCompositeHiddenControls

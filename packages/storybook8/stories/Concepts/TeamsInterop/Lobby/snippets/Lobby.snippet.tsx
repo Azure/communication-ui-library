@@ -6,18 +6,23 @@ import {
   EndCallButton,
   MicrophoneButton,
   DevicesButton,
-  useTheme
+  useTheme,
+  DEFAULT_COMPONENT_ICONS
 } from '@azure/communication-react';
 import React from 'react';
 
 // Don't import this. It's just a helper for the story.
 import { useVideoStreams } from '../../../../utils';
+import { initializeIcons, registerIcons } from '@fluentui/react';
 
 export interface LobbyProps {
   isVideoReady: boolean;
   callStateText: string;
   callStateSubText: string;
 }
+
+initializeIcons();
+registerIcons({ icons: DEFAULT_COMPONENT_ICONS });
 
 export const Lobby = (props: LobbyProps): JSX.Element => {
   const theme = useTheme();
@@ -84,7 +89,6 @@ export const Lobby = (props: LobbyProps): JSX.Element => {
           {props.callStateSubText}
         </p>
       </div>
-
       <ControlBar layout="dockedBottom" styles={ControlBarStyles}>
         <CameraButton showLabel={true} checked={true} />
         <MicrophoneButton showLabel={true} checked={true} />
