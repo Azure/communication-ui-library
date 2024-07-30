@@ -24,7 +24,7 @@
     "placeholderText": "Immetti un messaggio",
     "textTooLong": "La lunghezza del messaggio supera il limite massimo.",
     "sendButtonAriaLabel": "Invio messaggio",
-    "attachmentUploadsPendingError": "Caricamento in corso... Attendere.",
+    "attachmentUploadsPendingError": "È in corso il caricamento del file, attendere.",
     "removeAttachment": "Rimuovi file",
     "uploading": "Caricamento in corso",
     "uploadCompleted": "Caricamento completato",
@@ -34,7 +34,8 @@
     "placeholderText": "Immetti un messaggio",
     "textTooLong": "La lunghezza del messaggio supera il limite massimo.",
     "sendButtonAriaLabel": "Invia messaggio",
-    "attachmentUploadsPendingError": "Caricamento... Attendi.",
+    "attachmentUploadsPendingError": "È in corso il caricamento del file, attendere.",
+    "imageUploadsPendingError": "È in corso il caricamento dell'immagine, attendere.",
     "removeAttachment": "Rimuovi file",
     "uploading": "Caricamento",
     "uploadCompleted": "Caricamento completato",
@@ -58,7 +59,11 @@
     "richTextDeleteRowMenu": "Elimina riga",
     "richTextDeleteTableMenu": "Elimina tabella",
     "richTextToolbarMoreButtonAriaLabel": "Altre opzioni",
-    "attachmentMoreMenu": "Altre opzioni"
+    "attachmentMoreMenu": "Altre opzioni",
+    "richTextNewBulletedListItemAnnouncement": "Punto elenco, nuova riga",
+    "richTextNewNumberedListItemAnnouncement": "{0}, nuova riga",
+    "richTextBulletedListAppliedAnnouncement": "Elenco puntato applicato",
+    "richTextNumberedListAppliedAnnouncement": "Elenco numerato applicato"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Suggerimenti"
@@ -221,7 +226,12 @@
     "richTextDeleteRowMenu": "Elimina riga",
     "richTextDeleteTableMenu": "Elimina tabella",
     "richTextToolbarMoreButtonAriaLabel": "Altre opzioni",
-    "attachmentUploadsPendingError": "Caricamento in corso... Attendi."
+    "attachmentUploadsPendingError": "È in corso il caricamento del file, attendere.",
+    "imageUploadsPendingError": "È in corso il caricamento dell'immagine, attendere.",
+    "richTextNewBulletedListItemAnnouncement": "Punto elenco, nuova riga",
+    "richTextNewNumberedListItemAnnouncement": "{0}, nuova riga",
+    "richTextBulletedListAppliedAnnouncement": "Elenco puntato applicato",
+    "richTextNumberedListAppliedAnnouncement": "Elenco numerato applicato"
   },
   "errorBar": {
     "unableToReachChatService": "Sei offline",
