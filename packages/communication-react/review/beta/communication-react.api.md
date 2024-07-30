@@ -4189,7 +4189,7 @@ export type ResourceFetchResult = {
 
 // @beta
 export interface RichTextEditBoxOptions extends RichTextEditorOptions {
-    messagesInlineImages?: Record<string, AttachmentMetadataInProgress[]>;
+    messagesInlineImagesWithProgress?: Record<string, AttachmentMetadataInProgress[]>;
     onRemoveInlineImage?: (imageAttributes: Record<string, string>, messageId: string) => void;
     onInsertInlineImage?: (imageUrl: string, messageId: string, imageFileName?: string) => void;
 }

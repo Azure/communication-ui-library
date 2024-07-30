@@ -70,14 +70,14 @@ export const getEditBoxMessagesInlineImages = (
     return;
   }
   const messageIds = Object.keys(editBoxInlineImageUploads || {});
-  const messagesInlineImages: Record<string, AttachmentMetadataInProgress[]> = {};
+  const messagesInlineImagesWithProgress: Record<string, AttachmentMetadataInProgress[]> = {};
   messageIds.map((messageId) => {
     const messageUploads = editBoxInlineImageUploads[messageId].map((upload) => {
       return upload.metadata;
     });
-    messagesInlineImages[messageId] = messageUploads;
+    messagesInlineImagesWithProgress[messageId] = messageUploads;
   });
-  return messagesInlineImages;
+  return messagesInlineImagesWithProgress;
 };
 
 /* @conditional-compile-remove(rich-text-editor-image-upload) */

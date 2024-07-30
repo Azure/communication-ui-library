@@ -44,7 +44,7 @@ import {
 const MessageThreadStory = (args): JSX.Element => {
   const [chatMessages, setChatMessages] =
     useState<(SystemMessage | CustomMessage | ChatMessage)[]>(GenerateMockChatMessages());
-  const [messagesInlineImages, setMessagesInlineImages] = useState<
+  const [messagesInlineImagesWithProgress, setMessagesInlineImages] = useState<
     Record<string, AttachmentMetadataInProgress[]> | undefined
   >();
   const dropdownMenuOptions = [
@@ -193,7 +193,7 @@ const MessageThreadStory = (args): JSX.Element => {
   const richTextEditorOptions: RichTextEditBoxOptions = useMemo(() => {
     return {
       onInsertInlineImage: (image: string, messageId: string, imageFileName?: string) => {
-        const inlineImages = messagesInlineImages?.[messageId] ?? [];
+        const inlineImages = messagesInlineImagesWithProgress?.[messageId] ?? [];
         const id = Math.floor(Math.random() * 1000000).toString();
         const newImage: AttachmentMetadataInProgress = {
           id,
@@ -202,19 +202,19 @@ const MessageThreadStory = (args): JSX.Element => {
           url: image,
           error: undefined
         };
-        setMessagesInlineImages({ ...messagesInlineImages, [messageId]: [...inlineImages, newImage] });
+        setMessagesInlineImages({ ...messagesInlineImagesWithProgress, [messageId]: [...inlineImages, newImage] });
       },
-      messagesInlineImages: messagesInlineImages,
+      messagesInlineImagesWithProgress: messagesInlineImagesWithProgress,
       onRemoveInlineImage: (imageAttributes: Record<string, string>, messageId: string) => {
-        const inlineImages = messagesInlineImages?.[messageId];
+        const inlineImages = messagesInlineImagesWithProgress?.[messageId];
         if (!inlineImages) {
           return;
         }
         const filteredImages = inlineImages.filter((img) => img.id !== imageAttributes.id);
-        setMessagesInlineImages({ ...messagesInlineImages, [messageId]: filteredImages });
+        setMessagesInlineImages({ ...messagesInlineImagesWithProgress, [messageId]: filteredImages });
       }
     };
-  }, [messagesInlineImages]);
+  }, [messagesInlineImagesWithProgress]);
 
   const onSendHandler = (): void => {
     switch (selectedMessageType.key) {
