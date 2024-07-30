@@ -67,7 +67,7 @@ export type ChatMessageComponentAsRichTextEditBoxProps = {
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   onPaste?: (event: { content: DocumentFragment }) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  onCancelInlineImageUpload?: (imageAttributes: Record<string, string>, messageId: string) => void;
+  onRemoveInlineImage?: (imageAttributes: Record<string, string>, messageId: string) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   onInsertInlineImage?: (imageUrl: string, messageId: string, imageFileName?: string) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
@@ -92,7 +92,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
     inlineImages,
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    onCancelInlineImageUpload
+    onRemoveInlineImage
   } = props;
 
   const initialContent = useMemo(() => {
@@ -320,13 +320,13 @@ export const ChatMessageComponentAsRichTextEditBox = (
       addedInlineImages && setAddedInlineImages(addedInlineImages);
       /* @conditional-compile-remove(rich-text-editor-image-upload) */
       removedInlineImages?.map((removedInlineImage: InlineImageAttributes) => {
-        onCancelInlineImageUpload && onCancelInlineImageUpload(removedInlineImage, message.messageId);
+        onRemoveInlineImage && onRemoveInlineImage(removedInlineImage, message.messageId);
       });
       setText(content);
     },
     [
       setText,
-      /* @conditional-compile-remove(rich-text-editor-image-upload) */ onCancelInlineImageUpload,
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */ onRemoveInlineImage,
       /* @conditional-compile-remove(rich-text-editor-image-upload) */ message.messageId
     ]
   );

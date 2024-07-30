@@ -24,7 +24,7 @@ export const RichTextSendBoxWithInlineImagesExample: () => JSX.Element = () => {
             setInlineImages([...(inlineImages ?? []), newImage]);
           }}
           inlineImages={inlineImages}
-          onCancelInlineImageUpload={(imageAttributes: Record<string, string>) => {
+          onRemoveInlineImage={(imageAttributes: Record<string, string>) => {
             const filteredInlineImages = inlineImages?.filter((image) => image.id !== imageAttributes.id);
             setInlineImages(filteredInlineImages);
           }}

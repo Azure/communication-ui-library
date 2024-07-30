@@ -72,7 +72,7 @@ export type ChatMessageComponentWrapperProps = _ChatMessageProps & {
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   onPaste?: (event: { content: DocumentFragment }) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  onCancelInlineImageUpload?: (imageAttributes: Record<string, string>, messageId: string) => void;
+  onRemoveInlineImage?: (imageAttributes: Record<string, string>, messageId: string) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   onInsertInlineImage?: (imageUrl: string, messageId: string, imageFileName?: string) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */

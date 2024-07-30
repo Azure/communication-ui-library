@@ -581,7 +581,7 @@ export interface RichTextEditBoxOptions extends RichTextEditorOptions {
   /**
    * Optional callback to remove the image upload or delete the image from server before sending.
    */
-  onCancelInlineImageUpload?: (imageAttributes: Record<string, string>, messageId: string) => void;
+  onRemoveInlineImage?: (imageAttributes: Record<string, string>, messageId: string) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   /**
    * Optional Record of type {@link AttachmentMetadataInProgress}
@@ -1206,7 +1206,7 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
                     richTextEditorOptions?.messagesInlineImages[message.message.messageId]
                   }
                   /* @conditional-compile-remove(rich-text-editor-image-upload) */
-                  onCancelInlineImageUpload={richTextEditorOptions?.onCancelInlineImageUpload}
+                  onRemoveInlineImage={richTextEditorOptions?.onRemoveInlineImage}
                 />
               );
             })}

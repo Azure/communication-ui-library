@@ -76,7 +76,7 @@ export interface RichTextSendBoxOptions extends RichTextEditorOptions {
   /**
    * Optional callback to remove the image upload or delete the image from server before sending.
    */
-  onCancelInlineImageUpload?: (imageAttributes: Record<string, string>) => void;
+  onRemoveInlineImage?: (imageAttributes: Record<string, string>) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   /**
    * Optional Array of type {@link AttachmentMetadataInProgress}
@@ -240,7 +240,7 @@ export interface RichTextSendBoxProps {
   /**
    * Optional callback to remove the image upload or delete the image from server before sending.
    */
-  onCancelInlineImageUpload?: (imageAttributes: Record<string, string>) => void;
+  onRemoveInlineImage?: (imageAttributes: Record<string, string>) => void;
   /**
    * Callback function used when the send button is clicked.
    */
@@ -290,7 +290,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
     inlineImages,
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    onCancelInlineImageUpload
+    onRemoveInlineImage
   } = props;
 
   const theme = useTheme();
@@ -344,12 +344,11 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
 
       /* @conditional-compile-remove(rich-text-editor-image-upload) */
       removedInlineImages?.map(
-        (removedInlineImage: InlineImageAttributes) =>
-          onCancelInlineImageUpload && onCancelInlineImageUpload(removedInlineImage)
+        (removedInlineImage: InlineImageAttributes) => onRemoveInlineImage && onRemoveInlineImage(removedInlineImage)
       );
       setContent(newValue);
     },
-    [setContent, /* @conditional-compile-remove(rich-text-editor-image-upload) */ onCancelInlineImageUpload]
+    [setContent, /* @conditional-compile-remove(rich-text-editor-image-upload) */ onRemoveInlineImage]
   );
 
   const hasContent = useMemo(() => {

@@ -607,7 +607,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
           /* @conditional-compile-remove(rich-text-editor-image-upload) */
           messagesInlineImages: getEditBoxMessagesInlineImages(editBoxInlineImageUploads),
           /* @conditional-compile-remove(rich-text-editor-image-upload) */
-          onCancelInlineImageUpload: (imageAttributes: Record<string, string>, messageId: string) => {
+          onRemoveInlineImage: (imageAttributes: Record<string, string>, messageId: string) => {
             cancelInlineImageUpload(
               imageAttributes,
               editBoxInlineImageUploads,
@@ -645,7 +645,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
           /* @conditional-compile-remove(rich-text-editor-image-upload) */
           inlineImages: getSendBoxInlineImages(sendBoxInlineImageUploads),
           /* @conditional-compile-remove(rich-text-editor-image-upload) */
-          onCancelInlineImageUpload: (imageAttributes: Record<string, string>) => {
+          onRemoveInlineImage: (imageAttributes: Record<string, string>) => {
             cancelInlineImageUpload(
               imageAttributes,
               sendBoxInlineImageUploads,
