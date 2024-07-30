@@ -597,7 +597,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
           onInsertInlineImage: (imageUrl: string, messageId: string, imageFileName?: string) => {
             onInsertInlineImageForEditBox(
               imageUrl,
-              imageFileName || '',
+              imageFileName || 'image.png',
               messageId,
               adapter,
               handleEditBoxInlineImageUploadAction,
