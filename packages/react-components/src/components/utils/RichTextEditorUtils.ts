@@ -26,12 +26,6 @@ export enum ContentChangedEventSource {
   Paste = 'Paste'
 }
 
-/* @conditional-compile-remove(rich-text-editor-image-upload) */
-/**
- * @internal
- */
-export type InlineImageAttributes = Record<string, string>;
-
 /**
  * Applies the border format to the specified element.
  * If the element is an HTMLTableCellElement, it skips setting editing info
@@ -70,11 +64,11 @@ export const dataSetApplier = (format: DatasetFormat, element: HTMLElement, cont
 /**
  * @internal
  */
-export const getPreviousInlineImages = (content?: string): Array<InlineImageAttributes> => {
+export const getPreviousInlineImages = (content?: string): Record<string, string>[] => {
   if (!content) {
     return [];
   }
-  const previousInlineImages: Array<InlineImageAttributes> = [];
+  const previousInlineImages: Record<string, string>[] = [];
   const document = new DOMParser().parseFromString(content ?? '', 'text/html');
   Array.from(document.querySelectorAll('img')).map((img) => {
     const imageAttributes = getInlineImageAttributes(img);
@@ -89,9 +83,9 @@ export const getPreviousInlineImages = (content?: string): Array<InlineImageAttr
  */
 export const getRemovedInlineImages = (
   content: string,
-  previousInlineImages: Array<InlineImageAttributes>
-): InlineImageAttributes[] => {
-  const removedInlineImages: InlineImageAttributes[] = [];
+  previousInlineImages: Record<string, string>[]
+): Record<string, string>[] => {
+  const removedInlineImages: Record<string, string>[] = [];
   const document = new DOMParser().parseFromString(content ?? '', 'text/html');
   const currentContentIds = Array.from(document.querySelectorAll('img')).map((img) => img.id);
   previousInlineImages = previousInlineImages?.filter((img) => !currentContentIds?.includes(img.id));
@@ -108,9 +102,9 @@ export const getRemovedInlineImages = (
  */
 export const getAddedInlineImages = (
   content: string,
-  previousInlineImages: Array<InlineImageAttributes>
-): InlineImageAttributes[] => {
-  const addedInlineImages: InlineImageAttributes[] = [];
+  previousInlineImages: Record<string, string>[]
+): Record<string, string>[] => {
+  const addedInlineImages: Record<string, string>[] = [];
   const document = new DOMParser().parseFromString(content ?? '', 'text/html');
   Array.from(document.querySelectorAll('img')).map((img) => {
     if (!previousInlineImages?.find((imgAttributes) => img.id === imgAttributes.id)) {
@@ -125,7 +119,7 @@ export const getAddedInlineImages = (
 /**
  * @internal
  */
-export const getInlineImageAttributes = (image: HTMLImageElement): InlineImageAttributes => {
+export const getInlineImageAttributes = (image: HTMLImageElement): Record<string, string> => {
   const imageAttributes: Record<string, string> = {};
   image.getAttributeNames().map((attrName) => {
     const attrValue = image.getAttribute(attrName);

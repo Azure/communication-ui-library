@@ -275,6 +275,7 @@ export const cancelInlineImageUpload = (
   }
 };
 
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
 const deleteInlineImageFromServer = (imageId: string, adapter: ChatAdapter): void => {
   try {
     adapter.deleteImage(imageId);

@@ -36,9 +36,9 @@ import { RichTextToolbar } from './Toolbar/RichTextToolbar';
 import { RichTextToolbarPlugin } from './Plugins/RichTextToolbarPlugin';
 import { ContextMenuPlugin } from './Plugins/ContextMenuPlugin';
 import { TableEditContextMenuProvider } from './Plugins/TableEditContextMenuProvider';
-import { borderApplier, dataSetApplier, getAddedInlineImages } from '../utils/RichTextEditorUtils';
+import { borderApplier, dataSetApplier } from '../utils/RichTextEditorUtils';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
-import { getPreviousInlineImages, InlineImageAttributes, getRemovedInlineImages } from '../utils/RichTextEditorUtils';
+import { getPreviousInlineImages, getRemovedInlineImages, getAddedInlineImages } from '../utils/RichTextEditorUtils';
 import { ContextualMenu, IContextualMenuItem, IContextualMenuProps, Theme } from '@fluentui/react';
 import { PlaceholderPlugin } from './Plugins/PlaceholderPlugin';
 import { getFormatState, setDirection } from 'roosterjs-content-model-api';
@@ -63,8 +63,8 @@ export interface RichTextEditorProps {
   initialContent?: string;
   onChange: (
     newValue?: string,
-    /* @conditional-compile-remove(rich-text-editor-image-upload) */ addedInlineImages?: Array<InlineImageAttributes>,
-    /* @conditional-compile-remove(rich-text-editor-image-upload) */ removedInlineImages?: Array<InlineImageAttributes>
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */ addedInlineImages?: Record<string, string>[],
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */ removedInlineImages?: Record<string, string>[]
   ) => void;
   onKeyDown?: (ev: KeyboardEvent) => void;
   // update the current content of the rich text editor
@@ -129,7 +129,7 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
   const [contextMenuProps, setContextMenuProps] = useState<IContextualMenuProps | null>(null);
   const previousThemeDirection = useRef(themeDirection(theme));
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  const [previousInlineImages, setPreviousInlineImages] = useState<Array<InlineImageAttributes>>([]);
+  const [previousInlineImages, setPreviousInlineImages] = useState<Record<string, string>[]>([]);
 
   useImperativeHandle(ref, () => {
     return {
@@ -139,6 +139,7 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
         }
       },
       setEmptyContent() {
+        /* @conditional-compile-remove(rich-text-editor-image-upload) */
         setPreviousInlineImages([]);
         if (editor.current) {
           // remove all content from the editor and update the model
@@ -212,9 +213,9 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
       } else {
         const content = exportContent(editor.current);
         /* @conditional-compile-remove(rich-text-editor-image-upload) */
-        let addedInlineImages: InlineImageAttributes[] = [];
+        let addedInlineImages: Record<string, string>[] = [];
         /* @conditional-compile-remove(rich-text-editor-image-upload) */
-        let removedInlineImages: InlineImageAttributes[] = [];
+        let removedInlineImages: Record<string, string>[] = [];
         /* @conditional-compile-remove(rich-text-editor-image-upload) */
         if (shouldUpdateInlineImages) {
           /* @conditional-compile-remove(rich-text-editor-image-upload) */
@@ -226,7 +227,7 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
 
         onChange &&
           onChange(
-            exportContent(editor.current),
+            content,
             /* @conditional-compile-remove(rich-text-editor-image-upload) */ addedInlineImages,
             /* @conditional-compile-remove(rich-text-editor-image-upload) */ removedInlineImages
           );

@@ -5,8 +5,6 @@
 import { AttachmentMetadataInProgress } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(file-sharing-acs) */
 import { AttachmentMetadata } from '@internal/acs-ui-common';
-/* @conditional-compile-remove(rich-text-editor-image-upload) */
-import { InlineImageAttributes } from './RichTextEditorUtils';
 
 /**
  * @private
@@ -46,7 +44,7 @@ export const isAttachmentUploadCompleted = (
 // Before sending the image, we need to add the image id we get back after uploading the images to the message content.
 export const updateStylesOfInlineImages = async (
   message: string,
-  addedInlineImages: InlineImageAttributes[]
+  addedInlineImages: Record<string, string>[]
 ): Promise<string> => {
   if (message === '') {
     return message;
@@ -160,7 +158,7 @@ export const toAttachmentMetadata = (
  */
 export const modifyInlineImagesInContentString = async (
   content: string,
-  addedInlineImages: InlineImageAttributes[],
+  addedInlineImages: Record<string, string>[],
   onCompleted?: (content: string) => void
 ): Promise<void> => {
   const newContent = await updateStylesOfInlineImages(content, addedInlineImages);

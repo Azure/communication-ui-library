@@ -35,8 +35,6 @@ import { SendBoxErrorBarType } from '../SendBoxErrorBar';
 import { attachmentUploadCardsStyles } from '../styles/SendBox.styles';
 /* @conditional-compile-remove(file-sharing-acs) */
 import { FluentV9ThemeProvider } from '../../theming/FluentV9ThemeProvider';
-/* @conditional-compile-remove(rich-text-editor-image-upload) */
-import { InlineImageAttributes } from '../utils/RichTextEditorUtils';
 
 /**
  * Strings of {@link RichTextSendBox} that can be overridden.
@@ -313,7 +311,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     undefined
   );
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  const [addedInlineImages, setAddedInlineImages] = useState<Array<InlineImageAttributes>>([]);
+  const [addedInlineImages, setAddedInlineImages] = useState<Record<string, string>[]>([]);
   const editorComponentRef = useRef<RichTextEditorComponentRef>(null);
 
   /* @conditional-compile-remove(file-sharing-acs) */
@@ -336,15 +334,15 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
   const onChangeHandler = useCallback(
     (
       newValue?: string,
-      /* @conditional-compile-remove(rich-text-editor-image-upload) */ addedInlineImages?: Array<InlineImageAttributes>,
-      /* @conditional-compile-remove(rich-text-editor-image-upload) */ removedInlineImages?: Array<InlineImageAttributes>
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */ addedInlineImages?: Record<string, string>[],
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */ removedInlineImages?: Record<string, string>[]
     ) => {
       /* @conditional-compile-remove(rich-text-editor-image-upload) */
       addedInlineImages && setAddedInlineImages(addedInlineImages);
 
       /* @conditional-compile-remove(rich-text-editor-image-upload) */
       removedInlineImages?.map(
-        (removedInlineImage: InlineImageAttributes) => onRemoveInlineImage && onRemoveInlineImage(removedInlineImage)
+        (removedInlineImage: Record<string, string>) => onRemoveInlineImage && onRemoveInlineImage(removedInlineImage)
       );
       setContent(newValue);
     },
@@ -412,6 +410,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
         setContentValue('');
         editorComponentRef.current?.setEmptyContent();
         editorComponentRef.current?.focus();
+        /* @conditional-compile-remove(rich-text-editor-composite-support) */
         setAddedInlineImages([]);
       };
 

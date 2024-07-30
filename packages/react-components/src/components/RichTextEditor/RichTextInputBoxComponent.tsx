@@ -22,8 +22,6 @@ import {
   richTextBorderBoxStyle
 } from '../styles/RichTextInputBoxComponent.styles';
 import type { ContentModelDocument } from 'roosterjs-content-model-types';
-/* @conditional-compile-remove(rich-text-editor-image-upload) */
-import { InlineImageAttributes } from '../utils/RichTextEditorUtils';
 
 /**
  * @private
@@ -39,8 +37,8 @@ export interface RichTextInputBoxComponentProps {
   initialContent?: string;
   onChange: (
     newValue?: string,
-    /* @conditional-compile-remove(rich-text-editor-image-upload) */ addedInlineImages?: Array<InlineImageAttributes>,
-    /* @conditional-compile-remove(rich-text-editor-image-upload) */ removedInlineImages?: Array<InlineImageAttributes>
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */ addedInlineImages?: Record<string, string>[],
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */ removedInlineImages?: Record<string, string>[]
   ) => void;
   onEnterKeyDown?: () => void;
   editorComponentRef: React.RefObject<RichTextEditorComponentRef>;

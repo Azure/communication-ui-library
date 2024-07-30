@@ -51,8 +51,6 @@ import { attachmentUploadCardsStyles } from '../../styles/SendBox.styles';
 import { SendBoxErrorBarError, SendBoxErrorBarType } from '../../SendBoxErrorBar';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { BROKEN_IMAGE_SVG_DATA } from '../../styles/Common.style';
-/* @conditional-compile-remove(rich-text-editor-image-upload) */
-import { InlineImageAttributes } from '../../utils/RichTextEditorUtils';
 
 /** @private */
 export type ChatMessageComponentAsRichTextEditBoxProps = {
@@ -135,7 +133,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
     undefined
   );
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  const [addedInlineImages, setAddedInlineImages] = useState<Array<InlineImageAttributes>>([]);
+  const [addedInlineImages, setAddedInlineImages] = useState<Record<string, string>[]>([]);
   const editTextFieldRef = React.useRef<RichTextEditorComponentRef>(null);
   const theme = useTheme();
   const messageState = useMemo(() => {
@@ -313,13 +311,15 @@ export const ChatMessageComponentAsRichTextEditBox = (
   const onChangeHandler = useCallback(
     (
       content: string | undefined,
-      /* @conditional-compile-remove(rich-text-editor-image-upload) */ addedInlineImages?: Array<InlineImageAttributes>,
-      /* @conditional-compile-remove(rich-text-editor-image-upload) */ removedInlineImages?: Array<InlineImageAttributes>
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */
+      addedInlineImages?: Record<string, string>[],
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */
+      removedInlineImages?: Record<string, string>[]
     ) => {
       /* @conditional-compile-remove(rich-text-editor-image-upload) */
       addedInlineImages && setAddedInlineImages(addedInlineImages);
       /* @conditional-compile-remove(rich-text-editor-image-upload) */
-      removedInlineImages?.map((removedInlineImage: InlineImageAttributes) => {
+      removedInlineImages?.map((removedInlineImage: Record<string, string>) => {
         onRemoveInlineImage && onRemoveInlineImage(removedInlineImage, message.messageId);
       });
       setText(content);
