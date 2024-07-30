@@ -34,7 +34,8 @@
     "placeholderText": "Kirjoita viesti",
     "textTooLong": "Viestin pituus ylittää enimmäispituuden.",
     "sendButtonAriaLabel": "Lähetä viesti",
-    "attachmentUploadsPendingError": "Ladataan... Odota.",
+    "attachmentUploadsPendingError": "Ladataan palvelimeen... Odota hetki.",
+    "imageUploadsPendingError": "Kuvaa ladataan palvelimeen, odota.",
     "removeAttachment": "Poista tiedosto",
     "uploading": "Ladataan",
     "uploadCompleted": "Lataus valmis",
@@ -58,7 +59,11 @@
     "richTextDeleteRowMenu": "Poista rivi",
     "richTextDeleteTableMenu": "Poista taulukko",
     "richTextToolbarMoreButtonAriaLabel": "Lisää asetuksia",
-    "attachmentMoreMenu": "Lisää asetuksia"
+    "attachmentMoreMenu": "Lisää asetuksia",
+    "richTextNewBulletedListItemAnnouncement": "Luettelomerkki, uusi rivi",
+    "richTextNewNumberedListItemAnnouncement": "{0}, uusi rivi",
+    "richTextBulletedListAppliedAnnouncement": "Luettelomerkeillä varustettu luettelo käytössä",
+    "richTextNumberedListAppliedAnnouncement": "Numeroitu luettelo käytössä"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Ehdotuksia"
@@ -221,7 +226,12 @@
     "richTextDeleteRowMenu": "Poista rivi",
     "richTextDeleteTableMenu": "Poista taulukko",
     "richTextToolbarMoreButtonAriaLabel": "Lisää asetuksia",
-    "attachmentUploadsPendingError": "Ladataan palvelimeen... Odota."
+    "attachmentUploadsPendingError": "Ladataan palvelimeen... Odota hetki.",
+    "imageUploadsPendingError": "Kuvaa ladataan palvelimeen, odota.",
+    "richTextNewBulletedListItemAnnouncement": "Luettelomerkki, uusi rivi",
+    "richTextNewNumberedListItemAnnouncement": "{0}, uusi rivi",
+    "richTextBulletedListAppliedAnnouncement": "Luettelomerkeillä varustettu luettelo käytössä",
+    "richTextNumberedListAppliedAnnouncement": "Numeroitu luettelo käytössä"
   },
   "errorBar": {
     "unableToReachChatService": "Olet offline-tilassa",
