@@ -5,6 +5,7 @@ import { AttachmentMetadataInProgress, RichTextSendBox as RichTextSendBoxCompone
 import { Title, Description, Props, Heading, Canvas, Source } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React, { useState } from 'react';
+import { v1 as generateGUID } from 'uuid';
 import { DetailedBetaBanner } from '../BetaBanners/DetailedBetaBanner';
 import { SingleLineBetaBanner } from '../BetaBanners/SingleLineBetaBanner';
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
@@ -93,7 +94,9 @@ const getDocs: () => JSX.Element = () => {
 const RichTextSendBoxStory = (args): JSX.Element => {
   const timeoutRef = React.useRef<NodeJS.Timeout>();
   const delayForSendButton = 300;
-  const [inlineImagesWithProgress, setInlineImages] = useState<AttachmentMetadataInProgress[] | undefined>();
+  const [inlineImagesWithProgress, setInlineImagesWithProgress] = useState<
+    AttachmentMetadataInProgress[] | undefined
+  >();
 
   return (
     <div style={{ width: '31.25rem', maxWidth: '90%' }}>
@@ -120,7 +123,7 @@ const RichTextSendBoxStory = (args): JSX.Element => {
         systemMessage={args.hasWarning ? args.warningMessage : undefined}
         onSendMessage={async (message, options) => {
           timeoutRef.current = setTimeout(() => {
-            setInlineImages(undefined);
+            setInlineImagesWithProgress(undefined);
             alert(`sent message: ${message} with options ${JSON.stringify(options)}`);
           }, delayForSendButton);
         }}
@@ -132,7 +135,8 @@ const RichTextSendBoxStory = (args): JSX.Element => {
           return Promise.resolve();
         }}
         onInsertInlineImage={(image: string, imageFileName?: string) => {
-          const id = inlineImagesWithProgress?.length ? (inlineImagesWithProgress.length + 1).toString() : '1';
+          const id = generateGUID();
+
           const newImage = {
             id,
             name: imageFileName ?? 'image.png',
@@ -140,12 +144,12 @@ const RichTextSendBoxStory = (args): JSX.Element => {
             url: image,
             error: undefined
           };
-          setInlineImages([...(inlineImagesWithProgress ?? []), newImage]);
+          setInlineImagesWithProgress([...(inlineImagesWithProgress ?? []), newImage]);
         }}
         inlineImagesWithProgress={inlineImagesWithProgress}
         onRemoveInlineImage={(imageAttributes: Record<string, string>) => {
           const filteredInlineImages = inlineImagesWithProgress?.filter((image) => image.id !== imageAttributes.id);
-          setInlineImages(filteredInlineImages);
+          setInlineImagesWithProgress(filteredInlineImages);
         }}
       />
     </div>

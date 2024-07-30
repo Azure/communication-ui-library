@@ -44,7 +44,7 @@ import {
 const MessageThreadStory = (args): JSX.Element => {
   const [chatMessages, setChatMessages] =
     useState<(SystemMessage | CustomMessage | ChatMessage)[]>(GenerateMockChatMessages());
-  const [messagesInlineImagesWithProgress, setMessagesInlineImages] = useState<
+  const [messagesInlineImagesWithProgress, setMessagesInlineImagesWithProgress] = useState<
     Record<string, AttachmentMetadataInProgress[]> | undefined
   >();
   const dropdownMenuOptions = [
@@ -126,7 +126,7 @@ const MessageThreadStory = (args): JSX.Element => {
     }
     updatedChatMessages[msgIdx] = message;
     setChatMessages(updatedChatMessages);
-    setMessagesInlineImages(undefined);
+    setMessagesInlineImagesWithProgress(undefined);
     return Promise.resolve();
   };
 
@@ -202,7 +202,7 @@ const MessageThreadStory = (args): JSX.Element => {
           url: image,
           error: undefined
         };
-        setMessagesInlineImages({
+        setMessagesInlineImagesWithProgress({
           ...messagesInlineImagesWithProgress,
           [messageId]: [...inlineImagesWithProgress, newImage]
         });
@@ -214,7 +214,7 @@ const MessageThreadStory = (args): JSX.Element => {
           return;
         }
         const filteredImages = inlineImagesWithProgress.filter((img) => img.id !== imageAttributes.id);
-        setMessagesInlineImages({ ...messagesInlineImagesWithProgress, [messageId]: filteredImages });
+        setMessagesInlineImagesWithProgress({ ...messagesInlineImagesWithProgress, [messageId]: filteredImages });
       }
     };
   }, [messagesInlineImagesWithProgress]);
@@ -258,7 +258,7 @@ const MessageThreadStory = (args): JSX.Element => {
         onRenderMessage={onRenderMessage}
         inlineImageOptions={inlineImageOptions}
         onUpdateMessage={onUpdateMessageCallback}
-        onCancelEditMessage={() => setMessagesInlineImages(undefined)}
+        onCancelEditMessage={() => setMessagesInlineImagesWithProgress(undefined)}
         richTextEditorOptions={args.richTextEditor ? richTextEditorOptions : undefined}
         onRenderAvatar={(userId?: string) => {
           return (

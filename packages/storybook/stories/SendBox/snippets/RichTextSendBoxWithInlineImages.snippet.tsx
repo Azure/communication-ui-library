@@ -2,14 +2,16 @@ import { RichTextSendBox, FluentThemeProvider, AttachmentMetadataInProgress } fr
 import React, { useState } from 'react';
 
 export const RichTextSendBoxWithInlineImagesExample: () => JSX.Element = () => {
-  const [inlineImagesWithProgress, setInlineImages] = useState<AttachmentMetadataInProgress[] | undefined>();
+  const [inlineImagesWithProgress, setInlineImagesWithProgress] = useState<
+    AttachmentMetadataInProgress[] | undefined
+  >();
 
   return (
     <FluentThemeProvider>
       <div style={{ width: '31.25rem' }}>
         <RichTextSendBox
           onSendMessage={async () => {
-            setInlineImages(undefined);
+            setInlineImagesWithProgress(undefined);
             return;
           }}
           onInsertInlineImage={(image: string, imageFileName?: string) => {
@@ -21,12 +23,12 @@ export const RichTextSendBoxWithInlineImagesExample: () => JSX.Element = () => {
               url: image,
               error: undefined
             };
-            setInlineImages([...(inlineImagesWithProgress ?? []), newImage]);
+            setInlineImagesWithProgress([...(inlineImagesWithProgress ?? []), newImage]);
           }}
           inlineImagesWithProgress={inlineImagesWithProgress}
           onRemoveInlineImage={(imageAttributes: Record<string, string>) => {
             const filteredInlineImages = inlineImagesWithProgress?.filter((image) => image.id !== imageAttributes.id);
-            setInlineImages(filteredInlineImages);
+            setInlineImagesWithProgress(filteredInlineImages);
           }}
         />
       </div>

@@ -9,7 +9,7 @@ import { GetHistoryHTMLChatMessages } from './placeholdermessages';
 
 export const MessageThreadWithRichTextEditorInlineImagesExample: () => JSX.Element = () => {
   const [messages, setMessages] = useState(GetHistoryHTMLChatMessages());
-  const [messagesInlineImagesWithProgress, setMessagesInlineImages] = useState<
+  const [messagesInlineImagesWithProgress, setMessagesInlineImagesWithProgress] = useState<
     Record<string, AttachmentMetadataInProgress[]> | undefined
   >();
   const onUpdateMessage = useCallback(
@@ -24,7 +24,7 @@ export const MessageThreadWithRichTextEditorInlineImagesExample: () => JSX.Eleme
       message.editedOn = new Date(Date.now());
       updatedMessages[index] = message;
       setMessages(updatedMessages);
-      setMessagesInlineImages(undefined);
+      setMessagesInlineImagesWithProgress(undefined);
 
       return Promise.resolve();
     },
@@ -43,7 +43,7 @@ export const MessageThreadWithRichTextEditorInlineImagesExample: () => JSX.Eleme
           url: image,
           error: undefined
         };
-        setMessagesInlineImages({
+        setMessagesInlineImagesWithProgress({
           ...messagesInlineImagesWithProgress,
           [messageId]: [...inlineImagesWithProgress, newImage]
         });
@@ -55,7 +55,7 @@ export const MessageThreadWithRichTextEditorInlineImagesExample: () => JSX.Eleme
           return;
         }
         const filteredImages = inlineImagesWithProgress.filter((img) => img.id !== imageAttributes.id);
-        setMessagesInlineImages({ ...messagesInlineImagesWithProgress, [messageId]: filteredImages });
+        setMessagesInlineImagesWithProgress({ ...messagesInlineImagesWithProgress, [messageId]: filteredImages });
       }
     };
   }, [messagesInlineImagesWithProgress]);
@@ -67,7 +67,7 @@ export const MessageThreadWithRichTextEditorInlineImagesExample: () => JSX.Eleme
         richTextEditorOptions={richTextEditorOptions}
         messages={messages}
         onUpdateMessage={onUpdateMessage}
-        onCancelEditMessage={() => setMessagesInlineImages(undefined)}
+        onCancelEditMessage={() => setMessagesInlineImagesWithProgress(undefined)}
       />
     </FluentThemeProvider>
   );
