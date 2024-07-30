@@ -2,15 +2,15 @@
 // Licensed under the MIT License.
 
 import { Stack } from '@fluentui/react';
-import { Meta } from '@storybook/react';
+
 import React, { useState, useEffect } from 'react';
 import { CallWithChatExampleProps } from './snippets/CallWithChat.snippet';
 import { CallWithChatExperienceWithErrorChecks } from './snippets/CallWithChatWithErrorChecks.snippet';
 import { ConfigJoinMeetingHintBanner } from '../utils/Utils';
 import { compositeExperienceContainerStyle } from '../../constants';
-import { controlsToAdd, ArgsFrom, defaultCallWithChatCompositeHiddenControls } from '../utils/controlsUtils';
+import { controlsToAdd, ArgsFrom } from '../utils/controlsUtils';
 
-const storyControls = {
+export const storyControls = {
   userId: controlsToAdd.userId,
   token: controlsToAdd.token,
   endpointUrl: controlsToAdd.endpointUrl,
@@ -58,12 +58,3 @@ const JoinWithMeetingIdStory = (args: ArgsFrom<typeof storyControls>, context): 
 };
 
 export const JoinMeetingWithMeetingId = JoinWithMeetingIdStory.bind({});
-
-export default {
-  title: 'Concepts/Teams Interop/Join Meeting With Meeting Id',
-  component: JoinMeetingWithMeetingId,
-  argTypes: {
-    ...storyControls,
-    ...defaultCallWithChatCompositeHiddenControls
-  }
-} as Meta;

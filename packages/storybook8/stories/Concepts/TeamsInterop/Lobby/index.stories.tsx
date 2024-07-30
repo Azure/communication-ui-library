@@ -1,17 +1,10 @@
-// Copyright (c) Microsoft Corporation.
-// Licensed under the MIT License.
-
 import { Meta } from '@storybook/react';
-import React from 'react';
-
+import { Lobby } from './Lobby.story';
 import { controlsToAdd } from '../utils/controlsUtils';
-import { Lobby as LobbyComponent } from './snippets/Lobby.snippet';
 
-const LobbyStory: (args) => JSX.Element = (args) => {
-  return <LobbyComponent {...args} />;
+export const LobbyDocsOnly = {
+  render: Lobby
 };
-
-export const Lobby = LobbyStory.bind({});
 
 export default {
   title: 'Concepts/Teams Interop/Lobby',
