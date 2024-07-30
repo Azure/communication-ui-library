@@ -71,7 +71,7 @@ export type ChatMessageComponentAsRichTextEditBoxProps = {
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   onInsertInlineImage?: (imageUrl: string, messageId: string, imageFileName?: string) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  inlineImages?: AttachmentMetadataInProgress[];
+  inlineImagesWithProgress?: AttachmentMetadataInProgress[];
 };
 
 /**
@@ -90,7 +90,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
     onInsertInlineImage,
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    inlineImages,
+    inlineImagesWithProgress,
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
     onRemoveInlineImage
   } = props;
@@ -144,8 +144,8 @@ export const ChatMessageComponentAsRichTextEditBox = (
 
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   const imageUploadErrorMessage = useMemo(() => {
-    return inlineImages?.filter((image) => image.error).pop()?.error?.message;
-  }, [inlineImages]);
+    return inlineImagesWithProgress?.filter((image) => image.error).pop()?.error?.message;
+  }, [inlineImagesWithProgress]);
 
   const submitEnabled = messageState === 'OK';
 
@@ -203,7 +203,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
     setAttachmentUploadsPendingError(undefined);
 
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    if (hasIncompleteAttachmentUploads(inlineImages)) {
+    if (hasIncompleteAttachmentUploads(inlineImagesWithProgress)) {
       setAttachmentUploadsPendingError({
         message: strings.imageUploadsPendingError,
         timestamp: Date.now(),
@@ -230,7 +230,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
   }, [
     submitEnabled,
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    inlineImages,
+    inlineImagesWithProgress,
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
     addedInlineImages,
     textValue,

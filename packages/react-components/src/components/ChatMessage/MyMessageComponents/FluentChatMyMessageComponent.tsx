@@ -54,7 +54,7 @@ export const FluentChatMyMessageComponent = (props: FluentChatMessageComponentWr
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
     onPaste,
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    inlineImages,
+    inlineImagesWithProgress,
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
     onRemoveInlineImage,
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
@@ -109,7 +109,7 @@ export const FluentChatMyMessageComponent = (props: FluentChatMessageComponentWr
             /* @conditional-compile-remove(rich-text-editor-image-upload) */
             onInsertInlineImage={onInsertInlineImage}
             /* @conditional-compile-remove(rich-text-editor-image-upload) */
-            inlineImages={inlineImages}
+            inlineImagesWithProgress={inlineImagesWithProgress}
           />
         );
       }
@@ -142,7 +142,7 @@ export const FluentChatMyMessageComponent = (props: FluentChatMessageComponentWr
       /* @conditional-compile-remove(rich-text-editor-image-upload) */
       onInsertInlineImage,
       /* @conditional-compile-remove(rich-text-editor-image-upload) */
-      inlineImages
+      inlineImagesWithProgress
     ]
   );
 

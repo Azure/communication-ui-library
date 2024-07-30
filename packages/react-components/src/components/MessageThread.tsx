@@ -585,7 +585,7 @@ export interface RichTextEditBoxOptions extends RichTextEditorOptions {
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   /**
    * Optional Record of type {@link AttachmentMetadataInProgress}
-   * to render inline images being inserted in the MessageThread's edit boxes.
+   * to provide progress and error info for inline images inserted in the MessageThread's edit boxes.
    */
   messagesInlineImagesWithProgress?: Record<string, AttachmentMetadataInProgress[]>;
 }
@@ -1201,7 +1201,7 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
                   /* @conditional-compile-remove(rich-text-editor-image-upload) */
                   onInsertInlineImage={richTextEditorOptions?.onInsertInlineImage}
                   /* @conditional-compile-remove(rich-text-editor-image-upload) */
-                  inlineImages={
+                  inlineImagesWithProgress={
                     richTextEditorOptions?.messagesInlineImagesWithProgress &&
                     richTextEditorOptions?.messagesInlineImagesWithProgress[message.message.messageId]
                   }

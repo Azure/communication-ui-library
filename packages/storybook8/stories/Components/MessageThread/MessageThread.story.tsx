@@ -193,7 +193,7 @@ const MessageThreadStory = (args): JSX.Element => {
   const richTextEditorOptions: RichTextEditBoxOptions = useMemo(() => {
     return {
       onInsertInlineImage: (image: string, messageId: string, imageFileName?: string) => {
-        const inlineImages = messagesInlineImagesWithProgress?.[messageId] ?? [];
+        const inlineImagesWithProgress = messagesInlineImagesWithProgress?.[messageId] ?? [];
         const id = Math.floor(Math.random() * 1000000).toString();
         const newImage: AttachmentMetadataInProgress = {
           id,
@@ -202,15 +202,18 @@ const MessageThreadStory = (args): JSX.Element => {
           url: image,
           error: undefined
         };
-        setMessagesInlineImages({ ...messagesInlineImagesWithProgress, [messageId]: [...inlineImages, newImage] });
+        setMessagesInlineImages({
+          ...messagesInlineImagesWithProgress,
+          [messageId]: [...inlineImagesWithProgress, newImage]
+        });
       },
       messagesInlineImagesWithProgress: messagesInlineImagesWithProgress,
       onRemoveInlineImage: (imageAttributes: Record<string, string>, messageId: string) => {
-        const inlineImages = messagesInlineImagesWithProgress?.[messageId];
-        if (!inlineImages) {
+        const inlineImagesWithProgress = messagesInlineImagesWithProgress?.[messageId];
+        if (!inlineImagesWithProgress) {
           return;
         }
-        const filteredImages = inlineImages.filter((img) => img.id !== imageAttributes.id);
+        const filteredImages = inlineImagesWithProgress.filter((img) => img.id !== imageAttributes.id);
         setMessagesInlineImages({ ...messagesInlineImagesWithProgress, [messageId]: filteredImages });
       }
     };

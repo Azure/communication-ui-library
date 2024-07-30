@@ -643,7 +643,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             );
           },
           /* @conditional-compile-remove(rich-text-editor-image-upload) */
-          inlineImages: getSendBoxInlineImages(sendBoxInlineImageUploads),
+          inlineImagesWithProgress: getSendBoxInlineImages(sendBoxInlineImageUploads),
           /* @conditional-compile-remove(rich-text-editor-image-upload) */
           onRemoveInlineImage: (imageAttributes: Record<string, string>) => {
             cancelInlineImageUpload(
