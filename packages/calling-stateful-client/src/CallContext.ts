@@ -1254,7 +1254,7 @@ export class CallContext {
   }
 
   /* @conditional-compile-remove(breakout-rooms) */
-  public setLatestNotification(notificationTarget: NotificationTarget, notification: CallNotification): void {
+  public setLatestNotification(notification: CallNotification): void {
     this.modifyState((draft: CallClientState) => {
       draft.latestNotifications[notification.target] = notification;
     });

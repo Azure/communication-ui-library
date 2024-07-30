@@ -61,10 +61,7 @@ export class BreakoutRoomsSubscriber {
       ? this._context.getState().calls[callState.breakoutRooms?.breakoutRoomOriginCallId]
       : undefined;
     if (originalCallState?.breakoutRooms?.assignedBreakoutRoom?.call && breakoutRoom.state === 'open') {
-      this._context.setLatestNotification('assignedBreakoutRoomChanged', {
-        target: 'assignedBreakoutRoomChanged',
-        timestamp: new Date(Date.now())
-      });
+      this._context.setLatestNotification({ target: 'assignedBreakoutRoomChanged', timestamp: new Date(Date.now()) });
     } else if (
       breakoutRoom.state === 'open' &&
       (currentAssignedBreakoutRoom?.state === 'closed' || currentAssignedBreakoutRoom === undefined)
@@ -73,10 +70,7 @@ export class BreakoutRoomsSubscriber {
         breakoutRoom.autoMoveParticipantToBreakoutRoom === false
           ? 'assignedBreakoutRoomOpenedPromptJoin'
           : 'assignedBreakoutRoomOpened';
-      this._context.setLatestNotification(target, {
-        target,
-        timestamp: new Date(Date.now())
-      });
+      this._context.setLatestNotification({ target, timestamp: new Date(Date.now()) });
     } else if (breakoutRoom.state === 'closed' && currentAssignedBreakoutRoom?.state === 'closed') {
       this._context.deleteLatestNotification('assignedBreakoutRoomOpened');
       this._context.deleteLatestNotification('assignedBreakoutRoomOpenedPromptJoin');
