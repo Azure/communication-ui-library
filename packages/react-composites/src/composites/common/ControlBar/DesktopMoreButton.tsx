@@ -28,6 +28,8 @@ import { _preventDismissOnEvent } from '@internal/acs-ui-common';
 import { showDtmfDialer } from '../../CallComposite/utils/MediaGalleryUtils';
 import { useSelector } from '../../CallComposite/hooks/useSelector';
 import { getTargetCallees } from '../../CallComposite/selectors/baseSelectors';
+/*@conditional-compile-remove(teams-meeting-conference) */
+import { getTeamsMeetingCoordinates, getIsTeamsMeeting } from '../../CallComposite/selectors/baseSelectors';
 
 /** @private */
 export interface DesktopMoreButtonProps extends ControlBarButtonProps {
@@ -41,6 +43,10 @@ export interface DesktopMoreButtonProps extends ControlBarButtonProps {
   userSetGalleryLayout?: VideoGalleryLayout;
   onSetDialpadPage?: () => void;
   dtmfDialerPresent?: boolean;
+  /* @conditional-compile-remove(teams-meeting-conference) */
+  teamsMeetingPhoneCallEnable?: boolean;
+  /* @conditional-compile-remove(teams-meeting-conference) */
+  onMeetingPhoneInfoClick?: () => void;
 }
 
 /**
@@ -68,6 +74,11 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
 
   const callees = useSelector(getTargetCallees);
   const allowDtmfDialer = showDtmfDialer(callees);
+
+  /* @conditional-compile-remove(teams-meeting-conference) */
+  const isTeamsMeeting = useSelector(getIsTeamsMeeting);
+  /* @conditional-compile-remove(teams-meeting-conference) */
+  const teamsMeetingCoordinates = useSelector(getTeamsMeetingCoordinates);
 
   const [dtmfDialerChecked, setDtmfDialerChecked] = useState<boolean>(props.dtmfDialerPresent ?? false);
 
@@ -139,8 +150,8 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
         startCaptionsButtonProps.checked
           ? startCaptionsButtonHandlers.onStopCaptions()
           : startCaptionsButtonProps.currentSpokenLanguage !== ''
-          ? startCaptions()
-          : props.onCaptionsSettingsClick && props.onCaptionsSettingsClick();
+            ? startCaptions()
+            : props.onCaptionsSettingsClick && props.onCaptionsSettingsClick();
       },
       iconProps: {
         iconName: startCaptionsButtonProps.checked ? 'CaptionsOffIcon' : 'CaptionsIcon',
@@ -192,6 +203,28 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
    */
   if (props.onSetDialpadPage && allowDtmfDialer) {
     moreButtonContextualMenuItems.push(dtmfDialerScreenOption);
+  }
+  /* @conditional-compile-remove(teams-meeting-conference) */
+  const joinByPhoneOption = {
+    key: 'phoneCallKey',
+    itemProps: {
+      styles: buttonFlyoutIncreasedSizeStyles
+    },
+    text: localeStrings.strings.call.phoneCallMoreButtonLabel,
+    onClick: () => {
+      props.onMeetingPhoneInfoClick && props.onMeetingPhoneInfoClick();
+    },
+    iconProps: {
+      iconName: 'PhoneNumberButton',
+      styles: { root: { lineHeight: 0 } }
+    }
+  };
+  /**
+   * Only render the phone call button if meeting conordinates are present
+   */
+  /* @conditional-compile-remove(teams-meeting-conference) */
+  if (props.teamsMeetingPhoneCallEnable && isTeamsMeeting && teamsMeetingCoordinates) {
+    moreButtonContextualMenuItems.push(joinByPhoneOption);
   }
 
   if (props.onUserSetOverflowGalleryPositionChange) {

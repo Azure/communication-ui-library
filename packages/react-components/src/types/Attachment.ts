@@ -2,58 +2,9 @@
 // Licensed under the MIT License.
 
 import { ChatMessage } from './ChatMessage';
+import { AttachmentMetadata } from '@internal/acs-ui-common';
 
-/**
- * Metadata containing basic information about the attachment.
- *
- * @beta
- */
-export interface AttachmentMetadata {
-  /**
-   * Extension hint, useful for rendering a specific icon.
-   * An unknown or empty extension will be rendered as a generic icon.
-   * Example: `pdf`
-   */
-  extension?: string;
-  /**
-   * Unique ID of the attachment.
-   */
-  id: string;
-  /**
-   * Attachment name to be displayed.
-   */
-  name: string;
-  /**
-   * Download URL for the attachment.
-   */
-  url?: string;
-}
-
-/**
- * Metadata containing basic information about the uploading attachment.
- *
- * @beta
- */
-export interface AttachmentMetadataWithProgress extends AttachmentMetadata {
-  /**
-   * A number between 0 and 1 indicating the progress of the upload.
-   */
-  progress?: number;
-  /**
-   * A object contains error message would be shown to the user.
-   */
-  error?: AttachmentProgressError;
-}
-
-/**
- * @beta
- * A attachment progress error object that contains message to be shown to
- * the user when upload fails.
- */
-export interface AttachmentProgressError {
-  message: string;
-}
-
+/* @conditional-compile-remove(file-sharing-acs) */
 /**
  * @beta
  *
@@ -73,7 +24,7 @@ export interface AttachmentDownloadOptions {
   // A callback function that defines what action user can perform on an attachment.
   // by default, the UI library would have default actions that opens attachment URL in a new tab
   // provide this callback function to override the default actions or add new actions.
-  actionsForAttachment: (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[];
+  actionsForAttachment: AttachmentActionHandler;
 }
 
 /**
@@ -139,6 +90,11 @@ export interface AttachmentUploadTask {
    * HTML {@link File} object for the uploaded attachment.
    */
   file?: File;
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  /**
+   * {@link Blob} object for the uploaded inline image.
+   */
+  image?: Blob;
   /**
    * Update the progress of the upload changed.
    * A upload is considered complete when the progress reaches 1.
@@ -161,6 +117,19 @@ export interface AttachmentUploadTask {
 
 /**
  * @beta
+ * A callback function that defines what actions user can perform on an attachment.
+ * By default, the UI library would have default actions that opens attachment URL in a new tab.
+ * You can override the default actions or add new actions by providing this callback function.
+ * Moreover, you can also return dynamic actions based on the properties in {@link AttachmentMetadata} and/or {@link ChatMessage}.
+ *
+ * @param attachment - The file attachment that user is trying to perform actions on.
+ * @param message - The chat message that contains this attachment.
+ * @returns A list of {@link AttachmentMenuAction} that defines the type of actions user can perform on the attachment.
+ */
+export type AttachmentActionHandler = (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[];
+
+/**
+ * @beta
  * A callback function for handling list of upload tasks that contains files selected by user to upload.
  *
  * @param AttachmentUploads - The list of uploaded attachments. Each attachment is represented by an {@link AttachmentUpload} object.
@@ -174,3 +143,11 @@ export type AttachmentSelectionHandler = (attachmentUploads: AttachmentUploadTas
  * @param attachmentId - The ID of uploaded attachments.
  */
 export type AttachmentRemovalHandler = (attachmentId: string) => void;
+
+/**
+ * A wrapper for list of attachment metadata that is used for new message requests and update message requsts.
+ * @internal
+ */
+export type AttachmentMetadataWrapper = {
+  fileSharingMetadata: string;
+};

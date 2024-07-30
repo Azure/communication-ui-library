@@ -9,7 +9,7 @@ import { ChatAdapter } from './adapter/ChatAdapter';
 import { ChatAdapterProvider } from './adapter/ChatAdapterProvider';
 import { chatScreenContainerStyle } from './styles/Chat.styles';
 import { ChatScreen } from './ChatScreen';
-/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(file-sharing-acs) */
 import { AttachmentOptions } from '@internal/react-components';
 
 /**
@@ -37,7 +37,7 @@ export interface ChatCompositeProps extends BaseCompositeProps<ChatCompositeIcon
    * Flags to enable/disable visual elements of the {@link ChatComposite}.
    */
   options?: ChatCompositeOptions;
-  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(file-sharing-acs) */
   /**
    * Optimizes the composite form factor for either desktop or mobile.
    * @remarks `mobile` is currently only optimized for Portrait mode on mobile devices and does not support landscape.
@@ -77,13 +77,22 @@ export type ChatCompositeOptions = {
    */
   autoFocus?: 'sendBoxTextField';
 
-  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(file-sharing-acs) */
   /**
    * Properties for configuring the File Sharing feature.
    * If undefined, file sharing feature will be disabled.
    * @beta
    */
   attachmentOptions?: AttachmentOptions;
+
+  /* @conditional-compile-remove(rich-text-editor-composite-support) */
+  /**
+   * Enables rich text editor for the send and edit boxes
+   * @defaultValue `false`
+   *
+   * @beta
+   */
+  richTextEditor?: boolean;
 };
 
 /**
@@ -103,7 +112,7 @@ export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
     onFetchParticipantMenuItems
   } = props;
 
-  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(file-sharing-acs) */
   const formFactor = props['formFactor'] || 'desktop';
 
   return (
@@ -111,14 +120,14 @@ export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
       <BaseProvider {...props}>
         <ChatAdapterProvider adapter={adapter}>
           <ChatScreen
-            /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+            /* @conditional-compile-remove(file-sharing-acs) */
             formFactor={formFactor}
             options={options}
             onFetchAvatarPersonaData={onFetchAvatarPersonaData}
             onRenderTypingIndicator={onRenderTypingIndicator}
             onRenderMessage={onRenderMessage}
             onFetchParticipantMenuItems={onFetchParticipantMenuItems}
-            /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+            /* @conditional-compile-remove(file-sharing-acs) */
             attachmentOptions={options?.attachmentOptions}
           />
         </ChatAdapterProvider>

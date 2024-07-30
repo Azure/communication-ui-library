@@ -12,7 +12,8 @@ import {
   BackgroundBlurConfig,
   BackgroundReplacementConfig
 } from '@azure/communication-calling';
-/* @conditional-compile-remove(end-of-call-survey) */
+/* @conditional-compile-remove(soft-mute) */
+import { RemoteParticipant } from '@azure/communication-calling';
 import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
 import { DtmfTone } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
@@ -22,7 +23,6 @@ import { TeamsCall } from '@azure/communication-calling';
 /* @conditional-compile-remove(call-readiness) */
 import { PermissionConstraints } from '@azure/communication-calling';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
-/* @conditional-compile-remove(spotlight) */
 import { _toCommunicationIdentifier } from '@internal/acs-ui-common';
 import { CreateViewResult, StatefulCallClient, StatefulDeviceManager } from '@internal/calling-stateful-client';
 import memoizeOne from 'memoize-one';
@@ -34,7 +34,6 @@ import { CommunicationIdentifier } from '@azure/communication-common';
 import { Features } from '@azure/communication-calling';
 import { TeamsCaptions } from '@azure/communication-calling';
 import { Reaction } from '@azure/communication-calling';
-/* @conditional-compile-remove(spotlight) */
 import { _ComponentCallingHandlers } from './createHandlers';
 
 /**
@@ -95,14 +94,15 @@ export interface CommonCallingHandlers {
   onStopCaptions: () => Promise<void>;
   onSetSpokenLanguage: (language: string) => Promise<void>;
   onSetCaptionLanguage: (language: string) => Promise<void>;
-  /* @conditional-compile-remove(end-of-call-survey) */
+
   onSubmitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined>;
-  /* @conditional-compile-remove(spotlight) */
   onStartSpotlight: (userIds?: string[]) => Promise<void>;
-  /* @conditional-compile-remove(spotlight) */
   onStopSpotlight: (userIds?: string[]) => Promise<void>;
-  /* @conditional-compile-remove(spotlight) */
   onStopAllSpotlight: () => Promise<void>;
+  /* @conditional-compile-remove(soft-mute) */
+  onMuteParticipant: (userId: string) => Promise<void>;
+  /* @conditional-compile-remove(soft-mute) */
+  onMuteAllRemoteParticipants: () => Promise<void>;
 }
 
 /**
@@ -144,7 +144,7 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
     options?: {
       onResolveVideoBackgroundEffectsDependency?: () => Promise<VideoBackgroundEffectsDependency>;
     }
-  ): CommonCallingHandlers & /* @conditional-compile-remove(spotlight) */ Partial<_ComponentCallingHandlers> => {
+  ): CommonCallingHandlers & Partial<_ComponentCallingHandlers> => {
     const onStartLocalVideo = async (): Promise<void> => {
       // Before the call object creates a stream, dispose of any local preview streams.
       // @TODO: is there any way to parent the unparented view to the call object instead
@@ -594,45 +594,52 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       const captionsFeature = call?.feature(Features.Captions).captions as TeamsCaptions;
       await captionsFeature.setCaptionLanguage(language);
     };
-    /* @conditional-compile-remove(end-of-call-survey) */
+
     const onSubmitSurvey = async (survey: CallSurvey): Promise<CallSurveyResponse | undefined> =>
       await call?.feature(Features.CallSurvey).submitSurvey(survey);
-    /* @conditional-compile-remove(spotlight) */
     const onStartSpotlight = async (userIds?: string[]): Promise<void> => {
       const participants = userIds?.map((userId) => _toCommunicationIdentifier(userId));
       await call?.feature(Features.Spotlight).startSpotlight(participants);
     };
-    /* @conditional-compile-remove(spotlight) */
     const onStopSpotlight = async (userIds?: string[]): Promise<void> => {
       const participants = userIds?.map((userId) => _toCommunicationIdentifier(userId));
       await call?.feature(Features.Spotlight).stopSpotlight(participants);
     };
-    /* @conditional-compile-remove(spotlight) */
     const onStopAllSpotlight = async (): Promise<void> => {
       await call?.feature(Features.Spotlight).stopAllSpotlight();
     };
-    /* @conditional-compile-remove(spotlight) */
+    /* @conditional-compile-remove(soft-mute) */
+    const onMuteParticipant = async (userId: string): Promise<void> => {
+      if (call?.remoteParticipants) {
+        call?.remoteParticipants.forEach(async (participant: RemoteParticipant) => {
+          // Using toFlatCommunicationIdentifier to convert the CommunicationIdentifier to string
+          // as _toCommunicationIdentifier(userId) comparison to participant.identifier did not work for this case
+          if (toFlatCommunicationIdentifier(participant.identifier) === userId) {
+            await participant.mute();
+          }
+        });
+      }
+    };
+    /* @conditional-compile-remove(soft-mute) */
+    const onMuteAllRemoteParticipants = async (): Promise<void> => {
+      call?.muteAllRemoteParticipants();
+    };
     const canStartSpotlight = call?.feature(Features.Capabilities).capabilities.spotlightParticipant.isPresent;
-    /* @conditional-compile-remove(spotlight) */
     const canRemoveSpotlight = call?.feature(Features.Capabilities).capabilities.removeParticipantsSpotlight.isPresent;
-    /* @conditional-compile-remove(spotlight) */
     const onStartLocalSpotlight = canStartSpotlight
       ? async (): Promise<void> => {
           await call?.feature(Features.Spotlight).startSpotlight();
         }
       : undefined;
-    /* @conditional-compile-remove(spotlight) */
     const onStopLocalSpotlight = async (): Promise<void> => {
       await call?.feature(Features.Spotlight).stopSpotlight();
     };
-    /* @conditional-compile-remove(spotlight) */
     const onStartRemoteSpotlight = canStartSpotlight
       ? async (userIds?: string[]): Promise<void> => {
           const participants = userIds?.map((userId) => _toCommunicationIdentifier(userId));
           await call?.feature(Features.Spotlight).startSpotlight(participants);
         }
       : undefined;
-    /* @conditional-compile-remove(spotlight) */
     const onStopRemoteSpotlight = canRemoveSpotlight
       ? async (userIds?: string[]): Promise<void> => {
           const participants = userIds?.map((userId) => _toCommunicationIdentifier(userId));
@@ -670,32 +677,25 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       onSendDtmfTone,
       /* @conditional-compile-remove(call-readiness) */
       askDevicePermission,
-
       onRemoveVideoBackgroundEffects,
-
       onBlurVideoBackground,
-
       onReplaceVideoBackground,
       onStartCaptions,
       onStopCaptions,
       onSetCaptionLanguage,
       onSetSpokenLanguage,
-      /* @conditional-compile-remove(end-of-call-survey) */
       onSubmitSurvey,
-      /* @conditional-compile-remove(spotlight) */
       onStartSpotlight,
-      /* @conditional-compile-remove(spotlight) */
       onStopSpotlight,
-      /* @conditional-compile-remove(spotlight) */
       onStopAllSpotlight,
-      /* @conditional-compile-remove(spotlight) */
       onStartLocalSpotlight,
-      /* @conditional-compile-remove(spotlight) */
       onStopLocalSpotlight,
-      /* @conditional-compile-remove(spotlight) */
       onStartRemoteSpotlight,
-      /* @conditional-compile-remove(spotlight) */
-      onStopRemoteSpotlight
+      onStopRemoteSpotlight,
+      /* @conditional-compile-remove(soft-mute) */
+      onMuteParticipant,
+      /* @conditional-compile-remove(soft-mute) */
+      onMuteAllRemoteParticipants
     };
   }
 );

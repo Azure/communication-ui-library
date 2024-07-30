@@ -2,7 +2,14 @@
 // Licensed under the MIT License.
 
 import { CallClientState, CaptionsInfo } from '@internal/calling-stateful-client';
-import { CallingBaseSelectorProps, getStartCaptionsInProgress, getSupportedCaptionLanguages } from './baseSelectors';
+import {
+  CallingBaseSelectorProps,
+  getDisplayName,
+  getIdentifier,
+  getRemoteParticipants,
+  getStartCaptionsInProgress,
+  getSupportedCaptionLanguages
+} from './baseSelectors';
 import {
   getCaptions,
   getCaptionsStatus,
@@ -105,13 +112,22 @@ export type _CaptionsBannerSelector = (
  * @internal
  */
 export const _captionsBannerSelector: _CaptionsBannerSelector = reselect.createSelector(
-  [getCaptions, getCaptionsStatus, getStartCaptionsInProgress],
-  (captions, isCaptionsFeatureActive, startCaptionsInProgress) => {
+  [getCaptions, getCaptionsStatus, getStartCaptionsInProgress, getRemoteParticipants, getDisplayName, getIdentifier],
+  (captions, isCaptionsFeatureActive, startCaptionsInProgress, remoteParticipants, displayName, identifier) => {
     const captionsInfo = captions?.map((c, index) => {
       const userId = getCaptionsSpeakerIdentifier(c);
+      let finalDisplayName;
+      if (userId === identifier) {
+        finalDisplayName = displayName;
+      } else if (remoteParticipants) {
+        const participant = remoteParticipants[userId];
+        if (participant) {
+          finalDisplayName = participant.displayName;
+        }
+      }
       return {
-        id: (c.speaker.displayName ?? 'Unnamed Participant') + index,
-        displayName: c.speaker.displayName ?? 'Unnamed Participant',
+        id: (finalDisplayName ?? 'Unnamed Participant') + index,
+        displayName: finalDisplayName ?? 'Unnamed Participant',
         captionText: c.captionText ?? '',
         userId
       };

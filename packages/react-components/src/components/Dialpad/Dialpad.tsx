@@ -26,7 +26,7 @@ import {
   letterStyles,
   textFieldStyles
 } from '../styles/Dialpad.styles';
-import { formatPhoneNumber } from '../utils/formatPhoneNumber';
+import { _formatPhoneNumber } from '../utils/formatPhoneNumber';
 import useLongPress from '../utils/useLongPress';
 
 import { dtmfFrequencies, DtmfFrequenciesKeys, Tone } from './DTMFToneGenerator';
@@ -238,6 +238,7 @@ const DialpadButton = (props: {
           e.key === 'ArrowDown'
         ) {
           dtmfToneSound.current.stop();
+          return;
         }
         longPressHandlers.onKeyDown();
       }}
@@ -376,7 +377,7 @@ const DialpadContainer = (props: {
       {dialpadMode === 'dialer' && (
         <TextField
           styles={concatStyleSets(textFieldStyles(theme, plainTextValue !== ''), props.styles?.textField)}
-          value={textFieldValue ? textFieldValue : formatPhoneNumber(plainTextValue)}
+          value={textFieldValue ? textFieldValue : _formatPhoneNumber(plainTextValue)}
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           onChange={(e: any) => {
             setText(e.target.value);

@@ -27,6 +27,8 @@ export interface PreparedMoreDrawerProps {
   dtmfDialerPresent?: boolean;
   useTeamsCaptions?: boolean;
   reactionResources?: ReactionResources;
+  /* @conditional-compile-remove(teams-meeting-conference) */
+  onClickMeetingPhoneInfo?: () => void;
 }
 
 /** @private */

@@ -115,8 +115,8 @@ const DefaultRenderIcon = (props?: ControlBarButtonProps): JSX.Element | null =>
       ? props?.onRenderOnIcon()
       : null
     : props?.onRenderOffIcon
-    ? props?.onRenderOffIcon()
-    : null;
+      ? props?.onRenderOffIcon()
+      : null;
 };
 
 /**
@@ -137,8 +137,8 @@ export const ControlBarButton = (props: ControlBarButtonProps): JSX.Element => {
     (props?.disabled
       ? props?.strings?.tooltipDisabledContent
       : props?.checked
-      ? props?.strings?.tooltipOnContent
-      : props?.strings?.tooltipOffContent);
+        ? props?.strings?.tooltipOnContent
+        : props?.strings?.tooltipOffContent);
 
   const tooltipId = props.tooltipId ?? props.labelKey ? props.labelKey + '-tooltip' : undefined;
 
@@ -149,7 +149,7 @@ export const ControlBarButton = (props: ControlBarButtonProps): JSX.Element => {
         styles={componentStyles}
         onRenderText={props.showLabel && props.onRenderText ? props.onRenderText : undefined}
         onRenderIcon={props.onRenderIcon ?? DefaultRenderIcon}
-        ariaLabel={props.splitButtonAriaLabel ?? props.ariaLabel ?? tooltipContent ?? labelText}
+        ariaLabel={props.splitButtonAriaLabel ?? props.ariaLabel ?? labelText ?? tooltipContent}
         allowDisabledFocus={props.allowDisabledFocus ?? true}
         menuTriggerKeyCode={KeyCodes.down} // explicitly sets the keypress to activiate the split button drop down.
         text={undefined} // this is handled as a child of the button, without this the `showLabel` prop may be ignored.

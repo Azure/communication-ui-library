@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import { DeviceManagerState, RemoteParticipantState, StatefulCallClient } from '@internal/calling-stateful-client';
-import { CallState as CallStatus, ParticipantRole } from '@azure/communication-calling';
+import { CallState as CallStatus, LocalVideoStream, ParticipantRole } from '@azure/communication-calling';
 /* @conditional-compile-remove(unsupported-browser) */
 import { Features, EnvironmentInfo } from '@azure/communication-calling';
 import {
@@ -162,4 +162,16 @@ export const maskDisplayNameWithRole = (
     }
   }
   return maskedDisplayName;
+};
+
+/**
+ * Helper to create a local video stream from the selected camera.
+ * @private
+ */
+export const createLocalVideoStream = async (callClient: StatefulCallClient): Promise<LocalVideoStream | undefined> => {
+  const camera = await callClient?.getState().deviceManager.selectedCamera;
+  if (camera) {
+    return new LocalVideoStream(camera);
+  }
+  return undefined;
 };

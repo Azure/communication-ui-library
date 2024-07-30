@@ -1,10 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 import { isMessageTooLong, sanitizeText, MAXIMUM_LENGTH_OF_MESSAGE } from './SendBoxUtils';
-/* @conditional-compile-remove(attachment-upload) */
-import { hasIncompleteAttachmentUploads, hasCompletedAttachmentUploads } from './SendBoxUtils';
+/* @conditional-compile-remove(file-sharing-acs) */
+import { hasIncompleteAttachmentUploads, isAttachmentUploadCompleted } from './SendBoxUtils';
 
-/* @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(file-sharing-acs) */
 describe('SendBoxUtils hasIncompleteAttachmentUploads tests', () => {
   test('hasIncompleteAttachmentUploads should return false when progress property set to undefined', () => {
     const attachments = [
@@ -75,7 +75,7 @@ describe('SendBoxUtils hasIncompleteAttachmentUploads tests', () => {
   });
 });
 
-/* @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(file-sharing-acs) */
 describe('SendBoxUtils hasCompletedAttachmentUploads tests', () => {
   test('hasCompletedAttachmentUploads should return true when all attachments are complete', () => {
     const attachments = [
@@ -90,7 +90,7 @@ describe('SendBoxUtils hasCompletedAttachmentUploads tests', () => {
         progress: 1
       }
     ];
-    const result = hasCompletedAttachmentUploads(attachments);
+    const result = isAttachmentUploadCompleted(attachments);
     expect(result).toEqual(true);
   });
 
@@ -108,17 +108,17 @@ describe('SendBoxUtils hasCompletedAttachmentUploads tests', () => {
         progress: 1
       }
     ];
-    const result = hasCompletedAttachmentUploads(attachments);
+    const result = isAttachmentUploadCompleted(attachments);
     expect(result).toEqual(true);
   });
 
   test('hasCompletedAttachmentUploads should return false when there are no attachments', () => {
-    const result = hasCompletedAttachmentUploads([]);
+    const result = isAttachmentUploadCompleted([]);
     expect(result).toEqual(false);
   });
 
-  test('hasCompletedAttachmentUploads should return false when attachmentsWithProgress is undefined', () => {
-    const result = hasCompletedAttachmentUploads(undefined);
+  test('hasCompletedAttachmentUploads should return false when attachments is undefined', () => {
+    const result = isAttachmentUploadCompleted(undefined);
     expect(result).toEqual(false);
   });
 });

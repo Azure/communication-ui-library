@@ -20,6 +20,7 @@
     "complianceBannerTranscriptionStopped": "Die Transkription wurde beendet.",
     "configurationPageTitle": "Einen Anruf beginnen",
     "copyInviteLinkButtonLabel": "Einladungslink kopieren",
+    "copyInviteLinkButtonActionedLabel": "Link kopiert",
     "copyInviteLinkActionedAriaLabel": "Gruppeneinladungslink kopiert",
     "defaultPlaceHolder": "Option auswählen",
     "dismissSidePaneButtonLabel": "Schließen",
@@ -134,6 +135,7 @@
     "dtmfDialerButtonTooltipOff": "Wähltastatur ausblenden",
     "dtmfDialerMoreButtonLabelOn": "Wähltastatur anzeigen",
     "dtmfDialerMoreButtonLabelOff": "Wähltastatur ausblenden",
+    "phoneCallMoreButtonLabel": "Telefonanruf",
     "spokenLanguageStrings": {
       "ar-ae": "Arabisch – Vereinigte Arabische Emirate",
       "ar-sa": "Arabisch – Saudi-Arabien",
@@ -335,11 +337,25 @@
     "leaveConfirmDialogContent": "Möchten Sie den Anruf wirklich verlassen?",
     "endCallConfirmDialogTitle": "Gespräch beenden?",
     "endCallConfirmDialogContent": "Sie beenden das Gespräch für alle.",
-    "invalidMeetingIdentifier": "Ungültige Besprechungs-ID oder -Kennung"
+    "invalidMeetingIdentifier": "Ungültige Besprechungs-ID oder -Kennung",
+    "pinParticipantMenuLabel": "Für mich anheften",
+    "pinParticipantLimitReachedMenuLabel": "Anheften (Limit erreicht)",
+    "unpinParticipantMenuLabel": "Lösen",
+    "pinParticipantMenuItemAriaLabel": "Anheften",
+    "unpinParticipantMenuItemAriaLabel": "Lösen",
+    "muteAllMenuLabel": "Alle stummschalten",
+    "muteAllDialogTitle": "Alle stummschalten?",
+    "muteAllDialogContent": "Hierdurch werden alle in der Besprechung stummgeschaltet, außer Ihnen.",
+    "muteAllConfirmButtonLabel": "Alle stummschalten",
+    "muteAllCancelButtonLabel": "Abbrechen"
   },
   "chat": {
     "chatListHeader": "In diesem Chat",
-    "uploadAttachment": "Anlage hochladen"
+    "uploadAttachment": "Anlage hochladen",
+    "uploadImageDataNotProvided": "Bilddaten werden nicht bereitgestellt.",
+    "uploadImageIsTooLarge": "Das Bild ist zu groß. Wählen Sie einen Wert aus, der kleiner als {maxImageSize} MB ist.",
+    "uploadImageExtensionIsNotAllowed": "Das Hochladen von .{imageExtension} Image ist nicht zulässig.",
+    "uploadImageFailed": "Das Bild kann nicht hochgeladen werden. Versuchen Sie es später noch mal."
   },
   "callWithChat": {
     "chatButtonLabel": "Chat",
@@ -349,6 +365,7 @@
     "chatButtonTooltipOpen": "Chat anzeigen",
     "chatPaneTitle": "Chat",
     "copyInviteLinkButtonLabel": "Einladungslink kopieren",
+    "copyInviteLinkButtonActionedLabel": "Link kopiert",
     "copyInviteLinkActionedAriaLabel": "Gruppeneinladungslink kopiert",
     "dismissSidePaneButtonLabel": "Schließen",
     "moreDrawerAudioDeviceMenuTitle": "Audiogerät",
@@ -364,6 +381,8 @@
     "selectedPeopleButtonLabel": "Schaltfläche \"Personen\" ausgewählt",
     "peopleButtonTooltipOpen": "Teilnehmende anzeigen",
     "peopleButtonTooltipClose": "Teilnehmende ausblenden",
+    "peopleButtonTooltipOpenAriaLabel": "Schaltfläche „Personen“, Teilnehmer anzeigen",
+    "peopleButtonTooltipCloseAriaLabel": "Schaltfläche „Personen“, Teilnehmer ausblenden",
     "peoplePaneSubTitle": "In diesem Anruf",
     "peoplePaneTitle": "Personen",
     "pictureInPictureTileAriaLabel": "Videofeeds. Klicken Sie hier, um zum Anrufbildschirm zurückzukehren.",

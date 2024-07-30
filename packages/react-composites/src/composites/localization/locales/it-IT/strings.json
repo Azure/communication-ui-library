@@ -20,6 +20,7 @@
     "complianceBannerTranscriptionStopped": "Trascrizione interrotta.",
     "configurationPageTitle": "Avvia una chiamata",
     "copyInviteLinkButtonLabel": "Copia il collegamento dell’invito",
+    "copyInviteLinkButtonActionedLabel": "Collegamento copiato",
     "copyInviteLinkActionedAriaLabel": "Collegamento di invito copiato",
     "defaultPlaceHolder": "Seleziona un'opzione",
     "dismissSidePaneButtonLabel": "Chiudi",
@@ -134,6 +135,7 @@
     "dtmfDialerButtonTooltipOff": "Nascondi tastierino",
     "dtmfDialerMoreButtonLabelOn": "Mostra tastiera",
     "dtmfDialerMoreButtonLabelOff": "Nascondi tastierino",
+    "phoneCallMoreButtonLabel": "Chiamata telefonica",
     "spokenLanguageStrings": {
       "ar-ae": "Arabo - Emirati Arabi Uniti",
       "ar-sa": "Arabo - Arabia Saudita",
@@ -335,11 +337,25 @@
     "leaveConfirmDialogContent": "Vuoi abbandonare la chiamata?",
     "endCallConfirmDialogTitle": "Vuoi terminare la chiamata?",
     "endCallConfirmDialogContent": "La chiamata terminerà per tutti gli utenti.",
-    "invalidMeetingIdentifier": "ID riunione o passcode non valido"
+    "invalidMeetingIdentifier": "ID riunione o passcode non valido",
+    "pinParticipantMenuLabel": "Aggiungi per me",
+    "pinParticipantLimitReachedMenuLabel": "Segnaposto (limite raggiunto)",
+    "unpinParticipantMenuLabel": "Rimuovere dall’alto",
+    "pinParticipantMenuItemAriaLabel": "Aggiungi in alto",
+    "unpinParticipantMenuItemAriaLabel": "Rimuovere dall’alto",
+    "muteAllMenuLabel": "Disattivare l'audio di tutti",
+    "muteAllDialogTitle": "Disattivare l'audio di tutti?",
+    "muteAllDialogContent": "Questa operazione disattiverà l'audio di tutte le persone nella riunione, tranne te.",
+    "muteAllConfirmButtonLabel": "Disattivare l'audio di tutti",
+    "muteAllCancelButtonLabel": "Annullare"
   },
   "chat": {
     "chatListHeader": "In questa chat",
-    "uploadAttachment": "Carica allegato"
+    "uploadAttachment": "Carica allegato",
+    "uploadImageDataNotProvided": "I dati dell'immagine non sono stati forniti.",
+    "uploadImageIsTooLarge": "L'immagine è troppo grande. Scegliere un valore inferiore a {maxImageSize} MB.",
+    "uploadImageExtensionIsNotAllowed": "Il caricamento dell’immagine .{imageExtension} non è consentito.",
+    "uploadImageFailed": "Non è possibile caricare l'immagine. Riprovare più tardi."
   },
   "callWithChat": {
     "chatButtonLabel": "Chat",
@@ -349,6 +365,7 @@
     "chatButtonTooltipOpen": "Mostra chat",
     "chatPaneTitle": "Chat",
     "copyInviteLinkButtonLabel": "Copia il collegamento dell’invito",
+    "copyInviteLinkButtonActionedLabel": "Collegamento copiato",
     "copyInviteLinkActionedAriaLabel": "Collegamento di invito copiato",
     "dismissSidePaneButtonLabel": "Chiudi",
     "moreDrawerAudioDeviceMenuTitle": "Dispositivo audio",
@@ -364,6 +381,8 @@
     "selectedPeopleButtonLabel": "Pulsante Persone selezionato",
     "peopleButtonTooltipOpen": "Mostra partecipanti",
     "peopleButtonTooltipClose": "Nascondi partecipanti",
+    "peopleButtonTooltipOpenAriaLabel": "pulsante Persone, Mostra partecipanti",
+    "peopleButtonTooltipCloseAriaLabel": "Pulsante Persone, Nascondi partecipanti",
     "peoplePaneSubTitle": "In questa chiamata",
     "peoplePaneTitle": "Persone",
     "pictureInPictureTileAriaLabel": "Feed video. Fare clic per tornare alla schermata della chiamata.",

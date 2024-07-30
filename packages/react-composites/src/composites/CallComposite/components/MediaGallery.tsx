@@ -25,9 +25,7 @@ import { useParticipantChangedAnnouncement } from '../utils/MediaGalleryUtils';
 import { RemoteVideoTileMenuOptions } from '../CallComposite';
 import { LocalVideoTileOptions } from '../CallComposite';
 import { useAdapter } from '../adapter/CallAdapterProvider';
-/* @conditional-compile-remove(spotlight) */
 import { PromptProps } from './Prompt';
-/* @conditional-compile-remove(spotlight) */
 import { useLocalSpotlightCallbacksWithPrompt, useRemoteSpotlightCallbacksWithPrompt } from '../utils/spotlightUtils';
 import { VideoTilesOptions } from '@internal/react-components';
 
@@ -64,11 +62,8 @@ export interface MediaGalleryProps {
   userSetGalleryLayout: VideoGalleryLayout;
   pinnedParticipants?: string[];
   setPinnedParticipants?: (pinnedParticipants: string[]) => void;
-  /* @conditional-compile-remove(spotlight) */
   setIsPromptOpen: (isOpen: boolean) => void;
-  /* @conditional-compile-remove(spotlight) */
   setPromptProps: (props: PromptProps) => void;
-  /* @conditional-compile-remove(spotlight) */
   hideSpotlightButtons?: boolean;
   videoTilesOptions?: VideoTilesOptions;
 }
@@ -80,9 +75,9 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
   const {
     pinnedParticipants = [],
     setPinnedParticipants,
-    /* @conditional-compile-remove(spotlight) */ setIsPromptOpen,
-    /* @conditional-compile-remove(spotlight) */ setPromptProps,
-    /* @conditional-compile-remove(spotlight) */ hideSpotlightButtons,
+    setIsPromptOpen,
+    setPromptProps,
+    hideSpotlightButtons,
     videoTilesOptions
   } = props;
 
@@ -130,8 +125,8 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     return props.remoteVideoTileMenuOptions?.isHidden
       ? false
       : props.isMobile
-      ? { kind: 'drawer', hostId: props.drawerMenuHostId }
-      : { kind: 'contextual' };
+        ? { kind: 'drawer', hostId: props.drawerMenuHostId }
+        : { kind: 'contextual' };
   }, [props.remoteVideoTileMenuOptions?.isHidden, props.isMobile, props.drawerMenuHostId]);
 
   const overflowGalleryPosition = useMemo(() => {
@@ -148,11 +143,9 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     containerHeight
   ]);
 
-  /* @conditional-compile-remove(spotlight) */
   const { onStartLocalSpotlight, onStopLocalSpotlight, onStartRemoteSpotlight, onStopRemoteSpotlight } =
     videoGalleryProps;
 
-  /* @conditional-compile-remove(spotlight) */
   const { onStartLocalSpotlightWithPrompt, onStopLocalSpotlightWithPrompt } = useLocalSpotlightCallbacksWithPrompt(
     onStartLocalSpotlight,
     onStopLocalSpotlight,
@@ -160,7 +153,6 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     setPromptProps
   );
 
-  /* @conditional-compile-remove(spotlight) */
   const { onStartRemoteSpotlightWithPrompt, onStopRemoteSpotlightWithPrompt } = useRemoteSpotlightCallbacksWithPrompt(
     onStartRemoteSpotlight,
     onStopRemoteSpotlight,
@@ -209,21 +201,23 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
           props.localVideoTileOptions === false || userRole === 'Consumer' || (isRoomsCall && userRole === 'Unknown')
             ? 'hidden'
             : props.isMobile && containerAspectRatio < 1
-            ? '9:16'
-            : '16:9'
+              ? '9:16'
+              : '16:9'
         }
         pinnedParticipants={pinnedParticipants}
         onPinParticipant={onPinParticipant}
         onUnpinParticipant={onUnpinParticipant}
         reactionResources={reactionResources}
-        /* @conditional-compile-remove(spotlight) */
         onStartLocalSpotlight={hideSpotlightButtons ? undefined : onStartLocalSpotlightWithPrompt}
-        /* @conditional-compile-remove(spotlight) */
         onStopLocalSpotlight={hideSpotlightButtons ? undefined : onStopLocalSpotlightWithPrompt}
-        /* @conditional-compile-remove(spotlight) */
         onStartRemoteSpotlight={hideSpotlightButtons ? undefined : onStartRemoteSpotlightWithPrompt}
-        /* @conditional-compile-remove(spotlight) */
         onStopRemoteSpotlight={hideSpotlightButtons ? undefined : onStopRemoteSpotlightWithPrompt}
+        /* @conditional-compile-remove(soft-mute) */
+        onMuteParticipant={
+          ['Unknown', 'Organizer', 'Presenter', 'Co-organizer'].includes(userRole ?? '')
+            ? videoGalleryProps.onMuteParticipant
+            : undefined
+        }
       />
     );
   }, [
@@ -243,15 +237,10 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     onUnpinParticipant,
     layoutBasedOnTilePosition,
     reactionResources,
-    /* @conditional-compile-remove(spotlight) */
     onStartLocalSpotlightWithPrompt,
-    /* @conditional-compile-remove(spotlight) */
     onStopLocalSpotlightWithPrompt,
-    /* @conditional-compile-remove(spotlight) */
     onStartRemoteSpotlightWithPrompt,
-    /* @conditional-compile-remove(spotlight) */
     onStopRemoteSpotlightWithPrompt,
-    /* @conditional-compile-remove(spotlight) */
     hideSpotlightButtons,
     videoTilesOptions
   ]);

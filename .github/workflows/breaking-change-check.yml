@@ -58,7 +58,7 @@ jobs:
       # Try get node_modules from cache
       - name: Restore node_modules from cache
         if: ${{ github.event_name == 'pull_request' && !contains(github.event.pull_request.labels.*.name, 'breaking-change') }}
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
@@ -69,7 +69,7 @@ jobs:
       # Checkout the branch to be merged into in PR
       - name: Checkout base branch
         if: ${{ github.event_name == 'pull_request' && !contains(github.event.pull_request.labels.*.name, 'breaking-change') }}
-        run: git checkout ${{ github.event.pull_request.base.ref }}
+        run: git checkout ${{ github.event.pull_request.base.sha }}
       # Install dependencies for the base branch
       - name: Install beta dependencies
         if: ${{ matrix.flavor == 'beta' && github.event_name == 'pull_request' && !contains(github.event.pull_request.labels.*.name, 'breaking-change') }}

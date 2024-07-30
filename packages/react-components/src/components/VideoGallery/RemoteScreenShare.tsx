@@ -87,12 +87,14 @@ export const RemoteScreenShare = React.memo(
         }
         onRenderPlaceholder={() => <LoadingSpinner loadingMessage={loadingMessage} />}
         overlay={
-          <MeetingReactionOverlay
-            reactionResources={reactionResources!}
-            localParticipant={localParticipant}
-            remoteParticipants={remoteParticipants}
-            overlayMode="screen-share"
-          />
+          reactionResources && (
+            <MeetingReactionOverlay
+              reactionResources={reactionResources}
+              localParticipant={localParticipant}
+              remoteParticipants={remoteParticipants}
+              overlayMode="screen-share"
+            />
+          )
         }
       />
     );

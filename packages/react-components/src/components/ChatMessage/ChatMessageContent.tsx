@@ -20,9 +20,11 @@ import LiveMessage from '../Announcer/LiveMessage';
 /* @conditional-compile-remove(mention) */
 import { defaultOnMentionRender } from './MentionRenderer';
 import DOMPurify from 'dompurify';
-import { _AttachmentDownloadCardsStrings } from '../AttachmentDownloadCards';
-/* @conditional-compile-remove(attachment-download) */
-import { AttachmentMetadata } from '../../types';
+import { _AttachmentDownloadCardsStrings } from '../Attachment/AttachmentDownloadCards';
+/* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
+import { AttachmentMetadata } from '@internal/acs-ui-common';
+/* @conditional-compile-remove(data-loss-prevention) */
+import { dataLossIconStyle } from '../styles/MessageThread.styles';
 
 type ChatMessageContentProps = {
   message: ChatMessage;
@@ -135,7 +137,7 @@ const MessageContentAsText = (props: ChatMessageContentProps): JSX.Element => {
  * @private
  */
 export const BlockedMessageContent = (props: BlockedMessageContentProps): JSX.Element => {
-  const Icon: JSX.Element = <FontIcon iconName={'DataLossPreventionProhibited'} />;
+  const Icon: JSX.Element = <FontIcon className={dataLossIconStyle} iconName={'DataLossPreventionProhibited'} />;
   const blockedMessage =
     props.message.warningText === undefined ? props.strings.blockedWarningText : props.message.warningText;
   const blockedMessageLink = props.message.link;
@@ -168,7 +170,7 @@ export const BlockedMessageContent = (props: BlockedMessageContentProps): JSX.El
 
 const extractContentForAllyMessage = (props: ChatMessageContentProps): string => {
   let attachments = undefined;
-  /* @conditional-compile-remove(attachment-download) */
+  /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
   attachments = props.message.attachments;
   if (props.message.content || attachments) {
     // Replace all <img> tags with 'image' for aria.
@@ -188,7 +190,7 @@ const extractContentForAllyMessage = (props: ChatMessageContentProps): string =>
 
     // Inject message attachment count for aria.
     // this is only applying to file attachments not for inline images.
-    /* @conditional-compile-remove(attachment-download) */
+    /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
     if (attachments && attachments.length > 0) {
       const attachmentCardDescription = attachmentCardGroupDescription(props);
       const attachmentTextNode = document.createElement('div');
@@ -217,21 +219,23 @@ const messageContentAriaText = (props: ChatMessageContentProps): string | undefi
   const message = extractContentForAllyMessage(props);
   return props.message.mine
     ? _formatString(props.strings.messageContentMineAriaText, {
+        status: props.message.status ?? '',
         message: message
       })
     : _formatString(props.strings.messageContentAriaText, {
+        status: props.message.status ?? '',
         author: `${props.message.senderDisplayName}`,
         message: message
       });
 };
 
-/* @conditional-compile-remove(attachment-download) */
+/* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
 const attachmentCardGroupDescription = (props: ChatMessageContentProps): string => {
   const attachments = props.message.attachments;
   return getAttachmentCountLiveMessage(attachments ?? [], props.strings.attachmentCardGroupMessage);
 };
 
-/* @conditional-compile-remove(attachment-download) */
+/* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
 /**
  * @private
  */
@@ -286,8 +290,14 @@ const processHtmlToReact = (props: ChatMessageContentProps): JSX.Element => {
           return props.inlineImageOptions?.onRenderInlineImage
             ? props.inlineImageOptions.onRenderInlineImage(inlineImageProps, defaultOnRenderInlineImage)
             : defaultOnRenderInlineImage(inlineImageProps);
+        }
 
-          return <img key={imgProps.id as string} {...imgProps} />;
+        // Transform links to open in new tab
+        if (domNode.name === 'a' && React.isValidElement<React.AnchorHTMLAttributes<HTMLAnchorElement>>(reactNode)) {
+          return React.cloneElement(reactNode, {
+            target: '_blank',
+            rel: 'noreferrer noopener'
+          });
         }
       }
       // Pass through the original node

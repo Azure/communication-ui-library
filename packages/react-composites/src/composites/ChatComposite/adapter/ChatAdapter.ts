@@ -2,13 +2,13 @@
 // Licensed under the MIT License.
 
 import type { ChatMessage, ChatParticipant, SendMessageOptions } from '@azure/communication-chat';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+import type { UploadChatImageResult } from '@internal/acs-ui-common';
 import type { CommunicationIdentifierKind, CommunicationUserKind } from '@azure/communication-common';
 import { ChatThreadClientState } from '@internal/chat-stateful-client';
 import type { AdapterError, AdapterErrors, AdapterState, Disposable } from '../../common/adapters';
-/* @conditional-compile-remove(attachment-upload) */
-import { _AttachmentUploadAdapter, _AttachmentUploadsUiState } from './AzureCommunicationAttachmentUploadAdapter';
-/* @conditional-compile-remove(attachment-upload) */
-import { AttachmentMetadata } from '@internal/react-components';
+/* @conditional-compile-remove(file-sharing-acs) */
+import { MessageOptions } from '@internal/acs-ui-common';
 
 /**
  * {@link ChatAdapter} state for pure UI purposes.
@@ -19,15 +19,6 @@ export type ChatAdapterUiState = {
   // FIXME(Delete?)
   // Self-contained state for composite
   error?: Error;
-  /* @conditional-compile-remove(attachment-upload) */
-  /**
-   * Attachments being uploaded by a user in the current thread.
-   * Should be set to null once the upload is complete.
-   * Array of type {@link _AttachmentUploadsUiState}
-   *
-   * @internal
-   */
-  _attachmentUploads?: _AttachmentUploadsUiState;
 };
 
 /**
@@ -66,13 +57,22 @@ export interface ChatAdapterThreadManagement {
   fetchInitialData(): Promise<void>;
   /**
    * Send a message in the thread.
+   * Please note that SendMessageOptions is being deprecated, please use MessageOptions instead.
    */
-  sendMessage(content: string, options?: SendMessageOptions): Promise<void>;
-  /* @conditional-compile-remove(attachment-upload) */
+  sendMessage(
+    content: string,
+    options?: SendMessageOptions | /* @conditional-compile-remove(file-sharing-acs) */ MessageOptions
+  ): Promise<void>;
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
   /**
-   * Send a message with attachments in the chat thread.
+   * Upload an inline image for a message.
    */
-  sendMessageWithAttachments(content: string, attachments: AttachmentMetadata[]): Promise<void>;
+  uploadImage(image: Blob, imageFilename: string): Promise<UploadChatImageResult>;
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  /**
+   * Delete an inline image for a message.
+   */
+  deleteImage(imageId: string): Promise<void>;
   /**
    * Send a read receipt for a message.
    */
@@ -91,15 +91,12 @@ export interface ChatAdapterThreadManagement {
   setTopic(topicName: string): Promise<void>;
   /**
    * Update a message content.
+   * Please note that metadata is being deprecated, please use MessageOptions.metadata instead.
    */
   updateMessage(
     messageId: string,
     content: string,
-    metadata?: Record<string, string>,
-    /* @conditional-compile-remove(attachment-upload) */
-    options?: {
-      attachmentMetadata?: AttachmentMetadata[];
-    }
+    options?: Record<string, string> | /* @conditional-compile-remove(file-sharing-acs) */ MessageOptions
   ): Promise<void>;
   /**
    * Delete a message in the thread.
@@ -222,9 +219,7 @@ export interface ChatAdapterSubscribers {
 export type ChatAdapter = ChatAdapterThreadManagement &
   AdapterState<ChatAdapterState> &
   Disposable &
-  ChatAdapterSubscribers &
-  /* @conditional-compile-remove(attachment-upload) */
-  _AttachmentUploadAdapter;
+  ChatAdapterSubscribers;
 
 /**
  * Callback for {@link ChatAdapterSubscribers} 'messageReceived' event.

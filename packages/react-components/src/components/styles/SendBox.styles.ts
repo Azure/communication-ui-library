@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 import { IStyle, mergeStyles, Theme } from '@fluentui/react';
+import { makeStyles } from '@fluentui/react-components';
 
 /**
  * @private
@@ -39,7 +40,7 @@ export const sendButtonStyle = mergeStyles({
 export const sendIconStyle = (props: {
   theme: Theme;
   hasText: boolean;
-  /* @conditional-compile-remove(attachment-upload) */ hasAttachment: boolean;
+  /* @conditional-compile-remove(file-sharing-acs) */ hasAttachment: boolean;
   disabled?: boolean;
   hasErrorMessage: boolean;
   customSendIconStyle?: IStyle;
@@ -49,12 +50,12 @@ export const sendIconStyle = (props: {
     theme,
     hasText,
     disabled = false,
-    /* @conditional-compile-remove(attachment-upload) */ hasAttachment,
+    /* @conditional-compile-remove(file-sharing-acs) */ hasAttachment,
     hasErrorMessage,
     customSendIconStyle,
     defaultTextColor = theme.palette.neutralTertiary
   } = props;
-  const hasNoContent = !hasText && /* @conditional-compile-remove(attachment-upload) */ !hasAttachment;
+  const hasNoContent = !hasText && /* @conditional-compile-remove(file-sharing-acs) */ !hasAttachment;
   return mergeStyles(
     editorTextBoxButtonStyle,
     {
@@ -78,8 +79,16 @@ export const editorTextBoxButtonStyle: IStyle = {
  */
 export const attachmentUploadCardsStyles = mergeStyles({
   margin: '0 0.25rem 0.25rem 0.25rem',
-  maxHeight: '12.5rem',
   overflow: 'auto'
+});
+
+/**
+ * @private
+ */
+export const useV9CustomStyles = makeStyles({
+  clearBackground: {
+    backgroundColor: 'transparent'
+  }
 });
 
 /**

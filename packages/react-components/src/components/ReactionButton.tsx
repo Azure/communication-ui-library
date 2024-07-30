@@ -6,7 +6,6 @@ import {
   DefaultPalette,
   IButtonStyles,
   ICalloutContentStyles,
-  IconButton,
   IContextualMenuItem,
   mergeStyles,
   Theme,
@@ -21,6 +20,7 @@ import { emojiStyles, reactionEmojiMenuStyles, reactionToolTipHostStyle } from '
 import { isDarkThemed } from '../theming/themeUtils';
 import { ReactionResources } from '..';
 import { getEmojiFrameCount } from './VideoGallery/utils/videoGalleryLayoutUtils';
+import { _preventDismissOnEvent } from '@internal/acs-ui-common';
 
 /**
  * Props for {@link ReactionButton}.
@@ -126,14 +126,16 @@ export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
             styles={reactionToolTipHostStyle()}
             calloutProps={{ ...calloutProps }}
           >
-            <IconButton
+            <div
+              role="menuitem"
               key={index}
               onClick={() => {
                 props.onReactionClick(emoji);
                 dismissMenu();
               }}
               className={classname}
-            />
+              aria-label={emojiButtonTooltip.get(emoji)}
+            ></div>
           </TooltipHost>
         );
       })}
@@ -150,7 +152,8 @@ export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
       className={mergeStyles(styles, props.styles)}
       menuProps={{
         shouldFocusOnMount: true,
-        items: emojiList
+        items: emojiList,
+        calloutProps: { preventDismissOnEvent: _preventDismissOnEvent }
       }}
       onRenderIcon={props.onRenderIcon ?? onRenderIcon}
       strings={strings}

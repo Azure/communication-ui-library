@@ -1,18 +1,13 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/* @conditional-compile-remove(ppt-live) */
 import { Features, PPTLiveCallFeature } from '@azure/communication-calling';
 
-/* @conditional-compile-remove(ppt-live) */
 import { CallContext } from './CallContext';
-/* @conditional-compile-remove(ppt-live) */
 import { CallIdRef } from './CallIdRef';
-/* @conditional-compile-remove(ppt-live) */
 import { CallCommon } from './BetaToStableTypes';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 
-/* @conditional-compile-remove(ppt-live) */
 /**
  * @private
  */

@@ -5,8 +5,10 @@ import { DiagnosticQuality } from '@azure/communication-calling';
 import { useId } from '@fluentui/react-hooks';
 import { _isInCall } from '@internal/calling-component-bindings';
 import { ActiveErrorMessage, ErrorBar, ParticipantMenuItemsCallback } from '@internal/react-components';
+/* @conditional-compile-remove(notifications) */
+import { ActiveNotification } from '@internal/react-components';
 import { VideoGalleryLayout } from '@internal/react-components';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useState } from 'react';
 import { AvatarPersonaDataCallback } from '../../common/AvatarPersona';
 import { useLocale } from '../../localization';
@@ -31,8 +33,8 @@ import { CapabilitiesChangeNotificationBarProps } from '../components/Capabiliti
 import { DtmfDialpadPage } from './DtmfDialpadPage';
 import { showDtmfDialer } from '../utils/MediaGalleryUtils';
 import { getTargetCallees } from '../selectors/baseSelectors';
-/* @conditional-compile-remove(spotlight) */
 import { Prompt, PromptProps } from '../components/Prompt';
+import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 
 /**
  * @private
@@ -46,8 +48,14 @@ export interface CallPageProps {
   updateSidePaneRenderer: (renderer: SidePaneRenderer | undefined) => void;
   mobileChatTabHeader?: MobileChatSidePaneTabHeaderProps;
   options?: CallCompositeOptions;
-  latestErrors: ActiveErrorMessage[];
-  onDismissError: (error: ActiveErrorMessage) => void;
+  latestErrors: ActiveErrorMessage[] | /* @conditional-compile-remove(notifications) */ ActiveNotification[];
+  /* @conditional-compile-remove(notifications) */
+  latestNotifications: ActiveNotification[];
+  onDismissError: (
+    error: ActiveErrorMessage | /* @conditional-compile-remove(notifications) */ ActiveNotification
+  ) => void;
+  /* @conditional-compile-remove(notifications) */
+  onDismissNotification: (notification: ActiveNotification) => void;
   galleryLayout: VideoGalleryLayout;
   capabilitiesChangedNotificationBarProps?: CapabilitiesChangeNotificationBarProps;
   onUserSetGalleryLayoutChange?: (layout: VideoGalleryLayout) => void;
@@ -75,10 +83,14 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
     userSetOverflowGalleryPosition = 'Responsive',
     onSetUserSetOverflowGalleryPosition,
     onCloseChatPane,
-    pinnedParticipants,
+    pinnedParticipants = [],
     setPinnedParticipants,
     compositeAudioContext,
-    disableAutoShowDtmfDialer = false
+    disableAutoShowDtmfDialer = false,
+    /* @conditional-compile-remove(notifications) */
+    latestNotifications,
+    /* @conditional-compile-remove(notifications) */
+    onDismissNotification
   } = props;
 
   // To use useProps to get these states, we need to create another file wrapping Call,
@@ -91,7 +103,6 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
   const mutedNotificationProps = useSelector(mutedNotificationSelector);
   const networkReconnectTileProps = useSelector(networkReconnectTileSelector);
   const remoteParticipantsConnected = useSelector(getRemoteParticipantsConnectedSelector);
-
   const callees = useSelector(getTargetCallees);
   const renderDtmfDialerFromStart = showDtmfDialer(callees, remoteParticipantsConnected);
   const [dtmfDialerPresent, setDtmfDialerPresent] = useState<boolean>(
@@ -100,13 +111,21 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
 
   const strings = useLocale().strings.call;
 
+  const pinnedParticipantsChecked = useMemo(
+    () =>
+      pinnedParticipants.filter((pinnedParticipant) =>
+        remoteParticipantsConnected.find(
+          (remoteParticipant) => toFlatCommunicationIdentifier(remoteParticipant.identifier) === pinnedParticipant
+        )
+      ),
+    [pinnedParticipants, remoteParticipantsConnected]
+  );
+
   // Reduce the controls shown when mobile view is enabled.
   const callControlOptions = mobileView ? reduceCallControlsForMobile(options?.callControls) : options?.callControls;
 
   const drawerMenuHostId = useId('drawerMenuHost');
-  /* @conditional-compile-remove(spotlight) */
   const [isPromptOpen, setIsPromptOpen] = useState<boolean>(false);
-  /* @conditional-compile-remove(spotlight) */
   const [promptProps, setPromptProps] = useState<PromptProps>();
 
   const onRenderGalleryContentTrampoline = (): JSX.Element => {
@@ -118,7 +137,7 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
           options={props.options}
           updateSidePaneRenderer={props.updateSidePaneRenderer}
           mobileChatTabHeader={props.mobileChatTabHeader}
-          latestErrors={props.latestErrors}
+          latestErrors={props.latestErrors as ActiveErrorMessage[]}
           onDismissError={props.onDismissError}
           capabilitiesChangedNotificationBarProps={props.capabilitiesChangedNotificationBarProps}
           onSetDialpadPage={() => setDtmfDialerPresent(!dtmfDialerPresent)}
@@ -138,13 +157,10 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
           localVideoTileOptions={options?.localVideoTile}
           userSetOverflowGalleryPosition={userSetOverflowGalleryPosition}
           userSetGalleryLayout={galleryLayout}
-          pinnedParticipants={pinnedParticipants}
+          pinnedParticipants={pinnedParticipantsChecked}
           setPinnedParticipants={setPinnedParticipants}
-          /* @conditional-compile-remove(spotlight) */
           setIsPromptOpen={setIsPromptOpen}
-          /* @conditional-compile-remove(spotlight) */
           setPromptProps={setPromptProps}
-          /* @conditional-compile-remove(spotlight) */
           hideSpotlightButtons={options?.spotlight?.hideSpotlightButtons}
           videoTilesOptions={options?.videoTilesOptions}
         />
@@ -158,6 +174,8 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
         id={drawerMenuHostId}
         complianceBannerProps={{ ...complianceBannerProps, strings }}
         errorBarProps={options?.errorBar !== false && errorBarProps}
+        /* @conditional-compile-remove(notifications) */
+        showErrorNotifications={options?.errorBar ?? true}
         mutedNotificationProps={mutedNotificationProps}
         callControlProps={{
           callInvitationURL: callInvitationURL,
@@ -173,7 +191,10 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
             isNetworkHealthy(networkReconnectTileProps.networkReconnectValue) ? (
               onRenderGalleryContentTrampoline()
             ) : (
-              <NetworkReconnectTile {...networkReconnectTileProps} />
+              <NetworkReconnectTile
+                {...networkReconnectTileProps}
+                /* /* @conditional-compile-remove(teams-meeting-conference) */ isMobile={mobileView}
+              />
             )
           ) : (
             <></>
@@ -184,24 +205,24 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
         onCloseChatPane={onCloseChatPane}
         dataUiId={'call-page'}
         latestErrors={props.latestErrors}
+        /* @conditional-compile-remove(notifications) */
+        latestNotifications={latestNotifications}
         onDismissError={props.onDismissError}
+        /* @conditional-compile-remove(notifications) */
+        onDismissNotification={onDismissNotification}
         onUserSetOverflowGalleryPositionChange={onSetUserSetOverflowGalleryPosition}
         onUserSetGalleryLayoutChange={onUserSetGalleryLayoutChange}
         userSetGalleryLayout={galleryLayout}
         capabilitiesChangedNotificationBarProps={props.capabilitiesChangedNotificationBarProps}
         onSetDialpadPage={() => setDtmfDialerPresent(!dtmfDialerPresent)}
         dtmfDialerPresent={dtmfDialerPresent}
-        /* @conditional-compile-remove(spotlight) */
         setIsPromptOpen={setIsPromptOpen}
-        /* @conditional-compile-remove(spotlight) */
         setPromptProps={setPromptProps}
-        /* @conditional-compile-remove(spotlight) */
         hideSpotlightButtons={options?.spotlight?.hideSpotlightButtons}
+        pinnedParticipants={pinnedParticipantsChecked}
+        setPinnedParticipants={setPinnedParticipants}
       />
-      {
-        /* @conditional-compile-remove(spotlight) */
-        <Prompt isOpen={isPromptOpen} onDismiss={() => setIsPromptOpen(false)} {...promptProps} />
-      }
+      {<Prompt isOpen={isPromptOpen} onDismiss={() => setIsPromptOpen(false)} {...promptProps} />}
     </>
   );
 };

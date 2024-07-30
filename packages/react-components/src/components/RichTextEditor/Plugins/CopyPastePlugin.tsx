@@ -1,19 +1,22 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-
-import { getPositionRect, normalizeRect } from 'roosterjs-editor-dom';
-import type { PluginEvent, EditorPlugin, IEditor } from 'roosterjs-editor-types';
-import {
-  CompatiblePluginEventType,
-  CompatiblePasteType,
-  CompatibleChangeSource
-} from 'roosterjs-editor-types-compatible';
+import type { PluginEvent, EditorPlugin, IEditor } from 'roosterjs-content-model-types';
+import { ContentChangedEventSource, PluginEventType } from '../../utils/RichTextEditorUtils';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+import { _base64ToBlob } from '@internal/acs-ui-common';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+import { removeImageTags } from '@internal/acs-ui-common';
 
 /**
  * CopyPastePlugin is a plugin for handling copy and paste events in the editor.
  */
 export default class CopyPastePlugin implements EditorPlugin {
   private editor: IEditor | null = null;
+  // don't set value in constructor to be able to update it without plugin recreation
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  onPaste?: (event: { content: DocumentFragment }) => void;
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  onInsertInlineImage?: (imageUrl: string, imageFileName: string) => void;
 
   getName(): string {
     return 'CopyPastePlugin';
@@ -26,11 +29,23 @@ export default class CopyPastePlugin implements EditorPlugin {
   dispose(): void {}
 
   onPluginEvent(event: PluginEvent): void {
-    removeImageElement(event);
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    // If onInsertInlineImage is not provided, we should remove the image tags before calling the onPaste callback
+    if (event.eventType === PluginEventType.BeforePaste && event.pasteType === 'normal' && !this.onInsertInlineImage) {
+      removeImageTags({ content: event.fragment });
+    }
+
+    handleBeforePasteEvent(event, /* @conditional-compile-remove(rich-text-editor-image-upload) */ this.onPaste);
+
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    // We should handle the onInsertInlineImage after the onPaste callback in case Contosos want to modify the image tags, especially the src attribute.
+    if (this.onInsertInlineImage) {
+      handleInlineImage(event, this.onInsertInlineImage);
+    }
 
     if (this.editor !== null && !this.editor.isDisposed()) {
       // scroll the editor to the correct position after pasting content
-      scrollToBottomAfterContentPaste(event, this.editor);
+      scrollToBottomAfterContentPaste(event);
     }
   }
 }
@@ -39,51 +54,88 @@ export default class CopyPastePlugin implements EditorPlugin {
  * @internal
  * Exported only for unit testing
  */
-export const removeImageElement = (event: PluginEvent): void => {
-  // We don't support the pasting options such as paste as image yet.
-  if (event.eventType === CompatiblePluginEventType.BeforePaste && event.pasteType === CompatiblePasteType.Normal) {
+export const handleBeforePasteEvent = (
+  event: PluginEvent,
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */ onPaste?: (event: {
+    content: DocumentFragment;
+  }) => void
+): void => {
+  if (event.eventType === PluginEventType.BeforePaste && event.pasteType === 'normal') {
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    onPaste?.({ content: event.fragment });
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    return;
+  }
+};
+
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+/**
+ * @internal
+ * Exported only for unit testing
+ */
+export const handleInlineImage = (
+  event: PluginEvent,
+  onInsertInlineImage?: (image: string, fileName: string) => void
+): void => {
+  if (event.eventType === PluginEventType.BeforePaste && event.pasteType === 'normal' && onInsertInlineImage) {
     event.fragment.querySelectorAll('img').forEach((image) => {
-      // If the image is the only child of its parent, remove all the parents of this img element.
-      let parentNode: HTMLElement | null = image.parentElement;
-      let currentNode: HTMLElement = image;
-      while (parentNode?.childNodes.length === 1) {
-        currentNode = parentNode;
-        parentNode = parentNode.parentElement;
+      const clipboardImage = event.clipboardData.image;
+      const fileName = clipboardImage?.name || clipboardImage?.type.replace('/', '.') || 'image.png';
+      // If the image src is an external url, call the onInsertInlineImage callback with the url.
+      let imageUrl = image.src;
+      if (image.src.startsWith('data:image/')) {
+        const blobImage = _base64ToBlob(image.src);
+        imageUrl = URL.createObjectURL(blobImage);
       }
-      currentNode?.remove();
+
+      onInsertInlineImage(imageUrl, fileName);
+
+      image.src = imageUrl;
+      image.alt = image.alt || 'image';
     });
   }
 };
 
 /**
- * Scrolls the editor's scroll container to the bottom after content is pasted.
+ * Update the scroll position of the editor after pasting content to ensure the content is visible.
  * @param event - The plugin event.
- * @param editor - The editor instance.
  */
-export const scrollToBottomAfterContentPaste = (event: PluginEvent, editor: IEditor): void => {
-  if (event.eventType === CompatiblePluginEventType.ContentChanged && event.source === CompatibleChangeSource.Paste) {
-    // current focused position in the editor
-    const focusedPosition = editor.getFocusedPosition();
-    // the cursor position relative to the viewport
-    const cursorRect = focusedPosition && getPositionRect(focusedPosition);
-    // the scroll container of the editor
-    const scrollContainer = editor.getScrollContainer();
-    // the scrollContainer position relative to the viewport
-    const scrollContainerRect = normalizeRect(scrollContainer.getBoundingClientRect());
-    if (focusedPosition !== null && cursorRect !== null && cursorRect !== undefined && scrollContainerRect !== null) {
-      const textElement = focusedPosition.element;
-      // the caret height is typically the same as the font size of the text
-      const caretHeight = parseFloat(window.getComputedStyle(textElement).fontSize);
-      // 1. scrollContainer.scrollTop represents the number of pixels that the content of scrollContainer is scrolled upward.
-      // 2. subtract the top position of the scrollContainer element (scrollContainerRect.top) to
-      // translate the scroll position from being relative to the document to being relative to the viewport.
-      // 3. add the top position of the cursor (cursorRect.top) to moves the scroll position to the cursor's position.
-      // 4. subtract a caret height to add some space between the cursor and the top edge of the scrollContainer.
-      const updatedScrollTop = scrollContainer.scrollTop - scrollContainerRect.top + cursorRect.top - caretHeight;
-      scrollContainer.scrollTo({
-        top: updatedScrollTop,
-        behavior: 'smooth'
-      });
+export const scrollToBottomAfterContentPaste = (event: PluginEvent): void => {
+  if (event.eventType === PluginEventType.ContentChanged && event.source === ContentChangedEventSource.Paste) {
+    // Get the current selection in the document
+    const selection = document.getSelection();
+
+    // Check if a selection exists and it has at least one range
+    if (!selection || selection.rangeCount <= 0) {
+      // If no selection or range, exit the function
+      return;
     }
+
+    // Get the first range of the selection
+    // A user can normally only select one range at a time, so the rangeCount will usually be 1
+    const range = selection.getRangeAt(0);
+
+    // If the common ancestor container of the range is the document itself,
+    // it might mean that the editable element is getting removed from the DOM
+    // In such cases, especially in Safari, trying to modify the range might throw a HierarchyRequest error
+    if (range.commonAncestorContainer === document) {
+      return;
+    }
+
+    // Create a temporary span element to use as an anchor for scrolling
+    // We can't use the anchor node directly because if it's a Text node, calling scrollIntoView() on it will throw an error
+    const tempElement = document.createElement('span');
+    // Collapse the range to its end point
+    // This means the start and end points of the range will be the same, and it will not contain any content
+    range.collapse(false);
+    // Insert the temporary element at the cursor's position at the end of the range
+    range.insertNode(tempElement);
+
+    // Scroll the temporary element into view
+    // the element will be aligned at the center of the scroll container, otherwise, text and images may be positioned incorrectly
+    tempElement.scrollIntoView({
+      block: 'center'
+    });
+    tempElement.remove();
   }
 };

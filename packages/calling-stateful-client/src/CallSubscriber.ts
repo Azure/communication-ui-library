@@ -16,7 +16,6 @@ import { InternalCallContext } from './InternalCallContext';
 import { LocalVideoStreamVideoEffectsSubscriber } from './LocalVideoStreamVideoEffectsSubscriber';
 import { ParticipantSubscriber } from './ParticipantSubscriber';
 import { RecordingSubscriber } from './RecordingSubscriber';
-/* @conditional-compile-remove(ppt-live) */
 import { PPTLiveSubscriber } from './PPTLiveSubscriber';
 import { disposeView } from './StreamUtils';
 import { TranscriptionSubscriber } from './TranscriptionSubscriber';
@@ -26,10 +25,11 @@ import { OptimalVideoCountSubscriber } from './OptimalVideoCountSubscriber';
 
 import { CapabilitiesSubscriber } from './CapabilitiesSubscriber';
 import { ReactionSubscriber } from './ReactionSubscriber';
-/* @conditional-compile-remove(spotlight) */
 import { SpotlightSubscriber } from './SpotlightSubscriber';
 /* @conditional-compile-remove(local-recording-notification) */
 import { LocalRecordingSubscriber } from './LocalRecordingSubscriber';
+/* @conditional-compile-remove(breakout-rooms) */
+import { BreakoutRoomsSubscriber } from './BreakoutRoomsSubscriber';
 
 /**
  * Keeps track of the listeners assigned to a particular call because when we get an event from SDK, it doesn't tell us
@@ -48,7 +48,6 @@ export class CallSubscriber {
   private _transcriptionSubscriber: TranscriptionSubscriber;
   /* @conditional-compile-remove(local-recording-notification) */
   private _localRecordingSubscriber?: LocalRecordingSubscriber;
-  /* @conditional-compile-remove(ppt-live) */
   private _pptLiveSubscriber: PPTLiveSubscriber;
   private _optimalVideoCountSubscriber: OptimalVideoCountSubscriber;
   private _CaptionsFeatureSubscriber?: CaptionsFeatureSubscriber;
@@ -58,8 +57,9 @@ export class CallSubscriber {
   private _localVideoStreamVideoEffectsSubscribers: Map<string, LocalVideoStreamVideoEffectsSubscriber>;
 
   private _capabilitiesSubscriber: CapabilitiesSubscriber;
-  /* @conditional-compile-remove(spotlight) */
   private _spotlightSubscriber: SpotlightSubscriber;
+  /* @conditional-compile-remove(breakout-rooms) */
+  private _breakoutRoomsSubscriber: BreakoutRoomsSubscriber;
 
   constructor(call: CallCommon, context: CallContext, internalContext: InternalCallContext) {
     this._call = call;
@@ -78,7 +78,6 @@ export class CallSubscriber {
       this._context,
       this._call.feature(Features.Recording)
     );
-    /* @conditional-compile-remove(ppt-live) */
     this._pptLiveSubscriber = new PPTLiveSubscriber(this._callIdRef, this._context, this._call);
     this._transcriptionSubscriber = new TranscriptionSubscriber(
       this._callIdRef,
@@ -109,11 +108,16 @@ export class CallSubscriber {
       this._call.feature(Features.Capabilities)
     );
 
-    /* @conditional-compile-remove(spotlight) */
     this._spotlightSubscriber = new SpotlightSubscriber(
       this._callIdRef,
       this._context,
       this._call.feature(Features.Spotlight)
+    );
+    /* @conditional-compile-remove(breakout-rooms) */
+    this._breakoutRoomsSubscriber = new BreakoutRoomsSubscriber(
+      this._callIdRef,
+      this._context,
+      this._call.feature(Features.BreakoutRooms)
     );
 
     this.subscribe();
@@ -122,6 +126,8 @@ export class CallSubscriber {
   private subscribe = (): void => {
     this._call.on('stateChanged', this.stateChanged);
     this._call.on('stateChanged', this.initCaptionSubscriber);
+    /* @conditional-compile-remove(teams-meeting-conference) */
+    this._call.on('stateChanged', this.initTeamsMeetingConference);
     /* @conditional-compile-remove(local-recording-notification) */
     this._call.on('stateChanged', this.initLocalRecordingNotificationSubscriber);
     this._call.on('idChanged', this.idChanged);
@@ -133,6 +139,8 @@ export class CallSubscriber {
     this._call.feature(Features.DominantSpeakers).on('dominantSpeakersChanged', this.dominantSpeakersChanged);
     /* @conditional-compile-remove(total-participant-count) */
     this._call.on('totalParticipantCountChanged', this.totalParticipantCountChangedHandler);
+    /* @conditional-compile-remove(soft-mute) */
+    this._call.on('mutedByOthers', this.mutedByOthersHandler);
 
     for (const localVideoStream of this._call.localVideoStreams) {
       this._internalContext.setLocalRenderInfo(
@@ -162,6 +170,8 @@ export class CallSubscriber {
     this._call.off('stateChanged', this.initCaptionSubscriber);
     /* @conditional-compile-remove(local-recording-notification) */
     this._call.off('stateChanged', this.initLocalRecordingNotificationSubscriber);
+    /* @conditional-compile-remove(teams-meeting-conference) */
+    this._call.off('stateChanged', this.initTeamsMeetingConference);
     this._call.off('idChanged', this.idChanged);
     this._call.off('isScreenSharingOnChanged', this.isScreenSharingOnChanged);
     this._call.off('remoteParticipantsUpdated', this.remoteParticipantsUpdated);
@@ -170,6 +180,8 @@ export class CallSubscriber {
     this._call.off('roleChanged', this.callRoleChangedHandler);
     /* @conditional-compile-remove(total-participant-count) */
     this._call.off('totalParticipantCountChanged', this.totalParticipantCountChangedHandler);
+    /* @conditional-compile-remove(soft-mute) */
+    this._call.off('mutedByOthers', this.mutedByOthersHandler);
 
     this._participantSubscribers.forEach((participantSubscriber: ParticipantSubscriber) => {
       participantSubscriber.unsubscribe();
@@ -196,15 +208,15 @@ export class CallSubscriber {
     /* @conditional-compile-remove(local-recording-notification) */
     this._localRecordingSubscriber?.unsubscribe();
     this._optimalVideoCountSubscriber.unsubscribe();
-    /* @conditional-compile-remove(ppt-live) */
     this._pptLiveSubscriber.unsubscribe();
     this._CaptionsFeatureSubscriber?.unsubscribe();
     this._raiseHandSubscriber?.unsubscribe();
 
     this._capabilitiesSubscriber.unsubscribe();
     this._reactionSubscriber?.unsubscribe();
-    /* @conditional-compile-remove(spotlight) */
     this._spotlightSubscriber.unsubscribe();
+    /* @conditional-compile-remove(breakout-rooms) */
+    this._breakoutRoomsSubscriber.unsubscribe();
   };
 
   private addParticipantListener(participant: RemoteParticipant): void {
@@ -238,6 +250,19 @@ export class CallSubscriber {
         this._call.feature(Features.Captions)
       );
       this._call.off('stateChanged', this.initCaptionSubscriber);
+    }
+  };
+
+  /* @conditional-compile-remove(teams-meeting-conference) */
+  private initTeamsMeetingConference = (): void => {
+    if (this._call.state === 'Connected') {
+      this._call
+        .feature(Features.TeamsMeetingAudioConferencing)
+        .getTeamsMeetingAudioConferencingDetails()
+        .then((teamsMeetingConferenceDetails) => {
+          this._context.setTeamsMeetingConference(this._callIdRef.callId, teamsMeetingConferenceDetails);
+        });
+      this._call.off('stateChanged', this.initTeamsMeetingConference);
     }
   };
 
@@ -276,6 +301,15 @@ export class CallSubscriber {
   /* @conditional-compile-remove(total-participant-count) */
   private totalParticipantCountChangedHandler = (): void => {
     this._context.setTotalParticipantCount(this._callIdRef.callId, this._call.totalParticipantCount);
+  };
+
+  // TODO: Tee to notification state once available
+  /* @conditional-compile-remove(soft-mute) */
+  private mutedByOthersHandler = (): void => {
+    this._context.teeErrorToState(
+      { name: 'mutedByOthers', message: 'Muted by another participant' },
+      'Call.mutedByOthers'
+    );
   };
 
   private remoteParticipantsUpdated = (event: { added: RemoteParticipant[]; removed: RemoteParticipant[] }): void => {

@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { Call, CallAgent } from '@azure/communication-calling';
-import { CallAgentCommon, CallCommon, TeamsCall, TeamsCallAgent } from './BetaToStableTypes';
+import { Call, CallAgent, TeamsCallAgent, IncomingCallCommon } from '@azure/communication-calling';
+import { CallAgentCommon, CallCommon, TeamsCall } from './BetaToStableTypes';
 
 /**
  * @internal
@@ -37,5 +37,23 @@ export const _isTeamsCall = (call: CallCommon): call is TeamsCall => {
 export const _isTeamsCallAgent = (callAgent: CallAgentCommon): callAgent is TeamsCallAgent => {
   /* @conditional-compile-remove(teams-identity-support) */
   return callAgent.kind === 'TeamsCallAgent';
+  return false;
+};
+
+/**
+ * @internal
+ */
+export const _isTeamsIncomingCall = (call: IncomingCallCommon): boolean => {
+  /* @conditional-compile-remove(one-to-n-calling) */
+  return call.kind === 'TeamsIncomingCall';
+  return false;
+};
+
+/**
+ * @internal
+ */
+export const _isACSIncomingCall = (call: IncomingCallCommon): boolean => {
+  /* @conditional-compile-remove(one-to-n-calling) */
+  return call.kind === 'IncomingCall';
   return false;
 };

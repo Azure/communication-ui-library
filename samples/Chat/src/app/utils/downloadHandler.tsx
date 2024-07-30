@@ -1,15 +1,15 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/* @conditional-compile-remove(attachment-download) */
+/* @conditional-compile-remove(file-sharing-acs) */
 import { AttachmentMetadata, defaultAttachmentMenuAction } from '@azure/communication-react';
 
-/* @conditional-compile-remove(attachment-download) */
+/* @conditional-compile-remove(file-sharing-acs) */
 import { WindowNew24Regular } from '@fluentui/react-icons';
-/* @conditional-compile-remove(attachment-download) */
+/* @conditional-compile-remove(file-sharing-acs) */
 import React from 'react';
 
-/* @conditional-compile-remove(attachment-download) */
+/* @conditional-compile-remove(file-sharing-acs) */
 export const attachmentDownloadOptions = {
   actionsForAttachment: () => {
     // if download option is not defined, default download option will be used
@@ -19,14 +19,16 @@ export const attachmentDownloadOptions = {
   }
 };
 
-/* @conditional-compile-remove(attachment-download) */
+/* @conditional-compile-remove(file-sharing-acs) */
 export const attachmentDownloadOptionsWithCustomButtons = {
   actionsForAttachment: (attachment: AttachmentMetadata) => {
     // This is an example of how to add a custom action to the attachment menu
     // You can make the list of menu actions to be dynamic based on the
     // the attachment metadata such as the file extension, file name, etc, OR
     // based on the message metadata such as the sender ID, message type, etc.
-    if (attachment.extension === 'pdf') {
+    const re = /(?:\.([^.]+))?$/;
+    const match = re.exec(attachment.name);
+    if (match && match[1] === 'pdf') {
       return [
         {
           ...defaultAttachmentMenuAction,

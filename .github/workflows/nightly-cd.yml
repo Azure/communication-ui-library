@@ -24,7 +24,7 @@ jobs:
     permissions: read-all
     steps:
       # Check-out repo
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       # Check if any changes have been pushed to main since last release
       - name: Check latest commit age
@@ -58,25 +58,28 @@ jobs:
   release:
     name: Create alpha releases
     needs: checkForChanges
+    environment:
+      name: npm-alpha
     if: needs.checkForChanges.outputs.hasChanged == 'true'
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      id-token: write
     steps:
       # Check-out repo
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
       # Ensure node version is great enough
       - name: Use Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '20.x'
 
       # Try get node_modules from cache
       - name: Restore node_modules from cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
@@ -124,12 +127,6 @@ jobs:
           echo version: $ver
           echo "version=$ver" >> $GITHUB_OUTPUT
 
-      # Push git tags
-      - name: Create and push git tags
-        run: |
-          git tag ${{ steps.version.outputs.version }}
-          git push --tags
-
       # Clean package.json
       - name: Remove devDependencies and beachball from package.json
         run: node ../../common/scripts/prepare-package-json.js
@@ -140,26 +137,54 @@ jobs:
         run: npm pack
         working-directory: ./packages/communication-react
 
+      # Login via OIDC to permit uploading to azure blob store
+      - name: Azure login
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.NPM_DEPLOY_AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.NPM_DEPLOY_AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.NPM_DEPLOY_AZURE_SUBSCRIPTION_ID }}
+
       # Deploy npm package - this is done by uploading to Azure's SDK blob storage then triggering their partner release pipeline.
       # More info: https://dev.azure.com/azure-sdk/internal/_wiki/wikis/internal.wiki/1/Partner-Release-Pipeline
       - name: Upload tarball to blob storage
-        uses: azure/CLI@v1
-        with:
-          inlineScript: |
-            az login --service-principal -u ${{ secrets.AZURESDKPARTNERDROPS_CLIENT_ID }} -p ${{ secrets.AZURESDKPARTNERDROPS_SERVICE_PRINCIPAL_KEY }} --tenant ${{ secrets.AZURESDKPARTNERDROPS_TENANT_ID }}
-            az extension add --name storage-preview
-            az storage azcopy blob upload -s "packages/communication-react/release/*" -c "drops/azure-communication-services/react/npm/${{ steps.version.outputs.version }}" --account-name azuresdkpartnerdrops
+        run: az storage blob upload -f "packages/communication-react/release/azure-communication-react-${{ steps.version.outputs.version }}.tgz" -c "drops/azure-communication-services/react/npm/${{ steps.version.outputs.version }}" --account-name azuresdkpartnerdrops --auth-mode login
 
       - name: Trigger alpha package release pipeline
-        uses: Azure/pipelines@v1.2
-        with:
-          azure-devops-project-url: 'https://dev.azure.com/azure-sdk/internal'
-          azure-pipeline-name: 'azuresdkpartnerdrops to npm'
-          azure-devops-token: '${{ secrets.AZURE_SDK_RELEASE_PIPELINE_DEVOPS_TOKEN }}'
-          azure-pipeline-variables: '{"accessLevel": "public", "BlobPath": "azure-communication-services/react/npm/${{ steps.version.outputs.version }}", "registry": "https://registry.npmjs.org/", "skipDiff": "False", "tag": "dev"}'
+        run: az pipelines run --name 'js - partner-release' --org 'https://dev.azure.com/azure-sdk' --project 'internal' --parameters BlobPath=azure-communication-services/react/npm/${{ steps.version.outputs.version }} Tag=dev
+
+      # Push git tags
+      - name: Create and push git tags
+        run: |
+          git tag ${{ steps.version.outputs.version }}
+          git push --tags
 
       - name: Check if npm package published successfully
-        run: node common/scripts/poll-npm-package-published.mjs ${{ steps.version.outputs.version }}
+        run: |
+          POLL_INTERVAL_SEC=60 # 60 seconds
+          TIMEOUT_TIME_SEC=3600 # 60 minutes
+          GET_REQUEST_TIMEOUT_SEC=5
+          PACKAGE_NAME="@azure/communication-react"
+          VERSION="${{ steps.version.outputs.version }}"
+
+          start_time=$(date +%s)
+
+          while (( $(date +%s) - $start_time < $TIMEOUT_TIME_SEC )); do
+            response=$(curl --max-time $GET_REQUEST_TIMEOUT_SEC -s -o /dev/null -w "%{http_code}" https://registry.npmjs.org/$PACKAGE_NAME/$VERSION)
+            echo "Pinging: https://registry.npmjs.org/$PACKAGE_NAME/$VERSION"
+            echo "responseCode: $response"
+            
+            if [ $response -eq 200 ]; then
+              echo "Successfully found npm package"
+              exit 0
+            fi
+            
+            echo "Sleeping for a bit..."
+            sleep $POLL_INTERVAL_SEC
+          done
+
+          echo "Failed to find package on the npm registry"
+          exit 1
 
   check_failure:
     runs-on: ubuntu-latest

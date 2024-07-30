@@ -5,7 +5,11 @@ import { Text, mergeStyles } from '@fluentui/react';
 import { ChatMessage as FluentChatMessage } from '@fluentui-contrib/react-chat';
 import { _formatString } from '@internal/acs-ui-common';
 import React, { useCallback, useMemo } from 'react';
-import { chatMessageDateStyle, chatMessageAuthorStyle } from '../../styles/ChatMessageComponent.styles';
+import {
+  chatMessageDateStyle,
+  chatMessageAuthorStyle,
+  chatMessageDateFailedStyle
+} from '../../styles/ChatMessageComponent.styles';
 import { useIdentifiers } from '../../../identifiers/IdentifierProvider';
 import { useTheme } from '../../../theming';
 import { InlineImageOptions } from '../ChatMessageContent';
@@ -14,9 +18,11 @@ import { ChatMessage } from '../../../types/ChatMessage';
 import { BlockedMessage } from '../../../types/ChatMessage';
 import { MessageThreadStrings } from '../../MessageThread';
 import { ComponentSlotStyle } from '../../../types';
-/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-import { AttachmentMenuAction, AttachmentMetadata } from '../../../types';
-import { _AttachmentDownloadCards } from '../../AttachmentDownloadCards';
+/* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
+import { AttachmentMenuAction } from '../../../types';
+/* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
+import { AttachmentMetadata } from '@internal/acs-ui-common';
+import { _AttachmentDownloadCards } from '../../Attachment/AttachmentDownloadCards';
 import { useLocale } from '../../../localization';
 /* @conditional-compile-remove(mention) */
 import { MentionDisplayOptions } from '../../MentionPopover';
@@ -29,6 +35,8 @@ import {
   getMessageBubbleContent,
   getMessageEditedDetails
 } from '../../utils/ChatMessageComponentUtils';
+/* @conditional-compile-remove(file-sharing-acs) */
+import { doesMessageContainMultipleAttachments } from '../../utils/ChatMessageComponentAsEditBoxUtils';
 
 type ChatMessageComponentAsMessageBubbleProps = {
   message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage;
@@ -40,12 +48,12 @@ type ChatMessageComponentAsMessageBubbleProps = {
    * Whether to overlap avatar and message when the view is width constrained.
    */
   shouldOverlapAvatarAndMessage: boolean;
-  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
   /**
    * Optional callback to render message attachments in the message component.
    */
-  onRenderAttachmentDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
-  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  onRenderAttachmentDownloads?: (message: ChatMessage) => JSX.Element;
+  /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
   /**
    * Optional callback to define custom actions for attachments.
    */
@@ -80,11 +88,11 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     showDate,
     messageContainerStyle,
     strings,
-    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+    /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
     onRenderAttachmentDownloads,
     inlineImageOptions,
     shouldOverlapAvatarAndMessage,
-    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+    /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
     actionsForAttachment,
     /* @conditional-compile-remove(mention) */
     mentionDisplayOptions,
@@ -115,17 +123,17 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
       inlineImageOptions,
       /* @conditional-compile-remove(mention) */
       mentionDisplayOptions,
-      /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+      /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
       onRenderAttachmentDownloads,
-      /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+      /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
       actionsForAttachment
     );
   }, [
-    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ actionsForAttachment,
+    /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */ actionsForAttachment,
     inlineImageOptions,
     /* @conditional-compile-remove(mention) */ mentionDisplayOptions,
     message,
-    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ onRenderAttachmentDownloads,
+    /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */ onRenderAttachmentDownloads,
     strings,
     userId
   ]);
@@ -133,19 +141,24 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
   const isBlockedMessage =
     false || /* @conditional-compile-remove(data-loss-prevention) */ message.messageType === 'blocked';
   const chatMessageCommonStyles = useChatMessageCommonStyles();
-
+  /* @conditional-compile-remove(file-sharing-acs) */
+  const hasMultipleAttachments = useMemo(() => {
+    return doesMessageContainMultipleAttachments(message as ChatMessage);
+  }, [message]);
   const chatMessageStyles = useChatMessageStyles();
   const chatItemMessageContainerClassName = mergeClasses(
     chatMessageCommonStyles.body,
     chatMessageStyles.body,
     // disable placeholder functionality for GA releases as it might confuse users
-    chatMessageStyles.bodyWithPlaceholderImage,
+    chatMessageCommonStyles.bodyWithPlaceholderImage,
     isBlockedMessage
       ? chatMessageCommonStyles.blocked
       : props.message.status === 'failed'
-      ? chatMessageCommonStyles.failed
-      : undefined,
+        ? chatMessageCommonStyles.failed
+        : undefined,
     shouldOverlapAvatarAndMessage ? chatMessageStyles.avatarOverlap : chatMessageStyles.avatarNoOverlap,
+    /* @conditional-compile-remove(file-sharing-acs) */
+    hasMultipleAttachments ? chatMessageStyles.multipleAttachments : undefined,
     message.attached === 'top' || message.attached === false
       ? chatMessageStyles.bodyWithAvatar
       : chatMessageStyles.bodyWithoutAvatar,
@@ -161,11 +174,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
           attached={attached}
           key={props.message.messageId}
           root={{
-            className: chatMessageStyles.root,
-            // make body not focusable to remove repetitions from narrators.
-            // inner components are already focusable
-            tabIndex: -1,
-            role: 'none'
+            className: chatMessageStyles.root
           }}
           author={<Text className={chatMessageAuthorStyle}>{message.senderDisplayName}</Text>}
           body={{
@@ -174,7 +183,12 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
           }}
           data-ui-id="chat-composite-message"
           timestamp={
-            <Text className={chatMessageDateStyle} data-ui-id={ids.messageTimestamp}>
+            <Text
+              className={
+                props.message.status === 'failed' ? chatMessageDateFailedStyle(theme) : chatMessageDateStyle(theme)
+              }
+              data-ui-id={ids.messageTimestamp}
+            >
               {formattedTimestamp}
             </Text>
           }

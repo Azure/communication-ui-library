@@ -1,8 +1,75 @@
 # Change Log - @azure/communication-react
 
-This log was last generated on Tue, 23 Apr 2024 17:54:31 GMT and should not be manually modified.
+This log was last generated on Mon, 17 Jun 2024 16:27:12 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.18.0-beta.1](https://github.com/azure/communication-ui-library/tree/@azure/communication-react_v1.18.0-beta.1)
+
+Mon, 17 Jun 2024 16:27:12 GMT
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.17.0...1.18.0-beta.1)
+
+### Features
+
+#### Data Loss Prevention (DLP) Message Support - Public Preview
+
+- Data Loss Prevention (DLP) support has been enabled in the Composite for Teams interoperability scenarios. When enabled in Teams, DLP policies can be applied to prevent sensitive information from being shared in chat messages.
+
+#### Video Pinning - Public Preview
+
+- UI library has been updated to include functionality for pinning a video tile from the participant list, in addition to the existing video gallery pinning feature.
+
+### Improvements
+
+- Update table border and selection colors for rich text editor and messages ([PR #4675](https://github.com/azure/communication-ui-library/pull/4675) by 98852890+vhuseinova-msft@users.noreply.github.com)
+
+### Bug Fixes
+
+- Fix an issue where reactions are dismissed when receiving new captions ([PR #4707](https://github.com/azure/communication-ui-library/pull/4707) by 96077406+carocao-msft@users.noreply.github.com)
+- Update the color of message time stamps to meet a11y contrast requirements ([PR #4688](https://github.com/azure/communication-ui-library/pull/4688) by longamy@microsoft.com)
+- Disable highlight of message context menu on touch event on Android ([PR #4726](https://github.com/azure/communication-ui-library/pull/4726) by 3941071+emlynmac@users.noreply.github.com)
+- Use display name from participant list for captions speaker display name ([PR #4703](https://github.com/azure/communication-ui-library/pull/4703) by 96077406+carocao-msft@users.noreply.github.com)
+- Fix an issue where user cannot update message content ([PR #4701](https://github.com/azure/communication-ui-library/pull/4701) by 109105353+jpeng-ms@users.noreply.github.com)
+- Fix an issue where rich the text editor content wasn't scrolled correctly when new content is pasted ([PR #4720](https://github.com/azure/communication-ui-library/pull/4720) by <98852890+vhuseinova-msft@users.noreply.github.com>)
+
+## [1.17.0-beta.1](https://github.com/azure/communication-ui-library/tree/1.17.0-beta.1)
+
+Tue, 21 May 2024 20:14:27 GMT
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.16.0...1.17.0-beta.1)
+
+### Features
+
+#### Join Call with Meeting ID/Passcode
+
+We are excited to announce that the Azure Communication Services Web UI Library now supports joining a call with a Meeting Passcode and ID. Currently, Microsoft Teams allows you to require a meeting password for added security and generates a unique meeting ID for each meeting that participants can use to join. This feature now allows users on ACS to join interop Teams calls that have a meeting passcode or an ID generated. This is useful for private calls or events where limited access needs to be granted. Developers can use this functionality today through our composites (e.g CallComposite, CallWithChatComposite) as well as through components.
+
+#### File Sharing
+
+UI library supports file sharing for Teams Interop Scenario in CallWithChatComposite. File sharing capabilities are also supported in ChatComposite in conjunction with your choice of a storage solution. We have made improvements to the file sharing feature in this beta release. The attachment card is now more optimized and you can find the usage instructions in the storybook.
+
+#### Rich Text Editor
+
+This release brings major enhancements to the rich text editor feature. The changes include:
+
+- Upgrading Rooster JS from v8 to v9
+- Replacing RoosterJS React components with our own components
+
+#### Improvements
+
+- Add notification for Hide Attendee Names ([PR #4554](https://github.com/azure/communication-ui-library/pull/4554) by 97124699+prabhjot-msft@users.noreply.github.com)
+- Menu icon behavior improved ([PR #4584](https://github.com/azure/communication-ui-library/pull/4584) by jiangnanhello@live.com)
+- Allow captions to be used when in a adhoc teams call ([PR #4579](https://github.com/azure/communication-ui-library/pull/4579) by dmceachern@microsoft.com)
+
+#### Bug Fixes
+
+- Update styles to fix spacing of labeled background effects ([PR #4614](https://github.com/azure/communication-ui-library/pull/4614) by dmceachern@microsoft.com)
+- Add reaction items narrator strings ([PR #4635](https://github.com/azure/communication-ui-library/pull/4635) by dmceachern@microsoft.com)
+- Added Missing Message Options for MessageThread Component ([PR #4600](https://github.com/azure/communication-ui-library/pull/4600) by 109105353+jpeng-ms@users.noreply.github.com)
+- Fix bug where raise hand's height is the height of video tile ([PR #4589](https://github.com/azure/communication-ui-library/pull/4589) by 96077406+carocao-msft@users.noreply.github.com)
+- Fix for Pin tile icon too small ([PR #4587](https://github.com/azure/communication-ui-library/pull/4587) by 97124699+prabhjot-msft@users.noreply.github.com)
+- Fix crash bug for remote screen share ([PR #4608](https://github.com/azure/communication-ui-library/pull/4608) by jiangnanhello@live.com)
+- Fix bug when there are duplicate captions ([PR #4534](https://github.com/azure/communication-ui-library/pull/4534) by 96077406+carocao-msft@users.noreply.github.com)
+- Fix width for code snippets sent in messages ([PR #4633](https://github.com/azure/communication-ui-library/pull/4633) by 98852890+vhuseinova-msft@users.noreply.github.com)
 
 ## [1.16.0-beta.1](https://github.com/azure/communication-ui-library/tree/1.16.0-beta.1)
 
@@ -11,17 +78,19 @@ Tue, 23 Apr 2024 17:54:31 GMT
 
 ### Features
 
-### Rich Text Editor - Public Preview
+#### Rich Text Editor - Public Preview
 
-The Web UI RichTextSendBox and MessageThread components now support rich text formatting to generate HTML content for chat messages. This feature includes support for: 
+The Web UI RichTextSendBox and MessageThread components now support rich text formatting to generate HTML content for chat messages. This feature includes support for:
+
 - Different text styles (bold, italic and underline)
 - Bulleted and numbered lists
 - Changing indentation for text
 - Adding and updating tables
 
-### Closed Captions - Public Preview
+#### Closed Captions - Public Preview
 
 We are excited to announce that Azure Communications Services has recently added the Closed Captions feature. With closed captions, developers can provide a textual representation of the audio content in their videos, making it easier for users who are deaf or hard of hearing to follow along. Developers can enable this functionality today through our composites (e.g CallComposite, CallWithChatComposite). This feature includes support for:
+
 - Enable and disable closed captions in the call
 - Change spoken language
 - Being able to use captions outside of teams scenario

@@ -75,7 +75,7 @@ jobs:
           node-version: 'lts/*'
       # Try get node_modules from cache
       - name: Restore node_modules from cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
@@ -153,7 +153,7 @@ jobs:
           node-version: 'lts/*'
       # Try get node_modules from cache
       - name: Restore node_modules from cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
@@ -232,7 +232,7 @@ jobs:
 
   in-progress-feature-validation:
     needs: get_matrix
-    name: Check if in progress feature can be removed separately
+    name: Check if in progress feature can be removed separately (${{ matrix.flavor }})
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     runs-on: ubuntu-latest
@@ -248,7 +248,7 @@ jobs:
           node-version: 'lts/*'
       # Try get node_modules from cache
       - name: Restore node_modules from cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
@@ -300,7 +300,7 @@ jobs:
         with:
           node-version: 'lts/*'
       - name: Restore node_modules from cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
@@ -369,7 +369,7 @@ jobs:
         with:
           node-version: 'lts/*'
       - name: Restore node_modules from cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
@@ -438,7 +438,7 @@ jobs:
         with:
           node-version: 'lts/*'
       - name: Restore node_modules from cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
@@ -493,6 +493,8 @@ jobs:
     needs: get_matrix
     name: 'Components automation test (${{ matrix.flavor }})'
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
@@ -504,7 +506,7 @@ jobs:
         with:
           node-version: 'lts/*'
       - name: Restore node_modules from cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
@@ -547,7 +549,7 @@ jobs:
 
   build_storybook:
     needs: get_matrix
-    name: Build Storybook
+    name: Build Storybook (${{ matrix.flavor }})
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     runs-on: ubuntu-latest
@@ -560,7 +562,7 @@ jobs:
         with:
           node-version: 'lts/*'
       - name: Restore node_modules from cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
@@ -578,7 +580,7 @@ jobs:
   build_storybook8:
     needs: [get_matrix, files_changed]
     if: needs.files_changed.outputs.storybook8_changes == 'true'
-    name: Build Storybook v8
+    name: Build Storybook v8 (${{ matrix.flavor }})
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     runs-on: ubuntu-latest
@@ -591,7 +593,7 @@ jobs:
         with:
           node-version: 'lts/*'
       - name: Restore node_modules from cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
@@ -606,7 +608,7 @@ jobs:
         working-directory: packages/storybook8
       - name: Tests
         if: ${{ matrix.flavor == 'beta' || matrix.flavor == 'beta-release' }}
-        run: rushx test
+        run: rushx test-s8
         working-directory: packages/storybook8
 
   build_calling_sample:
@@ -624,7 +626,7 @@ jobs:
         with:
           node-version: 'lts/*'
       - name: Restore node_modules from cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
@@ -658,7 +660,7 @@ jobs:
         with:
           node-version: 'lts/*'
       - name: Restore node_modules from cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
@@ -692,7 +694,7 @@ jobs:
         with:
           node-version: 'lts/*'
       - name: Restore node_modules from cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}

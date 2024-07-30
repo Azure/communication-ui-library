@@ -20,6 +20,7 @@
     "complianceBannerTranscriptionStopped": "Döküm durduruldu.",
     "configurationPageTitle": "Arama başlatın",
     "copyInviteLinkButtonLabel": "Davet bağlantısını kopyala",
+    "copyInviteLinkButtonActionedLabel": "Bağlantı kopyalandı",
     "copyInviteLinkActionedAriaLabel": "Davet bağlantısı kopyalandı",
     "defaultPlaceHolder": "Bir seçenek belirleyin",
     "dismissSidePaneButtonLabel": "Kapat",
@@ -134,6 +135,7 @@
     "dtmfDialerButtonTooltipOff": "Sayısal tuş takımını gizle",
     "dtmfDialerMoreButtonLabelOn": "Tuş takımını göster",
     "dtmfDialerMoreButtonLabelOff": "Sayısal tuş takımını gizle",
+    "phoneCallMoreButtonLabel": "Telefon Görüşmesi",
     "spokenLanguageStrings": {
       "ar-ae": "Arapça - BAE",
       "ar-sa": "Arapça - Suudi Arabistan",
@@ -335,11 +337,25 @@
     "leaveConfirmDialogContent": "Aramadan ayrılmak istediğinizden emin misiniz?",
     "endCallConfirmDialogTitle": "Arama sonlandırılsın mı?",
     "endCallConfirmDialogContent": "Aramayı herkes için sonlandırıyorsunuz.",
-    "invalidMeetingIdentifier": "Geçersiz toplantı kimliği veya geçiş kodu"
+    "invalidMeetingIdentifier": "Geçersiz toplantı kimliği veya geçiş kodu",
+    "pinParticipantMenuLabel": "Benim için sabitle",
+    "pinParticipantLimitReachedMenuLabel": "Sabitleme (sınıra ulaşıldı)",
+    "unpinParticipantMenuLabel": "Sabitlemeyi kaldır",
+    "pinParticipantMenuItemAriaLabel": "Sabitle",
+    "unpinParticipantMenuItemAriaLabel": "Sabitlemeyi kaldır",
+    "muteAllMenuLabel": "Tümünü sessize al",
+    "muteAllDialogTitle": "Herkesi sessize almak mı istiyorsunuz?",
+    "muteAllDialogContent": "Bu, toplantıda sizin dışınızdaki herkesi sessize alır.",
+    "muteAllConfirmButtonLabel": "Tümünü sessize al",
+    "muteAllCancelButtonLabel": "İptal"
   },
   "chat": {
     "chatListHeader": "Bu sohbette",
-    "uploadAttachment": "Eki Karşıya Yükle"
+    "uploadAttachment": "Eki Karşıya Yükle",
+    "uploadImageDataNotProvided": "Görüntü verileri sağlanmadı.",
+    "uploadImageIsTooLarge": "Resim çok büyük. Mb'den küçük bir {maxImageSize} seçin.",
+    "uploadImageExtensionIsNotAllowed": ".{imageExtension} görüntüsünün karşıya yüklemesine izin verilmiyor.",
+    "uploadImageFailed": "Resim karşıya yüklenemiyor. Lütfen daha sonra yeniden deneyin."
   },
   "callWithChat": {
     "chatButtonLabel": "Sohbet",
@@ -349,6 +365,7 @@
     "chatButtonTooltipOpen": "Sohbeti göster",
     "chatPaneTitle": "Sohbet",
     "copyInviteLinkButtonLabel": "Davet bağlantısını kopyala",
+    "copyInviteLinkButtonActionedLabel": "Bağlantı kopyalandı",
     "copyInviteLinkActionedAriaLabel": "Davet bağlantısı kopyalandı",
     "dismissSidePaneButtonLabel": "Kapat",
     "moreDrawerAudioDeviceMenuTitle": "Ses Cihazı",
@@ -364,6 +381,8 @@
     "selectedPeopleButtonLabel": "Kişiler Düğmesi Seçildi",
     "peopleButtonTooltipOpen": "Katılımcıları göster",
     "peopleButtonTooltipClose": "Katılımcıları gizle",
+    "peopleButtonTooltipOpenAriaLabel": "Kişiler düğmesi, Katılımcıları göster",
+    "peopleButtonTooltipCloseAriaLabel": "Kişiler düğmesi, Katılımcıları gizle",
     "peoplePaneSubTitle": "Bu aramada",
     "peoplePaneTitle": "Kişiler",
     "pictureInPictureTileAriaLabel": "Video Akışları. Çağrı ekranına dönmek için tıklayın.",
