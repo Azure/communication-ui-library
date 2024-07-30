@@ -35,6 +35,8 @@ import {
   VideoOptions,
   Call
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(DNS) */
+import { AudioEffectsStartConfig, AudioEffectsStopConfig } from '@azure/communication-calling';
 import { SpotlightedParticipant } from '@azure/communication-calling';
 import { TeamsMeetingIdLocator } from '@azure/communication-calling';
 import { Reaction } from '@azure/communication-calling';
@@ -122,6 +124,8 @@ import { VideoBackgroundEffectsDependency } from '@internal/calling-component-bi
 import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
 import { CallingSoundSubscriber } from './CallingSoundSubscriber';
 import { CallingSounds } from './CallAdapter';
+/* @conditional-compile-remove(DNS) */
+import { DeepNoiseSuppressionEffect } from '@azure/communication-calling-effects';
 type CallTypeOf<AgentType extends CallAgent | TeamsCallAgent> = AgentType extends CallAgent ? Call : TeamsCall;
 
 /** Context of call, which is a centralized context for all state updates */
@@ -553,6 +557,10 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     this.startVideoBackgroundEffect.bind(this);
     this.stopVideoBackgroundEffects.bind(this);
     this.updateBackgroundPickerImages.bind(this);
+    /* @conditional-compile-remove(DNS) */
+    this.startNoiseSuppressionEffect.bind(this);
+    /* @conditional-compile-remove(DNS) */
+    this.stopNoiseSuppressionEffect.bind(this);
     this.submitSurvey.bind(this);
     this.startSpotlight.bind(this);
     this.stopSpotlight.bind(this);
@@ -865,6 +873,24 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
       const replaceConfig = videoBackgroundEffect as BackgroundReplacementConfig;
       await this.handlers.onReplaceVideoBackground(replaceConfig);
     }
+  }
+
+  /* @conditional-compile-remove(DNS) */
+  public async startNoiseSuppressionEffect(): Promise<void> {
+    const audioEffects: AudioEffectsStartConfig = {
+      noiseSuppression: new DeepNoiseSuppressionEffect()
+    };
+
+    await this.handlers.onStartNoiseSuppressionEffect(audioEffects);
+  }
+
+  /* @conditional-compile-remove(DNS) */
+  public async stopNoiseSuppressionEffect(): Promise<void> {
+    const audioEffects: AudioEffectsStopConfig = {
+      noiseSuppression: true
+    };
+
+    await this.handlers.onStopNoiseSuppressionEffect(audioEffects);
   }
 
   public async stopVideoBackgroundEffects(): Promise<void> {

@@ -188,6 +188,14 @@ export class _MockCallAdapter implements CallAdapter {
     throw new Error('updateBackgroundPickerImages not implemented.');
   }
 
+  startNoiseSuppressionEffect(): Promise<void> {
+    throw new Error('startNoiseSuppressionEffect not implemented.');
+  }
+
+  stopNoiseSuppressionEffect(): Promise<void> {
+    throw new Error('stopNoiseSuppressionEffect not implemented.');
+  }
+
   public updateSelectedVideoBackgroundEffect(): void {
     throw new Error('updateSelectedVideoBackgroundEffect not implemented.');
   }

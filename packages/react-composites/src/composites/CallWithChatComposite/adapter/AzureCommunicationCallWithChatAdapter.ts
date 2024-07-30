@@ -252,10 +252,12 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     this.setSpokenLanguage.bind(this);
     this.setCaptionLanguage.bind(this);
     this.startVideoBackgroundEffect.bind(this);
-
     this.stopVideoBackgroundEffects.bind(this);
-
     this.updateBackgroundPickerImages.bind(this);
+    /* @conditional-compile-remove(DNS) */
+    this.startNoiseSuppressionEffect.bind(this);
+    /* @conditional-compile-remove(DNS) */
+    this.stopNoiseSuppressionEffect.bind(this);
   }
 
   /** Join existing Call. */
@@ -542,6 +544,16 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
 
   public updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void {
     return this.callAdapter.updateBackgroundPickerImages(backgroundImages);
+  }
+
+  /* @conditional-compile-remove(DNS) */
+  public async startNoiseSuppressionEffect(): Promise<void> {
+    return await this.callAdapter.startNoiseSuppressionEffect();
+  }
+
+  /* @conditional-compile-remove(DNS) */
+  public async stopNoiseSuppressionEffect(): Promise<void> {
+    return await this.callAdapter.stopNoiseSuppressionEffect();
   }
 
   public updateSelectedVideoBackgroundEffect(selectedVideoBackground: VideoBackgroundEffect): void {

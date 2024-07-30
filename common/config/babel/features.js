@@ -21,6 +21,8 @@ module.exports = {
     "in-progress-beta-feature-demo",
     // feature for adding JS helpers to the UI library API
     "composite-js-helpers",
+     // Deep Noise Suppression feature
+    "DNS",
     // feature for breakout rooms
     "breakout-rooms",
   ],
