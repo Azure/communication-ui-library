@@ -21,6 +21,7 @@ export const parameters = {
         'Overview',
         'Use Cases',
         'Feedback',
+        'Setup',
         'Composites',
         [
           'Get Started',
@@ -30,7 +31,7 @@ export const parameters = {
           'Adapters',
           'Cross-Framework Support',
         ],
-        'UI Components',
+        'Components',
         [
           'Overview',
           'Get Started',

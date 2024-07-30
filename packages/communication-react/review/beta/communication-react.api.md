@@ -12,6 +12,9 @@ import { BackgroundBlurConfig } from '@azure/communication-calling';
 import { BackgroundBlurEffect } from '@azure/communication-calling';
 import { BackgroundReplacementConfig } from '@azure/communication-calling';
 import { BackgroundReplacementEffect } from '@azure/communication-calling';
+import { BreakoutRoom } from '@azure/communication-calling';
+import { BreakoutRoomsSettings } from '@azure/communication-calling';
+import { BreakoutRoomsUpdatedListener } from '@azure/communication-calling';
 import { Call } from '@azure/communication-calling';
 import { CallAgent } from '@azure/communication-calling';
 import { CallClient } from '@azure/communication-calling';
@@ -55,6 +58,7 @@ import { IIconProps } from '@fluentui/react';
 import { ILinkStyles } from '@fluentui/react';
 import { IMessageBarProps } from '@fluentui/react';
 import { IncomingCall } from '@azure/communication-calling';
+import { IncomingCallKind } from '@azure/communication-calling';
 import { IPersonaStyleProps } from '@fluentui/react';
 import { IPersonaStyles } from '@fluentui/react';
 import { IRawStyle } from '@fluentui/react';
@@ -118,6 +122,17 @@ export interface AcceptedTransfer {
 export interface ActiveErrorMessage {
     timestamp?: Date;
     type: ErrorType;
+}
+
+// @beta
+export interface ActiveIncomingCall {
+    callerInfo: {
+        displayName: string;
+    };
+    endTime?: Date;
+    id: string;
+    startTime: Date;
+    videoAvailable: boolean;
 }
 
 // @public
@@ -263,7 +278,7 @@ export type AzureCommunicationCallWithChatAdapterArgs = {
     userId: CommunicationUserIdentifier;
     displayName: string;
     credential: CommunicationTokenCredential;
-    locator: CallAndChatLocator | TeamsMeetingLinkLocator | /** @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator;
+    locator: CallAndChatLocator | TeamsMeetingLinkLocator | TeamsMeetingIdLocator;
     alternateCallerId?: string;
     callAdapterOptions?: AzureCommunicationCallAdapterOptions;
 };
@@ -334,6 +349,14 @@ export interface BlockedMessage extends MessageCommon {
     status?: MessageStatus;
     // (undocumented)
     warningText?: string;
+}
+
+// @public
+export interface BreakoutRoomsState {
+    // (undocumented)
+    assignedBreakoutRoom?: BreakoutRoom;
+    // (undocumented)
+    breakoutRoomSettings?: BreakoutRoomsSettings;
 }
 
 // @beta
@@ -485,7 +508,7 @@ export interface CallAdapterDeviceManagement {
 }
 
 // @public
-export type CallAdapterLocator = TeamsMeetingLinkLocator | GroupCallLocator | RoomCallLocator | /* @conditional-compile-remove(teams-adhoc-call) */ /* @conditional-compile-remove(PSTN-calls) */ CallParticipantsLocator | /* @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator;
+export type CallAdapterLocator = TeamsMeetingLinkLocator | GroupCallLocator | RoomCallLocator | /* @conditional-compile-remove(teams-adhoc-call) */ /* @conditional-compile-remove(PSTN-calls) */ CallParticipantsLocator | TeamsMeetingIdLocator;
 
 // @public
 export type CallAdapterState = CallAdapterUiState & CallAdapterClientState;
@@ -513,6 +536,7 @@ export interface CallAdapterSubscribers {
     off(event: 'roleChanged', listener: PropertyChangedEvent): void;
     off(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
     off(event: 'mutedByOthers', listener: PropertyChangedEvent): void;
+    off(event: 'breakoutRoomsUpdated', listener: BreakoutRoomsUpdatedListener): void;
     on(event: 'participantsJoined', listener: ParticipantsJoinedListener): void;
     on(event: 'participantsLeft', listener: ParticipantsLeftListener): void;
     on(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
@@ -534,6 +558,7 @@ export interface CallAdapterSubscribers {
     on(event: 'roleChanged', listener: PropertyChangedEvent): void;
     on(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
     on(event: 'mutedByOthers', listener: PropertyChangedEvent): void;
+    on(event: 'breakoutRoomsUpdated', listener: BreakoutRoomsUpdatedListener): void;
 }
 
 // @public
@@ -589,10 +614,10 @@ export interface CallClientState {
     deviceManager: DeviceManagerState;
     environmentInfo?: EnvironmentInfo;
     incomingCalls: {
-        [key: string]: IncomingCallState;
+        [key: string]: IncomingCallState | /* @conditional-compile-remove(one-to-n-calling) */ TeamsIncomingCallState;
     };
     incomingCallsEnded: {
-        [key: string]: IncomingCallState;
+        [key: string]: IncomingCallState | /* @conditional-compile-remove(one-to-n-calling) */ TeamsIncomingCallState;
     };
     latestErrors: CallErrors;
     userId: CommunicationIdentifierKind;
@@ -990,12 +1015,24 @@ export type CallIdChangedListener = (event: {
 }) => void;
 
 // @public
+export interface CallInfoState {
+    groupId?: string;
+    kind: IncomingCallKind;
+    participantId: string;
+    threadId?: string;
+}
+
+// @public
 export type CallingBaseSelectorProps = {
     callId: string;
 };
 
 // @public
 export interface CallingHandlers extends CommonCallingHandlers {
+    // (undocumented)
+    onAcceptCall: (incomingCallId: string, useVideo?: boolean) => Promise<void>;
+    // (undocumented)
+    onRejectCall: (incomingCallId: string) => Promise<void>;
     // (undocumented)
     onStartCall: (participants: CommunicationIdentifier[], options?: StartCallOptions) => Call | undefined;
 }
@@ -1057,6 +1094,7 @@ export interface CallProviderProps {
 
 // @public
 export interface CallState {
+    breakoutRooms?: BreakoutRoomsState;
     callEndReason?: CallEndReason;
     callerInfo: CallerInfo;
     capabilitiesFeature?: CapabilitiesFeatureState;
@@ -1224,6 +1262,8 @@ export interface CallWithChatAdapterSubscriptions {
     // (undocumented)
     off(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
     // (undocumented)
+    off(event: 'breakoutRoomsUpdated', listener: BreakoutRoomsUpdatedListener): void;
+    // (undocumented)
     off(event: 'messageReceived', listener: MessageReceivedListener): void;
     // (undocumented)
     off(event: 'messageEdited', listener: MessageEditedListener): void;
@@ -1275,6 +1315,8 @@ export interface CallWithChatAdapterSubscriptions {
     on(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
     // (undocumented)
     on(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
+    // (undocumented)
+    on(event: 'breakoutRoomsUpdated', listener: BreakoutRoomsUpdatedListener): void;
     // (undocumented)
     on(event: 'messageReceived', listener: MessageReceivedListener): void;
     // (undocumented)
@@ -1503,7 +1545,7 @@ export interface CallWithChatControlOptions extends CommonCallControlOptions {
 }
 
 // @public
-export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'selectedMicrophoneChanged' | 'selectedSpeakerChanged' | 'isCaptionsActiveChanged' | 'captionsReceived' | 'isCaptionLanguageChanged' | 'isSpokenLanguageChanged' | 'capabilitiesChanged' | 'spotlightChanged' | 'messageReceived' | 'messageEdited' | 'messageDeleted' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved' | 'chatInitialized';
+export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'selectedMicrophoneChanged' | 'selectedSpeakerChanged' | 'isCaptionsActiveChanged' | 'captionsReceived' | 'isCaptionLanguageChanged' | 'isSpokenLanguageChanged' | 'capabilitiesChanged' | 'spotlightChanged' | /* @conditional-compile-remove(breakout-rooms) */ 'breakoutRoomsUpdated' | 'messageReceived' | 'messageEdited' | 'messageDeleted' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved' | 'chatInitialized';
 
 // @beta
 export const CameraAndMicrophoneSitePermissions: (props: CameraAndMicrophoneSitePermissionsProps) => JSX.Element;
@@ -3069,7 +3111,7 @@ export interface FluentThemeProviderProps {
 export const fromFlatCommunicationIdentifier: (id: string) => CommunicationIdentifier;
 
 // @public
-export type GetCallingSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof VideoGallery> extends true ? VideoGallerySelector : AreEqual<Component, typeof DevicesButton> extends true ? DevicesButtonSelector : AreEqual<Component, typeof MicrophoneButton> extends true ? MicrophoneButtonSelector : AreEqual<Component, typeof CameraButton> extends true ? CameraButtonSelector : AreEqual<Component, typeof ScreenShareButton> extends true ? ScreenShareButtonSelector : AreEqual<Component, typeof ParticipantList> extends true ? ParticipantListSelector : AreEqual<Component, typeof ParticipantsButton> extends true ? ParticipantsButtonSelector : AreEqual<Component, typeof EndCallButton> extends true ? EmptySelector : AreEqual<Component, typeof ErrorBar> extends true ? CallErrorBarSelector : AreEqual<Component, typeof Dialpad> extends true ? EmptySelector : AreEqual<Component, typeof HoldButton> extends true ? HoldButtonSelector : AreEqual<Component, typeof NotificationStack> extends true ? NotificationStackSelector : undefined;
+export type GetCallingSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof VideoGallery> extends true ? VideoGallerySelector : AreEqual<Component, typeof DevicesButton> extends true ? DevicesButtonSelector : AreEqual<Component, typeof MicrophoneButton> extends true ? MicrophoneButtonSelector : AreEqual<Component, typeof CameraButton> extends true ? CameraButtonSelector : AreEqual<Component, typeof ScreenShareButton> extends true ? ScreenShareButtonSelector : AreEqual<Component, typeof ParticipantList> extends true ? ParticipantListSelector : AreEqual<Component, typeof ParticipantsButton> extends true ? ParticipantsButtonSelector : AreEqual<Component, typeof EndCallButton> extends true ? EmptySelector : AreEqual<Component, typeof ErrorBar> extends true ? CallErrorBarSelector : AreEqual<Component, typeof Dialpad> extends true ? EmptySelector : AreEqual<Component, typeof HoldButton> extends true ? HoldButtonSelector : AreEqual<Component, typeof NotificationStack> extends true ? NotificationStackSelector : AreEqual<Component, typeof IncomingCallStack> extends true ? IncomingCallStackSelector : undefined;
 
 // @public
 export const getCallingSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetCallingSelector<Component>;
@@ -3190,14 +3232,19 @@ export const IncomingCallNotification: (props: IncomingCallNotificationProps) =>
 
 // @beta
 export interface IncomingCallNotificationProps {
+    acceptOptions: {
+        showAcceptWithVideo: boolean;
+    };
     alertText?: string;
     avatarImage?: string;
     callerName?: string;
     onAcceptWithAudio: () => void;
     onAcceptWithVideo: () => void;
+    onDismiss?: () => void;
     onReject: () => void;
     onRenderAvatar?: () => JSX.Element;
     personaSize?: number;
+    strings?: IncomingCallNotificationStrings;
     styles?: IncomingCallNotificationStyles;
 }
 
@@ -3206,8 +3253,11 @@ export interface IncomingCallNotificationStrings {
     incomingCallNoticicationAcceptWithAudioAriaLabel?: string;
     incomingCallNoticicationAcceptWithVideoAriaLabel?: string;
     incomingCallNoticicationRejectAriaLabel?: string;
+    incomingCallNotificationAccceptWithVideoButtonLabel?: string;
+    incomingCallNotificationAcceptButtonLabel?: string;
     incomingCallNotificationPlaceholderAlert?: string;
     incomingCallNotificationPlaceholderId?: string;
+    incomingCallNotificationRejectButtonLabel?: string;
 }
 
 // @beta
@@ -3218,12 +3268,32 @@ export interface IncomingCallNotificationStyles {
     root?: IStackStyles;
 }
 
+// @beta
+export const IncomingCallStack: (props: IncomingCallStackProps) => JSX.Element;
+
+// @beta
+export interface IncomingCallStackProps {
+    activeIncomingCalls: ActiveIncomingCall[];
+    onAcceptCall: (incomingCallId: string, useVideo?: boolean) => void;
+    onRejectCall: (incomingCallId: string) => void;
+    removedIncomingCalls: ActiveIncomingCall[];
+    strings?: IncomingCallNotificationStrings;
+    styles?: IncomingCallNotificationStyles;
+}
+
+// @beta
+export type IncomingCallStackSelector = (state: CallClientState) => {
+    activeIncomingCalls: ActiveIncomingCall[];
+    removedIncomingCalls: ActiveIncomingCall[];
+};
+
 // @public
 export interface IncomingCallState {
     callEndReason?: CallEndReason;
     callerInfo: CallerInfo;
     endTime?: Date;
     id: string;
+    info: CallInfoState;
     startTime: Date;
 }
 
@@ -4137,9 +4207,9 @@ export type ResourceFetchResult = {
 
 // @beta
 export interface RichTextEditBoxOptions extends RichTextEditorOptions {
-    messagesImageUploadsInProgress?: Record<string, AttachmentMetadataInProgress[]>;
+    messagesInlineImages?: Record<string, AttachmentMetadataInProgress[]>;
     onCancelInlineImageUpload?: (imageId: string, messageId: string) => void;
-    onUploadInlineImage?: (imageUrl: string, imageFileName: string, messageId: string) => void;
+    onInsertInlineImage?: (imageUrl: string, imageFileName: string, messageId: string) => void;
 }
 
 // @beta
@@ -4154,9 +4224,9 @@ export const RichTextSendBox: (props: RichTextSendBoxProps) => JSX.Element;
 
 // @beta
 export interface RichTextSendBoxOptions extends RichTextEditorOptions {
-    imageUploadsInProgress?: AttachmentMetadataInProgress[];
+    inlineImages?: AttachmentMetadataInProgress[];
     onCancelInlineImageUpload?: (imageId: string) => void;
-    onUploadInlineImage?: (imageUrl: string, imageFileName: string) => void;
+    onInsertInlineImage?: (imageUrl: string, imageFileName: string) => void;
 }
 
 // @beta
@@ -4164,15 +4234,15 @@ export interface RichTextSendBoxProps {
     attachments?: AttachmentMetadataInProgress[];
     autoFocus?: 'sendBoxTextField';
     disabled?: boolean;
-    imageUploadsInProgress?: AttachmentMetadataInProgress[];
+    inlineImages?: AttachmentMetadataInProgress[];
     onCancelAttachmentUpload?: (attachmentId: string) => void;
     onCancelInlineImageUpload?: (imageId: string) => void;
+    onInsertInlineImage?: (imageUrl: string, imageFileName: string) => void;
     onPaste?: (event: {
         content: DocumentFragment;
     }) => void;
     onSendMessage: (content: string, options?: MessageOptions) => Promise<void>;
     onTyping?: () => Promise<void>;
-    onUploadInlineImage?: (imageUrl: string, imageFileName: string) => void;
     strings?: Partial<RichTextSendBoxStrings>;
     systemMessage?: string;
 }
@@ -4606,7 +4676,7 @@ export interface TeamsCallAdapter extends CommonCallAdapter {
 
 // @public
 export type TeamsCallAdapterArgs = TeamsCallAdapterArgsCommon & {
-    locator: TeamsMeetingLinkLocator | /* @conditional-compile-remove(teams-adhoc-call) */ /* @conditional-compile-remove(PSTN-calls) */ CallParticipantsLocator | /* @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator;
+    locator: TeamsMeetingLinkLocator | /* @conditional-compile-remove(teams-adhoc-call) */ /* @conditional-compile-remove(PSTN-calls) */ CallParticipantsLocator | TeamsMeetingIdLocator;
 };
 
 // @public
@@ -4619,6 +4689,10 @@ export type TeamsCallAdapterArgsCommon = {
 // @public
 export interface TeamsCallingHandlers extends CommonCallingHandlers {
     // (undocumented)
+    onAcceptCall: (incomingCallId: string, useVideo?: boolean) => Promise<void>;
+    // (undocumented)
+    onRejectCall: (incomingCallId: string) => Promise<void>;
+    // (undocumented)
     onStartCall: (participants: CommunicationIdentifier[], options?: StartCallOptions) => undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall;
 }
 
@@ -4626,6 +4700,16 @@ export interface TeamsCallingHandlers extends CommonCallingHandlers {
 export type TeamsIncomingCallManagement = {
     incomingCalls: ReadonlyArray<TeamsIncomingCall>;
 };
+
+// @beta
+export interface TeamsIncomingCallState {
+    callEndReason?: CallEndReason;
+    callerInfo: CallerInfo;
+    endTime?: Date;
+    id: string;
+    info: CallInfoState;
+    startTime: Date;
+}
 
 // @beta
 export type TeamsOutboundCallAdapterArgs = TeamsCallAdapterArgsCommon & {

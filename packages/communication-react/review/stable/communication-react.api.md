@@ -49,6 +49,7 @@ import { IContextualMenuProps } from '@fluentui/react';
 import { IContextualMenuStyles } from '@fluentui/react';
 import { IIconProps } from '@fluentui/react';
 import { IMessageBarProps } from '@fluentui/react';
+import { IncomingCallKind } from '@azure/communication-calling';
 import { IPersonaStyleProps } from '@fluentui/react';
 import { IPersonaStyles } from '@fluentui/react';
 import { IRawStyle } from '@fluentui/react';
@@ -184,7 +185,7 @@ export type AzureCommunicationCallWithChatAdapterArgs = {
     userId: CommunicationUserIdentifier;
     displayName: string;
     credential: CommunicationTokenCredential;
-    locator: CallAndChatLocator | TeamsMeetingLinkLocator | /** @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator;
+    locator: CallAndChatLocator | TeamsMeetingLinkLocator | TeamsMeetingIdLocator;
     callAdapterOptions?: AzureCommunicationCallAdapterOptions;
 };
 
@@ -321,7 +322,7 @@ export interface CallAdapterDeviceManagement {
 }
 
 // @public
-export type CallAdapterLocator = TeamsMeetingLinkLocator | GroupCallLocator | RoomCallLocator | /* @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator;
+export type CallAdapterLocator = TeamsMeetingLinkLocator | GroupCallLocator | RoomCallLocator | TeamsMeetingIdLocator;
 
 // @public
 export type CallAdapterState = CallAdapterUiState & CallAdapterClientState;
@@ -768,6 +769,14 @@ export type CallErrorTarget = 'Call.addParticipant' | 'Call.dispose' | 'Call.fea
 export type CallIdChangedListener = (event: {
     callId: string;
 }) => void;
+
+// @public
+export interface CallInfoState {
+    groupId?: string;
+    kind: IncomingCallKind;
+    participantId: string;
+    threadId?: string;
+}
 
 // @public
 export type CallingBaseSelectorProps = {
@@ -2698,6 +2707,7 @@ export interface IncomingCallState {
     callerInfo: CallerInfo;
     endTime?: Date;
     id: string;
+    info: CallInfoState;
     startTime: Date;
 }
 
@@ -3854,7 +3864,7 @@ export interface TeamsCallAdapter extends CommonCallAdapter {
 
 // @public
 export type TeamsCallAdapterArgs = TeamsCallAdapterArgsCommon & {
-    locator: TeamsMeetingLinkLocator | /* @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator;
+    locator: TeamsMeetingLinkLocator | TeamsMeetingIdLocator;
 };
 
 // @public

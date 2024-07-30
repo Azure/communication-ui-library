@@ -36,7 +36,6 @@ import {
   Call
 } from '@azure/communication-calling';
 import { SpotlightedParticipant } from '@azure/communication-calling';
-/* @conditional-compile-remove(meeting-id) */
 import { TeamsMeetingIdLocator } from '@azure/communication-calling';
 import { Reaction } from '@azure/communication-calling';
 import { TeamsCaptions } from '@azure/communication-calling';
@@ -54,6 +53,8 @@ import { Features } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { DtmfTone } from '@azure/communication-calling';
+/* @conditional-compile-remove(breakout-rooms) */
+import type { BreakoutRoomsEventData, BreakoutRoomsUpdatedListener } from '@azure/communication-calling';
 import { EventEmitter } from 'events';
 import {
   CommonCallAdapter,
@@ -390,9 +391,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
         ? (locatorOrTargetCalless as CallAdapterLocator)
         : undefined;
     this.deviceManager = deviceManager;
-    const isTeamsMeeting = this.locator
-      ? 'meetingLink' in this.locator || /* @conditional-compile-remove(meeting-id) */ 'meetingId' in this.locator
-      : false;
+    const isTeamsMeeting = this.locator ? 'meetingLink' in this.locator || 'meetingId' in this.locator : false;
     let isTeamsCall: boolean | undefined;
     this.targetCallees?.forEach((callee) => {
       if (isMicrosoftTeamsUserIdentifier(callee) || isMicrosoftTeamsAppIdentifier(callee)) {
@@ -650,7 +649,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
 
   private _joinCall(audioOptions: AudioOptions, videoOptions: VideoOptions): CallTypeOf<AgentType> {
     const isTeamsMeeting = this.locator ? 'meetingLink' in this.locator : false;
-    /* @conditional-compile-remove(meeting-id) */
     const isTeamsMeetingId = this.locator ? 'meetingId' in this.locator : false;
     const isRoomsCall = this.locator ? 'roomId' in this.locator : false;
 
@@ -662,7 +660,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
           videoOptions
         }) as CallTypeOf<AgentType>;
       }
-      /* @conditional-compile-remove(meeting-id) */
       if (isTeamsMeetingId) {
         return this.callAgent.join(this.locator as TeamsMeetingIdLocator, {
           audioOptions,
@@ -679,7 +676,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
       }) as CallTypeOf<AgentType>;
     }
 
-    /* @conditional-compile-remove(meeting-id) */
     if (isTeamsMeetingId) {
       return this.callAgent.join(this.locator as TeamsMeetingIdLocator, {
         audioOptions,
@@ -1087,6 +1083,8 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
   on(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
   /* @conditional-compile-remove(soft-mute) */
   on(event: 'mutedByOthers', listener: PropertyChangedEvent): void;
+  /* @conditional-compile-remove(breakout-rooms) */
+  on(event: 'breakoutRoomsUpdated', listener: BreakoutRoomsUpdatedListener): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public on(event: string, listener: (e: any) => void): void {
@@ -1164,6 +1162,12 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     this.call?.feature(Features.Transfer).on('transferAccepted', this.transferAccepted.bind(this));
     this.call?.feature(Features.Capabilities).on('capabilitiesChanged', this.capabilitiesChanged.bind(this));
     this.call?.feature(Features.Spotlight).on('spotlightChanged', this.spotlightChanged.bind(this));
+    /* @conditional-compile-remove(breakout-rooms) */
+    const breakoutRoomsFeature = this.call?.feature(Features.BreakoutRooms);
+    /* @conditional-compile-remove(breakout-rooms) */
+    if (breakoutRoomsFeature) {
+      breakoutRoomsFeature.on('breakoutRoomsUpdated', this.breakoutRoomsUpdated.bind(this));
+    }
   }
 
   private unsubscribeCallEvents(): void {
@@ -1303,6 +1307,10 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     this.emitter.emit('spotlightChanged', args);
   }
 
+  /* @conditional-compile-remove(breakout-rooms) */
+  private breakoutRoomsUpdated(eventData: BreakoutRoomsEventData): void {
+    this.emitter.emit('breakoutRoomsUpdated', eventData);
+  }
   private callIdChanged(): void {
     this.call?.id && this.emitter.emit('callIdChanged', { callId: this.call.id });
   }
@@ -1338,6 +1346,8 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
   off(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
   /* @conditional-compile-remove(soft-mute) */
   off(event: 'mutedByOthers', listener: PropertyChangedEvent): void;
+  /* @conditional-compile-remove(breakout-rooms) */
+  off(event: 'breakoutRoomsUpdated', listener: BreakoutRoomsUpdatedListener): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public off(event: string, listener: (e: any) => void): void {
@@ -1396,7 +1406,7 @@ export type CallAdapterLocator =
   | GroupCallLocator
   | RoomCallLocator
   | /* @conditional-compile-remove(teams-adhoc-call) */ /* @conditional-compile-remove(PSTN-calls) */ CallParticipantsLocator
-  | /* @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator;
+  | TeamsMeetingIdLocator;
 
 /**
  * Common optional parameters to create {@link AzureCommunicationCallAdapter} or {@link TeamsCallAdapter}
@@ -1514,7 +1524,7 @@ export type TeamsCallAdapterArgs = TeamsCallAdapterArgsCommon & {
   locator:
     | TeamsMeetingLinkLocator
     | /* @conditional-compile-remove(teams-adhoc-call) */ /* @conditional-compile-remove(PSTN-calls) */ CallParticipantsLocator
-    | /* @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator;
+    | TeamsMeetingIdLocator;
 };
 
 /* @conditional-compile-remove(teams-identity-support-beta) */

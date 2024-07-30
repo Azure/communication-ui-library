@@ -11,6 +11,8 @@ import {
   VideoDeviceInfo
 } from '@azure/communication-calling';
 import { RaisedHand } from '@azure/communication-calling';
+/* @conditional-compile-remove(breakout-rooms) */
+import { BreakoutRoom, BreakoutRoomsSettings } from '@azure/communication-calling';
 
 /* @conditional-compile-remove(teams-meeting-conference) */
 import { TeamsMeetingAudioConferencingDetails } from '@azure/communication-calling';
@@ -45,6 +47,8 @@ import {
   CallErrorTarget,
   CallError
 } from './CallClientState';
+/* @conditional-compile-remove(one-to-n-calling) */
+import { TeamsIncomingCallState } from './CallClientState';
 import { CaptionsInfo } from './CallClientState';
 import { ReactionState } from './CallClientState';
 import { AcceptedTransfer } from './CallClientState';
@@ -184,7 +188,6 @@ export class CallContext {
         // We don't update the startTime and endTime if we are updating an existing active call
         existingCall.captionsFeature.currentSpokenLanguage = call.captionsFeature.currentSpokenLanguage;
         existingCall.captionsFeature.currentCaptionLanguage = call.captionsFeature.currentCaptionLanguage;
-        /* @conditional-compile-remove(meeting-id) */
         existingCall.info = call.info;
         /* @conditional-compile-remove(teams-meeting-conference) */
         existingCall.meetingConference = call.meetingConference;
@@ -192,6 +195,12 @@ export class CallContext {
         draft.calls[latestCallId] = call;
       }
     });
+    /**
+     * Remove the incoming call that matches the call if there is one
+     */
+    if (this._state.incomingCalls[call.id]) {
+      this.removeIncomingCall(call.id);
+    }
   }
 
   public removeCall(callId: string): void {
@@ -611,6 +620,26 @@ export class CallContext {
     });
   }
 
+  /* @conditional-compile-remove(breakout-rooms) */
+  public setAssignedBreakoutRoom(callId: string, breakoutRoom: BreakoutRoom): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        call.breakoutRooms = { ...call.breakoutRooms, assignedBreakoutRoom: breakoutRoom };
+      }
+    });
+  }
+
+  /* @conditional-compile-remove(breakout-rooms) */
+  public setBreakoutRoomSettings(callId: string, breakoutRoomSettings: BreakoutRoomsSettings): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        call.breakoutRooms = { ...call.breakoutRooms, breakoutRoomSettings: breakoutRoomSettings };
+      }
+    });
+  }
+
   public setCallScreenShareParticipant(callId: string, participantKey: string | undefined): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
@@ -863,7 +892,9 @@ export class CallContext {
     });
   }
 
-  public setIncomingCall(call: IncomingCallState): void {
+  public setIncomingCall(
+    call: IncomingCallState | /* @conditional-compile-remove(one-to-n-calling) */ TeamsIncomingCallState
+  ): void {
     this.modifyState((draft: CallClientState) => {
       const existingCall = draft.incomingCalls[call.id];
       if (existingCall) {
