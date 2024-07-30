@@ -97,9 +97,14 @@ const storybookConfig: StorybookConfig = {
         },
     };
 
+    const txtRule = {
+        test: /\.txt$/,
+        use: 'raw-loader',
+    };
+
     return {
       ...config,
-      module: { ...config.module, rules: [...(config.module?.rules || []), tsRule] },
+      module: { ...config.module, rules: [...(config.module?.rules || []), tsRule, txtRule] },
     };
   },
 };
