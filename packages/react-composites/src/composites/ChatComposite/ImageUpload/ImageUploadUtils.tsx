@@ -271,7 +271,7 @@ export const cancelInlineImageUpload = (
   });
   // TODO: remove local blob
   if (imageUpload?.metadata.progress === 1) {
-    deleteInlineImageFromServer(imageAttributes.id, adapter);
+    deleteInlineImageFromServer(imageUpload?.metadata.id, adapter);
   }
 };
 
