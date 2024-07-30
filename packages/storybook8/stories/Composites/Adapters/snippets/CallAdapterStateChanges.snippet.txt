@@ -1,0 +1,25 @@
+//Access state and state changes, including CallClient and UI
+callAdapter.onStateChange((state) => {
+  console.log(state.userId)
+})
+callAdapter.getState().userId
+callAdapter.getState().call
+callAdapter.getState().devices
+
+//Access actions for the call
+callAdapter.mute()
+callAdapter.queryMicrophones()
+callAdapter.startCamera()
+
+//Call events
+callAdapter.on('participantsJoined', (event)=>{
+  event.joined.forEach((participant) => {
+    console.log(participant.displayName);
+  });
+})
+callAdapter.on('callEnded', (event) => {
+  console.log(event.callId);
+})
+callAdapter.on('error', (e: Error) => {
+  console.log(JSON.stringify(e))
+})
