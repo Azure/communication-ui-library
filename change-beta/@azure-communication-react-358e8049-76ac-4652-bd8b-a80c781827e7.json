@@ -1,0 +1,9 @@
+{
+  "type": "minor",
+  "area": "feature",
+  "workstream": "Storybook",
+  "comment": "Added storybook v8 for unsupported browser",
+  "packageName": "@azure/communication-react",
+  "email": "109105353+jpeng-ms@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
