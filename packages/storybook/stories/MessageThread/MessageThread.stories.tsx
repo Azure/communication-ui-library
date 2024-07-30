@@ -629,14 +629,13 @@ const MessageThreadStory = (args): JSX.Element => {
 
   const richTextEditorOptions: RichTextEditBoxOptions = useMemo(() => {
     return {
-      onInsertInlineImage: (image: string, messageId: string, imageFileName?: string) => {
+      onInsertInlineImage: (imageAttributes: Record<string, string>, messageId: string, imageFileName?: string) => {
         const inlineImagesWithProgress = messagesInlineImagesWithProgress?.[messageId] ?? [];
-        const id = Math.floor(Math.random() * 1000000).toString();
         const newImage: AttachmentMetadataInProgress = {
-          id,
+          id: imageAttributes.id,
           name: imageFileName ?? 'image',
           progress: 1,
-          url: image,
+          url: imageAttributes.src,
           error: undefined
         };
         setMessagesInlineImagesWithProgress({

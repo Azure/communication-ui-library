@@ -594,9 +594,9 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
           /* @conditional-compile-remove(rich-text-editor-image-upload) */
           ...richTextEditorOptions,
           /* @conditional-compile-remove(rich-text-editor-image-upload) */
-          onInsertInlineImage: (imageUrl: string, messageId: string, imageFileName?: string) => {
+          onInsertInlineImage: (imageAttributes: Record<string, string>, messageId: string, imageFileName?: string) => {
             onInsertInlineImageForEditBox(
-              imageUrl,
+              imageAttributes,
               imageFileName || 'image.png',
               messageId,
               adapter,
@@ -633,9 +633,9 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
           /* @conditional-compile-remove(rich-text-editor-image-upload) */
           ...richTextEditorOptions,
           /* @conditional-compile-remove(rich-text-editor-image-upload) */
-          onInsertInlineImage: (imageUrl: string, imageFileName?: string) => {
+          onInsertInlineImage: (imageAttributes: Record<string, string>, imageFileName?: string) => {
             onInsertInlineImageForSendBox(
-              imageUrl,
+              imageAttributes,
               imageFileName || 'image.png',
               adapter,
               handleSendBoxInlineImageUploadAction,

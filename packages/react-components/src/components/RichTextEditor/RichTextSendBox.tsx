@@ -69,7 +69,7 @@ export interface RichTextSendBoxOptions extends RichTextEditorOptions {
    * Optional callback to handle an inline image that's inserted in the rich text editor.
    * When not provided, pasting images into rich text editor will be disabled.
    */
-  onInsertInlineImage?: (imageUrl: string, imageFileName?: string) => void;
+  onInsertInlineImage?: (imageAttributes: Record<string, string>, imageFileName?: string) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   /**
    * Optional callback invoked after inline image is removed from the UI.
@@ -256,7 +256,7 @@ export interface RichTextSendBoxProps {
    * Optional callback to handle an inline image that's inserted in the rich text editor.
    * When not provided, pasting images into rich text editor will be disabled.
    */
-  onInsertInlineImage?: (imageUrl: string, imageFileName?: string) => void;
+  onInsertInlineImage?: (imageAttributes: Record<string, string>, imageFileName?: string) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   /**
    * Optional Array of type {@link AttachmentMetadataInProgress}

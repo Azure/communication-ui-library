@@ -134,12 +134,12 @@ const inlineImageUploadHandler = async (
 
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 const generateUploadTask = async (
-  image: string,
+  imageAttributes: Record<string, string>,
   fileName: string,
   messageId: string,
   inlineImageUploadActionHandler: Dispatch<ImageActions>
 ): Promise<AttachmentUpload | undefined> => {
-  const imageData = await getInlineImageData(image);
+  const imageData = await getInlineImageData(imageAttributes.src);
   if (!imageData) {
     return;
   }
@@ -148,9 +148,9 @@ const generateUploadTask = async (
     image: imageData,
     taskId,
     metadata: {
-      id: taskId,
+      id: imageAttributes.id,
       name: fileName,
-      url: image,
+      url: imageAttributes.src,
       progress: 0
     },
     notifyUploadProgressChanged: (value: number) => {
@@ -187,7 +187,7 @@ const generateUploadTask = async (
  * @internal
  */
 export const onInsertInlineImageForEditBox = async (
-  image: string,
+  imageAttributes: Record<string, string>,
   fileName: string,
   messageId: string,
   adapter: ChatAdapter,
@@ -195,7 +195,7 @@ export const onInsertInlineImageForEditBox = async (
   chatCompositeStrings: ChatCompositeStrings
 ): Promise<void> => {
   const uploadTask: AttachmentUpload | undefined = await generateUploadTask(
-    image,
+    imageAttributes,
     fileName,
     messageId,
     handleEditBoxInlineImageUploadAction
@@ -217,14 +217,14 @@ export const onInsertInlineImageForEditBox = async (
  * @internal
  */
 export const onInsertInlineImageForSendBox = async (
-  image: string,
+  imageAttributes: Record<string, string>,
   fileName: string,
   adapter: ChatAdapter,
   handleSendBoxInlineImageUploadAction: Dispatch<ImageActions>,
   chatCompositeStrings: ChatCompositeStrings
 ): Promise<void> => {
   const uploadTask: AttachmentUpload | undefined = await generateUploadTask(
-    image,
+    imageAttributes,
     fileName,
     SEND_BOX_UPLOADS_KEY_VALUE,
     handleSendBoxInlineImageUploadAction

@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 import type { PluginEvent, EditorPlugin, IEditor } from 'roosterjs-content-model-types';
-import { ContentChangedEventSource, PluginEventType } from '../../utils/RichTextEditorUtils';
+import { ContentChangedEventSource, getInlineImageAttributes, PluginEventType } from '../../utils/RichTextEditorUtils';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { _base64ToBlob } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
@@ -18,7 +18,7 @@ export default class CopyPastePlugin implements EditorPlugin {
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   onPaste?: (event: { content: DocumentFragment }) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  onInsertInlineImage?: (imageUrl: string, imageFileName?: string) => void;
+  onInsertInlineImage?: (imageAttributes: Record<string, string>, imageFileName?: string) => void;
 
   getName(): string {
     return 'CopyPastePlugin';
@@ -77,7 +77,7 @@ export const handleBeforePasteEvent = (
  */
 export const handleInlineImage = (
   event: PluginEvent,
-  onInsertInlineImage?: (image: string, fileName?: string) => void
+  onInsertInlineImage?: (imageAttributes: Record<string, string>, fileName?: string) => void
 ): void => {
   if (event.eventType === PluginEventType.BeforePaste && event.pasteType === 'normal' && onInsertInlineImage) {
     event.fragment.querySelectorAll('img').forEach((image) => {
@@ -94,7 +94,9 @@ export const handleInlineImage = (
       image.alt = image.alt || 'image';
       image.id = generateGUID();
 
-      onInsertInlineImage(imageUrl, fileName);
+      const imageAttributes = getInlineImageAttributes(image);
+
+      onInsertInlineImage(imageAttributes, fileName);
     });
   }
 };
