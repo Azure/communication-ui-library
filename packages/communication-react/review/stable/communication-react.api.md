@@ -4051,6 +4051,7 @@ export type VideoGalleryLayout = 'default' | 'floatingLocalVideo' | 'speaker' | 
 export interface VideoGalleryLocalParticipant extends VideoGalleryParticipant {
     raisedHand?: RaisedHand;
     reaction?: Reaction;
+    screenShareStream?: VideoGalleryStream;
 }
 
 // @public
