@@ -18,6 +18,8 @@ import {
   ScalingMode,
   VideoDeviceInfo
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(breakout-rooms) */
+import { BreakoutRoom, BreakoutRoomsSettings } from '@azure/communication-calling';
 import { TeamsCallInfo } from '@azure/communication-calling';
 import { CallInfo } from '@azure/communication-calling';
 
@@ -184,6 +186,17 @@ export interface SpotlightState {
    * Order position of spotlight in call
    */
   spotlightedOrderPosition?: number;
+}
+
+/* @conditional-compile-remove(breakout-rooms) */
+/**
+ * Breakout rooms state
+ *
+ * @public
+ */
+export interface BreakoutRoomsState {
+  assignedBreakoutRoom?: BreakoutRoom;
+  breakoutRoomSettings?: BreakoutRoomsSettings;
 }
 
 /**
@@ -632,6 +645,12 @@ export interface CallState {
    * Proxy of {@link @azure/communication-calling#TeamsMeetingAudioConferencingCallFeature}.
    */
   meetingConference?: { conferencePhones: ConferencePhoneInfo[] };
+
+  /* @conditional-compile-remove(breakout-rooms) */
+  /**
+   * Proxy of {@link @azure/communication-calling#BreakoutRoomsFeature}.
+   */
+  breakoutRooms?: BreakoutRoomsState;
 }
 
 /**
