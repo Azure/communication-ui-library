@@ -93,6 +93,7 @@ export const handleInlineImage = (
       image.src = imageUrl;
       image.alt = image.alt || 'image';
       image.id = generateGUID();
+      image.dataset.name = fileName;
 
       const imageAttributes = getInlineImageAttributes(image);
 
