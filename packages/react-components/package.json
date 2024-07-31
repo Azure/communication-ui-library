@@ -36,10 +36,10 @@
   "license": "MIT",
   "dependencies": {
     "@fluentui/react": "^8.119.3",
-    "@fluentui/react-components": "^9.54.6",
+    "@fluentui/react-components": "^9.54.7",
     "@fluentui/react-file-type-icons": "8.11.18",
     "@fluentui/react-hooks": "^8.8.10",
-    "@fluentui/react-icons": "^2.0.249",
+    "@fluentui/react-icons": "^2.0.252",
     "@fluentui/react-window-provider": "^2.2.27",
     "@fluentui-contrib/react-chat": "0.1.10",
     "@griffel/react": "^1.5.24",
