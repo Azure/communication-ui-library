@@ -162,7 +162,6 @@ export const scrollToBottomRichTextEditor = (): void => {
   range.collapse(false);
   // Insert the temporary element at the cursor's position at the end of the range
   range.insertNode(tempElement);
-  console.log('tempElement', tempElement, range);
   // Scroll the temporary element into view
   // the element will be aligned at the center of the scroll container, otherwise, text and images may be positioned incorrectly
   tempElement.scrollIntoView({
