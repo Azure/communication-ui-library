@@ -316,7 +316,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
       removedInlineImages?: Record<string, string>[]
     ) => {
       /* @conditional-compile-remove(rich-text-editor-image-upload) */
-      removedInlineImages?.map((removedInlineImage: Record<string, string>) => {
+      removedInlineImages?.forEach((removedInlineImage: Record<string, string>) => {
         onRemoveInlineImage && onRemoveInlineImage(removedInlineImage, message.messageId);
       });
       setText(content);

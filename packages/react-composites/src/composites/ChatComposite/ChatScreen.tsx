@@ -18,7 +18,7 @@ import {
   useTheme
 } from '@internal/react-components';
 /* @conditional-compile-remove(rich-text-editor) */
-import { RichTextEditBoxOptions, RichTextSendBoxOptions } from '@internal/react-components';
+import { RichTextEditBoxOptions } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing-acs) */
 import { ChatMessage } from '@internal/react-components';
 import React, { useCallback, useEffect, useMemo } from 'react';
@@ -65,7 +65,7 @@ import { AttachmentUploadActionType, AttachmentUpload, AttachmentUploadReducer }
 import { MessageOptions } from '@internal/acs-ui-common';
 import { SendBoxPicker } from '../common/SendBoxPicker';
 /* @conditional-compile-remove(rich-text-editor-composite-support) */
-import { loadRichTextSendBox } from '../common/SendBoxPicker';
+import { loadRichTextSendBox, RichTextSendBoxOptions } from '../common/SendBoxPicker';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import {
   cancelInlineImageUpload,

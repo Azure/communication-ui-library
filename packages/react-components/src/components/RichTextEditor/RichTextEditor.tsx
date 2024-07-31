@@ -239,9 +239,7 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     if (!onInsertInlineImage) {
       return;
     }
-    copyPastePlugin.onInsertInlineImage = (imageAttributes: Record<string, string>) => {
-      onInsertInlineImage && onInsertInlineImage(imageAttributes);
-    };
+    copyPastePlugin.onInsertInlineImage = onInsertInlineImage;
   }, [copyPastePlugin, onInsertInlineImage]);
 
   const keyboardInputPlugin = useMemo(() => {

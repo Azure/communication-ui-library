@@ -4247,13 +4247,6 @@ export interface RichTextEditorOptions {
 export const RichTextSendBox: (props: RichTextSendBoxProps) => JSX.Element;
 
 // @beta
-export interface RichTextSendBoxOptions extends RichTextEditorOptions {
-    inlineImagesWithProgress?: AttachmentMetadataInProgress[];
-    onInsertInlineImage?: (imageAttributes: Record<string, string>) => void;
-    onRemoveInlineImage?: (imageAttributes: Record<string, string>) => void;
-}
-
-// @beta
 export interface RichTextSendBoxProps {
     attachments?: AttachmentMetadataInProgress[];
     autoFocus?: 'sendBoxTextField';

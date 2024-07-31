@@ -57,36 +57,6 @@ export interface RichTextEditorOptions {
   onPaste?: (event: { content: DocumentFragment }) => void;
 }
 
-/* @conditional-compile-remove(rich-text-editor) */
-/**
- * Options for the rich text editor send box configuration.
- *
- * @beta
- */
-export interface RichTextSendBoxOptions extends RichTextEditorOptions {
-  /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  /**
-   * Optional callback to handle an inline image that's inserted in the rich text editor.
-   * When not provided, pasting images into rich text editor will be disabled.
-   * @param imageAttributes - attributes of the image such as id, src, style, etc.
-   *        It also contains the image file name which can be accessed through imageAttributes['data-image-file-name']
-   */
-  onInsertInlineImage?: (imageAttributes: Record<string, string>) => void;
-  /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  /**
-   * Optional callback invoked after inline image is removed from the UI.
-   * @param imageAttributes - attributes of the image such as id, src, style, etc.
-   *        It also contains the image file name which can be accessed through imageAttributes['data-image-file-name']
-   */
-  onRemoveInlineImage?: (imageAttributes: Record<string, string>) => void;
-  /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  /**
-   * Optional Array of type {@link AttachmentMetadataInProgress}
-   * to provide progress and error info for inline images inserted in the RichTextSendBox.
-   */
-  inlineImagesWithProgress?: AttachmentMetadataInProgress[];
-}
-
 /**
  * Strings of RichText that can be overridden.
  *
@@ -355,7 +325,9 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     // get plain text content from the editor to check if the message is empty
     // as the content may contain tags even when the content is empty
     const plainTextContent = editorComponentRef.current?.getPlainContent();
-    return sanitizeText(contentValue ?? '').length > 0 && sanitizeText(plainTextContent ?? '').length > 0;
+    const hasPlainText = sanitizeText(contentValue ?? '').length > 0 && sanitizeText(plainTextContent ?? '').length > 0;
+    const hasInlineImages = hasInlineImageContent(contentValue);
+    return hasPlainText || hasInlineImages;
   }, [contentValue]);
 
   const sendMessageOnClick = useCallback((): void => {
@@ -391,13 +363,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
 
     // we don't want to send empty messages including spaces, newlines, tabs
     // Message can be empty if there is a valid attachment upload
-    if (
-      hasContent ||
-      /* @conditional-compile-remove(file-sharing-acs) */ isAttachmentUploadCompleted(attachments) ||
-      // hasContent returns false if the content only contains img tags.
-      // We want to check if the content has inline images and allow sending the message.
-      /* @conditional-compile-remove(rich-text-editor-image-upload) */ hasInlineImageContent(contentValue)
-    ) {
+    if (hasContent || /* @conditional-compile-remove(file-sharing-acs) */ isAttachmentUploadCompleted(attachments)) {
       const sendMessage = (content: string): void => {
         onSendMessage(
           content,
