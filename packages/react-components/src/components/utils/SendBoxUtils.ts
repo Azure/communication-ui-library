@@ -65,7 +65,7 @@ export const updateStylesOfInlineImages = async (
   }
   const initialInlineImagesIds = initialInlineImages.map((initialInlineImage) => initialInlineImage.id);
   const document = new DOMParser().parseFromString(message ?? '', 'text/html');
-  const imagesPromise = Array.from(document.querySelectorAll('img')).map((img) => {
+  const imagesPromise = document.querySelectorAll('img').forEach((img) => {
     return new Promise<void>((resolve, rejects) => {
       // The message might content images that comes with the message before editing.
       // This function should only modify the message content for images that are newly added.

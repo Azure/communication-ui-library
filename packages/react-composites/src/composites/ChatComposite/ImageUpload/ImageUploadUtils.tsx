@@ -254,13 +254,13 @@ export const cancelInlineImageUpload = (
   adapter: ChatAdapter
 ): void => {
   if (!imageUploads || !imageUploads[messageId]) {
-    messageId !== SEND_BOX_UPLOADS_KEY_VALUE && deleteInlineImageFromServer(imageAttributes.id, adapter);
+    deleteExistingInlineImageForEditBox(imageAttributes.id, messageId, adapter);
     return;
   }
   const imageUpload = imageUploads[messageId].find((upload) => upload.metadata.url === imageAttributes.src);
 
   if (!imageUpload || !imageUpload?.metadata.id) {
-    messageId !== SEND_BOX_UPLOADS_KEY_VALUE && deleteInlineImageFromServer(imageAttributes.id, adapter);
+    deleteExistingInlineImageForEditBox(imageAttributes.id, messageId, adapter);
     return;
   }
 
@@ -282,6 +282,12 @@ const deleteInlineImageFromServer = (imageId: string, adapter: ChatAdapter): voi
   } catch (error) {
     console.error(error);
   }
+};
+
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+// This function is used to delete the inline image that existed before editing starts
+const deleteExistingInlineImageForEditBox = (imageId: string, messageId: string, adapter: ChatAdapter): void => {
+  messageId !== SEND_BOX_UPLOADS_KEY_VALUE && deleteInlineImageFromServer(imageId, adapter);
 };
 
 /* @conditional-compile-remove(rich-text-editor-image-upload) */

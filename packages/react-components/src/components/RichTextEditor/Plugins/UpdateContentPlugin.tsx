@@ -71,6 +71,10 @@ export class UpdateContentPlugin implements EditorPlugin {
       case PluginEventType.ContentChanged:
         if (
           event.source === ChangeSource.Cut ||
+          // We need to add the paste source here for an edge case:
+          // when user select an image that's already in the editor, then paste in an image to replace the selected one,
+          // we will only get a paste event.
+          // In this case, we need to update the removedInlineImage array to include the replaced image.
           event.source === ChangeSource.Paste ||
           (event.source === ChangeSource.Keyboard && (event.data === Keys.BACKSPACE || event.data === Keys.DELETE))
         ) {

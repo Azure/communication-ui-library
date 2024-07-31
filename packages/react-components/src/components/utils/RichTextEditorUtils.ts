@@ -70,7 +70,7 @@ export const getPreviousInlineImages = (content?: string): Record<string, string
   }
   const previousInlineImages: Record<string, string>[] = [];
   const document = new DOMParser().parseFromString(content ?? '', 'text/html');
-  Array.from(document.querySelectorAll('img')).map((img) => {
+  document.querySelectorAll('img').forEach((img) => {
     const imageAttributes = getInlineImageAttributes(img);
     previousInlineImages.push(imageAttributes);
   });
@@ -85,14 +85,11 @@ export const getRemovedInlineImages = (
   content: string,
   previousInlineImages: Record<string, string>[]
 ): Record<string, string>[] => {
-  const removedInlineImages: Record<string, string>[] = [];
   const document = new DOMParser().parseFromString(content ?? '', 'text/html');
   const currentContentIds = Array.from(document.querySelectorAll('img')).map((img) => img.id);
   previousInlineImages = previousInlineImages?.filter((img) => !currentContentIds?.includes(img.id));
 
-  previousInlineImages.map((imgAttributes) => {
-    removedInlineImages.push(imgAttributes);
-  });
+  const removedInlineImages = [...previousInlineImages];
   return removedInlineImages;
 };
 
@@ -102,7 +99,7 @@ export const getRemovedInlineImages = (
  */
 export const getInlineImageAttributes = (image: HTMLImageElement): Record<string, string> => {
   const imageAttributes: Record<string, string> = {};
-  image.getAttributeNames().map((attrName) => {
+  image.getAttributeNames().forEach((attrName) => {
     const attrValue = image.getAttribute(attrName);
     if (attrValue) {
       imageAttributes[attrName] = attrValue;

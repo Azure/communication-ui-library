@@ -75,6 +75,8 @@ export interface RichTextSendBoxOptions extends RichTextEditorOptions {
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   /**
    * Optional callback invoked after inline image is removed from the UI.
+   * @param imageAttributes - attributes of the image such as id, src, style, etc.
+   *        It also contains the image file name which can be accessed through imageAttributes['data-image-file-name']
    */
   onRemoveInlineImage?: (imageAttributes: Record<string, string>) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
@@ -239,6 +241,8 @@ export interface RichTextSendBoxProps {
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   /**
    * Optional callback invoked after inline image is removed from the UI.
+   * @param imageAttributes - attributes of the image such as id, src, style, etc.
+   *        It also contains the image file name which can be accessed through imageAttributes['data-image-file-name']
    */
   onRemoveInlineImage?: (imageAttributes: Record<string, string>) => void;
   /**
