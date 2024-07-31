@@ -1,15 +1,15 @@
 import { Meta } from '@storybook/react';
 import { controlsToAdd, hiddenControl } from '../../../controlsUtils';
-import { IncomingCallToast as IncomingCallToastComponent } from '../components';
+import { IncomingCallToast as IncomingCallToastStory } from './IncomingCallToast.story';
 
 export const IncomingCallToast = {
-  render: IncomingCallToastComponent
+  render: IncomingCallToastStory
 };
 
 export default {
   id: 'examples-incomingcallalerts-incomingcalltoast',
   title: 'examples/Incoming Call Alerts/Incoming Call Toast',
-  component: IncomingCallToastComponent,
+  component: IncomingCallToastStory,
   argTypes: {
     callerName: controlsToAdd.callerName,
     alertText: controlsToAdd.callToastAlertText,

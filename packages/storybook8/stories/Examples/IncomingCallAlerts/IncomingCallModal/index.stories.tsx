@@ -1,15 +1,15 @@
 import { Meta } from '@storybook/react/*';
 import { controlsToAdd, hiddenControl } from '../../../controlsUtils';
-import { IncomingCallModal as IncomingCallModalComponent } from '../components';
+import { IncomingCallModal as IncomingCallModalStory } from './snippets/exampleIncomingCallModal.snippet';
 
 export const IncomingCallModal = {
-  render: IncomingCallModalComponent
+  render: IncomingCallModalStory
 };
 
 export default {
   id: 'examples-incomingcallalerts-incomingcallmodal',
   title: 'examples/Incoming Call Alerts/Incoming Call Modal',
-  component: IncomingCallModalComponent,
+  component: IncomingCallModalStory,
   argTypes: {
     alertText: controlsToAdd.callModalAlertText,
     callerName: controlsToAdd.callerName,

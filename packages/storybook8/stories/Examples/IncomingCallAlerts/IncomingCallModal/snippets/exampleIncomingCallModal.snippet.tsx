@@ -2,7 +2,6 @@ import { StreamMedia, VideoTile } from '@azure/communication-react';
 import { DefaultButton, Persona, PersonaSize, Stack, Dialog, DialogType, DialogFooter } from '@fluentui/react';
 import { VideoOff20Regular, Video20Regular } from '@fluentui/react-icons';
 import { DefaultPalette, mergeStyles } from '@fluentui/react';
-import { IncomingCallToastProps } from '../../components/IncomingCallAlerts';
 import React from 'react';
 import { useBoolean } from '@fluentui/react-hooks';
 
@@ -22,7 +21,17 @@ const incomingCallModalLocalPreviewStyle = mergeStyles({
   }
 });
 
-interface IncomingCallModalProps extends IncomingCallToastProps {
+interface IncomingCallModalProps {
+  /** Caller's Name */
+  callerName?: string;
+  /** Alert Text. For example "incoming video call..." */
+  alertText?: string;
+  /** Caller's Avatar/Profile Image */
+  avatar?: string;
+  /** Provide a function that handles the call behavior when Accept Button is clicked */
+  onClickAccept: () => void;
+  /** Provide a function that handles the call behavior when Reject Button is clicked */
+  onClickReject: () => void;
   /** Text to the right of a Caller's Name */
   callerNameAlt?: string;
   /** A Caller's subtitle. Displayed right below the callers name */
@@ -37,7 +46,7 @@ interface IncomingCallModalProps extends IncomingCallToastProps {
   onClickVideoToggle: () => void;
 }
 
-const IncomingCallModal = (props: IncomingCallModalProps): JSX.Element => {
+const IncomingCallModalStory = (props: IncomingCallModalProps): JSX.Element => {
   const {
     alertText,
     avatar,
@@ -128,3 +137,5 @@ const IncomingCallModal = (props: IncomingCallModalProps): JSX.Element => {
     </>
   );
 };
+
+export const IncomingCallModal = IncomingCallModalStory.bind({});

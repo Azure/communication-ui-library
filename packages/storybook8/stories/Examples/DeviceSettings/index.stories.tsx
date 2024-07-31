@@ -1,13 +1,13 @@
 import { Meta } from '@storybook/react';
-import { DeviceSettings as DeviceSettingsExample } from './DeviceSettingsDropDown.story';
+import { DeviceSettings as DeviceSettingsStory } from './DeviceSettingsDropDown.story';
 
 export const DeviceSettings = {
-  render: DeviceSettingsExample
+  render: DeviceSettingsStory
 };
 
 export default {
   id: 'examples-devicesettings',
   title: 'Examples/Device Settings',
-  component: DeviceSettingsExample,
+  component: DeviceSettingsStory,
   args: {}
 } as Meta;

@@ -3,7 +3,7 @@
 
 import { Stack } from '@fluentui/react';
 import React from 'react';
-import { IncomingCallToast as IncomingCallToastComponent } from '../components';
+import { IncomingCallToast as IncomingCallToastComponent } from './snippets/exampleIncomingCallToast.snippet';
 
 const IncomingCallToastStory: (args) => JSX.Element = (args) => {
   return (

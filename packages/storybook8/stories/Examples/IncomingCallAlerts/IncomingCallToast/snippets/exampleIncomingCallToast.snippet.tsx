@@ -12,7 +12,6 @@ const incomingCallToastStyle = mergeStyles({
   backgroundColor: palette.whiteTranslucent40,
   opacity: 0.95,
   borderRadius: '0.5rem',
-  boxShadow: theme.effects.elevation8,
   padding: '1rem'
 });
 
@@ -59,7 +58,7 @@ type IncomingCallToastProps = {
   onClickReject: () => void;
 };
 
-const IncomingCallToast = (props: IncomingCallToastProps): JSX.Element => {
+const IncomingCallToastStory = (props: IncomingCallToastProps): JSX.Element => {
   const { callerName, alertText, avatar, onClickAccept, onClickReject } = props;
 
   return (
@@ -98,3 +97,5 @@ const IncomingCallToast = (props: IncomingCallToastProps): JSX.Element => {
     </Stack>
   );
 };
+
+export const IncomingCallToast = IncomingCallToastStory.bind({});

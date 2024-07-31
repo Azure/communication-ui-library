@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 import React, { useState } from 'react';
-import { useVideoStreams } from '../../utils';
-import { IncomingCallModal as IncomingCallModalComponent } from './components';
+import { IncomingCallModal as IncomingCallModalComponent } from './snippets/exampleIncomingCallModal.snippet';
+import { useVideoStreams } from '../../../utils';
 
 const IncomingCallModalStory = (args): JSX.Element => {
   const videoStreamElements = useVideoStreams(args.localVideoStreamEnabled ? 1 : 0);
