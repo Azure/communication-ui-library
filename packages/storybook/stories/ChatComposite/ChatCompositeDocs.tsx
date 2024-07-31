@@ -13,6 +13,7 @@ const customDataModelExampleContainerText =
   require('!!raw-loader!./snippets/CustomDataModelExampleContainer.snippet.tsx').default;
 const customDateTimeFormatExampleText = require('!!raw-loader!./snippets/CustomDateTimeFormat.snippet.tsx').default;
 const customBehaviorExampleText = require('!!raw-loader!./snippets/CustomizeBehavior.snippet.tsx').default;
+const richTextEditorExampleText = require('!!raw-loader!./snippets/RichTextEditor.snippet.tsx').default;
 const hideTopicStatement = `
 <ChatComposite options={{ topic: false}}>
 `;
@@ -28,6 +29,8 @@ export const Docs: () => JSX.Element = () => {
   const refCustomDateTimeFormat = useRef(null);
   const refExistedJoinChat = useRef(null);
   const refTheme = useRef(null);
+  const refFileSharing = useRef(null);
+  const refRichTextEditor = useRef(null);
 
   const scrollToRef = (ref): void => {
     ref.current.scrollIntoView({ behavior: 'auto' });
@@ -47,8 +50,12 @@ export const Docs: () => JSX.Element = () => {
       scrollToRef(refTheme);
     } else if (url.includes('existing-chat-thread') && refExistedJoinChat.current) {
       scrollToRef(refExistedJoinChat);
+    } else if (url.includes('adding-file-sharing') && refFileSharing.current) {
+      scrollToRef(refFileSharing);
+    } else if (url.includes('rich-text-editor-support') && refRichTextEditor.current) {
+      scrollToRef(refRichTextEditor);
     }
-  }, [refBasicUsage, refCustomBehavior, refCustomDataModel, refCustomDateTimeFormat, refTheme, refExistedJoinChat]);
+  }, []);
 
   return (
     <>
@@ -187,15 +194,29 @@ export const Docs: () => JSX.Element = () => {
         </Description>
         <Source code={customDateTimeFormatExampleText} />
       </div>
-      <Heading>Adding file sharing</Heading>
-      <SingleLineBetaBanner />
-      <Subheading>In Azure Communication Service Chat Thread</Subheading>
-      <Description>
-        The Chat Composite supports file sharing capabilities in conjunction with your choice of a storage solution.
-        Please refer to our
-        [tutorial](https://docs.microsoft.com/azure/communication-services/tutorials/file-sharing-tutorial) for more
-        details. File sharing in Teams interop senarios is avaliable with the CallWithChat Composite.
-      </Description>
+      <div ref={refFileSharing}>
+        <Heading>Adding file sharing</Heading>
+        <SingleLineBetaBanner />
+        <Subheading>In Azure Communication Service Chat Thread</Subheading>
+        <Description>
+          The Chat Composite supports file sharing capabilities in conjunction with your choice of a storage solution.
+          Please refer to our
+          [tutorial](https://docs.microsoft.com/azure/communication-services/tutorials/file-sharing-tutorial) for more
+          details. File sharing in Teams interop scenarios is available with the CallWithChat Composite.
+        </Description>
+      </div>
+
+      <div ref={refRichTextEditor}>
+        <Heading>Rich Text Editor Support</Heading>
+        <SingleLineBetaBanner />
+        <Description>
+          The following example show how to enable rich text editor for message editing by providing the
+          `richTextEditor` property. The insert inline images feature is only supported in the Teams Interop chats.
+          Please try it out in the [Join Teams
+          Meeting](./?path=/story/composites-call-with-chat-jointeamsmeeting--join-teams-meeting) page.
+        </Description>
+        <Source code={richTextEditorExampleText} />
+      </div>
 
       <Heading>Chat Composite Props</Heading>
       <Props of={ChatComposite} />

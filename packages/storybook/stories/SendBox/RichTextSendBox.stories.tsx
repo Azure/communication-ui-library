@@ -1,21 +1,27 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { RichTextSendBox as RichTextSendBoxComponent } from '@azure/communication-react';
+import { AttachmentMetadataInProgress, RichTextSendBox as RichTextSendBoxComponent } from '@azure/communication-react';
 import { Title, Description, Props, Heading, Canvas, Source } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
-import React from 'react';
+import React, { useState } from 'react';
 import { DetailedBetaBanner } from '../BetaBanners/DetailedBetaBanner';
 import { SingleLineBetaBanner } from '../BetaBanners/SingleLineBetaBanner';
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
 import { hiddenControl, controlsToAdd } from '../controlsUtils';
 import { RichTextSendBoxExample } from './snippets/RichTextSendBox.snippet';
 import { RichTextSendBoxAttachmentUploadsExample } from './snippets/RichTextSendBoxAttachmentUploads.snippet';
+import { RichTextSendBoxOnPasteCallbackExample } from './snippets/RichTextSendBoxOnPasteCallback.snippet';
+import { RichTextSendBoxWithInlineImagesExample } from './snippets/RichTextSendBoxWithInlineImages.snippet';
 import { RichTextSendBoxWithSystemMessageExample } from './snippets/RichTextSendBoxWithSystemMessage.snippet';
 
 const RichTextSendBoxExampleText = require('!!raw-loader!./snippets/RichTextSendBox.snippet.tsx').default;
 const RichTextSendBoxAttachmentUploadsExampleText =
   require('!!raw-loader!./snippets/RichTextSendBoxAttachmentUploads.snippet.tsx').default;
+const RichTextSendBoxOnPasteCallbackExampleText =
+  require('!!raw-loader!./snippets/RichTextSendBoxOnPasteCallback.snippet.tsx').default;
+const RichTextSendBoxWithInlineImagesExampleText =
+  require('!!raw-loader!./snippets/RichTextSendBoxWithInlineImages.snippet.tsx').default;
 const RichTextSendBoxWithSystemMessageExampleText =
   require('!!raw-loader!./snippets/RichTextSendBoxWithSystemMessage.snippet.tsx').default;
 
@@ -56,6 +62,28 @@ const getDocs: () => JSX.Element = () => {
         <RichTextSendBoxAttachmentUploadsExample />
       </Canvas>
 
+      <Heading>Enable Inserting Inline Images</Heading>
+      <Description>
+        The RichTextSendBox component provides an `onInsertInlineImage` callback to handle an inline image that is
+        inserted into the RichTextSendBox component. This callback can be used to implement custom logic, such as
+        uploading the image to a server. After processing each inserted image in the callback, the results should be
+        passed back to the component through the `inlineImages` prop. This prop will be used to render inline images in
+        the RichTextSendBox and send them with the message.
+      </Description>
+      <Canvas mdxSource={RichTextSendBoxWithInlineImagesExampleText}>
+        <RichTextSendBoxWithInlineImagesExample />
+      </Canvas>
+
+      <Heading>Process pasted content</Heading>
+      <Description>
+        RichTextSendBox provides `onPaste` callback for custom processing of the pasted content before it's inserted
+        into the RichTextSendBox. This callback can be used to implement custom paste handling logic tailored to your
+        application's needs. The example below shows how to remove images from pasted content.
+      </Description>
+      <Canvas mdxSource={RichTextSendBoxOnPasteCallbackExampleText}>
+        <RichTextSendBoxOnPasteCallbackExample />
+      </Canvas>
+
       <Heading>Props</Heading>
       <Props of={RichTextSendBoxComponent} />
     </>
@@ -65,6 +93,7 @@ const getDocs: () => JSX.Element = () => {
 const RichTextSendBoxStory = (args): JSX.Element => {
   const timeoutRef = React.useRef<NodeJS.Timeout>();
   const delayForSendButton = 300;
+  const [inlineImages, setInlineImages] = useState<AttachmentMetadataInProgress[] | undefined>();
 
   return (
     <div style={{ width: '31.25rem', maxWidth: '90%' }}>
@@ -91,6 +120,7 @@ const RichTextSendBoxStory = (args): JSX.Element => {
         systemMessage={args.hasWarning ? args.warningMessage : undefined}
         onSendMessage={async (message, options) => {
           timeoutRef.current = setTimeout(() => {
+            setInlineImages(undefined);
             alert(`sent message: ${message} with options ${JSON.stringify(options)}`);
           }, delayForSendButton);
         }}
@@ -100,6 +130,22 @@ const RichTextSendBoxStory = (args): JSX.Element => {
         onTyping={(): Promise<void> => {
           console.log(`sending typing notifications`);
           return Promise.resolve();
+        }}
+        onInsertInlineImage={(image: string, fileName: string) => {
+          const id = inlineImages?.length ? (inlineImages.length + 1).toString() : '1';
+          const newImage = {
+            id,
+            name: fileName,
+            progress: 1,
+            url: image,
+            error: undefined
+          };
+          setInlineImages([...(inlineImages ?? []), newImage]);
+        }}
+        inlineImages={inlineImages}
+        onCancelInlineImageUpload={(imageId: string) => {
+          const filteredInlineImages = inlineImages?.filter((image) => image.id !== imageId);
+          setInlineImages(filteredInlineImages);
         }}
       />
     </div>
@@ -124,7 +170,8 @@ export default {
     attachments: hiddenControl,
     onCancelAttachmentUpload: hiddenControl,
     onSendMessage: hiddenControl,
-    onTyping: hiddenControl
+    onTyping: hiddenControl,
+    onPaste: hiddenControl
   },
   parameters: {
     docs: {

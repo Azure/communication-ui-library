@@ -28,6 +28,21 @@ export type {
   AreParamEqual
 } from '../../acs-ui-common/src';
 
+/* @conditional-compile-remove(composite-js-helpers) */
+export {
+  loadOutboundCallComposite,
+  loadCallComposite,
+  loadChatComposite,
+  loadCallWithChatComposite
+} from '../../acs-ui-javascript-loaders/src';
+/* @conditional-compile-remove(composite-js-helpers) */
+export type {
+  OutboundCallCompositeLoaderProps,
+  CallCompositeLoaderProps,
+  ChatCompositeLoaderProps,
+  CallWithChatCompositeLoaderProps
+} from '../../acs-ui-javascript-loaders/src';
+
 // Not to export chat/calling specific hook from binding package
 export type {
   CallClientProviderProps,
@@ -96,6 +111,8 @@ export type { HoldButtonSelector } from '../../calling-component-bindings/src';
 export type { RaiseHandButtonSelector } from '../../calling-component-bindings/src';
 /* @conditional-compile-remove(notifications) */
 export type { NotificationStackSelector } from '../../calling-component-bindings/src';
+/* @conditional-compile-remove(one-to-n-calling) */
+export type { IncomingCallStackSelector } from '../../calling-component-bindings/src';
 
 export {
   ChatClientProvider,
@@ -166,9 +183,15 @@ export { RaiseHandButton } from '../../react-components/src';
 export { Dialpad } from '../../react-components/src';
 
 /* @conditional-compile-remove(one-to-n-calling) */
-export { IncomingCallNotification } from '../../react-components/src';
+export { IncomingCallNotification, IncomingCallStack } from '../../react-components/src';
 /* @conditional-compile-remove(one-to-n-calling) */
-export type { IncomingCallNotificationProps, IncomingCallNotificationStrings } from '../../react-components/src';
+export type {
+  IncomingCallNotificationProps,
+  IncomingCallNotificationStrings,
+  IncomingCallNotificationStyles,
+  IncomingCallStackProps,
+  ActiveIncomingCall
+} from '../../react-components/src';
 
 /* @conditional-compile-remove(call-readiness) */
 export {
@@ -333,6 +356,8 @@ export type {
 export type { AttachmentOptions } from '../../react-components/src';
 /* @conditional-compile-remove(file-sharing-acs) */
 export type { SendBoxErrorBarError } from '../../react-components/src';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+export type { SendBoxErrorBarType } from '../../react-components/src';
 /* @conditional-compile-remove(file-sharing-acs) */
 export type { AttachmentActionHandler } from '../../react-components/src';
 /* @conditional-compile-remove(file-sharing-acs) */
@@ -355,7 +380,7 @@ export { defaultAttachmentMenuAction } from '../../react-components/src';
 export type { ChatAttachmentType } from '../../react-components/src';
 export type { InlineImageOptions, InlineImage } from '../../react-components/src';
 /* @conditional-compile-remove(rich-text-editor) */
-export type { RichTextEditorOptions } from '../../react-components/src';
+export type { RichTextEditorOptions, RichTextEditBoxOptions, RichTextSendBoxOptions } from '../../react-components/src';
 /* @conditional-compile-remove(PSTN-calls) */
 export type { HoldButtonProps, HoldButtonStrings } from '../../react-components/src';
 export type { VideoTileStrings } from '../../react-components/src';

@@ -342,11 +342,20 @@
     "pinParticipantLimitReachedMenuLabel": "Anheften (Limit erreicht)",
     "unpinParticipantMenuLabel": "Lösen",
     "pinParticipantMenuItemAriaLabel": "Anheften",
-    "unpinParticipantMenuItemAriaLabel": "Lösen"
+    "unpinParticipantMenuItemAriaLabel": "Lösen",
+    "muteAllMenuLabel": "Alle stummschalten",
+    "muteAllDialogTitle": "Alle stummschalten?",
+    "muteAllDialogContent": "Hierdurch werden alle in der Besprechung stummgeschaltet, außer Ihnen.",
+    "muteAllConfirmButtonLabel": "Alle stummschalten",
+    "muteAllCancelButtonLabel": "Abbrechen"
   },
   "chat": {
     "chatListHeader": "In diesem Chat",
-    "uploadAttachment": "Anlage hochladen"
+    "uploadAttachment": "Anlage hochladen",
+    "uploadImageDataNotProvided": "Bilddaten werden nicht bereitgestellt.",
+    "uploadImageIsTooLarge": "Das Bild ist zu groß. Wählen Sie einen Wert aus, der kleiner als {maxImageSize} MB ist.",
+    "uploadImageExtensionIsNotAllowed": "Das Hochladen von .{imageExtension} Image ist nicht zulässig.",
+    "uploadImageFailed": "Das Bild kann nicht hochgeladen werden. Versuchen Sie es später noch mal."
   },
   "callWithChat": {
     "chatButtonLabel": "Chat",

@@ -342,11 +342,20 @@
     "pinParticipantLimitReachedMenuLabel": "Pin (limit reached)",
     "unpinParticipantMenuLabel": "Unpin",
     "pinParticipantMenuItemAriaLabel": "Pin",
-    "unpinParticipantMenuItemAriaLabel": "Unpin"
+    "unpinParticipantMenuItemAriaLabel": "Unpin",
+    "muteAllMenuLabel": "Mute all",
+    "muteAllDialogTitle": "Mute everyone?",
+    "muteAllDialogContent": "This will mute everyone in the meeting but you.",
+    "muteAllConfirmButtonLabel": "Mute all",
+    "muteAllCancelButtonLabel": "Cancel"
   },
   "chat": {
     "chatListHeader": "In this chat",
-    "uploadAttachment": "Upload Attachment"
+    "uploadAttachment": "Upload Attachment",
+    "uploadImageDataNotProvided": "Image data is not provided.",
+    "uploadImageIsTooLarge": "Image is too large. Choose one that's less than {maxImageSize} MB.",
+    "uploadImageExtensionIsNotAllowed": "Uploading .{imageExtension} image is not allowed.",
+    "uploadImageFailed": "Unable to upload image. Please try again later."
   },
   "callWithChat": {
     "chatButtonLabel": "Chat",

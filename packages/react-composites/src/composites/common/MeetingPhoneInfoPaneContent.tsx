@@ -12,7 +12,7 @@ import React from 'react';
 import {
   ConferencePhoneInfo,
   formatPhoneNumberInfo,
-  formatPhoneNumber,
+  _formatPhoneNumber,
   formatPhoneNumberLink
 } from '@internal/react-components';
 /* @conditional-compile-remove(teams-meeting-conference) */
@@ -39,7 +39,7 @@ export const MeetingPhoneInfoPaneContent = (props: {
 }): JSX.Element => {
   const { conferencePhoneInfoList } = props;
   const theme = useTheme();
-  const localeStrings = useLocale().component.strings.MeetingConferencePhoneInfo;
+  const localeStrings = useLocale().component.strings.meetingConferencePhoneInfo;
 
   if (props.mobileView) {
     return (
@@ -61,7 +61,7 @@ export const MeetingPhoneInfoPaneContent = (props: {
                 <Stack horizontal className={phoneInfoStep}>
                   <Stack.Item className={phoneInfoIcon(theme)}>
                     <Stack verticalAlign="center" horizontalAlign="center">
-                      <Icon iconName="PhoneNumberButton" className={phoneInfoIconStyle(theme)} />
+                      <Icon iconName="JoinByPhoneDialStepIcon" className={phoneInfoIconStyle(theme)} />
                     </Stack>
                   </Stack.Item>
                   <Stack.Item>
@@ -73,7 +73,7 @@ export const MeetingPhoneInfoPaneContent = (props: {
                 {conferencePhoneInfoList.map((phoneNumber, index) => (
                   <Stack.Item key={index}>
                     <Link className={phoneInfoTextStyle} href={formatPhoneNumberLink(phoneNumber)}>
-                      {formatPhoneNumber(phoneNumber.phoneNumber)}
+                      {_formatPhoneNumber(phoneNumber.phoneNumber, true)}
                     </Link>
                     <Text className={phoneInfoTextStyle}>
                       {' '}
@@ -96,7 +96,7 @@ export const MeetingPhoneInfoPaneContent = (props: {
               <Stack.Item>
                 <Stack horizontal>
                   <Stack.Item className={phoneInfoIcon(theme)}>
-                    <Icon iconName="DtmfDialpadButton" className={phoneInfoIconStyle(theme)} />
+                    <Icon iconName="JoinByPhoneConferenceIdIcon" className={phoneInfoIconStyle(theme)} />
                   </Stack.Item>
                   <Stack.Item>
                     <Text className={phoneInfoLabelStyle}>
@@ -115,7 +115,7 @@ export const MeetingPhoneInfoPaneContent = (props: {
             >
               <Stack horizontal>
                 <Stack.Item className={phoneInfoIcon(theme)}>
-                  <Icon iconName="PhoneInfoWait" className={phoneInfoIconStyle(theme)} />
+                  <Icon iconName="JoinByPhoneWaitToBeAdmittedIcon" className={phoneInfoIconStyle(theme)} />
                 </Stack.Item>
                 <Stack.Item>
                   <Text className={phoneInfoLabelStyle}>{localeStrings.meetingConferencePhoneInfoModalWait}</Text>

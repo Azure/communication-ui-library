@@ -342,11 +342,20 @@
     "pinParticipantLimitReachedMenuLabel": "Připnout (dosáhlo se limitu)",
     "unpinParticipantMenuLabel": "Odepnout",
     "pinParticipantMenuItemAriaLabel": "Připnout",
-    "unpinParticipantMenuItemAriaLabel": "Odepnout"
+    "unpinParticipantMenuItemAriaLabel": "Odepnout",
+    "muteAllMenuLabel": "Ztlumit všechny",
+    "muteAllDialogTitle": "Chcete všechny ztlumit?",
+    "muteAllDialogContent": "Ztlumí všechny účastníky schůzky kromě vás.",
+    "muteAllConfirmButtonLabel": "Ztlumit všechny",
+    "muteAllCancelButtonLabel": "Zrušit"
   },
   "chat": {
     "chatListHeader": "V tomto chatu",
-    "uploadAttachment": "Odeslat přílohu"
+    "uploadAttachment": "Odeslat přílohu",
+    "uploadImageDataNotProvided": "Data obrázku nebyla zadána.",
+    "uploadImageIsTooLarge": "Obrázek je příliš velký. Zvolte míň než {maxImageSize} MB.",
+    "uploadImageExtensionIsNotAllowed": "Nahrávání. Obrázek {imageExtension} není povolený.",
+    "uploadImageFailed": "Obrázek nejde nahrát. Zkuste to prosím znovu později."
   },
   "callWithChat": {
     "chatButtonLabel": "Chat",

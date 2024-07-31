@@ -13,6 +13,8 @@ import { TransferEventArgs } from '@azure/communication-calling';
 import { StartCaptionsOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
+/* @conditional-compile-remove(breakout-rooms) */
+import type { BreakoutRoomsUpdatedListener } from '@azure/communication-calling';
 import type {
   AudioDeviceInfo,
   VideoDeviceInfo,
@@ -905,7 +907,11 @@ export interface CallAdapterSubscribers {
    * Subscribe function for 'mutedByOthers' event.
    */
   on(event: 'mutedByOthers', listener: PropertyChangedEvent): void;
-
+  /* @conditional-compile-remove(breakout-rooms) */
+  /**
+   * Subscribe function for 'breakoutRoomsUpdated' event.
+   */
+  on(event: 'breakoutRoomsUpdated', listener: BreakoutRoomsUpdatedListener): void;
   /**
    * Unsubscribe function for 'participantsJoined' event.
    */
@@ -992,6 +998,11 @@ export interface CallAdapterSubscribers {
    * Unsubscribe function for 'mutedByOthers' event.
    */
   off(event: 'mutedByOthers', listener: PropertyChangedEvent): void;
+  /* @conditional-compile-remove(breakout-rooms) */
+  /**
+   * Unsubscribe function for 'breakoutRoomsUpdated' event.
+   */
+  off(event: 'breakoutRoomsUpdated', listener: BreakoutRoomsUpdatedListener): void;
 }
 
 // This type remains for non-breaking change reason

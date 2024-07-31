@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 import { GroupCallLocator, GroupLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
-/* @conditional-compile-remove(meeting-id) */
 import { TeamsMeetingIdLocator } from '@azure/communication-calling';
 import { v1 as generateGUID } from 'uuid';
 import { getExistingThreadIdFromURL } from './getThreadId';
@@ -65,7 +64,6 @@ export const ensureJoinableTeamsLinkPushedToUrl = (teamsLink: TeamsMeetingLinkLo
   }
 };
 
-/* @conditional-compile-remove(meeting-id) */
 /**
  * Get teams meeting id and passcode from the url's query params.
  */
@@ -78,7 +76,6 @@ export const getMeetingIdFromUrl = (): TeamsMeetingIdLocator | undefined => {
     : undefined;
 };
 
-/* @conditional-compile-remove(meeting-id) */
 export const ensureJoinableMeetingIdPushedToUrl = (teamsLink: TeamsMeetingIdLocator): void => {
   if (!getTeamsLinkFromUrl()) {
     pushQSPUrl({ name: 'meetingId', value: encodeURIComponent(teamsLink.meetingId) });

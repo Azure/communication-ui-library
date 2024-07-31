@@ -15,7 +15,7 @@ import {
 /**
  * Props for {@link Notification}.
  *
- * @beta
+ * @public
  */
 export interface NotificationProps {
   /**
@@ -59,7 +59,7 @@ export interface NotificationProps {
 /**
  * All strings that may be shown on the UI in the {@link Notification}.
  *
- * @beta
+ * @public
  */
 export interface NotificationStrings {
   /**
@@ -67,9 +67,9 @@ export interface NotificationStrings {
    */
   title: string;
   /**
-   * Notification bar close button aria label
+   * Notification bar dismiss button aria label
    */
-  closeButtonAriaLabel: string;
+  dismissButtonAriaLabel: string;
   /**
    * Notification bar message.
    */
@@ -87,7 +87,7 @@ export interface NotificationStrings {
 /**
  * A component to show notification messages on the UI.
  *
- * @beta
+ * @public
  */
 export const Notification = (props: NotificationProps): JSX.Element => {
   const strings = props.notificationStrings;
@@ -121,7 +121,7 @@ export const Notification = (props: NotificationProps): JSX.Element => {
 
           <IconButton
             iconProps={cancelIcon}
-            ariaLabel={strings?.closeButtonAriaLabel}
+            ariaLabel={strings?.dismissButtonAriaLabel}
             aria-live={'polite'}
             onClick={props.onDismiss}
           />

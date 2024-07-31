@@ -342,11 +342,20 @@
     "pinParticipantLimitReachedMenuLabel": "Fest (grensen er nådd)",
     "unpinParticipantMenuLabel": "Løsne",
     "pinParticipantMenuItemAriaLabel": "Fest",
-    "unpinParticipantMenuItemAriaLabel": "Løsne"
+    "unpinParticipantMenuItemAriaLabel": "Løsne",
+    "muteAllMenuLabel": "Demp alle",
+    "muteAllDialogTitle": "Vil du dempe alle?",
+    "muteAllDialogContent": "Dette demper alle i møtet, bortsett fra deg selv.",
+    "muteAllConfirmButtonLabel": "Demp alle",
+    "muteAllCancelButtonLabel": "Avbryt"
   },
   "chat": {
     "chatListHeader": "I denne chatten",
-    "uploadAttachment": "Last opp vedlegg"
+    "uploadAttachment": "Last opp vedlegg",
+    "uploadImageDataNotProvided": "Bildedata er ikke angitt.",
+    "uploadImageIsTooLarge": "Bildet er for stort. Velg en som er mindre enn {maxImageSize} MB.",
+    "uploadImageExtensionIsNotAllowed": "Opplasting av .{imageExtension}-bilde er ikke tillatt.",
+    "uploadImageFailed": "Kan ikke laste opp bilde. Prøv på nytt senere."
   },
   "callWithChat": {
     "chatButtonLabel": "Chat",

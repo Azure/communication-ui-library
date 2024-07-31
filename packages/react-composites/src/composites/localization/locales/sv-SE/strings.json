@@ -338,15 +338,24 @@
     "endCallConfirmDialogTitle": "Vill du avsluta samtalet?",
     "endCallConfirmDialogContent": "Du avslutar samtalet för alla.",
     "invalidMeetingIdentifier": "Ogiltigt mötes-ID eller lösenord",
-    "pinParticipantMenuLabel": "Pin for me",
-    "pinParticipantLimitReachedMenuLabel": "Pin (limit reached)",
-    "unpinParticipantMenuLabel": "Unpin",
-    "pinParticipantMenuItemAriaLabel": "Pin",
-    "unpinParticipantMenuItemAriaLabel": "Unpin"
+    "pinParticipantMenuLabel": "Fäst åt mig",
+    "pinParticipantLimitReachedMenuLabel": "Fäst (gränsen har nåtts)",
+    "unpinParticipantMenuLabel": "Ta bort",
+    "pinParticipantMenuItemAriaLabel": "Fäst",
+    "unpinParticipantMenuItemAriaLabel": "Ta bort",
+    "muteAllMenuLabel": "Stäng av ljudet för alla",
+    "muteAllDialogTitle": "Stäng av ljudet för alla?",
+    "muteAllDialogContent": "Detta stänger av ljudet för alla i mötet utom för dig.",
+    "muteAllConfirmButtonLabel": "Stäng av ljudet för alla",
+    "muteAllCancelButtonLabel": "Avbryt"
   },
   "chat": {
     "chatListHeader": "I den här chatten",
-    "uploadAttachment": "Ladda upp bifogad fil"
+    "uploadAttachment": "Ladda upp bifogad fil",
+    "uploadImageDataNotProvided": "Bilddata har inte angetts.",
+    "uploadImageIsTooLarge": "Bilden är för stor. Välj en som är mindre än {maxImageSize} MB.",
+    "uploadImageExtensionIsNotAllowed": "Uppladdning av .{imageExtension}-bilder tillåts inte.",
+    "uploadImageFailed": "Det gick inte att ladda upp bilden. Försök igen senare."
   },
   "callWithChat": {
     "chatButtonLabel": "Chatt",

@@ -6,36 +6,21 @@ import {
   overviewPageUIArtifactImageStyle,
   overviewPageUIArtifactsStackStyle
 } from './constants';
+import { addCSS } from './utils';
 
 <Meta title="Overview" parameters={{ previewTabs: { canvas: { disable: true, hidden: true } } }} />
 
+<div id='overview-page'>
+<script> { 
+  addCSS(' '.concat(
+  '#overview-page h1 { font-family: Segoe UI, sans-serif; color: #0078D4; font-weight: 600; font-size: 2rem; margin: 0rem; line-height: 2.5rem; }',
+  '#overview-page h2 { font-family: Segoe UI, sans-serif; color: rgba(0,0,0,0.5); font-weight: 500; font-size: 1.125rem; margin: 0rem 0rem 0.25rem 0rem; line-height: 1.5rem; border: none; }'
+)) } </script>
+
 <Stack horizontal horizontalAlign="space-between" style={overviewPageImagesStackStyle}>
   <Stack.Item align="center">
-    <h2
-      style={{
-        fontFamily: '"Segoe UI", sans-serif',
-        color: 'rgba(0,0,0,.5)',
-        fontSize: '1.125rem',
-        fontWeight: '500',
-        border: 'none',
-        margin: '0rem 0rem 0.25rem 0rem',
-        lineHeight: '1.5rem'
-      }}
-    >
-      Azure Communication Services
-    </h2>
-    <h1
-      style={{
-        fontFamily: '"Segoe UI", sans-serif',
-        color: '#0078D4',
-        fontWeight: '600',
-        fontSize: '2rem',
-        margin: '0rem',
-        lineHeight: '2.5rem'
-      }}
-    >
-      UI Library
-    </h1>
+    <h2>Azure Communication Services</h2>
+    <h1>UI Library</h1>
   </Stack.Item>
   <Stack.Item align="center">
     <Image
@@ -54,14 +39,14 @@ On top of that developers must worry about accessibility and localization for th
 **UI Library** is here to help!
 
 In some cases, you might additional customization and control over the overall communication experiences, for that we offer **UI Components**.
-These components can be composed together to build calling and chat experiences. For example, a [Video Gallery](./?path=/story/ui-components-videotile--video-tile) or a [Message Thread](./?path=/story/ui-components-messagethread--message-thread).
+These components can be composed together to build calling and chat experiences. For example, a [Video Gallery](./?path=/story/components-video-tile--video-tile) or a [Message Thread](./?path=/story/components-message-thread--message-thread).
 
 If you just want an out of the box communications experiences that you can drop into your application, we offer **Composites**.
 It takes only a couple lines of code to add and configure.
 
 <Stack horizontal tokens={{ childrenGap: '1rem' }} wrap style={{ margin: '2rem 0rem 2rem 0rem' }}>
   <Stack.Item styles={{ root: { ':hover': { textDecoration: 'underline !important' } } }}>
-    <a style={overviewPageUIArtifactsStackStyle} href="/docs/quickstarts-composites--page">
+    <a style={overviewPageUIArtifactsStackStyle} href="./?path=/docs/composites-get-started--docs">
       <Stack tokens={{ childrenGap: '1rem' }}>
         <Stack.Item style={overviewPageUIArtifactTextStyle}>
           <Text block variant="mediumPlus" style={{ color: '#004578', fontWeight: 600 }}>
@@ -87,7 +72,7 @@ It takes only a couple lines of code to add and configure.
       root: { ':hover': { textDecoration: 'underline !important', textDecorationColor: '#004578 !important' } }
     }}
   >
-    <a style={overviewPageUIArtifactsStackStyle} href="/docs/overview-uicomponents--page">
+    <a style={overviewPageUIArtifactsStackStyle} href="./?path=/docs/components-get-started--docs">
       <Stack tokens={{ childrenGap: '1rem' }}>
         <Stack.Item style={overviewPageUIArtifactTextStyle}>
           <Text block variant="mediumPlus" style={{ color: '#004578', fontWeight: 600 }}>
@@ -113,8 +98,8 @@ It takes only a couple lines of code to add and configure.
 These UI client libraries all use [Microsoft's Fluent design language](https://developer.microsoft.com/fluentui/) and assets. Fluent UI provides a foundational layer for the UI Library and is actively used across Microsoft products.
 
 The UI Library for Azure Communication Services delivers on the Microsoft promise of diversity and inclusion.
-All the UI Library components are fully accessible based on Microsoft [accessibility](./?path=/docs/accessibility--page) guidelines.
-They provide full [localization](./?path=/docs/localization--page) to enable developers to tweak them to their target audience.
+All the UI Library components are fully accessible based on Microsoft [accessibility](./?path=/docs/concepts-accessibility--docs) guidelines.
+They provide full [localization](./?path=/docs/concepts-localization--docs) to enable developers to tweak them to their target audience.
 
 Azure Communication Services support UI Library across Web (React) and Native Mobile ([iOS](https://docs.microsoft.com/azure/communication-services/quickstarts/ui-library/get-started-composites?tabs=kotlin&pivots=platform-ios) and [Android](https://docs.microsoft.com/azure/communication-services/quickstarts/ui-library/get-started-composites?tabs=kotlin&pivots=platform-android)). For Native Mobile, please refer to our [documentation](https://docs.microsoft.com/azure/communication-services/concepts/ui-library/ui-library-overview?pivots=platform-mobile).
 
@@ -135,35 +120,25 @@ Understanding these requirements will help you choose the right client library:
 - **How much customization do you desire?** Azure Communication core client libraries don't have a UX and are designed so you can build whatever UX you want. UI Library components provide UI assets at the cost of reduced customization.
 - **What platforms are you targeting?** Different platforms have different capabilities.
 
-Details about feature availability in the [UI Library is available here](./?path=/story/usecases--page), but key trade-offs are summarized below.
+Details about feature availability in the [UI Library is available here](./?path=/docs/use-cases--docs), but key trade-offs are summarized below.
 
-<Markdown>
-  {`
 | Client library / SDK  | Implementation Complexity | Customization Ability | Calling | Chat | [Teams Interop](https://docs.microsoft.com/azure/communication-services/concepts/teams-interop) |
 | --------------------- | ------------------------- | --------------------- | ------- | ---- | ----------------------------------------------------------------------------------------------- |
-| Composites            | Low                       | Low                   | ✔       | ✔    | ✔                                                                                               |
-| UI Components         | Medium                    | Medium                | ✔       | ✔    | ✔                                                                                               |
-| Core client libraries | High                      | High                  | ✔       | ✔    | ✔                                                                                               |
-`}
-</Markdown>
+| Composites            | Low                       | Low                   | ✔      | ✔   | ✔                                                                                              |
+| UI Components         | Medium                    | Medium                | ✔      | ✔   | ✔                                                                                              |
+| Core client libraries | High                      | High                  | ✔      | ✔   | ✔                                                                                              |
 
 ## Platform support
 
 For Native Mobile support ([iOS](https://docs.microsoft.com/azure/communication-services/quickstarts/ui-library/get-started-composites?tabs=kotlin&pivots=platform-ios) and [Android](https://docs.microsoft.com/azure/communication-services/quickstarts/ui-library/get-started-composites?tabs=kotlin&pivots=platform-android)), please refer to our [documentation](https://docs.microsoft.com/azure/communication-services/concepts/ui-library/ui-library-overview?pivots=platform-mobile).
 
-<Markdown>
-  {`
-| SDK                             | Windows                         | macOS                            | Ubuntu    | Linux     | Android      | iOS             |
-| ------------------------------- | -----------------------------   | -----------------------------    | --------  | --------  | ----------   | ------------    |
-| [UI SDK - Calling][calling-msv] | Chrome\\*, new Edge             | Chrome\\*, Safari\\*\\*          | Chrome\\* | Chrome\\* | Chrome\\*\\* | Safari\\*\\*\\* |
-| [UI SDK - Chat][chat-msv]       | Firefox\\*, Chrome\\*, new Edge | Firefox\\*, Chrome\\*, Safari\\* | Chrome\\* | Chrome\\* | Chrome\\*    | Safari\\*\\*\\* |
+| SDK                             | Windows                         | macOS                             | Ubuntu     | Linux      | Android      | iOS              |
+| ------------------------------- | ------------------------------- | --------------------------------- | ---------- | ---------- | ------------ | ---------------- |
+| [UI SDK - Calling][calling-msv] | Chrome\\\*, new Edge            | Chrome\\_, Safari\\_\\\*          | Chrome\\\* | Chrome\\\* | Chrome\\_\\_ | Safari\\_\\_\\\* |
+| [UI SDK - Chat][chat-msv]       | Firefox\\_, Chrome\\_, new Edge | Firefox\\_, Chrome\\_, Safari\\\* | Chrome\\\* | Chrome\\\* | Chrome\\\*   | Safari\\_\\_\\\* |
 
 [calling-msv]: https://docs.microsoft.com/en-us/azure/communication-services/concepts/voice-video-calling/calling-sdk-features#javascript-calling-sdk-support-by-os-and-browser
 [chat-msv]: https://docs.microsoft.com/en-us/azure/communication-services/concepts/chat/sdk-features#javascript-chat-sdk-support-by-os-and-browser
-
-`}
-
-</Markdown>
 
 \* The latest version is supported in addition to the
 previous two releases.
@@ -172,3 +147,5 @@ previous two releases.
 
 \*\*\* The latest version is supported in addition to the previous two releases. 1:1 calls are not supported on Safari. Outgoing screen sharing
 is not supported on iOS, device selection(for example choosing Bluetooth headset) is limited by OS, only one device available.
+
+</div>

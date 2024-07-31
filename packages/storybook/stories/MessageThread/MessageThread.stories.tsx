@@ -9,7 +9,9 @@ import {
   SystemMessage,
   MessageRenderer,
   ImageOverlay,
-  InlineImage
+  InlineImage,
+  AttachmentMetadataInProgress,
+  RichTextEditBoxOptions
 } from '@azure/communication-react';
 import {
   Persona,
@@ -23,7 +25,7 @@ import {
 import { Divider } from '@fluentui/react-components';
 import { Canvas, Description, Heading, Props, Source, Subtitle, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { DetailedBetaBanner } from '../BetaBanners/DetailedBetaBanner';
 import { SingleLineBetaBanner } from '../BetaBanners/SingleLineBetaBanner';
 
@@ -61,6 +63,8 @@ import { MessageThreadWithSystemMessagesExample } from './snippets/SystemMessage
 import { MessageThreadWithInlineImageExample } from './snippets/WithInlineImageMessage.snippet';
 import { MessageThreadWithMessageDateExample } from './snippets/WithMessageDate.snippet';
 import { MessageThreadWithRichTextEditorExample } from './snippets/WithRichTextEditor.snippet';
+import { MessageThreadWithRichTextEditorInlineImagesExample } from './snippets/WithRichTextEditorInlineImages.snippet';
+import { MessageThreadWithWithRichTextEditorOnPasteCallbackExample } from './snippets/WithRichTextEditorOnPasteCallback.snippet';
 
 const MessageThreadWithBlockedMessagesExampleText =
   require('!!raw-loader!./snippets/BlockedMessages.snippet.tsx').default;
@@ -94,6 +98,10 @@ const MessageThreadWithInlineImageExampleText =
   require('!!raw-loader!./snippets/WithInlineImageMessage.snippet.tsx').default;
 const MessageThreadWithMessageDateExampleText = require('!!raw-loader!./snippets/WithMessageDate.snippet.tsx').default;
 const MessageThreadWithRichTextEditorText = require('!!raw-loader!./snippets/WithRichTextEditor.snippet.tsx').default;
+const MessageThreadWithRichTextEditorInlineImagesText =
+  require('!!raw-loader!./snippets/WithRichTextEditorInlineImages.snippet.tsx').default;
+const MessageThreadWithRichTextEditorOnPasteCallabackText =
+  require('!!raw-loader!./snippets/WithRichTextEditorOnPasteCallback.snippet.tsx').default;
 
 const importStatement = `
 import { FluentThemeProvider, MessageThread } from '@azure/communication-react';
@@ -121,6 +129,8 @@ const Docs: () => JSX.Element = () => {
   const refDisplayAttachments = useRef(null);
   const refMentionOfUsers = useRef(null);
   const refRichTextEditor = useRef(null);
+  const refRichTextEditorInlineImages = useRef(null);
+  const refRichTextEditorOnPaste = useRef(null);
   const refProps = useRef(null);
 
   const scrollToRef = (ref): void => {
@@ -167,6 +177,16 @@ const Docs: () => JSX.Element = () => {
       scrollToRef(refMentionOfUsers);
     } else if (url.includes('rich-text-editor-support-for-editing-messages') && refRichTextEditor.current) {
       scrollToRef(refRichTextEditor);
+    } else if (
+      url.includes('rich-text-editor-support-for-editing-messages-with-inline-images') &&
+      refRichTextEditorInlineImages.current
+    ) {
+      scrollToRef(refRichTextEditorInlineImages);
+    } else if (
+      url.includes('process-content-on-paste-in-rich-text-editor-during-message-editing') &&
+      refRichTextEditorOnPaste.current
+    ) {
+      scrollToRef(refRichTextEditorOnPaste);
     } else if (url.includes('props') && refProps.current) {
       scrollToRef(refProps);
     }
@@ -375,7 +395,7 @@ const Docs: () => JSX.Element = () => {
           The MessageThread component also supports multiple ways to customize the rendering. You can leverage the
           `attachmentOptions.downloadOptions` props to provide a dynamic list of menu action buttons that will be based
           on properties of the attachment or the chat message associated with it. Moreover, you can also opt to provide
-          a static list for all secanrios.
+          a static list for all scenarios.
         </Description>
         <Description>
           For example, the following code snippet demonstrates how to customize the download options for attachments.
@@ -406,14 +426,47 @@ const Docs: () => JSX.Element = () => {
 
       <div ref={refRichTextEditor}>
         <Heading>Rich Text Editor Support for Editing Messages</Heading>
-        <DetailedBetaBanner />
+        <SingleLineBetaBanner />
         <Description>
-          The following example shows how to enable rich text editor for message editing by providing the
+          The following examples show how to enable rich text editor for message editing by providing the
           `richTextEditorOptions` property. Rich text editor does not support mentioning users at the moment. By setting
           `richTextEditorOptions` property, the `lookupOptions` under the `mentionOptions` property will be ignored.
+          Enabling the rich text editor for message editing, without customizing its behavior, can be achieved by
+          setting the richTextEditorOptions.
         </Description>
         <Canvas mdxSource={MessageThreadWithRichTextEditorText}>
           <MessageThreadWithRichTextEditorExample />
+        </Canvas>
+      </div>
+
+      <div ref={refRichTextEditorInlineImages}>
+        <Heading>Rich Text Editor Support for Editing Messages with Inline Images</Heading>
+        <SingleLineBetaBanner />
+        <Description>
+          The following examples show how to enable image insert functionality for message editing with rich text
+          editor. Under the `richTextEditorOptions` prop, an `onInsertInlineImage` callback to handle an inline image
+          that is inserted into the MessageThread component. This callback can be used to implement custom logic, such
+          as uploading the image to a server. After processing each inserted image in the callback, the results should
+          be passed back to the component through the `messagesInlineImages` prop for each message that has inserted
+          inline images. This prop will be used to render inline images in the MessageThread and submit them with the
+          message.
+        </Description>
+        <Canvas mdxSource={MessageThreadWithRichTextEditorInlineImagesText}>
+          <MessageThreadWithRichTextEditorInlineImagesExample />
+        </Canvas>
+      </div>
+
+      <div ref={refRichTextEditorOnPaste}>
+        <Heading>Process content on paste in Rich Text Editor during message editing</Heading>
+        <SingleLineBetaBanner />
+        <Description>
+          `richTextEditorOptions` provides `onPaste` callback for custom processing of the pasted content before it's
+          inserted into the rich text editor for message editing. This callback can be used to implement custom paste
+          handling logic tailored to your application's needs. The example below shows how to remove images from pasted
+          content.
+        </Description>
+        <Canvas mdxSource={MessageThreadWithRichTextEditorOnPasteCallabackText}>
+          <MessageThreadWithWithRichTextEditorOnPasteCallbackExample />
         </Canvas>
       </div>
 
@@ -439,6 +492,9 @@ const MessageThreadStory = (args): JSX.Element => {
   ];
 
   const [selectedMessageType, setSelectedMessageType] = useState<IDropdownOption>(dropdownMenuOptions[0]);
+  const [messagesInlineImages, setMessagesInlineImages] = useState<
+    Record<string, AttachmentMetadataInProgress[]> | undefined
+  >();
   // Property for checking if the history messages are loaded
   const loadedHistoryMessages = useRef(false);
 
@@ -500,12 +556,14 @@ const MessageThreadStory = (args): JSX.Element => {
     if (message.messageType === 'chat') {
       message.content = content;
       message.editedOn = new Date(Date.now());
-      if (args.richTextEditor === true) {
+      // args will get string type when value is updated and page is reloaded (without updating switch again)
+      if (args.richTextEditor === true || args.richTextEditor === 'true') {
         message.contentType = 'html';
       }
     }
     updatedChatMessages[msgIdx] = message;
     setChatMessages(updatedChatMessages);
+    setMessagesInlineImages(undefined);
     return Promise.resolve();
   };
 
@@ -569,6 +627,32 @@ const MessageThreadStory = (args): JSX.Element => {
     }
   };
 
+  const richTextEditorOptions: RichTextEditBoxOptions = useMemo(() => {
+    return {
+      onInsertInlineImage: (image: string, fileName: string, messageId: string) => {
+        const inlineImages = messagesInlineImages?.[messageId] ?? [];
+        const id = Math.floor(Math.random() * 1000000).toString();
+        const newImage: AttachmentMetadataInProgress = {
+          id,
+          name: fileName,
+          progress: 1,
+          url: image,
+          error: undefined
+        };
+        setMessagesInlineImages({ ...messagesInlineImages, [messageId]: [...inlineImages, newImage] });
+      },
+      messagesInlineImages: messagesInlineImages,
+      onCancelInlineImageUpload: (image: string, messageId: string) => {
+        const inlineImages = messagesInlineImages?.[messageId];
+        if (!inlineImages) {
+          return;
+        }
+        const filteredImages = inlineImages.filter((img) => img.url !== image);
+        setMessagesInlineImages({ ...messagesInlineImages, [messageId]: filteredImages });
+      }
+    };
+  }, [messagesInlineImages]);
+
   const onSendHandler = (): void => {
     switch (selectedMessageType.key) {
       case 'newMessage':
@@ -597,20 +681,6 @@ const MessageThreadStory = (args): JSX.Element => {
     }
   };
 
-  //TODO: Remove this function when the image upload functionality is implemented
-  const removeImageTags = useCallback((event: { content: DocumentFragment }) => {
-    event.content.querySelectorAll('img').forEach((image) => {
-      // If the image is the only child of its parent, remove all the parents of this img element.
-      let parentNode: HTMLElement | null = image.parentElement;
-      let currentNode: HTMLElement = image;
-      while (parentNode?.childNodes.length === 1) {
-        currentNode = parentNode;
-        parentNode = parentNode.parentElement;
-      }
-      currentNode?.remove();
-    });
-  }, []);
-
   return (
     <Stack verticalFill style={MessageThreadStoryContainerStyles} tokens={{ childrenGap: '1rem' }}>
       <MessageThreadComponent
@@ -623,7 +693,8 @@ const MessageThreadStory = (args): JSX.Element => {
         onRenderMessage={onRenderMessage}
         inlineImageOptions={inlineImageOptions}
         onUpdateMessage={onUpdateMessageCallback}
-        richTextEditorOptions={args.richTextEditor ? { onPaste: removeImageTags } : undefined}
+        onCancelEditMessage={() => setMessagesInlineImages(undefined)}
+        richTextEditorOptions={args.richTextEditor ? richTextEditorOptions : undefined}
         onRenderAvatar={(userId?: string) => {
           return (
             <Persona

@@ -342,11 +342,20 @@
     "pinParticipantLimitReachedMenuLabel": "Przypięcie (osiągnięto limit)",
     "unpinParticipantMenuLabel": "Odepnij",
     "pinParticipantMenuItemAriaLabel": "Przypnij",
-    "unpinParticipantMenuItemAriaLabel": "Odepnij"
+    "unpinParticipantMenuItemAriaLabel": "Odepnij",
+    "muteAllMenuLabel": "Wycisz wszystkich",
+    "muteAllDialogTitle": "Wyciszyć wszystkich?",
+    "muteAllDialogContent": "Spowoduje to wyciszenie wszystkich osób na spotkaniu oprócz Ciebie.",
+    "muteAllConfirmButtonLabel": "Wycisz wszystkich",
+    "muteAllCancelButtonLabel": "Anuluj"
   },
   "chat": {
     "chatListHeader": "W tym czacie",
-    "uploadAttachment": "Przekaż załącznik"
+    "uploadAttachment": "Przekaż załącznik",
+    "uploadImageDataNotProvided": "Nie udostępniono danych obrazu.",
+    "uploadImageIsTooLarge": "Obraz jest za duży. Wybierz rozmiar mniejszy niż {maxImageSize} MB.",
+    "uploadImageExtensionIsNotAllowed": "Przekazywanie obrazu .{imageExtension} nie jest dozwolone.",
+    "uploadImageFailed": "Nie można przekazać obrazu. Spróbuj ponownie później."
   },
   "callWithChat": {
     "chatButtonLabel": "Czat",

@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
-/* @conditional-compile-remove(meeting-id) */
 import { TeamsMeetingIdLocator } from '@azure/communication-calling';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import {
@@ -31,11 +30,9 @@ export interface CallScreenProps {
   userId: CommunicationUserIdentifier;
   displayName: string;
   endpoint: string;
-  locator:
-    | CallAndChatLocator
-    | TeamsMeetingLinkLocator
-    | /* @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator;
+  locator: CallAndChatLocator | TeamsMeetingLinkLocator | TeamsMeetingIdLocator;
   /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId?: string;
+  /* @conditional-compile-remove(rich-text-editor-composite-support) */ isRichTextEditorEnabled?: boolean;
 }
 
 export const CallScreen = (props: CallScreenProps): JSX.Element => {
@@ -45,7 +42,8 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     displayName,
     endpoint,
     locator,
-    /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId
+    /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
+    /* @conditional-compile-remove(rich-text-editor-composite-support) */ isRichTextEditorEnabled
   } = props;
 
   const callAdapterOptions: AzureCommunicationCallAdapterOptions = useMemo(() => {
@@ -202,11 +200,15 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
         }
       },
       /* @conditional-compile-remove(file-sharing-acs) */
-      attachmentOptions: attachmentOptions
+      attachmentOptions: attachmentOptions,
+      /* @conditional-compile-remove(rich-text-editor-composite-support) */
+      richTextEditor: isRichTextEditorEnabled
     }),
     [
       /* @conditional-compile-remove(file-sharing-acs) */
       attachmentOptions,
+      /* @conditional-compile-remove(rich-text-editor-composite-support) */
+      isRichTextEditorEnabled,
       shouldHideScreenShare
     ]
   );
@@ -226,14 +228,9 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
 
   let callInvitationUrl: string | undefined = window.location.href;
   // Only show the call invitation url if the call is a group call or Teams call, do not show for Rooms, 1:1 or 1:N calls
-  if (
-    !isGroupCallLocator(locator) &&
-    !isTeamsMeetingLinkLocator(locator) &&
-    /* @conditional-compile-remove(meeting-id) */ !isTeamsMeetingIdLocator(locator)
-  ) {
+  if (!isGroupCallLocator(locator) && !isTeamsMeetingLinkLocator(locator) && !isTeamsMeetingIdLocator(locator)) {
     callInvitationUrl = undefined;
   }
-
   return (
     <CallWithChatComposite
       adapter={adapter}
@@ -262,26 +259,17 @@ const convertPageStateToString = (state: CallWithChatAdapterState): string => {
 };
 
 const isTeamsMeetingLinkLocator = (
-  locator:
-    | TeamsMeetingLinkLocator
-    | CallAndChatLocator
-    | /* @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator
+  locator: TeamsMeetingLinkLocator | CallAndChatLocator | TeamsMeetingIdLocator
 ): locator is TeamsMeetingLinkLocator => {
   return 'meetingLink' in locator;
 };
 
-/* @conditional-compile-remove(meeting-id) */
 const isTeamsMeetingIdLocator = (
   locator: TeamsMeetingLinkLocator | CallAndChatLocator | TeamsMeetingIdLocator
 ): locator is TeamsMeetingIdLocator => {
   return 'meetingId' in locator;
 };
 
-const isGroupCallLocator = (
-  locator:
-    | TeamsMeetingLinkLocator
-    | CallAndChatLocator
-    | /* @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator
-): boolean => {
+const isGroupCallLocator = (locator: TeamsMeetingLinkLocator | CallAndChatLocator | TeamsMeetingIdLocator): boolean => {
   return 'callLocator' in locator && 'groupId' in locator.callLocator;
 };

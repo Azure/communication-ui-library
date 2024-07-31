@@ -342,11 +342,20 @@
     "pinParticipantLimitReachedMenuLabel": "Закрепить (достигнуто ограничение)",
     "unpinParticipantMenuLabel": "Открепить",
     "pinParticipantMenuItemAriaLabel": "Закрепить",
-    "unpinParticipantMenuItemAriaLabel": "Открепить"
+    "unpinParticipantMenuItemAriaLabel": "Открепить",
+    "muteAllMenuLabel": "Отключить все микрофоны",
+    "muteAllDialogTitle": "Отключить микрофоны всех участников?",
+    "muteAllDialogContent": "Будут отключены микрофоны всех участников собрания, кроме вас.",
+    "muteAllConfirmButtonLabel": "Отключить все микрофоны",
+    "muteAllCancelButtonLabel": "Отмена"
   },
   "chat": {
     "chatListHeader": "В этом чате",
-    "uploadAttachment": "Отправить вложение"
+    "uploadAttachment": "Отправить вложение",
+    "uploadImageDataNotProvided": "Данные образа не предоставлены.",
+    "uploadImageIsTooLarge": "Изображение слишком велико. Выберите размер меньше {maxImageSize} МБ.",
+    "uploadImageExtensionIsNotAllowed": "Отправка образа .{imageExtension} не разрешена.",
+    "uploadImageFailed": "Не удалось отправить изображение. Повторите попытку позже."
   },
   "callWithChat": {
     "chatButtonLabel": "Чат",
