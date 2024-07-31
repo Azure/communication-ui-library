@@ -44,7 +44,7 @@ useEffect(() => {
     // Handle ctrl + shift key modifiers
     if (event.ctrlKey === true && event.shiftKey === true) {
       switch (event.key) {
-        // toggle mute with ctrl+shift+M
+        // Toggle mute with ctrl+shift+M
         case 'M': {
           if (!adapterState) break;
           const isUserMuted = adapterState.call
