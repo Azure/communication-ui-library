@@ -7,10 +7,11 @@ import {
   CallEndReason,
   CollectionUpdatedEvent,
   IncomingCall,
-  TeamsIncomingCall
+  TeamsIncomingCall,
+  IncomingCallCommon
 } from '@azure/communication-calling';
 
-import { IncomingCallCommon, CallAgentCommon, CallCommon } from './BetaToStableTypes';
+import { CallAgentCommon, CallCommon } from './BetaToStableTypes';
 
 /* @conditional-compile-remove(teams-identity-support) */
 import { TeamsCallAgent } from '@azure/communication-calling';
@@ -137,11 +138,10 @@ export abstract class ProxyCallAgentCommon {
         incomingCall.id,
         teamsIncomingCallDeclaratify(incomingCall as TeamsIncomingCall, this._context)
       );
-      this._context.setIncomingCall(convertSdkIncomingCallToDeclarativeIncomingCall(incomingCall));
     } else {
       this._incomingCalls.set(incomingCall.id, incomingCallDeclaratify(incomingCall as IncomingCall, this._context));
-      this._context.setIncomingCall(convertSdkIncomingCallToDeclarativeIncomingCall(incomingCall));
     }
+    this._context.setIncomingCall(convertSdkIncomingCallToDeclarativeIncomingCall(incomingCall));
   };
 
   protected addCall = (call: CallCommon): DeclarativeCallCommon => {

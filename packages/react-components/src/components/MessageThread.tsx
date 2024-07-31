@@ -235,9 +235,9 @@ export interface MessageThreadStrings {
   attachmentCardGroupMessage: string;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   /**
-   * Error message indicating that all attachment uploads are not complete.
+   * Error message indicating that one or more image uploads are not complete.
    */
-  attachmentUploadsPendingError: string;
+  imageUploadsPendingError: string;
 }
 
 /**
@@ -573,20 +573,21 @@ export type MessageThreadProps = {
 export interface RichTextEditBoxOptions extends RichTextEditorOptions {
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   /**
-   * Optional callback to upload an inline image in the rich text editor.
+   * Optional callback to handle an inline image that's inserted in the rich text editor.
+   * When not provided, pasting images into rich text editor will be disabled.
    */
-  onUploadInlineImage?: (imageUrl: string, imageFileName: string, messageId: string) => void;
+  onInsertInlineImage?: (imageUrl: string, imageFileName: string, messageId: string) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   /**
-   * Optional callback to remove the attachment upload or delete the image before sending.
+   * Optional callback to remove the image upload or delete the image from server before sending.
    */
   onCancelInlineImageUpload?: (imageId: string, messageId: string) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   /**
    * Optional Record of type {@link AttachmentMetadataInProgress}
-   * to render inline images being uploaded in the MessageThread's edit box.
+   * to render inline images being inserted in the MessageThread's edit boxes.
    */
-  messagesImageUploadsInProgress?: Record<string, AttachmentMetadataInProgress[]>;
+  messagesInlineImages?: Record<string, AttachmentMetadataInProgress[]>;
 }
 
 /**
@@ -1198,11 +1199,11 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
                   /* @conditional-compile-remove(rich-text-editor-image-upload) */
                   onPaste={richTextEditorOptions?.onPaste}
                   /* @conditional-compile-remove(rich-text-editor-image-upload) */
-                  onUploadInlineImage={richTextEditorOptions?.onUploadInlineImage}
+                  onInsertInlineImage={richTextEditorOptions?.onInsertInlineImage}
                   /* @conditional-compile-remove(rich-text-editor-image-upload) */
-                  imageUploadsInProgress={
-                    richTextEditorOptions?.messagesImageUploadsInProgress &&
-                    richTextEditorOptions?.messagesImageUploadsInProgress[message.message.messageId]
+                  inlineImages={
+                    richTextEditorOptions?.messagesInlineImages &&
+                    richTextEditorOptions?.messagesInlineImages[message.message.messageId]
                   }
                   /* @conditional-compile-remove(rich-text-editor-image-upload) */
                   onCancelInlineImageUpload={richTextEditorOptions?.onCancelInlineImageUpload}
