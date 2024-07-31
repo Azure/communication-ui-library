@@ -37,7 +37,6 @@ export interface RichTextInputBoxComponentProps {
   initialContent?: string;
   onChange: (
     newValue?: string,
-    /* @conditional-compile-remove(rich-text-editor-image-upload) */ addedInlineImages?: Record<string, string>[],
     /* @conditional-compile-remove(rich-text-editor-image-upload) */ removedInlineImages?: Record<string, string>[]
   ) => void;
   onEnterKeyDown?: () => void;

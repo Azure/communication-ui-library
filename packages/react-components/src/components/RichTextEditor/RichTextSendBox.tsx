@@ -13,7 +13,7 @@ import { InputBoxButton } from '../InputBoxButton';
 import { RichTextSendBoxErrors, RichTextSendBoxErrorsProps } from './RichTextSendBoxErrors';
 import { isMessageTooLong, isSendBoxButtonAriaDisabled, sanitizeText } from '../utils/SendBoxUtils';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
-import { modifyInlineImagesInContentString } from '../utils/SendBoxUtils';
+import { modifyInlineImagesInContentString, hasInlineImageContent } from '../utils/SendBoxUtils';
 import { RichTextEditorComponentRef } from './RichTextEditor';
 import { useTheme } from '../../theming';
 import { richTextActionButtonsStyle, sendBoxRichTextEditorStyle } from '../styles/RichTextEditor.styles';
@@ -310,8 +310,6 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
   const [attachmentUploadsPendingError, setAttachmentUploadsPendingError] = useState<SendBoxErrorBarError | undefined>(
     undefined
   );
-  /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  const [addedInlineImages, setAddedInlineImages] = useState<Record<string, string>[]>([]);
   const editorComponentRef = useRef<RichTextEditorComponentRef>(null);
 
   /* @conditional-compile-remove(file-sharing-acs) */
@@ -334,12 +332,8 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
   const onChangeHandler = useCallback(
     (
       newValue?: string,
-      /* @conditional-compile-remove(rich-text-editor-image-upload) */ addedInlineImages?: Record<string, string>[],
       /* @conditional-compile-remove(rich-text-editor-image-upload) */ removedInlineImages?: Record<string, string>[]
     ) => {
-      /* @conditional-compile-remove(rich-text-editor-image-upload) */
-      addedInlineImages && setAddedInlineImages(addedInlineImages);
-
       /* @conditional-compile-remove(rich-text-editor-image-upload) */
       removedInlineImages?.map(
         (removedInlineImage: Record<string, string>) => onRemoveInlineImage && onRemoveInlineImage(removedInlineImage)
@@ -392,9 +386,9 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     if (
       hasContent ||
       /* @conditional-compile-remove(file-sharing-acs) */ isAttachmentUploadCompleted(attachments) ||
-      /* @conditional-compile-remove(rich-text-editor-image-upload) */ isAttachmentUploadCompleted(
-        inlineImagesWithProgress
-      )
+      // hasContent returns false if the content only contains img tags.
+      // We want to check if the content has inline images and allow sending the message.
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */ hasInlineImageContent(contentValue)
     ) {
       const sendMessage = (content: string): void => {
         onSendMessage(
@@ -410,19 +404,12 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
         setContentValue('');
         editorComponentRef.current?.setEmptyContent();
         editorComponentRef.current?.focus();
-        /* @conditional-compile-remove(rich-text-editor-composite-support) */
-        setAddedInlineImages([]);
       };
 
       /* @conditional-compile-remove(rich-text-editor-image-upload) */
-      if (isAttachmentUploadCompleted(inlineImagesWithProgress)) {
-        modifyInlineImagesInContentString(contentValue, addedInlineImages, (content: string) => {
-          sendMessage(content);
-        });
-        return;
-      }
-
-      sendMessage(contentValue);
+      modifyInlineImagesInContentString(contentValue, [], (content: string) => {
+        sendMessage(content);
+      });
     }
   }, [
     disabled,
@@ -431,8 +418,6 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     attachments,
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
     inlineImagesWithProgress,
-    /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    addedInlineImages,
     contentValue,
     hasContent,
     /* @conditional-compile-remove(file-sharing-acs) */

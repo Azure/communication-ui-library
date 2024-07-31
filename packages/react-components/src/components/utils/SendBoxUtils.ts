@@ -39,23 +39,37 @@ export const isAttachmentUploadCompleted = (
 
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 /**
+ * Check if the content has inline image.
  * @internal
  */
-// Before sending the image, we need to add the image id we get back after uploading the images to the message content.
+export const hasInlineImageContent = (content: string): boolean => {
+  const document = new DOMParser().parseFromString(content, 'text/html');
+  return !!document.querySelector('img');
+};
+
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+/**
+ * @internal
+ *
+ * @param message - The message content to update.
+ * @param initialInlineImages - The initial inline images that comes with the message before editing.
+ *
+ * @returns The updated message content.
+ */
 export const updateStylesOfInlineImages = async (
   message: string,
-  addedInlineImages: Record<string, string>[]
+  initialInlineImages: Record<string, string>[]
 ): Promise<string> => {
   if (message === '') {
     return message;
   }
-  const addedInlineImagesIds = addedInlineImages.map((addedInlineImage) => addedInlineImage.id);
+  const initialInlineImagesIds = initialInlineImages.map((initialInlineImage) => initialInlineImage.id);
   const document = new DOMParser().parseFromString(message ?? '', 'text/html');
   const imagesPromise = Array.from(document.querySelectorAll('img')).map((img) => {
     return new Promise<void>((resolve, rejects) => {
-      // The message might content images that comes with the message before editing, those images are not in the uploadInlineImages array.
-      // This function should only modify the message content for images in the uploadInlineImages array.
-      if (!addedInlineImagesIds.includes(img.id)) {
+      // The message might content images that comes with the message before editing.
+      // This function should only modify the message content for images that are newly added.
+      if (initialInlineImagesIds.includes(img.id)) {
         resolve();
         return;
       }
@@ -158,10 +172,10 @@ export const toAttachmentMetadata = (
  */
 export const modifyInlineImagesInContentString = async (
   content: string,
-  addedInlineImages: Record<string, string>[],
+  initialInlineImages: Record<string, string>[],
   onCompleted?: (content: string) => void
 ): Promise<void> => {
-  const newContent = await updateStylesOfInlineImages(content, addedInlineImages);
+  const newContent = await updateStylesOfInlineImages(content, initialInlineImages);
   onCompleted?.(newContent);
 };
 

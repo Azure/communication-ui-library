@@ -293,7 +293,7 @@ export const updateContentStringWithUploadedInlineImages = (
   imageUploads: Record<string, AttachmentUpload[]> | undefined,
   messageId: string = SEND_BOX_UPLOADS_KEY_VALUE
 ): string => {
-  if (!imageUploads) {
+  if (!imageUploads || !imageUploads[messageId]) {
     return content;
   }
   const messageUploads = imageUploads[messageId];

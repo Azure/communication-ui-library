@@ -100,25 +100,6 @@ export const getRemovedInlineImages = (
 /**
  * @internal
  */
-export const getAddedInlineImages = (
-  content: string,
-  previousInlineImages: Record<string, string>[]
-): Record<string, string>[] => {
-  const addedInlineImages: Record<string, string>[] = [];
-  const document = new DOMParser().parseFromString(content ?? '', 'text/html');
-  Array.from(document.querySelectorAll('img')).map((img) => {
-    if (!previousInlineImages?.find((imgAttributes) => img.id === imgAttributes.id)) {
-      const imageAttributes = getInlineImageAttributes(img);
-      addedInlineImages.push(imageAttributes);
-    }
-  });
-  return addedInlineImages;
-};
-
-/* @conditional-compile-remove(rich-text-editor-image-upload) */
-/**
- * @internal
- */
 export const getInlineImageAttributes = (image: HTMLImageElement): Record<string, string> => {
   const imageAttributes: Record<string, string> = {};
   image.getAttributeNames().map((attrName) => {

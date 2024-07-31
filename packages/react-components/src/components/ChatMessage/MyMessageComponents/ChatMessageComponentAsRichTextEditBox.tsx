@@ -51,6 +51,8 @@ import { attachmentUploadCardsStyles } from '../../styles/SendBox.styles';
 import { SendBoxErrorBarError, SendBoxErrorBarType } from '../../SendBoxErrorBar';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { BROKEN_IMAGE_SVG_DATA } from '../../styles/Common.style';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+import { getPreviousInlineImages } from '../../utils/RichTextEditorUtils';
 
 /** @private */
 export type ChatMessageComponentAsRichTextEditBoxProps = {
@@ -93,9 +95,14 @@ export const ChatMessageComponentAsRichTextEditBox = (
     onRemoveInlineImage
   } = props;
 
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  const [initialInlineImages, setInitialInlineImages] = useState<Record<string, string>[]>([]);
+
   const initialContent = useMemo(() => {
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
     const content = message.content;
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    setInitialInlineImages(getPreviousInlineImages(content));
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
     const document = new DOMParser().parseFromString(content ?? '', 'text/html');
     // The broken image element is a div element with all the attributes of the original image element.
@@ -132,8 +139,6 @@ export const ChatMessageComponentAsRichTextEditBox = (
   const [attachmentUploadsPendingError, setAttachmentUploadsPendingError] = useState<SendBoxErrorBarError | undefined>(
     undefined
   );
-  /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  const [addedInlineImages, setAddedInlineImages] = useState<Record<string, string>[]>([]);
   const editTextFieldRef = React.useRef<RichTextEditorComponentRef>(null);
   const theme = useTheme();
   const messageState = useMemo(() => {
@@ -214,23 +219,19 @@ export const ChatMessageComponentAsRichTextEditBox = (
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
     content = removeBrokenImageContentAndClearImageSizeStyles(content);
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    if (addedInlineImages.length > 0) {
-      modifyInlineImagesInContentString(textValue, addedInlineImages, (content) => {
-        onSubmit(content, /* @conditional-compile-remove(file-sharing-acs) */ attachmentMetadata || []);
-      });
-      return;
-    }
-    // it's very important to pass an empty attachment here
-    // so when user removes all attachments, UI can reflect it instantly
-    // if you set it to undefined, the attachments pre-edited would still be there
-    // until edit message event is received
-    onSubmit(content, /* @conditional-compile-remove(file-sharing-acs) */ attachmentMetadata || []);
+    modifyInlineImagesInContentString(content, initialInlineImages, (content: string) => {
+      // it's very important to pass an empty attachment here
+      // so when user removes all attachments, UI can reflect it instantly
+      // if you set it to undefined, the attachments pre-edited would still be there
+      // until edit message event is received
+      onSubmit(content, /* @conditional-compile-remove(file-sharing-acs) */ attachmentMetadata || []);
+    });
   }, [
     submitEnabled,
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
     inlineImagesWithProgress,
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    addedInlineImages,
+    initialInlineImages,
     textValue,
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
     strings.imageUploadsPendingError,
@@ -312,12 +313,8 @@ export const ChatMessageComponentAsRichTextEditBox = (
     (
       content: string | undefined,
       /* @conditional-compile-remove(rich-text-editor-image-upload) */
-      addedInlineImages?: Record<string, string>[],
-      /* @conditional-compile-remove(rich-text-editor-image-upload) */
       removedInlineImages?: Record<string, string>[]
     ) => {
-      /* @conditional-compile-remove(rich-text-editor-image-upload) */
-      addedInlineImages && setAddedInlineImages(addedInlineImages);
       /* @conditional-compile-remove(rich-text-editor-image-upload) */
       removedInlineImages?.map((removedInlineImage: Record<string, string>) => {
         onRemoveInlineImage && onRemoveInlineImage(removedInlineImage, message.messageId);

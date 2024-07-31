@@ -38,7 +38,7 @@ import { ContextMenuPlugin } from './Plugins/ContextMenuPlugin';
 import { TableEditContextMenuProvider } from './Plugins/TableEditContextMenuProvider';
 import { borderApplier, dataSetApplier } from '../utils/RichTextEditorUtils';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
-import { getPreviousInlineImages, getRemovedInlineImages, getAddedInlineImages } from '../utils/RichTextEditorUtils';
+import { getPreviousInlineImages, getRemovedInlineImages } from '../utils/RichTextEditorUtils';
 import { ContextualMenu, IContextualMenuItem, IContextualMenuProps, Theme } from '@fluentui/react';
 import { PlaceholderPlugin } from './Plugins/PlaceholderPlugin';
 import { getFormatState, setDirection } from 'roosterjs-content-model-api';
@@ -63,7 +63,6 @@ export interface RichTextEditorProps {
   initialContent?: string;
   onChange: (
     newValue?: string,
-    /* @conditional-compile-remove(rich-text-editor-image-upload) */ addedInlineImages?: Record<string, string>[],
     /* @conditional-compile-remove(rich-text-editor-image-upload) */ removedInlineImages?: Record<string, string>[]
   ) => void;
   onKeyDown?: (ev: KeyboardEvent) => void;
@@ -129,6 +128,7 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
   const [contextMenuProps, setContextMenuProps] = useState<IContextualMenuProps | null>(null);
   const previousThemeDirection = useRef(themeDirection(theme));
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  // This will be set when the editor is initialized and when the content is updated.
   const [previousInlineImages, setPreviousInlineImages] = useState<Record<string, string>[]>([]);
 
   useImperativeHandle(ref, () => {
@@ -213,24 +213,15 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
       } else {
         const content = exportContent(editor.current);
         /* @conditional-compile-remove(rich-text-editor-image-upload) */
-        let addedInlineImages: Record<string, string>[] = [];
-        /* @conditional-compile-remove(rich-text-editor-image-upload) */
         let removedInlineImages: Record<string, string>[] = [];
         /* @conditional-compile-remove(rich-text-editor-image-upload) */
         if (shouldUpdateInlineImages) {
-          /* @conditional-compile-remove(rich-text-editor-image-upload) */
-          // We cannot get the added images directly from the copyPastePlugin because the onUpdate is called before we can set an internal state.
-          addedInlineImages = getAddedInlineImages(content, previousInlineImages);
           /* @conditional-compile-remove(rich-text-editor-image-upload) */
           removedInlineImages = getRemovedInlineImages(content, previousInlineImages);
         }
 
         onChange &&
-          onChange(
-            content,
-            /* @conditional-compile-remove(rich-text-editor-image-upload) */ addedInlineImages,
-            /* @conditional-compile-remove(rich-text-editor-image-upload) */ removedInlineImages
-          );
+          onChange(content, /* @conditional-compile-remove(rich-text-editor-image-upload) */ removedInlineImages);
 
         /* @conditional-compile-remove(rich-text-editor-image-upload) */
         setPreviousInlineImages(getPreviousInlineImages(content));
