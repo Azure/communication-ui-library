@@ -85,6 +85,10 @@ export interface CommonCallControlBarProps {
   onToggleTeamsMeetingConferenceModal?: () => void;
   /* @conditional-compile-remove(teams-meeting-conference) */
   teamsMeetingConferenceModalPresent?: boolean;
+  /* @conditional-compile-remove(DNS) */
+  onClickNoiseSuppression?: () => void;
+  /* @conditional-compile-remove(DNS) */
+  isDeepNoiseSuppressionOn?: boolean;
 }
 
 const inferCommonCallControlOptions = (
@@ -348,6 +352,10 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                         /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
                         disabled={props.disableButtonsForHoldScreen || isDisabled(options.microphoneButton)}
                         disableTooltip={props.mobileView}
+                        /* @conditional-compile-remove(DNS) */
+                        onClickNoiseSuppression={props.onClickNoiseSuppression}
+                        /* @conditional-compile-remove(DNS) */
+                        isDeepNoiseSuppressionOn={props.isDeepNoiseSuppressionOn}
                       />
                     )}
                     {cameraButtonIsEnabled && (

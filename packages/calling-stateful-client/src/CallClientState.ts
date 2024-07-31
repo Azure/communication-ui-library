@@ -18,6 +18,8 @@ import {
   ScalingMode,
   VideoDeviceInfo
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(DNS) */
+import { ActiveAudioEffects } from '@azure/communication-calling';
 /* @conditional-compile-remove(breakout-rooms) */
 import { BreakoutRoom, BreakoutRoomsSettings } from '@azure/communication-calling';
 import { TeamsCallInfo } from '@azure/communication-calling';
@@ -631,6 +633,11 @@ export interface CallState {
    * Hide attendee names in teams meeting
    */
   hideAttendeeNames?: boolean;
+  /* @conditional-compile-remove(DNS) */
+  /**
+   * Active audio effects in the call
+   */
+  activeAudioEffects?: ActiveAudioEffects;
   /**
    * Proxy of {@link @azure/communication-calling#SpotlightCallFeature}.
    */

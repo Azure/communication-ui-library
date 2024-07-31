@@ -132,6 +132,14 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
     }
   }
 
+  /* @conditional-compile-remove(DNS) */
+  let activeAudioEffects;
+  /* @conditional-compile-remove(DNS) */
+  const audioStream = call?.localAudioStreams.find((stream) => stream.mediaStreamType === 'Audio');
+  /* @conditional-compile-remove(DNS) */
+  if (audioStream) {
+    activeAudioEffects = audioStream.feature(Features.AudioEffects).activeEffects;
+  }
   let callInfo: TeamsCallInfo | undefined | /* @conditional-compile-remove(calling-beta-sdk) */ CallInfo;
   if ('info' in call) {
     callInfo = call.info as TeamsCallInfo | undefined | /* @conditional-compile-remove(calling-beta-sdk) */ CallInfo;
@@ -190,7 +198,9 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
     hideAttendeeNames,
     info: callInfo,
     /* @conditional-compile-remove(teams-meeting-conference) */
-    meetingConference: { conferencePhones: [] }
+    meetingConference: { conferencePhones: [] },
+    /* @conditional-compile-remove(DNS) */
+    activeAudioEffects
   };
 }
 

@@ -51,6 +51,8 @@ import { PreparedMoreDrawer } from '../../common/Drawer/PreparedMoreDrawer';
 import { getIsTeamsMeeting, getRemoteParticipants } from '../selectors/baseSelectors';
 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { getPage } from '../selectors/baseSelectors';
+/* @conditional-compile-remove(DNS) */
+import { getActiveAudioEffects } from '../selectors/baseSelectors';
 import { getCallStatus, getCaptionsStatus } from '../selectors/baseSelectors';
 import { drawerContainerStyles } from '../styles/CallComposite.styles';
 import { SidePane } from './SidePane/SidePane';
@@ -374,6 +376,24 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     }
   }, [closePeoplePane, isPeoplePaneOpen, openPeoplePane]);
 
+  /* @conditional-compile-remove(DNS) */
+  const activeAudioEffects = useSelector(getActiveAudioEffects);
+  /* @conditional-compile-remove(DNS) */
+  const isDeepNoiseSuppressionOn: boolean = activeAudioEffects?.noiseSuppression.find(
+    (effect) => effect === 'DeepNoiseSuppression'
+  )
+    ? true
+    : false;
+
+  /* @conditional-compile-remove(DNS) */
+  const onClickNoiseSuppression = useCallback(() => {
+    if (isDeepNoiseSuppressionOn) {
+      adapter.stopNoiseSuppressionEffect();
+    } else {
+      adapter.startNoiseSuppressionEffect();
+    }
+  }, [adapter, isDeepNoiseSuppressionOn]);
+
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   useEffect(() => {
     if (isInLocalHold) {
@@ -608,6 +628,10 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                   useTeamsCaptions={useTeamsCaptions}
                   isCaptionsOn={isCaptionsOn}
                   onClickVideoEffects={onResolveVideoEffectDependency ? openVideoEffectsPane : undefined}
+                  /* @conditional-compile-remove(DNS) */
+                  onClickNoiseSuppression={onClickNoiseSuppression}
+                  /* @conditional-compile-remove(DNS) */
+                  isDeepNoiseSuppressionOn={isDeepNoiseSuppressionOn}
                   displayVertical={verticalControlBar}
                   onUserSetOverflowGalleryPositionChange={props.onUserSetOverflowGalleryPositionChange}
                   onUserSetGalleryLayout={props.onUserSetGalleryLayoutChange}

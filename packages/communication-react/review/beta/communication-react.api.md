@@ -6,6 +6,7 @@
 
 /// <reference types="react" />
 
+import { ActiveAudioEffects } from '@azure/communication-calling';
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { AudioDeviceInfo } from '@azure/communication-calling';
 import { AudioEffectsStartConfig } from '@azure/communication-calling';
@@ -1100,6 +1101,7 @@ export interface CallProviderProps {
 
 // @public
 export interface CallState {
+    activeAudioEffects?: ActiveAudioEffects;
     breakoutRooms?: BreakoutRoomsState;
     callEndReason?: CallEndReason;
     callerInfo: CallerInfo;
@@ -3705,7 +3707,9 @@ export interface MicrophoneButtonContextualMenuStyles extends IContextualMenuSty
 // @public
 export interface MicrophoneButtonProps extends ControlBarButtonProps {
     enableDeviceSelectionMenu?: boolean;
+    isDeepNoiseSuppressionOn?: boolean;
     microphones?: OptionsDevice[];
+    onClickNoiseSuppression?: () => void;
     onSelectMicrophone?: (device: OptionsDevice) => Promise<void>;
     onSelectSpeaker?: (device: OptionsDevice) => Promise<void>;
     onToggleMicrophone?: () => Promise<void>;

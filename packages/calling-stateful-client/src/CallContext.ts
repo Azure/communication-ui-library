@@ -10,6 +10,8 @@ import {
   ScalingMode,
   VideoDeviceInfo
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(DNS) */
+import { AudioEffectsFeature } from '@azure/communication-calling';
 import { RaisedHand } from '@azure/communication-calling';
 /* @conditional-compile-remove(breakout-rooms) */
 import { BreakoutRoom, BreakoutRoomsSettings } from '@azure/communication-calling';
@@ -696,6 +698,16 @@ export class CallContext {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
         call.optimalVideoCount.maxRemoteVideoStreams = optimalVideoCount;
+      }
+    });
+  }
+
+  /* @conditional-compile-remove(DNS) */
+  public setActiveAudioEffects(callId: string, audioEffects: AudioEffectsFeature): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        call.activeAudioEffects = audioEffects.activeEffects;
       }
     });
   }

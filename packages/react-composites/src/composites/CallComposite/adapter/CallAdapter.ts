@@ -161,7 +161,6 @@ export type CallAdapterClientState = {
    * Dependency to be injected for video background effect.
    */
   onResolveVideoEffectDependency?: () => Promise<VideoBackgroundEffectsDependency>;
-
   /**
    * State to track the selected video background effect.
    */
