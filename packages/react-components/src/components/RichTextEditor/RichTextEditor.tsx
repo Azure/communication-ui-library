@@ -42,6 +42,7 @@ import { getPreviousInlineImages, getRemovedInlineImages } from '../utils/RichTe
 import { ContextualMenu, IContextualMenuItem, IContextualMenuProps, Theme } from '@fluentui/react';
 import { PlaceholderPlugin } from './Plugins/PlaceholderPlugin';
 import { getFormatState, setDirection } from 'roosterjs-content-model-api';
+import UndoRedoPlugin from './Plugins/UndoRedoPlugin';
 
 /**
  * Style props for {@link RichTextEditor}.
@@ -233,11 +234,15 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     updatePlugin,
     /* @conditional-compile-remove(rich-text-editor-image-upload) */ previousInlineImages
   ]);
+  const undoRedoPlugin = useMemo(() => {
+    return new UndoRedoPlugin();
+  }, []);
 
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   useEffect(() => {
     copyPastePlugin.onInsertInlineImage = onInsertInlineImage;
-  }, [copyPastePlugin, onInsertInlineImage]);
+    undoRedoPlugin.onInsertInlineImage = onInsertInlineImage;
+  }, [copyPastePlugin, onInsertInlineImage, undoRedoPlugin]);
 
   const keyboardInputPlugin = useMemo(() => {
     return new KeyboardInputPlugin();
@@ -301,7 +306,8 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
       shortcutPlugin,
       // contextPlugin and tableEditMenuProvider allow to show insert/delete menu for the table
       contextMenuPlugin,
-      tableContextMenuPlugin
+      tableContextMenuPlugin,
+      undoRedoPlugin
     ];
   }, [
     onContextMenuRender,
@@ -311,7 +317,8 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     updatePlugin,
     copyPastePlugin,
     toolbarPlugin,
-    tableContextMenuPlugin
+    tableContextMenuPlugin,
+    undoRedoPlugin
   ]);
 
   const announcerStringGetter = useCallback(

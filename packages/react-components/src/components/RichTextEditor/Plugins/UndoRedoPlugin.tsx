@@ -1,0 +1,64 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+import type { PluginEvent, EditorPlugin, IEditor, BeforeSetContentEvent } from 'roosterjs-content-model-types';
+import {
+  getInsertedInlineImages,
+  PluginEventType,
+  scrollToBottomRichTextEditor
+} from '../../utils/RichTextEditorUtils';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+import { getInlineImageAttributes } from '../../utils/RichTextEditorUtils';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+import { ChangeSource } from 'roosterjs-content-model-dom';
+
+/**
+ * UndoRedoPlugin is a plugin for additional handling undo and redo events in the editor.
+ */
+export default class UndoRedoPlugin implements EditorPlugin {
+  private editor: IEditor | null = null;
+  // don't set value in constructor to be able to update it without plugin recreation
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  onInsertInlineImage?: (imageAttributes: Record<string, string>) => void;
+
+  getName(): string {
+    return 'CustomUndoRedoPlugin';
+  }
+
+  initialize(editor: IEditor): void {
+    this.editor = editor;
+  }
+
+  dispose(): void {}
+
+  onPluginEvent(event: PluginEvent): void {
+    // handle when new images are added to the editor because of undo/redo
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    if (this.editor && event.eventType === PluginEventType.BeforeSetContent && this.onInsertInlineImage) {
+      handleBeforeSetEvent(event, this.editor, this.onInsertInlineImage);
+    }
+
+    if (
+      this.editor &&
+      !this.editor.isDisposed() &&
+      event.eventType === PluginEventType.ContentChanged &&
+      event.source === ChangeSource.SetContent
+    ) {
+      // scroll the editor to the correct position after undo/redo actions
+      scrollToBottomRichTextEditor();
+    }
+  }
+}
+
+const handleBeforeSetEvent = (
+  event: BeforeSetContentEvent,
+  editor: IEditor,
+  onInsertInlineImage: (imageAttributes: Record<string, string>) => void
+): void => {
+  const currentImagesList = editor.getDocument().querySelectorAll('img');
+  const insertedImages = getInsertedInlineImages(event.newContent, currentImagesList);
+
+  insertedImages.forEach((image) => {
+    const imageAttributes = getInlineImageAttributes(image);
+    onInsertInlineImage(imageAttributes);
+  });
+};

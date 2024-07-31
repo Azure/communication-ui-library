@@ -76,7 +76,9 @@ export class UpdateContentPlugin implements EditorPlugin {
           // we will only get a paste event.
           // In this case, we need to update the removedInlineImage array to include the replaced image.
           event.source === ChangeSource.Paste ||
-          (event.source === ChangeSource.Keyboard && (event.data === Keys.BACKSPACE || event.data === Keys.DELETE))
+          (event.source === ChangeSource.Keyboard && (event.data === Keys.BACKSPACE || event.data === Keys.DELETE)) ||
+          // Handle undo/redo changes
+          event.source === ChangeSource.SetContent
         ) {
           this.onUpdate(UpdateEvent.ContentChanged, true);
         }
