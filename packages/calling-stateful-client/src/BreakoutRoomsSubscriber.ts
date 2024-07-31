@@ -57,12 +57,7 @@ export class BreakoutRoomsSubscriber {
   private onAssignedBreakoutRoomUpdated = (breakoutRoom: BreakoutRoom): void => {
     const callState = this._context.getState().calls[this._callIdRef.callId];
     const currentAssignedBreakoutRoom = callState?.breakoutRooms?.assignedBreakoutRoom;
-    const originalCallState = callState.breakoutRooms?.breakoutRoomOriginCallId
-      ? this._context.getState().calls[callState.breakoutRooms?.breakoutRoomOriginCallId]
-      : undefined;
-    if (originalCallState?.breakoutRooms?.assignedBreakoutRoom?.call && breakoutRoom.state === 'open') {
-      this._context.setLatestNotification({ target: 'assignedBreakoutRoomChanged', timestamp: new Date(Date.now()) });
-    } else if (
+    if (
       breakoutRoom.state === 'open' &&
       (currentAssignedBreakoutRoom?.state === 'closed' || currentAssignedBreakoutRoom === undefined)
     ) {
