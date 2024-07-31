@@ -1,4 +1,5 @@
-import { Canvas, Description, Meta, Source } from '@storybook/blocks';
+import { Canvas, Description, Meta, Source, ArgTypes } from '@storybook/blocks';
+import { ControlBar } from '@azure/communication-react';
 import * as ControlBarStories from './index.stories';
 import AllButtonsControlBarExampleText from '!!raw-loader!./snippets/AllButtonsControlBar.snippet.tsx';
 import ControlBarLayoutExampleText from '!!raw-loader!./snippets/ControlBarLayout.snippet.tsx';
@@ -68,3 +69,5 @@ out the [official Fluent UI documentation](https://developer.microsoft.com/fluen
 <Canvas of={ControlBarStories.DevicesButtonExampleDocsOnly} source={{ code: DevicesButtonExampleText }} />
 
 ## Props
+
+<ArgTypes of={ControlBar} />
