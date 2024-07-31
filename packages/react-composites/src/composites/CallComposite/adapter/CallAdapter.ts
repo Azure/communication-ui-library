@@ -719,6 +719,11 @@ export interface CallAdapterCallOperations {
    * Mute All participants
    */
   muteAllRemoteParticipants(): Promise<void>;
+  /* @conditional-compile-remove(breakout-rooms) */
+  /**
+   * Return to origin call of breakout room
+   */
+  returnFromBreakoutRoom(): Promise<void>;
 }
 
 /**
