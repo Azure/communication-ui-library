@@ -375,8 +375,6 @@ export interface BreakoutRoomsState {
     breakoutRoomOriginCallId?: string;
     // (undocumented)
     breakoutRoomSettings?: BreakoutRoomsSettings;
-    // (undocumented)
-    mainMeetingCallId?: string;
 }
 
 // @beta
