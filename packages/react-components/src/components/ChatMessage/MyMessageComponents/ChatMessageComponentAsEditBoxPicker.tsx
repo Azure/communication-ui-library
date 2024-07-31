@@ -53,7 +53,7 @@ export type ChatMessageComponentAsEditBoxPickerProps = {
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   onRemoveInlineImage?: (imageAttributes: Record<string, string>, messageId: string) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  onInsertInlineImage?: (imageAttributes: Record<string, string>, messageId: string, imageFileName?: string) => void;
+  onInsertInlineImage?: (imageAttributes: Record<string, string>, messageId: string) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   inlineImagesWithProgress?: AttachmentMetadataInProgress[];
 };

@@ -5,7 +5,10 @@ import { AttachmentMetadataInProgress, RichTextSendBox as RichTextSendBoxCompone
 import { Title, Description, Props, Heading, Canvas, Source } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React, { useState } from 'react';
-import { _DEFAULT_INLINE_IMAGE_FILE_NAME } from '../../../react-composites/src/composites/common/constants';
+import {
+  _DEFAULT_INLINE_IMAGE_FILE_NAME,
+  _IMAGE_ATTRIBUTE_INLINE_IMAGE_FILE_NAME_KEY
+} from '../../../react-composites/src/composites/common/constants';
 import { DetailedBetaBanner } from '../BetaBanners/DetailedBetaBanner';
 import { SingleLineBetaBanner } from '../BetaBanners/SingleLineBetaBanner';
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
@@ -134,10 +137,10 @@ const RichTextSendBoxStory = (args): JSX.Element => {
           console.log(`sending typing notifications`);
           return Promise.resolve();
         }}
-        onInsertInlineImage={(imageAttributes: Record<string, string>, imageFileName?: string) => {
+        onInsertInlineImage={(imageAttributes: Record<string, string>) => {
           const newImage = {
             id: imageAttributes.id,
-            name: imageFileName ?? _DEFAULT_INLINE_IMAGE_FILE_NAME,
+            name: imageAttributes[_IMAGE_ATTRIBUTE_INLINE_IMAGE_FILE_NAME_KEY] ?? _DEFAULT_INLINE_IMAGE_FILE_NAME,
             progress: 1,
             url: imageAttributes.src,
             error: undefined

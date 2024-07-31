@@ -34,11 +34,11 @@ export const MessageThreadWithRichTextEditorInlineImagesExample: () => JSX.Eleme
 
   const richTextEditorOptions: RichTextEditBoxOptions = useMemo(() => {
     return {
-      onInsertInlineImage: (imageAttributes: Record<string, string>, messageId: string, imageFileName?: string) => {
+      onInsertInlineImage: (imageAttributes: Record<string, string>, messageId: string) => {
         const inlineImagesWithProgress = messagesInlineImagesWithProgress?.[messageId] ?? [];
         const newImage: AttachmentMetadataInProgress = {
           id: imageAttributes.id,
-          name: imageFileName || _DEFAULT_INLINE_IMAGE_FILE_NAME,
+          name: imageAttributes['data-image-file-name'] ?? _DEFAULT_INLINE_IMAGE_FILE_NAME,
           progress: 1,
           url: imageAttributes.src,
           error: undefined

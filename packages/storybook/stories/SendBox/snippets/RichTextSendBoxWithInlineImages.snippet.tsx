@@ -15,10 +15,10 @@ export const RichTextSendBoxWithInlineImagesExample: () => JSX.Element = () => {
             setInlineImagesWithProgress(undefined);
             return;
           }}
-          onInsertInlineImage={(imageAttributes: Record<string, string>, imageFileName?: string) => {
+          onInsertInlineImage={(imageAttributes: Record<string, string>) => {
             const newImage = {
               id: imageAttributes.id,
-              name: imageFileName ?? _DEFAULT_INLINE_IMAGE_FILE_NAME,
+              name: imageAttributes['data-image-file-name'] ?? _DEFAULT_INLINE_IMAGE_FILE_NAME,
               progress: 1,
               url: imageAttributes.src,
               error: undefined

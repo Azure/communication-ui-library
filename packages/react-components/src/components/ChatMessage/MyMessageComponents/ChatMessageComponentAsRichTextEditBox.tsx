@@ -69,7 +69,7 @@ export type ChatMessageComponentAsRichTextEditBoxProps = {
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   onRemoveInlineImage?: (imageAttributes: Record<string, string>, messageId: string) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  onInsertInlineImage?: (imageAttributes: Record<string, string>, messageId: string, imageFileName?: string) => void;
+  onInsertInlineImage?: (imageAttributes: Record<string, string>, messageId: string) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   inlineImagesWithProgress?: AttachmentMetadataInProgress[];
 };
@@ -365,8 +365,8 @@ export const ChatMessageComponentAsRichTextEditBox = (
           /* @conditional-compile-remove(rich-text-editor-image-upload) */
           onInsertInlineImage={
             onInsertInlineImage
-              ? (imageAttributes: Record<string, string>, imageFileName?: string) => {
-                  onInsertInlineImage(imageAttributes, message.messageId, imageFileName);
+              ? (imageAttributes: Record<string, string>) => {
+                  onInsertInlineImage(imageAttributes, message.messageId);
                 }
               : undefined
           }

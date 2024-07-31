@@ -77,7 +77,7 @@ export interface RichTextEditorProps {
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   onPaste?: (event: { content: DocumentFragment }) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  onInsertInlineImage?: (imageAttributes: Record<string, string>, imageFileName?: string) => void;
+  onInsertInlineImage?: (imageAttributes: Record<string, string>) => void;
 }
 
 /**
@@ -239,8 +239,8 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     if (!onInsertInlineImage) {
       return;
     }
-    copyPastePlugin.onInsertInlineImage = (imageAttributes: Record<string, string>, imageFileName?: string) => {
-      onInsertInlineImage && onInsertInlineImage(imageAttributes, imageFileName);
+    copyPastePlugin.onInsertInlineImage = (imageAttributes: Record<string, string>) => {
+      onInsertInlineImage && onInsertInlineImage(imageAttributes);
     };
   }, [copyPastePlugin, onInsertInlineImage]);
 

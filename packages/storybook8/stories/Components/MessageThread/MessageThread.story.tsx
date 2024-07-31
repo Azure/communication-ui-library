@@ -26,7 +26,10 @@ import { Divider } from '@fluentui/react-components';
 
 import React, { useMemo, useRef, useState } from 'react';
 
-import { _DEFAULT_INLINE_IMAGE_FILE_NAME } from '../../../../react-composites/src/composites/common/constants';
+import {
+  _DEFAULT_INLINE_IMAGE_FILE_NAME,
+  _IMAGE_ATTRIBUTE_INLINE_IMAGE_FILE_NAME_KEY
+} from '../../../../react-composites/src/composites/common/constants';
 import {
   GenerateMockNewChatMessage,
   UserOne,
@@ -193,11 +196,11 @@ const MessageThreadStory = (args): JSX.Element => {
 
   const richTextEditorOptions: RichTextEditBoxOptions = useMemo(() => {
     return {
-      onInsertInlineImage: (imageAttributes: Record<string, string>, messageId: string, imageFileName?: string) => {
+      onInsertInlineImage: (imageAttributes: Record<string, string>, messageId: string) => {
         const inlineImagesWithProgress = messagesInlineImagesWithProgress?.[messageId] ?? [];
         const newImage: AttachmentMetadataInProgress = {
           id: imageAttributes.id,
-          name: imageFileName || _DEFAULT_INLINE_IMAGE_FILE_NAME,
+          name: imageAttributes[_IMAGE_ATTRIBUTE_INLINE_IMAGE_FILE_NAME_KEY] ?? _DEFAULT_INLINE_IMAGE_FILE_NAME,
           progress: 1,
           url: imageAttributes.src,
           error: undefined

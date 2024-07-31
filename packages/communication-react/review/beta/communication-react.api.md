@@ -4232,7 +4232,7 @@ export type ResourceFetchResult = {
 // @beta
 export interface RichTextEditBoxOptions extends RichTextEditorOptions {
     messagesInlineImagesWithProgress?: Record<string, AttachmentMetadataInProgress[]>;
-    onInsertInlineImage?: (imageAttributes: Record<string, string>, messageId: string, imageFileName?: string) => void;
+    onInsertInlineImage?: (imageAttributes: Record<string, string>, messageId: string) => void;
     onRemoveInlineImage?: (imageAttributes: Record<string, string>, messageId: string) => void;
 }
 
@@ -4249,7 +4249,7 @@ export const RichTextSendBox: (props: RichTextSendBoxProps) => JSX.Element;
 // @beta
 export interface RichTextSendBoxOptions extends RichTextEditorOptions {
     inlineImagesWithProgress?: AttachmentMetadataInProgress[];
-    onInsertInlineImage?: (imageAttributes: Record<string, string>, imageFileName?: string) => void;
+    onInsertInlineImage?: (imageAttributes: Record<string, string>) => void;
     onRemoveInlineImage?: (imageAttributes: Record<string, string>) => void;
 }
 
@@ -4260,7 +4260,7 @@ export interface RichTextSendBoxProps {
     disabled?: boolean;
     inlineImagesWithProgress?: AttachmentMetadataInProgress[];
     onCancelAttachmentUpload?: (attachmentId: string) => void;
-    onInsertInlineImage?: (imageAttributes: Record<string, string>, imageFileName?: string) => void;
+    onInsertInlineImage?: (imageAttributes: Record<string, string>) => void;
     onPaste?: (event: {
         content: DocumentFragment;
     }) => void;

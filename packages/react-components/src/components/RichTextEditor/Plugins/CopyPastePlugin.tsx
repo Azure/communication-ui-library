@@ -20,7 +20,7 @@ export default class CopyPastePlugin implements EditorPlugin {
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   onPaste?: (event: { content: DocumentFragment }) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  onInsertInlineImage?: (imageAttributes: Record<string, string>, imageFileName?: string) => void;
+  onInsertInlineImage?: (imageAttributes: Record<string, string>) => void;
 
   getName(): string {
     return 'CopyPastePlugin';
@@ -94,8 +94,10 @@ export const handleInlineImage = (
 
       image.src = imageUrl;
       image.alt = image.alt || 'image';
+      // Assign a unique id to the image element so Contosos can identify the image element.
+      // We also use it internally such as in getRemovedInlineImages to compare images in the content with previous images
       image.id = generateGUID();
-      image.dataset.name = fileName;
+      image.dataset.imageFileName = fileName;
 
       const imageAttributes = getInlineImageAttributes(image);
 
