@@ -19,6 +19,8 @@ export default class UndoRedoPlugin implements EditorPlugin {
   // don't set value in constructor to be able to update it without plugin recreation
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   onInsertInlineImage?: (imageAttributes: Record<string, string>) => void;
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  onUpdateContent?: (() => void) | null = null;
 
   getName(): string {
     return 'CustomUndoRedoPlugin';
@@ -37,6 +39,17 @@ export default class UndoRedoPlugin implements EditorPlugin {
       handleBeforeSetEvent(event, this.editor, this.onInsertInlineImage);
     }
 
+    // handle deleted images and updated content
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    if (
+      this.onUpdateContent &&
+      event.eventType === PluginEventType.ContentChanged &&
+      event.source === ChangeSource.SetContent
+    ) {
+      this.onUpdateContent();
+    }
+
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
     if (
       this.editor &&
       !this.editor.isDisposed() &&

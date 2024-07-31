@@ -200,6 +200,29 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     return new CopyPastePlugin();
   }, []);
 
+  const onChangeContent = useCallback(
+    (/* @conditional-compile-remove(rich-text-editor-image-upload) */ shouldUpdateInlineImages?: boolean) => {
+      if (editor.current === null) {
+        return;
+      }
+      const content = exportContent(editor.current);
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */
+      let removedInlineImages: Record<string, string>[] = [];
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */
+      if (shouldUpdateInlineImages) {
+        /* @conditional-compile-remove(rich-text-editor-image-upload) */
+        removedInlineImages = getRemovedInlineImages(content, previousInlineImages);
+      }
+
+      onChange &&
+        onChange(content, /* @conditional-compile-remove(rich-text-editor-image-upload) */ removedInlineImages);
+
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */
+      setPreviousInlineImages(getPreviousInlineImages(content));
+    },
+    [onChange, previousInlineImages]
+  );
+
   useEffect(() => {
     // don't set callback in plugin constructor to update callback without plugin recreation
     updatePlugin.onUpdate = (
@@ -212,28 +235,16 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
       if (event === UpdateEvent.Blur || event === UpdateEvent.Dispose) {
         onContentModelUpdate && onContentModelUpdate(editor.current.getContentModelCopy('disconnected'));
       } else {
-        const content = exportContent(editor.current);
-        /* @conditional-compile-remove(rich-text-editor-image-upload) */
-        let removedInlineImages: Record<string, string>[] = [];
-        /* @conditional-compile-remove(rich-text-editor-image-upload) */
-        if (shouldUpdateInlineImages) {
-          /* @conditional-compile-remove(rich-text-editor-image-upload) */
-          removedInlineImages = getRemovedInlineImages(content, previousInlineImages);
-        }
-
-        onChange &&
-          onChange(content, /* @conditional-compile-remove(rich-text-editor-image-upload) */ removedInlineImages);
-
-        /* @conditional-compile-remove(rich-text-editor-image-upload) */
-        setPreviousInlineImages(getPreviousInlineImages(content));
+        onChangeContent(/* @conditional-compile-remove(rich-text-editor-image-upload) */ shouldUpdateInlineImages);
       }
     };
   }, [
-    onChange,
     onContentModelUpdate,
     updatePlugin,
-    /* @conditional-compile-remove(rich-text-editor-image-upload) */ previousInlineImages
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */ previousInlineImages,
+    onChangeContent
   ]);
+
   const undoRedoPlugin = useMemo(() => {
     return new UndoRedoPlugin();
   }, []);
@@ -243,6 +254,12 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     copyPastePlugin.onInsertInlineImage = onInsertInlineImage;
     undoRedoPlugin.onInsertInlineImage = onInsertInlineImage;
   }, [copyPastePlugin, onInsertInlineImage, undoRedoPlugin]);
+
+  useEffect(() => {
+    undoRedoPlugin.onUpdateContent = () => {
+      onChangeContent(/* @conditional-compile-remove(rich-text-editor-image-upload) */ true);
+    };
+  }, [onChangeContent, undoRedoPlugin]);
 
   const keyboardInputPlugin = useMemo(() => {
     return new KeyboardInputPlugin();
