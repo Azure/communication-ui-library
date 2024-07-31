@@ -531,11 +531,11 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   );
 
   const onUpdateMessageHandler = useCallback(
-    async (
+    async function (
       messageId: string,
       content: string,
       /* @conditional-compile-remove(file-sharing-acs) */ options?: MessageOptions
-    ) => {
+    ) {
       await messageThreadProps.onUpdateMessage(
         messageId,
         content,
