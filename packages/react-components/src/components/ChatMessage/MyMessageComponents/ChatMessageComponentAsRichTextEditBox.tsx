@@ -226,6 +226,8 @@ export const ChatMessageComponentAsRichTextEditBox = (
       // until edit message event is received
       onSubmit(content, /* @conditional-compile-remove(file-sharing-acs) */ attachmentMetadata || []);
     });
+    // TODO: remove this block when rich-text-editor-image-upload is stabilized.
+    onSubmit(content, /* @conditional-compile-remove(file-sharing-acs) */ attachmentMetadata || []);
   }, [
     submitEnabled,
     /* @conditional-compile-remove(rich-text-editor-image-upload) */

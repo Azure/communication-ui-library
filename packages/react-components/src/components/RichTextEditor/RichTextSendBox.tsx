@@ -326,8 +326,9 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     // as the content may contain tags even when the content is empty
     const plainTextContent = editorComponentRef.current?.getPlainContent();
     const hasPlainText = sanitizeText(contentValue ?? '').length > 0 && sanitizeText(plainTextContent ?? '').length > 0;
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
     const hasInlineImages = hasInlineImageContent(contentValue);
-    return hasPlainText || hasInlineImages;
+    return hasPlainText || /* @conditional-compile-remove(rich-text-editor-image-upload) */ hasInlineImages;
   }, [contentValue]);
 
   const sendMessageOnClick = useCallback((): void => {
@@ -384,6 +385,8 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
       modifyInlineImagesInContentString(contentValue, [], (content: string) => {
         sendMessage(content);
       });
+      // TODO: remove this block when rich-text-editor-image-upload is stabilized.
+      sendMessage(contentValue);
     }
   }, [
     disabled,

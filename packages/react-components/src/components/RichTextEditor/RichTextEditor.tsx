@@ -236,9 +236,6 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
 
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   useEffect(() => {
-    if (!onInsertInlineImage) {
-      return;
-    }
     copyPastePlugin.onInsertInlineImage = onInsertInlineImage;
   }, [copyPastePlugin, onInsertInlineImage]);
 
