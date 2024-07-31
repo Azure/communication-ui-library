@@ -359,6 +359,8 @@ export interface BreakoutRoomsState {
     // (undocumented)
     assignedBreakoutRoom?: BreakoutRoom;
     // (undocumented)
+    breakoutRoomOriginCallId?: string;
+    // (undocumented)
     breakoutRoomSettings?: BreakoutRoomsSettings;
 }
 
@@ -455,6 +457,7 @@ export interface CallAdapterCallOperations {
     removeParticipant(participant: CommunicationIdentifier): Promise<void>;
     // @beta
     resumeCall(): Promise<void>;
+    returnFromBreakoutRoom(): Promise<void>;
     sendDtmfTone(dtmfTone: DtmfTone_2): Promise<void>;
     setCaptionLanguage(language: string): Promise<void>;
     setSpokenLanguage(language: string): Promise<void>;
@@ -1198,6 +1201,7 @@ export interface CallWithChatAdapterManagement {
     removeResourceFromCache(resourceDetails: ResourceDetails): void;
     // @beta
     resumeCall: () => Promise<void>;
+    returnFromBreakoutRoom(): Promise<void>;
     sendDtmfTone: (dtmfTone: DtmfTone_2) => Promise<void>;
     sendMessage(content: string, options?: SendMessageOptions | /* @conditional-compile-remove(file-sharing-acs) */ MessageOptions): Promise<void>;
     sendReadReceipt(chatMessageId: string): Promise<void>;

@@ -56,7 +56,7 @@ import { Features } from '@azure/communication-calling';
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { DtmfTone } from '@azure/communication-calling';
 /* @conditional-compile-remove(breakout-rooms) */
-import type { BreakoutRoomsEventData, BreakoutRoomsUpdatedListener } from '@azure/communication-calling';
+import type { BreakoutRoom, BreakoutRoomsEventData, BreakoutRoomsUpdatedListener } from '@azure/communication-calling';
 import { EventEmitter } from 'events';
 import {
   CommonCallAdapter,
@@ -1075,6 +1075,26 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     this.handlers.onStopAllSpotlight();
   }
 
+  /* @conditional-compile-remove(breakout-rooms) */
+  public async returnFromBreakoutRoom(): Promise<void> {
+    if (this.call === undefined) {
+      return;
+    }
+    // Find call state of current call from stateful layer
+    const callState = this.call
+      ? Object.values(this.callClient.getState().calls).find((call) => call.id === this.call?.id)
+      : undefined;
+    // Find main meeting call from call agent from the this call state
+    const mainMeetingCall = this.callAgent?.calls.find((callAgentCall) => {
+      return callAgentCall.id === callState?.breakoutRooms?.breakoutRoomOriginCallId;
+    });
+    // If a main meeting call exists then process that call and resume
+    if (mainMeetingCall) {
+      this.processNewCall(mainMeetingCall);
+      await this.resumeCall();
+    }
+  }
+
   public getState(): CallAdapterState {
     return this.context.getState();
   }
@@ -1335,8 +1355,29 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
 
   /* @conditional-compile-remove(breakout-rooms) */
   private breakoutRoomsUpdated(eventData: BreakoutRoomsEventData): void {
+    if (eventData.data) {
+      if (eventData.type === 'assignedBreakoutRooms') {
+        this.assignedBreakoutRoomUpdated(eventData.data);
+      } else if (eventData.type === 'join') {
+        this.breakoutRoomJoined(eventData.data);
+      }
+    }
+
     this.emitter.emit('breakoutRoomsUpdated', eventData);
   }
+
+  /* @conditional-compile-remove(breakout-rooms) */
+  private assignedBreakoutRoomUpdated(breakoutRoom: BreakoutRoom): void {
+    if (breakoutRoom.state === 'closed') {
+      this.returnFromBreakoutRoom();
+    }
+  }
+
+  /* @conditional-compile-remove(breakout-rooms) */
+  private breakoutRoomJoined(call: Call | TeamsCall): void {
+    this.processNewCall(call);
+  }
+
   private callIdChanged(): void {
     this.call?.id && this.emitter.emit('callIdChanged', { callId: this.call.id });
   }

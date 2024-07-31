@@ -199,6 +199,7 @@ export interface SpotlightState {
 export interface BreakoutRoomsState {
   assignedBreakoutRoom?: BreakoutRoom;
   breakoutRoomSettings?: BreakoutRoomsSettings;
+  breakoutRoomOriginCallId?: string;
 }
 
 /**
