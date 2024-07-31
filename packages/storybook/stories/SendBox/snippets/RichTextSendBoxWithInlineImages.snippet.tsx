@@ -1,5 +1,6 @@
 import { RichTextSendBox, FluentThemeProvider, AttachmentMetadataInProgress } from '@azure/communication-react';
 import React, { useState } from 'react';
+import { _DEFAULT_INLINE_IMAGE_FILE_NAME } from '../../../../react-composites/src/composites/common/constants';
 
 export const RichTextSendBoxWithInlineImagesExample: () => JSX.Element = () => {
   const [inlineImagesWithProgress, setInlineImagesWithProgress] = useState<
@@ -14,13 +15,12 @@ export const RichTextSendBoxWithInlineImagesExample: () => JSX.Element = () => {
             setInlineImagesWithProgress(undefined);
             return;
           }}
-          onInsertInlineImage={(image: string, imageFileName?: string) => {
-            const id = inlineImagesWithProgress?.length ? (inlineImagesWithProgress.length + 1).toString() : '1';
+          onInsertInlineImage={(imageAttributes: Record<string, string>, imageFileName?: string) => {
             const newImage = {
-              id,
-              name: imageFileName ?? 'image.png',
+              id: imageAttributes.id,
+              name: imageFileName ?? _DEFAULT_INLINE_IMAGE_FILE_NAME,
               progress: 1,
-              url: image,
+              url: imageAttributes.src,
               error: undefined
             };
             setInlineImagesWithProgress([...(inlineImagesWithProgress ?? []), newImage]);

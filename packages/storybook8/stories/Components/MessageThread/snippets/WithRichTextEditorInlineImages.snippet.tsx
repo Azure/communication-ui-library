@@ -5,6 +5,7 @@ import {
   RichTextEditBoxOptions
 } from '@azure/communication-react';
 import React, { useCallback, useMemo, useState } from 'react';
+import { _DEFAULT_INLINE_IMAGE_FILE_NAME } from '../../../../../react-composites/src/composites/common/constants';
 import { GetHistoryHTMLChatMessages } from './placeholdermessages';
 
 export const MessageThreadWithRichTextEditorInlineImagesExample: () => JSX.Element = () => {
@@ -33,14 +34,13 @@ export const MessageThreadWithRichTextEditorInlineImagesExample: () => JSX.Eleme
 
   const richTextEditorOptions: RichTextEditBoxOptions = useMemo(() => {
     return {
-      onInsertInlineImage: (image: string, messageId: string, imageFileName?: string) => {
+      onInsertInlineImage: (imageAttributes: Record<string, string>, messageId: string, imageFileName?: string) => {
         const inlineImagesWithProgress = messagesInlineImagesWithProgress?.[messageId] ?? [];
-        const id = Math.floor(Math.random() * 1000000).toString();
         const newImage: AttachmentMetadataInProgress = {
-          id,
-          name: imageFileName || 'image.png',
+          id: imageAttributes.id,
+          name: imageFileName || _DEFAULT_INLINE_IMAGE_FILE_NAME,
           progress: 1,
-          url: image,
+          url: imageAttributes.src,
           error: undefined
         };
         setMessagesInlineImagesWithProgress({

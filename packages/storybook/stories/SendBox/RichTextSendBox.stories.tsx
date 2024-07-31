@@ -5,7 +5,7 @@ import { AttachmentMetadataInProgress, RichTextSendBox as RichTextSendBoxCompone
 import { Title, Description, Props, Heading, Canvas, Source } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React, { useState } from 'react';
-import { v1 as generateGUID } from 'uuid';
+import { _DEFAULT_INLINE_IMAGE_FILE_NAME } from '../../../react-composites/src/composites/common/constants';
 import { DetailedBetaBanner } from '../BetaBanners/DetailedBetaBanner';
 import { SingleLineBetaBanner } from '../BetaBanners/SingleLineBetaBanner';
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
@@ -134,14 +134,12 @@ const RichTextSendBoxStory = (args): JSX.Element => {
           console.log(`sending typing notifications`);
           return Promise.resolve();
         }}
-        onInsertInlineImage={(image: string, imageFileName?: string) => {
-          const id = generateGUID();
-
+        onInsertInlineImage={(imageAttributes: Record<string, string>, imageFileName?: string) => {
           const newImage = {
-            id,
-            name: imageFileName ?? 'image.png',
+            id: imageAttributes.id,
+            name: imageFileName ?? _DEFAULT_INLINE_IMAGE_FILE_NAME,
             progress: 1,
-            url: image,
+            url: imageAttributes.src,
             error: undefined
           };
           setInlineImagesWithProgress([...(inlineImagesWithProgress ?? []), newImage]);

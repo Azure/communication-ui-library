@@ -80,7 +80,7 @@ import type { ChatAdapterState } from './adapter/ChatAdapter';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { isMicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
-import { SEND_BOX_UPLOADS_KEY_VALUE } from '../common/constants';
+import { SEND_BOX_UPLOADS_KEY_VALUE, _DEFAULT_INLINE_IMAGE_FILE_NAME } from '../common/constants';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { ImageUploadReducer } from './ImageUpload/ImageUploadReducer';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
@@ -597,7 +597,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
           onInsertInlineImage: (imageAttributes: Record<string, string>, messageId: string, imageFileName?: string) => {
             onInsertInlineImageForEditBox(
               imageAttributes,
-              imageFileName || 'image.png',
+              imageFileName || _DEFAULT_INLINE_IMAGE_FILE_NAME,
               messageId,
               adapter,
               handleEditBoxInlineImageUploadAction,
@@ -636,7 +636,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
           onInsertInlineImage: (imageAttributes: Record<string, string>, imageFileName?: string) => {
             onInsertInlineImageForSendBox(
               imageAttributes,
-              imageFileName || 'image.png',
+              imageFileName || _DEFAULT_INLINE_IMAGE_FILE_NAME,
               adapter,
               handleSendBoxInlineImageUploadAction,
               localeStrings.chat
