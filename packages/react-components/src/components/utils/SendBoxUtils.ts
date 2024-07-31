@@ -166,7 +166,6 @@ export const toAttachmentMetadata = (
     });
 };
 
-/* @conditional-compile-remove(rich-text-editor-image-upload) */
 /**
  * @internal
  */
@@ -175,7 +174,9 @@ export const modifyInlineImagesInContentString = async (
   initialInlineImages: Record<string, string>[],
   onCompleted?: (content: string) => void
 ): Promise<void> => {
-  const newContent = await updateStylesOfInlineImages(content, initialInlineImages);
+  let newContent = content;
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  newContent = await updateStylesOfInlineImages(content, initialInlineImages);
   onCompleted?.(newContent);
 };
 

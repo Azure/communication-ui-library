@@ -381,12 +381,9 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
         editorComponentRef.current?.focus();
       };
 
-      /* @conditional-compile-remove(rich-text-editor-image-upload) */
       modifyInlineImagesInContentString(contentValue, [], (content: string) => {
         sendMessage(content);
       });
-      // TODO: remove this block when rich-text-editor-image-upload is stabilized.
-      sendMessage(contentValue);
     }
   }, [
     disabled,

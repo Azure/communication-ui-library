@@ -218,7 +218,6 @@ export const ChatMessageComponentAsRichTextEditBox = (
     let content = textValue;
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
     content = removeBrokenImageContentAndClearImageSizeStyles(content);
-    /* @conditional-compile-remove(rich-text-editor-image-upload) */
     modifyInlineImagesInContentString(content, initialInlineImages, (content: string) => {
       // it's very important to pass an empty attachment here
       // so when user removes all attachments, UI can reflect it instantly
@@ -226,8 +225,6 @@ export const ChatMessageComponentAsRichTextEditBox = (
       // until edit message event is received
       onSubmit(content, /* @conditional-compile-remove(file-sharing-acs) */ attachmentMetadata || []);
     });
-    // TODO: remove this block when rich-text-editor-image-upload is stabilized.
-    onSubmit(content, /* @conditional-compile-remove(file-sharing-acs) */ attachmentMetadata || []);
   }, [
     submitEnabled,
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
