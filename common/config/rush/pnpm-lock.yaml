@@ -3649,7 +3649,7 @@ packages:
       '@fluentui/react-tabster': 9.22.3(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
       '@fluentui/react-theme': 9.1.19
       '@fluentui/react-utilities': 9.18.13(@types/react@18.3.3)(react@18.3.1)
-      '@griffel/react': 1.5.24(react@18.3.1)
+      '@griffel/react': 1.5.25(react@18.3.1)
       '@swc/helpers': 0.5.6
       '@types/react': 18.3.3
       '@types/react-dom': 18.3.0
@@ -3674,7 +3674,7 @@ packages:
       '@fluentui/react-tabster': 9.22.3(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
       '@fluentui/react-theme': 9.1.19
       '@fluentui/react-utilities': 9.18.13(@types/react@18.3.3)(react@18.3.1)
-      '@griffel/react': 1.5.24(react@18.3.1)
+      '@griffel/react': 1.5.25(react@18.3.1)
       '@swc/helpers': 0.5.6
       '@types/react': 18.3.3
       '@types/react-dom': 18.3.0
@@ -3722,7 +3722,7 @@ packages:
       '@fluentui/react-theme': 9.1.19
       '@fluentui/react-tooltip': 9.4.35(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
       '@fluentui/react-utilities': 9.18.13(@types/react@18.3.3)(react@18.3.1)
-      '@griffel/react': 1.5.24(react@18.3.1)
+      '@griffel/react': 1.5.25(react@18.3.1)
       '@swc/helpers': 0.5.6
       '@types/react': 18.3.3
       '@types/react-dom': 18.3.0
@@ -3745,7 +3745,7 @@ packages:
       '@fluentui/react-shared-contexts': 9.20.0(@types/react@18.3.3)(react@18.3.1)
       '@fluentui/react-theme': 9.1.19
       '@fluentui/react-utilities': 9.18.13(@types/react@18.3.3)(react@18.3.1)
-      '@griffel/react': 1.5.24(react@18.3.1)
+      '@griffel/react': 1.5.25(react@18.3.1)
       '@swc/helpers': 0.5.6
       '@types/react': 18.3.3
       '@types/react-dom': 18.3.0
@@ -3770,7 +3770,7 @@ packages:
       '@fluentui/react-tabster': 9.22.3(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
       '@fluentui/react-theme': 9.1.19
       '@fluentui/react-utilities': 9.18.13(@types/react@18.3.3)(react@18.3.1)
-      '@griffel/react': 1.5.24(react@18.3.1)
+      '@griffel/react': 1.5.25(react@18.3.1)
       '@swc/helpers': 0.5.6
       '@types/react': 18.3.3
       '@types/react-dom': 18.3.0
@@ -3794,7 +3794,7 @@ packages:
       '@fluentui/react-tabster': 9.22.3(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
       '@fluentui/react-theme': 9.1.19
       '@fluentui/react-utilities': 9.18.13(@types/react@18.3.3)(react@18.3.1)
-      '@griffel/react': 1.5.24(react@18.3.1)
+      '@griffel/react': 1.5.25(react@18.3.1)
       '@swc/helpers': 0.5.6
       '@types/react': 18.3.3
       '@types/react-dom': 18.3.0
@@ -3816,7 +3816,7 @@ packages:
       '@fluentui/react-text': 9.4.23(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
       '@fluentui/react-theme': 9.1.19
       '@fluentui/react-utilities': 9.18.13(@types/react@18.3.3)(react@18.3.1)
-      '@griffel/react': 1.5.24(react@18.3.1)
+      '@griffel/react': 1.5.25(react@18.3.1)
       '@swc/helpers': 0.5.6
       '@types/react': 18.3.3
       '@types/react-dom': 18.3.0
@@ -3840,7 +3840,7 @@ packages:
       '@fluentui/react-tabster': 9.22.3(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
       '@fluentui/react-theme': 9.1.19
       '@fluentui/react-utilities': 9.18.13(@types/react@18.3.3)(react@18.3.1)
-      '@griffel/react': 1.5.24(react@18.3.1)
+      '@griffel/react': 1.5.25(react@18.3.1)
       '@swc/helpers': 0.5.6
       '@types/react': 18.3.3
       '@types/react-dom': 18.3.0
@@ -3870,7 +3870,7 @@ packages:
       '@fluentui/react-tabster': 9.22.3(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
       '@fluentui/react-theme': 9.1.19
       '@fluentui/react-utilities': 9.18.13(@types/react@18.3.3)(react@18.3.1)
-      '@griffel/react': 1.5.24(react@18.3.1)
+      '@griffel/react': 1.5.25(react@18.3.1)
       '@swc/helpers': 0.5.6
       '@types/react': 18.3.3
       '@types/react-dom': 18.3.0
@@ -3944,7 +3944,7 @@ packages:
       '@fluentui/react-tree': 9.7.6(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)(scheduler@0.23.0)
       '@fluentui/react-utilities': 9.18.13(@types/react@18.3.3)(react@18.3.1)
       '@fluentui/react-virtualizer': 9.0.0-alpha.82(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
-      '@griffel/react': 1.5.24(react@18.3.1)
+      '@griffel/react': 1.5.25(react@18.3.1)
       '@swc/helpers': 0.5.6
       '@types/react': 18.3.3
       '@types/react-dom': 18.3.0
@@ -3991,7 +3991,7 @@ packages:
       '@fluentui/react-tabster': 9.22.3(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
       '@fluentui/react-theme': 9.1.19
       '@fluentui/react-utilities': 9.18.13(@types/react@18.3.3)(react@18.3.1)
-      '@griffel/react': 1.5.24(react@18.3.1)
+      '@griffel/react': 1.5.25(react@18.3.1)
       '@swc/helpers': 0.5.6
       '@types/react': 18.3.3
       '@types/react-dom': 18.3.0
@@ -4013,7 +4013,7 @@ packages:
       '@fluentui/react-shared-contexts': 9.20.0(@types/react@18.3.3)(react@18.3.1)
       '@fluentui/react-theme': 9.1.19
       '@fluentui/react-utilities': 9.18.13(@types/react@18.3.3)(react@18.3.1)
-      '@griffel/react': 1.5.24(react@18.3.1)
+      '@griffel/react': 1.5.25(react@18.3.1)
       '@swc/helpers': 0.5.6
       '@types/react': 18.3.3
       '@types/react-dom': 18.3.0
@@ -4036,7 +4036,7 @@ packages:
       '@fluentui/react-tabster': 9.22.3(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
       '@fluentui/react-theme': 9.1.19
       '@fluentui/react-utilities': 9.18.13(@types/react@18.3.3)(react@18.3.1)
-      '@griffel/react': 1.5.24(react@18.3.1)
+      '@griffel/react': 1.5.25(react@18.3.1)
       '@swc/helpers': 0.5.6
       '@types/react': 18.3.3
       '@types/react-dom': 18.3.0
@@ -4060,7 +4060,7 @@ packages:
       '@fluentui/react-label': 9.1.74(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
       '@fluentui/react-theme': 9.1.19
       '@fluentui/react-utilities': 9.18.13(@types/react@18.3.3)(react@18.3.1)
-      '@griffel/react': 1.5.24(react@18.3.1)
+      '@griffel/react': 1.5.25(react@18.3.1)
       '@swc/helpers': 0.5.6
       '@types/react': 18.3.3
       '@types/react-dom': 18.3.0
@@ -4165,7 +4165,7 @@ packages:
       '@fluentui/react-shared-contexts': 9.20.0(@types/react@18.3.3)(react@18.3.1)
       '@fluentui/react-theme': 9.1.19
       '@fluentui/react-utilities': 9.18.13(@types/react@18.3.3)(react@18.3.1)
-      '@griffel/react': 1.5.24(react@18.3.1)
+      '@griffel/react': 1.5.25(react@18.3.1)
       '@swc/helpers': 0.5.6
       '@types/react': 18.3.3
       '@types/react-dom': 18.3.0
@@ -4188,7 +4188,7 @@ packages:
       '@fluentui/react-tabster': 9.22.3(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
       '@fluentui/react-theme': 9.1.19
       '@fluentui/react-utilities': 9.18.13(@types/react@18.3.3)(react@18.3.1)
-      '@griffel/react': 1.5.24(react@18.3.1)
+      '@griffel/react': 1.5.25(react@18.3.1)
       '@swc/helpers': 0.5.6
       '@types/react': 18.3.3
       '@types/react-dom': 18.3.0
@@ -4213,7 +4213,7 @@ packages:
       '@fluentui/react-tabster': 9.22.3(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
       '@fluentui/react-theme': 9.1.19
       '@fluentui/react-utilities': 9.18.13(@types/react@18.3.3)(react@18.3.1)
-      '@griffel/react': 1.5.24(react@18.3.1)
+      '@griffel/react': 1.5.25(react@18.3.1)
       '@swc/helpers': 0.5.6
       '@types/react': 18.3.3
       '@types/react-dom': 18.3.0
@@ -4236,7 +4236,7 @@ packages:
       '@fluentui/react-shared-contexts': 9.20.0(@types/react@18.3.3)(react@18.3.1)
       '@fluentui/react-theme': 9.1.19
       '@fluentui/react-utilities': 9.18.13(@types/react@18.3.3)(react@18.3.1)
-      '@griffel/react': 1.5.24(react@18.3.1)
+      '@griffel/react': 1.5.25(react@18.3.1)
       '@swc/helpers': 0.5.6
       '@types/react': 18.3.3
       '@types/react-dom': 18.3.0
@@ -4284,7 +4284,7 @@ packages:
       '@fluentui/react-shared-contexts': 9.20.0(@types/react@18.3.3)(react@18.3.1)
       '@fluentui/react-theme': 9.1.19
       '@fluentui/react-utilities': 9.18.13(@types/react@18.3.3)(react@18.3.1)
-      '@griffel/react': 1.5.24(react@18.3.1)
+      '@griffel/react': 1.5.25(react@18.3.1)
       '@swc/helpers': 0.5.6
       '@types/react': 18.3.3
       '@types/react-dom': 18.3.0
@@ -4306,7 +4306,7 @@ packages:
       '@fluentui/react-tabster': 9.22.3(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
       '@fluentui/react-theme': 9.1.19
       '@fluentui/react-utilities': 9.18.13(@types/react@18.3.3)(react@18.3.1)
-      '@griffel/react': 1.5.24(react@18.3.1)
+      '@griffel/react': 1.5.25(react@18.3.1)
       '@swc/helpers': 0.5.6
       '@types/react': 18.3.3
       '@types/react-dom': 18.3.0
@@ -4333,7 +4333,7 @@ packages:
       '@fluentui/react-tabster': 9.22.3(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
       '@fluentui/react-theme': 9.1.19
       '@fluentui/react-utilities': 9.18.13(@types/react@18.3.3)(react@18.3.1)
-      '@griffel/react': 1.5.24(react@18.3.1)
+      '@griffel/react': 1.5.25(react@18.3.1)
       '@swc/helpers': 0.5.6
       '@types/react': 18.3.3
       '@types/react-dom': 18.3.0
@@ -4357,7 +4357,7 @@ packages:
       '@fluentui/react-shared-contexts': 9.20.0(@types/react@18.3.3)(react@18.3.1)
       '@fluentui/react-theme': 9.1.19
       '@fluentui/react-utilities': 9.18.13(@types/react@18.3.3)(react@18.3.1)
-      '@griffel/react': 1.5.24(react@18.3.1)
+      '@griffel/react': 1.5.25(react@18.3.1)
       '@swc/helpers': 0.5.6
       '@types/react': 18.3.3
       '@types/react-dom': 18.3.0
@@ -4412,7 +4412,7 @@ packages:
       '@fluentui/react-context-selector': 9.1.65(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)(scheduler@0.23.0)
       '@fluentui/react-theme': 9.1.19
       '@fluentui/react-utilities': 9.18.13(@types/react@18.3.3)(react@18.3.1)
-      '@griffel/react': 1.5.24(react@18.3.1)
+      '@griffel/react': 1.5.25(react@18.3.1)
       '@swc/helpers': 0.5.6
       '@types/react': 18.3.3
       '@types/react-dom': 18.3.0
@@ -4436,7 +4436,7 @@ packages:
       '@fluentui/react-shared-contexts': 9.20.0(@types/react@18.3.3)(react@18.3.1)
       '@fluentui/react-theme': 9.1.19
       '@fluentui/react-utilities': 9.18.13(@types/react@18.3.3)(react@18.3.1)
-      '@griffel/react': 1.5.24(react@18.3.1)
+      '@griffel/react': 1.5.25(react@18.3.1)
       '@swc/helpers': 0.5.6
       '@types/react': 18.3.3
       '@types/react-dom': 18.3.0
@@ -4464,7 +4464,7 @@ packages:
       '@fluentui/react-tabster': 9.22.3(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
       '@fluentui/react-theme': 9.1.19
       '@fluentui/react-utilities': 9.18.13(@types/react@18.3.3)(react@18.3.1)
-      '@griffel/react': 1.5.24(react@18.3.1)
+      '@griffel/react': 1.5.25(react@18.3.1)
       '@swc/helpers': 0.5.6
       '@types/react': 18.3.3
       '@types/react-dom': 18.3.0
@@ -4507,7 +4507,7 @@ packages:
       '@fluentui/react-shared-contexts': 9.20.0(@types/react@18.3.3)(react@18.3.1)
       '@fluentui/react-tabster': 9.22.3(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
       '@fluentui/react-utilities': 9.18.13(@types/react@18.3.3)(react@18.3.1)
-      '@griffel/react': 1.5.24(react@18.3.1)
+      '@griffel/react': 1.5.25(react@18.3.1)
       '@swc/helpers': 0.5.6
       '@types/react': 18.3.3
       '@types/react-dom': 18.3.0
@@ -4529,7 +4529,7 @@ packages:
       '@fluentui/react-shared-contexts': 9.20.0(@types/react@18.3.3)(react@18.3.1)
       '@fluentui/react-theme': 9.1.19
       '@fluentui/react-utilities': 9.18.13(@types/react@18.3.3)(react@18.3.1)
-      '@griffel/react': 1.5.24(react@18.3.1)
+      '@griffel/react': 1.5.25(react@18.3.1)
       '@swc/helpers': 0.5.6
       '@types/react': 18.3.3
       '@types/react-dom': 18.3.0
@@ -4550,7 +4550,7 @@ packages:
       '@fluentui/react-shared-contexts': 9.20.0(@types/react@18.3.3)(react@18.3.1)
       '@fluentui/react-theme': 9.1.19
       '@fluentui/react-utilities': 9.18.13(@types/react@18.3.3)(react@18.3.1)
-      '@griffel/react': 1.5.24(react@18.3.1)
+      '@griffel/react': 1.5.25(react@18.3.1)
       '@swc/helpers': 0.5.6
       '@types/react': 18.3.3
       '@types/react-dom': 18.3.0
@@ -4575,7 +4575,7 @@ packages:
       '@fluentui/react-theme': 9.1.19
       '@fluentui/react-utilities': 9.18.13(@types/react@18.3.3)(react@18.3.1)
       '@griffel/core': 1.17.1
-      '@griffel/react': 1.5.24(react@18.3.1)
+      '@griffel/react': 1.5.25(react@18.3.1)
       '@swc/helpers': 0.5.6
       '@types/react': 18.3.3
       '@types/react-dom': 18.3.0
@@ -4598,7 +4598,7 @@ packages:
       '@fluentui/react-tabster': 9.22.3(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
       '@fluentui/react-theme': 9.1.19
       '@fluentui/react-utilities': 9.18.13(@types/react@18.3.3)(react@18.3.1)
-      '@griffel/react': 1.5.24(react@18.3.1)
+      '@griffel/react': 1.5.25(react@18.3.1)
       '@swc/helpers': 0.5.6
       '@types/react': 18.3.3
       '@types/react-dom': 18.3.0
@@ -4621,7 +4621,7 @@ packages:
       '@fluentui/react-tabster': 9.22.3(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
       '@fluentui/react-theme': 9.1.19
       '@fluentui/react-utilities': 9.18.13(@types/react@18.3.3)(react@18.3.1)
-      '@griffel/react': 1.5.24(react@18.3.1)
+      '@griffel/react': 1.5.25(react@18.3.1)
       '@swc/helpers': 0.5.6
       '@types/react': 18.3.3
       '@types/react-dom': 18.3.0
@@ -4642,7 +4642,7 @@ packages:
       '@fluentui/react-jsx-runtime': 9.0.42(@types/react@18.3.3)(react@18.3.1)
       '@fluentui/react-theme': 9.1.19
       '@fluentui/react-utilities': 9.18.13(@types/react@18.3.3)(react@18.3.1)
-      '@griffel/react': 1.5.24(react@18.3.1)
+      '@griffel/react': 1.5.25(react@18.3.1)
       '@swc/helpers': 0.5.6
       '@types/react': 18.3.3
       '@types/react-dom': 18.3.0
@@ -4666,7 +4666,7 @@ packages:
       '@fluentui/react-shared-contexts': 9.20.0(@types/react@18.3.3)(react@18.3.1)
       '@fluentui/react-theme': 9.1.19
       '@fluentui/react-utilities': 9.18.13(@types/react@18.3.3)(react@18.3.1)
-      '@griffel/react': 1.5.24(react@18.3.1)
+      '@griffel/react': 1.5.25(react@18.3.1)
       '@swc/helpers': 0.5.6
       '@types/react': 18.3.3
       '@types/react-dom': 18.3.0
@@ -4713,7 +4713,7 @@ packages:
       '@fluentui/react-shared-contexts': 9.20.0(@types/react@18.3.3)(react@18.3.1)
       '@fluentui/react-theme': 9.1.19
       '@fluentui/react-utilities': 9.18.13(@types/react@18.3.3)(react@18.3.1)
-      '@griffel/react': 1.5.24(react@18.3.1)
+      '@griffel/react': 1.5.25(react@18.3.1)
       '@swc/helpers': 0.5.6
       '@types/react': 18.3.3
       '@types/react-dom': 18.3.0
@@ -4737,7 +4737,7 @@ packages:
       '@fluentui/react-tabster': 9.22.3(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
       '@fluentui/react-theme': 9.1.19
       '@fluentui/react-utilities': 9.18.13(@types/react@18.3.3)(react@18.3.1)
-      '@griffel/react': 1.5.24(react@18.3.1)
+      '@griffel/react': 1.5.25(react@18.3.1)
       '@swc/helpers': 0.5.6
       '@types/react': 18.3.3
       '@types/react-dom': 18.3.0
@@ -4762,7 +4762,7 @@ packages:
       '@fluentui/react-shared-contexts': 9.20.0(@types/react@18.3.3)(react@18.3.1)
       '@fluentui/react-theme': 9.1.19
       '@fluentui/react-utilities': 9.18.13(@types/react@18.3.3)(react@18.3.1)
-      '@griffel/react': 1.5.24(react@18.3.1)
+      '@griffel/react': 1.5.25(react@18.3.1)
       '@swc/helpers': 0.5.6
       '@types/react': 18.3.3
       '@types/react-dom': 18.3.0
@@ -4785,7 +4785,7 @@ packages:
       '@fluentui/react-shared-contexts': 9.20.0(@types/react@18.3.3)(react@18.3.1)
       '@fluentui/react-theme': 9.1.19
       '@fluentui/react-utilities': 9.18.13(@types/react@18.3.3)(react@18.3.1)
-      '@griffel/react': 1.5.24(react@18.3.1)
+      '@griffel/react': 1.5.25(react@18.3.1)
       '@swc/helpers': 0.5.6
       '@types/react': 18.3.3
       '@types/react-dom': 18.3.0
@@ -4808,7 +4808,7 @@ packages:
       '@fluentui/react-tabster': 9.22.3(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
       '@fluentui/react-theme': 9.1.19
       '@fluentui/react-utilities': 9.18.13(@types/react@18.3.3)(react@18.3.1)
-      '@griffel/react': 1.5.24(react@18.3.1)
+      '@griffel/react': 1.5.25(react@18.3.1)
       '@swc/helpers': 0.5.6
       '@types/react': 18.3.3
       '@types/react-dom': 18.3.0
@@ -4834,7 +4834,7 @@ packages:
       '@fluentui/react-tabster': 9.22.3(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
       '@fluentui/react-theme': 9.1.19
       '@fluentui/react-utilities': 9.18.13(@types/react@18.3.3)(react@18.3.1)
-      '@griffel/react': 1.5.24(react@18.3.1)
+      '@griffel/react': 1.5.25(react@18.3.1)
       '@swc/helpers': 0.5.6
       '@types/react': 18.3.3
       '@types/react-dom': 18.3.0
@@ -4864,7 +4864,7 @@ packages:
       '@fluentui/react-tabster': 9.22.3(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
       '@fluentui/react-theme': 9.1.19
       '@fluentui/react-utilities': 9.18.13(@types/react@18.3.3)(react@18.3.1)
-      '@griffel/react': 1.5.24(react@18.3.1)
+      '@griffel/react': 1.5.25(react@18.3.1)
       '@swc/helpers': 0.5.6
       '@types/react': 18.3.3
       '@types/react-dom': 18.3.0
@@ -4888,7 +4888,7 @@ packages:
       '@fluentui/react-tabster': 9.22.3(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
       '@fluentui/react-theme': 9.1.19
       '@fluentui/react-utilities': 9.18.13(@types/react@18.3.3)(react@18.3.1)
-      '@griffel/react': 1.5.24(react@18.3.1)
+      '@griffel/react': 1.5.25(react@18.3.1)
       '@swc/helpers': 0.5.6
       '@types/react': 18.3.3
       '@types/react-dom': 18.3.0
@@ -4909,7 +4909,7 @@ packages:
       '@fluentui/react-shared-contexts': 9.20.0(@types/react@18.3.3)(react@18.3.1)
       '@fluentui/react-theme': 9.1.19
       '@fluentui/react-utilities': 9.18.13(@types/react@18.3.3)(react@18.3.1)
-      '@griffel/react': 1.5.24(react@18.3.1)
+      '@griffel/react': 1.5.25(react@18.3.1)
       '@swc/helpers': 0.5.6
       '@types/react': 18.3.3
       '@types/react-dom': 18.3.0
@@ -4941,7 +4941,7 @@ packages:
       '@fluentui/react-tags': 9.3.13(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)(scheduler@0.23.0)
       '@fluentui/react-theme': 9.1.19
       '@fluentui/react-utilities': 9.18.13(@types/react@18.3.3)(react@18.3.1)
-      '@griffel/react': 1.5.24(react@18.3.1)
+      '@griffel/react': 1.5.25(react@18.3.1)
       '@swc/helpers': 0.5.6
       '@types/react': 18.3.3
       '@types/react-dom': 18.3.0
@@ -4968,7 +4968,7 @@ packages:
       '@fluentui/react-tabster': 9.22.3(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
       '@fluentui/react-theme': 9.1.19
       '@fluentui/react-utilities': 9.18.13(@types/react@18.3.3)(react@18.3.1)
-      '@griffel/react': 1.5.24(react@18.3.1)
+      '@griffel/react': 1.5.25(react@18.3.1)
       '@swc/helpers': 0.5.6
       '@types/react': 18.3.3
       '@types/react-dom': 18.3.0
@@ -4996,7 +4996,7 @@ packages:
       '@fluentui/react-tabster': 9.22.3(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
       '@fluentui/react-theme': 9.1.19
       '@fluentui/react-utilities': 9.18.13(@types/react@18.3.3)(react@18.3.1)
-      '@griffel/react': 1.5.24(react@18.3.1)
+      '@griffel/react': 1.5.25(react@18.3.1)
       '@swc/helpers': 0.5.6
       '@types/react': 18.3.3
       '@types/react-dom': 18.3.0
@@ -5019,7 +5019,7 @@ packages:
       '@fluentui/react-shared-contexts': 9.20.0(@types/react@18.3.3)(react@18.3.1)
       '@fluentui/react-theme': 9.1.19
       '@fluentui/react-utilities': 9.18.13(@types/react@18.3.3)(react@18.3.1)
-      '@griffel/react': 1.5.24(react@18.3.1)
+      '@griffel/react': 1.5.25(react@18.3.1)
       '@swc/helpers': 0.5.6
       '@types/react': 18.3.3
       '@types/react-dom': 18.3.0
@@ -5040,7 +5040,7 @@ packages:
       '@fluentui/react-shared-contexts': 9.20.0(@types/react@18.3.3)(react@18.3.1)
       '@fluentui/react-theme': 9.1.19
       '@fluentui/react-utilities': 9.18.13(@types/react@18.3.3)(react@18.3.1)
-      '@griffel/react': 1.5.24(react@18.3.1)
+      '@griffel/react': 1.5.25(react@18.3.1)
       '@swc/helpers': 0.5.6
       '@types/react': 18.3.3
       '@types/react-dom': 18.3.0
@@ -5075,7 +5075,7 @@ packages:
       '@fluentui/react-tabster': 9.22.3(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
       '@fluentui/react-theme': 9.1.19
       '@fluentui/react-utilities': 9.18.13(@types/react@18.3.3)(react@18.3.1)
-      '@griffel/react': 1.5.24(react@18.3.1)
+      '@griffel/react': 1.5.25(react@18.3.1)
       '@swc/helpers': 0.5.6
       '@types/react': 18.3.3
       '@types/react-dom': 18.3.0
@@ -5100,7 +5100,7 @@ packages:
       '@fluentui/react-tabster': 9.22.3(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
       '@fluentui/react-theme': 9.1.19
       '@fluentui/react-utilities': 9.18.13(@types/react@18.3.3)(react@18.3.1)
-      '@griffel/react': 1.5.24(react@18.3.1)
+      '@griffel/react': 1.5.25(react@18.3.1)
       '@swc/helpers': 0.5.6
       '@types/react': 18.3.3
       '@types/react-dom': 18.3.0
@@ -5126,7 +5126,7 @@ packages:
       '@fluentui/react-tabster': 9.22.3(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
       '@fluentui/react-theme': 9.1.19
       '@fluentui/react-utilities': 9.18.13(@types/react@18.3.3)(react@18.3.1)
-      '@griffel/react': 1.5.24(react@18.3.1)
+      '@griffel/react': 1.5.25(react@18.3.1)
       '@swc/helpers': 0.5.6
       '@types/react': 18.3.3
       '@types/react-dom': 18.3.0
@@ -5155,7 +5155,7 @@ packages:
       '@fluentui/react-tabster': 9.22.3(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
       '@fluentui/react-theme': 9.1.19
       '@fluentui/react-utilities': 9.18.13(@types/react@18.3.3)(react@18.3.1)
-      '@griffel/react': 1.5.24(react@18.3.1)
+      '@griffel/react': 1.5.25(react@18.3.1)
       '@swc/helpers': 0.5.6
       '@types/react': 18.3.3
       '@types/react-dom': 18.3.0
@@ -5202,7 +5202,7 @@ packages:
       '@fluentui/react-jsx-runtime': 9.0.42(@types/react@18.3.3)(react@18.3.1)
       '@fluentui/react-shared-contexts': 9.20.0(@types/react@18.3.3)(react@18.3.1)
       '@fluentui/react-utilities': 9.18.13(@types/react@18.3.3)(react@18.3.1)
-      '@griffel/react': 1.5.24(react@18.3.1)
+      '@griffel/react': 1.5.25(react@18.3.1)
       '@swc/helpers': 0.5.6
       '@types/react': 18.3.3
       '@types/react-dom': 18.3.0
@@ -5433,12 +5433,33 @@ packages:
       tslib: 2.6.2
     dev: false
 
+  /@griffel/core@1.18.0:
+    resolution: {integrity: sha512-3Dkn6f7ULeSzJ1wLyLfN1vc+v3q5shuEejeMe4XymBozQo0l35WIfH8FWcwB+Xrgip4fLLOy1p3sYN85gFGZxw==}
+    dependencies:
+      '@emotion/hash': 0.9.1
+      '@griffel/style-types': 1.2.0
+      csstype: 3.1.3
+      rtl-css-js: 1.16.1
+      stylis: 4.3.1
+      tslib: 2.6.2
+    dev: false
+
   /@griffel/react@1.5.24(react@18.3.1):
     resolution: {integrity: sha512-WDxWyg182kL/aFCViybARAm/ZFVZoJDiW52pguveZx6cJvvc51esZ2qYJhsbMoy8cqOfnfOrWhOibdb89kgXAQ==}
     peerDependencies:
       react: '>=16.8.0 <19.0.0'
     dependencies:
       '@griffel/core': 1.17.1
+      react: 18.3.1
+      tslib: 2.6.2
+    dev: false
+
+  /@griffel/react@1.5.25(react@18.3.1):
+    resolution: {integrity: sha512-ZGiCdn71VIX56fd3AxM7ouCxgClPvunOFIpXxFKebGJ94/rdj4sIbahuI1QBUFuU4/bqUyD6QonjDEpFBl9ORw==}
+    peerDependencies:
+      react: '>=16.8.0 <19.0.0'
+    dependencies:
+      '@griffel/core': 1.18.0
       react: 18.3.1
       tslib: 2.6.2
     dev: false
@@ -5876,15 +5897,15 @@ packages:
       - '@types/node'
     dev: false
 
-  /@microsoft/api-documenter@7.25.8(@types/node@20.14.12):
-    resolution: {integrity: sha512-/HcMK5g4Q9oGoe8sTC23gnFBpTCJv7aj6POeLmlnK9GzdPjDgT+0WkXU51SIoZY2863LByW0pKJ09IekVMNUdw==}
+  /@microsoft/api-documenter@7.25.9(@types/node@20.14.12):
+    resolution: {integrity: sha512-iQCicwgGcK3r+tEQSkY8SqMVgKEq1ILchgZvoDsH7kDcwqRQSDZEJq6l636t5p43jNa/RN+MlmKtDU/9VKBX9g==}
     hasBin: true
     dependencies:
-      '@microsoft/api-extractor-model': 7.29.3(@types/node@20.14.12)
+      '@microsoft/api-extractor-model': 7.29.4(@types/node@20.14.12)
       '@microsoft/tsdoc': 0.15.0
-      '@rushstack/node-core-library': 5.5.0(@types/node@20.14.12)
-      '@rushstack/terminal': 0.13.2(@types/node@20.14.12)
-      '@rushstack/ts-command-line': 4.22.2(@types/node@20.14.12)
+      '@rushstack/node-core-library': 5.5.1(@types/node@20.14.12)
+      '@rushstack/terminal': 0.13.3(@types/node@20.14.12)
+      '@rushstack/ts-command-line': 4.22.3(@types/node@20.14.12)
       js-yaml: 3.13.1
       resolve: 1.22.8
     transitivePeerDependencies:
@@ -5901,12 +5922,12 @@ packages:
       - '@types/node'
     dev: false
 
-  /@microsoft/api-extractor-model@7.29.3(@types/node@20.14.12):
-    resolution: {integrity: sha512-kEWjLr2ygL3ku9EGyjeTnL2S5IxyH9NaF1k1UoI0Nzwr4xEJBSWCVsWuF2+0lPUrRPA6mTY95fR264SJ5ETKQA==}
+  /@microsoft/api-extractor-model@7.29.4(@types/node@20.14.12):
+    resolution: {integrity: sha512-LHOMxmT8/tU1IiiiHOdHFF83Qsi+V8d0kLfscG4EvQE9cafiR8blOYr8SfkQKWB1wgEilQgXJX3MIA4vetDLZw==}
     dependencies:
       '@microsoft/tsdoc': 0.15.0
       '@microsoft/tsdoc-config': 0.17.0
-      '@rushstack/node-core-library': 5.5.0(@types/node@20.14.12)
+      '@rushstack/node-core-library': 5.5.1(@types/node@20.14.12)
     transitivePeerDependencies:
       - '@types/node'
     dev: false
@@ -5932,17 +5953,17 @@ packages:
       - '@types/node'
     dev: false
 
-  /@microsoft/api-extractor@7.47.3(@types/node@20.14.12):
-    resolution: {integrity: sha512-WKPcmg0vcBnuAX0vArXMbCtCwyN0xuyH1zoRBhuU//X0gP35KA7QInRSeuN0nFV/AKI5NGXapr8dS2lwlCDmgQ==}
+  /@microsoft/api-extractor@7.47.4(@types/node@20.14.12):
+    resolution: {integrity: sha512-HKm+P4VNzWwvq1Ey+Jfhhj/3MjsD+ka2hbt8L5AcRM95lu1MFOYnz3XlU7Gr79Q/ZhOb7W/imAKeYrOI0bFydg==}
     hasBin: true
     dependencies:
-      '@microsoft/api-extractor-model': 7.29.3(@types/node@20.14.12)
+      '@microsoft/api-extractor-model': 7.29.4(@types/node@20.14.12)
       '@microsoft/tsdoc': 0.15.0
       '@microsoft/tsdoc-config': 0.17.0
-      '@rushstack/node-core-library': 5.5.0(@types/node@20.14.12)
-      '@rushstack/rig-package': 0.5.2
-      '@rushstack/terminal': 0.13.2(@types/node@20.14.12)
-      '@rushstack/ts-command-line': 4.22.2(@types/node@20.14.12)
+      '@rushstack/node-core-library': 5.5.1(@types/node@20.14.12)
+      '@rushstack/rig-package': 0.5.3
+      '@rushstack/terminal': 0.13.3(@types/node@20.14.12)
+      '@rushstack/ts-command-line': 4.22.3(@types/node@20.14.12)
       lodash: 4.17.21
       minimatch: 3.0.8
       resolve: 1.22.8
@@ -6561,8 +6582,8 @@ packages:
       z-schema: 5.0.5
     dev: false
 
-  /@rushstack/node-core-library@5.5.0(@types/node@20.14.12):
-    resolution: {integrity: sha512-Cl3MYQ74Je5Y/EngMxcA3SpHjGZ/022nKbAO1aycGfQ+7eKyNCBu0oywj5B1f367GCzuHBgy+3BlVLKysHkXZw==}
+  /@rushstack/node-core-library@5.5.1(@types/node@20.14.12):
+    resolution: {integrity: sha512-ZutW56qIzH8xIOlfyaLQJFx+8IBqdbVCZdnj+XT1MorQ1JqqxHse8vbCpEM+2MjsrqcbxcgDIbfggB1ZSQ2A3g==}
     peerDependencies:
       '@types/node': '*'
     peerDependenciesMeta:
@@ -6587,6 +6608,13 @@ packages:
       strip-json-comments: 3.1.1
     dev: false
 
+  /@rushstack/rig-package@0.5.3:
+    resolution: {integrity: sha512-olzSSjYrvCNxUFZowevC3uz8gvKr3WTpHQ7BkpjtRpA3wK+T0ybep/SRUMfr195gBzJm5gaXw0ZMgjIyHqJUow==}
+    dependencies:
+      resolve: 1.22.8
+      strip-json-comments: 3.1.1
+    dev: false
+
   /@rushstack/terminal@0.10.0(@types/node@20.11.25):
     resolution: {integrity: sha512-UbELbXnUdc7EKwfH2sb8ChqNgapUOdqcCIdQP4NGxBpTZV2sQyeekuK3zmfQSa/MN+/7b4kBogl2wq0vpkpYGw==}
     peerDependencies:
@@ -6600,15 +6628,15 @@ packages:
       supports-color: 8.1.1
     dev: false
 
-  /@rushstack/terminal@0.13.2(@types/node@20.14.12):
-    resolution: {integrity: sha512-t8i0PsGvBHmFBY8pryO3badqFlxQsm2rw3KYrzjcmVkG/WGklKg1qVkr9beAS1Oe8XWDRgj6SkoHkpNjs7aaNw==}
+  /@rushstack/terminal@0.13.3(@types/node@20.14.12):
+    resolution: {integrity: sha512-fc3zjXOw8E0pXS5t9vTiIPx9gHA0fIdTXsu9mT4WbH+P3mYvnrX0iAQ5a6NvyK1+CqYWBTw/wVNx7SDJkI+WYQ==}
     peerDependencies:
       '@types/node': '*'
     peerDependenciesMeta:
       '@types/node':
         optional: true
     dependencies:
-      '@rushstack/node-core-library': 5.5.0(@types/node@20.14.12)
+      '@rushstack/node-core-library': 5.5.1(@types/node@20.14.12)
       '@types/node': 20.14.12
       supports-color: 8.1.1
     dev: false
@@ -6624,10 +6652,10 @@ packages:
       - '@types/node'
     dev: false
 
-  /@rushstack/ts-command-line@4.22.2(@types/node@20.14.12):
-    resolution: {integrity: sha512-xkvrGd6D9dPlI3I401Thc640WNsEPB1sGEmy12a2VJaPQPwhE6Ik0gEVPZJ/2G1w213eaCAdxUY1xpiTulsmpA==}
+  /@rushstack/ts-command-line@4.22.3(@types/node@20.14.12):
+    resolution: {integrity: sha512-edMpWB3QhFFZ4KtSzS8WNjBgR4PXPPOVrOHMbb7kNpmQ1UFS9HdVtjCXg1H5fG+xYAbeE+TMPcVPUyX2p84STA==}
     dependencies:
-      '@rushstack/terminal': 0.13.2(@types/node@20.14.12)
+      '@rushstack/terminal': 0.13.3(@types/node@20.14.12)
       '@types/argparse': 1.0.38
       argparse: 1.0.10
       string-argv: 0.3.2
@@ -7737,7 +7765,7 @@ packages:
       globby: 14.0.2
       jscodeshift: 0.15.2(@babel/preset-env@7.25.3)
       lodash: 4.17.21
-      prettier: 3.3.2
+      prettier: 3.3.3
       recast: 0.23.6
       tiny-invariant: 1.3.3
     transitivePeerDependencies:
@@ -14115,7 +14143,7 @@ packages:
       - supports-color
     dev: false
 
-  /eslint-plugin-prettier@5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.2):
+  /eslint-plugin-prettier@5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.3):
     resolution: {integrity: sha512-C9GCVAs4Eq7ZC/XFQHITLiHJxQngdtraXaM+LoUFoFp/lHNl2Zn8f3WQbe9HvTBBQ9YnKFB0/2Ajdqwo5D1EAw==}
     engines: {node: ^14.18.0 || >=16.0.0}
     peerDependencies:
@@ -14131,7 +14159,7 @@ packages:
     dependencies:
       eslint: 8.57.0
       eslint-config-prettier: 9.1.0(eslint@8.57.0)
-      prettier: 3.3.2
+      prettier: 3.3.3
       prettier-linter-helpers: 1.0.0
       synckit: 0.8.8
     dev: false
@@ -20477,8 +20505,8 @@ packages:
     hasBin: true
     dev: false
 
-  /prettier@3.3.2:
-    resolution: {integrity: sha512-rAVeHYMcv8ATV5d508CFdn+8/pHPpXeIid1DdrPwXnaAdH7cqjVbpJaT5eq4yRAFU/lsbwYwSF/n5iNrdJHPQA==}
+  /prettier@3.3.3:
+    resolution: {integrity: sha512-i2tDNA0O5IrMO757lfrdQZCc2jPNDVntV0m/+4whiDfWaTKfMNgR7Qz0NAeGz/nRqF4m5/6CLzbP4/liHt12Ew==}
     engines: {node: '>=14'}
     hasBin: true
     dev: false
@@ -20534,7 +20562,7 @@ packages:
     engines: {node: '>= 0.8'}
     dev: false
 
-  /pretty-quick@4.0.0(prettier@3.3.2):
+  /pretty-quick@4.0.0(prettier@3.3.3):
     resolution: {integrity: sha512-M+2MmeufXb/M7Xw3Afh1gxcYpj+sK0AxEfnfF958ktFeAyi5MsKY5brymVURQLgPLV1QaF5P4pb2oFJ54H3yzQ==}
     engines: {node: '>=14'}
     hasBin: true
@@ -20547,7 +20575,7 @@ packages:
       mri: 1.2.0
       picocolors: 1.0.0
       picomatch: 3.0.1
-      prettier: 3.3.2
+      prettier: 3.3.3
       tslib: 2.6.2
     dev: false
 
@@ -22580,7 +22608,7 @@ packages:
       jscodeshift: 0.15.2(@babel/preset-env@7.23.9)
       leven: 3.1.0
       ora: 5.4.1
-      prettier: 3.3.2
+      prettier: 3.3.3
       prompts: 2.4.2
       semver: 7.6.0
       strip-json-comments: 3.1.1
@@ -24226,8 +24254,8 @@ packages:
       qs: 6.12.0
     dev: false
 
-  /use-debounce@10.0.1(react@18.3.1):
-    resolution: {integrity: sha512-0uUXjOfm44e6z4LZ/woZvkM8FwV1wiuoB6xnrrOmeAEjRDDzTLQNRFtYHvqUsJdrz1X37j0rVGIVp144GLHGKg==}
+  /use-debounce@10.0.2(react@18.3.1):
+    resolution: {integrity: sha512-MwBiJK2dk+2qhMDVDCPRPeLuIekKfH2t1UYMnrW9pwcJJGFDbTLliSMBz2UKGmE1PJs8l3XoMqbIU1MemMAJ8g==}
     engines: {node: '>= 16.0.0'}
     peerDependencies:
       react: '>=16.8.0'
@@ -25322,7 +25350,7 @@ packages:
     dev: false
 
   file:projects/acs-ui-common.tgz:
-    resolution: {integrity: sha512-G2jgEERYdlNvEX5GKQ09+Wko1IbtO4x/tZG8DevC1ZYd/edlh3nt65u6Fxwpgg1/HzVrZtnUGf5BT8MQFO6eNA==, tarball: file:projects/acs-ui-common.tgz}
+    resolution: {integrity: sha512-iI29poVKsx6jK6HAdeyGKgMog4EoevrE/sexBPYKvFlyRgNZMOQiNsWCPwuwfCvILslFbbEErfB41/att8ul+w==, tarball: file:projects/acs-ui-common.tgz}
     name: '@rush-temp/acs-ui-common'
     version: 0.0.0
     dependencies:
@@ -25345,10 +25373,10 @@ packages:
       eslint-plugin-header: 3.1.1(eslint@8.57.0)
       eslint-plugin-import: 2.29.1(eslint@8.57.0)
       eslint-plugin-jsdoc: 36.1.1(eslint@8.57.0)
-      eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.2)
+      eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.3)
       if-env: 1.0.4
       jest: 29.7.0(@types/node@20.14.12)(ts-node@10.9.2)
-      prettier: 3.3.2
+      prettier: 3.3.3
       react: 18.3.1
       rimraf: 2.7.1
       rollup: 4.12.1
@@ -25368,7 +25396,7 @@ packages:
     dev: false
 
   file:projects/acs-ui-javascript-loaders.tgz:
-    resolution: {integrity: sha512-ClGBPW/y7CIQI1IxQ+WqkjeJe05bXTj9tz1RUidaHQdAKVx9Wt8t3SRTFnpt8KW91P9BLeyk6jGWBhzyaDIAvw==, tarball: file:projects/acs-ui-javascript-loaders.tgz}
+    resolution: {integrity: sha512-zXBICKbcszlYCz9yIXr3c780KOSQahuoe6ATBWqVvk5oNKWfdpkKruZHMNAbru7aBeVKMR5Y4SpaM0LAPfCWXg==, tarball: file:projects/acs-ui-javascript-loaders.tgz}
     name: '@rush-temp/acs-ui-javascript-loaders'
     version: 0.0.0
     dependencies:
@@ -25391,10 +25419,10 @@ packages:
       eslint-plugin-header: 3.1.1(eslint@8.57.0)
       eslint-plugin-import: 2.29.1(eslint@8.57.0)
       eslint-plugin-jsdoc: 36.1.1(eslint@8.57.0)
-      eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.2)
+      eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.3)
       if-env: 1.0.4
       jest: 29.7.0(@types/node@20.14.12)(ts-node@10.9.2)
-      prettier: 3.3.2
+      prettier: 3.3.3
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
       rimraf: 2.7.1
@@ -25415,7 +25443,7 @@ packages:
     dev: false
 
   file:projects/calling-component-bindings.tgz:
-    resolution: {integrity: sha512-N/C8z3PpUq1e0xxPE23igSoFTLq7/wZMPRXj2zEpt8XZjoSJiOHgsNtRQgwStlovYVymew0sDaSk4vbib+o81Q==, tarball: file:projects/calling-component-bindings.tgz}
+    resolution: {integrity: sha512-TbBIWONZAval2t0gYQpXeWnGNaDJ9/Vv2JpJs7fenNQkvqLqt/1pGgOthrJJ37lu/GSEJV9h99zysDUmwXSC6A==, tarball: file:projects/calling-component-bindings.tgz}
     name: '@rush-temp/calling-component-bindings'
     version: 0.0.0
     dependencies:
@@ -25439,11 +25467,11 @@ packages:
       eslint-plugin-header: 3.1.1(eslint@8.57.0)
       eslint-plugin-import: 2.29.1(eslint@8.57.0)
       eslint-plugin-jsdoc: 36.1.1(eslint@8.57.0)
-      eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.2)
+      eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.3)
       if-env: 1.0.4
       jest: 29.7.0(@types/node@20.14.12)(ts-node@10.9.2)
       memoize-one: 5.2.1
-      prettier: 3.3.2
+      prettier: 3.3.3
       react: 18.3.1
       reselect: 4.1.8
       rimraf: 2.7.1
@@ -25464,7 +25492,7 @@ packages:
     dev: false
 
   file:projects/calling-stateful-client.tgz:
-    resolution: {integrity: sha512-VVKZ1pTu2WbnTm904FvW29c+SC6D799iFi+4y6zSsQKjtGd+vOawdxHIRjCu6GD1riQHO8KNOhiUWC3KCTCLIw==, tarball: file:projects/calling-stateful-client.tgz}
+    resolution: {integrity: sha512-1uxNOiwXrZW8EGB3DAVK1eBfQW08rZeH8t+JzkdFRaK4HHzqnuhjFCFK9p9qQcQyZyokorm0lFMN1xp87+4XAA==, tarball: file:projects/calling-stateful-client.tgz}
     name: '@rush-temp/calling-stateful-client'
     version: 0.0.0
     dependencies:
@@ -25489,12 +25517,12 @@ packages:
       eslint-plugin-header: 3.1.1(eslint@8.57.0)
       eslint-plugin-import: 2.29.1(eslint@8.57.0)
       eslint-plugin-jsdoc: 36.1.1(eslint@8.57.0)
-      eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.2)
+      eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.3)
       events: 3.3.0
       if-env: 1.0.4
       immer: 10.1.1
       jest: 29.7.0(@types/node@20.14.12)(ts-node@10.9.2)
-      prettier: 3.3.2
+      prettier: 3.3.3
       rimraf: 2.7.1
       rollup: 4.12.1
       ts-jest: 29.1.5(@babel/core@7.24.9)(babel-jest@29.7.0)(jest@29.7.0)(typescript@5.4.5)
@@ -25513,7 +25541,7 @@ packages:
     dev: false
 
   file:projects/calling.tgz:
-    resolution: {integrity: sha512-PTt8WBDgC/sekDsahE+571Y/g15A3AqYwzYIraD9VOhAAJfqphaJ+oWOziarLad3IbbF1IFce5NASDPnSHmpYQ==, tarball: file:projects/calling.tgz}
+    resolution: {integrity: sha512-2/Du0h1VLXERjUeXYAtASvHSosNQYQov9DWqhwb3f6YpcN1zZ+svc/A0CqJ4EQAv0BxFt0xmNl913G66WcbfhA==, tarball: file:projects/calling.tgz}
     name: '@rush-temp/calling'
     version: 0.0.0
     dependencies:
@@ -25552,7 +25580,7 @@ packages:
       eslint-plugin-header: 3.1.1(eslint@8.57.0)
       eslint-plugin-import: 2.29.1(eslint@8.57.0)
       eslint-plugin-jsx-a11y: 6.8.0(eslint@8.57.0)
-      eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.2)
+      eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.3)
       eslint-plugin-react: 7.34.3(eslint@8.57.0)
       eslint-plugin-react-hooks: 4.6.2(eslint@8.57.0)
       follow-redirects: 1.15.3
@@ -25565,8 +25593,8 @@ packages:
       mobile-detect: 1.4.5
       nanoid: 3.3.6
       node-fetch: 2.6.7
-      prettier: 3.3.2
-      pretty-quick: 4.0.0(prettier@3.3.2)
+      prettier: 3.3.3
+      pretty-quick: 4.0.0(prettier@3.3.3)
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
       react-router-dom: 5.3.4(react@18.3.1)
@@ -25607,7 +25635,7 @@ packages:
     dev: false
 
   file:projects/callingstateful.tgz:
-    resolution: {integrity: sha512-TqmCKUZJMw0GpfLdnsj0K/mLjvIsv3U6xMyhjAdgbfBQJndjN9c7gxNfcX5pu133Ad25EBYkJjDmSXCvum8fhQ==, tarball: file:projects/callingstateful.tgz}
+    resolution: {integrity: sha512-UpSBAfwGeHZYkgWBF3LeTaBjKyzUz7KrjxsZMNA9XPqYcZdvQGY+hoZfm7NoecdH9hn16kISsg6fadhft2e3bA==, tarball: file:projects/callingstateful.tgz}
     name: '@rush-temp/callingstateful'
     version: 0.0.0
     dependencies:
@@ -25646,7 +25674,7 @@ packages:
       eslint-plugin-header: 3.1.1(eslint@8.57.0)
       eslint-plugin-import: 2.29.1(eslint@8.57.0)
       eslint-plugin-jsx-a11y: 6.8.0(eslint@8.57.0)
-      eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.2)
+      eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.3)
       eslint-plugin-react: 7.34.3(eslint@8.57.0)
       eslint-plugin-react-hooks: 4.6.2(eslint@8.57.0)
       follow-redirects: 1.15.3
@@ -25659,8 +25687,8 @@ packages:
       mobile-detect: 1.4.5
       nanoid: 3.3.6
       node-fetch: 2.6.7
-      prettier: 3.3.2
-      pretty-quick: 4.0.0(prettier@3.3.2)
+      prettier: 3.3.3
+      pretty-quick: 4.0.0(prettier@3.3.3)
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
       react-router-dom: 5.3.4(react@18.3.1)
@@ -25701,7 +25729,7 @@ packages:
     dev: false
 
   file:projects/callwithchat.tgz:
-    resolution: {integrity: sha512-jdRq758+f9ETTczpON5Ki0kJAUc1DFgGsRU8SYmqs9QtpSTtVRstSnt72BUYu+PYbbKGsdP/aJr/uCzHwTPPxQ==, tarball: file:projects/callwithchat.tgz}
+    resolution: {integrity: sha512-QaFj+MO4vmlw08EwPcTgnMCAN5huhEMoUcwD3kCLnCp3rO2wq2rb/t8cRztaA6W6nq4CSDKf0xoWP0C2Fmmhsg==, tarball: file:projects/callwithchat.tgz}
     name: '@rush-temp/callwithchat'
     version: 0.0.0
     dependencies:
@@ -25742,7 +25770,7 @@ packages:
       eslint-plugin-header: 3.1.1(eslint@8.57.0)
       eslint-plugin-import: 2.29.1(eslint@8.57.0)
       eslint-plugin-jsx-a11y: 6.8.0(eslint@8.57.0)
-      eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.2)
+      eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.3)
       eslint-plugin-react: 7.34.3(eslint@8.57.0)
       eslint-plugin-react-hooks: 4.6.2(eslint@8.57.0)
       html-webpack-plugin: 5.6.0(webpack@5.89.0)
@@ -25752,8 +25780,8 @@ packages:
       jest-junit: 16.0.0
       merge: 2.1.1
       mobile-detect: 1.4.5
-      prettier: 3.3.2
-      pretty-quick: 4.0.0(prettier@3.3.2)
+      prettier: 3.3.3
+      pretty-quick: 4.0.0(prettier@3.3.3)
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
       react-router-dom: 5.3.4(react@18.3.1)
@@ -25794,7 +25822,7 @@ packages:
     dev: false
 
   file:projects/chat-component-bindings.tgz:
-    resolution: {integrity: sha512-aScNIo9C3cjDOVSXek0eavvN/F4UwAdOBysb49P8S/+TMVC57iFxg5K4YSquIBbnsX53gkMIkR9p4ikfZYoD4g==, tarball: file:projects/chat-component-bindings.tgz}
+    resolution: {integrity: sha512-66Q0I9H+G6TftoP8sfRycsLuH+Dz1cAGXcnacexW2pnfsRwrbS1/Q0nrwDNH+W/KI49fbxY/tZexDPY5PVOq4Q==, tarball: file:projects/chat-component-bindings.tgz}
     name: '@rush-temp/chat-component-bindings'
     version: 0.0.0
     dependencies:
@@ -25816,11 +25844,11 @@ packages:
       eslint-plugin-header: 3.1.1(eslint@8.57.0)
       eslint-plugin-import: 2.29.1(eslint@8.57.0)
       eslint-plugin-jsdoc: 36.1.1(eslint@8.57.0)
-      eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.2)
+      eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.3)
       if-env: 1.0.4
       jest: 29.7.0(@types/node@20.14.12)(ts-node@10.9.2)
       memoize-one: 5.2.1
-      prettier: 3.3.2
+      prettier: 3.3.3
       react: 18.3.1
       reselect: 4.1.8
       rimraf: 2.7.1
@@ -25837,7 +25865,7 @@ packages:
     dev: false
 
   file:projects/chat-stateful-client.tgz:
-    resolution: {integrity: sha512-C8kewIpNlIUB5xOKRrmUsEWPWgt1xUe5X7hqnRtxewPAZ/GEvB8S6edHL1hMxI0FE5jvKCqbkJwt/fvGClSK5A==, tarball: file:projects/chat-stateful-client.tgz}
+    resolution: {integrity: sha512-Q9DSvEXDZBLmvtNqolCCarugT3e3mCjWeHxhm3oOiWhXxjeeKlv5tvTB368dWGnLf2r2MnIP5keOMD861SjMZA==, tarball: file:projects/chat-stateful-client.tgz}
     name: '@rush-temp/chat-stateful-client'
     version: 0.0.0
     dependencies:
@@ -25863,13 +25891,13 @@ packages:
       eslint-plugin-header: 3.1.1(eslint@8.57.0)
       eslint-plugin-import: 2.29.1(eslint@8.57.0)
       eslint-plugin-jsdoc: 36.1.1(eslint@8.57.0)
-      eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.2)
+      eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.3)
       events: 3.3.0
       if-env: 1.0.4
       immer: 10.1.1
       jest: 29.7.0(@types/node@20.14.12)(ts-node@10.9.2)
       nanoid: 3.3.6
-      prettier: 3.3.2
+      prettier: 3.3.3
       rimraf: 2.7.1
       rollup: 4.12.1
       ts-jest: 29.1.5(@babel/core@7.24.9)(babel-jest@29.7.0)(jest@29.7.0)(typescript@5.4.5)
@@ -25889,7 +25917,7 @@ packages:
     dev: false
 
   file:projects/chat.tgz:
-    resolution: {integrity: sha512-8LQruZPZ2Qo/Wz3ORXF/VFrHPPp+/MmHkp5zTmG7ZV9IOMQfO8PKhvnBhWfBE+SYbnXyQFdBWujzbwIhGyfhew==, tarball: file:projects/chat.tgz}
+    resolution: {integrity: sha512-7NiNUdSXnXYrB/gHTpi+IzBGthW4kCLKFipy+ztNIMJFJFHBipjZiF/XM1dZRJmPg76HPwfXnbpb6jjuCLKoGA==, tarball: file:projects/chat.tgz}
     name: '@rush-temp/chat'
     version: 0.0.0
     dependencies:
@@ -25925,7 +25953,7 @@ packages:
       eslint-plugin-header: 3.1.1(eslint@8.57.0)
       eslint-plugin-import: 2.29.1(eslint@8.57.0)
       eslint-plugin-jsx-a11y: 6.8.0(eslint@8.57.0)
-      eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.2)
+      eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.3)
       eslint-plugin-react: 7.34.3(eslint@8.57.0)
       eslint-plugin-react-hooks: 4.6.2(eslint@8.57.0)
       form-data: 4.0.0
@@ -25937,8 +25965,8 @@ packages:
       jest-junit: 16.0.0
       json-stringify-safe: 5.0.1
       mobile-detect: 1.4.5
-      prettier: 3.3.2
-      pretty-quick: 4.0.0(prettier@3.3.2)
+      prettier: 3.3.3
+      pretty-quick: 4.0.0(prettier@3.3.3)
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
       react-linkify: 1.0.0-alpha
@@ -25978,7 +26006,7 @@ packages:
     dev: false
 
   file:projects/check-treeshaking.tgz:
-    resolution: {integrity: sha512-p0538CPpilAbd20vp0wv71HvPbGu5qJBuF7nLWeozgo8csTq9Kw8WacAm2xvUC9+UQ8UDOmiKOup2KJL/1SYVQ==, tarball: file:projects/check-treeshaking.tgz}
+    resolution: {integrity: sha512-Y0P8qM1qqN/CI/xbtFpTSNcgqB3nocqLqkYrZDusiU+LUrJEUUJweK2MjgsWfPmIdOEPqkoOYZl4xr+QfOPhJw==, tarball: file:projects/check-treeshaking.tgz}
     name: '@rush-temp/check-treeshaking'
     version: 0.0.0
     dependencies:
@@ -25989,8 +26017,8 @@ packages:
       eslint-config-prettier: 9.1.0(eslint@8.57.0)
       eslint-plugin-header: 3.1.1(eslint@8.57.0)
       eslint-plugin-import: 2.29.1(eslint@8.57.0)
-      eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.2)
-      prettier: 3.3.2
+      eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.3)
+      prettier: 3.3.3
       rimraf: 2.7.1
       webpack: 5.89.0(webpack-cli@5.1.4)
       webpack-cli: 5.1.4(webpack-bundle-analyzer@4.10.1)(webpack@5.89.0)
@@ -26006,7 +26034,7 @@ packages:
     dev: false
 
   file:projects/check-typescript-regression.tgz:
-    resolution: {integrity: sha512-tHDWE/8JLsEGYkK1ooJ4PmSxII/wqeBrIB+oMwmVyDri5IJfnIB5uG2LZpK9D2CWxytQ8B8H5b6mo3wMy7OIyg==, tarball: file:projects/check-typescript-regression.tgz}
+    resolution: {integrity: sha512-RIYzmZXzumSYNdVAjcpdZ9EEgS4utyQw1XABs23fi6dfj5NY2rDVqm++3HahEwxOK1M/awK2dHyDJg12nuWmHw==, tarball: file:projects/check-typescript-regression.tgz}
     name: '@rush-temp/check-typescript-regression'
     version: 0.0.0
     dependencies:
@@ -26014,8 +26042,8 @@ packages:
       eslint-config-prettier: 9.1.0(eslint@8.57.0)
       eslint-plugin-header: 3.1.1(eslint@8.57.0)
       eslint-plugin-import: 2.29.1(eslint@8.57.0)
-      eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.2)
-      prettier: 3.3.2
+      eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.3)
+      prettier: 3.3.3
       rimraf: 2.7.1
       typescript: 4.6.3
     transitivePeerDependencies:
@@ -26024,7 +26052,7 @@ packages:
     dev: false
 
   file:projects/communication-react.tgz:
-    resolution: {integrity: sha512-mQkcznQVL1R75uX+ZOVsF1UpVmYtOcUwOTbtkXlFuCawktqi+WEZm5xshtVA7fX7di446/plMbEv9InZt5h2Tw==, tarball: file:projects/communication-react.tgz}
+    resolution: {integrity: sha512-BrJN5gLMfuiMiDy/UNgxZbA/dQnNfSBmCZCLodXvHOqRPAe1IbGq212+BqLrTD8OEycS+5Qc83sYaZQxd1TRTg==, tarball: file:projects/communication-react.tgz}
     name: '@rush-temp/communication-react'
     version: 0.0.0
     dependencies:
@@ -26046,9 +26074,9 @@ packages:
       '@fluentui/react-hooks': 8.8.10(@types/react@18.3.3)(react@18.3.1)
       '@fluentui/react-icons': 2.0.252(react@18.3.1)
       '@fluentui/react-window-provider': 2.2.27(@types/react@18.3.3)(react@18.3.1)
-      '@griffel/react': 1.5.24(react@18.3.1)
-      '@microsoft/api-documenter': 7.25.8(@types/node@20.14.12)
-      '@microsoft/api-extractor': 7.47.3(@types/node@20.14.12)
+      '@griffel/react': 1.5.25(react@18.3.1)
+      '@microsoft/api-documenter': 7.25.9(@types/node@20.14.12)
+      '@microsoft/api-extractor': 7.47.4(@types/node@20.14.12)
       '@rollup/plugin-json': 6.1.0(rollup@4.12.1)
       '@testing-library/jest-dom': 6.4.8
       '@testing-library/react': 16.0.0(@testing-library/dom@9.3.4)(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
@@ -26074,7 +26102,7 @@ packages:
       eslint-plugin-header: 3.1.1(eslint@8.57.0)
       eslint-plugin-import: 2.29.1(eslint@8.57.0)
       eslint-plugin-jsx-a11y: 6.8.0(eslint@8.57.0)
-      eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.2)
+      eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.3)
       eslint-plugin-react: 7.34.3(eslint@8.57.0)
       eslint-plugin-react-hooks: 4.6.2(eslint@8.57.0)
       events: 3.3.0
@@ -26086,8 +26114,8 @@ packages:
       memoize-one: 5.2.1
       nanoid: 3.3.6
       node-forge: 1.3.1
-      prettier: 3.3.2
-      pretty-quick: 4.0.0(prettier@3.3.2)
+      prettier: 3.3.3
+      pretty-quick: 4.0.0(prettier@3.3.3)
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
       react-is: 18.3.1
@@ -26119,7 +26147,7 @@ packages:
       type-fest: 4.15.0
       typescript: 5.4.5
       typescript-transform-paths: 3.4.7(typescript@5.4.5)
-      use-debounce: 10.0.1(react@18.3.1)
+      use-debounce: 10.0.2(react@18.3.1)
       uuid: 9.0.1
     transitivePeerDependencies:
       - '@jest/transform'
@@ -26137,7 +26165,7 @@ packages:
     dev: false
 
   file:projects/component-examples.tgz:
-    resolution: {integrity: sha512-HrIPBbP7OZpW77khA8BRyQdr15N0Tc3NxR5y1aNm5Jx26jpzAGtdOurDkFHUl+7mDk192pv7XQG1k+tiOTFmyA==, tarball: file:projects/component-examples.tgz}
+    resolution: {integrity: sha512-/ZCvyl+hUOGChAqcXA8pvlm4kFObd8RpWE/Kcu3k8WNVLAIRi4rUNTLfUHTJbzS70XLCspXtB3AP6JNCGNC7pw==, tarball: file:projects/component-examples.tgz}
     name: '@rush-temp/component-examples'
     version: 0.0.0
     dependencies:
@@ -26165,14 +26193,14 @@ packages:
       eslint-plugin-header: 3.1.1(eslint@8.57.0)
       eslint-plugin-import: 2.29.1(eslint@8.57.0)
       eslint-plugin-jsx-a11y: 6.8.0(eslint@8.57.0)
-      eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.2)
+      eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.3)
       eslint-plugin-react: 7.34.3(eslint@8.57.0)
       eslint-plugin-react-hooks: 4.6.2(eslint@8.57.0)
       html-webpack-plugin: 5.6.0(webpack@5.89.0)
       husky: 8.0.3
       if-env: 1.0.4
-      prettier: 3.3.2
-      pretty-quick: 4.0.0(prettier@3.3.2)
+      prettier: 3.3.3
+      pretty-quick: 4.0.0(prettier@3.3.3)
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
       rimraf: 2.7.1
@@ -26227,7 +26255,7 @@ packages:
     dev: false
 
   file:projects/fake-backends.tgz:
-    resolution: {integrity: sha512-ID66cvJiYFKLpapojU3+os1NbY/fjrHYYej7AryXL8OHh3VRLA35KObdIktA7LLC/tNj4N+RqSQJTHXYg4tM6g==, tarball: file:projects/fake-backends.tgz}
+    resolution: {integrity: sha512-48yY7c/TgD/+8yelQf/nHBubtHqJj3svCitt2zsPJSfVOq3Csl9fxt0qnTmeaqPhUkA2vKXyyBgCRr5mLcdqGQ==, tarball: file:projects/fake-backends.tgz}
     name: '@rush-temp/fake-backends'
     version: 0.0.0
     dependencies:
@@ -26254,13 +26282,13 @@ packages:
       eslint-plugin-header: 3.1.1(eslint@8.57.0)
       eslint-plugin-import: 2.29.1(eslint@8.57.0)
       eslint-plugin-jsdoc: 36.1.1(eslint@8.57.0)
-      eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.2)
+      eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.3)
       events: 3.3.0
       if-env: 1.0.4
       immer: 10.1.1
       jest: 29.7.0(@types/node@20.14.12)(ts-node@10.9.2)
       nanoid: 3.3.6
-      prettier: 3.3.2
+      prettier: 3.3.3
       rimraf: 2.7.1
       rollup: 4.12.1
       ts-jest: 29.1.5(@babel/core@7.24.9)(babel-jest@29.7.0)(jest@29.7.0)(typescript@5.4.5)
@@ -26283,7 +26311,7 @@ packages:
     dev: false
 
   file:projects/react-components.tgz:
-    resolution: {integrity: sha512-ZlhdzgcBbpC5FL9f30BSkwdqpEu4kGmJTyU+bGS0opUNQwuIosSPDDR5faN6gIg+ahc+2WoV2+nAvhn70O3smw==, tarball: file:projects/react-components.tgz}
+    resolution: {integrity: sha512-1xvh0wQ2bBNnwbh5DRgS4DAOAtlpRhT/8wKJBbcL8SaC7g2DAjaI04UVFz9q7KLdncb6uAsT2NKs8dK5LvV1DQ==, tarball: file:projects/react-components.tgz}
     name: '@rush-temp/react-components'
     version: 0.0.0
     dependencies:
@@ -26297,7 +26325,7 @@ packages:
       '@fluentui/react-hooks': 8.8.10(@types/react@18.3.3)(react@18.3.1)
       '@fluentui/react-icons': 2.0.252(react@18.3.1)
       '@fluentui/react-window-provider': 2.2.27(@types/react@18.3.3)(react@18.3.1)
-      '@griffel/react': 1.5.24(react@18.3.1)
+      '@griffel/react': 1.5.25(react@18.3.1)
       '@microsoft/api-documenter': 7.23.37(@types/node@20.11.25)
       '@microsoft/api-extractor': 7.42.3(@types/node@20.11.25)
       '@playwright/experimental-ct-react': 1.39.0(@types/node@20.14.12)
@@ -26334,7 +26362,7 @@ packages:
       eslint-plugin-import: 2.29.1(eslint@8.57.0)
       eslint-plugin-jsdoc: 36.1.1(eslint@8.57.0)
       eslint-plugin-jsx-a11y: 6.8.0(eslint@8.57.0)
-      eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.2)
+      eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.3)
       eslint-plugin-react: 7.34.3(eslint@8.57.0)
       eslint-plugin-react-hooks: 4.6.2(eslint@8.57.0)
       html-react-parser: 5.1.12(@types/react@18.3.3)(react@18.3.1)
@@ -26348,8 +26376,8 @@ packages:
       nan: 2.19.0
       node-forge: 1.3.1
       playwright-core: 1.39.0
-      prettier: 3.3.2
-      pretty-quick: 4.0.0(prettier@3.3.2)
+      prettier: 3.3.3
+      pretty-quick: 4.0.0(prettier@3.3.3)
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
       react-is: 18.3.1
@@ -26377,7 +26405,7 @@ packages:
       ts-node: 10.9.2(@types/node@20.14.12)(typescript@5.4.5)
       type-fest: 4.15.0
       typescript: 5.4.5
-      use-debounce: 10.0.1(react@18.3.1)
+      use-debounce: 10.0.2(react@18.3.1)
       uuid: 9.0.1
       webpack: 5.89.0(webpack-cli@5.1.4)
     transitivePeerDependencies:
@@ -26406,7 +26434,7 @@ packages:
     dev: false
 
   file:projects/react-composites.tgz:
-    resolution: {integrity: sha512-QWhRHr9kfntMD1lCODUz7fNjELAx7W7e8ddlny17n77n5tsjTqoZgbt/vmzqdYQSXrKdBCUYPIB0KgD0/yK8PQ==, tarball: file:projects/react-composites.tgz}
+    resolution: {integrity: sha512-WH+KiS0jlmcYnPfjYo6SkDuQUrheKhH0UpifGVzmWNJ1bgmBnsq763o1WjUieT5P4DK89obiTaSFS52pYL/m4A==, tarball: file:projects/react-composites.tgz}
     name: '@rush-temp/react-composites'
     version: 0.0.0
     dependencies:
@@ -26426,8 +26454,8 @@ packages:
       '@fluentui/react-file-type-icons': 8.11.18(@types/react@18.3.3)(react@18.3.1)
       '@fluentui/react-hooks': 8.8.10(@types/react@18.3.3)(react@18.3.1)
       '@fluentui/react-icons': 2.0.252(react@18.3.1)
-      '@microsoft/api-documenter': 7.25.8(@types/node@20.14.12)
-      '@microsoft/api-extractor': 7.47.3(@types/node@20.14.12)
+      '@microsoft/api-documenter': 7.25.9(@types/node@20.14.12)
+      '@microsoft/api-extractor': 7.47.4(@types/node@20.14.12)
       '@playwright/test': 1.39.0
       '@testing-library/jest-dom': 6.4.8
       '@testing-library/react': 16.0.0(@testing-library/dom@9.3.4)(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
@@ -26462,7 +26490,7 @@ packages:
       eslint-plugin-import: 2.29.1(eslint@8.57.0)
       eslint-plugin-jsdoc: 36.1.1(eslint@8.57.0)
       eslint-plugin-jsx-a11y: 6.8.0(eslint@8.57.0)
-      eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.2)
+      eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.3)
       eslint-plugin-react: 7.34.3(eslint@8.57.0)
       eslint-plugin-react-hooks: 4.6.2(eslint@8.57.0)
       events: 3.3.0
@@ -26480,8 +26508,8 @@ packages:
       nan: 2.19.0
       nanoid: 3.3.6
       node-forge: 1.3.1
-      prettier: 3.3.2
-      pretty-quick: 4.0.0(prettier@3.3.2)
+      prettier: 3.3.3
+      pretty-quick: 4.0.0(prettier@3.3.3)
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
       react-is: 18.3.1
@@ -26611,7 +26639,7 @@ packages:
     dev: false
 
   file:projects/server.tgz:
-    resolution: {integrity: sha512-Kt6dF0htkwJ0TjA7F3NKycWCxhea6GFQevPJ0jb8p96s1aZ28mxkGPiJtMt/zP1b0tQszXTUfK0bbM9O+N5bIg==, tarball: file:projects/server.tgz}
+    resolution: {integrity: sha512-D4A43HTS6ZDyx5TVyROjyao3XfPXBZw4M83ON07xJT+6C0VQFot9G9IzHoN2DvAsf9Jx3CYIh1YyRkHdGGHOjw==, tarball: file:projects/server.tgz}
     name: '@rush-temp/server'
     version: 0.0.0
     dependencies:
@@ -26643,7 +26671,7 @@ packages:
       eslint-plugin-flowtype: 8.0.3(eslint@8.57.0)
       eslint-plugin-header: 3.1.1(eslint@8.57.0)
       eslint-plugin-import: 2.29.1(eslint@8.57.0)
-      eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.2)
+      eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.3)
       express: 4.18.3
       http-errors: 1.8.1
       husky: 8.0.3
@@ -26652,8 +26680,8 @@ packages:
       morgan: 1.10.0
       multer: 1.4.5-lts.1
       node-fetch: 2.6.7
-      prettier: 3.3.2
-      pretty-quick: 4.0.0(prettier@3.3.2)
+      prettier: 3.3.3
+      pretty-quick: 4.0.0(prettier@3.3.3)
       rimraf: 2.7.1
       supertest: 6.3.4
       ts-jest: 29.1.5(jest@29.7.0)(typescript@5.4.5)
@@ -26686,7 +26714,7 @@ packages:
     dev: false
 
   file:projects/storybook.tgz:
-    resolution: {integrity: sha512-zv3d++9gLT93amDASx1oaHG4xrscdemMRBI+ySZOtQi3ndHxAkx1zgPjPaDkqYt1PjUgq8lYrTgfIoJZplWTvg==, tarball: file:projects/storybook.tgz}
+    resolution: {integrity: sha512-4mStJdCQ5ThExQmBs8RKgAjOYL5sw9Cs/d9cRyDrMaKvuFxEEoyulvcRiSt5aQO25+Nqy+XySpLegAP0ZvOEzw==, tarball: file:projects/storybook.tgz}
     name: '@rush-temp/storybook'
     version: 0.0.0
     dependencies:
@@ -26702,7 +26730,7 @@ packages:
       '@fluentui/react-hooks': 8.8.10(@types/react@18.3.3)(react@18.3.1)
       '@fluentui/react-icons': 2.0.252(react@18.3.1)
       '@fluentui/theme-samples': 8.7.123(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
-      '@griffel/react': 1.5.24(react@18.3.1)
+      '@griffel/react': 1.5.25(react@18.3.1)
       '@mdx-js/react': 1.6.22(react@18.3.1)
       '@microsoft/api-documenter': 7.23.37(@types/node@20.11.25)
       '@microsoft/api-extractor': 7.42.3(@types/node@20.11.25)
@@ -26749,7 +26777,7 @@ packages:
       eslint-plugin-import: 2.29.1(eslint@8.57.0)
       eslint-plugin-jsx-a11y: 6.8.0(eslint@8.57.0)
       eslint-plugin-mdx: 1.16.0(eslint@8.57.0)
-      eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.2)
+      eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.3)
       eslint-plugin-react: 7.34.3(eslint@8.57.0)
       eslint-plugin-react-hooks: 4.6.2(eslint@8.57.0)
       husky: 8.0.3
@@ -26761,8 +26789,8 @@ packages:
       nan: 2.19.0
       node-forge: 1.3.1
       preact: 10.19.6
-      prettier: 3.3.2
-      pretty-quick: 4.0.0(prettier@3.3.2)
+      prettier: 3.3.3
+      pretty-quick: 4.0.0(prettier@3.3.3)
       raw-loader: 4.0.2(webpack@5.89.0)
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
@@ -26830,7 +26858,7 @@ packages:
     dev: false
 
   file:projects/storybook8.tgz:
-    resolution: {integrity: sha512-JzS0ZlbwmIdgi85yLhs8qEHzpCugawM8xOBSqSATuCyAXMw1z+MNQLPCTj8n0wgarmdGcGckireecd7u8pfoUQ==, tarball: file:projects/storybook8.tgz}
+    resolution: {integrity: sha512-k28vMnYZScfJI1pCdIEJIEzK7sKR0g6LlEbczqEvKTKIFqIdcZlCCfdjZW229IjRsuCSR3jIzD1O8zBZTR9Gpg==, tarball: file:projects/storybook8.tgz}
     name: '@rush-temp/storybook8'
     version: 0.0.0
     dependencies:
@@ -26846,7 +26874,7 @@ packages:
       '@fluentui/react-hooks': 8.8.10(@types/react@18.3.3)(react@18.3.1)
       '@fluentui/react-icons': 2.0.252(react@18.3.1)
       '@fluentui/theme-samples': 8.7.123(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
-      '@griffel/react': 1.5.24(react@18.3.1)
+      '@griffel/react': 1.5.25(react@18.3.1)
       '@mdx-js/react': 1.6.22(react@18.3.1)
       '@microsoft/applicationinsights-react-js': 3.4.3(react@18.3.1)(tslib@2.6.2)
       '@microsoft/applicationinsights-web': 2.8.17(tslib@2.6.2)
@@ -26892,7 +26920,7 @@ packages:
       eslint-plugin-import: 2.29.1(eslint@8.57.0)
       eslint-plugin-jsx-a11y: 6.8.0(eslint@8.57.0)
       eslint-plugin-mdx: 1.16.0(eslint@8.57.0)
-      eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.2)
+      eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.3)
       eslint-plugin-react: 7.34.3(eslint@8.57.0)
       eslint-plugin-react-hooks: 4.6.2(eslint@8.57.0)
       husky: 8.0.3
@@ -26903,8 +26931,8 @@ packages:
       nan: 2.19.0
       node-forge: 1.3.1
       preact: 10.19.6
-      prettier: 3.3.2
-      pretty-quick: 4.0.0(prettier@3.3.2)
+      prettier: 3.3.3
+      pretty-quick: 4.0.0(prettier@3.3.3)
       raw-loader: 4.0.2(webpack@5.89.0)
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
