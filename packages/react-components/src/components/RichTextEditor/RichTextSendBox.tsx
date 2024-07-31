@@ -313,7 +313,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
       /* @conditional-compile-remove(rich-text-editor-image-upload) */ removedInlineImages?: Record<string, string>[]
     ) => {
       /* @conditional-compile-remove(rich-text-editor-image-upload) */
-      removedInlineImages?.map(
+      removedInlineImages?.forEach(
         (removedInlineImage: Record<string, string>) => onRemoveInlineImage && onRemoveInlineImage(removedInlineImage)
       );
       setContent(newValue);
