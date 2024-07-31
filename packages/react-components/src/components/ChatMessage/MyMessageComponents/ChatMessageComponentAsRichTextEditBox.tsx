@@ -20,11 +20,10 @@ import { _AttachmentUploadCards } from '../../Attachment/AttachmentUploadCards';
 /* @conditional-compile-remove(file-sharing-acs) */
 import { AttachmentMetadata } from '@internal/acs-ui-common';
 import { useChatMessageRichTextEditContainerStyles } from '../../styles/ChatMessageComponent.styles';
-import { MAXIMUM_LENGTH_OF_MESSAGE } from '../../utils/SendBoxUtils';
+import { MAXIMUM_LENGTH_OF_MESSAGE, modifyInlineImagesInContentString } from '../../utils/SendBoxUtils';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import {
   hasIncompleteAttachmentUploads,
-  modifyInlineImagesInContentString,
   removeBrokenImageContentAndClearImageSizeStyles
 } from '../../utils/SendBoxUtils';
 import {
@@ -218,7 +217,10 @@ export const ChatMessageComponentAsRichTextEditBox = (
     let content = textValue;
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
     content = removeBrokenImageContentAndClearImageSizeStyles(content);
-    modifyInlineImagesInContentString(content, initialInlineImages, (content: string) => {
+    let initInlineImages: Record<string, string>[] = [];
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    initInlineImages = initialInlineImages ?? [];
+    modifyInlineImagesInContentString(content, initInlineImages, (content: string) => {
       // it's very important to pass an empty attachment here
       // so when user removes all attachments, UI can reflect it instantly
       // if you set it to undefined, the attachments pre-edited would still be there

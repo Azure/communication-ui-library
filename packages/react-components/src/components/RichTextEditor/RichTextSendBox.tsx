@@ -11,9 +11,14 @@ import { sendIconStyle } from '../styles/SendBox.styles';
 import { useV9CustomStyles } from '../styles/SendBox.styles';
 import { InputBoxButton } from '../InputBoxButton';
 import { RichTextSendBoxErrors, RichTextSendBoxErrorsProps } from './RichTextSendBoxErrors';
-import { isMessageTooLong, isSendBoxButtonAriaDisabled, sanitizeText } from '../utils/SendBoxUtils';
+import {
+  isMessageTooLong,
+  isSendBoxButtonAriaDisabled,
+  sanitizeText,
+  modifyInlineImagesInContentString
+} from '../utils/SendBoxUtils';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
-import { modifyInlineImagesInContentString, hasInlineImageContent } from '../utils/SendBoxUtils';
+import { hasInlineImageContent } from '../utils/SendBoxUtils';
 import { RichTextEditorComponentRef } from './RichTextEditor';
 import { useTheme } from '../../theming';
 import { richTextActionButtonsStyle, sendBoxRichTextEditorStyle } from '../styles/RichTextEditor.styles';
