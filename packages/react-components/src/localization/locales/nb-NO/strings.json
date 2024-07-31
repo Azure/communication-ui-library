@@ -24,7 +24,7 @@
     "placeholderText": "Skriv en melding",
     "textTooLong": "Meldingslengden er over maksimumsgrensen.",
     "sendButtonAriaLabel": "Send melding",
-    "attachmentUploadsPendingError": "Laster opp. Vent litt ...",
+    "attachmentUploadsPendingError": "Filen lastes opp. Vent litt.",
     "removeAttachment": "Fjern fil",
     "uploading": "Laster opp",
     "uploadCompleted": "Opplasting fullført",
@@ -34,7 +34,8 @@
     "placeholderText": "Skriv en melding",
     "textTooLong": "Meldingslengden er over maksimumsgrensen.",
     "sendButtonAriaLabel": "Send melding",
-    "attachmentUploadsPendingError": "Laster opp ... Vent litt.",
+    "attachmentUploadsPendingError": "Filen lastes opp. Vent litt.",
+    "imageUploadsPendingError": "Bildet lastes opp. Vent litt.",
     "removeAttachment": "Fjern fil",
     "uploading": "Laster opp",
     "uploadCompleted": "Opplasting fullført",
@@ -58,7 +59,11 @@
     "richTextDeleteRowMenu": "Slett rad",
     "richTextDeleteTableMenu": "Slett tabell",
     "richTextToolbarMoreButtonAriaLabel": "Flere alternativer",
-    "attachmentMoreMenu": "Flere alternativer"
+    "attachmentMoreMenu": "Flere alternativer",
+    "richTextNewBulletedListItemAnnouncement": "Punkt, ny linje",
+    "richTextNewNumberedListItemAnnouncement": "{0}, ny linje",
+    "richTextBulletedListAppliedAnnouncement": "Punktliste er brukt",
+    "richTextNumberedListAppliedAnnouncement": "Nummerert liste brukes"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Forslag"
@@ -221,7 +226,12 @@
     "richTextDeleteRowMenu": "Slett rad",
     "richTextDeleteTableMenu": "Slett tabell",
     "richTextToolbarMoreButtonAriaLabel": "Flere alternativer",
-    "attachmentUploadsPendingError": "Laster opp ... Vent litt."
+    "attachmentUploadsPendingError": "Filen lastes opp. Vent litt.",
+    "imageUploadsPendingError": "Bildet lastes opp. Vent litt.",
+    "richTextNewBulletedListItemAnnouncement": "Punkt, ny linje",
+    "richTextNewNumberedListItemAnnouncement": "{0}, ny linje",
+    "richTextBulletedListAppliedAnnouncement": "Punktliste er brukt",
+    "richTextNumberedListAppliedAnnouncement": "Nummerert liste brukes"
   },
   "errorBar": {
     "unableToReachChatService": "Du er frakoblet",
