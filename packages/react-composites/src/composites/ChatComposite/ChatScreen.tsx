@@ -531,8 +531,16 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   );
 
   const onUpdateMessageHandler = useCallback(
-    async (messageId: string, content: string) => {
-      await messageThreadProps.onUpdateMessage(messageId, content);
+    async function (
+      messageId: string,
+      content: string,
+      /* @conditional-compile-remove(file-sharing-acs) */ options?: MessageOptions
+    ) {
+      await messageThreadProps.onUpdateMessage(
+        messageId,
+        content,
+        /* @conditional-compile-remove(file-sharing-acs) */ options
+      );
       /* @conditional-compile-remove(rich-text-editor-image-upload) */
       handleEditBoxInlineImageUploadAction({ type: AttachmentUploadActionType.Clear, messageId });
     },
