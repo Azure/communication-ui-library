@@ -1,4 +1,5 @@
-import { Canvas, Meta, Source } from '@storybook/blocks';
+import { Canvas, Meta, Source, ArgTypes } from '@storybook/blocks';
+import { CallComposite } from '@azure/communication-react';
 import { MessageBar, Stack, Text } from '@fluentui/react';
 import { SingleLineBetaBanner } from '../../BetaBanners/SingleLineBetaBanner';
 import containerText from '!!raw-loader!./snippets/Container.snippet.tsx';
@@ -389,4 +390,4 @@ need to be added to that room using their userId. To use the Rooms Client to cre
 
 ## Props
 
-TODO: Add props table
+<ArgTypes of={CallComposite} />
