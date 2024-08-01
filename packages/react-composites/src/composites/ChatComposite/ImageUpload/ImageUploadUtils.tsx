@@ -273,8 +273,8 @@ export const cancelInlineImageUpload = (
     messageId
   });
 
-  if (imageUpload?.metadata.progress === 1) {
-    deleteInlineImageFromServer(imageUpload?.metadata.id, adapter);
+  if (imageUpload?.metadata.progress === 1 && imageUpload?.metadata.url) {
+    deleteInlineImageFromServer(imageUpload?.metadata.url, adapter);
   }
 };
 
