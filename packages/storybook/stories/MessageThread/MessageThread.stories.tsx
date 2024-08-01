@@ -26,10 +26,8 @@ import { Divider } from '@fluentui/react-components';
 import { Canvas, Description, Heading, Props, Source, Subtitle, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import {
-  _DEFAULT_INLINE_IMAGE_FILE_NAME,
-  _IMAGE_ATTRIBUTE_INLINE_IMAGE_FILE_NAME_KEY
-} from '../../../react-composites/src/composites/common/constants';
+import { getImageFileNameFromAttributes } from '../../../react-composites/src/composites/ChatComposite/ImageUpload/ImageUploadUtils';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { DetailedBetaBanner } from '../BetaBanners/DetailedBetaBanner';
 import { SingleLineBetaBanner } from '../BetaBanners/SingleLineBetaBanner';
 
@@ -637,7 +635,7 @@ const MessageThreadStory = (args): JSX.Element => {
         const inlineImagesWithProgress = messagesInlineImagesWithProgress?.[messageId] ?? [];
         const newImage: AttachmentMetadataInProgress = {
           id: imageAttributes.id,
-          name: imageAttributes[_IMAGE_ATTRIBUTE_INLINE_IMAGE_FILE_NAME_KEY] ?? _DEFAULT_INLINE_IMAGE_FILE_NAME,
+          name: getImageFileNameFromAttributes(imageAttributes),
           progress: 1,
           url: imageAttributes.src,
           error: undefined

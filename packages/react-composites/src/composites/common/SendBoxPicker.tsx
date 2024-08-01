@@ -49,13 +49,19 @@ export interface RichTextSendBoxOptions extends RichTextEditorOptions {
   /**
    * Optional callback invoked after inline image is removed from the UI.
    * @param imageAttributes - attributes of the image such as id, src, style, etc.
-   *        It also contains the image file name which can be accessed through imageAttributes['data-image-file-name']
+   *        It also contains the image file name which can be accessed through imageAttributes['data-image-file-name'].
+   *        Note that if the src attribute is a local blob url, it has been revoked at this point.
    */
   onRemoveInlineImage?: (imageAttributes: Record<string, string>) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   /**
    * Optional Array of type {@link AttachmentMetadataInProgress}
-   * to provide progress and error info for inline images inserted in the RichTextSendBox.
+   * to render the errorBar for inline images inserted in the RichTextSendBox when:
+   *   - there is an error provided in the inlineImagesWithProgress
+   *   - progress is less than 1 when the send button is clicked
+   *   - content html string is longer than the max allowed length.
+   *     (Note that the id and the url prop of the inlineImagesWithProgress will be used as the id and src attribute of the content html
+   *     when calculating the content length, only for the purpose of displaying the content length overflow error.)
    */
   inlineImagesWithProgress?: AttachmentMetadataInProgress[];
 }
