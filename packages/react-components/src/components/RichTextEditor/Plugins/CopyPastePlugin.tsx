@@ -5,9 +5,7 @@ import { ContentChangedEventSource, PluginEventType } from '../../utils/RichText
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { getInlineImageAttributes } from '../../utils/RichTextEditorUtils';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
-import { _base64ToBlob } from '@internal/acs-ui-common';
-/* @conditional-compile-remove(rich-text-editor-image-upload) */
-import { removeImageTags } from '@internal/acs-ui-common';
+import { _base64ToBlob, removeImageTags, _IMAGE_ATTRIBUTE_INLINE_IMAGE_FILE_NAME_KEY } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { v1 as generateGUID } from 'uuid';
 
@@ -84,7 +82,11 @@ export const handleInlineImage = (
   if (event.eventType === PluginEventType.BeforePaste && event.pasteType === 'normal' && onInsertInlineImage) {
     event.fragment.querySelectorAll('img').forEach((image) => {
       const clipboardImage = event.clipboardData.image;
-      const fileName = clipboardImage?.name || clipboardImage?.type.replace('/', '.');
+      const fileName =
+        clipboardImage?.name ||
+        clipboardImage?.type.replace('/', '.') ||
+        image.getAttribute(_IMAGE_ATTRIBUTE_INLINE_IMAGE_FILE_NAME_KEY) ||
+        '';
       // If the image src is an external url, call the onInsertInlineImage callback with the url.
       let imageUrl = image.src;
       if (image.src.startsWith('data:image/')) {
