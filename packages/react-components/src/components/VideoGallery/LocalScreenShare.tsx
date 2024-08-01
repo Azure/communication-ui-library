@@ -18,14 +18,14 @@ export const LocalScreenShare = React.memo(
   (props: {
     localParticipant: VideoGalleryLocalParticipant;
     renderElement?: HTMLElement;
-    isReceiving?: boolean;
+    isAvailable?: boolean;
     onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
     onDisposeLocalScreenShareStreamView?: () => Promise<void>;
   }) => {
     const {
       localParticipant,
       renderElement,
-      isReceiving,
+      isAvailable,
       onCreateLocalStreamView,
       onDisposeLocalScreenShareStreamView
     } = props;
@@ -57,7 +57,7 @@ export const LocalScreenShare = React.memo(
         isMuted={localParticipant?.isMuted}
         renderElement={
           renderElement ? (
-            <StreamMedia videoStreamElement={renderElement} loadingState={isReceiving === false ? 'loading' : 'none'} />
+            <StreamMedia videoStreamElement={renderElement} loadingState={isAvailable === false ? 'loading' : 'none'} />
           ) : undefined
         }
         onRenderPlaceholder={() => <LoadingSpinner loadingMessage={loadingMessage} />}

@@ -689,7 +689,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     <LocalScreenShare
       localParticipant={localParticipant}
       renderElement={localParticipant.screenShareStream?.renderElement}
-      isReceiving={localParticipant.screenShareStream?.isReceiving}
+      isAvailable={localParticipant.screenShareStream?.isAvailable}
       onCreateLocalStreamView={onCreateLocalStreamView}
       onDisposeLocalScreenShareStreamView={onDisposeLocalScreenShareStreamView}
     />
