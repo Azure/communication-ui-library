@@ -70,14 +70,14 @@ export const getEditBoxMessagesInlineImages = (
     return;
   }
   const messageIds = Object.keys(editBoxInlineImageUploads || {});
-  const messagesInlineImages: Record<string, AttachmentMetadataInProgress[]> = {};
+  const messagesInlineImagesWithProgress: Record<string, AttachmentMetadataInProgress[]> = {};
   messageIds.map((messageId) => {
     const messageUploads = editBoxInlineImageUploads[messageId].map((upload) => {
       return upload.metadata;
     });
-    messagesInlineImages[messageId] = messageUploads;
+    messagesInlineImagesWithProgress[messageId] = messageUploads;
   });
-  return messagesInlineImages;
+  return messagesInlineImagesWithProgress;
 };
 
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
@@ -134,12 +134,12 @@ const inlineImageUploadHandler = async (
 
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 const generateUploadTask = async (
-  image: string,
+  imageAttributes: Record<string, string>,
   fileName: string,
   messageId: string,
   inlineImageUploadActionHandler: Dispatch<ImageActions>
 ): Promise<AttachmentUpload | undefined> => {
-  const imageData = await getInlineImageData(image);
+  const imageData = await getInlineImageData(imageAttributes.src);
   if (!imageData) {
     return;
   }
@@ -148,9 +148,9 @@ const generateUploadTask = async (
     image: imageData,
     taskId,
     metadata: {
-      id: taskId,
+      id: imageAttributes.id,
       name: fileName,
-      url: image,
+      url: imageAttributes.src,
       progress: 0
     },
     notifyUploadProgressChanged: (value: number) => {
@@ -187,7 +187,7 @@ const generateUploadTask = async (
  * @internal
  */
 export const onInsertInlineImageForEditBox = async (
-  image: string,
+  imageAttributes: Record<string, string>,
   fileName: string,
   messageId: string,
   adapter: ChatAdapter,
@@ -195,7 +195,7 @@ export const onInsertInlineImageForEditBox = async (
   chatCompositeStrings: ChatCompositeStrings
 ): Promise<void> => {
   const uploadTask: AttachmentUpload | undefined = await generateUploadTask(
-    image,
+    imageAttributes,
     fileName,
     messageId,
     handleEditBoxInlineImageUploadAction
@@ -217,14 +217,14 @@ export const onInsertInlineImageForEditBox = async (
  * @internal
  */
 export const onInsertInlineImageForSendBox = async (
-  image: string,
+  imageAttributes: Record<string, string>,
   fileName: string,
   adapter: ChatAdapter,
   handleSendBoxInlineImageUploadAction: Dispatch<ImageActions>,
   chatCompositeStrings: ChatCompositeStrings
 ): Promise<void> => {
   const uploadTask: AttachmentUpload | undefined = await generateUploadTask(
-    image,
+    imageAttributes,
     fileName,
     SEND_BOX_UPLOADS_KEY_VALUE,
     handleSendBoxInlineImageUploadAction
@@ -247,13 +247,20 @@ export const onInsertInlineImageForSendBox = async (
  * @internal
  */
 export const cancelInlineImageUpload = (
-  imageId: string,
-  imageUpload: AttachmentUpload | undefined,
+  imageAttributes: Record<string, string>,
+  imageUploads: Record<string, AttachmentUpload[]> | undefined,
   messageId: string,
   inlineImageUploadActionHandler: Dispatch<ImageActions>,
   adapter: ChatAdapter
 ): void => {
+  if (!imageUploads || !imageUploads[messageId]) {
+    deleteExistingInlineImageForEditBox(imageAttributes.id, messageId, adapter);
+    return;
+  }
+  const imageUpload = imageUploads[messageId].find((upload) => upload.metadata.url === imageAttributes.src);
+
   if (!imageUpload || !imageUpload?.metadata.id) {
+    deleteExistingInlineImageForEditBox(imageAttributes.id, messageId, adapter);
     return;
   }
 
@@ -264,55 +271,50 @@ export const cancelInlineImageUpload = (
   });
   // TODO: remove local blob
   if (imageUpload?.metadata.progress === 1) {
-    try {
-      adapter.deleteImage(imageId);
-    } catch (error) {
-      console.error(error);
+    deleteInlineImageFromServer(imageUpload?.metadata.id, adapter);
+  }
+};
+
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+const deleteInlineImageFromServer = (imageId: string, adapter: ChatAdapter): void => {
+  try {
+    adapter.deleteImage(imageId);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+// This function is used to delete the inline image that existed before editing starts
+const deleteExistingInlineImageForEditBox = (imageId: string, messageId: string, adapter: ChatAdapter): void => {
+  messageId !== SEND_BOX_UPLOADS_KEY_VALUE && deleteInlineImageFromServer(imageId, adapter);
+};
+
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+/**
+ * @internal
+ */
+export const updateContentStringWithUploadedInlineImages = (
+  content: string,
+  imageUploads: Record<string, AttachmentUpload[]> | undefined,
+  messageId: string = SEND_BOX_UPLOADS_KEY_VALUE
+): string => {
+  if (!imageUploads || !imageUploads[messageId]) {
+    return content;
+  }
+  const messageUploads = imageUploads[messageId];
+  const document = new DOMParser().parseFromString(content ?? '', 'text/html');
+  document.querySelectorAll('img').forEach((img) => {
+    const uploadInlineImage = messageUploads.find(
+      (upload) => !upload.metadata.error && upload.metadata.progress === 1 && upload.metadata.url === img.src
+    );
+
+    if (uploadInlineImage) {
+      img.id = uploadInlineImage.metadata.id;
+      img.src = uploadInlineImage.metadata.url ?? img.src;
     }
-  }
-};
+  });
+  content = document.body.innerHTML;
 
-/* @conditional-compile-remove(rich-text-editor-image-upload) */
-/**
- * @internal
- */
-export const onCancelInlineImageUploadHandlerForEditBox = (
-  imageId: string,
-  messageId: string,
-  editBoxInlineImageUploads: Record<string, AttachmentUpload[]> | undefined,
-  adapter: ChatAdapter,
-  handleEditBoxInlineImageUploadAction: Dispatch<ImageActions>
-): void => {
-  if (!editBoxInlineImageUploads) {
-    return;
-  }
-  const imageUpload = editBoxInlineImageUploads[messageId].find((upload) => upload.metadata.id === imageId);
-
-  cancelInlineImageUpload(imageId, imageUpload, messageId, handleEditBoxInlineImageUploadAction, adapter);
-};
-
-/* @conditional-compile-remove(rich-text-editor-image-upload) */
-/**
- * @internal
- */
-export const onCancelInlineImageUploadHandlerForSendBox = (
-  imageId: string,
-  sendBoxInlineImageUploads: Record<string, AttachmentUpload[]> | undefined,
-  adapter: ChatAdapter,
-  handleSendBoxInlineImageUploadAction: Dispatch<ImageActions>
-): void => {
-  if (!sendBoxInlineImageUploads) {
-    return;
-  }
-  const imageUpload = sendBoxInlineImageUploads[SEND_BOX_UPLOADS_KEY_VALUE].find(
-    (upload) => upload.metadata.id === imageId
-  );
-
-  cancelInlineImageUpload(
-    imageId,
-    imageUpload,
-    SEND_BOX_UPLOADS_KEY_VALUE,
-    handleSendBoxInlineImageUploadAction,
-    adapter
-  );
+  return content;
 };

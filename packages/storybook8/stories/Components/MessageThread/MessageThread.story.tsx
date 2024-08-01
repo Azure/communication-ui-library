@@ -27,6 +27,10 @@ import { Divider } from '@fluentui/react-components';
 import React, { useMemo, useRef, useState } from 'react';
 
 import {
+  _DEFAULT_INLINE_IMAGE_FILE_NAME,
+  _IMAGE_ATTRIBUTE_INLINE_IMAGE_FILE_NAME_KEY
+} from '../../../../react-composites/src/composites/common/constants';
+import {
   GenerateMockNewChatMessage,
   UserOne,
   GenerateMockNewChatMessageFromOthers,
@@ -44,7 +48,7 @@ import {
 const MessageThreadStory = (args): JSX.Element => {
   const [chatMessages, setChatMessages] =
     useState<(SystemMessage | CustomMessage | ChatMessage)[]>(GenerateMockChatMessages());
-  const [messagesInlineImages, setMessagesInlineImages] = useState<
+  const [messagesInlineImagesWithProgress, setMessagesInlineImagesWithProgress] = useState<
     Record<string, AttachmentMetadataInProgress[]> | undefined
   >();
   const dropdownMenuOptions = [
@@ -126,7 +130,7 @@ const MessageThreadStory = (args): JSX.Element => {
     }
     updatedChatMessages[msgIdx] = message;
     setChatMessages(updatedChatMessages);
-    setMessagesInlineImages(undefined);
+    setMessagesInlineImagesWithProgress(undefined);
     return Promise.resolve();
   };
 
@@ -192,29 +196,31 @@ const MessageThreadStory = (args): JSX.Element => {
 
   const richTextEditorOptions: RichTextEditBoxOptions = useMemo(() => {
     return {
-      onInsertInlineImage: (image: string, fileName: string, messageId: string) => {
-        const inlineImages = messagesInlineImages?.[messageId] ?? [];
-        const id = Math.floor(Math.random() * 1000000).toString();
+      onInsertInlineImage: (imageAttributes: Record<string, string>, messageId: string) => {
+        const inlineImagesWithProgress = messagesInlineImagesWithProgress?.[messageId] ?? [];
         const newImage: AttachmentMetadataInProgress = {
-          id,
-          name: fileName,
+          id: imageAttributes.id,
+          name: imageAttributes[_IMAGE_ATTRIBUTE_INLINE_IMAGE_FILE_NAME_KEY] ?? _DEFAULT_INLINE_IMAGE_FILE_NAME,
           progress: 1,
-          url: image,
+          url: imageAttributes.src,
           error: undefined
         };
-        setMessagesInlineImages({ ...messagesInlineImages, [messageId]: [...inlineImages, newImage] });
+        setMessagesInlineImagesWithProgress({
+          ...messagesInlineImagesWithProgress,
+          [messageId]: [...inlineImagesWithProgress, newImage]
+        });
       },
-      messagesInlineImages: messagesInlineImages,
-      onCancelInlineImageUpload: (image: string, messageId: string) => {
-        const inlineImages = messagesInlineImages?.[messageId];
-        if (!inlineImages) {
+      messagesInlineImagesWithProgress: messagesInlineImagesWithProgress,
+      onRemoveInlineImage: (imageAttributes: Record<string, string>, messageId: string) => {
+        const inlineImagesWithProgress = messagesInlineImagesWithProgress?.[messageId];
+        if (!inlineImagesWithProgress) {
           return;
         }
-        const filteredImages = inlineImages.filter((img) => img.url !== image);
-        setMessagesInlineImages({ ...messagesInlineImages, [messageId]: filteredImages });
+        const filteredImages = inlineImagesWithProgress.filter((img) => img.id !== imageAttributes.id);
+        setMessagesInlineImagesWithProgress({ ...messagesInlineImagesWithProgress, [messageId]: filteredImages });
       }
     };
-  }, [messagesInlineImages]);
+  }, [messagesInlineImagesWithProgress]);
 
   const onSendHandler = (): void => {
     switch (selectedMessageType.key) {
@@ -255,7 +261,7 @@ const MessageThreadStory = (args): JSX.Element => {
         onRenderMessage={onRenderMessage}
         inlineImageOptions={inlineImageOptions}
         onUpdateMessage={onUpdateMessageCallback}
-        onCancelEditMessage={() => setMessagesInlineImages(undefined)}
+        onCancelEditMessage={() => setMessagesInlineImagesWithProgress(undefined)}
         richTextEditorOptions={args.richTextEditor ? richTextEditorOptions : undefined}
         onRenderAvatar={(userId?: string) => {
           return (

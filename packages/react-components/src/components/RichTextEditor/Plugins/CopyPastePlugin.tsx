@@ -3,9 +3,13 @@
 import type { PluginEvent, EditorPlugin, IEditor } from 'roosterjs-content-model-types';
 import { ContentChangedEventSource, PluginEventType } from '../../utils/RichTextEditorUtils';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
+import { getInlineImageAttributes } from '../../utils/RichTextEditorUtils';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { _base64ToBlob } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { removeImageTags } from '@internal/acs-ui-common';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+import { v1 as generateGUID } from 'uuid';
 
 /**
  * CopyPastePlugin is a plugin for handling copy and paste events in the editor.
@@ -16,7 +20,7 @@ export default class CopyPastePlugin implements EditorPlugin {
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   onPaste?: (event: { content: DocumentFragment }) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  onInsertInlineImage?: (imageUrl: string, imageFileName: string) => void;
+  onInsertInlineImage?: (imageAttributes: Record<string, string>) => void;
 
   getName(): string {
     return 'CopyPastePlugin';
@@ -75,12 +79,12 @@ export const handleBeforePasteEvent = (
  */
 export const handleInlineImage = (
   event: PluginEvent,
-  onInsertInlineImage?: (image: string, fileName: string) => void
+  onInsertInlineImage?: (imageAttributes: Record<string, string>, fileName?: string) => void
 ): void => {
   if (event.eventType === PluginEventType.BeforePaste && event.pasteType === 'normal' && onInsertInlineImage) {
     event.fragment.querySelectorAll('img').forEach((image) => {
       const clipboardImage = event.clipboardData.image;
-      const fileName = clipboardImage?.name || clipboardImage?.type.replace('/', '.') || 'image.png';
+      const fileName = clipboardImage?.name || clipboardImage?.type.replace('/', '.');
       // If the image src is an external url, call the onInsertInlineImage callback with the url.
       let imageUrl = image.src;
       if (image.src.startsWith('data:image/')) {
@@ -88,10 +92,16 @@ export const handleInlineImage = (
         imageUrl = URL.createObjectURL(blobImage);
       }
 
-      onInsertInlineImage(imageUrl, fileName);
-
       image.src = imageUrl;
       image.alt = image.alt || 'image';
+      // Assign a unique id to the image element so Contosos can identify the image element.
+      // We also use it internally such as in getRemovedInlineImages to compare images in the content with previous images
+      image.id = generateGUID();
+      image.dataset.imageFileName = fileName;
+
+      const imageAttributes = getInlineImageAttributes(image);
+
+      onInsertInlineImage(imageAttributes, fileName);
     });
   }
 };
