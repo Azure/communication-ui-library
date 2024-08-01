@@ -2,11 +2,11 @@
 // Licensed under the MIT License.
 
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
-import { AttachmentMetadataInProgress } from '@internal/acs-ui-common';
+import { AttachmentMetadataInProgress, _IMAGE_ATTRIBUTE_INLINE_IMAGE_FILE_NAME_KEY } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { AttachmentUpload, AttachmentUploadActionType, AttachmentUploadTask } from '../file-sharing/AttachmentUpload';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
-import { SEND_BOX_UPLOADS_KEY_VALUE } from '../../common/constants';
+import { _DEFAULT_INLINE_IMAGE_FILE_NAME, SEND_BOX_UPLOADS_KEY_VALUE } from '../../common/constants';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { ChatAdapter } from '../adapter/ChatAdapter';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
@@ -321,4 +321,16 @@ export const updateContentStringWithUploadedInlineImages = (
   content = document.body.innerHTML;
 
   return content;
+};
+
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+/**
+ * @internal
+ */
+export const getImageFileNameFromAttributes = (imageAttributes: Record<string, string>): string => {
+  const fileName = imageAttributes[_IMAGE_ATTRIBUTE_INLINE_IMAGE_FILE_NAME_KEY];
+  if (!fileName || fileName === '' || fileName === 'undefined' || fileName === 'null') {
+    return _DEFAULT_INLINE_IMAGE_FILE_NAME;
+  }
+  return fileName;
 };
