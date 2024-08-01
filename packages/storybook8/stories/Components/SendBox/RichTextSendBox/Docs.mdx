@@ -1,0 +1,72 @@
+import { Canvas, Meta, ArgTypes } from '@storybook/addon-docs';
+import { SingleLineBetaBanner } from '../../../BetaBanners/SingleLineBetaBanner';
+import { DetailedBetaBanner } from '../../../BetaBanners/DetailedBetaBanner';
+import { RichTextSendBox } from '@azure/communication-react';
+
+import RichTextSendBoxExampleText from '!!raw-loader!./snippets/RichTextSendBox.snippet.tsx';
+import RichTextSendBoxAttachmentUploadsExampleText from '!!raw-loader!./snippets/RichTextSendBoxAttachmentUploads.snippet.tsx';
+import RichTextSendBoxOnPasteCallbackExampleText from '!!raw-loader!./snippets/RichTextSendBoxOnPasteCallback.snippet.tsx';
+import RichTextSendBoxWithInlineImagesExampleText from '!!raw-loader!./snippets/RichTextSendBoxWithInlineImages.snippet.tsx';
+import RichTextSendBoxWithSystemMessageExampleText from '!!raw-loader!./snippets/RichTextSendBoxWithSystemMessage.snippet.tsx';
+
+import * as RichTextSendBoxStories from './index.stories';
+
+<Meta of={RichTextSendBoxStories} />
+
+<SingleLineBetaBanner />
+
+# Rich Text Send Box
+
+Component for composing messages with rich text formatting. RichTextSendBox has a callback for sending typing notification when user starts entering text. It also supports an optional message above the rich text editor.
+
+## Importing
+
+```ts
+import { RichTextSendBox } from '@azure/communication-react';
+```
+
+## Example
+
+<Canvas of={RichTextSendBoxStories.RichTextSendBoxSnippetDocsOnly} source={{ code: RichTextSendBoxExampleText }} />
+
+## Add a system message
+
+To add a system message, use the systemMessage property like in the example below.
+
+<Canvas
+  of={RichTextSendBoxStories.RichTextSendBoxWithSystemMessageSnippetDocsOnly}
+  source={{ code: RichTextSendBoxWithSystemMessageExampleText }}
+/>
+
+## Display File Uploads
+
+<DetailedBetaBanner />
+RichTextSendBox component provides UI for displaying AttachmentMetadataInProgress in the RichTextSendBox. This allows
+developers to implement a file sharing feature using the pure UI component with minimal effort. Developers can write
+their own attachment upload logic and utilize the UI provided by RichTextSendBox.
+<Canvas
+  of={RichTextSendBoxStories.RichTextSendBoxAttachmentUploadsSnippetDocsOnly}
+  source={{ code: RichTextSendBoxAttachmentUploadsExampleText }}
+/>
+
+## Enable Inserting Inline Images
+
+The RichTextSendBox component provides an `onInsertInlineImage` callback to handle an inline image that is inserted into the RichTextSendBox component. This callback can be used to implement custom logic, such as uploading the image to a server. After processing each inserted image in the callback, the results should be passed back to the component through the `inlineImages` prop. This prop will be used to render inline images in the RichTextSendBox and send them with the message.
+
+<Canvas
+  of={RichTextSendBoxStories.RichTextSendBoxWithInlineImagesSnippetDocsOnly}
+  source={{ code: RichTextSendBoxWithInlineImagesExampleText }}
+/>
+
+## Process pasted content
+
+RichTextSendBox provides `onPaste` callback for custom processing of the pasted content before it's inserted into the RichTextSendBox. This callback can be used to implement custom paste handling logic tailored to your application's needs. The example below shows how to remove images from pasted content.
+
+<Canvas
+  of={RichTextSendBoxStories.RichTextSendBoxOnPasteCallbackSnippetDocsOnly}
+  source={{ code: RichTextSendBoxOnPasteCallbackExampleText }}
+/>
+
+## Props
+
+<ArgTypes of={RichTextSendBox} />
