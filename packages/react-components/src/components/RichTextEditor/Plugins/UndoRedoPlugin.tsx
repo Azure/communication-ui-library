@@ -2,9 +2,12 @@
 // Licensed under the MIT License.
 import type { PluginEvent, EditorPlugin, IEditor, BeforeSetContentEvent } from 'roosterjs-content-model-types';
 import {
-  getInsertedInlineImages,
   PluginEventType,
   scrollToBottomRichTextEditor
+} from '../../utils/RichTextEditorUtils';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+import {
+  getInsertedInlineImages
 } from '../../utils/RichTextEditorUtils';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { getInlineImageAttributes } from '../../utils/RichTextEditorUtils';
