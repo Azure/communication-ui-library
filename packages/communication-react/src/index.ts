@@ -380,7 +380,7 @@ export { defaultAttachmentMenuAction } from '../../react-components/src';
 export type { ChatAttachmentType } from '../../react-components/src';
 export type { InlineImageOptions, InlineImage } from '../../react-components/src';
 /* @conditional-compile-remove(rich-text-editor) */
-export type { RichTextEditorOptions, RichTextEditBoxOptions, RichTextSendBoxOptions } from '../../react-components/src';
+export type { RichTextEditorOptions, RichTextEditBoxOptions } from '../../react-components/src';
 /* @conditional-compile-remove(PSTN-calls) */
 export type { HoldButtonProps, HoldButtonStrings } from '../../react-components/src';
 export type { VideoTileStrings } from '../../react-components/src';
