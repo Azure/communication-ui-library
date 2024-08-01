@@ -47,6 +47,7 @@ import {
 import { ContextualMenu, IContextualMenuItem, IContextualMenuProps, Theme } from '@fluentui/react';
 import { PlaceholderPlugin } from './Plugins/PlaceholderPlugin';
 import { getFormatState, setDirection } from 'roosterjs-content-model-api';
+import UndoRedoPlugin from './Plugins/UndoRedoPlugin';
 
 /**
  * Style props for {@link RichTextEditor}.
@@ -219,6 +220,29 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     return new CopyPastePlugin();
   }, []);
 
+  const onChangeContent = useCallback(
+    (/* @conditional-compile-remove(rich-text-editor-image-upload) */ shouldUpdateInlineImages?: boolean) => {
+      if (editor.current === null) {
+        return;
+      }
+      const content = exportContent(editor.current);
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */
+      let removedInlineImages: Record<string, string>[] = [];
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */
+      if (shouldUpdateInlineImages) {
+        /* @conditional-compile-remove(rich-text-editor-image-upload) */
+        removedInlineImages = getRemovedInlineImages(content, previousInlineImages);
+      }
+
+      onChange &&
+        onChange(content, /* @conditional-compile-remove(rich-text-editor-image-upload) */ removedInlineImages);
+
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */
+      setPreviousInlineImages(getPreviousInlineImages(content));
+    },
+    [onChange, /* @conditional-compile-remove(rich-text-editor-image-upload) */ previousInlineImages]
+  );
+
   useEffect(() => {
     // don't set callback in plugin constructor to update callback without plugin recreation
     updatePlugin.onUpdate = (
@@ -257,6 +281,10 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     /* @conditional-compile-remove(rich-text-editor-image-upload) */ inlineImageLocalBlobs
   ]);
 
+  const undoRedoPlugin = useMemo(() => {
+    return new UndoRedoPlugin();
+  }, []);
+
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   useEffect(() => {
     copyPastePlugin.onInsertInlineImage = (imageAttributes: Record<string, string>) => {
@@ -264,7 +292,14 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
       setInlineImageLocalBlobs({ ...inlineImageLocalBlobs, [id]: src });
       onInsertInlineImage && onInsertInlineImage(imageAttributes);
     };
-  }, [copyPastePlugin, inlineImageLocalBlobs, onInsertInlineImage]);
+    undoRedoPlugin.onInsertInlineImage = onInsertInlineImage;
+  }, [copyPastePlugin, inlineImageLocalBlobs, onInsertInlineImage, undoRedoPlugin]);
+
+  useEffect(() => {
+    undoRedoPlugin.onUpdateContent = () => {
+      onChangeContent(/* @conditional-compile-remove(rich-text-editor-image-upload) */ true);
+    };
+  }, [onChangeContent, undoRedoPlugin]);
 
   const keyboardInputPlugin = useMemo(() => {
     return new KeyboardInputPlugin();
@@ -328,7 +363,8 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
       shortcutPlugin,
       // contextPlugin and tableEditMenuProvider allow to show insert/delete menu for the table
       contextMenuPlugin,
-      tableContextMenuPlugin
+      tableContextMenuPlugin,
+      undoRedoPlugin
     ];
   }, [
     onContextMenuRender,
@@ -338,7 +374,8 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     updatePlugin,
     copyPastePlugin,
     toolbarPlugin,
-    tableContextMenuPlugin
+    tableContextMenuPlugin,
+    undoRedoPlugin
   ]);
 
   const announcerStringGetter = useCallback(
