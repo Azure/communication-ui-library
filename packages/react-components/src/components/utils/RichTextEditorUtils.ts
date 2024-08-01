@@ -133,6 +133,7 @@ export const cleanAllLocalBlobs = (currentLocalBlobMap: Record<string, string>):
   });
 };
 
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
 const removeSingleLocalBlob = (currentLocalBlobMap: Record<string, string>, imageId: string): void => {
   const blobUrl = currentLocalBlobMap[imageId];
   if (blobUrl) {
