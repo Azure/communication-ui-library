@@ -88,7 +88,6 @@ export const getRemovedInlineImages = (
 ): Record<string, string>[] => {
   const document = new DOMParser().parseFromString(content ?? '', 'text/html');
   const currentContentIds = Array.from(document.querySelectorAll('img')).map((img) => img.id);
-  // if check is updated, also update getInsertedInlineImages
   previousInlineImages = previousInlineImages?.filter((img) => !currentContentIds?.includes(img.id));
 
   const removedInlineImages = [...previousInlineImages];
