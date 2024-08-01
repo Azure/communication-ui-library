@@ -20,13 +20,10 @@ import { _AttachmentUploadCards } from '../../Attachment/AttachmentUploadCards';
 /* @conditional-compile-remove(file-sharing-acs) */
 import { AttachmentMetadata } from '@internal/acs-ui-common';
 import { useChatMessageRichTextEditContainerStyles } from '../../styles/ChatMessageComponent.styles';
-import { MAXIMUM_LENGTH_OF_MESSAGE } from '../../utils/SendBoxUtils';
+import { MAXIMUM_LENGTH_OF_MESSAGE, modifyInlineImagesInContentString } from '../../utils/SendBoxUtils';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import {
-  cancelInlineImageUpload,
   hasIncompleteAttachmentUploads,
-  insertImagesToContentString,
-  isAttachmentUploadCompleted,
   removeBrokenImageContentAndClearImageSizeStyles
 } from '../../utils/SendBoxUtils';
 import {
@@ -53,6 +50,8 @@ import { attachmentUploadCardsStyles } from '../../styles/SendBox.styles';
 import { SendBoxErrorBarError, SendBoxErrorBarType } from '../../SendBoxErrorBar';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { BROKEN_IMAGE_SVG_DATA } from '../../styles/Common.style';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+import { getPreviousInlineImages } from '../../utils/RichTextEditorUtils';
 
 /** @private */
 export type ChatMessageComponentAsRichTextEditBoxProps = {
@@ -67,11 +66,11 @@ export type ChatMessageComponentAsRichTextEditBoxProps = {
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   onPaste?: (event: { content: DocumentFragment }) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  onCancelInlineImageUpload?: (imageId: string, messageId: string) => void;
+  onRemoveInlineImage?: (imageAttributes: Record<string, string>, messageId: string) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  onInsertInlineImage?: (imageUrl: string, imageFileName: string, messageId: string) => void;
+  onInsertInlineImage?: (imageAttributes: Record<string, string>, messageId: string) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  inlineImages?: AttachmentMetadataInProgress[];
+  inlineImagesWithProgress?: AttachmentMetadataInProgress[];
 };
 
 /**
@@ -90,14 +89,19 @@ export const ChatMessageComponentAsRichTextEditBox = (
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
     onInsertInlineImage,
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    inlineImages,
+    inlineImagesWithProgress,
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    onCancelInlineImageUpload
+    onRemoveInlineImage
   } = props;
+
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  const [initialInlineImages, setInitialInlineImages] = useState<Record<string, string>[]>([]);
 
   const initialContent = useMemo(() => {
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
     const content = message.content;
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    setInitialInlineImages(getPreviousInlineImages(content));
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
     const document = new DOMParser().parseFromString(content ?? '', 'text/html');
     // The broken image element is a div element with all the attributes of the original image element.
@@ -142,8 +146,8 @@ export const ChatMessageComponentAsRichTextEditBox = (
 
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   const imageUploadErrorMessage = useMemo(() => {
-    return inlineImages?.filter((image) => image.error).pop()?.error?.message;
-  }, [inlineImages]);
+    return inlineImagesWithProgress?.filter((image) => image.error).pop()?.error?.message;
+  }, [inlineImagesWithProgress]);
 
   const submitEnabled = messageState === 'OK';
 
@@ -201,7 +205,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
     setAttachmentUploadsPendingError(undefined);
 
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    if (hasIncompleteAttachmentUploads(inlineImages)) {
+    if (hasIncompleteAttachmentUploads(inlineImagesWithProgress)) {
       setAttachmentUploadsPendingError({
         message: strings.imageUploadsPendingError,
         timestamp: Date.now(),
@@ -213,22 +217,22 @@ export const ChatMessageComponentAsRichTextEditBox = (
     let content = textValue;
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
     content = removeBrokenImageContentAndClearImageSizeStyles(content);
+    let initInlineImages: Record<string, string>[] = [];
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    if (isAttachmentUploadCompleted(inlineImages)) {
-      insertImagesToContentString(textValue, inlineImages, (content) => {
-        onSubmit(content, /* @conditional-compile-remove(file-sharing-acs) */ attachmentMetadata || []);
-      });
-      return;
-    }
-    // it's very important to pass an empty attachment here
-    // so when user removes all attachments, UI can reflect it instantly
-    // if you set it to undefined, the attachments pre-edited would still be there
-    // until edit message event is received
-    onSubmit(content, /* @conditional-compile-remove(file-sharing-acs) */ attachmentMetadata || []);
+    initInlineImages = initialInlineImages ?? [];
+    modifyInlineImagesInContentString(content, initInlineImages, (content: string) => {
+      // it's very important to pass an empty attachment here
+      // so when user removes all attachments, UI can reflect it instantly
+      // if you set it to undefined, the attachments pre-edited would still be there
+      // until edit message event is received
+      onSubmit(content, /* @conditional-compile-remove(file-sharing-acs) */ attachmentMetadata || []);
+    });
   }, [
     submitEnabled,
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    inlineImages,
+    inlineImagesWithProgress,
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    initialInlineImages,
     textValue,
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
     strings.imageUploadsPendingError,
@@ -309,22 +313,18 @@ export const ChatMessageComponentAsRichTextEditBox = (
   const onChangeHandler = useCallback(
     (
       content: string | undefined,
-      /* @conditional-compile-remove(rich-text-editor-image-upload) */ imageSrcArray?: Array<string>
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */
+      removedInlineImages?: Record<string, string>[]
     ) => {
       /* @conditional-compile-remove(rich-text-editor-image-upload) */
-      cancelInlineImageUpload({
-        imageSrcArray,
-        inlineImages,
-        messageId: message.messageId,
-        editBoxOnCancelInlineImageUpload: onCancelInlineImageUpload,
-        sendBoxOnCancelInlineImageUpload: undefined
+      removedInlineImages?.forEach((removedInlineImage: Record<string, string>) => {
+        onRemoveInlineImage && onRemoveInlineImage(removedInlineImage, message.messageId);
       });
       setText(content);
     },
     [
       setText,
-      /* @conditional-compile-remove(rich-text-editor-image-upload) */ inlineImages,
-      /* @conditional-compile-remove(rich-text-editor-image-upload) */ onCancelInlineImageUpload,
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */ onRemoveInlineImage,
       /* @conditional-compile-remove(rich-text-editor-image-upload) */ message.messageId
     ]
   );
@@ -366,8 +366,8 @@ export const ChatMessageComponentAsRichTextEditBox = (
           /* @conditional-compile-remove(rich-text-editor-image-upload) */
           onInsertInlineImage={
             onInsertInlineImage
-              ? (imageUrl: string, imageFileName: string) => {
-                  onInsertInlineImage(imageUrl, imageFileName, message.messageId);
+              ? (imageAttributes: Record<string, string>) => {
+                  onInsertInlineImage(imageAttributes, message.messageId);
                 }
               : undefined
           }

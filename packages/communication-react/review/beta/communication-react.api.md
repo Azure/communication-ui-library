@@ -356,6 +356,8 @@ export interface BreakoutRoomsState {
     // (undocumented)
     assignedBreakoutRoom?: BreakoutRoom;
     // (undocumented)
+    breakoutRoomOriginCallId?: string;
+    // (undocumented)
     breakoutRoomSettings?: BreakoutRoomsSettings;
 }
 
@@ -452,6 +454,7 @@ export interface CallAdapterCallOperations {
     removeParticipant(participant: CommunicationIdentifier): Promise<void>;
     // @beta
     resumeCall(): Promise<void>;
+    returnFromBreakoutRoom(): Promise<void>;
     sendDtmfTone(dtmfTone: DtmfTone_2): Promise<void>;
     setCaptionLanguage(language: string): Promise<void>;
     setSpokenLanguage(language: string): Promise<void>;
@@ -710,7 +713,7 @@ export type CallCompositeIcons = {
     StopAllSpotlightMenuButton?: JSX.Element;
 };
 
-// @public
+// @beta
 export type CallCompositeLoaderProps = {
     userId: string;
     token: string;
@@ -1190,6 +1193,7 @@ export interface CallWithChatAdapterManagement {
     removeResourceFromCache(resourceDetails: ResourceDetails): void;
     // @beta
     resumeCall: () => Promise<void>;
+    returnFromBreakoutRoom(): Promise<void>;
     sendDtmfTone: (dtmfTone: DtmfTone_2) => Promise<void>;
     sendMessage(content: string, options?: SendMessageOptions | /* @conditional-compile-remove(file-sharing-acs) */ MessageOptions): Promise<void>;
     sendReadReceipt(chatMessageId: string): Promise<void>;
@@ -1443,6 +1447,15 @@ export type CallWithChatCompositeIcons = {
     ParticipantItemOptionsHovered?: JSX.Element;
     PeoplePaneMoreButton?: JSX.Element;
     StopAllSpotlightMenuButton?: JSX.Element;
+};
+
+// @beta
+export type CallWithChatCompositeLoaderProps = {
+    userId: string;
+    token: string;
+    displayName: string;
+    endpoint: string;
+    locator: CallAndChatLocator;
 };
 
 // @public
@@ -1864,6 +1877,15 @@ export type ChatCompositeIcons = {
     SendBoxSend?: JSX.Element;
     SendBoxSendHovered?: JSX.Element;
     SendBoxAttachFile?: JSX.Element;
+};
+
+// @beta
+export type ChatCompositeLoaderProps = {
+    userId: string;
+    token: string;
+    displayName?: string;
+    endpoint: string;
+    threadId: string;
 };
 
 // @public
@@ -3355,13 +3377,19 @@ export interface JumpToNewMessageButtonProps {
 // @public
 export const lightTheme: PartialTheme & CallingTheme;
 
-// @public
+// @beta
 export const loadCallComposite: (adapterArgs: CallCompositeLoaderProps, htmlElement: HTMLElement | null, props?: CallCompositeOptions) => Promise<CallAdapter | undefined>;
+
+// @beta
+export const loadCallWithChatComposite: (args: CallWithChatCompositeLoaderProps, htmlElement: HTMLElement | null, props: CallWithChatCompositeOptions) => Promise<CallWithChatAdapter | undefined>;
+
+// @beta
+export const loadChatComposite: (args: ChatCompositeLoaderProps, htmlElement: HTMLElement | null, props: ChatCompositeOptions) => Promise<ChatAdapter | undefined>;
 
 // @public
 export type LoadingState = 'loading' | 'none';
 
-// @public
+// @beta
 export const loadOutboundCallComposite: (adapterArgs: OutboundCallCompositeLoaderProps, htmlElement: HTMLElement | null, props?: CallCompositeOptions) => Promise<CallAdapter | undefined>;
 
 // @public
@@ -3850,7 +3878,7 @@ export interface OptionsDevice {
     name: string;
 }
 
-// @public
+// @beta
 export type OutboundCallCompositeLoaderProps = {
     userId: string;
     token: string;
@@ -4207,9 +4235,9 @@ export type ResourceFetchResult = {
 
 // @beta
 export interface RichTextEditBoxOptions extends RichTextEditorOptions {
-    messagesInlineImages?: Record<string, AttachmentMetadataInProgress[]>;
-    onCancelInlineImageUpload?: (imageId: string, messageId: string) => void;
-    onInsertInlineImage?: (imageUrl: string, imageFileName: string, messageId: string) => void;
+    messagesInlineImagesWithProgress?: Record<string, AttachmentMetadataInProgress[]>;
+    onInsertInlineImage?: (imageAttributes: Record<string, string>, messageId: string) => void;
+    onRemoveInlineImage?: (imageAttributes: Record<string, string>, messageId: string) => void;
 }
 
 // @beta
@@ -4223,24 +4251,17 @@ export interface RichTextEditorOptions {
 export const RichTextSendBox: (props: RichTextSendBoxProps) => JSX.Element;
 
 // @beta
-export interface RichTextSendBoxOptions extends RichTextEditorOptions {
-    inlineImages?: AttachmentMetadataInProgress[];
-    onCancelInlineImageUpload?: (imageId: string) => void;
-    onInsertInlineImage?: (imageUrl: string, imageFileName: string) => void;
-}
-
-// @beta
 export interface RichTextSendBoxProps {
     attachments?: AttachmentMetadataInProgress[];
     autoFocus?: 'sendBoxTextField';
     disabled?: boolean;
-    inlineImages?: AttachmentMetadataInProgress[];
+    inlineImagesWithProgress?: AttachmentMetadataInProgress[];
     onCancelAttachmentUpload?: (attachmentId: string) => void;
-    onCancelInlineImageUpload?: (imageId: string) => void;
-    onInsertInlineImage?: (imageUrl: string, imageFileName: string) => void;
+    onInsertInlineImage?: (imageAttributes: Record<string, string>) => void;
     onPaste?: (event: {
         content: DocumentFragment;
     }) => void;
+    onRemoveInlineImage?: (imageAttributes: Record<string, string>) => void;
     onSendMessage: (content: string, options?: MessageOptions) => Promise<void>;
     onTyping?: () => Promise<void>;
     strings?: Partial<RichTextSendBoxStrings>;
