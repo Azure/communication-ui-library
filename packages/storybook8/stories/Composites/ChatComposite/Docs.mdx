@@ -1,4 +1,5 @@
-import { Canvas, Meta, Source } from '@storybook/blocks';
+import { Canvas, Meta, Source, ArgTypes } from '@storybook/blocks';
+import { ChatComposite } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
 import { SingleLineBetaBanner } from '../../BetaBanners/SingleLineBetaBanner';
 
@@ -155,6 +156,6 @@ The insert inline images feature is only supported in the Teams Interop chats. P
 
 <Source code={richTextEditorExampleText} />
 
-# Chat Composite Props
+## Props
 
-`props`
+<ArgTypes of={ChatComposite} />
