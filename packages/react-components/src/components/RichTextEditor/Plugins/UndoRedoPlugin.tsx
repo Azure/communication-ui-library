@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-import type { PluginEvent, EditorPlugin, IEditor, BeforeSetContentEvent } from 'roosterjs-content-model-types';
+import type { PluginEvent, EditorPlugin, IEditor } from 'roosterjs-content-model-types';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+import type { BeforeSetContentEvent } from 'roosterjs-content-model-types';
 import {
   PluginEventType,
   scrollToBottomRichTextEditor
@@ -65,6 +67,7 @@ export default class UndoRedoPlugin implements EditorPlugin {
   }
 }
 
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
 const handleBeforeSetEvent = (
   event: BeforeSetContentEvent,
   editor: IEditor,
