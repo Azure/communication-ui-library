@@ -23,3 +23,17 @@ export const CHAT_CONTAINER_MIN_WIDTH_REM = 17.5;
  * @private
  */
 export const SEND_BOX_UPLOADS_KEY_VALUE = 'send-box';
+
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+/**
+ * Default rich text editor inline image file name
+ * @internal
+ */
+export const _DEFAULT_INLINE_IMAGE_FILE_NAME = 'image.png';
+
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+/**
+ * The key for the rich text editor inline image file name attribute
+ * @internal
+ */
+export const _IMAGE_ATTRIBUTE_INLINE_IMAGE_FILE_NAME_KEY = 'data-image-file-name';

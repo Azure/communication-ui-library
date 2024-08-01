@@ -37,6 +37,8 @@ import { RichTextToolbarPlugin } from './Plugins/RichTextToolbarPlugin';
 import { ContextMenuPlugin } from './Plugins/ContextMenuPlugin';
 import { TableEditContextMenuProvider } from './Plugins/TableEditContextMenuProvider';
 import { borderApplier, dataSetApplier } from '../utils/RichTextEditorUtils';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+import { getPreviousInlineImages, getRemovedInlineImages } from '../utils/RichTextEditorUtils';
 import { ContextualMenu, IContextualMenuItem, IContextualMenuProps, Theme } from '@fluentui/react';
 import { PlaceholderPlugin } from './Plugins/PlaceholderPlugin';
 import { getFormatState, setDirection } from 'roosterjs-content-model-api';
@@ -59,7 +61,10 @@ export interface RichTextEditorStyleProps {
 export interface RichTextEditorProps {
   // the initial content of editor that is set when editor is created (e.g. when editing a message)
   initialContent?: string;
-  onChange: (newValue?: string, imageSrcArray?: Array<string>) => void;
+  onChange: (
+    newValue?: string,
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */ removedInlineImages?: Record<string, string>[]
+  ) => void;
   onKeyDown?: (ev: KeyboardEvent) => void;
   // update the current content of the rich text editor
   onContentModelUpdate?: (contentModel: ContentModelDocument | undefined) => void;
@@ -72,7 +77,7 @@ export interface RichTextEditorProps {
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   onPaste?: (event: { content: DocumentFragment }) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  onInsertInlineImage?: (imageUrl: string, imageFileName: string) => void;
+  onInsertInlineImage?: (imageAttributes: Record<string, string>) => void;
 }
 
 /**
@@ -122,6 +127,9 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
   const theme = useTheme();
   const [contextMenuProps, setContextMenuProps] = useState<IContextualMenuProps | null>(null);
   const previousThemeDirection = useRef(themeDirection(theme));
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  // This will be set when the editor is initialized and when the content is updated.
+  const [previousInlineImages, setPreviousInlineImages] = useState<Record<string, string>[]>([]);
 
   useImperativeHandle(ref, () => {
     return {
@@ -131,6 +139,8 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
         }
       },
       setEmptyContent() {
+        /* @conditional-compile-remove(rich-text-editor-image-upload) */
+        setPreviousInlineImages([]);
         if (editor.current) {
           // remove all content from the editor and update the model
           // ContentChanged event will be sent by RoosterJS automatically
@@ -191,17 +201,38 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
 
   useEffect(() => {
     // don't set callback in plugin constructor to update callback without plugin recreation
-    updatePlugin.onUpdate = (event: string, imageSrcArray?: Array<string>) => {
+    updatePlugin.onUpdate = (
+      event: string,
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */ shouldUpdateInlineImages?: boolean
+    ) => {
       if (editor.current === null) {
         return;
       }
       if (event === UpdateEvent.Blur || event === UpdateEvent.Dispose) {
         onContentModelUpdate && onContentModelUpdate(editor.current.getContentModelCopy('disconnected'));
       } else {
-        onChange && onChange(exportContent(editor.current), imageSrcArray);
+        const content = exportContent(editor.current);
+        /* @conditional-compile-remove(rich-text-editor-image-upload) */
+        let removedInlineImages: Record<string, string>[] = [];
+        /* @conditional-compile-remove(rich-text-editor-image-upload) */
+        if (shouldUpdateInlineImages) {
+          /* @conditional-compile-remove(rich-text-editor-image-upload) */
+          removedInlineImages = getRemovedInlineImages(content, previousInlineImages);
+        }
+
+        onChange &&
+          onChange(content, /* @conditional-compile-remove(rich-text-editor-image-upload) */ removedInlineImages);
+
+        /* @conditional-compile-remove(rich-text-editor-image-upload) */
+        setPreviousInlineImages(getPreviousInlineImages(content));
       }
     };
-  }, [onChange, onContentModelUpdate, updatePlugin]);
+  }, [
+    onChange,
+    onContentModelUpdate,
+    updatePlugin,
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */ previousInlineImages
+  ]);
 
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   useEffect(() => {
@@ -298,6 +329,11 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
   );
 
   useEffect(() => {
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    const prevInlineImage = getPreviousInlineImages(initialContent);
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    setPreviousInlineImages(prevInlineImage);
+
     const initialModel = createEditorInitialModel(initialContent, contentModel);
     if (editorDiv.current) {
       editor.current = new Editor(editorDiv.current, {

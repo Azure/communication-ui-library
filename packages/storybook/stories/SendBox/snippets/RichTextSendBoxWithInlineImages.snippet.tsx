@@ -1,32 +1,34 @@
 import { RichTextSendBox, FluentThemeProvider, AttachmentMetadataInProgress } from '@azure/communication-react';
 import React, { useState } from 'react';
+import { _DEFAULT_INLINE_IMAGE_FILE_NAME } from '../../../../react-composites/src/composites/common/constants';
 
 export const RichTextSendBoxWithInlineImagesExample: () => JSX.Element = () => {
-  const [inlineImages, setInlineImages] = useState<AttachmentMetadataInProgress[] | undefined>();
+  const [inlineImagesWithProgress, setInlineImagesWithProgress] = useState<
+    AttachmentMetadataInProgress[] | undefined
+  >();
 
   return (
     <FluentThemeProvider>
       <div style={{ width: '31.25rem' }}>
         <RichTextSendBox
           onSendMessage={async () => {
-            setInlineImages(undefined);
+            setInlineImagesWithProgress(undefined);
             return;
           }}
-          onInsertInlineImage={(image: string, fileName: string) => {
-            const id = inlineImages?.length ? (inlineImages.length + 1).toString() : '1';
+          onInsertInlineImage={(imageAttributes: Record<string, string>) => {
             const newImage = {
-              id,
-              name: fileName,
+              id: imageAttributes.id,
+              name: imageAttributes['data-image-file-name'] ?? _DEFAULT_INLINE_IMAGE_FILE_NAME,
               progress: 1,
-              url: image,
+              url: imageAttributes.src,
               error: undefined
             };
-            setInlineImages([...(inlineImages ?? []), newImage]);
+            setInlineImagesWithProgress([...(inlineImagesWithProgress ?? []), newImage]);
           }}
-          inlineImages={inlineImages}
-          onCancelInlineImageUpload={(imageId: string) => {
-            const filteredInlineImages = inlineImages?.filter((image) => image.id !== imageId);
-            setInlineImages(filteredInlineImages);
+          inlineImagesWithProgress={inlineImagesWithProgress}
+          onRemoveInlineImage={(imageAttributes: Record<string, string>) => {
+            const filteredInlineImages = inlineImagesWithProgress?.filter((image) => image.id !== imageAttributes.id);
+            setInlineImagesWithProgress(filteredInlineImages);
           }}
         />
       </div>
