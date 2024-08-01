@@ -23,12 +23,7 @@ export const useTrackedCapabilityChangedNotifications = (
   const [trackedCapabilityChangedNotifications, setTrackedCapabilityChangedNotifications] =
     useState<TrackedCapabilityChangedNotifications>({});
 
-  // Initialize a share screen capability changed notification with 'RoleChanged' reason so that the initial
-  // share screen capability changed info from the Calling SDK when joining Teams interop will be ignored because
-  // being able to share screen is assumed by default. This is inline with what Teams is doing.
-  const activeNotifications = useRef<LatestCapabilityChangedNotificationRecord>({
-    shareScreen: { capabilityName: 'shareScreen', isPresent: true, changedReason: 'RoleChanged' }
-  });
+  const activeNotifications = useRef<LatestCapabilityChangedNotificationRecord>({});
 
   useEffect(() => {
     activeNotifications.current = updateLatestCapabilityChangedNotificationMap(
@@ -163,6 +158,31 @@ const updateLatestCapabilityChangedNotificationMap = (
     ) {
       continue;
     }
+
+    // All initial values of capabilities are not present with reason 'FeatureNotSupported'. So we should not show a
+    // notification for them when they initially become present at the start of the call
+    const oldCapabilityValue = capabilitiesChangedInfoAndRole.capabilitiesChangeInfo.oldValue[capabilityName];
+    if (
+      newCapabilityValue.isPresent === true &&
+      oldCapabilityValue?.isPresent === false &&
+      oldCapabilityValue?.reason === 'FeatureNotSupported' &&
+      capabilitiesChangedInfoAndRole.capabilitiesChangeInfo.reason === 'MeetingOptionOrOrganizerPolicyChanged'
+    ) {
+      continue;
+    }
+
+    // Do not show the first time the screenshare capability is present when the user's role is resolved to mirror
+    // Teams behaviour
+    if (
+      capabilityName === 'shareScreen' &&
+      activeNotifications['shareScreen'] === undefined &&
+      newCapabilityValue.isPresent === true &&
+      oldCapabilityValue?.isPresent === false &&
+      capabilitiesChangedInfoAndRole.capabilitiesChangeInfo.reason === 'RoleChanged'
+    ) {
+      continue;
+    }
+
     const newCapabilityChangeNotification: CapabalityChangedNotification = {
       capabilityName: capabilityName,
       isPresent: newCapabilityValue.isPresent,
