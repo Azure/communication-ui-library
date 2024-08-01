@@ -592,7 +592,12 @@ export interface RichTextEditBoxOptions extends RichTextEditorOptions {
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   /**
    * Optional Record of type {@link AttachmentMetadataInProgress}
-   * to provide progress and error info for inline images inserted in the MessageThread's edit boxes.
+   * to render the errorBar for inline images inserted in the MessageThread's edit boxes when:
+   *   - there is an error provided in the messagesInlineImagesWithProgress
+   *   - progress is less than 1 when the send button is clicked
+   *   - content html string is longer than the max allowed length.
+   *     (Note that the id and the url prop of the messagesInlineImagesWithProgress will be used as the id and src attribute of the content html
+   *     when calculating the content length, only for the purpose of displaying the content length overflow error.)
    */
   messagesInlineImagesWithProgress?: Record<string, AttachmentMetadataInProgress[]>;
 }
