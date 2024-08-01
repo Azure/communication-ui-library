@@ -3,6 +3,8 @@
 import type { PluginEvent, EditorPlugin, IEditor } from 'roosterjs-content-model-types';
 import { ContentChangedEventSource, PluginEventType } from '../../utils/RichTextEditorUtils';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
+import { getInlineImageAttributes } from '../../utils/RichTextEditorUtils';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { _base64ToBlob, removeImageTags, _IMAGE_ATTRIBUTE_INLINE_IMAGE_FILE_NAME_KEY } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { v1 as generateGUID } from 'uuid';
