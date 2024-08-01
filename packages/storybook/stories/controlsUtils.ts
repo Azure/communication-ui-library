@@ -362,7 +362,7 @@ export const controlsToAdd = {
   participantItemMenuItemsStr: {
     control: 'text',
     name: 'Menu items (comma separated)',
-    defaultValue: 'You, Hal Jordan, Barry Allen, Bruce Wayne'
+    defaultValue: 'Mute, Remove'
   },
   participantNames: {
     control: 'text',
