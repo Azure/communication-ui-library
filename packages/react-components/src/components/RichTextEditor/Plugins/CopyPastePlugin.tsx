@@ -9,8 +9,6 @@ import {
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { getInlineImageAttributes } from '../../utils/RichTextEditorUtils';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
-import { getInlineImageAttributes } from '../../utils/RichTextEditorUtils';
-/* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { _base64ToBlob } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { removeImageTags } from '@internal/acs-ui-common';
