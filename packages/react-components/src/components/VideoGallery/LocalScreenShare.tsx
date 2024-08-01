@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useLocale } from '../../localization';
 import { CreateVideoStreamViewResult, VideoGalleryLocalParticipant, VideoStreamOptions } from '../../types';
 import { VideoTile } from '../VideoTile';
@@ -20,12 +20,26 @@ export const LocalScreenShare = React.memo(
     renderElement?: HTMLElement;
     isReceiving?: boolean;
     onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
+    onDisposeLocalScreenShareStreamView?: () => Promise<void>;
   }) => {
-    const { localParticipant, renderElement, isReceiving, onCreateLocalStreamView } = props;
+    const {
+      localParticipant,
+      renderElement,
+      isReceiving,
+      onCreateLocalStreamView,
+      onDisposeLocalScreenShareStreamView
+    } = props;
     const locale = useLocale();
     if (!renderElement) {
       onCreateLocalStreamView && onCreateLocalStreamView();
     }
+
+    useEffect(() => {
+      return () => {
+        // TODO: Isolate disposing behaviors for screenShare and videoStream
+        onDisposeLocalScreenShareStreamView && onDisposeLocalScreenShareStreamView();
+      };
+    }, [onDisposeLocalScreenShareStreamView]);
 
     if (!localParticipant || !localParticipant.isScreenSharingOn) {
       return null;
@@ -35,11 +49,7 @@ export const LocalScreenShare = React.memo(
       ? locale.strings.videoGallery.displayNamePlaceholder
       : localParticipant?.displayName;
 
-    const loadingMessage = displayName
-      ? _formatString(locale.strings.videoGallery.screenShareLoadingMessage, {
-          participant: displayName
-        })
-      : '';
+    const loadingMessage = locale.strings.videoGallery.localScreenShareLoadingMessage;
 
     return (
       <VideoTile

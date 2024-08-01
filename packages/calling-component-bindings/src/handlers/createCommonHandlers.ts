@@ -77,6 +77,7 @@ export interface CommonCallingHandlers {
   onDisposeLocalStreamView: () => Promise<void>;
   onDisposeRemoteVideoStreamView: (userId: string) => Promise<void>;
   onDisposeRemoteScreenShareStreamView: (userId: string) => Promise<void>;
+  onDisposeLocalScreenShareStreamView: () => Promise<void>;
   onSendDtmfTone: (dtmfTone: DtmfTone) => Promise<void>;
   onRemoveParticipant(userId: string): Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */
@@ -372,7 +373,7 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
         createViewResult = await callClient.createView(call.id, undefined, localStream, options);
       }
 
-      if (localScreenSharingStream && !localScreenSharingStream.view) {
+      if (localScreenSharingStream && !localScreenSharingStream.view && call.isScreenSharingOn) {
         // Hardcoded `scalingMode` since it is highly unlikely that CONTOSO would ever want to use a different scaling mode for screenshare.
         // Using `Crop` would crop the contents of screenshare and `Stretch` would warp it.
         // `Fit` is the only mode that maintains the integrity of the screen being shared.
@@ -514,6 +515,20 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
 
       if (screenShareStream && screenShareStream.view) {
         callClient.disposeView(call.id, participant.identifier, screenShareStream);
+      }
+    };
+
+    const onDisposeLocalScreenShareStreamView = async (): Promise<void> => {
+      if (!call) {
+        return;
+      }
+      const callState = callClient.getState().calls[call.id];
+      if (!callState) {
+        throw new Error(`Call Not Found: ${call.id}`);
+      }
+      const screenShareStream = callState?.localVideoStreams.find((item) => item.mediaStreamType === 'ScreenSharing');
+      if (screenShareStream && screenShareStream.view) {
+        callClient.disposeView(call.id, undefined, screenShareStream);
       }
     };
 
@@ -678,6 +693,7 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       onDisposeRemoteStreamView,
       onDisposeLocalStreamView,
       onDisposeRemoteScreenShareStreamView,
+      onDisposeLocalScreenShareStreamView,
       onDisposeRemoteVideoStreamView,
       onRaiseHand,
       onLowerHand,
