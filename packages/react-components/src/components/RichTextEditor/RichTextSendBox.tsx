@@ -18,7 +18,7 @@ import {
   modifyInlineImagesInContentString
 } from '../utils/SendBoxUtils';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
-import { hasInlineImageContent } from '../utils/SendBoxUtils';
+import { hasInlineImageContent, getContentWithUpdatedInlineImagesInfo } from '../utils/SendBoxUtils';
 import { RichTextEditorComponentRef } from './RichTextEditor';
 import { useTheme } from '../../theming';
 import { richTextActionButtonsStyle, sendBoxRichTextEditorStyle } from '../styles/RichTextEditor.styles';
@@ -217,7 +217,8 @@ export interface RichTextSendBoxProps {
   /**
    * Optional callback invoked after inline image is removed from the UI.
    * @param imageAttributes - attributes of the image such as id, src, style, etc.
-   *        It also contains the image file name which can be accessed through imageAttributes['data-image-file-name']
+   *        It also contains the image file name which can be accessed through imageAttributes['data-image-file-name'].
+   *        Note that if the src attribute is a local blob url, it has been revoked at this point.
    */
   onRemoveInlineImage?: (imageAttributes: Record<string, string>) => void;
   /**
@@ -243,7 +244,12 @@ export interface RichTextSendBoxProps {
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   /**
    * Optional Array of type {@link AttachmentMetadataInProgress}
-   * to provide progress and error info for inline images inserted in the RichTextSendBox.
+   * to render the errorBar for inline images inserted in the RichTextSendBox when:
+   *   - there is an error provided in the inlineImagesWithProgress
+   *   - progress is less than 1 when the send button is clicked
+   *   - content html string is longer than the max allowed length.
+   *     (Note that the id and the url prop of the inlineImagesWithProgress will be used as the id and src attribute of the content html
+   *     when calculating the content length, only for the purpose of displaying the content length overflow error.)
    */
   inlineImagesWithProgress?: AttachmentMetadataInProgress[];
 }
@@ -337,6 +343,21 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
   }, [contentValue]);
 
   const sendMessageOnClick = useCallback((): void => {
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    if (inlineImagesWithProgress && inlineImagesWithProgress.length > 0) {
+      const contentWithUpdatedInlineImagesInfo = getContentWithUpdatedInlineImagesInfo(
+        contentValue,
+        inlineImagesWithProgress
+      );
+      const messageTooLong = isMessageTooLong(contentWithUpdatedInlineImagesInfo.length);
+      // Set contentValueOverflow state to display the error bar
+      setContentValueOverflow(messageTooLong);
+      // The change from the setContentValueOverflow in the previous line will not kick in yet.
+      // We need to relay on the local value of messageTooLong to return early if the message is too long.
+      if (messageTooLong) {
+        return;
+      }
+    }
     if (disabled || contentValueOverflow) {
       return;
     }

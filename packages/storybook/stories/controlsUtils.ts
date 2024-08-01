@@ -383,7 +383,11 @@ export const controlsToAdd = {
     defaultValue: 'desktop',
     name: 'Form factor'
   },
-  participantItemMenuItemsStr: { control: 'text', name: 'Menu items (comma separated)' },
+  participantItemMenuItemsStr: {
+    control: 'text',
+    name: 'Menu items (comma separated)',
+    defaultValue: 'Mute, Remove'
+  },
   participantNames: {
     control: 'text',
     defaultValue: 'You, Hal Jordan, Barry Allen, Bruce Wayne',
