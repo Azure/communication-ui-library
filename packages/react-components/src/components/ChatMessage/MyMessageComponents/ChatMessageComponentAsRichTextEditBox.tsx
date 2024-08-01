@@ -24,7 +24,9 @@ import { MAXIMUM_LENGTH_OF_MESSAGE, modifyInlineImagesInContentString } from '..
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import {
   hasIncompleteAttachmentUploads,
-  removeBrokenImageContentAndClearImageSizeStyles
+  removeBrokenImageContentAndClearImageSizeStyles,
+  getContentWithUpdatedInlineImagesInfo,
+  isMessageTooLong
 } from '../../utils/SendBoxUtils';
 import {
   getMessageState,
@@ -127,6 +129,8 @@ export const ChatMessageComponentAsRichTextEditBox = (
   }, [message]);
 
   const [textValue, setTextValue] = useState<string>(initialContent || '');
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  const [contentValueWithInlineImagesOverflow, setContentValueWithInlineImagesOverflow] = useState(false);
 
   /* @conditional-compile-remove(file-sharing-acs) */
   const [attachmentMetadata, handleAttachmentAction] = useReducer(
@@ -164,10 +168,15 @@ export const ChatMessageComponentAsRichTextEditBox = (
   }, []);
 
   const textTooLongMessage = useMemo(() => {
-    return messageState === 'too long'
+    return messageState === 'too long' ||
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */ contentValueWithInlineImagesOverflow
       ? _formatString(strings.editBoxTextLimit, { limitNumber: `${MAXIMUM_LENGTH_OF_MESSAGE}` })
       : undefined;
-  }, [messageState, strings.editBoxTextLimit]);
+  }, [
+    messageState,
+    strings.editBoxTextLimit,
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */ contentValueWithInlineImagesOverflow
+  ]);
 
   const iconClassName = useCallback(
     (isHover: boolean) => {
@@ -200,6 +209,22 @@ export const ChatMessageComponentAsRichTextEditBox = (
     if (!submitEnabled) {
       return;
     }
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    if (inlineImagesWithProgress && inlineImagesWithProgress.length > 0) {
+      const contentWithUpdatedInlineImagesInfo = getContentWithUpdatedInlineImagesInfo(
+        textValue,
+        inlineImagesWithProgress
+      );
+      const messageTooLong = isMessageTooLong(contentWithUpdatedInlineImagesInfo.length);
+      // Set contentValueWithInlineImagesOverflow state to display the error bar
+      setContentValueWithInlineImagesOverflow(messageTooLong);
+      // The change from the setContentValueOverflow in the previous line will not kick in yet.
+      // We need to rely on the local value of messageTooLong to return early if the message is too long.
+      if (messageTooLong) {
+        return;
+      }
+    }
+
     // Don't send message until all attachments have been uploaded successfully
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
     setAttachmentUploadsPendingError(undefined);
