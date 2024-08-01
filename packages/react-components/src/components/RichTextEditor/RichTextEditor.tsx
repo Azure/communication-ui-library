@@ -235,14 +235,27 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
       if (event === UpdateEvent.Blur || event === UpdateEvent.Dispose) {
         onContentModelUpdate && onContentModelUpdate(editor.current.getContentModelCopy('disconnected'));
       } else {
-        onChangeContent(/* @conditional-compile-remove(rich-text-editor-image-upload) */ shouldUpdateInlineImages);
+        const content = exportContent(editor.current);
+        /* @conditional-compile-remove(rich-text-editor-image-upload) */
+        let removedInlineImages: Record<string, string>[] = [];
+        /* @conditional-compile-remove(rich-text-editor-image-upload) */
+        if (shouldUpdateInlineImages) {
+          /* @conditional-compile-remove(rich-text-editor-image-upload) */
+          removedInlineImages = getRemovedInlineImages(content, previousInlineImages);
+        }
+
+        onChange &&
+          onChange(content, /* @conditional-compile-remove(rich-text-editor-image-upload) */ removedInlineImages);
+
+        /* @conditional-compile-remove(rich-text-editor-image-upload) */
+        setPreviousInlineImages(getPreviousInlineImages(content));
       }
     };
   }, [
+    onChange,
     onContentModelUpdate,
     updatePlugin,
-    /* @conditional-compile-remove(rich-text-editor-image-upload) */ previousInlineImages,
-    onChangeContent
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */ previousInlineImages
   ]);
 
   const undoRedoPlugin = useMemo(() => {

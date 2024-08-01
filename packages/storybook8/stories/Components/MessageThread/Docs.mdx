@@ -1,7 +1,7 @@
-import { Canvas, Description, Meta, Source } from '@storybook/blocks';
+import { Canvas, Description, Meta, Source, ArgTypes } from '@storybook/blocks';
 import { SingleLineBetaBanner } from '../../BetaBanners/SingleLineBetaBanner';
 import { DetailedBetaBanner } from '../../BetaBanners/DetailedBetaBanner';
-
+import { MessageThread } from '@azure/communication-react';
 import * as MessageThreadStories from './index.stories';
 
 import MessageThreadWithBlockedMessagesExampleText from '!!raw-loader!./snippets/BlockedMessages.snippet.tsx';
@@ -244,3 +244,7 @@ message.
   of={MessageThreadStories.RichTextEditorOnPasteTextDocsOnly}
   source={{ code: MessageThreadWithRichTextEditorOnPasteExampleText }}
 />
+
+## Props
+
+<ArgTypes of={MessageThread} />
