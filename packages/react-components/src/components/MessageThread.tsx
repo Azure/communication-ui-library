@@ -575,19 +575,25 @@ export interface RichTextEditBoxOptions extends RichTextEditorOptions {
   /**
    * Optional callback to handle an inline image that's inserted in the rich text editor.
    * When not provided, pasting images into rich text editor will be disabled.
+   * @param imageAttributes - attributes of the image such as id, src, style, etc.
+   *        It also contains the image file name which can be accessed through imageAttributes['data-image-file-name']
+   * @param messageId - the id of the message that the inlineImage belongs to.
    */
-  onInsertInlineImage?: (imageUrl: string, imageFileName: string, messageId: string) => void;
+  onInsertInlineImage?: (imageAttributes: Record<string, string>, messageId: string) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   /**
-   * Optional callback to remove the image upload or delete the image from server before sending.
+   * Optional callback invoked after inline image is removed from the UI.
+   * @param imageAttributes - attributes of the image such as id, src, style, etc.
+   *        It also contains the image file name which can be accessed through imageAttributes['data-image-file-name']
+   * @param messageId - the id of the message that the inlineImage belongs to.
    */
-  onCancelInlineImageUpload?: (imageId: string, messageId: string) => void;
+  onRemoveInlineImage?: (imageAttributes: Record<string, string>, messageId: string) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   /**
    * Optional Record of type {@link AttachmentMetadataInProgress}
-   * to render inline images being inserted in the MessageThread's edit boxes.
+   * to provide progress and error info for inline images inserted in the MessageThread's edit boxes.
    */
-  messagesInlineImages?: Record<string, AttachmentMetadataInProgress[]>;
+  messagesInlineImagesWithProgress?: Record<string, AttachmentMetadataInProgress[]>;
 }
 
 /**
@@ -1201,12 +1207,12 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
                   /* @conditional-compile-remove(rich-text-editor-image-upload) */
                   onInsertInlineImage={richTextEditorOptions?.onInsertInlineImage}
                   /* @conditional-compile-remove(rich-text-editor-image-upload) */
-                  inlineImages={
-                    richTextEditorOptions?.messagesInlineImages &&
-                    richTextEditorOptions?.messagesInlineImages[message.message.messageId]
+                  inlineImagesWithProgress={
+                    richTextEditorOptions?.messagesInlineImagesWithProgress &&
+                    richTextEditorOptions?.messagesInlineImagesWithProgress[message.message.messageId]
                   }
                   /* @conditional-compile-remove(rich-text-editor-image-upload) */
-                  onCancelInlineImageUpload={richTextEditorOptions?.onCancelInlineImageUpload}
+                  onRemoveInlineImage={richTextEditorOptions?.onRemoveInlineImage}
                 />
               );
             })}

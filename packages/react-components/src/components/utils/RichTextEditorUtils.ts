@@ -59,3 +59,51 @@ export const dataSetApplier = (format: DatasetFormat, element: HTMLElement, cont
     context.defaultFormatAppliers.dataset(format, element, context);
   }
 };
+
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+/**
+ * @internal
+ */
+export const getPreviousInlineImages = (content?: string): Record<string, string>[] => {
+  if (!content) {
+    return [];
+  }
+  const previousInlineImages: Record<string, string>[] = [];
+  const document = new DOMParser().parseFromString(content ?? '', 'text/html');
+  document.querySelectorAll('img').forEach((img) => {
+    const imageAttributes = getInlineImageAttributes(img);
+    previousInlineImages.push(imageAttributes);
+  });
+  return previousInlineImages;
+};
+
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+/**
+ * @internal
+ */
+export const getRemovedInlineImages = (
+  content: string,
+  previousInlineImages: Record<string, string>[]
+): Record<string, string>[] => {
+  const document = new DOMParser().parseFromString(content ?? '', 'text/html');
+  const currentContentIds = Array.from(document.querySelectorAll('img')).map((img) => img.id);
+  previousInlineImages = previousInlineImages?.filter((img) => !currentContentIds?.includes(img.id));
+
+  const removedInlineImages = [...previousInlineImages];
+  return removedInlineImages;
+};
+
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+/**
+ * @internal
+ */
+export const getInlineImageAttributes = (image: HTMLImageElement): Record<string, string> => {
+  const imageAttributes: Record<string, string> = {};
+  image.getAttributeNames().forEach((attrName) => {
+    const attrValue = image.getAttribute(attrName);
+    if (attrValue) {
+      imageAttributes[attrName] = attrValue;
+    }
+  });
+  return imageAttributes;
+};
