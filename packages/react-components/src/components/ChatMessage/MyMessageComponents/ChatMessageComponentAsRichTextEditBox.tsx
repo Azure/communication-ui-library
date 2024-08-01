@@ -219,7 +219,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
       // Set contentValueWithInlineImagesOverflow state to display the error bar
       setContentValueWithInlineImagesOverflow(messageTooLong);
       // The change from the setContentValueOverflow in the previous line will not kick in yet.
-      // We need to relay on the local value of messageTooLong to return early if the message is too long.
+      // We need to rely on the local value of messageTooLong to return early if the message is too long.
       if (messageTooLong) {
         return;
       }
