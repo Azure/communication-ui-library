@@ -3,12 +3,10 @@
 import type { PluginEvent, EditorPlugin, IEditor } from 'roosterjs-content-model-types';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import type { BeforeSetContentEvent } from 'roosterjs-content-model-types';
-import {
-  PluginEventType,
-  scrollToBottomRichTextEditor
-} from '../../utils/RichTextEditorUtils';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import {
+  PluginEventType,
+  scrollToBottomRichTextEditor,
   getInsertedInlineImages
 } from '../../utils/RichTextEditorUtils';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
@@ -20,11 +18,11 @@ import { ChangeSource } from 'roosterjs-content-model-dom';
  * UndoRedoPlugin is a plugin for additional handling undo and redo events in the editor.
  */
 export default class UndoRedoPlugin implements EditorPlugin {
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
   private editor: IEditor | null = null;
   // don't set value in constructor to be able to update it without plugin recreation
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   onInsertInlineImage?: (imageAttributes: Record<string, string>) => void;
-  /* @conditional-compile-remove(rich-text-editor-image-upload) */
   onUpdateContent?: (() => void) | null = null;
 
   getName(): string {
@@ -32,6 +30,7 @@ export default class UndoRedoPlugin implements EditorPlugin {
   }
 
   initialize(editor: IEditor): void {
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
     this.editor = editor;
   }
 
