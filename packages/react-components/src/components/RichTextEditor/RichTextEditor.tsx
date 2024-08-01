@@ -38,10 +38,16 @@ import { ContextMenuPlugin } from './Plugins/ContextMenuPlugin';
 import { TableEditContextMenuProvider } from './Plugins/TableEditContextMenuProvider';
 import { borderApplier, dataSetApplier } from '../utils/RichTextEditorUtils';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
-import { getPreviousInlineImages, getRemovedInlineImages } from '../utils/RichTextEditorUtils';
+import {
+  getPreviousInlineImages,
+  getRemovedInlineImages,
+  removeLocalBlobs,
+  cleanAllLocalBlobs
+} from '../utils/RichTextEditorUtils';
 import { ContextualMenu, IContextualMenuItem, IContextualMenuProps, Theme } from '@fluentui/react';
 import { PlaceholderPlugin } from './Plugins/PlaceholderPlugin';
 import { getFormatState, setDirection } from 'roosterjs-content-model-api';
+import UndoRedoPlugin from './Plugins/UndoRedoPlugin';
 
 /**
  * Style props for {@link RichTextEditor}.
@@ -130,6 +136,18 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   // This will be set when the editor is initialized and when the content is updated.
   const [previousInlineImages, setPreviousInlineImages] = useState<Record<string, string>[]>([]);
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  const [inlineImageLocalBlobs, setInlineImageLocalBlobs] = useState<Record<string, string>>({});
+
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  useEffect(() => {
+    return () => {
+      // Cleanup Local Blob URLs when the component is unmounted
+      cleanAllLocalBlobs(inlineImageLocalBlobs);
+    };
+    // This effect should only run once when the component is unmounted, so we don't need to add any dependencies
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useImperativeHandle(ref, () => {
     return {
@@ -141,6 +159,9 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
       setEmptyContent() {
         /* @conditional-compile-remove(rich-text-editor-image-upload) */
         setPreviousInlineImages([]);
+        /* @conditional-compile-remove(rich-text-editor-image-upload) */
+        cleanAllLocalBlobs(inlineImageLocalBlobs);
+
         if (editor.current) {
           // remove all content from the editor and update the model
           // ContentChanged event will be sent by RoosterJS automatically
@@ -163,7 +184,7 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
         }
       }
     };
-  }, [onContentModelUpdate]);
+  }, [/* @conditional-compile-remove(rich-text-editor-image-upload) */ inlineImageLocalBlobs, onContentModelUpdate]);
 
   const toolbarPlugin = React.useMemo(() => {
     return new RichTextToolbarPlugin();
@@ -199,11 +220,34 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     return new CopyPastePlugin();
   }, []);
 
+  const onChangeContent = useCallback(
+    (/* @conditional-compile-remove(rich-text-editor-image-upload) */ shouldUpdateInlineImages?: boolean) => {
+      if (editor.current === null) {
+        return;
+      }
+      const content = exportContent(editor.current);
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */
+      let removedInlineImages: Record<string, string>[] = [];
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */
+      if (shouldUpdateInlineImages) {
+        /* @conditional-compile-remove(rich-text-editor-image-upload) */
+        removedInlineImages = getRemovedInlineImages(content, previousInlineImages);
+      }
+
+      onChange &&
+        onChange(content, /* @conditional-compile-remove(rich-text-editor-image-upload) */ removedInlineImages);
+
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */
+      setPreviousInlineImages(getPreviousInlineImages(content));
+    },
+    [onChange, /* @conditional-compile-remove(rich-text-editor-image-upload) */ previousInlineImages]
+  );
+
   useEffect(() => {
     // don't set callback in plugin constructor to update callback without plugin recreation
     updatePlugin.onUpdate = (
       event: string,
-      /* @conditional-compile-remove(rich-text-editor-image-upload) */ shouldUpdateInlineImages?: boolean
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */ shouldRemoveInlineImages?: boolean
     ) => {
       if (editor.current === null) {
         return;
@@ -215,9 +259,11 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
         /* @conditional-compile-remove(rich-text-editor-image-upload) */
         let removedInlineImages: Record<string, string>[] = [];
         /* @conditional-compile-remove(rich-text-editor-image-upload) */
-        if (shouldUpdateInlineImages) {
-          /* @conditional-compile-remove(rich-text-editor-image-upload) */
+        if (shouldRemoveInlineImages) {
           removedInlineImages = getRemovedInlineImages(content, previousInlineImages);
+          if (removedInlineImages.length > 0) {
+            removeLocalBlobs(inlineImageLocalBlobs, removedInlineImages);
+          }
         }
 
         onChange &&
@@ -231,13 +277,29 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     onChange,
     onContentModelUpdate,
     updatePlugin,
-    /* @conditional-compile-remove(rich-text-editor-image-upload) */ previousInlineImages
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */ previousInlineImages,
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */ inlineImageLocalBlobs
   ]);
+
+  const undoRedoPlugin = useMemo(() => {
+    return new UndoRedoPlugin();
+  }, []);
 
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   useEffect(() => {
-    copyPastePlugin.onInsertInlineImage = onInsertInlineImage;
-  }, [copyPastePlugin, onInsertInlineImage]);
+    copyPastePlugin.onInsertInlineImage = (imageAttributes: Record<string, string>) => {
+      const { id, src } = imageAttributes;
+      setInlineImageLocalBlobs({ ...inlineImageLocalBlobs, [id]: src });
+      onInsertInlineImage && onInsertInlineImage(imageAttributes);
+    };
+    undoRedoPlugin.onInsertInlineImage = onInsertInlineImage;
+  }, [copyPastePlugin, inlineImageLocalBlobs, onInsertInlineImage, undoRedoPlugin]);
+
+  useEffect(() => {
+    undoRedoPlugin.onUpdateContent = () => {
+      onChangeContent(/* @conditional-compile-remove(rich-text-editor-image-upload) */ true);
+    };
+  }, [onChangeContent, undoRedoPlugin]);
 
   const keyboardInputPlugin = useMemo(() => {
     return new KeyboardInputPlugin();
@@ -301,7 +363,8 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
       shortcutPlugin,
       // contextPlugin and tableEditMenuProvider allow to show insert/delete menu for the table
       contextMenuPlugin,
-      tableContextMenuPlugin
+      tableContextMenuPlugin,
+      undoRedoPlugin
     ];
   }, [
     onContextMenuRender,
@@ -311,7 +374,8 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     updatePlugin,
     copyPastePlugin,
     toolbarPlugin,
-    tableContextMenuPlugin
+    tableContextMenuPlugin,
+    undoRedoPlugin
   ]);
 
   const announcerStringGetter = useCallback(
