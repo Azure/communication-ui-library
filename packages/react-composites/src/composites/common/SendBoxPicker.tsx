@@ -49,7 +49,8 @@ export interface RichTextSendBoxOptions extends RichTextEditorOptions {
   /**
    * Optional callback invoked after inline image is removed from the UI.
    * @param imageAttributes - attributes of the image such as id, src, style, etc.
-   *        It also contains the image file name which can be accessed through imageAttributes['data-image-file-name']
+   *        It also contains the image file name which can be accessed through imageAttributes['data-image-file-name'].
+   *        Note that if the src attribute is a local blob url, it has been revoked at this point.
    */
   onRemoveInlineImage?: (imageAttributes: Record<string, string>) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
