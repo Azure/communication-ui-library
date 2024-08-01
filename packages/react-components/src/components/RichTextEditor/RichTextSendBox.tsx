@@ -438,26 +438,16 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     onSendMessage
   ]);
 
-  const hasErrorMessage = useMemo(() => {
+  const hasErrorMessageThatPreventsSubmit = useMemo(() => {
     return (
-      !!systemMessage ||
       !!contentTooLongMessage ||
       /* @conditional-compile-remove(file-sharing-acs) */
-      !!attachmentUploadsPendingError ||
-      /* @conditional-compile-remove(file-sharing-acs) */
-      !!attachments?.filter((attachmentUpload) => attachmentUpload.error).pop()?.error ||
-      /* @conditional-compile-remove(rich-text-editor-image-upload) */
-      !!inlineImages?.filter((image) => image.error).pop()?.error
+      !!attachmentUploadsPendingError
     );
   }, [
-    /* @conditional-compile-remove(file-sharing-acs) */
-    attachments,
     contentTooLongMessage,
     /* @conditional-compile-remove(file-sharing-acs) */
-    attachmentUploadsPendingError,
-    systemMessage,
-    /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    inlineImages
+    attachmentUploadsPendingError
   ]);
 
   const onRenderSendIcon = useCallback(
@@ -470,14 +460,14 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
             hasText: hasContent,
             /* @conditional-compile-remove(file-sharing-acs) */
             hasAttachment: false,
-            hasErrorMessage: hasErrorMessage,
+            hasErrorMessage: hasErrorMessageThatPreventsSubmit,
             defaultTextColor: theme.palette.neutralSecondary,
             disabled: disabled
           })}
         />
       );
     },
-    [disabled, hasContent, hasErrorMessage, theme]
+    [disabled, hasContent, hasErrorMessageThatPreventsSubmit, theme]
   );
 
   const sendBoxErrorsProps: RichTextSendBoxErrorsProps = useMemo(() => {
@@ -551,10 +541,15 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
       hasContent,
       /* @conditional-compile-remove(file-sharing-acs) */ hasCompletedAttachmentUploads:
         isAttachmentUploadCompleted(attachments),
-      hasError: hasErrorMessage,
+      hasError: hasErrorMessageThatPreventsSubmit,
       disabled
     });
-  }, [/* @conditional-compile-remove(file-sharing-acs) */ attachments, disabled, hasContent, hasErrorMessage]);
+  }, [
+    /* @conditional-compile-remove(file-sharing-acs) */ attachments,
+    disabled,
+    hasContent,
+    hasErrorMessageThatPreventsSubmit
+  ]);
 
   const sendButton = useMemo(() => {
     return (
