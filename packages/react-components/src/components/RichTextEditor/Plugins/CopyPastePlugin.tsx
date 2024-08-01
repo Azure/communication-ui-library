@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 import type { PluginEvent, EditorPlugin, IEditor } from 'roosterjs-content-model-types';
+/* @conditional-compile-remove(rich-text-editor) */
+import { scrollToBottomRichTextEditor } from '../../utils/RichTextEditorUtils';
 import { ContentChangedEventSource, PluginEventType } from '../../utils/RichTextEditorUtils';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { getInlineImageAttributes } from '../../utils/RichTextEditorUtils';
@@ -77,7 +79,7 @@ export const handleBeforePasteEvent = (
  */
 export const handleInlineImage = (
   event: PluginEvent,
-  onInsertInlineImage?: (imageAttributes: Record<string, string>, fileName?: string) => void
+  onInsertInlineImage?: (imageAttributes: Record<string, string>) => void
 ): void => {
   if (event.eventType === PluginEventType.BeforePaste && event.pasteType === 'normal' && onInsertInlineImage) {
     event.fragment.querySelectorAll('img').forEach((image) => {
@@ -103,7 +105,7 @@ export const handleInlineImage = (
 
       const imageAttributes = getInlineImageAttributes(image);
 
-      onInsertInlineImage(imageAttributes, fileName);
+      onInsertInlineImage(imageAttributes);
     });
   }
 };
@@ -114,40 +116,7 @@ export const handleInlineImage = (
  */
 export const scrollToBottomAfterContentPaste = (event: PluginEvent): void => {
   if (event.eventType === PluginEventType.ContentChanged && event.source === ContentChangedEventSource.Paste) {
-    // Get the current selection in the document
-    const selection = document.getSelection();
-
-    // Check if a selection exists and it has at least one range
-    if (!selection || selection.rangeCount <= 0) {
-      // If no selection or range, exit the function
-      return;
-    }
-
-    // Get the first range of the selection
-    // A user can normally only select one range at a time, so the rangeCount will usually be 1
-    const range = selection.getRangeAt(0);
-
-    // If the common ancestor container of the range is the document itself,
-    // it might mean that the editable element is getting removed from the DOM
-    // In such cases, especially in Safari, trying to modify the range might throw a HierarchyRequest error
-    if (range.commonAncestorContainer === document) {
-      return;
-    }
-
-    // Create a temporary span element to use as an anchor for scrolling
-    // We can't use the anchor node directly because if it's a Text node, calling scrollIntoView() on it will throw an error
-    const tempElement = document.createElement('span');
-    // Collapse the range to its end point
-    // This means the start and end points of the range will be the same, and it will not contain any content
-    range.collapse(false);
-    // Insert the temporary element at the cursor's position at the end of the range
-    range.insertNode(tempElement);
-
-    // Scroll the temporary element into view
-    // the element will be aligned at the center of the scroll container, otherwise, text and images may be positioned incorrectly
-    tempElement.scrollIntoView({
-      block: 'center'
-    });
-    tempElement.remove();
+    /* @conditional-compile-remove(rich-text-editor) */
+    scrollToBottomRichTextEditor();
   }
 };
