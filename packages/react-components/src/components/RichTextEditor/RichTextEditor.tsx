@@ -220,7 +220,7 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
       /* @conditional-compile-remove(rich-text-editor-image-upload) */
       setPreviousInlineImages(getPreviousInlineImages(content));
     },
-    [onChange, previousInlineImages]
+    [onChange, /* @conditional-compile-remove(rich-text-editor-image-upload) */ previousInlineImages]
   );
 
   useEffect(() => {
