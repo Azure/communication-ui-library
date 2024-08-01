@@ -6,9 +6,10 @@ import {
   DiagnosticChangedEventArgs,
   LatestDiagnosticValue,
   MediaDiagnosticChangedEventArgs,
-  NetworkDiagnosticChangedEventArgs,
-  RemoteParticipantDiagnosticsData
+  NetworkDiagnosticChangedEventArgs
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(remote-ufd) */
+import { RemoteParticipantDiagnosticsData } from '@azure/communication-calling';
 import { CallContext } from './CallContext';
 import { CallIdRef } from './CallIdRef';
 
@@ -60,9 +61,10 @@ export class UserFacingDiagnosticsSubscriber {
   private subscribe(): void {
     this._diagnostics.network.on('diagnosticChanged', this.networkDiagnosticsChanged.bind(this));
     this._diagnostics.media.on('diagnosticChanged', this.mediaDiagnosticsChanged.bind(this));
+    /* @conditional-compile-remove(remote-ufd) */
     this._diagnostics.remote.on('diagnosticChanged', this.remoteDiagnosticsChanged.bind(this));
   }
-
+  /* @conditional-compile-remove(remote-ufd) */
   private remoteDiagnosticsChanged(args: RemoteParticipantDiagnosticsData): void {
     this._context.modifyState((state) => {
       const call = state.calls[this._callIdRef.callId];
@@ -70,8 +72,8 @@ export class UserFacingDiagnosticsSubscriber {
         return;
       }
       for (const diagnostic of args.diagnostics) {
-        const { remoteParticipant: _, participantId, ...participantDiagnostic } = diagnostic;
-        const participant = call.remoteParticipants[participantId];
+        const { remoteParticipant: _, rawId, ...participantDiagnostic } = diagnostic;
+        const participant = call.remoteParticipants[rawId];
         if (participant) {
           participant.diagnostic = participantDiagnostic;
         }

@@ -1,31 +1,35 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import type {
+import {
   AudioDeviceInfo,
   CallDirection,
   CallEndReason,
   CallerInfo,
   CallState as CallStatus,
   DeviceAccess,
-  DiagnosticFlag,
-  DiagnosticQuality,
-  DiagnosticValueType,
   DominantSpeakersInfo,
   IncomingCallKind,
   LatestMediaDiagnostics,
   LatestNetworkDiagnostics,
-  MediaDiagnosticType,
   MediaStreamType,
-  NetworkDiagnosticType,
   ParticipantRole,
   RemoteParticipantState as RemoteParticipantStatus,
   ScalingMode,
-  ServerDiagnosticType,
   VideoDeviceInfo
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(breakout-rooms) */
 import { BreakoutRoom, BreakoutRoomsSettings } from '@azure/communication-calling';
+/* @conditional-compile-remove(remote-ufd) */
+import type {
+  ServerDiagnosticType,
+  MediaDiagnosticType,
+  NetworkDiagnosticType,
+  DiagnosticValueType,
+  DiagnosticQuality,
+  DiagnosticFlag
+} from '@azure/communication-calling';
+/* @conditional-compile-remove(meeting-id) */
 import { TeamsCallInfo } from '@azure/communication-calling';
 import { CallInfo } from '@azure/communication-calling';
 
@@ -476,6 +480,7 @@ export interface RemoteParticipantState {
    * Proxy of {@link @azure/communication-calling#SpotlightCallFeature.spotlightedParticipants}.
    */
   spotlight?: SpotlightState;
+  /* @conditional-compile-remove(remote-ufd) */
   /**
    * The diagnostic status of RemoteParticipant{@link @azure/communication-calling#RemoteDiagnostics}.
    */
@@ -1034,13 +1039,13 @@ export interface DiagnosticsCallFeatureState {
   media: MediaDiagnosticsState;
 }
 
+/* @conditional-compile-remove(remote-ufd) */
 /**
  * State only proxy for {@link @azure/communication-calling#DiagnosticsCallFeature}.
  *
  * @beta
  */
 export declare type RemoteDiagnosticState = {
-  readonly rawId: string;
   readonly diagnostic: NetworkDiagnosticType | MediaDiagnosticType | ServerDiagnosticType;
   readonly value: DiagnosticQuality | DiagnosticFlag;
   readonly valueType: DiagnosticValueType;
