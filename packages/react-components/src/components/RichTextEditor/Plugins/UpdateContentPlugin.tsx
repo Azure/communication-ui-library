@@ -28,7 +28,7 @@ export class UpdateContentPlugin implements EditorPlugin {
   private editor: IEditor | null = null;
   private disposer: (() => void) | null = null;
   // don't set callback in constructor to be able to update callback without plugin recreation
-  onUpdate: ((event: UpdateEvent, shouldUpdateInlineImages?: boolean) => void) | null = null;
+  onUpdate: ((event: UpdateEvent, shouldRemoveInlineImages?: boolean) => void) | null = null;
 
   getName(): string {
     return 'UpdateContentPlugin';

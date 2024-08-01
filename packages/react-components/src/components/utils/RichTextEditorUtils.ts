@@ -107,3 +107,37 @@ export const getInlineImageAttributes = (image: HTMLImageElement): Record<string
   });
   return imageAttributes;
 };
+
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+/**
+ * Revoke the blob urls in the removedInlineImages and remove them from the currentLocalBlobMap
+ * @internal
+ */
+export const removeLocalBlobs = (
+  currentLocalBlobMap: Record<string, string>,
+  removedInlineImages: Record<string, string>[]
+): void => {
+  removedInlineImages.forEach((image) => {
+    removeSingleLocalBlob(currentLocalBlobMap, image.id);
+  });
+};
+
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+/**
+ * Revoke all the blob urls in the currentLocalBlobMap and clean up the currentLocalBlobMap
+ * @internal
+ */
+export const cleanAllLocalBlobs = (currentLocalBlobMap: Record<string, string>): void => {
+  Object.keys(currentLocalBlobMap).forEach((imageId) => {
+    removeSingleLocalBlob(currentLocalBlobMap, imageId);
+  });
+};
+
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+const removeSingleLocalBlob = (currentLocalBlobMap: Record<string, string>, imageId: string): void => {
+  const blobUrl = currentLocalBlobMap[imageId];
+  if (blobUrl) {
+    URL.revokeObjectURL(blobUrl);
+    delete currentLocalBlobMap[imageId];
+  }
+};
