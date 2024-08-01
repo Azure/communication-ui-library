@@ -236,9 +236,7 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
         let removedInlineImages: Record<string, string>[] = [];
         /* @conditional-compile-remove(rich-text-editor-image-upload) */
         if (shouldRemoveInlineImages) {
-          /* @conditional-compile-remove(rich-text-editor-image-upload) */
           removedInlineImages = getRemovedInlineImages(content, previousInlineImages);
-          /* @conditional-compile-remove(rich-text-editor-image-upload) */
           if (removedInlineImages.length > 0) {
             removeLocalBlobs(inlineImageLocalBlobs, removedInlineImages);
           }
