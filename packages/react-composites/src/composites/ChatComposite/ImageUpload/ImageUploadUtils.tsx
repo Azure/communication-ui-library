@@ -2,11 +2,11 @@
 // Licensed under the MIT License.
 
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
-import { AttachmentMetadataInProgress } from '@internal/acs-ui-common';
+import { AttachmentMetadataInProgress, _IMAGE_ATTRIBUTE_INLINE_IMAGE_FILE_NAME_KEY } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { AttachmentUpload, AttachmentUploadActionType, AttachmentUploadTask } from '../file-sharing/AttachmentUpload';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
-import { SEND_BOX_UPLOADS_KEY_VALUE } from '../../common/constants';
+import { _DEFAULT_INLINE_IMAGE_FILE_NAME, SEND_BOX_UPLOADS_KEY_VALUE } from '../../common/constants';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { ChatAdapter } from '../adapter/ChatAdapter';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
@@ -124,7 +124,10 @@ const inlineImageUploadHandler = async (
 
     try {
       const response = await adapter.uploadImage(image, task.metadata?.name);
-      uploadTask.notifyUploadCompleted(response.id, task.metadata.url || '');
+      // Use response id as the image src because we need to keep the original image id as a reference to find the image.
+      // Also the html content we send to ChatSDK does not need image src,
+      // it only need the response id to match the uploaded image, url is not needed.
+      uploadTask.notifyUploadCompleted(task.metadata.id, response.id);
     } catch (error) {
       console.error(error);
       uploadTask.notifyUploadFailed(strings.uploadImageFailed);
@@ -257,7 +260,7 @@ export const cancelInlineImageUpload = (
     deleteExistingInlineImageForEditBox(imageAttributes.id, messageId, adapter);
     return;
   }
-  const imageUpload = imageUploads[messageId].find((upload) => upload.metadata.url === imageAttributes.src);
+  const imageUpload = imageUploads[messageId].find((upload) => upload.metadata.id === imageAttributes.id);
 
   if (!imageUpload || !imageUpload?.metadata.id) {
     deleteExistingInlineImageForEditBox(imageAttributes.id, messageId, adapter);
@@ -269,7 +272,7 @@ export const cancelInlineImageUpload = (
     id: imageUpload?.metadata.id,
     messageId
   });
-  // TODO: remove local blob
+
   if (imageUpload?.metadata.progress === 1) {
     deleteInlineImageFromServer(imageUpload?.metadata.id, adapter);
   }
@@ -306,15 +309,28 @@ export const updateContentStringWithUploadedInlineImages = (
   const document = new DOMParser().parseFromString(content ?? '', 'text/html');
   document.querySelectorAll('img').forEach((img) => {
     const uploadInlineImage = messageUploads.find(
-      (upload) => !upload.metadata.error && upload.metadata.progress === 1 && upload.metadata.url === img.src
+      (upload) => !upload.metadata.error && upload.metadata.progress === 1 && upload.metadata.id === img.id
     );
 
     if (uploadInlineImage) {
-      img.id = uploadInlineImage.metadata.id;
-      img.src = uploadInlineImage.metadata.url ?? img.src;
+      // ChatSDK uses the respond id provided by the upload response. We store the response id in the image src attribute previously.
+      img.id = uploadInlineImage.metadata.url ?? img.id;
+      img.src = '';
     }
   });
   content = document.body.innerHTML;
 
   return content;
+};
+
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+/**
+ * @internal
+ */
+export const getImageFileNameFromAttributes = (imageAttributes: Record<string, string>): string => {
+  const fileName = imageAttributes[_IMAGE_ATTRIBUTE_INLINE_IMAGE_FILE_NAME_KEY];
+  if (!fileName || fileName === '' || fileName === 'undefined' || fileName === 'null') {
+    return _DEFAULT_INLINE_IMAGE_FILE_NAME;
+  }
+  return fileName;
 };

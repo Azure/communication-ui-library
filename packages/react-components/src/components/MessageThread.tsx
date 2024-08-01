@@ -584,14 +584,20 @@ export interface RichTextEditBoxOptions extends RichTextEditorOptions {
   /**
    * Optional callback invoked after inline image is removed from the UI.
    * @param imageAttributes - attributes of the image such as id, src, style, etc.
-   *        It also contains the image file name which can be accessed through imageAttributes['data-image-file-name']
+   *        It also contains the image file name which can be accessed through imageAttributes['data-image-file-name'].
+   *        Note that if the src attribute is a local blob url, it has been revoked at this point.
    * @param messageId - the id of the message that the inlineImage belongs to.
    */
   onRemoveInlineImage?: (imageAttributes: Record<string, string>, messageId: string) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   /**
    * Optional Record of type {@link AttachmentMetadataInProgress}
-   * to provide progress and error info for inline images inserted in the MessageThread's edit boxes.
+   * to render the errorBar for inline images inserted in the MessageThread's edit boxes when:
+   *   - there is an error provided in the messagesInlineImagesWithProgress
+   *   - progress is less than 1 when the send button is clicked
+   *   - content html string is longer than the max allowed length.
+   *     (Note that the id and the url prop of the messagesInlineImagesWithProgress will be used as the id and src attribute of the content html
+   *     when calculating the content length, only for the purpose of displaying the content length overflow error.)
    */
   messagesInlineImagesWithProgress?: Record<string, AttachmentMetadataInProgress[]>;
 }

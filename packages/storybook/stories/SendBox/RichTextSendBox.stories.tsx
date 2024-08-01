@@ -5,10 +5,8 @@ import { AttachmentMetadataInProgress, RichTextSendBox as RichTextSendBoxCompone
 import { Title, Description, Props, Heading, Canvas, Source } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React, { useState } from 'react';
-import {
-  _DEFAULT_INLINE_IMAGE_FILE_NAME,
-  _IMAGE_ATTRIBUTE_INLINE_IMAGE_FILE_NAME_KEY
-} from '../../../react-composites/src/composites/common/constants';
+import { getImageFileNameFromAttributes } from '../../../react-composites/src/composites/ChatComposite/ImageUpload/ImageUploadUtils';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { DetailedBetaBanner } from '../BetaBanners/DetailedBetaBanner';
 import { SingleLineBetaBanner } from '../BetaBanners/SingleLineBetaBanner';
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
@@ -140,7 +138,7 @@ const RichTextSendBoxStory = (args): JSX.Element => {
         onInsertInlineImage={(imageAttributes: Record<string, string>) => {
           const newImage = {
             id: imageAttributes.id,
-            name: imageAttributes[_IMAGE_ATTRIBUTE_INLINE_IMAGE_FILE_NAME_KEY] ?? _DEFAULT_INLINE_IMAGE_FILE_NAME,
+            name: getImageFileNameFromAttributes(imageAttributes),
             progress: 1,
             url: imageAttributes.src,
             error: undefined

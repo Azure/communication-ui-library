@@ -23,13 +23,8 @@ import {
   IDropdownOption
 } from '@fluentui/react';
 import { Divider } from '@fluentui/react-components';
-
 import React, { useMemo, useRef, useState } from 'react';
 
-import {
-  _DEFAULT_INLINE_IMAGE_FILE_NAME,
-  _IMAGE_ATTRIBUTE_INLINE_IMAGE_FILE_NAME_KEY
-} from '../../../../react-composites/src/composites/common/constants';
 import {
   GenerateMockNewChatMessage,
   UserOne,
@@ -200,7 +195,7 @@ const MessageThreadStory = (args): JSX.Element => {
         const inlineImagesWithProgress = messagesInlineImagesWithProgress?.[messageId] ?? [];
         const newImage: AttachmentMetadataInProgress = {
           id: imageAttributes.id,
-          name: imageAttributes[_IMAGE_ATTRIBUTE_INLINE_IMAGE_FILE_NAME_KEY] ?? _DEFAULT_INLINE_IMAGE_FILE_NAME,
+          name: getImageFileNameFromAttributes(imageAttributes),
           progress: 1,
           url: imageAttributes.src,
           error: undefined
