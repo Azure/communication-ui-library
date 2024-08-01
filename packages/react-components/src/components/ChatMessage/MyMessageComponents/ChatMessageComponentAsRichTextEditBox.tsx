@@ -27,7 +27,8 @@ import {
   hasIncompleteAttachmentUploads,
   insertImagesToContentString,
   isAttachmentUploadCompleted,
-  removeBrokenImageContentAndClearImageSizeStyles
+  removeBrokenImageContentAndClearImageSizeStyles,
+  insertInlineImage
 } from '../../utils/SendBoxUtils';
 import {
   getMessageState,
@@ -319,12 +320,21 @@ export const ChatMessageComponentAsRichTextEditBox = (
         editBoxOnCancelInlineImageUpload: onCancelInlineImageUpload,
         sendBoxOnCancelInlineImageUpload: undefined
       });
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */
+      insertInlineImage({
+        imageSrcArray,
+        inlineImages,
+        messageId: message.messageId,
+        editBoxOnInsertInlineImage: onInsertInlineImage,
+        sendBoxOnInsertInlineImage: undefined
+      });
       setText(content);
     },
     [
       setText,
       /* @conditional-compile-remove(rich-text-editor-image-upload) */ inlineImages,
       /* @conditional-compile-remove(rich-text-editor-image-upload) */ onCancelInlineImageUpload,
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */ onInsertInlineImage,
       /* @conditional-compile-remove(rich-text-editor-image-upload) */ message.messageId
     ]
   );

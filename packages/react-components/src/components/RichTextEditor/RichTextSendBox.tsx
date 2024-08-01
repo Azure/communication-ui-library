@@ -25,7 +25,8 @@ import { AttachmentMetadataInProgress, MessageOptions } from '@internal/acs-ui-c
 import {
   isAttachmentUploadCompleted,
   hasIncompleteAttachmentUploads,
-  toAttachmentMetadata
+  toAttachmentMetadata,
+  insertInlineImage
 } from '../utils/SendBoxUtils';
 /* @conditional-compile-remove(file-sharing-acs) */
 import { SendBoxErrorBarError } from '../SendBoxErrorBar';
@@ -342,12 +343,21 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
         editBoxOnCancelInlineImageUpload: undefined,
         sendBoxOnCancelInlineImageUpload: onCancelInlineImageUpload
       });
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */
+      insertInlineImage({
+        imageSrcArray,
+        inlineImages,
+        messageId: undefined,
+        editBoxOnInsertInlineImage: undefined,
+        sendBoxOnInsertInlineImage: onInsertInlineImage
+      });
       setContent(newValue);
     },
     [
       setContent,
       /* @conditional-compile-remove(rich-text-editor-image-upload) */ onCancelInlineImageUpload,
-      /* @conditional-compile-remove(rich-text-editor-image-upload) */ inlineImages
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */ inlineImages,
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */ onInsertInlineImage
     ]
   );
 

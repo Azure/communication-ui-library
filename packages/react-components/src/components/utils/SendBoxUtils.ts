@@ -164,6 +164,31 @@ export const cancelInlineImageUpload = (props: CancelInlineImageUploadProps): vo
   }
 };
 
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+interface InsertInlineImageProps {
+  imageSrcArray: string[] | undefined;
+  inlineImages: AttachmentMetadataInProgress[] | undefined;
+  messageId?: string;
+  editBoxOnInsertInlineImage?: (imageUrl: string, imageFileName: string, messageId: string) => void;
+  sendBoxOnInsertInlineImage?: (imageUrl: string, imageFileName: string) => void;
+}
+
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+/**
+ * @internal
+ */
+export const insertInlineImage = (props: InsertInlineImageProps): void => {
+  const { imageSrcArray, inlineImages, messageId, editBoxOnInsertInlineImage, sendBoxOnInsertInlineImage } = props;
+  if (imageSrcArray && inlineImages && imageSrcArray?.length > 0) {
+    imageSrcArray?.map((image) => {
+      if (image && !inlineImages.find((uploadImage) => uploadImage.url === image)) {
+        sendBoxOnInsertInlineImage && sendBoxOnInsertInlineImage(image, 'image.png');
+        editBoxOnInsertInlineImage && editBoxOnInsertInlineImage(image, 'image.png', messageId || '');
+      }
+    });
+  }
+};
+
 /* @conditional-compile-remove(file-sharing-acs) */
 /**
  * @internal
