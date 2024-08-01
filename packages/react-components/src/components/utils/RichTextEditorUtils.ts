@@ -118,12 +118,7 @@ export const removeLocalBlobs = (
   removedInlineImages: Record<string, string>[]
 ): void => {
   removedInlineImages.forEach((image) => {
-    const imageId = image.id;
-    const blobUrl = currentLocalBlobMap[imageId];
-    if (blobUrl) {
-      URL.revokeObjectURL(blobUrl);
-      delete currentLocalBlobMap[imageId];
-    }
+    removeSingleLocalBlob(currentLocalBlobMap, image.id);
   });
 };
 
@@ -134,10 +129,14 @@ export const removeLocalBlobs = (
  */
 export const cleanAllLocalBlobs = (currentLocalBlobMap: Record<string, string>): void => {
   Object.keys(currentLocalBlobMap).forEach((imageId) => {
-    const blobUrl = currentLocalBlobMap[imageId];
-    if (blobUrl) {
-      URL.revokeObjectURL(blobUrl);
-      delete currentLocalBlobMap[imageId];
-    }
+    removeSingleLocalBlob(currentLocalBlobMap, imageId);
   });
+};
+
+const removeSingleLocalBlob = (currentLocalBlobMap: Record<string, string>, imageId: string): void => {
+  const blobUrl = currentLocalBlobMap[imageId];
+  if (blobUrl) {
+    URL.revokeObjectURL(blobUrl);
+    delete currentLocalBlobMap[imageId];
+  }
 };
