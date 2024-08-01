@@ -1,11 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 import type { PluginEvent, EditorPlugin, IEditor } from 'roosterjs-content-model-types';
-import {
-  ContentChangedEventSource,
-  PluginEventType,
-  scrollToBottomRichTextEditor
-} from '../../utils/RichTextEditorUtils';
+/* @conditional-compile-remove(rich-text-editor) */
+import { scrollToBottomRichTextEditor } from '../../utils/RichTextEditorUtils';
+import { ContentChangedEventSource, PluginEventType } from '../../utils/RichTextEditorUtils';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { getInlineImageAttributes } from '../../utils/RichTextEditorUtils';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
@@ -118,6 +116,7 @@ export const handleInlineImage = (
  */
 export const scrollToBottomAfterContentPaste = (event: PluginEvent): void => {
   if (event.eventType === PluginEventType.ContentChanged && event.source === ContentChangedEventSource.Paste) {
+    /* @conditional-compile-remove(rich-text-editor) */
     scrollToBottomRichTextEditor();
   }
 };
