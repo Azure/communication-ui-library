@@ -1,4 +1,5 @@
-import { Canvas, Description, Meta, Source } from '@storybook/blocks';
+import { Canvas, Description, Meta, Source, ArgTypes } from '@storybook/blocks';
+import { ParticipantItem } from '@azure/communication-react';
 import * as ParticipantItemStories from './index.stories';
 import ParticipantItemExampleText from '!!raw-loader!./snippets/ParticipantItem.snippet.tsx';
 import CustomAvatarExampleText from '!!raw-loader!./snippets/CustomAvatar.snippet.tsx';
@@ -34,3 +35,7 @@ To customize the avatar, use the `onRenderAvatar` property like in the example b
 To add an icon, use the `onRenderIcon` property like in the example below.
 
 <Canvas of={ParticipantItemStories.CustomIconSnippetDocsOnly} source={{ code: CustomIconExampleText }} />
+
+## Props
+
+<ArgTypes of={ParticipantItem} />

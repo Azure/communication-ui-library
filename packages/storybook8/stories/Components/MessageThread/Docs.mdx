@@ -1,7 +1,7 @@
-import { Canvas, Description, Meta, Source } from '@storybook/blocks';
+import { Canvas, Description, Meta, Source, ArgTypes } from '@storybook/blocks';
 import { SingleLineBetaBanner } from '../../BetaBanners/SingleLineBetaBanner';
 import { DetailedBetaBanner } from '../../BetaBanners/DetailedBetaBanner';
-
+import { MessageThread } from '@azure/communication-react';
 import * as MessageThreadStories from './index.stories';
 
 import MessageThreadWithBlockedMessagesExampleText from '!!raw-loader!./snippets/BlockedMessages.snippet.tsx';
@@ -225,7 +225,7 @@ The following examples show how to enable image insert functionality for message
 editor. Under the `richTextEditorOptions` prop, an `onInsertInlineImage` callback to handle an inline image
 that is inserted into the MessageThread component. This callback can be used to implement custom logic, such
 as uploading the image to a server. After processing each inserted image in the callback, the results should
-be passed back to the component through the `messagesInlineImages` prop for each message that has inserted
+be passed back to the component through the `messagesInlineImagesWithProgress` prop for each message that has inserted
 inline images. This prop will be used to render inline images in the MessageThread and submit them with the
 message.
 
@@ -244,3 +244,7 @@ message.
   of={MessageThreadStories.RichTextEditorOnPasteTextDocsOnly}
   source={{ code: MessageThreadWithRichTextEditorOnPasteExampleText }}
 />
+
+## Props
+
+<ArgTypes of={MessageThread} />
