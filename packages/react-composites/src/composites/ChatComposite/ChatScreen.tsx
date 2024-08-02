@@ -47,7 +47,7 @@ import { participantListContainerPadding } from '../common/styles/ParticipantCon
 import { ChatScreenPeoplePane } from './ChatScreenPeoplePane';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
-import { removeImageTags } from '@internal/acs-ui-common';
+import { removeImageTags, _IMAGE_ATTRIBUTE_INLINE_IMAGE_FILE_NAME_KEY } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(file-sharing-acs) */
 import { AttachmentDownloadErrorBar } from './AttachmentDownloadErrorBar';
 import { _AttachmentDownloadCards } from '@internal/react-components';
@@ -70,6 +70,7 @@ import { loadRichTextSendBox, RichTextSendBoxOptions } from '../common/SendBoxPi
 import {
   cancelInlineImageUpload,
   getEditBoxMessagesInlineImages,
+  getImageFileNameFromAttributes,
   getSendBoxInlineImages,
   onInsertInlineImageForEditBox,
   onInsertInlineImageForSendBox,
@@ -80,11 +81,7 @@ import type { ChatAdapterState } from './adapter/ChatAdapter';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { isMicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
-import {
-  SEND_BOX_UPLOADS_KEY_VALUE,
-  _DEFAULT_INLINE_IMAGE_FILE_NAME,
-  _IMAGE_ATTRIBUTE_INLINE_IMAGE_FILE_NAME_KEY
-} from '../common/constants';
+import { SEND_BOX_UPLOADS_KEY_VALUE, _DEFAULT_INLINE_IMAGE_FILE_NAME } from '../common/constants';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { ImageUploadReducer } from './ImageUpload/ImageUploadReducer';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
@@ -609,7 +606,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
           onInsertInlineImage: (imageAttributes: Record<string, string>, messageId: string) => {
             onInsertInlineImageForEditBox(
               imageAttributes,
-              imageAttributes[_IMAGE_ATTRIBUTE_INLINE_IMAGE_FILE_NAME_KEY] || _DEFAULT_INLINE_IMAGE_FILE_NAME,
+              getImageFileNameFromAttributes(imageAttributes),
               messageId,
               adapter,
               handleEditBoxInlineImageUploadAction,
@@ -648,7 +645,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
           onInsertInlineImage: (imageAttributes: Record<string, string>) => {
             onInsertInlineImageForSendBox(
               imageAttributes,
-              imageAttributes[_IMAGE_ATTRIBUTE_INLINE_IMAGE_FILE_NAME_KEY] || _DEFAULT_INLINE_IMAGE_FILE_NAME,
+              getImageFileNameFromAttributes(imageAttributes),
               adapter,
               handleSendBoxInlineImageUploadAction,
               localeStrings.chat

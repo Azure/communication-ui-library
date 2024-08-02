@@ -206,3 +206,28 @@ export const removeBrokenImageContentAndClearImageSizeStyles = (content: string)
   });
   return document.body.innerHTML;
 };
+
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+/**
+ * @internal
+ */
+export const getContentWithUpdatedInlineImagesInfo = (
+  content: string,
+  inlineImageWithProgress: AttachmentMetadataInProgress[]
+): string => {
+  if (!inlineImageWithProgress || inlineImageWithProgress.length <= 0) {
+    return content;
+  }
+  const document = new DOMParser().parseFromString(content, 'text/html');
+  document.querySelectorAll('img').forEach((img) => {
+    const imageId = img.id;
+    const inlineImage = inlineImageWithProgress.find(
+      (image) => !image.error && image.progress === 1 && image.id === imageId
+    );
+    if (inlineImage) {
+      img.id = inlineImage.id;
+      img.src = inlineImage.url || img.src;
+    }
+  });
+  return document.body.innerHTML;
+};
