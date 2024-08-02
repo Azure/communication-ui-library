@@ -21,6 +21,8 @@ export default class CopyPastePlugin implements EditorPlugin {
   onPaste?: (event: { content: DocumentFragment }) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   onInsertInlineImage?: (imageAttributes: Record<string, string>) => void;
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  private imageBase64DataMap: Record<string, string> = {};
 
   getName(): string {
     return 'CopyPastePlugin';
@@ -32,7 +34,50 @@ export default class CopyPastePlugin implements EditorPlugin {
 
   dispose(): void {}
 
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  private handleInlineImage = (event: PluginEvent): void => {
+    if (event.eventType === PluginEventType.BeforePaste && event.pasteType === 'normal' && this.onInsertInlineImage) {
+      event.fragment.querySelectorAll('img').forEach((image) => {
+        // Assign a unique id to the image element so Contosos can identify the image element.
+        // We also use it internally such as in getRemovedInlineImages to compare images in the content with previous images
+        image.id = generateGUID();
+
+        const clipboardImage = event.clipboardData.image;
+        const fileName =
+          clipboardImage?.name ||
+          clipboardImage?.type.replace('/', '.') ||
+          image.getAttribute(_IMAGE_ATTRIBUTE_INLINE_IMAGE_FILE_NAME_KEY) ||
+          '';
+        // If the image src is an external url, call the onInsertInlineImage callback with the url.
+        let imageUrl = image.src;
+        if (image.src.startsWith('data:image/')) {
+          this.imageBase64DataMap[image.id] = image.src;
+
+          const blobImage = _base64ToBlob(image.src);
+          imageUrl = URL.createObjectURL(blobImage);
+        }
+
+        image.src = imageUrl;
+        image.alt = image.alt || 'image';
+
+        image.dataset.imageFileName = fileName;
+
+        const imageAttributes = getInlineImageAttributes(image);
+
+        this.onInsertInlineImage && this.onInsertInlineImage(imageAttributes);
+      });
+    }
+  };
+
   onPluginEvent(event: PluginEvent): void {
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    if (event.eventType === PluginEventType.BeforeCutCopy) {
+      event.clonedRoot.querySelectorAll('img').forEach(async (image) => {
+        const base64Data = this.imageBase64DataMap[image.id];
+        image.src = base64Data || image.src;
+      });
+    }
+
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
     // If onInsertInlineImage is not provided, we should remove the image tags before calling the onPaste callback
     if (event.eventType === PluginEventType.BeforePaste && event.pasteType === 'normal' && !this.onInsertInlineImage) {
@@ -44,7 +89,7 @@ export default class CopyPastePlugin implements EditorPlugin {
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
     // We should handle the onInsertInlineImage after the onPaste callback in case Contosos want to modify the image tags, especially the src attribute.
     if (this.onInsertInlineImage) {
-      handleInlineImage(event, this.onInsertInlineImage);
+      this.handleInlineImage(event);
     }
 
     if (this.editor !== null && !this.editor.isDisposed()) {
@@ -69,44 +114,6 @@ export const handleBeforePasteEvent = (
     onPaste?.({ content: event.fragment });
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
     return;
-  }
-};
-
-/* @conditional-compile-remove(rich-text-editor-image-upload) */
-/**
- * @internal
- * Exported only for unit testing
- */
-export const handleInlineImage = (
-  event: PluginEvent,
-  onInsertInlineImage?: (imageAttributes: Record<string, string>) => void
-): void => {
-  if (event.eventType === PluginEventType.BeforePaste && event.pasteType === 'normal' && onInsertInlineImage) {
-    event.fragment.querySelectorAll('img').forEach((image) => {
-      const clipboardImage = event.clipboardData.image;
-      const fileName =
-        clipboardImage?.name ||
-        clipboardImage?.type.replace('/', '.') ||
-        image.getAttribute(_IMAGE_ATTRIBUTE_INLINE_IMAGE_FILE_NAME_KEY) ||
-        '';
-      // If the image src is an external url, call the onInsertInlineImage callback with the url.
-      let imageUrl = image.src;
-      if (image.src.startsWith('data:image/')) {
-        const blobImage = _base64ToBlob(image.src);
-        imageUrl = URL.createObjectURL(blobImage);
-      }
-
-      image.src = imageUrl;
-      image.alt = image.alt || 'image';
-      // Assign a unique id to the image element so Contosos can identify the image element.
-      // We also use it internally such as in getRemovedInlineImages to compare images in the content with previous images
-      image.id = generateGUID();
-      image.dataset.imageFileName = fileName;
-
-      const imageAttributes = getInlineImageAttributes(image);
-
-      onInsertInlineImage(imageAttributes);
-    });
   }
 };
 
