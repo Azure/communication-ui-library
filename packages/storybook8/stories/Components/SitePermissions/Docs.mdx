@@ -1,11 +1,15 @@
-import { Canvas, Description, Meta, Source } from '@storybook/blocks';
+import { Canvas, Description, Meta, Source, ArgTypes } from '@storybook/blocks';
+import { CameraSitePermissions } from '@azure/communication-react';
 import * as SitePermissionsStories from './index.stories';
+import { SingleLineBetaBanner } from '../../BetaBanners/SingleLineBetaBanner';
 import SitePermissionsCheckModalExample from '!!raw-loader!./snippets/SitePermissionsCheckModal.snippet.tsx';
 import SitePermissionsDeniedModalExample from '!!raw-loader!./snippets/SitePermissionsDeniedModal.snippet.tsx';
 import SitePermissionsExample from '!!raw-loader!./snippets/SitePermissionsExample.snippet.tsx';
 import SitePermissionsRequestModalExample from '!!raw-loader!./snippets/SitePermissionsRequestModal.snippet.tsx';
 
 <Meta of={SitePermissionsStories} />
+
+<SingleLineBetaBanner />
 
 # Site Permissions
 
@@ -57,4 +61,4 @@ below to see the component.
 
 ## Props
 
-TODO: Add props documentation
+<ArgTypes of={CameraSitePermissions} />

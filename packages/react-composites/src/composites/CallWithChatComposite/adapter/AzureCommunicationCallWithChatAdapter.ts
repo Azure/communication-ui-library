@@ -573,6 +573,11 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     return this.callAdapter.muteAllRemoteParticipants();
   }
 
+  /* @conditional-compile-remove(breakout-rooms) */
+  public async returnFromBreakoutRoom(): Promise<void> {
+    return this.callAdapter.returnFromBreakoutRoom();
+  }
+
   on(event: 'callParticipantsJoined', listener: ParticipantsJoinedListener): void;
   on(event: 'callParticipantsLeft', listener: ParticipantsLeftListener): void;
   on(event: 'callEnded', listener: CallEndedListener): void;

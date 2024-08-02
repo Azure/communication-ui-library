@@ -5,6 +5,8 @@ import { AttachmentMetadataInProgress, RichTextSendBox as RichTextSendBoxCompone
 import { Title, Description, Props, Heading, Canvas, Source } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React, { useState } from 'react';
+import { getImageFileNameFromAttributes } from '../../../react-composites/src/composites/ChatComposite/ImageUpload/ImageUploadUtils';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { DetailedBetaBanner } from '../BetaBanners/DetailedBetaBanner';
 import { SingleLineBetaBanner } from '../BetaBanners/SingleLineBetaBanner';
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
@@ -67,8 +69,8 @@ const getDocs: () => JSX.Element = () => {
         The RichTextSendBox component provides an `onInsertInlineImage` callback to handle an inline image that is
         inserted into the RichTextSendBox component. This callback can be used to implement custom logic, such as
         uploading the image to a server. After processing each inserted image in the callback, the results should be
-        passed back to the component through the `inlineImages` prop. This prop will be used to render inline images in
-        the RichTextSendBox and send them with the message.
+        passed back to the component through the `inlineImagesWithProgress` prop. This prop will be used to render
+        inline images in the RichTextSendBox and send them with the message.
       </Description>
       <Canvas mdxSource={RichTextSendBoxWithInlineImagesExampleText}>
         <RichTextSendBoxWithInlineImagesExample />
@@ -93,7 +95,9 @@ const getDocs: () => JSX.Element = () => {
 const RichTextSendBoxStory = (args): JSX.Element => {
   const timeoutRef = React.useRef<NodeJS.Timeout>();
   const delayForSendButton = 300;
-  const [inlineImages, setInlineImages] = useState<AttachmentMetadataInProgress[] | undefined>();
+  const [inlineImagesWithProgress, setInlineImagesWithProgress] = useState<
+    AttachmentMetadataInProgress[] | undefined
+  >();
 
   return (
     <div style={{ width: '31.25rem', maxWidth: '90%' }}>
@@ -120,7 +124,7 @@ const RichTextSendBoxStory = (args): JSX.Element => {
         systemMessage={args.hasWarning ? args.warningMessage : undefined}
         onSendMessage={async (message, options) => {
           timeoutRef.current = setTimeout(() => {
-            setInlineImages(undefined);
+            setInlineImagesWithProgress(undefined);
             alert(`sent message: ${message} with options ${JSON.stringify(options)}`);
           }, delayForSendButton);
         }}
@@ -131,21 +135,20 @@ const RichTextSendBoxStory = (args): JSX.Element => {
           console.log(`sending typing notifications`);
           return Promise.resolve();
         }}
-        onInsertInlineImage={(image: string, fileName: string) => {
-          const id = inlineImages?.length ? (inlineImages.length + 1).toString() : '1';
+        onInsertInlineImage={(imageAttributes: Record<string, string>) => {
           const newImage = {
-            id,
-            name: fileName,
+            id: imageAttributes.id,
+            name: getImageFileNameFromAttributes(imageAttributes),
             progress: 1,
-            url: image,
+            url: imageAttributes.src,
             error: undefined
           };
-          setInlineImages([...(inlineImages ?? []), newImage]);
+          setInlineImagesWithProgress([...(inlineImagesWithProgress ?? []), newImage]);
         }}
-        inlineImages={inlineImages}
-        onCancelInlineImageUpload={(imageId: string) => {
-          const filteredInlineImages = inlineImages?.filter((image) => image.id !== imageId);
-          setInlineImages(filteredInlineImages);
+        inlineImagesWithProgress={inlineImagesWithProgress}
+        onRemoveInlineImage={(imageAttributes: Record<string, string>) => {
+          const filteredInlineImages = inlineImagesWithProgress?.filter((image) => image.id !== imageAttributes.id);
+          setInlineImagesWithProgress(filteredInlineImages);
         }}
       />
     </div>
