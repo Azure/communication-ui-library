@@ -2725,6 +2725,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     IncomingCallNotificationRejectIcon: React_2.JSX.Element;
     IncomingCallNotificationAcceptIcon: React_2.JSX.Element;
     IncomingCallNotificationAcceptWithVideoIcon: React_2.JSX.Element;
+    SummaryChatIcon: React_2.JSX.Element;
 };
 
 // @public
@@ -2900,6 +2901,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     IncomingCallNotificationRejectIcon: React_2.JSX.Element;
     IncomingCallNotificationAcceptIcon: React_2.JSX.Element;
     IncomingCallNotificationAcceptWithVideoIcon: React_2.JSX.Element;
+    SummaryChatIcon: React_2.JSX.Element;
 };
 
 // @beta

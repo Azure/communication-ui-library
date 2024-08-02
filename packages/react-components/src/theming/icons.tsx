@@ -47,7 +47,8 @@ import {
   PinOff20Regular,
   ScaleFit20Regular,
   ScaleFill20Regular,
-  PersonDelete20Regular
+  PersonDelete20Regular,
+  ChatSparkle20Regular
 } from '@fluentui/react-icons';
 import { MicOff16Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(rich-text-editor) */
@@ -411,5 +412,6 @@ export const DEFAULT_COMPONENT_ICONS = {
   /* @conditional-compile-remove(one-to-n-calling) */
   IncomingCallNotificationAcceptIcon: <Call20Filled />,
   /* @conditional-compile-remove(one-to-n-calling) */
-  IncomingCallNotificationAcceptWithVideoIcon: <Video20Filled />
+  IncomingCallNotificationAcceptWithVideoIcon: <Video20Filled />,
+  SummaryChatIcon: <ChatSparkle20Regular />
 };
