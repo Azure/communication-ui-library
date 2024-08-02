@@ -266,15 +266,9 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
   /* @conditional-compile-remove(breakout-rooms) */
   const canReturnToMainMeeting = breakoutRoomSettings && breakoutRoomSettings.disableReturnToMainMeeting === false;
   /* @conditional-compile-remove(breakout-rooms) */
-  const returnFromBreakoutRoom = useMemo(
-    () => (canReturnToMainMeeting ? () => props.callAdapter.returnFromBreakoutRoom() : undefined),
-    [canReturnToMainMeeting, props.callAdapter]
-  );
+  const returnFromBreakoutRoom = useCallback(() => props.callAdapter.returnFromBreakoutRoom(), [props.callAdapter]);
   /* @conditional-compile-remove(breakout-rooms) */
-  const hangUpOriginCall = useMemo(
-    () => (canReturnToMainMeeting ? () => props.callAdapter.hangUpOriginCall() : undefined),
-    [canReturnToMainMeeting, props.callAdapter]
-  );
+  const hangUpOriginCall = useCallback(() => props.callAdapter.hangUpOriginCall(), [props.callAdapter]);
 
   // when options is false then we want to hide the whole control bar.
   if (options === false) {
