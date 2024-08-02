@@ -363,6 +363,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                 <div ref={controlBarContainerRef}>
                   <ControlBar layout={props.displayVertical ? 'vertical' : 'horizontal'} styles={centerContainerStyles}>
                     {
+                      /* @conditional-compile-remove(breakout-rooms) */
                       // eslint-disable-next-line @typescript-eslint/no-explicit-any
                       assignedBreakoutRoom && assignedBreakoutRoom.state === 'open' && (
                         <PrimaryButton
