@@ -18,7 +18,7 @@ export type ContainerProps = {
   alternateCallerId: string;
   userId: CommunicationUserIdentifier;
   token: string;
-  targetCallees: string[];
+  targetCallees: string;
   displayName: string;
   formFactor?: 'desktop' | 'mobile';
   fluentTheme?: PartialTheme | Theme;
@@ -28,8 +28,11 @@ export type ContainerProps = {
   options?: CallCompositeOptions;
 };
 
-const createTargetCallees = (targetCallees: string[]): PhoneNumberIdentifier[] => {
-  return targetCallees.map((c) => fromFlatCommunicationIdentifier(c) as PhoneNumberIdentifier);
+const createTargetCallees = (callees: string): PhoneNumberIdentifier[] => {
+  const numbers = callees.split(',');
+  const targetCallees = numbers.map((c) => fromFlatCommunicationIdentifier(c) as PhoneNumberIdentifier);
+  console.log('targetCallees', targetCallees);
+  return targetCallees;
 };
 
 export const ContosoCallContainerPSTN = (props: ContainerProps): JSX.Element => {
