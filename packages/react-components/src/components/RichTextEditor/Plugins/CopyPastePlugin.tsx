@@ -73,8 +73,10 @@ export default class CopyPastePlugin implements EditorPlugin {
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
     if (event.eventType === PluginEventType.BeforeCutCopy) {
       event.clonedRoot.querySelectorAll('img').forEach(async (image) => {
-        const base64Data = this.imageBase64DataMap[image.id];
-        image.src = base64Data || image.src;
+        if (image.src.startsWith('blob:')) {
+          const base64Data = this.imageBase64DataMap[image.id];
+          image.src = base64Data || image.src;
+        }
       });
     }
 
