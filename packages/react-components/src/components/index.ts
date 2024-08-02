@@ -59,7 +59,7 @@ export type {
 } from './MessageThread';
 
 /* @conditional-compile-remove(rich-text-editor) */
-export type { RichTextEditorOptions, RichTextSendBoxOptions } from './RichTextEditor/RichTextSendBox';
+export type { RichTextEditorOptions } from './RichTextEditor/RichTextSendBox';
 /* @conditional-compile-remove(rich-text-editor) */
 export type { RichTextEditBoxOptions } from './MessageThread';
 

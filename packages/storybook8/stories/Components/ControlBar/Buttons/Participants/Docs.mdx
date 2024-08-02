@@ -1,4 +1,5 @@
-import { Canvas, Description, Meta, Source } from '@storybook/blocks';
+import { Canvas, Description, Meta, Source, ArgTypes } from '@storybook/blocks';
+import { ParticipantsButton } from '@azure/communication-react';
 import * as ParticipantsStories from './index.stories';
 import ParticipantsButtonDefaultExampleText from '!!raw-loader!./snippets/Default.snippet.tsx';
 import ParticipantsButtonWithCallLinkExampleText from '!!raw-loader!./snippets/WithCallLink.snippet.tsx';
@@ -92,3 +93,5 @@ onRenderText, etc... ) with the addition of customizing the render of the partic
 ## Props
 
 `ParticipantsButton` features all props a [FluentUI Button](https://developer.microsoft.com/fluentui#/controls/web/button) offers, with the following additional properties.
+
+<ArgTypes of={ParticipantsButton} />
