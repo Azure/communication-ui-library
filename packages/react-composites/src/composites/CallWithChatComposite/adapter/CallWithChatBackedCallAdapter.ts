@@ -241,6 +241,11 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
   public async returnFromBreakoutRoom(): Promise<void> {
     return this.callWithChatAdapter.returnFromBreakoutRoom();
   }
+
+  /* @conditional-compile-remove(breakout-rooms) */
+  public async hangUpOriginCall(): Promise<void> {
+    return this.callWithChatAdapter.hangUpOriginCall();
+  }
 }
 
 function callAdapterStateFromCallWithChatAdapterState(

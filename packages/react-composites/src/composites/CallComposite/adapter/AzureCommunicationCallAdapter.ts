@@ -1064,9 +1064,29 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     });
     // If a main meeting call exists then process that call and resume
     if (mainMeetingCall) {
+      const breakoutRoomCall = this.call;
       this.processNewCall(mainMeetingCall);
       await this.resumeCall();
+      if (breakoutRoomCall?.state === 'Connected') {
+        breakoutRoomCall.hangUp();
+      }
     }
+  }
+
+  /* @conditional-compile-remove(breakout-rooms) */
+  public async hangUpOriginCall(): Promise<void> {
+    const callId = this.call?.id;
+    if (!callId) {
+      return;
+    }
+    const thisCall = this.callClient.getState().calls[callId];
+    const originCall = this.callAgent.calls.find(
+      (call) => call.id === thisCall?.breakoutRooms?.breakoutRoomOriginCallId
+    );
+    if (!originCall) {
+      throw new Error('Origin call of breakout room not found');
+    }
+    originCall.hangUp();
   }
 
   public getState(): CallAdapterState {

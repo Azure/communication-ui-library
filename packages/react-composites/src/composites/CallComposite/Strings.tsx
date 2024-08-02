@@ -867,4 +867,19 @@ export interface CallCompositeStrings {
    * Label for mute all cancel button
    */
   muteAllCancelButtonLabel: string;
+  /* @conditional-compile-remove(breakout-rooms) */
+  /**
+   * Label for join breakout room button
+   */
+  joinBreakoutRoomButtonLabel: string;
+  /* @conditional-compile-remove(breakout-rooms) */
+  /**
+   * Label for button to return to main meeting
+   */
+  returnToMainMeetingButtonLabel: string;
+  /* @conditional-compile-remove(breakout-rooms) */
+  /**
+   * Label for button to leave breakout room and return to main meeting
+   */
+  leaveRoomAndMainMeetingButtonLabel: string;
 }
