@@ -38,6 +38,8 @@ import { Reaction } from '@azure/communication-calling';
 import { StartCaptionsOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
+/* @conditional-compile-remove(breakout-rooms) */
+import { BreakoutRoomsUpdatedListener } from '@azure/communication-calling';
 import { DtmfTone } from '@azure/communication-calling';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 import { SendMessageOptions } from '@azure/communication-chat';
@@ -506,6 +508,11 @@ export interface CallWithChatAdapterManagement {
    * Mute a participant
    */
   muteAllRemoteParticipants(): Promise<void>;
+  /* @conditional-compile-remove(breakout-rooms) */
+  /**
+   * Return to origin call of breakout room
+   */
+  returnFromBreakoutRoom(): Promise<void>;
 }
 
 /**
@@ -531,6 +538,8 @@ export interface CallWithChatAdapterSubscriptions {
   on(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
   on(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
   on(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
+  /* @conditional-compile-remove(breakout-rooms) */
+  on(event: 'breakoutRoomsUpdated', listener: BreakoutRoomsUpdatedListener): void;
   off(event: 'callEnded', listener: CallEndedListener): void;
   off(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
   off(event: 'callIdChanged', listener: CallIdChangedListener): void;
@@ -548,6 +557,8 @@ export interface CallWithChatAdapterSubscriptions {
   off(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
   off(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
   off(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
+  /* @conditional-compile-remove(breakout-rooms) */
+  off(event: 'breakoutRoomsUpdated', listener: BreakoutRoomsUpdatedListener): void;
 
   // Chat subscriptions
   on(event: 'messageReceived', listener: MessageReceivedListener): void;
@@ -615,6 +626,7 @@ export type CallWithChatEvent =
   | 'isSpokenLanguageChanged'
   | 'capabilitiesChanged'
   | 'spotlightChanged'
+  | /* @conditional-compile-remove(breakout-rooms) */ 'breakoutRoomsUpdated'
   | 'messageReceived'
   | 'messageEdited'
   | 'messageDeleted'

@@ -48,3 +48,5 @@ export type { SpotlightCallFeatureState, SpotlightState } from './CallClientStat
 export type { LocalRecordingCallFeatureState } from './CallClientState';
 /* @conditional-compile-remove(teams-meeting-conference) */
 export type { ConferencePhoneInfo } from './CallClientState';
+/* @conditional-compile-remove(breakout-rooms) */
+export type { BreakoutRoomsState } from './CallClientState';

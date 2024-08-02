@@ -27,7 +27,7 @@ const meta: Meta = {
   },
   args: {
     autoDismiss: false,
-    showStackedEffect: false,
+    showStackedEffect: false
   }
 };
 

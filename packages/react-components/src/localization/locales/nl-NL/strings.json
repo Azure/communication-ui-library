@@ -24,7 +24,7 @@
     "placeholderText": "Een bericht invoeren",
     "textTooLong": "De lengte van uw bericht overschrijdt de maximumlimiet.",
     "sendButtonAriaLabel": "Bericht verzenden",
-    "attachmentUploadsPendingError": "Uploaden.... Een ogenblik geduld.",
+    "attachmentUploadsPendingError": "Bestand wordt geüpload, even geduld.",
     "removeAttachment": "Bestand verwijderen",
     "uploading": "Uploaden",
     "uploadCompleted": "Upload voltooid",
@@ -34,7 +34,8 @@
     "placeholderText": "Een bericht invoeren",
     "textTooLong": "De lengte van uw bericht overschrijdt de maximumlimiet.",
     "sendButtonAriaLabel": "Bericht verzenden",
-    "attachmentUploadsPendingError": "Uploaden... Een ogenblik geduld.",
+    "attachmentUploadsPendingError": "Bestand wordt geüpload, even geduld.",
+    "imageUploadsPendingError": "Afbeelding wordt geüpload, even geduld.",
     "removeAttachment": "Bestand verwijderen",
     "uploading": "Uploaden",
     "uploadCompleted": "Upload voltooid",
@@ -58,7 +59,11 @@
     "richTextDeleteRowMenu": "Rij verwijderen",
     "richTextDeleteTableMenu": "Tabel verwijderen",
     "richTextToolbarMoreButtonAriaLabel": "Meer opties",
-    "attachmentMoreMenu": "Meer opties"
+    "attachmentMoreMenu": "Meer opties",
+    "richTextNewBulletedListItemAnnouncement": "Opsommingsteken, nieuwe regel",
+    "richTextNewNumberedListItemAnnouncement": "{0}, nieuwe regel",
+    "richTextBulletedListAppliedAnnouncement": "Lijst met opsommingstekens toegepast",
+    "richTextNumberedListAppliedAnnouncement": "Genummerde lijst is toegepast"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Suggesties"
@@ -221,7 +226,12 @@
     "richTextDeleteRowMenu": "Rij verwijderen",
     "richTextDeleteTableMenu": "Tabel verwijderen",
     "richTextToolbarMoreButtonAriaLabel": "Meer opties",
-    "attachmentUploadsPendingError": "Uploaden... Een ogenblik geduld."
+    "attachmentUploadsPendingError": "Bestand wordt geüpload, even geduld.",
+    "imageUploadsPendingError": "Afbeelding wordt geüpload, even geduld.",
+    "richTextNewBulletedListItemAnnouncement": "Opsommingsteken, nieuwe regel",
+    "richTextNewNumberedListItemAnnouncement": "{0}, nieuwe regel",
+    "richTextBulletedListAppliedAnnouncement": "Lijst met opsommingstekens toegepast",
+    "richTextNumberedListAppliedAnnouncement": "Genummerde lijst is toegepast"
   },
   "errorBar": {
     "unableToReachChatService": "U bent offline",

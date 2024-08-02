@@ -1,7 +1,7 @@
-import { Canvas, Description, Meta, Source } from '@storybook/blocks';
+import { Canvas, Description, Meta, Source, ArgTypes } from '@storybook/blocks';
 import { SingleLineBetaBanner } from '../../BetaBanners/SingleLineBetaBanner';
 import { DetailedBetaBanner } from '../../BetaBanners/DetailedBetaBanner';
-
+import { MessageThread } from '@azure/communication-react';
 import * as MessageThreadStories from './index.stories';
 
 import MessageThreadWithBlockedMessagesExampleText from '!!raw-loader!./snippets/BlockedMessages.snippet.tsx';
@@ -23,6 +23,7 @@ import MessageThreadWithSystemMessagesExampleText from '!!raw-loader!./snippets/
 import MessageThreadWithInlineImageExampleText from '!!raw-loader!./snippets/WithInlineImageMessage.snippet.tsx';
 import MessageThreadWithMessageDateExampleText from '!!raw-loader!./snippets/WithMessageDate.snippet.tsx';
 import MessageThreadWithRichTextEditorExampleText from '!!raw-loader!./snippets/WithRichTextEditor.snippet.tsx';
+import MessageThreadWithRichTextEditorInlineImagesExampleText from '!!raw-loader!./snippets/WithRichTextEditorInlineImages.snippet.tsx';
 import MessageThreadWithRichTextEditorOnPasteExampleText from '!!raw-loader!./snippets/WithRichTextEditorOnPaste.snippet.tsx';
 
 <Meta of={MessageThreadStories} />
@@ -181,7 +182,7 @@ icon shown below.
 The MessageThread component also supports multiple ways to customize the rendering. You can leverage the
 `attachmentOptions.downloadOptions` props to provide a dynamic list of menu action buttons that will be based
 on properties of the attachment or the chat message associated with it. Moreover, you can also opt to provide
-a static list for all secanrios.
+a static list for all scenarios.
 
 For example, the following code snippet demonstrates how to customize the download options for attachments.
 
@@ -216,6 +217,23 @@ Enabling the rich text editor for message editing, without customizing its behav
   source={{ code: MessageThreadWithRichTextEditorExampleText }}
 />
 
+## Rich Text Editor Support for Editing Messages with Inline Images
+
+<SingleLineBetaBanner />
+
+The following examples show how to enable image insert functionality for message editing with rich text
+editor. Under the `richTextEditorOptions` prop, an `onInsertInlineImage` callback to handle an inline image
+that is inserted into the MessageThread component. This callback can be used to implement custom logic, such
+as uploading the image to a server. After processing each inserted image in the callback, the results should
+be passed back to the component through the `messagesInlineImagesWithProgress` prop for each message that has inserted
+inline images. This prop will be used to render inline images in the MessageThread and submit them with the
+message.
+
+<Canvas
+  of={MessageThreadStories.RichTextEditorInlineImagesTextDocsOnly}
+  source={{ code: MessageThreadWithRichTextEditorInlineImagesExampleText }}
+/>
+
 ## Process content on paste in Rich Text Editor during message editing
 
 <SingleLineBetaBanner />
@@ -226,3 +244,7 @@ Enabling the rich text editor for message editing, without customizing its behav
   of={MessageThreadStories.RichTextEditorOnPasteTextDocsOnly}
   source={{ code: MessageThreadWithRichTextEditorOnPasteExampleText }}
 />
+
+## Props
+
+<ArgTypes of={MessageThread} />

@@ -24,7 +24,7 @@
     "placeholderText": "Saisir un message",
     "textTooLong": "La longueur de votre message dépasse la limite maximale.",
     "sendButtonAriaLabel": "Envoyer un message",
-    "attachmentUploadsPendingError": "Chargement en cours... Veuillez patienter.",
+    "attachmentUploadsPendingError": "Chargement du fichier en cours, veuillez patienter.",
     "removeAttachment": "Supprimer le fichier",
     "uploading": "Chargement",
     "uploadCompleted": "Téléchargement terminé",
@@ -34,7 +34,8 @@
     "placeholderText": "Saisir un message",
     "textTooLong": "La longueur de votre message dépasse la limite maximale.",
     "sendButtonAriaLabel": "Envoyer un message",
-    "attachmentUploadsPendingError": "Chargement en cours... Veuillez patienter.",
+    "attachmentUploadsPendingError": "Chargement du fichier en cours, veuillez patienter.",
+    "imageUploadsPendingError": "Chargement de l’image en cours, veuillez patienter.",
     "removeAttachment": "Supprimer un fichier",
     "uploading": "Téléchargement",
     "uploadCompleted": "Chargement terminé",
@@ -58,7 +59,11 @@
     "richTextDeleteRowMenu": "Supprimer une ligne",
     "richTextDeleteTableMenu": "Supprimer le tableau",
     "richTextToolbarMoreButtonAriaLabel": "Autres options",
-    "attachmentMoreMenu": "Plus d’options"
+    "attachmentMoreMenu": "Plus d’options",
+    "richTextNewBulletedListItemAnnouncement": "Puce, nouvelle ligne",
+    "richTextNewNumberedListItemAnnouncement": "{0}, nouvelle ligne",
+    "richTextBulletedListAppliedAnnouncement": "Liste à puces appliquée",
+    "richTextNumberedListAppliedAnnouncement": "Liste numérotée appliquée"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Suggestions"
@@ -221,7 +226,12 @@
     "richTextDeleteRowMenu": "Supprimer une ligne",
     "richTextDeleteTableMenu": "Supprimer le tableau",
     "richTextToolbarMoreButtonAriaLabel": "Autres options",
-    "attachmentUploadsPendingError": "Chargement en cours... Veuillez patienter."
+    "attachmentUploadsPendingError": "Chargement du fichier en cours, veuillez patienter.",
+    "imageUploadsPendingError": "Chargement de l’image en cours, veuillez patienter.",
+    "richTextNewBulletedListItemAnnouncement": "Puce, nouvelle ligne",
+    "richTextNewNumberedListItemAnnouncement": "{0}, nouvelle ligne",
+    "richTextBulletedListAppliedAnnouncement": "Liste à puces appliquée",
+    "richTextNumberedListAppliedAnnouncement": "Liste numérotée appliquée"
   },
   "errorBar": {
     "unableToReachChatService": "Vous êtes hors connexion",
