@@ -146,6 +146,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   /* @conditional-compile-remove(file-sharing-acs) */
   const [uploads, handleUploadAction] = useReducer(AttachmentUploadReducer, []);
   const adapter = useAdapter();
+  console.log('DEBUG adapter.getState().thread?.properties?.topic: ', adapter.getState().thread?.properties?.topic);
   const theme = useTheme();
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   const localeStrings = useLocale().strings;

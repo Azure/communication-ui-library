@@ -317,7 +317,7 @@ const hasValidParticipant = (chatMessage: ChatMessageWithStatus): boolean =>
 export const messageThreadSelectorWithThread: () => MessageThreadSelector = () =>
   createSelector(
     [getUserId, getChatMessages, getLatestReadTime, getIsLargeGroup, getReadReceipts, getParticipants],
-    (userId, chatMessages, latestReadTime, isLargeGroup, readReceipts, participants) => {
+    (userId, chatMessages, latestReadTime, isLargeGroup, readReceipts = [], participants) => {
       // We can't get displayName in teams meeting interop for now, disable rr feature when it is teams interop
       const isTeamsInterop = Object.values(participants).find((p) => 'microsoftTeamsUserId' in p.id) !== undefined;
 

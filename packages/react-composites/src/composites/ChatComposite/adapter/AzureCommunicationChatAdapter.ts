@@ -14,6 +14,7 @@ import type {
   ChatMessageDeletedEvent,
   ChatMessageEditedEvent,
   ChatMessageReceivedEvent,
+  ChatParticipant,
   ChatThreadPropertiesUpdatedEvent,
   ParticipantsAddedEvent,
   ParticipantsRemovedEvent,
@@ -523,6 +524,43 @@ export const _createAzureCommunicationChatAdapterInner = async (
   );
   const chatThreadClient = await chatClient.getChatThreadClient(threadId);
   await chatClient.startRealtimeNotifications();
+
+  async function waitToBeAddedToThread(): Promise<void> {
+    return new Promise((resolve) =>
+      // chatClient.on('participantsAdded', (e: ParticipantsAddedEvent) => {
+      //   const thisUserAdded = e.participantsAdded.find(
+      //     (participant: ChatParticipant) =>
+      //       toFlatCommunicationIdentifier(participant.id) === toFlatCommunicationIdentifier(userId)
+      //   );
+      //   if (e.threadId === threadId && thisUserAdded) {
+      //     resolve();
+      //   }
+      // })
+      chatClient.onStateChange((state: ChatClientState) => {
+        const userInThread = state.threads[threadId].participants[userId.communicationUserId];
+        if (userInThread) {
+          resolve();
+        }
+      })
+    );
+  }
+
+  const inThread = chatClient.getState().threads[threadId].participants[userId.communicationUserId];
+  if (!inThread) {
+    await waitToBeAddedToThread();
+  }
+
+  // let attempts = 0;
+  // while (attempts++ < 12) {
+  //   const participants = await chatThreadClient.listParticipants();
+  //   console.log('DEBUG participants: ', participants);
+  //   const inThread = chatClient.getState().threads[threadId].participants[userId.communicationUserId];
+  //   console.log('DEBUG inThread: ', inThread);
+  //   if (inThread) {
+  //     break;
+  //   }
+  //   await new Promise((_) => setTimeout(_, 1000));
+  // }
 
   const adapter = await createAzureCommunicationChatAdapterFromClient(chatClient, chatThreadClient);
 

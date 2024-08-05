@@ -3,6 +3,8 @@
 
 import React, { useCallback, useState, useMemo, useEffect, useRef } from 'react';
 import { mergeStyles, PartialTheme, Stack, Theme } from '@fluentui/react';
+/* @conditional-compile-remove(breakout-rooms) */
+import { Spinner } from '@fluentui/react';
 import { CallCompositePage } from '../CallComposite';
 import { CallSurvey } from '@azure/communication-calling';
 import { CallState } from '@azure/communication-calling';
@@ -577,17 +579,30 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
     ]
   );
 
-  const onRenderChatContent = useCallback(
-    (): JSX.Element => (
+  const onRenderChatContent = useCallback((): JSX.Element => {
+    const chatAdapterThreadId = chatAdapter.getState().thread.threadId;
+    const callAdapterThreadId = callAdapter.getState().call?.info?.threadId;
+    return chatAdapterThreadId === callAdapterThreadId ? (
       <ChatComposite
         adapter={chatAdapter}
         fluentTheme={theme}
         options={chatCompositeOptions}
         onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
       />
-    ),
-    [chatAdapter, props.onFetchAvatarPersonaData, chatCompositeOptions, theme]
-  );
+    ) : (
+      <Stack
+        className={mergeStyles({
+          width: '100%',
+          height: '100%',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center'
+        })}
+      >
+        <Spinner />
+      </Stack>
+    );
+  }, [chatAdapter, props.onFetchAvatarPersonaData, chatCompositeOptions, theme, callAdapter]);
 
   const sidePaneHeaderRenderer = useCallback(
     () => (
