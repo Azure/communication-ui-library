@@ -60,3 +60,14 @@ export const useMinMaxDragPosition = (modalLayerHostId: string, rtl?: boolean): 
  * @private
  */
 export const defaultSpokenLanguage = 'en-us';
+
+/* @conditional-compile-remove(breakout-rooms) */
+/**
+ * @private
+ */
+export const busyWait = async (checkCondition: () => boolean): Promise<void> => {
+  const delayMs = 500;
+  while (!checkCondition()) {
+    await new Promise((resolve) => setTimeout(resolve, delayMs));
+  }
+};
