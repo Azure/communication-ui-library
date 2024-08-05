@@ -21,11 +21,11 @@ import { StartCaptionsOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(breakout-rooms) */
-import type { BreakoutRoomsUpdatedListener } from '@azure/communication-calling';
+import type { BreakoutRoomsEventData, BreakoutRoomsUpdatedListener } from '@azure/communication-calling';
 import { DtmfTone } from '@azure/communication-calling';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing-acs) */
-import { MessageOptions } from '@internal/acs-ui-common';
+import { MessageOptions, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import {
   ParticipantsJoinedListener,
   ParticipantsLeftListener,
@@ -157,6 +157,10 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   private onChatStateChange: (newChatAdapterState: ChatAdapterState) => void;
   private onCallStateChange: (newChatAdapterState: CallAdapterState) => void;
   private isAdapterDisposed: boolean = false;
+  /* @conditional-compile-remove(breakout-rooms) */
+  private createChatAdapterCallback: ((threadId: string) => Promise<ChatAdapter>) | undefined;
+  private originCallChatAdapter: ChatAdapter | undefined;
+  private breakoutRoomChatAdapter: ChatAdapter | undefined;
 
   constructor(callAdapter: CallAdapter, chatAdapter?: ChatAdapter) {
     this.bindPublicMethods();
@@ -176,16 +180,79 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
       this.context.updateClientStateWithCallState(newCallAdapterState);
     };
 
+    const waitToBeAddedToThread = (chatAdapter: ChatAdapter): Promise<void> => {
+      return new Promise((resolve) =>
+        chatAdapter.onStateChange((state: ChatAdapterState) => {
+          const userInThread =
+            state.thread.participants[toFlatCommunicationIdentifier(this.callAdapter.getState().userId)];
+          if (userInThread) {
+            resolve();
+          }
+        })
+      );
+    };
+
     this.callAdapter.onStateChange(onCallStateChange);
+    /* @conditional-compile-remove(breakout-rooms) */
+    this.callAdapter.on('breakoutRoomsUpdated', async (eventData: BreakoutRoomsEventData) => {
+      if (!eventData.data) {
+        return;
+      }
+      if (eventData.type === 'join') {
+        const threadId = eventData.data.info.threadId;
+        if (threadId && this.chatAdapter && this.chatAdapter.getState().thread.threadId !== threadId) {
+          // check if you already have the adapter for the thread
+          if (this.breakoutRoomChatAdapter?.getState().thread.threadId === threadId) {
+            this.chatAdapter.offStateChange(this.onChatStateChange);
+            await waitToBeAddedToThread(this.breakoutRoomChatAdapter);
+            this.updateChatAdapter(this.breakoutRoomChatAdapter);
+          } else {
+            this.createNewChatAdapterForThread(threadId);
+          }
+        }
+      } else if (eventData.type === 'assignedBreakoutRooms') {
+        const chatAdapterThreadId = this.chatAdapter?.getState().thread.threadId;
+        if (chatAdapterThreadId === eventData.data.threadId && eventData.data.state === 'closed') {
+          this.disposeChatAdapter();
+          this.returnFromBreakoutRoom();
+        }
+      }
+    });
     this.onCallStateChange = onCallStateChange;
+  }
+
+  /* @conditional-compile-remove(breakout-rooms) */
+  private disposeChatAdapter(): void {
+    this.chatAdapter?.offStateChange(this.onChatStateChange);
+    this.chatAdapter?.dispose();
+    this.chatAdapter = undefined;
   }
 
   public setChatAdapterPromise(chatAdapter: Promise<ChatAdapter>): void {
     chatAdapter.then((adapter) => {
       if (!this.isAdapterDisposed) {
         this.updateChatAdapter(adapter);
+        this.originCallChatAdapter = adapter;
       }
     });
+  }
+
+  /* @conditional-compile-remove(breakout-rooms) */
+  public setCreateChatAdapterCallback(chatThreadCallBack: (threadId: string) => Promise<ChatAdapter>): void {
+    this.createChatAdapterCallback = chatThreadCallBack;
+  }
+
+  /* @conditional-compile-remove(breakout-rooms) */
+  public createNewChatAdapterForThread(threadId: string): void {
+    if (this.createChatAdapterCallback) {
+      this.createChatAdapterCallback(threadId).then((adapter) => {
+        if (!this.isAdapterDisposed) {
+          this.chatAdapter?.offStateChange(this.onChatStateChange);
+          this.updateChatAdapter(adapter);
+          this.breakoutRoomChatAdapter = adapter;
+        }
+      });
+    }
   }
 
   private updateChatAdapter(chatAdapter: ChatAdapter): void {
@@ -575,7 +642,15 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
 
   /* @conditional-compile-remove(breakout-rooms) */
   public async returnFromBreakoutRoom(): Promise<void> {
-    return this.callAdapter.returnFromBreakoutRoom();
+    const originalCallThreadId = this.callAdapter.getState().call?.info?.threadId;
+    if (originalCallThreadId) {
+      await this.callAdapter.returnFromBreakoutRoom();
+
+      if (this.originCallChatAdapter) {
+        this.chatAdapter?.offStateChange(this.onChatStateChange);
+        this.updateChatAdapter(this.originCallChatAdapter);
+      }
+    }
   }
 
   on(event: 'callParticipantsJoined', listener: ParticipantsJoinedListener): void;
@@ -1044,6 +1119,16 @@ export const createAzureCommunicationCallWithChatAdapter = async ({
       'CallWithChat' as _TelemetryImplementationHint
     );
     callWithChatAdapter.setChatAdapterPromise(chatAdapterPromise);
+    callWithChatAdapter.setCreateChatAdapterCallback((threadId: string) =>
+      _createAzureCommunicationChatAdapterInner(
+        endpoint,
+        userId,
+        displayName,
+        credential,
+        threadId,
+        'CallWithChat' as _TelemetryImplementationHint
+      )
+    );
     return callWithChatAdapter;
   } else {
     const chatAdapter = _createAzureCommunicationChatAdapterInner(
