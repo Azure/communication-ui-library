@@ -102,6 +102,8 @@ import { CapabilitiesChangedListener } from '../../CallComposite/adapter/CallAda
 import { SpotlightChangedListener } from '../../CallComposite/adapter/CallAdapter';
 import { VideoBackgroundImage, VideoBackgroundEffect } from '../../CallComposite';
 import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
+/* @conditional-compile-remove(breakout-rooms) */
+import { busyWait } from '../../common/utils';
 
 type CallWithChatAdapterStateChangedHandler = (newState: CallWithChatAdapterState) => void;
 
@@ -180,18 +182,6 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
       this.context.updateClientStateWithCallState(newCallAdapterState);
     };
 
-    const waitToBeAddedToThread = (chatAdapter: ChatAdapter): Promise<void> => {
-      return new Promise((resolve) =>
-        chatAdapter.onStateChange((state: ChatAdapterState) => {
-          const userInThread =
-            state.thread.participants[toFlatCommunicationIdentifier(this.callAdapter.getState().userId)];
-          if (userInThread) {
-            resolve();
-          }
-        })
-      );
-    };
-
     this.callAdapter.onStateChange(onCallStateChange);
     /* @conditional-compile-remove(breakout-rooms) */
     this.callAdapter.on('breakoutRoomsUpdated', async (eventData: BreakoutRoomsEventData) => {
@@ -202,13 +192,18 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
         const threadId = eventData.data.info.threadId;
         if (threadId && this.chatAdapter && this.chatAdapter.getState().thread.threadId !== threadId) {
           // check if you already have the adapter for the thread
-          if (this.breakoutRoomChatAdapter?.getState().thread.threadId === threadId) {
-            this.chatAdapter.offStateChange(this.onChatStateChange);
-            await waitToBeAddedToThread(this.breakoutRoomChatAdapter);
-            this.updateChatAdapter(this.breakoutRoomChatAdapter);
-          } else {
-            this.createNewChatAdapterForThread(threadId);
+          if (this.breakoutRoomChatAdapter?.getState().thread.threadId !== threadId) {
+            const newBreakoutRoomChatAdapter = await this.createNewChatAdapterForThread(threadId);
+            this.breakoutRoomChatAdapter = newBreakoutRoomChatAdapter;
           }
+          await busyWait(
+            () =>
+              !!this.breakoutRoomChatAdapter?.getState().thread.participants[
+                toFlatCommunicationIdentifier(this.context.getState().userId)
+              ]
+          );
+          this.chatAdapter.offStateChange(this.onChatStateChange);
+          this.updateChatAdapter(this.breakoutRoomChatAdapter);
         }
       } else if (eventData.type === 'assignedBreakoutRooms') {
         const chatAdapterThreadId = this.chatAdapter?.getState().thread.threadId;
@@ -243,19 +238,15 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   }
 
   /* @conditional-compile-remove(breakout-rooms) */
-  public createNewChatAdapterForThread(threadId: string): void {
+  public createNewChatAdapterForThread(threadId: string): Promise<ChatAdapter> {
     if (this.createChatAdapterCallback) {
-      this.createChatAdapterCallback(threadId).then((adapter) => {
-        if (!this.isAdapterDisposed) {
-          this.chatAdapter?.offStateChange(this.onChatStateChange);
-          this.updateChatAdapter(adapter);
-          this.breakoutRoomChatAdapter = adapter;
-        }
-      });
+      return this.createChatAdapterCallback(threadId);
     }
+    throw new Error('Unable to create chat adapter for thread');
   }
 
   private updateChatAdapter(chatAdapter: ChatAdapter): void {
+    console.log('DEBUG updateChatAdapter');
     this.chatAdapter = chatAdapter;
     this.chatAdapter.onStateChange(this.onChatStateChange);
     this.context.updateClientStateWithChatState(chatAdapter.getState());
