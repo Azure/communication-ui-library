@@ -110,6 +110,10 @@ export interface CallWithChatCompositeStrings {
    */
   chatPaneTitle: string;
   /**
+   * Side pane Chat screen title in a breakout room.
+   */
+  breakoutRoomChatPaneTitle: string;
+  /**
    * New Message label for chat button with notification icon component.
    */
   chatButtonNewMessageNotificationLabel: string;
