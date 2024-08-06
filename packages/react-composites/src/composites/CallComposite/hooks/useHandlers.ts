@@ -146,6 +146,9 @@ const createCompositeHandlers = memoizeOne(
       onDisposeRemoteScreenShareStreamView: async (userId) => {
         return adapter.disposeScreenShareStreamView(userId);
       },
+      onDisposeLocalScreenShareStreamView: async () => {
+        return adapter.disposeScreenShareStreamView('');
+      },
       onDisposeRemoteVideoStreamView: async (userId) => {
         return adapter.disposeRemoteVideoStreamView(userId);
       },
