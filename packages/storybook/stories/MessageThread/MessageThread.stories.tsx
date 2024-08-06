@@ -446,12 +446,18 @@ const Docs: () => JSX.Element = () => {
         <SingleLineBetaBanner />
         <Description>
           The following examples show how to enable image insert functionality for message editing with rich text
-          editor. Under the `richTextEditorOptions` prop, an `onInsertInlineImage` callback to handle an inline image
-          that is inserted into the MessageThread component. This callback can be used to implement custom logic, such
-          as uploading the image to a server. After processing each inserted image in the callback, the results should
-          be passed back to the component through the `messagesInlineImagesWithProgress` prop for each message that has
-          inserted inline images. This prop will be used to render inline images in the MessageThread and submit them
-          with the message.
+          editor. Under the `richTextEditorOptions` prop, the `onInsertInlineImage` callback is used to handle each
+          inline image that is inserted into the editor. When not provided, pasting images into the rich text editor
+          will be disabled. This callback can be used to manipulate the imageAttributes src URL (which is a local blob
+          URL), and implement any other custom logic. After processing each inserted image in the callback, the results
+          should be passed back to the component through the `messagesInlineImagesWithProgress` prop. This prop will be
+          used to render the error bar to the end user. Note that for the error of content exceeds the maximum length,
+          the `id` and `url` props provided in the `inlineImagesWithProgress` will be used in the calculation to achieve
+          a more accurate result. The content provided in the `onSendMessage` does not contain any information from the
+          `inlineImagesWithProgress`. To add or replace image attributes, manually parse the HTML content and update the
+          image attributes. After an inline image is removed from the editor, the `onRemoveInlineImage` callback will be
+          triggered. At this point, the image is already removed from the UI and the local blob of the image has already
+          been revoked. This callback can be used to implement custom logic such as deleting the image from the server.
         </Description>
         <Canvas mdxSource={MessageThreadWithRichTextEditorInlineImagesText}>
           <MessageThreadWithRichTextEditorInlineImagesExample />
