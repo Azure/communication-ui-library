@@ -458,6 +458,12 @@ const Docs: () => JSX.Element = () => {
           image attributes. After an inline image is removed from the editor, the `onRemoveInlineImage` callback will be
           triggered. At this point, the image is already removed from the UI and the local blob of the image has already
           been revoked. This callback can be used to implement custom logic such as deleting the image from the server.
+          When the inline images are displayed in the message thread, we restrict the max-width on each image, but not
+          the height. Long images will take up vertical space in the message thread. Also, when inserting images between
+          text, images will be on the same line as the text. If you wish to change this behavior so that each image is
+          always on a new line, you can set the display property to block for all image tags. For certain Android
+          devices, pasting of a single image is only supported by long pressing on the rich text editor and choosing
+          paste. Selecting from the clipboard view from keyboard may not be supported.
         </Description>
         <Canvas mdxSource={MessageThreadWithRichTextEditorInlineImagesText}>
           <MessageThreadWithRichTextEditorInlineImagesExample />
