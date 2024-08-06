@@ -273,8 +273,10 @@ export const cancelInlineImageUpload = (
     messageId
   });
 
-  if (imageUpload?.metadata.progress === 1) {
-    deleteInlineImageFromServer(imageUpload?.metadata.id, adapter);
+  if (imageUpload?.metadata.progress === 1 && imageUpload?.metadata.url) {
+    // The image id that we got back from the ChatSDK response is stored in the image src attribute,
+    // while the metadata id is the internal image id that we assigned to the image when it was pasted in.
+    deleteInlineImageFromServer(imageUpload?.metadata.url, adapter);
   }
 };
 
