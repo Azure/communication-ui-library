@@ -25,7 +25,6 @@ This release brings Rich Text Editor to the ChatComposite and the CallWithChatCo
 ### Improvements
 - Update @fluentui-contrib/react-chat to fix focus issues in chat component ([PR #4862](https://github.com/azure/communication-ui-library/pull/4862) by 98852890+vhuseinova-msft@users.noreply.github.com)
 - Update @azure/communication-calling beta to 1.28.1-beta.1 and stable to 1.27.2 ([PR #4954](https://github.com/azure/communication-ui-library/pull/4954) by 79475487+mgamis-msft@users.noreply.github.com)
-- Add more disallowed tags for pasting content in rich text editor ([PR #4796](https://github.com/azure/communication-ui-library/pull/4796) by 98852890+vhuseinova-msft@users.noreply.github.com)
 - Add `aria-checked` for rich text editor toolbar menu items ([PR #4787](https://github.com/azure/communication-ui-library/pull/4787) by 98852890+vhuseinova-msft@users.noreply.github.com)
 - Update table border width in insert table menu for rich text editor to 1px ([PR #4816](https://github.com/azure/communication-ui-library/pull/4816) by 98852890+vhuseinova-msft@users.noreply.github.com)
 - Update all dependencies with patch updates ([PR #4930](https://github.com/azure/communication-ui-library/pull/4930) by 2684369+JamesBurnside@users.noreply.github.com)
