@@ -11,6 +11,8 @@ import { VideoBackgroundImage, VideoBackgroundEffect } from '../../CallComposite
 import { VideoBackgroundEffectsDependency } from '@internal/calling-component-bindings';
 import { ChatAdapterState } from '../../ChatComposite';
 import { AdapterErrors } from '../../common/adapters';
+/* @conditional-compile-remove(breakout-rooms) */
+import { AdapterNotifications } from '../../common/adapters';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
 import { ReactionResources } from '@internal/react-components';
@@ -60,6 +62,9 @@ export interface CallWithChatClientState {
   chat?: ChatThreadClientState;
   /** Latest call error encountered for each operation performed via the adapter. */
   latestCallErrors: AdapterErrors;
+  /* @conditional-compile-remove(breakout-rooms) */
+  /** Latest call notifications encountered in the call client state via the adapter. */
+  latestCallNotifications: AdapterNotifications;
   /** Latest chat error encountered for each operation performed via the adapter. */
   latestChatErrors: AdapterErrors;
   /** State of available and currently selected devices */
@@ -117,6 +122,8 @@ export function callWithChatAdapterStateFromBackingStates(callAdapter: CallAdapt
     isTeamsCall: callAdapterState.isTeamsCall,
     isTeamsMeeting: callAdapterState.isTeamsMeeting,
     latestCallErrors: callAdapterState.latestErrors,
+    /* @conditional-compile-remove(breakout-rooms) */
+    latestCallNotifications: callAdapterState.latestNotifications,
     latestChatErrors: {},
     /* @conditional-compile-remove(PSTN-calls) */
     alternateCallerId: callAdapterState.alternateCallerId,
@@ -164,6 +171,8 @@ export function mergeCallAdapterStateIntoCallWithChatAdapterState(
     isTeamsCall: callAdapterState.isTeamsCall,
     isTeamsMeeting: callAdapterState.isTeamsMeeting,
     latestCallErrors: callAdapterState.latestErrors,
+    /* @conditional-compile-remove(breakout-rooms) */
+    latestCallNotifications: callAdapterState.latestNotifications,
 
     videoBackgroundImages: callAdapterState.videoBackgroundImages,
 
