@@ -44,6 +44,9 @@ import type { CommunicationUserKind } from '@azure/communication-common';
 import { CreateViewOptions } from '@azure/communication-calling';
 import { DeviceAccess } from '@azure/communication-calling';
 import { DeviceManager } from '@azure/communication-calling';
+import type { DiagnosticFlag } from '@azure/communication-calling';
+import type { DiagnosticQuality } from '@azure/communication-calling';
+import type { DiagnosticValueType } from '@azure/communication-calling';
 import { DominantSpeakersInfo } from '@azure/communication-calling';
 import { DtmfTone as DtmfTone_2 } from '@azure/communication-calling';
 import { EnvironmentInfo } from '@azure/communication-calling';
@@ -72,10 +75,12 @@ import { LatestNetworkDiagnostics } from '@azure/communication-calling';
 import { LocalRecordingInfo } from '@azure/communication-calling';
 import { LocalVideoStream } from '@azure/communication-calling';
 import type { MediaDiagnosticChangedEventArgs } from '@azure/communication-calling';
+import type { MediaDiagnosticType } from '@azure/communication-calling';
 import { MediaStreamType } from '@azure/communication-calling';
 import { MicrosoftTeamsAppIdentifier } from '@azure/communication-common';
 import { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 import type { NetworkDiagnosticChangedEventArgs } from '@azure/communication-calling';
+import type { NetworkDiagnosticType } from '@azure/communication-calling';
 import { PartialTheme } from '@fluentui/react';
 import { ParticipantCapabilities } from '@azure/communication-calling';
 import { ParticipantRole } from '@azure/communication-calling';
@@ -94,6 +99,7 @@ import { RemoteParticipantState as RemoteParticipantState_2 } from '@azure/commu
 import { RoomCallLocator } from '@azure/communication-calling';
 import { ScalingMode } from '@azure/communication-calling';
 import { SendMessageOptions } from '@azure/communication-chat';
+import type { ServerDiagnosticType } from '@azure/communication-calling';
 import { SpotlightedParticipant } from '@azure/communication-calling';
 import { StartCallOptions } from '@azure/communication-calling';
 import { StartCaptionsOptions } from '@azure/communication-calling';
@@ -4184,10 +4190,18 @@ export interface RecordingCallFeature {
     lastStoppedRecording?: RecordingInfo[];
 }
 
+// @beta
+export type RemoteDiagnosticState = {
+    readonly diagnostic: NetworkDiagnosticType | MediaDiagnosticType | ServerDiagnosticType;
+    readonly value: DiagnosticQuality | DiagnosticFlag;
+    readonly valueType: DiagnosticValueType;
+};
+
 // @public
 export interface RemoteParticipantState {
     callEndReason?: CallEndReason;
     contentSharingStream?: HTMLElement;
+    diagnostic?: RemoteDiagnosticState;
     displayName?: string;
     identifier: CommunicationIdentifierKind;
     isMuted: boolean;
