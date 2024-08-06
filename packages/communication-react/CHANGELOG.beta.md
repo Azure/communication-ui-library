@@ -17,9 +17,8 @@ We are excited to announce that the Azure Communication Services Web UI Library 
 
 #### Rich Text Editor
 
-This release brings major enhancements to the Rich Text Editor feature.
-- We now support enabling rich text editor when using either the ChatComposite or the CallWithChatComposite.
-- We have also added support for sending/editing messages that include images when in a Teams meeting using the CallWithChatComposite.
+This release brings Rich Text Editor to the ChatComposite and the CallWithChatComposite with the following new features:
+- We have added support for sending/editing messages that include images when in a Teams meeting using the CallWithChatComposite.
 - We now support setting a Text Only MessagingPolicy on the ChatComposite. This prevents attachments and inline images to be added as part of a message in Send Box and Message Edit Box.
 - An additional `onPaste` callback that can be used to customize content pasted to Rich Text Editor.
 
