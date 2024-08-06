@@ -86,6 +86,8 @@ export interface VideoGalleryStrings {
   screenIsBeingSharedMessage: string;
   /** String to show when remote screen share stream is loading */
   screenShareLoadingMessage: string;
+  /** String to show when local screen share stream is loading */
+  localScreenShareLoadingMessage: string;
   /** String for local video label. Default is "You" */
   localVideoLabel: string;
   /** String for local video camera switcher */
@@ -221,6 +223,8 @@ export interface VideoGalleryProps {
   onDisposeRemoteVideoStreamView?: (userId: string) => Promise<void>;
   /** Callback to dispose a remote screen share stream view */
   onDisposeRemoteScreenShareStreamView?: (userId: string) => Promise<void>;
+  /** Callback to dispose a local screen share stream view */
+  onDisposeLocalScreenShareStreamView?: () => Promise<void>;
   /** Callback to render a particpant avatar */
   onRenderAvatar?: OnRenderAvatarCallback;
   /**
@@ -372,6 +376,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     onDisposeLocalStreamView,
     onCreateRemoteStreamView,
     onDisposeRemoteScreenShareStreamView,
+    onDisposeLocalScreenShareStreamView,
     onDisposeRemoteVideoStreamView,
     styles,
     layout,
@@ -680,7 +685,15 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
 
   const screenShareParticipant = remoteParticipants.find((participant) => participant.screenShareStream?.isAvailable);
 
-  const localScreenShareStreamComponent = <LocalScreenShare localParticipant={localParticipant} />;
+  const localScreenShareStreamComponent = (
+    <LocalScreenShare
+      localParticipant={localParticipant}
+      renderElement={localParticipant.screenShareStream?.renderElement}
+      isAvailable={localParticipant.screenShareStream?.isAvailable}
+      onCreateLocalStreamView={onCreateLocalStreamView}
+      onDisposeLocalScreenShareStreamView={onDisposeLocalScreenShareStreamView}
+    />
+  );
 
   const remoteScreenShareComponent = screenShareParticipant && (
     <RemoteScreenShare
