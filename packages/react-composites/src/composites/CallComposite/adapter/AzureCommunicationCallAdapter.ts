@@ -722,7 +722,11 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
   }
 
   public async disposeScreenShareStreamView(remoteUserId: string): Promise<void> {
-    await this.handlers.onDisposeRemoteScreenShareStreamView(remoteUserId);
+    if (remoteUserId !== '') {
+      await this.handlers.onDisposeRemoteScreenShareStreamView(remoteUserId);
+    } else {
+      await this.handlers.onDisposeLocalScreenShareStreamView();
+    }
   }
 
   public async disposeRemoteVideoStreamView(remoteUserId: string): Promise<void> {

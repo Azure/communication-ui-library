@@ -47,7 +47,7 @@
     "@azure/communication-calling": "1.28.1-beta.2 || ^1.27.3",
     "@azure/communication-calling-effects": "1.1.1-beta.1 || ^1.1.0",
     "@babel/cli": "^7.24.8",
-    "@babel/core": "^7.24.9",
+    "@babel/core": "^7.25.2",
     "@types/jest": "^29.5.11",
     "@types/react": "18.3.3",
     "@typescript-eslint/eslint-plugin": "^7.14.1",

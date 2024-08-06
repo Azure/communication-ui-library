@@ -115,7 +115,11 @@ export const createDefaultChatHandlers = memoizeOne(
       },
       /* @conditional-compile-remove(rich-text-editor-image-upload) */
       onDeleteImage: async function (imageId: string): Promise<void> {
-        await chatThreadClient.deleteImage(imageId);
+        try {
+          await chatThreadClient.deleteImage(imageId);
+        } catch (e) {
+          console.log(`Error deleting image message: ${e}`);
+        }
         return;
       },
       // due to a bug in babel, we can't use arrow function here

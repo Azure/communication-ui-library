@@ -2134,6 +2134,8 @@ export interface CommonCallingHandlers {
     // (undocumented)
     onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
     // (undocumented)
+    onDisposeLocalScreenShareStreamView: () => Promise<void>;
+    // (undocumented)
     onDisposeLocalStreamView: () => Promise<void>;
     // (undocumented)
     onDisposeRemoteScreenShareStreamView: (userId: string) => Promise<void>;
@@ -4253,9 +4255,9 @@ export type ResourceFetchResult = {
 
 // @beta
 export interface RichTextEditBoxOptions extends RichTextEditorOptions {
-    messagesInlineImages?: Record<string, AttachmentMetadataInProgress[]>;
-    onCancelInlineImageUpload?: (imageId: string, messageId: string) => void;
-    onInsertInlineImage?: (imageUrl: string, imageFileName: string, messageId: string) => void;
+    messagesInlineImagesWithProgress?: Record<string, AttachmentMetadataInProgress[]>;
+    onInsertInlineImage?: (imageAttributes: Record<string, string>, messageId: string) => void;
+    onRemoveInlineImage?: (imageAttributes: Record<string, string>, messageId: string) => void;
 }
 
 // @beta
@@ -4269,24 +4271,17 @@ export interface RichTextEditorOptions {
 export const RichTextSendBox: (props: RichTextSendBoxProps) => JSX.Element;
 
 // @beta
-export interface RichTextSendBoxOptions extends RichTextEditorOptions {
-    inlineImages?: AttachmentMetadataInProgress[];
-    onCancelInlineImageUpload?: (imageId: string) => void;
-    onInsertInlineImage?: (imageUrl: string, imageFileName: string) => void;
-}
-
-// @beta
 export interface RichTextSendBoxProps {
     attachments?: AttachmentMetadataInProgress[];
     autoFocus?: 'sendBoxTextField';
     disabled?: boolean;
-    inlineImages?: AttachmentMetadataInProgress[];
+    inlineImagesWithProgress?: AttachmentMetadataInProgress[];
     onCancelAttachmentUpload?: (attachmentId: string) => void;
-    onCancelInlineImageUpload?: (imageId: string) => void;
-    onInsertInlineImage?: (imageUrl: string, imageFileName: string) => void;
+    onInsertInlineImage?: (imageAttributes: Record<string, string>) => void;
     onPaste?: (event: {
         content: DocumentFragment;
     }) => void;
+    onRemoveInlineImage?: (imageAttributes: Record<string, string>) => void;
     onSendMessage: (content: string, options?: MessageOptions) => Promise<void>;
     onTyping?: () => Promise<void>;
     strings?: Partial<RichTextSendBoxStrings>;
@@ -4990,6 +4985,7 @@ export type VideoGalleryLayout = 'default' | 'floatingLocalVideo' | 'speaker' | 
 export interface VideoGalleryLocalParticipant extends VideoGalleryParticipant {
     raisedHand?: RaisedHand;
     reaction?: Reaction;
+    screenShareStream?: VideoGalleryStream;
 }
 
 // @public
@@ -5014,6 +5010,7 @@ export interface VideoGalleryProps {
     maxRemoteVideoStreams?: number;
     onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
     onCreateRemoteStreamView?: (userId: string, options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
+    onDisposeLocalScreenShareStreamView?: () => Promise<void>;
     onDisposeLocalStreamView?: () => void;
     onDisposeRemoteScreenShareStreamView?: (userId: string) => Promise<void>;
     // @deprecated (undocumented)
@@ -5085,6 +5082,7 @@ export interface VideoGalleryStrings {
     displayNamePlaceholder: string;
     fillRemoteParticipantFrame: string;
     fitRemoteParticipantToFrame: string;
+    localScreenShareLoadingMessage: string;
     localVideoCameraSwitcherLabel: string;
     localVideoLabel: string;
     localVideoMovementAriaLabel: string;
