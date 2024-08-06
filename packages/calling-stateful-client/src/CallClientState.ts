@@ -29,7 +29,6 @@ import type {
   DiagnosticQuality,
   DiagnosticFlag
 } from '@azure/communication-calling';
-/* @conditional-compile-remove(meeting-id) */
 import { TeamsCallInfo } from '@azure/communication-calling';
 import { CallInfo } from '@azure/communication-calling';
 
