@@ -226,6 +226,20 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
     [props.mobileView, theme]
   );
 
+  /* @conditional-compile-remove(DNS) */
+  const [isDeepNoiseSuppressionOn, setDNS] = useState<boolean>(false);
+
+  /* @conditional-compile-remove(DNS) */
+  const onClickNoiseSuppression = useCallback(async () => {
+    if (isDeepNoiseSuppressionOn) {
+      await props.callAdapter.stopNoiseSuppressionEffect();
+      setDNS(false);
+    } else {
+      await props.callAdapter.startNoiseSuppressionEffect();
+      setDNS(true);
+    }
+  }, [props.callAdapter, isDeepNoiseSuppressionOn]);
+
   const controlBarWrapperDesktopStyles: IStyle = useMemo(
     // only center control bar buttons based on parent container if there are enough space on the screen and not mobile
     () => (!props.mobileView && !isOutOfSpace ? (rtl ? wrapperDesktopRtlStyles : wrapperDesktopStyles) : {}),
@@ -348,6 +362,10 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                         /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
                         disabled={props.disableButtonsForHoldScreen || isDisabled(options.microphoneButton)}
                         disableTooltip={props.mobileView}
+                        /* @conditional-compile-remove(DNS) */
+                        onClickNoiseSuppression={onClickNoiseSuppression}
+                        /* @conditional-compile-remove(DNS) */
+                        isDeepNoiseSuppressionOn={isDeepNoiseSuppressionOn}
                       />
                     )}
                     {cameraButtonIsEnabled && (
