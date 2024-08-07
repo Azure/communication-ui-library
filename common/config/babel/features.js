@@ -25,6 +25,8 @@ module.exports = {
     "DNS",
     // feature for breakout rooms
     "breakout-rooms",
+    // Feature for remote UFD
+    "remote-ufd",
   ],
   beta: [
     "call-readiness",

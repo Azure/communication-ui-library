@@ -351,7 +351,11 @@
   },
   "chat": {
     "chatListHeader": "בצ'אט זה",
-    "uploadAttachment": "העלה קובץ מצורף"
+    "uploadAttachment": "העלה קובץ מצורף",
+    "uploadImageDataNotProvided": "נתוני התמונה לא סופקו.",
+    "uploadImageIsTooLarge": "התמונה גדולה מדי. בחר אחד קטן יותר מ{maxImageSize} MB.",
+    "uploadImageExtensionIsNotAllowed": "העלאת תמונה {imageExtension} אסורה.",
+    "uploadImageFailed": "לא ניתן להעלות את התמונה. נסה שוב מאוחר יותר."
   },
   "callWithChat": {
     "chatButtonLabel": "צ'אט",

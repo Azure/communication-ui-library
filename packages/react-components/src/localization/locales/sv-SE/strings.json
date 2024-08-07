@@ -24,7 +24,7 @@
     "placeholderText": "Skriv ett meddelande",
     "textTooLong": "Meddelandelängden överskrider maxgränsen.",
     "sendButtonAriaLabel": "Skicka meddelande",
-    "attachmentUploadsPendingError": "Uppladdning pågår... Vänta.",
+    "attachmentUploadsPendingError": "Filen laddas upp. Vänta.",
     "removeAttachment": "Ta bort fil",
     "uploading": "Laddar upp",
     "uploadCompleted": "Uppladdningen har slutförts",
@@ -34,7 +34,8 @@
     "placeholderText": "Skriv ett meddelande",
     "textTooLong": "Meddelandelängden överskrider maxgränsen.",
     "sendButtonAriaLabel": "Skicka meddelande",
-    "attachmentUploadsPendingError": "Laddar upp... Var god vänta.",
+    "attachmentUploadsPendingError": "Filen laddas upp. Vänta.",
+    "imageUploadsPendingError": "Bilden laddas upp. Vänta.",
     "removeAttachment": "Ta bort filen",
     "uploading": "Laddar upp",
     "uploadCompleted": "Uppladdningen har slutförts",
@@ -58,7 +59,11 @@
     "richTextDeleteRowMenu": "Ta bort rad",
     "richTextDeleteTableMenu": "Ta bort tabell",
     "richTextToolbarMoreButtonAriaLabel": "Fler alternativ",
-    "attachmentMoreMenu": "Fler alternativ"
+    "attachmentMoreMenu": "Fler alternativ",
+    "richTextNewBulletedListItemAnnouncement": "Punkt, ny rad",
+    "richTextNewNumberedListItemAnnouncement": "{0}, ny rad",
+    "richTextBulletedListAppliedAnnouncement": "Punktlista tillämpad",
+    "richTextNumberedListAppliedAnnouncement": "Numrerad tillämpad"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Förslag"
@@ -221,7 +226,12 @@
     "richTextDeleteRowMenu": "Ta bort rad",
     "richTextDeleteTableMenu": "Ta bort tabell",
     "richTextToolbarMoreButtonAriaLabel": "Fler alternativ",
-    "attachmentUploadsPendingError": "Laddar upp... Var god vänta."
+    "attachmentUploadsPendingError": "Filen laddas upp. Vänta.",
+    "imageUploadsPendingError": "Bilden laddas upp. Vänta.",
+    "richTextNewBulletedListItemAnnouncement": "Punkt, ny rad",
+    "richTextNewNumberedListItemAnnouncement": "{0}, ny rad",
+    "richTextBulletedListAppliedAnnouncement": "Punktlista tillämpad",
+    "richTextNumberedListAppliedAnnouncement": "Numrerad tillämpad"
   },
   "errorBar": {
     "unableToReachChatService": "Du är offline",

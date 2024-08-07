@@ -24,7 +24,7 @@
     "placeholderText": "أدخل رسالة",
     "textTooLong": "تجاوز طول الرسالة الحد الأقصى.",
     "sendButtonAriaLabel": "إرسال رسالة",
-    "attachmentUploadsPendingError": "جارِ التحميل... يرجى الانتظار.",
+    "attachmentUploadsPendingError": "يتم الآن تحميل الملف، الرجاء الانتظار.",
     "removeAttachment": "إزالة الملف",
     "uploading": "جارٍ التحميل",
     "uploadCompleted": "اكتمل التحميل",
@@ -34,7 +34,8 @@
     "placeholderText": "أدخل رسالة",
     "textTooLong": "تجاوز طول الرسالة الحد الأقصى.",
     "sendButtonAriaLabel": "إرسال رسالة",
-    "attachmentUploadsPendingError": "جارٍ التحميل... الرجاء الانتظار.",
+    "attachmentUploadsPendingError": "يتم الآن تحميل الملف، الرجاء الانتظار.",
+    "imageUploadsPendingError": "يتم الآن تحميل الصورة، الرجاء الانتظار.",
     "removeAttachment": "إزالة الملف",
     "uploading": "يتم الآن التحميل",
     "uploadCompleted": "اكتمل التحميل",
@@ -58,7 +59,11 @@
     "richTextDeleteRowMenu": "حذف الصف",
     "richTextDeleteTableMenu": "حذف الجدول",
     "richTextToolbarMoreButtonAriaLabel": "خيارات إضافية",
-    "attachmentMoreMenu": "خيارات إضافية"
+    "attachmentMoreMenu": "خيارات إضافية",
+    "richTextNewBulletedListItemAnnouncement": "رمز نقطي، سطر جديد",
+    "richTextNewNumberedListItemAnnouncement": "{0}، سطر جديد",
+    "richTextBulletedListAppliedAnnouncement": "تم تطبيق قائمة نقطية",
+    "richTextNumberedListAppliedAnnouncement": "تطبيق قائمة ذات تعداد رقمي"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "الاقتراحات"
@@ -221,7 +226,12 @@
     "richTextDeleteRowMenu": "حذف الصف",
     "richTextDeleteTableMenu": "حذف الجدول",
     "richTextToolbarMoreButtonAriaLabel": "خيارات إضافية",
-    "attachmentUploadsPendingError": "يتم الآن التحميل... الرجاء الانتظار."
+    "attachmentUploadsPendingError": "يتم الآن تحميل الملف، الرجاء الانتظار.",
+    "imageUploadsPendingError": "يتم الآن تحميل الصورة، الرجاء الانتظار.",
+    "richTextNewBulletedListItemAnnouncement": "رمز نقطي، سطر جديد",
+    "richTextNewNumberedListItemAnnouncement": "{0}، سطر جديد",
+    "richTextBulletedListAppliedAnnouncement": "تم تطبيق قائمة نقطية",
+    "richTextNumberedListAppliedAnnouncement": "تطبيق قائمة ذات تعداد رقمي"
   },
   "errorBar": {
     "unableToReachChatService": "أنت غير متصل",

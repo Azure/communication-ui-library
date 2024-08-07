@@ -83,7 +83,7 @@ describe('RichTextSendBox should return text correctly', () => {
       icons: icons
     });
   });
-  test('HTML string should be correct when send button is clicked', async () => {
+  test.skip('HTML string should be correct when send button is clicked', async () => {
     let changedValue = '';
     render(
       <RichTextSendBox

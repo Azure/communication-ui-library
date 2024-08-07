@@ -24,7 +24,7 @@
     "placeholderText": "Escribir un mensaje",
     "textTooLong": "La longitud del mensaje supera el límite máximo.",
     "sendButtonAriaLabel": "Enviar mensaje",
-    "attachmentUploadsPendingError": "Cargando... Espere.",
+    "attachmentUploadsPendingError": "El archivo se está cargando. Espere.",
     "removeAttachment": "Quitar archivo",
     "uploading": "Cargando",
     "uploadCompleted": "Carga completada",
@@ -34,7 +34,8 @@
     "placeholderText": "Escribir un mensaje",
     "textTooLong": "La longitud del mensaje supera el límite máximo.",
     "sendButtonAriaLabel": "Enviar mensaje",
-    "attachmentUploadsPendingError": "Cargando... Espere.",
+    "attachmentUploadsPendingError": "El archivo se está cargando. Espere.",
+    "imageUploadsPendingError": "La imagen se está cargando. Espere.",
     "removeAttachment": "Quitar archivo",
     "uploading": "Cargando",
     "uploadCompleted": "Carga completada",
@@ -58,7 +59,11 @@
     "richTextDeleteRowMenu": "Eliminar fila",
     "richTextDeleteTableMenu": "Eliminar tabla",
     "richTextToolbarMoreButtonAriaLabel": "Más opciones",
-    "attachmentMoreMenu": "Más opciones"
+    "attachmentMoreMenu": "Más opciones",
+    "richTextNewBulletedListItemAnnouncement": "Viñeta, nueva línea",
+    "richTextNewNumberedListItemAnnouncement": "{0}, nueva línea",
+    "richTextBulletedListAppliedAnnouncement": "Lista con viñetas aplicada",
+    "richTextNumberedListAppliedAnnouncement": "Lista numerada aplicada"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Sugerencias"
@@ -221,7 +226,12 @@
     "richTextDeleteRowMenu": "Eliminar fila",
     "richTextDeleteTableMenu": "Eliminar tabla",
     "richTextToolbarMoreButtonAriaLabel": "Más opciones",
-    "attachmentUploadsPendingError": "Cargando... Espere."
+    "attachmentUploadsPendingError": "El archivo se está cargando. Espere.",
+    "imageUploadsPendingError": "La imagen se está cargando. Espere.",
+    "richTextNewBulletedListItemAnnouncement": "Viñeta, nueva línea",
+    "richTextNewNumberedListItemAnnouncement": "{0}, nueva línea",
+    "richTextBulletedListAppliedAnnouncement": "Lista con viñetas aplicada",
+    "richTextNumberedListAppliedAnnouncement": "Lista numerada aplicada"
   },
   "errorBar": {
     "unableToReachChatService": "Sin conexión",

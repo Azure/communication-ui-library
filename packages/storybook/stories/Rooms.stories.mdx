@@ -7,15 +7,15 @@ import RoomsCallSnippetText from '!!raw-loader!./snippets/RoomsCall.snippet.tsx'
 
 Azure Communication Services introduces the concept of rooms for developers secure and organized conversations. Users must receive an invite to room in order to join the call for that room, offering a more secure alternative compared to group calls.
 
-A user is invited to a room using the Rooms API as 1 of 3 following roles:
+A user is invited to a room using the Rooms API as one of three roles:
 
 - Presenter(default)
 - Attendee
 - Consumer
 
-The distinction between each role lies in the capabilities they possess during a room call when utilizing the CallComposite. The specific capabilities associated with each role are detailed [here](https://learn.microsoft.com/en-us/azure/communication-services/concepts/rooms/room-concept#predefined-participant-roles-and-permissions).
+Each role has different capabilities in a room call. The specific capabilities associated with each role are detailed [here](https://learn.microsoft.com/en-us/azure/communication-services/concepts/rooms/room-concept#predefined-participant-roles-and-permissions).
 
-The control of who can join calls, coupled with role-based capabilities, positions rooms as the ideal choice for the following call scenarios:
+The ability to manage call access and user roles make Rooms suited for the following call scenarios:
 
 - Virtual visits
 - Online classes
@@ -33,19 +33,19 @@ A JavaScript quickstart for using the Rooms API is detailed [here](https://learn
 
 ### Creating a room
 
-Here is the quickstart [sample code](https://learn.microsoft.com/en-us/azure/communication-services/quickstarts/rooms/get-started-rooms?tabs=windows&pivots=programming-language-javascript#initialize-the-room) for creating a room.
+Here is the quickstart [sample code](https://learn.microsoft.com/en-us/azure/communication-services/quickstarts/rooms/get-started-rooms?pivots=programming-language-javascript&tabs=windows#create-a-room) for creating a room.
 
 ### Add or update participants
 
-Users are added to a room with an assigned role as shown in this quickstart [sample code](https://learn.microsoft.com/en-us/azure/communication-services/quickstarts/rooms/get-started-rooms?tabs=windows&pivots=programming-language-javascript#add-or-update-participants). Users can be created by using ACS identities [here](/?path=/docs/identity--page) and their user IDs would be used for the Rooms API.
+Users are added to a room with an assigned role as shown in this quickstart [sample code](https://learn.microsoft.com/en-us/azure/communication-services/quickstarts/rooms/get-started-rooms?pivots=programming-language-javascript&tabs=windows#add-or-update-participants) and their user IDs would be used for the Rooms API.
 
 ## Joining a room with the CallComposite
 
-The following is a code snippet of how to join a room call with the CallComposite.
+The following is a code snippet which shows how to join a room call with the CallComposite.
 
 <Source code={RoomsCallSnippetText} />
 
-Also, you can to try this <a href="./?path=/story/composites-call-joinexistingcall--join-existing-call&args=callType:Rooms" target="_blank">preview sample</a> to join an existing room call.
+Also, you can to try this <a href="./?path=/story/composites-call-joinexistingcall--join-existing-call&args=callType:Rooms" target="_blank">preview sample</a> to join an existing room call by providing the room ID in the call locator.
 
 ## FAQs
 
@@ -67,4 +67,4 @@ Some capabilities are not allowed for users based on their role. For example, a 
 
 ### If I have found any issues with the rooms in the CallComposite where can I go?
 
-Please log a [Github issue](https://github.com/Azure/communication-ui-library/issues), and someone from our team can work with you.
+Please log a [Github issue](https://github.com/Azure/communication-ui-library/issues), and someone from our team will work with you.

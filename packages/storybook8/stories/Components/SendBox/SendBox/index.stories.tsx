@@ -3,7 +3,7 @@
 
 import { SendBox as SendBoxComponent } from '@azure/communication-react';
 import { Meta } from '@storybook/react';
-import { controlsToAdd, hiddenControl } from '../../controlsUtils';
+import { controlsToAdd, hiddenControl } from '../../../controlsUtils';
 
 import { AttachmentUploadsExample } from './snippets/AttachmentUploads.snippet';
 import { CustomIconExample } from './snippets/CustomIcon.snippet';
