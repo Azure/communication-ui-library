@@ -23,6 +23,8 @@ module.exports = {
     "composite-js-helpers",
     // feature for breakout rooms
     "breakout-rooms",
+    // Feature for remote UFD
+    "remote-ufd",
   ],
   beta: [
     "call-readiness",
