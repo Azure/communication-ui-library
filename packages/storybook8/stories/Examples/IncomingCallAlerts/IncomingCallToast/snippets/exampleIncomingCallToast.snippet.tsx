@@ -1,4 +1,4 @@
-import { DefaultButton, Persona, PersonaSize, Stack } from '@fluentui/react';
+import { IconButton, Persona, PersonaSize, Stack } from '@fluentui/react';
 import { CallEnd20Filled, Call20Filled } from '@fluentui/react-icons';
 import { DefaultPalette, mergeStyles } from '@fluentui/react';
 import React from 'react';
@@ -83,12 +83,12 @@ const IncomingCallToastStory = (props: IncomingCallToastProps): JSX.Element => {
       </Stack>
 
       <Stack horizontal tokens={{ childrenGap: 10 }}>
-        <DefaultButton
+        <IconButton
           className={incomingCallRejectButtonStyle}
           onClick={() => onClickReject()}
           onRenderIcon={() => <CallEnd20Filled />}
         />
-        <DefaultButton
+        <IconButton
           className={incomingCallAcceptButtonStyle}
           onClick={() => onClickAccept()}
           onRenderIcon={() => <Call20Filled />}

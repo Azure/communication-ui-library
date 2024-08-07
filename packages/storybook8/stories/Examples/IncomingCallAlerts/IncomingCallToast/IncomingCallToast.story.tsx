@@ -12,8 +12,8 @@ const IncomingCallToastStory: (args) => JSX.Element = (args) => {
         callerName={args.callerName}
         alertText={args.alertText}
         avatar={args.images.length > 0 ? args.images[0] : undefined}
-        onClickAccept={() => null}
-        onClickReject={() => null}
+        onClickAccept={() => alert('you accepted the call')}
+        onClickReject={() => alert('you rejected the call')}
       />
     </Stack>
   );
