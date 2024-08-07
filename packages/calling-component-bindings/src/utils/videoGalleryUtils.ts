@@ -206,6 +206,7 @@ export const memoizeLocalParticipant = memoizeOne(
     isMuted,
     isScreenSharingOn,
     localVideoStream,
+    localScreenSharingStream,
     role,
     raisedHand,
     reaction,
@@ -220,6 +221,10 @@ export const memoizeLocalParticipant = memoizeOne(
       isAvailable: !!localVideoStream,
       isMirrored: localVideoStream?.view?.isMirrored,
       renderElement: localVideoStream?.view?.target
+    },
+    screenShareStream: {
+      isAvailable: !!localScreenSharingStream,
+      renderElement: localScreenSharingStream?.view?.target
     },
     role,
     raisedHand: raisedHand,
