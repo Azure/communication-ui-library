@@ -65,9 +65,13 @@ export const defaultSpokenLanguage = 'en-us';
 /**
  * @private
  */
-export const busyWait = async (checkCondition: () => boolean): Promise<void> => {
+export const busyWait = async (checkCondition: () => boolean, retryLimit?: number): Promise<void> => {
   const delayMs = 500;
+  let retryCount = 0;
   while (!checkCondition()) {
     await new Promise((resolve) => setTimeout(resolve, delayMs));
+    if (retryLimit && retryCount++ >= retryLimit) {
+      break;
+    }
   }
 };

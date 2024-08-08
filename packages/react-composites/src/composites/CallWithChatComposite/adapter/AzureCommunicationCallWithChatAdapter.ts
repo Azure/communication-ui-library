@@ -21,7 +21,7 @@ import { StartCaptionsOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(breakout-rooms) */
-import type { BreakoutRoomsEventData, BreakoutRoomsUpdatedListener } from '@azure/communication-calling';
+import type { BreakoutRoomsEventData, BreakoutRoomsUpdatedListener, TeamsCall } from '@azure/communication-calling';
 import { DtmfTone } from '@azure/communication-calling';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing-acs) */
@@ -189,31 +189,47 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
         return;
       }
       if (eventData.type === 'join') {
-        const threadId = eventData.data.info.threadId;
-        if (threadId && this.chatAdapter && this.chatAdapter.getState().thread.threadId !== threadId) {
-          // check if you already have the adapter for the thread
-          if (this.breakoutRoomChatAdapter?.getState().thread.threadId !== threadId) {
-            const newBreakoutRoomChatAdapter = await this.createNewChatAdapterForThread(threadId);
-            this.breakoutRoomChatAdapter = newBreakoutRoomChatAdapter;
-          }
-          await busyWait(
-            () =>
-              !!this.breakoutRoomChatAdapter?.getState().thread.participants[
-                toFlatCommunicationIdentifier(this.context.getState().userId)
-              ]
-          );
-          this.chatAdapter.offStateChange(this.onChatStateChange);
-          this.updateChatAdapter(this.breakoutRoomChatAdapter);
-        }
+        await this.breakoutRoomJoined(eventData.data);
       } else if (eventData.type === 'assignedBreakoutRooms') {
-        const chatAdapterThreadId = this.chatAdapter?.getState().thread.threadId;
-        if (chatAdapterThreadId === eventData.data.threadId && eventData.data.state === 'closed') {
+        if (eventData.data.state === 'closed') {
           this.disposeChatAdapter();
           this.returnFromBreakoutRoom();
         }
       }
     });
     this.onCallStateChange = onCallStateChange;
+  }
+
+  /* @conditional-compile-remove(breakout-rooms) */
+  private async breakoutRoomJoined(call: Call | TeamsCall): Promise<void> {
+    const targetThreadId = call.info.threadId;
+    // If the chat adapter is not on the target thread then we need to switch to the breakout room chat adapter
+    if (targetThreadId && this.chatAdapter && this.chatAdapter.getState().thread.threadId !== targetThreadId) {
+      // Check if the breakout room chat adapter is initialized
+      if (this.breakoutRoomChatAdapter) {
+        // If the breakout room chat adapter is initialized but not set on the target thread then unsubscribe
+        // and dispose it
+        if (this.breakoutRoomChatAdapter.getState().thread.threadId !== targetThreadId) {
+          this.breakoutRoomChatAdapter.offStateChange(this.onChatStateChange);
+          this.breakoutRoomChatAdapter.dispose();
+          const newBreakoutRoomChatAdapter = await this.createNewChatAdapterForThread(targetThreadId);
+          this.breakoutRoomChatAdapter = newBreakoutRoomChatAdapter;
+        }
+      } else {
+        // Initiliaze the breakout room chat adapter for the target thread
+        const newBreakoutRoomChatAdapter = await this.createNewChatAdapterForThread(targetThreadId);
+        this.breakoutRoomChatAdapter = newBreakoutRoomChatAdapter;
+      }
+      // Wait for the user to be added to the target thread of the breakout room chat adapter
+      await busyWait(() => {
+        return !!this.breakoutRoomChatAdapter?.getState().thread.participants[
+          toFlatCommunicationIdentifier(this.context.getState().userId)
+        ];
+      }, 20);
+      // Unsubscribe the current chat adapter before switching to the breakout room chat adapter
+      this.chatAdapter?.offStateChange(this.onChatStateChange);
+      this.updateChatAdapter(this.breakoutRoomChatAdapter);
+    }
   }
 
   /* @conditional-compile-remove(breakout-rooms) */
@@ -246,7 +262,6 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   }
 
   private updateChatAdapter(chatAdapter: ChatAdapter): void {
-    console.log('DEBUG updateChatAdapter');
     this.chatAdapter = chatAdapter;
     this.chatAdapter.onStateChange(this.onChatStateChange);
     this.context.updateClientStateWithChatState(chatAdapter.getState());
@@ -635,12 +650,12 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   public async returnFromBreakoutRoom(): Promise<void> {
     const originalCallThreadId = this.callAdapter.getState().call?.info?.threadId;
     if (originalCallThreadId) {
-      await this.callAdapter.returnFromBreakoutRoom();
-
       if (this.originCallChatAdapter) {
         this.chatAdapter?.offStateChange(this.onChatStateChange);
         this.updateChatAdapter(this.originCallChatAdapter);
       }
+
+      await this.callAdapter.returnFromBreakoutRoom();
     }
   }
 

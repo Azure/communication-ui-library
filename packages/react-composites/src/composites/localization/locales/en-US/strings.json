@@ -399,6 +399,7 @@
     "dialpadModalAriaLabel": "Dialpad",
     "dialpadCloseModalButtonAriaLabel": "Close dialpad",
     "openDtmfDialpadLabel": "Show dialpad",
-    "dtmfDialpadPlaceholderText": "Enter number"
+    "dtmfDialpadPlaceholderText": "Enter number",
+    "breakoutRoomChatPaneTitle": "Breakout Room Chat"
   }
 }

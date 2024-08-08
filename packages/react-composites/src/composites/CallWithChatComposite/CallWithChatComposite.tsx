@@ -4,7 +4,7 @@
 import React, { useCallback, useState, useMemo, useEffect, useRef } from 'react';
 import { mergeStyles, PartialTheme, Stack, Theme } from '@fluentui/react';
 /* @conditional-compile-remove(breakout-rooms) */
-import { Spinner } from '@fluentui/react';
+import { Spinner, SpinnerSize } from '@fluentui/react';
 import { CallCompositePage } from '../CallComposite';
 import { CallSurvey } from '@azure/communication-calling';
 import { CallState } from '@azure/communication-calling';
@@ -580,8 +580,11 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
   );
 
   const onRenderChatContent = useCallback((): JSX.Element => {
+    /* @conditional-compile-remove(breakout-rooms) */
     const chatAdapterThreadId = chatAdapter.getState().thread.threadId;
+    /* @conditional-compile-remove(breakout-rooms) */
     const callAdapterThreadId = callAdapter.getState().call?.info?.threadId;
+    /* @conditional-compile-remove(breakout-rooms) */
     return chatAdapterThreadId === callAdapterThreadId ? (
       <ChatComposite
         adapter={chatAdapter}
@@ -599,21 +602,41 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
           alignItems: 'center'
         })}
       >
-        <Spinner />
+        <Spinner size={SpinnerSize.large} />
       </Stack>
     );
-  }, [chatAdapter, props.onFetchAvatarPersonaData, chatCompositeOptions, theme, callAdapter]);
+    return (
+      <ChatComposite
+        adapter={chatAdapter}
+        fluentTheme={theme}
+        options={chatCompositeOptions}
+        onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
+      />
+    );
+  }, [
+    chatAdapter,
+    props.onFetchAvatarPersonaData,
+    chatCompositeOptions,
+    theme,
+    /* @conditional-compile-remove(breakout-rooms) */ callAdapter
+  ]);
+
+  let chatPaneTitle = callWithChatStrings.chatPaneTitle;
+  /* @conditional-compile-remove(breakout-rooms) */
+  if (callAdapter.getState().call?.breakoutRooms?.breakoutRoomOriginCallId) {
+    chatPaneTitle = callWithChatStrings.breakoutRoomChatPaneTitle;
+  }
 
   const sidePaneHeaderRenderer = useCallback(
     () => (
       <SidePaneHeader
-        headingText={callWithChatStrings.chatPaneTitle}
+        headingText={chatPaneTitle}
         onClose={closeChat}
         dismissSidePaneButtonAriaLabel={callWithChatStrings.dismissSidePaneButtonLabel ?? ''}
         mobileView={mobileView}
       />
     ),
-    [callWithChatStrings.chatPaneTitle, callWithChatStrings.dismissSidePaneButtonLabel, closeChat, mobileView]
+    [chatPaneTitle, callWithChatStrings.dismissSidePaneButtonLabel, closeChat, mobileView]
   );
 
   const sidePaneContentRenderer = useMemo(
