@@ -457,6 +457,7 @@
   "videoGallery": {
     "screenIsBeingSharedMessage": "Você está compartilhando sua tela",
     "screenShareLoadingMessage": "Carregando a tela do {participant}",
+    "localScreenShareLoadingMessage": "Carregando sua tela",
     "localVideoLabel": "Você",
     "localVideoCameraSwitcherLabel": "Alternar câmera",
     "localVideoMovementLabel": "Bloco de Vídeo Local Removível",
@@ -626,9 +627,12 @@
   },
   "IncomingCallNotification": {
     "incomingCallNotificationPlaceholderId": "Usuário Desconhecido",
-    "incomingCallNotificationPlaceholderAlert": "Recebendo chamada",
+    "incomingCallNotificationPlaceholderAlert": "Chamada de {callerName}",
     "incomingCallNoticicationAcceptWithAudioAriaLabel": "Aceitar com áudio",
     "incomingCallNoticicationAcceptWithVideoAriaLabel": "Aceitar com vídeo",
-    "incomingCallNoticicationRejectAriaLabel": "Rejeitar"
+    "incomingCallNoticicationRejectAriaLabel": "Rejeitar",
+    "incomingCallNotificationAcceptButtonLabel": "Aceitar",
+    "incomingCallNotificationRejectButtonLabel": "Recusar",
+    "incomingCallNotificationAccceptWithVideoButtonLabel": "Aceitar com Vídeo"
   }
 }
