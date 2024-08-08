@@ -457,6 +457,7 @@
   "videoGallery": {
     "screenIsBeingSharedMessage": "Näyttösi jaetaan parhaillaan",
     "screenShareLoadingMessage": "Ladataan käyttäjän {participant} näyttöä",
+    "localScreenShareLoadingMessage": "Ladataan näyttöä",
     "localVideoLabel": "Sinä",
     "localVideoCameraSwitcherLabel": "Vaihda kameraa",
     "localVideoMovementLabel": "Siirrettävä paikallisen videon ruutu",
@@ -626,9 +627,12 @@
   },
   "IncomingCallNotification": {
     "incomingCallNotificationPlaceholderId": "Tuntematon käyttäjä",
-    "incomingCallNotificationPlaceholderAlert": "Saapuva puhelu",
+    "incomingCallNotificationPlaceholderAlert": "{callerName} soittaa",
     "incomingCallNoticicationAcceptWithAudioAriaLabel": "Vastaa äänipuhelulla",
     "incomingCallNoticicationAcceptWithVideoAriaLabel": "Vastaa videopuhelulla",
-    "incomingCallNoticicationRejectAriaLabel": "Hylkää"
+    "incomingCallNoticicationRejectAriaLabel": "Hylkää",
+    "incomingCallNotificationAcceptButtonLabel": "Hyväksy",
+    "incomingCallNotificationRejectButtonLabel": "Hylkää",
+    "incomingCallNotificationAccceptWithVideoButtonLabel": "Vastaa videopuhelulla"
   }
 }

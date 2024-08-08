@@ -457,6 +457,7 @@
   "videoGallery": {
     "screenIsBeingSharedMessage": "Ekranınızı paylaşıyorsunuz.",
     "screenShareLoadingMessage": "{participant} adlı katılımcının ekranını yükleme",
+    "localScreenShareLoadingMessage": "Ekranınız yükleniyor",
     "localVideoLabel": "Siz",
     "localVideoCameraSwitcherLabel": "Kamerayı değiştir",
     "localVideoMovementLabel": "Taşınabilir Yerel Video Kutucuğu",
@@ -626,9 +627,12 @@
   },
   "IncomingCallNotification": {
     "incomingCallNotificationPlaceholderId": "Bilinmeyen Kullanıcı",
-    "incomingCallNotificationPlaceholderAlert": "Gelen çağrı",
+    "incomingCallNotificationPlaceholderAlert": "{callerName} arıyor",
     "incomingCallNoticicationAcceptWithAudioAriaLabel": "Sesli kabul et",
     "incomingCallNoticicationAcceptWithVideoAriaLabel": "Görüntülü kabul et",
-    "incomingCallNoticicationRejectAriaLabel": "Reddet"
+    "incomingCallNoticicationRejectAriaLabel": "Reddet",
+    "incomingCallNotificationAcceptButtonLabel": "Kabul et",
+    "incomingCallNotificationRejectButtonLabel": "Reddet",
+    "incomingCallNotificationAccceptWithVideoButtonLabel": "Görüntülü Kabul Et"
   }
 }
