@@ -155,6 +155,16 @@ export interface MicrophoneButtonProps extends ControlBarButtonProps {
    * Styles for {@link MicrophoneButton} and the device selection flyout.
    */
   styles?: Partial<MicrophoneButtonStyles>;
+  /* @conditional-compile-remove(DNS) */
+  /**
+   * Whether the deep noise suppression is on or off
+   */
+  isDeepNoiseSuppressionOn?: boolean;
+  /* @conditional-compile-remove(DNS) */
+  /**
+   * Callback when noise suppression is clicked
+   */
+  onClickNoiseSuppression?: () => void;
 }
 
 /**
@@ -235,6 +245,22 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
           iconProps: {
             iconName: props.checked ? 'SplitButtonPrimaryActionMicUnmuted' : 'SplitButtonPrimaryActionMicMuted',
             styles: { root: { lineHeight: 0 } }
+          }
+        },
+        /* @conditional-compile-remove(DNS) */
+        {
+          key: 'microphoneDNSToggle',
+          text: props.isDeepNoiseSuppressionOn ? 'Noise Suppression On' : 'Noise Suppression Off',
+          canCheck: true,
+          isChecked: props.isDeepNoiseSuppressionOn,
+          iconProps: {
+            iconName: props.isDeepNoiseSuppressionOn ? 'NoiseSuppressionOn' : 'NoiseSuppressionOff',
+            styles: { root: { lineHeight: 0 } }
+          },
+          onClick: () => {
+            if (props.onClickNoiseSuppression) {
+              props.onClickNoiseSuppression();
+            }
           }
         }
       ]
