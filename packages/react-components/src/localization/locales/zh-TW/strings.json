@@ -457,6 +457,7 @@
   "videoGallery": {
     "screenIsBeingSharedMessage": "您現在正在分享螢幕畫面。",
     "screenShareLoadingMessage": "正在載入 {participant} 的螢幕畫面",
+    "localScreenShareLoadingMessage": "正在載入您的畫面",
     "localVideoLabel": "您",
     "localVideoCameraSwitcherLabel": "切換相機",
     "localVideoMovementLabel": "可移動本機視訊磚",
@@ -626,9 +627,12 @@
   },
   "IncomingCallNotification": {
     "incomingCallNotificationPlaceholderId": "未知的使用者",
-    "incomingCallNotificationPlaceholderAlert": "來電",
+    "incomingCallNotificationPlaceholderAlert": "{callerName} 正在通話",
     "incomingCallNoticicationAcceptWithAudioAriaLabel": "接受音訊",
     "incomingCallNoticicationAcceptWithVideoAriaLabel": "接受視訊",
-    "incomingCallNoticicationRejectAriaLabel": "拒絕"
+    "incomingCallNoticicationRejectAriaLabel": "拒絕",
+    "incomingCallNotificationAcceptButtonLabel": "接受",
+    "incomingCallNotificationRejectButtonLabel": "拒絕",
+    "incomingCallNotificationAccceptWithVideoButtonLabel": "接受並開啟視訊"
   }
 }
