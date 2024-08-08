@@ -81,6 +81,8 @@ import {
 import { Important20Filled } from '@fluentui/react-icons';
 /* @conditional-compile-remove(notifications) */
 import { Record16Regular } from '@fluentui/react-icons';
+/* @conditional-compile-remove(breakout-rooms) */
+import { ConferenceRoom20Regular } from '@fluentui/react-icons';
 
 import { VideoBackgroundEffect20Filled, VideoBackgroundEffect20Regular } from '@fluentui/react-icons';
 
@@ -306,6 +308,16 @@ export const DEFAULT_COMPONENT_ICONS = {
   ErrorBarMutedByRemoteParticipant: <MicOff16Regular />,
   /* @conditional-compile-remove(notifications) */
   NotificationBarRecording: <Record16Regular />,
+  /* @conditional-compile-remove(breakout-rooms) */
+  NotificationBarBreakoutRoomOpened: <></>,
+  /* @conditional-compile-remove(breakout-rooms) */
+  NotificationBarBreakoutRoomPromptJoin: <ConferenceRoom20Regular />,
+  /* @conditional-compile-remove(breakout-rooms) */
+  NotificationBarBreakoutRoomChanged: <ConferenceRoom20Regular />,
+  /* @conditional-compile-remove(breakout-rooms) */
+  NotificationBarBreakoutRoomClosingSoon: <ConferenceRoom20Regular />,
+  /* @conditional-compile-remove(breakout-rooms) */
+  NotificationBarBreakoutRoomClosed: <></>,
   HorizontalGalleryLeftButton: <GalleryLeftButton />,
   HorizontalGalleryRightButton: <GalleryRightButton />,
   MessageDelivered: <CheckmarkCircle16Regular />,

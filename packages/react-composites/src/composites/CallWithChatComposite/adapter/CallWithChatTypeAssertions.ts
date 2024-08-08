@@ -80,6 +80,7 @@ type CallWithChatClientStateInternal = Omit<
   | 'displayName'
   | 'endedCall'
   | 'latestErrors'
+  | /* @conditional-compile-remove(breakout-rooms) */ 'latestNotifications'
   | 'userId'
   | /* @conditional-compile-remove(PSTN-calls) */ 'alternateCallerId'
   | /* @conditional-compile-remove(unsupported-browser) */ 'features'
