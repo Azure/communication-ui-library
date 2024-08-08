@@ -457,6 +457,7 @@
   "videoGallery": {
     "screenIsBeingSharedMessage": "你正在共享你的屏幕",
     "screenShareLoadingMessage": "正在加载 {participant} 的屏幕",
+    "localScreenShareLoadingMessage": "正在加载屏幕",
     "localVideoLabel": "你",
     "localVideoCameraSwitcherLabel": "切换相机",
     "localVideoMovementLabel": "可移动本地小窗视频",
@@ -626,9 +627,12 @@
   },
   "IncomingCallNotification": {
     "incomingCallNotificationPlaceholderId": "未知用户",
-    "incomingCallNotificationPlaceholderAlert": "传入呼叫",
+    "incomingCallNotificationPlaceholderAlert": "{callerName} 正在通话",
     "incomingCallNoticicationAcceptWithAudioAriaLabel": "语音接听",
     "incomingCallNoticicationAcceptWithVideoAriaLabel": "视频接听",
-    "incomingCallNoticicationRejectAriaLabel": "拒绝"
+    "incomingCallNoticicationRejectAriaLabel": "拒绝",
+    "incomingCallNotificationAcceptButtonLabel": "接受",
+    "incomingCallNotificationRejectButtonLabel": "拒绝",
+    "incomingCallNotificationAccceptWithVideoButtonLabel": "使用视频接受"
   }
 }
