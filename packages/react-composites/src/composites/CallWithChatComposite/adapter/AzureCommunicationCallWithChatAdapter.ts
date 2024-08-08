@@ -651,12 +651,12 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   public async returnFromBreakoutRoom(): Promise<void> {
     const originalCallThreadId = this.callAdapter.getState().call?.info?.threadId;
     if (originalCallThreadId) {
-      await this.callAdapter.returnFromBreakoutRoom();
-
       if (this.originCallChatAdapter) {
         this.chatAdapter?.offStateChange(this.onChatStateChange);
         this.updateChatAdapter(this.originCallChatAdapter);
       }
+
+      await this.callAdapter.returnFromBreakoutRoom();
     }
   }
 

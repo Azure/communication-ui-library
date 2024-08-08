@@ -1057,17 +1057,22 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
       return;
     }
     // Find call state of current call from stateful layer
-    const callState = this.call
+    let callState = this.call
       ? Object.values(this.callClient.getState().calls).find((call) => call.id === this.call?.id)
       : undefined;
-    // Find main meeting call from call agent from the this call state
-    const mainMeetingCall = this.callAgent?.calls.find((callAgentCall) => {
+    if (callState === undefined) {
+      callState = this.call
+        ? Object.values(this.callClient.getState().callsEnded).find((call) => call.id === this.call?.id)
+        : undefined;
+    }
+    // Find origin call from call agent from the this call state
+    const originCall = this.callAgent?.calls.find((callAgentCall) => {
       return callAgentCall.id === callState?.breakoutRooms?.breakoutRoomOriginCallId;
     });
-    // If a main meeting call exists then process that call and resume
-    if (mainMeetingCall) {
+    // If an origin call exists then process that call and resume
+    if (originCall) {
       const breakoutRoomCall = this.call;
-      this.processNewCall(mainMeetingCall);
+      this.processNewCall(originCall);
       await this.resumeCall();
       if (breakoutRoomCall?.state === 'Connected') {
         breakoutRoomCall.hangUp();
