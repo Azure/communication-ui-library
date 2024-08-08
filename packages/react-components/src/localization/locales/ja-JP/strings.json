@@ -457,6 +457,7 @@
   "videoGallery": {
     "screenIsBeingSharedMessage": "画面を共有しています",
     "screenShareLoadingMessage": "{participant} の画面を読み込んでいます",
+    "localScreenShareLoadingMessage": "画面を読み込んでいます",
     "localVideoLabel": "自分",
     "localVideoCameraSwitcherLabel": "カメラを切り替え",
     "localVideoMovementLabel": "移動可能なローカル ビデオ タイル",
@@ -626,9 +627,12 @@
   },
   "IncomingCallNotification": {
     "incomingCallNotificationPlaceholderId": "不明なユーザー",
-    "incomingCallNotificationPlaceholderAlert": "着信",
+    "incomingCallNotificationPlaceholderAlert": "{callerName} が呼び出しています",
     "incomingCallNoticicationAcceptWithAudioAriaLabel": "オーディオで承諾する",
     "incomingCallNoticicationAcceptWithVideoAriaLabel": "ビデオで承諾する",
-    "incomingCallNoticicationRejectAriaLabel": "拒否する"
+    "incomingCallNoticicationRejectAriaLabel": "拒否する",
+    "incomingCallNotificationAcceptButtonLabel": "承諾",
+    "incomingCallNotificationRejectButtonLabel": "拒否",
+    "incomingCallNotificationAccceptWithVideoButtonLabel": "ビデオで受ける"
   }
 }

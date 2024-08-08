@@ -457,6 +457,7 @@
   "videoGallery": {
     "screenIsBeingSharedMessage": "אתה משתף את המסך שלך",
     "screenShareLoadingMessage": "טוען את המסך של {participant}",
+    "localScreenShareLoadingMessage": "טוען את המסך שלך",
     "localVideoLabel": "אתה",
     "localVideoCameraSwitcherLabel": "החלף מצלמה",
     "localVideoMovementLabel": "אריח וידאו מקומי נשלף",
@@ -626,9 +627,12 @@
   },
   "IncomingCallNotification": {
     "incomingCallNotificationPlaceholderId": "משתמש לא ידוע",
-    "incomingCallNotificationPlaceholderAlert": "שיחה נכנסת",
+    "incomingCallNotificationPlaceholderAlert": "{callerName} מתקשר",
     "incomingCallNoticicationAcceptWithAudioAriaLabel": "קבל עם שמע",
     "incomingCallNoticicationAcceptWithVideoAriaLabel": "קבל עם וידאו",
-    "incomingCallNoticicationRejectAriaLabel": "דחה"
+    "incomingCallNoticicationRejectAriaLabel": "דחה",
+    "incomingCallNotificationAcceptButtonLabel": "קבל",
+    "incomingCallNotificationRejectButtonLabel": "דחה",
+    "incomingCallNotificationAccceptWithVideoButtonLabel": "קבל עם וידאו"
   }
 }

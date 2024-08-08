@@ -457,6 +457,7 @@
   "videoGallery": {
     "screenIsBeingSharedMessage": "Sdílíte obrazovku",
     "screenShareLoadingMessage": "Načítání obrazovky {participant}",
+    "localScreenShareLoadingMessage": "Načítá se obrazovka",
     "localVideoLabel": "Vy",
     "localVideoCameraSwitcherLabel": "Přepnout kameru",
     "localVideoMovementLabel": "Dlaždice s místním videem s možností přesunutí",
@@ -626,9 +627,12 @@
   },
   "IncomingCallNotification": {
     "incomingCallNotificationPlaceholderId": "Neznámý uživatel",
-    "incomingCallNotificationPlaceholderAlert": "Příchozí hovor",
+    "incomingCallNotificationPlaceholderAlert": "Volá {callerName}",
     "incomingCallNoticicationAcceptWithAudioAriaLabel": "Přijmout se zvukem",
     "incomingCallNoticicationAcceptWithVideoAriaLabel": "Přijmout s videem",
-    "incomingCallNoticicationRejectAriaLabel": "Odmítnout"
+    "incomingCallNoticicationRejectAriaLabel": "Odmítnout",
+    "incomingCallNotificationAcceptButtonLabel": "Přijmout",
+    "incomingCallNotificationRejectButtonLabel": "Odmítnout",
+    "incomingCallNotificationAccceptWithVideoButtonLabel": "Přijmout s videem"
   }
 }
