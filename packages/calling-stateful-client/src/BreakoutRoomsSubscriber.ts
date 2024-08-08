@@ -18,6 +18,9 @@ import { CallIdRef } from './CallIdRef';
 import { NotificationTarget } from './CallClientState';
 
 /* @conditional-compile-remove(breakout-rooms) */
+const MILLSECONDS_BEFORE_CLOSING_TO_SHOW_NOTIFICATION = 30000;
+
+/* @conditional-compile-remove(breakout-rooms) */
 /**
  * @private
  */
@@ -25,6 +28,7 @@ export class BreakoutRoomsSubscriber {
   private _callIdRef: CallIdRef;
   private _context: CallContext;
   private _breakoutRoomsFeature: BreakoutRoomsCallFeature;
+  private _assignedBreakoutRoomClosingSoonTimeoutId: NodeJS.Timeout | undefined;
 
   constructor(callIdRef: CallIdRef, context: CallContext, breakoutRoomsFeature: BreakoutRoomsCallFeature) {
     this._callIdRef = callIdRef;
@@ -36,6 +40,7 @@ export class BreakoutRoomsSubscriber {
 
   public unsubscribe = (): void => {
     this._breakoutRoomsFeature.off('breakoutRoomsUpdated', this.onBreakoutRoomsUpdated);
+    clearTimeout(this._assignedBreakoutRoomClosingSoonTimeoutId);
   };
 
   private subscribe(): void {
@@ -71,18 +76,27 @@ export class BreakoutRoomsSubscriber {
       currentAssignedBreakoutRoom?.state === 'open' &&
       currentAssignedBreakoutRoom?.call?.id !== breakoutRoom.call?.id
     ) {
-      this._context.setLatestNotification({ target: 'assignedBreakoutRoomChanged', timestamp: new Date(Date.now()) });
+      if (
+        !this._context.getState().latestNotifications['assignedBreakoutRoomOpened'] &&
+        !this._context.getState().latestNotifications['assignedBreakoutRoomOpenedPromptJoin']
+      ) {
+        this._context.setLatestNotification({ target: 'assignedBreakoutRoomChanged', timestamp: new Date(Date.now()) });
+      }
     } else if (breakoutRoom.state === 'open') {
-      const target: NotificationTarget =
-        breakoutRoom.autoMoveParticipantToBreakoutRoom === false
-          ? 'assignedBreakoutRoomOpenedPromptJoin'
-          : 'assignedBreakoutRoomOpened';
-      this._context.setLatestNotification({ target, timestamp: new Date(Date.now()) });
+      if (!this._context.getState().latestNotifications['assignedBreakoutRoomChanged']) {
+        const target: NotificationTarget =
+          breakoutRoom.autoMoveParticipantToBreakoutRoom === false
+            ? 'assignedBreakoutRoomOpenedPromptJoin'
+            : 'assignedBreakoutRoomOpened';
+        this._context.setLatestNotification({ target, timestamp: new Date(Date.now()) });
+      }
     } else if (breakoutRoom.state === 'closed' && currentAssignedBreakoutRoom?.state === 'closed') {
       // This scenario covers the case where the breakout room is opened but then closed before the user joins.
       this._context.deleteLatestNotification('assignedBreakoutRoomOpened');
       this._context.deleteLatestNotification('assignedBreakoutRoomOpenedPromptJoin');
       this._context.deleteLatestNotification('assignedBreakoutRoomChanged');
+      this._context.deleteLatestNotification('assignedBreakoutRoomClosingSoon');
+      clearTimeout(this._assignedBreakoutRoomClosingSoonTimeoutId);
     }
     this._context.setAssignedBreakoutRoom(this._callIdRef.callId, breakoutRoom);
   };
@@ -92,9 +106,30 @@ export class BreakoutRoomsSubscriber {
     this._context.deleteLatestNotification('assignedBreakoutRoomOpened');
     this._context.deleteLatestNotification('assignedBreakoutRoomOpenedPromptJoin');
     this._context.deleteLatestNotification('assignedBreakoutRoomChanged');
+    this._context.deleteLatestNotification('assignedBreakoutRoomClosingSoon');
   };
 
   private onBreakoutRoomSettingsUpdated = (breakoutRoomSettings: BreakoutRoomsSettings): void => {
+    // If the roomEndTime is available, set a timeout to show a notification before the room closes.
+    if (typeof breakoutRoomSettings.roomEndTime === 'string') {
+      const now = new Date(Date.now());
+      const roomEndTimeMs = new Date(breakoutRoomSettings.roomEndTime).getTime();
+      const timeBeforeClosingMs = roomEndTimeMs - now.getTime();
+      const timeBeforeSendingClosingSoonNotificationMs = Math.max(
+        timeBeforeClosingMs - MILLSECONDS_BEFORE_CLOSING_TO_SHOW_NOTIFICATION,
+        0
+      );
+      if (!this._assignedBreakoutRoomClosingSoonTimeoutId) {
+        this._assignedBreakoutRoomClosingSoonTimeoutId = setTimeout(
+          () =>
+            this._context.setLatestNotification({
+              target: 'assignedBreakoutRoomClosingSoon',
+              timestamp: now
+            }),
+          timeBeforeSendingClosingSoonNotificationMs
+        );
+      }
+    }
     this._context.setBreakoutRoomSettings(this._callIdRef.callId, breakoutRoomSettings);
   };
 }
