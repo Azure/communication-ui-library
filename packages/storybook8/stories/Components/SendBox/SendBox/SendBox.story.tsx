@@ -11,7 +11,9 @@ const SendBoxRender = (args): JSX.Element => {
   useEffect(() => {
     // Clean up the timeout when the component unmounts
     return () => {
-      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
     };
   }, []);
 

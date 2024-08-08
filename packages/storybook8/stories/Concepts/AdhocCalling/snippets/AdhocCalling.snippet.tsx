@@ -1,10 +1,9 @@
 import {
   AzureCommunicationTokenCredential,
   CommunicationUserIdentifier,
-  PhoneNumberIdentifier
+  MicrosoftTeamsUserIdentifier
 } from '@azure/communication-common';
 import {
-  CallAdapter,
   CallComposite,
   CallCompositeOptions,
   CompositeLocale,
@@ -15,24 +14,17 @@ import { PartialTheme, Theme } from '@fluentui/react';
 import React, { useMemo } from 'react';
 
 export type ContainerProps = {
-  alternateCallerId: string;
   userId: CommunicationUserIdentifier;
   token: string;
-  targetCallees: string[];
-  displayName: string;
   formFactor?: 'desktop' | 'mobile';
   fluentTheme?: PartialTheme | Theme;
-  rtl?: boolean;
-  callInvitationURL?: string;
   locale?: CompositeLocale;
   options?: CallCompositeOptions;
+  // Teams user ids need to be in format '8:orgid:<UUID>'. For example, '8:orgid:87d349ed-44d7-43e1-9a83-5f2406dee5bd'
+  microsoftTeamsUserId: string;
 };
 
-const createTargetCallees = (targetCallees: string[]): PhoneNumberIdentifier[] => {
-  return targetCallees.map((c) => fromFlatCommunicationIdentifier(c) as PhoneNumberIdentifier);
-};
-
-export const ContosoCallContainerPSTN = (props: ContainerProps): JSX.Element => {
+export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
   const credential = useMemo(() => {
     try {
       return new AzureCommunicationTokenCredential(props.token);
@@ -42,22 +34,23 @@ export const ContosoCallContainerPSTN = (props: ContainerProps): JSX.Element => 
     }
   }, [props.token]);
 
-  const targetCallees = useMemo(() => createTargetCallees(props.targetCallees), [props.targetCallees]);
+  const createTargetCallees = useMemo(() => {
+    return fromFlatCommunicationIdentifier(props.microsoftTeamsUserId) as MicrosoftTeamsUserIdentifier;
+  }, [props.microsoftTeamsUserId]);
 
-  const adapter = useAzureCommunicationCallAdapter(
-    {
+  const callAdapterArgs = useMemo(
+    () => ({
       userId: props.userId,
-      displayName: props.displayName, // Max 256 Characters
       credential,
-      targetCallees,
-      alternateCallerId: props.alternateCallerId
-    },
-    undefined,
-    leaveCall
+      targetCallees: createTargetCallees
+    }),
+    [props.userId, credential, createTargetCallees]
   );
 
-  if (!targetCallees) {
-    return <>Please provide the identities of people you would like to call</>;
+  const adapter = useAzureCommunicationCallAdapter(callAdapterArgs);
+
+  if (!props.microsoftTeamsUserId) {
+    return <>Microsoft Teams user id is not provided.</>;
   }
 
   if (adapter) {
@@ -67,8 +60,6 @@ export const ContosoCallContainerPSTN = (props: ContainerProps): JSX.Element => 
           adapter={adapter}
           formFactor={props.formFactor}
           fluentTheme={props.fluentTheme}
-          rtl={props.rtl}
-          callInvitationUrl={props?.callInvitationURL}
           locale={props?.locale}
           options={props?.options}
         />
@@ -79,10 +70,4 @@ export const ContosoCallContainerPSTN = (props: ContainerProps): JSX.Element => 
     return <>Failed to construct credential. Provided token is malformed.</>;
   }
   return <>Initializing...</>;
-};
-
-const leaveCall = async (adapter: CallAdapter): Promise<void> => {
-  await adapter.leaveCall().catch((e) => {
-    console.error('Failed to leave call', e);
-  });
 };

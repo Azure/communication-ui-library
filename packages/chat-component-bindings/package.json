@@ -44,7 +44,7 @@
   },
   "devDependencies": {
     "@babel/cli": "^7.24.8",
-    "@babel/core": "^7.24.9",
+    "@babel/core": "^7.25.2",
     "@types/jest": "^29.5.11",
     "@types/react": "18.3.3",
     "copyfiles": "^2.4.1",
