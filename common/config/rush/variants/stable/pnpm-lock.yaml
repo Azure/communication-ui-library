@@ -14922,16 +14922,6 @@ packages:
       readable-stream: 2.3.8
     dev: false
 
-  /follow-redirects@1.15.4:
-    resolution: {integrity: sha512-Cr4D/5wlrb0z9dgERpUL3LrmPKVDsETIJhaCMeDfuFYcqa5bldGV6wBsAN6X/vxlXQtFBMrXdXxdL8CbDTGniw==}
-    engines: {node: '>=4.0'}
-    peerDependencies:
-      debug: '*'
-    peerDependenciesMeta:
-      debug:
-        optional: true
-    dev: false
-
   /follow-redirects@1.15.6:
     resolution: {integrity: sha512-wWN62YITEaOpSK584EZXJafH1AGpO8RVgElfkuXbTOrPX4fIfOyEpW/CsiNd8JdYrAoOvafRTOEnvsO++qCqFA==}
     engines: {node: '>=4.0'}
@@ -25478,7 +25468,7 @@ packages:
     dev: false
 
   file:projects/calling.tgz:
-    resolution: {integrity: sha512-ZGrh9NPAR9DyUZHDtbatyxr9qVKjTTgpQCD+sdxlmwHPVGP5jHssID7NjRLbkvWdrGs5S4VUBvV94KkWa5hwpQ==, tarball: file:projects/calling.tgz}
+    resolution: {integrity: sha512-LR1UUjyRxWo9wyhpYTh2SQvi0yzeGfzAtxVhbi2BhPEOWU+xhr7RcrzD2O+/Lxq8STsjHmK+UTmHYA8tc4W0Rg==, tarball: file:projects/calling.tgz}
     name: '@rush-temp/calling'
     version: 0.0.0
     dependencies:
@@ -25520,7 +25510,7 @@ packages:
       eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.2)
       eslint-plugin-react: 7.34.3(eslint@8.57.0)
       eslint-plugin-react-hooks: 4.6.2(eslint@8.57.0)
-      follow-redirects: 1.15.4
+      follow-redirects: 1.15.6
       html-webpack-plugin: 5.6.0(webpack@5.89.0)
       husky: 8.0.3
       if-env: 1.0.4
@@ -25572,7 +25562,7 @@ packages:
     dev: false
 
   file:projects/callingstateful.tgz:
-    resolution: {integrity: sha512-46BLqJFORQIuwFi5QW0ob8IT/vZlkYeEo17bka1dwjd739gLeSDZK8aW5Kd3CJsZdGzUMPF8+5IdBhoAfgJbwA==, tarball: file:projects/callingstateful.tgz}
+    resolution: {integrity: sha512-Eybk8oJsAylC6DOgVEze1cApDclcGcXKYq0Ki7QJj8OG8IWF7yvRDu3w6zd7w88PPADwt0Kan2yM5Dzp1RwuJQ==, tarball: file:projects/callingstateful.tgz}
     name: '@rush-temp/callingstateful'
     version: 0.0.0
     dependencies:
@@ -25614,7 +25604,7 @@ packages:
       eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.3.2)
       eslint-plugin-react: 7.34.3(eslint@8.57.0)
       eslint-plugin-react-hooks: 4.6.2(eslint@8.57.0)
-      follow-redirects: 1.15.4
+      follow-redirects: 1.15.6
       html-webpack-plugin: 5.6.0(webpack@5.89.0)
       husky: 8.0.3
       if-env: 1.0.4
