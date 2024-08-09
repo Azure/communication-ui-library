@@ -706,7 +706,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       localParticipant={localParticipant}
       remoteParticipants={remoteParticipants}
       reactionResources={reactionResources}
-      isPPTLive={!screenShareParticipant.screenShareStream?.id}
     />
   );
 
