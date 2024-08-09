@@ -245,6 +245,13 @@ export class CallContext {
         delete draft.calls[oldCallId];
         draft.calls[newCallId] = call;
       }
+      /* @conditional-compile-remove(breakout-rooms) */
+      // Update the old origin call id of breakout room calls to the new call id
+      Object.values(draft.calls).forEach((call) => {
+        if (call.breakoutRooms?.breakoutRoomOriginCallId === oldCallId) {
+          call.breakoutRooms?.breakoutRoomOriginCallId === newCallId;
+        }
+      });
     });
   }
 
