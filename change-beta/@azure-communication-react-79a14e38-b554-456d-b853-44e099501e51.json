@@ -1,9 +1,0 @@
-{
-  "type": "patch",
-  "area": "fix",
-  "workstream": "",
-  "comment": "Resolve issue where placeholder didn't always hide.",
-  "packageName": "@azure/communication-react",
-  "email": "palatter@microsoft.com",
-  "dependentChangeType": "patch"
-}
