@@ -34,14 +34,7 @@ const BasicStory = (args: ArgsFrom<typeof storyControls>, context): JSX.Element 
           args.userId,
           args.endpointUrl,
           args.displayName
-        ).catch((e) => {
-          console.log(e);
-          return { callLocator: { groupId: '' }, chatThreadId: '' };
-        });
-        if (callLocator.groupId === '' || chatThreadId === '') {
-          setCallWithChatProps(undefined);
-          return;
-        }
+        );
         setCallWithChatProps({
           userId: { communicationUserId: args.userId },
           token: args.token,
