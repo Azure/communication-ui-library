@@ -46,7 +46,7 @@
     "@internal/calling-stateful-client": "1.19.0-beta.1",
     "@internal/react-components": "1.19.0-beta.1",
     "@internal/react-composites": "1.19.0-beta.1",
-    "follow-redirects": "1.15.3",
+    "follow-redirects": "1.15.4",
     "merge": "^2.1.1",
     "mobile-detect": "^1.4.5",
     "nanoid": "3.3.6",
