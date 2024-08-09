@@ -137,6 +137,20 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
     callInfo = call.info as TeamsCallInfo | undefined | /* @conditional-compile-remove(calling-beta-sdk) */ CallInfo;
   }
 
+  /* @conditional-compile-remove(DNS) */
+  let isDeepNoiseSuppressionOn;
+  /* @conditional-compile-remove(DNS) */
+  const audioStream = call?.localAudioStreams.find((stream) => stream.mediaStreamType === 'Audio');
+  /* @conditional-compile-remove(DNS) */
+  if (audioStream) {
+    const activeAudioEffects = audioStream.feature(Features.AudioEffects).activeEffects;
+    if (activeAudioEffects && activeAudioEffects.noiseSuppression.includes('DeepNoiseSuppression')) {
+      isDeepNoiseSuppressionOn = true;
+    } else {
+      isDeepNoiseSuppressionOn = false;
+    }
+  }
+
   return {
     id: call.id,
     /* @conditional-compile-remove(teams-identity-support) */
@@ -190,7 +204,9 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
     hideAttendeeNames,
     info: callInfo,
     /* @conditional-compile-remove(teams-meeting-conference) */
-    meetingConference: { conferencePhones: [] }
+    meetingConference: { conferencePhones: [] },
+    /* @conditional-compile-remove(DNS) */
+    isDeepNoiseSuppressionOn
   };
 }
 

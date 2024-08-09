@@ -646,6 +646,11 @@ export interface CallState {
    * Hide attendee names in teams meeting
    */
   hideAttendeeNames?: boolean;
+  /* @conditional-compile-remove(DNS) */
+  /**
+   * Deep noise suppression state of audio stream in call
+   */
+  isDeepNoiseSuppressionOn?: boolean;
   /**
    * Proxy of {@link @azure/communication-calling#SpotlightCallFeature}.
    */
