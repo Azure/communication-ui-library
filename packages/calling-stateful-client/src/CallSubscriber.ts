@@ -30,6 +30,8 @@ import { SpotlightSubscriber } from './SpotlightSubscriber';
 import { LocalRecordingSubscriber } from './LocalRecordingSubscriber';
 /* @conditional-compile-remove(breakout-rooms) */
 import { BreakoutRoomsSubscriber } from './BreakoutRoomsSubscriber';
+/* @conditional-compile-remove(DNS) */
+import { AudioEffectsSubscriber } from './AudioEffectsSubscriber';
 
 /**
  * Keeps track of the listeners assigned to a particular call because when we get an event from SDK, it doesn't tell us
@@ -60,12 +62,25 @@ export class CallSubscriber {
   private _spotlightSubscriber: SpotlightSubscriber;
   /* @conditional-compile-remove(breakout-rooms) */
   private _breakoutRoomsSubscriber: BreakoutRoomsSubscriber;
+  /* @conditional-compile-remove(DNS) */
+  private _audioEffectsSubscriber?: AudioEffectsSubscriber;
 
   constructor(call: CallCommon, context: CallContext, internalContext: InternalCallContext) {
     this._call = call;
     this._callIdRef = { callId: call.id };
     this._context = context;
     this._internalContext = internalContext;
+
+    /* @conditional-compile-remove(DNS) */
+    const audioStream = this._call?.localAudioStreams.find((stream) => stream.mediaStreamType === 'Audio');
+    /* @conditional-compile-remove(DNS) */
+    if (audioStream) {
+      this._audioEffectsSubscriber = new AudioEffectsSubscriber(
+        this._callIdRef,
+        this._context,
+        audioStream.feature(Features.AudioEffects)
+      );
+    }
 
     this._diagnosticsSubscriber = new UserFacingDiagnosticsSubscriber(
       this._callIdRef,
@@ -217,6 +232,8 @@ export class CallSubscriber {
     this._spotlightSubscriber.unsubscribe();
     /* @conditional-compile-remove(breakout-rooms) */
     this._breakoutRoomsSubscriber.unsubscribe();
+    /* @conditional-compile-remove(DNS) */
+    this._audioEffectsSubscriber?.unsubscribe();
   };
 
   private addParticipantListener(participant: RemoteParticipant): void {

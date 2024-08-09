@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 import { CallState as SDKCallStatus, DominantSpeakersInfo } from '@azure/communication-calling';
+/* @conditional-compile-remove(DNS) */
+import { ActiveAudioEffects } from '@azure/communication-calling';
 import { ParticipantCapabilities } from '@azure/communication-calling';
 import { VideoDeviceInfo, AudioDeviceInfo } from '@azure/communication-calling';
 
@@ -240,3 +242,10 @@ export const getStartTime = (state: CallAdapterState): Date | undefined => state
  */
 export const getSpotlightedParticipants = (state: CallAdapterState): SpotlightedParticipant[] | undefined =>
   state.call?.spotlight?.spotlightedParticipants;
+
+/* @conditional-compile-remove(DNS) */
+/**
+ * @private
+ */
+export const getActiveAudioEffects = (state: CallAdapterState): ActiveAudioEffects | undefined =>
+  state.call?.activeAudioEffects;

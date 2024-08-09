@@ -22,6 +22,10 @@ export const Microphone = (props: {
   splitButtonsForDeviceSelection?: boolean;
   disabled?: boolean;
   disableTooltip?: boolean;
+  /* @conditional-compile-remove(DNS) */
+  onClickNoiseSuppression?: () => void;
+  /* @conditional-compile-remove(DNS) */
+  isDeepNoiseSuppressionOn?: boolean;
 }): JSX.Element => {
   const microphoneButtonProps = usePropsFor(MicrophoneButton);
   const callStatus = useSelector(getCallStatus);
@@ -58,6 +62,10 @@ export const Microphone = (props: {
           ? () => <_HighContrastAwareIcon disabled={true} iconName={'ControlButtonMicProhibited'} />
           : undefined
       }
+      /* @conditional-compile-remove(DNS) */
+      onClickNoiseSuppression={props.onClickNoiseSuppression}
+      /* @conditional-compile-remove(DNS) */
+      isDeepNoiseSuppressionOn={props.isDeepNoiseSuppressionOn}
     />
   );
 };

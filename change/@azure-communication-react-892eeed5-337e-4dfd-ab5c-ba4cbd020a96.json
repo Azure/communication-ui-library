@@ -1,0 +1,9 @@
+{
+  "type": "minor",
+  "area": "feature",
+  "workstream": "DNS",
+  "comment": "Add active audio effects and DNS button",
+  "packageName": "@azure/communication-react",
+  "email": "97124699+prabhjot-msft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

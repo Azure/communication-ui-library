@@ -161,7 +161,6 @@ export type CallAdapterClientState = {
    * Dependency to be injected for video background effect.
    */
   onResolveVideoEffectDependency?: () => Promise<VideoBackgroundEffectsDependency>;
-
   /**
    * State to track the selected video background effect.
    */
@@ -680,6 +679,20 @@ export interface CallAdapterCallOperations {
    * @public
    */
   updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void;
+  /* @conditional-compile-remove(DNS) */
+  /**
+   * Start the noise suppression effect.
+   *
+   * @beta
+   */
+  startNoiseSuppressionEffect(): Promise<void>;
+  /* @conditional-compile-remove(DNS) */
+  /**
+   * Start the noise suppression effect.
+   *
+   * @beta
+   */
+  stopNoiseSuppressionEffect(): Promise<void>;
 
   /**
    * Update the selected video background effect.
