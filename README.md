@@ -22,7 +22,7 @@ If you're wondering where to start, here are a few scenarios to guide you:
 - **I want to see what this library can do!**
   - Explore our [Storybook](https://azure.github.io/communication-ui-library) and [Sample Apps](#samples).
   
-- **I want to write my own communication application**
+- **I want to write my communication application**
   - Start with our [comprehensive documentation](https://azure.github.io/communication-ui-library/?path=/story/overview--page) to make the best choices for your application.
   
 - **I want more information on the available npm packages**
@@ -43,9 +43,9 @@ Explore [Storybook](https://azure.github.io/communication-ui-library) to try out
 
 ## Contributing to the Packages or Samples
 
-Join us in contributing to this open source library. Get started by checking out our [contributing guide](./docs/contributing-guide/1.%20getting-set-up.md).
+Join us in contributing to this open-source library. Get started by checking out our [contributing guide](./docs/contributing-guide/1.%20getting-set-up.md).
 
-We look forward to building an amazing open source library with you!
+We look forward to building an amazing open-source library with you!
 
 ## Further Reading
 
