@@ -1122,6 +1122,7 @@ export interface CallState {
     hideAttendeeNames?: boolean;
     id: string;
     info?: TeamsCallInfo | /* @conditional-compile-remove(calling-beta-sdk) */ CallInfo;
+    isDeepNoiseSuppressionOn?: boolean;
     isMuted: boolean;
     isScreenSharingOn: boolean;
     kind: CallKind;
