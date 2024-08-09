@@ -38,6 +38,8 @@ function createMockCallWithChatAdapter(): CallWithChatAdapter {
       call: undefined,
       chat: undefined,
       latestCallErrors: { test: new Error() as AdapterError },
+      /* @conditional-compile-remove(breakout-rooms) */
+      latestCallNotifications: {},
       latestChatErrors: { test: new Error() as AdapterError }
     })
   );

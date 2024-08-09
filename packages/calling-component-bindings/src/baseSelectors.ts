@@ -1,7 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 import { DominantSpeakersInfo } from '@azure/communication-calling';
-
+/* @conditional-compile-remove(breakout-rooms) */
+import { BreakoutRoom } from '@azure/communication-calling';
 import { ParticipantCapabilities } from '@azure/communication-calling';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
@@ -27,6 +28,8 @@ import { RaisedHandState } from '@internal/calling-stateful-client';
 import { _SupportedCaptionLanguage, _SupportedSpokenLanguage } from '@internal/react-components';
 /* @conditional-compile-remove(teams-meeting-conference) */
 import { ConferencePhoneInfo } from '@internal/calling-stateful-client';
+/* @conditional-compile-remove(breakout-rooms) */
+import { CallNotifications } from '@internal/calling-stateful-client';
 
 /**
  * Common props used to reference calling declarative client state.
@@ -173,6 +176,12 @@ export const getIdentifier = (state: CallClientState): string => toFlatCommunica
  */
 export const getLatestErrors = (state: CallClientState): CallErrors => state.latestErrors;
 
+/* @conditional-compile-remove(breakout-rooms) */
+/**
+ * @private
+ */
+export const getLatestNotifications = (state: CallClientState): CallNotifications => state.latestNotifications;
+
 /**
  * @private
  */
@@ -290,4 +299,13 @@ export const getRemovedIncomingCalls = (
   state: CallClientState
 ): IncomingCallState[] | /* @conditional-compile-remove(one-to-n-calling) */ TeamsIncomingCallState[] => {
   return Object.values(state.incomingCallsEnded);
+};
+
+/* @conditional-compile-remove(breakout-rooms) */
+/** @private */
+export const getAssignedBreakoutRoom = (
+  state: CallClientState,
+  props: CallingBaseSelectorProps
+): BreakoutRoom | undefined => {
+  return state.calls[props.callId]?.breakoutRooms?.assignedBreakoutRoom;
 };

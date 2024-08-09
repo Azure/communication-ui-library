@@ -41,6 +41,8 @@ import { CommunicationIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
 import type { CommunicationUserIdentifier, PhoneNumberIdentifier } from '@azure/communication-common';
 import type { AdapterState, Disposable, AdapterError, AdapterErrors } from '../../common/adapters';
+/* @conditional-compile-remove(breakout-rooms) */
+import type { AdapterNotifications } from '../../common/adapters';
 
 import { VideoBackgroundEffectsDependency } from '@internal/calling-component-bindings';
 
@@ -136,6 +138,11 @@ export type CallAdapterClientState = {
    * Latest error encountered for each operation performed via the adapter.
    */
   latestErrors: AdapterErrors;
+  /* @conditional-compile-remove(breakout-rooms) */
+  /**
+   * Latest notifications from call client state.
+   */
+  latestNotifications: AdapterNotifications;
   /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Azure communications Phone number to make PSTN calls with.
