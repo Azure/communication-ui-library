@@ -1,9 +1,0 @@
-{
-  "type": "patch",
-  "area": "fix",
-  "workstream": "",
-  "comment": "Resolve A11Y issue with rich text editor table size selection color contrast.",
-  "packageName": "@azure/communication-react",
-  "email": "palatter@microsoft.com",
-  "dependentChangeType": "patch"
-}

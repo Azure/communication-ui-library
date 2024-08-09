@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "area": "feature",
-  "workstream": "Notifications",
-  "comment": "Azure Communication Services UI Library is adding support for improved in-call notifications. In call notifications are essential for providing users with timely and relevant information about their calling experience. Whether it is an error message, a mute status, or a network quality indicator, notifications can help users troubleshoot issues and improve their communication. The new feature of ACS UI Library simplifies the display and management of multiple notifications in a consistent and user-friendly way. The in-call notification feature introduces a streamlined UI experience for displaying errors and notifications in the calling environment.",
-  "packageName": "@azure/communication-react",
-  "email": "96077406+carocao-msft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
