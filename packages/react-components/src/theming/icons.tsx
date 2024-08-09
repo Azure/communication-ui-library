@@ -47,7 +47,8 @@ import {
   PinOff20Regular,
   ScaleFit20Regular,
   ScaleFill20Regular,
-  PersonDelete20Regular
+  PersonDelete20Regular,
+  PersonVoice20Filled
 } from '@fluentui/react-icons';
 import { MicOff16Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(rich-text-editor) */
@@ -358,6 +359,8 @@ export const DEFAULT_COMPONENT_ICONS = {
   SplitButtonPrimaryActionCameraOff: <VideoOff20Filled />,
   SplitButtonPrimaryActionMicUnmuted: <Mic20Filled />,
   SplitButtonPrimaryActionMicMuted: <MicOff20Filled />,
+  NoiseSuppressionOff: <PersonVoice20Regular />,
+  NoiseSuppressionOn: <PersonVoice20Filled />,
   VerticalGalleryLeftButton: <GalleryLeftButton />,
   VerticalGalleryRightButton: <GalleryRightButton />,
   ControlButtonVideoEffectsOption: <VideoBackgroundEffect20Regular />,

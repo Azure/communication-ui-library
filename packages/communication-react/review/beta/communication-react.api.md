@@ -2711,6 +2711,8 @@ export const DEFAULT_COMPONENT_ICONS: {
     SplitButtonPrimaryActionCameraOff: React_2.JSX.Element;
     SplitButtonPrimaryActionMicUnmuted: React_2.JSX.Element;
     SplitButtonPrimaryActionMicMuted: React_2.JSX.Element;
+    NoiseSuppressionOff: React_2.JSX.Element;
+    NoiseSuppressionOn: React_2.JSX.Element;
     VerticalGalleryLeftButton: React_2.JSX.Element;
     VerticalGalleryRightButton: React_2.JSX.Element;
     ControlButtonVideoEffectsOption: React_2.JSX.Element;
@@ -2886,6 +2888,8 @@ export const DEFAULT_COMPOSITE_ICONS: {
     SplitButtonPrimaryActionCameraOff: React_2.JSX.Element;
     SplitButtonPrimaryActionMicUnmuted: React_2.JSX.Element;
     SplitButtonPrimaryActionMicMuted: React_2.JSX.Element;
+    NoiseSuppressionOff: React_2.JSX.Element;
+    NoiseSuppressionOn: React_2.JSX.Element;
     VerticalGalleryLeftButton: React_2.JSX.Element;
     VerticalGalleryRightButton: React_2.JSX.Element;
     ControlButtonVideoEffectsOption: React_2.JSX.Element;
@@ -3717,7 +3721,9 @@ export interface MicrophoneButtonContextualMenuStyles extends IContextualMenuSty
 // @public
 export interface MicrophoneButtonProps extends ControlBarButtonProps {
     enableDeviceSelectionMenu?: boolean;
+    isDeepNoiseSuppressionOn?: boolean;
     microphones?: OptionsDevice[];
+    onClickNoiseSuppression?: () => void;
     onSelectMicrophone?: (device: OptionsDevice) => Promise<void>;
     onSelectSpeaker?: (device: OptionsDevice) => Promise<void>;
     onToggleMicrophone?: () => Promise<void>;
