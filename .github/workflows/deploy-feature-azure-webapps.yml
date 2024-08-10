@@ -51,5 +51,5 @@ jobs:
       - name: Deploy Chat
         uses: azure/webapps-deploy@v2
         with:
-          app-name: john-test-3245e65as
+          app-name: john-test-3245e65as-fxf8bwa4dscecpg7
           package: ./samples/Chat/dist
