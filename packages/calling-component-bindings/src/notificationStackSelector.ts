@@ -246,6 +246,13 @@ export const notificationStackSelector: NotificationStackSelector = createSelect
         timestamp: latestNotifications['assignedBreakoutRoomChanged'].timestamp
       });
     }
+    /* @conditional-compile-remove(breakout-rooms) */
+    if (latestNotifications['assignedBreakoutRoomClosingSoon']) {
+      activeNotifications.push({
+        type: 'assignedBreakoutRoomClosingSoon',
+        timestamp: latestNotifications['assignedBreakoutRoomClosingSoon'].timestamp
+      });
+    }
     return { activeErrorMessages: activeErrorMessages, activeNotifications: activeNotifications };
   }
 );
