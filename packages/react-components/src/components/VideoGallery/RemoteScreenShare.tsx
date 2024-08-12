@@ -101,7 +101,13 @@ export const RemoteScreenShare = React.memo(
   }
 );
 
-const LoadingSpinner = (props: { loadingMessage: string }): JSX.Element => {
+/**
+ * LoadingSpinner component for displaying a loading spinner.
+ *
+ * @param {string} props.loadingMessage - The loading message to display.
+ * @returns {JSX.Element} The JSX element representing the loading spinner.
+ */
+export const LoadingSpinner = (props: { loadingMessage: string }): JSX.Element => {
   return (
     <Stack verticalAlign="center" className={loadingStyle}>
       <Spinner label={props.loadingMessage} size={SpinnerSize.xSmall} aria-live={'assertive'} />

@@ -5,11 +5,12 @@ import {
   RichTextEditBoxOptions
 } from '@azure/communication-react';
 import React, { useCallback, useMemo, useState } from 'react';
+import { _DEFAULT_INLINE_IMAGE_FILE_NAME } from '../../../../react-composites/src/composites/common/constants';
 import { GetHistoryHTMLChatMessages } from './placeholdermessages';
 
 export const MessageThreadWithRichTextEditorInlineImagesExample: () => JSX.Element = () => {
   const [messages, setMessages] = useState(GetHistoryHTMLChatMessages());
-  const [messagesInlineImages, setMessagesInlineImages] = useState<
+  const [messagesInlineImagesWithProgress, setMessagesInlineImagesWithProgress] = useState<
     Record<string, AttachmentMetadataInProgress[]> | undefined
   >();
 
@@ -25,7 +26,7 @@ export const MessageThreadWithRichTextEditorInlineImagesExample: () => JSX.Eleme
       message.editedOn = new Date(Date.now());
       updatedMessages[index] = message;
       setMessages(updatedMessages);
-      setMessagesInlineImages(undefined);
+      setMessagesInlineImagesWithProgress(undefined);
 
       return Promise.resolve();
     },
@@ -34,29 +35,31 @@ export const MessageThreadWithRichTextEditorInlineImagesExample: () => JSX.Eleme
 
   const richTextEditorOptions: RichTextEditBoxOptions = useMemo(() => {
     return {
-      onInsertInlineImage: (image: string, fileName: string, messageId: string) => {
-        const inlineImages = messagesInlineImages?.[messageId] ?? [];
-        const id = Math.floor(Math.random() * 1000000).toString();
+      onInsertInlineImage: (imageAttributes: Record<string, string>, messageId: string) => {
+        const inlineImagesWithProgress = messagesInlineImagesWithProgress?.[messageId] ?? [];
         const newImage: AttachmentMetadataInProgress = {
-          id,
-          name: 'image',
+          id: imageAttributes.id,
+          name: imageAttributes['data-image-file-name'] || _DEFAULT_INLINE_IMAGE_FILE_NAME,
           progress: 1,
-          url: image,
+          url: imageAttributes.src,
           error: undefined
         };
-        setMessagesInlineImages({ ...messagesInlineImages, [messageId]: [...inlineImages, newImage] });
+        setMessagesInlineImagesWithProgress({
+          ...messagesInlineImagesWithProgress,
+          [messageId]: [...inlineImagesWithProgress, newImage]
+        });
       },
-      messagesInlineImages: messagesInlineImages,
-      onCancelInlineImageUpload: (image: string, messageId: string) => {
-        const inlineImages = messagesInlineImages?.[messageId];
-        if (!inlineImages) {
+      messagesInlineImagesWithProgress: messagesInlineImagesWithProgress,
+      onRemoveInlineImage: (imageAttributes: Record<string, string>, messageId: string) => {
+        const inlineImagesWithProgress = messagesInlineImagesWithProgress?.[messageId];
+        if (!inlineImagesWithProgress) {
           return;
         }
-        const filteredImages = inlineImages.filter((img) => img.url !== image);
-        setMessagesInlineImages({ ...messagesInlineImages, [messageId]: filteredImages });
+        const filteredImages = inlineImagesWithProgress.filter((img) => img.id !== imageAttributes.id);
+        setMessagesInlineImagesWithProgress({ ...messagesInlineImagesWithProgress, [messageId]: filteredImages });
       }
     };
-  }, [messagesInlineImages]);
+  }, [messagesInlineImagesWithProgress]);
 
   return (
     <FluentThemeProvider>
@@ -65,7 +68,7 @@ export const MessageThreadWithRichTextEditorInlineImagesExample: () => JSX.Eleme
         richTextEditorOptions={richTextEditorOptions}
         messages={messages}
         onUpdateMessage={onUpdateMessage}
-        onCancelEditMessage={() => setMessagesInlineImages(undefined)}
+        onCancelEditMessage={() => setMessagesInlineImagesWithProgress(undefined)}
       />
     </FluentThemeProvider>
   );

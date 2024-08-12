@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "area": "feature",
-  "workstream": "Notifications",
-  "comment": "Fix bug where isMuted banner not showing up when compliance banners are up, also make sure notifications are ordered from earliest to latest",
-  "packageName": "@azure/communication-react",
-  "email": "96077406+carocao-msft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
