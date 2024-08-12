@@ -1,10 +1,14 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+/* @conditional-compile-remove(DNS) */
 import { AudioEffectsFeature } from '@azure/communication-calling';
+/* @conditional-compile-remove(DNS) */
 import { CallContext } from './CallContext';
+/* @conditional-compile-remove(DNS) */
 import { CallIdRef } from './CallIdRef';
 
+/* @conditional-compile-remove(DNS) */
 /**
  * @private
  */
