@@ -227,16 +227,14 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
   );
 
   /* @conditional-compile-remove(DNS) */
-  const [isDeepNoiseSuppressionOn, setDNS] = useState<boolean>(false);
+  const isDeepNoiseSuppressionOn = props.callAdapter.getState().call?.isDeepNoiseSuppressionOn;
 
   /* @conditional-compile-remove(DNS) */
   const onClickNoiseSuppression = useCallback(async () => {
     if (isDeepNoiseSuppressionOn) {
       await props.callAdapter.stopNoiseSuppressionEffect();
-      setDNS(false);
     } else {
       await props.callAdapter.startNoiseSuppressionEffect();
-      setDNS(true);
     }
   }, [props.callAdapter, isDeepNoiseSuppressionOn]);
 

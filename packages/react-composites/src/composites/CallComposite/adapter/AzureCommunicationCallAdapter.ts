@@ -150,6 +150,8 @@ class CallContext {
       };
       callingSounds?: CallingSounds;
       reactionResources?: ReactionResources;
+      /* @conditional-compile-remove(DNS) */
+      enableDeepNoiseSuppression?: boolean;
     },
     targetCallees?: StartCallIdentifier[]
   ) {
@@ -174,7 +176,10 @@ class CallContext {
       selectedVideoBackgroundEffect: undefined,
       cameraStatus: undefined,
       sounds: options?.callingSounds,
-      reactions: options?.reactionResources
+      reactions: options?.reactionResources,
+      /* @conditional-compile-remove(DNS) */
+      enableDeepNoiseSuppression:
+        options?.enableDeepNoiseSuppression === false ? options.enableDeepNoiseSuppression : true
     };
     this.emitter.setMaxListeners(options?.maxListeners ?? 50);
     this.bindPublicMethods();
@@ -1507,6 +1512,12 @@ export type CommonCallAdapterOptions = {
    * @beta
    */
   reactionResources?: ReactionResources;
+  /* @conditional-compile-remove(DNS) */
+  /**
+   * Parameter to enable deep noise suppression
+   * @default true
+   */
+  enableDeepNoiseSuppression?: boolean;
 };
 
 /**

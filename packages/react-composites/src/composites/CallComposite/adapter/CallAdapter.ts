@@ -184,6 +184,12 @@ export type CallAdapterClientState = {
    * @public
    */
   reactions?: ReactionResources;
+  /* @conditional-compile-remove(DNS) */
+  /**
+   * Parameter to enable deep noise suppression
+   * @default true
+   */
+  enableDeepNoiseSuppression?: boolean;
 };
 
 /**

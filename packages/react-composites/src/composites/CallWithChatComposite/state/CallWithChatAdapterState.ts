@@ -90,6 +90,12 @@ export interface CallWithChatClientState {
    * Reaction resources to render in meetings
    * */
   reactions?: ReactionResources;
+  /* @conditional-compile-remove(DNS) */
+  /**
+   * Parameter to enable deep noise suppression
+   * @default true
+   */
+  enableDeepNoiseSuppression?: boolean;
 }
 
 /**

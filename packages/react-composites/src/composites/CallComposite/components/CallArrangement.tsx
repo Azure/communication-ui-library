@@ -470,6 +470,18 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     );
   }
 
+  /* @conditional-compile-remove(DNS) */
+  useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+    async function startDNS() {
+      const enableDNS = adapter.getState().enableDeepNoiseSuppression;
+      if (enableDNS) {
+        await adapter.startNoiseSuppressionEffect();
+      }
+    }
+    startDNS();
+  }, [adapter]);
+
   /* @conditional-compile-remove(acs-close-captions) */
   const isTeamsCaptions = useSelector(getCaptionsKind) === 'TeamsCaptions';
   const isTeamsMeeting = useSelector(getIsTeamsMeeting);

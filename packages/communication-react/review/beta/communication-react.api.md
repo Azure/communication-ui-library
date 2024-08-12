@@ -509,6 +509,7 @@ export type CallAdapterClientState = {
     hideAttendeeNames?: boolean;
     sounds?: CallingSounds;
     reactions?: ReactionResources;
+    enableDeepNoiseSuppression?: boolean;
 };
 
 // @public
@@ -1373,6 +1374,7 @@ export interface CallWithChatClientState {
     chat?: ChatThreadClientState;
     devices: DeviceManagerState;
     displayName: string | undefined;
+    enableDeepNoiseSuppression?: boolean;
     environmentInfo?: EnvironmentInfo;
     hideAttendeeNames?: boolean;
     isTeamsCall: boolean;
@@ -2078,6 +2080,7 @@ export type CommonCallAdapterOptions = {
     onFetchProfile?: OnFetchProfileCallback;
     callingSounds?: CallingSounds;
     reactionResources?: ReactionResources;
+    enableDeepNoiseSuppression?: boolean;
 };
 
 // @public

@@ -90,16 +90,14 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
   const adapter = useAdapter();
 
   /* @conditional-compile-remove(DNS) */
-  const [isDeepNoiseSuppressionOn, setDNS] = useState<boolean>(false);
+  const isDeepNoiseSuppressionOn = adapter.getState().call?.isDeepNoiseSuppressionOn;
 
   /* @conditional-compile-remove(DNS) */
   const onClickNoiseSuppression = useCallback(async () => {
     if (isDeepNoiseSuppressionOn) {
       await adapter.stopNoiseSuppressionEffect();
-      setDNS(false);
     } else {
       await adapter.startNoiseSuppressionEffect();
-      setDNS(true);
     }
   }, [adapter, isDeepNoiseSuppressionOn]);
 
