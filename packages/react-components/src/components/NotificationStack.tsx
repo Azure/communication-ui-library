@@ -370,6 +370,19 @@ export const NotificationStack = (props: NotificationStackProps): JSX.Element =>
     >
       {activeNotifications.map((notification, index) => {
         if (index < maxNotificationsToShow) {
+          const onDismiss = (): void => {
+            trackDismissedNotificationsInternally
+              ? setDismissedNotifications(dismissNotification(dismissedNotifications, notification))
+              : props.onDismissNotification?.(notification);
+            notification.onDismiss && notification.onDismiss();
+          };
+          if (notification.type === 'assignedBreakoutRoomOpenedPromptJoin') {
+            // If notification is of type assignedBreakoutRoomOpenedPromptJoin then set onClickSecondaryButton to
+            // onDismiss if it is not defined
+            notification.onClickSecondaryButton = notification.onClickSecondaryButton
+              ? notification.onClickSecondaryButton
+              : () => onDismiss();
+          }
           return (
             <div key={index} style={{ marginBottom: `${index === maxNotificationsToShow - 1 ? 0 : '0.25rem'}` }}>
               <Notification
@@ -377,12 +390,7 @@ export const NotificationStack = (props: NotificationStackProps): JSX.Element =>
                 notificationIconProps={NotificationIconProps(notification.type)}
                 onClickPrimaryButton={() => notification.onClickPrimaryButton?.()}
                 onClickSecondaryButton={() => notification.onClickSecondaryButton?.()}
-                onDismiss={() => {
-                  trackDismissedNotificationsInternally
-                    ? setDismissedNotifications(dismissNotification(dismissedNotifications, notification))
-                    : props.onDismissNotification?.(notification);
-                  notification.onDismiss && notification.onDismiss();
-                }}
+                onDismiss={onDismiss}
                 showStackedEffect={
                   index === maxNotificationsToShow - 1 && activeNotifications.length > maxNotificationsToShow
                 }
