@@ -10,6 +10,7 @@ import {
 import { COMPONENT_LOCALE_EN_US } from '../../../localization/locales';
 import userEvent from '@testing-library/user-event';
 import { registerIcons } from '@fluentui/react';
+import { modifyInlineImagesInContentString } from '../../utils/SendBoxUtils';
 
 const icons: {
   [key: string]: string | JSX.Element;
@@ -109,6 +110,7 @@ describe('ChatMessageComponentAsRichTextEditBox tests', () => {
       fail('Submit button not found');
     }
     fireEvent.click(submitButton);
+    await modifyInlineImagesInContentString('<div>Hello World! Test</div>', []);
 
     expect(onSubmitMock).toHaveBeenCalledWith(
       '<div>Hello World! Test</div>',

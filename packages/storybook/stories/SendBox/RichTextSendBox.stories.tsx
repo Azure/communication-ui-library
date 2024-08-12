@@ -5,6 +5,8 @@ import { AttachmentMetadataInProgress, RichTextSendBox as RichTextSendBoxCompone
 import { Title, Description, Props, Heading, Canvas, Source } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React, { useState } from 'react';
+import { getImageFileNameFromAttributes } from '../../../react-composites/src/composites/ChatComposite/ImageUpload/ImageUploadUtils';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { DetailedBetaBanner } from '../BetaBanners/DetailedBetaBanner';
 import { SingleLineBetaBanner } from '../BetaBanners/SingleLineBetaBanner';
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
@@ -64,11 +66,22 @@ const getDocs: () => JSX.Element = () => {
 
       <Heading>Enable Inserting Inline Images</Heading>
       <Description>
-        The RichTextSendBox component provides an `onInsertInlineImage` callback to handle an inline image that is
-        inserted into the RichTextSendBox component. This callback can be used to implement custom logic, such as
-        uploading the image to a server. After processing each inserted image in the callback, the results should be
-        passed back to the component through the `inlineImages` prop. This prop will be used to render inline images in
-        the RichTextSendBox and send them with the message.
+        The RichTextSendBox component provides an `onInsertInlineImage` callback to handle each inline image that is
+        inserted into the editor. When not provided, pasting images into the rich text editor will be disabled. This
+        callback can be used to manipulate the imageAttributes src URL (which is a local blob URL), and implement any
+        other custom logic. After processing each inserted image in the callback, the results should be passed back to
+        the component through the `inlineImagesWithProgress` prop. This prop will be used to render the error bar to the
+        end user. Note that for the error of content exceeds the maximum length, the `id` and `url` props provided in
+        the `inlineImagesWithProgress` will be used in the calculation to achieve a more accurate result. The content
+        provided in the `onSendMessage` does not contain any information from the `inlineImagesWithProgress`. To add or
+        replace image attributes, manually parse the HTML content and update the image attributes. After an inline image
+        is removed from the editor, the `onRemoveInlineImage` callback will be triggered. At this point, the image is
+        already removed from the UI and the local blob of the image has already been revoked. This callback can be used
+        to implement custom logic such as deleting the image from the server. When inserting images between text, images
+        will be on the same line as the text. If you wish to change this behavior so that each image is always on a new
+        line, you can set the display property to block for all image tags. For certain Android devices, pasting of a
+        single image is only supported by long pressing on the rich text editor and choosing paste. Selecting from the
+        clipboard view from keyboard may not be supported.
       </Description>
       <Canvas mdxSource={RichTextSendBoxWithInlineImagesExampleText}>
         <RichTextSendBoxWithInlineImagesExample />
@@ -93,7 +106,9 @@ const getDocs: () => JSX.Element = () => {
 const RichTextSendBoxStory = (args): JSX.Element => {
   const timeoutRef = React.useRef<NodeJS.Timeout>();
   const delayForSendButton = 300;
-  const [inlineImages, setInlineImages] = useState<AttachmentMetadataInProgress[] | undefined>();
+  const [inlineImagesWithProgress, setInlineImagesWithProgress] = useState<
+    AttachmentMetadataInProgress[] | undefined
+  >();
 
   return (
     <div style={{ width: '31.25rem', maxWidth: '90%' }}>
@@ -120,7 +135,7 @@ const RichTextSendBoxStory = (args): JSX.Element => {
         systemMessage={args.hasWarning ? args.warningMessage : undefined}
         onSendMessage={async (message, options) => {
           timeoutRef.current = setTimeout(() => {
-            setInlineImages(undefined);
+            setInlineImagesWithProgress(undefined);
             alert(`sent message: ${message} with options ${JSON.stringify(options)}`);
           }, delayForSendButton);
         }}
@@ -131,21 +146,20 @@ const RichTextSendBoxStory = (args): JSX.Element => {
           console.log(`sending typing notifications`);
           return Promise.resolve();
         }}
-        onInsertInlineImage={(image: string, fileName: string) => {
-          const id = inlineImages?.length ? (inlineImages.length + 1).toString() : '1';
+        onInsertInlineImage={(imageAttributes: Record<string, string>) => {
           const newImage = {
-            id,
-            name: fileName,
+            id: imageAttributes.id,
+            name: getImageFileNameFromAttributes(imageAttributes),
             progress: 1,
-            url: image,
+            url: imageAttributes.src,
             error: undefined
           };
-          setInlineImages([...(inlineImages ?? []), newImage]);
+          setInlineImagesWithProgress([...(inlineImagesWithProgress ?? []), newImage]);
         }}
-        inlineImages={inlineImages}
-        onCancelInlineImageUpload={(imageId: string) => {
-          const filteredInlineImages = inlineImages?.filter((image) => image.id !== imageId);
-          setInlineImages(filteredInlineImages);
+        inlineImagesWithProgress={inlineImagesWithProgress}
+        onRemoveInlineImage={(imageAttributes: Record<string, string>) => {
+          const filteredInlineImages = inlineImagesWithProgress?.filter((image) => image.id !== imageAttributes.id);
+          setInlineImagesWithProgress(filteredInlineImages);
         }}
       />
     </div>

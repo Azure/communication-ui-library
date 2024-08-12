@@ -457,6 +457,7 @@
   "videoGallery": {
     "screenIsBeingSharedMessage": "Du delar din skärm",
     "screenShareLoadingMessage": "Läser in {participant}s skärm",
+    "localScreenShareLoadingMessage": "Läser in skärmen",
     "localVideoLabel": "Du",
     "localVideoCameraSwitcherLabel": "Växla kamera",
     "localVideoMovementLabel": "Flyttbar lokal videopanel",
@@ -626,9 +627,12 @@
   },
   "IncomingCallNotification": {
     "incomingCallNotificationPlaceholderId": "Okänd användare",
-    "incomingCallNotificationPlaceholderAlert": "Inkommande samtal",
+    "incomingCallNotificationPlaceholderAlert": "{callerName} ringer",
     "incomingCallNoticicationAcceptWithAudioAriaLabel": "Acceptera med ljud",
     "incomingCallNoticicationAcceptWithVideoAriaLabel": "Acceptera med video",
-    "incomingCallNoticicationRejectAriaLabel": "Avvisa"
+    "incomingCallNoticicationRejectAriaLabel": "Avvisa",
+    "incomingCallNotificationAcceptButtonLabel": "Acceptera",
+    "incomingCallNotificationRejectButtonLabel": "Avböj",
+    "incomingCallNotificationAccceptWithVideoButtonLabel": "Acceptera med video"
   }
 }

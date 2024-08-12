@@ -478,6 +478,7 @@
   "videoGallery": {
     "screenIsBeingSharedMessage": "You are sharing your screen",
     "screenShareLoadingMessage": "Loading {participant}'s screen",
+    "localScreenShareLoadingMessage": "Loading your screen",
     "localVideoLabel": "You",
     "localVideoCameraSwitcherLabel": "Switch camera",
     "localVideoMovementLabel": "Movable Local Video Tile",
