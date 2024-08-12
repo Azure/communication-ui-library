@@ -376,6 +376,7 @@ export const NotificationStack = (props: NotificationStackProps): JSX.Element =>
               : props.onDismissNotification?.(notification);
             notification.onDismiss && notification.onDismiss();
           };
+          /* @conditional-compile-remove(breakout-rooms) */
           if (notification.type === 'assignedBreakoutRoomOpenedPromptJoin') {
             // If notification is of type assignedBreakoutRoomOpenedPromptJoin then set onClickSecondaryButton to
             // onDismiss if it is not defined
