@@ -1374,6 +1374,7 @@ export interface CallWithChatClientState {
     chat?: ChatThreadClientState;
     devices: DeviceManagerState;
     displayName: string | undefined;
+    // @beta
     enableDeepNoiseSuppression?: boolean;
     environmentInfo?: EnvironmentInfo;
     hideAttendeeNames?: boolean;
