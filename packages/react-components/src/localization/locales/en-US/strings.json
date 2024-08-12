@@ -464,7 +464,7 @@
     },
     "assignedBreakoutRoomOpenedPromptJoin": {
       "title": "Join breakout room?",
-      "message": "You've been assigned to \"{breakoutRoomDisplayName}\".",
+      "message": "You've been assigned to a breakout room.",
       "dismissButtonAriaLabel": "Close",
       "primaryButtonLabel": "Join room",
       "secondaryButtonLabel": "Later"

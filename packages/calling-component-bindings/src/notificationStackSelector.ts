@@ -236,10 +236,7 @@ export const notificationStackSelector: NotificationStackSelector = createSelect
       activeNotifications.push({
         type: 'assignedBreakoutRoomOpenedPromptJoin',
         timestamp: latestNotifications['assignedBreakoutRoomOpenedPromptJoin'].timestamp,
-        onClickPrimaryButton: () => assignedBreakoutRoom.join(),
-        metadata: assignedBreakoutRoom.displayName
-          ? { breakoutRoom: { assignedBreakoutRoomDisplayName: assignedBreakoutRoom.displayName } }
-          : undefined
+        onClickPrimaryButton: () => assignedBreakoutRoom.join()
       });
     }
     /* @conditional-compile-remove(breakout-rooms) */

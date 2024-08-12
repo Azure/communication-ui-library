@@ -138,11 +138,6 @@ export interface ActiveIncomingCall {
 // @public
 export interface ActiveNotification {
     autoDismiss?: boolean;
-    metadata?: {
-        breakoutRoom?: {
-            assignedBreakoutRoomDisplayName?: string;
-        };
-    };
     onClickPrimaryButton?: () => void;
     onClickSecondaryButton?: () => void;
     onDismiss?: () => void;

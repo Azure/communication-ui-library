@@ -317,13 +317,6 @@ export interface ActiveNotification {
    * by the user.
    */
   timestamp?: Date;
-  /* @conditional-compile-remove(breakout-rooms) */
-  /**
-   * Metadata for the notification.
-   */
-  metadata?: {
-    breakoutRoom?: { assignedBreakoutRoomDisplayName?: string };
-  };
 }
 
 /**
@@ -377,15 +370,6 @@ export const NotificationStack = (props: NotificationStackProps): JSX.Element =>
     >
       {activeNotifications.map((notification, index) => {
         if (index < maxNotificationsToShow) {
-          /* @conditional-compile-remove(breakout-rooms) */
-          const notificationString = strings ? strings[notification.type] : undefined;
-          /* @conditional-compile-remove(breakout-rooms) */
-          if (notificationString?.message && notification.metadata?.breakoutRoom?.assignedBreakoutRoomDisplayName) {
-            notificationString.message = notificationString.message.replace(
-              '{breakoutRoomDisplayName}',
-              notification.metadata?.breakoutRoom?.assignedBreakoutRoomDisplayName
-            );
-          }
           return (
             <div key={index} style={{ marginBottom: `${index === maxNotificationsToShow - 1 ? 0 : '0.25rem'}` }}>
               <Notification
