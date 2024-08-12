@@ -4,7 +4,7 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Icon, IStyle, mergeStyles, PrimaryButton } from '@fluentui/react';
 import { Chat } from '@fluentui-contrib/react-chat';
-import { mergeClasses } from '@fluentui/react-components';
+import { mergeClasses, useArrowNavigationGroup } from '@fluentui/react-components';
 import {
   DownIconStyle,
   newMessageButtonContainerStyle,
@@ -1173,6 +1173,7 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
             className={mergeClasses(classes.root, mergeStyles(styles?.chatContainer))}
             ref={chatScrollDivRef}
             style={{ ...createStyleFromV8Style(styles?.chatContainer) }}
+            {...useArrowNavigationGroup({ axis: 'vertical', memorizeCurrent: false })}
           >
             {latestDeletedMessageId && (
               <Announcer
