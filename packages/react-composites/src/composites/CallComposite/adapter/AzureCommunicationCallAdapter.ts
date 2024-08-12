@@ -1515,6 +1515,7 @@ export type CommonCallAdapterOptions = {
   /* @conditional-compile-remove(DNS) */
   /**
    * Parameter to enable deep noise suppression
+   * @beta
    * @default true
    */
   enableDeepNoiseSuppression?: boolean;
