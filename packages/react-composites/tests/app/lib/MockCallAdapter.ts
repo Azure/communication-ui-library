@@ -157,10 +157,6 @@ export class MockCallAdapter implements CallAdapter {
   returnFromBreakoutRoom(): Promise<void> {
     throw Error('returnFromBreakoutRoom not implemented');
   }
-  /* @conditional-compile-remove(breakout-rooms) */
-  hangUpOriginCall(): Promise<void> {
-    throw Error('hangUpOriginCall not implemented');
-  }
 
   async setCamera(sourceInfo: VideoDeviceInfo): Promise<void> {
     this.modifyState((draft: CallAdapterState) => {

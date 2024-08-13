@@ -724,11 +724,6 @@ export interface CallAdapterCallOperations {
    * Return to origin call of breakout room
    */
   returnFromBreakoutRoom(): Promise<void>;
-  /* @conditional-compile-remove(breakout-rooms) */
-  /**
-   * Hang up origin call of breakout room
-   */
-  hangUpOriginCall(): Promise<void>;
 }
 
 /**

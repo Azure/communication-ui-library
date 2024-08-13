@@ -26,8 +26,6 @@ export const EndCall = (props: {
   disableEndCallModal?: boolean;
   /* @conditional-compile-remove(breakout-rooms) */
   returnFromBreakoutRoom?: () => Promise<void>;
-  /* @conditional-compile-remove(breakout-rooms) */
-  hangUpOriginCall?: () => Promise<void>;
 }): JSX.Element => {
   const compactMode = props.displayType === 'compact';
   const hangUpButtonProps = usePropsFor(EndCallButton);
@@ -111,7 +109,7 @@ export const EndCall = (props: {
   );
 
   /* @conditional-compile-remove(breakout-rooms) */
-  const enableBreakoutRoomMenu = !!props.returnFromBreakoutRoom && !!props.hangUpOriginCall;
+  const enableBreakoutRoomMenu = !!props.returnFromBreakoutRoom;
   /* @conditional-compile-remove(breakout-rooms) */
   const breakoutRoomMenuProps: IContextualMenuProps = {
     items: [
@@ -127,11 +125,7 @@ export const EndCall = (props: {
         key: 'leaveRoomAndMainMeeting',
         text: localeStrings.call.leaveRoomAndMainMeetingButtonLabel,
         title: localeStrings.call.leaveRoomAndMainMeetingButtonLabel,
-        onClick: () => {
-          props.hangUpOriginCall?.().then(() => {
-            onHangUp();
-          });
-        }
+        onClick: () => onHangUp()
       }
     ],
     styles: props.styles
