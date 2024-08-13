@@ -4,7 +4,8 @@ import {
   CallAndChatLocator,
   CallWithChatComposite,
   useAzureCommunicationCallWithChatAdapter,
-  CallWithChatCompositeOptions
+  CallWithChatCompositeOptions,
+  CallWithChatAdapter
 } from '@azure/communication-react';
 import { Theme, PartialTheme, Spinner } from '@fluentui/react';
 import React, { useMemo } from 'react';
@@ -31,13 +32,17 @@ export const CallWithChatExperienceWithErrorChecks = (props: CallWithChatExample
     }
   }, [props.token]);
 
-  const adapter = useAzureCommunicationCallWithChatAdapter({
-    userId: props.userId,
-    displayName: props.displayName,
-    credential,
-    locator: props.locator,
-    endpoint: props.endpointUrl
-  });
+  const adapter = useAzureCommunicationCallWithChatAdapter(
+    {
+      userId: props.userId,
+      displayName: props.displayName,
+      credential,
+      locator: props.locator,
+      endpoint: props.endpointUrl
+    },
+    undefined,
+    leaveCall
+  );
 
   if (!credential) {
     return <>Failed to construct credential. Provided token is malformed.</>;
@@ -57,4 +62,10 @@ export const CallWithChatExperienceWithErrorChecks = (props: CallWithChatExample
       options={props.compositeOptions}
     />
   );
+};
+
+const leaveCall = async (adapter: CallWithChatAdapter): Promise<void> => {
+  await adapter.leaveCall().catch((e) => {
+    console.error('Failed to leave call', e);
+  });
 };
