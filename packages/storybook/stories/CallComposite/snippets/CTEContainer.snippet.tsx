@@ -24,7 +24,8 @@ export type ContainerProps = {
   options?: CallCompositeOptions;
 };
 
-const isTeamsMeetingLink = (link: string): boolean => link.startsWith('https://teams.microsoft.com/l/meetup-join');
+const isTeamsMeetingLink = (link: string): boolean =>
+  link.startsWith('https://teams.microsoft.com/meet/') || link.startsWith('https://teams.microsoft.com/l/meetup-join');
 
 const createCallAdapterLocator = (
   locator?: string,
