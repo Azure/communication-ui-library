@@ -115,16 +115,16 @@ export const EndCall = (props: {
     items: [
       {
         key: 'returnToMainMeeting',
-        text: localeStrings.call.returnToMainMeetingButtonLabel,
-        title: localeStrings.call.returnToMainMeetingButtonLabel,
+        text: localeStrings.call.returnFromBreakoutRoomButtonLabel,
+        title: localeStrings.call.returnFromBreakoutRoomButtonLabel,
         onClick: () => {
           props.returnFromBreakoutRoom?.();
         }
       },
       {
         key: 'leaveRoomAndMainMeeting',
-        text: localeStrings.call.leaveRoomAndMainMeetingButtonLabel,
-        title: localeStrings.call.leaveRoomAndMainMeetingButtonLabel,
+        text: localeStrings.call.leaveBreakoutRoomAndMeetingButtonLabel,
+        title: localeStrings.call.leaveBreakoutRoomAndMeetingButtonLabel,
         onClick: () => onHangUp()
       }
     ],

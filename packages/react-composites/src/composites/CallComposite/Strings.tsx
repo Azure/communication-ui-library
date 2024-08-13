@@ -874,12 +874,12 @@ export interface CallCompositeStrings {
   joinBreakoutRoomButtonLabel: string;
   /* @conditional-compile-remove(breakout-rooms) */
   /**
-   * Label for button to return to main meeting
+   * Label for button to return from breakout room
    */
-  returnToMainMeetingButtonLabel: string;
+  returnFromBreakoutRoomButtonLabel: string;
   /* @conditional-compile-remove(breakout-rooms) */
   /**
-   * Label for button to leave breakout room and return to main meeting
+   * Label for button to leave breakout room and meeting
    */
-  leaveRoomAndMainMeetingButtonLabel: string;
+  leaveBreakoutRoomAndMeetingButtonLabel: string;
 }

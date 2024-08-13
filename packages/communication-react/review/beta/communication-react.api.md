@@ -853,10 +853,10 @@ export interface CallCompositeStrings {
     inviteToRoomRemovedTitle: string;
     joinBreakoutRoomButtonLabel: string;
     learnMore: string;
+    leaveBreakoutRoomAndMeetingButtonLabel: string;
     leaveConfirmButtonLabel?: string;
     leaveConfirmDialogContent?: string;
     leaveConfirmDialogTitle?: string;
-    leaveRoomAndMainMeetingButtonLabel: string;
     leavingCallTitle?: string;
     leftCallMoreDetails?: string;
     leftCallTitle: string;
@@ -925,9 +925,9 @@ export interface CallCompositeStrings {
     resumeCallButtonLabel: string;
     resumingCallButtonAriaLabel: string;
     resumingCallButtonLabel: string;
+    returnFromBreakoutRoomButtonLabel: string;
     returnToCallButtonAriaDescription?: string;
     returnToCallButtonAriaLabel?: string;
-    returnToMainMeetingButtonLabel: string;
     roomNotFoundDetails?: string;
     roomNotFoundTitle: string;
     roomNotValidDetails?: string;
