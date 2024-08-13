@@ -21,8 +21,6 @@ module.exports = {
     "in-progress-beta-feature-demo",
     // feature for adding JS helpers to the UI library API
     "composite-js-helpers",
-     // Deep Noise Suppression feature
-    "DNS",
     // feature for breakout rooms
     "breakout-rooms",
     // Feature for remote UFD
@@ -84,7 +82,9 @@ module.exports = {
     // Feature to support file sharing in ACS chats
     "file-sharing-acs",
     // Soft Mute feature for ACS calls and Interop calls
-    "soft-mute"
+    "soft-mute",
+    // Deep Noise Suppression feature
+    "DNS"
   ],
   stable: [
     // Demo feature. Used in live-documentation of conditional compilation.
