@@ -1151,6 +1151,7 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
   ]);
 
   const classes = useChatStyles();
+  const chatAttr = useArrowNavigationGroup({ axis: 'vertical', memorizeCurrent: false });
 
   return (
     <div className={mergeStyles(messageThreadWrapperContainerStyle)} ref={chatThreadRef}>
@@ -1173,7 +1174,7 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
             className={mergeClasses(classes.root, mergeStyles(styles?.chatContainer))}
             ref={chatScrollDivRef}
             style={{ ...createStyleFromV8Style(styles?.chatContainer) }}
-            {...useArrowNavigationGroup({ axis: 'vertical', memorizeCurrent: false })}
+            {...chatAttr}
           >
             {latestDeletedMessageId && (
               <Announcer
