@@ -25,7 +25,9 @@ import type { BreakoutRoomsEventData, BreakoutRoomsUpdatedListener, TeamsCall } 
 import { DtmfTone } from '@azure/communication-calling';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing-acs) */
-import { MessageOptions, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
+import { MessageOptions } from '@internal/acs-ui-common';
+/* @conditional-compile-remove(breakout-rooms) */
+import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import {
   ParticipantsJoinedListener,
   ParticipantsLeftListener,
@@ -161,7 +163,9 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   private isAdapterDisposed: boolean = false;
   /* @conditional-compile-remove(breakout-rooms) */
   private createChatAdapterCallback: ((threadId: string) => Promise<ChatAdapter>) | undefined;
+  /* @conditional-compile-remove(breakout-rooms) */
   private originCallChatAdapter: ChatAdapter | undefined;
+  /* @conditional-compile-remove(breakout-rooms) */
   private breakoutRoomChatAdapter: ChatAdapter | undefined;
 
   constructor(callAdapter: CallAdapter, chatAdapter?: ChatAdapter) {
@@ -243,6 +247,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     chatAdapter.then((adapter) => {
       if (!this.isAdapterDisposed) {
         this.updateChatAdapter(adapter);
+        /* @conditional-compile-remove(breakout-rooms) */
         this.originCallChatAdapter = adapter;
       }
     });
@@ -1125,6 +1130,7 @@ export const createAzureCommunicationCallWithChatAdapter = async ({
       'CallWithChat' as _TelemetryImplementationHint
     );
     callWithChatAdapter.setChatAdapterPromise(chatAdapterPromise);
+    /* @conditional-compile-remove(breakout-rooms) */
     callWithChatAdapter.setCreateChatAdapterCallback((threadId: string) =>
       _createAzureCommunicationChatAdapterInner(
         endpoint,
