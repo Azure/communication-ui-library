@@ -44,7 +44,7 @@ export const CallWithChatExperience = (props: CallWithChatExampleProps): JSX.Ele
   const credential = useMemo(() => new AzureCommunicationTokenCredential(props.token), [props.token]);
 
   // Create the adapter using a custom react hook provided in the @azure/communication-react package.
-  // See https://aka.ms/acsstorybook?path=/docs/composite-adapters--page for more information on adapter construction and alternative constructors.
+  // See https://aka.ms/acsstorybook/?path=/docs/composites-adapters--docs for more information on adapter construction and alternative constructors.
   const adapter = useAzureCommunicationCallWithChatAdapter({
     userId: props.userId,
     displayName: props.displayName,

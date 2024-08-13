@@ -19,8 +19,10 @@ participants entering and leaving the chat.
 <Stack horizontalAlign="center" style={overviewPageImagesStackStyle}>
   <Image src="images/call-with-chat-composite-hero.png" alt="Call with chat composite preview image" width="85%" />
 </Stack>
-<br />
-## Basic usage A CallWithChatComposite is comprised of two key underlying parts: an ACS Call and an ACS Chat thread. As
+
+## Basic usage
+
+A CallWithChatComposite is comprised of two key underlying parts: an ACS Call and an ACS Chat thread. As
 such you must provide details for both in the CallWithChatAdapter interface.
 
 A key thing to note is that initialization of the adapter is asynchronous. Thus, the initialization step
@@ -52,7 +54,7 @@ to be optimized for a mobile device.
   Note: Only Portrait mode is supported when the `formFactor` is set to "mobile". Landscape mode is not supported.
 </MessageBar>
 You can try out the form factor property in the [CallWithChatComposite Basic
-Example](./?path=/story/composites-call-with-chat-basicexample--basic-example).
+Example](./?path=/story/composites-call-with-chat-basicexample-basic-example--basic-example).
 
 Mobile devices have a pull-down to refresh feature that may impact users from scrolling through messages in
 chat. A simple and effective way to disable the pull-down to refresh feature is to set an `overflow='hidden'` OR
@@ -61,8 +63,8 @@ chat. A simple and effective way to disable the pull-down to refresh feature is 
 ## Theming
 
 CallWithChatComposite can be themed with Fluent UI themes, just like the base components. Look at the
-[CallComposite theme example](./?path=/story/composites-call-themeexample--theme-example) to see theming in
-action or the [overall theming example](./?path=/docs/theming--page) to see how theming works for all the
+[CallComposite theme example](./?path=/story/composites-callcomposite-theme-example--theme-example) to see theming in
+action or the [overall theming example](./?path=/docs/concepts-theming--docs) to see how theming works for all the
 components in this UI library.
 
 ## Custom Branding
@@ -103,7 +105,7 @@ logo image is 128x128 pixels.
 ## Customize Call Controls
 
 CallWithChatComposite provides a set of default controls for the call that can be customized similar to
-CallComposite. Check out [Customize Call Controls](./?path=/docs/composites-call-basicexample--basic-example#customize-call-controls)
+CallComposite. Check out [Customize Call Controls](./?path=/docs/composites-callcomposite--docs#customize-call-controls)
 to learn more.
 
 ## Adding image sharing
@@ -182,7 +184,7 @@ The CallWithChatComposite supports the PSTN Calling modality as well. With CallW
 provide a chat thread Id for instances where you will add a Azure Communications user to the call. If you are
 looking to use the CallWithChatComposite and are looking to hide the chat because you are only calling PSTN
 users please see our documentation on how to hide the [control bar
-buttons](./?path=/story/composites-call-with-chat-basicexample--basic-example).
+buttons](./?path=/story/composites-call-with-chat-basicexample-basic-example--basic-example).
 
 ## Rich Text Editor Support
 
@@ -191,5 +193,5 @@ buttons](./?path=/story/composites-call-with-chat-basicexample--basic-example).
 
 The CallWithChatComposite supports options to enable a rich text editor functionality in chat similar to
 ChatComposite. Check out [Rich Text Editor Support for
-ChatComposite](./?path=/docs/composites-chat-basicexample--basic-example#rich-text-editor-support) to learn
+ChatComposite](./?path=/docs/composites-chatcomposite--docs#rich-text-editor-support) to learn
 more.
