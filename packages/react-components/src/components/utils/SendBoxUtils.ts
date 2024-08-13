@@ -87,8 +87,7 @@ export const updateStylesOfInlineImages = async (
         resolve();
       };
       imageElement.onerror = () => {
-        console.log('Error loading image', img.src);
-        rejects();
+        rejects(`Error loading image ${img.id}`);
       };
     });
   });
@@ -176,7 +175,11 @@ export const modifyInlineImagesInContentString = async (
 ): Promise<void> => {
   let newContent = content;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  newContent = await updateStylesOfInlineImages(content, initialInlineImages);
+  try {
+    newContent = await updateStylesOfInlineImages(content, initialInlineImages);
+  } catch (error) {
+    console.error('Error updating inline images: ', error);
+  }
   onCompleted?.(newContent);
 };
 
