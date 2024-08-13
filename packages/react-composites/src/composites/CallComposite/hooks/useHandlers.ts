@@ -176,9 +176,11 @@ const createCompositeHandlers = memoizeOne(
         };
         return await adapter.startVideoBackgroundEffect(replacementConfig);
       },
+      /* @conditional-compile-remove(DNS) */
       onStartNoiseSuppressionEffect: async () => {
         return await adapter.startNoiseSuppressionEffect();
       },
+      /* @conditional-compile-remove(DNS) */
       onStopNoiseSuppressionEffect: async () => {
         return await adapter.stopNoiseSuppressionEffect();
       },

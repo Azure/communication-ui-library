@@ -102,17 +102,13 @@ export const VideoEffectsPaneContent = (props: {
           type: 'blur',
           timestamp: new Date(Date.now())
         });
-        await adapter.startNoiseSuppressionEffect();
         await adapter.startVideoBackgroundEffect(blurEffect);
-        await adapter.startNoiseSuppressionEffect();
         adapter.updateSelectedVideoBackgroundEffect(blurEffect);
       } else if (effectKey === 'none') {
         const noneEffect: VideoBackgroundNoEffect = {
           effectName: effectKey
         };
-        await adapter.stopNoiseSuppressionEffect();
         await adapter.stopVideoBackgroundEffects();
-        await adapter.stopNoiseSuppressionEffect();
         adapter.updateSelectedVideoBackgroundEffect(noneEffect);
       } else {
         const backgroundImg = selectableVideoEffects.find((effect) => {
