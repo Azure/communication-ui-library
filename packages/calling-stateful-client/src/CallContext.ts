@@ -285,10 +285,6 @@ export class CallContext {
         addRemoteParticipant.forEach((participant: RemoteParticipantState) => {
           call.remoteParticipants[toFlatCommunicationIdentifier(participant.identifier)] = participant;
         });
-        // TODO: need to remove after contentSharingRole avaible in WebCalling SDK.
-        if (!call.contentSharingRemoteParticipant) {
-          call.contentSharingRemoteParticipant = toFlatCommunicationIdentifier(addRemoteParticipant[0].identifier);
-        }
       }
     });
   }
@@ -445,14 +441,14 @@ export class CallContext {
     });
   }
 
-  public setCallParticipantPPTLive(callId: string, target: HTMLElement | undefined): void {
+  public setCallParticipantPPTLive(callId: string, participantKey: string, target: HTMLElement | undefined): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
-      const participantKey = call.contentSharingRemoteParticipant;
       if (call && participantKey) {
         const participant = call.remoteParticipants[participantKey];
         if (participant) {
           participant.contentSharingStream = target;
+          call.contentSharingRemoteParticipant = participantKey;
         }
       }
     });
