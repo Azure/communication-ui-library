@@ -69,7 +69,8 @@ export type CallExampleProps = {
   options?: CallCompositeOptions;
 };
 
-const isTeamsMeetingLink = (link: string): boolean => link.startsWith('https://teams.microsoft.com/l/meetup-join');
+const isTeamsMeetingLink = (link: string): boolean =>
+  link.startsWith('https://teams.microsoft.com/meet/') || link.startsWith('https://teams.microsoft.com/l/meetup-join');
 const isGroupID = (id: string): boolean => validateUUID(id);
 
 const createCallAdapterLocator = (locator: string): CallAdapterLocator | undefined => {
