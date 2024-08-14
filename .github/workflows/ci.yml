@@ -735,7 +735,7 @@ jobs:
         id: setup-chrome
         with:
           chrome-version: 120.0.6099
-      - name: Build
+      - name: Build lib
         run: rush build -t @azure/communication-react
       - name: Build test
         run: |
