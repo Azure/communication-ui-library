@@ -787,6 +787,12 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 'lts/*'
+      # Try get node_modules from cache
+      - name: Restore node_modules from cache
+        uses: actions/cache@v4
+        with:
+          path: common/temp/pnpm-store
+          key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install Dependencies
         run: node ./common/scripts/install-dependencies-ci.mjs ${{ matrix.flavor }}
       - uses: browser-actions/setup-chrome@v1
