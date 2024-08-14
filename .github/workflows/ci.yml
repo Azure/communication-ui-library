@@ -735,11 +735,11 @@ jobs:
         id: setup-chrome
         with:
           chrome-version: 120.0.6099
-        - name: Build test
+      - name: Build test1
         run: |
           cd packages/acs-ui-common
           rushx build
-      - name: Build test
+      - name: Build test2
         run: |
           cd packages/calling-stateful-client
           rushx build
