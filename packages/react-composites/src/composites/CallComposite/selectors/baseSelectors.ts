@@ -10,6 +10,8 @@ import { CapabilitiesChangeInfo } from '@azure/communication-calling';
 import { EnvironmentInfo } from '@azure/communication-calling';
 
 import { ParticipantRole } from '@azure/communication-calling';
+/* @conditional-compile-remove(breakout-rooms) */
+import { BreakoutRoom, BreakoutRoomsSettings } from '@azure/communication-calling';
 import {
   CallState,
   DeviceManagerState,
@@ -240,3 +242,17 @@ export const getStartTime = (state: CallAdapterState): Date | undefined => state
  */
 export const getSpotlightedParticipants = (state: CallAdapterState): SpotlightedParticipant[] | undefined =>
   state.call?.spotlight?.spotlightedParticipants;
+
+/* @conditional-compile-remove(breakout-rooms) */
+/**
+ * @private
+ */
+export const getAssignedBreakoutRoom = (state: CallAdapterState): BreakoutRoom | undefined =>
+  state.call?.breakoutRooms?.assignedBreakoutRoom;
+
+/* @conditional-compile-remove(breakout-rooms) */
+/**
+ * @private
+ */
+export const getBreakoutRoomSettings = (state: CallAdapterState): BreakoutRoomsSettings | undefined =>
+  state.call?.breakoutRooms?.breakoutRoomSettings;
