@@ -106,12 +106,12 @@ Successfully starting the quickstart with a Callee userID and access token will 
 
 ## Troubleshooting
 
-See the [troubleshooting page](./?path=/story/troubleshooting--page) for some common problems and recommended solutions.
+See the [troubleshooting page](./?path=/docs/concepts-troubleshooting--docs) for some common problems and recommended solutions.
 
 ## Mixing Modalities
 
 UI Library supports mixing PSTN and 1:N modalities into one calling experience. If you wish to develop a scenario where
-both is needed, an [alternateCallerId](./?path=/docs/composite-adapters--page) must be provided for the user initiating the call.
+both is needed, an [alternateCallerId](./?path=/docs/composites-adapters--docs) must be provided for the user initiating the call.
 If an altnerateCallerId is not provided, then only ACS users are able to be added into the call in a 1:N scenario.
 
 ## Setting Up Inbound Calling
@@ -120,7 +120,7 @@ The UI Library does not officially support inbound scenarios. However, our State
 for [incomingCalls](https://docs.microsoft.com/en-us/javascript/api/@azure/communication-react/callclientstate#@azure-communication-react-callclientstate-incomingcalls)
 to accept and reject calls. This allows developers to create scenarios where their apps can receive calls from outbound 1:N calls using the UI Library.
 
-To set up inbound calling instantiate Stateful Call Client, Call Agent, and Call following the [Stateful Call Client quickstart](./?path=/docs/quickstarts-statefulcallclient--page).
+To set up inbound calling instantiate Stateful Call Client, Call Agent, and Call following the [Stateful Call Client quickstart](./?path=/docs/stateful-client-get-started-call--docs).
 
 Then subscribe to incoming call events using the Call Agent.
 
