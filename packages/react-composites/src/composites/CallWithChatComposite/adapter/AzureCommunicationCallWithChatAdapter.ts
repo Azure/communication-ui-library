@@ -144,6 +144,11 @@ class CallWithChatContext {
     this.updateClientState(mergeChatAdapterStateIntoCallWithChatAdapterState(this.state, chatAdapterState));
   }
 
+  /* @conditional-compile-remove(breakout-rooms) */
+  public unsetChatState(): void {
+    this.updateClientState({ ...this.state, chat: undefined });
+  }
+
   public updateClientStateWithCallState(callAdapterState: CallAdapterState): void {
     this.updateClientState(mergeCallAdapterStateIntoCallWithChatAdapterState(this.state, callAdapterState));
   }
@@ -210,6 +215,9 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     const targetThreadId = call.info.threadId;
     // If the chat adapter is not on the target thread then we need to switch to the breakout room chat adapter
     if (targetThreadId && this.chatAdapter && this.chatAdapter.getState().thread.threadId !== targetThreadId) {
+      // Set chat state to undefined to prevent chat from being displayed while switching to the breakout room chat
+      this.context.unsetChatState();
+
       // Check if the breakout room chat adapter has been initialized
       if (this.breakoutRoomChatAdapter) {
         // If the breakout room chat adapter is not set on the target thread then unsubscribe, dispose, and
@@ -227,8 +235,9 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
       }
 
       // Wait for the user to be added to the chat thread of the breakout room to avoid error of being "no longer
-      // in the chat thread." Check 20 times every 500ms. Chat acess will be restricted for a few seconds after
-      // the users join the breakout room. Access to the chat thread of the breakout room is also delayed in Teams.
+      // in the chat thread." Check up to 20 times every 500ms and then continue. Chat acess will be restricted for
+      // a few seconds after the users join the breakout room. Access to the chat thread of the breakout room is
+      // also delayed in Teams.
       await busyWait(() => {
         return !!this.breakoutRoomChatAdapter?.getState().thread.participants[
           toFlatCommunicationIdentifier(this.context.getState().userId)

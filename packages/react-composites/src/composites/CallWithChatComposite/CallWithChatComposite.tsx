@@ -583,11 +583,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
 
   const onRenderChatContent = useCallback((): JSX.Element => {
     /* @conditional-compile-remove(breakout-rooms) */
-    const chatAdapterThreadId = chatAdapter.getState().thread.threadId;
-    /* @conditional-compile-remove(breakout-rooms) */
-    const callAdapterThreadId = callAdapter.getState().call?.info?.threadId;
-    /* @conditional-compile-remove(breakout-rooms) */
-    return chatAdapterThreadId === callAdapterThreadId ? (
+    return callWithChatAdapter.getState().chat?.threadId ? (
       <ChatComposite
         adapter={chatAdapter}
         fluentTheme={theme}
@@ -612,7 +608,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
     props.onFetchAvatarPersonaData,
     chatCompositeOptions,
     theme,
-    /* @conditional-compile-remove(breakout-rooms) */ callAdapter
+    /* @conditional-compile-remove(breakout-rooms) */ callWithChatAdapter
   ]);
 
   let chatPaneTitle = callWithChatStrings.chatPaneTitle;
