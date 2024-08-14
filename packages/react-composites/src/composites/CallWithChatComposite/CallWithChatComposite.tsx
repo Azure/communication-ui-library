@@ -9,6 +9,8 @@ import { CallCompositePage } from '../CallComposite';
 import { CallSurvey } from '@azure/communication-calling';
 import { CallState } from '@azure/communication-calling';
 import { callCompositeContainerStyles, compositeOuterContainerStyles } from './styles/CallWithChatCompositeStyles';
+/* @conditional-compile-remove(breakout-rooms) */
+import { chatSpinnerContainerStyles } from './styles/CallWithChatCompositeStyles';
 import { CallWithChatAdapter } from './adapter/CallWithChatAdapter';
 import { CallWithChatBackedCallAdapter } from './adapter/CallWithChatBackedCallAdapter';
 import { CallWithChatBackedChatAdapter } from './adapter/CallWithChatBackedChatAdapter';
@@ -593,15 +595,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
         onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
       />
     ) : (
-      <Stack
-        className={mergeStyles({
-          width: '100%',
-          height: '100%',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center'
-        })}
-      >
+      <Stack styles={chatSpinnerContainerStyles}>
         <Spinner size={SpinnerSize.large} />
       </Stack>
     );
