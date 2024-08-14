@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 import { concatStyleSets } from '@fluentui/react';
+/* @conditional-compile-remove(breakout-rooms) */
+import { IContextualMenuProps } from '@fluentui/react';
 import { ControlBarButtonStyles, EndCallButton } from '@internal/react-components';
 import React, { useMemo } from 'react';
 /* @conditional-compile-remove(end-call-options) */
@@ -22,6 +24,8 @@ export const EndCall = (props: {
   /* @conditional-compile-remove(end-call-options) */
   enableEndCallMenu?: boolean;
   disableEndCallModal?: boolean;
+  /* @conditional-compile-remove(breakout-rooms) */
+  returnFromBreakoutRoom?: () => Promise<void>;
 }): JSX.Element => {
   const compactMode = props.displayType === 'compact';
   const hangUpButtonProps = usePropsFor(EndCallButton);
@@ -103,6 +107,30 @@ export const EndCall = (props: {
       ),
     [compactMode, props.styles]
   );
+
+  /* @conditional-compile-remove(breakout-rooms) */
+  const enableBreakoutRoomMenu = !!props.returnFromBreakoutRoom;
+  /* @conditional-compile-remove(breakout-rooms) */
+  const breakoutRoomMenuProps: IContextualMenuProps = {
+    items: [
+      {
+        key: 'returnToMainMeeting',
+        text: localeStrings.call.returnFromBreakoutRoomButtonLabel,
+        title: localeStrings.call.returnFromBreakoutRoomButtonLabel,
+        onClick: () => {
+          props.returnFromBreakoutRoom?.();
+        }
+      },
+      {
+        key: 'leaveRoomAndMainMeeting',
+        text: localeStrings.call.leaveBreakoutRoomAndMeetingButtonLabel,
+        title: localeStrings.call.leaveBreakoutRoomAndMeetingButtonLabel,
+        onClick: () => onHangUp()
+      }
+    ],
+    styles: props.styles
+  };
+
   return (
     <>
       {
@@ -125,6 +153,8 @@ export const EndCall = (props: {
         showLabel={!compactMode}
         /* @conditional-compile-remove(end-call-options) */
         enableEndCallMenu={props.enableEndCallMenu ?? false}
+        /* @conditional-compile-remove(breakout-rooms) */
+        menuProps={enableBreakoutRoomMenu ? breakoutRoomMenuProps : undefined}
       />
     </>
   );

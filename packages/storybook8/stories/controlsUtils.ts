@@ -572,6 +572,10 @@ export const defaultCallWithChatCompositeHiddenControls = {
   joinInvitationURL: hiddenControl,
   rtl: hiddenControl,
   options: hiddenControl,
+  locale: hiddenControl,
+  icons: hiddenControl,
+  onFetchAvatarPersonaData: hiddenControl,
+  onFetchParticipantMenuItems: hiddenControl,
   formFactor: hiddenControl // formFactor is hidden by default and compositeFormFactor is used as a prop instead to workaround a bug where formFactor is not put in the correct order when the controls are generated
 };
 

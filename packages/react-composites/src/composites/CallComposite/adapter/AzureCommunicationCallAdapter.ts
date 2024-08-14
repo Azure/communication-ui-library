@@ -1068,8 +1068,12 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     });
     // If a main meeting call exists then process that call and resume
     if (mainMeetingCall) {
+      const breakoutRoomCall = this.call;
       this.processNewCall(mainMeetingCall);
       await this.resumeCall();
+      if (breakoutRoomCall?.state === 'Connected') {
+        breakoutRoomCall.hangUp();
+      }
     }
   }
 
