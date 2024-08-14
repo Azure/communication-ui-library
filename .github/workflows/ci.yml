@@ -735,11 +735,13 @@ jobs:
         id: setup-chrome
         with:
           chrome-version: 120.0.6099
-      - name: Build lib
-        run: rush build -t @azure/communication-react
+        - name: Build test
+        run: |
+          cd packages/acs-ui-common
+          rushx build
       - name: Build test
         run: |
-          cd samples/StaticHtmlComposites
+          cd packages/calling-stateful-client
           rushx build
       - name: Build
         run: rush build -t sample-static-html-composites
