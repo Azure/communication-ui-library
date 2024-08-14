@@ -1358,11 +1358,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     if (this.call?.id === undefined) {
       return;
     }
-    if (
-      breakoutRoom.state === 'closed' &&
-      this.call?.id &&
-      this.callClient.getState().calls[this.call?.id].state === 'Disconnected'
-    ) {
+    if (breakoutRoom.state === 'closed' && this.callClient.getState().calls[this.call.id].state === 'Disconnected') {
       this.returnFromBreakoutRoom();
     }
   }

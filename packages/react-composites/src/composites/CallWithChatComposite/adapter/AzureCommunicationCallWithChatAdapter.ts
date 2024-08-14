@@ -196,6 +196,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
         await this.breakoutRoomJoined(eventData.data);
       } else if (eventData.type === 'assignedBreakoutRooms') {
         if (eventData.data.state === 'closed') {
+          // If assigned breakout room is closed, dispose the breakout room chat adapter
           this.disposeChatAdapter();
           this.returnFromBreakoutRoom();
         }
@@ -209,10 +210,10 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     const targetThreadId = call.info.threadId;
     // If the chat adapter is not on the target thread then we need to switch to the breakout room chat adapter
     if (targetThreadId && this.chatAdapter && this.chatAdapter.getState().thread.threadId !== targetThreadId) {
-      // Check if the breakout room chat adapter is initialized
+      // Check if the breakout room chat adapter has been initialized
       if (this.breakoutRoomChatAdapter) {
-        // If the breakout room chat adapter is initialized but not set on the target thread then unsubscribe
-        // and dispose it
+        // If the breakout room chat adapter is not set on the target thread then unsubscribe, dispose, and
+        // reinitialize the chat adapter for the target thread
         if (this.breakoutRoomChatAdapter.getState().thread.threadId !== targetThreadId) {
           this.breakoutRoomChatAdapter.offStateChange(this.onChatStateChange);
           this.breakoutRoomChatAdapter.dispose();
@@ -224,12 +225,16 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
         const newBreakoutRoomChatAdapter = await this.createNewChatAdapterForThread(targetThreadId);
         this.breakoutRoomChatAdapter = newBreakoutRoomChatAdapter;
       }
-      // Wait for the user to be added to the target thread of the breakout room chat adapter
+
+      // Wait for the user to be added to the chat thread of the breakout room to avoid error of being "no longer
+      // in the chat thread." Check 20 times every 500ms. Chat acess will be restricted for a few seconds after
+      // the users join the breakout room. Access to the chat thread of the breakout room is also delayed in Teams.
       await busyWait(() => {
         return !!this.breakoutRoomChatAdapter?.getState().thread.participants[
           toFlatCommunicationIdentifier(this.context.getState().userId)
         ];
       }, 20);
+
       // Unsubscribe the current chat adapter before switching to the breakout room chat adapter
       this.chatAdapter?.offStateChange(this.onChatStateChange);
       this.updateChatAdapter(this.breakoutRoomChatAdapter);
@@ -263,7 +268,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     if (this.createChatAdapterCallback) {
       return this.createChatAdapterCallback(threadId);
     }
-    throw new Error('Unable to create chat adapter for thread');
+    throw new Error('Unable to create chat adapter for thread because createChatAdapterCallback is not set');
   }
 
   private updateChatAdapter(chatAdapter: ChatAdapter): void {
