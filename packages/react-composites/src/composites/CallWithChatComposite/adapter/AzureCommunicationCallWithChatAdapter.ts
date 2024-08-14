@@ -201,8 +201,6 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
         await this.breakoutRoomJoined(eventData.data);
       } else if (eventData.type === 'assignedBreakoutRooms') {
         if (eventData.data.state === 'closed') {
-          // If assigned breakout room is closed, dispose the breakout room chat adapter
-          this.disposeChatAdapter();
           this.returnFromBreakoutRoom();
         }
       }
@@ -244,17 +242,8 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
         ];
       }, 20);
 
-      // Unsubscribe the current chat adapter before switching to the breakout room chat adapter
-      this.chatAdapter?.offStateChange(this.onChatStateChange);
       this.updateChatAdapter(this.breakoutRoomChatAdapter);
     }
-  }
-
-  /* @conditional-compile-remove(breakout-rooms) */
-  private disposeChatAdapter(): void {
-    this.chatAdapter?.offStateChange(this.onChatStateChange);
-    this.chatAdapter?.dispose();
-    this.chatAdapter = undefined;
   }
 
   public setChatAdapterPromise(chatAdapter: Promise<ChatAdapter>): void {
@@ -281,6 +270,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   }
 
   private updateChatAdapter(chatAdapter: ChatAdapter): void {
+    this.chatAdapter?.offStateChange(this.onChatStateChange);
     this.chatAdapter = chatAdapter;
     this.chatAdapter.onStateChange(this.onChatStateChange);
     this.context.updateClientStateWithChatState(chatAdapter.getState());
@@ -667,15 +657,12 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
 
   /* @conditional-compile-remove(breakout-rooms) */
   public async returnFromBreakoutRoom(): Promise<void> {
-    const originalCallThreadId = this.callAdapter.getState().call?.info?.threadId;
-    if (originalCallThreadId) {
-      if (this.originCallChatAdapter) {
-        this.chatAdapter?.offStateChange(this.onChatStateChange);
-        this.updateChatAdapter(this.originCallChatAdapter);
-      }
-
-      await this.callAdapter.returnFromBreakoutRoom();
+    if (this.originCallChatAdapter) {
+      this.breakoutRoomChatAdapter?.dispose();
+      this.updateChatAdapter(this.originCallChatAdapter);
     }
+
+    await this.callAdapter.returnFromBreakoutRoom();
   }
 
   on(event: 'callParticipantsJoined', listener: ParticipantsJoinedListener): void;
