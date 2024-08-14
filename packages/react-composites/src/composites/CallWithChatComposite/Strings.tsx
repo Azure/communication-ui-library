@@ -109,6 +109,7 @@ export interface CallWithChatCompositeStrings {
    * Side pane Chat screen title.
    */
   chatPaneTitle: string;
+  /* @conditional-compile-remove(breakout-rooms) */
   /**
    * Side pane Chat screen title in a breakout room.
    */
