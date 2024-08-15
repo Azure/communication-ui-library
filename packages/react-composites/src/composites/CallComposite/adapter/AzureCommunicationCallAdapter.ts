@@ -1378,6 +1378,31 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     if (this.call?.id !== call.id) {
       this.processNewCall(call);
     }
+    // Hang up other breakout room calls in case we are joining a new breakout room while already in one
+    this.hangupOtherBreakoutRoomCalls(call);
+  }
+
+  /* @conditional-compile-remove(breakout-rooms) */
+  private hangupOtherBreakoutRoomCalls(breakoutRoomCall: Call | TeamsCall): void {
+    // Get origin call id of breakout room call
+    const breakoutRoomCallState = this.callClient.getState().calls[breakoutRoomCall.id];
+    const originCallId = breakoutRoomCallState.breakoutRooms?.breakoutRoomOriginCallId;
+
+    // Get other breakout room calls with the same origin call
+    const otherBreakoutRoomCallStates = Object.values(this.callClient.getState().calls).filter((callState) => {
+      return callState.breakoutRooms?.breakoutRoomOriginCallId === originCallId;
+    });
+
+    // Hang up other breakout room calls
+    for (const breakoutRoom of otherBreakoutRoomCallStates) {
+      if (breakoutRoom.id !== breakoutRoomCall.id) {
+        this.callAgent.calls
+          .find((callAgentCall) => {
+            return callAgentCall.id === breakoutRoom.id;
+          })
+          ?.hangUp();
+      }
+    }
   }
 
   private callIdChanged(): void {
