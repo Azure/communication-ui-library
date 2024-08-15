@@ -1,16 +1,16 @@
 import { Canvas, Meta, ArgTypes } from '@storybook/blocks';
-import { _CaptionsBanner } from '@internal/react-components';
-import * as CaptionsBannerStories from './index.stories';
-import CaptionsBannerExampleText from '!!raw-loader!./snippets/CaptionsBanner.snippet.tsx';
+import { _CaptionsSettingsModal } from '@internal/react-components';
+import * as CaptionsSettingsModalStories from './index.stories';
+import CaptionsSettingsModalExampleText from '!!raw-loader!./snippets/CaptionsSettingsModal.snippet.tsx';
 
-<Meta of={CaptionsBannerStories} />
+<Meta of={CaptionsSettingsModalStories} />
 
 # CaptionsBanner
 
 A component for displaying a CaptionsBanner with user icon, displayName and captions text.
 
-<Canvas of={CaptionsBannerStories.CaptionsBanner} source={{ code: CaptionsBannerExampleText }} />
+<Canvas of={CaptionsSettingsModalStories.CaptionsSettingsModal} source={{ code: CaptionsSettingsModalExampleText }} />
 
 ## Props
 
-<ArgTypes of={_CaptionsBanner} />
+<ArgTypes of={_CaptionsSettingsModal} />

@@ -9,7 +9,7 @@ import {
 } from '@internal/react-components';
 import React, { useState } from 'react';
 
-const CaptionsSettingsModalStory = (args: any): JSX.Element => {
+export const CaptionsSettingsModalStory = (args: any): JSX.Element => {
   const supportedSpokenLanguages: Array<keyof SpokenLanguageStrings> = [
     'ar-ae',
     'ar-sa',
@@ -82,7 +82,6 @@ const CaptionsSettingsModalStory = (args: any): JSX.Element => {
 
   return (
     <Stack>
-      {`Captions Settings Modal`}
       <_CaptionsSettingsModal
         showModal={showModal}
         isCaptionsFeatureActive={args.isCaptionsFeatureActive}
@@ -99,7 +98,3 @@ const CaptionsSettingsModalStory = (args: any): JSX.Element => {
     </Stack>
   );
 };
-
-// This must be the only named export from this module, and must be named to match the storybook path suffix.
-// This ensures that storybook hoists the story instead of creating a folder with a single entry.
-export const CaptionsSettingsModal = CaptionsSettingsModalStory.bind({});
