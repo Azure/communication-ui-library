@@ -870,7 +870,9 @@ export interface CallCompositeStrings {
     invalidMeetingIdentifier: string;
     inviteToRoomRemovedDetails?: string;
     inviteToRoomRemovedTitle: string;
+    joinBreakoutRoomButtonLabel: string;
     learnMore: string;
+    leaveBreakoutRoomAndMeetingButtonLabel: string;
     leaveConfirmButtonLabel?: string;
     leaveConfirmDialogContent?: string;
     leaveConfirmDialogTitle?: string;
@@ -942,6 +944,7 @@ export interface CallCompositeStrings {
     resumeCallButtonLabel: string;
     resumingCallButtonAriaLabel: string;
     resumingCallButtonLabel: string;
+    returnFromBreakoutRoomButtonLabel: string;
     returnToCallButtonAriaDescription?: string;
     returnToCallButtonAriaLabel?: string;
     roomNotFoundDetails?: string;

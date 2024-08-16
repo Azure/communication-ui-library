@@ -347,7 +347,10 @@
     "muteAllDialogTitle": "Mute everyone?",
     "muteAllDialogContent": "This will mute everyone in the meeting but you.",
     "muteAllConfirmButtonLabel": "Mute all",
-    "muteAllCancelButtonLabel": "Cancel"
+    "muteAllCancelButtonLabel": "Cancel",
+    "joinBreakoutRoomButtonLabel": "Join breakout room",
+    "returnFromBreakoutRoomButtonLabel": "Leave room",
+    "leaveBreakoutRoomAndMeetingButtonLabel": "Leave meeting"
   },
   "chat": {
     "chatListHeader": "In this chat",
