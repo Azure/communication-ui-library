@@ -289,6 +289,8 @@ const createDefaultCallAdapterState = (role?: ParticipantRole): CallAdapterState
     isTeamsCall: false,
     isTeamsMeeting: false,
     isRoomsCall: false,
-    latestErrors: {}
+    latestErrors: {},
+    /* @conditional-compile-remove(breakout-rooms) */
+    latestNotifications: {}
   };
 };
