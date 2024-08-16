@@ -17,7 +17,7 @@ export const IncomingCallNotificationStylingExampleDocsOnly = {
 };
 
 export default {
-  title: 'Components/Internal/IncomingCallNotification',
+  title: 'Components/Internal/Incoming Call Notification',
   component: IncomingCallNotification,
   parameters: {},
   args: {}
