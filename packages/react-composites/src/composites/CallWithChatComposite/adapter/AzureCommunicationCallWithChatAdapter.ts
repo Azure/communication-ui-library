@@ -205,6 +205,16 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
         }
       }
     });
+    /* @conditional-compile-remove(breakout-rooms) */
+    this.callAdapter.on('callEnded', () => {
+      const originCallId = this.context.getState().call?.breakoutRooms?.breakoutRoomOriginCallId;
+
+      // If the call ended is a breakout room call, return to the origin call chat adapter
+      if (originCallId && this.originCallChatAdapter) {
+        this.breakoutRoomChatAdapter?.dispose();
+        this.updateChatAdapter(this.originCallChatAdapter);
+      }
+    });
     this.onCallStateChange = onCallStateChange;
   }
 
