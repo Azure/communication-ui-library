@@ -211,38 +211,59 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   /* @conditional-compile-remove(breakout-rooms) */
   private async breakoutRoomJoined(call: Call | TeamsCall): Promise<void> {
     const targetThreadId = call.info.threadId;
+
     // If the chat adapter is not on the target thread then we need to switch to the breakout room chat adapter
     if (targetThreadId && this.chatAdapter && this.chatAdapter.getState().thread.threadId !== targetThreadId) {
-      // Set chat state to undefined to prevent chat from being displayed while switching to the breakout room chat
+      // Set chat state to undefined to prevent showing chat thread of origin call
       this.context.unsetChatState();
 
       // Check if the breakout room chat adapter has been initialized
-      if (this.breakoutRoomChatAdapter) {
-        // If the breakout room chat adapter is not set on the target thread then unsubscribe, dispose, and
-        // reinitialize the chat adapter for the target thread
-        if (this.breakoutRoomChatAdapter.getState().thread.threadId !== targetThreadId) {
-          this.breakoutRoomChatAdapter.offStateChange(this.onChatStateChange);
-          this.breakoutRoomChatAdapter.dispose();
-          const newBreakoutRoomChatAdapter = await this.createNewChatAdapterForThread(targetThreadId);
-          this.breakoutRoomChatAdapter = newBreakoutRoomChatAdapter;
-        }
-      } else {
-        // Initiliaze the breakout room chat adapter for the target thread
-        const newBreakoutRoomChatAdapter = await this.createNewChatAdapterForThread(targetThreadId);
-        this.breakoutRoomChatAdapter = newBreakoutRoomChatAdapter;
-      }
+      this.breakoutRoomChatAdapter = await this.setBreakoutRoomChatAdapterToThread(targetThreadId);
 
-      // Wait for the user to be added to the chat thread of the breakout room to avoid error of being "no longer
-      // in the chat thread." Check up to 20 times every 500ms and then continue. Chat acess will be restricted for
-      // a few seconds after the users join the breakout room. Access to the chat thread of the breakout room is
-      // also delayed in Teams.
+      // Wait for the user to be added to the thread of chat adapter before updating the current chat adapter
+      // to avoid chat errors of not having access to the chat thread. This delayed access to the chat thread
+      // is also seen in Teams
+      // Check up to 20 times every 500ms and then continue.
       await busyWait(() => {
-        return !!this.breakoutRoomChatAdapter?.getState().thread.participants[
-          toFlatCommunicationIdentifier(this.context.getState().userId)
-        ];
+        // If the call adapter's call id has been changed, then stop waiting and don't update the chat adapter
+        if (this.context.getState().call?.id !== call.id) {
+          return true;
+        }
+
+        const userAddedToThread =
+          !!this.breakoutRoomChatAdapter?.getState().thread.participants[
+            toFlatCommunicationIdentifier(this.context.getState().userId)
+          ];
+        return userAddedToThread;
       }, 20);
 
+      // If the call adapter's call has been changed while for waiting for breakout room chat adapter to be ready
+      // then don't update the chat adapter
+      if (this.context.getState().call?.id !== call.id) {
+        return;
+      }
+
       this.updateChatAdapter(this.breakoutRoomChatAdapter);
+    }
+  }
+
+  /* @conditional-compile-remove(breakout-rooms) */
+  private async setBreakoutRoomChatAdapterToThread(targetThreadId: string): Promise<ChatAdapter> {
+    if (this.breakoutRoomChatAdapter) {
+      // If the breakout room chat adapter is not set on the target thread then unsubscribe, dispose, and
+      // reinitialize the chat adapter for the target thread
+      if (this.breakoutRoomChatAdapter.getState().thread.threadId !== targetThreadId) {
+        this.breakoutRoomChatAdapter.offStateChange(this.onChatStateChange);
+        this.breakoutRoomChatAdapter.dispose();
+        const newBreakoutRoomChatAdapter = await this.createNewChatAdapterForThread(targetThreadId);
+        return newBreakoutRoomChatAdapter;
+      } else {
+        return this.breakoutRoomChatAdapter;
+      }
+    } else {
+      // Initiliaze the breakout room chat adapter for the target thread
+      const newBreakoutRoomChatAdapter = await this.createNewChatAdapterForThread(targetThreadId);
+      return newBreakoutRoomChatAdapter;
     }
   }
 
