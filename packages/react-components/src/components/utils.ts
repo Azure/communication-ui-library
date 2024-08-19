@@ -357,7 +357,17 @@ export const customNotificationIconName: Partial<{ [key in NotificationType]: st
   /* @conditional-compile-remove(notifications) */
   recordingStoppedStillTranscribing: 'NotificationBarRecording',
   /* @conditional-compile-remove(notifications) */
-  transcriptionStoppedStillRecording: 'NotificationBarRecording'
+  transcriptionStoppedStillRecording: 'NotificationBarRecording',
+  /* @conditional-compile-remove(breakout-rooms) */
+  assignedBreakoutRoomOpened: 'NotificationBarBreakoutRoomOpened',
+  /* @conditional-compile-remove(breakout-rooms) */
+  assignedBreakoutRoomOpenedPromptJoin: 'NotificationBarBreakoutRoomPromptJoin',
+  /* @conditional-compile-remove(breakout-rooms) */
+  assignedBreakoutRoomChanged: 'NotificationBarBreakoutRoomChanged',
+  /* @conditional-compile-remove(breakout-rooms) */
+  assignedBreakoutRoomClosingSoon: 'NotificationBarBreakoutRoom',
+  /* @conditional-compile-remove(breakout-rooms) */
+  assignedBreakoutRoomClosed: 'NotificationBarBreakoutRoomClosed'
 };
 
 /**
