@@ -18,7 +18,7 @@ import { CallIdRef } from './CallIdRef';
 import { NotificationTarget } from './CallClientState';
 
 /* @conditional-compile-remove(breakout-rooms) */
-const MILLSECONDS_BEFORE_CLOSING_TO_SHOW_NOTIFICATION = 30000;
+const MILLSECONDS_BEFORE_END_TIME_TO_SHOW_CLOSING_NOTIFICATION = 30000;
 
 /* @conditional-compile-remove(breakout-rooms) */
 /**
@@ -41,6 +41,7 @@ export class BreakoutRoomsSubscriber {
   public unsubscribe = (): void => {
     this._breakoutRoomsFeature.off('breakoutRoomsUpdated', this.onBreakoutRoomsUpdated);
     this._context.deleteLatestNotification('assignedBreakoutRoomJoined');
+    this._context.deleteLatestNotification('assignedBreakoutRoomClosingSoon');
     clearTimeout(this._assignedBreakoutRoomClosingSoonTimeoutId);
   };
 
@@ -114,12 +115,15 @@ export class BreakoutRoomsSubscriber {
 
   private onBreakoutRoomSettingsUpdated = (breakoutRoomSettings: BreakoutRoomsSettings): void => {
     // If the roomEndTime is available, set a timeout to show a notification before the room closes.
-    if (typeof breakoutRoomSettings.roomEndTime === 'string') {
+    if (
+      typeof breakoutRoomSettings.roomEndTime === 'string' &&
+      !Number.isNaN(Date.parse(breakoutRoomSettings.roomEndTime))
+    ) {
       const now = new Date(Date.now());
       const roomEndTimeMs = new Date(breakoutRoomSettings.roomEndTime).getTime();
       const timeBeforeClosingMs = roomEndTimeMs - now.getTime();
       const timeBeforeSendingClosingSoonNotificationMs = Math.max(
-        timeBeforeClosingMs - MILLSECONDS_BEFORE_CLOSING_TO_SHOW_NOTIFICATION,
+        timeBeforeClosingMs - MILLSECONDS_BEFORE_END_TIME_TO_SHOW_CLOSING_NOTIFICATION,
         0
       );
       if (!this._assignedBreakoutRoomClosingSoonTimeoutId) {
