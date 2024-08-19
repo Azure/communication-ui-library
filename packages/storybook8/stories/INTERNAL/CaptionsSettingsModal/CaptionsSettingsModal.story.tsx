@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { Stack } from '@fluentui/react';
+import { mergeStyles, PrimaryButton, Stack } from '@fluentui/react';
 import {
   _CaptionsSettingsModal,
   _CaptionsSettingsModalStrings,
@@ -55,7 +55,7 @@ const CaptionsSettingsModalStory = (args: any): JSX.Element => {
   ];
 
   const currentSpokenLanguage = 'en-us';
-  const [showModal, setShowModal] = useState<boolean>(true);
+  const [showModal, setShowModal] = useState<boolean>(false);
   const onDismissCaptionsSettings = (): void => {
     setShowModal(false);
   };
@@ -82,7 +82,14 @@ const CaptionsSettingsModalStory = (args: any): JSX.Element => {
 
   return (
     <Stack>
-      {`Captions Settings Modal`}
+      <PrimaryButton
+        className={mergeStyles({ maxWidth: '13.5rem' })}
+        onClick={() => {
+          setShowModal(true);
+        }}
+      >
+        {'Captions Settings Modal'}
+      </PrimaryButton>
       <_CaptionsSettingsModal
         showModal={showModal}
         isCaptionsFeatureActive={args.isCaptionsFeatureActive}
