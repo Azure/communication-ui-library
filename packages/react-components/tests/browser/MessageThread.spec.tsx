@@ -10,7 +10,7 @@ import { ChatMessage, Message, MessageThread } from '../../src';
 betaTest.describe('MessageThread focusing', () => {
   betaTest.skip(({ isBetaBuild }) => !isBetaBuild, 'The tests should be run for beta flavor only');
 
-  betaTest.only(
+  betaTest(
     'MessageThread keyboard press tab and down arrow key should go to correct message',
     async ({ mount, page }) => {
       const component = await mount(<MessageThread userId={'1'} messages={getMessages()} />);
