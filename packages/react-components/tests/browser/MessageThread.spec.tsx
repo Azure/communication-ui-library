@@ -10,24 +10,27 @@ import { ChatMessage, Message, MessageThread } from '../../src';
 betaTest.describe('MessageThread focusing', () => {
   betaTest.skip(({ isBetaBuild }) => !isBetaBuild, 'The tests should be run for beta flavor only');
 
-  betaTest.only('MessageThread keyboard press tab should focus on first message', async ({ mount, page }) => {
-    const component = await mount(<MessageThread userId={'1'} messages={getMessages()} />);
-    let index = 0;
-    let bubbleHTML = '';
-    const expectedMessage = 'Second';
-    await component.evaluate(() => document.fonts.ready);
-    await page.keyboard.press('Tab');
-    await page.keyboard.press('ArrowDown').then(async () => {
-      index++;
-      const message = getMessages()[index] as ChatMessage;
-      const author = message.senderDisplayName;
-      const messageContent = message.content;
-      bubbleHTML = await page.getByText(`${author}11:50 AM${messageContent}`).innerHTML();
-    });
+  betaTest.only(
+    'MessageThread keyboard press tab and down arrow key should go to correct message',
+    async ({ mount, page }) => {
+      const component = await mount(<MessageThread userId={'1'} messages={getMessages()} />);
+      let index = 0;
+      let bubbleHTML = '';
+      const expectedMessage = 'Second';
+      await component.evaluate(() => document.fonts.ready);
+      await page.keyboard.press('Tab');
+      await page.keyboard.press('ArrowDown').then(async () => {
+        index++;
+        const message = getMessages()[index] as ChatMessage;
+        const author = message.senderDisplayName;
+        const messageContent = message.content;
+        bubbleHTML = await page.getByText(`${author}11:50 AM${messageContent}`).innerHTML();
+      });
 
-    await expect(bubbleHTML.includes(expectedMessage)).toBeTruthy();
-    await expect(index).toEqual(1);
-  });
+      await expect(bubbleHTML.includes(expectedMessage)).toBeTruthy();
+      await expect(index).toEqual(1);
+    }
+  );
 
   const getMessages = (): Message[] => {
     const messages: Message[] = [
