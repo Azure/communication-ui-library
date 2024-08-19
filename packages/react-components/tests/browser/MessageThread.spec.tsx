@@ -3,8 +3,82 @@
 
 import React from 'react';
 import { expect } from '@playwright/experimental-ct-react';
+
 import { test as betaTest } from './FlavoredBaseTest';
-import { Message, MessageThread } from '../../src';
+import { ChatMessage, Message, MessageThread } from '../../src';
+
+betaTest.describe('MessageThread focusing', () => {
+  betaTest.skip(({ isBetaBuild }) => !isBetaBuild, 'The tests should be run for beta flavor only');
+
+  betaTest.only('MessageThread keyboard press tab should focus on first message', async ({ mount, page }) => {
+    const component = await mount(<MessageThread userId={'1'} messages={getMessages()} />);
+    let index = 0;
+    let bubbleHTML = '';
+    const expectedMessage = 'Second';
+    await component.evaluate(() => document.fonts.ready);
+    await page.keyboard.press('Tab');
+    await page.keyboard.press('ArrowDown').then(async () => {
+      index++;
+      const message = getMessages()[index] as ChatMessage;
+      const author = message.senderDisplayName;
+      const messageContent = message.content;
+      bubbleHTML = await page.getByText(`${author}11:50 AM${messageContent}`).innerHTML();
+    });
+
+    await expect(bubbleHTML.includes(expectedMessage)).toBeTruthy();
+    await expect(index).toEqual(1);
+  });
+
+  const getMessages = (): Message[] => {
+    const messages: Message[] = [
+      {
+        messageType: 'chat',
+        senderId: 'user1',
+        content: 'First',
+        senderDisplayName: 'Miguel Garcia',
+        messageId: Math.random().toString(),
+        createdOn: new Date('2019-04-13T00:00:00.000+08:10'),
+        mine: false,
+        attached: false,
+        contentType: 'text'
+      },
+      {
+        messageType: 'chat',
+        senderId: 'user2',
+        senderDisplayName: 'Robert Tolbert',
+        messageId: Math.random().toString(),
+        content: 'Second',
+        createdOn: new Date('2019-04-13T00:00:00.000+08:10'),
+        mine: true,
+        attached: false,
+        contentType: 'text'
+      },
+      {
+        messageType: 'chat',
+        senderId: 'user1',
+        content: 'Third',
+        senderDisplayName: 'Miguel Garcia',
+        messageId: Math.random().toString(),
+        createdOn: new Date('2019-04-13T00:00:00.000+08:10'),
+        mine: false,
+        attached: false,
+        contentType: 'text'
+      },
+      {
+        messageType: 'chat',
+        senderId: 'user2',
+        senderDisplayName: 'Robert Tolbert',
+        messageId: Math.random().toString(),
+        content: 'Fourth',
+        createdOn: new Date('2019-04-13T00:00:00.000+08:10'),
+        mine: true,
+        attached: false,
+        contentType: 'text'
+      }
+    ];
+    return messages;
+  };
+});
 
 betaTest.describe('MessageThread inline image tests', () => {
   betaTest.skip(({ isBetaBuild }) => !isBetaBuild, 'The tests should be run for beta flavor only');
