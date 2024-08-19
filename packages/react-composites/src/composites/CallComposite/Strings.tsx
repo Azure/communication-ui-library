@@ -882,4 +882,9 @@ export interface CallCompositeStrings {
    * Label for button to leave breakout room and meeting
    */
   leaveBreakoutRoomAndMeetingButtonLabel: string;
+  /* @conditional-compile-remove(breakout-rooms) */
+  /**
+   * Notification title for when a user joins a breakout room
+   */
+  assignedBreakoutRoomJoinedNotificationTitle: string;
 }

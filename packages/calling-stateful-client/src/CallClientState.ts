@@ -1052,6 +1052,7 @@ export type NotificationTarget =
   | 'assignedBreakoutRoomOpened'
   | 'assignedBreakoutRoomOpenedPromptJoin'
   | 'assignedBreakoutRoomChanged'
+  | 'assignedBreakoutRoomJoined'
   | 'assignedBreakoutRoomClosingSoon'
   | 'assignedBreakoutRoomClosed';
 

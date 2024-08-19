@@ -40,6 +40,7 @@ export class BreakoutRoomsSubscriber {
 
   public unsubscribe = (): void => {
     this._breakoutRoomsFeature.off('breakoutRoomsUpdated', this.onBreakoutRoomsUpdated);
+    this._context.deleteLatestNotification('assignedBreakoutRoomJoined');
     clearTimeout(this._assignedBreakoutRoomClosingSoonTimeoutId);
   };
 
@@ -95,6 +96,7 @@ export class BreakoutRoomsSubscriber {
       this._context.deleteLatestNotification('assignedBreakoutRoomOpened');
       this._context.deleteLatestNotification('assignedBreakoutRoomOpenedPromptJoin');
       this._context.deleteLatestNotification('assignedBreakoutRoomChanged');
+      this._context.deleteLatestNotification('assignedBreakoutRoomJoined');
       this._context.deleteLatestNotification('assignedBreakoutRoomClosingSoon');
       clearTimeout(this._assignedBreakoutRoomClosingSoonTimeoutId);
     }
@@ -107,6 +109,7 @@ export class BreakoutRoomsSubscriber {
     this._context.deleteLatestNotification('assignedBreakoutRoomOpenedPromptJoin');
     this._context.deleteLatestNotification('assignedBreakoutRoomChanged');
     this._context.deleteLatestNotification('assignedBreakoutRoomClosingSoon');
+    this._context.setLatestNotification({ target: 'assignedBreakoutRoomJoined', timestamp: new Date(Date.now()) });
   };
 
   private onBreakoutRoomSettingsUpdated = (breakoutRoomSettings: BreakoutRoomsSettings): void => {

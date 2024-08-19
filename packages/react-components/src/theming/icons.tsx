@@ -82,7 +82,7 @@ import { Important20Filled } from '@fluentui/react-icons';
 /* @conditional-compile-remove(notifications) */
 import { Record16Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(breakout-rooms) */
-import { ConferenceRoom20Regular } from '@fluentui/react-icons';
+import { ConferenceRoom16Regular, DoorArrowLeft16Regular, DoorArrowRight16Regular } from '@fluentui/react-icons';
 
 import { VideoBackgroundEffect20Filled, VideoBackgroundEffect20Regular } from '@fluentui/react-icons';
 
@@ -309,13 +309,15 @@ export const DEFAULT_COMPONENT_ICONS = {
   /* @conditional-compile-remove(notifications) */
   NotificationBarRecording: <Record16Regular />,
   /* @conditional-compile-remove(breakout-rooms) */
-  NotificationBarBreakoutRoomOpened: <></>,
+  NotificationBarBreakoutRoomOpened: <DoorArrowRight16Regular />,
   /* @conditional-compile-remove(breakout-rooms) */
-  NotificationBarBreakoutRoomPromptJoin: <ConferenceRoom20Regular />,
+  NotificationBarBreakoutRoomPromptJoin: <DoorArrowRight16Regular />,
   /* @conditional-compile-remove(breakout-rooms) */
-  NotificationBarBreakoutRoomChanged: <ConferenceRoom20Regular />,
+  NotificationBarBreakoutRoomChanged: <DoorArrowRight16Regular />,
   /* @conditional-compile-remove(breakout-rooms) */
-  NotificationBarBreakoutRoomClosingSoon: <ConferenceRoom20Regular />,
+  NotificationBarBreakoutRoomJoined: <ConferenceRoom16Regular />,
+  /* @conditional-compile-remove(breakout-rooms) */
+  NotificationBarBreakoutRoomClosingSoon: <DoorArrowLeft16Regular />,
   /* @conditional-compile-remove(breakout-rooms) */
   NotificationBarBreakoutRoomClosed: <></>,
   HorizontalGalleryLeftButton: <GalleryLeftButton />,

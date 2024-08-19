@@ -795,6 +795,7 @@ export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcon
 // @public
 export interface CallCompositeStrings {
     addSpotlightMenuLabel: string;
+    assignedBreakoutRoomJoinedNotificationTitle: string;
     blurBackgroundEffectButtonLabel?: string;
     blurBackgroundTooltip?: string;
     callRejectedMoreDetails?: string;
@@ -2688,6 +2689,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     NotificationBarBreakoutRoomOpened: React_2.JSX.Element;
     NotificationBarBreakoutRoomPromptJoin: React_2.JSX.Element;
     NotificationBarBreakoutRoomChanged: React_2.JSX.Element;
+    NotificationBarBreakoutRoomJoined: React_2.JSX.Element;
     NotificationBarBreakoutRoomClosingSoon: React_2.JSX.Element;
     NotificationBarBreakoutRoomClosed: React_2.JSX.Element;
     HorizontalGalleryLeftButton: React_2.JSX.Element;
@@ -2886,6 +2888,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     NotificationBarBreakoutRoomOpened: React_2.JSX.Element;
     NotificationBarBreakoutRoomPromptJoin: React_2.JSX.Element;
     NotificationBarBreakoutRoomChanged: React_2.JSX.Element;
+    NotificationBarBreakoutRoomJoined: React_2.JSX.Element;
     NotificationBarBreakoutRoomClosingSoon: React_2.JSX.Element;
     NotificationBarBreakoutRoomClosed: React_2.JSX.Element;
     MessageResend: React_2.JSX.Element;
@@ -3851,6 +3854,7 @@ export interface NotificationStackStrings {
     assignedBreakoutRoomChanged?: NotificationStrings;
     assignedBreakoutRoomClosed?: NotificationStrings;
     assignedBreakoutRoomClosingSoon?: NotificationStrings;
+    assignedBreakoutRoomJoined?: NotificationStrings;
     assignedBreakoutRoomOpened?: NotificationStrings;
     assignedBreakoutRoomOpenedPromptJoin?: NotificationStrings;
     callCameraAccessDenied?: NotificationStrings;
@@ -3904,7 +3908,7 @@ export interface NotificationStrings {
 }
 
 // @public (undocumented)
-export type NotificationTarget = 'assignedBreakoutRoomOpened' | 'assignedBreakoutRoomOpenedPromptJoin' | 'assignedBreakoutRoomChanged' | 'assignedBreakoutRoomClosingSoon' | 'assignedBreakoutRoomClosed';
+export type NotificationTarget = 'assignedBreakoutRoomOpened' | 'assignedBreakoutRoomOpenedPromptJoin' | 'assignedBreakoutRoomChanged' | 'assignedBreakoutRoomJoined' | 'assignedBreakoutRoomClosingSoon' | 'assignedBreakoutRoomClosed';
 
 // @public
 export type NotificationType = keyof NotificationStackStrings;
