@@ -28,7 +28,7 @@ export class BreakoutRoomsSubscriber {
   private _callIdRef: CallIdRef;
   private _context: CallContext;
   private _breakoutRoomsFeature: BreakoutRoomsCallFeature;
-  private _assignedBreakoutRoomClosingSoonTimeoutId: NodeJS.Timeout | undefined;
+  private _assignedBreakoutRoomClosingSoonTimeoutId: ReturnType<typeof setTimeout> | undefined;
 
   constructor(callIdRef: CallIdRef, context: CallContext, breakoutRoomsFeature: BreakoutRoomsCallFeature) {
     this._callIdRef = callIdRef;
