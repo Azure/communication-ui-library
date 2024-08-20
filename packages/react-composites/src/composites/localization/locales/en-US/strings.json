@@ -351,7 +351,7 @@
     "joinBreakoutRoomButtonLabel": "Join breakout room",
     "returnFromBreakoutRoomButtonLabel": "Leave room",
     "leaveBreakoutRoomAndMeetingButtonLabel": "Leave meeting",
-    "assignedBreakoutRoomJoinedNotificationTitle": "You've joined Breakout room '{roomName}'"
+    "breakoutRoomJoinedNotificationTitle": "You've joined Breakout room '{roomName}'"
   },
   "chat": {
     "chatListHeader": "In this chat",

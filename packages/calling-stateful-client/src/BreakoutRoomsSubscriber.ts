@@ -28,7 +28,7 @@ export class BreakoutRoomsSubscriber {
   private _callIdRef: CallIdRef;
   private _context: CallContext;
   private _breakoutRoomsFeature: BreakoutRoomsCallFeature;
-  private _assignedBreakoutRoomClosingSoonTimeoutId: ReturnType<typeof setTimeout> | undefined;
+  private _breakoutRoomClosingSoonTimeoutId: ReturnType<typeof setTimeout> | undefined;
 
   constructor(callIdRef: CallIdRef, context: CallContext, breakoutRoomsFeature: BreakoutRoomsCallFeature) {
     this._callIdRef = callIdRef;
@@ -41,10 +41,10 @@ export class BreakoutRoomsSubscriber {
   public unsubscribe = (): void => {
     this._breakoutRoomsFeature.off('breakoutRoomsUpdated', this.onBreakoutRoomsUpdated);
     // Clear breakout room joined notification for this call.
-    this._context.deleteLatestNotification(this._callIdRef.callId, 'assignedBreakoutRoomJoined');
+    this._context.deleteLatestNotification(this._callIdRef.callId, 'breakoutRoomJoined');
     // Clear breakout room closing soon notification for this call.
-    this._context.deleteLatestNotification(this._callIdRef.callId, 'assignedBreakoutRoomClosingSoon');
-    clearTimeout(this._assignedBreakoutRoomClosingSoonTimeoutId);
+    this._context.deleteLatestNotification(this._callIdRef.callId, 'breakoutRoomClosingSoon');
+    clearTimeout(this._breakoutRoomClosingSoonTimeoutId);
   };
 
   private subscribe(): void {
@@ -102,9 +102,9 @@ export class BreakoutRoomsSubscriber {
       this._context.deleteLatestNotification(this._callIdRef.callId, 'assignedBreakoutRoomOpened');
       this._context.deleteLatestNotification(this._callIdRef.callId, 'assignedBreakoutRoomOpenedPromptJoin');
       this._context.deleteLatestNotification(this._callIdRef.callId, 'assignedBreakoutRoomChanged');
-      this._context.deleteLatestNotification(this._callIdRef.callId, 'assignedBreakoutRoomJoined');
-      this._context.deleteLatestNotification(this._callIdRef.callId, 'assignedBreakoutRoomClosingSoon');
-      clearTimeout(this._assignedBreakoutRoomClosingSoonTimeoutId);
+      this._context.deleteLatestNotification(this._callIdRef.callId, 'breakoutRoomJoined');
+      this._context.deleteLatestNotification(this._callIdRef.callId, 'breakoutRoomClosingSoon');
+      clearTimeout(this._breakoutRoomClosingSoonTimeoutId);
     }
     this._context.setAssignedBreakoutRoom(this._callIdRef.callId, breakoutRoom);
   };
@@ -114,11 +114,11 @@ export class BreakoutRoomsSubscriber {
     this._context.deleteLatestNotification(this._callIdRef.callId, 'assignedBreakoutRoomOpened');
     this._context.deleteLatestNotification(this._callIdRef.callId, 'assignedBreakoutRoomOpenedPromptJoin');
     this._context.deleteLatestNotification(this._callIdRef.callId, 'assignedBreakoutRoomChanged');
-    this._context.deleteLatestNotification(this._callIdRef.callId, 'assignedBreakoutRoomClosingSoon');
+    this._context.deleteLatestNotification(this._callIdRef.callId, 'breakoutRoomClosingSoon');
 
-    // Send latest notification for assignedBreakoutRoomJoined on behalf of the call that was joined.
+    // Send latest notification for breakoutRoomJoined on behalf of the call that was joined.
     this._context.setLatestNotification(call.id, {
-      target: 'assignedBreakoutRoomJoined',
+      target: 'breakoutRoomJoined',
       timestamp: new Date(Date.now())
     });
 
@@ -143,11 +143,11 @@ export class BreakoutRoomsSubscriber {
         timeBeforeClosingMs - MILLSECONDS_BEFORE_END_TIME_TO_SHOW_CLOSING_NOTIFICATION,
         0
       );
-      if (!this._assignedBreakoutRoomClosingSoonTimeoutId) {
-        this._assignedBreakoutRoomClosingSoonTimeoutId = setTimeout(
+      if (!this._breakoutRoomClosingSoonTimeoutId) {
+        this._breakoutRoomClosingSoonTimeoutId = setTimeout(
           () =>
             this._context.setLatestNotification(this._callIdRef.callId, {
-              target: 'assignedBreakoutRoomClosingSoon',
+              target: 'breakoutRoomClosingSoon',
               timestamp: now
             }),
           timeBeforeSendingClosingSoonNotificationMs

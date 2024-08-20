@@ -20,12 +20,14 @@ export const useCompositeStringsForNotificationStackStrings = (locale: Composite
   const notificationStackStrings = locale.component.strings.notificationStack;
 
   if (
-    notificationStackStrings.assignedBreakoutRoomJoined &&
-    locale.strings.call.assignedBreakoutRoomJoinedNotificationTitle &&
+    notificationStackStrings.breakoutRoomJoined &&
+    locale.strings.call.breakoutRoomJoinedNotificationTitle &&
     breakoutRoomDisplayName
   ) {
-    notificationStackStrings.assignedBreakoutRoomJoined.title =
-      locale.strings.call.assignedBreakoutRoomJoinedNotificationTitle.replace('{roomName}', breakoutRoomDisplayName);
+    notificationStackStrings.breakoutRoomJoined.title = locale.strings.call.breakoutRoomJoinedNotificationTitle.replace(
+      '{roomName}',
+      breakoutRoomDisplayName
+    );
   }
 
   return notificationStackStrings;

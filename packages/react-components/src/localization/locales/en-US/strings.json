@@ -469,11 +469,11 @@
       "primaryButtonLabel": "Join room",
       "secondaryButtonLabel": "Later"
     },
-    "assignedBreakoutRoomJoined": {
+    "breakoutRoomJoined": {
       "title": "You have joined a breakout room.",
       "dismissButtonAriaLabel": "Close"
     },
-    "assignedBreakoutRoomClosingSoon": {
+    "breakoutRoomClosingSoon": {
       "title": "Room time limit about to expire.",
       "message": "This room will close in 30 seconds",
       "dismissButtonAriaLabel": "Close"

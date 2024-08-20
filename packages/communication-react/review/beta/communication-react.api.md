@@ -373,6 +373,8 @@ export interface BreakoutRoomsState {
     // (undocumented)
     assignedBreakoutRoom?: BreakoutRoom;
     // (undocumented)
+    breakoutRoomDisplayName?: string;
+    // (undocumented)
     breakoutRoomOriginCallId?: string;
     // (undocumented)
     breakoutRoomSettings?: BreakoutRoomsSettings;
@@ -795,9 +797,9 @@ export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcon
 // @public
 export interface CallCompositeStrings {
     addSpotlightMenuLabel: string;
-    assignedBreakoutRoomJoinedNotificationTitle: string;
     blurBackgroundEffectButtonLabel?: string;
     blurBackgroundTooltip?: string;
+    breakoutRoomJoinedNotificationTitle: string;
     callRejectedMoreDetails?: string;
     callRejectedTitle?: string;
     callTimeoutBotDetails?: string;
@@ -3852,11 +3854,10 @@ export type NotificationStackSelector = (state: CallClientState, props: CallingB
 // @public
 export interface NotificationStackStrings {
     assignedBreakoutRoomChanged?: NotificationStrings;
-    assignedBreakoutRoomClosed?: NotificationStrings;
-    assignedBreakoutRoomClosingSoon?: NotificationStrings;
-    assignedBreakoutRoomJoined?: NotificationStrings;
     assignedBreakoutRoomOpened?: NotificationStrings;
     assignedBreakoutRoomOpenedPromptJoin?: NotificationStrings;
+    breakoutRoomClosingSoon?: NotificationStrings;
+    breakoutRoomJoined?: NotificationStrings;
     callCameraAccessDenied?: NotificationStrings;
     callCameraAccessDeniedSafari?: NotificationStrings;
     callCameraAlreadyInUse?: NotificationStrings;
@@ -3908,7 +3909,7 @@ export interface NotificationStrings {
 }
 
 // @public (undocumented)
-export type NotificationTarget = 'assignedBreakoutRoomOpened' | 'assignedBreakoutRoomOpenedPromptJoin' | 'assignedBreakoutRoomChanged' | 'assignedBreakoutRoomJoined' | 'assignedBreakoutRoomClosingSoon' | 'assignedBreakoutRoomClosed';
+export type NotificationTarget = 'assignedBreakoutRoomOpened' | 'assignedBreakoutRoomOpenedPromptJoin' | 'assignedBreakoutRoomChanged' | 'breakoutRoomJoined' | 'breakoutRoomClosingSoon';
 
 // @public
 export type NotificationType = keyof NotificationStackStrings;

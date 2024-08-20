@@ -247,17 +247,17 @@ export const notificationStackSelector: NotificationStackSelector = createSelect
       });
     }
     /* @conditional-compile-remove(breakout-rooms) */
-    if (latestNotifications['assignedBreakoutRoomJoined']) {
+    if (latestNotifications['breakoutRoomJoined']) {
       activeNotifications.push({
-        type: 'assignedBreakoutRoomJoined',
-        timestamp: latestNotifications['assignedBreakoutRoomJoined'].timestamp
+        type: 'breakoutRoomJoined',
+        timestamp: latestNotifications['breakoutRoomJoined'].timestamp
       });
     }
     /* @conditional-compile-remove(breakout-rooms) */
-    if (latestNotifications['assignedBreakoutRoomClosingSoon']) {
+    if (latestNotifications['breakoutRoomClosingSoon']) {
       activeNotifications.push({
-        type: 'assignedBreakoutRoomClosingSoon',
-        timestamp: latestNotifications['assignedBreakoutRoomClosingSoon'].timestamp
+        type: 'breakoutRoomClosingSoon',
+        timestamp: latestNotifications['breakoutRoomClosingSoon'].timestamp
       });
     }
     return { activeErrorMessages: activeErrorMessages, activeNotifications: activeNotifications };

@@ -886,5 +886,5 @@ export interface CallCompositeStrings {
   /**
    * Notification title for when a user joins a breakout room
    */
-  assignedBreakoutRoomJoinedNotificationTitle: string;
+  breakoutRoomJoinedNotificationTitle: string;
 }
