@@ -368,7 +368,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                   <ControlBar layout={props.displayVertical ? 'vertical' : 'horizontal'} styles={centerContainerStyles}>
                     {
                       /* @conditional-compile-remove(breakout-rooms) */
-                      assignedBreakoutRoom && assignedBreakoutRoom.state === 'open' && (
+                      !props.mobileView && assignedBreakoutRoom && assignedBreakoutRoom.state === 'open' && (
                         <PrimaryButton
                           text={callStrings.joinBreakoutRoomButtonLabel}
                           onClick={async (): Promise<void> => {

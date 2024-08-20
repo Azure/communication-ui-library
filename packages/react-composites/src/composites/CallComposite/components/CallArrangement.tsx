@@ -47,6 +47,8 @@ import { callStatusSelector } from '../selectors/callStatusSelector';
 import { CallControlOptions } from '../types/CallControlOptions';
 import { PreparedMoreDrawer } from '../../common/Drawer/PreparedMoreDrawer';
 import { getIsTeamsMeeting, getRemoteParticipants } from '../selectors/baseSelectors';
+/* @conditional-compile-remove(breakout-rooms) */
+import { getBreakoutRoomSettings, getAssignedBreakoutRoom } from '../selectors/baseSelectors';
 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { getPage } from '../selectors/baseSelectors';
 import { getCallStatus, getCaptionsStatus } from '../selectors/baseSelectors';
@@ -95,6 +97,8 @@ import { useHandlers } from '../hooks/useHandlers';
 import { MoreDrawer } from '../../common/Drawer/MoreDrawer';
 /* @conditional-compile-remove(breakout-rooms) */
 import { useCompositeStringsForNotificationStackStrings } from '../hooks/useCompositeStringsForNotificationStack';
+/* @conditional-compile-remove(breakout-rooms) */
+import { Banner } from './Banner';
 
 /**
  * @private
@@ -492,6 +496,26 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   /* @conditional-compile-remove(breakout-rooms) */
   const notificationStackStrings = useCompositeStringsForNotificationStackStrings(locale);
 
+  /* @conditional-compile-remove(breakout-rooms) */
+  const assignedBreakoutRoom = useSelector(getAssignedBreakoutRoom);
+  /* @conditional-compile-remove(breakout-rooms) */
+  const breakoutRoomSettings = useSelector(getBreakoutRoomSettings);
+
+  let latestNotifications = props.latestNotifications;
+  /* @conditional-compile-remove(breakout-rooms) */
+  // Filter out breakout room notification that prompts user to join breakout room when in mobile view. We will
+  // replace it with a non-dismissible banner
+  latestNotifications = props.mobileView
+    ? (latestNotifications ?? []).filter((n) => n.type !== 'assignedBreakoutRoomOpenedPromptJoin')
+    : latestNotifications;
+
+  /* @conditional-compile-remove(breakout-rooms) */
+  const movingToBreakoutRoomAutomatically =
+    assignedBreakoutRoom?.autoMoveParticipantToBreakoutRoom &&
+    latestNotifications?.find(
+      (n) => n.type === 'assignedBreakoutRoomOpened' || n.type === 'assignedBreakoutRoomChanged'
+    );
+
   return (
     <div ref={containerRef} className={mergeStyles(containerDivStyles)} id={props.id}>
       <Stack verticalFill horizontalAlign="stretch" className={containerClassName} data-ui-id={props.dataUiId}>
@@ -587,6 +611,44 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
               <Stack.Item styles={callGalleryStyles} grow>
                 <Stack verticalFill styles={mediaGalleryContainerStyles}>
                   <Stack.Item styles={notificationsContainerStyles}>
+                    {
+                      /* @conditional-compile-remove(breakout-rooms) */ props.mobileView &&
+                        assignedBreakoutRoom &&
+                        assignedBreakoutRoom.state === 'open' &&
+                        !movingToBreakoutRoomAutomatically && (
+                          <Stack styles={bannerNotificationStyles}>
+                            <Banner
+                              strings={{
+                                title: assignedBreakoutRoom.displayName
+                                  ? locale.strings.call.joinBreakoutRoomBannerTitle.replace(
+                                      '{roomName}',
+                                      assignedBreakoutRoom.displayName
+                                    )
+                                  : locale.strings.call.joinBreakoutRoomBannerTitle,
+                                primaryButtonLabel: locale.strings.call.joinBreakoutRoomBannerButtonLabel
+                              }}
+                              onClickPrimaryButton={() => assignedBreakoutRoom.join()}
+                              iconProps={{ iconName: 'DoorArrowRight' }}
+                            />
+                          </Stack>
+                        )
+                    }
+                    {
+                      /* @conditional-compile-remove(breakout-rooms) */ props.mobileView &&
+                        breakoutRoomSettings &&
+                        !breakoutRoomSettings.disableReturnToMainMeeting && (
+                          <Stack styles={bannerNotificationStyles}>
+                            <Banner
+                              strings={{
+                                title: locale.strings.call.returnFromBreakoutRoomBannerTitle,
+                                primaryButtonLabel: locale.strings.call.returnFromBreakoutRoomBannerButtonLabel
+                              }}
+                              onClickPrimaryButton={() => adapter.returnFromBreakoutRoom()}
+                              iconProps={{ iconName: 'DoorArrowLeft' }}
+                            />
+                          </Stack>
+                        )
+                    }
                     {props.showErrorNotifications && (
                       <Stack styles={notificationStackStyles} horizontalAlign="center" verticalAlign="center">
                         <NotificationStack
@@ -595,10 +657,10 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                         />
                       </Stack>
                     )}
-                    {props.latestNotifications && (
+                    {latestNotifications && (
                       <Stack styles={notificationStackStyles} horizontalAlign="center" verticalAlign="center">
                         <NotificationStack
-                          activeNotifications={props.latestNotifications}
+                          activeNotifications={latestNotifications}
                           onDismissNotification={props.onDismissNotification}
                           /* @conditional-compile-remove(breakout-rooms) */
                           strings={notificationStackStrings}
