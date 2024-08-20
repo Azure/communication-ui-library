@@ -92,6 +92,7 @@ export class CallContext {
   private _atomicId: number;
   private _callIdHistory: CallIdHistory = new CallIdHistory();
   private _timeOutId: { [key: string]: ReturnType<typeof setTimeout> } = {};
+  /* @conditional-compile-remove(breakout-rooms) */
   private _latestCallIdsThatPushedNotifications: Partial<Record<NotificationTarget, string>> = {};
 
   constructor(
