@@ -132,6 +132,8 @@ export interface VideoGalleryStrings {
   /* @conditional-compile-remove(soft-mute) */
   /** Menu text shown in Video Tile contextual menu to mute a remote participant */
   muteParticipantMenuItemLabel: string;
+  /** Text shown when waiting for others to join the call */
+  waitingScreenText: string;
 }
 
 /**
@@ -523,6 +525,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           drawerMenuHostId={drawerMenuHostId}
           strings={strings}
           reactionResources={reactionResources}
+          participantsCount={remoteParticipants.length + 1}
         />
       </Stack>
     );
@@ -551,7 +554,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     strings,
     drawerMenuHostId,
     reactionResources,
-    videoTilesOptions
+    videoTilesOptions,
+    remoteParticipants.length
   ]);
 
   const onPinParticipant = useCallback(

@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { mergeStyles, Stack } from '@fluentui/react';
+import { IStyle, ITheme, mergeStyles, Stack, Text } from '@fluentui/react';
 import { concatStyleSets, IContextualMenuProps, Layer } from '@fluentui/react';
 import { _formatString } from '@internal/acs-ui-common';
 import React, { useMemo } from 'react';
@@ -23,6 +23,8 @@ import { useVideoTileContextualMenuProps } from './VideoGallery/useVideoTileCont
 import { VideoGalleryStrings } from './VideoGallery';
 import { _DrawerMenu, _DrawerMenuItemProps } from './Drawer';
 import { drawerMenuWrapperStyles } from './VideoGallery/styles/RemoteVideoTile.styles';
+import { videoContainerStyles, waitingScreenIconStyle, waitingScreenTextStyle } from './styles/VideoTile.styles';
+
 /**
  * A memoized version of VideoTile for rendering local participant.
  *
@@ -60,6 +62,7 @@ export const _LocalVideoTile = React.memo(
     drawerMenuHostId?: string;
     strings?: VideoGalleryStrings;
     reactionResources?: ReactionResources;
+    participantsCount?: number;
   }) => {
     const {
       isAvailable,
@@ -192,10 +195,35 @@ export const _LocalVideoTile = React.memo(
       showCameraSwitcherInLocalPreview
     ]);
 
-    const reactionOverlay =
-      reactionResources !== undefined ? (
-        <MeetingReactionOverlay overlayMode="grid-tiles" reaction={reaction} reactionResources={reactionResources} />
-      ) : undefined;
+    const videoTileOverlay = useMemo(() => {
+      const reactionOverlay =
+        reactionResources !== undefined ? (
+          <MeetingReactionOverlay overlayMode="grid-tiles" reaction={reaction} reactionResources={reactionResources} />
+        ) : undefined;
+      // If there are only one particiapnt in the call, show the waiting for others to join message
+      if (props.participantsCount === 1) {
+        return (
+          <>
+            {reactionOverlay}
+            <Stack
+              className={mergeStyles(videoContainerStyles, {
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                backgroundColor: 'rgba(0, 0, 0, 0.6)'
+              })}
+            >
+              <p className={mergeStyles(waitingScreenIconStyle())}>&#9749;</p>
+              <Text className={mergeStyles(waitingScreenTextStyle(theme))} aria-live={'polite'}>
+                {strings?.waitingScreenText}
+              </Text>
+            </Stack>
+          </>
+        );
+      } else {
+        return reactionOverlay;
+      }
+    }, [props.participantsCount, reaction, reactionResources, theme, strings]);
 
     return (
       <Stack
@@ -223,7 +251,7 @@ export const _LocalVideoTile = React.memo(
               convertContextualMenuItemsToDrawerMenuItemProps(contextualMenuProps, () => setDrawerMenuItemProps([]))
             )
           }
-          overlay={reactionOverlay}
+          overlay={videoTileOverlay}
         >
           {drawerMenuItemProps.length > 0 && (
             <Layer hostId={props.drawerMenuHostId}>

@@ -212,3 +212,23 @@ export const reactionRenderingStyle = (args: {
     transformOrigin: 'top left'
   });
 };
+
+/**
+ * @private
+ */
+export const waitingScreenTextStyle = (theme: ITheme): IStyle => {
+  return {
+    color: theme.palette.white,
+    fontSize: `1.25rem`
+  };
+};
+
+/**
+ * @private
+ */
+export const waitingScreenIconStyle = (): IStyle => {
+  return {
+    fontSize: '3rem',
+    margin: '0'
+  };
+};
