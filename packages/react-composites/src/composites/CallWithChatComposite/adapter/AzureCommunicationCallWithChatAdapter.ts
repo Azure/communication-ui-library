@@ -1171,6 +1171,7 @@ export const useAzureCommunicationCallWithChatAdapter = (
           newAdapter = await afterCreateRef.current(newAdapter);
         }
         adapterRef.current = newAdapter;
+        creatingAdapterRef.current = false;
         setAdapter(newAdapter);
       })();
     },

@@ -162,6 +162,7 @@ class CallContext {
       targetCallees: targetCallees as CommunicationIdentifier[],
       page: 'configuration',
       latestErrors: clientState.latestErrors,
+      /* @conditional-compile-remove(breakout-rooms) */ latestNotifications: clientState.latestNotifications,
       isTeamsCall,
       isTeamsMeeting,
       isRoomsCall,
@@ -268,6 +269,7 @@ class CallContext {
         endedCall: latestEndedCall,
         devices: clientState.deviceManager,
         latestErrors: clientState.latestErrors,
+        /* @conditional-compile-remove(breakout-rooms) */ latestNotifications: clientState.latestNotifications,
         cameraStatus:
           call?.localVideoStreams.find((s) => s.mediaStreamType === 'Video') ||
           clientState.deviceManager.unparentedViews.find((s) => s.mediaStreamType === 'Video')
@@ -1094,8 +1096,12 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     });
     // If a main meeting call exists then process that call and resume
     if (mainMeetingCall) {
+      const breakoutRoomCall = this.call;
       this.processNewCall(mainMeetingCall);
       await this.resumeCall();
+      if (breakoutRoomCall?.state === 'Connected') {
+        breakoutRoomCall.hangUp();
+      }
     }
   }
 
