@@ -79,6 +79,8 @@ export const HoldPage = (props: HoldPageProps): JSX.Element => {
       onDismissError={props.onDismissError}
       /* @conditional-compile-remove(notifications) */
       onDismissNotification={props.onDismissNotification}
+      /* @conditional-compile-remove(call-readiness) */
+      doNotShowCameraAccessNotifications={props.options?.deviceChecks?.camera === 'doNotPrompt'}
     />
   );
 };
