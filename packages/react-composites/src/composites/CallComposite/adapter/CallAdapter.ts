@@ -696,7 +696,7 @@ export interface CallAdapterCallOperations {
   startNoiseSuppressionEffect(): Promise<void>;
   /* @conditional-compile-remove(DNS) */
   /**
-   * Start the noise suppression effect.
+   * Stop the noise suppression effect.
    *
    * @beta
    */

@@ -616,7 +616,6 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
     const onStartNoiseSuppressionEffect = async (audioEffects: AudioEffectsStartConfig): Promise<void> => {
       const stream = call?.localAudioStreams.find((stream) => stream.mediaStreamType === 'Audio');
       if (stream && audioEffects && audioEffects.noiseSuppression) {
-        console.log('start noise suppression- active effects', stream.feature(Features.AudioEffects).activeEffects);
         const audioEffectsFeature = stream.feature(Features.AudioEffects);
         const isNoiseSuppressionSupported = await audioEffectsFeature.isSupported(audioEffects.noiseSuppression);
         if (isNoiseSuppressionSupported) {
@@ -631,7 +630,6 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
     const onStopNoiseSuppressionEffect = async (audioEffects: AudioEffectsStopConfig): Promise<void> => {
       const stream = call?.localAudioStreams.find((stream) => stream.mediaStreamType === 'Audio');
       if (stream && audioEffects && audioEffects.noiseSuppression) {
-        console.log('stop noise suppression - active effects', stream.feature(Features.AudioEffects).activeEffects);
         return await stream.feature(Features.AudioEffects).stopEffects(audioEffects);
       }
     };
