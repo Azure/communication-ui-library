@@ -256,3 +256,10 @@ export const getAssignedBreakoutRoom = (state: CallAdapterState): BreakoutRoom |
  */
 export const getBreakoutRoomSettings = (state: CallAdapterState): BreakoutRoomsSettings | undefined =>
   state.call?.breakoutRooms?.breakoutRoomSettings;
+
+/* @conditional-compile-remove(breakout-rooms) */
+/**
+ * @private
+ */
+export const getBreakoutRoomDisplayName = (state: CallAdapterState): string | undefined =>
+  state.call?.breakoutRooms?.breakoutRoomDisplayName;
