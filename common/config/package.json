@@ -22,7 +22,7 @@
     "@rollup/plugin-commonjs": "~25.0.7",
     "@rollup/plugin-json": "^6.0.1",
     "@types/node": "^20.14.12",
-    "beachball": "2.31.13",
+    "beachball": "^2.44.0",
     "rollup": "^4.12.1",
     "rollup-plugin-sourcemaps": "~0.6.3",
     "rollup-plugin-svg": "~2.0.0",

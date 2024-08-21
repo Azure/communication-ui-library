@@ -13,12 +13,16 @@ import { getPackageInfos } from '../../config/node_modules/beachball/lib/monorep
 import {gatherBumpInfo} from '../../config/node_modules/beachball/lib/bump/gatherBumpInfo.js';
 import {performBump} from '../../config/node_modules/beachball/lib/bump/performBump.js';
 import { getOptions } from '../../config/node_modules/beachball/lib/options/getOptions.js';
-import { CHANGE_DIR } from './constants.mjs';
+import { CHANGE_DIR, CHANGE_DIR_BETA } from './constants.mjs';
 
 import fs from 'fs';
 
-export async function generateChangelogs() {
+/**
+ * @param {'stable' | 'beta-release'} buildFlavor
+ */
+export async function generateChangelogs(buildFlavor) {
   const options = getOptions([]);
+  options.changeDir = buildFlavor === 'beta-release' ? CHANGE_DIR_BETA : CHANGE_DIR;
   const packageInfos = getPackageInfos(options.path);
   // Preserve(deep clone) the current packageInfo before bump, we don't change version number using beachball
   const preservedPackages = Object.fromEntries(Object.entries(packageInfos).map(([name, info]) => ([name, clone(info)])));
