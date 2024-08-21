@@ -246,6 +246,20 @@ export const notificationStackSelector: NotificationStackSelector = createSelect
         timestamp: latestNotifications['assignedBreakoutRoomChanged'].timestamp
       });
     }
+    /* @conditional-compile-remove(breakout-rooms) */
+    if (latestNotifications['breakoutRoomJoined']) {
+      activeNotifications.push({
+        type: 'breakoutRoomJoined',
+        timestamp: latestNotifications['breakoutRoomJoined'].timestamp
+      });
+    }
+    /* @conditional-compile-remove(breakout-rooms) */
+    if (latestNotifications['breakoutRoomClosingSoon']) {
+      activeNotifications.push({
+        type: 'breakoutRoomClosingSoon',
+        timestamp: latestNotifications['breakoutRoomClosingSoon'].timestamp
+      });
+    }
     return { activeErrorMessages: activeErrorMessages, activeNotifications: activeNotifications };
   }
 );

@@ -207,6 +207,7 @@ export interface BreakoutRoomsState {
   assignedBreakoutRoom?: BreakoutRoom;
   breakoutRoomSettings?: BreakoutRoomsSettings;
   breakoutRoomOriginCallId?: string;
+  breakoutRoomDisplayName?: string;
 }
 
 /**
@@ -1052,8 +1053,8 @@ export type NotificationTarget =
   | 'assignedBreakoutRoomOpened'
   | 'assignedBreakoutRoomOpenedPromptJoin'
   | 'assignedBreakoutRoomChanged'
-  | 'assignedBreakoutRoomClosingSoon'
-  | 'assignedBreakoutRoomClosed';
+  | 'breakoutRoomJoined'
+  | 'breakoutRoomClosingSoon';
 
 /**
  * State only proxy for {@link @azure/communication-calling#DiagnosticsCallFeature}.

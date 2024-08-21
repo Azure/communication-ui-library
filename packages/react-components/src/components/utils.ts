@@ -365,9 +365,9 @@ export const customNotificationIconName: Partial<{ [key in NotificationType]: st
   /* @conditional-compile-remove(breakout-rooms) */
   assignedBreakoutRoomChanged: 'NotificationBarBreakoutRoomChanged',
   /* @conditional-compile-remove(breakout-rooms) */
-  assignedBreakoutRoomClosingSoon: 'NotificationBarBreakoutRoom',
+  breakoutRoomJoined: 'NotificationBarBreakoutRoomJoined',
   /* @conditional-compile-remove(breakout-rooms) */
-  assignedBreakoutRoomClosed: 'NotificationBarBreakoutRoomClosed'
+  breakoutRoomClosingSoon: 'NotificationBarBreakoutRoomClosingSoon'
 };
 
 /**
