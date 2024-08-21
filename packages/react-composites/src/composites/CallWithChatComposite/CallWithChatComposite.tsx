@@ -583,18 +583,13 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
 
   const onRenderChatContent = useCallback((): JSX.Element => {
     /* @conditional-compile-remove(breakout-rooms) */
-    return callWithChatAdapter.getState().chat?.threadId ? (
-      <ChatComposite
-        adapter={chatAdapter}
-        fluentTheme={theme}
-        options={chatCompositeOptions}
-        onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
-      />
-    ) : (
-      <Stack styles={chatSpinnerContainerStyles}>
-        <Spinner size={SpinnerSize.large} />
-      </Stack>
-    );
+    if (!isChatInitialized) {
+      return (
+        <Stack styles={chatSpinnerContainerStyles}>
+          <Spinner size={SpinnerSize.large} />
+        </Stack>
+      );
+    }
     return (
       <ChatComposite
         adapter={chatAdapter}
@@ -608,7 +603,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
     props.onFetchAvatarPersonaData,
     chatCompositeOptions,
     theme,
-    /* @conditional-compile-remove(breakout-rooms) */ callWithChatAdapter
+    /* @conditional-compile-remove(breakout-rooms) */ isChatInitialized
   ]);
 
   let chatPaneTitle = callWithChatStrings.chatPaneTitle;

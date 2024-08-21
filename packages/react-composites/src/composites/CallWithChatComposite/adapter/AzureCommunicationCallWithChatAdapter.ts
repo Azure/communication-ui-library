@@ -224,6 +224,8 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
 
     // If the chat adapter is not on the target thread then we need to switch to the breakout room chat adapter
     if (targetThreadId && this.chatAdapter && this.chatAdapter.getState().thread.threadId !== targetThreadId) {
+      // Unsubscribe from chat adapter state changes
+      this.chatAdapter.offStateChange(this.onChatStateChange);
       // Set chat state to undefined to prevent showing chat thread of origin call
       this.context.unsetChatState();
 
