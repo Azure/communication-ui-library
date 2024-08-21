@@ -133,10 +133,10 @@ export class BreakoutRoomsSubscriber {
       !Number.isNaN(Date.parse(breakoutRoomSettings.roomEndTime))
     ) {
       const now = new Date(Date.now());
-      const roomEndTimeMs = new Date(breakoutRoomSettings.roomEndTime).getTime();
-      const timeBeforeClosingMs = roomEndTimeMs - now.getTime();
-      const timeBeforeSendingClosingSoonNotificationMs = Math.max(
-        timeBeforeClosingMs - MILLSECONDS_BEFORE_END_TIME_TO_SHOW_CLOSING_NOTIFICATION,
+      const roomClosingTime = new Date(breakoutRoomSettings.roomEndTime).getTime();
+      const timeBeforeClosing = roomClosingTime - now.getTime();
+      const timeBeforeSendingClosingSoonNotification = Math.max(
+        timeBeforeClosing - MILLSECONDS_BEFORE_END_TIME_TO_SHOW_CLOSING_NOTIFICATION,
         0
       );
       if (!this._breakoutRoomClosingSoonTimeoutId) {
@@ -146,7 +146,7 @@ export class BreakoutRoomsSubscriber {
               target: 'breakoutRoomClosingSoon',
               timestamp: now
             }),
-          timeBeforeSendingClosingSoonNotificationMs
+          timeBeforeSendingClosingSoonNotification
         );
       }
     }
