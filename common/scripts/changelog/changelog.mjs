@@ -13,7 +13,7 @@ import { getPackageInfos } from '../../config/node_modules/beachball/lib/monorep
 import {gatherBumpInfo} from '../../config/node_modules/beachball/lib/bump/gatherBumpInfo.js';
 import {performBump} from '../../config/node_modules/beachball/lib/bump/performBump.js';
 import { getOptions } from '../../config/node_modules/beachball/lib/options/getOptions.js';
-import { CHANGE_DIR, CHANGE_DIR_BETA } from './constants.mjs';
+import { CHANGE_DIR_BETA, CHANGE_DIR_STABLE, BETA_CHANGE_DIR_NAME, STABLE_CHANGE_DIR_NAME } from './constants.mjs';
 
 import fs from 'fs';
 
@@ -21,8 +21,12 @@ import fs from 'fs';
  * @param {'stable' | 'beta-release'} buildFlavor
  */
 export async function generateChangelogs(buildFlavor) {
+  if (buildFlavor !== 'stable' && buildFlavor !== 'beta-release') {
+    throw new Error(`Unknown build flavor in generateChangelogs: ${buildFlavor}. Flavor must be 'stable' or 'beta-release'.`);
+  }
+
   const options = getOptions([]);
-  options.changeDir = buildFlavor === 'beta-release' ? CHANGE_DIR_BETA : CHANGE_DIR;
+  options.changeDir = buildFlavor === 'beta-release' ? BETA_CHANGE_DIR_NAME : STABLE_CHANGE_DIR_NAME;
   const packageInfos = getPackageInfos(options.path);
   // Preserve(deep clone) the current packageInfo before bump, we don't change version number using beachball
   const preservedPackages = Object.fromEntries(Object.entries(packageInfos).map(([name, info]) => ([name, clone(info)])));
@@ -36,7 +40,7 @@ export async function generateChangelogs(buildFlavor) {
 
   // Beachball deletes the change file directory which causes confusion for scripts
   // that manipulate working directory paths.
-  ensureDirectory(CHANGE_DIR);
+  ensureDirectory('beta-release' ? CHANGE_DIR_BETA : CHANGE_DIR_STABLE);
 }
 
 
