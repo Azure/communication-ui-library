@@ -1075,14 +1075,15 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
       return callAgentCall.id === originCallId;
     });
 
-    // If an origin call exists then process that call and resume
-    if (originCall) {
-      const breakoutRoomCall = this.call;
-      this.processNewCall(originCall);
-      await this.resumeCall();
-      if (breakoutRoomCall?.state === 'Connected') {
-        breakoutRoomCall.hangUp();
-      }
+    if (!originCall) {
+      throw new Error('Could not return from breakout room because the origin call could not be retrieved.');
+    }
+
+    const breakoutRoomCall = this.call;
+    this.processNewCall(originCall);
+    await this.resumeCall();
+    if (breakoutRoomCall?.state === 'Connected') {
+      breakoutRoomCall.hangUp();
     }
   }
 
