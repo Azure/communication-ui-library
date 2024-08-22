@@ -36,10 +36,10 @@
     "immer": "10.1.1"
   },
   "peerDependencies": {
-    "@azure/communication-calling": "1.28.1-beta.2 || ^1.27.4"
+    "@azure/communication-calling": "1.28.1-beta.4 || ^1.27.5"
   },
   "devDependencies": {
-    "@azure/communication-calling": "1.28.1-beta.2 || ^1.27.4",
+    "@azure/communication-calling": "1.28.1-beta.4 || ^1.27.5",
     "@azure/core-auth": "^1.4.0",
     "@babel/cli": "^7.24.8",
     "@babel/core": "^7.25.2",

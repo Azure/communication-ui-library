@@ -263,14 +263,14 @@ export interface NotificationStackStrings {
   assignedBreakoutRoomChanged?: NotificationStrings;
   /* @conditional-compile-remove(breakout-rooms) */
   /**
-   * Message shown in notification when the user's assigned breakout room is closing soon
+   * Message shown in notification when breakout room is joined
    */
-  assignedBreakoutRoomClosingSoon?: NotificationStrings;
+  breakoutRoomJoined?: NotificationStrings;
   /* @conditional-compile-remove(breakout-rooms) */
   /**
-   * Message shown in notification when the user's assigned breakout room is closed
+   * Message shown in notification when breakout room is closing soon
    */
-  assignedBreakoutRoomClosed?: NotificationStrings;
+  breakoutRoomClosingSoon?: NotificationStrings;
 }
 
 /**
