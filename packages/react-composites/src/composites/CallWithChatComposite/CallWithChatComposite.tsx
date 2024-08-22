@@ -50,6 +50,8 @@ import { useUnreadMessagesTracker } from './ChatButton/useUnreadMessagesTracker'
 import { VideoGalleryLayout } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing-acs) */
 import { AttachmentOptions } from '@internal/react-components';
+/* @conditional-compile-remove(breakout-rooms) */
+import { useLocale } from '../localization';
 
 /**
  * Props required for the {@link CallWithChatComposite}
@@ -581,12 +583,15 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
     ]
   );
 
+  /* @conditional-compile-remove(breakout-rooms) */
+  const chatSpinnerLabel = useLocale().strings.callWithChat.chatContentSpinnerLabel;
+
   const onRenderChatContent = useCallback((): JSX.Element => {
     /* @conditional-compile-remove(breakout-rooms) */
     if (!isChatInitialized) {
       return (
         <Stack styles={chatSpinnerContainerStyles}>
-          <Spinner size={SpinnerSize.large} />
+          <Spinner label={chatSpinnerLabel} size={SpinnerSize.large} />
         </Stack>
       );
     }
@@ -603,7 +608,8 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
     props.onFetchAvatarPersonaData,
     chatCompositeOptions,
     theme,
-    /* @conditional-compile-remove(breakout-rooms) */ isChatInitialized
+    /* @conditional-compile-remove(breakout-rooms) */ isChatInitialized,
+    /* @conditional-compile-remove(breakout-rooms) */ chatSpinnerLabel
   ]);
 
   let chatPaneTitle = callWithChatStrings.chatPaneTitle;
