@@ -1365,9 +1365,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
 
   /* @conditional-compile-remove(breakout-rooms) */
   private assignedBreakoutRoomUpdated(breakoutRoom: BreakoutRoom): void {
-    if (this.call?.id === undefined) {
-      return;
-    }
     if (breakoutRoom.state === 'closed') {
       this.returnFromBreakoutRoom();
     }
@@ -1383,14 +1380,17 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
   }
 
   /* @conditional-compile-remove(breakout-rooms) */
-  private hangupOtherBreakoutRoomCalls(breakoutRoomCall: Call | TeamsCall): void {
+  private hangupOtherBreakoutRoomCalls(currentBreakoutRoomCall: Call | TeamsCall): void {
     // Get origin call id of breakout room call
-    const breakoutRoomCallState = this.callClient.getState().calls[breakoutRoomCall.id];
+    const breakoutRoomCallState = this.callClient.getState().calls[currentBreakoutRoomCall.id];
     const originCallId = breakoutRoomCallState.breakoutRooms?.breakoutRoomOriginCallId;
 
     // Get other breakout room calls with the same origin call
     const otherBreakoutRoomCallStates = Object.values(this.callClient.getState().calls).filter((callState) => {
-      return callState.breakoutRooms?.breakoutRoomOriginCallId === originCallId && callState.id !== breakoutRoomCall.id;
+      return (
+        callState.breakoutRooms?.breakoutRoomOriginCallId === originCallId &&
+        callState.id !== currentBreakoutRoomCall.id
+      );
     });
 
     // Hang up other breakout room calls
