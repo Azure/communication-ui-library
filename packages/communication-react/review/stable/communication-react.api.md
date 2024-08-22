@@ -2365,11 +2365,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     ControlButtonParticipantsContextualMenuItem: React_2.JSX.Element;
     OpenAttachment: React_2.JSX.Element;
     ErrorBarCallVideoRecoveredBySystem: React_2.JSX.Element;
-    ErrorBarCallVideoStoppedBySystem: React_2.JSX.Element; /**
-    * Icons that can be overridden for {@link CallComposite}.
-    *
-    * @public
-    */
+    ErrorBarCallVideoStoppedBySystem: React_2.JSX.Element;
     NotificationBarRecording: React_2.JSX.Element;
     MessageResend: React_2.JSX.Element;
     ParticipantItemSpotlighted: React_2.JSX.Element;
