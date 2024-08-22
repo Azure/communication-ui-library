@@ -1061,17 +1061,11 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
       return;
     }
 
-    // Find call state of current breakout room from stateful layer
-    let callState = this.call
-      ? Object.values(this.callClient.getState().calls).find((call) => call.id === this.call?.id)
+    // Find call state of current call from stateful layer. The current call state of breakout room may not be present in calls array
+    // if the breakout room call is ended. So search the callsEnded array as well.
+    const callState = this.callClient.getState().calls[this.call?.id]
+      ? this.callClient.getState().callsEnded[this.call?.id]
       : undefined;
-    // Current call state of breakout room may not be present in calls array if the breakout room call is ended.
-    // So let's try to find the call state from callsEnded array
-    if (callState === undefined) {
-      callState = this.call
-        ? Object.values(this.callClient.getState().callsEnded).find((call) => call.id === this.call?.id)
-        : undefined;
-    }
 
     // Find origin call id from breakout room call state
     const originCallId = callState?.breakoutRooms?.breakoutRoomOriginCallId;
@@ -1376,20 +1370,19 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
       this.processNewCall(call);
     }
     // Hang up other breakout room calls in case we are joining a new breakout room while already in one
-    this.hangupOtherBreakoutRoomCalls(call);
+    this.hangupOtherBreakoutRoomCalls(call.id);
   }
 
   /* @conditional-compile-remove(breakout-rooms) */
-  private hangupOtherBreakoutRoomCalls(currentBreakoutRoomCall: Call | TeamsCall): void {
+  private hangupOtherBreakoutRoomCalls(currentBreakoutRoomCallId: string): void {
     // Get origin call id of breakout room call
-    const breakoutRoomCallState = this.callClient.getState().calls[currentBreakoutRoomCall.id];
+    const breakoutRoomCallState = this.callClient.getState().calls[currentBreakoutRoomCallId];
     const originCallId = breakoutRoomCallState.breakoutRooms?.breakoutRoomOriginCallId;
 
     // Get other breakout room calls with the same origin call
     const otherBreakoutRoomCallStates = Object.values(this.callClient.getState().calls).filter((callState) => {
       return (
-        callState.breakoutRooms?.breakoutRoomOriginCallId === originCallId &&
-        callState.id !== currentBreakoutRoomCall.id
+        callState.breakoutRooms?.breakoutRoomOriginCallId === originCallId && callState.id !== currentBreakoutRoomCallId
       );
     });
 
