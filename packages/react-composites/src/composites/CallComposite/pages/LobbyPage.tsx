@@ -91,6 +91,8 @@ export const LobbyPage = (props: LobbyPageProps): JSX.Element => {
       latestNotifications={props.latestNotifications}
       /* @conditional-compile-remove(notifications) */
       onDismissNotification={props.onDismissNotification}
+      /* @conditional-compile-remove(call-readiness) */
+      doNotShowCameraAccessNotifications={props.options?.deviceChecks?.camera === 'doNotPrompt'}
     />
   );
 };
