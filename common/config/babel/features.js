@@ -26,7 +26,9 @@ module.exports = {
     // Feature for remote UFD
     "remote-ufd",
     // Feature for showing dtmp dialer by default
-    "dtmf-dialer-on-by-default"
+    "dtmf-dialer-on-by-default",
+    // Deep Noise Suppression feature
+    "DNS"
   ],
   beta: [
     "call-readiness",

@@ -211,6 +211,17 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
   public updateSelectedVideoBackgroundEffect(selectedVideoBackground: VideoBackgroundEffect): void {
     return this.callWithChatAdapter.updateSelectedVideoBackgroundEffect(selectedVideoBackground);
   }
+
+  /* @conditional-compile-remove(DNS) */
+  public async startNoiseSuppressionEffect(): Promise<void> {
+    return this.callWithChatAdapter.startNoiseSuppressionEffect();
+  }
+
+  /* @conditional-compile-remove(DNS) */
+  public async stopNoiseSuppressionEffect(): Promise<void> {
+    return this.callWithChatAdapter.stopNoiseSuppressionEffect();
+  }
+
   public async submitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined> {
     return this.callWithChatAdapter.submitSurvey(survey);
   }
