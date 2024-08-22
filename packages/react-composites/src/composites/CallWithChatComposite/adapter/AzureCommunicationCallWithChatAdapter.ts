@@ -194,13 +194,10 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     this.callAdapter.onStateChange(onCallStateChange);
     /* @conditional-compile-remove(breakout-rooms) */
     this.callAdapter.on('breakoutRoomsUpdated', async (eventData: BreakoutRoomsEventData) => {
-      if (!eventData.data) {
-        return;
-      }
       if (eventData.type === 'join') {
         await this.breakoutRoomJoined(eventData.data);
       } else if (eventData.type === 'assignedBreakoutRooms') {
-        if (eventData.data.state === 'closed') {
+        if (!eventData.data || eventData.data.state === 'closed') {
           await this.returnFromBreakoutRoom();
         }
       }
