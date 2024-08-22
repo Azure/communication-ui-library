@@ -1347,20 +1347,20 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
 
   /* @conditional-compile-remove(breakout-rooms) */
   private breakoutRoomsUpdated(eventData: BreakoutRoomsEventData): void {
-    if (eventData.data) {
-      if (eventData.type === 'assignedBreakoutRooms') {
-        this.assignedBreakoutRoomUpdated(eventData.data);
-      } else if (eventData.type === 'join') {
-        this.breakoutRoomJoined(eventData.data);
-      }
+    if (eventData.type === 'assignedBreakoutRooms') {
+      this.assignedBreakoutRoomUpdated(eventData.data);
+    } else if (eventData.type === 'join') {
+      this.breakoutRoomJoined(eventData.data);
     }
-
     this.emitter.emit('breakoutRoomsUpdated', eventData);
   }
 
   /* @conditional-compile-remove(breakout-rooms) */
-  private assignedBreakoutRoomUpdated(breakoutRoom: BreakoutRoom): void {
-    if (breakoutRoom.state === 'closed') {
+  private assignedBreakoutRoomUpdated(breakoutRoom?: BreakoutRoom): void {
+    if (this.call?.id === undefined) {
+      return;
+    }
+    if (!breakoutRoom || breakoutRoom.state === 'closed') {
       this.returnFromBreakoutRoom();
     }
   }
