@@ -203,12 +203,8 @@ export type AzureCommunicationCallWithChatAdapterArgs = {
     userId: CommunicationUserIdentifier;
     displayName: string;
     credential: CommunicationTokenCredential;
-<<<<<<< HEAD
-    locator: CallAndChatLocator | TeamsMeetingLinkLocator | /** @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator;
-    alternateCallerId?: string;
-=======
     locator: CallAndChatLocator | TeamsMeetingLinkLocator | TeamsMeetingIdLocator;
->>>>>>> 193eaed0e7e20b519a8cde3423cd30b7a70a6f91
+    alternateCallerId?: string;
     callAdapterOptions?: AzureCommunicationCallAdapterOptions;
 };
 
@@ -454,10 +450,10 @@ export interface CallClientState {
     };
     deviceManager: DeviceManagerState;
     incomingCalls: {
-        [key: string]: IncomingCallState | /* @conditional-compile-remove(one-to-n-calling) */ TeamsIncomingCallState;
+        [key: string]: IncomingCallState | TeamsIncomingCallState;
     };
     incomingCallsEnded: {
-        [key: string]: IncomingCallState | /* @conditional-compile-remove(one-to-n-calling) */ TeamsIncomingCallState;
+        [key: string]: IncomingCallState | TeamsIncomingCallState;
     };
     latestErrors: CallErrors;
     userId: CommunicationIdentifierKind;
@@ -584,7 +580,7 @@ export type CallCompositeOptions = {
 };
 
 // @public
-export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configuration' | /* @conditional-compile-remove(PSTN-calls) */ 'hold' | 'joinCallFailedDueToNoNetwork' | 'leftCall' | 'leaving' | 'lobby' | 'removedFromCall' | 'transferring' | 'badRequest';
+export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configuration' | 'hold' | 'joinCallFailedDueToNoNetwork' | 'leftCall' | 'leaving' | 'lobby' | 'removedFromCall' | 'transferring' | 'badRequest';
 
 // @public
 export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcons> {
@@ -1002,7 +998,7 @@ export interface CallWithChatAdapterManagement {
     setSpeaker(sourceInfo: AudioDeviceInfo): Promise<void>;
     setSpokenLanguage(language: string): Promise<void>;
     startCall(participants: string[], options?: StartCallOptions): Call | undefined;
-    startCall(participants: (MicrosoftTeamsAppIdentifier | /* @conditional-compile-remove(PSTN-calls) */ PhoneNumberIdentifier | /* @conditional-compile-remove(one-to-n-calling) */ CommunicationUserIdentifier | /* @conditional-compile-remove(teams-adhoc-call) */ MicrosoftTeamsUserIdentifier | UnknownIdentifier)[], options?: StartCallOptions): Call | undefined;
+    startCall(participants: (MicrosoftTeamsAppIdentifier | PhoneNumberIdentifier | CommunicationUserIdentifier | MicrosoftTeamsUserIdentifier | UnknownIdentifier)[], options?: StartCallOptions): Call | undefined;
     startCamera(options?: VideoStreamOptions): Promise<void>;
     startCaptions(options?: StartCaptionsOptions): Promise<void>;
     startScreenShare(): Promise<void>;
@@ -1323,7 +1319,7 @@ export interface CallWithChatCompositeStrings {
 
 // @public
 export interface CallWithChatControlOptions extends CommonCallControlOptions {
-    chatButton?: boolean | /* @conditional-compile-remove(PSTN-calls) */ {
+    chatButton?: boolean | {
         disabled: boolean;
     };
 }
@@ -1782,22 +1778,17 @@ export type CommonCallAdapterOptions = {
 // @public
 export type CommonCallControlOptions = {
     displayType?: CallControlDisplayType;
-<<<<<<< HEAD
-    cameraButton?: boolean | /* @conditional-compile-remove(PSTN-calls) */ {
+    cameraButton?: boolean | {
         disabled: boolean;
     };
-    endCallButton?: boolean | /* @conditional-compile-remove(end-call-options) */ {
-=======
-    cameraButton?: boolean;
     endCallButton?: boolean | {
->>>>>>> 193eaed0e7e20b519a8cde3423cd30b7a70a6f91
         hangUpForEveryone?: false | 'endCallOptions';
         disableEndCallModal?: boolean;
     };
-    microphoneButton?: boolean | /* @conditional-compile-remove(PSTN-calls) */ {
+    microphoneButton?: boolean | {
         disabled: boolean;
     };
-    devicesButton?: boolean | /* @conditional-compile-remove(PSTN-calls) */ {
+    devicesButton?: boolean | {
         disabled: boolean;
     };
     participantsButton?: boolean | {
@@ -1817,7 +1808,7 @@ export type CommonCallControlOptions = {
     holdButton?: boolean | {
         disabled: boolean;
     };
-    peopleButton?: boolean | /* @conditional-compile-remove(PSTN-calls) */ {
+    peopleButton?: boolean | {
         disabled: boolean;
     };
     dtmfDialerButton?: boolean | {
@@ -2285,10 +2276,10 @@ export interface CustomMessage extends MessageCommon {
 export const darkTheme: PartialTheme & CallingTheme;
 
 // @public
-export type DeclarativeCallAgent = CallAgent & /* @conditional-compile-remove(one-to-n-calling) */ IncomingCallManagement;
+export type DeclarativeCallAgent = CallAgent & IncomingCallManagement;
 
 // @public
-export type DeclarativeTeamsCallAgent = TeamsCallAgent & /* @conditional-compile-remove(one-to-n-calling) */ TeamsIncomingCallManagement;
+export type DeclarativeTeamsCallAgent = TeamsCallAgent & TeamsIncomingCallManagement;
 
 // @public
 export const DEFAULT_COMPONENT_ICONS: {
@@ -3943,7 +3934,7 @@ export interface SpotlightState {
 }
 
 // @public
-export type StartCallIdentifier = (MicrosoftTeamsAppIdentifier | /* @conditional-compile-remove(PSTN-calls) */ PhoneNumberIdentifier | /* @conditional-compile-remove(one-to-n-calling) */ CommunicationUserIdentifier | /* @conditional-compile-remove(teams-adhoc-call) */ MicrosoftTeamsUserIdentifier | UnknownIdentifier) | /* @conditional-compile-remove(start-call-beta) */ CommunicationIdentifier;
+export type StartCallIdentifier = (MicrosoftTeamsAppIdentifier | PhoneNumberIdentifier | CommunicationUserIdentifier | MicrosoftTeamsUserIdentifier | UnknownIdentifier) | CommunicationIdentifier;
 
 // @public
 export interface StatefulCallClient extends CallClient {
@@ -3958,12 +3949,8 @@ export interface StatefulCallClient extends CallClient {
 
 // @public
 export type StatefulCallClientArgs = {
-<<<<<<< HEAD
-    userId: CommunicationUserIdentifier | /* @conditional-compile-remove(teams-identity-support) */ MicrosoftTeamsUserIdentifier;
-    alternateCallerId?: string;
-=======
     userId: CommunicationUserIdentifier | MicrosoftTeamsUserIdentifier;
->>>>>>> 193eaed0e7e20b519a8cde3423cd30b7a70a6f91
+    alternateCallerId?: string;
 };
 
 // @public
@@ -4109,15 +4096,11 @@ export type TeamsCallAdapterArgsCommon = {
 // @public
 export interface TeamsCallingHandlers extends CommonCallingHandlers {
     // (undocumented)
-<<<<<<< HEAD
     onAcceptCall: (incomingCallId: string, useVideo?: boolean) => Promise<void>;
     // (undocumented)
     onRejectCall: (incomingCallId: string) => Promise<void>;
     // (undocumented)
-    onStartCall: (participants: CommunicationIdentifier[], options?: StartCallOptions) => undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall;
-=======
     onStartCall: (participants: CommunicationIdentifier[], options?: StartCallOptions) => undefined | TeamsCall;
->>>>>>> 193eaed0e7e20b519a8cde3423cd30b7a70a6f91
 }
 
 // @public

@@ -527,11 +527,7 @@ export interface CallAdapterDeviceManagement {
 }
 
 // @public
-<<<<<<< HEAD
-export type CallAdapterLocator = TeamsMeetingLinkLocator | GroupCallLocator | RoomCallLocator | /* @conditional-compile-remove(call-participants-locator) */ CallParticipantsLocator | /* @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator;
-=======
-export type CallAdapterLocator = TeamsMeetingLinkLocator | GroupCallLocator | RoomCallLocator | /* @conditional-compile-remove(teams-adhoc-call) */ /* @conditional-compile-remove(PSTN-calls) */ CallParticipantsLocator | TeamsMeetingIdLocator;
->>>>>>> 193eaed0e7e20b519a8cde3423cd30b7a70a6f91
+export type CallAdapterLocator = TeamsMeetingLinkLocator | GroupCallLocator | RoomCallLocator | /* @conditional-compile-remove(call-participants-locator) */ CallParticipantsLocator | TeamsMeetingIdLocator;
 
 // @public
 export type CallAdapterState = CallAdapterUiState & CallAdapterClientState;
@@ -4760,11 +4756,7 @@ export interface TeamsCallAdapter extends CommonCallAdapter {
 
 // @public
 export type TeamsCallAdapterArgs = TeamsCallAdapterArgsCommon & {
-<<<<<<< HEAD
-    locator: TeamsMeetingLinkLocator | /* @conditional-compile-remove(call-participants-locator) */ CallParticipantsLocator | /* @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator;
-=======
-    locator: TeamsMeetingLinkLocator | /* @conditional-compile-remove(teams-adhoc-call) */ /* @conditional-compile-remove(PSTN-calls) */ CallParticipantsLocator | TeamsMeetingIdLocator;
->>>>>>> 193eaed0e7e20b519a8cde3423cd30b7a70a6f91
+    locator: TeamsMeetingLinkLocator | /* @conditional-compile-remove(call-participants-locator) */ CallParticipantsLocator | TeamsMeetingIdLocator;
 };
 
 // @public
