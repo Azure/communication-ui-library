@@ -11399,14 +11399,14 @@ packages:
     resolution: {integrity: sha512-x+VAiMRL6UPkx+kudNvxTl6hB2XNNCG2r+7wixVfIYwu/2HKRXimwQyaumLjMveWvT2Hkd/cAJw+QBMfJ/EKVw==}
     dev: false
 
-  /beachball@2.31.13:
-    resolution: {integrity: sha512-VEzTJc4zUlxSuKJDh44GQjhvhaCCz06E4uzBsWLhsYBFAt71FBu2KdSkPg0zzIwyom02tvC59rDeUWCYm0Hr+g==}
-    engines: {node: '>=12.0.0'}
+  /beachball@2.44.0(typescript@5.4.5):
+    resolution: {integrity: sha512-gpODT4gD4fttLlkfm6VpHjMwlVMvN40ML1SujW6sAf6DgL6XN2TEyFSxOCkdnQxUAuGNe3I0p2BmKuwaYAuBGA==}
+    engines: {node: '>=14.0.0'}
     hasBin: true
     dependencies:
-      cosmiconfig: 7.1.0
+      cosmiconfig: 8.3.6(typescript@5.4.5)
       execa: 5.1.1
-      fs-extra: 10.1.0
+      fs-extra: 11.2.0
       lodash: 4.17.21
       minimatch: 3.1.2
       p-limit: 3.1.0
@@ -11414,8 +11414,10 @@ packages:
       semver: 7.6.0
       toposort: 2.0.2
       uuid: 9.0.1
-      workspace-tools: 0.30.0
+      workspace-tools: 0.36.4
       yargs-parser: 21.1.1
+    transitivePeerDependencies:
+      - typescript
     dev: false
 
   /before-after-hook@2.2.3:
@@ -12572,6 +12574,22 @@ packages:
       parse-json: 5.2.0
       path-type: 4.0.0
       yaml: 1.10.2
+    dev: false
+
+  /cosmiconfig@8.3.6(typescript@5.4.5):
+    resolution: {integrity: sha512-kcZ6+W5QzcJ3P1Mt+83OUv/oHFqZHIx8DuxG6eZ5RGMERoLqp4BuGjhHLYGK+Kf5XVkQvqBSmAy/nGWN3qDgEA==}
+    engines: {node: '>=14'}
+    peerDependencies:
+      typescript: '>=4.9.5'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+    dependencies:
+      import-fresh: 3.3.0
+      js-yaml: 4.1.0
+      parse-json: 5.2.0
+      path-type: 4.0.0
+      typescript: 5.4.5
     dev: false
 
   /cp-file@7.0.0:
@@ -24979,10 +24997,11 @@ packages:
       microevent.ts: 0.1.1
     dev: false
 
-  /workspace-tools@0.30.0:
-    resolution: {integrity: sha512-vQrzjAFvQYI2Zg9kFAo43aIgQNX5VSTtWLvOxCKhgjKnPdyLMXcPNxPTCKu3v+tjDW+YJNXUAigVv+pykrwOsQ==}
+  /workspace-tools@0.36.4:
+    resolution: {integrity: sha512-v0UFVvw9BjHtRu2Dau5PEJKkuG8u4jPlpXZQWjSz9XgbSutpPURqtO2P0hp3cVmQVATh8lkMFCewFgJuDnyC/w==}
     dependencies:
       '@yarnpkg/lockfile': 1.1.0
+      fast-glob: 3.3.2
       git-url-parse: 13.1.1
       globby: 11.1.0
       jju: 1.4.0
@@ -26142,7 +26161,7 @@ packages:
     dev: false
 
   file:projects/config.tgz:
-    resolution: {integrity: sha512-D/SWkStVgT3eIsJ+oUxMCxzYzauOpOca9ftXqSER9yBhkZ6vNeX7nUc+qBZLoCN7Xh9X2Mp6rjPyFLXDGz/hVA==, tarball: file:projects/config.tgz}
+    resolution: {integrity: sha512-K+G3IjrQOzuz1Dv/AWkMaty4XkgsLeDVgs4N08asKNpcvfKf2PtQl3W6RXR2iALjzh/ayAiJSs97fLOwCio4AA==, tarball: file:projects/config.tgz}
     name: '@rush-temp/config'
     version: 0.0.0
     dependencies:
@@ -26152,7 +26171,7 @@ packages:
       '@rollup/plugin-commonjs': 25.0.7(rollup@4.12.1)
       '@rollup/plugin-json': 6.1.0(rollup@4.12.1)
       '@types/node': 20.14.12
-      beachball: 2.31.13
+      beachball: 2.44.0(typescript@5.4.5)
       rollup: 4.12.1
       rollup-plugin-sourcemaps: 0.6.3(@types/node@20.14.12)(rollup@4.12.1)
       rollup-plugin-svg: 2.0.0

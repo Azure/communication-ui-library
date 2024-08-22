@@ -140,6 +140,7 @@ export interface CallArrangementProps {
   hideSpotlightButtons?: boolean;
   pinnedParticipants?: string[];
   setPinnedParticipants?: (pinnedParticipants: string[]) => void;
+  doNotShowCameraAccessNotifications?: boolean;
 }
 
 /**
@@ -450,6 +451,16 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     role === 'Consumer' &&
     (props.errorBarProps || /* @conditional-compile-remove(notifications) */ props.showErrorNotifications)
   ) {
+    filteredLatestErrors = filteredLatestErrors.filter(
+      (e) => e.type !== 'callCameraAccessDenied' && e.type !== 'callCameraAccessDeniedSafari'
+    );
+    /* @conditional-compile-remove(notifications) */
+    filteredLatestErrorNotifications = filteredLatestErrorNotifications.filter(
+      (e) => e.type !== 'callCameraAccessDenied' && e.type !== 'callCameraAccessDeniedSafari'
+    );
+  }
+
+  if (props.doNotShowCameraAccessNotifications) {
     filteredLatestErrors = filteredLatestErrors.filter(
       (e) => e.type !== 'callCameraAccessDenied' && e.type !== 'callCameraAccessDeniedSafari'
     );
