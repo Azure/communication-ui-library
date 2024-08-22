@@ -109,7 +109,7 @@ export type {
 export type { HoldButtonSelector } from '../../calling-component-bindings/src';
 
 export type { RaiseHandButtonSelector } from '../../calling-component-bindings/src';
-/* @conditional-compile-remove(notifications) */
+
 export type { NotificationStackSelector } from '../../calling-component-bindings/src';
 /* @conditional-compile-remove(one-to-n-calling) */
 export type { IncomingCallStackSelector } from '../../calling-component-bindings/src';
@@ -444,9 +444,9 @@ export type { SurveyIssues } from '../../react-components/src';
 export type { SurveyIssuesHeadingStrings } from '../../react-components/src';
 
 export type { CallSurveyImprovementSuggestions } from '../../react-components/src';
-/* @conditional-compile-remove(notifications) */
+
 export { NotificationStack, Notification } from '../../react-components/src';
-/* @conditional-compile-remove(notifications) */
+
 export type {
   NotificationStackProps,
   NotificationProps,

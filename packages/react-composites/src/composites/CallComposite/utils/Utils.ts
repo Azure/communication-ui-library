@@ -18,7 +18,7 @@ import { VideoDeviceInfo } from '@azure/communication-calling';
 import { VideoEffectProcessor } from '@azure/communication-calling';
 import { CompositeLocale } from '../../localization';
 import { CallCompositeIcons } from '../../common/icons';
-/* @conditional-compile-remove(notifications) */
+
 import { ActiveNotification } from '@internal/react-components';
 
 const ACCESS_DENIED_TEAMS_MEETING_SUB_CODE = 5854;
@@ -590,13 +590,11 @@ export const getLocatorOrTargetCallees = (
   return !!Array.isArray(locatorOrTargetCallees);
 };
 
-/* @conditional-compile-remove(notifications) */
 /**
  * @private
  */
 export type ComplianceState = 'on' | 'off' | 'stopped';
 
-/* @conditional-compile-remove(notifications) */
 /**
  * Return different conditions based on the current and previous state of recording and transcribing
  *
@@ -632,7 +630,6 @@ export const computeVariant = (
   }
 };
 
-/* @conditional-compile-remove(notifications) */
 /**
  * @private
  */
@@ -647,7 +644,6 @@ export type ComplianceNotificationVariant =
   | 'recordingStoppedStillTranscribing'
   | 'transcriptionStoppedStillRecording';
 
-/* @conditional-compile-remove(notifications) */
 /**
  * @private
  */
@@ -665,7 +661,6 @@ export type CachedComplianceNotificationProps = {
   lastUpdated: number;
 };
 
-/* @conditional-compile-remove(notifications) */
 /**
  * @private
  */
@@ -686,7 +681,7 @@ export function determineStates(previous: ComplianceState, current: boolean | un
     }
   }
 }
-/* @conditional-compile-remove(notifications) */
+
 /**
  * Compute compliance notification based on latest compliance state and cached props.
  * @private
