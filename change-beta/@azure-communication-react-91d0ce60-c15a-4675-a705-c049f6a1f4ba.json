@@ -1,0 +1,9 @@
+{
+  "type": "prerelease",
+  "area": "feature",
+  "workstream": "Remote UFD",
+  "comment": "Add remote ufd to stateful client",
+  "packageName": "@azure/communication-react",
+  "email": "jiangnanhello@live.com",
+  "dependentChangeType": "patch"
+}

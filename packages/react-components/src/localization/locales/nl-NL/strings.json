@@ -457,6 +457,7 @@
   "videoGallery": {
     "screenIsBeingSharedMessage": "U deelt uw scherm",
     "screenShareLoadingMessage": "Scherm van {participant} laden",
+    "localScreenShareLoadingMessage": "Uw scherm laden",
     "localVideoLabel": "U",
     "localVideoCameraSwitcherLabel": "Camera wisselen",
     "localVideoMovementLabel": "Tegel voor verwisselbare lokale video",
@@ -626,9 +627,12 @@
   },
   "IncomingCallNotification": {
     "incomingCallNotificationPlaceholderId": "Onbekende gebruiker",
-    "incomingCallNotificationPlaceholderAlert": "Binnenkomende oproep",
+    "incomingCallNotificationPlaceholderAlert": "{callerName} belt",
     "incomingCallNoticicationAcceptWithAudioAriaLabel": "Accepteren met geluid",
     "incomingCallNoticicationAcceptWithVideoAriaLabel": "Accepteren met video",
-    "incomingCallNoticicationRejectAriaLabel": "Weigeren"
+    "incomingCallNoticicationRejectAriaLabel": "Weigeren",
+    "incomingCallNotificationAcceptButtonLabel": "Accepteren",
+    "incomingCallNotificationRejectButtonLabel": "Weigeren",
+    "incomingCallNotificationAccceptWithVideoButtonLabel": "Accepteren met video"
   }
 }

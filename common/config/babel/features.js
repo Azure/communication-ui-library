@@ -23,6 +23,10 @@ module.exports = {
     "composite-js-helpers",
     // feature for breakout rooms
     "breakout-rooms",
+    // Feature for remote UFD
+    "remote-ufd",
+    // Feature for showing dtmp dialer by default
+    "dtmf-dialer-on-by-default"
   ],
   beta: [
     "call-readiness",
