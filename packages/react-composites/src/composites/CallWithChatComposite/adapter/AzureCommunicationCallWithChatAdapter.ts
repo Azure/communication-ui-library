@@ -185,6 +185,8 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     this.onChatStateChange = onChatStateChange;
     if (chatAdapter) {
       this.updateChatAdapter(chatAdapter);
+      /* @conditional-compile-remove(breakout-rooms) */
+      this.originCallChatAdapter = chatAdapter;
     }
 
     const onCallStateChange = (newCallAdapterState: CallAdapterState): void => {
@@ -1183,7 +1185,19 @@ export const createAzureCommunicationCallWithChatAdapter = async ({
       'CallWithChat' as _TelemetryImplementationHint
     );
 
-    return new AzureCommunicationCallWithChatAdapter(await callAdapter, await chatAdapter);
+    const callWithChatAdapter = new AzureCommunicationCallWithChatAdapter(await callAdapter, await chatAdapter);
+    /* @conditional-compile-remove(breakout-rooms) */
+    callWithChatAdapter.setCreateChatAdapterCallback((threadId: string) =>
+      _createAzureCommunicationChatAdapterInner(
+        endpoint,
+        userId,
+        displayName,
+        credential,
+        threadId,
+        'CallWithChat' as _TelemetryImplementationHint
+      )
+    );
+    return callWithChatAdapter;
   }
 };
 
