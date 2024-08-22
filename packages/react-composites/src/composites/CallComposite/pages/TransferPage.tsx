@@ -89,7 +89,6 @@ export const TransferPage = (
         complianceBannerProps={{ strings }}
         // Ignore errors from before current call. This avoids old errors from showing up when a user re-joins a call.
         errorBarProps={props.options?.errorBar !== false && errorBarProps}
-        /* @conditional-compile-remove(notifications) */
         showErrorNotifications={props.options?.errorBar ?? true}
         callControlProps={{
           options: callControlOptions,
@@ -117,10 +116,10 @@ export const TransferPage = (
         mobileChatTabHeader={props.mobileChatTabHeader}
         latestErrors={props.latestErrors}
         onDismissError={props.onDismissError}
-        /* @conditional-compile-remove(notifications) */
         onDismissNotification={props.onDismissNotification}
-        /* @conditional-compile-remove(notifications) */
         latestNotifications={props.latestNotifications}
+        /* @conditional-compile-remove(call-readiness) */
+        doNotShowCameraAccessNotifications={props.options?.deviceChecks?.camera === 'doNotPrompt'}
       />
     </Stack>
   );

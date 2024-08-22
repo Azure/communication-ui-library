@@ -3,7 +3,7 @@
 
 import { ActiveErrorMessage, ErrorType } from '@internal/react-components';
 import { TrackedNotifications } from '../types/ErrorTracking';
-/* @conditional-compile-remove(notifications) */
+
 import { NotificationType, ActiveNotification } from '@internal/react-components';
 
 /**
@@ -12,9 +12,9 @@ import { NotificationType, ActiveNotification } from '@internal/react-components
  * @private
  */
 export const filterLatestNotifications = (
-  activeNotifications: ActiveErrorMessage[] | /* @conditional-compile-remove(notifications) */ ActiveNotification[],
+  activeNotifications: ActiveErrorMessage[] | ActiveNotification[],
   trackedNotifications: TrackedNotifications
-): ActiveErrorMessage[] | /* @conditional-compile-remove(notifications) */ ActiveNotification[] => {
+): ActiveErrorMessage[] | ActiveNotification[] => {
   const filteredNotifications = activeNotifications.filter((activeNotification) => {
     const trackedNotification = trackedNotifications[activeNotification.type];
     return (
@@ -23,9 +23,7 @@ export const filterLatestNotifications = (
       trackedNotification.lastDismissedAt < trackedNotification.mostRecentlyActive
     );
   });
-  return filteredNotifications as
-    | ActiveErrorMessage[]
-    | /* @conditional-compile-remove(notifications) */ ActiveNotification[];
+  return filteredNotifications as ActiveErrorMessage[] | ActiveNotification[];
 };
 
 /**
@@ -35,7 +33,7 @@ export const filterLatestNotifications = (
  */
 export const updateTrackedNotificationsWithActiveNotifications = (
   existingTrackedNotifications: TrackedNotifications,
-  activeNotifications: ActiveErrorMessage[] | /* @conditional-compile-remove(notifications) */ ActiveNotification[]
+  activeNotifications: ActiveErrorMessage[] | ActiveNotification[]
 ): TrackedNotifications => {
   const trackedNotifications: TrackedNotifications = {};
 
@@ -58,7 +56,7 @@ export const updateTrackedNotificationsWithActiveNotifications = (
  * @private
  */
 export const trackNotificationAsDismissed = (
-  notificationType: ErrorType | /* @conditional-compile-remove(notifications) */ NotificationType,
+  notificationType: ErrorType | NotificationType,
   trackedNotifications: TrackedNotifications
 ): TrackedNotifications => {
   const now = new Date(Date.now());

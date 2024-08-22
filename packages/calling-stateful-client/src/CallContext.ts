@@ -92,6 +92,8 @@ export class CallContext {
   private _atomicId: number;
   private _callIdHistory: CallIdHistory = new CallIdHistory();
   private _timeOutId: { [key: string]: ReturnType<typeof setTimeout> } = {};
+  /* @conditional-compile-remove(breakout-rooms) */
+  private _latestCallIdsThatPushedNotifications: Partial<Record<NotificationTarget, string>> = {};
 
   constructor(
     userId: CommunicationIdentifierKind,
@@ -656,6 +658,16 @@ export class CallContext {
     });
   }
 
+  /* @conditional-compile-remove(breakout-rooms) */
+  public setBreakoutRoomDisplayName(callId: string, breakoutRoomDisplayName: string): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        call.breakoutRooms = { ...call.breakoutRooms, breakoutRoomDisplayName };
+      }
+    });
+  }
+
   public setCallScreenShareParticipant(callId: string, participantKey: string | undefined): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
@@ -763,7 +775,6 @@ export class CallContext {
           const existingStream = participant.videoStreams[stream.id];
           if (existingStream) {
             existingStream.isAvailable = stream.isAvailable;
-            /* @conditional-compile-remove(video-stream-is-receiving-flag) */
             existingStream.isReceiving = stream.isReceiving;
             existingStream.mediaStreamType = stream.mediaStreamType;
           } else {
@@ -794,7 +805,6 @@ export class CallContext {
     });
   }
 
-  /* @conditional-compile-remove(video-stream-is-receiving-flag) */
   public setRemoteVideoStreamIsReceiving(
     callId: string,
     participantKey: string,
@@ -857,7 +867,6 @@ export class CallContext {
             if (stream) {
               stream.mediaStreamType = newStream.mediaStreamType;
               stream.isAvailable = newStream.isAvailable;
-              /* @conditional-compile-remove(video-stream-is-receiving-flag) */
               stream.isReceiving = newStream.isReceiving;
             } else {
               participant.videoStreams[newStream.id] = newStream;
@@ -1257,14 +1266,25 @@ export class CallContext {
   }
 
   /* @conditional-compile-remove(breakout-rooms) */
-  public setLatestNotification(notification: CallNotification): void {
+  public setLatestNotification(callId: string, notification: CallNotification): void {
+    this._latestCallIdsThatPushedNotifications[notification.target] = callId;
     this.modifyState((draft: CallClientState) => {
       draft.latestNotifications[notification.target] = notification;
     });
   }
 
   /* @conditional-compile-remove(breakout-rooms) */
-  public deleteLatestNotification(notificationTarget: NotificationTarget): void {
+  public deleteLatestNotification(callId: string, notificationTarget: NotificationTarget): void {
+    let callIdToPushLatestNotification = this._latestCallIdsThatPushedNotifications[notificationTarget];
+    callIdToPushLatestNotification = callIdToPushLatestNotification
+      ? this._callIdHistory.latestCallId(callIdToPushLatestNotification)
+      : undefined;
+    // Only delete the notification if the call that pushed the notification is the same as the call that is trying
+    // to delete it.
+    if (callIdToPushLatestNotification !== callId) {
+      return;
+    }
+
     this.modifyState((draft: CallClientState) => {
       delete draft.latestNotifications[notificationTarget];
     });

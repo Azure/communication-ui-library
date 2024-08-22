@@ -342,21 +342,21 @@ export const customNotificationIconName: Partial<{ [key in NotificationType]: st
   /* @conditional-compile-remove(soft-mute) */
   mutedByRemoteParticipant: 'ErrorBarMutedByRemoteParticipant',
   speakingWhileMuted: 'ErrorBarCallMicrophoneMutedBySystem',
-  /* @conditional-compile-remove(notifications) */
+
   recordingStarted: 'NotificationBarRecording',
-  /* @conditional-compile-remove(notifications) */
+
   transcriptionStarted: 'NotificationBarRecording',
-  /* @conditional-compile-remove(notifications) */
+
   recordingStopped: 'NotificationBarRecording',
-  /* @conditional-compile-remove(notifications) */
+
   transcriptionStopped: 'NotificationBarRecording',
-  /* @conditional-compile-remove(notifications) */
+
   recordingAndTranscriptionStarted: 'NotificationBarRecording',
-  /* @conditional-compile-remove(notifications) */
+
   recordingAndTranscriptionStopped: 'NotificationBarRecording',
-  /* @conditional-compile-remove(notifications) */
+
   recordingStoppedStillTranscribing: 'NotificationBarRecording',
-  /* @conditional-compile-remove(notifications) */
+
   transcriptionStoppedStillRecording: 'NotificationBarRecording',
   /* @conditional-compile-remove(breakout-rooms) */
   assignedBreakoutRoomOpened: 'NotificationBarBreakoutRoomOpened',
@@ -365,9 +365,9 @@ export const customNotificationIconName: Partial<{ [key in NotificationType]: st
   /* @conditional-compile-remove(breakout-rooms) */
   assignedBreakoutRoomChanged: 'NotificationBarBreakoutRoomChanged',
   /* @conditional-compile-remove(breakout-rooms) */
-  assignedBreakoutRoomClosingSoon: 'NotificationBarBreakoutRoom',
+  breakoutRoomJoined: 'NotificationBarBreakoutRoomJoined',
   /* @conditional-compile-remove(breakout-rooms) */
-  assignedBreakoutRoomClosed: 'NotificationBarBreakoutRoomClosed'
+  breakoutRoomClosingSoon: 'NotificationBarBreakoutRoomClosingSoon'
 };
 
 /**

@@ -293,6 +293,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
             isPermissionsModalDismissed={isPermissionsModalDismissed}
             setIsPermissionsModalDismissed={setIsPermissionsModalDismissed}
             onPermissionsTroubleshootingClick={onPermissionsTroubleshootingClick}
+            doNotPromptCamera={deviceChecks?.camera === 'doNotPrompt'}
           />
         )
       }
