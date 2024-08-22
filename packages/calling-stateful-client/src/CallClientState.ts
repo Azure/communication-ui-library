@@ -207,6 +207,7 @@ export interface BreakoutRoomsState {
   assignedBreakoutRoom?: BreakoutRoom;
   breakoutRoomSettings?: BreakoutRoomsSettings;
   breakoutRoomOriginCallId?: string;
+  breakoutRoomDisplayName?: string;
 }
 
 /**
@@ -384,7 +385,6 @@ export interface RemoteVideoStreamState {
    * Proxy of {@link @azure/communication-calling#RemoteVideoStream.isReceiving}.
    * @public
    */
-  /* @conditional-compile-remove(video-stream-is-receiving-flag) */
   isReceiving: boolean;
   /**
    * {@link VideoStreamRendererView} that is managed by createView/disposeView in {@link StatefulCallClient}
@@ -1052,8 +1052,8 @@ export type NotificationTarget =
   | 'assignedBreakoutRoomOpened'
   | 'assignedBreakoutRoomOpenedPromptJoin'
   | 'assignedBreakoutRoomChanged'
-  | 'assignedBreakoutRoomClosingSoon'
-  | 'assignedBreakoutRoomClosed';
+  | 'breakoutRoomJoined'
+  | 'breakoutRoomClosingSoon';
 
 /**
  * State only proxy for {@link @azure/communication-calling#DiagnosticsCallFeature}.

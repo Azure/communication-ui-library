@@ -12,11 +12,10 @@
  *   node common/scripts/changelog/collect.mjs beta
  */
 
-import { copyFile, open, rm, readFile, rename, writeFile, mkdir } from 'fs/promises';
+import { copyFile, open, rm, readFile, writeFile } from 'fs/promises';
 import { exec } from "../lib/exec.mjs";
-import { CHANGE_DIR, CHANGE_DIR_BETA, CHANGE_DIR_STABLE_TEMP, COMMUNICATION_REACT_CHANGELOG_BETA, COMMUNICATION_REACT_CHANGELOG_STABLE, COMMUNICATION_REACT_CHANGELOG_TEMPORARY } from './constants.mjs';
+import { CHANGE_DIR_STABLE, CHANGE_DIR_BETA, COMMUNICATION_REACT_CHANGELOG_BETA, COMMUNICATION_REACT_CHANGELOG_STABLE, COMMUNICATION_REACT_CHANGELOG_TEMPORARY } from './constants.mjs';
 import { generateChangelogs } from './changelog.mjs';
-import { existsSync } from 'fs';
 
 async function main() {
     const args = process.argv;
@@ -38,33 +37,17 @@ async function main() {
 }
 
 async function collectionBetaChangelog() {
-    await swapInBetaChangeFiles();
     await createTemporaryChangelog(COMMUNICATION_REACT_CHANGELOG_BETA);
-    await generateChangelogs();
+    await generateChangelogs('beta-release');
     const prsFromStableChangelog = await getPRsFromFile(COMMUNICATION_REACT_CHANGELOG_STABLE);
     await removePRsFromLatestReleaseOfChangelogFile(COMMUNICATION_REACT_CHANGELOG_TEMPORARY, prsFromStableChangelog);
-    await restoreStableChangeFiles();
     await commitChangelog(COMMUNICATION_REACT_CHANGELOG_BETA);
 }
 
 async function collectionStableChangelog() {
     await createTemporaryChangelog(COMMUNICATION_REACT_CHANGELOG_STABLE);
-    await generateChangelogs();
+    await generateChangelogs('stable');
     await commitChangelog(COMMUNICATION_REACT_CHANGELOG_STABLE);
-}
-
-async function swapInBetaChangeFiles() {
-    await rm(CHANGE_DIR_STABLE_TEMP, { recursive: true, force: true })
-    await rename(CHANGE_DIR, CHANGE_DIR_STABLE_TEMP);
-    if(!existsSync(CHANGE_DIR_BETA)) {
-        await mkdir(CHANGE_DIR_BETA);
-    }
-    await rename(CHANGE_DIR_BETA, CHANGE_DIR);
-}
-
-async function restoreStableChangeFiles() {
-    await rename(CHANGE_DIR, CHANGE_DIR_BETA);
-    await rename(CHANGE_DIR_STABLE_TEMP, CHANGE_DIR);
 }
 
 async function ensureCleanWorkingDirectory() {
@@ -85,7 +68,7 @@ async function commitChangelog(target) {
     await copyFile(COMMUNICATION_REACT_CHANGELOG_TEMPORARY, target);
     await exec(`git add ${target}`);
     await exec(`git add **/CHANGELOG.json`);
-    await exec(`git add ${CHANGE_DIR} ${CHANGE_DIR_BETA}`);
+    await exec(`git add ${CHANGE_DIR_STABLE} ${CHANGE_DIR_BETA}`);
     await exec('git commit -m "Collect CHANGELOG"');
 }
 

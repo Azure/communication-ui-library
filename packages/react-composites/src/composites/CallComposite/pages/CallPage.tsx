@@ -221,6 +221,8 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
         hideSpotlightButtons={options?.spotlight?.hideSpotlightButtons}
         pinnedParticipants={pinnedParticipantsChecked}
         setPinnedParticipants={setPinnedParticipants}
+        /* @conditional-compile-remove(call-readiness) */
+        doNotShowCameraAccessNotifications={props.options?.deviceChecks?.camera === 'doNotPrompt'}
       />
       {<Prompt isOpen={isPromptOpen} onDismiss={() => setIsPromptOpen(false)} {...promptProps} />}
     </>
