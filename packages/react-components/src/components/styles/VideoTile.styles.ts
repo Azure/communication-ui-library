@@ -229,6 +229,18 @@ export const waitingScreenTextStyle = (theme: ITheme): IStyle => {
 export const waitingScreenIconStyle = (): IStyle => {
   return {
     fontSize: '3rem',
-    margin: '0'
+    fontStyle: 'normal'
+  };
+};
+
+/**
+ * @private
+ */
+export const overlayStyles = (): IStyle => {
+  return {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.6)'
   };
 };

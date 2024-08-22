@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { mergeStyles, Stack, Text } from '@fluentui/react';
+import { mergeStyles, Stack, Text, Icon } from '@fluentui/react';
 import { concatStyleSets, IContextualMenuProps, Layer } from '@fluentui/react';
 import { _formatString } from '@internal/acs-ui-common';
 import React, { useMemo } from 'react';
@@ -23,7 +23,12 @@ import { useVideoTileContextualMenuProps } from './VideoGallery/useVideoTileCont
 import { VideoGalleryStrings } from './VideoGallery';
 import { _DrawerMenu, _DrawerMenuItemProps } from './Drawer';
 import { drawerMenuWrapperStyles } from './VideoGallery/styles/RemoteVideoTile.styles';
-import { videoContainerStyles, waitingScreenIconStyle, waitingScreenTextStyle } from './styles/VideoTile.styles';
+import {
+  videoContainerStyles,
+  overlayStyles,
+  waitingScreenIconStyle,
+  waitingScreenTextStyle
+} from './styles/VideoTile.styles';
 
 /**
  * A memoized version of VideoTile for rendering local participant.
@@ -205,15 +210,8 @@ export const _LocalVideoTile = React.memo(
         return (
           <>
             {reactionOverlay}
-            <Stack
-              className={mergeStyles(videoContainerStyles, {
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                backgroundColor: 'rgba(0, 0, 0, 0.6)'
-              })}
-            >
-              <p className={mergeStyles(waitingScreenIconStyle())}>&#9749;</p>
+            <Stack className={mergeStyles(videoContainerStyles, overlayStyles())}>
+              <Icon className={mergeStyles(waitingScreenIconStyle())} iconName="WaitingScreenIcon" />
               <Text className={mergeStyles(waitingScreenTextStyle(theme))} aria-live={'polite'}>
                 {strings?.waitingScreenText}
               </Text>

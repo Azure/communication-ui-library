@@ -512,6 +512,7 @@ export type CallCompositeIcons = {
     JoinByPhoneWaitToBeAdmittedIcon?: JSX.Element;
     PeoplePaneMoreButton?: JSX.Element;
     StopAllSpotlightMenuButton?: JSX.Element;
+    WaitingScreenIcon?: JSX.Element;
 };
 
 // @public
@@ -1159,6 +1160,7 @@ export type CallWithChatCompositeIcons = {
     ParticipantItemOptionsHovered?: JSX.Element;
     PeoplePaneMoreButton?: JSX.Element;
     StopAllSpotlightMenuButton?: JSX.Element;
+    WaitingScreenIcon?: JSX.Element;
 };
 
 // @public
@@ -2348,6 +2350,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     JoinByPhoneWaitToBeAdmittedIcon?: JSX.Element | undefined;
     PeoplePaneMoreButton?: JSX.Element | undefined;
     StopAllSpotlightMenuButton?: JSX.Element | undefined;
+    WaitingScreenIcon?: JSX.Element | undefined;
     ChevronLeft?: JSX.Element | undefined;
     ControlBarChatButtonActive?: JSX.Element | undefined;
     ControlBarChatButtonInactive?: JSX.Element | undefined;
@@ -2362,7 +2365,11 @@ export const DEFAULT_COMPOSITE_ICONS: {
     ControlButtonParticipantsContextualMenuItem: React_2.JSX.Element;
     OpenAttachment: React_2.JSX.Element;
     ErrorBarCallVideoRecoveredBySystem: React_2.JSX.Element;
-    ErrorBarCallVideoStoppedBySystem: React_2.JSX.Element;
+    ErrorBarCallVideoStoppedBySystem: React_2.JSX.Element; /**
+    * Icons that can be overridden for {@link CallComposite}.
+    *
+    * @public
+    */
     NotificationBarRecording: React_2.JSX.Element;
     MessageResend: React_2.JSX.Element;
     ParticipantItemSpotlighted: React_2.JSX.Element;
