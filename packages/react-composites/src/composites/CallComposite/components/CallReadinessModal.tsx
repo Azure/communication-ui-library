@@ -40,6 +40,7 @@ export const CallReadinessModal = (props: {
     camera: PermissionState;
     microphone: PermissionState;
   }) => void;
+  doNotPromptCamera: boolean;
 }): JSX.Element => {
   const {
     mobileView,
@@ -59,7 +60,10 @@ export const CallReadinessModal = (props: {
   const audioState: PermissionState = permissionsState.microphone;
 
   const showModal =
-    videoState === 'denied' || videoState === 'prompt' || audioState === 'denied' || audioState === 'prompt';
+    (!props.doNotPromptCamera && videoState === 'denied') ||
+    (!props.doNotPromptCamera && videoState === 'prompt') ||
+    audioState === 'denied' ||
+    audioState === 'prompt';
   /* @conditional-compile-remove(unsupported-browser) */
   const isSafari = _isSafari(environmentInfo);
 

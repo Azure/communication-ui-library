@@ -121,6 +121,8 @@ export const TransferPage = (
         onDismissNotification={props.onDismissNotification}
         /* @conditional-compile-remove(notifications) */
         latestNotifications={props.latestNotifications}
+        /* @conditional-compile-remove(call-readiness) */
+        doNotShowCameraAccessNotifications={props.options?.deviceChecks?.camera === 'doNotPrompt'}
       />
     </Stack>
   );
