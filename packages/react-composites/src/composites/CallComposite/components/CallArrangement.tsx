@@ -95,6 +95,8 @@ import { getCaptionsKind, getIsTeamsCall } from '../selectors/baseSelectors';
 import { useHandlers } from '../hooks/useHandlers';
 /* @conditional-compile-remove(soft-mute) */
 import { MoreDrawer } from '../../common/Drawer/MoreDrawer';
+/* @conditional-compile-remove(breakout-rooms) */
+import { useCompositeStringsForNotificationStackStrings } from '../hooks/useCompositeStringsForNotificationStack';
 
 /**
  * @private
@@ -516,6 +518,9 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
       )
     : props.capabilitiesChangedNotificationBarProps?.capabilitiesChangedNotifications;
 
+  /* @conditional-compile-remove(breakout-rooms) */
+  const notificationStackStrings = useCompositeStringsForNotificationStackStrings(locale);
+
   const errorNotificationTrampoline = (): JSX.Element => {
     /* @conditional-compile-remove(notifications) */
     return (
@@ -675,6 +680,8 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                           <NotificationStack
                             activeNotifications={props.latestNotifications}
                             onDismissNotification={props.onDismissNotification}
+                            /* @conditional-compile-remove(breakout-rooms) */
+                            strings={notificationStackStrings}
                           />
                         </Stack>
                       )
