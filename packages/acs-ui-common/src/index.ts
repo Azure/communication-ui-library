@@ -26,6 +26,8 @@ export type { _IObjectMap } from './localizationUtils';
 export type { _TelemetryImplementationHint } from './telemetry';
 
 export { _MAX_EVENT_LISTENERS } from './constants';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+export { _IMAGE_ATTRIBUTE_INLINE_IMAGE_FILE_NAME_KEY } from './constants';
 
 export { _pxToRem } from './cssUtils';
 

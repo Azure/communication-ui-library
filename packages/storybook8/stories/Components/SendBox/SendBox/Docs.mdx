@@ -1,0 +1,67 @@
+import { SendBox } from '@azure/communication-react';
+import { Title, Description, Props, Heading, Source, Canvas, Meta, ArgTypes } from '@storybook/addon-docs';
+import { SingleLineBetaBanner } from '../../../BetaBanners/SingleLineBetaBanner';
+import { DetailedBetaBanner } from '../../../BetaBanners/DetailedBetaBanner';
+
+import AttachmentUploadsExampleText from '!!raw-loader!./snippets/AttachmentUploads.snippet.tsx';
+import CustomIconExampleText from '!!raw-loader!./snippets/CustomIcon.snippet.tsx';
+import CustomStylingExampleText from '!!raw-loader!./snippets/CustomStyling.snippet.tsx';
+import MentionsExampleText from '!!raw-loader!./snippets/Mentions.snippet.tsx';
+import SendBoxExampleText from '!!raw-loader!./snippets/SendBox.snippet.tsx';
+import SendBoxWithSystemMessageExampleText from '!!raw-loader!./snippets/SendBoxWithSystemMessage.snippet.tsx';
+
+import * as SendBoxStories from './index.stories';
+
+<Meta of={SendBoxStories} component={SendBox} />
+
+# SendBox
+
+Component for typing and sending messages. SendBox has a callback for sending typing notification when user starts entering text. It also supports an optional message below the text input field.
+
+## Importing
+
+```ts
+import { SendBox } from '@azure/communication-react';
+```
+
+## Example
+
+<Canvas of={SendBoxStories.SendBoxExampleDocsOnly} source={{ code: SendBoxExampleText }} />
+
+## Add a system message
+
+To add a system message, use the `systemMessage` property like in the example below.
+
+<Canvas
+  of={SendBoxStories.SendBoxWithSystemMessageExampleDocsOnly}
+  source={{ code: SendBoxWithSystemMessageExampleText }}
+/>
+
+## Customize send icon
+
+To customize the send icon, use the `onRenderIcon` property like in the example below. A Fluent UI [Icon](https://developer.microsoft.com/fluentui#/controls/web/icon) is used in this example but you can use any `JSX.Element`.
+
+<Canvas of={SendBoxStories.CustomIconExampleDocsOnly} source={{ code: CustomIconExampleText }} />
+## Customize styling
+
+To customize the style of SendBox, use the `styles` property like in the example below. Notice that the keys of the `styles` property are the root and sub-components of `SendBox`, each of which can be styled independently.
+
+<Canvas of={SendBoxStories.CustomStylingExampleDocsOnly} source={{ code: CustomStylingExampleText }} />
+
+## Display Attachment Uploads
+
+<DetailedBetaBanner />
+
+SendBox component provides UI for displaying `AttachmentMetadataInProgress` in the SendBox. This allows developers to implement a file-sharing feature using the pure UI component with minimal effort. Developers can write their own attachment upload logic and utilize the UI provided by SendBox.
+
+<Canvas of={SendBoxStories.AttachmentUploadsExampleDocsOnly} source={{ code: AttachmentUploadsExampleText }} />
+
+## Mentioning Users
+
+<SingleLineBetaBanner version={'1.7.0-beta.1'} />
+
+The SendBox component supports mentioning users in the chat. To enable this feature, set the `mentionLookupOptions` property to an object and implement the required functionality.
+
+<Canvas of={SendBoxStories.MentionsExampleDocsOnly} source={{ code: MentionsExampleText }} />
+## Props
+<ArgTypes of={SendBox} />

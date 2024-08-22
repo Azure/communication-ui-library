@@ -24,7 +24,7 @@
     "placeholderText": "Введите сообщение",
     "textTooLong": "Длина сообщения превышает максимально допустимую.",
     "sendButtonAriaLabel": "Отправить сообщение",
-    "attachmentUploadsPendingError": "Выполняется загрузка. Подождите...",
+    "attachmentUploadsPendingError": "Выполняется отправка файла. Подождите.",
     "removeAttachment": "Удалить файл",
     "uploading": "Отправка",
     "uploadCompleted": "Отправка завершена",
@@ -34,7 +34,8 @@
     "placeholderText": "Введите сообщение",
     "textTooLong": "Длина сообщения превышает максимально допустимую.",
     "sendButtonAriaLabel": "Отправить сообщение",
-    "attachmentUploadsPendingError": "Производится отправка... Подождите.",
+    "attachmentUploadsPendingError": "Выполняется отправка файла. Подождите.",
+    "imageUploadsPendingError": "Выполняется отправка изображения. Подождите.",
     "removeAttachment": "Удалить файл",
     "uploading": "Отправка",
     "uploadCompleted": "Отправка завершена",
@@ -58,7 +59,11 @@
     "richTextDeleteRowMenu": "Удалить строку",
     "richTextDeleteTableMenu": "Удалить таблицу",
     "richTextToolbarMoreButtonAriaLabel": "Дополнительные параметры",
-    "attachmentMoreMenu": "Дополнительные параметры"
+    "attachmentMoreMenu": "Дополнительные параметры",
+    "richTextNewBulletedListItemAnnouncement": "Маркер, новая строка",
+    "richTextNewNumberedListItemAnnouncement": "{0}, новая строка",
+    "richTextBulletedListAppliedAnnouncement": "Применен маркированный список",
+    "richTextNumberedListAppliedAnnouncement": "Применен нумерованный список"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Рекомендации"
@@ -221,7 +226,12 @@
     "richTextDeleteRowMenu": "Удалить строку",
     "richTextDeleteTableMenu": "Удалить таблицу",
     "richTextToolbarMoreButtonAriaLabel": "Дополнительные параметры",
-    "attachmentUploadsPendingError": "Отправка... Подождите."
+    "attachmentUploadsPendingError": "Выполняется отправка файла. Подождите.",
+    "imageUploadsPendingError": "Выполняется отправка изображения. Подождите.",
+    "richTextNewBulletedListItemAnnouncement": "Маркер, новая строка",
+    "richTextNewNumberedListItemAnnouncement": "{0}, новая строка",
+    "richTextBulletedListAppliedAnnouncement": "Применен маркированный список",
+    "richTextNumberedListAppliedAnnouncement": "Применен нумерованный список"
   },
   "errorBar": {
     "unableToReachChatService": "Вы не в сети",
@@ -447,6 +457,7 @@
   "videoGallery": {
     "screenIsBeingSharedMessage": "Вы демонстрируете свой экран",
     "screenShareLoadingMessage": "Загрузка экрана пользователя {participant}",
+    "localScreenShareLoadingMessage": "Загрузка экрана",
     "localVideoLabel": "Вы",
     "localVideoCameraSwitcherLabel": "Переключить камеру",
     "localVideoMovementLabel": "Перемещаемая локальная плитка видео",
@@ -616,9 +627,12 @@
   },
   "IncomingCallNotification": {
     "incomingCallNotificationPlaceholderId": "Неизвестный пользователь",
-    "incomingCallNotificationPlaceholderAlert": "Входящий звонок",
+    "incomingCallNotificationPlaceholderAlert": "{callerName} звонит",
     "incomingCallNoticicationAcceptWithAudioAriaLabel": "Ответить голосом",
     "incomingCallNoticicationAcceptWithVideoAriaLabel": "Принять видеозвонок",
-    "incomingCallNoticicationRejectAriaLabel": "Отклонить"
+    "incomingCallNoticicationRejectAriaLabel": "Отклонить",
+    "incomingCallNotificationAcceptButtonLabel": "Принять",
+    "incomingCallNotificationRejectButtonLabel": "Отклонить",
+    "incomingCallNotificationAccceptWithVideoButtonLabel": "Ответить с видео"
   }
 }

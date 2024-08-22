@@ -24,7 +24,7 @@
     "placeholderText": "Inserir uma mensagem",
     "textTooLong": "O comprimento da mensagem está acima do limite máximo.",
     "sendButtonAriaLabel": "Enviar mensagem",
-    "attachmentUploadsPendingError": "Carregando... Aguarde.",
+    "attachmentUploadsPendingError": "O arquivo está sendo carregado, aguarde.",
     "removeAttachment": "Remover arquivo",
     "uploading": "Carregando",
     "uploadCompleted": "Carregamento concluído",
@@ -34,7 +34,8 @@
     "placeholderText": "Inserir uma mensagem",
     "textTooLong": "O comprimento da mensagem está acima do limite máximo.",
     "sendButtonAriaLabel": "Enviar mensagem",
-    "attachmentUploadsPendingError": "Carregando... Aguarde.",
+    "attachmentUploadsPendingError": "O arquivo está sendo carregado, aguarde.",
+    "imageUploadsPendingError": "A imagem está sendo carregada, aguarde.",
     "removeAttachment": "Remover arquivo",
     "uploading": "Carregando",
     "uploadCompleted": "Carregamento concluído",
@@ -58,7 +59,11 @@
     "richTextDeleteRowMenu": "Excluir linha",
     "richTextDeleteTableMenu": "Excluir tabela",
     "richTextToolbarMoreButtonAriaLabel": "Mais opções",
-    "attachmentMoreMenu": "Mais Opções"
+    "attachmentMoreMenu": "Mais Opções",
+    "richTextNewBulletedListItemAnnouncement": "Com marcadores, nova linha",
+    "richTextNewNumberedListItemAnnouncement": "{0}, Nova linha",
+    "richTextBulletedListAppliedAnnouncement": "Lista com marcadores aplicada",
+    "richTextNumberedListAppliedAnnouncement": "Lista numerada aplicada"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Sugestões"
@@ -221,7 +226,12 @@
     "richTextDeleteRowMenu": "Excluir linha",
     "richTextDeleteTableMenu": "Excluir tabela",
     "richTextToolbarMoreButtonAriaLabel": "Mais opções",
-    "attachmentUploadsPendingError": "Carregando... Aguarde."
+    "attachmentUploadsPendingError": "O arquivo está sendo carregado, aguarde.",
+    "imageUploadsPendingError": "A imagem está sendo carregada, aguarde.",
+    "richTextNewBulletedListItemAnnouncement": "Com marcadores, nova linha",
+    "richTextNewNumberedListItemAnnouncement": "{0}, Nova linha",
+    "richTextBulletedListAppliedAnnouncement": "Lista com marcadores aplicada",
+    "richTextNumberedListAppliedAnnouncement": "Lista numerada aplicada"
   },
   "errorBar": {
     "unableToReachChatService": "Você está offline",
@@ -447,6 +457,7 @@
   "videoGallery": {
     "screenIsBeingSharedMessage": "Você está compartilhando sua tela",
     "screenShareLoadingMessage": "Carregando a tela do {participant}",
+    "localScreenShareLoadingMessage": "Carregando sua tela",
     "localVideoLabel": "Você",
     "localVideoCameraSwitcherLabel": "Alternar câmera",
     "localVideoMovementLabel": "Bloco de Vídeo Local Removível",
@@ -616,9 +627,12 @@
   },
   "IncomingCallNotification": {
     "incomingCallNotificationPlaceholderId": "Usuário Desconhecido",
-    "incomingCallNotificationPlaceholderAlert": "Recebendo chamada",
+    "incomingCallNotificationPlaceholderAlert": "Chamada de {callerName}",
     "incomingCallNoticicationAcceptWithAudioAriaLabel": "Aceitar com áudio",
     "incomingCallNoticicationAcceptWithVideoAriaLabel": "Aceitar com vídeo",
-    "incomingCallNoticicationRejectAriaLabel": "Rejeitar"
+    "incomingCallNoticicationRejectAriaLabel": "Rejeitar",
+    "incomingCallNotificationAcceptButtonLabel": "Aceitar",
+    "incomingCallNotificationRejectButtonLabel": "Recusar",
+    "incomingCallNotificationAccceptWithVideoButtonLabel": "Aceitar com Vídeo"
   }
 }

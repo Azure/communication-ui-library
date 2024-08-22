@@ -351,7 +351,11 @@
   },
   "chat": {
     "chatListHeader": "In deze chat",
-    "uploadAttachment": "Bijlage uploaden"
+    "uploadAttachment": "Bijlage uploaden",
+    "uploadImageDataNotProvided": "Er zijn geen afbeeldingsgegevens opgegeven.",
+    "uploadImageIsTooLarge": "Afbeelding is te groot. Kies een optie die kleiner is dan {maxImageSize} MB.",
+    "uploadImageExtensionIsNotAllowed": "Het uploaden van {imageExtension} afbeelding is niet toegestaan.",
+    "uploadImageFailed": "Kan afbeelding niet uploaden. Probeer het later opnieuw."
   },
   "callWithChat": {
     "chatButtonLabel": "Chatten",

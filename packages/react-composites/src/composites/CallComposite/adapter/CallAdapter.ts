@@ -13,6 +13,8 @@ import { TransferEventArgs } from '@azure/communication-calling';
 import { StartCaptionsOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
+/* @conditional-compile-remove(breakout-rooms) */
+import type { BreakoutRoomsUpdatedListener } from '@azure/communication-calling';
 import type {
   AudioDeviceInfo,
   VideoDeviceInfo,
@@ -39,6 +41,8 @@ import { CommunicationIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
 import type { CommunicationUserIdentifier, PhoneNumberIdentifier } from '@azure/communication-common';
 import type { AdapterState, Disposable, AdapterError, AdapterErrors } from '../../common/adapters';
+/* @conditional-compile-remove(breakout-rooms) */
+import type { AdapterNotifications } from '../../common/adapters';
 
 import { VideoBackgroundEffectsDependency } from '@internal/calling-component-bindings';
 
@@ -134,6 +138,11 @@ export type CallAdapterClientState = {
    * Latest error encountered for each operation performed via the adapter.
    */
   latestErrors: AdapterErrors;
+  /* @conditional-compile-remove(breakout-rooms) */
+  /**
+   * Latest notifications from call client state.
+   */
+  latestNotifications: AdapterNotifications;
   /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Azure communications Phone number to make PSTN calls with.
@@ -717,6 +726,11 @@ export interface CallAdapterCallOperations {
    * Mute All participants
    */
   muteAllRemoteParticipants(): Promise<void>;
+  /* @conditional-compile-remove(breakout-rooms) */
+  /**
+   * Return to origin call of breakout room
+   */
+  returnFromBreakoutRoom(): Promise<void>;
 }
 
 /**
@@ -905,7 +919,11 @@ export interface CallAdapterSubscribers {
    * Subscribe function for 'mutedByOthers' event.
    */
   on(event: 'mutedByOthers', listener: PropertyChangedEvent): void;
-
+  /* @conditional-compile-remove(breakout-rooms) */
+  /**
+   * Subscribe function for 'breakoutRoomsUpdated' event.
+   */
+  on(event: 'breakoutRoomsUpdated', listener: BreakoutRoomsUpdatedListener): void;
   /**
    * Unsubscribe function for 'participantsJoined' event.
    */
@@ -992,6 +1010,11 @@ export interface CallAdapterSubscribers {
    * Unsubscribe function for 'mutedByOthers' event.
    */
   off(event: 'mutedByOthers', listener: PropertyChangedEvent): void;
+  /* @conditional-compile-remove(breakout-rooms) */
+  /**
+   * Unsubscribe function for 'breakoutRoomsUpdated' event.
+   */
+  off(event: 'breakoutRoomsUpdated', listener: BreakoutRoomsUpdatedListener): void;
 }
 
 // This type remains for non-breaking change reason

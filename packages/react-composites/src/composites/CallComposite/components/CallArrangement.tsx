@@ -95,6 +95,8 @@ import { getCaptionsKind, getIsTeamsCall } from '../selectors/baseSelectors';
 import { useHandlers } from '../hooks/useHandlers';
 /* @conditional-compile-remove(soft-mute) */
 import { MoreDrawer } from '../../common/Drawer/MoreDrawer';
+/* @conditional-compile-remove(breakout-rooms) */
+import { useCompositeStringsForNotificationStackStrings } from '../hooks/useCompositeStringsForNotificationStack';
 
 /**
  * @private
@@ -138,6 +140,7 @@ export interface CallArrangementProps {
   hideSpotlightButtons?: boolean;
   pinnedParticipants?: string[];
   setPinnedParticipants?: (pinnedParticipants: string[]) => void;
+  doNotShowCameraAccessNotifications?: boolean;
 }
 
 /**
@@ -457,6 +460,16 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     );
   }
 
+  if (props.doNotShowCameraAccessNotifications) {
+    filteredLatestErrors = filteredLatestErrors.filter(
+      (e) => e.type !== 'callCameraAccessDenied' && e.type !== 'callCameraAccessDeniedSafari'
+    );
+    /* @conditional-compile-remove(notifications) */
+    filteredLatestErrorNotifications = filteredLatestErrorNotifications.filter(
+      (e) => e.type !== 'callCameraAccessDenied' && e.type !== 'callCameraAccessDeniedSafari'
+    );
+  }
+
   const isVideoPaneOpen = useIsParticularSidePaneOpen(VIDEO_EFFECTS_SIDE_PANE_ID);
 
   if (
@@ -504,6 +517,9 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
         (notification) => notification.capabilityName !== 'shareScreen'
       )
     : props.capabilitiesChangedNotificationBarProps?.capabilitiesChangedNotifications;
+
+  /* @conditional-compile-remove(breakout-rooms) */
+  const notificationStackStrings = useCompositeStringsForNotificationStackStrings(locale);
 
   const errorNotificationTrampoline = (): JSX.Element => {
     /* @conditional-compile-remove(notifications) */
@@ -664,6 +680,8 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                           <NotificationStack
                             activeNotifications={props.latestNotifications}
                             onDismissNotification={props.onDismissNotification}
+                            /* @conditional-compile-remove(breakout-rooms) */
+                            strings={notificationStackStrings}
                           />
                         </Stack>
                       )

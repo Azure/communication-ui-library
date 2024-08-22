@@ -1,0 +1,28 @@
+import { Canvas, Description, Meta, Source, ArgTypes } from '@storybook/blocks';
+import { Notification } from '@azure/communication-react';
+import * as NotificationStories from './index.stories';
+import NotificationExampleText from '!!raw-loader!./snippets/Notification.snippet';
+
+<Meta of={NotificationStories} />
+
+# Notification
+
+A container showing notification in a bar format with an icon, title, message, and 2 buttons. The message and buttons are optional.
+
+## Importing
+
+```ts
+import { Notification } from '@azure/communication-react';
+```
+
+## Example
+
+<Canvas of={NotificationStories.NotificationExampleDocsOnly} source={{ code: NotificationExampleText }} />
+
+## Custom Controls
+
+Toggle the `autoDismiss` prop to automatically dismiss the notification after 5 seconds. Toggle the `showStackedEffect` prop to show the notification in a stacked effect hinting there are more notifications behind it.
+
+## Props
+
+<ArgTypes of={Notification} />

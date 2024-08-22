@@ -214,6 +214,10 @@ export class _MockCallAdapter implements CallAdapter {
   muteAllRemoteParticipants(): Promise<void> {
     throw Error('muteAllRemoteParticipants not implemented');
   }
+  /* @conditional-compile-remove(breakout-rooms) */
+  returnFromBreakoutRoom(): Promise<void> {
+    throw Error('returnFromBreakoutRoom not implemented');
+  }
 }
 
 /**
@@ -285,6 +289,8 @@ const createDefaultCallAdapterState = (role?: ParticipantRole): CallAdapterState
     isTeamsCall: false,
     isTeamsMeeting: false,
     isRoomsCall: false,
-    latestErrors: {}
+    latestErrors: {},
+    /* @conditional-compile-remove(breakout-rooms) */
+    latestNotifications: {}
   };
 };

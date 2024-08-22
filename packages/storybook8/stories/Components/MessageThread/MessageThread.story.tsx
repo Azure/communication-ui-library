@@ -9,7 +9,9 @@ import {
   SystemMessage,
   MessageRenderer,
   ImageOverlay,
-  InlineImage
+  InlineImage,
+  RichTextEditBoxOptions,
+  AttachmentMetadataInProgress
 } from '@azure/communication-react';
 import {
   Persona,
@@ -21,8 +23,7 @@ import {
   IDropdownOption
 } from '@fluentui/react';
 import { Divider } from '@fluentui/react-components';
-
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 
 import {
   GenerateMockNewChatMessage,
@@ -42,6 +43,9 @@ import {
 const MessageThreadStory = (args): JSX.Element => {
   const [chatMessages, setChatMessages] =
     useState<(SystemMessage | CustomMessage | ChatMessage)[]>(GenerateMockChatMessages());
+  const [messagesInlineImagesWithProgress, setMessagesInlineImagesWithProgress] = useState<
+    Record<string, AttachmentMetadataInProgress[]> | undefined
+  >();
   const dropdownMenuOptions = [
     { key: 'newMessage', text: 'New Message' },
     { key: 'newMessageOthers', text: 'New Message from others' },
@@ -114,12 +118,14 @@ const MessageThreadStory = (args): JSX.Element => {
     if (message.messageType === 'chat') {
       message.content = content;
       message.editedOn = new Date(Date.now());
-      if (args.richTextEditor === true) {
+      // args will get string type when value is updated and page is reloaded (without updating switch again)
+      if (args.richTextEditor === true || args.richTextEditor === 'true') {
         message.contentType = 'html';
       }
     }
     updatedChatMessages[msgIdx] = message;
     setChatMessages(updatedChatMessages);
+    setMessagesInlineImagesWithProgress(undefined);
     return Promise.resolve();
   };
 
@@ -183,18 +189,33 @@ const MessageThreadStory = (args): JSX.Element => {
     }
   };
 
-  const removeImageTags = useCallback((event: { content: DocumentFragment }) => {
-    event.content.querySelectorAll('img').forEach((image) => {
-      // If the image is the only child of its parent, remove all the parents of this img element.
-      let parentNode: HTMLElement | null = image.parentElement;
-      let currentNode: HTMLElement = image;
-      while (parentNode?.childNodes.length === 1) {
-        currentNode = parentNode;
-        parentNode = parentNode.parentElement;
+  const richTextEditorOptions: RichTextEditBoxOptions = useMemo(() => {
+    return {
+      onInsertInlineImage: (imageAttributes: Record<string, string>, messageId: string) => {
+        const inlineImagesWithProgress = messagesInlineImagesWithProgress?.[messageId] ?? [];
+        const newImage: AttachmentMetadataInProgress = {
+          id: imageAttributes.id,
+          name: getImageFileNameFromAttributes(imageAttributes),
+          progress: 1,
+          url: imageAttributes.src,
+          error: undefined
+        };
+        setMessagesInlineImagesWithProgress({
+          ...messagesInlineImagesWithProgress,
+          [messageId]: [...inlineImagesWithProgress, newImage]
+        });
+      },
+      messagesInlineImagesWithProgress: messagesInlineImagesWithProgress,
+      onRemoveInlineImage: (imageAttributes: Record<string, string>, messageId: string) => {
+        const inlineImagesWithProgress = messagesInlineImagesWithProgress?.[messageId];
+        if (!inlineImagesWithProgress) {
+          return;
+        }
+        const filteredImages = inlineImagesWithProgress.filter((img) => img.id !== imageAttributes.id);
+        setMessagesInlineImagesWithProgress({ ...messagesInlineImagesWithProgress, [messageId]: filteredImages });
       }
-      currentNode?.remove();
-    });
-  }, []);
+    };
+  }, [messagesInlineImagesWithProgress]);
 
   const onSendHandler = (): void => {
     switch (selectedMessageType.key) {
@@ -235,7 +256,8 @@ const MessageThreadStory = (args): JSX.Element => {
         onRenderMessage={onRenderMessage}
         inlineImageOptions={inlineImageOptions}
         onUpdateMessage={onUpdateMessageCallback}
-        richTextEditorOptions={args.richTextEditor ? { onPaste: removeImageTags } : undefined}
+        onCancelEditMessage={() => setMessagesInlineImagesWithProgress(undefined)}
+        richTextEditorOptions={args.richTextEditor ? richTextEditorOptions : undefined}
         onRenderAvatar={(userId?: string) => {
           return (
             <Persona

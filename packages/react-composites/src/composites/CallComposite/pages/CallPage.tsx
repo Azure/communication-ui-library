@@ -8,7 +8,7 @@ import { ActiveErrorMessage, ErrorBar, ParticipantMenuItemsCallback } from '@int
 /* @conditional-compile-remove(notifications) */
 import { ActiveNotification } from '@internal/react-components';
 import { VideoGalleryLayout } from '@internal/react-components';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useState } from 'react';
 import { AvatarPersonaDataCallback } from '../../common/AvatarPersona';
 import { useLocale } from '../../localization';
@@ -34,6 +34,7 @@ import { DtmfDialpadPage } from './DtmfDialpadPage';
 import { showDtmfDialer } from '../utils/MediaGalleryUtils';
 import { getTargetCallees } from '../selectors/baseSelectors';
 import { Prompt, PromptProps } from '../components/Prompt';
+import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 
 /**
  * @private
@@ -82,7 +83,7 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
     userSetOverflowGalleryPosition = 'Responsive',
     onSetUserSetOverflowGalleryPosition,
     onCloseChatPane,
-    pinnedParticipants,
+    pinnedParticipants = [],
     setPinnedParticipants,
     compositeAudioContext,
     disableAutoShowDtmfDialer = false,
@@ -109,6 +110,16 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
   );
 
   const strings = useLocale().strings.call;
+
+  const pinnedParticipantsChecked = useMemo(
+    () =>
+      pinnedParticipants.filter((pinnedParticipant) =>
+        remoteParticipantsConnected.find(
+          (remoteParticipant) => toFlatCommunicationIdentifier(remoteParticipant.identifier) === pinnedParticipant
+        )
+      ),
+    [pinnedParticipants, remoteParticipantsConnected]
+  );
 
   // Reduce the controls shown when mobile view is enabled.
   const callControlOptions = mobileView ? reduceCallControlsForMobile(options?.callControls) : options?.callControls;
@@ -146,7 +157,7 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
           localVideoTileOptions={options?.localVideoTile}
           userSetOverflowGalleryPosition={userSetOverflowGalleryPosition}
           userSetGalleryLayout={galleryLayout}
-          pinnedParticipants={pinnedParticipants}
+          pinnedParticipants={pinnedParticipantsChecked}
           setPinnedParticipants={setPinnedParticipants}
           setIsPromptOpen={setIsPromptOpen}
           setPromptProps={setPromptProps}
@@ -208,8 +219,10 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
         setIsPromptOpen={setIsPromptOpen}
         setPromptProps={setPromptProps}
         hideSpotlightButtons={options?.spotlight?.hideSpotlightButtons}
-        pinnedParticipants={pinnedParticipants}
+        pinnedParticipants={pinnedParticipantsChecked}
         setPinnedParticipants={setPinnedParticipants}
+        /* @conditional-compile-remove(call-readiness) */
+        doNotShowCameraAccessNotifications={props.options?.deviceChecks?.camera === 'doNotPrompt'}
       />
       {<Prompt isOpen={isPromptOpen} onDismiss={() => setIsPromptOpen(false)} {...promptProps} />}
     </>

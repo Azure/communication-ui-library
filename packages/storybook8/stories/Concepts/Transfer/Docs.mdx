@@ -1,0 +1,28 @@
+import { Meta, Source } from '@storybook/addon-docs';
+
+import TransferSnippetText from '!!raw-loader!./snippets/Transfer.snippet.tsx';
+
+<Meta title="Concepts/Transfer" />
+
+# Transfer
+
+During an active call, a participant can transfer another participant to another user or call. The transfer process
+starts when a participant (the transferor) transfers one participant (the transferee) to another
+participant (the transfer target.) The transferee receives a transfer accepted event which contains the new call that was started to facilitate the transfer.
+If the oubound call is accepted by the transfer target, the transferee joins the new call. Finally, the call is ended by the transferor when the transferee leaves.
+
+In the current version, ACS users cannot request to transfer other participants yet but they can receive transfers.
+Currently, only Teams users can request to transfer other participants. To make a call to a Teams user or Teams Voice app, refer
+to the [Ad-hoc calling page](?path=/docs/adhoc-calling--docs).
+
+## Handling transfer events
+
+The [CallAdapter](./?path=/docs/composites-adapters--docs#call-adapter) is able to receive `transferAccepted` events and
+allows you to handle these events by defining your own `TransferRequestedListener` callback. The following code snippet
+shows an example of a `TransferAcceptedListener` that outputs all transferred calls to state.
+
+<Source code={TransferSnippetText} />
+
+## Requesting transfers
+
+ACS users cannot request transfers yet.

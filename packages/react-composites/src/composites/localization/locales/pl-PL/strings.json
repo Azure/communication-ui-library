@@ -351,7 +351,11 @@
   },
   "chat": {
     "chatListHeader": "W tym czacie",
-    "uploadAttachment": "Przekaż załącznik"
+    "uploadAttachment": "Przekaż załącznik",
+    "uploadImageDataNotProvided": "Nie udostępniono danych obrazu.",
+    "uploadImageIsTooLarge": "Obraz jest za duży. Wybierz rozmiar mniejszy niż {maxImageSize} MB.",
+    "uploadImageExtensionIsNotAllowed": "Przekazywanie obrazu .{imageExtension} nie jest dozwolone.",
+    "uploadImageFailed": "Nie można przekazać obrazu. Spróbuj ponownie później."
   },
   "callWithChat": {
     "chatButtonLabel": "Czat",

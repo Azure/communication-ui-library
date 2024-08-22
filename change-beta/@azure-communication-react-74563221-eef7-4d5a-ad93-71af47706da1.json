@@ -1,0 +1,9 @@
+{
+  "type": "prerelease",
+  "area": "improvement",
+  "workstream": "Update communication-calling package to 1.28.1-beta.4 and 1.27.5",
+  "comment": "Update communication calling to 1.28.1-beta.4 and 1.27.5",
+  "packageName": "@azure/communication-react",
+  "email": "edwardlee@microsoft.com",
+  "dependentChangeType": "patch"
+}

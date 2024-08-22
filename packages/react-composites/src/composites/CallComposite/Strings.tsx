@@ -810,7 +810,6 @@ export interface CallCompositeStrings {
    * Content of confirm dialog when leaving
    */
   endCallConfirmDialogContent?: string;
-  /* @conditional-compile-remove(meeting-id) */
   /**
    * Error message when the meeting identifier or passcode is invalid
    */
@@ -868,4 +867,24 @@ export interface CallCompositeStrings {
    * Label for mute all cancel button
    */
   muteAllCancelButtonLabel: string;
+  /* @conditional-compile-remove(breakout-rooms) */
+  /**
+   * Label for join breakout room button
+   */
+  joinBreakoutRoomButtonLabel: string;
+  /* @conditional-compile-remove(breakout-rooms) */
+  /**
+   * Label for button to return from breakout room
+   */
+  returnFromBreakoutRoomButtonLabel: string;
+  /* @conditional-compile-remove(breakout-rooms) */
+  /**
+   * Label for button to leave breakout room and meeting
+   */
+  leaveBreakoutRoomAndMeetingButtonLabel: string;
+  /* @conditional-compile-remove(breakout-rooms) */
+  /**
+   * Notification title for when a user joins a breakout room
+   */
+  breakoutRoomJoinedNotificationTitle: string;
 }

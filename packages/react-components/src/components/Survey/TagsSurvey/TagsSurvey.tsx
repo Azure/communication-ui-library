@@ -1,6 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+// Permit `any` in this file to handle the overloaded issue type. Todo: refactor CallSurvey to have PartialDeep<_CallSurvey> instead of any
+// for tracking incomplete survey responses.
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Text, useTheme, Stack, Checkbox, Pivot, PivotItem, TextField } from '@fluentui/react';
 import { _formatString, _getKeys, _pxToRem } from '@internal/acs-ui-common';
@@ -140,9 +144,9 @@ export const _TagsSurvey = (props: _TagsSurveyProps): JSX.Element => {
           setSelectedTags((prevState) => {
             const existingIssues = prevState?.[issueCategory]?.issues;
             if (existingIssues) {
-              (prevState[issueCategory]!.issues as unknown[]) = [...existingIssues, issue];
+              prevState[issueCategory]!.issues = [...existingIssues, issue] as any;
             } else {
-              (prevState[issueCategory] as { issues: unknown[] }) = { issues: [issue] };
+              prevState[issueCategory] = { issues: [issue] } as any;
             }
             return prevState;
           });

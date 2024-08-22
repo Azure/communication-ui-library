@@ -24,7 +24,7 @@
     "placeholderText": "输入消息",
     "textTooLong": "你的消息长度超过了最大限制。",
     "sendButtonAriaLabel": "发送消息",
-    "attachmentUploadsPendingError": "正在上载...请稍候。",
+    "attachmentUploadsPendingError": "正在上传文件，请稍候。",
     "removeAttachment": "删除文件",
     "uploading": "正在上传",
     "uploadCompleted": "已完成上传",
@@ -34,7 +34,8 @@
     "placeholderText": "输入消息",
     "textTooLong": "你的消息长度超过了最大限制。",
     "sendButtonAriaLabel": "发送信息",
-    "attachmentUploadsPendingError": "正在上传...请稍候。",
+    "attachmentUploadsPendingError": "正在上传文件，请稍候。",
+    "imageUploadsPendingError": "正在上传图像，请稍候。",
     "removeAttachment": "删除文件",
     "uploading": "正在上传",
     "uploadCompleted": "已完成上传",
@@ -58,7 +59,11 @@
     "richTextDeleteRowMenu": "删除行",
     "richTextDeleteTableMenu": "删除表格",
     "richTextToolbarMoreButtonAriaLabel": "更多选项",
-    "attachmentMoreMenu": "更多选项"
+    "attachmentMoreMenu": "更多选项",
+    "richTextNewBulletedListItemAnnouncement": "项目符号，新行",
+    "richTextNewNumberedListItemAnnouncement": "{0}，新行",
+    "richTextBulletedListAppliedAnnouncement": "已应用项目符号列表",
+    "richTextNumberedListAppliedAnnouncement": "已应用编号列表"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "建议"
@@ -221,7 +226,12 @@
     "richTextDeleteRowMenu": "删除行",
     "richTextDeleteTableMenu": "删除表格",
     "richTextToolbarMoreButtonAriaLabel": "更多选项",
-    "attachmentUploadsPendingError": "正在上传...请稍等。"
+    "attachmentUploadsPendingError": "正在上传文件，请稍候。",
+    "imageUploadsPendingError": "正在上传图像，请稍候。",
+    "richTextNewBulletedListItemAnnouncement": "项目符号，新行",
+    "richTextNewNumberedListItemAnnouncement": "{0}，新行",
+    "richTextBulletedListAppliedAnnouncement": "已应用项目符号列表",
+    "richTextNumberedListAppliedAnnouncement": "已应用编号列表"
   },
   "errorBar": {
     "unableToReachChatService": "你已脱机",
@@ -447,6 +457,7 @@
   "videoGallery": {
     "screenIsBeingSharedMessage": "你正在共享你的屏幕",
     "screenShareLoadingMessage": "正在加载 {participant} 的屏幕",
+    "localScreenShareLoadingMessage": "正在加载屏幕",
     "localVideoLabel": "你",
     "localVideoCameraSwitcherLabel": "切换相机",
     "localVideoMovementLabel": "可移动本地小窗视频",
@@ -616,9 +627,12 @@
   },
   "IncomingCallNotification": {
     "incomingCallNotificationPlaceholderId": "未知用户",
-    "incomingCallNotificationPlaceholderAlert": "传入呼叫",
+    "incomingCallNotificationPlaceholderAlert": "{callerName} 正在通话",
     "incomingCallNoticicationAcceptWithAudioAriaLabel": "语音接听",
     "incomingCallNoticicationAcceptWithVideoAriaLabel": "视频接听",
-    "incomingCallNoticicationRejectAriaLabel": "拒绝"
+    "incomingCallNoticicationRejectAriaLabel": "拒绝",
+    "incomingCallNotificationAcceptButtonLabel": "接受",
+    "incomingCallNotificationRejectButtonLabel": "拒绝",
+    "incomingCallNotificationAccceptWithVideoButtonLabel": "使用视频接受"
   }
 }

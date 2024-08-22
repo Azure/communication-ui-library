@@ -15,6 +15,8 @@ import {
   Stack,
   useTheme
 } from '@fluentui/react';
+/* @conditional-compile-remove(breakout-rooms) */
+import { PrimaryButton } from '@fluentui/react';
 import { controlBarContainerStyles } from '../../CallComposite/styles/CallControls.styles';
 import { callControlsContainerStyles } from '../../CallComposite/styles/CallPage.styles';
 import { useCallWithChatCompositeStrings } from '../../CallWithChatComposite/hooks/useCallWithChatCompositeStrings';
@@ -49,9 +51,13 @@ import { useLocale } from '../../localization';
 import { isBoolean } from '../utils';
 /* @conditional-compile-remove(end-call-options) */
 import { getIsTeamsCall } from '../../CallComposite/selectors/baseSelectors';
+/* @conditional-compile-remove(breakout-rooms) */
+import { getAssignedBreakoutRoom, getBreakoutRoomSettings } from '../../CallComposite/selectors/baseSelectors';
 import { callStatusSelector } from '../../CallComposite/selectors/callStatusSelector';
 /* @conditional-compile-remove(teams-meeting-conference) */
 import { MeetingConferencePhoneInfoModal } from '@internal/react-components';
+/* @conditional-compile-remove(breakout-rooms) */
+import { Timer } from './Timer';
 
 /**
  * @private
@@ -135,6 +141,11 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
     useSelector((state) => state.call?.capabilitiesFeature?.capabilities.hangUpForEveryOne.isPresent) ?? true;
   /* @conditional-compile-remove(end-call-options) */
   const isTeams = useSelector(getIsTeamsCall);
+
+  /* @conditional-compile-remove(breakout-rooms) */
+  const assignedBreakoutRoom = useSelector(getAssignedBreakoutRoom);
+  /* @conditional-compile-remove(breakout-rooms) */
+  const breakoutRoomSettings = useSelector(getBreakoutRoomSettings);
 
   const handleResize = useCallback((): void => {
     setControlBarButtonsWidth(controlBarContainerRef.current ? controlBarContainerRef.current.offsetWidth : 0);
@@ -234,7 +245,17 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
 
   // only center control bar buttons based on parent container if there are enough space on the screen and not mobile
   const controlBarDesktopContainerStyles: IStyle = useMemo(
-    () => (!props.mobileView && !isOutOfSpace ? { position: 'relative', minHeight: '4.5rem', width: '100%' } : {}),
+    () =>
+      !props.mobileView && !isOutOfSpace
+        ? {
+            position: 'relative',
+            minHeight: '4.5rem',
+            width: '100%',
+            display: 'flex',
+            alignItems: 'center',
+            paddingLeft: '1rem'
+          }
+        : {},
     [props.mobileView, isOutOfSpace]
   );
 
@@ -253,6 +274,11 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
     callState.callStatus !== 'Connected' ||
     !capabilitiesSelector?.capabilities ||
     capabilitiesSelector.capabilities.useReactions.isPresent;
+
+  /* @conditional-compile-remove(breakout-rooms) */
+  const canReturnToMainMeeting = breakoutRoomSettings && breakoutRoomSettings.disableReturnToMainMeeting === false;
+  /* @conditional-compile-remove(breakout-rooms) */
+  const returnFromBreakoutRoom = useCallback(() => props.callAdapter.returnFromBreakoutRoom(), [props.callAdapter]);
 
   // when options is false then we want to hide the whole control bar.
   if (options === false) {
@@ -340,6 +366,18 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                 */}
                 <div ref={controlBarContainerRef}>
                   <ControlBar layout={props.displayVertical ? 'vertical' : 'horizontal'} styles={centerContainerStyles}>
+                    {
+                      /* @conditional-compile-remove(breakout-rooms) */
+                      assignedBreakoutRoom && assignedBreakoutRoom.state === 'open' && (
+                        <PrimaryButton
+                          text={callStrings.joinBreakoutRoomButtonLabel}
+                          onClick={async (): Promise<void> => {
+                            assignedBreakoutRoom.join();
+                          }}
+                          styles={commonButtonStyles}
+                        />
+                      )
+                    }
                     {microphoneButtonIsEnabled && (
                       <Microphone
                         displayType={options.displayType}
@@ -469,13 +507,17 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                         props.callControls?.endCallButton?.hangUpForEveryone === 'endCallOptions' &&
                         // Only show the end call menu when the call is connected, user should not be able to end the call for everyone
                         // when they are not actively in the call to communicate they will.
-                        callState.callStatus === 'Connected'
+                        callState.callStatus === 'Connected' &&
+                        /* @conditional-compile-remove(breakout-rooms) */
+                        !canReturnToMainMeeting
                       }
                       disableEndCallModal={
                         !isBoolean(props.callControls) &&
                         !isBoolean(props.callControls?.endCallButton) &&
                         props.callControls?.endCallButton?.disableEndCallModal
                       }
+                      /* @conditional-compile-remove(breakout-rooms) */
+                      returnFromBreakoutRoom={canReturnToMainMeeting ? returnFromBreakoutRoom : undefined}
                     />
                   </ControlBar>
                 </div>
@@ -523,6 +565,14 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
             </div>
           </Stack.Item>
         )}
+        {
+          /* @conditional-compile-remove(breakout-rooms) */
+          breakoutRoomSettings?.roomEndTime && !props.mobileView && !isOutOfSpace && (
+            <Stack.Item>
+              <Timer timeStampInfo={breakoutRoomSettings?.roomEndTime.toString()} />
+            </Stack.Item>
+          )
+        }
       </Stack>
     </div>
   );
