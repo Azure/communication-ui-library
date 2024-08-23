@@ -1060,22 +1060,30 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     if (this.call === undefined) {
       return;
     }
-    // Find call state of current call from stateful layer
-    const callState = this.call
-      ? Object.values(this.callClient.getState().calls).find((call) => call.id === this.call?.id)
+
+    // Find call state of current call from stateful layer. The current call state of breakout room may not be present in calls array
+    // if the breakout room call is ended. So search the callsEnded array as well.
+    const callState = this.callClient.getState().calls[this.call?.id]
+      ? this.callClient.getState().callsEnded[this.call?.id]
       : undefined;
-    // Find main meeting call from call agent from the this call state
-    const mainMeetingCall = this.callAgent?.calls.find((callAgentCall) => {
-      return callAgentCall.id === callState?.breakoutRooms?.breakoutRoomOriginCallId;
+
+    // Find origin call id from breakout room call state
+    const originCallId = callState?.breakoutRooms?.breakoutRoomOriginCallId;
+
+    // Find origin call from call agent
+    const originCall = this.callAgent?.calls.find((callAgentCall) => {
+      return callAgentCall.id === originCallId;
     });
-    // If a main meeting call exists then process that call and resume
-    if (mainMeetingCall) {
-      const breakoutRoomCall = this.call;
-      this.processNewCall(mainMeetingCall);
-      await this.resumeCall();
-      if (breakoutRoomCall?.state === 'Connected') {
-        breakoutRoomCall.hangUp();
-      }
+
+    if (!originCall) {
+      throw new Error('Could not return from breakout room because the origin call could not be retrieved.');
+    }
+
+    const breakoutRoomCall = this.call;
+    this.processNewCall(originCall);
+    await this.resumeCall();
+    if (breakoutRoomCall?.state === 'Connected') {
+      breakoutRoomCall.hangUp();
     }
   }
 
@@ -1359,7 +1367,33 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
 
   /* @conditional-compile-remove(breakout-rooms) */
   private breakoutRoomJoined(call: Call | TeamsCall): void {
-    this.processNewCall(call);
+    if (this.call?.id !== call.id) {
+      this.processNewCall(call);
+    }
+    // Hang up other breakout room calls in case we are joining a new breakout room while already in one
+    this.hangupOtherBreakoutRoomCalls(call.id);
+  }
+
+  /* @conditional-compile-remove(breakout-rooms) */
+  private hangupOtherBreakoutRoomCalls(currentBreakoutRoomCallId: string): void {
+    // Get origin call id of breakout room call
+    const breakoutRoomCallState = this.callClient.getState().calls[currentBreakoutRoomCallId];
+    const originCallId = breakoutRoomCallState.breakoutRooms?.breakoutRoomOriginCallId;
+
+    // Get other breakout room calls with the same origin call
+    const otherBreakoutRoomCallStates = Object.values(this.callClient.getState().calls).filter((callState) => {
+      return (
+        callState.breakoutRooms?.breakoutRoomOriginCallId === originCallId && callState.id !== currentBreakoutRoomCallId
+      );
+    });
+
+    // Hang up other breakout room calls
+    for (const breakoutRoom of otherBreakoutRoomCallStates) {
+      const breakoutRoomCall = this.callAgent.calls.find((callAgentCall) => {
+        return callAgentCall.id === breakoutRoom.id;
+      });
+      breakoutRoomCall?.hangUp();
+    }
   }
 
   private callIdChanged(): void {
