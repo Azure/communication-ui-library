@@ -48,7 +48,7 @@ export const BreakoutRoomsBanner = (props: {
               : locale.strings.call.joinBreakoutRoomBannerTitle,
             primaryButtonLabel: locale.strings.call.joinBreakoutRoomBannerButtonLabel
           }}
-          onClickPrimaryButton={() => assignedBreakoutRoom.join()}
+          onClickButton={() => assignedBreakoutRoom.join()}
           iconProps={{ iconName: 'DoorArrowRight' }}
         />
       </Stack>
@@ -61,7 +61,7 @@ export const BreakoutRoomsBanner = (props: {
             title: locale.strings.call.returnFromBreakoutRoomBannerTitle,
             primaryButtonLabel: locale.strings.call.returnFromBreakoutRoomBannerButtonLabel
           }}
-          onClickPrimaryButton={() => adapter.returnFromBreakoutRoom()}
+          onClickButton={() => adapter.returnFromBreakoutRoom()}
           iconProps={{ iconName: 'DoorArrowLeft' }}
         />
       </Stack>

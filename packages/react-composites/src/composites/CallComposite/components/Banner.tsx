@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { Theme, mergeStyles } from '@fluentui/react';
+import { DefaultButton, Theme, mergeStyles } from '@fluentui/react';
 import { _pxToRem } from '@internal/acs-ui-common';
 // eslint-disable-next-line no-restricted-imports
 import { IIconProps, Icon, PrimaryButton, Stack, Text, useTheme } from '@fluentui/react';
@@ -24,9 +24,14 @@ export interface BannerProps {
   iconProps?: IIconProps;
 
   /**
-   * Callback called when the primary button inside banner is clicked.
+   * Callback called when the button inside banner is clicked.
    */
-  onClickPrimaryButton?: () => void;
+  onClickButton?: () => void;
+
+  /**
+   * If true, the primary button will be styled as a primary button. Default is false.
+   */
+  primaryButton?: boolean;
 }
 
 /**
@@ -64,12 +69,19 @@ export const Banner = (props: BannerProps): JSX.Element => {
             )}
             <Text className={titleTextClassName}>{strings?.title}</Text>
           </Stack>
-
-          <PrimaryButton
-            text={strings?.primaryButtonLabel}
-            ariaLabel={strings?.primaryButtonLabel}
-            onClick={props.onClickPrimaryButton}
-          />
+          {props.primaryButton ? (
+            <PrimaryButton
+              text={strings?.primaryButtonLabel}
+              ariaLabel={strings?.primaryButtonLabel}
+              onClick={props.onClickButton}
+            />
+          ) : (
+            <DefaultButton
+              text={strings?.primaryButtonLabel}
+              ariaLabel={strings?.primaryButtonLabel}
+              onClick={props.onClickButton}
+            />
+          )}
         </Stack>
       </Stack>
     </Stack>
