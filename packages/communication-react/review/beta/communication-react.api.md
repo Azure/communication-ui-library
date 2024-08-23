@@ -3947,7 +3947,7 @@ export type OnRenderAvatarCallback = (
 userId?: string, options?: CustomAvatarOptions,
 defaultOnRender?: (props: CustomAvatarOptions) => JSX.Element) => JSX.Element | undefined;
 
-// @public
+// @beta
 export const onResolveDNSDependencyLazy: () => Promise<DeepNoiseSuppressionEffectDependency>;
 
 // @public

@@ -6,12 +6,12 @@ import { AudioEffectsStartConfig } from '@azure/communication-calling';
 /* @conditional-compile-remove(DNS) */
 import { DeepNoiseSuppressionEffectDependency } from '@internal/calling-component-bindings';
 
+/* @conditional-compile-remove(DNS) */
 /**
  *
  * Dependency resolution for video background effects using lazy loading.
- * @public
+ * @beta
  */
-/* @conditional-compile-remove(DNS) */
 export const onResolveDNSDependencyLazy = async (): Promise<DeepNoiseSuppressionEffectDependency> => {
   const module = await import('@azure/communication-calling-effects');
   const audioEffect: AudioEffectsStartConfig = {
