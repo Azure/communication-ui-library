@@ -99,8 +99,6 @@ module.exports = {
     // Feature to support file sharing in Teams interoperability chats
     "file-sharing-teams-interop",
     // Get join conference information
-    'teams-meeting-conference',
-    // Feature for showing notifications
-    "notifications"
+    'teams-meeting-conference'
   ]
 }

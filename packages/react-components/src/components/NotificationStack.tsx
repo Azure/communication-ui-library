@@ -3,7 +3,7 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import { Stack } from '@fluentui/react';
-/* @conditional-compile-remove(notifications) */
+
 import { useLocale } from '../localization';
 import {
   DismissedNotification,
@@ -333,9 +333,8 @@ export interface ActiveNotification {
  * @public
  */
 export const NotificationStack = (props: NotificationStackProps): JSX.Element => {
-  /* @conditional-compile-remove(notifications) */
   const localeStrings = useLocale().strings.notificationStack;
-  const strings = props.strings ?? /* @conditional-compile-remove(notifications) */ localeStrings;
+  const strings = props.strings ?? localeStrings;
   const maxNotificationsToShow = props.maxNotificationsToShow ?? 2;
 
   const trackDismissedNotificationsInternally = !props.onDismissNotification;
