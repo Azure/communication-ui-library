@@ -16,6 +16,8 @@ import { AdapterNotifications } from '../../common/adapters';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
 import { ReactionResources } from '@internal/react-components';
+/* @conditional-compile-remove(DNS) */
+import { DeepNoiseSuppressionEffectDependency } from '@internal/calling-component-bindings';
 
 /**
  * UI state pertaining to the {@link CallWithChatComposite}.
@@ -85,6 +87,9 @@ export interface CallWithChatClientState {
 
   /** Dependency to be injected for video background effects */
   onResolveVideoEffectDependency?: () => Promise<VideoBackgroundEffectsDependency>;
+  /* @conditional-compile-remove(DNS) */
+  /** Dependency to be injected for deep noise suppression effect. */
+  onResolveDeepNoiseSuppressionDependency?: () => Promise<DeepNoiseSuppressionEffectDependency>;
 
   /** State to track the selected video background effect */
   selectedVideoBackgroundEffect?: VideoBackgroundEffect;
@@ -131,6 +136,8 @@ export function callWithChatAdapterStateFromBackingStates(callAdapter: CallAdapt
     environmentInfo: callAdapterState.environmentInfo,
     videoBackgroundImages: callAdapterState.videoBackgroundImages,
     onResolveVideoEffectDependency: callAdapterState.onResolveVideoEffectDependency,
+    /* @conditional-compile-remove(DNS) */
+    onResolveDeepNoiseSuppressionDependency: callAdapterState.onResolveDeepNoiseSuppressionDependency,
     selectedVideoBackgroundEffect: callAdapterState.selectedVideoBackgroundEffect,
     /* @conditional-compile-remove(hide-attendee-name) */
     /** Hide attendee names in teams meeting */
@@ -177,6 +184,8 @@ export function mergeCallAdapterStateIntoCallWithChatAdapterState(
     videoBackgroundImages: callAdapterState.videoBackgroundImages,
 
     onResolveVideoEffectDependency: callAdapterState.onResolveVideoEffectDependency,
+    /* @conditional-compile-remove(DNS) */
+    onResolveDeepNoiseSuppressionDependency: callAdapterState.onResolveDeepNoiseSuppressionDependency,
 
     selectedVideoBackgroundEffect: callAdapterState.selectedVideoBackgroundEffect
   };

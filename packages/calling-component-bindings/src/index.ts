@@ -35,6 +35,9 @@ export type { CaptionsOptions } from './handlers/createCommonHandlers';
 
 export type { VideoBackgroundEffectsDependency } from './handlers/createCommonHandlers';
 
+/* @conditional-compile-remove(DNS) */
+export type { DeepNoiseSuppressionEffectDependency } from './handlers/createCommonHandlers';
+
 export type { _ComponentCallingHandlers, CallingHandlersOptions } from './handlers/createHandlers';
 /* @conditional-compile-remove(teams-identity-support) */
 export { useTeamsCall, useTeamsCallAgent } from './providers';

@@ -53,3 +53,5 @@ export type {
 export { onResolveVideoEffectDependencyLazy } from './common/resolveVideoEffectDependencyLazy';
 
 export { onResolveVideoEffectDependency } from './common/resolveVideoEffectDependency';
+/* @conditional-compile-remove(DNS) */
+export { onResolveDNSDependencyLazy } from './common/resolveDNSDependencyLazy';

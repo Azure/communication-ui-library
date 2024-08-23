@@ -278,7 +278,8 @@ function callAdapterStateFromCallWithChatAdapterState(
     videoBackgroundImages: callWithChatAdapterState.videoBackgroundImages,
 
     onResolveVideoEffectDependency: callWithChatAdapterState.onResolveVideoEffectDependency,
-
+    /* @conditional-compile-remove(DNS) */
+    onResolveDeepNoiseSuppressionDependency: callWithChatAdapterState.onResolveDeepNoiseSuppressionDependency,
     selectedVideoBackgroundEffect: callWithChatAdapterState.selectedVideoBackgroundEffect,
     reactions: callWithChatAdapterState.reactions
   };

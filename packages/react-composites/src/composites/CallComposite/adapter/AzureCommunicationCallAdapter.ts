@@ -35,8 +35,6 @@ import {
   VideoOptions,
   Call
 } from '@azure/communication-calling';
-/* @conditional-compile-remove(DNS) */
-import { AudioEffectsStartConfig, AudioEffectsStopConfig } from '@azure/communication-calling';
 import { SpotlightedParticipant } from '@azure/communication-calling';
 import { TeamsMeetingIdLocator } from '@azure/communication-calling';
 import { Reaction } from '@azure/communication-calling';
@@ -125,7 +123,7 @@ import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
 import { CallingSoundSubscriber } from './CallingSoundSubscriber';
 import { CallingSounds } from './CallAdapter';
 /* @conditional-compile-remove(DNS) */
-import { DeepNoiseSuppressionEffect } from '@azure/communication-calling-effects';
+import { DeepNoiseSuppressionEffectDependency } from '@internal/calling-component-bindings';
 type CallTypeOf<AgentType extends CallAgent | TeamsCallAgent> = AgentType extends CallAgent ? Call : TeamsCall;
 
 /** Context of call, which is a centralized context for all state updates */
@@ -147,6 +145,10 @@ class CallContext {
       videoBackgroundOptions?: {
         videoBackgroundImages?: VideoBackgroundImage[];
         onResolveDependency?: () => Promise<VideoBackgroundEffectsDependency>;
+      };
+      /* @conditional-compile-remove(DNS) */
+      deepNoiseSuppressionOptions?: {
+        onResolveDependency?: () => Promise<DeepNoiseSuppressionEffectDependency>;
       };
       callingSounds?: CallingSounds;
       reactionResources?: ReactionResources;
@@ -172,6 +174,8 @@ class CallContext {
       videoBackgroundImages: options?.videoBackgroundOptions?.videoBackgroundImages,
 
       onResolveVideoEffectDependency: options?.videoBackgroundOptions?.onResolveDependency,
+      /* @conditional-compile-remove(DNS) */
+      onResolveDeepNoiseSuppressionDependency: options?.deepNoiseSuppressionOptions?.onResolveDependency,
       selectedVideoBackgroundEffect: undefined,
       cameraStatus: undefined,
       sounds: options?.callingSounds,
@@ -355,6 +359,8 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
   private onClientStateChange: (clientState: CallClientState) => void;
 
   private onResolveVideoBackgroundEffectsDependency?: () => Promise<VideoBackgroundEffectsDependency>;
+  /* @conditional-compile-remove(DNS) */
+  private onResolveDeepNoiseSuppressionDependency?: () => Promise<DeepNoiseSuppressionEffectDependency>;
 
   private get call(): CallCommon | undefined {
     return this._call;
@@ -408,6 +414,8 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     const isRoomsCall = this.locator ? 'roomId' in this.locator : false;
 
     this.onResolveVideoBackgroundEffectsDependency = options?.videoBackgroundOptions?.onResolveDependency;
+    /* @conditional-compile-remove(DNS) */
+    this.onResolveDeepNoiseSuppressionDependency = options?.deepNoiseSuppressionOptions?.onResolveDependency;
 
     this.context = new CallContext(
       callClient.getState(),
@@ -454,7 +462,9 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     };
 
     this.handlers = createHandlers(callClient, callAgent, deviceManager, undefined, {
-      onResolveVideoBackgroundEffectsDependency: this.onResolveVideoBackgroundEffectsDependency
+      onResolveVideoBackgroundEffectsDependency: this.onResolveVideoBackgroundEffectsDependency,
+      /* @conditional-compile-remove(DNS) */
+      onResolveDeepNoiseSuppressionDependency: this.onResolveDeepNoiseSuppressionDependency
     });
 
     this.onClientStateChange = onStateChange;
@@ -749,7 +759,9 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     await this.handlers.onHangUp(forEveryone);
     this.unsubscribeCallEvents();
     this.handlers = createHandlers(this.callClient, this.callAgent, this.deviceManager, this.call, {
-      onResolveVideoBackgroundEffectsDependency: this.onResolveVideoBackgroundEffectsDependency
+      onResolveVideoBackgroundEffectsDependency: this.onResolveVideoBackgroundEffectsDependency,
+      /* @conditional-compile-remove(DNS) */
+      onResolveDeepNoiseSuppressionDependency: this.onResolveDeepNoiseSuppressionDependency
     });
     // We set the adapter.call object to undefined immediately when a call is ended.
     // We do not set the context.callId to undefined because it is a part of the immutable data flow loop.
@@ -895,20 +907,12 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
 
   /* @conditional-compile-remove(DNS) */
   public async startNoiseSuppressionEffect(): Promise<void> {
-    const audioEffects: AudioEffectsStartConfig = {
-      noiseSuppression: new DeepNoiseSuppressionEffect()
-    };
-
-    await this.handlers.onStartNoiseSuppressionEffect(audioEffects);
+    await this.handlers.onStartNoiseSuppressionEffect();
   }
 
   /* @conditional-compile-remove(DNS) */
   public async stopNoiseSuppressionEffect(): Promise<void> {
-    const audioEffects: AudioEffectsStopConfig = {
-      noiseSuppression: true
-    };
-
-    await this.handlers.onStopNoiseSuppressionEffect(audioEffects);
+    await this.handlers.onStopNoiseSuppressionEffect();
   }
 
   public startCall(
@@ -974,7 +978,9 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     // Resync state after callId is set
     this.context.updateClientState(this.callClient.getState());
     this.handlers = createHandlers(this.callClient, this.callAgent, this.deviceManager, this.call, {
-      onResolveVideoBackgroundEffectsDependency: this.onResolveVideoBackgroundEffectsDependency
+      onResolveVideoBackgroundEffectsDependency: this.onResolveVideoBackgroundEffectsDependency,
+      /* @conditional-compile-remove(DNS) */
+      onResolveDeepNoiseSuppressionDependency: this.onResolveDeepNoiseSuppressionDependency
     });
     this.subscribeCallEvents();
   }
@@ -1531,6 +1537,13 @@ export type CommonCallAdapterOptions = {
   videoBackgroundOptions?: {
     videoBackgroundImages?: VideoBackgroundImage[];
     onResolveDependency?: () => Promise<VideoBackgroundEffectsDependency>;
+  };
+  /* @conditional-compile-remove(DNS) */
+  /**
+   * `DeepNoiseSuppressionEffect` options to be used for noise suppression.
+   */
+  deepNoiseSuppressionOptions?: {
+    onResolveDependency?: () => Promise<DeepNoiseSuppressionEffectDependency>;
   };
   /**
    * Use this to fetch profile information which will override data in {@link CallAdapterState} like display name
