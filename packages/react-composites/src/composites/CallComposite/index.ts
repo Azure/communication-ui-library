@@ -73,7 +73,9 @@ export type {
   ParticipantsJoinedListener,
   ParticipantsLeftListener,
   JoinCallOptions,
-  StartCallIdentifier
+  StartCallIdentifier,
+  StartCaptionsAdapterOptions,
+  StopCaptionsAdapterOptions
 } from './adapter';
 
 export type {
