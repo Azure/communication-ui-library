@@ -89,7 +89,11 @@ export const IncomingCallStack = (props: IncomingCallStackProps): JSX.Element =>
   /* @conditional-compile-remove(one-to-n-calling) */
   const { activeIncomingCalls, removedIncomingCalls, onAcceptCall, onRejectCall, styles, strings, tabIndex } = props;
   return (
-    <Stack tokens={{ childrenGap: '0.25rem' }} role={'group'}>
+    <Stack
+      tokens={{ childrenGap: '0.25rem' }}
+      role={'group'}
+      /* @conditional-compile-remove(one-to-n-calling) */ tabIndex={tabIndex}
+    >
       {
         /* @conditional-compile-remove(one-to-n-calling) */ activeIncomingCalls
           .filter((incomingCall) => !removedIncomingCalls.some((call) => call.id === incomingCall.id))

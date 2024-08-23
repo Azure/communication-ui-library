@@ -3,7 +3,6 @@
 
 import {
   DefaultButton,
-  FocusZone,
   IButtonStyles,
   IconButton,
   IStackStyles,
@@ -222,7 +221,11 @@ export const IncomingCallNotification = (props: IncomingCallNotificationProps): 
         </Stack>
 
         <Stack grow horizontalAlign="center" style={{ alignItems: 'flex-start', fontFamily: 'Segoe UI' }}>
-          <Text tabIndex={0} aria-live={'assertive'} aria-label={alertText ?? formattedMessageString}>
+          <Text
+            tabIndex={0}
+            aria-live={'assertive'}
+            aria-label={alertText ?? /* @conditional-compile-remove(one-to-n-calling) */ formattedMessageString}
+          >
             {alertText ??
               strings?.incomingCallNotificationPlaceholderAlert ??
               /* @conditional-compile-remove(one-to-n-calling) */ formattedMessageString}
