@@ -950,10 +950,10 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
         this.emitter.off(event, listener);
         break;
       case 'capabilitiesChanged':
-        this.emitter.off('capabilitiesChanged', listener);
+        this.callAdapter.off('capabilitiesChanged', listener);
         break;
       case 'spotlightChanged':
-        this.emitter.off('spotlightChanged', listener);
+        this.callAdapter.off('spotlightChanged', listener);
         break;
       default:
         throw `Unknown AzureCommunicationCallWithChatAdapter Event: ${event}`;
