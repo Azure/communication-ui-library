@@ -173,6 +173,7 @@ export type CallAdapterClientState = {
   /* @conditional-compile-remove(DNS) */
   /**
    * Dependency to be injected for deep noise suppression effect.
+   * @beta
    */
   onResolveDeepNoiseSuppressionDependency?: () => Promise<DeepNoiseSuppressionEffectDependency>;
 
