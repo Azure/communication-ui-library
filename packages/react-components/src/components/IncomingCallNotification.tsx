@@ -3,6 +3,7 @@
 
 import {
   DefaultButton,
+  FocusZone,
   IButtonStyles,
   IconButton,
   IStackStyles,
@@ -59,6 +60,10 @@ export interface IncomingCallNotificationStrings {
    * label for the reject button in the incoming call notification.
    */
   incomingCallNotificationRejectButtonLabel?: string;
+  /**
+   * Aria label for the incoming call dismiss button
+   */
+  incomingCallNotificationDismissButtonAriaLabel?: string;
 }
 
 /**
@@ -141,6 +146,11 @@ export interface IncomingCallNotificationProps {
   acceptOptions: {
     showAcceptWithVideo: boolean;
   };
+  /**
+   * Tab index for the incoming Call stack, this will set the tab order of the
+   * incoming call notifications in your application.
+   */
+  tabIndex?: number;
 }
 
 /**
@@ -162,7 +172,8 @@ export const IncomingCallNotification = (props: IncomingCallNotificationProps): 
     styles,
     strings,
     /* @conditional-compile-remove(one-to-n-calling) */
-    acceptOptions
+    acceptOptions,
+    tabIndex
   } = props;
   const theme = useTheme();
   /* @conditional-compile-remove(one-to-n-calling) */
@@ -196,73 +207,84 @@ export const IncomingCallNotification = (props: IncomingCallNotificationProps): 
     : undefined;
 
   return (
-    <Stack
-      tokens={{ childrenGap: '0.5rem' }}
-      verticalAlign="center"
-      styles={styles?.root ? styles.root : incomingCallToastStyle(theme)}
-    >
-      <Stack horizontal verticalAlign="center" tokens={{ childrenGap: personaSize ? '0.5rem' : '0rem' }}>
-        <Stack
-          horizontalAlign="start"
-          styles={styles?.avatarContainer ? styles.avatarContainer : incomingCallToastAvatarContainerStyle}
-        >
-          <Persona
-            imageUrl={avatarImage}
-            text={callerName}
-            size={PersonaSize.size24}
-            coinSize={personaSize}
-            hidePersonaDetails={true}
-            aria-label={callerName}
+    <FocusZone tabIndex={tabIndex}>
+      <Stack
+        tokens={{ childrenGap: '0.5rem' }}
+        verticalAlign="center"
+        styles={styles?.root ? styles.root : incomingCallToastStyle(theme)}
+      >
+        <Stack horizontal verticalAlign="center" tokens={{ childrenGap: personaSize ? '0.5rem' : '0rem' }}>
+          <Stack
+            horizontalAlign="start"
+            styles={styles?.avatarContainer ? styles.avatarContainer : incomingCallToastAvatarContainerStyle}
+          >
+            <Persona
+              imageUrl={avatarImage}
+              text={callerName}
+              size={PersonaSize.size24}
+              coinSize={personaSize}
+              hidePersonaDetails={true}
+              aria-label={callerName}
+            />
+          </Stack>
+
+          <Stack grow horizontalAlign="center" style={{ alignItems: 'flex-start', fontFamily: 'Segoe UI' }}>
+            <Stack style={{ fontSize: '0.75rem' }}>
+              <Text role={'heading'} aria-level={2}>
+                {alertText ??
+                  strings?.incomingCallNotificationPlaceholderAlert ??
+                  /* @conditional-compile-remove(one-to-n-calling) */ formattedMessageString}
+              </Text>
+            </Stack>
+          </Stack>
+          <IconButton
+            /* @conditional-compile-remove(one-to-n-calling) */
+            ariaLabel={
+              strings?.incomingCallNotificationDismissButtonAriaLabel ??
+              localeStrings.incomingCallNotificationDismissButtonAriaLabel
+            }
+            iconProps={{ iconName: 'cancel' }}
+            onClick={onDismiss}
+            styles={dismissButtonStyle(theme)}
           />
         </Stack>
 
-        <Stack grow horizontalAlign="center" style={{ alignItems: 'flex-start', fontFamily: 'Segoe UI' }}>
-          <Stack style={{ fontSize: '0.75rem' }}>
-            <Text>
-              {alertText ??
-                strings?.incomingCallNotificationPlaceholderAlert ??
-                /* @conditional-compile-remove(one-to-n-calling) */ formattedMessageString}
-            </Text>
-          </Stack>
+        <Stack horizontal horizontalAlign={'center'} tokens={{ childrenGap: '0.5rem' }}>
+          <PrimaryButton
+            styles={styles?.acceptButton ? styles.acceptButton : incomingCallAcceptButtonStyle(theme)}
+            onClick={() => onAcceptWithAudio()}
+            iconProps={{ iconName: 'IncomingCallNotificationAcceptIcon', style: { lineHeight: '1rem' } }}
+            /* @conditional-compile-remove(one-to-n-calling) */
+            ariaLabel={
+              strings?.incomingCallNoticicationAcceptWithAudioAriaLabel ??
+              localeStrings.incomingCallNoticicationAcceptWithAudioAriaLabel
+            }
+            /* @conditional-compile-remove(one-to-n-calling) */
+            menuProps={acceptManuOptions}
+          >
+            {
+              /* @conditional-compile-remove(one-to-n-calling) */ strings?.incomingCallNotificationAcceptButtonLabel ??
+                localeStrings.incomingCallNotificationAcceptButtonLabel
+            }
+          </PrimaryButton>
+          <DefaultButton
+            styles={styles?.rejectButton ? styles.rejectButton : incomingCallRejectButtonStyle(theme)}
+            onClick={() => onReject()}
+            label={'Decline'}
+            iconProps={{ iconName: 'IncomingCallNotificationRejectIcon' }}
+            /* @conditional-compile-remove(one-to-n-calling) */
+            ariaLabel={
+              strings?.incomingCallNoticicationRejectAriaLabel ?? localeStrings.incomingCallNoticicationRejectAriaLabel
+            }
+          >
+            {
+              /* @conditional-compile-remove(one-to-n-calling) */ strings?.incomingCallNotificationRejectButtonLabel ??
+                localeStrings.incomingCallNotificationRejectButtonLabel
+            }
+          </DefaultButton>
         </Stack>
-        <IconButton iconProps={{ iconName: 'cancel' }} onClick={onDismiss} styles={dismissButtonStyle(theme)} />
       </Stack>
-
-      <Stack horizontal horizontalAlign={'center'} tokens={{ childrenGap: '0.5rem' }}>
-        <PrimaryButton
-          styles={styles?.acceptButton ? styles.acceptButton : incomingCallAcceptButtonStyle(theme)}
-          onClick={() => onAcceptWithAudio()}
-          iconProps={{ iconName: 'IncomingCallNotificationAcceptIcon', style: { lineHeight: '1rem' } }}
-          /* @conditional-compile-remove(one-to-n-calling) */
-          ariaLabel={
-            strings?.incomingCallNoticicationAcceptWithAudioAriaLabel ??
-            localeStrings.incomingCallNoticicationAcceptWithAudioAriaLabel
-          }
-          /* @conditional-compile-remove(one-to-n-calling) */
-          menuProps={acceptManuOptions}
-        >
-          {
-            /* @conditional-compile-remove(one-to-n-calling) */ strings?.incomingCallNotificationAcceptButtonLabel ??
-              localeStrings.incomingCallNotificationAcceptButtonLabel
-          }
-        </PrimaryButton>
-        <DefaultButton
-          styles={styles?.rejectButton ? styles.rejectButton : incomingCallRejectButtonStyle(theme)}
-          onClick={() => onReject()}
-          label={'Decline'}
-          iconProps={{ iconName: 'IncomingCallNotificationRejectIcon' }}
-          /* @conditional-compile-remove(one-to-n-calling) */
-          ariaLabel={
-            strings?.incomingCallNoticicationRejectAriaLabel ?? localeStrings.incomingCallNoticicationRejectAriaLabel
-          }
-        >
-          {
-            /* @conditional-compile-remove(one-to-n-calling) */ strings?.incomingCallNotificationRejectButtonLabel ??
-              localeStrings.incomingCallNotificationRejectButtonLabel
-          }
-        </DefaultButton>
-      </Stack>
-    </Stack>
+    </FocusZone>
   );
 };
 

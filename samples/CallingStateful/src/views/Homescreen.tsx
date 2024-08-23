@@ -75,7 +75,12 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
           Start Call
         </PrimaryButton>
         <Stack style={{ position: 'absolute', top: '0', right: '0' }}>
-          {/* @conditional-compile-remove(one-to-n-calling) */ <IncomingCallStack {...incomingCallStackProps} />}
+          {
+            /* @conditional-compile-remove(one-to-n-calling) */ <IncomingCallStack
+              {...incomingCallStackProps}
+              tabIndex={1}
+            />
+          }
         </Stack>
       </Stack>
     </Stack>
