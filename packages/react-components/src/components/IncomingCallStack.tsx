@@ -97,7 +97,6 @@ export const IncomingCallStack = (props: IncomingCallStackProps): JSX.Element =>
             return (
               <IncomingCallNotification
                 key={incomingCall.id}
-                tabIndex={tabIndex}
                 callerName={incomingCall.callerInfo.displayName}
                 onAcceptWithAudio={() => onAcceptCall(incomingCall.id)}
                 onAcceptWithVideo={() => onAcceptCall(incomingCall.id, true)}
