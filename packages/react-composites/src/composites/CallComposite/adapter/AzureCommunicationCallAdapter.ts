@@ -1174,6 +1174,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
       acsCaptionsFeature.off('CaptionsActiveChanged', this.isCaptionsActiveChanged.bind(this));
       /* @conditional-compile-remove(acs-close-captions) */
       acsCaptionsFeature.off('SpokenLanguageChanged', this.isSpokenLanguageChanged.bind(this));
+      /* @conditional-compile-remove(acs-close-captions) */
       captionsFeature?.off('CaptionsKindChanged', this.captionsKindChanged.bind(this));
     }
   }
