@@ -47,8 +47,6 @@ import { callStatusSelector } from '../selectors/callStatusSelector';
 import { CallControlOptions } from '../types/CallControlOptions';
 import { PreparedMoreDrawer } from '../../common/Drawer/PreparedMoreDrawer';
 import { getIsTeamsMeeting, getRemoteParticipants } from '../selectors/baseSelectors';
-/* @conditional-compile-remove(breakout-rooms) */
-import { getBreakoutRoomSettings, getAssignedBreakoutRoom } from '../selectors/baseSelectors';
 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { getPage } from '../selectors/baseSelectors';
 import { getCallStatus, getCaptionsStatus } from '../selectors/baseSelectors';
@@ -496,11 +494,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   /* @conditional-compile-remove(breakout-rooms) */
   const notificationStackStrings = useCompositeStringsForNotificationStackStrings(locale);
 
-  /* @conditional-compile-remove(breakout-rooms) */
-  const assignedBreakoutRoom = useSelector(getAssignedBreakoutRoom);
-  /* @conditional-compile-remove(breakout-rooms) */
-  const breakoutRoomSettings = useSelector(getBreakoutRoomSettings);
-
   let latestNotifications = props.latestNotifications;
   /* @conditional-compile-remove(breakout-rooms) */
   // Filter out breakout room notification that prompts user to join breakout room when in mobile view. We will
@@ -608,8 +601,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                       /* @conditional-compile-remove(breakout-rooms) */
                       props.mobileView && (
                         <BreakoutRoomsBanner
-                          assignedBreakoutRoom={assignedBreakoutRoom}
-                          breakoutRoomSettings={breakoutRoomSettings}
                           latestNotifications={latestNotifications}
                           locale={locale}
                           adapter={adapter}

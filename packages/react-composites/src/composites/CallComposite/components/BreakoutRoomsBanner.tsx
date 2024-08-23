@@ -14,7 +14,9 @@ import { CommonCallAdapter } from '../adapter';
 /* @conditional-compile-remove(breakout-rooms) */
 import { CompositeLocale } from '../../localization';
 /* @conditional-compile-remove(breakout-rooms) */
-import { BreakoutRoom, BreakoutRoomsSettings } from '@azure/communication-calling';
+import { useSelector } from '../hooks/useSelector';
+/* @conditional-compile-remove(breakout-rooms) */
+import { getAssignedBreakoutRoom, getBreakoutRoomSettings } from '../selectors/baseSelectors';
 /* @conditional-compile-remove(breakout-rooms) */
 import { Banner } from './Banner';
 
@@ -23,13 +25,14 @@ import { Banner } from './Banner';
  * @private
  */
 export const BreakoutRoomsBanner = (props: {
-  assignedBreakoutRoom: BreakoutRoom | undefined;
-  breakoutRoomSettings: BreakoutRoomsSettings | undefined;
   latestNotifications: ActiveNotification[] | undefined;
   locale: CompositeLocale;
   adapter: CommonCallAdapter;
 }): JSX.Element | undefined => {
-  const { assignedBreakoutRoom, breakoutRoomSettings, latestNotifications, locale, adapter } = props;
+  const { latestNotifications, locale, adapter } = props;
+
+  const assignedBreakoutRoom = useSelector(getAssignedBreakoutRoom);
+  const breakoutRoomSettings = useSelector(getBreakoutRoomSettings);
 
   const autoMoveToBreakoutRoomCurrentlyInEffect =
     assignedBreakoutRoom?.autoMoveParticipantToBreakoutRoom &&
@@ -50,6 +53,7 @@ export const BreakoutRoomsBanner = (props: {
           }}
           onClickButton={() => assignedBreakoutRoom.join()}
           iconProps={{ iconName: 'DoorArrowRight' }}
+          primaryButton
         />
       </Stack>
     );
