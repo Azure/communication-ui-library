@@ -273,10 +273,18 @@ class CallContext {
       : undefined;
     const transferCall = latestAcceptedTransfer ? clientState.calls[latestAcceptedTransfer.callId] : undefined;
 
+    /* @conditional-compile-remove(breakout-rooms) */
+    const originCall = call?.breakoutRooms?.breakoutRoomOriginCallId
+      ? clientState.calls[call?.breakoutRooms?.breakoutRoomOriginCallId]
+      : latestEndedCall?.breakoutRooms?.breakoutRoomOriginCallId
+        ? clientState.calls[latestEndedCall?.breakoutRooms?.breakoutRoomOriginCallId]
+        : undefined;
+
     const newPage = getCallCompositePage(
       call,
       latestEndedCall,
       transferCall,
+      /* @conditional-compile-remove(breakout-rooms) */ originCall,
       /* @conditional-compile-remove(unsupported-browser) */ environmentInfo
     );
     if (!IsCallEndedPage(oldPage) && IsCallEndedPage(newPage)) {
@@ -381,6 +389,8 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
   private emitter: EventEmitter = new EventEmitter();
   private callingSoundSubscriber: CallingSoundSubscriber | undefined;
   private onClientStateChange: (clientState: CallClientState) => void;
+  /* @conditional-compile-remove(breakout-rooms) */
+  private originCall: CallCommon | undefined;
 
   private onResolveVideoBackgroundEffectsDependency?: () => Promise<VideoBackgroundEffectsDependency>;
 
@@ -676,6 +686,8 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
           : {};
       const call = this._joinCall(audioOptions, videoOptions);
 
+      /* @conditional-compile-remove(breakout-rooms) */
+      this.originCall = call;
       this.processNewCall(call);
       return call;
     });
@@ -1103,32 +1115,19 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
 
   /* @conditional-compile-remove(breakout-rooms) */
   public async returnFromBreakoutRoom(): Promise<void> {
-    if (this.call === undefined) {
-      return;
-    }
-
-    // Find call state of current call from stateful layer. The current call state of breakout room may not be present in calls array
-    // if the breakout room call is ended. So search the callsEnded array as well.
-    const callState = this.callClient.getState().calls[this.call?.id]
-      ? this.callClient.getState().callsEnded[this.call?.id]
-      : undefined;
-
-    // Find origin call id from breakout room call state
-    const originCallId = callState?.breakoutRooms?.breakoutRoomOriginCallId;
-
-    // Find origin call from call agent
-    const originCall = this.callAgent?.calls.find((callAgentCall) => {
-      return callAgentCall.id === originCallId;
-    });
-
-    if (!originCall) {
+    if (!this.originCall) {
       throw new Error('Could not return from breakout room because the origin call could not be retrieved.');
     }
 
+    if (this.call?.id === this.originCall.id) {
+      console.error('Return from breakout room will not be done because current call is the origin call.');
+      return;
+    }
+
     const breakoutRoomCall = this.call;
-    this.processNewCall(originCall);
+    this.processNewCall(this.originCall);
     await this.resumeCall();
-    if (breakoutRoomCall?.state === 'Connected') {
+    if (breakoutRoomCall?.state && !['Disconnecting', 'Disconnected'].includes(breakoutRoomCall.state)) {
       breakoutRoomCall.hangUp();
     }
   }
@@ -1176,55 +1175,52 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
   }
 
   private subscribeToCaptionEvents(): void {
-    if (this.call && this.call.state === 'Connected') {
-      const captionsFeature = this.call?.feature(Features.Captions);
-      if (
-        captionsFeature.captions.kind === 'TeamsCaptions' &&
-        (this.context.getState().isTeamsCall || this.context.getState().isTeamsMeeting)
-      ) {
-        const teamsCaptionsFeature = captionsFeature.captions as TeamsCaptions;
-        teamsCaptionsFeature.on('CaptionsReceived', this.teamsCaptionsReceived.bind(this));
-        teamsCaptionsFeature.on('CaptionsActiveChanged', this.isCaptionsActiveChanged.bind(this));
-        teamsCaptionsFeature.on('CaptionLanguageChanged', this.isCaptionLanguageChanged.bind(this));
-        teamsCaptionsFeature.on('SpokenLanguageChanged', this.isSpokenLanguageChanged.bind(this));
-      } else {
-        /* @conditional-compile-remove(acs-close-captions) */
-        const acsCaptionsFeature = captionsFeature.captions as Captions;
-        /* @conditional-compile-remove(acs-close-captions) */
-        acsCaptionsFeature.on('CaptionsReceived', this.captionsReceived.bind(this));
-        /* @conditional-compile-remove(acs-close-captions) */
-        acsCaptionsFeature.on('CaptionsActiveChanged', this.isCaptionsActiveChanged.bind(this));
-        /* @conditional-compile-remove(acs-close-captions) */
-        acsCaptionsFeature.on('SpokenLanguageChanged', this.isSpokenLanguageChanged.bind(this));
-        /* @conditional-compile-remove(acs-close-captions) */
-        captionsFeature.on('CaptionsKindChanged', this.captionsKindChanged.bind(this));
-      }
+    const captionsFeature = this.call?.feature(Features.Captions);
+    if (
+      captionsFeature?.captions.kind === 'TeamsCaptions' &&
+      (this.context.getState().isTeamsCall || this.context.getState().isTeamsMeeting)
+    ) {
+      const teamsCaptionsFeature = captionsFeature.captions as TeamsCaptions;
+      teamsCaptionsFeature.on('CaptionsReceived', this.teamsCaptionsReceived.bind(this));
+      teamsCaptionsFeature.on('CaptionsActiveChanged', this.isCaptionsActiveChanged.bind(this));
+      teamsCaptionsFeature.on('CaptionLanguageChanged', this.isCaptionLanguageChanged.bind(this));
+      teamsCaptionsFeature.on('SpokenLanguageChanged', this.isSpokenLanguageChanged.bind(this));
+    } else {
+      /* @conditional-compile-remove(acs-close-captions) */
+      const acsCaptionsFeature = captionsFeature?.captions as Captions;
+      /* @conditional-compile-remove(acs-close-captions) */
+      acsCaptionsFeature.on('CaptionsReceived', this.captionsReceived.bind(this));
+      /* @conditional-compile-remove(acs-close-captions) */
+      acsCaptionsFeature.on('CaptionsActiveChanged', this.isCaptionsActiveChanged.bind(this));
+      /* @conditional-compile-remove(acs-close-captions) */
+      acsCaptionsFeature.on('SpokenLanguageChanged', this.isSpokenLanguageChanged.bind(this));
+      /* @conditional-compile-remove(acs-close-captions) */
+      captionsFeature?.on('CaptionsKindChanged', this.captionsKindChanged.bind(this));
     }
   }
 
   private unsubscribeFromCaptionEvents(): void {
-    if (this.call && this.call.state === 'Connected') {
-      const captionsFeature = this.call?.feature(Features.Captions);
-      if (
-        captionsFeature.captions.kind === 'TeamsCaptions' &&
-        (this.context.getState().isTeamsCall || this.context.getState().isTeamsMeeting)
-      ) {
-        const teamsCaptionsFeature = captionsFeature.captions as TeamsCaptions;
-        teamsCaptionsFeature.off('CaptionsReceived', this.teamsCaptionsReceived.bind(this));
-        teamsCaptionsFeature.off('CaptionsActiveChanged', this.isCaptionsActiveChanged.bind(this));
-        teamsCaptionsFeature.off('CaptionLanguageChanged', this.isCaptionLanguageChanged.bind(this));
-        teamsCaptionsFeature.off('SpokenLanguageChanged', this.isSpokenLanguageChanged.bind(this));
-      } else {
-        /* @conditional-compile-remove(acs-close-captions) */
-        const acsCaptionsFeature = captionsFeature.captions as Captions;
-        /* @conditional-compile-remove(acs-close-captions) */
-        acsCaptionsFeature.off('CaptionsReceived', this.captionsReceived.bind(this));
-        /* @conditional-compile-remove(acs-close-captions) */
-        acsCaptionsFeature.off('CaptionsActiveChanged', this.isCaptionsActiveChanged.bind(this));
-        /* @conditional-compile-remove(acs-close-captions) */
-        acsCaptionsFeature.off('SpokenLanguageChanged', this.isSpokenLanguageChanged.bind(this));
-      }
-      this.call?.off('stateChanged', this.subscribeToCaptionEvents.bind(this));
+    const captionsFeature = this.call?.feature(Features.Captions);
+    if (
+      captionsFeature?.captions.kind === 'TeamsCaptions' &&
+      (this.context.getState().isTeamsCall || this.context.getState().isTeamsMeeting)
+    ) {
+      const teamsCaptionsFeature = captionsFeature.captions as TeamsCaptions;
+      teamsCaptionsFeature.off('CaptionsReceived', this.teamsCaptionsReceived.bind(this));
+      teamsCaptionsFeature.off('CaptionsActiveChanged', this.isCaptionsActiveChanged.bind(this));
+      teamsCaptionsFeature.off('CaptionLanguageChanged', this.isCaptionLanguageChanged.bind(this));
+      teamsCaptionsFeature.off('SpokenLanguageChanged', this.isSpokenLanguageChanged.bind(this));
+    } else {
+      /* @conditional-compile-remove(acs-close-captions) */
+      const acsCaptionsFeature = captionsFeature?.captions as Captions;
+      /* @conditional-compile-remove(acs-close-captions) */
+      acsCaptionsFeature.off('CaptionsReceived', this.captionsReceived.bind(this));
+      /* @conditional-compile-remove(acs-close-captions) */
+      acsCaptionsFeature.off('CaptionsActiveChanged', this.isCaptionsActiveChanged.bind(this));
+      /* @conditional-compile-remove(acs-close-captions) */
+      acsCaptionsFeature.off('SpokenLanguageChanged', this.isSpokenLanguageChanged.bind(this));
+      /* @conditional-compile-remove(acs-close-captions) */
+      captionsFeature?.off('CaptionsKindChanged', this.captionsKindChanged.bind(this));
     }
   }
 
@@ -1240,9 +1236,9 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     this.call?.on('isMutedChanged', this.isMyMutedChanged.bind(this));
     this.call?.on('isScreenSharingOnChanged', this.isScreenSharingOnChanged.bind(this));
     this.call?.on('idChanged', this.callIdChanged.bind(this));
-    this.call?.on('stateChanged', this.subscribeToCaptionEvents.bind(this));
     this.call?.on('roleChanged', this.roleChanged.bind(this));
 
+    this.subscribeToCaptionEvents();
     this.call?.feature(Features.Transfer).on('transferAccepted', this.transferAccepted.bind(this));
     this.call?.feature(Features.Capabilities).on('capabilitiesChanged', this.capabilitiesChanged.bind(this));
     this.call?.feature(Features.Spotlight).on('spotlightChanged', this.spotlightChanged.bind(this));
@@ -1264,14 +1260,16 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     this.call?.off('isScreenSharingOnChanged', this.isScreenSharingOnChanged.bind(this));
     this.call?.off('idChanged', this.callIdChanged.bind(this));
     this.call?.off('roleChanged', this.roleChanged.bind(this));
-    /* @conditional-compile-remove(acs-close-captions) */
-    if (this.call?.feature(Features.Captions).captions.kind === 'Captions') {
-      this.call?.feature(Features.Captions).off('CaptionsKindChanged', this.unsubscribeFromCaptionEvents.bind(this));
-    }
 
     this.unsubscribeFromCaptionEvents();
     if (this.callingSoundSubscriber) {
       this.callingSoundSubscriber.unsubscribeAll();
+    }
+    /* @conditional-compile-remove(breakout-rooms) */
+    const breakoutRoomsFeature = this.call?.feature(Features.BreakoutRooms);
+    /* @conditional-compile-remove(breakout-rooms) */
+    if (breakoutRoomsFeature) {
+      breakoutRoomsFeature.off('breakoutRoomsUpdated', this.breakoutRoomsUpdated.bind(this));
     }
   }
 
@@ -1393,20 +1391,20 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
 
   /* @conditional-compile-remove(breakout-rooms) */
   private breakoutRoomsUpdated(eventData: BreakoutRoomsEventData): void {
-    if (eventData.data) {
-      if (eventData.type === 'assignedBreakoutRooms') {
-        this.assignedBreakoutRoomUpdated(eventData.data);
-      } else if (eventData.type === 'join') {
-        this.breakoutRoomJoined(eventData.data);
-      }
+    if (eventData.type === 'assignedBreakoutRooms') {
+      this.assignedBreakoutRoomUpdated(eventData.data);
+    } else if (eventData.type === 'join') {
+      this.breakoutRoomJoined(eventData.data);
     }
-
     this.emitter.emit('breakoutRoomsUpdated', eventData);
   }
 
   /* @conditional-compile-remove(breakout-rooms) */
-  private assignedBreakoutRoomUpdated(breakoutRoom: BreakoutRoom): void {
-    if (breakoutRoom.state === 'closed') {
+  private assignedBreakoutRoomUpdated(breakoutRoom?: BreakoutRoom): void {
+    if (!this.call?.id) {
+      return;
+    }
+    if (this.originCall?.id !== this.call?.id && (!breakoutRoom || breakoutRoom.state === 'closed')) {
       this.returnFromBreakoutRoom();
     }
   }

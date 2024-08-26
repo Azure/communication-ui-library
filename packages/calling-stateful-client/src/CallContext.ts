@@ -629,7 +629,7 @@ export class CallContext {
   }
 
   /* @conditional-compile-remove(breakout-rooms) */
-  public setAssignedBreakoutRoom(callId: string, breakoutRoom: BreakoutRoom): void {
+  public setAssignedBreakoutRoom(callId: string, breakoutRoom?: BreakoutRoom): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {

@@ -52,26 +52,27 @@ export class BreakoutRoomsSubscriber {
   }
 
   private onBreakoutRoomsUpdated = (eventData: BreakoutRoomsEventData): void => {
-    if (!eventData.data) {
-      return;
-    }
-
     if (eventData.type === 'assignedBreakoutRooms') {
       this.onAssignedBreakoutRoomUpdated(eventData.data);
     } else if (eventData.type === 'join') {
       this.onBreakoutRoomsJoined(eventData.data);
-    } else if (eventData.type === 'breakoutRoomsSettings') {
+    } else if (eventData.type === 'breakoutRoomsSettings' && eventData.data) {
       this.onBreakoutRoomSettingsUpdated(eventData.data);
     }
   };
 
-  private onAssignedBreakoutRoomUpdated = (breakoutRoom: BreakoutRoom): void => {
+  private onAssignedBreakoutRoomUpdated = (breakoutRoom?: BreakoutRoom): void => {
     const callState = this._context.getState().calls[this._callIdRef.callId];
     const currentAssignedBreakoutRoom = callState?.breakoutRooms?.assignedBreakoutRoom;
 
     // This call won't exist in the calls array in state if this call is a breakout room that was re-assigned.
     // If so, do nothing.
     if (callState === undefined) {
+      return;
+    }
+
+    if (!breakoutRoom) {
+      this._context.setAssignedBreakoutRoom(this._callIdRef.callId, breakoutRoom);
       return;
     }
 

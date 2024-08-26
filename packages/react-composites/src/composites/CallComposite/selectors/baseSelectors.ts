@@ -28,6 +28,8 @@ import { CallAdapterState, CallCompositePage } from '../adapter/CallAdapter';
 import { VideoBackgroundEffect } from '../adapter/CallAdapter';
 import { _isInCall, _isPreviewOn, _dominantSpeakersWithFlatId } from '@internal/calling-component-bindings';
 import { AdapterErrors } from '../../common/adapters';
+/* @conditional-compile-remove(breakout-rooms) */
+import { AdapterNotifications } from '../../common/adapters';
 import { RaisedHandState } from '@internal/calling-stateful-client';
 import { CommunicationIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(acs-close-captions) */
@@ -263,3 +265,9 @@ export const getBreakoutRoomSettings = (state: CallAdapterState): BreakoutRoomsS
  */
 export const getBreakoutRoomDisplayName = (state: CallAdapterState): string | undefined =>
   state.call?.breakoutRooms?.breakoutRoomDisplayName;
+
+/* @conditional-compile-remove(breakout-rooms) */
+/**
+ * @private
+ */
+export const getLatestNotifications = (state: CallAdapterState): AdapterNotifications => state.latestNotifications;
