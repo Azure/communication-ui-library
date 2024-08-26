@@ -9,7 +9,7 @@ import {
   PersonaSize
 } from '@fluentui/react';
 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
-import { ParticipantState } from '.';
+import { ParticipantConnectionStatus } from '.';
 
 /**
  * Options that can be injected into the `onRender` function for customizing an
@@ -36,7 +36,7 @@ export type CustomAvatarOptions = {
   text?: string;
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   /** State for the participant to be displayed in the defaultPlaceHolder */
-  participantState?: ParticipantState;
+  participantState?: ParticipantConnectionStatus;
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   /**
    * If true, show the special coin for unknown persona.

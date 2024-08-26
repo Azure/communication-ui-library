@@ -10,7 +10,7 @@ import { CommunicationParticipant } from './CommunicationParticipant';
  */
 export type CallParticipantListParticipant = ParticipantListParticipant & {
   /** State of calling participant */
-  state: ParticipantState;
+  connectionStatus: ParticipantConnectionStatus;
   /** Whether calling participant is screen sharing */
   isScreenSharing?: boolean;
   /** Whether calling participant is muted */
@@ -82,7 +82,7 @@ export type ParticipantListParticipant = CommunicationParticipant & {
  * @public
  * The connection state of a call participant.
  */
-export type ParticipantState =
+export type ParticipantConnectionStatus =
   | 'Idle'
   | 'Connecting'
   | 'Ringing'

@@ -1100,7 +1100,7 @@ export type CallNotifications = {
 
 // @public
 export type CallParticipantListParticipant = ParticipantListParticipant & {
-    state: ParticipantState;
+    connectionStatus: ParticipantConnectionStatus;
     isScreenSharing?: boolean;
     isMuted?: boolean;
     isSpeaking?: boolean;
@@ -2591,7 +2591,7 @@ export type CustomAvatarOptions = {
     size?: PersonaSize;
     styles?: IStyleFunctionOrObject<IPersonaStyleProps, IPersonaStyles>;
     text?: string;
-    participantState?: ParticipantState;
+    participantState?: ParticipantConnectionStatus;
     showUnknownPersonaCoin?: boolean;
 };
 
@@ -3962,18 +3962,21 @@ export interface ParticipantAddedSystemMessage extends SystemMessageCommon {
 }
 
 // @public
+export type ParticipantConnectionStatus = 'Idle' | 'Connecting' | 'Ringing' | 'Connected' | 'Hold' | 'InLobby' | 'EarlyMedia' | 'Disconnected';
+
+// @public
 export const ParticipantItem: (props: ParticipantItemProps) => JSX.Element;
 
 // @public
 export interface ParticipantItemProps {
     ariaLabelledBy?: string;
+    connectionState?: ParticipantConnectionStatus;
     displayName?: string;
     me?: boolean;
     menuItems?: IContextualMenuItem[];
     onClick?: (props?: ParticipantItemProps) => void;
     onRenderAvatar?: OnRenderAvatarCallback;
     onRenderIcon?: (props?: ParticipantItemProps) => JSX.Element | null;
-    participantState?: ParticipantState;
     presence?: PersonaPresence;
     showParticipantOverflowTooltip?: boolean;
     strings?: Partial<ParticipantItemStrings>;
@@ -4131,9 +4134,6 @@ export type ParticipantsRemovedListener = (event: {
     participantsRemoved: ChatParticipant[];
     removedBy: ChatParticipant;
 }) => void;
-
-// @public
-export type ParticipantState = 'Idle' | 'Connecting' | 'Ringing' | 'Connected' | 'Hold' | 'InLobby' | 'EarlyMedia' | 'Disconnected';
 
 // @public
 export interface PPTLiveCallFeatureState {
@@ -5092,12 +5092,12 @@ export interface VideoGalleryProps {
 
 // @public
 export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
+    // @beta
+    connectionStatus?: ParticipantConnectionStatus;
     isSpeaking?: boolean;
     raisedHand?: RaisedHand;
     reaction?: Reaction;
     screenShareStream?: VideoGalleryStream;
-    // @beta
-    state?: ParticipantState;
 }
 
 // @public
@@ -5204,7 +5204,7 @@ export interface VideoTileProps {
     onLongTouch?: () => void;
     onRenderPlaceholder?: OnRenderAvatarCallback;
     overlay?: JSX.Element | null;
-    participantState?: ParticipantState;
+    participantState?: ParticipantConnectionStatus;
     personaMaxSize?: number;
     personaMinSize?: number;
     raisedHand?: RaisedHand;

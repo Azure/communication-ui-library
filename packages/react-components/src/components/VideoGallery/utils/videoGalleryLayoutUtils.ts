@@ -79,7 +79,9 @@ const getOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedPa
   const gridParticipantSet = new Set(newGridParticipants.map((p) => p.userId));
 
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
-  const callingParticipants = remoteParticipantsOrdered.filter((p) => p.state === ('Connecting' || 'Ringing'));
+  const callingParticipants = remoteParticipantsOrdered.filter(
+    (p) => p.connectionStatus === ('Connecting' || 'Ringing')
+  );
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   const callingParticipantsSet = new Set(callingParticipants.map((p) => p.userId));
 

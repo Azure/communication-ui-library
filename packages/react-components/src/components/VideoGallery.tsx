@@ -629,7 +629,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           showMuteIndicator={showMuteIndicator}
           strings={strings}
           /* @conditional-compile-remove(PSTN-calls) */
-          participantState={participant.state}
+          connectionStatus={participant.connectionStatus}
           menuKind={
             participant.userId === localParticipant.userId
               ? undefined

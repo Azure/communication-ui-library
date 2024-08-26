@@ -733,7 +733,7 @@ const createRemoteParticipant = (attrs?: Partial<VideoGalleryRemoteParticipant>)
     displayName: attrs?.displayName ?? 'Remote Participant',
     isMuted: attrs?.isMuted ?? false,
     isSpeaking: attrs?.isSpeaking ?? false,
-    /* @conditional-compile-remove(demo) */ state: attrs?.state ?? 'Connected',
+    /* @conditional-compile-remove(demo) */ connectionStatus: attrs?.connectionStatus ?? 'Connected',
     screenShareStream: {
       id: attrs?.screenShareStream?.id ?? 1,
       isAvailable: attrs?.screenShareStream?.isAvailable ?? false,

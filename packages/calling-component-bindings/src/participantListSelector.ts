@@ -175,7 +175,7 @@ export const participantListSelector: ParticipantListSelector = createSelector(
       isScreenSharing: isScreenSharingOn,
       isMuted: isMuted,
       raisedHand: raisedHand,
-      state: 'Connected',
+      connectionStatus: 'Connected',
       // Local participant can never remove themselves.
       isRemovable: false,
       reaction: memoizedConvertToVideoTileReaction(localParticipantReactionState),

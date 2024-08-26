@@ -31,7 +31,7 @@ import {
 import { _preventDismissOnEvent as preventDismissOnEvent } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(one-to-n-calling) */
 /* @conditional-compile-remove(PSTN-calls) */
-import { ParticipantState } from '../types';
+import { ParticipantConnectionStatus } from '../types';
 import { useId } from '@fluentui/react-hooks';
 
 /**
@@ -128,7 +128,7 @@ export interface ParticipantItemProps {
    * corresponding to the provided participant state.
    * For example, `strings.participantStateConnecting` will be used if `participantState` is `Connecting`.
    */
-  participantState?: ParticipantState;
+  connectionState?: ParticipantConnectionStatus;
   /**
    * Optional aria property that prefixes the ParticipantItems aria content
    * Takes in a unique id value of the element you would like to be read before the ParticipantItem.
@@ -313,9 +313,9 @@ const participantStateStringTrampoline = (
 ): string | undefined => {
   /* @conditional-compile-remove(one-to-n-calling) */
   /* @conditional-compile-remove(PSTN-calls) */
-  return props.participantState === 'EarlyMedia' || props.participantState === 'Ringing'
+  return props.connectionState === 'EarlyMedia' || props.connectionState === 'Ringing'
     ? strings?.participantStateRinging
-    : props.participantState === 'Hold'
+    : props.connectionState === 'Hold'
       ? strings?.participantStateHold
       : undefined;
 
