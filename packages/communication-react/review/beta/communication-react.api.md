@@ -130,17 +130,6 @@ export interface ActiveErrorMessage {
     type: ErrorType;
 }
 
-// @beta
-export interface ActiveIncomingCall {
-    callerInfo: {
-        displayName: string;
-    };
-    endTime?: Date;
-    id: string;
-    startTime: Date;
-    videoAvailable: boolean;
-}
-
 // @public
 export interface ActiveNotification {
     autoDismiss?: boolean;
@@ -3351,19 +3340,28 @@ export interface IncomingCallNotificationStyles {
 export const IncomingCallStack: (props: IncomingCallStackProps) => JSX.Element;
 
 // @beta
+export interface IncomingCallStackCall {
+    callerInfo: {
+        displayName?: string;
+    };
+    id: string;
+    videoAvailable: boolean;
+}
+
+// @beta
 export interface IncomingCallStackProps {
-    activeIncomingCalls: ActiveIncomingCall[];
+    activeIncomingCalls: IncomingCallStackCall[];
     onAcceptCall: (incomingCallId: string, useVideo?: boolean) => void;
     onRejectCall: (incomingCallId: string) => void;
-    removedIncomingCalls: ActiveIncomingCall[];
+    removedIncomingCalls: IncomingCallStackCall[];
     strings?: IncomingCallNotificationStrings;
     styles?: IncomingCallNotificationStyles;
 }
 
 // @beta
 export type IncomingCallStackSelector = (state: CallClientState) => {
-    activeIncomingCalls: ActiveIncomingCall[];
-    removedIncomingCalls: ActiveIncomingCall[];
+    activeIncomingCalls: IncomingCallStackCall[];
+    removedIncomingCalls: IncomingCallStackCall[];
 };
 
 // @public
