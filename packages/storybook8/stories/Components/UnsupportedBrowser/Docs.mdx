@@ -1,4 +1,4 @@
-import { Canvas, Description, Meta, Source } from '@storybook/blocks';
+import { Canvas, Description, Meta, Source, ArgTypes } from '@storybook/blocks';
 import { UnsupportedBrowser as UnsupportedBrowserComponent } from '@azure/communication-react';
 import * as UnsupportedBrowserStories from './index.stories';
 import { SingleLineBetaBanner } from '../../BetaBanners/SingleLineBetaBanner';
@@ -43,3 +43,7 @@ below to see the component
   of={UnsupportedBrowserStories.UnsupportedEnvironmentModalsDocsOnly}
   source={{ code: UnsupportedEnvironmentModals }}
 />
+
+## Props
+
+<ArgTypes of={UnsupportedBrowserComponent} />
