@@ -357,6 +357,8 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
   private emitter: EventEmitter = new EventEmitter();
   private callingSoundSubscriber: CallingSoundSubscriber | undefined;
   private onClientStateChange: (clientState: CallClientState) => void;
+  /* @conditional-compile-remove(breakout-rooms) */
+  private originCall: CallCommon | undefined;
 
   private onResolveVideoBackgroundEffectsDependency?: () => Promise<VideoBackgroundEffectsDependency>;
 
@@ -652,6 +654,8 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
           : {};
       const call = this._joinCall(audioOptions, videoOptions);
 
+      /* @conditional-compile-remove(breakout-rooms) */
+      this.originCall = call;
       this.processNewCall(call);
       return call;
     });
@@ -1065,32 +1069,17 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
 
   /* @conditional-compile-remove(breakout-rooms) */
   public async returnFromBreakoutRoom(): Promise<void> {
-    // Find call state of current call from stateful layer. The current call state of breakout room may not be present in calls array
-    // if the breakout room call is ended. So search the callsEnded array as well.
-    const callState = this.call
-      ? this.callClient.getState().calls[this.call.id] ?? this.callClient.getState().callsEnded[this.call.id]
-      : undefined;
-
-    // Find origin call id from breakout room call state
-    const originCallId = callState?.breakoutRooms?.breakoutRoomOriginCallId;
-
-    // Find origin call from call agent
-    const originCall = this.callAgent?.calls.find((callAgentCall) => {
-      return callAgentCall.id === originCallId;
-    });
-
-    if (!originCall) {
-      console.log('Could not return from breakout room because the origin call could not be retrieved.');
-      return;
+    if (!this.originCall) {
+      throw new Error('Could not return from breakout room because the origin call could not be retrieved.');
     }
 
-    if (this.call?.id === originCall.id) {
-      console.log('Could not return from breakout room because the current call is the origin call.');
+    if (this.call?.id === this.originCall.id) {
+      console.error('Return from breakout room will not be done because current call is the origin call.');
       return;
     }
 
     const breakoutRoomCall = this.call;
-    this.processNewCall(originCall);
+    this.processNewCall(this.originCall);
     await this.resumeCall();
     if (breakoutRoomCall?.state && !['Disconnecting', 'Disconnected'].includes(breakoutRoomCall.state)) {
       breakoutRoomCall.hangUp();
@@ -1369,8 +1358,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     if (!this.call?.id) {
       return;
     }
-    const originCallId = this.callClient.getState().calls[this.call.id].breakoutRooms?.breakoutRoomOriginCallId;
-    if (originCallId && (!breakoutRoom || breakoutRoom.state === 'closed')) {
+    if (this.originCall?.id !== this.call?.id && (!breakoutRoom || breakoutRoom.state === 'closed')) {
       this.returnFromBreakoutRoom();
     }
   }
