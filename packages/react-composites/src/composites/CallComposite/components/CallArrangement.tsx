@@ -95,6 +95,8 @@ import { useHandlers } from '../hooks/useHandlers';
 import { MoreDrawer } from '../../common/Drawer/MoreDrawer';
 /* @conditional-compile-remove(breakout-rooms) */
 import { useCompositeStringsForNotificationStackStrings } from '../hooks/useCompositeStringsForNotificationStack';
+/* @conditional-compile-remove(breakout-rooms) */
+import { BreakoutRoomsBanner } from './BreakoutRoomsBanner';
 
 /**
  * @private
@@ -492,6 +494,14 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   /* @conditional-compile-remove(breakout-rooms) */
   const notificationStackStrings = useCompositeStringsForNotificationStackStrings(locale);
 
+  let latestNotifications = props.latestNotifications;
+  /* @conditional-compile-remove(breakout-rooms) */
+  // Filter out breakout room notification that prompts user to join breakout room when in mobile view. We will
+  // replace it with a non-dismissible banner
+  latestNotifications = props.mobileView
+    ? (latestNotifications ?? []).filter((notification) => notification.type !== 'assignedBreakoutRoomOpenedPromptJoin')
+    : latestNotifications;
+
   return (
     <div ref={containerRef} className={mergeStyles(containerDivStyles)} id={props.id}>
       <Stack verticalFill horizontalAlign="stretch" className={containerClassName} data-ui-id={props.dataUiId}>
@@ -587,6 +597,16 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
               <Stack.Item styles={callGalleryStyles} grow>
                 <Stack verticalFill styles={mediaGalleryContainerStyles}>
                   <Stack.Item styles={notificationsContainerStyles}>
+                    {
+                      /* @conditional-compile-remove(breakout-rooms) */
+                      props.mobileView && (
+                        <BreakoutRoomsBanner
+                          latestNotifications={latestNotifications}
+                          locale={locale}
+                          adapter={adapter}
+                        />
+                      )
+                    }
                     {props.showErrorNotifications && (
                       <Stack styles={notificationStackStyles} horizontalAlign="center" verticalAlign="center">
                         <NotificationStack
@@ -595,10 +615,10 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                         />
                       </Stack>
                     )}
-                    {props.latestNotifications && (
+                    {latestNotifications && (
                       <Stack styles={notificationStackStyles} horizontalAlign="center" verticalAlign="center">
                         <NotificationStack
-                          activeNotifications={props.latestNotifications}
+                          activeNotifications={latestNotifications}
                           onDismissNotification={props.onDismissNotification}
                           /* @conditional-compile-remove(breakout-rooms) */
                           strings={notificationStackStrings}
