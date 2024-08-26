@@ -730,6 +730,7 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       onMuteAllRemoteParticipants,
       /* @conditional-compile-remove(one-to-n-calling) */
       onAcceptCall: notImplemented,
+      /* @conditional-compile-remove(one-to-n-calling) */
       onRejectCall: notImplemented
     };
   }
