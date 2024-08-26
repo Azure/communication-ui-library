@@ -452,6 +452,31 @@
       "title": "Transkriptionen har avslutats.",
       "message": "Du spelar nu bara in det här mötet.",
       "dismissButtonAriaLabel": "Stäng"
+    },
+    "assignedBreakoutRoomOpened": {
+      "title": "Du flyttas till det tilldelade rummet om 5 sekunder.",
+      "dismissButtonAriaLabel": "Stäng"
+    },
+    "assignedBreakoutRoomChanged": {
+      "title": "Ditt grupprum har ändrats",
+      "message": "Du flyttas till det tilldelade rummet om 5 sekunder.",
+      "dismissButtonAriaLabel": "Stäng"
+    },
+    "assignedBreakoutRoomOpenedPromptJoin": {
+      "title": "Vill du ansluta till grupprummet?",
+      "message": "Du har tilldelats till ett separat rum.",
+      "dismissButtonAriaLabel": "Stäng",
+      "primaryButtonLabel": "Anslut till rummet",
+      "secondaryButtonLabel": "Senare"
+    },
+    "breakoutRoomJoined": {
+      "title": "Du har gått med i ett grupprum.",
+      "dismissButtonAriaLabel": "Stäng"
+    },
+    "breakoutRoomClosingSoon": {
+      "title": "Tidsgränsen för rummet upphör snart att gälla.",
+      "message": "Det här rummet stängs om 30 sekunder",
+      "dismissButtonAriaLabel": "Stäng"
     }
   },
   "videoGallery": {
