@@ -1,8 +1,31 @@
 # Change Log - @azure/communication-react
 
-This log was last generated on Tue, 06 Aug 2024 19:45:27 GMT and should not be manually modified.
+This log was last generated on Mon, 26 Aug 2024 18:25:58 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.19.0-beta.2](https://github.com/azure/communication-ui-library/tree/1.19.0-beta.2)
+
+Mon, 26 Aug 2024 18:25:58 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.19.0-beta.1...1.19.0-beta.2)
+
+### Features
+- Add join breakout room and leave room buttons ([PR #5009](https://github.com/azure/communication-ui-library/pull/5009) by 79475487+mgamis-msft@users.noreply.github.com)
+- Add Timer component to control bar in breakout room call. Add notifications when breakout room is joined and closing soon. ([PR #5048](https://github.com/azure/communication-ui-library/pull/5048) by 79475487+mgamis-msft@users.noreply.github.com)
+- Add breakout rooms notifications ([PR #4977](https://github.com/azure/communication-ui-library/pull/4977) by 79475487+mgamis-msft@users.noreply.github.com)
+- Add remote ufd to stateful client ([PR #4943](https://github.com/azure/communication-ui-library/pull/4943) by jiangnanhello@live.com)
+- Switch chat threads to breakout room when breakout room is joined ([PR #5038](https://github.com/azure/communication-ui-library/pull/5038) by 79475487+mgamis-msft@users.noreply.github.com)
+### Improvements
+- Turn on dialer by default ([PR #5035](https://github.com/azure/communication-ui-library/pull/5035) by jiangnanhello@live.com)
+- Update communication calling to 1.28.1-beta.4 and 1.27.5 ([PR #5051](https://github.com/azure/communication-ui-library/pull/5051) by edwardlee@microsoft.com)
+- Add PPTLive presenter information ([PR #4494](https://github.com/azure/communication-ui-library/pull/4494) by 93549644+ShaunaSong@users.noreply.github.com)
+### Bug Fixes
+- Fix CallComposite camera prompts to respect deviceChecks property ([PR #5052](https://github.com/azure/communication-ui-library/pull/5052) by 2684369+JamesBurnside@users.noreply.github.com)
+- Fix error when listening to capabilitiesChanged and spotlightChanged events from AzureCommunicationCallWithChatAdapter ([PR #5066](https://github.com/azure/communication-ui-library/pull/5066) by 79475487+mgamis-msft@users.noreply.github.com)
+- Fix bug when adapter caption events are not firing ([PR #5065](https://github.com/azure/communication-ui-library/pull/5065) by 96077406+carocao-msft@users.noreply.github.com)
+- Update RoosterJS version to fix some issues with keyboard table navigation in Rich Text Editor components ([PR #5050](https://github.com/azure/communication-ui-library/pull/5050) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- Fix chat selectors using read receipts from state ([PR #5063](https://github.com/azure/communication-ui-library/pull/5063) by 79475487+mgamis-msft@users.noreply.github.com)
+
 
 ## [1.19.0-beta.1](https://github.com/azure/communication-ui-library/tree/1.19.0-beta.1)
 
