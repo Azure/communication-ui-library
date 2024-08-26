@@ -241,10 +241,18 @@ class CallContext {
       : undefined;
     const transferCall = latestAcceptedTransfer ? clientState.calls[latestAcceptedTransfer.callId] : undefined;
 
+    /* @conditional-compile-remove(breakout-rooms) */
+    const originCall = call?.breakoutRooms?.breakoutRoomOriginCallId
+      ? clientState.calls[call?.breakoutRooms?.breakoutRoomOriginCallId]
+      : latestEndedCall?.breakoutRooms?.breakoutRoomOriginCallId
+        ? clientState.calls[latestEndedCall?.breakoutRooms?.breakoutRoomOriginCallId]
+        : undefined;
+
     const newPage = getCallCompositePage(
       call,
       latestEndedCall,
       transferCall,
+      /* @conditional-compile-remove(breakout-rooms) */ originCall,
       /* @conditional-compile-remove(unsupported-browser) */ environmentInfo
     );
     if (!IsCallEndedPage(oldPage) && IsCallEndedPage(newPage)) {
@@ -1057,14 +1065,10 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
 
   /* @conditional-compile-remove(breakout-rooms) */
   public async returnFromBreakoutRoom(): Promise<void> {
-    if (this.call === undefined) {
-      return;
-    }
-
     // Find call state of current call from stateful layer. The current call state of breakout room may not be present in calls array
     // if the breakout room call is ended. So search the callsEnded array as well.
-    const callState = this.callClient.getState().calls[this.call?.id]
-      ? this.callClient.getState().callsEnded[this.call?.id]
+    const callState = this.call
+      ? this.callClient.getState().calls[this.call.id] ?? this.callClient.getState().callsEnded[this.call.id]
       : undefined;
 
     // Find origin call id from breakout room call state
@@ -1076,13 +1080,19 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     });
 
     if (!originCall) {
-      throw new Error('Could not return from breakout room because the origin call could not be retrieved.');
+      console.log('Could not return from breakout room because the origin call could not be retrieved.');
+      return;
+    }
+
+    if (this.call?.id === originCall.id) {
+      console.log('Could not return from breakout room because the current call is the origin call.');
+      return;
     }
 
     const breakoutRoomCall = this.call;
     this.processNewCall(originCall);
     await this.resumeCall();
-    if (breakoutRoomCall?.state === 'Connected') {
+    if (breakoutRoomCall?.state && !['Disconnecting', 'Disconnected'].includes(breakoutRoomCall.state)) {
       breakoutRoomCall.hangUp();
     }
   }
@@ -1220,6 +1230,12 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     if (this.callingSoundSubscriber) {
       this.callingSoundSubscriber.unsubscribeAll();
     }
+    /* @conditional-compile-remove(breakout-rooms) */
+    const breakoutRoomsFeature = this.call?.feature(Features.BreakoutRooms);
+    /* @conditional-compile-remove(breakout-rooms) */
+    if (breakoutRoomsFeature) {
+      breakoutRoomsFeature.off('breakoutRoomsUpdated', this.breakoutRoomsUpdated.bind(this));
+    }
   }
 
   private isMyMutedChanged = (): void => {
@@ -1350,10 +1366,11 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
 
   /* @conditional-compile-remove(breakout-rooms) */
   private assignedBreakoutRoomUpdated(breakoutRoom?: BreakoutRoom): void {
-    if (this.call?.id === undefined) {
+    if (!this.call?.id) {
       return;
     }
-    if (!breakoutRoom || breakoutRoom.state === 'closed') {
+    const originCallId = this.callClient.getState().calls[this.call.id].breakoutRooms?.breakoutRoomOriginCallId;
+    if (originCallId && (!breakoutRoom || breakoutRoom.state === 'closed')) {
       this.returnFromBreakoutRoom();
     }
   }
