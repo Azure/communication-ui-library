@@ -90,8 +90,6 @@ module.exports = {
     // Demo feature. Used in live-documentation of conditional compilation.
     // Do not use in production code.
     "stabilizedDemo",
-    // Support Calling SDK isReceiving flag, shows a loading spinner on the video tile when isAvailable is true but isReceiving is false
-    "video-stream-is-receiving-flag",
     // Joining calls using teams token
     "teams-identity-support",
     // feature for hiding attendee name in the teams meeting
@@ -101,8 +99,6 @@ module.exports = {
     // Feature to support file sharing in Teams interoperability chats
     "file-sharing-teams-interop",
     // Get join conference information
-    'teams-meeting-conference',
-    // Feature for showing notifications
-    "notifications"
+    'teams-meeting-conference'
   ]
 }

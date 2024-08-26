@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/* @conditional-compile-remove(notifications) */
 import { NotificationType } from '@internal/react-components';
 import { ErrorType } from '@internal/react-components';
 
@@ -12,7 +11,7 @@ export interface NotificationTrackingInfo {
 }
 
 /** @private */
-type NotificationTypes = ErrorType | /* @conditional-compile-remove(notifications) */ NotificationType;
+type NotificationTypes = ErrorType | NotificationType;
 
 /** @private */
 export type TrackedNotifications = Partial<Record<NotificationTypes, NotificationTrackingInfo>>;
