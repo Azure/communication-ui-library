@@ -282,7 +282,6 @@ export type AzureCommunicationCallAdapterArgs = {
     displayName: string;
     credential: CommunicationTokenCredential;
     locator: CallAdapterLocator;
-    alternateCallerId?: string;
     options?: AzureCommunicationCallAdapterOptions;
 };
 
@@ -2106,6 +2105,7 @@ export type CommonCallAdapterOptions = {
     onFetchProfile?: OnFetchProfileCallback;
     callingSounds?: CallingSounds;
     reactionResources?: ReactionResources;
+    alternateCallerId?: string;
 };
 
 // @public
@@ -4637,7 +4637,6 @@ export interface StatefulCallClient extends CallClient {
 // @public
 export type StatefulCallClientArgs = {
     userId: CommunicationUserIdentifier | /* @conditional-compile-remove(teams-identity-support) */ MicrosoftTeamsUserIdentifier;
-    alternateCallerId?: string;
 };
 
 // @public

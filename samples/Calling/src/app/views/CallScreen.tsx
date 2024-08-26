@@ -168,9 +168,10 @@ const AzureCommunicationCallScreen = (props: AzureCommunicationCallScreenProps):
         laughReaction: { url: '/assets/reactions/laughEmoji.png', frameCount: 102 },
         applauseReaction: { url: '/assets/reactions/clapEmoji.png', frameCount: 102 },
         surprisedReaction: { url: '/assets/reactions/surprisedEmoji.png', frameCount: 102 }
-      }
+      },
+      alternateCallerId: adapterArgs.alternateCallerId
     };
-  }, []);
+  }, [adapterArgs.alternateCallerId]);
 
   const adapter = useAzureCommunicationCallAdapter(
     {
@@ -216,9 +217,10 @@ const AzureCommunicationOutboundCallScreen = (props: AzureCommunicationCallScree
           return { displayName: 'Teams app display name' };
         }
         return defaultProfile;
-      }
+      },
+      alternateCallerId: adapterArgs.alternateCallerId
     };
-  }, []);
+  }, [adapterArgs.alternateCallerId]);
 
   const adapter = useAzureCommunicationCallAdapter(
     {
