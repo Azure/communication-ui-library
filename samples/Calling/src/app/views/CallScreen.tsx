@@ -19,7 +19,7 @@ import { useTeamsCallAdapter, TeamsCallAdapter } from '@azure/communication-reac
 
 import { onResolveVideoEffectDependencyLazy } from '@azure/communication-react';
 /* @conditional-compile-remove(DNS) */
-import { onResolveDeepNoiseSuppressionDependencyLazy } from '@azure/communication-react';
+import { onResolveDeepNoiseSuppressionDependency } from '@azure/communication-react';
 /* @conditional-compile-remove(teams-identity-support) */
 import type { Profile, TeamsAdapterOptions } from '@azure/communication-react';
 import type { StartCallIdentifier } from '@azure/communication-react';
@@ -159,9 +159,9 @@ const AzureCommunicationCallScreen = (props: AzureCommunicationCallScreenProps):
         videoBackgroundImages,
         onResolveDependency: onResolveVideoEffectDependencyLazy
       },
-      /* @conditional-compile-remove(DNS) */
+      // /* @conditional-compile-remove(DNS) */
       deepNoiseSuppressionOptions: {
-        onResolveDependency: onResolveDeepNoiseSuppressionDependencyLazy
+        onResolveDependency: onResolveDeepNoiseSuppressionDependency
       },
       callingSounds: {
         callEnded: { url: '/assets/sounds/callEnded.mp3' },

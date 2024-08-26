@@ -55,3 +55,5 @@ export { onResolveVideoEffectDependencyLazy } from './common/resolveVideoEffectD
 export { onResolveVideoEffectDependency } from './common/resolveVideoEffectDependency';
 /* @conditional-compile-remove(DNS) */
 export { onResolveDeepNoiseSuppressionDependencyLazy } from './common/resolveDeepNoiseSuppressionDependencyLazy';
+/* @conditional-compile-remove(DNS) */
+export { onResolveDeepNoiseSuppressionDependency } from './common/resolveVideoEffectDependency';

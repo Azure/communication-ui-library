@@ -3952,6 +3952,9 @@ userId?: string, options?: CustomAvatarOptions,
 defaultOnRender?: (props: CustomAvatarOptions) => JSX.Element) => JSX.Element | undefined;
 
 // @beta
+export const onResolveDeepNoiseSuppressionDependency: () => Promise<DeepNoiseSuppressionEffectDependency>;
+
+// @beta
 export const onResolveDeepNoiseSuppressionDependencyLazy: () => Promise<DeepNoiseSuppressionEffectDependency>;
 
 // @public
