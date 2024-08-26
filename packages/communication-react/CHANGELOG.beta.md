@@ -10,13 +10,13 @@ Mon, 26 Aug 2024 18:25:58 GMT
 [Compare changes](https://github.com/azure/communication-ui-library/compare/1.19.0-beta.1...1.19.0-beta.2)
 
 ### Features
-- Add join breakout room and leave room buttons ([PR #5009](https://github.com/azure/communication-ui-library/pull/5009) by 79475487+mgamis-msft@users.noreply.github.com)
-- Add Timer component to control bar in breakout room call. Add notifications when breakout room is joined and closing soon. ([PR #5048](https://github.com/azure/communication-ui-library/pull/5048) by 79475487+mgamis-msft@users.noreply.github.com)
-- Add breakout rooms notifications ([PR #4977](https://github.com/azure/communication-ui-library/pull/4977) by 79475487+mgamis-msft@users.noreply.github.com)
-- Add remote ufd to stateful client ([PR #4943](https://github.com/azure/communication-ui-library/pull/4943) by jiangnanhello@live.com)
-- Switch chat threads to breakout room when breakout room is joined ([PR #5038](https://github.com/azure/communication-ui-library/pull/5038) by 79475487+mgamis-msft@users.noreply.github.com)
+
+#### Breakout Rooms
+
+We are excited to announce that the Azure Communication Services Web UI Library enables ACS users to be moved to assigned breakout rooms when in Teams meetings. ACS
+users will readily be able move to breakout rooms in the Call and CallWithChat composite. In the CallWithChat composite, the chat thread will be updated when in the breakout room. Breakout rooms can also be incorporated into apps that use only our stateful layer. It is important to note that ACS users will not yet be able to choose their own breakout room or manage breakout rooms as a Teams user with an organizer role.
+
 ### Improvements
-- Turn on dialer by default ([PR #5035](https://github.com/azure/communication-ui-library/pull/5035) by jiangnanhello@live.com)
 - Update communication calling to 1.28.1-beta.4 and 1.27.5 ([PR #5051](https://github.com/azure/communication-ui-library/pull/5051) by edwardlee@microsoft.com)
 - Add PPTLive presenter information ([PR #4494](https://github.com/azure/communication-ui-library/pull/4494) by 93549644+ShaunaSong@users.noreply.github.com)
 ### Bug Fixes
