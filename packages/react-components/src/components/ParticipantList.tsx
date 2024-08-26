@@ -225,7 +225,7 @@ const onRenderParticipantDefault = (
       showParticipantOverflowTooltip={showParticipantOverflowTooltip}
       /* @conditional-compile-remove(one-to-n-calling) */
       /* @conditional-compile-remove(PSTN-calls) */
-      connectionState={callingParticipant.connectionStatus}
+      participantState={callingParticipant.state}
       ariaLabelledBy={participantAriaLabelledBy}
     />
   );

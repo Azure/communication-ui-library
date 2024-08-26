@@ -122,7 +122,7 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
   isMuted: boolean,
   isSpeaking: boolean,
   videoStreams: { [key: number]: RemoteVideoStreamState },
-  connectionStatus: RemoteParticipantConnectionState,
+  state: RemoteParticipantConnectionState,
   displayName?: string,
   raisedHand?: RaisedHandState,
   contentSharingStream?: HTMLElement,
@@ -169,7 +169,7 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
     isScreenSharingOn: screenShareStream !== undefined && screenShareStream.isAvailable,
     /* @conditional-compile-remove(one-to-n-calling) */
     /* @conditional-compile-remove(PSTN-calls) */
-    connectionStatus,
+    state,
     raisedHand,
     reaction,
     spotlight

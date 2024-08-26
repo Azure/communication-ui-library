@@ -3,7 +3,7 @@
 
 /* @conditional-compile-remove(one-to-n-calling) */
 /* @conditional-compile-remove(PSTN-calls) */
-import { ParticipantConnectionStatus } from './ParticipantListParticipant';
+import { ParticipantState } from './ParticipantListParticipant';
 
 import { RaisedHand } from './ParticipantListParticipant';
 import { Reaction } from './ParticipantListParticipant';
@@ -121,7 +121,7 @@ export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
    * @beta
    * The connection state of the participant. For example, 'Hold', 'Connecting' etc.
    */
-  connectionStatus?: ParticipantConnectionStatus;
+  state?: ParticipantState;
   /** Whether participant is raised a hand */
   raisedHand?: RaisedHand;
   /**

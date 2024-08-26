@@ -22,7 +22,7 @@ import { RaisedHand } from '../types';
 import { RaisedHandIcon } from './assets/RaisedHandIcon';
 /* @conditional-compile-remove(one-to-n-calling) */
 /* @conditional-compile-remove(PSTN-calls) */
-import { ParticipantConnectionStatus } from '../types';
+import { ParticipantState } from '../types';
 import {
   disabledVideoHint,
   displayNameStyle,
@@ -157,7 +157,7 @@ export interface VideoTileProps {
    * The call connection state of the participant.
    * For example, `Hold` means the participant is on hold.
    */
-  participantState?: ParticipantConnectionStatus;
+  participantState?: ParticipantState;
   /**
    * Strings to override in the component.
    */

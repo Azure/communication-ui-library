@@ -16,7 +16,7 @@ import memoizeOne from 'memoize-one';
 const convertRemoteParticipantToParticipantListParticipant = (
   userId: string,
   displayName: string | undefined,
-  connectionStatus: RemoteParticipantState,
+  state: RemoteParticipantState,
   isMuted: boolean,
   isScreenSharing: boolean,
   isSpeaking: boolean,
@@ -29,7 +29,7 @@ const convertRemoteParticipantToParticipantListParticipant = (
   return {
     userId,
     displayName,
-    connectionStatus,
+    state,
     isMuted,
     isScreenSharing,
     isSpeaking,

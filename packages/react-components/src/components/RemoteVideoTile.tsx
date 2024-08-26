@@ -7,7 +7,7 @@ import { KeyboardEvent, useCallback } from 'react';
 import {
   CreateVideoStreamViewResult,
   OnRenderAvatarCallback,
-  ParticipantConnectionStatus,
+  ParticipantState,
   VideoGalleryRemoteParticipant,
   VideoStreamOptions,
   ViewScalingMode
@@ -55,7 +55,7 @@ export const _RemoteVideoTile = React.memo(
     alwaysShowLabelBackground?: boolean;
     personaMinSize?: number;
     strings: VideoGalleryStrings;
-    connectionStatus?: ParticipantConnectionStatus;
+    participantState?: ParticipantState;
     menuKind?: 'contextual' | 'drawer';
     drawerMenuHostId?: string;
     onPinParticipant?: (userId: string) => void;
@@ -85,7 +85,7 @@ export const _RemoteVideoTile = React.memo(
       onRenderAvatar,
       showMuteIndicator,
       remoteParticipant,
-      connectionStatus,
+      participantState,
       menuKind,
       isPinned,
       onPinParticipant,
@@ -160,7 +160,7 @@ export const _RemoteVideoTile = React.memo(
       };
     }, [contextualMenuProps, menuKind]);
 
-    const showLoadingIndicator = isAvailable && isReceiving === false && connectionStatus !== 'Disconnected';
+    const showLoadingIndicator = isAvailable && isReceiving === false && participantState !== 'Disconnected';
 
     const [drawerMenuItemProps, setDrawerMenuItemProps] = React.useState<_DrawerMenuItemProps[]>([]);
 
@@ -239,7 +239,7 @@ export const _RemoteVideoTile = React.memo(
           alwaysShowLabelBackground={props.alwaysShowLabelBackground}
           /* @conditional-compile-remove(one-to-n-calling) */
           /* @conditional-compile-remove(PSTN-calls) */
-          participantState={connectionStatus}
+          participantState={participantState}
           {...videoTileContextualMenuProps}
           isPinned={props.isPinned}
           onLongTouch={
