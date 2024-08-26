@@ -704,12 +704,18 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
 
   /* @conditional-compile-remove(breakout-rooms) */
   public async returnFromBreakoutRoom(): Promise<void> {
-    if (this.originCallChatAdapter) {
+    if (
+      this.originCallChatAdapter &&
+      this.context.getState().chat?.threadId !== this.originCallChatAdapter.getState().thread.threadId
+    ) {
       this.breakoutRoomChatAdapter?.dispose();
       this.updateChatAdapter(this.originCallChatAdapter);
     }
 
-    await this.callAdapter.returnFromBreakoutRoom();
+    const originCallId = this.callAdapter.getState().call?.breakoutRooms?.breakoutRoomOriginCallId;
+    if (originCallId) {
+      await this.callAdapter.returnFromBreakoutRoom();
+    }
   }
 
   on(event: 'callParticipantsJoined', listener: ParticipantsJoinedListener): void;
@@ -832,6 +838,16 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
         break;
       case 'chatInitialized':
         this.emitter.on(event, listener);
+        break;
+      case 'capabilitiesChanged':
+        this.callAdapter.on('capabilitiesChanged', listener);
+        break;
+      case 'spotlightChanged':
+        this.callAdapter.on('spotlightChanged', listener);
+        break;
+      /* @conditional-compile-remove(breakout-rooms) */
+      case 'breakoutRoomsUpdated':
+        this.callAdapter.on('breakoutRoomsUpdated', listener);
         break;
       default:
         throw `Unknown AzureCommunicationCallWithChatAdapter Event: ${event}`;
@@ -957,6 +973,16 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
         break;
       case 'chatInitialized':
         this.emitter.off(event, listener);
+        break;
+      case 'capabilitiesChanged':
+        this.callAdapter.off('capabilitiesChanged', listener);
+        break;
+      case 'spotlightChanged':
+        this.callAdapter.off('spotlightChanged', listener);
+        break;
+      /* @conditional-compile-remove(breakout-rooms) */
+      case 'breakoutRoomsUpdated':
+        this.callAdapter.off('breakoutRoomsUpdated', listener);
         break;
       default:
         throw `Unknown AzureCommunicationCallWithChatAdapter Event: ${event}`;

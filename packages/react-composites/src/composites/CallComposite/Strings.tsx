@@ -887,4 +887,26 @@ export interface CallCompositeStrings {
    * Notification title for when a user joins a breakout room
    */
   breakoutRoomJoinedNotificationTitle: string;
+  /* @conditional-compile-remove(breakout-rooms) */
+  /**
+   * Title for banner to join the assigned breakout room. The banner is shown in mobile view instead of the
+   * notification.
+   */
+  joinBreakoutRoomBannerTitle: string;
+  /* @conditional-compile-remove(breakout-rooms) */
+  /**
+   * Label for button in banner to join breakout room. The banner is shown in mobile view instead of the notification.
+   */
+  joinBreakoutRoomBannerButtonLabel: string;
+  /* @conditional-compile-remove(breakout-rooms) */
+  /**
+   * Title for banner to return from breakout room. The banner is shown in mobile view instead of the notification.
+   */
+  returnFromBreakoutRoomBannerTitle: string;
+  /* @conditional-compile-remove(breakout-rooms) */
+  /**
+   * Label for button in banner to return from breakout room. The banner is shown in mobile view instead of the
+   * notification.
+   */
+  returnFromBreakoutRoomBannerButtonLabel: string;
 }

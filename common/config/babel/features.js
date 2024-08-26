@@ -21,8 +21,6 @@ module.exports = {
     "in-progress-beta-feature-demo",
     // feature for adding JS helpers to the UI library API
     "composite-js-helpers",
-    // feature for breakout rooms
-    "breakout-rooms",
     // Feature for remote UFD
     "remote-ufd",
     // Feature for showing dtmp dialer by default
@@ -86,7 +84,9 @@ module.exports = {
     // Feature to support file sharing in ACS chats
     "file-sharing-acs",
     // Soft Mute feature for ACS calls and Interop calls
-    "soft-mute"
+    "soft-mute",
+    // feature for breakout rooms
+    "breakout-rooms"
   ],
   stable: [
     // Demo feature. Used in live-documentation of conditional compilation.
