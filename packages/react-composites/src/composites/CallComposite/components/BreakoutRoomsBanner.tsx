@@ -52,7 +52,7 @@ export const BreakoutRoomsBanner = (props: {
             primaryButtonLabel: locale.strings.call.joinBreakoutRoomBannerButtonLabel
           }}
           onClickButton={() => assignedBreakoutRoom.join()}
-          iconProps={{ iconName: 'DoorArrowRight' }}
+          iconProps={{ iconName: 'NotificationBarBreakoutRoomPromptJoin' }}
           primaryButton
         />
       </Stack>
@@ -66,7 +66,7 @@ export const BreakoutRoomsBanner = (props: {
             primaryButtonLabel: locale.strings.call.returnFromBreakoutRoomBannerButtonLabel
           }}
           onClickButton={() => adapter.returnFromBreakoutRoom()}
-          iconProps={{ iconName: 'DoorArrowLeft' }}
+          iconProps={{ iconName: 'NotificationBarBreakoutRoomClosingSoon' }}
         />
       </Stack>
     );
