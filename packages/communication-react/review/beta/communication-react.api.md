@@ -1050,10 +1050,6 @@ export type CallingBaseSelectorProps = {
 // @public
 export interface CallingHandlers extends CommonCallingHandlers {
     // (undocumented)
-    onAcceptCall: (incomingCallId: string, useVideo?: boolean) => Promise<void>;
-    // (undocumented)
-    onRejectCall: (incomingCallId: string) => Promise<void>;
-    // (undocumented)
     onStartCall: (participants: CommunicationIdentifier[], options?: StartCallOptions) => Call | undefined;
 }
 
@@ -2146,6 +2142,8 @@ export interface CommonCallingHandlers {
     // (undocumented)
     askDevicePermission: (constrain: PermissionConstraints) => Promise<void>;
     // (undocumented)
+    onAcceptCall: (incomingCallId: string, useVideo?: boolean) => Promise<void>;
+    // (undocumented)
     onAddParticipant(participant: CommunicationUserIdentifier): Promise<void>;
     // (undocumented)
     onAddParticipant(participant: PhoneNumberIdentifier, options: AddPhoneNumberOptions): Promise<void>;
@@ -2177,6 +2175,8 @@ export interface CommonCallingHandlers {
     onRaiseHand: () => Promise<void>;
     // (undocumented)
     onReactionClick: (reaction: Reaction_2) => Promise<void>;
+    // (undocumented)
+    onRejectCall: (incomingCallId: string) => Promise<void>;
     // (undocumented)
     onRemoveParticipant(userId: string): Promise<void>;
     // (undocumented)
@@ -4779,10 +4779,6 @@ export type TeamsCallAdapterArgsCommon = {
 
 // @public
 export interface TeamsCallingHandlers extends CommonCallingHandlers {
-    // (undocumented)
-    onAcceptCall: (incomingCallId: string, useVideo?: boolean) => Promise<void>;
-    // (undocumented)
-    onRejectCall: (incomingCallId: string) => Promise<void>;
     // (undocumented)
     onStartCall: (participants: CommunicationIdentifier[], options?: StartCallOptions) => undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall;
 }

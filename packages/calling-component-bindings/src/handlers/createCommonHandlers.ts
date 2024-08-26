@@ -85,7 +85,10 @@ export interface CommonCallingHandlers {
   /* @conditional-compile-remove(call-readiness) */
   askDevicePermission: (constrain: PermissionConstraints) => Promise<void>;
   onStartCall: (participants: CommunicationIdentifier[], options?: StartCallOptions) => void;
-
+  /* @conditional-compile-remove(one-to-n-calling) */
+  onAcceptCall: (incomingCallId: string, useVideo?: boolean) => Promise<void>;
+  /* @conditional-compile-remove(one-to-n-calling) */
+  onRejectCall: (incomingCallId: string) => Promise<void>;
   onRemoveVideoBackgroundEffects: () => Promise<void>;
 
   onBlurVideoBackground: (backgroundBlurConfig?: BackgroundBlurConfig) => Promise<void>;
@@ -724,7 +727,10 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       /* @conditional-compile-remove(soft-mute) */
       onMuteParticipant,
       /* @conditional-compile-remove(soft-mute) */
-      onMuteAllRemoteParticipants
+      onMuteAllRemoteParticipants,
+      /* @conditional-compile-remove(one-to-n-calling) */
+      onAcceptCall: notImplemented,
+      onRejectCall: notImplemented
     };
   }
 );
