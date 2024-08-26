@@ -7,12 +7,7 @@ import {
   BackgroundReplacementConfig,
   BackgroundReplacementEffect
 } from '@azure/communication-calling-effects';
-/* @conditional-compile-remove(DNS) */
-import { AudioEffectsStartConfig } from '@azure/communication-calling';
-/* @conditional-compile-remove(DNS) */
-import { DeepNoiseSuppressionEffect } from '@azure/communication-calling-effects';
-/* @conditional-compile-remove(DNS) */
-import type { DeepNoiseSuppressionEffectDependency } from '@internal/calling-component-bindings';
+
 import { VideoBackgroundEffectsDependency } from '@internal/calling-component-bindings';
 
 /**
@@ -32,18 +27,4 @@ export const onResolveVideoEffectDependency = async (): Promise<VideoBackgroundE
     createBackgroundReplacementEffect
   };
   return VideoBackgroundEffectsDependency;
-};
-
-/* @conditional-compile-remove(DNS) */
-/**
- *
- * Dependency resolution for video background effects using lazy loading.
- * @beta
- */
-export const onResolveDeepNoiseSuppressionDependency = async (): Promise<DeepNoiseSuppressionEffectDependency> => {
-  const audioEffect: AudioEffectsStartConfig = {
-    noiseSuppression: new DeepNoiseSuppressionEffect()
-  };
-
-  return { deepNoiseSuppressionEffect: audioEffect };
 };
