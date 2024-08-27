@@ -12,6 +12,8 @@ import {
   BackgroundBlurConfig,
   BackgroundReplacementConfig
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(DNS) */
+import { AudioEffectsStartConfig, AudioEffectsStopConfig } from '@azure/communication-calling';
 /* @conditional-compile-remove(soft-mute) */
 import { RemoteParticipant } from '@azure/communication-calling';
 import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
@@ -94,6 +96,10 @@ export interface CommonCallingHandlers {
   onBlurVideoBackground: (backgroundBlurConfig?: BackgroundBlurConfig) => Promise<void>;
 
   onReplaceVideoBackground: (backgroundReplacementConfig: BackgroundReplacementConfig) => Promise<void>;
+  /* @conditional-compile-remove(DNS) */
+  onStartNoiseSuppressionEffect: () => Promise<void>;
+  /* @conditional-compile-remove(DNS) */
+  onStopNoiseSuppressionEffect: () => Promise<void>;
   onStartCaptions: (options?: CaptionsOptions) => Promise<void>;
   onStopCaptions: () => Promise<void>;
   onSetSpokenLanguage: (language: string) => Promise<void>;
@@ -135,6 +141,15 @@ export type VideoBackgroundEffectsDependency = {
   createBackgroundReplacementEffect: (config: BackgroundReplacementConfig) => BackgroundReplacementEffect;
 };
 
+/* @conditional-compile-remove(DNS) */
+/**
+ * Dependency type to be injected for deep noise suppression
+ *
+ * @beta
+ */
+export type DeepNoiseSuppressionEffectDependency = {
+  deepNoiseSuppressionEffect: AudioEffectsStartConfig;
+};
 /**
  * Create the common implementation of {@link CallingHandlers} for all types of Call
  *
@@ -147,6 +162,8 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
     call: Call | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall | undefined,
     options?: {
       onResolveVideoBackgroundEffectsDependency?: () => Promise<VideoBackgroundEffectsDependency>;
+      /* @conditional-compile-remove(DNS) */
+      onResolveDeepNoiseSuppressionDependency?: () => Promise<DeepNoiseSuppressionEffectDependency>;
     }
   ): CommonCallingHandlers & Partial<_ComponentCallingHandlers> => {
     const onStartLocalVideo = async (): Promise<void> => {
@@ -609,6 +626,34 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       }
     };
 
+    /* @conditional-compile-remove(DNS) */
+    const onStartNoiseSuppressionEffect = async (): Promise<void> => {
+      const audioEffects =
+        options?.onResolveDeepNoiseSuppressionDependency &&
+        (await options.onResolveDeepNoiseSuppressionDependency())?.deepNoiseSuppressionEffect;
+      const stream = call?.localAudioStreams.find((stream) => stream.mediaStreamType === 'Audio');
+      if (stream && audioEffects && audioEffects.noiseSuppression) {
+        const audioEffectsFeature = stream.feature(Features.AudioEffects);
+        const isNoiseSuppressionSupported = await audioEffectsFeature.isSupported(audioEffects.noiseSuppression);
+        if (isNoiseSuppressionSupported) {
+          return await audioEffectsFeature.startEffects(audioEffects);
+        } else {
+          throw new Error('Deep Noise Suppression is not supported on this platform.');
+        }
+      }
+    };
+
+    /* @conditional-compile-remove(DNS) */
+    const onStopNoiseSuppressionEffect = async (): Promise<void> => {
+      const stream = call?.localAudioStreams.find((stream) => stream.mediaStreamType === 'Audio');
+      if (stream && options?.onResolveDeepNoiseSuppressionDependency) {
+        const audioEffects: AudioEffectsStopConfig = {
+          noiseSuppression: true
+        };
+        return await stream.feature(Features.AudioEffects).stopEffects(audioEffects);
+      }
+    };
+
     const onStartCaptions = async (options?: CaptionsOptions): Promise<void> => {
       const captionsFeature = call?.feature(Features.Captions).captions;
       await captionsFeature?.startCaptions(options);
@@ -712,6 +757,10 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       onRemoveVideoBackgroundEffects,
       onBlurVideoBackground,
       onReplaceVideoBackground,
+      /* @conditional-compile-remove(DNS) */
+      onStartNoiseSuppressionEffect,
+      /* @conditional-compile-remove(DNS) */
+      onStopNoiseSuppressionEffect,
       onStartCaptions,
       onStopCaptions,
       onSetCaptionLanguage,
