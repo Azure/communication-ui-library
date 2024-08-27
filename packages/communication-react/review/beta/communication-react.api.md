@@ -3331,7 +3331,11 @@ export interface IncomingCallNotificationStyles {
 // @public
 export const IncomingCallStack: (props: IncomingCallStackProps) => JSX.Element;
 
+<<<<<<< HEAD
 // @public
+=======
+// @beta
+>>>>>>> e477de24d20740e81e57fb7337745191f59eaf5b
 export interface IncomingCallStackCall {
     callerInfo: {
         displayName?: string;
@@ -3340,7 +3344,11 @@ export interface IncomingCallStackCall {
     videoAvailable: boolean;
 }
 
+<<<<<<< HEAD
 // @public
+=======
+// @beta
+>>>>>>> e477de24d20740e81e57fb7337745191f59eaf5b
 export interface IncomingCallStackProps {
     activeIncomingCalls: IncomingCallStackCall[];
     onAcceptCall: (incomingCallId: string, useVideo?: boolean) => void;
