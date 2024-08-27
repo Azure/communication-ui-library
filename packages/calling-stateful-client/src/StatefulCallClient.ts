@@ -301,16 +301,6 @@ export type StatefulCallClientArgs = {
   userId:
     | CommunicationUserIdentifier
     | /* @conditional-compile-remove(teams-identity-support) */ MicrosoftTeamsUserIdentifier;
-  /* @conditional-compile-remove(PSTN-calls) */
-  /**
-   * A phone number in E.164 format that will be used to represent the callers identity. This number is required
-   * to start a PSTN call.
-   *
-   * example: +11234567
-   *
-   * This is not a cached value from the headless calling client.
-   */
-  alternateCallerId?: string;
 };
 
 /**
@@ -366,11 +356,7 @@ export const _createStatefulCallClientInner = (
   );
   return createStatefulCallClientWithDeps(
     new CallClient(withTelemetryTag(telemetryImplementationHint, options?.callClientOptions)),
-    new CallContext(
-      getIdentifierKind(args.userId),
-      options?.maxStateChangeListeners,
-      /* @conditional-compile-remove(PSTN-calls) */ args.alternateCallerId
-    ),
+    new CallContext(getIdentifierKind(args.userId), options?.maxStateChangeListeners),
     new InternalCallContext()
   );
 };
