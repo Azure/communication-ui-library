@@ -7,14 +7,16 @@ const mockActiveIncomingCalls: ActiveIncomingCall[] = [
       displayName: 'John Wick'
     },
     startTime: new Date(),
-    id: '1'
+    id: '1',
+    videoAvailable: false
   },
   {
     callerInfo: {
       displayName: 'Dog'
     },
     startTime: new Date(),
-    id: '2'
+    id: '2',
+    videoAvailable: true
   }
 ];
 const mockRemovedIncomingCalls: ActiveIncomingCall[] = [];
