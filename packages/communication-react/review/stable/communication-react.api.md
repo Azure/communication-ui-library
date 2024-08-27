@@ -3359,7 +3359,7 @@ export type ParticipantsRemovedListener = (event: {
 }) => void;
 
 // @public
-export type ParticipantState = 'Idle' | 'Connecting' | 'Ringing' | 'Connected' | 'Hold' | 'InLobby' | 'EarlyMedia' | 'Disconnected';
+export type ParticipantState = 'Idle' | 'Connecting' | 'Ringing' | 'Connected' | 'Hold' | 'InLobby' | 'EarlyMedia' | 'Disconnected' | 'Reconnecting';
 
 // @public
 export interface PPTLiveCallFeatureState {

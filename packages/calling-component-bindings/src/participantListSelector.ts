@@ -14,7 +14,7 @@ import { getRole } from './baseSelectors';
 /* @conditional-compile-remove(hide-attendee-name) */
 import { isHideAttendeeNamesEnabled } from './baseSelectors';
 import { CallParticipantListParticipant } from '@internal/react-components';
-import { _isRingingPSTNParticipant, _updateUserDisplayNames } from './utils/callUtils';
+import { _convertParticipantState, _updateUserDisplayNames } from './utils/callUtils';
 import { memoizedConvertAllremoteParticipants } from './utils/participantListSelectorUtils';
 import { memoizedConvertToVideoTileReaction, memoizedSpotlight } from './utils/participantListSelectorUtils';
 import { getLocalParticipantRaisedHand } from './baseSelectors';
@@ -63,7 +63,7 @@ const convertRemoteParticipantsToParticipantListParticipants = (
            * We want to check the participant to see if they are a PSTN participant joining the call
            * and mapping their state to be 'Ringing'
            */
-          const state = _isRingingPSTNParticipant(participant);
+          const state = _convertParticipantState(participant);
           let displayName = participant.displayName;
           /* @conditional-compile-remove(hide-attendee-name) */
           displayName = maskDisplayNameWithRole(

@@ -25,7 +25,8 @@ type ParticipantConnectionState =
   | 'Hold'
   | 'InLobby'
   | 'EarlyMedia'
-  | 'Disconnected';
+  | 'Disconnected'
+  | 'Reconnecting';
 
 /**
  * Check if the call state represents being in the call
@@ -133,7 +134,10 @@ export const isACSCallParticipants = (
  * @private
  * Checks whether the user is a 'Ringing' PSTN user.
  */
-export const _isRingingPSTNParticipant = (participant: RemoteParticipantState): ParticipantConnectionState => {
+export const _convertParticipantState = (participant: RemoteParticipantState): ParticipantConnectionState => {
+  if (participant.diagnostic?.diagnostic === 'ServerConnection' && participant.diagnostic?.value === false) {
+    return 'Reconnecting';
+  }
   return isPhoneNumberIdentifier(participant.identifier) && participant.state === 'Connecting'
     ? 'Ringing'
     : participant.state;

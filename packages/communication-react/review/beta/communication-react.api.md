@@ -3444,7 +3444,7 @@ export const loadCallWithChatComposite: (args: CallWithChatCompositeLoaderProps,
 export const loadChatComposite: (args: ChatCompositeLoaderProps, htmlElement: HTMLElement | null, props: ChatCompositeOptions) => Promise<ChatAdapter | undefined>;
 
 // @public
-export type LoadingState = 'loading' | 'none';
+export type LoadingState = 'loading' | 'none' | 'reconnecting';
 
 // @beta
 export const loadOutboundCallComposite: (adapterArgs: OutboundCallCompositeLoaderProps, htmlElement: HTMLElement | null, props?: CallCompositeOptions) => Promise<CallAdapter | undefined>;
@@ -4135,7 +4135,7 @@ export type ParticipantsRemovedListener = (event: {
 }) => void;
 
 // @public
-export type ParticipantState = 'Idle' | 'Connecting' | 'Ringing' | 'Connected' | 'Hold' | 'InLobby' | 'EarlyMedia' | 'Disconnected';
+export type ParticipantState = 'Idle' | 'Connecting' | 'Ringing' | 'Connected' | 'Hold' | 'InLobby' | 'EarlyMedia' | 'Disconnected' | 'Reconnecting';
 
 // @public
 export interface PPTLiveCallFeatureState {

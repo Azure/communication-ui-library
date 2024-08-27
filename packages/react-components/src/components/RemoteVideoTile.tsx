@@ -161,21 +161,25 @@ export const _RemoteVideoTile = React.memo(
     }, [contextualMenuProps, menuKind]);
 
     const showLoadingIndicator = isAvailable && isReceiving === false && participantState !== 'Disconnected';
+    const isReconnecting = participantState === 'Reconnecting';
 
     const [drawerMenuItemProps, setDrawerMenuItemProps] = React.useState<_DrawerMenuItemProps[]>([]);
 
     const renderVideoStreamElement = useMemo(() => {
       // Checking if renderElement is well defined or not as calling SDK has a number of video streams limitation which
       // implies that, after their threshold, all streams have no child (blank video)
-      if (!renderElement || !renderElement.childElementCount) {
+      if ((!renderElement || !renderElement.childElementCount) && !isReconnecting) {
         // Returning `undefined` results in the placeholder with avatar being shown
         return undefined;
       }
 
       return (
-        <StreamMedia videoStreamElement={renderElement} loadingState={showLoadingIndicator ? 'loading' : 'none'} />
+        <StreamMedia
+          videoStreamElement={renderElement ?? null}
+          loadingState={showLoadingIndicator ? 'loading' : isReconnecting ? 'reconnecting' : 'none'}
+        />
       );
-    }, [renderElement, showLoadingIndicator]);
+    }, [isReconnecting, renderElement, showLoadingIndicator]);
 
     const onKeyDown = useCallback(
       (e: KeyboardEvent) => {

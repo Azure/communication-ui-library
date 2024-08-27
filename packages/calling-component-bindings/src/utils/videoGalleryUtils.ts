@@ -12,7 +12,7 @@ import { memoizeFnAll, toFlatCommunicationIdentifier } from '@internal/acs-ui-co
 import { RemoteParticipantState, RemoteVideoStreamState } from '@internal/calling-stateful-client';
 import { VideoGalleryRemoteParticipant, VideoGalleryStream } from '@internal/react-components';
 import memoizeOne from 'memoize-one';
-import { _isRingingPSTNParticipant } from './callUtils';
+import { _convertParticipantState } from './callUtils';
 /* @conditional-compile-remove(hide-attendee-name) */
 import { maskDisplayNameWithRole } from './callUtils';
 import { checkIsSpeaking } from './SelectorUtils';
@@ -60,7 +60,7 @@ export const _videoGalleryRemoteParticipantsMemo: _VideoGalleryRemoteParticipant
           );
         })
         .map((participant: RemoteParticipantState) => {
-          const state = _isRingingPSTNParticipant(participant);
+          const state = _convertParticipantState(participant);
           let displayName = participant.displayName;
           /* @conditional-compile-remove(hide-attendee-name) */
           displayName = maskDisplayNameWithRole(
@@ -94,7 +94,7 @@ const memoizedAllConvertRemoteParticipant = memoizeFnAll(
     isMuted: boolean,
     isSpeaking: boolean,
     videoStreams: { [key: number]: RemoteVideoStreamState },
-    state: RemoteParticipantConnectionState,
+    state: RemoteParticipantConnectionState | 'Reconnecting',
     displayName?: string,
     raisedHand?: RaisedHandState,
     contentSharingStream?: HTMLElement,
@@ -122,7 +122,7 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
   isMuted: boolean,
   isSpeaking: boolean,
   videoStreams: { [key: number]: RemoteVideoStreamState },
-  state: RemoteParticipantConnectionState,
+  state: RemoteParticipantConnectionState | 'Reconnecting',
   displayName?: string,
   raisedHand?: RaisedHandState,
   contentSharingStream?: HTMLElement,
