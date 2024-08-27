@@ -169,9 +169,10 @@ const AzureCommunicationCallScreen = (props: AzureCommunicationCallScreenProps):
         applauseReaction: { url: '/assets/reactions/clapEmoji.png', frameCount: 102 },
         surprisedReaction: { url: '/assets/reactions/surprisedEmoji.png', frameCount: 102 }
       },
+      /* @conditional-compile-remove(PSTN-calls) */
       alternateCallerId: adapterArgs.alternateCallerId
     };
-  }, [adapterArgs.alternateCallerId]);
+  }, [/* @conditional-compile-remove(PSTN-calls) */ adapterArgs.alternateCallerId]);
 
   const adapter = useAzureCommunicationCallAdapter(
     {
@@ -218,9 +219,10 @@ const AzureCommunicationOutboundCallScreen = (props: AzureCommunicationCallScree
         }
         return defaultProfile;
       },
+      /* @conditional-compile-remove(PSTN-calls) */
       alternateCallerId: adapterArgs.alternateCallerId
     };
-  }, [adapterArgs.alternateCallerId]);
+  }, [/* @conditional-compile-remove(PSTN-calls) */ adapterArgs.alternateCallerId]);
 
   const adapter = useAzureCommunicationCallAdapter(
     {
