@@ -11,7 +11,7 @@ import React from 'react';
  * Represents an active incoming call.
  * @beta
  */
-export interface ActiveIncomingCall {
+export interface IncomingCallStackCall {
   /**
    * Unique identifier for the incoming call.
    */
@@ -23,16 +23,8 @@ export interface ActiveIncomingCall {
     /**
      * Display name of the caller.
      */
-    displayName: string;
+    displayName?: string;
   };
-  /**
-   * Start time of the incoming call.
-   */
-  startTime: Date;
-  /**
-   * End time of the incoming call.
-   */
-  endTime?: Date;
   /**
    * Whether or not the call is a voip capable call.
    */
@@ -46,11 +38,11 @@ export interface IncomingCallStackProps {
   /**
    * List of incoming calls.
    */
-  activeIncomingCalls: ActiveIncomingCall[];
+  activeIncomingCalls: IncomingCallStackCall[];
   /**
    * List of incoming calls that have ended.
    */
-  removedIncomingCalls: ActiveIncomingCall[];
+  removedIncomingCalls: IncomingCallStackCall[];
   /**
    * Handler to accept the incoming call.
    * @param incomingCallId - Id of the incoming call to accept.

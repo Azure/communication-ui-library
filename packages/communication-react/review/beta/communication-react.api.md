@@ -130,17 +130,6 @@ export interface ActiveErrorMessage {
     type: ErrorType;
 }
 
-// @beta
-export interface ActiveIncomingCall {
-    callerInfo: {
-        displayName: string;
-    };
-    endTime?: Date;
-    id: string;
-    startTime: Date;
-    videoAvailable: boolean;
-}
-
 // @public
 export interface ActiveNotification {
     autoDismiss?: boolean;
@@ -282,7 +271,6 @@ export type AzureCommunicationCallAdapterArgs = {
     displayName: string;
     credential: CommunicationTokenCredential;
     locator: CallAdapterLocator;
-    alternateCallerId?: string;
     options?: AzureCommunicationCallAdapterOptions;
 };
 
@@ -843,13 +831,13 @@ export interface CallCompositeStrings {
     configurationPageTitle: string;
     configurationPageVideoEffectsButtonLabel?: string;
     copyInviteLinkActionedAriaLabel: string;
-    copyInviteLinkButtonActionedLabel: string;
-    copyInviteLinkButtonLabel: string;
+    copyInviteLinkButtonActionedLabel?: string;
+    copyInviteLinkButtonLabel?: string;
     defaultPlaceHolder: string;
-    dialpadCloseModalButtonAriaLabel: string;
-    dialpadModalAriaLabel: string;
-    dialpadModalTitle: string;
-    dialpadStartCallButtonLabel: string;
+    dialpadCloseModalButtonAriaLabel?: string;
+    dialpadModalAriaLabel?: string;
+    dialpadModalTitle?: string;
+    dialpadStartCallButtonLabel?: string;
     dismissModalAriaLabel?: string;
     dismissSidePaneButtonLabel?: string;
     dtmfDialerButtonLabel?: string;
@@ -857,7 +845,7 @@ export interface CallCompositeStrings {
     dtmfDialerButtonTooltipOn?: string;
     dtmfDialerMoreButtonLabelOff?: string;
     dtmfDialerMoreButtonLabelOn?: string;
-    dtmfDialpadPlaceholderText: string;
+    dtmfDialpadPlaceholderText?: string;
     endCallConfirmButtonLabel?: string;
     endCallConfirmDialogContent?: string;
     endCallConfirmDialogTitle?: string;
@@ -869,7 +857,7 @@ export interface CallCompositeStrings {
     failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails?: string;
     failedToJoinTeamsMeetingReasonAccessDeniedTitle: string;
     hangUpCancelButtonLabel?: string;
-    holdScreenLabel: string;
+    holdScreenLabel?: string;
     invalidMeetingIdentifier: string;
     inviteToRoomRemovedDetails?: string;
     inviteToRoomRemovedTitle: string;
@@ -916,8 +904,8 @@ export interface CallCompositeStrings {
     noSpeakersLabel: string;
     notInvitedToRoomDetails?: string;
     notInvitedToRoomTitle: string;
-    openDialpadButtonLabel: string;
-    openDtmfDialpadLabel: string;
+    openDialpadButtonLabel?: string;
+    openDtmfDialpadLabel?: string;
     outboundCallingNoticeString?: string;
     participantCouldNotBeReachedMoreDetails?: string;
     participantCouldNotBeReachedTitle?: string;
@@ -928,9 +916,9 @@ export interface CallCompositeStrings {
     peopleButtonLabel: string;
     peopleButtonTooltipClose: string;
     peopleButtonTooltipOpen: string;
-    peoplePaneAddPeopleButtonLabel: string;
+    peoplePaneAddPeopleButtonLabel?: string;
     peoplePaneMoreButtonAriaLabel: string;
-    peoplePaneSubTitle: string;
+    peoplePaneSubTitle?: string;
     peoplePaneTitle: string;
     permissionToReachTargetParticipantNotAllowedMoreDetails?: string;
     permissionToReachTargetParticipantNotAllowedTitle?: string;
@@ -944,11 +932,11 @@ export interface CallCompositeStrings {
     removeBackgroundTooltip?: string;
     removedFromCallMoreDetails?: string;
     removedFromCallTitle: string;
-    removeMenuLabel: string;
-    resumeCallButtonAriaLabel: string;
-    resumeCallButtonLabel: string;
-    resumingCallButtonAriaLabel: string;
-    resumingCallButtonLabel: string;
+    removeMenuLabel?: string;
+    resumeCallButtonAriaLabel?: string;
+    resumeCallButtonLabel?: string;
+    resumingCallButtonAriaLabel?: string;
+    resumingCallButtonLabel?: string;
     returnFromBreakoutRoomBannerButtonLabel: string;
     returnFromBreakoutRoomBannerTitle: string;
     returnFromBreakoutRoomButtonLabel: string;
@@ -1061,10 +1049,6 @@ export type CallingBaseSelectorProps = {
 
 // @public
 export interface CallingHandlers extends CommonCallingHandlers {
-    // (undocumented)
-    onAcceptCall: (incomingCallId: string, useVideo?: boolean) => Promise<void>;
-    // (undocumented)
-    onRejectCall: (incomingCallId: string) => Promise<void>;
     // (undocumented)
     onStartCall: (participants: CommunicationIdentifier[], options?: StartCallOptions) => Call | undefined;
 }
@@ -2107,6 +2091,7 @@ export type CommonCallAdapterOptions = {
     onFetchProfile?: OnFetchProfileCallback;
     callingSounds?: CallingSounds;
     reactionResources?: ReactionResources;
+    alternateCallerId?: string;
 };
 
 // @public
@@ -2158,6 +2143,8 @@ export interface CommonCallingHandlers {
     // (undocumented)
     askDevicePermission: (constrain: PermissionConstraints) => Promise<void>;
     // (undocumented)
+    onAcceptCall: (incomingCallId: string, useVideo?: boolean) => Promise<void>;
+    // (undocumented)
     onAddParticipant(participant: CommunicationUserIdentifier): Promise<void>;
     // (undocumented)
     onAddParticipant(participant: PhoneNumberIdentifier, options: AddPhoneNumberOptions): Promise<void>;
@@ -2189,6 +2176,8 @@ export interface CommonCallingHandlers {
     onRaiseHand: () => Promise<void>;
     // (undocumented)
     onReactionClick: (reaction: Reaction_2) => Promise<void>;
+    // (undocumented)
+    onRejectCall: (incomingCallId: string) => Promise<void>;
     // (undocumented)
     onRemoveParticipant(userId: string): Promise<void>;
     // (undocumented)
@@ -3233,10 +3222,10 @@ export type HoldButtonSelector = (state: CallClientState, props: CallingBaseSele
 
 // @beta
 export interface HoldButtonStrings {
-    offLabel: string;
-    onLabel: string;
-    tooltipOffContent: string;
-    tooltipOnContent: string;
+    offLabel?: string;
+    onLabel?: string;
+    tooltipOffContent?: string;
+    tooltipOnContent?: string;
 }
 
 // @public
@@ -3352,19 +3341,28 @@ export interface IncomingCallNotificationStyles {
 export const IncomingCallStack: (props: IncomingCallStackProps) => JSX.Element;
 
 // @beta
+export interface IncomingCallStackCall {
+    callerInfo: {
+        displayName?: string;
+    };
+    id: string;
+    videoAvailable: boolean;
+}
+
+// @beta
 export interface IncomingCallStackProps {
-    activeIncomingCalls: ActiveIncomingCall[];
+    activeIncomingCalls: IncomingCallStackCall[];
     onAcceptCall: (incomingCallId: string, useVideo?: boolean) => void;
     onRejectCall: (incomingCallId: string) => void;
-    removedIncomingCalls: ActiveIncomingCall[];
+    removedIncomingCalls: IncomingCallStackCall[];
     strings?: IncomingCallNotificationStrings;
     styles?: IncomingCallNotificationStyles;
 }
 
 // @beta
 export type IncomingCallStackSelector = (state: CallClientState) => {
-    activeIncomingCalls: ActiveIncomingCall[];
-    removedIncomingCalls: ActiveIncomingCall[];
+    activeIncomingCalls: IncomingCallStackCall[];
+    removedIncomingCalls: IncomingCallStackCall[];
 };
 
 // @public
@@ -4639,7 +4637,6 @@ export interface StatefulCallClient extends CallClient {
 // @public
 export type StatefulCallClientArgs = {
     userId: CommunicationUserIdentifier | /* @conditional-compile-remove(teams-identity-support) */ MicrosoftTeamsUserIdentifier;
-    alternateCallerId?: string;
 };
 
 // @public
@@ -4784,10 +4781,6 @@ export type TeamsCallAdapterArgsCommon = {
 
 // @public
 export interface TeamsCallingHandlers extends CommonCallingHandlers {
-    // (undocumented)
-    onAcceptCall: (incomingCallId: string, useVideo?: boolean) => Promise<void>;
-    // (undocumented)
-    onRejectCall: (incomingCallId: string) => Promise<void>;
     // (undocumented)
     onStartCall: (participants: CommunicationIdentifier[], options?: StartCallOptions) => undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall;
 }
