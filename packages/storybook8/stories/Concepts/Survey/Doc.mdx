@@ -4,7 +4,9 @@ import { Meta, Source } from '@storybook/addon-docs';
 
 import { exampleDisableSurvey, exampleOnSurveyClosed, exampleOnSurveySubmitted } from './utils/SurveyDocs';
 
-# End of Call Survey
+# Survey
+
+## End of Call Survey
 
 Azure Communication Services UI Library is adding support for End of Call Survey. With this new feature, call participants will be able to share feedback on the quality and reliability of Audio and Video calls.
 
@@ -17,7 +19,7 @@ Participants will be able to submit feedback based on four categories:
 
 They can rate their call experience on a star based numerical survey and provide additional detail as to the specifics of each category if they wish. The feedback feature will enable developers to collect subjective customer feedback on call quality and reliability and enable the creation of more definite metrics.
 
-# Handling Survey Results
+## Handling Survey Results
 
 Survey feedback is automatically sent to Azure Monitor. To send survey results to your own service, you can also gain access to the survey results by passing in a custom function utilizing the `onSurveySubmitted` prop inside `surveyOptions`.
 
@@ -27,13 +29,13 @@ With `onSurveySubmitted` populated, a free form text survey is available to the 
 
 <Source code={exampleOnSurveySubmitted} />
 
-# Disabling End of Call Survey
+## Disabling End of Call Survey
 
 The UI Library enables users to display surveys at end of call by providing the option to use end of call survey within the CallComposite and CallWithChatComposite experience. End of Call Survey are enabled by default both in Mobile Web sessions and in Desktop Web sessions. If you wish to disable the end of call survey, you have the option to remove this feature from the composites.
 
 <Source code={exampleDisableSurvey} />
 
-# Redirect to your own experience after end of call survey
+## Redirect to your own experience after end of call survey
 
 The UI Library enables users to redirect to their own experience when end of call survey is skipped, submitted, or has an issue sending. This is done by passing in a custom function utilizing the `onSurveyClosed` prop inside `surveyOptions`.
 
