@@ -10,9 +10,9 @@ export type { ParticipantListSelector } from './participantListSelector';
 export type { ParticipantsButtonSelector } from './participantsButtonSelector';
 export type { VideoGallerySelector } from './videoGallerySelector';
 export type { ErrorBarSelector } from './errorBarSelector';
-/* @conditional-compile-remove(notifications) */
+
 export type { NotificationStackSelector } from './notificationStackSelector';
-/* @conditional-compile-remove(notifications) */
+
 export { notificationStackSelector } from './notificationStackSelector';
 /* @conditional-compile-remove(PSTN-calls) */
 export type { HoldButtonSelector } from './callControlSelectors';

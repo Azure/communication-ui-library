@@ -405,6 +405,7 @@
     "dialpadCloseModalButtonAriaLabel": "Close dialpad",
     "openDtmfDialpadLabel": "Show dialpad",
     "dtmfDialpadPlaceholderText": "Enter number",
-    "breakoutRoomChatPaneTitle": "Breakout Room Chat"
+    "breakoutRoomChatPaneTitle": "Breakout Room Chat",
+    "chatContentSpinnerLabel": "Loading..."
   }
 }

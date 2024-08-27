@@ -21,8 +21,6 @@ module.exports = {
     "in-progress-beta-feature-demo",
     // feature for adding JS helpers to the UI library API
     "composite-js-helpers",
-    // feature for breakout rooms
-    "breakout-rooms",
     // Feature for remote UFD
     "remote-ufd",
     // Feature for showing dtmp dialer by default
@@ -79,13 +77,13 @@ module.exports = {
     "soft-mute",
     // feature for tracking the callParticipantsLocator
     "call-participants-locator",
+    // feature for breakout rooms
+    "breakout-rooms"
   ],
   stable: [
     // Demo feature. Used in live-documentation of conditional compilation.
     // Do not use in production code.
     "stabilizedDemo",
-    // Support Calling SDK isReceiving flag, shows a loading spinner on the video tile when isAvailable is true but isReceiving is false
-    "video-stream-is-receiving-flag",
     // Joining calls using teams token
     "teams-identity-support",
     // feature for hiding attendee name in the teams meeting
@@ -105,6 +103,8 @@ module.exports = {
     // Adhoc calls to a Teams user.
     "teams-adhoc-call",
     // Feature for tracking beta start call identifier
-    'start-call-beta'
+    'start-call-beta',
+    // Feature for meeting conference coordinates
+    'teams-meeting-conference'
   ]
 }

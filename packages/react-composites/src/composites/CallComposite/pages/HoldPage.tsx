@@ -13,7 +13,6 @@ import { MobileChatSidePaneTabHeaderProps } from '../../common/TabHeader';
 import { SidePaneRenderer } from '../components/SidePane/SidePaneProvider';
 
 import { CapabilitiesChangeNotificationBarProps } from '../components/CapabilitiesChangedNotificationBar';
-/* @conditional-compile-remove(notifications) */
 import { ActiveNotification } from '@internal/react-components';
 
 /**
@@ -25,14 +24,10 @@ export interface HoldPageProps {
   modalLayerHostId: string;
   updateSidePaneRenderer: (renderer: SidePaneRenderer | undefined) => void;
   mobileChatTabHeader?: MobileChatSidePaneTabHeaderProps;
-  latestErrors: ActiveErrorMessage[] | /* @conditional-compile-remove(notifications) */ ActiveNotification[];
-  onDismissError: (
-    error: ActiveErrorMessage | /* @conditional-compile-remove(notifications) */ ActiveNotification
-  ) => void;
-  /* @conditional-compile-remove(notifications) */
+  latestErrors: ActiveErrorMessage[] | ActiveNotification[];
+  onDismissError: (error: ActiveErrorMessage | ActiveNotification) => void;
   onDismissNotification?: (notification: ActiveNotification) => void;
   capabilitiesChangedNotificationBarProps?: CapabilitiesChangeNotificationBarProps;
-  /* @conditional-compile-remove(notifications) */
   latestNotifications: ActiveNotification[];
 }
 
@@ -61,7 +56,6 @@ export const HoldPage = (props: HoldPageProps): JSX.Element => {
     <CallArrangement
       complianceBannerProps={{ strings }}
       errorBarProps={props.options?.errorBar !== false && errorBarProps}
-      /* @conditional-compile-remove(notifications) */
       showErrorNotifications={props.options?.errorBar ?? true}
       callControlProps={{
         options: callControlOptions,
@@ -74,10 +68,8 @@ export const HoldPage = (props: HoldPageProps): JSX.Element => {
       updateSidePaneRenderer={props.updateSidePaneRenderer}
       mobileChatTabHeader={props.mobileChatTabHeader}
       latestErrors={props.latestErrors}
-      /* @conditional-compile-remove(notifications) */
       latestNotifications={props.latestNotifications}
       onDismissError={props.onDismissError}
-      /* @conditional-compile-remove(notifications) */
       onDismissNotification={props.onDismissNotification}
       /* @conditional-compile-remove(call-readiness) */
       doNotShowCameraAccessNotifications={props.options?.deviceChecks?.camera === 'doNotPrompt'}

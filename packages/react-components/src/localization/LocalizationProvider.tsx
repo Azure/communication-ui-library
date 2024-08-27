@@ -17,7 +17,7 @@ import {
   TypingIndicatorStrings,
   VideoGalleryStrings
 } from '../components';
-/* @conditional-compile-remove(notifications) */
+
 import { NotificationStackStrings } from '../components';
 
 import { RaiseHandButtonStrings } from '../components';
@@ -112,7 +112,7 @@ export interface ComponentStrings {
   messageStatusIndicator: MessageStatusIndicatorStrings;
   /** Strings for ErrorBar */
   errorBar: ErrorBarStrings;
-  /* @conditional-compile-remove(notifications) */
+
   /** Strings for NotificationStack */
   notificationStack: NotificationStackStrings;
   /** Strings for VideoGallery */
