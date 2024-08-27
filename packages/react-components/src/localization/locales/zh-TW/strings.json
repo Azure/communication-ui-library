@@ -87,7 +87,7 @@
     "label": "離開",
     "tooltipContent": "離開通話",
     "leaveOption": "離開",
-    "endCallOption": "每個人都結束通話"
+    "endCallOption": "結束所有通話"
   },
   "cameraButton": {
     "onLabel": "相機",
@@ -150,7 +150,7 @@
   },
   "screenShareButton": {
     "onLabel": "停止簡報",
-    "offLabel": "存在",
+    "offLabel": "分享",
     "tooltipDisabledContent": "簡報已停用",
     "tooltipOnContent": "展示您的螢幕",
     "tooltipOffContent": "展示您的螢幕"
