@@ -30,11 +30,11 @@ import { CalloutWithIcon } from './CalloutWithIcon';
 
 /** @private */
 export interface AddPeopleDropdownStrings extends CallingDialpadStrings {
-  copyInviteLinkButtonLabel: string;
-  copyInviteLinkButtonActionedLabel: string;
-  openDialpadButtonLabel: string;
-  peoplePaneAddPeopleButtonLabel: string;
-  copyInviteLinkActionedAriaLabel: string;
+  copyInviteLinkButtonLabel?: string;
+  copyInviteLinkButtonActionedLabel?: string;
+  openDialpadButtonLabel?: string;
+  peoplePaneAddPeopleButtonLabel?: string;
+  copyInviteLinkActionedAriaLabel?: string;
 }
 
 /** @private */
@@ -156,7 +156,7 @@ export const AddPeopleDropdown = (props: AddPeopleDropdownProps): JSX.Element =>
             {inviteLinkCopiedRecently && (
               <CalloutWithIcon
                 targetId={calloutButtonId}
-                text={strings.copyInviteLinkButtonActionedLabel}
+                text={strings.copyInviteLinkButtonActionedLabel ?? ''}
                 doNotLayer={true}
               />
             )}
@@ -213,7 +213,7 @@ export const AddPeopleDropdown = (props: AddPeopleDropdownProps): JSX.Element =>
                 data-ui-id="call-add-people-button"
               />
               {inviteLinkCopiedRecently && (
-                <CalloutWithIcon targetId={calloutButtonId} text={strings.copyInviteLinkButtonActionedLabel} />
+                <CalloutWithIcon targetId={calloutButtonId} text={strings.copyInviteLinkButtonActionedLabel ?? ''} />
               )}
             </Stack>
           )}
