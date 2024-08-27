@@ -44,10 +44,6 @@ export interface TeamsCallingHandlers extends CommonCallingHandlers {
     participants: CommunicationIdentifier[],
     options?: StartCallOptions
   ) => undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall;
-  /* @conditional-compile-remove(one-to-n-calling) */
-  onAcceptCall: (incomingCallId: string, useVideo?: boolean) => Promise<void>;
-  /* @conditional-compile-remove(one-to-n-calling) */
-  onRejectCall: (incomingCallId: string) => Promise<void>;
 }
 
 /**

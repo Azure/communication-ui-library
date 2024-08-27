@@ -38,10 +38,6 @@ import { DeepNoiseSuppressionEffectDependency } from './createCommonHandlers';
  */
 export interface CallingHandlers extends CommonCallingHandlers {
   onStartCall: (participants: CommunicationIdentifier[], options?: StartCallOptions) => Call | undefined;
-  /* @conditional-compile-remove(one-to-n-calling) */
-  onAcceptCall: (incomingCallId: string, useVideo?: boolean) => Promise<void>;
-  /* @conditional-compile-remove(one-to-n-calling) */
-  onRejectCall: (incomingCallId: string) => Promise<void>;
 }
 
 /**

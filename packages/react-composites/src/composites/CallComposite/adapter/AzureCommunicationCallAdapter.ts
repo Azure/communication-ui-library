@@ -152,6 +152,8 @@ class CallContext {
       };
       callingSounds?: CallingSounds;
       reactionResources?: ReactionResources;
+      /* @conditional-compile-remove(PSTN-calls) */
+      alternateCallerId?: string;
     },
     targetCallees?: StartCallIdentifier[]
   ) {
@@ -168,7 +170,7 @@ class CallContext {
       isTeamsCall,
       isTeamsMeeting,
       isRoomsCall,
-      /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId: clientState.alternateCallerId,
+      /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId: options?.alternateCallerId,
       /* @conditional-compile-remove(unsupported-browser) */ environmentInfo: clientState.environmentInfo,
       /* @conditional-compile-remove(unsupported-browser) */ unsupportedBrowserVersionsAllowed: false,
       videoBackgroundImages: options?.videoBackgroundOptions?.videoBackgroundImages,
@@ -1558,6 +1560,12 @@ export type CommonCallAdapterOptions = {
    * @beta
    */
   reactionResources?: ReactionResources;
+  /* @conditional-compile-remove(PSTN-calls) */
+  /**
+   * A phone number in E.164 format procured using Azure Communication Services that will be used to represent callers identity.
+   * E.164 numbers are formatted as [+] [country code] [phone number including area code]. For example, +14255550123 for a US phone number.
+   */
+  alternateCallerId?: string;
 };
 
 /**
@@ -1579,13 +1587,6 @@ export type AzureCommunicationCallAdapterArgs = {
   displayName: string;
   credential: CommunicationTokenCredential;
   locator: CallAdapterLocator;
-  /* @conditional-compile-remove(PSTN-calls) */
-  /**
-   * A phone number in E.164 format procured using Azure Communication Services that will be used to represent callers identity.
-   * E.164 numbers are formatted as [+] [country code] [phone number including area code]. For example, +14255550123 for a US phone number.
-   */
-  alternateCallerId?: string;
-
   /**
    * Optional parameters for the {@link AzureCommunicationCallAdapter} created
    */
@@ -1723,8 +1724,6 @@ export async function createAzureCommunicationCallAdapter(
     credential: args.credential,
     locator: (args as AzureCommunicationCallAdapterArgs).locator,
     targetCallees: (args as AzureCommunicationOutboundCallAdapterArgs).targetCallees,
-    /* @conditional-compile-remove(PSTN-calls) */
-    alternateCallerId: args.alternateCallerId,
     options: args.options
   });
 }
@@ -1740,7 +1739,6 @@ export const _createAzureCommunicationCallAdapterInner = async ({
   credential,
   locator,
   targetCallees,
-  /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
   options,
   telemetryImplementationHint = 'Call'
 }: {
@@ -1758,9 +1756,7 @@ export const _createAzureCommunicationCallAdapterInner = async ({
   }
   const callClient = _createStatefulCallClientInner(
     {
-      userId,
-      /* @conditional-compile-remove(PSTN-calls) */
-      alternateCallerId
+      userId
     },
     undefined,
     telemetryImplementationHint
@@ -1869,8 +1865,6 @@ function useAzureCommunicationCallAdapterGeneric<
   const locator = 'locator' in args ? args.locator : undefined;
   const targetCallees = 'targetCallees' in args ? args.targetCallees : undefined;
   const displayName = 'displayName' in args ? args.displayName : undefined;
-  /* @conditional-compile-remove(PSTN-calls) */
-  const alternateCallerId = 'alternateCallerId' in args ? args.alternateCallerId : undefined;
 
   const options = 'options' in args ? args.options : undefined;
 
@@ -1930,7 +1924,6 @@ function useAzureCommunicationCallAdapterGeneric<
               displayName: displayName,
               locator,
               userId: userId as CommunicationUserIdentifier,
-              /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
               options
             })) as Adapter;
           } else if (targetCallees) {
@@ -1939,7 +1932,6 @@ function useAzureCommunicationCallAdapterGeneric<
               displayName: displayName,
               targetCallees,
               userId: userId as CommunicationUserIdentifier,
-              /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
               options
             })) as Adapter;
           }
@@ -1992,8 +1984,6 @@ function useAzureCommunicationCallAdapterGeneric<
       locator,
       userId,
       displayName,
-      /* @conditional-compile-remove(PSTN-calls) */
-      alternateCallerId,
       options,
       targetCallees
     ]
