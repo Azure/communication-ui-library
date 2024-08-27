@@ -17,6 +17,8 @@ import {
 import { attachmentUploadOptions } from '../../../../Chat/src/app/utils/uploadHandler';
 
 import { onResolveVideoEffectDependencyLazy, AzureCommunicationCallAdapterOptions } from '@azure/communication-react';
+/* @conditional-compile-remove(DNS) */
+import { onResolveDeepNoiseSuppressionDependencyLazy } from '@azure/communication-react';
 import { Spinner } from '@fluentui/react';
 import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import { useSwitchableFluentTheme } from '../theming/SwitchableFluentThemeProvider';
@@ -89,6 +91,10 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
         videoBackgroundImages,
 
         onResolveDependency: onResolveVideoEffectDependencyLazy
+      },
+      /* @conditional-compile-remove(DNS) */
+      deepNoiseSuppressionOptions: {
+        onResolveDependency: onResolveDeepNoiseSuppressionDependencyLazy
       },
       reactionResources: {
         likeReaction: { url: '/assets/reactions/likeEmoji.png', frameCount: 102 },
