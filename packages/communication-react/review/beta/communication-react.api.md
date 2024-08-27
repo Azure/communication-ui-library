@@ -831,13 +831,13 @@ export interface CallCompositeStrings {
     configurationPageTitle: string;
     configurationPageVideoEffectsButtonLabel?: string;
     copyInviteLinkActionedAriaLabel: string;
-    copyInviteLinkButtonActionedLabel: string;
-    copyInviteLinkButtonLabel: string;
+    copyInviteLinkButtonActionedLabel?: string;
+    copyInviteLinkButtonLabel?: string;
     defaultPlaceHolder: string;
-    dialpadCloseModalButtonAriaLabel: string;
-    dialpadModalAriaLabel: string;
-    dialpadModalTitle: string;
-    dialpadStartCallButtonLabel: string;
+    dialpadCloseModalButtonAriaLabel?: string;
+    dialpadModalAriaLabel?: string;
+    dialpadModalTitle?: string;
+    dialpadStartCallButtonLabel?: string;
     dismissModalAriaLabel?: string;
     dismissSidePaneButtonLabel?: string;
     dtmfDialerButtonLabel?: string;
@@ -845,7 +845,7 @@ export interface CallCompositeStrings {
     dtmfDialerButtonTooltipOn?: string;
     dtmfDialerMoreButtonLabelOff?: string;
     dtmfDialerMoreButtonLabelOn?: string;
-    dtmfDialpadPlaceholderText: string;
+    dtmfDialpadPlaceholderText?: string;
     endCallConfirmButtonLabel?: string;
     endCallConfirmDialogContent?: string;
     endCallConfirmDialogTitle?: string;
@@ -857,7 +857,7 @@ export interface CallCompositeStrings {
     failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails?: string;
     failedToJoinTeamsMeetingReasonAccessDeniedTitle: string;
     hangUpCancelButtonLabel?: string;
-    holdScreenLabel: string;
+    holdScreenLabel?: string;
     invalidMeetingIdentifier: string;
     inviteToRoomRemovedDetails?: string;
     inviteToRoomRemovedTitle: string;
@@ -904,8 +904,8 @@ export interface CallCompositeStrings {
     noSpeakersLabel: string;
     notInvitedToRoomDetails?: string;
     notInvitedToRoomTitle: string;
-    openDialpadButtonLabel: string;
-    openDtmfDialpadLabel: string;
+    openDialpadButtonLabel?: string;
+    openDtmfDialpadLabel?: string;
     outboundCallingNoticeString?: string;
     participantCouldNotBeReachedMoreDetails?: string;
     participantCouldNotBeReachedTitle?: string;
@@ -916,9 +916,9 @@ export interface CallCompositeStrings {
     peopleButtonLabel: string;
     peopleButtonTooltipClose: string;
     peopleButtonTooltipOpen: string;
-    peoplePaneAddPeopleButtonLabel: string;
+    peoplePaneAddPeopleButtonLabel?: string;
     peoplePaneMoreButtonAriaLabel: string;
-    peoplePaneSubTitle: string;
+    peoplePaneSubTitle?: string;
     peoplePaneTitle: string;
     permissionToReachTargetParticipantNotAllowedMoreDetails?: string;
     permissionToReachTargetParticipantNotAllowedTitle?: string;
@@ -932,11 +932,11 @@ export interface CallCompositeStrings {
     removeBackgroundTooltip?: string;
     removedFromCallMoreDetails?: string;
     removedFromCallTitle: string;
-    removeMenuLabel: string;
-    resumeCallButtonAriaLabel: string;
-    resumeCallButtonLabel: string;
-    resumingCallButtonAriaLabel: string;
-    resumingCallButtonLabel: string;
+    removeMenuLabel?: string;
+    resumeCallButtonAriaLabel?: string;
+    resumeCallButtonLabel?: string;
+    resumingCallButtonAriaLabel?: string;
+    resumingCallButtonLabel?: string;
     returnFromBreakoutRoomBannerButtonLabel: string;
     returnFromBreakoutRoomBannerTitle: string;
     returnFromBreakoutRoomButtonLabel: string;
@@ -3221,10 +3221,10 @@ export type HoldButtonSelector = (state: CallClientState, props: CallingBaseSele
 
 // @beta
 export interface HoldButtonStrings {
-    offLabel: string;
-    onLabel: string;
-    tooltipOffContent: string;
-    tooltipOnContent: string;
+    offLabel?: string;
+    onLabel?: string;
+    tooltipOffContent?: string;
+    tooltipOnContent?: string;
 }
 
 // @public
