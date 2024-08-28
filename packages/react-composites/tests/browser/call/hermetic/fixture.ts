@@ -151,6 +151,8 @@ export function defaultMockCallAdapterState(
     isTeamsMeeting: false,
     isRoomsCall: isRoomsCall ?? false,
     latestErrors: {},
+    /* @conditional-compile-remove(breakout-rooms) */
+    latestNotifications: {},
     targetCallees: undefined,
     reactions: undefined
   };

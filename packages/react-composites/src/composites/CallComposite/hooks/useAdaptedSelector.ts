@@ -12,6 +12,8 @@ import { CallErrors, CallState, CallClientState, DeviceManagerState } from '@int
 import { CommunicationIdentifierKind } from '@azure/communication-common';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
+/* @conditional-compile-remove(breakout-rooms) */
+import { CallNotifications } from '@internal/calling-stateful-client';
 /**
  * @private
  */
@@ -82,6 +84,7 @@ const memoizeState = memoizeOne(
     deviceManager: DeviceManagerState,
     calls: { [key: string]: CallState },
     latestErrors: CallErrors,
+    latestNotifications?: undefined | /* @conditional-compile-remove(breakout-rooms) */ CallNotifications,
     displayName?: string,
     alternateCallerId?: string,
     environmentInfo?: undefined | /* @conditional-compile-remove(unsupported-browser) */ EnvironmentInfo
@@ -94,6 +97,8 @@ const memoizeState = memoizeOne(
     callAgent: { displayName },
     calls,
     latestErrors,
+    /* @conditional-compile-remove(breakout-rooms) */
+    latestNotifications: latestNotifications ?? ({} as CallNotifications),
     /* @conditional-compile-remove(PSTN-calls) */
     alternateCallerId,
     /* @conditional-compile-remove(unsupported-browser) */
@@ -122,6 +127,8 @@ const adaptCompositeState = (compositeState: CallAdapterState): CallClientState 
     // just displaying them in some UI surface) will continue to work for these operations. Handling of
     // specific operations (e.g., acting on errors related to permission issues) will ignore these operations.
     compositeState.latestErrors as CallErrors,
+    undefined ||
+      /* @conditional-compile-remove(breakout-rooms) */ (compositeState.latestNotifications as CallNotifications),
     compositeState.displayName,
     /* @conditional-compile-remove(PSTN-calls) */
     compositeState.alternateCallerId,

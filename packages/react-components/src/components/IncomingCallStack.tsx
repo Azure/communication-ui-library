@@ -11,7 +11,7 @@ import React from 'react';
  * Represents an active incoming call.
  * @beta
  */
-export interface ActiveIncomingCall {
+export interface IncomingCallStackCall {
   /**
    * Unique identifier for the incoming call.
    */
@@ -23,16 +23,8 @@ export interface ActiveIncomingCall {
     /**
      * Display name of the caller.
      */
-    displayName: string;
+    displayName?: string;
   };
-  /**
-   * Start time of the incoming call.
-   */
-  startTime: Date;
-  /**
-   * End time of the incoming call.
-   */
-  endTime?: Date;
   /**
    * Whether or not the call is a voip capable call.
    */
@@ -46,11 +38,11 @@ export interface IncomingCallStackProps {
   /**
    * List of incoming calls.
    */
-  activeIncomingCalls: ActiveIncomingCall[];
+  activeIncomingCalls: IncomingCallStackCall[];
   /**
    * List of incoming calls that have ended.
    */
-  removedIncomingCalls: ActiveIncomingCall[];
+  removedIncomingCalls: IncomingCallStackCall[];
   /**
    * Handler to accept the incoming call.
    * @param incomingCallId - Id of the incoming call to accept.
@@ -72,6 +64,11 @@ export interface IncomingCallStackProps {
    * Strings for the incoming call notifications.
    */
   strings?: IncomingCallNotificationStrings;
+  /**
+   * Tab index for the incoming Call stack, this will set the tab order of the
+   * incoming call notifications in your application.
+   */
+  tabIndex?: number;
 }
 
 /**
@@ -82,9 +79,13 @@ export interface IncomingCallStackProps {
  */
 export const IncomingCallStack = (props: IncomingCallStackProps): JSX.Element => {
   /* @conditional-compile-remove(one-to-n-calling) */
-  const { activeIncomingCalls, removedIncomingCalls, onAcceptCall, onRejectCall, styles, strings } = props;
+  const { activeIncomingCalls, removedIncomingCalls, onAcceptCall, onRejectCall, styles, strings, tabIndex } = props;
   return (
-    <Stack tokens={{ childrenGap: '0.25rem' }}>
+    <Stack
+      tokens={{ childrenGap: '0.25rem' }}
+      role={'group'}
+      /* @conditional-compile-remove(one-to-n-calling) */ tabIndex={tabIndex}
+    >
       {
         /* @conditional-compile-remove(one-to-n-calling) */ activeIncomingCalls
           .filter((incomingCall) => !removedIncomingCalls.some((call) => call.id === incomingCall.id))

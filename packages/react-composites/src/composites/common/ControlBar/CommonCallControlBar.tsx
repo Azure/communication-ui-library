@@ -52,10 +52,16 @@ import { isBoolean } from '../utils';
 /* @conditional-compile-remove(end-call-options) */
 import { getIsTeamsCall } from '../../CallComposite/selectors/baseSelectors';
 /* @conditional-compile-remove(breakout-rooms) */
-import { getAssignedBreakoutRoom, getBreakoutRoomSettings } from '../../CallComposite/selectors/baseSelectors';
+import {
+  getAssignedBreakoutRoom,
+  getBreakoutRoomSettings,
+  getLatestNotifications
+} from '../../CallComposite/selectors/baseSelectors';
 import { callStatusSelector } from '../../CallComposite/selectors/callStatusSelector';
 /* @conditional-compile-remove(teams-meeting-conference) */
 import { MeetingConferencePhoneInfoModal } from '@internal/react-components';
+/* @conditional-compile-remove(breakout-rooms) */
+import { Timer } from './Timer';
 
 /**
  * @private
@@ -143,7 +149,13 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
   /* @conditional-compile-remove(breakout-rooms) */
   const assignedBreakoutRoom = useSelector(getAssignedBreakoutRoom);
   /* @conditional-compile-remove(breakout-rooms) */
+  const latestNotifications = useSelector(getLatestNotifications);
+  /* @conditional-compile-remove(breakout-rooms) */
   const breakoutRoomSettings = useSelector(getBreakoutRoomSettings);
+  /* @conditional-compile-remove(breakout-rooms) */
+  const movingToBreakoutRoomAutomatically =
+    assignedBreakoutRoom?.autoMoveParticipantToBreakoutRoom &&
+    (latestNotifications['assignedBreakoutRoomOpened'] || latestNotifications['assignedBreakoutRoomChanged']);
 
   const handleResize = useCallback((): void => {
     setControlBarButtonsWidth(controlBarContainerRef.current ? controlBarContainerRef.current.offsetWidth : 0);
@@ -243,7 +255,17 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
 
   // only center control bar buttons based on parent container if there are enough space on the screen and not mobile
   const controlBarDesktopContainerStyles: IStyle = useMemo(
-    () => (!props.mobileView && !isOutOfSpace ? { position: 'relative', minHeight: '4.5rem', width: '100%' } : {}),
+    () =>
+      !props.mobileView && !isOutOfSpace
+        ? {
+            position: 'relative',
+            minHeight: '4.5rem',
+            width: '100%',
+            display: 'flex',
+            alignItems: 'center',
+            paddingLeft: '1rem'
+          }
+        : {},
     [props.mobileView, isOutOfSpace]
   );
 
@@ -356,15 +378,18 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                   <ControlBar layout={props.displayVertical ? 'vertical' : 'horizontal'} styles={centerContainerStyles}>
                     {
                       /* @conditional-compile-remove(breakout-rooms) */
-                      assignedBreakoutRoom && assignedBreakoutRoom.state === 'open' && (
-                        <PrimaryButton
-                          text={callStrings.joinBreakoutRoomButtonLabel}
-                          onClick={async (): Promise<void> => {
-                            assignedBreakoutRoom.join();
-                          }}
-                          styles={commonButtonStyles}
-                        />
-                      )
+                      !props.mobileView &&
+                        assignedBreakoutRoom &&
+                        assignedBreakoutRoom.state === 'open' &&
+                        !movingToBreakoutRoomAutomatically && (
+                          <PrimaryButton
+                            text={callStrings.joinBreakoutRoomButtonLabel}
+                            onClick={async (): Promise<void> => {
+                              assignedBreakoutRoom.join();
+                            }}
+                            styles={commonButtonStyles}
+                          />
+                        )
                     }
                     {microphoneButtonIsEnabled && (
                       <Microphone
@@ -553,6 +578,14 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
             </div>
           </Stack.Item>
         )}
+        {
+          /* @conditional-compile-remove(breakout-rooms) */
+          breakoutRoomSettings?.roomEndTime && !props.mobileView && !isOutOfSpace && (
+            <Stack.Item>
+              <Timer timeStampInfo={breakoutRoomSettings?.roomEndTime.toString()} />
+            </Stack.Item>
+          )
+        }
       </Stack>
     </div>
   );

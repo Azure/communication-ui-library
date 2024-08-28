@@ -21,12 +21,12 @@ module.exports = {
     "in-progress-beta-feature-demo",
     // feature for adding JS helpers to the UI library API
     "composite-js-helpers",
-    // feature for breakout rooms
-    "breakout-rooms",
     // Feature for remote UFD
     "remote-ufd",
     // Feature for showing dtmp dialer by default
-    "dtmf-dialer-on-by-default"
+    "dtmf-dialer-on-by-default",
+    // Deep Noise Suppression feature
+    "DNS"
   ],
   beta: [
     "call-readiness",
@@ -84,14 +84,14 @@ module.exports = {
     // Feature to support file sharing in ACS chats
     "file-sharing-acs",
     // Soft Mute feature for ACS calls and Interop calls
-    "soft-mute"
+    "soft-mute",
+    // feature for breakout rooms
+    "breakout-rooms"
   ],
   stable: [
     // Demo feature. Used in live-documentation of conditional compilation.
     // Do not use in production code.
     "stabilizedDemo",
-    // Support Calling SDK isReceiving flag, shows a loading spinner on the video tile when isAvailable is true but isReceiving is false
-    "video-stream-is-receiving-flag",
     // Joining calls using teams token
     "teams-identity-support",
     // feature for hiding attendee name in the teams meeting
@@ -101,8 +101,6 @@ module.exports = {
     // Feature to support file sharing in Teams interoperability chats
     "file-sharing-teams-interop",
     // Get join conference information
-    'teams-meeting-conference',
-    // Feature for showing notifications
-    "notifications"
+    'teams-meeting-conference'
   ]
 }
