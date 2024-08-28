@@ -20,10 +20,7 @@ import { useAttachmentCardGroupStyles } from '../styles/AttachmentCardGroup.styl
  * Represents the type of attachment
  * @public
  */
-export type ChatAttachmentType =
-  | 'unknown'
-  | 'image'
-  | /* @conditional-compile-remove(file-sharing-acs) */ 'file';
+export type ChatAttachmentType = 'unknown' | 'image' | /* @conditional-compile-remove(file-sharing-acs) */ 'file';
 
 /**
  * Strings of _AttachmentDownloadCards that can be overridden.

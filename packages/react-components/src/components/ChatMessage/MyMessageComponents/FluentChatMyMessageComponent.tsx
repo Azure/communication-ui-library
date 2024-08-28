@@ -66,9 +66,7 @@ export const FluentChatMyMessageComponent = (props: FluentChatMessageComponentWr
     /* @conditional-compile-remove(file-sharing-acs) */
     return onRenderAttachmentDownloads;
     return undefined;
-  }, [
-    /* @conditional-compile-remove(file-sharing-acs) */ onRenderAttachmentDownloads
-  ]);
+  }, [/* @conditional-compile-remove(file-sharing-acs) */ onRenderAttachmentDownloads]);
 
   // To rerender the defaultChatMessageRenderer if app running across days(every new day chat time stamp
   // needs to be regenerated), the dependency on "new Date().toDateString()"" is added.
