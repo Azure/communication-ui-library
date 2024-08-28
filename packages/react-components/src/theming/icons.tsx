@@ -91,7 +91,6 @@ import { Backspace20Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(call-readiness) */
 import { Sparkle20Filled, VideoProhibited20Filled, MicProhibited20Filled } from '@fluentui/react-icons';
 
-/* @conditional-compile-remove(file-sharing-teams-interop) */
 import { Open20Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(file-sharing-acs) */
 import { ArrowDownload20Regular } from '@fluentui/react-icons';
@@ -282,7 +281,7 @@ export const DEFAULT_COMPONENT_ICONS = {
   CancelAttachmentUpload: <Dismiss16Regular />,
   /* @conditional-compile-remove(file-sharing-acs) */
   DownloadAttachment: <ArrowDownload20Regular />,
-  /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
+  /* @conditional-compile-remove(file-sharing-acs) */
   OpenAttachment: <Open20Regular />,
   /* @conditional-compile-remove(file-sharing-acs) */
   AttachmentMoreMenu: <MoreHorizontal20Filled />,

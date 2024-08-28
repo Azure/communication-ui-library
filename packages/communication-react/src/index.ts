@@ -370,7 +370,7 @@ export type {
   AttachmentUploadOptions,
   AttachmentUploadTask
 } from '../../react-components/src';
-/* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
+/* @conditional-compile-remove(file-sharing-acs) */
 export type { AttachmentMetadata } from '../../acs-ui-common/src';
 
 /* @conditional-compile-remove(file-sharing-acs) */
