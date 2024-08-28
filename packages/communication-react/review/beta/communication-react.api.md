@@ -3349,6 +3349,7 @@ export interface IncomingCallNotificationStrings {
     incomingCallNoticicationRejectAriaLabel?: string;
     incomingCallNotificationAccceptWithVideoButtonLabel?: string;
     incomingCallNotificationAcceptButtonLabel?: string;
+    incomingCallNotificationDismissButtonAriaLabel?: string;
     incomingCallNotificationPlaceholderAlert?: string;
     incomingCallNotificationPlaceholderId?: string;
     incomingCallNotificationRejectButtonLabel?: string;
@@ -3382,6 +3383,7 @@ export interface IncomingCallStackProps {
     removedIncomingCalls: IncomingCallStackCall[];
     strings?: IncomingCallNotificationStrings;
     styles?: IncomingCallNotificationStyles;
+    tabIndex?: number;
 }
 
 // @beta
