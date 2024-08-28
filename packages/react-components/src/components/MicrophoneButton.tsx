@@ -12,6 +12,8 @@ import {
   IContextualMenuItemStyles,
   IContextualMenuStyles
 } from '@fluentui/react';
+/* @conditional-compile-remove(DNS) */
+import { Toggle } from '@fluentui/react';
 import { ControlBarButtonStyles } from './ControlBarButton';
 import { OptionsDevice, generateDefaultDeviceMenuProps } from './DevicesButton';
 import { Announcer } from './Announcer';
@@ -84,6 +86,16 @@ export interface MicrophoneButtonStrings {
    * Aria description for the microphone button
    */
   microphoneAriaDescription?: string;
+  /* @conditional-compile-remove(DNS) */
+  /**
+   * Title when deep noise suppression is on
+   */
+  deepNoiseSuppresionOnTitle?: string;
+  /* @conditional-compile-remove(DNS) */
+  /**
+   * Title when deep noise suppression is off
+   */
+  deepNoiseSuppresionOffTitle?: string;
 }
 
 /**
@@ -159,6 +171,16 @@ export interface MicrophoneButtonProps extends ControlBarButtonProps {
    * Styles for {@link MicrophoneButton} and the device selection flyout.
    */
   styles?: Partial<MicrophoneButtonStyles>;
+  /* @conditional-compile-remove(DNS) */
+  /**
+   * Whether the deep noise suppression is on or off
+   */
+  isDeepNoiseSuppressionOn?: boolean;
+  /* @conditional-compile-remove(DNS) */
+  /**
+   * Callback when noise suppression is clicked
+   */
+  onClickNoiseSuppression?: () => void;
 }
 
 /**
@@ -239,6 +261,24 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
           iconProps: {
             iconName: props.checked ? 'SplitButtonPrimaryActionMicUnmuted' : 'SplitButtonPrimaryActionMicMuted',
             styles: { root: { lineHeight: 0 } }
+          }
+        },
+        /* @conditional-compile-remove(DNS) */
+        {
+          key: 'microphoneDNSToggle',
+          onRender: () => {
+            return (
+              <Toggle
+                onText={strings.deepNoiseSuppresionOnTitle}
+                offText={strings.deepNoiseSuppresionOffTitle}
+                checked={props.isDeepNoiseSuppressionOn}
+                onChange={() => {
+                  props.onClickNoiseSuppression?.();
+                }}
+                inlineLabel
+                styles={{ root: { padding: '10px' } }}
+              />
+            );
           }
         }
       ]

@@ -127,7 +127,9 @@
     "offSplitButtonMicrophonePrimaryAction": "Unmute mic",
     "onSplitButtonMicrophonePrimaryAction": "Mute mic",
     "microphonePrimaryActionSplitButtonTitle": "Use microphone",
-    "microphoneAriaDescription": "Audio options"
+    "microphoneAriaDescription": "Audio options",
+    "deepNoiseSuppresionOnTitle": "Noise Suppression On",
+    "deepNoiseSuppresionOffTitle": "Noise Suppression Off"
   },
   "devicesButton": {
     "label": "Devices",
