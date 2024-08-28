@@ -293,6 +293,8 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
         setInlineImageLocalBlobs({ ...inlineImageLocalBlobs, [id]: src });
         onInsertInlineImage(imageAttributes);
       };
+    } else {
+      copyPastePlugin.onInsertInlineImage = undefined;
     }
     undoRedoPlugin.onInsertInlineImage = onInsertInlineImage;
   }, [copyPastePlugin, inlineImageLocalBlobs, onInsertInlineImage, undoRedoPlugin]);
