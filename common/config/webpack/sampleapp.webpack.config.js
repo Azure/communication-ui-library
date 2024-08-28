@@ -52,10 +52,12 @@ const webpackConfig = (sampleAppDir, env, babelConfig) => {
           test: /\.tsx?$/,
           loader: 'ts-loader',
           options: {
+            transpileOnly: true,
+
+            // Enable HRML for GH codespaces devlopment (this was found to not work on MacOS so enabling for GH Codespaces only)
             getCustomTransformers: () => ({
               before: [!env.production && RUNNING_IN_GH_CODESPACES && ReactRefreshTypeScript()].filter(Boolean),
-            }),
-            transpileOnly: true
+            })
           },
           exclude: /dist/,
           sideEffects: false
@@ -75,7 +77,9 @@ const webpackConfig = (sampleAppDir, env, babelConfig) => {
       ]
     },
     plugins: [
+      // Enable HRML for GH codespaces devlopment (this was found to not work on MacOS so enabling for GH Codespaces only)
       !env.production && RUNNING_IN_GH_CODESPACES && new ReactRefreshWebpackPlugin(),
+
       new HtmlWebpackPlugin({ template: './public/index.html' }),
       new webpack.DefinePlugin({
         'process.env.PRODUCTION': env.production || !env.development,
