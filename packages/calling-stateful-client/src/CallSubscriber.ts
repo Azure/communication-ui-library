@@ -131,7 +131,6 @@ export class CallSubscriber {
 
   private subscribe = (): void => {
     this._call.on('stateChanged', this.stateChanged);
-    // this._call.on('stateChanged', this.initCaptionSubscriber);
     /* @conditional-compile-remove(teams-meeting-conference) */
     this._call.on('stateChanged', this.initTeamsMeetingConference);
     /* @conditional-compile-remove(local-recording-notification) */
