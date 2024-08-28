@@ -53,7 +53,7 @@ const webpackConfig = (sampleAppDir, env, babelConfig) => {
           loader: 'ts-loader',
           options: {
             getCustomTransformers: () => ({
-              before: [!env.production && ReactRefreshTypeScript()].filter(Boolean),
+              before: [!env.production && RUNNING_IN_GH_CODESPACES && ReactRefreshTypeScript()].filter(Boolean),
             }),
             transpileOnly: true
           },
@@ -75,7 +75,7 @@ const webpackConfig = (sampleAppDir, env, babelConfig) => {
       ]
     },
     plugins: [
-      !env.production && new ReactRefreshWebpackPlugin(),
+      !env.production && RUNNING_IN_GH_CODESPACES && new ReactRefreshWebpackPlugin(),
       new HtmlWebpackPlugin({ template: './public/index.html' }),
       new webpack.DefinePlugin({
         'process.env.PRODUCTION': env.production || !env.development,
