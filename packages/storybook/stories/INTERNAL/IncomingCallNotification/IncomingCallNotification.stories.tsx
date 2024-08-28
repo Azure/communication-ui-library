@@ -23,7 +23,7 @@ const getDocs: () => JSX.Element = () => {
       <Description>
         This component is a representation of an incoming call. It will show the name of the caller and allow you to
         accept the call with either audio or video or reject the call. This component is used by the `IncomingCallStack`
-        for each of the calls held in it's state.
+        for each of the calls held in its state.
       </Description>
       <Canvas mdxSource={IncomingCallNotificationText}>
         <IncomingCallNotificationExample />
@@ -31,8 +31,8 @@ const getDocs: () => JSX.Element = () => {
       <Heading>Styling</Heading>
       <Description>
         Depending on your use of `IncomingCallNotification` and the `IncomingCallStack` you might want to customize your
-        notifications appearence to match your needs. Both components includes API's to adjust the CSS on many different
-        elements of the notification. Below is an example of how you can customize `IncomingCallNotification`.
+        notification's appearence to match your needs. Both components includes API's to adjust the CSS on many
+        different elements of the notification. Below is an example of how you can customize `IncomingCallNotification`.
       </Description>
       <Canvas mdxSource={IncomingCallNotificationStylingText}>
         <IncomingCallNotificationStylingExample />

@@ -20,7 +20,7 @@ const getDocs = (): JSX.Element => {
       <Description>
         This component is a manager for your different incoming calls. It will render the different calls using the
         `IncomingCallNotification` component. Using the `usePropsFor` hook it will be able to get these calls from the
-        statefulcallclient and render them in the UI. This component will allow you to manage multiple incoming calls.
+        `Statefulcallclient` and render them in the UI. This component will allow you to manage multiple incoming calls.
       </Description>
       <Canvas mdxSource={IncomingCallStackExampleText}>
         <IncomingCallStackExample />
