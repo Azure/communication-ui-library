@@ -253,7 +253,7 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
   const deepNoiseSuppressionToggleStyles: IStyleFunctionOrObject<IToggleStyleProps, IToggleStyles> = {
     root: {
       margin: '4px',
-      padding: '0px 10px',
+      padding: '0px 12px',
       flexFlow: 'row-reverse',
       justifyContent: 'space-between'
     },
