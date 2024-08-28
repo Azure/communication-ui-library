@@ -3803,7 +3803,9 @@ export type MicrophoneButtonSelector = (state: CallClientState, props: CallingBa
 
 // @public
 export interface MicrophoneButtonStrings {
+    deepNoiseSuppresionOffAnnouncement?: string;
     deepNoiseSuppresionOffTitle?: string;
+    deepNoiseSuppresionOnAnnouncement?: string;
     deepNoiseSuppresionOnTitle?: string;
     microphoneActionTurnedOffAnnouncement?: string;
     microphoneActionTurnedOnAnnouncement?: string;

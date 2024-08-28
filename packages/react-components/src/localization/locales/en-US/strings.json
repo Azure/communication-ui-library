@@ -129,7 +129,9 @@
     "microphonePrimaryActionSplitButtonTitle": "Use microphone",
     "microphoneAriaDescription": "Audio options",
     "deepNoiseSuppresionOnTitle": "Noise Suppression On",
-    "deepNoiseSuppresionOffTitle": "Noise Suppression Off"
+    "deepNoiseSuppresionOffTitle": "Noise Suppression Off",
+    "deepNoiseSuppresionOnAnnouncement": "Deep noise suppression has been turned on",
+    "deepNoiseSuppresionOffAnnouncement": "Deep noise suppression has been turned off"
   },
   "devicesButton": {
     "label": "Devices",

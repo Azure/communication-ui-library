@@ -13,7 +13,7 @@ import {
   IContextualMenuStyles
 } from '@fluentui/react';
 /* @conditional-compile-remove(DNS) */
-import { Toggle } from '@fluentui/react';
+import { Toggle, Stack, IStyleFunctionOrObject, IToggleStyleProps, IToggleStyles } from '@fluentui/react';
 import { ControlBarButtonStyles } from './ControlBarButton';
 import { OptionsDevice, generateDefaultDeviceMenuProps } from './DevicesButton';
 import { Announcer } from './Announcer';
@@ -96,6 +96,16 @@ export interface MicrophoneButtonStrings {
    * Title when deep noise suppression is off
    */
   deepNoiseSuppresionOffTitle?: string;
+  /* @conditional-compile-remove(DNS) */
+  /**
+   * Noise Suppression turned on string for announcer
+   */
+  deepNoiseSuppresionOnAnnouncement?: string;
+  /* @conditional-compile-remove(DNS) */
+  /**
+   * Noise Suppression turned off string for announcer
+   */
+  deepNoiseSuppresionOffAnnouncement?: string;
 }
 
 /**
@@ -239,6 +249,17 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
     }
   }, [isMicOn, onToggleMicrophone, toggleAnnouncerString]);
 
+  /* @conditional-compile-remove(DNS) */
+  const deepNoiseSuppressionToggleStyles: IStyleFunctionOrObject<IToggleStyleProps, IToggleStyles> = {
+    root: {
+      margin: '4px',
+      padding: '0px 10px',
+      flexFlow: 'row-reverse',
+      justifyContent: 'space-between'
+    },
+    label: { fontWeight: 400 }
+  };
+
   /**
    * We need to also include the primary action of the button to the
    * split button for mobile devices.
@@ -268,16 +289,27 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
           key: 'microphoneDNSToggle',
           onRender: () => {
             return (
-              <Toggle
-                onText={strings.deepNoiseSuppresionOnTitle}
-                offText={strings.deepNoiseSuppresionOffTitle}
-                checked={props.isDeepNoiseSuppressionOn}
-                onChange={() => {
-                  props.onClickNoiseSuppression?.();
+              <Stack
+                onClick={async () => {
+                  await props.onClickNoiseSuppression?.();
+                  setAnnouncerString(
+                    props.isDeepNoiseSuppressionOn
+                      ? strings.deepNoiseSuppresionOnAnnouncement
+                      : strings.deepNoiseSuppresionOffAnnouncement
+                  );
                 }}
-                inlineLabel
-                styles={{ root: { padding: '10px' } }}
-              />
+              >
+                <Toggle
+                  label={
+                    props.isDeepNoiseSuppressionOn
+                      ? strings.deepNoiseSuppresionOnTitle
+                      : strings.deepNoiseSuppresionOffTitle
+                  }
+                  checked={props.isDeepNoiseSuppressionOn}
+                  inlineLabel
+                  styles={deepNoiseSuppressionToggleStyles}
+                />
+              </Stack>
             );
           }
         }
