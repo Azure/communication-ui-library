@@ -660,6 +660,7 @@
     "incomingCallNoticicationRejectAriaLabel": "Reject",
     "incomingCallNotificationAcceptButtonLabel": "Accept",
     "incomingCallNotificationRejectButtonLabel": "Decline",
-    "incomingCallNotificationAccceptWithVideoButtonLabel": "Accept with Video"
+    "incomingCallNotificationAccceptWithVideoButtonLabel": "Accept with Video",
+    "incomingCallNotificationDismissButtonAriaLabel": "Dismiss"
   }
 }
