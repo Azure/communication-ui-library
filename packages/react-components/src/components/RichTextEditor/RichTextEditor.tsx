@@ -287,11 +287,15 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
 
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   useEffect(() => {
-    copyPastePlugin.onInsertInlineImage = (imageAttributes: Record<string, string>) => {
-      const { id, src } = imageAttributes;
-      setInlineImageLocalBlobs({ ...inlineImageLocalBlobs, [id]: src });
-      onInsertInlineImage && onInsertInlineImage(imageAttributes);
-    };
+    if (onInsertInlineImage) {
+      copyPastePlugin.onInsertInlineImage = (imageAttributes: Record<string, string>) => {
+        const { id, src } = imageAttributes;
+        setInlineImageLocalBlobs({ ...inlineImageLocalBlobs, [id]: src });
+        onInsertInlineImage(imageAttributes);
+      };
+    } else {
+      copyPastePlugin.onInsertInlineImage = undefined;
+    }
     undoRedoPlugin.onInsertInlineImage = onInsertInlineImage;
   }, [copyPastePlugin, inlineImageLocalBlobs, onInsertInlineImage, undoRedoPlugin]);
 
