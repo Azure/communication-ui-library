@@ -99,15 +99,14 @@
     "cameraMenuTitle": "Camera",
     "cameraMenuTooltip": "Choose camera",
     "cameraButtonSplitRoleDescription": "Split button",
-    "onSplitButtonAriaLabel": "Turn off camera",
-    "offSplitButtonAriaLabel": "Turn on camera",
+    "onSplitButtonAriaLabel": "Turn off camera and camera options",
+    "offSplitButtonAriaLabel": "Turn on camera and camera options",
     "cameraActionTurnedOnAnnouncement": "Your camera has been turned on",
     "cameraActionTurnedOffAnnouncement": "Your camera has been turned off",
     "onSplitButtonPrimaryActionCamera": "Turn off camera",
     "offSplitButtonPrimaryActionCamera": "Turn on camera",
     "cameraPrimaryActionSplitButtonTitle": "Use camera",
-    "videoEffectsMenuItemTitle": "Effects",
-    "cameraButtonAriaDescription": "camera options"
+    "videoEffectsMenuItemTitle": "Effects"
   },
   "microphoneButton": {
     "onLabel": "Mic",
@@ -120,14 +119,13 @@
     "speakerMenuTitle": "Speaker",
     "speakerMenuTooltip": "Choose speaker",
     "microphoneButtonSplitRoleDescription": "Split button",
-    "onSplitButtonAriaLabel": "Mute mic",
-    "offSplitButtonAriaLabel": "Unmute mic",
+    "onSplitButtonAriaLabel": "Mute microphone and audio options",
+    "offSplitButtonAriaLabel": "Unmute microphone and audio options",
     "microphoneActionTurnedOnAnnouncement": "Your microphone has been turned on",
     "microphoneActionTurnedOffAnnouncement": "Your microphone has been turned off",
-    "offSplitButtonMicrophonePrimaryAction": "Unmute mic",
-    "onSplitButtonMicrophonePrimaryAction": "Mute mic",
-    "microphonePrimaryActionSplitButtonTitle": "Use microphone",
-    "microphoneAriaDescription": "Audio options"
+    "offSplitButtonMicrophonePrimaryAction": "Unmute microphone",
+    "onSplitButtonMicrophonePrimaryAction": "Mute microphone",
+    "microphonePrimaryActionSplitButtonTitle": "Use microphone"
   },
   "devicesButton": {
     "label": "Devices",
@@ -660,7 +658,6 @@
     "incomingCallNoticicationRejectAriaLabel": "Reject",
     "incomingCallNotificationAcceptButtonLabel": "Accept",
     "incomingCallNotificationRejectButtonLabel": "Decline",
-    "incomingCallNotificationAccceptWithVideoButtonLabel": "Accept with Video",
-    "incomingCallNotificationDismissButtonAriaLabel": "Dismiss"
+    "incomingCallNotificationAccceptWithVideoButtonLabel": "Accept with Video"
   }
 }
