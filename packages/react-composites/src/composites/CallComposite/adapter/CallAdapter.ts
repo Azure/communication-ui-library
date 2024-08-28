@@ -482,6 +482,37 @@ export interface VideoBackgroundReplacementEffect extends BackgroundReplacementC
 }
 
 /**
+ * Options passed to adapter.startCaptions
+ *
+ * @public
+ */
+export interface StartCaptionsAdapterOptions extends StartCaptionsOptions {
+  /**
+   * Start captions in the background without showing the captions UI to the Composite user.
+   *
+   * @defaultValue false
+   */
+  startInBackground?: boolean;
+}
+
+/**
+ * Options passed to adapter.stopCaptions
+ *
+ * @public
+ */
+export interface StopCaptionsAdapterOptions {
+  /**
+   * Stop captions that have been started in the background.
+   *
+   * @remarks
+   * This option is only applicable when stopping captions that have been started using the `startInBackground` property of adpater.startCaptions.
+   *
+   * @defaultValue false
+   */
+  stopInBackground?: boolean;
+}
+
+/**
  * Functionality for managing the current call.
  *
  * @public
@@ -657,7 +688,7 @@ export interface CallAdapterCallOperations {
    * Function to Start captions
    * @param options - options for start captions
    */
-  startCaptions(options?: StartCaptionsOptions): Promise<void>;
+  startCaptions(options?: StartCaptionsAdapterOptions): Promise<void>;
   /**
    * Function to set caption language
    * @param language - language set for caption
@@ -671,7 +702,7 @@ export interface CallAdapterCallOperations {
   /**
    * Funtion to stop captions
    */
-  stopCaptions(): Promise<void>;
+  stopCaptions(options?: StopCaptionsAdapterOptions): Promise<void>;
 
   /**
    * Start the video background effect.

@@ -42,7 +42,7 @@ import { TeamsCaptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(acs-close-captions) */
 import { Captions, CaptionsInfo } from '@azure/communication-calling';
 import { TransferEventArgs } from '@azure/communication-calling';
-import { StartCaptionsOptions, TeamsCaptionsInfo } from '@azure/communication-calling';
+import { TeamsCaptionsInfo } from '@azure/communication-calling';
 
 import type { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling';
 
@@ -71,7 +71,9 @@ import {
   CallAdapterCallEndedEvent,
   CallAdapter,
   JoinCallOptions,
-  StartCallIdentifier
+  StartCallIdentifier,
+  StartCaptionsAdapterOptions,
+  StopCaptionsAdapterOptions
 } from './CallAdapter';
 import { ReactionResources } from '@internal/react-components';
 import { TransferAcceptedListener } from './CallAdapter';
@@ -126,10 +128,23 @@ import { CallingSounds } from './CallAdapter';
 import { DeepNoiseSuppressionEffectDependency } from '@internal/calling-component-bindings';
 type CallTypeOf<AgentType extends CallAgent | TeamsCallAgent> = AgentType extends CallAgent ? Call : TeamsCall;
 
+/**
+ * State used by the CallAdapter to manage the call state that is not exposed to the public API.
+ */
+interface CallAdapterPrivateState {
+  /** Track how captions has been started to decide on showing UI or not */
+  captionsTriggers?: {
+    captionsStartedInBackground?: boolean;
+    captionsStartedWithUI?: boolean;
+  };
+}
+
+type CallContextState = CallAdapterState & CallAdapterPrivateState;
+
 /** Context of call, which is a centralized context for all state updates */
 class CallContext {
   private emitter: EventEmitter = new EventEmitter();
-  private state: CallAdapterState;
+  private state: CallContextState;
   private callId: string | undefined;
   private displayNameModifier: AdapterStateModifier | undefined;
 
@@ -197,20 +212,37 @@ class CallContext {
     this.setAllowedUnsupportedBrowser.bind(this);
   }
 
-  public onStateChange(handler: (_uiState: CallAdapterState) => void): void {
+  public onStateChange(handler: (_uiState: CallContextState) => void): void {
     this.emitter.on('stateChanged', handler);
   }
 
-  public offStateChange(handler: (_uiState: CallAdapterState) => void): void {
+  public offStateChange(handler: (_uiState: CallContextState) => void): void {
     this.emitter.off('stateChanged', handler);
   }
 
-  public setState(state: CallAdapterState): void {
+  public setState(state: CallContextState): void {
     this.state = this.displayNameModifier ? this.displayNameModifier(state) : state;
+
+    // This context privately tracks how captions was started to determine if captions is running only in the background.
+    // If so we should not show the UI.
+    this.state = captionsUIVisibilityModifier(this.state);
+
     this.emitter.emit('stateChanged', this.state);
   }
 
-  public getState(): CallAdapterState {
+  public updateCaptionsStartedInBackground(captionsStartedInBackground: boolean): void {
+    const captionsTriggers = this.state.captionsTriggers ?? {};
+    captionsTriggers.captionsStartedInBackground = captionsStartedInBackground;
+    this.setState({ ...this.state, captionsTriggers });
+  }
+
+  public updateCaptionsStartedWithUI(captionsStartedWithUI: boolean): void {
+    const captionsTriggers = this.state.captionsTriggers ?? {};
+    captionsTriggers.captionsStartedWithUI = captionsStartedWithUI;
+    this.setState({ ...this.state, captionsTriggers });
+  }
+
+  public getState(): CallContextState {
     return this.state;
   }
 
@@ -1060,12 +1092,26 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     this.handlers.onSendDtmfTone(dtmfTone);
   }
 
-  public async startCaptions(options?: StartCaptionsOptions): Promise<void> {
+  public async startCaptions(options?: StartCaptionsAdapterOptions): Promise<void> {
+    if (options?.startInBackground) {
+      this.context.updateCaptionsStartedInBackground(true);
+    } else {
+      this.context.updateCaptionsStartedWithUI(true);
+    }
     this.handlers.onStartCaptions(options);
   }
 
-  public async stopCaptions(): Promise<void> {
-    this.handlers.onStopCaptions();
+  public async stopCaptions(options?: StopCaptionsAdapterOptions): Promise<void> {
+    if (options?.stopInBackground) {
+      this.context.updateCaptionsStartedInBackground(false);
+    }
+
+    this.context.updateCaptionsStartedWithUI(false);
+
+    // Only stop captions if they are not still running in the background
+    if (!this.context.getState().captionsTriggers?.captionsStartedInBackground) {
+      this.handlers.onStopCaptions();
+    }
   }
 
   public async setCaptionLanguage(language: string): Promise<void> {
@@ -2183,6 +2229,28 @@ export const createTeamsCallAdapterFromClient = async (
   } else {
     return new AzureCommunicationCallAdapter(callClient, locator, callAgent, deviceManager, options);
   }
+};
+
+const captionsUIVisibilityModifier = (state: CallContextState): CallContextState => {
+  // To hide captions to the UI, set isCaptionsFeatureActive to false and startCaptionsInProgress to false
+  if (
+    state.call?.captionsFeature &&
+    state.captionsTriggers?.captionsStartedInBackground &&
+    !state.captionsTriggers?.captionsStartedWithUI
+  ) {
+    return {
+      ...state,
+      call: {
+        ...state.call,
+        captionsFeature: {
+          ...state.call.captionsFeature,
+          isCaptionsFeatureActive: false,
+          startCaptionsInProgress: false
+        }
+      }
+    };
+  }
+  return state;
 };
 
 const isCallError = (e: Error): e is CallError => {
