@@ -127,8 +127,8 @@ export class CaptionsFeatureSubscriber {
     this._context = context;
     this._captions = captions;
     /* @conditional-compile-remove(acs-close-captions) */
-    this._context.setCaptionsKind(this._callIdRef.callId, this._captions.captions?.kind);
-    if (this._captions.captions?.kind === 'TeamsCaptions') {
+    this._context.setCaptionsKind(this._callIdRef.callId, this._captions.captions.kind);
+    if (this._captions.captions.kind === 'TeamsCaptions') {
       this._TeamsCaptionsSubscriber = new TeamsCaptionsSubscriber(
         this._callIdRef,
         this._context,
@@ -160,9 +160,9 @@ export class CaptionsFeatureSubscriber {
 
   /* @conditional-compile-remove(acs-close-captions) */
   private isCaptionsKindChanged: PropertyChangedEvent = (): void => {
-    this._context.setCaptionsKind(this._callIdRef.callId, this._captions.captions?.kind);
+    this._context.setCaptionsKind(this._callIdRef.callId, this._captions.captions.kind);
     // ACS call can turn into teams call but teams call will never turn into ACS call so we only need to handle the case when captions kind is TeamsCaptions
-    if (this._captions.captions?.kind === 'TeamsCaptions') {
+    if (this._captions.captions.kind === 'TeamsCaptions') {
       this._CaptionsSubscriber?.unsubscribe();
       this._TeamsCaptionsSubscriber = new TeamsCaptionsSubscriber(
         this._callIdRef,
