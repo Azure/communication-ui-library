@@ -1,0 +1,9 @@
+{
+  "type": "patch",
+  "area": "improvement",
+  "workstream": "Calling dependency",
+  "comment": "Upgrade calling beta to 1.28.1-beta.1 and stable to 1.27.2",
+  "packageName": "@azure/communication-react",
+  "email": "79475487+mgamis-msft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

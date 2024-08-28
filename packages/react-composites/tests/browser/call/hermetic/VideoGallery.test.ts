@@ -97,7 +97,8 @@ test.describe('VideoGallery tests', async () => {
     );
   });
 
-  test('Remote video tile pin menu button should be disabled when max remote video tiles are pinned', async ({
+  // @conditional-compile-remove(soft-mute)
+  test('Remote video tile mute menu button should be disabled when user is muted', async ({
     page,
     serverUrl
   }, testInfo) => {
@@ -106,30 +107,23 @@ test.describe('VideoGallery tests', async () => {
     test.skip(isTestProfileMobile(testInfo));
     const displayNames = ['Tony Hawk', 'Marie Curie', 'Gal Gadot', 'Margaret Atwood', 'Kobe Bryant', "Conan O'Brien"];
     const participants = displayNames.map((name) => defaultMockRemoteParticipant(name));
+    for (const participant of participants) {
+      participant.isMuted = true;
+    }
     const initialState = defaultMockCallAdapterState(participants);
 
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
 
     const videoGallery = await waitForSelector(page, dataUiId(IDS.videoGallery));
 
-    // pin remote video tiles in video gallery up to the max allowed in the call composite.
     // skip the first tile because it is the local video tile
-    for (let i = 1; i < 5; i++) {
-      const videoTile = await videoGallery.waitForSelector(dataUiId(IDS.videoTile) + ` >> nth=${i}`);
-      await videoTile.hover();
-      const moreButton = await videoTile.waitForSelector(dataUiId(IDS.videoTileMoreOptionsButton));
-      await moreButton.click();
-      // click pin menu button in contextual menu
-      await pageClick(page, dataUiId('video-tile-pin-participant-button'));
-    }
-    // hover the sixth remote video tile which is presumably an unpinned remote video tile
-    const sixthVideoTile = await videoGallery.waitForSelector(dataUiId(IDS.videoTile) + ` >> nth=5`);
-    sixthVideoTile.hover();
-    const moreButton = await sixthVideoTile.waitForSelector(dataUiId(IDS.videoTileMoreOptionsButton));
-    moreButton.click();
-    await waitForSelector(page, dataUiId('video-tile-pin-participant-button'));
-    // take snapshot to verify pin button is disabled
-    expect(await stableScreenshot(page)).toMatchSnapshot('disabled-pin-menu-button.png');
+    const videoTile = await videoGallery.waitForSelector(dataUiId(IDS.videoTile) + ` >> nth=1`);
+    await videoTile.hover();
+    const moreButton = await videoTile.waitForSelector(dataUiId(IDS.videoTileMoreOptionsButton));
+    await moreButton.click();
+    await waitForSelector(page, dataUiId('video-tile-mute-participant'));
+    // take snapshot to verify mute button is disabled
+    expect(await stableScreenshot(page)).toMatchSnapshot('disabled-mute-menu-button.png');
   });
   test('VideoGallery should show one tile when in speaker mode', async ({ page, serverUrl }, testInfo) => {
     test.skip(isTestProfileMobile(testInfo));

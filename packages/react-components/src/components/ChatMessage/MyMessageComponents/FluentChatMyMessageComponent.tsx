@@ -45,21 +45,29 @@ export const FluentChatMyMessageComponent = (props: FluentChatMessageComponentWr
     userId,
     defaultStatusRenderer,
     statusToRender,
-    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+    /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
     actionsForAttachment,
-    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+    /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
     onRenderAttachmentDownloads,
     /* @conditional-compile-remove(rich-text-editor) */
-    richTextEditor
+    isRichTextEditorEnabled,
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    onPaste,
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    inlineImagesWithProgress,
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    onRemoveInlineImage,
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    onInsertInlineImage
   } = props;
   const chatMessageRenderStyles = useChatMessageRenderStyles();
-  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
   const onRenderAttachmentDownloadsMemo = useMemo(() => {
-    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+    /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
     return onRenderAttachmentDownloads;
     return undefined;
   }, [
-    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ onRenderAttachmentDownloads
+    /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */ onRenderAttachmentDownloads
   ]);
 
   // To rerender the defaultChatMessageRenderer if app running across days(every new day chat time stamp
@@ -73,9 +81,9 @@ export const FluentChatMyMessageComponent = (props: FluentChatMessageComponentWr
         return (
           <ChatMyMessageComponent
             {...messageProps}
-            /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+            /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
             onRenderAttachmentDownloads={onRenderAttachmentDownloadsMemo}
-            /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+            /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
             strings={messageProps.strings}
             message={messageProps.message}
             userId={userId}
@@ -90,10 +98,18 @@ export const FluentChatMyMessageComponent = (props: FluentChatMessageComponentWr
             inlineImageOptions={inlineImageOptions}
             /* @conditional-compile-remove(mention) */
             mentionOptions={mentionOptions}
-            /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+            /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
             actionsForAttachment={actionsForAttachment}
             /* @conditional-compile-remove(rich-text-editor) */
-            richTextEditor={richTextEditor}
+            isRichTextEditorEnabled={isRichTextEditorEnabled}
+            /* @conditional-compile-remove(rich-text-editor-image-upload) */
+            onPaste={onPaste}
+            /* @conditional-compile-remove(rich-text-editor-image-upload) */
+            onRemoveInlineImage={onRemoveInlineImage}
+            /* @conditional-compile-remove(rich-text-editor-image-upload) */
+            onInsertInlineImage={onInsertInlineImage}
+            /* @conditional-compile-remove(rich-text-editor-image-upload) */
+            inlineImagesWithProgress={inlineImagesWithProgress}
           />
         );
       }
@@ -111,14 +127,22 @@ export const FluentChatMyMessageComponent = (props: FluentChatMessageComponentWr
       inlineImageOptions,
       /* @conditional-compile-remove(mention) */
       mentionOptions,
-      /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+      /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
       onRenderAttachmentDownloadsMemo,
-      /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+      /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
       actionsForAttachment,
       // eslint-disable-next-line react-hooks/exhaustive-deps
       new Date().toDateString(),
       /* @conditional-compile-remove(rich-text-editor) */
-      richTextEditor
+      isRichTextEditorEnabled,
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */
+      onPaste,
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */
+      onRemoveInlineImage,
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */
+      onInsertInlineImage,
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */
+      inlineImagesWithProgress
     ]
   );
 
@@ -181,11 +205,7 @@ export const FluentChatMyMessageComponent = (props: FluentChatMessageComponentWr
 
   const myMessageBodyProps = useMemo(() => {
     return {
-      className: mergeClasses(chatMessageRenderStyles.bodyCommon, chatMessageRenderStyles.bodyMyMessage),
-      // make body not focusable to remove repetitions from narrators.
-      // inner components are already focusable
-      tabIndex: -1,
-      role: 'none'
+      className: mergeClasses(chatMessageRenderStyles.bodyCommon, chatMessageRenderStyles.bodyMyMessage)
     };
   }, [chatMessageRenderStyles.bodyCommon, chatMessageRenderStyles.bodyMyMessage]);
 

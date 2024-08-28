@@ -1,9 +1,0 @@
-{
-  "type": "patch",
-  "area": "fix",
-  "workstream": "MessageThread",
-  "comment": "Fix default constant maxWidth value for fluent chat components",
-  "packageName": "@azure/communication-react",
-  "email": "98852890+vhuseinova-msft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

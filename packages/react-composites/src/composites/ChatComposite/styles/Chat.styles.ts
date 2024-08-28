@@ -62,7 +62,7 @@ export const chatArea = mergeStyles({
 export const chatWrapper = mergeStyles({
   height: '100%',
   width: '100%',
-  overflow: 'hidden',
+  overflow: 'visible',
   zIndex: CHAT_CONTAINER_ZINDEX
 });
 

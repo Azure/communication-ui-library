@@ -80,6 +80,10 @@ export interface MicrophoneButtonStrings {
    * Title for primary action section of split button
    */
   microphonePrimaryActionSplitButtonTitle?: string;
+  /**
+   * Aria description for the microphone button
+   */
+  microphoneAriaDescription?: string;
 }
 
 /**
@@ -266,6 +270,7 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
         aria-roledescription={
           props.enableDeviceSelectionMenu ? strings.microphoneButtonSplitRoleDescription : undefined
         }
+        aria-description={strings.microphoneAriaDescription}
         splitButtonAriaLabel={props.enableDeviceSelectionMenu ? splitButtonAriaString : undefined}
         disabled={disabled}
         primaryDisabled={primaryDisabled}

@@ -20,6 +20,7 @@
     "complianceBannerTranscriptionStopped": "Transkripsjon er stoppet.",
     "configurationPageTitle": "Start en samtale",
     "copyInviteLinkButtonLabel": "Kopier invitasjonskobling",
+    "copyInviteLinkButtonActionedLabel": "Koblingen er kopiert",
     "copyInviteLinkActionedAriaLabel": "Invitasjonskobling er kopiert",
     "defaultPlaceHolder": "Velg et alternativ",
     "dismissSidePaneButtonLabel": "Lukk",
@@ -134,6 +135,7 @@
     "dtmfDialerButtonTooltipOff": "Skjul numerisk tastatur",
     "dtmfDialerMoreButtonLabelOn": "Vis numerisk tastatur",
     "dtmfDialerMoreButtonLabelOff": "Skjul numerisk tastatur",
+    "phoneCallMoreButtonLabel": "Telefonsamtale",
     "spokenLanguageStrings": {
       "ar-ae": "Arabisk – De forente arabiske emirater",
       "ar-sa": "Arabisk – Saudi-Arabia",
@@ -244,6 +246,10 @@
       "shareScreen": {
         "lostDueToRoleChangeToAttendee": "Rollen din er endret. Noen handlinger, for eksempel deling av innhold, vil ikke være tilgjengelige for deg.",
         "grantedDueToRoleChangeToPresenter": "Du er presentatør. Du kan dele innhold og tilrettelegge møtet."
+      },
+      "hideAttendeeNames": {
+        "hideAttendeeNameAttendee": "Navnet ditt er skjult for andre deltakere. Arrangører og presentatører kan se ditt virkelige navn.",
+        "hideAttendeeNamePresenter": "Deltakernavn er skjult. Bare arrangører og presentatører kan se navn for å beskytte deltakernes personvern."
       }
     },
     "surveyTitle": "Hjelp oss med å bli bedre",
@@ -259,7 +265,6 @@
     "tagsSurveyQuestion": "Hva kunne ha vært bedre?",
     "tagsSurveyTextFieldDefaultText": "Annet, spesifiser",
     "tagsSurveyHelperText": "Merk eventuelle problemer du har opplevd.",
-    "surveyTextboxDefaultText": "Annet, spesifiser",
     "endOfSurveyText": "Takk for tilbakemeldingen!",
     "surveyIssues": {
       "overallRating": {
@@ -301,7 +306,7 @@
         "otherIssues": "Jeg hadde andre problemer med skjermdeling i denne samtalen"
       }
     },
-    "SurveyIssuesHeadingStrings": {
+    "surveyIssuesHeadingStrings": {
       "overallRating": "Samlet vurdering",
       "audioRating": "Lyd",
       "videoRating": "Video",
@@ -325,17 +330,32 @@
     },
     "exitSpotlightButtonLabel": "Rampelys av",
     "exitSpotlightButtonTooltip": "Rampelys av",
-    "hangUpConfirmButtonLabel": "Bekreft",
+    "leaveConfirmButtonLabel": "Forlat",
+    "endCallConfirmButtonLabel": "Avslutt samtalen",
     "hangUpCancelButtonLabel": "Avbryt",
     "leaveConfirmDialogTitle": "Forlat chatten",
     "leaveConfirmDialogContent": "Er du sikker på at du vil forlate samtalen?",
     "endCallConfirmDialogTitle": "Avslutt samtalen?",
     "endCallConfirmDialogContent": "Du avslutter møtet for alle.",
-    "invalidMeetingIdentifier": "Ugyldig møte-ID eller passord"
+    "invalidMeetingIdentifier": "Ugyldig møte-ID eller passord",
+    "pinParticipantMenuLabel": "Fest for meg",
+    "pinParticipantLimitReachedMenuLabel": "Fest (grensen er nådd)",
+    "unpinParticipantMenuLabel": "Løsne",
+    "pinParticipantMenuItemAriaLabel": "Fest",
+    "unpinParticipantMenuItemAriaLabel": "Løsne",
+    "muteAllMenuLabel": "Demp alle",
+    "muteAllDialogTitle": "Vil du dempe alle?",
+    "muteAllDialogContent": "Dette demper alle i møtet, bortsett fra deg selv.",
+    "muteAllConfirmButtonLabel": "Demp alle",
+    "muteAllCancelButtonLabel": "Avbryt"
   },
   "chat": {
     "chatListHeader": "I denne chatten",
-    "uploadAttachment": "Last opp vedlegg"
+    "uploadAttachment": "Last opp vedlegg",
+    "uploadImageDataNotProvided": "Bildedata er ikke angitt.",
+    "uploadImageIsTooLarge": "Bildet er for stort. Velg en som er mindre enn {maxImageSize} MB.",
+    "uploadImageExtensionIsNotAllowed": "Opplasting av .{imageExtension}-bilde er ikke tillatt.",
+    "uploadImageFailed": "Kan ikke laste opp bilde. Prøv på nytt senere."
   },
   "callWithChat": {
     "chatButtonLabel": "Chat",
@@ -345,6 +365,7 @@
     "chatButtonTooltipOpen": "Vis chat",
     "chatPaneTitle": "Chat",
     "copyInviteLinkButtonLabel": "Kopier invitasjonskobling",
+    "copyInviteLinkButtonActionedLabel": "Koblingen er kopiert",
     "copyInviteLinkActionedAriaLabel": "Invitasjonskobling er kopiert",
     "dismissSidePaneButtonLabel": "Lukk",
     "moreDrawerAudioDeviceMenuTitle": "Lydenhet",
@@ -360,6 +381,8 @@
     "selectedPeopleButtonLabel": "Personer-knappen er valgt",
     "peopleButtonTooltipOpen": "Vis deltakere",
     "peopleButtonTooltipClose": "Skjul deltakere",
+    "peopleButtonTooltipOpenAriaLabel": "Personer-knapp, Vis deltakere",
+    "peopleButtonTooltipCloseAriaLabel": "Personer-knapp, Skjul deltakere",
     "peoplePaneSubTitle": "I denne samtalen",
     "peoplePaneTitle": "Personer",
     "pictureInPictureTileAriaLabel": "Videofeeder. Klikk for å gå tilbake til samtaleskjermen.",

@@ -57,15 +57,15 @@ betaTest.describe('RichTextSendBox tests', () => {
     await expect(component).toHaveScreenshot('rich-text-send-box-with-system-message.png');
   });
 
-  betaTest('RichTextSendBox should show attachmentsWithProgress correctly', async ({ mount }) => {
+  betaTest('RichTextSendBox should show attachments correctly', async ({ mount }) => {
     const component = await mount(
       <RichTextSendBox
         onSendMessage={async () => {
           return;
         }}
-        attachmentsWithProgress={[
-          { progress: 0.65, id: 'id1', name: 'test1.pdf', extension: 'pdf' },
-          { progress: 1, id: 'id2', name: 'test2.docx', extension: 'docx' },
+        attachments={[
+          { progress: 0.65, id: 'id1', name: 'test1.pdf' },
+          { progress: 1, id: 'id2', name: 'test2.docx' },
           { progress: 0, id: 'id3', name: 'test3' }
         ]}
       />

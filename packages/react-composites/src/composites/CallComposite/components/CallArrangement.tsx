@@ -11,12 +11,11 @@ import {
   _useContainerHeight,
   _useContainerWidth,
   ActiveErrorMessage,
-  ErrorBar,
   ErrorBarProps,
   useTheme
 } from '@internal/react-components';
+import { ActiveNotification, NotificationStack } from '@internal/react-components';
 import { VideoGalleryLayout } from '@internal/react-components';
-/* @conditional-compile-remove(spotlight) */
 import { VideoGallery } from '@internal/react-components';
 import React, { useMemo, useRef, useState } from 'react';
 import { useEffect } from 'react';
@@ -39,19 +38,25 @@ import {
   CONTROL_BAR_Z_INDEX,
   DRAWER_Z_INDEX
 } from '../styles/CallPage.styles';
-import { MutedNotification, MutedNotificationProps } from './MutedNotification';
+
+import { notificationStackStyles } from '../styles/CallPage.styles';
+import { MutedNotificationProps } from './MutedNotification';
 import { CallAdapter } from '../adapter';
 import { useSelector } from '../hooks/useSelector';
 import { callStatusSelector } from '../selectors/callStatusSelector';
 import { CallControlOptions } from '../types/CallControlOptions';
 import { PreparedMoreDrawer } from '../../common/Drawer/PreparedMoreDrawer';
-import { getRemoteParticipants } from '../selectors/baseSelectors';
+import { getIsTeamsMeeting, getRemoteParticipants } from '../selectors/baseSelectors';
 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { getPage } from '../selectors/baseSelectors';
-import { getCallStatus, getIsTeamsCall, getCaptionsStatus } from '../selectors/baseSelectors';
+import { getCallStatus, getCaptionsStatus } from '../selectors/baseSelectors';
 import { drawerContainerStyles } from '../styles/CallComposite.styles';
 import { SidePane } from './SidePane/SidePane';
 import { usePeoplePane } from './SidePane/usePeoplePane';
+/* @conditional-compile-remove(teams-meeting-conference) */
+import { useMeetingPhoneInfoPane } from './SidePane/useMeetingPhoneInfo';
+/* @conditional-compile-remove(teams-meeting-conference) */
+import { getTeamsMeetingCoordinates } from '../selectors/baseSelectors';
 
 import {
   useVideoEffectsPane,
@@ -75,18 +80,23 @@ import {
   CapabilitiesChangeNotificationBarProps
 } from './CapabilitiesChangedNotificationBar';
 import { useLocale } from '../../localization';
-/* @conditional-compile-remove(spotlight) */
 import { usePropsFor } from '../hooks/usePropsFor';
-/* @conditional-compile-remove(spotlight) */
 import { PromptProps } from './Prompt';
-/* @conditional-compile-remove(spotlight) */
 import {
   useLocalSpotlightCallbacksWithPrompt,
   useRemoteSpotlightCallbacksWithPrompt,
   useStopAllSpotlightCallbackWithPrompt
 } from '../utils/spotlightUtils';
 /* @conditional-compile-remove(acs-close-captions) */
-import { getCaptionsKind } from '../selectors/baseSelectors';
+import { getCaptionsKind, getIsTeamsCall } from '../selectors/baseSelectors';
+/* @conditional-compile-remove(soft-mute) */
+import { useHandlers } from '../hooks/useHandlers';
+/* @conditional-compile-remove(soft-mute) */
+import { MoreDrawer } from '../../common/Drawer/MoreDrawer';
+/* @conditional-compile-remove(breakout-rooms) */
+import { useCompositeStringsForNotificationStackStrings } from '../hooks/useCompositeStringsForNotificationStack';
+/* @conditional-compile-remove(breakout-rooms) */
+import { BreakoutRoomsBanner } from './BreakoutRoomsBanner';
 
 /**
  * @private
@@ -95,6 +105,7 @@ export interface CallArrangementProps {
   id?: string;
   complianceBannerProps: _ComplianceBannerProps;
   errorBarProps: ErrorBarProps | false;
+  showErrorNotifications: boolean;
   mutedNotificationProps?: MutedNotificationProps;
   callControlProps: CallControlsProps;
   onRenderGalleryContent: () => JSX.Element;
@@ -104,8 +115,11 @@ export interface CallArrangementProps {
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   updateSidePaneRenderer: (renderer: SidePaneRenderer | undefined) => void;
   mobileChatTabHeader?: MobileChatSidePaneTabHeaderProps;
-  latestErrors: ActiveErrorMessage[];
-  onDismissError: (error: ActiveErrorMessage) => void;
+  latestErrors: ActiveErrorMessage[] | ActiveNotification[];
+  latestNotifications?: ActiveNotification[];
+  onDismissError: (error: ActiveErrorMessage | ActiveNotification) => void;
+
+  onDismissNotification?: (notification: ActiveNotification) => void;
   onUserSetOverflowGalleryPositionChange?: (position: 'Responsive' | 'horizontalTop') => void;
   onUserSetGalleryLayoutChange?: (layout: VideoGalleryLayout) => void;
   userSetGalleryLayout?: VideoGalleryLayout;
@@ -114,13 +128,22 @@ export interface CallArrangementProps {
   onCloseChatPane?: () => void;
   onSetDialpadPage?: () => void;
   dtmfDialerPresent?: boolean;
-  /* @conditional-compile-remove(spotlight) */
+
   setIsPromptOpen?: (isOpen: boolean) => void;
-  /* @conditional-compile-remove(spotlight) */
+
   setPromptProps?: (props: PromptProps) => void;
-  /* @conditional-compile-remove(spotlight) */
+
   hideSpotlightButtons?: boolean;
+  pinnedParticipants?: string[];
+  setPinnedParticipants?: (pinnedParticipants: string[]) => void;
+  doNotShowCameraAccessNotifications?: boolean;
 }
+
+/**
+ * @private
+ * Maximum number of remote video tiles that can be pinned
+ */
+export const MAX_PINNED_REMOTE_VIDEO_TILES = 4;
 
 /**
  * @private
@@ -161,6 +184,17 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
       setDrawerMenuItems([]);
     }
   }, [participantActioned, remoteParticipants]);
+
+  /* @conditional-compile-remove(teams-meeting-conference) */
+  const conferencePhoneInfo = useSelector(getTeamsMeetingCoordinates);
+
+  /* @conditional-compile-remove(teams-meeting-conference) */
+  const meetingPhoneInfoPaneProps = {
+    updateSidePaneRenderer,
+    mobileView: props.mobileView,
+    conferencePhoneInfo: conferencePhoneInfo
+  };
+
   const peoplePaneProps = useMemo(
     () => ({
       updateSidePaneRenderer,
@@ -184,25 +218,81 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   );
 
   const locale = useLocale();
-
-  /* @conditional-compile-remove(spotlight) */
+  const role = adapter.getState().call?.role;
   const videoGalleryProps = usePropsFor(VideoGallery);
-
-  /* @conditional-compile-remove(spotlight) */
+  /* @conditional-compile-remove(soft-mute) */
+  const muteAllHandlers = useHandlers(MoreDrawer);
   const { setPromptProps, setIsPromptOpen, hideSpotlightButtons } = props;
-
-  /* @conditional-compile-remove(spotlight) */
   const {
     onStartLocalSpotlight,
     onStopLocalSpotlight,
     onStartRemoteSpotlight,
     onStopRemoteSpotlight,
+    /* @conditional-compile-remove(soft-mute) */
+    onMuteParticipant,
     spotlightedParticipants,
     maxParticipantsToSpotlight,
     localParticipant
   } = videoGalleryProps;
 
-  /* @conditional-compile-remove(spotlight) */
+  /* @conditional-compile-remove(teams-meeting-conference) */
+  const [showTeamsMeetingConferenceModal, setShowTeamsMeetingConferenceModal] = useState(false);
+  /* @conditional-compile-remove(teams-meeting-conference) */
+  const toggleTeamsMeetingConferenceModal = useCallback((): void => {
+    setShowTeamsMeetingConferenceModal(!showTeamsMeetingConferenceModal);
+  }, [showTeamsMeetingConferenceModal]);
+
+  /* @conditional-compile-remove(teams-meeting-conference) */
+  const { isMeetingPhoneInfoPaneOpen, openMeetingPhoneInfoPane, closeMeetingPhoneInfoPane } = useMeetingPhoneInfoPane({
+    ...meetingPhoneInfoPaneProps
+  });
+
+  /* @conditional-compile-remove(teams-meeting-conference) */
+  const toggleMeetingPhoneInfoPane = useCallback(() => {
+    if (isMeetingPhoneInfoPaneOpen) {
+      closeMeetingPhoneInfoPane();
+    } else {
+      openMeetingPhoneInfoPane();
+    }
+  }, [closeMeetingPhoneInfoPane, isMeetingPhoneInfoPaneOpen, openMeetingPhoneInfoPane]);
+
+  /* @conditional-compile-remove(teams-meeting-conference) */
+  const onMeetingPhoneInfoClicked = useCallback(() => {
+    setShowDrawer(false);
+    toggleMeetingPhoneInfoPane();
+  }, [toggleMeetingPhoneInfoPane]);
+
+  const { pinnedParticipants, setPinnedParticipants } = props;
+  const onPinParticipant = useCallback(
+    (userId: string) => {
+      if (pinnedParticipants && pinnedParticipants.length >= MAX_PINNED_REMOTE_VIDEO_TILES) {
+        return;
+      }
+      if (pinnedParticipants && setPinnedParticipants && !pinnedParticipants.includes(userId)) {
+        setPinnedParticipants(pinnedParticipants.concat(userId));
+      }
+    },
+    [pinnedParticipants, setPinnedParticipants]
+  );
+
+  const onUnpinParticipant = useCallback(
+    (userId: string) => {
+      if (pinnedParticipants && setPinnedParticipants) {
+        setPinnedParticipants(pinnedParticipants.filter((participantId) => participantId !== userId));
+      }
+    },
+    [setPinnedParticipants, pinnedParticipants]
+  );
+
+  const pinPeoplePaneProps = useMemo(() => {
+    return {
+      pinnedParticipants: pinnedParticipants,
+      onPinParticipant: onPinParticipant,
+      onUnpinParticipant: onUnpinParticipant,
+      disablePinMenuItem: pinnedParticipants && pinnedParticipants.length >= MAX_PINNED_REMOTE_VIDEO_TILES
+    };
+  }, [onPinParticipant, onUnpinParticipant, pinnedParticipants]);
+
   const { onStartLocalSpotlightWithPrompt, onStopLocalSpotlightWithPrompt } = useLocalSpotlightCallbacksWithPrompt(
     onStartLocalSpotlight,
     onStopLocalSpotlight,
@@ -210,7 +300,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     setPromptProps
   );
 
-  /* @conditional-compile-remove(spotlight) */
   const { onStartRemoteSpotlightWithPrompt, onStopRemoteSpotlightWithPrompt } = useRemoteSpotlightCallbacksWithPrompt(
     onStartRemoteSpotlight,
     onStopRemoteSpotlight,
@@ -218,24 +307,37 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     setPromptProps
   );
 
-  /* @conditional-compile-remove(spotlight) */
   const canRemoveSpotlight =
     adapter.getState().call?.capabilitiesFeature?.capabilities.removeParticipantsSpotlight.isPresent;
-  /* @conditional-compile-remove(spotlight) */
   const stopAllSpotlight = useMemo(
     () => (canRemoveSpotlight ? () => adapter.stopAllSpotlight() : undefined),
     [canRemoveSpotlight, adapter]
   );
 
-  /* @conditional-compile-remove(spotlight) */
   const { stopAllSpotlightWithPrompt } = useStopAllSpotlightCallbackWithPrompt(
     stopAllSpotlight,
     setIsPromptOpen,
     setPromptProps
   );
 
+  const onMuteParticipantPeoplePaneProps = useMemo(() => {
+    /* @conditional-compile-remove(soft-mute) */
+    return {
+      onMuteParticipant: ['Unknown', 'Organizer', 'Presenter', 'Co-organizer'].includes(role ?? '')
+        ? onMuteParticipant
+        : undefined,
+      onMuteAllRemoteParticipants: ['Unknown', 'Organizer', 'Presenter', 'Co-organizer'].includes(role ?? '')
+        ? muteAllHandlers.onMuteAllRemoteParticipants
+        : undefined
+    };
+    return {};
+  }, [
+    /* @conditional-compile-remove(soft-mute) */ onMuteParticipant,
+    /* @conditional-compile-remove(soft-mute) */ role,
+    /* @conditional-compile-remove(soft-mute) */ muteAllHandlers.onMuteAllRemoteParticipants
+  ]);
+
   const spotlightPeoplePaneProps = useMemo(() => {
-    /* @conditional-compile-remove(spotlight) */
     return {
       spotlightedParticipantUserIds: spotlightedParticipants,
       onStartLocalSpotlight: hideSpotlightButtons ? undefined : onStartLocalSpotlightWithPrompt,
@@ -247,19 +349,21 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     };
     return {};
   }, [
-    /* @conditional-compile-remove(spotlight) */ hideSpotlightButtons,
-    /* @conditional-compile-remove(spotlight) */ maxParticipantsToSpotlight,
-    /* @conditional-compile-remove(spotlight) */ onStartLocalSpotlightWithPrompt,
-    /* @conditional-compile-remove(spotlight) */ onStartRemoteSpotlightWithPrompt,
-    /* @conditional-compile-remove(spotlight) */ onStopLocalSpotlightWithPrompt,
-    /* @conditional-compile-remove(spotlight) */ onStopRemoteSpotlightWithPrompt,
-    /* @conditional-compile-remove(spotlight) */ stopAllSpotlightWithPrompt,
-    /* @conditional-compile-remove(spotlight) */ spotlightedParticipants
+    hideSpotlightButtons,
+    maxParticipantsToSpotlight,
+    onStartLocalSpotlightWithPrompt,
+    onStartRemoteSpotlightWithPrompt,
+    onStopLocalSpotlightWithPrompt,
+    onStopRemoteSpotlightWithPrompt,
+    stopAllSpotlightWithPrompt,
+    spotlightedParticipants
   ]);
 
   const { isPeoplePaneOpen, openPeoplePane, closePeoplePane } = usePeoplePane({
     ...peoplePaneProps,
-    ...spotlightPeoplePaneProps
+    ...spotlightPeoplePaneProps,
+    ...onMuteParticipantPeoplePaneProps,
+    ...pinPeoplePaneProps
   });
   const togglePeoplePane = useCallback(() => {
     if (isPeoplePaneOpen) {
@@ -308,7 +412,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   const { openVideoEffectsPane } = useVideoEffectsPane(
     props.updateSidePaneRenderer,
     props.mobileView,
-    props.latestErrors,
+    props.latestErrors as ActiveErrorMessage[],
     props.onDismissError,
     cameraButtonRef
   );
@@ -326,35 +430,56 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
 
   const drawerContainerStylesValue = useMemo(() => drawerContainerStyles(DRAWER_Z_INDEX), []);
 
-  const role = adapter.getState().call?.role;
-
-  const canUnmute = role !== 'Consumer' ? true : false;
-
-  let filteredLatestErrors: ActiveErrorMessage[] = props.errorBarProps !== false ? props.latestErrors : [];
+  let filteredLatestErrorNotifications: ActiveNotification[] = props.showErrorNotifications
+    ? (props.latestErrors as ActiveNotification[])
+    : [];
 
   const isCameraOn = useSelector(localVideoSelector).isAvailable;
 
   // TODO: move this logic to the error bar selector once role is plumbed from the headless SDK
-  if (role === 'Consumer' && props.errorBarProps) {
-    filteredLatestErrors = filteredLatestErrors.filter(
+  if (role === 'Consumer' && (props.errorBarProps || props.showErrorNotifications)) {
+    filteredLatestErrorNotifications = filteredLatestErrorNotifications.filter(
+      (e) => e.type !== 'callCameraAccessDenied' && e.type !== 'callCameraAccessDeniedSafari'
+    );
+  }
+
+  if (props.doNotShowCameraAccessNotifications) {
+    filteredLatestErrorNotifications = filteredLatestErrorNotifications.filter(
       (e) => e.type !== 'callCameraAccessDenied' && e.type !== 'callCameraAccessDeniedSafari'
     );
   }
 
   const isVideoPaneOpen = useIsParticularSidePaneOpen(VIDEO_EFFECTS_SIDE_PANE_ID);
 
-  if ((isVideoPaneOpen || !isCameraOn) && props.errorBarProps) {
-    filteredLatestErrors = filteredLatestErrors.filter((e) => e.type !== 'unableToStartVideoEffect');
+  if ((isVideoPaneOpen || !isCameraOn) && (props.errorBarProps || props.showErrorNotifications)) {
+    filteredLatestErrorNotifications = filteredLatestErrorNotifications.filter(
+      (e) => e.type !== 'unableToStartVideoEffect'
+    );
   }
 
   /* @conditional-compile-remove(acs-close-captions) */
   const isTeamsCaptions = useSelector(getCaptionsKind) === 'TeamsCaptions';
+  const isTeamsMeeting = useSelector(getIsTeamsMeeting);
+  /* @conditional-compile-remove(acs-close-captions) */
+  const isTeamsCall = useSelector(getIsTeamsCall);
   const useTeamsCaptions =
-    useSelector(getIsTeamsCall) || /* @conditional-compile-remove(acs-close-captions) */ isTeamsCaptions;
+    isTeamsMeeting ||
+    /* @conditional-compile-remove(acs-close-captions) */ isTeamsCall ||
+    /* @conditional-compile-remove(acs-close-captions) */ isTeamsCaptions;
   const hasJoinedCall = useSelector(getCallStatus) === 'Connected';
   const isCaptionsOn = useSelector(getCaptionsStatus);
   const minMaxDragPosition = useMinMaxDragPosition(props.modalLayerHostId);
   const pipStyles = useMemo(() => getPipStyles(theme), [theme]);
+
+  if (isTeamsMeeting) {
+    filteredLatestErrorNotifications
+      .filter((notification) => notification.type === 'teamsMeetingCallNetworkQualityLow')
+      .forEach((notification) => {
+        notification.onClickPrimaryButton = props.mobileView
+          ? toggleMeetingPhoneInfoPane
+          : toggleTeamsMeetingConferenceModal;
+      });
+  }
 
   const verticalControlBar =
     props.mobileView && containerWidth && containerHeight && containerWidth / containerHeight > 1 ? true : false;
@@ -365,6 +490,17 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
         (notification) => notification.capabilityName !== 'shareScreen'
       )
     : props.capabilitiesChangedNotificationBarProps?.capabilitiesChangedNotifications;
+
+  /* @conditional-compile-remove(breakout-rooms) */
+  const notificationStackStrings = useCompositeStringsForNotificationStackStrings(locale);
+
+  let latestNotifications = props.latestNotifications;
+  /* @conditional-compile-remove(breakout-rooms) */
+  // Filter out breakout room notification that prompts user to join breakout room when in mobile view. We will
+  // replace it with a non-dismissible banner
+  latestNotifications = props.mobileView
+    ? (latestNotifications ?? []).filter((notification) => notification.type !== 'assignedBreakoutRoomOpenedPromptJoin')
+    : latestNotifications;
 
   return (
     <div ref={containerRef} className={mergeStyles(containerDivStyles)} id={props.id}>
@@ -422,10 +558,13 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                   dtmfDialerPresent={props.dtmfDialerPresent}
                   peopleButtonRef={peopleButtonRef}
                   cameraButtonRef={cameraButtonRef}
-                  /* @conditional-compile-remove(spotlight) */
                   onStopLocalSpotlight={
                     !hideSpotlightButtons && localParticipant.spotlight ? onStopLocalSpotlightWithPrompt : undefined
                   }
+                  /* @conditional-compile-remove(teams-meeting-conference) */
+                  onToggleTeamsMeetingConferenceModal={toggleTeamsMeetingConferenceModal}
+                  /* @conditional-compile-remove(teams-meeting-conference) */
+                  teamsMeetingConferenceModalPresent={showTeamsMeetingConferenceModal}
                 />
               )}
             </Stack>
@@ -448,6 +587,8 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                 onSetDialpadPage={props.onSetDialpadPage}
                 dtmfDialerPresent={props.dtmfDialerPresent}
                 reactionResources={adapter.getState().reactions}
+                /* @conditional-compile-remove(teams-meeting-conference) */
+                onClickMeetingPhoneInfo={onMeetingPhoneInfoClicked}
               />
             </Stack>
           )}
@@ -456,15 +597,31 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
               <Stack.Item styles={callGalleryStyles} grow>
                 <Stack verticalFill styles={mediaGalleryContainerStyles}>
                   <Stack.Item styles={notificationsContainerStyles}>
-                    <Stack styles={bannerNotificationStyles}>
-                      <_ComplianceBanner {...props.complianceBannerProps} />
-                    </Stack>
-                    {props.errorBarProps !== false && (
-                      <Stack styles={bannerNotificationStyles}>
-                        <ErrorBar
-                          {...props.errorBarProps}
-                          onDismissError={props.onDismissError}
-                          activeErrorMessages={filteredLatestErrors}
+                    {
+                      /* @conditional-compile-remove(breakout-rooms) */
+                      props.mobileView && (
+                        <BreakoutRoomsBanner
+                          latestNotifications={latestNotifications}
+                          locale={locale}
+                          adapter={adapter}
+                        />
+                      )
+                    }
+                    {props.showErrorNotifications && (
+                      <Stack styles={notificationStackStyles} horizontalAlign="center" verticalAlign="center">
+                        <NotificationStack
+                          onDismissNotification={props.onDismissError}
+                          activeNotifications={filteredLatestErrorNotifications}
+                        />
+                      </Stack>
+                    )}
+                    {latestNotifications && (
+                      <Stack styles={notificationStackStyles} horizontalAlign="center" verticalAlign="center">
+                        <NotificationStack
+                          activeNotifications={latestNotifications}
+                          onDismissNotification={props.onDismissNotification}
+                          /* @conditional-compile-remove(breakout-rooms) */
+                          strings={notificationStackStrings}
                         />
                       </Stack>
                     )}
@@ -477,9 +634,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                           />
                         </Stack>
                       )}
-                    {canUnmute && !!props.mutedNotificationProps && (
-                      <MutedNotification {...props.mutedNotificationProps} />
-                    )}
                   </Stack.Item>
                   {renderGallery && props.onRenderGalleryContent && props.onRenderGalleryContent()}
                   {true &&

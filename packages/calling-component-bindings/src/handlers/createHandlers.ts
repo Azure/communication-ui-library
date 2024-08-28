@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 import { Call, CallAgent, StartCallOptions } from '@azure/communication-calling';
+/* @conditional-compile-remove(one-to-n-calling) */
+import { IncomingCallCommon } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
@@ -13,12 +15,18 @@ import {
 import { CommunicationIdentifier } from '@azure/communication-common';
 
 import { _toCommunicationIdentifier } from '@internal/acs-ui-common';
+/* @conditional-compile-remove(one-to-n-calling) */
+import { DeclarativeCallAgent } from '@internal/calling-stateful-client';
 import { StatefulCallClient, StatefulDeviceManager } from '@internal/calling-stateful-client';
 import memoizeOne from 'memoize-one';
 import { isACSCallParticipants } from '../utils/callUtils';
+/* @conditional-compile-remove(one-to-n-calling) */
+import { createLocalVideoStream } from '../utils/callUtils';
 import { createDefaultCommonCallingHandlers, CommonCallingHandlers } from './createCommonHandlers';
 
 import { VideoBackgroundEffectsDependency } from './createCommonHandlers';
+/* @conditional-compile-remove(DNS) */
+import { DeepNoiseSuppressionEffectDependency } from './createCommonHandlers';
 
 /**
  * Object containing all the handlers required for calling components.
@@ -38,6 +46,8 @@ export interface CallingHandlers extends CommonCallingHandlers {
  */
 export type CallingHandlersOptions = {
   onResolveVideoBackgroundEffectsDependency?: () => Promise<VideoBackgroundEffectsDependency>;
+  /* @conditional-compile-remove(DNS) */
+  onResolveDeepNoiseSuppressionDependency?: () => Promise<DeepNoiseSuppressionEffectDependency>;
 };
 
 /**
@@ -64,8 +74,15 @@ export type CreateDefaultCallingHandlers = (
  */
 export const createDefaultCallingHandlers: CreateDefaultCallingHandlers = memoizeOne((...args) => {
   const [callClient, callAgent, deviceManager, call, options] = args;
+  /* @conditional-compile-remove(breakout-rooms) */
+  const callState = call?.id ? callClient.getState().calls[call?.id] : undefined;
+  /* @conditional-compile-remove(breakout-rooms) */
+  const breakoutRoomOriginCallId = callState?.breakoutRooms?.breakoutRoomOriginCallId;
+  /* @conditional-compile-remove(breakout-rooms) */
+  const breakoutRoomOriginCall = callAgent?.calls.find((call) => call.id === breakoutRoomOriginCallId);
+  const commonCallingHandlers = createDefaultCommonCallingHandlers(callClient, deviceManager, call, options);
   return {
-    ...createDefaultCommonCallingHandlers(callClient, deviceManager, call, options),
+    ...commonCallingHandlers,
     // FIXME: onStartCall API should use string, not the underlying SDK types.
     onStartCall: (participants: CommunicationIdentifier[], options?: StartCallOptions): Call | undefined => {
       /* @conditional-compile-remove(teams-adhoc-call) */
@@ -92,11 +109,35 @@ export const createDefaultCallingHandlers: CreateDefaultCallingHandlers = memoiz
     ): Promise<void> => {
       const participant = _toCommunicationIdentifier(userId);
       await call?.removeParticipant(participant);
-    }
+    },
+    /* @conditional-compile-remove(one-to-n-calling) */
+    onAcceptCall: async (incomingCallId: string, useVideo?: boolean): Promise<void> => {
+      const localVideoStream = useVideo ? await createLocalVideoStream(callClient) : undefined;
+      const incomingCall = (callAgent as DeclarativeCallAgent)?.incomingCalls.find(
+        (incomingCall: IncomingCallCommon) => incomingCall.id === incomingCallId
+      );
+      if (incomingCall) {
+        await incomingCall.accept(
+          localVideoStream ? { videoOptions: { localVideoStreams: [localVideoStream] } } : undefined
+        );
+      }
+    },
+    /* @conditional-compile-remove(one-to-n-calling) */
+    onRejectCall: async (incomingCallId: string): Promise<void> => {
+      const incomingCall = (callAgent as DeclarativeCallAgent)?.incomingCalls.find(
+        (incomingCall: IncomingCallCommon) => incomingCall.id === incomingCallId
+      );
+      if (incomingCall) {
+        await incomingCall.reject();
+      }
+    },
+    /* @conditional-compile-remove(breakout-rooms) */
+    onHangUp: breakoutRoomOriginCall
+      ? async () => breakoutRoomOriginCall.hangUp().then(() => commonCallingHandlers.onHangUp())
+      : commonCallingHandlers.onHangUp
   };
 });
 
-/* @conditional-compile-remove(spotlight) */
 /**
  * Handlers only for calling components
  * @internal

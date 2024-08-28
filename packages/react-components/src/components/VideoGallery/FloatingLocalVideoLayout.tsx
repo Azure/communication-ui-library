@@ -68,7 +68,7 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
     overflowGalleryPosition = 'horizontalBottom',
     pinnedParticipantUserIds = [],
     localVideoTileSize,
-    /* @conditional-compile-remove(spotlight) */ spotlightedParticipantUserIds
+    spotlightedParticipantUserIds
   } = props;
 
   const theme = useTheme();
@@ -91,7 +91,7 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
       : childrenPerPage.current,
     pinnedParticipantUserIds,
     layout: 'floatingLocalVideo',
-    /* @conditional-compile-remove(spotlight) */ spotlightedParticipantUserIds
+    spotlightedParticipantUserIds
   });
 
   let activeVideoStreams = 0;
@@ -142,8 +142,8 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
       return isNarrow
         ? SMALL_FLOATING_MODAL_SIZE_REM
         : isShort
-        ? SHORT_VERTICAL_GALLERY_FLOATING_MODAL_SIZE_REM
-        : VERTICAL_GALLERY_FLOATING_MODAL_SIZE_REM;
+          ? SHORT_VERTICAL_GALLERY_FLOATING_MODAL_SIZE_REM
+          : VERTICAL_GALLERY_FLOATING_MODAL_SIZE_REM;
     }
     if ((overflowGalleryTiles.length > 0 || screenShareComponent) && overflowGalleryPosition === 'horizontalBottom') {
       return localVideoTileSize === '16:9' || !isNarrow ? LARGE_FLOATING_MODAL_SIZE_REM : SMALL_FLOATING_MODAL_SIZE_REM;

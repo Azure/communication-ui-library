@@ -1,0 +1,58 @@
+import { ParticipantList } from '@azure/communication-react';
+import { Canvas, Meta, ArgTypes } from '@storybook/blocks';
+import * as ParticipantStories from './index.stories';
+
+import DefaultCallParticipantListExampleText from '!!raw-loader!./snippets/DefaultCall.snippet.tsx';
+import DefaultChatParticipantListExampleText from '!!raw-loader!./snippets/DefaultChat.snippet.tsx';
+import InteractiveCallParticipantListExampleText from '!!raw-loader!./snippets/InteractiveCall.snippet.tsx';
+import ParticipantListWithExcludedUserExampleText from '!!raw-loader!./snippets/WithExcludedUser.snippet.tsx';
+
+<Meta of={ParticipantStories} component={ParticipantList} />
+
+# ParticipantList
+
+ParticipantList renders a list of all calling or chat participants.
+
+## Default example for Chat
+
+The ParticipantList for chat is by default a list of [ParticipantItem](./?path=/docs/ui-components-participantitem--participant-item) components linked with state around each chat participant.
+
+<Canvas
+  of={ParticipantStories.DefaultChatParticipantListDocsOnly}
+  source={{ code: DefaultChatParticipantListExampleText }}
+/>
+
+## Default example for Calling
+
+ParticipantList for calling is by default a list of [ParticipantItem](./?path=/docs/ui-components-participantitem--participant-item) components with presence linked to the participant call state, as well as icons for microphone and screen sharing states.
+
+<Canvas
+  of={ParticipantStories.DefaultCallParticipantListDocsOnly}
+  source={{ code: DefaultCallParticipantListExampleText }}
+/>
+
+## ParticipantList with local user excluded from the list
+
+Local user can be excluded from the participant list as shown in the example below.
+
+<Canvas
+  of={ParticipantStories.ParticipantListWithExcludedUserDocsOnly}
+  source={{ code: ParticipantListWithExcludedUserExampleText }}
+/>
+
+## Interactive Call example
+
+ParticipantList is designed with a rendering override, `onRenderParticipant`, which allows you to have your own design or use your own [ParticipantItem](./?path=/docs/ui-components-participantitem--participant-item) components with their context menu style enabling interaction with this participant. For example, you can add menu items and icons to the participants using `menuItems` and `onRenderIcon` properties of [ParticipantItem](./?path=/docs/ui-components-participantitem--participant-item#props) like in the code below.
+
+For simplicity, React `useState` is used to keep the state of every participant to decide which menu items and icons to show. You can now mute and unmute by clicking a participant in the rendered example below.
+
+Note: Each `ParticipantItem` needs a unique key to avoid warnings for children in a list.
+
+<Canvas
+  of={ParticipantStories.InteractiveCallParticipantListDocsOnly}
+  source={{ code: InteractiveCallParticipantListExampleText }}
+/>
+
+## Props
+
+<ArgTypes of={ParticipantList} />

@@ -1,0 +1,27 @@
+import { Canvas, Meta, ArgTypes } from '@storybook/blocks';
+import * as MessageStatusIndicatorStories from './index.stories';
+import { MessageStatusIndicator } from '@azure/communication-react';
+import MessageStatusIndicatorStoriesExampleText from '!!raw-loader!./snippets/MessageStatusIndicator.snippet.tsx';
+
+<Meta of={MessageStatusIndicatorStories} />
+
+# Message Status Indicator
+
+MessageStatusIndicator is used to indicate whether a message has been read, delivered, currently sending, or failed to send.
+
+## Importing
+
+```ts
+import { MessageStatus, MessageStatusIndicator } from '@azure/communication-react';
+```
+
+## Example
+
+<Canvas
+  of={MessageStatusIndicatorStories.MessageStatusIndicatorSnippetDocsOnly}
+  source={{ code: MessageStatusIndicatorStoriesExampleText }}
+/>
+
+## Props
+
+<ArgTypes of={MessageStatusIndicator} />

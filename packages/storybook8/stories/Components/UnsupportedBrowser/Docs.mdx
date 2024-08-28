@@ -1,0 +1,49 @@
+import { Canvas, Description, Meta, Source, ArgTypes } from '@storybook/blocks';
+import { UnsupportedBrowser as UnsupportedBrowserComponent } from '@azure/communication-react';
+import * as UnsupportedBrowserStories from './index.stories';
+import { SingleLineBetaBanner } from '../../BetaBanners/SingleLineBetaBanner';
+import UnsupportedBrowserExamples from '!!raw-loader!./snippets/UnsupportedBrowserExamples.snippet.tsx';
+import UnsupportedEnvironmentModals from '!!raw-loader!./snippets/UnsupportedEnvironmentModal.snippet.tsx';
+
+<Meta of={UnsupportedBrowserStories} components={UnsupportedBrowserComponent} />
+
+<SingleLineBetaBanner />
+
+# Unsupported Browser
+
+Component to display help information when the app is loaded in an unsuppported environment.
+
+## Importing
+
+```ts
+import {
+  UnsupportedBrowser,
+  UnsupportedBrowserVersion,
+  UnsupportedOperatingSystem,
+  UnsupportedBrowserProps,
+  UnsupportedBrowserVersionProps,
+  UnsupportedOperatingSystemProps
+} from '@azure/communication-react';
+```
+
+## Example
+
+<Canvas
+  of={UnsupportedBrowserStories.UnsupportedBrowserExamplesDocsOnly}
+  source={{ code: UnsupportedBrowserExamples }}
+/>
+
+## Hosting in a Fluent modal
+
+The Unsupported Browser components can be hosted in a fluent modal, inside a fluent modal the components and be
+displayed when the conditions are met and disappear when conditions are no longer valid. Click on the buttons
+below to see the component
+
+<Canvas
+  of={UnsupportedBrowserStories.UnsupportedEnvironmentModalsDocsOnly}
+  source={{ code: UnsupportedEnvironmentModals }}
+/>
+
+## Props
+
+<ArgTypes of={UnsupportedBrowserComponent} />

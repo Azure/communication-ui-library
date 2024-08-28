@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { CustomCallControlButtonProps, ErrorType } from '@azure/communication-react';
+import { CustomCallControlButtonProps, ErrorType, NotificationType } from '@azure/communication-react';
 import { PartialTheme } from '@fluentui/react';
 import { DefaultTheme, DarkTheme, TeamsTheme, WordTheme } from '@fluentui/theme-samples';
 import {
@@ -116,6 +116,46 @@ const errorOptions: ErrorType[] = [
   'callMacOsScreenShareAccessDenied',
   'callVideoStoppedBySystem',
   'callVideoRecoveredBySystem'
+];
+const notificationOptions: NotificationType[] = [
+  'startVideoGeneric',
+  'stopVideoGeneric',
+  'muteGeneric',
+  'unmuteGeneric',
+  'speakingWhileMuted',
+  'startScreenShareGeneric',
+  'stopScreenShareGeneric',
+  'callNetworkQualityLow',
+  'teamsMeetingCallNetworkQualityLow',
+  'callNoSpeakerFound',
+  'callNoMicrophoneFound',
+  'callMicrophoneAccessDenied',
+  'callMicrophoneAccessDeniedSafari',
+  'callMicrophoneMutedBySystem',
+  'callMicrophoneUnmutedBySystem',
+  'callMacOsMicrophoneAccessDenied',
+  'callLocalVideoFreeze',
+  'callCameraAccessDenied',
+  'callCameraAccessDeniedSafari',
+  'callCameraAlreadyInUse',
+  'callVideoStoppedBySystem',
+  'callVideoRecoveredBySystem',
+  'callMacOsCameraAccessDenied',
+  'callMacOsScreenShareAccessDenied',
+  'failedToJoinCallGeneric',
+  'failedToJoinCallInvalidMeetingLink',
+  'cameraFrozenForRemoteParticipants',
+  'unableToStartVideoEffect',
+  'startSpotlightWhileMaxParticipantsAreSpotlighted',
+  'mutedByRemoteParticipant',
+  'recordingStarted',
+  'transcriptionStarted',
+  'recordingStopped',
+  'transcriptionStopped',
+  'recordingAndTranscriptionStarted',
+  'recordingAndTranscriptionStopped',
+  'recordingStoppedStillTranscribing',
+  'transcriptionStoppedStillRecording'
 ];
 
 const themeChoices = ['Default', 'Dark', 'Teams', 'Word'];
@@ -257,7 +297,7 @@ export const controlsToAdd = {
   font: { control: 'text', defaultValue: 'Monaco, Menlo, Consolas', name: 'Font' },
   gridParticipants: { control: 'object', defaultValue: defaultControlsGridParticipants, name: 'Participants' },
   isCameraEnabled: { control: 'boolean', defaultValue: true, name: 'Is camera available' },
-  isMe: { control: 'boolean', defaultValue: false, name: 'Is You' },
+  isMe: { control: 'boolean', name: 'Is You' },
   isMicrophoneEnabled: { control: 'boolean', defaultValue: true, name: 'Is microphone available' },
   isMuteAllAvailable: {
     control: 'boolean',
@@ -269,6 +309,7 @@ export const controlsToAdd = {
   isScreenSharing: { control: 'boolean', defaultValue: false, name: 'Is screen sharing' },
   isRaisedHand: { control: 'boolean', defaultValue: false, name: 'Is Raised Hand' },
   isSendBoxWithWarning: { control: 'boolean', defaultValue: false, name: 'Has warning/information message' },
+  isSendBoxWithAttachments: { control: 'boolean', defaultValue: false, name: 'Has attachments' },
   isVideoAvailable: { control: 'boolean', defaultValue: true, name: 'Is video available' },
   isVideoMirrored: { control: 'boolean', defaultValue: false, name: 'Is video mirrored' },
   isVideoReady: { control: 'boolean', defaultValue: false, name: 'Is Video ready' },
@@ -318,7 +359,11 @@ export const controlsToAdd = {
     defaultValue: 'desktop',
     name: 'Form factor'
   },
-  participantItemMenuItemsStr: { control: 'text', defaultValue: 'Mute, Remove', name: 'Menu items (comma separated)' },
+  participantItemMenuItemsStr: {
+    control: 'text',
+    name: 'Menu items (comma separated)',
+    defaultValue: 'Mute, Remove'
+  },
   participantNames: {
     control: 'text',
     defaultValue: 'You, Hal Jordan, Barry Allen, Bruce Wayne',
@@ -365,6 +410,20 @@ export const controlsToAdd = {
   typingUsers: { control: 'object', defaultValue: defaultTypingUsers, name: 'Typing users' },
   isCaptionsFeatureActive: { control: 'boolean', defaultValue: true, name: 'Is captions on' },
   richTextEditor: { control: 'boolean', defaultValue: false, name: 'Enable rich text editor' },
+  isNotificationAutoDismiss: { control: 'boolean', defaultValue: false, name: 'Is auto dismiss on' },
+  showNotificationStacked: { control: 'boolean', defaultValue: false, name: 'Show notification stacked effect' },
+  activeNotifications: {
+    control: 'check',
+    options: notificationOptions,
+    defaultValue: ['startVideoGeneric'],
+    name: 'activeNotifications'
+  },
+  maxNotificationsToShow: {
+    control: 'select',
+    options: [1, 2, 3],
+    defaultValue: '2',
+    name: 'Select max number of notifications to show'
+  },
   userId: {
     control: 'text',
     defaultValue: '',

@@ -61,4 +61,4 @@ export type OnRenderAvatarCallback = (
    * Pass the `options` to the `onRender` component for default rendering.
    */
   defaultOnRender?: (props: CustomAvatarOptions) => JSX.Element
-) => JSX.Element;
+) => JSX.Element | undefined;

@@ -4,7 +4,7 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Icon, IStyle, mergeStyles, PrimaryButton } from '@fluentui/react';
 import { Chat } from '@fluentui-contrib/react-chat';
-import { mergeClasses } from '@fluentui/react-components';
+import { mergeClasses, useArrowNavigationGroup } from '@fluentui/react-components';
 import {
   DownIconStyle,
   newMessageButtonContainerStyle,
@@ -29,11 +29,15 @@ import {
 import { BlockedMessage } from '../types';
 import { MessageStatusIndicatorProps } from './MessageStatusIndicator';
 import { memoizeFnAll, MessageStatus } from '@internal/acs-ui-common';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+import { AttachmentMetadataInProgress } from '@internal/acs-ui-common';
+/* @conditional-compile-remove(file-sharing-acs) */
+import { MessageOptions } from '@internal/acs-ui-common';
 import { useLocale } from '../localization/LocalizationProvider';
 import { isNarrowWidth, _useContainerWidth } from './utils/responsive';
 import getParticipantsWhoHaveReadMessage from './utils/getParticipantsWhoHaveReadMessage';
-/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-import { AttachmentMetadata, AttachmentOptions } from '../types/Attachment';
+/* @conditional-compile-remove(file-sharing-acs) */
+import { AttachmentOptions } from '../types/Attachment';
 import { useTheme } from '../theming';
 import { FluentV9ThemeProvider } from './../theming/FluentV9ThemeProvider';
 import LiveAnnouncer from './Announcer/LiveAnnouncer';
@@ -47,6 +51,8 @@ import {
 import { InlineImageOptions } from './ChatMessage/ChatMessageContent';
 import { MessageStatusIndicatorInternal } from './MessageStatusIndicatorInternal';
 import { Announcer } from './Announcer';
+/* @conditional-compile-remove(rich-text-editor) */
+import { RichTextEditorOptions, RichTextStrings } from './RichTextEditor/RichTextSendBox';
 /* @conditional-compile-remove(rich-text-editor) */
 import { loadChatMessageComponentAsRichTextEditBox } from './ChatMessage/MyMessageComponents/ChatMessageComponentAsEditBoxPicker';
 
@@ -212,10 +218,10 @@ export interface MessageThreadStrings {
   actionMenuMoreOptions?: string;
   /** Aria label to announce when a message is deleted */
   messageDeletedAnnouncementAriaLabel: string;
-  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(file-sharing-acs) */
   /** String for download attachment button in attachment card */
   downloadAttachment: string;
-  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
   /** String for open attachment button in attachment card */
   openAttachment: string;
   /* @conditional-compile-remove(data-loss-prevention) */
@@ -224,9 +230,14 @@ export interface MessageThreadStrings {
   /* @conditional-compile-remove(data-loss-prevention) */
   /** String for policy violation message removal details link */
   blockedWarningLinkText: string;
-  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
   /** String for aria text in attachment card group*/
   attachmentCardGroupMessage: string;
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  /**
+   * Error message indicating that one or more image uploads are not complete.
+   */
+  imageUploadsPendingError: string;
 }
 
 /**
@@ -271,7 +282,11 @@ const memoizeAllMessages = memoizeFnAll(
     onUpdateMessage?: UpdateMessageCallback,
     onCancelEditMessage?: CancelEditCallback,
     onDeleteMessage?: (messageId: string) => Promise<void>,
-    onSendMessage?: (content: string) => Promise<void>,
+    onSendMessage?: (
+      content: string,
+      /* @conditional-compile-remove(file-sharing-acs) */
+      options?: MessageOptions
+    ) => Promise<void>,
     disableEditing?: boolean,
     lastSeenChatMessage?: string,
     lastSendingChatMessage?: string,
@@ -350,12 +365,8 @@ const getLastChatMessageForCurrentUser = (messages: Message[]): ChatMessage | un
 export type UpdateMessageCallback = (
   messageId: string,
   content: string,
-  /* @conditional-compile-remove(attachment-upload) */
-  options?: {
-    /* @conditional-compile-remove(attachment-upload) */
-    metadata?: Record<string, string>;
-    attachmentMetadata?: AttachmentMetadata[];
-  }
+  /* @conditional-compile-remove(file-sharing-acs) */
+  options?: MessageOptions
 ) => Promise<void>;
 /**
  * @public
@@ -462,12 +473,12 @@ export type MessageThreadProps = {
    * `messageRenderer` is not provided for `CustomMessage` and thus only available for `ChatMessage` and `SystemMessage`.
    */
   onRenderMessage?: (messageProps: MessageProps, messageRenderer?: MessageRenderer) => JSX.Element;
-  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(file-sharing-acs) */
   /**
    * Optional callback to render attachments in the message component.
    * @beta
    */
-  onRenderAttachmentDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
+  onRenderAttachmentDownloads?: (message: ChatMessage) => JSX.Element;
   /**
    * Optional callback to edit a message.
    *
@@ -495,9 +506,14 @@ export type MessageThreadProps = {
    * Optional callback to send a message.
    *
    * @param content - message body to send
+   * @param options - message options to be included in the message
    *
    */
-  onSendMessage?: (content: string) => Promise<void>;
+  onSendMessage?: (
+    content: string,
+    /* @conditional-compile-remove(file-sharing-acs) */
+    options?: MessageOptions
+  ) => Promise<void>;
 
   /**
   /**
@@ -514,7 +530,7 @@ export type MessageThreadProps = {
    */
   strings?: Partial<MessageThreadStrings>;
 
-  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(file-sharing-acs) */
   /**
    * @beta
    * Optional attachment options, which defines behvaiour for uploading and downloading attachments.
@@ -542,12 +558,49 @@ export type MessageThreadProps = {
 
   /* @conditional-compile-remove(rich-text-editor) */
   /**
-   * enables rich text editor for the edit box
-   *
-   * @defaultValue `false`
+   * Options to enable rich text editor for the edit box.
+   * @beta
    */
-  richTextEditor?: boolean;
+  richTextEditorOptions?: RichTextEditBoxOptions;
 };
+
+/* @conditional-compile-remove(rich-text-editor) */
+/**
+ * Options for the rich text editor edit box configuration.
+ *
+ * @beta
+ */
+export interface RichTextEditBoxOptions extends RichTextEditorOptions {
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  /**
+   * Optional callback to handle an inline image that's inserted in the rich text editor.
+   * When not provided, pasting images into rich text editor will be disabled.
+   * @param imageAttributes - attributes of the image such as id, src, style, etc.
+   *        It also contains the image file name which can be accessed through imageAttributes['data-image-file-name']
+   * @param messageId - the id of the message that the inlineImage belongs to.
+   */
+  onInsertInlineImage?: (imageAttributes: Record<string, string>, messageId: string) => void;
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  /**
+   * Optional callback invoked after inline image is removed from the UI.
+   * @param imageAttributes - attributes of the image such as id, src, style, etc.
+   *        It also contains the image file name which can be accessed through imageAttributes['data-image-file-name'].
+   *        Note that if the src attribute is a local blob url, it has been revoked at this point.
+   * @param messageId - the id of the message that the inlineImage belongs to.
+   */
+  onRemoveInlineImage?: (imageAttributes: Record<string, string>, messageId: string) => void;
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  /**
+   * Optional Record of type {@link AttachmentMetadataInProgress}
+   * to render the errorBar for inline images inserted in the MessageThread's edit boxes when:
+   *   - there is an error provided in the messagesInlineImagesWithProgress
+   *   - progress is less than 1 when the send button is clicked
+   *   - content html string is longer than the max allowed length.
+   *     (Note that the id and the url prop of the messagesInlineImagesWithProgress will be used as the id and src attribute of the content html
+   *     when calculating the content length, only for the purpose of displaying the content length overflow error.)
+   */
+  messagesInlineImagesWithProgress?: Record<string, AttachmentMetadataInProgress[]>;
+}
 
 /**
  * Props to render a single message.
@@ -564,7 +617,7 @@ export type MessageProps = {
   /**
    * Strings from parent MessageThread component
    */
-  strings: MessageThreadStrings;
+  strings: MessageThreadStrings & /* @conditional-compile-remove(rich-text-editor) */ Partial<RichTextStrings>;
   /**
    * Custom CSS styles for chat message container.
    */
@@ -608,10 +661,15 @@ export type MessageProps = {
   /**
    * Optional callback to send a message.
    *
-   * @param messageId - message id from chatClient
+   * @param content - message content from chatClient
+   * @param options - message options to be included in the message
    *
    */
-  onSendMessage?: (messageId: string) => Promise<void>;
+  onSendMessage?: (
+    content: string,
+    /* @conditional-compile-remove(file-sharing-acs) */
+    options?: MessageOptions
+  ) => Promise<void>;
 };
 
 /**
@@ -678,12 +736,12 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
     /* @conditional-compile-remove(mention) */
     mentionOptions,
     inlineImageOptions,
-    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+    /* @conditional-compile-remove(file-sharing-acs) */
     attachmentOptions,
-    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+    /* @conditional-compile-remove(file-sharing-acs) */
     onRenderAttachmentDownloads,
     /* @conditional-compile-remove(rich-text-editor) */
-    richTextEditor = false
+    richTextEditorOptions
   } = props;
   // We need this state to wait for one tick and scroll to bottom after messages have been initialized.
   // Otherwise chatScrollDivRef.current.clientHeight is wrong if we scroll to bottom before messages are initialized.
@@ -718,12 +776,12 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
   /* @conditional-compile-remove(rich-text-editor) */
   useEffect(() => {
     // if rich text editor is enabled, the rich text editor component should be loaded early for good UX
-    if (richTextEditor !== undefined && richTextEditor) {
+    if (richTextEditorOptions !== undefined) {
       // this line is needed to load the Rooster JS dependencies early in the lifecycle
       // when the rich text editor is enabled
       loadChatMessageComponentAsRichTextEditBox();
     }
-  }, [richTextEditor]);
+  }, [richTextEditorOptions]);
 
   const onDeleteMessageCallback = useCallback(
     async (messageId: string): Promise<void> => {
@@ -1093,6 +1151,7 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
   ]);
 
   const classes = useChatStyles();
+  const chatArrowNavigationAttributes = useArrowNavigationGroup({ axis: 'vertical', memorizeCurrent: false });
 
   return (
     <div className={mergeStyles(messageThreadWrapperContainerStyle)} ref={chatThreadRef}>
@@ -1115,6 +1174,7 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
             className={mergeClasses(classes.root, mergeStyles(styles?.chatContainer))}
             ref={chatScrollDivRef}
             style={{ ...createStyleFromV8Style(styles?.chatContainer) }}
+            {...chatArrowNavigationAttributes}
           >
             {latestDeletedMessageId && (
               <Announcer
@@ -1139,17 +1199,28 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
                   onActionButtonClick={onActionButtonClickMemo}
                   readCount={readCountForHoveredIndicator}
                   participantCount={participantCount}
-                  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+                  /* @conditional-compile-remove(file-sharing-acs) */
                   actionsForAttachment={attachmentOptions?.downloadOptions?.actionsForAttachment}
                   inlineImageOptions={inlineImageOptions}
                   /* @conditional-compile-remove(date-time-customization) */
                   onDisplayDateTimeString={onDisplayDateTimeString}
                   /* @conditional-compile-remove(mention) */
                   mentionOptions={mentionOptions}
-                  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+                  /* @conditional-compile-remove(file-sharing-acs) */
                   onRenderAttachmentDownloads={onRenderAttachmentDownloads}
                   /* @conditional-compile-remove(rich-text-editor) */
-                  richTextEditor={richTextEditor}
+                  isRichTextEditorEnabled={!!richTextEditorOptions}
+                  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+                  onPaste={richTextEditorOptions?.onPaste}
+                  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+                  onInsertInlineImage={richTextEditorOptions?.onInsertInlineImage}
+                  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+                  inlineImagesWithProgress={
+                    richTextEditorOptions?.messagesInlineImagesWithProgress &&
+                    richTextEditorOptions?.messagesInlineImagesWithProgress[message.message.messageId]
+                  }
+                  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+                  onRemoveInlineImage={richTextEditorOptions?.onRemoveInlineImage}
                 />
               );
             })}

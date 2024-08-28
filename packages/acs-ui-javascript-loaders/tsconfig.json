@@ -1,0 +1,10 @@
+{
+  "extends": "../../common/config/tsc/tsconfig.json",
+  "compilerOptions": {
+    "noImplicitAny": true,
+    "outDir": "./dist/dist-esm"
+  },
+  "typeRoots": ["./node_modules/@types"],
+  "include": ["src/**/*", "src/outboundCallCompositeLoader.ts"],
+  "exclude": ["dist", "node_modules"]
+}

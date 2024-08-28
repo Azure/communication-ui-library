@@ -20,6 +20,7 @@
     "complianceBannerTranscriptionStopped": "La transcription a pris fin.",
     "configurationPageTitle": "Lancer un appel",
     "copyInviteLinkButtonLabel": "Copier le lien d'invitation",
+    "copyInviteLinkButtonActionedLabel": "Lien copié",
     "copyInviteLinkActionedAriaLabel": "Le lien d’invitation a été copié.",
     "defaultPlaceHolder": "Sélectionnez une option",
     "dismissSidePaneButtonLabel": "Fermer",
@@ -134,6 +135,7 @@
     "dtmfDialerButtonTooltipOff": "Masquez le pavé de numérotation",
     "dtmfDialerMoreButtonLabelOn": "Afficher le pavé numérique",
     "dtmfDialerMoreButtonLabelOff": "Masquez le pavé de numérotation",
+    "phoneCallMoreButtonLabel": "Appel téléphonique",
     "spokenLanguageStrings": {
       "ar-ae": "Arabe – E.A.U.",
       "ar-sa": "Arabe – Arabie saoudite",
@@ -244,6 +246,10 @@
       "shareScreen": {
         "lostDueToRoleChangeToAttendee": "Votre rôle a été modifié. Certaines actions, telles que le partage de contenu, ne seront pas disponibles pour vous.",
         "grantedDueToRoleChangeToPresenter": "Vous êtes présentateur. Vous pouvez partager du contenu et organiser la réunion."
+      },
+      "hideAttendeeNames": {
+        "hideAttendeeNameAttendee": "Votre nom est masqué pour les autres participants. Les organisateurs et les présentateurs peuvent voir votre vrai nom.",
+        "hideAttendeeNamePresenter": "Les noms des participants sont masqués. Afin de protéger la vie privée des participants, seuls les organisateurs et les présentateurs peuvent visualiser les noms."
       }
     },
     "surveyTitle": "Aidez-nous à nous améliorer",
@@ -259,7 +265,6 @@
     "tagsSurveyQuestion": "Que pouvons-nous améliorer ?",
     "tagsSurveyTextFieldDefaultText": "Autre, veuillez préciser",
     "tagsSurveyHelperText": "Cochez les problèmes que vous avez rencontrés",
-    "surveyTextboxDefaultText": "Autre, veuillez préciser",
     "endOfSurveyText": "Merci pour vos commentaires !",
     "surveyIssues": {
       "overallRating": {
@@ -301,7 +306,7 @@
         "otherIssues": "Je rencontre d’autres problèmes de partage d’écran dans cet appel"
       }
     },
-    "SurveyIssuesHeadingStrings": {
+    "surveyIssuesHeadingStrings": {
       "overallRating": "Globale",
       "audioRating": "Audio",
       "videoRating": "Vidéo",
@@ -325,17 +330,32 @@
     },
     "exitSpotlightButtonLabel": "Quitter la mise en évidence",
     "exitSpotlightButtonTooltip": "Quitter la mise en évidence",
-    "hangUpConfirmButtonLabel": "Confirmer",
+    "leaveConfirmButtonLabel": "Partir",
+    "endCallConfirmButtonLabel": "Fin d’appel",
     "hangUpCancelButtonLabel": "Annuler",
     "leaveConfirmDialogTitle": "Quitter l'appel ?",
     "leaveConfirmDialogContent": "Voulez-vous vraiment quitter l’appel ?",
     "endCallConfirmDialogTitle": "Mettre fin à l'appel ?",
     "endCallConfirmDialogContent": "Vous mettrez fin à l'appel pour tout le monde.",
-    "invalidMeetingIdentifier": "ID ou code secret de réunion non valide"
+    "invalidMeetingIdentifier": "ID ou code secret de réunion non valide",
+    "pinParticipantMenuLabel": "Épingler pour moi",
+    "pinParticipantLimitReachedMenuLabel": "Épingler (limite atteinte)",
+    "unpinParticipantMenuLabel": "Désépingler",
+    "pinParticipantMenuItemAriaLabel": "Épingler",
+    "unpinParticipantMenuItemAriaLabel": "Désépingler",
+    "muteAllMenuLabel": "Désactiver le son de tous",
+    "muteAllDialogTitle": "Désactiver le son de tout le monde ?",
+    "muteAllDialogContent": "Cette opération va désactiver le son de tous les participants à la réunion, sauf vous.",
+    "muteAllConfirmButtonLabel": "Désactiver le son de tous",
+    "muteAllCancelButtonLabel": "Annuler"
   },
   "chat": {
     "chatListHeader": "Dans cette conversation",
-    "uploadAttachment": "Charger une pièce jointe"
+    "uploadAttachment": "Charger une pièce jointe",
+    "uploadImageDataNotProvided": "Aucune donnée d'image n'est fournie.",
+    "uploadImageIsTooLarge": "L’image est trop grande. Choisissez une taille inférieure à {maxImageSize} Mo.",
+    "uploadImageExtensionIsNotAllowed": "Il est interdit de télécharger une image .{imageExtension}.",
+    "uploadImageFailed": "Impossible de charger l’image. Veuillez réessayer plus tard."
   },
   "callWithChat": {
     "chatButtonLabel": "Clavardage",
@@ -345,6 +365,7 @@
     "chatButtonTooltipOpen": "Afficher la conversation",
     "chatPaneTitle": "Clavardage",
     "copyInviteLinkButtonLabel": "Copier le lien d'invitation",
+    "copyInviteLinkButtonActionedLabel": "Lien copié",
     "copyInviteLinkActionedAriaLabel": "Le lien d’invitation a été copié.",
     "dismissSidePaneButtonLabel": "Fermer",
     "moreDrawerAudioDeviceMenuTitle": "Périphérique audio",
@@ -360,6 +381,8 @@
     "selectedPeopleButtonLabel": "Bouton Contacts sélectionné",
     "peopleButtonTooltipOpen": "Afficher les participants",
     "peopleButtonTooltipClose": "Masquer les participants",
+    "peopleButtonTooltipOpenAriaLabel": "Bouton Contacts, Afficher les participants",
+    "peopleButtonTooltipCloseAriaLabel": "Bouton Contacts, Masquer les participants",
     "peoplePaneSubTitle": "Pendant cet appel",
     "peoplePaneTitle": "Personnes",
     "pictureInPictureTileAriaLabel": "Flux vidéo. Cliquez pour revenir à l’écran d’appel.",

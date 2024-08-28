@@ -1,9 +1,0 @@
-{
-  "type": "patch",
-  "area": "fix",
-  "workstream": "Styles",
-  "comment": "Update button label rem size to fit shorter text",
-  "packageName": "@azure/communication-react",
-  "email": "edwardlee@microsoft.com",
-  "dependentChangeType": "patch"
-}

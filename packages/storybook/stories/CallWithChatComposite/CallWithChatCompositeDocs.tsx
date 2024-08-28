@@ -70,6 +70,8 @@ export const Docs: () => JSX.Element = () => {
   const refImageSharingTeams = useRef(null);
   const refFileSharingACS = useRef(null);
   const refFileSharingTeams = useRef(null);
+  const refRichTextEditor = useRef(null);
+  const refPSTN = useRef(null);
 
   const scrollToRef = (ref): void => {
     ref.current.scrollIntoView({ behavior: 'auto' });
@@ -90,8 +92,12 @@ export const Docs: () => JSX.Element = () => {
       scrollToRef(refFileSharingACS);
     } else if (url.includes('teams-meeting') && refTeamsMeeting.current) {
       scrollToRef(refTeamsMeeting);
+    } else if (url.includes('rich-text-editor-support') && refRichTextEditor.current) {
+      scrollToRef(refRichTextEditor);
+    } else if (url.includes('pstn-and-1-n-calling') && refPSTN.current) {
+      scrollToRef(refPSTN);
     }
-  }, [refTeamsMeeting, refFileSharingACS, refFileSharingTeams, refFileSharing]);
+  }, []);
 
   return (
     <>
@@ -198,7 +204,7 @@ export const Docs: () => JSX.Element = () => {
         <Subheading>Inline Image In Teams Interop Meeting Chat Thread</Subheading>
         <SingleLineBetaBanner />
         <Description>
-          The Azure Communication Services end user can recieve images shared by the Teams user without any additional
+          The Azure Communication Services end user can receive images shared by the Teams user without any additional
           setup when using the `CallWithChat` Composite in a Teams interop scenario,. Azure Communication Services end
           user would need to join the Teams meeting first, as soon as the Teams user sends a file from the Teams client,
           the Azure Communication Services end user will be see the image in the chat thread. Please check out the
@@ -225,14 +231,11 @@ export const Docs: () => JSX.Element = () => {
       </div>
       <div ref={refFileSharingTeams}>
         <Subheading>File Sharing In Teams Interop Meeting Chat Thread</Subheading>
-        <SingleLineBetaBanner />
         <Description>
           When using the `CallWithChat` Composite in a Teams interop scenario, the Azure Communication Services end user
           can recieve file attachments from Teams user without any additional setup. Simply join the Teams meeting as an
           Azure Communication Services end user, as soon as the Teams user sends a file from the Teams client, the Azure
-          Communication Services end user will be able to see shared files in the chat thread. Please check out the
-          tutorial for [Enable file sharing using UI Library in Teams Interoperability
-          Chat](https://learn.microsoft.com/en-us/azure/communication-services/tutorials/file-sharing-tutorial-interop-chat)
+          Communication Services end user will be able to see shared files in the chat thread.
         </Description>
       </div>
 
@@ -246,6 +249,17 @@ export const Docs: () => JSX.Element = () => {
         users please see our documentation on how to hide the [control bar
         buttons](./?path=/story/composites-call-with-chat-basicexample--basic-example).
       </Description>
+      <div ref={refRichTextEditor}>
+        <Heading>Rich Text Editor Support</Heading>
+        <SingleLineBetaBanner />
+        <MessageBar>Note: see ChatComposite for detailed implementation description</MessageBar>
+        <Description>
+          The CallWithChatComposite supports options to enable a rich text editor functionality in chat similar to
+          ChatComposite. Check out [Rich Text Editor Support for
+          ChatComposite](./?path=/docs/composites-chat-basicexample--basic-example#rich-text-editor-support) to learn
+          more.
+        </Description>
+      </div>
     </>
   );
 };

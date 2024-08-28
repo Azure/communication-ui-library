@@ -5,13 +5,20 @@ import {
   RemoteParticipant as SdkRemoteParticipant,
   RemoteVideoStream as SdkRemoteVideoStream,
   LocalVideoStream as SdkLocalVideoStream,
-  VideoStreamRendererView
+  VideoStreamRendererView,
+  IncomingCall,
+  IncomingCallCommon
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(one-to-n-calling) */
+import { TeamsIncomingCall } from '@azure/communication-calling';
 import { TeamsCaptionsInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(acs-close-captions) */
 import { CaptionsInfo as AcsCaptionsInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support) */
 import { CallKind } from '@azure/communication-calling';
+import { TeamsCallInfo } from '@azure/communication-calling';
+/* @conditional-compile-remove(calling-beta-sdk) */
+import { CallInfo } from '@azure/communication-calling';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import {
   CallState,
@@ -19,15 +26,18 @@ import {
   RemoteVideoStreamState as DeclarativeRemoteVideoStream,
   LocalVideoStreamState as DeclarativeLocalVideoStream,
   IncomingCallState as DeclarativeIncomingCall,
-  VideoStreamRendererViewState as DeclarativeVideoStreamRendererView
+  VideoStreamRendererViewState as DeclarativeVideoStreamRendererView,
+  CallInfoState
 } from './CallClientState';
 import { CaptionsInfo } from './CallClientState';
-
-/* @conditional-compile-remove(teams-identity-support) */ /* @conditional-compile-remove(meeting-id) */
+/* @conditional-compile-remove(one-to-n-calling) */
+import { TeamsIncomingCallState as DeclarativeTeamsIncomingCall } from './CallClientState';
+/* @conditional-compile-remove(one-to-n-calling) */
+import { _isTeamsIncomingCall } from './TypeGuards';
 import { _isACSCall } from './TypeGuards';
-/* @conditional-compile-remove(meeting-id) */ /* @conditional-compile-remove(acs-close-captions) */
+/* @conditional-compile-remove(acs-close-captions) */
 import { _isTeamsCall } from './TypeGuards';
-import { CallCommon, IncomingCallCommon } from './BetaToStableTypes';
+import { CallCommon } from './BetaToStableTypes';
 
 import { Features } from '@azure/communication-calling';
 
@@ -36,6 +46,8 @@ import { VideoEffectName } from '@azure/communication-calling';
 import { LocalVideoStreamVideoEffectsState } from './CallClientState';
 import { RaisedHand } from '@azure/communication-calling';
 import { RaisedHandState } from './CallClientState';
+import { TeamsMeetingAudioConferencingDetails } from '@azure/communication-calling';
+import { ConferencePhoneInfo } from './CallClientState';
 
 /**
  * @private
@@ -64,7 +76,6 @@ export function convertSdkRemoteStreamToDeclarativeRemoteStream(
     id: stream.id,
     mediaStreamType: stream.mediaStreamType,
     isAvailable: stream.isAvailable,
-    /* @conditional-compile-remove(video-stream-is-receiving-flag) */
     isReceiving: stream.isReceiving,
     view: undefined,
     streamSize: stream.size
@@ -92,7 +103,6 @@ export function convertSdkParticipantToDeclarativeParticipant(
     raisedHand: undefined,
     /* @conditional-compile-remove(hide-attendee-name) */
     role: participant.role,
-    /* @conditional-compile-remove(spotlight) */
     spotlight: undefined
   };
 }
@@ -121,6 +131,11 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
     }
   }
 
+  let callInfo: TeamsCallInfo | undefined | /* @conditional-compile-remove(calling-beta-sdk) */ CallInfo;
+  if ('info' in call) {
+    callInfo = call.info as TeamsCallInfo | undefined | /* @conditional-compile-remove(calling-beta-sdk) */ CallInfo;
+  }
+
   return {
     id: call.id,
     /* @conditional-compile-remove(teams-identity-support) */
@@ -145,7 +160,6 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
     recording: { isRecordingActive: false },
     /* @conditional-compile-remove(local-recording-notification) */
     localRecording: { isLocalRecordingActive: false },
-    /* @conditional-compile-remove(ppt-live) */
     pptLive: { isActive: false },
     raiseHand: { raisedHands: [] },
     localParticipantReaction: undefined,
@@ -173,17 +187,42 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
     },
     /* @conditional-compile-remove(hide-attendee-name) */
     hideAttendeeNames,
-    /* @conditional-compile-remove(meeting-id) */
-    info: _isACSCall(call) ? call.info : _isTeamsCall(call) ? call.info : undefined
+    info: callInfo,
+    /* @conditional-compile-remove(teams-meeting-conference) */
+    meetingConference: { conferencePhones: [] }
   };
 }
 
 /**
  * @private
  */
-export function convertSdkIncomingCallToDeclarativeIncomingCall(call: IncomingCallCommon): DeclarativeIncomingCall {
+export function convertSdkIncomingCallToDeclarativeIncomingCall(
+  call: IncomingCallCommon
+): DeclarativeIncomingCall | /* @conditional-compile-remove(one-to-n-calling) */ DeclarativeTeamsIncomingCall {
+  /* @conditional-compile-remove(one-to-n-calling) */
+  if (_isTeamsIncomingCall(call)) {
+    const newInfo: CallInfoState = { ...(call as TeamsIncomingCall).info, kind: call.kind };
+    return {
+      id: call.id,
+      info: newInfo,
+      callerInfo: call.callerInfo,
+      startTime: new Date(),
+      endTime: undefined
+    };
+  } else {
+    const newInfo: CallInfoState = { ...(call as IncomingCall).info, kind: call.kind };
+    return {
+      id: call.id,
+      info: newInfo,
+      callerInfo: call.callerInfo,
+      startTime: new Date(),
+      endTime: undefined
+    };
+  }
+  const newInfo: CallInfoState = { ...(call as IncomingCall).info, kind: call.kind };
   return {
     id: call.id,
+    info: newInfo,
     callerInfo: call.callerInfo,
     startTime: new Date(),
     endTime: undefined
@@ -239,4 +278,32 @@ export function convertFromSDKToRaisedHandState(raisedHand: RaisedHand): RaisedH
   return {
     raisedHandOrderPosition: raisedHand.order
   };
+}
+
+/** @private */
+export function convertConferencePhoneInfo(
+  meetingConferencePhoneInfo?: TeamsMeetingAudioConferencingDetails
+): ConferencePhoneInfo[] {
+  if (!meetingConferencePhoneInfo) {
+    return [];
+  }
+
+  return meetingConferencePhoneInfo.phoneNumbers.flatMap((phoneNumber) => {
+    const common = {
+      conferenceId: meetingConferencePhoneInfo.phoneConferenceId,
+      country: phoneNumber.countryName,
+      city: phoneNumber.cityName,
+      phoneNumber: '',
+      isTollFree: false
+    };
+    const toll = Object.assign({}, common);
+    toll.phoneNumber = phoneNumber.tollPhoneNumber?.phoneNumber ?? '';
+    toll.isTollFree = false;
+
+    const tollFree = Object.assign({}, common);
+    tollFree.phoneNumber = phoneNumber.tollFreePhoneNumber?.phoneNumber ?? '';
+    tollFree.isTollFree = true;
+
+    return [toll, tollFree].filter((phoneInfo) => phoneInfo.phoneNumber);
+  });
 }

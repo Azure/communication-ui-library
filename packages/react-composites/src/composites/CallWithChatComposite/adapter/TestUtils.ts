@@ -44,6 +44,8 @@ import {
   CallErrors,
   CreateViewResult
 } from '@internal/calling-stateful-client';
+/* @conditional-compile-remove(breakout-rooms) */
+import { CallNotifications } from '@internal/calling-stateful-client';
 import EventEmitter from 'events';
 /**
  * @private
@@ -172,7 +174,9 @@ export const createStatefulCallClientMock = (): StatefulCallClient => {
       incomingCalls: {},
       incomingCallsEnded: {},
       userId: userId,
-      latestErrors: {} as CallErrors
+      latestErrors: {} as CallErrors,
+      /* @conditional-compile-remove(breakout-rooms) */
+      latestNotifications: {} as CallNotifications
     })
   );
   return statefulCallClient;
@@ -239,7 +243,6 @@ function createMockCall(mockCallId: string): CallState {
     endTime: undefined,
     dominantSpeakers: undefined,
     raiseHand: { raisedHands: [] },
-    /* @conditional-compile-remove(ppt-live) */
     pptLive: { isActive: false },
     localParticipantReaction: undefined,
     captionsFeature: {

@@ -6,7 +6,6 @@ import type { CallAdapter, CallAdapterState, VideoBackgroundEffect } from '../..
 import type { MockCallAdapterState } from '../../common';
 import { produce } from 'immer';
 import EventEmitter from 'events';
-/* @conditional-compile-remove(end-of-call-survey) */
 import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
 
 /**
@@ -137,17 +136,26 @@ export class MockCallAdapter implements CallAdapter {
   setSpokenLanguage(): Promise<void> {
     throw Error('setSpokenLanguage not implemented');
   }
-  /* @conditional-compile-remove(spotlight) */
   startSpotlight(): Promise<void> {
     throw Error('startSpotlight not implemented');
   }
-  /* @conditional-compile-remove(spotlight) */
   stopSpotlight(): Promise<void> {
     throw Error('stopSpotlight not implemented');
   }
-  /* @conditional-compile-remove(spotlight) */
   stopAllSpotlight(): Promise<void> {
     throw Error('stopAllSpotlight not implemented');
+  }
+  /* @conditional-compile-remove(soft-mute) */
+  muteParticipant(): Promise<void> {
+    throw Error('muteParticipant not implemented');
+  }
+  /* @conditional-compile-remove(soft-mute) */
+  muteAllRemoteParticipants(): Promise<void> {
+    throw Error('muteAllRemoteParticipants not implemented');
+  }
+  /* @conditional-compile-remove(breakout-rooms) */
+  returnFromBreakoutRoom(): Promise<void> {
+    throw Error('returnFromBreakoutRoom not implemented');
   }
 
   async setCamera(sourceInfo: VideoDeviceInfo): Promise<void> {
@@ -231,7 +239,15 @@ export class MockCallAdapter implements CallAdapter {
     });
   }
 
-  /* @conditional-compile-remove(end-of-call-survey) */ // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  startNoiseSuppressionEffect(): Promise<void> {
+    throw new Error('startNoiseSuppressionEffect not implemented.');
+  }
+
+  stopNoiseSuppressionEffect(): Promise<void> {
+    throw new Error('stopNoiseSuppressionEffect not implemented.');
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   submitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined> {
     throw Error('submitStarSurvey not implemented');
   }

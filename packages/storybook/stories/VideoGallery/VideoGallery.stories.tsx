@@ -526,9 +526,9 @@ const VideoGalleryStory = (args): JSX.Element => {
     .split(',')
     .map((p) => p.trim())
     .filter((p) => p)
-    .map((p, i) => {
+    .map((p) => {
       return {
-        userId: `user${i}`,
+        userId: `userId-${p}`,
         displayName: p,
         videoStream: { isAvailable: true }
       };

@@ -20,6 +20,7 @@
     "complianceBannerTranscriptionStopped": "Transkriptio on pysäytetty.",
     "configurationPageTitle": "Aloita puhelu",
     "copyInviteLinkButtonLabel": "Kopioi kutsulinkki",
+    "copyInviteLinkButtonActionedLabel": "Linkki kopioitu",
     "copyInviteLinkActionedAriaLabel": "Kutsulinkki kopioitu",
     "defaultPlaceHolder": "Valitse vaihtoehto",
     "dismissSidePaneButtonLabel": "Sulje",
@@ -134,6 +135,7 @@
     "dtmfDialerButtonTooltipOff": "Piilota valintapaneeli",
     "dtmfDialerMoreButtonLabelOn": "Näytä valintapaneeli",
     "dtmfDialerMoreButtonLabelOff": "Piilota valintapaneeli",
+    "phoneCallMoreButtonLabel": "Puhelu",
     "spokenLanguageStrings": {
       "ar-ae": "arabia – Arabiemiirikunnat",
       "ar-sa": "arabia – Saudi-Arabia",
@@ -244,12 +246,16 @@
       "shareScreen": {
         "lostDueToRoleChangeToAttendee": "Roolisi on muuttunut. Jotkin toiminnot, kuten sisällön jakaminen, eivät ole käytettävissäsi.",
         "grantedDueToRoleChangeToPresenter": "Olet esittäjä. Voit jakaa sisältöä ja johtaa kokousta."
+      },
+      "hideAttendeeNames": {
+        "hideAttendeeNameAttendee": "Nimesi on piilotettu muilta osallistujilta. Järjestäjät ja esittäjät voivat nähdä oikean nimesi.",
+        "hideAttendeeNamePresenter": "Osallistujien nimet on piilotettu. Vain järjestäjät ja esittäjät voivat nähdä nimet osallistujien yksityisyyden suojaamiseksi."
       }
     },
     "surveyTitle": "Auta kehittämään tuotetta",
     "starSurveyHelperText": "Millainen oli puhelun äänenlaatu?",
     "starSurveyOneStarText": "Laatu oli huono.",
-    "starSurveyTwoStarText": "Laatu oli erittäin huono.",
+    "starSurveyTwoStarText": "Laatu oli heikko.",
     "starSurveyThreeStarText": "Laatu oli hyvä.",
     "starSurveyFourStarText": "Laatu oli erinomainen.",
     "starSurveyFiveStarText": "Laatu oli erinomainen.",
@@ -259,7 +265,6 @@
     "tagsSurveyQuestion": "Mikä olisi voinut olla paremmin?",
     "tagsSurveyTextFieldDefaultText": "Muu, anna kuvaus",
     "tagsSurveyHelperText": "Tarkista havaitsematsi ongelmat",
-    "surveyTextboxDefaultText": "Muu, anna kuvaus",
     "endOfSurveyText": "Kiitos palautteestasi!",
     "surveyIssues": {
       "overallRating": {
@@ -301,7 +306,7 @@
         "otherIssues": "Minulla oli puhelun aikana muita näytön jakamiseen liittyviä ongelmia"
       }
     },
-    "SurveyIssuesHeadingStrings": {
+    "surveyIssuesHeadingStrings": {
       "overallRating": "Yleinen",
       "audioRating": "Äänet",
       "videoRating": "Video",
@@ -325,17 +330,32 @@
     },
     "exitSpotlightButtonLabel": "Poistu valokeilasta",
     "exitSpotlightButtonTooltip": "Poistu valokeilasta",
-    "hangUpConfirmButtonLabel": "Vahvista",
+    "leaveConfirmButtonLabel": "Poistu",
+    "endCallConfirmButtonLabel": "Lopeta puhelu",
     "hangUpCancelButtonLabel": "Peruuta",
     "leaveConfirmDialogTitle": "Poistutaanko puhelusta?",
     "leaveConfirmDialogContent": "Haluatko varmasti poistua puhelusta?",
     "endCallConfirmDialogTitle": "Lopetetaanko puhelu?",
     "endCallConfirmDialogContent": "Puhelu lopetetaan kaikkien osallistujien osalta.",
-    "invalidMeetingIdentifier": "Virheellinen kokoustunnus tai tunnuskoodi"
+    "invalidMeetingIdentifier": "Virheellinen kokoustunnus tai tunnuskoodi",
+    "pinParticipantMenuLabel": "Kiinnitä minulle",
+    "pinParticipantLimitReachedMenuLabel": "Kiinnitä (enimmäisraja saavutettu)",
+    "unpinParticipantMenuLabel": "Poista kiinnitys",
+    "pinParticipantMenuItemAriaLabel": "Kiinnitä",
+    "unpinParticipantMenuItemAriaLabel": "Poista kiinnitys",
+    "muteAllMenuLabel": "Mykistä kaikki",
+    "muteAllDialogTitle": "Mykistetäänkö kaikki?",
+    "muteAllDialogContent": "Tämä toiminto mykistää kaikki muut kokouksen osallistujat paitsi sinut.",
+    "muteAllConfirmButtonLabel": "Mykistä kaikki",
+    "muteAllCancelButtonLabel": "Peruuta"
   },
   "chat": {
     "chatListHeader": "Tässä keskustelussa",
-    "uploadAttachment": "Lataa liite"
+    "uploadAttachment": "Lataa liite",
+    "uploadImageDataNotProvided": "Kuvatietoja ei ole annettu.",
+    "uploadImageIsTooLarge": "Kuva on liian suuri. Valitse sellainen, jonka koko on alle {maxImageSize} Mt.",
+    "uploadImageExtensionIsNotAllowed": ".{imageExtension}-kuvan lataamista ei sallita.",
+    "uploadImageFailed": "Kuvaa ei voi ladata palvelimeen. Yritä myöhemmin uudelleen."
   },
   "callWithChat": {
     "chatButtonLabel": "Keskustelu",
@@ -345,6 +365,7 @@
     "chatButtonTooltipOpen": "Näytä keskustelu",
     "chatPaneTitle": "Keskustelu",
     "copyInviteLinkButtonLabel": "Kopioi kutsulinkki",
+    "copyInviteLinkButtonActionedLabel": "Linkki kopioitu",
     "copyInviteLinkActionedAriaLabel": "Kutsulinkki kopioitu",
     "dismissSidePaneButtonLabel": "Sulje",
     "moreDrawerAudioDeviceMenuTitle": "Äänilaite",
@@ -360,6 +381,8 @@
     "selectedPeopleButtonLabel": "Henkilöt-painike valittu",
     "peopleButtonTooltipOpen": "Näytä osallistujat",
     "peopleButtonTooltipClose": "Piilota osallistujat",
+    "peopleButtonTooltipOpenAriaLabel": "Henkilöt-painike, Näytä osallistujat",
+    "peopleButtonTooltipCloseAriaLabel": "Henkilöt-painike, Piilota osallistujat",
     "peoplePaneSubTitle": "Tässä puhelussa",
     "peoplePaneTitle": "Ihmiset",
     "pictureInPictureTileAriaLabel": "Videosyötteet. Palaa puhelunäyttöön napsauttamalla.",

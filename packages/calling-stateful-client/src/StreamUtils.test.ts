@@ -112,7 +112,6 @@ function createMockCall(mockCallId: string): CallState {
     optimalVideoCount: {
       maxRemoteVideoStreams: 4
     },
-    /* @conditional-compile-remove(ppt-live) */
     pptLive: { isActive: false }
   };
   return call;
@@ -134,7 +133,6 @@ function addMockRemoteStreamAndParticipant(
     id: streamId,
     mediaStreamType: 'Video',
     isAvailable: true,
-    /* @conditional-compile-remove(video-stream-is-receiving-flag) */
     isReceiving: true,
     view: undefined
   };

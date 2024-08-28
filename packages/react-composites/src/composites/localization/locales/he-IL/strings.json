@@ -20,6 +20,7 @@
     "complianceBannerTranscriptionStopped": "התמלול הופסק.",
     "configurationPageTitle": "התחל שיחה",
     "copyInviteLinkButtonLabel": "העתק קישור להזמנה",
+    "copyInviteLinkButtonActionedLabel": "הקישור הועתק",
     "copyInviteLinkActionedAriaLabel": "קישור ההזמנה הועתק",
     "defaultPlaceHolder": "בחר אפשרות",
     "dismissSidePaneButtonLabel": "סגור",
@@ -134,6 +135,7 @@
     "dtmfDialerButtonTooltipOff": "הסתר לוח חיוג",
     "dtmfDialerMoreButtonLabelOn": "הצג לוח חיוג",
     "dtmfDialerMoreButtonLabelOff": "הסתר לוח חיוג",
+    "phoneCallMoreButtonLabel": "שיחת טלפון",
     "spokenLanguageStrings": {
       "ar-ae": "ערבית - איחוד האמירויות",
       "ar-sa": "ערבית - ערב הסעודית",
@@ -244,6 +246,10 @@
       "shareScreen": {
         "lostDueToRoleChangeToAttendee": "התפקיד שלך השתנה. פעולות מסוימות, כגון שיתוף תוכן, לא יהיו זמינות עבורך.",
         "grantedDueToRoleChangeToPresenter": "אתה מציג. באפשרותך לשתף תוכן ולסייע בפגישה."
+      },
+      "hideAttendeeNames": {
+        "hideAttendeeNameAttendee": "שמך מוסתר ממשתתפים אחרים. מארגנים ומציגים יכולים לראות את שמך האמיתי.",
+        "hideAttendeeNamePresenter": "שמות המשתתפים מוסתרים. רק מארגנים ומציגים יכולים לראות את השמות, כדי להגן על פרטיות המשתתפים."
       }
     },
     "surveyTitle": "עזור לנו להשתפר",
@@ -259,7 +265,6 @@
     "tagsSurveyQuestion": "מה יכול היה להיות טוב יותר?",
     "tagsSurveyTextFieldDefaultText": "אחר, נא לציין",
     "tagsSurveyHelperText": "בדוק את כל הבעיות שבהן נתקלת",
-    "surveyTextboxDefaultText": "אחר, נא לציין",
     "endOfSurveyText": "תודה על המשוב!",
     "surveyIssues": {
       "overallRating": {
@@ -301,7 +306,7 @@
         "otherIssues": "נתקלתי בבעיות אחרות בשיתוף מסכים בשיחה זו"
       }
     },
-    "SurveyIssuesHeadingStrings": {
+    "surveyIssuesHeadingStrings": {
       "overallRating": "סך הכל",
       "audioRating": "שם ציוד השמע",
       "videoRating": "סרטון",
@@ -325,17 +330,32 @@
     },
     "exitSpotlightButtonLabel": "צא מהזרקור",
     "exitSpotlightButtonTooltip": "צא מהזרקור",
-    "hangUpConfirmButtonLabel": "אשר",
+    "leaveConfirmButtonLabel": "צא",
+    "endCallConfirmButtonLabel": "סיים שיחה",
     "hangUpCancelButtonLabel": "ביטול",
     "leaveConfirmDialogTitle": "לצאת מהשיחה?",
     "leaveConfirmDialogContent": "האם אתה בטוח שברצונך לעזוב את השיחה?",
     "endCallConfirmDialogTitle": "לסיים את השיחה?",
     "endCallConfirmDialogContent": "פעולה זאת תסיים את השיחה עבור כל המשתתפים.",
-    "invalidMeetingIdentifier": "מזהה פגישה או קוד סיסמה לא חוקיים"
+    "invalidMeetingIdentifier": "מזהה פגישה או קוד סיסמה לא חוקיים",
+    "pinParticipantMenuLabel": "הצמד עבורי",
+    "pinParticipantLimitReachedMenuLabel": "הצמדה (הגעת למגבלה)",
+    "unpinParticipantMenuLabel": "בטל הצמדה",
+    "pinParticipantMenuItemAriaLabel": "הצמד",
+    "unpinParticipantMenuItemAriaLabel": "בטל הצמדה",
+    "muteAllMenuLabel": "השתק הכל",
+    "muteAllDialogTitle": "האם להשתיק את כולם?",
+    "muteAllDialogContent": "פעולה זו תשתיק את כל האנשים בפגישה חוץ ממך.",
+    "muteAllConfirmButtonLabel": "השתק הכל",
+    "muteAllCancelButtonLabel": "ביטול"
   },
   "chat": {
     "chatListHeader": "בצ'אט זה",
-    "uploadAttachment": "העלה קובץ מצורף"
+    "uploadAttachment": "העלה קובץ מצורף",
+    "uploadImageDataNotProvided": "נתוני התמונה לא סופקו.",
+    "uploadImageIsTooLarge": "התמונה גדולה מדי. בחר אחד קטן יותר מ{maxImageSize} MB.",
+    "uploadImageExtensionIsNotAllowed": "העלאת תמונה {imageExtension} אסורה.",
+    "uploadImageFailed": "לא ניתן להעלות את התמונה. נסה שוב מאוחר יותר."
   },
   "callWithChat": {
     "chatButtonLabel": "צ'אט",
@@ -345,6 +365,7 @@
     "chatButtonTooltipOpen": "הצג צ'אט",
     "chatPaneTitle": "צ'אט",
     "copyInviteLinkButtonLabel": "העתק קישור להזמנה",
+    "copyInviteLinkButtonActionedLabel": "הקישור הועתק",
     "copyInviteLinkActionedAriaLabel": "קישור ההזמנה הועתק",
     "dismissSidePaneButtonLabel": "סגור",
     "moreDrawerAudioDeviceMenuTitle": "התקן שמע",
@@ -360,6 +381,8 @@
     "selectedPeopleButtonLabel": "לחצן 'אנשים' נבחר",
     "peopleButtonTooltipOpen": "הצג משתתפים",
     "peopleButtonTooltipClose": "הסתר משתתפים",
+    "peopleButtonTooltipOpenAriaLabel": "לחצן אנשים, הצג משתתפים",
+    "peopleButtonTooltipCloseAriaLabel": "לחצן אנשים, הסתר משתתפים",
     "peoplePaneSubTitle": "בשיחה זו",
     "peoplePaneTitle": "אנשים",
     "pictureInPictureTileAriaLabel": "הזנות וידאו. לחץ כדי לחזור למסך השיחה.",

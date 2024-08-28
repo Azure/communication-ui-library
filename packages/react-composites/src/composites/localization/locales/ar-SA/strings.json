@@ -20,6 +20,7 @@
     "complianceBannerTranscriptionStopped": "توقفت كتابة الحديث.",
     "configurationPageTitle": "بدء مكالمة",
     "copyInviteLinkButtonLabel": "نسخ ارتباط دعوة",
+    "copyInviteLinkButtonActionedLabel": "تم نسخ الارتباط",
     "copyInviteLinkActionedAriaLabel": "تم نسخ ارتباط الدعوة",
     "defaultPlaceHolder": "تحديد خيار",
     "dismissSidePaneButtonLabel": "إغلاق",
@@ -134,6 +135,7 @@
     "dtmfDialerButtonTooltipOff": "إخفاء لوحة الطلب",
     "dtmfDialerMoreButtonLabelOn": "عرض لوحة الطلب",
     "dtmfDialerMoreButtonLabelOff": "إخفاء لوحة الطلب",
+    "phoneCallMoreButtonLabel": "مكالمة هاتفية",
     "spokenLanguageStrings": {
       "ar-ae": "العربية - الإمارات العربية المتحدة",
       "ar-sa": "العربية - السعودية",
@@ -244,6 +246,10 @@
       "shareScreen": {
         "lostDueToRoleChangeToAttendee": "تم تغيير دورك. لن تتوفر بعض الإجراءات، مثل مشاركة المحتوى، لك.",
         "grantedDueToRoleChangeToPresenter": "أنت مقدم العرض. يمكنك مشاركة المحتوى وتسهيل الاجتماع."
+      },
+      "hideAttendeeNames": {
+        "hideAttendeeNameAttendee": "اسمك مخفي عن الحضور الآخرين. يمكن للمنظمين والمقدمين رؤية اسمك الحقيقي.",
+        "hideAttendeeNamePresenter": "أسماء الحضور مخفية. يمكن للمنظمين والمقدمين فقط رؤية الأسماء لحماية خصوصية الحضور."
       }
     },
     "surveyTitle": "ساعدنا في تحسين خدماتنا",
@@ -259,7 +265,6 @@
     "tagsSurveyQuestion": "ما الذي كان يمكن أن يكون أفضل؟",
     "tagsSurveyTextFieldDefaultText": "أخرى، يُرجى التحديد",
     "tagsSurveyHelperText": "تحقق من أي مشاكل واجهتك",
-    "surveyTextboxDefaultText": "أخرى، يُرجى التحديد",
     "endOfSurveyText": "شكراً لك على تقديم ملاحظاتك!",
     "surveyIssues": {
       "overallRating": {
@@ -301,7 +306,7 @@
         "otherIssues": "كنت أواجه مشكلات أخرى في مشاركة الشاشة في هذه المكالمة"
       }
     },
-    "SurveyIssuesHeadingStrings": {
+    "surveyIssuesHeadingStrings": {
       "overallRating": "بشكل عام",
       "audioRating": "صوت",
       "videoRating": "فيديو",
@@ -325,17 +330,32 @@
     },
     "exitSpotlightButtonLabel": "الخروج من وضع تسليط الضوء",
     "exitSpotlightButtonTooltip": "الخروج من وضع تسليط الضوء",
-    "hangUpConfirmButtonLabel": "تأكيد",
+    "leaveConfirmButtonLabel": "مغادرة",
+    "endCallConfirmButtonLabel": "إنهاء المكالمة",
     "hangUpCancelButtonLabel": "إلغاء",
     "leaveConfirmDialogTitle": "هل تريد مغادرة المكالمة؟",
     "leaveConfirmDialogContent": "هل تريد بالتأكيد مغادرة المكالمة؟",
     "endCallConfirmDialogTitle": "هل تريد إنهاء المكالمة؟",
     "endCallConfirmDialogContent": "ستنهي المكالمة لدى الجميع.",
-    "invalidMeetingIdentifier": "معرف اجتماع أو رمز مرور غير صالح"
+    "invalidMeetingIdentifier": "معرف اجتماع أو رمز مرور غير صالح",
+    "pinParticipantMenuLabel": "تثبيت نيابة عني",
+    "pinParticipantLimitReachedMenuLabel": "تثبيت (تم بلوغ الحد الأقصى)",
+    "unpinParticipantMenuLabel": "إزالة التثبيت",
+    "pinParticipantMenuItemAriaLabel": "تثبيت",
+    "unpinParticipantMenuItemAriaLabel": "إزالة التثبيت",
+    "muteAllMenuLabel": "كتم صوت الجميع",
+    "muteAllDialogTitle": "هل تريد كتم صوت الجميع؟",
+    "muteAllDialogContent": "سيؤدي ذلك إلى كتم صوت الجميع في الاجتماع باستثننائك.",
+    "muteAllConfirmButtonLabel": "كتم صوت الجميع",
+    "muteAllCancelButtonLabel": "إلغاء"
   },
   "chat": {
     "chatListHeader": "في هذه الدردشة",
-    "uploadAttachment": "تحميل المرفق"
+    "uploadAttachment": "تحميل المرفق",
+    "uploadImageDataNotProvided": "لم يتم توفير بيانات الصورة.",
+    "uploadImageIsTooLarge": "الصورة كبيرة جدا. اختر جهازا أقل من {maxImageSize} ميغابايت.",
+    "uploadImageExtensionIsNotAllowed": "تحميل الصورة .{imageExtension} غير مسموح به.",
+    "uploadImageFailed": "تعذر تحميل الصورة. الرجاء المحاولة مرة أخرى لاحقا."
   },
   "callWithChat": {
     "chatButtonLabel": "دردشة",
@@ -345,6 +365,7 @@
     "chatButtonTooltipOpen": "إظهار الدردشة",
     "chatPaneTitle": "دردشة",
     "copyInviteLinkButtonLabel": "نسخ ارتباط دعوة",
+    "copyInviteLinkButtonActionedLabel": "تم نسخ الارتباط",
     "copyInviteLinkActionedAriaLabel": "تم نسخ ارتباط الدعوة",
     "dismissSidePaneButtonLabel": "إغلاق",
     "moreDrawerAudioDeviceMenuTitle": "جهاز صوت",
@@ -360,6 +381,8 @@
     "selectedPeopleButtonLabel": "تم تحديد زر الأشخاص",
     "peopleButtonTooltipOpen": "إظهار المشاركين",
     "peopleButtonTooltipClose": "إخفاء المشاركين",
+    "peopleButtonTooltipOpenAriaLabel": "زر الأشخاص، إظهار المشاركين",
+    "peopleButtonTooltipCloseAriaLabel": "زر الأشخاص، إخفاء المشاركين",
     "peoplePaneSubTitle": "في هذه المكالمة",
     "peoplePaneTitle": "الأشخاص",
     "pictureInPictureTileAriaLabel": "موجزات الفيديو. انقر للعودة إلى شاشة المكالمة.",

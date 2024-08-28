@@ -20,6 +20,7 @@
     "complianceBannerTranscriptionStopped": "听录已停止。",
     "configurationPageTitle": "开始通话",
     "copyInviteLinkButtonLabel": "复制邀请链接",
+    "copyInviteLinkButtonActionedLabel": "已复制链接",
     "copyInviteLinkActionedAriaLabel": "已复制邀请链接",
     "defaultPlaceHolder": "选择一个选项",
     "dismissSidePaneButtonLabel": "关闭",
@@ -134,6 +135,7 @@
     "dtmfDialerButtonTooltipOff": "隐藏拨号盘",
     "dtmfDialerMoreButtonLabelOn": "显示拨号盘",
     "dtmfDialerMoreButtonLabelOff": "隐藏拨号盘",
+    "phoneCallMoreButtonLabel": "电话呼叫",
     "spokenLanguageStrings": {
       "ar-ae": "阿拉伯语 - 阿拉伯联合酋长国",
       "ar-sa": "阿拉伯语 - 沙特阿拉伯",
@@ -244,6 +246,10 @@
       "shareScreen": {
         "lostDueToRoleChangeToAttendee": "你的角色已更改。某些操作，如共享内容，对你不可用。",
         "grantedDueToRoleChangeToPresenter": "你是演示者。你可以共享内容并促进会议。"
+      },
+      "hideAttendeeNames": {
+        "hideAttendeeNameAttendee": "你的姓名对其他与会者隐藏。组织者和演示者可以看到你的真实姓名。",
+        "hideAttendeeNamePresenter": "与会者姓名已隐藏。为保护与会者隐私，只有组织者和演示者才能查看姓名。"
       }
     },
     "surveyTitle": "帮助我们改进",
@@ -259,7 +265,6 @@
     "tagsSurveyQuestion": "如何改进?",
     "tagsSurveyTextFieldDefaultText": "其他，请说明",
     "tagsSurveyHelperText": "检查遇到的任何问题",
-    "surveyTextboxDefaultText": "其他，请说明",
     "endOfSurveyText": "感谢你的反馈!",
     "surveyIssues": {
       "overallRating": {
@@ -301,7 +306,7 @@
         "otherIssues": "我在此通话中遇到其他屏幕共享问题"
       }
     },
-    "SurveyIssuesHeadingStrings": {
+    "surveyIssuesHeadingStrings": {
       "overallRating": "整体",
       "audioRating": "音频",
       "videoRating": "视频",
@@ -325,17 +330,32 @@
     },
     "exitSpotlightButtonLabel": "退出聚焦",
     "exitSpotlightButtonTooltip": "退出聚焦",
-    "hangUpConfirmButtonLabel": "确认",
+    "leaveConfirmButtonLabel": "退出",
+    "endCallConfirmButtonLabel": "结束通话",
     "hangUpCancelButtonLabel": "取消",
     "leaveConfirmDialogTitle": "离开聊天?",
     "leaveConfirmDialogContent": "是否确实要离开此聊天?",
     "endCallConfirmDialogTitle": "结束通话?",
     "endCallConfirmDialogContent": "你将结束所有人的通话。",
-    "invalidMeetingIdentifier": "会议 ID 或密码无效"
+    "invalidMeetingIdentifier": "会议 ID 或密码无效",
+    "pinParticipantMenuLabel": "为我固定",
+    "pinParticipantLimitReachedMenuLabel": "固定(已达到上限)",
+    "unpinParticipantMenuLabel": "取消固定",
+    "pinParticipantMenuItemAriaLabel": "固定",
+    "unpinParticipantMenuItemAriaLabel": "取消固定",
+    "muteAllMenuLabel": "全部静音",
+    "muteAllDialogTitle": "对所有人静音?",
+    "muteAllDialogContent": "这会将会议中除你之外的所有人静音。",
+    "muteAllConfirmButtonLabel": "全部静音",
+    "muteAllCancelButtonLabel": "取消"
   },
   "chat": {
     "chatListHeader": "在此聊天中",
-    "uploadAttachment": "上传附件"
+    "uploadAttachment": "上传附件",
+    "uploadImageDataNotProvided": "未提供图像数据。",
+    "uploadImageIsTooLarge": "图像太大。选择小于 {maxImageSize} MB 的选项。",
+    "uploadImageExtensionIsNotAllowed": "上传。不允许使用 {imageExtension} 图像。",
+    "uploadImageFailed": "无法上传图像。请稍后重试。"
   },
   "callWithChat": {
     "chatButtonLabel": "聊天",
@@ -345,6 +365,7 @@
     "chatButtonTooltipOpen": "显示聊天",
     "chatPaneTitle": "聊天",
     "copyInviteLinkButtonLabel": "复制邀请链接",
+    "copyInviteLinkButtonActionedLabel": "已复制链接",
     "copyInviteLinkActionedAriaLabel": "已复制邀请链接",
     "dismissSidePaneButtonLabel": "关闭",
     "moreDrawerAudioDeviceMenuTitle": "音频设备",
@@ -360,6 +381,8 @@
     "selectedPeopleButtonLabel": "已选择“人员”按钮",
     "peopleButtonTooltipOpen": "显示参与者",
     "peopleButtonTooltipClose": "隐藏参与者",
+    "peopleButtonTooltipOpenAriaLabel": "“人员”按钮，显示参与者",
+    "peopleButtonTooltipCloseAriaLabel": "“人员”按钮，隐藏参与者",
     "peoplePaneSubTitle": "在此通话中",
     "peoplePaneTitle": "人员",
     "pictureInPictureTileAriaLabel": "视频源。单击以返回到通话屏幕。",

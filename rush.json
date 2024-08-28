@@ -41,6 +41,11 @@
       "reviewCategory": "internal"
     },
     {
+      "packageName": "@internal/acs-ui-javascript-loaders",
+      "projectFolder": "packages/acs-ui-javascript-loaders",
+      "reviewCategory": "internal"
+    },
+    {
       "packageName": "@internal/chat-stateful-client",
       "projectFolder": "packages/chat-stateful-client",
       "reviewCategory": "internal"
@@ -73,6 +78,11 @@
     {
       "packageName": "@internal/callwithchat",
       "projectFolder": "samples/CallWithChat",
+      "reviewCategory": "sample"
+    },
+    {
+      "packageName": "@internal/callingstateful",
+      "projectFolder": "samples/CallingStateful",
       "reviewCategory": "sample"
     },
     {

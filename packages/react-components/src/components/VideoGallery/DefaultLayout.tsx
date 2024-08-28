@@ -39,7 +39,7 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
     parentHeight,
     pinnedParticipantUserIds = [],
     overflowGalleryPosition = 'horizontalBottom',
-    /* @conditional-compile-remove(spotlight) */ spotlightedParticipantUserIds = []
+    spotlightedParticipantUserIds = []
   } = props;
 
   const isNarrow = parentWidth ? isNarrowWidth(parentWidth) : false;
@@ -62,7 +62,7 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
       : childrenPerPage.current,
     pinnedParticipantUserIds,
     layout: 'default',
-    /* @conditional-compile-remove(spotlight) */ spotlightedParticipantUserIds
+    spotlightedParticipantUserIds
   });
 
   let activeVideoStreams = 0;
@@ -95,7 +95,7 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
   });
 
   if (localVideoComponent) {
-    if (screenShareComponent || /* @conditional-compile-remove(spotlight) */ spotlightedParticipantUserIds.length > 0) {
+    if (screenShareComponent || spotlightedParticipantUserIds.length > 0) {
       overflowGalleryTiles = [localVideoComponent].concat(overflowGalleryTiles);
     } else {
       gridTiles = [localVideoComponent].concat(gridTiles);

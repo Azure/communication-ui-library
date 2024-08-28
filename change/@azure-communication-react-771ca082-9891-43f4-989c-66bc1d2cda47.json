@@ -1,9 +1,0 @@
-{
-  "type": "patch",
-  "area": "improvement",
-  "workstream": "",
-  "comment": "Lay groundwork for supporting the new Teams' short meeting URLs",
-  "packageName": "@azure/communication-react",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

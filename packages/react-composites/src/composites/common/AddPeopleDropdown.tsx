@@ -25,13 +25,16 @@ import { drawerContainerStyles } from '../CallComposite/styles/CallComposite.sty
 import { convertContextualMenuItemToDrawerMenuItem } from './ConvertContextualMenuItemToDrawerMenuItem';
 import { PhoneNumberIdentifier } from '@azure/communication-common';
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
+import { useId } from '@fluentui/react-hooks';
+import { CalloutWithIcon } from './CalloutWithIcon';
 
 /** @private */
 export interface AddPeopleDropdownStrings extends CallingDialpadStrings {
-  copyInviteLinkButtonLabel: string;
-  openDialpadButtonLabel: string;
-  peoplePaneAddPeopleButtonLabel: string;
-  copyInviteLinkActionedAriaLabel: string;
+  copyInviteLinkButtonLabel?: string;
+  copyInviteLinkButtonActionedLabel?: string;
+  openDialpadButtonLabel?: string;
+  peoplePaneAddPeopleButtonLabel?: string;
+  copyInviteLinkActionedAriaLabel?: string;
 }
 
 /** @private */
@@ -41,13 +44,23 @@ export interface AddPeopleDropdownProps {
   strings: AddPeopleDropdownStrings;
   onAddParticipant: (participant: PhoneNumberIdentifier, options?: AddPhoneNumberOptions) => void;
   alternateCallerId?: string;
+  onCopyInviteLink?: () => void;
+  inviteLinkCopiedRecently?: boolean;
 }
 
 /** @private */
 export const AddPeopleDropdown = (props: AddPeopleDropdownProps): JSX.Element => {
   const theme = useTheme();
 
-  const { inviteLink, strings, mobileView, onAddParticipant, alternateCallerId } = props;
+  const {
+    inviteLink,
+    strings,
+    mobileView,
+    onAddParticipant,
+    alternateCallerId,
+    onCopyInviteLink,
+    inviteLinkCopiedRecently
+  } = props;
 
   const [showDialpad, setShowDialpad] = useState(false);
 
@@ -80,6 +93,7 @@ export const AddPeopleDropdown = (props: AddPeopleDropdownProps): JSX.Element =>
         onClick: () => {
           setAnnouncerStrings(strings.copyInviteLinkActionedAriaLabel);
           copy(inviteLink);
+          onCopyInviteLink?.();
         }
       });
     }
@@ -104,7 +118,8 @@ export const AddPeopleDropdown = (props: AddPeopleDropdownProps): JSX.Element =>
     strings.copyInviteLinkButtonLabel,
     strings.copyInviteLinkActionedAriaLabel,
     strings.openDialpadButtonLabel,
-    copyLinkButtonStylesThemed
+    copyLinkButtonStylesThemed,
+    onCopyInviteLink
   ]);
 
   const onDismissDialpad = (): void => {
@@ -122,6 +137,8 @@ export const AddPeopleDropdown = (props: AddPeopleDropdownProps): JSX.Element =>
     };
   }, [defaultMenuProps, setAddPeopleDrawerMenuItems]);
 
+  const calloutButtonId = useId('callout-button');
+
   if (mobileView) {
     return (
       <Stack>
@@ -129,12 +146,20 @@ export const AddPeopleDropdown = (props: AddPeopleDropdownProps): JSX.Element =>
         {defaultMenuProps.items.length > 0 && (
           <Stack.Item styles={copyLinkButtonContainerStyles}>
             <PrimaryButton
+              id={calloutButtonId}
               onClick={setDrawerMenuItemsForAddPeople}
               styles={copyLinkButtonStylesThemed}
               onRenderIcon={() => PeoplePaneAddPersonIconTrampoline()}
               text={strings.peoplePaneAddPeopleButtonLabel}
               data-ui-id="call-add-people-button"
             />
+            {inviteLinkCopiedRecently && (
+              <CalloutWithIcon
+                targetId={calloutButtonId}
+                text={strings.copyInviteLinkButtonActionedLabel ?? ''}
+                doNotLayer={true}
+              />
+            )}
           </Stack.Item>
         )}
 
@@ -180,12 +205,16 @@ export const AddPeopleDropdown = (props: AddPeopleDropdownProps): JSX.Element =>
           {defaultMenuProps.items.length > 0 && (
             <Stack styles={copyLinkButtonStackStyles}>
               <DefaultButton
+                id={calloutButtonId}
                 onRenderIcon={() => PeoplePaneAddPersonIconTrampoline()}
                 text={strings.peoplePaneAddPeopleButtonLabel}
                 menuProps={defaultMenuProps}
                 styles={copyLinkButtonStylesThemed}
                 data-ui-id="call-add-people-button"
               />
+              {inviteLinkCopiedRecently && (
+                <CalloutWithIcon targetId={calloutButtonId} text={strings.copyInviteLinkButtonActionedLabel ?? ''} />
+              )}
             </Stack>
           )}
         </Stack>

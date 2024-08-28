@@ -1,9 +1,0 @@
-{
-  "type": "minor",
-  "area": "improvement",
-  "workstream": "File Sharing Refactor",
-  "comment": "Updated File Sharing Public APIs",
-  "packageName": "@azure/communication-react",
-  "email": "109105353+jpeng-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

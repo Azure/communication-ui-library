@@ -3,7 +3,6 @@
 
 import { IPersona, Persona, Stack, PersonaSize, Text } from '@fluentui/react';
 import React from 'react';
-import { _AttachmentUploadCardsStrings } from './AttachmentUploadCards';
 import { OnRenderAvatarCallback } from '../types';
 import {
   captionClassName,

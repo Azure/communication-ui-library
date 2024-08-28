@@ -53,8 +53,8 @@ export const CaptionsBannerMoreButton = (props: CaptionsBannerMoreButtonProps): 
       startCaptionsButtonProps.checked
         ? startCaptionsButtonHandlers.onStopCaptions()
         : startCaptionsButtonProps.currentSpokenLanguage !== ''
-        ? startCaptions()
-        : props.onCaptionsSettingsClick && props.onCaptionsSettingsClick();
+          ? startCaptions()
+          : props.onCaptionsSettingsClick && props.onCaptionsSettingsClick();
     },
     iconProps: {
       iconName: startCaptionsButtonProps.checked ? 'CaptionsOffIcon' : 'CaptionsIcon',

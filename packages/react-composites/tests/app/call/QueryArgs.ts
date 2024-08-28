@@ -27,7 +27,7 @@ export interface QueryArgs {
   backgroundImage?: boolean;
   galleryLayout?: string;
   playSounds?: boolean;
-
+  disableAutoShowDtmfDialer?: boolean;
   // These are only set for live tests.
   // TODO: Separate the args out better.
   userId: string;
@@ -44,10 +44,10 @@ export function parseQueryArgs(): QueryArgs {
   const localVideoTilePosition = !params.localVideoTilePosition
     ? undefined
     : params.localVideoTilePosition === 'false'
-    ? false
-    : params.localVideoTilePosition === 'floating'
-    ? 'floating'
-    : 'grid';
+      ? false
+      : params.localVideoTilePosition === 'floating'
+        ? 'floating'
+        : 'grid';
 
   return {
     mockCallAdapterState: params.mockCallAdapterState
@@ -77,6 +77,7 @@ export function parseQueryArgs(): QueryArgs {
     galleryLayout: params.galleryLayout ?? '',
     logo: params.logo as 'circle' | 'square' | undefined,
     backgroundImage: Boolean(params.backgroundImage),
-    playSounds: Boolean(params.playSounds)
+    playSounds: Boolean(params.playSounds),
+    disableAutoShowDtmfDialer: params.disableAutoShowDtmfDialer === 'true' ? true : false
   };
 }

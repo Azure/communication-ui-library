@@ -91,6 +91,17 @@ export const bannerNotificationStyles: IStackStyles = {
 /**
  * @private
  */
+export const notificationStackStyles: IStackStyles = {
+  root: {
+    zIndex: NOTIFICATION_CONTAINER_Z_INDEX,
+    pointerEvents: 'auto', // to allow the dismissal or error and warning bars in the notification container,
+    marginBottom: '0.5rem'
+  }
+};
+
+/**
+ * @private
+ */
 export const callArrangementContainerStyles = (verticalControlBar?: boolean): IStackStyles => {
   return {
     root: {

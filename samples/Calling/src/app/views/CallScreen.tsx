@@ -18,6 +18,8 @@ import {
 import { useTeamsCallAdapter, TeamsCallAdapter } from '@azure/communication-react';
 
 import { onResolveVideoEffectDependencyLazy } from '@azure/communication-react';
+/* @conditional-compile-remove(DNS) */
+import { onResolveDeepNoiseSuppressionDependencyLazy } from '@azure/communication-react';
 /* @conditional-compile-remove(teams-identity-support) */
 import type { Profile, TeamsAdapterOptions } from '@azure/communication-react';
 import type { StartCallIdentifier } from '@azure/communication-react';
@@ -157,6 +159,10 @@ const AzureCommunicationCallScreen = (props: AzureCommunicationCallScreenProps):
         videoBackgroundImages,
         onResolveDependency: onResolveVideoEffectDependencyLazy
       },
+      // /* @conditional-compile-remove(DNS) */
+      deepNoiseSuppressionOptions: {
+        onResolveDependency: onResolveDeepNoiseSuppressionDependencyLazy
+      },
       callingSounds: {
         callEnded: { url: '/assets/sounds/callEnded.mp3' },
         callRinging: { url: '/assets/sounds/callRinging.mp3' },
@@ -168,9 +174,11 @@ const AzureCommunicationCallScreen = (props: AzureCommunicationCallScreenProps):
         laughReaction: { url: '/assets/reactions/laughEmoji.png', frameCount: 102 },
         applauseReaction: { url: '/assets/reactions/clapEmoji.png', frameCount: 102 },
         surprisedReaction: { url: '/assets/reactions/surprisedEmoji.png', frameCount: 102 }
-      }
+      },
+      /* @conditional-compile-remove(PSTN-calls) */
+      alternateCallerId: adapterArgs.alternateCallerId
     };
-  }, []);
+  }, [/* @conditional-compile-remove(PSTN-calls) */ adapterArgs.alternateCallerId]);
 
   const adapter = useAzureCommunicationCallAdapter(
     {
@@ -216,9 +224,11 @@ const AzureCommunicationOutboundCallScreen = (props: AzureCommunicationCallScree
           return { displayName: 'Teams app display name' };
         }
         return defaultProfile;
-      }
+      },
+      /* @conditional-compile-remove(PSTN-calls) */
+      alternateCallerId: adapterArgs.alternateCallerId
     };
-  }, []);
+  }, [/* @conditional-compile-remove(PSTN-calls) */ adapterArgs.alternateCallerId]);
 
   const adapter = useAzureCommunicationCallAdapter(
     {
@@ -237,6 +247,8 @@ const convertPageStateToString = (state: CallAdapterState): string => {
   switch (state.page) {
     case 'accessDeniedTeamsMeeting':
       return 'error';
+    case 'badRequest':
+      return 'error';
     case 'leftCall':
       return 'end call';
     case 'removedFromCall':
@@ -248,38 +260,38 @@ const convertPageStateToString = (state: CallAdapterState): string => {
 
 const videoBackgroundImages = [
   {
-    key: 'ab1',
+    key: 'contoso',
     url: '/assets/backgrounds/contoso.png',
-    tooltipText: 'Custom Background'
+    tooltipText: 'Contoso Background'
   },
   {
-    key: 'ab2',
+    key: 'pastel',
     url: '/assets/backgrounds/abstract2.jpg',
-    tooltipText: 'Custom Background'
+    tooltipText: 'Pastel Background'
   },
   {
-    key: 'ab3',
+    key: 'rainbow',
     url: '/assets/backgrounds/abstract3.jpg',
-    tooltipText: 'Custom Background'
+    tooltipText: 'Rainbow Background'
   },
   {
-    key: 'ab4',
+    key: 'office',
     url: '/assets/backgrounds/room1.jpg',
-    tooltipText: 'Custom Background'
+    tooltipText: 'Office Background'
   },
   {
-    key: 'ab5',
+    key: 'plant',
     url: '/assets/backgrounds/room2.jpg',
-    tooltipText: 'Custom Background'
+    tooltipText: 'Plant Background'
   },
   {
-    key: 'ab6',
+    key: 'bedroom',
     url: '/assets/backgrounds/room3.jpg',
-    tooltipText: 'Custom Background'
+    tooltipText: 'Bedroom Background'
   },
   {
-    key: 'ab7',
+    key: 'livingroom',
     url: '/assets/backgrounds/room4.jpg',
-    tooltipText: 'Custom Background'
+    tooltipText: 'Living Room Background'
   }
 ];

@@ -10,6 +10,8 @@ import { CapabilitiesChangeInfo } from '@azure/communication-calling';
 import { EnvironmentInfo } from '@azure/communication-calling';
 
 import { ParticipantRole } from '@azure/communication-calling';
+/* @conditional-compile-remove(breakout-rooms) */
+import { BreakoutRoom, BreakoutRoomsSettings } from '@azure/communication-calling';
 import {
   CallState,
   DeviceManagerState,
@@ -18,13 +20,16 @@ import {
   RemoteParticipantState
 } from '@internal/calling-stateful-client';
 import { CaptionsInfo } from '@internal/calling-stateful-client';
-/* @conditional-compile-remove(spotlight) */
+/* @conditional-compile-remove(teams-meeting-conference) */
+import { ConferencePhoneInfo } from '@internal/calling-stateful-client';
 import { SpotlightedParticipant } from '@azure/communication-calling';
 import { CallAdapterState, CallCompositePage } from '../adapter/CallAdapter';
 
 import { VideoBackgroundEffect } from '../adapter/CallAdapter';
 import { _isInCall, _isPreviewOn, _dominantSpeakersWithFlatId } from '@internal/calling-component-bindings';
 import { AdapterErrors } from '../../common/adapters';
+/* @conditional-compile-remove(breakout-rooms) */
+import { AdapterNotifications } from '../../common/adapters';
 import { RaisedHandState } from '@internal/calling-stateful-client';
 import { CommunicationIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(acs-close-captions) */
@@ -203,6 +208,18 @@ export const getIsTeamsCall = (state: CallAdapterState): boolean => state.isTeam
 /**
  * @private
  */
+export const getIsTeamsMeeting = (state: CallAdapterState): boolean => state.isTeamsMeeting;
+
+/* @conditional-compile-remove(teams-meeting-conference) */
+/**
+ * @private
+ */
+export const getTeamsMeetingCoordinates = (state: CallAdapterState): ConferencePhoneInfo[] | undefined =>
+  state.call?.meetingConference?.conferencePhones;
+
+/**
+ * @private
+ */
 export const getLatestErrors = (state: CallAdapterState): AdapterErrors => state.latestErrors;
 
 /**
@@ -222,9 +239,35 @@ export const getTargetCallees = (state: CallAdapterState): CommunicationIdentifi
  */
 export const getStartTime = (state: CallAdapterState): Date | undefined => state.call?.startTime;
 
-/* @conditional-compile-remove(spotlight) */
 /**
  * @private
  */
 export const getSpotlightedParticipants = (state: CallAdapterState): SpotlightedParticipant[] | undefined =>
   state.call?.spotlight?.spotlightedParticipants;
+
+/* @conditional-compile-remove(breakout-rooms) */
+/**
+ * @private
+ */
+export const getAssignedBreakoutRoom = (state: CallAdapterState): BreakoutRoom | undefined =>
+  state.call?.breakoutRooms?.assignedBreakoutRoom;
+
+/* @conditional-compile-remove(breakout-rooms) */
+/**
+ * @private
+ */
+export const getBreakoutRoomSettings = (state: CallAdapterState): BreakoutRoomsSettings | undefined =>
+  state.call?.breakoutRooms?.breakoutRoomSettings;
+
+/* @conditional-compile-remove(breakout-rooms) */
+/**
+ * @private
+ */
+export const getBreakoutRoomDisplayName = (state: CallAdapterState): string | undefined =>
+  state.call?.breakoutRooms?.breakoutRoomDisplayName;
+
+/* @conditional-compile-remove(breakout-rooms) */
+/**
+ * @private
+ */
+export const getLatestNotifications = (state: CallAdapterState): AdapterNotifications => state.latestNotifications;

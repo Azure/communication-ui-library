@@ -1,9 +1,0 @@
-{
-  "type": "minor",
-  "area": "feature",
-  "workstream": "Hide Attendee Names",
-  "comment": "add view attendee names",
-  "packageName": "@azure/communication-react",
-  "email": "97124699+prabhjot-msft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

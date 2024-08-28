@@ -59,12 +59,6 @@ export const overviewPageUIArtifactImageStyle = {
   padding: '0rem 1rem 1rem 1rem'
 };
 
-export const COMPONENT_FOLDER_PREFIX = 'UI Components';
-export const COMPOSITE_FOLDER_PREFIX = 'Composites';
-export const EXAMPLES_FOLDER_PREFIX = 'Examples';
-export const CONCEPTS_FOLDER_PREFIX = 'Concepts';
-export const STATEFUL_CLIENT_PREFIX = 'Stateful Client';
-
 export const MICROSOFT_AZURE_PREVIEWS_URL = 'https://azure.microsoft.com/support/legal/preview-supplemental-terms/';
 
 export const MICROSOFT_AZURE_ACCESS_TOKEN_QUICKSTART =

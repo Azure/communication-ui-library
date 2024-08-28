@@ -10,7 +10,6 @@ import { localVideoSelector } from './localVideoStreamSelector';
 import { dominantRemoteParticipantSelector } from './dominantRemoteParticipantSelector';
 import { getDisplayName } from './baseSelectors';
 import { getLocalParticipantRaisedHand } from './baseSelectors';
-/* @conditional-compile-remove(spotlight) */
 import { getFirstSpotlightedRemoteParticipant } from './getFirstSpotlightedRemoteParticipantSelector';
 
 /**
@@ -23,17 +22,16 @@ export const localAndRemotePIPSelector = reselect.createSelector(
     dominantRemoteParticipantSelector,
     localVideoSelector,
     getLocalParticipantRaisedHand,
-    /* @conditional-compile-remove(spotlight) */ getFirstSpotlightedRemoteParticipant
+    getFirstSpotlightedRemoteParticipant
   ],
   (
     displayName,
     dominantRemoteParticipantState,
     localVideoStreamInfo,
     raisedHand,
-    /* @conditional-compile-remove(spotlight) */ firstSpotlightedRemoteParticipantState
+    firstSpotlightedRemoteParticipantState
   ) => {
     let remoteParticipantState = dominantRemoteParticipantState;
-    /* @conditional-compile-remove(spotlight) */
     if (firstSpotlightedRemoteParticipantState) {
       remoteParticipantState = firstSpotlightedRemoteParticipantState;
     }

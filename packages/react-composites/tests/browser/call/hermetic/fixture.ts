@@ -94,7 +94,6 @@ export function defaultMockCallAdapterState(
       remoteParticipants,
       remoteParticipantsEnded: {},
       raiseHand: { raisedHands: [] },
-      /** @conditional-compile-remove(ppt-live) */
       pptLive: { isActive: false },
       role: role ?? 'Unknown',
       dominantSpeakers: dominantSpeakers,
@@ -126,7 +125,8 @@ export function defaultMockCallAdapterState(
           callEndReason: {
             code: 0,
             subCode: callEndReasonSubCode,
-            /* @conditional-compile-remove(calling-beta-sdk) */ resultCategories: []
+            /* @conditional-compile-remove(calling-beta-sdk) */ resultCategories: [],
+            /* @conditional-compile-remove(calling-beta-sdk) */ message: ''
           }
         }
       : undefined,
@@ -148,8 +148,11 @@ export function defaultMockCallAdapterState(
       deviceAccess: { video: true, audio: true }
     },
     isTeamsCall: false,
+    isTeamsMeeting: false,
     isRoomsCall: isRoomsCall ?? false,
     latestErrors: {},
+    /* @conditional-compile-remove(breakout-rooms) */
+    latestNotifications: {},
     targetCallees: undefined,
     reactions: undefined
   };
@@ -360,8 +363,7 @@ const consumerCapabilitiesInRoomsCall: ParticipantCapabilities = {
   removeParticipantsSpotlight: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
   shareScreen: { isPresent: false, reason: 'RoleRestricted' },
   spotlightParticipant: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
-  startLiveCaptions: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
-  stopLiveCaptions: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
+  startLiveCallingCaptions: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
   turnVideoOn: { isPresent: false, reason: 'RoleRestricted' },
   muteOthers: {
     isPresent: false,
@@ -374,7 +376,19 @@ const consumerCapabilitiesInRoomsCall: ParticipantCapabilities = {
   viewAttendeeNames: {
     isPresent: true,
     reason: 'Capable'
-  }
+  },
+  startLiveMeetingCaptions: {
+    isPresent: false,
+    reason: 'CapabilityNotApplicableForTheCallType'
+  },
+  setCaptionLanguage: {
+    isPresent: false,
+    reason: 'CapabilityNotApplicableForTheCallType'
+  },
+  /* @conditional-compile-remove(calling-beta-sdk) */
+  startTogetherMode: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
+  /* @conditional-compile-remove(breakout-rooms) */
+  joinBreakoutRooms: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' }
 };
 
 const attendeeCapabilitiesInRoomsCall: ParticipantCapabilities = {
@@ -391,8 +405,11 @@ const attendeeCapabilitiesInRoomsCall: ParticipantCapabilities = {
   removeParticipantsSpotlight: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
   shareScreen: { isPresent: false, reason: 'RoleRestricted' },
   spotlightParticipant: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
-  startLiveCaptions: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
-  stopLiveCaptions: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
+  startLiveCallingCaptions: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
+  startLiveMeetingCaptions: {
+    isPresent: false,
+    reason: 'CapabilityNotApplicableForTheCallType'
+  },
   turnVideoOn: { isPresent: true, reason: 'Capable' },
   muteOthers: {
     isPresent: false,
@@ -405,7 +422,15 @@ const attendeeCapabilitiesInRoomsCall: ParticipantCapabilities = {
   viewAttendeeNames: {
     isPresent: true,
     reason: 'Capable'
-  }
+  },
+  setCaptionLanguage: {
+    isPresent: false,
+    reason: 'CapabilityNotApplicableForTheCallType'
+  },
+  /* @conditional-compile-remove(calling-beta-sdk) */
+  startTogetherMode: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
+  /* @conditional-compile-remove(breakout-rooms) */
+  joinBreakoutRooms: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' }
 };
 
 const presenterCapabilitiesInRoomsCall: ParticipantCapabilities = {
@@ -422,8 +447,15 @@ const presenterCapabilitiesInRoomsCall: ParticipantCapabilities = {
   removeParticipantsSpotlight: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
   shareScreen: { isPresent: true, reason: 'Capable' },
   spotlightParticipant: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
-  startLiveCaptions: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
-  stopLiveCaptions: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
+  startLiveCallingCaptions: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
+  startLiveMeetingCaptions: {
+    isPresent: false,
+    reason: 'CapabilityNotApplicableForTheCallType'
+  },
+  setCaptionLanguage: {
+    isPresent: false,
+    reason: 'CapabilityNotApplicableForTheCallType'
+  },
   turnVideoOn: { isPresent: true, reason: 'Capable' },
   muteOthers: {
     isPresent: false,
@@ -436,7 +468,11 @@ const presenterCapabilitiesInRoomsCall: ParticipantCapabilities = {
   viewAttendeeNames: {
     isPresent: true,
     reason: 'Capable'
-  }
+  },
+  /* @conditional-compile-remove(calling-beta-sdk) */
+  startTogetherMode: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
+  /* @conditional-compile-remove(breakout-rooms) */
+  joinBreakoutRooms: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' }
 };
 
 const presenterCapabilitiesInTeamsCall: ParticipantCapabilities = {
@@ -453,8 +489,15 @@ const presenterCapabilitiesInTeamsCall: ParticipantCapabilities = {
   removeParticipantsSpotlight: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
   shareScreen: { isPresent: true, reason: 'Capable' },
   spotlightParticipant: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
-  startLiveCaptions: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
-  stopLiveCaptions: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
+  startLiveCallingCaptions: { isPresent: true, reason: 'Capable' },
+  startLiveMeetingCaptions: {
+    isPresent: true,
+    reason: 'Capable'
+  },
+  setCaptionLanguage: {
+    isPresent: true,
+    reason: 'Capable'
+  },
   turnVideoOn: { isPresent: true, reason: 'Capable' },
   muteOthers: {
     isPresent: false,
@@ -467,7 +510,11 @@ const presenterCapabilitiesInTeamsCall: ParticipantCapabilities = {
   viewAttendeeNames: {
     isPresent: true,
     reason: 'Capable'
-  }
+  },
+  /* @conditional-compile-remove(calling-beta-sdk) */
+  startTogetherMode: { isPresent: true, reason: 'Capable' },
+  /* @conditional-compile-remove(breakout-rooms) */
+  joinBreakoutRooms: { isPresent: true, reason: 'Capable' }
 };
 
 const defaultEndedCallState: CallState = {
@@ -490,7 +537,6 @@ const defaultEndedCallState: CallState = {
   remoteParticipants: {},
   remoteParticipantsEnded: {},
   raiseHand: { raisedHands: [] },
-  /** @conditional-compile-remove(ppt-live) */
   pptLive: { isActive: false },
   captionsFeature: {
     captions: [],

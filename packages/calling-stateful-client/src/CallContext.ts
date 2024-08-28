@@ -11,6 +11,13 @@ import {
   VideoDeviceInfo
 } from '@azure/communication-calling';
 import { RaisedHand } from '@azure/communication-calling';
+/* @conditional-compile-remove(breakout-rooms) */
+import { BreakoutRoom, BreakoutRoomsSettings } from '@azure/communication-calling';
+
+/* @conditional-compile-remove(teams-meeting-conference) */
+import { TeamsMeetingAudioConferencingDetails } from '@azure/communication-calling';
+/* @conditional-compile-remove(teams-meeting-conference) */
+import { convertConferencePhoneInfo } from './Converter';
 
 import { CapabilitiesChangeInfo, ParticipantCapabilities } from '@azure/communication-calling';
 import { TeamsCaptionsInfo } from '@azure/communication-calling';
@@ -40,6 +47,10 @@ import {
   CallErrorTarget,
   CallError
 } from './CallClientState';
+/* @conditional-compile-remove(breakout-rooms) */
+import { NotificationTarget, CallNotification, CallNotifications } from './CallClientState';
+/* @conditional-compile-remove(one-to-n-calling) */
+import { TeamsIncomingCallState } from './CallClientState';
 import { CaptionsInfo } from './CallClientState';
 import { ReactionState } from './CallClientState';
 import { AcceptedTransfer } from './CallClientState';
@@ -51,7 +62,6 @@ import { convertFromTeamsSDKToCaptionInfoState } from './Converter';
 import { convertFromSDKToCaptionInfoState } from './Converter';
 import { convertFromSDKToRaisedHandState } from './Converter';
 import { ReactionMessage } from '@azure/communication-calling';
-/* @conditional-compile-remove(spotlight) */
 import { SpotlightedParticipant } from '@azure/communication-calling';
 /* @conditional-compile-remove(local-recording-notification) */
 import { LocalRecordingInfo } from '@azure/communication-calling';
@@ -81,13 +91,11 @@ export class CallContext {
   private _emitter: EventEmitter;
   private _atomicId: number;
   private _callIdHistory: CallIdHistory = new CallIdHistory();
-  private _timeOutId: { [key: string]: NodeJS.Timeout } = {};
+  private _timeOutId: { [key: string]: ReturnType<typeof setTimeout> } = {};
+  /* @conditional-compile-remove(breakout-rooms) */
+  private _latestCallIdsThatPushedNotifications: Partial<Record<NotificationTarget, string>> = {};
 
-  constructor(
-    userId: CommunicationIdentifierKind,
-    maxListeners = 50,
-    /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId?: string
-  ) {
+  constructor(userId: CommunicationIdentifierKind, maxListeners = 50) {
     this._logger = createClientLogger('communication-react:calling-context');
     this._state = {
       calls: {},
@@ -104,8 +112,8 @@ export class CallContext {
       callAgent: undefined,
       userId: userId,
       /* @conditional-compile-remove(unsupported-browser) */ environmentInfo: undefined,
-      /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId: alternateCallerId,
-      latestErrors: {} as CallErrors
+      latestErrors: {} as CallErrors,
+      /* @conditional-compile-remove(breakout-rooms) */ latestNotifications: {} as CallNotifications
     };
     this._emitter = new EventEmitter();
     this._emitter.setMaxListeners(maxListeners);
@@ -172,7 +180,6 @@ export class CallContext {
         existingCall.optimalVideoCount.maxRemoteVideoStreams = call.optimalVideoCount.maxRemoteVideoStreams;
         existingCall.recording.isRecordingActive = call.recording.isRecordingActive;
         existingCall.raiseHand.raisedHands = call.raiseHand.raisedHands;
-        /* @conditional-compile-remove(ppt-live) */
         existingCall.pptLive.isActive = call.pptLive.isActive;
         existingCall.raiseHand.localParticipantRaisedHand = call.raiseHand.localParticipantRaisedHand;
         existingCall.role = call.role;
@@ -181,12 +188,19 @@ export class CallContext {
         // We don't update the startTime and endTime if we are updating an existing active call
         existingCall.captionsFeature.currentSpokenLanguage = call.captionsFeature.currentSpokenLanguage;
         existingCall.captionsFeature.currentCaptionLanguage = call.captionsFeature.currentCaptionLanguage;
-        /* @conditional-compile-remove(meeting-id) */
         existingCall.info = call.info;
+        /* @conditional-compile-remove(teams-meeting-conference) */
+        existingCall.meetingConference = call.meetingConference;
       } else {
         draft.calls[latestCallId] = call;
       }
     });
+    /**
+     * Remove the incoming call that matches the call if there is one
+     */
+    if (this._state.incomingCalls[call.id]) {
+      this.removeIncomingCall(call.id);
+    }
   }
 
   public removeCall(callId: string): void {
@@ -231,6 +245,13 @@ export class CallContext {
         delete draft.calls[oldCallId];
         draft.calls[newCallId] = call;
       }
+      /* @conditional-compile-remove(breakout-rooms) */
+      // Update the old origin call id of breakout room calls to the new call id
+      Object.values(draft.calls).forEach((call) => {
+        if (call.breakoutRooms?.breakoutRoomOriginCallId === oldCallId) {
+          call.breakoutRooms?.breakoutRoomOriginCallId === newCallId;
+        }
+      });
     });
   }
 
@@ -264,11 +285,6 @@ export class CallContext {
         addRemoteParticipant.forEach((participant: RemoteParticipantState) => {
           call.remoteParticipants[toFlatCommunicationIdentifier(participant.identifier)] = participant;
         });
-        // TODO: need to remove after contentSharingRole avaible in WebCalling SDK.
-        /* @conditional-compile-remove(ppt-live) */
-        if (!call.contentSharingRemoteParticipant) {
-          call.contentSharingRemoteParticipant = toFlatCommunicationIdentifier(addRemoteParticipant[0].identifier);
-        }
       }
     });
   }
@@ -416,7 +432,6 @@ export class CallContext {
     });
   }
 
-  /* @conditional-compile-remove(ppt-live) */
   public setCallPPTLiveActive(callId: string, isActive: boolean): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
@@ -426,15 +441,14 @@ export class CallContext {
     });
   }
 
-  /* @conditional-compile-remove(ppt-live) */
-  public setCallParticipantPPTLive(callId: string, target: HTMLElement | undefined): void {
+  public setCallParticipantPPTLive(callId: string, participantKey: string, target: HTMLElement | undefined): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
-      const participantKey = call.contentSharingRemoteParticipant;
       if (call && participantKey) {
         const participant = call.remoteParticipants[participantKey];
         if (participant) {
           participant.contentSharingStream = target;
+          call.contentSharingRemoteParticipant = participantKey;
         }
       }
     });
@@ -547,7 +561,6 @@ export class CallContext {
     });
   }
 
-  /* @conditional-compile-remove(spotlight) */
   public setSpotlight(
     callId: string,
     spotlightedParticipants: SpotlightedParticipant[],
@@ -561,7 +574,19 @@ export class CallContext {
     });
   }
 
-  /* @conditional-compile-remove(spotlight) */
+  /* @conditional-compile-remove(teams-meeting-conference) */
+  public setTeamsMeetingConference(
+    callId: string,
+    teamsMeetingConferenceDetails: TeamsMeetingAudioConferencingDetails
+  ): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        call.meetingConference = { conferencePhones: convertConferencePhoneInfo(teamsMeetingConferenceDetails) };
+      }
+    });
+  }
+
   public setParticipantSpotlighted(callId: string, spotlightedParticipant: SpotlightedParticipant): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
@@ -580,7 +605,6 @@ export class CallContext {
     });
   }
 
-  /* @conditional-compile-remove(spotlight) */
   public setParticipantNotSpotlighted(callId: string, spotlightedParticipant: SpotlightedParticipant): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
@@ -595,6 +619,46 @@ export class CallContext {
         ) {
           call.spotlight.localParticipantSpotlight = undefined;
         }
+      }
+    });
+  }
+
+  /* @conditional-compile-remove(breakout-rooms) */
+  public setAssignedBreakoutRoom(callId: string, breakoutRoom?: BreakoutRoom): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        call.breakoutRooms = { ...call.breakoutRooms, assignedBreakoutRoom: breakoutRoom };
+      }
+    });
+  }
+
+  /* @conditional-compile-remove(breakout-rooms) */
+  public setBreakoutRoomOriginCallId(callId: string, breakoutRoomCallId: string): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(breakoutRoomCallId)];
+      if (call) {
+        call.breakoutRooms = { ...call.breakoutRooms, breakoutRoomOriginCallId: callId };
+      }
+    });
+  }
+
+  /* @conditional-compile-remove(breakout-rooms) */
+  public setBreakoutRoomSettings(callId: string, breakoutRoomSettings: BreakoutRoomsSettings): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        call.breakoutRooms = { ...call.breakoutRooms, breakoutRoomSettings: breakoutRoomSettings };
+      }
+    });
+  }
+
+  /* @conditional-compile-remove(breakout-rooms) */
+  public setBreakoutRoomDisplayName(callId: string, breakoutRoomDisplayName: string): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        call.breakoutRooms = { ...call.breakoutRooms, breakoutRoomDisplayName };
       }
     });
   }
@@ -706,7 +770,6 @@ export class CallContext {
           const existingStream = participant.videoStreams[stream.id];
           if (existingStream) {
             existingStream.isAvailable = stream.isAvailable;
-            /* @conditional-compile-remove(video-stream-is-receiving-flag) */
             existingStream.isReceiving = stream.isReceiving;
             existingStream.mediaStreamType = stream.mediaStreamType;
           } else {
@@ -737,7 +800,6 @@ export class CallContext {
     });
   }
 
-  /* @conditional-compile-remove(video-stream-is-receiving-flag) */
   public setRemoteVideoStreamIsReceiving(
     callId: string,
     participantKey: string,
@@ -800,7 +862,6 @@ export class CallContext {
             if (stream) {
               stream.mediaStreamType = newStream.mediaStreamType;
               stream.isAvailable = newStream.isAvailable;
-              /* @conditional-compile-remove(video-stream-is-receiving-flag) */
               stream.isReceiving = newStream.isReceiving;
             } else {
               participant.videoStreams[newStream.id] = newStream;
@@ -851,7 +912,9 @@ export class CallContext {
     });
   }
 
-  public setIncomingCall(call: IncomingCallState): void {
+  public setIncomingCall(
+    call: IncomingCallState | /* @conditional-compile-remove(one-to-n-calling) */ TeamsIncomingCallState
+  ): void {
     this.modifyState((draft: CallClientState) => {
       const existingCall = draft.incomingCalls[call.id];
       if (existingCall) {
@@ -1194,6 +1257,31 @@ export class CallContext {
   private setLatestError(target: CallErrorTarget, error: CallError): void {
     this.modifyState((draft: CallClientState) => {
       draft.latestErrors[target] = error;
+    });
+  }
+
+  /* @conditional-compile-remove(breakout-rooms) */
+  public setLatestNotification(callId: string, notification: CallNotification): void {
+    this._latestCallIdsThatPushedNotifications[notification.target] = callId;
+    this.modifyState((draft: CallClientState) => {
+      draft.latestNotifications[notification.target] = notification;
+    });
+  }
+
+  /* @conditional-compile-remove(breakout-rooms) */
+  public deleteLatestNotification(callId: string, notificationTarget: NotificationTarget): void {
+    let callIdToPushLatestNotification = this._latestCallIdsThatPushedNotifications[notificationTarget];
+    callIdToPushLatestNotification = callIdToPushLatestNotification
+      ? this._callIdHistory.latestCallId(callIdToPushLatestNotification)
+      : undefined;
+    // Only delete the notification if the call that pushed the notification is the same as the call that is trying
+    // to delete it.
+    if (callIdToPushLatestNotification !== callId) {
+      return;
+    }
+
+    this.modifyState((draft: CallClientState) => {
+      delete draft.latestNotifications[notificationTarget];
     });
   }
 }

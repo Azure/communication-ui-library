@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { _AttachmentUploadCardsStrings } from '../AttachmentUploadCards';
-/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+import { _AttachmentUploadCardsStrings } from '../Attachment/AttachmentUploadCards';
+/* @conditional-compile-remove(file-sharing-acs) */
 import { useLocale } from '../../localization';
 import { ParticipantState } from '../../types';
 
@@ -11,7 +11,7 @@ import { ParticipantState } from '../../types';
  * @returns attachment card strings
  */
 export const useLocaleAttachmentCardStringsTrampoline = (): _AttachmentUploadCardsStrings => {
-  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(file-sharing-acs) */
   return useLocale().strings.sendBox;
   return {
     removeAttachment: '',

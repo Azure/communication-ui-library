@@ -1,0 +1,73 @@
+import { Canvas, Description, Meta, Source, ArgTypes } from '@storybook/blocks';
+import { ControlBar } from '@azure/communication-react';
+import * as ControlBarStories from './index.stories';
+import AllButtonsControlBarExampleText from '!!raw-loader!./snippets/AllButtonsControlBar.snippet.tsx';
+import ControlBarLayoutExampleText from '!!raw-loader!./snippets/ControlBarLayout.snippet.tsx';
+import CustomButtonsExampleText from '!!raw-loader!./snippets/CustomButtons.snippet.tsx';
+import CustomControlBarStylesExampleText from '!!raw-loader!./snippets/CustomControlBarStyles.snippet.tsx';
+import DevicesButtonExampleText from '!!raw-loader!./snippets/DevicesButton.snippet.tsx';
+
+<Meta of={ControlBarStories} />
+
+# Control Bar
+
+A container for call control buttons. See [layouts](#layouts) for the different formats this control provides.
+
+## Importing
+
+```ts
+import { FluentThemeProvider, ControlBar } from '@azure/communication-react';
+import { DefaultButton } from '@fluentui/react';
+```
+
+## Example
+
+We recommend using our pre-defined buttons you can start find
+[here](./?path=/docs/components-controlbar-buttons-camera--docs) or `DefaultButton`, a
+[Button](https://developer.microsoft.com/fluentui#/controls/web/button) component from Fluent UI, as controls
+inside `ControlBar`. Pre-defined styles like `controlButtonStyles` or `controlButtonLabelStyles` can also be
+imported and used as `DefaultButton` styles for easy styling. `FluentThemeProvider` is needed around
+`ControlBar` to provide theming and icons. Learn more about theming [here](./?path=/docs/concepts-theming--docs).
+
+<Canvas of={ControlBarStories.AllButtonsControlBarExampleDocsOnly} source={{ code: AllButtonsControlBarExampleText }} />
+
+Note: In the example above, `menuProps` is a property of `Button`. The property type is
+[IContextualMenuProps](https://developer.microsoft.com/fluentui#/controls/web/contextualmenu#IContextualMenuProps),
+an interface for defining dropdown menu items.
+
+## Layouts
+
+You can change the layout of `ControlBar` by providing a preset layout to the `layout` prop. Preset layouts are
+`horizontal`, `vertical`, `dockedTop`, `dockedBottom`, `dockedLeft`, `dockedRight`, `floatingTop`,
+`floatingBottom`, `floatingLeft` and `floatingRight`.
+
+<Canvas of={ControlBarStories.ControlBarLayoutExampleDocsOnly} source={{ code: ControlBarLayoutExampleText }} />
+
+## Custom Control Bar Styles
+
+You can change the styles of the `ControlBar` by customizing its `styles` prop like in the example below.
+
+<Canvas
+  of={ControlBarStories.CustomControlBarStylesExampleDocsOnly}
+  source={{ code: CustomControlBarStylesExampleText }}
+/>
+
+## Custom Buttons
+
+You can also easily change the styles of included button components. They are built on Fluent UI `DefaultButton`
+and accept all the same props. In the example below we import `CameraButton` and `MicrophoneButton` for the 1st
+and 2nd buttons and style our own hang up button for the 3rd button. Learn more about styling
+[here](./?path=/docs/concepts-styling--docs).
+
+<Canvas of={ControlBarStories.CustomButtonsExampleDocsOnly} source={{ code: CustomButtonsExampleText }} />
+
+## Dropdown Devices Button
+
+The `DevicesButton` can be used for any dropdown items defined through `menuProps`. For more information, check
+out the [official Fluent UI documentation](https://developer.microsoft.com/fluentui#/controls/web/button)
+
+<Canvas of={ControlBarStories.DevicesButtonExampleDocsOnly} source={{ code: DevicesButtonExampleText }} />
+
+## Props
+
+<ArgTypes of={ControlBar} />

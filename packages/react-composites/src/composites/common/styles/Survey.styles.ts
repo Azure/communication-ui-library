@@ -1,12 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/* @conditional-compile-remove(end-of-call-survey) */
 import { Theme, mergeStyles } from '@fluentui/react';
-/* @conditional-compile-remove(end-of-call-survey) */
 import { _pxToRem } from '@internal/acs-ui-common';
 
-/* @conditional-compile-remove(end-of-call-survey) */
 /**
  * @private
  */
@@ -18,7 +15,6 @@ export const questionTextStyle = (theme: Theme): string =>
     color: theme.palette.neutralPrimary
   });
 
-/* @conditional-compile-remove(end-of-call-survey) */
 /**
  * @private
  */

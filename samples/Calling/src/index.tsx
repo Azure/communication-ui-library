@@ -19,10 +19,8 @@ initReactRenderTracker();
 createRoot(domNode).render(
   <React.StrictMode>
     <SwitchableFluentThemeProvider scopeId="SampleCallingApp">
-      <div className="wrapper">
-        <App />
-        <ShakeToSendLogs />
-      </div>
+      <App />
+      <ShakeToSendLogs />
     </SwitchableFluentThemeProvider>
   </React.StrictMode>
 );

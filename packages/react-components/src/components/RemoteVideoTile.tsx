@@ -62,14 +62,16 @@ export const _RemoteVideoTile = React.memo(
     onUnpinParticipant?: (userId: string) => void;
     onUpdateScalingMode?: (userId: string, scalingMode: ViewScalingMode) => void;
     isPinned?: boolean;
-    /* @conditional-compile-remove(spotlight) */ spotlightedParticipantUserIds?: string[];
-    /* @conditional-compile-remove(spotlight) */ isSpotlighted?: boolean;
-    /* @conditional-compile-remove(spotlight) */ onStartSpotlight?: (userIds: string[]) => void;
-    /* @conditional-compile-remove(spotlight) */ onStopSpotlight?: (userIds: string[]) => void;
-    /* @conditional-compile-remove(spotlight) */ maxParticipantsToSpotlight?: number;
+    spotlightedParticipantUserIds?: string[];
+    isSpotlighted?: boolean;
+    onStartSpotlight?: (userIds: string[]) => void;
+    onStopSpotlight?: (userIds: string[]) => void;
+    maxParticipantsToSpotlight?: number;
+    /* @conditional-compile-remove(soft-mute) */ onMuteParticipant?: (userId: string) => void;
     disablePinMenuItem?: boolean;
     toggleAnnouncerString?: (announcerString: string) => void;
     reactionResources?: ReactionResources;
+    onLongTouch?: (() => void) | undefined;
   }) => {
     const {
       isAvailable,
@@ -88,11 +90,12 @@ export const _RemoteVideoTile = React.memo(
       isPinned,
       onPinParticipant,
       onUnpinParticipant,
-      /* @conditional-compile-remove(spotlight) */ spotlightedParticipantUserIds,
-      /* @conditional-compile-remove(spotlight) */ isSpotlighted,
-      /* @conditional-compile-remove(spotlight) */ onStartSpotlight,
-      /* @conditional-compile-remove(spotlight) */ onStopSpotlight,
-      /* @conditional-compile-remove(spotlight) */ maxParticipantsToSpotlight,
+      spotlightedParticipantUserIds,
+      isSpotlighted,
+      onStartSpotlight,
+      onStopSpotlight,
+      maxParticipantsToSpotlight,
+      /* @conditional-compile-remove(soft-mute) */ onMuteParticipant,
       onUpdateScalingMode,
       disablePinMenuItem,
       toggleAnnouncerString,
@@ -140,11 +143,12 @@ export const _RemoteVideoTile = React.memo(
       onUpdateScalingMode,
       disablePinMenuItem,
       toggleAnnouncerString,
-      /* @conditional-compile-remove(spotlight) */ spotlightedParticipantUserIds,
-      /* @conditional-compile-remove(spotlight) */ isSpotlighted,
-      /* @conditional-compile-remove(spotlight) */ onStartSpotlight,
-      /* @conditional-compile-remove(spotlight) */ onStopSpotlight,
-      /* @conditional-compile-remove(spotlight) */ maxParticipantsToSpotlight
+      spotlightedParticipantUserIds,
+      isSpotlighted,
+      onStartSpotlight,
+      onStopSpotlight,
+      maxParticipantsToSpotlight,
+      /* @conditional-compile-remove(soft-mute) */ onMuteParticipant
     });
 
     const videoTileContextualMenuProps = useMemo(() => {
@@ -196,11 +200,18 @@ export const _RemoteVideoTile = React.memo(
       return displayName;
     };
 
-    const reactionOverlay = (
+    const formatInitialsName = (): string | undefined => {
+      if (remoteParticipant.displayName && attendeeRoleString) {
+        return _formatString(remoteParticipant.displayName, { AttendeeRole: attendeeRoleString });
+      }
+      return remoteParticipant.displayName;
+    };
+
+    const reactionOverlay = reactionResources && (
       <MeetingReactionOverlay
         overlayMode="grid-tiles"
         reaction={remoteParticipant.reaction}
-        reactionResources={reactionResources!}
+        reactionResources={reactionResources}
       />
     );
 
@@ -215,7 +226,7 @@ export const _RemoteVideoTile = React.memo(
         <VideoTile
           key={userId}
           userId={userId}
-          initialsName={remoteParticipant.displayName ?? ''}
+          initialsName={formatInitialsName() ?? ''}
           renderElement={renderVideoStreamElement}
           displayName={displayName}
           onRenderPlaceholder={onRenderAvatar}
@@ -231,12 +242,16 @@ export const _RemoteVideoTile = React.memo(
           participantState={participantState}
           {...videoTileContextualMenuProps}
           isPinned={props.isPinned}
-          onLongTouch={() =>
-            setDrawerMenuItemProps(
-              convertContextualMenuItemsToDrawerMenuItemProps(contextualMenuProps, () => setDrawerMenuItemProps([]))
-            )
+          onLongTouch={
+            props.onLongTouch
+              ? props.onLongTouch
+              : () =>
+                  setDrawerMenuItemProps(
+                    convertContextualMenuItemsToDrawerMenuItemProps(contextualMenuProps, () =>
+                      setDrawerMenuItemProps([])
+                    )
+                  )
           }
-          /* @conditional-compile-remove(spotlight) */
           isSpotlighted={isSpotlighted}
           overlay={reactionOverlay}
         />

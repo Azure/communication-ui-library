@@ -1,0 +1,47 @@
+{
+  "name": "@internal/acs-ui-javascript-loaders",
+  "entries": [
+    {
+      "date": "Tue, 06 Aug 2024 19:45:33 GMT",
+      "tag": "@internal/acs-ui-javascript-loaders_v1.19.0-beta.1",
+      "version": "1.19.0-beta.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@internal/acs-ui-javascript-loaders",
+            "comment": "Bump @internal/acs-ui-common to v1.19.0-beta.1",
+            "commit": "2a0be9b93dff44ba6cac2e5837a91e87dffe0f8e"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/acs-ui-javascript-loaders",
+            "comment": "Bump @internal/react-composites to v1.19.0-beta.1",
+            "commit": "2a0be9b93dff44ba6cac2e5837a91e87dffe0f8e"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 15 Jul 2024 18:16:40 GMT",
+      "tag": "@internal/acs-ui-javascript-loaders_v1.18.0",
+      "version": "1.18.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@internal/acs-ui-javascript-loaders",
+            "comment": "Bump @internal/acs-ui-common to v1.18.0",
+            "commit": "1961bc1b7b27ee99b97c8999898f951aa0dce051"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/acs-ui-javascript-loaders",
+            "comment": "Bump @internal/react-composites to v1.18.0",
+            "commit": "1961bc1b7b27ee99b97c8999898f951aa0dce051"
+          }
+        ]
+      }
+    }
+  ]
+}

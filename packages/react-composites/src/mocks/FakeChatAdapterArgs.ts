@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import { ChatParticipant, ChatThreadClient } from '@azure/communication-chat';
-import type { AttachmentMetadata } from '@internal/react-components';
+import type { AttachmentMetadata } from '@internal/acs-ui-common';
 
 /**
  * Type to represent a attachment upload the local participant will perform.
@@ -43,16 +43,6 @@ export type _FakeChatAdapterArgs = {
    */
   fileSharingEnabled?: boolean;
   /**
-   * Array of {@link AttachmentUpload} the local participant will perform when. Property `fileSharingEnabled`
-   * needs to be enabled.
-   */
-  attachmentUploads?: _MockAttachmentUpload[];
-  /**
-   * Determines if array of {@link AttachmentUpload} the local participant will perform in property `attachmentUploads`
-   * will fail. Property `fileSharingEnabled` needs to be enabled.
-   */
-  failFileDownload?: boolean;
-  /**
    * Determines if the first remote participant will send a fixed message with a shared attachment. Property
    * `fileSharingEnabled` needs to be enabled.
    */
@@ -65,10 +55,6 @@ export type _FakeChatAdapterArgs = {
    * Local server url
    */
   serverUrl?: string;
-  /**
-   * Overwrites the url of the inline image that the first remote participant will send.
-   */
-  inlineImageUrl?: string;
   /**
    * Determines if chat composite will be localized in French (France).
    */

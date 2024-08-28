@@ -1,7 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 import { DominantSpeakersInfo } from '@azure/communication-calling';
-
+/* @conditional-compile-remove(breakout-rooms) */
+import { BreakoutRoom } from '@azure/communication-calling';
 import { ParticipantCapabilities } from '@azure/communication-calling';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
@@ -13,16 +14,22 @@ import {
   RemoteParticipantState,
   LocalVideoStreamState,
   CallErrors,
-  DiagnosticsCallFeatureState
+  DiagnosticsCallFeatureState,
+  SpotlightCallFeatureState,
+  IncomingCallState
 } from '@internal/calling-stateful-client';
-/* @conditional-compile-remove(spotlight) */
-import { SpotlightCallFeatureState } from '@internal/calling-stateful-client';
+/* @conditional-compile-remove(one-to-n-calling) */
+import { TeamsIncomingCallState } from '@internal/calling-stateful-client';
 import { ReactionState } from '@internal/calling-stateful-client';
 import { CaptionsInfo } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(acs-close-captions) */
 import { CaptionsKind } from '@azure/communication-calling';
 import { RaisedHandState } from '@internal/calling-stateful-client';
 import { _SupportedCaptionLanguage, _SupportedSpokenLanguage } from '@internal/react-components';
+/* @conditional-compile-remove(teams-meeting-conference) */
+import { ConferencePhoneInfo } from '@internal/calling-stateful-client';
+/* @conditional-compile-remove(breakout-rooms) */
+import { CallNotifications } from '@internal/calling-stateful-client';
 
 /**
  * Common props used to reference calling declarative client state.
@@ -100,7 +107,6 @@ export const getLocalParticipantRaisedHand = (
   return state.calls[props.callId]?.raiseHand?.localParticipantRaisedHand;
 };
 
-/* @conditional-compile-remove(spotlight) */
 /**
  * @private
  */
@@ -169,6 +175,12 @@ export const getIdentifier = (state: CallClientState): string => toFlatCommunica
  * @private
  */
 export const getLatestErrors = (state: CallClientState): CallErrors => state.latestErrors;
+
+/* @conditional-compile-remove(breakout-rooms) */
+/**
+ * @private
+ */
+export const getLatestNotifications = (state: CallClientState): CallNotifications => state.latestNotifications;
 
 /**
  * @private
@@ -256,4 +268,44 @@ export const getSupportedSpokenLanguages = (
   props: CallingBaseSelectorProps
 ): _SupportedSpokenLanguage[] | undefined => {
   return state.calls[props.callId]?.captionsFeature.supportedSpokenLanguages as _SupportedSpokenLanguage[];
+};
+
+/* @conditional-compile-remove(teams-meeting-conference) */
+/** @private */
+export const getMeetingConferencePhones = (
+  state: CallClientState,
+  props: CallingBaseSelectorProps
+): ConferencePhoneInfo[] | undefined => {
+  return state.calls[props.callId]?.meetingConference?.conferencePhones;
+};
+
+/**
+ * selector for retrieving the incoming calls from state
+ * @returns the incoming calls in the call client state
+ * @private
+ */
+export const getIncomingCalls = (
+  state: CallClientState
+): IncomingCallState[] | /* @conditional-compile-remove(one-to-n-calling) */ TeamsIncomingCallState[] => {
+  return Object.values(state.incomingCalls);
+};
+
+/**
+ * selector for retrieving the incoming calls that have been removed from state
+ * @returns the incoming calls that have been removed
+ * @private
+ */
+export const getRemovedIncomingCalls = (
+  state: CallClientState
+): IncomingCallState[] | /* @conditional-compile-remove(one-to-n-calling) */ TeamsIncomingCallState[] => {
+  return Object.values(state.incomingCallsEnded);
+};
+
+/* @conditional-compile-remove(breakout-rooms) */
+/** @private */
+export const getAssignedBreakoutRoom = (
+  state: CallClientState,
+  props: CallingBaseSelectorProps
+): BreakoutRoom | undefined => {
+  return state.calls[props.callId]?.breakoutRooms?.assignedBreakoutRoom;
 };

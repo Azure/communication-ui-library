@@ -15,7 +15,6 @@ import { CallKind } from '@azure/communication-calling';
 import { EnvironmentInfo } from '@azure/communication-calling';
 import { EventEmitter } from 'events';
 import type { CallAdapter, CallAdapterState } from './adapter';
-/* @conditional-compile-remove(end-of-call-survey) */
 import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
 
 /**
@@ -192,21 +191,41 @@ export class _MockCallAdapter implements CallAdapter {
   public updateSelectedVideoBackgroundEffect(): void {
     throw new Error('updateSelectedVideoBackgroundEffect not implemented.');
   }
-  /* @conditional-compile-remove(end-of-call-survey) */ // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
+  startNoiseSuppressionEffect(): Promise<void> {
+    throw new Error('startNoiseSuppressionEffect not implemented.');
+  }
+
+  stopNoiseSuppressionEffect(): Promise<void> {
+    throw new Error('stopNoiseSuppressionEffect not implemented.');
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   submitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined> {
     throw Error('submitStarSurvey not implemented');
   }
-  /* @conditional-compile-remove(spotlight) */ // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   startSpotlight(userIds?: string[]): Promise<void> {
     throw Error('startSpotlight not implemented');
   }
-  /* @conditional-compile-remove(spotlight) */ // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   stopSpotlight(userIds?: string[]): Promise<void> {
     throw Error('stopSpotlight not implemented');
   }
-  /* @conditional-compile-remove(spotlight) */
   stopAllSpotlight(): Promise<void> {
     throw Error('stopAllSpotlight not implemented');
+  }
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  muteParticipant(userId: string): Promise<void> {
+    throw Error('muteParticipant not implemented');
+  }
+  /* @conditional-compile-remove(soft-mute) */
+  muteAllRemoteParticipants(): Promise<void> {
+    throw Error('muteAllRemoteParticipants not implemented');
+  }
+  /* @conditional-compile-remove(breakout-rooms) */
+  returnFromBreakoutRoom(): Promise<void> {
+    throw Error('returnFromBreakoutRoom not implemented');
   }
 }
 
@@ -238,7 +257,6 @@ const createDefaultCallAdapterState = (role?: ParticipantRole): CallAdapterState
       remoteParticipants: {},
       remoteParticipantsEnded: {},
       raiseHand: { raisedHands: [] },
-      /* @conditional-compile-remove(ppt-live) */
       pptLive: { isActive: false },
       localParticipantReaction: undefined,
       role,
@@ -278,7 +296,10 @@ const createDefaultCallAdapterState = (role?: ParticipantRole): CallAdapterState
       deviceAccess: { video: true, audio: true }
     },
     isTeamsCall: false,
+    isTeamsMeeting: false,
     isRoomsCall: false,
-    latestErrors: {}
+    latestErrors: {},
+    /* @conditional-compile-remove(breakout-rooms) */
+    latestNotifications: {}
   };
 };

@@ -7,7 +7,6 @@ import { ParticipantState } from './ParticipantListParticipant';
 
 import { RaisedHand } from './ParticipantListParticipant';
 import { Reaction } from './ParticipantListParticipant';
-/* @conditional-compile-remove(spotlight) */
 import { Spotlight } from './ParticipantListParticipant';
 /**
  * Scaling mode of a {@link VideoGalleryStream}.
@@ -44,7 +43,6 @@ export type VideoGalleryParticipant = {
   videoStream?: VideoGalleryStream;
   /** Whether participant is screen sharing or not */
   isScreenSharingOn?: boolean;
-  /* @conditional-compile-remove(spotlight) */
   /** Whether participant is spotlighted **/
   spotlight?: Spotlight;
 };
@@ -103,6 +101,8 @@ export interface VideoGalleryLocalParticipant extends VideoGalleryParticipant {
    *
    * */
   reaction?: Reaction;
+  /** Video stream of shared screen */
+  screenShareStream?: VideoGalleryStream;
 }
 
 /**

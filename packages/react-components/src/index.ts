@@ -63,7 +63,6 @@ export type {
 
 export type { RaisedHand } from './types';
 
-/* @conditional-compile-remove(spotlight) */
 export type { Spotlight } from './types';
 
 export type { Reaction, ReactionResources, ReactionSprite } from './types';
@@ -78,9 +77,9 @@ export { _spokenLanguageToCaptionLanguage } from './types';
 
 /* @conditional-compile-remove(data-loss-prevention) */
 export type { BlockedMessage } from './types';
-/* @conditional-compile-remove(end-of-call-survey) */
+
 export type { SurveyIssues } from './types';
-/* @conditional-compile-remove(end-of-call-survey) */
+
 export type { SurveyIssuesHeadingStrings } from './types';
-/* @conditional-compile-remove(end-of-call-survey) */
+
 export type { CallSurveyImprovementSuggestions } from './types';

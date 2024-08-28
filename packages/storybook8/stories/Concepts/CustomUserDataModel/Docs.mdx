@@ -1,0 +1,42 @@
+import { Meta } from '@storybook/addon-docs';
+
+<Meta title="Concepts/Custom User Data Model" />
+
+# Custom User Data Model
+
+Azure Communication Services uses an identity agnostic model where developers can [bring their own identities](https://docs.microsoft.com/azure/communication-services/concepts/identity-model).
+Developers can bring their own data model and link it to Azure Communication Services identities.
+A developers data model for a user most likely includes information such as their display name, profile picture or avatar and other details. Information used by developers to power their own applications and platforms.
+The UI Library makes it simple for developers to inject that user data model into the UI Components, so that when rendered they show a users provided information rather than generic information that Azure Communication Services has.
+UI Library enables these capabilities for both UI Components and Composites. Below, we will introduce the patterns to customize user data model for both types of components.
+
+## UI Components
+
+For UI Components, user data model can be customized for each individual component.
+This provides developers the most flexibility when building truly custom experiences that might expose and reflect different parts of a users persona.
+User data model injection is available for those components that expose user information, particularly their display name and their avatar.
+Below you will find a table with the components that support injection and the pattern/method used to inject information.
+
+| UI Components                                                                      | Display Name                                       | Avatar         |
+| ---------------------------------------------------------------------------------- | -------------------------------------------------- | -------------- |
+| [Video Tile](./?path=/story/ui-components-videotile--video-tile)                   | displayName                                        | placeholder    |
+| [Video Gallery](./?path=/story/ui-components-videogallery--video-gallery)          | onRenderRemoteVideoTile and onRenderLocalVideoTile | onRenderAvatar |
+| [Message Thread](./?path=/story/ui-components-messagethread--message-thread)       | onRenderMessage                                    | onRenderAvatar |
+| [Typing Indicator](./?path=/story/ui-components-typingindicator--typing-indicator) | onRenderUsers                                      | onRenderUsers  |
+| [Participant Item](./?path=/story/ui-components-participantitem--participant-item) | displayName                                        | onRenderAvatar |
+| [Participant List](./?path=/story/ui-components-participantlist--participant-list) | onRenderParticipant                                | onRenderAvatar |
+
+For additional examples on how this user data model injection pattern works, visit the individual component pages for each component.
+
+## Composites
+
+For Composites, user data model can be customized at a composite level.
+As turn-key experience, developers can provide a single data model mapping to the composite and the composite takes care of rendering the correct information for a user.
+Composites support user data model injection for display name and avatar across both chat and calling composites.
+
+| Composite                                                                   | Display Name                                                              | Avatar                                                                                                      |
+| --------------------------------------------------------------------------- | ------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| [CallComposite](./?path=/story/composites-call-basicexample--basic-example) | [displayName](./?path=/story/composites-call-basicexample--basic-example) | [onFetchAvatarPersonaData](./?path=/docs/composites-call-customdatamodelexample--custom-data-model-example) |
+| [ChatComposite](./?path=/story/composites-chat-basicexample--basic-example) | [displayName](./?path=/story/composites-chat-basicexample--basic-example) | [onFetchAvatarPersonaData](./?path=/docs/composites-chat-customdatamodelexample--custom-data-model-example) |
+
+For additional examples on how this user data model injection pattern works, visit the individual composite pages.

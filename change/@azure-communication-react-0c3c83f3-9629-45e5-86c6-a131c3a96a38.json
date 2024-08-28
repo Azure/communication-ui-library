@@ -1,9 +1,0 @@
-{
-  "type": "minor",
-  "area": "feature",
-  "workstream": "RTE",
-  "comment": "The Web UI RichTextSendBox and MessageThread components now support rich text formatting to generate HTML content for chat messages. This feature includes support for: Different text styles (bold, italic and underline)Bulleted and numbered listsChanging indentation for textAdding and updating tables",
-  "packageName": "@azure/communication-react",
-  "email": "98852890+vhuseinova-msft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

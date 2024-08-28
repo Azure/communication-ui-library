@@ -15,27 +15,24 @@ export const richTextEditorStyle = (props: { minHeight: string; maxHeight: strin
     minHeight: props.minHeight,
     maxHeight: props.maxHeight,
     maxWidth: '100%',
-    // this is needed to fix an issue when text has some indentation, indentation uses blockquote tag and
-    // it gets both horizontal margins because of the user agent stylesheet
-    // remove this code when RoosterJS content model packages are used as they use different approach for indentation
-    '& blockquote': {
-      marginInlineEnd: '0'
-    }
+    paddingTop: '0.5rem'
   });
 };
 
 /**
  * @private
  */
-export const richTextEditorWrapperStyle = (theme: Theme, addTopOffset: boolean): string => {
+export const richTextEditorWrapperStyle = (theme: Theme): string => {
   return mergeStyles({
-    paddingTop: `${addTopOffset ? '0.5rem' : '0'}`,
     paddingInlineStart: `0.75rem`,
     paddingInlineEnd: `0.75rem`,
-    lineHeight: '1.25rem',
     maxWidth: '100%',
     color: theme.palette.neutralPrimary,
-
+    '& img': {
+      margin: '0.2rem',
+      maxWidth: '100% !important', // Remove !important when resolving issue where rooster sets width/height in style attribute incorrectly
+      height: 'auto !important' // Remove !important when resolving issue where rooster sets width/height in style attribute incorrectly
+    },
     '& table': {
       background: 'transparent',
       borderCollapse: 'collapse',
@@ -45,11 +42,11 @@ export const richTextEditorWrapperStyle = (theme: Theme, addTopOffset: boolean):
 
       '& tr': {
         background: 'transparent',
-        border: `1px solid ${theme.palette.neutralLight}`,
+        border: `1px solid ${theme.palette.neutralSecondary}`,
 
         '& td': {
           background: 'transparent',
-          border: `1px solid ${theme.palette.neutralLight}`,
+          border: `1px solid ${theme.palette.neutralSecondary}`,
           wordBreak: 'normal',
           padding: '0.125rem 0.25rem',
           verticalAlign: 'top'
@@ -114,7 +111,7 @@ const ribbonOverflowButtonRootStyles = (theme: Theme): IStyle => {
       },
       '.ribbon-table-button-regular-icon': {
         display: 'inline-block',
-        margin: '-0.25rem 0.25rem 0 0.25rem',
+        margin: '0 0.25rem 0 0.25rem',
         width: '1.25rem',
         height: '1.25rem'
       },
@@ -125,16 +122,26 @@ const ribbonOverflowButtonRootStyles = (theme: Theme): IStyle => {
   };
 };
 
-const ribbonButtonRootStyles = (theme: Theme): IStyle => {
+const ribbonButtonRootStyles = (iconColor: string, hoverIconColor: string): IStyle => {
   return {
     backgroundColor: 'transparent',
     selectors: {
-      // Icon's color doesn't work here because of the specificity
+      // media query applies only if the device allows real hover interactions
+      // and hover styles are not applied on touch- only devices where the hover state cannot be accurately detected
+      '@media (hover: hover)': {
+        ':hover .ms-Button-icon': {
+          color: hoverIconColor
+        },
+        ':hover .ms-Button-menuIcon': {
+          color: hoverIconColor
+        }
+      },
+      // the classes needs here to apply to styles for icons because of the specificity
       '.ms-Button-icon': {
-        color: theme.palette.themePrimary
+        color: iconColor
       },
       '.ms-Button-menuIcon': {
-        color: theme.palette.themePrimary
+        color: iconColor
       }
     }
   };
@@ -143,18 +150,19 @@ const ribbonButtonRootStyles = (theme: Theme): IStyle => {
 /**
  * @private
  */
-export const ribbonButtonStyle = (theme: Theme): Partial<IButtonStyles> => {
+export const toolbarButtonStyle = (theme: Theme): Partial<IButtonStyles> => {
   return {
-    icon: { color: theme.palette.neutralPrimary, height: 'auto' },
-    menuIcon: { color: theme.palette.neutralPrimary, height: 'auto' },
+    icon: { color: theme.palette.neutralPrimary, height: 'auto', paddingTop: '0.25rem' },
+    menuIcon: { color: theme.palette.neutralPrimary, height: 'auto', paddingTop: '0.25rem' },
     root: { minWidth: 'auto', backgroundColor: 'transparent' },
-    rootChecked: ribbonButtonRootStyles(theme),
-    rootHovered: ribbonButtonRootStyles(theme),
-    rootCheckedHovered: ribbonButtonRootStyles(theme),
-    rootCheckedPressed: ribbonButtonRootStyles(theme),
-    rootPressed: ribbonButtonRootStyles(theme),
-    rootExpanded: ribbonButtonRootStyles(theme),
-    rootExpandedHovered: ribbonButtonRootStyles(theme)
+    rootChecked: ribbonButtonRootStyles(theme.palette.themePrimary, theme.palette.themePrimary),
+    // there is a bug for Android where the press action is considered hover sometimes
+    rootHovered: ribbonButtonRootStyles(theme.palette.neutralPrimary, theme.palette.themePrimary),
+    rootCheckedHovered: ribbonButtonRootStyles(theme.palette.themePrimary, theme.palette.themePrimary),
+    rootCheckedPressed: ribbonButtonRootStyles(theme.palette.themePrimary, theme.palette.themePrimary),
+    rootPressed: ribbonButtonRootStyles(theme.palette.themePrimary, theme.palette.themePrimary),
+    rootExpanded: ribbonButtonRootStyles(theme.palette.themePrimary, theme.palette.themePrimary),
+    rootExpandedHovered: ribbonButtonRootStyles(theme.palette.themePrimary, theme.palette.themePrimary)
   };
 };
 
@@ -166,7 +174,7 @@ const rootRibbonTableButtonStyle = (theme: Theme): IStyle => {
 /**
  * @private
  */
-export const ribbonTableButtonStyle = (theme: Theme): Partial<IButtonStyles> => {
+export const toolbarTableButtonStyle = (theme: Theme): Partial<IButtonStyles> => {
   return {
     icon: { height: 'auto' },
     menuIcon: { height: 'auto' },
@@ -187,14 +195,14 @@ const ribbonTableButtonRootStyles = (theme: Theme, isSelected: boolean): IStyle 
       '.ribbon-table-button-regular-icon': {
         width: '1.25rem',
         height: '1.25rem',
-        margin: '-0.25rem 0.25rem 0 0.25rem',
+        margin: '0 0.25rem 0 0.25rem',
         color: theme.palette.neutralPrimary,
         display: isSelected ? 'none' : 'inline-block'
       },
       '.ribbon-table-button-filled-icon': {
         width: '1.25rem',
         height: '1.25rem',
-        margin: '-0.25rem 0.25rem 0 0.25rem',
+        margin: '0 0.25rem 0 0.25rem',
         color: theme.palette.themePrimary,
         display: isSelected ? 'inline-block' : 'none'
       }
@@ -209,16 +217,16 @@ export const ribbonDividerStyle = (theme: Theme): string => {
   return mergeStyles({
     color: theme.palette.neutralQuaternaryAlt,
     margin: '0 -0.5rem',
-    paddingTop: '0.5rem'
+    paddingTop: '0.25rem'
   });
 };
 
 /**
  * @private
  */
-export const ribbonStyle: Partial<ICommandBarStyles> = {
+export const richTextToolbarStyle: Partial<ICommandBarStyles> = {
   // Override for the default white color of the Ribbon component
-  root: { backgroundColor: 'transparent' }
+  root: { backgroundColor: 'transparent', padding: '0.25rem 0 0 0', height: '2rem' }
 };
 
 /**
@@ -255,14 +263,11 @@ export const sendBoxRichTextEditorStyle = (isExpanded: boolean): RichTextEditorS
  */
 export const insertTableMenuCellButtonStyles = (theme: Theme): IStyle => {
   return {
-    width: '1rem',
-    height: '1rem',
-    border: `solid 0.0625rem ${theme.palette.neutralTertiaryAlt}`,
-    display: 'inline-block',
+    width: '24px',
+    height: '24px',
+    border: `solid 1px ${theme.palette.neutralSecondaryAlt}`,
     cursor: 'pointer',
-    background: 'transparent',
-    // include border into width value as the parent element has fixed width
-    boxSizing: 'border-box'
+    background: 'transparent'
   };
 };
 
@@ -271,7 +276,8 @@ export const insertTableMenuCellButtonStyles = (theme: Theme): IStyle => {
  */
 export const insertTableMenuCellButtonSelectedStyles = (theme: Theme): IStyle => {
   return {
-    background: theme.palette.themePrimary
+    background: theme.palette.themePrimary,
+    border: `solid 1px ${theme.palette.themeLighterAlt}`
   };
 };
 
@@ -279,7 +285,7 @@ export const insertTableMenuCellButtonSelectedStyles = (theme: Theme): IStyle =>
  * @private
  */
 export const insertTableMenuTablePane = mergeStyles({
-  padding: '0.5rem 0.625rem 0.75rem 0.625rem',
+  padding: '8px 10px 12px 10px',
   boxSizing: 'content-box',
   minWidth: 'auto'
 });
@@ -289,12 +295,9 @@ export const insertTableMenuTablePane = mergeStyles({
  */
 export const insertTableMenuFocusZone = (theme: Theme): string => {
   return mergeStyles({
-    lineHeight: '12px',
-    // fixed width is required to show columns in a grid correctly
-    width: '5rem',
-    border: `solid 0.0625rem ${theme.palette.neutralTertiaryAlt}`,
-    // don't include border into width value as otherwise it may be broken when zoom value is changed
-    boxSizing: 'content-box'
+    display: 'inline-grid',
+    gridTemplateColumns: 'auto auto auto auto auto',
+    border: `solid 1px ${theme.palette.neutralSecondaryAlt}`
   });
 };
 

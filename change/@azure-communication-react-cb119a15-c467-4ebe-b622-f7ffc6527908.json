@@ -1,9 +1,0 @@
-{
-  "type": "minor",
-  "area": "improvement",
-  "workstream": "VideoGallery",
-  "comment": "Allow always showing background color for display name containers in VideoTiles",
-  "packageName": "@azure/communication-react",
-  "email": "edwardlee@microsoft.com",
-  "dependentChangeType": "patch"
-}

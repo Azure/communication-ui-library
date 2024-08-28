@@ -10,6 +10,7 @@ import {
 import { COMPONENT_LOCALE_EN_US } from '../../../localization/locales';
 import userEvent from '@testing-library/user-event';
 import { registerIcons } from '@fluentui/react';
+import { modifyInlineImagesInContentString } from '../../utils/SendBoxUtils';
 
 const icons: {
   [key: string]: string | JSX.Element;
@@ -39,7 +40,7 @@ describe('ChatMessageComponentAsRichTextEditBox tests', () => {
   const onCancelMock = jest.fn();
   const onSubmitMock = jest.fn();
   const text = 'Hello World!';
-  const htmlContent = `<div style="background-color: transparent;">${text}</div>`;
+  const htmlContent = `<div>${text}</div>`;
   const messageId = '1';
 
   const localeStrings = COMPONENT_LOCALE_EN_US.strings;
@@ -109,11 +110,14 @@ describe('ChatMessageComponentAsRichTextEditBox tests', () => {
       fail('Submit button not found');
     }
     fireEvent.click(submitButton);
+    await modifyInlineImagesInContentString('<div>Hello World! Test</div>', []);
 
     expect(onSubmitMock).toHaveBeenCalledWith(
-      '<div style="background-color: transparent;">Hello World! Test</div>',
-      undefined,
-      /* @conditional-compile-remove(attachment-upload) */ { attachmentMetadata: undefined }
+      '<div>Hello World! Test</div>',
+      // in beta, attachment metadata is undefined
+      // because there is no attachment associated with this message
+      // in stable, attachment metadata field do not exist
+      /* @conditional-compile-remove(file-sharing-acs) */ []
     );
   });
 });

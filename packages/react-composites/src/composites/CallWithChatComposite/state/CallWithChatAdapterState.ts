@@ -10,12 +10,14 @@ import { VideoBackgroundImage, VideoBackgroundEffect } from '../../CallComposite
 
 import { VideoBackgroundEffectsDependency } from '@internal/calling-component-bindings';
 import { ChatAdapterState } from '../../ChatComposite';
-/* @conditional-compile-remove(attachment-upload) */
-import { _AttachmentUploadsUiState } from '../../ChatComposite';
 import { AdapterErrors } from '../../common/adapters';
+/* @conditional-compile-remove(breakout-rooms) */
+import { AdapterNotifications } from '../../common/adapters';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
 import { ReactionResources } from '@internal/react-components';
+/* @conditional-compile-remove(DNS) */
+import { DeepNoiseSuppressionEffectDependency } from '@internal/calling-component-bindings';
 
 /**
  * UI state pertaining to the {@link CallWithChatComposite}.
@@ -35,15 +37,6 @@ export interface CallWithChatAdapterUiState {
    * @public
    */
   page: CallCompositePage;
-  /* @conditional-compile-remove(attachment-upload) */
-  /**
-   * Files being uploaded by a user in the current thread.
-   * Should be set to null once the upload is complete.
-   * Array of type {@link _AttachmentUploadsUiState}
-   *
-   * @internal
-   */
-  _attachmentUploads?: _AttachmentUploadsUiState;
   /* @conditional-compile-remove(unsupported-browser) */
   /**
    * State to track whether the end user has opted in to using a
@@ -71,12 +64,17 @@ export interface CallWithChatClientState {
   chat?: ChatThreadClientState;
   /** Latest call error encountered for each operation performed via the adapter. */
   latestCallErrors: AdapterErrors;
+  /* @conditional-compile-remove(breakout-rooms) */
+  /** Latest call notifications encountered in the call client state via the adapter. */
+  latestCallNotifications: AdapterNotifications;
   /** Latest chat error encountered for each operation performed via the adapter. */
   latestChatErrors: AdapterErrors;
   /** State of available and currently selected devices */
   devices: DeviceManagerState;
   /** State of whether the active call is a Teams interop call */
   isTeamsCall: boolean;
+  /** State of whether the active call is a Teams interop meeting */
+  isTeamsMeeting: boolean;
   /* @conditional-compile-remove(PSTN-calls) */
   /** alternateCallerId for PSTN call */
   alternateCallerId?: string | undefined;
@@ -89,6 +87,9 @@ export interface CallWithChatClientState {
 
   /** Dependency to be injected for video background effects */
   onResolveVideoEffectDependency?: () => Promise<VideoBackgroundEffectsDependency>;
+  /* @conditional-compile-remove(DNS) */
+  /** Dependency to be injected for deep noise suppression effect. */
+  onResolveDeepNoiseSuppressionDependency?: () => Promise<DeepNoiseSuppressionEffectDependency>;
 
   /** State to track the selected video background effect */
   selectedVideoBackgroundEffect?: VideoBackgroundEffect;
@@ -124,16 +125,19 @@ export function callWithChatAdapterStateFromBackingStates(callAdapter: CallAdapt
     devices: callAdapterState.devices,
     isLocalPreviewMicrophoneEnabled: callAdapterState.isLocalPreviewMicrophoneEnabled,
     isTeamsCall: callAdapterState.isTeamsCall,
+    isTeamsMeeting: callAdapterState.isTeamsMeeting,
     latestCallErrors: callAdapterState.latestErrors,
+    /* @conditional-compile-remove(breakout-rooms) */
+    latestCallNotifications: callAdapterState.latestNotifications,
     latestChatErrors: {},
-    /* @conditional-compile-remove(attachment-upload) */
-    _attachmentUploads: {},
     /* @conditional-compile-remove(PSTN-calls) */
     alternateCallerId: callAdapterState.alternateCallerId,
     /* @conditional-compile-remove(unsupported-browser) */
     environmentInfo: callAdapterState.environmentInfo,
     videoBackgroundImages: callAdapterState.videoBackgroundImages,
     onResolveVideoEffectDependency: callAdapterState.onResolveVideoEffectDependency,
+    /* @conditional-compile-remove(DNS) */
+    onResolveDeepNoiseSuppressionDependency: callAdapterState.onResolveDeepNoiseSuppressionDependency,
     selectedVideoBackgroundEffect: callAdapterState.selectedVideoBackgroundEffect,
     /* @conditional-compile-remove(hide-attendee-name) */
     /** Hide attendee names in teams meeting */
@@ -152,9 +156,7 @@ export function mergeChatAdapterStateIntoCallWithChatAdapterState(
   return {
     ...existingCallWithChatAdapterState,
     chat: chatAdapterState.thread,
-    latestChatErrors: chatAdapterState.latestErrors,
-    /* @conditional-compile-remove(attachment-upload) */
-    _attachmentUploads: chatAdapterState._attachmentUploads
+    latestChatErrors: chatAdapterState.latestErrors
   };
 }
 
@@ -174,11 +176,16 @@ export function mergeCallAdapterStateIntoCallWithChatAdapterState(
     call: callAdapterState.call,
     isLocalPreviewMicrophoneEnabled: callAdapterState.isLocalPreviewMicrophoneEnabled,
     isTeamsCall: callAdapterState.isTeamsCall,
+    isTeamsMeeting: callAdapterState.isTeamsMeeting,
     latestCallErrors: callAdapterState.latestErrors,
+    /* @conditional-compile-remove(breakout-rooms) */
+    latestCallNotifications: callAdapterState.latestNotifications,
 
     videoBackgroundImages: callAdapterState.videoBackgroundImages,
 
     onResolveVideoEffectDependency: callAdapterState.onResolveVideoEffectDependency,
+    /* @conditional-compile-remove(DNS) */
+    onResolveDeepNoiseSuppressionDependency: callAdapterState.onResolveDeepNoiseSuppressionDependency,
 
     selectedVideoBackgroundEffect: callAdapterState.selectedVideoBackgroundEffect
   };

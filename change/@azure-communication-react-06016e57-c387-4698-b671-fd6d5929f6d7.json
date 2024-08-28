@@ -1,9 +1,0 @@
-{
-  "type": "minor",
-  "area": "improvement",
-  "workstream": "Storybook 8 Migration",
-  "comment": "Add storybook 8 packlet to repository",
-  "packageName": "@azure/communication-react",
-  "email": "3941071+emlynmac@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

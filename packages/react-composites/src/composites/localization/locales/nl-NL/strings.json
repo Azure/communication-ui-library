@@ -20,6 +20,7 @@
     "complianceBannerTranscriptionStopped": "Transcriptie is gestopt.",
     "configurationPageTitle": "Een oproep starten",
     "copyInviteLinkButtonLabel": "Uitnodigingskoppeling kopiëren",
+    "copyInviteLinkButtonActionedLabel": "De koppeling is gekopieerd",
     "copyInviteLinkActionedAriaLabel": "Uitnodigingskoppeling gekopieerd",
     "defaultPlaceHolder": "Een optie selecteren",
     "dismissSidePaneButtonLabel": "Sluiten",
@@ -134,6 +135,7 @@
     "dtmfDialerButtonTooltipOff": "Toetsenblok verbergen",
     "dtmfDialerMoreButtonLabelOn": "Toetsenblok weergeven",
     "dtmfDialerMoreButtonLabelOff": "Toetsenblok verbergen",
+    "phoneCallMoreButtonLabel": "Oproep",
     "spokenLanguageStrings": {
       "ar-ae": "Arabisch - Verenigde Arabische Emiraten",
       "ar-sa": "Arabisch - Saudi-Arabië",
@@ -244,6 +246,10 @@
       "shareScreen": {
         "lostDueToRoleChangeToAttendee": "Uw rol is gewijzigd. Sommige acties, zoals het delen van inhoud, zijn niet beschikbaar voor u.",
         "grantedDueToRoleChangeToPresenter": "U bent een presentator. U kunt inhoud delen en de vergadering vergemakkelijken."
+      },
+      "hideAttendeeNames": {
+        "hideAttendeeNameAttendee": "Uw naam is verborgen voor andere genodigden. Organisatoren en presentatoren kunnen uw echte naam zien.",
+        "hideAttendeeNamePresenter": "Namen van genodigden zijn verborgen. Alleen organisatoren en presentatoren kunnen namen zien om de privacy van deelnemers te beschermen."
       }
     },
     "surveyTitle": "Help mee met verbeteren",
@@ -259,7 +265,6 @@
     "tagsSurveyQuestion": "Wat had beter kunnen zijn?",
     "tagsSurveyTextFieldDefaultText": "Overig, geef een toelichting",
     "tagsSurveyHelperText": "Controleer eventuele problemen die u hebt ondervonden",
-    "surveyTextboxDefaultText": "Overige, geef een toelichting",
     "endOfSurveyText": "Hartelijk dank voor uw feedback.",
     "surveyIssues": {
       "overallRating": {
@@ -301,7 +306,7 @@
         "otherIssues": "Ik had andere problemen met het delen van het scherm in dit gesprek"
       }
     },
-    "SurveyIssuesHeadingStrings": {
+    "surveyIssuesHeadingStrings": {
       "overallRating": "Algemeen",
       "audioRating": "Audio",
       "videoRating": "Video",
@@ -325,17 +330,32 @@
     },
     "exitSpotlightButtonLabel": "Spotlight afsluiten",
     "exitSpotlightButtonTooltip": "Spotlight afsluiten",
-    "hangUpConfirmButtonLabel": "Bevestigen",
+    "leaveConfirmButtonLabel": "Verlaten",
+    "endCallConfirmButtonLabel": "Gesprek beëindigen",
     "hangUpCancelButtonLabel": "Annuleren",
     "leaveConfirmDialogTitle": "Het gesprek verlaten?",
     "leaveConfirmDialogContent": "Weet u zeker dat u het gesprek wilt verlaten?",
     "endCallConfirmDialogTitle": "Het gesprek beëindigen?",
     "endCallConfirmDialogContent": "U beëindigt het gesprek voor iedereen.",
-    "invalidMeetingIdentifier": "Ongeldige vergaderings-id of wachtwoordcode"
+    "invalidMeetingIdentifier": "Ongeldige vergaderings-id of wachtwoordcode",
+    "pinParticipantMenuLabel": "Voor mij vastmaken",
+    "pinParticipantLimitReachedMenuLabel": "Pin (limiet bereikt)",
+    "unpinParticipantMenuLabel": "Losmaken",
+    "pinParticipantMenuItemAriaLabel": "Vastmaken",
+    "unpinParticipantMenuItemAriaLabel": "Losmaken",
+    "muteAllMenuLabel": "Allen dempen",
+    "muteAllDialogTitle": "Iedereen dempen?",
+    "muteAllDialogContent": "Hiermee wordt iedereen in de vergadering gedempt, behalve u.",
+    "muteAllConfirmButtonLabel": "Allen dempen",
+    "muteAllCancelButtonLabel": "Annuleren"
   },
   "chat": {
     "chatListHeader": "In deze chat",
-    "uploadAttachment": "Bijlage uploaden"
+    "uploadAttachment": "Bijlage uploaden",
+    "uploadImageDataNotProvided": "Er zijn geen afbeeldingsgegevens opgegeven.",
+    "uploadImageIsTooLarge": "Afbeelding is te groot. Kies een optie die kleiner is dan {maxImageSize} MB.",
+    "uploadImageExtensionIsNotAllowed": "Het uploaden van {imageExtension} afbeelding is niet toegestaan.",
+    "uploadImageFailed": "Kan afbeelding niet uploaden. Probeer het later opnieuw."
   },
   "callWithChat": {
     "chatButtonLabel": "Chatten",
@@ -345,6 +365,7 @@
     "chatButtonTooltipOpen": "Chat weergeven",
     "chatPaneTitle": "Chatten",
     "copyInviteLinkButtonLabel": "Uitnodigingskoppeling kopiëren",
+    "copyInviteLinkButtonActionedLabel": "De koppeling is gekopieerd",
     "copyInviteLinkActionedAriaLabel": "Uitnodigingskoppeling gekopieerd",
     "dismissSidePaneButtonLabel": "Sluiten",
     "moreDrawerAudioDeviceMenuTitle": "Audioapparaat",
@@ -360,6 +381,8 @@
     "selectedPeopleButtonLabel": "Knop Personen geselecteerd",
     "peopleButtonTooltipOpen": "Deelnemers weergeven",
     "peopleButtonTooltipClose": "Deelnemers verbergen",
+    "peopleButtonTooltipOpenAriaLabel": "Knop Personen, Deelnemers weergeven",
+    "peopleButtonTooltipCloseAriaLabel": "Knop Personen, Deelnemers verbergen",
     "peoplePaneSubTitle": "In dit gesprek",
     "peoplePaneTitle": "Personen",
     "pictureInPictureTileAriaLabel": "Videofeeds. Klik om terug te keren naar het oproepscherm.",

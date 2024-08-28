@@ -47,6 +47,10 @@ export type CommonCallControlOptions = {
          * @defaultValue false
          */
         hangUpForEveryone?: false | 'endCallOptions';
+        /**
+         * Wether to disable the end call confirmation modal.
+         */
+        disableEndCallModal?: boolean;
       };
   /**
    * Show or Hide Microphone button during a call.
@@ -106,7 +110,6 @@ export type CommonCallControlOptions = {
    * Show or hide the dialpad button in the composite control bar.
    */
   dtmfDialerButton?: boolean | { disabled: boolean };
-  /* @conditional-compile-remove(spotlight) */
   /**
    * Show or hide the exit spotlight button in the composite control bar when local participant is spotlighted.
    */
@@ -117,4 +120,10 @@ export type CommonCallControlOptions = {
    * @defaultValue true
    */
   captionsButton?: boolean;
+  /* @conditional-compile-remove(teams-meeting-conference) */
+  /**
+   * Show, meeting conference phone information.
+   * @defaultValue true
+   */
+  teamsMeetingPhoneCallButton?: boolean;
 };

@@ -24,38 +24,46 @@
     "placeholderText": "メッセージを入力",
     "textTooLong": "メッセージの長さが上限を超えています。",
     "sendButtonAriaLabel": "メッセージの送信",
-    "attachmentUploadsPendingError": "アップロード中です... お待ちください。",
+    "attachmentUploadsPendingError": "ファイルをアップロードしています。お待ちください。",
     "removeAttachment": "ファイルの削除",
     "uploading": "アップロード中",
-    "uploadCompleted": "アップロードが完了しました"
+    "uploadCompleted": "アップロードが完了しました",
+    "attachmentMoreMenu": "その他のオプション"
   },
   "richTextSendBox": {
     "placeholderText": "メッセージを入力してください",
     "textTooLong": "メッセージの長さが上限を超えています。",
     "sendButtonAriaLabel": "メッセージの送信",
-    "attachmentUploadsPendingError": "アップロード中...お待ちください。",
+    "attachmentUploadsPendingError": "ファイルをアップロードしています。お待ちください。",
+    "imageUploadsPendingError": "画像をアップロードしています。お待ちください。",
     "removeAttachment": "ファイルを削除します",
     "uploading": "アップロード中",
     "uploadCompleted": "アップロード完了",
-    "boldTooltip": "太字",
-    "italicTooltip": "斜体",
-    "underlineTooltip": "下線",
-    "bulletListTooltip": "箇条書き",
-    "numberListTooltip": "番号付きリスト",
-    "increaseIndentTooltip": "インデントを増やす",
-    "decreaseIndentTooltip": "インデントを減らす",
-    "insertTableTooltip": "表の挿入",
+    "richTextBoldTooltip": "太字",
+    "richTextItalicTooltip": "斜体",
+    "richTextUnderlineTooltip": "下線",
+    "richTextBulletListTooltip": "箇条書き",
+    "richTextNumberListTooltip": "番号付きリスト",
+    "richTextIncreaseIndentTooltip": "インデントを増やします",
+    "richTextDecreaseIndentTooltip": "インデントを減らします",
+    "richTextInsertTableTooltip": "表を挿入します",
     "richTextFormatButtonTooltip": "形式",
-    "insertRowOrColumnMenu": "挿入",
-    "insertTableMenuTitle": "{column} x {row} の表を挿入する",
-    "insertRowAboveMenu": "上に挿入",
-    "insertRowBelowMenu": "下に挿入",
-    "insertColumnLeftMenu": "左に挿入",
-    "insertColumnRightMenu": "右に挿入",
-    "deleteRowOrColumnMenu": "削除",
-    "deleteColumnMenu": "列の削除",
-    "deleteRowMenu": "行の削除",
-    "deleteTableMenu": "表の削除"
+    "richTextInsertRowOrColumnMenu": "挿入",
+    "richTextInsertTableMenuTitle": "{column} x {row} の表を挿入する",
+    "richTextInsertRowAboveMenu": "上に挿入",
+    "richTextInsertRowBelowMenu": "下に挿入",
+    "richTextInsertColumnLeftMenu": "左に挿入",
+    "richTextInsertColumnRightMenu": "右に挿入",
+    "richTextDeleteRowOrColumnMenu": "削除",
+    "richTextDeleteColumnMenu": "列の削除",
+    "richTextDeleteRowMenu": "行の削除",
+    "richTextDeleteTableMenu": "表の削除",
+    "richTextToolbarMoreButtonAriaLabel": "その他のオプション",
+    "attachmentMoreMenu": "その他のオプション",
+    "richTextNewBulletedListItemAnnouncement": "行頭文字、改行",
+    "richTextNewNumberedListItemAnnouncement": "{0}、改行",
+    "richTextBulletedListAppliedAnnouncement": "箇条書きが適用されました",
+    "richTextNumberedListAppliedAnnouncement": "番号付きリストが適用されました"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "候補"
@@ -79,7 +87,7 @@
     "label": "退出",
     "tooltipContent": "通話を終了",
     "leaveOption": "退出",
-    "endCallOption": "通話の終了"
+    "endCallOption": "全員の通話を終了"
   },
   "cameraButton": {
     "onLabel": "カメラ",
@@ -182,8 +190,8 @@
     "failToSendTag": "送信できませんでした",
     "editedTag": "編集済み",
     "liveAuthorIntro": "{author} さんの発言",
-    "messageContentAriaText": "{author} が {message} と言いました",
-    "messageContentMineAriaText": "{message} と言いました",
+    "messageContentAriaText": "{status} {author} さんが {message} と言いました",
+    "messageContentMineAriaText": "{status} あなたが {message} と言いました",
     "editBoxTextLimit": "メッセージが{limitNumber}文字の制限を超えています",
     "editBoxPlaceholderText": "メッセージを編集する",
     "newMessagesIndicator": "新しいメッセージ",
@@ -197,7 +205,33 @@
     "blockedWarningText": "組織のポリシーにより、このメッセージは削除されました。",
     "blockedWarningLinkText": "詳細",
     "attachmentCardGroupMessage": "メッセージに添付ファイルが {attachmentCount} 個あります",
-    "messageDeletedAnnouncementAriaLabel": "メッセージが削除されます"
+    "messageDeletedAnnouncementAriaLabel": "メッセージが削除されます",
+    "richTextBoldTooltip": "太字",
+    "richTextItalicTooltip": "斜体",
+    "richTextUnderlineTooltip": "下線",
+    "richTextBulletListTooltip": "箇条書き",
+    "richTextNumberListTooltip": "番号付きリスト",
+    "richTextIncreaseIndentTooltip": "インデントを増やす",
+    "richTextDecreaseIndentTooltip": "インデントを減らす",
+    "richTextInsertTableTooltip": "表の挿入",
+    "richTextFormatButtonTooltip": "書式設定します",
+    "richTextInsertRowOrColumnMenu": "挿入",
+    "richTextInsertTableMenuTitle": "{column} x {row} の表を挿入する",
+    "richTextInsertRowAboveMenu": "上に挿入",
+    "richTextInsertRowBelowMenu": "下に挿入",
+    "richTextInsertColumnLeftMenu": "左に挿入",
+    "richTextInsertColumnRightMenu": "右に挿入",
+    "richTextDeleteRowOrColumnMenu": "削除",
+    "richTextDeleteColumnMenu": "列の削除",
+    "richTextDeleteRowMenu": "行の削除",
+    "richTextDeleteTableMenu": "テーブルの削除",
+    "richTextToolbarMoreButtonAriaLabel": "その他のオプション",
+    "attachmentUploadsPendingError": "ファイルをアップロードしています。お待ちください。",
+    "imageUploadsPendingError": "画像をアップロードしています。お待ちください。",
+    "richTextNewBulletedListItemAnnouncement": "行頭文字、改行",
+    "richTextNewNumberedListItemAnnouncement": "{0}、改行",
+    "richTextBulletedListAppliedAnnouncement": "箇条書きが適用されました",
+    "richTextNumberedListAppliedAnnouncement": "番号付きリストが適用されました"
   },
   "errorBar": {
     "unableToReachChatService": "オフラインです",
@@ -214,6 +248,7 @@
     "startScreenShareGeneric": "画面共有の開始中に問題が発生しました。",
     "stopScreenShareGeneric": "画面の共有を停止できませんでした",
     "callNetworkQualityLow": "ネットワークの品質が低くなっています。",
+    "teamsMeetingCallNetworkQualityLow": "ネットワークの品質が低くなっています。",
     "callNoSpeakerFound": "スピーカーまたはヘッドフォンが見つかりません。音声デバイスを接続して通話を聞きます。",
     "callNoMicrophoneFound": "マイクが見つかりません。オーディオ入力デバイスを接続します。",
     "callMicrophoneAccessDenied": "マイクにアクセスできません。アドレス バーのロックをクリックして、この Web ページにアクセス許可を付与します。",
@@ -234,14 +269,199 @@
     "failedToJoinCallInvalidMeetingLink": "会議に参加できません。リンクが無効です。",
     "cameraFrozenForRemoteParticipants": "通話のユーザーにビデオの表示で問題が発生しています。デバイスとネットワークを確認してください。",
     "unableToStartVideoEffect": "ビデオ効果を適用できません。",
-    "startSpotlightWhileMaxParticipantsAreSpotlighted": "最大数の参加者に既にスポットライトが設定されているため、参加者にスポットライトを開始できません。"
+    "startSpotlightWhileMaxParticipantsAreSpotlighted": "最大数の参加者に既にスポットライトが設定されているため、参加者にスポットライトを開始できません。",
+    "mutedByRemoteParticipant": "他の参加者によってミュートにされました。"
+  },
+  "notificationStack": {
+    "callingNetworkFailure": {
+      "title": "通話の接続に問題があります",
+      "message": "オフラインのようです。ネットワーク接続を確認して、もう一度お試しください。",
+      "dismissButtonAriaLabel": "閉じる"
+    },
+    "startVideoGeneric": {
+      "title": "ビデオを開始できませんでした。",
+      "dismissButtonAriaLabel": "閉じる"
+    },
+    "stopVideoGeneric": {
+      "title": "ビデオを停止できませんでした。",
+      "dismissButtonAriaLabel": "閉じる"
+    },
+    "muteGeneric": {
+      "title": "マイクをミュートできませんでした。",
+      "dismissButtonAriaLabel": "閉じる"
+    },
+    "unmuteGeneric": {
+      "title": "マイクのミュートを解除できませんでした。",
+      "dismissButtonAriaLabel": "閉じる"
+    },
+    "speakingWhileMuted": {
+      "title": "ミュートにしています。",
+      "dismissButtonAriaLabel": "閉じる"
+    },
+    "startScreenShareGeneric": {
+      "title": "画面共有の開始中に問題が発生しました。",
+      "dismissButtonAriaLabel": "閉じる"
+    },
+    "stopScreenShareGeneric": {
+      "title": "画面の共有を停止できませんでした。",
+      "dismissButtonAriaLabel": "閉じる"
+    },
+    "callNetworkQualityLow": {
+      "title": "ネットワークの品質が低くなっています。",
+      "dismissButtonAriaLabel": "閉じる"
+    },
+    "teamsMeetingCallNetworkQualityLow": {
+      "title": "ネットワークの品質が低くなっています。",
+      "dismissButtonAriaLabel": "閉じる",
+      "message": "サウンドを向上させるには、電話からこの通話に参加してください。このデバイスで引き続き会議を表示できます。",
+      "primaryButtonLabel": "電話で参加"
+    },
+    "callNoSpeakerFound": {
+      "title": "スピーカーまたはヘッドフォンが見つかりません",
+      "message": "音声デバイスを接続して通話を聞いてください。",
+      "dismissButtonAriaLabel": "閉じる"
+    },
+    "callNoMicrophoneFound": {
+      "title": "マイクが見つかりません",
+      "message": "オーディオ入力デバイスを接続します。",
+      "dismissButtonAriaLabel": "閉じる"
+    },
+    "callMicrophoneAccessDenied": {
+      "title": "マイクにアクセスできません",
+      "message": "アドレス バーのロックをクリックして、この Web ページにアクセス許可を付与します。",
+      "dismissButtonAriaLabel": "閉じる"
+    },
+    "callMicrophoneAccessDeniedSafari": {
+      "title": "マイクにアクセスできません",
+      "message": "ページを更新してアクセス許可を可能にするか、このブラウザーの設定を確認し、この Web サイトのアクセス許可が有効になっていることを確認してください。",
+      "dismissButtonAriaLabel": "閉じる"
+    },
+    "callMicrophoneMutedBySystem": {
+      "title": "システムによってミュートになっています。",
+      "dismissButtonAriaLabel": "閉じる"
+    },
+    "callMicrophoneUnmutedBySystem": {
+      "title": "マイクが回復し、システムによってミュートが解除されました。",
+      "dismissButtonAriaLabel": "閉じる"
+    },
+    "callMacOsMicrophoneAccessDenied": {
+      "title": "マイクにアクセスできません",
+      "message": "macOS のプライバシー設定でマイクへのアクセス許可を付与します。",
+      "dismissButtonAriaLabel": "閉じる"
+    },
+    "callLocalVideoFreeze": {
+      "title": "ネットワーク帯域幅が貧弱です",
+      "message": "通話中に他のユーザーのビデオが一時停止している可能性があります。",
+      "dismissButtonAriaLabel": "閉じる"
+    },
+    "callCameraAccessDenied": {
+      "title": "カメラにアクセスできません",
+      "message": "アドレス バーのロックをクリックして、この Web ページにアクセス許可を付与します。",
+      "dismissButtonAriaLabel": "閉じる"
+    },
+    "callCameraAccessDeniedSafari": {
+      "title": "カメラにアクセスできません",
+      "message": "ページを更新してアクセス許可を可能にするか、このブラウザーの設定を確認し、この Web サイトのアクセス許可が有効になっていることを確認してください。",
+      "dismissButtonAriaLabel": "閉じる"
+    },
+    "callCameraAlreadyInUse": {
+      "title": "カメラにアクセスできません",
+      "message": "別のアプリケーションによって既に使用されている可能性があります。",
+      "dismissButtonAriaLabel": "閉じる"
+    },
+    "callVideoStoppedBySystem": {
+      "title": "ビデオはシステムによって停止されました。",
+      "dismissButtonAriaLabel": "閉じる"
+    },
+    "callVideoRecoveredBySystem": {
+      "title": "ビデオが再開されました。",
+      "dismissButtonAriaLabel": "閉じる"
+    },
+    "callMacOsCameraAccessDenied": {
+      "title": "MacOS がカメラへのアクセスをブロックしています",
+      "message": "プライバシー設定を更新して、このブラウザーがカメラにアクセスできるようにします。",
+      "dismissButtonAriaLabel": "閉じる"
+    },
+    "callMacOsScreenShareAccessDenied": {
+      "title": "MacOS で画面共有がブロックされています",
+      "message": "プライバシー設定を更新して、このブラウザーで画面を録画できるようにします。",
+      "dismissButtonAriaLabel": "閉じる"
+    },
+    "failedToJoinCallGeneric": {
+      "title": "通話に参加できませんでした。",
+      "dismissButtonAriaLabel": "閉じる"
+    },
+    "failedToJoinCallInvalidMeetingLink": {
+      "title": "会議に参加できません。リンクが無効です。",
+      "dismissButtonAriaLabel": "閉じる"
+    },
+    "cameraFrozenForRemoteParticipants": {
+      "title": "通話中のユーザーにビデオの表示で問題が発生しています",
+      "message": "デバイスとネットワークをチェックしてください。",
+      "dismissButtonAriaLabel": "閉じる"
+    },
+    "unableToStartVideoEffect": {
+      "title": "ビデオ効果を適用できません。",
+      "dismissButtonAriaLabel": "閉じる"
+    },
+    "startSpotlightWhileMaxParticipantsAreSpotlighted": {
+      "title": "参加者にスポットライトを開始できません",
+      "message": "参加者の最大数は既にスポットライトが設定されています。",
+      "dismissButtonAriaLabel": "閉じる"
+    },
+    "mutedByRemoteParticipant": {
+      "title": "他の参加者によってミュートにされました。",
+      "dismissButtonAriaLabel": "閉じる"
+    },
+    "recordingStarted": {
+      "title": "レコーディングが開始しました。",
+      "message": "参加すると、この会議のトランスクリプトの作成に同意したことになります。",
+      "dismissButtonAriaLabel": "閉じる"
+    },
+    "transcriptionStarted": {
+      "title": "文字起こしが開始しました。",
+      "message": "参加すると、この会議のトランスクリプトの作成に同意したことになります。",
+      "dismissButtonAriaLabel": "閉じる"
+    },
+    "recordingStopped": {
+      "title": "レコーディングを保存しています。",
+      "message": "レコーディングが停止しました。",
+      "dismissButtonAriaLabel": "閉じる"
+    },
+    "transcriptionStopped": {
+      "title": "文字起こしを保存しています。",
+      "message": "文字起こしが停止しました。",
+      "dismissButtonAriaLabel": "閉じる"
+    },
+    "recordingAndTranscriptionStarted": {
+      "title": "レコーディングとトランスクリプトが開始されました。",
+      "message": "参加すると、この会議のトランスクリプトの作成に同意したことになります。",
+      "dismissButtonAriaLabel": "閉じる"
+    },
+    "recordingAndTranscriptionStopped": {
+      "title": "レコーディングとトランスクリプトを保存されました。",
+      "message": "レコーディングとトランスクリプトを停止しました。",
+      "dismissButtonAriaLabel": "閉じる"
+    },
+    "recordingStoppedStillTranscribing": {
+      "title": "レコーディングが停止しました。",
+      "message": "この会議のトランスクリプトを作成しています。",
+      "dismissButtonAriaLabel": "閉じる"
+    },
+    "transcriptionStoppedStillRecording": {
+      "title": "文字起こしが停止しました。",
+      "message": "今はこの会議の録画のみを行っています。",
+      "dismissButtonAriaLabel": "閉じる"
+    }
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "画面を共有しています",
     "screenShareLoadingMessage": "{participant} の画面を読み込んでいます",
+    "localScreenShareLoadingMessage": "画面を読み込んでいます",
     "localVideoLabel": "自分",
     "localVideoCameraSwitcherLabel": "カメラを切り替え",
     "localVideoMovementLabel": "移動可能なローカル ビデオ タイル",
+    "localVideoMovementAriaLabel": "移動可能なローカル ビデオ タイル",
     "localVideoSelectedDescription": "{cameraName} が選択されました。",
     "displayNamePlaceholder": "名前のない参加者",
     "fitRemoteParticipantToFrame": "フレームに収める",
@@ -258,7 +478,8 @@
     "spotlightLimitReachedMenuTitle": "スポットライトの上限に達しました",
     "stopSpotlightVideoTileMenuLabel": "スポットライトの設定を解除",
     "stopSpotlightOnSelfVideoTileMenuLabel": "スポットライトを終了",
-    "attendeeRole": "出席者"
+    "attendeeRole": "出席者",
+    "muteParticipantMenuItemLabel": "ミュート"
   },
   "dialpad": {
     "placeholderText": "電話番号を入力してください",
@@ -272,7 +493,8 @@
   },
   "videoTile": {
     "participantStateRinging": "呼び出し中...",
-    "participantStateHold": "保留中"
+    "participantStateHold": "保留中",
+    "moreOptionsButtonAriaLabel": "その他のオプション"
   },
   "CameraAndMicrophoneSitePermissionsRequest": {
     "primaryText": "{appName}にカメラとマイクの使用を許可する",
@@ -392,5 +614,25 @@
   "verticalGallery": {
     "leftNavButtonAriaLabel": "前のページ",
     "rightNavButtonAriaLabel": "次のページ"
+  },
+  "meetingConferencePhoneInfo": {
+    "meetingConferencePhoneInfoModalTitle": "電話から通話に参加",
+    "meetingConferencePhoneInfoModalDialIn": "ダイヤル番号",
+    "meetingConferencePhoneInfoModalMeetingId": "会議 ID の入力",
+    "meetingConferencePhoneInfoModalWait": "開催者に許可されるのを待つ",
+    "meetingConferencePhoneInfoModalNoPhoneAvailable": "利用可能な電話がありません",
+    "meetingConferencePhoneInfoModalTollGeoData": "{country}、{city}",
+    "meetingConferencePhoneInfoModalTollFree": "(無料電話番号)",
+    "meetingConferencePhoneInfoModalToll": "(有料電話番号)"
+  },
+  "IncomingCallNotification": {
+    "incomingCallNotificationPlaceholderId": "不明なユーザー",
+    "incomingCallNotificationPlaceholderAlert": "{callerName} が呼び出しています",
+    "incomingCallNoticicationAcceptWithAudioAriaLabel": "オーディオで承諾する",
+    "incomingCallNoticicationAcceptWithVideoAriaLabel": "ビデオで承諾する",
+    "incomingCallNoticicationRejectAriaLabel": "拒否する",
+    "incomingCallNotificationAcceptButtonLabel": "承諾",
+    "incomingCallNotificationRejectButtonLabel": "拒否",
+    "incomingCallNotificationAccceptWithVideoButtonLabel": "ビデオで受ける"
   }
 }

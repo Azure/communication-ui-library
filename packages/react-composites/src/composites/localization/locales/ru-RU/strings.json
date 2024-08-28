@@ -20,6 +20,7 @@
     "complianceBannerTranscriptionStopped": "Транскрибирование остановлено.",
     "configurationPageTitle": "Позвонить",
     "copyInviteLinkButtonLabel": "Копировать ссылку с приглашением",
+    "copyInviteLinkButtonActionedLabel": "Ссылка скопирована",
     "copyInviteLinkActionedAriaLabel": "Ссылка на приглашение в группу скопирована",
     "defaultPlaceHolder": "Выберите один из вариантов",
     "dismissSidePaneButtonLabel": "Закрыть",
@@ -134,6 +135,7 @@
     "dtmfDialerButtonTooltipOff": "Скрыть панель набора номера",
     "dtmfDialerMoreButtonLabelOn": "Показать панель набора номера",
     "dtmfDialerMoreButtonLabelOff": "Скрыть панель набора номера",
+    "phoneCallMoreButtonLabel": "Звонок",
     "spokenLanguageStrings": {
       "ar-ae": "Арабский (ОАЭ)",
       "ar-sa": "Арабский (Саудовская Аравия)",
@@ -244,6 +246,10 @@
       "shareScreen": {
         "lostDueToRoleChangeToAttendee": "Ваша роль изменилась. Некоторые действия, например общий доступ к содержимому, будут вам недоступны.",
         "grantedDueToRoleChangeToPresenter": "Вы ведущий. Вы можете предоставлять доступ к содержимому и помогать вести собрание."
+      },
+      "hideAttendeeNames": {
+        "hideAttendeeNameAttendee": "Ваше имя скрыто от других участников. Организаторы и выступающие могут видеть ваше настоящее имя.",
+        "hideAttendeeNamePresenter": "Имена участников скрыты. Для защиты конфиденциальности участников имена видят только организаторы и выступающие."
       }
     },
     "surveyTitle": "Улучшение продукта",
@@ -259,7 +265,6 @@
     "tagsSurveyQuestion": "Что можно было улучшить?",
     "tagsSurveyTextFieldDefaultText": "Другое, укажите",
     "tagsSurveyHelperText": "Отметьте все проблемы, с которыми вы столкнулись",
-    "surveyTextboxDefaultText": "Другое, укажите",
     "endOfSurveyText": "Спасибо за отзыв!",
     "surveyIssues": {
       "overallRating": {
@@ -301,7 +306,7 @@
         "otherIssues": "У меня возникли другие проблемы с демонстрацией экрана во время этого звонка"
       }
     },
-    "SurveyIssuesHeadingStrings": {
+    "surveyIssuesHeadingStrings": {
       "overallRating": "Общий",
       "audioRating": "Звук",
       "videoRating": "Видео",
@@ -325,17 +330,32 @@
     },
     "exitSpotlightButtonLabel": "Выйти из важного",
     "exitSpotlightButtonTooltip": "Выйти из важного",
-    "hangUpConfirmButtonLabel": "Подтвердить",
+    "leaveConfirmButtonLabel": "Выйти",
+    "endCallConfirmButtonLabel": "Завершить звонок",
     "hangUpCancelButtonLabel": "Отмена",
     "leaveConfirmDialogTitle": "Покинуть звонок?",
     "leaveConfirmDialogContent": "Вы действительно хотите покинуть звонок?",
     "endCallConfirmDialogTitle": "Завершить звонок?",
     "endCallConfirmDialogContent": "Вы завершите звонок для всех пользователей.",
-    "invalidMeetingIdentifier": "Недопустимый идентификатор собрания или секретный код"
+    "invalidMeetingIdentifier": "Недопустимый идентификатор собрания или секретный код",
+    "pinParticipantMenuLabel": "Закрепить для меня",
+    "pinParticipantLimitReachedMenuLabel": "Закрепить (достигнуто ограничение)",
+    "unpinParticipantMenuLabel": "Открепить",
+    "pinParticipantMenuItemAriaLabel": "Закрепить",
+    "unpinParticipantMenuItemAriaLabel": "Открепить",
+    "muteAllMenuLabel": "Отключить все микрофоны",
+    "muteAllDialogTitle": "Отключить микрофоны всех участников?",
+    "muteAllDialogContent": "Будут отключены микрофоны всех участников собрания, кроме вас.",
+    "muteAllConfirmButtonLabel": "Отключить все микрофоны",
+    "muteAllCancelButtonLabel": "Отмена"
   },
   "chat": {
     "chatListHeader": "В этом чате",
-    "uploadAttachment": "Отправить вложение"
+    "uploadAttachment": "Отправить вложение",
+    "uploadImageDataNotProvided": "Данные образа не предоставлены.",
+    "uploadImageIsTooLarge": "Изображение слишком велико. Выберите размер меньше {maxImageSize} МБ.",
+    "uploadImageExtensionIsNotAllowed": "Отправка образа .{imageExtension} не разрешена.",
+    "uploadImageFailed": "Не удалось отправить изображение. Повторите попытку позже."
   },
   "callWithChat": {
     "chatButtonLabel": "Чат",
@@ -345,6 +365,7 @@
     "chatButtonTooltipOpen": "Показать чат",
     "chatPaneTitle": "Чат",
     "copyInviteLinkButtonLabel": "Копировать ссылку с приглашением",
+    "copyInviteLinkButtonActionedLabel": "Ссылка скопирована",
     "copyInviteLinkActionedAriaLabel": "Ссылка на приглашение в группу скопирована",
     "dismissSidePaneButtonLabel": "Закрыть",
     "moreDrawerAudioDeviceMenuTitle": "Звуковое устройство",
@@ -360,6 +381,8 @@
     "selectedPeopleButtonLabel": "Нажата кнопка \"Люди\"",
     "peopleButtonTooltipOpen": "Показать участников",
     "peopleButtonTooltipClose": "Скрыть участников",
+    "peopleButtonTooltipOpenAriaLabel": "Кнопка \"Люди\", показать участников",
+    "peopleButtonTooltipCloseAriaLabel": "Кнопка \"Люди\", скрыть участников",
     "peoplePaneSubTitle": "В этом звонке",
     "peoplePaneTitle": "Люди",
     "pictureInPictureTileAriaLabel": "Ленты видео. Щелкните, чтобы вернуться на экран вызова.",

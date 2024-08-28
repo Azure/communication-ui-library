@@ -1,14 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/* @conditional-compile-remove(spotlight) */
 import { SpotlightCallFeature, SpotlightedParticipant } from '@azure/communication-calling';
-/* @conditional-compile-remove(spotlight) */
 import { CallContext } from './CallContext';
-/* @conditional-compile-remove(spotlight) */
 import { CallIdRef } from './CallIdRef';
 
-/* @conditional-compile-remove(spotlight) */
 /**
  * @private
  */

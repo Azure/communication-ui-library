@@ -41,10 +41,16 @@ import { ReactionResources } from '../types/ReactionTypes';
 
 /**
  * Strings of {@link VideoTile} that can be overridden.
- * @beta
+ * @public
  */
 export interface VideoTileStrings {
+  /** Aria label for announcing the remote video tile drawer menu */
+  moreOptionsButtonAriaLabel: string;
+  /* @conditional-compile-remove(one-to-n-calling) */
+  /* @conditional-compile-remove(PSTN-calls) */
   participantStateRinging: string;
+  /* @conditional-compile-remove(one-to-n-calling) */
+  /* @conditional-compile-remove(PSTN-calls) */
   participantStateHold: string;
 }
 
@@ -152,8 +158,9 @@ export interface VideoTileProps {
    * For example, `Hold` means the participant is on hold.
    */
   participantState?: ParticipantState;
-  /* @conditional-compile-remove(one-to-n-calling) */
-  /* @conditional-compile-remove(PSTN-calls) */
+  /**
+   * Strings to override in the component.
+   */
   strings?: VideoTileStrings;
   /**
    * Display custom menu items in the VideoTile's contextual menu.
@@ -165,7 +172,6 @@ export interface VideoTileProps {
    * Callback triggered by video tile on touch and hold.
    */
   onLongTouch?: () => void;
-  /* @conditional-compile-remove(spotlight) */
   /**
    * If true, the video tile will show the spotlighted icon.
    */
@@ -214,6 +220,9 @@ const VideoTileMoreOptionsButton = (props: {
   contextualMenu?: IContextualMenuProps;
   canShowContextMenuButton: boolean;
 }): JSX.Element => {
+  const locale = useLocale();
+  const strings = { ...locale.strings.videoTile };
+
   const { contextualMenu, canShowContextMenuButton } = props;
   if (!contextualMenu) {
     return <></>;
@@ -224,6 +233,7 @@ const VideoTileMoreOptionsButton = (props: {
   return (
     <IconButton
       data-ui-id="video-tile-more-options-button"
+      ariaLabel={strings?.moreOptionsButtonAriaLabel}
       styles={moreButtonStyles}
       menuIconProps={videoTileMoreMenuIconProps}
       menuProps={{ ...videoTileMoreMenuProps, ...contextualMenu }}
@@ -246,7 +256,6 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     initialsName,
     isMirrored,
     isMuted,
-    /* @conditional-compile-remove(spotlight) */
     isSpotlighted,
     isPinned,
     onRenderPlaceholder,
@@ -296,11 +305,10 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     return () => currentObserver.disconnect();
   }, [videoTileRef]);
 
-  /* @conditional-compile-remove(ppt-live) */
   // TODO: Remove after calling sdk fix the keybaord focus
   useEffect(() => {
-    // PPTLive display name is undefined, return as it is not screen share
-    if (displayName !== undefined) {
+    // PPTLive stream id is null
+    if (videoTileRef.current?.id) {
       return;
     }
     let observer: MutationObserver | undefined;
@@ -453,14 +461,11 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
                   <Icon iconName="VideoTileMicOff" />
                 </Stack>
               )}
-              {
-                /* @conditional-compile-remove(spotlight) */
-                isSpotlighted && (
-                  <Stack className={mergeStyles(iconContainerStyle)}>
-                    <Icon iconName="VideoTileSpotlighted" />
-                  </Stack>
-                )
-              }
+              {isSpotlighted && (
+                <Stack className={mergeStyles(iconContainerStyle)}>
+                  <Icon iconName="VideoTileSpotlighted" />
+                </Stack>
+              )}
               {isPinned && (
                 <Stack className={mergeStyles(iconContainerStyle)}>
                   <Icon iconName="VideoTilePinned" className={mergeStyles(pinIconStyle)} />
@@ -505,8 +510,8 @@ const participantStateStringTrampoline = (props: VideoTileProps, locale: Compone
   return props.participantState === 'EarlyMedia' || props.participantState === 'Ringing'
     ? strings?.participantStateRinging
     : props.participantState === 'Hold'
-    ? strings?.participantStateHold
-    : undefined;
+      ? strings?.participantStateHold
+      : undefined;
 
   return undefined;
 };

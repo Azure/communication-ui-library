@@ -12,8 +12,6 @@ import { ChatAdapterThreadManagement, ChatAdapterUiState } from '../../ChatCompo
 import { CallWithChatControlOptions } from '../CallWithChatComposite';
 import { CallWithChatAdapterUiState, CallWithChatClientState } from '../state/CallWithChatAdapterState';
 import { CallWithChatAdapterManagement } from './CallWithChatAdapter';
-/* @conditional-compile-remove(attachment-upload) */
-import { _AttachmentUploadAdapter } from '../../ChatComposite';
 
 /// IMPORTANT
 ///
@@ -29,9 +27,7 @@ import { _AttachmentUploadAdapter } from '../../ChatComposite';
 
 type CallWithChatAdapterManagementInternal = Omit<CallAdapterCallManagement, 'removeParticipant' | 'onReactionClick'> &
   CallAdapterDeviceManagement &
-  Omit<ChatAdapterThreadManagement, 'removeParticipant' | 'setTopic'> &
-  /* @conditional-compile-remove(attachment-upload) */
-  _AttachmentUploadAdapter;
+  Omit<ChatAdapterThreadManagement, 'removeParticipant' | 'setTopic'>;
 
 const CallWithChatAdapterManagementTypeAssertion = (
   value: CallWithChatAdapterManagement
@@ -84,6 +80,7 @@ type CallWithChatClientStateInternal = Omit<
   | 'displayName'
   | 'endedCall'
   | 'latestErrors'
+  | /* @conditional-compile-remove(breakout-rooms) */ 'latestNotifications'
   | 'userId'
   | /* @conditional-compile-remove(PSTN-calls) */ 'alternateCallerId'
   | /* @conditional-compile-remove(unsupported-browser) */ 'features'

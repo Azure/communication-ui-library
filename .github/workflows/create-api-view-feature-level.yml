@@ -19,12 +19,12 @@ jobs:
     permissions: read-all
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
       # Ensure node version is great enough
       - name: Use Node.js v20.x
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '20.x'
       # Install dependencies

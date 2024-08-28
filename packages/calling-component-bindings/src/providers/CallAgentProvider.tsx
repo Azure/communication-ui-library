@@ -70,7 +70,7 @@ export const useCallAgent = (): CallAgent | undefined => {
  * Useful when implementing a custom component that utilizes the providers
  * exported from this library.
  *
- * @beta
+ * @public
  */
 export const useTeamsCallAgent = ():
   | undefined
