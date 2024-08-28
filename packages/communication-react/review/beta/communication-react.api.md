@@ -1239,25 +1239,17 @@ export interface CallWithChatAdapterManagement {
     startCall(participants: string[], options?: StartCallOptions): Call | undefined;
     startCall(participants: (MicrosoftTeamsAppIdentifier | /* @conditional-compile-remove(PSTN-calls) */ PhoneNumberIdentifier | /* @conditional-compile-remove(one-to-n-calling) */ CommunicationUserIdentifier | /* @conditional-compile-remove(teams-adhoc-call) */ MicrosoftTeamsUserIdentifier | UnknownIdentifier)[], options?: StartCallOptions): Call | undefined;
     startCamera(options?: VideoStreamOptions): Promise<void>;
-<<<<<<< HEAD
     startCaptions(options?: StartCaptionsAdapterOptions): Promise<void>;
-=======
-    startCaptions(options?: StartCaptionsOptions): Promise<void>;
     // @beta
     startNoiseSuppressionEffect(): Promise<void>;
->>>>>>> origin/main
     startScreenShare(): Promise<void>;
     startSpotlight(userIds?: string[]): Promise<void>;
     startVideoBackgroundEffect(videoBackgroundEffect: VideoBackgroundEffect): Promise<void>;
     stopAllSpotlight(): Promise<void>;
     stopCamera(): Promise<void>;
-<<<<<<< HEAD
     stopCaptions(options?: StopCaptionsAdapterOptions): Promise<void>;
-=======
-    stopCaptions(): Promise<void>;
     // @beta
     stopNoiseSuppressionEffect(): Promise<void>;
->>>>>>> origin/main
     stopScreenShare(): Promise<void>;
     stopSpotlight(userIds?: string[]): Promise<void>;
     stopVideoBackgroundEffects(): Promise<void>;
