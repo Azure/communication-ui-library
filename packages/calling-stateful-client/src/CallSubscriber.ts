@@ -50,7 +50,7 @@ export class CallSubscriber {
   private _localRecordingSubscriber?: LocalRecordingSubscriber;
   private _pptLiveSubscriber: PPTLiveSubscriber;
   private _optimalVideoCountSubscriber: OptimalVideoCountSubscriber;
-  private _captionsFeatureSubscriber?: CaptionsFeatureSubscriber;
+  private _CaptionsFeatureSubscriber?: CaptionsFeatureSubscriber;
   private _raiseHandSubscriber?: RaiseHandSubscriber;
   private _reactionSubscriber?: ReactionSubscriber;
 
@@ -120,17 +120,12 @@ export class CallSubscriber {
       this._call.feature(Features.BreakoutRooms)
     );
 
-    this._captionsFeatureSubscriber = new CaptionsFeatureSubscriber(
-      this._callIdRef,
-      this._context,
-      this._call.feature(Features.Captions)
-    );
-
     this.subscribe();
   }
 
   private subscribe = (): void => {
     this._call.on('stateChanged', this.stateChanged);
+    this._call.on('stateChanged', this.initCaptionSubscriber);
     /* @conditional-compile-remove(teams-meeting-conference) */
     this._call.on('stateChanged', this.initTeamsMeetingConference);
     /* @conditional-compile-remove(local-recording-notification) */
@@ -172,6 +167,7 @@ export class CallSubscriber {
 
   public unsubscribe = (): void => {
     this._call.off('stateChanged', this.stateChanged);
+    this._call.off('stateChanged', this.initCaptionSubscriber);
     /* @conditional-compile-remove(local-recording-notification) */
     this._call.off('stateChanged', this.initLocalRecordingNotificationSubscriber);
     /* @conditional-compile-remove(teams-meeting-conference) */
@@ -213,6 +209,7 @@ export class CallSubscriber {
     this._localRecordingSubscriber?.unsubscribe();
     this._optimalVideoCountSubscriber.unsubscribe();
     this._pptLiveSubscriber.unsubscribe();
+    this._CaptionsFeatureSubscriber?.unsubscribe();
     this._raiseHandSubscriber?.unsubscribe();
 
     this._capabilitiesSubscriber.unsubscribe();
@@ -220,7 +217,6 @@ export class CallSubscriber {
     this._spotlightSubscriber.unsubscribe();
     /* @conditional-compile-remove(breakout-rooms) */
     this._breakoutRoomsSubscriber.unsubscribe();
-    this._captionsFeatureSubscriber?.unsubscribe();
   };
 
   private addParticipantListener(participant: RemoteParticipant): void {
@@ -243,6 +239,18 @@ export class CallSubscriber {
 
   private stateChanged = (): void => {
     this._context.setCallState(this._callIdRef.callId, this._call.state);
+  };
+
+  private initCaptionSubscriber = (): void => {
+    // subscribe to captions here so that we don't call captions when call is not initialized
+    if (this._call.state === 'Connected' && !this._CaptionsFeatureSubscriber) {
+      this._CaptionsFeatureSubscriber = new CaptionsFeatureSubscriber(
+        this._callIdRef,
+        this._context,
+        this._call.feature(Features.Captions)
+      );
+      this._call.off('stateChanged', this.initCaptionSubscriber);
+    }
   };
 
   /* @conditional-compile-remove(teams-meeting-conference) */
