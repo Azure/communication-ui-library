@@ -271,17 +271,6 @@ export function createMockCall(mockCallId = 'defaultCallID'): MockCall {
     },
     remoteParticipants: [] as RemoteParticipant[],
     localVideoStreams: [] as ReadonlyArray<LocalVideoStream>,
-    captionsFeature: {
-      captions: [],
-      supportedSpokenLanguages: [],
-      supportedCaptionLanguages: [],
-      currentCaptionLanguage: '',
-      currentSpokenLanguage: '',
-      isCaptionsFeatureActive: false,
-      startCaptionsInProgress: false,
-      /* @conditional-compile-remove(acs-close-captions) */
-      captionsKind: 'Captions'
-    },
     feature: createMockApiFeatures(new Map()),
 
     testHelperPushRemoteParticipant(participant: RemoteParticipant): void {
