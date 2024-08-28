@@ -48,6 +48,8 @@ import { VideoBackgroundEffectsDependency } from '@internal/calling-component-bi
 
 import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
 import { ReactionResources } from '@internal/react-components';
+/* @conditional-compile-remove(DNS) */
+import { DeepNoiseSuppressionEffectDependency } from '@internal/calling-component-bindings';
 
 /**
  * Major UI screens shown in the {@link CallComposite}.
@@ -168,6 +170,12 @@ export type CallAdapterClientState = {
    * Dependency to be injected for video background effect.
    */
   onResolveVideoEffectDependency?: () => Promise<VideoBackgroundEffectsDependency>;
+  /* @conditional-compile-remove(DNS) */
+  /**
+   * Dependency to be injected for deep noise suppression effect.
+   * @beta
+   */
+  onResolveDeepNoiseSuppressionDependency?: () => Promise<DeepNoiseSuppressionEffectDependency>;
 
   /**
    * State to track the selected video background effect.
@@ -474,6 +482,37 @@ export interface VideoBackgroundReplacementEffect extends BackgroundReplacementC
 }
 
 /**
+ * Options passed to adapter.startCaptions
+ *
+ * @public
+ */
+export interface StartCaptionsAdapterOptions extends StartCaptionsOptions {
+  /**
+   * Start captions in the background without showing the captions UI to the Composite user.
+   *
+   * @defaultValue false
+   */
+  startInBackground?: boolean;
+}
+
+/**
+ * Options passed to adapter.stopCaptions
+ *
+ * @public
+ */
+export interface StopCaptionsAdapterOptions {
+  /**
+   * Stop captions that have been started in the background.
+   *
+   * @remarks
+   * This option is only applicable when stopping captions that have been started using the `startInBackground` property of adpater.startCaptions.
+   *
+   * @defaultValue false
+   */
+  stopInBackground?: boolean;
+}
+
+/**
  * Functionality for managing the current call.
  *
  * @public
@@ -649,7 +688,7 @@ export interface CallAdapterCallOperations {
    * Function to Start captions
    * @param options - options for start captions
    */
-  startCaptions(options?: StartCaptionsOptions): Promise<void>;
+  startCaptions(options?: StartCaptionsAdapterOptions): Promise<void>;
   /**
    * Function to set caption language
    * @param language - language set for caption
@@ -663,7 +702,7 @@ export interface CallAdapterCallOperations {
   /**
    * Funtion to stop captions
    */
-  stopCaptions(): Promise<void>;
+  stopCaptions(options?: StopCaptionsAdapterOptions): Promise<void>;
 
   /**
    * Start the video background effect.
@@ -694,6 +733,20 @@ export interface CallAdapterCallOperations {
    * @public
    */
   updateSelectedVideoBackgroundEffect(selectedVideoBackground: VideoBackgroundEffect): void;
+  /* @conditional-compile-remove(DNS) */
+  /**
+   * Start the noise suppression effect.
+   *
+   * @beta
+   */
+  startNoiseSuppressionEffect(): Promise<void>;
+  /* @conditional-compile-remove(DNS) */
+  /**
+   * Stop the noise suppression effect.
+   *
+   * @beta
+   */
+  stopNoiseSuppressionEffect(): Promise<void>;
   /**
    * Send the end of call survey result
    *

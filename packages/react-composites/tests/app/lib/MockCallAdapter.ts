@@ -239,6 +239,14 @@ export class MockCallAdapter implements CallAdapter {
     });
   }
 
+  startNoiseSuppressionEffect(): Promise<void> {
+    throw new Error('startNoiseSuppressionEffect not implemented.');
+  }
+
+  stopNoiseSuppressionEffect(): Promise<void> {
+    throw new Error('stopNoiseSuppressionEffect not implemented.');
+  }
+
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   submitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined> {
     throw Error('submitStarSurvey not implemented');
