@@ -9,6 +9,10 @@ const CopyPlugin = require("copy-webpack-plugin");
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const ReactRefreshTypeScript = require('react-refresh-typescript');
 
+// Detect if running in GitHub Codespaces environment through environment variable set by codespace.
+// More details: https://docs.github.com/en/codespaces/developing-in-a-codespace/default-environment-variables-for-your-codespace#list-of-default-environment-variables
+const RUNNING_IN_GH_CODESPACES = !!process.env.CODESPACES;
+
 const webpackConfig = (sampleAppDir, env, babelConfig) => {
   const config = {
     entry: {
@@ -98,11 +102,13 @@ const webpackConfig = (sampleAppDir, env, babelConfig) => {
       hot: true,
       open: true,
       static: { directory: path.resolve(sampleAppDir, 'public') },
-      client: {
+      // To support hot reloading in GitHub Codespaces, we need to use the secure websocket URL
+      // For more details: https://github.com/orgs/community/discussions/11524#discussioncomment-2176952
+      client: RUNNING_IN_GH_CODESPACES ? {
         webSocketURL: {
           port: '443'
         }
-      },
+      } : undefined,
       proxy: [
         {
           path: '/token',
