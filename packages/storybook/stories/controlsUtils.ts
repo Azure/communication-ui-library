@@ -96,21 +96,18 @@ const defaultIncomingCallNotifications = [
     callerInfo: {
       displayName: 'John Wick'
     },
-    startTime: new Date(),
     id: '1'
   },
   {
     callerInfo: {
       displayName: 'Dog'
     },
-    startTime: new Date(),
     id: '2'
   },
   {
     callerInfo: {
       displayName: 'Cat'
     },
-    startTime: new Date(),
     id: '3'
   }
 ];

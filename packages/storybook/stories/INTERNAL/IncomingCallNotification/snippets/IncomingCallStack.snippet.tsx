@@ -1,12 +1,11 @@
-import { ActiveIncomingCall, IncomingCallStack } from '@azure/communication-react';
+import { IncomingCallStackCall, IncomingCallStack } from '@azure/communication-react';
 import React from 'react';
 
-const mockActiveIncomingCalls: ActiveIncomingCall[] = [
+const mockActiveIncomingCalls: IncomingCallStackCall[] = [
   {
     callerInfo: {
       displayName: 'John Wick'
     },
-    startTime: new Date(),
     id: '1',
     videoAvailable: false
   },
@@ -14,12 +13,11 @@ const mockActiveIncomingCalls: ActiveIncomingCall[] = [
     callerInfo: {
       displayName: 'Dog'
     },
-    startTime: new Date(),
     id: '2',
     videoAvailable: true
   }
 ];
-const mockRemovedIncomingCalls: ActiveIncomingCall[] = [];
+const mockRemovedIncomingCalls: IncomingCallStackCall[] = [];
 
 export const IncomingCallStackExample: () => JSX.Element = () => {
   return (
