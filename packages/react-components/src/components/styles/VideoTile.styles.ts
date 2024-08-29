@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { IButtonStyles, IStyle, mergeStyles, Theme, ITheme } from '@fluentui/react';
+import { IButtonStyles, IStyle, mergeStyles, Theme, ITheme, ISpinnerStyles } from '@fluentui/react';
 import { keyframes, memoizeFunction } from '@fluentui/react';
 import { REACTION_SCREEN_SHARE_ANIMATION_TIME_MS } from '../VideoGallery/utils/reactionUtils';
 
@@ -211,4 +211,43 @@ export const reactionRenderingStyle = (args: {
     transform: `scale(${args.emojiSize / frameSizePx})`,
     transformOrigin: 'top left'
   });
+};
+
+/**
+ * @private
+ */
+export const loadSpinnerStyles = (theme: ITheme, isOverLay: boolean): ISpinnerStyles => {
+  return {
+    circle: {
+      width: '2rem',
+      height: '2rem'
+    },
+    label: {
+      fontSize: '1rem',
+      color: isOverLay ? theme.palette.white : theme.palette.themePrimary
+    }
+  };
+};
+
+/**
+ * @private
+ */
+export const overlayStyles = (): IStyle => {
+  return {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.3)'
+  };
+};
+
+/**
+ * @private
+ */
+export const overlayStylesTransparent = (): IStyle => {
+  return {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
+  };
 };
