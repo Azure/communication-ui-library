@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { mergeStyles, Stack, Text, Icon } from '@fluentui/react';
+import { mergeStyles, Stack, Text, Spinner } from '@fluentui/react';
 import { concatStyleSets, IContextualMenuProps, Layer } from '@fluentui/react';
 import { _formatString } from '@internal/acs-ui-common';
 import React, { useMemo } from 'react';
@@ -26,8 +26,9 @@ import { drawerMenuWrapperStyles } from './VideoGallery/styles/RemoteVideoTile.s
 import {
   videoContainerStyles,
   overlayStyles,
-  waitingScreenIconStyle,
-  waitingScreenTextStyle
+  waitingScreenTextStyle,
+  overlayStylesTransparent,
+  loadSpinnerStyles
 } from './styles/VideoTile.styles';
 
 /**
@@ -190,6 +191,14 @@ export const _LocalVideoTile = React.memo(
             localVideoSelectedDescription={localVideoSelectedDescription}
           />
           <StreamMedia videoStreamElement={renderElement} isMirrored={true} />
+          {props.participantsCount === 1 && (
+            <Stack className={mergeStyles(videoContainerStyles, overlayStyles())}>
+              <Spinner data-ui-id="stream-media-loading-spinner" styles={loadSpinnerStyles} />
+              <Text className={mergeStyles(waitingScreenTextStyle(theme, true))} aria-live={'polite'}>
+                {strings?.waitingScreenText}
+              </Text>
+            </Stack>
+          )}
         </>
       );
     }, [
@@ -197,7 +206,10 @@ export const _LocalVideoTile = React.memo(
       localVideoCameraSwitcherLabel,
       localVideoSelectedDescription,
       renderElement,
-      showCameraSwitcherInLocalPreview
+      showCameraSwitcherInLocalPreview,
+      props.participantsCount,
+      theme,
+      strings?.waitingScreenText
     ]);
 
     const videoTileOverlay = useMemo(() => {
@@ -205,23 +217,19 @@ export const _LocalVideoTile = React.memo(
         reactionResources !== undefined ? (
           <MeetingReactionOverlay overlayMode="grid-tiles" reaction={reaction} reactionResources={reactionResources} />
         ) : undefined;
-      // If there are only one particiapnt in the call, show the waiting for others to join message
-      if (props.participantsCount === 1) {
-        return (
-          <>
-            {reactionOverlay}
-            <Stack className={mergeStyles(videoContainerStyles, overlayStyles())}>
-              <Icon className={mergeStyles(waitingScreenIconStyle())} iconName="WaitingScreenIcon" />
-              <Text className={mergeStyles(waitingScreenTextStyle(theme))} aria-live={'polite'}>
-                {strings?.waitingScreenText}
-              </Text>
-            </Stack>
-          </>
-        );
-      } else {
-        return reactionOverlay;
-      }
-    }, [props.participantsCount, reaction, reactionResources, theme, strings]);
+      return reactionOverlay;
+    }, [reaction, reactionResources]);
+
+    const onRenderAvatarOneParticipant = useCallback(() => {
+      return (
+        <Stack className={mergeStyles(videoContainerStyles, overlayStylesTransparent())}>
+          <Spinner data-ui-id="stream-media-loading-spinner" styles={loadSpinnerStyles} />
+          <Text className={mergeStyles(waitingScreenTextStyle(theme, false))} aria-live={'polite'}>
+            {strings?.waitingScreenText}
+          </Text>
+        </Stack>
+      );
+    }, [theme, strings?.waitingScreenText]);
 
     return (
       <Stack
@@ -237,7 +245,7 @@ export const _LocalVideoTile = React.memo(
           displayName={displayName}
           initialsName={initialsName}
           styles={videoTileStyles}
-          onRenderPlaceholder={onRenderAvatar}
+          onRenderPlaceholder={props.participantsCount === 1 ? onRenderAvatarOneParticipant : onRenderAvatar}
           isMuted={isMuted}
           showMuteIndicator={showMuteIndicator}
           personaMinSize={props.personaMinSize}

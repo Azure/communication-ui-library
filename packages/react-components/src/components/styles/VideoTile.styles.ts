@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { IButtonStyles, IStyle, mergeStyles, Theme, ITheme } from '@fluentui/react';
+import { IButtonStyles, IStyle, mergeStyles, Theme, ITheme, ISpinnerStyles } from '@fluentui/react';
 import { keyframes, memoizeFunction } from '@fluentui/react';
 import { REACTION_SCREEN_SHARE_ANIMATION_TIME_MS } from '../VideoGallery/utils/reactionUtils';
 
@@ -216,21 +216,21 @@ export const reactionRenderingStyle = (args: {
 /**
  * @private
  */
-export const waitingScreenTextStyle = (theme: ITheme): IStyle => {
+export const waitingScreenTextStyle = (theme: ITheme, isOverLay: boolean): IStyle => {
   return {
-    color: theme.palette.white,
-    fontSize: `1.25rem`
+    color: isOverLay ? theme.palette.white : theme.palette.themePrimary,
+    fontSize: '1rem'
   };
 };
 
 /**
  * @private
  */
-export const waitingScreenIconStyle = (): IStyle => {
-  return {
-    fontSize: '3rem',
-    fontStyle: 'normal'
-  };
+export const loadSpinnerStyles: ISpinnerStyles = {
+  circle: {
+    width: '2rem',
+    height: '2rem'
+  }
 };
 
 /**
@@ -241,6 +241,17 @@ export const overlayStyles = (): IStyle => {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.6)'
+    backgroundColor: 'rgba(0, 0, 0, 0.3)'
+  };
+};
+
+/**
+ * @private
+ */
+export const overlayStylesTransparent = (): IStyle => {
+  return {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
   };
 };
