@@ -8,6 +8,7 @@ import React from 'react';
 export const CallScreen = (): JSX.Element => {
   /**
    * The usage of `usePropsFor` is to get the props for the `IncomingCallStack` component.
+   *
    */
   const incomingCallStackProps = usePropsFor(IncomingCallStack);
   return (

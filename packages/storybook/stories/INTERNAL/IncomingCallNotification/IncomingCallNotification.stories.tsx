@@ -5,7 +5,6 @@ import { IncomingCallNotification as IncomingCallNotificationComponent } from '@
 import { Canvas, Description, Heading, Props, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
-import { SingleLineBetaBanner } from '../../BetaBanners/SingleLineBetaBanner';
 import { COMPONENT_FOLDER_PREFIX } from '../../constants';
 import { controlsToAdd } from '../../controlsUtils';
 import { IncomingCallNotificationExample } from './snippets/IncomingCallNotification.snippet';
@@ -19,7 +18,6 @@ const getDocs: () => JSX.Element = () => {
   return (
     <>
       <Title>IncomingCallNotification</Title>
-      <SingleLineBetaBanner />
       <Description>
         This component is a representation of an incoming call. It will show the name of the caller and allow you to
         accept the call with either audio or video or reject the call. This component is used by the `IncomingCallStack`

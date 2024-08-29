@@ -4,7 +4,6 @@ import { IncomingCallStack as IncomingCallStackComponent } from '@azure/communic
 import { Canvas, Description, Props, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
-import { SingleLineBetaBanner } from '../../BetaBanners/SingleLineBetaBanner';
 import { COMPONENT_FOLDER_PREFIX } from '../../constants';
 import { controlsToAdd } from '../../controlsUtils';
 import { IncomingCallStackExample } from './snippets/IncomingCallStack.snippet';
@@ -16,7 +15,6 @@ const getDocs = (): JSX.Element => {
   return (
     <>
       <Title>IncomingCallStack</Title>
-      <SingleLineBetaBanner />
       <Description>
         This component is a manager for your different incoming calls. It will render the different calls using the
         `IncomingCallNotification` component. Using the `usePropsFor` hook it will be able to get these calls from the

@@ -1,4 +1,6 @@
-import { Meta } from '@storybook/addon-docs';
+import { Meta, Source } from '@storybook/addon-docs';
+
+import InboundCallingSource from '!!raw-loader!./snippets/IncomingCallStackPropsExample.snippet.tsx';
 
 <Meta
   id="inboundcalling"
@@ -9,11 +11,11 @@ import { Meta } from '@storybook/addon-docs';
 # Inbound Calling
 
 Azure Communication Services UI Library is adding support for Inbound Calling. With this new feature, users will
-be able to see and monitor new incoming calls when signed in to ACS or Teams as a Communication as a Teams User.
+be able to see and monitor new incoming calls when signed in to Azure Communication Services or as a Teams User.
 Users will be able to accept with audio, accept with video, and reject incoming calls.
 
 Enabling this feature will allow them to see multiple incoming calls allowing the user to service multiple people
-at once best supporting the people that want to get in touch. In any scenario when your user’s assist multiple people simultaneously and better support those trying to reach them. In any scenario, when your users are logged in, you are able to accept or reject based on your users' needs.
+at once. In any scenario, when your users are logged in, you are able to connect with your customers in a more direct way.
 
 ## Incorporating Inbound Calling into your Experience
 
@@ -26,6 +28,12 @@ the calls come to you through these new react components. We are adding this cap
 [IncomingCallStack](./?path=/docs/ui-components-internal-inboundcalling-incomingcallstack--incoming-call-stack) and
 [IncomingCallNotification](./?path=/docs/ui-components-internal-inboundcalling-incomingcallnotification--incoming-call-notification) Component.
 These new components will allow you to accept, accept with video, or reject the call. Accepting will bring you straight into the call.
+
+The following code is a snippet of how you can incorporate the Inbound Calling feature into your experience:
+
+<Source code={InboundCallingSource} />
+
+**Note:** this code should be wrapped in our different stateful client providers to fetch state. See how to use our [`usePropsFor` react hook](./?path=/docs/statefulclient-reacthooks-usepropsfor--page).
 
 ## FAQ
 
