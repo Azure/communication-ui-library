@@ -5198,6 +5198,7 @@ export interface VideoGalleryStrings {
     unpinnedParticipantAnnouncementAriaLabel: string;
     unpinParticipantForMe: string;
     unpinParticipantMenuItemAriaLabel: string;
+    waitingScreenText: string;
 }
 
 // @public
