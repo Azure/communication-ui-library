@@ -193,7 +193,7 @@ export const _LocalVideoTile = React.memo(
           <StreamMedia videoStreamElement={renderElement} isMirrored={true} />
           {props.participantsCount === 1 && (
             <Stack className={mergeStyles(videoContainerStyles, overlayStyles())}>
-              <Spinner data-ui-id="stream-media-loading-spinner" styles={loadSpinnerStyles} />
+              <Spinner data-ui-id="stream-media-loading-spinner" styles={loadSpinnerStyles} ariaLive="assertive" />
               <Text className={mergeStyles(waitingScreenTextStyle(theme, true))} aria-live={'polite'}>
                 {strings?.waitingScreenText}
               </Text>
