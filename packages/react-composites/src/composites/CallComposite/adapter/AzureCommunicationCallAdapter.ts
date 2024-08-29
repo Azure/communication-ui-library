@@ -1129,52 +1129,55 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
   }
 
   private subscribeToCaptionEvents(): void {
-    const captionsFeature = this.call?.feature(Features.Captions);
-    if (
-      captionsFeature?.captions.kind === 'TeamsCaptions' &&
-      (this.context.getState().isTeamsCall || this.context.getState().isTeamsMeeting)
-    ) {
-      const teamsCaptionsFeature = captionsFeature.captions as TeamsCaptions;
-      teamsCaptionsFeature.on('CaptionsReceived', this.teamsCaptionsReceived.bind(this));
-      teamsCaptionsFeature.on('CaptionsActiveChanged', this.isCaptionsActiveChanged.bind(this));
-      teamsCaptionsFeature.on('CaptionLanguageChanged', this.isCaptionLanguageChanged.bind(this));
-      teamsCaptionsFeature.on('SpokenLanguageChanged', this.isSpokenLanguageChanged.bind(this));
-    } else {
-      /* @conditional-compile-remove(acs-close-captions) */
-      const acsCaptionsFeature = captionsFeature?.captions as Captions;
-      /* @conditional-compile-remove(acs-close-captions) */
-      acsCaptionsFeature.on('CaptionsReceived', this.captionsReceived.bind(this));
-      /* @conditional-compile-remove(acs-close-captions) */
-      acsCaptionsFeature.on('CaptionsActiveChanged', this.isCaptionsActiveChanged.bind(this));
-      /* @conditional-compile-remove(acs-close-captions) */
-      acsCaptionsFeature.on('SpokenLanguageChanged', this.isSpokenLanguageChanged.bind(this));
-      /* @conditional-compile-remove(acs-close-captions) */
-      captionsFeature?.on('CaptionsKindChanged', this.captionsKindChanged.bind(this));
+    if (this.call && this.call.state === 'Connected') {
+      const captionsFeature = this.call?.feature(Features.Captions);
+      if (
+        captionsFeature.captions.kind === 'TeamsCaptions' &&
+        (this.context.getState().isTeamsCall || this.context.getState().isTeamsMeeting)
+      ) {
+        const teamsCaptionsFeature = captionsFeature.captions as TeamsCaptions;
+        teamsCaptionsFeature.on('CaptionsReceived', this.teamsCaptionsReceived.bind(this));
+        teamsCaptionsFeature.on('CaptionsActiveChanged', this.isCaptionsActiveChanged.bind(this));
+        teamsCaptionsFeature.on('CaptionLanguageChanged', this.isCaptionLanguageChanged.bind(this));
+        teamsCaptionsFeature.on('SpokenLanguageChanged', this.isSpokenLanguageChanged.bind(this));
+      } else {
+        /* @conditional-compile-remove(acs-close-captions) */
+        const acsCaptionsFeature = captionsFeature.captions as Captions;
+        /* @conditional-compile-remove(acs-close-captions) */
+        acsCaptionsFeature.on('CaptionsReceived', this.captionsReceived.bind(this));
+        /* @conditional-compile-remove(acs-close-captions) */
+        acsCaptionsFeature.on('CaptionsActiveChanged', this.isCaptionsActiveChanged.bind(this));
+        /* @conditional-compile-remove(acs-close-captions) */
+        acsCaptionsFeature.on('SpokenLanguageChanged', this.isSpokenLanguageChanged.bind(this));
+        /* @conditional-compile-remove(acs-close-captions) */
+        captionsFeature.on('CaptionsKindChanged', this.captionsKindChanged.bind(this));
+      }
     }
   }
 
   private unsubscribeFromCaptionEvents(): void {
-    const captionsFeature = this.call?.feature(Features.Captions);
-    if (
-      captionsFeature?.captions.kind === 'TeamsCaptions' &&
-      (this.context.getState().isTeamsCall || this.context.getState().isTeamsMeeting)
-    ) {
-      const teamsCaptionsFeature = captionsFeature.captions as TeamsCaptions;
-      teamsCaptionsFeature.off('CaptionsReceived', this.teamsCaptionsReceived.bind(this));
-      teamsCaptionsFeature.off('CaptionsActiveChanged', this.isCaptionsActiveChanged.bind(this));
-      teamsCaptionsFeature.off('CaptionLanguageChanged', this.isCaptionLanguageChanged.bind(this));
-      teamsCaptionsFeature.off('SpokenLanguageChanged', this.isSpokenLanguageChanged.bind(this));
-    } else {
-      /* @conditional-compile-remove(acs-close-captions) */
-      const acsCaptionsFeature = captionsFeature?.captions as Captions;
-      /* @conditional-compile-remove(acs-close-captions) */
-      acsCaptionsFeature.off('CaptionsReceived', this.captionsReceived.bind(this));
-      /* @conditional-compile-remove(acs-close-captions) */
-      acsCaptionsFeature.off('CaptionsActiveChanged', this.isCaptionsActiveChanged.bind(this));
-      /* @conditional-compile-remove(acs-close-captions) */
-      acsCaptionsFeature.off('SpokenLanguageChanged', this.isSpokenLanguageChanged.bind(this));
-      /* @conditional-compile-remove(acs-close-captions) */
-      captionsFeature?.off('CaptionsKindChanged', this.captionsKindChanged.bind(this));
+    if (this.call && this.call.state === 'Connected') {
+      const captionsFeature = this.call?.feature(Features.Captions);
+      if (
+        captionsFeature.captions.kind === 'TeamsCaptions' &&
+        (this.context.getState().isTeamsCall || this.context.getState().isTeamsMeeting)
+      ) {
+        const teamsCaptionsFeature = captionsFeature.captions as TeamsCaptions;
+        teamsCaptionsFeature.off('CaptionsReceived', this.teamsCaptionsReceived.bind(this));
+        teamsCaptionsFeature.off('CaptionsActiveChanged', this.isCaptionsActiveChanged.bind(this));
+        teamsCaptionsFeature.off('CaptionLanguageChanged', this.isCaptionLanguageChanged.bind(this));
+        teamsCaptionsFeature.off('SpokenLanguageChanged', this.isSpokenLanguageChanged.bind(this));
+      } else {
+        /* @conditional-compile-remove(acs-close-captions) */
+        const acsCaptionsFeature = captionsFeature.captions as Captions;
+        /* @conditional-compile-remove(acs-close-captions) */
+        acsCaptionsFeature.off('CaptionsReceived', this.captionsReceived.bind(this));
+        /* @conditional-compile-remove(acs-close-captions) */
+        acsCaptionsFeature.off('CaptionsActiveChanged', this.isCaptionsActiveChanged.bind(this));
+        /* @conditional-compile-remove(acs-close-captions) */
+        acsCaptionsFeature.off('SpokenLanguageChanged', this.isSpokenLanguageChanged.bind(this));
+      }
+      this.call?.off('stateChanged', this.subscribeToCaptionEvents.bind(this));
     }
   }
 
@@ -1190,9 +1193,9 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     this.call?.on('isMutedChanged', this.isMyMutedChanged.bind(this));
     this.call?.on('isScreenSharingOnChanged', this.isScreenSharingOnChanged.bind(this));
     this.call?.on('idChanged', this.callIdChanged.bind(this));
+    this.call?.on('stateChanged', this.subscribeToCaptionEvents.bind(this));
     this.call?.on('roleChanged', this.roleChanged.bind(this));
 
-    this.subscribeToCaptionEvents();
     this.call?.feature(Features.Transfer).on('transferAccepted', this.transferAccepted.bind(this));
     this.call?.feature(Features.Capabilities).on('capabilitiesChanged', this.capabilitiesChanged.bind(this));
     this.call?.feature(Features.Spotlight).on('spotlightChanged', this.spotlightChanged.bind(this));
@@ -1214,6 +1217,10 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     this.call?.off('isScreenSharingOnChanged', this.isScreenSharingOnChanged.bind(this));
     this.call?.off('idChanged', this.callIdChanged.bind(this));
     this.call?.off('roleChanged', this.roleChanged.bind(this));
+    /* @conditional-compile-remove(acs-close-captions) */
+    if (this.call?.feature(Features.Captions).captions.kind === 'Captions') {
+      this.call?.feature(Features.Captions).off('CaptionsKindChanged', this.unsubscribeFromCaptionEvents.bind(this));
+    }
 
     this.unsubscribeFromCaptionEvents();
     if (this.callingSoundSubscriber) {
