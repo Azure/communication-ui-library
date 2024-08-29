@@ -452,6 +452,31 @@
       "title": "Döküm durduruldu.",
       "message": "Şu anda yalnızca bu toplantıyı kaydediyorsunuz.",
       "dismissButtonAriaLabel": "Kapat"
+    },
+    "assignedBreakoutRoomOpened": {
+      "title": "Sizi 5 saniye içinde atanan odanıza taşıyacağız.",
+      "dismissButtonAriaLabel": "Kapat"
+    },
+    "assignedBreakoutRoomChanged": {
+      "title": "Tartışma odanız değişti",
+      "message": "Sizi 5 saniye içinde atanan odanıza taşıyacağız.",
+      "dismissButtonAriaLabel": "Kapat"
+    },
+    "assignedBreakoutRoomOpenedPromptJoin": {
+      "title": "Tartışma odasına katılmak ister misiniz?",
+      "message": "Bir tartışma odasına atandınız.",
+      "dismissButtonAriaLabel": "Kapat",
+      "primaryButtonLabel": "Odaya katıl",
+      "secondaryButtonLabel": "Daha sonra"
+    },
+    "breakoutRoomJoined": {
+      "title": "Tartışma odasına katıldınız.",
+      "dismissButtonAriaLabel": "Kapat"
+    },
+    "breakoutRoomClosingSoon": {
+      "title": "Oda süre sınırı sona ermek üzere.",
+      "message": "Bu oda 30 sn. içinde kapanacak",
+      "dismissButtonAriaLabel": "Kapat"
     }
   },
   "videoGallery": {
