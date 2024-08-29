@@ -4,8 +4,8 @@ import { IncomingCallStack as IncomingCallStackComponent } from '@azure/communic
 import { Canvas, Description, Props, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
-import { COMPONENT_FOLDER_PREFIX } from '../constants';
-import { controlsToAdd } from '../controlsUtils';
+import { COMPONENT_FOLDER_PREFIX } from '../../constants';
+import { controlsToAdd } from '../../controlsUtils';
 import { IncomingCallStackExample } from './snippets/IncomingCallStack.snippet';
 
 const IncomingCallStackExampleText: string =
@@ -50,8 +50,8 @@ const IncomingCallStackStory = (args): JSX.Element => {
 export const IncomingCallStack = IncomingCallStackStory.bind({});
 
 export default {
-  id: `${COMPONENT_FOLDER_PREFIX}-Inbound Calling-IncomingCallStack`,
-  title: `${COMPONENT_FOLDER_PREFIX}/Inbound Calling/IncomingCallStack`,
+  id: `${COMPONENT_FOLDER_PREFIX}-Internal-InboundCalling-IncomingCallStack`,
+  title: `${COMPONENT_FOLDER_PREFIX}/Internal/InboundCalling/IncomingCallStack`,
   component: IncomingCallStack,
   argTypes: {
     incomingCalls: controlsToAdd.incomingCalls,
