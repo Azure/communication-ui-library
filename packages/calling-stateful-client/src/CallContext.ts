@@ -95,11 +95,7 @@ export class CallContext {
   /* @conditional-compile-remove(breakout-rooms) */
   private _latestCallIdsThatPushedNotifications: Partial<Record<NotificationTarget, string>> = {};
 
-  constructor(
-    userId: CommunicationIdentifierKind,
-    maxListeners = 50,
-    /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId?: string
-  ) {
+  constructor(userId: CommunicationIdentifierKind, maxListeners = 50) {
     this._logger = createClientLogger('communication-react:calling-context');
     this._state = {
       calls: {},
@@ -116,7 +112,6 @@ export class CallContext {
       callAgent: undefined,
       userId: userId,
       /* @conditional-compile-remove(unsupported-browser) */ environmentInfo: undefined,
-      /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId: alternateCallerId,
       latestErrors: {} as CallErrors,
       /* @conditional-compile-remove(breakout-rooms) */ latestNotifications: {} as CallNotifications
     };
@@ -629,7 +624,7 @@ export class CallContext {
   }
 
   /* @conditional-compile-remove(breakout-rooms) */
-  public setAssignedBreakoutRoom(callId: string, breakoutRoom: BreakoutRoom): void {
+  public setAssignedBreakoutRoom(callId: string, breakoutRoom?: BreakoutRoom): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {

@@ -28,19 +28,19 @@ export interface HoldButtonStrings {
   /**
    * Label for when action is to resume call.
    */
-  onLabel: string;
+  onLabel?: string;
   /**
    * Label for when action is to hold call.
    */
-  offLabel: string;
+  offLabel?: string;
   /**
    * Content for when button is checked
    */
-  tooltipOnContent: string;
+  tooltipOnContent?: string;
   /**
    * Content for when button is unchecked
    */
-  tooltipOffContent: string;
+  tooltipOffContent?: string;
 }
 
 /**

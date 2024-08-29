@@ -52,7 +52,11 @@ import { isBoolean } from '../utils';
 /* @conditional-compile-remove(end-call-options) */
 import { getIsTeamsCall } from '../../CallComposite/selectors/baseSelectors';
 /* @conditional-compile-remove(breakout-rooms) */
-import { getAssignedBreakoutRoom, getBreakoutRoomSettings } from '../../CallComposite/selectors/baseSelectors';
+import {
+  getAssignedBreakoutRoom,
+  getBreakoutRoomSettings,
+  getLatestNotifications
+} from '../../CallComposite/selectors/baseSelectors';
 import { callStatusSelector } from '../../CallComposite/selectors/callStatusSelector';
 /* @conditional-compile-remove(teams-meeting-conference) */
 import { MeetingConferencePhoneInfoModal } from '@internal/react-components';
@@ -145,7 +149,13 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
   /* @conditional-compile-remove(breakout-rooms) */
   const assignedBreakoutRoom = useSelector(getAssignedBreakoutRoom);
   /* @conditional-compile-remove(breakout-rooms) */
+  const latestNotifications = useSelector(getLatestNotifications);
+  /* @conditional-compile-remove(breakout-rooms) */
   const breakoutRoomSettings = useSelector(getBreakoutRoomSettings);
+  /* @conditional-compile-remove(breakout-rooms) */
+  const movingToBreakoutRoomAutomatically =
+    assignedBreakoutRoom?.autoMoveParticipantToBreakoutRoom &&
+    (latestNotifications['assignedBreakoutRoomOpened'] || latestNotifications['assignedBreakoutRoomChanged']);
 
   const handleResize = useCallback((): void => {
     setControlBarButtonsWidth(controlBarContainerRef.current ? controlBarContainerRef.current.offsetWidth : 0);
@@ -214,6 +224,20 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
     }),
     [callStrings]
   );
+
+  /* @conditional-compile-remove(DNS) */
+  const [isDeepNoiseSuppressionOn, setDeepNoiseSuppressionOn] = useState<boolean>(false);
+
+  /* @conditional-compile-remove(DNS) */
+  const onClickNoiseSuppression = useCallback(async () => {
+    if (isDeepNoiseSuppressionOn) {
+      await props.callAdapter.stopNoiseSuppressionEffect();
+      setDeepNoiseSuppressionOn(false);
+    } else {
+      await props.callAdapter.startNoiseSuppressionEffect();
+      setDeepNoiseSuppressionOn(true);
+    }
+  }, [props.callAdapter, isDeepNoiseSuppressionOn]);
 
   const centerContainerStyles = useMemo(() => {
     const styles: BaseCustomStyles = !props.mobileView ? desktopControlBarStyles : {};
@@ -368,15 +392,18 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                   <ControlBar layout={props.displayVertical ? 'vertical' : 'horizontal'} styles={centerContainerStyles}>
                     {
                       /* @conditional-compile-remove(breakout-rooms) */
-                      assignedBreakoutRoom && assignedBreakoutRoom.state === 'open' && (
-                        <PrimaryButton
-                          text={callStrings.joinBreakoutRoomButtonLabel}
-                          onClick={async (): Promise<void> => {
-                            assignedBreakoutRoom.join();
-                          }}
-                          styles={commonButtonStyles}
-                        />
-                      )
+                      !props.mobileView &&
+                        assignedBreakoutRoom &&
+                        assignedBreakoutRoom.state === 'open' &&
+                        !movingToBreakoutRoomAutomatically && (
+                          <PrimaryButton
+                            text={callStrings.joinBreakoutRoomButtonLabel}
+                            onClick={async (): Promise<void> => {
+                              assignedBreakoutRoom.join();
+                            }}
+                            styles={commonButtonStyles}
+                          />
+                        )
                     }
                     {microphoneButtonIsEnabled && (
                       <Microphone
@@ -386,6 +413,10 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                         /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
                         disabled={props.disableButtonsForHoldScreen || isDisabled(options.microphoneButton)}
                         disableTooltip={props.mobileView}
+                        /* @conditional-compile-remove(DNS) */
+                        onClickNoiseSuppression={onClickNoiseSuppression}
+                        /* @conditional-compile-remove(DNS) */
+                        isDeepNoiseSuppressionOn={isDeepNoiseSuppressionOn}
                       />
                     )}
                     {cameraButtonIsEnabled && (

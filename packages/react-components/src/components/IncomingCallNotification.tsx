@@ -59,6 +59,10 @@ export interface IncomingCallNotificationStrings {
    * label for the reject button in the incoming call notification.
    */
   incomingCallNotificationRejectButtonLabel?: string;
+  /**
+   * Aria label for the incoming call dismiss button
+   */
+  incomingCallNotificationDismissButtonAriaLabel?: string;
 }
 
 /**
@@ -217,15 +221,26 @@ export const IncomingCallNotification = (props: IncomingCallNotificationProps): 
         </Stack>
 
         <Stack grow horizontalAlign="center" style={{ alignItems: 'flex-start', fontFamily: 'Segoe UI' }}>
-          <Stack style={{ fontSize: '0.75rem' }}>
-            <Text>
-              {alertText ??
-                strings?.incomingCallNotificationPlaceholderAlert ??
-                /* @conditional-compile-remove(one-to-n-calling) */ formattedMessageString}
-            </Text>
-          </Stack>
+          <Text
+            tabIndex={0}
+            aria-live={'assertive'}
+            aria-label={alertText ?? /* @conditional-compile-remove(one-to-n-calling) */ formattedMessageString}
+          >
+            {alertText ??
+              strings?.incomingCallNotificationPlaceholderAlert ??
+              /* @conditional-compile-remove(one-to-n-calling) */ formattedMessageString}
+          </Text>
         </Stack>
-        <IconButton iconProps={{ iconName: 'cancel' }} onClick={onDismiss} styles={dismissButtonStyle(theme)} />
+        <IconButton
+          /* @conditional-compile-remove(one-to-n-calling) */
+          ariaLabel={
+            strings?.incomingCallNotificationDismissButtonAriaLabel ??
+            localeStrings.incomingCallNotificationDismissButtonAriaLabel
+          }
+          iconProps={{ iconName: 'cancel' }}
+          onClick={onDismiss}
+          styles={dismissButtonStyle(theme)}
+        />
       </Stack>
 
       <Stack horizontal horizontalAlign={'center'} tokens={{ childrenGap: '0.5rem' }}>
@@ -249,7 +264,6 @@ export const IncomingCallNotification = (props: IncomingCallNotificationProps): 
         <DefaultButton
           styles={styles?.rejectButton ? styles.rejectButton : incomingCallRejectButtonStyle(theme)}
           onClick={() => onReject()}
-          label={'Decline'}
           iconProps={{ iconName: 'IncomingCallNotificationRejectIcon' }}
           /* @conditional-compile-remove(one-to-n-calling) */
           ariaLabel={

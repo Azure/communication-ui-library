@@ -22,6 +22,10 @@ export const Microphone = (props: {
   splitButtonsForDeviceSelection?: boolean;
   disabled?: boolean;
   disableTooltip?: boolean;
+  /* @conditional-compile-remove(DNS) */
+  isDeepNoiseSuppressionOn?: boolean;
+  /* @conditional-compile-remove(DNS) */
+  onClickNoiseSuppression?: () => void;
 }): JSX.Element => {
   const microphoneButtonProps = usePropsFor(MicrophoneButton);
   const callStatus = useSelector(getCallStatus);
@@ -46,6 +50,10 @@ export const Microphone = (props: {
     <MicrophoneButton
       data-ui-id="call-composite-microphone-button"
       {...microphoneButtonProps}
+      /* @conditional-compile-remove(DNS) */
+      isDeepNoiseSuppressionOn={props.isDeepNoiseSuppressionOn}
+      /* @conditional-compile-remove(DNS) */
+      onClickNoiseSuppression={props.onClickNoiseSuppression}
       showLabel={props.displayType !== 'compact'}
       disableTooltip={props.disableTooltip}
       styles={styles}

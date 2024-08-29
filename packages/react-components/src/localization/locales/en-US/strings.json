@@ -99,14 +99,15 @@
     "cameraMenuTitle": "Camera",
     "cameraMenuTooltip": "Choose camera",
     "cameraButtonSplitRoleDescription": "Split button",
-    "onSplitButtonAriaLabel": "Turn off camera and camera options",
-    "offSplitButtonAriaLabel": "Turn on camera and camera options",
+    "onSplitButtonAriaLabel": "Turn off camera",
+    "offSplitButtonAriaLabel": "Turn on camera",
     "cameraActionTurnedOnAnnouncement": "Your camera has been turned on",
     "cameraActionTurnedOffAnnouncement": "Your camera has been turned off",
     "onSplitButtonPrimaryActionCamera": "Turn off camera",
     "offSplitButtonPrimaryActionCamera": "Turn on camera",
     "cameraPrimaryActionSplitButtonTitle": "Use camera",
-    "videoEffectsMenuItemTitle": "Effects"
+    "videoEffectsMenuItemTitle": "Effects",
+    "cameraButtonAriaDescription": "camera options"
   },
   "microphoneButton": {
     "onLabel": "Mic",
@@ -119,13 +120,18 @@
     "speakerMenuTitle": "Speaker",
     "speakerMenuTooltip": "Choose speaker",
     "microphoneButtonSplitRoleDescription": "Split button",
-    "onSplitButtonAriaLabel": "Mute microphone and audio options",
-    "offSplitButtonAriaLabel": "Unmute microphone and audio options",
+    "onSplitButtonAriaLabel": "Mute mic",
+    "offSplitButtonAriaLabel": "Unmute mic",
     "microphoneActionTurnedOnAnnouncement": "Your microphone has been turned on",
     "microphoneActionTurnedOffAnnouncement": "Your microphone has been turned off",
-    "offSplitButtonMicrophonePrimaryAction": "Unmute microphone",
-    "onSplitButtonMicrophonePrimaryAction": "Mute microphone",
-    "microphonePrimaryActionSplitButtonTitle": "Use microphone"
+    "offSplitButtonMicrophonePrimaryAction": "Unmute mic",
+    "onSplitButtonMicrophonePrimaryAction": "Mute mic",
+    "microphonePrimaryActionSplitButtonTitle": "Use microphone",
+    "microphoneAriaDescription": "Audio options",
+    "deepNoiseSuppresionOnTitle": "Noise Suppression On",
+    "deepNoiseSuppresionOffTitle": "Noise Suppression Off",
+    "deepNoiseSuppresionOnAnnouncement": "Deep noise suppression has been turned on",
+    "deepNoiseSuppresionOffAnnouncement": "Deep noise suppression has been turned off"
   },
   "devicesButton": {
     "label": "Devices",
@@ -659,6 +665,7 @@
     "incomingCallNoticicationRejectAriaLabel": "Reject",
     "incomingCallNotificationAcceptButtonLabel": "Accept",
     "incomingCallNotificationRejectButtonLabel": "Decline",
-    "incomingCallNotificationAccceptWithVideoButtonLabel": "Accept with Video"
+    "incomingCallNotificationAccceptWithVideoButtonLabel": "Accept with Video",
+    "incomingCallNotificationDismissButtonAriaLabel": "Dismiss"
   }
 }
