@@ -6356,6 +6356,43 @@ packages:
       webpack: 5.89.0(webpack-cli@5.1.4)
     dev: false
 
+  /@pmmmwh/react-refresh-webpack-plugin@0.5.15(react-refresh@0.14.2)(webpack@5.89.0):
+    resolution: {integrity: sha512-LFWllMA55pzB9D34w/wXUCf8+c+IYKuJDgxiZ3qMhl64KRMBHYM1I3VdGaD2BV5FNPV2/S2596bppxHbv2ZydQ==}
+    engines: {node: '>= 10.13'}
+    peerDependencies:
+      '@types/webpack': 4.x || 5.x
+      react-refresh: '>=0.10.0 <1.0.0'
+      sockjs-client: ^1.4.0
+      type-fest: '>=0.17.0 <5.0.0'
+      webpack: '>=4.43.0 <6.0.0'
+      webpack-dev-server: 3.x || 4.x || 5.x
+      webpack-hot-middleware: 2.x
+      webpack-plugin-serve: 0.x || 1.x
+    peerDependenciesMeta:
+      '@types/webpack':
+        optional: true
+      sockjs-client:
+        optional: true
+      type-fest:
+        optional: true
+      webpack-dev-server:
+        optional: true
+      webpack-hot-middleware:
+        optional: true
+      webpack-plugin-serve:
+        optional: true
+    dependencies:
+      ansi-html: 0.0.9
+      core-js-pure: 3.36.0
+      error-stack-parser: 2.1.4
+      html-entities: 2.5.2
+      loader-utils: 2.0.4
+      react-refresh: 0.14.2
+      schema-utils: 4.2.0
+      source-map: 0.7.4
+      webpack: 5.89.0(webpack-cli@5.1.4)
+    dev: false
+
   /@polka/url@1.0.0-next.25:
     resolution: {integrity: sha512-j7P6Rgr3mmtdkeDGTe0E/aYyWEWVtc5yFXtHCRHs28/jptDEWfaVOc5T7cblqy1XKPPfCxJc/8DwQ5YgLOZOVQ==}
     dev: false
@@ -10573,6 +10610,12 @@ packages:
 
   /ansi-html-community@0.0.8:
     resolution: {integrity: sha512-1APHAyr3+PCamwNw3bXCPp4HFLONZt/yIH0sZp0/469KWNTEy+qN5jQ3GVX6DMZ1UXAi34yVwtTeaG/HpBuuzw==}
+    engines: {'0': node >= 0.8.0}
+    hasBin: true
+    dev: false
+
+  /ansi-html@0.0.9:
+    resolution: {integrity: sha512-ozbS3LuenHVxNRh/wdnN16QapUHzauqSomAl1jwwJRRsGwFwtj644lIhxfWu0Fy0acCij2+AEgHvjscq3dlVXg==}
     engines: {'0': node >= 0.8.0}
     hasBin: true
     dev: false
@@ -20916,6 +20959,16 @@ packages:
     resolution: {integrity: sha512-+PbtI3VuDV0l6CleQMsx2gtK0JZbZKbpdu5ynr+lbsuvtmgbNcS3VM0tuY2QjFNOcWxvXeHjDpy42RO+4U2rug==}
     dev: false
 
+  /react-refresh-typescript@2.0.9(react-refresh@0.14.2)(typescript@5.4.5):
+    resolution: {integrity: sha512-chAnOO4vpxm/3WkgOVmti+eN8yUtkJzeGkOigV6UA9eDFz12W34e/SsYe2H5+RwYJ3+sfSZkVbiXcG1chEBxlg==}
+    peerDependencies:
+      react-refresh: 0.10.x || 0.11.x || 0.12.x || 0.13.x || 0.14.x
+      typescript: ^4.8 || ^5.0
+    dependencies:
+      react-refresh: 0.14.2
+      typescript: 5.4.5
+    dev: false
+
   /react-refresh@0.11.0:
     resolution: {integrity: sha512-F27qZr8uUqwhWZboondsPx8tnC3Ct3SxZA3V5WyEvujRyyNv0VYPhoBg1gZ8/MV5tubQp76Trw8lTv9hzRBa+A==}
     engines: {node: '>=0.10.0'}
@@ -20923,6 +20976,11 @@ packages:
 
   /react-refresh@0.14.0:
     resolution: {integrity: sha512-wViHqhAd8OHeLS/IRMJjTSDHF3U9eWi62F/MledQGPdJGDhodXJ9PBLNGr6WWL7qlH12Mt3TyTpbS+hGXMjCzQ==}
+    engines: {node: '>=0.10.0'}
+    dev: false
+
+  /react-refresh@0.14.2:
+    resolution: {integrity: sha512-jCvmsr+1IUSMUyzOkRcvnVbX3ZYC6g9TDrDbFuFmRDq7PD4yaGbLKNQL6k2jnArV8hjYxh7hVhAZB6s9HDGpZA==}
     engines: {node: '>=0.10.0'}
     dev: false
 
@@ -26582,7 +26640,7 @@ packages:
     dev: false
 
   file:projects/server.tgz:
-    resolution: {integrity: sha512-Kt6dF0htkwJ0TjA7F3NKycWCxhea6GFQevPJ0jb8p96s1aZ28mxkGPiJtMt/zP1b0tQszXTUfK0bbM9O+N5bIg==, tarball: file:projects/server.tgz}
+    resolution: {integrity: sha512-LpEeSn9Vp4mg8JHQtX6OadeYae8nMk33TA8ME/ey5b3hMZ7LTPsi3LZLW3ctt8KsOQdmw/nXQft2zBaHdTQMWA==, tarball: file:projects/server.tgz}
     name: '@rush-temp/server'
     version: 0.0.0
     dependencies:
@@ -26591,6 +26649,7 @@ packages:
       '@azure/communication-identity': 1.3.0
       '@azure/communication-rooms': 1.1.0-beta.1
       '@azure/storage-blob': 12.17.0
+      '@pmmmwh/react-refresh-webpack-plugin': 0.5.15(react-refresh@0.14.2)(webpack@5.89.0)
       '@types/cookie-parser': 1.4.7
       '@types/copy-webpack-plugin': 6.4.3
       '@types/cors': 2.8.17
@@ -26625,6 +26684,8 @@ packages:
       node-fetch: 2.6.7
       prettier: 3.3.2
       pretty-quick: 4.0.0(prettier@3.3.2)
+      react-refresh: 0.14.2
+      react-refresh-typescript: 2.0.9(react-refresh@0.14.2)(typescript@5.4.5)
       rimraf: 2.7.1
       supertest: 6.3.4
       ts-jest: 29.1.5(jest@29.7.0)(typescript@5.4.5)
@@ -26644,16 +26705,21 @@ packages:
       - '@swc/core'
       - '@swc/wasm'
       - '@types/eslint'
+      - '@types/webpack'
       - '@webpack-cli/generators'
       - babel-jest
       - babel-plugin-macros
       - encoding
       - esbuild
       - node-notifier
+      - sockjs-client
       - supports-color
+      - type-fest
       - uglify-js
       - webpack-bundle-analyzer
       - webpack-dev-server
+      - webpack-hot-middleware
+      - webpack-plugin-serve
     dev: false
 
   file:projects/storybook.tgz:
