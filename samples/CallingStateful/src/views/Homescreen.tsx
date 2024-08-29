@@ -32,6 +32,14 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const incomingCallStackProps = usePropsFor(IncomingCallStack);
   return (
     <Stack horizontal tokens={{ childrenGap: '1rem' }}>
+      <Stack style={{ position: 'absolute', top: '0', right: '0' }}>
+        {
+          /* @conditional-compile-remove(one-to-n-calling) */ <IncomingCallStack
+            {...incomingCallStackProps}
+            tabIndex={1}
+          />
+        }
+      </Stack>
       <Stack verticalAlign="center">
         <Image alt="Welcome to the ACS Calling sample app" className={imgStyle} {...headerImageProps} />
       </Stack>
@@ -74,9 +82,6 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
         >
           Start Call
         </PrimaryButton>
-        <Stack style={{ position: 'absolute', top: '0', right: '0' }}>
-          {/* @conditional-compile-remove(one-to-n-calling) */ <IncomingCallStack {...incomingCallStackProps} />}
-        </Stack>
       </Stack>
     </Stack>
   );

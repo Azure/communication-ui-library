@@ -9,7 +9,7 @@ import React from 'react';
 /** @private */
 export interface CalloutWithIconProps {
   targetId: string;
-  text: string;
+  text?: string;
   doNotLayer?: boolean;
 }
 
