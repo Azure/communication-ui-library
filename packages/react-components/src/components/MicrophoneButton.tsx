@@ -12,6 +12,8 @@ import {
   IContextualMenuItemStyles,
   IContextualMenuStyles
 } from '@fluentui/react';
+/* @conditional-compile-remove(DNS) */
+import { Toggle, Stack, IStyleFunctionOrObject, IToggleStyleProps, IToggleStyles } from '@fluentui/react';
 import { ControlBarButtonStyles } from './ControlBarButton';
 import { OptionsDevice, generateDefaultDeviceMenuProps } from './DevicesButton';
 import { Announcer } from './Announcer';
@@ -84,6 +86,26 @@ export interface MicrophoneButtonStrings {
    * Aria description for the microphone button
    */
   microphoneAriaDescription?: string;
+  /* @conditional-compile-remove(DNS) */
+  /**
+   * Title when deep noise suppression is on
+   */
+  deepNoiseSuppresionOnTitle?: string;
+  /* @conditional-compile-remove(DNS) */
+  /**
+   * Title when deep noise suppression is off
+   */
+  deepNoiseSuppresionOffTitle?: string;
+  /* @conditional-compile-remove(DNS) */
+  /**
+   * Noise Suppression turned on string for announcer
+   */
+  deepNoiseSuppresionOnAnnouncement?: string;
+  /* @conditional-compile-remove(DNS) */
+  /**
+   * Noise Suppression turned off string for announcer
+   */
+  deepNoiseSuppresionOffAnnouncement?: string;
 }
 
 /**
@@ -159,6 +181,16 @@ export interface MicrophoneButtonProps extends ControlBarButtonProps {
    * Styles for {@link MicrophoneButton} and the device selection flyout.
    */
   styles?: Partial<MicrophoneButtonStyles>;
+  /* @conditional-compile-remove(DNS) */
+  /**
+   * Whether the deep noise suppression is on or off
+   */
+  isDeepNoiseSuppressionOn?: boolean;
+  /* @conditional-compile-remove(DNS) */
+  /**
+   * Callback when noise suppression is clicked
+   */
+  onClickNoiseSuppression?: () => void;
 }
 
 /**
@@ -217,6 +249,17 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
     }
   }, [isMicOn, onToggleMicrophone, toggleAnnouncerString]);
 
+  /* @conditional-compile-remove(DNS) */
+  const deepNoiseSuppressionToggleStyles: IStyleFunctionOrObject<IToggleStyleProps, IToggleStyles> = {
+    root: {
+      margin: '4px',
+      padding: '0px 12px',
+      flexFlow: 'row-reverse',
+      justifyContent: 'space-between'
+    },
+    label: { fontWeight: 400 }
+  };
+
   /**
    * We need to also include the primary action of the button to the
    * split button for mobile devices.
@@ -239,6 +282,35 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
           iconProps: {
             iconName: props.checked ? 'SplitButtonPrimaryActionMicUnmuted' : 'SplitButtonPrimaryActionMicMuted',
             styles: { root: { lineHeight: 0 } }
+          }
+        },
+        /* @conditional-compile-remove(DNS) */
+        {
+          key: 'microphoneDNSToggle',
+          onRender: () => {
+            return (
+              <Stack
+                onClick={async () => {
+                  await props.onClickNoiseSuppression?.();
+                  setAnnouncerString(
+                    props.isDeepNoiseSuppressionOn
+                      ? strings.deepNoiseSuppresionOnAnnouncement
+                      : strings.deepNoiseSuppresionOffAnnouncement
+                  );
+                }}
+              >
+                <Toggle
+                  label={
+                    props.isDeepNoiseSuppressionOn
+                      ? strings.deepNoiseSuppresionOnTitle
+                      : strings.deepNoiseSuppresionOffTitle
+                  }
+                  checked={props.isDeepNoiseSuppressionOn}
+                  inlineLabel
+                  styles={deepNoiseSuppressionToggleStyles}
+                />
+              </Stack>
+            );
           }
         }
       ]
