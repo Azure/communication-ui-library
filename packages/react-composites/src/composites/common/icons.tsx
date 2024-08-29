@@ -117,8 +117,7 @@ export const COMPOSITE_ONLY_ICONS: CompositeIcons = {
   /* @conditional-compile-remove(teams-meeting-conference) */
   JoinByPhoneWaitToBeAdmittedIcon: <Clock20Filled />,
   PeoplePaneMoreButton: <MoreHorizontal20Filled />,
-  StopAllSpotlightMenuButton: <VideoPersonStarOff20Filled />,
-  WaitingScreenIcon: <>&#9749;</>
+  StopAllSpotlightMenuButton: <VideoPersonStarOff20Filled />
 };
 
 /**
@@ -264,7 +263,6 @@ export type CallCompositeIcons = {
   JoinByPhoneWaitToBeAdmittedIcon?: JSX.Element;
   PeoplePaneMoreButton?: JSX.Element;
   StopAllSpotlightMenuButton?: JSX.Element;
-  WaitingScreenIcon?: JSX.Element;
 };
 
 /**
@@ -369,7 +367,6 @@ export type CallWithChatCompositeIcons = {
   ParticipantItemOptionsHovered?: JSX.Element;
   PeoplePaneMoreButton?: JSX.Element;
   StopAllSpotlightMenuButton?: JSX.Element;
-  WaitingScreenIcon?: JSX.Element;
 };
 
 /**
