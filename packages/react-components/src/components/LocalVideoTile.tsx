@@ -26,7 +26,6 @@ import { drawerMenuWrapperStyles } from './VideoGallery/styles/RemoteVideoTile.s
 import {
   videoContainerStyles,
   overlayStyles,
-  waitingScreenTextStyle,
   overlayStylesTransparent,
   loadSpinnerStyles
 } from './styles/VideoTile.styles';
@@ -193,10 +192,12 @@ export const _LocalVideoTile = React.memo(
           <StreamMedia videoStreamElement={renderElement} isMirrored={true} />
           {props.participantsCount === 1 && (
             <Stack className={mergeStyles(videoContainerStyles, overlayStyles())}>
-              <Spinner data-ui-id="stream-media-loading-spinner" styles={loadSpinnerStyles} ariaLive="assertive" />
-              <Text className={mergeStyles(waitingScreenTextStyle(theme, true))} aria-live={'polite'}>
-                {strings?.waitingScreenText}
-              </Text>
+              <Spinner
+                label={strings?.waitingScreenText}
+                ariaLive="assertive"
+                labelPosition="bottom"
+                styles={loadSpinnerStyles(theme, true)}
+              />
             </Stack>
           )}
         </>
@@ -208,8 +209,8 @@ export const _LocalVideoTile = React.memo(
       renderElement,
       showCameraSwitcherInLocalPreview,
       props.participantsCount,
-      theme,
-      strings?.waitingScreenText
+      strings?.waitingScreenText,
+      theme
     ]);
 
     const videoTileOverlay = useMemo(() => {
@@ -223,13 +224,15 @@ export const _LocalVideoTile = React.memo(
     const onRenderAvatarOneParticipant = useCallback(() => {
       return (
         <Stack className={mergeStyles(videoContainerStyles, overlayStylesTransparent())}>
-          <Spinner data-ui-id="stream-media-loading-spinner" styles={loadSpinnerStyles} />
-          <Text className={mergeStyles(waitingScreenTextStyle(theme, false))} aria-live={'polite'}>
-            {strings?.waitingScreenText}
-          </Text>
+          <Spinner
+            label={strings?.waitingScreenText}
+            ariaLive="assertive"
+            labelPosition="bottom"
+            styles={loadSpinnerStyles(theme, false)}
+          />
         </Stack>
       );
-    }, [theme, strings?.waitingScreenText]);
+    }, [strings?.waitingScreenText, theme]);
 
     return (
       <Stack

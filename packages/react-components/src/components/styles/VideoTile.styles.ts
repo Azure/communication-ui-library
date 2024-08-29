@@ -216,21 +216,17 @@ export const reactionRenderingStyle = (args: {
 /**
  * @private
  */
-export const waitingScreenTextStyle = (theme: ITheme, isOverLay: boolean): IStyle => {
+export const loadSpinnerStyles = (theme: ITheme, isOverLay: boolean): ISpinnerStyles => {
   return {
-    color: isOverLay ? theme.palette.white : theme.palette.themePrimary,
-    fontSize: '1rem'
+    circle: {
+      width: '2rem',
+      height: '2rem'
+    },
+    label: {
+      fontSize: '1rem',
+      color: isOverLay ? theme.palette.white : theme.palette.themePrimary
+    }
   };
-};
-
-/**
- * @private
- */
-export const loadSpinnerStyles: ISpinnerStyles = {
-  circle: {
-    width: '2rem',
-    height: '2rem'
-  }
 };
 
 /**
