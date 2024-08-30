@@ -230,27 +230,27 @@ export interface CallCompositeStrings {
   /**
    * Side pane People section subheader.
    */
-  peoplePaneSubTitle: string;
+  peoplePaneSubTitle?: string;
   /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   /**
    * Label for button to copy invite link
    */
-  copyInviteLinkButtonLabel: string;
+  copyInviteLinkButtonLabel?: string;
   /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   /**
    * Label for button to copy invite link when it has been actioned
    */
-  copyInviteLinkButtonActionedLabel: string;
+  copyInviteLinkButtonActionedLabel?: string;
   /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Label for button to open dialpad
    */
-  openDialpadButtonLabel: string;
+  openDialpadButtonLabel?: string;
   /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   /**
    * Label for menu item to remove participant
    */
-  removeMenuLabel: string;
+  removeMenuLabel?: string;
   /**
    * Label for menu item to start spotlight on participant
    */
@@ -279,27 +279,27 @@ export interface CallCompositeStrings {
   /**
    * Label for add people dropdown
    */
-  peoplePaneAddPeopleButtonLabel: string;
+  peoplePaneAddPeopleButtonLabel?: string;
   /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Label for button to start a call
    */
-  dialpadStartCallButtonLabel: string;
+  dialpadStartCallButtonLabel?: string;
   /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Title for dialpad Modal
    */
-  dialpadModalTitle: string;
+  dialpadModalTitle?: string;
   /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Aria Label for dialpad Modal
    */
-  dialpadModalAriaLabel: string;
+  dialpadModalAriaLabel?: string;
   /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Aria Label for dialpad Modal close button
    */
-  dialpadCloseModalButtonAriaLabel: string;
+  dialpadCloseModalButtonAriaLabel?: string;
   /**
    * label for more button in the Calling composite
    */
@@ -308,37 +308,37 @@ export interface CallCompositeStrings {
   /**
    * Label for the resume call button on the hold pane
    */
-  resumeCallButtonLabel: string;
+  resumeCallButtonLabel?: string;
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   /**
    * Label for the resume call button on the hold pane when call is resuming
    */
-  resumingCallButtonLabel: string;
+  resumingCallButtonLabel?: string;
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   /**
    * Aria label for the resume call button on the hold pane
    */
-  resumeCallButtonAriaLabel: string;
+  resumeCallButtonAriaLabel?: string;
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   /**
    * Aria label for the resume call button on the hold pane when call is resuming
    */
-  resumingCallButtonAriaLabel: string;
+  resumingCallButtonAriaLabel?: string;
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   /**
    * Label for the hold pane
    */
-  holdScreenLabel: string;
+  holdScreenLabel?: string;
   /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Placeholder text for dtmf dialpad
    */
-  dtmfDialpadPlaceholderText: string;
+  dtmfDialpadPlaceholderText?: string;
   /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Label for the button to open dtmf dialpad
    */
-  openDtmfDialpadLabel: string;
+  openDtmfDialpadLabel?: string;
   /**
    * aria label for when the invite link has been actioned
    */
@@ -810,7 +810,6 @@ export interface CallCompositeStrings {
    * Content of confirm dialog when leaving
    */
   endCallConfirmDialogContent?: string;
-  /* @conditional-compile-remove(meeting-id) */
   /**
    * Error message when the meeting identifier or passcode is invalid
    */
@@ -868,4 +867,46 @@ export interface CallCompositeStrings {
    * Label for mute all cancel button
    */
   muteAllCancelButtonLabel: string;
+  /* @conditional-compile-remove(breakout-rooms) */
+  /**
+   * Label for join breakout room button
+   */
+  joinBreakoutRoomButtonLabel: string;
+  /* @conditional-compile-remove(breakout-rooms) */
+  /**
+   * Label for button to return from breakout room
+   */
+  returnFromBreakoutRoomButtonLabel: string;
+  /* @conditional-compile-remove(breakout-rooms) */
+  /**
+   * Label for button to leave breakout room and meeting
+   */
+  leaveBreakoutRoomAndMeetingButtonLabel: string;
+  /* @conditional-compile-remove(breakout-rooms) */
+  /**
+   * Notification title for when a user joins a breakout room
+   */
+  breakoutRoomJoinedNotificationTitle: string;
+  /* @conditional-compile-remove(breakout-rooms) */
+  /**
+   * Title for banner to join the assigned breakout room. The banner is shown in mobile view instead of the
+   * notification.
+   */
+  joinBreakoutRoomBannerTitle: string;
+  /* @conditional-compile-remove(breakout-rooms) */
+  /**
+   * Label for button in banner to join breakout room. The banner is shown in mobile view instead of the notification.
+   */
+  joinBreakoutRoomBannerButtonLabel: string;
+  /* @conditional-compile-remove(breakout-rooms) */
+  /**
+   * Title for banner to return from breakout room. The banner is shown in mobile view instead of the notification.
+   */
+  returnFromBreakoutRoomBannerTitle: string;
+  /* @conditional-compile-remove(breakout-rooms) */
+  /**
+   * Label for button in banner to return from breakout room. The banner is shown in mobile view instead of the
+   * notification.
+   */
+  returnFromBreakoutRoomBannerButtonLabel: string;
 }

@@ -29,7 +29,9 @@ export const richTextEditorWrapperStyle = (theme: Theme): string => {
     maxWidth: '100%',
     color: theme.palette.neutralPrimary,
     '& img': {
-      margin: '0.2rem'
+      margin: '0.2rem',
+      maxWidth: '100% !important', // Remove !important when resolving issue where rooster sets width/height in style attribute incorrectly
+      height: 'auto !important' // Remove !important when resolving issue where rooster sets width/height in style attribute incorrectly
     },
     '& table': {
       background: 'transparent',

@@ -347,11 +347,23 @@
     "muteAllDialogTitle": "Vil du dempe alle?",
     "muteAllDialogContent": "Dette demper alle i møtet, bortsett fra deg selv.",
     "muteAllConfirmButtonLabel": "Demp alle",
-    "muteAllCancelButtonLabel": "Avbryt"
+    "muteAllCancelButtonLabel": "Avbryt",
+    "joinBreakoutRoomButtonLabel": "Bli med i grupperommet",
+    "returnFromBreakoutRoomButtonLabel": "Forlat rom",
+    "leaveBreakoutRoomAndMeetingButtonLabel": "Forlat møte",
+    "breakoutRoomJoinedNotificationTitle": "Du har blitt med i grupperommet {roomName}",
+    "joinBreakoutRoomBannerTitle": "Grupperommet {roomName} er åpent",
+    "joinBreakoutRoomBannerButtonLabel": "Bli med",
+    "returnFromBreakoutRoomBannerTitle": "Gå tilbake til hovedmøte",
+    "returnFromBreakoutRoomBannerButtonLabel": "Bli med på nytt"
   },
   "chat": {
     "chatListHeader": "I denne chatten",
-    "uploadAttachment": "Last opp vedlegg"
+    "uploadAttachment": "Last opp vedlegg",
+    "uploadImageDataNotProvided": "Bildedata er ikke angitt.",
+    "uploadImageIsTooLarge": "Bildet er for stort. Velg en som er mindre enn {maxImageSize} MB.",
+    "uploadImageExtensionIsNotAllowed": "Opplasting av .{imageExtension}-bilde er ikke tillatt.",
+    "uploadImageFailed": "Kan ikke laste opp bilde. Prøv på nytt senere."
   },
   "callWithChat": {
     "chatButtonLabel": "Chat",
@@ -392,6 +404,8 @@
     "dialpadModalAriaLabel": "Numerisk tastatur",
     "dialpadCloseModalButtonAriaLabel": "Lukk numerisk tastatur",
     "openDtmfDialpadLabel": "Vis numerisk tastatur",
-    "dtmfDialpadPlaceholderText": "Skriv inn nummer"
+    "dtmfDialpadPlaceholderText": "Skriv inn nummer",
+    "breakoutRoomChatPaneTitle": "Grupperomchat",
+    "chatContentSpinnerLabel": "Laster inn ..."
   }
 }

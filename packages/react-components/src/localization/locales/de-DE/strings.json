@@ -24,7 +24,7 @@
     "placeholderText": "Nachricht eingeben",
     "textTooLong": "Ihre Nachrichtenlänge überschreitet den maximalen Grenzwert.",
     "sendButtonAriaLabel": "Nachricht senden",
-    "attachmentUploadsPendingError": "Wird hochgeladen... Bitte warten.",
+    "attachmentUploadsPendingError": "Datei wird hochgeladen, bitte warten.",
     "removeAttachment": "Datei entfernen",
     "uploading": "Hochladen",
     "uploadCompleted": "Upload abgeschlossen",
@@ -34,7 +34,8 @@
     "placeholderText": "Nachricht eingeben",
     "textTooLong": "Ihre Nachrichtenlänge überschreitet den maximalen Grenzwert.",
     "sendButtonAriaLabel": "Nachricht senden",
-    "attachmentUploadsPendingError": "Wird hochgeladen... Bitte warten.",
+    "attachmentUploadsPendingError": "Datei wird hochgeladen, bitte warten.",
+    "imageUploadsPendingError": "Bild wird hochgeladen, bitte warten.",
     "removeAttachment": "Datei entfernen",
     "uploading": "Wird hochgeladen",
     "uploadCompleted": "Upload abgeschlossen",
@@ -58,7 +59,11 @@
     "richTextDeleteRowMenu": "Zeile löschen",
     "richTextDeleteTableMenu": "Tabelle löschen",
     "richTextToolbarMoreButtonAriaLabel": "Weitere Optionen",
-    "attachmentMoreMenu": "Mehr Optionen"
+    "attachmentMoreMenu": "Mehr Optionen",
+    "richTextNewBulletedListItemAnnouncement": "Aufzählungszeichen, neue Zeile",
+    "richTextNewNumberedListItemAnnouncement": "{0}, neue Zeile",
+    "richTextBulletedListAppliedAnnouncement": "Aufzählung angewendet",
+    "richTextNumberedListAppliedAnnouncement": "\"Nummerierte Liste\" angewendet."
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Vorschläge"
@@ -221,7 +226,12 @@
     "richTextDeleteRowMenu": "Zeile löschen",
     "richTextDeleteTableMenu": "Tabelle löschen",
     "richTextToolbarMoreButtonAriaLabel": "Weitere Optionen",
-    "attachmentUploadsPendingError": "Wird hochgeladen... Warten Sie."
+    "attachmentUploadsPendingError": "Datei wird hochgeladen, bitte warten.",
+    "imageUploadsPendingError": "Bild wird hochgeladen, bitte warten.",
+    "richTextNewBulletedListItemAnnouncement": "Aufzählungszeichen, neue Zeile",
+    "richTextNewNumberedListItemAnnouncement": "{0}, neue Zeile",
+    "richTextBulletedListAppliedAnnouncement": "Aufzählung angewendet",
+    "richTextNumberedListAppliedAnnouncement": "\"Nummerierte Liste\" angewendet."
   },
   "errorBar": {
     "unableToReachChatService": "Sie sind offline.",
@@ -442,11 +452,37 @@
       "title": "Die Transkription wurde beendet.",
       "message": "Sie zeichnen nun nur diese Besprechung auf.",
       "dismissButtonAriaLabel": "Schließen"
+    },
+    "assignedBreakoutRoomOpened": {
+      "title": "Wir verschieben Sie in 5 Sekunden zu Ihrem zugewiesenen Raum.",
+      "dismissButtonAriaLabel": "Schließen"
+    },
+    "assignedBreakoutRoomChanged": {
+      "title": "Ihr Gruppenraum hat sich geändert.",
+      "message": "Wir verschieben Sie in 5 Sekunden zu Ihrem zugewiesenen Raum.",
+      "dismissButtonAriaLabel": "Schließen"
+    },
+    "assignedBreakoutRoomOpenedPromptJoin": {
+      "title": "Gruppenraum betreten?",
+      "message": "Sie wurden einem Gruppenraum zugewiesen.",
+      "dismissButtonAriaLabel": "Schließen",
+      "primaryButtonLabel": "Raum betreten",
+      "secondaryButtonLabel": "Später"
+    },
+    "breakoutRoomJoined": {
+      "title": "Sie sind einem Gruppenraum beigetreten.",
+      "dismissButtonAriaLabel": "Schließen"
+    },
+    "breakoutRoomClosingSoon": {
+      "title": "Das Raumzeitlimit läuft bald ab.",
+      "message": "Dieser Raum wird in 30 Sekunden geschlossen.",
+      "dismissButtonAriaLabel": "Schließen"
     }
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "Sie teilen Ihren Bildschirm",
     "screenShareLoadingMessage": "Der Bildschirm von {participant} wird geladen",
+    "localScreenShareLoadingMessage": "Ihr Bildschirm wird geladen.",
     "localVideoLabel": "Sie",
     "localVideoCameraSwitcherLabel": "Kamera wechseln",
     "localVideoMovementLabel": "Verschiebbare lokale Videokachel",
@@ -616,9 +652,12 @@
   },
   "IncomingCallNotification": {
     "incomingCallNotificationPlaceholderId": "Unbekannter Benutzer",
-    "incomingCallNotificationPlaceholderAlert": "Eingehender Anruf",
+    "incomingCallNotificationPlaceholderAlert": "{callerName} ruft an",
     "incomingCallNoticicationAcceptWithAudioAriaLabel": "Mit Audio annehmen",
     "incomingCallNoticicationAcceptWithVideoAriaLabel": "Mit Video annehmen",
-    "incomingCallNoticicationRejectAriaLabel": "Ablehnen"
+    "incomingCallNoticicationRejectAriaLabel": "Ablehnen",
+    "incomingCallNotificationAcceptButtonLabel": "Akzeptieren",
+    "incomingCallNotificationRejectButtonLabel": "Ablehnen",
+    "incomingCallNotificationAccceptWithVideoButtonLabel": "Mit Video annehmen"
   }
 }

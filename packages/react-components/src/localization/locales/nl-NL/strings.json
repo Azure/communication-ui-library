@@ -24,7 +24,7 @@
     "placeholderText": "Een bericht invoeren",
     "textTooLong": "De lengte van uw bericht overschrijdt de maximumlimiet.",
     "sendButtonAriaLabel": "Bericht verzenden",
-    "attachmentUploadsPendingError": "Uploaden.... Een ogenblik geduld.",
+    "attachmentUploadsPendingError": "Bestand wordt geüpload, even geduld.",
     "removeAttachment": "Bestand verwijderen",
     "uploading": "Uploaden",
     "uploadCompleted": "Upload voltooid",
@@ -34,7 +34,8 @@
     "placeholderText": "Een bericht invoeren",
     "textTooLong": "De lengte van uw bericht overschrijdt de maximumlimiet.",
     "sendButtonAriaLabel": "Bericht verzenden",
-    "attachmentUploadsPendingError": "Uploaden... Een ogenblik geduld.",
+    "attachmentUploadsPendingError": "Bestand wordt geüpload, even geduld.",
+    "imageUploadsPendingError": "Afbeelding wordt geüpload, even geduld.",
     "removeAttachment": "Bestand verwijderen",
     "uploading": "Uploaden",
     "uploadCompleted": "Upload voltooid",
@@ -58,7 +59,11 @@
     "richTextDeleteRowMenu": "Rij verwijderen",
     "richTextDeleteTableMenu": "Tabel verwijderen",
     "richTextToolbarMoreButtonAriaLabel": "Meer opties",
-    "attachmentMoreMenu": "Meer opties"
+    "attachmentMoreMenu": "Meer opties",
+    "richTextNewBulletedListItemAnnouncement": "Opsommingsteken, nieuwe regel",
+    "richTextNewNumberedListItemAnnouncement": "{0}, nieuwe regel",
+    "richTextBulletedListAppliedAnnouncement": "Lijst met opsommingstekens toegepast",
+    "richTextNumberedListAppliedAnnouncement": "Genummerde lijst is toegepast"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Suggesties"
@@ -221,7 +226,12 @@
     "richTextDeleteRowMenu": "Rij verwijderen",
     "richTextDeleteTableMenu": "Tabel verwijderen",
     "richTextToolbarMoreButtonAriaLabel": "Meer opties",
-    "attachmentUploadsPendingError": "Uploaden... Een ogenblik geduld."
+    "attachmentUploadsPendingError": "Bestand wordt geüpload, even geduld.",
+    "imageUploadsPendingError": "Afbeelding wordt geüpload, even geduld.",
+    "richTextNewBulletedListItemAnnouncement": "Opsommingsteken, nieuwe regel",
+    "richTextNewNumberedListItemAnnouncement": "{0}, nieuwe regel",
+    "richTextBulletedListAppliedAnnouncement": "Lijst met opsommingstekens toegepast",
+    "richTextNumberedListAppliedAnnouncement": "Genummerde lijst is toegepast"
   },
   "errorBar": {
     "unableToReachChatService": "U bent offline",
@@ -442,11 +452,37 @@
       "title": "Transcriptie is gestopt.",
       "message": "U bent nu alleen deze vergadering aan het opnemen.",
       "dismissButtonAriaLabel": "Sluiten"
+    },
+    "assignedBreakoutRoomOpened": {
+      "title": "U wordt over 5 seconden naar de toegewezen ruimte verplaatst.",
+      "dismissButtonAriaLabel": "Sluiten"
+    },
+    "assignedBreakoutRoomChanged": {
+      "title": "Uw aparte vergaderruimte is gewijzigd",
+      "message": "U wordt over 5 seconden naar de toegewezen ruimte verplaatst.",
+      "dismissButtonAriaLabel": "Sluiten"
+    },
+    "assignedBreakoutRoomOpenedPromptJoin": {
+      "title": "Deelnemen aan aparte vergaderruimte?",
+      "message": "U bent toegewezen aan een aparte vergaderruimte.",
+      "dismissButtonAriaLabel": "Sluiten",
+      "primaryButtonLabel": "Naar vergaderruimte",
+      "secondaryButtonLabel": "Later"
+    },
+    "breakoutRoomJoined": {
+      "title": "U heeft deelgenomen aan een vergaderruimte.",
+      "dismissButtonAriaLabel": "Sluiten"
+    },
+    "breakoutRoomClosingSoon": {
+      "title": "De tijdslimiet voor de ruimte verloopt binnenkort.",
+      "message": "Deze ruimte wordt in 30 seconden gesloten.",
+      "dismissButtonAriaLabel": "Sluiten"
     }
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "U deelt uw scherm",
     "screenShareLoadingMessage": "Scherm van {participant} laden",
+    "localScreenShareLoadingMessage": "Uw scherm laden",
     "localVideoLabel": "U",
     "localVideoCameraSwitcherLabel": "Camera wisselen",
     "localVideoMovementLabel": "Tegel voor verwisselbare lokale video",
@@ -616,9 +652,12 @@
   },
   "IncomingCallNotification": {
     "incomingCallNotificationPlaceholderId": "Onbekende gebruiker",
-    "incomingCallNotificationPlaceholderAlert": "Binnenkomende oproep",
+    "incomingCallNotificationPlaceholderAlert": "{callerName} belt",
     "incomingCallNoticicationAcceptWithAudioAriaLabel": "Accepteren met geluid",
     "incomingCallNoticicationAcceptWithVideoAriaLabel": "Accepteren met video",
-    "incomingCallNoticicationRejectAriaLabel": "Weigeren"
+    "incomingCallNoticicationRejectAriaLabel": "Weigeren",
+    "incomingCallNotificationAcceptButtonLabel": "Accepteren",
+    "incomingCallNotificationRejectButtonLabel": "Weigeren",
+    "incomingCallNotificationAccceptWithVideoButtonLabel": "Accepteren met video"
   }
 }

@@ -19,12 +19,14 @@ module.exports = {
     "hide-attendee-name",
     // Demo feature. Used in live-documentation of conditional compilation. Do not use in production code.
     "in-progress-beta-feature-demo",
-    // Feature for Rich Text Editor (RTE) composite support
-    "rich-text-editor-composite-support",
-    // Feature for Rich Text Editor (RTE) image upload support
-    "rich-text-editor-image-upload",
     // feature for adding JS helpers to the UI library API
     "composite-js-helpers",
+    // Feature for remote UFD
+    "remote-ufd",
+    // Feature for showing dtmp dialer by default
+    "dtmf-dialer-on-by-default",
+    // Deep Noise Suppression feature
+    "DNS"
   ],
   beta: [
     "call-readiness",
@@ -75,30 +77,30 @@ module.exports = {
     "acs-close-captions",
     // Feature for Rich Text Editor (RTE) support
     'rich-text-editor',
+    // Feature for Rich Text Editor (RTE) composite support
+    "rich-text-editor-composite-support",
+    // Feature for Rich Text Editor (RTE) image upload support
+    "rich-text-editor-image-upload",
     // Feature to support file sharing in ACS chats
     "file-sharing-acs",
-    // Soft Mute feature for ACS and Interop calls
-    "soft-mute"
+    // Soft Mute feature for ACS calls and Interop calls
+    "soft-mute",
+    // feature for breakout rooms
+    "breakout-rooms"
   ],
   stable: [
     // Demo feature. Used in live-documentation of conditional compilation.
     // Do not use in production code.
     "stabilizedDemo",
-    // Support Calling SDK isReceiving flag, shows a loading spinner on the video tile when isAvailable is true but isReceiving is false
-    "video-stream-is-receiving-flag",
     // Joining calls using teams token
     "teams-identity-support",
     // feature for hiding attendee name in the teams meeting
     "hide-attendee-name",
-    // Join meeting with meetingId and passcode
-    'meeting-id',
     // Feature for end call options 
     'end-call-options',
     // Feature to support file sharing in Teams interoperability chats
     "file-sharing-teams-interop",
     // Get join conference information
-    'teams-meeting-conference',
-    // Feature for showing notifications
-    "notifications"
+    'teams-meeting-conference'
   ]
 }

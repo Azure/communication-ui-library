@@ -347,11 +347,23 @@
     "muteAllDialogTitle": "האם להשתיק את כולם?",
     "muteAllDialogContent": "פעולה זו תשתיק את כל האנשים בפגישה חוץ ממך.",
     "muteAllConfirmButtonLabel": "השתק הכל",
-    "muteAllCancelButtonLabel": "ביטול"
+    "muteAllCancelButtonLabel": "ביטול",
+    "joinBreakoutRoomButtonLabel": "הצטרף לחדר בריחה",
+    "returnFromBreakoutRoomButtonLabel": "עזוב את החדר",
+    "leaveBreakoutRoomAndMeetingButtonLabel": "עזוב פגישה",
+    "breakoutRoomJoinedNotificationTitle": "הצטרפת לפיצול חדרים '{roomName}'",
+    "joinBreakoutRoomBannerTitle": "פיצול החדרים '{roomName}' פתוח",
+    "joinBreakoutRoomBannerButtonLabel": "הצטרף",
+    "returnFromBreakoutRoomBannerTitle": "חזרה לפגישה הראשית",
+    "returnFromBreakoutRoomBannerButtonLabel": "הצטרף מחדש"
   },
   "chat": {
     "chatListHeader": "בצ'אט זה",
-    "uploadAttachment": "העלה קובץ מצורף"
+    "uploadAttachment": "העלה קובץ מצורף",
+    "uploadImageDataNotProvided": "נתוני התמונה לא סופקו.",
+    "uploadImageIsTooLarge": "התמונה גדולה מדי. בחר אחד קטן יותר מ{maxImageSize} MB.",
+    "uploadImageExtensionIsNotAllowed": "העלאת תמונה {imageExtension} אסורה.",
+    "uploadImageFailed": "לא ניתן להעלות את התמונה. נסה שוב מאוחר יותר."
   },
   "callWithChat": {
     "chatButtonLabel": "צ'אט",
@@ -392,6 +404,8 @@
     "dialpadModalAriaLabel": "לוח חיוג",
     "dialpadCloseModalButtonAriaLabel": "סגור לוח חיוג",
     "openDtmfDialpadLabel": "הצג לוח חיוג",
-    "dtmfDialpadPlaceholderText": "הזן מספר"
+    "dtmfDialpadPlaceholderText": "הזן מספר",
+    "breakoutRoomChatPaneTitle": "צ'אט פיצול חדרים",
+    "chatContentSpinnerLabel": "בטעינה..."
   }
 }

@@ -34,7 +34,8 @@
     "placeholderText": "Kirjoita viesti",
     "textTooLong": "Viestin pituus ylittää enimmäispituuden.",
     "sendButtonAriaLabel": "Lähetä viesti",
-    "attachmentUploadsPendingError": "Ladataan... Odota.",
+    "attachmentUploadsPendingError": "Ladataan palvelimeen... Odota hetki.",
+    "imageUploadsPendingError": "Kuvaa ladataan palvelimeen, odota.",
     "removeAttachment": "Poista tiedosto",
     "uploading": "Ladataan",
     "uploadCompleted": "Lataus valmis",
@@ -58,7 +59,11 @@
     "richTextDeleteRowMenu": "Poista rivi",
     "richTextDeleteTableMenu": "Poista taulukko",
     "richTextToolbarMoreButtonAriaLabel": "Lisää asetuksia",
-    "attachmentMoreMenu": "Lisää asetuksia"
+    "attachmentMoreMenu": "Lisää asetuksia",
+    "richTextNewBulletedListItemAnnouncement": "Luettelomerkki, uusi rivi",
+    "richTextNewNumberedListItemAnnouncement": "{0}, uusi rivi",
+    "richTextBulletedListAppliedAnnouncement": "Luettelomerkeillä varustettu luettelo käytössä",
+    "richTextNumberedListAppliedAnnouncement": "Numeroitu luettelo käytössä"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Ehdotuksia"
@@ -221,7 +226,12 @@
     "richTextDeleteRowMenu": "Poista rivi",
     "richTextDeleteTableMenu": "Poista taulukko",
     "richTextToolbarMoreButtonAriaLabel": "Lisää asetuksia",
-    "attachmentUploadsPendingError": "Ladataan palvelimeen... Odota."
+    "attachmentUploadsPendingError": "Ladataan palvelimeen... Odota hetki.",
+    "imageUploadsPendingError": "Kuvaa ladataan palvelimeen, odota.",
+    "richTextNewBulletedListItemAnnouncement": "Luettelomerkki, uusi rivi",
+    "richTextNewNumberedListItemAnnouncement": "{0}, uusi rivi",
+    "richTextBulletedListAppliedAnnouncement": "Luettelomerkeillä varustettu luettelo käytössä",
+    "richTextNumberedListAppliedAnnouncement": "Numeroitu luettelo käytössä"
   },
   "errorBar": {
     "unableToReachChatService": "Olet offline-tilassa",
@@ -442,11 +452,37 @@
       "title": "Transkriptio on pysäytetty.",
       "message": "Tallennetta ollaan luomassa vain tästä kokouksesta.",
       "dismissButtonAriaLabel": "Sulje"
+    },
+    "assignedBreakoutRoomOpened": {
+      "title": "Siirrämme sinut määritettyihin huoneeseesi 5 sekunnin kuluttua.",
+      "dismissButtonAriaLabel": "Sulje"
+    },
+    "assignedBreakoutRoomChanged": {
+      "title": "Pienryhmätilasi on muuttunut",
+      "message": "Siirrämme sinut määritettyihin huoneeseesi 5 sekunnin kuluttua.",
+      "dismissButtonAriaLabel": "Sulje"
+    },
+    "assignedBreakoutRoomOpenedPromptJoin": {
+      "title": "Liitytäänkö pienryhmätilaan?",
+      "message": "Sinut on määritetty pienryhmätilaan.",
+      "dismissButtonAriaLabel": "Sulje",
+      "primaryButtonLabel": "Liity tilaan",
+      "secondaryButtonLabel": "Myöhemmin"
+    },
+    "breakoutRoomJoined": {
+      "title": "Olet liittynyt pienryhmätilaan.",
+      "dismissButtonAriaLabel": "Sulje"
+    },
+    "breakoutRoomClosingSoon": {
+      "title": "Pienryhmätilan aikaraja on täyttymässä.",
+      "message": "Tämä huone suljetaan 30 sekunnin kuluttua",
+      "dismissButtonAriaLabel": "Sulje"
     }
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "Näyttösi jaetaan parhaillaan",
     "screenShareLoadingMessage": "Ladataan käyttäjän {participant} näyttöä",
+    "localScreenShareLoadingMessage": "Ladataan näyttöä",
     "localVideoLabel": "Sinä",
     "localVideoCameraSwitcherLabel": "Vaihda kameraa",
     "localVideoMovementLabel": "Siirrettävä paikallisen videon ruutu",
@@ -616,9 +652,12 @@
   },
   "IncomingCallNotification": {
     "incomingCallNotificationPlaceholderId": "Tuntematon käyttäjä",
-    "incomingCallNotificationPlaceholderAlert": "Saapuva puhelu",
+    "incomingCallNotificationPlaceholderAlert": "{callerName} soittaa",
     "incomingCallNoticicationAcceptWithAudioAriaLabel": "Vastaa äänipuhelulla",
     "incomingCallNoticicationAcceptWithVideoAriaLabel": "Vastaa videopuhelulla",
-    "incomingCallNoticicationRejectAriaLabel": "Hylkää"
+    "incomingCallNoticicationRejectAriaLabel": "Hylkää",
+    "incomingCallNotificationAcceptButtonLabel": "Hyväksy",
+    "incomingCallNotificationRejectButtonLabel": "Hylkää",
+    "incomingCallNotificationAccceptWithVideoButtonLabel": "Vastaa videopuhelulla"
   }
 }

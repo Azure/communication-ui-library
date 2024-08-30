@@ -24,7 +24,7 @@
     "placeholderText": "أدخل رسالة",
     "textTooLong": "تجاوز طول الرسالة الحد الأقصى.",
     "sendButtonAriaLabel": "إرسال رسالة",
-    "attachmentUploadsPendingError": "جارِ التحميل... يرجى الانتظار.",
+    "attachmentUploadsPendingError": "يتم الآن تحميل الملف، الرجاء الانتظار.",
     "removeAttachment": "إزالة الملف",
     "uploading": "جارٍ التحميل",
     "uploadCompleted": "اكتمل التحميل",
@@ -34,7 +34,8 @@
     "placeholderText": "أدخل رسالة",
     "textTooLong": "تجاوز طول الرسالة الحد الأقصى.",
     "sendButtonAriaLabel": "إرسال رسالة",
-    "attachmentUploadsPendingError": "جارٍ التحميل... الرجاء الانتظار.",
+    "attachmentUploadsPendingError": "يتم الآن تحميل الملف، الرجاء الانتظار.",
+    "imageUploadsPendingError": "يتم الآن تحميل الصورة، الرجاء الانتظار.",
     "removeAttachment": "إزالة الملف",
     "uploading": "يتم الآن التحميل",
     "uploadCompleted": "اكتمل التحميل",
@@ -58,7 +59,11 @@
     "richTextDeleteRowMenu": "حذف الصف",
     "richTextDeleteTableMenu": "حذف الجدول",
     "richTextToolbarMoreButtonAriaLabel": "خيارات إضافية",
-    "attachmentMoreMenu": "خيارات إضافية"
+    "attachmentMoreMenu": "خيارات إضافية",
+    "richTextNewBulletedListItemAnnouncement": "رمز نقطي، سطر جديد",
+    "richTextNewNumberedListItemAnnouncement": "{0}، سطر جديد",
+    "richTextBulletedListAppliedAnnouncement": "تم تطبيق قائمة نقطية",
+    "richTextNumberedListAppliedAnnouncement": "تطبيق قائمة ذات تعداد رقمي"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "الاقتراحات"
@@ -221,7 +226,12 @@
     "richTextDeleteRowMenu": "حذف الصف",
     "richTextDeleteTableMenu": "حذف الجدول",
     "richTextToolbarMoreButtonAriaLabel": "خيارات إضافية",
-    "attachmentUploadsPendingError": "يتم الآن التحميل... الرجاء الانتظار."
+    "attachmentUploadsPendingError": "يتم الآن تحميل الملف، الرجاء الانتظار.",
+    "imageUploadsPendingError": "يتم الآن تحميل الصورة، الرجاء الانتظار.",
+    "richTextNewBulletedListItemAnnouncement": "رمز نقطي، سطر جديد",
+    "richTextNewNumberedListItemAnnouncement": "{0}، سطر جديد",
+    "richTextBulletedListAppliedAnnouncement": "تم تطبيق قائمة نقطية",
+    "richTextNumberedListAppliedAnnouncement": "تطبيق قائمة ذات تعداد رقمي"
   },
   "errorBar": {
     "unableToReachChatService": "أنت غير متصل",
@@ -442,11 +452,37 @@
       "title": "توقفت كتابة الحديث.",
       "message": "أنت الآن تسجل هذا الاجتماع فقط.",
       "dismissButtonAriaLabel": "إغلاق"
+    },
+    "assignedBreakoutRoomOpened": {
+      "title": "سننقلك إلى الغرفة المعينة خلال 5 ثوان.",
+      "dismissButtonAriaLabel": "إغلاق"
+    },
+    "assignedBreakoutRoomChanged": {
+      "title": "تم تغيير الغرفة الفرعية الخاصة بك",
+      "message": "سننقلك إلى الغرفة المعينة خلال 5 ثوان.",
+      "dismissButtonAriaLabel": "إغلاق"
+    },
+    "assignedBreakoutRoomOpenedPromptJoin": {
+      "title": "هل تريد الانضمام إلى الغرفة الفرعية؟",
+      "message": "تم تعيينك إلى غرفة اجتماع فرعية.",
+      "dismissButtonAriaLabel": "إغلاق",
+      "primaryButtonLabel": "الانضمام إلى الغرفة",
+      "secondaryButtonLabel": "لاحقاً"
+    },
+    "breakoutRoomJoined": {
+      "title": "لقد قمت بالانضمام إلى غرفة الاجتماع فرعية.",
+      "dismissButtonAriaLabel": "‏إغلاق"
+    },
+    "breakoutRoomClosingSoon": {
+      "title": "أوشكت صلاحية الحد الزمني للغرفة على الانتهاء.",
+      "message": "سيتم إغلاق هذه الغرفة في غضون 30 ثانية.",
+      "dismissButtonAriaLabel": "‏إغلاق"
     }
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "أنت تشارك شاشتك",
     "screenShareLoadingMessage": "يتم الآن تحميل شاشة {participant}",
+    "localScreenShareLoadingMessage": "تحميل الشاشة",
     "localVideoLabel": "أنت",
     "localVideoCameraSwitcherLabel": "تبديل الكاميرا",
     "localVideoMovementLabel": "لوحة فيديو محلية قابلة للنقل",
@@ -616,9 +652,12 @@
   },
   "IncomingCallNotification": {
     "incomingCallNotificationPlaceholderId": "مستخدم غير معروف",
-    "incomingCallNotificationPlaceholderAlert": "مكالمة واردة",
+    "incomingCallNotificationPlaceholderAlert": "{callerName} يتصل",
     "incomingCallNoticicationAcceptWithAudioAriaLabel": "قبول مع الصوت",
     "incomingCallNoticicationAcceptWithVideoAriaLabel": "قبول مع الفيديو",
-    "incomingCallNoticicationRejectAriaLabel": "رفض"
+    "incomingCallNoticicationRejectAriaLabel": "رفض",
+    "incomingCallNotificationAcceptButtonLabel": "قبول",
+    "incomingCallNotificationRejectButtonLabel": "رفض",
+    "incomingCallNotificationAccceptWithVideoButtonLabel": "قبول مع الفيديو"
   }
 }

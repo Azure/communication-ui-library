@@ -35,7 +35,6 @@ export const RemoteScreenShare = React.memo(
     reactionResources?: ReactionResources;
     localParticipant?: VideoGalleryLocalParticipant;
     remoteParticipants?: VideoGalleryRemoteParticipant[];
-    isPPTLive?: boolean;
   }) => {
     const {
       userId,
@@ -48,8 +47,7 @@ export const RemoteScreenShare = React.memo(
       participantVideoScalingMode,
       reactionResources,
       localParticipant,
-      remoteParticipants,
-      isPPTLive
+      remoteParticipants
     } = props;
     const locale = useLocale();
 
@@ -77,31 +75,6 @@ export const RemoteScreenShare = React.memo(
           participant: displayName
         })
       : '';
-    if (isPPTLive) {
-      return (
-        <VideoTile
-          renderElement={
-            renderElement ? (
-              <StreamMedia
-                videoStreamElement={renderElement}
-                loadingState={isReceiving === false ? 'loading' : 'none'}
-              />
-            ) : undefined
-          }
-          onRenderPlaceholder={() => <LoadingSpinner loadingMessage={loadingMessage} />}
-          overlay={
-            reactionResources && (
-              <MeetingReactionOverlay
-                reactionResources={reactionResources}
-                localParticipant={localParticipant}
-                remoteParticipants={remoteParticipants}
-                overlayMode="screen-share"
-              />
-            )
-          }
-        />
-      );
-    }
 
     return (
       <VideoTile
@@ -128,7 +101,13 @@ export const RemoteScreenShare = React.memo(
   }
 );
 
-const LoadingSpinner = (props: { loadingMessage: string }): JSX.Element => {
+/**
+ * LoadingSpinner component for displaying a loading spinner.
+ *
+ * @param {string} props.loadingMessage - The loading message to display.
+ * @returns {JSX.Element} The JSX element representing the loading spinner.
+ */
+export const LoadingSpinner = (props: { loadingMessage: string }): JSX.Element => {
   return (
     <Stack verticalAlign="center" className={loadingStyle}>
       <Spinner label={props.loadingMessage} size={SpinnerSize.xSmall} aria-live={'assertive'} />

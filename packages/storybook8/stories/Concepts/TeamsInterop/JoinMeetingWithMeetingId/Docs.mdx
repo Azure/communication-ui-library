@@ -1,0 +1,41 @@
+import { Meta, Source } from '@storybook/addon-docs';
+import { Stack } from '@fluentui/react';
+
+<Meta title="Concepts/Teams Interop/Join Meeting With Meeting Id" />
+
+# Use Teams MeetingId and passcode
+
+The [join existing call](./?path=/story/composites-callcomposite--join-existing-call) provides an easy
+playground to join an existing Azure Communication Services group call or an existing Teams meeting. This is
+useful if you want to explore the composite with multiple users. There are two ways to join an existing call:
+
+## Where to find the Teams MeetingId and passcode:
+
+- Outlook. Open the meeting you want to join. At the bottom of the meeting invitation under Or join by enteringa meeting ID, you'll find the ID and passcode.
+- Teams.Open the meeting you want to join. Click on the three dots at the top right of the meeting window and select meeting info.
+  <Stack horizontalAlign="center">
+    <img
+      style={{ width: '100%', maxWidth: '25rem' }}
+      src="images/teams-get-meetingid-and-passcode.png"
+      alt="Get Teams MeetingId and passcode from Teams"
+    />
+  </Stack>
+
+## Use Graph API to get or create meeting
+
+You can use the Microsoft Graph API to get all information about Teams meeting. You can find more information on
+how to do this in this [article](https://learn.microsoft.com/en-us/graph/api/onlinemeeting-get?view=graph-rest-1.0&tabs=http).
+
+It is possible to create a Teams meeting using the Microsoft Graph API. You can find more information on how to
+do this in this [article](https://learn.microsoft.com/en-us/graph/api/application-post-onlinemeetings?view=graph-rest-1.0&tabs=http).
+
+Response will contain both the mettinglink and the meetingId and passcode.
+
+<Source
+  code={`
+  // partial response from creating a Teams meeting
+  'joinWebUrl': 'https://teams.microsoft.com/l/meetup',
+  'joinMeetingId': '1234567890',
+  'passcode': 'abc'
+`}
+/>

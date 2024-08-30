@@ -54,11 +54,11 @@ export const FluentChatMyMessageComponent = (props: FluentChatMessageComponentWr
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
     onPaste,
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    imageUploadsInProgress,
+    inlineImagesWithProgress,
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    onCancelInlineImageUpload,
+    onRemoveInlineImage,
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    onUploadInlineImage
+    onInsertInlineImage
   } = props;
   const chatMessageRenderStyles = useChatMessageRenderStyles();
   /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
@@ -105,11 +105,11 @@ export const FluentChatMyMessageComponent = (props: FluentChatMessageComponentWr
             /* @conditional-compile-remove(rich-text-editor-image-upload) */
             onPaste={onPaste}
             /* @conditional-compile-remove(rich-text-editor-image-upload) */
-            onCancelInlineImageUpload={onCancelInlineImageUpload}
+            onRemoveInlineImage={onRemoveInlineImage}
             /* @conditional-compile-remove(rich-text-editor-image-upload) */
-            onUploadInlineImage={onUploadInlineImage}
+            onInsertInlineImage={onInsertInlineImage}
             /* @conditional-compile-remove(rich-text-editor-image-upload) */
-            imageUploadsInProgress={imageUploadsInProgress}
+            inlineImagesWithProgress={inlineImagesWithProgress}
           />
         );
       }
@@ -138,11 +138,11 @@ export const FluentChatMyMessageComponent = (props: FluentChatMessageComponentWr
       /* @conditional-compile-remove(rich-text-editor-image-upload) */
       onPaste,
       /* @conditional-compile-remove(rich-text-editor-image-upload) */
-      onCancelInlineImageUpload,
+      onRemoveInlineImage,
       /* @conditional-compile-remove(rich-text-editor-image-upload) */
-      onUploadInlineImage,
+      onInsertInlineImage,
       /* @conditional-compile-remove(rich-text-editor-image-upload) */
-      imageUploadsInProgress
+      inlineImagesWithProgress
     ]
   );
 

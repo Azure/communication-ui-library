@@ -101,6 +101,8 @@ export interface VideoGalleryLocalParticipant extends VideoGalleryParticipant {
    *
    * */
   reaction?: Reaction;
+  /** Video stream of shared screen */
+  screenShareStream?: VideoGalleryStream;
 }
 
 /**

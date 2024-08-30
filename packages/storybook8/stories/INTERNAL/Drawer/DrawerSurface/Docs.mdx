@@ -1,0 +1,14 @@
+import { Canvas, Meta, ArgTypes } from '@storybook/addon-docs';
+import * as DrawerSurfaceStories from './index.stories';
+import DrawerMenuText from '!!raw-loader!./DrawerSurface.story';
+import { _DrawerSurface } from '@internal/react-components';
+
+<Meta of={DrawerSurfaceStories} />
+
+# Drawer Surface
+
+A `Drawer` can be used to reveal lightweight views inside your application. They appear from the bottom of the screen upwards and are light-dismissed.
+
+<Canvas of={DrawerSurfaceStories.DrawerSurfaceDocsOnly} source={{ code: DrawerMenuText }} />
+
+<ArgTypes of={_DrawerSurface} />

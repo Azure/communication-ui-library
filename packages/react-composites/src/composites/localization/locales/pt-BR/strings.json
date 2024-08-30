@@ -347,11 +347,23 @@
     "muteAllDialogTitle": "Ativar mudo para todos?",
     "muteAllDialogContent": "Isso ativará o mudo para todas as pessoas na reunião, exceto para você.",
     "muteAllConfirmButtonLabel": "Ativar mudo de todos",
-    "muteAllCancelButtonLabel": "Cancelar"
+    "muteAllCancelButtonLabel": "Cancelar",
+    "joinBreakoutRoomButtonLabel": "Ingressar na sala da sessão de grupo",
+    "returnFromBreakoutRoomButtonLabel": "Sair da sala",
+    "leaveBreakoutRoomAndMeetingButtonLabel": "Sair da reunião",
+    "breakoutRoomJoinedNotificationTitle": "Você ingressou na sala para sessão de grupo '{roomName}'",
+    "joinBreakoutRoomBannerTitle": "A sala para sessão de grupo '{roomName}' está aberta",
+    "joinBreakoutRoomBannerButtonLabel": "Ingressar",
+    "returnFromBreakoutRoomBannerTitle": "Voltar à reunião principal",
+    "returnFromBreakoutRoomBannerButtonLabel": "Reingressar"
   },
   "chat": {
     "chatListHeader": "Neste chat",
-    "uploadAttachment": "Carregar anexo"
+    "uploadAttachment": "Carregar anexo",
+    "uploadImageDataNotProvided": "Os dados da imagem não foram fornecidos.",
+    "uploadImageIsTooLarge": "A imagem é muito grande. Escolha um que seja menor que {maxImageSize} MB.",
+    "uploadImageExtensionIsNotAllowed": "O upload da imagem .{imageExtension} não é permitido.",
+    "uploadImageFailed": "Não é possível carregar a imagem. Tente novamente mais tarde."
   },
   "callWithChat": {
     "chatButtonLabel": "Chat",
@@ -392,6 +404,8 @@
     "dialpadModalAriaLabel": "Teclado de discagem",
     "dialpadCloseModalButtonAriaLabel": "Fechar teclado",
     "openDtmfDialpadLabel": "Mostrar teclado de discagem",
-    "dtmfDialpadPlaceholderText": "Digite o número"
+    "dtmfDialpadPlaceholderText": "Digite o número",
+    "breakoutRoomChatPaneTitle": "Chat da Sala para Sessão de Grupo",
+    "chatContentSpinnerLabel": "Carregando..."
   }
 }

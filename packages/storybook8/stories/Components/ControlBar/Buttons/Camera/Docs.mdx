@@ -1,4 +1,5 @@
-import { Canvas, Description, Meta, Source } from '@storybook/blocks';
+import { Canvas, Description, Meta, Source, ArgTypes } from '@storybook/blocks';
+import { CameraButton } from '@azure/communication-react';
 import * as CameraStories from './index.stories';
 import CustomButtonExampleText from '!!raw-loader!./snippets/Custom.snippet.tsx';
 import DefaultButtonExampleText from '!!raw-loader!./snippets/Default.snippet.tsx';
@@ -60,3 +61,5 @@ to each element to avoid warning for children in a list.
 `CameraButton` features all props a [FluentUI
 Button](https://developer.microsoft.com/fluentui#/controls/web/button) offers, with the following additional
 properties:
+
+<ArgTypes of={CameraButton} />

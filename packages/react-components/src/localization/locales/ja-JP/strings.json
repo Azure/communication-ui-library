@@ -24,7 +24,7 @@
     "placeholderText": "メッセージを入力",
     "textTooLong": "メッセージの長さが上限を超えています。",
     "sendButtonAriaLabel": "メッセージの送信",
-    "attachmentUploadsPendingError": "アップロード中です... お待ちください。",
+    "attachmentUploadsPendingError": "ファイルをアップロードしています。お待ちください。",
     "removeAttachment": "ファイルの削除",
     "uploading": "アップロード中",
     "uploadCompleted": "アップロードが完了しました",
@@ -34,7 +34,8 @@
     "placeholderText": "メッセージを入力してください",
     "textTooLong": "メッセージの長さが上限を超えています。",
     "sendButtonAriaLabel": "メッセージの送信",
-    "attachmentUploadsPendingError": "アップロード中...お待ちください。",
+    "attachmentUploadsPendingError": "ファイルをアップロードしています。お待ちください。",
+    "imageUploadsPendingError": "画像をアップロードしています。お待ちください。",
     "removeAttachment": "ファイルを削除します",
     "uploading": "アップロード中",
     "uploadCompleted": "アップロード完了",
@@ -58,7 +59,11 @@
     "richTextDeleteRowMenu": "行の削除",
     "richTextDeleteTableMenu": "表の削除",
     "richTextToolbarMoreButtonAriaLabel": "その他のオプション",
-    "attachmentMoreMenu": "その他のオプション"
+    "attachmentMoreMenu": "その他のオプション",
+    "richTextNewBulletedListItemAnnouncement": "行頭文字、改行",
+    "richTextNewNumberedListItemAnnouncement": "{0}、改行",
+    "richTextBulletedListAppliedAnnouncement": "箇条書きが適用されました",
+    "richTextNumberedListAppliedAnnouncement": "番号付きリストが適用されました"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "候補"
@@ -162,7 +167,7 @@
     "ariaLabel": "リアクション ボタン、リアクションの送信",
     "tooltipDisabledContent": "リアクション操作が無効になっています",
     "tooltipContent": "リアクションを送信します",
-    "likeReactionTooltipContent": "高く評価",
+    "likeReactionTooltipContent": "いいね!",
     "heartReactionTooltipContent": "大好き",
     "laughReactionTooltipContent": "笑い",
     "applauseReactionTooltipContent": "喝采",
@@ -221,7 +226,12 @@
     "richTextDeleteRowMenu": "行の削除",
     "richTextDeleteTableMenu": "テーブルの削除",
     "richTextToolbarMoreButtonAriaLabel": "その他のオプション",
-    "attachmentUploadsPendingError": "アップロードしています...お待ちください。"
+    "attachmentUploadsPendingError": "ファイルをアップロードしています。お待ちください。",
+    "imageUploadsPendingError": "画像をアップロードしています。お待ちください。",
+    "richTextNewBulletedListItemAnnouncement": "行頭文字、改行",
+    "richTextNewNumberedListItemAnnouncement": "{0}、改行",
+    "richTextBulletedListAppliedAnnouncement": "箇条書きが適用されました",
+    "richTextNumberedListAppliedAnnouncement": "番号付きリストが適用されました"
   },
   "errorBar": {
     "unableToReachChatService": "オフラインです",
@@ -442,11 +452,37 @@
       "title": "文字起こしが停止しました。",
       "message": "今はこの会議の録画のみを行っています。",
       "dismissButtonAriaLabel": "閉じる"
+    },
+    "assignedBreakoutRoomOpened": {
+      "title": "5 秒後に、割り当てられた会議室に移動します。",
+      "dismissButtonAriaLabel": "閉じる"
+    },
+    "assignedBreakoutRoomChanged": {
+      "title": "ブレークアウト ルームが変更されました",
+      "message": "5 秒後に、割り当てられた会議室に移動します。",
+      "dismissButtonAriaLabel": "閉じる"
+    },
+    "assignedBreakoutRoomOpenedPromptJoin": {
+      "title": "ブレークアウト ルームに参加しますか?",
+      "message": "ブレークアウト ルームに割り当てられました。",
+      "dismissButtonAriaLabel": "閉じる",
+      "primaryButtonLabel": "ルームに参加",
+      "secondaryButtonLabel": "後で"
+    },
+    "breakoutRoomJoined": {
+      "title": "ブレークアウト ルームに参加しました。",
+      "dismissButtonAriaLabel": "閉じる"
+    },
+    "breakoutRoomClosingSoon": {
+      "title": "ルームの時間制限がもうすぐ切れます。",
+      "message": "このルームは 30 秒後に終了します",
+      "dismissButtonAriaLabel": "閉じる"
     }
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "画面を共有しています",
     "screenShareLoadingMessage": "{participant} の画面を読み込んでいます",
+    "localScreenShareLoadingMessage": "画面を読み込んでいます",
     "localVideoLabel": "自分",
     "localVideoCameraSwitcherLabel": "カメラを切り替え",
     "localVideoMovementLabel": "移動可能なローカル ビデオ タイル",
@@ -616,9 +652,12 @@
   },
   "IncomingCallNotification": {
     "incomingCallNotificationPlaceholderId": "不明なユーザー",
-    "incomingCallNotificationPlaceholderAlert": "着信",
+    "incomingCallNotificationPlaceholderAlert": "{callerName} が呼び出しています",
     "incomingCallNoticicationAcceptWithAudioAriaLabel": "オーディオで承諾する",
     "incomingCallNoticicationAcceptWithVideoAriaLabel": "ビデオで承諾する",
-    "incomingCallNoticicationRejectAriaLabel": "拒否する"
+    "incomingCallNoticicationRejectAriaLabel": "拒否する",
+    "incomingCallNotificationAcceptButtonLabel": "承諾",
+    "incomingCallNotificationRejectButtonLabel": "拒否",
+    "incomingCallNotificationAccceptWithVideoButtonLabel": "ビデオで受ける"
   }
 }

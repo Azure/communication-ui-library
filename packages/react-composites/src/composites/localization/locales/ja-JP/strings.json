@@ -347,11 +347,23 @@
     "muteAllDialogTitle": "全員をミュートにしますか?",
     "muteAllDialogContent": "会議に参加している自分以外の全員がミュートになります。",
     "muteAllConfirmButtonLabel": "全員をミュート",
-    "muteAllCancelButtonLabel": "取り消す"
+    "muteAllCancelButtonLabel": "取り消す",
+    "joinBreakoutRoomButtonLabel": "ブレークアウト ルームに参加",
+    "returnFromBreakoutRoomButtonLabel": "ルームから退出",
+    "leaveBreakoutRoomAndMeetingButtonLabel": "会議から退出",
+    "breakoutRoomJoinedNotificationTitle": "ブレークアウト ルーム '{roomName}' に参加しました",
+    "joinBreakoutRoomBannerTitle": "ブレークアウト ルーム '{roomName}' が開いています",
+    "joinBreakoutRoomBannerButtonLabel": "参加",
+    "returnFromBreakoutRoomBannerTitle": "メインの会議に戻る",
+    "returnFromBreakoutRoomBannerButtonLabel": "もう一度参加"
   },
   "chat": {
     "chatListHeader": "このチャット内",
-    "uploadAttachment": "添付ファイルのアップロード"
+    "uploadAttachment": "添付ファイルのアップロード",
+    "uploadImageDataNotProvided": "画像データが提供されていません。",
+    "uploadImageIsTooLarge": "画像が大きすぎます。{maxImageSize} MB 未満のものを選択してください。",
+    "uploadImageExtensionIsNotAllowed": ".{imageExtension} 形式の画像はアップロードできません。",
+    "uploadImageFailed": "画像をアップロードできません。後でもう一度お試しください。"
   },
   "callWithChat": {
     "chatButtonLabel": "チャット",
@@ -392,6 +404,8 @@
     "dialpadModalAriaLabel": "ダイヤルパッド",
     "dialpadCloseModalButtonAriaLabel": "ダイヤルパッドを閉じる",
     "openDtmfDialpadLabel": "ダイヤルパッドを表示",
-    "dtmfDialpadPlaceholderText": "番号を入力してください"
+    "dtmfDialpadPlaceholderText": "番号を入力してください",
+    "breakoutRoomChatPaneTitle": "ブレークアウト ルーム チャット",
+    "chatContentSpinnerLabel": "読み込んでいます..."
   }
 }

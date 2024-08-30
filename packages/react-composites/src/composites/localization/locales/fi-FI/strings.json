@@ -347,11 +347,23 @@
     "muteAllDialogTitle": "Mykistetäänkö kaikki?",
     "muteAllDialogContent": "Tämä toiminto mykistää kaikki muut kokouksen osallistujat paitsi sinut.",
     "muteAllConfirmButtonLabel": "Mykistä kaikki",
-    "muteAllCancelButtonLabel": "Peruuta"
+    "muteAllCancelButtonLabel": "Peruuta",
+    "joinBreakoutRoomButtonLabel": "Liity pienryhmätilaan",
+    "returnFromBreakoutRoomButtonLabel": "Poistu kokoustilasta",
+    "leaveBreakoutRoomAndMeetingButtonLabel": "Poistu kokouksesta",
+    "breakoutRoomJoinedNotificationTitle": "Olet liittynyt pienryhmätilaan {roomName}",
+    "joinBreakoutRoomBannerTitle": "Pienryhmätila {roomName} on avoinna",
+    "joinBreakoutRoomBannerButtonLabel": "Liity",
+    "returnFromBreakoutRoomBannerTitle": "Palaa pääkokoukseen",
+    "returnFromBreakoutRoomBannerButtonLabel": "Liity uudelleen"
   },
   "chat": {
     "chatListHeader": "Tässä keskustelussa",
-    "uploadAttachment": "Lataa liite"
+    "uploadAttachment": "Lataa liite",
+    "uploadImageDataNotProvided": "Kuvatietoja ei ole annettu.",
+    "uploadImageIsTooLarge": "Kuva on liian suuri. Valitse sellainen, jonka koko on alle {maxImageSize} Mt.",
+    "uploadImageExtensionIsNotAllowed": ".{imageExtension}-kuvan lataamista ei sallita.",
+    "uploadImageFailed": "Kuvaa ei voi ladata palvelimeen. Yritä myöhemmin uudelleen."
   },
   "callWithChat": {
     "chatButtonLabel": "Keskustelu",
@@ -392,6 +404,8 @@
     "dialpadModalAriaLabel": "Valintapaneeli",
     "dialpadCloseModalButtonAriaLabel": "Sulje valintapaneeli",
     "openDtmfDialpadLabel": "Näytä valintapaneeli",
-    "dtmfDialpadPlaceholderText": "Syötä numero"
+    "dtmfDialpadPlaceholderText": "Syötä numero",
+    "breakoutRoomChatPaneTitle": "Pienryhmätilan keskustelu",
+    "chatContentSpinnerLabel": "Ladataan..."
   }
 }

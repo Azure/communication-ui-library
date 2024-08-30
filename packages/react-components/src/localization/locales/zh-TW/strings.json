@@ -24,7 +24,7 @@
     "placeholderText": "輸入訊息",
     "textTooLong": "您的訊息長度超過上限。",
     "sendButtonAriaLabel": "傳送訊息",
-    "attachmentUploadsPendingError": "正在上傳... 請稍候。",
+    "attachmentUploadsPendingError": "正在上傳檔案，請稍候。",
     "removeAttachment": "移除檔案",
     "uploading": "正在上傳",
     "uploadCompleted": "上傳完成",
@@ -34,7 +34,8 @@
     "placeholderText": "輸入訊息",
     "textTooLong": "您的訊息長度超過上限。",
     "sendButtonAriaLabel": "傳送訊息",
-    "attachmentUploadsPendingError": "正在上傳...請稍候。",
+    "attachmentUploadsPendingError": "正在上傳檔案，請稍候。",
+    "imageUploadsPendingError": "正在上傳影像，請稍候。",
     "removeAttachment": "移除檔案",
     "uploading": "正在上傳",
     "uploadCompleted": "上傳完成",
@@ -58,7 +59,11 @@
     "richTextDeleteRowMenu": "刪除列",
     "richTextDeleteTableMenu": "刪除表格",
     "richTextToolbarMoreButtonAriaLabel": "其他選項",
-    "attachmentMoreMenu": "其他選項"
+    "attachmentMoreMenu": "其他選項",
+    "richTextNewBulletedListItemAnnouncement": "項目符號，新行",
+    "richTextNewNumberedListItemAnnouncement": "{0}，新行",
+    "richTextBulletedListAppliedAnnouncement": "已套用項目符號清單",
+    "richTextNumberedListAppliedAnnouncement": "已套用編號清單"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "建議"
@@ -221,7 +226,12 @@
     "richTextDeleteRowMenu": "刪除列",
     "richTextDeleteTableMenu": "刪除表格",
     "richTextToolbarMoreButtonAriaLabel": "其他選項",
-    "attachmentUploadsPendingError": "正在上傳...請稍候。"
+    "attachmentUploadsPendingError": "正在上傳檔案，請稍候。",
+    "imageUploadsPendingError": "正在上傳影像，請稍候。",
+    "richTextNewBulletedListItemAnnouncement": "項目符號，新行",
+    "richTextNewNumberedListItemAnnouncement": "{0}，新行",
+    "richTextBulletedListAppliedAnnouncement": "已套用項目符號清單",
+    "richTextNumberedListAppliedAnnouncement": "已套用編號清單"
   },
   "errorBar": {
     "unableToReachChatService": "您處於離線狀態",
@@ -442,11 +452,37 @@
       "title": "已停止轉錄。",
       "message": "您現在只會錄製此會議。",
       "dismissButtonAriaLabel": "關閉"
+    },
+    "assignedBreakoutRoomOpened": {
+      "title": "我們將在 5 秒內將您移至指派的會議室。",
+      "dismissButtonAriaLabel": "關閉"
+    },
+    "assignedBreakoutRoomChanged": {
+      "title": "您的分組討論區已變更",
+      "message": "我們將在 5 秒內將您移至指派的會議室。",
+      "dismissButtonAriaLabel": "關閉"
+    },
+    "assignedBreakoutRoomOpenedPromptJoin": {
+      "title": "加入分組討論區?",
+      "message": "系統已指派分組討論區給您。",
+      "dismissButtonAriaLabel": "關閉",
+      "primaryButtonLabel": "加入會議室",
+      "secondaryButtonLabel": "稍後"
+    },
+    "breakoutRoomJoined": {
+      "title": "您已加入分組討論區。",
+      "dismissButtonAriaLabel": "關閉"
+    },
+    "breakoutRoomClosingSoon": {
+      "title": "會議室時間限制即將到期。",
+      "message": "此會議室將在 30 秒鐘內關閉。",
+      "dismissButtonAriaLabel": "關閉"
     }
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "您現在正在分享螢幕畫面。",
     "screenShareLoadingMessage": "正在載入 {participant} 的螢幕畫面",
+    "localScreenShareLoadingMessage": "正在載入您的畫面",
     "localVideoLabel": "您",
     "localVideoCameraSwitcherLabel": "切換相機",
     "localVideoMovementLabel": "可移動本機視訊磚",
@@ -616,9 +652,12 @@
   },
   "IncomingCallNotification": {
     "incomingCallNotificationPlaceholderId": "未知的使用者",
-    "incomingCallNotificationPlaceholderAlert": "來電",
+    "incomingCallNotificationPlaceholderAlert": "{callerName} 正在通話",
     "incomingCallNoticicationAcceptWithAudioAriaLabel": "接受音訊",
     "incomingCallNoticicationAcceptWithVideoAriaLabel": "接受視訊",
-    "incomingCallNoticicationRejectAriaLabel": "拒絕"
+    "incomingCallNoticicationRejectAriaLabel": "拒絕",
+    "incomingCallNotificationAcceptButtonLabel": "接受",
+    "incomingCallNotificationRejectButtonLabel": "拒絕",
+    "incomingCallNotificationAccceptWithVideoButtonLabel": "接受並開啟視訊"
   }
 }

@@ -3,13 +3,11 @@
 
 import React, { useMemo } from 'react';
 import { SendBox, SendBoxStylesProps } from '@internal/react-components';
-/* @conditional-compile-remove(rich-text-editor-composite-support) */
-import { RichTextSendBoxOptions } from '@internal/react-components';
 import { usePropsFor } from '../ChatComposite/hooks/usePropsFor';
 /* @conditional-compile-remove(rich-text-editor-composite-support) */
 import { Suspense } from 'react';
 /* @conditional-compile-remove(rich-text-editor-composite-support) */
-import { _ErrorBoundary, RichTextSendBoxProps } from '@internal/react-components';
+import { _ErrorBoundary, RichTextSendBoxProps, RichTextEditorOptions } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing-acs) */
 import { AttachmentMetadataInProgress, MessageOptions } from '@internal/acs-ui-common';
 
@@ -32,6 +30,41 @@ export const loadRichTextSendBox = (): Promise<{
   default: React.ComponentType<RichTextSendBoxProps>;
 }> => import('./RichTextSendBoxWrapper').then((module) => ({ default: module.RichTextSendBoxWrapper }));
 
+/* @conditional-compile-remove(rich-text-editor) */
+/**
+ * Options for the rich text editor send box configuration.
+ *
+ * @internal
+ */
+export interface RichTextSendBoxOptions extends RichTextEditorOptions {
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  /**
+   * Optional callback to handle an inline image that's inserted in the rich text editor.
+   * When not provided, pasting images into rich text editor will be disabled.
+   * @param imageAttributes - attributes of the image such as id, src, style, etc.
+   *        It also contains the image file name which can be accessed through imageAttributes['data-image-file-name']
+   */
+  onInsertInlineImage?: (imageAttributes: Record<string, string>) => void;
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  /**
+   * Optional callback invoked after inline image is removed from the UI.
+   * @param imageAttributes - attributes of the image such as id, src, style, etc.
+   *        It also contains the image file name which can be accessed through imageAttributes['data-image-file-name'].
+   *        Note that if the src attribute is a local blob url, it has been revoked at this point.
+   */
+  onRemoveInlineImage?: (imageAttributes: Record<string, string>) => void;
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  /**
+   * Optional Array of type {@link AttachmentMetadataInProgress}
+   * to render the errorBar for inline images inserted in the RichTextSendBox when:
+   *   - there is an error provided in the inlineImagesWithProgress
+   *   - progress is less than 1 when the send button is clicked
+   *   - content html string is longer than the max allowed length.
+   *     (Note that the id and the url prop of the inlineImagesWithProgress will be used as the id and src attribute of the content html
+   *     when calculating the content length, only for the purpose of displaying the content length overflow error.)
+   */
+  inlineImagesWithProgress?: AttachmentMetadataInProgress[];
+}
 /**
  * @private
  */
@@ -57,8 +90,7 @@ export const SendBoxPicker = (props: SendBoxPickerProps): JSX.Element => {
   /* @conditional-compile-remove(rich-text-editor-composite-support) */
   const { richTextEditorOptions } = props;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  const { onPaste, onUploadInlineImage, imageUploadsInProgress, onCancelInlineImageUpload } =
-    richTextEditorOptions || {};
+  const { onPaste, onInsertInlineImage, inlineImagesWithProgress, onRemoveInlineImage } = richTextEditorOptions || {};
 
   const sendBoxProps = usePropsFor(SendBox);
 
@@ -76,10 +108,14 @@ export const SendBoxPicker = (props: SendBoxPickerProps): JSX.Element => {
         <Suspense fallback={sendBox}>
           <RichTextSendBoxWrapper
             {...props}
+            /* @conditional-compile-remove(rich-text-editor-image-upload) */
             onPaste={onPaste}
-            onUploadInlineImage={onUploadInlineImage}
-            imageUploadsInProgress={imageUploadsInProgress}
-            onCancelInlineImageUpload={onCancelInlineImageUpload}
+            /* @conditional-compile-remove(rich-text-editor-image-upload) */
+            onInsertInlineImage={onInsertInlineImage}
+            /* @conditional-compile-remove(rich-text-editor-image-upload) */
+            inlineImagesWithProgress={inlineImagesWithProgress}
+            /* @conditional-compile-remove(rich-text-editor-image-upload) */
+            onRemoveInlineImage={onRemoveInlineImage}
           />
         </Suspense>
       </_ErrorBoundary>

@@ -347,11 +347,23 @@
     "muteAllDialogTitle": "Disattivare l'audio di tutti?",
     "muteAllDialogContent": "Questa operazione disattiverà l'audio di tutte le persone nella riunione, tranne te.",
     "muteAllConfirmButtonLabel": "Disattivare l'audio di tutti",
-    "muteAllCancelButtonLabel": "Annullare"
+    "muteAllCancelButtonLabel": "Annullare",
+    "joinBreakoutRoomButtonLabel": "Partecipa al gruppo di lavoro",
+    "returnFromBreakoutRoomButtonLabel": "Esci dalla stanza",
+    "leaveBreakoutRoomAndMeetingButtonLabel": "Abbandona riunione",
+    "breakoutRoomJoinedNotificationTitle": "Sei stato aggiunto alla stanza di lavoro '{roomName}'",
+    "joinBreakoutRoomBannerTitle": "La stanza di lavoro '{roomName}' è aperta",
+    "joinBreakoutRoomBannerButtonLabel": "Partecipa",
+    "returnFromBreakoutRoomBannerTitle": "Torna alla riunione principale",
+    "returnFromBreakoutRoomBannerButtonLabel": "Partecipa di nuovo"
   },
   "chat": {
     "chatListHeader": "In questa chat",
-    "uploadAttachment": "Carica allegato"
+    "uploadAttachment": "Carica allegato",
+    "uploadImageDataNotProvided": "I dati dell'immagine non sono stati forniti.",
+    "uploadImageIsTooLarge": "L'immagine è troppo grande. Scegliere un valore inferiore a {maxImageSize} MB.",
+    "uploadImageExtensionIsNotAllowed": "Il caricamento dell’immagine .{imageExtension} non è consentito.",
+    "uploadImageFailed": "Non è possibile caricare l'immagine. Riprovare più tardi."
   },
   "callWithChat": {
     "chatButtonLabel": "Chat",
@@ -392,6 +404,8 @@
     "dialpadModalAriaLabel": "Tastiera",
     "dialpadCloseModalButtonAriaLabel": "Chiudi tastiera",
     "openDtmfDialpadLabel": "Mostra tastiera",
-    "dtmfDialpadPlaceholderText": "Immetti il numero"
+    "dtmfDialpadPlaceholderText": "Immetti il numero",
+    "breakoutRoomChatPaneTitle": "Chat della stanza di lavoro",
+    "chatContentSpinnerLabel": "Loading..."
   }
 }

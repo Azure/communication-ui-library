@@ -1,9 +1,0 @@
-{
-  "type": "minor",
-  "area": "improvement",
-  "workstream": "File Sharing",
-  "comment": "Removed Beta Banner for File Sharing Feature",
-  "packageName": "@azure/communication-react",
-  "email": "109105353+jpeng-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

@@ -1,0 +1,17 @@
+import { Canvas, Meta, ArgTypes } from '@storybook/addon-docs';
+import * as TroubleshootingGuideErrorBarStories from './index.stories';
+import TroubleshootingGuideErrorBarText from '!!raw-loader!./TroubleshootingGuideErrorBar.story';
+import { _TroubleshootingGuideErrorBar } from '@internal/react-components';
+
+<Meta of={TroubleshootingGuideErrorBarStories} />
+
+# Device Permission Dropdown
+
+A component to show device Permission/network connection related errors, contains link that leads to further trouble shooting guide
+
+<Canvas
+  of={TroubleshootingGuideErrorBarStories.TroubleshootingGuideErrorBarExampleDocsOnly}
+  source={{ code: TroubleshootingGuideErrorBarText }}
+/>
+
+<ArgTypes of={_TroubleshootingGuideErrorBar} />

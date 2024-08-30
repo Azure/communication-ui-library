@@ -21,7 +21,7 @@ import { InlineImageOptions } from '../ChatMessageContent';
 import { ChatMyMessageComponentAsMessageBubble } from './ChatMyMessageComponentAsMessageBubble';
 import { ChatMessageComponentAsEditBoxPicker } from './ChatMessageComponentAsEditBoxPicker';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
-import { removeBrokenImageContent } from '../../utils/SendBoxUtils';
+import { removeBrokenImageContentAndClearImageSizeStyles } from '../../utils/SendBoxUtils';
 
 type ChatMyMessageComponentProps = {
   message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage;
@@ -104,11 +104,11 @@ type ChatMyMessageComponentProps = {
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   onPaste?: (event: { content: DocumentFragment }) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  onCancelInlineImageUpload?: (imageId: string, messageId: string) => void;
+  onRemoveInlineImage?: (imageAttributes: Record<string, string>, messageId: string) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  onUploadInlineImage?: (imageUrl: string, imageFileName: string, messageId: string) => void;
+  onInsertInlineImage?: (imageAttributes: Record<string, string>, messageId: string) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  imageUploadsInProgress?: AttachmentMetadataInProgress[];
+  inlineImagesWithProgress?: AttachmentMetadataInProgress[];
 };
 
 /**
@@ -136,7 +136,7 @@ export const ChatMyMessageComponent = (props: ChatMyMessageComponentProps): JSX.
     onDeleteMessage && clientMessageId && onDeleteMessage(clientMessageId);
     let newContent = content ?? '';
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    newContent = removeBrokenImageContent(newContent);
+    newContent = removeBrokenImageContentAndClearImageSizeStyles(newContent);
     onSendMessage &&
       onSendMessage(
         newContent,
@@ -199,11 +199,11 @@ export const ChatMyMessageComponent = (props: ChatMyMessageComponentProps): JSX.
         /* @conditional-compile-remove(rich-text-editor-image-upload) */
         onPaste={props.onPaste}
         /* @conditional-compile-remove(rich-text-editor-image-upload) */
-        onUploadInlineImage={props.onUploadInlineImage}
+        onInsertInlineImage={props.onInsertInlineImage}
         /* @conditional-compile-remove(rich-text-editor-image-upload) */
-        imageUploadsInProgress={props.imageUploadsInProgress}
+        inlineImagesWithProgress={props.inlineImagesWithProgress}
         /* @conditional-compile-remove(rich-text-editor-image-upload) */
-        onCancelInlineImageUpload={props.onCancelInlineImageUpload}
+        onRemoveInlineImage={props.onRemoveInlineImage}
       />
     );
   } else {

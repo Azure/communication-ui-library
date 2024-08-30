@@ -24,7 +24,7 @@
     "placeholderText": "Skriv ett meddelande",
     "textTooLong": "Meddelandelängden överskrider maxgränsen.",
     "sendButtonAriaLabel": "Skicka meddelande",
-    "attachmentUploadsPendingError": "Uppladdning pågår... Vänta.",
+    "attachmentUploadsPendingError": "Filen laddas upp. Vänta.",
     "removeAttachment": "Ta bort fil",
     "uploading": "Laddar upp",
     "uploadCompleted": "Uppladdningen har slutförts",
@@ -34,7 +34,8 @@
     "placeholderText": "Skriv ett meddelande",
     "textTooLong": "Meddelandelängden överskrider maxgränsen.",
     "sendButtonAriaLabel": "Skicka meddelande",
-    "attachmentUploadsPendingError": "Laddar upp... Var god vänta.",
+    "attachmentUploadsPendingError": "Filen laddas upp. Vänta.",
+    "imageUploadsPendingError": "Bilden laddas upp. Vänta.",
     "removeAttachment": "Ta bort filen",
     "uploading": "Laddar upp",
     "uploadCompleted": "Uppladdningen har slutförts",
@@ -58,7 +59,11 @@
     "richTextDeleteRowMenu": "Ta bort rad",
     "richTextDeleteTableMenu": "Ta bort tabell",
     "richTextToolbarMoreButtonAriaLabel": "Fler alternativ",
-    "attachmentMoreMenu": "Fler alternativ"
+    "attachmentMoreMenu": "Fler alternativ",
+    "richTextNewBulletedListItemAnnouncement": "Punkt, ny rad",
+    "richTextNewNumberedListItemAnnouncement": "{0}, ny rad",
+    "richTextBulletedListAppliedAnnouncement": "Punktlista tillämpad",
+    "richTextNumberedListAppliedAnnouncement": "Numrerad tillämpad"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Förslag"
@@ -221,7 +226,12 @@
     "richTextDeleteRowMenu": "Ta bort rad",
     "richTextDeleteTableMenu": "Ta bort tabell",
     "richTextToolbarMoreButtonAriaLabel": "Fler alternativ",
-    "attachmentUploadsPendingError": "Laddar upp... Var god vänta."
+    "attachmentUploadsPendingError": "Filen laddas upp. Vänta.",
+    "imageUploadsPendingError": "Bilden laddas upp. Vänta.",
+    "richTextNewBulletedListItemAnnouncement": "Punkt, ny rad",
+    "richTextNewNumberedListItemAnnouncement": "{0}, ny rad",
+    "richTextBulletedListAppliedAnnouncement": "Punktlista tillämpad",
+    "richTextNumberedListAppliedAnnouncement": "Numrerad tillämpad"
   },
   "errorBar": {
     "unableToReachChatService": "Du är offline",
@@ -442,11 +452,37 @@
       "title": "Transkriptionen har avslutats.",
       "message": "Du spelar nu bara in det här mötet.",
       "dismissButtonAriaLabel": "Stäng"
+    },
+    "assignedBreakoutRoomOpened": {
+      "title": "Du flyttas till det tilldelade rummet om 5 sekunder.",
+      "dismissButtonAriaLabel": "Stäng"
+    },
+    "assignedBreakoutRoomChanged": {
+      "title": "Ditt grupprum har ändrats",
+      "message": "Du flyttas till det tilldelade rummet om 5 sekunder.",
+      "dismissButtonAriaLabel": "Stäng"
+    },
+    "assignedBreakoutRoomOpenedPromptJoin": {
+      "title": "Vill du ansluta till grupprummet?",
+      "message": "Du har tilldelats till ett separat rum.",
+      "dismissButtonAriaLabel": "Stäng",
+      "primaryButtonLabel": "Anslut till rummet",
+      "secondaryButtonLabel": "Senare"
+    },
+    "breakoutRoomJoined": {
+      "title": "Du har gått med i ett grupprum.",
+      "dismissButtonAriaLabel": "Stäng"
+    },
+    "breakoutRoomClosingSoon": {
+      "title": "Tidsgränsen för rummet upphör snart att gälla.",
+      "message": "Det här rummet stängs om 30 sekunder",
+      "dismissButtonAriaLabel": "Stäng"
     }
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "Du delar din skärm",
     "screenShareLoadingMessage": "Läser in {participant}s skärm",
+    "localScreenShareLoadingMessage": "Läser in skärmen",
     "localVideoLabel": "Du",
     "localVideoCameraSwitcherLabel": "Växla kamera",
     "localVideoMovementLabel": "Flyttbar lokal videopanel",
@@ -616,9 +652,12 @@
   },
   "IncomingCallNotification": {
     "incomingCallNotificationPlaceholderId": "Okänd användare",
-    "incomingCallNotificationPlaceholderAlert": "Inkommande samtal",
+    "incomingCallNotificationPlaceholderAlert": "{callerName} ringer",
     "incomingCallNoticicationAcceptWithAudioAriaLabel": "Acceptera med ljud",
     "incomingCallNoticicationAcceptWithVideoAriaLabel": "Acceptera med video",
-    "incomingCallNoticicationRejectAriaLabel": "Avvisa"
+    "incomingCallNoticicationRejectAriaLabel": "Avvisa",
+    "incomingCallNotificationAcceptButtonLabel": "Acceptera",
+    "incomingCallNotificationRejectButtonLabel": "Avböj",
+    "incomingCallNotificationAccceptWithVideoButtonLabel": "Acceptera med video"
   }
 }

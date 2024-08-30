@@ -24,7 +24,7 @@
     "placeholderText": "Enter a message",
     "textTooLong": "Your message length is over the maximum limit.",
     "sendButtonAriaLabel": "Send message",
-    "attachmentUploadsPendingError": "Uploading... Please wait.",
+    "attachmentUploadsPendingError": "File is uploading, please wait.",
     "removeAttachment": "Remove file",
     "uploading": "Uploading",
     "uploadCompleted": "Upload completed",
@@ -34,7 +34,8 @@
     "placeholderText": "Enter a message",
     "textTooLong": "Your message length is over the maximum limit.",
     "sendButtonAriaLabel": "Send message",
-    "attachmentUploadsPendingError": "Uploading... Please wait.",
+    "attachmentUploadsPendingError": "File is uploading, please wait.",
+    "imageUploadsPendingError": "Image is uploading, please wait.",
     "removeAttachment": "Remove file",
     "uploading": "Uploading",
     "uploadCompleted": "Upload completed",
@@ -98,14 +99,15 @@
     "cameraMenuTitle": "Camera",
     "cameraMenuTooltip": "Choose camera",
     "cameraButtonSplitRoleDescription": "Split button",
-    "onSplitButtonAriaLabel": "Turn off camera and camera options",
-    "offSplitButtonAriaLabel": "Turn on camera and camera options",
+    "onSplitButtonAriaLabel": "Turn off camera",
+    "offSplitButtonAriaLabel": "Turn on camera",
     "cameraActionTurnedOnAnnouncement": "Your camera has been turned on",
     "cameraActionTurnedOffAnnouncement": "Your camera has been turned off",
     "onSplitButtonPrimaryActionCamera": "Turn off camera",
     "offSplitButtonPrimaryActionCamera": "Turn on camera",
     "cameraPrimaryActionSplitButtonTitle": "Use camera",
-    "videoEffectsMenuItemTitle": "Effects"
+    "videoEffectsMenuItemTitle": "Effects",
+    "cameraButtonAriaDescription": "camera options"
   },
   "microphoneButton": {
     "onLabel": "Mic",
@@ -118,13 +120,18 @@
     "speakerMenuTitle": "Speaker",
     "speakerMenuTooltip": "Choose speaker",
     "microphoneButtonSplitRoleDescription": "Split button",
-    "onSplitButtonAriaLabel": "Mute microphone and audio options",
-    "offSplitButtonAriaLabel": "Unmute microphone and audio options",
+    "onSplitButtonAriaLabel": "Mute mic",
+    "offSplitButtonAriaLabel": "Unmute mic",
     "microphoneActionTurnedOnAnnouncement": "Your microphone has been turned on",
     "microphoneActionTurnedOffAnnouncement": "Your microphone has been turned off",
-    "offSplitButtonMicrophonePrimaryAction": "Unmute microphone",
-    "onSplitButtonMicrophonePrimaryAction": "Mute microphone",
-    "microphonePrimaryActionSplitButtonTitle": "Use microphone"
+    "offSplitButtonMicrophonePrimaryAction": "Unmute mic",
+    "onSplitButtonMicrophonePrimaryAction": "Mute mic",
+    "microphonePrimaryActionSplitButtonTitle": "Use microphone",
+    "microphoneAriaDescription": "Audio options",
+    "deepNoiseSuppresionOnTitle": "Noise Suppression On",
+    "deepNoiseSuppresionOffTitle": "Noise Suppression Off",
+    "deepNoiseSuppresionOnAnnouncement": "Deep noise suppression has been turned on",
+    "deepNoiseSuppresionOffAnnouncement": "Deep noise suppression has been turned off"
   },
   "devicesButton": {
     "label": "Devices",
@@ -225,9 +232,12 @@
     "richTextDeleteRowMenu": "Delete row",
     "richTextDeleteTableMenu": "Delete table",
     "richTextToolbarMoreButtonAriaLabel": "More options",
-    "attachmentUploadsPendingError": "Uploading... Please wait.",
+    "attachmentUploadsPendingError": "File is uploading, please wait.",
+    "imageUploadsPendingError": "Image is uploading, please wait.",
     "richTextNewBulletedListItemAnnouncement": "Bullet, new line",
-    "richTextNewNumberedListItemAnnouncement": "{0}, new line"
+    "richTextNewNumberedListItemAnnouncement": "{0}, new line",
+    "richTextBulletedListAppliedAnnouncement": "Bulleted list applied",
+    "richTextNumberedListAppliedAnnouncement": "Numbered list applied"
   },
   "errorBar": {
     "unableToReachChatService": "You are offline",
@@ -448,11 +458,37 @@
       "title": "Transcription has stopped.",
       "message": "You are now only recording this meeting.",
       "dismissButtonAriaLabel": "Close"
+    },
+    "assignedBreakoutRoomOpened": {
+      "title": "We'll move you to your assigned room in 5 seconds.",
+      "dismissButtonAriaLabel": "Close"
+    },
+    "assignedBreakoutRoomChanged": {
+      "title": "Your breakout room has changed",
+      "message": "We'll move you to your assigned room in 5 seconds.",
+      "dismissButtonAriaLabel": "Close"
+    },
+    "assignedBreakoutRoomOpenedPromptJoin": {
+      "title": "Join breakout room?",
+      "message": "You've been assigned to a breakout room.",
+      "dismissButtonAriaLabel": "Close",
+      "primaryButtonLabel": "Join room",
+      "secondaryButtonLabel": "Later"
+    },
+    "breakoutRoomJoined": {
+      "title": "You have joined a breakout room.",
+      "dismissButtonAriaLabel": "Close"
+    },
+    "breakoutRoomClosingSoon": {
+      "title": "Room time limit about to expire.",
+      "message": "This room will close in 30 seconds",
+      "dismissButtonAriaLabel": "Close"
     }
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "You are sharing your screen",
     "screenShareLoadingMessage": "Loading {participant}'s screen",
+    "localScreenShareLoadingMessage": "Loading your screen",
     "localVideoLabel": "You",
     "localVideoCameraSwitcherLabel": "Switch camera",
     "localVideoMovementLabel": "Movable Local Video Tile",
@@ -474,7 +510,8 @@
     "stopSpotlightVideoTileMenuLabel": "Stop spotlighting",
     "stopSpotlightOnSelfVideoTileMenuLabel": "Exit spotlight",
     "attendeeRole": "Attendee",
-    "muteParticipantMenuItemLabel": "Mute"
+    "muteParticipantMenuItemLabel": "Mute",
+    "waitingScreenText": "Waiting for others to join"
   },
   "dialpad": {
     "placeholderText": "Enter phone number",
@@ -622,9 +659,13 @@
   },
   "IncomingCallNotification": {
     "incomingCallNotificationPlaceholderId": "Unknown User",
-    "incomingCallNotificationPlaceholderAlert": "Incoming call",
+    "incomingCallNotificationPlaceholderAlert": "{callerName} is calling",
     "incomingCallNoticicationAcceptWithAudioAriaLabel": "Accept with audio",
     "incomingCallNoticicationAcceptWithVideoAriaLabel": "Accept with video",
-    "incomingCallNoticicationRejectAriaLabel": "Reject"
+    "incomingCallNoticicationRejectAriaLabel": "Reject",
+    "incomingCallNotificationAcceptButtonLabel": "Accept",
+    "incomingCallNotificationRejectButtonLabel": "Decline",
+    "incomingCallNotificationAccceptWithVideoButtonLabel": "Accept with Video",
+    "incomingCallNotificationDismissButtonAriaLabel": "Dismiss"
   }
 }

@@ -54,7 +54,7 @@ export class RichTextToolbarPlugin implements EditorPlugin {
    * Updates the format state of the rich text editor and triggers the `onFormatChanged` callback
    * if there is any difference between the new and the current format states.
    */
-  private updateFormat(): void {
+  updateFormat(): void {
     if (this.editor && this.onFormatChanged) {
       const newFormatState = getFormatState(this.editor);
       // use keys from the format that has more keys or the new format state if there is no current format state

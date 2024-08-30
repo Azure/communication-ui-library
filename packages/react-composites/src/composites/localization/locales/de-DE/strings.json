@@ -347,11 +347,23 @@
     "muteAllDialogTitle": "Alle stummschalten?",
     "muteAllDialogContent": "Hierdurch werden alle in der Besprechung stummgeschaltet, außer Ihnen.",
     "muteAllConfirmButtonLabel": "Alle stummschalten",
-    "muteAllCancelButtonLabel": "Abbrechen"
+    "muteAllCancelButtonLabel": "Abbrechen",
+    "joinBreakoutRoomButtonLabel": "Breakout-Room beitreten",
+    "returnFromBreakoutRoomButtonLabel": "Raum verlassen",
+    "leaveBreakoutRoomAndMeetingButtonLabel": "Besprechung verlassen",
+    "breakoutRoomJoinedNotificationTitle": "Sie sind dem Gruppenraum „{roomName}“ beigetreten.",
+    "joinBreakoutRoomBannerTitle": "Der Gruppenraum „{roomName}“ ist geöffnet.",
+    "joinBreakoutRoomBannerButtonLabel": "Beitreten",
+    "returnFromBreakoutRoomBannerTitle": "Zurück zur Hauptbesprechung",
+    "returnFromBreakoutRoomBannerButtonLabel": "Erneut teilnehmen"
   },
   "chat": {
     "chatListHeader": "In diesem Chat",
-    "uploadAttachment": "Anlage hochladen"
+    "uploadAttachment": "Anlage hochladen",
+    "uploadImageDataNotProvided": "Bilddaten werden nicht bereitgestellt.",
+    "uploadImageIsTooLarge": "Das Bild ist zu groß. Wählen Sie einen Wert aus, der kleiner als {maxImageSize} MB ist.",
+    "uploadImageExtensionIsNotAllowed": "Das Hochladen von .{imageExtension} Image ist nicht zulässig.",
+    "uploadImageFailed": "Das Bild kann nicht hochgeladen werden. Versuchen Sie es später noch mal."
   },
   "callWithChat": {
     "chatButtonLabel": "Chat",
@@ -392,6 +404,8 @@
     "dialpadModalAriaLabel": "Wähltastatur",
     "dialpadCloseModalButtonAriaLabel": "Wähltastatur schließen",
     "openDtmfDialpadLabel": "Wähltastatur anzeigen",
-    "dtmfDialpadPlaceholderText": "Nummer eingeben"
+    "dtmfDialpadPlaceholderText": "Nummer eingeben",
+    "breakoutRoomChatPaneTitle": "Chat im Gruppenraum",
+    "chatContentSpinnerLabel": "Loading..."
   }
 }

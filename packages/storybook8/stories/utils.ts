@@ -91,3 +91,5 @@ export const useVideoStreams = (numberOfStreams: number): (HTMLElement | null)[]
 
   return videoStreamElements;
 };
+export const addCSS = (css: string): string =>
+  (document.head.appendChild(document.createElement('style')).innerHTML = css);

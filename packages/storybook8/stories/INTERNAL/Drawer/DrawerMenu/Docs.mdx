@@ -1,0 +1,14 @@
+import { Canvas, Meta, ArgTypes } from '@storybook/addon-docs';
+import * as DrawerMenuStories from './index.stories';
+import DrawerMenuText from '!!raw-loader!./DrawerMenu.story';
+import { _DrawerMenu } from '@internal/react-components';
+
+<Meta of={DrawerMenuStories} />
+
+# Drawer Menu
+
+Takes a set of menu items and returns a created menu inside a Drawer Surface
+
+<Canvas of={DrawerMenuStories.DrawerMenuDocsOnly} source={{ code: DrawerMenuText }} />
+
+<ArgTypes of={_DrawerMenu} />

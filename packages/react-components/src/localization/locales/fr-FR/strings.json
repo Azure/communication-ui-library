@@ -24,7 +24,7 @@
     "placeholderText": "Saisir un message",
     "textTooLong": "La longueur de votre message dépasse la limite maximale.",
     "sendButtonAriaLabel": "Envoyer un message",
-    "attachmentUploadsPendingError": "Chargement en cours... Veuillez patienter.",
+    "attachmentUploadsPendingError": "Chargement du fichier en cours, veuillez patienter.",
     "removeAttachment": "Supprimer le fichier",
     "uploading": "Chargement",
     "uploadCompleted": "Téléchargement terminé",
@@ -34,7 +34,8 @@
     "placeholderText": "Saisir un message",
     "textTooLong": "La longueur de votre message dépasse la limite maximale.",
     "sendButtonAriaLabel": "Envoyer un message",
-    "attachmentUploadsPendingError": "Chargement en cours... Veuillez patienter.",
+    "attachmentUploadsPendingError": "Chargement du fichier en cours, veuillez patienter.",
+    "imageUploadsPendingError": "Chargement de l’image en cours, veuillez patienter.",
     "removeAttachment": "Supprimer un fichier",
     "uploading": "Téléchargement",
     "uploadCompleted": "Chargement terminé",
@@ -58,7 +59,11 @@
     "richTextDeleteRowMenu": "Supprimer une ligne",
     "richTextDeleteTableMenu": "Supprimer le tableau",
     "richTextToolbarMoreButtonAriaLabel": "Autres options",
-    "attachmentMoreMenu": "Plus d’options"
+    "attachmentMoreMenu": "Plus d’options",
+    "richTextNewBulletedListItemAnnouncement": "Puce, nouvelle ligne",
+    "richTextNewNumberedListItemAnnouncement": "{0}, nouvelle ligne",
+    "richTextBulletedListAppliedAnnouncement": "Liste à puces appliquée",
+    "richTextNumberedListAppliedAnnouncement": "Liste numérotée appliquée"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Suggestions"
@@ -221,7 +226,12 @@
     "richTextDeleteRowMenu": "Supprimer une ligne",
     "richTextDeleteTableMenu": "Supprimer le tableau",
     "richTextToolbarMoreButtonAriaLabel": "Autres options",
-    "attachmentUploadsPendingError": "Chargement en cours... Veuillez patienter."
+    "attachmentUploadsPendingError": "Chargement du fichier en cours, veuillez patienter.",
+    "imageUploadsPendingError": "Chargement de l’image en cours, veuillez patienter.",
+    "richTextNewBulletedListItemAnnouncement": "Puce, nouvelle ligne",
+    "richTextNewNumberedListItemAnnouncement": "{0}, nouvelle ligne",
+    "richTextBulletedListAppliedAnnouncement": "Liste à puces appliquée",
+    "richTextNumberedListAppliedAnnouncement": "Liste numérotée appliquée"
   },
   "errorBar": {
     "unableToReachChatService": "Vous êtes hors connexion",
@@ -442,11 +452,37 @@
       "title": "Arrêt de la transcription.",
       "message": "Vous n’enregistrez désormais que cette réunion.",
       "dismissButtonAriaLabel": "Fermer"
+    },
+    "assignedBreakoutRoomOpened": {
+      "title": "Nous allons vous déplacer vers la salle affectée dans 5 secondes.",
+      "dismissButtonAriaLabel": "Fermer"
+    },
+    "assignedBreakoutRoomChanged": {
+      "title": "Votre salle pour petit groupe a changé",
+      "message": "Nous allons vous déplacer vers la salle affectée dans 5 secondes.",
+      "dismissButtonAriaLabel": "Fermer"
+    },
+    "assignedBreakoutRoomOpenedPromptJoin": {
+      "title": "Rejoindre la salle de réunion ?",
+      "message": "Vous avez reçu une invitation à rejoindre une salle pour petit groupe.",
+      "dismissButtonAriaLabel": "Fermer",
+      "primaryButtonLabel": "Rejoindre une salle",
+      "secondaryButtonLabel": "Plus tard"
+    },
+    "breakoutRoomJoined": {
+      "title": "Vous avez rejoint une salle pour petit groupe.",
+      "dismissButtonAriaLabel": "Proche"
+    },
+    "breakoutRoomClosingSoon": {
+      "title": "Limite de temps de la salle sur le point d’expirer.",
+      "message": "Cette salle se fermera dans 30 secondes.",
+      "dismissButtonAriaLabel": "Proche"
     }
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "Vous partagez votre écran.",
     "screenShareLoadingMessage": "Chargement de l’écran de {participant}",
+    "localScreenShareLoadingMessage": "Chargement de votre écran",
     "localVideoLabel": "Vous",
     "localVideoCameraSwitcherLabel": "Changer de caméra",
     "localVideoMovementLabel": "Vignette de vidéo locale déplaçable",
@@ -616,9 +652,12 @@
   },
   "IncomingCallNotification": {
     "incomingCallNotificationPlaceholderId": "Utilisateur inconnu",
-    "incomingCallNotificationPlaceholderAlert": "Appel entrant",
+    "incomingCallNotificationPlaceholderAlert": "{callerName} appelle",
     "incomingCallNoticicationAcceptWithAudioAriaLabel": "Accepter avec l'audio",
     "incomingCallNoticicationAcceptWithVideoAriaLabel": "Accepter avec la vidéo",
-    "incomingCallNoticicationRejectAriaLabel": "Rejeter"
+    "incomingCallNoticicationRejectAriaLabel": "Rejeter",
+    "incomingCallNotificationAcceptButtonLabel": "Accepter",
+    "incomingCallNotificationRejectButtonLabel": "Refuser",
+    "incomingCallNotificationAccceptWithVideoButtonLabel": "Accepter avec une vidéo"
   }
 }

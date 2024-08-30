@@ -1,4 +1,5 @@
-import { Canvas, Meta, Source } from '@storybook/blocks';
+import { Canvas, Meta, Source, ArgTypes } from '@storybook/blocks';
+import { TypingIndicator } from '@azure/communication-react';
 import TypingIndicatorExampleText from '!!raw-loader!./snippets/TypingIndicator.snippet.tsx';
 import CustomizeStyleExampleText from '!!raw-loader!./snippets/CustomizeStyle.snippet.tsx';
 import CustomizeUserRenderingExampleText from '!!raw-loader!./snippets/CustomizeUserRendering.snippet.tsx';
@@ -34,3 +35,7 @@ To customize user rendering of `TypingIndicator`, use the `onRenderUsers` proper
   of={TypingIndicatorStories.CustomizeUserRenderingExampleDocsOnly}
   source={{ code: CustomizeUserRenderingExampleText }}
 />
+
+## Props
+
+<ArgTypes of={TypingIndicator} />

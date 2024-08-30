@@ -10,15 +10,14 @@
  *   node common/scripts/changelog/check.mjs origin/main origin/feature-pony
  */
 
-import { REPO_ROOT } from "../lib/constants.mjs";
 import { exec_output } from "../lib/exec.mjs";
-import path from 'path';
 import { parseNewChangeFiles } from "./utils.mjs";
+import { CHANGE_DIR_BETA, CHANGE_DIR_STABLE } from "./constants.mjs";
 
 async function main() {
   const [base, head] = parseArgs(process.argv);
-  const gitLogStdoutStableChangeFiles = await exec_output(`git log --name-status ${base}..${head} -- ${path.join(REPO_ROOT, 'change/')}`);
-  const gitLogStdoutBetaChangeFiles = await exec_output(`git log --name-status ${base}..${head} -- ${path.join(REPO_ROOT, 'change-beta/')}`);
+  const gitLogStdoutStableChangeFiles = await exec_output(`git log --name-status ${base}..${head} -- ${CHANGE_DIR_STABLE}`);
+  const gitLogStdoutBetaChangeFiles = await exec_output(`git log --name-status ${base}..${head} -- ${CHANGE_DIR_BETA}`);
 
   const newStableChangeFiles = parseNewChangeFiles(gitLogStdoutStableChangeFiles);
   const newBetaChangeFiles = parseNewChangeFiles(gitLogStdoutBetaChangeFiles);

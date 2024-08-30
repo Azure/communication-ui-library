@@ -30,7 +30,6 @@ import { CallError } from './views/CallError';
 import { CallScreen } from './views/CallScreen';
 import { HomeScreen } from './views/HomeScreen';
 import { UnsupportedBrowserPage } from './views/UnsupportedBrowserPage';
-/*@conditional-compile-remove(meeting-id)  */
 import { getMeetingIdFromUrl } from './utils/AppUtils';
 
 setLogLevel('error');
@@ -97,10 +96,7 @@ const App = (): JSX.Element => {
       document.title = `home - ${WEB_APP_TITLE}`;
       // Show a simplified join home screen if joining an existing call
       const joiningExistingCall: boolean =
-        !!getGroupIdFromUrl() ||
-        !!getTeamsLinkFromUrl() ||
-        /* @conditional-compile-remove(meeting-id) */ !!getMeetingIdFromUrl() ||
-        !!getRoomIdFromUrl();
+        !!getGroupIdFromUrl() || !!getTeamsLinkFromUrl() || !!getMeetingIdFromUrl() || !!getRoomIdFromUrl();
       return (
         <HomeScreen
           joiningExistingCall={joiningExistingCall}
@@ -112,7 +108,7 @@ const App = (): JSX.Element => {
               callDetails.callLocator ||
               getRoomIdFromUrl() ||
               getTeamsLinkFromUrl() ||
-              /* @conditional-compile-remove(meeting-id) */ getMeetingIdFromUrl() ||
+              getMeetingIdFromUrl() ||
               getGroupIdFromUrl() ||
               createGroupId();
 
@@ -242,7 +238,6 @@ const getJoinParams = (locator: CallAdapterLocator): string => {
   if ('meetingLink' in locator) {
     return '?teamsLink=' + encodeURIComponent(locator.meetingLink);
   }
-  /* @conditional-compile-remove(meeting-id) */
   if ('meetingId' in locator) {
     return (
       '?meetingId=' + encodeURIComponent(locator.meetingId) + (locator.passcode ? '&passcode=' + locator.passcode : '')

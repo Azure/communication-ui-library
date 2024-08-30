@@ -32,7 +32,6 @@ import { localStorageAvailable } from '../utils/localStorage';
 import { getDisplayNameFromLocalStorage, saveDisplayNameToLocalStorage } from '../utils/localStorage';
 import { DisplayNameField } from './DisplayNameField';
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
-/* @conditional-compile-remove(meeting-id) */
 import { TeamsMeetingIdLocator } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { Dialpad } from '@azure/communication-react';
@@ -46,7 +45,7 @@ import { RichTextEditorToggle } from './RichTextEditorToggle';
 export interface HomeScreenProps {
   startCallHandler(callDetails: {
     displayName: string;
-    meetingLocator?: TeamsMeetingLinkLocator | /* @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator;
+    meetingLocator?: TeamsMeetingLinkLocator | TeamsMeetingIdLocator;
     /* @conditional-compile-remove(one-to-n-calling)  */
     outboundParticipants?: string[];
     /* @conditional-compile-remove(PSTN-calls) */
@@ -80,12 +79,8 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const [displayName, setDisplayName] = useState<string | undefined>(defaultDisplayName ?? undefined);
 
   const [chosenCallOption, setChosenCallOption] = useState<IChoiceGroupOption>(callOptions[0]);
-  const [meetingLocator, setMeetingLocator] = useState<
-    TeamsMeetingLinkLocator | /* @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator
-  >();
-  /* @conditional-compile-remove(meeting-id) */
+  const [meetingLocator, setMeetingLocator] = useState<TeamsMeetingLinkLocator | TeamsMeetingIdLocator>();
   const [meetingId, setMeetingId] = useState<string>();
-  /* @conditional-compile-remove(meeting-id) */
   const [passcode, setPasscode] = useState<string>();
 
   /* @conditional-compile-remove(PSTN-calls) */
@@ -161,54 +156,46 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                 }}
               />
             )}
-            {
-              /* @conditional-compile-remove(meeting-id) */ teamsCallChosen && (
-                <Text className={teamsItemStyle} block variant="medium">
-                  <b>Or</b>
-                </Text>
-              )
-            }
-            {
-              /* @conditional-compile-remove(meeting-id) */ teamsCallChosen && (
-                <TextField
-                  className={teamsItemStyle}
-                  iconProps={{ iconName: 'MeetingId' }}
-                  label={'Meeting Id'}
-                  required
-                  placeholder={'Enter a meeting id'}
-                  onChange={(_, newValue) => {
-                    setMeetingId(newValue);
-                    newValue
-                      ? setMeetingLocator({ meetingId: newValue, passcode: passcode })
-                      : setMeetingLocator(undefined);
-                  }}
-                />
-              )
-            }
-            {
-              /* @conditional-compile-remove(meeting-id) */ teamsCallChosen && (
-                <TextField
-                  className={teamsItemStyle}
-                  iconProps={{ iconName: 'passcode' }}
-                  label={'Passcode'}
-                  placeholder={'Enter a meeting passcode'}
-                  onChange={(_, newValue) => {
-                    // meeting id is required, but passcode is not
-                    setPasscode(newValue);
-                    meetingId
-                      ? setMeetingLocator({ meetingId: meetingId, passcode: newValue })
-                      : setMeetingLocator(undefined);
-                  }}
-                />
-              )
-            }
-            {
-              /* @conditional-compile-remove(meeting-id) */ teamsCallChosen && (
-                <Text className={teamsItemStyle} block variant="medium">
-                  <b>And</b>
-                </Text>
-              )
-            }
+            {teamsCallChosen && (
+              <Text className={teamsItemStyle} block variant="medium">
+                <b>Or</b>
+              </Text>
+            )}
+            {teamsCallChosen && (
+              <TextField
+                className={teamsItemStyle}
+                iconProps={{ iconName: 'MeetingId' }}
+                label={'Meeting Id'}
+                required
+                placeholder={'Enter a meeting id'}
+                onChange={(_, newValue) => {
+                  setMeetingId(newValue);
+                  newValue
+                    ? setMeetingLocator({ meetingId: newValue, passcode: passcode })
+                    : setMeetingLocator(undefined);
+                }}
+              />
+            )}
+            {teamsCallChosen && (
+              <TextField
+                className={teamsItemStyle}
+                iconProps={{ iconName: 'passcode' }}
+                label={'Passcode'}
+                placeholder={'Enter a meeting passcode'}
+                onChange={(_, newValue) => {
+                  // meeting id is required, but passcode is not
+                  setPasscode(newValue);
+                  meetingId
+                    ? setMeetingLocator({ meetingId: meetingId, passcode: newValue })
+                    : setMeetingLocator(undefined);
+                }}
+              />
+            )}
+            {teamsCallChosen && (
+              <Text className={teamsItemStyle} block variant="medium">
+                <b>And</b>
+              </Text>
+            )}
             {
               /* @conditional-compile-remove(one-to-n-calling) */ acsCallChosen && (
                 <Stack>

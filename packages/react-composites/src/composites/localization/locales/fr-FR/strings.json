@@ -347,11 +347,23 @@
     "muteAllDialogTitle": "Désactiver le son de tout le monde ?",
     "muteAllDialogContent": "Cette opération va désactiver le son de tous les participants à la réunion, sauf vous.",
     "muteAllConfirmButtonLabel": "Désactiver le son de tous",
-    "muteAllCancelButtonLabel": "Annuler"
+    "muteAllCancelButtonLabel": "Annuler",
+    "joinBreakoutRoomButtonLabel": "Rejoindre la salle de réunion",
+    "returnFromBreakoutRoomButtonLabel": "Quitter la salle",
+    "leaveBreakoutRoomAndMeetingButtonLabel": "Quitter la réunion",
+    "breakoutRoomJoinedNotificationTitle": "Vous avez rejoint la salle pour petit groupe « {roomName} »",
+    "joinBreakoutRoomBannerTitle": "La salle pour petit groupe « {roomName} » est ouverte",
+    "joinBreakoutRoomBannerButtonLabel": "Joindre",
+    "returnFromBreakoutRoomBannerTitle": "Revenir à la réunion principale",
+    "returnFromBreakoutRoomBannerButtonLabel": "Rejoindre"
   },
   "chat": {
     "chatListHeader": "Dans cette conversation",
-    "uploadAttachment": "Charger une pièce jointe"
+    "uploadAttachment": "Charger une pièce jointe",
+    "uploadImageDataNotProvided": "Aucune donnée d'image n'est fournie.",
+    "uploadImageIsTooLarge": "L’image est trop grande. Choisissez une taille inférieure à {maxImageSize} Mo.",
+    "uploadImageExtensionIsNotAllowed": "Il est interdit de télécharger une image .{imageExtension}.",
+    "uploadImageFailed": "Impossible de charger l’image. Veuillez réessayer plus tard."
   },
   "callWithChat": {
     "chatButtonLabel": "Clavardage",
@@ -392,6 +404,8 @@
     "dialpadModalAriaLabel": "Pavé numérique",
     "dialpadCloseModalButtonAriaLabel": "Fermer le pavé numérique",
     "openDtmfDialpadLabel": "Afficher le pavé numérique",
-    "dtmfDialpadPlaceholderText": "Saisir un numéro"
+    "dtmfDialpadPlaceholderText": "Saisir un numéro",
+    "breakoutRoomChatPaneTitle": "Conversation dans une salle pour petit groupe",
+    "chatContentSpinnerLabel": "Chargement en cours..."
   }
 }

@@ -8,8 +8,7 @@ import { PeoplePaneContent } from '../../../common/PeoplePaneContent';
 import { useLocale } from '../../../localization';
 import { ParticipantMenuItemsCallback, _DrawerMenuItemProps } from '@internal/react-components';
 import { AvatarPersonaDataCallback } from '../../../common/AvatarPersona';
-import { IButton } from '@fluentui/react';
-import { IContextualMenuItem, IContextualMenuProps } from '@fluentui/react';
+import { IButton, IContextualMenuProps, IContextualMenuItem } from '@fluentui/react';
 /* @conditional-compile-remove(soft-mute) */
 import { getRemoteParticipants } from '../../selectors/baseSelectors';
 /* @conditional-compile-remove(soft-mute) */
@@ -109,17 +108,6 @@ export const usePeoplePane = (props: {
 
   const sidePaneHeaderMenuProps: IContextualMenuProps = useMemo(() => {
     const menuItems: IContextualMenuItem[] = [];
-    if (onStopAllSpotlight && spotlightedParticipantUserIds && spotlightedParticipantUserIds.length > 0) {
-      menuItems.push({
-        key: 'stopAllSpotlightKey',
-        text: localeStrings.stopAllSpotlightMenuLabel,
-        iconProps: { iconName: 'StopAllSpotlightMenuButton', styles: { root: { lineHeight: 0 } } },
-        onClick: () => {
-          onStopAllSpotlight();
-        },
-        ariaLabel: localeStrings.stopAllSpotlightMenuLabel
-      });
-    }
     /* @conditional-compile-remove(soft-mute) */
     if (onMuteAllRemoteParticipants && remoteParticipants) {
       let isAllMuted = true;
@@ -146,6 +134,17 @@ export const usePeoplePane = (props: {
         disabled: isAllMuted
       });
     }
+    if (onStopAllSpotlight && spotlightedParticipantUserIds && spotlightedParticipantUserIds.length > 0) {
+      menuItems.push({
+        key: 'stopAllSpotlightKey',
+        text: localeStrings.stopAllSpotlightMenuLabel,
+        iconProps: { iconName: 'StopAllSpotlightMenuButton', styles: { root: { lineHeight: 0 } } },
+        onClick: () => {
+          onStopAllSpotlight();
+        },
+        ariaLabel: localeStrings.stopAllSpotlightMenuLabel
+      });
+    }
     return {
       items: menuItems
     };
@@ -155,8 +154,8 @@ export const usePeoplePane = (props: {
     localeStrings.stopAllSpotlightMenuLabel,
     /* @conditional-compile-remove(soft-mute) */ localeStrings.muteAllMenuLabel,
     /* @conditional-compile-remove(soft-mute) */ onMuteAllRemoteParticipants,
-    /* @conditional-compile-remove(soft-mute) */ remoteParticipants,
-    /* @conditional-compile-remove(soft-mute) */ setShowMuteAllPrompt
+    /* @conditional-compile-remove(soft-mute) */ setShowMuteAllPrompt,
+    /* @conditional-compile-remove(soft-mute) */ remoteParticipants
   ]);
 
   const onRenderHeader = useCallback(
@@ -174,10 +173,29 @@ export const usePeoplePane = (props: {
   const onFetchParticipantMenuItemsForCallComposite = useCallback(
     (participantId: string, myUserId?: string, defaultMenuItems?: IContextualMenuItem[]): IContextualMenuItem[] => {
       let isPinned = pinnedParticipants?.includes(participantId);
-      const _defaultMenuItems: IContextualMenuItem[] = defaultMenuItems ?? [];
+      const _defaultMenuItems: IContextualMenuItem[] = [];
       const isSpotlighted = spotlightedParticipantUserIds?.includes(participantId);
       const isMe = myUserId === participantId;
       isPinned = isSpotlighted ? false : isPinned;
+      /* @conditional-compile-remove(soft-mute) */
+      if (onMuteParticipant && !isMe && remoteParticipants && remoteParticipants[participantId]) {
+        const participant = remoteParticipants[participantId];
+        const isMuted = participant.isMuted;
+        _defaultMenuItems.push({
+          key: 'mute',
+          text: 'Mute',
+          iconProps: {
+            iconName: 'ContextualMenuMicMutedIcon',
+            styles: { root: { lineHeight: 0 } }
+          },
+          onClick: () => {
+            onMuteParticipant(participantId);
+          },
+          'data-ui-id': 'participant-item-mute-participant',
+          ariaLabel: 'Mute',
+          disabled: isMuted
+        });
+      }
       if (isSpotlighted) {
         const stopSpotlightMenuText = isMe
           ? localeStrings.stopSpotlightOnSelfMenuLabel
@@ -233,25 +251,6 @@ export const usePeoplePane = (props: {
           });
         }
       }
-      /* @conditional-compile-remove(soft-mute) */
-      if (onMuteParticipant && !isMe) {
-        const isMuted = remoteParticipants && remoteParticipants[participantId]?.isMuted;
-        _defaultMenuItems.push({
-          key: 'mute',
-          text: 'Mute',
-          iconProps: {
-            iconName: 'ContextualMenuMicMutedIcon',
-            styles: { root: { lineHeight: 0 } }
-          },
-          onClick: () => {
-            onMuteParticipant(participantId);
-          },
-          'data-ui-id': 'participant-item-mute-participant',
-          ariaLabel: 'Mute',
-          disabled: isMuted
-        });
-      }
-
       if (!isMe && isPinned !== undefined) {
         if (isPinned && onUnpinParticipant && localeStrings?.unpinParticipantMenuLabel) {
           _defaultMenuItems.push({
@@ -286,6 +285,9 @@ export const usePeoplePane = (props: {
             ariaLabel: localeStrings.pinParticipantMenuItemAriaLabel
           });
         }
+      }
+      if (defaultMenuItems) {
+        _defaultMenuItems.push(...defaultMenuItems);
       }
       return onFetchParticipantMenuItems
         ? onFetchParticipantMenuItems(participantId, myUserId, _defaultMenuItems)

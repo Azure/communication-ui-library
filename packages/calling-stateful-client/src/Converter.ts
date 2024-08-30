@@ -5,14 +5,17 @@ import {
   RemoteParticipant as SdkRemoteParticipant,
   RemoteVideoStream as SdkRemoteVideoStream,
   LocalVideoStream as SdkLocalVideoStream,
-  VideoStreamRendererView
+  VideoStreamRendererView,
+  IncomingCall,
+  IncomingCallCommon
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(one-to-n-calling) */
+import { TeamsIncomingCall } from '@azure/communication-calling';
 import { TeamsCaptionsInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(acs-close-captions) */
 import { CaptionsInfo as AcsCaptionsInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support) */
 import { CallKind } from '@azure/communication-calling';
-/* @conditional-compile-remove(meeting-id) */
 import { TeamsCallInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(calling-beta-sdk) */
 import { CallInfo } from '@azure/communication-calling';
@@ -23,15 +26,18 @@ import {
   RemoteVideoStreamState as DeclarativeRemoteVideoStream,
   LocalVideoStreamState as DeclarativeLocalVideoStream,
   IncomingCallState as DeclarativeIncomingCall,
-  VideoStreamRendererViewState as DeclarativeVideoStreamRendererView
+  VideoStreamRendererViewState as DeclarativeVideoStreamRendererView,
+  CallInfoState
 } from './CallClientState';
 import { CaptionsInfo } from './CallClientState';
-
-/* @conditional-compile-remove(teams-identity-support) */ /* @conditional-compile-remove(meeting-id) */
+/* @conditional-compile-remove(one-to-n-calling) */
+import { TeamsIncomingCallState as DeclarativeTeamsIncomingCall } from './CallClientState';
+/* @conditional-compile-remove(one-to-n-calling) */
+import { _isTeamsIncomingCall } from './TypeGuards';
 import { _isACSCall } from './TypeGuards';
-/* @conditional-compile-remove(meeting-id) */ /* @conditional-compile-remove(acs-close-captions) */
+/* @conditional-compile-remove(acs-close-captions) */
 import { _isTeamsCall } from './TypeGuards';
-import { CallCommon, IncomingCallCommon } from './BetaToStableTypes';
+import { CallCommon } from './BetaToStableTypes';
 
 import { Features } from '@azure/communication-calling';
 
@@ -70,7 +76,6 @@ export function convertSdkRemoteStreamToDeclarativeRemoteStream(
     id: stream.id,
     mediaStreamType: stream.mediaStreamType,
     isAvailable: stream.isAvailable,
-    /* @conditional-compile-remove(video-stream-is-receiving-flag) */
     isReceiving: stream.isReceiving,
     view: undefined,
     streamSize: stream.size
@@ -182,7 +187,6 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
     },
     /* @conditional-compile-remove(hide-attendee-name) */
     hideAttendeeNames,
-    /* @conditional-compile-remove(meeting-id) */
     info: callInfo,
     /* @conditional-compile-remove(teams-meeting-conference) */
     meetingConference: { conferencePhones: [] }
@@ -192,9 +196,33 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
 /**
  * @private
  */
-export function convertSdkIncomingCallToDeclarativeIncomingCall(call: IncomingCallCommon): DeclarativeIncomingCall {
+export function convertSdkIncomingCallToDeclarativeIncomingCall(
+  call: IncomingCallCommon
+): DeclarativeIncomingCall | /* @conditional-compile-remove(one-to-n-calling) */ DeclarativeTeamsIncomingCall {
+  /* @conditional-compile-remove(one-to-n-calling) */
+  if (_isTeamsIncomingCall(call)) {
+    const newInfo: CallInfoState = { ...(call as TeamsIncomingCall).info, kind: call.kind };
+    return {
+      id: call.id,
+      info: newInfo,
+      callerInfo: call.callerInfo,
+      startTime: new Date(),
+      endTime: undefined
+    };
+  } else {
+    const newInfo: CallInfoState = { ...(call as IncomingCall).info, kind: call.kind };
+    return {
+      id: call.id,
+      info: newInfo,
+      callerInfo: call.callerInfo,
+      startTime: new Date(),
+      endTime: undefined
+    };
+  }
+  const newInfo: CallInfoState = { ...(call as IncomingCall).info, kind: call.kind };
   return {
     id: call.id,
+    info: newInfo,
     callerInfo: call.callerInfo,
     startTime: new Date(),
     endTime: undefined

@@ -24,7 +24,7 @@
     "placeholderText": "הזן הודעה",
     "textTooLong": "אורך ההודעה שלך חורג מהמגבלה המרבית.",
     "sendButtonAriaLabel": "שלח הודעה",
-    "attachmentUploadsPendingError": "מעלה... אנא המתן.",
+    "attachmentUploadsPendingError": "הקובץ בהעלאה, נא המתן.",
     "removeAttachment": "הסרת קובץ",
     "uploading": "מעלה",
     "uploadCompleted": "ההעלאה הושלמה",
@@ -34,7 +34,8 @@
     "placeholderText": "הזן הודעה",
     "textTooLong": "אורך ההודעה שלך חורג מהמגבלה המרבית.",
     "sendButtonAriaLabel": "שלח הודעה",
-    "attachmentUploadsPendingError": "מעלה... המתן.",
+    "attachmentUploadsPendingError": "הקובץ בהעלאה, נא המתן.",
+    "imageUploadsPendingError": "התמונה בהעלאה, נא המתן.",
     "removeAttachment": "הסר קובץ",
     "uploading": "מעלה",
     "uploadCompleted": "ההעלאה הושלמה",
@@ -58,7 +59,11 @@
     "richTextDeleteRowMenu": "מחק שורה",
     "richTextDeleteTableMenu": "מחק טבלה",
     "richTextToolbarMoreButtonAriaLabel": "אפשרויות נוספות",
-    "attachmentMoreMenu": "אפשרויות נוספות"
+    "attachmentMoreMenu": "אפשרויות נוספות",
+    "richTextNewBulletedListItemAnnouncement": "תבליט, שורה חדשה",
+    "richTextNewNumberedListItemAnnouncement": "{0}, שורה חדשה",
+    "richTextBulletedListAppliedAnnouncement": "הוחלה רשימה עם תבליטים",
+    "richTextNumberedListAppliedAnnouncement": "רשימה ממוספרת הוחלה"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "הצעות"
@@ -221,7 +226,12 @@
     "richTextDeleteRowMenu": "מחק שורה",
     "richTextDeleteTableMenu": "מחק טבלה",
     "richTextToolbarMoreButtonAriaLabel": "אפשרויות נוספות",
-    "attachmentUploadsPendingError": "מעלה... המתן."
+    "attachmentUploadsPendingError": "הקובץ בהעלאה, נא המתן.",
+    "imageUploadsPendingError": "התמונה בהעלאה, נא המתן.",
+    "richTextNewBulletedListItemAnnouncement": "תבליט, שורה חדשה",
+    "richTextNewNumberedListItemAnnouncement": "{0}, שורה חדשה",
+    "richTextBulletedListAppliedAnnouncement": "הוחלה רשימה עם תבליטים",
+    "richTextNumberedListAppliedAnnouncement": "רשימה ממוספרת הוחלה"
   },
   "errorBar": {
     "unableToReachChatService": "אתה נמצא במצב לא מקוון",
@@ -442,11 +452,37 @@
       "title": "התמלול הופסק.",
       "message": "אתה כעת רק מקליט את הפגישה.",
       "dismissButtonAriaLabel": "סגור"
+    },
+    "assignedBreakoutRoomOpened": {
+      "title": "נעביר אותך לחדר שהוקצה לך תוך 5 שניות.",
+      "dismissButtonAriaLabel": "סגור"
+    },
+    "assignedBreakoutRoomChanged": {
+      "title": "פיצול החדרים שלך השתנה",
+      "message": "נעביר אותך לחדר שהוקצה לך תוך 5 שניות.",
+      "dismissButtonAriaLabel": "סגור"
+    },
+    "assignedBreakoutRoomOpenedPromptJoin": {
+      "title": "להצטרף לפיצול חדרים?",
+      "message": "הוקצית לפיצול חדר.",
+      "dismissButtonAriaLabel": "סגור",
+      "primaryButtonLabel": "הצטרף לחדר",
+      "secondaryButtonLabel": "מאוחר יותר"
+    },
+    "breakoutRoomJoined": {
+      "title": "הצטרפת לפיצול חדרים.",
+      "dismissButtonAriaLabel": "סגור"
+    },
+    "breakoutRoomClosingSoon": {
+      "title": "תוקף מגבלת זמן החדר עומד לפוג.",
+      "message": "חדר זה ייסגר בעוד 30 שניות",
+      "dismissButtonAriaLabel": "סגור"
     }
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "אתה משתף את המסך שלך",
     "screenShareLoadingMessage": "טוען את המסך של {participant}",
+    "localScreenShareLoadingMessage": "טוען את המסך שלך",
     "localVideoLabel": "אתה",
     "localVideoCameraSwitcherLabel": "החלף מצלמה",
     "localVideoMovementLabel": "אריח וידאו מקומי נשלף",
@@ -616,9 +652,12 @@
   },
   "IncomingCallNotification": {
     "incomingCallNotificationPlaceholderId": "משתמש לא ידוע",
-    "incomingCallNotificationPlaceholderAlert": "שיחה נכנסת",
+    "incomingCallNotificationPlaceholderAlert": "{callerName} מתקשר",
     "incomingCallNoticicationAcceptWithAudioAriaLabel": "קבל עם שמע",
     "incomingCallNoticicationAcceptWithVideoAriaLabel": "קבל עם וידאו",
-    "incomingCallNoticicationRejectAriaLabel": "דחה"
+    "incomingCallNoticicationRejectAriaLabel": "דחה",
+    "incomingCallNotificationAcceptButtonLabel": "קבל",
+    "incomingCallNotificationRejectButtonLabel": "דחה",
+    "incomingCallNotificationAccceptWithVideoButtonLabel": "קבל עם וידאו"
   }
 }

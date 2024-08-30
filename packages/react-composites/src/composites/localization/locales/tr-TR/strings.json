@@ -347,11 +347,23 @@
     "muteAllDialogTitle": "Herkesi sessize almak mı istiyorsunuz?",
     "muteAllDialogContent": "Bu, toplantıda sizin dışınızdaki herkesi sessize alır.",
     "muteAllConfirmButtonLabel": "Tümünü sessize al",
-    "muteAllCancelButtonLabel": "İptal"
+    "muteAllCancelButtonLabel": "İptal",
+    "joinBreakoutRoomButtonLabel": "Tartışma odasına katıl",
+    "returnFromBreakoutRoomButtonLabel": "Odadan ayrıl",
+    "leaveBreakoutRoomAndMeetingButtonLabel": "Toplantıdan ayrıl",
+    "breakoutRoomJoinedNotificationTitle": "'{roomName}' Tartışma odasına katıldınız",
+    "joinBreakoutRoomBannerTitle": "'{roomName}' Tartışma odası açık",
+    "joinBreakoutRoomBannerButtonLabel": "Katıl",
+    "returnFromBreakoutRoomBannerTitle": "Ana toplantıya geri dön",
+    "returnFromBreakoutRoomBannerButtonLabel": "Yeniden Katıl"
   },
   "chat": {
     "chatListHeader": "Bu sohbette",
-    "uploadAttachment": "Eki Karşıya Yükle"
+    "uploadAttachment": "Eki Karşıya Yükle",
+    "uploadImageDataNotProvided": "Görüntü verileri sağlanmadı.",
+    "uploadImageIsTooLarge": "Resim çok büyük. Mb'den küçük bir {maxImageSize} seçin.",
+    "uploadImageExtensionIsNotAllowed": ".{imageExtension} görüntüsünün karşıya yüklemesine izin verilmiyor.",
+    "uploadImageFailed": "Resim karşıya yüklenemiyor. Lütfen daha sonra yeniden deneyin."
   },
   "callWithChat": {
     "chatButtonLabel": "Sohbet",
@@ -392,6 +404,8 @@
     "dialpadModalAriaLabel": "Tuş takımı",
     "dialpadCloseModalButtonAriaLabel": "Tuş takımını kapat",
     "openDtmfDialpadLabel": "Tuş takımını göster",
-    "dtmfDialpadPlaceholderText": "Numara girin"
+    "dtmfDialpadPlaceholderText": "Numara girin",
+    "breakoutRoomChatPaneTitle": "Tartışma Odası Sohbeti",
+    "chatContentSpinnerLabel": "Loading..."
   }
 }

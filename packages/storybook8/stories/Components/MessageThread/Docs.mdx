@@ -1,6 +1,7 @@
-import { Canvas, Description, Meta, Source } from '@storybook/blocks';
+import { Canvas, Description, Meta, Source, ArgTypes } from '@storybook/blocks';
 import { SingleLineBetaBanner } from '../../BetaBanners/SingleLineBetaBanner';
-
+import { DetailedBetaBanner } from '../../BetaBanners/DetailedBetaBanner';
+import { MessageThread } from '@azure/communication-react';
 import * as MessageThreadStories from './index.stories';
 
 import MessageThreadWithBlockedMessagesExampleText from '!!raw-loader!./snippets/BlockedMessages.snippet.tsx';
@@ -21,6 +22,9 @@ import ExampleImportantsText from '!!raw-loader!./snippets/placeholdermessages.t
 import MessageThreadWithSystemMessagesExampleText from '!!raw-loader!./snippets/SystemMessages.snippet.tsx';
 import MessageThreadWithInlineImageExampleText from '!!raw-loader!./snippets/WithInlineImageMessage.snippet.tsx';
 import MessageThreadWithMessageDateExampleText from '!!raw-loader!./snippets/WithMessageDate.snippet.tsx';
+import MessageThreadWithRichTextEditorExampleText from '!!raw-loader!./snippets/WithRichTextEditor.snippet.tsx';
+import MessageThreadWithRichTextEditorInlineImagesExampleText from '!!raw-loader!./snippets/WithRichTextEditorInlineImages.snippet.tsx';
+import MessageThreadWithRichTextEditorOnPasteExampleText from '!!raw-loader!./snippets/WithRichTextEditorOnPaste.snippet.tsx';
 
 <Meta of={MessageThreadStories} />
 
@@ -178,7 +182,7 @@ icon shown below.
 The MessageThread component also supports multiple ways to customize the rendering. You can leverage the
 `attachmentOptions.downloadOptions` props to provide a dynamic list of menu action buttons that will be based
 on properties of the attachment or the chat message associated with it. Moreover, you can also opt to provide
-a static list for all secanrios.
+a static list for all scenarios.
 
 For example, the following code snippet demonstrates how to customize the download options for attachments.
 
@@ -196,4 +200,63 @@ further customization. The HTML Tag is defined:
 <msft-mention id="<id>">Displayable Text</msft-mention>
 ```
 
+The MessageThread component also supports mentioning users when editing a message if the `lookupOptions` under the `mentionOptions` property is provided. However, if the `richTextEditorOptions` property is set, the `lookupOptions` will be ignored.
+
 <Canvas of={MessageThreadStories.CustomMentionsDocsOnly} source={{ code: MessageWithCustomMentionRendererText }} />
+
+## Rich Text Editor Support for Editing Messages
+
+<SingleLineBetaBanner />
+
+The following examples show how to enable rich text editor for message editing by providing the `richTextEditorOptions` property. Rich text editor does not support mentioning users at the moment. By setting `richTextEditorOptions` property, the `lookupOptions` under the `mentionOptions` property will be ignored.
+
+Enabling the rich text editor for message editing, without customizing its behavior, can be achieved by setting the richTextEditorOptions.
+
+<Canvas
+  of={MessageThreadStories.RichTextEditorTextDocsOnly}
+  source={{ code: MessageThreadWithRichTextEditorExampleText }}
+/>
+
+## Rich Text Editor Support for Editing Messages with Inline Images
+
+<SingleLineBetaBanner />
+
+The following examples show how to enable image insert functionality for message editing with rich text
+editor. Under the `richTextEditorOptions` prop, the `onInsertInlineImage` callback is used to handle each
+inline image that is inserted into the editor. When not provided, pasting images into the rich text editor
+will be disabled. This callback can be used to manipulate the imageAttributes src URL (which is a local blob
+URL), and implement any other custom logic. After processing each inserted image in the callback, the results
+should be passed back to the component through the `messagesInlineImagesWithProgress` prop. This prop will be
+used to render the error bar to the end user. Note that for the error of content exceeds the maximum length,
+the `id` and `url` props provided in the `inlineImagesWithProgress` will be used in the calculation to achieve
+a more accurate result. The content provided in the `onSendMessage` does not contain any information from the
+`inlineImagesWithProgress`. To add or replace image attributes, manually parse the HTML content and update the
+image attributes. After an inline image is removed from the editor, the `onRemoveInlineImage` callback will be
+triggered. At this point, the image is already removed from the UI and the local blob of the image has already
+been revoked. This callback can be used to implement custom logic such as deleting the image from the server.
+When the inline images are displayed in the message thread, we restrict the max-width on each image, but not
+the height. Long images will take up vertical space in the message thread. Also, when inserting images between
+text, images will be on the same line as the text. If you wish to change this behavior so that each image is
+always on a new line, you can set the display property to block for all image tags. For certain Android
+devices, pasting of a single image is only supported by long pressing on the rich text editor and choosing
+paste. Selecting from the clipboard view from keyboard may not be supported.
+
+<Canvas
+  of={MessageThreadStories.RichTextEditorInlineImagesTextDocsOnly}
+  source={{ code: MessageThreadWithRichTextEditorInlineImagesExampleText }}
+/>
+
+## Process content on paste in Rich Text Editor during message editing
+
+<SingleLineBetaBanner />
+
+`richTextEditorOptions` provides `onPaste` callback for custom processing of the pasted content before it's inserted into the rich text editor for message editing. This callback can be used to implement custom paste handling logic tailored to your application's needs. The example below shows how to remove images from pasted content.
+
+<Canvas
+  of={MessageThreadStories.RichTextEditorOnPasteTextDocsOnly}
+  source={{ code: MessageThreadWithRichTextEditorOnPasteExampleText }}
+/>
+
+## Props
+
+<ArgTypes of={MessageThread} />

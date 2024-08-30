@@ -2,11 +2,11 @@
 // Licensed under the MIT License.
 
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
-import { AttachmentMetadataInProgress } from '@internal/acs-ui-common';
+import { AttachmentMetadataInProgress, _IMAGE_ATTRIBUTE_INLINE_IMAGE_FILE_NAME_KEY } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { AttachmentUpload, AttachmentUploadActionType, AttachmentUploadTask } from '../file-sharing/AttachmentUpload';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
-import { SEND_BOX_UPLOADS_KEY_VALUE } from '../../common/constants';
+import { _DEFAULT_INLINE_IMAGE_FILE_NAME, SEND_BOX_UPLOADS_KEY_VALUE } from '../../common/constants';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { ChatAdapter } from '../adapter/ChatAdapter';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
@@ -15,6 +15,8 @@ import { Dispatch } from 'react';
 import { ImageActions } from './ImageUploadReducer';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { nanoid } from 'nanoid';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+import { ChatCompositeStrings } from '../Strings';
 
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 const MAX_INLINE_IMAGE_UPLOAD_SIZE_MB = 20;
@@ -61,45 +63,28 @@ export const getInlineImageData = async (image: string): Promise<Blob | undefine
 /**
  * @internal
  */
-export const removeImageTags = (event: { content: DocumentFragment }): void => {
-  event.content.querySelectorAll('img').forEach((image) => {
-    // If the image is the only child of its parent, remove all the parents of this img element.
-    let parentNode: HTMLElement | null = image.parentElement;
-    let currentNode: HTMLElement = image;
-    while (parentNode?.childNodes.length === 1) {
-      currentNode = parentNode;
-      parentNode = parentNode.parentElement;
-    }
-    currentNode?.remove();
-  });
-};
-
-/* @conditional-compile-remove(rich-text-editor-image-upload) */
-/**
- * @internal
- */
-export const getEditBoxMessagesImageUploadsInProgress = (
+export const getEditBoxMessagesInlineImages = (
   editBoxInlineImageUploads: Record<string, AttachmentUpload[]> | undefined
 ): Record<string, AttachmentMetadataInProgress[]> | undefined => {
   if (!editBoxInlineImageUploads) {
     return;
   }
   const messageIds = Object.keys(editBoxInlineImageUploads || {});
-  const messagesImageUploadsInProgress: Record<string, AttachmentMetadataInProgress[]> = {};
+  const messagesInlineImagesWithProgress: Record<string, AttachmentMetadataInProgress[]> = {};
   messageIds.map((messageId) => {
     const messageUploads = editBoxInlineImageUploads[messageId].map((upload) => {
       return upload.metadata;
     });
-    messagesImageUploadsInProgress[messageId] = messageUploads;
+    messagesInlineImagesWithProgress[messageId] = messageUploads;
   });
-  return messagesImageUploadsInProgress;
+  return messagesInlineImagesWithProgress;
 };
 
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 /**
  * @internal
  */
-export const getSendBoxImageUploadsInProgress = (
+export const getSendBoxInlineImages = (
   sendBoxInlineImageUploads: Record<string, AttachmentUpload[]> | undefined
 ): AttachmentMetadataInProgress[] | undefined => {
   if (!sendBoxInlineImageUploads) {
@@ -109,17 +94,21 @@ export const getSendBoxImageUploadsInProgress = (
 };
 
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
-const inlineImageUploadHandler = async (uploadTasks: AttachmentUpload[], adapter: ChatAdapter): Promise<void> => {
+const inlineImageUploadHandler = async (
+  uploadTasks: AttachmentUpload[],
+  adapter: ChatAdapter,
+  strings: ChatCompositeStrings
+): Promise<void> => {
   for (const task of uploadTasks) {
     const uploadTask = task as AttachmentUploadTask;
     const image: Blob | undefined = uploadTask.image;
     if (!image) {
-      uploadTask.notifyUploadFailed(`Image data for "${task.metadata?.name}" is not provided.`);
+      uploadTask.notifyUploadFailed(strings.uploadImageDataNotProvided);
       continue;
     }
     if (image && image.size > MAX_INLINE_IMAGE_UPLOAD_SIZE_MB * 1024 * 1024) {
       uploadTask.notifyUploadFailed(
-        `"${task.metadata?.name}" is too big. Select a file under ${MAX_INLINE_IMAGE_UPLOAD_SIZE_MB}MB.`
+        strings.uploadImageIsTooLarge.replace('{maxImageSize}', `${MAX_INLINE_IMAGE_UPLOAD_SIZE_MB}`)
       );
       continue;
     }
@@ -127,28 +116,33 @@ const inlineImageUploadHandler = async (uploadTasks: AttachmentUpload[], adapter
     const SUPPORTED_FILES: Array<string> = ['jpg', 'jpeg', 'png', 'gif', 'heic', 'webp'];
     const imageExtension = task.metadata?.name.split('.').pop() ?? '';
     if (!SUPPORTED_FILES.includes(imageExtension)) {
-      uploadTask.notifyUploadFailed(`Uploading ".${imageExtension}" image is not allowed.`);
+      uploadTask.notifyUploadFailed(
+        strings.uploadImageExtensionIsNotAllowed.replace('{imageExtension}', imageExtension)
+      );
       continue;
     }
 
     try {
       const response = await adapter.uploadImage(image, task.metadata?.name);
-      uploadTask.notifyUploadCompleted(response.id, task.metadata.url || '');
+      // Use response id as the image src because we need to keep the original image id as a reference to find the image.
+      // Also the html content we send to ChatSDK does not need image src,
+      // it only need the response id to match the uploaded image, url is not needed.
+      uploadTask.notifyUploadCompleted(task.metadata.id, response.id);
     } catch (error) {
       console.error(error);
-      uploadTask.notifyUploadFailed('Unable to upload inline image. Please try again later.');
+      uploadTask.notifyUploadFailed(strings.uploadImageFailed);
     }
   }
 };
 
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 const generateUploadTask = async (
-  image: string,
+  imageAttributes: Record<string, string>,
   fileName: string,
   messageId: string,
   inlineImageUploadActionHandler: Dispatch<ImageActions>
 ): Promise<AttachmentUpload | undefined> => {
-  const imageData = await getInlineImageData(image);
+  const imageData = await getInlineImageData(imageAttributes.src);
   if (!imageData) {
     return;
   }
@@ -157,9 +151,9 @@ const generateUploadTask = async (
     image: imageData,
     taskId,
     metadata: {
-      id: taskId,
+      id: imageAttributes.id,
       name: fileName,
-      url: image,
+      url: imageAttributes.src,
       progress: 0
     },
     notifyUploadProgressChanged: (value: number) => {
@@ -195,15 +189,16 @@ const generateUploadTask = async (
 /**
  * @internal
  */
-export const onUploadInlineImageForEditBox = async (
-  image: string,
+export const onInsertInlineImageForEditBox = async (
+  imageAttributes: Record<string, string>,
   fileName: string,
   messageId: string,
   adapter: ChatAdapter,
-  handleEditBoxInlineImageUploadAction: Dispatch<ImageActions>
+  handleEditBoxInlineImageUploadAction: Dispatch<ImageActions>,
+  chatCompositeStrings: ChatCompositeStrings
 ): Promise<void> => {
   const uploadTask: AttachmentUpload | undefined = await generateUploadTask(
-    image,
+    imageAttributes,
     fileName,
     messageId,
     handleEditBoxInlineImageUploadAction
@@ -217,21 +212,22 @@ export const onUploadInlineImageForEditBox = async (
     newUploads: [uploadTask],
     messageId
   });
-  inlineImageUploadHandler([uploadTask], adapter);
+  inlineImageUploadHandler([uploadTask], adapter, chatCompositeStrings);
 };
 
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 /**
  * @internal
  */
-export const onUploadInlineImageForSendBox = async (
-  image: string,
+export const onInsertInlineImageForSendBox = async (
+  imageAttributes: Record<string, string>,
   fileName: string,
   adapter: ChatAdapter,
-  handleSendBoxInlineImageUploadAction: Dispatch<ImageActions>
+  handleSendBoxInlineImageUploadAction: Dispatch<ImageActions>,
+  chatCompositeStrings: ChatCompositeStrings
 ): Promise<void> => {
   const uploadTask: AttachmentUpload | undefined = await generateUploadTask(
-    image,
+    imageAttributes,
     fileName,
     SEND_BOX_UPLOADS_KEY_VALUE,
     handleSendBoxInlineImageUploadAction
@@ -246,7 +242,7 @@ export const onUploadInlineImageForSendBox = async (
     newUploads: [uploadTask],
     messageId: SEND_BOX_UPLOADS_KEY_VALUE
   });
-  inlineImageUploadHandler([uploadTask], adapter);
+  inlineImageUploadHandler([uploadTask], adapter, chatCompositeStrings);
 };
 
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
@@ -254,13 +250,20 @@ export const onUploadInlineImageForSendBox = async (
  * @internal
  */
 export const cancelInlineImageUpload = (
-  imageId: string,
-  imageUpload: AttachmentUpload | undefined,
+  imageAttributes: Record<string, string>,
+  imageUploads: Record<string, AttachmentUpload[]> | undefined,
   messageId: string,
   inlineImageUploadActionHandler: Dispatch<ImageActions>,
   adapter: ChatAdapter
 ): void => {
+  if (!imageUploads || !imageUploads[messageId]) {
+    deleteExistingInlineImageForEditBox(imageAttributes.id, messageId, adapter);
+    return;
+  }
+  const imageUpload = imageUploads[messageId].find((upload) => upload.metadata.id === imageAttributes.id);
+
   if (!imageUpload || !imageUpload?.metadata.id) {
+    deleteExistingInlineImageForEditBox(imageAttributes.id, messageId, adapter);
     return;
   }
 
@@ -269,57 +272,67 @@ export const cancelInlineImageUpload = (
     id: imageUpload?.metadata.id,
     messageId
   });
-  // TODO: remove local blob
-  if (imageUpload?.metadata.progress === 1) {
-    try {
-      adapter.deleteImage(imageId);
-    } catch (error) {
-      console.error(error);
+
+  if (imageUpload?.metadata.progress === 1 && imageUpload?.metadata.url) {
+    // The image id that we got back from the ChatSDK response is stored in the image src attribute,
+    // while the metadata id is the internal image id that we assigned to the image when it was pasted in.
+    deleteInlineImageFromServer(imageUpload?.metadata.url, adapter);
+  }
+};
+
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+const deleteInlineImageFromServer = (imageId: string, adapter: ChatAdapter): void => {
+  try {
+    adapter.deleteImage(imageId);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+// This function is used to delete the inline image that existed before editing starts
+const deleteExistingInlineImageForEditBox = (imageId: string, messageId: string, adapter: ChatAdapter): void => {
+  messageId !== SEND_BOX_UPLOADS_KEY_VALUE && deleteInlineImageFromServer(imageId, adapter);
+};
+
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+/**
+ * @internal
+ */
+export const updateContentStringWithUploadedInlineImages = (
+  content: string,
+  imageUploads: Record<string, AttachmentUpload[]> | undefined,
+  messageId: string = SEND_BOX_UPLOADS_KEY_VALUE
+): string => {
+  if (!imageUploads || !imageUploads[messageId]) {
+    return content;
+  }
+  const messageUploads = imageUploads[messageId];
+  const document = new DOMParser().parseFromString(content ?? '', 'text/html');
+  document.querySelectorAll('img').forEach((img) => {
+    const uploadInlineImage = messageUploads.find(
+      (upload) => !upload.metadata.error && upload.metadata.progress === 1 && upload.metadata.id === img.id
+    );
+
+    if (uploadInlineImage) {
+      // ChatSDK uses the respond id provided by the upload response. We store the response id in the image src attribute previously.
+      img.id = uploadInlineImage.metadata.url ?? img.id;
+      img.src = '';
     }
-  }
+  });
+  content = document.body.innerHTML;
+
+  return content;
 };
 
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 /**
  * @internal
  */
-export const onCancelInlineImageUploadHandlerForEditBox = (
-  imageId: string,
-  messageId: string,
-  editBoxInlineImageUploads: Record<string, AttachmentUpload[]> | undefined,
-  adapter: ChatAdapter,
-  handleEditBoxInlineImageUploadAction: Dispatch<ImageActions>
-): void => {
-  if (!editBoxInlineImageUploads) {
-    return;
+export const getImageFileNameFromAttributes = (imageAttributes: Record<string, string>): string => {
+  const fileName = imageAttributes[_IMAGE_ATTRIBUTE_INLINE_IMAGE_FILE_NAME_KEY];
+  if (!fileName || fileName === '' || fileName === 'undefined' || fileName === 'null') {
+    return _DEFAULT_INLINE_IMAGE_FILE_NAME;
   }
-  const imageUpload = editBoxInlineImageUploads[messageId].find((upload) => upload.metadata.id === imageId);
-
-  cancelInlineImageUpload(imageId, imageUpload, messageId, handleEditBoxInlineImageUploadAction, adapter);
-};
-
-/* @conditional-compile-remove(rich-text-editor-image-upload) */
-/**
- * @internal
- */
-export const onCancelInlineImageUploadHandlerForSendBox = (
-  imageId: string,
-  sendBoxInlineImageUploads: Record<string, AttachmentUpload[]> | undefined,
-  adapter: ChatAdapter,
-  handleSendBoxInlineImageUploadAction: Dispatch<ImageActions>
-): void => {
-  if (!sendBoxInlineImageUploads) {
-    return;
-  }
-  const imageUpload = sendBoxInlineImageUploads[SEND_BOX_UPLOADS_KEY_VALUE].find(
-    (upload) => upload.metadata.id === imageId
-  );
-
-  cancelInlineImageUpload(
-    imageId,
-    imageUpload,
-    SEND_BOX_UPLOADS_KEY_VALUE,
-    handleSendBoxInlineImageUploadAction,
-    adapter
-  );
+  return fileName;
 };

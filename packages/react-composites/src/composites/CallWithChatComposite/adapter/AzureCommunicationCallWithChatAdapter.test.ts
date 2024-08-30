@@ -31,7 +31,6 @@ describe('Adapter is created as expected', () => {
     expect(adapter).toBeDefined();
   });
 
-  /* @conditional-compile-remove(meeting-id) */
   it('when creating a new adapter from stateful client with meeting id', async () => {
     const mockCallClient = new MockCallClient() as unknown as StatefulCallClient;
     const mockCallAgent = new MockCallAgent();

@@ -1,4 +1,5 @@
-import { Canvas, Meta, Source } from '@storybook/blocks';
+import { Canvas, Meta, Source, ArgTypes } from '@storybook/blocks';
+import { ChatComposite } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
 import { SingleLineBetaBanner } from '../../BetaBanners/SingleLineBetaBanner';
 
@@ -8,6 +9,7 @@ import containerText from '!!raw-loader!./snippets/Container.snippet.tsx';
 import customDataModelExampleContainerText from '!!raw-loader!./snippets/CustomDataModelExampleContainer.snippet.tsx';
 import customDateTimeFormatExampleText from '!!raw-loader!./snippets/CustomDateTimeFormat.snippet.tsx';
 import customBehaviorExampleText from '!!raw-loader!./snippets/CustomizeBehavior.snippet.tsx';
+import richTextEditorExampleText from '!!raw-loader!./snippets/RichTextEditor.snippet.tsx';
 
 <Meta title="Composites/ChatComposite" />
 
@@ -145,6 +147,15 @@ Please refer to our
 [tutorial](https://docs.microsoft.com/azure/communication-services/tutorials/file-sharing-tutorial) for more
 details. File sharing in Teams interop scenarios is available with the CallWithChat Composite.
 
-# Chat Composite Props
+## Rich Text Editor Support
 
-`props`
+<SingleLineBetaBanner />
+
+The following example show how to enable rich text editor for message editing by providing the `richTextEditor` property.
+The insert inline images feature is only supported in the Teams Interop chats. Please try it out in the Join Teams Meeting page.
+
+<Source code={richTextEditorExampleText} />
+
+## Props
+
+<ArgTypes of={ChatComposite} />

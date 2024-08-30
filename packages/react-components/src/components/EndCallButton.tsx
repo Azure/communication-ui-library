@@ -132,7 +132,7 @@ export const EndCallButton = (props: EndCallButtonProps): JSX.Element => {
       <ControlBarButton
         {...props}
         /* @conditional-compile-remove(end-call-options) */
-        menuProps={enableEndCallMenu ? defaultMenuProps : undefined}
+        menuProps={enableEndCallMenu ? defaultMenuProps : props.menuProps}
         onClick={onHangUp ? () => onHangUp() : props.onClick}
         styles={componentStyles}
         onRenderIcon={props.onRenderIcon ?? onRenderEndCallIcon}

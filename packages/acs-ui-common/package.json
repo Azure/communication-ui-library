@@ -1,6 +1,6 @@
 {
   "name": "@internal/acs-ui-common",
-  "version": "1.18.0-beta.1",
+  "version": "1.19.0-beta.1",
   "description": "Common types and utilities for all Azure Communication Serves UI libraries",
   "module": "dist/dist-esm/index.js",
   "main": "dist/dist-cjs/index.js",
@@ -37,8 +37,8 @@
     "@types/react": ">=16.8.0 <19.0.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.24.7",
-    "@babel/core": "^7.24.7",
+    "@babel/cli": "^7.24.8",
+    "@babel/core": "^7.25.2",
     "@types/jest": "^29.5.11",
     "@types/react": "18.3.3",
     "@typescript-eslint/eslint-plugin": "^7.14.1",

@@ -26,9 +26,8 @@ import { _preventDismissOnEvent } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(teams-meeting-conference) */
 import { useLocale } from '../localization';
 /* @conditional-compile-remove(teams-meeting-conference) */
-import { isPossiblePhoneNumber, parsePhoneNumber } from 'libphonenumber-js';
-/* @conditional-compile-remove(teams-meeting-conference) */
 import { _pxToRem } from '@internal/acs-ui-common';
+import { _formatPhoneNumber } from './utils/formatPhoneNumber';
 
 /* @conditional-compile-remove(teams-meeting-conference) */
 /**
@@ -143,7 +142,7 @@ export const MeetingConferencePhoneInfoModal = (props: MeetingConferencePhoneInf
                 {conferencePhoneInfoList.map((phoneNumber, index) => (
                   <Stack.Item key={index}>
                     <Text className={phoneInfoTextStyle}>
-                      {formatPhoneNumber(phoneNumber.phoneNumber)}{' '}
+                      {_formatPhoneNumber(phoneNumber.phoneNumber, true)}{' '}
                       {phoneNumber.isTollFree
                         ? strings.meetingConferencePhoneInfoModalTollFree
                         : strings.meetingConferencePhoneInfoModalToll}
@@ -195,25 +194,6 @@ export const MeetingConferencePhoneInfoModal = (props: MeetingConferencePhoneInf
 /* @conditional-compile-remove(teams-meeting-conference) */
 /**
  * @internal
- * format phone number
- */
-export const formatPhoneNumber = (phoneNumber: string): string => {
-  if (!phoneNumber) {
-    return '';
-  }
-  let enchantedPhoneNumber = phoneNumber;
-  if (!phoneNumber.startsWith('+')) {
-    enchantedPhoneNumber = `+${phoneNumber}`;
-  }
-  if (isPossiblePhoneNumber(enchantedPhoneNumber)) {
-    return parsePhoneNumber(enchantedPhoneNumber)?.formatInternational() || enchantedPhoneNumber;
-  }
-  return phoneNumber;
-};
-
-/* @conditional-compile-remove(teams-meeting-conference) */
-/**
- * @internal
  * format phone number link
  */
 export const formatPhoneNumberLink = (phoneNumber: ConferencePhoneInfo): string => {
@@ -233,8 +213,7 @@ export const formatPhoneNumberInfo = (
     phoneNumber.country && phoneNumber.city ? strings?.meetingConferencePhoneInfoModalTollGeoData : '';
   return (
     templateText
-      ?.replace('{phoneNumber}', formatPhoneNumber(phoneNumber.phoneNumber))
-      .replace('{country}', phoneNumber.country || '')
+      ?.replace('{country}', phoneNumber.country || '')
       .replace('{city}', phoneNumber.city || '')
       .trim() || ''
   );

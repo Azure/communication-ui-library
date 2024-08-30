@@ -17,7 +17,11 @@ export const CallManager = (props: CallManagerProps): JSX.Element => {
   const { onSetResume, calls, onSetHold, activeCall } = props;
   const theme = useTheme();
 
-  const otherCalls = calls.filter((call) => call.id !== activeCall?.id);
+  const [otherCalls, setOtherCalls] = useState<Call[] | TeamsCall[]>([]);
+
+  useEffect(() => {
+    setOtherCalls(calls.filter((call) => call.id !== activeCall?.id));
+  }, [calls, activeCall]);
 
   return (
     <Stack verticalAlign={'start'} styles={callManagerContainerStyle(theme)}>
@@ -67,7 +71,7 @@ const CallItem = (props: CallItemProps): JSX.Element => {
 
   useEffect(() => {
     if (call.state === 'Connecting') {
-      setCallTitle('Connecting');
+      setCallTitle('');
     } else {
       const names = call.remoteParticipants.map((participant) => participant.displayName);
       if (names.length === 1 && names[0]) {

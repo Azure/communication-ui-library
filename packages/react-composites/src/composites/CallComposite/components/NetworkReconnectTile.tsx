@@ -34,7 +34,7 @@ import {
   infoConnectionLinkStyle
 } from '../../common/styles/TeamsMeetingConferenceInfo.style';
 /* @conditional-compile-remove(teams-meeting-conference) */
-import { formatPhoneNumberInfo, formatPhoneNumber, formatPhoneNumberLink } from '@internal/react-components';
+import { formatPhoneNumberInfo, _formatPhoneNumber, formatPhoneNumberLink } from '@internal/react-components';
 /* @conditional-compile-remove(teams-meeting-conference) */
 import { _pxToRem } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(teams-meeting-conference) */
@@ -122,11 +122,13 @@ export const NetworkReconnectTile = (props: NetworkReconnectTileProps): JSX.Elem
                           <Text className={phoneInfoTextStyle}>
                             {props.isMobile && (
                               <Link className={phoneInfoTextStyle} href={formatPhoneNumberLink(phoneNumber)}>
-                                {formatPhoneNumber(phoneNumber.phoneNumber)}
+                                {_formatPhoneNumber(phoneNumber.phoneNumber, true)}
                               </Link>
                             )}
                             {!props.isMobile && (
-                              <Text className={phoneInfoTextStyle}>{formatPhoneNumber(phoneNumber.phoneNumber)}</Text>
+                              <Text className={phoneInfoTextStyle}>
+                                {_formatPhoneNumber(phoneNumber.phoneNumber, true)}
+                              </Text>
                             )}{' '}
                             {phoneNumber.isTollFree
                               ? localeStrings.meetingConferencePhoneInfoModalTollFree

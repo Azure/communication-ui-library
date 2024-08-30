@@ -24,7 +24,7 @@
     "placeholderText": "Immetti un messaggio",
     "textTooLong": "La lunghezza del messaggio supera il limite massimo.",
     "sendButtonAriaLabel": "Invio messaggio",
-    "attachmentUploadsPendingError": "Caricamento in corso... Attendere.",
+    "attachmentUploadsPendingError": "È in corso il caricamento del file, attendere.",
     "removeAttachment": "Rimuovi file",
     "uploading": "Caricamento in corso",
     "uploadCompleted": "Caricamento completato",
@@ -34,7 +34,8 @@
     "placeholderText": "Immetti un messaggio",
     "textTooLong": "La lunghezza del messaggio supera il limite massimo.",
     "sendButtonAriaLabel": "Invia messaggio",
-    "attachmentUploadsPendingError": "Caricamento... Attendi.",
+    "attachmentUploadsPendingError": "È in corso il caricamento del file, attendere.",
+    "imageUploadsPendingError": "È in corso il caricamento dell'immagine, attendere.",
     "removeAttachment": "Rimuovi file",
     "uploading": "Caricamento",
     "uploadCompleted": "Caricamento completato",
@@ -58,7 +59,11 @@
     "richTextDeleteRowMenu": "Elimina riga",
     "richTextDeleteTableMenu": "Elimina tabella",
     "richTextToolbarMoreButtonAriaLabel": "Altre opzioni",
-    "attachmentMoreMenu": "Altre opzioni"
+    "attachmentMoreMenu": "Altre opzioni",
+    "richTextNewBulletedListItemAnnouncement": "Punto elenco, nuova riga",
+    "richTextNewNumberedListItemAnnouncement": "{0}, nuova riga",
+    "richTextBulletedListAppliedAnnouncement": "Elenco puntato applicato",
+    "richTextNumberedListAppliedAnnouncement": "Elenco numerato applicato"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Suggerimenti"
@@ -221,7 +226,12 @@
     "richTextDeleteRowMenu": "Elimina riga",
     "richTextDeleteTableMenu": "Elimina tabella",
     "richTextToolbarMoreButtonAriaLabel": "Altre opzioni",
-    "attachmentUploadsPendingError": "Caricamento in corso... Attendi."
+    "attachmentUploadsPendingError": "È in corso il caricamento del file, attendere.",
+    "imageUploadsPendingError": "È in corso il caricamento dell'immagine, attendere.",
+    "richTextNewBulletedListItemAnnouncement": "Punto elenco, nuova riga",
+    "richTextNewNumberedListItemAnnouncement": "{0}, nuova riga",
+    "richTextBulletedListAppliedAnnouncement": "Elenco puntato applicato",
+    "richTextNumberedListAppliedAnnouncement": "Elenco numerato applicato"
   },
   "errorBar": {
     "unableToReachChatService": "Sei offline",
@@ -442,11 +452,37 @@
       "title": "La trascrizione è stata arrestata.",
       "message": "È in corso la registrazione solo di questa riunione.",
       "dismissButtonAriaLabel": "Chiudi"
+    },
+    "assignedBreakoutRoomOpened": {
+      "title": "Verrai spostato nella stanza assegnata tra 5 secondi.",
+      "dismissButtonAriaLabel": "Chiudi"
+    },
+    "assignedBreakoutRoomChanged": {
+      "title": "La stanza di lavoro è cambiata",
+      "message": "Verrai spostato nella stanza assegnata tra 5 secondi.",
+      "dismissButtonAriaLabel": "Chiudi"
+    },
+    "assignedBreakoutRoomOpenedPromptJoin": {
+      "title": "Vuoi partecipare alla stanza di lavoro?",
+      "message": "Ti è stata assegnata una stanza di lavoro.",
+      "dismissButtonAriaLabel": "Chiudi",
+      "primaryButtonLabel": "Accedi alla stanza",
+      "secondaryButtonLabel": "Più tardi"
+    },
+    "breakoutRoomJoined": {
+      "title": "Sei stato aggiunto alla stanza di lavoro.",
+      "dismissButtonAriaLabel": "Chiudi"
+    },
+    "breakoutRoomClosingSoon": {
+      "title": "Il limite di tempo della stanza di lavoro sta per scadere.",
+      "message": "Questa stanza verrà chiusa tra 30 secondi",
+      "dismissButtonAriaLabel": "Chiudi"
     }
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "Stai condividendo lo schermo",
     "screenShareLoadingMessage": "Caricamento dello schermo di {participant}",
+    "localScreenShareLoadingMessage": "Caricamento della schermata in corso...",
     "localVideoLabel": "Tu",
     "localVideoCameraSwitcherLabel": "Cambia videocamera",
     "localVideoMovementLabel": "Riquadro video locale mobile",
@@ -616,9 +652,12 @@
   },
   "IncomingCallNotification": {
     "incomingCallNotificationPlaceholderId": "Utente sconosciuto",
-    "incomingCallNotificationPlaceholderAlert": "Chiamata in arrivo",
+    "incomingCallNotificationPlaceholderAlert": "{callerName} sta chiamando",
     "incomingCallNoticicationAcceptWithAudioAriaLabel": "Accetta con audio",
     "incomingCallNoticicationAcceptWithVideoAriaLabel": "Accetta con video",
-    "incomingCallNoticicationRejectAriaLabel": "Rifiuta"
+    "incomingCallNoticicationRejectAriaLabel": "Rifiuta",
+    "incomingCallNotificationAcceptButtonLabel": "Accetta",
+    "incomingCallNotificationRejectButtonLabel": "Rifiuta",
+    "incomingCallNotificationAccceptWithVideoButtonLabel": "Accetta con video"
   }
 }
