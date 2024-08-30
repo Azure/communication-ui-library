@@ -452,6 +452,31 @@
       "title": "Transkriptio on pysäytetty.",
       "message": "Tallennetta ollaan luomassa vain tästä kokouksesta.",
       "dismissButtonAriaLabel": "Sulje"
+    },
+    "assignedBreakoutRoomOpened": {
+      "title": "Siirrämme sinut määritettyihin huoneeseesi 5 sekunnin kuluttua.",
+      "dismissButtonAriaLabel": "Sulje"
+    },
+    "assignedBreakoutRoomChanged": {
+      "title": "Pienryhmätilasi on muuttunut",
+      "message": "Siirrämme sinut määritettyihin huoneeseesi 5 sekunnin kuluttua.",
+      "dismissButtonAriaLabel": "Sulje"
+    },
+    "assignedBreakoutRoomOpenedPromptJoin": {
+      "title": "Liitytäänkö pienryhmätilaan?",
+      "message": "Sinut on määritetty pienryhmätilaan.",
+      "dismissButtonAriaLabel": "Sulje",
+      "primaryButtonLabel": "Liity tilaan",
+      "secondaryButtonLabel": "Myöhemmin"
+    },
+    "breakoutRoomJoined": {
+      "title": "Olet liittynyt pienryhmätilaan.",
+      "dismissButtonAriaLabel": "Sulje"
+    },
+    "breakoutRoomClosingSoon": {
+      "title": "Pienryhmätilan aikaraja on täyttymässä.",
+      "message": "Tämä huone suljetaan 30 sekunnin kuluttua",
+      "dismissButtonAriaLabel": "Sulje"
     }
   },
   "videoGallery": {
