@@ -128,7 +128,7 @@ export const useVideoTileContextualMenuProps = (props: {
           },
           'data-ui-id': 'video-tile-pin-participant-button',
           disabled: disablePinMenuItem || isSpotlighted,
-          ariaLabel: pinActionString
+          ariaLabel: strings.pinParticipantForMe
         });
       }
     }

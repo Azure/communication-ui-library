@@ -38,14 +38,14 @@
     "reselect": "^4.0.0"
   },
   "peerDependencies": {
-    "@azure/communication-calling": "1.28.1-beta.4 || ^1.27.5",
-    "@azure/communication-calling-effects": "1.0.1",
+    "@azure/communication-calling": "1.29.1-beta.1 || ^1.28.1",
+    "@azure/communication-calling-effects": "1.1.1-beta.1 || ^1.1.0",
     "@types/react": ">=16.8.0 <19.0.0",
     "react": ">=16.8.0 <19.0.0"
   },
   "devDependencies": {
-    "@azure/communication-calling": "1.28.1-beta.4 || ^1.27.5",
-    "@azure/communication-calling-effects": "1.0.1",
+    "@azure/communication-calling": "1.29.1-beta.1 || ^1.28.1",
+    "@azure/communication-calling-effects": "1.1.1-beta.1 || ^1.1.0",
     "@babel/cli": "^7.24.8",
     "@babel/core": "^7.25.2",
     "@types/jest": "^29.5.11",

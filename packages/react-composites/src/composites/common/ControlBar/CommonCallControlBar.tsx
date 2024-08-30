@@ -225,6 +225,41 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
     [callStrings]
   );
 
+  /* @conditional-compile-remove(DNS) */
+  const [isDeepNoiseSuppressionOn, setDeepNoiseSuppressionOn] = useState<boolean>(false);
+
+  /* @conditional-compile-remove(DNS) */
+  const startDeepNoiseSuppression = useCallback(async () => {
+    await props.callAdapter.startNoiseSuppressionEffect();
+  }, [props.callAdapter]);
+
+  /* @conditional-compile-remove(DNS) */
+  useEffect(() => {
+    if (
+      props.callAdapter.getState().onResolveDeepNoiseSuppressionDependency &&
+      props.callAdapter.getState().deepNoiseSuppressionOnByDefault
+    ) {
+      startDeepNoiseSuppression();
+      setDeepNoiseSuppressionOn(true);
+    }
+  }, [props.callAdapter, startDeepNoiseSuppression]);
+  /* @conditional-compile-remove(DNS) */
+  const showNoiseSuppressionButton =
+    props.callAdapter.getState().onResolveDeepNoiseSuppressionDependency &&
+    !props.callAdapter.getState().hideNoiseSuppressionButton
+      ? true
+      : false;
+  /* @conditional-compile-remove(DNS) */
+  const onClickNoiseSuppression = useCallback(async () => {
+    if (isDeepNoiseSuppressionOn) {
+      await props.callAdapter.stopNoiseSuppressionEffect();
+      setDeepNoiseSuppressionOn(false);
+    } else {
+      await props.callAdapter.startNoiseSuppressionEffect();
+      setDeepNoiseSuppressionOn(true);
+    }
+  }, [props.callAdapter, isDeepNoiseSuppressionOn]);
+
   const centerContainerStyles = useMemo(() => {
     const styles: BaseCustomStyles = !props.mobileView ? desktopControlBarStyles : {};
     return mergeStyleSets(styles, {
@@ -399,6 +434,12 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                         /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
                         disabled={props.disableButtonsForHoldScreen || isDisabled(options.microphoneButton)}
                         disableTooltip={props.mobileView}
+                        /* @conditional-compile-remove(DNS) */
+                        onClickNoiseSuppression={onClickNoiseSuppression}
+                        /* @conditional-compile-remove(DNS) */
+                        isDeepNoiseSuppressionOn={isDeepNoiseSuppressionOn}
+                        /* @conditional-compile-remove(DNS) */
+                        showNoiseSuppressionButton={showNoiseSuppressionButton}
                       />
                     )}
                     {cameraButtonIsEnabled && (
