@@ -1,0 +1,9 @@
+{
+  "type": "patch",
+  "area": "fix",
+  "workstream": "A11y Fixes",
+  "comment": "Fix Message status announcement sometimes takes priority over \"Message is deleted\" one",
+  "packageName": "@azure/communication-react",
+  "email": "3941071+emlynmac@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
