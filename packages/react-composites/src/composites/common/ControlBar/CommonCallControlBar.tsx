@@ -229,6 +229,27 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
   const [isDeepNoiseSuppressionOn, setDeepNoiseSuppressionOn] = useState<boolean>(false);
 
   /* @conditional-compile-remove(DNS) */
+  const startDeepNoiseSuppression = useCallback(async () => {
+    await props.callAdapter.startNoiseSuppressionEffect();
+  }, [props.callAdapter]);
+
+  /* @conditional-compile-remove(DNS) */
+  useEffect(() => {
+    if (
+      props.callAdapter.getState().onResolveDeepNoiseSuppressionDependency &&
+      props.callAdapter.getState().deepNoiseSuppressionOnByDefault
+    ) {
+      startDeepNoiseSuppression();
+      setDeepNoiseSuppressionOn(true);
+    }
+  }, [props.callAdapter, startDeepNoiseSuppression]);
+  /* @conditional-compile-remove(DNS) */
+  const showNoiseSuppressionButton =
+    props.callAdapter.getState().onResolveDeepNoiseSuppressionDependency &&
+    !props.callAdapter.getState().hideNoiseSuppressionButton
+      ? true
+      : false;
+  /* @conditional-compile-remove(DNS) */
   const onClickNoiseSuppression = useCallback(async () => {
     if (isDeepNoiseSuppressionOn) {
       await props.callAdapter.stopNoiseSuppressionEffect();
@@ -417,6 +438,8 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                         onClickNoiseSuppression={onClickNoiseSuppression}
                         /* @conditional-compile-remove(DNS) */
                         isDeepNoiseSuppressionOn={isDeepNoiseSuppressionOn}
+                        /* @conditional-compile-remove(DNS) */
+                        showNoiseSuppressionButton={showNoiseSuppressionButton}
                       />
                     )}
                     {cameraButtonIsEnabled && (
