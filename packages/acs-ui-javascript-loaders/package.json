@@ -33,7 +33,7 @@
     "@azure/communication-common": "^2.3.1",
     "@internal/acs-ui-common": "1.19.0-beta.1",
     "@internal/react-composites": "1.19.0-beta.1",
-    "@fluentui/react": "^8.120.0",
+    "@fluentui/react": "^8.120.7",
     "@azure/logger": "^1.0.4"
   },
   "peerDependencies": {
