@@ -347,7 +347,15 @@
     "muteAllDialogTitle": "Mykistetäänkö kaikki?",
     "muteAllDialogContent": "Tämä toiminto mykistää kaikki muut kokouksen osallistujat paitsi sinut.",
     "muteAllConfirmButtonLabel": "Mykistä kaikki",
-    "muteAllCancelButtonLabel": "Peruuta"
+    "muteAllCancelButtonLabel": "Peruuta",
+    "joinBreakoutRoomButtonLabel": "Liity pienryhmätilaan",
+    "returnFromBreakoutRoomButtonLabel": "Poistu kokoustilasta",
+    "leaveBreakoutRoomAndMeetingButtonLabel": "Poistu kokouksesta",
+    "breakoutRoomJoinedNotificationTitle": "Olet liittynyt pienryhmätilaan {roomName}",
+    "joinBreakoutRoomBannerTitle": "Pienryhmätila {roomName} on avoinna",
+    "joinBreakoutRoomBannerButtonLabel": "Liity",
+    "returnFromBreakoutRoomBannerTitle": "Palaa pääkokoukseen",
+    "returnFromBreakoutRoomBannerButtonLabel": "Liity uudelleen"
   },
   "chat": {
     "chatListHeader": "Tässä keskustelussa",
@@ -396,6 +404,8 @@
     "dialpadModalAriaLabel": "Valintapaneeli",
     "dialpadCloseModalButtonAriaLabel": "Sulje valintapaneeli",
     "openDtmfDialpadLabel": "Näytä valintapaneeli",
-    "dtmfDialpadPlaceholderText": "Syötä numero"
+    "dtmfDialpadPlaceholderText": "Syötä numero",
+    "breakoutRoomChatPaneTitle": "Pienryhmätilan keskustelu",
+    "chatContentSpinnerLabel": "Ladataan..."
   }
 }
