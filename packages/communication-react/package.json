@@ -64,6 +64,9 @@
   },
   "main": "./dist/dist-cjs/communication-react/index.js",
   "module": "./dist/dist-esm/communication-react/src/index.js",
+  "exports": {
+    "./javascript-loaders": "./dist/dist-esm/communication-react/src/loaders.js"
+  },
   "scripts": {
     "copy-original": "cpx \"../*/src/**\" ./preprocess-dist && renamer --find src --replace preprocessed ./preprocess-dist/**/*",
     "preprocess": "babel ../*/src --out-dir ../preprocessed --extensions \".ts,.tsx\" --keep-file-extension --config-file ./.babelrc.js --relative && rimraf ../preprocessed",
