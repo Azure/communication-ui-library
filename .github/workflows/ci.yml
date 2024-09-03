@@ -838,7 +838,7 @@ jobs:
       # checkout base bundle stats
       - name: Get bundle stats of main from gist
         run: curl -o base/report.json "${{ matrix.gist }}/raw/${{ matrix.app }}-report.json" --create-dirs -L
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4.1.7
         with:
           path: current
           name: ${{ matrix.app }}-report
@@ -887,7 +887,7 @@ jobs:
           - app: CallWithChat
             gist_id: 72a7fca0af8a3c5b37f966bb6d4bcd11
     steps:
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4.1.7
         with:
           name: ${{ matrix.app }}-report
       - name: Upload bundle report to gist
