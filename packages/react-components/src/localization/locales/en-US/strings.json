@@ -127,7 +127,11 @@
     "offSplitButtonMicrophonePrimaryAction": "Unmute mic",
     "onSplitButtonMicrophonePrimaryAction": "Mute mic",
     "microphonePrimaryActionSplitButtonTitle": "Use microphone",
-    "microphoneAriaDescription": "Audio options"
+    "microphoneAriaDescription": "Audio options",
+    "deepNoiseSuppresionOnTitle": "Noise Suppression On",
+    "deepNoiseSuppresionOffTitle": "Noise Suppression Off",
+    "deepNoiseSuppresionOnAnnouncement": "Deep noise suppression has been turned on",
+    "deepNoiseSuppresionOffAnnouncement": "Deep noise suppression has been turned off"
   },
   "devicesButton": {
     "label": "Devices",
@@ -506,7 +510,8 @@
     "stopSpotlightVideoTileMenuLabel": "Stop spotlighting",
     "stopSpotlightOnSelfVideoTileMenuLabel": "Exit spotlight",
     "attendeeRole": "Attendee",
-    "muteParticipantMenuItemLabel": "Mute"
+    "muteParticipantMenuItemLabel": "Mute",
+    "waitingScreenText": "Waiting for others to join"
   },
   "dialpad": {
     "placeholderText": "Enter phone number",
