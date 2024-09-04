@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
 import {
   CameraButton,
   ControlBar,
@@ -8,7 +10,7 @@ import {
 } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
 import React, { useState } from 'react';
-import { renderVideoStream } from '../../../utils';
+import { renderVideoStream } from '../../utils';
 
 export const VideoTileExample: () => JSX.Element = () => {
   const customStyles: VideoTileStylesProps = {
@@ -38,7 +40,7 @@ export const VideoTileExample: () => JSX.Element = () => {
   const videoStreamElement = videoStreams[0];
 
   return (
-    <FluentThemeProvider>
+    <FluentThemeProvider rootStyle={{ height: '300px' }}>
       <Stack style={{ width: '400px' }}>
         <VideoTile
           renderElement={
