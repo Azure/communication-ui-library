@@ -7,10 +7,14 @@ import {
   LocalizationProvider,
   MicrophoneButton,
   ScreenShareButton,
-  COMPONENT_LOCALE_DE_DE
+  COMPONENT_LOCALE_DE_DE,
+  DEFAULT_COMPONENT_ICONS
 } from '@azure/communication-react';
-import { IStyle } from '@fluentui/react';
+import { initializeIcons, IStyle, registerIcons } from '@fluentui/react';
 import React from 'react';
+
+initializeIcons();
+registerIcons({ icons: { ...DEFAULT_COMPONENT_ICONS } });
 
 export const Truncation = (): JSX.Element => {
   const buttonStyle = {
