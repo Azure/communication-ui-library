@@ -347,7 +347,15 @@
     "muteAllDialogTitle": "모든 사용자를 음소거하시겠습니까?",
     "muteAllDialogContent": "나를 제외한 모임 참여자를 모두 음소거합니다.",
     "muteAllConfirmButtonLabel": "모두 음소거",
-    "muteAllCancelButtonLabel": "취소"
+    "muteAllCancelButtonLabel": "취소",
+    "joinBreakoutRoomButtonLabel": "소규모 회의실 참가",
+    "returnFromBreakoutRoomButtonLabel": "회의실 나가기",
+    "leaveBreakoutRoomAndMeetingButtonLabel": "모임 나가기",
+    "breakoutRoomJoinedNotificationTitle": "소규모 회의실 '{roomName}'에 참가했습니다.",
+    "joinBreakoutRoomBannerTitle": "소규모 회의실 '{roomName}'이(가) 열려 있습니다.",
+    "joinBreakoutRoomBannerButtonLabel": "참가",
+    "returnFromBreakoutRoomBannerTitle": "주 모임으로 돌아가기",
+    "returnFromBreakoutRoomBannerButtonLabel": "다시 참가"
   },
   "chat": {
     "chatListHeader": "채팅 참가자",
@@ -396,6 +404,8 @@
     "dialpadModalAriaLabel": "다이얼패드",
     "dialpadCloseModalButtonAriaLabel": "다이얼패드 닫기",
     "openDtmfDialpadLabel": "다이얼패드 표시",
-    "dtmfDialpadPlaceholderText": "번호 입력"
+    "dtmfDialpadPlaceholderText": "번호 입력",
+    "breakoutRoomChatPaneTitle": "소규모 회의실 채팅",
+    "chatContentSpinnerLabel": "로드하는 중..."
   }
 }

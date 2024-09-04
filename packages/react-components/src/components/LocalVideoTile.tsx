@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { mergeStyles, Stack } from '@fluentui/react';
+import { mergeStyles, Stack, Spinner } from '@fluentui/react';
 import { concatStyleSets, IContextualMenuProps, Layer } from '@fluentui/react';
 import { _formatString } from '@internal/acs-ui-common';
 import React, { useMemo } from 'react';
@@ -23,6 +23,13 @@ import { useVideoTileContextualMenuProps } from './VideoGallery/useVideoTileCont
 import { VideoGalleryStrings } from './VideoGallery';
 import { _DrawerMenu, _DrawerMenuItemProps } from './Drawer';
 import { drawerMenuWrapperStyles } from './VideoGallery/styles/RemoteVideoTile.styles';
+import {
+  videoContainerStyles,
+  overlayStyles,
+  overlayStylesTransparent,
+  loadSpinnerStyles
+} from './styles/VideoTile.styles';
+
 /**
  * A memoized version of VideoTile for rendering local participant.
  *
@@ -60,6 +67,7 @@ export const _LocalVideoTile = React.memo(
     drawerMenuHostId?: string;
     strings?: VideoGalleryStrings;
     reactionResources?: ReactionResources;
+    participantsCount?: number;
   }) => {
     const {
       isAvailable,
@@ -182,6 +190,16 @@ export const _LocalVideoTile = React.memo(
             localVideoSelectedDescription={localVideoSelectedDescription}
           />
           <StreamMedia videoStreamElement={renderElement} isMirrored={true} />
+          {props.participantsCount === 1 && (
+            <Stack className={mergeStyles(videoContainerStyles, overlayStyles())}>
+              <Spinner
+                label={strings?.waitingScreenText}
+                ariaLive="assertive"
+                labelPosition="bottom"
+                styles={loadSpinnerStyles(theme, true)}
+              />
+            </Stack>
+          )}
         </>
       );
     }, [
@@ -189,13 +207,32 @@ export const _LocalVideoTile = React.memo(
       localVideoCameraSwitcherLabel,
       localVideoSelectedDescription,
       renderElement,
-      showCameraSwitcherInLocalPreview
+      showCameraSwitcherInLocalPreview,
+      props.participantsCount,
+      strings?.waitingScreenText,
+      theme
     ]);
 
-    const reactionOverlay =
-      reactionResources !== undefined ? (
-        <MeetingReactionOverlay overlayMode="grid-tiles" reaction={reaction} reactionResources={reactionResources} />
-      ) : undefined;
+    const videoTileOverlay = useMemo(() => {
+      const reactionOverlay =
+        reactionResources !== undefined ? (
+          <MeetingReactionOverlay overlayMode="grid-tiles" reaction={reaction} reactionResources={reactionResources} />
+        ) : undefined;
+      return reactionOverlay;
+    }, [reaction, reactionResources]);
+
+    const onRenderAvatarOneParticipant = useCallback(() => {
+      return (
+        <Stack className={mergeStyles(videoContainerStyles, overlayStylesTransparent())}>
+          <Spinner
+            label={strings?.waitingScreenText}
+            ariaLive="assertive"
+            labelPosition="bottom"
+            styles={loadSpinnerStyles(theme, false)}
+          />
+        </Stack>
+      );
+    }, [strings?.waitingScreenText, theme]);
 
     return (
       <Stack
@@ -211,7 +248,7 @@ export const _LocalVideoTile = React.memo(
           displayName={displayName}
           initialsName={initialsName}
           styles={videoTileStyles}
-          onRenderPlaceholder={onRenderAvatar}
+          onRenderPlaceholder={props.participantsCount === 1 ? onRenderAvatarOneParticipant : onRenderAvatar}
           isMuted={isMuted}
           showMuteIndicator={showMuteIndicator}
           personaMinSize={props.personaMinSize}
@@ -223,7 +260,7 @@ export const _LocalVideoTile = React.memo(
               convertContextualMenuItemsToDrawerMenuItemProps(contextualMenuProps, () => setDrawerMenuItemProps([]))
             )
           }
-          overlay={reactionOverlay}
+          overlay={videoTileOverlay}
         >
           {drawerMenuItemProps.length > 0 && (
             <Layer hostId={props.drawerMenuHostId}>

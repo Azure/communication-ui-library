@@ -52,7 +52,8 @@ export const videoEffectsItemContainerStyles = (args: {
           args.disabled && !args.isSelected
             ? `${borderDefaultThickness} solid ${args.theme.palette.neutralQuaternaryAlt}`
             : `${borderActiveThickness} solid ${args.theme.palette.themePrimary}`
-      }
+      },
+      padding: '0.5rem'
     }
   };
 };

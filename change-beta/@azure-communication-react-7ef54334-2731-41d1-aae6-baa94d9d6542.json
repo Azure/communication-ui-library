@@ -1,8 +1,8 @@
 {
-  "type": "prerelease",
+  "type": "patch",
   "area": "fix",
   "workstream": "",
-  "comment": "Fix CallComposite camera prompts to respect deviceChecks property",
+  "comment": "Fix compliance notification not showing that transcription has stopped in react18 strict mode",
   "packageName": "@azure/communication-react",
   "email": "2684369+JamesBurnside@users.noreply.github.com",
   "dependentChangeType": "patch"
