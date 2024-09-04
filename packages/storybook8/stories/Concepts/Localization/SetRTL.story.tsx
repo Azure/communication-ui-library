@@ -6,14 +6,9 @@ import {
   ControlBar,
   EndCallButton,
   MicrophoneButton,
-  ScreenShareButton,
-  DEFAULT_COMPONENT_ICONS
+  ScreenShareButton
 } from '@azure/communication-react';
-import { initializeIcons, registerIcons } from '@fluentui/react';
 import React from 'react';
-
-initializeIcons();
-registerIcons({ icons: { ...DEFAULT_COMPONENT_ICONS } });
 
 export const SetRTL = (): JSX.Element => {
   return (

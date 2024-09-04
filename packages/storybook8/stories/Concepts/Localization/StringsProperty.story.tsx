@@ -3,16 +3,11 @@
 import {
   CameraButton,
   ControlBar,
-  DEFAULT_COMPONENT_ICONS,
   EndCallButton,
   MicrophoneButton,
   ScreenShareButton
 } from '@azure/communication-react';
-import { initializeIcons, registerIcons } from '@fluentui/react';
 import React from 'react';
-
-initializeIcons();
-registerIcons({ icons: { ...DEFAULT_COMPONENT_ICONS } });
 
 export const StringsProperty = (): JSX.Element => {
   return (

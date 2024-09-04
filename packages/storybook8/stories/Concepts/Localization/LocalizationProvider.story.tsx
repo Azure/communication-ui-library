@@ -7,14 +7,9 @@ import {
   LocalizationProvider as LocaleProvider,
   MicrophoneButton,
   ScreenShareButton,
-  COMPONENT_LOCALE_FR_FR,
-  DEFAULT_COMPONENT_ICONS
+  COMPONENT_LOCALE_FR_FR
 } from '@azure/communication-react';
-import { initializeIcons, registerIcons } from '@fluentui/react';
 import React from 'react';
-
-initializeIcons();
-registerIcons({ icons: { ...DEFAULT_COMPONENT_ICONS } });
 
 export const LocalizationProvider = (): JSX.Element => {
   return (
