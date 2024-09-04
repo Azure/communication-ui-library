@@ -1,0 +1,9 @@
+{
+  "type": "patch",
+  "area": "fix",
+  "workstream": "Storybook Migration",
+  "comment": "Fixed ChatComposite Storybook Issues for V8",
+  "packageName": "@azure/communication-react",
+  "email": "109105353+jpeng-ms@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
