@@ -62,10 +62,16 @@
     "react": ">=16.8.0 <19.0.0",
     "react-dom": ">=16.8.0 <19.0.0"
   },
-  "main": "./dist/dist-cjs/communication-react/index.js",
-  "module": "./dist/dist-esm/communication-react/src/index.js",
   "exports": {
-    "./javascript-loaders": "./dist/dist-esm/communication-react/src/loaders.js"
+    ".": {
+      "main": "./dist/dist-cjs/communication-react/index.js",
+      "module": "./dist/dist-esm/communication-react/src/index.js",
+      "types": "./dist/communication-react.d.ts"
+    },
+    "./javascript-loaders": {
+      "module": "./dist/dist-esm/communication-react/src/javascript-loaders.js",
+      "types": "./dist/dist-esm/communication-react/src/javascript-loaders.d.ts"
+    } 
   },
   "scripts": {
     "copy-original": "cpx \"../*/src/**\" ./preprocess-dist && renamer --find src --replace preprocessed ./preprocess-dist/**/*",
