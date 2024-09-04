@@ -91,27 +91,6 @@ const defaultTypingUsers = [
   }
 ];
 
-const defaultIncomingCallNotifications = [
-  {
-    callerInfo: {
-      displayName: 'John Wick'
-    },
-    id: '1'
-  },
-  {
-    callerInfo: {
-      displayName: 'Dog'
-    },
-    id: '2'
-  },
-  {
-    callerInfo: {
-      displayName: 'Cat'
-    },
-    id: '3'
-  }
-];
-
 const errorOptions: ErrorType[] = [
   'unableToReachChatService',
   'accessDenied',
@@ -433,13 +412,6 @@ export const controlsToAdd = {
   richTextEditor: { control: 'boolean', defaultValue: false, name: 'Enable rich text editor' },
   isNotificationAutoDismiss: { control: 'boolean', defaultValue: false, name: 'Is auto dismiss on' },
   showNotificationStacked: { control: 'boolean', defaultValue: false, name: 'Show notification stacked effect' },
-  incomingCalls: { control: 'object', defaultValue: defaultIncomingCallNotifications, name: 'Incoming Calls' },
-  maxIncomingCallsToShow: {
-    control: 'select',
-    options: [1, 2, 3],
-    defaultValue: '2',
-    name: 'Number of incoming calls'
-  },
   activeNotifications: {
     control: 'check',
     options: notificationOptions,

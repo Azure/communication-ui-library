@@ -127,10 +127,7 @@ export const _VideoEffectsItem = (props: _VideoEffectsItemProps): JSX.Element =>
   const disabled = props.disabled ?? false;
   const backgroundImage = props.backgroundProps?.url;
   const iconContainerStyles = mergeStyles({ height: '1.25rem' }, props.styles?.iconContainer);
-  const textContainerStyles = mergeStyles(
-    { height: '1.25rem', width: '100%', overflow: 'hidden' },
-    props.styles?.textContainer
-  );
+  const textContainerStyles = mergeStyles({ height: '1.25rem' }, props.styles?.textContainer);
 
   const containerStyles = useCallback(
     () =>
@@ -159,7 +156,7 @@ export const _VideoEffectsItem = (props: _VideoEffectsItemProps): JSX.Element =>
           ariaLabel={props.ariaLabel ?? (props.tooltipProps?.content as string) ?? props.itemKey}
           aria-disabled={props.disabled}
         >
-          <Stack horizontalAlign={'center'} className={mergeStyles({ width: '100%' })}>
+          <Stack horizontalAlign={'center'}>
             {props.iconProps && (
               <Stack.Item className={iconContainerStyles}>
                 <Icon {...props.iconProps} />
@@ -167,12 +164,7 @@ export const _VideoEffectsItem = (props: _VideoEffectsItemProps): JSX.Element =>
             )}
             {props.title && (
               <Stack.Item className={textContainerStyles}>
-                <Text
-                  variant="small"
-                  styles={{ root: { whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' } }}
-                >
-                  {props.title}
-                </Text>
+                <Text variant="small">{props.title}</Text>
               </Stack.Item>
             )}
           </Stack>

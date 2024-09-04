@@ -347,15 +347,7 @@
     "muteAllDialogTitle": "对所有人静音?",
     "muteAllDialogContent": "这会将会议中除你之外的所有人静音。",
     "muteAllConfirmButtonLabel": "全部静音",
-    "muteAllCancelButtonLabel": "取消",
-    "joinBreakoutRoomButtonLabel": "加入分组讨论室",
-    "returnFromBreakoutRoomButtonLabel": "离开房间",
-    "leaveBreakoutRoomAndMeetingButtonLabel": "离开会议",
-    "breakoutRoomJoinedNotificationTitle": "你已加入分组讨论室“{roomName}”",
-    "joinBreakoutRoomBannerTitle": "分组讨论室“{roomName}”已打开",
-    "joinBreakoutRoomBannerButtonLabel": "加入",
-    "returnFromBreakoutRoomBannerTitle": "返回到主会议",
-    "returnFromBreakoutRoomBannerButtonLabel": "重新加入"
+    "muteAllCancelButtonLabel": "取消"
   },
   "chat": {
     "chatListHeader": "在此聊天中",
@@ -404,8 +396,6 @@
     "dialpadModalAriaLabel": "拨号盘",
     "dialpadCloseModalButtonAriaLabel": "关闭拨号盘",
     "openDtmfDialpadLabel": "显示拨号盘",
-    "dtmfDialpadPlaceholderText": "输入号码",
-    "breakoutRoomChatPaneTitle": "分组讨论室聊天",
-    "chatContentSpinnerLabel": "正在加载..."
+    "dtmfDialpadPlaceholderText": "输入号码"
   }
 }

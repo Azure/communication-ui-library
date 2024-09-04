@@ -347,15 +347,7 @@
     "muteAllDialogTitle": "Stäng av ljudet för alla?",
     "muteAllDialogContent": "Detta stänger av ljudet för alla i mötet utom för dig.",
     "muteAllConfirmButtonLabel": "Stäng av ljudet för alla",
-    "muteAllCancelButtonLabel": "Avbryt",
-    "joinBreakoutRoomButtonLabel": "Anslut till separat rum",
-    "returnFromBreakoutRoomButtonLabel": "Lämna rum",
-    "leaveBreakoutRoomAndMeetingButtonLabel": "Lämna möte",
-    "breakoutRoomJoinedNotificationTitle": "Du har gått med i grupprummet {roomName}",
-    "joinBreakoutRoomBannerTitle": "Grupprummet {roomName} är öppet",
-    "joinBreakoutRoomBannerButtonLabel": "Gå med",
-    "returnFromBreakoutRoomBannerTitle": "Återgå till huvudmötet",
-    "returnFromBreakoutRoomBannerButtonLabel": "Anslut igen"
+    "muteAllCancelButtonLabel": "Avbryt"
   },
   "chat": {
     "chatListHeader": "I den här chatten",
@@ -404,8 +396,6 @@
     "dialpadModalAriaLabel": "Knappsats",
     "dialpadCloseModalButtonAriaLabel": "Stäng knappsats",
     "openDtmfDialpadLabel": "Visa knappsats",
-    "dtmfDialpadPlaceholderText": "Ange nummer",
-    "breakoutRoomChatPaneTitle": "Grupprumschatt",
-    "chatContentSpinnerLabel": "Loading..."
+    "dtmfDialpadPlaceholderText": "Ange nummer"
   }
 }

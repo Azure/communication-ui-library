@@ -90,12 +90,6 @@ export interface CallWithChatClientState {
   /* @conditional-compile-remove(DNS) */
   /** Dependency to be injected for deep noise suppression effect. */
   onResolveDeepNoiseSuppressionDependency?: () => Promise<DeepNoiseSuppressionEffectDependency>;
-  /* @conditional-compile-remove(DNS) */
-  /** State to track whether the noise suppression should be on by default. */
-  deepNoiseSuppressionOnByDefault?: boolean;
-  /* @conditional-compile-remove(DNS) */
-  /** State to track whether to hide the noise suppression button. */
-  hideNoiseSuppressionButton?: boolean;
 
   /** State to track the selected video background effect */
   selectedVideoBackgroundEffect?: VideoBackgroundEffect;

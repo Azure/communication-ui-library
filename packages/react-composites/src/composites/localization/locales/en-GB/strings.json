@@ -347,15 +347,7 @@
     "muteAllDialogTitle": "Mute everyone?",
     "muteAllDialogContent": "This will mute everyone in the meeting but you.",
     "muteAllConfirmButtonLabel": "Mute all",
-    "muteAllCancelButtonLabel": "Cancel",
-    "joinBreakoutRoomButtonLabel": "Join breakout room",
-    "returnFromBreakoutRoomButtonLabel": "Leave room",
-    "leaveBreakoutRoomAndMeetingButtonLabel": "Leave meeting",
-    "breakoutRoomJoinedNotificationTitle": "You've joined Breakout room '{roomName}'",
-    "joinBreakoutRoomBannerTitle": "Breakout room '{roomName}' is open",
-    "joinBreakoutRoomBannerButtonLabel": "Join",
-    "returnFromBreakoutRoomBannerTitle": "Return to main meeting",
-    "returnFromBreakoutRoomBannerButtonLabel": "Rejoin"
+    "muteAllCancelButtonLabel": "Cancel"
   },
   "chat": {
     "chatListHeader": "In this chat",
@@ -404,8 +396,6 @@
     "dialpadModalAriaLabel": "Dialpad",
     "dialpadCloseModalButtonAriaLabel": "Close dialpad",
     "openDtmfDialpadLabel": "Show dialpad",
-    "dtmfDialpadPlaceholderText": "Enter number",
-    "breakoutRoomChatPaneTitle": "Breakout Room Chat",
-    "chatContentSpinnerLabel": "Loading..."
+    "dtmfDialpadPlaceholderText": "Enter number"
   }
 }

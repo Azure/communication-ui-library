@@ -452,31 +452,6 @@
       "title": "A transcrição foi interrompida.",
       "message": "Você agora está apenas gravando esta reunião.",
       "dismissButtonAriaLabel": "Fechar"
-    },
-    "assignedBreakoutRoomOpened": {
-      "title": "Vamos movê-lo para a sala atribuída em 5 segundos.",
-      "dismissButtonAriaLabel": "Fechar"
-    },
-    "assignedBreakoutRoomChanged": {
-      "title": "Sua sala para sessão de grupo foi alterada",
-      "message": "Vamos movê-lo para a sala atribuída em 5 segundos.",
-      "dismissButtonAriaLabel": "Fechar"
-    },
-    "assignedBreakoutRoomOpenedPromptJoin": {
-      "title": "Ingressar na sala para sessão de grupo?",
-      "message": "Você foi atribuído a uma sala para sessão de grupo.",
-      "dismissButtonAriaLabel": "Fechar",
-      "primaryButtonLabel": "Ingressar na sala",
-      "secondaryButtonLabel": "Mais tarde"
-    },
-    "breakoutRoomJoined": {
-      "title": "Você ingressou nem uma sala para sessão de grupo.",
-      "dismissButtonAriaLabel": "Fechar"
-    },
-    "breakoutRoomClosingSoon": {
-      "title": "Limite de tempo de sala prestes a expirar.",
-      "message": "Esta sala será fechada em 30 segundos",
-      "dismissButtonAriaLabel": "Fechar"
     }
   },
   "videoGallery": {

@@ -452,31 +452,6 @@
       "title": "Транскрибирование остановлено.",
       "message": "Сейчас для этого собрания ведется только запись.",
       "dismissButtonAriaLabel": "Закрыть"
-    },
-    "assignedBreakoutRoomOpened": {
-      "title": "Мы переместим вас в назначенную комнату через 5 секунд.",
-      "dismissButtonAriaLabel": "Закрыть"
-    },
-    "assignedBreakoutRoomChanged": {
-      "title": "Переговорная комната изменилась",
-      "message": "Мы переместим вас в назначенную комнату через 5 секунд.",
-      "dismissButtonAriaLabel": "Закрыть"
-    },
-    "assignedBreakoutRoomOpenedPromptJoin": {
-      "title": "Присоединиться к переговорной комнате?",
-      "message": "Вам назначена переговорная комната.",
-      "dismissButtonAriaLabel": "Закрыть",
-      "primaryButtonLabel": "Присоединиться к комнате",
-      "secondaryButtonLabel": "Позже"
-    },
-    "breakoutRoomJoined": {
-      "title": "Вы присоединились к переговорной комнате.",
-      "dismissButtonAriaLabel": "Закрыть"
-    },
-    "breakoutRoomClosingSoon": {
-      "title": "Скоро будет достигнуто ограничение времени для комнаты.",
-      "message": "Эта комната будет закрыта через 30 секунд",
-      "dismissButtonAriaLabel": "Закрыть"
     }
   },
   "videoGallery": {

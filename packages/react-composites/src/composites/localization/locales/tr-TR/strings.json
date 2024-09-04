@@ -347,15 +347,7 @@
     "muteAllDialogTitle": "Herkesi sessize almak mı istiyorsunuz?",
     "muteAllDialogContent": "Bu, toplantıda sizin dışınızdaki herkesi sessize alır.",
     "muteAllConfirmButtonLabel": "Tümünü sessize al",
-    "muteAllCancelButtonLabel": "İptal",
-    "joinBreakoutRoomButtonLabel": "Tartışma odasına katıl",
-    "returnFromBreakoutRoomButtonLabel": "Odadan ayrıl",
-    "leaveBreakoutRoomAndMeetingButtonLabel": "Toplantıdan ayrıl",
-    "breakoutRoomJoinedNotificationTitle": "'{roomName}' Tartışma odasına katıldınız",
-    "joinBreakoutRoomBannerTitle": "'{roomName}' Tartışma odası açık",
-    "joinBreakoutRoomBannerButtonLabel": "Katıl",
-    "returnFromBreakoutRoomBannerTitle": "Ana toplantıya geri dön",
-    "returnFromBreakoutRoomBannerButtonLabel": "Yeniden Katıl"
+    "muteAllCancelButtonLabel": "İptal"
   },
   "chat": {
     "chatListHeader": "Bu sohbette",
@@ -404,8 +396,6 @@
     "dialpadModalAriaLabel": "Tuş takımı",
     "dialpadCloseModalButtonAriaLabel": "Tuş takımını kapat",
     "openDtmfDialpadLabel": "Tuş takımını göster",
-    "dtmfDialpadPlaceholderText": "Numara girin",
-    "breakoutRoomChatPaneTitle": "Tartışma Odası Sohbeti",
-    "chatContentSpinnerLabel": "Loading..."
+    "dtmfDialpadPlaceholderText": "Numara girin"
   }
 }

@@ -452,31 +452,6 @@
       "title": "La trascrizione è stata arrestata.",
       "message": "È in corso la registrazione solo di questa riunione.",
       "dismissButtonAriaLabel": "Chiudi"
-    },
-    "assignedBreakoutRoomOpened": {
-      "title": "Verrai spostato nella stanza assegnata tra 5 secondi.",
-      "dismissButtonAriaLabel": "Chiudi"
-    },
-    "assignedBreakoutRoomChanged": {
-      "title": "La stanza di lavoro è cambiata",
-      "message": "Verrai spostato nella stanza assegnata tra 5 secondi.",
-      "dismissButtonAriaLabel": "Chiudi"
-    },
-    "assignedBreakoutRoomOpenedPromptJoin": {
-      "title": "Vuoi partecipare alla stanza di lavoro?",
-      "message": "Ti è stata assegnata una stanza di lavoro.",
-      "dismissButtonAriaLabel": "Chiudi",
-      "primaryButtonLabel": "Accedi alla stanza",
-      "secondaryButtonLabel": "Più tardi"
-    },
-    "breakoutRoomJoined": {
-      "title": "Sei stato aggiunto alla stanza di lavoro.",
-      "dismissButtonAriaLabel": "Chiudi"
-    },
-    "breakoutRoomClosingSoon": {
-      "title": "Il limite di tempo della stanza di lavoro sta per scadere.",
-      "message": "Questa stanza verrà chiusa tra 30 secondi",
-      "dismissButtonAriaLabel": "Chiudi"
     }
   },
   "videoGallery": {

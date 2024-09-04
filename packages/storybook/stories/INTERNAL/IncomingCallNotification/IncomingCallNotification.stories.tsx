@@ -2,39 +2,39 @@
 // Licensed under the MIT License.
 
 import { IncomingCallNotification as IncomingCallNotificationComponent } from '@azure/communication-react';
-import { Canvas, Description, Heading, Props, Title } from '@storybook/addon-docs';
+import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
-import { COMPONENT_FOLDER_PREFIX } from '../constants';
-import { controlsToAdd } from '../controlsUtils';
+import { SingleLineBetaBanner } from '../../BetaBanners/SingleLineBetaBanner';
+import { COMPONENT_FOLDER_PREFIX } from '../../constants';
 import { IncomingCallNotificationExample } from './snippets/IncomingCallNotification.snippet';
 import { IncomingCallNotificationStylingExample } from './snippets/IncomingCallNotificationStyling.snippet';
 
-const IncomingCallNotificationText: string =
-  require('!!raw-loader!./snippets/IncomingCallNotification.snippet.tsx').default;
-const IncomingCallNotificationStylingText: string =
-  require('!!raw-loader!./snippets/IncomingCallNotificationStyling.snippet.tsx').default;
+const IncomingCallNotificationText = require('!!raw-loader!./snippets/IncomingCallNotification.snippet').default;
+const IncomingCallNotificationStylingText =
+  require('!!raw-loader!./snippets/IncomingCallNotificationStyling.snippet').default;
 const getDocs: () => JSX.Element = () => {
   return (
     <>
-      <Title>IncomingCallNotification</Title>
+      <Title>Incoming Call Notification Component</Title>
+      <SingleLineBetaBanner />
       <Description>
-        This component is a representation of an incoming call. It will show the name of the caller and allow you to
-        accept the call with either audio or video or reject the call. This component is used by the `IncomingCallStack`
-        for each of the calls held in its state.
+        The incoming Call notification component is used to provide information to your users when they are recieving a
+        call. This UI component is to be used to represent a single incoming call.
       </Description>
       <Canvas mdxSource={IncomingCallNotificationText}>
         <IncomingCallNotificationExample />
       </Canvas>
       <Heading>Styling</Heading>
       <Description>
-        Depending on your use of `IncomingCallNotification` and the `IncomingCallStack` you might want to customize your
-        notification's appearence to match your needs. Both components includes API's to adjust the CSS on many
-        different elements of the notification. Below is an example of how you can customize `IncomingCallNotification`.
+        Depending on your use of incoming call notification you might want to customize it to your needs. The component
+        includes API's to adjust the CSS on many different elements of the component. Below is an example of how you can
+        customize incoming call notification.
       </Description>
-      <Canvas mdxSource={IncomingCallNotificationStylingText}>
+      <Canvas>
         <IncomingCallNotificationStylingExample />
       </Canvas>
+      <Source code={IncomingCallNotificationStylingText}></Source>
       <Heading>Props</Heading>
       <Props of={IncomingCallNotificationComponent}></Props>
     </>
@@ -64,13 +64,9 @@ const IncomingCallNotificationStory = (): JSX.Element => {
 export const IncomingCallNotification = IncomingCallNotificationStory.bind({});
 
 export default {
-  id: `${COMPONENT_FOLDER_PREFIX}-Inbound Calling-IncomingCallNotification`,
-  title: `${COMPONENT_FOLDER_PREFIX}/Inbound Calling/IncomingCallNotification`,
+  id: `${COMPONENT_FOLDER_PREFIX}-Internal-IncomingCallNotification`,
+  title: `${COMPONENT_FOLDER_PREFIX}/Internal/IncomingCallNotification`,
   component: IncomingCallNotification,
-  argTypes: {
-    incomingCalls: controlsToAdd.incomingCalls,
-    maxIncomingCallsToShow: controlsToAdd.maxIncomingCallsToShow
-  },
   parameters: {
     docs: {
       page: getDocs

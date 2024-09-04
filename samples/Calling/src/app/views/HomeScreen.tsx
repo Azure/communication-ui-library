@@ -79,7 +79,7 @@ type ICallChoiceGroupOption = IChoiceGroupOption & { key: CallOption };
 
 export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const imageProps = { src: heroSVG.toString() };
-  const headerTitle = props.joiningExistingCall ? 'Join Call' : 'Start or join a call!';
+  const headerTitle = props.joiningExistingCall ? 'Join Call' : 'Start or join a call';
   const callOptionsGroupLabel = 'Select a call option';
   const buttonText = 'Next';
   const callOptions: ICallChoiceGroupOption[] = [

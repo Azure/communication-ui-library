@@ -25,7 +25,7 @@
      */
     // "some-library": "1.2.3"
     // This is the version for stable build (please also update allowedAlternativeVersions below)
-    "@azure/communication-calling": "^1.28.1",
+    "@azure/communication-calling": "^1.27.5",
     "@azure/communication-common": "2.3.0",
     "@azure/communication-chat": "^1.5.1",
     "@azure/communication-signaling": "1.0.0-beta.26"
@@ -57,7 +57,7 @@
    */
   "allowedAlternativeVersions": {
     // This is the version for stable build (please also update preferredVersions above)
-    "@azure/communication-calling": ["^1.28.1"],
+    "@azure/communication-calling": ["^1.27.5"],
     "@azure/communication-common": ["2.3.0"],
     "@azure/communication-chat": ["^1.5.1"],
     "@azure/communication-signaling": ["1.0.0-beta.26"],

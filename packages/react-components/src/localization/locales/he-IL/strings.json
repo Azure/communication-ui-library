@@ -452,31 +452,6 @@
       "title": "התמלול הופסק.",
       "message": "אתה כעת רק מקליט את הפגישה.",
       "dismissButtonAriaLabel": "סגור"
-    },
-    "assignedBreakoutRoomOpened": {
-      "title": "נעביר אותך לחדר שהוקצה לך תוך 5 שניות.",
-      "dismissButtonAriaLabel": "סגור"
-    },
-    "assignedBreakoutRoomChanged": {
-      "title": "פיצול החדרים שלך השתנה",
-      "message": "נעביר אותך לחדר שהוקצה לך תוך 5 שניות.",
-      "dismissButtonAriaLabel": "סגור"
-    },
-    "assignedBreakoutRoomOpenedPromptJoin": {
-      "title": "להצטרף לפיצול חדרים?",
-      "message": "הוקצית לפיצול חדר.",
-      "dismissButtonAriaLabel": "סגור",
-      "primaryButtonLabel": "הצטרף לחדר",
-      "secondaryButtonLabel": "מאוחר יותר"
-    },
-    "breakoutRoomJoined": {
-      "title": "הצטרפת לפיצול חדרים.",
-      "dismissButtonAriaLabel": "סגור"
-    },
-    "breakoutRoomClosingSoon": {
-      "title": "תוקף מגבלת זמן החדר עומד לפוג.",
-      "message": "חדר זה ייסגר בעוד 30 שניות",
-      "dismissButtonAriaLabel": "סגור"
     }
   },
   "videoGallery": {

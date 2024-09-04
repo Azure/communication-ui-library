@@ -347,15 +347,7 @@
     "muteAllDialogTitle": "Alle stummschalten?",
     "muteAllDialogContent": "Hierdurch werden alle in der Besprechung stummgeschaltet, außer Ihnen.",
     "muteAllConfirmButtonLabel": "Alle stummschalten",
-    "muteAllCancelButtonLabel": "Abbrechen",
-    "joinBreakoutRoomButtonLabel": "Breakout-Room beitreten",
-    "returnFromBreakoutRoomButtonLabel": "Raum verlassen",
-    "leaveBreakoutRoomAndMeetingButtonLabel": "Besprechung verlassen",
-    "breakoutRoomJoinedNotificationTitle": "Sie sind dem Gruppenraum „{roomName}“ beigetreten.",
-    "joinBreakoutRoomBannerTitle": "Der Gruppenraum „{roomName}“ ist geöffnet.",
-    "joinBreakoutRoomBannerButtonLabel": "Beitreten",
-    "returnFromBreakoutRoomBannerTitle": "Zurück zur Hauptbesprechung",
-    "returnFromBreakoutRoomBannerButtonLabel": "Erneut teilnehmen"
+    "muteAllCancelButtonLabel": "Abbrechen"
   },
   "chat": {
     "chatListHeader": "In diesem Chat",
@@ -404,8 +396,6 @@
     "dialpadModalAriaLabel": "Wähltastatur",
     "dialpadCloseModalButtonAriaLabel": "Wähltastatur schließen",
     "openDtmfDialpadLabel": "Wähltastatur anzeigen",
-    "dtmfDialpadPlaceholderText": "Nummer eingeben",
-    "breakoutRoomChatPaneTitle": "Chat im Gruppenraum",
-    "chatContentSpinnerLabel": "Loading..."
+    "dtmfDialpadPlaceholderText": "Nummer eingeben"
   }
 }

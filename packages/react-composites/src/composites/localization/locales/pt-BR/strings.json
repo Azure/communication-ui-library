@@ -347,15 +347,7 @@
     "muteAllDialogTitle": "Ativar mudo para todos?",
     "muteAllDialogContent": "Isso ativará o mudo para todas as pessoas na reunião, exceto para você.",
     "muteAllConfirmButtonLabel": "Ativar mudo de todos",
-    "muteAllCancelButtonLabel": "Cancelar",
-    "joinBreakoutRoomButtonLabel": "Ingressar na sala da sessão de grupo",
-    "returnFromBreakoutRoomButtonLabel": "Sair da sala",
-    "leaveBreakoutRoomAndMeetingButtonLabel": "Sair da reunião",
-    "breakoutRoomJoinedNotificationTitle": "Você ingressou na sala para sessão de grupo '{roomName}'",
-    "joinBreakoutRoomBannerTitle": "A sala para sessão de grupo '{roomName}' está aberta",
-    "joinBreakoutRoomBannerButtonLabel": "Ingressar",
-    "returnFromBreakoutRoomBannerTitle": "Voltar à reunião principal",
-    "returnFromBreakoutRoomBannerButtonLabel": "Reingressar"
+    "muteAllCancelButtonLabel": "Cancelar"
   },
   "chat": {
     "chatListHeader": "Neste chat",
@@ -404,8 +396,6 @@
     "dialpadModalAriaLabel": "Teclado de discagem",
     "dialpadCloseModalButtonAriaLabel": "Fechar teclado",
     "openDtmfDialpadLabel": "Mostrar teclado de discagem",
-    "dtmfDialpadPlaceholderText": "Digite o número",
-    "breakoutRoomChatPaneTitle": "Chat da Sala para Sessão de Grupo",
-    "chatContentSpinnerLabel": "Carregando..."
+    "dtmfDialpadPlaceholderText": "Digite o número"
   }
 }

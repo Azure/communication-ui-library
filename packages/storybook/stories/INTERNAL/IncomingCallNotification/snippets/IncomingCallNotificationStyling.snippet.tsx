@@ -44,7 +44,7 @@ export const IncomingCallNotificationStylingExample: () => JSX.Element = () => {
         avatarContainer: {
           root: {
             background: 'blue',
-            borderRadius: '2rem'
+            borderRadius: '50%'
           }
         }
       }}

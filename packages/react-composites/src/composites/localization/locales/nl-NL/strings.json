@@ -347,15 +347,7 @@
     "muteAllDialogTitle": "Iedereen dempen?",
     "muteAllDialogContent": "Hiermee wordt iedereen in de vergadering gedempt, behalve u.",
     "muteAllConfirmButtonLabel": "Allen dempen",
-    "muteAllCancelButtonLabel": "Annuleren",
-    "joinBreakoutRoomButtonLabel": "Deelnemen aan aparte vergaderruimte",
-    "returnFromBreakoutRoomButtonLabel": "Vergaderruimte verlaten",
-    "leaveBreakoutRoomAndMeetingButtonLabel": "Vergadering verlaten",
-    "breakoutRoomJoinedNotificationTitle": "U neemt deel aan de aparte vergaderruimte '{roomName}'",
-    "joinBreakoutRoomBannerTitle": "Aparte vergaderruimte '{roomName}' is geopend",
-    "joinBreakoutRoomBannerButtonLabel": "Bijwonen",
-    "returnFromBreakoutRoomBannerTitle": "Terugkeren naar hoofdvergadering",
-    "returnFromBreakoutRoomBannerButtonLabel": "Opnieuw deelnemen"
+    "muteAllCancelButtonLabel": "Annuleren"
   },
   "chat": {
     "chatListHeader": "In deze chat",
@@ -404,8 +396,6 @@
     "dialpadModalAriaLabel": "Telefoonkiezer",
     "dialpadCloseModalButtonAriaLabel": "Toetsenblok sluiten",
     "openDtmfDialpadLabel": "Toetsenblok weergeven",
-    "dtmfDialpadPlaceholderText": "Nummer invoeren",
-    "breakoutRoomChatPaneTitle": "Aparte vergaderruimte chat",
-    "chatContentSpinnerLabel": "Loading..."
+    "dtmfDialpadPlaceholderText": "Nummer invoeren"
   }
 }

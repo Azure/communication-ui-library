@@ -1,8 +1,8 @@
 {
-  "type": "patch",
-  "area": "fix",
-  "workstream": "Video effects button",
-  "comment": "Truncate long text used in video effects button",
+  "type": "prerelease",
+  "area": "feature",
+  "workstream": "Breakout rooms",
+  "comment": "Add breakout rooms notifications",
   "packageName": "@azure/communication-react",
   "email": "79475487+mgamis-msft@users.noreply.github.com",
   "dependentChangeType": "patch"

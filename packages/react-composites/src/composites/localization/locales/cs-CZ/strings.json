@@ -347,15 +347,7 @@
     "muteAllDialogTitle": "Chcete všechny ztlumit?",
     "muteAllDialogContent": "Ztlumí všechny účastníky schůzky kromě vás.",
     "muteAllConfirmButtonLabel": "Ztlumit všechny",
-    "muteAllCancelButtonLabel": "Zrušit",
-    "joinBreakoutRoomButtonLabel": "Připojí se ke skupinové místnosti.",
-    "returnFromBreakoutRoomButtonLabel": "Opustit místnost",
-    "leaveBreakoutRoomAndMeetingButtonLabel": "Opustit schůzku",
-    "breakoutRoomJoinedNotificationTitle": "Připojili jste se ke skupinové místnosti {roomName}",
-    "joinBreakoutRoomBannerTitle": "Skupinová místnost {roomName} je otevřená",
-    "joinBreakoutRoomBannerButtonLabel": "Připojit se",
-    "returnFromBreakoutRoomBannerTitle": "Vrátit se k hlavní schůzce",
-    "returnFromBreakoutRoomBannerButtonLabel": "Znovu připojit"
+    "muteAllCancelButtonLabel": "Zrušit"
   },
   "chat": {
     "chatListHeader": "V tomto chatu",
@@ -404,8 +396,6 @@
     "dialpadModalAriaLabel": "Číselník",
     "dialpadCloseModalButtonAriaLabel": "Zavřít číselník",
     "openDtmfDialpadLabel": "Zobrazit číselník",
-    "dtmfDialpadPlaceholderText": "Zadejte číslo",
-    "breakoutRoomChatPaneTitle": "Chat ve skupinové místnosti",
-    "chatContentSpinnerLabel": "Načítání..."
+    "dtmfDialpadPlaceholderText": "Zadejte číslo"
   }
 }

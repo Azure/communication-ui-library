@@ -6,7 +6,6 @@ import {
 import { initializeIcons, registerIcons, Stack } from '@fluentui/react';
 import React from 'react';
 
-// initializeIcons() and registerIcons() should only be called once in the application
 initializeIcons();
 registerIcons({ icons: { ...DEFAULT_COMPONENT_ICONS } });
 

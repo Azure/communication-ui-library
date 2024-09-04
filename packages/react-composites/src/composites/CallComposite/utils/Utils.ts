@@ -689,12 +689,6 @@ export function determineStates(previous: ComplianceState, current: boolean | un
   }
 }
 
-// The debounce time for the stopped state to be shown after both states are stopped.
-// This is to prevent stopped messages from being lost by transitioning to "Off" too
-// quickly if the states are toggled in quick succession.
-// This also prevents React strict mode from transitioning to "Off" too quickly.
-const ComplianceNotificationOffDebounceTimeMs = 2000;
-
 /**
  * Compute compliance notification based on latest compliance state and cached props.
  * @private
@@ -732,24 +726,22 @@ export function computeComplianceNotification(
     };
   }
 
-  // [2]: If the callRecordState and callTranscribeState are both stopped for a predetermined amount of time, mark both states as off.
-  // NOTE: this can be removed once lastStoppedRecording in the calling stateful client is GA.
+  // [2]: Compute the variant, using the transitioned state machine.
+  const variant = computeVariant(
+    cachedProps.current.latestStringState.callRecordState,
+    cachedProps.current.latestStringState.callTranscribeState
+  );
+
+  // [3]: Transition the state machine again to deal with some end-states.
   if (
     shouldUpdateCached &&
     cachedProps.current.latestStringState.callRecordState === 'stopped' &&
-    cachedProps.current.latestStringState.callTranscribeState === 'stopped' &&
-    Date.now() - cachedProps.current.lastUpdated > ComplianceNotificationOffDebounceTimeMs
+    cachedProps.current.latestStringState.callTranscribeState === 'stopped'
   ) {
     // When both states are stopped, after displaying message "RECORDING_AND_TRANSCRIPTION_STOPPED", change both states to off (going back to the default state).
     cachedProps.current.latestStringState.callRecordState = 'off';
     cachedProps.current.latestStringState.callTranscribeState = 'off';
   }
-
-  // [3]: Compute the variant, using the transitioned state machine.
-  const variant = computeVariant(
-    cachedProps.current.latestStringState.callRecordState,
-    cachedProps.current.latestStringState.callTranscribeState
-  );
 
   // If the variant is not 'noState', then show the notification.
   if (variant !== 'noState') {

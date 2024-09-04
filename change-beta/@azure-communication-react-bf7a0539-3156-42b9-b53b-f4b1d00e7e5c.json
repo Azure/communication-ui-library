@@ -1,8 +1,8 @@
 {
-  "type": "patch",
+  "type": "prerelease",
   "area": "feature",
-  "workstream": "Calling dependency",
-  "comment": "Update communication calling to 1.29.1-beta.1 and 1.28.1",
+  "workstream": "Breakout rooms",
+  "comment": "Switch chat threads to breakout room when breakout room is joined",
   "packageName": "@azure/communication-react",
   "email": "79475487+mgamis-msft@users.noreply.github.com",
   "dependentChangeType": "patch"

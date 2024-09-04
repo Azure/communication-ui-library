@@ -15,7 +15,7 @@ ParticipantList renders a list of all calling or chat participants.
 
 ## Default example for Chat
 
-The ParticipantList for chat is by default a list of [ParticipantItem](./?path=/docs/components-participant-item--docs) components linked with state around each chat participant.
+The ParticipantList for chat is by default a list of [ParticipantItem](./?path=/docs/ui-components-participantitem--participant-item) components linked with state around each chat participant.
 
 <Canvas
   of={ParticipantStories.DefaultChatParticipantListDocsOnly}
@@ -24,7 +24,7 @@ The ParticipantList for chat is by default a list of [ParticipantItem](./?path=/
 
 ## Default example for Calling
 
-ParticipantList for calling is by default a list of [ParticipantItem](./?path=/docs/components-participant-item--docs) components with presence linked to the participant call state, as well as icons for microphone and screen sharing states.
+ParticipantList for calling is by default a list of [ParticipantItem](./?path=/docs/ui-components-participantitem--participant-item) components with presence linked to the participant call state, as well as icons for microphone and screen sharing states.
 
 <Canvas
   of={ParticipantStories.DefaultCallParticipantListDocsOnly}
@@ -42,7 +42,7 @@ Local user can be excluded from the participant list as shown in the example bel
 
 ## Interactive Call example
 
-ParticipantList is designed with a rendering override, `onRenderParticipant`, which allows you to have your own design or use your own [ParticipantItem](./?path=/docs/components-participant-item--docs) components with their context menu style enabling interaction with this participant. For example, you can add menu items and icons to the participants using `menuItems` and `onRenderIcon` properties of [ParticipantItem](./?path=/docs/components-participant-item--docs#props) like in the code below.
+ParticipantList is designed with a rendering override, `onRenderParticipant`, which allows you to have your own design or use your own [ParticipantItem](./?path=/docs/ui-components-participantitem--participant-item) components with their context menu style enabling interaction with this participant. For example, you can add menu items and icons to the participants using `menuItems` and `onRenderIcon` properties of [ParticipantItem](./?path=/docs/ui-components-participantitem--participant-item#props) like in the code below.
 
 For simplicity, React `useState` is used to keep the state of every participant to decide which menu items and icons to show. You can now mute and unmute by clicking a participant in the rendered example below.
 

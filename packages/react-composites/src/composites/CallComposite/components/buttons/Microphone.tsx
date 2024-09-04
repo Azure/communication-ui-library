@@ -26,8 +26,6 @@ export const Microphone = (props: {
   isDeepNoiseSuppressionOn?: boolean;
   /* @conditional-compile-remove(DNS) */
   onClickNoiseSuppression?: () => void;
-  /* @conditional-compile-remove(DNS) */
-  showNoiseSuppressionButton?: boolean;
 }): JSX.Element => {
   const microphoneButtonProps = usePropsFor(MicrophoneButton);
   const callStatus = useSelector(getCallStatus);
@@ -56,8 +54,6 @@ export const Microphone = (props: {
       isDeepNoiseSuppressionOn={props.isDeepNoiseSuppressionOn}
       /* @conditional-compile-remove(DNS) */
       onClickNoiseSuppression={props.onClickNoiseSuppression}
-      /* @conditional-compile-remove(DNS) */
-      showNoiseSuppressionButton={props.showNoiseSuppressionButton}
       showLabel={props.displayType !== 'compact'}
       disableTooltip={props.disableTooltip}
       styles={styles}

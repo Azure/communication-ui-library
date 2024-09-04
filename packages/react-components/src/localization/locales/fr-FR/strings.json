@@ -452,31 +452,6 @@
       "title": "Arrêt de la transcription.",
       "message": "Vous n’enregistrez désormais que cette réunion.",
       "dismissButtonAriaLabel": "Fermer"
-    },
-    "assignedBreakoutRoomOpened": {
-      "title": "Nous allons vous déplacer vers la salle affectée dans 5 secondes.",
-      "dismissButtonAriaLabel": "Fermer"
-    },
-    "assignedBreakoutRoomChanged": {
-      "title": "Votre salle pour petit groupe a changé",
-      "message": "Nous allons vous déplacer vers la salle affectée dans 5 secondes.",
-      "dismissButtonAriaLabel": "Fermer"
-    },
-    "assignedBreakoutRoomOpenedPromptJoin": {
-      "title": "Rejoindre la salle de réunion ?",
-      "message": "Vous avez reçu une invitation à rejoindre une salle pour petit groupe.",
-      "dismissButtonAriaLabel": "Fermer",
-      "primaryButtonLabel": "Rejoindre une salle",
-      "secondaryButtonLabel": "Plus tard"
-    },
-    "breakoutRoomJoined": {
-      "title": "Vous avez rejoint une salle pour petit groupe.",
-      "dismissButtonAriaLabel": "Proche"
-    },
-    "breakoutRoomClosingSoon": {
-      "title": "Limite de temps de la salle sur le point d’expirer.",
-      "message": "Cette salle se fermera dans 30 secondes.",
-      "dismissButtonAriaLabel": "Proche"
     }
   },
   "videoGallery": {

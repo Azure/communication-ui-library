@@ -510,8 +510,7 @@
     "stopSpotlightVideoTileMenuLabel": "Stop spotlighting",
     "stopSpotlightOnSelfVideoTileMenuLabel": "Exit spotlight",
     "attendeeRole": "Attendee",
-    "muteParticipantMenuItemLabel": "Mute",
-    "waitingScreenText": "Waiting for others to join"
+    "muteParticipantMenuItemLabel": "Mute"
   },
   "dialpad": {
     "placeholderText": "Enter phone number",

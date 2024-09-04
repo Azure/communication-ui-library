@@ -347,15 +347,7 @@
     "muteAllDialogTitle": "هل تريد كتم صوت الجميع؟",
     "muteAllDialogContent": "سيؤدي ذلك إلى كتم صوت الجميع في الاجتماع باستثننائك.",
     "muteAllConfirmButtonLabel": "كتم صوت الجميع",
-    "muteAllCancelButtonLabel": "إلغاء",
-    "joinBreakoutRoomButtonLabel": "انضمام إلى غرفة فرعية",
-    "returnFromBreakoutRoomButtonLabel": "مغادرة الغرفة",
-    "leaveBreakoutRoomAndMeetingButtonLabel": "مغادرة الاجتماع",
-    "breakoutRoomJoinedNotificationTitle": "لقد انضممت إلى الغرفة الفرعية '{roomName}'",
-    "joinBreakoutRoomBannerTitle": "الغرفة الفرعية '{roomName}' مفتوحة",
-    "joinBreakoutRoomBannerButtonLabel": "انضمام",
-    "returnFromBreakoutRoomBannerTitle": "رجوع إلى الاجتماع الرئيسي",
-    "returnFromBreakoutRoomBannerButtonLabel": "إعادة الانضمام"
+    "muteAllCancelButtonLabel": "إلغاء"
   },
   "chat": {
     "chatListHeader": "في هذه الدردشة",
@@ -404,8 +396,6 @@
     "dialpadModalAriaLabel": "لوحة الطلب",
     "dialpadCloseModalButtonAriaLabel": "إغلاق لوحة الطلب",
     "openDtmfDialpadLabel": "عرض لوحة الطلب",
-    "dtmfDialpadPlaceholderText": "أدخل عدداً",
-    "breakoutRoomChatPaneTitle": "دردشة الغرفة الفرعية",
-    "chatContentSpinnerLabel": "يتم الآن التحميل..."
+    "dtmfDialpadPlaceholderText": "أدخل عدداً"
   }
 }

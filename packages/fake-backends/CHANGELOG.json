@@ -2,21 +2,6 @@
   "name": "@internal/fake-backends",
   "entries": [
     {
-      "date": "Mon, 26 Aug 2024 18:25:59 GMT",
-      "version": "1.19.0-beta.2",
-      "tag": "@internal/fake-backends_v1.19.0-beta.2",
-      "comments": {
-        "patch": [
-          {
-            "author": "beachball",
-            "package": "@internal/fake-backends",
-            "comment": "Bump @internal/acs-ui-common to v1.19.0-beta.2",
-            "commit": "not available"
-          }
-        ]
-      }
-    },
-    {
       "date": "Tue, 06 Aug 2024 19:45:33 GMT",
       "tag": "@internal/fake-backends_v1.19.0-beta.1",
       "version": "1.19.0-beta.1",

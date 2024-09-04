@@ -167,7 +167,7 @@
     "ariaLabel": "リアクション ボタン、リアクションの送信",
     "tooltipDisabledContent": "リアクション操作が無効になっています",
     "tooltipContent": "リアクションを送信します",
-    "likeReactionTooltipContent": "いいね!",
+    "likeReactionTooltipContent": "高く評価",
     "heartReactionTooltipContent": "大好き",
     "laughReactionTooltipContent": "笑い",
     "applauseReactionTooltipContent": "喝采",
@@ -451,31 +451,6 @@
     "transcriptionStoppedStillRecording": {
       "title": "文字起こしが停止しました。",
       "message": "今はこの会議の録画のみを行っています。",
-      "dismissButtonAriaLabel": "閉じる"
-    },
-    "assignedBreakoutRoomOpened": {
-      "title": "5 秒後に、割り当てられた会議室に移動します。",
-      "dismissButtonAriaLabel": "閉じる"
-    },
-    "assignedBreakoutRoomChanged": {
-      "title": "ブレークアウト ルームが変更されました",
-      "message": "5 秒後に、割り当てられた会議室に移動します。",
-      "dismissButtonAriaLabel": "閉じる"
-    },
-    "assignedBreakoutRoomOpenedPromptJoin": {
-      "title": "ブレークアウト ルームに参加しますか?",
-      "message": "ブレークアウト ルームに割り当てられました。",
-      "dismissButtonAriaLabel": "閉じる",
-      "primaryButtonLabel": "ルームに参加",
-      "secondaryButtonLabel": "後で"
-    },
-    "breakoutRoomJoined": {
-      "title": "ブレークアウト ルームに参加しました。",
-      "dismissButtonAriaLabel": "閉じる"
-    },
-    "breakoutRoomClosingSoon": {
-      "title": "ルームの時間制限がもうすぐ切れます。",
-      "message": "このルームは 30 秒後に終了します",
       "dismissButtonAriaLabel": "閉じる"
     }
   },

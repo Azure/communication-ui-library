@@ -347,15 +347,7 @@
     "muteAllDialogTitle": "全員をミュートにしますか?",
     "muteAllDialogContent": "会議に参加している自分以外の全員がミュートになります。",
     "muteAllConfirmButtonLabel": "全員をミュート",
-    "muteAllCancelButtonLabel": "取り消す",
-    "joinBreakoutRoomButtonLabel": "ブレークアウト ルームに参加",
-    "returnFromBreakoutRoomButtonLabel": "ルームから退出",
-    "leaveBreakoutRoomAndMeetingButtonLabel": "会議から退出",
-    "breakoutRoomJoinedNotificationTitle": "ブレークアウト ルーム '{roomName}' に参加しました",
-    "joinBreakoutRoomBannerTitle": "ブレークアウト ルーム '{roomName}' が開いています",
-    "joinBreakoutRoomBannerButtonLabel": "参加",
-    "returnFromBreakoutRoomBannerTitle": "メインの会議に戻る",
-    "returnFromBreakoutRoomBannerButtonLabel": "もう一度参加"
+    "muteAllCancelButtonLabel": "取り消す"
   },
   "chat": {
     "chatListHeader": "このチャット内",
@@ -404,8 +396,6 @@
     "dialpadModalAriaLabel": "ダイヤルパッド",
     "dialpadCloseModalButtonAriaLabel": "ダイヤルパッドを閉じる",
     "openDtmfDialpadLabel": "ダイヤルパッドを表示",
-    "dtmfDialpadPlaceholderText": "番号を入力してください",
-    "breakoutRoomChatPaneTitle": "ブレークアウト ルーム チャット",
-    "chatContentSpinnerLabel": "読み込んでいます..."
+    "dtmfDialpadPlaceholderText": "番号を入力してください"
   }
 }

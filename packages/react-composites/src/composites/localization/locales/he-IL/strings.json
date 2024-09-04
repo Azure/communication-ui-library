@@ -347,15 +347,7 @@
     "muteAllDialogTitle": "האם להשתיק את כולם?",
     "muteAllDialogContent": "פעולה זו תשתיק את כל האנשים בפגישה חוץ ממך.",
     "muteAllConfirmButtonLabel": "השתק הכל",
-    "muteAllCancelButtonLabel": "ביטול",
-    "joinBreakoutRoomButtonLabel": "הצטרף לחדר בריחה",
-    "returnFromBreakoutRoomButtonLabel": "עזוב את החדר",
-    "leaveBreakoutRoomAndMeetingButtonLabel": "עזוב פגישה",
-    "breakoutRoomJoinedNotificationTitle": "הצטרפת לפיצול חדרים '{roomName}'",
-    "joinBreakoutRoomBannerTitle": "פיצול החדרים '{roomName}' פתוח",
-    "joinBreakoutRoomBannerButtonLabel": "הצטרף",
-    "returnFromBreakoutRoomBannerTitle": "חזרה לפגישה הראשית",
-    "returnFromBreakoutRoomBannerButtonLabel": "הצטרף מחדש"
+    "muteAllCancelButtonLabel": "ביטול"
   },
   "chat": {
     "chatListHeader": "בצ'אט זה",
@@ -404,8 +396,6 @@
     "dialpadModalAriaLabel": "לוח חיוג",
     "dialpadCloseModalButtonAriaLabel": "סגור לוח חיוג",
     "openDtmfDialpadLabel": "הצג לוח חיוג",
-    "dtmfDialpadPlaceholderText": "הזן מספר",
-    "breakoutRoomChatPaneTitle": "צ'אט פיצול חדרים",
-    "chatContentSpinnerLabel": "בטעינה..."
+    "dtmfDialpadPlaceholderText": "הזן מספר"
   }
 }
