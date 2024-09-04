@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import EventEmitter from 'events';
+import { EventEmitter } from 'events';
 import { enableMapSet, enablePatches, produce, Patch } from 'immer';
 import {
   ChatClientState,
