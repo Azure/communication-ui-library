@@ -1,5 +1,8 @@
 import { Canvas, Meta, Story, Source } from '@storybook/addon-docs';
 
+import { ControlBarExample } from './ControlBar.story';
+import { VideoTileExample } from './VideoTile.story';
+
 import ControlBarExampleText from '!!raw-loader!./snippets/StylingControlBar.snippet.tsx';
 import VideoTileExampleText from '!!raw-loader!./snippets/StylingVideoTile.snippet.tsx';
 
@@ -23,6 +26,7 @@ All the UI Components have complete CSS support and provide complex styling capa
 Let's style the `ControlBar` component and components inside it using the `root` styles property.
 
 <Source code={ControlBarExampleText} />
+<ControlBarExample />{' '}
 
 ## Example - VideoTile
 
@@ -30,3 +34,4 @@ Let's style the `VideoTile` component.
 `VideoTile` component allows you to style its `root` element, the `Video Container` and the `Overlay Container` (Content rendered in front of the Video Container).
 
 <Source code={VideoTileExampleText} />
+<VideoTileExample />

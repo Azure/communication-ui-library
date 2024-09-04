@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
 import {
   CameraButton,
   ControlBar,
@@ -38,7 +40,7 @@ export const VideoTileExample: () => JSX.Element = () => {
   const videoStreamElement = videoStreams[0];
 
   return (
-    <FluentThemeProvider>
+    <FluentThemeProvider rootStyle={{ height: '300px' }}>
       <Stack style={{ width: '400px' }}>
         <VideoTile
           renderElement={
