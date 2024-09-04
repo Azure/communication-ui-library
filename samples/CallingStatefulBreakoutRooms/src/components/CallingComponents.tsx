@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+import { Features } from '@azure/communication-calling';
 import {
   usePropsFor,
   VideoGallery,
@@ -10,12 +11,19 @@ import {
   NotificationStack,
   ScreenShareButton,
   EndCallButton,
-  VideoStreamOptions
+  VideoStreamOptions,
+  useCall
 } from '@azure/communication-react';
-import { IStackStyles, Stack } from '@fluentui/react';
+import { IStackStyles, PrimaryButton, Stack } from '@fluentui/react';
 import React, { useCallback, useState } from 'react';
 
-export const CallingComponents = (): JSX.Element => {
+export type CallingComponentsProps = {
+  returnToMainMeeting?: () => Promise<void>;
+};
+
+export const CallingComponents = (props: CallingComponentsProps): JSX.Element => {
+  const call = useCall();
+
   const videoGalleryProps = usePropsFor(VideoGallery);
   const cameraProps = usePropsFor(CameraButton);
   const microphoneProps = usePropsFor(MicrophoneButton);
@@ -43,6 +51,34 @@ export const CallingComponents = (): JSX.Element => {
     return <CallEnded />;
   }
 
+  let breakoutRoomMenuProps = undefined;
+  // Breakout room menu items are shown only if the breakout room settings allow returning to the main meeting
+  if (
+    props.returnToMainMeeting &&
+    call?.feature(Features.BreakoutRooms).breakoutRoomsSettings?.disableReturnToMainMeeting === false
+  ) {
+    breakoutRoomMenuProps = {
+      items: [
+        {
+          key: 'leaveRoom',
+          text: 'Leave room',
+          title: 'Leave room',
+          onClick: () => {
+            props.returnToMainMeeting?.();
+          }
+        },
+        {
+          key: 'leaveMeeting',
+          text: 'Leave meeting',
+          title: 'Leave meeting',
+          onClick: () => onHangup()
+        }
+      ]
+    };
+  }
+
+  const assignedBreakoutRoom = call?.feature(Features.BreakoutRooms).assignedBreakoutRooms;
+
   return (
     <Stack style={{ height: '100%' }}>
       {videoGalleryProps && (
@@ -59,10 +95,19 @@ export const CallingComponents = (): JSX.Element => {
           />
           <Stack>
             <ControlBar layout={'floatingBottom'}>
+              {assignedBreakoutRoom?.state === 'open' && assignedBreakoutRoom.call && (
+                <PrimaryButton
+                  text="Join breakout room"
+                  onClick={() => assignedBreakoutRoom.join()}
+                  style={{ height: '3.5rem' }}
+                />
+              )}
               {cameraProps && <CameraButton {...cameraProps} />}
               {microphoneProps && <MicrophoneButton {...microphoneProps} />}
               {screenShareProps && <ScreenShareButton {...screenShareProps} />}
-              {endCallProps && <EndCallButton {...endCallProps} onHangUp={onHangup} />}
+              {endCallProps && (
+                <EndCallButton {...endCallProps} onHangUp={onHangup} menuProps={breakoutRoomMenuProps} />
+              )}
             </ControlBar>
           </Stack>
         </Stack>

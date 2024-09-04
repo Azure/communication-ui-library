@@ -126,7 +126,7 @@ function App(): JSX.Element {
               <CallAgentProvider callAgent={callAgent}>
                 {call && (
                   <CallProvider call={call}>
-                    <CallingComponents />
+                    <CallingComponents returnToMainMeeting={returnToMainMeeting} />
                   </CallProvider>
                 )}
               </CallAgentProvider>
