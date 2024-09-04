@@ -1,0 +1,19 @@
+import { Canvas, Meta, ArgTypes } from '@storybook/addon-docs';
+import * as PictureInPictureInPictureStories from './index.stories';
+import PictureInPictureInPictureText from '!!raw-loader!./PictureInPictureInPicture.story';
+import { _PictureInPictureInPicture } from '@internal/react-components';
+
+<Meta of={PictureInPictureInPictureStories} />
+
+# Picture In Picture In Picture
+
+Component that displays a video feed for use as a Picture-in-Picture style component. It contains a secondary video feed resulting in an inner Picture-in-Picture style feed.
+
+@remarks The double nature of the Picture-in-Picture styles is where this component gets its name; Picture-in-Picture-in-Picture.
+
+<Canvas
+  of={PictureInPictureInPictureStories.PictureInPictureInPictureDocsOnly}
+  source={{ code: PictureInPictureInPictureText }}
+/>
+
+<ArgTypes of={_PictureInPictureInPicture} />

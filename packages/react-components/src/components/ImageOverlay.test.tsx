@@ -1,17 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/* @conditional-compile-remove(image-overlay) */
 import React from 'react';
-/* @conditional-compile-remove(image-overlay) */
 import { ImageOverlay } from './ImageOverlay';
-/* @conditional-compile-remove(image-overlay) */
 import { render, screen } from '@testing-library/react';
-/* @conditional-compile-remove(image-overlay) */
 import { registerIcons } from '@fluentui/react';
 
 describe('ImageOverlay default layout tests', () => {
-  /* @conditional-compile-remove(image-overlay) */
   beforeAll(() => {
     registerIcons({
       icons: {
@@ -24,18 +19,15 @@ describe('ImageOverlay default layout tests', () => {
     expect(true).toBe(true);
   });
 
-  /* @conditional-compile-remove(image-overlay) */
   const titleIconTestId1 = 'titleIconTestId1';
-  /* @conditional-compile-remove(image-overlay) */
   const imageInfo = {
     imageSrc: 'images/inlineImageExample1.png',
-    downloadFilename: 'downloadFilename',
+    downloadAttachmentname: 'downloadAttachmentname',
     altText: 'altText',
     title: 'title',
     titleIcon: <div data-testid={titleIconTestId1}></div>
   };
 
-  /* @conditional-compile-remove(image-overlay) */
   const renderImageOverlayComponent = (
     imageSrc?: string,
     title?: string,
@@ -56,7 +48,6 @@ describe('ImageOverlay default layout tests', () => {
     );
     return container;
   };
-  /* @conditional-compile-remove(image-overlay) */
   test('Show image overlay with required props', async () => {
     renderImageOverlayComponent();
     const image: HTMLImageElement = await screen.findByRole('img', { name: 'image-overlay-main-image' });
@@ -69,7 +60,6 @@ describe('ImageOverlay default layout tests', () => {
     expect(titleIcon).toBeTruthy();
   });
 
-  /* @conditional-compile-remove(image-overlay) */
   test('It should call the onDismiss handler when the close icon is clicked', async () => {
     const onDismissHandler = jest.fn();
     renderImageOverlayComponent(undefined, undefined, undefined, onDismissHandler);
@@ -80,7 +70,6 @@ describe('ImageOverlay default layout tests', () => {
     expect(onDismissHandler).toBeCalledTimes(1);
   });
 
-  /* @conditional-compile-remove(image-overlay) */
   test('It should call the onDownloadButtonClicked handler when the download icon is clicked', async () => {
     const onDownloadButtonClicked = jest.fn();
     renderImageOverlayComponent(undefined, undefined, undefined, undefined, onDownloadButtonClicked);

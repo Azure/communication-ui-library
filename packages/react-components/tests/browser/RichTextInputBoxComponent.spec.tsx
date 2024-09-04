@@ -2,28 +2,33 @@
 // Licensed under the MIT License.
 
 import React from 'react';
-import { expect, test } from '@playwright/experimental-ct-react';
+import { expect } from '@playwright/experimental-ct-react';
 import { TestRichTextInputBoxComponent } from './TestingComponents/TestRichTextInputBoxComponent';
 import { Locator } from 'playwright-core';
+import { test as betaTest } from './FlavoredBaseTest';
 
 const formatButtonId = 'rich-text-input-box-format-button';
 const editorId = 'rooster-rich-text-editor';
 
-test.describe('RichTextInputBoxComponent tests', () => {
-  test('RichTextInputBoxComponent should be shown correctly', async ({ mount }) => {
+// created a separate file for table tests (`RichTextInputBoxComponentTablesTests.spec.tsx`) to speed up the test execution
+betaTest.describe('RichTextInputBoxComponent tests', () => {
+  betaTest.skip(({ isBetaBuild }) => !isBetaBuild, 'The tests should be run for beta flavor only');
+  betaTest('RichTextInputBoxComponent should be shown correctly', async ({ mount }) => {
     const component = await mount(<TestRichTextInputBoxComponent disabled={false} minHeight="1rem" maxHeight="2rem" />);
     await component.evaluate(() => document.fonts.ready);
-    await expect(component).toHaveScreenshot('richtextinputboxcomponent-without-format-toolbar.png');
+    await expect(component).toHaveScreenshot('rich-text-input-box-component-without-format-toolbar.png');
     const formatButton = component.getByTestId(formatButtonId);
 
     await formatButton.hover();
-    await expect(component).toHaveScreenshot('richtextinputboxcomponent-hover.png');
+    await expect(component).toHaveScreenshot('rich-text-input-box-component-hover.png');
 
     await formatButton.click();
-    await expect(component).toHaveScreenshot('richtextinputboxcomponent-with-format-toolbar.png');
+    //move mouse to the format button so the screenshots are consistent
+    await formatButton.hover();
+    await expect(component).toHaveScreenshot('rich-text-input-box-component-with-format-toolbar.png');
   });
 
-  test('Text should be formatted correctly when only 1 text style selected', async ({ mount }) => {
+  betaTest('Text should be formatted correctly when only 1 text style selected', async ({ mount }) => {
     const component = await mount(<TestRichTextInputBoxComponent disabled={false} minHeight="1rem" maxHeight="2rem" />);
     await component.evaluate(() => document.fonts.ready);
     await component.getByTestId(formatButtonId).click();
@@ -44,10 +49,12 @@ test.describe('RichTextInputBoxComponent tests', () => {
     await underlineButton.click();
     await editor.pressSequentially('Underline ');
 
-    await expect(component).toHaveScreenshot('richtextinputboxcomponent-text-formatted-1-text-format-at-a-time.png');
+    await expect(component).toHaveScreenshot(
+      'rich-text-input-box-component-text-formatted-1-text-format-at-a-time.png'
+    );
   });
 
-  test('Text should be formatted correctly when only all text styles selected', async ({ mount }) => {
+  betaTest('Text should be formatted correctly when only all text styles selected', async ({ mount }) => {
     const component = await mount(<TestRichTextInputBoxComponent disabled={false} minHeight="1rem" maxHeight="2rem" />);
     await component.evaluate(() => document.fonts.ready);
     await component.getByTestId(formatButtonId).click();
@@ -60,20 +67,20 @@ test.describe('RichTextInputBoxComponent tests', () => {
     // fill can't be used here as it doesn't trigger needed events
     await editor.pressSequentially('Hello World!');
 
-    await expect(component).toHaveScreenshot('richtextinputboxcomponent-text-formatted-all-text-formats.png');
+    await expect(component).toHaveScreenshot('rich-text-input-box-component-text-formatted-all-text-formats.png');
   });
 
-  test('Text should be formatted for bulleted list', async ({ mount }) => {
+  betaTest('Text should be formatted for bulleted list', async ({ mount }) => {
     const component = await mount(
       <TestRichTextInputBoxComponent disabled={false} minHeight="1rem" maxHeight="10rem" />
     );
     await component.evaluate(() => document.fonts.ready);
     addList('Bulleted list', component);
 
-    await expect(component).toHaveScreenshot('richtextinputboxcomponent-text-formatted-bulleted-list.png');
+    await expect(component).toHaveScreenshot('rich-text-input-box-component-text-formatted-bulleted-list.png');
   });
 
-  test('Text should be formatted for numbered list', async ({ mount }) => {
+  betaTest('Text should be formatted for numbered list', async ({ mount }) => {
     const component = await mount(
       <TestRichTextInputBoxComponent disabled={false} minHeight="1rem" maxHeight="10rem" />
     );
@@ -81,7 +88,7 @@ test.describe('RichTextInputBoxComponent tests', () => {
 
     addList('Numbered list', component);
 
-    await expect(component).toHaveScreenshot('richtextinputboxcomponent-text-formatted-numbered-list.png');
+    await expect(component).toHaveScreenshot('rich-text-input-box-component-text-formatted-numbered-list.png');
   });
 });
 
@@ -99,5 +106,9 @@ const addList = async (listButtonLabel: string, component: Locator): Promise<voi
   await editor.pressSequentially('First submenu');
   await editor.press('Enter');
   await component.getByLabel('Decrease indent').click();
+  // the tests are fast and sometimes UI state for "decrease indent" button doesn't have enough time to update
+  // this call is to fix it
+  // click is not used as it might set cursor to incorrect position
+  editor.hover();
   await editor.pressSequentially('Third line');
 };

@@ -20,13 +20,25 @@ export type InputBoxButtonProps = {
   ariaLabel?: string;
   tooltipContent?: string;
   'data-testId'?: string;
+  ariaDisabled?: boolean;
+  ariaExpanded?: boolean;
 };
 
 /**
  * @private
  */
 export const InputBoxButton = (props: InputBoxButtonProps): JSX.Element => {
-  const { onRenderIcon, onClick, ariaLabel, className, id, tooltipContent, 'data-testId': dataTestId } = props;
+  const {
+    onRenderIcon,
+    onClick,
+    ariaLabel,
+    className,
+    id,
+    tooltipContent,
+    'data-testId': dataTestId,
+    ariaDisabled = false,
+    ariaExpanded = false
+  } = props;
   const [isHover, setIsHover] = useState(false);
   const mergedButtonStyle = mergeStyles(inputBoxButtonStyle, className);
 
@@ -41,21 +53,27 @@ export const InputBoxButton = (props: InputBoxButtonProps): JSX.Element => {
   };
   return (
     <TooltipHost hostClassName={inputBoxButtonTooltipStyle} content={tooltipContent} calloutProps={{ ...calloutProps }}>
-      <IconButton
-        className={mergedButtonStyle}
-        ariaLabel={ariaLabel}
-        onClick={onClick}
-        id={id}
-        onMouseEnter={() => {
-          setIsHover(true);
-        }}
-        onMouseLeave={() => {
-          setIsHover(false);
-        }}
-        // VoiceOver fix: Avoid icon from stealing focus when IconButton is double-tapped to send message by wrapping with Stack with pointerEvents style to none
-        onRenderIcon={() => <Stack className={iconWrapperStyle}>{onRenderIcon(isHover)}</Stack>}
-        data-testid={dataTestId}
-      />
+      {/* IconButton doesn't support aria-disabled so adding a parent element that wil have this value set */}
+      {/* in this case aria-disabled will be set to the same value for all children elements */}
+      {/* see aria-disabled documentation for more information */}
+      <Stack aria-disabled={ariaDisabled}>
+        <IconButton
+          className={mergedButtonStyle}
+          ariaLabel={ariaLabel}
+          onClick={onClick}
+          id={id}
+          onMouseEnter={() => {
+            setIsHover(true);
+          }}
+          onMouseLeave={() => {
+            setIsHover(false);
+          }}
+          // VoiceOver fix: Avoid icon from stealing focus when IconButton is double-tapped to send message by wrapping with Stack with pointerEvents style to none
+          onRenderIcon={() => <Stack className={iconWrapperStyle}>{onRenderIcon(isHover)}</Stack>}
+          data-testid={dataTestId}
+          aria-expanded={ariaExpanded}
+        />
+      </Stack>
     </TooltipHost>
   );
 };

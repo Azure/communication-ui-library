@@ -18,7 +18,8 @@ const storyControls = {
   endpointUrl: controlsToAdd.endpointUrl,
   displayName: controlsToAdd.requiredDisplayName,
   teamsMeetingLink: controlsToAdd.teamsMeetingLink,
-  formFactor: controlsToAdd.formFactor
+  formFactor: controlsToAdd.formFactor,
+  richTextEditor: controlsToAdd.richTextEditor
 };
 
 const JoinTeamsMeetingStory = (args: ArgsFrom<typeof storyControls>, context): JSX.Element => {
@@ -32,14 +33,15 @@ const JoinTeamsMeetingStory = (args: ArgsFrom<typeof storyControls>, context): J
           token: args.token,
           displayName: args.displayName,
           endpointUrl: args.endpointUrl,
-          locator: { meetingLink: args.teamsMeetingLink }
+          locator: { meetingLink: args.teamsMeetingLink },
+          compositeOptions: { richTextEditor: args.richTextEditor }
         });
       } else {
         setMeetingProps(undefined);
       }
     };
     fetchToken();
-  }, [args.token, args.userId, args.endpointUrl, args.displayName, args.teamsMeetingLink]);
+  }, [args.token, args.userId, args.endpointUrl, args.displayName, args.teamsMeetingLink, args.richTextEditor]);
 
   return (
     <>

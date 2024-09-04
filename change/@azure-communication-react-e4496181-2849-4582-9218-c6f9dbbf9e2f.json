@@ -1,9 +1,0 @@
-{
-  "type": "none",
-  "area": "fix",
-  "workstream": "ImageGallery",
-  "comment": "Revert \"[Chat] Wrap ImageOverlay with theme provider and change some of the APIs (#4117)\"",
-  "packageName": "@azure/communication-react",
-  "email": "107075081+Leah-Xia-Microsoft@users.noreply.github.com",
-  "dependentChangeType": "none"
-}

@@ -22,7 +22,7 @@ jobs:
     permissions: read-all
     steps:
       # Check-out repo
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
           # Use a machine account when checking out. This is to workaround the issue were GitHub
@@ -46,7 +46,7 @@ jobs:
 
       # Ensure node version is great enough
       - name: Use Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '20.x'
 
@@ -118,8 +118,18 @@ jobs:
           rush build -t @azure/communication-react
         id: buildapifiles
 
-      - name: Commit beta release snapshots
-        if: ${{ startsWith(github.event.inputs.branch, 'prerelease-beta' )}}
+      - name: Check for API changes
+        id: API-check
+        run: |
+          if [[ -z $(git status packages/communication-react -s) ]]
+          then
+            echo "hasChanged=false" >> $GITHUB_OUTPUT
+          else
+            echo "hasChanged=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Commit API File changes
+        if: ${{ startsWith(github.event.inputs.branch, 'prerelease-beta' ) && steps.API-check.outputs.hasChanged == 'true'}}
         run: |
           git add packages/**/*.api.md
           git commit -m 'Update ${{ matrix.flavor }} API files'
@@ -140,7 +150,7 @@ jobs:
       - name: Bump versions for pre-release branch if stable release
         if: ${{ startsWith(github.event.inputs.branch, 'prerelease-stable') }}
         run: |
-          node common/scripts/bump-beta-release-version.js beta
+          node common/scripts/bump-beta-release-version.js beta-next
           rush update
           git add .
           git commit -m "Bump package versions to beta.0 for next release"

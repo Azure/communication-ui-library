@@ -38,6 +38,7 @@ export interface CommonQueryArgs {
   customCompositeOptions?: CallWithChatCompositeOptions;
   injectCustomButtons?: boolean;
   rtl?: boolean;
+  forceInvalidChatThread?: boolean;
 }
 
 /**
@@ -65,6 +66,7 @@ export function parseQueryArgs(): QueryArgs {
 
     customCompositeOptions: params.customCompositeOptions ? JSON.parse(params.customCompositeOptions) : undefined,
     injectCustomButtons: params.injectCustomButtons === 'true',
-    rtl: Boolean(params.rtl)
+    rtl: Boolean(params.rtl),
+    forceInvalidChatThread: params.forceInvalidChatThread === 'true'
   };
 }

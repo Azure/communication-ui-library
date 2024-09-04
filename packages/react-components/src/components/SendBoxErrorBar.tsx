@@ -1,9 +1,34 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { MessageBar, MessageBarType } from '@fluentui/react';
+import { MessageBar } from '@fluentui/react';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+import { MessageBarType } from '@fluentui/react';
 import React, { useEffect } from 'react';
-import { Announcer } from './Announcer';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+import { useMemo } from 'react';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+import { useLocale } from '../localization';
+
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+/**
+ * @beta
+ * Error bar type for {@link SendBoxErrorBarError}
+ */
+export enum SendBoxErrorBarType {
+  /** Info styled MessageBar */
+  info = 0,
+  /** Error styled MessageBar */
+  error = 1,
+  /** Blocked styled MessageBar */
+  blocked = 2,
+  /** SevereWarning styled MessageBar */
+  severeWarning = 3,
+  /** Success styled MessageBar */
+  success = 4,
+  /** Warning styled MessageBar */
+  warning = 5
+}
 
 /**
  * @beta
@@ -16,6 +41,11 @@ export interface SendBoxErrorBarError {
    * Unix Timestamp. Preferred generation using `Date.now()`
    */
   timestamp: number;
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  /**
+   * ErrorBar type. Defaults to `warning`.
+   */
+  errorBarType?: SendBoxErrorBarType;
 }
 
 /**
@@ -40,6 +70,9 @@ export interface SendBoxErrorBarProps {
  */
 export const SendBoxErrorBar = (props: SendBoxErrorBarProps): JSX.Element => {
   const { error, dismissAfterMs, onDismiss } = props;
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  const strings = useLocale().strings.errorBar;
+
   const [errorMessage, setErrorMessage] = React.useState(error?.message);
   // Using `any` because `NodeJS.Timeout` here will cause `declaration error` with jest.
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -61,22 +94,44 @@ export const SendBoxErrorBar = (props: SendBoxErrorBarProps): JSX.Element => {
     };
   }, [dismissAfterMs, onDismiss, error]);
 
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  const messageBarType = useMemo(() => {
+    switch (error?.errorBarType) {
+      case SendBoxErrorBarType.info:
+        return MessageBarType.info;
+      case SendBoxErrorBarType.error:
+        return MessageBarType.error;
+      case SendBoxErrorBarType.blocked:
+        return MessageBarType.blocked;
+      case SendBoxErrorBarType.severeWarning:
+        return MessageBarType.severeWarning;
+      case SendBoxErrorBarType.success:
+        return MessageBarType.success;
+      case SendBoxErrorBarType.warning:
+      default:
+        return MessageBarType.warning;
+    }
+  }, [error]);
+
   if (errorMessage) {
     return (
-      <>
-        <Announcer announcementString={errorMessage} ariaLive={'polite'} />
-        <MessageBar
-          data-testid={'send-box-message-bar'}
-          messageBarType={MessageBarType.warning}
-          styles={{
-            iconContainer: {
-              display: 'none'
-            }
-          }}
-        >
-          {errorMessage}
-        </MessageBar>
-      </>
+      <MessageBar
+        role="alert"
+        aria-label={errorMessage}
+        data-testid={'send-box-message-bar'}
+        /* @conditional-compile-remove(rich-text-editor-image-upload) */
+        messageBarType={messageBarType}
+        /* @conditional-compile-remove(rich-text-editor-image-upload) */
+        isMultiline={true}
+        /* @conditional-compile-remove(rich-text-editor-image-upload) */
+        key={error?.errorBarType || SendBoxErrorBarType.warning}
+        /* @conditional-compile-remove(rich-text-editor-image-upload) */
+        onDismiss={onDismiss}
+        /* @conditional-compile-remove(rich-text-editor-image-upload) */
+        dismissButtonAriaLabel={strings.dismissButtonAriaLabel}
+      >
+        {errorMessage}
+      </MessageBar>
     );
   } else {
     return <></>;

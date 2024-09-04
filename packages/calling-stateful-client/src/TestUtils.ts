@@ -19,10 +19,9 @@ import {
   CallFeatureFactory,
   CallFeature
 } from '@azure/communication-calling';
-/* @conditional-compile-remove(raise-hand) */
 import { RaiseHandCallFeature, RaisedHandListener, RaisedHand } from '@azure/communication-calling';
 import { CollectionUpdatedEvent, RecordingInfo } from '@azure/communication-calling';
-/* @conditional-compile-remove(video-background-effects) */
+
 import { VideoEffectsFeature } from '@azure/communication-calling';
 import { CommunicationTokenCredential } from '@azure/communication-common';
 import { AccessToken } from '@azure/core-auth';
@@ -32,6 +31,8 @@ import { CallClientState } from './CallClientState';
 import { CallContext } from './CallContext';
 import { InternalCallContext } from './InternalCallContext';
 import { createStatefulCallClientWithDeps, StatefulCallClient } from './StatefulCallClient';
+/* @conditional-compile-remove(calling-beta-sdk) */
+import { RemoteParticipantDiagnosticsData } from '@azure/communication-calling';
 
 let backupFreezeFunction: typeof Object.freeze;
 
@@ -114,7 +115,6 @@ export class MockRecordingCallFeatureImpl implements RecordingCallFeature {
   }
 }
 
-/* @conditional-compile-remove(raise-hand) */
 /**
  * @private
  */
@@ -190,7 +190,7 @@ export class MockTranscriptionCallFeatureImpl implements TranscriptionCallFeatur
  * @private
  */
 export class StubDiagnosticsCallFeatureImpl implements UserFacingDiagnosticsFeature {
-  public name = 'Diagnosticss';
+  public name = 'Diagnostics';
   public media = {
     getLatest(): LatestMediaDiagnostics {
       return {};
@@ -216,6 +216,18 @@ export class StubDiagnosticsCallFeatureImpl implements UserFacingDiagnosticsFeat
   dispose(): void {
     /* No state to clean up */
   }
+  /* @conditional-compile-remove(calling-beta-sdk) */
+  public remote = {
+    getLatest(): RemoteParticipantDiagnosticsData {
+      return { diagnostics: [] };
+    },
+    on(): void {
+      /* Stub to appease types */
+    },
+    off(): void {
+      /* Stub to appease types */
+    }
+  };
 }
 
 /**
@@ -254,7 +266,6 @@ export function createMockCall(mockCallId = 'defaultCallID'): MockCall {
     id: mockCallId,
     /* @conditional-compile-remove(teams-identity-support) */
     kind: 'Call',
-    /* @conditional-compile-remove(close-captions) */
     info: {
       groupId: 'testGroupId'
     },
@@ -326,7 +337,6 @@ export function createMockIncomingCall(mockCallId: string): MockIncomingCall {
   return addMockEmitter(mockIncomingCall);
 }
 
-/* @conditional-compile-remove(video-background-effects) */
 const createMockVideoEffectsAPI = (): VideoEffectsFeature =>
   addMockEmitter({
     activeEffects: ['MockVideoEffect'],
@@ -345,9 +355,9 @@ export const createMockLocalVideoStream = (): LocalVideoStream =>
     },
     mediaStreamType: 'Video',
     switchSource: Promise.resolve,
-    /* @conditional-compile-remove(video-background-effects) */
+
     feature: () => createMockVideoEffectsAPI()
-  } as unknown as LocalVideoStream);
+  }) as unknown as LocalVideoStream;
 
 /**
  * @private
@@ -377,39 +387,17 @@ export function createMockApiFeatures(
 ): <FeatureT extends CallFeature>(cls: CallFeatureFactory<FeatureT>) => FeatureT {
   return <FeatureT extends CallFeature>(cls: CallFeatureFactory<FeatureT>): FeatureT => {
     for (const [key, feature] of cache.entries()) {
-      if (cls && key.callApiCtor === cls.callApiCtor) {
+      if (cls && key && key.callApiCtor === cls.callApiCtor) {
         return feature as FeatureT;
       }
     }
 
     // Default one if none provided
     const generic = addMockEmitter({
+      ...new StubDiagnosticsCallFeatureImpl(),
       name: 'Default',
       isRecordingActive: false,
-      isTranscriptionActive: false,
-      /* eslint-enable @typescript-eslint/no-unused-vars */
-      media: {
-        getLatest(): LatestMediaDiagnostics {
-          return {};
-        },
-        on(): void {
-          /* Stub to appease types */
-        },
-        off(): void {
-          /* Stub to appease types */
-        }
-      },
-      network: {
-        getLatest(): LatestNetworkDiagnostics {
-          return {};
-        },
-        on(): void {
-          /* Stub to appease types */
-        },
-        off(): void {
-          /* Stub to appease types */
-        }
-      }
+      isTranscriptionActive: false
     });
     return generic;
   };

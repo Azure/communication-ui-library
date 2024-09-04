@@ -16,16 +16,16 @@ import {
   CallFeatureFactory,
   StartCallOptions,
   RoomLocator,
-  TeamsMeetingIdLocator
+  TeamsMeetingIdLocator,
+  ConnectionStateChangedEvent,
+  ConnectionState
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(calling-beta-sdk) */
 import {
   CallAgentFeature,
   MeetingLocator,
   GroupChatCallLocator,
-  PushNotificationData,
-  ConnectionStateChangedEvent,
-  ConnectionState
+  PushNotificationData
 } from '@azure/communication-calling';
 import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
 import EventEmitter from 'events';
@@ -75,7 +75,6 @@ const mockCallId = 'b';
 class MockCallAgent implements CallAgent {
   calls: MockCall[] = [];
   displayName = undefined;
-  /* @conditional-compile-remove(calling-beta-sdk) */
   connectionState = 'Disconnected' as ConnectionState;
   kind = 'CallAgent' as CallAgentKind;
   emitter = new EventEmitter();
@@ -119,14 +118,12 @@ class MockCallAgent implements CallAgent {
   }
   on(event: 'incomingCall', listener: IncomingCallEvent): void;
   on(event: 'callsUpdated', listener: CollectionUpdatedEvent<Call>): void;
-  /* @conditional-compile-remove(calling-beta-sdk) */
   on(event: 'connectionStateChanged', listener: ConnectionStateChangedEvent): void;
   on(event: any, listener: any): void {
     this.emitter.on(event, listener);
   }
   off(event: 'incomingCall', listener: IncomingCallEvent): void;
   off(event: 'callsUpdated', listener: CollectionUpdatedEvent<Call>): void;
-  /* @conditional-compile-remove(calling-beta-sdk) */
   off(event: 'connectionStateChanged', listener: ConnectionStateChangedEvent): void;
   off(event: any, listener: any): void {
     this.emitter.off(event, listener);
@@ -215,6 +212,26 @@ describe('declarative call agent', () => {
     expect(Object.keys(context.getState().calls).length).toBe(1);
   });
 
+  test('should update state with new call when join to meeting is invoked', () => {
+    const mockCallAgent = new MockCallAgent();
+    const context = new CallContext({ kind: 'communicationUser', communicationUserId: '' });
+    const internalContext = new InternalCallContext();
+    expect(Object.keys(context.getState().calls).length).toBe(0);
+    const declarativeCallAgent = callAgentDeclaratify(mockCallAgent, context, internalContext);
+    declarativeCallAgent.join({ meetingId: '123', passcode: 'qwe' });
+    expect(Object.keys(context.getState().calls).length).toBe(1);
+  });
+
+  test('should update state with new call when join to meeting and without passcode is invoked', () => {
+    const mockCallAgent = new MockCallAgent();
+    const context = new CallContext({ kind: 'communicationUser', communicationUserId: '' });
+    const internalContext = new InternalCallContext();
+    expect(Object.keys(context.getState().calls).length).toBe(0);
+    const declarativeCallAgent = callAgentDeclaratify(mockCallAgent, context, internalContext);
+    declarativeCallAgent.join({ meetingId: '123' });
+    expect(Object.keys(context.getState().calls).length).toBe(1);
+  });
+
   test('should move call to callEnded when call is removed and add endTime', async () => {
     const mockCallAgent = new MockCallAgent();
     const context = new CallContext({ kind: 'communicationUser', communicationUserId: '' });
@@ -230,7 +247,11 @@ describe('declarative call agent', () => {
 
     expect(Object.keys(context.getState().calls).length).toBe(1);
 
-    mockCall.callEndReason = { code: 1, /* @conditional-compile-remove(calling-beta-sdk) */ resultCategories: [] };
+    mockCall.callEndReason = {
+      code: 1,
+      /* @conditional-compile-remove(calling-beta-sdk) */ resultCategories: [],
+      /* @conditional-compile-remove(calling-beta-sdk) */ message: ''
+    };
     mockCallAgent.calls = [];
     mockCallAgent.emit('callsUpdated', { added: [], removed: [mockCall] });
 

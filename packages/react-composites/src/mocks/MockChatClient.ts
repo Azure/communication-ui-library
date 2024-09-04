@@ -2,14 +2,12 @@
 // Licensed under the MIT License.
 
 import { ChatClient, ChatThreadClient } from '@azure/communication-chat';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { ChatThreadItem, CreateChatThreadResult } from '@azure/communication-chat';
 import {
   StatefulChatClient,
   StatefulChatClientArgs,
   _createStatefulChatClientWithDeps
 } from '@internal/chat-stateful-client';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { ChatClientState, ChatErrors } from '@internal/chat-stateful-client';
 import { PagedAsyncIterableIterator } from '@azure/core-paging';
 
@@ -114,7 +112,6 @@ export const pagedAsyncIterator = <T>(values: T[]): PagedAsyncIterableIterator<T
     }
   };
 };
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 /**
  * @private
  */

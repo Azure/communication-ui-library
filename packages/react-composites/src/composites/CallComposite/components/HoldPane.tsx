@@ -57,7 +57,9 @@ export const HoldPane = (): JSX.Element => {
     <Stack styles={paneStyles}>
       <Stack horizontal styles={holdPaneContentStyles}>
         <Text styles={holdPaneTimerStyles}>{elapsedTime}</Text>
-        <Text styles={holdPaneLabelStyles}>{strings.holdScreenLabel}</Text>
+        <Text styles={holdPaneLabelStyles} role="status" aria-live="assertive">
+          {strings.holdScreenLabel}
+        </Text>
         <PrimaryButton
           text={!resumingCall ? strings.resumeCallButtonLabel : strings.resumingCallButtonLabel}
           ariaLabel={!resumingCall ? strings.resumeCallButtonAriaLabel : strings.resumingCallButtonAriaLabel}
@@ -106,11 +108,11 @@ export const getReadableTime = (time: number): string => {
 const stringsTrampoline = (locale: CompositeLocale): HoldPaneStrings => {
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   return {
-    holdScreenLabel: locale.strings.call.holdScreenLabel,
-    resumeCallButtonLabel: locale.strings.call.resumeCallButtonLabel,
-    resumeCallButtonAriaLabel: locale.strings.call.resumeCallButtonAriaLabel,
-    resumingCallButtonLabel: locale.strings.call.resumingCallButtonLabel,
-    resumingCallButtonAriaLabel: locale.strings.call.resumingCallButtonAriaLabel
+    holdScreenLabel: locale.strings.call.holdScreenLabel ?? '',
+    resumeCallButtonLabel: locale.strings.call.resumeCallButtonLabel ?? '',
+    resumeCallButtonAriaLabel: locale.strings.call.resumeCallButtonAriaLabel ?? '',
+    resumingCallButtonLabel: locale.strings.call.resumingCallButtonLabel ?? '',
+    resumingCallButtonAriaLabel: locale.strings.call.resumingCallButtonAriaLabel ?? ''
   };
   return {
     holdScreenLabel: '',

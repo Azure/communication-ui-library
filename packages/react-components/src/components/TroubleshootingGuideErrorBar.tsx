@@ -108,7 +108,7 @@ export const _TroubleshootingGuideErrorBar = (props: _TroubleshootingGuideErrorB
   const toShow = errorsToShow(props.activeErrorMessages, dismissedErrors);
 
   return (
-    <Stack data-ui-id="error-bar-stack">
+    <Stack data-ui-id="notifications-stack">
       {toShow.map((error) => {
         const devicePermissionErrorBar = (
           <div>

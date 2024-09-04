@@ -1,9 +1,0 @@
-{
-  "type": "none",
-  "area": "improvement",
-  "workstream": "Conditional-compilation",
-  "comment": "Remove conditional-compilation flags for Gallery-layouts",
-  "packageName": "@azure/communication-react",
-  "email": "dmceachern@microsoft.com",
-  "dependentChangeType": "none"
-}

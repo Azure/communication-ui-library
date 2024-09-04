@@ -190,5 +190,7 @@ export const showDtmfDialer = (
       }
     });
   }
+  /* @conditional-compile-remove(dtmf-dialer-on-by-default) */
+  showDtmfDialer = true;
   return showDtmfDialer;
 };

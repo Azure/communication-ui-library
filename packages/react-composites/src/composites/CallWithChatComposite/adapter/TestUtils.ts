@@ -18,7 +18,9 @@ import {
   VideoDeviceInfo,
   AudioDeviceInfo,
   RoomLocator,
-  TeamsMeetingIdLocator
+  TeamsMeetingIdLocator,
+  ConnectionState,
+  ConnectionStateChangedEvent
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
@@ -33,13 +35,7 @@ import {
   UnknownIdentifierKind
 } from '@azure/communication-common';
 /* @conditional-compile-remove(calling-beta-sdk) */
-import {
-  GroupChatCallLocator,
-  MeetingLocator,
-  PushNotificationData,
-  ConnectionState,
-  ConnectionStateChangedEvent
-} from '@azure/communication-calling';
+import { GroupChatCallLocator, MeetingLocator, PushNotificationData } from '@azure/communication-calling';
 import {
   CallState,
   CallClientState,
@@ -48,6 +44,8 @@ import {
   CallErrors,
   CreateViewResult
 } from '@internal/calling-stateful-client';
+/* @conditional-compile-remove(breakout-rooms) */
+import { CallNotifications } from '@internal/calling-stateful-client';
 import EventEmitter from 'events';
 /**
  * @private
@@ -176,7 +174,9 @@ export const createStatefulCallClientMock = (): StatefulCallClient => {
       incomingCalls: {},
       incomingCallsEnded: {},
       userId: userId,
-      latestErrors: {} as CallErrors
+      latestErrors: {} as CallErrors,
+      /* @conditional-compile-remove(breakout-rooms) */
+      latestNotifications: {} as CallNotifications
     })
   );
   return statefulCallClient;
@@ -235,18 +235,16 @@ function createMockCall(mockCallId: string): CallState {
     remoteParticipants: {},
     remoteParticipantsEnded: {},
     recording: { isRecordingActive: false },
+    /* @conditional-compile-remove(local-recording-notification) */
+    localRecording: { isLocalRecordingActive: false },
     transcription: { isTranscriptionActive: false },
     screenShareRemoteParticipant: undefined,
     startTime: new Date(),
     endTime: undefined,
     dominantSpeakers: undefined,
-    /* @conditional-compile-remove(raise-hand) */
     raiseHand: { raisedHands: [] },
-    /* @conditional-compile-remove(ppt-live) */
     pptLive: { isActive: false },
-    /* @conditional-compile-remove(reaction) */
     localParticipantReaction: undefined,
-    /* @conditional-compile-remove(close-captions) */
     captionsFeature: {
       captions: [],
       supportedSpokenLanguages: [],
@@ -254,13 +252,13 @@ function createMockCall(mockCallId: string): CallState {
       currentCaptionLanguage: '',
       currentSpokenLanguage: '',
       isCaptionsFeatureActive: false,
-      startCaptionsInProgress: false
+      startCaptionsInProgress: false,
+      /* @conditional-compile-remove(acs-close-captions) */
+      captionsKind: 'Captions'
     },
-    /* @conditional-compile-remove(call-transfer) */
     transfer: {
       acceptedTransfers: {}
     },
-    /* @conditional-compile-remove(optimal-video-count) */
     optimalVideoCount: {
       maxRemoteVideoStreams: 4
     }
@@ -274,7 +272,6 @@ function createMockCall(mockCallId: string): CallState {
 export class MockCallAgent implements CallAgent {
   calls: Call[] = [];
   displayName = undefined;
-  /* @conditional-compile-remove(calling-beta-sdk) */
   connectionState = 'Disconnected' as ConnectionState;
   kind = 'CallAgent' as CallAgentKind;
   emitter = new EventEmitter();
@@ -312,7 +309,6 @@ export class MockCallAgent implements CallAgent {
   }
   on(event: 'incomingCall', listener: IncomingCallEvent): void;
   on(event: 'callsUpdated', listener: CollectionUpdatedEvent<Call>): void;
-  /* @conditional-compile-remove(calling-beta-sdk) */
   on(event: 'connectionStateChanged', listener: ConnectionStateChangedEvent): void;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
   on(event: any, listener: any): void {
@@ -320,7 +316,6 @@ export class MockCallAgent implements CallAgent {
   }
   off(event: 'incomingCall', listener: IncomingCallEvent): void;
   off(event: 'callsUpdated', listener: CollectionUpdatedEvent<Call>): void;
-  /* @conditional-compile-remove(calling-beta-sdk) */
   off(event: 'connectionStateChanged', listener: ConnectionStateChangedEvent): void;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
   off(event: any, listener: any): void {

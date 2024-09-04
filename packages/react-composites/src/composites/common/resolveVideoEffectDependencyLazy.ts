@@ -1,17 +1,15 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/* @conditional-compile-remove(video-background-effects) */
 import type {
   BackgroundBlurConfig,
   BackgroundBlurEffect,
   BackgroundReplacementConfig,
   BackgroundReplacementEffect
 } from '@azure/communication-calling';
-/* @conditional-compile-remove(video-background-effects) */
+
 import { VideoBackgroundEffectsDependency } from '@internal/calling-component-bindings';
 
-/* @conditional-compile-remove(video-background-effects) */
 /**
  *
  * Dependency resolution for video background effects using lazy loading.

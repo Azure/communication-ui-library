@@ -124,6 +124,11 @@ export interface ErrorBarStrings {
    */
   callNetworkQualityLow: string;
 
+  /* @conditional-compile-remove(teams-meeting-conference) */
+  /**
+   * Message shown when poor network quality is detected during a call.
+   */
+  teamsMeetingCallNetworkQualityLow: string;
   /**
    * Message shown on failure to detect audio output devices.
    */
@@ -219,16 +224,22 @@ export interface ErrorBarStrings {
    * Error bar string letting you know remote participants see a frozen stream for you.
    */
   cameraFrozenForRemoteParticipants?: string;
-  /* @conditional-compile-remove(video-background-effects) */
+
   /**
    * Unable to start effect
    */
   unableToStartVideoEffect?: string;
-  /* @conditional-compile-remove(spotlight) */
+
   /**
    * An error message when starting spotlight while max participants are spotlighted
    */
   startSpotlightWhileMaxParticipantsAreSpotlighted: string;
+
+  /* @conditional-compile-remove(soft-mute) */
+  /**
+   * An error message when local user is muted by a remote participant
+   */
+  mutedByRemoteParticipant: string;
 }
 
 /**
@@ -297,7 +308,7 @@ export const ErrorBar = (props: ErrorBarProps): JSX.Element => {
   );
 
   return (
-    <Stack data-ui-id="error-bar-stack">
+    <Stack data-ui-id="notifications-stack">
       {toShow.map((error) => (
         <MessageBar
           {...props}
@@ -312,8 +323,8 @@ export const ErrorBar = (props: ErrorBarProps): JSX.Element => {
               lineHeight: 'inherit'
             },
             dismissal: {
-              height: 0,
-              paddingTop: '0.8rem'
+              height: '2rem',
+              paddingBottom: '0.8rem'
             }
           }}
           key={error.type}
@@ -324,7 +335,7 @@ export const ErrorBar = (props: ErrorBarProps): JSX.Element => {
               ? setDismissedErrors(dismissError(dismissedErrors, error))
               : props.onDismissError?.(error)
           }
-          dismissButtonAriaLabel={strings.dismissButtonAriaLabel}
+          dismissButtonAriaLabel={`${strings[error.type]}, ${strings.dismissButtonAriaLabel}`}
           dismissIconProps={{ iconName: 'ErrorBarClear' }}
         >
           {strings[error.type]}

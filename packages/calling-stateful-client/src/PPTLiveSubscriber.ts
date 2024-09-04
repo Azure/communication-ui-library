@@ -1,17 +1,13 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/* @conditional-compile-remove(ppt-live) */
 import { Features, PPTLiveCallFeature } from '@azure/communication-calling';
 
-/* @conditional-compile-remove(ppt-live) */
 import { CallContext } from './CallContext';
-/* @conditional-compile-remove(ppt-live) */
 import { CallIdRef } from './CallIdRef';
-/* @conditional-compile-remove(ppt-live) */
 import { CallCommon } from './BetaToStableTypes';
+import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 
-/* @conditional-compile-remove(ppt-live) */
 /**
  * @private
  */
@@ -44,14 +40,25 @@ export class PPTLiveSubscriber {
   };
 
   private checkAndUpdatePPTLiveParticipant = async (): Promise<void> => {
+    if (!this._pptLive.activePresenterId) {
+      return;
+    }
     if (this._pptLive.isActive) {
       // TODO： need to refactor if Web Calling SDK has this logic ready
       if (this._call.isScreenSharingOn) {
         await this._call.stopScreenSharing();
       }
-      this._context.setCallParticipantPPTLive(this._callIdRef.callId, this._pptLive.target);
+      this._context.setCallParticipantPPTLive(
+        this._callIdRef.callId,
+        toFlatCommunicationIdentifier(this._pptLive.activePresenterId),
+        this._pptLive.target
+      );
     } else {
-      this._context.setCallParticipantPPTLive(this._callIdRef.callId, undefined);
+      this._context.setCallParticipantPPTLive(
+        this._callIdRef.callId,
+        toFlatCommunicationIdentifier(this._pptLive.activePresenterId),
+        undefined
+      );
     }
   };
 }

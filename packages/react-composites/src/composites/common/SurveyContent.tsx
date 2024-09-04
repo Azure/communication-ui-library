@@ -2,13 +2,9 @@
 // Licensed under the MIT License.
 
 import React from 'react';
-/* @conditional-compile-remove(end-of-call-survey) */
 import { StarSurvey } from './StarSurvey';
-/* @conditional-compile-remove(end-of-call-survey) */
 import { TagsSurvey } from './TagsSurvey';
-/* @conditional-compile-remove(end-of-call-survey) */
 import { useState } from 'react';
-/* @conditional-compile-remove(end-of-call-survey) */
 import {
   _AudioIssue,
   _OverallIssue,
@@ -16,29 +12,19 @@ import {
   _VideoIssue,
   CallSurveyImprovementSuggestions
 } from '@internal/react-components';
-/* @conditional-compile-remove(end-of-call-survey) */
 import { CallSurvey } from '@azure/communication-calling';
-/* @conditional-compile-remove(end-of-call-survey) */
 import { Stack } from '@fluentui/react';
 
 /**
  * @private
  */
-export const SurveyContent = (
-  /* @conditional-compile-remove(end-of-call-survey) */ props: {
-    /* @conditional-compile-remove(end-of-call-survey) */
-    setShowSubmitFeedbackButton: (showButton: boolean) => void;
-    /* @conditional-compile-remove(end-of-call-survey) */
-    setRatings: (rating: number) => void;
-    /* @conditional-compile-remove(end-of-call-survey) */
-    setIssuesSelected: (issuesSelected: CallSurvey) => void;
-    /* @conditional-compile-remove(end-of-call-survey) */
-    setImprovementSuggestions?: (improvementSuggestions: CallSurveyImprovementSuggestions) => void;
-  }
-): JSX.Element => {
-  /* @conditional-compile-remove(end-of-call-survey) */
+export const SurveyContent = (props: {
+  setShowSubmitFeedbackButton: (showButton: boolean) => void;
+  setRatings: (rating: number) => void;
+  setIssuesSelected: (issuesSelected: CallSurvey) => void;
+  setImprovementSuggestions?: (improvementSuggestions: CallSurveyImprovementSuggestions) => void;
+}): JSX.Element => {
   const [showTagsSurvey, setShowTagsSurvey] = useState(false);
-  /* @conditional-compile-remove(end-of-call-survey) */
   const onStarRatingSelected = (ratings: number): void => {
     if (ratings < 5) {
       setShowTagsSurvey(true);
@@ -48,7 +34,7 @@ export const SurveyContent = (
     }
     props.setRatings(ratings);
   };
-  /* @conditional-compile-remove(end-of-call-survey) */
+
   const onIssuesSelected = (
     selectedTags: CallSurvey,
     improvementSuggestions?: CallSurveyImprovementSuggestions
@@ -59,7 +45,7 @@ export const SurveyContent = (
       props.setImprovementSuggestions(improvementSuggestions);
     }
   };
-  /* @conditional-compile-remove(end-of-call-survey) */
+
   return (
     <Stack data-ui-id="call-composite-survey">
       <StarSurvey onStarRatingSelected={onStarRatingSelected} />
@@ -72,6 +58,4 @@ export const SurveyContent = (
       )}
     </Stack>
   );
-
-  return <></>;
 };

@@ -9,8 +9,8 @@ import { ChatAdapter } from './adapter/ChatAdapter';
 import { ChatAdapterProvider } from './adapter/ChatAdapterProvider';
 import { chatScreenContainerStyle } from './styles/Chat.styles';
 import { ChatScreen } from './ChatScreen';
-/* @conditional-compile-remove(file-sharing) */
-import { FileSharingOptions } from './ChatScreen';
+/* @conditional-compile-remove(file-sharing-acs) */
+import { AttachmentOptions } from '@internal/react-components';
 
 /**
  * Props for {@link ChatComposite}.
@@ -37,7 +37,7 @@ export interface ChatCompositeProps extends BaseCompositeProps<ChatCompositeIcon
    * Flags to enable/disable visual elements of the {@link ChatComposite}.
    */
   options?: ChatCompositeOptions;
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(file-sharing-acs) */
   /**
    * Optimizes the composite form factor for either desktop or mobile.
    * @remarks `mobile` is currently only optimized for Portrait mode on mobile devices and does not support landscape.
@@ -77,31 +77,23 @@ export type ChatCompositeOptions = {
    */
   autoFocus?: 'sendBoxTextField';
 
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(file-sharing-acs) */
   /**
    * Properties for configuring the File Sharing feature.
    * If undefined, file sharing feature will be disabled.
    * @beta
    */
-  fileSharing?: FileSharingOptions;
+  attachmentOptions?: AttachmentOptions;
 
-  /* @conditional-compile-remove(rich-text-editor) */
+  /* @conditional-compile-remove(rich-text-editor-composite-support) */
   /**
-   * Properties for configuring the richTextEditor feature.
-   * @defaultValue false
+   * Enables rich text editor for the send and edit boxes
+   * @defaultValue `false`
    *
    * @beta
    */
-  richTextEditor?: boolean | RichTextEditorOptions;
+  richTextEditor?: boolean;
 };
-
-/* @conditional-compile-remove(rich-text-editor) */
-/**
- * Options for configuring the rich text editor.
- *
- * @beta
- */
-export interface RichTextEditorOptions {}
 
 /**
  * A customizable UI composite for the chat experience.
@@ -120,7 +112,7 @@ export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
     onFetchParticipantMenuItems
   } = props;
 
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(file-sharing-acs) */
   const formFactor = props['formFactor'] || 'desktop';
 
   return (
@@ -128,15 +120,15 @@ export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
       <BaseProvider {...props}>
         <ChatAdapterProvider adapter={adapter}>
           <ChatScreen
-            /* @conditional-compile-remove(file-sharing) */
+            /* @conditional-compile-remove(file-sharing-acs) */
             formFactor={formFactor}
             options={options}
             onFetchAvatarPersonaData={onFetchAvatarPersonaData}
             onRenderTypingIndicator={onRenderTypingIndicator}
             onRenderMessage={onRenderMessage}
             onFetchParticipantMenuItems={onFetchParticipantMenuItems}
-            /* @conditional-compile-remove(file-sharing) */
-            fileSharing={options?.fileSharing}
+            /* @conditional-compile-remove(file-sharing-acs) */
+            attachmentOptions={options?.attachmentOptions}
           />
         </ChatAdapterProvider>
       </BaseProvider>

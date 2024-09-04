@@ -2,6 +2,171 @@
   "name": "@internal/chat-stateful-client",
   "entries": [
     {
+      "date": "Mon, 26 Aug 2024 18:25:59 GMT",
+      "version": "1.19.0-beta.2",
+      "tag": "@internal/chat-stateful-client_v1.19.0-beta.2",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@internal/chat-stateful-client",
+            "comment": "Bump @internal/acs-ui-common to v1.19.0-beta.2",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 06 Aug 2024 19:45:33 GMT",
+      "tag": "@internal/chat-stateful-client_v1.19.0-beta.1",
+      "version": "1.19.0-beta.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@internal/chat-stateful-client",
+            "comment": "Bump @internal/acs-ui-common to v1.19.0-beta.1",
+            "commit": "2a0be9b93dff44ba6cac2e5837a91e87dffe0f8e"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 15 Jul 2024 18:16:40 GMT",
+      "tag": "@internal/chat-stateful-client_v1.18.0",
+      "version": "1.18.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@internal/chat-stateful-client",
+            "comment": "Bump @internal/acs-ui-common to v1.18.0",
+            "commit": "1961bc1b7b27ee99b97c8999898f951aa0dce051"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 17 Jun 2024 16:27:16 GMT",
+      "tag": "@internal/chat-stateful-client_v1.18.0-beta.1",
+      "version": "1.18.0-beta.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@internal/chat-stateful-client",
+            "comment": "Bump @internal/acs-ui-common to v1.18.0-beta.1",
+            "commit": "426b6a0ff8c54594e1fe935d7a2678023563c9dc"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 04 Jun 2024 05:01:43 GMT",
+      "tag": "@internal/chat-stateful-client_v1.17.0",
+      "version": "1.17.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@internal/chat-stateful-client",
+            "comment": "Bump @internal/acs-ui-common to v1.17.0",
+            "commit": "7bfef8e8091613024bbf0e1056f811814da1bffd"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 21 May 2024 20:14:29 GMT",
+      "tag": "@internal/chat-stateful-client_v1.17.0-beta.1",
+      "version": "1.17.0-beta.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@internal/chat-stateful-client",
+            "comment": "Bump @internal/acs-ui-common to v1.17.0-beta.1",
+            "commit": "507d5767cfd985df9eb209c1da548cc820ad6234"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 06 May 2024 20:38:28 GMT",
+      "tag": "@internal/chat-stateful-client_v1.16.0",
+      "version": "1.16.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@internal/chat-stateful-client",
+            "comment": "Bump @internal/acs-ui-common to v1.16.0",
+            "commit": "fa4fffe670e4d79487fa1fad35c54ae5eaced76f"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 23 Apr 2024 17:54:37 GMT",
+      "tag": "@internal/chat-stateful-client_v1.16.0-beta.1",
+      "version": "1.16.0-beta.1",
+      "comments": {
+        "minor": [
+          {
+            "author": "beachball",
+            "package": "@internal/chat-stateful-client",
+            "comment": "Bump @internal/acs-ui-common to v1.16.0-beta.1",
+            "commit": "04a79e96b9d8be86b08060c3c9ba56ae8a46bbb1"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 08 Apr 2024 20:34:42 GMT",
+      "tag": "@internal/chat-stateful-client_v1.15.0",
+      "version": "1.15.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@internal/chat-stateful-client",
+            "comment": "Bump @internal/acs-ui-common to v1.15.0",
+            "commit": "a5d118183ecd1e7ea767a85561ff170cf11f653b"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 26 Mar 2024 17:38:32 GMT",
+      "tag": "@internal/chat-stateful-client_v1.15.0-beta.1",
+      "version": "1.15.0-beta.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@internal/chat-stateful-client",
+            "comment": "Bump @internal/acs-ui-common to v1.15.0-beta.1",
+            "commit": "0f6019132a8bd408e1f324bc8265313e26b7f3e1"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 14 Mar 2024 03:50:54 GMT",
+      "tag": "@internal/chat-stateful-client_v1.14.0",
+      "version": "1.14.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@internal/chat-stateful-client",
+            "comment": "Bump @internal/acs-ui-common to v1.14.0",
+            "commit": "15f04ffe4016c17b215365c2f0cf9c3d1ede7d56"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 26 Feb 2024 16:19:20 GMT",
       "tag": "@internal/chat-stateful-client_v1.14.0-beta.1",
       "version": "1.14.0-beta.1",

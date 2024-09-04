@@ -23,72 +23,88 @@ extends:
           - job: job
             steps:
               - checkout: self
+                clean: true
                 persistCredentials: true
 
-              # Setup bot information for pushing new changes
-              # Here we use the id from the github actions bot: https://api.github.com/users/better-informatics%5Bbot%5D
-              - script: |
-                  git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-                  git config user.name "github-actions[bot]"
-
-              - task: TouchdownBuildTask@1
+              - task: TouchdownBuildTask@4
                 inputs:
                   environment: 'PRODEXT'
                   teamId: '35669'
-                  authType: 'OAuth'
-                  authId: 'fa441387-cab4-4f61-969d-fd23388fc7b4'
-                  authKey: $(AUTH_KEY)
+                  authType: 'FederatedIdentity'
+                  FederatedIdentityServiceConnection: 'Touchdown-Build-authentication-for-acs-web-ui'
                   isPreview: false
                   resourceFilePath: 'packages/react-components/src/localization/locales/en-US/strings.json'
                   outputDirectoryRoot: 'packages/react-components/src/localization/locales'
                   cultureMappingType: 'None'
-                  gitAction: 'NONE'
-                displayName: 'Call Touchdown build task for components'
-                condition: ne(variables['commit'], 'true')
-
-              - task: TouchdownBuildTask@1
-                inputs:
-                  environment: 'PRODEXT'
-                  teamId: '35669'
-                  authType: 'OAuth'
-                  authId: 'fa441387-cab4-4f61-969d-fd23388fc7b4'
-                  authKey: $(AUTH_KEY)
-                  isPreview: false
-                  resourceFilePath: 'packages/react-composites/src/composites/localization/locales/en-US/strings.json'
-                  outputDirectoryRoot: 'packages/react-composites/src/composites/localization/locales'
-                  cultureMappingType: 'None'
-                  gitAction: 'NONE'
-                displayName: 'Call Touchdown build task for composites'
-                condition: ne(variables['commit'], 'true')
-
-              - task: TouchdownBuildTask@1
-                inputs:
-                  environment: 'PRODEXT'
-                  teamId: '35669'
-                  authType: 'OAuth'
-                  authId: 'fa441387-cab4-4f61-969d-fd23388fc7b4'
-                  authKey: $(AUTH_KEY)
-                  isPreview: false
-                  resourceFilePath: 'packages/react-components/src/localization/locales/en-US/strings.json'
-                  outputDirectoryRoot: 'packages/react-components/src/localization/locales'
-                  cultureMappingType: 'None'
-                  gitAction: 'COMMIT'
                 displayName: 'Call Touchdown build task for components and commit changes'
-                condition: eq(variables['commit'], 'true')
 
-              - task: TouchdownBuildTask@1
+              - task: TouchdownBuildTask@4
                 inputs:
                   environment: 'PRODEXT'
                   teamId: '35669'
-                  authType: 'OAuth'
-                  authId: 'fa441387-cab4-4f61-969d-fd23388fc7b4'
-                  authKey: $(AUTH_KEY)
+                  authType: 'FederatedIdentity'
+                  FederatedIdentityServiceConnection: 'Touchdown-Build-authentication-for-acs-web-ui'
                   isPreview: false
                   resourceFilePath: 'packages/react-composites/src/composites/localization/locales/en-US/strings.json'
                   outputDirectoryRoot: 'packages/react-composites/src/composites/localization/locales'
                   cultureMappingType: 'None'
-                  gitAction: 'COMMIT'
                 displayName: 'Call Touchdown build task for composites and commit changes'
+
+              - task: PowerShell@2
+                displayName: Push changes to repo
+                inputs:
+                  targetType: 'inline'
+                  script: |
+                    # ------------------------------------------------------------------------------------------------
+                    # - Script to push changes
+                    # ------------------------------------------------------------------------------------------------
+
+                    $teamProject = $env:SYSTEM_TEAMPROJECT
+                    $repoName= $env:Build_Repository_Name
+                    $pipelineName = $env:Build_DefinitionName
+
+                    Write-host "Azure DevOps organization: $env:System_TeamFoundationCollectionUri"
+                    Write-host "Team Project: $teamProject"
+                    Write-host "Repo Name: $repoName"
+                    Write-host "Source Branch: $(Build.SourceBranch)"
+
+
+                    if ("$(git status)".Contains("nothing to commit")) {
+                        Write-Host "Nothing to commit, exiting immediately"
+                        Exit
+                    }
+
+                    #****************************************
+                    #************Configure GIT***************
+                    #****************************************
+                    Write-Host "##[group] Configure GIT"
+
+                    #Setting Global Git Username and Email. NOTE: Branch will be created as this user
+                    git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+                    git config user.name "github-actions[bot]"
+
+                    #**********************************************
+                    #***Checkout current branch and push changes***
+                    #**********************************************
+
+                    Write-Host "##[group] Checkout current branch and push changes"
+                    #Create Branch and add changes
+
+                    Write-Host "Checkout current branch"
+
+                    $branchName = "$(Build.SourceBranch)"
+                    $branchName = $branchName -replace "refs/heads/", ""
+
+                    git checkout $branchName
+                    git add -A
+                    git commit -m "TDBuild latest localization" -a
+                    git push origin $branchName
+
+                    if (!$?) {
+                      # We ignore stderr (in task definition) due to git loving to write there even when things are fine.
+                      Write-Host "The git push command failed. Exiting."
+                      Exit 1
+                    }
                 condition: eq(variables['commit'], 'true')
     sdl:
       arrow:

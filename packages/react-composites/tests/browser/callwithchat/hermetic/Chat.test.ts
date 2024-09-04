@@ -96,4 +96,15 @@ test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
     );
     expect(await stableScreenshot(page)).toMatchSnapshot(`call-with-chat-gallery-screen-with-10-unread-messages.png`);
   });
+
+  test('Chat Thread not available', async ({ page, serverUrl }) => {
+    const remoteParticipant = defaultMockRemoteParticipant('Paul Bridges');
+    const callState = defaultMockCallAdapterState([remoteParticipant]);
+    await loadCallPage(page, serverUrl, callState, {
+      forceInvalidChatThread: 'true'
+    });
+    await pageClick(page, dataUiId('call-with-chat-composite-chat-button'));
+    await page.waitForTimeout(2000);
+    expect(await stableScreenshot(page)).toMatchSnapshot(`call-with-chat-composite-chat-unavailable.png`);
+  });
 });

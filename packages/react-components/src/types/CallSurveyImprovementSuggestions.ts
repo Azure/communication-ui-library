@@ -3,7 +3,7 @@
 
 /**
  * Represents the improvement suggestion part of call survey
- * @beta
+ * @public
  */
 export interface CallSurveyImprovementSuggestions {
   /**

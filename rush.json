@@ -41,6 +41,11 @@
       "reviewCategory": "internal"
     },
     {
+      "packageName": "@internal/acs-ui-javascript-loaders",
+      "projectFolder": "packages/acs-ui-javascript-loaders",
+      "reviewCategory": "internal"
+    },
+    {
       "packageName": "@internal/chat-stateful-client",
       "projectFolder": "packages/chat-stateful-client",
       "reviewCategory": "internal"
@@ -76,6 +81,11 @@
       "reviewCategory": "sample"
     },
     {
+      "packageName": "@internal/callingstateful",
+      "projectFolder": "samples/CallingStateful",
+      "reviewCategory": "sample"
+    },
+    {
       "packageName": "@internal/component-examples",
       "projectFolder": "samples/ComponentExamples",
       "reviewCategory": "sample"
@@ -98,6 +108,11 @@
     {
       "packageName": "@internal/storybook",
       "projectFolder": "packages/storybook",
+      "reviewCategory": "tools"
+    },
+    {
+      "packageName": "@internal/storybook8",
+      "projectFolder": "packages/storybook8",
       "reviewCategory": "tools"
     },
     {

@@ -1,14 +1,19 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-export * from './FileUpload';
-export * from './FileUploadButton';
-export * from './FileUploadHandler';
+export * from './AttachmentUpload';
+export * from './AttachmentUploadButton';
 
-/**
- * Metadata used for setting uploaded files by a user using chat composite in a group call.
- * @internal
- */
-export type FileSharingMetadata = {
-  fileSharingMetadata: string;
-};
+/* @conditional-compile-remove(file-sharing-acs) */
+export type {
+  AttachmentOptions,
+  AttachmentUploadTask,
+  AttachmentUploadOptions,
+  AttachmentRemovalHandler,
+  AttachmentMetadataWrapper,
+  AttachmentSelectionHandler,
+  AttachmentActionHandler
+} from '@internal/react-components';
+
+/* @conditional-compile-remove(file-sharing-acs) */
+export type { AttachmentDownloadOptions } from '@internal/react-components';

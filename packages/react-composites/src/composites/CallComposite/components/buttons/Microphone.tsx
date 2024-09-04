@@ -3,7 +3,7 @@
 
 import { _isInLobbyOrConnecting } from '@internal/calling-component-bindings';
 import { ControlBarButtonStyles, MicrophoneButton } from '@internal/react-components';
-/* @conditional-compile-remove(capabilities) */
+
 import { _HighContrastAwareIcon } from '@internal/react-components';
 import React, { useMemo } from 'react';
 import { CallControlDisplayType } from '../../../common/types/CommonCallControlOptions';
@@ -11,7 +11,6 @@ import { usePropsFor } from '../../hooks/usePropsFor';
 import { useSelector } from '../../hooks/useSelector';
 import { getCallStatus, getLocalMicrophoneEnabled } from '../../selectors/baseSelectors';
 import { concatButtonBaseStyles } from '../../styles/Buttons.styles';
-/* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(capabilities) */
 import { useAdapter } from '../../adapter/CallAdapterProvider';
 
 /**
@@ -23,16 +22,19 @@ export const Microphone = (props: {
   splitButtonsForDeviceSelection?: boolean;
   disabled?: boolean;
   disableTooltip?: boolean;
+  /* @conditional-compile-remove(DNS) */
+  isDeepNoiseSuppressionOn?: boolean;
+  /* @conditional-compile-remove(DNS) */
+  onClickNoiseSuppression?: () => void;
+  /* @conditional-compile-remove(DNS) */
+  showNoiseSuppressionButton?: boolean;
 }): JSX.Element => {
   const microphoneButtonProps = usePropsFor(MicrophoneButton);
   const callStatus = useSelector(getCallStatus);
   const isLocalMicrophoneEnabled = useSelector(getLocalMicrophoneEnabled);
-  /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(capabilities) */
   const adapter = useAdapter();
-  /* @conditional-compile-remove(rooms) */
   const isRoomsCall = adapter.getState().isRoomsCall;
 
-  /* @conditional-compile-remove(capabilities) */
   const unmuteMicCapability = adapter.getState().call?.capabilitiesFeature?.capabilities.unmuteMic;
 
   /**
@@ -50,16 +52,19 @@ export const Microphone = (props: {
     <MicrophoneButton
       data-ui-id="call-composite-microphone-button"
       {...microphoneButtonProps}
+      /* @conditional-compile-remove(DNS) */
+      isDeepNoiseSuppressionOn={props.isDeepNoiseSuppressionOn}
+      /* @conditional-compile-remove(DNS) */
+      onClickNoiseSuppression={props.onClickNoiseSuppression}
+      /* @conditional-compile-remove(DNS) */
+      showNoiseSuppressionButton={props.showNoiseSuppressionButton}
       showLabel={props.displayType !== 'compact'}
       disableTooltip={props.disableTooltip}
       styles={styles}
       enableDeviceSelectionMenu={props.splitButtonsForDeviceSelection}
       disabled={
-        microphoneButtonProps.disabled ||
-        props.disabled ||
-        /* @conditional-compile-remove(rooms) */ (isRoomsCall && adapter.getState().call?.role === 'Unknown')
+        microphoneButtonProps.disabled || props.disabled || (isRoomsCall && adapter.getState().call?.role === 'Unknown')
       }
-      /* @conditional-compile-remove(capabilities) */
       onRenderOffIcon={
         unmuteMicCapability && !unmuteMicCapability.isPresent
           ? () => <_HighContrastAwareIcon disabled={true} iconName={'ControlButtonMicProhibited'} />

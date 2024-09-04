@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "area": "feature",
-  "workstream": "End of call survey",
-  "comment": "Move survey a bit up to allow more room for tag survey, fix survey in the same place in the page and not move around based on height",
-  "packageName": "@azure/communication-react",
-  "email": "96077406+carocao-msft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

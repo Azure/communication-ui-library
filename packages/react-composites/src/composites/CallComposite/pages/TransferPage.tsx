@@ -4,10 +4,8 @@
 import { Spinner, SpinnerSize, Stack, Text, mergeStyles } from '@fluentui/react';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { ErrorBar } from '@internal/react-components';
-/* @conditional-compile-remove(call-transfer) */
 import { Announcer } from '@internal/react-components';
 import React, { useCallback, useLayoutEffect, useMemo, useRef, useState } from 'react';
-/* @conditional-compile-remove(call-transfer) */
 import { useEffect } from 'react';
 import { AvatarPersona, AvatarPersonaDataCallback } from '../../common/AvatarPersona';
 import { useLocale } from '../../localization';
@@ -15,7 +13,6 @@ import { CallArrangement } from '../components/CallArrangement';
 import { usePropsFor } from '../hooks/usePropsFor';
 import { useSelector } from '../hooks/useSelector';
 import { getRemoteParticipants } from '../selectors/baseSelectors';
-/* @conditional-compile-remove(call-transfer) */
 import { getTransferCall } from '../selectors/baseSelectors';
 import {
   avatarStyles,
@@ -30,7 +27,6 @@ import {
 import { reduceCallControlsForMobile } from '../utils';
 import { LobbyPageProps } from './LobbyPage';
 
-/* @conditional-compile-remove(call-transfer) */
 // Which should be participant shown in the transfer page
 type TransferPageSubject = 'transferor' | 'transferTarget';
 
@@ -46,10 +42,8 @@ export const TransferPage = (
   const errorBarProps = usePropsFor(ErrorBar);
   const strings = useLocale().strings.call;
   const remoteParticipants = useSelector(getRemoteParticipants);
-  /* @conditional-compile-remove(call-transfer) */
   const transferCall = useSelector(getTransferCall);
 
-  /* @conditional-compile-remove(call-transfer) */
   const [announcerString, setAnnouncerString] = useState<string | undefined>(undefined);
 
   // Reduce the controls shown when mobile view is enabled.
@@ -61,13 +55,11 @@ export const TransferPage = (
     () => (remoteParticipants ? Object.values(remoteParticipants)?.[0] : undefined),
     [remoteParticipants]
   );
-  /* @conditional-compile-remove(call-transfer) */
   const transferTarget = useMemo(
     () => (transferCall?.remoteParticipants ? Object.values(transferCall.remoteParticipants)?.[0] : undefined),
     [transferCall]
   );
 
-  /* @conditional-compile-remove(call-transfer) */
   const pageSubject: TransferPageSubject = useMemo(() => {
     if (transferCall && transferTarget?.displayName) {
       return 'transferTarget';
@@ -75,21 +67,16 @@ export const TransferPage = (
     return 'transferor';
   }, [transferCall, transferTarget?.displayName]);
 
-  /* @conditional-compile-remove(call-transfer) */
   useEffect(() => {
     setAnnouncerString(strings.transferPageNoticeString);
   }, [strings.transferPageNoticeString]);
 
   let transferTileParticipant = transferor;
-  /* @conditional-compile-remove(call-transfer) */
   if (pageSubject === 'transferTarget') {
     transferTileParticipant = transferTarget;
   }
 
-  let transferParticipantDisplayName =
-    transferor?.displayName ??
-    /* @conditional-compile-remove(call-transfer) */ strings.transferPageUnknownTransferorDisplayName;
-  /* @conditional-compile-remove(call-transfer) */
+  let transferParticipantDisplayName = transferor?.displayName ?? strings.transferPageUnknownTransferorDisplayName;
   if (pageSubject === 'transferTarget') {
     transferParticipantDisplayName =
       transferTarget?.displayName ?? strings.transferPageUnknownTransferTargetDisplayName;
@@ -97,14 +84,12 @@ export const TransferPage = (
 
   return (
     <Stack className={mergeStyles(pageContainer)}>
-      {
-        /* @conditional-compile-remove(call-transfer) */
-        <Announcer announcementString={announcerString} ariaLive="polite" />
-      }
+      <Announcer announcementString={announcerString} ariaLive="polite" />
       <CallArrangement
         complianceBannerProps={{ strings }}
         // Ignore errors from before current call. This avoids old errors from showing up when a user re-joins a call.
         errorBarProps={props.options?.errorBar !== false && errorBarProps}
+        showErrorNotifications={props.options?.errorBar ?? true}
         callControlProps={{
           options: callControlOptions,
           increaseFlyoutItemSize: props.mobileView
@@ -118,7 +103,6 @@ export const TransferPage = (
             }
             displayName={transferParticipantDisplayName}
             initialsName={transferParticipantDisplayName}
-            /* @conditional-compile-remove(call-transfer) */
             statusText={
               pageSubject === 'transferTarget'
                 ? strings.transferPageTransferTargetText
@@ -132,6 +116,10 @@ export const TransferPage = (
         mobileChatTabHeader={props.mobileChatTabHeader}
         latestErrors={props.latestErrors}
         onDismissError={props.onDismissError}
+        onDismissNotification={props.onDismissNotification}
+        latestNotifications={props.latestNotifications}
+        /* @conditional-compile-remove(call-readiness) */
+        doNotShowCameraAccessNotifications={props.options?.deviceChecks?.camera === 'doNotPrompt'}
       />
     </Stack>
   );

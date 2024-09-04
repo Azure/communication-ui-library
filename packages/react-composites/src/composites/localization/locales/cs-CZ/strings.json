@@ -20,6 +20,7 @@
     "complianceBannerTranscriptionStopped": "Přepis se zastavil.",
     "configurationPageTitle": "Začít hovor",
     "copyInviteLinkButtonLabel": "Kopírovat odkaz pro pozvání",
+    "copyInviteLinkButtonActionedLabel": "Odkaz byl zkopírován.",
     "copyInviteLinkActionedAriaLabel": "Odkaz pozvánky se zkopíroval",
     "defaultPlaceHolder": "Vyberte jednu možnost",
     "dismissSidePaneButtonLabel": "Zavřít",
@@ -52,6 +53,7 @@
     "peopleButtonLabel": "Lidé",
     "selectedPeopleButtonLabel": "Vybráno tlačítko Lidé",
     "peoplePaneTitle": "Lidé",
+    "peoplePaneMoreButtonAriaLabel": "Více",
     "peopleButtonTooltipOpen": "Zobrazit účastníky",
     "peopleButtonTooltipClose": "Skrýt účastníky",
     "peoplePaneSubTitle": "V tomto hovoru {numberOfPeople}",
@@ -60,11 +62,12 @@
     "removedFromCallMoreDetails": "Jiný účastník vás odebral z hovoru.",
     "removedFromCallTitle": "Byli jste odebráni",
     "removeMenuLabel": "Odebrat",
-    "startSpotlightParticipantListMenuLabel": "Přidat do hlavního výběru všem",
-    "addSpotlightParticipantListMenuLabel": "Přidat do hlavního výběru",
-    "stopSpotlightParticipantListMenuLabel": "Zastavit přidávání do hlavního výběru",
-    "stopSpotlightOnSelfParticipantListMenuLabel": "Ukončit hlavní výběr",
-    "spotlightLimitReachedParticipantListMenuTitle": "Dosáhlo se limitu hlavního výběru",
+    "startSpotlightMenuLabel": "Přidat do hlavního výběru všem",
+    "addSpotlightMenuLabel": "Přidat do hlavního výběru",
+    "stopSpotlightMenuLabel": "Zastavit přidávání do hlavního výběru",
+    "stopSpotlightOnSelfMenuLabel": "Ukončit hlavní výběr",
+    "spotlightLimitReachedMenuTitle": "Dosáhlo se limitu hlavního výběru",
+    "stopAllSpotlightMenuLabel": "Zastavit všechny výběry",
     "returnToCallButtonAriaDescription": "Pokračovat v hovoru",
     "returnToCallButtonAriaLabel": "Zpět",
     "roomNotFoundDetails": "Zadané ID místnosti se nepovedlo najít.",
@@ -132,6 +135,7 @@
     "dtmfDialerButtonTooltipOff": "Skrýt číselník",
     "dtmfDialerMoreButtonLabelOn": "Zobrazit číselník",
     "dtmfDialerMoreButtonLabelOff": "Skrýt číselník",
+    "phoneCallMoreButtonLabel": "Telefonní hovor",
     "spokenLanguageStrings": {
       "ar-ae": "Arabština - Spojené arabské emiráty",
       "ar-sa": "Arabština - Saúdská Arábie",
@@ -242,6 +246,10 @@
       "shareScreen": {
         "lostDueToRoleChangeToAttendee": "Vaše role se změnila. Některé akce, jako je sdílení obsahu, pro vás nebudou k dispozici.",
         "grantedDueToRoleChangeToPresenter": "Jste prezentující. Můžete sdílet obsah a moderovat schůzku."
+      },
+      "hideAttendeeNames": {
+        "hideAttendeeNameAttendee": "Vaše jméno je před ostatními účastníky skryté. Organizátoři a přednášející uvidí vaše skutečné jméno.",
+        "hideAttendeeNamePresenter": "Jména účastníků jsou skrytá. Pro ochranu soukromí účastníků uvidí jména jenom organizátoři a přednášející."
       }
     },
     "surveyTitle": "Pomozte nám se zlepšovat",
@@ -257,7 +265,6 @@
     "tagsSurveyQuestion": "Co by mohlo být lepší?",
     "tagsSurveyTextFieldDefaultText": "Jiné, upřesněte prosím",
     "tagsSurveyHelperText": "Zkontrolujte všechny problémy, se které jste zaznamenali.",
-    "surveyTextboxDefaultText": "Jiné, upřesněte prosím",
     "endOfSurveyText": "Děkujeme za váš názor!",
     "surveyIssues": {
       "overallRating": {
@@ -299,7 +306,7 @@
         "otherIssues": "Měl(a) jsem jiné problémy se sdílením obrazovky v tomto hovoru"
       }
     },
-    "SurveyIssuesHeadingStrings": {
+    "surveyIssuesHeadingStrings": {
       "overallRating": "Celkem",
       "audioRating": "Zvuk",
       "videoRating": "Video",
@@ -311,18 +318,52 @@
       "startSpotlightOnSelfText": "Vaše video se zvýrazní všem účastníkům schůzky.",
       "startSpotlightConfirmButtonLabel": "Přidat do hlavního výběru všem",
       "startSpotlightCancelButtonLabel": "Zrušit",
-      "stopSpotlightHeading": "Zastavit přidávání do hlavního výběru?",
+      "stopSpotlightHeading": "Chcete přestat zobrazovat toto video v hlavním výběru?",
       "stopSpotlightOnSelfHeading": "Ukončit hlavní výběr?",
+      "stopAllSpotlightHeading": "Zastavit zobrazování všech videí v hlavním výběru?",
       "stopSpotlightText": "Účastníkům se už toto video nebude zvýrazňovat.",
       "stopSpotlightOnSelfText": "Účastníkům se už vaše video nebude zvýrazňovat.",
+      "stopAllSpotlightText": "Účastníkům schůzky se už videa nebudou zvýrazňovat.",
       "stopSpotlightConfirmButtonLabel": "Zastavit přidávání do hlavního výběru",
       "stopSpotlightOnSelfConfirmButtonLabel": "Ukončit hlavní výběr",
       "stopSpotlightCancelButtonLabel": "Zrušit"
-    }
+    },
+    "exitSpotlightButtonLabel": "Ukončit hlavní výběr",
+    "exitSpotlightButtonTooltip": "Ukončit hlavní výběr",
+    "leaveConfirmButtonLabel": "Odejít",
+    "endCallConfirmButtonLabel": "Ukončit hovor",
+    "hangUpCancelButtonLabel": "Zrušit",
+    "leaveConfirmDialogTitle": "Chcete z hovoru odejít?",
+    "leaveConfirmDialogContent": "Opravdu chcete hovor opustit?",
+    "endCallConfirmDialogTitle": "Chcete hovor ukončit?",
+    "endCallConfirmDialogContent": "Hovor ukončíte pro všechny.",
+    "invalidMeetingIdentifier": "Neplatné ID schůzky nebo heslo",
+    "pinParticipantMenuLabel": "Připnout pro mě",
+    "pinParticipantLimitReachedMenuLabel": "Připnout (dosáhlo se limitu)",
+    "unpinParticipantMenuLabel": "Odepnout",
+    "pinParticipantMenuItemAriaLabel": "Připnout",
+    "unpinParticipantMenuItemAriaLabel": "Odepnout",
+    "muteAllMenuLabel": "Ztlumit všechny",
+    "muteAllDialogTitle": "Chcete všechny ztlumit?",
+    "muteAllDialogContent": "Ztlumí všechny účastníky schůzky kromě vás.",
+    "muteAllConfirmButtonLabel": "Ztlumit všechny",
+    "muteAllCancelButtonLabel": "Zrušit",
+    "joinBreakoutRoomButtonLabel": "Připojí se ke skupinové místnosti.",
+    "returnFromBreakoutRoomButtonLabel": "Opustit místnost",
+    "leaveBreakoutRoomAndMeetingButtonLabel": "Opustit schůzku",
+    "breakoutRoomJoinedNotificationTitle": "Připojili jste se ke skupinové místnosti {roomName}",
+    "joinBreakoutRoomBannerTitle": "Skupinová místnost {roomName} je otevřená",
+    "joinBreakoutRoomBannerButtonLabel": "Připojit se",
+    "returnFromBreakoutRoomBannerTitle": "Vrátit se k hlavní schůzce",
+    "returnFromBreakoutRoomBannerButtonLabel": "Znovu připojit"
   },
   "chat": {
     "chatListHeader": "V tomto chatu",
-    "uploadFile": "Nahrát soubor"
+    "uploadAttachment": "Odeslat přílohu",
+    "uploadImageDataNotProvided": "Data obrázku nebyla zadána.",
+    "uploadImageIsTooLarge": "Obrázek je příliš velký. Zvolte míň než {maxImageSize} MB.",
+    "uploadImageExtensionIsNotAllowed": "Nahrávání. Obrázek {imageExtension} není povolený.",
+    "uploadImageFailed": "Obrázek nejde nahrát. Zkuste to prosím znovu později."
   },
   "callWithChat": {
     "chatButtonLabel": "Chat",
@@ -332,6 +373,7 @@
     "chatButtonTooltipOpen": "Zobrazit chat",
     "chatPaneTitle": "Chat",
     "copyInviteLinkButtonLabel": "Kopírovat odkaz pro pozvání",
+    "copyInviteLinkButtonActionedLabel": "Odkaz byl zkopírován.",
     "copyInviteLinkActionedAriaLabel": "Odkaz pozvánky se zkopíroval",
     "dismissSidePaneButtonLabel": "Zavřít",
     "moreDrawerAudioDeviceMenuTitle": "Zvukové zařízení",
@@ -347,6 +389,8 @@
     "selectedPeopleButtonLabel": "Vybráno tlačítko Lidé",
     "peopleButtonTooltipOpen": "Zobrazit účastníky",
     "peopleButtonTooltipClose": "Skrýt účastníky",
+    "peopleButtonTooltipOpenAriaLabel": "Tlačítko Lidé, Zobrazit účastníky",
+    "peopleButtonTooltipCloseAriaLabel": "Tlačítko Lidé, Skrýt účastníky",
     "peoplePaneSubTitle": "V tomto hovoru",
     "peoplePaneTitle": "Lidé",
     "pictureInPictureTileAriaLabel": "Informační kanály videa. Kliknutím se vrátíte na obrazovku hovoru.",
@@ -360,6 +404,8 @@
     "dialpadModalAriaLabel": "Číselník",
     "dialpadCloseModalButtonAriaLabel": "Zavřít číselník",
     "openDtmfDialpadLabel": "Zobrazit číselník",
-    "dtmfDialpadPlaceholderText": "Zadejte číslo"
+    "dtmfDialpadPlaceholderText": "Zadejte číslo",
+    "breakoutRoomChatPaneTitle": "Chat ve skupinové místnosti",
+    "chatContentSpinnerLabel": "Načítání..."
   }
 }

@@ -1,9 +1,0 @@
-{
-  "type": "patch",
-  "area": "improvement",
-  "workstream": "Update SDK Version",
-  "comment": "update sdk version",
-  "packageName": "@azure/communication-react",
-  "email": "93549644+ShaunaSong@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

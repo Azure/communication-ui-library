@@ -1,9 +1,0 @@
-{
-  "type": "minor",
-  "area": "improvement",
-  "workstream": "InlineImage",
-  "comment": "In Composite, use adapter state to get the full size cached image src",
-  "packageName": "@azure/communication-react",
-  "email": "107075081+Leah-Xia-Microsoft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

@@ -32,7 +32,7 @@ const JoinExistingCallAsTeamsUserStory = (args: ArgsFrom<typeof storyControls>, 
         <ContosoCTECallContainer
           fluentTheme={context.theme}
           rtl={context.globals.rtl === 'rtl'}
-          locator={args.callLocator}
+          meetingLink={args.callLocator}
           userId={{ microsoftTeamsUserId: args.userId }}
           token={args.token}
           callInvitationURL={args.callInvitationURL}

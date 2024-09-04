@@ -25,8 +25,7 @@ class ProxyCall extends ProxyCallCommon implements ProxyHandler<Call> {
           ...args: Parameters<Call['addParticipant']>
         ) {
           return await target.addParticipant(...args);
-        },
-        'Call.addParticipant');
+        }, 'Call.addParticipant');
       }
       default:
         return super.get(target, prop as any);

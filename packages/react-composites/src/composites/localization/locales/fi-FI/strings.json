@@ -20,6 +20,7 @@
     "complianceBannerTranscriptionStopped": "Transkriptio on pysäytetty.",
     "configurationPageTitle": "Aloita puhelu",
     "copyInviteLinkButtonLabel": "Kopioi kutsulinkki",
+    "copyInviteLinkButtonActionedLabel": "Linkki kopioitu",
     "copyInviteLinkActionedAriaLabel": "Kutsulinkki kopioitu",
     "defaultPlaceHolder": "Valitse vaihtoehto",
     "dismissSidePaneButtonLabel": "Sulje",
@@ -52,6 +53,7 @@
     "peopleButtonLabel": "Ihmiset",
     "selectedPeopleButtonLabel": "Henkilöt-painike valittu",
     "peoplePaneTitle": "Ihmiset",
+    "peoplePaneMoreButtonAriaLabel": "Lisää",
     "peopleButtonTooltipOpen": "Näytä osallistujat",
     "peopleButtonTooltipClose": "Piilota osallistujat",
     "peoplePaneSubTitle": "Tässä puhelussa {numberOfPeople}",
@@ -60,11 +62,12 @@
     "removedFromCallMoreDetails": "Toinen osallistuja poisti sinut puhelusta.",
     "removedFromCallTitle": "Sinut on poistettu",
     "removeMenuLabel": "Poista",
-    "startSpotlightParticipantListMenuLabel": "Lisää valokeilaan kaikille",
-    "addSpotlightParticipantListMenuLabel": "Lisää valokeilaan",
-    "stopSpotlightParticipantListMenuLabel": "Poista valokeilasta",
-    "stopSpotlightOnSelfParticipantListMenuLabel": "Valokeila",
-    "spotlightLimitReachedParticipantListMenuTitle": "Spotlight-raja saavutettu",
+    "startSpotlightMenuLabel": "Lisää valokeilaan kaikille",
+    "addSpotlightMenuLabel": "Lisää valokeilaan",
+    "stopSpotlightMenuLabel": "Poista valokeilasta",
+    "stopSpotlightOnSelfMenuLabel": "Valokeila",
+    "spotlightLimitReachedMenuTitle": "Spotlight-raja saavutettu",
+    "stopAllSpotlightMenuLabel": "Poista kaikki valokeilat",
     "returnToCallButtonAriaDescription": "Palaa puheluun",
     "returnToCallButtonAriaLabel": "Takaisin",
     "roomNotFoundDetails": "Annettua huonetunnusta ei löydy.",
@@ -132,6 +135,7 @@
     "dtmfDialerButtonTooltipOff": "Piilota valintapaneeli",
     "dtmfDialerMoreButtonLabelOn": "Näytä valintapaneeli",
     "dtmfDialerMoreButtonLabelOff": "Piilota valintapaneeli",
+    "phoneCallMoreButtonLabel": "Puhelu",
     "spokenLanguageStrings": {
       "ar-ae": "arabia – Arabiemiirikunnat",
       "ar-sa": "arabia – Saudi-Arabia",
@@ -242,12 +246,16 @@
       "shareScreen": {
         "lostDueToRoleChangeToAttendee": "Roolisi on muuttunut. Jotkin toiminnot, kuten sisällön jakaminen, eivät ole käytettävissäsi.",
         "grantedDueToRoleChangeToPresenter": "Olet esittäjä. Voit jakaa sisältöä ja johtaa kokousta."
+      },
+      "hideAttendeeNames": {
+        "hideAttendeeNameAttendee": "Nimesi on piilotettu muilta osallistujilta. Järjestäjät ja esittäjät voivat nähdä oikean nimesi.",
+        "hideAttendeeNamePresenter": "Osallistujien nimet on piilotettu. Vain järjestäjät ja esittäjät voivat nähdä nimet osallistujien yksityisyyden suojaamiseksi."
       }
     },
     "surveyTitle": "Auta kehittämään tuotetta",
     "starSurveyHelperText": "Millainen oli puhelun äänenlaatu?",
     "starSurveyOneStarText": "Laatu oli huono.",
-    "starSurveyTwoStarText": "Laatu oli erittäin huono.",
+    "starSurveyTwoStarText": "Laatu oli heikko.",
     "starSurveyThreeStarText": "Laatu oli hyvä.",
     "starSurveyFourStarText": "Laatu oli erinomainen.",
     "starSurveyFiveStarText": "Laatu oli erinomainen.",
@@ -257,7 +265,6 @@
     "tagsSurveyQuestion": "Mikä olisi voinut olla paremmin?",
     "tagsSurveyTextFieldDefaultText": "Muu, anna kuvaus",
     "tagsSurveyHelperText": "Tarkista havaitsematsi ongelmat",
-    "surveyTextboxDefaultText": "Muu, anna kuvaus",
     "endOfSurveyText": "Kiitos palautteestasi!",
     "surveyIssues": {
       "overallRating": {
@@ -299,7 +306,7 @@
         "otherIssues": "Minulla oli puhelun aikana muita näytön jakamiseen liittyviä ongelmia"
       }
     },
-    "SurveyIssuesHeadingStrings": {
+    "surveyIssuesHeadingStrings": {
       "overallRating": "Yleinen",
       "audioRating": "Äänet",
       "videoRating": "Video",
@@ -311,18 +318,52 @@
       "startSpotlightOnSelfText": "Korostat videosi kaikille kokouksen osallistujille.",
       "startSpotlightConfirmButtonLabel": "Lisää valokeilaan kaikille",
       "startSpotlightCancelButtonLabel": "Peruuta",
-      "stopSpotlightHeading": "Poistetaanko valokeilasta?",
+      "stopSpotlightHeading": "Haluatko poistaa videon valokeilasta?",
       "stopSpotlightOnSelfHeading": "Haluatko poistua valokeilasta?",
+      "stopAllSpotlightHeading": "Poistetaanko kaikki videot valokeilasta?",
       "stopSpotlightText": "Videota ei enää korosteta kaikille kokouksen osallistujille.",
       "stopSpotlightOnSelfText": "Videota ei enää korosteta kaikille kokouksen osallistujille.",
+      "stopAllSpotlightText": "Videoita ei enää korosteta kaikille kokouksen osallistujille.",
       "stopSpotlightConfirmButtonLabel": "Poista valokeilasta",
       "stopSpotlightOnSelfConfirmButtonLabel": "Valokeila",
       "stopSpotlightCancelButtonLabel": "Peruuta"
-    }
+    },
+    "exitSpotlightButtonLabel": "Poistu valokeilasta",
+    "exitSpotlightButtonTooltip": "Poistu valokeilasta",
+    "leaveConfirmButtonLabel": "Poistu",
+    "endCallConfirmButtonLabel": "Lopeta puhelu",
+    "hangUpCancelButtonLabel": "Peruuta",
+    "leaveConfirmDialogTitle": "Poistutaanko puhelusta?",
+    "leaveConfirmDialogContent": "Haluatko varmasti poistua puhelusta?",
+    "endCallConfirmDialogTitle": "Lopetetaanko puhelu?",
+    "endCallConfirmDialogContent": "Puhelu lopetetaan kaikkien osallistujien osalta.",
+    "invalidMeetingIdentifier": "Virheellinen kokoustunnus tai tunnuskoodi",
+    "pinParticipantMenuLabel": "Kiinnitä minulle",
+    "pinParticipantLimitReachedMenuLabel": "Kiinnitä (enimmäisraja saavutettu)",
+    "unpinParticipantMenuLabel": "Poista kiinnitys",
+    "pinParticipantMenuItemAriaLabel": "Kiinnitä",
+    "unpinParticipantMenuItemAriaLabel": "Poista kiinnitys",
+    "muteAllMenuLabel": "Mykistä kaikki",
+    "muteAllDialogTitle": "Mykistetäänkö kaikki?",
+    "muteAllDialogContent": "Tämä toiminto mykistää kaikki muut kokouksen osallistujat paitsi sinut.",
+    "muteAllConfirmButtonLabel": "Mykistä kaikki",
+    "muteAllCancelButtonLabel": "Peruuta",
+    "joinBreakoutRoomButtonLabel": "Liity pienryhmätilaan",
+    "returnFromBreakoutRoomButtonLabel": "Poistu kokoustilasta",
+    "leaveBreakoutRoomAndMeetingButtonLabel": "Poistu kokouksesta",
+    "breakoutRoomJoinedNotificationTitle": "Olet liittynyt pienryhmätilaan {roomName}",
+    "joinBreakoutRoomBannerTitle": "Pienryhmätila {roomName} on avoinna",
+    "joinBreakoutRoomBannerButtonLabel": "Liity",
+    "returnFromBreakoutRoomBannerTitle": "Palaa pääkokoukseen",
+    "returnFromBreakoutRoomBannerButtonLabel": "Liity uudelleen"
   },
   "chat": {
     "chatListHeader": "Tässä keskustelussa",
-    "uploadFile": "Lataa tiedosto palvelimeen"
+    "uploadAttachment": "Lataa liite",
+    "uploadImageDataNotProvided": "Kuvatietoja ei ole annettu.",
+    "uploadImageIsTooLarge": "Kuva on liian suuri. Valitse sellainen, jonka koko on alle {maxImageSize} Mt.",
+    "uploadImageExtensionIsNotAllowed": ".{imageExtension}-kuvan lataamista ei sallita.",
+    "uploadImageFailed": "Kuvaa ei voi ladata palvelimeen. Yritä myöhemmin uudelleen."
   },
   "callWithChat": {
     "chatButtonLabel": "Keskustelu",
@@ -332,6 +373,7 @@
     "chatButtonTooltipOpen": "Näytä keskustelu",
     "chatPaneTitle": "Keskustelu",
     "copyInviteLinkButtonLabel": "Kopioi kutsulinkki",
+    "copyInviteLinkButtonActionedLabel": "Linkki kopioitu",
     "copyInviteLinkActionedAriaLabel": "Kutsulinkki kopioitu",
     "dismissSidePaneButtonLabel": "Sulje",
     "moreDrawerAudioDeviceMenuTitle": "Äänilaite",
@@ -347,6 +389,8 @@
     "selectedPeopleButtonLabel": "Henkilöt-painike valittu",
     "peopleButtonTooltipOpen": "Näytä osallistujat",
     "peopleButtonTooltipClose": "Piilota osallistujat",
+    "peopleButtonTooltipOpenAriaLabel": "Henkilöt-painike, Näytä osallistujat",
+    "peopleButtonTooltipCloseAriaLabel": "Henkilöt-painike, Piilota osallistujat",
     "peoplePaneSubTitle": "Tässä puhelussa",
     "peoplePaneTitle": "Ihmiset",
     "pictureInPictureTileAriaLabel": "Videosyötteet. Palaa puhelunäyttöön napsauttamalla.",
@@ -360,6 +404,8 @@
     "dialpadModalAriaLabel": "Valintapaneeli",
     "dialpadCloseModalButtonAriaLabel": "Sulje valintapaneeli",
     "openDtmfDialpadLabel": "Näytä valintapaneeli",
-    "dtmfDialpadPlaceholderText": "Syötä numero"
+    "dtmfDialpadPlaceholderText": "Syötä numero",
+    "breakoutRoomChatPaneTitle": "Pienryhmätilan keskustelu",
+    "chatContentSpinnerLabel": "Ladataan..."
   }
 }

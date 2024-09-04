@@ -3,7 +3,7 @@
 
 import { CallWithChatAdapter } from './CallWithChatAdapter';
 import { CallAdapter, CallAdapterState } from '../../CallComposite';
-/* @conditional-compile-remove(video-background-effects) */
+
 import { VideoBackgroundImage, VideoBackgroundEffect } from '../../CallComposite';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 import {
@@ -13,10 +13,7 @@ import {
   PermissionConstraints,
   StartCallOptions
 } from '@azure/communication-calling';
-/* @conditional-compile-remove(reaction) */
 import { Reaction } from '@azure/communication-calling';
-/* @conditional-compile-remove(close-captions) */
-import { StartCaptionsOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { DtmfTone } from '@azure/communication-calling';
@@ -26,8 +23,12 @@ import { CommunicationIdentifier, isPhoneNumberIdentifier, PhoneNumberIdentifier
 /* @conditional-compile-remove(one-to-n-calling) */
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { _toCommunicationIdentifier } from '@internal/acs-ui-common';
-import { JoinCallOptions, StartCallIdentifier } from '../../CallComposite/adapter/CallAdapter';
-/* @conditional-compile-remove(end-of-call-survey) */
+import {
+  JoinCallOptions,
+  StartCallIdentifier,
+  StartCaptionsAdapterOptions,
+  StopCaptionsAdapterOptions
+} from '../../CallComposite/adapter/CallAdapter';
 import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -122,11 +123,8 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
   public unmute = async (): Promise<void> => await this.callWithChatAdapter.unmute();
   public startScreenShare = async (): Promise<void> => await this.callWithChatAdapter.startScreenShare();
   public stopScreenShare = async (): Promise<void> => await this.callWithChatAdapter.stopScreenShare();
-  /* @conditional-compile-remove(raise-hand) */
   public raiseHand = async (): Promise<void> => await this.callWithChatAdapter.raiseHand();
-  /* @conditional-compile-remove(raise-hand) */
   public lowerHand = async (): Promise<void> => await this.callWithChatAdapter.lowerHand();
-  /* @conditional-compile-remove(reaction) */
   public onReactionClick = async (reaction: Reaction): Promise<void> =>
     await this.callWithChatAdapter.onReactionClick(reaction);
   public removeParticipant = async (
@@ -186,59 +184,77 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
     await this.callWithChatAdapter.sendDtmfTone(dtmfTone);
   };
 
-  /* @conditional-compile-remove(close-captions) */
-  public async startCaptions(options?: StartCaptionsOptions): Promise<void> {
-    this.callWithChatAdapter.startCaptions(options);
+  public async startCaptions(options?: StartCaptionsAdapterOptions): Promise<void> {
+    await this.callWithChatAdapter.startCaptions(options);
   }
 
-  /* @conditional-compile-remove(close-captions) */
-  public async stopCaptions(): Promise<void> {
-    this.callWithChatAdapter.stopCaptions();
+  public async stopCaptions(options?: StopCaptionsAdapterOptions): Promise<void> {
+    await this.callWithChatAdapter.stopCaptions(options);
   }
 
-  /* @conditional-compile-remove(close-captions) */
   public async setCaptionLanguage(language: string): Promise<void> {
-    this.callWithChatAdapter.setCaptionLanguage(language);
+    await this.callWithChatAdapter.setCaptionLanguage(language);
   }
 
-  /* @conditional-compile-remove(close-captions) */
   public async setSpokenLanguage(language: string): Promise<void> {
-    this.callWithChatAdapter.setSpokenLanguage(language);
+    await this.callWithChatAdapter.setSpokenLanguage(language);
   }
 
-  /* @conditional-compile-remove(video-background-effects) */
   public async startVideoBackgroundEffect(videoBackgroundEffect: VideoBackgroundEffect): Promise<void> {
     await this.callWithChatAdapter.startVideoBackgroundEffect(videoBackgroundEffect);
   }
-  /* @conditional-compile-remove(video-background-effects) */
+
   public async stopVideoBackgroundEffects(): Promise<void> {
     await this.callWithChatAdapter.stopVideoBackgroundEffects();
   }
-  /* @conditional-compile-remove(video-background-effects) */
+
   public updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void {
     return this.callWithChatAdapter.updateBackgroundPickerImages(backgroundImages);
   }
-  /* @conditional-compile-remove(video-background-effects) */
+
   public updateSelectedVideoBackgroundEffect(selectedVideoBackground: VideoBackgroundEffect): void {
     return this.callWithChatAdapter.updateSelectedVideoBackgroundEffect(selectedVideoBackground);
   }
-  /* @conditional-compile-remove(end-of-call-survey) */
+
+  /* @conditional-compile-remove(DNS) */
+  public async startNoiseSuppressionEffect(): Promise<void> {
+    return this.callWithChatAdapter.startNoiseSuppressionEffect();
+  }
+
+  /* @conditional-compile-remove(DNS) */
+  public async stopNoiseSuppressionEffect(): Promise<void> {
+    return this.callWithChatAdapter.stopNoiseSuppressionEffect();
+  }
+
   public async submitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined> {
     return this.callWithChatAdapter.submitSurvey(survey);
   }
-  /* @conditional-compile-remove(spotlight) */
+
   public async startSpotlight(userIds?: string[]): Promise<void> {
     return this.callWithChatAdapter.startSpotlight(userIds);
   }
 
-  /* @conditional-compile-remove(spotlight) */
   public async stopSpotlight(userIds?: string[]): Promise<void> {
     return this.callWithChatAdapter.stopSpotlight(userIds);
   }
 
-  /* @conditional-compile-remove(spotlight) */
   public async stopAllSpotlight(): Promise<void> {
     return this.callWithChatAdapter.stopAllSpotlight();
+  }
+
+  /* @conditional-compile-remove(soft-mute) */
+  public async muteParticipant(userId: string): Promise<void> {
+    return this.callWithChatAdapter.muteParticipant(userId);
+  }
+
+  /* @conditional-compile-remove(soft-mute) */
+  public async muteAllRemoteParticipants(): Promise<void> {
+    return this.callWithChatAdapter.muteAllRemoteParticipants();
+  }
+
+  /* @conditional-compile-remove(breakout-rooms) */
+  public async returnFromBreakoutRoom(): Promise<void> {
+    return this.callWithChatAdapter.returnFromBreakoutRoom();
   }
 }
 
@@ -253,20 +269,22 @@ function callAdapterStateFromCallWithChatAdapterState(
     call: callWithChatAdapterState.call,
     devices: callWithChatAdapterState.devices,
     isTeamsCall: callWithChatAdapterState.isTeamsCall,
-    /* @conditional-compile-remove(rooms) */
+    isTeamsMeeting: callWithChatAdapterState.isTeamsMeeting,
     isRoomsCall: false,
     latestErrors: callWithChatAdapterState.latestCallErrors,
+    /* @conditional-compile-remove(breakout-rooms) */
+    latestNotifications: callWithChatAdapterState.latestCallNotifications,
     /* @conditional-compile-remove(PSTN-calls) */
     alternateCallerId: callWithChatAdapterState.alternateCallerId,
     /* @conditional-compile-remove(unsupported-browser) */
     environmentInfo: callWithChatAdapterState.environmentInfo,
-    /* @conditional-compile-remove(video-background-effects) */
+
     videoBackgroundImages: callWithChatAdapterState.videoBackgroundImages,
-    /* @conditional-compile-remove(video-background-effects) */
+
     onResolveVideoEffectDependency: callWithChatAdapterState.onResolveVideoEffectDependency,
-    /* @conditional-compile-remove(video-background-effects) */
+    /* @conditional-compile-remove(DNS) */
+    onResolveDeepNoiseSuppressionDependency: callWithChatAdapterState.onResolveDeepNoiseSuppressionDependency,
     selectedVideoBackgroundEffect: callWithChatAdapterState.selectedVideoBackgroundEffect,
-    /* @conditional-compile-remove(reaction) */
     reactions: callWithChatAdapterState.reactions
   };
 }

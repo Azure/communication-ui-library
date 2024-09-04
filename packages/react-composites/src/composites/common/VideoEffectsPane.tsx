@@ -2,29 +2,29 @@
 // Licensed under the MIT License.
 
 import React from 'react';
-/* @conditional-compile-remove(video-background-effects) */
+
 import { useCallback, useMemo } from 'react';
-/* @conditional-compile-remove(video-background-effects) */
+
 import { MessageBar, MessageBarType, Stack, mergeStyles } from '@fluentui/react';
-/* @conditional-compile-remove(video-background-effects) */
+
 import { useLocale } from '../localization';
 import { ActiveErrorMessage, _VideoEffectsItemProps } from '@internal/react-components';
-/* @conditional-compile-remove(video-background-effects) */
+
 import { _VideoBackgroundEffectsPicker } from '@internal/react-components';
-/* @conditional-compile-remove(video-background-effects) */
+
 import {
   VideoBackgroundImage,
   VideoBackgroundBlurEffect,
   VideoBackgroundNoEffect,
   VideoBackgroundReplacementEffect
 } from '../CallComposite';
-/* @conditional-compile-remove(video-background-effects) */
+
 import { activeVideoBackgroundEffectSelector } from '../CallComposite/selectors/activeVideoBackgroundEffectSelector';
-/* @conditional-compile-remove(video-background-effects) */
+
 import { useSelector } from '../CallComposite/hooks/useSelector';
-/* @conditional-compile-remove(video-background-effects) */
+
 import { useAdapter } from '../CallComposite/adapter/CallAdapterProvider';
-/* @conditional-compile-remove(video-background-effects) */
+
 import { localVideoSelector } from '../CallComposite/selectors/localVideoStreamSelector';
 import { ActiveVideoEffect } from '../CallComposite/components/SidePane/useVideoEffectsPane';
 
@@ -37,22 +37,20 @@ export const VideoEffectsPaneContent = (props: {
   activeVideoEffectError?: ActiveErrorMessage;
   onDismissError: (error: ActiveErrorMessage) => void;
   activeVideoEffectChange: (effect: ActiveVideoEffect) => void;
+  updateFocusHandle: React.RefObject<{
+    focus: () => void;
+  }>;
 }): JSX.Element => {
-  const {
-    onDismissError,
-    activeVideoEffectError,
-    /* @conditional-compile-remove(video-background-effects) */
-    activeVideoEffectChange
-  } = props;
-  /* @conditional-compile-remove(video-background-effects) */
+  const { onDismissError, activeVideoEffectError, activeVideoEffectChange } = props;
+
   const locale = useLocale();
-  /* @conditional-compile-remove(video-background-effects) */
+
   const adapter = useAdapter();
-  /* @conditional-compile-remove(video-background-effects) */
+
   const strings = locale.strings.call;
-  /* @conditional-compile-remove(video-background-effects) */
+
   const activeVideoEffects = useSelector(localVideoSelector).activeVideoEffects?.activeEffects;
-  /* @conditional-compile-remove(video-background-effects) */
+
   const selectableVideoEffects: _VideoEffectsItemProps[] = useMemo(() => {
     const videoEffects: _VideoEffectsItemProps[] = [
       {
@@ -94,7 +92,6 @@ export const VideoEffectsPaneContent = (props: {
     return videoEffects;
   }, [strings, adapter]);
 
-  /* @conditional-compile-remove(video-background-effects) */
   const onEffectChange = useCallback(
     async (effectKey: string) => {
       if (effectKey === 'blur') {
@@ -135,39 +132,39 @@ export const VideoEffectsPaneContent = (props: {
     [adapter, activeVideoEffectChange, selectableVideoEffects]
   );
 
-  /* @conditional-compile-remove(video-background-effects) */
   if (activeVideoEffectError && activeVideoEffects && activeVideoEffects.length === 0) {
     const noneEffect: VideoBackgroundNoEffect = {
       effectName: 'none'
     };
     adapter.updateSelectedVideoBackgroundEffect(noneEffect);
   }
+
   return VideoEffectsPaneTrampoline(
     onDismissError,
+    props.updateFocusHandle,
     activeVideoEffectError,
-    /* @conditional-compile-remove(video-background-effects) */
     selectableVideoEffects,
-    /* @conditional-compile-remove(video-background-effects) */
     onEffectChange
   );
 };
 
 const VideoEffectsPaneTrampoline = (
   onDismissError: (error: ActiveErrorMessage) => void,
+  updateFocusHandle: React.RefObject<{
+    focus: () => void;
+  }>,
   activeVideoEffectError?: ActiveErrorMessage,
   selectableVideoEffects?: _VideoEffectsItemProps[],
   onEffectChange?: (effectKey: string) => Promise<void>
 ): JSX.Element => {
-  /* @conditional-compile-remove(video-background-effects) */
   const selectedEffect = useSelector(activeVideoBackgroundEffectSelector);
-  /* @conditional-compile-remove(video-background-effects) */
+
   const isCameraOn = useSelector(localVideoSelector).isAvailable;
-  /* @conditional-compile-remove(video-background-effects) */
+
   const showWarning = !isCameraOn && selectedEffect !== 'none';
-  /* @conditional-compile-remove(video-background-effects) */
+
   const locale = useLocale();
 
-  /* @conditional-compile-remove(video-background-effects) */
   return (
     <Stack tokens={{ childrenGap: '0.75rem' }} className={mergeStyles({ paddingLeft: '0.5rem' })}>
       {activeVideoEffectError && isCameraOn && (
@@ -186,13 +183,13 @@ const VideoEffectsPaneTrampoline = (
         options={selectableVideoEffects ?? []}
         onChange={onEffectChange}
         selectedEffectKey={selectedEffect}
+        componentRef={updateFocusHandle}
       />
     </Stack>
   );
   return <></>;
 };
 
-/* @conditional-compile-remove(video-background-effects) */
 const backgroundPickerStyles = {
   label: {
     fontSize: '0.75rem',

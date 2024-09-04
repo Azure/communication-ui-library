@@ -20,12 +20,12 @@ import { useLocale } from '../localization';
 import { useTheme } from '../theming';
 import { BaseCustomStyles, OnRenderAvatarCallback } from '../types';
 import {
+  displayNoneStyle,
   iconContainerStyle,
   iconStyles,
   meContainerStyle,
   menuButtonContainerStyle,
   participantItemContainerStyle,
-  participantStateMaxWidth,
   participantStateStringStyles
 } from './styles/ParticipantItem.styles';
 import { _preventDismissOnEvent as preventDismissOnEvent } from '@internal/acs-ui-common';
@@ -157,7 +157,6 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
     showParticipantOverflowTooltip
   } = props;
   const [itemHovered, setItemHovered] = useState<boolean>(false);
-  const [itemFocused, setItemFocused] = useState<boolean>(false);
   const [menuHidden, setMenuHidden] = useState<boolean>(true);
   const containerRef = useRef<HTMLDivElement>(null);
   const theme = useTheme();
@@ -166,6 +165,8 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
   const uniqueId = useId();
 
   const strings = { ...localeStrings, ...props.strings };
+  const participantStateString = participantStateStringTrampoline(props, strings);
+  const showMenuIcon = !participantStateString && (itemHovered || !menuHidden) && menuItems && menuItems?.length > 0;
 
   // For 'me' show empty name so avatar will get 'Person' icon, when there is no name
   const meAvatarText = displayName?.trim() || '';
@@ -206,15 +207,14 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
     () =>
       mergeStyles(
         iconContainerStyle,
-        { color: theme.palette.neutralTertiary, marginLeft: 'auto' },
+        { color: theme.palette.neutralSecondary, marginLeft: 'auto' },
         styles?.iconContainer
       ),
-    [theme.palette.neutralTertiary, styles?.iconContainer]
+    [theme.palette.neutralSecondary, styles?.iconContainer]
   );
 
   const onDismissMenu = (): void => {
     setItemHovered(false);
-    setItemFocused(false);
     setMenuHidden(true);
   };
 
@@ -223,43 +223,35 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
       <Stack
         horizontal={true}
         horizontalAlign="end"
-        className={mergeStyles(menuButtonContainerStyle)}
+        className={mergeStyles(menuButtonContainerStyle, { color: theme.palette.neutralPrimary })}
         title={strings.menuTitle}
         data-ui-id={ids.participantItemMenuButton}
       >
         <Icon
-          iconName={
-            itemHovered || itemFocused || !menuHidden ? 'ParticipantItemOptionsHovered' : 'ParticipantItemOptions'
-          }
-          className={iconStyles}
+          iconName="ParticipantItemOptionsHovered"
+          className={mergeStyles(iconStyles, !showMenuIcon ? displayNoneStyle : {})}
         />
       </Stack>
     ),
-    [strings.menuTitle, ids.participantItemMenuButton, itemHovered, itemFocused, menuHidden]
+    [theme.palette.neutralPrimary, strings.menuTitle, ids.participantItemMenuButton, showMenuIcon]
   );
 
-  const participantStateString = participantStateStringTrampoline(props, strings);
   return (
     <div
       ref={containerRef}
       role={'menuitem'}
+      aria-disabled={(menuItems && menuItems.length > 0) || props.onClick ? false : true}
       data-is-focusable={true}
       data-ui-id="participant-item"
       className={mergeStyles(
-        participantItemContainerStyle({
-          localparticipant: me,
-          clickable: !!menuItems && menuItems.length > 0
-        }),
+        participantItemContainerStyle({ clickable: !!menuItems && menuItems.length > 0 }),
         styles?.root
       )}
       onMouseEnter={() => setItemHovered(true)}
       onMouseLeave={() => setItemHovered(false)}
-      onFocus={() => setItemFocused(true)}
-      onBlur={() => setItemFocused(false)}
       onClick={() => {
         if (!participantStateString) {
           setItemHovered(true);
-          setItemFocused(false);
           setMenuHidden(false);
           onClick?.(props);
         }
@@ -272,9 +264,8 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
       <Stack
         horizontal
         className={mergeStyles({
-          width: `calc(100% - ${
-            !me && participantStateString ? participantStateMaxWidth : menuButtonContainerStyle.width
-          })`,
+          flexGrow: 1,
+          maxWidth: '100%',
           alignItems: 'center'
         })}
         id={uniqueId}
@@ -283,35 +274,35 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
         {avatar}
         {me && <Text className={meTextStyle}>{strings.isMeText}</Text>}
         <Stack horizontal className={mergeStyles(infoContainerStyle)}>
-          {onRenderIcon && onRenderIcon(props)}
-        </Stack>
-      </Stack>
-      {/* When the participantStateString has a value, we don't show the menu  */}
-      {!me && participantStateString ? (
-        <Text data-ui-id="participant-item-state-string" className={mergeStyles(participantStateStringStyles)}>
-          {participantStateString}
-        </Text>
-      ) : (
-        <div>
-          {menuItems && menuItems.length > 0 && (
+          {!showMenuIcon && onRenderIcon && onRenderIcon(props)}
+          {/* When the participantStateString has a value, we don't show the menu  */}
+          {!me && participantStateString ? (
+            <Text data-ui-id="participant-item-state-string" className={mergeStyles(participantStateStringStyles)}>
+              {participantStateString}
+            </Text>
+          ) : (
             <>
-              {menuButton}
-              <ContextualMenu
-                items={menuItems}
-                hidden={menuHidden}
-                target={containerRef}
-                onItemClick={onDismissMenu}
-                onDismiss={onDismissMenu}
-                directionalHint={DirectionalHint.bottomRightEdge}
-                className={contextualMenuStyle}
-                calloutProps={{
-                  preventDismissOnEvent
-                }}
-              />
+              {menuItems && menuItems.length > 0 && (
+                <>
+                  {menuButton}
+                  <ContextualMenu
+                    items={menuItems}
+                    hidden={menuHidden}
+                    target={containerRef}
+                    onItemClick={onDismissMenu}
+                    onDismiss={onDismissMenu}
+                    directionalHint={DirectionalHint.bottomRightEdge}
+                    className={contextualMenuStyle}
+                    calloutProps={{
+                      preventDismissOnEvent
+                    }}
+                  />
+                </>
+              )}
             </>
           )}
-        </div>
-      )}
+        </Stack>
+      </Stack>
     </div>
   );
 };
@@ -325,8 +316,8 @@ const participantStateStringTrampoline = (
   return props.participantState === 'EarlyMedia' || props.participantState === 'Ringing'
     ? strings?.participantStateRinging
     : props.participantState === 'Hold'
-    ? strings?.participantStateHold
-    : undefined;
+      ? strings?.participantStateHold
+      : undefined;
 
   return undefined;
 };

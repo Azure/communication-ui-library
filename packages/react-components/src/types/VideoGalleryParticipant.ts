@@ -5,11 +5,8 @@
 /* @conditional-compile-remove(PSTN-calls) */
 import { ParticipantState } from './ParticipantListParticipant';
 
-/* @conditional-compile-remove(raise-hand) */
 import { RaisedHand } from './ParticipantListParticipant';
-/* @conditional-compile-remove(reaction) */
 import { Reaction } from './ParticipantListParticipant';
-/* @conditional-compile-remove(spotlight) */
 import { Spotlight } from './ParticipantListParticipant';
 /**
  * Scaling mode of a {@link VideoGalleryStream}.
@@ -46,7 +43,6 @@ export type VideoGalleryParticipant = {
   videoStream?: VideoGalleryStream;
   /** Whether participant is screen sharing or not */
   isScreenSharingOn?: boolean;
-  /* @conditional-compile-remove(spotlight) */
   /** Whether participant is spotlighted **/
   spotlight?: Spotlight;
 };
@@ -98,16 +94,15 @@ export interface CreateVideoStreamViewResult {
  * @public
  */
 export interface VideoGalleryLocalParticipant extends VideoGalleryParticipant {
-  /* @conditional-compile-remove(raise-hand) */
   /** Whether local participant is raised a hand */
   raisedHand?: RaisedHand;
-  /* @conditional-compile-remove(reaction) */
   /**
    * Whether local participant has reacted
    *
-   * @beta
    * */
   reaction?: Reaction;
+  /** Video stream of shared screen */
+  screenShareStream?: VideoGalleryStream;
 }
 
 /**
@@ -127,14 +122,12 @@ export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
    * The connection state of the participant. For example, 'Hold', 'Connecting' etc.
    */
   state?: ParticipantState;
-  /* @conditional-compile-remove(raise-hand) */
   /** Whether participant is raised a hand */
   raisedHand?: RaisedHand;
-  /* @conditional-compile-remove(reaction) */
   /**
    * Whether participant has reacted
    *
-   * @beta
+   * @public
    * */
   reaction?: Reaction;
 }

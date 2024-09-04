@@ -22,6 +22,7 @@ import {
 } from '../../common/utils';
 import { IDS } from '../../common/constants';
 import type { MockCallAdapterState } from '../../../common';
+import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 
 const participantListShownAsFlyout = (): boolean => {
   /* @conditional-compile-remove(one-to-n-calling) */
@@ -62,8 +63,8 @@ test.describe('Participant list flyout tests', () => {
     );
     await pageClick(page, dataUiId('call-composite-participants-button'));
     await pageClick(page, dataUiId(IDS.participantButtonPeopleMenuItem));
-    // click on last person (myself) to remove any hover effect on participant items
-    await pageClick(page, dataUiId('participant-item') + ' >> nth=3');
+    // click on the first person to remove any hover effect on participant items
+    await pageClick(page, dataUiId('participant-item') + ' >> nth=0');
     expect(await stableScreenshot(page)).toMatchSnapshot(`video-gallery-page-participants-flyout-custom-ellipses.png`);
   });
 
@@ -113,7 +114,7 @@ test.describe('Participant list side pane tests', () => {
     if (!initialState.call) {
       throw new Error('Call state not set in initial state');
     }
-
+    const unnamedParticipant = defaultMockRemoteParticipant('');
     await page.goto(
       buildUrlWithMockAdapter(
         serverUrl,
@@ -124,16 +125,32 @@ test.describe('Participant list side pane tests', () => {
             ...initialState.call,
             remoteParticipants: {
               ...initialState.call?.remoteParticipants,
-              '': defaultMockRemoteParticipant('')
+              [toFlatCommunicationIdentifier(unnamedParticipant.identifier)]: unnamedParticipant
             }
           }
         },
         { callInvitationUrl: 'testUrl' }
       )
     );
+    await waitForSelector(page, dataUiId('call-composite-participants-button'));
     await pageClick(page, dataUiId('call-composite-participants-button'));
     await waitForSelector(page, dataUiId('people-pane-content'));
     expect(await stableScreenshot(page)).toMatchSnapshot(`video-gallery-page-participants-no-displayname.png`);
+  });
+
+  test('participant list shows participant items such as raised hand', async ({ page, serverUrl }, testInfo) => {
+    test.skip(!participantListShownAsSidePane(testInfo));
+
+    const participantListState = participantListInitialState({
+      localRaisedHand: true,
+      remoteRaisedHand: true
+    });
+    participantListState.call?.remoteParticipants;
+
+    await page.goto(buildUrlWithMockAdapter(serverUrl, participantListState));
+    await pageClick(page, dataUiId('call-composite-participants-button'));
+    await waitForSelector(page, dataUiId('people-pane-content'));
+    expect(await stableScreenshot(page)).toMatchSnapshot(`video-gallery-page-participants-pane-icons.png`);
   });
 
   test('participant list opens and displays ellipses if passing in custom icon', async ({
@@ -190,6 +207,75 @@ test.describe('Participant list side pane tests', () => {
     await pageClick(page, dataUiId('call-composite-participants-button'));
     await waitForSelector(page, dataUiId('people-pane-content'));
     expect(await stableScreenshot(page)).toMatchSnapshot('people-pane-with-error-bar.png');
+  });
+
+  // @conditional-compile-remove(soft-mute)
+  test('Mute menu item disabled for user that is already muted', async ({ page, serverUrl }, testInfo) => {
+    test.skip(!participantListShownAsSidePane(testInfo));
+
+    await page.goto(
+      buildUrlWithMockAdapter(serverUrl, participantListInitialState({ remoteIsMuted: true }), {
+        callInvitationUrl: 'testUrl'
+      })
+    );
+    await waitForSelector(page, dataUiId(IDS.videoGallery));
+
+    await pageClick(page, dataUiId('call-composite-participants-button'));
+    await page.hover(dataUiId('participant-item'));
+    await pageClick(page, dataUiId(IDS.participantItemMenuButton));
+    await waitForSelector(page, '.ms-ContextualMenu-itemText');
+
+    // wait for drawer to have opened
+    await waitForSelector(page, dataUiId('participant-item-mute-participant'));
+    expect(await stableScreenshot(page)).toMatchSnapshot(`participant-mute-menu-item-disabled.png`);
+  });
+
+  // @conditional-compile-remove(soft-mute)
+  test('People pane header more options menu', async ({ page, serverUrl }, testInfo) => {
+    test.skip(!participantListShownAsSidePane(testInfo));
+
+    const displayNames = ['Tony Hawk', 'Marie Curie', 'Gal Gadot'];
+    const participants = displayNames.map((name) => defaultMockRemoteParticipant(name));
+    const initialState = defaultMockCallAdapterState(participants);
+
+    await page.goto(
+      buildUrlWithMockAdapter(serverUrl, initialState, {
+        callInvitationUrl: 'testUrl'
+      })
+    );
+    await waitForSelector(page, dataUiId(IDS.videoGallery));
+
+    await pageClick(page, dataUiId('call-composite-participants-button'));
+    await pageClick(page, dataUiId('people-pane-header-more-button'));
+
+    // wait for drawer to have opened
+    await waitForSelector(page, dataUiId('people-pane-mute-all-remote-participants'));
+    expect(await stableScreenshot(page)).toMatchSnapshot(`people-pane-header-more-options.png`);
+  });
+  // @conditional-compile-remove(soft-mute)
+  test('Mute all menu item disabled for user that is already muted', async ({ page, serverUrl }, testInfo) => {
+    test.skip(!participantListShownAsSidePane(testInfo));
+
+    const displayNames = ['Tony Hawk', 'Marie Curie', 'Gal Gadot'];
+    const participants = displayNames.map((name) => defaultMockRemoteParticipant(name));
+    for (const participant of participants) {
+      participant.isMuted = true;
+    }
+    const initialState = defaultMockCallAdapterState(participants);
+
+    await page.goto(
+      buildUrlWithMockAdapter(serverUrl, initialState, {
+        callInvitationUrl: 'testUrl'
+      })
+    );
+    await waitForSelector(page, dataUiId(IDS.videoGallery));
+
+    await pageClick(page, dataUiId('call-composite-participants-button'));
+    await pageClick(page, dataUiId('people-pane-header-more-button'));
+
+    // wait for drawer to have opened
+    await waitForSelector(page, dataUiId('people-pane-mute-all-remote-participants'));
+    expect(await stableScreenshot(page)).toMatchSnapshot(`people-pane-mute-all-menu-item-disabled.png`);
   });
 });
 
@@ -253,14 +339,84 @@ test.describe('Participant list full screen pane with drawer tests', () => {
     await waitForSelector(page, dataUiId('drawer-menu'));
     expect(await stableScreenshot(page)).toMatchSnapshot(`participant-menu-item-flyout.png`);
   });
+
+  // @conditional-compile-remove(soft-mute)
+  test('Mute menu item disabled for user that is already muted', async ({ page, serverUrl }, testInfo) => {
+    test.skip(!participantListShownAsFullScreenPane(testInfo));
+
+    await page.goto(
+      buildUrlWithMockAdapter(serverUrl, participantListInitialState({ remoteIsMuted: true }), {
+        callInvitationUrl: 'testUrl'
+      })
+    );
+    await waitForSelector(page, dataUiId(IDS.videoGallery));
+
+    await pageClick(page, dataUiId('common-call-composite-more-button'));
+    const drawerPeopleMenuDiv = await page.$('div[role="menu"] >> text=People');
+    await drawerPeopleMenuDiv?.click();
+    // click the first participant
+    await pageClick(page, `${dataUiId('participant-list')} [role="menuitem"]`);
+
+    // wait for drawer to have opened
+    await waitForSelector(page, '[data-icon-name="ContextualMenuMicMutedIcon"]');
+    expect(await stableScreenshot(page)).toMatchSnapshot(`participant-mute-menu-item-disabled.png`);
+  });
+
+  // @conditional-compile-remove(soft-mute)
+  test('Mute all menu item disabled for user that is already muted', async ({ page, serverUrl }, testInfo) => {
+    test.skip(!participantListShownAsFullScreenPane(testInfo));
+
+    const displayNames = ['Tony Hawk', 'Marie Curie', 'Gal Gadot'];
+    const participants = displayNames.map((name) => defaultMockRemoteParticipant(name));
+    for (const participant of participants) {
+      participant.isMuted = true;
+    }
+    const initialState = defaultMockCallAdapterState(participants);
+
+    await page.goto(
+      buildUrlWithMockAdapter(serverUrl, initialState, {
+        callInvitationUrl: 'testUrl'
+      })
+    );
+    await waitForSelector(page, dataUiId(IDS.videoGallery));
+
+    await pageClick(page, dataUiId('common-call-composite-more-button'));
+    const drawerPeopleMenuDiv = await page.$('div[role="menu"] >> text=People');
+    await drawerPeopleMenuDiv?.click();
+    await pageClick(page, dataUiId('people-pane-header-more-button'));
+
+    // wait for drawer to have opened
+    await waitForSelector(page, `[data-icon-name="ContextualMenuMicMutedIcon"]`);
+    expect(await stableScreenshot(page)).toMatchSnapshot(`people-pane-mute-all-menu-item-disabled.png`);
+  });
 });
 
-const participantListInitialState = (): MockCallAdapterState => {
+const participantListInitialState = (options?: {
+  localRaisedHand?: boolean;
+  remoteRaisedHand?: boolean;
+  remoteIsMuted?: boolean;
+}): MockCallAdapterState => {
   const paul = defaultMockRemoteParticipant('Paul Bridges');
   addVideoStream(paul, true);
   paul.isSpeaking = true;
+  if (options?.localRaisedHand) {
+    paul.raisedHand = {
+      raisedHandOrderPosition: 1
+    };
+  }
+
+  const remoteParticipant1 = defaultMockRemoteParticipant('Eryka Klein');
+  if (options?.remoteRaisedHand) {
+    remoteParticipant1.raisedHand = {
+      raisedHandOrderPosition: options.localRaisedHand ? 2 : 1
+    };
+  }
+  if (options?.remoteIsMuted) {
+    remoteParticipant1.isMuted = options?.remoteIsMuted;
+  }
+
   const initialState = defaultMockCallAdapterState(
-    [paul, defaultMockRemoteParticipant('Eryka Klein'), defaultMockRemoteParticipant('Fiona Harper')],
+    [paul, remoteParticipant1, defaultMockRemoteParticipant('Fiona Harper')],
     'Unknown'
   );
   addDefaultMockLocalVideoStreamState(initialState);

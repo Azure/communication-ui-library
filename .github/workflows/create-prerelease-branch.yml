@@ -35,7 +35,7 @@ jobs:
     permissions: read-all
     steps:
       # Check-out repo
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
           # Use a machine account when checking out. This is to workaround the issue were GitHub
@@ -58,20 +58,20 @@ jobs:
 
       # Ensure node version is great enough
       - name: Use Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '20.x'
 
       # Try get node_modules from cache
       - name: Restore node_modules from cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
 
       # Install dependencies
       - name: Install rush
-        run: npm install -g @microsoft/rush@5.112.2
+        run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
       - name: Install dependencies
         run: rush install --max-install-attempts 3
 
@@ -141,11 +141,13 @@ jobs:
       - name: Hop into new branch
         id: groombranch
         run: |
-          git checkout -b groom-changelog-${{github.event.inputs.bumptype}}/${{ steps.version.outputs.version }}
-          echo "groombranch=groom-changelog-${{github.event.inputs.bumptype}}/${{ steps.version.outputs.version }}" >> $GITHUB_OUTPUT
+          git checkout -b groom-changelog-${{github.event.inputs.bump_type}}/${{ steps.version.outputs.version }}
+          echo "groombranch=groom-changelog-${{github.event.inputs.bump_type}}/${{ steps.version.outputs.version }}" >> $GITHUB_OUTPUT
 
       - name: Add trivial changefile so CI does not complain about the CHANGELOG grooming PR
-        run: node common/scripts/changelog/change.mjs -m 'Bumped versions for release' --type none
+        run: |
+          echo "Please create a changelog manually with message - Bumped versions for release"
+          echo "This is no longer possible due to changes to beachball. Use rushx changelog to create the file."
 
       # Push groom changes
       - name: Create groom file and push changes

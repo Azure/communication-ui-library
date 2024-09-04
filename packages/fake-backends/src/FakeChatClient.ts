@@ -19,13 +19,14 @@ import { FakeChatThreadClient } from './FakeChatThreadClient';
 import { chatToSignalingParticipant, pagedAsyncIterator, latestMessageTimestamp } from './utils';
 import { BaseChatThreadEvent } from '@azure/communication-signaling';
 import { getThreadEventTargets } from './ThreadEventEmitter';
+import { FakeInvalidChatThreadClient, INVALID_THREAD_ID } from './FakeInvalidChatThreadClient';
 
 /**
  * A public interface compatible stub for ChatClient.
  */
 export class FakeChatClient implements IChatClient {
   private realtimeNotificationsEnabled = false;
-  private threadClients: FakeChatThreadClient[] = [];
+  private threadClients: IChatThreadClient[] = [];
   private model: Model;
   private userId: CommunicationIdentifier;
 
@@ -36,34 +37,43 @@ export class FakeChatClient implements IChatClient {
 
   getChatThreadClient(threadId: string): ChatThreadClient {
     this.model.checkedGetThread(this.userId, threadId);
-    const threadClient = new FakeChatThreadClient(this.model, this.userId, threadId);
+
+    const threadClient =
+      threadId === INVALID_THREAD_ID
+        ? new FakeInvalidChatThreadClient(threadId)
+        : new FakeChatThreadClient(this.model, this.userId, threadId);
+
     this.threadClients.push(threadClient);
     return threadClient as IChatThreadClient as ChatThreadClient;
   }
 
   createChatThread(
     request: CreateChatThreadRequest,
-    options?: CreateChatThreadOptions
+    options?: CreateChatThreadOptions & {
+      fakeInvalidThread?: boolean;
+    }
   ): Promise<CreateChatThreadResult> {
     const now = new Date(Date.now());
     const participants = this.withCurrentUserInThread(options?.participants ?? []);
     const thread: Thread = {
-      id: nanoid(),
+      id: options?.fakeInvalidThread ? INVALID_THREAD_ID : nanoid(),
       version: 0,
       createdOn: now,
       createdBy: getIdentifierKind(this.userId),
       topic: request.topic,
       participants,
-      messages: [
-        {
-          id: '0',
-          type: 'participantAdded',
-          sequenceId: '0',
-          version: '0',
-          createdOn: new Date(),
-          content: { participants }
-        }
-      ],
+      messages: options?.fakeInvalidThread
+        ? []
+        : [
+            {
+              id: '0',
+              type: 'participantAdded',
+              sequenceId: '0',
+              version: '0',
+              createdOn: new Date(),
+              content: { participants }
+            }
+          ],
       readReceipts: []
     };
     this.model.addThread(thread);

@@ -60,7 +60,7 @@ const UnsupportedBrowserStory = (): JSX.Element => {
 const getDocs: () => JSX.Element = () => {
   return (
     <Stack>
-      <SingleLineBetaBanner />
+      <SingleLineBetaBanner topOfPage={true} />
       <Title>Unsupported Browser</Title>
       <Description>
         Component to display help information when the app is loaded in an unsuppported environment.

@@ -20,6 +20,7 @@
     "complianceBannerTranscriptionStopped": "La transcripción se ha detenido.",
     "configurationPageTitle": "Iniciar una llamada",
     "copyInviteLinkButtonLabel": "Copiar vínculo de invitación",
+    "copyInviteLinkButtonActionedLabel": "Vínculo copiado",
     "copyInviteLinkActionedAriaLabel": "Vínculo de invitación copiado",
     "defaultPlaceHolder": "Seleccionar una opción",
     "dismissSidePaneButtonLabel": "Cerrar",
@@ -52,6 +53,7 @@
     "peopleButtonLabel": "Contactos",
     "selectedPeopleButtonLabel": "Se seleccionó el botón Contactos",
     "peoplePaneTitle": "Contactos",
+    "peoplePaneMoreButtonAriaLabel": "Más",
     "peopleButtonTooltipOpen": "Mostrar participantes",
     "peopleButtonTooltipClose": "Ocultar participantes",
     "peoplePaneSubTitle": "En esta llamada {numberOfPeople}",
@@ -60,11 +62,12 @@
     "removedFromCallMoreDetails": "Otro participante te ha eliminado de la llamada.",
     "removedFromCallTitle": "Fuiste eliminado",
     "removeMenuLabel": "Quitar",
-    "startSpotlightParticipantListMenuLabel": "Poner en primer plano para todos",
-    "addSpotlightParticipantListMenuLabel": "Agregar primer plano",
-    "stopSpotlightParticipantListMenuLabel": "Dejar de poner en primer plano",
-    "stopSpotlightOnSelfParticipantListMenuLabel": "Primer plano",
-    "spotlightLimitReachedParticipantListMenuTitle": "Se alcanzó el límite de primer plano",
+    "startSpotlightMenuLabel": "Poner en primer plano para todos",
+    "addSpotlightMenuLabel": "Agregar primer plano",
+    "stopSpotlightMenuLabel": "Dejar de poner en primer plano",
+    "stopSpotlightOnSelfMenuLabel": "Primer plano",
+    "spotlightLimitReachedMenuTitle": "Se alcanzó el límite de primer plano",
+    "stopAllSpotlightMenuLabel": "Detener todos los primeros planos",
     "returnToCallButtonAriaDescription": "Volver a llamada",
     "returnToCallButtonAriaLabel": "Volver",
     "roomNotFoundDetails": "No se encontró el Id. de sala proporcionado.",
@@ -132,6 +135,7 @@
     "dtmfDialerButtonTooltipOff": "Ocultar teclado de marcado",
     "dtmfDialerMoreButtonLabelOn": "Mostrar teclado de marcado",
     "dtmfDialerMoreButtonLabelOff": "Ocultar teclado de marcado",
+    "phoneCallMoreButtonLabel": "Llamada telefónica",
     "spokenLanguageStrings": {
       "ar-ae": "Árabe - Emiratos Árabes Unidos",
       "ar-sa": "Árabe - Arabia Saudí",
@@ -242,6 +246,10 @@
       "shareScreen": {
         "lostDueToRoleChangeToAttendee": "Tu rol ha sido cambiado. Algunas acciones, como compartir contenido, no estarán disponibles para usted.",
         "grantedDueToRoleChangeToPresenter": "Es moderador. Puede compartir contenido y facilitar la reunión."
+      },
+      "hideAttendeeNames": {
+        "hideAttendeeNameAttendee": "Su nombre está oculto para otros asistentes. Los organizadores y moderadores pueden ver su nombre real.",
+        "hideAttendeeNamePresenter": "Los nombres de los asistentes están ocultos. Solo los organizadores y moderadores pueden ver los nombres para proteger la privacidad de los asistentes."
       }
     },
     "surveyTitle": "Ayúdenos a mejorar",
@@ -257,7 +265,6 @@
     "tagsSurveyQuestion": "¿Qué podría haber sido mejor?",
     "tagsSurveyTextFieldDefaultText": "Otro, especifique",
     "tagsSurveyHelperText": "Marque los problemas que haya experimentado",
-    "surveyTextboxDefaultText": "Otro, especifique",
     "endOfSurveyText": "Gracias por sus comentarios.",
     "surveyIssues": {
       "overallRating": {
@@ -299,7 +306,7 @@
         "otherIssues": "Estaba teniendo otros problemas de pantalla compartida en esta llamada"
       }
     },
-    "SurveyIssuesHeadingStrings": {
+    "surveyIssuesHeadingStrings": {
       "overallRating": "General",
       "audioRating": "Audio",
       "videoRating": "Vídeo",
@@ -311,18 +318,52 @@
       "startSpotlightOnSelfText": "Resaltará el vídeo para todos los participantes de la reunión.",
       "startSpotlightConfirmButtonLabel": "Poner en primer plano para todos",
       "startSpotlightCancelButtonLabel": "Cancelar",
-      "stopSpotlightHeading": "¿Dejar de poner en primer plano?",
+      "stopSpotlightHeading": "¿Dejar de poner este vídeo en primer plano?",
       "stopSpotlightOnSelfHeading": "¿Salir del primer plano?",
+      "stopAllSpotlightHeading": "¿Quieres dejar de poner en primer plano todos los vídeos?",
       "stopSpotlightText": "Este vídeo dejará de estar resaltado para todos los asistentes a la reunión.",
       "stopSpotlightOnSelfText": "Su vídeo ya no resaltará para todos en la reunión.",
+      "stopAllSpotlightText": "El vídeo ya no se pondrá en primer plano para todos los participantes de la reunión.",
       "stopSpotlightConfirmButtonLabel": "Dejar de poner en primer plano",
       "stopSpotlightOnSelfConfirmButtonLabel": "Salir del primer plano",
       "stopSpotlightCancelButtonLabel": "Cancelar"
-    }
+    },
+    "exitSpotlightButtonLabel": "Salir del primer plano",
+    "exitSpotlightButtonTooltip": "Salir del primer plano",
+    "leaveConfirmButtonLabel": "Salir",
+    "endCallConfirmButtonLabel": "Finalizar llamada",
+    "hangUpCancelButtonLabel": "Cancelar",
+    "leaveConfirmDialogTitle": "¿Abandonar la llamada?",
+    "leaveConfirmDialogContent": "¿Está seguro de que desea abandonar la llamada?",
+    "endCallConfirmDialogTitle": "¿Finalizar la llamada?",
+    "endCallConfirmDialogContent": "Finalizará la llamada para todos los usuarios.",
+    "invalidMeetingIdentifier": "Id. de reunión o código de acceso no válidos",
+    "pinParticipantMenuLabel": "Anclar para mí",
+    "pinParticipantLimitReachedMenuLabel": "Pin (límite alcanzado)",
+    "unpinParticipantMenuLabel": "Desanclar",
+    "pinParticipantMenuItemAriaLabel": "Anclar",
+    "unpinParticipantMenuItemAriaLabel": "Desanclar",
+    "muteAllMenuLabel": "Silenciar todo",
+    "muteAllDialogTitle": "¿Silenciar a todos?",
+    "muteAllDialogContent": "Esto silenciará a todos los participantes de la reunión, excepto usted.",
+    "muteAllConfirmButtonLabel": "Silenciar todo",
+    "muteAllCancelButtonLabel": "Cancelar",
+    "joinBreakoutRoomButtonLabel": "Unirse a la sala para sesión de subgrupo",
+    "returnFromBreakoutRoomButtonLabel": "Salir de la sala",
+    "leaveBreakoutRoomAndMeetingButtonLabel": "Salir de la reunión",
+    "breakoutRoomJoinedNotificationTitle": "Se has unido a la sala para sesión de subgrupo '{roomName}'",
+    "joinBreakoutRoomBannerTitle": "La sala para sesión de subgrupo '{roomName}' está abierta",
+    "joinBreakoutRoomBannerButtonLabel": "Unirse",
+    "returnFromBreakoutRoomBannerTitle": "Regresar a la reunión principal",
+    "returnFromBreakoutRoomBannerButtonLabel": "Volver a unirse"
   },
   "chat": {
     "chatListHeader": "En este chat",
-    "uploadFile": "Subir archivo"
+    "uploadAttachment": "Cargar datos adjuntos",
+    "uploadImageDataNotProvided": "No se proporcionaron datos de imagen.",
+    "uploadImageIsTooLarge": "La imagen es demasiado grande. Elige uno que sea inferior a {maxImageSize} MB.",
+    "uploadImageExtensionIsNotAllowed": "No se permite cargar una imagen .{imageExtension}.",
+    "uploadImageFailed": "No se puede cargar la imagen. Vuelva a intentarlo más tarde."
   },
   "callWithChat": {
     "chatButtonLabel": "Chat",
@@ -332,6 +373,7 @@
     "chatButtonTooltipOpen": "Mostrar chat",
     "chatPaneTitle": "Chat",
     "copyInviteLinkButtonLabel": "Copiar vínculo de invitación",
+    "copyInviteLinkButtonActionedLabel": "Vínculo copiado",
     "copyInviteLinkActionedAriaLabel": "Vínculo de invitación copiado",
     "dismissSidePaneButtonLabel": "Cerrar",
     "moreDrawerAudioDeviceMenuTitle": "Dispositivo de audio",
@@ -347,6 +389,8 @@
     "selectedPeopleButtonLabel": "Se seleccionó el botón Contactos",
     "peopleButtonTooltipOpen": "Mostrar participantes",
     "peopleButtonTooltipClose": "Ocultar participantes",
+    "peopleButtonTooltipOpenAriaLabel": "Botón Contactos, Mostrar participantes",
+    "peopleButtonTooltipCloseAriaLabel": "Botón Contactos, Ocultar participantes",
     "peoplePaneSubTitle": "En esta llamada",
     "peoplePaneTitle": "Contactos",
     "pictureInPictureTileAriaLabel": "Fuentes de vídeo. Hacer clic para volver a la pantalla de la llamada.",
@@ -360,6 +404,8 @@
     "dialpadModalAriaLabel": "Teclado de marcado",
     "dialpadCloseModalButtonAriaLabel": "Cerrar teclado de marcado",
     "openDtmfDialpadLabel": "Mostrar teclado de marcado",
-    "dtmfDialpadPlaceholderText": "Introducir número"
+    "dtmfDialpadPlaceholderText": "Introducir número",
+    "breakoutRoomChatPaneTitle": "Chat de sala para sesión de subgrupo",
+    "chatContentSpinnerLabel": "Cargando..."
   }
 }

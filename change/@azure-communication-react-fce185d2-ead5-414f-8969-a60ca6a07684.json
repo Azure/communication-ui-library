@@ -1,0 +1,9 @@
+{
+  "type": "patch",
+  "area": "fix",
+  "workstream": "Inline Image",
+  "comment": "Fixed the issue where image loading placeholder doesn't work for safari",
+  "packageName": "@azure/communication-react",
+  "email": "109105353+jpeng-ms@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

@@ -1,9 +1,34 @@
+/// A list of features recognized by the conditional compilation preprocessing plugin.
+///
+/// alpha - Features that are in development and not yet ready for general use.
+///         These features conditional-compiled out of beta and stable npm packages.
+/// beta - Features that are in development and are ready for public preview.
+///        These features are conditional-compiled out of stable npm packages.
+/// stable - Features that are ready for general use. These features are included in all releases.
+///
 module.exports = {
-  // A list of features recognized by the conditional compilation preprocessing plugin.
-  // "demo" is a special feature, used for demo purposes. For this feature,
-  // The plugin removes any AST node that is preceded by a comment that contains the tag:
-  // @conditional-compile-remove(demo)
-  "features": [
+  alpha: [
+    // Feature for custom video gallery layouts
+    // Feature for large gallery layout DO NOT REMOVE UNTIL SDK SUPPORTS 49 VIDEO STREAMS
+    "large-gallery",
+    // feature for positioning the overflowGallery at the top of the screen in the composite
+    "overflow-top-composite",
+    // feature for gallery layout in the composite
+    "gallery-layout-composite",
+    // feature for hiding attendee name in the teams meeting
+    "hide-attendee-name",
+    // Demo feature. Used in live-documentation of conditional compilation. Do not use in production code.
+    "in-progress-beta-feature-demo",
+    // feature for adding JS helpers to the UI library API
+    "composite-js-helpers",
+    // Feature for remote UFD
+    "remote-ufd",
+    // Feature for showing dtmp dialer by default
+    "dtmf-dialer-on-by-default",
+    // Deep Noise Suppression feature
+    "DNS"
+  ],
+  beta: [
     "call-readiness",
     // Flag to add API only available in beta calling SDK to mocks and internal types.
     // This feature should be stabilized whenever calling SDK is stabilized.
@@ -15,11 +40,6 @@ module.exports = {
     "communication-common-beta-v3",
     // Participant pane in the `ChatComposite`.
     "chat-composite-participant-pane",
-    // Close captions feature
-    "close-captions",
-    // API for injecting custom buttons in he control bar for
-    // `CallComposite` and `CallWithChatComposite`.
-    "control-bar-button-injection",
     // props to allow Contoso to overwrite timestamp format for chat messages, one in locale and one in message thread component
     "date-time-customization",
     // Demo feature. Used in live-documentation of conditional compilation.
@@ -29,8 +49,6 @@ module.exports = {
     "dialpad",
     // Data loss prevention feature
     "data-loss-prevention",
-    // Ability to upload/download files in message thread.
-    "file-sharing",
     // Mention feature
     "mention",
     // 1 to N Calling feature.
@@ -39,124 +57,50 @@ module.exports = {
     "PSTN-calls",
     // Adhoc calls to a Teams user.
     "teams-adhoc-call",
-    // Joining calls using teams token
-    "teams-identity-support",
+    // Beta feature for joining calls using teams token
+    "teams-identity-support-beta",
+    // Block joining calls if the user is on an unsupported browser
     "unsupported-browser",
-    // Support Calling SDK isReceiving flag, shows a loading spinner on the video tile when isAvailable is true but isReceiving is false
-    "video-stream-is-receiving-flag",
     // Feature to show the total number of participants in a call (currently in beta in calling SDK, hence this must be conditionally compiled)
     "total-participant-count",
     // feature for tracking environment info API different than unsupported browser. stable use of environment info affects other components possibly sooner
     "calling-environment-info",
-    // feature for vertical gallery layouts in VideoGallery
-    "vertical-gallery",
-    // Feature for updates needed for Click to Call (C2C) scenarios
-    "click-to-call",
-    // a demo feature flag for those beta feature not ready for beta release
-    "in-progress-beta-feature-demo",
-    // Feature for call transfer
-    "call-transfer",
-    // Optimal Video Count
-    "optimal-video-count",
-    // Feature for capabilities
-    "capabilities",
-    // Feature for large Gallery layout
-    "large-gallery",
-    // feature for positioning the overflowGallery at the top of the screen in the composite
-    "overflow-top-composite",
-    // feature for gallery layout in the composite 
-    "gallery-layout-composite",
     // conditional-compile for new signaling beta
     "signaling-beta",
-    // feature for hiding attendee name in the teams meeting
-    "hide-attendee-name",
-    // custom branding for the composites
-    "custom-branding",
-    // Feature for sounds during different calling events
-    "calling-sounds",
-    // Feature for end of call survey
-    'end-of-call-survey',
-    // Feature for the DTMF dialer for Teams voice apps
-    'dtmf-dialer',
-    // Feature for PPT Live for teams meeting
-    'ppt-live',
-    // Feature for meeting reactions
-    'reaction',
-    // Feature for Rich Text Editor (RTE) support
-    'rich-text-editor',
-    // Feature for spotlight
-    'spotlight',
     // Feature for tracking beta start call identifier
-    'start-call-beta'
-  ],
-  // A list of in progress beta feature.
-  // These features are still beta feature but "in progress"
-  // causing a build failure, but they are ignored by the preprocessing step.
-  "inProgressFeatures": [
-    // Demo feature. Used in live-documentation of conditional compilation.
-    // Do not use in production code.
-    "in-progress-beta-feature-demo",
-    // Feature for custom video gallery layouts
-    // Feature for large gallery layout DO NOT REMOVE UNTIL SDK SUPPORTS 49 VIDEO STREAMS
-    "large-gallery",
-    // feature for positioning the overflowGallery at the top of the screen in the composite
-    "overflow-top-composite",
-    // feature for gallery layout in the composite 
-    "gallery-layout-composite",
-    // feature for hiding attendee name in the teams meeting
-    "hide-attendee-name",
-    // Feature for end of call survey
-    'end-of-call-survey',
-    // Feature for PPT Live for teams meeting
-    'ppt-live',
-    // Feature for end of call survey self host version
-    'end-of-call-survey-self-host',
-    // Feature for meeting reactions
-    'reaction',
+    'start-call-beta',
+    // Image overlay theme
+    'image-overlay-theme',
+    // Feature for local recording notification for teams meetings
+    'local-recording-notification',
+    // Close captions feature for ACS calls
+    "acs-close-captions",
     // Feature for Rich Text Editor (RTE) support
     'rich-text-editor',
-    // Feature for spotlight
-    'spotlight'
+    // Feature for Rich Text Editor (RTE) composite support
+    "rich-text-editor-composite-support",
+    // Feature for Rich Text Editor (RTE) image upload support
+    "rich-text-editor-image-upload",
+    // Feature to support file sharing in ACS chats
+    "file-sharing-acs",
+    // Soft Mute feature for ACS calls and Interop calls
+    "soft-mute",
+    // feature for breakout rooms
+    "breakout-rooms"
   ],
-  // A list of stabilized features.
-  // These features can be listed in the conditional compilation directives without
-  // causing a build failure, but they are ignored by the preprocessing step.
-  "stabilizedFeatures": [
+  stable: [
     // Demo feature. Used in live-documentation of conditional compilation.
     // Do not use in production code.
     "stabilizedDemo",
-    // feature for blurred background and replace background effects
-    "video-background-effects",
-    // Feature for capabilities
-    "capabilities",
-    // Closed captions
-    "close-captions",
-    // Optimal Video Count
-    "optimal-video-count",
-    // raise hands feature
-    "raise-hand",
-    // feature  for vertical overflow gallery
-    "vertical-gallery",
-    // API for injecting custom buttons in he control bar for
-    // `CallComposite` and `CallWithChatComposite`.
-    "control-bar-button-injection",
-    // rooms
-    "rooms",
-    // feature for calling sounds
-    "calling-sounds",
-    // Feature for the DTMF dialer for Teams voice apps
-    "dtmf-dialer",
-    // dialpad
-    "dialpad",
-    // Feature for updates needed for Click to Call (C2C) scenarios
-    "click-to-call",
-    // Feature for call transfer
-    "call-transfer",
-    // Feature image overlay
-    "image-overlay",
-    // Chat teams interop to display images and file attachments in chat messages
-    "teams-inline-images-and-file-sharing",
-    // custom branding for the composites
-    "custom-branding"
+    // Joining calls using teams token
+    "teams-identity-support",
+    // feature for hiding attendee name in the teams meeting
+    "hide-attendee-name",
+    // Feature for end call options 
+    'end-call-options',
+    // Feature to support file sharing in Teams interoperability chats
+    "file-sharing-teams-interop",
+    // Get join conference information
+    'teams-meeting-conference'
   ]
 }

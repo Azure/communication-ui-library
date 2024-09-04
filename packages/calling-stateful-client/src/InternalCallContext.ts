@@ -11,9 +11,8 @@ import { LocalVideoStreamState } from './CallClientState';
 import type { CallContext } from './CallContext';
 import { CallIdHistory } from './CallIdHistory';
 
-/* @conditional-compile-remove(video-background-effects) */
 import { LocalVideoStreamVideoEffectsSubscriber } from './LocalVideoStreamVideoEffectsSubscriber';
-/* @conditional-compile-remove(video-background-effects) */
+
 import { Features } from '@azure/communication-calling';
 
 /**
@@ -62,7 +61,7 @@ export class InternalCallContext {
 
   // Used for keeping track of video effects subscribers that are not part of a Call.
   // The key is the stream ID. We assume each stream ID
-  /* @conditional-compile-remove(video-background-effects) */
+
   private _unparentedViewVideoEffectsSubscriber = new Map<string, LocalVideoStreamVideoEffectsSubscriber | undefined>();
 
   public setCallId(newCallId: string, oldCallId: string): void {
@@ -197,14 +196,12 @@ export class InternalCallContext {
   }
 
   public deleteUnparentedRenderInfo(localVideoStream: LocalVideoStreamState): void {
-    /* @conditional-compile-remove(video-background-effects) */
     this._unparentedViewVideoEffectsSubscriber.get(localVideoStream.mediaStreamType)?.unsubscribe();
 
     this._unparentedRenderInfos.delete(localVideoStream.mediaStreamType);
   }
 
   public subscribeToUnparentedViewVideoEffects(localVideoStream: LocalVideoStream, callContext: CallContext): void {
-    /* @conditional-compile-remove(video-background-effects) */
     {
       // Ensure we aren't setting multiple subscriptions
       this._unparentedViewVideoEffectsSubscriber.get(localVideoStream.mediaStreamType)?.unsubscribe();

@@ -4,22 +4,15 @@
 import { ChatParticipant, ChatMessage } from '@azure/communication-chat';
 import { getIdentifierKind } from '@azure/communication-common';
 import { _createStatefulChatClientWithDeps } from '@internal/chat-stateful-client';
-import {
-  _IdentifierProvider,
-  FileDownloadError,
-  FileDownloadHandler,
-  lightTheme,
-  darkTheme
-} from '@internal/react-components';
+import { _IdentifierProvider, lightTheme, darkTheme } from '@internal/react-components';
 import React, { useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import {
-  ChatAdapter,
   ChatComposite,
   COMPOSITE_LOCALE_FR_FR,
   _FakeChatAdapterArgs,
   _useFakeChatAdapters,
-  _MockFileUpload
+  _MockAttachmentUpload
 } from '../../../src';
 // eslint-disable-next-line no-restricted-imports
 import { IDS } from '../../browser/common/constants';
@@ -53,10 +46,6 @@ export const FakeAdapterApp = (): JSX.Element => {
         return;
       }
 
-      if (fakeChatAdapterArgs.fileUploads) {
-        handleFileUploads(fakeAdapters.local, fakeChatAdapterArgs.fileUploads);
-      }
-
       if (fakeChatAdapterArgs.sendRemoteFileSharingMessage && fakeChatAdapterArgs.remoteParticipants.length > 0) {
         sendRemoteFileSharingMessage(
           fakeAdapters.service.model,
@@ -71,22 +60,11 @@ export const FakeAdapterApp = (): JSX.Element => {
           fakeChatAdapterArgs.localParticipant,
           fakeChatAdapterArgs.remoteParticipants[0],
           fakeAdapters.service.threadId,
-          fakeChatAdapterArgs.serverUrl ?? '',
-          fakeChatAdapterArgs.inlineImageUrl
+          fakeChatAdapterArgs.serverUrl ?? ''
         );
       }
     })();
   }, [fakeAdapters]);
-
-  const fileDownloadHandler: FileDownloadHandler = (_userId, fileData): Promise<URL | FileDownloadError> => {
-    return new Promise((resolve) => {
-      if (fakeChatAdapterArgs.failFileDownload) {
-        resolve({ errorMessage: 'You don’t have permission to download this file.' });
-      } else {
-        resolve(new URL(fileData.url));
-      }
-    });
-  };
 
   if (!fakeAdapters) {
     return <>{'Initializing chat adapter...'}</>;
@@ -105,13 +83,11 @@ export const FakeAdapterApp = (): JSX.Element => {
             onRenderMessage={fakeChatAdapterArgs.customDataModelEnabled ? customOnRenderMessage : undefined}
             options={{
               participantPane: fakeChatAdapterArgs.showParticipantPane ?? false,
-              fileSharing: fakeChatAdapterArgs.fileSharingEnabled
+              attachmentOptions: fakeChatAdapterArgs.fileSharingEnabled
                 ? {
-                    downloadHandler: fileDownloadHandler,
-                    uploadHandler: () => {
-                      //noop
-                    },
-                    multiple: true
+                    uploadOptions: {
+                      handleAttachmentSelection: () => {}
+                    }
                   }
                 : undefined
             }}
@@ -125,29 +101,6 @@ export const FakeAdapterApp = (): JSX.Element => {
       <HiddenChatComposites adapters={fakeAdapters.remotes} />
     </>
   );
-};
-
-const handleFileUploads = (adapter: ChatAdapter, fileUploads: _MockFileUpload[]): void => {
-  fileUploads.forEach((file) => {
-    if (file.uploadComplete) {
-      const fileUploads = adapter.registerActiveFileUploads([new File([], file.name)]);
-      fileUploads[0].notifyUploadCompleted({
-        name: file.name,
-        extension: file.extension,
-        url: file.url,
-        /* @conditional-compile-remove(file-sharing) */
-        id: file.id
-      });
-    } else if (file.error) {
-      const fileUploads = adapter.registerActiveFileUploads([new File([], file.name)]);
-      fileUploads[0].notifyUploadFailed(file.error);
-    } else if (file.progress) {
-      const fileUploads = adapter.registerActiveFileUploads([new File([], file.name)]);
-      fileUploads[0].notifyUploadProgressChanged(file.progress);
-    } else {
-      adapter.registerCompletedFileUploads([file]);
-    }
-  });
 };
 
 const sendRemoteFileSharingMessage = (
@@ -175,12 +128,12 @@ const sendRemoteInlineImageMessage = (
   localParticipant: ChatParticipant,
   remoteParticipant: ChatParticipant,
   threadId: string,
-  serverUrl: string,
-  inlineImageUrl?: string
+  serverUrl: string
 ): void => {
   const localParticipantId = getIdentifierKind(localParticipant.id);
   const remoteParticipantId = getIdentifierKind(remoteParticipant.id);
-  const imgSrc = serverUrl + (inlineImageUrl || '/images/inlineImageExample1.png');
+  const imgSrcPreview = serverUrl + '/images/inlineImageExample1.png';
+  const imgSrcFullSize = serverUrl + '/images/inlineImageExample1-fullSize.png';
   if (localParticipantId.kind === 'microsoftTeamsApp' || remoteParticipantId.kind === 'microsoftTeamsApp') {
     throw new Error('Unsupported identifier kind: microsoftBot');
   }
@@ -192,14 +145,14 @@ const sendRemoteInlineImageMessage = (
     sequenceId: `${thread.messages.length}`,
     version: '0',
     content: {
-      message: `<p>Test</p><p><img alt="image" src="${imgSrc}" itemscope="png" width="200" height="300" id="SomeImageId1" style="vertical-align:bottom"></p><p>&nbsp;</p>`,
+      message: `<p>Test</p><p><img alt="image" src="${imgSrcPreview}" itemscope="png" width="200" height="300" id="SomeImageId1" style="vertical-align:bottom; aspect-ratio: 200 / 300;"></p><p>&nbsp;</p>`,
       attachments: [
         {
           id: 'SomeImageId1',
           attachmentType: 'image',
           name: '',
-          url: imgSrc,
-          previewUrl: imgSrc
+          url: imgSrcFullSize,
+          previewUrl: imgSrcPreview
         }
       ]
     },

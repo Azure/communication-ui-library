@@ -20,6 +20,7 @@
     "complianceBannerTranscriptionStopped": "התמלול הופסק.",
     "configurationPageTitle": "התחל שיחה",
     "copyInviteLinkButtonLabel": "העתק קישור להזמנה",
+    "copyInviteLinkButtonActionedLabel": "הקישור הועתק",
     "copyInviteLinkActionedAriaLabel": "קישור ההזמנה הועתק",
     "defaultPlaceHolder": "בחר אפשרות",
     "dismissSidePaneButtonLabel": "סגור",
@@ -52,6 +53,7 @@
     "peopleButtonLabel": "אנשים",
     "selectedPeopleButtonLabel": "לחצן 'אנשים' נבחר",
     "peoplePaneTitle": "אנשים",
+    "peoplePaneMoreButtonAriaLabel": "עוד",
     "peopleButtonTooltipOpen": "הצג משתתפים",
     "peopleButtonTooltipClose": "הסתר משתתפים",
     "peoplePaneSubTitle": "בשיחה זו {numberOfPeople}",
@@ -60,11 +62,12 @@
     "removedFromCallMoreDetails": "משתתף אחר הסיר אותך מהשיחה.",
     "removedFromCallTitle": "הוסרת",
     "removeMenuLabel": "הסר",
-    "startSpotlightParticipantListMenuLabel": "הצבת זרקור עבור כולם",
-    "addSpotlightParticipantListMenuLabel": "הוסף זרקור",
-    "stopSpotlightParticipantListMenuLabel": "הפסק להציב זרקור",
-    "stopSpotlightOnSelfParticipantListMenuLabel": "צא מזרקור",
-    "spotlightLimitReachedParticipantListMenuTitle": "הגעת למגבלת הזרקורים",
+    "startSpotlightMenuLabel": "הצבת זרקור עבור כולם",
+    "addSpotlightMenuLabel": "הוסף זרקור",
+    "stopSpotlightMenuLabel": "הפסק להציב זרקור",
+    "stopSpotlightOnSelfMenuLabel": "צא מזרקור",
+    "spotlightLimitReachedMenuTitle": "הגעת למגבלת הזרקורים",
+    "stopAllSpotlightMenuLabel": "הפסק את כל הצבות הזרקור",
     "returnToCallButtonAriaDescription": "חזור לשיחה",
     "returnToCallButtonAriaLabel": "הקודם",
     "roomNotFoundDetails": "מזהה החדר שסופק לא נמצא.",
@@ -132,6 +135,7 @@
     "dtmfDialerButtonTooltipOff": "הסתר לוח חיוג",
     "dtmfDialerMoreButtonLabelOn": "הצג לוח חיוג",
     "dtmfDialerMoreButtonLabelOff": "הסתר לוח חיוג",
+    "phoneCallMoreButtonLabel": "שיחת טלפון",
     "spokenLanguageStrings": {
       "ar-ae": "ערבית - איחוד האמירויות",
       "ar-sa": "ערבית - ערב הסעודית",
@@ -242,6 +246,10 @@
       "shareScreen": {
         "lostDueToRoleChangeToAttendee": "התפקיד שלך השתנה. פעולות מסוימות, כגון שיתוף תוכן, לא יהיו זמינות עבורך.",
         "grantedDueToRoleChangeToPresenter": "אתה מציג. באפשרותך לשתף תוכן ולסייע בפגישה."
+      },
+      "hideAttendeeNames": {
+        "hideAttendeeNameAttendee": "שמך מוסתר ממשתתפים אחרים. מארגנים ומציגים יכולים לראות את שמך האמיתי.",
+        "hideAttendeeNamePresenter": "שמות המשתתפים מוסתרים. רק מארגנים ומציגים יכולים לראות את השמות, כדי להגן על פרטיות המשתתפים."
       }
     },
     "surveyTitle": "עזור לנו להשתפר",
@@ -257,7 +265,6 @@
     "tagsSurveyQuestion": "מה יכול היה להיות טוב יותר?",
     "tagsSurveyTextFieldDefaultText": "אחר, נא לציין",
     "tagsSurveyHelperText": "בדוק את כל הבעיות שבהן נתקלת",
-    "surveyTextboxDefaultText": "אחר, נא לציין",
     "endOfSurveyText": "תודה על המשוב!",
     "surveyIssues": {
       "overallRating": {
@@ -299,7 +306,7 @@
         "otherIssues": "נתקלתי בבעיות אחרות בשיתוף מסכים בשיחה זו"
       }
     },
-    "SurveyIssuesHeadingStrings": {
+    "surveyIssuesHeadingStrings": {
       "overallRating": "סך הכל",
       "audioRating": "שם ציוד השמע",
       "videoRating": "סרטון",
@@ -311,18 +318,52 @@
       "startSpotlightOnSelfText": "תסמן את סרטון הווידאו שלך עבור כל האנשים בפגישה.",
       "startSpotlightConfirmButtonLabel": "הצבת זרקור עבור כולם",
       "startSpotlightCancelButtonLabel": "ביטול",
-      "stopSpotlightHeading": "להפסיק להציב זרקור?",
+      "stopSpotlightHeading": "להפסיק להאיר בזרקור וידאו זה?",
       "stopSpotlightOnSelfHeading": "לצאת מזרקור?",
+      "stopAllSpotlightHeading": "להפסיק להציב זרקור על כל סרטוני הווידאו?",
       "stopSpotlightText": "וידאו זה לא יסומן עוד עבור כל האנשים בפגישה.",
       "stopSpotlightOnSelfText": "סרטון הווידאו שלך לא יסומן עוד עבור כל האנשים בפגישה.",
+      "stopAllSpotlightText": "סרטוני הווידאו לא יסומנו עוד עבור כל האנשים בפגישה.",
       "stopSpotlightConfirmButtonLabel": "הפסק להציב זרקור",
       "stopSpotlightOnSelfConfirmButtonLabel": "צא מזרקור",
       "stopSpotlightCancelButtonLabel": "ביטול"
-    }
+    },
+    "exitSpotlightButtonLabel": "צא מהזרקור",
+    "exitSpotlightButtonTooltip": "צא מהזרקור",
+    "leaveConfirmButtonLabel": "צא",
+    "endCallConfirmButtonLabel": "סיים שיחה",
+    "hangUpCancelButtonLabel": "ביטול",
+    "leaveConfirmDialogTitle": "לצאת מהשיחה?",
+    "leaveConfirmDialogContent": "האם אתה בטוח שברצונך לעזוב את השיחה?",
+    "endCallConfirmDialogTitle": "לסיים את השיחה?",
+    "endCallConfirmDialogContent": "פעולה זאת תסיים את השיחה עבור כל המשתתפים.",
+    "invalidMeetingIdentifier": "מזהה פגישה או קוד סיסמה לא חוקיים",
+    "pinParticipantMenuLabel": "הצמד עבורי",
+    "pinParticipantLimitReachedMenuLabel": "הצמדה (הגעת למגבלה)",
+    "unpinParticipantMenuLabel": "בטל הצמדה",
+    "pinParticipantMenuItemAriaLabel": "הצמד",
+    "unpinParticipantMenuItemAriaLabel": "בטל הצמדה",
+    "muteAllMenuLabel": "השתק הכל",
+    "muteAllDialogTitle": "האם להשתיק את כולם?",
+    "muteAllDialogContent": "פעולה זו תשתיק את כל האנשים בפגישה חוץ ממך.",
+    "muteAllConfirmButtonLabel": "השתק הכל",
+    "muteAllCancelButtonLabel": "ביטול",
+    "joinBreakoutRoomButtonLabel": "הצטרף לחדר בריחה",
+    "returnFromBreakoutRoomButtonLabel": "עזוב את החדר",
+    "leaveBreakoutRoomAndMeetingButtonLabel": "עזוב פגישה",
+    "breakoutRoomJoinedNotificationTitle": "הצטרפת לפיצול חדרים '{roomName}'",
+    "joinBreakoutRoomBannerTitle": "פיצול החדרים '{roomName}' פתוח",
+    "joinBreakoutRoomBannerButtonLabel": "הצטרף",
+    "returnFromBreakoutRoomBannerTitle": "חזרה לפגישה הראשית",
+    "returnFromBreakoutRoomBannerButtonLabel": "הצטרף מחדש"
   },
   "chat": {
     "chatListHeader": "בצ'אט זה",
-    "uploadFile": "העלה קובץ"
+    "uploadAttachment": "העלה קובץ מצורף",
+    "uploadImageDataNotProvided": "נתוני התמונה לא סופקו.",
+    "uploadImageIsTooLarge": "התמונה גדולה מדי. בחר אחד קטן יותר מ{maxImageSize} MB.",
+    "uploadImageExtensionIsNotAllowed": "העלאת תמונה {imageExtension} אסורה.",
+    "uploadImageFailed": "לא ניתן להעלות את התמונה. נסה שוב מאוחר יותר."
   },
   "callWithChat": {
     "chatButtonLabel": "צ'אט",
@@ -332,6 +373,7 @@
     "chatButtonTooltipOpen": "הצג צ'אט",
     "chatPaneTitle": "צ'אט",
     "copyInviteLinkButtonLabel": "העתק קישור להזמנה",
+    "copyInviteLinkButtonActionedLabel": "הקישור הועתק",
     "copyInviteLinkActionedAriaLabel": "קישור ההזמנה הועתק",
     "dismissSidePaneButtonLabel": "סגור",
     "moreDrawerAudioDeviceMenuTitle": "התקן שמע",
@@ -347,6 +389,8 @@
     "selectedPeopleButtonLabel": "לחצן 'אנשים' נבחר",
     "peopleButtonTooltipOpen": "הצג משתתפים",
     "peopleButtonTooltipClose": "הסתר משתתפים",
+    "peopleButtonTooltipOpenAriaLabel": "לחצן אנשים, הצג משתתפים",
+    "peopleButtonTooltipCloseAriaLabel": "לחצן אנשים, הסתר משתתפים",
     "peoplePaneSubTitle": "בשיחה זו",
     "peoplePaneTitle": "אנשים",
     "pictureInPictureTileAriaLabel": "הזנות וידאו. לחץ כדי לחזור למסך השיחה.",
@@ -360,6 +404,8 @@
     "dialpadModalAriaLabel": "לוח חיוג",
     "dialpadCloseModalButtonAriaLabel": "סגור לוח חיוג",
     "openDtmfDialpadLabel": "הצג לוח חיוג",
-    "dtmfDialpadPlaceholderText": "הזן מספר"
+    "dtmfDialpadPlaceholderText": "הזן מספר",
+    "breakoutRoomChatPaneTitle": "צ'אט פיצול חדרים",
+    "chatContentSpinnerLabel": "בטעינה..."
   }
 }

@@ -3,7 +3,6 @@
 
 import { CallCommon } from '@azure/communication-calling';
 import { CallingSounds } from './CallAdapter';
-/* @conditional-compile-remove(calling-sounds) */
 import { isPhoneNumberIdentifier } from '@azure/communication-common';
 import { CommunicationIdentifier } from '@azure/communication-common';
 
@@ -25,6 +24,7 @@ export class CallingSoundSubscriber {
   private call: CallCommon;
   private soundsLoaded?: CallingSoundsLoaded;
   private callee: CommunicationIdentifier[] | undefined;
+  public playingSounds: boolean = false;
 
   constructor(call: CallCommon, callee?: CommunicationIdentifier[], sounds?: CallingSounds) {
     this.call = call;
@@ -40,20 +40,24 @@ export class CallingSoundSubscriber {
       if (shouldPlayRinging(this.call, this.callee) && this.soundsLoaded?.callRingingSound) {
         this.soundsLoaded.callRingingSound.loop = true;
         this.playSound(this.soundsLoaded.callRingingSound);
+        this.playingSounds = true;
       }
       if (!shouldPlayRinging(this.call, this.callee) && this.soundsLoaded?.callRingingSound) {
         this.soundsLoaded.callRingingSound.loop = false;
         this.soundsLoaded.callRingingSound.pause();
+        this.playingSounds = false;
       }
       if (this.call.state === 'Disconnected') {
         if (this.soundsLoaded?.callBusySound && this.call.callEndReason?.code === CALL_REJECTED_CODE) {
           this.playSound(this.soundsLoaded.callBusySound);
+          this.playingSounds = true;
         } else if (
           this.soundsLoaded?.callEndedSound &&
           this.call.callEndReason?.code === CALL_ENDED_CODE &&
           this.call.callEndReason?.subCode !== CALL_TRANSFER_SUBCODE
         ) {
           this.playSound(this.soundsLoaded.callEndedSound);
+          this.playingSounds = true;
         }
       }
     });
@@ -67,6 +71,21 @@ export class CallingSoundSubscriber {
     this.call?.off('stateChanged', this.onCallStateChanged);
     if (this.soundsLoaded?.callRingingSound) {
       this.soundsLoaded.callRingingSound.pause();
+    }
+  }
+
+  public pauseSounds(): void {
+    if (this.soundsLoaded?.callRingingSound) {
+      this.soundsLoaded.callRingingSound.pause();
+      this.playingSounds = false;
+    }
+    if (this.soundsLoaded?.callEndedSound) {
+      this.soundsLoaded.callEndedSound.pause();
+      this.playingSounds = false;
+    }
+    if (this.soundsLoaded?.callBusySound) {
+      this.soundsLoaded.callBusySound.pause();
+      this.playingSounds = false;
     }
   }
 
@@ -105,7 +124,6 @@ export class CallingSoundSubscriber {
  * sound when making an outbound call.
  */
 const shouldPlayRinging = (call: CallCommon, callee?: CommunicationIdentifier[]): boolean => {
-  /* @conditional-compile-remove(calling-sounds) */
   if (
     callee &&
     callee.length >= 1 &&

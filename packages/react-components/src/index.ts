@@ -61,30 +61,25 @@ export type {
   ViewScalingMode
 } from './types';
 
-/* @conditional-compile-remove(raise-hand) */
 export type { RaisedHand } from './types';
 
-/* @conditional-compile-remove(spotlight) */
 export type { Spotlight } from './types';
 
-/* @conditional-compile-remove(reaction) */
 export type { Reaction, ReactionResources, ReactionSprite } from './types';
 
-/* @conditional-compile-remove(close-captions) */
 export type {
   SpokenLanguageStrings,
   CaptionLanguageStrings,
   _SupportedSpokenLanguage,
   _SupportedCaptionLanguage
 } from './types';
-/* @conditional-compile-remove(close-captions) */
 export { _spokenLanguageToCaptionLanguage } from './types';
 
 /* @conditional-compile-remove(data-loss-prevention) */
 export type { BlockedMessage } from './types';
-/* @conditional-compile-remove(end-of-call-survey) */
+
 export type { SurveyIssues } from './types';
-/* @conditional-compile-remove(end-of-call-survey) */
+
 export type { SurveyIssuesHeadingStrings } from './types';
-/* @conditional-compile-remove(end-of-call-survey) */
+
 export type { CallSurveyImprovementSuggestions } from './types';

@@ -3,29 +3,28 @@
 
 import { AudioDeviceInfo, VideoDeviceInfo } from '@azure/communication-calling';
 import { Dropdown, IDropdownOption, Label, mergeStyles, Stack } from '@fluentui/react';
-/* @conditional-compile-remove(video-background-effects) */
+
 import { DefaultButton } from '@fluentui/react';
-/* @conditional-compile-remove(call-readiness) */
 import { useEffect } from 'react';
 import { useTheme, VideoStreamOptions, _DevicePermissionDropdown } from '@internal/react-components';
 import React from 'react';
 import { CallCompositeIcon } from '../../common/icons';
 import { useLocale } from '../../localization';
 import {
+  deviceSelectionContainerStyles,
   dropDownStyles,
   dropDownTitleIconStyles,
   mainStackTokens,
   optionIconStyles,
   soundStackTokens
 } from '../styles/LocalDeviceSettings.styles';
-/* @conditional-compile-remove(call-readiness) */ /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(video-background-effects) */
 import { useAdapter } from '../adapter/CallAdapterProvider';
 import { ConfigurationPageCameraDropdown } from './ConfigurationPageCameraDropdown';
 import { ConfigurationPageMicDropdown } from './ConfigurationPageMicDropdown';
 /* @conditional-compile-remove(call-readiness) */
 import { useHandlers } from '../hooks/useHandlers';
 import { cameraAndVideoEffectsContainerStyleDesktop } from '../styles/CallConfiguration.styles';
-/* @conditional-compile-remove(video-background-effects) */
+
 import { effectsButtonStyles } from '../styles/CallConfiguration.styles';
 
 type iconType = 'Camera' | 'Microphone' | 'Speaker';
@@ -92,7 +91,7 @@ export interface LocalDeviceSettingsType {
   onSelectSpeaker: (device: AudioDeviceInfo) => Promise<void>;
   /* @conditional-compile-remove(call-readiness) */
   onClickEnableDevicePermission?: () => void;
-  /* @conditional-compile-remove(video-background-effects) */
+
   onClickVideoEffects?: () => void;
 }
 
@@ -102,9 +101,8 @@ export interface LocalDeviceSettingsType {
 export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element => {
   const theme = useTheme();
   const locale = useLocale();
-  /* @conditional-compile-remove(call-readiness) */ /* @conditional-compile-remove(video-background-effects) */ /* @conditional-compile-remove(rooms) */
   const adapter = useAdapter();
-  /* @conditional-compile-remove(video-background-effects) */
+
   const onResolveVideoEffectDependency = adapter.getState().onResolveVideoEffectDependency;
   const defaultPlaceHolder = locale.strings.call.defaultPlaceHolder;
   const cameraLabel = locale.strings.call.cameraLabel;
@@ -112,24 +110,17 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
   const noSpeakersLabel = locale.strings.call.noSpeakersLabel;
   const noCameraLabel = locale.strings.call.noCamerasLabel;
   const noMicLabel = locale.strings.call.noMicrophonesLabel;
-  /* @conditional-compile-remove(rooms) */
   const role = adapter.getState().call?.role;
 
   const cameraPermissionGranted = props.cameraPermissionGranted;
   const micPermissionGranted = props.microphonePermissionGranted;
 
-  let roleCanUseCamera = true;
-  let roleCanUseMic = true;
-
-  /* @conditional-compile-remove(rooms) */
-  roleCanUseCamera = role === 'Consumer' ? false : true;
-  /* @conditional-compile-remove(rooms) */
-  roleCanUseMic = role === 'Consumer' ? false : true;
+  const roleCanUseCamera = role !== 'Consumer';
+  const roleCanUseMic = role !== 'Consumer';
 
   // TODO: speaker permission is tied to microphone permission (when you request 'audio' permission using the SDK) its
   // actually granting access to query both microphone and speaker. However the browser popup asks you explicity for
   // 'microphone'. This needs investigation on how we want to handle this and maybe needs follow up with SDK team.
-  /* @conditional-compile-remove(call-readiness) */
   useEffect(() => {
     if (cameraPermissionGranted) {
       adapter.queryCameras();
@@ -168,8 +159,8 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
           ? props.selectedCamera
             ? props.selectedCamera.id
             : props.cameras
-            ? props.cameras[0]?.id
-            : ''
+              ? props.cameras[0]?.id
+              : ''
           : 'deniedOrUnknown'
       }
       onChange={(event, option, index) => {
@@ -241,7 +232,7 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
   };
 
   return (
-    <Stack data-ui-id="call-composite-device-settings" tokens={mainStackTokens}>
+    <Stack data-ui-id="call-composite-device-settings" tokens={mainStackTokens} styles={deviceSelectionContainerStyles}>
       {roleCanUseCamera && (
         <Stack>
           <Stack horizontal horizontalAlign="space-between" styles={cameraAndVideoEffectsContainerStyleDesktop}>
@@ -252,19 +243,17 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
             >
               {cameraLabel}
             </Label>
-            {
-              /* @conditional-compile-remove(video-background-effects) */
-              onResolveVideoEffectDependency && (
-                <DefaultButton
-                  iconProps={{ iconName: 'ConfigurationScreenVideoEffectsButton' }}
-                  styles={effectsButtonStyles(theme)}
-                  onClick={props.onClickVideoEffects}
-                  data-ui-id={'call-config-video-effects-button'}
-                >
-                  {locale.strings.call.configurationPageVideoEffectsButtonLabel}
-                </DefaultButton>
-              )
-            }
+            {onResolveVideoEffectDependency && (
+              <DefaultButton
+                iconProps={{ iconName: 'ConfigurationScreenVideoEffectsButton' }}
+                styles={effectsButtonStyles(theme, !cameraPermissionGranted)}
+                onClick={props.onClickVideoEffects}
+                disabled={!cameraPermissionGranted}
+                data-ui-id={'call-config-video-effects-button'}
+              >
+                {locale.strings.call.configurationPageVideoEffectsButtonLabel}
+              </DefaultButton>
+            )}
           </Stack>
           <ConfigurationPageCameraDropdown
             cameraGrantedDropdown={cameraGrantedDropdown}

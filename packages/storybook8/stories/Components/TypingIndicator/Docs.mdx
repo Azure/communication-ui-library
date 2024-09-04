@@ -1,0 +1,41 @@
+import { Canvas, Meta, Source, ArgTypes } from '@storybook/blocks';
+import { TypingIndicator } from '@azure/communication-react';
+import TypingIndicatorExampleText from '!!raw-loader!./snippets/TypingIndicator.snippet.tsx';
+import CustomizeStyleExampleText from '!!raw-loader!./snippets/CustomizeStyle.snippet.tsx';
+import CustomizeUserRenderingExampleText from '!!raw-loader!./snippets/CustomizeUserRendering.snippet.tsx';
+import * as TypingIndicatorStories from './index.stories';
+
+<Meta of={TypingIndicatorStories} />
+
+# Typing Indicator
+
+Component to notify the local user when one or more participants in the chat thread are typing.
+
+## Import
+
+```ts
+import { TypingIndicator } from '@azure/communication-react';
+```
+
+## Example
+
+<Canvas of={TypingIndicatorStories.TypingIndicatorExampleDocsOnly} source={{ code: TypingIndicatorExampleText }} />
+
+## Customize Style
+
+To customize the style of `TypingIndicator`, use the `styles` property like in the example below. Notice that the keys of `styles` property are the root and sub-components of `TypingIndicator`, each of which can be styled independently.
+
+<Canvas of={TypingIndicatorStories.CustomizeStyleExampleDocsOnly} source={{ code: CustomizeStyleExampleText }} />
+
+## Customize user rendering
+
+To customize user rendering of `TypingIndicator`, use the `onRenderUsers` property like in the example below. Note when this property is assigned you must apply style directly. The `styles` property will not apply.
+
+<Canvas
+  of={TypingIndicatorStories.CustomizeUserRenderingExampleDocsOnly}
+  source={{ code: CustomizeUserRenderingExampleText }}
+/>
+
+## Props
+
+<ArgTypes of={TypingIndicator} />

@@ -1,9 +1,0 @@
-{
-  "type": "none",
-  "area": "feature",
-  "workstream": "RTE",
-  "comment": "Add Ribbon toolbar for rich text editor",
-  "packageName": "@azure/communication-react",
-  "email": "98852890+vhuseinova-msft@users.noreply.github.com",
-  "dependentChangeType": "none"
-}

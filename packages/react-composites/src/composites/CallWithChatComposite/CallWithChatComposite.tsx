@@ -3,21 +3,23 @@
 
 import React, { useCallback, useState, useMemo, useEffect, useRef } from 'react';
 import { mergeStyles, PartialTheme, Stack, Theme } from '@fluentui/react';
+/* @conditional-compile-remove(breakout-rooms) */
+import { Spinner, SpinnerSize } from '@fluentui/react';
 import { CallCompositePage } from '../CallComposite';
-/* @conditional-compile-remove(end-of-call-survey) */
 import { CallSurvey } from '@azure/communication-calling';
 import { CallState } from '@azure/communication-calling';
 import { callCompositeContainerStyles, compositeOuterContainerStyles } from './styles/CallWithChatCompositeStyles';
+/* @conditional-compile-remove(breakout-rooms) */
+import { chatSpinnerContainerStyles } from './styles/CallWithChatCompositeStyles';
 import { CallWithChatAdapter } from './adapter/CallWithChatAdapter';
 import { CallWithChatBackedCallAdapter } from './adapter/CallWithChatBackedCallAdapter';
 import { CallWithChatBackedChatAdapter } from './adapter/CallWithChatBackedChatAdapter';
 import { CallAdapter } from '../CallComposite';
-import { ChatComposite, ChatAdapter } from '../ChatComposite';
+import { ChatComposite, ChatAdapter, ChatCompositeOptions } from '../ChatComposite';
 import { BaseProvider, BaseCompositeProps } from '../common/BaseComposite';
 import { CallWithChatCompositeIcons } from '../common/icons';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { CallWithChatAdapterState } from './state/CallWithChatAdapterState';
-/* @conditional-compile-remove(end-of-call-survey) */
 import { CallSurveyImprovementSuggestions } from '@internal/react-components';
 import {
   ParticipantMenuItemsCallback,
@@ -26,13 +28,10 @@ import {
   useTheme
 } from '@internal/react-components';
 import { useId } from '@fluentui/react-hooks';
-/* @conditional-compile-remove(file-sharing) */
-import { FileSharingOptions } from '../ChatComposite';
 import { containerDivStyles } from '../common/ContainerRectProps';
 import { useCallWithChatCompositeStrings } from './hooks/useCallWithChatCompositeStrings';
 import { CallCompositeInner, CallCompositeOptions } from '../CallComposite/CallComposite';
 import { RemoteVideoTileMenuOptions } from '../CallComposite/CallComposite';
-/* @conditional-compile-remove(click-to-call) */
 import { LocalVideoTileOptions } from '../CallComposite/CallComposite';
 /* @conditional-compile-remove(call-readiness) */
 import { DeviceCheckOptions } from '../CallComposite/CallComposite';
@@ -49,6 +48,10 @@ import { SidePaneHeader } from '../common/SidePaneHeader';
 import { CallControlOptions } from '../CallComposite/types/CallControlOptions';
 import { useUnreadMessagesTracker } from './ChatButton/useUnreadMessagesTracker';
 import { VideoGalleryLayout } from '@internal/react-components';
+/* @conditional-compile-remove(file-sharing-acs) */
+import { AttachmentOptions } from '@internal/react-components';
+/* @conditional-compile-remove(breakout-rooms) */
+import { useLocale } from '../localization';
 
 /**
  * Props required for the {@link CallWithChatComposite}
@@ -103,13 +106,13 @@ export type CallWithChatCompositeOptions = {
    * If using the boolean values, true will cause default behavior across the whole control bar. False hides the whole control bar.
    */
   callControls?: boolean | CallWithChatControlOptions;
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(file-sharing-acs) */
   /**
    * Properties for configuring the File Sharing feature.
    * If undefined, file sharing feature will be disabled.
    * @beta
    */
-  fileSharing?: FileSharingOptions;
+  attachmentOptions?: AttachmentOptions;
   /* @conditional-compile-remove(call-readiness) */
   /**
    * Device permissions check options for your call.
@@ -168,7 +171,6 @@ export type CallWithChatCompositeOptions = {
    * Remote participant video tile menu options
    */
   remoteVideoTileMenuOptions?: RemoteVideoTileMenuOptions;
-  /* @conditional-compile-remove(click-to-call) */
   /**
    * Options for controlling the local video tile.
    *
@@ -184,7 +186,6 @@ export type CallWithChatCompositeOptions = {
      */
     layout?: VideoGalleryLayout;
   };
-  /* @conditional-compile-remove(end-of-call-survey) */
   /**
    * Options for end of call survey
    */
@@ -222,7 +223,6 @@ export type CallWithChatCompositeOptions = {
       improvementSuggestions: CallSurveyImprovementSuggestions
     ) => Promise<void>;
   };
-  /* @conditional-compile-remove(custom-branding) */
   /**
    * Options for setting additional customizations related to personalized branding.
    */
@@ -249,7 +249,6 @@ export type CallWithChatCompositeOptions = {
        */
       shape?: 'unset' | 'circle';
     };
-    /* @conditional-compile-remove(custom-branding) */
     /**
      * Background image displayed on the configuration page.
      */
@@ -263,7 +262,6 @@ export type CallWithChatCompositeOptions = {
       url: string;
     };
   };
-  /* @conditional-compile-remove(spotlight) */
   /**
    * Options for settings related to spotlight.
    */
@@ -274,6 +272,15 @@ export type CallWithChatCompositeOptions = {
      */
     hideSpotlightButtons?: boolean;
   };
+
+  /* @conditional-compile-remove(rich-text-editor-composite-support) */
+  /**
+   * Enables rich text editor for the send and edit boxes
+   * @defaultValue `false`
+   *
+   * @beta
+   */
+  richTextEditor?: boolean;
 };
 
 type CallWithChatScreenProps = {
@@ -284,8 +291,8 @@ type CallWithChatScreenProps = {
   callControls?: boolean | CallWithChatControlOptions;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
-  /* @conditional-compile-remove(file-sharing) */
-  fileSharing?: FileSharingOptions;
+  /* @conditional-compile-remove(file-sharing-acs) */
+  attachmentOptions?: AttachmentOptions;
   rtl?: boolean;
   /* @conditional-compile-remove(call-readiness) */
   deviceChecks?: DeviceCheckOptions;
@@ -299,12 +306,10 @@ type CallWithChatScreenProps = {
   /* @conditional-compile-remove(unsupported-browser) */
   onEnvironmentInfoTroubleshootingClick?: () => void;
   remoteVideoTileMenuOptions?: RemoteVideoTileMenuOptions;
-  /* @conditional-compile-remove(click-to-call) */
   localVideoTile?: boolean | LocalVideoTileOptions;
   galleryOptions?: {
     layout?: VideoGalleryLayout;
   };
-  /* @conditional-compile-remove(end-of-call-survey) */
   /**
    * Options for end of call survey
    */
@@ -342,25 +347,23 @@ type CallWithChatScreenProps = {
       improvementSuggestions: CallSurveyImprovementSuggestions
     ) => Promise<void>;
   };
-  /* @conditional-compile-remove(custom-branding) */
   logo?: {
     url: string;
     alt?: string;
     shape?: 'unset' | 'circle';
   };
-  /* @conditional-compile-remove(custom-branding) */
   backgroundImage?: {
     url: string;
   };
-  /* @conditional-compile-remove(spotlight) */
   spotlight?: {
     hideSpotlightButtons?: boolean;
   };
+  /* @conditional-compile-remove(rich-text-editor-composite-support) */
+  richTextEditor?: boolean;
 };
 
 const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
   const { callWithChatAdapter, fluentTheme, formFactor = 'desktop' } = props;
-  /* @conditional-compile-remove(end-of-call-survey) */
   const { surveyOptions } = props;
   const mobileView = formFactor === 'mobile';
 
@@ -374,6 +377,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
   );
 
   const [currentCallState, setCurrentCallState] = useState<CallState>();
+  const [isChatInitialized, setIsChatInitialized] = useState(false);
   const [currentPage, setCurrentPage] = useState<CallCompositePage>();
   const [isChatOpen, setIsChatOpen] = useState(false);
 
@@ -383,6 +387,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
     const updateCallWithChatPage = (newState: CallWithChatAdapterState): void => {
       setCurrentPage(newState.page);
       setCurrentCallState(newState.call?.state);
+      setIsChatInitialized(newState.chat ? true : false);
     };
     updateCallWithChatPage(callWithChatAdapter.getState());
     callWithChatAdapter.onStateChange(updateCallWithChatPage);
@@ -459,7 +464,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
     [chatButtonDisabled, mobileView, toggleChat, showChatButton]
   );
 
-  const unreadChatMessagesCount = useUnreadMessagesTracker(chatAdapter, isChatOpen);
+  const unreadChatMessagesCount = useUnreadMessagesTracker(chatAdapter, isChatOpen, isChatInitialized);
 
   const customChatButton: CustomCallControlButtonCallback = useCallback(
     (args: CustomCallControlButtonCallbackArgs) => ({
@@ -501,9 +506,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
   );
 
   const injectedCustomButtonsFromProps = useMemo(() => {
-    /* @conditional-compile-remove(control-bar-button-injection) */
     return [...(callControlOptionsFromProps.onFetchCustomButtonProps ?? [])];
-    return [];
   }, [callControlOptionsFromProps]);
 
   const callCompositeOptions: CallCompositeOptions = useMemo(
@@ -515,7 +518,6 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
               ...callControlOptionsFromProps,
               onFetchCustomButtonProps: [
                 ...(showChatButton ? [customChatButton] : []),
-                /* @conditional-compile-remove(control-bar-button-injection) */
                 ...injectedCustomButtonsFromProps
               ],
               legacyControlBarExperience: false
@@ -531,16 +533,12 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
       remoteVideoTileMenuOptions: props.remoteVideoTileMenuOptions,
 
       galleryOptions: props.galleryOptions,
-      /* @conditional-compile-remove(click-to-call) */
       localVideoTile: props.localVideoTile,
-      /* @conditional-compile-remove(end-of-call-survey) */
       surveyOptions: surveyOptions,
-      /* @conditional-compile-remove(custom-branding) */
       branding: {
         logo: props.logo,
         backgroundImage: props.backgroundImage
       },
-      /* @conditional-compile-remove(spotlight) */
       spotlight: props.spotlight
     }),
     [
@@ -557,55 +555,79 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
       props.onNetworkingTroubleShootingClick,
       /* @conditional-compile-remove(call-readiness) */
       props.onPermissionsTroubleshootingClick,
-
       props.galleryOptions,
-      /* @conditional-compile-remove(click-to-call) */
       props.localVideoTile,
       props.remoteVideoTileMenuOptions,
-      /* @conditional-compile-remove(end-of-call-survey) */
       surveyOptions,
-      /* @conditional-compile-remove(custom-branding) */
       props.logo,
-      /* @conditional-compile-remove(custom-branding) */
       props.backgroundImage,
-      /* @conditional-compile-remove(spotlight) */
       props.spotlight
     ]
   );
 
-  const onRenderChatContent = useCallback(
-    (): JSX.Element => (
+  const chatCompositeOptions: ChatCompositeOptions = useMemo(
+    () => ({
+      topic: false,
+      /* @conditional-compile-remove(chat-composite-participant-pane) */
+      participantPane: false,
+      /* @conditional-compile-remove(file-sharing-acs) */
+      attachmentOptions: props.attachmentOptions,
+      /* @conditional-compile-remove(rich-text-editor-composite-support) */
+      richTextEditor: props.richTextEditor
+    }),
+    [
+      /* @conditional-compile-remove(file-sharing-acs) */
+      props.attachmentOptions,
+      /* @conditional-compile-remove(rich-text-editor-composite-support) */
+      props.richTextEditor
+    ]
+  );
+
+  /* @conditional-compile-remove(breakout-rooms) */
+  const chatSpinnerLabel = useLocale().strings.callWithChat.chatContentSpinnerLabel;
+
+  const onRenderChatContent = useCallback((): JSX.Element => {
+    /* @conditional-compile-remove(breakout-rooms) */
+    if (!isChatInitialized) {
+      return (
+        <Stack styles={chatSpinnerContainerStyles}>
+          <Spinner label={chatSpinnerLabel} size={SpinnerSize.large} />
+        </Stack>
+      );
+    }
+    return (
       <ChatComposite
         adapter={chatAdapter}
         fluentTheme={theme}
-        options={{
-          topic: false,
-          /* @conditional-compile-remove(chat-composite-participant-pane) */
-          participantPane: false,
-          /* @conditional-compile-remove(file-sharing) */
-          fileSharing: props.fileSharing
-        }}
+        options={chatCompositeOptions}
         onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
       />
-    ),
-    [
-      chatAdapter,
-      /* @conditional-compile-remove(file-sharing) */ props.fileSharing,
-      props.onFetchAvatarPersonaData,
-      theme
-    ]
-  );
+    );
+  }, [
+    chatAdapter,
+    props.onFetchAvatarPersonaData,
+    chatCompositeOptions,
+    theme,
+    /* @conditional-compile-remove(breakout-rooms) */ isChatInitialized,
+    /* @conditional-compile-remove(breakout-rooms) */ chatSpinnerLabel
+  ]);
+
+  let chatPaneTitle = callWithChatStrings.chatPaneTitle;
+  /* @conditional-compile-remove(breakout-rooms) */
+  if (callAdapter.getState().call?.breakoutRooms?.breakoutRoomOriginCallId) {
+    chatPaneTitle = callWithChatStrings.breakoutRoomChatPaneTitle;
+  }
 
   const sidePaneHeaderRenderer = useCallback(
     () => (
       <SidePaneHeader
-        headingText={callWithChatStrings.chatPaneTitle}
+        headingText={chatPaneTitle}
         onClose={closeChat}
         dismissSidePaneButtonAriaLabel={callWithChatStrings.dismissSidePaneButtonLabel ?? ''}
         mobileView={mobileView}
       />
     ),
-    [callWithChatStrings.chatPaneTitle, callWithChatStrings.dismissSidePaneButtonLabel, closeChat, mobileView]
+    [chatPaneTitle, callWithChatStrings.dismissSidePaneButtonLabel, closeChat, mobileView]
   );
 
   const sidePaneContentRenderer = useMemo(
@@ -681,7 +703,13 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
 export const CallWithChatComposite = (props: CallWithChatCompositeProps): JSX.Element => {
   const { adapter, fluentTheme, rtl, formFactor, joinInvitationURL, options } = props;
   return (
-    <BaseProvider fluentTheme={fluentTheme} rtl={rtl} locale={props.locale} icons={props.icons}>
+    <BaseProvider
+      fluentTheme={fluentTheme}
+      rtl={rtl}
+      locale={props.locale}
+      icons={props.icons}
+      formFactor={props.formFactor}
+    >
       <CallWithChatScreen
         {...props}
         /* @conditional-compile-remove(call-readiness) */
@@ -692,19 +720,16 @@ export const CallWithChatComposite = (props: CallWithChatCompositeProps): JSX.El
         joinInvitationURL={joinInvitationURL}
         fluentTheme={fluentTheme}
         remoteVideoTileMenuOptions={options?.remoteVideoTileMenuOptions}
-        /* @conditional-compile-remove(file-sharing) */
-        fileSharing={options?.fileSharing}
-        /* @conditional-compile-remove(click-to-call) */
+        /* @conditional-compile-remove(file-sharing-acs) */
+        attachmentOptions={options?.attachmentOptions}
         localVideoTile={options?.localVideoTile}
         galleryOptions={options?.galleryOptions}
-        /* @conditional-compile-remove(custom-branding) */
         logo={options?.branding?.logo}
-        /* @conditional-compile-remove(custom-branding) */
         backgroundImage={options?.branding?.backgroundImage}
-        /* @conditional-compile-remove(end-of-call-survey) */
         surveyOptions={options?.surveyOptions}
-        /* @conditional-compile-remove(spotlight) */
         spotlight={options?.spotlight}
+        /* @conditional-compile-remove(rich-text-editor-composite-support) */
+        richTextEditor={options?.richTextEditor}
       />
     </BaseProvider>
   );

@@ -26,21 +26,21 @@ jobs:
       id-token: write
     environment: production
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Use Node.js 20.x
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 20.x
 
       - name: Restore node_modules from cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
 
       - name: Install Rush
-        run: npm install -g @microsoft/rush@5.112.2
+        run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
 
       - name: Set commit SHA as environment variable
         run: echo "REACT_APP_COMMIT_SHA=${GITHUB_SHA::7}" >> $GITHUB_ENV

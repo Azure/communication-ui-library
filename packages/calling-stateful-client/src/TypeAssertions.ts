@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import { Call, CallAgent, CallClient, DeviceManager } from '@azure/communication-calling';
-/* @conditional-compile-remove(video-background-effects) */
+
 import { VideoEffectsFeature } from '@azure/communication-calling';
 import { CallErrorTarget } from './CallClientState';
 import { IncomingCall } from '@azure/communication-calling';
@@ -28,10 +28,7 @@ type InferredCallErrorTargets =
   | CallObjectMethodNames<'DeviceManager', DeviceManager>
   | CallObjectMethodNames<'Call', Call>
   | CallObjectMethodNames<'IncomingCall', Pick<IncomingCall, 'accept' | 'reject'>>
-  | /* @conditional-compile-remove(video-background-effects) */ CallObjectMethodNames<
-      'VideoEffectsFeature',
-      Pick<VideoEffectsFeature, 'startEffects'>
-    >
+  | CallObjectMethodNames<'VideoEffectsFeature', Pick<VideoEffectsFeature, 'startEffects'>>
   /* Need to explicitly add these because we incorrectly added them to exported type before it was
    * stabilized in @azure/commmunication-calling.
    * TODO: Remove this hack once 'CallAgent.feature' becomes part of stable @azure/communication-calling.
@@ -42,8 +39,8 @@ type InferredCallErrorTargets =
   | 'CallClient.feature'
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.admit'
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.rejectParticipant'
-  | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.muteAllRemoteParticipants'
-  | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.admitAll';
+  | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.admitAll'
+  | /* @conditional-compile-remove(soft-mute) */ 'Call.mutedByOthers';
 
 type CallObjectMethodNames<TName extends string, T> = {
   [K in keyof T & string]: `${TName}.${CallMethodName<T, K>}`;

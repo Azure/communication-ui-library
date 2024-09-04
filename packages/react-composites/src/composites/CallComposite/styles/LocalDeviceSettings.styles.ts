@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { IDropdownStyles, IStackTokens, Theme, mergeStyles } from '@fluentui/react';
+import { IDropdownStyles, IStackStyles, IStackTokens, Theme, mergeStyles } from '@fluentui/react';
 
 const DROPDOWN_HEIGHT_REM = 2.25;
 
@@ -77,3 +77,16 @@ export const optionIconStyles = mergeStyles({
   marginRight: '8px',
   verticalAlign: 'text-top'
 });
+
+/**
+ * @private
+ */
+export const deviceSelectionContainerStyles: IStackStyles = {
+  root: {
+    /**
+     * this is to move the device selection container above the larger border
+     * container that is occluding messages
+     */
+    zIndex: 1
+  }
+};

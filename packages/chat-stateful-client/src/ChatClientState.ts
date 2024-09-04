@@ -86,7 +86,25 @@ export type ChatThreadClientState = {
  */
 export type ChatThreadProperties = {
   topic?: string;
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  createdBy?: CommunicationIdentifierKind;
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  messagingPolicy?: MessagingPolicy;
 };
+
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+/**
+ *
+ * Messaging policy of a chat thread.
+ *
+ * @beta
+ */
+export interface MessagingPolicy {
+  /**
+   * Boolean to track whether or not messages are restricted to only text.
+   * */
+  textOnlyChat?: boolean;
+}
 
 /**
  * Errors teed from API calls to the Chat SDK.
@@ -156,4 +174,6 @@ export type ChatErrorTarget =
   | 'ChatThreadClient.sendTypingNotification'
   | 'ChatThreadClient.updateMessage'
   | /* @conditional-compile-remove(chat-beta-sdk) */ 'ChatThreadClient.updateProperties'
-  | 'ChatThreadClient.updateTopic';
+  | 'ChatThreadClient.updateTopic'
+  | /* @conditional-compile-remove(chat-beta-sdk) */ 'ChatThreadClient.uploadImage'
+  | /* @conditional-compile-remove(chat-beta-sdk) */ 'ChatThreadClient.deleteImage';

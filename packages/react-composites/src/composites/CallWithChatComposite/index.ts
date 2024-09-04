@@ -7,7 +7,8 @@ export type {
   CallWithChatAdapter,
   CallWithChatEvent,
   CallWithChatAdapterManagement,
-  CallWithChatAdapterSubscriptions
+  CallWithChatAdapterSubscriptions,
+  ChatInitializedListener
 } from './adapter/CallWithChatAdapter';
 
 export type {
@@ -29,7 +30,6 @@ export type {
 
 export type { CallWithChatCompositeStrings } from './Strings';
 
-/* @conditional-compile-remove(control-bar-button-injection) */
 export type {
   CustomCallControlButtonPlacement,
   CustomCallControlButtonCallback,

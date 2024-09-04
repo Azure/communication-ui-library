@@ -5,8 +5,8 @@ import { Dialpad as DialpadComponent, useTheme } from '@azure/communication-reac
 import { mergeStyles } from '@fluentui/react';
 import { Canvas, Description, Heading, Props, Subheading, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
+import MobileDetect from 'mobile-detect';
 import React from 'react';
-import { SingleLineBetaBanner } from '../BetaBanners/SingleLineBetaBanner';
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
 import { hiddenControl } from '../controlsUtils';
 import { CustomDialpadExample } from './snippets/CustomDialpad.snippet';
@@ -17,11 +17,14 @@ const CustomDialpadText = require('!!raw-loader!./snippets/CustomDialpad.snippet
 const ExampleDialpadText = require('!!raw-loader!./snippets/Dialpad.snippet.tsx').default;
 const DialerExampleText = require('!!raw-loader!./snippets/DialpadDialer.snippet.tsx').default;
 
+export const isIOS = (): boolean =>
+  /iPad|iPhone|iPod/.test(navigator.platform) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+
 const getDocs: () => JSX.Element = () => {
+  const isTouchOnlyDevice = !!new MobileDetect(window.navigator.userAgent).mobile() || isIOS();
   /* eslint-disable react/no-unescaped-entities */
   return (
     <>
-      <SingleLineBetaBanner topOfPage={true} />
       <Title>Dialpad</Title>
       <Heading>Dialpad modes</Heading>
       <Description>
@@ -35,7 +38,7 @@ const getDocs: () => JSX.Element = () => {
         number, or to dial in a new participant into an ongoing call.
       </Description>
       <Canvas mdxSource={DialerExampleText}>
-        <DialerExample />
+        <DialerExample isTouchOnlyDevice={isTouchOnlyDevice} />
       </Canvas>
       <Subheading>DTMF Mode</Subheading>
       <Description>
@@ -45,7 +48,7 @@ const getDocs: () => JSX.Element = () => {
         dialpad is hidden since you are not able to edit DTMF tones that are sent.
       </Description>
       <Canvas mdxSource={ExampleDialpadText}>
-        <DialpadExample />
+        <DialpadExample isTouchOnlyDevice={isTouchOnlyDevice} />
       </Canvas>
       <Description>
         Component to render a Dialpad. This component allows numbers and +, *, # input by clicking on dialpad or using
@@ -59,7 +62,7 @@ const getDocs: () => JSX.Element = () => {
         numbers. In this example, the sounds are also disabled.
       </Description>
       <Canvas mdxSource={CustomDialpadText}>
-        <CustomDialpadExample />
+        <CustomDialpadExample isTouchOnlyDevice={isTouchOnlyDevice} />
       </Canvas>
       <Heading>Dialpad Props</Heading>
       <Props of={DialpadComponent} />
@@ -68,6 +71,7 @@ const getDocs: () => JSX.Element = () => {
 };
 
 const DialpadStory = (): JSX.Element => {
+  const isMobile = !!new MobileDetect(window.navigator.userAgent).mobile() || isIOS();
   const theme = useTheme();
 
   return (
@@ -79,7 +83,7 @@ const DialpadStory = (): JSX.Element => {
         height: '75%'
       })}
     >
-      <DialpadComponent />
+      <DialpadComponent longPressTrigger={isMobile ? 'touch' : 'mouseAndTouch'} />
     </div>
   );
 };

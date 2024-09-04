@@ -33,10 +33,13 @@ function createMockCallWithChatAdapter(): CallWithChatAdapter {
         speakers: [],
         unparentedViews: []
       },
-      isTeamsCall: true,
+      isTeamsCall: false,
+      isTeamsMeeting: true,
       call: undefined,
       chat: undefined,
       latestCallErrors: { test: new Error() as AdapterError },
+      /* @conditional-compile-remove(breakout-rooms) */
+      latestCallNotifications: {},
       latestChatErrors: { test: new Error() as AdapterError }
     })
   );

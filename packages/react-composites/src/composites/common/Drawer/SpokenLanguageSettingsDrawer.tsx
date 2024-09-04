@@ -2,17 +2,13 @@
 // Licensed under the MIT License.
 
 import React from 'react';
-/* @conditional-compile-remove(close-captions) */
 import { useMemo, useCallback } from 'react';
-/* @conditional-compile-remove(close-captions) */
 import { _CaptionsSettingsModal, SpokenLanguageStrings, useTheme } from '@internal/react-components';
-/* @conditional-compile-remove(close-captions) */
 import {
   _DrawerMenu as DrawerMenu,
   _DrawerMenuItemProps as DrawerMenuItemProps,
   _DrawerMenuStyles
 } from '@internal/react-components';
-/* @conditional-compile-remove(close-captions) */
 import { captionSettingsDrawerStyles } from './captionSettingsDrawer.styles';
 import { _getKeys } from '@internal/acs-ui-common';
 
@@ -28,17 +24,15 @@ export interface CaptionSettingsDrawerStrings {
 
 /** @private */
 export const SpokenLanguageSettingsDrawer = (props: {
-  /* @conditional-compile-remove(close-captions) */ selectLanguage: (language: keyof SpokenLanguageStrings) => void;
-  /* @conditional-compile-remove(close-captions) */ setCurrentLanguage: (language: keyof SpokenLanguageStrings) => void;
-  /* @conditional-compile-remove(close-captions) */ currentLanguage: keyof SpokenLanguageStrings;
-  /* @conditional-compile-remove(close-captions) */ onLightDismiss: () => void;
-  /* @conditional-compile-remove(close-captions) */ strings?: CaptionSettingsDrawerStrings;
-  /* @conditional-compile-remove(close-captions) */ supportedLanguageStrings?: SpokenLanguageStrings;
+  selectLanguage: (language: keyof SpokenLanguageStrings) => void;
+  setCurrentLanguage: (language: keyof SpokenLanguageStrings) => void;
+  currentLanguage: keyof SpokenLanguageStrings;
+  onLightDismiss: () => void;
+  strings?: CaptionSettingsDrawerStrings;
+  supportedLanguageStrings?: SpokenLanguageStrings;
 }): JSX.Element => {
-  /* @conditional-compile-remove(close-captions) */
   const theme = useTheme();
 
-  /* @conditional-compile-remove(close-captions) */
   const onDrawerItemClick = useCallback(
     (languageCode: keyof SpokenLanguageStrings) => {
       props.selectLanguage(languageCode);
@@ -46,7 +40,6 @@ export const SpokenLanguageSettingsDrawer = (props: {
     [props]
   );
 
-  /* @conditional-compile-remove(close-captions) */
   const drawerItems: DrawerMenuItemProps[] = useMemo(() => {
     return _getKeys(props.supportedLanguageStrings ?? []).map((languageCode) => ({
       itemKey: languageCode,
@@ -61,7 +54,6 @@ export const SpokenLanguageSettingsDrawer = (props: {
     return copy.sort((a, b) => (a.text && b.text && a.text > b.text ? 1 : -1));
   }, [drawerItems]);
 
-  /* @conditional-compile-remove(close-captions) */
   return (
     <DrawerMenu
       heading={props.strings?.menuTitle}
@@ -73,5 +65,4 @@ export const SpokenLanguageSettingsDrawer = (props: {
       styles={captionSettingsDrawerStyles(theme)}
     />
   );
-  return <></>;
 };

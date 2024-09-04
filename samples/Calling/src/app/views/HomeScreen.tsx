@@ -33,10 +33,8 @@ import { ThemeSelector } from '../theming/ThemeSelector';
 import { localStorageAvailable } from '../utils/localStorage';
 import { getDisplayNameFromLocalStorage, saveDisplayNameToLocalStorage } from '../utils/localStorage';
 import { DisplayNameField } from './DisplayNameField';
-import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
-/* @conditional-compile-remove(rooms) */
-import { RoomLocator } from '@azure/communication-calling';
-/* @conditional-compile-remove(rooms) */
+import { RoomLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
+import { TeamsMeetingIdLocator } from '@azure/communication-calling';
 import { getRoomIdFromUrl } from '../utils/AppUtils';
 /* @conditional-compile-remove(teams-identity-support) */
 import { getIsCTE } from '../utils/AppUtils';
@@ -51,8 +49,8 @@ import { CallAdapterLocator } from '@azure/communication-react';
 export type CallOption =
   | 'ACSCall'
   | 'TeamsMeeting'
-  | /* @conditional-compile-remove(rooms) */ 'Rooms'
-  | /* @conditional-compile-remove(rooms) */ 'StartRooms'
+  | 'Rooms'
+  | 'StartRooms'
   | /* @conditional-compile-remove(teams-identity-support) */ 'TeamsIdentity'
   | /* @conditional-compile-remove(one-to-n-calling) */ '1:N'
   | /* @conditional-compile-remove(PSTN-calls) */ 'PSTN'
@@ -61,9 +59,8 @@ export type CallOption =
 export interface HomeScreenProps {
   startCallHandler(callDetails: {
     displayName: string;
-    callLocator?: CallAdapterLocator | TeamsMeetingLinkLocator | /* @conditional-compile-remove(rooms) */ RoomLocator;
+    callLocator?: CallAdapterLocator | TeamsMeetingLinkLocator | RoomLocator | TeamsMeetingIdLocator;
     option?: CallOption;
-    /* @conditional-compile-remove(rooms) */
     role?: string;
     /* @conditional-compile-remove(PSTN-calls) */
     outboundParticipants?: string[];
@@ -82,15 +79,13 @@ type ICallChoiceGroupOption = IChoiceGroupOption & { key: CallOption };
 
 export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const imageProps = { src: heroSVG.toString() };
-  const headerTitle = props.joiningExistingCall ? 'Join Call' : 'Start or join a call';
+  const headerTitle = props.joiningExistingCall ? 'Join Call' : 'Start or join a call!';
   const callOptionsGroupLabel = 'Select a call option';
   const buttonText = 'Next';
   const callOptions: ICallChoiceGroupOption[] = [
     { key: 'ACSCall', text: 'Start a call' },
-    /* @conditional-compile-remove(rooms) */
     { key: 'StartRooms', text: 'Start a Rooms call' },
     { key: 'TeamsMeeting', text: 'Join a Teams meeting using ACS identity' },
-    /* @conditional-compile-remove(rooms) */
     { key: 'Rooms', text: 'Join a Rooms Call' },
     /* @conditional-compile-remove(teams-identity-support) */
     { key: 'TeamsIdentity', text: 'Join a Teams call using Teams identity' },
@@ -100,15 +95,12 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
     { key: 'PSTN', text: 'Start a PSTN Call' },
     { key: 'TeamsAdhoc', text: 'Call a Teams User or voice application' }
   ];
-  /* @conditional-compile-remove(rooms) */
   const roomIdLabel = 'Room ID';
   /* @conditional-compile-remove(teams-identity-support) */
   const teamsTokenLabel = 'Enter a Teams token';
   /* @conditional-compile-remove(teams-identity-support) */
   const teamsIdLabel = 'Enter a Teams Id';
-  /* @conditional-compile-remove(rooms) */
   const roomsRoleGroupLabel = 'Rooms Role';
-  /* @conditional-compile-remove(rooms) */
   const roomRoleOptions: IChoiceGroupOption[] = [
     { key: 'Consumer', text: 'Consumer' },
     { key: 'Presenter', text: 'Presenter' },
@@ -120,10 +112,9 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const [displayName, setDisplayName] = useState<string | undefined>(defaultDisplayName ?? undefined);
 
   const [chosenCallOption, setChosenCallOption] = useState<ICallChoiceGroupOption>(callOptions[0]);
-  const [callLocator, setCallLocator] = useState<
-    TeamsMeetingLinkLocator | /* @conditional-compile-remove(rooms) */ RoomLocator
-  >();
-  /* @conditional-compile-remove(rooms) */
+  const [callLocator, setCallLocator] = useState<TeamsMeetingLinkLocator | RoomLocator | TeamsMeetingIdLocator>();
+  const [meetingId, setMeetingId] = useState<string>();
+  const [passcode, setPasscode] = useState<string>();
   const [chosenRoomsRoleOption, setRoomsRoleOption] = useState<IChoiceGroupOption>(roomRoleOptions[1]);
   /* @conditional-compile-remove(PSTN-calls) */
   const [alternateCallerId, setAlternateCallerId] = useState<string>();
@@ -154,7 +145,6 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
     (displayName || /* @conditional-compile-remove(teams-identity-support) */ teamsToken) &&
     (startGroupCall ||
       (teamsCallChosen && callLocator) ||
-      /* @conditional-compile-remove(rooms) */
       (((chosenCallOption.key === 'Rooms' && callLocator) || chosenCallOption.key === 'StartRooms') &&
         chosenRoomsRoleOption) ||
       /* @conditional-compile-remove(PSTN-calls) */ (pstnCallChosen && dialPadParticipant && alternateCallerId) ||
@@ -215,8 +205,46 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                 label={'Meeting Link'}
                 required
                 placeholder={'Enter a Teams meeting link'}
-                onChange={(_, newValue) => newValue && setCallLocator({ meetingLink: newValue })}
+                onChange={(_, newValue) => {
+                  newValue ? setCallLocator({ meetingLink: newValue }) : setCallLocator(undefined);
+                }}
               />
+            )}
+            {(teamsCallChosen || /* @conditional-compile-remove(teams-identity-support) */ teamsIdentityChosen) && (
+              <Text className={teamsItemStyle} block variant="medium">
+                <b>Or</b>
+              </Text>
+            )}
+            {(teamsCallChosen || /* @conditional-compile-remove(teams-identity-support) */ teamsIdentityChosen) && (
+              <TextField
+                className={teamsItemStyle}
+                iconProps={{ iconName: 'MeetingId' }}
+                label={'Meeting Id'}
+                required
+                placeholder={'Enter a meeting id'}
+                onChange={(_, newValue) => {
+                  setMeetingId(newValue);
+                  newValue ? setCallLocator({ meetingId: newValue, passcode: passcode }) : setCallLocator(undefined);
+                }}
+              />
+            )}
+            {(teamsCallChosen || /* @conditional-compile-remove(teams-identity-support) */ teamsIdentityChosen) && (
+              <TextField
+                className={teamsItemStyle}
+                iconProps={{ iconName: 'passcode' }}
+                label={'Passcode'}
+                placeholder={'Enter a meeting passcode'}
+                onChange={(_, newValue) => {
+                  // meeting id is required, but passcode is not
+                  setPasscode(newValue);
+                  meetingId ? setCallLocator({ meetingId: meetingId, passcode: newValue }) : setCallLocator(undefined);
+                }}
+              />
+            )}
+            {teamsCallChosen && (
+              <Text className={teamsItemStyle} block variant="medium">
+                <b>And</b>
+              </Text>
             )}
             {
               /* @conditional-compile-remove(teams-identity-support) */ (chosenCallOption.key === 'TeamsIdentity' ||
@@ -260,32 +288,27 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                 </Stack>
               )
             }
-            {
-              /* @conditional-compile-remove(rooms) */ chosenCallOption.key === 'Rooms' && (
-                <Stack>
-                  <TextField
-                    className={teamsItemStyle}
-                    label={roomIdLabel}
-                    required
-                    placeholder={'Enter a room ID'}
-                    onChange={(_, newValue) => setCallLocator(newValue ? { roomId: newValue } : undefined)}
-                  />
-                </Stack>
-              )
-            }
-            {
-              /* @conditional-compile-remove(rooms) */
-              (chosenCallOption.key === 'Rooms' || chosenCallOption.key === 'StartRooms' || getRoomIdFromUrl()) && (
-                <ChoiceGroup
-                  styles={callOptionsGroupStyles}
-                  label={roomsRoleGroupLabel}
-                  defaultSelectedKey="Presenter"
-                  options={roomRoleOptions}
-                  required={true}
-                  onChange={(_, option) => option && setRoomsRoleOption(option)}
+            {chosenCallOption.key === 'Rooms' && (
+              <Stack>
+                <TextField
+                  className={teamsItemStyle}
+                  label={roomIdLabel}
+                  required
+                  placeholder={'Enter a room ID'}
+                  onChange={(_, newValue) => setCallLocator(newValue ? { roomId: newValue } : undefined)}
                 />
-              )
-            }
+              </Stack>
+            )}
+            {(chosenCallOption.key === 'Rooms' || chosenCallOption.key === 'StartRooms' || getRoomIdFromUrl()) && (
+              <ChoiceGroup
+                styles={callOptionsGroupStyles}
+                label={roomsRoleGroupLabel}
+                defaultSelectedKey="Presenter"
+                options={roomRoleOptions}
+                required={true}
+                onChange={(_, option) => option && setRoomsRoleOption(option)}
+              />
+            )}
             {
               /* @conditional-compile-remove(one-to-n-calling) */ acsCallChosen && (
                 <Stack>
@@ -397,9 +420,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                   //TODO: This needs to be updated after we change arg types of TeamsCall
                   displayName: !displayName ? 'Teams UserName PlaceHolder' : displayName,
                   callLocator: callLocator,
-                  /* @conditional-compile-remove(rooms) */
                   option: chosenCallOption.key,
-                  /* @conditional-compile-remove(rooms) */
                   role: chosenRoomsRoleOption.key,
                   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling)  */
                   outboundParticipants: acsParticipantsToCall ? acsParticipantsToCall : dialpadParticipantToCall,

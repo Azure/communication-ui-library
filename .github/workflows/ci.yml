@@ -19,6 +19,24 @@ concurrency:
 permissions: read-all
 
 jobs:
+  files_changed:
+    name: Determine Changes
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    # Map a step output to a job output
+    outputs:
+      storybook8_changes: ${{ steps.changes.outputs.storybook8 }}
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
+      - uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v3
+        id: changes
+        with:
+          # token: ${{ secrets.GITHUB_TOKEN }}
+          filters: |
+            storybook8:
+              - 'packages/storybook8/**'
+
   # get matrix for ci-jobs
   get_matrix:
     name: Load CI Matrix Details
@@ -49,7 +67,7 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 2 # this job requires depth of 2 for access to diff the SHA for change file check
       # Ensure node version is great enough
       - name: Use Node.js
         uses: actions/setup-node@v4
@@ -57,33 +75,21 @@ jobs:
           node-version: 'lts/*'
       # Try get node_modules from cache
       - name: Restore node_modules from cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
-      # Install dependencies
-      - name: Install rush
-        run: npm install -g @microsoft/rush
-      - name: Install dependencies
-        run: rush install --max-install-attempts 3
-      # Switch flavor if necessary
-      - name: Switch flavor for build
-        id: switch-flavor
-        if: ${{ matrix.flavor != 'beta' }}
-        run: |
-          rush switch-flavor:${{ matrix.flavor }}
-          node ./common/scripts/force-build-flavor.mjs ${{ matrix.flavor }}
-      - name: Run dependency update for stable
-        if: ${{ matrix.flavor == 'stable' }}
-        run: rush update:stable
+      - name: Install Dependencies
+        id: install-dependencies
+        run: node ./common/scripts/install-dependencies-ci.mjs ${{ matrix.flavor }}
       - name: Check result of flavor switch
-        if: ${{ always() && steps.switch-flavor.outcome == 'failure' }}
-        run: echo "Failed to switch to stable flavor, please make sure you run 'rush update:stable' if dependencies were updated." && exit 1
-
+        if: ${{ always() && steps.install-dependencies.outcome == 'failure' }}
+        run: echo "Failed to install dependencies, please make sure you run `rush update:all-flavors` if dependencies were updated." && exit 1
       - name: Check the necessary change file has been submitted
-        if: ${{ github.event_name == 'pull_request' }}
-        # GitHub provides remote branch names as refs.
-        run: node common/scripts/changelog/check.mjs origin/${{ github.base_ref }} origin/${{ github.head_ref }}
+        if: ${{ github.event_name == 'pull_request' && !contains( github.event.pull_request.labels.*.name, 'do not need changelog')}}
+        run: |
+          git fetch origin main:main --depth=2
+          node common/scripts/changelog/check.mjs ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }}
 
       # Perform lint check
       - name: Run linter
@@ -139,7 +145,7 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 1
       # Ensure node version is great enough
       - name: Use Node.js
         uses: actions/setup-node@v4
@@ -147,25 +153,14 @@ jobs:
           node-version: 'lts/*'
       # Try get node_modules from cache
       - name: Restore node_modules from cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       # Install dependencies
-      - name: Install rush
-        run: npm install -g @microsoft/rush
-      - name: Install dependencies
-        run: rush install --max-install-attempts 3
-      # Switch flavor if necessary
-      - name: Switch flavor for build
-        id: switch-flavor
-        if: ${{ matrix.flavor != 'beta' }}
-        run: |
-          rush switch-flavor:${{ matrix.flavor }}
-          node ./common/scripts/force-build-flavor.mjs ${{ matrix.flavor }}
-      - name: Run dependency update for stable
-        if: ${{ matrix.flavor == 'stable' }}
-        run: rush update:stable
+      - name: Install Dependencies
+        run: node ./common/scripts/install-dependencies-ci.mjs ${{ matrix.flavor }}
+      # Build and test
       - name: Build Packages
         run: rush build -t @azure/communication-react
       - name: Test Packages
@@ -236,13 +231,16 @@ jobs:
           file_path: temp/jest/current/merge/summary/coverage-summary.json
 
   in-progress-feature-validation:
-    name: Check if in progress feature can be removed separately
+    needs: get_matrix
+    name: Check if in progress feature can be removed separately (${{ matrix.flavor }})
+    strategy:
+      matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     runs-on: ubuntu-latest
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 1
       # Ensure node version is great enough
       - name: Use Node.js
         uses: actions/setup-node@v4
@@ -250,25 +248,21 @@ jobs:
           node-version: 'lts/*'
       # Try get node_modules from cache
       - name: Restore node_modules from cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       # Install dependencies
-      - name: Install rush
-        run: npm install -g @microsoft/rush
-      - name: Install dependencies
-        run: rush install --max-install-attempts 3
-      # Switch flavor if necessary
-      - name: Switch flavor for beta-release build
-        id: switch-flavor
-        run: |
-          rush switch-flavor:beta-release
+      - name: Install Dependencies
+        if: ${{ matrix.flavor == 'beta-release'}}
+        run: node ./common/scripts/install-dependencies-ci.mjs ${{ matrix.flavor }}
       # Perform lint check
       - name: Run linter
+        if: ${{ matrix.flavor == 'beta-release'}}
         run: rush lint
       # Builds
       - name: Build Packages
+        if: ${{ matrix.flavor == 'beta-release'}}
         run: rush build -t @azure/communication-react
       # # Type check test folder
       # # - must be run after building all packlets because it depends on compiled packlet dependencies
@@ -278,9 +272,11 @@ jobs:
       #   run: cd packages/react-composites && rushx tsc:e2e
       # Tests
       - name: Test Packages
+        if: ${{ matrix.flavor == 'beta-release'}}
         run: rush test -t @azure/communication-react
       # Upload azure-communication api.md files for easy access
       - name: Upload communication-react api files
+        if: ${{ matrix.flavor == 'beta-release'}}
         uses: actions/upload-artifact@v3
         with:
           name: communication-react.beta-release.api.json
@@ -298,33 +294,22 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 1
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 'lts/*'
       - name: Restore node_modules from cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
-      - name: Install rush
-        run: npm install -g @microsoft/rush
-      - name: Install dependencies
-        run: rush install --max-install-attempts 3
+      - name: Install Dependencies
+        run: node ./common/scripts/install-dependencies-ci.mjs ${{ matrix.flavor }}
       - uses: browser-actions/setup-chrome@v1
         id: setup-chrome
         with:
           chrome-version: 120.0.6099
-      - name: Switch flavor for build
-        id: switch-flavor
-        if: ${{ matrix.flavor != 'beta' }}
-        run: |
-          rush switch-flavor:${{ matrix.flavor }}
-          node ./common/scripts/force-build-flavor.mjs ${{ matrix.flavor }}
-      - name: Run dependency update for stable
-        if: ${{ matrix.flavor == 'stable' }}
-        run: rush update:stable
       - name: Build Call Composite Test App
         run: |
           cd packages/react-composites
@@ -378,33 +363,22 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 1
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 'lts/*'
       - name: Restore node_modules from cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
-      - name: Install rush
-        run: npm install -g @microsoft/rush
-      - name: Install dependencies
-        run: rush install --max-install-attempts 3
+      - name: Install Dependencies
+        run: node ./common/scripts/install-dependencies-ci.mjs ${{ matrix.flavor }}
       - uses: browser-actions/setup-chrome@v1
         id: setup-chrome
         with:
           chrome-version: 120.0.6099
-      - name: Switch flavor for build
-        id: switch-flavor
-        if: ${{ matrix.flavor != 'beta' }}
-        run: |
-          rush switch-flavor:${{ matrix.flavor }}
-          node ./common/scripts/force-build-flavor.mjs ${{ matrix.flavor }}
-      - name: Run dependency update for stable
-        if: ${{ matrix.flavor == 'stable' }}
-        run: rush update:stable
       - name: Build Chat Composite Test App
         run: |
           cd packages/react-composites
@@ -458,33 +432,22 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 1
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 'lts/*'
       - name: Restore node_modules from cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
-      - name: Install rush
-        run: npm install -g @microsoft/rush
-      - name: Install dependencies
-        run: rush install --max-install-attempts 3
+      - name: Install Dependencies
+        run: node ./common/scripts/install-dependencies-ci.mjs ${{ matrix.flavor }}
       - uses: browser-actions/setup-chrome@v1
         id: setup-chrome
         with:
           chrome-version: 120.0.6099
-      - name: Switch flavor for build
-        id: switch-flavor
-        if: ${{ matrix.flavor != 'beta' }}
-        run: |
-          rush switch-flavor:${{ matrix.flavor }}
-          node ./common/scripts/force-build-flavor.mjs ${{ matrix.flavor }}
-      - name: Run dependency update for stable
-        if: ${{ matrix.flavor == 'stable' }}
-        run: rush update:stable
       - name: Build CallWithChatComposite Test App
         run: |
           cd packages/react-composites
@@ -530,38 +493,29 @@ jobs:
     needs: get_matrix
     name: 'Components automation test (${{ matrix.flavor }})'
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 1
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 'lts/*'
       - name: Restore node_modules from cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
-      - name: Install rush
-        run: npm install -g @microsoft/rush
-      - name: Install dependencies
-        run: rush install --max-install-attempts 3
+      - name: Install Dependencies
+        run: node ./common/scripts/install-dependencies-ci.mjs ${{ matrix.flavor }}
       - uses: browser-actions/setup-chrome@v1
         id: setup-chrome
         with:
           chrome-version: 120.0.6099
-      - name: Switch flavor for build
-        id: switch-flavor
-        if: ${{ matrix.flavor != 'beta' }}
-        run: |
-          rush switch-flavor:${{ matrix.flavor }}
-          node ./common/scripts/force-build-flavor.mjs ${{ matrix.flavor }}
-      - name: Run dependency update for stable
-        if: ${{ matrix.flavor == 'stable' }}
-        run: rush update:stable
       # Build the packages
       # This is needed because react-components depends on acs-ui-common and
       # acs-ui-common specifies main/module variables in package.json
@@ -578,8 +532,8 @@ jobs:
         if: ${{ always() && steps.visualregressiontests.outcome == 'failure' }}
         uses: actions/upload-artifact@v3
         with:
-          name: snapshots
-          path: packages/react-components/tests/
+          name: Components-snapshots
+          path: packages/react-components/tests/temp
       - name: Comment on PR
         if: ${{ github.event_name == 'pull_request' && always() && steps.visualregressiontests.outcome == 'failure' && !contains( github.event.pull_request.labels.*.name, 'update_snapshots') }}
         uses: actions/github-script@v3
@@ -594,30 +548,68 @@ jobs:
             })
 
   build_storybook:
-    name: Build Storybook
+    needs: get_matrix
+    name: Build Storybook (${{ matrix.flavor }})
+    strategy:
+      matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 1
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 'lts/*'
       - name: Restore node_modules from cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
+        with:
+          path: common/temp/pnpm-store
+          key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
+      - name: Install Dependencies
+        if: ${{ matrix.flavor == 'beta' || matrix.flavor == 'beta-release'}}
+        run: node ./common/scripts/install-dependencies-ci.mjs ${{ matrix.flavor }}
+      - name: Build
+        if: ${{ matrix.flavor == 'beta' || matrix.flavor == 'beta-release' }}
+        run: rush build -o storybook
+      - name: Tests
+        if: ${{ matrix.flavor == 'beta' || matrix.flavor == 'beta-release' }}
+        run: rushx test
+        working-directory: packages/storybook
+
+  build_storybook8:
+    needs: [get_matrix, files_changed]
+    if: needs.files_changed.outputs.storybook8_changes == 'true'
+    name: Build Storybook v8 (${{ matrix.flavor }})
+    strategy:
+      matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 'lts/*'
+      - name: Restore node_modules from cache
+        uses: actions/cache@v4
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
-        run: npm install -g @microsoft/rush
+        run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
       - name: Install dependencies
+        if: ${{ matrix.flavor == 'beta' || matrix.flavor == 'beta-release'}}
         run: rush install --max-install-attempts 3
       - name: Build
-        run: rush build -o storybook
+        if: ${{ matrix.flavor == 'beta' || matrix.flavor == 'beta-release' }}
+        run: rushx build-s8
+        working-directory: packages/storybook8
       - name: Tests
-        run: rushx test
-        working-directory: packages/storybook
+        if: ${{ matrix.flavor == 'beta' || matrix.flavor == 'beta-release' }}
+        run: rushx test-s8
+        working-directory: packages/storybook8
 
   build_calling_sample:
     needs: get_matrix
@@ -628,34 +620,22 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 1
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 'lts/*'
       - name: Restore node_modules from cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
-      - name: Install rush
-        run: npm install -g @microsoft/rush
-      - name: Install dependencies
-        run: rush install --max-install-attempts 3
-      # Switch flavor if necessary
-      - name: Switch flavor for build
-        id: switch-flavor
-        if: ${{ matrix.flavor != 'beta' }}
-        run: |
-          rush switch-flavor:${{ matrix.flavor }}
-          node ./common/scripts/force-build-flavor.mjs ${{ matrix.flavor }}
-      - name: Run dependency update for stable
-        if: ${{ matrix.flavor == 'stable' }}
-        run: rush update:stable
+      - name: Install Dependencies
+        run: node ./common/scripts/install-dependencies-ci.mjs ${{ matrix.flavor }}
       - name: Build dependencies
         run: rush build -t @azure/communication-react
       - name: Build
-        run: rush build -o calling
+        run: rush build:minify -o calling
       - name: Tests
         run: rush test -o calling
       # upload bundle stats.json which will be consumed later
@@ -674,34 +654,22 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 1
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 'lts/*'
       - name: Restore node_modules from cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
-      - name: Install rush
-        run: npm install -g @microsoft/rush
-      - name: Install dependencies
-        run: rush install --max-install-attempts 3
-      # Switch flavor if necessary
-      - name: Switch flavor for build
-        id: switch-flavor
-        if: ${{ matrix.flavor != 'beta' }}
-        run: |
-          rush switch-flavor:${{ matrix.flavor }}
-          node ./common/scripts/force-build-flavor.mjs ${{ matrix.flavor }}
-      - name: Run dependency update for stable
-        if: ${{ matrix.flavor == 'stable' }}
-        run: rush update:stable
+      - name: Install Dependencies
+        run: node ./common/scripts/install-dependencies-ci.mjs ${{ matrix.flavor }}
       - name: Build dependencies
         run: rush build -t @azure/communication-react
       - name: Build
-        run: rush build -o chat
+        run: rush build:minify -o chat
       - name: Tests
         run: rush test -o chat
       # upload bundle stats.json which will be consumed later
@@ -720,34 +688,22 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 1
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 'lts/*'
       - name: Restore node_modules from cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
-      - name: Install rush
-        run: npm install -g @microsoft/rush
-      - name: Install dependencies
-        run: rush install --max-install-attempts 3
-      # Switch flavor if necessary
-      - name: Switch flavor for build
-        id: switch-flavor
-        if: ${{ matrix.flavor != 'beta' }}
-        run: |
-          rush switch-flavor:${{ matrix.flavor }}
-          node ./common/scripts/force-build-flavor.mjs ${{ matrix.flavor }}
-      - name: Run dependency update for stable
-        if: ${{ matrix.flavor == 'stable' }}
-        run: rush update:stable
+      - name: Install Dependencies
+        run: node ./common/scripts/install-dependencies-ci.mjs ${{ matrix.flavor }}
       - name: Build dependencies
         run: rush build -t @azure/communication-react
       - name: Build
-        run: rush build -o callwithchat
+        run: rush build:minify -o callwithchat
       - name: Tests
         run: rush test -o callwithchat
       # upload bundle stats.json which will be consumed later
@@ -768,29 +724,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 1
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 'lts/*'
-      - name: Install rush
-        run: npm install -g @microsoft/rush
-      - name: Install dependencies
-        run: rush install --max-install-attempts 3
+      - name: Install Dependencies
+        run: node ./common/scripts/install-dependencies-ci.mjs ${{ matrix.flavor }}
       - uses: browser-actions/setup-chrome@v1
         id: setup-chrome
         with:
           chrome-version: 120.0.6099
-      # Switch flavor if necessary
-      - name: Switch flavor for build
-        id: switch-flavor
-        if: ${{ matrix.flavor != 'beta' }}
-        run: |
-          rush switch-flavor:${{ matrix.flavor }}
-          node ./common/scripts/force-build-flavor.mjs ${{ matrix.flavor }}
-      - name: Run dependency update for stable
-        if: ${{ matrix.flavor == 'stable' }}
-        run: rush update:stable
       - name: Build
         run: rush build -t sample-static-html-composites
       - name: Visual Regression Tests
@@ -832,29 +776,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 1
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 'lts/*'
-      - name: Install rush
-        run: npm install -g @microsoft/rush
-      - name: Install dependencies
-        run: rush install --max-install-attempts 3
+      - name: Install Dependencies
+        run: node ./common/scripts/install-dependencies-ci.mjs ${{ matrix.flavor }}
       - uses: browser-actions/setup-chrome@v1
         id: setup-chrome
         with:
           chrome-version: 120.0.6099
-      # Switch flavor when necessary
-      - name: Switch flavor for build
-        id: switch-flavor
-        if: ${{ matrix.flavor != 'beta' }}
-        run: |
-          rush switch-flavor:${{ matrix.flavor }}
-          node ./common/scripts/force-build-flavor.mjs ${{ matrix.flavor }}
-      - name: Run dependency update for stable
-        if: ${{ matrix.flavor == 'stable' }}
-        run: rush update:stable
       - name: Build
         run: rush build -t component-examples
       - name: Visual Regression Tests

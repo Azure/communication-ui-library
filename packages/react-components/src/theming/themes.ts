@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { PartialTheme } from '@fluentui/react';
+import { createTheme, PartialTheme } from '@fluentui/react';
 
 /**
  * Custom Fluent theme palette used by calling related components in this library.
@@ -14,8 +14,8 @@ export interface CallingTheme {
     callRedDark: string;
     callRedDarker: string;
     iconWhite: string;
-    /* @conditional-compile-remove(raise-hand) */
     raiseHandGold: string;
+    videoTileLabelBackgroundLight: string;
   };
 }
 
@@ -55,20 +55,15 @@ export const lightTheme: PartialTheme & CallingTheme = {
     callRedDark: '#8b2c3d',
     callRedDarker: '#772a38',
     iconWhite: '#ffffff',
-    /* @conditional-compile-remove(raise-hand) */
-    raiseHandGold: '#eaa300'
+    raiseHandGold: '#eaa300',
+    videoTileLabelBackgroundLight: 'rgba(255,255,255,0.8)'
   },
   semanticColors: {
     errorText: '#a80000'
   }
 };
 
-/**
- * Preset dark theme for components exported from this library.
- *
- * @public
- */
-export const darkTheme: PartialTheme & CallingTheme = {
+const partialDarkTheme: PartialTheme = {
   palette: {
     themePrimary: '#2899f5',
     themeLighterAlt: '#02060a',
@@ -94,20 +89,32 @@ export const darkTheme: PartialTheme & CallingTheme = {
     white: '#252423',
     whiteTranslucent40: 'rgba(0, 0, 0, 0.4)'
   },
-  callingPalette: {
-    callRed: '#c4314b',
-    callRedDark: '#a42e43',
-    callRedDarker: '#8b2c3d',
-    iconWhite: '#ffffff',
-    /* @conditional-compile-remove(raise-hand) */
-    raiseHandGold: '#eaa300'
-  },
   semanticColors: {
     errorText: '#f1707b'
   }
 };
 
-/* @conditional-compile-remove(image-overlay) */
+/**
+ * Preset dark theme for components exported from this library.
+ *
+ * @public
+ */
+export const darkTheme: PartialTheme & CallingTheme = {
+  ...createTheme({
+    ...partialDarkTheme,
+    isInverted: true
+  }),
+  callingPalette: {
+    callRed: '#c4314b',
+    callRedDark: '#a42e43',
+    callRedDarker: '#8b2c3d',
+    iconWhite: '#ffffff',
+    raiseHandGold: '#eaa300',
+    videoTileLabelBackgroundLight: 'rgba(37,36,35,0.8)'
+  }
+};
+
+/* @conditional-compile-remove(image-overlay-theme) */
 /**
  * Preset dark theme for the ImageOverlay component.
  *

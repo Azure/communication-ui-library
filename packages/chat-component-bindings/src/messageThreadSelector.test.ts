@@ -62,7 +62,6 @@ describe('messageThreadSelector tests', () => {
     ]);
   });
 
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   test('should parse HTML messages with image tag correctly with attachments', async (): Promise<void> => {
     const messageText = '<p>Hello <img alt="image" src="" id="1"></p>';
     const imageContent = 'data:image/png;base64,iVBORw0KGgoAAAA';
@@ -99,7 +98,6 @@ const getChatMessages = (
   messageText: string,
   type: ChatMessageType,
   attachments?: ChatAttachment[],
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   resourceCache?: Record<string, ResourceFetchResult>
 ): { [key: string]: ChatMessageWithStatus } => {
   const chatMessages: { [key: string]: ChatMessageWithStatus } = {};
@@ -115,7 +113,6 @@ const getChatMessages = (
       message: messageText,
       attachments: attachments
     },
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     resourceCache: resourceCache
   };
   return chatMessages;

@@ -1,9 +1,0 @@
-{
-  "type": "none",
-  "area": "improvement",
-  "workstream": "Turning the reaction feature OFF since we do not have resources yet.",
-  "comment": "Turning off reaction feature usage in sample",
-  "packageName": "@azure/communication-react",
-  "email": "mbellah@microsoft.com",
-  "dependentChangeType": "none"
-}

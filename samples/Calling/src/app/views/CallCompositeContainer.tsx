@@ -3,7 +3,7 @@
 
 import { GroupCallLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { CallAdapterLocator, CallComposite, CallCompositeOptions, CommonCallAdapter } from '@azure/communication-react';
-import { Spinner } from '@fluentui/react';
+import { Spinner, Stack } from '@fluentui/react';
 import React, { useEffect, useMemo } from 'react';
 import { useSwitchableFluentTheme } from '../theming/SwitchableFluentThemeProvider';
 import { useIsMobile } from '../utils/useIsMobile';
@@ -18,13 +18,35 @@ export const CallCompositeContainer = (props: CallCompositeContainerProps): JSX.
   const isMobileSession = useIsMobile();
   const shouldHideScreenShare = isMobileSession || isIOS();
 
+  useEffect(() => {
+    /**
+     * We want to make sure that the page is up to date. If for example a browser is dismissed
+     * on mobile, the page will be stale when opened again. This event listener will reload the page
+     */
+    window.addEventListener('pageshow', (event) => {
+      if (event.persisted) {
+        window.location.reload();
+      }
+    });
+    return () => {
+      window.removeEventListener('pageshow', () => {
+        window.location.reload();
+      });
+    };
+  }, []);
+
   const options: CallCompositeOptions = useMemo(
     () => ({
       /* @conditional-compile-remove(call-readiness) */ onPermissionsTroubleshootingClick,
       /* @conditional-compile-remove(call-readiness) */ onNetworkingTroubleShootingClick,
       callControls: {
-        screenShareButton: shouldHideScreenShare ? false : undefined
-      }
+        screenShareButton: shouldHideScreenShare ? false : undefined,
+        /* @conditional-compile-remove(end-call-options) */
+        endCallButton: {
+          hangUpForEveryone: 'endCallOptions'
+        }
+      },
+      autoShowDtmfDialer: true
     }),
     [shouldHideScreenShare]
   );
@@ -39,7 +61,11 @@ export const CallCompositeContainer = (props: CallCompositeContainerProps): JSX.
   }, [adapter]);
 
   if (!adapter) {
-    return <Spinner label={'Creating adapter'} ariaLive="assertive" labelPosition="top" />;
+    return (
+      <Stack horizontalAlign="center" verticalAlign="center" styles={{ root: { height: '100%' } }}>
+        <Spinner label={'Creating adapter'} ariaLive="assertive" labelPosition="top" />
+      </Stack>
+    );
   }
 
   let callInvitationUrl: string | undefined = window.location.href;

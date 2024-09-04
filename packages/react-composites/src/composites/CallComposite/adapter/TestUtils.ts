@@ -43,7 +43,6 @@ export function createMockCall(mockCallId = 'defaultCallID'): MockCall {
     id: mockCallId,
     /* @conditional-compile-remove(teams-identity-support) */
     kind: 'Call',
-    /* @conditional-compile-remove(close-captions) */
     info: {
       groupId: 'testGroupId'
     },

@@ -7,3 +7,5 @@ export type { _DrawerMenuItemProps } from './DrawerMenuItem';
 
 export { _DrawerSurface } from './DrawerSurface';
 export type { _DrawerSurfaceProps, _DrawerSurfaceStyles } from './DrawerSurface';
+export { _ReactionDrawerMenuItem } from './ReactionDrawerMenuItem';
+export type { _ReactionMenuItemProps } from './ReactionDrawerMenuItem';

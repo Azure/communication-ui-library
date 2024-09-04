@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Stack, PrimaryButton, Image, ChoiceGroup, IChoiceGroupOption, Text, TextField } from '@fluentui/react';
 /* @conditional-compile-remove(PSTN-calls) */
 import { registerIcons, Label, Link, Callout, mergeStyles } from '@fluentui/react';
@@ -32,21 +32,26 @@ import { localStorageAvailable } from '../utils/localStorage';
 import { getDisplayNameFromLocalStorage, saveDisplayNameToLocalStorage } from '../utils/localStorage';
 import { DisplayNameField } from './DisplayNameField';
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
+import { TeamsMeetingIdLocator } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { Dialpad } from '@azure/communication-react';
 /* @conditional-compile-remove(PSTN-calls) */
 import { Backspace20Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(PSTN-calls) */
 import { useIsMobile } from '../utils/useIsMobile';
+/* @conditional-compile-remove(rich-text-editor-composite-support) */
+import { RichTextEditorToggle } from './RichTextEditorToggle';
 
 export interface HomeScreenProps {
   startCallHandler(callDetails: {
     displayName: string;
-    teamsLink?: TeamsMeetingLinkLocator;
+    meetingLocator?: TeamsMeetingLinkLocator | TeamsMeetingIdLocator;
     /* @conditional-compile-remove(one-to-n-calling)  */
     outboundParticipants?: string[];
     /* @conditional-compile-remove(PSTN-calls) */
     alternateCallerId?: string;
+    /* @conditional-compile-remove(rich-text-editor-composite-support) */
+    isRichTextEditorEnabled?: boolean;
   }): void;
   joiningExistingCall: boolean;
 }
@@ -66,12 +71,17 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
     { key: 'PSTN', text: 'Start a PSTN Call' }
   ];
 
+  /* @conditional-compile-remove(rich-text-editor-composite-support) */
+  const [isRichTextEditorEnabled, setIsRichTextEditorEnabled] = useState<boolean>(false);
+
   // Get display name from local storage if available
   const defaultDisplayName = localStorageAvailable ? getDisplayNameFromLocalStorage() : null;
   const [displayName, setDisplayName] = useState<string | undefined>(defaultDisplayName ?? undefined);
 
   const [chosenCallOption, setChosenCallOption] = useState<IChoiceGroupOption>(callOptions[0]);
-  const [teamsLink, setTeamsLink] = useState<TeamsMeetingLinkLocator>();
+  const [meetingLocator, setMeetingLocator] = useState<TeamsMeetingLinkLocator | TeamsMeetingIdLocator>();
+  const [meetingId, setMeetingId] = useState<string>();
+  const [passcode, setPasscode] = useState<string>();
 
   /* @conditional-compile-remove(PSTN-calls) */
   const [alternateCallerId, setAlternateCallerId] = useState<string>();
@@ -92,13 +102,19 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const buttonEnabled =
     displayName &&
     (startGroupCall ||
-      teamsLink ||
-      (teamsCallChosen && teamsLink) ||
+      meetingLocator ||
+      (teamsCallChosen && meetingLocator) ||
       /* @conditional-compile-remove(PSTN-calls) */ (pstnCallChosen && dialpadParticipant && alternateCallerId) ||
       /* @conditional-compile-remove(one-to-n-calling) */ (outboundParticipants && acsCallChosen));
 
   /* @conditional-compile-remove(PSTN-calls) */
   registerIcons({ icons: { DialpadBackspace: <Backspace20Regular /> } });
+
+  const richTextEditorToggle = useMemo((): JSX.Element => {
+    /* @conditional-compile-remove(rich-text-editor-composite-support) */
+    return <RichTextEditorToggle setRichTextEditorIsEnabled={setIsRichTextEditorEnabled} />;
+    return <></>;
+  }, [/* @conditional-compile-remove(rich-text-editor-composite-support) */ setIsRichTextEditorEnabled]);
 
   /* @conditional-compile-remove(PSTN-calls) */
   const isMobileSession = useIsMobile();
@@ -135,8 +151,50 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                 label={'Meeting Link'}
                 required
                 placeholder={'Enter a Teams meeting link'}
-                onChange={(_, newValue) => newValue && setTeamsLink({ meetingLink: newValue })}
+                onChange={(_, newValue) => {
+                  newValue ? setMeetingLocator({ meetingLink: newValue }) : setMeetingLocator(undefined);
+                }}
               />
+            )}
+            {teamsCallChosen && (
+              <Text className={teamsItemStyle} block variant="medium">
+                <b>Or</b>
+              </Text>
+            )}
+            {teamsCallChosen && (
+              <TextField
+                className={teamsItemStyle}
+                iconProps={{ iconName: 'MeetingId' }}
+                label={'Meeting Id'}
+                required
+                placeholder={'Enter a meeting id'}
+                onChange={(_, newValue) => {
+                  setMeetingId(newValue);
+                  newValue
+                    ? setMeetingLocator({ meetingId: newValue, passcode: passcode })
+                    : setMeetingLocator(undefined);
+                }}
+              />
+            )}
+            {teamsCallChosen && (
+              <TextField
+                className={teamsItemStyle}
+                iconProps={{ iconName: 'passcode' }}
+                label={'Passcode'}
+                placeholder={'Enter a meeting passcode'}
+                onChange={(_, newValue) => {
+                  // meeting id is required, but passcode is not
+                  setPasscode(newValue);
+                  meetingId
+                    ? setMeetingLocator({ meetingId: meetingId, passcode: newValue })
+                    : setMeetingLocator(undefined);
+                }}
+              />
+            )}
+            {teamsCallChosen && (
+              <Text className={teamsItemStyle} block variant="medium">
+                <b>And</b>
+              </Text>
             )}
             {
               /* @conditional-compile-remove(one-to-n-calling) */ acsCallChosen && (
@@ -212,7 +270,6 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
             }
           </Stack>
           <DisplayNameField defaultName={displayName} setName={setDisplayName} />
-
           <PrimaryButton
             disabled={!buttonEnabled}
             className={buttonStyle}
@@ -226,16 +283,19 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                 const dialpadParticipantToCall = parseParticipants(dialpadParticipant);
                 startCallHandler({
                   displayName,
-                  teamsLink,
+                  meetingLocator,
                   /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
                   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling)  */
-                  outboundParticipants: acsParticipantsToCall ? acsParticipantsToCall : dialpadParticipantToCall
+                  outboundParticipants: acsParticipantsToCall ? acsParticipantsToCall : dialpadParticipantToCall,
+                  /* @conditional-compile-remove(rich-text-editor-composite-support) */
+                  isRichTextEditorEnabled: isRichTextEditorEnabled
                 });
               }
             }}
           />
           <div>
             <ThemeSelector label="Theme" horizontal={true} />
+            {richTextEditorToggle}
           </div>
         </Stack>
       </Stack>

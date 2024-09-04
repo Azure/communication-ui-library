@@ -1,9 +1,0 @@
-{
-  "type": "minor",
-  "area": "feature",
-  "workstream": "InlineImages",
-  "comment": "Introduce new concept of ResourceResult",
-  "packageName": "@azure/communication-react",
-  "email": "9044372+JoshuaLai@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

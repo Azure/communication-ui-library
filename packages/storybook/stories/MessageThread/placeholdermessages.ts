@@ -76,11 +76,37 @@ export const GenerateMockNewChatMessageWithInlineImage = (): ChatMessage => {
     ...UserThree,
     messageId: Math.random().toString(),
     content:
-      '<p>Check out this image:&nbsp;</p>\r\n<p><img alt="image" src="images/inlineImageExample1.png" itemscope="png" width="250" height="375" id="SomeImageId" style="vertical-align:bottom"></p><p>&nbsp;</p>\r\n',
+      '<p>Check out this image:&nbsp;</p>\r\n<p><img alt="image" src="images/inlineImageExample1.png" itemscope="png" width="250" height="375" id="SomeImageId" style="vertical-align:bottom; aspect-ratio: 250 / 375;"></p><p>&nbsp;</p>\r\n',
     createdOn: new Date('2020-04-13T00:00:00.000+07:01'),
     mine: false,
     attached: false,
     contentType: 'html'
+  };
+};
+
+export const GenerateMockNewChatMessageWithAttachment = (): ChatMessage => {
+  return {
+    messageType: 'chat',
+    ...UserThree,
+    messageId: Math.random().toString(),
+    content: 'Check out these files:',
+    createdOn: new Date('2020-04-13T00:00:00.000+07:01'),
+    mine: true,
+    attached: false,
+    status: 'seen' as MessageStatus,
+    contentType: 'text',
+    attachments: [
+      {
+        id: 'fdd0bfe2c7a8',
+        name: 'Annual Report.xlsx',
+        url: 'https://www.sharepoint.com/'
+      },
+      {
+        id: 'a2c3e281ced7',
+        name: 'Business Report.pdf',
+        url: 'https://www.example.com/files/RouterConfig.xlsx'
+      }
+    ]
   };
 };
 

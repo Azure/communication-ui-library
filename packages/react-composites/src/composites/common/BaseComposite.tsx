@@ -18,6 +18,7 @@ import { AvatarPersonaDataCallback } from './AvatarPersona';
 import { CallCompositeIcons, CallWithChatCompositeIcons, ChatCompositeIcons, DEFAULT_COMPOSITE_ICONS } from './icons';
 import { globalLayerHostStyle } from './styles/GlobalHostLayer.styles';
 import { useId } from '@fluentui/react-hooks';
+import { ACSAudioProvider } from './AudioProvider';
 /**
  * Properties common to all composites exported from this library.
  *
@@ -75,6 +76,7 @@ export interface BaseCompositeProps<TIcons extends Record<string, JSX.Element>> 
 export const BaseProvider = (
   props: BaseCompositeProps<CallCompositeIcons | ChatCompositeIcons | CallWithChatCompositeIcons> & {
     children: React.ReactNode;
+    formFactor?: 'desktop' | 'mobile';
   }
 ): JSX.Element => {
   const { fluentTheme, rtl, locale } = props;
@@ -106,13 +108,22 @@ export const BaseProvider = (
    */
   registerIcons({ icons: { ...iconsToRegister, ...props.icons } });
 
+  /**
+   * We need to create one context for the AudioProvider to ensure that we only have one instance of the AudioContext.
+   */
+  const compositeAudioContext = new AudioContext();
   // we use Customizer to override default LayerHost injected to <body />
   // which stop polluting global dom tree and increase compatibility with react-full-screen
   const CompositeElement = (
     <FluentThemeProvider fluentTheme={fluentTheme} rtl={rtl}>
-      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+      {
+        // On mobile we expect the composite to fill the device screen, hence we set a meta property to have better OOBE.
+        props.formFactor === 'mobile' && <meta name="viewport" content="width=device-width" />
+      }
       <Customizer scopedSettings={{ Layer: { hostId: globalLayerHostId } }}>
-        <WithBackgroundColor>{props.children}</WithBackgroundColor>
+        <ACSAudioProvider audioContext={compositeAudioContext}>
+          <WithBackgroundColor>{props.children}</WithBackgroundColor>
+        </ACSAudioProvider>
       </Customizer>
       <LayerHost id={globalLayerHostId} className={mergeStyles(globalLayerHostStyle)} />
     </FluentThemeProvider>

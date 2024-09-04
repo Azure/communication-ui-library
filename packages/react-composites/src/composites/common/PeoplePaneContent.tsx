@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { IContextualMenuItem, Stack } from '@fluentui/react';
+import { IContextualMenuItem, IContextualMenuProps, Stack } from '@fluentui/react';
 import {
   ParticipantList,
   ParticipantListParticipant,
@@ -17,9 +17,9 @@ import { ParticipantListWithHeading } from '../common/ParticipantContainer';
 import { peoplePaneContainerTokens } from '../common/styles/ParticipantContainer.styles';
 import { participantListContainerStyles, peoplePaneContainerStyle } from './styles/PeoplePaneContent.styles';
 import { convertContextualMenuItemToDrawerMenuItem } from './ConvertContextualMenuItemToDrawerMenuItem';
+import { CommonCallAdapter } from '../CallComposite';
 /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
 import { CallCompositeStrings } from '../CallComposite';
-import { CommonCallAdapter } from '../CallComposite';
 import { AddPeopleButton } from './AddPeopleButton';
 /* @conditional-compile-remove(PSTN-calls) */
 import { PhoneNumberIdentifier } from '@azure/communication-common';
@@ -36,9 +36,18 @@ export const PeoplePaneContent = (props: {
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   setDrawerMenuItems: (drawerMenuItems: _DrawerMenuItemProps[]) => void;
+  setParticipantActioned?: (userId: string) => void;
   mobileView?: boolean;
+  participantListHeadingMoreButtonProps?: IContextualMenuProps;
+  pinnedParticipants?: string[];
 }): JSX.Element => {
-  const { inviteLink, onFetchParticipantMenuItems, setDrawerMenuItems } = props;
+  const {
+    inviteLink,
+    onFetchParticipantMenuItems,
+    setDrawerMenuItems,
+    setParticipantActioned,
+    participantListHeadingMoreButtonProps
+  } = props;
   const adapter = useAdapter();
   const localeStrings = useLocale();
 
@@ -70,10 +79,11 @@ export const PeoplePaneContent = (props: {
   const alternateCallerId = adapter.getState().alternateCallerId;
 
   const participantListDefaultProps = usePropsFor(ParticipantList);
-  const removeButtonAllowed = hasRemoveParticipantsPermissionTrampoline(adapter);
+  const removeButtonAllowed = canRemoveParticipants(adapter);
   const setDrawerMenuItemsForParticipant: (participant?: ParticipantListParticipant) => void = useMemo(() => {
     return (participant?: ParticipantListParticipant) => {
       if (participant) {
+        setParticipantActioned?.(participant.userId);
         let contextualMenuItems: IContextualMenuItem[] = createDefaultContextualMenuItems(
           participant,
           strings,
@@ -99,8 +109,16 @@ export const PeoplePaneContent = (props: {
     participantListDefaultProps.myUserId,
     removeButtonAllowed,
     onFetchParticipantMenuItems,
-    setDrawerMenuItems
+    setDrawerMenuItems,
+    setParticipantActioned
   ]);
+
+  const setDrawerMenuItemsForParticipantListHeadingMoreButton = useMemo(() => {
+    const drawerMenuItems = participantListHeadingMoreButtonProps?.items.map((contextualMenu: IContextualMenuItem) =>
+      convertContextualMenuItemToDrawerMenuItem(contextualMenu, () => setDrawerMenuItems([]))
+    );
+    return drawerMenuItems && drawerMenuItems.length > 0 ? () => setDrawerMenuItems(drawerMenuItems) : undefined;
+  }, [participantListHeadingMoreButtonProps?.items, setDrawerMenuItems]);
 
   const participantListProps: ParticipantListProps = useMemo(() => {
     const onRemoveAParticipant = async (participantId: string): Promise<void> =>
@@ -121,6 +139,10 @@ export const PeoplePaneContent = (props: {
       onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
       onFetchParticipantMenuItems={props.mobileView ? undefined : onFetchParticipantMenuItems}
       title={strings.peoplePaneSubTitle}
+      headingMoreButtonAriaLabel={localeStrings.strings.call.peoplePaneMoreButtonAriaLabel}
+      onClickHeadingMoreButton={props.mobileView ? setDrawerMenuItemsForParticipantListHeadingMoreButton : undefined}
+      headingMoreButtonMenuProps={props.participantListHeadingMoreButtonProps}
+      pinnedParticipants={props.pinnedParticipants}
     />
   );
 
@@ -191,7 +213,8 @@ const createDefaultContextualMenuItems = (
         }
       },
       iconProps: {
-        iconName: 'UserRemove'
+        iconName: 'ContextMenuRemoveParticipant',
+        styles: { root: { lineHeight: 0 } }
       },
       'data-ui-id': 'participant-list-remove-participant-button'
     });
@@ -199,16 +222,12 @@ const createDefaultContextualMenuItems = (
   return menuItems;
 };
 
-/**
- * @private
- */
-const hasRemoveParticipantsPermissionTrampoline = (adapter: CommonCallAdapter): boolean => {
-  /* @conditional-compile-remove(rooms) */
+const canRemoveParticipants = (adapter: CommonCallAdapter): boolean => {
+  // TODO: We should be using the removeParticipant capability here but there is an SDK bug for Rooms where a
+  // Presenter's removeParticipant capability is {isPresent: false, reason: 'CapabilityNotApplicableForTheCallType'}.
+  // But a Presenter in Rooms should be able to remove participants according to the following documentation
+  // https://learn.microsoft.com/en-us/azure/communication-services/concepts/rooms/room-concept#predefined-participant-roles-and-permissions
   const role = adapter.getState().call?.role;
-  /* @conditional-compile-remove(rooms) */
   const canRemove = role === 'Presenter' || role === 'Unknown' || role === undefined;
-  /* @conditional-compile-remove(rooms) */
   return canRemove;
-  // Return true if stable.
-  return true;
 };

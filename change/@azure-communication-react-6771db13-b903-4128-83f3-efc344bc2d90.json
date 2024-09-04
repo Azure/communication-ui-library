@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "area": "feature",
-  "workstream": "Release 1.14.0-beta.1 merge back of pre-release branch",
-  "comment": "Release 1.14.0-beta.1 merge back of pre-release branch",
-  "packageName": "@azure/communication-react",
-  "email": "3941071+emlynmac@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

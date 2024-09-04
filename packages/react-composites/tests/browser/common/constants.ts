@@ -23,7 +23,7 @@ export const IDS = {
   overflowGalleryLeftNavButton: 'overflow-gallery-left-nav-button',
   overflowGalleryRightNavButton: 'overflow-gallery-right-nav-button',
   readReceiptTooltip: 'chat-composite-message-tooltip',
-  fileTypeIcon: 'filetype-icon',
+  attachmentTypeIcon: 'attachmenttype-icon',
   deviceButton: 'calling-composite-devices-button',
   resumeCallButton: 'hold-page-resume-call-button',
   holdButton: 'hold-button',
@@ -39,7 +39,10 @@ export const IDS = {
   verticalGalleryVideoTile: 'vertical-gallery-video-tile',
   horizontalGalleryVideoTile: 'horizontal-gallery-video-tile',
   mentionSuggestionList: 'mention-suggestion-list',
-  mentionSuggestionItem: 'mention-suggestion-item'
+  mentionSuggestionItem: 'mention-suggestion-item',
+  reactionButton: 'call-composite-reaction-button',
+  reactionButtonSubMenu: 'reaction-sub-menu',
+  reactionMobileDrawerMenuItem: 'reaction-mobile-drawer-menu-item'
 };
 
 export const spokenLanguageStrings = [
@@ -126,7 +129,7 @@ export const captionsFeatureState = {
       timestamp: new Date(0),
       speaker: {
         displayName: 'Participant 1',
-        identifier: { communicationUserId: 'communicationId1', kind: 'communicationUser' as const }
+        identifier: { communicationUserId: '1', kind: 'communicationUser' as const }
       },
       spokenLanguage: 'en-us' as const,
       captionText: 'How are you?'
@@ -136,7 +139,7 @@ export const captionsFeatureState = {
       timestamp: new Date(10000),
       speaker: {
         displayName: 'Participant 2',
-        identifier: { communicationUserId: 'communicationId2', kind: 'communicationUser' as const }
+        identifier: { communicationUserId: '1', kind: 'communicationUser' as const }
       },
       spokenLanguage: 'en-us',
       captionText: 'I am good.'
@@ -146,7 +149,7 @@ export const captionsFeatureState = {
       timestamp: new Date(10001),
       speaker: {
         displayName: 'Participant 3',
-        identifier: { communicationUserId: 'communicationId3', kind: 'communicationUser' as const }
+        identifier: { communicationUserId: '1', kind: 'communicationUser' as const }
       },
       spokenLanguage: 'en-us',
       captionText: 'Nice to see you today!'
@@ -157,7 +160,9 @@ export const captionsFeatureState = {
   currentCaptionLanguage: 'en',
   currentSpokenLanguage: 'en-us',
   isCaptionsFeatureActive: true,
-  startCaptionsInProgress: true
+  startCaptionsInProgress: true,
+  /* @conditional-compile-remove(acs-close-captions) */
+  captionsKind: 'Captions' as const
 };
 
 export const captionsFeatureStateArabic = {
@@ -167,7 +172,7 @@ export const captionsFeatureStateArabic = {
       timestamp: new Date(0),
       speaker: {
         displayName: 'Participant 1',
-        identifier: { communicationUserId: 'communicationId1', kind: 'communicationUser' as const }
+        identifier: { communicationUserId: '1', kind: 'communicationUser' as const }
       },
       spokenLanguage: 'ar-ae' as const,
       captionText: '!سعيد بلقائك! مرحبًا'
@@ -177,7 +182,7 @@ export const captionsFeatureStateArabic = {
       timestamp: new Date(10000),
       speaker: {
         displayName: 'Participant 2',
-        identifier: { communicationUserId: 'communicationId2', kind: 'communicationUser' as const }
+        identifier: { communicationUserId: '1', kind: 'communicationUser' as const }
       },
       spokenLanguage: 'ar-ae' as const,
       captionText: 'انا جيد، كيف حالك؟'
@@ -187,7 +192,7 @@ export const captionsFeatureStateArabic = {
       timestamp: new Date(10001),
       speaker: {
         displayName: 'Participant 3',
-        identifier: { communicationUserId: 'communicationId3', kind: 'communicationUser' as const }
+        identifier: { communicationUserId: '1', kind: 'communicationUser' as const }
       },
       spokenLanguage: 'ar-ae' as const,
       captionText: '!سُعدت برؤيتك'
@@ -198,5 +203,7 @@ export const captionsFeatureStateArabic = {
   currentCaptionLanguage: 'ar',
   currentSpokenLanguage: 'ar-ae',
   isCaptionsFeatureActive: true,
-  startCaptionsInProgress: true
+  startCaptionsInProgress: true,
+  /* @conditional-compile-remove(acs-close-captions) */
+  captionsKind: 'Captions' as const
 };

@@ -27,7 +27,6 @@ import { ScreenSharingFromViewerExample } from './snippets/ScreenSharingFromView
 import { SpeakerLayoutExample } from './snippets/SpeakerLayout.snippet';
 import { WithHorizontalGalleryExample } from './snippets/WithHorizontalGallery.snippet';
 import { WithVerticalGalleryExample } from './snippets/WithVerticalGallery.snippet';
-
 const CustomAvatarVideoGalleryExampleText = require('!!raw-loader!./snippets/CustomAvatar.snippet.tsx').default;
 const CustomStyleVideoGalleryExampleText = require('!!raw-loader!./snippets/CustomStyle.snippet.tsx').default;
 const DefaultVideoGalleryExampleText = require('!!raw-loader!./snippets/Default.snippet.tsx').default;
@@ -233,25 +232,44 @@ const getDocs: () => JSX.Element = () => {
           <Description>✅ Wide screen share appearence vertical gallery</Description>
         </Stack>
       </Stack>
-      <Heading>Screen Sharing Experience</Heading>
+      <Heading>Content Sharing Experience</Heading>
       <Description>
-        The screen shared is the only element placed in the GridLayout and all remote participants are placed in the
-        horizontal gallery in the lower section. To be able to view this screen share, the sharing participant should
-        have their `isScreenSharingOn` prop set to true as well as a defined `screenShareStream` prop (see
-        `localParticipant` and `remoteParticipants` props).
+        Our VideoGallery component is designed for optimal content sharing, incorporating both screen sharing and
+        PowerPoint Live functionalities. The screen shared is the sole element placed in the [Grid
+        Layout](./?path=/docs/ui-components-gridlayout--grid-layout), with all remote participants positioned in the
+        horizontal gallery at the lower section. For effective screen sharing or PowerPoint Live, ensure the sharing
+        participant has their `isScreenSharingOn` prop set to true, along with a defined `screenShareStream` prop (refer
+        to `localParticipant` and `remoteParticipants` props).
       </Description>
+      <Subheading>Supported Features</Subheading>
+      <Description>
+        Currently, the VideoGallery component supports two primary features to enhance collaboration and presentation
+        quality: screen sharing and PowerPoint Live.
+      </Description>
+      <ul className={'sbdocs sbdocs-p'}>
+        <li>
+          <strong>Screen Sharing:</strong> Share your local screen with participants in real-time or view remote screen
+          shares. For more details, see the sections below.
+        </li>
+        <li>
+          <strong>PowerPoint Live:</strong> Exclusively view remote PowerPoint presentations.
+          <a href="?path=/docs/ppt-live--page">Learn more about PowerPoint Live</a>.
+        </li>
+      </ul>
+
       <Subheading>From a presenter point of view</Subheading>
       <Canvas mdxSource={ScreenSharingFromPresenterExampleText}>
         <ScreenSharingFromPresenterExample />
       </Canvas>
       <Subheading>From a viewer point of view</Subheading>
       <Description>
-        Note that in this example, we substitute the screenshare video stream with an image just for mocking experience.
+        We have the capability to configure the `screenShareStream` to utilize any `HTMLElement` as the renderElement,
+        enabling functionalities like screen sharing and PowerPoint Live. It's important to note that, in this specific
+        example, we're replacing the screenshare video stream with an image merely to simulate the experience.
       </Description>
       <Canvas mdxSource={ScreenSharingFromViewerExampleText}>
         <ScreenSharingFromViewerExample />
       </Canvas>
-
       <Heading>Custom Avatar</Heading>
       <Description>
         Rendering of avatars can be customized through the VideoGallery callback `onRenderAvatar`.
@@ -508,9 +526,9 @@ const VideoGalleryStory = (args): JSX.Element => {
     .split(',')
     .map((p) => p.trim())
     .filter((p) => p)
-    .map((p, i) => {
+    .map((p) => {
       return {
-        userId: `user${i}`,
+        userId: `userId-${p}`,
         displayName: p,
         videoStream: { isAvailable: true }
       };

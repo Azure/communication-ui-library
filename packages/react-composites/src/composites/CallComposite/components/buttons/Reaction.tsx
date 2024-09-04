@@ -1,20 +1,13 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/* @conditional-compile-remove(reaction) */
 import { ReactionResources } from '@internal/react-components';
-/* @conditional-compile-remove(reaction) */
 import { ControlBarButtonStyles, ReactionButton, ReactionButtonProps } from '@internal/react-components';
-/* @conditional-compile-remove(reaction) */
 import React, { useMemo } from 'react';
-/* @conditional-compile-remove(reaction) */
 import { CallControlDisplayType } from '../../../common/types/CommonCallControlOptions';
-/* @conditional-compile-remove(reaction) */
 import { usePropsFor } from '../../hooks/usePropsFor';
-/* @conditional-compile-remove(reaction) */
 import { concatButtonBaseStyles } from '../../styles/Buttons.styles';
 
-/* @conditional-compile-remove(reaction) */
 /** @private */
 export const Reaction = (props: {
   // The value of `CallControlOptions.reactionButton`.
@@ -44,7 +37,6 @@ export const Reaction = (props: {
   );
 };
 
-/* @conditional-compile-remove(reaction) */
 const isDisabled = (option?: boolean | { disabled: boolean }): boolean => {
   if (option === undefined || option === true || option === false) {
     return false;

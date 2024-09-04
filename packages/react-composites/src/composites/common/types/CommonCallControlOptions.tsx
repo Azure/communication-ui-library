@@ -39,7 +39,19 @@ export type CommonCallControlOptions = {
    * Show or Hide EndCall button during a call.
    * @defaultValue true
    */
-  endCallButton?: boolean;
+  endCallButton?:
+    | boolean
+    | /* @conditional-compile-remove(end-call-options) */ {
+        /**
+         * whether to make end call button to trigger a menu, which will enable end call for everybody functionality.
+         * @defaultValue false
+         */
+        hangUpForEveryone?: false | 'endCallOptions';
+        /**
+         * Wether to disable the end call confirmation modal.
+         */
+        disableEndCallModal?: boolean;
+      };
   /**
    * Show or Hide Microphone button during a call.
    * @defaultValue true
@@ -68,25 +80,21 @@ export type CommonCallControlOptions = {
    * @defaultValue true
    */
   screenShareButton?: boolean | { disabled: boolean };
-  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(close-captions) */ /* @conditional-compile-remove(raise-hand) */
   /**
    * Show, Hide or disable the more button during a call.
    * @defaultValue true
    */
   moreButton?: boolean;
-  /* @conditional-compile-remove(raise-hand) */
   /**
    * Show, Hide or Disable the screen share button during a call.
    * @defaultValue true
    */
   raiseHandButton?: boolean | { disabled: boolean };
-  /* @conditional-compile-remove(reaction) */
   /**
    * Show, Hide or Disable the reaction button during a call.
    * @defaultValue true
    */
   reactionButton?: boolean | { disabled: boolean };
-  /* @conditional-compile-remove(control-bar-button-injection) */
   /**
    * Inject custom buttons in the call controls.
    */
@@ -102,9 +110,20 @@ export type CommonCallControlOptions = {
    * Show or hide the dialpad button in the composite control bar.
    */
   dtmfDialerButton?: boolean | { disabled: boolean };
-  /* @conditional-compile-remove(spotlight) */
   /**
    * Show or hide the exit spotlight button in the composite control bar when local participant is spotlighted.
    */
   exitSpotlightButton?: boolean;
+  /* @conditional-compile-remove(acs-close-captions) */
+  /**
+   * Show, Hide or Disable captions during a call.
+   * @defaultValue true
+   */
+  captionsButton?: boolean;
+  /* @conditional-compile-remove(teams-meeting-conference) */
+  /**
+   * Show, meeting conference phone information.
+   * @defaultValue true
+   */
+  teamsMeetingPhoneCallButton?: boolean;
 };

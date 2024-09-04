@@ -3,7 +3,7 @@
 
 import { CallComposite } from '@azure/communication-react';
 import { MessageBar, Stack, Text } from '@fluentui/react';
-import { Description, Heading, Props, Source, Title } from '@storybook/addon-docs';
+import { Description, Heading, Props, Source, Subheading, Title } from '@storybook/addon-docs';
 import React, { useEffect, useRef } from 'react';
 import { SingleLineBetaBanner } from '../BetaBanners/SingleLineBetaBanner';
 import { overviewPageImagesStackStyle } from '../constants';
@@ -267,9 +267,21 @@ export const Docs: () => JSX.Element = () => {
         using `callControls` as shown below:
       </Description>
       <Source code="<CallComposite options={{ callControls: { screenShareButton: { disabled: true } } }} />" />
-
+      <Subheading>End Call Modal</Subheading>
+      <Description>
+        Our `CallComposite` is able to use the end call for everyone functionality found on the end call button. This
+        functionality will end the call for everyone present in the call. As such it will present the user with a
+        confirmation modal to make sure that the action of ending, or leaving the call was intentional. This mode can be
+        turned on with the following snippet.
+      </Description>
+      <Source code="<CallComposite options={{ callControls: { endCallButton: { hangUpForEveryone: 'endCallOptions' } } }} />"></Source>
+      <Description>
+        With this mode the `EndCallButton` will always present the user with a confirmation modal before ending the
+        call. If you are wanting to end the call without the confirmation modal you can use the following snippet to
+        disable the confirmation.
+      </Description>
+      <Source code="<CallComposite options={{ callControls: { endCallButton: { disableEndCallModal: true } } }} />"></Source>
       <Heading>Customize Local Video Tile</Heading>
-      <SingleLineBetaBanner version={'1.7.0-beta.1'} />
       <Description>
         Just like customizing the control bar we have some configuration options for the local video tile. These
         controls are to help facilitate different calling experiences like creating an audio only call.
@@ -358,14 +370,6 @@ export const Docs: () => JSX.Element = () => {
       <Source code="<CallComposite options={galleryOptions: {layout: 'default'}} />" />
       <Source code="<CallComposite options={galleryOptions: {layout: 'floatingLocalVideo'}} />" />
       <Source code="<CallComposite options={galleryOptions: {layout: 'focusedContent'}} />" />
-      <div ref={refExistedJoinCall}>
-        <Heading>Joining an existing Call</Heading>
-        <Description>
-          The [join existing call](./?path=/story/composites-call-joinexistingcall--join-existing-call) provides an easy
-          playground to join an existing Azure Communication Services group call or an existing Teams meeting. This is
-          useful if you want to explore the composite with multiple users.
-        </Description>
-      </div>
       <Heading>PSTN and 1:N Calling</Heading>
       <SingleLineBetaBanner version={'1.3.2-beta.1'} />
       <Description>

@@ -20,6 +20,7 @@
     "complianceBannerTranscriptionStopped": "Zakończono transkrypcję.",
     "configurationPageTitle": "Rozpocznij rozmowę",
     "copyInviteLinkButtonLabel": "Kopiuj link do zaproszenia",
+    "copyInviteLinkButtonActionedLabel": "Skopiowano link",
     "copyInviteLinkActionedAriaLabel": "Skopiowano link do zaproszenia",
     "defaultPlaceHolder": "Wybierz opcję",
     "dismissSidePaneButtonLabel": "Zamknij",
@@ -52,6 +53,7 @@
     "peopleButtonLabel": "Osoby",
     "selectedPeopleButtonLabel": "Wybrano przycisk Kontakty",
     "peoplePaneTitle": "Osoby",
+    "peoplePaneMoreButtonAriaLabel": "Więcej",
     "peopleButtonTooltipOpen": "Pokaż uczestników",
     "peopleButtonTooltipClose": "Ukryj uczestników",
     "peoplePaneSubTitle": "W tej rozmowie {numberOfPeople}",
@@ -60,11 +62,12 @@
     "removedFromCallMoreDetails": "Inny uczestnik usunął Cię z rozmowy.",
     "removedFromCallTitle": "Usunięto Cię",
     "removeMenuLabel": "Usuń",
-    "startSpotlightParticipantListMenuLabel": "Wyróżnij dla wszystkich",
-    "addSpotlightParticipantListMenuLabel": "Dodaj wyróżnienie",
-    "stopSpotlightParticipantListMenuLabel": "Zatrzymaj wyróżnianie",
-    "stopSpotlightOnSelfParticipantListMenuLabel": "Zakończ wyróżnienie",
-    "spotlightLimitReachedParticipantListMenuTitle": "Osiągnięto limit wyróżnienia",
+    "startSpotlightMenuLabel": "Wyróżnij dla wszystkich",
+    "addSpotlightMenuLabel": "Dodaj wyróżnienie",
+    "stopSpotlightMenuLabel": "Zatrzymaj wyróżnianie",
+    "stopSpotlightOnSelfMenuLabel": "Zakończ wyróżnienie",
+    "spotlightLimitReachedMenuTitle": "Osiągnięto limit wyróżnienia",
+    "stopAllSpotlightMenuLabel": "Zatrzymaj wszystkie wyróżnienia",
     "returnToCallButtonAriaDescription": "Wróć do rozmowy",
     "returnToCallButtonAriaLabel": "Wstecz",
     "roomNotFoundDetails": "Nie można odnaleźć podanego identyfikatora pokoju.",
@@ -132,6 +135,7 @@
     "dtmfDialerButtonTooltipOff": "Ukryj klawiaturę numeryczną",
     "dtmfDialerMoreButtonLabelOn": "Pokaż klawiaturę numeryczną",
     "dtmfDialerMoreButtonLabelOff": "Ukryj klawiaturę numeryczną",
+    "phoneCallMoreButtonLabel": "Rozmowa telefoniczna",
     "spokenLanguageStrings": {
       "ar-ae": "arabski — Zjednoczone Emiraty Arabskie",
       "ar-sa": "arabski — Arabia Saudyjska",
@@ -242,6 +246,10 @@
       "shareScreen": {
         "lostDueToRoleChangeToAttendee": "Rola została zmieniona. Niektóre akcje, takie jak udostępnianie zawartości, nie będą dla Ciebie dostępne.",
         "grantedDueToRoleChangeToPresenter": "Jesteś osobą prowadzącą. Możesz udostępniać zawartość i prowadzić spotkanie."
+      },
+      "hideAttendeeNames": {
+        "hideAttendeeNameAttendee": "Twoje imię i nazwisko jest ukryte przed innymi uczestnikami. Organizatorzy i osoby prowadzące mogą zobaczyć Twoje prawdziwe imię.",
+        "hideAttendeeNamePresenter": "Imiona i nazwiska uczestników są ukryte. Tylko organizatorzy i osoby prowadzące mogą wyświetlać imiona i nazwiska, aby chronić prywatność uczestników."
       }
     },
     "surveyTitle": "Pomóż nam w ulepszaniu",
@@ -257,7 +265,6 @@
     "tagsSurveyQuestion": "Co można było zrobić lepiej?",
     "tagsSurveyTextFieldDefaultText": "Inny — prosimy określić",
     "tagsSurveyHelperText": "Sprawdź wszelkie napotkane problemy",
-    "surveyTextboxDefaultText": "Inna odpowiedź, podaj szczegóły",
     "endOfSurveyText": "Dziękujemy za opinię!",
     "surveyIssues": {
       "overallRating": {
@@ -299,7 +306,7 @@
         "otherIssues": "Wystąpiły inne problemy z udostępnianiem ekranu podczas tej rozmowy"
       }
     },
-    "SurveyIssuesHeadingStrings": {
+    "surveyIssuesHeadingStrings": {
       "overallRating": "Ogólne",
       "audioRating": "Dźwięk",
       "videoRating": "Wideo",
@@ -311,18 +318,52 @@
       "startSpotlightOnSelfText": "Wyróżnisz swój klip wideo dla wszystkich uczestników spotkania.",
       "startSpotlightConfirmButtonLabel": "Wyróżnij dla wszystkich",
       "startSpotlightCancelButtonLabel": "Anuluj",
-      "stopSpotlightHeading": "Zatrzymać wyróżnianie?",
+      "stopSpotlightHeading": "Zatrzymać wyróżnianie tego klipu wideo?",
       "stopSpotlightOnSelfHeading": "Zakończyć wyróżnianie?",
+      "stopAllSpotlightHeading": "Zatrzymać wyróżnianie wszystkich klipów wideo?",
       "stopSpotlightText": "Klip wideo nie będzie już wyróżniany dla wszystkich osób na spotkaniu.",
       "stopSpotlightOnSelfText": "Twój klip wideo nie będzie już wyróżniany dla wszystkich osób na spotkaniu.",
+      "stopAllSpotlightText": "Klipy wideo nie będą już wyróżniane dla wszystkich osób na spotkaniu.",
       "stopSpotlightConfirmButtonLabel": "Zatrzymaj wyróżnianie",
       "stopSpotlightOnSelfConfirmButtonLabel": "Zakończ wyróżnienie",
       "stopSpotlightCancelButtonLabel": "Anuluj"
-    }
+    },
+    "exitSpotlightButtonLabel": "Wyjdź z ważnych informacji",
+    "exitSpotlightButtonTooltip": "Wyjdź z ważnych informacji",
+    "leaveConfirmButtonLabel": "Opuść",
+    "endCallConfirmButtonLabel": "Zakończ połączenie",
+    "hangUpCancelButtonLabel": "Anuluj",
+    "leaveConfirmDialogTitle": "Opuścić połączenie?",
+    "leaveConfirmDialogContent": "Czy na pewno chcesz opuścić rozmowę?",
+    "endCallConfirmDialogTitle": "Zakończyć połączenie?",
+    "endCallConfirmDialogContent": "Zakończysz połączenie dla wszystkich.",
+    "invalidMeetingIdentifier": "Nieprawidłowy identyfikator spotkania lub kod dostępu",
+    "pinParticipantMenuLabel": "Przypnij dla mnie",
+    "pinParticipantLimitReachedMenuLabel": "Przypięcie (osiągnięto limit)",
+    "unpinParticipantMenuLabel": "Odepnij",
+    "pinParticipantMenuItemAriaLabel": "Przypnij",
+    "unpinParticipantMenuItemAriaLabel": "Odepnij",
+    "muteAllMenuLabel": "Wycisz wszystkich",
+    "muteAllDialogTitle": "Wyciszyć wszystkich?",
+    "muteAllDialogContent": "Spowoduje to wyciszenie wszystkich osób na spotkaniu oprócz Ciebie.",
+    "muteAllConfirmButtonLabel": "Wycisz wszystkich",
+    "muteAllCancelButtonLabel": "Anuluj",
+    "joinBreakoutRoomButtonLabel": "Dołącz do osobnego pokoju",
+    "returnFromBreakoutRoomButtonLabel": "Opuść pokój",
+    "leaveBreakoutRoomAndMeetingButtonLabel": "Opuść spotkanie",
+    "breakoutRoomJoinedNotificationTitle": "Dołączono do osobnego pokoju „{roomName}”",
+    "joinBreakoutRoomBannerTitle": "Osobny pokój „{roomName}” jest otwarty",
+    "joinBreakoutRoomBannerButtonLabel": "Dołącz",
+    "returnFromBreakoutRoomBannerTitle": "Powrót do spotkania głównego",
+    "returnFromBreakoutRoomBannerButtonLabel": "Dołącz ponownie"
   },
   "chat": {
     "chatListHeader": "W tym czacie",
-    "uploadFile": "Przekazywanie pliku"
+    "uploadAttachment": "Przekaż załącznik",
+    "uploadImageDataNotProvided": "Nie udostępniono danych obrazu.",
+    "uploadImageIsTooLarge": "Obraz jest za duży. Wybierz rozmiar mniejszy niż {maxImageSize} MB.",
+    "uploadImageExtensionIsNotAllowed": "Przekazywanie obrazu .{imageExtension} nie jest dozwolone.",
+    "uploadImageFailed": "Nie można przekazać obrazu. Spróbuj ponownie później."
   },
   "callWithChat": {
     "chatButtonLabel": "Czat",
@@ -332,6 +373,7 @@
     "chatButtonTooltipOpen": "Pokaż czat",
     "chatPaneTitle": "Czat",
     "copyInviteLinkButtonLabel": "Kopiuj link do zaproszenia",
+    "copyInviteLinkButtonActionedLabel": "Skopiowano link",
     "copyInviteLinkActionedAriaLabel": "Skopiowano link do zaproszenia",
     "dismissSidePaneButtonLabel": "Zamknij",
     "moreDrawerAudioDeviceMenuTitle": "Urządzenie audio",
@@ -347,6 +389,8 @@
     "selectedPeopleButtonLabel": "Wybrano przycisk Kontakty",
     "peopleButtonTooltipOpen": "Pokaż uczestników",
     "peopleButtonTooltipClose": "Ukryj uczestników",
+    "peopleButtonTooltipOpenAriaLabel": "Przycisk Kontakty, Pokaż uczestników",
+    "peopleButtonTooltipCloseAriaLabel": "Przycisk Kontakty, Ukryj uczestników",
     "peoplePaneSubTitle": "W tej rozmowie",
     "peoplePaneTitle": "Osoby",
     "pictureInPictureTileAriaLabel": "Kanały wideo. Kliknij, aby powrócić do ekranu rozmowy.",
@@ -360,6 +404,8 @@
     "dialpadModalAriaLabel": "Klawiatura numeryczna",
     "dialpadCloseModalButtonAriaLabel": "Zamknij klawiaturę numeryczną",
     "openDtmfDialpadLabel": "Pokaż klawiaturę numeryczną",
-    "dtmfDialpadPlaceholderText": "Wprowadź numer"
+    "dtmfDialpadPlaceholderText": "Wprowadź numer",
+    "breakoutRoomChatPaneTitle": "Czat osobnego pokoju",
+    "chatContentSpinnerLabel": "Trwa ładowanie..."
   }
 }

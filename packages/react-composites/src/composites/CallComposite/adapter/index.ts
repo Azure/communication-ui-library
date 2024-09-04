@@ -15,19 +15,22 @@ export {
   useTeamsCallAdapter
 } from './AzureCommunicationCallAdapter';
 
+/* @conditional-compile-remove(teams-identity-support-beta) */
+export type { TeamsOutboundCallAdapterArgs, StartTeamsCallIdentifier } from './AzureCommunicationCallAdapter';
+
 export type { TeamsAdapterOptions } from './AzureCommunicationCallAdapter';
 /* @conditional-compile-remove(teams-identity-support) */
-export type { TeamsCallAdapterArgs } from './AzureCommunicationCallAdapter';
-/* @conditional-compile-remove(teams-identity-support) */
+export type { TeamsCallAdapterArgsCommon, TeamsCallAdapterArgs } from './AzureCommunicationCallAdapter';
+
 export type { OnFetchProfileCallback, Profile } from './OnFetchProfileCallback';
 export type {
   AzureCommunicationCallAdapterArgs,
   CallAdapterLocator,
   AzureCommunicationOutboundCallAdapterArgs
 } from './AzureCommunicationCallAdapter';
-/* @conditional-compile-remove(video-background-effects) */
+
 export type { AzureCommunicationCallAdapterOptions } from './AzureCommunicationCallAdapter';
-/* @conditional-compile-remove(video-background-effects) */
+
 export type { CommonCallAdapterOptions } from './AzureCommunicationCallAdapter';
 
 /* @conditional-compile-remove(teams-adhoc-call) */
@@ -57,10 +60,11 @@ export type {
   ParticipantsJoinedListener,
   ParticipantsLeftListener,
   JoinCallOptions,
-  StartCallIdentifier
+  StartCallIdentifier,
+  StartCaptionsAdapterOptions,
+  StopCaptionsAdapterOptions
 } from './CallAdapter';
 
-/* @conditional-compile-remove(close-captions) */
 export type {
   CaptionsReceivedListener,
   IsCaptionsActiveChangedListener,
@@ -68,13 +72,10 @@ export type {
   IsSpokenLanguageChangedListener
 } from './CallAdapter';
 
-/* @conditional-compile-remove(call-transfer) */
 export type { TransferAcceptedListener } from './CallAdapter';
 
-/* @conditional-compile-remove(capabilities) */
 export type { CapabilitiesChangedListener } from './CallAdapter';
 
-/* @conditional-compile-remove(spotlight) */
 export type { SpotlightChangedListener } from './CallAdapter';
 
 /* @conditional-compile-remove(teams-identity-support) */

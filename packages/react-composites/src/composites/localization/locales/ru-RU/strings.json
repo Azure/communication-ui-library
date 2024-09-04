@@ -20,6 +20,7 @@
     "complianceBannerTranscriptionStopped": "Транскрибирование остановлено.",
     "configurationPageTitle": "Позвонить",
     "copyInviteLinkButtonLabel": "Копировать ссылку с приглашением",
+    "copyInviteLinkButtonActionedLabel": "Ссылка скопирована",
     "copyInviteLinkActionedAriaLabel": "Ссылка на приглашение в группу скопирована",
     "defaultPlaceHolder": "Выберите один из вариантов",
     "dismissSidePaneButtonLabel": "Закрыть",
@@ -52,6 +53,7 @@
     "peopleButtonLabel": "Люди",
     "selectedPeopleButtonLabel": "Нажата кнопка \"Люди\"",
     "peoplePaneTitle": "Люди",
+    "peoplePaneMoreButtonAriaLabel": "Еще",
     "peopleButtonTooltipOpen": "Показать участников",
     "peopleButtonTooltipClose": "Скрыть участников",
     "peoplePaneSubTitle": "В этом вызове {numberOfPeople}",
@@ -60,11 +62,12 @@
     "removedFromCallMoreDetails": "Другой участник удалил вас из беседы.",
     "removedFromCallTitle": "Вы были удалены",
     "removeMenuLabel": "Удалить",
-    "startSpotlightParticipantListMenuLabel": "Закрепить видео для всех",
-    "addSpotlightParticipantListMenuLabel": "Добавить закрепление",
-    "stopSpotlightParticipantListMenuLabel": "Не закреплять",
-    "stopSpotlightOnSelfParticipantListMenuLabel": "Открепить",
-    "spotlightLimitReachedParticipantListMenuTitle": "Достигнуто предельное число закреплений",
+    "startSpotlightMenuLabel": "Закрепить видео для всех",
+    "addSpotlightMenuLabel": "Добавить закрепление",
+    "stopSpotlightMenuLabel": "Не закреплять",
+    "stopSpotlightOnSelfMenuLabel": "Открепить",
+    "spotlightLimitReachedMenuTitle": "Достигнуто предельное число закреплений",
+    "stopAllSpotlightMenuLabel": "Отменить все закрепления",
     "returnToCallButtonAriaDescription": "Вернуться к звонку",
     "returnToCallButtonAriaLabel": "Назад",
     "roomNotFoundDetails": "Не удалось найти указанный идентификатор комнаты.",
@@ -132,6 +135,7 @@
     "dtmfDialerButtonTooltipOff": "Скрыть панель набора номера",
     "dtmfDialerMoreButtonLabelOn": "Показать панель набора номера",
     "dtmfDialerMoreButtonLabelOff": "Скрыть панель набора номера",
+    "phoneCallMoreButtonLabel": "Звонок",
     "spokenLanguageStrings": {
       "ar-ae": "Арабский (ОАЭ)",
       "ar-sa": "Арабский (Саудовская Аравия)",
@@ -242,6 +246,10 @@
       "shareScreen": {
         "lostDueToRoleChangeToAttendee": "Ваша роль изменилась. Некоторые действия, например общий доступ к содержимому, будут вам недоступны.",
         "grantedDueToRoleChangeToPresenter": "Вы ведущий. Вы можете предоставлять доступ к содержимому и помогать вести собрание."
+      },
+      "hideAttendeeNames": {
+        "hideAttendeeNameAttendee": "Ваше имя скрыто от других участников. Организаторы и выступающие могут видеть ваше настоящее имя.",
+        "hideAttendeeNamePresenter": "Имена участников скрыты. Для защиты конфиденциальности участников имена видят только организаторы и выступающие."
       }
     },
     "surveyTitle": "Улучшение продукта",
@@ -257,7 +265,6 @@
     "tagsSurveyQuestion": "Что можно было улучшить?",
     "tagsSurveyTextFieldDefaultText": "Другое, укажите",
     "tagsSurveyHelperText": "Отметьте все проблемы, с которыми вы столкнулись",
-    "surveyTextboxDefaultText": "Другое, укажите",
     "endOfSurveyText": "Спасибо за отзыв!",
     "surveyIssues": {
       "overallRating": {
@@ -299,7 +306,7 @@
         "otherIssues": "У меня возникли другие проблемы с демонстрацией экрана во время этого звонка"
       }
     },
-    "SurveyIssuesHeadingStrings": {
+    "surveyIssuesHeadingStrings": {
       "overallRating": "Общий",
       "audioRating": "Звук",
       "videoRating": "Видео",
@@ -311,18 +318,52 @@
       "startSpotlightOnSelfText": "Вы выделите свое видео для всех участников собрания.",
       "startSpotlightConfirmButtonLabel": "Отметить видео как важное для всех",
       "startSpotlightCancelButtonLabel": "Отмена",
-      "stopSpotlightHeading": "Исключить из важного?",
+      "stopSpotlightHeading": "Больше не рекомендовать это видео?",
       "stopSpotlightOnSelfHeading": "Выйти из работы с важным?",
+      "stopAllSpotlightHeading": "Отменить закрепление всех видео?",
       "stopSpotlightText": "Ваше видео больше не будет помечено как важное для всех участников собрания.",
       "stopSpotlightOnSelfText": "Ваше видео больше не будет выделено для всех участников собрания.",
+      "stopAllSpotlightText": "Видео больше не будут выделены для всех участников собрания.",
       "stopSpotlightConfirmButtonLabel": "Больше не помечать важное",
       "stopSpotlightOnSelfConfirmButtonLabel": "Выйти из важного",
       "stopSpotlightCancelButtonLabel": "Отмена"
-    }
+    },
+    "exitSpotlightButtonLabel": "Выйти из важного",
+    "exitSpotlightButtonTooltip": "Выйти из важного",
+    "leaveConfirmButtonLabel": "Выйти",
+    "endCallConfirmButtonLabel": "Завершить звонок",
+    "hangUpCancelButtonLabel": "Отмена",
+    "leaveConfirmDialogTitle": "Покинуть звонок?",
+    "leaveConfirmDialogContent": "Вы действительно хотите покинуть звонок?",
+    "endCallConfirmDialogTitle": "Завершить звонок?",
+    "endCallConfirmDialogContent": "Вы завершите звонок для всех пользователей.",
+    "invalidMeetingIdentifier": "Недопустимый идентификатор собрания или секретный код",
+    "pinParticipantMenuLabel": "Закрепить для меня",
+    "pinParticipantLimitReachedMenuLabel": "Закрепить (достигнуто ограничение)",
+    "unpinParticipantMenuLabel": "Открепить",
+    "pinParticipantMenuItemAriaLabel": "Закрепить",
+    "unpinParticipantMenuItemAriaLabel": "Открепить",
+    "muteAllMenuLabel": "Отключить все микрофоны",
+    "muteAllDialogTitle": "Отключить микрофоны всех участников?",
+    "muteAllDialogContent": "Будут отключены микрофоны всех участников собрания, кроме вас.",
+    "muteAllConfirmButtonLabel": "Отключить все микрофоны",
+    "muteAllCancelButtonLabel": "Отмена",
+    "joinBreakoutRoomButtonLabel": "Присоединиться к переговорной комнате",
+    "returnFromBreakoutRoomButtonLabel": "Покинуть комнату",
+    "leaveBreakoutRoomAndMeetingButtonLabel": "Покинуть собрание",
+    "breakoutRoomJoinedNotificationTitle": "Вы присоединились к переговорной комнате \"{roomName}\"",
+    "joinBreakoutRoomBannerTitle": "Переговорная комната \"{roomName}\" открыта",
+    "joinBreakoutRoomBannerButtonLabel": "Присоединиться",
+    "returnFromBreakoutRoomBannerTitle": "Вернуться в главное собрание",
+    "returnFromBreakoutRoomBannerButtonLabel": "Присоединиться снова"
   },
   "chat": {
     "chatListHeader": "В этом чате",
-    "uploadFile": "Отправить файл"
+    "uploadAttachment": "Отправить вложение",
+    "uploadImageDataNotProvided": "Данные образа не предоставлены.",
+    "uploadImageIsTooLarge": "Изображение слишком велико. Выберите размер меньше {maxImageSize} МБ.",
+    "uploadImageExtensionIsNotAllowed": "Отправка образа .{imageExtension} не разрешена.",
+    "uploadImageFailed": "Не удалось отправить изображение. Повторите попытку позже."
   },
   "callWithChat": {
     "chatButtonLabel": "Чат",
@@ -332,6 +373,7 @@
     "chatButtonTooltipOpen": "Показать чат",
     "chatPaneTitle": "Чат",
     "copyInviteLinkButtonLabel": "Копировать ссылку с приглашением",
+    "copyInviteLinkButtonActionedLabel": "Ссылка скопирована",
     "copyInviteLinkActionedAriaLabel": "Ссылка на приглашение в группу скопирована",
     "dismissSidePaneButtonLabel": "Закрыть",
     "moreDrawerAudioDeviceMenuTitle": "Звуковое устройство",
@@ -347,6 +389,8 @@
     "selectedPeopleButtonLabel": "Нажата кнопка \"Люди\"",
     "peopleButtonTooltipOpen": "Показать участников",
     "peopleButtonTooltipClose": "Скрыть участников",
+    "peopleButtonTooltipOpenAriaLabel": "Кнопка \"Люди\", показать участников",
+    "peopleButtonTooltipCloseAriaLabel": "Кнопка \"Люди\", скрыть участников",
     "peoplePaneSubTitle": "В этом звонке",
     "peoplePaneTitle": "Люди",
     "pictureInPictureTileAriaLabel": "Ленты видео. Щелкните, чтобы вернуться на экран вызова.",
@@ -360,6 +404,8 @@
     "dialpadModalAriaLabel": "Панель набора номера",
     "dialpadCloseModalButtonAriaLabel": "Закрыть панель набора номера",
     "openDtmfDialpadLabel": "Показать панель набора номера",
-    "dtmfDialpadPlaceholderText": "Введите номер"
+    "dtmfDialpadPlaceholderText": "Введите номер",
+    "breakoutRoomChatPaneTitle": "Чат переговорной комнаты",
+    "chatContentSpinnerLabel": "Загрузка…"
   }
 }

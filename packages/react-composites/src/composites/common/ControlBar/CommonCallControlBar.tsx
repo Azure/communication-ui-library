@@ -15,6 +15,8 @@ import {
   Stack,
   useTheme
 } from '@fluentui/react';
+/* @conditional-compile-remove(breakout-rooms) */
+import { PrimaryButton } from '@fluentui/react';
 import { controlBarContainerStyles } from '../../CallComposite/styles/CallControls.styles';
 import { callControlsContainerStyles } from '../../CallComposite/styles/CallPage.styles';
 import { useCallWithChatCompositeStrings } from '../../CallWithChatComposite/hooks/useCallWithChatCompositeStrings';
@@ -32,27 +34,35 @@ import {
   generateCustomCallControlBarButton,
   onFetchCustomButtonPropsTrampoline
 } from './CustomButton';
-/*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(close-captions) */
 import { DesktopMoreButton } from './DesktopMoreButton';
 import { isDisabled } from '../../CallComposite/utils';
 import { HiddenFocusStartPoint } from '../HiddenFocusStartPoint';
 import { CallWithChatControlOptions } from '../../CallWithChatComposite';
 import { CommonCallControlOptions } from '../types/CommonCallControlOptions';
-/* @conditional-compile-remove(close-captions) */
 import { CaptionsSettingsModal } from '../CaptionsSettingsModal';
-/* @conditional-compile-remove(raise-hand) */
 import { RaiseHand } from '../../CallComposite/components/buttons/RaiseHand';
-/* @conditional-compile-remove(reaction) */
 import { Reaction } from '../../CallComposite/components/buttons/Reaction';
-/* @conditional-compile-remove(reaction) */
 import { useSelector } from '../../CallComposite/hooks/useSelector';
-/* @conditional-compile-remove(reaction) */
 import { capabilitySelector } from '../../CallComposite/selectors/capabilitySelector';
 import { DtmfDialpadButton } from './DtmfDialerButton';
-/* @conditional-compile-remove(spotlight) */
 import { ExitSpotlightButton } from '../ExitSpotlightButton';
-/* @conditional-compile-remove(spotlight) */
 import { useLocale } from '../../localization';
+/* @conditional-compile-remove(end-call-options) */
+import { isBoolean } from '../utils';
+/* @conditional-compile-remove(end-call-options) */
+import { getIsTeamsCall } from '../../CallComposite/selectors/baseSelectors';
+/* @conditional-compile-remove(breakout-rooms) */
+import {
+  getAssignedBreakoutRoom,
+  getBreakoutRoomSettings,
+  getLatestNotifications
+} from '../../CallComposite/selectors/baseSelectors';
+import { callStatusSelector } from '../../CallComposite/selectors/callStatusSelector';
+/* @conditional-compile-remove(teams-meeting-conference) */
+import { MeetingConferencePhoneInfoModal } from '@internal/react-components';
+/* @conditional-compile-remove(breakout-rooms) */
+import { Timer } from './Timer';
+
 /**
  * @private
  */
@@ -67,11 +77,8 @@ export interface CommonCallControlBarProps {
   disableButtonsForHoldScreen?: boolean;
   /* @conditional-compile-remove(PSTN-calls) */
   onClickShowDialpad?: () => void;
-  /* @conditional-compile-remove(video-background-effects) */
   onClickVideoEffects?: (showVideoEffects: boolean) => void;
-  /* @conditional-compile-remove(close-captions) */
   isCaptionsSupported?: boolean;
-  /* @conditional-compile-remove(close-captions) */
   isCaptionsOn?: boolean;
   displayVertical?: boolean;
   onUserSetOverflowGalleryPositionChange?: (position: 'Responsive' | 'horizontalTop') => void;
@@ -79,12 +86,15 @@ export interface CommonCallControlBarProps {
   userSetGalleryLayout?: VideoGalleryLayout;
   peopleButtonRef?: React.RefObject<IButton>;
   cameraButtonRef?: React.RefObject<IButton>;
-  /* @conditional-compile-remove(video-background-effects) */
   videoBackgroundPickerRef?: React.RefObject<IButton>;
   onSetDialpadPage?: () => void;
   dtmfDialerPresent?: boolean;
-  /* @conditional-compile-remove(spotlight) */
   onStopLocalSpotlight?: () => void;
+  useTeamsCaptions?: boolean;
+  /* @conditional-compile-remove(teams-meeting-conference) */
+  onToggleTeamsMeetingConferenceModal?: () => void;
+  /* @conditional-compile-remove(teams-meeting-conference) */
+  teamsMeetingConferenceModalPresent?: boolean;
 }
 
 const inferCommonCallControlOptions = (
@@ -127,8 +137,25 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
   const callWithChatStrings = useCallWithChatCompositeStrings();
   const options = inferCommonCallControlOptions(props.mobileView, props.callControls);
 
-  /* @conditional-compile-remove(close-captions) */
   const [showCaptionsSettingsModal, setShowCaptionsSettingsModal] = useState(false);
+
+  /* @conditional-compile-remove(end-call-options) */
+  // If the hangup capability is not present, we default to true
+  const isHangUpForEveryoneAllowed =
+    useSelector((state) => state.call?.capabilitiesFeature?.capabilities.hangUpForEveryOne.isPresent) ?? true;
+  /* @conditional-compile-remove(end-call-options) */
+  const isTeams = useSelector(getIsTeamsCall);
+
+  /* @conditional-compile-remove(breakout-rooms) */
+  const assignedBreakoutRoom = useSelector(getAssignedBreakoutRoom);
+  /* @conditional-compile-remove(breakout-rooms) */
+  const latestNotifications = useSelector(getLatestNotifications);
+  /* @conditional-compile-remove(breakout-rooms) */
+  const breakoutRoomSettings = useSelector(getBreakoutRoomSettings);
+  /* @conditional-compile-remove(breakout-rooms) */
+  const movingToBreakoutRoomAutomatically =
+    assignedBreakoutRoom?.autoMoveParticipantToBreakoutRoom &&
+    (latestNotifications['assignedBreakoutRoomOpened'] || latestNotifications['assignedBreakoutRoomChanged']);
 
   const handleResize = useCallback((): void => {
     setControlBarButtonsWidth(controlBarContainerRef.current ? controlBarContainerRef.current.offsetWidth : 0);
@@ -163,18 +190,20 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
     setIsOutOfSpace(totalButtonsWidth > controlBarContainerWidth);
   }, [totalButtonsWidth, controlBarContainerWidth]);
 
-  /* @conditional-compile-remove(close-captions) */
   const openCaptionsSettingsModal = useCallback((): void => {
     setShowCaptionsSettingsModal(true);
   }, []);
-  /* @conditional-compile-remove(close-captions) */
+
   const onDismissCaptionsSettings = useCallback((): void => {
     setShowCaptionsSettingsModal(false);
   }, []);
+
   const peopleButtonStrings = useMemo(
     () => ({
       label: callWithChatStrings.peopleButtonLabel,
       selectedLabel: callWithChatStrings.selectedPeopleButtonLabel,
+      tooltipOpenAriaLabel: callWithChatStrings.peopleButtonTooltipOpenAriaLabel,
+      tooltipCloseAriaLabel: callWithChatStrings.peopleButtonTooltipCloseAriaLabel,
       tooltipOffContent: callWithChatStrings.peopleButtonTooltipOpen,
       tooltipOnContent: callWithChatStrings.peopleButtonTooltipClose
     }),
@@ -187,9 +216,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
     }),
     [callWithChatStrings]
   );
-  /* @conditional-compile-remove(spotlight) */
   const callStrings = useLocale().strings.call;
-  /* @conditional-compile-remove(spotlight) */
   const exitSpotlightButtonStrings = useMemo(
     () => ({
       label: callStrings.exitSpotlightButtonLabel,
@@ -197,6 +224,41 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
     }),
     [callStrings]
   );
+
+  /* @conditional-compile-remove(DNS) */
+  const [isDeepNoiseSuppressionOn, setDeepNoiseSuppressionOn] = useState<boolean>(false);
+
+  /* @conditional-compile-remove(DNS) */
+  const startDeepNoiseSuppression = useCallback(async () => {
+    await props.callAdapter.startNoiseSuppressionEffect();
+  }, [props.callAdapter]);
+
+  /* @conditional-compile-remove(DNS) */
+  useEffect(() => {
+    if (
+      props.callAdapter.getState().onResolveDeepNoiseSuppressionDependency &&
+      props.callAdapter.getState().deepNoiseSuppressionOnByDefault
+    ) {
+      startDeepNoiseSuppression();
+      setDeepNoiseSuppressionOn(true);
+    }
+  }, [props.callAdapter, startDeepNoiseSuppression]);
+  /* @conditional-compile-remove(DNS) */
+  const showNoiseSuppressionButton =
+    props.callAdapter.getState().onResolveDeepNoiseSuppressionDependency &&
+    !props.callAdapter.getState().hideNoiseSuppressionButton
+      ? true
+      : false;
+  /* @conditional-compile-remove(DNS) */
+  const onClickNoiseSuppression = useCallback(async () => {
+    if (isDeepNoiseSuppressionOn) {
+      await props.callAdapter.stopNoiseSuppressionEffect();
+      setDeepNoiseSuppressionOn(false);
+    } else {
+      await props.callAdapter.startNoiseSuppressionEffect();
+      setDeepNoiseSuppressionOn(true);
+    }
+  }, [props.callAdapter, isDeepNoiseSuppressionOn]);
 
   const centerContainerStyles = useMemo(() => {
     const styles: BaseCustomStyles = !props.mobileView ? desktopControlBarStyles : {};
@@ -228,7 +290,17 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
 
   // only center control bar buttons based on parent container if there are enough space on the screen and not mobile
   const controlBarDesktopContainerStyles: IStyle = useMemo(
-    () => (!props.mobileView && !isOutOfSpace ? { position: 'relative', minHeight: '4.5rem', width: '100%' } : {}),
+    () =>
+      !props.mobileView && !isOutOfSpace
+        ? {
+            position: 'relative',
+            minHeight: '4.5rem',
+            width: '100%',
+            display: 'flex',
+            alignItems: 'center',
+            paddingLeft: '1rem'
+          }
+        : {},
     [props.mobileView, isOutOfSpace]
   );
 
@@ -241,11 +313,17 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
     [options]
   );
 
-  /* @conditional-compile-remove(reaction) */
   const capabilitiesSelector = useSelector(capabilitySelector);
-  /* @conditional-compile-remove(reaction) */
+  const callState = useSelector(callStatusSelector);
   const isReactionAllowed =
-    !capabilitiesSelector?.capabilities || capabilitiesSelector.capabilities.useReactions.isPresent;
+    callState.callStatus !== 'Connected' ||
+    !capabilitiesSelector?.capabilities ||
+    capabilitiesSelector.capabilities.useReactions.isPresent;
+
+  /* @conditional-compile-remove(breakout-rooms) */
+  const canReturnToMainMeeting = breakoutRoomSettings && breakoutRoomSettings.disableReturnToMainMeeting === false;
+  /* @conditional-compile-remove(breakout-rooms) */
+  const returnFromBreakoutRoom = useCallback(() => props.callAdapter.returnFromBreakoutRoom(), [props.callAdapter]);
 
   // when options is false then we want to hide the whole control bar.
   if (options === false) {
@@ -261,37 +339,45 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
 
   const cameraButtonIsEnabled = isEnabled(options?.cameraButton);
 
-  /* @conditional-compile-remove(spotlight) */
   const showExitSpotlightButton = options?.exitSpotlightButton !== false;
 
+  const showCaptionsButton =
+    props.isCaptionsSupported &&
+    /* @conditional-compile-remove(acs-close-captions) */ isEnabled(options.captionsButton);
+
+  /* @conditional-compile-remove(teams-meeting-conference) */
+  const showTeamsMeetingPhoneCallButton = isEnabled(options?.teamsMeetingPhoneCallButton);
+
   const showDesktopMoreButton =
-    /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(close-captions) */ isEnabled(
-      options?.moreButton
-    ) &&
+    isEnabled(options?.moreButton) &&
     (false ||
       /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ isEnabled(
         options?.holdButton
       ) ||
-      /* @conditional-compile-remove(close-captions) */ props.isCaptionsSupported ||
+      showCaptionsButton ||
       props.onUserSetGalleryLayout);
 
-  /*@conditional-compile-remove(rooms) */
   const role = props.callAdapter.getState().call?.role;
-  /*@conditional-compile-remove(rooms) */
   const hideRaiseHandButtonInRoomsCall =
     props.callAdapter.getState().isRoomsCall && role && ['Consumer', 'Unknown'].includes(role);
-  /*@conditional-compile-remove(reaction) */
   const reactionResources = props.callAdapter.getState().reactions;
 
   return (
     <div ref={controlBarSizeRef}>
       <CallAdapterProvider adapter={props.callAdapter}>
+        {showCaptionsSettingsModal && (
+          <CaptionsSettingsModal
+            showCaptionsSettingsModal={showCaptionsSettingsModal}
+            onDismissCaptionsSettings={onDismissCaptionsSettings}
+            changeCaptionLanguage={props.isCaptionsOn && props.useTeamsCaptions}
+          />
+        )}
         {
-          /* @conditional-compile-remove(close-captions) */ showCaptionsSettingsModal && (
-            <CaptionsSettingsModal
-              showCaptionsSettingsModal={showCaptionsSettingsModal}
-              onDismissCaptionsSettings={onDismissCaptionsSettings}
-              changeCaptionLanguage={props.isCaptionsOn}
+          /* @conditional-compile-remove(teams-meeting-conference) */ props.teamsMeetingConferenceModalPresent && (
+            <MeetingConferencePhoneInfoModal
+              conferencePhoneInfoList={props.callAdapter.getState().call?.meetingConference?.conferencePhones ?? []}
+              showModal={props.teamsMeetingConferenceModalPresent}
+              onDismissMeetingPhoneInfoSettings={props.onToggleTeamsMeetingConferenceModal}
             />
           )
         }
@@ -325,6 +411,21 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                 */}
                 <div ref={controlBarContainerRef}>
                   <ControlBar layout={props.displayVertical ? 'vertical' : 'horizontal'} styles={centerContainerStyles}>
+                    {
+                      /* @conditional-compile-remove(breakout-rooms) */
+                      !props.mobileView &&
+                        assignedBreakoutRoom &&
+                        assignedBreakoutRoom.state === 'open' &&
+                        !movingToBreakoutRoomAutomatically && (
+                          <PrimaryButton
+                            text={callStrings.joinBreakoutRoomButtonLabel}
+                            onClick={async (): Promise<void> => {
+                              assignedBreakoutRoom.join();
+                            }}
+                            styles={commonButtonStyles}
+                          />
+                        )
+                    }
                     {microphoneButtonIsEnabled && (
                       <Microphone
                         displayType={options.displayType}
@@ -333,6 +434,12 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                         /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
                         disabled={props.disableButtonsForHoldScreen || isDisabled(options.microphoneButton)}
                         disableTooltip={props.mobileView}
+                        /* @conditional-compile-remove(DNS) */
+                        onClickNoiseSuppression={onClickNoiseSuppression}
+                        /* @conditional-compile-remove(DNS) */
+                        isDeepNoiseSuppressionOn={isDeepNoiseSuppressionOn}
+                        /* @conditional-compile-remove(DNS) */
+                        showNoiseSuppressionButton={showNoiseSuppressionButton}
                       />
                     )}
                     {cameraButtonIsEnabled && (
@@ -342,38 +449,30 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                         splitButtonsForDeviceSelection={!props.mobileView}
                         /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
                         disabled={props.disableButtonsForHoldScreen || isDisabled(options.cameraButton)}
-                        /* @conditional-compile-remove(video-background-effects) */
                         onClickVideoEffects={props.onClickVideoEffects}
                         componentRef={props.cameraButtonRef}
                         disableTooltip={props.mobileView}
                       />
                     )}
-                    {
-                      /* @conditional-compile-remove(reaction) */
-                      !props.mobileView &&
-                        isReactionAllowed &&
-                        isEnabled(options.reactionButton) &&
-                        reactionResources && (
-                          <Reaction
-                            displayType={options.displayType}
-                            styles={commonButtonStyles}
-                            disabled={props.disableButtonsForHoldScreen}
-                            reactionResource={reactionResources}
-                          />
-                        )
-                    }
-                    {
-                      /* @conditional-compile-remove(raise-hand) */ !props.mobileView &&
-                        isEnabled(options.raiseHandButton) &&
-                        /* @conditional-compile-remove(rooms) */ !hideRaiseHandButtonInRoomsCall && (
-                          <RaiseHand
-                            displayType={options.displayType}
-                            styles={commonButtonStyles}
-                            /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
-                            disabled={props.disableButtonsForHoldScreen || isDisabled(options.microphoneButton)}
-                          />
-                        )
-                    }
+                    {!props.mobileView &&
+                      isReactionAllowed &&
+                      isEnabled(options.reactionButton) &&
+                      reactionResources && (
+                        <Reaction
+                          displayType={options.displayType}
+                          styles={commonButtonStyles}
+                          disabled={props.disableButtonsForHoldScreen}
+                          reactionResource={reactionResources}
+                        />
+                      )}
+                    {!props.mobileView && isEnabled(options.raiseHandButton) && !hideRaiseHandButtonInRoomsCall && (
+                      <RaiseHand
+                        displayType={options.displayType}
+                        styles={commonButtonStyles}
+                        /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+                        disabled={props.disableButtonsForHoldScreen || isDisabled(options.microphoneButton)}
+                      />
+                    )}
                     {showDtmfDialerButton(options) && props.onSetDialpadPage !== undefined && (
                       <DtmfDialpadButton
                         styles={commonButtonStyles}
@@ -385,17 +484,14 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                         }}
                       />
                     )}
-                    {
-                      /* @conditional-compile-remove(spotlight) */ showExitSpotlightButton &&
-                        props.onStopLocalSpotlight && (
-                          <ExitSpotlightButton
-                            displayType={options.displayType}
-                            onClick={props.onStopLocalSpotlight}
-                            styles={commonButtonStyles}
-                            strings={exitSpotlightButtonStrings}
-                          />
-                        )
-                    }
+                    {showExitSpotlightButton && props.onStopLocalSpotlight && (
+                      <ExitSpotlightButton
+                        displayType={options.displayType}
+                        onClick={props.onStopLocalSpotlight}
+                        styles={commonButtonStyles}
+                        strings={exitSpotlightButtonStrings}
+                      />
+                    )}
                     {screenShareButtonIsEnabled && (
                       <ScreenShare
                         option={options.screenShareButton}
@@ -437,20 +533,46 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                         styles={commonButtonStyles}
                         /*@conditional-compile-remove(PSTN-calls) */
                         onClickShowDialpad={props.onClickShowDialpad}
-                        /* @conditional-compile-remove(control-bar-button-injection) */
                         callControls={props.callControls}
-                        /* @conditional-compile-remove(close-captions) */
-                        isCaptionsSupported={props.isCaptionsSupported}
-                        /* @conditional-compile-remove(close-captions) */
+                        isCaptionsSupported={showCaptionsButton}
                         onCaptionsSettingsClick={openCaptionsSettingsModal}
                         onUserSetOverflowGalleryPositionChange={props.onUserSetOverflowGalleryPositionChange}
                         onUserSetGalleryLayout={props.onUserSetGalleryLayout}
                         userSetGalleryLayout={props.userSetGalleryLayout}
                         dtmfDialerPresent={props.dtmfDialerPresent}
                         onSetDialpadPage={props.onSetDialpadPage}
+                        /* @conditional-compile-remove(teams-meeting-conference) */
+                        teamsMeetingPhoneCallEnable={showTeamsMeetingPhoneCallButton}
+                        /* @conditional-compile-remove(teams-meeting-conference) */
+                        onMeetingPhoneInfoClick={props.onToggleTeamsMeetingConferenceModal}
                       />
                     )}
-                    <EndCall displayType="compact" styles={endCallButtonStyles} />
+                    <EndCall
+                      displayType="compact"
+                      mobileView={props.mobileView}
+                      styles={endCallButtonStyles}
+                      /* @conditional-compile-remove(end-call-options) */
+                      enableEndCallMenu={
+                        !isBoolean(props.callControls) &&
+                        !isBoolean(props.callControls?.endCallButton) &&
+                        !props.mobileView &&
+                        isHangUpForEveryoneAllowed &&
+                        !isTeams && // Temporary disable it for Teams call, since capability does not give the right value
+                        props.callControls?.endCallButton?.hangUpForEveryone === 'endCallOptions' &&
+                        // Only show the end call menu when the call is connected, user should not be able to end the call for everyone
+                        // when they are not actively in the call to communicate they will.
+                        callState.callStatus === 'Connected' &&
+                        /* @conditional-compile-remove(breakout-rooms) */
+                        !canReturnToMainMeeting
+                      }
+                      disableEndCallModal={
+                        !isBoolean(props.callControls) &&
+                        !isBoolean(props.callControls?.endCallButton) &&
+                        props.callControls?.endCallButton?.disableEndCallModal
+                      }
+                      /* @conditional-compile-remove(breakout-rooms) */
+                      returnFromBreakoutRoom={canReturnToMainMeeting ? returnFromBreakoutRoom : undefined}
+                    />
                   </ControlBar>
                 </div>
               </Stack.Item>
@@ -465,7 +587,9 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                   <PeopleButton
                     checked={props.peopleButtonChecked}
                     ariaLabel={
-                      props.peopleButtonChecked ? peopleButtonStrings?.selectedLabel : peopleButtonStrings?.label
+                      props.peopleButtonChecked
+                        ? peopleButtonStrings?.tooltipCloseAriaLabel
+                        : peopleButtonStrings?.tooltipOpenAriaLabel
                     }
                     showLabel={options.displayType !== 'compact'}
                     onClick={props.onPeopleButtonClicked}
@@ -495,6 +619,14 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
             </div>
           </Stack.Item>
         )}
+        {
+          /* @conditional-compile-remove(breakout-rooms) */
+          breakoutRoomSettings?.roomEndTime && !props.mobileView && !isOutOfSpace && (
+            <Stack.Item>
+              <Timer timeStampInfo={breakoutRoomSettings?.roomEndTime.toString()} />
+            </Stack.Item>
+          )
+        }
       </Stack>
     </div>
   );

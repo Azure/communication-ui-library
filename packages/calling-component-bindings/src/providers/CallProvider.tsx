@@ -78,7 +78,7 @@ export const useCall = (): Call | undefined => {
  *
  * you must have previously used the CallProvider with a TeamsCall object to use this hook
  *
- * @beta
+ * @public
  */
 export const useTeamsCall = (): undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall => {
   const call = useContext(CallContext)?.call;

@@ -1,14 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/* @conditional-compile-remove(video-background-effects) */
 import * as reselect from 'reselect';
-/* @conditional-compile-remove(video-background-effects) */
+
 import { getSelectedVideoEffect } from './baseSelectors';
-/* @conditional-compile-remove(video-background-effects) */
+
 import { VideoBackgroundEffect } from '../adapter/CallAdapter';
 
-/* @conditional-compile-remove(video-background-effects) */
 /**
  * @private
  */

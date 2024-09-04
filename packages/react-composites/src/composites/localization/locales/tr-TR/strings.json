@@ -20,6 +20,7 @@
     "complianceBannerTranscriptionStopped": "Döküm durduruldu.",
     "configurationPageTitle": "Arama başlatın",
     "copyInviteLinkButtonLabel": "Davet bağlantısını kopyala",
+    "copyInviteLinkButtonActionedLabel": "Bağlantı kopyalandı",
     "copyInviteLinkActionedAriaLabel": "Davet bağlantısı kopyalandı",
     "defaultPlaceHolder": "Bir seçenek belirleyin",
     "dismissSidePaneButtonLabel": "Kapat",
@@ -52,6 +53,7 @@
     "peopleButtonLabel": "Kişiler",
     "selectedPeopleButtonLabel": "Kişiler Düğmesi Seçildi",
     "peoplePaneTitle": "Kişiler",
+    "peoplePaneMoreButtonAriaLabel": "Daha fazla",
     "peopleButtonTooltipOpen": "Katılımcıları göster",
     "peopleButtonTooltipClose": "Katılımcıları gizle",
     "peoplePaneSubTitle": "Bu aramada {numberOfPeople} var",
@@ -60,11 +62,12 @@
     "removedFromCallMoreDetails": "Başka bir katılımcı sizi aramadan çıkardı.",
     "removedFromCallTitle": "Çıkarıldınız",
     "removeMenuLabel": "Kaldır",
-    "startSpotlightParticipantListMenuLabel": "Herkes için öne çıkar",
-    "addSpotlightParticipantListMenuLabel": "Öne çıkarma ekle",
-    "stopSpotlightParticipantListMenuLabel": "Öne çıkarmayı durdur",
-    "stopSpotlightOnSelfParticipantListMenuLabel": "Öne çıkarmadan çık",
-    "spotlightLimitReachedParticipantListMenuTitle": "Öne çıkarma sınırına ulaşıldı",
+    "startSpotlightMenuLabel": "Herkes için öne çıkar",
+    "addSpotlightMenuLabel": "Öne çıkarma ekle",
+    "stopSpotlightMenuLabel": "Öne çıkarmayı durdur",
+    "stopSpotlightOnSelfMenuLabel": "Öne çıkarmadan çık",
+    "spotlightLimitReachedMenuTitle": "Öne çıkarma sınırına ulaşıldı",
+    "stopAllSpotlightMenuLabel": "Tüm öne çıkarmaları durdur",
     "returnToCallButtonAriaDescription": "Aramaya Dön",
     "returnToCallButtonAriaLabel": "Geri",
     "roomNotFoundDetails": "Sağlanan oda kimliği bulunamadı.",
@@ -132,6 +135,7 @@
     "dtmfDialerButtonTooltipOff": "Sayısal tuş takımını gizle",
     "dtmfDialerMoreButtonLabelOn": "Tuş takımını göster",
     "dtmfDialerMoreButtonLabelOff": "Sayısal tuş takımını gizle",
+    "phoneCallMoreButtonLabel": "Telefon Görüşmesi",
     "spokenLanguageStrings": {
       "ar-ae": "Arapça - BAE",
       "ar-sa": "Arapça - Suudi Arabistan",
@@ -242,6 +246,10 @@
       "shareScreen": {
         "lostDueToRoleChangeToAttendee": "Rolünüz değiştirildi. İçerik paylaşma gibi bazı eylemler kullanılamaz.",
         "grantedDueToRoleChangeToPresenter": "Sunucuyuz. İçerik paylaşabilir ve toplantıya yardımcı olabilirsiniz."
+      },
+      "hideAttendeeNames": {
+        "hideAttendeeNameAttendee": "Adınız diğer katılımcılardan gizlendi. Düzenleyiciler ve sunucular gerçek adınızı görebilir.",
+        "hideAttendeeNamePresenter": "Katılımcı adları gizlidir. Katılımcı gizliliğini korumak için yalnızca düzenleyiciler ve sunucular adları görebilir."
       }
     },
     "surveyTitle": "Geliştirmemize yardımcı olun",
@@ -257,7 +265,6 @@
     "tagsSurveyQuestion": "Neleri iyileştirebiliriz?",
     "tagsSurveyTextFieldDefaultText": "Diğer, lütfen belirtin",
     "tagsSurveyHelperText": "Karşılaştığınız tüm sorunları işaretleyin",
-    "surveyTextboxDefaultText": "Diğer, lütfen belirtin",
     "endOfSurveyText": "Geri bildiriminiz için teşekkür ederiz!",
     "surveyIssues": {
       "overallRating": {
@@ -299,7 +306,7 @@
         "otherIssues": "Bu aramada başka ekran paylaşımı sorunlarıyla karşılaştım"
       }
     },
-    "SurveyIssuesHeadingStrings": {
+    "surveyIssuesHeadingStrings": {
       "overallRating": "Genel",
       "audioRating": "Ses",
       "videoRating": "Video",
@@ -311,18 +318,52 @@
       "startSpotlightOnSelfText": "Videonuzu toplantıdaki herkes için öne çıkaracaksınız.",
       "startSpotlightConfirmButtonLabel": "Herkes için öne çıkar",
       "startSpotlightCancelButtonLabel": "İptal",
-      "stopSpotlightHeading": "Öne çıkarma durdurulsun mu?",
+      "stopSpotlightHeading": "Bu video için öne çıkarma durdurulsun mu?",
       "stopSpotlightOnSelfHeading": "Öne çıkarmadan çıkılsın mı?",
+      "stopAllSpotlightHeading": "Tüm videolarda öne çıkarma durdurulsun mu?",
       "stopSpotlightText": "Bu video artık toplantıdaki herkes için öne çıkarılmayacak.",
       "stopSpotlightOnSelfText": "Videonuz toplantıdaki herkes için artık öne çıkarılmayacak.",
+      "stopAllSpotlightText": "Artık videolar toplantıdaki herkes için öne çıkarılmayacak.",
       "stopSpotlightConfirmButtonLabel": "Öne çıkarmayı durdur",
       "stopSpotlightOnSelfConfirmButtonLabel": "Öne çıkarmadan çık",
       "stopSpotlightCancelButtonLabel": "İptal"
-    }
+    },
+    "exitSpotlightButtonLabel": "Öne çıkarmadan çık",
+    "exitSpotlightButtonTooltip": "Öne çıkarmadan çık",
+    "leaveConfirmButtonLabel": "Ayrıl",
+    "endCallConfirmButtonLabel": "Aramayı sonlandır",
+    "hangUpCancelButtonLabel": "İptal",
+    "leaveConfirmDialogTitle": "Aramadan çıkılsın mı?",
+    "leaveConfirmDialogContent": "Aramadan ayrılmak istediğinizden emin misiniz?",
+    "endCallConfirmDialogTitle": "Arama sonlandırılsın mı?",
+    "endCallConfirmDialogContent": "Aramayı herkes için sonlandırıyorsunuz.",
+    "invalidMeetingIdentifier": "Geçersiz toplantı kimliği veya geçiş kodu",
+    "pinParticipantMenuLabel": "Benim için sabitle",
+    "pinParticipantLimitReachedMenuLabel": "Sabitleme (sınıra ulaşıldı)",
+    "unpinParticipantMenuLabel": "Sabitlemeyi kaldır",
+    "pinParticipantMenuItemAriaLabel": "Sabitle",
+    "unpinParticipantMenuItemAriaLabel": "Sabitlemeyi kaldır",
+    "muteAllMenuLabel": "Tümünü sessize al",
+    "muteAllDialogTitle": "Herkesi sessize almak mı istiyorsunuz?",
+    "muteAllDialogContent": "Bu, toplantıda sizin dışınızdaki herkesi sessize alır.",
+    "muteAllConfirmButtonLabel": "Tümünü sessize al",
+    "muteAllCancelButtonLabel": "İptal",
+    "joinBreakoutRoomButtonLabel": "Tartışma odasına katıl",
+    "returnFromBreakoutRoomButtonLabel": "Odadan ayrıl",
+    "leaveBreakoutRoomAndMeetingButtonLabel": "Toplantıdan ayrıl",
+    "breakoutRoomJoinedNotificationTitle": "'{roomName}' Tartışma odasına katıldınız",
+    "joinBreakoutRoomBannerTitle": "'{roomName}' Tartışma odası açık",
+    "joinBreakoutRoomBannerButtonLabel": "Katıl",
+    "returnFromBreakoutRoomBannerTitle": "Ana toplantıya geri dön",
+    "returnFromBreakoutRoomBannerButtonLabel": "Yeniden Katıl"
   },
   "chat": {
     "chatListHeader": "Bu sohbette",
-    "uploadFile": "Dosyayı Karşıya Yükle"
+    "uploadAttachment": "Eki Karşıya Yükle",
+    "uploadImageDataNotProvided": "Görüntü verileri sağlanmadı.",
+    "uploadImageIsTooLarge": "Resim çok büyük. Mb'den küçük bir {maxImageSize} seçin.",
+    "uploadImageExtensionIsNotAllowed": ".{imageExtension} görüntüsünün karşıya yüklemesine izin verilmiyor.",
+    "uploadImageFailed": "Resim karşıya yüklenemiyor. Lütfen daha sonra yeniden deneyin."
   },
   "callWithChat": {
     "chatButtonLabel": "Sohbet",
@@ -332,6 +373,7 @@
     "chatButtonTooltipOpen": "Sohbeti göster",
     "chatPaneTitle": "Sohbet",
     "copyInviteLinkButtonLabel": "Davet bağlantısını kopyala",
+    "copyInviteLinkButtonActionedLabel": "Bağlantı kopyalandı",
     "copyInviteLinkActionedAriaLabel": "Davet bağlantısı kopyalandı",
     "dismissSidePaneButtonLabel": "Kapat",
     "moreDrawerAudioDeviceMenuTitle": "Ses Cihazı",
@@ -347,6 +389,8 @@
     "selectedPeopleButtonLabel": "Kişiler Düğmesi Seçildi",
     "peopleButtonTooltipOpen": "Katılımcıları göster",
     "peopleButtonTooltipClose": "Katılımcıları gizle",
+    "peopleButtonTooltipOpenAriaLabel": "Kişiler düğmesi, Katılımcıları göster",
+    "peopleButtonTooltipCloseAriaLabel": "Kişiler düğmesi, Katılımcıları gizle",
     "peoplePaneSubTitle": "Bu aramada",
     "peoplePaneTitle": "Kişiler",
     "pictureInPictureTileAriaLabel": "Video Akışları. Çağrı ekranına dönmek için tıklayın.",
@@ -360,6 +404,8 @@
     "dialpadModalAriaLabel": "Tuş takımı",
     "dialpadCloseModalButtonAriaLabel": "Tuş takımını kapat",
     "openDtmfDialpadLabel": "Tuş takımını göster",
-    "dtmfDialpadPlaceholderText": "Numara girin"
+    "dtmfDialpadPlaceholderText": "Numara girin",
+    "breakoutRoomChatPaneTitle": "Tartışma Odası Sohbeti",
+    "chatContentSpinnerLabel": "Loading..."
   }
 }

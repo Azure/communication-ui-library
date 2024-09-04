@@ -1,0 +1,21 @@
+import { Meta, Canvas, ArgTypes } from '@storybook/addon-docs';
+import * as TagsSurveyStories from './index.stories';
+import { TagsSurveyExample } from './snippets/TagsSurvey.snippet';
+import ExampleSurveyText from '!!raw-loader!./snippets/TagsSurvey.snippet.tsx';
+import { _TagsSurvey as TagsSurveyComponent } from '@internal/react-components';
+
+<Meta of={TagsSurveyStories} />
+
+# Tags Survey
+
+Component to render a Tags Survey
+
+## Usage
+
+Here is an example of how to use `TagsSurvey`
+
+<Canvas of={TagsSurveyStories.TagsSurveyExampleDocsOnly} source={{ code: ExampleSurveyText }} />
+
+## Props
+
+<ArgTypes of={TagsSurveyComponent} />

@@ -7,7 +7,8 @@
     }
   },
   "AllowedHosts": "*",
-  "ResourceConnectionString": "REPLACE_WITH_CONNECTION_STRING",
+  "ResourceConnectionString": "REPLACE_WITH_COMMUNICATION_RESOURCE_CONNECTION_STRING",
   "EndpointUrl": "REPLACE_WITH_ENDPOINT_URL",
-  "AdminUserId": "REPLACE_WITH_ADMIN_USER_ID"
+  "AdminUserId": "REPLACE_WITH_ADMIN_USER_ID",
+  "AzureBlobStorageConnectionString": "REPLACE_WITH_BLOB_STORAGE_CONNECTION_STRING"
 }

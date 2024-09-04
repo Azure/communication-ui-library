@@ -32,14 +32,12 @@ import { useIdentifiers } from '../identifiers';
 import { localVideoTileContainerStyles, videoGalleryOuterDivStyle } from './styles/VideoGallery.styles';
 import { floatingLocalVideoTileStyle } from './VideoGallery/styles/FloatingLocalVideo.styles';
 import { useId } from '@fluentui/react-hooks';
-/* @conditional-compile-remove(vertical-gallery) */
 import { VerticalGalleryStyles } from './VerticalGallery';
 import { SpeakerVideoLayout } from './VideoGallery/SpeakerVideoLayout';
 import { FocusedContentLayout } from './VideoGallery/FocusContentLayout';
 /* @conditional-compile-remove(large-gallery) */
 import { LargeGalleryLayout } from './VideoGallery/LargeGalleryLayout';
 import { LayoutProps } from './VideoGallery/Layout';
-/* @conditional-compile-remove(reaction) */
 import { ReactionResources } from '../types/ReactionTypes';
 
 /**
@@ -88,12 +86,16 @@ export interface VideoGalleryStrings {
   screenIsBeingSharedMessage: string;
   /** String to show when remote screen share stream is loading */
   screenShareLoadingMessage: string;
+  /** String to show when local screen share stream is loading */
+  localScreenShareLoadingMessage: string;
   /** String for local video label. Default is "You" */
   localVideoLabel: string;
   /** String for local video camera switcher */
   localVideoCameraSwitcherLabel: string;
   /** String for announcing the local video tile can be moved by keyboard controls */
   localVideoMovementLabel: string;
+  /** Aria-label for announcing the local video tile can be moved by keyboard controls */
+  localVideoMovementAriaLabel: string;
   /** String for announcing the selected camera */
   localVideoSelectedDescription: string;
   /** placeholder text for participants who does not have a display name*/
@@ -114,24 +116,24 @@ export interface VideoGalleryStrings {
   pinnedParticipantAnnouncementAriaLabel: string;
   /** Aria label to announce when remote participant's video tile is unpinned */
   unpinnedParticipantAnnouncementAriaLabel: string;
-  /* @conditional-compile-remove(spotlight) */
   /** Menu text shown in Video Tile contextual menu to start spotlight on participant's video tile */
   startSpotlightVideoTileMenuLabel: string;
-  /* @conditional-compile-remove(spotlight) */
   /** Menu text shown in Video Tile contextual menu to add spotlight to participant's video tile */
   addSpotlightVideoTileMenuLabel: string;
-  /* @conditional-compile-remove(spotlight) */
   /** Menu title for start spotlight menu item when spotlight limit is reached */
   spotlightLimitReachedMenuTitle: string;
-  /* @conditional-compile-remove(spotlight) */
   /** Menu text shown in Video Tile contextual menu to stop spotlight on participant's video tile */
   stopSpotlightVideoTileMenuLabel: string;
-  /* @conditional-compile-remove(spotlight) */
   /** Menu text shown in Video Tile contextual menu to stop spotlight on local user's video tile */
   stopSpotlightOnSelfVideoTileMenuLabel: string;
   /* @conditional-compile-remove(hide-attendee-name) */
   /** String for the attendee role */
   attendeeRole: string;
+  /* @conditional-compile-remove(soft-mute) */
+  /** Menu text shown in Video Tile contextual menu to mute a remote participant */
+  muteParticipantMenuItemLabel: string;
+  /** Text shown when waiting for others to join the call */
+  waitingScreenText: string;
 }
 
 /**
@@ -155,12 +157,10 @@ export interface VideoGalleryStyles extends BaseCustomStyles {
   horizontalGallery?: HorizontalGalleryStyles;
   /** Styles for the local video  */
   localVideo?: IStyle;
-  /* @conditional-compile-remove(vertical-gallery) */
   /** Styles for the vertical gallery */
   verticalGallery?: VerticalGalleryStyles;
 }
 
-/* @conditional-compile-remove(vertical-gallery) */
 /**
  * Different modes and positions of the overflow gallery in the VideoGallery
  *
@@ -168,7 +168,6 @@ export interface VideoGalleryStyles extends BaseCustomStyles {
  */
 export type OverflowGalleryPosition = 'horizontalBottom' | 'verticalRight' | 'horizontalTop';
 
-/* @conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */
 /**
  * different modes of the local video tile
  *
@@ -226,6 +225,8 @@ export interface VideoGalleryProps {
   onDisposeRemoteVideoStreamView?: (userId: string) => Promise<void>;
   /** Callback to dispose a remote screen share stream view */
   onDisposeRemoteScreenShareStreamView?: (userId: string) => Promise<void>;
+  /** Callback to dispose a local screen share stream view */
+  onDisposeLocalScreenShareStreamView?: () => Promise<void>;
   /** Callback to render a particpant avatar */
   onRenderAvatar?: OnRenderAvatarCallback;
   /**
@@ -260,32 +261,26 @@ export interface VideoGalleryProps {
    * This callback will be called when a participant video tile is un-pinned.
    */
   onUnpinParticipant?: (userId: string) => void;
-  /* @conditional-compile-remove(spotlight) */
   /**
    * List of spotlighted participant userIds.
    */
   spotlightedParticipants?: string[];
-  /* @conditional-compile-remove(spotlight) */
   /**
-   * This callback will be called when spotlight is started for the local participant video tile.
+   * This callback is to start spotlight for local participant video tile.
    */
   onStartLocalSpotlight?: () => Promise<void>;
-  /* @conditional-compile-remove(spotlight) */
   /**
-   * This callback will be called when spotlight is started for the local participant video tile.
+   * This callback is to stop spotlight for local participant video tile.
    */
-  onStartRemoteSpotlight?: (userIds?: string[]) => Promise<void>;
-  /* @conditional-compile-remove(spotlight) */
+  onStartRemoteSpotlight?: (userIds: string[]) => Promise<void>;
   /**
-   * This callback will be called when spotlight is stopped for remote participant video tiles.
+   * This callback is to start spotlight for remote participant video tiles.
    */
   onStopLocalSpotlight?: () => Promise<void>;
-  /* @conditional-compile-remove(spotlight) */
   /**
-   * This callback will be called when spotlight is stopped for remote participant video tiles.
+   * This callback is to stop spotlight for remote participant video tiles.
    */
-  onStopRemoteSpotlight?: (userIds?: string[]) => Promise<void>;
-  /* @conditional-compile-remove(spotlight) */
+  onStopRemoteSpotlight?: (userIds: string[]) => Promise<void>;
   /**
    * Maximum participants that can be spotlighted
    */
@@ -296,13 +291,11 @@ export interface VideoGalleryProps {
    * @defaultValue \{ kind: 'contextual' \}
    */
   remoteVideoTileMenu?: false | VideoTileContextualMenuProps | VideoTileDrawerMenuProps;
-  /* @conditional-compile-remove(vertical-gallery) */
   /**
    * Determines the layout of the overflowGallery inside the VideoGallery.
    * @defaultValue 'horizontalBottom'
    */
   overflowGalleryPosition?: OverflowGalleryPosition;
-  /* @conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */
   /**
    * Determines the aspect ratio of local video tile in the video gallery.
    * @remarks 'followDeviceOrientation' will be responsive to the screen orientation and will change between 9:16 (portrait) and
@@ -310,12 +303,31 @@ export interface VideoGalleryProps {
    * @defaultValue 'followDeviceOrientation'
    */
   localVideoTileSize?: LocalVideoTileSize;
-  /* @conditional-compile-remove(reaction) */
   /**
    * Reaction resources for like, heart, laugh, applause and surprised.
-   * @beta
    */
   reactionResources?: ReactionResources;
+  /**
+   * Additional Options for Video Tiles
+   */
+  videoTilesOptions?: VideoTilesOptions;
+  /* @conditional-compile-remove(soft-mute) */
+  /**
+   * This callback is to mute a remote participant
+   */
+  onMuteParticipant?: (userId: string) => Promise<void>;
+}
+
+/**
+ * Options that apply to all Video Tiles in the {@link VideoGallery}
+ *
+ * @public
+ */
+export interface VideoTilesOptions {
+  /**
+   * Whether to always show the label background for the video tile
+   */
+  alwaysShowLabelBackground?: boolean;
 }
 
 /**
@@ -366,6 +378,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     onDisposeLocalStreamView,
     onCreateRemoteStreamView,
     onDisposeRemoteScreenShareStreamView,
+    onDisposeLocalScreenShareStreamView,
     onDisposeRemoteVideoStreamView,
     styles,
     layout,
@@ -377,24 +390,18 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     onPinParticipant: onPinParticipantHandler,
     onUnpinParticipant: onUnpinParticipantHandler,
     remoteVideoTileMenu = DEFAULT_REMOTE_VIDEO_TILE_MENU_OPTIONS,
-    /* @conditional-compile-remove(vertical-gallery) */
     overflowGalleryPosition = 'horizontalBottom',
-    /* @conditional-compile-remove(rooms) */
     localVideoTileSize = 'followDeviceOrientation',
-    /* @conditional-compile-remove(spotlight) */
     spotlightedParticipants,
-    /* @conditional-compile-remove(spotlight) */
     onStartLocalSpotlight,
-    /* @conditional-compile-remove(spotlight) */
     onStartRemoteSpotlight,
-    /* @conditional-compile-remove(spotlight) */
     onStopLocalSpotlight,
-    /* @conditional-compile-remove(spotlight) */
     onStopRemoteSpotlight,
-    /* @conditional-compile-remove(spotlight) */
     maxParticipantsToSpotlight,
-    /* @conditional-compile-remove(reaction) */
-    reactionResources
+    reactionResources,
+    videoTilesOptions,
+    /* @conditional-compile-remove(soft-mute) */
+    onMuteParticipant
   } = props;
 
   const ids = useIdentifiers();
@@ -441,19 +448,21 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     });
   }, [props.pinnedParticipants, props.remoteParticipants]);
   // Use pinnedParticipants from props but if it is not defined use the maintained state of pinned participants
-  const pinnedParticipants = props.pinnedParticipants ?? pinnedParticipantsState;
+  const pinnedParticipants = useMemo(
+    () =>
+      props.pinnedParticipants ??
+      pinnedParticipantsState.filter((pinnedParticipantId) =>
+        remoteParticipants.find((remoteParticipant) => remoteParticipant.userId === pinnedParticipantId)
+      ),
+    [props.pinnedParticipants, pinnedParticipantsState, remoteParticipants]
+  );
 
   const showLocalVideoTileLabel =
-    !(
-      (localTileNotInGrid && isNarrow) ||
-      /*@conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */ localVideoTileSize ===
-        '9:16'
-    ) || layout === 'default';
+    !((localTileNotInGrid && isNarrow) || localVideoTileSize === '9:16') || layout === 'default';
   /**
    * Utility function for memoized rendering of LocalParticipant.
    */
-  const localVideoTile = useMemo((): JSX.Element /* @conditional-compile-remove(rooms) */ | undefined => {
-    /* @conditional-compile-remove(click-to-call) */
+  const localVideoTile = useMemo((): JSX.Element | undefined => {
     if (localVideoTileSize === 'hidden') {
       return undefined;
     }
@@ -461,7 +470,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       return onRenderLocalVideoTile(localParticipant);
     }
 
-    /* @conditional-compile-remove(spotlight) */
     const isSpotlighted = !!localParticipant.spotlight;
 
     const localVideoTileStyles = concatStyleSets(
@@ -484,10 +492,11 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
         styles={localVideoTileContainerStyles}
         key="local-video-tile-key"
         tabIndex={0}
-        aria-label={strings.localVideoMovementLabel}
+        aria-label={strings.localVideoMovementAriaLabel ?? strings.localVideoMovementLabel}
         role={'dialog'}
       >
         <_LocalVideoTile
+          alwaysShowLabelBackground={videoTilesOptions?.alwaysShowLabelBackground}
           userId={localParticipant.userId}
           onCreateLocalStreamView={onCreateLocalStreamView}
           onDisposeLocalStreamView={onDisposeLocalStreamView}
@@ -505,28 +514,18 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           localVideoCameraSwitcherLabel={strings.localVideoCameraSwitcherLabel}
           localVideoSelectedDescription={strings.localVideoSelectedDescription}
           styles={localVideoTileStyles}
-          /* @conditional-compile-remove(raise-hand) */
           raisedHand={localParticipant.raisedHand}
-          /* @conditional-compile-remove(reaction) */
           reaction={localParticipant.reaction}
-          /* @conditional-compile-remove(spotlight) */
           spotlightedParticipantUserIds={spotlightedParticipants}
-          /* @conditional-compile-remove(spotlight) */
           isSpotlighted={isSpotlighted}
-          /* @conditional-compile-remove(spotlight) */
           onStartSpotlight={onStartLocalSpotlight}
-          /* @conditional-compile-remove(spotlight) */
           onStopSpotlight={onStopLocalSpotlight}
-          /* @conditional-compile-remove(spotlight) */
           maxParticipantsToSpotlight={maxParticipantsToSpotlight}
-          /* @conditional-compile-remove(spotlight) */
           menuKind={remoteVideoTileMenu ? (remoteVideoTileMenu.kind === 'drawer' ? 'drawer' : 'contextual') : undefined}
-          /* @conditional-compile-remove(spotlight) */
           drawerMenuHostId={drawerMenuHostId}
-          /* @conditional-compile-remove(spotlight) */
           strings={strings}
-          /* @conditional-compile-remove(reaction) */
           reactionResources={reactionResources}
+          participantsCount={remoteParticipants.length + 1}
         />
       </Stack>
     );
@@ -544,27 +543,19 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     showMuteIndicator,
     styles?.localVideo,
     theme.effects.roundedCorner4,
-    /*@conditional-compile-remove(click-to-call) */
     localVideoTileSize,
-
     layout,
     showLocalVideoTileLabel,
-    /* @conditional-compile-remove(spotlight) */
     spotlightedParticipants,
-    /* @conditional-compile-remove(spotlight) */
     onStartLocalSpotlight,
-    /* @conditional-compile-remove(spotlight) */
     onStopLocalSpotlight,
-    /* @conditional-compile-remove(spotlight) */
     maxParticipantsToSpotlight,
-    /* @conditional-compile-remove(spotlight) */
     remoteVideoTileMenu,
-    /* @conditional-compile-remove(spotlight) */
     strings,
-    /* @conditional-compile-remove(spotlight) */
     drawerMenuHostId,
-    /* @conditional-compile-remove(reaction) */
-    reactionResources
+    reactionResources,
+    videoTilesOptions,
+    remoteParticipants.length
   ]);
 
   const onPinParticipant = useCallback(
@@ -572,12 +563,12 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       if (pinnedParticipants.length >= MAX_PINNED_REMOTE_VIDEO_TILES) {
         return;
       }
-      if (!pinnedParticipantsState.includes(userId)) {
-        setPinnedParticipantsState(pinnedParticipantsState.concat(userId));
+      if (!pinnedParticipants.includes(userId)) {
+        setPinnedParticipantsState(pinnedParticipants.concat(userId));
       }
       onPinParticipantHandler?.(userId);
     },
-    [pinnedParticipants.length, pinnedParticipantsState, setPinnedParticipantsState, onPinParticipantHandler]
+    [pinnedParticipants, setPinnedParticipantsState, onPinParticipantHandler]
   );
   const onUnpinParticipant = useCallback(
     (userId: string) => {
@@ -609,9 +600,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       const remoteVideoStream = participant.videoStream;
       const selectedScalingMode = remoteVideoStream ? selectedScalingModeState[participant.userId] : undefined;
       let isPinned = pinnedParticipants?.includes(participant.userId);
-      /* @conditional-compile-remove(spotlight) */
       const isSpotlighted = !!participant.spotlight;
-      /* @conditional-compile-remove(spotlight) */
       isPinned = isSpotlighted ? false : isPinned;
 
       const createViewOptions = (): VideoStreamOptions | undefined => {
@@ -629,6 +618,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
 
       return (
         <_RemoteVideoTile
+          alwaysShowLabelBackground={videoTilesOptions?.alwaysShowLabelBackground}
+          streamId={remoteVideoStream?.id}
           key={participant.userId}
           userId={participant.userId}
           remoteParticipant={participant}
@@ -647,10 +638,10 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
             participant.userId === localParticipant.userId
               ? undefined
               : remoteVideoTileMenu
-              ? remoteVideoTileMenu.kind === 'drawer'
-                ? 'drawer'
-                : 'contextual'
-              : undefined
+                ? remoteVideoTileMenu.kind === 'drawer'
+                  ? 'drawer'
+                  : 'contextual'
+                : undefined
           }
           drawerMenuHostId={drawerMenuHostId}
           onPinParticipant={onPinParticipant}
@@ -659,18 +650,14 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           isPinned={isPinned}
           disablePinMenuItem={pinnedParticipants.length >= MAX_PINNED_REMOTE_VIDEO_TILES}
           toggleAnnouncerString={toggleAnnouncerString}
-          /* @conditional-compile-remove(spotlight) */
           spotlightedParticipantUserIds={spotlightedParticipants}
-          /* @conditional-compile-remove(spotlight) */
           isSpotlighted={isSpotlighted}
-          /* @conditional-compile-remove(spotlight) */
           onStartSpotlight={onStartRemoteSpotlight}
-          /* @conditional-compile-remove(spotlight) */
           onStopSpotlight={onStopRemoteSpotlight}
-          /* @conditional-compile-remove(spotlight) */
           maxParticipantsToSpotlight={maxParticipantsToSpotlight}
-          /* @conditional-compile-remove(reaction) */
           reactionResources={reactionResources}
+          /* @conditional-compile-remove(soft-mute) */
+          onMuteParticipant={onMuteParticipant}
         />
       );
     },
@@ -690,17 +677,27 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       onUnpinParticipant,
       toggleAnnouncerString,
       onUpdateScalingMode,
-      /* @conditional-compile-remove(spotlight) */ spotlightedParticipants,
-      /* @conditional-compile-remove(spotlight) */ onStartRemoteSpotlight,
-      /* @conditional-compile-remove(spotlight) */ onStopRemoteSpotlight,
-      /* @conditional-compile-remove(spotlight) */ maxParticipantsToSpotlight,
-      /* @conditional-compile-remove(reaction) */ reactionResources
+      spotlightedParticipants,
+      onStartRemoteSpotlight,
+      onStopRemoteSpotlight,
+      maxParticipantsToSpotlight,
+      /* @conditional-compile-remove(soft-mute) */ onMuteParticipant,
+      reactionResources,
+      videoTilesOptions
     ]
   );
 
   const screenShareParticipant = remoteParticipants.find((participant) => participant.screenShareStream?.isAvailable);
 
-  const localScreenShareStreamComponent = <LocalScreenShare localParticipant={localParticipant} />;
+  const localScreenShareStreamComponent = (
+    <LocalScreenShare
+      localParticipant={localParticipant}
+      renderElement={localParticipant.screenShareStream?.renderElement}
+      isAvailable={localParticipant.screenShareStream?.isAvailable}
+      onCreateLocalStreamView={onCreateLocalStreamView}
+      onDisposeLocalScreenShareStreamView={onDisposeLocalScreenShareStreamView}
+    />
+  );
 
   const remoteScreenShareComponent = screenShareParticipant && (
     <RemoteScreenShare
@@ -710,16 +707,17 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       onDisposeRemoteStreamView={onDisposeRemoteScreenShareStreamView}
       isReceiving={screenShareParticipant.screenShareStream?.isReceiving}
       participantVideoScalingMode={selectedScalingModeState[screenShareParticipant.userId]}
-      /* @conditional-compile-remove(ppt-live) */
-      isPPTLive={!screenShareParticipant.screenShareStream?.id}
+      localParticipant={localParticipant}
+      remoteParticipants={remoteParticipants}
+      reactionResources={reactionResources}
     />
   );
 
   const screenShareComponent = remoteScreenShareComponent
     ? remoteScreenShareComponent
     : localParticipant.isScreenSharingOn
-    ? localScreenShareStreamComponent
-    : undefined;
+      ? localScreenShareStreamComponent
+      : undefined;
 
   const layoutProps = useMemo<LayoutProps>(
     () => ({
@@ -735,9 +733,9 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       parentWidth: containerWidth,
       parentHeight: containerHeight,
       pinnedParticipantUserIds: pinnedParticipants,
-      /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition,
-      /* @conditional-compile-remove(click-to-call) */ localVideoTileSize,
-      /* @conditional-compile-remove(spotlight) */ spotlightedParticipantUserIds: spotlightedParticipants
+      overflowGalleryPosition,
+      localVideoTileSize,
+      spotlightedParticipantUserIds: spotlightedParticipants
     }),
     [
       remoteParticipants,
@@ -753,9 +751,9 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       onRenderRemoteVideoTile,
       defaultOnRenderVideoTile,
       pinnedParticipants,
-      /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition,
-      /* @conditional-compile-remove(click-to-call) */ localVideoTileSize,
-      /* @conditional-compile-remove(spotlight) */ spotlightedParticipants
+      overflowGalleryPosition,
+      localVideoTileSize,
+      spotlightedParticipants
     ]
   );
 

@@ -2,18 +2,14 @@
 // Licensed under the MIT License.
 
 import { ControlBarButtonStyles, DevicesButton } from '@internal/react-components';
-/* @conditional-compile-remove(rooms) */
 import { DevicesButtonStrings } from '@internal/react-components';
 import React, { useMemo } from 'react';
 import { usePropsFor } from '../../hooks/usePropsFor';
 import { concatButtonBaseStyles, devicesButtonWithIncreasedTouchTargets } from '../../styles/Buttons.styles';
-/* @conditional-compile-remove(rooms) */
 import { CompositeLocale, useLocale } from '../../../localization';
 import { _HighContrastAwareIcon } from '@internal/react-components';
 import { CallControlDisplayType } from '../../../common/types/CommonCallControlOptions';
-/* @conditional-compile-remove(rooms) */
 import { useAdapter } from '../../adapter/CallAdapterProvider';
-/* @conditional-compile-remove(rooms) */
 import { ParticipantRole } from '@azure/communication-calling';
 
 /** @private */
@@ -24,24 +20,16 @@ export const Devices = (props: {
   disabled?: boolean;
 }): JSX.Element => {
   const devicesButtonProps = usePropsFor(DevicesButton);
-  /* @conditional-compile-remove(rooms) */
   const adapter = useAdapter();
-  /* @conditional-compile-remove(rooms) */
   const role: ParticipantRole = adapter.getState().call?.role ?? 'Unknown';
 
   const augmentedDeviceButtonProps = useMemo(
     () => ({
       ...devicesButtonProps,
-      /* @conditional-compile-remove(rooms) */
       microphones: role === 'Consumer' ? [] : devicesButtonProps.microphones,
-      /* @conditional-compile-remove(rooms) */
       cameras: role === 'Consumer' ? [] : devicesButtonProps.cameras
     }),
-    [
-      devicesButtonProps,
-      /* @conditional-compile-remove(rooms) */
-      role
-    ]
+    [devicesButtonProps, role]
   );
   const styles = useMemo(
     () =>
@@ -51,12 +39,9 @@ export const Devices = (props: {
       ),
     [props.increaseFlyoutItemSize, props.styles]
   );
-  /* @conditional-compile-remove(rooms) */
   const locale = useLocale();
-  /* @conditional-compile-remove(rooms) */
   const onlyManageSpeakers = role === 'Consumer';
 
-  /* @conditional-compile-remove(rooms) */
   const onRenderDevicesIcon = (): JSX.Element => {
     return <_HighContrastAwareIcon disabled={props.disabled} iconName="OptionsSpeaker" />;
   };
@@ -70,15 +55,12 @@ export const Devices = (props: {
       styles={styles}
       data-ui-id="calling-composite-devices-button"
       disabled={props.disabled}
-      /* @conditional-compile-remove(rooms) */
       strings={getLabelFromRole(role as ParticipantRole, locale)}
-      /* @conditional-compile-remove(rooms) */
       onRenderIcon={onlyManageSpeakers ? onRenderDevicesIcon : undefined}
     />
   );
 };
 
-/* @conditional-compile-remove(rooms) */
 const getLabelFromRole = (
   role: ParticipantRole,
   locale: CompositeLocale

@@ -23,7 +23,6 @@ import { chatStatefulLogger } from './Logger';
  * @public
  */
 export interface StatefulChatClient extends ChatClient {
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   /**
    * Cleans up the resource cache from the chat thread client.
    */
@@ -45,7 +44,6 @@ export interface StatefulChatClient extends ChatClient {
    * @param handler - Original callback to be unsubscribed.
    */
   offStateChange(handler: (state: ChatClientState) => void): void;
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   /**
    * Downloads a resource for specific message and caches it.
    *
@@ -54,7 +52,6 @@ export interface StatefulChatClient extends ChatClient {
    * @param resourceUrl - The resource url to fetch and cache.
    */
   downloadResourceToCache(threadId: string, messageId: string, resourceUrl: string): void;
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   /**
    * Removes a resource from cache for a specific message.
    *
@@ -122,8 +119,7 @@ const proxyChatClient: ProxyHandler<ChatClient> = {
             receiver.eventSubscriber = new EventSubscriber(chatClient, context);
           }
           return ret;
-        },
-        'ChatClient.startRealtimeNotifications');
+        }, 'ChatClient.startRealtimeNotifications');
       }
       case 'stopRealtimeNotifications': {
         return context.withAsyncErrorTeedToState(async function (
@@ -135,8 +131,7 @@ const proxyChatClient: ProxyHandler<ChatClient> = {
             receiver.eventSubscriber = undefined;
           }
           return ret;
-        },
-        'ChatClient.stopRealtimeNotifications');
+        }, 'ChatClient.stopRealtimeNotifications');
       }
       default:
         return Reflect.get(chatClient, prop);
@@ -237,11 +232,7 @@ export const _createStatefulChatClientWithDeps = (
   args: StatefulChatClientArgs,
   options?: StatefulChatClientOptions
 ): StatefulChatClient => {
-  const context = new ChatContext(
-    options?.maxStateChangeListeners,
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ args.credential,
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ args.endpoint
-  );
+  const context = new ChatContext(options?.maxStateChangeListeners, args.credential, args.endpoint);
 
   let eventSubscriber: EventSubscriber;
 
@@ -261,18 +252,15 @@ export const _createStatefulChatClientWithDeps = (
       eventSubscriber = val;
     }
   });
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   Object.defineProperty(proxy, 'dispose', {
     configurable: false,
     value: () => context?.dispose()
   });
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   Object.defineProperty(proxy, 'downloadResourceToCache', {
     configurable: false,
     value: (threadId: string, messageId: string, resourceUrl: string) =>
       context?.downloadResourceToCache(threadId, messageId, resourceUrl)
   });
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   Object.defineProperty(proxy, 'removeResourceFromCache', {
     configurable: false,
     value: (threadId: string, messageId: string, resourceUrl: string) =>

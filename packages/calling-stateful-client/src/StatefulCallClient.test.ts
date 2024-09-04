@@ -89,18 +89,6 @@ describe('Stateful call client', () => {
     expect(client.getState().callAgent?.displayName).toBe(displayName);
   });
 
-  /* @conditional-compile-remove(PSTN-calls) */
-  test('should update CallClient state and have alternateCallerId set when callAgent is created', async () => {
-    const phoneNumber = '+15555555';
-    const userId: CommunicationUserKind = { kind: 'communicationUser', communicationUserId: 'someUser' };
-    const client = createStatefulCallClientWithDeps(
-      createMockCallClient(),
-      new CallContext(userId, undefined, phoneNumber),
-      new InternalCallContext()
-    );
-    expect(client.getState().alternateCallerId).toEqual(phoneNumber);
-  });
-
   test('should update call in state when new call is added and removed', async () => {
     const agent = createMockCallAgent();
     const client = createStatefulCallClientWithAgent(agent);
@@ -682,6 +670,16 @@ describe('errors should be reported correctly from Call when', () => {
       expect(listener.onChangeCalledCount).toBe(1);
       expect(client.getState().latestErrors['Call.stopScreenSharing']).toBeDefined();
     }
+  });
+
+  /* @conditional-compile-remove(teams-meeting-conference) */
+  test('Conference call is undefined in acs to acs calls', async () => {
+    const conference = addMockEmitter({ name: 'Conference' });
+
+    const { client, callId } = await prepareCallWithFeatures(
+      createMockApiFeatures(new Map([[Features.TeamsMeetingAudioConferencing, conference]]))
+    );
+    expect(client.getState().calls[callId]?.meetingConference?.conferencePhones).toStrictEqual([]);
   });
 });
 

@@ -12,7 +12,6 @@ import {
   test
 } from './fixture';
 
-/* @conditional-compile-remove(vertical-gallery) */
 test.describe('Vertical gallery resizing tests', async () => {
   test('resize should have the tiles all change to the same size within expected bounds', async ({
     page,

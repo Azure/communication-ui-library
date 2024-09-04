@@ -19,7 +19,7 @@ jobs:
     outputs:
       met: ${{ steps.label.outputs.found || steps.workflow_dispatch.outputs.found }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
           # Use a machine account when checking out. This is to workaround the issue where GitHub
@@ -50,11 +50,11 @@ jobs:
     outputs:
       matrix: ${{ steps.get-matrix.outputs.matrix }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - name: Use Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '20.x'
       - id: get-matrix
@@ -69,7 +69,7 @@ jobs:
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
           # Use a machine account when checking out. This is to workaround the issue where GitHub
@@ -79,7 +79,7 @@ jobs:
           token: ${{ secrets.MACHINE_ACCOUNT_PAT }}
       - name: Checkout branch if on a PR
         if: ${{ github.event_name != 'workflow_dispatch' }}
-        # On the `pull_request` event, actions/checkout@v3 leaves the local checkout in a detached head state.
+        # On the `pull_request` event, actions/checkout@v4 leaves the local checkout in a detached head state.
         # Explicitly checkout the target branch so we can push later.
         run: git checkout ${{ github.event.pull_request.head.ref }}
       - name: Setup bot git information
@@ -88,16 +88,16 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
       - name: Use Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '20.x'
       - name: Restore node_modules from cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
-        run: npm install -g @microsoft/rush@5.112.2
+        run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
       - name: Install dependencies
         run: rush install --max-install-attempts 3
       - uses: browser-actions/setup-chrome@v1
@@ -165,7 +165,7 @@ jobs:
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
           # Use a machine account when checking out. This is to workaround the issue where GitHub
@@ -175,7 +175,7 @@ jobs:
           token: ${{ secrets.MACHINE_ACCOUNT_PAT }}
       - name: Checkout branch if on a PR
         if: ${{ github.event_name != 'workflow_dispatch' }}
-        # On the `pull_request` event, actions/checkout@v3 leaves the local checkout in a detached head state.
+        # On the `pull_request` event, actions/checkout@v4 leaves the local checkout in a detached head state.
         # Explicitly checkout the target branch so we can push later.
         run: git checkout ${{ github.event.pull_request.head.ref }}
       - name: Setup bot git information
@@ -184,16 +184,16 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
       - name: Use Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '20.x'
       - name: Restore node_modules from cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
-        run: npm install -g @microsoft/rush@5.112.2
+        run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
       - name: Install dependencies
         run: rush install --max-install-attempts 3
       - uses: browser-actions/setup-chrome@v1
@@ -261,7 +261,7 @@ jobs:
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
           # Use a machine account when checking out. This is to workaround the issue where GitHub
@@ -271,7 +271,7 @@ jobs:
           token: ${{ secrets.MACHINE_ACCOUNT_PAT }}
       - name: Checkout branch if on a PR
         if: ${{ github.event_name != 'workflow_dispatch' }}
-        # On the `pull_request` event, actions/checkout@v3 leaves the local checkout in a detached head state.
+        # On the `pull_request` event, actions/checkout@v4 leaves the local checkout in a detached head state.
         # Explicitly checkout the target branch so we can push later.
         run: git checkout ${{ github.event.pull_request.head.ref }}
       - name: Setup bot git information
@@ -280,16 +280,16 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
       - name: Use Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '20.x'
       - name: Restore node_modules from cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
-        run: npm install -g @microsoft/rush@5.112.2
+        run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
       - name: Install dependencies
         run: rush install --max-install-attempts 3
       - uses: browser-actions/setup-chrome@v1
@@ -357,7 +357,7 @@ jobs:
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
           # Use a machine account when checking out. This is to workaround the issue where GitHub
@@ -367,7 +367,7 @@ jobs:
           token: ${{ secrets.MACHINE_ACCOUNT_PAT }}
       - name: Checkout branch if on a PR
         if: ${{ github.event_name != 'workflow_dispatch' }}
-        # On the `pull_request` event, actions/checkout@v3 leaves the local checkout in a detached head state.
+        # On the `pull_request` event, actions/checkout@v4 leaves the local checkout in a detached head state.
         # Explicitly checkout the target branch so we can push later.
         run: git checkout ${{ github.event.pull_request.head.ref }}
       - name: Setup bot git information
@@ -376,16 +376,16 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
       - name: Use Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '20.x'
       - name: Restore node_modules from cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
-        run: npm install -g @microsoft/rush@5.112.2
+        run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
       - name: Install dependencies
         run: rush install --max-install-attempts 3
       - uses: browser-actions/setup-chrome@v1
@@ -453,7 +453,7 @@ jobs:
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
           # Use a machine account when checking out. This is to workaround the issue where GitHub
@@ -463,7 +463,7 @@ jobs:
           token: ${{ secrets.MACHINE_ACCOUNT_PAT }}
       - name: Checkout branch if on a PR
         if: ${{ github.event_name != 'workflow_dispatch' }}
-        # On the `pull_request` event, actions/checkout@v3 leaves the local checkout in a detached head state.
+        # On the `pull_request` event, actions/checkout@v4 leaves the local checkout in a detached head state.
         # Explicitly checkout the target branch so we can push later.
         run: git checkout ${{ github.event.pull_request.head.ref }}
       - name: Setup bot git information
@@ -472,16 +472,16 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
       - name: Use Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '20.x'
       - name: Restore node_modules from cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
-        run: npm install -g @microsoft/rush@5.112.2
+        run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
       - name: Install dependencies
         run: rush install --max-install-attempts 3
       - uses: browser-actions/setup-chrome@v1
@@ -549,7 +549,7 @@ jobs:
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
           # Use a machine account when checking out. This is to workaround the issue where GitHub
@@ -559,7 +559,7 @@ jobs:
           token: ${{ secrets.MACHINE_ACCOUNT_PAT }}
       - name: Checkout branch if on a PR
         if: ${{ github.event_name != 'workflow_dispatch' }}
-        # On the `pull_request` event, actions/checkout@v3 leaves the local checkout in a detached head state.
+        # On the `pull_request` event, actions/checkout@v4 leaves the local checkout in a detached head state.
         # Explicitly checkout the target branch so we can push later.
         run: git checkout ${{ github.event.pull_request.head.ref }}
       - name: Setup bot git information
@@ -568,16 +568,16 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
       - name: Use Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '20.x'
       - name: Restore node_modules from cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
-        run: npm install -g @microsoft/rush@5.112.2
+        run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
       - name: Install dependencies
         run: rush install --max-install-attempts 3
       - uses: browser-actions/setup-chrome@v1
@@ -640,7 +640,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions: read-all
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
           # Use a machine account when checking out. This is to workaround the issue where GitHub

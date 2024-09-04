@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { CallAgent } from '@azure/communication-calling';
+import { CallAgent, TeamsCallAgent } from '@azure/communication-calling';
 import { CallingHandlers, createDefaultCallingHandlers } from '@internal/calling-component-bindings';
 /* @conditional-compile-remove(teams-identity-support)) */
 import { createDefaultTeamsCallingHandlers, TeamsCallingHandlers } from '@internal/calling-component-bindings';
@@ -9,14 +9,15 @@ import {
   CallCommon,
   StatefulCallClient,
   StatefulDeviceManager,
-  TeamsCallAgent,
   _isACSCall,
   _isACSCallAgent,
   _isTeamsCall,
   _isTeamsCallAgent
 } from '@internal/calling-stateful-client';
-/* @conditional-compile-remove(video-background-effects) */
+
 import { VideoBackgroundEffectsDependency } from '@internal/calling-component-bindings';
+/* @conditional-compile-remove(DNS) */
+import { DeepNoiseSuppressionEffectDependency } from '@internal/calling-component-bindings';
 
 /**
  * @private
@@ -35,9 +36,11 @@ export function createHandlers<AgentType extends CallAgent | TeamsCallAgent>(
   callAgent: AgentType,
   deviceManager: StatefulDeviceManager | undefined,
   call: CallCommon | undefined,
-  /* @conditional-compile-remove(video-background-effects) */
+
   options?: {
     onResolveVideoBackgroundEffectsDependency?: () => Promise<VideoBackgroundEffectsDependency>;
+    /* @conditional-compile-remove(DNS) */
+    onResolveDeepNoiseSuppressionDependency?: () => Promise<DeepNoiseSuppressionEffectDependency>;
   }
 ): CallHandlersOf<AgentType> {
   // Call can be either undefined or ACS Call
@@ -47,7 +50,6 @@ export function createHandlers<AgentType extends CallAgent | TeamsCallAgent>(
       callAgent,
       deviceManager,
       call,
-      /* @conditional-compile-remove(video-background-effects) */
       options
     ) as CallHandlersOf<AgentType>;
   }
@@ -59,7 +61,6 @@ export function createHandlers<AgentType extends CallAgent | TeamsCallAgent>(
       callAgent,
       deviceManager,
       call,
-      /* @conditional-compile-remove(video-background-effects) */
       options
     ) as CallHandlersOf<AgentType>;
   }

@@ -43,7 +43,8 @@ export const LargeGalleryLayout = (props: LargeGalleryProps): JSX.Element => {
     parentWidth,
     parentHeight,
     pinnedParticipantUserIds = [],
-    /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition = 'horizontalBottom'
+    overflowGalleryPosition = 'horizontalBottom',
+    spotlightedParticipantUserIds = []
   } = props;
 
   const isNarrow = parentWidth ? isNarrowWidth(parentWidth) : false;
@@ -53,7 +54,6 @@ export const LargeGalleryLayout = (props: LargeGalleryProps): JSX.Element => {
     return parentWidth && parentHeight
       ? calculateMaxTilesInLargeGrid(parentWidth, parentHeight)
       : maxRemoteVideoStreams;
-    return maxRemoteVideoStreams;
   };
 
   // This is for tracking the number of children in the first page of overflow gallery.
@@ -64,13 +64,14 @@ export const LargeGalleryLayout = (props: LargeGalleryProps): JSX.Element => {
     remoteParticipants,
     localParticipant,
     dominantSpeakers,
-    maxRemoteVideoStreams: maxStreamsTrampoline(),
+    maxGridParticipants: maxStreamsTrampoline(),
     isScreenShareActive: !!screenShareComponent,
     maxOverflowGalleryDominantSpeakers: screenShareComponent
       ? childrenPerPage.current - ((pinnedParticipantUserIds.length + 1) % childrenPerPage.current)
       : childrenPerPage.current,
     pinnedParticipantUserIds,
-    /* @conditional-compile-remove(large-gallery) */ layout: 'largeGallery'
+    /* @conditional-compile-remove(large-gallery) */ layout: 'largeGallery',
+    spotlightedParticipantUserIds
   });
   let activeVideoStreams = 0;
 
@@ -102,7 +103,7 @@ export const LargeGalleryLayout = (props: LargeGalleryProps): JSX.Element => {
   });
 
   if (localVideoComponent) {
-    if (screenShareComponent) {
+    if (screenShareComponent || spotlightedParticipantUserIds.length > 0) {
       overflowGalleryTiles = [localVideoComponent].concat(overflowGalleryTiles);
     } else {
       gridTiles = [localVideoComponent].concat(gridTiles);
@@ -120,9 +121,7 @@ export const LargeGalleryLayout = (props: LargeGalleryProps): JSX.Element => {
         shouldFloatLocalVideo={false}
         overflowGalleryElements={overflowGalleryTiles}
         horizontalGalleryStyles={styles?.horizontalGallery}
-        /* @conditional-compile-remove(vertical-gallery) */
         verticalGalleryStyles={styles?.verticalGallery}
-        /* @conditional-compile-remove(vertical-gallery) */
         overflowGalleryPosition={overflowGalleryPosition}
         onFetchTilesToRender={setIndexesToRender}
         onChildrenPerPageChange={(n: number) => {
@@ -136,15 +135,14 @@ export const LargeGalleryLayout = (props: LargeGalleryProps): JSX.Element => {
     isShort,
     overflowGalleryTiles,
     styles?.horizontalGallery,
-    /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition,
+    overflowGalleryPosition,
     setIndexesToRender,
-    /* @conditional-compile-remove(vertical-gallery) */ styles?.verticalGallery,
+    styles?.verticalGallery,
     parentWidth
   ]);
 
   return (
     <Stack
-      /* @conditional-compile-remove(vertical-gallery) */
       horizontal={overflowGalleryPosition === 'verticalRight'}
       styles={rootLayoutStyle}
       tokens={videoGalleryLayoutGap}

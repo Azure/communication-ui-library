@@ -81,11 +81,14 @@ export interface CameraButtonStrings {
    * Title for primary action section of split button
    */
   cameraPrimaryActionSplitButtonTitle?: string;
-  /* @conditional-compile-remove(video-background-effects) */
   /**
    * Title for video effects menu item
    */
   videoEffectsMenuItemTitle?: string;
+  /**
+   * Aria description for camera button
+   */
+  cameraButtonAriaDescription?: string;
 }
 
 /**
@@ -153,7 +156,7 @@ export interface CameraButtonProps extends ControlBarButtonProps {
    * Styles for {@link CameraButton} and the device selection flyout.
    */
   styles?: Partial<CameraButtonStyles>;
-  /* @conditional-compile-remove(video-background-effects) */
+
   /**
    * Callback when a effects is clicked
    */
@@ -228,7 +231,7 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
   );
 
   const splitButtonMenuItems: IContextualMenuItem[] = [];
-  /* @conditional-compile-remove(video-background-effects) */
+
   if (props.onClickVideoEffects) {
     splitButtonMenuItems.push({
       key: 'effects',
@@ -296,6 +299,7 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
         }
         menuIconProps={props.menuIconProps ?? !props.enableDeviceSelectionMenu ? { hidden: true } : undefined}
         split={props.split ?? props.enableDeviceSelectionMenu}
+        aria-description={strings.cameraButtonAriaDescription}
         aria-roledescription={props.enableDeviceSelectionMenu ? strings.cameraButtonSplitRoleDescription : undefined}
         splitButtonAriaLabel={props.enableDeviceSelectionMenu ? splitButtonAriaString : undefined}
         splitButtonMenuProps={splitButtonMenuProps}

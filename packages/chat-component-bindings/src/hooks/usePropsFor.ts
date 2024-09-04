@@ -54,22 +54,20 @@ export const usePropsFor = <Component extends (props: any) => JSX.Element>(
  *
  * @public
  */
-export type GetSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<
-  Component,
-  typeof SendBox
-> extends true
-  ? SendBoxSelector
-  : AreEqual<Component, typeof RichTextSendBox> extends true
-  ? /* @conditional-compile-remove(rich-text-editor) */ SendBoxSelector
-  : AreEqual<Component, typeof MessageThread> extends true
-  ? MessageThreadSelector
-  : AreEqual<Component, typeof TypingIndicator> extends true
-  ? TypingIndicatorSelector
-  : AreEqual<Component, typeof ParticipantList> extends true
-  ? ChatParticipantListSelector
-  : AreEqual<Component, typeof ErrorBar> extends true
-  ? ErrorBarSelector
-  : undefined;
+export type GetSelector<Component extends (props: any) => JSX.Element | undefined> =
+  AreEqual<Component, typeof SendBox> extends true
+    ? SendBoxSelector
+    : AreEqual<Component, typeof RichTextSendBox> extends true
+      ? /* @conditional-compile-remove(rich-text-editor) */ SendBoxSelector
+      : AreEqual<Component, typeof MessageThread> extends true
+        ? MessageThreadSelector
+        : AreEqual<Component, typeof TypingIndicator> extends true
+          ? TypingIndicatorSelector
+          : AreEqual<Component, typeof ParticipantList> extends true
+            ? ChatParticipantListSelector
+            : AreEqual<Component, typeof ErrorBar> extends true
+              ? ErrorBarSelector
+              : undefined;
 
 /**
  * Get the selector for a specified component.

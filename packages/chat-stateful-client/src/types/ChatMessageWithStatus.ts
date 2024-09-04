@@ -15,17 +15,13 @@ import { MessageStatus } from '@internal/acs-ui-common';
 export type ChatMessageWithStatus = ChatMessage & {
   clientMessageId?: string;
   status: MessageStatus;
-  /* @conditional-compile-remove(data-loss-prevention) */
-  policyViolation?: boolean;
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   resourceCache?: Record<string, ResourceFetchResult>;
 };
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 /**
  * Result of the Resource downloaded from stateful client
  * @public
  */
 export type ResourceFetchResult = {
-  sourceUrl: string;
+  sourceUrl?: string;
   error?: Error;
 };

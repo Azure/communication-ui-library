@@ -32,7 +32,6 @@ type PeopleAndChatHeaderProps = {
   activeTab: TabHeaderTab;
   disableChatButton?: boolean;
   disablePeopleButton?: boolean;
-  onHeaderMenuClick?: () => void;
 };
 
 /**
@@ -110,22 +109,13 @@ export const PeopleAndChatHeader = (props: PeopleAndChatHeaderProps): JSX.Elemen
           </Stack>
         </FocusZone>
       </Stack.Item>
-      {props.onHeaderMenuClick ? (
-        <DefaultButton
-          ariaLabel={strings.peoplePaneMoreButtonAriaLabel}
-          styles={concatStyleSets(mobilePaneBackButtonStyles, {
-            icon: { display: 'flex', alignItems: 'center' }
-          })}
-          iconProps={{ iconName: 'PeoplePaneMoreButton' }}
-          onClick={props.onHeaderMenuClick}
-        />
-      ) : (
+      {
         /* Hidden icon to take the same space as the actual back button on the left. */
         <DefaultButton
           styles={mobilePaneHiddenIconStyles}
           onRenderIcon={() => <CallWithChatCompositeIcon iconName="ChevronLeft" />}
-        ></DefaultButton>
-      )}
+        />
+      }
     </Stack>
   );
 };

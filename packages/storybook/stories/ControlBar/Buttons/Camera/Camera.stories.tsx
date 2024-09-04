@@ -6,7 +6,6 @@ import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/a
 import { Meta } from '@storybook/react/types-6-0';
 import React, { useState } from 'react';
 
-import { SingleLineBetaBanner } from '../../../BetaBanners/SingleLineBetaBanner';
 import { COMPONENT_FOLDER_PREFIX } from '../../../constants';
 import { controlsToAdd, defaultControlsCameras, hiddenControl } from '../../../controlsUtils';
 import { CustomCameraButtonExample } from './snippets/Custom.snippet';
@@ -57,7 +56,6 @@ const getDocs: () => JSX.Element = () => {
       </Canvas>
 
       <Heading>Camera with device selection menu</Heading>
-      <SingleLineBetaBanner />
       <Description>
         `CameraButton` can be optionally rendered as a split button. The secondary button in this mode opens a menu
         where users can select the camera to use. To render `CameraButton` in this mode, set the

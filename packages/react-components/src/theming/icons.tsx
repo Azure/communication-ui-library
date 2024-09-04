@@ -17,7 +17,7 @@ import {
   ErrorCircle16Regular,
   Eye16Regular,
   MicOff16Filled,
-  MicOff16Regular,
+  MicOff20Regular,
   MicOff20Filled,
   Mic16Filled,
   Mic20Filled,
@@ -42,11 +42,14 @@ import {
   MicProhibited16Filled,
   VideoProhibited16Filled,
   Pin16Filled,
-  Pin16Regular,
-  PinOff16Regular,
+  Pin20Filled,
+  Pin20Regular,
+  PinOff20Regular,
   ScaleFit20Regular,
-  ScaleFill20Regular
+  ScaleFill20Regular,
+  PersonDelete20Regular
 } from '@fluentui/react-icons';
+import { MicOff16Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(rich-text-editor) */
 import {
   TextBold20Regular,
@@ -58,20 +61,15 @@ import {
   TextIndentIncrease20Regular,
   DividerTall24Regular,
   TextEditStyle20Regular,
-  TextEditStyle20Filled
+  TextEditStyle20Filled,
+  Table20Regular,
+  Table20Filled,
+  TableAdd20Regular,
+  TableDismiss20Regular
 } from '@fluentui/react-icons';
-/* @conditional-compile-remove(reaction) */
 import { Emoji20Regular } from '@fluentui/react-icons';
-/* @conditional-compile-remove(end-of-call-survey) */
 import { Star28Regular, Star28Filled } from '@fluentui/react-icons';
-/* @conditional-compile-remove(raise-hand) */
-import {
-  HandRight20Filled,
-  HandRightOff20Filled,
-  HandRight20Regular,
-  HandRightOff20Regular
-} from '@fluentui/react-icons';
-/* @conditional-compile-remove(close-captions) */
+import { HandRight20Regular, HandRightOff20Regular } from '@fluentui/react-icons';
 import {
   ClosedCaption20Regular,
   ClosedCaptionOff20Regular,
@@ -81,20 +79,24 @@ import {
 } from '@fluentui/react-icons';
 /* @conditional-compile-remove(call-readiness) */
 import { Important20Filled } from '@fluentui/react-icons';
-/* @conditional-compile-remove(video-background-effects) */
+
+import { Record16Regular } from '@fluentui/react-icons';
+/* @conditional-compile-remove(breakout-rooms) */
+import { ConferenceRoom16Regular, DoorArrowLeft16Regular, DoorArrowRight16Regular } from '@fluentui/react-icons';
+
 import { VideoBackgroundEffect20Filled, VideoBackgroundEffect20Regular } from '@fluentui/react-icons';
 
-/* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
 import { Backspace20Regular } from '@fluentui/react-icons';
 
 /* @conditional-compile-remove(call-readiness) */
 import { Sparkle20Filled, VideoProhibited20Filled, MicProhibited20Filled } from '@fluentui/react-icons';
 
-/* @conditional-compile-remove(file-sharing) */
-import { ArrowDownload16Regular } from '@fluentui/react-icons';
+/* @conditional-compile-remove(file-sharing-teams-interop) */
+import { Open20Regular } from '@fluentui/react-icons';
+/* @conditional-compile-remove(file-sharing-acs) */
+import { ArrowDownload20Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(PSTN-calls) */
 import { CallPause20Regular, CallPause20Filled, Play20Regular } from '@fluentui/react-icons';
-/* @conditional-compile-remove(dialpad) */
 import { People20Regular } from '@fluentui/react-icons';
 
 /* @conditional-compile-remove(data-loss-prevention) */
@@ -103,7 +105,6 @@ import { Prohibited16Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(unsupported-browser) */
 import { Warning20Filled } from '@fluentui/react-icons';
 
-/* @conditional-compile-remove(spotlight) */
 import { VideoPersonStar20Filled, VideoPersonStarOff20Filled } from '@fluentui/react-icons';
 
 import { _pxToRem } from '@internal/acs-ui-common';
@@ -112,6 +113,8 @@ import React from 'react';
 import { useTheme } from './FluentThemeProvider';
 /* @conditional-compile-remove(call-readiness) */
 import { sitePermissionIconBackgroundStyle, scaledIconStyles } from './icons.styles';
+/* @conditional-compile-remove(one-to-n-calling) */
+import { Call20Filled } from '@fluentui/react-icons';
 
 /**
  * Icons used by the React components exported from this library.
@@ -244,15 +247,11 @@ const GalleryRightButton = (): JSX.Element => {
 };
 
 const ControlButtonRaiseHandIcon = (): JSX.Element => {
-  /* @conditional-compile-remove(reaction) */
   return <HandRight20Regular />;
-  return <HandRight20Filled />;
 };
 
 const ControlButtonLowerHandIcon = (): JSX.Element => {
-  /* @conditional-compile-remove(reaction) */
   return <HandRightOff20Regular />;
-  return <HandRightOff20Filled />;
 };
 
 /**
@@ -271,24 +270,22 @@ export const DEFAULT_COMPONENT_ICONS = {
   ControlButtonMicOn: <Mic20Filled />,
   ControlButtonOptions: <Settings20Filled />,
   ControlButtonParticipants: <People20Filled />,
-  /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
   ControlButtonParticipantsContextualMenuItem: <People20Regular />,
   ControlButtonScreenShareStart: <ShareScreenStart20Filled />,
   ControlButtonScreenShareStop: <ShareScreenStop20Filled />,
-  /* @conditional-compile-remove(raise-hand) */
   ControlButtonRaiseHand: <ControlButtonRaiseHandIcon />,
-  /* @conditional-compile-remove(raise-hand) */
   ControlButtonLowerHand: <ControlButtonLowerHandIcon />,
-  /* @conditional-compile-remove(raise-hand) */
   RaiseHandContextualMenuItem: <HandRight20Regular />,
-  /* @conditional-compile-remove(raise-hand) */
   LowerHandContextualMenuItem: <HandRightOff20Regular />,
-  /* @conditional-compile-remove(reaction) */
   ReactionButtonIcon: <Emoji20Regular />,
-  /* @conditional-compile-remove(file-sharing) */
-  CancelFileUpload: <Dismiss16Regular />,
-  /* @conditional-compile-remove(file-sharing) */
-  DownloadFile: <ArrowDownload16Regular />,
+  /* @conditional-compile-remove(file-sharing-acs) */
+  CancelAttachmentUpload: <Dismiss16Regular />,
+  /* @conditional-compile-remove(file-sharing-acs) */
+  DownloadAttachment: <ArrowDownload20Regular />,
+  /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
+  OpenAttachment: <Open20Regular />,
+  /* @conditional-compile-remove(file-sharing-acs) */
+  AttachmentMoreMenu: <MoreHorizontal20Filled />,
   /* @conditional-compile-remove(data-loss-prevention) */
   DataLossPreventionProhibited: <DataLossPreventionProhibited16Regular />,
   EditBoxCancel: <Dismiss20Regular />,
@@ -299,7 +296,7 @@ export const DEFAULT_COMPONENT_ICONS = {
   ErrorBarCallMacOsCameraAccessDenied: <VideoProhibited16Filled />,
   ErrorBarCallMacOsMicrophoneAccessDenied: <MicProhibited16Filled />,
   ErrorBarCallMicrophoneAccessDenied: <MicProhibited16Filled />,
-  ErrorBarCallMicrophoneMutedBySystem: <MicOff16Filled />,
+  ErrorBarCallMicrophoneMutedBySystem: <MicOff16Regular />,
   ErrorBarCallMicrophoneUnmutedBySystem: <Mic16Filled />,
   ErrorBarCallNetworkQualityLow: <WifiWarning16Filled />,
   ErrorBarCallNoMicrophoneFound: <MicProhibited16Filled />,
@@ -307,6 +304,20 @@ export const DEFAULT_COMPONENT_ICONS = {
   ErrorBarClear: <Dismiss16Regular />,
   ErrorBarCallVideoRecoveredBySystem: <Video16Filled />,
   ErrorBarCallVideoStoppedBySystem: <VideoProhibited16Filled />,
+  /* @conditional-compile-remove(soft-mute) */
+  ErrorBarMutedByRemoteParticipant: <MicOff16Regular />,
+
+  NotificationBarRecording: <Record16Regular />,
+  /* @conditional-compile-remove(breakout-rooms) */
+  NotificationBarBreakoutRoomOpened: <DoorArrowRight16Regular />,
+  /* @conditional-compile-remove(breakout-rooms) */
+  NotificationBarBreakoutRoomPromptJoin: <DoorArrowRight16Regular />,
+  /* @conditional-compile-remove(breakout-rooms) */
+  NotificationBarBreakoutRoomChanged: <DoorArrowRight16Regular />,
+  /* @conditional-compile-remove(breakout-rooms) */
+  NotificationBarBreakoutRoomJoined: <ConferenceRoom16Regular />,
+  /* @conditional-compile-remove(breakout-rooms) */
+  NotificationBarBreakoutRoomClosingSoon: <DoorArrowLeft16Regular />,
   HorizontalGalleryLeftButton: <GalleryLeftButton />,
   HorizontalGalleryRightButton: <GalleryRightButton />,
   MessageDelivered: <CheckmarkCircle16Regular />,
@@ -319,11 +330,10 @@ export const DEFAULT_COMPONENT_ICONS = {
   OptionsCamera: <Video20Regular />,
   OptionsMic: <Mic20Regular />,
   OptionsSpeaker: <Speaker220Regular />,
-  ParticipantItemMicOff: <MicOff16Regular />,
+  ParticipantItemMicOff: <MicOff20Regular />,
   ParticipantItemOptions: <></>,
   ParticipantItemOptionsHovered: <MoreHorizontal20Filled />,
   ParticipantItemScreenShareStart: <ShareScreenStart20Filled />,
-  /* @conditional-compile-remove(spotlight) */
   ParticipantItemSpotlighted: <VideoPersonStar20Filled />,
   /* @conditional-compile-remove(PSTN-calls) */
   HoldCallContextualMenuItem: <CallPause20Regular />,
@@ -334,7 +344,6 @@ export const DEFAULT_COMPONENT_ICONS = {
   SendBoxSend: <Send20Regular />,
   SendBoxSendHovered: <Send20Filled />,
   VideoTileMicOff: <MicOff16Filled />,
-  /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
   DialpadBackspace: <Backspace20Regular />,
   /* @conditional-compile-remove(call-readiness) */
   SitePermissionsSparkle: <SitePermissionSparkle20Filled />,
@@ -351,46 +360,34 @@ export const DEFAULT_COMPONENT_ICONS = {
   /* @conditional-compile-remove(call-readiness) */
   BrowserPermissionDeniedError: <BrowserPermissionDenied20Filled />,
   VideoTilePinned: <Pin16Filled />,
+  ParticipantItemPinned: <Pin20Filled />,
   VideoTileMoreOptions: <MoreHorizontal20Filled />,
   VideoTileScaleFit: <ScaleFit20Regular />,
   VideoTileScaleFill: <ScaleFill20Regular />,
-  PinParticipant: <Pin16Regular />,
-  UnpinParticipant: <PinOff16Regular />,
+  PinParticipant: <Pin20Regular />,
+  UnpinParticipant: <PinOff20Regular />,
   SplitButtonPrimaryActionCameraOn: <Video20Filled />,
   SplitButtonPrimaryActionCameraOff: <VideoOff20Filled />,
   SplitButtonPrimaryActionMicUnmuted: <Mic20Filled />,
   SplitButtonPrimaryActionMicMuted: <MicOff20Filled />,
-  /* @conditional-compile-remove(vertical-gallery) */
   VerticalGalleryLeftButton: <GalleryLeftButton />,
-  /* @conditional-compile-remove(vertical-gallery) */
   VerticalGalleryRightButton: <GalleryRightButton />,
-  /* @conditional-compile-remove(video-background-effects) */
   ControlButtonVideoEffectsOption: <VideoBackgroundEffect20Regular />,
-  /* @conditional-compile-remove(video-background-effects) */
   ConfigurationScreenVideoEffectsButton: <VideoBackgroundEffect20Filled />,
-  /* @conditional-compile-remove(close-captions) */
   CaptionsIcon: <ClosedCaption20Regular />,
-  /* @conditional-compile-remove(close-captions) */
   CaptionsOffIcon: <ClosedCaptionOff20Regular />,
-  /* @conditional-compile-remove(close-captions) */
   CaptionsSettingsIcon: <Settings20Regular />,
-  /* @conditional-compile-remove(close-captions) */
   ChangeSpokenLanguageIcon: <PersonVoice20Regular />,
-  /* @conditional-compile-remove(close-captions) */
   ChangeCaptionLanguageIcon: <Translate20Regular />,
   ContextMenuCameraIcon: <Video20Regular />,
   ContextMenuMicIcon: <Mic20Regular />,
   ContextMenuSpeakerIcon: <Speaker220Regular />,
-  /* @conditional-compile-remove(end-of-call-survey) */
+  ContextMenuRemoveParticipant: <PersonDelete20Regular />,
   SurveyStarIcon: <Star28Regular />,
-  /* @conditional-compile-remove(end-of-call-survey) */
   SurveyStarIconFilled: <Star28Filled />,
-  /* @conditional-compile-remove(spotlight) */
   StartSpotlightContextualMenuItem: <VideoPersonStar20Filled />,
-  /* @conditional-compile-remove(spotlight) */
   StopSpotlightContextualMenuItem: <VideoPersonStarOff20Filled />,
-  /* @conditional-compile-remove(spotlight) */
-  VideoSpotlighted: <VideoPersonStar20Filled style={{ height: '16px', width: '16px' }} />,
+  VideoTileSpotlighted: <VideoPersonStar20Filled style={{ height: '16px', width: '16px' }} />,
   /* @conditional-compile-remove(rich-text-editor) */
   RichTextBoldButtonIcon: <TextBold20Regular />,
   /* @conditional-compile-remove(rich-text-editor) */
@@ -410,5 +407,21 @@ export const DEFAULT_COMPONENT_ICONS = {
   /* @conditional-compile-remove(rich-text-editor) */
   RichTextEditorButtonIcon: <TextEditStyle20Regular />,
   /* @conditional-compile-remove(rich-text-editor) */
-  RichTextEditorButtonIconFilled: <TextEditStyle20Filled />
+  RichTextEditorButtonIconFilled: <TextEditStyle20Filled />,
+  /* @conditional-compile-remove(rich-text-editor) */
+  RichTextInsertTableRegularIcon: <Table20Regular />,
+  /* @conditional-compile-remove(rich-text-editor) */
+  RichTextInsertTableFilledIcon: <Table20Filled />,
+  /* @conditional-compile-remove(rich-text-editor) */
+  RichTextTableInsertMenuIcon: <TableAdd20Regular />,
+  /* @conditional-compile-remove(rich-text-editor) */
+  RichTextTableDeleteMenuIcon: <TableDismiss20Regular />,
+  /* @conditional-compile-remove(soft-mute) */
+  ContextualMenuMicMutedIcon: <MicOff20Regular />,
+  /* @conditional-compile-remove(one-to-n-calling) */
+  IncomingCallNotificationRejectIcon: <CallEnd20Filled />,
+  /* @conditional-compile-remove(one-to-n-calling) */
+  IncomingCallNotificationAcceptIcon: <Call20Filled />,
+  /* @conditional-compile-remove(one-to-n-calling) */
+  IncomingCallNotificationAcceptWithVideoIcon: <Video20Filled />
 };

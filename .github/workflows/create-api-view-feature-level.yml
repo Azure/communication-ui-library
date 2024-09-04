@@ -19,17 +19,17 @@ jobs:
     permissions: read-all
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
       # Ensure node version is great enough
       - name: Use Node.js v20.x
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '20.x'
       # Install dependencies
       - name: Install rush
-        run: npm install -g @microsoft/rush@5.100.1
+        run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
       - name: Install dependencies
         run: rush install --max-install-attempts 3
       # Generate APIs

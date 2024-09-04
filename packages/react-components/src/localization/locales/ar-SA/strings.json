@@ -7,7 +7,8 @@
     "mutedIconLabel": "تم كتم الصوت",
     "displayNamePlaceholder": "مشارك غير مسمى",
     "participantStateRinging": "يتم الآن الاتصال...",
-    "participantStateHold": "قيد الانتظار"
+    "participantStateHold": "قيد الانتظار",
+    "attendeeRole": "الحضور"
   },
   "ParticipantList": {
     "overflowParticipantCount": "+{overflowCount} من الأشخاص الإضافيين"
@@ -23,10 +24,46 @@
     "placeholderText": "أدخل رسالة",
     "textTooLong": "تجاوز طول الرسالة الحد الأقصى.",
     "sendButtonAriaLabel": "إرسال رسالة",
-    "fileUploadsPendingError": "جارِ التحميل... يرجى الانتظار.",
-    "removeFile": "إزالة الملف",
+    "attachmentUploadsPendingError": "يتم الآن تحميل الملف، الرجاء الانتظار.",
+    "removeAttachment": "إزالة الملف",
     "uploading": "جارٍ التحميل",
-    "uploadCompleted": "اكتمل التحميل"
+    "uploadCompleted": "اكتمل التحميل",
+    "attachmentMoreMenu": "خيارات إضافية"
+  },
+  "richTextSendBox": {
+    "placeholderText": "أدخل رسالة",
+    "textTooLong": "تجاوز طول الرسالة الحد الأقصى.",
+    "sendButtonAriaLabel": "إرسال رسالة",
+    "attachmentUploadsPendingError": "يتم الآن تحميل الملف، الرجاء الانتظار.",
+    "imageUploadsPendingError": "يتم الآن تحميل الصورة، الرجاء الانتظار.",
+    "removeAttachment": "إزالة الملف",
+    "uploading": "يتم الآن التحميل",
+    "uploadCompleted": "اكتمل التحميل",
+    "richTextBoldTooltip": "غامق",
+    "richTextItalicTooltip": "مائل",
+    "richTextUnderlineTooltip": "مسطّر",
+    "richTextBulletListTooltip": "قائمة ذات تعداد نقطي",
+    "richTextNumberListTooltip": "قائمة مرقّمة",
+    "richTextIncreaseIndentTooltip": "زيادة المسافة البادئة",
+    "richTextDecreaseIndentTooltip": "إنقاص المسافة البادئة",
+    "richTextInsertTableTooltip": "إدراج جدول",
+    "richTextFormatButtonTooltip": "تنسيق",
+    "richTextInsertRowOrColumnMenu": "إدراج",
+    "richTextInsertTableMenuTitle": "إدراج جدول بـ {column} x {row}",
+    "richTextInsertRowAboveMenu": "إدراج أعلاه",
+    "richTextInsertRowBelowMenu": "إدراج أدناه",
+    "richTextInsertColumnLeftMenu": "إدراج يساراً",
+    "richTextInsertColumnRightMenu": "إدراج يميناً",
+    "richTextDeleteRowOrColumnMenu": "حذف",
+    "richTextDeleteColumnMenu": "حذف العمود",
+    "richTextDeleteRowMenu": "حذف الصف",
+    "richTextDeleteTableMenu": "حذف الجدول",
+    "richTextToolbarMoreButtonAriaLabel": "خيارات إضافية",
+    "attachmentMoreMenu": "خيارات إضافية",
+    "richTextNewBulletedListItemAnnouncement": "رمز نقطي، سطر جديد",
+    "richTextNewNumberedListItemAnnouncement": "{0}، سطر جديد",
+    "richTextBulletedListAppliedAnnouncement": "تم تطبيق قائمة نقطية",
+    "richTextNumberedListAppliedAnnouncement": "تطبيق قائمة ذات تعداد رقمي"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "الاقتراحات"
@@ -48,7 +85,9 @@
   },
   "endCallButton": {
     "label": "مغادرة",
-    "tooltipContent": "مغادرة المكالمة"
+    "tooltipContent": "مغادرة المكالمة",
+    "leaveOption": "مغادرة",
+    "endCallOption": "إنهاء المكالمة لدى الجميع"
   },
   "cameraButton": {
     "onLabel": "الكاميرا",
@@ -125,6 +164,7 @@
   },
   "reactionButton": {
     "label": "تفاعل",
+    "ariaLabel": "زر \"تفاعل\"، إرسال تفاعل",
     "tooltipDisabledContent": "تم تعطيل إجراء التفاعل",
     "tooltipContent": "إرسال تفاعل",
     "likeReactionTooltipContent": "إعجاب",
@@ -150,8 +190,8 @@
     "failToSendTag": "فشل الإرسال",
     "editedTag": "تم التحرير",
     "liveAuthorIntro": "قال {author}",
-    "messageContentAriaText": "{author} قال {message}",
-    "messageContentMineAriaText": "لقد قلت {message}",
+    "messageContentAriaText": "{status} {author} قال {message}",
+    "messageContentMineAriaText": "{status} أنت قولت {message}",
     "editBoxTextLimit": "تجاوزت رسالتك الحد الأقصى لعدد الأحرف {limitNumber}",
     "editBoxPlaceholderText": "تحرير رسالتك",
     "newMessagesIndicator": "رسائل جديدة",
@@ -160,11 +200,38 @@
     "editBoxSubmitButton": "تم",
     "messageReadCount": "تمت القراءة بواسطة {messageReadByCount} من {remoteParticipantsCount}",
     "actionMenuMoreOptions": "المزيد من الخيارات",
-    "downloadFile": "تنزيل ملف",
+    "downloadAttachment": "تنزيل ملف",
+    "openAttachment": "فتح ملف",
     "blockedWarningText": "تم حذف هذه الرسالة بسبب نهج تنظيمي.",
     "blockedWarningLinkText": "تفاصيل",
-    "fileCardGroupMessage": "تحتوي الرسالة على مرفق {fileCount}",
-    "messageDeletedAnnouncementAriaLabel": "تم حذف الرسالة"
+    "attachmentCardGroupMessage": "تحتوي الرسالة على مرفق {attachmentCount}",
+    "messageDeletedAnnouncementAriaLabel": "تم حذف الرسالة",
+    "richTextBoldTooltip": "غامق",
+    "richTextItalicTooltip": "مائل",
+    "richTextUnderlineTooltip": "تسطير",
+    "richTextBulletListTooltip": "قائمة ذات تعداد نقطي",
+    "richTextNumberListTooltip": "قائمة مرقّمة",
+    "richTextIncreaseIndentTooltip": "زيادة المسافة البادئة",
+    "richTextDecreaseIndentTooltip": "إنقاص المسافة البادئة",
+    "richTextInsertTableTooltip": "إدراج جدول",
+    "richTextFormatButtonTooltip": "تنسيق",
+    "richTextInsertRowOrColumnMenu": "إدراج",
+    "richTextInsertTableMenuTitle": "إدراج جدول بـ {column} x {row}",
+    "richTextInsertRowAboveMenu": "إدراج أعلاه",
+    "richTextInsertRowBelowMenu": "إدراج أدناه",
+    "richTextInsertColumnLeftMenu": "إدراج يساراً",
+    "richTextInsertColumnRightMenu": "إدراج يميناً",
+    "richTextDeleteRowOrColumnMenu": "حذف",
+    "richTextDeleteColumnMenu": "حذف العمود",
+    "richTextDeleteRowMenu": "حذف الصف",
+    "richTextDeleteTableMenu": "حذف الجدول",
+    "richTextToolbarMoreButtonAriaLabel": "خيارات إضافية",
+    "attachmentUploadsPendingError": "يتم الآن تحميل الملف، الرجاء الانتظار.",
+    "imageUploadsPendingError": "يتم الآن تحميل الصورة، الرجاء الانتظار.",
+    "richTextNewBulletedListItemAnnouncement": "رمز نقطي، سطر جديد",
+    "richTextNewNumberedListItemAnnouncement": "{0}، سطر جديد",
+    "richTextBulletedListAppliedAnnouncement": "تم تطبيق قائمة نقطية",
+    "richTextNumberedListAppliedAnnouncement": "تطبيق قائمة ذات تعداد رقمي"
   },
   "errorBar": {
     "unableToReachChatService": "أنت غير متصل",
@@ -181,6 +248,7 @@
     "startScreenShareGeneric": "حدثت مشكلة أثناء بدء مشاركة الشاشة.",
     "stopScreenShareGeneric": "فشل إيقاف مشاركة الشاشة",
     "callNetworkQualityLow": "جودة الشبكة مقبولة.",
+    "teamsMeetingCallNetworkQualityLow": "جودة الشبكة منخفضة.",
     "callNoSpeakerFound": "لم يتم العثور على سماعات أو سماعات رأس. قم بتوصيل جهاز صوت لسماع المكالمة.",
     "callNoMicrophoneFound": "لم يتم العثور على ميكروفونات. قم بتوصيل جهاز إدخال صوت.",
     "callMicrophoneAccessDenied": "يتعذر الوصول إلى الميكروفون. انقر فوق التأمين في شريط العناوين لمنح الإذن لصفحة ويب هذه.",
@@ -201,14 +269,224 @@
     "failedToJoinCallInvalidMeetingLink": "تعذر الانضمام إلى الاجتماع. ارتباط غير صالح.",
     "cameraFrozenForRemoteParticipants": "يواجه المستخدمون في المكالمة مشكلات في رؤية الفيديو الخاص بك. الرجاء التحقق من أجهزتك وشبكتك.",
     "unableToStartVideoEffect": "يتعذر تطبيق تأثير الفيديو.",
-    "startSpotlightWhileMaxParticipantsAreSpotlighted": "لا يمكن بدء تسليط الضوء على المشاركين (المشاركين) لأنه تم بالفعل تسليط الضوء على الحد الأقصى لعدد المشاركين."
+    "startSpotlightWhileMaxParticipantsAreSpotlighted": "لا يمكن بدء تسليط الضوء على المشاركين (المشاركين) لأنه تم بالفعل تسليط الضوء على الحد الأقصى لعدد المشاركين.",
+    "mutedByRemoteParticipant": "تم كتم صوتك من قبل مشارك آخر."
+  },
+  "notificationStack": {
+    "callingNetworkFailure": {
+      "title": "مكالمة مزعجة",
+      "message": "يبدو أنك غير متصل. الرجاء التحقق من اتصال الشبكة والمحاولة مرة أخرى.",
+      "dismissButtonAriaLabel": "إغلاق"
+    },
+    "startVideoGeneric": {
+      "title": "فشل بدء الفيديو.",
+      "dismissButtonAriaLabel": "إغلاق"
+    },
+    "stopVideoGeneric": {
+      "title": "فشل إيقاف الفيديو.",
+      "dismissButtonAriaLabel": "إغلاق"
+    },
+    "muteGeneric": {
+      "title": "فشل كتم صوت الميكروفون.",
+      "dismissButtonAriaLabel": "إغلاق"
+    },
+    "unmuteGeneric": {
+      "title": "فشل إلغاء كتم صوت الميكروفون.",
+      "dismissButtonAriaLabel": "إغلاق"
+    },
+    "speakingWhileMuted": {
+      "title": "تم كتم صوتك.",
+      "dismissButtonAriaLabel": "إغلاق"
+    },
+    "startScreenShareGeneric": {
+      "title": "حدثت مشكلة أثناء بدء مشاركة الشاشة.",
+      "dismissButtonAriaLabel": "إغلاق"
+    },
+    "stopScreenShareGeneric": {
+      "title": "فشل إيقاف مشاركة الشاشة",
+      "dismissButtonAriaLabel": "إغلاق"
+    },
+    "callNetworkQualityLow": {
+      "title": "جودة الشبكة مقبولة.",
+      "dismissButtonAriaLabel": "إغلاق"
+    },
+    "teamsMeetingCallNetworkQualityLow": {
+      "title": "جودة الشبكة منخفضة.",
+      "dismissButtonAriaLabel": "إغلاق",
+      "message": "انضم إلى هذه المكالمة من هاتفك للحصول على صوت أفضل. يمكنك متابعة عرض الاجتماع على هذا الجهاز.",
+      "primaryButtonLabel": "انضمام عبر الهاتف"
+    },
+    "callNoSpeakerFound": {
+      "title": "لم يتم العثور على سماعات أو سماعات رأس",
+      "message": "قم بتوصيل جهاز صوت لسماع المكالمة.",
+      "dismissButtonAriaLabel": "إغلاق"
+    },
+    "callNoMicrophoneFound": {
+      "title": "لم يتم العثور على ميكروفونات",
+      "message": "قم بتوصيل جهاز إدخال صوت.",
+      "dismissButtonAriaLabel": "إغلاق"
+    },
+    "callMicrophoneAccessDenied": {
+      "title": "يتعذر الوصول إلى الميكروفون",
+      "message": "انقر فوق التأمين في شريط العناوين لمنح الإذن لصفحة ويب هذه.",
+      "dismissButtonAriaLabel": "إغلاق"
+    },
+    "callMicrophoneAccessDeniedSafari": {
+      "title": "يتعذر الوصول إلى الميكروفون",
+      "message": "قم بتحديث الصفحة للسماح بالأذونات، أو تحقق من إعدادات هذا المستعرض وتحقق من تمكين الأذونات لموقع الويب هذا.",
+      "dismissButtonAriaLabel": "إغلاق"
+    },
+    "callMicrophoneMutedBySystem": {
+      "title": "تم كتم صوتك بواسطة النظام.",
+      "dismissButtonAriaLabel": "إغلاق"
+    },
+    "callMicrophoneUnmutedBySystem": {
+      "title": "تم استرداد الميكروفون وتم إلغاء كتم صوتك من قبل النظام.",
+      "dismissButtonAriaLabel": "إغلاق"
+    },
+    "callMacOsMicrophoneAccessDenied": {
+      "title": "يتعذر الوصول إلى الميكروفون",
+      "message": "امنح الميكروفون إذنا في إعدادات خصوصية macOS.",
+      "dismissButtonAriaLabel": "إغلاق"
+    },
+    "callLocalVideoFreeze": {
+      "title": "النطاق الترددي للشبكة ضعيف.",
+      "message": "قد يظهر الفيديو متوقفا مؤقتا للآخرين في المكالمة.",
+      "dismissButtonAriaLabel": "إغلاق"
+    },
+    "callCameraAccessDenied": {
+      "title": "تعذر الوصول إلى الكاميرا",
+      "message": "انقر فوق التأمين في شريط العناوين لمنح الإذن لصفحة ويب هذه.",
+      "dismissButtonAriaLabel": "إغلاق"
+    },
+    "callCameraAccessDeniedSafari": {
+      "title": "تعذر الوصول إلى الكاميرا",
+      "message": "قم بتحديث الصفحة للسماح بالأذونات، أو تحقق من إعدادات هذا المستعرض وتحقق من تمكين الأذونات لموقع الويب هذا.",
+      "dismissButtonAriaLabel": "إغلاق"
+    },
+    "callCameraAlreadyInUse": {
+      "title": "تعذر الوصول إلى الكاميرا",
+      "message": "قد يكون قيد الاستخدام بالفعل بواسطة تطبيق آخر.",
+      "dismissButtonAriaLabel": "إغلاق"
+    },
+    "callVideoStoppedBySystem": {
+      "title": "تم إيقاف الفيديو الخاص بك من قبل النظام.",
+      "dismissButtonAriaLabel": "إغلاق"
+    },
+    "callVideoRecoveredBySystem": {
+      "title": "تم استئناف الفيديو الخاص بك.",
+      "dismissButtonAriaLabel": "إغلاق"
+    },
+    "callMacOsCameraAccessDenied": {
+      "title": "يقوم MacOS بحظر الوصول إلى الكاميرا",
+      "message": "قم بتحديث إعدادات الخصوصية للسماح لهذا المستعرض بالوصول إلى الكاميرا.",
+      "dismissButtonAriaLabel": "إغلاق"
+    },
+    "callMacOsScreenShareAccessDenied": {
+      "title": "يقوم MacOS بحظر مشاركة الشاشة",
+      "message": "قم بتحديث إعدادات الخصوصية للسماح لهذا المستعرض بتسجيل الشاشة.",
+      "dismissButtonAriaLabel": "إغلاق"
+    },
+    "failedToJoinCallGeneric": {
+      "title": "فشل الانضمام إلى المكالمة.",
+      "dismissButtonAriaLabel": "إغلاق"
+    },
+    "failedToJoinCallInvalidMeetingLink": {
+      "title": "تعذر الانضمام إلى الاجتماع. ارتباط غير صالح.",
+      "dismissButtonAriaLabel": "إغلاق"
+    },
+    "cameraFrozenForRemoteParticipants": {
+      "title": "يواجه المستخدمون في المكالمة مشكلات في رؤية الفيديو الخاص بك.",
+      "message": "الرجاء التحقق من أجهزتك وشبكتك.",
+      "dismissButtonAriaLabel": "إغلاق"
+    },
+    "unableToStartVideoEffect": {
+      "title": "يتعذر تطبيق تأثير الفيديو.",
+      "dismissButtonAriaLabel": "إغلاق"
+    },
+    "startSpotlightWhileMaxParticipantsAreSpotlighted": {
+      "title": "يتعذر بدء تسليط ضوء على المشاركين.",
+      "message": "يتم تسليط الضوء على الحد الأقصى لعدد المشاركين بالفعل.",
+      "dismissButtonAriaLabel": "إغلاق"
+    },
+    "mutedByRemoteParticipant": {
+      "title": "تم كتم صوتك من قبل مشارك آخر.",
+      "dismissButtonAriaLabel": "إغلاق"
+    },
+    "recordingStarted": {
+      "title": "بدأ التسجيل.",
+      "message": "من خلال الانضمام، فأنت توافق على كتابة هذا الاجتماع.",
+      "dismissButtonAriaLabel": "إغلاق"
+    },
+    "transcriptionStarted": {
+      "title": "بدأت كتابة الحديث.",
+      "message": "من خلال الانضمام، فأنت توافق على كتابة هذا الاجتماع.",
+      "dismissButtonAriaLabel": "إغلاق"
+    },
+    "recordingStopped": {
+      "title": "يتم الآن حفظ التسجيل.",
+      "message": "لقد توقف التسجيل.",
+      "dismissButtonAriaLabel": "إغلاق"
+    },
+    "transcriptionStopped": {
+      "title": "يتم الآن حفظ كتابة الحديث.",
+      "message": "توقفت كتابة الحديث.",
+      "dismissButtonAriaLabel": "إغلاق"
+    },
+    "recordingAndTranscriptionStarted": {
+      "title": "بدء التسجيل والنسخ. ",
+      "message": "من خلال الانضمام، فأنت توافق على كتابة هذا الاجتماع.",
+      "dismissButtonAriaLabel": "إغلاق"
+    },
+    "recordingAndTranscriptionStopped": {
+      "title": "يتم حفظ التسجيل وكتابة الحديث.",
+      "message": "التسجيل وكتابة الحديث متوقفان.",
+      "dismissButtonAriaLabel": "إغلاق"
+    },
+    "recordingStoppedStillTranscribing": {
+      "title": "لقد توقف التسجيل.",
+      "message": "أنت الآن تقوم فقط بكتابة الحديث لهذا الاجتماع.",
+      "dismissButtonAriaLabel": "إغلاق"
+    },
+    "transcriptionStoppedStillRecording": {
+      "title": "توقفت كتابة الحديث.",
+      "message": "أنت الآن تسجل هذا الاجتماع فقط.",
+      "dismissButtonAriaLabel": "إغلاق"
+    },
+    "assignedBreakoutRoomOpened": {
+      "title": "سننقلك إلى الغرفة المعينة خلال 5 ثوان.",
+      "dismissButtonAriaLabel": "إغلاق"
+    },
+    "assignedBreakoutRoomChanged": {
+      "title": "تم تغيير الغرفة الفرعية الخاصة بك",
+      "message": "سننقلك إلى الغرفة المعينة خلال 5 ثوان.",
+      "dismissButtonAriaLabel": "إغلاق"
+    },
+    "assignedBreakoutRoomOpenedPromptJoin": {
+      "title": "هل تريد الانضمام إلى الغرفة الفرعية؟",
+      "message": "تم تعيينك إلى غرفة اجتماع فرعية.",
+      "dismissButtonAriaLabel": "إغلاق",
+      "primaryButtonLabel": "الانضمام إلى الغرفة",
+      "secondaryButtonLabel": "لاحقاً"
+    },
+    "breakoutRoomJoined": {
+      "title": "لقد قمت بالانضمام إلى غرفة الاجتماع فرعية.",
+      "dismissButtonAriaLabel": "‏إغلاق"
+    },
+    "breakoutRoomClosingSoon": {
+      "title": "أوشكت صلاحية الحد الزمني للغرفة على الانتهاء.",
+      "message": "سيتم إغلاق هذه الغرفة في غضون 30 ثانية.",
+      "dismissButtonAriaLabel": "‏إغلاق"
+    }
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "أنت تشارك شاشتك",
     "screenShareLoadingMessage": "يتم الآن تحميل شاشة {participant}",
+    "localScreenShareLoadingMessage": "تحميل الشاشة",
     "localVideoLabel": "أنت",
     "localVideoCameraSwitcherLabel": "تبديل الكاميرا",
     "localVideoMovementLabel": "لوحة فيديو محلية قابلة للنقل",
+    "localVideoMovementAriaLabel": "لوحة فيديو محلية قابلة للنقل",
     "localVideoSelectedDescription": "تم تحديد {cameraName}",
     "displayNamePlaceholder": "مشارك غير مسمى",
     "fitRemoteParticipantToFrame": "الملاءمة داخل إطار",
@@ -224,7 +502,9 @@
     "addSpotlightVideoTileMenuLabel": "إضافة تسليط ضوء",
     "spotlightLimitReachedMenuTitle": "تم الوصول إلى الحد الأقصى لتسليط الضوء",
     "stopSpotlightVideoTileMenuLabel": "التوقف عن تسليط الضوء",
-    "stopSpotlightOnSelfVideoTileMenuLabel": "الخروج من وضع تسليط الضوء"
+    "stopSpotlightOnSelfVideoTileMenuLabel": "الخروج من وضع تسليط الضوء",
+    "attendeeRole": "الحضور",
+    "muteParticipantMenuItemLabel": "كتم الصوت"
   },
   "dialpad": {
     "placeholderText": "أدخل رقم الهاتف",
@@ -238,7 +518,8 @@
   },
   "videoTile": {
     "participantStateRinging": "يتم الآن الاتصال...",
-    "participantStateHold": "قيد الانتظار"
+    "participantStateHold": "قيد الانتظار",
+    "moreOptionsButtonAriaLabel": "خيارات إضافية"
   },
   "CameraAndMicrophoneSitePermissionsRequest": {
     "primaryText": "السماح {appName} باستخدام الكاميرا والميكروفون لديك",
@@ -359,5 +640,24 @@
     "leftNavButtonAriaLabel": "الصفحة السابقة",
     "rightNavButtonAriaLabel": "الصفحة التالية"
   },
-  "AttendeeRole": "الحضور"
+  "meetingConferencePhoneInfo": {
+    "meetingConferencePhoneInfoModalTitle": "الانضمام إلى مكالمة من هاتفك",
+    "meetingConferencePhoneInfoModalDialIn": "رقم الاتصال",
+    "meetingConferencePhoneInfoModalMeetingId": "أدخل معرف الاجتماع",
+    "meetingConferencePhoneInfoModalWait": "انتظر حتى يتم القبول من قبل المنظم",
+    "meetingConferencePhoneInfoModalNoPhoneAvailable": "لا يتوفر هاتف",
+    "meetingConferencePhoneInfoModalTollGeoData": "{country}، {city}",
+    "meetingConferencePhoneInfoModalTollFree": "(رقم مجاني)",
+    "meetingConferencePhoneInfoModalToll": "(الرقم غير المجاني)"
+  },
+  "IncomingCallNotification": {
+    "incomingCallNotificationPlaceholderId": "مستخدم غير معروف",
+    "incomingCallNotificationPlaceholderAlert": "{callerName} يتصل",
+    "incomingCallNoticicationAcceptWithAudioAriaLabel": "قبول مع الصوت",
+    "incomingCallNoticicationAcceptWithVideoAriaLabel": "قبول مع الفيديو",
+    "incomingCallNoticicationRejectAriaLabel": "رفض",
+    "incomingCallNotificationAcceptButtonLabel": "قبول",
+    "incomingCallNotificationRejectButtonLabel": "رفض",
+    "incomingCallNotificationAccceptWithVideoButtonLabel": "قبول مع الفيديو"
+  }
 }

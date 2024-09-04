@@ -1,0 +1,23 @@
+//Access state and state changes, including ChatClient and UI
+chatAdapter.onStateChange((state) => {
+  console.log(state.userId)
+})
+chatAdapter.getState().thread
+chatAdapter.getState().userId
+
+//Access actions for the chat
+chatAdapter.sendMessage()
+chatAdapter.removeParticipants()
+chatAdapter.setTopic()
+
+//Chat events
+//Only messages from the thread that initialize the chat adapter will trigger the event.
+chatAdapter.on('messageReceived', (event) => {
+  console.log(event.message.content?.message);
+})
+chatAdapter.on('messageSent', (event) => {
+  console.log(event.message.content?.message);
+})
+chatAdapter.on('topicChanged', (event) => {
+  console.log(event.topic);
+})

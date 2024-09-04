@@ -4,7 +4,7 @@
 import { AudioDeviceInfo, DeviceAccess, DeviceManager, VideoDeviceInfo } from '@azure/communication-calling';
 import { CallContext } from './CallContext';
 import { InternalCallContext } from './InternalCallContext';
-/* @conditional-compile-remove(video-background-effects) */
+
 import { LocalVideoStream } from '@azure/communication-calling';
 
 /**
@@ -20,7 +20,6 @@ export interface StatefulDeviceManager extends DeviceManager {
    */
   selectCamera: (device: VideoDeviceInfo) => void;
 
-  /* @conditional-compile-remove(video-background-effects) */
   /**
    * Gets the list of unparented video streams. This is a list of video streams that have not been added to a
    * {@link @azure/communication-calling#Call}. This is useful for developers who want to interact with rendered
@@ -64,6 +63,27 @@ class ProxyDeviceManager implements ProxyHandler<DeviceManager> {
     this._deviceManager.on('audioDevicesUpdated', this.audioDevicesUpdated);
     this._deviceManager.on('selectedMicrophoneChanged', this.selectedMicrophoneChanged);
     this._deviceManager.on('selectedSpeakerChanged', this.selectedSpeakerChanged);
+
+    // Subscribe to browser camera permissions changes
+    try {
+      navigator.permissions.query({ name: 'camera' as PermissionName }).then((cameraPermissions): void => {
+        cameraPermissions.addEventListener('change', this.permissionsApiStateChangeHandler);
+      });
+    } catch (e) {
+      console.info('Could not subscribe to Permissions API Camera changed events, API is not supported by browser', e);
+    }
+
+    // Subscribe to browser microphone permissions changes
+    try {
+      navigator.permissions.query({ name: 'microphone' as PermissionName }).then((micPermissions): void => {
+        micPermissions.addEventListener('change', this.permissionsApiStateChangeHandler);
+      });
+    } catch (e) {
+      console.info(
+        'Could not subscribe to Permissions API Microphone changed events, API is not supported by browser',
+        e
+      );
+    }
   };
 
   /**
@@ -74,6 +94,34 @@ class ProxyDeviceManager implements ProxyHandler<DeviceManager> {
     this._deviceManager.off('audioDevicesUpdated', this.audioDevicesUpdated);
     this._deviceManager.off('selectedMicrophoneChanged', this.selectedMicrophoneChanged);
     this._deviceManager.off('selectedSpeakerChanged', this.selectedSpeakerChanged);
+
+    // Unsubscribe from browser camera permissions changes
+    try {
+      navigator.permissions.query({ name: 'camera' as PermissionName }).then((cameraPermissions): void => {
+        cameraPermissions.removeEventListener('change', this.permissionsApiStateChangeHandler);
+      });
+    } catch (e) {
+      console.info(
+        'Could not Unsubscribe to Permissions API Camera changed events, API is not supported by browser',
+        e
+      );
+    }
+
+    // Unsubscribe from browser microphone permissions changes
+    try {
+      navigator.permissions.query({ name: 'microphone' as PermissionName }).then((micPermissions): void => {
+        micPermissions.removeEventListener('change', this.permissionsApiStateChangeHandler);
+      });
+    } catch (e) {
+      console.info(
+        'Could not Unsubscribe to Permissions API Camera changed events, API is not supported by browser',
+        e
+      );
+    }
+  };
+
+  private permissionsApiStateChangeHandler = async (): Promise<void> => {
+    await this.updateDevicePermissionState();
   };
 
   /**
@@ -94,7 +142,9 @@ class ProxyDeviceManager implements ProxyHandler<DeviceManager> {
 
   private audioDevicesUpdated = async (): Promise<void> => {
     this._context.setDeviceManagerMicrophones(dedupeById(await this._deviceManager.getMicrophones()));
-    this._context.setDeviceManagerSpeakers(dedupeById(await this._deviceManager.getSpeakers()));
+    if (this._deviceManager.isSpeakerSelectionAvailable) {
+      this._context.setDeviceManagerSpeakers(dedupeById(await this._deviceManager.getSpeakers()));
+    }
   };
 
   private selectedMicrophoneChanged = (): void => {
@@ -103,6 +153,35 @@ class ProxyDeviceManager implements ProxyHandler<DeviceManager> {
 
   private selectedSpeakerChanged = (): void => {
     this._context.setDeviceManagerSelectedSpeaker(this._deviceManager.selectedSpeaker);
+  };
+
+  private updateDevicePermissionState = async (sdkDeviceAccessState?: DeviceAccess): Promise<void> => {
+    let hasCameraPermission = !!sdkDeviceAccessState?.video;
+    let hasMicPermission = !!sdkDeviceAccessState?.audio;
+
+    // Supplement the SDK values with values from the Permissions API to get a better understanding of the device
+    // permission state. The SDK only uses the getUserMedia API to determine the device permission state. However,
+    // this returns false if the camera is in use by another application. The Permissions API can provide more
+    // information about the device permission state, but is not supported yet in Firefox or Android WebView.
+    // Note: It also has the limitation where it cannot detect if the device is blocked by the Operating System
+    // permissions.
+    try {
+      const [cameraPermissions, micPermissions] = await Promise.all([
+        navigator.permissions.query({ name: 'camera' as PermissionName }),
+        navigator.permissions.query({ name: 'microphone' as PermissionName })
+      ]);
+
+      hasCameraPermission = cameraPermissions.state === 'granted';
+      hasMicPermission = micPermissions.state === 'granted';
+    } catch (e) {
+      console.info('Permissions API is not supported by browser', e);
+    }
+
+    this._context.setDeviceManagerDeviceAccess({
+      video: hasCameraPermission,
+      audio: hasMicPermission
+    });
+    this.setDeviceManager();
   };
 
   public get<P extends keyof DeviceManager>(target: DeviceManager, prop: P): any {
@@ -157,9 +236,8 @@ class ProxyDeviceManager implements ProxyHandler<DeviceManager> {
       case 'askDevicePermission': {
         return this._context.withAsyncErrorTeedToState(
           (...args: Parameters<DeviceManager['askDevicePermission']>): Promise<DeviceAccess> => {
-            return target.askDevicePermission(...args).then((deviceAccess: DeviceAccess) => {
-              this._context.setDeviceManagerDeviceAccess(deviceAccess);
-              this.setDeviceManager();
+            return target.askDevicePermission(...args).then(async (deviceAccess: DeviceAccess) => {
+              await this.updateDevicePermissionState(deviceAccess);
               return deviceAccess;
             });
           },
@@ -209,7 +287,7 @@ export const deviceManagerDeclaratify = (
     configurable: false,
     value: (videoDeviceInfo: VideoDeviceInfo) => proxyDeviceManager.selectCamera(videoDeviceInfo)
   });
-  /* @conditional-compile-remove(video-background-effects) */
+
   Object.defineProperty(deviceManager, 'getUnparentedVideoStreams', {
     configurable: false,
     value: (): LocalVideoStream[] => internalContext.getUnparentedRenderInfos()

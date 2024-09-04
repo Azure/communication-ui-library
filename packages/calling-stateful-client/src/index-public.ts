@@ -21,30 +21,36 @@ export type {
   RemoteParticipantState,
   RemoteVideoStreamState,
   TranscriptionCallFeatureState as TranscriptionCallFeature,
-  VideoStreamRendererViewState
+  VideoStreamRendererViewState,
+  CallInfoState
 } from './CallClientState';
+/* @conditional-compile-remove(breakout-rooms) */
+export type { CallNotification, CallNotifications, NotificationTarget } from './CallClientState';
+/* @conditional-compile-remove(one-to-n-calling) */
+export type { TeamsIncomingCallState } from './CallClientState';
+/* @conditional-compile-remove(remote-ufd) */
+export type { RemoteDiagnosticState } from './CallClientState';
 export type { CreateViewResult } from './StreamUtils';
-/* @conditional-compile-remove(raise-hand) */
 export type { RaiseHandCallFeatureState as RaiseHandCallFeature } from './CallClientState';
-/* @conditional-compile-remove(raise-hand) */
 export type { RaisedHandState } from './CallClientState';
 /* @conditional-compile-remove(one-to-n-calling) */
 export type { DeclarativeCallAgent, IncomingCallManagement } from './CallAgentDeclarative';
+/* @conditional-compile-remove(teams-identity-support) */
+export type { DeclarativeTeamsCallAgent } from './TeamsCallAgentDeclarative';
 /* @conditional-compile-remove(one-to-n-calling) */
-export type { DeclarativeIncomingCall } from './IncomingCallDeclarative';
-/* @conditional-compile-remove(video-background-effects) */
+export type { TeamsIncomingCallManagement } from './TeamsCallAgentDeclarative';
 export type { LocalVideoStreamVideoEffectsState } from './CallClientState';
-/* @conditional-compile-remove(capabilities) */
+
 export type { CapabilitiesFeatureState } from './CallClientState';
-/* @conditional-compile-remove(close-captions) */
 export type { CaptionsCallFeatureState, CaptionsInfo } from './CallClientState';
-/* @conditional-compile-remove(call-transfer) */
 export type { AcceptedTransfer, TransferFeatureState as TransferFeature } from './CallClientState';
-/* @conditional-compile-remove(optimal-video-count) */
 export type { OptimalVideoCountFeatureState } from './CallClientState';
-/* @conditional-compile-remove(ppt-live) */
 export type { PPTLiveCallFeatureState } from './CallClientState';
-/* @conditional-compile-remove(reaction) */
 export type { ReactionState } from './CallClientState';
-/* @conditional-compile-remove(spotlight) */
 export type { SpotlightCallFeatureState, SpotlightState } from './CallClientState';
+/* @conditional-compile-remove(local-recording-notification) */
+export type { LocalRecordingCallFeatureState } from './CallClientState';
+/* @conditional-compile-remove(teams-meeting-conference) */
+export type { ConferencePhoneInfo } from './CallClientState';
+/* @conditional-compile-remove(breakout-rooms) */
+export type { BreakoutRoomsState } from './CallClientState';

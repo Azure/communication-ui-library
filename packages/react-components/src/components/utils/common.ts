@@ -1,22 +1,23 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { _FileUploadCardsStrings } from '../FileUploadCards';
-/* @conditional-compile-remove(file-sharing) */
+import { _AttachmentUploadCardsStrings } from '../Attachment/AttachmentUploadCards';
+/* @conditional-compile-remove(file-sharing-acs) */
 import { useLocale } from '../../localization';
 import { ParticipantState } from '../../types';
 
 /**
- * Conditionally modify locale strings passed to the file card
- * @returns file upload card strings
+ * Conditionally modify locale strings passed to the attachment card
+ * @returns attachment card strings
  */
-export const useLocaleFileCardStringsTrampoline = (): _FileUploadCardsStrings => {
-  /* @conditional-compile-remove(file-sharing) */
+export const useLocaleAttachmentCardStringsTrampoline = (): _AttachmentUploadCardsStrings => {
+  /* @conditional-compile-remove(file-sharing-acs) */
   return useLocale().strings.sendBox;
   return {
-    removeFile: '',
+    removeAttachment: '',
     uploadCompleted: '',
-    uploading: ''
+    uploading: '',
+    attachmentMoreMenu: ''
   };
 };
 

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
+import { TeamsMeetingIdLocator } from '@azure/communication-calling';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import {
   toFlatCommunicationIdentifier,
@@ -12,8 +13,12 @@ import {
   CallWithChatAdapter,
   CallWithChatCompositeOptions
 } from '@azure/communication-react';
-/* @conditional-compile-remove(video-background-effects) */
+/* @conditional-compile-remove(file-sharing-acs) */
+import { attachmentUploadOptions } from '../../../../Chat/src/app/utils/uploadHandler';
+
 import { onResolveVideoEffectDependencyLazy, AzureCommunicationCallAdapterOptions } from '@azure/communication-react';
+/* @conditional-compile-remove(DNS) */
+import { onResolveDeepNoiseSuppressionDependencyLazy } from '@azure/communication-react';
 import { Spinner } from '@fluentui/react';
 import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import { useSwitchableFluentTheme } from '../theming/SwitchableFluentThemeProvider';
@@ -27,8 +32,9 @@ export interface CallScreenProps {
   userId: CommunicationUserIdentifier;
   displayName: string;
   endpoint: string;
-  locator: CallAndChatLocator | TeamsMeetingLinkLocator;
+  locator: CallAndChatLocator | TeamsMeetingLinkLocator | TeamsMeetingIdLocator;
   /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId?: string;
+  /* @conditional-compile-remove(rich-text-editor-composite-support) */ isRichTextEditorEnabled?: boolean;
 }
 
 export const CallScreen = (props: CallScreenProps): JSX.Element => {
@@ -38,10 +44,10 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     displayName,
     endpoint,
     locator,
-    /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId
+    /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
+    /* @conditional-compile-remove(rich-text-editor-composite-support) */ isRichTextEditorEnabled
   } = props;
 
-  /* @conditional-compile-remove(video-background-effects) */
   const callAdapterOptions: AzureCommunicationCallAdapterOptions = useMemo(() => {
     const videoBackgroundImages = [
       {
@@ -83,10 +89,13 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     return {
       videoBackgroundOptions: {
         videoBackgroundImages,
-        /* @conditional-compile-remove(video-background-effects) */
+
         onResolveDependency: onResolveVideoEffectDependencyLazy
       },
-      /* @conditional-compile-remove(reaction) */
+      /* @conditional-compile-remove(DNS) */
+      deepNoiseSuppressionOptions: {
+        onResolveDependency: onResolveDeepNoiseSuppressionDependencyLazy
+      },
       reactionResources: {
         likeReaction: { url: '/assets/reactions/likeEmoji.png', frameCount: 102 },
         heartReaction: { url: '/assets/reactions/heartEmoji.png', frameCount: 102 },
@@ -103,6 +112,24 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     document.body.style.overflow = 'hidden';
     return () => {
       document.body.style.overflow = 'null';
+    };
+  }, []);
+
+  // Update stale mobile browsers
+  useEffect(() => {
+    /**
+     * We want to make sure that the page is up to date. If for example a browser is dismissed
+     * on mobile, the page will be stale when opened again. This event listener will reload the page
+     */
+    window.addEventListener('pageshow', (event) => {
+      if (event.persisted) {
+        window.location.reload();
+      }
+    });
+    return () => {
+      window.removeEventListener('pageshow', () => {
+        window.location.reload();
+      });
     };
   }, []);
 
@@ -149,20 +176,47 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
       endpoint,
       locator,
       /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
-      /* @conditional-compile-remove(video-background-effects) */ callAdapterOptions: callAdapterOptions
+      callAdapterOptions: callAdapterOptions
     },
     afterAdapterCreate
   );
 
   const shouldHideScreenShare = isMobileSession || isIOS();
 
+  /* @conditional-compile-remove(file-sharing-acs) */
+  const attachmentOptions = useMemo(() => {
+    // Returning undefined for none group call locators
+    // This includes teams meeting link and teams meeting id locators
+    // Because BYOS file sharing in interop chat is not supported currently
+    if (locator && !isGroupCallLocator(locator)) {
+      return undefined;
+    }
+    return {
+      uploadOptions: attachmentUploadOptions
+    };
+  }, [locator]);
+
   const options: CallWithChatCompositeOptions = useMemo(
     () => ({
       callControls: {
-        screenShareButton: shouldHideScreenShare ? false : undefined
-      }
+        screenShareButton: shouldHideScreenShare ? false : undefined,
+        /* @conditional-compile-remove(end-call-options) */
+        endCallButton: {
+          hangUpForEveryone: 'endCallOptions'
+        }
+      },
+      /* @conditional-compile-remove(file-sharing-acs) */
+      attachmentOptions: attachmentOptions,
+      /* @conditional-compile-remove(rich-text-editor-composite-support) */
+      richTextEditor: isRichTextEditorEnabled
     }),
-    [shouldHideScreenShare]
+    [
+      /* @conditional-compile-remove(file-sharing-acs) */
+      attachmentOptions,
+      /* @conditional-compile-remove(rich-text-editor-composite-support) */
+      isRichTextEditorEnabled,
+      shouldHideScreenShare
+    ]
   );
 
   // Dispose of the adapter in the window's before unload event.
@@ -180,10 +234,9 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
 
   let callInvitationUrl: string | undefined = window.location.href;
   // Only show the call invitation url if the call is a group call or Teams call, do not show for Rooms, 1:1 or 1:N calls
-  if (!isGroupCallLocator(locator) && !isTeamsMeetingLinkLocator(locator)) {
+  if (!isGroupCallLocator(locator) && !isTeamsMeetingLinkLocator(locator) && !isTeamsMeetingIdLocator(locator)) {
     callInvitationUrl = undefined;
   }
-
   return (
     <CallWithChatComposite
       adapter={adapter}
@@ -200,6 +253,8 @@ const convertPageStateToString = (state: CallWithChatAdapterState): string => {
   switch (state.page) {
     case 'accessDeniedTeamsMeeting':
       return 'error';
+    case 'badRequest':
+      return 'error';
     case 'leftCall':
       return 'end call';
     case 'removedFromCall':
@@ -210,11 +265,17 @@ const convertPageStateToString = (state: CallWithChatAdapterState): string => {
 };
 
 const isTeamsMeetingLinkLocator = (
-  locator: TeamsMeetingLinkLocator | CallAndChatLocator
+  locator: TeamsMeetingLinkLocator | CallAndChatLocator | TeamsMeetingIdLocator
 ): locator is TeamsMeetingLinkLocator => {
   return 'meetingLink' in locator;
 };
 
-const isGroupCallLocator = (locator: TeamsMeetingLinkLocator | CallAndChatLocator): boolean => {
+const isTeamsMeetingIdLocator = (
+  locator: TeamsMeetingLinkLocator | CallAndChatLocator | TeamsMeetingIdLocator
+): locator is TeamsMeetingIdLocator => {
+  return 'meetingId' in locator;
+};
+
+const isGroupCallLocator = (locator: TeamsMeetingLinkLocator | CallAndChatLocator | TeamsMeetingIdLocator): boolean => {
   return 'callLocator' in locator && 'groupId' in locator.callLocator;
 };

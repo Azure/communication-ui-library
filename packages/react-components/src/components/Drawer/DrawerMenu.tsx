@@ -46,6 +46,10 @@ export interface _DrawerMenuProps {
   styles?: _DrawerMenuStyles;
 }
 
+const isDrawerMenuItem = (item: _DrawerMenuItemProps): boolean => {
+  return item.onRendererContent === undefined;
+};
+
 /**
  * Takes a set of menu items and returns a created menu inside a {@link _DrawerSurface}.
  *
@@ -61,7 +65,7 @@ export const _DrawerMenu = (props: _DrawerMenuProps): JSX.Element => {
   const menuItemsToRender = useMemo(() => {
     let items: _DrawerMenuItemProps[] | undefined = props.items;
     for (const subMenuKey of selectedKeyPath) {
-      items = items?.find((item) => item.itemKey === subMenuKey)?.subMenuProps;
+      items = items?.find((item) => isDrawerMenuItem(item) && item.itemKey === subMenuKey)?.subMenuProps;
     }
     return items;
   }, [props.items, selectedKeyPath]);
@@ -85,7 +89,7 @@ export const _DrawerMenu = (props: _DrawerMenuProps): JSX.Element => {
 
   // Ensure the first item has a border radius that matches the DrawerSurface
   const borderRadius = useTheme().effects.roundedCorner4;
-  const firstItemStyle = menuItemsToRender && menuItemsToRender[0]?.styles;
+  const firstItemStyle = menuItemsToRender?.[0] && menuItemsToRender[0]?.styles;
   const modifiedFirstItemStyle = useMemo(
     () =>
       merge(firstItemStyle ?? {}, {
@@ -105,26 +109,38 @@ export const _DrawerMenu = (props: _DrawerMenuProps): JSX.Element => {
       heading={props.heading}
     >
       <Stack styles={props.styles} role="menu" data-ui-id="drawer-menu">
-        {menuItemsToRender?.slice(0, 1).map((item) => (
-          <DrawerMenuItem
-            {...item}
-            key={`${item.itemKey}` + '0'}
-            shouldFocusOnMount={true}
-            styles={modifiedFirstItemStyle}
-            onItemClick={(ev, itemKey) => {
-              onItemClick(item, ev, itemKey);
-            }}
-          />
-        ))}
-        {menuItemsToRender?.slice(1).map((item, i) => (
-          <DrawerMenuItem
-            {...item}
-            key={`${item.itemKey}` + `${i + 1}`}
-            onItemClick={(ev, itemKey) => {
-              onItemClick(item, ev, itemKey);
-            }}
-          />
-        ))}
+        {menuItemsToRender?.slice(0, 1).map((item) =>
+          isDrawerMenuItem(item) ? (
+            <DrawerMenuItem
+              {...item}
+              key={`${item.itemKey}` + '0'}
+              shouldFocusOnMount={item.itemKey === 'reactions' ? false : true}
+              styles={modifiedFirstItemStyle}
+              onItemClick={
+                item.itemKey === 'reactions'
+                  ? undefined
+                  : (ev, itemKey) => {
+                      onItemClick(item, ev, itemKey);
+                    }
+              }
+            />
+          ) : (
+            item.onRendererContent?.()
+          )
+        )}
+        {menuItemsToRender?.slice(1).map((item, i) =>
+          isDrawerMenuItem(item) ? (
+            <DrawerMenuItem
+              {...item}
+              key={`${item.itemKey}` + `${i + 1}`}
+              onItemClick={(ev, itemKey) => {
+                onItemClick(item, ev, itemKey);
+              }}
+            />
+          ) : (
+            item.onRendererContent?.()
+          )
+        )}
       </Stack>
     </_DrawerSurface>
   );

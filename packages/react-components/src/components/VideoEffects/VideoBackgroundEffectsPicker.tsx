@@ -52,6 +52,13 @@ export interface _VideoBackgroundEffectsPickerProps {
    * Styles for the picker.
    */
   styles?: _VideoBackgroundEffectsPickerStyles;
+
+  /**
+   * Imperative handle for calling focus()
+   */
+  componentRef?: React.RefObject<{
+    focus: () => void;
+  }>;
 }
 
 /**
@@ -138,7 +145,12 @@ export const _VideoBackgroundEffectsPicker = (props: _VideoBackgroundEffectsPick
           {options.map((option, i) => {
             if (i === 0 && rowIndex === 0) {
               return (
-                <_VideoEffectsItem {...option} itemKey={option.itemKey} key={option.itemKey} focusOnMount={true} />
+                <_VideoEffectsItem
+                  {...option}
+                  itemKey={option.itemKey}
+                  key={option.itemKey}
+                  componentRef={props.componentRef}
+                />
               );
             }
             return <_VideoEffectsItem {...option} itemKey={option.itemKey} key={option.itemKey} />;

@@ -55,10 +55,14 @@ export const ResponsiveVerticalGallery = (props: ResponsiveVerticalGalleryProps)
 
   const topPadding = containerRef.current ? parseFloat(getComputedStyle(containerRef.current).paddingTop) : 0;
   const bottomPadding = containerRef.current ? parseFloat(getComputedStyle(containerRef.current).paddingBottom) : 0;
+  let containerHeightWithoutPadding = Math.max((containerHeight ?? 0) - topPadding - bottomPadding, 0);
+  if (Number.isNaN(containerHeightWithoutPadding)) {
+    containerHeightWithoutPadding = 0;
+  }
 
   const childrenPerPage = calculateVerticalChildrenPerPage({
     numberOfChildren: React.Children.count(children) ?? 0,
-    containerHeight: (containerHeight ?? 0) - topPadding - bottomPadding,
+    containerHeight: containerHeightWithoutPadding,
     gapHeightRem,
     controlBarHeight: controlBarHeightRem ?? 2,
     isShort: isShort ?? false

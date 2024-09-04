@@ -83,8 +83,15 @@ export const ChatMessageActionFlyout = (props: ChatMessageActionFlyoutProps): JS
       key: person.displayName,
       text: person.displayName,
       itemProps: { styles: props.increaseFlyoutItemSize ? menuItemIncreasedSizeStyles : undefined },
-      onRenderIcon: () =>
-        onRenderAvatar ? onRenderAvatar(person.id ?? '', personaOptions) : <Persona {...personaOptions} />,
+      onRenderIcon: () => {
+        if (onRenderAvatar) {
+          const rendered = onRenderAvatar(person.id ?? '', personaOptions);
+          if (rendered) {
+            return rendered;
+          }
+        }
+        return <Persona {...personaOptions} />;
+      },
       iconProps: {
         styles: menuIconStyleSet
       }

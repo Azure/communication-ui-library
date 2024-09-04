@@ -9,13 +9,17 @@ import { ChatMessage } from '@azure/communication-chat';
  * Used by the CallWithChatComposite to track unread messages for showing as a badge on the Chat Button.
  * @private
  */
-export const useUnreadMessagesTracker = (chatAdapter: ChatAdapter, isChatPaneVisible: boolean): number => {
+export const useUnreadMessagesTracker = (
+  chatAdapter: ChatAdapter,
+  isChatPaneVisible: boolean,
+  isChatInitiazed: boolean
+): number => {
   // Store messageIds of unread messages
   const [unreadChatMessages, setUnreadChatMessages] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     // Clear unread messages when chat pane is opened
-    if (isChatPaneVisible) {
+    if (isChatPaneVisible || !isChatInitiazed) {
       setUnreadChatMessages(new Set());
       return;
     }
@@ -49,7 +53,7 @@ export const useUnreadMessagesTracker = (chatAdapter: ChatAdapter, isChatPaneVis
       chatAdapter.off('messageReceived', incrementUnreadChatMessagesCount);
       chatAdapter.off('messageDeleted', decrementUnreadChatMessagesCount);
     };
-  }, [chatAdapter, setUnreadChatMessages, isChatPaneVisible]);
+  }, [chatAdapter, setUnreadChatMessages, isChatPaneVisible, isChatInitiazed]);
 
   return unreadChatMessages.size;
 };

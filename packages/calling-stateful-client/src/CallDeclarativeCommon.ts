@@ -3,13 +3,13 @@
 
 import { CallContext } from './CallContext';
 import { CallCommon } from './BetaToStableTypes';
-/* @conditional-compile-remove(close-captions) */ /* @conditional-compile-remove(call-transfer) */
 import { Features } from '@azure/communication-calling';
-/* @conditional-compile-remove(close-captions) */
+/* @conditional-compile-remove(acs-close-captions) */
+import { PropertyChangedEvent, CaptionsCallFeature } from '@azure/communication-calling';
+/* @conditional-compile-remove(acs-close-captions) */
+import { Captions } from '@azure/communication-calling';
 import { TeamsCaptions } from '@azure/communication-calling';
-/* @conditional-compile-remove(call-transfer) */
 import { TransferCallFeature, TransferAcceptedEvent, TransferEventArgs } from '@azure/communication-calling';
-/* @conditional-compile-remove(spotlight) */
 import { SpotlightCallFeature } from '@azure/communication-calling';
 /**
  * @private
@@ -56,16 +56,14 @@ export abstract class ProxyCallCommon implements ProxyHandler<CallCommon> {
           ...args: Parameters<CallCommon['startScreenSharing']>
         ) {
           return await target.startScreenSharing(...args);
-        },
-        'Call.startScreenSharing');
+        }, 'Call.startScreenSharing');
       }
       case 'stopScreenSharing': {
         return this._context.withAsyncErrorTeedToState(async function (
           ...args: Parameters<CallCommon['stopScreenSharing']>
         ) {
           return await target.stopScreenSharing(...args);
-        },
-        'Call.stopScreenSharing');
+        }, 'Call.stopScreenSharing');
       }
       case 'hold': {
         return this._context.withAsyncErrorTeedToState(async function (...args: Parameters<CallCommon['hold']>) {
@@ -80,19 +78,42 @@ export abstract class ProxyCallCommon implements ProxyHandler<CallCommon> {
       case 'feature': {
         // these are mini version of Proxy object - if it grows too big, a real Proxy object should be used.
         return this._context.withErrorTeedToState((...args: Parameters<CallCommon['feature']>) => {
-          /* @conditional-compile-remove(close-captions) */
           if (args[0] === Features.Captions) {
-            const captionsFeature = target.feature(Features.Captions).captions;
-            const proxyFeature = new ProxyTeamsCaptions(this._context, target);
-            return { captions: new Proxy(captionsFeature, proxyFeature) };
+            const captionsFeature = target.feature(Features.Captions);
+            let proxyFeature;
+            /* @conditional-compile-remove(acs-close-captions) */
+            if (captionsFeature.captions.kind === 'Captions') {
+              proxyFeature = new ProxyCaptions(this._context, target);
+              return {
+                captions: new Proxy(captionsFeature.captions, proxyFeature),
+                on: (...args: Parameters<CaptionsCallFeature['on']>): void => {
+                  const isCaptionsKindChanged = args[0] === 'CaptionsKindChanged';
+                  if (isCaptionsKindChanged) {
+                    const listener = args[1] as PropertyChangedEvent;
+                    const newListener = (): void => {
+                      listener();
+                    };
+                    return captionsFeature.on('CaptionsKindChanged', newListener);
+                  }
+                },
+                off: (...args: Parameters<CaptionsCallFeature['off']>): void => {
+                  const isCaptionsKindChanged = args[0] === 'CaptionsKindChanged';
+                  if (isCaptionsKindChanged) {
+                    return captionsFeature.off('CaptionsKindChanged', args[1]);
+                  }
+                }
+              };
+            }
+            proxyFeature = new ProxyTeamsCaptions(this._context, target);
+            return {
+              captions: new Proxy(captionsFeature.captions, proxyFeature)
+            };
           }
-          /* @conditional-compile-remove(call-transfer) */
           if (args[0] === Features.Transfer) {
             const transferFeature = target.feature(Features.Transfer);
             const proxyFeature = new ProxyTransferCallFeature(this._context, target);
             return new Proxy(transferFeature, proxyFeature);
           }
-          /* @conditional-compile-remove(spotlight) */
           if (args[0] === Features.Spotlight) {
             const spotlightFeature = target.feature(Features.Spotlight);
             const proxyFeature = new ProxySpotlightCallFeature(this._context);
@@ -107,7 +128,6 @@ export abstract class ProxyCallCommon implements ProxyHandler<CallCommon> {
   }
 }
 
-/* @conditional-compile-remove(close-captions) */
 /**
  * @private
  */
@@ -125,9 +145,14 @@ class ProxyTeamsCaptions implements ProxyHandler<TeamsCaptions> {
       case 'startCaptions':
         return this._context.withAsyncErrorTeedToState(async (...args: Parameters<TeamsCaptions['startCaptions']>) => {
           this._context.setStartCaptionsInProgress(this._call.id, true);
-          const ret = await target.startCaptions(...args);
-          this._context.setSelectedSpokenLanguage(this._call.id, args[0]?.spokenLanguage ?? 'en-us');
-          return ret;
+          try {
+            const ret = await target.startCaptions(...args);
+            this._context.setSelectedSpokenLanguage(this._call.id, args[0]?.spokenLanguage ?? 'en-us');
+            return ret;
+          } catch (e) {
+            this._context.setStartCaptionsInProgress(this._call.id, false);
+            throw e;
+          }
         }, 'Call.feature');
         break;
       case 'stopCaptions':
@@ -162,7 +187,57 @@ class ProxyTeamsCaptions implements ProxyHandler<TeamsCaptions> {
   }
 }
 
-/* @conditional-compile-remove(spotlight) */
+/* @conditional-compile-remove(acs-close-captions) */
+/**
+ * @private
+ */
+class ProxyCaptions implements ProxyHandler<Captions> {
+  private _context: CallContext;
+  private _call: CallCommon;
+
+  constructor(context: CallContext, call: CallCommon) {
+    this._context = context;
+    this._call = call;
+  }
+
+  public get<P extends keyof Captions>(target: Captions, prop: P): any {
+    switch (prop) {
+      case 'startCaptions':
+        return this._context.withAsyncErrorTeedToState(async (...args: Parameters<TeamsCaptions['startCaptions']>) => {
+          this._context.setStartCaptionsInProgress(this._call.id, true);
+          try {
+            const ret = await target.startCaptions(...args);
+            this._context.setSelectedSpokenLanguage(this._call.id, args[0]?.spokenLanguage ?? 'en-us');
+            return ret;
+          } catch (e) {
+            this._context.setStartCaptionsInProgress(this._call.id, false);
+            throw e;
+          }
+        }, 'Call.feature');
+        break;
+      case 'stopCaptions':
+        return this._context.withAsyncErrorTeedToState(async (...args: Parameters<TeamsCaptions['stopCaptions']>) => {
+          const ret = await target.stopCaptions(...args);
+          this._context.setIsCaptionActive(this._call.id, false);
+          this._context.setStartCaptionsInProgress(this._call.id, false);
+          this._context.clearCaptions(this._call.id);
+          return ret;
+        }, 'Call.feature');
+      case 'setSpokenLanguage':
+        return this._context.withAsyncErrorTeedToState(
+          async (...args: Parameters<TeamsCaptions['setSpokenLanguage']>) => {
+            const ret = await target.setSpokenLanguage(...args);
+            this._context.setSelectedSpokenLanguage(this._call.id, args[0]);
+            return ret;
+          },
+          'Call.feature'
+        );
+      default:
+        return Reflect.get(target, prop);
+    }
+  }
+}
+
 /**
  * @private
  */
@@ -198,7 +273,6 @@ class ProxySpotlightCallFeature implements ProxyHandler<SpotlightCallFeature> {
   }
 }
 
-/* @conditional-compile-remove(call-transfer) */
 /**
  * @private
  */

@@ -1,6 +1,7 @@
 import { Stack } from '@fluentui/react';
-import { Meta } from '@storybook/addon-docs';
+import { Meta, Source } from '@storybook/addon-docs';
 import { overviewPageImagesStackStyle } from './constants';
+import VideoEffectsSnippetText from '!!raw-loader!./snippets/VideoEffectsSnippet.snippet.tsx';
 
 <Meta
   id="videoeffects"
@@ -48,3 +49,9 @@ Users can select if they want blurred, custom, or no backgrounds from the start 
     <img src="images/videoeffects-call.png" alt="example of choosing a language on web desktop" />
   </Stack.Item>
 </Stack>
+
+** Adding Video Background Effects to your application**
+We are providing the video effects experiences in our `CallComposite` and `CallWithChatComposite`. The video effect resources are
+applied through the `CallAdapter` options and video effects can be added to the experience with the following snippet.
+
+<Source code={VideoEffectsSnippetText} />

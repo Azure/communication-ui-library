@@ -19,8 +19,7 @@ const AnnouncerMessage = (props: {
   const announce = useCallback(() => {
     if (ariaLive === 'assertive') {
       announceAssertive(message || '', createGUID());
-    }
-    if (ariaLive === 'polite') {
+    } else if (ariaLive === 'polite') {
       announcePolite(message || '', createGUID());
     }
   }, [announceAssertive, announcePolite, ariaLive, message]);

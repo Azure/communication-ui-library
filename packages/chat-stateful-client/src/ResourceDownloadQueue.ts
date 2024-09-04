@@ -1,14 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { ChatContext } from './ChatContext';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { ChatMessageWithStatus, ResourceFetchResult } from './types/ChatMessageWithStatus';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import type { CommunicationTokenCredential } from '@azure/communication-common';
 
 declare type CancellationDetails = { src: string; abortController: AbortController };
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 /**
  * @private
  */
@@ -148,7 +144,6 @@ export class ResourceDownloadQueue {
   }
 }
 
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 /**
  * @private
  */
@@ -197,11 +192,15 @@ export const fetchImageSource = async (
   }
 
   const response = await fetchWithAuthentication(src, token, options);
+
+  if (response.status >= 400) {
+    throw new Error(`Failed to fetch image source. Status code: ${response.status}`);
+  }
+
   const blob = await response.blob();
 
   return URL.createObjectURL(blob);
 };
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 interface ImageRequest {
   (
     request: string,

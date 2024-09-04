@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 import { GroupCallLocator, GroupLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
+import { TeamsMeetingIdLocator } from '@azure/communication-calling';
 import { v1 as generateGUID } from 'uuid';
 import { getExistingThreadIdFromURL } from './getThreadId';
 import { pushQSPUrl } from './pushQSPUrl';
@@ -45,6 +46,27 @@ export const getTeamsLinkFromUrl = (): TeamsMeetingLinkLocator | undefined => {
 export const ensureJoinableTeamsLinkPushedToUrl = (teamsLink: TeamsMeetingLinkLocator): void => {
   if (!getTeamsLinkFromUrl()) {
     pushQSPUrl({ name: 'teamsLink', value: encodeURIComponent(teamsLink.meetingLink) });
+  }
+};
+
+/**
+ * Get teams meeting id and passcode from the url's query params.
+ */
+export const getMeetingIdFromUrl = (): TeamsMeetingIdLocator | undefined => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const meetingId = urlParams.get('meetingId');
+  const passcode = urlParams.get('passcode');
+  return meetingId
+    ? { meetingId: decodeURIComponent(meetingId), passcode: passcode ? passcode : undefined }
+    : undefined;
+};
+
+export const ensureJoinableMeetingIdPushedToUrl = (teamsLink: TeamsMeetingIdLocator): void => {
+  if (!getTeamsLinkFromUrl()) {
+    pushQSPUrl({ name: 'meetingId', value: encodeURIComponent(teamsLink.meetingId) });
+    if (teamsLink.passcode) {
+      pushQSPUrl({ name: 'passcode', value: teamsLink.passcode });
+    }
   }
 };
 
