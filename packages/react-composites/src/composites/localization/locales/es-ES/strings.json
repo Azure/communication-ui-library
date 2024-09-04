@@ -347,7 +347,15 @@
     "muteAllDialogTitle": "¿Silenciar a todos?",
     "muteAllDialogContent": "Esto silenciará a todos los participantes de la reunión, excepto usted.",
     "muteAllConfirmButtonLabel": "Silenciar todo",
-    "muteAllCancelButtonLabel": "Cancelar"
+    "muteAllCancelButtonLabel": "Cancelar",
+    "joinBreakoutRoomButtonLabel": "Unirse a la sala para sesión de subgrupo",
+    "returnFromBreakoutRoomButtonLabel": "Salir de la sala",
+    "leaveBreakoutRoomAndMeetingButtonLabel": "Salir de la reunión",
+    "breakoutRoomJoinedNotificationTitle": "Se has unido a la sala para sesión de subgrupo '{roomName}'",
+    "joinBreakoutRoomBannerTitle": "La sala para sesión de subgrupo '{roomName}' está abierta",
+    "joinBreakoutRoomBannerButtonLabel": "Unirse",
+    "returnFromBreakoutRoomBannerTitle": "Regresar a la reunión principal",
+    "returnFromBreakoutRoomBannerButtonLabel": "Volver a unirse"
   },
   "chat": {
     "chatListHeader": "En este chat",
@@ -396,6 +404,8 @@
     "dialpadModalAriaLabel": "Teclado de marcado",
     "dialpadCloseModalButtonAriaLabel": "Cerrar teclado de marcado",
     "openDtmfDialpadLabel": "Mostrar teclado de marcado",
-    "dtmfDialpadPlaceholderText": "Introducir número"
+    "dtmfDialpadPlaceholderText": "Introducir número",
+    "breakoutRoomChatPaneTitle": "Chat de sala para sesión de subgrupo",
+    "chatContentSpinnerLabel": "Cargando..."
   }
 }
