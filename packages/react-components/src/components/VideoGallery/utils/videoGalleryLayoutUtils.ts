@@ -137,7 +137,7 @@ export const useOrganizedParticipants = (props: OrganizedParticipantsArgs): Orga
 
   const unfocusedParticipants = props.remoteParticipants.filter((p) => !focusedParticipantUserIdSet.has(p.userId));
 
-  const useOrganizedParticipantsProps: OrganizedParticipantsArgs = {
+  const organizedParticipantsArgs: OrganizedParticipantsArgs = {
     ...props,
     // if there are focused participants then leave no room in the grid by setting maxGridParticipants to 0
     maxGridParticipants: focusedParticipants.length > 0 || props.isScreenShareActive ? 0 : props.maxGridParticipants,
@@ -146,19 +146,19 @@ export const useOrganizedParticipants = (props: OrganizedParticipantsArgs): Orga
     previousOverflowParticipants: currentOverflowGalleryParticipants.current
   };
 
-  const useOrganizedParticipantsResult = getOrganizedParticipants(useOrganizedParticipantsProps);
+  const organizedParticipants = getOrganizedParticipants(organizedParticipantsArgs);
 
-  currentGridParticipants.current = useOrganizedParticipantsResult.gridParticipants;
-  currentOverflowGalleryParticipants.current = useOrganizedParticipantsResult.overflowGalleryParticipants;
+  currentGridParticipants.current = organizedParticipants.gridParticipants;
+  currentOverflowGalleryParticipants.current = organizedParticipants.overflowGalleryParticipants;
 
   return focusedParticipants.length > 0
     ? {
         gridParticipants: props.isScreenShareActive ? [] : focusedParticipants,
         overflowGalleryParticipants: props.isScreenShareActive
-          ? focusedParticipants.concat(useOrganizedParticipantsResult.overflowGalleryParticipants)
-          : useOrganizedParticipantsResult.overflowGalleryParticipants
+          ? focusedParticipants.concat(organizedParticipants.overflowGalleryParticipants)
+          : organizedParticipants.overflowGalleryParticipants
       }
-    : useOrganizedParticipantsResult;
+    : organizedParticipants;
 };
 
 const putVideoParticipantsFirst = (
