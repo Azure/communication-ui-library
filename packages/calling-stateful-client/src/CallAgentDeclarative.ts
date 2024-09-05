@@ -54,6 +54,7 @@ class ProxyCallAgent extends ProxyCallAgentCommon implements ProxyHandler<Declar
     // There could be scenario that when ProxyCallAgent is created that the given CallAgent already has Calls. In this
     // case we need to make sure to subscribe to those already existing Calls.
     for (const call of this._callAgent.calls) {
+      console.log('[jaburnsi][miguel] this.add call from SUBSCRIBE called');
       this.addCall(call);
     }
   };
@@ -81,7 +82,13 @@ class ProxyCallAgent extends ProxyCallAgentCommon implements ProxyHandler<Declar
 
   protected joinCall(agent: CallAgentCommon, args: Parameters<CallAgent['join']>): CallCommon {
     if (_isACSCallAgent(agent)) {
-      return agent.join(...args);
+      const call = agent.join(...args);
+
+      call.on('stateChanged', () => {
+        console.log('[jaburnsi] CallAgentDeclarative protected joinCall L87 Call state changed', call.state);
+      });
+
+      return call;
     }
     throw Error('Unreachable code, DeclarativeCallAgent.joinCall must be called with an ACS callAgent.');
   }

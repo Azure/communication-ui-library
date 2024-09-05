@@ -417,6 +417,11 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
   }
 
   private set call(newCall: CallCommon | undefined) {
+    // console.log('[jaburnsi] set call', newCall.id);
+    // newCall.on('stateChanged', () => {
+    //   console.log('[jaburnsi] adapter setCall callstatechanged', newCall.state);
+    // });
+
     this.resetDiagnosticsForwarder(newCall);
     this._call = newCall;
   }
@@ -760,10 +765,16 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
         videoOptions
       }) as CallTypeOf<AgentType>;
     }
-    return this.callAgent.join(this.locator as GroupCallLocator, {
+    const call = this.callAgent.join(this.locator as GroupCallLocator, {
       audioOptions,
       videoOptions
     }) as CallTypeOf<AgentType>;
+
+    // call.on('stateChanged', () => {
+    //   console.log('[jaburnsi] _joinCall callstatechanged', call.state);
+    // });
+
+    return call;
   }
 
   public async createStreamView(
@@ -1272,6 +1283,15 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
         this.getState().sounds
       );
     }
+
+    // this.call?.on('stateChanged', () => {
+    //   console.log('[jaburnsi] Call state changed: ', this.call?.state); // WE DONT SEE CONNECTED
+    // });
+
+    // this._call?.on('stateChanged', () => {
+    //   console.log('[jaburnsi] _______Call state changed: ', this._call?.state);
+    // });
+
     this.call?.on('remoteParticipantsUpdated', this.onRemoteParticipantsUpdated.bind(this));
     this.call?.on('isMutedChanged', this.isMyMutedChanged.bind(this));
     this.call?.on('isScreenSharingOnChanged', this.isScreenSharingOnChanged.bind(this));
@@ -1813,6 +1833,7 @@ export const _createAzureCommunicationCallAdapterInner = async ({
     undefined,
     telemetryImplementationHint
   );
+
   const callAgent = await callClient.createCallAgent(credential, {
     displayName
   });

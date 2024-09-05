@@ -67,6 +67,14 @@ export class CallSubscriber {
     this._context = context;
     this._internalContext = internalContext;
 
+    call.on('idChanged', () => {
+      console.log('[jaburnsi] STATEFUL CALL SUBSCRIBER Call idChanged', call.id);
+    });
+
+    call.on('stateChanged', () => {
+      console.log('[jaburnsi][CallSub1] STATEFUL CALL SUBSCRIBER Call state changed', call.state); // WE SEE CONNECTED
+    });
+
     this._diagnosticsSubscriber = new UserFacingDiagnosticsSubscriber(
       this._callIdRef,
       this._context,
@@ -78,6 +86,9 @@ export class CallSubscriber {
       this._context,
       this._call.feature(Features.Recording)
     );
+    call.on('stateChanged', () => {
+      console.log('[jaburnsi][CallSub2] STATEFUL CALL SUBSCRIBER Call state changed', call.state); // WE SEE CONNECTED
+    });
     this._pptLiveSubscriber = new PPTLiveSubscriber(this._callIdRef, this._context, this._call);
     this._transcriptionSubscriber = new TranscriptionSubscriber(
       this._callIdRef,
@@ -89,6 +100,9 @@ export class CallSubscriber {
       this._context,
       this._call.feature(Features.RaiseHand)
     );
+    call.on('stateChanged', () => {
+      console.log('[jaburnsi][CallSub3] STATEFUL CALL SUBSCRIBER Call state changed', call.state); // WE SEE CONNECTED
+    });
     this._reactionSubscriber = new ReactionSubscriber(
       this._callIdRef,
       this._context,
@@ -98,6 +112,9 @@ export class CallSubscriber {
       callIdRef: this._callIdRef,
       context: this._context,
       localOptimalVideoCountFeature: this._call.feature(Features.OptimalVideoCount)
+    });
+    call.on('stateChanged', () => {
+      console.log('[jaburnsi][CallSub4] STATEFUL CALL SUBSCRIBER Call state changed', call.state); // WE SEE CONNECTED
     });
 
     this._localVideoStreamVideoEffectsSubscribers = new Map();
@@ -120,16 +137,33 @@ export class CallSubscriber {
       this._call.feature(Features.BreakoutRooms)
     );
 
+    call.on('stateChanged', () => {
+      console.log('[jaburnsi][CallSub5] STATEFUL CALL SUBSCRIBER Call state changed', call.state); // WE SEE CONNECTED
+    });
+
     this.subscribe();
+
+    call.on('stateChanged', () => {
+      console.log('[jaburnsi][CallSub6] STATEFUL CALL SUBSCRIBER Call state changed', call.state); // WE SEE CONNECTED
+    });
   }
 
   private subscribe = (): void => {
+    this._call.on('stateChanged', () => {
+      console.log('[jaburnsi][CallSub][Subscribe][0] STATEFUL CALL SUBSCRIBER Call state changed', this._call.state);
+    });
     this._call.on('stateChanged', this.stateChanged);
-    this._call.on('stateChanged', this.initCaptionSubscriber);
-    /* @conditional-compile-remove(teams-meeting-conference) */
-    this._call.on('stateChanged', this.initTeamsMeetingConference);
-    /* @conditional-compile-remove(local-recording-notification) */
-    this._call.on('stateChanged', this.initLocalRecordingNotificationSubscriber);
+    this._call.on('stateChanged', () => {
+      console.log('[jaburnsi][CallSub][Subscribe][1] STATEFUL CALL SUBSCRIBER Call state changed', this._call.state);
+    });
+    // this._call.on('stateChanged', this.initCaptionSubscriber);
+    // /* @conditional-compile-remove(teams-meeting-conference) */
+    // this._call.on('stateChanged', this.initTeamsMeetingConference);
+    // /* @conditional-compile-remove(local-recording-notification) */
+    // this._call.on('stateChanged', this.initLocalRecordingNotificationSubscriber);
+    this._call.on('stateChanged', () => {
+      console.log('[jaburnsi][CallSub][Subscribe][2] STATEFUL CALL SUBSCRIBER Call state changed', this._call.state);
+    });
     this._call.on('idChanged', this.idChanged);
     this._call.on('isScreenSharingOnChanged', this.isScreenSharingOnChanged);
     this._call.on('remoteParticipantsUpdated', this.remoteParticipantsUpdated);
@@ -142,6 +176,10 @@ export class CallSubscriber {
     /* @conditional-compile-remove(soft-mute) */
     this._call.on('mutedByOthers', this.mutedByOthersHandler);
 
+    this._call.on('stateChanged', () => {
+      console.log('[jaburnsi][CallSub][Subscribe][3] STATEFUL CALL SUBSCRIBER Call state changed', this._call.state);
+    });
+
     for (const localVideoStream of this._call.localVideoStreams) {
       this._internalContext.setLocalRenderInfo(
         this._callIdRef.callId,
@@ -151,6 +189,10 @@ export class CallSubscriber {
         undefined
       );
     }
+
+    this._call.on('stateChanged', () => {
+      console.log('[jaburnsi][CallSub][Subscribe][4] STATEFUL CALL SUBSCRIBER Call state changed', this._call.state);
+    });
 
     if (this._call.remoteParticipants.length > 0) {
       this._call.remoteParticipants.forEach((participant: RemoteParticipant) => {
@@ -163,6 +205,10 @@ export class CallSubscriber {
         []
       );
     }
+
+    this._call.on('stateChanged', () => {
+      console.log('[jaburnsi][CallSub][Subscribe][5] STATEFUL CALL SUBSCRIBER Call state changed', this._call.state);
+    });
   };
 
   public unsubscribe = (): void => {

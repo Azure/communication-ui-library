@@ -60,6 +60,7 @@ class ProxyTeamsCallAgent extends ProxyCallAgentCommon implements ProxyHandler<D
     // There could be scenario that when ProxyTeamsCallAgent is created that the given CallAgent already has TeamsCalls. In this
     // case we need to make sure to subscribe to those already existing Calls.
     for (const call of this._callAgent.calls) {
+      console.log('[jaburnsi][miguel] this.add call from TEAMS subscribe');
       this.addCall(call);
     }
   };

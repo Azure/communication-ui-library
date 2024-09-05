@@ -88,11 +88,13 @@ export abstract class ProxyCallAgentCommon {
   protected callsUpdated = (event: { added: CallCommon[]; removed: CallCommon[] }): void => {
     const addedStatefulCall: DeclarativeCallCommon[] = [];
     for (const call of event.added) {
-      const statefulCall = this.addCall(call);
-      addedStatefulCall.push(statefulCall);
+      console.log('[jaburnsi][miguel] this.add call from calls updated');
+      // const statefulCall = this.addCall(call);
+      // addedStatefulCall.push(statefulCall);
     }
     const removedStatefulCall: DeclarativeCallCommon[] = [];
     for (const call of event.removed) {
+      console.log('[jaburnsi][miguel] CALL REMOVED Does this get called?');
       disposeAllViewsFromCall(this._context, this._internalContext, call.id);
       const callSubscriber = this._callSubscribers.get(call);
       if (callSubscriber) {
@@ -111,7 +113,7 @@ export abstract class ProxyCallAgentCommon {
     }
 
     for (const externalCallsUpdatedListener of this._externalCallsUpdatedListeners) {
-      externalCallsUpdatedListener({ added: addedStatefulCall, removed: removedStatefulCall });
+      // externalCallsUpdatedListener({ added: addedStatefulCall, removed: removedStatefulCall });
     }
   };
 
@@ -145,23 +147,75 @@ export abstract class ProxyCallAgentCommon {
   };
 
   protected addCall = (call: CallCommon): DeclarativeCallCommon => {
+    console.log('[jaburnsi] _callSubscribers', this._callSubscribers, this._callSubscribers.get(call));
+
     this._callSubscribers.get(call)?.unsubscribe();
+
+    call.on('stateChanged', () => {
+      console.log('[jaburnsi][addCall0] CallAgentCommon.addCall state changed', call.state);
+    });
 
     // For API extentions we need to have the call in the state when we are subscribing as we may want to update the
     // state during the subscription process in the subscriber so we add the call to state before subscribing.
     this._context.setCall(convertSdkCallToDeclarativeCall(call));
+    call.on('stateChanged', () => {
+      console.log('[jaburnsi][addCall1][WORKS] CallAgentCommon.addCall state changed', call.state);
+    });
     this._callSubscribers.set(call, new CallSubscriber(call, this._context, this._internalContext));
-    return this.getOrCreateDeclarativeCall(call);
+    call.on('stateChanged', () => {
+      console.log('[jaburnsi][addCall2][NO WORKS] CallAgentCommon.addCall state changed', call.state);
+    });
+    const dcall = this.getOrCreateDeclarativeCall(call);
+    call.on('stateChanged', () => {
+      console.log('[jaburnsi][addCall3] CallAgentCommon.addCall state changed', call.state);
+    });
+    dcall.on('stateChanged', () => {
+      console.log('[jaburnsi][addCall4] CallAgentCommon.addCall state changed', dcall.state);
+    });
+    return dcall;
   };
 
   private getOrCreateDeclarativeCall = (call: CallCommon): DeclarativeCallCommon => {
     const declarativeCall = this._declarativeCalls.get(call);
     if (declarativeCall) {
+      console.log('[jaburnsi][edward] declarativeCall already exists!');
+
+      declarativeCall.on('stateChanged', () => {
+        console.log(
+          '[jaburnsi][edward0] CallAgentCommon.getOrCreateDeclarativeCall state changed',
+          declarativeCall.state
+        );
+      });
+
       return declarativeCall;
     }
+    console.log('[jaburnsi][edward] declarativeCall doesnt exist!');
+
+    call.on('stateChanged', () => {
+      console.log('[jaburnsi][edward1] CallAgentCommon.getOrCreateDeclarativeCall state changed', call.state);
+    });
 
     const newDeclarativeCall = this.callDeclaratify(call, this._context);
+
+    call.on('stateChanged', () => {
+      console.log('[jaburnsi][edward2] CallAgentCommon.getOrCreateDeclarativeCall state changed', call.state);
+    });
+
     this._declarativeCalls.set(call, newDeclarativeCall);
+
+    console.log('[jaburnsi][edward] newDeclarativeCall', newDeclarativeCall);
+
+    call.on('stateChanged', () => {
+      console.log('[jaburnsi][edward3] CallAgentCommon.getOrCreateDeclarativeCall state changed', call.state);
+    });
+
+    newDeclarativeCall.on('stateChanged', () => {
+      console.log(
+        '[jaburnsi][edward4] CallAgentCommon.getOrCreateDeclarativeCall state changed',
+        newDeclarativeCall.state
+      );
+    });
+
     return newDeclarativeCall;
   };
 
@@ -181,6 +235,7 @@ export abstract class ProxyCallAgentCommon {
       case 'startCall': {
         return this._context.withErrorTeedToState((...args: Parameters<AgentType['startCall']>): CallCommon => {
           const call = this.startCall(target, args);
+          console.log('[jaburnsi][miguel] this.add call from start call');
           this.addCall(call);
           return this.getOrCreateDeclarativeCall(call);
         }, 'CallAgent.startCall');
@@ -188,8 +243,29 @@ export abstract class ProxyCallAgentCommon {
       case 'join': {
         return this._context.withErrorTeedToState((...args: Parameters<AgentType['join']>): CallCommon => {
           const call = this.joinCall(target, args);
+          console.log('[jaburnsi] This one definitely gets called?');
+
+          call.on('stateChanged', () => {
+            console.log('[jaburnsi][donald][SHOULD WORK] CallAgentCommon.join Call state changed', call.state);
+          });
+
+          console.log('[jaburnsi][miguel] this.add call from join call');
           this.addCall(call);
-          return this.getOrCreateDeclarativeCall(call);
+
+          call.on('stateChanged', () => {
+            console.log('[jaburnsi][donald][MAYBE NOT WORKS] CallAgentCommon.join Call state changed', call.state);
+          });
+
+          const declarativeCall = this.getOrCreateDeclarativeCall(call);
+
+          declarativeCall.on('stateChanged', () => {
+            console.log(
+              '[jaburnsi][donald][NEVER WORKS] CallAgentCommon.join declarativeCall state changed',
+              declarativeCall.state
+            );
+          });
+
+          return declarativeCall;
         }, 'CallAgent.join');
       }
       case 'calls': {

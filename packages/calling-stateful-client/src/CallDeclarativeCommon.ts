@@ -30,6 +30,7 @@ export abstract class ProxyCallCommon implements ProxyHandler<CallCommon> {
   }
 
   public get<P extends keyof CallCommon>(target: CallCommon, prop: P): any {
+    // console.log('[jaburnsi] CallCommon ProxyCallCommon get prop:', prop);
     switch (prop) {
       case 'mute': {
         return this._context.withAsyncErrorTeedToState(async function (...args: Parameters<CallCommon['mute']>) {

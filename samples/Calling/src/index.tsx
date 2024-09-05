@@ -17,10 +17,10 @@ if (!domNode) {
 initReactRenderTracker();
 
 createRoot(domNode).render(
-  <React.StrictMode>
-    <SwitchableFluentThemeProvider scopeId="SampleCallingApp">
-      <App />
-      <ShakeToSendLogs />
-    </SwitchableFluentThemeProvider>
-  </React.StrictMode>
+  // <React.StrictMode>
+  <SwitchableFluentThemeProvider scopeId="SampleCallingApp">
+    <App />
+    <ShakeToSendLogs />
+  </SwitchableFluentThemeProvider>
+  // </React.StrictMode>
 );
