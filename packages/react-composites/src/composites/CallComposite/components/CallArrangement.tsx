@@ -599,13 +599,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                   <Stack.Item styles={notificationsContainerStyles}>
                     {
                       /* @conditional-compile-remove(breakout-rooms) */
-                      props.mobileView && (
-                        <BreakoutRoomsBanner
-                          latestNotifications={latestNotifications}
-                          locale={locale}
-                          adapter={adapter}
-                        />
-                      )
+                      props.mobileView && <BreakoutRoomsBanner locale={locale} adapter={adapter} />
                     }
                     {props.showErrorNotifications && (
                       <Stack styles={notificationStackStyles} horizontalAlign="center" verticalAlign="center">
