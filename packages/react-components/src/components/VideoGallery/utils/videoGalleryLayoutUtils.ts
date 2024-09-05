@@ -52,13 +52,22 @@ const getOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedPa
     previousOverflowParticipants = []
   } = props;
 
-  const remoteParticipantsOrdered = putVideoParticipantsFirst(remoteParticipants);
+  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+  const callingParticipants = remoteParticipants.filter((p) => p.state === ('Connecting' || 'Ringing'));
+  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+  const callingParticipantsSet = new Set(callingParticipants.map((p) => p.userId));
+
+  let connectedParticipants = remoteParticipants;
+  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+  connectedParticipants = connectedParticipants.filter((p) => !callingParticipantsSet.has(p.userId));
+
+  const remoteParticipantsOrdered = putVideoParticipantsFirst(connectedParticipants);
   const videoParticipants = remoteParticipants.filter((p) => p.videoStream?.isAvailable);
-  const participants =
+  const participantsForGrid =
     layout === 'floatingLocalVideo' && videoParticipants.length > 0 ? videoParticipants : remoteParticipantsOrdered;
 
   let newGridParticipants = smartDominantSpeakerParticipants({
-    participants: participants,
+    participants: participantsForGrid,
     dominantSpeakers,
     currentParticipants: previousGridParticipants,
     maxDominantSpeakers: maxGridParticipants
@@ -77,19 +86,8 @@ const getOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedPa
 
   const gridParticipantSet = new Set(newGridParticipants.map((p) => p.userId));
 
-  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
-  const callingParticipants = remoteParticipantsOrdered.filter((p) => p.state === ('Connecting' || 'Ringing'));
-  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
-  const callingParticipantsSet = new Set(callingParticipants.map((p) => p.userId));
-
   const newOverflowGalleryParticipants = smartDominantSpeakerParticipants({
-    participants: remoteParticipantsOrdered.filter(
-      (p) =>
-        !gridParticipantSet.has(p.userId) &&
-        /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ !callingParticipantsSet.has(
-          p.userId
-        )
-    ),
+    participants: remoteParticipantsOrdered.filter((p) => !gridParticipantSet.has(p.userId)),
     dominantSpeakers: dominantSpeakers,
     currentParticipants: previousOverflowParticipants,
     maxDominantSpeakers: maxOverflowGalleryDominantSpeakers
