@@ -15,7 +15,7 @@
     "prettier": "prettier --no-error-on-unmatched-pattern --write --config ../../.prettierrc --ignore-path=../../.prettierignore \"**/*.js\" \"**/*.jsx\" \"**/*.ts\" \"**/*.tsx\"",
     "prettier:check": "prettier --no-error-on-unmatched-pattern --check --config ../../.prettierrc --ignore-path=../../.prettierignore \"**/*.js\" \"**/*.jsx\" \"**/*.ts\" \"**/*.tsx\"",
     "test": "echo package only in alpha no test run",
-    "test:ci-coverage": "rushx _by-flavor \"rushx _test:by-flavor --coverage\"",
+    "test:ci-coverage": "echo package only in alpha no test run",
     "test:coverage": "rushx _by-flavor \"rushx _test:by-flavor --coverage --coverageReporters=lcov\"",
     "lint": "eslint --max-warnings 0 \"*/**/*.{ts,tsx}\"",
     "lint:fix": "rushx lint --fix --",
