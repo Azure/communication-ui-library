@@ -68,7 +68,7 @@ export const continueAnywayButtonStyles = (theme: Theme): IButtonStyles => {
       backgroundColor: '#C4314B',
       borderColor: theme.palette.neutralLight,
       color: theme.palette.white,
-      padding: '1rem'
+      padding: '0.5rem'
     }
   };
 };

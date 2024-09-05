@@ -94,8 +94,8 @@ export const linkTextStyles: ILinkStyles = {
  */
 export const primaryButtonStyles: IButtonStyles = {
   root: {
-    paddingTop: '1.5rem',
-    paddingBottom: '1.5rem',
+    paddingTop: '0.625rem',
+    paddingBottom: '0.625rem',
     borderRadius: '0.5rem',
     marginBottom: _pxToRem(22)
   }
