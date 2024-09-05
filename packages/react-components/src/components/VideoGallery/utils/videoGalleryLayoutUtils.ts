@@ -95,19 +95,14 @@ const getOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedPa
     maxDominantSpeakers: maxOverflowGalleryDominantSpeakers
   });
 
-  const gridParticipants = getGridParticipants({
-    gridParticipants: newGridParticipants,
-    overflowGalleryParticipants: newOverflowGalleryParticipants,
-    maxGridParticipants: maxGridParticipants,
-    /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ callingParticipants
-  });
-
-  const overflowGalleryParticipants = getOverflowGalleryRemoteParticipants({
-    gridParticipants: newGridParticipants,
-    overflowGalleryParticipants: newOverflowGalleryParticipants,
-    maxGridParticipants: maxGridParticipants,
-    /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ callingParticipants
-  });
+  let gridParticipants = newGridParticipants;
+  let overflowGalleryParticipants = newOverflowGalleryParticipants;
+  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+  if (gridParticipants.length + callingParticipants.length <= maxGridParticipants) {
+    gridParticipants = gridParticipants.concat(callingParticipants);
+  } else {
+    overflowGalleryParticipants = overflowGalleryParticipants.concat(callingParticipants);
+  }
 
   return { gridParticipants, overflowGalleryParticipants };
 };
@@ -166,47 +161,6 @@ export const useOrganizedParticipants = (props: OrganizedParticipantsArgs): Orga
           : useOrganizedParticipantsResult.overflowGalleryParticipants
       }
     : useOrganizedParticipantsResult;
-};
-
-const getGridParticipants = (args: {
-  gridParticipants: VideoGalleryParticipant[];
-  overflowGalleryParticipants: VideoGalleryParticipant[];
-  maxGridParticipants: number;
-  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ callingParticipants: VideoGalleryParticipant[];
-}): VideoGalleryRemoteParticipant[] => {
-  // if we have no grid participants we need to cap the max number of overflowGallery participants in the grid
-  // we will use the max streams provided to the function to find the max participants that can go in the grid
-  // if there are less participants than max streams then we will use all participants including joining in the grid
-  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
-  return args.gridParticipants.length > 0
-    ? args.gridParticipants
-    : args.overflowGalleryParticipants.length > args.maxGridParticipants
-      ? args.overflowGalleryParticipants.slice(0, args.maxGridParticipants)
-      : args.overflowGalleryParticipants.slice(0, args.maxGridParticipants).concat(args.callingParticipants);
-  return args.gridParticipants.length > 0
-    ? args.gridParticipants
-    : args.overflowGalleryParticipants.slice(0, args.maxGridParticipants);
-};
-
-const getOverflowGalleryRemoteParticipants = (args: {
-  gridParticipants: VideoGalleryParticipant[];
-  overflowGalleryParticipants: VideoGalleryParticipant[];
-  maxGridParticipants: number;
-  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ callingParticipants: VideoGalleryParticipant[];
-}): VideoGalleryRemoteParticipant[] => {
-  // If screen sharing is not active, then assign all video tiles as grid tiles.
-  // If there are no video tiles, then assign audio tiles as grid tiles.
-  // if there are more overflow tiles than max streams then find the tiles that don't fit in the grid and put them in overflow
-  // overflow should be empty if total participants including calling participants is less than max streams
-  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
-  return args.gridParticipants.length > 0
-    ? args.overflowGalleryParticipants.concat(args.callingParticipants)
-    : args.overflowGalleryParticipants.length > args.maxGridParticipants
-      ? args.overflowGalleryParticipants.slice(args.maxGridParticipants).concat(args.callingParticipants)
-      : [];
-  return args.gridParticipants.length > 0
-    ? args.overflowGalleryParticipants
-    : args.overflowGalleryParticipants.slice(args.maxGridParticipants);
 };
 
 const putVideoParticipantsFirst = (
