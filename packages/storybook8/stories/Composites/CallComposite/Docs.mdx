@@ -39,7 +39,7 @@ appearing with a blue border.
   </Stack.Item>
 </Stack>
 
-When joining a Microsoft Teams call ([Teams Interop experience](./?path=/docs/examples-teamsinterop-compliancebanner--compliance-banner)), the Call Composite
+When joining a Microsoft Teams call ([Teams Interop experience](./?path=/docs/concepts-teams-interop-compliance-banner--docs)), the Call Composite
 includes a lobby experience where the user is waiting to be admitted into the call.
 
 <Stack
@@ -120,13 +120,13 @@ mobile device.
   Note: Only Portrait mode is supported when the `formFactor` is set to "mobile". Landscape mode is not supported.
 </MessageBar>
 
-You can try out the form factor property in the [CallComposite Basic Example](./?path=/story/composites-call-basicexample--basic-example).
+You can try out the form factor property in the [CallComposite Basic Example](./?path=/story/composites-callcomposite--basic-example).
 
 ## Theming
 
 CallComposite can be themed with Fluent UI themes, just like the base components. Look at the [CallComposite
-theme example](./?path=/story/composites-call-themeexample--theme-example) to see theming in action or the
-[overall theming example](./?path=/docs/theming--page) to see how theming works for all the components in this
+theme example](./?path=/story/composites-callcomposite-theme-example--theme-example) to see theming in action or the
+[overall theming example](./?path=/docs/concepts-theming--docs) to see how theming works for all the components in this
 UI library.
 
 ## Custom Branding
@@ -169,21 +169,21 @@ It is a primary tenet of Azure Communication Services that customers bring their
 Customers then use the Azure Communication Services identity service to create corresponding authentication
 tokens for their users. The CallComposite allows developers to easily inject custom data associated with these
 user identities. Look at the [example
-canvas](./?path=/story/composites-call-customdatamodelexample--custom-data-model-example) to see how the
+canvas](./?path=/story/composites-callcomposite--custom-data-model-example) to see how the
 initials displayed for users can be provided by Contoso.
 
 Note that, by default, the initials text color is setup to `white`
 
 <Source code={customDataModelExampleContainerText} />
 
-See the [Custom data model example documentation](./?path=/docs/customuserdatamodel--page) to understand how
+See the [Custom data model example documentation](./?path=/docs/concepts-custom-user-data-model--docs) to understand how
 custom data model can be injected for all the components in this UI library.
 
 ## Fonts
 
 Custom fonts can be applied to the CallComposite using the in built theming mechanism. Look at the
-[CallComposite themes canvas](./?path=/story/composites-call-themeexample--theme-example) to see custom fonts in
-action or the [overall theming example](./?path=/story/theming--page) to see how theming works for all the
+[CallComposite themes canvas](./?path=/docs/examples-themes-teams--docs) to see custom fonts in
+action or the [overall theming example](./?path=/docs/concepts-theming--docs) to see how theming works for all the
 components in this UI library. Read more about fonts in [Fluent UI
 Typography](https://developer.microsoft.com/fluentui#/styles/web/typography).
 
@@ -283,7 +283,7 @@ instead of the options object.
 
 This will hide the local video tile from the composite's video gallery. The default value is `floating` which
 will have the local video tile follow our `floatingLocalLayout`. See our [video
-gallery](./?path=/docs/ui-components-videogallery--video-gallery) component docs for more information on our
+gallery](./?path=/docs/components-video-gallery--docs) component docs for more information on our
 local video tile and some of the other options we have for the local video tile when just using the components.
 
 ## Customizing the default Gallery Layout
@@ -355,7 +355,7 @@ You can set the gallery layout using the following:
 The CallComposite supports making outbound PSTN and 1:N calls. 1:N is a call either between just Azure
 Communication Users or, a mix between ACS and PSTN users. To make these outbound calls you need to provide an
 array of `targetCallees` that contains participantIds that you are looking to call to the
-[CallAdapter](./?path=/docs/composite-adapters--page). For PSTN these IDs are the phone numbers that you are
+[CallAdapter](./?path=/docs/composites-adapters--docs). For PSTN these IDs are the phone numbers that you are
 looking to call. For Azure Communication Users you will need to provide their unique ACS acquired `userId`.
 These are to be provided to the `CallAdapter` properties in place of a locator as `targetCallees`.
 
@@ -379,10 +379,10 @@ the same call.
 
 ## Rooms
 
-The CallComposite supports [Rooms](./?path=/docs/rooms--page). To join a room call you need to provide a
+The CallComposite supports [Rooms](./?path=/docs/concepts-rooms--docs). To join a room call you need to provide a
 `locator` that contains the roomId of the room call you want to join to the
-[CallAdapter](./?path=/docs/composite-adapters--page). An example snippet is shown in the 'How to incorporate
-Rooms in your experience' section in our [Rooms doc](./?path=/docs/rooms--page).
+[CallAdapter](./?path=/docs/composites-adapters--docs). An example snippet is shown in the 'How to incorporate
+Rooms in your experience' section in our [Rooms doc](./?path=/docs/concepts-rooms--docs).
 
 Note: A room needs be created using the Rooms Client to obtain a roomId. Also with the Rooms Client, ACS users
 need to be added to that room using their userId. To use the Rooms Client to create a room follow these
@@ -390,4 +390,4 @@ need to be added to that room using their userId. To use the Rooms Client to cre
 
 ## Props
 
-<ArgTypes of={CallComposite} />
+<ArgTypes of={CallComposite} include={['adapter', 'formFactor', 'callInvitationUrl', 'options']} />
