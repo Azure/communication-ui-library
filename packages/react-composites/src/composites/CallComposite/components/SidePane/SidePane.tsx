@@ -26,6 +26,7 @@ export interface SidePaneProps {
   disableChatButton?: boolean;
   onChatButtonClicked?: () => void;
   onPeopleButtonClicked?: () => void;
+  showAddPeopleButton?: boolean;
 }
 
 /** @private */
@@ -97,7 +98,13 @@ export const SidePane = (props: SidePaneProps): JSX.Element => {
   }
 
   return (
-    <Stack verticalFill grow styles={paneStyles} data-ui-id="SidePane" tokens={props.mobileView ? {} : sidePaneTokens}>
+    <Stack
+      verticalFill
+      grow
+      styles={paneStyles}
+      data-ui-id="SidePane"
+      tokens={props.mobileView || !props.showAddPeopleButton ? {} : sidePaneTokens}
+    >
       {HeaderToRender}
       <Stack.Item verticalFill grow styles={paneBodyContainer}>
         <Stack verticalFill styles={scrollableContainer}>
