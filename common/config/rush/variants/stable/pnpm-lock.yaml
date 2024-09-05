@@ -11114,6 +11114,16 @@ packages:
       - debug
     dev: false
 
+  /axios@1.7.7:
+    resolution: {integrity: sha512-S4kL7XrjgBmvdGut0sN3yJxqYzrDOnivkBiN0OFs6hLiUam3UPvswUo0kqGyhqUZGEOytHyumEdXsAkgCOUf3Q==}
+    dependencies:
+      follow-redirects: 1.15.6
+      form-data: 4.0.0
+      proxy-from-env: 1.1.0
+    transitivePeerDependencies:
+      - debug
+    dev: false
+
   /axobject-query@3.2.1:
     resolution: {integrity: sha512-jsyHu61e6N4Vbz/v18DHwWYKK0bSWLqn47eeDSKPB7m8tqMHF9YJ+mhIk2lVteyZrY8tnSj/jHOv4YiTCuCJgg==}
     dependencies:
@@ -25383,7 +25393,7 @@ packages:
     dev: false
 
   file:projects/acs-ui-javascript-loaders.tgz:
-    resolution: {integrity: sha512-jCwWWVUeiLLX49A5nlctZgTtsxVjlT+6wZul6XCZnfTFD2dVDL9AFxtV7hGdS94ZlMekaqcLNaSZuiia7R66AQ==, tarball: file:projects/acs-ui-javascript-loaders.tgz}
+    resolution: {integrity: sha512-riKBTA2JPdqTDZkRD7uts0m9qYqhP0NFl7/gJD6ntehL6jrfumskvrRzGzVLSQYNPVL01Kgx0mz7vXKakHqoDw==, tarball: file:projects/acs-ui-javascript-loaders.tgz}
     name: '@rush-temp/acs-ui-javascript-loaders'
     version: 0.0.0
     dependencies:
@@ -25430,7 +25440,7 @@ packages:
     dev: false
 
   file:projects/calling-component-bindings.tgz:
-    resolution: {integrity: sha512-8QIpnXqIa4GN5wf2Y1TEjQKo/eM7S8mrmLbXU8ZCFxIXDELiJlQ45rvl02dKfcf9f+t+lOTCW6XM6usD0NtyCg==, tarball: file:projects/calling-component-bindings.tgz}
+    resolution: {integrity: sha512-XT7BuQjwD3jgXxYilXI76IyYRBJhG+D5FaIdP2C03vLQOFlmRGph/qHS2Xjr7wHHI3M8I3/EHHjo4AnIKV+Jew==, tarball: file:projects/calling-component-bindings.tgz}
     name: '@rush-temp/calling-component-bindings'
     version: 0.0.0
     dependencies:
@@ -25479,7 +25489,7 @@ packages:
     dev: false
 
   file:projects/calling-stateful-client.tgz:
-    resolution: {integrity: sha512-SNLv3eWTlR7/AoUW8dfPwaLhkpleX8RYxmI3Xm82Zw+MFhFFmFQP+PzC0DL6le/rkM3EkHIsoPWLi+vtUL0c7Q==, tarball: file:projects/calling-stateful-client.tgz}
+    resolution: {integrity: sha512-vDaj25Qe+0nXHjexrMxpK88NfH0H06GZHuwMuhExUcaG5LexTSCnv4T/1YIWZseqF+Q9xxlrCagRZqIAhKe+JQ==, tarball: file:projects/calling-stateful-client.tgz}
     name: '@rush-temp/calling-stateful-client'
     version: 0.0.0
     dependencies:
@@ -25528,7 +25538,7 @@ packages:
     dev: false
 
   file:projects/calling.tgz:
-    resolution: {integrity: sha512-2jh6rL+BYFQ8iiQYse0AwNP7WkOdOKS5ZHrR47gX2cQKAejygvyKBMWQcuMX7JKTpiJAT5VgZytpAujdc/t44A==, tarball: file:projects/calling.tgz}
+    resolution: {integrity: sha512-MDq6qcH1EPesgwsIAme/EJAB92VqNnHc1wqvZzmTtZ/xAGoPAf4Jhgg4hq5qoHLfCWUr8jxBBPW5u+1SYwa/yw==, tarball: file:projects/calling.tgz}
     name: '@rush-temp/calling'
     version: 0.0.0
     dependencies:
@@ -25622,7 +25632,7 @@ packages:
     dev: false
 
   file:projects/callingstateful.tgz:
-    resolution: {integrity: sha512-nfRq2AB+LsG3qqakd5+KDI5V7UhkS+4jMN4fIZhYofgoCS9U1L5X3h81p+gAC6m0pMAvvFeQx48DGPanStCxdA==, tarball: file:projects/callingstateful.tgz}
+    resolution: {integrity: sha512-1eemv9/+He2jfUqu9dCgAtzWJDvQU3/XzRpA564fLKOdKgQXnApRLyX1MLkT1ORu4DS3w1642BEjXyXrDGRitg==, tarball: file:projects/callingstateful.tgz}
     name: '@rush-temp/callingstateful'
     version: 0.0.0
     dependencies:
@@ -25716,7 +25726,7 @@ packages:
     dev: false
 
   file:projects/callwithchat.tgz:
-    resolution: {integrity: sha512-bGsvJUvewWVdPpu++6fFvp1OnQKNuMym/4Vhu3Qvqs2ByVxsTyVhYbselB2jmjICu1IZtnXAwNYXUlGhTE852Q==, tarball: file:projects/callwithchat.tgz}
+    resolution: {integrity: sha512-os6LAym6jWL9zddicQwyJsGTYYEbL+FsENVdQZc7BtvGUJv/um7oXJPkbn90rYhJR4zHX1zmYvy9YZr55al97A==, tarball: file:projects/callwithchat.tgz}
     name: '@rush-temp/callwithchat'
     version: 0.0.0
     dependencies:
@@ -25809,7 +25819,7 @@ packages:
     dev: false
 
   file:projects/chat-component-bindings.tgz:
-    resolution: {integrity: sha512-Tkk8hJMfchMsVsS1zKSy+JrPBb1Ia7vAxO9Wfv3PhvIPWKqu7z2bWLnvRZap6hmhQ/fTywP3Zft5hR4ZjqoBRg==, tarball: file:projects/chat-component-bindings.tgz}
+    resolution: {integrity: sha512-f4N9CqEaLr0IsNYrHkAVp5WP49GZg4vFnp4sTChvX6dXTPU4y5wJzs8RwyEoUpPhV5/trOrSb0Lb6zLDWTiTtA==, tarball: file:projects/chat-component-bindings.tgz}
     name: '@rush-temp/chat-component-bindings'
     version: 0.0.0
     dependencies:
@@ -25852,7 +25862,7 @@ packages:
     dev: false
 
   file:projects/chat-stateful-client.tgz:
-    resolution: {integrity: sha512-+U4YeYKmCOPp/2QfttFL1eEpOZA3w4n92CRdCNSmMSPba1eEV820I9Jf/3/zMHCWqbk49pBXMsVqEzj8XNvHcA==, tarball: file:projects/chat-stateful-client.tgz}
+    resolution: {integrity: sha512-DpPhkzM1nE2LxOAMfAI6yN+5+TO3CjL/kuM75pRKrymAKD0FSYaJo7LcEsQ7K//lmy430p2rIvD3igqgtM/4ag==, tarball: file:projects/chat-stateful-client.tgz}
     name: '@rush-temp/chat-stateful-client'
     version: 0.0.0
     dependencies:
@@ -25904,7 +25914,7 @@ packages:
     dev: false
 
   file:projects/chat.tgz:
-    resolution: {integrity: sha512-PANT8cx7h2NeUmFZlQmfotB0L9je8F2PH2qivMjJmvdUsrmR11vjF/lLtwCQkgGsfy8hHBsmpqlViMwIPWn6ng==, tarball: file:projects/chat.tgz}
+    resolution: {integrity: sha512-5NPwHAkVqPSK0VOQHI2tgskc5Uf3g8di80usz4uOy57sglOyH6DUg/RsvO+Y34RjwwBmFGg+LFbRhPmSrKOKHQ==, tarball: file:projects/chat.tgz}
     name: '@rush-temp/chat'
     version: 0.0.0
     dependencies:
@@ -25926,7 +25936,7 @@ packages:
       '@types/react-linkify': 1.0.4
       '@typescript-eslint/eslint-plugin': 7.14.1(@typescript-eslint/parser@7.14.1)(eslint@8.57.0)(typescript@5.4.5)
       '@typescript-eslint/parser': 7.14.1(eslint@8.57.0)(typescript@5.4.5)
-      axios: 1.6.8
+      axios: 1.7.7
       babel-loader: 8.1.0(@babel/core@7.25.2)(webpack@5.89.0)
       concurrently: 5.3.0
       copyfiles: 2.4.1
@@ -25993,7 +26003,7 @@ packages:
     dev: false
 
   file:projects/check-treeshaking.tgz:
-    resolution: {integrity: sha512-J8hX3/ulTmqSz6Qc2FlVU3hutESIe30HPcCYFEhjDSbQ8P9Ng9I4xj0/RNQ77cALsNo0KsMcrmeExDbewQDAuA==, tarball: file:projects/check-treeshaking.tgz}
+    resolution: {integrity: sha512-rHoBFz3KTs+6OQhePKMpRiOyH2DJLbe02ia2O5omYJqNJw2SifLeohD3F2XL4OnrTJSrLIYATvJiKUODSIED/A==, tarball: file:projects/check-treeshaking.tgz}
     name: '@rush-temp/check-treeshaking'
     version: 0.0.0
     dependencies:
@@ -26021,7 +26031,7 @@ packages:
     dev: false
 
   file:projects/check-typescript-regression.tgz:
-    resolution: {integrity: sha512-u4+0gd5F6w/kh0W8e5tc2wuDxqoCZ9m+ovlUmrF6WFfvEOH/IzbMztyX0CD0BbC+irKu4NnEtx1VMcoyAejJUw==, tarball: file:projects/check-typescript-regression.tgz}
+    resolution: {integrity: sha512-tpd5S9C3ZbWdgrxfS127RpSgKvtqnoGAxheiWp66ghDdL9Y1nN1PXnw+q/wJqWQ1H/cQ6WfdkbwGlpSz8j8pBA==, tarball: file:projects/check-typescript-regression.tgz}
     name: '@rush-temp/check-typescript-regression'
     version: 0.0.0
     dependencies:
@@ -26039,7 +26049,7 @@ packages:
     dev: false
 
   file:projects/communication-react.tgz:
-    resolution: {integrity: sha512-G4XQKSy1K0LdATTDgvxC8xH8d8go67oGU+UhR7J/T6KVkocWpkL8fFjacpmAN/Xuw0xerSO8Zv5yyyX8OFTq+g==, tarball: file:projects/communication-react.tgz}
+    resolution: {integrity: sha512-JhnmouU82GsRd4s2JCJV1V2CqaFBKzyKmId8QmEFOma+H8PIvpLNWgBkAjvvkgqLjIdk/EC/2iRtxpgELVSOZA==, tarball: file:projects/communication-react.tgz}
     name: '@rush-temp/communication-react'
     version: 0.0.0
     dependencies:
@@ -26152,7 +26162,7 @@ packages:
     dev: false
 
   file:projects/component-examples.tgz:
-    resolution: {integrity: sha512-qXopDZnvTpIkLR8EnOUqzhbn4sefBytB83Sn7vJnSx4phAN5vFAhlCGkNuzVXzTG2Wc0J47M9+2DrVzJmWN01w==, tarball: file:projects/component-examples.tgz}
+    resolution: {integrity: sha512-rY9C/dwQFj5V8cTJ1mrpeWktbNppr6QsjHoBH3ezaF3FoQEELi85tg9ZP3VFald+DwmfqOIUvby5Rk9YXMgFrw==, tarball: file:projects/component-examples.tgz}
     name: '@rush-temp/component-examples'
     version: 0.0.0
     dependencies:
@@ -26242,7 +26252,7 @@ packages:
     dev: false
 
   file:projects/fake-backends.tgz:
-    resolution: {integrity: sha512-c+unzHeQ+tKksfwC76OVdOTYj6pR1i4JOazqeO7JZKz/uJRyQbVmaG6v3Y1rqMiHx7e5OZGfKjhDC/4V6EQBMg==, tarball: file:projects/fake-backends.tgz}
+    resolution: {integrity: sha512-sojVIvNFsmgu0grLqwhcb4k1A+AtcqLPZNNR9euKlbR/5jar5eub6o2r89Vi9qApUiMLIkYHbWNsIFdwszyWHA==, tarball: file:projects/fake-backends.tgz}
     name: '@rush-temp/fake-backends'
     version: 0.0.0
     dependencies:
@@ -26298,7 +26308,7 @@ packages:
     dev: false
 
   file:projects/react-components.tgz:
-    resolution: {integrity: sha512-JDYahl95XpQT13LdadAA9ojLOLOvUEKnTmc7Dq0nrEzvQQpTkff4JqjGZhnAbcpX5LgnB3FjTnyghwmwFs4mMg==, tarball: file:projects/react-components.tgz}
+    resolution: {integrity: sha512-g1E9lPS7zeJhkKG2/prsLxPyVBWkIBJffDR1ob5bXq+HXqReryYOymUlXLwDPguQtoyrYEbtx7DqBX7kRdi34Q==, tarball: file:projects/react-components.tgz}
     name: '@rush-temp/react-components'
     version: 0.0.0
     dependencies:
@@ -26421,7 +26431,7 @@ packages:
     dev: false
 
   file:projects/react-composites.tgz:
-    resolution: {integrity: sha512-/R8EHh8AVW5Fxnd5XTqrpUj7OJGlPI8vs5wFRx5NOzZUmbPi2HHhSTFZ1Vu420zfHHKhmBCqTxJz8ycu62i+mA==, tarball: file:projects/react-composites.tgz}
+    resolution: {integrity: sha512-ofjVFjaS9jq//1omV5sl51rs25Boe6IUBmA6+bGkxEslBKQr5OtK+gbim0G7I/z2qkyiSW9HQWIUGMME17nonw==, tarball: file:projects/react-composites.tgz}
     name: '@rush-temp/react-composites'
     version: 0.0.0
     dependencies:
@@ -26565,7 +26575,7 @@ packages:
     dev: false
 
   file:projects/sample-static-html-composites.tgz:
-    resolution: {integrity: sha512-wg7e0pnNZKMnailOjDXLWNkJZWz+52dQISZClge9viM1Rg2B1s+6MokP+vS+sqhfzTTB+DIdOrua+dkKDe6F8A==, tarball: file:projects/sample-static-html-composites.tgz}
+    resolution: {integrity: sha512-ro9o1T5hHR8kO9GIA2M4LGpFz6YvS7ENstpsiUrk7pQTts859zKlMwUunfoXJTw5BB3pNM0sekdQq8R4tG58eA==, tarball: file:projects/sample-static-html-composites.tgz}
     name: '@rush-temp/sample-static-html-composites'
     version: 0.0.0
     dependencies:
@@ -26709,7 +26719,7 @@ packages:
     dev: false
 
   file:projects/storybook.tgz:
-    resolution: {integrity: sha512-+bSKlnLrfFjAVkZ2WeI5gNYvAg3a/1wGd7FVUaRIgjKN0JBdHJPkYynhiPOtgh0dkOJgKsFAVifZc6xjF8k4CQ==, tarball: file:projects/storybook.tgz}
+    resolution: {integrity: sha512-RvkG/2GQDV5mRCLE4Xv7EO9A1HFe3DPdUjVAa90pT+lGF3jB+vIGy/0LvXfzTmf+IVyHPMDTQE22B8cIVi2cKQ==, tarball: file:projects/storybook.tgz}
     name: '@rush-temp/storybook'
     version: 0.0.0
     dependencies:
@@ -26853,7 +26863,7 @@ packages:
     dev: false
 
   file:projects/storybook8.tgz:
-    resolution: {integrity: sha512-+5zYxOZEfxUWVCHFE/9UjWt1mSwWnT1J45LkR8LL4qcd+R7Bx2JdhryYrPx+z8jt1TXb7CydhNZxmL1jixcppQ==, tarball: file:projects/storybook8.tgz}
+    resolution: {integrity: sha512-ysZ/xyoMK1dLveQjlXNY9yff5ZzuK6sM9/9R8wYJInlecvvwUjuRrcvfVcT5VdUnZIVe9oFx+fXcL3vgYlJjLQ==, tarball: file:projects/storybook8.tgz}
     name: '@rush-temp/storybook8'
     version: 0.0.0
     dependencies:
