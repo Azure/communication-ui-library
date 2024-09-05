@@ -10,7 +10,9 @@ import FormData from 'form-data';
 
 /* @conditional-compile-remove(file-sharing-acs) */
 // max file size is 50MB
-const MAX_FILE_SIZE_MB = 50 * 1024 * 1024; // 50MB
+const MAX_FILE_SIZE_MB = 50; // 50MB
+/* @conditional-compile-remove(file-sharing-acs) */
+const MAX_FILE_SIZE = MAX_FILE_SIZE_MB * 1024 * 1024; // 50MB
 /* @conditional-compile-remove(file-sharing-acs) */
 const UNSUPPORTED_FILES = ['exe', 'bat', 'dat'];
 /* @conditional-compile-remove(file-sharing-acs) */
@@ -24,8 +26,8 @@ const attachmentSelectionHandler: AttachmentSelectionHandler = async (
   for (const task of uploadTasks) {
     const fileExtension = task.file?.name.split('.').pop() ?? '';
 
-    if (task.file && task.file?.size > MAX_FILE_SIZE_MB) {
-      task.notifyUploadFailed(`"${task.file?.name}" is too big. Select a file under 50MB.`);
+    if (task.file && task.file?.size > MAX_FILE_SIZE) {
+      task.notifyUploadFailed(`"${task.file?.name}" is too large. Choose one that's less than ${MAX_FILE_SIZE_MB} MB.`);
       continue;
     }
 

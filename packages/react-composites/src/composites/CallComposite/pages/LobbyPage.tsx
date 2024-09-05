@@ -3,7 +3,6 @@
 
 import React from 'react';
 import { ActiveErrorMessage, ErrorBar } from '@internal/react-components';
-/* @conditional-compile-remove(notifications) */
 import { ActiveNotification } from '@internal/react-components';
 import { useSelector } from '../hooks/useSelector';
 import { lobbySelector } from '../selectors/lobbySelector';
@@ -32,13 +31,11 @@ export interface LobbyPageProps {
   options?: CallCompositeOptions;
   mobileChatTabHeader: MobileChatSidePaneTabHeaderProps | undefined;
   updateSidePaneRenderer: (renderer: SidePaneRenderer | undefined) => void;
-  latestErrors: ActiveErrorMessage[] | /* @conditional-compile-remove(notifications) */ ActiveNotification[];
-  /* @conditional-compile-remove(notifications) */
+  latestErrors: ActiveErrorMessage[] | ActiveNotification[];
+
   latestNotifications: ActiveNotification[];
-  onDismissError: (
-    error: ActiveErrorMessage | /* @conditional-compile-remove(notifications) */ ActiveNotification
-  ) => void;
-  /* @conditional-compile-remove(notifications) */
+  onDismissError: (error: ActiveErrorMessage | ActiveNotification) => void;
+
   onDismissNotification: (notification: ActiveNotification) => void;
   capabilitiesChangedNotificationBarProps?: CapabilitiesChangeNotificationBarProps;
 }
@@ -67,7 +64,6 @@ export const LobbyPage = (props: LobbyPageProps): JSX.Element => {
     <CallArrangement
       complianceBannerProps={{ strings }}
       errorBarProps={props.options?.errorBar !== false && errorBarProps}
-      /* @conditional-compile-remove(notifications) */
       showErrorNotifications={props.options?.errorBar ?? true}
       callControlProps={{
         options: callControlOptions,
@@ -87,10 +83,10 @@ export const LobbyPage = (props: LobbyPageProps): JSX.Element => {
       mobileChatTabHeader={props.mobileChatTabHeader}
       latestErrors={props.latestErrors}
       onDismissError={props.onDismissError}
-      /* @conditional-compile-remove(notifications) */
       latestNotifications={props.latestNotifications}
-      /* @conditional-compile-remove(notifications) */
       onDismissNotification={props.onDismissNotification}
+      /* @conditional-compile-remove(call-readiness) */
+      doNotShowCameraAccessNotifications={props.options?.deviceChecks?.camera === 'doNotPrompt'}
     />
   );
 };

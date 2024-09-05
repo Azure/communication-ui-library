@@ -31,6 +31,8 @@ import {
 /* @conditional-compile-remove(PSTN-calls) */
 import { _toCommunicationIdentifier } from '@internal/acs-ui-common';
 
+type AdapterCommonCallingHandlers = Omit<CommonCallingHandlers, 'onAcceptCall' | 'onRejectCall'>;
+
 /**
  * @private
  */
@@ -38,7 +40,7 @@ import { _toCommunicationIdentifier } from '@internal/acs-ui-common';
 export const useHandlers = <PropsT>(
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   _component: (props: PropsT) => ReactElement | null
-): Pick<CommonCallingHandlers, CommonProperties<CommonCallingHandlers, PropsT>> &
+): Pick<AdapterCommonCallingHandlers, CommonProperties<AdapterCommonCallingHandlers, PropsT>> &
   Partial<_ComponentCallingHandlers> => {
   const adapter = useAdapter();
   const capabilities = adapter.getState().call?.capabilitiesFeature?.capabilities;
@@ -49,7 +51,7 @@ const createCompositeHandlers = memoizeOne(
   (
     adapter: CommonCallAdapter,
     capabilities?: ParticipantCapabilities
-  ): CommonCallingHandlers & Partial<_ComponentCallingHandlers> => {
+  ): AdapterCommonCallingHandlers & Partial<_ComponentCallingHandlers> => {
     return {
       onCreateLocalStreamView: async (options) => {
         return await adapter.createStreamView(undefined, options);
@@ -146,6 +148,9 @@ const createCompositeHandlers = memoizeOne(
       onDisposeRemoteScreenShareStreamView: async (userId) => {
         return adapter.disposeScreenShareStreamView(userId);
       },
+      onDisposeLocalScreenShareStreamView: async () => {
+        return adapter.disposeScreenShareStreamView('');
+      },
       onDisposeRemoteVideoStreamView: async (userId) => {
         return adapter.disposeRemoteVideoStreamView(userId);
       },
@@ -173,6 +178,16 @@ const createCompositeHandlers = memoizeOne(
         };
         return await adapter.startVideoBackgroundEffect(replacementConfig);
       },
+
+      /* @conditional-compile-remove(DNS) */
+      onStartNoiseSuppressionEffect: async () => {
+        return await adapter.startNoiseSuppressionEffect();
+      },
+      /* @conditional-compile-remove(DNS) */
+      onStopNoiseSuppressionEffect: async () => {
+        return await adapter.stopNoiseSuppressionEffect();
+      },
+
       onStartCaptions: async (options) => {
         await adapter.startCaptions(options);
       },

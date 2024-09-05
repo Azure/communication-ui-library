@@ -1,0 +1,53 @@
+import { Stack } from '@fluentui/react';
+import { Meta, Source } from '@storybook/addon-docs';
+import { overviewPageImagesStackStyle } from '../../constants';
+import VideoEffectsSnippetText from '!!raw-loader!./snippets/VideoEffectsSnippet.snippet.tsx';
+
+<Meta title="Concepts/Video Effects" />
+
+## Blurred and Custom Backgrounds
+
+Azure Communication Services UI Library is adding support for Blurred and Custom Backgrounds.
+With this new feature, users can blur the user background or change the background to a provided default image gallery option.
+Contoso can set their own custom images that the end user can then set as their background, allowing for greater customization of the calling experience.
+Enable this feature to enhance privacy and to also direct focus on the individual by removing their existing real-life background with a custom background or effect.
+The main scenarios where blurred and custom backgrounds are useful are:
+
+**Privacy:** Blurred backgrounds can be helpful in maintaining privacy by concealing potentially sensitive information visible in the background, such as personal documents or family photos.
+
+**Professionalism:** Custom backgrounds can be used to convey a professional image in business settings by presenting a branded or neutral background instead of a potentially cluttered or unprofessional real-life background.
+
+**Personalization:** Custom backgrounds can be used to express individuality and personal preferences, adding a fun and creative element to video calls.
+
+### Incorporating Blurred and Customer backgrounds into your experience
+
+The UI Library enables users to enhance their video conferencing experiences by providing the option to use blurred and custom backgrounds within the CallComposite and CallWithChat experiences.
+Blurred and custom backgrounds can be enabled both in Mobile Web sessions and in Desktop Web sessions.
+Blurred and Custom Backgrounds are enabled by default and are automatically included within the CallComposite and CallWithChatComposite experiences.
+
+Users can select if they want blurred, custom, or no backgrounds from the start screen or in-call through the camera and effects settings.
+
+**Selecting background effect from call setup**
+
+<Stack tokens={{ childrenGap: '3rem' }} style={overviewPageImagesStackStyle}>
+  <Stack.Item align="center">
+    <img src="images/videoEffects-config.png" alt="example of choosing a language on web desktop" />
+  </Stack.Item>
+</Stack>
+
+**Selecting background effect in call**
+
+<Stack tokens={{ childrenGap: '3rem' }} style={overviewPageImagesStackStyle}>
+  <Stack.Item align="center">
+    <img src="images/videoeffects-call-button.png" alt="example of choosing a language on web desktop" />
+  </Stack.Item>
+  <Stack.Item align="center">
+    <img src="images/videoeffects-call.png" alt="example of choosing a language on web desktop" />
+  </Stack.Item>
+</Stack>
+
+** Adding Video Background Effects to your application**
+We are providing the video effects experiences in our `CallComposite` and `CallWithChatComposite`. The video effect resources are
+applied through the `CallAdapter` options and video effects can be added to the experience with the following snippet.
+
+<Source code={VideoEffectsSnippetText} />

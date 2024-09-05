@@ -28,8 +28,8 @@ import { AttachmentMenuAction } from '../../types/Attachment';
 import { AttachmentMetadata, AttachmentMetadataInProgress } from '@internal/acs-ui-common';
 import {
   useAttachmentCardStyles,
-  attachmentNameContainerClassName,
-  ATTACHMENT_CARD_MIN_PROGRESS
+  ATTACHMENT_CARD_MIN_PROGRESS,
+  titleTooltipContainerStyle
 } from '../styles/AttachmentCard.styles';
 
 /**
@@ -113,8 +113,9 @@ export const _AttachmentCard = (props: _AttachmentCardProps): JSX.Element => {
       >
         <CardHeader
           className={attachmentCardStyles.content}
-          image={
-            <div className={attachmentCardStyles.fileIcon}>
+          image={{
+            className: attachmentCardStyles.fileIcon,
+            children: (
               <Icon
                 data-ui-id={'attachmenttype-icon'}
                 iconName={
@@ -125,37 +126,36 @@ export const _AttachmentCard = (props: _AttachmentCardProps): JSX.Element => {
                   }).iconName
                 }
               />
-            </div>
-          }
-          header={
-            <div className={attachmentNameContainerClassName} id={'attachment-' + attachment.id}>
+            )
+          }}
+          header={{
+            id: 'attachment-' + attachment.id,
+            children: (
               <TooltipHost
                 content={attachment.name}
                 calloutProps={{
                   gapSpace: 0,
                   target: '#attachment-' + attachment.id
                 }}
+                hostClassName={titleTooltipContainerStyle}
               >
-                <div className={attachmentCardStyles.fileNameLabel}>
-                  <Text className={attachmentCardStyles.title} aria-label={attachment.name}>
-                    {attachment.name}
-                  </Text>
-                </div>
+                <Text className={attachmentCardStyles.title} aria-label={attachment.name}>
+                  {attachment.name}
+                </Text>
               </TooltipHost>
-            </div>
-          }
-          action={
-            <div className={attachmentCardStyles.focusState}>
-              {MappedMenuItems(
-                menuActions,
-                {
-                  ...attachment,
-                  url: attachment.url ?? ''
-                },
-                onActionHandlerFailed
-              )}
-            </div>
-          }
+            )
+          }}
+          action={{
+            className: attachmentCardStyles.actions,
+            children: MappedMenuItems(
+              menuActions,
+              {
+                ...attachment,
+                url: attachment.url ?? ''
+              },
+              onActionHandlerFailed
+            )
+          }}
         />
       </Card>
       {isUploadInProgress ? (

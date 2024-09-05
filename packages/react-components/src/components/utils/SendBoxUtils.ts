@@ -39,26 +39,59 @@ export const isAttachmentUploadCompleted = (
 
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 /**
+ * Check if the content has inline image.
  * @internal
  */
-// Before sending the image, we need to add the image id we get back after uploading the images to the message content.
-export const addUploadedImagesToMessage = (
+export const hasInlineImageContent = (content: string): boolean => {
+  const document = new DOMParser().parseFromString(content, 'text/html');
+  return !!document.querySelector('img');
+};
+
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+/**
+ * @internal
+ *
+ * @param message - The message content to update.
+ * @param initialInlineImages - The initial inline images that comes with the message before editing.
+ *
+ * @returns The updated message content.
+ */
+export const updateStylesOfInlineImages = async (
   message: string,
-  uploadInlineImages: AttachmentMetadataInProgress[]
-): string => {
+  initialInlineImages: Record<string, string>[]
+): Promise<string> => {
   if (message === '') {
     return message;
   }
+  const initialInlineImagesIds = initialInlineImages.map((initialInlineImage) => initialInlineImage.id);
   const document = new DOMParser().parseFromString(message ?? '', 'text/html');
-  document.querySelectorAll('img').forEach((img) => {
-    if (!img.id) {
-      const uploadInlineImage = uploadInlineImages.find(
-        (imageUpload) => !imageUpload.error && (imageUpload.url === img.src || imageUpload.id === img.id)
-      );
-      img.id = uploadInlineImage?.id ?? '';
-      img.src = '';
-    }
+  const imagesPromise = Array.from(document.querySelectorAll('img')).map((img) => {
+    return new Promise<void>((resolve, rejects) => {
+      // The message might content images that comes with the message before editing.
+      // This function should only modify the message content for images that are newly added.
+      if (initialInlineImagesIds.includes(img.id)) {
+        resolve();
+        return;
+      }
+      const imageElement = new Image();
+      imageElement.src = img.src;
+      imageElement.onload = () => {
+        // imageElement is a copy of original img element, so changes need to be made to the original img element
+        img.width = imageElement.width;
+        img.height = imageElement.height;
+        img.style.aspectRatio = `${imageElement.width} / ${imageElement.height}`;
+        // Clear maxWidth and maxHeight styles that are set by roosterJS.
+        // This is so that they can be set in messageThread styles without using the important flag.
+        img.style.maxWidth = '';
+        img.style.maxHeight = '';
+        resolve();
+      };
+      imageElement.onerror = () => {
+        rejects(`Error loading image ${img.id}`);
+      };
+    });
   });
+  await Promise.all(imagesPromise);
   const newMessage = document.body.innerHTML;
   return newMessage;
 };
@@ -112,24 +145,6 @@ export const isSendBoxButtonAriaDisabled = ({
   );
 };
 
-/* @conditional-compile-remove(rich-text-editor-image-upload) */
-/**
- * @internal
- */
-export const cancelInlineImageUpload = (
-  imageSrcArray: string[] | undefined,
-  imageUploadsInProgress: AttachmentMetadataInProgress[] | undefined,
-  onCancelInlineImageUpload?: (id: string) => void
-): void => {
-  if (imageSrcArray && imageUploadsInProgress && imageUploadsInProgress?.length > 0) {
-    imageUploadsInProgress?.map((uploadImage) => {
-      if (uploadImage.url && !imageSrcArray?.includes(uploadImage.url)) {
-        onCancelInlineImageUpload?.(uploadImage.id);
-      }
-    });
-  }
-};
-
 /* @conditional-compile-remove(file-sharing-acs) */
 /**
  * @internal
@@ -150,17 +165,72 @@ export const toAttachmentMetadata = (
     });
 };
 
+/**
+ * @internal
+ */
+export const modifyInlineImagesInContentString = async (
+  content: string,
+  initialInlineImages: Record<string, string>[],
+  onCompleted?: (content: string) => void
+): Promise<void> => {
+  let newContent = content;
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  try {
+    newContent = await updateStylesOfInlineImages(content, initialInlineImages);
+  } catch (error) {
+    console.error('Error updating inline images: ', error);
+  }
+  onCompleted?.(newContent);
+};
+
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 /**
  * @internal
  */
-export const insertImagesToContentString = (
+export const removeBrokenImageContentAndClearImageSizeStyles = (content: string): string => {
+  const document = new DOMParser().parseFromString(content, 'text/html');
+  document.querySelectorAll('img').forEach((img) => {
+    // Before submitting/resend the message, we need to trim the unnecessary attributes such as src,
+    // which is set to a local svg of a broken image icon at this point.
+    // Once message is submitted/resent, it will be fetched again and might not be a broken image anymore,
+    // That's why we need to remove the class and data-ui-id attribute of 'broken-image-wrapper'
+    if (img.className === 'broken-image-wrapper') {
+      img.removeAttribute('class');
+      img.removeAttribute('src');
+      img.removeAttribute('data-ui-id');
+    }
+    // Clear maxWidth and maxHeight styles that are set by roosterJS.
+    // Clear width and height styles as the width and height is set in attributes
+    // This is so that they can be set in messageThread styles without using the important flag.
+    img.style.width = '';
+    img.style.height = '';
+    img.style.maxWidth = '';
+    img.style.maxHeight = '';
+  });
+  return document.body.innerHTML;
+};
+
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+/**
+ * @internal
+ */
+export const getContentWithUpdatedInlineImagesInfo = (
   content: string,
-  imageUploadsInProgress?: AttachmentMetadataInProgress[]
+  inlineImageWithProgress: AttachmentMetadataInProgress[]
 ): string => {
-  if (!imageUploadsInProgress || imageUploadsInProgress.length <= 0) {
+  if (!inlineImageWithProgress || inlineImageWithProgress.length <= 0) {
     return content;
   }
-  const newContent = addUploadedImagesToMessage(content, imageUploadsInProgress);
-  return newContent;
+  const document = new DOMParser().parseFromString(content, 'text/html');
+  document.querySelectorAll('img').forEach((img) => {
+    const imageId = img.id;
+    const inlineImage = inlineImageWithProgress.find(
+      (image) => !image.error && image.progress === 1 && image.id === imageId
+    );
+    if (inlineImage) {
+      img.id = inlineImage.id;
+      img.src = inlineImage.url || img.src;
+    }
+  });
+  return document.body.innerHTML;
 };

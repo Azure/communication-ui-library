@@ -10,8 +10,6 @@ import { AttachmentMetadata } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { AttachmentMetadataInProgress } from '@internal/acs-ui-common';
 import { MessageThreadStrings } from '../../MessageThread';
-/* @conditional-compile-remove(rich-text-editor) */
-import { RichTextEditorOptions } from '../../MessageThread';
 import { ChatMessageComponentAsEditBox } from './ChatMessageComponentAsEditBox';
 /* @conditional-compile-remove(mention) */
 import { MentionLookupOptions } from '../../MentionPopover';
@@ -49,42 +47,31 @@ export type ChatMessageComponentAsEditBoxPickerProps = {
   /* @conditional-compile-remove(mention) */
   mentionLookupOptions?: MentionLookupOptions;
   /* @conditional-compile-remove(rich-text-editor) */
-  richTextEditorOptions?: RichTextEditorOptions;
+  isRichTextEditorEnabled?: boolean;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  onCancelInlineImageUpload?: (imageId: string) => void;
+  onPaste?: (event: { content: DocumentFragment }) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  onUploadInlineImage?: (imageUrl: string, imageFileName: string) => void;
+  onRemoveInlineImage?: (imageAttributes: Record<string, string>, messageId: string) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  imageUploadsInProgress?: AttachmentMetadataInProgress[];
+  onInsertInlineImage?: (imageAttributes: Record<string, string>, messageId: string) => void;
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  inlineImagesWithProgress?: AttachmentMetadataInProgress[];
 };
 
 /**
  * @private
  */
 export const ChatMessageComponentAsEditBoxPicker = (props: ChatMessageComponentAsEditBoxPickerProps): JSX.Element => {
-  /* @conditional-compile-remove(rich-text-editor) */
-  const { richTextEditorOptions } = props;
-
   const simpleEditBox = useMemo(() => {
     return <ChatMessageComponentAsEditBox {...props} />;
   }, [props]);
 
   /* @conditional-compile-remove(rich-text-editor) */
-  if (richTextEditorOptions) {
+  if (props.isRichTextEditorEnabled) {
     return (
       <_ErrorBoundary fallback={simpleEditBox}>
         <Suspense fallback={simpleEditBox}>
-          <ChatMessageComponentAsRichTextEditBox
-            {...props}
-            /* @conditional-compile-remove(rich-text-editor-image-upload) */
-            onPaste={richTextEditorOptions?.onPaste}
-            /* @conditional-compile-remove(rich-text-editor-image-upload) */
-            onUploadInlineImage={richTextEditorOptions?.onUploadInlineImage}
-            /* @conditional-compile-remove(rich-text-editor-image-upload) */
-            imageUploadsInProgress={richTextEditorOptions?.imageUploadsInProgress}
-            /* @conditional-compile-remove(rich-text-editor-image-upload) */
-            onCancelInlineImageUpload={richTextEditorOptions?.onCancelInlineImageUpload}
-          />
+          <ChatMessageComponentAsRichTextEditBox {...props} />
         </Suspense>
       </_ErrorBoundary>
     );

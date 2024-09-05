@@ -1,0 +1,49 @@
+import { Canvas, Description, Meta, Source, ArgTypes } from '@storybook/blocks';
+import { ScreenShareButton } from '@azure/communication-react';
+import * as ScreenShareStories from './index.stories';
+import CustomButtonExampleText from '!!raw-loader!./snippets/Custom.snippet.tsx';
+import DefaultButtonExampleText from '!!raw-loader!./snippets/Default.snippet.tsx';
+import ButtonWithLabelExampleText from '!!raw-loader!./snippets/WithLabel.snippet.tsx';
+
+<Meta of={ScreenShareStories} />
+
+# Screen Share Button
+
+A button to toggle the user's screen sharing on and off. For use with the [Control Bar](./?path=/docs/components-controlbar-control-bar--docs).
+
+Note that for accessibility purposes, this button can be focused on even when disabled. This behaviour can be changed by setting the button prop `allowDisabledFocus` to `false`.
+
+## Importing
+
+```tsx
+import { ScreenShareButton } from '@azure/communication-react';
+```
+
+## Example
+
+The default `ScreenShareButton` component shows a ScreenShare icon with no label. The following example displays the `ScreenShareButton` with screen sharing enabled and disabled.
+
+<Canvas of={ScreenShareStories.ScreenShareButtonExampleDocsOnly} source={{ code: DefaultButtonExampleText }} />
+
+## ScreenShare with default label
+
+You can display the button label which, by default, will show below the icon as `Share` or `Stop`.
+
+<Canvas
+  of={ScreenShareStories.ScreenShareButtonWithLabelExampleDocsOnly}
+  source={{ code: ButtonWithLabelExampleText }}
+/>
+
+## Custom ScreenShareButton Styles
+
+You can change the styles of the `ScreenShareButton` as you would customized any Button (styles, primary, onRenderIcon, onRenderText, etc... ).
+
+Note: When overriding a render, like using `onRenderIcon` or `onRenderText`, do not forget to add a unique key to each element to avoid warning for children in a list.
+
+<Canvas of={ScreenShareStories.CustomScreenShareButtonExampleDocsOnly} source={{ code: CustomButtonExampleText }} />
+
+## Props
+
+`ScreenShareButton` features all props a [FluentUI Button](https://developer.microsoft.com/fluentui#/controls/web/button) offers, with the following additional properties.
+
+<ArgTypes of={ScreenShareButton} />

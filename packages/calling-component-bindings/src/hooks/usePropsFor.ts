@@ -11,7 +11,9 @@ import {
   ScreenShareButton,
   VideoGallery
 } from '@internal/react-components';
-/* @conditional-compile-remove(notifications) */
+/* @conditional-compile-remove(one-to-n-calling) */
+import { IncomingCallStack } from '@internal/react-components';
+
 import { NotificationStack } from '@internal/react-components';
 import { Dialpad } from '@internal/react-components';
 /* @conditional-compile-remove(PSTN-calls) */
@@ -43,8 +45,10 @@ import { CommonCallingHandlers } from '../handlers/createCommonHandlers';
 import { reactionButtonSelector } from '../callControlSelectors';
 import { ReactionButton } from '@internal/react-components';
 import { _ComponentCallingHandlers } from '../handlers/createHandlers';
-/* @conditional-compile-remove(notifications) */
+
 import { notificationStackSelector, NotificationStackSelector } from '../notificationStackSelector';
+/* @conditional-compile-remove(one-to-n-calling) */
+import { incomingCallStackSelector, IncomingCallStackSelector } from '../incomingCallStackSelector';
 
 /**
  * Primary hook to get all hooks necessary for a calling Component.
@@ -119,8 +123,10 @@ export type GetSelector<Component extends (props: any) => JSX.Element | undefine
                       : AreEqual<Component, typeof HoldButton> extends true
                         ? /* @conditional-compile-remove(PSTN-calls) */ HoldButtonSelector
                         : AreEqual<Component, typeof NotificationStack> extends true
-                          ? /* @conditional-compile-remove(notifications) */ NotificationStackSelector
-                          : undefined;
+                          ? NotificationStackSelector
+                          : AreEqual<Component, typeof IncomingCallStack> extends true
+                            ? /* @conditional-compile-remove(one-to-n-calling) */ IncomingCallStackSelector
+                            : undefined;
 
 /**
  * Get the selector for a specified component.
@@ -138,8 +144,8 @@ export const getSelector = <Component extends (props: any) => JSX.Element | unde
   if (component === HoldButton) {
     return findConditionalCompiledSelector(component);
   }
-  /* @conditional-compile-remove(notifications) */
-  if (component === NotificationStack) {
+  /* @conditional-compile-remove(one-to-n-calling) */
+  if (component === IncomingCallStack) {
     return findConditionalCompiledSelector(component);
   }
 
@@ -175,20 +181,22 @@ const findSelector = (component: (props: any) => JSX.Element | undefined): any =
       return raiseHandButtonSelector;
     case ReactionButton:
       return reactionButtonSelector;
+    case NotificationStack:
+      return notificationStackSelector;
   }
   return undefined;
 };
 
-/* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(notifications) */
+/* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 const findConditionalCompiledSelector = (component: (props: any) => JSX.Element | undefined): any => {
   switch (component) {
     /* @conditional-compile-remove(PSTN-calls) */
     case HoldButton:
       /* @conditional-compile-remove(PSTN-calls) */
       return holdButtonSelector;
-    /* @conditional-compile-remove(notifications) */
-    case NotificationStack:
-      /* @conditional-compile-remove(notifications) */
-      return notificationStackSelector;
+    /* @conditional-compile-remove(one-to-n-calling) */
+    case IncomingCallStack:
+      /* @conditional-compile-remove(one-to-n-calling) */
+      return incomingCallStackSelector;
   }
 };

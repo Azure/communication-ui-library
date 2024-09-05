@@ -3,7 +3,7 @@
 
 import { GroupCallLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { CallAdapterLocator, CallComposite, CallCompositeOptions, CommonCallAdapter } from '@azure/communication-react';
-import { Spinner } from '@fluentui/react';
+import { Spinner, Stack } from '@fluentui/react';
 import React, { useEffect, useMemo } from 'react';
 import { useSwitchableFluentTheme } from '../theming/SwitchableFluentThemeProvider';
 import { useIsMobile } from '../utils/useIsMobile';
@@ -61,7 +61,11 @@ export const CallCompositeContainer = (props: CallCompositeContainerProps): JSX.
   }, [adapter]);
 
   if (!adapter) {
-    return <Spinner label={'Creating adapter'} ariaLive="assertive" labelPosition="top" />;
+    return (
+      <Stack horizontalAlign="center" verticalAlign="center" styles={{ root: { height: '100%' } }}>
+        <Spinner label={'Creating adapter'} ariaLive="assertive" labelPosition="top" />
+      </Stack>
+    );
   }
 
   let callInvitationUrl: string | undefined = window.location.href;

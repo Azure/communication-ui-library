@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-/* @conditional-compile-remove(notifications) */
+
 import {
   CallingBaseSelectorProps,
   getDeviceManager,
@@ -8,17 +8,19 @@ import {
   getLatestErrors,
   getEnvironmentInfo
 } from './baseSelectors';
-/* @conditional-compile-remove(notifications) */
+/* @conditional-compile-remove(breakout-rooms) */
+import { getLatestNotifications, getAssignedBreakoutRoom } from './baseSelectors';
+
 import { getMeetingConferencePhones } from './baseSelectors';
-/* @conditional-compile-remove(notifications) */
+
 import { ActiveNotification, NotificationType } from '@internal/react-components';
-/* @conditional-compile-remove(notifications) */
+
 import { createSelector } from 'reselect';
-/* @conditional-compile-remove(notifications) */
+
 import { CallClientState, CallErrors, CallErrorTarget } from '@internal/calling-stateful-client';
-/* @conditional-compile-remove(notifications) */
+
 import { DiagnosticQuality } from '@azure/communication-calling';
-/* @conditional-compile-remove(notifications) */
+
 /**
  * Selector type for {@link Notification} component.
  *
@@ -31,7 +33,7 @@ export type NotificationStackSelector = (
   activeErrorMessages: ActiveNotification[];
   activeNotifications: ActiveNotification[];
 };
-/* @conditional-compile-remove(notifications) */
+
 /**
  * Select the active errors from the state for the `Notification` component.
  *
@@ -44,17 +46,21 @@ export type NotificationStackSelector = (
 export const notificationStackSelector: NotificationStackSelector = createSelector(
   [
     getLatestErrors,
+    /* @conditional-compile-remove(breakout-rooms) */ getLatestNotifications,
     getDiagnostics,
     getDeviceManager,
     getEnvironmentInfo,
-    /* @conditional-compile-remove(teams-meeting-conference) */ getMeetingConferencePhones
+    /* @conditional-compile-remove(teams-meeting-conference) */ getMeetingConferencePhones,
+    /* @conditional-compile-remove(breakout-rooms) */ getAssignedBreakoutRoom
   ],
   (
     latestErrors: CallErrors,
+    /* @conditional-compile-remove(breakout-rooms) */ latestNotifications,
     diagnostics,
     deviceManager,
     environmentInfo,
-    /* @conditional-compile-remove(teams-meeting-conference) */ meetingConference
+    /* @conditional-compile-remove(teams-meeting-conference) */ meetingConference,
+    /* @conditional-compile-remove(breakout-rooms) */ assignedBreakoutRoom
   ): { activeErrorMessages: ActiveNotification[]; activeNotifications: ActiveNotification[] } => {
     // The order in which the errors are returned is significant: The `Notification` shows errors on the UI in that order.
     // There are several options for the ordering:
@@ -218,10 +224,46 @@ export const notificationStackSelector: NotificationStackSelector = createSelect
     if (diagnostics?.media.latest.speakingWhileMicrophoneIsMuted?.value) {
       activeNotifications.push({ type: 'speakingWhileMuted', timestamp: new Date(Date.now()), autoDismiss: true });
     }
+    /* @conditional-compile-remove(breakout-rooms) */
+    if (latestNotifications['assignedBreakoutRoomOpened']) {
+      activeNotifications.push({
+        type: 'assignedBreakoutRoomOpened',
+        timestamp: latestNotifications['assignedBreakoutRoomOpened'].timestamp
+      });
+    }
+    /* @conditional-compile-remove(breakout-rooms) */
+    if (latestNotifications['assignedBreakoutRoomOpenedPromptJoin'] && assignedBreakoutRoom) {
+      activeNotifications.push({
+        type: 'assignedBreakoutRoomOpenedPromptJoin',
+        timestamp: latestNotifications['assignedBreakoutRoomOpenedPromptJoin'].timestamp,
+        onClickPrimaryButton: () => assignedBreakoutRoom.join()
+      });
+    }
+    /* @conditional-compile-remove(breakout-rooms) */
+    if (latestNotifications['assignedBreakoutRoomChanged']) {
+      activeNotifications.push({
+        type: 'assignedBreakoutRoomChanged',
+        timestamp: latestNotifications['assignedBreakoutRoomChanged'].timestamp
+      });
+    }
+    /* @conditional-compile-remove(breakout-rooms) */
+    if (latestNotifications['breakoutRoomJoined']) {
+      activeNotifications.push({
+        type: 'breakoutRoomJoined',
+        timestamp: latestNotifications['breakoutRoomJoined'].timestamp
+      });
+    }
+    /* @conditional-compile-remove(breakout-rooms) */
+    if (latestNotifications['breakoutRoomClosingSoon']) {
+      activeNotifications.push({
+        type: 'breakoutRoomClosingSoon',
+        timestamp: latestNotifications['breakoutRoomClosingSoon'].timestamp
+      });
+    }
     return { activeErrorMessages: activeErrorMessages, activeNotifications: activeNotifications };
   }
 );
-/* @conditional-compile-remove(notifications) */
+
 const appendActiveErrorIfDefined = (
   activeErrorMessages: ActiveNotification[],
   latestErrors: CallErrors,

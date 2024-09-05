@@ -3,7 +3,7 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import { Stack } from '@fluentui/react';
-/* @conditional-compile-remove(notifications) */
+
 import { useLocale } from '../localization';
 import {
   DismissedNotification,
@@ -243,9 +243,34 @@ export interface NotificationStackStrings {
    */
   recordingStoppedStillTranscribing?: NotificationStrings;
   /**
-   *  Transcription stopped but recording still going on message
+   * Transcription stopped but recording still going on message
    */
   transcriptionStoppedStillRecording?: NotificationStrings;
+  /* @conditional-compile-remove(breakout-rooms) */
+  /**
+   * Message shown in notification when the user will be automatically to their assigned breakout room that is opened
+   */
+  assignedBreakoutRoomOpened?: NotificationStrings;
+  /* @conditional-compile-remove(breakout-rooms) */
+  /**
+   * Message shown in notification when the user is prompted to join their assigned breakout room that is opened
+   */
+  assignedBreakoutRoomOpenedPromptJoin?: NotificationStrings;
+  /* @conditional-compile-remove(breakout-rooms) */
+  /**
+   * Message shown in notification when the user is assigned breakout room is changed
+   */
+  assignedBreakoutRoomChanged?: NotificationStrings;
+  /* @conditional-compile-remove(breakout-rooms) */
+  /**
+   * Message shown in notification when breakout room is joined
+   */
+  breakoutRoomJoined?: NotificationStrings;
+  /* @conditional-compile-remove(breakout-rooms) */
+  /**
+   * Message shown in notification when breakout room is closing soon
+   */
+  breakoutRoomClosingSoon?: NotificationStrings;
 }
 
 /**
@@ -308,9 +333,8 @@ export interface ActiveNotification {
  * @public
  */
 export const NotificationStack = (props: NotificationStackProps): JSX.Element => {
-  /* @conditional-compile-remove(notifications) */
   const localeStrings = useLocale().strings.notificationStack;
-  const strings = props.strings ?? /* @conditional-compile-remove(notifications) */ localeStrings;
+  const strings = props.strings ?? localeStrings;
   const maxNotificationsToShow = props.maxNotificationsToShow ?? 2;
 
   const trackDismissedNotificationsInternally = !props.onDismissNotification;
@@ -345,6 +369,20 @@ export const NotificationStack = (props: NotificationStackProps): JSX.Element =>
     >
       {activeNotifications.map((notification, index) => {
         if (index < maxNotificationsToShow) {
+          const onDismiss = (): void => {
+            trackDismissedNotificationsInternally
+              ? setDismissedNotifications(dismissNotification(dismissedNotifications, notification))
+              : props.onDismissNotification?.(notification);
+            notification.onDismiss && notification.onDismiss();
+          };
+          /* @conditional-compile-remove(breakout-rooms) */
+          if (notification.type === 'assignedBreakoutRoomOpenedPromptJoin') {
+            // If notification is of type assignedBreakoutRoomOpenedPromptJoin then set onClickSecondaryButton to
+            // onDismiss if it is not defined
+            notification.onClickSecondaryButton = notification.onClickSecondaryButton
+              ? notification.onClickSecondaryButton
+              : () => onDismiss();
+          }
           return (
             <div key={index} style={{ marginBottom: `${index === maxNotificationsToShow - 1 ? 0 : '0.25rem'}` }}>
               <Notification
@@ -352,12 +390,7 @@ export const NotificationStack = (props: NotificationStackProps): JSX.Element =>
                 notificationIconProps={NotificationIconProps(notification.type)}
                 onClickPrimaryButton={() => notification.onClickPrimaryButton?.()}
                 onClickSecondaryButton={() => notification.onClickSecondaryButton?.()}
-                onDismiss={() => {
-                  trackDismissedNotificationsInternally
-                    ? setDismissedNotifications(dismissNotification(dismissedNotifications, notification))
-                    : props.onDismissNotification?.(notification);
-                  notification.onDismiss && notification.onDismiss();
-                }}
+                onDismiss={onDismiss}
                 showStackedEffect={
                   index === maxNotificationsToShow - 1 && activeNotifications.length > maxNotificationsToShow
                 }

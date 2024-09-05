@@ -10,8 +10,12 @@ import { Persona, PersonaSize } from '@fluentui/react';
 import React, { useState } from 'react';
 
 export const MessageThreadWithInlineImageExample: () => JSX.Element = () => {
-  const [overlayImageItem, setOverlayImageItem] =
-    useState<{ imageSrc: string; title: string; titleIcon: JSX.Element; downloadImagename: string }>();
+  const [overlayImageItem, setOverlayImageItem] = useState<{
+    imageSrc: string;
+    title: string;
+    titleIcon: JSX.Element;
+    downloadImagename: string;
+  }>();
 
   const onInlineImageClicked = (attachmentId: string, messageId: string): Promise<void> => {
     const filteredMessages = messages?.filter((message) => {

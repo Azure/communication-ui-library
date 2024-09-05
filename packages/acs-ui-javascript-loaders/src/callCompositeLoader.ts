@@ -2,19 +2,10 @@
 // Licensed under the MIT License.
 
 import React from 'react';
+import { parseReactVersion } from './utils';
 
 const reactVersion = React.version;
-const parseReactVersion = (version: string | undefined): number[] => {
-  if (!version) {
-    return [];
-  }
-  return version.split('.').map((v) => parseInt(v));
-};
-if (parseReactVersion(reactVersion)[0] && parseReactVersion(reactVersion)[0] < 18) {
-  throw new Error(
-    'React version is less than 18. Please upgrade to React 18 or alternatively checkout how to use our composites directly here: https://azure.github.io/communication-ui-library/?path=/docs/quickstarts-composites--page'
-  );
-}
+parseReactVersion(reactVersion);
 
 import { createRoot } from 'react-dom/client';
 import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
@@ -31,7 +22,7 @@ import { initializeIcons } from '@fluentui/react';
 
 /**
  * Props for the OutboundCallComposite that you can use in your application.
- * @public
+ * @beta
  */
 export type CallCompositeLoaderProps = {
   userId: string;
@@ -44,7 +35,7 @@ export type CallCompositeLoaderProps = {
 /**
  * Loader function for the OutboundCallComposite that you can use in your application.
  *
- * @public
+ * @beta
  */
 export const loadCallComposite = async function (
   adapterArgs: CallCompositeLoaderProps,

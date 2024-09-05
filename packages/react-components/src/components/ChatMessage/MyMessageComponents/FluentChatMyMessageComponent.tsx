@@ -50,7 +50,15 @@ export const FluentChatMyMessageComponent = (props: FluentChatMessageComponentWr
     /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
     onRenderAttachmentDownloads,
     /* @conditional-compile-remove(rich-text-editor) */
-    richTextEditorOptions
+    isRichTextEditorEnabled,
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    onPaste,
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    inlineImagesWithProgress,
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    onRemoveInlineImage,
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    onInsertInlineImage
   } = props;
   const chatMessageRenderStyles = useChatMessageRenderStyles();
   /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
@@ -93,7 +101,15 @@ export const FluentChatMyMessageComponent = (props: FluentChatMessageComponentWr
             /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
             actionsForAttachment={actionsForAttachment}
             /* @conditional-compile-remove(rich-text-editor) */
-            richTextEditorOptions={richTextEditorOptions}
+            isRichTextEditorEnabled={isRichTextEditorEnabled}
+            /* @conditional-compile-remove(rich-text-editor-image-upload) */
+            onPaste={onPaste}
+            /* @conditional-compile-remove(rich-text-editor-image-upload) */
+            onRemoveInlineImage={onRemoveInlineImage}
+            /* @conditional-compile-remove(rich-text-editor-image-upload) */
+            onInsertInlineImage={onInsertInlineImage}
+            /* @conditional-compile-remove(rich-text-editor-image-upload) */
+            inlineImagesWithProgress={inlineImagesWithProgress}
           />
         );
       }
@@ -118,7 +134,15 @@ export const FluentChatMyMessageComponent = (props: FluentChatMessageComponentWr
       // eslint-disable-next-line react-hooks/exhaustive-deps
       new Date().toDateString(),
       /* @conditional-compile-remove(rich-text-editor) */
-      richTextEditorOptions
+      isRichTextEditorEnabled,
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */
+      onPaste,
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */
+      onRemoveInlineImage,
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */
+      onInsertInlineImage,
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */
+      inlineImagesWithProgress
     ]
   );
 

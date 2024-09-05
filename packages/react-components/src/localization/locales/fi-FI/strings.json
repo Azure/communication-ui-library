@@ -34,7 +34,8 @@
     "placeholderText": "Kirjoita viesti",
     "textTooLong": "Viestin pituus ylittää enimmäispituuden.",
     "sendButtonAriaLabel": "Lähetä viesti",
-    "attachmentUploadsPendingError": "Ladataan... Odota.",
+    "attachmentUploadsPendingError": "Ladataan palvelimeen... Odota hetki.",
+    "imageUploadsPendingError": "Kuvaa ladataan palvelimeen, odota.",
     "removeAttachment": "Poista tiedosto",
     "uploading": "Ladataan",
     "uploadCompleted": "Lataus valmis",
@@ -58,7 +59,11 @@
     "richTextDeleteRowMenu": "Poista rivi",
     "richTextDeleteTableMenu": "Poista taulukko",
     "richTextToolbarMoreButtonAriaLabel": "Lisää asetuksia",
-    "attachmentMoreMenu": "Lisää asetuksia"
+    "attachmentMoreMenu": "Lisää asetuksia",
+    "richTextNewBulletedListItemAnnouncement": "Luettelomerkki, uusi rivi",
+    "richTextNewNumberedListItemAnnouncement": "{0}, uusi rivi",
+    "richTextBulletedListAppliedAnnouncement": "Luettelomerkeillä varustettu luettelo käytössä",
+    "richTextNumberedListAppliedAnnouncement": "Numeroitu luettelo käytössä"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Ehdotuksia"
@@ -185,8 +190,8 @@
     "failToSendTag": "Lähettäminen epäonnistui",
     "editedTag": "Muokattu",
     "liveAuthorIntro": "{author} sanoo",
-    "messageContentAriaText": "{author} sanoi {message}",
-    "messageContentMineAriaText": "Sanoit {message}",
+    "messageContentAriaText": "{status} {author} sanoi {message}",
+    "messageContentMineAriaText": "{status} Sanoit {message}",
     "editBoxTextLimit": "Viesti ylittää {limitNumber} merkin rajan",
     "editBoxPlaceholderText": "Muokkaa viestiäsi",
     "newMessagesIndicator": "Uudet viestit",
@@ -220,7 +225,13 @@
     "richTextDeleteColumnMenu": "Poista sarake",
     "richTextDeleteRowMenu": "Poista rivi",
     "richTextDeleteTableMenu": "Poista taulukko",
-    "richTextToolbarMoreButtonAriaLabel": "Lisää asetuksia"
+    "richTextToolbarMoreButtonAriaLabel": "Lisää asetuksia",
+    "attachmentUploadsPendingError": "Ladataan palvelimeen... Odota hetki.",
+    "imageUploadsPendingError": "Kuvaa ladataan palvelimeen, odota.",
+    "richTextNewBulletedListItemAnnouncement": "Luettelomerkki, uusi rivi",
+    "richTextNewNumberedListItemAnnouncement": "{0}, uusi rivi",
+    "richTextBulletedListAppliedAnnouncement": "Luettelomerkeillä varustettu luettelo käytössä",
+    "richTextNumberedListAppliedAnnouncement": "Numeroitu luettelo käytössä"
   },
   "errorBar": {
     "unableToReachChatService": "Olet offline-tilassa",
@@ -237,6 +248,7 @@
     "startScreenShareGeneric": "Näytön jakamisen aloittamisessa ilmeni ongelma.",
     "stopScreenShareGeneric": "Näytön jakamisen lopettaminen epäonnistui",
     "callNetworkQualityLow": "Verkkoyhteyden laatu on huono.",
+    "teamsMeetingCallNetworkQualityLow": "Verkkoyhteyden laatu on huono.",
     "callNoSpeakerFound": "Kaiuttimia tai kuulokkeita ei löytynyt. Yhdistä äänilaite voidaksesi kuulla puhelun.",
     "callNoMicrophoneFound": "Mikrofoneja ei löytynyt. Yhdistä äänitulolaite.",
     "callMicrophoneAccessDenied": "Mikrofonia ei voi käyttää. Myönnä käyttöoikeus tälle verkkosivulle napsauttamalla osoiterivin lukitusta.",
@@ -257,165 +269,220 @@
     "failedToJoinCallInvalidMeetingLink": "Kokoukseen liittyminen ei onnistu. Linkki on virheellinen.",
     "cameraFrozenForRemoteParticipants": "Puhelun käyttäjillä on videokuvan näkymiseen liittyviä ongelmia. Tarkista laitteesi ja verkkosi.",
     "unableToStartVideoEffect": "Videotehosteen käyttäminen ei onnistu.",
-    "startSpotlightWhileMaxParticipantsAreSpotlighted": "Osallistujien korostusta ei voi aloittaa, koska enimmäismäärä osallistujia on jo valokeilassa."
+    "startSpotlightWhileMaxParticipantsAreSpotlighted": "Osallistujien korostusta ei voi aloittaa, koska enimmäismäärä osallistujia on jo valokeilassa.",
+    "mutedByRemoteParticipant": "Toinen osallistuja mykisti sinut."
   },
-  "notifications": {
-    "unableToReachChatService": {
-      "title": "Olet offline-tilassa.",
-      "closeButtonAriaLabel": "Sulje"
-    },
-    "accessDenied": {
-      "title": "Keskustelupalveluita ei voi käyttää",
-      "message": "Tarkista käyttäjästä annetut tunnistetiedot",
-      "closeButtonAriaLabel": "Sulje"
-    },
-    "userNotInChatThread": {
-      "title": "Et ole enää tässä keskusteluketjussa.",
-      "closeButtonAriaLabel": "Sulje"
-    },
-    "sendMessageNotInChatThread": {
-      "title": "Viestin lähettäminen epäonnistui",
-      "message": "Et ole enää mukana tässä keskusteluketjussa",
-      "closeButtonAriaLabel": "Sulje"
-    },
-    "sendMessageGeneric": {
-      "title": "Viestin lähettäminen epäonnistui.",
-      "closeButtonAriaLabel": "Sulje"
-    },
+  "notificationStack": {
     "callingNetworkFailure": {
       "title": "Ongelma puhelun yhdistämisessä",
       "message": "Olet ilmeisesti offline-tilassa. Tarkista verkkoyhteys ja yritä uudelleen.",
-      "closeButtonAriaLabel": "Sulje"
+      "dismissButtonAriaLabel": "Sulje"
     },
     "startVideoGeneric": {
       "title": "Videon käynnistäminen epäonnistui.",
-      "closeButtonAriaLabel": "Sulje"
+      "dismissButtonAriaLabel": "Sulje"
     },
     "stopVideoGeneric": {
       "title": "Videon pysäyttäminen epäonnistui.",
-      "closeButtonAriaLabel": "Sulje"
+      "dismissButtonAriaLabel": "Sulje"
     },
     "muteGeneric": {
       "title": "Mikrofonin mykistäminen epäonnistui.",
-      "closeButtonAriaLabel": "Sulje"
+      "dismissButtonAriaLabel": "Sulje"
     },
     "unmuteGeneric": {
       "title": "Mikrofonin mykistyksen poistaminen epäonnistui.",
-      "closeButtonAriaLabel": "Sulje"
+      "dismissButtonAriaLabel": "Sulje"
     },
     "speakingWhileMuted": {
       "title": "Ääni on mykistetty.",
-      "closeButtonAriaLabel": "Sulje"
+      "dismissButtonAriaLabel": "Sulje"
     },
     "startScreenShareGeneric": {
       "title": "Näytön jakamisen aloittamisessa ilmeni ongelma.",
-      "closeButtonAriaLabel": "Sulje"
+      "dismissButtonAriaLabel": "Sulje"
     },
     "stopScreenShareGeneric": {
       "title": "Näytön jakamisen lopettaminen epäonnistui.",
-      "closeButtonAriaLabel": "Sulje"
+      "dismissButtonAriaLabel": "Sulje"
     },
     "callNetworkQualityLow": {
       "title": "Verkkoyhteyden laatu on huono.",
-      "closeButtonAriaLabel": "Sulje"
+      "dismissButtonAriaLabel": "Sulje"
+    },
+    "teamsMeetingCallNetworkQualityLow": {
+      "title": "Verkkoyhteyden laatu on huono.",
+      "dismissButtonAriaLabel": "Sulje",
+      "message": "Liity tähän puheluun puhelimestasi, jotta ääni on parempi. Voit jatkaa kokouksen tarkastelua tällä laitteella.",
+      "primaryButtonLabel": "Liity puhelimella"
     },
     "callNoSpeakerFound": {
       "title": "Kaiuttimia tai kuulokkeita ei löytynyt.",
       "message": "Yhdistä äänilaite voidaksesi kuulla puhelun.",
-      "closeButtonAriaLabel": "Sulje"
+      "dismissButtonAriaLabel": "Sulje"
     },
     "callNoMicrophoneFound": {
       "title": "Mikrofoneja ei löytynyt",
       "message": "Yhdistä äänensyöttölaite.",
-      "closeButtonAriaLabel": "Sulje"
+      "dismissButtonAriaLabel": "Sulje"
     },
     "callMicrophoneAccessDenied": {
       "title": "Mikrofonia ei voi käyttää",
       "message": "Myönnä käyttöoikeus tälle verkkosivulle napsauttamalla osoiterivillä olevaa lukkoa.",
-      "closeButtonAriaLabel": "Sulje"
+      "dismissButtonAriaLabel": "Sulje"
     },
     "callMicrophoneAccessDeniedSafari": {
       "title": "Mikrofonia ei voi käyttää",
       "message": "Salli käyttöoikeudet päivittämällä sivu tai tarkista tämän selaimen asetukset ja varmista, että käyttöoikeudet on otettu käyttöön tässä sivustossa.",
-      "closeButtonAriaLabel": "Sulje"
+      "dismissButtonAriaLabel": "Sulje"
     },
     "callMicrophoneMutedBySystem": {
       "title": "Järjestelmäasetuksen perusteella sinut on mykistetty.",
-      "closeButtonAriaLabel": "Sulje"
+      "dismissButtonAriaLabel": "Sulje"
     },
     "callMicrophoneUnmutedBySystem": {
       "title": "Mikrofonisi palautui käyttöön ja järjestelmä on poistanut sen mykistyksen.",
-      "closeButtonAriaLabel": "Sulje"
+      "dismissButtonAriaLabel": "Sulje"
     },
     "callMacOsMicrophoneAccessDenied": {
       "title": "Mikrofonia ei voi käyttää",
       "message": "Myönnä mikrofonin käyttöoikeus macOS:n tietosuoja-asetuksissa.",
-      "closeButtonAriaLabel": "Sulje"
+      "dismissButtonAriaLabel": "Sulje"
     },
     "callLocalVideoFreeze": {
       "title": "Verkon kaistanleveys on heikko",
       "message": "Videokuvasi saattaa näkyä keskeytettynä puhelun muille osallistujille.",
-      "closeButtonAriaLabel": "Sulje"
+      "dismissButtonAriaLabel": "Sulje"
     },
     "callCameraAccessDenied": {
       "title": "Kameraa ei voi käyttää",
       "message": "Myönnä käyttöoikeus tälle verkkosivulle napsauttamalla osoiterivillä olevaa lukkoa.",
-      "closeButtonAriaLabel": "Sulje"
+      "dismissButtonAriaLabel": "Sulje"
     },
     "callCameraAccessDeniedSafari": {
       "title": "Kameraa ei voi käyttää",
       "message": "Salli käyttöoikeudet päivittämällä sivu tai tarkista tämän selaimen asetukset ja varmista, että käyttöoikeudet on otettu käyttöön tässä sivustossa.",
-      "closeButtonAriaLabel": "Sulje"
+      "dismissButtonAriaLabel": "Sulje"
     },
     "callCameraAlreadyInUse": {
       "title": "Kameraa ei voi käyttää",
       "message": "Toinen sovellus saattaa jo käyttää sitä.",
-      "closeButtonAriaLabel": "Sulje"
+      "dismissButtonAriaLabel": "Sulje"
     },
     "callVideoStoppedBySystem": {
       "title": "Järjestelmä on pysäyttänyt videosi.",
-      "closeButtonAriaLabel": "Sulje"
+      "dismissButtonAriaLabel": "Sulje"
     },
     "callVideoRecoveredBySystem": {
       "title": "Videosi näytetään jälleen.",
-      "closeButtonAriaLabel": "Sulje"
+      "dismissButtonAriaLabel": "Sulje"
     },
     "callMacOsCameraAccessDenied": {
       "title": "MacOS estää kameran käytön",
       "message": "Päivitä tietosuoja-asetukset, jotta selain voi käyttää kameraasi.",
-      "closeButtonAriaLabel": "Sulje"
+      "dismissButtonAriaLabel": "Sulje"
     },
     "callMacOsScreenShareAccessDenied": {
       "title": "MacOS estää näytön jakamisen",
       "message": "Päivitä tietosuoja-asetukset, jotta selain voi tallentaa, mitä näytölläsi tapahtuu.",
-      "closeButtonAriaLabel": "Sulje"
+      "dismissButtonAriaLabel": "Sulje"
     },
     "failedToJoinCallGeneric": {
       "title": "Puheluun liittyminen epäonnistui.",
-      "closeButtonAriaLabel": "Sulje"
+      "dismissButtonAriaLabel": "Sulje"
     },
     "failedToJoinCallInvalidMeetingLink": {
       "title": "Kokoukseen liittyminen ei onnistu. Linkki on virheellinen.",
-      "closeButtonAriaLabel": "Sulje"
+      "dismissButtonAriaLabel": "Sulje"
     },
     "cameraFrozenForRemoteParticipants": {
       "title": "Puhelun muilla osallistujilla on videokuvasi näkymiseen liittyviä ongelmia",
       "message": "Tarkista laitteesi ja verkkosi.",
-      "closeButtonAriaLabel": "Sulje"
+      "dismissButtonAriaLabel": "Sulje"
     },
     "unableToStartVideoEffect": {
       "title": "Videotehosteen käyttäminen ei onnistu.",
-      "closeButtonAriaLabel": "Sulje"
+      "dismissButtonAriaLabel": "Sulje"
     },
     "startSpotlightWhileMaxParticipantsAreSpotlighted": {
       "title": "Osallistujien valokeilaa ei voi aloittaa",
       "message": "Enimmäismäärä osallistujia on jo valokeilassa.",
-      "closeButtonAriaLabel": "Sulje"
+      "dismissButtonAriaLabel": "Sulje"
+    },
+    "mutedByRemoteParticipant": {
+      "title": "Toinen osallistuja mykisti sinut.",
+      "dismissButtonAriaLabel": "Sulje"
+    },
+    "recordingStarted": {
+      "title": "Tallennus on aloitettu.",
+      "message": "Liittymällä annat suostumuksesi kokouksen litteroimiseen.",
+      "dismissButtonAriaLabel": "Sulje"
+    },
+    "transcriptionStarted": {
+      "title": "Transkriptio on aloitettu.",
+      "message": "Liittymällä annat suostumuksesi kokouksen litteroimiseen.",
+      "dismissButtonAriaLabel": "Sulje"
+    },
+    "recordingStopped": {
+      "title": "Tallennetta tallennetaan.",
+      "message": "Tallennus on pysäytetty.",
+      "dismissButtonAriaLabel": "Sulje"
+    },
+    "transcriptionStopped": {
+      "title": "Transkriptiota tallennetaan.",
+      "message": "Transkriptio on pysäytetty.",
+      "dismissButtonAriaLabel": "Sulje"
+    },
+    "recordingAndTranscriptionStarted": {
+      "title": "Tallentaminen ja litterointi on aloitettu.",
+      "message": "Liittymällä annat suostumuksesi kokouksen litteroimiseen.",
+      "dismissButtonAriaLabel": "Sulje"
+    },
+    "recordingAndTranscriptionStopped": {
+      "title": "Tallennusta ja transkriptiota tallennetaan.",
+      "message": "Tallentaminen ja transkriptio on pysäytetty.",
+      "dismissButtonAriaLabel": "Sulje"
+    },
+    "recordingStoppedStillTranscribing": {
+      "title": "Tallennus on pysäytetty.",
+      "message": "Transkriptiota ollaan luomassa vain tästä kokouksesta.",
+      "dismissButtonAriaLabel": "Sulje"
+    },
+    "transcriptionStoppedStillRecording": {
+      "title": "Transkriptio on pysäytetty.",
+      "message": "Tallennetta ollaan luomassa vain tästä kokouksesta.",
+      "dismissButtonAriaLabel": "Sulje"
+    },
+    "assignedBreakoutRoomOpened": {
+      "title": "Siirrämme sinut määritettyihin huoneeseesi 5 sekunnin kuluttua.",
+      "dismissButtonAriaLabel": "Sulje"
+    },
+    "assignedBreakoutRoomChanged": {
+      "title": "Pienryhmätilasi on muuttunut",
+      "message": "Siirrämme sinut määritettyihin huoneeseesi 5 sekunnin kuluttua.",
+      "dismissButtonAriaLabel": "Sulje"
+    },
+    "assignedBreakoutRoomOpenedPromptJoin": {
+      "title": "Liitytäänkö pienryhmätilaan?",
+      "message": "Sinut on määritetty pienryhmätilaan.",
+      "dismissButtonAriaLabel": "Sulje",
+      "primaryButtonLabel": "Liity tilaan",
+      "secondaryButtonLabel": "Myöhemmin"
+    },
+    "breakoutRoomJoined": {
+      "title": "Olet liittynyt pienryhmätilaan.",
+      "dismissButtonAriaLabel": "Sulje"
+    },
+    "breakoutRoomClosingSoon": {
+      "title": "Pienryhmätilan aikaraja on täyttymässä.",
+      "message": "Tämä huone suljetaan 30 sekunnin kuluttua",
+      "dismissButtonAriaLabel": "Sulje"
     }
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "Näyttösi jaetaan parhaillaan",
     "screenShareLoadingMessage": "Ladataan käyttäjän {participant} näyttöä",
+    "localScreenShareLoadingMessage": "Ladataan näyttöä",
     "localVideoLabel": "Sinä",
     "localVideoCameraSwitcherLabel": "Vaihda kameraa",
     "localVideoMovementLabel": "Siirrettävä paikallisen videon ruutu",
@@ -436,7 +503,8 @@
     "spotlightLimitReachedMenuTitle": "Spotlight-raja saavutettu",
     "stopSpotlightVideoTileMenuLabel": "Poista valokeilasta",
     "stopSpotlightOnSelfVideoTileMenuLabel": "Valokeila",
-    "attendeeRole": "Osallistuja"
+    "attendeeRole": "Osallistuja",
+    "muteParticipantMenuItemLabel": "Mykistä"
   },
   "dialpad": {
     "placeholderText": "Anna puhelinnumero",
@@ -578,9 +646,18 @@
     "meetingConferencePhoneInfoModalMeetingId": "Anna kokoustunnus",
     "meetingConferencePhoneInfoModalWait": "Odota, että järjestäjä ottaa sinut vastaan",
     "meetingConferencePhoneInfoModalNoPhoneAvailable": "Puhelinta ei ole käytettävissä",
-    "meetingConferencePhoneInfoModalTollFree": "{phoneNumber} (maksuton) {country}, {city}",
-    "meetingConferencePhoneInfoModalTollFreeWithoutGeoData": "{phoneNumber} (maksuton)",
-    "meetingConferencePhoneInfoModalToll": "{phoneNumber} (maksullinen) {country}, {city}",
-    "meetingConferencePhoneInfoModalTollWithoutGeoData": "{phoneNumber} (maksullinen)"
+    "meetingConferencePhoneInfoModalTollGeoData": "{country}, {city}",
+    "meetingConferencePhoneInfoModalTollFree": "(Maksuton)",
+    "meetingConferencePhoneInfoModalToll": "(Maksullinen)"
+  },
+  "IncomingCallNotification": {
+    "incomingCallNotificationPlaceholderId": "Tuntematon käyttäjä",
+    "incomingCallNotificationPlaceholderAlert": "{callerName} soittaa",
+    "incomingCallNoticicationAcceptWithAudioAriaLabel": "Vastaa äänipuhelulla",
+    "incomingCallNoticicationAcceptWithVideoAriaLabel": "Vastaa videopuhelulla",
+    "incomingCallNoticicationRejectAriaLabel": "Hylkää",
+    "incomingCallNotificationAcceptButtonLabel": "Hyväksy",
+    "incomingCallNotificationRejectButtonLabel": "Hylkää",
+    "incomingCallNotificationAccceptWithVideoButtonLabel": "Vastaa videopuhelulla"
   }
 }

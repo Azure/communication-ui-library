@@ -108,11 +108,11 @@ export const getReadableTime = (time: number): string => {
 const stringsTrampoline = (locale: CompositeLocale): HoldPaneStrings => {
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   return {
-    holdScreenLabel: locale.strings.call.holdScreenLabel,
-    resumeCallButtonLabel: locale.strings.call.resumeCallButtonLabel,
-    resumeCallButtonAriaLabel: locale.strings.call.resumeCallButtonAriaLabel,
-    resumingCallButtonLabel: locale.strings.call.resumingCallButtonLabel,
-    resumingCallButtonAriaLabel: locale.strings.call.resumingCallButtonAriaLabel
+    holdScreenLabel: locale.strings.call.holdScreenLabel ?? '',
+    resumeCallButtonLabel: locale.strings.call.resumeCallButtonLabel ?? '',
+    resumeCallButtonAriaLabel: locale.strings.call.resumeCallButtonAriaLabel ?? '',
+    resumingCallButtonLabel: locale.strings.call.resumingCallButtonLabel ?? '',
+    resumingCallButtonAriaLabel: locale.strings.call.resumingCallButtonAriaLabel ?? ''
   };
   return {
     holdScreenLabel: '',

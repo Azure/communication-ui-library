@@ -342,11 +342,28 @@
     "pinParticipantLimitReachedMenuLabel": "Pin (límite alcanzado)",
     "unpinParticipantMenuLabel": "Desanclar",
     "pinParticipantMenuItemAriaLabel": "Anclar",
-    "unpinParticipantMenuItemAriaLabel": "Desanclar"
+    "unpinParticipantMenuItemAriaLabel": "Desanclar",
+    "muteAllMenuLabel": "Silenciar todo",
+    "muteAllDialogTitle": "¿Silenciar a todos?",
+    "muteAllDialogContent": "Esto silenciará a todos los participantes de la reunión, excepto usted.",
+    "muteAllConfirmButtonLabel": "Silenciar todo",
+    "muteAllCancelButtonLabel": "Cancelar",
+    "joinBreakoutRoomButtonLabel": "Unirse a la sala para sesión de subgrupo",
+    "returnFromBreakoutRoomButtonLabel": "Salir de la sala",
+    "leaveBreakoutRoomAndMeetingButtonLabel": "Salir de la reunión",
+    "breakoutRoomJoinedNotificationTitle": "Se has unido a la sala para sesión de subgrupo '{roomName}'",
+    "joinBreakoutRoomBannerTitle": "La sala para sesión de subgrupo '{roomName}' está abierta",
+    "joinBreakoutRoomBannerButtonLabel": "Unirse",
+    "returnFromBreakoutRoomBannerTitle": "Regresar a la reunión principal",
+    "returnFromBreakoutRoomBannerButtonLabel": "Volver a unirse"
   },
   "chat": {
     "chatListHeader": "En este chat",
-    "uploadAttachment": "Cargar datos adjuntos"
+    "uploadAttachment": "Cargar datos adjuntos",
+    "uploadImageDataNotProvided": "No se proporcionaron datos de imagen.",
+    "uploadImageIsTooLarge": "La imagen es demasiado grande. Elige uno que sea inferior a {maxImageSize} MB.",
+    "uploadImageExtensionIsNotAllowed": "No se permite cargar una imagen .{imageExtension}.",
+    "uploadImageFailed": "No se puede cargar la imagen. Vuelva a intentarlo más tarde."
   },
   "callWithChat": {
     "chatButtonLabel": "Chat",
@@ -387,6 +404,8 @@
     "dialpadModalAriaLabel": "Teclado de marcado",
     "dialpadCloseModalButtonAriaLabel": "Cerrar teclado de marcado",
     "openDtmfDialpadLabel": "Mostrar teclado de marcado",
-    "dtmfDialpadPlaceholderText": "Introducir número"
+    "dtmfDialpadPlaceholderText": "Introducir número",
+    "breakoutRoomChatPaneTitle": "Chat de sala para sesión de subgrupo",
+    "chatContentSpinnerLabel": "Cargando..."
   }
 }

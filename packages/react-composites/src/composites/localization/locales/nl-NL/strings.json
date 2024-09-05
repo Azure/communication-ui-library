@@ -342,11 +342,28 @@
     "pinParticipantLimitReachedMenuLabel": "Pin (limiet bereikt)",
     "unpinParticipantMenuLabel": "Losmaken",
     "pinParticipantMenuItemAriaLabel": "Vastmaken",
-    "unpinParticipantMenuItemAriaLabel": "Losmaken"
+    "unpinParticipantMenuItemAriaLabel": "Losmaken",
+    "muteAllMenuLabel": "Allen dempen",
+    "muteAllDialogTitle": "Iedereen dempen?",
+    "muteAllDialogContent": "Hiermee wordt iedereen in de vergadering gedempt, behalve u.",
+    "muteAllConfirmButtonLabel": "Allen dempen",
+    "muteAllCancelButtonLabel": "Annuleren",
+    "joinBreakoutRoomButtonLabel": "Deelnemen aan aparte vergaderruimte",
+    "returnFromBreakoutRoomButtonLabel": "Vergaderruimte verlaten",
+    "leaveBreakoutRoomAndMeetingButtonLabel": "Vergadering verlaten",
+    "breakoutRoomJoinedNotificationTitle": "U neemt deel aan de aparte vergaderruimte '{roomName}'",
+    "joinBreakoutRoomBannerTitle": "Aparte vergaderruimte '{roomName}' is geopend",
+    "joinBreakoutRoomBannerButtonLabel": "Bijwonen",
+    "returnFromBreakoutRoomBannerTitle": "Terugkeren naar hoofdvergadering",
+    "returnFromBreakoutRoomBannerButtonLabel": "Opnieuw deelnemen"
   },
   "chat": {
     "chatListHeader": "In deze chat",
-    "uploadAttachment": "Bijlage uploaden"
+    "uploadAttachment": "Bijlage uploaden",
+    "uploadImageDataNotProvided": "Er zijn geen afbeeldingsgegevens opgegeven.",
+    "uploadImageIsTooLarge": "Afbeelding is te groot. Kies een optie die kleiner is dan {maxImageSize} MB.",
+    "uploadImageExtensionIsNotAllowed": "Het uploaden van {imageExtension} afbeelding is niet toegestaan.",
+    "uploadImageFailed": "Kan afbeelding niet uploaden. Probeer het later opnieuw."
   },
   "callWithChat": {
     "chatButtonLabel": "Chatten",
@@ -387,6 +404,8 @@
     "dialpadModalAriaLabel": "Telefoonkiezer",
     "dialpadCloseModalButtonAriaLabel": "Toetsenblok sluiten",
     "openDtmfDialpadLabel": "Toetsenblok weergeven",
-    "dtmfDialpadPlaceholderText": "Nummer invoeren"
+    "dtmfDialpadPlaceholderText": "Nummer invoeren",
+    "breakoutRoomChatPaneTitle": "Aparte vergaderruimte chat",
+    "chatContentSpinnerLabel": "Loading..."
   }
 }

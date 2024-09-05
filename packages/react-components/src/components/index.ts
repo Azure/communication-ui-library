@@ -59,7 +59,9 @@ export type {
 } from './MessageThread';
 
 /* @conditional-compile-remove(rich-text-editor) */
-export type { RichTextEditorOptions } from './MessageThread';
+export type { RichTextEditorOptions } from './RichTextEditor/RichTextSendBox';
+/* @conditional-compile-remove(rich-text-editor) */
+export type { RichTextEditBoxOptions } from './MessageThread';
 
 export { StreamMedia } from './StreamMedia';
 export type { StreamMediaProps } from './StreamMedia';
@@ -202,6 +204,8 @@ export type {
 export * from './Drawer';
 /* @conditional-compile-remove(file-sharing-acs) */
 export type { SendBoxErrorBarError } from './SendBoxErrorBar';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+export type { SendBoxErrorBarType } from './SendBoxErrorBar';
 export * from './Attachment/AttachmentCard';
 export * from './Attachment/AttachmentCardGroup';
 export * from './ModalClone/ModalClone';
@@ -296,11 +300,14 @@ export * from './CaptionsSettingsModal';
 
 /* @conditional-compile-remove(teams-meeting-conference) */
 export * from './MeetingConferencePhoneInfo';
+/* @conditional-compile-remove(teams-meeting-conference) */
+export { _formatPhoneNumber } from './utils/formatPhoneNumber';
 
 export { _ErrorBoundary } from './ErrorBoundary';
-/* @conditional-compile-remove(notifications) */
+
 export * from './Notification';
-/* @conditional-compile-remove(notifications) */
+
 export * from './NotificationStack';
 /* @conditional-compile-remove(one-to-n-calling) */
 export * from './IncomingCallNotification';
+export * from './IncomingCallStack';

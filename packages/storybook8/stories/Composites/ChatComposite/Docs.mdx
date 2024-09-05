@@ -1,0 +1,161 @@
+import { Canvas, Meta, Source, ArgTypes } from '@storybook/blocks';
+import { ChatComposite } from '@azure/communication-react';
+import { Stack } from '@fluentui/react';
+import { SingleLineBetaBanner } from '../../BetaBanners/SingleLineBetaBanner';
+
+import { JoinExistingChatThread } from './JoinExistingChatThread.stories';
+import { overviewPageImagesStackStyle } from '../../constants';
+import containerText from '!!raw-loader!./snippets/Container.snippet.tsx';
+import customDataModelExampleContainerText from '!!raw-loader!./snippets/CustomDataModelExampleContainer.snippet.tsx';
+import customDateTimeFormatExampleText from '!!raw-loader!./snippets/CustomDateTimeFormat.snippet.tsx';
+import customBehaviorExampleText from '!!raw-loader!./snippets/CustomizeBehavior.snippet.tsx';
+import richTextEditorExampleText from '!!raw-loader!./snippets/RichTextEditor.snippet.tsx';
+
+<Meta title="Composites/ChatComposite" />
+
+# ChatComposite
+
+ChatComposite provides a chat experience where user can send and receive messages. Message thread events such as
+typing indicators, whether the message has been successfully delivered or read, or participants entering and
+leaving the chat are displayed to the user as part of the chat thread. Here is a visual example of Chat
+composite.
+
+<Stack style={overviewPageImagesStackStyle}>
+  <Stack.Item align="center">
+    <img
+      style={{ width: '100%' }}
+      src="images/chatComposite_NoParticipantsList.png"
+      alt="Chat composite with the participants list"
+    />
+  </Stack.Item>
+</Stack>
+Note that ChatComposite has a min width and height of respectively 17.5rem and 20rem (280px x 320px, with default rem at
+16px).
+
+## Basic Usage
+
+There are two parts to the composite - a `ChatComposite` react component and a `ChatAdapter` that connects the
+react component to the backend APIs.
+
+The key thing to note is that initialization of `ChatAdapter` is asynchronous. Thus, the initialization step
+requires special handling, as the example code below shows.
+
+<Source code={containerText} />
+
+## Prerequisites
+
+ChatComposite provides the UI for an _existing user_ in an _existing thread_. Thus, the user and thread must be
+created beforehand. Typically, the user and thread are created on a Contoso-owned service and authentication
+tokens are served to the client application that then passes it to the ChatComposite.
+
+## Theming
+
+ChatComposite can be themed with Fluent UI themes, just like the base components. Look at the [ChatComposite
+themes canvas](./?path=/story/composites-chatcomposite-theme-example--theme-example) to see theming in action or the
+[overall theming example](./?path=/docs/concepts-theming--docs) to see how theming works for all the components in
+this UI library.
+
+## Fonts
+
+Custom fonts can be applied to the ChatComposite using the in built theming mechanism. Look at the
+[ChatComposite themes canvas](./?path=/story/composites-chatcomposite-theme-example--theme-example) to see custom fonts
+in action or the [overall theming example](./?path=/docs/concepts-theming--docs) to see how theming works for all the
+components in this UI library. Read more about fonts in [Fluent UI Typography
+here](https://developer.microsoft.com/fluentui#/styles/web/typography).
+
+## Icons
+
+Custom icons can be applied to the Composite using `icons` prop exposed by the Composite. The `icons` prop
+accepts an object where you can provide a custom JSX element against an icon name key.
+
+## Hiding/Showing UI Elements
+
+Some UI elements of the composite can be hidden if desired using the ChatAdapter `options` interface. Currently
+we support hiding the `Topic Header`:
+
+```ts
+<ChatComposite options={{ topic: false }} />
+```
+
+## Participant Pane
+
+<SingleLineBetaBanner />
+You can also show a `Participant Pane` to the right hand side of the chat that has support for removing users. The
+Participant pane is a `beta` feature. Currently it does not support mobile views and is subject to breaking changes.
+
+```ts
+  // Caution: the Participant Pane is a beta feature
+<ChatComposite options={{ participantPane: true}}>
+```
+
+## Running in a Mobile browser
+
+Unlike the CallComposite and CallWithChatComposite, the ChatComposite has no `formFactor` property. Instead the
+composite is responsive to the container it is in and should perform optimally on mobile and desktop
+automatically.
+
+Mobile devices have a pull-down to refresh feature that may impact users from scrolling through messages in
+chat. A simple and effective way to disable the pull-down to refresh feature is to set an `overflow='hidden'` OR
+`touch-action='none'` style on the body element for your app.
+
+## Custom Data Model
+
+It is a primary tenet of Azure Communication Services that customers bring their own user identities.
+Customers then use the Azure Communication Services identity service to create corresponding authentication
+tokens for their users. The ChatComposite allows developers to easily inject custom data associated with these
+user identities. Look at the [example
+canvas](./?path=/story/composites-chatcomposite-custom-data-model-example--custom-data-model-example) to see how the name
+and avatar displayed for users can be provided by Contoso.
+
+Note that, by default, the initials text color is setup to `white`
+
+<Source code={customDataModelExampleContainerText} />
+
+See the [Custom data model example documentation](./?path=/docs/concepts-custom-user-data-model--docs) to understand how
+custom data model can be injected for all the components in this UI library.
+
+## Customize Behavior
+
+The `ChatAdapter` makes it possible to arbitrarily modify the communication between the `ChatComposite`
+component and the Azure Communication Services backend. This adds powerful customization possibilities. The
+[Customized Behavior Example](./?path=/story/composites-chatcomposite-custom-behavior-example--custom-behavior-example)
+shows a way to intercept messages entered by the user and modify them before sending them on to the backend.
+
+<Source code={customBehaviorExampleText} />
+
+## Joining existing Chat
+
+The [join existing chat thread](./?path=/story/composites-chatcomposite-join-existing-chat-thread--join-existing-chat-thread)
+provides an easy playground to join an existing Azure Communication Services chat thread. This is useful if you
+want to explore the composite with multiple users.
+
+## Custom DateTime Format using Locale
+
+<SingleLineBetaBanner />
+
+You can pass in a function that formats the datetime displayed in chat messages through Locale
+
+<Source code={customDateTimeFormatExampleText} />
+
+## Adding file sharing
+
+<SingleLineBetaBanner />
+### In Azure Communication Service Chat Thread
+
+The Chat Composite supports file sharing capabilities in conjunction with your choice of a storage solution.
+Please refer to our
+[tutorial](https://docs.microsoft.com/azure/communication-services/tutorials/file-sharing-tutorial) for more
+details. File sharing in Teams interop scenarios is available with the CallWithChat Composite.
+
+## Rich Text Editor Support
+
+<SingleLineBetaBanner />
+
+The following example show how to enable rich text editor for message editing by providing the `richTextEditor` property.
+The insert inline images feature is only supported in the Teams Interop chats. Please try it out in the [Join Teams Meeting](./?path=/story/composites-callwithchatcomposite-join-teams-meeting--join-teams-meeting) page.
+
+<Source code={richTextEditorExampleText} />
+
+## Props
+
+<ArgTypes of={ChatComposite} exclude={['fluentTheme', 'icons', 'locale', 'rtl', 'onFetchAvatarPersonaData', 'onFetchParticipantMenuItems' ]} />

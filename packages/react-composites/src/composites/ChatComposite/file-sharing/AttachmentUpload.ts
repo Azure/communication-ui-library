@@ -30,7 +30,7 @@ export enum AttachmentUploadActionType {
 /**
  * @private
  */
-interface Action {
+export interface Action {
   type: AttachmentUploadActionType;
 }
 
@@ -47,7 +47,7 @@ interface SetAction extends Action {
 /**
  * @private
  */
-interface ProgressAction extends Action {
+export interface ProgressAction extends Action {
   type: AttachmentUploadActionType.Progress;
   taskId: string;
   progress: number;
@@ -57,7 +57,7 @@ interface ProgressAction extends Action {
 /**
  * @private
  */
-interface CompleteAction extends Action {
+export interface CompleteAction extends Action {
   type: AttachmentUploadActionType.Completed;
   taskId: string;
   id: string;
@@ -68,7 +68,7 @@ interface CompleteAction extends Action {
 /**
  * @private
  */
-interface FailedAction extends Action {
+export interface FailedAction extends Action {
   type: AttachmentUploadActionType.Failed;
   taskId: string;
   message: string;
@@ -78,7 +78,7 @@ interface FailedAction extends Action {
 /**
  * @private
  */
-interface RemoveAction extends Action {
+export interface RemoveAction extends Action {
   type: AttachmentUploadActionType.Remove;
   id: string;
 }
@@ -87,7 +87,7 @@ interface RemoveAction extends Action {
 /**
  * @private
  */
-interface ClearAction extends Action {
+export interface ClearAction extends Action {
   type: AttachmentUploadActionType.Clear;
 }
 
@@ -95,7 +95,7 @@ interface ClearAction extends Action {
 /**
  * @private
  */
-export type Actions = SetAction | ProgressAction | CompleteAction | FailedAction | RemoveAction | ClearAction;
+type Actions = SetAction | ProgressAction | CompleteAction | FailedAction | RemoveAction | ClearAction;
 
 /* @conditional-compile-remove(file-sharing-acs) */
 /**

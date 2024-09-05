@@ -53,6 +53,9 @@ export const RichTextToolbar = (props: RichTextToolbarProps): JSX.Element => {
   useEffect(() => {
     // update the format state on editor events
     plugin.onFormatChanged = setFormatState;
+    // plugin editor ready event may happen before onFormatChanged is set
+    // call update format function to ensure the format state is set
+    plugin.updateFormat();
   }, [plugin]);
 
   const boldButton: ICommandBarItemProps = useMemo(() => {
@@ -110,14 +113,23 @@ export const RichTextToolbar = (props: RichTextToolbarProps): JSX.Element => {
       icon: 'RichTextBulletListButtonIcon',
       onClick: () => {
         plugin.onToolbarButtonClick((editor) => {
+          // check the format state to see if the bulleted list is already applied
+          const isBullet = formatState?.isBullet;
           toggleBullet(editor);
+          // the bulleted list was added
+          if (!isBullet) {
+            setTimeout(() => {
+              // a small delay and polite aria live are needed for MacOS VoiceOver to announce the change
+              editor.announce({ ariaLiveMode: 'polite', text: strings.richTextBulletedListAppliedAnnouncement });
+            }, 50);
+          }
         });
       },
       text: strings.richTextBulletListTooltip,
       checked: formatState !== undefined && formatState?.isBullet === true,
       theme: theme
     });
-  }, [formatState, plugin, strings.richTextBulletListTooltip, theme]);
+  }, [formatState, plugin, strings.richTextBulletListTooltip, strings.richTextBulletedListAppliedAnnouncement, theme]);
 
   const numberListButton: ICommandBarItemProps = useMemo(() => {
     return getCommandBarItem({
@@ -126,14 +138,23 @@ export const RichTextToolbar = (props: RichTextToolbarProps): JSX.Element => {
       icon: 'RichTextNumberListButtonIcon',
       onClick: () => {
         plugin.onToolbarButtonClick((editor) => {
+          // check the format state to see if the numbered list is already applied
+          const isNumbering = formatState?.isNumbering;
           toggleNumbering(editor);
+          // the numbered list was added
+          if (!isNumbering) {
+            // a small delay and polite aria live are needed for MacOS VoiceOver to announce the change
+            setTimeout(() => {
+              editor.announce({ ariaLiveMode: 'polite', text: strings.richTextNumberedListAppliedAnnouncement });
+            }, 50);
+          }
         });
       },
       text: strings.richTextNumberListTooltip,
       checked: formatState !== undefined && formatState?.isNumbering === true,
       theme: theme
     });
-  }, [formatState, plugin, strings.richTextNumberListTooltip, theme]);
+  }, [formatState, plugin, strings.richTextNumberListTooltip, strings.richTextNumberedListAppliedAnnouncement, theme]);
 
   const indentDecreaseButton: ICommandBarItemProps = useMemo(() => {
     return getCommandBarItem({

@@ -12,7 +12,7 @@ import React from 'react';
 import {
   ConferencePhoneInfo,
   formatPhoneNumberInfo,
-  formatPhoneNumber,
+  _formatPhoneNumber,
   formatPhoneNumberLink
 } from '@internal/react-components';
 /* @conditional-compile-remove(teams-meeting-conference) */
@@ -73,7 +73,7 @@ export const MeetingPhoneInfoPaneContent = (props: {
                 {conferencePhoneInfoList.map((phoneNumber, index) => (
                   <Stack.Item key={index}>
                     <Link className={phoneInfoTextStyle} href={formatPhoneNumberLink(phoneNumber)}>
-                      {formatPhoneNumber(phoneNumber.phoneNumber)}
+                      {_formatPhoneNumber(phoneNumber.phoneNumber, true)}
                     </Link>
                     <Text className={phoneInfoTextStyle}>
                       {' '}

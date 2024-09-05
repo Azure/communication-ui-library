@@ -23,7 +23,7 @@ test.describe('Component Examples Test', () => {
   });
 
   // only need to make sure it is loading correctly, the rest will be the responsibility of composite tests
-  test('Whether html page is loaded right with 2 composites', async ({ page }) => {
+  test.skip('Whether html page is loaded right with 2 composites', async ({ page }) => {
     // Wait for message to finish sending
     await page.waitForSelector(dataUiId('sendbox-textfield'));
     await page.waitForSelector('[id="camera-button"]');

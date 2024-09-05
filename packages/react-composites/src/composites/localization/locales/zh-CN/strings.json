@@ -338,15 +338,32 @@
     "endCallConfirmDialogTitle": "结束通话?",
     "endCallConfirmDialogContent": "你将结束所有人的通话。",
     "invalidMeetingIdentifier": "会议 ID 或密码无效",
-    "pinParticipantMenuLabel": "Pin for me",
-    "pinParticipantLimitReachedMenuLabel": "Pin (limit reached)",
-    "unpinParticipantMenuLabel": "Unpin",
-    "pinParticipantMenuItemAriaLabel": "Pin",
-    "unpinParticipantMenuItemAriaLabel": "Unpin"
+    "pinParticipantMenuLabel": "为我固定",
+    "pinParticipantLimitReachedMenuLabel": "固定(已达到上限)",
+    "unpinParticipantMenuLabel": "取消固定",
+    "pinParticipantMenuItemAriaLabel": "固定",
+    "unpinParticipantMenuItemAriaLabel": "取消固定",
+    "muteAllMenuLabel": "全部静音",
+    "muteAllDialogTitle": "对所有人静音?",
+    "muteAllDialogContent": "这会将会议中除你之外的所有人静音。",
+    "muteAllConfirmButtonLabel": "全部静音",
+    "muteAllCancelButtonLabel": "取消",
+    "joinBreakoutRoomButtonLabel": "加入分组讨论室",
+    "returnFromBreakoutRoomButtonLabel": "离开房间",
+    "leaveBreakoutRoomAndMeetingButtonLabel": "离开会议",
+    "breakoutRoomJoinedNotificationTitle": "你已加入分组讨论室“{roomName}”",
+    "joinBreakoutRoomBannerTitle": "分组讨论室“{roomName}”已打开",
+    "joinBreakoutRoomBannerButtonLabel": "加入",
+    "returnFromBreakoutRoomBannerTitle": "返回到主会议",
+    "returnFromBreakoutRoomBannerButtonLabel": "重新加入"
   },
   "chat": {
     "chatListHeader": "在此聊天中",
-    "uploadAttachment": "上传附件"
+    "uploadAttachment": "上传附件",
+    "uploadImageDataNotProvided": "未提供图像数据。",
+    "uploadImageIsTooLarge": "图像太大。选择小于 {maxImageSize} MB 的选项。",
+    "uploadImageExtensionIsNotAllowed": "上传。不允许使用 {imageExtension} 图像。",
+    "uploadImageFailed": "无法上传图像。请稍后重试。"
   },
   "callWithChat": {
     "chatButtonLabel": "聊天",
@@ -387,6 +404,8 @@
     "dialpadModalAriaLabel": "拨号盘",
     "dialpadCloseModalButtonAriaLabel": "关闭拨号盘",
     "openDtmfDialpadLabel": "显示拨号盘",
-    "dtmfDialpadPlaceholderText": "输入号码"
+    "dtmfDialpadPlaceholderText": "输入号码",
+    "breakoutRoomChatPaneTitle": "分组讨论室聊天",
+    "chatContentSpinnerLabel": "正在加载..."
   }
 }

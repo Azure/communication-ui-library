@@ -35,15 +35,20 @@ import {
   VideoDeviceInfo
 } from '@azure/communication-calling';
 import { Reaction } from '@azure/communication-calling';
-import { StartCaptionsOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
+/* @conditional-compile-remove(breakout-rooms) */
+import { BreakoutRoomsUpdatedListener } from '@azure/communication-calling';
 import { DtmfTone } from '@azure/communication-calling';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 import { SendMessageOptions } from '@azure/communication-chat';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { UploadChatImageResult } from '@internal/acs-ui-common';
-import { JoinCallOptions } from '../../CallComposite/adapter/CallAdapter';
+import {
+  JoinCallOptions,
+  StartCaptionsAdapterOptions,
+  StopCaptionsAdapterOptions
+} from '../../CallComposite/adapter/CallAdapter';
 /* @conditional-compile-remove(file-sharing-acs) */
 import { MessageOptions } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(PSTN-calls) */
@@ -433,7 +438,7 @@ export interface CallWithChatAdapterManagement {
    * Function to Start captions
    * @param options - options for start captions
    */
-  startCaptions(options?: StartCaptionsOptions): Promise<void>;
+  startCaptions(options?: StartCaptionsAdapterOptions): Promise<void>;
   /**
    * Function to set caption language
    * @param language - language set for caption
@@ -447,7 +452,7 @@ export interface CallWithChatAdapterManagement {
   /**
    * Funtion to stop captions
    */
-  stopCaptions(): Promise<void>;
+  stopCaptions(options?: StopCaptionsAdapterOptions): Promise<void>;
 
   /**
    * Start the video background effect.
@@ -478,6 +483,20 @@ export interface CallWithChatAdapterManagement {
    * @public
    */
   updateSelectedVideoBackgroundEffect(selectedVideoBackground: VideoBackgroundEffect): void;
+  /* @conditional-compile-remove(DNS) */
+  /**
+   * Start the noise suppression effect.
+   *
+   * @beta
+   */
+  startNoiseSuppressionEffect(): Promise<void>;
+  /* @conditional-compile-remove(DNS) */
+  /**
+   * Start the noise suppression effect.
+   *
+   * @beta
+   */
+  stopNoiseSuppressionEffect(): Promise<void>;
   /**
    * Send the end of call survey result
    *
@@ -506,6 +525,11 @@ export interface CallWithChatAdapterManagement {
    * Mute a participant
    */
   muteAllRemoteParticipants(): Promise<void>;
+  /* @conditional-compile-remove(breakout-rooms) */
+  /**
+   * Return to origin call of breakout room
+   */
+  returnFromBreakoutRoom(): Promise<void>;
 }
 
 /**
@@ -531,6 +555,8 @@ export interface CallWithChatAdapterSubscriptions {
   on(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
   on(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
   on(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
+  /* @conditional-compile-remove(breakout-rooms) */
+  on(event: 'breakoutRoomsUpdated', listener: BreakoutRoomsUpdatedListener): void;
   off(event: 'callEnded', listener: CallEndedListener): void;
   off(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
   off(event: 'callIdChanged', listener: CallIdChangedListener): void;
@@ -548,6 +574,8 @@ export interface CallWithChatAdapterSubscriptions {
   off(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
   off(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
   off(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
+  /* @conditional-compile-remove(breakout-rooms) */
+  off(event: 'breakoutRoomsUpdated', listener: BreakoutRoomsUpdatedListener): void;
 
   // Chat subscriptions
   on(event: 'messageReceived', listener: MessageReceivedListener): void;
@@ -615,6 +643,7 @@ export type CallWithChatEvent =
   | 'isSpokenLanguageChanged'
   | 'capabilitiesChanged'
   | 'spotlightChanged'
+  | /* @conditional-compile-remove(breakout-rooms) */ 'breakoutRoomsUpdated'
   | 'messageReceived'
   | 'messageEdited'
   | 'messageDeleted'

@@ -2,19 +2,24 @@
 // Licensed under the MIT License.
 
 import {
+  DefaultButton,
   IButtonStyles,
-  IStackStyles,
   IconButton,
+  IStackStyles,
   Persona,
   PersonaSize,
+  PrimaryButton,
   Stack,
   Text,
   Theme,
   useTheme
 } from '@fluentui/react';
+/* @conditional-compile-remove(one-to-n-calling) */
+import { IContextualMenuProps } from '@fluentui/react';
 import React from 'react';
 /* @conditional-compile-remove(one-to-n-calling) */
 import { useLocale } from '../localization';
+import { _formatString } from '@internal/acs-ui-common';
 
 /**
  * Strings for the incoming call notification component.
@@ -23,7 +28,7 @@ import { useLocale } from '../localization';
  */
 export interface IncomingCallNotificationStrings {
   /**
-   *Placeholder CallerID for the incoming call notification.
+   * Placeholder CallerID for the incoming call notification.
    */
   incomingCallNotificationPlaceholderId?: string;
   /**
@@ -42,6 +47,22 @@ export interface IncomingCallNotificationStrings {
    * Aria label for the reject button in the incoming call notification.
    */
   incomingCallNoticicationRejectAriaLabel?: string;
+  /**
+   * Label for the accept button in the incoming call notification.
+   */
+  incomingCallNotificationAcceptButtonLabel?: string;
+  /**
+   * Label for the accept with video button in the incoming call notification.
+   */
+  incomingCallNotificationAccceptWithVideoButtonLabel?: string;
+  /**
+   * label for the reject button in the incoming call notification.
+   */
+  incomingCallNotificationRejectButtonLabel?: string;
+  /**
+   * Aria label for the incoming call dismiss button
+   */
+  incomingCallNotificationDismissButtonAriaLabel?: string;
 }
 
 /**
@@ -107,9 +128,23 @@ export interface IncomingCallNotificationProps {
    */
   onReject: () => void;
   /**
+   * Callback when the notification is dismissed
+   */
+  onDismiss?: () => void;
+  /**
    * Styles for the incoming call notification component.
    */
   styles?: IncomingCallNotificationStyles;
+  /**
+   * Strings for the incoming call notification component.
+   */
+  strings?: IncomingCallNotificationStrings;
+  /**
+   * Options for whether to show the accept with video button
+   */
+  acceptOptions: {
+    showAcceptWithVideo: boolean;
+  };
 }
 
 /**
@@ -118,69 +153,128 @@ export interface IncomingCallNotificationProps {
  * @beta
  */
 export const IncomingCallNotification = (props: IncomingCallNotificationProps): JSX.Element => {
-  const { callerName, alertText, avatarImage, onAcceptWithAudio, onAcceptWithVideo, onReject, personaSize, styles } =
-    props;
+  const {
+    callerName,
+    alertText,
+    avatarImage,
+    onAcceptWithAudio,
+    /* @conditional-compile-remove(one-to-n-calling) */
+    onAcceptWithVideo,
+    onReject,
+    onDismiss,
+    personaSize,
+    styles,
+    strings,
+    /* @conditional-compile-remove(one-to-n-calling) */
+    acceptOptions
+  } = props;
   const theme = useTheme();
   /* @conditional-compile-remove(one-to-n-calling) */
   const localeStrings = useLocale().strings.IncomingCallNotification;
+  /* @conditional-compile-remove(one-to-n-calling) */
+  const formattedMessageString =
+    localeStrings.incomingCallNotificationPlaceholderAlert && callerName
+      ? _formatString(localeStrings.incomingCallNotificationPlaceholderAlert, { callerName: callerName })
+      : callerName;
+
+  /* @conditional-compile-remove(one-to-n-calling) */
+  const acceptManuOptions: IContextualMenuProps | undefined = acceptOptions.showAcceptWithVideo
+    ? {
+        items: [
+          {
+            key: 'audio',
+            text:
+              /* @conditional-compile-remove(one-to-n-calling) */ strings?.incomingCallNotificationAcceptButtonLabel ??
+              localeStrings.incomingCallNotificationAcceptButtonLabel,
+            onClick: () => onAcceptWithAudio()
+          },
+          {
+            key: 'video',
+            text:
+              /* @conditional-compile-remove(one-to-n-calling) */ strings?.incomingCallNotificationAccceptWithVideoButtonLabel ??
+              localeStrings.incomingCallNotificationAccceptWithVideoButtonLabel,
+            onClick: () => onAcceptWithVideo()
+          }
+        ]
+      }
+    : undefined;
+
   return (
     <Stack
-      horizontal
       tokens={{ childrenGap: '0.5rem' }}
       verticalAlign="center"
       styles={styles?.root ? styles.root : incomingCallToastStyle(theme)}
     >
-      <Stack
-        horizontalAlign="start"
-        styles={styles?.avatarContainer ? styles.avatarContainer : incomingCallToastAvatarContainerStyle}
-      >
-        <Persona
-          imageUrl={avatarImage}
-          text={callerName}
-          size={PersonaSize.size40}
-          coinSize={personaSize}
-          hidePersonaDetails={true}
-          aria-label={callerName}
+      <Stack horizontal verticalAlign="center" tokens={{ childrenGap: personaSize ? '0.5rem' : '0rem' }}>
+        <Stack
+          horizontalAlign="start"
+          styles={styles?.avatarContainer ? styles.avatarContainer : incomingCallToastAvatarContainerStyle}
+        >
+          <Persona
+            imageUrl={avatarImage}
+            text={callerName}
+            size={PersonaSize.size24}
+            coinSize={personaSize}
+            hidePersonaDetails={true}
+            aria-label={callerName}
+          />
+        </Stack>
+
+        <Stack grow horizontalAlign="center" style={{ alignItems: 'flex-start', fontFamily: 'Segoe UI' }}>
+          <Text
+            tabIndex={0}
+            aria-live={'assertive'}
+            aria-label={alertText ?? /* @conditional-compile-remove(one-to-n-calling) */ formattedMessageString}
+          >
+            {alertText ??
+              strings?.incomingCallNotificationPlaceholderAlert ??
+              /* @conditional-compile-remove(one-to-n-calling) */ formattedMessageString}
+          </Text>
+        </Stack>
+        <IconButton
+          /* @conditional-compile-remove(one-to-n-calling) */
+          ariaLabel={
+            strings?.incomingCallNotificationDismissButtonAriaLabel ??
+            localeStrings.incomingCallNotificationDismissButtonAriaLabel
+          }
+          iconProps={{ iconName: 'cancel' }}
+          onClick={onDismiss}
+          styles={dismissButtonStyle(theme)}
         />
       </Stack>
 
-      <Stack grow={1} horizontalAlign="center" style={{ alignItems: 'flex-start', fontFamily: 'Segoe UI' }}>
-        <Stack style={{ fontSize: '0.875rem' }}>
-          <Text>
-            {callerName ??
-              /* @conditional-compile-remove(one-to-n-calling) */ localeStrings.incomingCallNotificationPlaceholderId}
-          </Text>
-        </Stack>
-        <Stack style={{ fontSize: '0.75rem' }}>
-          <Text>
-            {alertText ??
-              /* @conditional-compile-remove(one-to-n-calling) */ localeStrings.incomingCallNotificationPlaceholderAlert}
-          </Text>
-        </Stack>
-      </Stack>
-
-      <Stack horizontal tokens={{ childrenGap: 10 }}>
-        <IconButton
+      <Stack horizontal horizontalAlign={'center'} tokens={{ childrenGap: '0.5rem' }}>
+        <PrimaryButton
+          styles={styles?.acceptButton ? styles.acceptButton : incomingCallAcceptButtonStyle(theme)}
+          onClick={() => onAcceptWithAudio()}
+          iconProps={{ iconName: 'IncomingCallNotificationAcceptIcon', style: { lineHeight: '1rem' } }}
+          /* @conditional-compile-remove(one-to-n-calling) */
+          ariaLabel={
+            strings?.incomingCallNoticicationAcceptWithAudioAriaLabel ??
+            localeStrings.incomingCallNoticicationAcceptWithAudioAriaLabel
+          }
+          /* @conditional-compile-remove(one-to-n-calling) */
+          menuProps={acceptManuOptions}
+        >
+          {
+            /* @conditional-compile-remove(one-to-n-calling) */ strings?.incomingCallNotificationAcceptButtonLabel ??
+              localeStrings.incomingCallNotificationAcceptButtonLabel
+          }
+        </PrimaryButton>
+        <DefaultButton
           styles={styles?.rejectButton ? styles.rejectButton : incomingCallRejectButtonStyle(theme)}
           onClick={() => onReject()}
           iconProps={{ iconName: 'IncomingCallNotificationRejectIcon' }}
           /* @conditional-compile-remove(one-to-n-calling) */
-          ariaLabel={localeStrings.incomingCallNoticicationRejectAriaLabel}
-        />
-        <IconButton
-          styles={styles?.acceptButton ? styles.acceptButton : incomingCallAcceptButtonStyle(theme)}
-          onClick={() => onAcceptWithVideo()}
-          iconProps={{ iconName: 'IncomingCallNotificationAcceptWithVideoIcon' }}
-          /* @conditional-compile-remove(one-to-n-calling) */
-          ariaLabel={localeStrings.incomingCallNoticicationAcceptWithVideoAriaLabel}
-        />
-        <IconButton
-          styles={styles?.acceptButton ? styles.acceptButton : incomingCallAcceptButtonStyle(theme)}
-          onClick={() => onAcceptWithAudio()}
-          iconProps={{ iconName: 'IncomingCallNotificationAcceptIcon' }}
-          /* @conditional-compile-remove(one-to-n-calling) */
-          ariaLabel={localeStrings.incomingCallNoticicationAcceptWithAudioAriaLabel}
-        />
+          ariaLabel={
+            strings?.incomingCallNoticicationRejectAriaLabel ?? localeStrings.incomingCallNoticicationRejectAriaLabel
+          }
+        >
+          {
+            /* @conditional-compile-remove(one-to-n-calling) */ strings?.incomingCallNotificationRejectButtonLabel ??
+              localeStrings.incomingCallNotificationRejectButtonLabel
+          }
+        </DefaultButton>
       </Stack>
     </Stack>
   );
@@ -189,8 +283,7 @@ export const IncomingCallNotification = (props: IncomingCallNotificationProps): 
 const incomingCallToastStyle = (theme: Theme): IStackStyles => {
   return {
     root: {
-      minWidth: '20rem',
-      maxWidth: '40rem',
+      width: '20rem',
       background: theme.palette.white,
       opacity: 0.95,
       borderRadius: '0.5rem',
@@ -206,19 +299,33 @@ const incomingCallToastAvatarContainerStyle: IStackStyles = {
   }
 };
 
+const dismissButtonStyle = (theme: Theme): IButtonStyles => {
+  return {
+    root: {
+      color: theme.palette.neutralPrimary,
+      width: '1rem',
+      height: '1rem'
+    },
+    rootHovered: {
+      color: theme.palette.neutralDark
+    }
+  };
+};
+
 const incomingCallAcceptButtonStyle = (theme: Theme): IButtonStyles => {
   return {
     root: {
-      backgroundColor: theme.palette.greenDark,
       color: theme.palette.white,
-      borderRadius: '2rem',
-      minWidth: '2rem',
-      width: '2rem',
-      border: 'none'
+      border: 'none',
+      borderRadius: theme.effects.roundedCorner4,
+      width: '100%',
+      maxWidth: '8.875rem'
     },
     rootHovered: {
-      backgroundColor: theme.palette.green,
       color: theme.palette.white
+    },
+    icon: {
+      height: '1.25rem'
     }
   };
 };
@@ -226,16 +333,12 @@ const incomingCallAcceptButtonStyle = (theme: Theme): IButtonStyles => {
 const incomingCallRejectButtonStyle = (theme: Theme): IButtonStyles => {
   return {
     root: {
-      backgroundColor: theme.palette.redDark,
-      color: theme.palette.white,
-      borderRadius: '2rem',
-      minWidth: '2rem',
-      width: '2rem',
-      border: 'none'
+      borderRadius: theme.effects.roundedCorner4,
+      maxWidth: '8.875rem',
+      width: '100%'
     },
-    rootHovered: {
-      backgroundColor: theme.palette.red,
-      color: theme.palette.white
+    icon: {
+      height: '1.25rem'
     }
   };
 };

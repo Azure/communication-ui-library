@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { CustomCallControlButtonProps, ErrorType } from '@azure/communication-react';
+import { ErrorType, NotificationType } from '@azure/communication-react';
 import { PartialTheme } from '@fluentui/react';
 import { DefaultTheme, DarkTheme, TeamsTheme, WordTheme } from '@fluentui/theme-samples';
 import {
@@ -147,6 +147,49 @@ export const controlsForImageOverlay = {
   setAltText: { control: 'text', name: 'Set Alt Text' }
 };
 
+const notificationOptions: NotificationType[] = [
+  'startVideoGeneric',
+  'stopVideoGeneric',
+  'muteGeneric',
+  'unmuteGeneric',
+  'speakingWhileMuted',
+  'startScreenShareGeneric',
+  'stopScreenShareGeneric',
+  'callNetworkQualityLow',
+  'teamsMeetingCallNetworkQualityLow',
+  'callNoSpeakerFound',
+  'callNoMicrophoneFound',
+  'callMicrophoneAccessDenied',
+  'callMicrophoneAccessDeniedSafari',
+  'callMicrophoneMutedBySystem',
+  'callMicrophoneUnmutedBySystem',
+  'callMacOsMicrophoneAccessDenied',
+  'callLocalVideoFreeze',
+  'callCameraAccessDenied',
+  'callCameraAccessDeniedSafari',
+  'callCameraAlreadyInUse',
+  'callVideoStoppedBySystem',
+  'callVideoRecoveredBySystem',
+  'callMacOsCameraAccessDenied',
+  'callMacOsScreenShareAccessDenied',
+  'failedToJoinCallGeneric',
+  'failedToJoinCallInvalidMeetingLink',
+  'cameraFrozenForRemoteParticipants',
+  'unableToStartVideoEffect',
+  'startSpotlightWhileMaxParticipantsAreSpotlighted',
+  'mutedByRemoteParticipant',
+  'recordingStarted',
+  'transcriptionStarted',
+  'recordingStopped',
+  'transcriptionStopped',
+  'recordingAndTranscriptionStarted',
+  'recordingAndTranscriptionStopped',
+  'recordingStoppedStillTranscribing',
+  'transcriptionStoppedStillRecording'
+];
+
+export const defaultActiveNotifications = ['callNoSpeakerFound'];
+
 export const controlsToAdd = {
   alternateCallerId: {
     control: 'text',
@@ -163,7 +206,6 @@ export const controlsToAdd = {
   botAvatar: { control: 'radio', options: botAvatars, defaultValue: 'Default', name: 'Bot Avatar' },
   botChatTopic: {
     control: 'text',
-    defaultValue: 'Chat with a friendly bot',
     name: 'Chat Topic',
     type: { name: 'string', required: true }
   },
@@ -200,11 +242,10 @@ export const controlsToAdd = {
     defaultValue: '',
     name: 'Call locator (ACS group ID, Teams meeting link, or Room ID)'
   },
-  callParticipantsLocator: {
-    control: 'array',
-    defaultValue: ['+###########'],
-    name: 'Call locator (participants phone numbers)',
-    type: { name: 'string', required: true }
+  targetParticipantsPSTN: {
+    control: 'text',
+    defaultValue: '',
+    name: 'Phone number(s) to call (comma separated)'
   },
   callModalAlertText: { control: 'text', defaultValue: 'Incoming Video Call', name: 'Alert Text' },
   callToastAlertText: { control: 'text', defaultValue: 'Incoming Call', name: 'Alert Text' },
@@ -370,7 +411,8 @@ export const controlsToAdd = {
     control: 'text',
     defaultValue: '',
     name: 'User identifier for user',
-    type: { name: 'string', required: true }
+    type: { name: 'string', required: true },
+    value: ''
   },
   videoGallerylayout: {
     control: 'select',
@@ -438,43 +480,58 @@ export const controlsToAdd = {
       options: ['undefined', false, true],
       name: 'Show Label'
     },
-    allowRawObjectInput: {
-      control: 'boolean',
-      defaultValue: false,
-      if: { arg: 'injectMaximumNumberOfButtons', truthy: false },
-      name: 'Inject your own buttons'
-    },
-    objectOptions: {
-      control: 'object',
-      if: { arg: 'allowRawObjectInput' },
-      defaultValue: [
-        (): CustomCallControlButtonProps => ({
-          placement: 'primary',
-          strings: {
-            label: 'Custom'
-          }
-        }),
-        (): CustomCallControlButtonProps => ({
-          placement: 'secondary',
-          strings: {
-            label: 'Custom'
-          }
-        }),
-        (): CustomCallControlButtonProps => ({
-          placement: 'overflow',
-          strings: {
-            label: 'Custom'
-          }
-        })
-      ]
-    },
+    // Object injection is converting function consts to string. This is causing errors with this control.
+    // allowRawObjectInput: {
+    //   control: 'boolean',
+    //   defaultValue: false,
+    //   if: { arg: 'injectMaximumNumberOfButtons', truthy: false },
+    //   name: 'Inject your own buttons'
+    // },
+    // objectOptions: {
+    //   control: 'object',
+    //   if: { arg: 'allowRawObjectInput' },
+    //   defaultValue: [
+    //     (): CustomCallControlButtonProps => ({
+    //       placement: 'primary',
+    //       strings: {
+    //         label: 'Custom'
+    //       }
+    //     }),
+    //     (): CustomCallControlButtonProps => ({
+    //       placement: 'secondary',
+    //       strings: {
+    //         label: 'Custom'
+    //       }
+    //     }),
+    //     (): CustomCallControlButtonProps => ({
+    //       placement: 'overflow',
+    //       strings: {
+    //         label: 'Custom'
+    //       }
+    //     })
+    //   ]
+    // },
     injectMaximumNumberOfButtons: {
       control: 'boolean',
       defaultValue: false,
       if: { arg: 'allowRawObjectInput', truthy: false },
       name: 'Inject Max # of Custom Buttons'
     }
-  }
+  },
+  isNotificationAutoDismiss: { control: 'boolean', defaultValue: false, name: 'Is auto dismiss on' },
+  showNotificationStacked: { control: 'boolean', defaultValue: false, name: 'Show notification stacked effect' },
+  activeNotifications: {
+    control: 'check',
+    options: notificationOptions,
+    name: 'Active notifications to show'
+  },
+  maxNotificationsToShow: {
+    control: 'select',
+    options: [1, 2, 3],
+    defaultValue: '2',
+    name: 'Select max number of notifications to show'
+  },
+  richTextEditor: { control: 'boolean', name: 'Enable rich text editor' }
 };
 
 export const hiddenControl = { control: false, table: { disable: true } };
@@ -490,7 +547,9 @@ export const defaultCallCompositeHiddenControls = {
   options: hiddenControl,
   callInvitationUrl: hiddenControl,
   formFactor: hiddenControl, // formFactor is hidden by default and compositeFormFactor is used as a prop instead to workaround a bug where formFactor is not put in the correct order when the controls are generated
-  role: hiddenControl // TODO: once role work is complete this should be added as a drop down control
+  role: hiddenControl, // TODO: once role work is complete this should be added as a drop down control
+  icons: hiddenControl,
+  onFetchParticipantMenuItems: hiddenControl
 };
 
 export const defaultChatCompositeHiddenControls = {
@@ -513,6 +572,10 @@ export const defaultCallWithChatCompositeHiddenControls = {
   joinInvitationURL: hiddenControl,
   rtl: hiddenControl,
   options: hiddenControl,
+  locale: hiddenControl,
+  icons: hiddenControl,
+  onFetchAvatarPersonaData: hiddenControl,
+  onFetchParticipantMenuItems: hiddenControl,
   formFactor: hiddenControl // formFactor is hidden by default and compositeFormFactor is used as a prop instead to workaround a bug where formFactor is not put in the correct order when the controls are generated
 };
 

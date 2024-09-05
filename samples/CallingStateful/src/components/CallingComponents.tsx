@@ -44,20 +44,24 @@ export const CallingComponents = (): JSX.Element => {
   return (
     <Stack style={{ height: '100%' }}>
       {videoGalleryProps && (
-        <Stack style={{ height: '100vh' }}>
+        <Stack verticalAlign="center" style={{ height: '100%' }}>
           <VideoGallery
             {...videoGalleryProps}
+            styles={VideoGalleryStyles}
+            layout={'floatingLocalVideo'}
             localVideoViewOptions={localVideoViewOptions}
             remoteVideoViewOptions={remoteVideoViewOptions}
           />
+          <Stack>
+            <ControlBar layout={'floatingBottom'}>
+              {cameraProps && <CameraButton {...cameraProps} />}
+              {microphoneProps && <MicrophoneButton {...microphoneProps} />}
+              {screenShareProps && <ScreenShareButton {...screenShareProps} />}
+              {endCallProps && <EndCallButton {...endCallProps} onHangUp={onHangup} />}
+            </ControlBar>
+          </Stack>
         </Stack>
       )}
-      <ControlBar layout="floatingBottom">
-        {cameraProps && <CameraButton {...cameraProps} />}
-        {microphoneProps && <MicrophoneButton {...microphoneProps} />}
-        {screenShareProps && <ScreenShareButton {...screenShareProps} />}
-        {endCallProps && <EndCallButton {...endCallProps} onHangUp={onHangup} />}
-      </ControlBar>
     </Stack>
   );
 };
@@ -67,3 +71,12 @@ function CallEnded(): JSX.Element {
 }
 
 export default CallingComponents;
+
+const VideoGalleryStyles = {
+  root: {
+    height: '100%',
+    width: '100%',
+    minHeight: '10rem', // space affordance to ensure media gallery is never collapsed
+    minWidth: '6rem'
+  }
+};

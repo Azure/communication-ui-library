@@ -180,7 +180,6 @@ const convertRemoteVideoStreamToVideoGalleryStream = (stream: RemoteVideoStreamS
   return {
     id: stream.id,
     isAvailable: stream.isAvailable,
-    /* @conditional-compile-remove(video-stream-is-receiving-flag) */
     isReceiving: stream.isReceiving,
     isMirrored: stream.view?.isMirrored,
     renderElement: stream.view?.target,
@@ -206,6 +205,7 @@ export const memoizeLocalParticipant = memoizeOne(
     isMuted,
     isScreenSharingOn,
     localVideoStream,
+    localScreenSharingStream,
     role,
     raisedHand,
     reaction,
@@ -220,6 +220,10 @@ export const memoizeLocalParticipant = memoizeOne(
       isAvailable: !!localVideoStream,
       isMirrored: localVideoStream?.view?.isMirrored,
       renderElement: localVideoStream?.view?.target
+    },
+    screenShareStream: {
+      isAvailable: !!localScreenSharingStream,
+      renderElement: localScreenSharingStream?.view?.target
     },
     role,
     raisedHand: raisedHand,

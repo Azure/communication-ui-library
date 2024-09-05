@@ -1,9 +1,0 @@
-{
-  "type": "patch",
-  "area": "fix",
-  "workstream": "End call options",
-  "comment": "Only allow the user to end the call for everyone if they are acitvely in the call",
-  "packageName": "@azure/communication-react",
-  "email": "dmceachern@microsoft.com",
-  "dependentChangeType": "patch"
-}

@@ -18,14 +18,13 @@ import { VideoDeviceInfo } from '@azure/communication-calling';
 import { VideoEffectProcessor } from '@azure/communication-calling';
 import { CompositeLocale } from '../../localization';
 import { CallCompositeIcons } from '../../common/icons';
-/* @conditional-compile-remove(notifications) */
+
 import { ActiveNotification } from '@internal/react-components';
 
 const ACCESS_DENIED_TEAMS_MEETING_SUB_CODE = 5854;
 const REMOTE_PSTN_USER_HUNG_UP = 560000;
 const REMOVED_FROM_CALL_SUB_CODES = [5000, 5300, REMOTE_PSTN_USER_HUNG_UP];
 const CALL_REJECTED_CODE = 603;
-/* @conditional-compile-remove(meeting-id) */
 const INVALID_MEETING_IDENTIFIER = 5751;
 /** @private */
 export const ROOM_NOT_FOUND_SUB_CODE = 5732;
@@ -237,7 +236,6 @@ export const getEndedCallPageProps = (
       }
       break;
   }
-  /* @conditional-compile-remove(meeting-id) */
   switch (endedCall?.callEndReason?.subCode) {
     case INVALID_MEETING_IDENTIFIER:
       if (locale.strings.call.callRejectedTitle) {
@@ -270,6 +268,7 @@ type GetCallCompositePageFunction = ((
     call: CallState | undefined,
     previousCall: CallState | undefined,
     transferCall?: CallState,
+    originCall?: CallState,
     /* @conditional-compile-remove(unsupported-browser) */ unsupportedBrowserInfo?: {
       environmentInfo?: EnvironmentInfo;
       unsupportedBrowserVersionOptedIn?: boolean;
@@ -292,6 +291,7 @@ export const getCallCompositePage: GetCallCompositePageFunction = (
   call,
   previousCall?,
   transferCall?: CallState,
+  originCall?: CallState,
   unsupportedBrowserInfo?: {
     /* @conditional-compile-remove(unsupported-browser) */
     environmentInfo?: EnvironmentInfo;
@@ -337,6 +337,11 @@ export const getCallCompositePage: GetCallCompositePageFunction = (
       // transitional state.
       return 'configuration';
     }
+  }
+
+  // /* @conditional-compile-remove(breakout-rooms) */
+  if (previousCall?.breakoutRooms?.breakoutRoomOriginCallId && originCall) {
+    return 'call';
   }
 
   if (previousCall) {
@@ -592,13 +597,11 @@ export const getLocatorOrTargetCallees = (
   return !!Array.isArray(locatorOrTargetCallees);
 };
 
-/* @conditional-compile-remove(notifications) */
 /**
  * @private
  */
 export type ComplianceState = 'on' | 'off' | 'stopped';
 
-/* @conditional-compile-remove(notifications) */
 /**
  * Return different conditions based on the current and previous state of recording and transcribing
  *
@@ -634,7 +637,6 @@ export const computeVariant = (
   }
 };
 
-/* @conditional-compile-remove(notifications) */
 /**
  * @private
  */
@@ -649,7 +651,6 @@ export type ComplianceNotificationVariant =
   | 'recordingStoppedStillTranscribing'
   | 'transcriptionStoppedStillRecording';
 
-/* @conditional-compile-remove(notifications) */
 /**
  * @private
  */
@@ -667,7 +668,6 @@ export type CachedComplianceNotificationProps = {
   lastUpdated: number;
 };
 
-/* @conditional-compile-remove(notifications) */
 /**
  * @private
  */
@@ -688,7 +688,13 @@ export function determineStates(previous: ComplianceState, current: boolean | un
     }
   }
 }
-/* @conditional-compile-remove(notifications) */
+
+// The debounce time for the stopped state to be shown after both states are stopped.
+// This is to prevent stopped messages from being lost by transitioning to "Off" too
+// quickly if the states are toggled in quick succession.
+// This also prevents React strict mode from transitioning to "Off" too quickly.
+const ComplianceNotificationOffDebounceTimeMs = 2000;
+
 /**
  * Compute compliance notification based on latest compliance state and cached props.
  * @private
@@ -726,22 +732,24 @@ export function computeComplianceNotification(
     };
   }
 
-  // [2]: Compute the variant, using the transitioned state machine.
-  const variant = computeVariant(
-    cachedProps.current.latestStringState.callRecordState,
-    cachedProps.current.latestStringState.callTranscribeState
-  );
-
-  // [3]: Transition the state machine again to deal with some end-states.
+  // [2]: If the callRecordState and callTranscribeState are both stopped for a predetermined amount of time, mark both states as off.
+  // NOTE: this can be removed once lastStoppedRecording in the calling stateful client is GA.
   if (
     shouldUpdateCached &&
     cachedProps.current.latestStringState.callRecordState === 'stopped' &&
-    cachedProps.current.latestStringState.callTranscribeState === 'stopped'
+    cachedProps.current.latestStringState.callTranscribeState === 'stopped' &&
+    Date.now() - cachedProps.current.lastUpdated > ComplianceNotificationOffDebounceTimeMs
   ) {
     // When both states are stopped, after displaying message "RECORDING_AND_TRANSCRIPTION_STOPPED", change both states to off (going back to the default state).
     cachedProps.current.latestStringState.callRecordState = 'off';
     cachedProps.current.latestStringState.callTranscribeState = 'off';
   }
+
+  // [3]: Compute the variant, using the transitioned state machine.
+  const variant = computeVariant(
+    cachedProps.current.latestStringState.callRecordState,
+    cachedProps.current.latestStringState.callTranscribeState
+  );
 
   // If the variant is not 'noState', then show the notification.
   if (variant !== 'noState') {

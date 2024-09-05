@@ -3,35 +3,45 @@
 
 import React, { useCallback, useEffect, useState } from 'react';
 import './App.css';
-import { CommunicationUserIdentifier } from '@azure/communication-common';
-import {
-  CallCommon,
-  IncomingCall,
-  TeamsIncomingCall,
-  LocalVideoStream,
-  IncomingCallCommon
-} from '@azure/communication-calling';
 /* @conditional-compile-remove(one-to-n-calling) */
-import { IncomingCallEvent, TeamsIncomingCallEvent } from '@azure/communication-calling';
+import { CommunicationUserIdentifier } from '@azure/communication-common';
+import { Call, CallCommon, TeamsCall } from '@azure/communication-calling';
+/* @conditional-compile-remove(one-to-n-calling) */
+import { CallAgent } from '@azure/communication-calling';
 import {
   DEFAULT_COMPONENT_ICONS,
+  CallClientProvider,
   FluentThemeProvider,
   StatefulCallClient,
   CallClientState
 } from '@azure/communication-react';
 /* @conditional-compile-remove(one-to-n-calling) */
-import { DeclarativeCallAgent, DeclarativeTeamsCallAgent } from '@azure/communication-react';
-import { Stack, Text, initializeIcons, registerIcons } from '@fluentui/react';
+import {
+  DeclarativeCallAgent,
+  DeclarativeTeamsCallAgent,
+  CallProvider,
+  CallAgentProvider
+} from '@azure/communication-react';
+import { Text, initializeIcons, registerIcons } from '@fluentui/react';
+/* @conditional-compile-remove(one-to-n-calling) */
+import { Stack } from '@fluentui/react';
 import heroSVG from './assets/hero.svg';
 import { LoginScreen } from './views/Login';
+/* @conditional-compile-remove(one-to-n-calling) */
 import { CallScreen } from './views/CallScreen';
-import { IncomingCallManager } from './components/IncomingCallManager';
+/* @conditional-compile-remove(one-to-n-calling) */
+import { HomeScreen } from './views/Homescreen';
+/* @conditional-compile-remove(one-to-n-calling) */
+import { CallManager } from './components/CallManager';
+
 initializeIcons();
 registerIcons({ icons: DEFAULT_COMPONENT_ICONS });
 
 function App(): JSX.Element {
   const imageProps = { src: heroSVG.toString() };
+  /* @conditional-compile-remove(one-to-n-calling) */
   const [userIdentifier, setUserIdentifier] = useState<CommunicationUserIdentifier>();
+  /* @conditional-compile-remove(one-to-n-calling) */
   const [teamsIdentifier, setTeamsIdentifier] = useState<string>();
 
   const [userCredentialFetchError, setUserCredentialFetchError] = useState<boolean>(false);
@@ -39,41 +49,30 @@ function App(): JSX.Element {
   const [statefulCallClient, setStatefulCallClient] = useState<StatefulCallClient>();
   /* @conditional-compile-remove(one-to-n-calling) */
   const [callAgent, setCallAgent] = useState<DeclarativeCallAgent | DeclarativeTeamsCallAgent>();
-  const [call, setCall] = useState<CallCommon>();
-  const [incomingCalls, setIncomingCalls] = useState<readonly IncomingCall[] | readonly TeamsIncomingCall[]>([]);
-
-  /**
-   * Helper function to clear the old incoming Calls in the app that are no longer valid.
-   * @param statefulClient
-   */
-  const filterEndedIncomingCalls = useCallback(
-    (incomingCall: IncomingCallCommon): void => {
-      setIncomingCalls(incomingCalls.filter((call) => call.id !== incomingCall.id));
-    },
-    [incomingCalls]
-  );
-
+  const [call, setCall] = useState<Call | TeamsCall>();
   /* @conditional-compile-remove(one-to-n-calling) */
-  const incomingAcsCallListener: IncomingCallEvent = useCallback(
-    ({ incomingCall }): void => {
-      console.log('Incoming call received: ', incomingCall);
-      if (callAgent) {
-        setIncomingCalls(callAgent.incomingCalls);
+  const [calls, setCalls] = useState<Call[] | TeamsCall[]>([]);
+
+  const statefulCallClientUpdatedListener = useCallback(
+    (newStatefulCallClient: CallClientState): void => {
+      if (newStatefulCallClient.callAgent && /* @conditional-compile-remove(one-to-n-calling) */ callAgent?.calls) {
+        /* @conditional-compile-remove(one-to-n-calling) */
+        setCalls((callAgent?.calls as Call[] | TeamsCall[]) || []);
       }
     },
-    [callAgent]
+    [/* @conditional-compile-remove(one-to-n-calling) */ callAgent]
   );
 
-  /* @conditional-compile-remove(one-to-n-calling) */
-  const teamsIncomingCallListener: TeamsIncomingCallEvent = useCallback(
-    ({ incomingCall }): void => {
-      console.log('Incoming call received: ', incomingCall);
-      if (callAgent) {
-        setIncomingCalls(callAgent.incomingCalls);
+  useEffect(() => {
+    if (statefulCallClient) {
+      statefulCallClient.onStateChange(statefulCallClientUpdatedListener);
+    }
+    return () => {
+      if (statefulCallClient) {
+        statefulCallClient.offStateChange(statefulCallClientUpdatedListener);
       }
-    },
-    [callAgent]
-  );
+    };
+  }, [statefulCallClient, statefulCallClientUpdatedListener]);
 
   const callsUpdatedListener = useCallback(
     (event: { added: CallCommon[]; removed: CallCommon[] }): void => {
@@ -81,61 +80,16 @@ function App(): JSX.Element {
         if (call && call.state !== 'Disconnected') {
           call.hold();
         }
-        setCall(event.added[0]);
+        setCall(event.added[0] as Call | TeamsCall);
       } else if (event.removed.length > 0) {
         if (event.removed[0] === call) {
           setCall(undefined);
+          console.log(call.id, call.callEndReason);
         }
       }
     },
-    [call, setCall]
+    [call]
   );
-
-  /**
-   * We need to check the call client to make sure we are removing any of the notifications that
-   * are no longer valid.
-   */
-  const statefulCallClientStateListener = useCallback(
-    (state: CallClientState): void => {
-      if (statefulCallClient) {
-        const endedIncomingCalls = Object.keys(state.incomingCallsEnded);
-        setIncomingCalls(incomingCalls.filter((call) => !endedIncomingCalls.includes(call.id)));
-      }
-    },
-    [statefulCallClient, incomingCalls]
-  );
-
-  // Examples for Callback functions for utilizing incomingCall reject and accept.
-  const onRejectCall = (incomingCall: IncomingCall | TeamsIncomingCall): void => {
-    if (incomingCall && /* @conditional-compile-remove(one-to-n-calling) */ callAgent) {
-      incomingCall.reject();
-      filterEndedIncomingCalls(incomingCall);
-    }
-  };
-
-  const onAcceptCall = async (incomingCall: IncomingCall | TeamsIncomingCall, useVideo?: boolean): Promise<void> => {
-    const cameras = statefulCallClient?.getState().deviceManager.cameras;
-    console.log(cameras);
-    let localVideoStream: LocalVideoStream | undefined;
-    if (cameras && useVideo) {
-      localVideoStream = new LocalVideoStream(cameras[0]);
-    }
-    if (incomingCall && /* @conditional-compile-remove(one-to-n-calling) */ callAgent) {
-      await incomingCall.accept(
-        localVideoStream ? { videoOptions: { localVideoStreams: [localVideoStream] } } : undefined
-      );
-      filterEndedIncomingCalls(incomingCall);
-    }
-  };
-
-  useEffect(() => {
-    if (statefulCallClient) {
-      statefulCallClient.onStateChange(statefulCallClientStateListener);
-    }
-    return () => {
-      statefulCallClient?.offStateChange(statefulCallClientStateListener);
-    };
-  }, [statefulCallClient, statefulCallClientStateListener]);
 
   useEffect(() => {
     /* @conditional-compile-remove(one-to-n-calling) */
@@ -147,36 +101,22 @@ function App(): JSX.Element {
       console.log('Subscribing to teams events');
       /* @conditional-compile-remove(one-to-n-calling) */
       (callAgent as DeclarativeTeamsCallAgent).on('callsUpdated', callsUpdatedListener);
-      /* @conditional-compile-remove(one-to-n-calling) */
-      (callAgent as DeclarativeTeamsCallAgent).on('incomingCall', teamsIncomingCallListener);
       return () => {
-        /* @conditional-compile-remove(one-to-n-calling) */
-        (callAgent as DeclarativeTeamsCallAgent).off('incomingCall', teamsIncomingCallListener);
         /* @conditional-compile-remove(one-to-n-calling) */
         (callAgent as DeclarativeTeamsCallAgent).off('callsUpdated', callsUpdatedListener);
       };
     } else if (callAgent.kind === 'CallAgent') {
       console.log('subscribing to ACS CallAgent events');
       /* @conditional-compile-remove(one-to-n-calling) */
-      (callAgent as DeclarativeCallAgent).on('incomingCall', incomingAcsCallListener);
-      /* @conditional-compile-remove(one-to-n-calling) */
       (callAgent as DeclarativeCallAgent).on('callsUpdated', callsUpdatedListener);
       return () => {
-        /* @conditional-compile-remove(one-to-n-calling) */
-        (callAgent as DeclarativeCallAgent).off('incomingCall', incomingAcsCallListener);
         /* @conditional-compile-remove(one-to-n-calling) */
         (callAgent as DeclarativeCallAgent).off('callsUpdated', callsUpdatedListener);
       };
     } else {
       throw new Error('Unknown call agent kind');
     }
-  }, [
-    /* @conditional-compile-remove(one-to-n-calling) */ callAgent,
-    call,
-    callsUpdatedListener,
-    /* @conditional-compile-remove(one-to-n-calling) */ incomingAcsCallListener,
-    /* @conditional-compile-remove(one-to-n-calling) */ teamsIncomingCallListener
-  ]);
+  }, [/* @conditional-compile-remove(one-to-n-calling) */ callAgent, callsUpdatedListener]);
 
   if (userCredentialFetchError) {
     return <Text>Failed to fetch user credentials</Text>;
@@ -188,9 +128,11 @@ function App(): JSX.Element {
         onSetStatefulClient={setStatefulCallClient}
         /* @conditional-compile-remove(one-to-n-calling) */
         onSetCallAgent={setCallAgent}
+        /* @conditional-compile-remove(one-to-n-calling) */
         onSetUserIdentifier={setUserIdentifier}
         headerImageProps={imageProps}
         setTokenCredentialError={setUserCredentialFetchError}
+        /* @conditional-compile-remove(one-to-n-calling) */
         onSetTeamsIdentity={setTeamsIdentifier}
       />
     );
@@ -198,24 +140,64 @@ function App(): JSX.Element {
 
   return (
     <FluentThemeProvider>
-      <Stack
-        verticalAlign="center"
-        horizontalAlign="center"
-        tokens={{ childrenGap: '1rem' }}
-        style={{ width: '100%', height: '40rem', margin: 'auto', paddingTop: '1rem', position: 'relative' }}
-      >
-        {userIdentifier && <Text>your userId: {userIdentifier.communicationUserId}</Text>}
-        {teamsIdentifier && <Text>your teamsId: {teamsIdentifier}</Text>}
-        {statefulCallClient && /* @conditional-compile-remove(one-to-n-calling) */ callAgent && call && (
-          <CallScreen
-            statefulCallClient={statefulCallClient}
-            /* @conditional-compile-remove(one-to-n-calling) */ callAgent={callAgent}
-            /* @conditional-compile-remove(one-to-n-calling) */ call={call}
-            /* @conditional-compile-remove(one-to-n-calling) */ onSetCall={setCall}
-          />
-        )}
-        <IncomingCallManager incomingCalls={incomingCalls} onAcceptCall={onAcceptCall} onRejectCall={onRejectCall} />
-      </Stack>
+      <CallClientProvider callClient={statefulCallClient}>
+        <>
+          {
+            /* @conditional-compile-remove(one-to-n-calling) */ <CallAgentProvider callAgent={callAgent}>
+              <Stack horizontal>
+                <Stack
+                  verticalAlign="center"
+                  horizontalAlign="center"
+                  tokens={{ childrenGap: '1rem' }}
+                  style={{ width: '100%', height: '40rem', margin: 'auto', paddingTop: '1rem', position: 'relative' }}
+                >
+                  {userIdentifier && <Text>your userId: {userIdentifier.communicationUserId}</Text>}
+                  {teamsIdentifier && <Text>your teamsId: {teamsIdentifier}</Text>}
+                  {
+                    /* @conditional-compile-remove(one-to-n-calling) */ statefulCallClient && callAgent && !call && (
+                      <HomeScreen callAgent={callAgent as CallAgent} headerImageProps={imageProps}></HomeScreen>
+                    )
+                  }
+                  {statefulCallClient && /* @conditional-compile-remove(one-to-n-calling) */ callAgent && call && (
+                    <CallProvider call={call.kind === 'Call' ? (call as Call) : (call as TeamsCall)}>
+                      <CallScreen
+                        /* @conditional-compile-remove(one-to-n-calling) */ call={call}
+                        /* @conditional-compile-remove(one-to-n-calling) */ onSetCall={setCall}
+                      />
+                    </CallProvider>
+                  )}
+                </Stack>
+                {calls.length > 0 && (
+                  <Stack style={{ minWidth: '15rem', height: '100%', paddingTop: '3rem' }}>
+                    <Stack.Item style={{ width: '100%', height: '30rem' }}>
+                      <CallManager
+                        activeCall={call}
+                        calls={calls}
+                        onSetResume={function (newCall: Call | TeamsCall): void {
+                          if (call) {
+                            call.hold();
+                            newCall.resume();
+                            setCall(newCall);
+                          } else {
+                            newCall.resume();
+                            setCall(newCall);
+                          }
+                        }}
+                        onSetHold={function (callToHold: Call | TeamsCall): void {
+                          callToHold.hold();
+                        }}
+                        onEndCall={function (callCallToEnd: Call | TeamsCall): void {
+                          callCallToEnd.hangUp();
+                        }}
+                      />
+                    </Stack.Item>
+                  </Stack>
+                )}
+              </Stack>
+            </CallAgentProvider>
+          }
+        </>
+      </CallClientProvider>
     </FluentThemeProvider>
   );
 }

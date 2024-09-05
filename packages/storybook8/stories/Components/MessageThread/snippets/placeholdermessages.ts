@@ -85,6 +85,15 @@ export const GetHistoryWithCustomMessages = (): (CustomMessage | ChatMessage)[] 
   ];
 };
 
+export const GetHistoryHTMLChatMessages = (): ChatMessage[] => {
+  return GetHistoryChatMessages().map((message) => {
+    return {
+      ...message,
+      contentType: 'html'
+    };
+  });
+};
+
 // This is some mock avatars for example purposes.
 export const GetAvatarUrlByUserId = (userId: string): string => {
   switch (userId) {

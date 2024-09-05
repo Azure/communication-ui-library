@@ -1,0 +1,9 @@
+{
+  "type": "patch",
+  "area": "improvement",
+  "workstream": "Add PPTLive presenter information",
+  "comment": "Add PPTLive presenter information",
+  "packageName": "@azure/communication-react",
+  "email": "93549644+ShaunaSong@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

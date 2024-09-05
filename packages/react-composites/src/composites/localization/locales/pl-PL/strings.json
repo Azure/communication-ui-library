@@ -342,11 +342,28 @@
     "pinParticipantLimitReachedMenuLabel": "Przypięcie (osiągnięto limit)",
     "unpinParticipantMenuLabel": "Odepnij",
     "pinParticipantMenuItemAriaLabel": "Przypnij",
-    "unpinParticipantMenuItemAriaLabel": "Odepnij"
+    "unpinParticipantMenuItemAriaLabel": "Odepnij",
+    "muteAllMenuLabel": "Wycisz wszystkich",
+    "muteAllDialogTitle": "Wyciszyć wszystkich?",
+    "muteAllDialogContent": "Spowoduje to wyciszenie wszystkich osób na spotkaniu oprócz Ciebie.",
+    "muteAllConfirmButtonLabel": "Wycisz wszystkich",
+    "muteAllCancelButtonLabel": "Anuluj",
+    "joinBreakoutRoomButtonLabel": "Dołącz do osobnego pokoju",
+    "returnFromBreakoutRoomButtonLabel": "Opuść pokój",
+    "leaveBreakoutRoomAndMeetingButtonLabel": "Opuść spotkanie",
+    "breakoutRoomJoinedNotificationTitle": "Dołączono do osobnego pokoju „{roomName}”",
+    "joinBreakoutRoomBannerTitle": "Osobny pokój „{roomName}” jest otwarty",
+    "joinBreakoutRoomBannerButtonLabel": "Dołącz",
+    "returnFromBreakoutRoomBannerTitle": "Powrót do spotkania głównego",
+    "returnFromBreakoutRoomBannerButtonLabel": "Dołącz ponownie"
   },
   "chat": {
     "chatListHeader": "W tym czacie",
-    "uploadAttachment": "Przekaż załącznik"
+    "uploadAttachment": "Przekaż załącznik",
+    "uploadImageDataNotProvided": "Nie udostępniono danych obrazu.",
+    "uploadImageIsTooLarge": "Obraz jest za duży. Wybierz rozmiar mniejszy niż {maxImageSize} MB.",
+    "uploadImageExtensionIsNotAllowed": "Przekazywanie obrazu .{imageExtension} nie jest dozwolone.",
+    "uploadImageFailed": "Nie można przekazać obrazu. Spróbuj ponownie później."
   },
   "callWithChat": {
     "chatButtonLabel": "Czat",
@@ -387,6 +404,8 @@
     "dialpadModalAriaLabel": "Klawiatura numeryczna",
     "dialpadCloseModalButtonAriaLabel": "Zamknij klawiaturę numeryczną",
     "openDtmfDialpadLabel": "Pokaż klawiaturę numeryczną",
-    "dtmfDialpadPlaceholderText": "Wprowadź numer"
+    "dtmfDialpadPlaceholderText": "Wprowadź numer",
+    "breakoutRoomChatPaneTitle": "Czat osobnego pokoju",
+    "chatContentSpinnerLabel": "Trwa ładowanie..."
   }
 }

@@ -24,7 +24,7 @@
     "placeholderText": "메시지를 입력하세요",
     "textTooLong": "메시지 길이가 최대 제한을 초과했습니다.",
     "sendButtonAriaLabel": "메시지 보내기",
-    "attachmentUploadsPendingError": "업로드 중... 잠시만 기다려 주세요.",
+    "attachmentUploadsPendingError": "파일을 업로드하는 중입니다. 잠시만 기다려 주세요.",
     "removeAttachment": "파일 제거",
     "uploading": "업로드 중",
     "uploadCompleted": "업로드 완료",
@@ -34,7 +34,8 @@
     "placeholderText": "메시지 입력",
     "textTooLong": "메시지 길이가 최대 제한을 초과했습니다.",
     "sendButtonAriaLabel": "메시지 보내기",
-    "attachmentUploadsPendingError": "업로드 중... 잠시 기다려 주세요.",
+    "attachmentUploadsPendingError": "파일을 업로드하는 중입니다. 잠시만 기다려 주세요.",
+    "imageUploadsPendingError": "이미지를 업로드하는 중입니다. 잠시만 기다려 주세요.",
     "removeAttachment": "파일 제거",
     "uploading": "업로드 중",
     "uploadCompleted": "업로드 완료",
@@ -58,7 +59,11 @@
     "richTextDeleteRowMenu": "행 삭제",
     "richTextDeleteTableMenu": "표 삭제",
     "richTextToolbarMoreButtonAriaLabel": "옵션 더 보기",
-    "attachmentMoreMenu": "옵션 더 보기"
+    "attachmentMoreMenu": "옵션 더 보기",
+    "richTextNewBulletedListItemAnnouncement": "글머리 기호, 새 줄",
+    "richTextNewNumberedListItemAnnouncement": "{0}, 새 줄",
+    "richTextBulletedListAppliedAnnouncement": "글머리 기호 목록 적용됨",
+    "richTextNumberedListAppliedAnnouncement": "번호 매기기 목록 적용됨"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "제안"
@@ -185,8 +190,8 @@
     "failToSendTag": "보내기 실패",
     "editedTag": "편집됨",
     "liveAuthorIntro": "{author} 님이 말합니다.",
-    "messageContentAriaText": "{author} 님이 {message}(이)라고 말했습니다.",
-    "messageContentMineAriaText": "내가 {message}(이)라고 말했습니다.",
+    "messageContentAriaText": "{status} {author} 님의 메시지: {message}",
+    "messageContentMineAriaText": "{status} 내 메시지: {message}",
     "editBoxTextLimit": "메시지가 {limitNumber} 문자 제한을 초과했습니다.",
     "editBoxPlaceholderText": "메시지 편집",
     "newMessagesIndicator": "새 메시지",
@@ -220,7 +225,13 @@
     "richTextDeleteColumnMenu": "열 삭제",
     "richTextDeleteRowMenu": "행 삭제",
     "richTextDeleteTableMenu": "표 삭제",
-    "richTextToolbarMoreButtonAriaLabel": "옵션 더 보기"
+    "richTextToolbarMoreButtonAriaLabel": "옵션 더 보기",
+    "attachmentUploadsPendingError": "파일을 업로드하는 중입니다. 잠시만 기다려 주세요.",
+    "imageUploadsPendingError": "이미지를 업로드하는 중입니다. 잠시만 기다려 주세요.",
+    "richTextNewBulletedListItemAnnouncement": "글머리 기호, 새 줄",
+    "richTextNewNumberedListItemAnnouncement": "{0}, 새 줄",
+    "richTextBulletedListAppliedAnnouncement": "글머리 기호 목록 적용됨",
+    "richTextNumberedListAppliedAnnouncement": "번호 매기기 목록 적용됨"
   },
   "errorBar": {
     "unableToReachChatService": "오프라인 상태입니다.",
@@ -237,6 +248,7 @@
     "startScreenShareGeneric": "화면 공유를 시작하는 동안 문제가 발생했습니다.",
     "stopScreenShareGeneric": "화면 공유를 중지하지 못함",
     "callNetworkQualityLow": "네트워크 품질이 낮습니다.",
+    "teamsMeetingCallNetworkQualityLow": "네트워크 품질이 낮습니다.",
     "callNoSpeakerFound": "스피커 또는 헤드폰을 찾을 수 없습니다. 오디오 장치를 연결하여 통화를 들을 수 있습니다.",
     "callNoMicrophoneFound": "마이크를 찾을 수 없습니다. 오디오 입력 장치를 연결합니다.",
     "callMicrophoneAccessDenied": "마이크에 액세스할 수 없습니다. 주소 표시줄에서 잠금을 클릭하여 이 웹 페이지에 권한을 부여합니다.",
@@ -257,165 +269,220 @@
     "failedToJoinCallInvalidMeetingLink": "모임에 참가할 수 없습니다. 잘못된 링크입니다.",
     "cameraFrozenForRemoteParticipants": "통화 중인 사용자에게 영상이 표시되는 데 문제가 있습니다. 장치와 네트워크를 확인하세요.",
     "unableToStartVideoEffect": "비디오 효과를 적용할 수 없습니다.",
-    "startSpotlightWhileMaxParticipantsAreSpotlighted": "최대 참가자 수가 이미 스포트라이트되었으므로 참가자에서 스포트라이트를 시작할 수 없습니다."
+    "startSpotlightWhileMaxParticipantsAreSpotlighted": "최대 참가자 수가 이미 스포트라이트되었으므로 참가자에서 스포트라이트를 시작할 수 없습니다.",
+    "mutedByRemoteParticipant": "다른 참가자가 나를 음소거했습니다."
   },
-  "notifications": {
-    "unableToReachChatService": {
-      "title": "오프라인 상태입니다.",
-      "closeButtonAriaLabel": "닫기"
-    },
-    "accessDenied": {
-      "title": "채팅 서비스에 액세스할 수 없음",
-      "message": "제공된 사용자 자격 증명 확인",
-      "closeButtonAriaLabel": "닫기"
-    },
-    "userNotInChatThread": {
-      "title": "이 채팅 스레드에 더 이상 없습니다.",
-      "closeButtonAriaLabel": "닫기"
-    },
-    "sendMessageNotInChatThread": {
-      "title": "메시지를 보내지 못함",
-      "message": "이 채팅 스레드에 더 이상 없습니다.",
-      "closeButtonAriaLabel": "닫기"
-    },
-    "sendMessageGeneric": {
-      "title": "메시지를 보내지 못했습니다.",
-      "closeButtonAriaLabel": "닫기"
-    },
+  "notificationStack": {
     "callingNetworkFailure": {
-      "title": "통화 연결에 문제가 발생",
-      "message": "오프라인 상태인 것 같습니다. 네트워크 연결을 검사 다시 시도하세요.",
-      "closeButtonAriaLabel": "닫기"
+      "title": "통화 연결 문제 발생",
+      "message": "오프라인 상태인 것 같습니다. 네트워크 연결을 확인하고 다시 시도하세요.",
+      "dismissButtonAriaLabel": "닫기"
     },
     "startVideoGeneric": {
       "title": "비디오를 시작하지 못했습니다.",
-      "closeButtonAriaLabel": "닫기"
+      "dismissButtonAriaLabel": "닫기"
     },
     "stopVideoGeneric": {
       "title": "비디오를 중지하지 못했습니다.",
-      "closeButtonAriaLabel": "닫기"
+      "dismissButtonAriaLabel": "닫기"
     },
     "muteGeneric": {
       "title": "마이크를 음소거하지 못했습니다.",
-      "closeButtonAriaLabel": "닫기"
+      "dismissButtonAriaLabel": "닫기"
     },
     "unmuteGeneric": {
       "title": "마이크의 음소거를 해제하지 못했습니다.",
-      "closeButtonAriaLabel": "닫기"
+      "dismissButtonAriaLabel": "닫기"
     },
     "speakingWhileMuted": {
-      "title": "음소거 되었습니다.",
-      "closeButtonAriaLabel": "닫기"
+      "title": "음소거했습니다.",
+      "dismissButtonAriaLabel": "닫기"
     },
     "startScreenShareGeneric": {
       "title": "화면 공유를 시작하는 동안 문제가 발생했습니다.",
-      "closeButtonAriaLabel": "닫기"
+      "dismissButtonAriaLabel": "닫기"
     },
     "stopScreenShareGeneric": {
       "title": "화면 공유를 중지하지 못했습니다.",
-      "closeButtonAriaLabel": "닫기"
+      "dismissButtonAriaLabel": "닫기"
     },
     "callNetworkQualityLow": {
       "title": "네트워크 품질이 낮습니다.",
-      "closeButtonAriaLabel": "닫기"
+      "dismissButtonAriaLabel": "닫기"
+    },
+    "teamsMeetingCallNetworkQualityLow": {
+      "title": "네트워크 품질이 낮습니다.",
+      "dismissButtonAriaLabel": "닫기",
+      "message": "더 나은 사운드를 위해 휴대폰에서 이 통화에 참여하세요. 이 장치에서 모임을 계속 볼 수 있습니다.",
+      "primaryButtonLabel": "전화로 참가"
     },
     "callNoSpeakerFound": {
       "title": "스피커 또는 헤드폰을 찾을 수 없음",
       "message": "오디오 장치를 연결하여 통화를 들을 수 있습니다.",
-      "closeButtonAriaLabel": "닫기"
+      "dismissButtonAriaLabel": "닫기"
     },
     "callNoMicrophoneFound": {
-      "title": "마이크를 찾을 수 없음",
+      "title": "마이크를 찾을 수 없습니다.",
       "message": "오디오 입력 장치를 연결합니다.",
-      "closeButtonAriaLabel": "닫기"
+      "dismissButtonAriaLabel": "닫기"
     },
     "callMicrophoneAccessDenied": {
       "title": "마이크에 액세스할 수 없음",
       "message": "주소 표시줄에서 잠금을 클릭하여 이 웹 페이지에 권한을 부여합니다.",
-      "closeButtonAriaLabel": "닫기"
+      "dismissButtonAriaLabel": "닫기"
     },
     "callMicrophoneAccessDeniedSafari": {
       "title": "마이크에 액세스할 수 없음",
-      "message": "사용 권한을 허용하려면 페이지를 새로 고치거나 이 브라우저의 설정을 검사 이 웹 사이트에 대해 사용 권한이 활성화되어 있는지 확인하세요.",
-      "closeButtonAriaLabel": "닫기"
+      "message": "사용 권한을 허용하려면 페이지를 새로 고치거나 이 브라우저의 설정을 확인하고 이 웹 사이트에 사용 권한이 설정되어 있는지 확인하세요.",
+      "dismissButtonAriaLabel": "닫기"
     },
     "callMicrophoneMutedBySystem": {
       "title": "시스템에 의해 음소거되었습니다.",
-      "closeButtonAriaLabel": "닫기"
+      "dismissButtonAriaLabel": "닫기"
     },
     "callMicrophoneUnmutedBySystem": {
       "title": "마이크가 복구되었으며 시스템에서 음소거를 해제했습니다.",
-      "closeButtonAriaLabel": "닫기"
+      "dismissButtonAriaLabel": "닫기"
     },
     "callMacOsMicrophoneAccessDenied": {
       "title": "마이크에 액세스할 수 없음",
       "message": "macOS 개인 정보 설정에서 마이크 권한을 부여합니다.",
-      "closeButtonAriaLabel": "닫기"
+      "dismissButtonAriaLabel": "닫기"
     },
     "callLocalVideoFreeze": {
       "title": "네트워크 대역폭이 나쁨",
       "message": "통화 중에 다른 사람에 대해 비디오가 일시 중지된 것 같습니다.",
-      "closeButtonAriaLabel": "닫기"
+      "dismissButtonAriaLabel": "닫기"
     },
     "callCameraAccessDenied": {
       "title": "카메라에 액세스할 수 없음",
       "message": "주소 표시줄에서 잠금을 클릭하여 이 웹 페이지에 권한을 부여합니다.",
-      "closeButtonAriaLabel": "닫기"
+      "dismissButtonAriaLabel": "닫기"
     },
     "callCameraAccessDeniedSafari": {
       "title": "카메라에 액세스할 수 없음",
-      "message": "사용 권한을 허용하려면 페이지를 새로 고치거나 이 브라우저의 설정을 검사 이 웹 사이트에 대해 사용 권한이 활성화되어 있는지 확인하세요.",
-      "closeButtonAriaLabel": "닫기"
+      "message": "사용 권한을 허용하려면 페이지를 새로 고치거나 이 브라우저의 설정을 확인하고 이 웹 사이트에 사용 권한이 설정되어 있는지 확인하세요.",
+      "dismissButtonAriaLabel": "닫기"
     },
     "callCameraAlreadyInUse": {
       "title": "카메라에 액세스할 수 없음",
       "message": "다른 응용 프로그램에서 이미 사용 중일 수 있습니다.",
-      "closeButtonAriaLabel": "닫기"
+      "dismissButtonAriaLabel": "닫기"
     },
     "callVideoStoppedBySystem": {
       "title": "시스템에 의해 비디오가 중지되었습니다.",
-      "closeButtonAriaLabel": "닫기"
+      "dismissButtonAriaLabel": "닫기"
     },
     "callVideoRecoveredBySystem": {
-      "title": "비디오가 다시 시작되었습니다.",
-      "closeButtonAriaLabel": "닫기"
+      "title": "비디오를 다시 시작했습니다.",
+      "dismissButtonAriaLabel": "닫기"
     },
     "callMacOsCameraAccessDenied": {
       "title": "MacOS가 카메라에 대한 액세스를 차단하고 있습니다.",
       "message": "이 브라우저에서 카메라에 액세스할 수 있도록 개인 정보 설정을 업데이트합니다.",
-      "closeButtonAriaLabel": "닫기"
+      "dismissButtonAriaLabel": "닫기"
     },
     "callMacOsScreenShareAccessDenied": {
       "title": "MacOS에서 화면 공유를 차단하고 있습니다.",
       "message": "이 브라우저에서 화면을 녹화할 수 있도록 개인 정보 설정을 업데이트합니다.",
-      "closeButtonAriaLabel": "닫기"
+      "dismissButtonAriaLabel": "닫기"
     },
     "failedToJoinCallGeneric": {
       "title": "통화에 참가하지 못했습니다.",
-      "closeButtonAriaLabel": "닫기"
+      "dismissButtonAriaLabel": "닫기"
     },
     "failedToJoinCallInvalidMeetingLink": {
       "title": "모임에 참가할 수 없습니다. 잘못된 링크입니다.",
-      "closeButtonAriaLabel": "닫기"
+      "dismissButtonAriaLabel": "닫기"
     },
     "cameraFrozenForRemoteParticipants": {
       "title": "통화 중인 사용자에게 영상이 표시되는 데 문제가 있습니다.",
       "message": "장치 및 네트워크를 확인하세요.",
-      "closeButtonAriaLabel": "닫기"
+      "dismissButtonAriaLabel": "닫기"
     },
     "unableToStartVideoEffect": {
       "title": "비디오 효과를 적용할 수 없습니다.",
-      "closeButtonAriaLabel": "닫기"
+      "dismissButtonAriaLabel": "닫기"
     },
     "startSpotlightWhileMaxParticipantsAreSpotlighted": {
       "title": "참가자에 대한 스포트라이트를 시작할 수 없음",
       "message": "최대 참가자 수가 이미 스포트라이트되었습니다.",
-      "closeButtonAriaLabel": "닫기"
+      "dismissButtonAriaLabel": "닫기"
+    },
+    "mutedByRemoteParticipant": {
+      "title": "다른 참가자가 나를 음소거했습니다.",
+      "dismissButtonAriaLabel": "닫기"
+    },
+    "recordingStarted": {
+      "title": "녹음/녹화가 시작되었습니다.",
+      "message": "참가하면 이 모임이 전사되는 것에 동의하게 됩니다.",
+      "dismissButtonAriaLabel": "닫기"
+    },
+    "transcriptionStarted": {
+      "title": "전사를 시작했습니다.",
+      "message": "참가하면 이 모임이 전사되는 것에 동의하게 됩니다.",
+      "dismissButtonAriaLabel": "닫기"
+    },
+    "recordingStopped": {
+      "title": "녹음/녹화를 저장하는 중입니다.",
+      "message": "녹음/녹화를 중단했습니다.",
+      "dismissButtonAriaLabel": "닫기"
+    },
+    "transcriptionStopped": {
+      "title": "대화 기록을 저장하는 중입니다.",
+      "message": "대화 내용 기록을 중단했습니다.",
+      "dismissButtonAriaLabel": "닫기"
+    },
+    "recordingAndTranscriptionStarted": {
+      "title": "녹음/녹화와 전사를 시작했습니다.",
+      "message": "참가하면 이 모임이 전사되는 것에 동의하게 됩니다.",
+      "dismissButtonAriaLabel": "닫기"
+    },
+    "recordingAndTranscriptionStopped": {
+      "title": "녹음/녹화와 전사를 저장하는 중입니다.",
+      "message": "녹음/녹화와 전사를 중단했습니다.",
+      "dismissButtonAriaLabel": "닫기"
+    },
+    "recordingStoppedStillTranscribing": {
+      "title": "녹음/녹화를 중단했습니다.",
+      "message": "이제 이 모임의 전사만 진행합니다.",
+      "dismissButtonAriaLabel": "닫기"
+    },
+    "transcriptionStoppedStillRecording": {
+      "title": "대화 내용 기록을 중단했습니다.",
+      "message": "이제 이 모임의 녹음/녹화만 진행합니다.",
+      "dismissButtonAriaLabel": "닫기"
+    },
+    "assignedBreakoutRoomOpened": {
+      "title": "5초 후에 할당된 채팅방으로 이동합니다.",
+      "dismissButtonAriaLabel": "닫기"
+    },
+    "assignedBreakoutRoomChanged": {
+      "title": "소규모 회의실이 변경되었습니다.",
+      "message": "5초 후에 할당된 채팅방으로 이동합니다.",
+      "dismissButtonAriaLabel": "닫기"
+    },
+    "assignedBreakoutRoomOpenedPromptJoin": {
+      "title": "소규모 회의실에 참가하시겠어요?",
+      "message": "사용자가 소규모 회의실에 배정되었습니다.",
+      "dismissButtonAriaLabel": "닫기",
+      "primaryButtonLabel": "소회의실 참가",
+      "secondaryButtonLabel": "나중에"
+    },
+    "breakoutRoomJoined": {
+      "title": "소회의실에 참가했습니다.",
+      "dismissButtonAriaLabel": "닫기"
+    },
+    "breakoutRoomClosingSoon": {
+      "title": "소회의실 시간 제한이 곧 만료됩니다.",
+      "message": "이 소회의실은 30초 후에 닫힙니다.",
+      "dismissButtonAriaLabel": "닫기"
     }
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "화면을 공유 중입니다.",
     "screenShareLoadingMessage": "{participant} 님의 화면 로드 중",
+    "localScreenShareLoadingMessage": "화면 로드 중",
     "localVideoLabel": "나",
     "localVideoCameraSwitcherLabel": "카메라 전환",
     "localVideoMovementLabel": "이동 가능한 로컬 비디오 타일",
@@ -436,7 +503,8 @@
     "spotlightLimitReachedMenuTitle": "스포트라이트 한도 도달",
     "stopSpotlightVideoTileMenuLabel": "스포트라이트 중지",
     "stopSpotlightOnSelfVideoTileMenuLabel": "스포트라이트 종료",
-    "attendeeRole": "참석자"
+    "attendeeRole": "참석자",
+    "muteParticipantMenuItemLabel": "음소거"
   },
   "dialpad": {
     "placeholderText": "전화 번호를 입력하세요.",
@@ -578,9 +646,18 @@
     "meetingConferencePhoneInfoModalMeetingId": "모임 ID 입력",
     "meetingConferencePhoneInfoModalWait": "이끌이가 허가할 때까지 기다리세요.",
     "meetingConferencePhoneInfoModalNoPhoneAvailable": "사용할 수 있는 전화 없음",
-    "meetingConferencePhoneInfoModalTollFree": "{phoneNumber}(무료) {country}, {city}",
-    "meetingConferencePhoneInfoModalTollFreeWithoutGeoData": "{phoneNumber}(무료)",
-    "meetingConferencePhoneInfoModalToll": "{phoneNumber}(유료) {country}, {city}",
-    "meetingConferencePhoneInfoModalTollWithoutGeoData": "{phoneNumber}(유료)"
+    "meetingConferencePhoneInfoModalTollGeoData": "{country}, {city}",
+    "meetingConferencePhoneInfoModalTollFree": "(무료)",
+    "meetingConferencePhoneInfoModalToll": "(유료)"
+  },
+  "IncomingCallNotification": {
+    "incomingCallNotificationPlaceholderId": "알 수 없는 사용자",
+    "incomingCallNotificationPlaceholderAlert": "{callerName}이(가) 호출 중입니다.",
+    "incomingCallNoticicationAcceptWithAudioAriaLabel": "오디오 수락",
+    "incomingCallNoticicationAcceptWithVideoAriaLabel": "비디오 수락",
+    "incomingCallNoticicationRejectAriaLabel": "거부",
+    "incomingCallNotificationAcceptButtonLabel": "수락",
+    "incomingCallNotificationRejectButtonLabel": "거절",
+    "incomingCallNotificationAccceptWithVideoButtonLabel": "영상 수락"
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "@internal/chat-component-bindings",
-  "version": "1.18.0-beta.1",
+  "version": "1.19.0-beta.2",
   "description": "Component bindings specific to components that integrate with the Azure Communication Services Chat JavaScript SDK",
   "module": "dist/dist-esm/index.js",
   "main": "dist/dist-cjs/index.js",
@@ -31,9 +31,9 @@
   "dependencies": {
     "@azure/communication-common": "^2.3.1",
     "@azure/core-paging": "^1.5.0",
-    "@internal/acs-ui-common": "1.18.0-beta.1",
-    "@internal/chat-stateful-client": "1.18.0-beta.1",
-    "@internal/react-components": "1.18.0-beta.1",
+    "@internal/acs-ui-common": "1.19.0-beta.2",
+    "@internal/chat-stateful-client": "1.19.0-beta.2",
+    "@internal/react-components": "1.19.0-beta.2",
     "reselect": "^4.0.0",
     "memoize-one": "^5.2.1"
   },
@@ -43,8 +43,8 @@
     "react": ">=16.8.0 <19.0.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.24.7",
-    "@babel/core": "^7.24.7",
+    "@babel/cli": "^7.24.8",
+    "@babel/core": "^7.25.2",
     "@types/jest": "^29.5.11",
     "@types/react": "18.3.3",
     "copyfiles": "^2.4.1",

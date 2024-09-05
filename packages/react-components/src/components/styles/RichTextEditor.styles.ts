@@ -28,7 +28,11 @@ export const richTextEditorWrapperStyle = (theme: Theme): string => {
     paddingInlineEnd: `0.75rem`,
     maxWidth: '100%',
     color: theme.palette.neutralPrimary,
-
+    '& img': {
+      margin: '0.2rem',
+      maxWidth: '100% !important', // Remove !important when resolving issue where rooster sets width/height in style attribute incorrectly
+      height: 'auto !important' // Remove !important when resolving issue where rooster sets width/height in style attribute incorrectly
+    },
     '& table': {
       background: 'transparent',
       borderCollapse: 'collapse',
@@ -48,9 +52,6 @@ export const richTextEditorWrapperStyle = (theme: Theme): string => {
           verticalAlign: 'top'
         }
       }
-    },
-    '& img': {
-      width: '119px'
     }
   });
 };

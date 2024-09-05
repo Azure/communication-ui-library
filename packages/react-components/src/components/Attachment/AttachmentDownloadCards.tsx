@@ -8,7 +8,7 @@ import { useMemo } from 'react';
 import { useLocale } from '../../localization';
 import { _AttachmentCard } from './AttachmentCard';
 import { _AttachmentCardGroup, _AttachmentCardGroupLayout } from './AttachmentCardGroup';
-import { _formatString } from '@internal/acs-ui-common';
+import { _formatString, _isIdentityMicrosoftTeamsUser } from '@internal/acs-ui-common';
 import { AttachmentMenuAction } from '../../types/Attachment';
 import { AttachmentMetadata } from '@internal/acs-ui-common';
 import { ChatMessage } from '../../types';
@@ -152,7 +152,8 @@ const getDefaultMenuActions = (
 ): AttachmentMenuAction[] => {
   let actionName = locale.openAttachment;
   // if message is sent by a Teams user, we need to use a different icon ("open")
-  if (chatMessage?.senderId?.includes('8:orgid:')) {
+  const isTeamsUser = _isIdentityMicrosoftTeamsUser(chatMessage?.senderId);
+  if (isTeamsUser) {
     return [
       {
         name: actionName,

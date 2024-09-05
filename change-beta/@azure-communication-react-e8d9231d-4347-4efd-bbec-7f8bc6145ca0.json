@@ -1,9 +1,0 @@
-{
-  "type": "patch",
-  "area": "fix",
-  "workstream": "UI/UX",
-  "comment": "Update DLP message styling",
-  "packageName": "@azure/communication-react",
-  "email": "longamy@microsoft.com",
-  "dependentChangeType": "patch"
-}

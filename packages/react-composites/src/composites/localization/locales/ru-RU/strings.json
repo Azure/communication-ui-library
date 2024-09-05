@@ -342,11 +342,28 @@
     "pinParticipantLimitReachedMenuLabel": "Закрепить (достигнуто ограничение)",
     "unpinParticipantMenuLabel": "Открепить",
     "pinParticipantMenuItemAriaLabel": "Закрепить",
-    "unpinParticipantMenuItemAriaLabel": "Открепить"
+    "unpinParticipantMenuItemAriaLabel": "Открепить",
+    "muteAllMenuLabel": "Отключить все микрофоны",
+    "muteAllDialogTitle": "Отключить микрофоны всех участников?",
+    "muteAllDialogContent": "Будут отключены микрофоны всех участников собрания, кроме вас.",
+    "muteAllConfirmButtonLabel": "Отключить все микрофоны",
+    "muteAllCancelButtonLabel": "Отмена",
+    "joinBreakoutRoomButtonLabel": "Присоединиться к переговорной комнате",
+    "returnFromBreakoutRoomButtonLabel": "Покинуть комнату",
+    "leaveBreakoutRoomAndMeetingButtonLabel": "Покинуть собрание",
+    "breakoutRoomJoinedNotificationTitle": "Вы присоединились к переговорной комнате \"{roomName}\"",
+    "joinBreakoutRoomBannerTitle": "Переговорная комната \"{roomName}\" открыта",
+    "joinBreakoutRoomBannerButtonLabel": "Присоединиться",
+    "returnFromBreakoutRoomBannerTitle": "Вернуться в главное собрание",
+    "returnFromBreakoutRoomBannerButtonLabel": "Присоединиться снова"
   },
   "chat": {
     "chatListHeader": "В этом чате",
-    "uploadAttachment": "Отправить вложение"
+    "uploadAttachment": "Отправить вложение",
+    "uploadImageDataNotProvided": "Данные образа не предоставлены.",
+    "uploadImageIsTooLarge": "Изображение слишком велико. Выберите размер меньше {maxImageSize} МБ.",
+    "uploadImageExtensionIsNotAllowed": "Отправка образа .{imageExtension} не разрешена.",
+    "uploadImageFailed": "Не удалось отправить изображение. Повторите попытку позже."
   },
   "callWithChat": {
     "chatButtonLabel": "Чат",
@@ -387,6 +404,8 @@
     "dialpadModalAriaLabel": "Панель набора номера",
     "dialpadCloseModalButtonAriaLabel": "Закрыть панель набора номера",
     "openDtmfDialpadLabel": "Показать панель набора номера",
-    "dtmfDialpadPlaceholderText": "Введите номер"
+    "dtmfDialpadPlaceholderText": "Введите номер",
+    "breakoutRoomChatPaneTitle": "Чат переговорной комнаты",
+    "chatContentSpinnerLabel": "Загрузка…"
   }
 }

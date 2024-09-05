@@ -153,6 +153,10 @@ export class MockCallAdapter implements CallAdapter {
   muteAllRemoteParticipants(): Promise<void> {
     throw Error('muteAllRemoteParticipants not implemented');
   }
+  /* @conditional-compile-remove(breakout-rooms) */
+  returnFromBreakoutRoom(): Promise<void> {
+    throw Error('returnFromBreakoutRoom not implemented');
+  }
 
   async setCamera(sourceInfo: VideoDeviceInfo): Promise<void> {
     this.modifyState((draft: CallAdapterState) => {
@@ -233,6 +237,14 @@ export class MockCallAdapter implements CallAdapter {
     this.modifyState((draft: CallAdapterState) => {
       draft.selectedVideoBackgroundEffect = selectedVideoBackground;
     });
+  }
+
+  startNoiseSuppressionEffect(): Promise<void> {
+    throw new Error('startNoiseSuppressionEffect not implemented.');
+  }
+
+  stopNoiseSuppressionEffect(): Promise<void> {
+    throw new Error('stopNoiseSuppressionEffect not implemented.');
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

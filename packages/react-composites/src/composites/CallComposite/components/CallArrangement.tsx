@@ -11,11 +11,9 @@ import {
   _useContainerHeight,
   _useContainerWidth,
   ActiveErrorMessage,
-  ErrorBar,
   ErrorBarProps,
   useTheme
 } from '@internal/react-components';
-/* @conditional-compile-remove(notifications) */
 import { ActiveNotification, NotificationStack } from '@internal/react-components';
 import { VideoGalleryLayout } from '@internal/react-components';
 import { VideoGallery } from '@internal/react-components';
@@ -40,9 +38,9 @@ import {
   CONTROL_BAR_Z_INDEX,
   DRAWER_Z_INDEX
 } from '../styles/CallPage.styles';
-/* @conditional-compile-remove(notifications) */
+
 import { notificationStackStyles } from '../styles/CallPage.styles';
-import { MutedNotification, MutedNotificationProps } from './MutedNotification';
+import { MutedNotificationProps } from './MutedNotification';
 import { CallAdapter } from '../adapter';
 import { useSelector } from '../hooks/useSelector';
 import { callStatusSelector } from '../selectors/callStatusSelector';
@@ -95,6 +93,10 @@ import { getCaptionsKind, getIsTeamsCall } from '../selectors/baseSelectors';
 import { useHandlers } from '../hooks/useHandlers';
 /* @conditional-compile-remove(soft-mute) */
 import { MoreDrawer } from '../../common/Drawer/MoreDrawer';
+/* @conditional-compile-remove(breakout-rooms) */
+import { useCompositeStringsForNotificationStackStrings } from '../hooks/useCompositeStringsForNotificationStack';
+/* @conditional-compile-remove(breakout-rooms) */
+import { BreakoutRoomsBanner } from './BreakoutRoomsBanner';
 
 /**
  * @private
@@ -103,7 +105,6 @@ export interface CallArrangementProps {
   id?: string;
   complianceBannerProps: _ComplianceBannerProps;
   errorBarProps: ErrorBarProps | false;
-  /* @conditional-compile-remove(notifications) */
   showErrorNotifications: boolean;
   mutedNotificationProps?: MutedNotificationProps;
   callControlProps: CallControlsProps;
@@ -114,13 +115,10 @@ export interface CallArrangementProps {
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   updateSidePaneRenderer: (renderer: SidePaneRenderer | undefined) => void;
   mobileChatTabHeader?: MobileChatSidePaneTabHeaderProps;
-  latestErrors: ActiveErrorMessage[] | /* @conditional-compile-remove(notifications) */ ActiveNotification[];
-  /* @conditional-compile-remove(notifications) */
+  latestErrors: ActiveErrorMessage[] | ActiveNotification[];
   latestNotifications?: ActiveNotification[];
-  onDismissError: (
-    error: ActiveErrorMessage | /* @conditional-compile-remove(notifications) */ ActiveNotification
-  ) => void;
-  /* @conditional-compile-remove(notifications) */
+  onDismissError: (error: ActiveErrorMessage | ActiveNotification) => void;
+
   onDismissNotification?: (notification: ActiveNotification) => void;
   onUserSetOverflowGalleryPositionChange?: (position: 'Responsive' | 'horizontalTop') => void;
   onUserSetGalleryLayoutChange?: (layout: VideoGalleryLayout) => void;
@@ -138,6 +136,7 @@ export interface CallArrangementProps {
   hideSpotlightButtons?: boolean;
   pinnedParticipants?: string[];
   setPinnedParticipants?: (pinnedParticipants: string[]) => void;
+  doNotShowCameraAccessNotifications?: boolean;
 }
 
 /**
@@ -431,12 +430,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
 
   const drawerContainerStylesValue = useMemo(() => drawerContainerStyles(DRAWER_Z_INDEX), []);
 
-  const canUnmute = role !== 'Consumer' ? true : false;
-
-  let filteredLatestErrors: ActiveErrorMessage[] =
-    props.errorBarProps !== false ? (props.latestErrors as ActiveErrorMessage[]) : [];
-
-  /* @conditional-compile-remove(notifications) */
   let filteredLatestErrorNotifications: ActiveNotification[] = props.showErrorNotifications
     ? (props.latestErrors as ActiveNotification[])
     : [];
@@ -444,14 +437,13 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   const isCameraOn = useSelector(localVideoSelector).isAvailable;
 
   // TODO: move this logic to the error bar selector once role is plumbed from the headless SDK
-  if (
-    role === 'Consumer' &&
-    (props.errorBarProps || /* @conditional-compile-remove(notifications) */ props.showErrorNotifications)
-  ) {
-    filteredLatestErrors = filteredLatestErrors.filter(
+  if (role === 'Consumer' && (props.errorBarProps || props.showErrorNotifications)) {
+    filteredLatestErrorNotifications = filteredLatestErrorNotifications.filter(
       (e) => e.type !== 'callCameraAccessDenied' && e.type !== 'callCameraAccessDeniedSafari'
     );
-    /* @conditional-compile-remove(notifications) */
+  }
+
+  if (props.doNotShowCameraAccessNotifications) {
     filteredLatestErrorNotifications = filteredLatestErrorNotifications.filter(
       (e) => e.type !== 'callCameraAccessDenied' && e.type !== 'callCameraAccessDeniedSafari'
     );
@@ -459,12 +451,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
 
   const isVideoPaneOpen = useIsParticularSidePaneOpen(VIDEO_EFFECTS_SIDE_PANE_ID);
 
-  if (
-    (isVideoPaneOpen || !isCameraOn) &&
-    (props.errorBarProps || /* @conditional-compile-remove(notifications) */ props.showErrorNotifications)
-  ) {
-    filteredLatestErrors = filteredLatestErrors.filter((e) => e.type !== 'unableToStartVideoEffect');
-    /* @conditional-compile-remove(notifications) */
+  if ((isVideoPaneOpen || !isCameraOn) && (props.errorBarProps || props.showErrorNotifications)) {
     filteredLatestErrorNotifications = filteredLatestErrorNotifications.filter(
       (e) => e.type !== 'unableToStartVideoEffect'
     );
@@ -484,7 +471,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   const minMaxDragPosition = useMinMaxDragPosition(props.modalLayerHostId);
   const pipStyles = useMemo(() => getPipStyles(theme), [theme]);
 
-  /* @conditional-compile-remove(notifications) */
   if (isTeamsMeeting) {
     filteredLatestErrorNotifications
       .filter((notification) => notification.type === 'teamsMeetingCallNetworkQualityLow')
@@ -505,60 +491,16 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
       )
     : props.capabilitiesChangedNotificationBarProps?.capabilitiesChangedNotifications;
 
-  const errorNotificationTrampoline = (): JSX.Element => {
-    /* @conditional-compile-remove(notifications) */
-    return (
-      <>
-        {props.showErrorNotifications && (
-          <Stack styles={notificationStackStyles} horizontalAlign="center" verticalAlign="center">
-            <NotificationStack
-              onDismissNotification={props.onDismissError}
-              activeNotifications={filteredLatestErrorNotifications}
-            />
-          </Stack>
-        )}
-      </>
-    );
+  /* @conditional-compile-remove(breakout-rooms) */
+  const notificationStackStrings = useCompositeStringsForNotificationStackStrings(locale);
 
-    return (
-      <>
-        {props.errorBarProps !== false && (
-          <Stack styles={bannerNotificationStyles}>
-            <ErrorBar
-              {...props.errorBarProps}
-              onDismissError={props.onDismissError}
-              activeErrorMessages={filteredLatestErrors}
-            />
-          </Stack>
-        )}
-      </>
-    );
-  };
-
-  const mutedNotificationTrampoline = (): JSX.Element => {
-    /* @conditional-compile-remove(notifications) */
-    return <></>;
-    return (
-      <>
-        {canUnmute && !!props.mutedNotificationProps && (
-          <MutedNotification
-            {...props.mutedNotificationProps}
-            speakingWhileMuted={props.mutedNotificationProps?.speakingWhileMuted ?? false}
-          />
-        )}
-      </>
-    );
-  };
-
-  const complianceBannerTrampoline = (): JSX.Element => {
-    /* @conditional-compile-remove(notifications) */
-    return <></>;
-    return (
-      <Stack styles={bannerNotificationStyles}>
-        <_ComplianceBanner {...props.complianceBannerProps} />
-      </Stack>
-    );
-  };
+  let latestNotifications = props.latestNotifications;
+  /* @conditional-compile-remove(breakout-rooms) */
+  // Filter out breakout room notification that prompts user to join breakout room when in mobile view. We will
+  // replace it with a non-dismissible banner
+  latestNotifications = props.mobileView
+    ? (latestNotifications ?? []).filter((notification) => notification.type !== 'assignedBreakoutRoomOpenedPromptJoin')
+    : latestNotifications;
 
   return (
     <div ref={containerRef} className={mergeStyles(containerDivStyles)} id={props.id}>
@@ -655,19 +597,28 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
               <Stack.Item styles={callGalleryStyles} grow>
                 <Stack verticalFill styles={mediaGalleryContainerStyles}>
                   <Stack.Item styles={notificationsContainerStyles}>
-                    {complianceBannerTrampoline()}
-
-                    {errorNotificationTrampoline()}
                     {
-                      /* @conditional-compile-remove(notifications) */ props.latestNotifications && (
-                        <Stack styles={notificationStackStyles} horizontalAlign="center" verticalAlign="center">
-                          <NotificationStack
-                            activeNotifications={props.latestNotifications}
-                            onDismissNotification={props.onDismissNotification}
-                          />
-                        </Stack>
-                      )
+                      /* @conditional-compile-remove(breakout-rooms) */
+                      props.mobileView && <BreakoutRoomsBanner locale={locale} adapter={adapter} />
                     }
+                    {props.showErrorNotifications && (
+                      <Stack styles={notificationStackStyles} horizontalAlign="center" verticalAlign="center">
+                        <NotificationStack
+                          onDismissNotification={props.onDismissError}
+                          activeNotifications={filteredLatestErrorNotifications}
+                        />
+                      </Stack>
+                    )}
+                    {latestNotifications && (
+                      <Stack styles={notificationStackStyles} horizontalAlign="center" verticalAlign="center">
+                        <NotificationStack
+                          activeNotifications={latestNotifications}
+                          onDismissNotification={props.onDismissNotification}
+                          /* @conditional-compile-remove(breakout-rooms) */
+                          strings={notificationStackStrings}
+                        />
+                      </Stack>
+                    )}
                     {props.capabilitiesChangedNotificationBarProps &&
                       props.capabilitiesChangedNotificationBarProps.capabilitiesChangedNotifications.length > 0 && (
                         <Stack styles={bannerNotificationStyles}>
@@ -677,7 +628,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                           />
                         </Stack>
                       )}
-                    {mutedNotificationTrampoline()}
                   </Stack.Item>
                   {renderGallery && props.onRenderGalleryContent && props.onRenderGalleryContent()}
                   {true &&

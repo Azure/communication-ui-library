@@ -1,0 +1,47 @@
+import { Stack } from '@fluentui/react';
+import { Meta } from '@storybook/addon-docs';
+import { overviewPageImagesStackStyle } from '../constants';
+
+<Meta title="Components/Overview" />
+
+# UI Component Overview
+
+Pure UI Components that can be used by developers to compose communication experiences, from stitching video tiles into a grid to showcase remote participants, to organizing components to fit your applications specifications.
+UI Components support customization to give the components the right feel and look to match an applications branding and style.
+
+Following are lists of components that can be used for specific areas.
+
+## Main Components for Calling
+
+<Stack tokens={{ childrenGap: '3rem' }} style={overviewPageImagesStackStyle}>
+  <Stack.Item align="center">
+    <img src="images/components_calling.png" alt="example of components that can be used for calling" />
+  </Stack.Item>
+  <Stack.Item align="center">
+    <img src="images/components_common.png" alt="example of components that can be used for chat" />
+  </Stack.Item>
+</Stack>
+
+| Component                                                                        | Description                                                                                        |
+| -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| [Grid Layout](./?path=/story/components-grid-layout--grid-layout)                | Grid component to organize Video Tiles into an NxN grid                                            |
+| [Video Tile](./?path=/story/components-video-tile--video-tile)                   | Component that displays video stream when available and a default static component when not        |
+| [Control Bar](./?path=/story/components-controlbar-control-bar--control-bar)     | Container to organize DefaultButtons to hook up to specific call actions like mute or share screen |
+| [Video Gallery](./?path=/story/components-video-gallery--gallery-layout)         | Turn-key video gallery component which dynamically changes as participants are added               |
+| [Participant Item](./?path=/story/components-participant-item--participant-item) | Common component to render a call or chat participant including avatar and display name            |
+| [Participant List](./?path=/story/components-participant-list--participant-list) | Common component to render a call or chat participant list including avatar and display name       |
+
+## Main Components for Chat
+
+<Stack style={overviewPageImagesStackStyle}>
+  <Stack.Item align="center">
+    <img src="images/components_chat.png" alt="example of components that can be used for chat" />
+  </Stack.Item>
+</Stack>
+
+| Component                                                                                                | Description                                                                   |
+| -------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| [Message Thread](./?path=/story/components-message-thread--message-thread)                               | Container that renders chat messages, system messages, and custom messages    |
+| [Send Box](./?path=/story/components-sendbox-send-box--send-box)                                         | Text input component with a discrete send button                              |
+| [Message Status Indicator](./?path=/story/components-message-status-indicator--message-status-indicator) | Multi-state message status indicator component to show status of sent message |
+| [Typing indicator](./?path=/story/components-typing-indicator--typing-indicator)                         | Text component to render the participants who are actively typing on a thread |

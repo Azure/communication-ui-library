@@ -1,9 +1,0 @@
-{
-  "type": "patch",
-  "area": "fix",
-  "workstream": "A11y",
-  "comment": "Remove the themeV8 version for the link color",
-  "packageName": "@azure/communication-react",
-  "email": "longamy@microsoft.com",
-  "dependentChangeType": "patch"
-}
