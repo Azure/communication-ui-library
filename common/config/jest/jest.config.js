@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+const path = require('path');
 /*
  * For a detailed explanation regarding each configuration property and type check, visit:
  * https://jestjs.io/docs/en/configuration.html
@@ -57,12 +58,6 @@ module.exports = {
   // Specifies the memory limit for workers before they are recycled and
   // is primarily a work- around for https://github.com/jestjs/jest/issues/11956
   workerIdleMemoryLimit: 0.85,
-  // A map from regular expressions to module names or to arrays of module names that allow to stub out resources,
-  // like images or styles with a single module.
-  moduleNameMapper: {
-    // Force modules to resolve with the CJS entry point, because Jest does not support package.json.exports. See https://github.com/uuidjs/uuid/issues/451
-    '^uuid$': require.resolve('uuid'),
-    '^nanoid$': require.resolve('nanoid'),
-    '^@azure/logger$': require.resolve('@azure/logger')
-  }
+  // Force modules to resolve with the CJS entry point, because Jest does not support ESM fully yet. See https://github.com/uuidjs/uuid/issues/451
+  resolver: path.resolve(__dirname, './resolver.js')
 };

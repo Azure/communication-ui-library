@@ -4,8 +4,6 @@
 /* @conditional-compile-remove(breakout-rooms) */
 import { Stack } from '@fluentui/react';
 /* @conditional-compile-remove(breakout-rooms) */
-import { ActiveNotification } from '@internal/react-components';
-/* @conditional-compile-remove(breakout-rooms) */
 import React from 'react';
 /* @conditional-compile-remove(breakout-rooms) */
 import { bannerNotificationStyles } from '../styles/CallPage.styles';
@@ -25,23 +23,15 @@ import { Banner } from './Banner';
  * @private
  */
 export const BreakoutRoomsBanner = (props: {
-  latestNotifications: ActiveNotification[] | undefined;
   locale: CompositeLocale;
   adapter: CommonCallAdapter;
 }): JSX.Element | undefined => {
-  const { latestNotifications, locale, adapter } = props;
+  const { locale, adapter } = props;
 
   const assignedBreakoutRoom = useSelector(getAssignedBreakoutRoom);
   const breakoutRoomSettings = useSelector(getBreakoutRoomSettings);
 
-  const autoMoveToBreakoutRoomCurrentlyInEffect =
-    assignedBreakoutRoom?.autoMoveParticipantToBreakoutRoom &&
-    latestNotifications?.find(
-      (notification) =>
-        notification.type === 'assignedBreakoutRoomOpened' || notification.type === 'assignedBreakoutRoomChanged'
-    );
-
-  if (assignedBreakoutRoom && assignedBreakoutRoom.state === 'open' && !autoMoveToBreakoutRoomCurrentlyInEffect) {
+  if (assignedBreakoutRoom && assignedBreakoutRoom.state === 'open' && assignedBreakoutRoom.call) {
     return (
       <Stack styles={bannerNotificationStyles}>
         <Banner
