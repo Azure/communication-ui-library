@@ -47,7 +47,6 @@ const getOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedPa
     dominantSpeakers = [],
     maxGridParticipants = DEFAULT_MAX_VIDEO_SREAMS,
     maxOverflowGalleryDominantSpeakers = DEFAULT_MAX_OVERFLOW_GALLERY_DOMINANT_SPEAKERS,
-    isScreenShareActive = false,
     layout,
     previousGridParticipants = [],
     previousOverflowParticipants = []
@@ -97,7 +96,6 @@ const getOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedPa
   });
 
   const gridParticipants = getGridParticipants({
-    isScreenShareActive,
     gridParticipants: newGridParticipants,
     overflowGalleryParticipants: newOverflowGalleryParticipants,
     maxGridParticipants: maxGridParticipants,
@@ -105,7 +103,6 @@ const getOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedPa
   });
 
   const overflowGalleryParticipants = getOverflowGalleryRemoteParticipants({
-    isScreenShareActive,
     gridParticipants: newGridParticipants,
     overflowGalleryParticipants: newOverflowGalleryParticipants,
     maxGridParticipants: maxGridParticipants,
@@ -172,15 +169,11 @@ export const useOrganizedParticipants = (props: OrganizedParticipantsArgs): Orga
 };
 
 const getGridParticipants = (args: {
-  isScreenShareActive: boolean;
   gridParticipants: VideoGalleryParticipant[];
   overflowGalleryParticipants: VideoGalleryParticipant[];
   maxGridParticipants: number;
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ callingParticipants: VideoGalleryParticipant[];
 }): VideoGalleryRemoteParticipant[] => {
-  if (args.isScreenShareActive) {
-    return [];
-  }
   // if we have no grid participants we need to cap the max number of overflowGallery participants in the grid
   // we will use the max streams provided to the function to find the max participants that can go in the grid
   // if there are less participants than max streams then we will use all participants including joining in the grid
@@ -196,32 +189,24 @@ const getGridParticipants = (args: {
 };
 
 const getOverflowGalleryRemoteParticipants = (args: {
-  isScreenShareActive: boolean;
   gridParticipants: VideoGalleryParticipant[];
   overflowGalleryParticipants: VideoGalleryParticipant[];
   maxGridParticipants: number;
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ callingParticipants: VideoGalleryParticipant[];
 }): VideoGalleryRemoteParticipant[] => {
-  if (args.isScreenShareActive) {
-    // If screen sharing is active, assign video and audio participants as overflow gallery participants
-    /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
-    return args.gridParticipants.concat(args.overflowGalleryParticipants.concat(args.callingParticipants));
-    return args.gridParticipants.concat(args.overflowGalleryParticipants);
-  } else {
-    // If screen sharing is not active, then assign all video tiles as grid tiles.
-    // If there are no video tiles, then assign audio tiles as grid tiles.
-    // if there are more overflow tiles than max streams then find the tiles that don't fit in the grid and put them in overflow
-    // overflow should be empty if total participants including calling participants is less than max streams
-    /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
-    return args.gridParticipants.length > 0
-      ? args.overflowGalleryParticipants.concat(args.callingParticipants)
-      : args.overflowGalleryParticipants.length > args.maxGridParticipants
-        ? args.overflowGalleryParticipants.slice(args.maxGridParticipants).concat(args.callingParticipants)
-        : [];
-    return args.gridParticipants.length > 0
-      ? args.overflowGalleryParticipants
-      : args.overflowGalleryParticipants.slice(args.maxGridParticipants);
-  }
+  // If screen sharing is not active, then assign all video tiles as grid tiles.
+  // If there are no video tiles, then assign audio tiles as grid tiles.
+  // if there are more overflow tiles than max streams then find the tiles that don't fit in the grid and put them in overflow
+  // overflow should be empty if total participants including calling participants is less than max streams
+  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+  return args.gridParticipants.length > 0
+    ? args.overflowGalleryParticipants.concat(args.callingParticipants)
+    : args.overflowGalleryParticipants.length > args.maxGridParticipants
+      ? args.overflowGalleryParticipants.slice(args.maxGridParticipants).concat(args.callingParticipants)
+      : [];
+  return args.gridParticipants.length > 0
+    ? args.overflowGalleryParticipants
+    : args.overflowGalleryParticipants.slice(args.maxGridParticipants);
 };
 
 const putVideoParticipantsFirst = (
