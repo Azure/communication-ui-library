@@ -76,6 +76,7 @@ export class BreakoutRoomsSubscriber {
       if (currentAssignedBreakoutRoom?.call?.id) {
         this._context.deleteLatestNotification(currentAssignedBreakoutRoom.call.id, 'breakoutRoomJoined');
         this._context.deleteLatestNotification(currentAssignedBreakoutRoom.call.id, 'breakoutRoomClosingSoon');
+        clearTimeout(this._breakoutRoomClosingSoonTimeoutId);
       }
       this._context.setAssignedBreakoutRoom(this._callIdRef.callId, breakoutRoom);
       return;
