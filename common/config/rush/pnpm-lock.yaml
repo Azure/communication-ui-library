@@ -10543,10 +10543,8 @@ packages:
       ajv: 6.12.6
     dev: false
 
-  /ajv-formats@2.1.1(ajv@8.17.1):
+  /ajv-formats@2.1.1:
     resolution: {integrity: sha512-Wx0Kx52hxE7C18hkMEggYlEifqWZtYaRgouJor+WMdPnQyEK13vgEWyVNup7SoeeoLMsr4kf5h6dOW11I15MUA==}
-    peerDependencies:
-      ajv: ^8.0.0
     peerDependenciesMeta:
       ajv:
         optional: true
@@ -11113,6 +11111,16 @@ packages:
 
   /axios@1.6.8:
     resolution: {integrity: sha512-v/ZHtJDU39mDpyBoFVkETcd/uNdxrWRrg3bKpOKzXFA6Bvqopts6ALSMU3y6ijYxbw2B+wPrIv46egTzJXCLGQ==}
+    dependencies:
+      follow-redirects: 1.15.6
+      form-data: 4.0.0
+      proxy-from-env: 1.1.0
+    transitivePeerDependencies:
+      - debug
+    dev: false
+
+  /axios@1.7.7:
+    resolution: {integrity: sha512-S4kL7XrjgBmvdGut0sN3yJxqYzrDOnivkBiN0OFs6hLiUam3UPvswUo0kqGyhqUZGEOytHyumEdXsAkgCOUf3Q==}
     dependencies:
       follow-redirects: 1.15.6
       form-data: 4.0.0
@@ -22044,7 +22052,7 @@ packages:
     dependencies:
       '@types/json-schema': 7.0.15
       ajv: 8.17.1
-      ajv-formats: 2.1.1(ajv@8.17.1)
+      ajv-formats: 2.1.1
       ajv-keywords: 5.1.0(ajv@8.17.1)
     dev: false
 
@@ -25955,7 +25963,7 @@ packages:
     dev: false
 
   file:projects/chat.tgz:
-    resolution: {integrity: sha512-638oIFHE3CHWFWHWK72pWV8kZyZHw0O6rgahESl7KDPnxeBkl9PHKce7xfwzYrXq0YcVjYzRMMT1kgQ/zh7RfQ==, tarball: file:projects/chat.tgz}
+    resolution: {integrity: sha512-5NPwHAkVqPSK0VOQHI2tgskc5Uf3g8di80usz4uOy57sglOyH6DUg/RsvO+Y34RjwwBmFGg+LFbRhPmSrKOKHQ==, tarball: file:projects/chat.tgz}
     name: '@rush-temp/chat'
     version: 0.0.0
     dependencies:
@@ -25977,7 +25985,7 @@ packages:
       '@types/react-linkify': 1.0.4
       '@typescript-eslint/eslint-plugin': 7.14.1(@typescript-eslint/parser@7.14.1)(eslint@8.57.0)(typescript@5.4.5)
       '@typescript-eslint/parser': 7.14.1(eslint@8.57.0)(typescript@5.4.5)
-      axios: 1.6.8
+      axios: 1.7.7
       babel-loader: 8.1.0(@babel/core@7.25.2)(webpack@5.89.0)
       concurrently: 5.3.0
       copyfiles: 2.4.1

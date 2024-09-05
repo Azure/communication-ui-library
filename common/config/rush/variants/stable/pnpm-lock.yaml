@@ -11147,6 +11147,16 @@ packages:
       - debug
     dev: false
 
+  /axios@1.7.7:
+    resolution: {integrity: sha512-S4kL7XrjgBmvdGut0sN3yJxqYzrDOnivkBiN0OFs6hLiUam3UPvswUo0kqGyhqUZGEOytHyumEdXsAkgCOUf3Q==}
+    dependencies:
+      follow-redirects: 1.15.6
+      form-data: 4.0.0
+      proxy-from-env: 1.1.0
+    transitivePeerDependencies:
+      - debug
+    dev: false
+
   /axobject-query@3.2.1:
     resolution: {integrity: sha512-jsyHu61e6N4Vbz/v18DHwWYKK0bSWLqn47eeDSKPB7m8tqMHF9YJ+mhIk2lVteyZrY8tnSj/jHOv4YiTCuCJgg==}
     dependencies:
@@ -25940,7 +25950,7 @@ packages:
     dev: false
 
   file:projects/chat.tgz:
-    resolution: {integrity: sha512-638oIFHE3CHWFWHWK72pWV8kZyZHw0O6rgahESl7KDPnxeBkl9PHKce7xfwzYrXq0YcVjYzRMMT1kgQ/zh7RfQ==, tarball: file:projects/chat.tgz}
+    resolution: {integrity: sha512-5NPwHAkVqPSK0VOQHI2tgskc5Uf3g8di80usz4uOy57sglOyH6DUg/RsvO+Y34RjwwBmFGg+LFbRhPmSrKOKHQ==, tarball: file:projects/chat.tgz}
     name: '@rush-temp/chat'
     version: 0.0.0
     dependencies:
@@ -25962,7 +25972,7 @@ packages:
       '@types/react-linkify': 1.0.4
       '@typescript-eslint/eslint-plugin': 7.14.1(@typescript-eslint/parser@7.14.1)(eslint@8.57.0)(typescript@5.4.5)
       '@typescript-eslint/parser': 7.14.1(eslint@8.57.0)(typescript@5.4.5)
-      axios: 1.6.8
+      axios: 1.7.7
       babel-loader: 8.1.0(@babel/core@7.25.2)(webpack@5.89.0)
       concurrently: 5.3.0
       copyfiles: 2.4.1
