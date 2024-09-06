@@ -95,7 +95,7 @@ export const RichTextEditorOnPasteTextDocsOnly = {
 };
 
 // Main story meta export
-const meta: Meta = {
+const meta: Meta<typeof MessageThreadComponent> = {
   title: 'Components/Message Thread',
   component: MessageThreadComponent,
   argTypes: {
@@ -123,7 +123,9 @@ const meta: Meta = {
     // hide unnecessary props since we "send message with attachments" option
     onRenderAttachmentDownloads: hiddenControl,
     attachmentOptions: hiddenControl,
-    onSendMessage: hiddenControl
+    onSendMessage: hiddenControl,
+    onCancelEditMessage: hiddenControl,
+    onDisplayDateTimeString: hiddenControl
   },
   args: {
     showMessageDate: true,
