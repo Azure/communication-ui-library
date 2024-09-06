@@ -196,7 +196,7 @@ class CallContext {
       /* @conditional-compile-remove(DNS) */
       onResolveDeepNoiseSuppressionDependency: options?.deepNoiseSuppressionOptions?.onResolveDependency,
       /* @conditional-compile-remove(DNS) */
-      deepNoiseSuppressionOnByDefault: options?.deepNoiseSuppressionOptions?.deepNoiseSuppressionOnByDefault ?? false,
+      deepNoiseSuppressionOnByDefault: options?.deepNoiseSuppressionOptions?.deepNoiseSuppressionOnByDefault ?? true,
       /* @conditional-compile-remove(DNS) */
       hideNoiseSuppressionButton: options?.deepNoiseSuppressionOptions?.hideNoiseSuppressionButton ?? false,
       selectedVideoBackgroundEffect: undefined,
