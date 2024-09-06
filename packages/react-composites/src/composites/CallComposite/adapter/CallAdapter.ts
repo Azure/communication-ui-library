@@ -180,7 +180,7 @@ export type CallAdapterClientState = {
   /**
    * State to track whether the noise suppression should be on by default.
    * @beta
-   * @default false
+   * @default true
    */
   deepNoiseSuppressionOnByDefault?: boolean;
   /* @conditional-compile-remove(DNS) */

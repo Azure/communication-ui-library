@@ -114,5 +114,8 @@
     "ts-node": "^10.9.2",
     "typescript": "5.4.5",
     "webpack": "5.89.0"
+  },
+  "resolutions": {
+    "tocbot": "4.25.0"
   }
 }
