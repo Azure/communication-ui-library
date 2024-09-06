@@ -72,6 +72,12 @@ export class BreakoutRoomsSubscriber {
     }
 
     if (!breakoutRoom) {
+      // This scenario covers the case where the user is unassigned from a breakout room.
+      if (currentAssignedBreakoutRoom?.call?.id) {
+        this._context.deleteLatestNotification(currentAssignedBreakoutRoom.call.id, 'breakoutRoomJoined');
+        this._context.deleteLatestNotification(currentAssignedBreakoutRoom.call.id, 'breakoutRoomClosingSoon');
+        clearTimeout(this._breakoutRoomClosingSoonTimeoutId);
+      }
       this._context.setAssignedBreakoutRoom(this._callIdRef.callId, breakoutRoom);
       return;
     }
@@ -103,6 +109,11 @@ export class BreakoutRoomsSubscriber {
       this._context.deleteLatestNotification(this._callIdRef.callId, 'assignedBreakoutRoomOpened');
       this._context.deleteLatestNotification(this._callIdRef.callId, 'assignedBreakoutRoomOpenedPromptJoin');
       this._context.deleteLatestNotification(this._callIdRef.callId, 'assignedBreakoutRoomChanged');
+    } else if (breakoutRoom.state === 'closed' && currentAssignedBreakoutRoom?.call?.id) {
+      // This scenario covers the case where the breakout room is changed to a closed breakout room.
+      this._context.deleteLatestNotification(currentAssignedBreakoutRoom.call.id, 'breakoutRoomJoined');
+      this._context.deleteLatestNotification(currentAssignedBreakoutRoom.call.id, 'breakoutRoomClosingSoon');
+      clearTimeout(this._breakoutRoomClosingSoonTimeoutId);
     }
     this._context.setAssignedBreakoutRoom(this._callIdRef.callId, breakoutRoom);
   };

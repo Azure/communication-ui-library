@@ -26,7 +26,7 @@ import { CaptionsKind, CaptionsInfo as AcsCaptionsInfo } from '@azure/communicat
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
 import { AzureLogger, createClientLogger, getLogLevel } from '@azure/logger';
-import EventEmitter from 'events';
+import { EventEmitter } from 'events';
 import { enableMapSet, enablePatches, Patch, produce } from 'immer';
 import {
   CallEndReason,
