@@ -103,7 +103,9 @@ export const SidePane = (props: SidePaneProps): JSX.Element => {
       grow
       styles={paneStyles}
       data-ui-id="SidePane"
-      tokens={props.mobileView || !props.showAddPeopleButton ? {} : sidePaneTokens}
+      tokens={
+        props.mobileView || (!props.showAddPeopleButton && sidePaneRenderer?.id === 'people') ? {} : sidePaneTokens
+      }
     >
       {HeaderToRender}
       <Stack.Item verticalFill grow styles={paneBodyContainer}>
