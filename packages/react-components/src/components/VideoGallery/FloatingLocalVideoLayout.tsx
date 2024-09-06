@@ -99,7 +99,7 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
   const gridTiles = gridParticipants.map((p) => {
     return onRenderRemoteParticipant(
       p,
-      maxRemoteVideoStreams && maxRemoteVideoStreams >= 0
+      maxRemoteVideoStreams >= 0
         ? p.videoStream?.isAvailable && activeVideoStreams++ < maxRemoteVideoStreams
         : p.videoStream?.isAvailable
     );
@@ -119,16 +119,23 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
    * this case when those components are here
    */
   const [indexesToRender, setIndexesToRender] = useState<number[]>([]);
+  const participantsToRenderVideo = indexesToRender
+    .map((i) => {
+      return overflowGalleryParticipants.at(i);
+    })
+    .filter((p) => p?.videoStream?.isAvailable);
+  const numberOfVideosToRender = maxRemoteVideoStreams - activeVideoStreams;
+  const dominantSpeakersToRender = dominantSpeakers
+    ? dominantSpeakers
+        .filter((userId) => participantsToRenderVideo.find((p) => p?.userId === userId))
+        .slice(0, numberOfVideosToRender)
+    : [];
+  let streamsLeftToRender = numberOfVideosToRender - dominantSpeakersToRender.length;
 
-  const overflowGalleryTiles = overflowGalleryParticipants.map((p, i) => {
+  const overflowGalleryTiles = overflowGalleryParticipants.map((p) => {
     return onRenderRemoteParticipant(
       p,
-      maxRemoteVideoStreams && maxRemoteVideoStreams >= 0
-        ? p.videoStream?.isAvailable &&
-            indexesToRender &&
-            indexesToRender.includes(i) &&
-            activeVideoStreams++ < maxRemoteVideoStreams
-        : p.videoStream?.isAvailable
+      dominantSpeakersToRender.includes(p.userId) || (streamsLeftToRender-- > 0 && p.videoStream?.isAvailable)
     );
   });
 
