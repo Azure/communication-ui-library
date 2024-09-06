@@ -24,7 +24,7 @@
     "placeholderText": "輸入訊息",
     "textTooLong": "您的訊息長度超過上限。",
     "sendButtonAriaLabel": "傳送訊息",
-    "attachmentUploadsPendingError": "正在上傳... 請稍候。",
+    "attachmentUploadsPendingError": "正在上傳檔案，請稍候。",
     "removeAttachment": "移除檔案",
     "uploading": "正在上傳",
     "uploadCompleted": "上傳完成",
@@ -34,7 +34,8 @@
     "placeholderText": "輸入訊息",
     "textTooLong": "您的訊息長度超過上限。",
     "sendButtonAriaLabel": "傳送訊息",
-    "attachmentUploadsPendingError": "正在上傳...請稍候。",
+    "attachmentUploadsPendingError": "正在上傳檔案，請稍候。",
+    "imageUploadsPendingError": "正在上傳影像，請稍候。",
     "removeAttachment": "移除檔案",
     "uploading": "正在上傳",
     "uploadCompleted": "上傳完成",
@@ -57,8 +58,12 @@
     "richTextDeleteColumnMenu": "刪除欄",
     "richTextDeleteRowMenu": "刪除列",
     "richTextDeleteTableMenu": "刪除表格",
-    "richTextToolbarMoreButtonAriaLabel": "More options",
-    "attachmentMoreMenu": "其他選項"
+    "richTextToolbarMoreButtonAriaLabel": "其他選項",
+    "attachmentMoreMenu": "其他選項",
+    "richTextNewBulletedListItemAnnouncement": "項目符號，新行",
+    "richTextNewNumberedListItemAnnouncement": "{0}，新行",
+    "richTextBulletedListAppliedAnnouncement": "已套用項目符號清單",
+    "richTextNumberedListAppliedAnnouncement": "已套用編號清單"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "建議"
@@ -185,8 +190,8 @@
     "failToSendTag": "無法傳送",
     "editedTag": "已編輯",
     "liveAuthorIntro": "{author} 說",
-    "messageContentAriaText": "{author} 說 {message}",
-    "messageContentMineAriaText": "您說 {message}",
+    "messageContentAriaText": "{status} {author} 說 {message}",
+    "messageContentMineAriaText": "{status} 您說 {message}",
     "editBoxTextLimit": "您的訊息超過 {limitNumber} 個字元的限制",
     "editBoxPlaceholderText": "編輯您的訊息",
     "newMessagesIndicator": "新訊息",
@@ -220,7 +225,13 @@
     "richTextDeleteColumnMenu": "刪除欄",
     "richTextDeleteRowMenu": "刪除列",
     "richTextDeleteTableMenu": "刪除表格",
-    "richTextToolbarMoreButtonAriaLabel": "More options"
+    "richTextToolbarMoreButtonAriaLabel": "其他選項",
+    "attachmentUploadsPendingError": "正在上傳檔案，請稍候。",
+    "imageUploadsPendingError": "正在上傳影像，請稍候。",
+    "richTextNewBulletedListItemAnnouncement": "項目符號，新行",
+    "richTextNewNumberedListItemAnnouncement": "{0}，新行",
+    "richTextBulletedListAppliedAnnouncement": "已套用項目符號清單",
+    "richTextNumberedListAppliedAnnouncement": "已套用編號清單"
   },
   "errorBar": {
     "unableToReachChatService": "您處於離線狀態",
@@ -237,6 +248,7 @@
     "startScreenShareGeneric": "啟動畫面分享時發生問題。",
     "stopScreenShareGeneric": "無法停止螢幕畫面分享",
     "callNetworkQualityLow": "您的網路品質不佳。",
+    "teamsMeetingCallNetworkQualityLow": "網路品質不佳。",
     "callNoSpeakerFound": "找不到喇叭或耳機。請連接音訊裝置以聆聽通話。",
     "callNoMicrophoneFound": "找不到麥克風。請連接音訊輸入裝置。",
     "callMicrophoneAccessDenied": "無法存取麥克風。按一下網址列中的鎖定以授與此網頁的許可權。",
@@ -257,14 +269,224 @@
     "failedToJoinCallInvalidMeetingLink": "無法加入會議。連結無效。",
     "cameraFrozenForRemoteParticipants": "通話中的使用者在觀看您的視訊時發生問題。請檢查您的裝置和網路。",
     "unableToStartVideoEffect": "無法套用視訊效果。",
-    "startSpotlightWhileMaxParticipantsAreSpotlighted": "無法啟動參與者的焦點，因為參與者人數已達焦點上限。"
+    "startSpotlightWhileMaxParticipantsAreSpotlighted": "無法啟動參與者的焦點，因為參與者人數已達焦點上限。",
+    "mutedByRemoteParticipant": "另一位參與者已將您設為靜音。"
+  },
+  "notificationStack": {
+    "callingNetworkFailure": {
+      "title": "接通電話時發生問題",
+      "message": "您似乎已離線。請檢查您的網路連線，然後再試一次。",
+      "dismissButtonAriaLabel": "關閉"
+    },
+    "startVideoGeneric": {
+      "title": "無法啟動影片。",
+      "dismissButtonAriaLabel": "關閉"
+    },
+    "stopVideoGeneric": {
+      "title": "無法停止影片。",
+      "dismissButtonAriaLabel": "關閉"
+    },
+    "muteGeneric": {
+      "title": "無法將麥克風設為靜音。",
+      "dismissButtonAriaLabel": "關閉"
+    },
+    "unmuteGeneric": {
+      "title": "無法將麥克風取消靜音。",
+      "dismissButtonAriaLabel": "關閉"
+    },
+    "speakingWhileMuted": {
+      "title": "已將您設為靜音。",
+      "dismissButtonAriaLabel": "關閉"
+    },
+    "startScreenShareGeneric": {
+      "title": "啟動畫面分享時發生問題。",
+      "dismissButtonAriaLabel": "關閉"
+    },
+    "stopScreenShareGeneric": {
+      "title": "無法停止螢幕畫面分享。",
+      "dismissButtonAriaLabel": "關閉"
+    },
+    "callNetworkQualityLow": {
+      "title": "網路品質不佳。",
+      "dismissButtonAriaLabel": "關閉"
+    },
+    "teamsMeetingCallNetworkQualityLow": {
+      "title": "網路品質不佳。",
+      "dismissButtonAriaLabel": "關閉",
+      "message": "從您的手機加入此通話以獲得更佳的音效。您可以繼續在此裝置上檢視會議。",
+      "primaryButtonLabel": "使用電話加入"
+    },
+    "callNoSpeakerFound": {
+      "title": "找不到喇叭或耳機",
+      "message": "連接音訊裝置以聆聽通話。",
+      "dismissButtonAriaLabel": "關閉"
+    },
+    "callNoMicrophoneFound": {
+      "title": "找不到麥克風",
+      "message": "請連結音訊輸入裝置。",
+      "dismissButtonAriaLabel": "關閉"
+    },
+    "callMicrophoneAccessDenied": {
+      "title": "無法存取麥克風",
+      "message": "按兩下網址列中的鎖定以授與此網頁的許可權。",
+      "dismissButtonAriaLabel": "關閉"
+    },
+    "callMicrophoneAccessDeniedSafari": {
+      "title": "無法存取麥克風",
+      "message": "重新整理頁面以允許許可權，或檢查此瀏覽器的設定，並確認已啟用此網站的權限。",
+      "dismissButtonAriaLabel": "關閉"
+    },
+    "callMicrophoneMutedBySystem": {
+      "title": "系統已將您設為靜音。",
+      "dismissButtonAriaLabel": "關閉"
+    },
+    "callMicrophoneUnmutedBySystem": {
+      "title": "您的麥克風已復原，系統已取消您的靜音。",
+      "dismissButtonAriaLabel": "關閉"
+    },
+    "callMacOsMicrophoneAccessDenied": {
+      "title": "無法存取麥克風",
+      "message": "在您的macOS隱私權設定中授與麥克風許可權。",
+      "dismissButtonAriaLabel": "關閉"
+    },
+    "callLocalVideoFreeze": {
+      "title": "網路頻寬不佳",
+      "message": "通話中的其他人可能會暫停您的視訊。",
+      "dismissButtonAriaLabel": "關閉"
+    },
+    "callCameraAccessDenied": {
+      "title": "無法存取相機",
+      "message": "按兩下網址列中的鎖定以授與此網頁的許可權。",
+      "dismissButtonAriaLabel": "關閉"
+    },
+    "callCameraAccessDeniedSafari": {
+      "title": "無法存取相機",
+      "message": "重新整理頁面以允許許可權，或檢查此瀏覽器的設定，並確認已啟用此網站的權限。",
+      "dismissButtonAriaLabel": "關閉"
+    },
+    "callCameraAlreadyInUse": {
+      "title": "無法存取相機",
+      "message": "其他應用程式可能已在使用它。",
+      "dismissButtonAriaLabel": "關閉"
+    },
+    "callVideoStoppedBySystem": {
+      "title": "您的影片已遭系統停止。",
+      "dismissButtonAriaLabel": "關閉"
+    },
+    "callVideoRecoveredBySystem": {
+      "title": "您的影片已恢復播放。",
+      "dismissButtonAriaLabel": "關閉"
+    },
+    "callMacOsCameraAccessDenied": {
+      "title": "MacOS 禁止存取您的相機",
+      "message": "更新您的隱私權設定，以允許此瀏覽器存取您的相機。",
+      "dismissButtonAriaLabel": "關閉"
+    },
+    "callMacOsScreenShareAccessDenied": {
+      "title": "MacOS 正在封鎖螢幕畫面分享",
+      "message": "更新您的隱私權設定，以允許此瀏覽器錄製您的螢幕。",
+      "dismissButtonAriaLabel": "關閉"
+    },
+    "failedToJoinCallGeneric": {
+      "title": "無法加入通話。",
+      "dismissButtonAriaLabel": "關閉"
+    },
+    "failedToJoinCallInvalidMeetingLink": {
+      "title": "無法加入會議。連結無效。",
+      "dismissButtonAriaLabel": "關閉"
+    },
+    "cameraFrozenForRemoteParticipants": {
+      "title": "通話中的用戶在觀看您的視訊時發生問題",
+      "message": "請檢查您的裝置和網路。",
+      "dismissButtonAriaLabel": "關閉"
+    },
+    "unableToStartVideoEffect": {
+      "title": "無法套用視訊效果。",
+      "dismissButtonAriaLabel": "關閉"
+    },
+    "startSpotlightWhileMaxParticipantsAreSpotlighted": {
+      "title": "無法在參與者上啟動焦點",
+      "message": "參與者人數上限已成為焦點。",
+      "dismissButtonAriaLabel": "關閉"
+    },
+    "mutedByRemoteParticipant": {
+      "title": "另一位參與者已將您設為靜音。",
+      "dismissButtonAriaLabel": "關閉"
+    },
+    "recordingStarted": {
+      "title": "錄製已啟動。",
+      "message": "一旦加入，即表示您同意轉譯此會議。",
+      "dismissButtonAriaLabel": "關閉"
+    },
+    "transcriptionStarted": {
+      "title": "已開始轉錄。",
+      "message": "一旦加入，即表示您同意轉譯此會議。",
+      "dismissButtonAriaLabel": "關閉"
+    },
+    "recordingStopped": {
+      "title": "正在儲存錄製內容。",
+      "message": "已停止錄製。",
+      "dismissButtonAriaLabel": "關閉"
+    },
+    "transcriptionStopped": {
+      "title": "正在儲存轉錄。",
+      "message": "已停止轉錄。",
+      "dismissButtonAriaLabel": "關閉"
+    },
+    "recordingAndTranscriptionStarted": {
+      "title": "已開始錄製並進行轉錄。",
+      "message": "一旦加入，即表示您同意轉譯此會議。",
+      "dismissButtonAriaLabel": "關閉"
+    },
+    "recordingAndTranscriptionStopped": {
+      "title": "正在儲存錄製和轉錄。",
+      "message": "已停止錄製與轉錄。",
+      "dismissButtonAriaLabel": "關閉"
+    },
+    "recordingStoppedStillTranscribing": {
+      "title": "已停止錄製。",
+      "message": "您現在只會轉錄此會議。",
+      "dismissButtonAriaLabel": "關閉"
+    },
+    "transcriptionStoppedStillRecording": {
+      "title": "已停止轉錄。",
+      "message": "您現在只會錄製此會議。",
+      "dismissButtonAriaLabel": "關閉"
+    },
+    "assignedBreakoutRoomOpened": {
+      "title": "我們將在 5 秒內將您移至指派的會議室。",
+      "dismissButtonAriaLabel": "關閉"
+    },
+    "assignedBreakoutRoomChanged": {
+      "title": "您的分組討論區已變更",
+      "message": "我們將在 5 秒內將您移至指派的會議室。",
+      "dismissButtonAriaLabel": "關閉"
+    },
+    "assignedBreakoutRoomOpenedPromptJoin": {
+      "title": "加入分組討論區?",
+      "message": "系統已指派分組討論區給您。",
+      "dismissButtonAriaLabel": "關閉",
+      "primaryButtonLabel": "加入會議室",
+      "secondaryButtonLabel": "稍後"
+    },
+    "breakoutRoomJoined": {
+      "title": "您已加入分組討論區。",
+      "dismissButtonAriaLabel": "關閉"
+    },
+    "breakoutRoomClosingSoon": {
+      "title": "會議室時間限制即將到期。",
+      "message": "此會議室將在 30 秒鐘內關閉。",
+      "dismissButtonAriaLabel": "關閉"
+    }
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "您現在正在分享螢幕畫面。",
     "screenShareLoadingMessage": "正在載入 {participant} 的螢幕畫面",
+    "localScreenShareLoadingMessage": "正在載入您的畫面",
     "localVideoLabel": "您",
     "localVideoCameraSwitcherLabel": "切換相機",
     "localVideoMovementLabel": "可移動本機視訊磚",
+    "localVideoMovementAriaLabel": "可移動的區域影片標題",
     "localVideoSelectedDescription": "已選取 {cameraName}",
     "displayNamePlaceholder": "未命名的參與者",
     "fitRemoteParticipantToFrame": "調整成畫面大小",
@@ -281,7 +503,8 @@
     "spotlightLimitReachedMenuTitle": "已達焦點限制",
     "stopSpotlightVideoTileMenuLabel": "停止聚焦",
     "stopSpotlightOnSelfVideoTileMenuLabel": "結束聚焦",
-    "attendeeRole": "出席者"
+    "attendeeRole": "出席者",
+    "muteParticipantMenuItemLabel": "靜音"
   },
   "dialpad": {
     "placeholderText": "輸入電話號碼",
@@ -295,7 +518,8 @@
   },
   "videoTile": {
     "participantStateRinging": "撥號中...",
-    "participantStateHold": "電話保留"
+    "participantStateHold": "電話保留",
+    "moreOptionsButtonAriaLabel": "其他選項"
   },
   "CameraAndMicrophoneSitePermissionsRequest": {
     "primaryText": "允許 {appName} 使用您的相機和麥克風",
@@ -415,5 +639,25 @@
   "verticalGallery": {
     "leftNavButtonAriaLabel": "上一頁",
     "rightNavButtonAriaLabel": "下一頁"
+  },
+  "meetingConferencePhoneInfo": {
+    "meetingConferencePhoneInfoModalTitle": "從您的電話加入通話",
+    "meetingConferencePhoneInfoModalDialIn": "撥號號碼",
+    "meetingConferencePhoneInfoModalMeetingId": "輸入會議識別碼",
+    "meetingConferencePhoneInfoModalWait": "等候召集人獲准進入",
+    "meetingConferencePhoneInfoModalNoPhoneAvailable": "沒有可用的電話",
+    "meetingConferencePhoneInfoModalTollGeoData": "{country}, {city}",
+    "meetingConferencePhoneInfoModalTollFree": "(免付費電話)",
+    "meetingConferencePhoneInfoModalToll": "(付費)"
+  },
+  "IncomingCallNotification": {
+    "incomingCallNotificationPlaceholderId": "未知的使用者",
+    "incomingCallNotificationPlaceholderAlert": "{callerName} 正在通話",
+    "incomingCallNoticicationAcceptWithAudioAriaLabel": "接受音訊",
+    "incomingCallNoticicationAcceptWithVideoAriaLabel": "接受視訊",
+    "incomingCallNoticicationRejectAriaLabel": "拒絕",
+    "incomingCallNotificationAcceptButtonLabel": "接受",
+    "incomingCallNotificationRejectButtonLabel": "拒絕",
+    "incomingCallNotificationAccceptWithVideoButtonLabel": "接受並開啟視訊"
   }
 }

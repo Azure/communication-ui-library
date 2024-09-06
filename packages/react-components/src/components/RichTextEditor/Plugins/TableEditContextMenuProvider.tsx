@@ -37,7 +37,6 @@ export class TableEditContextMenuProvider implements ContextMenuProvider<IContex
   }
 
   getContextMenuItems(node: Node): IContextualMenuItem[] | null {
-    // return this.items;
     if (this.editor && isTableEditable(this.editor, node)) {
       return this.items;
     } else {

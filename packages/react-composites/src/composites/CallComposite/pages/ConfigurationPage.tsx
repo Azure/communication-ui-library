@@ -197,20 +197,20 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
           ? videoState
           : 'denied'
         : cameraPermissionGranted !== false
-        ? cameraPermissionGranted
-          ? 'granted'
-          : 'prompt'
-        : 'denied',
+          ? cameraPermissionGranted
+            ? 'granted'
+            : 'prompt'
+          : 'denied',
     microphone:
       audioState && audioState !== 'unsupported'
         ? microphonePermissionGranted !== false
           ? audioState
           : 'denied'
         : microphonePermissionGranted !== false
-        ? microphonePermissionGranted
-          ? 'granted'
-          : 'prompt'
-        : 'denied'
+          ? microphonePermissionGranted
+            ? 'granted'
+            : 'prompt'
+          : 'denied'
   };
   /* @conditional-compile-remove(call-readiness) */
   const networkErrors = errorBarProps.activeErrorMessages.filter((message) => message.type === 'callNetworkQualityLow');
@@ -293,6 +293,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
             isPermissionsModalDismissed={isPermissionsModalDismissed}
             setIsPermissionsModalDismissed={setIsPermissionsModalDismissed}
             onPermissionsTroubleshootingClick={onPermissionsTroubleshootingClick}
+            doNotPromptCamera={deviceChecks?.camera === 'doNotPrompt'}
           />
         )
       }

@@ -13,6 +13,8 @@ import { TransferEventArgs } from '@azure/communication-calling';
 import { StartCaptionsOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
+/* @conditional-compile-remove(breakout-rooms) */
+import type { BreakoutRoomsUpdatedListener } from '@azure/communication-calling';
 import type {
   AudioDeviceInfo,
   VideoDeviceInfo,
@@ -39,11 +41,15 @@ import { CommunicationIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
 import type { CommunicationUserIdentifier, PhoneNumberIdentifier } from '@azure/communication-common';
 import type { AdapterState, Disposable, AdapterError, AdapterErrors } from '../../common/adapters';
+/* @conditional-compile-remove(breakout-rooms) */
+import type { AdapterNotifications } from '../../common/adapters';
 
 import { VideoBackgroundEffectsDependency } from '@internal/calling-component-bindings';
 
 import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
 import { ReactionResources } from '@internal/react-components';
+/* @conditional-compile-remove(DNS) */
+import { DeepNoiseSuppressionEffectDependency } from '@internal/calling-component-bindings';
 
 /**
  * Major UI screens shown in the {@link CallComposite}.
@@ -134,6 +140,11 @@ export type CallAdapterClientState = {
    * Latest error encountered for each operation performed via the adapter.
    */
   latestErrors: AdapterErrors;
+  /* @conditional-compile-remove(breakout-rooms) */
+  /**
+   * Latest notifications from call client state.
+   */
+  latestNotifications: AdapterNotifications;
   /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Azure communications Phone number to make PSTN calls with.
@@ -159,7 +170,26 @@ export type CallAdapterClientState = {
    * Dependency to be injected for video background effect.
    */
   onResolveVideoEffectDependency?: () => Promise<VideoBackgroundEffectsDependency>;
-
+  /* @conditional-compile-remove(DNS) */
+  /**
+   * Dependency to be injected for deep noise suppression effect.
+   * @beta
+   */
+  onResolveDeepNoiseSuppressionDependency?: () => Promise<DeepNoiseSuppressionEffectDependency>;
+  /* @conditional-compile-remove(DNS) */
+  /**
+   * State to track whether the noise suppression should be on by default.
+   * @beta
+   * @default false
+   */
+  deepNoiseSuppressionOnByDefault?: boolean;
+  /* @conditional-compile-remove(DNS) */
+  /**
+   * State to track whether to hide the noise suppression button.
+   * @beta
+   * @default false
+   */
+  hideNoiseSuppressionButton?: boolean;
   /**
    * State to track the selected video background effect.
    */
@@ -465,6 +495,37 @@ export interface VideoBackgroundReplacementEffect extends BackgroundReplacementC
 }
 
 /**
+ * Options passed to adapter.startCaptions
+ *
+ * @public
+ */
+export interface StartCaptionsAdapterOptions extends StartCaptionsOptions {
+  /**
+   * Start captions in the background without showing the captions UI to the Composite user.
+   *
+   * @defaultValue false
+   */
+  startInBackground?: boolean;
+}
+
+/**
+ * Options passed to adapter.stopCaptions
+ *
+ * @public
+ */
+export interface StopCaptionsAdapterOptions {
+  /**
+   * Stop captions that have been started in the background.
+   *
+   * @remarks
+   * This option is only applicable when stopping captions that have been started using the `startInBackground` property of adpater.startCaptions.
+   *
+   * @defaultValue false
+   */
+  stopInBackground?: boolean;
+}
+
+/**
  * Functionality for managing the current call.
  *
  * @public
@@ -640,7 +701,7 @@ export interface CallAdapterCallOperations {
    * Function to Start captions
    * @param options - options for start captions
    */
-  startCaptions(options?: StartCaptionsOptions): Promise<void>;
+  startCaptions(options?: StartCaptionsAdapterOptions): Promise<void>;
   /**
    * Function to set caption language
    * @param language - language set for caption
@@ -654,7 +715,7 @@ export interface CallAdapterCallOperations {
   /**
    * Funtion to stop captions
    */
-  stopCaptions(): Promise<void>;
+  stopCaptions(options?: StopCaptionsAdapterOptions): Promise<void>;
 
   /**
    * Start the video background effect.
@@ -685,6 +746,20 @@ export interface CallAdapterCallOperations {
    * @public
    */
   updateSelectedVideoBackgroundEffect(selectedVideoBackground: VideoBackgroundEffect): void;
+  /* @conditional-compile-remove(DNS) */
+  /**
+   * Start the noise suppression effect.
+   *
+   * @beta
+   */
+  startNoiseSuppressionEffect(): Promise<void>;
+  /* @conditional-compile-remove(DNS) */
+  /**
+   * Stop the noise suppression effect.
+   *
+   * @beta
+   */
+  stopNoiseSuppressionEffect(): Promise<void>;
   /**
    * Send the end of call survey result
    *
@@ -712,6 +787,16 @@ export interface CallAdapterCallOperations {
    * @param userId - Id of the participant to mute
    */
   muteParticipant(userId: string): Promise<void>;
+  /* @conditional-compile-remove(soft-mute) */
+  /**
+   * Mute All participants
+   */
+  muteAllRemoteParticipants(): Promise<void>;
+  /* @conditional-compile-remove(breakout-rooms) */
+  /**
+   * Return to origin call of breakout room
+   */
+  returnFromBreakoutRoom(): Promise<void>;
 }
 
 /**
@@ -895,7 +980,16 @@ export interface CallAdapterSubscribers {
    * Subscribe function for 'spotlightChanged' event.
    */
   on(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
-
+  /* @conditional-compile-remove(soft-mute) */
+  /**
+   * Subscribe function for 'mutedByOthers' event.
+   */
+  on(event: 'mutedByOthers', listener: PropertyChangedEvent): void;
+  /* @conditional-compile-remove(breakout-rooms) */
+  /**
+   * Subscribe function for 'breakoutRoomsUpdated' event.
+   */
+  on(event: 'breakoutRoomsUpdated', listener: BreakoutRoomsUpdatedListener): void;
   /**
    * Unsubscribe function for 'participantsJoined' event.
    */
@@ -974,9 +1068,19 @@ export interface CallAdapterSubscribers {
    */
   off(event: 'roleChanged', listener: PropertyChangedEvent): void;
   /**
-   * Subscribe function for 'spotlightChanged' event.
+   * Unsubscribe function for 'spotlightChanged' event.
    */
   off(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
+  /* @conditional-compile-remove(soft-mute) */
+  /**
+   * Unsubscribe function for 'mutedByOthers' event.
+   */
+  off(event: 'mutedByOthers', listener: PropertyChangedEvent): void;
+  /* @conditional-compile-remove(breakout-rooms) */
+  /**
+   * Unsubscribe function for 'breakoutRoomsUpdated' event.
+   */
+  off(event: 'breakoutRoomsUpdated', listener: BreakoutRoomsUpdatedListener): void;
 }
 
 // This type remains for non-breaking change reason

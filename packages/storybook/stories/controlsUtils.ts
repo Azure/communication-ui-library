@@ -91,6 +91,27 @@ const defaultTypingUsers = [
   }
 ];
 
+const defaultIncomingCallNotifications = [
+  {
+    callerInfo: {
+      displayName: 'John Wick'
+    },
+    id: '1'
+  },
+  {
+    callerInfo: {
+      displayName: 'Dog'
+    },
+    id: '2'
+  },
+  {
+    callerInfo: {
+      displayName: 'Cat'
+    },
+    id: '3'
+  }
+];
+
 const errorOptions: ErrorType[] = [
   'unableToReachChatService',
   'accessDenied',
@@ -118,30 +139,44 @@ const errorOptions: ErrorType[] = [
   'callVideoRecoveredBySystem'
 ];
 const notificationOptions: NotificationType[] = [
-  'unableToReachChatService',
-  'accessDenied',
-  'userNotInChatThread',
-  'sendMessageNotInChatThread',
-  'sendMessageGeneric',
   'startVideoGeneric',
   'stopVideoGeneric',
   'muteGeneric',
   'unmuteGeneric',
+  'speakingWhileMuted',
   'startScreenShareGeneric',
   'stopScreenShareGeneric',
   'callNetworkQualityLow',
+  'teamsMeetingCallNetworkQualityLow',
   'callNoSpeakerFound',
   'callNoMicrophoneFound',
   'callMicrophoneAccessDenied',
+  'callMicrophoneAccessDeniedSafari',
   'callMicrophoneMutedBySystem',
   'callMicrophoneUnmutedBySystem',
   'callMacOsMicrophoneAccessDenied',
   'callLocalVideoFreeze',
+  'callCameraAccessDenied',
+  'callCameraAccessDeniedSafari',
   'callCameraAlreadyInUse',
+  'callVideoStoppedBySystem',
+  'callVideoRecoveredBySystem',
   'callMacOsCameraAccessDenied',
   'callMacOsScreenShareAccessDenied',
-  'callVideoStoppedBySystem',
-  'callVideoRecoveredBySystem'
+  'failedToJoinCallGeneric',
+  'failedToJoinCallInvalidMeetingLink',
+  'cameraFrozenForRemoteParticipants',
+  'unableToStartVideoEffect',
+  'startSpotlightWhileMaxParticipantsAreSpotlighted',
+  'mutedByRemoteParticipant',
+  'recordingStarted',
+  'transcriptionStarted',
+  'recordingStopped',
+  'transcriptionStopped',
+  'recordingAndTranscriptionStarted',
+  'recordingAndTranscriptionStopped',
+  'recordingStoppedStillTranscribing',
+  'transcriptionStoppedStillRecording'
 ];
 
 const themeChoices = ['Default', 'Dark', 'Teams', 'Word'];
@@ -283,7 +318,7 @@ export const controlsToAdd = {
   font: { control: 'text', defaultValue: 'Monaco, Menlo, Consolas', name: 'Font' },
   gridParticipants: { control: 'object', defaultValue: defaultControlsGridParticipants, name: 'Participants' },
   isCameraEnabled: { control: 'boolean', defaultValue: true, name: 'Is camera available' },
-  isMe: { control: 'boolean', defaultValue: false, name: 'Is You' },
+  isMe: { control: 'boolean', name: 'Is You' },
   isMicrophoneEnabled: { control: 'boolean', defaultValue: true, name: 'Is microphone available' },
   isMuteAllAvailable: {
     control: 'boolean',
@@ -345,7 +380,11 @@ export const controlsToAdd = {
     defaultValue: 'desktop',
     name: 'Form factor'
   },
-  participantItemMenuItemsStr: { control: 'text', defaultValue: 'Mute, Remove', name: 'Menu items (comma separated)' },
+  participantItemMenuItemsStr: {
+    control: 'text',
+    name: 'Menu items (comma separated)',
+    defaultValue: 'Mute, Remove'
+  },
   participantNames: {
     control: 'text',
     defaultValue: 'You, Hal Jordan, Barry Allen, Bruce Wayne',
@@ -394,10 +433,17 @@ export const controlsToAdd = {
   richTextEditor: { control: 'boolean', defaultValue: false, name: 'Enable rich text editor' },
   isNotificationAutoDismiss: { control: 'boolean', defaultValue: false, name: 'Is auto dismiss on' },
   showNotificationStacked: { control: 'boolean', defaultValue: false, name: 'Show notification stacked effect' },
+  incomingCalls: { control: 'object', defaultValue: defaultIncomingCallNotifications, name: 'Incoming Calls' },
+  maxIncomingCallsToShow: {
+    control: 'select',
+    options: [1, 2, 3],
+    defaultValue: '2',
+    name: 'Number of incoming calls'
+  },
   activeNotifications: {
     control: 'check',
     options: notificationOptions,
-    defaultValue: ['accessDenied'],
+    defaultValue: ['startVideoGeneric'],
     name: 'activeNotifications'
   },
   maxNotificationsToShow: {

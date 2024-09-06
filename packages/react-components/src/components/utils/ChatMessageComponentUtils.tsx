@@ -141,8 +141,8 @@ export const generateCustomizedTimestamp = (
   return onDisplayDateTimeString
     ? onDisplayDateTimeString(createdOn)
     : locale.onDisplayDateTimeString
-    ? locale.onDisplayDateTimeString(createdOn)
-    : '';
+      ? locale.onDisplayDateTimeString(createdOn)
+      : '';
 
   return '';
 };

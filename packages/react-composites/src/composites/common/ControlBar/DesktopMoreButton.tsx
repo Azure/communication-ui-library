@@ -150,8 +150,8 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
         startCaptionsButtonProps.checked
           ? startCaptionsButtonHandlers.onStopCaptions()
           : startCaptionsButtonProps.currentSpokenLanguage !== ''
-          ? startCaptions()
-          : props.onCaptionsSettingsClick && props.onCaptionsSettingsClick();
+            ? startCaptions()
+            : props.onCaptionsSettingsClick && props.onCaptionsSettingsClick();
       },
       iconProps: {
         iconName: startCaptionsButtonProps.checked ? 'CaptionsOffIcon' : 'CaptionsIcon',

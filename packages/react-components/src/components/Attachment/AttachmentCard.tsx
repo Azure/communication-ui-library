@@ -28,8 +28,8 @@ import { AttachmentMenuAction } from '../../types/Attachment';
 import { AttachmentMetadata, AttachmentMetadataInProgress } from '@internal/acs-ui-common';
 import {
   useAttachmentCardStyles,
-  attachmentNameContainerClassName,
-  ATTACHMENT_CARD_MIN_PROGRESS
+  ATTACHMENT_CARD_MIN_PROGRESS,
+  titleTooltipContainerStyle
 } from '../styles/AttachmentCard.styles';
 
 /**
@@ -113,8 +113,9 @@ export const _AttachmentCard = (props: _AttachmentCardProps): JSX.Element => {
       >
         <CardHeader
           className={attachmentCardStyles.content}
-          image={
-            <div className={attachmentCardStyles.fileIcon}>
+          image={{
+            className: attachmentCardStyles.fileIcon,
+            children: (
               <Icon
                 data-ui-id={'attachmenttype-icon'}
                 iconName={
@@ -125,31 +126,36 @@ export const _AttachmentCard = (props: _AttachmentCardProps): JSX.Element => {
                   }).iconName
                 }
               />
-            </div>
-          }
-          header={
-            <div className={attachmentNameContainerClassName} id={'attachment-' + attachment.id}>
+            )
+          }}
+          header={{
+            id: 'attachment-' + attachment.id,
+            children: (
               <TooltipHost
                 content={attachment.name}
                 calloutProps={{
                   gapSpace: 0,
                   target: '#attachment-' + attachment.id
                 }}
+                hostClassName={titleTooltipContainerStyle}
               >
-                <Text className={attachmentCardStyles.title} title={attachment.name}>
+                <Text className={attachmentCardStyles.title} aria-label={attachment.name}>
                   {attachment.name}
                 </Text>
               </TooltipHost>
-            </div>
-          }
-          action={MappedMenuItems(
-            menuActions,
-            {
-              ...attachment,
-              url: attachment.url ?? ''
-            },
-            onActionHandlerFailed
-          )}
+            )
+          }}
+          action={{
+            className: attachmentCardStyles.actions,
+            children: MappedMenuItems(
+              menuActions,
+              {
+                ...attachment,
+                url: attachment.url ?? ''
+              },
+              onActionHandlerFailed
+            )
+          }}
         />
       </Card>
       {isUploadInProgress ? (
@@ -181,6 +187,7 @@ const MappedMenuItems = (
     <TooltipHost content={menuActions[0].name}>
       <ToolbarButton
         aria-label={menuActions[0].name}
+        role="button"
         icon={menuActions[0].icon}
         onClick={() => {
           try {
@@ -197,7 +204,9 @@ const MappedMenuItems = (
         <TooltipHost content={localeStrings.attachmentMoreMenu}>
           <MenuTrigger>
             <ToolbarButton
-              icon={<Icon iconName="AttachmentMoreMenu" aria-label={localeStrings.attachmentMoreMenu} />}
+              aria-label={localeStrings.attachmentMoreMenu}
+              role="button"
+              icon={<Icon iconName="AttachmentMoreMenu" />}
             />
           </MenuTrigger>
         </TooltipHost>
@@ -205,6 +214,7 @@ const MappedMenuItems = (
           <MenuList>
             {menuActions.map((menuItem, index) => (
               <MenuItem
+                aria-label={menuItem.name}
                 key={index}
                 icon={menuItem.icon}
                 onClick={async () => {

@@ -111,7 +111,11 @@ export const COMPOSITE_ONLY_ICONS: CompositeIcons = {
   /* @conditional-compile-remove(teams-meeting-conference) */
   PhoneNumberButton: <PersonCall20Regular />,
   /* @conditional-compile-remove(teams-meeting-conference) */
-  PhoneInfoWait: <Clock20Filled />,
+  JoinByPhoneDialStepIcon: <PersonCall20Regular />,
+  /* @conditional-compile-remove(teams-meeting-conference) */
+  JoinByPhoneConferenceIdIcon: <Dialpad20Regular />,
+  /* @conditional-compile-remove(teams-meeting-conference) */
+  JoinByPhoneWaitToBeAdmittedIcon: <Clock20Filled />,
   PeoplePaneMoreButton: <MoreHorizontal20Filled />,
   StopAllSpotlightMenuButton: <VideoPersonStarOff20Filled />
 };
@@ -252,7 +256,11 @@ export type CallCompositeIcons = {
   /* @conditional-compile-remove(teams-meeting-conference) */
   PhoneNumberButton?: JSX.Element;
   /* @conditional-compile-remove(teams-meeting-conference) */
-  PhoneInfoWait?: JSX.Element;
+  JoinByPhoneDialStepIcon?: JSX.Element;
+  /* @conditional-compile-remove(teams-meeting-conference) */
+  JoinByPhoneConferenceIdIcon?: JSX.Element;
+  /* @conditional-compile-remove(teams-meeting-conference) */
+  JoinByPhoneWaitToBeAdmittedIcon?: JSX.Element;
   PeoplePaneMoreButton?: JSX.Element;
   StopAllSpotlightMenuButton?: JSX.Element;
 };

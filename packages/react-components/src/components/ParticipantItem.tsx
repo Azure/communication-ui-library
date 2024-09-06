@@ -316,8 +316,8 @@ const participantStateStringTrampoline = (
   return props.participantState === 'EarlyMedia' || props.participantState === 'Ringing'
     ? strings?.participantStateRinging
     : props.participantState === 'Hold'
-    ? strings?.participantStateHold
-    : undefined;
+      ? strings?.participantStateHold
+      : undefined;
 
   return undefined;
 };

@@ -8,9 +8,7 @@ import { useMemo } from 'react';
 import { useLocale } from '../../localization';
 import { _AttachmentCard } from './AttachmentCard';
 import { _AttachmentCardGroup, _AttachmentCardGroupLayout } from './AttachmentCardGroup';
-/* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
-import { getAttachmentCountLiveMessage } from '../ChatMessage/ChatMessageContent';
-import { _formatString } from '@internal/acs-ui-common';
+import { _formatString, _isIdentityMicrosoftTeamsUser } from '@internal/acs-ui-common';
 import { AttachmentMenuAction } from '../../types/Attachment';
 import { AttachmentMetadata } from '@internal/acs-ui-common';
 import { ChatMessage } from '../../types';
@@ -97,18 +95,6 @@ export const _AttachmentDownloadCards = (props: _AttachmentDownloadCardsProps): 
     []
   );
 
-  const attachmentCardGroupDescription = useMemo(
-    () => () => {
-      /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
-      return getAttachmentCountLiveMessage(
-        attachments ?? [],
-        props.strings?.attachmentCardGroupMessage ?? localeStrings.attachmentCardGroupMessage
-      );
-      return '';
-    },
-    [props.strings?.attachmentCardGroupMessage, localeStrings.attachmentCardGroupMessage, attachments]
-  );
-
   const hasMultipleAttachments = useMemo(() => {
     return (props.attachments?.length ?? 0) > 1;
   }, [props.attachments]);
@@ -127,10 +113,7 @@ export const _AttachmentDownloadCards = (props: _AttachmentDownloadCardsProps): 
       )}
       data-ui-id="attachment-download-card-group"
     >
-      <_AttachmentCardGroup
-        ariaLabel={attachmentCardGroupDescription()}
-        attachmentGroupLayout={_AttachmentCardGroupLayout.Grid}
-      >
+      <_AttachmentCardGroup attachmentGroupLayout={_AttachmentCardGroupLayout.Grid}>
         {attachments &&
           attachments.map((attachment) => (
             <_AttachmentCard
@@ -169,7 +152,8 @@ const getDefaultMenuActions = (
 ): AttachmentMenuAction[] => {
   let actionName = locale.openAttachment;
   // if message is sent by a Teams user, we need to use a different icon ("open")
-  if (chatMessage?.senderId?.includes('8:orgid:')) {
+  const isTeamsUser = _isIdentityMicrosoftTeamsUser(chatMessage?.senderId);
+  if (isTeamsUser) {
     return [
       {
         name: actionName,

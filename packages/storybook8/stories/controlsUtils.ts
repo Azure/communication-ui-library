@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { CustomCallControlButtonProps, ErrorType } from '@azure/communication-react';
+import { ErrorType, NotificationType } from '@azure/communication-react';
 import { PartialTheme } from '@fluentui/react';
 import { DefaultTheme, DarkTheme, TeamsTheme, WordTheme } from '@fluentui/theme-samples';
 import {
@@ -73,14 +73,14 @@ const defaultControlsGridParticipants = [
   }
 ];
 
-const defaultLocalParticipant = [{ name: 'You', status: 'Connected', isMuted: false, isScreenSharing: false }];
-const defaultRemoteParticipants = [
+export const defaultLocalParticipant = [{ name: 'You', status: 'Connected', isMuted: false, isScreenSharing: false }];
+export const defaultRemoteParticipants = [
   { name: 'Rick', status: 'InLobby', isMuted: false, isScreenSharing: false },
   { name: 'Daryl', status: 'Connecting', isMuted: false, isScreenSharing: false },
   { name: 'Michonne', status: 'Idle', isMuted: false, isScreenSharing: false }
 ];
 
-const defaultTypingUsers = [
+export const defaultTypingUsers = [
   {
     userId: '1',
     displayName: 'User1'
@@ -142,11 +142,58 @@ export const orientationArg = {
   defaultValue: 'landscape'
 };
 
+export const controlsForImageOverlay = {
+  showTitle: { control: 'text', name: 'Set Title' },
+  setAltText: { control: 'text', name: 'Set Alt Text' }
+};
+
+const notificationOptions: NotificationType[] = [
+  'startVideoGeneric',
+  'stopVideoGeneric',
+  'muteGeneric',
+  'unmuteGeneric',
+  'speakingWhileMuted',
+  'startScreenShareGeneric',
+  'stopScreenShareGeneric',
+  'callNetworkQualityLow',
+  'teamsMeetingCallNetworkQualityLow',
+  'callNoSpeakerFound',
+  'callNoMicrophoneFound',
+  'callMicrophoneAccessDenied',
+  'callMicrophoneAccessDeniedSafari',
+  'callMicrophoneMutedBySystem',
+  'callMicrophoneUnmutedBySystem',
+  'callMacOsMicrophoneAccessDenied',
+  'callLocalVideoFreeze',
+  'callCameraAccessDenied',
+  'callCameraAccessDeniedSafari',
+  'callCameraAlreadyInUse',
+  'callVideoStoppedBySystem',
+  'callVideoRecoveredBySystem',
+  'callMacOsCameraAccessDenied',
+  'callMacOsScreenShareAccessDenied',
+  'failedToJoinCallGeneric',
+  'failedToJoinCallInvalidMeetingLink',
+  'cameraFrozenForRemoteParticipants',
+  'unableToStartVideoEffect',
+  'startSpotlightWhileMaxParticipantsAreSpotlighted',
+  'mutedByRemoteParticipant',
+  'recordingStarted',
+  'transcriptionStarted',
+  'recordingStopped',
+  'transcriptionStopped',
+  'recordingAndTranscriptionStarted',
+  'recordingAndTranscriptionStopped',
+  'recordingStoppedStillTranscribing',
+  'transcriptionStoppedStillRecording'
+];
+
+export const defaultActiveNotifications = ['callNoSpeakerFound'];
+
 export const controlsToAdd = {
   alternateCallerId: {
     control: 'text',
     description: 'added',
-    defaultValue: '',
     name: 'Alternate CallerID',
     type: { name: 'string', required: true }
   },
@@ -159,7 +206,6 @@ export const controlsToAdd = {
   botAvatar: { control: 'radio', options: botAvatars, defaultValue: 'Default', name: 'Bot Avatar' },
   botChatTopic: {
     control: 'text',
-    defaultValue: 'Chat with a friendly bot',
     name: 'Chat Topic',
     type: { name: 'string', required: true }
   },
@@ -196,11 +242,10 @@ export const controlsToAdd = {
     defaultValue: '',
     name: 'Call locator (ACS group ID, Teams meeting link, or Room ID)'
   },
-  callParticipantsLocator: {
-    control: 'array',
-    defaultValue: ['+###########'],
-    name: 'Call locator (participants phone numbers)',
-    type: { name: 'string', required: true }
+  targetParticipantsPSTN: {
+    control: 'text',
+    defaultValue: '',
+    name: 'Phone number(s) to call (comma separated)'
   },
   callModalAlertText: { control: 'text', defaultValue: 'Incoming Video Call', name: 'Alert Text' },
   callToastAlertText: { control: 'text', defaultValue: 'Incoming Call', name: 'Alert Text' },
@@ -239,8 +284,8 @@ export const controlsToAdd = {
     name: 'Request Status'
   },
   disabled: { control: 'boolean', defaultValue: false, name: 'Disable component' },
-  displayName: { control: 'text', defaultValue: 'John Smith', name: 'Display Name' },
-  enableJumpToNewMessageButton: { control: 'boolean', defaultValue: true, name: 'Enable Jump To New Message' },
+  displayName: { control: 'text', name: 'Display Name' },
+  enableJumpToNewMessageButton: { control: 'boolean', name: 'Enable Jump To New Message' },
   endpointUrl: {
     control: 'text',
     defaultValue: '',
@@ -265,13 +310,14 @@ export const controlsToAdd = {
     name: 'Mute all participants option'
   },
   isMuted: { control: 'boolean', defaultValue: false, name: 'Is muted' },
-  isSpeaking: { control: 'boolean', defaultValue: false, name: 'Is Speaking' },
+  isSpeaking: { control: 'boolean', name: 'Is Speaking' },
   isScreenSharing: { control: 'boolean', defaultValue: false, name: 'Is screen sharing' },
   isRaisedHand: { control: 'boolean', defaultValue: false, name: 'Is Raised Hand' },
-  isSendBoxWithWarning: { control: 'boolean', defaultValue: false, name: 'Has warning/information message' },
+  isSendBoxWithWarning: { control: 'boolean', name: 'Has warning/information message' },
+  isSendBoxWithAttachments: { control: 'boolean', name: 'Has attachments' },
   isVideoAvailable: { control: 'boolean', defaultValue: true, name: 'Is video available' },
-  isVideoMirrored: { control: 'boolean', defaultValue: false, name: 'Is video mirrored' },
-  isVideoReady: { control: 'boolean', defaultValue: false, name: 'Is Video ready' },
+  isVideoMirrored: { control: 'boolean', name: 'Is video mirrored' },
+  isVideoReady: { control: 'boolean', name: 'Is video ready' },
   layoutHeight: {
     control: {
       type: 'range',
@@ -293,7 +339,7 @@ export const controlsToAdd = {
     name: 'Width (px)'
   },
   localParticipantDisplayName: { control: 'text', defaultValue: 'John Doe', name: 'Local Participant displayName' },
-  localParticipant: { control: 'object', defaultValue: defaultLocalParticipant, name: 'Your information' },
+  localParticipant: { control: 'object', name: 'Your information' },
   localVideoInverted: { control: 'boolean', defaultValue: true, name: 'Invert Local Video' },
   localVideoStreamEnabled: { control: 'boolean', defaultValue: true, name: 'Turn Local Video On' },
   messageDeliveredTooltipText: { control: 'text', defaultValue: 'Sent', name: 'Delivered icon tooltip text' },
@@ -330,7 +376,7 @@ export const controlsToAdd = {
       'Rick, Daryl, Michonne, Dwight, Pam, Michael, Jim, Kevin, Creed, Angela, Andy, Stanley, Meredith, Phyllis, Oscar, Ryan, Kelly, Andy, Toby, Darryl, Gabe, Erin',
     name: 'Remote participants (comma separated)'
   },
-  remoteParticipants: { control: 'object', defaultValue: defaultRemoteParticipants, name: 'Remote participants' },
+  remoteParticipants: { control: 'object', name: 'Remote participants' },
   requiredDisplayName: {
     control: 'text',
     defaultValue: 'John Smith',
@@ -345,28 +391,28 @@ export const controlsToAdd = {
   },
   sendBoxWarningMessage: {
     control: 'text',
-    defaultValue: 'Please wait 30 seconds to send new messages',
     name: 'Warning/information message for SendBox'
   },
   showChatParticipants: { control: 'boolean', defaultValue: true, name: 'Show Participants Pane' },
   showChatTopic: { control: 'boolean', defaultValue: true, name: 'Show Topic' },
   showErrorBar: { control: 'boolean', defaultValue: true, name: 'Show ErrorBar' },
   showLabel: { control: 'boolean', defaultValue: false, name: 'Show label' },
-  showVideoTileLabel: { control: 'boolean', defaultValue: true, name: 'Show label' },
-  showMessageDate: { control: 'boolean', defaultValue: true, name: 'Enable Message Date' },
-  showMessageStatus: { control: 'boolean', defaultValue: true, name: 'Enable Message Status Indicator' },
-  showMuteIndicator: { control: 'boolean', defaultValue: true, name: 'Show Mute/UnMute Indicator' },
+  showVideoTileLabel: { control: 'boolean', name: 'Show label' },
+  showMessageDate: { control: 'boolean', name: 'Enable Message Date' },
+  showMessageStatus: { control: 'boolean', name: 'Enable Message Status Indicator' },
+  showMuteIndicator: { control: 'boolean', name: 'Show Mute/UnMute Indicator' },
   speakers: { control: 'object', defaultValue: defaultControlsSpeakers, name: 'Speakers' },
   teamsMeetingLink: { control: 'text', defaultValue: '', name: 'Teams meeting link' },
   theme: { control: 'radio', options: themeChoices, defaultValue: 'Default', name: 'Theme' },
   token: { control: 'text', defaultValue: '', name: 'Valid token for user', type: { name: 'string', required: true } },
-  typingUsers: { control: 'object', defaultValue: defaultTypingUsers, name: 'Typing users' },
+  typingUsers: { control: 'object', name: 'Typing users' },
   isCaptionsFeatureActive: { control: 'boolean', defaultValue: true, name: 'Is captions on' },
   userId: {
     control: 'text',
     defaultValue: '',
     name: 'User identifier for user',
-    type: { name: 'string', required: true }
+    type: { name: 'string', required: true },
+    value: ''
   },
   videoGallerylayout: {
     control: 'select',
@@ -386,8 +432,8 @@ export const controlsToAdd = {
     defaultValue: 'followDeviceOrientation',
     name: 'Local Video Tile Size'
   },
-  videoTileHeight: { control: { type: 'range', min: 80, max: 800, step: 10 }, defaultValue: 300, name: 'Height (px)' },
-  videoTileWidth: { control: { type: 'range', min: 100, max: 1200, step: 10 }, defaultValue: 400, name: 'Width (px)' },
+  videoTileHeight: { control: { type: 'range', min: 80, max: 800, step: 10 }, name: 'Height (px)' },
+  videoTileWidth: { control: { type: 'range', min: 100, max: 1200, step: 10 }, name: 'Width (px)' },
   callWithChatControlOptions: {
     control: 'object',
     defaultValue: {
@@ -434,43 +480,58 @@ export const controlsToAdd = {
       options: ['undefined', false, true],
       name: 'Show Label'
     },
-    allowRawObjectInput: {
-      control: 'boolean',
-      defaultValue: false,
-      if: { arg: 'injectMaximumNumberOfButtons', truthy: false },
-      name: 'Inject your own buttons'
-    },
-    objectOptions: {
-      control: 'object',
-      if: { arg: 'allowRawObjectInput' },
-      defaultValue: [
-        (): CustomCallControlButtonProps => ({
-          placement: 'primary',
-          strings: {
-            label: 'Custom'
-          }
-        }),
-        (): CustomCallControlButtonProps => ({
-          placement: 'secondary',
-          strings: {
-            label: 'Custom'
-          }
-        }),
-        (): CustomCallControlButtonProps => ({
-          placement: 'overflow',
-          strings: {
-            label: 'Custom'
-          }
-        })
-      ]
-    },
+    // Object injection is converting function consts to string. This is causing errors with this control.
+    // allowRawObjectInput: {
+    //   control: 'boolean',
+    //   defaultValue: false,
+    //   if: { arg: 'injectMaximumNumberOfButtons', truthy: false },
+    //   name: 'Inject your own buttons'
+    // },
+    // objectOptions: {
+    //   control: 'object',
+    //   if: { arg: 'allowRawObjectInput' },
+    //   defaultValue: [
+    //     (): CustomCallControlButtonProps => ({
+    //       placement: 'primary',
+    //       strings: {
+    //         label: 'Custom'
+    //       }
+    //     }),
+    //     (): CustomCallControlButtonProps => ({
+    //       placement: 'secondary',
+    //       strings: {
+    //         label: 'Custom'
+    //       }
+    //     }),
+    //     (): CustomCallControlButtonProps => ({
+    //       placement: 'overflow',
+    //       strings: {
+    //         label: 'Custom'
+    //       }
+    //     })
+    //   ]
+    // },
     injectMaximumNumberOfButtons: {
       control: 'boolean',
       defaultValue: false,
       if: { arg: 'allowRawObjectInput', truthy: false },
       name: 'Inject Max # of Custom Buttons'
     }
-  }
+  },
+  isNotificationAutoDismiss: { control: 'boolean', defaultValue: false, name: 'Is auto dismiss on' },
+  showNotificationStacked: { control: 'boolean', defaultValue: false, name: 'Show notification stacked effect' },
+  activeNotifications: {
+    control: 'check',
+    options: notificationOptions,
+    name: 'Active notifications to show'
+  },
+  maxNotificationsToShow: {
+    control: 'select',
+    options: [1, 2, 3],
+    defaultValue: '2',
+    name: 'Select max number of notifications to show'
+  },
+  richTextEditor: { control: 'boolean', name: 'Enable rich text editor' }
 };
 
 export const hiddenControl = { control: false, table: { disable: true } };
@@ -486,7 +547,9 @@ export const defaultCallCompositeHiddenControls = {
   options: hiddenControl,
   callInvitationUrl: hiddenControl,
   formFactor: hiddenControl, // formFactor is hidden by default and compositeFormFactor is used as a prop instead to workaround a bug where formFactor is not put in the correct order when the controls are generated
-  role: hiddenControl // TODO: once role work is complete this should be added as a drop down control
+  role: hiddenControl, // TODO: once role work is complete this should be added as a drop down control
+  icons: hiddenControl,
+  onFetchParticipantMenuItems: hiddenControl
 };
 
 export const defaultChatCompositeHiddenControls = {
@@ -509,6 +572,10 @@ export const defaultCallWithChatCompositeHiddenControls = {
   joinInvitationURL: hiddenControl,
   rtl: hiddenControl,
   options: hiddenControl,
+  locale: hiddenControl,
+  icons: hiddenControl,
+  onFetchAvatarPersonaData: hiddenControl,
+  onFetchParticipantMenuItems: hiddenControl,
   formFactor: hiddenControl // formFactor is hidden by default and compositeFormFactor is used as a prop instead to workaround a bug where formFactor is not put in the correct order when the controls are generated
 };
 

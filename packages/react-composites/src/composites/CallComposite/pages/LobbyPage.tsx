@@ -3,6 +3,7 @@
 
 import React from 'react';
 import { ActiveErrorMessage, ErrorBar } from '@internal/react-components';
+import { ActiveNotification } from '@internal/react-components';
 import { useSelector } from '../hooks/useSelector';
 import { lobbySelector } from '../selectors/lobbySelector';
 import { CallCompositeOptions } from '../CallComposite';
@@ -30,9 +31,12 @@ export interface LobbyPageProps {
   options?: CallCompositeOptions;
   mobileChatTabHeader: MobileChatSidePaneTabHeaderProps | undefined;
   updateSidePaneRenderer: (renderer: SidePaneRenderer | undefined) => void;
-  latestErrors: ActiveErrorMessage[];
-  onDismissError: (error: ActiveErrorMessage) => void;
+  latestErrors: ActiveErrorMessage[] | ActiveNotification[];
 
+  latestNotifications: ActiveNotification[];
+  onDismissError: (error: ActiveErrorMessage | ActiveNotification) => void;
+
+  onDismissNotification: (notification: ActiveNotification) => void;
   capabilitiesChangedNotificationBarProps?: CapabilitiesChangeNotificationBarProps;
 }
 
@@ -60,6 +64,7 @@ export const LobbyPage = (props: LobbyPageProps): JSX.Element => {
     <CallArrangement
       complianceBannerProps={{ strings }}
       errorBarProps={props.options?.errorBar !== false && errorBarProps}
+      showErrorNotifications={props.options?.errorBar ?? true}
       callControlProps={{
         options: callControlOptions,
         increaseFlyoutItemSize: props.mobileView
@@ -78,6 +83,10 @@ export const LobbyPage = (props: LobbyPageProps): JSX.Element => {
       mobileChatTabHeader={props.mobileChatTabHeader}
       latestErrors={props.latestErrors}
       onDismissError={props.onDismissError}
+      latestNotifications={props.latestNotifications}
+      onDismissNotification={props.onDismissNotification}
+      /* @conditional-compile-remove(call-readiness) */
+      doNotShowCameraAccessNotifications={props.options?.deviceChecks?.camera === 'doNotPrompt'}
     />
   );
 };
@@ -106,8 +115,8 @@ const overlayProps = (
   return inLobby
     ? overlayPropsWaitingToBeAdmitted(strings)
     : outboundCallParticipant
-    ? overlayPropsOutboundCall(strings, outboundCallParticipant)
-    : overlayPropsConnectingToCall(strings);
+      ? overlayPropsOutboundCall(strings, outboundCallParticipant)
+      : overlayPropsConnectingToCall(strings);
 };
 
 const overlayPropsConnectingToCall = (strings: CallCompositeStrings): LobbyOverlayProps => ({

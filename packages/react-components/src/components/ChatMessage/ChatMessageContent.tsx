@@ -23,6 +23,8 @@ import DOMPurify from 'dompurify';
 import { _AttachmentDownloadCardsStrings } from '../Attachment/AttachmentDownloadCards';
 /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
 import { AttachmentMetadata } from '@internal/acs-ui-common';
+/* @conditional-compile-remove(data-loss-prevention) */
+import { dataLossIconStyle } from '../styles/MessageThread.styles';
 
 type ChatMessageContentProps = {
   message: ChatMessage;
@@ -135,7 +137,7 @@ const MessageContentAsText = (props: ChatMessageContentProps): JSX.Element => {
  * @private
  */
 export const BlockedMessageContent = (props: BlockedMessageContentProps): JSX.Element => {
-  const Icon: JSX.Element = <FontIcon iconName={'DataLossPreventionProhibited'} />;
+  const Icon: JSX.Element = <FontIcon className={dataLossIconStyle} iconName={'DataLossPreventionProhibited'} />;
   const blockedMessage =
     props.message.warningText === undefined ? props.strings.blockedWarningText : props.message.warningText;
   const blockedMessageLink = props.message.link;
@@ -217,9 +219,11 @@ const messageContentAriaText = (props: ChatMessageContentProps): string | undefi
   const message = extractContentForAllyMessage(props);
   return props.message.mine
     ? _formatString(props.strings.messageContentMineAriaText, {
+        status: props.message.status ?? '',
         message: message
       })
     : _formatString(props.strings.messageContentAriaText, {
+        status: props.message.status ?? '',
         author: `${props.message.senderDisplayName}`,
         message: message
       });

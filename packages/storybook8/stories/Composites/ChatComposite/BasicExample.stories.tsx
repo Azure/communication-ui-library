@@ -23,6 +23,14 @@ const messageArray = [
   'Have fun!'
 ];
 
+const defaultControlsValues = {
+  displayName: 'John Smith',
+  showErrorBar: true,
+  showParticipants: true,
+  showTopic: true,
+  compositeFormFactor: 'desktop'
+};
+
 const storyControls = {
   userId: controlsToAdd.userId,
   token: controlsToAdd.token,
@@ -91,6 +99,9 @@ const meta: Meta<typeof BasicStory> = {
     ...storyControls,
     // Hiding auto-generated controls
     ...defaultChatCompositeHiddenControls
+  },
+  args: {
+    ...defaultControlsValues
   }
 };
 

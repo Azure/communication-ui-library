@@ -1,0 +1,9 @@
+{
+  "type": "patch",
+  "area": "improvement",
+  "workstream": "Dependencies",
+  "comment": "Update @fluentui-contrib/react-chat to fix focus issues in chat component",
+  "packageName": "@azure/communication-react",
+  "email": "98852890+vhuseinova-msft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

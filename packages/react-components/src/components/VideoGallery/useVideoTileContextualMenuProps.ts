@@ -27,6 +27,8 @@ export const useVideoTileContextualMenuProps = (props: {
     stopSpotlightVideoTileMenuLabel?: string;
     stopSpotlightOnSelfVideoTileMenuLabel?: string;
     spotlightLimitReachedMenuTitle?: string;
+    /* @conditional-compile-remove(soft-mute) */
+    muteParticipantMenuItemLabel?: string;
   };
   view?: { updateScalingMode: (scalingMode: ViewScalingMode) => Promise<void> };
   isPinned?: boolean;
@@ -68,7 +70,21 @@ export const useVideoTileContextualMenuProps = (props: {
 
   const contextualMenuProps: IContextualMenuProps | undefined = useMemo(() => {
     const items: IContextualMenuItem[] = [];
-
+    /* @conditional-compile-remove(soft-mute) */
+    if (onMuteParticipant && strings?.muteParticipantMenuItemLabel) {
+      items.push({
+        key: 'mute',
+        text: strings?.muteParticipantMenuItemLabel,
+        iconProps: {
+          iconName: 'ContextualMenuMicMutedIcon',
+          styles: { root: { lineHeight: 0 } }
+        },
+        onClick: () => onMuteParticipant(participant.userId),
+        'data-ui-id': 'video-tile-mute-participant',
+        ariaLabel: strings?.muteParticipantMenuItemLabel,
+        disabled: participant.isMuted
+      });
+    }
     if (isPinned !== undefined) {
       if (isPinned && onUnpinParticipant && strings?.unpinParticipantForMe) {
         let unpinActionString: string | undefined = undefined;
@@ -112,7 +128,7 @@ export const useVideoTileContextualMenuProps = (props: {
           },
           'data-ui-id': 'video-tile-pin-participant-button',
           disabled: disablePinMenuItem || isSpotlighted,
-          ariaLabel: pinActionString
+          ariaLabel: strings.pinParticipantForMe
         });
       }
     }
@@ -156,21 +172,6 @@ export const useVideoTileContextualMenuProps = (props: {
           title: maxSpotlightedParticipantsReached ? strings?.spotlightLimitReachedMenuTitle : undefined
         });
       }
-    }
-    /* @conditional-compile-remove(soft-mute) */
-    if (onMuteParticipant) {
-      items.push({
-        key: 'mute',
-        text: 'Mute',
-        iconProps: {
-          iconName: 'ContextualMenuMicMutedIcon',
-          styles: { root: { lineHeight: 0 } }
-        },
-        onClick: () => onMuteParticipant(participant.userId),
-        'data-ui-id': 'video-tile-mute-participant',
-        ariaLabel: 'Mute',
-        disabled: participant.isMuted
-      });
     }
     if (scalingMode) {
       if (scalingMode === 'Crop' && strings?.fitRemoteParticipantToFrame) {

@@ -106,5 +106,9 @@ const addList = async (listButtonLabel: string, component: Locator): Promise<voi
   await editor.pressSequentially('First submenu');
   await editor.press('Enter');
   await component.getByLabel('Decrease indent').click();
+  // the tests are fast and sometimes UI state for "decrease indent" button doesn't have enough time to update
+  // this call is to fix it
+  // click is not used as it might set cursor to incorrect position
+  editor.hover();
   await editor.pressSequentially('Third line');
 };

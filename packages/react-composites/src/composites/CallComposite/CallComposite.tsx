@@ -9,6 +9,8 @@ import {
   useTheme,
   VideoTilesOptions
 } from '@internal/react-components';
+
+import { ActiveNotification, NotificationStack } from '@internal/react-components';
 import { CallSurveyImprovementSuggestions } from '@internal/react-components';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
@@ -43,12 +45,14 @@ import { ParticipantRole, PermissionConstraints } from '@azure/communication-cal
 import { MobileChatSidePaneTabHeaderProps } from '../common/TabHeader';
 import { InjectedSidePaneProps, SidePaneProvider, SidePaneRenderer } from './components/SidePane/SidePaneProvider';
 import {
-  filterLatestErrors,
+  filterLatestNotifications,
   getEndedCallPageProps,
-  trackErrorAsDismissed,
-  updateTrackedErrorsWithActiveErrors
+  trackNotificationAsDismissed,
+  updateTrackedNotificationsWithActiveNotifications
 } from './utils';
-import { TrackedErrors } from './types/ErrorTracking';
+
+import { CachedComplianceNotificationProps, computeComplianceNotification } from './utils';
+import { TrackedNotifications } from './types/ErrorTracking';
 import { usePropsFor } from './hooks/usePropsFor';
 import { deviceCountSelector } from './selectors/deviceCountSelector';
 import { VideoGalleryLayout } from '@internal/react-components';
@@ -57,6 +61,8 @@ import { useTrackedCapabilityChangedNotifications } from './utils/TrackCapabilit
 import { useEndedCallConsoleErrors } from './utils/useConsoleErrors';
 import { SurveyPage } from './pages/SurveyPage';
 import { useAudio } from '../common/AudioProvider';
+
+import { complianceBannerSelector } from './selectors/complianceBannerSelector';
 
 /**
  * Props for {@link CallComposite}.
@@ -359,6 +365,11 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
       const constrain = getQueryOptions({
         role: adapter.getState().call?.role
       });
+      /* @conditional-compile-remove(call-readiness) */
+      {
+        constrain.audio = props.options?.deviceChecks?.microphone === 'doNotPrompt' ? false : constrain.audio;
+        constrain.video = props.options?.deviceChecks?.camera === 'doNotPrompt' ? false : constrain.video;
+      }
       await adapter.askDevicePermission(constrain);
       adapter.queryCameras();
       adapter.queryMicrophones();
@@ -366,6 +377,8 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
     })();
   }, [
     adapter,
+    /* @conditional-compile-remove(call-readiness) */
+    props.options?.deviceChecks,
     // Ensure we re-ask for permissions if the number of devices goes from 0 -> n during a call
     // as we cannot request permissions when there are no devices.
     hasCameras,
@@ -423,14 +436,92 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   // This works by tracking the most recent timestamp of any active error type.
   // And then tracking when that error type was last dismissed.
   const activeErrors = usePropsFor(ErrorBar).activeErrorMessages;
-  const [trackedErrors, setTrackedErrors] = useState<TrackedErrors>({} as TrackedErrors);
+
+  const activeInCallErrors = usePropsFor(NotificationStack).activeErrorMessages;
+
+  const activeNotifications = usePropsFor(NotificationStack).activeNotifications;
+
+  const complianceProps = useSelector(complianceBannerSelector);
+
+  const cachedProps = useRef<CachedComplianceNotificationProps>({
+    latestBooleanState: {
+      callTranscribeState: false,
+      callRecordState: false
+    },
+    latestStringState: {
+      callTranscribeState: 'off',
+      callRecordState: 'off'
+    },
+    lastUpdated: Date.now()
+  });
+
+  const complianceNotification: ActiveNotification | undefined = useMemo(() => {
+    return computeComplianceNotification(complianceProps, cachedProps);
+  }, [complianceProps, cachedProps]);
+
   useEffect(() => {
-    setTrackedErrors((prev) => updateTrackedErrorsWithActiveErrors(prev, activeErrors));
-  }, [activeErrors]);
-  const onDismissError = useCallback((error: ActiveErrorMessage) => {
-    setTrackedErrors((prev) => trackErrorAsDismissed(error.type, prev));
+    if (complianceNotification) {
+      activeNotifications.forEach((notification, index) => {
+        if (
+          [
+            'recordingStarted',
+            'transcriptionStarted',
+            'recordingStopped',
+            'transcriptionStopped',
+            'recordingAndTranscriptionStarted',
+            'recordingAndTranscriptionStopped',
+            'recordingStoppedStillTranscribing',
+            'transcriptionStoppedStillRecording'
+          ].includes(activeNotifications[index].type)
+        ) {
+          activeNotifications.splice(index, 1);
+        }
+      });
+      activeNotifications.push(complianceNotification);
+    }
+    setTrackedNotifications((prev) => updateTrackedNotificationsWithActiveNotifications(prev, activeNotifications));
+  }, [complianceNotification, activeNotifications]);
+
+  const [trackedErrors, setTrackedErrors] = useState<TrackedNotifications>({} as TrackedNotifications);
+
+  const [trackedInCallErrors, setTrackedInCallErrors] = useState<TrackedNotifications>({} as TrackedNotifications);
+
+  const [trackedNotifications, setTrackedNotifications] = useState<TrackedNotifications>({} as TrackedNotifications);
+
+  useEffect(() => {
+    setTrackedErrors((prev) => updateTrackedNotificationsWithActiveNotifications(prev, activeErrors));
+
+    setTrackedInCallErrors((prev) => updateTrackedNotificationsWithActiveNotifications(prev, activeInCallErrors));
+  }, [activeErrors, activeInCallErrors]);
+
+  const onDismissError = useCallback((error: ActiveErrorMessage | ActiveNotification) => {
+    setTrackedErrors((prev) => trackNotificationAsDismissed(error.type, prev));
+
+    setTrackedInCallErrors((prev) => trackNotificationAsDismissed(error.type, prev));
   }, []);
-  const latestErrors = useMemo(() => filterLatestErrors(activeErrors, trackedErrors), [activeErrors, trackedErrors]);
+
+  const onDismissNotification = useCallback((notification: ActiveNotification) => {
+    setTrackedNotifications((prev) => trackNotificationAsDismissed(notification.type, prev));
+  }, []);
+  const latestErrors = useMemo(
+    () => filterLatestNotifications(activeErrors, trackedErrors),
+    [activeErrors, trackedErrors]
+  );
+
+  const latestInCallErrors = useMemo(
+    () => filterLatestNotifications(activeInCallErrors, trackedInCallErrors),
+    [activeInCallErrors, trackedInCallErrors]
+  ) as ActiveNotification[];
+
+  const latestNotifications = useMemo(() => {
+    const result = filterLatestNotifications(activeNotifications, trackedNotifications);
+    // sort notifications by timestamp from earliest to latest
+    result.sort(
+      (a, b) => (a.timestamp ?? new Date(Date.now())).getTime() - (b.timestamp ?? new Date(Date.now())).getTime()
+    );
+    return result;
+  }, [activeNotifications, trackedNotifications]) as ActiveNotification[];
+
   const callees = useSelector(getTargetCallees) as StartCallIdentifier[];
   const locale = useLocale();
   const palette = useTheme().palette;
@@ -460,7 +551,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
             }
           }}
           updateSidePaneRenderer={setSidePaneRenderer}
-          latestErrors={latestErrors}
+          latestErrors={latestErrors as ActiveErrorMessage[]}
           onDismissError={onDismissError}
           modalLayerHostId={props.modalLayerHostId}
           /* @conditional-compile-remove(call-readiness) */
@@ -564,8 +655,10 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           options={props.options}
           updateSidePaneRenderer={setSidePaneRenderer}
           mobileChatTabHeader={props.mobileChatTabHeader}
-          latestErrors={latestErrors}
+          latestErrors={latestInCallErrors}
+          latestNotifications={latestNotifications}
           onDismissError={onDismissError}
+          onDismissNotification={onDismissNotification}
           capabilitiesChangedNotificationBarProps={capabilitiesChangedNotificationBarProps}
         />
       );
@@ -579,8 +672,10 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           updateSidePaneRenderer={setSidePaneRenderer}
           mobileChatTabHeader={props.mobileChatTabHeader}
           onFetchAvatarPersonaData={onFetchAvatarPersonaData}
-          latestErrors={latestErrors}
+          latestErrors={latestInCallErrors}
+          latestNotifications={latestNotifications}
           onDismissError={onDismissError}
+          onDismissNotification={onDismissNotification}
           capabilitiesChangedNotificationBarProps={capabilitiesChangedNotificationBarProps}
         />
       );
@@ -597,8 +692,10 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           updateSidePaneRenderer={setSidePaneRenderer}
           mobileChatTabHeader={props.mobileChatTabHeader}
           onCloseChatPane={props.onCloseChatPane}
-          latestErrors={latestErrors}
+          latestErrors={latestInCallErrors}
+          latestNotifications={latestNotifications}
           onDismissError={onDismissError}
+          onDismissNotification={onDismissNotification}
           galleryLayout={userSetGalleryLayout}
           onUserSetGalleryLayoutChange={setUserSetGalleryLayout}
           onSetUserSetOverflowGalleryPosition={setUserSetOverflowGalleryPosition}
@@ -622,8 +719,10 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
               options={props.options}
               updateSidePaneRenderer={setSidePaneRenderer}
               mobileChatTabHeader={props.mobileChatTabHeader}
-              latestErrors={latestErrors}
+              latestErrors={latestInCallErrors}
+              latestNotifications={latestNotifications}
               onDismissError={onDismissError}
+              onDismissNotification={onDismissNotification}
               capabilitiesChangedNotificationBarProps={capabilitiesChangedNotificationBarProps}
             />
           }

@@ -45,7 +45,7 @@ const memoizedAllConvertChatMessage = memoizeFnAll(
   ): Message => {
     const messageType = chatMessage.type.toLowerCase();
     /* @conditional-compile-remove(data-loss-prevention) */
-    if (chatMessage.policyViolation) {
+    if (chatMessage.policyViolation?.result === 'contentBlocked') {
       return convertToUiBlockedMessage(chatMessage, userId, isSeen, isLargeGroup);
     }
     if (
@@ -136,7 +136,16 @@ const processChatMessageContent = (message: ChatMessageWithStatus): string | und
         const attachmentPreviewUrl = attachments.find((attachment) => attachment.id === img.id)?.previewUrl;
         if (attachmentPreviewUrl) {
           const resourceCache = message.resourceCache?.[attachmentPreviewUrl];
-          img.src = getResourceSourceUrl(resourceCache);
+          const src = getResourceSourceUrl(resourceCache);
+          // if in error state
+          if (src === undefined) {
+            const brokenImageView = getBrokenImageViewNode(img);
+            img.parentElement?.replaceChild(brokenImageView, img);
+          } else {
+            // else in loading or success state
+            img.setAttribute('src', src);
+          }
+          setImageWidthAndHeight(img);
         }
       });
       content = document.body.innerHTML;
@@ -163,24 +172,29 @@ const generateImageAttachmentImgHtml = (message: ChatMessageWithStatus, attachme
     const contentType = extractAttachmentContentTypeFromName(attachment.name);
     const resourceCache = message.resourceCache?.[attachment.previewUrl];
     const src = getResourceSourceUrl(resourceCache);
-
+    // if in error state
+    if (src === undefined) {
+      return `\r\n<p>${getBrokenImageViewNode()}</p>`;
+    }
+    // else in loading or success state
     return `\r\n<p><img alt="image" src="${src}" itemscope="${contentType}" id="${attachment.id}"></p>`;
   }
 
   return '';
 };
 
-const getResourceSourceUrl = (result?: ResourceFetchResult): string => {
-  let src = '';
+const getResourceSourceUrl = (result?: ResourceFetchResult): string | undefined => {
   if (result) {
-    if (result.error || !result.sourceUrl) {
-      // In case of an error we set src to some invalid value to show broken image
-      src = 'blob://';
+    if (!result.error && result.sourceUrl) {
+      // return sourceUrl for success state
+      return result.sourceUrl;
     } else {
-      src = result.sourceUrl;
+      // return undefined for error state
+      return undefined;
     }
   }
-  return src;
+  // return empty string for loading state
+  return '';
 };
 
 const extractAttachmentContentTypeFromName = (name?: string): string => {
@@ -193,6 +207,16 @@ const extractAttachmentContentTypeFromName = (name?: string): string => {
   }
   const contentType = name.substring(indexOfLastDot + 1);
   return contentType;
+};
+
+const setImageWidthAndHeight = (img?: HTMLImageElement): void => {
+  if (img) {
+    // define aspect ratio explicitly to prevent image not being displayed correctly
+    // in safari, this includes image placeholder for loading state
+    const width = img.width;
+    const height = img.height;
+    img.style.aspectRatio = `${width}/${height}`;
+  }
 };
 
 /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
@@ -293,7 +317,7 @@ const hasValidParticipant = (chatMessage: ChatMessageWithStatus): boolean =>
 export const messageThreadSelectorWithThread: () => MessageThreadSelector = () =>
   createSelector(
     [getUserId, getChatMessages, getLatestReadTime, getIsLargeGroup, getReadReceipts, getParticipants],
-    (userId, chatMessages, latestReadTime, isLargeGroup, readReceipts, participants) => {
+    (userId, chatMessages, latestReadTime, isLargeGroup, readReceipts = [], participants) => {
       // We can't get displayName in teams meeting interop for now, disable rr feature when it is teams interop
       const isTeamsInterop = Object.values(participants).find((p) => 'microsoftTeamsUserId' in p.id) !== undefined;
 
@@ -360,6 +384,17 @@ const sanitizedMessageContentType = (type: string): MessageContentType => {
     ? lowerCaseType
     : 'unknown';
 };
+
+const getBrokenImageViewNode = (img?: HTMLDivElement): HTMLDivElement => {
+  const wrapper = document.createElement('div');
+  Array.from(img?.attributes ?? []).forEach((attr) => {
+    wrapper.setAttribute(attr.nodeName, attr.nodeValue ?? '');
+  });
+  wrapper.setAttribute('class', 'broken-image-wrapper');
+  wrapper.setAttribute('data-ui-id', 'broken-image-icon');
+  return wrapper;
+};
+
 const isMessageValidToRender = (message: ChatMessageWithStatus): boolean => {
   if (message.deletedOn) {
     return false;
@@ -368,7 +403,7 @@ const isMessageValidToRender = (message: ChatMessageWithStatus): boolean => {
     return true;
   }
   /* @conditional-compile-remove(data-loss-prevention) */
-  if (message.policyViolation) {
+  if (message.policyViolation?.result === 'contentBlocked') {
     return true;
   }
   return !!(message.content && message.content?.message !== '');

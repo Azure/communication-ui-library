@@ -7,6 +7,10 @@ import { Common, fromFlatCommunicationIdentifier } from '@internal/acs-ui-common
 import { StatefulChatClient } from '@internal/chat-stateful-client';
 /* @conditional-compile-remove(file-sharing-acs) */
 import { ChatAttachment } from '@azure/communication-chat';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+import { UploadChatImageResult } from '@internal/acs-ui-common';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+import { getImageAttachmentsFromHTMLContent } from '../utils/getImageAttachmentsFromHTMLContent';
 import { ChatMessage, ChatMessageReadReceipt, ChatThreadClient, SendMessageOptions } from '@azure/communication-chat';
 import memoizeOne from 'memoize-one';
 /* @conditional-compile-remove(file-sharing-acs) */
@@ -25,6 +29,10 @@ export type ChatHandlers = {
     content: string,
     options?: SendMessageOptions | /* @conditional-compile-remove(file-sharing-acs) */ MessageOptions
   ) => Promise<void>;
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  onUploadImage: (image: Blob, imageFilename: string) => Promise<UploadChatImageResult>;
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  onDeleteImage: (imageId: string) => Promise<void>;
   onMessageSeen: (chatMessageId: string) => Promise<void>;
   onTyping: () => Promise<void>;
   onRemoveParticipant: (userId: string) => Promise<void>;
@@ -64,24 +72,55 @@ export const createDefaultChatHandlers = memoizeOne(
           content,
           senderDisplayName: chatClient.getState().displayName
         };
+
+        /* @conditional-compile-remove(rich-text-editor-image-upload) */
+        const imageAttachments: ChatAttachment[] | undefined = getImageAttachmentsFromHTMLContent(content);
+
         /* @conditional-compile-remove(file-sharing-acs) */
-        if (
+        const hasAttachments =
           options &&
           'attachments' in options &&
           options.attachments &&
           options.attachments[0] &&
-          !(options.attachments[0] as ChatAttachment).attachmentType
+          !(options.attachments[0] as ChatAttachment).attachmentType;
+        /* @conditional-compile-remove(rich-text-editor-image-upload) */
+        const hasImages = options && imageAttachments && imageAttachments.length > 0;
+
+        /* @conditional-compile-remove(file-sharing-acs) */
+        /* @conditional-compile-remove(rich-text-editor-image-upload) */
+        if (
+          /* @conditional-compile-remove(file-sharing-acs) */ hasAttachments ||
+          /* @conditional-compile-remove(rich-text-editor-image-upload) */ hasImages
         ) {
-          const chatSDKOptions = {
+          const chatSDKOptions: SendMessageOptions = {
             metadata: {
               ...options?.metadata,
-              fileSharingMetadata: JSON.stringify(options?.attachments)
-            }
+              /* @conditional-compile-remove(file-sharing-acs) */
+              fileSharingMetadata: JSON.stringify(options.attachments)
+            },
+            /* @conditional-compile-remove(rich-text-editor-image-upload) */
+            attachments: imageAttachments,
+            type: options.type
           };
           await chatThreadClient.sendMessage(sendMessageRequest, chatSDKOptions);
           return;
         }
+
         await chatThreadClient.sendMessage(sendMessageRequest, options as SendMessageOptions);
+      },
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */
+      onUploadImage: async function (image: Blob, imageFilename: string): Promise<UploadChatImageResult> {
+        const imageResult = await chatThreadClient.uploadImage(image, imageFilename);
+        return imageResult;
+      },
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */
+      onDeleteImage: async function (imageId: string): Promise<void> {
+        try {
+          await chatThreadClient.deleteImage(imageId);
+        } catch (e) {
+          console.log(`Error deleting image message: ${e}`);
+        }
+        return;
       },
       // due to a bug in babel, we can't use arrow function here
       // affecting conditional-compile-remove(attachment-upload)
@@ -91,13 +130,18 @@ export const createDefaultChatHandlers = memoizeOne(
         /* @conditional-compile-remove(file-sharing-acs) */
         options?: MessageOptions
       ) {
+        /* @conditional-compile-remove(rich-text-editor-image-upload) */
+        const imageAttachments: ChatAttachment[] | undefined = getImageAttachmentsFromHTMLContent(content);
+
         const updateMessageOptions = {
           content,
           /* @conditional-compile-remove(file-sharing-acs) */
           metadata: {
             ...options?.metadata,
             fileSharingMetadata: JSON.stringify(options?.attachments)
-          }
+          },
+          /* @conditional-compile-remove(rich-text-editor-image-upload) */
+          attachments: imageAttachments
         };
         await chatThreadClient.updateMessage(messageId, updateMessageOptions);
       },

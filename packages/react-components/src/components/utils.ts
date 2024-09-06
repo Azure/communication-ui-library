@@ -4,7 +4,7 @@
 import { IIconProps, MessageBarType } from '@fluentui/react';
 import { ActiveErrorMessage, ErrorType } from './ErrorBar';
 import { _SupportedSpokenLanguage } from '../types';
-import { NotificationType } from './Notifications';
+import { ActiveNotification, NotificationType } from './NotificationStack';
 
 /**
  * @private
@@ -30,6 +30,15 @@ export const extension = (fileName: string): string => fileName.split('.').pop()
  */
 export interface DismissedError {
   type: ErrorType;
+  dismissedAt: Date;
+  activeSince?: Date;
+}
+
+/**
+ * @private
+ */
+export interface DismissedNotification {
+  type: NotificationType;
   dismissedAt: Date;
   activeSince?: Date;
 }
@@ -100,6 +109,73 @@ export const dropDismissalsForInactiveErrors = (
 
 /**
  * @private
+ * @param dismissedNotifications
+ * @param toDismiss
+ * @returns DismissedNotification[]
+ * Always returns a new Array so that the state variable is updated, trigerring a render.
+ */
+export const dismissNotification = (
+  dismissedNotifications: DismissedNotification[],
+  toDismiss: ActiveNotification
+): DismissedNotification[] => {
+  const now = new Date(Date.now());
+  for (const notification of dismissedNotifications) {
+    if (notification.type === toDismiss.type) {
+      // Bump the timestamp for latest dismissal of this error to now.
+      notification.dismissedAt = now;
+      notification.activeSince = toDismiss.timestamp;
+      return Array.from(dismissedNotifications);
+    }
+  }
+
+  const toDismissTimestamp = toDismiss.timestamp ?? now;
+
+  // Record that this error was dismissed for the first time right now.
+  return [
+    ...dismissedNotifications,
+    {
+      type: toDismiss.type,
+      // the error time could be sometimes later than the button click time, which cause the dismiss not working
+      // so we set the dismiss time to the later one
+      dismissedAt: now > toDismissTimestamp ? now : toDismissTimestamp,
+      activeSince: toDismiss.timestamp
+    }
+  ];
+};
+
+/**
+ * @private
+ * @param activeNotifications
+ * @param dismissedNotifications
+ * @returns DismissedError[]
+ *  Returns a new Array if and only if contents change, to avoid re-rendering when nothing was dropped.
+ */
+export const dropDismissalsForInactiveNotifications = (
+  activeNotifications: ActiveNotification[],
+  dismissedNotifications: DismissedNotification[]
+): DismissedNotification[] => {
+  const active = new Map();
+  for (const message of activeNotifications) {
+    active.set(message.type, message);
+  }
+
+  // For an error such that:
+  // * It was previously active, and dismissed.
+  // * It did not have a timestamp associated with it.
+  // * It is no longer active.
+  //
+  // We remove it from dismissals. When it becomes active again next time, it will be shown again on the UI.
+  const shouldDeleteDismissal = (dismissed: DismissedNotification): boolean =>
+    dismissed.activeSince === undefined && active.get(dismissed.type) === undefined;
+
+  if (dismissedNotifications.some((dismissed) => shouldDeleteDismissal(dismissed))) {
+    return dismissedNotifications.filter((dismissed) => !shouldDeleteDismissal(dismissed));
+  }
+  return dismissedNotifications;
+};
+
+/**
+ * @private
  * @param activeErrorMessages
  * @param dismissedErrors
  * @returns ActiveErrorMessage[]
@@ -131,6 +207,42 @@ export const errorsToShow = (
     }
     // Error has an associated timestamp, so compare with last dismissal.
     return error.timestamp > dismissal.dismissedAt;
+  });
+};
+
+/**
+ * @private
+ * @param activeNotifications
+ * @param dismissedNotifications
+ * @returns ActiveNotification[]
+ */
+export const notificationsToShow = (
+  activeNotifications: ActiveNotification[],
+  dismissedNotifications: DismissedNotification[],
+  mountTimestamp?: Date
+): ActiveNotification[] => {
+  const dismissed: Map<NotificationType, DismissedNotification> = new Map();
+  for (const notification of dismissedNotifications) {
+    dismissed.set(notification.type, notification);
+  }
+
+  return activeNotifications.filter((notification) => {
+    if (mountTimestamp && notification.timestamp && mountTimestamp > notification.timestamp) {
+      // Notification has a timestamp and it is older than when the component was mounted.
+      return false;
+    }
+
+    const dismissal = dismissed.get(notification.type);
+    if (!dismissal) {
+      // This error was never dismissed.
+      return true;
+    }
+    if (!notification.timestamp) {
+      // No timestamp associated with the error. In this case, the existence of a dismissal is enough to suppress the error.
+      return false;
+    }
+    // Error has an associated timestamp, so compare with last dismissal.
+    return notification.timestamp > dismissal.dismissedAt;
   });
 };
 
@@ -211,6 +323,8 @@ export const NotificationIconProps = (notificationType: NotificationType): IIcon
  */
 export const customNotificationIconName: Partial<{ [key in NotificationType]: string }> = {
   callNetworkQualityLow: 'ErrorBarCallNetworkQualityLow',
+  /* @conditional-compile-remove(teams-meeting-conference) */
+  teamsMeetingCallNetworkQualityLow: 'ErrorBarCallNetworkQualityLow',
   callNoSpeakerFound: 'ErrorBarCallNoSpeakerFound',
   callNoMicrophoneFound: 'ErrorBarCallNoMicrophoneFound',
   callMicrophoneAccessDenied: 'ErrorBarCallMicrophoneAccessDenied',
@@ -224,7 +338,36 @@ export const customNotificationIconName: Partial<{ [key in NotificationType]: st
   callCameraAlreadyInUse: 'ErrorBarCallCameraAlreadyInUse',
   callVideoStoppedBySystem: 'ErrorBarCallVideoStoppedBySystem',
   callVideoRecoveredBySystem: 'ErrorBarCallVideoRecoveredBySystem',
-  callMacOsCameraAccessDenied: 'ErrorBarCallMacOsCameraAccessDenied'
+  callMacOsCameraAccessDenied: 'ErrorBarCallMacOsCameraAccessDenied',
+  /* @conditional-compile-remove(soft-mute) */
+  mutedByRemoteParticipant: 'ErrorBarMutedByRemoteParticipant',
+  speakingWhileMuted: 'ErrorBarCallMicrophoneMutedBySystem',
+
+  recordingStarted: 'NotificationBarRecording',
+
+  transcriptionStarted: 'NotificationBarRecording',
+
+  recordingStopped: 'NotificationBarRecording',
+
+  transcriptionStopped: 'NotificationBarRecording',
+
+  recordingAndTranscriptionStarted: 'NotificationBarRecording',
+
+  recordingAndTranscriptionStopped: 'NotificationBarRecording',
+
+  recordingStoppedStillTranscribing: 'NotificationBarRecording',
+
+  transcriptionStoppedStillRecording: 'NotificationBarRecording',
+  /* @conditional-compile-remove(breakout-rooms) */
+  assignedBreakoutRoomOpened: 'NotificationBarBreakoutRoomOpened',
+  /* @conditional-compile-remove(breakout-rooms) */
+  assignedBreakoutRoomOpenedPromptJoin: 'NotificationBarBreakoutRoomPromptJoin',
+  /* @conditional-compile-remove(breakout-rooms) */
+  assignedBreakoutRoomChanged: 'NotificationBarBreakoutRoomChanged',
+  /* @conditional-compile-remove(breakout-rooms) */
+  breakoutRoomJoined: 'NotificationBarBreakoutRoomJoined',
+  /* @conditional-compile-remove(breakout-rooms) */
+  breakoutRoomClosingSoon: 'NotificationBarBreakoutRoomClosingSoon'
 };
 
 /**

@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 import { GroupCallLocator, GroupLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
-/* @conditional-compile-remove(meeting-id) */
 import { TeamsMeetingIdLocator } from '@azure/communication-calling';
 import { v1 as generateGUID } from 'uuid';
 import { getExistingThreadIdFromURL } from './getThreadId';
@@ -22,21 +21,6 @@ export const fetchTokenResponse = async (): Promise<any> => {
     }
   }
   throw 'Invalid token response';
-};
-
-/**
- * Init React Render Tracker whenever it detects the query param 'rrt' is set to true.
- */
-export const initReactRenderTracker = (): void => {
-  const urlParams = new URLSearchParams(window.location.search);
-  const isEnabled = urlParams.get('rrt');
-  if (isEnabled !== 'true') {
-    return;
-  }
-
-  const script = document.createElement('script');
-  script.src = 'https://cdn.jsdelivr.net/npm/react-render-tracker';
-  document.head.appendChild(script);
 };
 
 /**
@@ -65,7 +49,6 @@ export const ensureJoinableTeamsLinkPushedToUrl = (teamsLink: TeamsMeetingLinkLo
   }
 };
 
-/* @conditional-compile-remove(meeting-id) */
 /**
  * Get teams meeting id and passcode from the url's query params.
  */
@@ -78,7 +61,6 @@ export const getMeetingIdFromUrl = (): TeamsMeetingIdLocator | undefined => {
     : undefined;
 };
 
-/* @conditional-compile-remove(meeting-id) */
 export const ensureJoinableMeetingIdPushedToUrl = (teamsLink: TeamsMeetingIdLocator): void => {
   if (!getTeamsLinkFromUrl()) {
     pushQSPUrl({ name: 'meetingId', value: encodeURIComponent(teamsLink.meetingId) });

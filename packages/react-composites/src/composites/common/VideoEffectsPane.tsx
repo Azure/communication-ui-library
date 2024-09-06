@@ -41,12 +41,7 @@ export const VideoEffectsPaneContent = (props: {
     focus: () => void;
   }>;
 }): JSX.Element => {
-  const {
-    onDismissError,
-    activeVideoEffectError,
-
-    activeVideoEffectChange
-  } = props;
+  const { onDismissError, activeVideoEffectError, activeVideoEffectChange } = props;
 
   const locale = useLocale();
 

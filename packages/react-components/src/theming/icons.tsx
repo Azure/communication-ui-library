@@ -42,12 +42,14 @@ import {
   MicProhibited16Filled,
   VideoProhibited16Filled,
   Pin16Filled,
+  Pin20Filled,
   Pin20Regular,
   PinOff20Regular,
   ScaleFit20Regular,
   ScaleFill20Regular,
   PersonDelete20Regular
 } from '@fluentui/react-icons';
+import { MicOff16Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(rich-text-editor) */
 import {
   TextBold20Regular,
@@ -78,6 +80,10 @@ import {
 /* @conditional-compile-remove(call-readiness) */
 import { Important20Filled } from '@fluentui/react-icons';
 
+import { Record16Regular } from '@fluentui/react-icons';
+/* @conditional-compile-remove(breakout-rooms) */
+import { ConferenceRoom16Regular, DoorArrowLeft16Regular, DoorArrowRight16Regular } from '@fluentui/react-icons';
+
 import { VideoBackgroundEffect20Filled, VideoBackgroundEffect20Regular } from '@fluentui/react-icons';
 
 import { Backspace20Regular } from '@fluentui/react-icons';
@@ -107,6 +113,8 @@ import React from 'react';
 import { useTheme } from './FluentThemeProvider';
 /* @conditional-compile-remove(call-readiness) */
 import { sitePermissionIconBackgroundStyle, scaledIconStyles } from './icons.styles';
+/* @conditional-compile-remove(one-to-n-calling) */
+import { Call20Filled } from '@fluentui/react-icons';
 
 /**
  * Icons used by the React components exported from this library.
@@ -288,7 +296,7 @@ export const DEFAULT_COMPONENT_ICONS = {
   ErrorBarCallMacOsCameraAccessDenied: <VideoProhibited16Filled />,
   ErrorBarCallMacOsMicrophoneAccessDenied: <MicProhibited16Filled />,
   ErrorBarCallMicrophoneAccessDenied: <MicProhibited16Filled />,
-  ErrorBarCallMicrophoneMutedBySystem: <MicOff16Filled />,
+  ErrorBarCallMicrophoneMutedBySystem: <MicOff16Regular />,
   ErrorBarCallMicrophoneUnmutedBySystem: <Mic16Filled />,
   ErrorBarCallNetworkQualityLow: <WifiWarning16Filled />,
   ErrorBarCallNoMicrophoneFound: <MicProhibited16Filled />,
@@ -296,6 +304,20 @@ export const DEFAULT_COMPONENT_ICONS = {
   ErrorBarClear: <Dismiss16Regular />,
   ErrorBarCallVideoRecoveredBySystem: <Video16Filled />,
   ErrorBarCallVideoStoppedBySystem: <VideoProhibited16Filled />,
+  /* @conditional-compile-remove(soft-mute) */
+  ErrorBarMutedByRemoteParticipant: <MicOff16Regular />,
+
+  NotificationBarRecording: <Record16Regular />,
+  /* @conditional-compile-remove(breakout-rooms) */
+  NotificationBarBreakoutRoomOpened: <DoorArrowRight16Regular />,
+  /* @conditional-compile-remove(breakout-rooms) */
+  NotificationBarBreakoutRoomPromptJoin: <DoorArrowRight16Regular />,
+  /* @conditional-compile-remove(breakout-rooms) */
+  NotificationBarBreakoutRoomChanged: <DoorArrowRight16Regular />,
+  /* @conditional-compile-remove(breakout-rooms) */
+  NotificationBarBreakoutRoomJoined: <ConferenceRoom16Regular />,
+  /* @conditional-compile-remove(breakout-rooms) */
+  NotificationBarBreakoutRoomClosingSoon: <DoorArrowLeft16Regular />,
   HorizontalGalleryLeftButton: <GalleryLeftButton />,
   HorizontalGalleryRightButton: <GalleryRightButton />,
   MessageDelivered: <CheckmarkCircle16Regular />,
@@ -338,6 +360,7 @@ export const DEFAULT_COMPONENT_ICONS = {
   /* @conditional-compile-remove(call-readiness) */
   BrowserPermissionDeniedError: <BrowserPermissionDenied20Filled />,
   VideoTilePinned: <Pin16Filled />,
+  ParticipantItemPinned: <Pin20Filled />,
   VideoTileMoreOptions: <MoreHorizontal20Filled />,
   VideoTileScaleFit: <ScaleFit20Regular />,
   VideoTileScaleFill: <ScaleFill20Regular />,
@@ -394,5 +417,11 @@ export const DEFAULT_COMPONENT_ICONS = {
   /* @conditional-compile-remove(rich-text-editor) */
   RichTextTableDeleteMenuIcon: <TableDismiss20Regular />,
   /* @conditional-compile-remove(soft-mute) */
-  ContextualMenuMicMutedIcon: <MicOff20Regular />
+  ContextualMenuMicMutedIcon: <MicOff20Regular />,
+  /* @conditional-compile-remove(one-to-n-calling) */
+  IncomingCallNotificationRejectIcon: <CallEnd20Filled />,
+  /* @conditional-compile-remove(one-to-n-calling) */
+  IncomingCallNotificationAcceptIcon: <Call20Filled />,
+  /* @conditional-compile-remove(one-to-n-calling) */
+  IncomingCallNotificationAcceptWithVideoIcon: <Video20Filled />
 };

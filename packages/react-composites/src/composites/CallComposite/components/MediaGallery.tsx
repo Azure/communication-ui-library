@@ -125,8 +125,8 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     return props.remoteVideoTileMenuOptions?.isHidden
       ? false
       : props.isMobile
-      ? { kind: 'drawer', hostId: props.drawerMenuHostId }
-      : { kind: 'contextual' };
+        ? { kind: 'drawer', hostId: props.drawerMenuHostId }
+        : { kind: 'contextual' };
   }, [props.remoteVideoTileMenuOptions?.isHidden, props.isMobile, props.drawerMenuHostId]);
 
   const overflowGalleryPosition = useMemo(() => {
@@ -201,8 +201,8 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
           props.localVideoTileOptions === false || userRole === 'Consumer' || (isRoomsCall && userRole === 'Unknown')
             ? 'hidden'
             : props.isMobile && containerAspectRatio < 1
-            ? '9:16'
-            : '16:9'
+              ? '9:16'
+              : '16:9'
         }
         pinnedParticipants={pinnedParticipants}
         onPinParticipant={onPinParticipant}

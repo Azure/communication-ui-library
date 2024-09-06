@@ -8,7 +8,8 @@ import { _ATTACHMENT_CARD_MARGIN_IN_PX, _ATTACHMENT_CARD_WIDTH_IN_REM } from '..
 import {
   attachmentCardBaseStyles,
   attachmentCardFlexLayout,
-  attachmentCardGirdLayout
+  attachmentCardGirdLayout,
+  attachmentGroupDisabled
 } from '../styles/AttachmentCardGroup.styles';
 
 /**
@@ -34,6 +35,7 @@ export interface _AttachmentCardGroupProps {
   children: React.ReactNode;
   ariaLabel?: string;
   attachmentGroupLayout?: _AttachmentCardGroupLayout;
+  disabled?: boolean;
 }
 
 /**
@@ -42,7 +44,7 @@ export interface _AttachmentCardGroupProps {
  * Renders the children equally spaced in multiple rows.
  */
 export const _AttachmentCardGroup = (props: _AttachmentCardGroupProps): JSX.Element => {
-  const { children, ariaLabel, attachmentGroupLayout } = props;
+  const { children, ariaLabel, attachmentGroupLayout, disabled } = props;
   if (!children) {
     return <></>;
   }
@@ -50,10 +52,12 @@ export const _AttachmentCardGroup = (props: _AttachmentCardGroupProps): JSX.Elem
     <Stack
       horizontal
       className={mergeStyles(
+        disabled && attachmentGroupDisabled,
         attachmentCardBaseStyles,
         attachmentGroupLayout === _AttachmentCardGroupLayout.Grid ? attachmentCardGirdLayout : attachmentCardFlexLayout
       )}
       aria-label={ariaLabel}
+      role="list"
     >
       {children}
     </Stack>

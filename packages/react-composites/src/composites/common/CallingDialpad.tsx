@@ -20,10 +20,10 @@ import { drawerContainerStyles } from '../CallComposite/styles/CallComposite.sty
 
 /** @private */
 export interface CallingDialpadStrings {
-  dialpadModalAriaLabel: string;
-  dialpadModalTitle: string;
-  dialpadCloseModalButtonAriaLabel: string;
-  dialpadStartCallButtonLabel: string;
+  dialpadModalAriaLabel?: string;
+  dialpadModalTitle?: string;
+  dialpadCloseModalButtonAriaLabel?: string;
+  dialpadStartCallButtonLabel?: string;
 }
 
 /** @private */

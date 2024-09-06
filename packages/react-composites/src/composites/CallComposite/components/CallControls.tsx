@@ -8,6 +8,8 @@ import { ControlBar, DevicesButton, ParticipantMenuItemsCallback } from '@intern
 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { HoldButton } from '@internal/react-components';
 import React, { useMemo } from 'react';
+/* @conditional-compile-remove(DNS) */
+import { useCallback, useState, useEffect } from 'react';
 import { CallControlOptions } from '../types/CallControlOptions';
 import { Camera } from './buttons/Camera';
 import { Devices } from './buttons/Devices';
@@ -90,6 +92,41 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
   const adapter = useAdapter();
 
   const localeStrings = useLocale();
+
+  /* @conditional-compile-remove(DNS) */
+  const [isDeepNoiseSuppressionOn, setDeepNoiseSuppressionOn] = useState<boolean>(false);
+
+  /* @conditional-compile-remove(DNS) */
+  const startDeepNoiseSuppression = useCallback(async () => {
+    await adapter.startNoiseSuppressionEffect();
+  }, [adapter]);
+
+  /* @conditional-compile-remove(DNS) */
+  useEffect(() => {
+    if (
+      adapter.getState().onResolveDeepNoiseSuppressionDependency &&
+      adapter.getState().deepNoiseSuppressionOnByDefault
+    ) {
+      startDeepNoiseSuppression();
+      setDeepNoiseSuppressionOn(true);
+    }
+  }, [adapter, startDeepNoiseSuppression]);
+  /* @conditional-compile-remove(DNS) */
+  const showNoiseSuppressionButton =
+    adapter.getState().onResolveDeepNoiseSuppressionDependency && !adapter.getState().hideNoiseSuppressionButton
+      ? true
+      : false;
+
+  /* @conditional-compile-remove(DNS) */
+  const onClickNoiseSuppression = useCallback(async () => {
+    if (isDeepNoiseSuppressionOn) {
+      await adapter.stopNoiseSuppressionEffect();
+      setDeepNoiseSuppressionOn(false);
+    } else {
+      await adapter.startNoiseSuppressionEffect();
+      setDeepNoiseSuppressionOn(true);
+    }
+  }, [adapter, isDeepNoiseSuppressionOn]);
 
   /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   const peopleButtonStrings = useMemo(
@@ -340,7 +377,16 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
           styles={controlBarStyles(theme.semanticColors.bodyBackground)}
         >
           {microphoneButtonIsEnabled && (
-            <Microphone displayType={options?.displayType} disabled={isDisabled(options?.microphoneButton)} />
+            <Microphone
+              displayType={options?.displayType}
+              disabled={isDisabled(options?.microphoneButton)}
+              /* @conditional-compile-remove(DNS) */
+              onClickNoiseSuppression={onClickNoiseSuppression}
+              /* @conditional-compile-remove(DNS) */
+              isDeepNoiseSuppressionOn={isDeepNoiseSuppressionOn}
+              /* @conditional-compile-remove(DNS) */
+              showNoiseSuppressionButton={showNoiseSuppressionButton}
+            />
           )}
           {cameraButtonIsEnabled && (
             <Camera displayType={options?.displayType} disabled={isDisabled(options?.cameraButton)} />

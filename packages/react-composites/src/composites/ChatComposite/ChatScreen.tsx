@@ -17,6 +17,8 @@ import {
   TypingIndicatorStylesProps,
   useTheme
 } from '@internal/react-components';
+/* @conditional-compile-remove(rich-text-editor) */
+import { RichTextEditBoxOptions } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing-acs) */
 import { ChatMessage } from '@internal/react-components';
 import React, { useCallback, useEffect, useMemo } from 'react';
@@ -44,6 +46,8 @@ import { participantListContainerPadding } from '../common/styles/ParticipantCon
 /* @conditional-compile-remove(chat-composite-participant-pane) */
 import { ChatScreenPeoplePane } from './ChatScreenPeoplePane';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+import { removeImageTags, _IMAGE_ATTRIBUTE_INLINE_IMAGE_FILE_NAME_KEY } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(file-sharing-acs) */
 import { AttachmentDownloadErrorBar } from './AttachmentDownloadErrorBar';
 import { _AttachmentDownloadCards } from '@internal/react-components';
@@ -55,12 +59,33 @@ import { AttachmentOptions } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing-acs) */
 import { nanoid } from 'nanoid';
 /* @conditional-compile-remove(file-sharing-acs) */
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { AttachmentUploadActionType, AttachmentUpload, AttachmentUploadReducer } from './file-sharing/AttachmentUpload';
 /* @conditional-compile-remove(file-sharing-acs) */
 import { MessageOptions } from '@internal/acs-ui-common';
 import { SendBoxPicker } from '../common/SendBoxPicker';
 /* @conditional-compile-remove(rich-text-editor-composite-support) */
-import { loadRichTextSendBox } from '../common/SendBoxPicker';
+import { loadRichTextSendBox, RichTextSendBoxOptions } from '../common/SendBoxPicker';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+import {
+  cancelInlineImageUpload,
+  getEditBoxMessagesInlineImages,
+  getImageFileNameFromAttributes,
+  getSendBoxInlineImages,
+  onInsertInlineImageForEditBox,
+  onInsertInlineImageForSendBox,
+  updateContentStringWithUploadedInlineImages
+} from './ImageUpload/ImageUploadUtils';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+import type { ChatAdapterState } from './adapter/ChatAdapter';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+import { isMicrosoftTeamsUserIdentifier } from '@azure/communication-common';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+import { SEND_BOX_UPLOADS_KEY_VALUE, _DEFAULT_INLINE_IMAGE_FILE_NAME } from '../common/constants';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+import { ImageUploadReducer } from './ImageUpload/ImageUploadReducer';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+import { useLocale } from '../localization';
 
 /**
  * @private
@@ -120,9 +145,36 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const [isImageOverlayOpen, setIsImageOverlayOpen] = useState<boolean>(false);
   /* @conditional-compile-remove(file-sharing-acs) */
   const [uploads, handleUploadAction] = useReducer(AttachmentUploadReducer, []);
-
   const adapter = useAdapter();
   const theme = useTheme();
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  const localeStrings = useLocale().strings;
+
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  const [textOnlyChat, setTextOnlyChat] = useState(false);
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  const [isACSChat, setIsACSChat] = useState(false);
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  const [editBoxInlineImageUploads, handleEditBoxInlineImageUploadAction] = useReducer(ImageUploadReducer, undefined);
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  const [sendBoxInlineImageUploads, handleSendBoxInlineImageUploadAction] = useReducer(ImageUploadReducer, undefined);
+
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  useEffect(() => {
+    const updateChatState = (newState: ChatAdapterState): void => {
+      setTextOnlyChat(newState.thread.properties?.messagingPolicy?.textOnlyChat === true);
+      if (newState.thread.properties?.createdBy) {
+        setIsACSChat(!isMicrosoftTeamsUserIdentifier(newState.thread.properties?.createdBy));
+      }
+    };
+    // set initial state for textOnlyChat and isACSChat
+    updateChatState(adapter.getState());
+
+    adapter.onStateChange(updateChatState);
+    return () => {
+      adapter.offStateChange(updateChatState);
+    };
+  }, [adapter]);
 
   useEffect(() => {
     // Initial data should be always fetched by the composite(or external caller) instead of the adapter
@@ -138,12 +190,12 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   /* @conditional-compile-remove(rich-text-editor-composite-support) */
   useEffect(() => {
     // if rich text editor is enabled, the rich text editor component should be loaded early for good UX
-    if (options?.richTextEditorOptions !== undefined) {
+    if (options?.richTextEditor) {
       // this line is needed to load the Rooster JS dependencies early in the lifecycle
       // when the rich text editor is enabled
       loadRichTextSendBox();
     }
-  }, [options?.richTextEditorOptions]);
+  }, [options?.richTextEditor]);
 
   const messageThreadProps = usePropsFor(MessageThread);
   const typingIndicatorProps = usePropsFor(TypingIndicator);
@@ -217,8 +269,29 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const userId = toFlatCommunicationIdentifier(adapter.getState().userId);
 
   /* @conditional-compile-remove(file-sharing-acs) */
+  const setKeyboardFocusAfterFileSelection = useCallback(() => {
+    // look up sendbox by ID for now, we will use `useRef`
+    // once attachment button is moved inside of send box component
+    // see ADO workitem #3764245
+    /* @conditional-compile-remove(rich-text-editor-composite-support) */
+    if (props.options?.richTextEditor) {
+      const richTextSendBox = document?.querySelector(`[id="richTextSendBox"]`) as HTMLDivElement;
+      richTextSendBox?.focus();
+      return;
+    }
+    const sendBox = document?.querySelector(`[id="sendbox"]`) as HTMLTextAreaElement;
+    // set send box on focus after file selection per A11y requirement
+    sendBox?.focus();
+  }, [
+    /* @conditional-compile-remove(rich-text-editor-composite-support) */
+    props.options?.richTextEditor
+  ]);
+
+  /* @conditional-compile-remove(file-sharing-acs) */
   const attachmentUploadButtonOnChange = useCallback(
     (files: FileList | null): void => {
+      setKeyboardFocusAfterFileSelection();
+
       if (!files) {
         return;
       }
@@ -254,7 +327,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       handleUploadAction({ type: AttachmentUploadActionType.Set, newUploads });
       attachmentOptions?.uploadOptions?.handleAttachmentSelection(newUploads);
     },
-    [attachmentOptions?.uploadOptions]
+    [attachmentOptions?.uploadOptions, setKeyboardFocusAfterFileSelection]
   );
 
   /* @conditional-compile-remove(file-sharing-acs) */
@@ -399,8 +472,12 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   );
 
   /* @conditional-compile-remove(file-sharing-acs) */
-  const AttachmentButton = useCallback(() => {
-    if (!attachmentOptions?.uploadOptions?.handleAttachmentSelection) {
+  const attachmentButton = useMemo(() => {
+    if (
+      !attachmentOptions?.uploadOptions?.handleAttachmentSelection ||
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */
+      textOnlyChat
+    ) {
       return null;
     }
     return (
@@ -415,7 +492,9 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     attachmentOptions?.uploadOptions?.handleAttachmentSelection,
     attachmentOptions?.uploadOptions?.supportedMediaTypes,
     attachmentOptions?.uploadOptions?.disableMultipleUploads,
-    attachmentUploadButtonOnChange
+    attachmentUploadButtonOnChange,
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    textOnlyChat
   ]);
 
   /* @conditional-compile-remove(file-sharing-acs) */
@@ -428,10 +507,18 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       content: string,
       /* @conditional-compile-remove(file-sharing-acs) */ /* @conditional-compile-remove(rich-text-editor-composite-support) */ options?: MessageOptions
     ) {
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */
+      content = updateContentStringWithUploadedInlineImages(content, sendBoxInlineImageUploads);
       /* @conditional-compile-remove(file-sharing-acs) */
       const attachments = options?.attachments ?? [];
       /* @conditional-compile-remove(file-sharing-acs) */
       handleUploadAction({ type: AttachmentUploadActionType.Clear });
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */
+      handleSendBoxInlineImageUploadAction({
+        type: AttachmentUploadActionType.Clear,
+        messageId: SEND_BOX_UPLOADS_KEY_VALUE
+      });
+
       /* @conditional-compile-remove(file-sharing-acs) */
       await adapter.sendMessage(content, {
         attachments: attachments,
@@ -445,7 +532,42 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
         type: options?.type
       });
     },
-    [adapter]
+    [
+      adapter,
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */ handleSendBoxInlineImageUploadAction,
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */ sendBoxInlineImageUploads
+    ]
+  );
+
+  const onUpdateMessageHandler = useCallback(
+    async function (
+      messageId: string,
+      content: string,
+      /* @conditional-compile-remove(file-sharing-acs) */ options?: MessageOptions
+    ) {
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */
+      content = updateContentStringWithUploadedInlineImages(content, editBoxInlineImageUploads, messageId);
+      await messageThreadProps.onUpdateMessage(
+        messageId,
+        content,
+        /* @conditional-compile-remove(file-sharing-acs) */ options
+      );
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */
+      handleEditBoxInlineImageUploadAction({ type: AttachmentUploadActionType.Clear, messageId });
+    },
+    [
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */ handleEditBoxInlineImageUploadAction,
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */ editBoxInlineImageUploads,
+      messageThreadProps
+    ]
+  );
+
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  const onCancelEditMessageHandler = useCallback(
+    (messageId: string) => {
+      handleEditBoxInlineImageUploadAction({ type: AttachmentUploadActionType.Clear, messageId });
+    },
+    [handleEditBoxInlineImageUploadAction]
   );
 
   /* @conditional-compile-remove(file-sharing-acs) */
@@ -456,6 +578,101 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     },
     [attachmentOptions?.uploadOptions]
   );
+
+  /* @conditional-compile-remove(rich-text-editor-composite-support) */
+  const richTextEditorOptions = useMemo(() => {
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    const onPasteCallback = isACSChat || textOnlyChat ? removeImageTags : undefined;
+    return options?.richTextEditor
+      ? {
+          /* @conditional-compile-remove(rich-text-editor-image-upload) */ onPaste: onPasteCallback
+        }
+      : undefined;
+  }, [
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    isACSChat,
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    textOnlyChat,
+    options?.richTextEditor
+  ]);
+
+  /* @conditional-compile-remove(rich-text-editor-composite-support) */
+  const richTextEditBoxOptions: RichTextEditBoxOptions | undefined = useMemo(() => {
+    return options?.richTextEditor
+      ? {
+          /* @conditional-compile-remove(rich-text-editor-image-upload) */
+          ...richTextEditorOptions,
+          /* @conditional-compile-remove(rich-text-editor-image-upload) */
+          onInsertInlineImage: (imageAttributes: Record<string, string>, messageId: string) => {
+            onInsertInlineImageForEditBox(
+              imageAttributes,
+              getImageFileNameFromAttributes(imageAttributes),
+              messageId,
+              adapter,
+              handleEditBoxInlineImageUploadAction,
+              localeStrings.chat
+            );
+          },
+          /* @conditional-compile-remove(rich-text-editor-image-upload) */
+          messagesInlineImagesWithProgress: getEditBoxMessagesInlineImages(editBoxInlineImageUploads),
+          /* @conditional-compile-remove(rich-text-editor-image-upload) */
+          onRemoveInlineImage: (imageAttributes: Record<string, string>, messageId: string) => {
+            cancelInlineImageUpload(
+              imageAttributes,
+              editBoxInlineImageUploads,
+              messageId,
+              handleEditBoxInlineImageUploadAction,
+              adapter
+            );
+          }
+        }
+      : undefined;
+  }, [
+    options?.richTextEditor,
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */ richTextEditorOptions,
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */ editBoxInlineImageUploads,
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */ adapter,
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */ localeStrings.chat
+  ]);
+
+  /* @conditional-compile-remove(rich-text-editor-composite-support) */
+  const richTextSendBoxOptions: RichTextSendBoxOptions | undefined = useMemo(() => {
+    return options?.richTextEditor
+      ? {
+          /* @conditional-compile-remove(rich-text-editor-image-upload) */
+          ...richTextEditorOptions,
+          /* @conditional-compile-remove(rich-text-editor-image-upload) */
+          onInsertInlineImage: (imageAttributes: Record<string, string>) => {
+            onInsertInlineImageForSendBox(
+              imageAttributes,
+              getImageFileNameFromAttributes(imageAttributes),
+              adapter,
+              handleSendBoxInlineImageUploadAction,
+              localeStrings.chat
+            );
+          },
+          /* @conditional-compile-remove(rich-text-editor-image-upload) */
+          inlineImagesWithProgress: getSendBoxInlineImages(sendBoxInlineImageUploads),
+          /* @conditional-compile-remove(rich-text-editor-image-upload) */
+          onRemoveInlineImage: (imageAttributes: Record<string, string>) => {
+            cancelInlineImageUpload(
+              imageAttributes,
+              sendBoxInlineImageUploads,
+              SEND_BOX_UPLOADS_KEY_VALUE,
+              handleSendBoxInlineImageUploadAction,
+              adapter
+            );
+          }
+        }
+      : undefined;
+  }, [
+    options?.richTextEditor,
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */ richTextEditorOptions,
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */ sendBoxInlineImageUploads,
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */ localeStrings.chat,
+    adapter
+  ]);
+
   return (
     <Stack className={chatContainer} grow>
       {options?.topic !== false && <ChatHeader {...headerProps} />}
@@ -473,6 +690,9 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
           }
           <MessageThread
             {...messageThreadProps}
+            onUpdateMessage={onUpdateMessageHandler}
+            /* @conditional-compile-remove(rich-text-editor-image-upload) */
+            onCancelEditMessage={onCancelEditMessageHandler}
             onRenderAvatar={onRenderAvatarCallback}
             onRenderMessage={onRenderMessage}
             /* @conditional-compile-remove(file-sharing-acs) */
@@ -480,8 +700,8 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             inlineImageOptions={inlineImageOptions}
             numberOfChatMessagesToReload={defaultNumberOfChatMessagesToReload}
             styles={messageThreadStyles}
-            /* @conditional-compile-remove(rich-text-editor-composite-support) @conditional-compile-remove(rich-text-editor) */
-            richTextEditorOptions={options?.richTextEditorOptions}
+            /* @conditional-compile-remove(rich-text-editor-composite-support) */
+            richTextEditorOptions={richTextEditBoxOptions}
           />
           <Stack className={mergeStyles(sendboxContainerStyles)}>
             <div className={mergeStyles(typingIndicatorContainerStyles)}>
@@ -494,16 +714,14 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             <Stack horizontal={formFactor === 'mobile'}>
               {formFactor === 'mobile' && (
                 /* @conditional-compile-remove(file-sharing-acs) */
-                <Stack verticalAlign="center">
-                  <AttachmentButton />
-                </Stack>
+                <Stack verticalAlign="center">{attachmentButton}</Stack>
               )}
               <Stack grow>
                 <SendBoxPicker
                   styles={sendBoxStyles}
                   autoFocus={options?.autoFocus}
                   /* @conditional-compile-remove(rich-text-editor-composite-support) */
-                  richTextEditorOptions={options?.richTextEditorOptions}
+                  richTextEditorOptions={richTextSendBoxOptions}
                   /* @conditional-compile-remove(file-sharing-acs) */
                   attachments={attachments}
                   /* @conditional-compile-remove(file-sharing-acs) */
@@ -513,10 +731,9 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
                   onSendMessage={onSendMessageHandler}
                 />
               </Stack>
-              {formFactor !== 'mobile' && (
+              {formFactor !== 'mobile' &&
                 /* @conditional-compile-remove(file-sharing-acs) */
-                <AttachmentButton />
-              )}
+                attachmentButton}
             </Stack>
           </Stack>
         </Stack>

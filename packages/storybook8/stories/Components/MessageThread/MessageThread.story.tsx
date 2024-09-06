@@ -9,7 +9,9 @@ import {
   SystemMessage,
   MessageRenderer,
   ImageOverlay,
-  InlineImage
+  InlineImage,
+  RichTextEditBoxOptions,
+  AttachmentMetadataInProgress
 } from '@azure/communication-react';
 import {
   Persona,
@@ -21,8 +23,7 @@ import {
   IDropdownOption
 } from '@fluentui/react';
 import { Divider } from '@fluentui/react-components';
-
-import React, { useRef, useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 
 import {
   GenerateMockNewChatMessage,
@@ -40,9 +41,11 @@ import {
 } from './placeholdermessages';
 
 const MessageThreadStory = (args): JSX.Element => {
-  const [chatMessages, setChatMessages] = useState<(SystemMessage | CustomMessage | ChatMessage)[]>(
-    GenerateMockChatMessages()
-  );
+  const [chatMessages, setChatMessages] =
+    useState<(SystemMessage | CustomMessage | ChatMessage)[]>(GenerateMockChatMessages());
+  const [messagesInlineImagesWithProgress, setMessagesInlineImagesWithProgress] = useState<
+    Record<string, AttachmentMetadataInProgress[]> | undefined
+  >();
   const dropdownMenuOptions = [
     { key: 'newMessage', text: 'New Message' },
     { key: 'newMessageOthers', text: 'New Message from others' },
@@ -115,14 +118,23 @@ const MessageThreadStory = (args): JSX.Element => {
     if (message.messageType === 'chat') {
       message.content = content;
       message.editedOn = new Date(Date.now());
+      // args will get string type when value is updated and page is reloaded (without updating switch again)
+      if (args.richTextEditor === true || args.richTextEditor === 'true') {
+        message.contentType = 'html';
+      }
     }
     updatedChatMessages[msgIdx] = message;
     setChatMessages(updatedChatMessages);
+    setMessagesInlineImagesWithProgress(undefined);
     return Promise.resolve();
   };
 
-  const [overlayImageItem, setOverlayImageItem] =
-    useState<{ imageSrc: string; title: string; titleIcon: JSX.Element; downloadAttachmentname: string }>();
+  const [overlayImageItem, setOverlayImageItem] = useState<{
+    imageSrc: string;
+    title: string;
+    titleIcon: JSX.Element;
+    downloadAttachmentname: string;
+  }>();
 
   const onInlineImageClicked = (attachmentId: string, messageId: string): Promise<void> => {
     const messages = chatMessages?.filter((message) => {
@@ -177,6 +189,34 @@ const MessageThreadStory = (args): JSX.Element => {
     }
   };
 
+  const richTextEditorOptions: RichTextEditBoxOptions = useMemo(() => {
+    return {
+      onInsertInlineImage: (imageAttributes: Record<string, string>, messageId: string) => {
+        const inlineImagesWithProgress = messagesInlineImagesWithProgress?.[messageId] ?? [];
+        const newImage: AttachmentMetadataInProgress = {
+          id: imageAttributes.id,
+          name: getImageFileNameFromAttributes(imageAttributes),
+          progress: 1,
+          url: imageAttributes.src,
+          error: undefined
+        };
+        setMessagesInlineImagesWithProgress({
+          ...messagesInlineImagesWithProgress,
+          [messageId]: [...inlineImagesWithProgress, newImage]
+        });
+      },
+      messagesInlineImagesWithProgress: messagesInlineImagesWithProgress,
+      onRemoveInlineImage: (imageAttributes: Record<string, string>, messageId: string) => {
+        const inlineImagesWithProgress = messagesInlineImagesWithProgress?.[messageId];
+        if (!inlineImagesWithProgress) {
+          return;
+        }
+        const filteredImages = inlineImagesWithProgress.filter((img) => img.id !== imageAttributes.id);
+        setMessagesInlineImagesWithProgress({ ...messagesInlineImagesWithProgress, [messageId]: filteredImages });
+      }
+    };
+  }, [messagesInlineImagesWithProgress]);
+
   const onSendHandler = (): void => {
     switch (selectedMessageType.key) {
       case 'newMessage':
@@ -216,6 +256,8 @@ const MessageThreadStory = (args): JSX.Element => {
         onRenderMessage={onRenderMessage}
         inlineImageOptions={inlineImageOptions}
         onUpdateMessage={onUpdateMessageCallback}
+        onCancelEditMessage={() => setMessagesInlineImagesWithProgress(undefined)}
+        richTextEditorOptions={args.richTextEditor ? richTextEditorOptions : undefined}
         onRenderAvatar={(userId?: string) => {
           return (
             <Persona
@@ -259,4 +301,4 @@ const MessageThreadStory = (args): JSX.Element => {
   );
 };
 
-export const Preview = MessageThreadStory.bind({});
+export const MessageThread = MessageThreadStory.bind({});

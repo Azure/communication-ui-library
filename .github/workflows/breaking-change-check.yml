@@ -58,7 +58,7 @@ jobs:
       # Try get node_modules from cache
       - name: Restore node_modules from cache
         if: ${{ github.event_name == 'pull_request' && !contains(github.event.pull_request.labels.*.name, 'breaking-change') }}
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}

@@ -9,6 +9,7 @@ import {
   CallState as CallStatus,
   DeviceAccess,
   DominantSpeakersInfo,
+  IncomingCallKind,
   LatestMediaDiagnostics,
   LatestNetworkDiagnostics,
   MediaStreamType,
@@ -17,9 +18,18 @@ import {
   ScalingMode,
   VideoDeviceInfo
 } from '@azure/communication-calling';
-/* @conditional-compile-remove(meeting-id) */
+/* @conditional-compile-remove(breakout-rooms) */
+import { BreakoutRoom, BreakoutRoomsSettings } from '@azure/communication-calling';
+/* @conditional-compile-remove(remote-ufd) */
+import type {
+  ServerDiagnosticType,
+  MediaDiagnosticType,
+  NetworkDiagnosticType,
+  DiagnosticValueType,
+  DiagnosticQuality,
+  DiagnosticFlag
+} from '@azure/communication-calling';
 import { TeamsCallInfo } from '@azure/communication-calling';
-/* @conditional-compile-remove(calling-beta-sdk) */
 import { CallInfo } from '@azure/communication-calling';
 
 import { CapabilitiesChangeInfo, ParticipantCapabilities } from '@azure/communication-calling';
@@ -185,6 +195,19 @@ export interface SpotlightState {
    * Order position of spotlight in call
    */
   spotlightedOrderPosition?: number;
+}
+
+/* @conditional-compile-remove(breakout-rooms) */
+/**
+ * Breakout rooms state
+ *
+ * @public
+ */
+export interface BreakoutRoomsState {
+  assignedBreakoutRoom?: BreakoutRoom;
+  breakoutRoomSettings?: BreakoutRoomsSettings;
+  breakoutRoomOriginCallId?: string;
+  breakoutRoomDisplayName?: string;
 }
 
 /**
@@ -362,7 +385,6 @@ export interface RemoteVideoStreamState {
    * Proxy of {@link @azure/communication-calling#RemoteVideoStream.isReceiving}.
    * @public
    */
-  /* @conditional-compile-remove(video-stream-is-receiving-flag) */
   isReceiving: boolean;
   /**
    * {@link VideoStreamRendererView} that is managed by createView/disposeView in {@link StatefulCallClient}
@@ -457,6 +479,11 @@ export interface RemoteParticipantState {
    * Proxy of {@link @azure/communication-calling#SpotlightCallFeature.spotlightedParticipants}.
    */
   spotlight?: SpotlightState;
+  /* @conditional-compile-remove(remote-ufd) */
+  /**
+   * The diagnostic status of RemoteParticipant{@link @azure/communication-calling#RemoteDiagnostics}.
+   */
+  diagnostic?: RemoteDiagnosticState;
 }
 
 /**
@@ -623,7 +650,6 @@ export interface CallState {
    * Proxy of {@link @azure/communication-calling#SpotlightCallFeature}.
    */
   spotlight?: SpotlightCallFeatureState;
-  /* @conditional-compile-remove(meeting-id) */
   /**
    * Proxy of {@link @azure/communication-calling#Call.info}.
    */
@@ -633,7 +659,13 @@ export interface CallState {
   /**
    * Proxy of {@link @azure/communication-calling#TeamsMeetingAudioConferencingCallFeature}.
    */
-  teamsMeetingConference?: ConferencePhoneInfo[];
+  meetingConference?: { conferencePhones: ConferencePhoneInfo[] };
+
+  /* @conditional-compile-remove(breakout-rooms) */
+  /**
+   * Proxy of {@link @azure/communication-calling#BreakoutRoomsFeature}.
+   */
+  breakoutRooms?: BreakoutRoomsState;
 }
 
 /**
@@ -665,6 +697,29 @@ export interface AcceptedTransfer {
 }
 
 /**
+ * State to track the types {@link CallInfo} and {@link TeamsCallInfo}
+ * @public
+ */
+export interface CallInfoState {
+  /**
+   * GroupId of the call that you joined
+   */
+  groupId?: string;
+  /**
+   * The teams meeting thread id
+   */
+  threadId?: string;
+  /**
+   * participant id of the local user
+   */
+  participantId: string;
+  /**
+   * Differentiator between the Call and TeamsCall types
+   */
+  kind: IncomingCallKind;
+}
+
+/**
  * State only version of {@link @azure/communication-calling#IncomingCall}. {@link StatefulCallClient} will
  * automatically detect incoming calls and add their state to the state exposed by {@link StatefulCallClient}.
  *
@@ -676,7 +731,45 @@ export interface IncomingCallState {
    */
   id: string;
   /**
+   * Proxy of {@link @azure/communication-calling#IncomingCall.callInfo}.
+   */
+  info: CallInfoState;
+  /**
    * Proxy of {@link @azure/communication-calling#IncomingCall.callerInfo}.
+   */
+  callerInfo: CallerInfo;
+  /**
+   * Set to the state returned by 'callEnded' event on {@link @azure/communication-calling#IncomingCall} when received.
+   * This property is added by the stateful layer and is not a proxy of SDK state.
+   */
+  callEndReason?: CallEndReason;
+  /**
+   * Stores the local date when the call started on the client. This property is added by the stateful layer and is not
+   * a proxy of SDK state.
+   */
+  startTime: Date;
+  /**
+   * Stores the local date when the call ended on the client. This property is added by the stateful layer and is not a
+   * proxy of SDK state. It is undefined if the call is not ended yet.
+   */
+  endTime?: Date;
+}
+
+/**
+ * State only version of {@link @azure/communication-calling#TeamsIncomingCall}
+ * @beta
+ */
+export interface TeamsIncomingCallState {
+  /**
+   * Proxy of {@link @azure/communication-calling#TeamsIncomingCall.id}.
+   */
+  id: string;
+  /**
+   * Proxy of {@link @azure/communication-calling#TeamsIncomingCall.teamsCallInfo}.
+   */
+  info: CallInfoState;
+  /**
+   * Proxy of {@link @azure/communication-calling#TeamsIncomingCall.callerInfo}.
    */
   callerInfo: CallerInfo;
   /**
@@ -778,14 +871,18 @@ export interface CallClientState {
    * Proxy of {@link @azure/communication-calling#IncomingCall} as an object with {@link IncomingCall} fields.
    * It is keyed by {@link @azure/communication-calling#IncomingCall.id}.
    */
-  incomingCalls: { [key: string]: IncomingCallState };
+  incomingCalls: {
+    [key: string]: IncomingCallState | /* @conditional-compile-remove(one-to-n-calling) */ TeamsIncomingCallState;
+  };
   /**
    * Incoming Calls that have ended are stored here so the callEndReason could be checked.
    * It is an as an object with {@link @azure/communication-calling#Call.id} keys and {@link IncomingCall} values.
    *
    * Only {@link MAX_CALL_HISTORY_LENGTH} Calls are kept in the history. Oldest calls are evicted if required.
    */
-  incomingCallsEnded: { [key: string]: IncomingCallState };
+  incomingCallsEnded: {
+    [key: string]: IncomingCallState | /* @conditional-compile-remove(one-to-n-calling) */ TeamsIncomingCallState;
+  };
   /**
    * Proxy of {@link @azure/communication-calling#DeviceManager}. Please review {@link DeviceManagerState}.
    */
@@ -806,6 +903,13 @@ export interface CallClientState {
    * See documentation of {@Link CallErrors} for details.
    */
   latestErrors: CallErrors;
+  /* @conditional-compile-remove(breakout-rooms) */
+  /**
+   * Stores the latest notifications.
+   *
+   * See documentation of {@Link CallNotifications} for details.
+   */
+  latestNotifications: CallNotifications;
   /* @conditional-compile-remove(PSTN-calls) */
   /**
    * A phone number in E.164 format that will be used to represent callers identity.
@@ -920,8 +1024,36 @@ export type CallErrorTarget =
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.admit'
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.rejectParticipant'
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.admitAll'
-  | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.muteAllRemoteParticipants'
+  | /* @conditional-compile-remove(soft-mute) */ 'Call.mutedByOthers'
+  | 'Call.muteAllRemoteParticipants'
   | 'Call.setConstraints';
+
+/* @conditional-compile-remove(breakout-rooms) */
+/**
+ * @public
+ */
+export type CallNotifications = {
+  [target in NotificationTarget]: CallNotification;
+};
+
+/* @conditional-compile-remove(breakout-rooms) */
+/**
+ * @public
+ */
+export interface CallNotification {
+  target: NotificationTarget;
+
+  timestamp: Date;
+}
+
+/* @conditional-compile-remove(breakout-rooms) */
+/** @public */
+export type NotificationTarget =
+  | 'assignedBreakoutRoomOpened'
+  | 'assignedBreakoutRoomOpenedPromptJoin'
+  | 'assignedBreakoutRoomChanged'
+  | 'breakoutRoomJoined'
+  | 'breakoutRoomClosingSoon';
 
 /**
  * State only proxy for {@link @azure/communication-calling#DiagnosticsCallFeature}.
@@ -939,6 +1071,18 @@ export interface DiagnosticsCallFeatureState {
    */
   media: MediaDiagnosticsState;
 }
+
+/* @conditional-compile-remove(remote-ufd) */
+/**
+ * State only proxy for {@link @azure/communication-calling#DiagnosticsCallFeature}.
+ *
+ * @beta
+ */
+export declare type RemoteDiagnosticState = {
+  readonly diagnostic: NetworkDiagnosticType | MediaDiagnosticType | ServerDiagnosticType;
+  readonly value: DiagnosticQuality | DiagnosticFlag;
+  readonly valueType: DiagnosticValueType;
+};
 
 /**
  * State only proxy for {@link @azure/communication-calling#NetworkDiagnostics}.
@@ -963,9 +1107,24 @@ export interface MediaDiagnosticsState {
  * Information for conference phone info
  */
 export interface ConferencePhoneInfo {
+  /**
+   * Phone number for the conference
+   */
   phoneNumber: string;
+  /**
+   * Conference id for the conference
+   */
   conferenceId: string;
+  /**
+   * Is toll free phone number
+   */
   isTollFree: boolean;
+  /**
+   * phone number country
+   */
   country?: string;
+  /**
+   * phone number city
+   */
   city?: string;
 }

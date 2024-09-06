@@ -233,7 +233,6 @@ export const createV9Theme = (themeV8: ThemeV8, baseThemeV9?: ThemeV9): ThemeV9 
     colorNeutralForeground2: themeV8.palette.neutralSecondary,
     colorBrandForegroundLinkHover: themeV8.palette.themeDarker,
     colorNeutralBackground1Selected: themeV8.palette.neutralQuaternaryAlt,
-    colorNeutralStroke2: themeV8.palette.neutralTertiaryAlt,
     // Fix for an issue with black borders for iOS that are added with 'after' selector
     colorStrokeFocus2: 'transparent'
   };

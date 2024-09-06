@@ -21,6 +21,7 @@ export type InputBoxButtonProps = {
   tooltipContent?: string;
   'data-testId'?: string;
   ariaDisabled?: boolean;
+  ariaExpanded?: boolean;
 };
 
 /**
@@ -35,7 +36,8 @@ export const InputBoxButton = (props: InputBoxButtonProps): JSX.Element => {
     id,
     tooltipContent,
     'data-testId': dataTestId,
-    ariaDisabled = false
+    ariaDisabled = false,
+    ariaExpanded = false
   } = props;
   const [isHover, setIsHover] = useState(false);
   const mergedButtonStyle = mergeStyles(inputBoxButtonStyle, className);
@@ -69,6 +71,7 @@ export const InputBoxButton = (props: InputBoxButtonProps): JSX.Element => {
           // VoiceOver fix: Avoid icon from stealing focus when IconButton is double-tapped to send message by wrapping with Stack with pointerEvents style to none
           onRenderIcon={() => <Stack className={iconWrapperStyle}>{onRenderIcon(isHover)}</Stack>}
           data-testid={dataTestId}
+          aria-expanded={ariaExpanded}
         />
       </Stack>
     </TooltipHost>

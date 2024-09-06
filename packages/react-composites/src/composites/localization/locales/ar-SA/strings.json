@@ -135,6 +135,7 @@
     "dtmfDialerButtonTooltipOff": "إخفاء لوحة الطلب",
     "dtmfDialerMoreButtonLabelOn": "عرض لوحة الطلب",
     "dtmfDialerMoreButtonLabelOff": "إخفاء لوحة الطلب",
+    "phoneCallMoreButtonLabel": "مكالمة هاتفية",
     "spokenLanguageStrings": {
       "ar-ae": "العربية - الإمارات العربية المتحدة",
       "ar-sa": "العربية - السعودية",
@@ -336,11 +337,33 @@
     "leaveConfirmDialogContent": "هل تريد بالتأكيد مغادرة المكالمة؟",
     "endCallConfirmDialogTitle": "هل تريد إنهاء المكالمة؟",
     "endCallConfirmDialogContent": "ستنهي المكالمة لدى الجميع.",
-    "invalidMeetingIdentifier": "معرف اجتماع أو رمز مرور غير صالح"
+    "invalidMeetingIdentifier": "معرف اجتماع أو رمز مرور غير صالح",
+    "pinParticipantMenuLabel": "تثبيت نيابة عني",
+    "pinParticipantLimitReachedMenuLabel": "تثبيت (تم بلوغ الحد الأقصى)",
+    "unpinParticipantMenuLabel": "إزالة التثبيت",
+    "pinParticipantMenuItemAriaLabel": "تثبيت",
+    "unpinParticipantMenuItemAriaLabel": "إزالة التثبيت",
+    "muteAllMenuLabel": "كتم صوت الجميع",
+    "muteAllDialogTitle": "هل تريد كتم صوت الجميع؟",
+    "muteAllDialogContent": "سيؤدي ذلك إلى كتم صوت الجميع في الاجتماع باستثننائك.",
+    "muteAllConfirmButtonLabel": "كتم صوت الجميع",
+    "muteAllCancelButtonLabel": "إلغاء",
+    "joinBreakoutRoomButtonLabel": "انضمام إلى غرفة فرعية",
+    "returnFromBreakoutRoomButtonLabel": "مغادرة الغرفة",
+    "leaveBreakoutRoomAndMeetingButtonLabel": "مغادرة الاجتماع",
+    "breakoutRoomJoinedNotificationTitle": "لقد انضممت إلى الغرفة الفرعية '{roomName}'",
+    "joinBreakoutRoomBannerTitle": "الغرفة الفرعية '{roomName}' مفتوحة",
+    "joinBreakoutRoomBannerButtonLabel": "انضمام",
+    "returnFromBreakoutRoomBannerTitle": "رجوع إلى الاجتماع الرئيسي",
+    "returnFromBreakoutRoomBannerButtonLabel": "إعادة الانضمام"
   },
   "chat": {
     "chatListHeader": "في هذه الدردشة",
-    "uploadAttachment": "تحميل المرفق"
+    "uploadAttachment": "تحميل المرفق",
+    "uploadImageDataNotProvided": "لم يتم توفير بيانات الصورة.",
+    "uploadImageIsTooLarge": "الصورة كبيرة جدا. اختر جهازا أقل من {maxImageSize} ميغابايت.",
+    "uploadImageExtensionIsNotAllowed": "تحميل الصورة .{imageExtension} غير مسموح به.",
+    "uploadImageFailed": "تعذر تحميل الصورة. الرجاء المحاولة مرة أخرى لاحقا."
   },
   "callWithChat": {
     "chatButtonLabel": "دردشة",
@@ -381,6 +404,8 @@
     "dialpadModalAriaLabel": "لوحة الطلب",
     "dialpadCloseModalButtonAriaLabel": "إغلاق لوحة الطلب",
     "openDtmfDialpadLabel": "عرض لوحة الطلب",
-    "dtmfDialpadPlaceholderText": "أدخل عدداً"
+    "dtmfDialpadPlaceholderText": "أدخل عدداً",
+    "breakoutRoomChatPaneTitle": "دردشة الغرفة الفرعية",
+    "chatContentSpinnerLabel": "يتم الآن التحميل..."
   }
 }

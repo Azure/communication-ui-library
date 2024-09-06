@@ -188,8 +188,8 @@ const getGridParticipants = (args: {
   return args.gridParticipants.length > 0
     ? args.gridParticipants
     : args.overflowGalleryParticipants.length > args.maxGridParticipants
-    ? args.overflowGalleryParticipants.slice(0, args.maxGridParticipants)
-    : args.overflowGalleryParticipants.slice(0, args.maxGridParticipants).concat(args.callingParticipants);
+      ? args.overflowGalleryParticipants.slice(0, args.maxGridParticipants)
+      : args.overflowGalleryParticipants.slice(0, args.maxGridParticipants).concat(args.callingParticipants);
   return args.gridParticipants.length > 0
     ? args.gridParticipants
     : args.overflowGalleryParticipants.slice(0, args.maxGridParticipants);
@@ -216,8 +216,8 @@ const getOverflowGalleryRemoteParticipants = (args: {
     return args.gridParticipants.length > 0
       ? args.overflowGalleryParticipants.concat(args.callingParticipants)
       : args.overflowGalleryParticipants.length > args.maxGridParticipants
-      ? args.overflowGalleryParticipants.slice(args.maxGridParticipants).concat(args.callingParticipants)
-      : [];
+        ? args.overflowGalleryParticipants.slice(args.maxGridParticipants).concat(args.callingParticipants)
+        : [];
     return args.gridParticipants.length > 0
       ? args.overflowGalleryParticipants
       : args.overflowGalleryParticipants.slice(args.maxGridParticipants);

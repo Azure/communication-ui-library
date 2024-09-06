@@ -45,6 +45,10 @@ const createCompositeHandlers = memoizeOne(
       }
       return adapter.sendMessage(content, options);
     },
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    onUploadImage: adapter.uploadImage,
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    onDeleteImage: adapter.deleteImage,
     onLoadPreviousChatMessages: adapter.loadPreviousChatMessages,
     onMessageSeen: adapter.sendReadReceipt,
     onTyping: adapter.sendTypingIndicator,

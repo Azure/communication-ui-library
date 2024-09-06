@@ -51,3 +51,12 @@ export const attachmentCardFlexLayout = mergeStyles({
   display: 'flex',
   flexWrap: 'wrap'
 });
+
+/**
+ * @private
+ */
+export const attachmentGroupDisabled = mergeStyles({
+  opacity: '0.5',
+  userSelect: 'none',
+  pointerEvents: 'none'
+});

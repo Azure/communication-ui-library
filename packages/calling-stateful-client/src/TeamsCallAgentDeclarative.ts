@@ -1,9 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { CallAgentCommon, CallCommon, TeamsCallAgent } from './BetaToStableTypes';
+import { TeamsCallAgent } from '@azure/communication-calling';
 /* @conditional-compile-remove(one-to-n-calling) */
-import { IncomingCallManagement } from './CallAgentDeclarative';
+import { TeamsIncomingCall } from '@azure/communication-calling';
+import { CallCommon, CallAgentCommon } from './BetaToStableTypes';
 import { clearCallRelatedState, DeclarativeCallCommon, ProxyCallAgentCommon } from './CallAgentDeclarativeCommon';
 import { CallContext } from './CallContext';
 /* @conditional-compile-remove(teams-identity-support) */
@@ -12,12 +13,26 @@ import { InternalCallContext } from './InternalCallContext';
 /* @conditional-compile-remove(teams-identity-support) */
 import { teamsCallDeclaratify } from './TeamsCallDeclarative';
 
+/* @conditional-compile-remove(one-to-n-calling) */
 /**
  * @beta
+ * Proxies the {@link @azure/communication-calling#TeamsIncomingCall} interface.
+ */
+export type TeamsIncomingCallManagement = {
+  /**
+   * @beta
+   * @Remark This attribute doesn't exist on the {@link @azure/communication-calling#TeamsCallAgent} interface.
+   * @returns readonly array of {@link DeclarativeTeamsIncomingCall}
+   */
+  incomingCalls: ReadonlyArray<TeamsIncomingCall>;
+};
+
+/**
+ * @public
  * `DeclarativeTeamsCallAgent` extends and proxies the {@link @azure/communication-calling#TeamsCallAgent}
  */
 export type DeclarativeTeamsCallAgent = TeamsCallAgent &
-  /* @conditional-compile-remove(one-to-n-calling) */ IncomingCallManagement;
+  /* @conditional-compile-remove(one-to-n-calling) */ TeamsIncomingCallManagement;
 
 /**
  * ProxyTeamsCallAgent proxies TeamsCallAgent and saves any returned state in the given context. It will subscribe to all state
@@ -66,7 +81,7 @@ class ProxyTeamsCallAgent extends ProxyCallAgentCommon implements ProxyHandler<D
     throw new Error('Not reachable code, DeclarativeTeamsCallAgent.callDeclaratify must be called with an TeamsCall.');
   }
 
-  protected startCall(agent: CallAgentCommon, args: Parameters<TeamsCallAgent['startCall']>): CallCommon {
+  protected startCall(agent: TeamsCallAgent, args: Parameters<TeamsCallAgent['startCall']>): CallCommon {
     /* @conditional-compile-remove(teams-identity-support) */
     if (_isTeamsCallAgent(agent)) {
       return agent.startCall(...args);
@@ -86,6 +101,7 @@ class ProxyTeamsCallAgent extends ProxyCallAgentCommon implements ProxyHandler<D
     /* @conditional-compile-remove(teams-identity-support) */
     if (_isTeamsCallAgent(agent)) {
       agent.on(...args);
+      return;
     }
     throw new Error(
       'Not reachable code, DeclarativeTeamsCallAgent.agentSubscribe must be called with an TeamsCallAgent.'
@@ -96,13 +112,14 @@ class ProxyTeamsCallAgent extends ProxyCallAgentCommon implements ProxyHandler<D
     /* @conditional-compile-remove(teams-identity-support) */
     if (_isTeamsCallAgent(agent)) {
       agent.off(...args);
+      return;
     }
     throw new Error(
       'Not reachable code, DeclarativeTeamsCallAgent.agentUnsubscribe must be called with an TeamsCallAgent.'
     );
   }
 
-  public get<P extends keyof TeamsCallAgent>(target: TeamsCallAgent, prop: P): any {
+  public get<P extends keyof CallAgentCommon>(target: TeamsCallAgent, prop: P): any {
     /* @conditional-compile-remove(teams-identity-support) */
     return super.getCommon(target, prop);
   }

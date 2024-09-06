@@ -5,16 +5,16 @@ const repoUrl = `https://github.com/${repoDetails.owner}/${repoDetails.repo}`;
 
 function renderHeader(renderInfo: PackageChangelogRenderInfo): string {
   const {
-    newVersionChangelog: { tag, version, date },
+    newVersionChangelog: { version, date },
     previousJson
   } = renderInfo;
 
   // Link to the tag on github
-  const header = tag ? `[${version}](${repoUrl}/tree/${tag})` : version;
+  const header = `[${version}](${repoUrl}/tree/${version})`;
 
-  // Also include a compare link to the previous tag if available
-  const previousTag = previousJson?.entries?.[0]?.tag;
-  const compareLink = tag && previousTag ? ` \n[Compare changes](${repoUrl}/compare/${previousTag}...${tag})` : '';
+  // Also include a compare link to the previous version if available
+  const previousVersion = previousJson?.entries?.[0]?.version;
+  const compareLink = version && previousVersion ? ` \n[Compare changes](${repoUrl}/compare/${previousVersion}...${version})` : '';
 
   return `## ${header}\n\n${date.toUTCString()}${compareLink}`;
 }

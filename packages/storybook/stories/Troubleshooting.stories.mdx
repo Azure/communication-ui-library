@@ -98,3 +98,32 @@ can be caused by passing arguments to our factory functions too often. We recomm
 or disposing of the adapter or stateful client before attempting to create a new one.
 
 Another common cause for this error is using strict mode in your application. Please see [React's documentation](https://react.dev/reference/react/StrictMode) on strict mode to learn more.
+
+## Mobile browser refresh
+
+This is an issue when using a mobile browser and the user closes the browser.
+the browser will load the page cached but all of the subscriptions will be lost. To fix this as the
+developer you will need to force the browser to refresh the page, this can be done with the following snippet:
+
+```Typescript
+useEffect(() => {
+ /**
+  * We want to make sure that the page is up to date. If for example a browser is dismissed
+  * on mobile, the page will be stale when opened again. This event listener will reload the page
+  */
+  window.addEventListener('pageshow', (event) => {
+    if (event.persisted) {
+      window.location.reload();
+    }
+  });
+  return () => {
+    window.removeEventListener('pageshow', () => {
+      window.location.reload();
+    });
+  };
+}, []);
+```
+
+This `useEffect` will add an event listener for the `pageshow` event, this event when triggered
+will share if the page is persisted or cached. If the page is cached we will reload the app so the
+user can rejoin the call.

@@ -65,7 +65,6 @@ export const errorBarSelector: ErrorBarSelector = createSelector(
       return false;
     };
 
-    // Errors reported via diagnostics are more reliable than from API method failures, so process those first.
     if (
       diagnostics?.network.latest.networkReceiveQuality?.value === DiagnosticQuality.Bad ||
       diagnostics?.network.latest.networkReceiveQuality?.value === DiagnosticQuality.Poor
@@ -157,6 +156,9 @@ export const errorBarSelector: ErrorBarSelector = createSelector(
     }
 
     appendActiveErrorIfDefined(activeErrorMessages, latestErrors, 'Call.unmute', 'unmuteGeneric');
+
+    /* @conditional-compile-remove(soft-mute) */
+    appendActiveErrorIfDefined(activeErrorMessages, latestErrors, 'Call.mutedByOthers', 'mutedByRemoteParticipant');
 
     appendActiveErrorIfDefined(
       activeErrorMessages,

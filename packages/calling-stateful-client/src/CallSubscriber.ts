@@ -28,6 +28,8 @@ import { ReactionSubscriber } from './ReactionSubscriber';
 import { SpotlightSubscriber } from './SpotlightSubscriber';
 /* @conditional-compile-remove(local-recording-notification) */
 import { LocalRecordingSubscriber } from './LocalRecordingSubscriber';
+/* @conditional-compile-remove(breakout-rooms) */
+import { BreakoutRoomsSubscriber } from './BreakoutRoomsSubscriber';
 
 /**
  * Keeps track of the listeners assigned to a particular call because when we get an event from SDK, it doesn't tell us
@@ -56,6 +58,8 @@ export class CallSubscriber {
 
   private _capabilitiesSubscriber: CapabilitiesSubscriber;
   private _spotlightSubscriber: SpotlightSubscriber;
+  /* @conditional-compile-remove(breakout-rooms) */
+  private _breakoutRoomsSubscriber: BreakoutRoomsSubscriber;
 
   constructor(call: CallCommon, context: CallContext, internalContext: InternalCallContext) {
     this._call = call;
@@ -109,6 +113,12 @@ export class CallSubscriber {
       this._context,
       this._call.feature(Features.Spotlight)
     );
+    /* @conditional-compile-remove(breakout-rooms) */
+    this._breakoutRoomsSubscriber = new BreakoutRoomsSubscriber(
+      this._callIdRef,
+      this._context,
+      this._call.feature(Features.BreakoutRooms)
+    );
 
     this.subscribe();
   }
@@ -129,6 +139,8 @@ export class CallSubscriber {
     this._call.feature(Features.DominantSpeakers).on('dominantSpeakersChanged', this.dominantSpeakersChanged);
     /* @conditional-compile-remove(total-participant-count) */
     this._call.on('totalParticipantCountChanged', this.totalParticipantCountChangedHandler);
+    /* @conditional-compile-remove(soft-mute) */
+    this._call.on('mutedByOthers', this.mutedByOthersHandler);
 
     for (const localVideoStream of this._call.localVideoStreams) {
       this._internalContext.setLocalRenderInfo(
@@ -168,6 +180,8 @@ export class CallSubscriber {
     this._call.off('roleChanged', this.callRoleChangedHandler);
     /* @conditional-compile-remove(total-participant-count) */
     this._call.off('totalParticipantCountChanged', this.totalParticipantCountChangedHandler);
+    /* @conditional-compile-remove(soft-mute) */
+    this._call.off('mutedByOthers', this.mutedByOthersHandler);
 
     this._participantSubscribers.forEach((participantSubscriber: ParticipantSubscriber) => {
       participantSubscriber.unsubscribe();
@@ -201,6 +215,8 @@ export class CallSubscriber {
     this._capabilitiesSubscriber.unsubscribe();
     this._reactionSubscriber?.unsubscribe();
     this._spotlightSubscriber.unsubscribe();
+    /* @conditional-compile-remove(breakout-rooms) */
+    this._breakoutRoomsSubscriber.unsubscribe();
   };
 
   private addParticipantListener(participant: RemoteParticipant): void {
@@ -285,6 +301,15 @@ export class CallSubscriber {
   /* @conditional-compile-remove(total-participant-count) */
   private totalParticipantCountChangedHandler = (): void => {
     this._context.setTotalParticipantCount(this._callIdRef.callId, this._call.totalParticipantCount);
+  };
+
+  // TODO: Tee to notification state once available
+  /* @conditional-compile-remove(soft-mute) */
+  private mutedByOthersHandler = (): void => {
+    this._context.teeErrorToState(
+      { name: 'mutedByOthers', message: 'Muted by another participant' },
+      'Call.mutedByOthers'
+    );
   };
 
   private remoteParticipantsUpdated = (event: { added: RemoteParticipant[]; removed: RemoteParticipant[] }): void => {

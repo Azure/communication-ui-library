@@ -195,8 +195,8 @@ const CustomButtonInjectionStory = (args): JSX.Element => {
           onFetchCustomButtonProps: args.allowRawObjectInput
             ? args.options
             : args.injectMaximumNumberOfButtons
-            ? maxCustomButtonsForInjection
-            : customButtonArray
+              ? maxCustomButtonsForInjection
+              : customButtonArray
         }
       }}
     />

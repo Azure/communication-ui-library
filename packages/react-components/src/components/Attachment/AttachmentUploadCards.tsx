@@ -41,6 +41,10 @@ export interface AttachmentUploadCardsProps {
    * Optional arialabel strings for attachment upload cards
    */
   strings?: _AttachmentUploadCardsStrings;
+  /**
+   * Optional flag to disable attachment cards.
+   */
+  disabled?: boolean;
 }
 
 const actionIconStyle = { height: '1rem' };
@@ -63,7 +67,7 @@ export const _AttachmentUploadCards = (props: AttachmentUploadCardsProps): JSX.E
   }
 
   return (
-    <_AttachmentCardGroup attachmentGroupLayout={_AttachmentCardGroupLayout.Flex}>
+    <_AttachmentCardGroup attachmentGroupLayout={_AttachmentCardGroupLayout.Flex} disabled={props.disabled}>
       {attachments &&
         attachments
           .filter((attachment) => !attachment.error)
@@ -73,9 +77,9 @@ export const _AttachmentUploadCards = (props: AttachmentUploadCardsProps): JSX.E
               key={attachment.id}
               menuActions={[
                 {
-                  name: props.strings?.removeAttachment ?? 'Remove',
+                  name: removeAttachmentButtonString(),
                   icon: (
-                    <div aria-label={removeAttachmentButtonString()} data-testid="attachment-upload-card-remove">
+                    <div data-testid="attachment-upload-card-remove">
                       <Icon iconName="CancelAttachmentUpload" className={mergeStyles(actionIconStyle)} />
                     </div>
                   ),

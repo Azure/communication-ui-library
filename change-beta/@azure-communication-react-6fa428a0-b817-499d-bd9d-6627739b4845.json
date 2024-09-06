@@ -1,9 +1,0 @@
-{
-  "type": "patch",
-  "area": "fix",
-  "workstream": "PiPiP",
-  "comment": "Remove scaling options for PiPiP in the people and chat panes to stop surprise popup controls",
-  "packageName": "@azure/communication-react",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { mergeStyles } from '@fluentui/react';
 import { makeStyles, shorthands } from '@fluentui/react-components';
 import { _pxToRem } from '@internal/acs-ui-common';
+import { mergeStyles } from '@fluentui/react';
 
 /**
  * @private
@@ -30,30 +30,38 @@ export const useAttachmentCardStyles = makeStyles({
     width: `${_ATTACHMENT_CARD_WIDTH_IN_REM}rem`
   },
   fileIcon: {
-    marginLeft: _pxToRem(4)
+    marginLeft: _pxToRem(4),
+    // don't shrink the file icon container
+    flexShrink: 0
   },
   content: {
     '> div': {
-      width: '100%',
       overflow: 'hidden',
       textOverflow: 'ellipsis'
     }
   },
   title: {
-    width: '100%'
+    overflow: 'hidden',
+    whiteSpace: 'nowrap',
+    textOverflow: 'ellipsis'
+  },
+  actions: {
+    '& > * button:focus': {
+      border: `black solid ${_pxToRem(1)}`
+    },
+    // don't shrink the actions container
+    flexShrink: 0
   }
 });
 
 /**
  * @private
  */
-export const attachmentNameContainerClassName = mergeStyles({
-  marginTop: _pxToRem(5),
-  overflow: 'hidden',
+export const titleTooltipContainerStyle = mergeStyles({
+  width: '100%',
   textOverflow: 'ellipsis',
-  span: {
-    whiteSpace: 'nowrap'
-  }
+  whiteSpace: 'nowrap',
+  overflowX: 'clip'
 });
 
 /**

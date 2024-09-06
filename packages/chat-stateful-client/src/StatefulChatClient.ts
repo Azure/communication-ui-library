@@ -119,8 +119,7 @@ const proxyChatClient: ProxyHandler<ChatClient> = {
             receiver.eventSubscriber = new EventSubscriber(chatClient, context);
           }
           return ret;
-        },
-        'ChatClient.startRealtimeNotifications');
+        }, 'ChatClient.startRealtimeNotifications');
       }
       case 'stopRealtimeNotifications': {
         return context.withAsyncErrorTeedToState(async function (
@@ -132,8 +131,7 @@ const proxyChatClient: ProxyHandler<ChatClient> = {
             receiver.eventSubscriber = undefined;
           }
           return ret;
-        },
-        'ChatClient.stopRealtimeNotifications');
+        }, 'ChatClient.stopRealtimeNotifications');
       }
       default:
         return Reflect.get(chatClient, prop);

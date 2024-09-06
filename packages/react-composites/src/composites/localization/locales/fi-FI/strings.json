@@ -135,6 +135,7 @@
     "dtmfDialerButtonTooltipOff": "Piilota valintapaneeli",
     "dtmfDialerMoreButtonLabelOn": "Näytä valintapaneeli",
     "dtmfDialerMoreButtonLabelOff": "Piilota valintapaneeli",
+    "phoneCallMoreButtonLabel": "Puhelu",
     "spokenLanguageStrings": {
       "ar-ae": "arabia – Arabiemiirikunnat",
       "ar-sa": "arabia – Saudi-Arabia",
@@ -336,11 +337,33 @@
     "leaveConfirmDialogContent": "Haluatko varmasti poistua puhelusta?",
     "endCallConfirmDialogTitle": "Lopetetaanko puhelu?",
     "endCallConfirmDialogContent": "Puhelu lopetetaan kaikkien osallistujien osalta.",
-    "invalidMeetingIdentifier": "Virheellinen kokoustunnus tai tunnuskoodi"
+    "invalidMeetingIdentifier": "Virheellinen kokoustunnus tai tunnuskoodi",
+    "pinParticipantMenuLabel": "Kiinnitä minulle",
+    "pinParticipantLimitReachedMenuLabel": "Kiinnitä (enimmäisraja saavutettu)",
+    "unpinParticipantMenuLabel": "Poista kiinnitys",
+    "pinParticipantMenuItemAriaLabel": "Kiinnitä",
+    "unpinParticipantMenuItemAriaLabel": "Poista kiinnitys",
+    "muteAllMenuLabel": "Mykistä kaikki",
+    "muteAllDialogTitle": "Mykistetäänkö kaikki?",
+    "muteAllDialogContent": "Tämä toiminto mykistää kaikki muut kokouksen osallistujat paitsi sinut.",
+    "muteAllConfirmButtonLabel": "Mykistä kaikki",
+    "muteAllCancelButtonLabel": "Peruuta",
+    "joinBreakoutRoomButtonLabel": "Liity pienryhmätilaan",
+    "returnFromBreakoutRoomButtonLabel": "Poistu kokoustilasta",
+    "leaveBreakoutRoomAndMeetingButtonLabel": "Poistu kokouksesta",
+    "breakoutRoomJoinedNotificationTitle": "Olet liittynyt pienryhmätilaan {roomName}",
+    "joinBreakoutRoomBannerTitle": "Pienryhmätila {roomName} on avoinna",
+    "joinBreakoutRoomBannerButtonLabel": "Liity",
+    "returnFromBreakoutRoomBannerTitle": "Palaa pääkokoukseen",
+    "returnFromBreakoutRoomBannerButtonLabel": "Liity uudelleen"
   },
   "chat": {
     "chatListHeader": "Tässä keskustelussa",
-    "uploadAttachment": "Lataa liite"
+    "uploadAttachment": "Lataa liite",
+    "uploadImageDataNotProvided": "Kuvatietoja ei ole annettu.",
+    "uploadImageIsTooLarge": "Kuva on liian suuri. Valitse sellainen, jonka koko on alle {maxImageSize} Mt.",
+    "uploadImageExtensionIsNotAllowed": ".{imageExtension}-kuvan lataamista ei sallita.",
+    "uploadImageFailed": "Kuvaa ei voi ladata palvelimeen. Yritä myöhemmin uudelleen."
   },
   "callWithChat": {
     "chatButtonLabel": "Keskustelu",
@@ -381,6 +404,8 @@
     "dialpadModalAriaLabel": "Valintapaneeli",
     "dialpadCloseModalButtonAriaLabel": "Sulje valintapaneeli",
     "openDtmfDialpadLabel": "Näytä valintapaneeli",
-    "dtmfDialpadPlaceholderText": "Syötä numero"
+    "dtmfDialpadPlaceholderText": "Syötä numero",
+    "breakoutRoomChatPaneTitle": "Pienryhmätilan keskustelu",
+    "chatContentSpinnerLabel": "Ladataan..."
   }
 }

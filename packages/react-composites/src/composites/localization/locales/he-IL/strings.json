@@ -135,6 +135,7 @@
     "dtmfDialerButtonTooltipOff": "הסתר לוח חיוג",
     "dtmfDialerMoreButtonLabelOn": "הצג לוח חיוג",
     "dtmfDialerMoreButtonLabelOff": "הסתר לוח חיוג",
+    "phoneCallMoreButtonLabel": "שיחת טלפון",
     "spokenLanguageStrings": {
       "ar-ae": "ערבית - איחוד האמירויות",
       "ar-sa": "ערבית - ערב הסעודית",
@@ -336,11 +337,33 @@
     "leaveConfirmDialogContent": "האם אתה בטוח שברצונך לעזוב את השיחה?",
     "endCallConfirmDialogTitle": "לסיים את השיחה?",
     "endCallConfirmDialogContent": "פעולה זאת תסיים את השיחה עבור כל המשתתפים.",
-    "invalidMeetingIdentifier": "מזהה פגישה או קוד סיסמה לא חוקיים"
+    "invalidMeetingIdentifier": "מזהה פגישה או קוד סיסמה לא חוקיים",
+    "pinParticipantMenuLabel": "הצמד עבורי",
+    "pinParticipantLimitReachedMenuLabel": "הצמדה (הגעת למגבלה)",
+    "unpinParticipantMenuLabel": "בטל הצמדה",
+    "pinParticipantMenuItemAriaLabel": "הצמד",
+    "unpinParticipantMenuItemAriaLabel": "בטל הצמדה",
+    "muteAllMenuLabel": "השתק הכל",
+    "muteAllDialogTitle": "האם להשתיק את כולם?",
+    "muteAllDialogContent": "פעולה זו תשתיק את כל האנשים בפגישה חוץ ממך.",
+    "muteAllConfirmButtonLabel": "השתק הכל",
+    "muteAllCancelButtonLabel": "ביטול",
+    "joinBreakoutRoomButtonLabel": "הצטרף לחדר בריחה",
+    "returnFromBreakoutRoomButtonLabel": "עזוב את החדר",
+    "leaveBreakoutRoomAndMeetingButtonLabel": "עזוב פגישה",
+    "breakoutRoomJoinedNotificationTitle": "הצטרפת לפיצול חדרים '{roomName}'",
+    "joinBreakoutRoomBannerTitle": "פיצול החדרים '{roomName}' פתוח",
+    "joinBreakoutRoomBannerButtonLabel": "הצטרף",
+    "returnFromBreakoutRoomBannerTitle": "חזרה לפגישה הראשית",
+    "returnFromBreakoutRoomBannerButtonLabel": "הצטרף מחדש"
   },
   "chat": {
     "chatListHeader": "בצ'אט זה",
-    "uploadAttachment": "העלה קובץ מצורף"
+    "uploadAttachment": "העלה קובץ מצורף",
+    "uploadImageDataNotProvided": "נתוני התמונה לא סופקו.",
+    "uploadImageIsTooLarge": "התמונה גדולה מדי. בחר אחד קטן יותר מ{maxImageSize} MB.",
+    "uploadImageExtensionIsNotAllowed": "העלאת תמונה {imageExtension} אסורה.",
+    "uploadImageFailed": "לא ניתן להעלות את התמונה. נסה שוב מאוחר יותר."
   },
   "callWithChat": {
     "chatButtonLabel": "צ'אט",
@@ -381,6 +404,8 @@
     "dialpadModalAriaLabel": "לוח חיוג",
     "dialpadCloseModalButtonAriaLabel": "סגור לוח חיוג",
     "openDtmfDialpadLabel": "הצג לוח חיוג",
-    "dtmfDialpadPlaceholderText": "הזן מספר"
+    "dtmfDialpadPlaceholderText": "הזן מספר",
+    "breakoutRoomChatPaneTitle": "צ'אט פיצול חדרים",
+    "chatContentSpinnerLabel": "בטעינה..."
   }
 }

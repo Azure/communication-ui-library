@@ -4,8 +4,6 @@
 import { _formatString } from '@internal/acs-ui-common';
 import React, { useCallback, useState } from 'react';
 import { MessageThreadStrings, UpdateMessageCallback } from '../../MessageThread';
-/* @conditional-compile-remove(rich-text-editor) */
-import { RichTextEditorOptions } from '../../MessageThread';
 import { ChatMessage, ComponentSlotStyle, OnRenderAvatarCallback } from '../../../types';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '../../../types';
@@ -15,11 +13,15 @@ import { AttachmentMenuAction } from '../../../types/Attachment';
 import { AttachmentMetadata } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(file-sharing-acs) */
 import { MessageOptions } from '@internal/acs-ui-common';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+import { AttachmentMetadataInProgress } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(mention) */
 import { MentionOptions } from '../../MentionPopover';
 import { InlineImageOptions } from '../ChatMessageContent';
 import { ChatMyMessageComponentAsMessageBubble } from './ChatMyMessageComponentAsMessageBubble';
 import { ChatMessageComponentAsEditBoxPicker } from './ChatMessageComponentAsEditBoxPicker';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+import { removeBrokenImageContentAndClearImageSizeStyles } from '../../utils/SendBoxUtils';
 
 type ChatMyMessageComponentProps = {
   message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage;
@@ -98,11 +100,15 @@ type ChatMyMessageComponentProps = {
    */
   actionsForAttachment?: (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[];
   /* @conditional-compile-remove(rich-text-editor) */
-  /**
-   * Optional flag to enable rich text editor.
-   * @beta
-   */
-  richTextEditorOptions?: RichTextEditorOptions;
+  isRichTextEditorEnabled?: boolean;
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  onPaste?: (event: { content: DocumentFragment }) => void;
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  onRemoveInlineImage?: (imageAttributes: Record<string, string>, messageId: string) => void;
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  onInsertInlineImage?: (imageAttributes: Record<string, string>, messageId: string) => void;
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  inlineImagesWithProgress?: AttachmentMetadataInProgress[];
 };
 
 /**
@@ -127,18 +133,30 @@ export const ChatMyMessageComponent = (props: ChatMyMessageComponentProps): JSX.
   }, [onDeleteMessage, message.messageId, message.messageType, clientMessageId]);
 
   const onResendClick = useCallback(() => {
-    /* @conditional-compile-remove(file-sharing-acs) */
-    const messageOptions = {
-      attachments: `attachments` in message ? message.attachments : undefined
-    };
     onDeleteMessage && clientMessageId && onDeleteMessage(clientMessageId);
+    let newContent = content ?? '';
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    newContent = removeBrokenImageContentAndClearImageSizeStyles(newContent);
     onSendMessage &&
       onSendMessage(
-        content !== undefined ? content : '',
+        newContent,
         /* @conditional-compile-remove(file-sharing-acs) */
-        messageOptions
+        /* @conditional-compile-remove(rich-text-editor-image-upload) */
+        {
+          /* @conditional-compile-remove(file-sharing-acs) */ attachments:
+            `attachments` in message ? message.attachments : undefined,
+          /* @conditional-compile-remove(rich-text-editor) */
+          type: props.isRichTextEditorEnabled ? 'html' : 'text'
+        }
       );
-  }, [onDeleteMessage, clientMessageId, onSendMessage, content, message]);
+  }, [
+    message,
+    onDeleteMessage,
+    clientMessageId,
+    onSendMessage,
+    content,
+    /* @conditional-compile-remove(rich-text-editor) */ props.isRichTextEditorEnabled
+  ]);
 
   const onSubmitHandler = useCallback(
     // due to a bug in babel, we can't use arrow function here
@@ -158,9 +176,7 @@ export const ChatMyMessageComponent = (props: ChatMyMessageComponentProps): JSX.
           message.messageId,
           text,
           /* @conditional-compile-remove(file-sharing-acs) */
-          {
-            attachments: attachments
-          }
+          { attachments: attachments }
         ));
       setIsEditing(false);
     },
@@ -179,7 +195,15 @@ export const ChatMyMessageComponent = (props: ChatMyMessageComponentProps): JSX.
         /* @conditional-compile-remove(mention) */
         mentionLookupOptions={props.mentionOptions?.lookupOptions}
         /* @conditional-compile-remove(rich-text-editor) */
-        richTextEditorOptions={props.richTextEditorOptions}
+        isRichTextEditorEnabled={props.isRichTextEditorEnabled}
+        /* @conditional-compile-remove(rich-text-editor-image-upload) */
+        onPaste={props.onPaste}
+        /* @conditional-compile-remove(rich-text-editor-image-upload) */
+        onInsertInlineImage={props.onInsertInlineImage}
+        /* @conditional-compile-remove(rich-text-editor-image-upload) */
+        inlineImagesWithProgress={props.inlineImagesWithProgress}
+        /* @conditional-compile-remove(rich-text-editor-image-upload) */
+        onRemoveInlineImage={props.onRemoveInlineImage}
       />
     );
   } else {

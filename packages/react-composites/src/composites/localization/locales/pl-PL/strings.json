@@ -135,6 +135,7 @@
     "dtmfDialerButtonTooltipOff": "Ukryj klawiaturę numeryczną",
     "dtmfDialerMoreButtonLabelOn": "Pokaż klawiaturę numeryczną",
     "dtmfDialerMoreButtonLabelOff": "Ukryj klawiaturę numeryczną",
+    "phoneCallMoreButtonLabel": "Rozmowa telefoniczna",
     "spokenLanguageStrings": {
       "ar-ae": "arabski — Zjednoczone Emiraty Arabskie",
       "ar-sa": "arabski — Arabia Saudyjska",
@@ -336,11 +337,33 @@
     "leaveConfirmDialogContent": "Czy na pewno chcesz opuścić rozmowę?",
     "endCallConfirmDialogTitle": "Zakończyć połączenie?",
     "endCallConfirmDialogContent": "Zakończysz połączenie dla wszystkich.",
-    "invalidMeetingIdentifier": "Nieprawidłowy identyfikator spotkania lub kod dostępu"
+    "invalidMeetingIdentifier": "Nieprawidłowy identyfikator spotkania lub kod dostępu",
+    "pinParticipantMenuLabel": "Przypnij dla mnie",
+    "pinParticipantLimitReachedMenuLabel": "Przypięcie (osiągnięto limit)",
+    "unpinParticipantMenuLabel": "Odepnij",
+    "pinParticipantMenuItemAriaLabel": "Przypnij",
+    "unpinParticipantMenuItemAriaLabel": "Odepnij",
+    "muteAllMenuLabel": "Wycisz wszystkich",
+    "muteAllDialogTitle": "Wyciszyć wszystkich?",
+    "muteAllDialogContent": "Spowoduje to wyciszenie wszystkich osób na spotkaniu oprócz Ciebie.",
+    "muteAllConfirmButtonLabel": "Wycisz wszystkich",
+    "muteAllCancelButtonLabel": "Anuluj",
+    "joinBreakoutRoomButtonLabel": "Dołącz do osobnego pokoju",
+    "returnFromBreakoutRoomButtonLabel": "Opuść pokój",
+    "leaveBreakoutRoomAndMeetingButtonLabel": "Opuść spotkanie",
+    "breakoutRoomJoinedNotificationTitle": "Dołączono do osobnego pokoju „{roomName}”",
+    "joinBreakoutRoomBannerTitle": "Osobny pokój „{roomName}” jest otwarty",
+    "joinBreakoutRoomBannerButtonLabel": "Dołącz",
+    "returnFromBreakoutRoomBannerTitle": "Powrót do spotkania głównego",
+    "returnFromBreakoutRoomBannerButtonLabel": "Dołącz ponownie"
   },
   "chat": {
     "chatListHeader": "W tym czacie",
-    "uploadAttachment": "Przekaż załącznik"
+    "uploadAttachment": "Przekaż załącznik",
+    "uploadImageDataNotProvided": "Nie udostępniono danych obrazu.",
+    "uploadImageIsTooLarge": "Obraz jest za duży. Wybierz rozmiar mniejszy niż {maxImageSize} MB.",
+    "uploadImageExtensionIsNotAllowed": "Przekazywanie obrazu .{imageExtension} nie jest dozwolone.",
+    "uploadImageFailed": "Nie można przekazać obrazu. Spróbuj ponownie później."
   },
   "callWithChat": {
     "chatButtonLabel": "Czat",
@@ -381,6 +404,8 @@
     "dialpadModalAriaLabel": "Klawiatura numeryczna",
     "dialpadCloseModalButtonAriaLabel": "Zamknij klawiaturę numeryczną",
     "openDtmfDialpadLabel": "Pokaż klawiaturę numeryczną",
-    "dtmfDialpadPlaceholderText": "Wprowadź numer"
+    "dtmfDialpadPlaceholderText": "Wprowadź numer",
+    "breakoutRoomChatPaneTitle": "Czat osobnego pokoju",
+    "chatContentSpinnerLabel": "Trwa ładowanie..."
   }
 }

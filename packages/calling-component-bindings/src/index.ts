@@ -10,8 +10,14 @@ export type { ParticipantListSelector } from './participantListSelector';
 export type { ParticipantsButtonSelector } from './participantsButtonSelector';
 export type { VideoGallerySelector } from './videoGallerySelector';
 export type { ErrorBarSelector } from './errorBarSelector';
+
+export type { NotificationStackSelector } from './notificationStackSelector';
+
+export { notificationStackSelector } from './notificationStackSelector';
 /* @conditional-compile-remove(PSTN-calls) */
 export type { HoldButtonSelector } from './callControlSelectors';
+export type { IncomingCallStackSelector } from './incomingCallStackSelector';
+export { incomingCallStackSelector } from './incomingCallStackSelector';
 
 export type {
   _StartCaptionsButtonSelector,
@@ -28,6 +34,9 @@ export type { CommonCallingHandlers } from './handlers/createCommonHandlers';
 export type { CaptionsOptions } from './handlers/createCommonHandlers';
 
 export type { VideoBackgroundEffectsDependency } from './handlers/createCommonHandlers';
+
+/* @conditional-compile-remove(DNS) */
+export type { DeepNoiseSuppressionEffectDependency } from './handlers/createCommonHandlers';
 
 export type { _ComponentCallingHandlers, CallingHandlersOptions } from './handlers/createHandlers';
 /* @conditional-compile-remove(teams-identity-support) */

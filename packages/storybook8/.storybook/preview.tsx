@@ -12,7 +12,7 @@ export const parameters = {
   docs: {
     toc: {
         title: 'On this page',
-        headingSelector: 'h2, h3'
+        headingSelector: 'h2'
       }
   },
   options: {
@@ -21,6 +21,7 @@ export const parameters = {
         'Overview',
         'Use Cases',
         'Feedback',
+        'Setup',
         'Composites',
         [
           'Get Started',
@@ -30,7 +31,7 @@ export const parameters = {
           'Adapters',
           'Cross-Framework Support',
         ],
-        'UI Components',
+        'Components',
         [
           'Overview',
           'Get Started',
@@ -138,7 +139,20 @@ const withLocalization = (Story: any, context: any) => {
   }
 };
 
-export const decorators = [withThemeProvider, withLocalization];
+const withCenterStory = (Story: any) => {
+  return (
+    <div style={{
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      height: '100vh'
+    }}>
+      <Story />
+    </div>
+  );
+};
+
+export const decorators = [withCenterStory, withThemeProvider, withLocalization];
 
 export const globalTypes = {
   theme: {

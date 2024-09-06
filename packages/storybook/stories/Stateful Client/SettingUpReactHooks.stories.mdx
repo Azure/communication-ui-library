@@ -8,10 +8,10 @@ import { Meta } from '@storybook/addon-docs';
 
 # Hooks
 
-[React Hooks](https://reactjs.org/docs/hooks-intro.html) allows developers to use state and other react features without writing a class component.
+[React Hooks](https://react.dev/reference/react/hooks) allows developers to use state and other react features without writing a class component.
 
 While you can choose any state management library such as Redux, we also provide a simple way to power react components with our Stateful SDK.
-We provide two [custom hooks](https://reactjs.org/docs/hooks-custom.html) in our library, [usePropsFor()](./?path=/docs/statefulclient-reacthooks-usepropsfor--page) and [useSelector()](./?path=/docs/statefulclient-reacthooks-useselector--page), that allow you to subscribe to changes in the SDK state and bind to our UI components.
+We provide two [custom hooks](https://react.dev/learn/reusing-logic-with-custom-hooks) in our library, [usePropsFor()](./?path=/docs/statefulclient-reacthooks-usepropsfor--page) and [useSelector()](./?path=/docs/statefulclient-reacthooks-useselector--page), that allow you to subscribe to changes in the SDK state and bind to our UI components.
 After binding with the custom hooks a SDK state change will trigger a re-render of the UI component, and events on the component will call into the SDK clients.
 
 ## Before you Start
@@ -60,4 +60,4 @@ ReactDOM.render(
 
 Once you have wrapped your entire app with providers, you are now can use the usePropsFor() method inside of your app to connect your components to the state.
 
-To see a full end-to-end example using providers, see [Getting Started with StatefulClient](./?path=/docs/quickstarts-statefulclient--page)
+To see full end-to-end examples using providers, see [Getting Started with Call Stateful Client](./?path=/docs/quickstarts-statefulcallclient--page) and [Getting Started with Chat Stateful Client](./?path=/docs/quickstarts-statefulchatclient--page).

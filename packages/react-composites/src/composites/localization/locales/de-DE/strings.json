@@ -135,6 +135,7 @@
     "dtmfDialerButtonTooltipOff": "Wähltastatur ausblenden",
     "dtmfDialerMoreButtonLabelOn": "Wähltastatur anzeigen",
     "dtmfDialerMoreButtonLabelOff": "Wähltastatur ausblenden",
+    "phoneCallMoreButtonLabel": "Telefonanruf",
     "spokenLanguageStrings": {
       "ar-ae": "Arabisch – Vereinigte Arabische Emirate",
       "ar-sa": "Arabisch – Saudi-Arabien",
@@ -336,11 +337,33 @@
     "leaveConfirmDialogContent": "Möchten Sie den Anruf wirklich verlassen?",
     "endCallConfirmDialogTitle": "Gespräch beenden?",
     "endCallConfirmDialogContent": "Sie beenden das Gespräch für alle.",
-    "invalidMeetingIdentifier": "Ungültige Besprechungs-ID oder -Kennung"
+    "invalidMeetingIdentifier": "Ungültige Besprechungs-ID oder -Kennung",
+    "pinParticipantMenuLabel": "Für mich anheften",
+    "pinParticipantLimitReachedMenuLabel": "Anheften (Limit erreicht)",
+    "unpinParticipantMenuLabel": "Lösen",
+    "pinParticipantMenuItemAriaLabel": "Anheften",
+    "unpinParticipantMenuItemAriaLabel": "Lösen",
+    "muteAllMenuLabel": "Alle stummschalten",
+    "muteAllDialogTitle": "Alle stummschalten?",
+    "muteAllDialogContent": "Hierdurch werden alle in der Besprechung stummgeschaltet, außer Ihnen.",
+    "muteAllConfirmButtonLabel": "Alle stummschalten",
+    "muteAllCancelButtonLabel": "Abbrechen",
+    "joinBreakoutRoomButtonLabel": "Breakout-Room beitreten",
+    "returnFromBreakoutRoomButtonLabel": "Raum verlassen",
+    "leaveBreakoutRoomAndMeetingButtonLabel": "Besprechung verlassen",
+    "breakoutRoomJoinedNotificationTitle": "Sie sind dem Gruppenraum „{roomName}“ beigetreten.",
+    "joinBreakoutRoomBannerTitle": "Der Gruppenraum „{roomName}“ ist geöffnet.",
+    "joinBreakoutRoomBannerButtonLabel": "Beitreten",
+    "returnFromBreakoutRoomBannerTitle": "Zurück zur Hauptbesprechung",
+    "returnFromBreakoutRoomBannerButtonLabel": "Erneut teilnehmen"
   },
   "chat": {
     "chatListHeader": "In diesem Chat",
-    "uploadAttachment": "Anlage hochladen"
+    "uploadAttachment": "Anlage hochladen",
+    "uploadImageDataNotProvided": "Bilddaten werden nicht bereitgestellt.",
+    "uploadImageIsTooLarge": "Das Bild ist zu groß. Wählen Sie einen Wert aus, der kleiner als {maxImageSize} MB ist.",
+    "uploadImageExtensionIsNotAllowed": "Das Hochladen von .{imageExtension} Image ist nicht zulässig.",
+    "uploadImageFailed": "Das Bild kann nicht hochgeladen werden. Versuchen Sie es später noch mal."
   },
   "callWithChat": {
     "chatButtonLabel": "Chat",
@@ -381,6 +404,8 @@
     "dialpadModalAriaLabel": "Wähltastatur",
     "dialpadCloseModalButtonAriaLabel": "Wähltastatur schließen",
     "openDtmfDialpadLabel": "Wähltastatur anzeigen",
-    "dtmfDialpadPlaceholderText": "Nummer eingeben"
+    "dtmfDialpadPlaceholderText": "Nummer eingeben",
+    "breakoutRoomChatPaneTitle": "Chat im Gruppenraum",
+    "chatContentSpinnerLabel": "Loading..."
   }
 }

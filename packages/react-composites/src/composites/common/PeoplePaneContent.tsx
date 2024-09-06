@@ -39,6 +39,7 @@ export const PeoplePaneContent = (props: {
   setParticipantActioned?: (userId: string) => void;
   mobileView?: boolean;
   participantListHeadingMoreButtonProps?: IContextualMenuProps;
+  pinnedParticipants?: string[];
 }): JSX.Element => {
   const {
     inviteLink,
@@ -141,6 +142,7 @@ export const PeoplePaneContent = (props: {
       headingMoreButtonAriaLabel={localeStrings.strings.call.peoplePaneMoreButtonAriaLabel}
       onClickHeadingMoreButton={props.mobileView ? setDrawerMenuItemsForParticipantListHeadingMoreButton : undefined}
       headingMoreButtonMenuProps={props.participantListHeadingMoreButtonProps}
+      pinnedParticipants={props.pinnedParticipants}
     />
   );
 

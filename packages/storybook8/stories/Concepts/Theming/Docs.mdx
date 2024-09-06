@@ -1,0 +1,113 @@
+import { Meta, Controls, Primary, Source } from '@storybook/addon-docs';
+import { DarkControlBar } from './DarkControlBar.story';
+import { DefaultTheme } from './DefaultTheme.story';
+import { ThemedButton } from './ThemedButton.story';
+
+import DarkControlBarText from '!!raw-loader!./snippets/DarkControlBar.snippet.tsx';
+import DefaultThemeSnippetText from '!!raw-loader!./snippets/DefaultTheme.snippet.tsx';
+import ThemedButtonText from '!!raw-loader!./snippets/ThemedButton.snippet.tsx';
+
+<Meta title="Concepts/Theming" />
+
+# Theming
+
+ACS UI Library uses components and icons from both Fluent UI React [v8](https://aka.ms/fluentui#/controls/web)
+and [v9](https://react.fluentui.dev/). The `FluentThemeProvider`
+is a wrapping component that allows you to theme all ACS UI Library components consistently.
+
+## Usage
+
+ACS UI Library components are themed with a light theme by default as shown by the `ControlBar` and buttons below.
+
+<Source code={DefaultThemeSnippetText} />
+<DefaultTheme />
+
+To theme this ControlBar, import `FluentThemeProvider` from `@azure/communication-react` and wrap it around the `ControlBar`.
+Then import `darkTheme` from `@azure/communication-react` and assign it to the `fluentTheme` property of `FluentThemeProvider`.
+`darkTheme` is a [Theme](https://aka.ms/fluentui#/controls/web/references/theme) object from Fluent UI.
+
+<Source code={DarkControlBarText} />
+<DarkControlBar />
+
+## FluentThemeProvider Props
+
+## Creating your own theme
+
+`lightTheme` and `darkTheme` are available from `@azure/communication-react`. But if you wish to use your own theme,
+we recommend using Microsoft's [Fluent UI Theme Designer](https://aka.ms/themedesigner) to create your theme. Please ensure
+that the Accessibility checker on the same page passes when creating your own theme.
+
+<img src="images/accessibility_checker_pass.png" alt="Accessibility checker pass" />
+
+The default light theme we export looks like this:
+
+```typescript
+export const lightTheme = {
+  palette: {
+    themePrimary: '#0078d4',
+    themeLighterAlt: '#f3f9fd',
+    themeLighter: '#d0e7f8',
+    themeLight: '#a9d3f2',
+    themeTertiary: '#5ca9e5',
+    themeSecondary: '#1a86d9',
+    themeDarkAlt: '#006cbe',
+    themeDark: '#005ba1',
+    themeDarker: '#004377',
+    neutralLighterAlt: '#faf9f8',
+    neutralLighter: '#f3f2f1',
+    neutralLight: '#edebe9',
+    neutralQuaternaryAlt: '#e1dfdd',
+    neutralQuaternary: '#d0d0d0',
+    neutralTertiaryAlt: '#c8c6c4',
+    neutralTertiary: '#a19f9d',
+    neutralSecondary: '#605e5c',
+    neutralPrimaryAlt: '#3b3a39',
+    neutralPrimary: '#323130',
+    neutralDark: '#201f1e',
+    black: '#000000',
+    white: '#ffffff'
+  }
+};
+```
+
+## Custom Theme Mapping
+
+The ACS UI Library and Fluent UI components are themed with palette values from the
+[Theme](https://aka.ms/fluentui#/controls/web/references/theme) object with a mapping that is designed to work for any valid theme.
+But if you wish to override the mapping, we recommend that you use the `useTheme` hook from `@azure/communication-react` and
+use the component's `styles` prop like in the example below.
+
+<Source code={ThemedButtonText} />
+<ThemedButton />
+
+Should you override the palette mapping, please note that ACS UI Library components abide by the general Fluent UI
+mappings. Foreground colors are used for text, icons, and outlines while background colors for component
+backgrounds. Primary colors are also used for component backgrounds or icons.
+
+## Custom Fonts
+
+Custom Fonts can be applied to UI Components or Composites using the existing theming mechansim.
+Along with the ability to change colors, a JSON object containing the theme palette also allows users to specify custom fonts.
+As long as the fonts have been loaded in the application, a custom font name can be specified as shown in the example below.
+
+```tsx
+export const lightTheme = {
+  defaultFontStyle: { fontFamily: 'Monaco, Menlo, Consolas', fontWeight: 'regular' },
+  palette: {
+    themePrimary: '#0078d4',
+    themeLighterAlt: '#f3f9fd'
+  }
+};
+```
+
+If you wish to apply the same font to all the font weights, simply remove the `fontWeight` property from the `defaultFontStyle` object.
+
+## Applying Custom Branding to the Composites
+
+With the CallComposite and CallWithChatComposite you can also inject your own custom branding.
+You can inject a background and logo into the Composite configuration page to present to your users. This is done by
+passing background and logo properties to the `options` of the Composite.
+
+For usage details and image recommendations please refer to the [Composites](./?path=/docs/composites-call-with-chat-basicexample--basic-example#custom-branding) section.
+
+<img src="images/composite-logo-background.png" alt="CallWithChatComposite with a logo and background applied" />

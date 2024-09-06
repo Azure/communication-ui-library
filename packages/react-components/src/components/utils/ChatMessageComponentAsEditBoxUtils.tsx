@@ -45,8 +45,8 @@ export function getMessageState(
   return isMessageEmpty(messageText, /* @conditional-compile-remove(file-sharing-acs) */ attachments)
     ? 'too short'
     : isMessageTooLong(messageText.length)
-    ? 'too long'
-    : 'OK';
+      ? 'too long'
+      : 'OK';
 }
 
 /* @conditional-compile-remove(file-sharing-acs) */

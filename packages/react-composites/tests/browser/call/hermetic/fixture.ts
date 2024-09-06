@@ -151,6 +151,8 @@ export function defaultMockCallAdapterState(
     isTeamsMeeting: false,
     isRoomsCall: isRoomsCall ?? false,
     latestErrors: {},
+    /* @conditional-compile-remove(breakout-rooms) */
+    latestNotifications: {},
     targetCallees: undefined,
     reactions: undefined
   };
@@ -382,7 +384,11 @@ const consumerCapabilitiesInRoomsCall: ParticipantCapabilities = {
   setCaptionLanguage: {
     isPresent: false,
     reason: 'CapabilityNotApplicableForTheCallType'
-  }
+  },
+  /* @conditional-compile-remove(calling-beta-sdk) */
+  startTogetherMode: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
+  /* @conditional-compile-remove(breakout-rooms) */
+  joinBreakoutRooms: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' }
 };
 
 const attendeeCapabilitiesInRoomsCall: ParticipantCapabilities = {
@@ -420,7 +426,11 @@ const attendeeCapabilitiesInRoomsCall: ParticipantCapabilities = {
   setCaptionLanguage: {
     isPresent: false,
     reason: 'CapabilityNotApplicableForTheCallType'
-  }
+  },
+  /* @conditional-compile-remove(calling-beta-sdk) */
+  startTogetherMode: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
+  /* @conditional-compile-remove(breakout-rooms) */
+  joinBreakoutRooms: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' }
 };
 
 const presenterCapabilitiesInRoomsCall: ParticipantCapabilities = {
@@ -458,7 +468,11 @@ const presenterCapabilitiesInRoomsCall: ParticipantCapabilities = {
   viewAttendeeNames: {
     isPresent: true,
     reason: 'Capable'
-  }
+  },
+  /* @conditional-compile-remove(calling-beta-sdk) */
+  startTogetherMode: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
+  /* @conditional-compile-remove(breakout-rooms) */
+  joinBreakoutRooms: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' }
 };
 
 const presenterCapabilitiesInTeamsCall: ParticipantCapabilities = {
@@ -496,7 +510,11 @@ const presenterCapabilitiesInTeamsCall: ParticipantCapabilities = {
   viewAttendeeNames: {
     isPresent: true,
     reason: 'Capable'
-  }
+  },
+  /* @conditional-compile-remove(calling-beta-sdk) */
+  startTogetherMode: { isPresent: true, reason: 'Capable' },
+  /* @conditional-compile-remove(breakout-rooms) */
+  joinBreakoutRooms: { isPresent: true, reason: 'Capable' }
 };
 
 const defaultEndedCallState: CallState = {

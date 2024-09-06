@@ -112,6 +112,8 @@ export type ParticipantListProps = {
   strings?: ParticipantListStrings;
   /** Optional aria-labelledby prop that prefixes each ParticipantItem aria-label */
   participantAriaLabelledBy?: string;
+  /** List of pinned participants */
+  pinnedParticipants?: string[];
 };
 
 const onRenderParticipantDefault = (
@@ -124,7 +126,8 @@ const onRenderParticipantDefault = (
   onParticipantClick?: (participant?: ParticipantListParticipant) => void,
   showParticipantOverflowTooltip?: boolean,
   participantAriaLabelledBy?: string,
-  theme?: Theme
+  theme?: Theme,
+  pinnedParticipants?: string[]
 ): JSX.Element | null => {
   const callingParticipant = participant as CallParticipantListParticipant;
 
@@ -149,8 +152,10 @@ const onRenderParticipantDefault = (
 
   const callingPalette = (theme as unknown as CallingTheme).callingPalette;
 
+  const isPinned = pinnedParticipants && pinnedParticipants?.includes(participant.userId);
+
   const onRenderIcon =
-    callingParticipant?.isScreenSharing || callingParticipant?.isMuted || callingParticipant?.raisedHand
+    callingParticipant?.isScreenSharing || callingParticipant?.isMuted || callingParticipant?.raisedHand || isPinned
       ? () => (
           <Stack horizontal={true} tokens={{ childrenGap: '0.5rem' }}>
             {callingParticipant.raisedHand && (
@@ -185,6 +190,8 @@ const onRenderParticipantDefault = (
               <Icon iconName="ParticipantItemMicOff" className={iconStyles} ariaLabel={strings.mutedIconLabel} />
             )}
             {callingParticipant.spotlight && <Icon iconName="ParticipantItemSpotlighted" className={iconStyles} />}
+
+            {isPinned && <Icon iconName="ParticipantItemPinned" className={iconStyles} />}
           </Stack>
         )
       : () => null;
@@ -292,7 +299,8 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
     totalParticipantCount,
     /* @conditional-compile-remove(total-participant-count) */
     strings,
-    participantAriaLabelledBy
+    participantAriaLabelledBy,
+    pinnedParticipants
   } = props;
 
   const theme = useTheme();
@@ -372,7 +380,8 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
               props.onParticipantClick,
               showParticipantOverflowTooltip,
               participantAriaLabelledBy,
-              theme
+              theme,
+              pinnedParticipants
             )
       )}
       {

@@ -1,0 +1,35 @@
+import { Canvas, Markdown, Meta, ArgTypes } from '@storybook/blocks';
+import * as ImageOverlayStories from './index.stories';
+
+import ImageOverlayStoriesExampleText from '!!raw-loader!./snippets/ImageOverlay.snippet.tsx';
+import { ImageOverlay } from '@internal/react-components';
+
+<Meta of={ImageOverlayStories} />
+
+# Image Overlay
+
+Component to display image in a overlay. The overlay launches as a modal, it takes focus from the page or app and require users to interact with them.
+
+## Importing
+
+```ts
+import { ImageOverlay } from '@azure/communication-react';
+```
+
+## Example
+
+Component will render a fullscreen modal using a set image source.
+
+<Canvas of={ImageOverlayStories.ImageOverlaySnippetDocsOnly} source={{ code: ImageOverlayStoriesExampleText }} />
+
+## Cover iOS safe area
+
+To have the image overlay cover the safeArea on iOS devices, we can add `viewport-fit=cover` to the viewport meta tag of the app.
+
+```ts
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+```
+
+## Props
+
+<ArgTypes of={ImageOverlay} />

@@ -1,9 +1,0 @@
-{
-  "type": "patch",
-  "area": "fix",
-  "workstream": "End Call Screen",
-  "comment": "Fixed bug when call ended due to wrong links/ids users are lead to normal end call screen with survey",
-  "packageName": "@azure/communication-react",
-  "email": "96077406+carocao-msft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
