@@ -36,6 +36,11 @@ MessageThread internally uses the `Chat` & `ChatMessage` components from `@fluen
 checkout the details about these components
 [here](https://microsoft.github.io/fluentui-contrib/react-chat/?path=/story/chat--default).
 
+The MessageThread component supports lazy loading for the rich text editor used for editing messages. This means
+that the rich text editor and its dependencies can be excluded from the bundle if they're not required,
+utilizing tree-shaking techniques such as [the sideEffects
+option](https://webpack.js.org/guides/tree-shaking/#mark-the-file-as-side-effect-free) in webpack.
+
 ## Importing
 
 ```ts
@@ -177,7 +182,7 @@ icon shown below.
 
 ### Advanced Usage: Customizing Attachment Rendering
 
-<SingleLineBetaBanner />
+<DetailedBetaBanner />
 
 The MessageThread component also supports multiple ways to customize the rendering. You can leverage the
 `attachmentOptions.downloadOptions` props to provide a dynamic list of menu action buttons that will be based
