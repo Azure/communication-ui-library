@@ -22,20 +22,10 @@ const config =
             tsconfig: 'tsconfig.preprocess.json'
           }
         },
-        moduleNameMapper: {
-          // Force modules to resolve with the CJS entry point, because Jest does not support package.json.exports. See https://github.com/uuidjs/uuid/issues/451
-          '^uuid$': require.resolve('uuid'),
-          '^nanoid$': require.resolve('nanoid')
-        },
         ...jestCoverageConfig
       }
     : {
         ...commonConfig,
-        moduleNameMapper: {
-          // Force modules to resolve with the CJS entry point, because Jest does not support package.json.exports. See https://github.com/uuidjs/uuid/issues/451
-          '^uuid$': require.resolve('uuid'),
-          '^nanoid$': require.resolve('nanoid')
-        },
         ...jestCoverageConfig
       };
 
