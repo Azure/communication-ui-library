@@ -26,7 +26,7 @@ import { VideoEffectsFeature } from '@azure/communication-calling';
 import { CommunicationTokenCredential } from '@azure/communication-common';
 import { AccessToken } from '@azure/core-auth';
 
-import EventEmitter from 'events';
+import { EventEmitter } from 'events';
 import { CallClientState } from './CallClientState';
 import { CallContext } from './CallContext';
 import { InternalCallContext } from './InternalCallContext';
