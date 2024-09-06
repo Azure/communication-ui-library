@@ -9498,6 +9498,10 @@ packages:
     resolution: {integrity: sha512-/kYRxGDLWzHOB7q+wtSUQlFrtcdUccpfy+X+9iMBpHK8QLLhx2wIPYuS5DYtR9Wa/YlZAbIovy7qVdB1Aq6Lyw==}
     dev: false
 
+  /@types/events@3.0.3:
+    resolution: {integrity: sha512-trOc4AAUThEz9hapPtSd7wf5tiQKvTtu5b371UxXdTuqzIh0ArcRspRP0i0Viu+LXstIQ1z96t1nsPxT9ol01g==}
+    dev: false
+
   /@types/express-serve-static-core@4.17.43:
     resolution: {integrity: sha512-oaYtiBirUOPQGSWNGPWnzyAFJ0BP3cwvN4oWZQY+zUBwpVIGsKUkpBpSztp74drYcjavs7SKFZ4DX1V2QeN8rg==}
     dependencies:
@@ -10569,10 +10573,8 @@ packages:
       ajv: 6.12.6
     dev: false
 
-  /ajv-formats@2.1.1(ajv@8.17.1):
+  /ajv-formats@2.1.1:
     resolution: {integrity: sha512-Wx0Kx52hxE7C18hkMEggYlEifqWZtYaRgouJor+WMdPnQyEK13vgEWyVNup7SoeeoLMsr4kf5h6dOW11I15MUA==}
-    peerDependencies:
-      ajv: ^8.0.0
     peerDependenciesMeta:
       ajv:
         optional: true
@@ -22087,7 +22089,7 @@ packages:
     dependencies:
       '@types/json-schema': 7.0.15
       ajv: 8.17.1
-      ajv-formats: 2.1.1(ajv@8.17.1)
+      ajv-formats: 2.1.1
       ajv-keywords: 5.1.0(ajv@8.17.1)
     dev: false
 
@@ -25525,7 +25527,7 @@ packages:
     dev: false
 
   file:projects/calling-stateful-client.tgz:
-    resolution: {integrity: sha512-Zp3qWoYm/JiI6zOSO+LVd397y33VRdkZRHUaj6RJhdMNCFYPjhKO6wNwZ5hYB80tmAUCIl7lT3duORAGmN8SAg==, tarball: file:projects/calling-stateful-client.tgz}
+    resolution: {integrity: sha512-BsO+7Z03N+3GRB85gxhIIXMCmbIkNqBNpsM69gcqCmXnM9pQRuaDtk5Q/knXBOPPKLGUpT/0WH48FTJZ78IUoA==, tarball: file:projects/calling-stateful-client.tgz}
     name: '@rush-temp/calling-stateful-client'
     version: 0.0.0
     dependencies:
@@ -25537,6 +25539,7 @@ packages:
       '@babel/core': 7.25.2
       '@microsoft/api-documenter': 7.23.37(@types/node@20.11.25)
       '@microsoft/api-extractor': 7.42.3(@types/node@20.11.25)
+      '@types/events': 3.0.3
       '@types/jest': 29.5.12
       '@types/react': 18.3.3
       '@typescript-eslint/eslint-plugin': 7.14.1(@typescript-eslint/parser@7.14.1)(eslint@8.57.0)(typescript@5.4.5)
@@ -25898,7 +25901,7 @@ packages:
     dev: false
 
   file:projects/chat-stateful-client.tgz:
-    resolution: {integrity: sha512-d9FpRRcxJVHWKnHdtg9UkcKgpeS09fs12ECjgX/3wlj8bsY18iLnFPh9QDSemWDyzbUz+E8Y8cMz376Hr1CMAw==, tarball: file:projects/chat-stateful-client.tgz}
+    resolution: {integrity: sha512-4L/FPqAW9H9Oh4hSDyRvQ8jAgGYcZaYpXhMK64pe8GRVDM0KAdEqq4yXQUCYHA/blOpdZr+5xWJBVuk8KNgGYw==, tarball: file:projects/chat-stateful-client.tgz}
     name: '@rush-temp/chat-stateful-client'
     version: 0.0.0
     dependencies:
@@ -25911,6 +25914,7 @@ packages:
       '@babel/core': 7.25.2
       '@microsoft/api-documenter': 7.23.37(@types/node@20.11.25)
       '@microsoft/api-extractor': 7.42.3(@types/node@20.11.25)
+      '@types/events': 3.0.3
       '@types/jest': 29.5.12
       '@types/react': 18.3.3
       '@typescript-eslint/eslint-plugin': 7.14.1(@typescript-eslint/parser@7.14.1)(eslint@8.57.0)(typescript@5.4.5)
@@ -26085,7 +26089,7 @@ packages:
     dev: false
 
   file:projects/communication-react.tgz:
-    resolution: {integrity: sha512-jKkVRH95ZIoAnFC+19CqZW7Xkb9hD0IN2MR/6mkCvqFMwfPzmS/PYVv1PULxKaV3VjWBh5enz9vgT3bydQ4hjw==, tarball: file:projects/communication-react.tgz}
+    resolution: {integrity: sha512-AjDYWjRD58zMX4lPaaFItR16OkMpQfbG84pVeNkJYasErTrLBRX64FyOIhmEIaHow/YzRugHwoiCzkG4ZBwqiQ==, tarball: file:projects/communication-react.tgz}
     name: '@rush-temp/communication-react'
     version: 0.0.0
     dependencies:
@@ -26114,6 +26118,7 @@ packages:
       '@testing-library/jest-dom': 6.4.8
       '@testing-library/react': 16.0.0(@testing-library/dom@9.3.4)(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
       '@types/dompurify': 3.0.5
+      '@types/events': 3.0.3
       '@types/jest': 29.5.12
       '@types/json-stringify-safe': 5.0.3
       '@types/node': 20.14.12
@@ -26288,7 +26293,7 @@ packages:
     dev: false
 
   file:projects/fake-backends.tgz:
-    resolution: {integrity: sha512-l+GfREKXH8jL90WWwHwbT12CslpOuHHaRSFFkSsrNeLfaOYp0f4JI42uyh7BRYPEohzpSMI5eTtSx1NHsyu6Vw==, tarball: file:projects/fake-backends.tgz}
+    resolution: {integrity: sha512-rdxPm6P3e3FGrsYDlvnG40mJRH8qx0QkkNKVM3Rk9amVE/if0zE2Q4j/+PQg4JHUvBHqmcFriVIfzM7A1zbShQ==, tarball: file:projects/fake-backends.tgz}
     name: '@rush-temp/fake-backends'
     version: 0.0.0
     dependencies:
@@ -26301,6 +26306,7 @@ packages:
       '@babel/core': 7.25.2
       '@babel/preset-env': 7.23.9(@babel/core@7.25.2)
       '@microsoft/api-extractor': 7.42.3(@types/node@20.11.25)
+      '@types/events': 3.0.3
       '@types/jest': 29.5.12
       '@typescript-eslint/eslint-plugin': 7.14.1(@typescript-eslint/parser@7.14.1)(eslint@8.57.0)(typescript@5.4.5)
       '@typescript-eslint/parser': 7.14.1(eslint@8.57.0)(typescript@5.4.5)
@@ -26467,7 +26473,7 @@ packages:
     dev: false
 
   file:projects/react-composites.tgz:
-    resolution: {integrity: sha512-+cu/3oIysf7vpUehBjTQohttTKybhYYvXBYJeXcFCSrvm0bAmuEK7K9trHaNZQe1fAendg8hyszC2BBjRaZDsw==, tarball: file:projects/react-composites.tgz}
+    resolution: {integrity: sha512-U8ZKvH1WLnmisingVgOnIVE8kYdG0sZcFq6WfOI/nEV2yXrlYGKUJSaadP/rzA+7puCQ8AIQOCPneAVOn+3Njg==, tarball: file:projects/react-composites.tgz}
     name: '@rush-temp/react-composites'
     version: 0.0.0
     dependencies:
@@ -26493,6 +26499,7 @@ packages:
       '@testing-library/jest-dom': 6.4.8
       '@testing-library/react': 16.0.0(@testing-library/dom@9.3.4)(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
       '@types/copy-webpack-plugin': 6.4.3
+      '@types/events': 3.0.3
       '@types/express': 4.17.21
       '@types/jest': 29.5.12
       '@types/json-stringify-safe': 5.0.3

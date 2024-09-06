@@ -5,7 +5,7 @@ import { AudioDeviceInfo, Call, EnvironmentInfo, VideoDeviceInfo } from '@azure/
 import type { CallAdapter, CallAdapterState, VideoBackgroundEffect } from '../../../src';
 import type { MockCallAdapterState } from '../../common';
 import { produce } from 'immer';
-import EventEmitter from 'events';
+import { EventEmitter } from 'events';
 import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
 
 /**

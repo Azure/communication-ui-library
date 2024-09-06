@@ -98,5 +98,12 @@ export const primaryButtonStyles: IButtonStyles = {
     paddingBottom: '1.5rem',
     borderRadius: '0.5rem',
     marginBottom: _pxToRem(22)
+  },
+  flexContainer: {
+    position: 'absolute',
+    left: '1rem',
+    right: '1rem',
+    top: '0',
+    bottom: '0'
   }
 };

@@ -14,7 +14,7 @@ import {
   RemoteParticipant
 } from '@azure/communication-calling';
 import { Mutable } from '../../CallWithChatComposite/adapter/TestUtils';
-import EventEmitter from 'events';
+import { EventEmitter } from 'events';
 
 /**
  * @private
