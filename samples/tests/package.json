@@ -4,6 +4,7 @@
   "description": "Automation tests for samples.",
   "private": true,
   "scripts": {
+    "clean":"echo skip",
     "build": "echo skip",
     "test": "echo skip",
     "test:ci-coverage": "echo skip",
