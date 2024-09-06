@@ -507,7 +507,7 @@ export type CallAdapterClientState = {
     onResolveVideoEffectDependency?: () => Promise<VideoBackgroundEffectsDependency>;
     onResolveDeepNoiseSuppressionDependency?: () => Promise<DeepNoiseSuppressionEffectDependency>;
     deepNoiseSuppressionOnByDefault?: boolean;
-    hideNoiseSuppressionButton?: boolean;
+    hideDeepNoiseSuppressionButton?: boolean;
     selectedVideoBackgroundEffect?: VideoBackgroundEffect;
     acceptedTransferCallState?: CallState;
     hideAttendeeNames?: boolean;
@@ -1400,7 +1400,7 @@ export interface CallWithChatClientState {
     environmentInfo?: EnvironmentInfo;
     hideAttendeeNames?: boolean;
     // @beta
-    hideNoiseSuppressionButton?: boolean;
+    hideDeepNoiseSuppressionButton?: boolean;
     isTeamsCall: boolean;
     isTeamsMeeting: boolean;
     latestCallErrors: AdapterErrors;
