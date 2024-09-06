@@ -4,6 +4,7 @@
   "private": "true",
   "description": "Utility to ensure we do not introduce breaking changes to typescript",
   "scripts": {
+    "clean":"echo skip",
     "build": "tsc",
     "build:watch": "echo skip",
     "build:stable": "tsc",
