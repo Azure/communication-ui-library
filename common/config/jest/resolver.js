@@ -18,7 +18,17 @@ module.exports = (path, options) => {
             // it falls back to uuid's CommonJS+node "main" property.
             //
             // Once we're able to migrate our Jest config to ESM or get CommonJS browser export for our dependencies, this can go away.
-            if (pkg.name === 'uuid' || pkg.name === '@azure/core-util' || pkg.name === '@azure/abort-controller' || pkg.name === '@azure/core-rest-pipeline' || pkg.name === '@azure/logger'|| pkg.name === '@azure/core-tracing'|| pkg.name === '@azure/core-auth'|| pkg.name === '@azure/core-client' || pkg.name === 'nanoid') {
+            if (
+                pkg.name === 'uuid' ||
+                pkg.name === '@azure/core-util' ||
+                pkg.name === '@azure/abort-controller' ||
+                pkg.name === '@azure/core-rest-pipeline' ||
+                pkg.name === '@azure/logger' ||
+                pkg.name === '@azure/core-tracing' ||
+                pkg.name === '@azure/core-auth' ||
+                pkg.name === '@azure/core-client' ||
+                pkg.name === 'nanoid'
+            ) {
                 delete pkg['exports'];
                 delete pkg['module'];
             }
