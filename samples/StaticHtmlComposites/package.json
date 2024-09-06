@@ -23,7 +23,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@azure/communication-react": "1.19.0-beta.2",
+    "@azure/communication-react": "1.19.0-beta.3",
     "@azure/communication-common": "^2.3.1",
     "@azure/communication-calling": "1.28.1-beta.4",
     "@azure/communication-chat": "1.6.0-beta.3",
