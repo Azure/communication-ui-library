@@ -61,6 +61,7 @@
     "@internal/chat-component-bindings": "1.19.0-beta.2",
     "@internal/chat-stateful-client": "1.19.0-beta.2",
     "@internal/react-components": "1.19.0-beta.2",
+    "@types/events": "^3.0.3",
     "copy-to-clipboard": "^3.3.1",
     "events": "^3.3.0",
     "immer": "10.1.1",

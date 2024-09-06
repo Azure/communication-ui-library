@@ -35,6 +35,7 @@
     "@azure/core-paging": "^1.5.0",
     "@azure/core-rest-pipeline": "^1.13.0",
     "@internal/acs-ui-common": "1.19.0-beta.2",
+    "@types/events": "^3.0.3",
     "events": "^3.3.0",
     "immer": "10.1.1",
     "nanoid": "3.3.6"

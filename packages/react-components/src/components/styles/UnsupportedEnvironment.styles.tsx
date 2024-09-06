@@ -68,7 +68,9 @@ export const continueAnywayButtonStyles = (theme: Theme): IButtonStyles => {
       backgroundColor: '#C4314B',
       borderColor: theme.palette.neutralLight,
       color: theme.palette.white,
-      padding: '1rem'
+      padding: '1rem',
+      // copy value previously set in FluentUI
+      height: '32px'
     }
   };
 };
