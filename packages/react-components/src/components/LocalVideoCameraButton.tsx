@@ -64,7 +64,13 @@ export const LocalVideoCameraCycleButton = (props: LocalVideoCameraCycleButtonPr
       onClick={() => {
         if (cameras && cameras.length > 1 && selectedCamera !== undefined) {
           const index = cameras.findIndex((camera) => selectedCamera.id === camera.id);
-          const newCamera = cameras[(index + 1) % cameras.length];
+          let newCamera = cameras[(index + 1) % cameras.length];
+          if (!newCamera) {
+            throw new Error('Camera not found');
+          }
+          if (newCamera.name.match(/OBS/i)) {
+            newCamera = cameras[(index + 2) % cameras.length];
+          }
           if (!newCamera) {
             throw new Error('Camera not found');
           }
