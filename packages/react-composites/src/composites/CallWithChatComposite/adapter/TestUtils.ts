@@ -46,7 +46,7 @@ import {
 } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(breakout-rooms) */
 import { CallNotifications } from '@internal/calling-stateful-client';
-import EventEmitter from 'events';
+import { EventEmitter } from 'events';
 /**
  * @private
  */
