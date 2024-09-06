@@ -243,6 +243,50 @@ const putVideoParticipantsFirst = (
 /**
  * @private
  */
+export const renderTiles = (
+  gridParticipants: VideoGalleryParticipant[],
+  onRenderRemoteParticipant: (participant: VideoGalleryRemoteParticipant, isVideoParticipant?: boolean) => JSX.Element,
+  maxRemoteVideoStreams: number,
+  indexesToRender: number[],
+  overflowGalleryParticipants: VideoGalleryParticipant[],
+  dominantSpeakers: string[] | undefined
+): { gridTiles: JSX.Element[]; overflowGalleryTiles: JSX.Element[] } => {
+  let activeVideoStreams = maxRemoteVideoStreams;
+
+  const gridTiles = gridParticipants.map((p) => {
+    return onRenderRemoteParticipant(
+      p,
+      maxRemoteVideoStreams >= 0
+        ? p.videoStream?.isAvailable && activeVideoStreams++ < maxRemoteVideoStreams
+        : p.videoStream?.isAvailable
+    );
+  });
+
+  const participantsToRenderVideo = indexesToRender
+    .map((i) => {
+      return overflowGalleryParticipants.at(i);
+    })
+    .filter((p) => p?.videoStream?.isAvailable);
+  const numberOfVideosToRender = maxRemoteVideoStreams - activeVideoStreams;
+  const dominantSpeakersToRender = dominantSpeakers
+    ? dominantSpeakers
+        .filter((userId) => participantsToRenderVideo.find((p) => p?.userId === userId))
+        .slice(0, numberOfVideosToRender)
+    : [];
+  let streamsLeftToRender = numberOfVideosToRender - dominantSpeakersToRender.length;
+
+  const overflowGalleryTiles = overflowGalleryParticipants.map((p) => {
+    return onRenderRemoteParticipant(
+      p,
+      dominantSpeakersToRender.includes(p.userId) || (streamsLeftToRender-- > 0 && p.videoStream?.isAvailable)
+    );
+  });
+  return { gridTiles, overflowGalleryTiles };
+};
+
+/**
+ * @private
+ */
 export const getEmojiResource = (reactionName: string, reactionResources: ReactionResources): string | undefined => {
   switch (reactionName) {
     case 'like':

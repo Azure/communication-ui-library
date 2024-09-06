@@ -23,7 +23,11 @@ import {
 } from './styles/FloatingLocalVideo.styles';
 import { innerLayoutStyle, layerHostStyle, rootLayoutStyle } from './styles/FloatingLocalVideoLayout.styles';
 import { videoGalleryLayoutGap } from './styles/Layout.styles';
-import { MAX_GRID_PARTICIPANTS_NOT_LARGE_GALLERY, useOrganizedParticipants } from './utils/videoGalleryLayoutUtils';
+import {
+  MAX_GRID_PARTICIPANTS_NOT_LARGE_GALLERY,
+  renderTiles,
+  useOrganizedParticipants
+} from './utils/videoGalleryLayoutUtils';
 import { OverflowGallery } from './OverflowGallery';
 import { LocalVideoTileSize } from '../VideoGallery';
 
@@ -94,23 +98,6 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
     spotlightedParticipantUserIds
   });
 
-  let activeVideoStreams = 0;
-
-  const gridTiles = gridParticipants.map((p) => {
-    return onRenderRemoteParticipant(
-      p,
-      maxRemoteVideoStreams >= 0
-        ? p.videoStream?.isAvailable && activeVideoStreams++ < maxRemoteVideoStreams
-        : p.videoStream?.isAvailable
-    );
-  });
-
-  const shouldFloatLocalVideo = remoteParticipants.length > 0;
-
-  if (!shouldFloatLocalVideo && localVideoComponent) {
-    gridTiles.push(localVideoComponent);
-  }
-
   /**
    * instantiate indexes available to render with indexes available that would be on first page
    *
@@ -119,25 +106,21 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
    * this case when those components are here
    */
   const [indexesToRender, setIndexesToRender] = useState<number[]>([]);
-  const participantsToRenderVideo = indexesToRender
-    .map((i) => {
-      return overflowGalleryParticipants.at(i);
-    })
-    .filter((p) => p?.videoStream?.isAvailable);
-  const numberOfVideosToRender = maxRemoteVideoStreams - activeVideoStreams;
-  const dominantSpeakersToRender = dominantSpeakers
-    ? dominantSpeakers
-        .filter((userId) => participantsToRenderVideo.find((p) => p?.userId === userId))
-        .slice(0, numberOfVideosToRender)
-    : [];
-  let streamsLeftToRender = numberOfVideosToRender - dominantSpeakersToRender.length;
 
-  const overflowGalleryTiles = overflowGalleryParticipants.map((p) => {
-    return onRenderRemoteParticipant(
-      p,
-      dominantSpeakersToRender.includes(p.userId) || (streamsLeftToRender-- > 0 && p.videoStream?.isAvailable)
-    );
-  });
+  const { gridTiles, overflowGalleryTiles } = renderTiles(
+    gridParticipants,
+    onRenderRemoteParticipant,
+    maxRemoteVideoStreams,
+    indexesToRender,
+    overflowGalleryParticipants,
+    dominantSpeakers
+  );
+
+  const shouldFloatLocalVideo = remoteParticipants.length > 0;
+
+  if (!shouldFloatLocalVideo && localVideoComponent) {
+    gridTiles.push(localVideoComponent);
+  }
 
   const layerHostId = useId('layerhost');
 
