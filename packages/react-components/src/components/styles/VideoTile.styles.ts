@@ -117,24 +117,26 @@ export const participantStateStringStyles = (theme: Theme): IStyle => {
 /**
  * @private
  */
-export const moreButtonStyles: IButtonStyles = {
-  root: {
-    // To ensure that the button is clickable when there is a floating video tile
-    zIndex: 1,
-    color: 'inherit',
-    top: '-0.125rem',
-    height: '100%',
-    padding: '0rem'
-  },
-  rootHovered: {
-    background: 'none'
-  },
-  rootPressed: {
-    background: 'none'
-  },
-  rootExpanded: {
-    background: 'none'
-  }
+export const moreButtonStyles = (theme: Theme): IButtonStyles => {
+  return {
+    root: {
+      // To ensure that the button is clickable when there is a floating video tile
+      zIndex: 1,
+      top: '-0.125rem',
+      height: '100%',
+      padding: '0rem'
+    },
+    rootHovered: {
+      background: 'none'
+    },
+    rootPressed: {
+      background: 'none'
+    },
+    rootExpanded: {
+      background: 'none',
+      color: theme.palette.themePrimary
+    }
+  };
 };
 
 /**
