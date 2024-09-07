@@ -53,7 +53,7 @@ const GalleryLayoutRender = (args: any): JSX.Element => {
   }
 
   return (
-    <div style={{ height: '100vh', width: '100vw' }}>
+    <div style={{ height: '80vh', width: '50vw' }}>
       <VideoGalleryComponent
         layout={args.videoGalleryLayout}
         overflowGalleryPosition={args.overflowGalleryPosition}
