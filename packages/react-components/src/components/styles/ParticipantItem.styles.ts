@@ -23,7 +23,7 @@ export const participantItemContainerStyle = (options: { clickable: boolean }, t
       }
     },
     ':focus': {
-      outline: '1px solid'
+      outline: `0.1rem solid ${theme.palette.themePrimary}`
     }
   };
 };
