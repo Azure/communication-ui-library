@@ -165,7 +165,7 @@ class CallContext {
       deepNoiseSuppressionOptions?: {
         onResolveDependency?: () => Promise<DeepNoiseSuppressionEffectDependency>;
         deepNoiseSuppressionOnByDefault?: boolean;
-        hideNoiseSuppressionButton?: boolean;
+        hideDeepNoiseSuppressionButton?: boolean;
       };
       callingSounds?: CallingSounds;
       reactionResources?: ReactionResources;
@@ -198,7 +198,7 @@ class CallContext {
       /* @conditional-compile-remove(DNS) */
       deepNoiseSuppressionOnByDefault: options?.deepNoiseSuppressionOptions?.deepNoiseSuppressionOnByDefault ?? true,
       /* @conditional-compile-remove(DNS) */
-      hideNoiseSuppressionButton: options?.deepNoiseSuppressionOptions?.hideNoiseSuppressionButton ?? false,
+      hideDeepNoiseSuppressionButton: options?.deepNoiseSuppressionOptions?.hideDeepNoiseSuppressionButton ?? false,
       selectedVideoBackgroundEffect: undefined,
       cameraStatus: undefined,
       sounds: options?.callingSounds,
@@ -1592,6 +1592,7 @@ export type CommonCallAdapterOptions = {
   /* @conditional-compile-remove(DNS) */
   /**
    * `DeepNoiseSuppressionEffect` options to be used for noise suppression.
+   * @beta
    */
   deepNoiseSuppressionOptions?: {
     onResolveDependency?: () => Promise<DeepNoiseSuppressionEffectDependency>;
