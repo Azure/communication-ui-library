@@ -11,7 +11,7 @@ import { isPhoneNumberIdentifier } from '@azure/communication-common';
 
 /**
  * Selector to get the active and removed incoming calls.
- * @beta
+ * @public
  */
 export type IncomingCallStackSelector = (state: CallClientState) => {
   activeIncomingCalls: IncomingCallStackCall[];
@@ -20,7 +20,7 @@ export type IncomingCallStackSelector = (state: CallClientState) => {
 
 /**
  * Select the active and removed incoming calls from the stateful client for the IncomingCallNotificationStackComponent.
- * @beta
+ * @public
  */
 export const incomingCallStackSelector: IncomingCallStackSelector = createSelector(
   [getIncomingCalls, getRemovedIncomingCalls, getDeviceManager],
