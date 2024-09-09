@@ -113,7 +113,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
   }, [adapter, startDeepNoiseSuppression]);
   /* @conditional-compile-remove(DNS) */
   const showNoiseSuppressionButton =
-    adapter.getState().onResolveDeepNoiseSuppressionDependency && !adapter.getState().hideNoiseSuppressionButton
+    adapter.getState().onResolveDeepNoiseSuppressionDependency && !adapter.getState().hideDeepNoiseSuppressionButton
       ? true
       : false;
 
