@@ -85,7 +85,7 @@
     "build:cjs": "rollup -c --silent",
     "build:esm": "npm run _if-preprocess && rushx copy-original && rushx preprocess && rushx copy-preprocess  && tspc -project tsconfig.preprocess.json || (if-env COMMUNICATION_REACT_FLAVOR=beta && tspc)",
     "build:watch": "",
-    "build:api": "rushx api-extractor:complete",
+    "build:api": "rushx _api-extractor:complete:by-flavor",
     "clean": "rimraf dist && rimraf ../**/preprocessed && rimraf ../**/preprocess-dist",
     "test": "",
     "test:ci-coverage": "",
@@ -105,6 +105,7 @@
     "_if-preprocess": "if-env COMMUNICATION_REACT_FLAVOR=stable || if-env COMMUNICATION_REACT_FLAVOR=beta-release",
     "_if-beta": "if-env COMMUNICATION_REACT_FLAVOR=beta || if-env COMMUNICATION_REACT_FLAVOR=beta-release",
     "_api-extractor:by-flavor": "if-env COMMUNICATION_REACT_FLAVOR=stable && api-extractor run -c api-extractor.stable.json --local || (rushx _if-beta && api-extractor run --local)",
+    "_api-extractor:complete:by-flavor": "if-env COMMUNICATION_REACT_FLAVOR=stable && api-extractor run -c api-extractor-complete.stable.json --local || (rushx _if-beta && api-extractor run -c api-extractor-complete.json --local)",
     "_build:by-flavor": "rushx clean && rushx build:esm && rushx build:cjs && rushx _api-extractor:by-flavor",
     "_current-flavor": "echo You are running under COMMUNICATION_REACT_FLAVOR: && env-cmd -f ../../common/config/env/.env node -p process.env.COMMUNICATION_REACT_FLAVOR",
     "_by-flavor": "rushx _current-flavor && env-cmd -f ../../common/config/env/.env --use-shell"

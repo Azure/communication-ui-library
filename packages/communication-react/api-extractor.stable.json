@@ -1,4 +1,4 @@
 {
   "extends": "../../common/config/api-extractor/api-extractor.stable.json",
-  "mainEntryPointFilePath": "<projectFolder>/dist/dist-esm/communication-react/src/api-summary.d.ts"
+  "mainEntryPointFilePath": "<projectFolder>/dist/dist-esm/communication-react/src/index.d.ts"
 }
