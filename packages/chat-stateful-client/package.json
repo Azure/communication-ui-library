@@ -39,10 +39,10 @@
     "nanoid": "3.3.6"
   },
   "peerDependencies": {
-    "@azure/communication-chat": "1.6.0-beta.3 || >=1.5.1"
+    "@azure/communication-chat": "1.6.0-beta.3 || >=1.5.2"
   },
   "devDependencies": {
-    "@azure/communication-signaling": "1.0.0-beta.27 || 1.0.0-beta.26",
+    "@azure/communication-signaling": "1.0.0-beta.27 || 1.0.0-beta.28",
     "@babel/cli": "^7.24.8",
     "@babel/core": "^7.25.2",
     "@types/jest": "^29.5.11",

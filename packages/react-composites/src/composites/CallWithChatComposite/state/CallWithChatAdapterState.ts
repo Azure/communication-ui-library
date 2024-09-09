@@ -102,7 +102,7 @@ export interface CallWithChatClientState {
   /** State to track whether to hide the noise suppression button.
    * @beta
    */
-  hideNoiseSuppressionButton?: boolean;
+  hideDeepNoiseSuppressionButton?: boolean;
 
   /** State to track the selected video background effect */
   selectedVideoBackgroundEffect?: VideoBackgroundEffect;

@@ -165,7 +165,7 @@ class CallContext {
       deepNoiseSuppressionOptions?: {
         onResolveDependency?: () => Promise<DeepNoiseSuppressionEffectDependency>;
         deepNoiseSuppressionOnByDefault?: boolean;
-        hideNoiseSuppressionButton?: boolean;
+        hideDeepNoiseSuppressionButton?: boolean;
       };
       callingSounds?: CallingSounds;
       reactionResources?: ReactionResources;
@@ -198,7 +198,7 @@ class CallContext {
       /* @conditional-compile-remove(DNS) */
       deepNoiseSuppressionOnByDefault: options?.deepNoiseSuppressionOptions?.deepNoiseSuppressionOnByDefault ?? true,
       /* @conditional-compile-remove(DNS) */
-      hideNoiseSuppressionButton: options?.deepNoiseSuppressionOptions?.hideNoiseSuppressionButton ?? false,
+      hideDeepNoiseSuppressionButton: options?.deepNoiseSuppressionOptions?.hideDeepNoiseSuppressionButton ?? false,
       selectedVideoBackgroundEffect: undefined,
       cameraStatus: undefined,
       sounds: options?.callingSounds,
@@ -1546,8 +1546,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
   }
 }
 
-/* @conditional-compile-remove(teams-adhoc-call) */
-/* @conditional-compile-remove(PSTN-calls) */
+/* @conditional-compile-remove(call-participants-locator) */
 /**
  * Locator used by {@link createAzureCommunicationCallAdapter} to call one or more participants
  *
@@ -1574,7 +1573,7 @@ export type CallAdapterLocator =
   | TeamsMeetingLinkLocator
   | GroupCallLocator
   | RoomCallLocator
-  | /* @conditional-compile-remove(teams-adhoc-call) */ /* @conditional-compile-remove(PSTN-calls) */ CallParticipantsLocator
+  | /* @conditional-compile-remove(call-participants-locator) */ CallParticipantsLocator
   | TeamsMeetingIdLocator;
 
 /**
@@ -1593,6 +1592,7 @@ export type CommonCallAdapterOptions = {
   /* @conditional-compile-remove(DNS) */
   /**
    * `DeepNoiseSuppressionEffect` options to be used for noise suppression.
+   * @beta
    */
   deepNoiseSuppressionOptions?: {
     onResolveDependency?: () => Promise<DeepNoiseSuppressionEffectDependency>;
@@ -1698,7 +1698,7 @@ export type TeamsCallAdapterArgsCommon = {
 export type TeamsCallAdapterArgs = TeamsCallAdapterArgsCommon & {
   locator:
     | TeamsMeetingLinkLocator
-    | /* @conditional-compile-remove(teams-adhoc-call) */ /* @conditional-compile-remove(PSTN-calls) */ CallParticipantsLocator
+    | /* @conditional-compile-remove(call-participants-locator) */ CallParticipantsLocator
     | TeamsMeetingIdLocator;
 };
 
