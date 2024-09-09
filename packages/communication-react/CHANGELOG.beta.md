@@ -1,8 +1,17 @@
 # Change Log - @azure/communication-react
 
-This log was last generated on Mon, 26 Aug 2024 18:25:58 GMT and should not be manually modified.
+This log was last generated on Fri, 06 Sep 2024 23:30:32 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.19.0-beta.3](https://github.com/azure/communication-ui-library/tree/1.19.0-beta.3)
+
+Fri, 06 Sep 2024 23:30:32 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.19.0-beta.2...1.19.0-beta.3)
+
+### Bug Fixes
+- Fix lazy loading for Composites ([PR #5126](https://github.com/azure/communication-ui-library/pull/5126) by 107075081+Leah-Xia-Microsoft@users.noreply.github.com)
+
 
 ## [1.19.0-beta.2](https://github.com/azure/communication-ui-library/tree/1.19.0-beta.2)
 
