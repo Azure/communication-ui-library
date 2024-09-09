@@ -3,7 +3,6 @@
 
 import { MessageThread as MessageThreadComponent } from '@azure/communication-react';
 import { Meta } from '@storybook/react';
-import { controlsToAdd, hiddenControl } from '../../controlsUtils';
 
 import { MessageThreadWithBlockedMessagesExample } from './snippets/BlockedMessages.snippet';
 import { MessageThreadWithCustomAvatarExample } from './snippets/CustomAvatar.snippet';
@@ -99,38 +98,87 @@ const meta: Meta<typeof MessageThreadComponent> = {
   title: 'Components/Message Thread',
   component: MessageThreadComponent,
   argTypes: {
-    showMessageDate: controlsToAdd.showMessageDate,
-    showMessageStatus: controlsToAdd.showMessageStatus,
-    enableJumpToNewMessageButton: controlsToAdd.enableJumpToNewMessageButton,
-    richTextEditor: controlsToAdd.richTextEditor,
-    // Hiding auto-generated controls
-    richTextEditorOptions: hiddenControl,
-    styles: hiddenControl,
-    strings: hiddenControl,
-    userId: hiddenControl,
-    messages: hiddenControl,
-    disableJumpToNewMessageButton: hiddenControl,
-    numberOfChatMessagesToReload: hiddenControl,
-    onMessageSeen: hiddenControl,
-    onRenderMessageStatus: hiddenControl,
-    onRenderAvatar: hiddenControl,
-    onRenderJumpToNewMessageButton: hiddenControl,
-    onLoadPreviousChatMessages: hiddenControl,
-    onRenderMessage: hiddenControl,
-    onUpdateMessage: hiddenControl,
-    onDeleteMessage: hiddenControl,
-    disableEditing: hiddenControl,
-    // hide unnecessary props since we "send message with attachments" option
-    onRenderAttachmentDownloads: hiddenControl,
-    attachmentOptions: hiddenControl,
-    onSendMessage: hiddenControl,
-    onCancelEditMessage: hiddenControl,
-    onDisplayDateTimeString: hiddenControl
+    messages: {
+      table: {
+        type: {
+          summary: 'Array'
+        }
+      }
+    },
+    readReceiptsBySenderId: {
+      table: {
+        type: {
+          summary: 'ReadReceiptsBySenderId'
+        }
+      }
+    },
+    showMessageDate: { control: 'boolean' },
+    showMessageStatus: { control: 'boolean' },
+    onRenderAvatar: {
+      table: {
+        type: {
+          summary: '(userId: string, options?: CustomAvatarOptions) => JSX.Element | undefined'
+        }
+      }
+    },
+    onUpdateMessage: {
+      table: {
+        type: {
+          summary: '(messageId: string, content: string) => Promise<void>'
+        }
+      }
+    },
+    onSendMessage: {
+      table: {
+        type: {
+          summary: '(content: string) => Promise<void>'
+        }
+      }
+    },
+    strings: {
+      table: {
+        type: {
+          summary: 'Partial<MessageThreadStrings>'
+        }
+      }
+    }
   },
   args: {
+    richTextEditor: false,
     showMessageDate: true,
     showMessageStatus: true,
-    enableJumpToNewMessageButton: true
+    enableJumpToNewMessageButton: false
+  },
+  parameters: {
+    controls: {
+      exclude: [
+        'userId',
+        'messages',
+        'participantCount',
+        'readReceiptsBySenderId',
+        'styles',
+        'disableJumpToNewMessageButton',
+        'numberOfChatMessagesToReload',
+        'onMessageSeen',
+        'onRenderMessageStatus',
+        'onRenderAvatar',
+        'onRenderJumpToNewMessageButton',
+        'onLoadPreviousChatMessages',
+        'onRenderMessage',
+        'onRenderAttachmentDownloads',
+        'onUpdateMessage',
+        'onCancelEditMessage',
+        'onDeleteMessage',
+        'onSendMessage',
+        'disableEditing',
+        'strings',
+        'attachmentOptions',
+        'onDisplayDateTimeString',
+        'mentionOptions',
+        'inlineImageOptions',
+        'richTextEditorOptions'
+      ]
+    }
   }
 };
 
