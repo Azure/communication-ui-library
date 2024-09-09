@@ -139,7 +139,11 @@ const withLocalization = (Story: any, context: any) => {
   }
 };
 
-const withCenterStory = (Story: any) => {
+const withCenterStory = (Story: any, context: any) => {
+  if(context.viewMode === 'docs') {
+    return <Story />;
+  }
+
   return (
     <div style={{
       display: 'flex',
