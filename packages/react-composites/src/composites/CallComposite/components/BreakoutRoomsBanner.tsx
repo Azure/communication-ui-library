@@ -31,7 +31,11 @@ export const BreakoutRoomsBanner = (props: {
   const assignedBreakoutRoom = useSelector(getAssignedBreakoutRoom);
   const breakoutRoomSettings = useSelector(getBreakoutRoomSettings);
 
-  if (assignedBreakoutRoom && assignedBreakoutRoom.state === 'open' && assignedBreakoutRoom.call) {
+  if (
+    assignedBreakoutRoom &&
+    assignedBreakoutRoom.state === 'open' &&
+    (assignedBreakoutRoom.call || !assignedBreakoutRoom.autoMoveParticipantToBreakoutRoom)
+  ) {
     return (
       <Stack styles={bannerNotificationStyles}>
         <Banner

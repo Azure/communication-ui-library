@@ -406,7 +406,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                       !props.mobileView &&
                         assignedBreakoutRoom &&
                         assignedBreakoutRoom.state === 'open' &&
-                        assignedBreakoutRoom.call && (
+                        (assignedBreakoutRoom.call || !assignedBreakoutRoom.autoMoveParticipantToBreakoutRoom) && (
                           <PrimaryButton
                             text={callStrings.joinBreakoutRoomButtonLabel}
                             onClick={async (): Promise<void> => {
