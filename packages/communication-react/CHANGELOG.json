@@ -2,6 +2,23 @@
   "name": "@azure/communication-react",
   "entries": [
     {
+      "date": "Fri, 06 Sep 2024 23:30:32 GMT",
+      "version": "1.19.0-beta.3",
+      "tag": "@azure/communication-react_v1.19.0-beta.3",
+      "comments": {
+        "patch": [
+          {
+            "author": "107075081+Leah-Xia-Microsoft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "d60818a9b0960ed80a215d451d01386bef97449d",
+            "area": "fix",
+            "workstream": "Lazy loading",
+            "comment": "Fix lazy loading for Composites"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 26 Aug 2024 18:25:58 GMT",
       "version": "1.19.0-beta.2",
       "tag": "@azure/communication-react_v1.19.0-beta.2",
