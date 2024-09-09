@@ -24,7 +24,8 @@ import {
 } from '@fluentui/react';
 import { Divider } from '@fluentui/react-components';
 import React, { useMemo, useRef, useState } from 'react';
-
+import { getImageFileNameFromAttributes } from '../../../../react-composites/src/composites/ChatComposite/ImageUpload/ImageUploadUtils';
+import { ArgsFrom, controlsToAdd } from '../../controlsUtils';
 import {
   GenerateMockNewChatMessage,
   UserOne,
@@ -40,7 +41,14 @@ import {
   GenerateMockNewChatMessageWithAttachment
 } from './placeholdermessages';
 
-const MessageThreadStory = (args): JSX.Element => {
+const storyControls = {
+  richTextEditor: controlsToAdd.richTextEditor,
+  showMessageDate: controlsToAdd.showMessageDate,
+  showMessageStatus: controlsToAdd.showMessageStatus,
+  enableJumpToNewMessageButton: controlsToAdd.enableJumpToNewMessageButton
+};
+
+const MessageThreadStory = (args: ArgsFrom<typeof storyControls>): JSX.Element => {
   const [chatMessages, setChatMessages] =
     useState<(SystemMessage | CustomMessage | ChatMessage)[]>(GenerateMockChatMessages());
   const [messagesInlineImagesWithProgress, setMessagesInlineImagesWithProgress] = useState<
