@@ -189,7 +189,7 @@ export type CallAdapterClientState = {
    * @beta
    * @default false
    */
-  hideNoiseSuppressionButton?: boolean;
+  hideDeepNoiseSuppressionButton?: boolean;
   /**
    * State to track the selected video background effect.
    */
