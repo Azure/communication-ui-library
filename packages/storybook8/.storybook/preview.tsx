@@ -139,7 +139,24 @@ const withLocalization = (Story: any, context: any) => {
   }
 };
 
-export const decorators = [withThemeProvider, withLocalization];
+const withCenterStory = (Story: any, context: any) => {
+  if(context.viewMode === 'docs') {
+    return <Story />;
+  }
+
+  return (
+    <div style={{
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      height: '100vh'
+    }}>
+      <Story />
+    </div>
+  );
+};
+
+export const decorators = [withCenterStory, withThemeProvider, withLocalization];
 
 export const globalTypes = {
   theme: {
