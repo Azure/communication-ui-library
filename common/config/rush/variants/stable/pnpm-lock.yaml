@@ -9041,17 +9041,6 @@ packages:
       util-deprecate: 1.0.2
     dev: false
 
-  /@storybook/storybook-deployer@2.8.16:
-    resolution: {integrity: sha512-DRQrjyLKaRLXMYo7SNUznyGabtOLJ0b9yfBKNVMu6PsUHJifGPabXuNXmRPZ6qvyhHUSKLQgeLaX8L3Og6uFUg==}
-    hasBin: true
-    dependencies:
-      git-url-parse: 12.0.0
-      glob: 7.2.3
-      parse-repo: 1.0.4
-      shelljs: 0.8.5
-      yargs: 15.4.1
-    dev: false
-
   /@storybook/telemetry@6.5.16(eslint@8.57.0)(react-dom@18.3.1)(react@18.3.1)(typescript@5.4.5):
     resolution: {integrity: sha512-CWr5Uko1l9jJW88yTXsZTj/3GTabPvw0o7pDPOXPp8JRZiJTxv1JFaFCafhK9UzYbgcRuGfCC8kEWPZims7iKA==}
     dependencies:
@@ -26873,7 +26862,6 @@ packages:
       '@storybook/manager-webpack5': 6.5.16(eslint@8.57.0)(react-dom@18.3.1)(react@18.3.1)(typescript@5.4.5)
       '@storybook/node-logger': 6.5.16
       '@storybook/react': 6.5.16(@babel/core@7.25.2)(@storybook/builder-webpack5@6.5.14)(@storybook/manager-webpack5@6.5.16)(eslint@8.57.0)(react-dom@18.3.1)(react@18.3.1)(require-from-string@2.0.2)(typescript@5.4.5)
-      '@storybook/storybook-deployer': 2.8.16
       '@storybook/theming': 6.5.16(react-dom@18.3.1)(react@18.3.1)
       '@testing-library/jest-dom': 6.4.8
       '@types/jest': 29.5.12
@@ -27015,7 +27003,6 @@ packages:
       '@storybook/preview-api': 8.2.6(storybook@8.2.6)
       '@storybook/react': 8.2.6(react-dom@18.3.1)(react@18.3.1)(storybook@8.2.6)(typescript@5.4.5)
       '@storybook/react-webpack5': 8.2.6(react-dom@18.3.1)(react@18.3.1)(storybook@8.2.6)(typescript@5.4.5)
-      '@storybook/storybook-deployer': 2.8.16
       '@storybook/test-runner': 0.17.0(@types/node@20.14.12)(storybook@8.2.6)(ts-node@10.9.2)
       '@storybook/theming': 8.2.6(storybook@8.2.6)
       '@testing-library/jest-dom': 6.4.8
