@@ -1,7 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+/* @conditional-compile-remove(composite-js-helpers) */
 import { CallCompositeOptions } from '@internal/react-composites';
+/* @conditional-compile-remove(composite-js-helpers) */
 import { CallCompositeLoaderProps } from './callCompositeLoader';
 
 jest.mock('@Internal/react-composites', () => {
@@ -33,6 +35,10 @@ jest.mock('@fluentui/react', () => {
 });
 
 describe('CallCompositeLoader tests', () => {
+  test('test to fulfill no empty test runners', () => {
+    expect(true).toBeTruthy();
+  });
+  /* @conditional-compile-remove(composite-js-helpers) */
   test('loadCallComposite should call createAzureCommunicationCallAdapter and createRoot', async () => {
     const mockAdapterArgs: CallCompositeLoaderProps = {
       userId: 'userId',
