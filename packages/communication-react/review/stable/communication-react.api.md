@@ -2160,10 +2160,23 @@ export function createAzureCommunicationCallAdapterFromClient(callClient: Statef
 export function createAzureCommunicationCallAdapterFromClient(callClient: StatefulCallClient, callAgent: CallAgent, locator: CallAdapterLocator, options?: AzureCommunicationCallAdapterOptions): Promise<CallAdapter>;
 
 // @public
+export function createAzureCommunicationCallAdapterFromClient(callClient: StatefulCallClient, callAgent: CallAgent, call: Call, options?: AzureCommunicationCallAdapterOptions): Promise<CallAdapter>;
+
+// @public
 export const createAzureCommunicationCallWithChatAdapter: ({ userId, displayName, credential, endpoint, locator, alternateCallerId, callAdapterOptions }: AzureCommunicationCallWithChatAdapterArgs) => Promise<CallWithChatAdapter>;
 
 // @public
-export const createAzureCommunicationCallWithChatAdapterFromClients: ({ callClient, callAgent, callLocator, chatClient, chatThreadClient, callAdapterOptions }: AzureCommunicationCallWithChatAdapterFromClientArgs) => Promise<CallWithChatAdapter>;
+export function createAzureCommunicationCallWithChatAdapterFromClients(args: AzureCommunicationCallWithChatAdapterFromClientArgs): Promise<CallWithChatAdapter>;
+
+// @public
+export function createAzureCommunicationCallWithChatAdapterFromClients(args: {
+    callClient: StatefulCallClient;
+    callAgent: CallAgent;
+    call: Call;
+    chatClient: StatefulChatClient;
+    chatThreadClient: ChatThreadClient;
+    callAdapterOptions?: AzureCommunicationCallAdapterOptions;
+}): Promise<CallWithChatAdapter>;
 
 // @public
 export const createAzureCommunicationChatAdapter: ({ endpoint: endpointUrl, userId, displayName, credential, threadId }: AzureCommunicationChatAdapterArgs) => Promise<ChatAdapter>;

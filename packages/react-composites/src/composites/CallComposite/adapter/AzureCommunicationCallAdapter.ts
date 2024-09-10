@@ -473,7 +473,12 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
       }
     });
 
-    const isRoomsCall = this.locator ? 'roomId' in this.locator : !!overloadedParamAsCall?.info.roomId;
+    const isOverloadedParamARoomsCallTrampoline = (): boolean => {
+      /* @conditional-compile-remove(calling-beta-sdk) */
+      return !!overloadedParamAsCall?.info.roomId;
+      return false;
+    };
+    const isRoomsCall = this.locator ? 'roomId' in this.locator : isOverloadedParamARoomsCallTrampoline();
 
     this.onResolveVideoBackgroundEffectsDependency = options?.videoBackgroundOptions?.onResolveDependency;
     /* @conditional-compile-remove(DNS) */

@@ -7,7 +7,7 @@ import { CallControlOptions } from '../types/CallControlOptions';
 import { CallState, RemoteParticipantState } from '@internal/calling-stateful-client';
 import { isPhoneNumberIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(unsupported-browser) */
-import { Call, EnvironmentInfo } from '@azure/communication-calling';
+import { EnvironmentInfo } from '@azure/communication-calling';
 import { AdapterStateModifier, CallAdapterLocator } from '../adapter/AzureCommunicationCallAdapter';
 
 import { VideoBackgroundEffectsDependency } from '@internal/calling-component-bindings';
@@ -15,7 +15,7 @@ import { VideoBackgroundEffectsDependency } from '@internal/calling-component-bi
 import { VideoBackgroundEffect } from '../adapter/CallAdapter';
 import { VideoDeviceInfo } from '@azure/communication-calling';
 
-import { VideoEffectProcessor } from '@azure/communication-calling';
+import { Call, VideoEffectProcessor } from '@azure/communication-calling';
 import { CompositeLocale } from '../../localization';
 import { CallCompositeIcons } from '../../common/icons';
 

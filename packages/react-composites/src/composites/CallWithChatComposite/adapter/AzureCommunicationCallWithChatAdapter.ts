@@ -1394,7 +1394,6 @@ export type AzureCommunicationCallWithChatAdapterFromClientArgs = {
   callClient: StatefulCallClient;
   chatClient: StatefulChatClient;
   chatThreadClient: ChatThreadClient;
-
   callAdapterOptions?: AzureCommunicationCallAdapterOptions;
 };
 
@@ -1407,24 +1406,59 @@ export type AzureCommunicationCallWithChatAdapterFromClientArgs = {
  *
  * @public
  */
-export const createAzureCommunicationCallWithChatAdapterFromClients = async ({
-  callClient,
-  callAgent,
-  callLocator,
-  chatClient,
-  chatThreadClient,
-  callAdapterOptions
-}: AzureCommunicationCallWithChatAdapterFromClientArgs): Promise<CallWithChatAdapter> => {
-  const callAdapter = await createAzureCommunicationCallAdapterFromClient(
-    callClient,
-    callAgent,
-    callLocator,
+export async function createAzureCommunicationCallWithChatAdapterFromClients(
+  args: AzureCommunicationCallWithChatAdapterFromClientArgs
+): Promise<CallWithChatAdapter>;
 
-    callAdapterOptions
-  );
+/**
+ * Create a {@link CallWithChatAdapter} using the provided {@link StatefulChatClient} and {@link StatefulCallClient} and {@link Call}.
+ *
+ * Useful if you want to keep a reference to {@link StatefulChatClient} and {@link StatefulCallClient}.
+ * Please note that chatThreadClient has to be created by StatefulChatClient via chatClient.getChatThreadClient(chatThreadId) API.
+ * Consider using {@link createAzureCommunicationCallWithChatAdapter} for a simpler API.
+ *
+ * @public
+ */
+export async function createAzureCommunicationCallWithChatAdapterFromClients(args: {
+  callClient: StatefulCallClient;
+  callAgent: CallAgent;
+  call: Call;
+  chatClient: StatefulChatClient;
+  chatThreadClient: ChatThreadClient;
+  callAdapterOptions?: AzureCommunicationCallAdapterOptions;
+}): Promise<CallWithChatAdapter>;
+
+/**
+ * Implementation of {@link createAzureCommunicationCallWithChatAdapterFromClients} overloads.
+ * @private
+ */
+export async function createAzureCommunicationCallWithChatAdapterFromClients(
+  args:
+    | AzureCommunicationCallWithChatAdapterFromClientArgs
+    | {
+        call: Call;
+        callAgent: CallAgent;
+        callClient: StatefulCallClient;
+        chatClient: StatefulChatClient;
+        chatThreadClient: ChatThreadClient;
+        callAdapterOptions?: AzureCommunicationCallAdapterOptions;
+      }
+): Promise<CallWithChatAdapter> {
+  const { callAgent, callClient, chatClient, chatThreadClient, callAdapterOptions } = args;
+
+  const callAdapter =
+    'call' in args
+      ? await createAzureCommunicationCallAdapterFromClient(callClient, callAgent, args.call, callAdapterOptions)
+      : await createAzureCommunicationCallAdapterFromClient(
+          callClient,
+          callAgent,
+          args.callLocator,
+          callAdapterOptions
+        );
+
   const chatAdapter = await createAzureCommunicationChatAdapterFromClient(chatClient, chatThreadClient);
   return new AzureCommunicationCallWithChatAdapter(callAdapter, chatAdapter);
-};
+}
 
 /**
  * Create a {@link CallWithChatAdapter} from the underlying adapters.
