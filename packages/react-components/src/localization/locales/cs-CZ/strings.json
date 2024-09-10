@@ -99,14 +99,15 @@
     "cameraMenuTitle": "Kamera",
     "cameraMenuTooltip": "Zvolit kameru",
     "cameraButtonSplitRoleDescription": "Tlačítko rozdělení",
-    "onSplitButtonAriaLabel": "Vypnout kameru a možnosti kamery",
-    "offSplitButtonAriaLabel": "Zapnout kameru a možnosti kamery",
+    "onSplitButtonAriaLabel": "Vypnout kameru",
+    "offSplitButtonAriaLabel": "Zapnout kameru",
     "cameraActionTurnedOnAnnouncement": "Vaše kamera je zapnutá",
     "cameraActionTurnedOffAnnouncement": "Vaše kamera je vypnutá",
     "onSplitButtonPrimaryActionCamera": "Vypnout kameru",
     "offSplitButtonPrimaryActionCamera": "Zapnout kameru",
     "cameraPrimaryActionSplitButtonTitle": "Použít kameru",
-    "videoEffectsMenuItemTitle": "Efekty"
+    "videoEffectsMenuItemTitle": "Efekty",
+    "cameraButtonAriaDescription": "camera options"
   },
   "microphoneButton": {
     "onLabel": "Mikrofon",
@@ -119,13 +120,17 @@
     "speakerMenuTitle": "Reproduktor",
     "speakerMenuTooltip": "Zvolit reproduktor",
     "microphoneButtonSplitRoleDescription": "Tlačítko rozdělení",
-    "onSplitButtonAriaLabel": "Ztlumit mikrofon a možnosti zvuku",
-    "offSplitButtonAriaLabel": "Zrušit ztlumení mikrofonu a možností zvuku",
+    "onSplitButtonAriaLabel": "Ztlumit mikrofon",
+    "offSplitButtonAriaLabel": "Zrušit ztlumení mikrofonu",
     "microphoneActionTurnedOnAnnouncement": "Váš mikrofon je zapnutý",
     "microphoneActionTurnedOffAnnouncement": "Váš mikrofon je vypnutý",
     "offSplitButtonMicrophonePrimaryAction": "Zrušit ztlumení mikrofonu",
     "onSplitButtonMicrophonePrimaryAction": "Ztlumit mikrofon",
-    "microphonePrimaryActionSplitButtonTitle": "Použít mikrofon"
+    "microphonePrimaryActionSplitButtonTitle": "Použít mikrofon",
+    "microphoneAriaDescription": "Audio options",
+    "deepNoiseSuppressionTitle": "Potlačení šumu",
+    "deepNoiseSuppressionOnAnnouncement": "Potlačení hlubokého šumu je zapnuté",
+    "deepNoiseSuppressionOffAnnouncement": "Potlačení hlubokého šumu je vypnuté"
   },
   "devicesButton": {
     "label": "Zařízení",
@@ -504,7 +509,8 @@
     "stopSpotlightVideoTileMenuLabel": "Zastavit přidávání do hlavního výběru",
     "stopSpotlightOnSelfVideoTileMenuLabel": "Ukončit hlavní výběr",
     "attendeeRole": "Účastník",
-    "muteParticipantMenuItemLabel": "Ztlumit"
+    "muteParticipantMenuItemLabel": "Ztlumit",
+    "waitingScreenText": "Čeká se na připojení ostatních"
   },
   "dialpad": {
     "placeholderText": "Zadejte telefonní číslo",
@@ -658,6 +664,7 @@
     "incomingCallNoticicationRejectAriaLabel": "Odmítnout",
     "incomingCallNotificationAcceptButtonLabel": "Přijmout",
     "incomingCallNotificationRejectButtonLabel": "Odmítnout",
-    "incomingCallNotificationAccceptWithVideoButtonLabel": "Přijmout s videem"
+    "incomingCallNotificationAccceptWithVideoButtonLabel": "Přijmout s videem",
+    "incomingCallNotificationDismissButtonAriaLabel": "Dismiss"
   }
 }

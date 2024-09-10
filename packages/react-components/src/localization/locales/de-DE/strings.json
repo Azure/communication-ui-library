@@ -99,14 +99,15 @@
     "cameraMenuTitle": "Kamera",
     "cameraMenuTooltip": "Kamera auswählen",
     "cameraButtonSplitRoleDescription": "Unterteilte Schaltfläche",
-    "onSplitButtonAriaLabel": "Kamera und Kameraoptionen deaktivieren",
-    "offSplitButtonAriaLabel": "Kamera und Kameraoptionen aktivieren",
+    "onSplitButtonAriaLabel": "Kamera ausschalten",
+    "offSplitButtonAriaLabel": "Kamera einschalten",
     "cameraActionTurnedOnAnnouncement": "Ihre Kamera wurde eingeschaltet.",
     "cameraActionTurnedOffAnnouncement": "Ihre Kamera wurde ausgeschaltet.",
     "onSplitButtonPrimaryActionCamera": "Kamera ausschalten",
     "offSplitButtonPrimaryActionCamera": "Kamera einschalten",
     "cameraPrimaryActionSplitButtonTitle": "Kamera verwenden",
-    "videoEffectsMenuItemTitle": "Effekte"
+    "videoEffectsMenuItemTitle": "Effekte",
+    "cameraButtonAriaDescription": "camera options"
   },
   "microphoneButton": {
     "onLabel": "Mikrofon",
@@ -119,13 +120,17 @@
     "speakerMenuTitle": "Lautsprecher",
     "speakerMenuTooltip": "Lautsprecher auswählen",
     "microphoneButtonSplitRoleDescription": "Unterteilte Schaltfläche",
-    "onSplitButtonAriaLabel": "Mikrofon- und Audiooptionen stummschalten",
-    "offSplitButtonAriaLabel": "Stummschaltung von Mikrofon- und Audiooptionen aufheben",
+    "onSplitButtonAriaLabel": "Mikrofon stummschalten",
+    "offSplitButtonAriaLabel": "Stummschaltung des Mikrofons aufheben",
     "microphoneActionTurnedOnAnnouncement": "Ihr Mikrofon wurde eingeschaltet.",
     "microphoneActionTurnedOffAnnouncement": "Ihr Mikrofon wurde ausgeschaltet.",
-    "offSplitButtonMicrophonePrimaryAction": "Mikrofonstummschaltung aufheben",
+    "offSplitButtonMicrophonePrimaryAction": "Stummschaltung des Mikrofons aufheben",
     "onSplitButtonMicrophonePrimaryAction": "Mikrofon stummschalten",
-    "microphonePrimaryActionSplitButtonTitle": "Mikrofon verwenden"
+    "microphonePrimaryActionSplitButtonTitle": "Mikrofon verwenden",
+    "microphoneAriaDescription": "Audio options",
+    "deepNoiseSuppressionTitle": "Rauschunterdrückung",
+    "deepNoiseSuppressionOnAnnouncement": "Die Unterdrückung tiefer Geräusche wurde aktiviert.",
+    "deepNoiseSuppressionOffAnnouncement": "Die Unterdrückung tiefer Geräusche wurde deaktiviert."
   },
   "devicesButton": {
     "label": "Geräte",
@@ -504,7 +509,8 @@
     "stopSpotlightVideoTileMenuLabel": "Spotlight beenden",
     "stopSpotlightOnSelfVideoTileMenuLabel": "Spotlight beenden",
     "attendeeRole": "Teilnehmer",
-    "muteParticipantMenuItemLabel": "Stummschalten"
+    "muteParticipantMenuItemLabel": "Stummschalten",
+    "waitingScreenText": "Warten auf andere Teilnehmer"
   },
   "dialpad": {
     "placeholderText": "Telefonnummer eingeben",
@@ -658,6 +664,7 @@
     "incomingCallNoticicationRejectAriaLabel": "Ablehnen",
     "incomingCallNotificationAcceptButtonLabel": "Akzeptieren",
     "incomingCallNotificationRejectButtonLabel": "Ablehnen",
-    "incomingCallNotificationAccceptWithVideoButtonLabel": "Mit Video annehmen"
+    "incomingCallNotificationAccceptWithVideoButtonLabel": "Mit Video annehmen",
+    "incomingCallNotificationDismissButtonAriaLabel": "Dismiss"
   }
 }

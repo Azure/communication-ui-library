@@ -99,14 +99,15 @@
     "cameraMenuTitle": "카메라",
     "cameraMenuTooltip": "카메라 선택",
     "cameraButtonSplitRoleDescription": "분할 단추",
-    "onSplitButtonAriaLabel": "카메라 사용 안 함 및 카메라 옵션",
-    "offSplitButtonAriaLabel": "카메라 사용 및 카메라 옵션",
+    "onSplitButtonAriaLabel": "카메라 끄기",
+    "offSplitButtonAriaLabel": "카메라 켜기",
     "cameraActionTurnedOnAnnouncement": "카메라가 켜져 있습니다.",
     "cameraActionTurnedOffAnnouncement": "카메라가 꺼져 있습니다.",
     "onSplitButtonPrimaryActionCamera": "카메라 끄기",
     "offSplitButtonPrimaryActionCamera": "카메라 켜기",
     "cameraPrimaryActionSplitButtonTitle": "카메라 사용",
-    "videoEffectsMenuItemTitle": "효과"
+    "videoEffectsMenuItemTitle": "효과",
+    "cameraButtonAriaDescription": "camera options"
   },
   "microphoneButton": {
     "onLabel": "마이크",
@@ -119,13 +120,17 @@
     "speakerMenuTitle": "발언자",
     "speakerMenuTooltip": "스피커 선택",
     "microphoneButtonSplitRoleDescription": "분할 단추",
-    "onSplitButtonAriaLabel": "마이크 및 오디오 음소거 옵션",
-    "offSplitButtonAriaLabel": "마이크 및 오디오 음소거 해제 옵션",
+    "onSplitButtonAriaLabel": "마이크 음소거",
+    "offSplitButtonAriaLabel": "마이크 음소거 해제",
     "microphoneActionTurnedOnAnnouncement": "마이크가 켜져 있습니다.",
     "microphoneActionTurnedOffAnnouncement": "마이크가 꺼져 있습니다.",
     "offSplitButtonMicrophonePrimaryAction": "마이크 음소거 해제",
     "onSplitButtonMicrophonePrimaryAction": "마이크 음소거",
-    "microphonePrimaryActionSplitButtonTitle": "마이크 사용"
+    "microphonePrimaryActionSplitButtonTitle": "마이크 사용",
+    "microphoneAriaDescription": "Audio options",
+    "deepNoiseSuppressionTitle": "노이즈 억제",
+    "deepNoiseSuppressionOnAnnouncement": "심층 노이즈 억제가 켜졌습니다.",
+    "deepNoiseSuppressionOffAnnouncement": "심층 노이즈 억제가 꺼졌습니다."
   },
   "devicesButton": {
     "label": "장치",
@@ -504,7 +509,8 @@
     "stopSpotlightVideoTileMenuLabel": "스포트라이트 중지",
     "stopSpotlightOnSelfVideoTileMenuLabel": "스포트라이트 종료",
     "attendeeRole": "참석자",
-    "muteParticipantMenuItemLabel": "음소거"
+    "muteParticipantMenuItemLabel": "음소거",
+    "waitingScreenText": "다른 사용자의 참여를 기다리는 중"
   },
   "dialpad": {
     "placeholderText": "전화 번호를 입력하세요.",
@@ -658,6 +664,7 @@
     "incomingCallNoticicationRejectAriaLabel": "거부",
     "incomingCallNotificationAcceptButtonLabel": "수락",
     "incomingCallNotificationRejectButtonLabel": "거절",
-    "incomingCallNotificationAccceptWithVideoButtonLabel": "영상 수락"
+    "incomingCallNotificationAccceptWithVideoButtonLabel": "영상 수락",
+    "incomingCallNotificationDismissButtonAriaLabel": "Dismiss"
   }
 }
