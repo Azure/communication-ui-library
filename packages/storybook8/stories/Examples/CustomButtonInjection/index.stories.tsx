@@ -4,13 +4,15 @@
 import { Meta } from '@storybook/react';
 import { controlsToAdd, hiddenControl } from '../../controlsUtils';
 import { CustomButtonInjection as CustomButtonInjectionComponent } from './snippets/CustomButtonInjectionTypes';
-import { CustomButtonWithAsyncStateExample } from './snippets/CustomButtonWithAsyncState.snippet';
-import { CustomButtonWithStateExample } from './snippets/CustomButtonWithState.snippet';
-import { LegacyControlBarCustomButtonInjectionExample } from './snippets/LegacyControlBarCustomButtonInjection.snippet';
-import { MobileCustomButtonInjectionExample } from './snippets/MobileCustomButtonInjection.snippet';
-import { OverflowCustomButtonInjectionExample } from './snippets/OverflowCustomButtonInjection.snippet';
-import { PrimaryCustomButtonInjectionExample } from './snippets/PrimaryCustomButtonInjection.snippet';
-import { SecondaryCustomButtonInjectionExample } from './snippets/SecondaryCustomButtonInjection.snippet';
+import {
+  CustomButtonWithAsyncStateExample,
+  CustomButtonWithStateExample,
+  LegacyControlBarCustomButtonInjectionExample,
+  MobileCustomButtonInjectionExample,
+  OverflowCustomButtonInjectionExample,
+  PrimaryCustomButtonInjectionExample,
+  SecondaryCustomButtonInjectionExample
+} from './snippets/CustomButtonImages';
 
 export { CustomButtonInjection } from './CustomButtonInjection.story';
 
