@@ -16,7 +16,7 @@
     "prettier:check": ""
   },
   "devDependencies": {
-    "@types/yargs": "^17.0.29",
+    "@types/yargs": "^17.0.33",
     "yargs": "^17.7.2"
   }
 }
