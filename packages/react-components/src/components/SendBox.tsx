@@ -32,7 +32,7 @@ import {
   MAXIMUM_LENGTH_OF_MESSAGE,
   isMessageTooLong,
   sanitizeText,
-  isSendBoxButtonAriaDisabled
+  isSendBoxButtonDisabled
 } from './utils/SendBoxUtils';
 /* @conditional-compile-remove(mention) */
 import { MentionLookupOptions } from './MentionPopover';
@@ -296,24 +296,14 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     () =>
       sendIconStyle({
         theme,
-        hasText: sanitizeText(textValue).length > 0,
-        /* @conditional-compile-remove(file-sharing-acs) */ hasAttachment: isAttachmentUploadCompleted(attachments),
-        hasErrorMessage: !!errorMessage,
-        customSendIconStyle: styles?.sendMessageIcon,
-        disabled: !!disabled
+        isSendBoxButtonDisabled: isSendBoxButtonDisabledValue,
+        customSendIconStyle: styles?.sendMessageIcon
       }),
-    [
-      theme,
-      textValue,
-      /* @conditional-compile-remove(file-sharing-acs) */ attachments,
-      errorMessage,
-      styles?.sendMessageIcon,
-      disabled
-    ]
+    [theme, styles?.sendMessageIcon]
   );
 
-  const isSendBoxButtonAriaDisabledValue = useMemo(() => {
-    return isSendBoxButtonAriaDisabled({
+  const isSendBoxButtonDisabledValue = useMemo(() => {
+    return isSendBoxButtonDisabled({
       hasContent: sanitizeText(textValue).length > 0,
       /* @conditional-compile-remove(file-sharing-acs) */ hasCompletedAttachmentUploads:
         isAttachmentUploadCompleted(attachments),
@@ -455,7 +445,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
             className={mergedSendButtonStyle}
             ariaLabel={localeStrings.sendButtonAriaLabel}
             tooltipContent={localeStrings.sendButtonAriaLabel}
-            ariaDisabled={isSendBoxButtonAriaDisabledValue}
+            ariaDisabled={isSendBoxButtonDisabledValue}
           />
         </InputBoxComponent>
         {

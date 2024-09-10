@@ -39,27 +39,22 @@ export const sendButtonStyle = mergeStyles({
  */
 export const sendIconStyle = (props: {
   theme: Theme;
-  hasText: boolean;
-  /* @conditional-compile-remove(file-sharing-acs) */ hasAttachment: boolean;
-  disabled?: boolean;
-  hasErrorMessage: boolean;
+  isSendBoxButtonDisabled: boolean;
   customSendIconStyle?: IStyle;
   defaultTextColor?: string;
 }): string => {
   const {
     theme,
-    hasText,
-    disabled = false,
-    /* @conditional-compile-remove(file-sharing-acs) */ hasAttachment,
-    hasErrorMessage,
+    isSendBoxButtonDisabled,
     customSendIconStyle,
     defaultTextColor = theme.palette.neutralTertiary
   } = props;
-  const hasNoContent = !hasText && /* @conditional-compile-remove(file-sharing-acs) */ !hasAttachment;
   return mergeStyles(
     editorTextBoxButtonStyle,
     {
-      color: disabled || hasErrorMessage || hasNoContent ? defaultTextColor : theme.palette.themePrimary
+      color: isSendBoxButtonDisabled
+        ? defaultTextColor
+        : theme.palette.themePrimary
     },
     customSendIconStyle
   );

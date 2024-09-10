@@ -115,15 +115,15 @@ export const sanitizeText = (message: string): string => {
 };
 
 /**
- * Determines whether the send box should be disabled for ARIA accessibility.
+ * Determines whether the send box should be disabled.
  *
  * @param hasContent - Indicates whether the send box has content.
  * @param hasCompletedAttachmentUploads - Indicates whether attachment uploads have completed.
  * @param hasError - Indicates whether there is an error.
  * @param disabled - Indicates whether the send box is disabled.
- * @returns A boolean value indicating whether the send box should be disabled for ARIA accessibility.
+ * @returns A boolean value indicating whether the send box should be disabled.
  */
-export const isSendBoxButtonAriaDisabled = ({
+export const isSendBoxButtonDisabled = ({
   hasContent,
   /* @conditional-compile-remove(file-sharing-acs) */
   hasCompletedAttachmentUploads,
@@ -136,6 +136,7 @@ export const isSendBoxButtonAriaDisabled = ({
   hasError: boolean;
   disabled: boolean;
 }): boolean => {
+  console.log('PATRICK - hasContent', hasContent, 'hasCompletedAttachmentUploads', hasCompletedAttachmentUploads, 'hasError', hasError, 'disabled', disabled);
   return (
     // no content
     !(hasContent || /* @conditional-compile-remove(file-sharing-acs) */ hasCompletedAttachmentUploads) ||
