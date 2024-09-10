@@ -1,0 +1,9 @@
+{
+  "type": "minor",
+  "area": "feature",
+  "workstream": "",
+  "comment": "Support Composites joining existing calls by updating CallAdapter and CallWithChatAdapters to take an existing call as a contruction parameter instead of a locator.",
+  "packageName": "@azure/communication-react",
+  "email": "2684369+JamesBurnside@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
