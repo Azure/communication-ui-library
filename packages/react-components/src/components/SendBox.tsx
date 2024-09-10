@@ -285,23 +285,6 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
   const textTooLongMessage = textValueOverflow ? strings.textTooLong : undefined;
   const errorMessage = systemMessage ?? textTooLongMessage;
 
-  const mergedSendButtonStyle = useMemo(
-    () => mergeStyles(sendButtonStyle, styles?.sendMessageIconContainer),
-    [styles?.sendMessageIconContainer]
-  );
-
-  const mergedStyles = useMemo(() => concatStyleSets(styles), [styles]);
-
-  const mergedSendIconStyle = useMemo(
-    () =>
-      sendIconStyle({
-        theme,
-        isSendBoxButtonDisabled: isSendBoxButtonDisabledValue,
-        customSendIconStyle: styles?.sendMessageIcon
-      }),
-    [theme, styles?.sendMessageIcon]
-  );
-
   const isSendBoxButtonDisabledValue = useMemo(() => {
     return isSendBoxButtonDisabled({
       hasContent: sanitizeText(textValue).length > 0,
@@ -317,6 +300,23 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     errorMessage,
     textValue
   ]);
+
+  const mergedSendButtonStyle = useMemo(
+    () => mergeStyles(sendButtonStyle, styles?.sendMessageIconContainer),
+    [styles?.sendMessageIconContainer]
+  );
+
+  const mergedStyles = useMemo(() => concatStyleSets(styles), [styles]);
+
+  const mergedSendIconStyle = useMemo(
+    () =>
+      sendIconStyle({
+        theme,
+        isSendBoxButtonDisabled: isSendBoxButtonDisabledValue,
+        customSendIconStyle: styles?.sendMessageIcon
+      }),
+    [theme, isSendBoxButtonDisabledValue, styles?.sendMessageIcon]
+  );
 
   const onRenderSendIcon = useCallback(
     (isHover: boolean) =>
@@ -445,7 +445,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
             className={mergedSendButtonStyle}
             ariaLabel={localeStrings.sendButtonAriaLabel}
             tooltipContent={localeStrings.sendButtonAriaLabel}
-            ariaDisabled={isSendBoxButtonDisabledValue}
+            disabled={isSendBoxButtonDisabledValue}
           />
         </InputBoxComponent>
         {

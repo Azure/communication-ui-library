@@ -136,7 +136,6 @@ export const isSendBoxButtonDisabled = ({
   hasError: boolean;
   disabled: boolean;
 }): boolean => {
-  console.log('PATRICK - hasContent', hasContent, 'hasCompletedAttachmentUploads', hasCompletedAttachmentUploads, 'hasError', hasError, 'disabled', disabled);
   return (
     // no content
     !(hasContent || /* @conditional-compile-remove(file-sharing-acs) */ hasCompletedAttachmentUploads) ||
