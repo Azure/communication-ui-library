@@ -1,67 +1,53 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-
 import { CallComposite } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
 import { Meta } from '@storybook/react';
-import React, { useMemo } from 'react';
-import { v1 as createGUID } from 'uuid';
+import React from 'react';
 import { compositeExperienceContainerStyle } from '../../constants';
 import { defaultCallCompositeHiddenControls, controlsToAdd, ArgsFrom } from '../../controlsUtils';
 import { compositeLocale } from '../../localizationUtils';
-import { CustomDataModelExampleContainer } from './snippets/CustomDataModelExampleContainer.snippet';
-import { ConfigHintBanner } from './snippets/Utils';
+import { ContosoCTECallContainer } from './snippets/CTEContainer.snippet';
+import { ConfigJoinCallHintBanner } from './snippets/Utils';
 
 const storyControls = {
   userId: controlsToAdd.userId,
   token: controlsToAdd.token,
-  displayName: controlsToAdd.requiredDisplayName,
-  avatarInitials: controlsToAdd.avatarInitials,
+  callLocator: controlsToAdd.teamsMeetingLink,
   compositeFormFactor: controlsToAdd.formFactor,
   callInvitationURL: controlsToAdd.callInvitationURL
 };
 
-const CustomDataModelStory = (args: ArgsFrom<typeof storyControls>, context: any): JSX.Element => {
+const JoinExistingCallAsTeamsUserStory = (args: ArgsFrom<typeof storyControls>, context: any): JSX.Element => {
   const {
     globals: { locale }
   } = context;
-
-  const containerProps = useMemo(() => {
-    if (args.userId && args.token) {
-      const containerProps = {
-        userId: { communicationUserId: args.userId },
-        token: args.token,
-        locator: createGUID()
-      };
-      return containerProps;
-    }
-    return undefined;
-  }, [args.token, args.userId]);
+  const areAllKnobsSet = !!args.callLocator && !!args.userId && !!args.token;
 
   return (
     <Stack horizontalAlign="center" verticalAlign="center" styles={compositeExperienceContainerStyle}>
-      {containerProps ? (
-        <CustomDataModelExampleContainer
+      {areAllKnobsSet ? (
+        <ContosoCTECallContainer
           fluentTheme={context.theme}
           rtl={context.globals.rtl === 'rtl'}
-          displayName={args.displayName}
-          avatarInitials={args.avatarInitials}
-          {...containerProps}
+          meetingLink={args.callLocator}
+          userId={{ microsoftTeamsUserId: args.userId }}
+          token={args.token}
           callInvitationURL={args.callInvitationURL}
           locale={compositeLocale(locale)}
           formFactor={args.compositeFormFactor}
         />
       ) : (
-        <ConfigHintBanner />
+        <ConfigJoinCallHintBanner />
       )}
     </Stack>
   );
 };
 
-export const CustomDataModelExample = CustomDataModelStory.bind({});
+export const JoinExistingCallAsTeamsUser = JoinExistingCallAsTeamsUserStory.bind({});
 
 const meta: Meta = {
-  title: 'Composites/CallComposite',
+  title: 'Composites/CallComposite/Join Existing Call As Teams User',
   component: CallComposite,
   argTypes: {
     ...storyControls,
@@ -69,13 +55,11 @@ const meta: Meta = {
     ...defaultCallCompositeHiddenControls
   },
   args: {
-    userId: '123',
+    userId: '',
     token: '',
-    displayName: 'John Smith',
-    avatarInitials: 'A B',
+    callLocator: '',
     compositeFormFactor: 'desktop',
     callInvitationURL: ''
   }
 };
-
 export default meta;

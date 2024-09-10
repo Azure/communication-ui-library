@@ -27,6 +27,16 @@ export const parameters = {
           'Get Started',
           'CallWithChatComposite',
           'CallComposite',
+          [
+            'Basic Example',
+            'Custom Data Model Example',
+            
+            'Join Existing Call',
+            'Join Existing Call As Teams User',
+            'Theme Example',
+            '1:N',
+            'PSTN',
+          ],
           'ChatComposite',
           'Adapters',
           'Cross-Framework Support',

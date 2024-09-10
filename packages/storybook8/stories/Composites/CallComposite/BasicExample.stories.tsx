@@ -1,56 +1,66 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-
 import { CallComposite } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
 import { Meta } from '@storybook/react';
-import React from 'react';
+import React, { useMemo } from 'react';
+import { v1 as createGUID } from 'uuid';
 import { compositeExperienceContainerStyle } from '../../constants';
-import { defaultCallCompositeHiddenControls, controlsToAdd, ArgsFrom } from '../../controlsUtils';
+import { ArgsFrom, controlsToAdd, defaultCallCompositeHiddenControls, hiddenControl } from '../../controlsUtils';
 import { compositeLocale } from '../../localizationUtils';
 import { ContosoCallContainer } from './snippets/Container.snippet';
-import { ConfigJoinCallHintBanner } from './snippets/Utils';
+import { ConfigHintBanner } from './snippets/Utils';
 
 const storyControls = {
   userId: controlsToAdd.userId,
   token: controlsToAdd.token,
   displayName: controlsToAdd.requiredDisplayName,
-  callLocator: controlsToAdd.callLocator,
   compositeFormFactor: controlsToAdd.formFactor,
-  callInvitationURL: controlsToAdd.callInvitationURL
+  callInvitationURL: controlsToAdd.callInvitationURL,
+  errorBar: controlsToAdd.showErrorBar
 };
 
-const JoinExistingCallStory = (args: ArgsFrom<typeof storyControls>, context: any): JSX.Element => {
+const BasicStory = (args: ArgsFrom<typeof storyControls>, context: any): JSX.Element => {
   const {
     globals: { locale }
   } = context;
-  const areAllKnobsSet = !!args.callLocator && !!args.userId && !!args.token && !!args.displayName;
+
+  const containerProps = useMemo(() => {
+    if (args.userId && args.token) {
+      const containerProps = {
+        userId: { communicationUserId: args.userId },
+        token: args.token,
+        locator: createGUID()
+      };
+      return containerProps;
+    }
+    return undefined;
+  }, [args.userId, args.token]);
 
   return (
     <Stack horizontalAlign="center" verticalAlign="center" styles={compositeExperienceContainerStyle}>
-      {areAllKnobsSet ? (
+      {containerProps ? (
         <ContosoCallContainer
           fluentTheme={context.theme}
           rtl={context.globals.rtl === 'rtl'}
-          locator={args.callLocator}
-          userId={{ communicationUserId: args.userId }}
-          token={args.token}
           displayName={args.displayName}
+          {...containerProps}
           callInvitationURL={args.callInvitationURL}
           locale={compositeLocale(locale)}
           formFactor={args.compositeFormFactor}
+          options={{ errorBar: args.errorBar }}
         />
       ) : (
-        <ConfigJoinCallHintBanner />
+        <ConfigHintBanner />
       )}
     </Stack>
   );
 };
 
-export const JoinExistingCall = JoinExistingCallStory.bind({});
+export const BasicExample = BasicStory.bind({});
 
 const meta: Meta = {
-  title: 'Composites/CallComposite',
+  title: 'Composites/CallComposite/Basic Example',
   component: CallComposite,
   argTypes: {
     ...storyControls,
@@ -61,9 +71,10 @@ const meta: Meta = {
     userId: '',
     token: '',
     displayName: 'John Smith',
-    callLocator: '',
+    callInvitationURL: '',
     compositeFormFactor: 'desktop',
-    callInvitationURL: ''
+    errorBar: true
   }
 };
+
 export default meta;

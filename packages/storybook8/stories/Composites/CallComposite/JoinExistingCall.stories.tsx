@@ -1,5 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
+
 import { CallComposite } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
 import { Meta } from '@storybook/react';
@@ -7,32 +8,34 @@ import React from 'react';
 import { compositeExperienceContainerStyle } from '../../constants';
 import { defaultCallCompositeHiddenControls, controlsToAdd, ArgsFrom } from '../../controlsUtils';
 import { compositeLocale } from '../../localizationUtils';
-import { ContosoCTECallContainer } from './snippets/CTEContainer.snippet';
+import { ContosoCallContainer } from './snippets/Container.snippet';
 import { ConfigJoinCallHintBanner } from './snippets/Utils';
 
 const storyControls = {
   userId: controlsToAdd.userId,
   token: controlsToAdd.token,
-  callLocator: controlsToAdd.teamsMeetingLink,
+  displayName: controlsToAdd.requiredDisplayName,
+  callLocator: controlsToAdd.callLocator,
   compositeFormFactor: controlsToAdd.formFactor,
   callInvitationURL: controlsToAdd.callInvitationURL
 };
 
-const JoinExistingCallAsTeamsUserStory = (args: ArgsFrom<typeof storyControls>, context: any): JSX.Element => {
+const JoinExistingCallStory = (args: ArgsFrom<typeof storyControls>, context: any): JSX.Element => {
   const {
     globals: { locale }
   } = context;
-  const areAllKnobsSet = !!args.callLocator && !!args.userId && !!args.token;
+  const areAllKnobsSet = !!args.callLocator && !!args.userId && !!args.token && !!args.displayName;
 
   return (
     <Stack horizontalAlign="center" verticalAlign="center" styles={compositeExperienceContainerStyle}>
       {areAllKnobsSet ? (
-        <ContosoCTECallContainer
+        <ContosoCallContainer
           fluentTheme={context.theme}
           rtl={context.globals.rtl === 'rtl'}
-          meetingLink={args.callLocator}
-          userId={{ microsoftTeamsUserId: args.userId }}
+          locator={args.callLocator}
+          userId={{ communicationUserId: args.userId }}
           token={args.token}
+          displayName={args.displayName}
           callInvitationURL={args.callInvitationURL}
           locale={compositeLocale(locale)}
           formFactor={args.compositeFormFactor}
@@ -44,10 +47,10 @@ const JoinExistingCallAsTeamsUserStory = (args: ArgsFrom<typeof storyControls>, 
   );
 };
 
-export const JoinExistingCallAsTeamsUser = JoinExistingCallAsTeamsUserStory.bind({});
+export const JoinExistingCall = JoinExistingCallStory.bind({});
 
 const meta: Meta = {
-  title: 'Composites/CallComposite',
+  title: 'Composites/CallComposite/Join Existing Call',
   component: CallComposite,
   argTypes: {
     ...storyControls,
@@ -57,6 +60,7 @@ const meta: Meta = {
   args: {
     userId: '',
     token: '',
+    displayName: 'John Smith',
     callLocator: '',
     compositeFormFactor: 'desktop',
     callInvitationURL: ''
