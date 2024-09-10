@@ -284,6 +284,10 @@ function callAdapterStateFromCallWithChatAdapterState(
     onResolveVideoEffectDependency: callWithChatAdapterState.onResolveVideoEffectDependency,
     /* @conditional-compile-remove(DNS) */
     onResolveDeepNoiseSuppressionDependency: callWithChatAdapterState.onResolveDeepNoiseSuppressionDependency,
+    /* @conditional-compile-remove(DNS) */
+    deepNoiseSuppressionOnByDefault: callWithChatAdapterState.deepNoiseSuppressionOnByDefault,
+    /* @conditional-compile-remove(DNS) */
+    hideDeepNoiseSuppressionButton: callWithChatAdapterState.hideDeepNoiseSuppressionButton,
     selectedVideoBackgroundEffect: callWithChatAdapterState.selectedVideoBackgroundEffect,
     reactions: callWithChatAdapterState.reactions
   };
