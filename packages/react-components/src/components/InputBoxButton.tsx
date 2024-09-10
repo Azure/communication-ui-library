@@ -69,6 +69,7 @@ export const InputBoxButton = (props: InputBoxButtonProps): JSX.Element => {
         data-testid={dataTestId}
         aria-expanded={ariaExpanded}
         disabled={disabled}
+        allowDisabledFocus={true}
       />
     </TooltipHost>
   );
