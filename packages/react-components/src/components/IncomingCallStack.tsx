@@ -9,7 +9,7 @@ import React from 'react';
 
 /**
  * Represents an active incoming call.
- * @beta
+ * @public
  */
 export interface IncomingCallStackCall {
   /**
@@ -32,7 +32,7 @@ export interface IncomingCallStackCall {
 }
 /**
  * Props for the IncomingCallManager component.
- * @beta
+ * @public
  */
 export interface IncomingCallStackProps {
   /**
@@ -75,7 +75,7 @@ export interface IncomingCallStackProps {
  * Wrapper to manage multiple incoming calls
  * @param props - {@link IncomingCallManagerProps}
  * @returns
- * @beta
+ * @public
  */
 export const IncomingCallStack = (props: IncomingCallStackProps): JSX.Element => {
   /* @conditional-compile-remove(one-to-n-calling) */
