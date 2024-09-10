@@ -32,6 +32,11 @@ export type { TeamsIncomingCallState } from './CallClientState';
 export type { RemoteDiagnosticState } from './CallClientState';
 export type { CreateViewResult } from './StreamUtils';
 export type { RaiseHandCallFeatureState as RaiseHandCallFeature } from './CallClientState';
+/* @conditional-compile-remove(together-mode) */
+export type { TogetherModeCallFeatureState as TogetherModeCallFeature } from './CallClientState';
+/* @conditional-compile-remove(together-mode) */
+export type { TogetherModeStreamState } from './CallClientState';
+
 export type { RaisedHandState } from './CallClientState';
 /* @conditional-compile-remove(one-to-n-calling) */
 export type { DeclarativeCallAgent, IncomingCallManagement } from './CallAgentDeclarative';

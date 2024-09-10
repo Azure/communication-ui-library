@@ -111,6 +111,9 @@ export class _MockCallAdapter implements CallAdapter {
   createStreamView(): Promise<void> {
     throw Error('createStreamView not implemented');
   }
+  startTogetherMode(): Promise<void> {
+    throw Error('startTogetherMode not implemented');
+  }
   disposeStreamView(): Promise<void> {
     return Promise.resolve();
   }
@@ -257,6 +260,8 @@ const createDefaultCallAdapterState = (role?: ParticipantRole): CallAdapterState
       remoteParticipants: {},
       remoteParticipantsEnded: {},
       raiseHand: { raisedHands: [] },
+      /* @conditional-compile-remove(together-mode) */
+      togetherMode: { stream: undefined },
       pptLive: { isActive: false },
       localParticipantReaction: undefined,
       role,
