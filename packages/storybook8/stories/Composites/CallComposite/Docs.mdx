@@ -5,8 +5,9 @@ import { SingleLineBetaBanner } from '../../BetaBanners/SingleLineBetaBanner';
 import containerText from '!!raw-loader!./snippets/Container.snippet.tsx';
 import customDataModelExampleContainerText from '!!raw-loader!./snippets/CustomDataModelExampleContainer.snippet.tsx';
 import { overviewPageImagesStackStyle } from '../../constants';
+import * as CallCompositeStories from './index.stories';
 
-<Meta title="Composites/CallComposite" />
+<Meta of={CallCompositeStories} />
 
 # CallComposite
 
@@ -390,4 +391,4 @@ need to be added to that room using their userId. To use the Rooms Client to cre
 
 ## Props
 
-<ArgTypes of={CallComposite} include={['adapter', 'formFactor', 'callInvitationUrl', 'options']} />
+<ArgTypes of={CallCompositeStories} include={['adapter', 'formFactor', 'callInvitationUrl', 'options']} />

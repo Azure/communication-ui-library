@@ -1,27 +1,26 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-
 import { CallComposite } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
 import { Meta } from '@storybook/react';
 import React, { useMemo } from 'react';
 import { v1 as createGUID } from 'uuid';
 import { compositeExperienceContainerStyle } from '../../constants';
-import { defaultCallCompositeHiddenControls, controlsToAdd, ArgsFrom } from '../../controlsUtils';
+import { ArgsFrom, controlsToAdd, defaultCallCompositeHiddenControls, hiddenControl } from '../../controlsUtils';
 import { compositeLocale } from '../../localizationUtils';
-import { CustomDataModelExampleContainer } from './snippets/CustomDataModelExampleContainer.snippet';
+import { ContosoCallContainer } from './snippets/Container.snippet';
 import { ConfigHintBanner } from './snippets/Utils';
 
 const storyControls = {
   userId: controlsToAdd.userId,
   token: controlsToAdd.token,
   displayName: controlsToAdd.requiredDisplayName,
-  avatarInitials: controlsToAdd.avatarInitials,
   compositeFormFactor: controlsToAdd.formFactor,
-  callInvitationURL: controlsToAdd.callInvitationURL
+  callInvitationURL: controlsToAdd.callInvitationURL,
+  errorBar: controlsToAdd.showErrorBar
 };
 
-const CustomDataModelStory = (args: ArgsFrom<typeof storyControls>, context: any): JSX.Element => {
+const BasicStory = (args: ArgsFrom<typeof storyControls>, context: any): JSX.Element => {
   const {
     globals: { locale }
   } = context;
@@ -36,20 +35,20 @@ const CustomDataModelStory = (args: ArgsFrom<typeof storyControls>, context: any
       return containerProps;
     }
     return undefined;
-  }, [args.token, args.userId]);
+  }, [args.userId, args.token]);
 
   return (
     <Stack horizontalAlign="center" verticalAlign="center" styles={compositeExperienceContainerStyle}>
       {containerProps ? (
-        <CustomDataModelExampleContainer
+        <ContosoCallContainer
           fluentTheme={context.theme}
           rtl={context.globals.rtl === 'rtl'}
           displayName={args.displayName}
-          avatarInitials={args.avatarInitials}
           {...containerProps}
           callInvitationURL={args.callInvitationURL}
           locale={compositeLocale(locale)}
           formFactor={args.compositeFormFactor}
+          options={{ errorBar: args.errorBar }}
         />
       ) : (
         <ConfigHintBanner />
@@ -58,7 +57,7 @@ const CustomDataModelStory = (args: ArgsFrom<typeof storyControls>, context: any
   );
 };
 
-export const CustomDataModelExample = CustomDataModelStory.bind({});
+export const BasicExample = BasicStory.bind({});
 
 const meta: Meta = {
   title: 'Composites/CallComposite',
@@ -72,9 +71,9 @@ const meta: Meta = {
     userId: '',
     token: '',
     displayName: 'John Smith',
-    avatarInitials: 'A B',
+    callInvitationURL: '',
     compositeFormFactor: 'desktop',
-    callInvitationURL: ''
+    errorBar: true
   }
 };
 
