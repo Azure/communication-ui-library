@@ -52,9 +52,7 @@ export const sendIconStyle = (props: {
   return mergeStyles(
     editorTextBoxButtonStyle,
     {
-      color: isSendBoxButtonDisabled
-        ? defaultTextColor
-        : theme.palette.themePrimary
+      color: isSendBoxButtonDisabled ? defaultTextColor : theme.palette.themePrimary
     },
     customSendIconStyle
   );

@@ -459,7 +459,6 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     });
   }, [/* @conditional-compile-remove(file-sharing-acs) */ attachments, disabled, hasContent, hasErrorMessage]);
 
-
   const onRenderSendIcon = useCallback(
     (isHover: boolean) => {
       return (
