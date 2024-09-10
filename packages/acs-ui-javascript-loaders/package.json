@@ -33,7 +33,7 @@
     "@azure/communication-common": "^2.3.1",
     "@internal/acs-ui-common": "1.19.0-beta.2",
     "@internal/react-composites": "1.19.0-beta.2",
-    "@fluentui/react": "^8.120.0",
+    "@fluentui/react": "^8.120.9",
     "@azure/logger": "^1.0.4"
   },
   "peerDependencies": {
@@ -46,7 +46,7 @@
     "@babel/cli": "^7.24.8",
     "@babel/core": "^7.25.2",
     "@types/jest": "^29.5.11",
-    "@types/react": "18.3.3",
+    "@types/react": "18.3.5",
     "@typescript-eslint/eslint-plugin": "^7.14.1",
     "@typescript-eslint/parser": "^7.14.1",
     "copyfiles": "^2.4.1",

@@ -47,6 +47,7 @@ import { useWindow } from '@fluentui/react-window-provider';
 export interface _ExtendedIModalProps extends IModalProps {
   minDragPosition?: _ICoordinates;
   maxDragPosition?: _ICoordinates;
+  'data-ui-id'?: string;
 }
 
 const animationDuration = AnimationVariables.durationValue2;
@@ -444,7 +445,7 @@ const ModalBase: React.FunctionComponent<_ExtendedIModalProps> = React.forwardRe
         firstFocusableSelector={firstFocusableSelector}
         focusPreviouslyFocusedInnerElement
         onBlur={internalState.isInKeyboardMoveMode ? handleExitKeyboardMoveMode : undefined}
-        data-ui-id={props['data-ui-id' as keyof _ExtendedIModalProps]}
+        data-ui-id={props['data-ui-id']}
         // enableAriaHiddenSiblings is handled by the Popup
       >
         {dragOptions && internalState.isInKeyboardMoveMode && (
