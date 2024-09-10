@@ -24,9 +24,7 @@ module.exports = {
     // Feature for remote UFD
     "remote-ufd",
     // Feature for showing dtmp dialer by default
-    "dtmf-dialer-on-by-default",
-    // Deep Noise Suppression feature
-    "DNS"
+    "dtmf-dialer-on-by-default"
   ],
   beta: [
     "call-readiness",
@@ -80,7 +78,9 @@ module.exports = {
     // feature for tracking the callParticipantsLocator
     "call-participants-locator",
     // feature for breakout rooms
-    "breakout-rooms"
+    "breakout-rooms",
+    // Deep Noise Suppression feature
+    "DNS"
   ],
   stable: [
     // Demo feature. Used in live-documentation of conditional compilation.
