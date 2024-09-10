@@ -17,7 +17,7 @@ import {
   VERTICAL_GALLERY_FLOATING_MODAL_SIZE_REM,
   SHORT_VERTICAL_GALLERY_FLOATING_MODAL_SIZE_REM
 } from './styles/FloatingLocalVideo.styles';
-import { useOrganizedParticipants } from './utils/videoGalleryLayoutUtils';
+import { renderTiles, useOrganizedParticipants } from './utils/videoGalleryLayoutUtils';
 import { GridLayout } from '../GridLayout';
 import { rootLayoutStyle } from './styles/FloatingLocalVideoLayout.styles';
 import { layerHostStyle, innerLayoutStyle } from './styles/FloatingLocalVideoLayout.styles';
@@ -86,23 +86,6 @@ export const SpeakerVideoLayout = (props: SpeakerVideoLayoutProps): JSX.Element 
     layout: 'speaker'
   });
 
-  let activeVideoStreams = 0;
-
-  const gridTiles = gridParticipants.map((p) => {
-    return onRenderRemoteParticipant(
-      p,
-      maxRemoteVideoStreams && maxRemoteVideoStreams >= 0
-        ? p.videoStream?.isAvailable && activeVideoStreams++ < maxRemoteVideoStreams
-        : p.videoStream?.isAvailable
-    );
-  });
-
-  const shouldFloatLocalVideo = remoteParticipants.length > 0;
-
-  if (!shouldFloatLocalVideo && localVideoComponent) {
-    gridTiles.push(localVideoComponent);
-  }
-
   /**
    * instantiate indexes available to render with indexes available that would be on first page
    *
@@ -112,17 +95,20 @@ export const SpeakerVideoLayout = (props: SpeakerVideoLayoutProps): JSX.Element 
    */
   const [indexesToRender, setIndexesToRender] = useState<number[]>([]);
 
-  const overflowGalleryTiles = overflowGalleryParticipants.map((p, i) => {
-    return onRenderRemoteParticipant(
-      p,
-      maxRemoteVideoStreams && maxRemoteVideoStreams >= 0
-        ? p.videoStream?.isAvailable &&
-            indexesToRender &&
-            indexesToRender.includes(i) &&
-            activeVideoStreams++ < maxRemoteVideoStreams
-        : p.videoStream?.isAvailable
-    );
-  });
+  const { gridTiles, overflowGalleryTiles } = renderTiles(
+    gridParticipants,
+    onRenderRemoteParticipant,
+    maxRemoteVideoStreams,
+    indexesToRender,
+    overflowGalleryParticipants,
+    dominantSpeakers
+  );
+
+  const shouldFloatLocalVideo = remoteParticipants.length > 0;
+
+  if (!shouldFloatLocalVideo && localVideoComponent) {
+    gridTiles.push(localVideoComponent);
+  }
 
   const layerHostId = useId('layerhost');
 
