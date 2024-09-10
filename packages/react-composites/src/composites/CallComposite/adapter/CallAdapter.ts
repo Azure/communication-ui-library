@@ -180,7 +180,7 @@ export type CallAdapterClientState = {
   /**
    * State to track whether the noise suppression should be on by default.
    * @beta
-   * @default false
+   * @default true
    */
   deepNoiseSuppressionOnByDefault?: boolean;
   /* @conditional-compile-remove(DNS) */
@@ -189,7 +189,7 @@ export type CallAdapterClientState = {
    * @beta
    * @default false
    */
-  hideNoiseSuppressionButton?: boolean;
+  hideDeepNoiseSuppressionButton?: boolean;
   /**
    * State to track the selected video background effect.
    */
@@ -609,7 +609,7 @@ export interface CallAdapterCallOperations {
   /**
    * Remove a participant from the call.
    * @param participant - {@link @azure/communication-common#CommunicationIdentifier} of the participant to be removed
-   * @beta
+   * @public
    */
   removeParticipant(participant: CommunicationIdentifier): Promise<void>;
   /**
@@ -667,21 +667,21 @@ export interface CallAdapterCallOperations {
   /**
    * Holds the call.
    *
-   * @beta
+   * @public
    */
   holdCall(): Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Resumes the call from a `LocalHold` state.
    *
-   * @beta
+   * @public
    */
   resumeCall(): Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Add a participant to the call.
    *
-   * @beta
+   * @public
    */
   addParticipant(participant: PhoneNumberIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */

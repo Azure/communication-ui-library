@@ -41,8 +41,9 @@ export const mediaGalleryHeightDefault = 500;
 
 export const compositeExperienceContainerStyle: IStackStyles = {
   root: {
-    width: '90vw',
-    height: '90vh'
+    width: '100vw',
+    height: '100vh',
+    backgroundColor: 'initial'
   }
 };
 
