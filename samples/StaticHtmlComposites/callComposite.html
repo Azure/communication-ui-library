@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 
 <head>
   <meta charset="utf-8" />
@@ -16,7 +16,6 @@
   <div id="call-composite-container"></div>
   <!-- replace with https://github.com/Azure/communication-ui-library/releases/latest/download/callComposite.js for development and prototyping -->
   <script src="./callComposite.js"></script>
-  <script src="./videoEffectDependency.js"></script>
   <script src="./service.js"></script>
   <script type="module">
     const testParams = service.loadConfigFromUrlQuery();
@@ -32,10 +31,7 @@
         userId: user,
         token: token,
         displayName: displayName,
-        locator: { groupId: groupId }, // Provide any GUID to join a group
-        options: {
-          videoBackgroundOptions: { onResolveDependency: videoEffectDependency.onResolveVideoEffectDependency }
-        }
+        locator: { groupId: groupId } // Provide any GUID to join a group
       },
       document.getElementById('call-composite-container')
     );

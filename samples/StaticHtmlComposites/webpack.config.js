@@ -9,7 +9,6 @@ const config = {
     callComposite: './src/callComposite.js',
     outboundCallComposite: './src/outboundCallComposite.js',
     callWithChatComposite: './src/callWithChatComposite.js',
-    videoEffectDependency: './src/videoEffectDependency.js',
     service: './src/service.js'
   },
   mode: 'development', // change to 'production' for optimization
