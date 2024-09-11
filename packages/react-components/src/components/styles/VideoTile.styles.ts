@@ -132,7 +132,10 @@ export const moreButtonStyles = (theme: Theme): IButtonStyles => {
     rootPressed: {
       background: 'none'
     },
-    rootExpanded: {
+    icon: {
+      color: theme.palette.neutralPrimary
+    },
+    iconExpanded: {
       background: 'none',
       color: theme.palette.themePrimary
     }
