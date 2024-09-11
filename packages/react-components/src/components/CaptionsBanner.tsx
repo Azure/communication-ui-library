@@ -57,7 +57,7 @@ export interface _CaptionsBannerProps {
   };
 }
 
-const SCROLL_OFF_SET_ALLOWANCE = 20;
+const SCROLL_OFFSET_ALLOWANCE = 20;
 
 /**
  * @internal
@@ -89,7 +89,7 @@ export const _CaptionsBanner = (props: _CaptionsBannerProps): JSX.Element => {
     }
     const atBottom =
       Math.ceil(captionsScrollDivRef.current.scrollTop) >=
-      captionsScrollDivRef.current.scrollHeight - captionsScrollDivRef.current.clientHeight - scrollOffsetAllowance;
+      captionsScrollDivRef.current.scrollHeight - captionsScrollDivRef.current.clientHeight - SCROLL_OFF_SET_ALLOWANCE;
 
     setIsAtBottomOfScroll(atBottom);
   }, []);
