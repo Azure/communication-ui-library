@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { concatStyleSets } from '@fluentui/react';
+import { concatStyleSets, Stack } from '@fluentui/react';
 /* @conditional-compile-remove(breakout-rooms) */
 import { IContextualMenuProps } from '@fluentui/react';
 import { ControlBarButtonStyles, EndCallButton } from '@internal/react-components';
@@ -132,18 +132,7 @@ export const EndCall = (props: {
   };
 
   return (
-    <>
-      {
-        /* @conditional-compile-remove(end-call-options) */
-        <Prompt
-          {...dialogLabels}
-          styles={{ main: { minWidth: '22.5rem', padding: '1.5rem' } }}
-          cancelButtonLabel={localeStrings.call.hangUpCancelButtonLabel}
-          onConfirm={() => onHangUpConfirm(props.enableEndCallMenu)} // if enableEndCallMenu is true, that means the dialog is triggered by hangUpForEveryone button
-          isOpen={showHangUpConfirm}
-          onCancel={toggleConfirm}
-        />
-      }
+    <Stack>
       <EndCallButton
         data-ui-id="call-composite-hangup-button"
         {...hangUpButtonProps}
@@ -156,6 +145,17 @@ export const EndCall = (props: {
         /* @conditional-compile-remove(breakout-rooms) */
         menuProps={enableBreakoutRoomMenu ? breakoutRoomMenuProps : undefined}
       />
-    </>
+      {
+        /* @conditional-compile-remove(end-call-options) */
+        <Prompt
+          {...dialogLabels}
+          styles={{ main: { minWidth: '22.5rem', padding: '1.5rem' } }}
+          cancelButtonLabel={localeStrings.call.hangUpCancelButtonLabel}
+          onConfirm={() => onHangUpConfirm(props.enableEndCallMenu)} // if enableEndCallMenu is true, that means the dialog is triggered by hangUpForEveryone button
+          isOpen={showHangUpConfirm}
+          onCancel={toggleConfirm}
+        />
+      }
+    </Stack>
   );
 };
