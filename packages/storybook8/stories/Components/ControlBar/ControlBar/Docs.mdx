@@ -1,4 +1,5 @@
-import { Canvas, Description, Meta, Source } from '@storybook/blocks';
+import { Canvas, Description, Meta, Source, ArgTypes } from '@storybook/blocks';
+import { ControlBar } from '@azure/communication-react';
 import * as ControlBarStories from './index.stories';
 import AllButtonsControlBarExampleText from '!!raw-loader!./snippets/AllButtonsControlBar.snippet.tsx';
 import ControlBarLayoutExampleText from '!!raw-loader!./snippets/ControlBarLayout.snippet.tsx';
@@ -22,11 +23,11 @@ import { DefaultButton } from '@fluentui/react';
 ## Example
 
 We recommend using our pre-defined buttons you can start find
-[here](./?path=/docs/ui-components-controlbar-buttons) or `DefaultButton`, a
+[here](./?path=/docs/components-controlbar-buttons-camera--docs) or `DefaultButton`, a
 [Button](https://developer.microsoft.com/fluentui#/controls/web/button) component from Fluent UI, as controls
 inside `ControlBar`. Pre-defined styles like `controlButtonStyles` or `controlButtonLabelStyles` can also be
 imported and used as `DefaultButton` styles for easy styling. `FluentThemeProvider` is needed around
-`ControlBar` to provide theming and icons. Learn more about theming [here](./?path=/docs/theming--page).
+`ControlBar` to provide theming and icons. Learn more about theming [here](./?path=/docs/concepts-theming--docs).
 
 <Canvas of={ControlBarStories.AllButtonsControlBarExampleDocsOnly} source={{ code: AllButtonsControlBarExampleText }} />
 
@@ -56,7 +57,7 @@ You can change the styles of the `ControlBar` by customizing its `styles` prop l
 You can also easily change the styles of included button components. They are built on Fluent UI `DefaultButton`
 and accept all the same props. In the example below we import `CameraButton` and `MicrophoneButton` for the 1st
 and 2nd buttons and style our own hang up button for the 3rd button. Learn more about styling
-[here](./?path=/docs/styling--page).
+[here](./?path=/docs/concepts-styling--docs).
 
 <Canvas of={ControlBarStories.CustomButtonsExampleDocsOnly} source={{ code: CustomButtonsExampleText }} />
 
@@ -68,3 +69,5 @@ out the [official Fluent UI documentation](https://developer.microsoft.com/fluen
 <Canvas of={ControlBarStories.DevicesButtonExampleDocsOnly} source={{ code: DevicesButtonExampleText }} />
 
 ## Props
+
+<ArgTypes of={ControlBar} />

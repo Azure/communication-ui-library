@@ -1,0 +1,15 @@
+import { Canvas, Meta } from '@storybook/blocks';
+import * as ThemeStories from './index.stories';
+import exampleTeamsTheme from '!!raw-loader!./snippets/TeamsTheme.snippet.tsx';
+
+<Meta of={ThemeStories} />
+
+# Themes
+
+Below is an example of a [Microsoft Teams](http://teams.microsoft.com/) Theme being applied to UI Components. In
+this example a color palette that resembles Teams is provided to the FluentThemeProvider. The
+FluentThemeProvider in turn styles the UI Components.
+
+## Teams-Like Theme
+
+<Canvas of={ThemeStories.TeamsTheme} source={{ code: exampleTeamsTheme }} />

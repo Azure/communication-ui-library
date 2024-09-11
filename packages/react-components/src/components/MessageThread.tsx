@@ -4,7 +4,7 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Icon, IStyle, mergeStyles, PrimaryButton } from '@fluentui/react';
 import { Chat } from '@fluentui-contrib/react-chat';
-import { mergeClasses } from '@fluentui/react-components';
+import { mergeClasses, useArrowNavigationGroup } from '@fluentui/react-components';
 import {
   DownIconStyle,
   newMessageButtonContainerStyle,
@@ -575,19 +575,31 @@ export interface RichTextEditBoxOptions extends RichTextEditorOptions {
   /**
    * Optional callback to handle an inline image that's inserted in the rich text editor.
    * When not provided, pasting images into rich text editor will be disabled.
+   * @param imageAttributes - attributes of the image such as id, src, style, etc.
+   *        It also contains the image file name which can be accessed through imageAttributes['data-image-file-name']
+   * @param messageId - the id of the message that the inlineImage belongs to.
    */
-  onInsertInlineImage?: (imageUrl: string, imageFileName: string, messageId: string) => void;
+  onInsertInlineImage?: (imageAttributes: Record<string, string>, messageId: string) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   /**
-   * Optional callback to remove the image upload or delete the image from server before sending.
+   * Optional callback invoked after inline image is removed from the UI.
+   * @param imageAttributes - attributes of the image such as id, src, style, etc.
+   *        It also contains the image file name which can be accessed through imageAttributes['data-image-file-name'].
+   *        Note that if the src attribute is a local blob url, it has been revoked at this point.
+   * @param messageId - the id of the message that the inlineImage belongs to.
    */
-  onCancelInlineImageUpload?: (imageId: string, messageId: string) => void;
+  onRemoveInlineImage?: (imageAttributes: Record<string, string>, messageId: string) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   /**
    * Optional Record of type {@link AttachmentMetadataInProgress}
-   * to render inline images being inserted in the MessageThread's edit boxes.
+   * to render the errorBar for inline images inserted in the MessageThread's edit boxes when:
+   *   - there is an error provided in the messagesInlineImagesWithProgress
+   *   - progress is less than 1 when the send button is clicked
+   *   - content html string is longer than the max allowed length.
+   *     (Note that the id and the url prop of the messagesInlineImagesWithProgress will be used as the id and src attribute of the content html
+   *     when calculating the content length, only for the purpose of displaying the content length overflow error.)
    */
-  messagesInlineImages?: Record<string, AttachmentMetadataInProgress[]>;
+  messagesInlineImagesWithProgress?: Record<string, AttachmentMetadataInProgress[]>;
 }
 
 /**
@@ -1139,6 +1151,7 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
   ]);
 
   const classes = useChatStyles();
+  const chatArrowNavigationAttributes = useArrowNavigationGroup({ axis: 'vertical', memorizeCurrent: false });
 
   return (
     <div className={mergeStyles(messageThreadWrapperContainerStyle)} ref={chatThreadRef}>
@@ -1161,6 +1174,7 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
             className={mergeClasses(classes.root, mergeStyles(styles?.chatContainer))}
             ref={chatScrollDivRef}
             style={{ ...createStyleFromV8Style(styles?.chatContainer) }}
+            {...chatArrowNavigationAttributes}
           >
             {latestDeletedMessageId && (
               <Announcer
@@ -1201,12 +1215,12 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
                   /* @conditional-compile-remove(rich-text-editor-image-upload) */
                   onInsertInlineImage={richTextEditorOptions?.onInsertInlineImage}
                   /* @conditional-compile-remove(rich-text-editor-image-upload) */
-                  inlineImages={
-                    richTextEditorOptions?.messagesInlineImages &&
-                    richTextEditorOptions?.messagesInlineImages[message.message.messageId]
+                  inlineImagesWithProgress={
+                    richTextEditorOptions?.messagesInlineImagesWithProgress &&
+                    richTextEditorOptions?.messagesInlineImagesWithProgress[message.message.messageId]
                   }
                   /* @conditional-compile-remove(rich-text-editor-image-upload) */
-                  onCancelInlineImageUpload={richTextEditorOptions?.onCancelInlineImageUpload}
+                  onRemoveInlineImage={richTextEditorOptions?.onRemoveInlineImage}
                 />
               );
             })}

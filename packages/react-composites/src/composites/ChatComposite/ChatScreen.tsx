@@ -17,6 +17,8 @@ import {
   TypingIndicatorStylesProps,
   useTheme
 } from '@internal/react-components';
+/* @conditional-compile-remove(rich-text-editor) */
+import { RichTextEditBoxOptions } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing-acs) */
 import { ChatMessage } from '@internal/react-components';
 import React, { useCallback, useEffect, useMemo } from 'react';
@@ -45,7 +47,7 @@ import { participantListContainerPadding } from '../common/styles/ParticipantCon
 import { ChatScreenPeoplePane } from './ChatScreenPeoplePane';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
-import { removeImageTags } from '@internal/acs-ui-common';
+import { removeImageTags, _IMAGE_ATTRIBUTE_INLINE_IMAGE_FILE_NAME_KEY } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(file-sharing-acs) */
 import { AttachmentDownloadErrorBar } from './AttachmentDownloadErrorBar';
 import { _AttachmentDownloadCards } from '@internal/react-components';
@@ -63,22 +65,23 @@ import { AttachmentUploadActionType, AttachmentUpload, AttachmentUploadReducer }
 import { MessageOptions } from '@internal/acs-ui-common';
 import { SendBoxPicker } from '../common/SendBoxPicker';
 /* @conditional-compile-remove(rich-text-editor-composite-support) */
-import { loadRichTextSendBox } from '../common/SendBoxPicker';
+import { loadRichTextSendBox, RichTextSendBoxOptions } from '../common/SendBoxPicker';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import {
+  cancelInlineImageUpload,
   getEditBoxMessagesInlineImages,
+  getImageFileNameFromAttributes,
   getSendBoxInlineImages,
-  onCancelInlineImageUploadHandlerForEditBox,
-  onCancelInlineImageUploadHandlerForSendBox,
   onInsertInlineImageForEditBox,
-  onInsertInlineImageForSendBox
+  onInsertInlineImageForSendBox,
+  updateContentStringWithUploadedInlineImages
 } from './ImageUpload/ImageUploadUtils';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import type { ChatAdapterState } from './adapter/ChatAdapter';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { isMicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
-import { SEND_BOX_UPLOADS_KEY_VALUE } from '../common/constants';
+import { SEND_BOX_UPLOADS_KEY_VALUE, _DEFAULT_INLINE_IMAGE_FILE_NAME } from '../common/constants';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { ImageUploadReducer } from './ImageUpload/ImageUploadReducer';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
@@ -504,6 +507,8 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       content: string,
       /* @conditional-compile-remove(file-sharing-acs) */ /* @conditional-compile-remove(rich-text-editor-composite-support) */ options?: MessageOptions
     ) {
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */
+      content = updateContentStringWithUploadedInlineImages(content, sendBoxInlineImageUploads);
       /* @conditional-compile-remove(file-sharing-acs) */
       const attachments = options?.attachments ?? [];
       /* @conditional-compile-remove(file-sharing-acs) */
@@ -527,7 +532,11 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
         type: options?.type
       });
     },
-    [adapter, /* @conditional-compile-remove(rich-text-editor-image-upload) */ handleSendBoxInlineImageUploadAction]
+    [
+      adapter,
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */ handleSendBoxInlineImageUploadAction,
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */ sendBoxInlineImageUploads
+    ]
   );
 
   const onUpdateMessageHandler = useCallback(
@@ -536,6 +545,8 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       content: string,
       /* @conditional-compile-remove(file-sharing-acs) */ options?: MessageOptions
     ) {
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */
+      content = updateContentStringWithUploadedInlineImages(content, editBoxInlineImageUploads, messageId);
       await messageThreadProps.onUpdateMessage(
         messageId,
         content,
@@ -546,6 +557,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     },
     [
       /* @conditional-compile-remove(rich-text-editor-image-upload) */ handleEditBoxInlineImageUploadAction,
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */ editBoxInlineImageUploads,
       messageThreadProps
     ]
   );
@@ -585,16 +597,16 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   ]);
 
   /* @conditional-compile-remove(rich-text-editor-composite-support) */
-  const richTextEditBoxOptions = useMemo(() => {
+  const richTextEditBoxOptions: RichTextEditBoxOptions | undefined = useMemo(() => {
     return options?.richTextEditor
       ? {
           /* @conditional-compile-remove(rich-text-editor-image-upload) */
           ...richTextEditorOptions,
           /* @conditional-compile-remove(rich-text-editor-image-upload) */
-          onInsertInlineImage: (imageUrl: string, imageFileName: string, messageId: string) => {
+          onInsertInlineImage: (imageAttributes: Record<string, string>, messageId: string) => {
             onInsertInlineImageForEditBox(
-              imageUrl,
-              imageFileName,
+              imageAttributes,
+              getImageFileNameFromAttributes(imageAttributes),
               messageId,
               adapter,
               handleEditBoxInlineImageUploadAction,
@@ -602,15 +614,15 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             );
           },
           /* @conditional-compile-remove(rich-text-editor-image-upload) */
-          messagesInlineImages: getEditBoxMessagesInlineImages(editBoxInlineImageUploads),
+          messagesInlineImagesWithProgress: getEditBoxMessagesInlineImages(editBoxInlineImageUploads),
           /* @conditional-compile-remove(rich-text-editor-image-upload) */
-          onCancelInlineImageUpload: (imageId: string, messageId: string) => {
-            onCancelInlineImageUploadHandlerForEditBox(
-              imageId,
-              messageId,
+          onRemoveInlineImage: (imageAttributes: Record<string, string>, messageId: string) => {
+            cancelInlineImageUpload(
+              imageAttributes,
               editBoxInlineImageUploads,
-              adapter,
-              handleEditBoxInlineImageUploadAction
+              messageId,
+              handleEditBoxInlineImageUploadAction,
+              adapter
             );
           }
         }
@@ -624,30 +636,31 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   ]);
 
   /* @conditional-compile-remove(rich-text-editor-composite-support) */
-  const richTextSendBoxOptions = useMemo(() => {
+  const richTextSendBoxOptions: RichTextSendBoxOptions | undefined = useMemo(() => {
     return options?.richTextEditor
       ? {
           /* @conditional-compile-remove(rich-text-editor-image-upload) */
           ...richTextEditorOptions,
           /* @conditional-compile-remove(rich-text-editor-image-upload) */
-          onInsertInlineImage: (imageUrl: string, imageFileName: string) => {
+          onInsertInlineImage: (imageAttributes: Record<string, string>) => {
             onInsertInlineImageForSendBox(
-              imageUrl,
-              imageFileName,
+              imageAttributes,
+              getImageFileNameFromAttributes(imageAttributes),
               adapter,
               handleSendBoxInlineImageUploadAction,
               localeStrings.chat
             );
           },
           /* @conditional-compile-remove(rich-text-editor-image-upload) */
-          inlineImages: getSendBoxInlineImages(sendBoxInlineImageUploads),
+          inlineImagesWithProgress: getSendBoxInlineImages(sendBoxInlineImageUploads),
           /* @conditional-compile-remove(rich-text-editor-image-upload) */
-          onCancelInlineImageUpload: (imageId: string) => {
-            onCancelInlineImageUploadHandlerForSendBox(
-              imageId,
+          onRemoveInlineImage: (imageAttributes: Record<string, string>) => {
+            cancelInlineImageUpload(
+              imageAttributes,
               sendBoxInlineImageUploads,
-              adapter,
-              handleSendBoxInlineImageUploadAction
+              SEND_BOX_UPLOADS_KEY_VALUE,
+              handleSendBoxInlineImageUploadAction,
+              adapter
             );
           }
         }

@@ -5,7 +5,7 @@ import { AudioDeviceInfo, Call, EnvironmentInfo, VideoDeviceInfo } from '@azure/
 import type { CallAdapter, CallAdapterState, VideoBackgroundEffect } from '../../../src';
 import type { MockCallAdapterState } from '../../common';
 import { produce } from 'immer';
-import EventEmitter from 'events';
+import { EventEmitter } from 'events';
 import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
 
 /**
@@ -237,6 +237,14 @@ export class MockCallAdapter implements CallAdapter {
     this.modifyState((draft: CallAdapterState) => {
       draft.selectedVideoBackgroundEffect = selectedVideoBackground;
     });
+  }
+
+  startNoiseSuppressionEffect(): Promise<void> {
+    throw new Error('startNoiseSuppressionEffect not implemented.');
+  }
+
+  stopNoiseSuppressionEffect(): Promise<void> {
+    throw new Error('stopNoiseSuppressionEffect not implemented.');
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

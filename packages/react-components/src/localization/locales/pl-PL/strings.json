@@ -452,11 +452,37 @@
       "title": "Zakończono transkrypcję.",
       "message": "W tej chwili tylko Ty nagrywasz to spotkanie.",
       "dismissButtonAriaLabel": "Zamknij"
+    },
+    "assignedBreakoutRoomOpened": {
+      "title": "Przeniesiemy Cię do przypisanego pokoju w ciągu 5 sekund.",
+      "dismissButtonAriaLabel": "Zamknij"
+    },
+    "assignedBreakoutRoomChanged": {
+      "title": "Twój osobny pokój został zmieniony",
+      "message": "Przeniesiemy Cię do przypisanego pokoju w ciągu 5 sekund.",
+      "dismissButtonAriaLabel": "Zamknij"
+    },
+    "assignedBreakoutRoomOpenedPromptJoin": {
+      "title": "Dołączyć do osobnego pokoju?",
+      "message": "Przypisano Cię do osobnego pokoju.",
+      "dismissButtonAriaLabel": "Zamknij",
+      "primaryButtonLabel": "Dołącz do pokoju",
+      "secondaryButtonLabel": "Później"
+    },
+    "breakoutRoomJoined": {
+      "title": "Dołączono do osobnego pokoju.",
+      "dismissButtonAriaLabel": "Zamknij"
+    },
+    "breakoutRoomClosingSoon": {
+      "title": "Limit czasu pokoju wkrótce wygaśnie.",
+      "message": "Ten pokój zostanie zamknięty za 30 sekund",
+      "dismissButtonAriaLabel": "Zamknij"
     }
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "Udostępniasz ekran",
     "screenShareLoadingMessage": "Ładowanie ekranu uczestnika {participant}",
+    "localScreenShareLoadingMessage": "Ładowanie ekranu",
     "localVideoLabel": "Ty",
     "localVideoCameraSwitcherLabel": "Przełącz kamerę",
     "localVideoMovementLabel": "Ruchomy lokalny kafelek wideo",
@@ -626,9 +652,12 @@
   },
   "IncomingCallNotification": {
     "incomingCallNotificationPlaceholderId": "Nieznany użytkownik",
-    "incomingCallNotificationPlaceholderAlert": "Przychodzące połączenie głosowe",
+    "incomingCallNotificationPlaceholderAlert": "{callerName} dzwoni",
     "incomingCallNoticicationAcceptWithAudioAriaLabel": "Zaakceptuj z dźwiękiem",
     "incomingCallNoticicationAcceptWithVideoAriaLabel": "Zaakceptuj z wideo",
-    "incomingCallNoticicationRejectAriaLabel": "Odrzuć"
+    "incomingCallNoticicationRejectAriaLabel": "Odrzuć",
+    "incomingCallNotificationAcceptButtonLabel": "Akceptuj",
+    "incomingCallNotificationRejectButtonLabel": "Odrzuć",
+    "incomingCallNotificationAccceptWithVideoButtonLabel": "Odbierz jako połączenie wideo"
   }
 }

@@ -26,7 +26,7 @@ import { VideoEffectsFeature } from '@azure/communication-calling';
 import { CommunicationTokenCredential } from '@azure/communication-common';
 import { AccessToken } from '@azure/core-auth';
 
-import EventEmitter from 'events';
+import { EventEmitter } from 'events';
 import { CallClientState } from './CallClientState';
 import { CallContext } from './CallContext';
 import { InternalCallContext } from './InternalCallContext';
@@ -394,32 +394,10 @@ export function createMockApiFeatures(
 
     // Default one if none provided
     const generic = addMockEmitter({
+      ...new StubDiagnosticsCallFeatureImpl(),
       name: 'Default',
       isRecordingActive: false,
-      isTranscriptionActive: false,
-      /* eslint-enable @typescript-eslint/no-unused-vars */
-      media: {
-        getLatest(): LatestMediaDiagnostics {
-          return {};
-        },
-        on(): void {
-          /* Stub to appease types */
-        },
-        off(): void {
-          /* Stub to appease types */
-        }
-      },
-      network: {
-        getLatest(): LatestNetworkDiagnostics {
-          return {};
-        },
-        on(): void {
-          /* Stub to appease types */
-        },
-        off(): void {
-          /* Stub to appease types */
-        }
-      }
+      isTranscriptionActive: false
     });
     return generic;
   };

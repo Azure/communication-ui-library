@@ -28,21 +28,6 @@ export type {
   AreParamEqual
 } from '../../acs-ui-common/src';
 
-/* @conditional-compile-remove(composite-js-helpers) */
-export {
-  loadOutboundCallComposite,
-  loadCallComposite,
-  loadChatComposite,
-  loadCallWithChatComposite
-} from '../../acs-ui-javascript-loaders/src';
-/* @conditional-compile-remove(composite-js-helpers) */
-export type {
-  OutboundCallCompositeLoaderProps,
-  CallCompositeLoaderProps,
-  ChatCompositeLoaderProps,
-  CallWithChatCompositeLoaderProps
-} from '../../acs-ui-javascript-loaders/src';
-
 // Not to export chat/calling specific hook from binding package
 export type {
   CallClientProviderProps,
@@ -55,6 +40,9 @@ export type {
 } from '../../calling-component-bindings/src';
 
 export type { VideoBackgroundEffectsDependency, CallingHandlersOptions } from '../../calling-component-bindings/src';
+
+/* @conditional-compile-remove(DNS) */
+export type { DeepNoiseSuppressionEffectDependency } from '../../calling-component-bindings/src';
 
 export type { CaptionsOptions } from '../../calling-component-bindings/src';
 
@@ -109,7 +97,7 @@ export type {
 export type { HoldButtonSelector } from '../../calling-component-bindings/src';
 
 export type { RaiseHandButtonSelector } from '../../calling-component-bindings/src';
-/* @conditional-compile-remove(notifications) */
+
 export type { NotificationStackSelector } from '../../calling-component-bindings/src';
 /* @conditional-compile-remove(one-to-n-calling) */
 export type { IncomingCallStackSelector } from '../../calling-component-bindings/src';
@@ -190,7 +178,7 @@ export type {
   IncomingCallNotificationStrings,
   IncomingCallNotificationStyles,
   IncomingCallStackProps,
-  ActiveIncomingCall
+  IncomingCallStackCall
 } from '../../react-components/src';
 
 /* @conditional-compile-remove(call-readiness) */
@@ -380,7 +368,7 @@ export { defaultAttachmentMenuAction } from '../../react-components/src';
 export type { ChatAttachmentType } from '../../react-components/src';
 export type { InlineImageOptions, InlineImage } from '../../react-components/src';
 /* @conditional-compile-remove(rich-text-editor) */
-export type { RichTextEditorOptions, RichTextEditBoxOptions, RichTextSendBoxOptions } from '../../react-components/src';
+export type { RichTextEditorOptions, RichTextEditBoxOptions } from '../../react-components/src';
 /* @conditional-compile-remove(PSTN-calls) */
 export type { HoldButtonProps, HoldButtonStrings } from '../../react-components/src';
 export type { VideoTileStrings } from '../../react-components/src';
@@ -444,9 +432,9 @@ export type { SurveyIssues } from '../../react-components/src';
 export type { SurveyIssuesHeadingStrings } from '../../react-components/src';
 
 export type { CallSurveyImprovementSuggestions } from '../../react-components/src';
-/* @conditional-compile-remove(notifications) */
+
 export { NotificationStack, Notification } from '../../react-components/src';
-/* @conditional-compile-remove(notifications) */
+
 export type {
   NotificationStackProps,
   NotificationProps,

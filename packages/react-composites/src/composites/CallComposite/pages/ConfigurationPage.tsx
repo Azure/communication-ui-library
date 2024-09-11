@@ -171,6 +171,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
           lineHeightPx={16 * 1.5}
           bufferHeightPx={16}
           text={locale.strings.call.configurationPageTitle}
+          role="heading"
         />
       </Stack.Item>
     ) : (
@@ -293,6 +294,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
             isPermissionsModalDismissed={isPermissionsModalDismissed}
             setIsPermissionsModalDismissed={setIsPermissionsModalDismissed}
             onPermissionsTroubleshootingClick={onPermissionsTroubleshootingClick}
+            doNotPromptCamera={deviceChecks?.camera === 'doNotPrompt'}
           />
         )
       }

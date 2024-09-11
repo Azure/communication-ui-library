@@ -81,11 +81,14 @@ export interface CameraButtonStrings {
    * Title for primary action section of split button
    */
   cameraPrimaryActionSplitButtonTitle?: string;
-
   /**
    * Title for video effects menu item
    */
   videoEffectsMenuItemTitle?: string;
+  /**
+   * Aria description for camera button
+   */
+  cameraButtonAriaDescription?: string;
 }
 
 /**
@@ -296,6 +299,7 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
         }
         menuIconProps={props.menuIconProps ?? !props.enableDeviceSelectionMenu ? { hidden: true } : undefined}
         split={props.split ?? props.enableDeviceSelectionMenu}
+        aria-description={strings.cameraButtonAriaDescription}
         aria-roledescription={props.enableDeviceSelectionMenu ? strings.cameraButtonSplitRoleDescription : undefined}
         splitButtonAriaLabel={props.enableDeviceSelectionMenu ? splitButtonAriaString : undefined}
         splitButtonMenuProps={splitButtonMenuProps}

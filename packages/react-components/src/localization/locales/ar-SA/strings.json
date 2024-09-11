@@ -452,11 +452,37 @@
       "title": "توقفت كتابة الحديث.",
       "message": "أنت الآن تسجل هذا الاجتماع فقط.",
       "dismissButtonAriaLabel": "إغلاق"
+    },
+    "assignedBreakoutRoomOpened": {
+      "title": "سننقلك إلى الغرفة المعينة خلال 5 ثوان.",
+      "dismissButtonAriaLabel": "إغلاق"
+    },
+    "assignedBreakoutRoomChanged": {
+      "title": "تم تغيير الغرفة الفرعية الخاصة بك",
+      "message": "سننقلك إلى الغرفة المعينة خلال 5 ثوان.",
+      "dismissButtonAriaLabel": "إغلاق"
+    },
+    "assignedBreakoutRoomOpenedPromptJoin": {
+      "title": "هل تريد الانضمام إلى الغرفة الفرعية؟",
+      "message": "تم تعيينك إلى غرفة اجتماع فرعية.",
+      "dismissButtonAriaLabel": "إغلاق",
+      "primaryButtonLabel": "الانضمام إلى الغرفة",
+      "secondaryButtonLabel": "لاحقاً"
+    },
+    "breakoutRoomJoined": {
+      "title": "لقد قمت بالانضمام إلى غرفة الاجتماع فرعية.",
+      "dismissButtonAriaLabel": "‏إغلاق"
+    },
+    "breakoutRoomClosingSoon": {
+      "title": "أوشكت صلاحية الحد الزمني للغرفة على الانتهاء.",
+      "message": "سيتم إغلاق هذه الغرفة في غضون 30 ثانية.",
+      "dismissButtonAriaLabel": "‏إغلاق"
     }
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "أنت تشارك شاشتك",
     "screenShareLoadingMessage": "يتم الآن تحميل شاشة {participant}",
+    "localScreenShareLoadingMessage": "تحميل الشاشة",
     "localVideoLabel": "أنت",
     "localVideoCameraSwitcherLabel": "تبديل الكاميرا",
     "localVideoMovementLabel": "لوحة فيديو محلية قابلة للنقل",
@@ -626,9 +652,12 @@
   },
   "IncomingCallNotification": {
     "incomingCallNotificationPlaceholderId": "مستخدم غير معروف",
-    "incomingCallNotificationPlaceholderAlert": "مكالمة واردة",
+    "incomingCallNotificationPlaceholderAlert": "{callerName} يتصل",
     "incomingCallNoticicationAcceptWithAudioAriaLabel": "قبول مع الصوت",
     "incomingCallNoticicationAcceptWithVideoAriaLabel": "قبول مع الفيديو",
-    "incomingCallNoticicationRejectAriaLabel": "رفض"
+    "incomingCallNoticicationRejectAriaLabel": "رفض",
+    "incomingCallNotificationAcceptButtonLabel": "قبول",
+    "incomingCallNotificationRejectButtonLabel": "رفض",
+    "incomingCallNotificationAccceptWithVideoButtonLabel": "قبول مع الفيديو"
   }
 }

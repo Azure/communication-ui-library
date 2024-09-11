@@ -4,7 +4,7 @@
 import { StartCallOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(one-to-n-calling) */
 import { IncomingCallCommon } from '@azure/communication-calling';
-/* @conditional-compile-remove(PSTN-calls) */
+/* @conditional-compile-remove(teams-identity-support-beta) */
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support) */
 import { TeamsCall, TeamsCallAgent, TeamsCallAgentOptions } from '@azure/communication-calling';
@@ -13,7 +13,7 @@ import {
   isCommunicationUserIdentifier,
   isMicrosoftTeamsAppIdentifier
 } from '@azure/communication-common';
-/* @conditional-compile-remove(PSTN-calls) */
+/* @conditional-compile-remove(teams-identity-support-beta) */
 import { isPhoneNumberIdentifier } from '@azure/communication-common';
 import { Common, _toCommunicationIdentifier } from '@internal/acs-ui-common';
 import { StatefulCallClient, StatefulDeviceManager } from '@internal/calling-stateful-client';
@@ -29,6 +29,8 @@ import {
   CommonCallingHandlers,
   VideoBackgroundEffectsDependency
 } from './createCommonHandlers';
+/* @conditional-compile-remove(DNS) */
+import { DeepNoiseSuppressionEffectDependency } from './createCommonHandlers';
 /**
  * Object containing all the teams call handlers required for calling components.
  *
@@ -42,10 +44,6 @@ export interface TeamsCallingHandlers extends CommonCallingHandlers {
     participants: CommunicationIdentifier[],
     options?: StartCallOptions
   ) => undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall;
-  /* @conditional-compile-remove(one-to-n-calling) */
-  onAcceptCall: (incomingCallId: string, useVideo?: boolean) => Promise<void>;
-  /* @conditional-compile-remove(one-to-n-calling) */
-  onRejectCall: (incomingCallId: string) => Promise<void>;
 }
 
 /**
@@ -64,6 +62,8 @@ export const createDefaultTeamsCallingHandlers = memoizeOne(
     call?: TeamsCall,
     options?: {
       onResolveVideoBackgroundEffectsDependency?: () => Promise<VideoBackgroundEffectsDependency>;
+      /* @conditional-compile-remove(DNS) */
+      onResolveDeepNoiseSuppressionDependency?: () => Promise<DeepNoiseSuppressionEffectDependency>;
     }
   ): TeamsCallingHandlers => {
     return {
@@ -84,7 +84,7 @@ export const createDefaultTeamsCallingHandlers = memoizeOne(
 
         return undefined;
       },
-      /* @conditional-compile-remove(PSTN-calls) */
+      /* @conditional-compile-remove(teams-identity-support-beta) */
       onAddParticipant: async (
         userId: string | CommunicationIdentifier,
         options?: AddPhoneNumberOptions

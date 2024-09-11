@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "area": "feature",
-  "workstream": "RTE",
-  "comment": "This release brings major enhancements to the rich text editor feature.  -- We now support enabling rich text editor when using either the Chat Composite or the Call with Chat Composite.-- We have also added support for sending/editing messages that include images when in a 'Teams Interop' meeting using the Call with Chat Composite. -- We now support setting a Text Only MessagingPolicy on the ChatComposite. This prevents attachments and inline images to be added as part of a message in Send Box and Message Edit Box.-- There is also an additional onPaste Callback that can be used to customize content pasted to rich text editor.",
-  "packageName": "@azure/communication-react",
-  "email": "73612854+palatter@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

@@ -242,11 +242,10 @@ export const controlsToAdd = {
     defaultValue: '',
     name: 'Call locator (ACS group ID, Teams meeting link, or Room ID)'
   },
-  callParticipantsLocator: {
-    control: 'array',
-    defaultValue: ['+###########'],
-    name: 'Call locator (participants phone numbers)',
-    type: { name: 'string', required: true }
+  targetParticipantsPSTN: {
+    control: 'text',
+    defaultValue: '',
+    name: 'Phone number(s) to call (comma separated)'
   },
   callModalAlertText: { control: 'text', defaultValue: 'Incoming Video Call', name: 'Alert Text' },
   callToastAlertText: { control: 'text', defaultValue: 'Incoming Call', name: 'Alert Text' },
@@ -573,6 +572,10 @@ export const defaultCallWithChatCompositeHiddenControls = {
   joinInvitationURL: hiddenControl,
   rtl: hiddenControl,
   options: hiddenControl,
+  locale: hiddenControl,
+  icons: hiddenControl,
+  onFetchAvatarPersonaData: hiddenControl,
+  onFetchParticipantMenuItems: hiddenControl,
   formFactor: hiddenControl // formFactor is hidden by default and compositeFormFactor is used as a prop instead to workaround a bug where formFactor is not put in the correct order when the controls are generated
 };
 

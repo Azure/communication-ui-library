@@ -1,4 +1,5 @@
-import { Canvas, Description, Meta, Source } from '@storybook/blocks';
+import { Canvas, Description, Meta, Source, ArgTypes } from '@storybook/blocks';
+import { RaiseHandButton } from '@azure/communication-react';
 import * as RaiseHandStories from './index.stories';
 import CustomButtonExampleText from '!!raw-loader!./snippets/Custom.snippet.tsx';
 import DefaultButtonExampleText from '!!raw-loader!./snippets/Default.snippet.tsx';
@@ -41,3 +42,5 @@ Note: When overriding a render, like using `onRenderIcon` or `onRenderText`, do 
 ## Props
 
 `RaiseHandButton` features all props a [FluentUI Button](https://developer.microsoft.com/fluentui#/controls/web/button) offers, with the following additional properties.
+
+<ArgTypes of={RaiseHandButton} />

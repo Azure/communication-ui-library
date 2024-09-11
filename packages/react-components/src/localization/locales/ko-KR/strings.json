@@ -452,11 +452,37 @@
       "title": "대화 내용 기록을 중단했습니다.",
       "message": "이제 이 모임의 녹음/녹화만 진행합니다.",
       "dismissButtonAriaLabel": "닫기"
+    },
+    "assignedBreakoutRoomOpened": {
+      "title": "5초 후에 할당된 채팅방으로 이동합니다.",
+      "dismissButtonAriaLabel": "닫기"
+    },
+    "assignedBreakoutRoomChanged": {
+      "title": "소규모 회의실이 변경되었습니다.",
+      "message": "5초 후에 할당된 채팅방으로 이동합니다.",
+      "dismissButtonAriaLabel": "닫기"
+    },
+    "assignedBreakoutRoomOpenedPromptJoin": {
+      "title": "소규모 회의실에 참가하시겠어요?",
+      "message": "사용자가 소규모 회의실에 배정되었습니다.",
+      "dismissButtonAriaLabel": "닫기",
+      "primaryButtonLabel": "소회의실 참가",
+      "secondaryButtonLabel": "나중에"
+    },
+    "breakoutRoomJoined": {
+      "title": "소회의실에 참가했습니다.",
+      "dismissButtonAriaLabel": "닫기"
+    },
+    "breakoutRoomClosingSoon": {
+      "title": "소회의실 시간 제한이 곧 만료됩니다.",
+      "message": "이 소회의실은 30초 후에 닫힙니다.",
+      "dismissButtonAriaLabel": "닫기"
     }
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "화면을 공유 중입니다.",
     "screenShareLoadingMessage": "{participant} 님의 화면 로드 중",
+    "localScreenShareLoadingMessage": "화면 로드 중",
     "localVideoLabel": "나",
     "localVideoCameraSwitcherLabel": "카메라 전환",
     "localVideoMovementLabel": "이동 가능한 로컬 비디오 타일",
@@ -626,9 +652,12 @@
   },
   "IncomingCallNotification": {
     "incomingCallNotificationPlaceholderId": "알 수 없는 사용자",
-    "incomingCallNotificationPlaceholderAlert": "수신 전화",
+    "incomingCallNotificationPlaceholderAlert": "{callerName}이(가) 호출 중입니다.",
     "incomingCallNoticicationAcceptWithAudioAriaLabel": "오디오 수락",
     "incomingCallNoticicationAcceptWithVideoAriaLabel": "비디오 수락",
-    "incomingCallNoticicationRejectAriaLabel": "거부"
+    "incomingCallNoticicationRejectAriaLabel": "거부",
+    "incomingCallNotificationAcceptButtonLabel": "수락",
+    "incomingCallNotificationRejectButtonLabel": "거절",
+    "incomingCallNotificationAccceptWithVideoButtonLabel": "영상 수락"
   }
 }

@@ -13,8 +13,9 @@ export const SvgWithWordWrapping = (props: {
   text: string;
   lineHeightPx: number;
   bufferHeightPx: number;
+  role?: string;
 }): JSX.Element => {
-  const { width, text, lineHeightPx, bufferHeightPx } = props;
+  const { width, text, lineHeightPx, bufferHeightPx, role } = props;
   const svgRef = useRef<SVGSVGElement>(null);
   const calculationTextElement = useRef<SVGTextElement>(null);
   const visibleTextElement = useRef<SVGTextElement>(null);
@@ -38,7 +39,7 @@ export const SvgWithWordWrapping = (props: {
   }, [width, lineHeightPx, text]);
 
   return (
-    <svg width={width} height={height + bufferHeightPx} ref={svgRef} xmlns="http://www.w3.org/2000/svg">
+    <svg role={role} width={width} height={height + bufferHeightPx} ref={svgRef} xmlns="http://www.w3.org/2000/svg">
       <text height={0} ref={calculationTextElement} style={{ visibility: 'hidden' }}>
         {text}
       </text>

@@ -3,6 +3,7 @@
 
 import type { EditorPlugin, IEditor, PluginEvent } from 'roosterjs-content-model-types';
 import { PluginEventType } from '../../utils/RichTextEditorUtils';
+import { ChangeSource } from 'roosterjs-content-model-dom';
 
 /**
  * An update mode to indicate when the content update happens
@@ -27,7 +28,7 @@ export class UpdateContentPlugin implements EditorPlugin {
   private editor: IEditor | null = null;
   private disposer: (() => void) | null = null;
   // don't set callback in constructor to be able to update callback without plugin recreation
-  onUpdate: ((event: UpdateEvent, imageSrcArray?: Array<string>) => void) | null = null;
+  onUpdate: ((event: UpdateEvent, shouldRemoveInlineImages?: boolean) => void) | null = null;
 
   getName(): string {
     return 'UpdateContentPlugin';
@@ -57,7 +58,6 @@ export class UpdateContentPlugin implements EditorPlugin {
     if (this.onUpdate === null) {
       return;
     }
-    let imageSrcArray: Array<string> | undefined;
 
     switch (event.eventType) {
       case PluginEventType.EditorReady:
@@ -70,22 +70,17 @@ export class UpdateContentPlugin implements EditorPlugin {
 
       case PluginEventType.ContentChanged:
         if (
-          event.source.toLowerCase() === 'cut' ||
-          (event.source.toLowerCase() === 'keyboard' && (event.data === Keys.BACKSPACE || event.data === Keys.DELETE))
+          event.source === ChangeSource.Cut ||
+          // We need to add the paste source here for an edge case:
+          // when user select an image that's already in the editor, then paste in an image to replace the selected one,
+          // we will only get a paste event.
+          // In this case, we need to update the removedInlineImage array to include the replaced image.
+          event.source === ChangeSource.Paste ||
+          (event.source === ChangeSource.Keyboard && (event.data === Keys.BACKSPACE || event.data === Keys.DELETE))
         ) {
-          imageSrcArray = [];
-          event.contentModel?.blocks.map((block) => {
-            if (block.blockType === 'Paragraph') {
-              const segments = block.segments;
-              segments.map((segment) => {
-                if (segment.segmentType === 'Image') {
-                  imageSrcArray?.push(segment.src);
-                }
-              });
-            }
-          });
+          this.onUpdate(UpdateEvent.ContentChanged, true);
         }
-        this.onUpdate(UpdateEvent.ContentChanged, imageSrcArray);
+        this.onUpdate(UpdateEvent.ContentChanged);
         break;
 
       case PluginEventType.Input:

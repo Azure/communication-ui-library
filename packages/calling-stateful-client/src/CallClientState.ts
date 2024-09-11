@@ -20,6 +20,15 @@ import {
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(breakout-rooms) */
 import { BreakoutRoom, BreakoutRoomsSettings } from '@azure/communication-calling';
+/* @conditional-compile-remove(remote-ufd) */
+import type {
+  ServerDiagnosticType,
+  MediaDiagnosticType,
+  NetworkDiagnosticType,
+  DiagnosticValueType,
+  DiagnosticQuality,
+  DiagnosticFlag
+} from '@azure/communication-calling';
 import { TeamsCallInfo } from '@azure/communication-calling';
 import { CallInfo } from '@azure/communication-calling';
 
@@ -198,6 +207,7 @@ export interface BreakoutRoomsState {
   assignedBreakoutRoom?: BreakoutRoom;
   breakoutRoomSettings?: BreakoutRoomsSettings;
   breakoutRoomOriginCallId?: string;
+  breakoutRoomDisplayName?: string;
 }
 
 /**
@@ -375,7 +385,6 @@ export interface RemoteVideoStreamState {
    * Proxy of {@link @azure/communication-calling#RemoteVideoStream.isReceiving}.
    * @public
    */
-  /* @conditional-compile-remove(video-stream-is-receiving-flag) */
   isReceiving: boolean;
   /**
    * {@link VideoStreamRendererView} that is managed by createView/disposeView in {@link StatefulCallClient}
@@ -470,6 +479,11 @@ export interface RemoteParticipantState {
    * Proxy of {@link @azure/communication-calling#SpotlightCallFeature.spotlightedParticipants}.
    */
   spotlight?: SpotlightState;
+  /* @conditional-compile-remove(remote-ufd) */
+  /**
+   * The diagnostic status of RemoteParticipant{@link @azure/communication-calling#RemoteDiagnostics}.
+   */
+  diagnostic?: RemoteDiagnosticState;
 }
 
 /**
@@ -743,7 +757,7 @@ export interface IncomingCallState {
 
 /**
  * State only version of {@link @azure/communication-calling#TeamsIncomingCall}
- * @beta
+ * @public
  */
 export interface TeamsIncomingCallState {
   /**
@@ -889,6 +903,13 @@ export interface CallClientState {
    * See documentation of {@Link CallErrors} for details.
    */
   latestErrors: CallErrors;
+  /* @conditional-compile-remove(breakout-rooms) */
+  /**
+   * Stores the latest notifications.
+   *
+   * See documentation of {@Link CallNotifications} for details.
+   */
+  latestNotifications: CallNotifications;
   /* @conditional-compile-remove(PSTN-calls) */
   /**
    * A phone number in E.164 format that will be used to represent callers identity.
@@ -1007,6 +1028,33 @@ export type CallErrorTarget =
   | 'Call.muteAllRemoteParticipants'
   | 'Call.setConstraints';
 
+/* @conditional-compile-remove(breakout-rooms) */
+/**
+ * @public
+ */
+export type CallNotifications = {
+  [target in NotificationTarget]: CallNotification;
+};
+
+/* @conditional-compile-remove(breakout-rooms) */
+/**
+ * @public
+ */
+export interface CallNotification {
+  target: NotificationTarget;
+
+  timestamp: Date;
+}
+
+/* @conditional-compile-remove(breakout-rooms) */
+/** @public */
+export type NotificationTarget =
+  | 'assignedBreakoutRoomOpened'
+  | 'assignedBreakoutRoomOpenedPromptJoin'
+  | 'assignedBreakoutRoomChanged'
+  | 'breakoutRoomJoined'
+  | 'breakoutRoomClosingSoon';
+
 /**
  * State only proxy for {@link @azure/communication-calling#DiagnosticsCallFeature}.
  *
@@ -1023,6 +1071,18 @@ export interface DiagnosticsCallFeatureState {
    */
   media: MediaDiagnosticsState;
 }
+
+/* @conditional-compile-remove(remote-ufd) */
+/**
+ * State only proxy for {@link @azure/communication-calling#DiagnosticsCallFeature}.
+ *
+ * @beta
+ */
+export declare type RemoteDiagnosticState = {
+  readonly diagnostic: NetworkDiagnosticType | MediaDiagnosticType | ServerDiagnosticType;
+  readonly value: DiagnosticQuality | DiagnosticFlag;
+  readonly valueType: DiagnosticValueType;
+};
 
 /**
  * State only proxy for {@link @azure/communication-calling#NetworkDiagnostics}.

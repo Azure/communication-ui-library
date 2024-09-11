@@ -1,5 +1,6 @@
 import { Image, Stack, Text } from '@fluentui/react';
-import { Canvas, Description, Meta } from '@storybook/blocks';
+import { Canvas, Description, Meta, ArgTypes } from '@storybook/blocks';
+import { VideoGallery } from '@azure/communication-react';
 import { yellowBannerPalette } from '../../BetaBanners/BannerPalettes';
 import { StorybookBanner } from '../../BetaBanners/StorybookBanner';
 import * as VideoGalleryStories from './index.stories';
@@ -356,4 +357,4 @@ The 3x3 video gallery allows customers to have 9 remote videos rendering with th
 
 ## Props
 
-tbd...
+<ArgTypes of={VideoGallery} />

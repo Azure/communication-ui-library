@@ -452,11 +452,37 @@
       "title": "Přepis se zastavil.",
       "message": "Nyní tuto schůzku pouze nahráváte.",
       "dismissButtonAriaLabel": "Zavřít"
+    },
+    "assignedBreakoutRoomOpened": {
+      "title": "Za 5 sekund vás přesuneme do přiřazené místnosti.",
+      "dismissButtonAriaLabel": "Zavřít"
+    },
+    "assignedBreakoutRoomChanged": {
+      "title": "Vaše skupinová místnost se změnila",
+      "message": "Za 5 sekund vás přesuneme do přiřazené místnosti.",
+      "dismissButtonAriaLabel": "Zavřít"
+    },
+    "assignedBreakoutRoomOpenedPromptJoin": {
+      "title": "Připojit se ke skupinové místnosti?",
+      "message": "Byli jste přiřazeni ke skupinové místnosti.",
+      "dismissButtonAriaLabel": "Zavřít",
+      "primaryButtonLabel": "Připojit se k místnosti",
+      "secondaryButtonLabel": "Později"
+    },
+    "breakoutRoomJoined": {
+      "title": "Připojili jste se ke skupinové místnosti.",
+      "dismissButtonAriaLabel": "Zavřít"
+    },
+    "breakoutRoomClosingSoon": {
+      "title": "Časový limit místnosti brzy vyprší.",
+      "message": "Tato místnost se zavře během 30 sekund.",
+      "dismissButtonAriaLabel": "Zavřít"
     }
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "Sdílíte obrazovku",
     "screenShareLoadingMessage": "Načítání obrazovky {participant}",
+    "localScreenShareLoadingMessage": "Načítá se obrazovka",
     "localVideoLabel": "Vy",
     "localVideoCameraSwitcherLabel": "Přepnout kameru",
     "localVideoMovementLabel": "Dlaždice s místním videem s možností přesunutí",
@@ -626,9 +652,12 @@
   },
   "IncomingCallNotification": {
     "incomingCallNotificationPlaceholderId": "Neznámý uživatel",
-    "incomingCallNotificationPlaceholderAlert": "Příchozí hovor",
+    "incomingCallNotificationPlaceholderAlert": "Volá {callerName}",
     "incomingCallNoticicationAcceptWithAudioAriaLabel": "Přijmout se zvukem",
     "incomingCallNoticicationAcceptWithVideoAriaLabel": "Přijmout s videem",
-    "incomingCallNoticicationRejectAriaLabel": "Odmítnout"
+    "incomingCallNoticicationRejectAriaLabel": "Odmítnout",
+    "incomingCallNotificationAcceptButtonLabel": "Přijmout",
+    "incomingCallNotificationRejectButtonLabel": "Odmítnout",
+    "incomingCallNotificationAccceptWithVideoButtonLabel": "Přijmout s videem"
   }
 }

@@ -24,7 +24,7 @@ import { _formatString } from '@internal/acs-ui-common';
 /**
  * Strings for the incoming call notification component.
  *
- * @beta
+ * @public
  */
 export interface IncomingCallNotificationStrings {
   /**
@@ -59,12 +59,16 @@ export interface IncomingCallNotificationStrings {
    * label for the reject button in the incoming call notification.
    */
   incomingCallNotificationRejectButtonLabel?: string;
+  /**
+   * Aria label for the incoming call dismiss button
+   */
+  incomingCallNotificationDismissButtonAriaLabel?: string;
 }
 
 /**
  * Styles for the incoming call notification component.
  *
- * @beta
+ * @public
  */
 export interface IncomingCallNotificationStyles {
   /**
@@ -88,7 +92,7 @@ export interface IncomingCallNotificationStyles {
 /**
  * Properties for the incoming call notification component.
  *
- * @beta
+ * @public
  */
 export interface IncomingCallNotificationProps {
   /**
@@ -146,7 +150,7 @@ export interface IncomingCallNotificationProps {
 /**
  * A Notification component that is to be used to represent incoming calls to the end user.
  * Allows the user to accept or reject the incoming call.
- * @beta
+ * @public
  */
 export const IncomingCallNotification = (props: IncomingCallNotificationProps): JSX.Element => {
   const {
@@ -217,15 +221,26 @@ export const IncomingCallNotification = (props: IncomingCallNotificationProps): 
         </Stack>
 
         <Stack grow horizontalAlign="center" style={{ alignItems: 'flex-start', fontFamily: 'Segoe UI' }}>
-          <Stack style={{ fontSize: '0.75rem' }}>
-            <Text>
-              {alertText ??
-                strings?.incomingCallNotificationPlaceholderAlert ??
-                /* @conditional-compile-remove(one-to-n-calling) */ formattedMessageString}
-            </Text>
-          </Stack>
+          <Text
+            tabIndex={0}
+            aria-live={'assertive'}
+            aria-label={alertText ?? /* @conditional-compile-remove(one-to-n-calling) */ formattedMessageString}
+          >
+            {alertText ??
+              strings?.incomingCallNotificationPlaceholderAlert ??
+              /* @conditional-compile-remove(one-to-n-calling) */ formattedMessageString}
+          </Text>
         </Stack>
-        <IconButton iconProps={{ iconName: 'cancel' }} onClick={onDismiss} styles={dismissButtonStyle(theme)} />
+        <IconButton
+          /* @conditional-compile-remove(one-to-n-calling) */
+          ariaLabel={
+            strings?.incomingCallNotificationDismissButtonAriaLabel ??
+            localeStrings.incomingCallNotificationDismissButtonAriaLabel
+          }
+          iconProps={{ iconName: 'cancel' }}
+          onClick={onDismiss}
+          styles={dismissButtonStyle(theme)}
+        />
       </Stack>
 
       <Stack horizontal horizontalAlign={'center'} tokens={{ childrenGap: '0.5rem' }}>
@@ -249,7 +264,6 @@ export const IncomingCallNotification = (props: IncomingCallNotificationProps): 
         <DefaultButton
           styles={styles?.rejectButton ? styles.rejectButton : incomingCallRejectButtonStyle(theme)}
           onClick={() => onReject()}
-          label={'Decline'}
           iconProps={{ iconName: 'IncomingCallNotificationRejectIcon' }}
           /* @conditional-compile-remove(one-to-n-calling) */
           ariaLabel={

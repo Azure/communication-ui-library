@@ -90,4 +90,5 @@ export const CustomDataModelExampleContainer = (props: ContainerProps): JSX.Elem
   );
 };
 
-const isTeamsMeetingLink = (link: string): boolean => link.startsWith('https://teams.microsoft.com/l/meetup-join');
+const isTeamsMeetingLink = (link: string): boolean =>
+  link.startsWith('https://teams.microsoft.com/meet/') || link.startsWith('https://teams.microsoft.com/l/meetup-join');

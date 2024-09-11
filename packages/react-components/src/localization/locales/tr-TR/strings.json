@@ -452,11 +452,37 @@
       "title": "Döküm durduruldu.",
       "message": "Şu anda yalnızca bu toplantıyı kaydediyorsunuz.",
       "dismissButtonAriaLabel": "Kapat"
+    },
+    "assignedBreakoutRoomOpened": {
+      "title": "Sizi 5 saniye içinde atanan odanıza taşıyacağız.",
+      "dismissButtonAriaLabel": "Kapat"
+    },
+    "assignedBreakoutRoomChanged": {
+      "title": "Tartışma odanız değişti",
+      "message": "Sizi 5 saniye içinde atanan odanıza taşıyacağız.",
+      "dismissButtonAriaLabel": "Kapat"
+    },
+    "assignedBreakoutRoomOpenedPromptJoin": {
+      "title": "Tartışma odasına katılmak ister misiniz?",
+      "message": "Bir tartışma odasına atandınız.",
+      "dismissButtonAriaLabel": "Kapat",
+      "primaryButtonLabel": "Odaya katıl",
+      "secondaryButtonLabel": "Daha sonra"
+    },
+    "breakoutRoomJoined": {
+      "title": "Tartışma odasına katıldınız.",
+      "dismissButtonAriaLabel": "Kapat"
+    },
+    "breakoutRoomClosingSoon": {
+      "title": "Oda süre sınırı sona ermek üzere.",
+      "message": "Bu oda 30 sn. içinde kapanacak",
+      "dismissButtonAriaLabel": "Kapat"
     }
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "Ekranınızı paylaşıyorsunuz.",
     "screenShareLoadingMessage": "{participant} adlı katılımcının ekranını yükleme",
+    "localScreenShareLoadingMessage": "Ekranınız yükleniyor",
     "localVideoLabel": "Siz",
     "localVideoCameraSwitcherLabel": "Kamerayı değiştir",
     "localVideoMovementLabel": "Taşınabilir Yerel Video Kutucuğu",
@@ -626,9 +652,12 @@
   },
   "IncomingCallNotification": {
     "incomingCallNotificationPlaceholderId": "Bilinmeyen Kullanıcı",
-    "incomingCallNotificationPlaceholderAlert": "Gelen çağrı",
+    "incomingCallNotificationPlaceholderAlert": "{callerName} arıyor",
     "incomingCallNoticicationAcceptWithAudioAriaLabel": "Sesli kabul et",
     "incomingCallNoticicationAcceptWithVideoAriaLabel": "Görüntülü kabul et",
-    "incomingCallNoticicationRejectAriaLabel": "Reddet"
+    "incomingCallNoticicationRejectAriaLabel": "Reddet",
+    "incomingCallNotificationAcceptButtonLabel": "Kabul et",
+    "incomingCallNotificationRejectButtonLabel": "Reddet",
+    "incomingCallNotificationAccceptWithVideoButtonLabel": "Görüntülü Kabul Et"
   }
 }

@@ -347,7 +347,15 @@
     "muteAllDialogTitle": "Wyciszyć wszystkich?",
     "muteAllDialogContent": "Spowoduje to wyciszenie wszystkich osób na spotkaniu oprócz Ciebie.",
     "muteAllConfirmButtonLabel": "Wycisz wszystkich",
-    "muteAllCancelButtonLabel": "Anuluj"
+    "muteAllCancelButtonLabel": "Anuluj",
+    "joinBreakoutRoomButtonLabel": "Dołącz do osobnego pokoju",
+    "returnFromBreakoutRoomButtonLabel": "Opuść pokój",
+    "leaveBreakoutRoomAndMeetingButtonLabel": "Opuść spotkanie",
+    "breakoutRoomJoinedNotificationTitle": "Dołączono do osobnego pokoju „{roomName}”",
+    "joinBreakoutRoomBannerTitle": "Osobny pokój „{roomName}” jest otwarty",
+    "joinBreakoutRoomBannerButtonLabel": "Dołącz",
+    "returnFromBreakoutRoomBannerTitle": "Powrót do spotkania głównego",
+    "returnFromBreakoutRoomBannerButtonLabel": "Dołącz ponownie"
   },
   "chat": {
     "chatListHeader": "W tym czacie",
@@ -396,6 +404,8 @@
     "dialpadModalAriaLabel": "Klawiatura numeryczna",
     "dialpadCloseModalButtonAriaLabel": "Zamknij klawiaturę numeryczną",
     "openDtmfDialpadLabel": "Pokaż klawiaturę numeryczną",
-    "dtmfDialpadPlaceholderText": "Wprowadź numer"
+    "dtmfDialpadPlaceholderText": "Wprowadź numer",
+    "breakoutRoomChatPaneTitle": "Czat osobnego pokoju",
+    "chatContentSpinnerLabel": "Trwa ładowanie..."
   }
 }

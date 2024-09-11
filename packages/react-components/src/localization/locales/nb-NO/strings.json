@@ -452,11 +452,37 @@
       "title": "Transkripsjon har stoppet.",
       "message": "Du tar nå bare opp dette møtet.",
       "dismissButtonAriaLabel": "Lukk"
+    },
+    "assignedBreakoutRoomOpened": {
+      "title": "Vi flytter deg til det tilordnede rommet om fem sekunder.",
+      "dismissButtonAriaLabel": "Lukk"
+    },
+    "assignedBreakoutRoomChanged": {
+      "title": "Grupperommet er endret",
+      "message": "Vi flytter deg til det tilordnede rommet om fem sekunder.",
+      "dismissButtonAriaLabel": "Lukk"
+    },
+    "assignedBreakoutRoomOpenedPromptJoin": {
+      "title": "Bli med i grupperommet?",
+      "message": "Du har blitt tilordnet et grupperom.",
+      "dismissButtonAriaLabel": "Lukk",
+      "primaryButtonLabel": "Bli med i rom",
+      "secondaryButtonLabel": "Senere"
+    },
+    "breakoutRoomJoined": {
+      "title": "Du har blitt med i et grupperom.",
+      "dismissButtonAriaLabel": "Lukk"
+    },
+    "breakoutRoomClosingSoon": {
+      "title": "Romtidsgrensen er i ferd med å utløpe.",
+      "message": "Dette rommet blir lukket om 30 sekunder",
+      "dismissButtonAriaLabel": "Lukk"
     }
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "Du deler skjermen",
     "screenShareLoadingMessage": "Laster inn skjermen til {participant}",
+    "localScreenShareLoadingMessage": "Laster inn skjermen",
     "localVideoLabel": "Du",
     "localVideoCameraSwitcherLabel": "Bytt kamera",
     "localVideoMovementLabel": "Flyttbar lokal videoflis",
@@ -626,9 +652,12 @@
   },
   "IncomingCallNotification": {
     "incomingCallNotificationPlaceholderId": "Ukjent bruker",
-    "incomingCallNotificationPlaceholderAlert": "Innkommende anrop",
+    "incomingCallNotificationPlaceholderAlert": "{callerName} ringer",
     "incomingCallNoticicationAcceptWithAudioAriaLabel": "Godta med lyd",
     "incomingCallNoticicationAcceptWithVideoAriaLabel": "Godta med video",
-    "incomingCallNoticicationRejectAriaLabel": "Avvis"
+    "incomingCallNoticicationRejectAriaLabel": "Avvis",
+    "incomingCallNotificationAcceptButtonLabel": "Godta",
+    "incomingCallNotificationRejectButtonLabel": "Avslå",
+    "incomingCallNotificationAccceptWithVideoButtonLabel": "Svar med video"
   }
 }

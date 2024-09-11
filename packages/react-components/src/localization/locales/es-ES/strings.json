@@ -452,11 +452,37 @@
       "title": "La transcripción se ha detenido.",
       "message": "Solo está grabando esta reunión.",
       "dismissButtonAriaLabel": "Cerrar"
+    },
+    "assignedBreakoutRoomOpened": {
+      "title": "Le moveremos a la sala asignada en 5 segundos.",
+      "dismissButtonAriaLabel": "Cerrar"
+    },
+    "assignedBreakoutRoomChanged": {
+      "title": "La sala para sesión de subgrupo ha cambiado",
+      "message": "Le moveremos a la sala asignada en 5 segundos.",
+      "dismissButtonAriaLabel": "Cerrar"
+    },
+    "assignedBreakoutRoomOpenedPromptJoin": {
+      "title": "¿Quiere unirse a la sala para sesión de subgrupo?",
+      "message": "Se le ha asignado a una sala para sesión de subgrupo.",
+      "dismissButtonAriaLabel": "Cerrar",
+      "primaryButtonLabel": "Unirse a la sala",
+      "secondaryButtonLabel": "Más tarde"
+    },
+    "breakoutRoomJoined": {
+      "title": "Se ha unido a una sala para sesión de subgrupo.",
+      "dismissButtonAriaLabel": "Cerrar"
+    },
+    "breakoutRoomClosingSoon": {
+      "title": "Límite de tiempo de sala a punto de expirar.",
+      "message": "Esta sala se cerrará en 30 segundos",
+      "dismissButtonAriaLabel": "Cerrar"
     }
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "Está compartiendo su pantalla",
     "screenShareLoadingMessage": "Cargando la pantalla de {participant}",
+    "localScreenShareLoadingMessage": "Cargando la pantalla",
     "localVideoLabel": "Tú",
     "localVideoCameraSwitcherLabel": "Cambiar de cámara",
     "localVideoMovementLabel": "Mosaico de vídeo local movible",
@@ -626,9 +652,12 @@
   },
   "IncomingCallNotification": {
     "incomingCallNotificationPlaceholderId": "Usuario desconocido",
-    "incomingCallNotificationPlaceholderAlert": "Llamada entrante",
+    "incomingCallNotificationPlaceholderAlert": "{callerName} está llamando",
     "incomingCallNoticicationAcceptWithAudioAriaLabel": "Aceptar con audio",
     "incomingCallNoticicationAcceptWithVideoAriaLabel": "Aceptar con vídeo",
-    "incomingCallNoticicationRejectAriaLabel": "Rechazar"
+    "incomingCallNoticicationRejectAriaLabel": "Rechazar",
+    "incomingCallNotificationAcceptButtonLabel": "Aceptar",
+    "incomingCallNotificationRejectButtonLabel": "Rechazar",
+    "incomingCallNotificationAccceptWithVideoButtonLabel": "Aceptar con vídeo"
   }
 }

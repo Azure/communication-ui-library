@@ -452,11 +452,37 @@
       "title": "听录已停止。",
       "message": "现在仅录制此会议。",
       "dismissButtonAriaLabel": "关闭"
+    },
+    "assignedBreakoutRoomOpened": {
+      "title": "我们将在 5 秒后将你移动到你分配的聊天室。",
+      "dismissButtonAriaLabel": "关闭"
+    },
+    "assignedBreakoutRoomChanged": {
+      "title": "你的分组讨论室已更改",
+      "message": "我们将在 5 秒后将你移动到你分配的聊天室。",
+      "dismissButtonAriaLabel": "关闭"
+    },
+    "assignedBreakoutRoomOpenedPromptJoin": {
+      "title": "要加入分组讨论室吗?",
+      "message": "已将你分配到一间分组讨论室。",
+      "dismissButtonAriaLabel": "关闭",
+      "primaryButtonLabel": "加入分组讨论室",
+      "secondaryButtonLabel": "以后再说"
+    },
+    "breakoutRoomJoined": {
+      "title": "你已加入分组讨论室。",
+      "dismissButtonAriaLabel": "关闭"
+    },
+    "breakoutRoomClosingSoon": {
+      "title": "分组讨论室时间限制即将过期。",
+      "message": "此分组讨论室将在 30 秒内关闭",
+      "dismissButtonAriaLabel": "关闭"
     }
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "你正在共享你的屏幕",
     "screenShareLoadingMessage": "正在加载 {participant} 的屏幕",
+    "localScreenShareLoadingMessage": "正在加载屏幕",
     "localVideoLabel": "你",
     "localVideoCameraSwitcherLabel": "切换相机",
     "localVideoMovementLabel": "可移动本地小窗视频",
@@ -626,9 +652,12 @@
   },
   "IncomingCallNotification": {
     "incomingCallNotificationPlaceholderId": "未知用户",
-    "incomingCallNotificationPlaceholderAlert": "传入呼叫",
+    "incomingCallNotificationPlaceholderAlert": "{callerName} 正在通话",
     "incomingCallNoticicationAcceptWithAudioAriaLabel": "语音接听",
     "incomingCallNoticicationAcceptWithVideoAriaLabel": "视频接听",
-    "incomingCallNoticicationRejectAriaLabel": "拒绝"
+    "incomingCallNoticicationRejectAriaLabel": "拒绝",
+    "incomingCallNotificationAcceptButtonLabel": "接受",
+    "incomingCallNotificationRejectButtonLabel": "拒绝",
+    "incomingCallNotificationAccceptWithVideoButtonLabel": "使用视频接受"
   }
 }

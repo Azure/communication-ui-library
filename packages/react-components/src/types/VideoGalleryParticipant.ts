@@ -101,6 +101,8 @@ export interface VideoGalleryLocalParticipant extends VideoGalleryParticipant {
    *
    * */
   reaction?: Reaction;
+  /** Video stream of shared screen */
+  screenShareStream?: VideoGalleryStream;
 }
 
 /**
@@ -116,7 +118,7 @@ export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
   /* @conditional-compile-remove(one-to-n-calling) */
   /* @conditional-compile-remove(PSTN-calls) */
   /**
-   * @beta
+   * @public
    * The connection state of the participant. For example, 'Hold', 'Connecting' etc.
    */
   state?: ParticipantState;

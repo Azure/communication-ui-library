@@ -86,6 +86,8 @@ export interface VideoGalleryStrings {
   screenIsBeingSharedMessage: string;
   /** String to show when remote screen share stream is loading */
   screenShareLoadingMessage: string;
+  /** String to show when local screen share stream is loading */
+  localScreenShareLoadingMessage: string;
   /** String for local video label. Default is "You" */
   localVideoLabel: string;
   /** String for local video camera switcher */
@@ -130,6 +132,8 @@ export interface VideoGalleryStrings {
   /* @conditional-compile-remove(soft-mute) */
   /** Menu text shown in Video Tile contextual menu to mute a remote participant */
   muteParticipantMenuItemLabel: string;
+  /** Text shown when waiting for others to join the call */
+  waitingScreenText: string;
 }
 
 /**
@@ -221,6 +225,8 @@ export interface VideoGalleryProps {
   onDisposeRemoteVideoStreamView?: (userId: string) => Promise<void>;
   /** Callback to dispose a remote screen share stream view */
   onDisposeRemoteScreenShareStreamView?: (userId: string) => Promise<void>;
+  /** Callback to dispose a local screen share stream view */
+  onDisposeLocalScreenShareStreamView?: () => Promise<void>;
   /** Callback to render a particpant avatar */
   onRenderAvatar?: OnRenderAvatarCallback;
   /**
@@ -372,6 +378,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     onDisposeLocalStreamView,
     onCreateRemoteStreamView,
     onDisposeRemoteScreenShareStreamView,
+    onDisposeLocalScreenShareStreamView,
     onDisposeRemoteVideoStreamView,
     styles,
     layout,
@@ -518,6 +525,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           drawerMenuHostId={drawerMenuHostId}
           strings={strings}
           reactionResources={reactionResources}
+          participantsCount={remoteParticipants.length + 1}
         />
       </Stack>
     );
@@ -546,7 +554,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     strings,
     drawerMenuHostId,
     reactionResources,
-    videoTilesOptions
+    videoTilesOptions,
+    remoteParticipants.length
   ]);
 
   const onPinParticipant = useCallback(
@@ -680,7 +689,15 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
 
   const screenShareParticipant = remoteParticipants.find((participant) => participant.screenShareStream?.isAvailable);
 
-  const localScreenShareStreamComponent = <LocalScreenShare localParticipant={localParticipant} />;
+  const localScreenShareStreamComponent = (
+    <LocalScreenShare
+      localParticipant={localParticipant}
+      renderElement={localParticipant.screenShareStream?.renderElement}
+      isAvailable={localParticipant.screenShareStream?.isAvailable}
+      onCreateLocalStreamView={onCreateLocalStreamView}
+      onDisposeLocalScreenShareStreamView={onDisposeLocalScreenShareStreamView}
+    />
+  );
 
   const remoteScreenShareComponent = screenShareParticipant && (
     <RemoteScreenShare
@@ -693,7 +710,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       localParticipant={localParticipant}
       remoteParticipants={remoteParticipants}
       reactionResources={reactionResources}
-      isPPTLive={!screenShareParticipant.screenShareStream?.id}
     />
   );
 

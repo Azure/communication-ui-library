@@ -104,11 +104,11 @@ type ChatMyMessageComponentProps = {
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   onPaste?: (event: { content: DocumentFragment }) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  onCancelInlineImageUpload?: (imageId: string, messageId: string) => void;
+  onRemoveInlineImage?: (imageAttributes: Record<string, string>, messageId: string) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  onInsertInlineImage?: (imageUrl: string, imageFileName: string, messageId: string) => void;
+  onInsertInlineImage?: (imageAttributes: Record<string, string>, messageId: string) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  inlineImages?: AttachmentMetadataInProgress[];
+  inlineImagesWithProgress?: AttachmentMetadataInProgress[];
 };
 
 /**
@@ -201,9 +201,9 @@ export const ChatMyMessageComponent = (props: ChatMyMessageComponentProps): JSX.
         /* @conditional-compile-remove(rich-text-editor-image-upload) */
         onInsertInlineImage={props.onInsertInlineImage}
         /* @conditional-compile-remove(rich-text-editor-image-upload) */
-        inlineImages={props.inlineImages}
+        inlineImagesWithProgress={props.inlineImagesWithProgress}
         /* @conditional-compile-remove(rich-text-editor-image-upload) */
-        onCancelInlineImageUpload={props.onCancelInlineImageUpload}
+        onRemoveInlineImage={props.onRemoveInlineImage}
       />
     );
   } else {

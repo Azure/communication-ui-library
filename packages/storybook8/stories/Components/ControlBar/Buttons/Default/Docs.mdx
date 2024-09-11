@@ -1,4 +1,5 @@
-import { Canvas, Description, Meta, Source } from '@storybook/blocks';
+import { Canvas, Description, Meta, Source, ArgTypes } from '@storybook/blocks';
+import { ControlBarButton } from '@azure/communication-react';
 import * as ControlBarButtonStories from './index.stories';
 import CustomControlBarButtonExampleText from '!!raw-loader!./snippets/Custom.snippet.tsx';
 import ControlBarButtonExampleText from '!!raw-loader!./snippets/Default.snippet.tsx';
@@ -52,3 +53,5 @@ to each element to avoid warning for children in a list.
 `ControlBarButton` features all props a [FluentUI
 Button](https://developer.microsoft.com/fluentui#/controls/web/button) offers, with the additional following
 properties.
+
+<ArgTypes of={ControlBarButton} />

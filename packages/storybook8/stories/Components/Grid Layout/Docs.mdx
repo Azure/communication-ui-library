@@ -1,4 +1,5 @@
-import { Canvas, Description, Meta, Source } from '@storybook/blocks';
+import { Canvas, Description, Meta, Source, ArgTypes } from '@storybook/blocks';
+import { GridLayout } from '@azure/communication-react';
 import * as GridLayoutStories from './index.stories';
 import GridLayoutExampleText from '!!raw-loader!./snippets/GridLayout.snippet';
 
@@ -23,3 +24,5 @@ children video tiles, please read the [VideoTile component docs](./?path=/docs/c
 <Canvas of={GridLayoutStories.GridLayoutExampleDocsOnly} source={{ code: GridLayoutExampleText }} />
 
 ## Props
+
+<ArgTypes of={GridLayout} />

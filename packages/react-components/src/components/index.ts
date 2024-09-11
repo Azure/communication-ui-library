@@ -59,7 +59,7 @@ export type {
 } from './MessageThread';
 
 /* @conditional-compile-remove(rich-text-editor) */
-export type { RichTextEditorOptions, RichTextSendBoxOptions } from './RichTextEditor/RichTextSendBox';
+export type { RichTextEditorOptions } from './RichTextEditor/RichTextSendBox';
 /* @conditional-compile-remove(rich-text-editor) */
 export type { RichTextEditBoxOptions } from './MessageThread';
 
@@ -304,9 +304,9 @@ export * from './MeetingConferencePhoneInfo';
 export { _formatPhoneNumber } from './utils/formatPhoneNumber';
 
 export { _ErrorBoundary } from './ErrorBoundary';
-/* @conditional-compile-remove(notifications) */
+
 export * from './Notification';
-/* @conditional-compile-remove(notifications) */
+
 export * from './NotificationStack';
 /* @conditional-compile-remove(one-to-n-calling) */
 export * from './IncomingCallNotification';

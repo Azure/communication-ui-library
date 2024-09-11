@@ -1,4 +1,5 @@
-import { Canvas, Description, Meta, Source } from '@storybook/blocks';
+import { Canvas, Description, Meta, Source, ArgTypes } from '@storybook/blocks';
+import { NotificationStack } from '@azure/communication-react';
 import * as NotificationStackStories from './index.stories';
 import NotificationStackExampleText from '!!raw-loader!./snippets/NotificationStack.snippet';
 
@@ -42,3 +43,7 @@ again.
 More than one notification can occur at the same time. The `NotificationStack` component can show multiple
 active notifications. To avoid confusing the user, it is important to be mindful to limit the total number of
 notifications that are shown together by setting the `maxNotificationsToShow` field.
+
+## Props
+
+<ArgTypes of={NotificationStack} />

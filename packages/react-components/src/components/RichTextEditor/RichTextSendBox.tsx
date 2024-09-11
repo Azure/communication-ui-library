@@ -11,9 +11,14 @@ import { sendIconStyle } from '../styles/SendBox.styles';
 import { useV9CustomStyles } from '../styles/SendBox.styles';
 import { InputBoxButton } from '../InputBoxButton';
 import { RichTextSendBoxErrors, RichTextSendBoxErrorsProps } from './RichTextSendBoxErrors';
-import { isMessageTooLong, isSendBoxButtonAriaDisabled, sanitizeText } from '../utils/SendBoxUtils';
+import {
+  isMessageTooLong,
+  isSendBoxButtonAriaDisabled,
+  sanitizeText,
+  modifyInlineImagesInContentString
+} from '../utils/SendBoxUtils';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
-import { insertImagesToContentString, cancelInlineImageUpload } from '../utils/SendBoxUtils';
+import { hasInlineImageContent, getContentWithUpdatedInlineImagesInfo } from '../utils/SendBoxUtils';
 import { RichTextEditorComponentRef } from './RichTextEditor';
 import { useTheme } from '../../theming';
 import { richTextActionButtonsStyle, sendBoxRichTextEditorStyle } from '../styles/RichTextEditor.styles';
@@ -55,32 +60,6 @@ export interface RichTextEditorOptions {
    * Optional callback to handle paste event.
    */
   onPaste?: (event: { content: DocumentFragment }) => void;
-}
-
-/* @conditional-compile-remove(rich-text-editor) */
-/**
- * Options for the rich text editor send box configuration.
- *
- * @beta
- */
-export interface RichTextSendBoxOptions extends RichTextEditorOptions {
-  /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  /**
-   * Optional callback to handle an inline image that's inserted in the rich text editor.
-   * When not provided, pasting images into rich text editor will be disabled.
-   */
-  onInsertInlineImage?: (imageUrl: string, imageFileName: string) => void;
-  /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  /**
-   * Optional callback to remove the image upload or delete the image from server before sending.
-   */
-  onCancelInlineImageUpload?: (imageId: string) => void;
-  /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  /**
-   * Optional Array of type {@link AttachmentMetadataInProgress}
-   * to render inline images being inserted in the RichTextSendBox.
-   */
-  inlineImages?: AttachmentMetadataInProgress[];
 }
 
 /**
@@ -236,9 +215,12 @@ export interface RichTextSendBoxProps {
   onCancelAttachmentUpload?: (attachmentId: string) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   /**
-   * Optional callback to remove the image upload or delete the image from server before sending.
+   * Optional callback invoked after inline image is removed from the UI.
+   * @param imageAttributes - attributes of the image such as id, src, style, etc.
+   *        It also contains the image file name which can be accessed through imageAttributes['data-image-file-name'].
+   *        Note that if the src attribute is a local blob url, it has been revoked at this point.
    */
-  onCancelInlineImageUpload?: (imageId: string) => void;
+  onRemoveInlineImage?: (imageAttributes: Record<string, string>) => void;
   /**
    * Callback function used when the send button is clicked.
    */
@@ -255,14 +237,21 @@ export interface RichTextSendBoxProps {
   /**
    * Optional callback to handle an inline image that's inserted in the rich text editor.
    * When not provided, pasting images into rich text editor will be disabled.
+   * @param imageAttributes - attributes of the image such as id, src, style, etc.
+   *        It also contains the image file name which can be accessed through imageAttributes['data-image-file-name']
    */
-  onInsertInlineImage?: (imageUrl: string, imageFileName: string) => void;
+  onInsertInlineImage?: (imageAttributes: Record<string, string>) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   /**
    * Optional Array of type {@link AttachmentMetadataInProgress}
-   * to render inline images being inserted in the RichTextSendBox.
+   * to render the errorBar for inline images inserted in the RichTextSendBox when:
+   *   - there is an error provided in the inlineImagesWithProgress
+   *   - progress is less than 1 when the send button is clicked
+   *   - content html string is longer than the max allowed length.
+   *     (Note that the id and the url prop of the inlineImagesWithProgress will be used as the id and src attribute of the content html
+   *     when calculating the content length, only for the purpose of displaying the content length overflow error.)
    */
-  inlineImages?: AttachmentMetadataInProgress[];
+  inlineImagesWithProgress?: AttachmentMetadataInProgress[];
 }
 
 /**
@@ -286,9 +275,9 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
     onInsertInlineImage,
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    inlineImages,
+    inlineImagesWithProgress,
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    onCancelInlineImageUpload
+    onRemoveInlineImage
   } = props;
 
   const theme = useTheme();
@@ -332,33 +321,43 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
   const onChangeHandler = useCallback(
     (
       newValue?: string,
-      /* @conditional-compile-remove(rich-text-editor-image-upload) */ imageSrcArray?: Array<string>
+      /* @conditional-compile-remove(rich-text-editor-image-upload) */ removedInlineImages?: Record<string, string>[]
     ) => {
       /* @conditional-compile-remove(rich-text-editor-image-upload) */
-      cancelInlineImageUpload({
-        imageSrcArray,
-        inlineImages,
-        messageId: undefined,
-        editBoxOnCancelInlineImageUpload: undefined,
-        sendBoxOnCancelInlineImageUpload: onCancelInlineImageUpload
-      });
+      removedInlineImages?.forEach(
+        (removedInlineImage: Record<string, string>) => onRemoveInlineImage && onRemoveInlineImage(removedInlineImage)
+      );
       setContent(newValue);
     },
-    [
-      setContent,
-      /* @conditional-compile-remove(rich-text-editor-image-upload) */ onCancelInlineImageUpload,
-      /* @conditional-compile-remove(rich-text-editor-image-upload) */ inlineImages
-    ]
+    [setContent, /* @conditional-compile-remove(rich-text-editor-image-upload) */ onRemoveInlineImage]
   );
 
   const hasContent = useMemo(() => {
     // get plain text content from the editor to check if the message is empty
     // as the content may contain tags even when the content is empty
     const plainTextContent = editorComponentRef.current?.getPlainContent();
-    return sanitizeText(contentValue ?? '').length > 0 && sanitizeText(plainTextContent ?? '').length > 0;
+    const hasPlainText = sanitizeText(contentValue ?? '').length > 0 && sanitizeText(plainTextContent ?? '').length > 0;
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    const hasInlineImages = hasInlineImageContent(contentValue);
+    return hasPlainText || /* @conditional-compile-remove(rich-text-editor-image-upload) */ hasInlineImages;
   }, [contentValue]);
 
   const sendMessageOnClick = useCallback((): void => {
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    if (inlineImagesWithProgress && inlineImagesWithProgress.length > 0) {
+      const contentWithUpdatedInlineImagesInfo = getContentWithUpdatedInlineImagesInfo(
+        contentValue,
+        inlineImagesWithProgress
+      );
+      const messageTooLong = isMessageTooLong(contentWithUpdatedInlineImagesInfo.length);
+      // Set contentValueOverflow state to display the error bar
+      setContentValueOverflow(messageTooLong);
+      // The change from the setContentValueOverflow in the previous line will not kick in yet.
+      // We need to relay on the local value of messageTooLong to return early if the message is too long.
+      if (messageTooLong) {
+        return;
+      }
+    }
     if (disabled || contentValueOverflow) {
       return;
     }
@@ -367,7 +366,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     setAttachmentUploadsPendingError(undefined);
 
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    const hasIncompleteImageUploads = hasIncompleteAttachmentUploads(inlineImages);
+    const hasIncompleteImageUploads = hasIncompleteAttachmentUploads(inlineImagesWithProgress);
     /* @conditional-compile-remove(file-sharing-acs) */
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
     if (
@@ -391,11 +390,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
 
     // we don't want to send empty messages including spaces, newlines, tabs
     // Message can be empty if there is a valid attachment upload
-    if (
-      hasContent ||
-      /* @conditional-compile-remove(file-sharing-acs) */ isAttachmentUploadCompleted(attachments) ||
-      /* @conditional-compile-remove(rich-text-editor-image-upload) */ isAttachmentUploadCompleted(inlineImages)
-    ) {
+    if (hasContent || /* @conditional-compile-remove(file-sharing-acs) */ isAttachmentUploadCompleted(attachments)) {
       const sendMessage = (content: string): void => {
         onSendMessage(
           content,
@@ -412,15 +407,9 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
         editorComponentRef.current?.focus();
       };
 
-      /* @conditional-compile-remove(rich-text-editor-image-upload) */
-      if (isAttachmentUploadCompleted(inlineImages)) {
-        insertImagesToContentString(contentValue, inlineImages, (content: string) => {
-          sendMessage(content);
-        });
-        return;
-      }
-
-      sendMessage(contentValue);
+      modifyInlineImagesInContentString(contentValue, [], (content: string) => {
+        sendMessage(content);
+      });
     }
   }, [
     disabled,
@@ -428,7 +417,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     /* @conditional-compile-remove(file-sharing-acs) */
     attachments,
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    inlineImages,
+    inlineImagesWithProgress,
     contentValue,
     hasContent,
     /* @conditional-compile-remove(file-sharing-acs) */
@@ -447,7 +436,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
       /* @conditional-compile-remove(file-sharing-acs) */
       !!attachments?.filter((attachmentUpload) => attachmentUpload.error).pop()?.error ||
       /* @conditional-compile-remove(rich-text-editor-image-upload) */
-      !!inlineImages?.filter((image) => image.error).pop()?.error
+      !!inlineImagesWithProgress?.filter((image) => image.error).pop()?.error
     );
   }, [
     /* @conditional-compile-remove(file-sharing-acs) */
@@ -457,7 +446,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     attachmentUploadsPendingError,
     systemMessage,
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    inlineImages
+    inlineImagesWithProgress
   ]);
 
   const onRenderSendIcon = useCallback(
@@ -484,7 +473,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     /* @conditional-compile-remove(file-sharing-acs) */
     const uploadErrorMessage = attachments?.filter((attachmentUpload) => attachmentUpload.error).pop()?.error?.message;
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    const imageUploadErrorMessage = inlineImages?.filter((image) => image.error).pop()?.error?.message;
+    const imageUploadErrorMessage = inlineImagesWithProgress?.filter((image) => image.error).pop()?.error?.message;
     /* @conditional-compile-remove(file-sharing-acs) */
     const errorMessage =
       uploadErrorMessage || /* @conditional-compile-remove(rich-text-editor-image-upload) */ imageUploadErrorMessage;
@@ -511,7 +500,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     /* @conditional-compile-remove(file-sharing-acs) */
     attachmentUploadsPendingError,
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    inlineImages,
+    inlineImagesWithProgress,
     systemMessage
   ]);
 
