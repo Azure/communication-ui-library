@@ -42,7 +42,7 @@ import WithVerticalGalleryExampleText from '!!raw-loader!./snippets/WithVertical
 
 # VideoGallery
 
-VideoGallery lays out the local user and each remote participant in a call in a [VideoTile](./?path=/docs/ui-components-videotile--video-tile) component. The VideoGallery component is made up of a [Grid Layout](./?path=/docs/ui-components-videogallery--video-gallery#grid-layout), [Overflow Gallery](./?path=/docs/ui-components-videogallery--video-gallery#overflow-gallery), and a [Local Video Tile](./?path=/docs/ui-components-videogallery--video-gallery#local-video-tile). The logic used to place each [VideoTile](./?path=/docs/ui-components-videotile--video-tile) component into which section is explained below.
+VideoGallery lays out the local user and each remote participant in a call in a [VideoTile](./?path=/docs/components-video-tile--docs) component. The VideoGallery component is made up of a [Grid Layout](./?path=/docs/components-grid-layout--docs#grid-layout), [Overflow Gallery](./?path=/docs/components-grid-layout--docs#grid-layout), and a [Local Video Tile](./?path=/docs/components-video-gallery--docs#local-video-camera-button). The logic used to place each [VideoTile](./?path=/docs/components-video-tile--docs) component into which section is explained below.
 
 ## Importing
 
@@ -260,7 +260,7 @@ The state of which remote participants are pinned can be managed by defining the
 
 ## Remote video stream rendering options
 
-When `useProps` hook is used to provide the props to VideoGallery from the [stateful client](./?path=/docs/statefulclient-overview--page), prop `remoteParticipants` will contain information on the video streams of each remote participant and props `onCreateRemoteStreamView` and `onDisposeRemoteStreamView` handle the creation and disposal of these video streams. The VideoGallery component will have a menu item in the contextual menu of remote video tiles to change the rendering option of active remote video streams to either fill-frame or fit-to-frame. Below are screenshots to demonstrate this feature.
+When `useProps` hook is used to provide the props to VideoGallery from the [stateful client](./?path=/docs/stateful-client-overview--docs), prop `remoteParticipants` will contain information on the video streams of each remote participant and props `onCreateRemoteStreamView` and `onDisposeRemoteStreamView` handle the creation and disposal of these video streams. The VideoGallery component will have a menu item in the contextual menu of remote video tiles to change the rendering option of active remote video streams to either fill-frame or fit-to-frame. Below are screenshots to demonstrate this feature.
 
 <Stack horizontal={true} tokens={{ childrenGap: '0.5rem' }}>
   <Stack horizontalAlign="center">
@@ -377,4 +377,4 @@ The 3x3 video gallery allows customers to have 9 remote videos rendering with th
 
 ## Props
 
-<ArgTypes of={VideoGallery} />
+<ArgTypes of={VideoGalleryStories} />
