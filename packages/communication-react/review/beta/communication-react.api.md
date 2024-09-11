@@ -2101,6 +2101,8 @@ export type CommonCallAdapterOptions = {
     };
     deepNoiseSuppressionOptions?: {
         onResolveDependency?: () => Promise<DeepNoiseSuppressionEffectDependency>;
+        deepNoiseSuppressionOnByDefault?: boolean;
+        hideDeepNoiseSuppressionButton?: boolean;
     };
     onFetchProfile?: OnFetchProfileCallback;
     callingSounds?: CallingSounds;
