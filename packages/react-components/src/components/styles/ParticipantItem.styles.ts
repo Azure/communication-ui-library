@@ -20,9 +20,7 @@ export const participantItemContainerStyle = (options: { clickable: boolean }, t
     ':focus-visible': {
       [` .${menuIconClass}`]: {
         display: 'flex'
-      }
-    },
-    ':focus': {
+      },
       outline: `0.1rem solid ${theme.palette.themePrimary}`
     }
   };
