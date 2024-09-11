@@ -46,9 +46,6 @@ export const CallCompositeContainer = (props: CallCompositeContainerProps): JSX.
           hangUpForEveryone: 'endCallOptions'
         }
       },
-      captionsBanner: {
-        height: 'full'
-      },
       autoShowDtmfDialer: true
     }),
     [shouldHideScreenShare]
