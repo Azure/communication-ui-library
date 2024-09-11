@@ -7,11 +7,11 @@ import { FocusedContentExample } from './snippets/FocusedContent.snippet';
 import { SpeakerLayoutExample } from './snippets/SpeakerLayout.snippet';
 import { WithHorizontalGalleryExample } from './snippets/WithHorizontalGallery.snippet';
 import { WithVerticalGalleryExample } from './snippets/WithVerticalGallery.snippet';
-import { FloatingLocalVideoLayout } from './FloatingLocalVideoLayout.story';
+import { FloatingLocalVideoExample } from './snippets/FloatingLocalVideo.snippet';
 export { GalleryLayout as VideoGallery } from './GalleryLayout.story';
 
 export const FloatingLocalVideoLayoutDocsOnly = {
-  render: FloatingLocalVideoLayout
+  render: FloatingLocalVideoExample
 };
 
 export const FocusedContentExampleDocsOnly = {
