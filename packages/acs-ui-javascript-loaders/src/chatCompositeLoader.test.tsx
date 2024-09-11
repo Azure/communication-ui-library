@@ -53,7 +53,7 @@ describe('ChatCompositeLoader tests', () => {
       errorBar: true
     };
     const { loadChatComposite } = await import('./chatCompositeLoader');
-    const { createAzureCommunicationChatAdapter } = await import('@Internal/react-composites');
+    const { createAzureCommunicationChatAdapter } = await import('@internal/react-composites');
     await loadChatComposite(mockAdapterArgs, mockHtmlElement, mockCompositeOptions);
 
     expect(mockInitializeIcons).toHaveBeenCalled();

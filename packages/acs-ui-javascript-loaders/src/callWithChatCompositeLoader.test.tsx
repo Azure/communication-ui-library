@@ -54,7 +54,7 @@ describe('CallWithChatCompositeLoader tests', () => {
     };
 
     const { loadCallWithChatComposite } = await import('./callWithChatCompositeLoader');
-    const { createAzureCommunicationCallWithChatAdapter } = await import('@Internal/react-composites');
+    const { createAzureCommunicationCallWithChatAdapter } = await import('@internal/react-composites');
     await loadCallWithChatComposite(mockAdapterArgs, mockHtmlElement, mockCompositeOptions);
 
     expect(mockInitializeIcons).toHaveBeenCalled();

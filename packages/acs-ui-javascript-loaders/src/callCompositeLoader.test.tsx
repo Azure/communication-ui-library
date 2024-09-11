@@ -52,7 +52,7 @@ describe('CallCompositeLoader tests', () => {
     const mockCompositeOptions: CallCompositeOptions = {};
 
     const { loadCallComposite } = await import('./callCompositeLoader');
-    const { createAzureCommunicationCallAdapter } = await import('@Internal/react-composites');
+    const { createAzureCommunicationCallAdapter } = await import('@internal/react-composites');
     await loadCallComposite(mockAdapterArgs, mockHtmlElement, mockCompositeOptions);
 
     expect(mockInitializeIcons).toHaveBeenCalled();
