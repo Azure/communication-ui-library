@@ -1546,8 +1546,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
   }
 }
 
-/* @conditional-compile-remove(teams-adhoc-call) */
-/* @conditional-compile-remove(PSTN-calls) */
+/* @conditional-compile-remove(call-participants-locator) */
 /**
  * Locator used by {@link createAzureCommunicationCallAdapter} to call one or more participants
  *
@@ -1574,7 +1573,7 @@ export type CallAdapterLocator =
   | TeamsMeetingLinkLocator
   | GroupCallLocator
   | RoomCallLocator
-  | /* @conditional-compile-remove(teams-adhoc-call) */ /* @conditional-compile-remove(PSTN-calls) */ CallParticipantsLocator
+  | /* @conditional-compile-remove(call-participants-locator) */ CallParticipantsLocator
   | TeamsMeetingIdLocator;
 
 /**
@@ -1597,6 +1596,8 @@ export type CommonCallAdapterOptions = {
    */
   deepNoiseSuppressionOptions?: {
     onResolveDependency?: () => Promise<DeepNoiseSuppressionEffectDependency>;
+    deepNoiseSuppressionOnByDefault?: boolean;
+    hideDeepNoiseSuppressionButton?: boolean;
   };
   /**
    * Use this to fetch profile information which will override data in {@link CallAdapterState} like display name
@@ -1699,7 +1700,7 @@ export type TeamsCallAdapterArgsCommon = {
 export type TeamsCallAdapterArgs = TeamsCallAdapterArgsCommon & {
   locator:
     | TeamsMeetingLinkLocator
-    | /* @conditional-compile-remove(teams-adhoc-call) */ /* @conditional-compile-remove(PSTN-calls) */ CallParticipantsLocator
+    | /* @conditional-compile-remove(call-participants-locator) */ CallParticipantsLocator
     | TeamsMeetingIdLocator;
 };
 

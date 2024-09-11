@@ -44,11 +44,20 @@ jobs:
       - name: Run Storybook tests
         run: rush test -o storybook
 
-      - name: Deploy Storybook
+      - name: Copy .env values
         # storybook requires the env vars to be in a .env file for access in the manager.ts
         run: |
           echo TELEMETRY_INSTRUMENTATION_KEY=${{ secrets.TELEMETRY_INSTRUMENTATION_KEY }} > .env
-          npm run deploy-storybook -- --ci
         working-directory: ./packages/storybook
         env:
           GH_TOKEN: ${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload Storybook GH Pages Artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./packages/storybook/storybook-static
+
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
