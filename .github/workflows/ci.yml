@@ -95,11 +95,6 @@ jobs:
       - name: Run linter
         run: rush lint
       # Builds
-      - name: build to loaders
-        run: rush build -t react-composites
-      - name: build loaders package
-        run: cd packages/acs-ui-javascript-loaders && rushx build
-
       - name: Build Packages
         run: rush build -t @azure/communication-react
       # Type check test folder
