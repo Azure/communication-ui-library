@@ -57,7 +57,7 @@ export interface _CaptionsBannerProps {
   };
 }
 
-const scrollOffsetAllowance = 20;
+const SCROLL_OFF_SET_ALLOWANCE = 20;
 
 /**
  * @internal
