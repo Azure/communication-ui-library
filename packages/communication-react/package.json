@@ -92,7 +92,7 @@
     "test:coverage": "",
     "check-deps": "node scripts/verifyDependencies",
     "api-extractor": "rushx _by-flavor \"rushx build:esm && rushx _api-extractor:by-flavor\"",
-    "api-extractor:complete": "rushx _by-flavor \"api-extractor run -c api-extractor-complete.json --local\"",
+    "api-extractor:complete": "rushx _by-flavor \"rushx build:esm && rushx api-extractor:complete:by-falvor\"",
     "generate-doc": "api-documenter markdown -i temp -o docGen",
     "prettier": "prettier --no-error-on-unmatched-pattern --write --config ../../.prettierrc --ignore-path=../../.prettierignore \"**/*.js\" \"**/*.jsx\" \"**/*.ts\" \"**/*.tsx\"",
     "prettier:check": "prettier --no-error-on-unmatched-pattern --check --config ../../.prettierrc --ignore-path=../../.prettierignore \"**/*.js\" \"**/*.jsx\" \"**/*.ts\" \"**/*.tsx\"",
