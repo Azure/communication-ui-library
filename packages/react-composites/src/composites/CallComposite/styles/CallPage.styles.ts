@@ -60,8 +60,7 @@ export const galleryParentContainerStyles = (backgroundColor: string): IStackSty
 export const mediaGalleryContainerStyles: IStackItemStyles = {
   root: {
     height: '100%',
-    width: '100%',
-    position: 'absolute'
+    width: '100%'
   }
 };
 

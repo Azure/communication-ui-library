@@ -741,6 +741,9 @@ export type CallCompositeLoaderProps = {
 
 // @public
 export type CallCompositeOptions = {
+    captionsBanner?: {
+        height: 'full' | 'default';
+    };
     errorBar?: boolean;
     callControls?: boolean | CallControlOptions;
     deviceChecks?: DeviceCheckOptions;

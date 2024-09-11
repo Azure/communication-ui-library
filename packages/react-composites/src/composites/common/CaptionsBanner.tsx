@@ -21,6 +21,9 @@ export const CaptionsBanner = (props: {
   isMobile: boolean;
   useTeamsCaptions?: boolean;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
+  captionsOptions?: {
+    height: 'full' | 'default';
+  };
 }): JSX.Element => {
   const captionsBannerProps = useAdaptedSelector(_captionsBannerSelector);
 
@@ -36,11 +39,15 @@ export const CaptionsBanner = (props: {
     setIsCaptionsSettingsOpen(false);
   };
 
-  const containerClassName = mergeStyles({
-    position: 'absolute',
-    height: '100%',
-    width: '100%'
-  });
+  const containerClassName = mergeStyles(
+    props.captionsOptions?.height === 'full'
+      ? mergeStyles({
+          position: 'absolute',
+          height: '100%',
+          width: '100%'
+        })
+      : { position: 'relative' }
+  );
 
   const floatingChildClassName = mergeStyles({
     position: 'absolute',
@@ -92,6 +99,7 @@ export const CaptionsBanner = (props: {
               <_CaptionsBanner
                 {...captionsBannerProps}
                 {...handlers}
+                captionsOptions={props.captionsOptions}
                 onRenderAvatar={onRenderAvatar}
                 formFactor={props.isMobile ? 'compact' : 'default'}
                 strings={captionsBannerStrings}
