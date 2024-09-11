@@ -520,6 +520,8 @@ jobs:
         with:
           chrome-version: 128.0.6613.137
           install-dependencies: true
+      - name: Install Playwright
+        run: npx playwright install
       # Build the packages
       # This is needed because react-components depends on acs-ui-common and
       # acs-ui-common specifies main/module variables in package.json
