@@ -2,7 +2,8 @@ import { CustomCallControlButtonPlacement, CustomCallControlButtonStrings } from
 import React from 'react';
 
 export const compositeCanvasContainerStyles = {
-  height: '22rem'
+  height: '100vh',
+  width: '100wh'
 };
 
 /**
