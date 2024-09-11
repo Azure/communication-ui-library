@@ -221,6 +221,7 @@ const VideoTileMoreOptionsButton = (props: {
   canShowContextMenuButton: boolean;
 }): JSX.Element => {
   const locale = useLocale();
+  const theme = useTheme();
   const strings = { ...locale.strings.videoTile };
 
   const { contextualMenu, canShowContextMenuButton } = props;
@@ -234,7 +235,7 @@ const VideoTileMoreOptionsButton = (props: {
     <IconButton
       data-ui-id="video-tile-more-options-button"
       ariaLabel={strings?.moreOptionsButtonAriaLabel}
-      styles={moreButtonStyles}
+      styles={moreButtonStyles(theme)}
       menuIconProps={videoTileMoreMenuIconProps}
       menuProps={{ ...videoTileMoreMenuProps, ...contextualMenu }}
       iconProps={{ iconName: optionsIcon }}
