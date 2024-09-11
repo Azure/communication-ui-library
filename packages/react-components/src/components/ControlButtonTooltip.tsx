@@ -1,10 +1,21 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import React, { useState } from 'react';
-import { ITooltipHostProps, ICalloutContentStyles, useTheme, Callout, Stack, DirectionalHint } from '@fluentui/react';
+import React from 'react';
+import {
+  TooltipHost,
+  ITooltipHostStyles,
+  ITooltipHostProps,
+  ICalloutContentStyles,
+  mergeStyleSets,
+  useTheme
+} from '@fluentui/react';
 import { isDarkThemed } from '../theming/themeUtils';
-import { useId } from '@fluentui/react-hooks';
+
+// The TooltipHost root uses display: inline by default.
+// To prevent sizing issues or tooltip positioning issues, we override to inline-block.
+// For more details see "Icon Button with Tooltip" on https://developer.microsoft.com/en-us/fluentui#/controls/web/button
+const hostStyles: Partial<ITooltipHostStyles> = { root: { display: 'inline-block' } };
 
 /**
  * Tooltip that should wrap control bar buttons.
@@ -13,39 +24,21 @@ import { useId } from '@fluentui/react-hooks';
  */
 export const ControlButtonTooltip = (props: ITooltipHostProps): JSX.Element => {
   const theme = useTheme();
-  const calloutStyle: Partial<ICalloutContentStyles> = {
-    root: { padding: 0 },
-    calloutMain: { padding: '0.5rem' },
-    beakCurtain: { marginBottom: '-1rem', background: 'transparent' }
-  };
+  const calloutStyle: Partial<ICalloutContentStyles> = { root: { padding: 0 }, calloutMain: { padding: '0.5rem' } };
 
   const calloutProps = {
     gapSpace: 4,
     styles: calloutStyle,
     backgroundColor: isDarkThemed(theme) ? theme.palette.neutralLighter : ''
   };
-
-  const id = useId('controlButtonTooltip');
-
-  const [showCallout, setShowCallout] = useState(false);
-  const [showCallout2, setShowCallout2] = useState(false);
-
   return (
-    <Stack>
-      <Stack id={id} onMouseEnter={() => setShowCallout(true)} onMouseLeave={() => setShowCallout(false)}>
-        {props.children}
-      </Stack>
-      {(showCallout || showCallout2) && (
-        <Callout
-          target={`#${id}`}
-          {...calloutProps}
-          directionalHint={DirectionalHint.topCenter}
-          onMouseEnter={() => setShowCallout2(true)}
-          onMouseLeave={() => setShowCallout2(false)}
-        >
-          {props.content}
-        </Callout>
-      )}
-    </Stack>
+    <TooltipHost
+      {...props}
+      data-ui-id={props.id}
+      calloutProps={{ ...calloutProps, ...props.calloutProps }}
+      styles={mergeStyleSets(hostStyles, props.styles)}
+    >
+      {props.children}
+    </TooltipHost>
   );
 };
