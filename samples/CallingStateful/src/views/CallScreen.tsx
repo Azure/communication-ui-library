@@ -25,7 +25,12 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     <Stack style={{ width: '100%', height: '100%', margin: 'auto', position: 'relative' }}>
       <>{/* @conditional-compile-remove(one-to-n-calling) */ call && <CallingComponents />}</>
       <Stack style={{ position: 'absolute', top: '0', right: '0' }}>
-        {/* @conditional-compile-remove(one-to-n-calling) */ <IncomingCallStack {...incomingCallStackProps} />}
+        {
+          /* @conditional-compile-remove(one-to-n-calling) */ <IncomingCallStack
+            {...incomingCallStackProps}
+            tabIndex={1}
+          />
+        }
       </Stack>
     </Stack>
   );

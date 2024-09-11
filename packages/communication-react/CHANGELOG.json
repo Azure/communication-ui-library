@@ -2,6 +2,138 @@
   "name": "@azure/communication-react",
   "entries": [
     {
+      "date": "Fri, 06 Sep 2024 23:30:32 GMT",
+      "version": "1.19.0-beta.3",
+      "tag": "@azure/communication-react_v1.19.0-beta.3",
+      "comments": {
+        "patch": [
+          {
+            "author": "107075081+Leah-Xia-Microsoft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "d60818a9b0960ed80a215d451d01386bef97449d",
+            "area": "fix",
+            "workstream": "Lazy loading",
+            "comment": "Fix lazy loading for Composites"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 26 Aug 2024 18:25:58 GMT",
+      "version": "1.19.0-beta.2",
+      "tag": "@azure/communication-react_v1.19.0-beta.2",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "79475487+mgamis-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "c143d4aac36d9a0f367e48b8af60c002820232ec",
+            "area": "feature",
+            "workstream": "Breakout rooms",
+            "comment": "Add join breakout room and leave room buttons"
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@azure/communication-react",
+            "commit": "2e4bc6522289cea25fcaee6e7b604d0dc0ecc496",
+            "area": "improvement",
+            "workstream": "",
+            "comment": "Turn on dialer by default"
+          },
+          {
+            "author": "79475487+mgamis-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "83e0a97c2802418a8dd37e92da766d0a7b24e450",
+            "area": "feature",
+            "workstream": "Breakout rooms",
+            "comment": "Add Timer component to control bar in breakout room call. Add notifications when breakout room is joined and closing soon."
+          },
+          {
+            "author": "79475487+mgamis-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "02bda1de52b5578822070afef0f4fbda243f2508",
+            "area": "feature",
+            "workstream": "Breakout rooms",
+            "comment": "Add breakout rooms notifications"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "589e1dbae655a93659b5bce553d0a5fa2464ebec",
+            "area": "improvement",
+            "workstream": "Update communication-calling package to 1.28.1-beta.4 and 1.27.5",
+            "comment": "Update communication calling to 1.28.1-beta.4 and 1.27.5"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "193eaed0e7e20b519a8cde3423cd30b7a70a6f91",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Fix CallComposite camera prompts to respect deviceChecks property"
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@azure/communication-react",
+            "commit": "3a5dc6145ab228bbf19dcb12e3c0bc1ffdf4be2a",
+            "area": "feature",
+            "workstream": "Remote UFD",
+            "comment": "Add remote ufd to stateful client"
+          },
+          {
+            "author": "79475487+mgamis-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "93d0e04deff800af3648f1fb40583e400db56cc6",
+            "area": "feature",
+            "workstream": "Breakout rooms",
+            "comment": "Switch chat threads to breakout room when breakout room is joined"
+          }
+        ],
+        "patch": [
+          {
+            "author": "79475487+mgamis-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "a58c2bf8e84556beb3ab5857f4de154e4054f4fd",
+            "area": "fix",
+            "workstream": "CallWithChatAdapter events",
+            "comment": "Fix error when listening to capabilitiesChanged and spotlightChanged events from AzureCommunicationCallWithChatAdapter"
+          },
+          {
+            "author": "93549644+ShaunaSong@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "ddaa4faeb8525e1c81428109f77400d51a032bfe",
+            "area": "improvement",
+            "workstream": "Add PPTLive presenter information",
+            "comment": "Add PPTLive presenter information"
+          },
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "9a4358aff34ef9a4766830acdaaccaf151fc7deb",
+            "area": "fix",
+            "workstream": "captions",
+            "comment": "Fix bug when adapter caption events are not firing"
+          },
+          {
+            "author": "98852890+vhuseinova-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "81eaaab7fdbf205a2b81817abaf09b24afccbca1",
+            "area": "fix",
+            "workstream": "RTE",
+            "comment": "Update RoosterJS version to fix some issues with keyboard table navigation in Rich Text Editor components"
+          },
+          {
+            "author": "79475487+mgamis-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "41bed597127641800f343750e5370a52e0f1af26",
+            "area": "fix",
+            "workstream": "Read receipt selector",
+            "comment": "Fix chat selectors using read receipts from state"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 06 Aug 2024 19:45:27 GMT",
       "tag": "@azure/communication-react_v1.19.0-beta.1",
       "version": "1.19.0-beta.1",

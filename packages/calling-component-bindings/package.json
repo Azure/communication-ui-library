@@ -1,6 +1,6 @@
 {
   "name": "@internal/calling-component-bindings",
-  "version": "1.19.0-beta.1",
+  "version": "1.19.0-beta.3",
   "description": "Component bindings specific to components that integrate with the Azure Communication Services Calling JavaScript SDK",
   "module": "dist/dist-esm/index.js",
   "main": "dist/dist-cjs/index.js",
@@ -30,22 +30,22 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@internal/acs-ui-common": "1.19.0-beta.1",
-    "@internal/calling-stateful-client": "1.19.0-beta.1",
-    "@internal/react-components": "1.19.0-beta.1",
+    "@internal/acs-ui-common": "1.19.0-beta.3",
+    "@internal/calling-stateful-client": "1.19.0-beta.3",
+    "@internal/react-components": "1.19.0-beta.3",
     "@azure/communication-common": "^2.3.1",
     "memoize-one": "^5.2.1",
     "reselect": "^4.0.0"
   },
   "peerDependencies": {
-    "@azure/communication-calling": "1.28.1-beta.4 || ^1.27.5",
-    "@azure/communication-calling-effects": "1.0.1",
+    "@azure/communication-calling": "1.29.1-beta.2 || ^1.28.4",
+    "@azure/communication-calling-effects": "1.1.1-beta.1 || ^1.1.0",
     "@types/react": ">=16.8.0 <19.0.0",
     "react": ">=16.8.0 <19.0.0"
   },
   "devDependencies": {
-    "@azure/communication-calling": "1.28.1-beta.4 || ^1.27.5",
-    "@azure/communication-calling-effects": "1.0.1",
+    "@azure/communication-calling": "1.29.1-beta.2 || ^1.28.4",
+    "@azure/communication-calling-effects": "1.1.1-beta.1 || ^1.1.0",
     "@babel/cli": "^7.24.8",
     "@babel/core": "^7.25.2",
     "@types/jest": "^29.5.11",
@@ -67,7 +67,7 @@
     "prettier": "3.3.2",
     "react": "18.3.1",
     "rimraf": "^2.6.2",
-    "rollup": "^4.12.1",
+    "rollup": "^4.21.2",
     "ts-jest": "^29.1.5",
     "typescript": "5.4.5"
   }

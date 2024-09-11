@@ -33,7 +33,7 @@ export type { AzureCommunicationCallAdapterOptions } from './AzureCommunicationC
 
 export type { CommonCallAdapterOptions } from './AzureCommunicationCallAdapter';
 
-/* @conditional-compile-remove(teams-adhoc-call) */
+/* @conditional-compile-remove(call-participants-locator) */
 export type { CallParticipantsLocator } from './AzureCommunicationCallAdapter';
 
 export type {
@@ -60,7 +60,9 @@ export type {
   ParticipantsJoinedListener,
   ParticipantsLeftListener,
   JoinCallOptions,
-  StartCallIdentifier
+  StartCallIdentifier,
+  StartCaptionsAdapterOptions,
+  StopCaptionsAdapterOptions
 } from './CallAdapter';
 
 export type {

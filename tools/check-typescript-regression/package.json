@@ -4,6 +4,7 @@
   "private": "true",
   "description": "Utility to ensure we do not introduce breaking changes to typescript",
   "scripts": {
+    "clean": "echo skip",
     "build": "tsc",
     "build:watch": "echo skip",
     "build:stable": "tsc",
@@ -18,7 +19,7 @@
     "lint:quiet": "rushx lint -- --quiet"
   },
   "dependencies": {
-    "@azure/communication-react": "1.19.0-beta.1"
+    "@azure/communication-react": "1.19.0-beta.3"
   },
   "devDependencies": {
     "eslint": "^8.57.0",

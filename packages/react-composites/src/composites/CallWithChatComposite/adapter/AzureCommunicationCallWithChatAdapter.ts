@@ -17,7 +17,6 @@ import {
 } from '@azure/communication-calling';
 import { TeamsMeetingIdLocator } from '@azure/communication-calling';
 import { Reaction } from '@azure/communication-calling';
-import { StartCaptionsOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(breakout-rooms) */
@@ -74,7 +73,7 @@ import {
 import { getChatThreadFromTeamsLink } from './parseTeamsUrl';
 import { AdapterError } from '../../common/adapters';
 
-/* @conditional-compile-remove(teams-adhoc-call) */
+/* @conditional-compile-remove(call-participants-locator) */
 import { CallParticipantsLocator } from '../../CallComposite/adapter/AzureCommunicationCallAdapter';
 
 import { _createAzureCommunicationCallAdapterInner } from '../../CallComposite/adapter/AzureCommunicationCallAdapter';
@@ -90,7 +89,12 @@ import { ChatThreadClient } from '@azure/communication-chat';
 import { UploadChatImageResult } from '@internal/acs-ui-common';
 import { useEffect, useRef, useState } from 'react';
 import { _toCommunicationIdentifier, _TelemetryImplementationHint } from '@internal/acs-ui-common';
-import { JoinCallOptions, StartCallIdentifier } from '../../CallComposite/adapter/CallAdapter';
+import {
+  JoinCallOptions,
+  StartCallIdentifier,
+  StartCaptionsAdapterOptions,
+  StopCaptionsAdapterOptions
+} from '../../CallComposite/adapter/CallAdapter';
 
 import { AzureCommunicationCallAdapterOptions } from '../../CallComposite/adapter/AzureCommunicationCallAdapter';
 import {
@@ -370,6 +374,10 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     this.stopVideoBackgroundEffects.bind(this);
 
     this.updateBackgroundPickerImages.bind(this);
+    /* @conditional-compile-remove(DNS) */
+    this.startNoiseSuppressionEffect.bind(this);
+    /* @conditional-compile-remove(DNS) */
+    this.stopNoiseSuppressionEffect.bind(this);
   }
 
   /** Join existing Call. */
@@ -630,12 +638,12 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     return this.callAdapter.allowUnsupportedBrowserVersion();
   }
 
-  public async startCaptions(options?: StartCaptionsOptions): Promise<void> {
+  public async startCaptions(options?: StartCaptionsAdapterOptions): Promise<void> {
     await this.callAdapter.startCaptions(options);
   }
 
-  public async stopCaptions(): Promise<void> {
-    await this.callAdapter.stopCaptions();
+  public async stopCaptions(options?: StopCaptionsAdapterOptions): Promise<void> {
+    await this.callAdapter.stopCaptions(options);
   }
 
   public async setCaptionLanguage(language: string): Promise<void> {
@@ -661,6 +669,17 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   public updateSelectedVideoBackgroundEffect(selectedVideoBackground: VideoBackgroundEffect): void {
     return this.callAdapter.updateSelectedVideoBackgroundEffect(selectedVideoBackground);
   }
+
+  /* @conditional-compile-remove(DNS) */
+  public async startNoiseSuppressionEffect(): Promise<void> {
+    return await this.callAdapter.startNoiseSuppressionEffect();
+  }
+
+  /* @conditional-compile-remove(DNS) */
+  public async stopNoiseSuppressionEffect(): Promise<void> {
+    return await this.callAdapter.stopNoiseSuppressionEffect();
+  }
+
   public async submitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined> {
     return this.callAdapter.submitSurvey(survey);
   }
@@ -1129,7 +1148,7 @@ export type CommunicationAdapter = CallAndChatProvider | TeamsMeetingLinkProvide
  */
 export interface CallAndChatLocator {
   /** Locator used by {@link createAzureCommunicationCallWithChatAdapter} to locate the call to join */
-  callLocator: GroupCallLocator | /* @conditional-compile-remove(teams-adhoc-call) */ CallParticipantsLocator;
+  callLocator: GroupCallLocator | /* @conditional-compile-remove(call-participants-locator) */ CallParticipantsLocator;
   /** Chat thread ID used by {@link createAzureCommunicationCallWithChatAdapter} to locate the chat thread to join */
   chatThreadId: string;
 }

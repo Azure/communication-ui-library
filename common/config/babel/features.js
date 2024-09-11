@@ -24,7 +24,11 @@ module.exports = {
     // Feature for remote UFD
     "remote-ufd",
     // Feature for showing dtmp dialer by default
-    "dtmf-dialer-on-by-default"
+    "dtmf-dialer-on-by-default",
+    // Deep Noise Suppression feature
+    "DNS",
+    // Feature for together mode
+    "together-mode"
   ],
   beta: [
     "call-readiness",
@@ -49,14 +53,6 @@ module.exports = {
     "data-loss-prevention",
     // Mention feature
     "mention",
-    // 1 to N Calling feature.
-    "one-to-n-calling",
-    // PSTN calls 
-    "PSTN-calls",
-    // Adhoc calls to a Teams user.
-    "teams-adhoc-call",
-    // Beta feature for joining calls using teams token
-    "teams-identity-support-beta",
     // Block joining calls if the user is on an unsupported browser
     "unsupported-browser",
     // Feature to show the total number of participants in a call (currently in beta in calling SDK, hence this must be conditionally compiled)
@@ -65,14 +61,10 @@ module.exports = {
     "calling-environment-info",
     // conditional-compile for new signaling beta
     "signaling-beta",
-    // Feature for tracking beta start call identifier
-    'start-call-beta',
     // Image overlay theme
     'image-overlay-theme',
     // Feature for local recording notification for teams meetings
     'local-recording-notification',
-    // Close captions feature for ACS calls
-    "acs-close-captions",
     // Feature for Rich Text Editor (RTE) support
     'rich-text-editor',
     // Feature for Rich Text Editor (RTE) composite support
@@ -81,8 +73,12 @@ module.exports = {
     "rich-text-editor-image-upload",
     // Feature to support file sharing in ACS chats
     "file-sharing-acs",
+    // Beta feature for joining calls using teams token
+    "teams-identity-support-beta",
     // Soft Mute feature for ACS calls and Interop calls
     "soft-mute",
+    // feature for tracking the callParticipantsLocator
+    "call-participants-locator",
     // feature for breakout rooms
     "breakout-rooms"
   ],
@@ -99,6 +95,18 @@ module.exports = {
     // Feature to support file sharing in Teams interoperability chats
     "file-sharing-teams-interop",
     // Get join conference information
-    'teams-meeting-conference'
+    'teams-meeting-conference',
+    // Close captions feature for ACS calls
+    "acs-close-captions",
+    // Feature for showing notifications
+    "notifications",
+    // 1 to N Calling feature.
+    "one-to-n-calling",
+    // PSTN calls 
+    "PSTN-calls",
+    // Adhoc calls to a Teams user.
+    "teams-adhoc-call",
+    // Feature for tracking beta start call identifier
+    'start-call-beta'
   ]
 }

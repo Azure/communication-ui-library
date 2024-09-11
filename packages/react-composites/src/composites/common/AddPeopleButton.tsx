@@ -83,7 +83,7 @@ export const AddPeopleButton = (props: AddPeopleButtonProps): JSX.Element => {
   if (mobileView) {
     return (
       <AddPeopleDropdown
-        strings={strings}
+        strings={{ ...strings }}
         mobileView={mobileView}
         inviteLink={inviteLink}
         onAddParticipant={props.onAddParticipant}

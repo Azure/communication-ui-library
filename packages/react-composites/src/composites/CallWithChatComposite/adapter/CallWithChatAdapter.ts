@@ -35,7 +35,6 @@ import {
   VideoDeviceInfo
 } from '@azure/communication-calling';
 import { Reaction } from '@azure/communication-calling';
-import { StartCaptionsOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(breakout-rooms) */
@@ -45,7 +44,11 @@ import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react
 import { SendMessageOptions } from '@azure/communication-chat';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { UploadChatImageResult } from '@internal/acs-ui-common';
-import { JoinCallOptions } from '../../CallComposite/adapter/CallAdapter';
+import {
+  JoinCallOptions,
+  StartCaptionsAdapterOptions,
+  StopCaptionsAdapterOptions
+} from '../../CallComposite/adapter/CallAdapter';
 /* @conditional-compile-remove(file-sharing-acs) */
 import { MessageOptions } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(PSTN-calls) */
@@ -89,7 +92,7 @@ export interface CallWithChatAdapterManagement {
   /**
    * Remove a participant from the call.
    * @param participant - {@link @azure/communication-common#CommunicationIdentifier} of the participant to be removed
-   * @beta
+   * @public
    */
   removeParticipant(participant: CommunicationIdentifier): Promise<void>;
 
@@ -401,21 +404,21 @@ export interface CallWithChatAdapterManagement {
   /**
    * Puts the Call in a Localhold.
    *
-   * @beta
+   * @public
    */
   holdCall: () => Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Resumes the call from a LocalHold state.
    *
-   * @beta
+   * @public
    */
   resumeCall: () => Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Adds a new Participant to the call.
    *
-   * @beta
+   * @public
    */
   addParticipant(participant: PhoneNumberIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */
@@ -435,7 +438,7 @@ export interface CallWithChatAdapterManagement {
    * Function to Start captions
    * @param options - options for start captions
    */
-  startCaptions(options?: StartCaptionsOptions): Promise<void>;
+  startCaptions(options?: StartCaptionsAdapterOptions): Promise<void>;
   /**
    * Function to set caption language
    * @param language - language set for caption
@@ -449,7 +452,7 @@ export interface CallWithChatAdapterManagement {
   /**
    * Funtion to stop captions
    */
-  stopCaptions(): Promise<void>;
+  stopCaptions(options?: StopCaptionsAdapterOptions): Promise<void>;
 
   /**
    * Start the video background effect.
@@ -480,6 +483,20 @@ export interface CallWithChatAdapterManagement {
    * @public
    */
   updateSelectedVideoBackgroundEffect(selectedVideoBackground: VideoBackgroundEffect): void;
+  /* @conditional-compile-remove(DNS) */
+  /**
+   * Start the noise suppression effect.
+   *
+   * @beta
+   */
+  startNoiseSuppressionEffect(): Promise<void>;
+  /* @conditional-compile-remove(DNS) */
+  /**
+   * Start the noise suppression effect.
+   *
+   * @beta
+   */
+  stopNoiseSuppressionEffect(): Promise<void>;
   /**
    * Send the end of call survey result
    *

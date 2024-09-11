@@ -61,7 +61,7 @@ const CustomDataModelStory = (args: ArgsFrom<typeof storyControls>, context: any
 export const CustomDataModelExample = CustomDataModelStory.bind({});
 
 const meta: Meta = {
-  title: 'Composites/CallComposite',
+  title: 'Composites/CallComposite/Custom Data Model Example',
   component: CallComposite,
   argTypes: {
     ...storyControls,

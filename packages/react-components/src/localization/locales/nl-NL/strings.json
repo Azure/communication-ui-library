@@ -452,6 +452,31 @@
       "title": "Transcriptie is gestopt.",
       "message": "U bent nu alleen deze vergadering aan het opnemen.",
       "dismissButtonAriaLabel": "Sluiten"
+    },
+    "assignedBreakoutRoomOpened": {
+      "title": "U wordt over 5 seconden naar de toegewezen ruimte verplaatst.",
+      "dismissButtonAriaLabel": "Sluiten"
+    },
+    "assignedBreakoutRoomChanged": {
+      "title": "Uw aparte vergaderruimte is gewijzigd",
+      "message": "U wordt over 5 seconden naar de toegewezen ruimte verplaatst.",
+      "dismissButtonAriaLabel": "Sluiten"
+    },
+    "assignedBreakoutRoomOpenedPromptJoin": {
+      "title": "Deelnemen aan aparte vergaderruimte?",
+      "message": "U bent toegewezen aan een aparte vergaderruimte.",
+      "dismissButtonAriaLabel": "Sluiten",
+      "primaryButtonLabel": "Naar vergaderruimte",
+      "secondaryButtonLabel": "Later"
+    },
+    "breakoutRoomJoined": {
+      "title": "U heeft deelgenomen aan een vergaderruimte.",
+      "dismissButtonAriaLabel": "Sluiten"
+    },
+    "breakoutRoomClosingSoon": {
+      "title": "De tijdslimiet voor de ruimte verloopt binnenkort.",
+      "message": "Deze ruimte wordt in 30 seconden gesloten.",
+      "dismissButtonAriaLabel": "Sluiten"
     }
   },
   "videoGallery": {

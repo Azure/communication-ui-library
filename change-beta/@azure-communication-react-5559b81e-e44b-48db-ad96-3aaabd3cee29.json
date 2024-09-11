@@ -1,0 +1,9 @@
+{
+  "type": "prerelease",
+  "area": "feature",
+  "workstream": "DNS",
+  "comment": "DNS update design and set on default toggle to true",
+  "packageName": "@azure/communication-react",
+  "email": "97124699+prabhjot-msft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
