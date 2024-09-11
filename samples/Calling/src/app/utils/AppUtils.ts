@@ -5,7 +5,7 @@ import { GroupLocator, TeamsMeetingLinkLocator } from '@azure/communication-call
 import { ParticipantRole, RoomCallLocator } from '@azure/communication-calling';
 import { TeamsMeetingIdLocator } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-adhoc-call) */ /* @conditional-compile-remove(PSTN-calls) */
-import { CallParticipantsLocator } from '@azure/communication-react';
+import { fromFlatCommunicationIdentifier, StartCallIdentifier } from '@azure/communication-react';
 import { v1 as generateGUID } from 'uuid';
 
 /**
@@ -112,10 +112,13 @@ export const getRoomIdFromUrl = (): RoomCallLocator | undefined => {
 };
 
 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling)  */
-export const getOutboundParticipants = (outboundParticipants?: string[]): CallParticipantsLocator | undefined => {
+export const getOutboundParticipants = (outboundParticipants?: string[]): StartCallIdentifier[] | undefined => {
   if (outboundParticipants && outboundParticipants.length > 0) {
+    const participants: StartCallIdentifier[] = outboundParticipants.map((participantId) => {
+      return fromFlatCommunicationIdentifier(participantId);
+    });
     // set call participants and do not update the window URL since there is not a joinable link
-    return { participantIds: outboundParticipants };
+    return participants;
   }
   return undefined;
 };

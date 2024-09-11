@@ -102,7 +102,7 @@ export interface CallWithChatClientState {
   /** State to track whether to hide the noise suppression button.
    * @beta
    */
-  hideNoiseSuppressionButton?: boolean;
+  hideDeepNoiseSuppressionButton?: boolean;
 
   /** State to track the selected video background effect */
   selectedVideoBackgroundEffect?: VideoBackgroundEffect;
@@ -199,6 +199,10 @@ export function mergeCallAdapterStateIntoCallWithChatAdapterState(
     onResolveVideoEffectDependency: callAdapterState.onResolveVideoEffectDependency,
     /* @conditional-compile-remove(DNS) */
     onResolveDeepNoiseSuppressionDependency: callAdapterState.onResolveDeepNoiseSuppressionDependency,
+    /* @conditional-compile-remove(DNS) */
+    deepNoiseSuppressionOnByDefault: callAdapterState.deepNoiseSuppressionOnByDefault,
+    /* @conditional-compile-remove(DNS) */
+    hideDeepNoiseSuppressionButton: callAdapterState.hideDeepNoiseSuppressionButton,
 
     selectedVideoBackgroundEffect: callAdapterState.selectedVideoBackgroundEffect
   };
