@@ -310,6 +310,7 @@ jobs:
         id: setup-chrome
         with:
           chrome-version: 128.0.6613.137
+          install-dependencies: true
       - name: Build Call Composite Test App
         run: |
           cd packages/react-composites
@@ -379,6 +380,7 @@ jobs:
         id: setup-chrome
         with:
           chrome-version: 128.0.6613.137
+          install-dependencies: true
       - name: Build Chat Composite Test App
         run: |
           cd packages/react-composites
@@ -448,6 +450,7 @@ jobs:
         id: setup-chrome
         with:
           chrome-version: 128.0.6613.137
+          install-dependencies: true
       - name: Build CallWithChatComposite Test App
         run: |
           cd packages/react-composites
@@ -516,6 +519,7 @@ jobs:
         id: setup-chrome
         with:
           chrome-version: 128.0.6613.137
+          install-dependencies: true
       # Build the packages
       # This is needed because react-components depends on acs-ui-common and
       # acs-ui-common specifies main/module variables in package.json
@@ -735,6 +739,7 @@ jobs:
         id: setup-chrome
         with:
           chrome-version: 128.0.6613.137
+          install-dependencies: true
       - name: Build
         run: rush build -t sample-static-html-composites
       - name: Visual Regression Tests
@@ -787,6 +792,7 @@ jobs:
         id: setup-chrome
         with:
           chrome-version: 128.0.6613.137
+          install-dependencies: true
       - name: Build
         run: rush build -t component-examples
       - name: Visual Regression Tests

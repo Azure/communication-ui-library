@@ -94,6 +94,7 @@ jobs:
         id: setup-chrome
         with:
           chrome-version: 128.0.6613.137
+          install-dependencies: true
       - name: Switch flavor for build
         if: ${{ matrix.flavor != 'beta' }}
         run: rush switch-flavor:${{ matrix.flavor }}
