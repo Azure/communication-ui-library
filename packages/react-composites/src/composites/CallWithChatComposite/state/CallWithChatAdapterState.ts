@@ -199,6 +199,10 @@ export function mergeCallAdapterStateIntoCallWithChatAdapterState(
     onResolveVideoEffectDependency: callAdapterState.onResolveVideoEffectDependency,
     /* @conditional-compile-remove(DNS) */
     onResolveDeepNoiseSuppressionDependency: callAdapterState.onResolveDeepNoiseSuppressionDependency,
+    /* @conditional-compile-remove(DNS) */
+    deepNoiseSuppressionOnByDefault: callAdapterState.deepNoiseSuppressionOnByDefault,
+    /* @conditional-compile-remove(DNS) */
+    hideDeepNoiseSuppressionButton: callAdapterState.hideDeepNoiseSuppressionButton,
 
     selectedVideoBackgroundEffect: callAdapterState.selectedVideoBackgroundEffect
   };

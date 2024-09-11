@@ -1596,6 +1596,8 @@ export type CommonCallAdapterOptions = {
    */
   deepNoiseSuppressionOptions?: {
     onResolveDependency?: () => Promise<DeepNoiseSuppressionEffectDependency>;
+    deepNoiseSuppressionOnByDefault?: boolean;
+    hideDeepNoiseSuppressionButton?: boolean;
   };
   /**
    * Use this to fetch profile information which will override data in {@link CallAdapterState} like display name
