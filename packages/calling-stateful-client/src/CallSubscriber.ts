@@ -123,13 +123,23 @@ export class CallSubscriber {
     this.subscribe();
   }
 
+  private _safeSubscribeInitCaptionSubscriber = () => {
+    this._safeSubscribe(this.initCaptionSubscriber);
+  };
+  private _safeSubscribeInitTeamsMeetingConference = () => {
+    this._safeSubscribe(this.initTeamsMeetingConference);
+  };
+  private _safeSubscribeInitLocalRecordingNotificationSubscriber = () => {
+    this._safeSubscribe(this.initLocalRecordingNotificationSubscriber);
+  };
+
   private subscribe = (): void => {
     this._call.on('stateChanged', this.stateChanged);
-    this._call.on('stateChanged', () => {this._safeSubscribe(this.initCaptionSubscriber)});
+    this._call.on('stateChanged', this._safeSubscribeInitCaptionSubscriber);
     /* @conditional-compile-remove(teams-meeting-conference) */
-    this._call.on('stateChanged', () => {this._safeSubscribe(this.initTeamsMeetingConference)});
+    this._call.on('stateChanged', this._safeSubscribeInitTeamsMeetingConference);
     /* @conditional-compile-remove(local-recording-notification) */
-    this._call.on('stateChanged', () => {this._safeSubscribe(this.initLocalRecordingNotificationSubscriber)});
+    this._call.on('stateChanged', this._safeSubscribeInitLocalRecordingNotificationSubscriber);
     this._call.on('idChanged', this.idChanged);
     this._call.on('isScreenSharingOnChanged', this.isScreenSharingOnChanged);
     this._call.on('remoteParticipantsUpdated', this.remoteParticipantsUpdated);
@@ -167,11 +177,11 @@ export class CallSubscriber {
 
   public unsubscribe = (): void => {
     this._call.off('stateChanged', this.stateChanged);
-    this._call.off('stateChanged', () => {this._safeSubscribe(this.initCaptionSubscriber)});
+    this._call.off('stateChanged', this._safeSubscribeInitCaptionSubscriber);
     /* @conditional-compile-remove(local-recording-notification) */
-    this._call.off('stateChanged', () => {this._safeSubscribe(this.initLocalRecordingNotificationSubscriber)});
+    this._call.off('stateChanged', this._safeSubscribeInitTeamsMeetingConference);
     /* @conditional-compile-remove(teams-meeting-conference) */
-    this._call.off('stateChanged', () => {this._safeSubscribe(this.initTeamsMeetingConference)});
+    this._call.off('stateChanged', this._safeSubscribeInitLocalRecordingNotificationSubscriber);
     this._call.off('idChanged', this.idChanged);
     this._call.off('isScreenSharingOnChanged', this.isScreenSharingOnChanged);
     this._call.off('remoteParticipantsUpdated', this.remoteParticipantsUpdated);
