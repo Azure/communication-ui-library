@@ -726,15 +726,6 @@ export type CallCompositeIcons = {
     StopAllSpotlightMenuButton?: JSX.Element;
 };
 
-// @beta
-export type CallCompositeLoaderProps = {
-    userId: string;
-    token: string;
-    displayName: string;
-    locator: CallAdapterLocator;
-    options?: AzureCommunicationCallAdapterOptions;
-};
-
 // @public
 export type CallCompositeOptions = {
     errorBar?: boolean;
@@ -1487,15 +1478,6 @@ export type CallWithChatCompositeIcons = {
     StopAllSpotlightMenuButton?: JSX.Element;
 };
 
-// @beta
-export type CallWithChatCompositeLoaderProps = {
-    userId: string;
-    token: string;
-    displayName: string;
-    endpoint: string;
-    locator: CallAndChatLocator;
-};
-
 // @public
 export type CallWithChatCompositeOptions = {
     callControls?: boolean | CallWithChatControlOptions;
@@ -1918,15 +1900,6 @@ export type ChatCompositeIcons = {
     SendBoxSend?: JSX.Element;
     SendBoxSendHovered?: JSX.Element;
     SendBoxAttachFile?: JSX.Element;
-};
-
-// @beta
-export type ChatCompositeLoaderProps = {
-    userId: string;
-    token: string;
-    displayName?: string;
-    endpoint: string;
-    threadId: string;
 };
 
 // @public
@@ -3461,20 +3434,8 @@ export interface JumpToNewMessageButtonProps {
 // @public
 export const lightTheme: PartialTheme & CallingTheme;
 
-// @beta
-export const loadCallComposite: (adapterArgs: CallCompositeLoaderProps, htmlElement: HTMLElement | null, props?: CallCompositeOptions) => Promise<CallAdapter | undefined>;
-
-// @beta
-export const loadCallWithChatComposite: (args: CallWithChatCompositeLoaderProps, htmlElement: HTMLElement | null, props: CallWithChatCompositeOptions) => Promise<CallWithChatAdapter | undefined>;
-
-// @beta
-export const loadChatComposite: (args: ChatCompositeLoaderProps, htmlElement: HTMLElement | null, props: ChatCompositeOptions) => Promise<ChatAdapter | undefined>;
-
 // @public
 export type LoadingState = 'loading' | 'none';
-
-// @beta
-export const loadOutboundCallComposite: (adapterArgs: OutboundCallCompositeLoaderProps, htmlElement: HTMLElement | null, props?: CallCompositeOptions) => Promise<CallAdapter | undefined>;
 
 // @public
 export const LocalizationProvider: (props: LocalizationProviderProps) => JSX.Element;
@@ -3988,15 +3949,6 @@ export interface OptionsDevice {
     id: string;
     name: string;
 }
-
-// @beta
-export type OutboundCallCompositeLoaderProps = {
-    userId: string;
-    token: string;
-    displayName: string;
-    targetCallees: string[] | StartCallIdentifier[];
-    options?: AzureCommunicationCallAdapterOptions;
-};
 
 // @public
 export type OverflowGalleryPosition = 'horizontalBottom' | 'verticalRight' | 'horizontalTop';
