@@ -502,7 +502,7 @@ export const _isSafari = (
   environmentInfo: undefined | /* @conditional-compile-remove(unsupported-browser) */ EnvironmentInfo
 ): boolean => {
   /* @conditional-compile-remove(unsupported-browser) */
-  return environmentInfo?.environment.browser === 'safari';
+  return environmentInfo?.environment.browser.toLowerCase() === 'safari';
   return /^((?!chrome|android|crios|fxios).)*safari/i.test(navigator.userAgent);
 };
 
