@@ -85,7 +85,7 @@
     "build:cjs": "rollup -c --silent",
     "build:esm": "npm run _if-preprocess && rushx copy-original && rushx preprocess && rushx copy-preprocess  && tspc -project tsconfig.preprocess.json || (if-env COMMUNICATION_REACT_FLAVOR=beta && tspc)",
     "build:watch": "",
-    "build:api": "rushx _api-extractor:complete:by-flavor",
+    "build:api": "rushx _by-flavor \"rushx _api-extractor:complete:by-flavor\"",
     "clean": "rimraf dist && rimraf ../**/preprocessed && rimraf ../**/preprocess-dist",
     "test": "",
     "test:ci-coverage": "",
