@@ -452,6 +452,31 @@
       "title": "已停止轉錄。",
       "message": "您現在只會錄製此會議。",
       "dismissButtonAriaLabel": "關閉"
+    },
+    "assignedBreakoutRoomOpened": {
+      "title": "我們將在 5 秒內將您移至指派的會議室。",
+      "dismissButtonAriaLabel": "關閉"
+    },
+    "assignedBreakoutRoomChanged": {
+      "title": "您的分組討論區已變更",
+      "message": "我們將在 5 秒內將您移至指派的會議室。",
+      "dismissButtonAriaLabel": "關閉"
+    },
+    "assignedBreakoutRoomOpenedPromptJoin": {
+      "title": "加入分組討論區?",
+      "message": "系統已指派分組討論區給您。",
+      "dismissButtonAriaLabel": "關閉",
+      "primaryButtonLabel": "加入會議室",
+      "secondaryButtonLabel": "稍後"
+    },
+    "breakoutRoomJoined": {
+      "title": "您已加入分組討論區。",
+      "dismissButtonAriaLabel": "關閉"
+    },
+    "breakoutRoomClosingSoon": {
+      "title": "會議室時間限制即將到期。",
+      "message": "此會議室將在 30 秒鐘內關閉。",
+      "dismissButtonAriaLabel": "關閉"
     }
   },
   "videoGallery": {

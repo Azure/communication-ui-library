@@ -9,7 +9,7 @@ import { ControlBar, DevicesButton, ParticipantMenuItemsCallback } from '@intern
 import { HoldButton } from '@internal/react-components';
 import React, { useMemo } from 'react';
 /* @conditional-compile-remove(DNS) */
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useEffect } from 'react';
 import { CallControlOptions } from '../types/CallControlOptions';
 import { Camera } from './buttons/Camera';
 import { Devices } from './buttons/Devices';
@@ -95,6 +95,27 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
 
   /* @conditional-compile-remove(DNS) */
   const [isDeepNoiseSuppressionOn, setDeepNoiseSuppressionOn] = useState<boolean>(false);
+
+  /* @conditional-compile-remove(DNS) */
+  const startDeepNoiseSuppression = useCallback(async () => {
+    await adapter.startNoiseSuppressionEffect();
+  }, [adapter]);
+
+  /* @conditional-compile-remove(DNS) */
+  useEffect(() => {
+    if (
+      adapter.getState().onResolveDeepNoiseSuppressionDependency &&
+      adapter.getState().deepNoiseSuppressionOnByDefault
+    ) {
+      startDeepNoiseSuppression();
+      setDeepNoiseSuppressionOn(true);
+    }
+  }, [adapter, startDeepNoiseSuppression]);
+  /* @conditional-compile-remove(DNS) */
+  const showNoiseSuppressionButton =
+    adapter.getState().onResolveDeepNoiseSuppressionDependency && !adapter.getState().hideDeepNoiseSuppressionButton
+      ? true
+      : false;
 
   /* @conditional-compile-remove(DNS) */
   const onClickNoiseSuppression = useCallback(async () => {
@@ -363,6 +384,8 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
               onClickNoiseSuppression={onClickNoiseSuppression}
               /* @conditional-compile-remove(DNS) */
               isDeepNoiseSuppressionOn={isDeepNoiseSuppressionOn}
+              /* @conditional-compile-remove(DNS) */
+              showNoiseSuppressionButton={showNoiseSuppressionButton}
             />
           )}
           {cameraButtonIsEnabled && (

@@ -32,7 +32,7 @@ import { joinThread } from './utils/joinThread';
 import { getThread } from './utils/getThread';
 import { getExistingThreadIdFromURL } from './utils/getThreadId';
 import { WEB_APP_TITLE } from './utils/constants';
-/* @conditional-compile-remove(PSTN-calls) */
+/* @conditional-compile-remove(call-participants-locator) */
 import { CallParticipantsLocator } from '@azure/communication-react';
 import { initializeFileTypeIcons } from '@fluentui/react-file-type-icons';
 
@@ -183,8 +183,8 @@ const generateCallWithChatArgs = async (
 
 const callLocatorGen = (
   /* @conditional-compile-remove(PSTN-calls) */ outBoundParticipants?: string[]
-): GroupCallLocator | /* @conditional-compile-remove(PSTN-calls) */ CallParticipantsLocator => {
-  /* @conditional-compile-remove(PSTN-calls) */
+): GroupCallLocator | /* @conditional-compile-remove(call-participants-locator) */ CallParticipantsLocator => {
+  /* @conditional-compile-remove(call-participants-locator) */
   if (outBoundParticipants) {
     return { participantIds: outBoundParticipants };
   }

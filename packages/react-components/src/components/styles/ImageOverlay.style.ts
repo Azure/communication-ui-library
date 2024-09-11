@@ -68,7 +68,7 @@ export const headerStyle: IStyle = {
   fontSize: 'inherit',
   margin: '0',
   width: '100%',
-  height: '3.5rem',
+  minHeight: '3.5rem',
   flexDirection: 'row',
   justifyContent: 'space-between',
   padding: '0.25rem 0.75rem'
@@ -80,7 +80,6 @@ export const headerStyle: IStyle = {
 export const titleBarContainerStyle: IStyle = {
   flexDirection: 'row',
   justifyContent: 'start',
-  flexWrap: 'wrap',
   alignContent: 'center',
   alignItems: 'center'
 };
