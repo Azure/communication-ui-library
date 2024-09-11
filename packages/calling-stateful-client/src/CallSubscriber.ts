@@ -125,11 +125,11 @@ export class CallSubscriber {
 
   private subscribe = (): void => {
     this._call.on('stateChanged', this.stateChanged);
-    this._call.on('stateChanged', this.initCaptionSubscriber);
+    this._call.on('stateChanged', () => {this._safeSubscribe(this.initCaptionSubscriber)});
     /* @conditional-compile-remove(teams-meeting-conference) */
-    this._call.on('stateChanged', this.initTeamsMeetingConference);
+    this._call.on('stateChanged', () => {this._safeSubscribe(this.initTeamsMeetingConference)});
     /* @conditional-compile-remove(local-recording-notification) */
-    this._call.on('stateChanged', this.initLocalRecordingNotificationSubscriber);
+    this._call.on('stateChanged', () => {this._safeSubscribe(this.initLocalRecordingNotificationSubscriber)});
     this._call.on('idChanged', this.idChanged);
     this._call.on('isScreenSharingOnChanged', this.isScreenSharingOnChanged);
     this._call.on('remoteParticipantsUpdated', this.remoteParticipantsUpdated);
@@ -167,11 +167,11 @@ export class CallSubscriber {
 
   public unsubscribe = (): void => {
     this._call.off('stateChanged', this.stateChanged);
-    this._call.off('stateChanged', this.initCaptionSubscriber);
+    this._call.off('stateChanged', () => {this._safeSubscribe(this.initCaptionSubscriber)});
     /* @conditional-compile-remove(local-recording-notification) */
-    this._call.off('stateChanged', this.initLocalRecordingNotificationSubscriber);
+    this._call.off('stateChanged', () => {this._safeSubscribe(this.initLocalRecordingNotificationSubscriber)});
     /* @conditional-compile-remove(teams-meeting-conference) */
-    this._call.off('stateChanged', this.initTeamsMeetingConference);
+    this._call.off('stateChanged', () => {this._safeSubscribe(this.initTeamsMeetingConference)});
     this._call.off('idChanged', this.idChanged);
     this._call.off('isScreenSharingOnChanged', this.isScreenSharingOnChanged);
     this._call.off('remoteParticipantsUpdated', this.remoteParticipantsUpdated);
@@ -218,6 +218,18 @@ export class CallSubscriber {
     /* @conditional-compile-remove(breakout-rooms) */
     this._breakoutRoomsSubscriber.unsubscribe();
   };
+
+  // This is a helper function to safely call subscriber functions. This is needed in order to prevent events
+  // with the same event type from failing to fire due to a subscriber throwing an error upon subscription.
+  // Wrap your listeners with this helper function if your listener can fail due to initialization or fail
+  // during a function call. This will prevent other events using the same event type from failing to fire.
+  private _safeSubscribe(subscriber: () => void): void {
+    try {
+      subscriber();
+    } catch (e) {
+      this._context.teeErrorToState(e as Error, 'CallAgent.feature');
+    }
+  }
 
   private addParticipantListener(participant: RemoteParticipant): void {
     const participantKey = toFlatCommunicationIdentifier(participant.identifier);
