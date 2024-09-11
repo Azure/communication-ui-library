@@ -2,7 +2,9 @@
 // Licensed under the MIT License.
 
 import { VideoGallery as VideoGalleryComponent } from '@azure/communication-react';
+import { Meta } from '@storybook/react';
 import React from 'react';
+import { controlsToAdd } from '../../controlsUtils';
 
 const MockLocalParticipant = {
   userId: 'userLocal',
@@ -13,10 +15,7 @@ const MockLocalParticipant = {
 };
 
 const GalleryLayoutRender = (args: any): JSX.Element => {
-  const remoteParticipants = (
-    args.remoteParticipants ??
-    'Rick, Daryl, Michonne, Dwight, Pam, Michael, Jim, Kevin, Creed, Angela, Andy, Stanley, Meredith, Phyllis, Oscar, Ryan, Kelly, Andy, Toby, Darryl, Gabe, Erin'
-  )
+  const remoteParticipants = args.remoteParticipants
     .split(',')
     .map((p: string) => p.trim())
     .filter((p: string) => p)
@@ -66,7 +65,7 @@ const GalleryLayoutRender = (args: any): JSX.Element => {
 };
 
 export const GalleryLayout = {
-  description: 'test description',
+  title: 'Components/Video Gallery',
   render: GalleryLayoutRender,
   source: {
     language: 'bash'
@@ -98,3 +97,40 @@ export const GalleryLayout = {
     }
   }
 };
+
+const meta: Meta = {
+  title: 'Components/Video Gallery',
+  component: VideoGalleryComponent,
+  argTypes: {
+    styles: { table: { disable: true } },
+    layout: { table: { disable: true } },
+    localParticipant: { table: { disable: true } },
+    dominantSpeakers: { table: { disable: true } },
+    localVideoViewOptions: { table: { disable: true } },
+    onCreateLocalStreamView: { table: { disable: true } },
+    onDisposeLocalStreamView: { table: { disable: true } },
+    onRenderLocalVideoTile: { table: { disable: true } },
+    onCreateRemoteStreamView: { table: { disable: true } },
+    onRenderRemoteVideoTile: { table: { disable: true } },
+    onDisposeRemoteStreamView: { table: { disable: true } },
+    onDisposeRemoteVideoStreamView: { table: { disable: true } },
+    onDisposeRemoteScreenShareStreamView: { table: { disable: true } },
+    onRenderAvatar: { table: { disable: true } },
+    showMuteIndicator: { table: { disable: true } },
+    strings: { table: { disable: true } },
+    maxRemoteVideoStreams: { table: { disable: true } },
+    pinnedParticipants: { table: { disable: true } },
+    onPinParticipant: { table: { disable: true } },
+    remoteParticipants: controlsToAdd.remoteParticipantNames,
+    videoGalleryLayout: controlsToAdd.videoGallerylayout,
+    overflowGalleryPosition: controlsToAdd.overflowGalleryPosition,
+    screenShareExperience: controlsToAdd.screenShareExperience,
+    localVideoTileSize: controlsToAdd.localVideoTileSize
+  },
+  args: {
+    remoteParticipants:
+      'Rick, Daryl, Michonne, Dwight, Pam, Michael, Jim, Kevin, Creed, Angela, Andy, Stanley, Meredith, Phyllis, Oscar, Ryan, Kelly, Andy, Toby, Darryl, Gabe, Erin'
+  }
+};
+
+export default meta;

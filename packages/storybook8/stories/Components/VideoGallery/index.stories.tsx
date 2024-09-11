@@ -8,7 +8,11 @@ import { SpeakerLayoutExample } from './snippets/SpeakerLayout.snippet';
 import { WithHorizontalGalleryExample } from './snippets/WithHorizontalGallery.snippet';
 import { WithVerticalGalleryExample } from './snippets/WithVerticalGallery.snippet';
 import { FloatingLocalVideoExample } from './snippets/FloatingLocalVideo.snippet';
-export { GalleryLayout as VideoGallery } from './GalleryLayout.story';
+import { DefaultVideoGalleryExample } from './snippets/Default.snippet';
+
+export const DefaultVideoGalleryExampleDocsOnly = {
+  render: DefaultVideoGalleryExample
+};
 
 export const FloatingLocalVideoLayoutDocsOnly = {
   render: FloatingLocalVideoExample

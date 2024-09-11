@@ -62,7 +62,7 @@ This feature allows users to choose from a variety of video gallery layouts. On 
 
 If there are no remote video streams on, all participants are placed in the [Grid Layout](./?path=/docs/components-grid-layout--docs) including the local user. Otherwise, only remote participants with their video streams on are placed in the Grid Layout upto a max of `maxRemoteVideoStreams`. The remaining participants are placed in the Horizontal Gallery.
 
-<Canvas of={VideoGalleryStories.VideoGallery} source={{ code: DefaultVideoGalleryExampleText }} />
+<Canvas of={VideoGalleryStories.DefaultVideoGalleryExampleDocsOnly} source={{ code: DefaultVideoGalleryExampleText }} />
 
 Note: The `maxRemoteVideoStreams` prop limits the number of remote video streams in the [GridLayout](./?path=/docs/components-grid-layout--docs). If the number of remote participants with their video stream on exceeds `maxRemoteVideoStreams` then remote participants in the `dominantSpeakers` prop will be prioritized. Furthermore, the VideoGallery is designed to limit the re-ordering when the `dominantSpeakers` prop is changed.
 
