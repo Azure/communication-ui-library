@@ -26,7 +26,9 @@ module.exports = {
     // Feature for showing dtmp dialer by default
     "dtmf-dialer-on-by-default",
     // Deep Noise Suppression feature
-    "DNS"
+    "DNS",
+    // Feature for together mode
+    "together-mode"
   ],
   beta: [
     "call-readiness",
