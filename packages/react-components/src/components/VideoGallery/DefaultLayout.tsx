@@ -9,7 +9,11 @@ import { isShortHeight } from '../utils/responsive';
 import { LayoutProps } from './Layout';
 import { rootLayoutStyle } from './styles/DefaultLayout.styles';
 import { videoGalleryLayoutGap } from './styles/Layout.styles';
-import { MAX_GRID_PARTICIPANTS_NOT_LARGE_GALLERY, useOrganizedParticipants } from './utils/videoGalleryLayoutUtils';
+import {
+  MAX_GRID_PARTICIPANTS_NOT_LARGE_GALLERY,
+  renderTiles,
+  useOrganizedParticipants
+} from './utils/videoGalleryLayoutUtils';
 import { OverflowGallery } from './OverflowGallery';
 
 /**
@@ -65,17 +69,6 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
     spotlightedParticipantUserIds
   });
 
-  let activeVideoStreams = 0;
-
-  let gridTiles = gridParticipants.map((p) => {
-    return onRenderRemoteParticipant(
-      p,
-      maxRemoteVideoStreams && maxRemoteVideoStreams >= 0
-        ? p.videoStream?.isAvailable && activeVideoStreams++ < maxRemoteVideoStreams
-        : p.videoStream?.isAvailable
-    );
-  });
-
   /**
    * instantiate indexes available to render with indexes available that would be on first page
    *
@@ -85,14 +78,14 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
    */
   const [indexesToRender, setIndexesToRender] = useState<number[]>([]);
 
-  let overflowGalleryTiles = overflowGalleryParticipants.map((p, i) => {
-    return onRenderRemoteParticipant(
-      p,
-      maxRemoteVideoStreams && maxRemoteVideoStreams >= 0
-        ? p.videoStream?.isAvailable && indexesToRender.includes(i) && activeVideoStreams++ < maxRemoteVideoStreams
-        : p.videoStream?.isAvailable
-    );
-  });
+  let { gridTiles, overflowGalleryTiles } = renderTiles(
+    gridParticipants,
+    onRenderRemoteParticipant,
+    maxRemoteVideoStreams,
+    indexesToRender,
+    overflowGalleryParticipants,
+    dominantSpeakers
+  );
 
   if (localVideoComponent) {
     if (screenShareComponent || spotlightedParticipantUserIds.length > 0) {

@@ -171,6 +171,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
           lineHeightPx={16 * 1.5}
           bufferHeightPx={16}
           text={locale.strings.call.configurationPageTitle}
+          role="heading"
         />
       </Stack.Item>
     ) : (
