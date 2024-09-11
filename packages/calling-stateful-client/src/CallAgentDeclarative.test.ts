@@ -28,7 +28,7 @@ import {
   PushNotificationData
 } from '@azure/communication-calling';
 import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
-import EventEmitter from 'events';
+import { EventEmitter } from 'events';
 import { callAgentDeclaratify } from './CallAgentDeclarative';
 import { CallError } from './CallClientState';
 import { CallContext, MAX_CALL_HISTORY_LENGTH } from './CallContext';

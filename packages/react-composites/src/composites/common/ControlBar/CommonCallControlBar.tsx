@@ -236,7 +236,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
   /* @conditional-compile-remove(DNS) */
   const showNoiseSuppressionButton =
     props.callAdapter.getState().onResolveDeepNoiseSuppressionDependency &&
-    !props.callAdapter.getState().hideNoiseSuppressionButton
+    !props.callAdapter.getState().hideDeepNoiseSuppressionButton
       ? true
       : false;
   /* @conditional-compile-remove(DNS) */
