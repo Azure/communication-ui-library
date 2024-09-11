@@ -58,6 +58,8 @@ import { callStatusSelector } from '../../CallComposite/selectors/callStatusSele
 import { MeetingConferencePhoneInfoModal } from '@internal/react-components';
 /* @conditional-compile-remove(breakout-rooms) */
 import { Timer } from './Timer';
+/* @conditional-compile-remove(DNS) */
+import { _isSafari } from '../../CallComposite/utils';
 
 /**
  * @private
@@ -224,6 +226,12 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
   }, [props.callAdapter]);
 
   /* @conditional-compile-remove(DNS) */
+  const environmentInfo = props.callAdapter.getState().environmentInfo;
+
+  /* @conditional-compile-remove(DNS) */
+  const isSafari = _isSafari(environmentInfo);
+
+  /* @conditional-compile-remove(DNS) */
   useEffect(() => {
     if (
       props.callAdapter.getState().onResolveDeepNoiseSuppressionDependency &&
@@ -236,7 +244,8 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
   /* @conditional-compile-remove(DNS) */
   const showNoiseSuppressionButton =
     props.callAdapter.getState().onResolveDeepNoiseSuppressionDependency &&
-    !props.callAdapter.getState().hideNoiseSuppressionButton
+    !props.callAdapter.getState().hideDeepNoiseSuppressionButton &&
+    !isSafari
       ? true
       : false;
   /* @conditional-compile-remove(DNS) */

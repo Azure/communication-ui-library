@@ -13,7 +13,7 @@ import { CallAgentCommon, CallCommon } from './BetaToStableTypes';
 
 /* @conditional-compile-remove(one-to-n-calling) */
 /**
- * @beta
+ * @public
  * This contains a readonly array that returns all the active `incomingCalls`.
  * An active incoming call is a call that has not been answered, declined or disconnected.
  */
@@ -27,7 +27,7 @@ export type IncomingCallManagement = {
 };
 
 /**
- * @beta
+ * @public
  * `DeclarativeCallAgent` extends and proxies the {@link @azure/communication-calling#CallAgent}
  */
 export type DeclarativeCallAgent = CallAgent &

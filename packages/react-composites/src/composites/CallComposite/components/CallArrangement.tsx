@@ -668,6 +668,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
               }
               onChatButtonClicked={props.mobileChatTabHeader?.onClick}
               disableChatButton={props.mobileChatTabHeader?.disabled}
+              showAddPeopleButton={!!props.callControlProps.callInvitationURL}
             />
             {props.mobileView && (
               <ModalLocalAndRemotePIP

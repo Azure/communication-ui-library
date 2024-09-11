@@ -223,7 +223,7 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
     />
   );
 
-  const SafariBrowserSpeakerDropdownTrampoline = (): JSX.Element => {
+  const safariBrowserSpeakerDropdownTrampoline = (): JSX.Element => {
     /* @conditional-compile-remove(unsupported-browser) */
     if (isSafariWithNoSpeakers) {
       return <></>;
@@ -282,7 +282,7 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
             /* @conditional-compile-remove(call-readiness) */
             onClickEnableDevicePermission={props.onClickEnableDevicePermission}
           />
-          <SafariBrowserSpeakerDropdownTrampoline />
+          {safariBrowserSpeakerDropdownTrampoline()}
         </Stack>
       </Stack>
     </Stack>
