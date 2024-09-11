@@ -63,8 +63,7 @@ betaTest.describe('ChatMyMessageComponent keyboard navigation tests', () => {
     await page.keyboard.press('Enter');
     await expect(removeButton).not.toBeFocused();
     // more menu isn't open
-    expect(page.getByTestId('chat-composite-message-contextual-menu-edit-action')).not.toBeVisible();
-    expect(page.getByTestId('chat-composite-message-contextual-menu-remove-action')).not.toBeVisible();
+    expect(removeButton).not.toBeVisible();
   });
 });
 
