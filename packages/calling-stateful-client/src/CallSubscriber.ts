@@ -126,9 +126,11 @@ export class CallSubscriber {
   private _safeSubscribeInitCaptionSubscriber = () => {
     this._safeSubscribe(this.initCaptionSubscriber);
   };
+  /* @conditional-compile-remove(teams-meeting-conference) */
   private _safeSubscribeInitTeamsMeetingConference = () => {
     this._safeSubscribe(this.initTeamsMeetingConference);
   };
+  /* @conditional-compile-remove(local-recording-notification) */
   private _safeSubscribeInitLocalRecordingNotificationSubscriber = () => {
     this._safeSubscribe(this.initLocalRecordingNotificationSubscriber);
   };
@@ -178,9 +180,9 @@ export class CallSubscriber {
   public unsubscribe = (): void => {
     this._call.off('stateChanged', this.stateChanged);
     this._call.off('stateChanged', this._safeSubscribeInitCaptionSubscriber);
-    /* @conditional-compile-remove(local-recording-notification) */
-    this._call.off('stateChanged', this._safeSubscribeInitTeamsMeetingConference);
     /* @conditional-compile-remove(teams-meeting-conference) */
+    this._call.off('stateChanged', this._safeSubscribeInitTeamsMeetingConference);
+    /* @conditional-compile-remove(local-recording-notification) */
     this._call.off('stateChanged', this._safeSubscribeInitLocalRecordingNotificationSubscriber);
     this._call.off('idChanged', this.idChanged);
     this._call.off('isScreenSharingOnChanged', this.isScreenSharingOnChanged);
