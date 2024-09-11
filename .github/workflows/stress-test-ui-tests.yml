@@ -33,7 +33,7 @@ jobs:
       - uses: browser-actions/setup-chrome@v1
         id: setup-chrome
         with:
-          chrome-version: 120.0.6099
+          chrome-version: 128.0.6613.137
       - name: Build Test
         run: |
           cd packages/react-composites
