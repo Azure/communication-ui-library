@@ -28,7 +28,6 @@ import { _preventDismissOnEvent } from '@internal/acs-ui-common';
 import { showDtmfDialer } from '../../CallComposite/utils/MediaGalleryUtils';
 import { useSelector } from '../../CallComposite/hooks/useSelector';
 import { getTargetCallees } from '../../CallComposite/selectors/baseSelectors';
-/*@conditional-compile-remove(teams-meeting-conference) */
 import { getTeamsMeetingCoordinates, getIsTeamsMeeting } from '../../CallComposite/selectors/baseSelectors';
 
 /** @private */
@@ -43,9 +42,7 @@ export interface DesktopMoreButtonProps extends ControlBarButtonProps {
   userSetGalleryLayout?: VideoGalleryLayout;
   onSetDialpadPage?: () => void;
   dtmfDialerPresent?: boolean;
-  /* @conditional-compile-remove(teams-meeting-conference) */
   teamsMeetingPhoneCallEnable?: boolean;
-  /* @conditional-compile-remove(teams-meeting-conference) */
   onMeetingPhoneInfoClick?: () => void;
 }
 
@@ -75,9 +72,7 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
   const callees = useSelector(getTargetCallees);
   const allowDtmfDialer = showDtmfDialer(callees);
 
-  /* @conditional-compile-remove(teams-meeting-conference) */
   const isTeamsMeeting = useSelector(getIsTeamsMeeting);
-  /* @conditional-compile-remove(teams-meeting-conference) */
   const teamsMeetingCoordinates = useSelector(getTeamsMeetingCoordinates);
 
   const [dtmfDialerChecked, setDtmfDialerChecked] = useState<boolean>(props.dtmfDialerPresent ?? false);
@@ -204,7 +199,7 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
   if (props.onSetDialpadPage && allowDtmfDialer) {
     moreButtonContextualMenuItems.push(dtmfDialerScreenOption);
   }
-  /* @conditional-compile-remove(teams-meeting-conference) */
+
   const joinByPhoneOption = {
     key: 'phoneCallKey',
     itemProps: {
@@ -222,7 +217,6 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
   /**
    * Only render the phone call button if meeting conordinates are present
    */
-  /* @conditional-compile-remove(teams-meeting-conference) */
   if (props.teamsMeetingPhoneCallEnable && isTeamsMeeting && teamsMeetingCoordinates) {
     moreButtonContextualMenuItems.push(joinByPhoneOption);
   }

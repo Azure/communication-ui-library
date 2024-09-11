@@ -20,7 +20,6 @@ import {
   RemoteParticipantState
 } from '@internal/calling-stateful-client';
 import { CaptionsInfo } from '@internal/calling-stateful-client';
-/* @conditional-compile-remove(teams-meeting-conference) */
 import { ConferencePhoneInfo } from '@internal/calling-stateful-client';
 import { SpotlightedParticipant } from '@azure/communication-calling';
 import { CallAdapterState, CallCompositePage } from '../adapter/CallAdapter';
@@ -210,7 +209,6 @@ export const getIsTeamsCall = (state: CallAdapterState): boolean => state.isTeam
  */
 export const getIsTeamsMeeting = (state: CallAdapterState): boolean => state.isTeamsMeeting;
 
-/* @conditional-compile-remove(teams-meeting-conference) */
 /**
  * @private
  */
