@@ -56,7 +56,8 @@ export const loadCallComposite = async function (
     throw new Error('Failed to find the root element');
   }
 
-  const { createRoot } = await import('react-dom/client');
-  createRoot(htmlElement).render(React.createElement(CallComposite, { ...props, adapter }, null));
+  import('react-dom/client').then(({ createRoot }) => {
+    createRoot(htmlElement).render(React.createElement(CallComposite, { ...props, adapter }, null));
+  });
   return adapter;
 };
