@@ -88,24 +88,22 @@ export interface MicrophoneButtonStrings {
   microphoneAriaDescription?: string;
   /* @conditional-compile-remove(DNS) */
   /**
-   * Title when deep noise suppression is on
+   * Title for deep noise suppression button
+   * @beta
    */
-  deepNoiseSuppresionOnTitle?: string;
-  /* @conditional-compile-remove(DNS) */
-  /**
-   * Title when deep noise suppression is off
-   */
-  deepNoiseSuppresionOffTitle?: string;
+  deepNoiseSuppressionTitle?: string;
   /* @conditional-compile-remove(DNS) */
   /**
    * Noise Suppression turned on string for announcer
+   * @beta
    */
-  deepNoiseSuppresionOnAnnouncement?: string;
+  deepNoiseSuppressionOnAnnouncement?: string;
   /* @conditional-compile-remove(DNS) */
   /**
    * Noise Suppression turned off string for announcer
+   * @beta
    */
-  deepNoiseSuppresionOffAnnouncement?: string;
+  deepNoiseSuppressionOffAnnouncement?: string;
 }
 
 /**
@@ -184,16 +182,22 @@ export interface MicrophoneButtonProps extends ControlBarButtonProps {
   /* @conditional-compile-remove(DNS) */
   /**
    * Whether the deep noise suppression is on or off
+   *
+   * @beta
    */
   isDeepNoiseSuppressionOn?: boolean;
   /* @conditional-compile-remove(DNS) */
   /**
    * Callback when noise suppression is clicked
+   *
+   * @beta
    */
   onClickNoiseSuppression?: () => void;
   /* @conditional-compile-remove(DNS) */
   /**
    * Show/Hide the deep noise suppression button
+   *
+   * @beta
    */
   showNoiseSuppressionButton?: boolean;
 }
@@ -267,6 +271,34 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
 
   const splitButtonMenuItems: IContextualMenuItem[] = [];
 
+  /* @conditional-compile-remove(DNS) */
+  if (props.showNoiseSuppressionButton) {
+    splitButtonMenuItems.push({
+      key: 'microphoneDNSToggle',
+      onRender: () => {
+        return (
+          <Stack
+            onClick={async () => {
+              await props.onClickNoiseSuppression?.();
+              setAnnouncerString(
+                props.isDeepNoiseSuppressionOn
+                  ? strings.deepNoiseSuppressionOnAnnouncement
+                  : strings.deepNoiseSuppressionOffAnnouncement
+              );
+            }}
+          >
+            <Toggle
+              label={strings.deepNoiseSuppressionTitle}
+              checked={props.isDeepNoiseSuppressionOn}
+              inlineLabel
+              styles={deepNoiseSuppressionToggleStyles}
+            />
+          </Stack>
+        );
+      }
+    });
+  }
+
   splitButtonMenuItems.push({
     key: 'microphonePrimaryAction',
     text: props.checked ? strings.onSplitButtonMicrophonePrimaryAction : strings.offSplitButtonMicrophonePrimaryAction,
@@ -279,37 +311,6 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
     }
   });
 
-  /* @conditional-compile-remove(DNS) */
-  if (props.showNoiseSuppressionButton) {
-    splitButtonMenuItems.push({
-      key: 'microphoneDNSToggle',
-      onRender: () => {
-        return (
-          <Stack
-            onClick={async () => {
-              await props.onClickNoiseSuppression?.();
-              setAnnouncerString(
-                props.isDeepNoiseSuppressionOn
-                  ? strings.deepNoiseSuppresionOnAnnouncement
-                  : strings.deepNoiseSuppresionOffAnnouncement
-              );
-            }}
-          >
-            <Toggle
-              label={
-                props.isDeepNoiseSuppressionOn
-                  ? strings.deepNoiseSuppresionOnTitle
-                  : strings.deepNoiseSuppresionOffTitle
-              }
-              checked={props.isDeepNoiseSuppressionOn}
-              inlineLabel
-              styles={deepNoiseSuppressionToggleStyles}
-            />
-          </Stack>
-        );
-      }
-    });
-  }
   /**
    * We need to also include the primary action of the button to the
    * split button for mobile devices.

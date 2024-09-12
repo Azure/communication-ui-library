@@ -1,14 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/* @conditional-compile-remove(teams-meeting-conference) */
 import * as reselect from 'reselect';
-/* @conditional-compile-remove(teams-meeting-conference) */
 import { getUserFacingDiagnostics } from './baseSelectors';
-/* @conditional-compile-remove(teams-meeting-conference) */
 import { DiagnosticQuality } from '@azure/communication-calling';
 
-/* @conditional-compile-remove(teams-meeting-conference) */
 /**
  * @private
  */
@@ -20,7 +16,6 @@ export const badNetworkQualityBannerSelector = reselect.createSelector([getUserF
   };
 });
 
-/* @conditional-compile-remove(teams-meeting-conference) */
 /**
  * @prative
  */
