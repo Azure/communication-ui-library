@@ -123,15 +123,16 @@ export class CallSubscriber {
     this.subscribe();
   }
 
-  private _safeSubscribeInitCaptionSubscriber = () => {
+  private _safeSubscribeInitCaptionSubscriber = (): void => {
     this._safeSubscribe(this.initCaptionSubscriber);
   };
-  /* @conditional-compile-remove(teams-meeting-conference) */
-  private _safeSubscribeInitTeamsMeetingConference = () => {
+
+  private _safeSubscribeInitTeamsMeetingConference = (): void => {
     this._safeSubscribe(this.initTeamsMeetingConference);
   };
+
   /* @conditional-compile-remove(local-recording-notification) */
-  private _safeSubscribeInitLocalRecordingNotificationSubscriber = () => {
+  private _safeSubscribeInitLocalRecordingNotificationSubscriber = (): void => {
     this._safeSubscribe(this.initLocalRecordingNotificationSubscriber);
   };
 
