@@ -27,6 +27,16 @@ export const parameters = {
           'Get Started',
           'CallWithChatComposite',
           'CallComposite',
+          [
+            'Basic Example',
+            'Custom Data Model Example',
+            
+            'Join Existing Call',
+            'Join Existing Call As Teams User',
+            'Theme Example',
+            '1:N',
+            'PSTN',
+          ],
           'ChatComposite',
           'Adapters',
           'Cross-Framework Support',
@@ -139,7 +149,11 @@ const withLocalization = (Story: any, context: any) => {
   }
 };
 
-const withCenterStory = (Story: any) => {
+const withCenterStory = (Story: any, context: any) => {
+  if(context.viewMode === 'docs') {
+    return <Story />;
+  }
+
   return (
     <div style={{
       display: 'flex',

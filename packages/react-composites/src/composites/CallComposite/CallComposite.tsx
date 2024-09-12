@@ -153,6 +153,9 @@ export interface LocalVideoTileOptions {
  * @public
  */
 export type CallCompositeOptions = {
+  captionsBanner?: {
+    height: 'full' | 'default';
+  };
   /**
    * Surface Azure Communication Services backend errors in the UI with {@link @azure/communication-react#ErrorBar}.
    * Hide or show the error bar.
