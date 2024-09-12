@@ -92,7 +92,7 @@ export interface CallWithChatAdapterManagement {
   /**
    * Remove a participant from the call.
    * @param participant - {@link @azure/communication-common#CommunicationIdentifier} of the participant to be removed
-   * @beta
+   * @public
    */
   removeParticipant(participant: CommunicationIdentifier): Promise<void>;
 
@@ -404,21 +404,21 @@ export interface CallWithChatAdapterManagement {
   /**
    * Puts the Call in a Localhold.
    *
-   * @beta
+   * @public
    */
   holdCall: () => Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Resumes the call from a LocalHold state.
    *
-   * @beta
+   * @public
    */
   resumeCall: () => Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Adds a new Participant to the call.
    *
-   * @beta
+   * @public
    */
   addParticipant(participant: PhoneNumberIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */

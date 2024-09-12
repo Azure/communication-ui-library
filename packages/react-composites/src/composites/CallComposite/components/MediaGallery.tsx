@@ -66,6 +66,9 @@ export interface MediaGalleryProps {
   setPromptProps: (props: PromptProps) => void;
   hideSpotlightButtons?: boolean;
   videoTilesOptions?: VideoTilesOptions;
+  captionsOptions?: {
+    height: 'full' | 'default';
+  };
 }
 
 /**
@@ -78,7 +81,8 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     setIsPromptOpen,
     setPromptProps,
     hideSpotlightButtons,
-    videoTilesOptions
+    videoTilesOptions,
+    captionsOptions
   } = props;
 
   const videoGalleryProps = usePropsFor(VideoGallery);
@@ -160,6 +164,10 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     setPromptProps
   );
 
+  const galleryStyles = useMemo(() => {
+    return { ...VideoGalleryStyles, ...(captionsOptions?.height === 'full' ? { root: { postion: 'absolute' } } : {}) };
+  }, [captionsOptions?.height]);
+
   const onPinParticipant = useMemo(() => {
     return setPinnedParticipants
       ? (userId: string) => {
@@ -190,7 +198,7 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
         videoTilesOptions={videoTilesOptions}
         localVideoViewOptions={localVideoViewOptions}
         remoteVideoViewOptions={remoteVideoViewOptions}
-        styles={VideoGalleryStyles}
+        styles={galleryStyles}
         layout={layoutBasedOnUserSelection()}
         showCameraSwitcherInLocalPreview={props.isMobile}
         localVideoCameraCycleButtonProps={cameraSwitcherProps}
@@ -222,8 +230,11 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     );
   }, [
     videoGalleryProps,
+    videoTilesOptions,
+    galleryStyles,
     props.isMobile,
     props.localVideoTileOptions,
+    props.userSetGalleryLayout,
     cameraSwitcherProps,
     onRenderAvatar,
     remoteVideoTileMenuOptions,
@@ -231,18 +242,16 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     userRole,
     isRoomsCall,
     containerAspectRatio,
-    props.userSetGalleryLayout,
     pinnedParticipants,
     onPinParticipant,
     onUnpinParticipant,
-    layoutBasedOnTilePosition,
     reactionResources,
+    hideSpotlightButtons,
     onStartLocalSpotlightWithPrompt,
     onStopLocalSpotlightWithPrompt,
     onStartRemoteSpotlightWithPrompt,
     onStopRemoteSpotlightWithPrompt,
-    hideSpotlightButtons,
-    videoTilesOptions
+    layoutBasedOnTilePosition
   ]);
 
   return (

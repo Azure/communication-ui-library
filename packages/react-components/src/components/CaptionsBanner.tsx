@@ -1,12 +1,14 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-import { Stack, FocusZone, Spinner } from '@fluentui/react';
+import { Stack, FocusZone, Spinner, useTheme } from '@fluentui/react';
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { _Caption } from './Caption';
 import {
   captionContainerClassName,
   captionsBannerClassName,
+  captionsBannerFullHeightClassName,
   captionsContainerClassName,
+  loadingBannerFullHeightStyles,
   loadingBannerStyles
 } from './styles/Captions.style';
 import { OnRenderAvatarCallback } from '../types';
@@ -50,16 +52,30 @@ export interface _CaptionsBannerProps {
    * @defaultValue 'default'
    */
   formFactor?: 'default' | 'compact';
+  captionsOptions?: {
+    height: 'full' | 'default';
+  };
 }
+
+const SCROLL_OFFSET_ALLOWANCE = 20;
 
 /**
  * @internal
  * A component for displaying a CaptionsBanner with user icon, displayName and captions text.
  */
 export const _CaptionsBanner = (props: _CaptionsBannerProps): JSX.Element => {
-  const { captions, isCaptionsOn, startCaptionsInProgress, onRenderAvatar, strings, formFactor = 'default' } = props;
+  const {
+    captions,
+    isCaptionsOn,
+    startCaptionsInProgress,
+    onRenderAvatar,
+    strings,
+    formFactor = 'default',
+    captionsOptions
+  } = props;
   const captionsScrollDivRef = useRef<HTMLDivElement>(null);
   const [isAtBottomOfScroll, setIsAtBottomOfScroll] = useState<boolean>(true);
+  const theme = useTheme();
 
   const scrollToBottom = (): void => {
     if (captionsScrollDivRef.current) {
@@ -73,7 +89,7 @@ export const _CaptionsBanner = (props: _CaptionsBannerProps): JSX.Element => {
     }
     const atBottom =
       Math.ceil(captionsScrollDivRef.current.scrollTop) >=
-      captionsScrollDivRef.current.scrollHeight - captionsScrollDivRef.current.clientHeight;
+      captionsScrollDivRef.current.scrollHeight - captionsScrollDivRef.current.clientHeight - SCROLL_OFFSET_ALLOWANCE;
 
     setIsAtBottomOfScroll(atBottom);
   }, []);
@@ -97,9 +113,17 @@ export const _CaptionsBanner = (props: _CaptionsBannerProps): JSX.Element => {
   return (
     <>
       {startCaptionsInProgress && (
-        <FocusZone as="ul" className={captionsContainerClassName}>
+        <FocusZone as="ul" className={captionsContainerClassName} data-ui-id="captions-banner">
           {isCaptionsOn && (
-            <div ref={captionsScrollDivRef} className={captionsBannerClassName(formFactor)}>
+            <div
+              ref={captionsScrollDivRef}
+              className={
+                captionsOptions?.height === 'full'
+                  ? captionsBannerFullHeightClassName(theme)
+                  : captionsBannerClassName(formFactor)
+              }
+              data-ui-id="captions-banner-inner"
+            >
               {captions.map((caption) => {
                 return (
                   <div key={caption.id} className={captionContainerClassName} data-is-focusable={true}>
@@ -110,7 +134,15 @@ export const _CaptionsBanner = (props: _CaptionsBannerProps): JSX.Element => {
             </div>
           )}
           {!isCaptionsOn && (
-            <Stack verticalAlign="center" styles={loadingBannerStyles(formFactor)} data-is-focusable={true}>
+            <Stack
+              verticalAlign="center"
+              styles={
+                captionsOptions?.height === 'full'
+                  ? loadingBannerFullHeightStyles(theme)
+                  : loadingBannerStyles(formFactor)
+              }
+              data-is-focusable={true}
+            >
               <Spinner label={strings?.captionsBannerSpinnerText} ariaLive="assertive" labelPosition="right" />
             </Stack>
           )}
