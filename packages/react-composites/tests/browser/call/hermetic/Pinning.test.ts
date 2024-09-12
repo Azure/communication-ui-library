@@ -27,7 +27,7 @@ const displayNames = [
   'Luciana Rodriguez'
 ];
 
-test.describe.only('PIN - Pinning tests', async () => {
+test.describe('PIN - Pinning tests', async () => {
   test('Pin and unpin remote participants via video tile', async ({ page, serverUrl }, testInfo) => {
     const participants = displayNames.map((name) => defaultMockRemoteParticipant(name));
     addVideoStream(participants[1], true);
@@ -78,7 +78,7 @@ test.describe.only('PIN - Pinning tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot('PIN-1-4-unpin-video-tile-after.png');
   });
 
-  test.only('Pin and unpin remote participants via participant item', async ({ page, serverUrl }, testInfo) => {
+  test('Pin and unpin remote participants via participant item', async ({ page, serverUrl }, testInfo) => {
     const participants = displayNames.map((name) => defaultMockRemoteParticipant(name));
     addVideoStream(participants[1], true);
     const initialState = defaultMockCallAdapterState(participants);

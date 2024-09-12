@@ -7,7 +7,7 @@ import { VideoGallery } from '../../src/components/VideoGallery';
 import { VideoGalleryLocalParticipant, VideoGalleryRemoteParticipant } from '../../src';
 import { Stack } from '@fluentui/react';
 
-test.describe.only('VGL - VideoGallery tests', () => {
+test.describe('VGL - VideoGallery tests', () => {
   test.beforeEach(async ({ page }) => {
     await page.evaluate(() => document.fonts.ready);
   });
