@@ -50,7 +50,7 @@ export const notificationStackSelector: NotificationStackSelector = createSelect
     getDiagnostics,
     getDeviceManager,
     getEnvironmentInfo,
-    /* @conditional-compile-remove(teams-meeting-conference) */ getMeetingConferencePhones,
+    getMeetingConferencePhones,
     /* @conditional-compile-remove(breakout-rooms) */ getAssignedBreakoutRoom
   ],
   (
@@ -59,7 +59,7 @@ export const notificationStackSelector: NotificationStackSelector = createSelect
     diagnostics,
     deviceManager,
     environmentInfo,
-    /* @conditional-compile-remove(teams-meeting-conference) */ meetingConference,
+    meetingConference,
     /* @conditional-compile-remove(breakout-rooms) */ assignedBreakoutRoom
   ): { activeErrorMessages: ActiveNotification[]; activeNotifications: ActiveNotification[] } => {
     // The order in which the errors are returned is significant: The `Notification` shows errors on the UI in that order.
@@ -85,7 +85,7 @@ export const notificationStackSelector: NotificationStackSelector = createSelect
 
     // Errors reported via diagnostics are more reliable than from API method failures, so process those first.
     let isTeamsMeetingWithPhones = false;
-    /* @conditional-compile-remove(teams-meeting-conference) */
+
     if (meetingConference && meetingConference.length > 0) {
       isTeamsMeetingWithPhones = true;
     }

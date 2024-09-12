@@ -65,8 +65,6 @@ module.exports = {
     'image-overlay-theme',
     // Feature for local recording notification for teams meetings
     'local-recording-notification',
-    // Close captions feature for ACS calls
-    "acs-close-captions",
     // Feature for Rich Text Editor (RTE) support
     'rich-text-editor',
     // Feature for Rich Text Editor (RTE) composite support
@@ -96,8 +94,8 @@ module.exports = {
     'end-call-options',
     // Feature to support file sharing in Teams interoperability chats
     "file-sharing-teams-interop",
-    // Get join conference information
-    'teams-meeting-conference',
+    // Close captions feature for ACS calls
+    "acs-close-captions",
     // Feature for showing notifications
     "notifications",
     // 1 to N Calling feature.
@@ -107,8 +105,6 @@ module.exports = {
     // Adhoc calls to a Teams user.
     "teams-adhoc-call",
     // Feature for tracking beta start call identifier
-    'start-call-beta',
-    // Feature for meeting conference coordinates
-    'teams-meeting-conference'
+    'start-call-beta'
   ]
 }
