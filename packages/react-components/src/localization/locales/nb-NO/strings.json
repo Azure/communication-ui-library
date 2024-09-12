@@ -99,14 +99,15 @@
     "cameraMenuTitle": "Kamera",
     "cameraMenuTooltip": "Velg kamera",
     "cameraButtonSplitRoleDescription": "Rullegardinknapp",
-    "onSplitButtonAriaLabel": "Slå av kamera og kameraalternativer",
-    "offSplitButtonAriaLabel": "Slå på kamera og kameraalternativer",
+    "onSplitButtonAriaLabel": "Slå av kamera",
+    "offSplitButtonAriaLabel": "Slå på kamera",
     "cameraActionTurnedOnAnnouncement": "Kameraet er slått på",
     "cameraActionTurnedOffAnnouncement": "Kameraet er slått av.",
     "onSplitButtonPrimaryActionCamera": "Slå av kamera",
     "offSplitButtonPrimaryActionCamera": "Slå på kamera",
     "cameraPrimaryActionSplitButtonTitle": "Bruk kamera",
-    "videoEffectsMenuItemTitle": "Effekter"
+    "videoEffectsMenuItemTitle": "Effekter",
+    "cameraButtonAriaDescription": "camera options"
   },
   "microphoneButton": {
     "onLabel": "Mikrofon",
@@ -119,13 +120,17 @@
     "speakerMenuTitle": "Høyttaler",
     "speakerMenuTooltip": "Velg høyttaler",
     "microphoneButtonSplitRoleDescription": "Rullegardinknapp",
-    "onSplitButtonAriaLabel": "Demp mikrofon og lydalternativer",
-    "offSplitButtonAriaLabel": "Opphev demping av mikrofon og lydalternativer",
+    "onSplitButtonAriaLabel": "Demp mikrofon",
+    "offSplitButtonAriaLabel": "Opphev demping av mikrofon",
     "microphoneActionTurnedOnAnnouncement": "Mikrofonen er slått på",
     "microphoneActionTurnedOffAnnouncement": "Mikrofonen er slått av",
     "offSplitButtonMicrophonePrimaryAction": "Opphev demping av mikrofon",
     "onSplitButtonMicrophonePrimaryAction": "Demp mikrofon",
-    "microphonePrimaryActionSplitButtonTitle": "Bruk mikrofon"
+    "microphonePrimaryActionSplitButtonTitle": "Bruk mikrofon",
+    "microphoneAriaDescription": "Audio options",
+    "deepNoiseSuppressionTitle": "Støydemping",
+    "deepNoiseSuppressionOnAnnouncement": "Dyp støydemping er aktivert",
+    "deepNoiseSuppressionOffAnnouncement": "Dyp støydemping er deaktivert"
   },
   "devicesButton": {
     "label": "Enheter",
@@ -504,7 +509,8 @@
     "stopSpotlightVideoTileMenuLabel": "Fjern fra rampelyset",
     "stopSpotlightOnSelfVideoTileMenuLabel": "Rampelys av",
     "attendeeRole": "Deltaker",
-    "muteParticipantMenuItemLabel": "Demp"
+    "muteParticipantMenuItemLabel": "Demp",
+    "waitingScreenText": "Venter på at andre skal bli med"
   },
   "dialpad": {
     "placeholderText": "Skriv inn telefonnummeret",
@@ -658,6 +664,7 @@
     "incomingCallNoticicationRejectAriaLabel": "Avvis",
     "incomingCallNotificationAcceptButtonLabel": "Godta",
     "incomingCallNotificationRejectButtonLabel": "Avslå",
-    "incomingCallNotificationAccceptWithVideoButtonLabel": "Svar med video"
+    "incomingCallNotificationAccceptWithVideoButtonLabel": "Svar med video",
+    "incomingCallNotificationDismissButtonAriaLabel": "Dismiss"
   }
 }

@@ -99,14 +99,15 @@
     "cameraMenuTitle": "Caméra",
     "cameraMenuTooltip": "Choisissez l'appareil photo",
     "cameraButtonSplitRoleDescription": "Bouton partagé",
-    "onSplitButtonAriaLabel": "Désactiver les options d’appareil photo et d’appareil photo",
-    "offSplitButtonAriaLabel": "Activer les options d’appareil photo et d’appareil photo",
+    "onSplitButtonAriaLabel": "Désactiver la caméra",
+    "offSplitButtonAriaLabel": "Activer la caméra",
     "cameraActionTurnedOnAnnouncement": "Votre caméra a été activée",
     "cameraActionTurnedOffAnnouncement": "Votre caméra a été désactivée",
     "onSplitButtonPrimaryActionCamera": "Désactiver l’appareil photo",
     "offSplitButtonPrimaryActionCamera": "Activer la caméra",
     "cameraPrimaryActionSplitButtonTitle": "Utiliser l’appareil photo",
-    "videoEffectsMenuItemTitle": "Effets"
+    "videoEffectsMenuItemTitle": "Effets",
+    "cameraButtonAriaDescription": "camera options"
   },
   "microphoneButton": {
     "onLabel": "Microphone",
@@ -119,13 +120,17 @@
     "speakerMenuTitle": "Haut-parleur",
     "speakerMenuTooltip": "Choisissez le haut-parleur",
     "microphoneButtonSplitRoleDescription": "Bouton partagé",
-    "onSplitButtonAriaLabel": "Désactiver le micro et les options audio",
-    "offSplitButtonAriaLabel": "Activer le son du microphone et des options audio",
+    "onSplitButtonAriaLabel": "Désactiver le micro",
+    "offSplitButtonAriaLabel": "Réactiver le micro",
     "microphoneActionTurnedOnAnnouncement": "Votre micro a été activé",
     "microphoneActionTurnedOffAnnouncement": "Votre micro a été désactivé",
-    "offSplitButtonMicrophonePrimaryAction": "Activer le son du microphone",
-    "onSplitButtonMicrophonePrimaryAction": "Désactiver le microphone",
-    "microphonePrimaryActionSplitButtonTitle": "Utiliser le microphone"
+    "offSplitButtonMicrophonePrimaryAction": "Réactiver le micro",
+    "onSplitButtonMicrophonePrimaryAction": "Désactiver le micro",
+    "microphonePrimaryActionSplitButtonTitle": "Utiliser le microphone",
+    "microphoneAriaDescription": "Audio options",
+    "deepNoiseSuppressionTitle": "Suppression du bruit",
+    "deepNoiseSuppressionOnAnnouncement": "La suppression du bruit profond a été activée",
+    "deepNoiseSuppressionOffAnnouncement": "La suppression du bruit profond a été désactivée"
   },
   "devicesButton": {
     "label": "Appareils",
@@ -504,7 +509,8 @@
     "stopSpotlightVideoTileMenuLabel": "Arrêter la mise en évidence",
     "stopSpotlightOnSelfVideoTileMenuLabel": "Quitter la mise en évidence",
     "attendeeRole": "Participant(e)",
-    "muteParticipantMenuItemLabel": "Désactiver le micro / muet"
+    "muteParticipantMenuItemLabel": "Désactiver le micro / muet",
+    "waitingScreenText": "En attente des autres participants"
   },
   "dialpad": {
     "placeholderText": "Entrer un numéro de téléphone",
@@ -658,6 +664,7 @@
     "incomingCallNoticicationRejectAriaLabel": "Rejeter",
     "incomingCallNotificationAcceptButtonLabel": "Accepter",
     "incomingCallNotificationRejectButtonLabel": "Refuser",
-    "incomingCallNotificationAccceptWithVideoButtonLabel": "Accepter avec une vidéo"
+    "incomingCallNotificationAccceptWithVideoButtonLabel": "Accepter avec une vidéo",
+    "incomingCallNotificationDismissButtonAriaLabel": "Dismiss"
   }
 }

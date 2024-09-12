@@ -87,7 +87,7 @@
     "label": "離開",
     "tooltipContent": "離開通話",
     "leaveOption": "離開",
-    "endCallOption": "每個人都結束通話"
+    "endCallOption": "結束所有通話"
   },
   "cameraButton": {
     "onLabel": "相機",
@@ -99,14 +99,15 @@
     "cameraMenuTitle": "相機",
     "cameraMenuTooltip": "選擇攝影機",
     "cameraButtonSplitRoleDescription": "[分割] 按鈕",
-    "onSplitButtonAriaLabel": "關閉相機和相機選項",
-    "offSplitButtonAriaLabel": "開啟相機和相機選項",
+    "onSplitButtonAriaLabel": "關閉攝影機",
+    "offSplitButtonAriaLabel": "開啟相機",
     "cameraActionTurnedOnAnnouncement": "您的相機已開啟",
     "cameraActionTurnedOffAnnouncement": "您的相機已關閉",
     "onSplitButtonPrimaryActionCamera": "關閉攝影機",
     "offSplitButtonPrimaryActionCamera": "開啟相機",
     "cameraPrimaryActionSplitButtonTitle": "使用相機",
-    "videoEffectsMenuItemTitle": "效果"
+    "videoEffectsMenuItemTitle": "效果",
+    "cameraButtonAriaDescription": "camera options"
   },
   "microphoneButton": {
     "onLabel": "麥克風",
@@ -119,13 +120,17 @@
     "speakerMenuTitle": "揚聲器",
     "speakerMenuTooltip": "選擇喇叭",
     "microphoneButtonSplitRoleDescription": "[分割] 按鈕",
-    "onSplitButtonAriaLabel": "將麥克風和音訊選項設為靜音",
-    "offSplitButtonAriaLabel": "將麥克風和音訊選項取消靜音",
+    "onSplitButtonAriaLabel": "將麥克風靜音",
+    "offSplitButtonAriaLabel": "取消麥克風靜音",
     "microphoneActionTurnedOnAnnouncement": "您的麥克風已開啟",
     "microphoneActionTurnedOffAnnouncement": "您的麥克風已關閉",
     "offSplitButtonMicrophonePrimaryAction": "取消麥克風靜音",
-    "onSplitButtonMicrophonePrimaryAction": "將麥克風設為靜音",
-    "microphonePrimaryActionSplitButtonTitle": "使用麥克風"
+    "onSplitButtonMicrophonePrimaryAction": "將麥克風靜音",
+    "microphonePrimaryActionSplitButtonTitle": "使用麥克風",
+    "microphoneAriaDescription": "Audio options",
+    "deepNoiseSuppressionTitle": "噪音抑制",
+    "deepNoiseSuppressionOnAnnouncement": "深噪音抑制已開啟",
+    "deepNoiseSuppressionOffAnnouncement": "深噪音抑制已關閉"
   },
   "devicesButton": {
     "label": "裝置",
@@ -150,7 +155,7 @@
   },
   "screenShareButton": {
     "onLabel": "停止簡報",
-    "offLabel": "存在",
+    "offLabel": "分享",
     "tooltipDisabledContent": "簡報已停用",
     "tooltipOnContent": "展示您的螢幕",
     "tooltipOffContent": "展示您的螢幕"
@@ -504,7 +509,8 @@
     "stopSpotlightVideoTileMenuLabel": "停止聚焦",
     "stopSpotlightOnSelfVideoTileMenuLabel": "結束聚焦",
     "attendeeRole": "出席者",
-    "muteParticipantMenuItemLabel": "靜音"
+    "muteParticipantMenuItemLabel": "靜音",
+    "waitingScreenText": "正在等待其他人加入"
   },
   "dialpad": {
     "placeholderText": "輸入電話號碼",
@@ -658,6 +664,7 @@
     "incomingCallNoticicationRejectAriaLabel": "拒絕",
     "incomingCallNotificationAcceptButtonLabel": "接受",
     "incomingCallNotificationRejectButtonLabel": "拒絕",
-    "incomingCallNotificationAccceptWithVideoButtonLabel": "接受並開啟視訊"
+    "incomingCallNotificationAccceptWithVideoButtonLabel": "接受並開啟視訊",
+    "incomingCallNotificationDismissButtonAriaLabel": "Dismiss"
   }
 }

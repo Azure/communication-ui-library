@@ -99,14 +99,15 @@
     "cameraMenuTitle": "Kamera",
     "cameraMenuTooltip": "Wybierz kamerę",
     "cameraButtonSplitRoleDescription": "Przycisk podziału",
-    "onSplitButtonAriaLabel": "Wyłącz kamerę i jej opcje",
-    "offSplitButtonAriaLabel": "Włącz kamerę i jej opcje",
+    "onSplitButtonAriaLabel": "Wyłącz kamerę",
+    "offSplitButtonAriaLabel": "Włącz kamerę",
     "cameraActionTurnedOnAnnouncement": "Kamera została włączona",
     "cameraActionTurnedOffAnnouncement": "Kamera została wyłączona",
     "onSplitButtonPrimaryActionCamera": "Wyłącz kamerę",
     "offSplitButtonPrimaryActionCamera": "Włącz kamerę",
     "cameraPrimaryActionSplitButtonTitle": "Użyj kamery",
-    "videoEffectsMenuItemTitle": "Efekty"
+    "videoEffectsMenuItemTitle": "Efekty",
+    "cameraButtonAriaDescription": "camera options"
   },
   "microphoneButton": {
     "onLabel": "Mikrofon",
@@ -119,13 +120,17 @@
     "speakerMenuTitle": "Głośnik",
     "speakerMenuTooltip": "Wybierz głośnik",
     "microphoneButtonSplitRoleDescription": "Przycisk podziału",
-    "onSplitButtonAriaLabel": "Wyciszenie mikrofonu i opcji dźwięku",
-    "offSplitButtonAriaLabel": "Wyłącz wyciszenie mikrofonu i opcji dźwięku",
+    "onSplitButtonAriaLabel": "Wycisz mikrofon",
+    "offSplitButtonAriaLabel": "Wyłącz wyciszenie mikrofonu",
     "microphoneActionTurnedOnAnnouncement": "Mikrofon został włączony",
     "microphoneActionTurnedOffAnnouncement": "Mikrofon został wyłączony",
     "offSplitButtonMicrophonePrimaryAction": "Wyłącz wyciszenie mikrofonu",
     "onSplitButtonMicrophonePrimaryAction": "Wycisz mikrofon",
-    "microphonePrimaryActionSplitButtonTitle": "Użyj mikrofonu"
+    "microphonePrimaryActionSplitButtonTitle": "Użyj mikrofonu",
+    "microphoneAriaDescription": "Audio options",
+    "deepNoiseSuppressionTitle": "Tłumienie szumu",
+    "deepNoiseSuppressionOnAnnouncement": "Głębokie tłumienie szumów zostało włączone",
+    "deepNoiseSuppressionOffAnnouncement": "Głębokie tłumienie szumów zostało wyłączone"
   },
   "devicesButton": {
     "label": "Urządzenia",
@@ -504,7 +509,8 @@
     "stopSpotlightVideoTileMenuLabel": "Zatrzymaj wyróżnianie",
     "stopSpotlightOnSelfVideoTileMenuLabel": "Zakończ wyróżnienie",
     "attendeeRole": "Uczestnik",
-    "muteParticipantMenuItemLabel": "Wycisz"
+    "muteParticipantMenuItemLabel": "Wycisz",
+    "waitingScreenText": "Oczekiwanie na dołączenie innych osób"
   },
   "dialpad": {
     "placeholderText": "Wprowadź numer telefonu",
@@ -658,6 +664,7 @@
     "incomingCallNoticicationRejectAriaLabel": "Odrzuć",
     "incomingCallNotificationAcceptButtonLabel": "Akceptuj",
     "incomingCallNotificationRejectButtonLabel": "Odrzuć",
-    "incomingCallNotificationAccceptWithVideoButtonLabel": "Odbierz jako połączenie wideo"
+    "incomingCallNotificationAccceptWithVideoButtonLabel": "Odbierz jako połączenie wideo",
+    "incomingCallNotificationDismissButtonAriaLabel": "Dismiss"
   }
 }

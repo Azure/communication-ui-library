@@ -99,14 +99,15 @@
     "cameraMenuTitle": "Kamera",
     "cameraMenuTooltip": "Valitse kamera",
     "cameraButtonSplitRoleDescription": "Jaettu painike",
-    "onSplitButtonAriaLabel": "Kameran ja sen käytöstä poistamisen asetukset",
-    "offSplitButtonAriaLabel": "Kameran ja sen käyttöön ottamisen asetukset",
+    "onSplitButtonAriaLabel": "Poista kamera käytöstä",
+    "offSplitButtonAriaLabel": "Ota kamera käyttöön",
     "cameraActionTurnedOnAnnouncement": "Kamerasi on otettu käyttöön",
     "cameraActionTurnedOffAnnouncement": "Kamerasi on poistettu käytöstä",
     "onSplitButtonPrimaryActionCamera": "Poista kamera käytöstä",
     "offSplitButtonPrimaryActionCamera": "Käynnistä kamera",
     "cameraPrimaryActionSplitButtonTitle": "Käytä kameraa",
-    "videoEffectsMenuItemTitle": "Tehosteet"
+    "videoEffectsMenuItemTitle": "Tehosteet",
+    "cameraButtonAriaDescription": "camera options"
   },
   "microphoneButton": {
     "onLabel": "Mikrofoni",
@@ -119,13 +120,17 @@
     "speakerMenuTitle": "Kaiutin",
     "speakerMenuTooltip": "Valitse kaiutin",
     "microphoneButtonSplitRoleDescription": "Jaettu painike",
-    "onSplitButtonAriaLabel": "Äänen ja mikrofonin mykistyksen asetukset",
-    "offSplitButtonAriaLabel": "Äänen ja mikrofonin mykistyksen poistamisen asetukset",
+    "onSplitButtonAriaLabel": "Mykistä mikrofoni",
+    "offSplitButtonAriaLabel": "Poista mikrofonin mykistys",
     "microphoneActionTurnedOnAnnouncement": "Mikrofonisi on otettu käyttöön",
     "microphoneActionTurnedOffAnnouncement": "Mikrofonisi on poistettu käytöstä",
     "offSplitButtonMicrophonePrimaryAction": "Poista mikrofonin mykistys",
     "onSplitButtonMicrophonePrimaryAction": "Mykistä mikrofoni",
-    "microphonePrimaryActionSplitButtonTitle": "Käytä mikrofonia"
+    "microphonePrimaryActionSplitButtonTitle": "Käytä mikrofonia",
+    "microphoneAriaDescription": "Audio options",
+    "deepNoiseSuppressionTitle": "Melunvaimennus",
+    "deepNoiseSuppressionOnAnnouncement": "Syvä melunvaimennus on otettu käyttöön",
+    "deepNoiseSuppressionOffAnnouncement": "Syvä melunvaimennus on poistettu käytöstä"
   },
   "devicesButton": {
     "label": "Laitteet",
@@ -504,7 +509,8 @@
     "stopSpotlightVideoTileMenuLabel": "Poista valokeilasta",
     "stopSpotlightOnSelfVideoTileMenuLabel": "Valokeila",
     "attendeeRole": "Osallistuja",
-    "muteParticipantMenuItemLabel": "Mykistä"
+    "muteParticipantMenuItemLabel": "Mykistä",
+    "waitingScreenText": "Odotetaan että muut liittyvät"
   },
   "dialpad": {
     "placeholderText": "Anna puhelinnumero",
@@ -658,6 +664,7 @@
     "incomingCallNoticicationRejectAriaLabel": "Hylkää",
     "incomingCallNotificationAcceptButtonLabel": "Hyväksy",
     "incomingCallNotificationRejectButtonLabel": "Hylkää",
-    "incomingCallNotificationAccceptWithVideoButtonLabel": "Vastaa videopuhelulla"
+    "incomingCallNotificationAccceptWithVideoButtonLabel": "Vastaa videopuhelulla",
+    "incomingCallNotificationDismissButtonAriaLabel": "Dismiss"
   }
 }
