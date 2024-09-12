@@ -11,7 +11,6 @@ import {
   CallingBaseSelectorProps
 } from './baseSelectors';
 import { getRole } from './baseSelectors';
-/* @conditional-compile-remove(hide-attendee-name) */
 import { isHideAttendeeNamesEnabled } from './baseSelectors';
 import { CallParticipantListParticipant } from '@internal/react-components';
 import { _isRingingPSTNParticipant, _updateUserDisplayNames } from './utils/callUtils';
@@ -24,7 +23,6 @@ import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { getParticipantCount } from './baseSelectors';
 import { isMicrosoftTeamsAppIdentifier, isPhoneNumberIdentifier } from '@azure/communication-common';
 import { ParticipantRole, SpotlightedParticipant } from '@azure/communication-calling';
-/* @conditional-compile-remove(hide-attendee-name) */
 import { maskDisplayNameWithRole } from './utils/callUtils';
 import { getRemoteParticipantsExcludingConsumers } from './getRemoteParticipantsExcludingConsumers';
 
@@ -65,7 +63,6 @@ const convertRemoteParticipantsToParticipantListParticipants = (
            */
           const state = _isRingingPSTNParticipant(participant);
           let displayName = participant.displayName;
-          /* @conditional-compile-remove(hide-attendee-name) */
           displayName = maskDisplayNameWithRole(
             displayName,
             localUserRole,
@@ -136,7 +133,6 @@ export const participantListSelector: ParticipantListSelector = createSelector(
     getLocalParticipantRaisedHand,
     getRole,
     getParticipantCount,
-    /* @conditional-compile-remove(hide-attendee-name) */
     isHideAttendeeNamesEnabled,
     getLocalParticipantReactionState,
     getSpotlightCallFeature
@@ -150,7 +146,6 @@ export const participantListSelector: ParticipantListSelector = createSelector(
     raisedHand,
     role,
     partitipantCount,
-    /* @conditional-compile-remove(hide-attendee-name) */
     isHideAttendeeNamesEnabled,
     localParticipantReactionState,
     spotlightCallFeature
@@ -164,8 +159,8 @@ export const participantListSelector: ParticipantListSelector = createSelector(
       ? convertRemoteParticipantsToParticipantListParticipants(
           updateUserDisplayNamesTrampoline(Object.values(remoteParticipants)),
           localUserCanRemoveOthers,
-          undefined || /* @conditional-compile-remove(hide-attendee-name) */ isHideAttendeeNamesEnabled,
-          undefined || /* @conditional-compile-remove(hide-attendee-name) */ role,
+          undefined || isHideAttendeeNamesEnabled,
+          undefined || role,
           spotlightCallFeature?.spotlightedParticipants
         )
       : [];

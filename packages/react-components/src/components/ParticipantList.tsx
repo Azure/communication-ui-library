@@ -140,14 +140,12 @@ const onRenderParticipantDefault = (
 
   let displayName = participant.displayName;
 
-  /* @conditional-compile-remove(hide-attendee-name) */
   const formatDisplayName = (): string | undefined => {
     if (displayName && strings.attendeeRole) {
       return _formatString(displayName, { AttendeeRole: strings.attendeeRole });
     }
     return displayName;
   };
-  /* @conditional-compile-remove(hide-attendee-name) */
   displayName = formatDisplayName();
 
   const callingPalette = (theme as unknown as CallingTheme).callingPalette;
