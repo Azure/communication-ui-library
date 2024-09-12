@@ -26,7 +26,6 @@ import { CaptionsInfo } from '@internal/calling-stateful-client';
 import { CaptionsKind } from '@azure/communication-calling';
 import { RaisedHandState } from '@internal/calling-stateful-client';
 import { _SupportedCaptionLanguage, _SupportedSpokenLanguage } from '@internal/react-components';
-/* @conditional-compile-remove(teams-meeting-conference) */
 import { ConferencePhoneInfo } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(breakout-rooms) */
 import { CallNotifications } from '@internal/calling-stateful-client';
@@ -270,7 +269,6 @@ export const getSupportedSpokenLanguages = (
   return state.calls[props.callId]?.captionsFeature.supportedSpokenLanguages as _SupportedSpokenLanguage[];
 };
 
-/* @conditional-compile-remove(teams-meeting-conference) */
 /** @private */
 export const getMeetingConferencePhones = (
   state: CallClientState,

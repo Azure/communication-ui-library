@@ -728,6 +728,9 @@ export type CallCompositeIcons = {
 
 // @public
 export type CallCompositeOptions = {
+    captionsBanner?: {
+        height: 'full' | 'default';
+    };
     errorBar?: boolean;
     callControls?: boolean | CallControlOptions;
     deviceChecks?: DeviceCheckOptions;

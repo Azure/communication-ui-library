@@ -20,7 +20,6 @@ import {
   WifiWarning20Filled,
   Circle20Regular
 } from '@fluentui/react-icons';
-/* @conditional-compile-remove(teams-meeting-conference) */
 import { PersonCall20Regular, Clock20Filled } from '@fluentui/react-icons';
 import { MoreHorizontal20Filled, VideoPersonStarOff20Filled } from '@fluentui/react-icons';
 import { MicProhibited20Filled, VideoProhibited20Filled } from '@fluentui/react-icons';
@@ -108,13 +107,9 @@ export const COMPOSITE_ONLY_ICONS: CompositeIcons = {
   LargeGalleryLayout: <Table20Regular />,
   DefaultCustomButton: <Circle20Regular />,
   DtmfDialpadButton: <Dialpad20Regular />,
-  /* @conditional-compile-remove(teams-meeting-conference) */
   PhoneNumberButton: <PersonCall20Regular />,
-  /* @conditional-compile-remove(teams-meeting-conference) */
   JoinByPhoneDialStepIcon: <PersonCall20Regular />,
-  /* @conditional-compile-remove(teams-meeting-conference) */
   JoinByPhoneConferenceIdIcon: <Dialpad20Regular />,
-  /* @conditional-compile-remove(teams-meeting-conference) */
   JoinByPhoneWaitToBeAdmittedIcon: <Clock20Filled />,
   PeoplePaneMoreButton: <MoreHorizontal20Filled />,
   StopAllSpotlightMenuButton: <VideoPersonStarOff20Filled />
@@ -253,13 +248,9 @@ export type CallCompositeIcons = {
   LargeGalleryLayout?: JSX.Element;
   DefaultCustomButton?: JSX.Element;
   DtmfDialpadButton?: JSX.Element;
-  /* @conditional-compile-remove(teams-meeting-conference) */
   PhoneNumberButton?: JSX.Element;
-  /* @conditional-compile-remove(teams-meeting-conference) */
   JoinByPhoneDialStepIcon?: JSX.Element;
-  /* @conditional-compile-remove(teams-meeting-conference) */
   JoinByPhoneConferenceIdIcon?: JSX.Element;
-  /* @conditional-compile-remove(teams-meeting-conference) */
   JoinByPhoneWaitToBeAdmittedIcon?: JSX.Element;
   PeoplePaneMoreButton?: JSX.Element;
   StopAllSpotlightMenuButton?: JSX.Element;
