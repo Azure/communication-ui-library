@@ -14,7 +14,7 @@ const MockLocalParticipant = {
   isScreenSharingOn: false
 };
 
-const GalleryLayoutRender = (args: any): JSX.Element => {
+const VideoGalleryRender = (args: any): JSX.Element => {
   const remoteParticipants = args.remoteParticipants
     .split(',')
     .map((p: string) => p.trim())
@@ -64,9 +64,8 @@ const GalleryLayoutRender = (args: any): JSX.Element => {
   );
 };
 
-export const GalleryLayout = {
-  title: 'Components/Video Gallery',
-  render: GalleryLayoutRender,
+export const VideoGallery = {
+  render: VideoGalleryRender,
   source: {
     language: 'bash'
   },
@@ -100,6 +99,7 @@ export const GalleryLayout = {
 
 const meta: Meta = {
   title: 'Components/Video Gallery',
+  name: 'VideoGallery',
   component: VideoGalleryComponent,
   argTypes: {
     styles: { table: { disable: true } },
@@ -129,7 +129,8 @@ const meta: Meta = {
   },
   args: {
     remoteParticipants:
-      'Rick, Daryl, Michonne, Dwight, Pam, Michael, Jim, Kevin, Creed, Angela, Andy, Stanley, Meredith, Phyllis, Oscar, Ryan, Kelly, Andy, Toby, Darryl, Gabe, Erin'
+      'Rick, Daryl, Michonne, Dwight, Pam, Michael, Jim, Kevin, Creed, Angela, Andy, Stanley, Meredith, Phyllis, Oscar, Ryan, Kelly, Andy, Toby, Darryl, Gabe, Erin',
+    videoGalleryLayout: 'floatingLocalVideo'
   }
 };
 

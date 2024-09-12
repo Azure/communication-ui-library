@@ -10,14 +10,9 @@ import { CustomStyleVideoGalleryExample } from './snippets/CustomStyle.snippet';
 import { DefaultVideoGalleryExample } from './snippets/Default.snippet';
 import { FloatingLocalVideoExample } from './snippets/FloatingLocalVideo.snippet';
 import { FocusedContentExample } from './snippets/FocusedContent.snippet';
-import { LocalCameraSwitcherExample } from './snippets/LocalCameraSwitcher.snippet';
-import { ManagedPinnedParticipantsExample } from './snippets/ManagedPinnedParticipants.snippet';
 import { MobileWrapper } from './snippets/MobileWrapper';
-import { OVC3x3VideoGalleryExample } from './snippets/OVC3x3.snippet';
-import { PinnedParticipantsDisabledExample } from './snippets/PinnedParticipantsDisabled.snippet';
+
 import { PinnedParticipantsMobileExample } from './snippets/PinnedParticipantsMobile.snippet';
-import { ScreenSharingFromPresenterExample } from './snippets/ScreenSharingFromPresenter.snippet';
-import { ScreenSharingFromViewerExample } from './snippets/ScreenSharingFromViewer.snippet';
 import { SpeakerLayoutExample } from './snippets/SpeakerLayout.snippet';
 import { WithHorizontalGalleryExample } from './snippets/WithHorizontalGallery.snippet';
 import { WithVerticalGalleryExample } from './snippets/WithVerticalGallery.snippet';
@@ -114,7 +109,11 @@ The Overflow Layout is used best in different ways depending on the applications
       src="images/narrow-horizontal-gallery.png"
       alt="Fill frame in VideoGallery"
     />
-    <>✅ Narrow video tile experience with horizontal gallery</>
+    <>
+      <br />✅ Narrow video tile experience with horizontal gallery
+      <br />
+      <br />
+    </>
   </Stack>
   <Stack horizontalAlign="center">
     <Image
@@ -122,13 +121,21 @@ The Overflow Layout is used best in different ways depending on the applications
       src="images/narrow-vertical-gallery.png"
       alt="Fit to frame menu item in VideoGallery"
     />
-    <>❌ Narrow video tile experience with vertical gallery</>
+    <>
+      <br />❌ Narrow video tile experience with vertical gallery
+      <br />
+      <br />
+    </>
   </Stack>
 </Stack>
 <Stack horizontal={true} tokens={{ childrenGap: '0.5rem' }}>
   <Stack horizontalAlign="center">
     <Image style={{ width: '100%', height: 'auto' }} src="images/short-gallery.png" alt="Fill frame in VideoGallery" />
-    <>❌ Wide video tile experience with horizontal gallery</>
+    <>
+      <br />
+      <br />❌ Wide video tile experience with horizontal gallery
+      <br />
+    </>
   </Stack>
   <Stack horizontalAlign="center">
     <Image
@@ -136,7 +143,11 @@ The Overflow Layout is used best in different ways depending on the applications
       src="images/short-gallery-vertical.png"
       alt="Fit to frame menu item in VideoGallery"
     />
-    <>✅ Wide video tile experience with vertical gallery</>
+    <>
+      <br />
+      <br />✅ Wide video tile experience with vertical gallery
+      <br />
+    </>
   </Stack>
 </Stack>
 
@@ -149,7 +160,9 @@ The vertical gallery can be most useful when the application is running a very w
       src="images/short-screen-share.png"
       alt="Fill to frame in VideoGallery"
     />
-    <>❌ Wide screen share appearence horiztonal gallery</>
+    <>
+      <br />❌ Wide screen share appearence horiztonal gallery
+    </>
   </Stack>
   <Stack horizontalAlign="center">
     <Image
@@ -157,7 +170,9 @@ The vertical gallery can be most useful when the application is running a very w
       src="images/short-screen-share-vertical.png"
       alt="Fill frame menu item in VideoGallery"
     />
-    <>✅ Wide screen share appearence vertical gallery</>
+    <>
+      <br />✅ Wide screen share appearence vertical gallery
+    </>
   </Stack>
 </Stack>
 
@@ -165,35 +180,48 @@ The vertical gallery can be most useful when the application is running a very w
 
 The screen shared is the only element placed in the GridLayout and all remote participants are placed in the horizontal gallery in the lower section. To be able to view this screen share, the sharing participant should have their `isScreenSharingOn` prop set to true as well as a defined `screenShareStream` prop (see `localParticipant` and `remoteParticipants` props).
 
+- <strong>Screen Sharing:</strong> Share your local screen with participants in real-time or view remote screen shares.
+  For more details, see the sections below.
+- <strong>PowerPoint Live:</strong> Exclusively view remote PowerPoint presentations.
+  <a href="?path=/docs/concepts-powerpoint-live--docs">Learn more about PowerPoint Live</a>.
+
+### Supported Features
+
+Currently, the VideoGallery component supports two primary features to enhance collaboration and presentation quality: screen sharing and PowerPoint Live.
+
 ### From a presenter point of view
 
-<Canvas mdxSource={ScreenSharingFromPresenterExampleText}>
-  <ScreenSharingFromPresenterExample />
-</Canvas>
+<Canvas
+  source={{ code: ScreenSharingFromPresenterExampleText }}
+  of={VideoGalleryStories.ScreenSharingFromPresenterExampleDocsOnly}
+/>
 
 ### From a viewer point of view
 
 Note that in this example, we substitute the screenshare video stream with an image just for mocking experience.
 
-<Canvas mdxSource={ScreenSharingFromViewerExampleText}>
-  <ScreenSharingFromViewerExample />
-</Canvas>
+<Canvas
+  source={{ code: ScreenSharingFromViewerExampleText }}
+  of={VideoGalleryStories.ScreenSharingFromViewerExampleDocsOnly}
+/>
 
 ## Custom Avatar
 
 Rendering of avatars can be customized through the VideoGallery callback `onRenderAvatar`.
 
-<Canvas mdxSource={CustomAvatarVideoGalleryExampleText}>
-  <CustomAvatarVideoGalleryExample />
-</Canvas>
+<Canvas
+  source={{ code: CustomAvatarVideoGalleryExampleText }}
+  of={VideoGalleryStories.CustomAvatarVideoGalleryExampleDocsOnly}
+/>
 
 ## Custom Style
 
 Style of the VideoGallery container can be customized through its `styles` prop. The `styles` prop is a `VideoGalleryStyles` type with subproperties for each part of the VideoGallery as shown in the example below.
 
-<Canvas mdxSource={CustomStyleVideoGalleryExampleText}>
-  <CustomStyleVideoGalleryExample />
-</Canvas>
+<Canvas
+  source={{ code: CustomStyleVideoGalleryExampleText }}
+  of={VideoGalleryStories.CustomStyleVideoGalleryExampleDocsOnly}
+/>
 
 ## Local Video Camera Button
 
@@ -205,9 +233,10 @@ The VideoGallery can take in customization to allow for the introduction of loca
   </Text>
 </StorybookBanner>
 
-<Canvas mdxSource={LocalVideoCameraCycleButtonExampleText}>
-  <LocalCameraSwitcherExample />
-</Canvas>
+<Canvas
+  source={{ code: LocalVideoCameraCycleButtonExampleText }}
+  of={VideoGalleryStories.LocalCameraSwitcherExampleDocsOnly}
+/>
 
 ## Remote video tile contextual menu
 
@@ -217,9 +246,10 @@ The VideoGallery provides a contextual menu for each remote video tile which can
 
 Remote video tile contextual menu is be enabled by default but can be disabled by setting the `remoteVideoTileMenuOptions` prop to false like in the example below.
 
-<Canvas mdxSource={PinnedParticipantsDisabledExampleText}>
-  <PinnedParticipantsDisabledExample />
-</Canvas>
+<Canvas
+  source={{ code: PinnedParticipantsDisabledExampleText }}
+  of={VideoGalleryStories.PinnedParticipantsDisabledExampleDocsOnly}
+/>
 
 ## Pinning Participants
 
@@ -244,19 +274,19 @@ when this limit is reached as shown in the screenshot below.
 
 The VideoGallery also caters to pinning participants on mobile by setting the prop `remoteVideoTileMenuOptions` to object \{ kind: 'drawer' \}. This changes the contextual menu to a drawer menu that is opened via long touch. The result is demonstrated in the example below where all mouse clicks are converted to touch to simulate a mobile browser. You can simulate a long touch by long clicking a remote video tile below to see that a drawer menu will appear.
 
-<Canvas mdxSource={PinnedParticipantsMobileExampleText}>
-  <MobileWrapper>
-    <PinnedParticipantsMobileExample />
-  </MobileWrapper>
-</Canvas>
+<Canvas
+  source={{ code: PinnedParticipantsMobileExampleText }}
+  of={VideoGalleryStories.PinnedParticipantsMobileExampleDocsOnly}
+/>
 
 ### Managing the pinned participants state
 
 The state of which remote participants are pinned can be managed by defining the value of the `pinnedParticipants` prop. But the callback props `onPinParticipant` and `onUnpinParticipant` must be defined to update the managed state. In the example below, the pinned participants state is managed outside of the VideoGallery component using a `useState` hook . The display names of the pinned participants are shown in text above the VideoGallery.
 
-<Canvas mdxSource={ManagedPinnedParticipantsExampleText}>
-  <ManagedPinnedParticipantsExample />
-</Canvas>
+<Canvas
+  source={{ code: ManagedPinnedParticipantsExampleText }}
+  of={VideoGalleryStories.ManagedPinnedParticipantsExampleDocsOnly}
+/>
 
 ## Remote video stream rendering options
 
@@ -303,7 +333,7 @@ When `useProps` hook is used to provide the props to VideoGallery from the [stat
 
 The default rendering options can be set for remote video streams as well as the local video stream through VideoGallery props `remoteVideoViewOptions` and `localVideoViewOptions`. To set the remote video streams to fill frame set the scalingMode to 'Crop' like in the code snippet. To set it to fit-to-frame set scalingMode to 'Fit'.
 
-```
+```typescript
 const renderingOptionsDefault = `
 import { VideoGallery, VideoStreamOptions } from '@internal/react-components';
 
@@ -371,9 +401,7 @@ The Optimal Video Count (OVC) feature provides a way to make sure that the numbe
 
 The 3x3 video gallery allows customers to have 9 remote videos rendering with the highest optimal quality.
 
-<Canvas mdxSource={OVC3x3ExampleText}>
-  <OVC3x3VideoGalleryExample />
-</Canvas>
+<Canvas source={{ code: OVC3x3ExampleText }} of={VideoGalleryStories.OVC3x3VideoGalleryExampleDocsOnly} />
 
 ## Props
 
