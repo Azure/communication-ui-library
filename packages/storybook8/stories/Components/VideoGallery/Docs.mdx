@@ -55,7 +55,7 @@ This feature allows users to choose from a variety of video gallery layouts. On 
 
 ### Gallery Layout
 
-If there are no remote video streams on, all participants are placed in the [Grid Layout](./?path=/docs/components-grid-layout--docs) including the local user. Otherwise, only remote participants with their video streams on are placed in the Grid Layout upto a max of `maxRemoteVideoStreams`. The remaining participants are placed in the Horizontal Gallery.
+If there are no remote video streams on, all participants are placed in the [Grid Layout](./?path=/docs/components-grid-layout--docs) including the local user. Otherwise, only remote participants with their video streams on are placed in the Grid Layout up to a max of `maxRemoteVideoStreams`. The remaining participants are placed in the Horizontal Gallery.
 
 <Canvas of={VideoGalleryStories.DefaultVideoGalleryExampleDocsOnly} source={{ code: DefaultVideoGalleryExampleText }} />
 
@@ -178,16 +178,16 @@ The vertical gallery can be most useful when the application is running a very w
 
 ## Content Sharing Experience
 
-The screen shared is the only element placed in the GridLayout and all remote participants are placed in the horizontal gallery in the lower section. To be able to view this screen share, the sharing participant should have their `isScreenSharingOn` prop set to true as well as a defined `screenShareStream` prop (see `localParticipant` and `remoteParticipants` props).
-
-- <strong>Screen Sharing:</strong> Share your local screen with participants in real-time or view remote screen shares.
-  For more details, see the sections below.
-- <strong>PowerPoint Live:</strong> Exclusively view remote PowerPoint presentations.
-  <a href="?path=/docs/concepts-powerpoint-live--docs">Learn more about PowerPoint Live</a>.
+Our VideoGallery component is designed for optimal content sharing, incorporating both screen sharing and PowerPoint Live functionalities. The screen shared is the sole element placed in the Grid Layout, with all remote participants positioned in the horizontal gallery at the lower section. For effective screen sharing or PowerPoint Live, ensure the sharing participant has their isScreenSharingOn prop set to true, along with a defined screenShareStream prop (refer to localParticipant and remoteParticipants props).
 
 ### Supported Features
 
 Currently, the VideoGallery component supports two primary features to enhance collaboration and presentation quality: screen sharing and PowerPoint Live.
+
+- <strong>Screen Sharing:</strong> Share your local screen with participants in real-time or view remote screen
+shares. For more details, see the sections below.
+- <strong>PowerPoint Live:</strong> Exclusively view remote PowerPoint presentations.
+<a href="?path=/docs/ppt-live--page">Learn more about PowerPoint Live</a>.
 
 ### From a presenter point of view
 
@@ -198,7 +198,9 @@ Currently, the VideoGallery component supports two primary features to enhance c
 
 ### From a viewer point of view
 
-Note that in this example, we substitute the screenshare video stream with an image just for mocking experience.
+We have the capability to configure the `screenShareStream` to utilize any `HTMLElement` as the renderElement,
+enabling functionalities like screen sharing and PowerPoint Live. It's important to note that, in this specific
+example, we're replacing the screenshare video stream with an image merely to simulate the experience.
 
 <Canvas
   source={{ code: ScreenSharingFromViewerExampleText }}
@@ -334,7 +336,6 @@ When `useProps` hook is used to provide the props to VideoGallery from the [stat
 The default rendering options can be set for remote video streams as well as the local video stream through VideoGallery props `remoteVideoViewOptions` and `localVideoViewOptions`. To set the remote video streams to fill frame set the scalingMode to 'Crop' like in the code snippet. To set it to fit-to-frame set scalingMode to 'Fit'.
 
 ```typescript
-const renderingOptionsDefault = `
 import { VideoGallery, VideoStreamOptions } from '@internal/react-components';
 
 const ViewOptionsDefault = (): JSX.Element => {
@@ -358,8 +359,6 @@ const ViewOptionsDefault = (): JSX.Element => {
     />
   );
 };
-}
-`;
 ```
 
 ## Local video tile aspect ratio options
