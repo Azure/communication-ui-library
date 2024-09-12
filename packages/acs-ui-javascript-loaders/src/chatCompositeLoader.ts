@@ -7,7 +7,6 @@ import { parseReactVersion } from './utils';
 const reactVersion = React.version;
 parseReactVersion(reactVersion);
 
-import { createRoot } from 'react-dom/client';
 import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import {
   ChatAdapter,
@@ -52,7 +51,7 @@ export const loadChatComposite = async function (
   if (!htmlElement) {
     throw new Error('Failed to find the root element');
   }
-
+  const { createRoot } = await import('react-dom/client');
   createRoot(htmlElement).render(React.createElement(ChatComposite, { ...props, adapter }, null));
   return adapter;
 };
