@@ -188,7 +188,6 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
     /* @conditional-compile-remove(hide-attendee-name) */
     hideAttendeeNames,
     info: callInfo,
-    /* @conditional-compile-remove(teams-meeting-conference) */
     meetingConference: { conferencePhones: [] }
   };
 }

@@ -53,9 +53,7 @@ import { getCallStatus, getCaptionsStatus } from '../selectors/baseSelectors';
 import { drawerContainerStyles } from '../styles/CallComposite.styles';
 import { SidePane } from './SidePane/SidePane';
 import { usePeoplePane } from './SidePane/usePeoplePane';
-/* @conditional-compile-remove(teams-meeting-conference) */
 import { useMeetingPhoneInfoPane } from './SidePane/useMeetingPhoneInfo';
-/* @conditional-compile-remove(teams-meeting-conference) */
 import { getTeamsMeetingCoordinates } from '../selectors/baseSelectors';
 
 import {
@@ -185,10 +183,8 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     }
   }, [participantActioned, remoteParticipants]);
 
-  /* @conditional-compile-remove(teams-meeting-conference) */
   const conferencePhoneInfo = useSelector(getTeamsMeetingCoordinates);
 
-  /* @conditional-compile-remove(teams-meeting-conference) */
   const meetingPhoneInfoPaneProps = {
     updateSidePaneRenderer,
     mobileView: props.mobileView,
@@ -235,19 +231,15 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     localParticipant
   } = videoGalleryProps;
 
-  /* @conditional-compile-remove(teams-meeting-conference) */
   const [showTeamsMeetingConferenceModal, setShowTeamsMeetingConferenceModal] = useState(false);
-  /* @conditional-compile-remove(teams-meeting-conference) */
   const toggleTeamsMeetingConferenceModal = useCallback((): void => {
     setShowTeamsMeetingConferenceModal(!showTeamsMeetingConferenceModal);
   }, [showTeamsMeetingConferenceModal]);
 
-  /* @conditional-compile-remove(teams-meeting-conference) */
   const { isMeetingPhoneInfoPaneOpen, openMeetingPhoneInfoPane, closeMeetingPhoneInfoPane } = useMeetingPhoneInfoPane({
     ...meetingPhoneInfoPaneProps
   });
 
-  /* @conditional-compile-remove(teams-meeting-conference) */
   const toggleMeetingPhoneInfoPane = useCallback(() => {
     if (isMeetingPhoneInfoPaneOpen) {
       closeMeetingPhoneInfoPane();
@@ -256,7 +248,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     }
   }, [closeMeetingPhoneInfoPane, isMeetingPhoneInfoPaneOpen, openMeetingPhoneInfoPane]);
 
-  /* @conditional-compile-remove(teams-meeting-conference) */
   const onMeetingPhoneInfoClicked = useCallback(() => {
     setShowDrawer(false);
     toggleMeetingPhoneInfoPane();
@@ -561,9 +552,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                   onStopLocalSpotlight={
                     !hideSpotlightButtons && localParticipant.spotlight ? onStopLocalSpotlightWithPrompt : undefined
                   }
-                  /* @conditional-compile-remove(teams-meeting-conference) */
                   onToggleTeamsMeetingConferenceModal={toggleTeamsMeetingConferenceModal}
-                  /* @conditional-compile-remove(teams-meeting-conference) */
                   teamsMeetingConferenceModalPresent={showTeamsMeetingConferenceModal}
                 />
               )}
@@ -587,7 +576,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                 onSetDialpadPage={props.onSetDialpadPage}
                 dtmfDialerPresent={props.dtmfDialerPresent}
                 reactionResources={adapter.getState().reactions}
-                /* @conditional-compile-remove(teams-meeting-conference) */
                 onClickMeetingPhoneInfo={onMeetingPhoneInfoClicked}
               />
             </Stack>

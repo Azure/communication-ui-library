@@ -672,7 +672,6 @@ describe('errors should be reported correctly from Call when', () => {
     }
   });
 
-  /* @conditional-compile-remove(teams-meeting-conference) */
   test('Conference call is undefined in acs to acs calls', async () => {
     const conference = addMockEmitter({ name: 'Conference' });
 

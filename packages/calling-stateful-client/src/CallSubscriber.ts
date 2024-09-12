@@ -138,7 +138,6 @@ export class CallSubscriber {
   private subscribe = (): void => {
     this._call.on('stateChanged', this.stateChanged);
     this._call.on('stateChanged', this._safeSubscribeInitCaptionSubscriber);
-    /* @conditional-compile-remove(teams-meeting-conference) */
     this._call.on('stateChanged', this._safeSubscribeInitTeamsMeetingConference);
     /* @conditional-compile-remove(local-recording-notification) */
     this._call.on('stateChanged', this._safeSubscribeInitLocalRecordingNotificationSubscriber);
@@ -180,7 +179,6 @@ export class CallSubscriber {
   public unsubscribe = (): void => {
     this._call.off('stateChanged', this.stateChanged);
     this._call.off('stateChanged', this._safeSubscribeInitCaptionSubscriber);
-    /* @conditional-compile-remove(teams-meeting-conference) */
     this._call.off('stateChanged', this._safeSubscribeInitTeamsMeetingConference);
     /* @conditional-compile-remove(local-recording-notification) */
     this._call.off('stateChanged', this._safeSubscribeInitLocalRecordingNotificationSubscriber);
@@ -277,7 +275,6 @@ export class CallSubscriber {
     }
   };
 
-  /* @conditional-compile-remove(teams-meeting-conference) */
   private initTeamsMeetingConference = (): void => {
     if (this._call.state === 'Connected') {
       this._call

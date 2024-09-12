@@ -655,7 +655,6 @@ export interface CallState {
    */
   info?: TeamsCallInfo | /* @conditional-compile-remove(calling-beta-sdk) */ CallInfo;
 
-  /* @conditional-compile-remove(teams-meeting-conference) */
   /**
    * Proxy of {@link @azure/communication-calling#TeamsMeetingAudioConferencingCallFeature}.
    */
