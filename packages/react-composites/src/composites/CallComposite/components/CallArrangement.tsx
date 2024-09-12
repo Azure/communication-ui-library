@@ -135,6 +135,9 @@ export interface CallArrangementProps {
   pinnedParticipants?: string[];
   setPinnedParticipants?: (pinnedParticipants: string[]) => void;
   doNotShowCameraAccessNotifications?: boolean;
+  captionsOptions?: {
+    height: 'full' | 'default';
+  };
 }
 
 /**
@@ -462,6 +465,13 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   const minMaxDragPosition = useMinMaxDragPosition(props.modalLayerHostId);
   const pipStyles = useMemo(() => getPipStyles(theme), [theme]);
 
+  const galleryContainerStyles = useMemo(() => {
+    return {
+      ...mediaGalleryContainerStyles,
+      ...(props?.captionsOptions?.height === 'full' ? { root: { postion: 'absolute' } } : {})
+    };
+  }, [props?.captionsOptions?.height]);
+
   if (isTeamsMeeting) {
     filteredLatestErrorNotifications
       .filter((notification) => notification.type === 'teamsMeetingCallNetworkQualityLow')
@@ -583,7 +593,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
           <Stack horizontal grow>
             <Stack.Item style={callCompositeContainerCSS}>
               <Stack.Item styles={callGalleryStyles} grow>
-                <Stack verticalFill styles={mediaGalleryContainerStyles}>
+                <Stack verticalFill styles={galleryContainerStyles}>
                   <Stack.Item styles={notificationsContainerStyles}>
                     {
                       /* @conditional-compile-remove(breakout-rooms) */
@@ -621,6 +631,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                   {true &&
                     /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ !isInLocalHold && (
                       <CaptionsBanner
+                        captionsOptions={props.captionsOptions}
                         isMobile={props.mobileView}
                         onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
                         useTeamsCaptions={useTeamsCaptions}
