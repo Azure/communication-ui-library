@@ -149,16 +149,3 @@ test.describe('VGL - VideoGallery tests', () => {
     await expect(component).toHaveScreenshot('VGL-4-2-videogallery-after-spotlight.png');
   });
 });
-
-const createMockVideoStream = (): HTMLElement => {
-  const mockVideoElement = document.createElement('div');
-  mockVideoElement.style.width = '100%';
-  mockVideoElement.style.height = '100%';
-  mockVideoElement.style.textAlign = 'center';
-  const imageElement = document.createElement('img');
-  imageElement.src = 'images/screenshare-example.png';
-  imageElement.style.maxWidth = decodeURIComponent('100%25');
-  imageElement.style.maxHeight = decodeURIComponent('100%25');
-  mockVideoElement.appendChild(imageElement);
-  return mockVideoElement as HTMLElement;
-};
