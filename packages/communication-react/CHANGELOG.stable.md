@@ -1,8 +1,63 @@
 # Change Log - @azure/communication-react
 
-This log was last generated on Mon, 15 Jul 2024 18:16:36 GMT and should not be manually modified.
+<!-- This log was last generated on Thu, 12 Sep 2024 18:13:15 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## [1.19.0](https://github.com/azure/communication-ui-library/tree/1.19.0)
+
+Thu, 12 Sep 2024 18:13:15 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.19.0-beta.3...1.19.0)
+
+### Features
+- Update communication calling to 1.29.1-beta.1 and 1.28.1 ([PR #5088](https://github.com/azure/communication-ui-library/pull/5088) by 79475487+mgamis-msft@users.noreply.github.com)
+- [DNS] Adapter API changes and common calling handlers ([PR #5062](https://github.com/azure/communication-ui-library/pull/5062) by 97124699+prabhjot-msft@users.noreply.github.com)
+- Stabilize, Inbound calling, PSTN, Teams Adhoc calling ([PR #4958](https://github.com/azure/communication-ui-library/pull/4958) by dmceachern@microsoft.com)
+- Add DNS toggle to Microphone button menu options ([PR #5085](https://github.com/azure/communication-ui-library/pull/5085) by 97124699+prabhjot-msft@users.noreply.github.com)
+- GA acs captions ([PR #5084](https://github.com/azure/communication-ui-library/pull/5084) by 96077406+carocao-msft@users.noreply.github.com)
+- Add toggle for DNS on by default and hide DNS button in adapter options ([PR #5095](https://github.com/azure/communication-ui-library/pull/5095) by 97124699+prabhjot-msft@users.noreply.github.com)
+- Add breakout rooms to stateful layer and events to CallAdapter and CallWithChatAdapter ([PR #4956](https://github.com/azure/communication-ui-library/pull/4956) by 79475487+mgamis-msft@users.noreply.github.com)
+### Improvements
+- Update axios to 1.7.5 with a security fix ([PR #5114](https://github.com/azure/communication-ui-library/pull/5114) by 107075081+Leah-Xia-Microsoft@users.noreply.github.com)
+- Update @fluentui-contrib/react-chat to fix focus issues in chat component ([PR #4862](https://github.com/azure/communication-ui-library/pull/4862) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- Fix frequent tooltip dismissal when trying to mouse over tooltip content ([PR #5158](https://github.com/azure/communication-ui-library/pull/5158) by 79475487+mgamis-msft@users.noreply.github.com)
+- Upgrade calling beta to 1.28.1-beta.1 and stable to 1.27.2 ([PR #4954](https://github.com/azure/communication-ui-library/pull/4954) by 79475487+mgamis-msft@users.noreply.github.com)
+- Add PPTLive presenter information ([PR #4494](https://github.com/azure/communication-ui-library/pull/4494) by 93549644+ShaunaSong@users.noreply.github.com)
+- Change logic of showing button to join breakout room when the breakout room call is available ([PR #5109](https://github.com/azure/communication-ui-library/pull/5109) by 79475487+mgamis-msft@users.noreply.github.com)
+- Update @azure/communication-calling to 1.26.2 ([PR #4906](https://github.com/azure/communication-ui-library/pull/4906) by 2684369+JamesBurnside@users.noreply.github.com)
+- Chat SDK and Signaling dependencies update ([PR #5138](https://github.com/azure/communication-ui-library/pull/5138) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- Update AddCSS to utils ([PR #4926](https://github.com/azure/communication-ui-library/pull/4926) by edwardlee@microsoft.com)
+- Update all dependencies with patch updates ([PR #4930](https://github.com/azure/communication-ui-library/pull/4930) by 2684369+JamesBurnside@users.noreply.github.com)
+- Add CallAdapter API to start captions in the background ([PR #5064](https://github.com/azure/communication-ui-library/pull/5064) by 2684369+JamesBurnside@users.noreply.github.com)
+- Caption fullscreen mode api ([PR #5164](https://github.com/azure/communication-ui-library/pull/5164) by jiangnanhello@live.com)
+### Bug Fixes
+- Remove use of phonenumberlib-js and manually format NA numbers ([PR #4920](https://github.com/azure/communication-ui-library/pull/4920) by 2684369+JamesBurnside@users.noreply.github.com)
+- Suppress initial notifications of capabilities being present when joining a call ([PR #4994](https://github.com/azure/communication-ui-library/pull/4994) by 79475487+mgamis-msft@users.noreply.github.com)
+- Fix error when listening to capabilitiesChanged and spotlightChanged events from AzureCommunicationCallWithChatAdapter ([PR #5066](https://github.com/azure/communication-ui-library/pull/5066) by 79475487+mgamis-msft@users.noreply.github.com)
+- Refactored Teams Identity Logic for File Sharing ([PR #4918](https://github.com/azure/communication-ui-library/pull/4918) by 109105353+jpeng-ms@users.noreply.github.com)
+- Fix Message status announcement sometimes takes priority over "Message is deleted" one ([PR #4334](https://github.com/azure/communication-ui-library/pull/4334) by 3941071+emlynmac@users.noreply.github.com)
+- Delete joined and closing breakout room notifications when user is unassigned from breakout room or re-assigned to a closed breakout room ([PR #5108](https://github.com/azure/communication-ui-library/pull/5108) by 79475487+mgamis-msft@users.noreply.github.com)
+- Fix bug when adapter caption events are not firing ([PR #5065](https://github.com/azure/communication-ui-library/pull/5065) by 96077406+carocao-msft@users.noreply.github.com)
+- Fix lazy loading for Composites ([PR #5126](https://github.com/azure/communication-ui-library/pull/5126) by 107075081+Leah-Xia-Microsoft@users.noreply.github.com)
+- Fix bug where speakers are getting selected on safari ([PR #4893](https://github.com/azure/communication-ui-library/pull/4893) by 96077406+carocao-msft@users.noreply.github.com)
+- Disable image pasting when onInsertInlineImage is not provided ([PR #5053](https://github.com/azure/communication-ui-library/pull/5053) by 107075081+Leah-Xia-Microsoft@users.noreply.github.com)
+- Hide DNS on Safari ([PR #5159](https://github.com/azure/communication-ui-library/pull/5159) by 97124699+prabhjot-msft@users.noreply.github.com)
+- Fix compliance notification not showing that transcription has stopped in react18 strict mode ([PR #5092](https://github.com/azure/communication-ui-library/pull/5092) by 2684369+JamesBurnside@users.noreply.github.com)
+- Fix an issue where cursor position was incorrect after rich text input box was reset ([PR #4887](https://github.com/azure/communication-ui-library/pull/4887) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- Ensure dominant speaker streams are rendered ([PR #5129](https://github.com/azure/communication-ui-library/pull/5129) by 79475487+mgamis-msft@users.noreply.github.com)
+- Fix visible names for pinning, camera and mic buttons ([PR #5079](https://github.com/azure/communication-ui-library/pull/5079) by dmceachern@microsoft.com)
+- Fix pinned participant limit to update correctly when pinned participants are removed from call ([PR #4761](https://github.com/azure/communication-ui-library/pull/4761) by 79475487+mgamis-msft@users.noreply.github.com)
+- Fix vulnerability of having NaN from calculations in horizontal or vertical overflow gallery ([PR #4861](https://github.com/azure/communication-ui-library/pull/4861) by 79475487+mgamis-msft@users.noreply.github.com)
+- Update RoosterJS version to fix some issues with keyboard table navigation in Rich Text Editor components ([PR #5050](https://github.com/azure/communication-ui-library/pull/5050) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- Fix chat selectors using read receipts from state ([PR #5063](https://github.com/azure/communication-ui-library/pull/5063) by 79475487+mgamis-msft@users.noreply.github.com)
+- Update paddings and theme handling for rich text editor toolbar ([PR #4852](https://github.com/azure/communication-ui-library/pull/4852) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- Add role to SvgWithWorkWrapping and set as a heading in the configuration page on use ([PR #5127](https://github.com/azure/communication-ui-library/pull/5127) by edwardlee@microsoft.com)
+- Update contrast issues when interacting with other participants in the call ([PR #5141](https://github.com/azure/communication-ui-library/pull/5141) by dmceachern@microsoft.com)
+- Truncate long text used in video effects button ([PR #5097](https://github.com/azure/communication-ui-library/pull/5097) by 79475487+mgamis-msft@users.noreply.github.com)
+- Add announcements for applying bulleted/numbered lists in rich text editor and for adding new list items to them ([PR #4874](https://github.com/azure/communication-ui-library/pull/4874) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- Fixed the issue where image loading placeholder doesn't work for safari ([PR #4846](https://github.com/azure/communication-ui-library/pull/4846) by 109105353+jpeng-ms@users.noreply.github.com)
+- Fix for an issue where toolbar didn't correctly show the selected style format during message editing ([PR #4940](https://github.com/azure/communication-ui-library/pull/4940) by 98852890+vhuseinova-msft@users.noreply.github.com)
+
 
 ## [1.18.0](https://github.com/azure/communication-ui-library/tree/1.18.0)
 
