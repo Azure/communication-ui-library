@@ -273,7 +273,7 @@ export class CallSubscriber {
         this._context,
         this._call.feature(Features.Captions)
       );
-      this._call.off('stateChanged', this.initCaptionSubscriber);
+      this._call.off('stateChanged', this._safeSubscribeInitCaptionSubscriber);
     }
   };
 
@@ -286,7 +286,7 @@ export class CallSubscriber {
         .then((teamsMeetingConferenceDetails) => {
           this._context.setTeamsMeetingConference(this._callIdRef.callId, teamsMeetingConferenceDetails);
         });
-      this._call.off('stateChanged', this.initTeamsMeetingConference);
+      this._call.off('stateChanged', this._safeSubscribeInitTeamsMeetingConference);
     }
   };
 
@@ -300,7 +300,7 @@ export class CallSubscriber {
         this._context,
         this._call.feature(Features.LocalRecording)
       );
-      this._call.off('stateChanged', this.initLocalRecordingNotificationSubscriber);
+      this._call.off('stateChanged', this._safeSubscribeInitLocalRecordingNotificationSubscriber);
     }
   };
 
