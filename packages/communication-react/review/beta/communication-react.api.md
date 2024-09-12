@@ -4865,7 +4865,7 @@ export const toFlatCommunicationIdentifier: (identifier: CommunicationIdentifier
 
 // @alpha
 export interface TogetherModeCallFeature {
-    stream?: TogetherModeStreamState;
+    stream: TogetherModeStreamState[];
 }
 
 // @alpha

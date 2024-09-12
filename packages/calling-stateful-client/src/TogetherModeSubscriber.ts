@@ -32,11 +32,11 @@ export class TogetherModeSubscriber {
     added: TogetherModeVideoStream[];
     removed: TogetherModeVideoStream[];
   }): void => {
-    for (const addedTogetherModeStream of args.added) {
-      this._context.setTogetherModeVideoStream(this._callIdRef.callId, addedTogetherModeStream);
+    if (args.added) {
+      this._context.setTogetherModeVideoStream(this._callIdRef.callId, args.added);
     }
-    for (const removedTogetherModeStream of args.removed) {
-      this._context.removeTogetherModeVideoStream(this._callIdRef.callId, removedTogetherModeStream);
+    if (args.removed) {
+      this._context.removeTogetherModeVideoStream(this._callIdRef.callId, args.removed);
     }
   };
 }

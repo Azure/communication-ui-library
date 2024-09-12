@@ -284,7 +284,7 @@ export interface TogetherModeCallFeatureState {
   /**
    * Proxy of {@link @azure/communication-calling#TogetherModeCallFeature.togetherModeStream}.
    */
-  stream?: TogetherModeStreamState;
+  stream: TogetherModeStreamState[];
 }
 
 /* @conditional-compile-remove(together-mode) */

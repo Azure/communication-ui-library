@@ -8,7 +8,6 @@ import {
   DominantSpeakersInfo,
   ParticipantRole,
   ScalingMode,
-  TogetherModeVideoStream,
   VideoDeviceInfo
 } from '@azure/communication-calling';
 import { RaisedHand } from '@azure/communication-calling';
@@ -26,6 +25,8 @@ import { TeamsCaptionsInfo } from '@azure/communication-calling';
 import { CaptionsKind, CaptionsInfo as AcsCaptionsInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
+/* @conditional-compile-remove(together-mode) */
+import { TogetherModeVideoStream } from '@azure/communication-calling';
 import { AzureLogger, createClientLogger, getLogLevel } from '@azure/logger';
 import { EventEmitter } from 'events';
 import { enableMapSet, enablePatches, Patch, produce } from 'immer';
@@ -456,7 +457,7 @@ export class CallContext {
   }
 
   /* @conditional-compile-remove(together-mode) */
-  public setTogetherModeVideoStream(callId: string, addedStream: TogetherModeVideoStream): void {
+  public setTogetherModeVideoStream(callId: string, addedStream: TogetherModeVideoStream[]): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
@@ -466,13 +467,11 @@ export class CallContext {
   }
 
   /* @conditional-compile-remove(together-mode) */
-  public removeTogetherModeVideoStream(callId: string, removedStream: TogetherModeVideoStream): void {
+  public removeTogetherModeVideoStream(callId: string, removedStream: TogetherModeVideoStream[]): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
-        if (call.togetherMode.stream && call.togetherMode.stream?.id === removedStream.id) {
-          call.togetherMode = { stream: undefined };
-        }
+        call.togetherMode = { stream: [] };
       }
     });
   }
