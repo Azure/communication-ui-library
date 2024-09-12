@@ -1,23 +1,15 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/* @conditional-compile-remove(teams-meeting-conference) */
 import React, { useCallback, useEffect, useMemo } from 'react';
-/* @conditional-compile-remove(teams-meeting-conference) */
 import { SidePaneRenderer, useIsParticularSidePaneOpen } from './SidePaneProvider';
-/* @conditional-compile-remove(teams-meeting-conference) */
 import { SidePaneHeader } from '../../../common/SidePaneHeader';
-/* @conditional-compile-remove(teams-meeting-conference) */
 import { MeetingPhoneInfoPaneContent } from '../../../common/MeetingPhoneInfoPaneContent';
-/* @conditional-compile-remove(teams-meeting-conference) */
 import { useLocale } from '../../../localization';
-/* @conditional-compile-remove(teams-meeting-conference) */
 import { ConferencePhoneInfo } from '@internal/react-components';
 
-/* @conditional-compile-remove(teams-meeting-conference) */
 const SIDE_PANE_ID = 'Meeting Phone Info';
 
-/* @conditional-compile-remove(teams-meeting-conference) */
 /** @private */
 export const useMeetingPhoneInfoPane = (props: {
   updateSidePaneRenderer: (renderer: SidePaneRenderer | undefined) => void;

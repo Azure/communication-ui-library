@@ -126,7 +126,6 @@ export class CallSubscriber {
   private subscribe = (): void => {
     this._call.on('stateChanged', this.stateChanged);
     this._call.on('stateChanged', this.initCaptionSubscriber);
-    /* @conditional-compile-remove(teams-meeting-conference) */
     this._call.on('stateChanged', this.initTeamsMeetingConference);
     /* @conditional-compile-remove(local-recording-notification) */
     this._call.on('stateChanged', this.initLocalRecordingNotificationSubscriber);
@@ -170,7 +169,7 @@ export class CallSubscriber {
     this._call.off('stateChanged', this.initCaptionSubscriber);
     /* @conditional-compile-remove(local-recording-notification) */
     this._call.off('stateChanged', this.initLocalRecordingNotificationSubscriber);
-    /* @conditional-compile-remove(teams-meeting-conference) */
+
     this._call.off('stateChanged', this.initTeamsMeetingConference);
     this._call.off('idChanged', this.idChanged);
     this._call.off('isScreenSharingOnChanged', this.isScreenSharingOnChanged);
@@ -253,7 +252,6 @@ export class CallSubscriber {
     }
   };
 
-  /* @conditional-compile-remove(teams-meeting-conference) */
   private initTeamsMeetingConference = (): void => {
     if (this._call.state === 'Connected') {
       this._call

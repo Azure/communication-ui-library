@@ -185,10 +185,7 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
             isNetworkHealthy(networkReconnectTileProps.networkReconnectValue) ? (
               onRenderGalleryContentTrampoline()
             ) : (
-              <NetworkReconnectTile
-                {...networkReconnectTileProps}
-                /* /* @conditional-compile-remove(teams-meeting-conference) */ isMobile={mobileView}
-              />
+              <NetworkReconnectTile {...networkReconnectTileProps} isMobile={mobileView} />
             )
           ) : (
             <></>
