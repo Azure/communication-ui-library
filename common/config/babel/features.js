@@ -94,8 +94,6 @@ module.exports = {
     'end-call-options',
     // Feature to support file sharing in Teams interoperability chats
     "file-sharing-teams-interop",
-    // Get join conference information
-    'teams-meeting-conference',
     // Close captions feature for ACS calls
     "acs-close-captions",
     // Feature for showing notifications

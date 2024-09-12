@@ -14,9 +14,7 @@ import { RaisedHand } from '@azure/communication-calling';
 /* @conditional-compile-remove(breakout-rooms) */
 import { BreakoutRoom, BreakoutRoomsSettings } from '@azure/communication-calling';
 
-/* @conditional-compile-remove(teams-meeting-conference) */
 import { TeamsMeetingAudioConferencingDetails } from '@azure/communication-calling';
-/* @conditional-compile-remove(teams-meeting-conference) */
 import { convertConferencePhoneInfo } from './Converter';
 
 import { CapabilitiesChangeInfo, ParticipantCapabilities } from '@azure/communication-calling';
@@ -189,7 +187,7 @@ export class CallContext {
         existingCall.captionsFeature.currentSpokenLanguage = call.captionsFeature.currentSpokenLanguage;
         existingCall.captionsFeature.currentCaptionLanguage = call.captionsFeature.currentCaptionLanguage;
         existingCall.info = call.info;
-        /* @conditional-compile-remove(teams-meeting-conference) */
+
         existingCall.meetingConference = call.meetingConference;
       } else {
         draft.calls[latestCallId] = call;
@@ -574,7 +572,6 @@ export class CallContext {
     });
   }
 
-  /* @conditional-compile-remove(teams-meeting-conference) */
   public setTeamsMeetingConference(
     callId: string,
     teamsMeetingConferenceDetails: TeamsMeetingAudioConferencingDetails
