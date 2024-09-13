@@ -1,10 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import {
-  DominantSpeakersInfo,
-  RemoteParticipantState as RemoteParticipantConnectionState
-} from '@azure/communication-calling';
+import { DominantSpeakersInfo } from '@azure/communication-calling';
 import { SpotlightedParticipant } from '@azure/communication-calling';
 /* @conditional-compile-remove(hide-attendee-name) */
 import { ParticipantRole } from '@azure/communication-calling';
