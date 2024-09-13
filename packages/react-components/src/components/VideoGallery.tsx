@@ -226,7 +226,7 @@ export interface VideoGalleryProps {
   onDisposeRemoteScreenShareStreamView?: (userId: string) => Promise<void>;
   /** Callback to dispose a local screen share stream view */
   onDisposeLocalScreenShareStreamView?: () => Promise<void>;
-  /** Callback to render a particpant avatar */
+  /** Callback to render a participant avatar */
   onRenderAvatar?: OnRenderAvatarCallback;
   /**
    * Whether to display the local video camera switcher button
