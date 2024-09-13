@@ -4260,7 +4260,7 @@ export type RemoteDiagnosticState = {
 export interface RemoteParticipantState {
     callEndReason?: CallEndReason;
     contentSharingStream?: HTMLElement;
-    diagnostic?: RemoteDiagnosticState;
+    diagnostics?: Record<string, RemoteDiagnosticState>;
     displayName?: string;
     identifier: CommunicationIdentifierKind;
     isMuted: boolean;

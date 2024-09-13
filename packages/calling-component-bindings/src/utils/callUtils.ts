@@ -135,7 +135,11 @@ export const isACSCallParticipants = (
  * Checks whether the user is a 'Ringing' PSTN user.
  */
 export const _convertParticipantState = (participant: RemoteParticipantState): ParticipantConnectionState => {
-  if (participant.diagnostic?.diagnostic === 'ServerConnection' && participant.diagnostic?.value === false) {
+  if (
+    participant.diagnostics &&
+    participant.diagnostics['ServerConnection'] &&
+    participant.diagnostics['ServerConnection']?.value === false
+  ) {
     return 'Reconnecting';
   }
   return isPhoneNumberIdentifier(participant.identifier) && participant.state === 'Connecting'
