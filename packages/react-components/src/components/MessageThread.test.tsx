@@ -375,7 +375,7 @@ describe('Message should display Mention correctly', () => {
       );
     };
 
-    const { container, rerender } = render(
+    const { rerender } = render(
       <MessageThread
         userId={user2Id}
         messages={messages}
@@ -389,7 +389,7 @@ describe('Message should display Mention correctly', () => {
     );
 
     // Find message bubble does not contain mention yet
-    const messageBubble = container.querySelector('[data-ui-id="chat-composite-message"]');
+    const messageBubble = screen.queryByTestId('chat-composite-message');
     if (!messageBubble) {
       fail('Failed to find chat message bubble');
     }
@@ -397,7 +397,7 @@ describe('Message should display Mention correctly', () => {
     expect(messageBubble.innerHTML).not.toContain(MSFT_MENTION);
 
     // Click on ... button to trigger context menu
-    const menuButton = container.querySelector('[data-ui-id="chat-composite-message-action-icon"]');
+    const menuButton = screen.queryByTestId('chat-composite-message-action-icon');
     if (!menuButton) {
       fail('Failed to find "More" action button');
     }
@@ -452,7 +452,7 @@ describe('Message should display Mention correctly', () => {
     );
 
     // After re-render with edited message, verify content includes mentions html tag
-    const messageBubbleAfterRerender = container.querySelector('[data-ui-id="chat-composite-message"]');
+    const messageBubbleAfterRerender = screen.queryByTestId('chat-composite-message');
     if (!messageBubbleAfterRerender) {
       fail('Failed to find "More" action button after rerender');
     }
