@@ -17,7 +17,12 @@ import {
 } from '@azure/communication-common';
 import { memoizeFnAll, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 
-type ParticipantConnectionState =
+/**
+ * Type for connmection state
+ *
+ * @internal
+ */
+export type ParticipantConnectionState =
   | 'Idle'
   | 'Connecting'
   | 'Ringing'
