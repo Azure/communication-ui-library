@@ -180,6 +180,55 @@ const putVideoParticipantsFirst = (
 /**
  * @private
  */
+export const renderTiles = (
+  gridParticipants: VideoGalleryParticipant[],
+  onRenderRemoteParticipant: (participant: VideoGalleryRemoteParticipant, isVideoParticipant?: boolean) => JSX.Element,
+  maxRemoteVideoStreams: number,
+  indexesToRender: number[],
+  overflowGalleryParticipants: VideoGalleryParticipant[],
+  dominantSpeakers?: string[]
+): { gridTiles: JSX.Element[]; overflowGalleryTiles: JSX.Element[] } => {
+  const _dominantSpeakers = dominantSpeakers ?? [];
+  let streamsLeftToRender = maxRemoteVideoStreams;
+
+  // Render the grid participants
+  const participantWithStreamsToRenderInGrid = gridParticipants.filter((p) => p?.videoStream?.isAvailable);
+  const dominantSpeakerWithStreamsToRenderInGrid = _dominantSpeakers
+    .filter((userId) => participantWithStreamsToRenderInGrid.find((p) => p?.userId === userId))
+    .slice(0, streamsLeftToRender);
+  streamsLeftToRender = streamsLeftToRender - dominantSpeakerWithStreamsToRenderInGrid.length;
+  const gridTiles = gridParticipants.map((p) => {
+    return onRenderRemoteParticipant(
+      p,
+      dominantSpeakerWithStreamsToRenderInGrid.includes(p.userId) ||
+        (p.videoStream?.isAvailable && streamsLeftToRender-- > 0)
+    );
+  });
+
+  // Render the overflow participants
+  const participantWithStreamsToRenderInOverflow = indexesToRender
+    .map((i) => {
+      return overflowGalleryParticipants.at(i);
+    })
+    .filter((p) => p?.videoStream?.isAvailable);
+  const dominantSpeakerWithStreamsToRenderInOverflow = _dominantSpeakers
+    .filter((userId) => participantWithStreamsToRenderInOverflow.find((p) => p?.userId === userId))
+    .slice(0, streamsLeftToRender);
+  streamsLeftToRender = streamsLeftToRender - dominantSpeakerWithStreamsToRenderInOverflow.length;
+  const overflowGalleryTiles = overflowGalleryParticipants.map((p) => {
+    return onRenderRemoteParticipant(
+      p,
+      dominantSpeakerWithStreamsToRenderInOverflow.includes(p.userId) ||
+        (p.videoStream?.isAvailable && streamsLeftToRender-- > 0)
+    );
+  });
+
+  return { gridTiles, overflowGalleryTiles };
+};
+
+/**
+ * @private
+ */
 export const getEmojiResource = (reactionName: string, reactionResources: ReactionResources): string | undefined => {
   switch (reactionName) {
     case 'like':

@@ -24,7 +24,11 @@ const hostStyles: Partial<ITooltipHostStyles> = { root: { display: 'inline-block
  */
 export const ControlButtonTooltip = (props: ITooltipHostProps): JSX.Element => {
   const theme = useTheme();
-  const calloutStyle: Partial<ICalloutContentStyles> = { root: { padding: 0 }, calloutMain: { padding: '0.5rem' } };
+  const calloutStyle: Partial<ICalloutContentStyles> = {
+    root: { padding: 0 },
+    calloutMain: { padding: '0.5rem' },
+    beakCurtain: { marginBottom: '-1rem', backgroundColor: 'transparent' }
+  };
 
   const calloutProps = {
     gapSpace: 4,

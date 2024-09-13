@@ -37,7 +37,7 @@ export const chatMessageActionMenuProps = (menuProps: {
       <div
         tabIndex={showActionMenu ? 0 : undefined} //make div focusable, as Icon below is migrated to v9, this can be deleted
         key="menuButton"
-        data-ui-id="chat-composite-message-action-icon"
+        data-testid="chat-composite-message-action-icon"
         ref={menuProps.menuButtonRef}
         onClick={showActionMenu ? () => menuProps.onActionButtonClick() : undefined}
         style={{ margin: showActionMenu ? '1px' : 0, minHeight: showActionMenu ? undefined : '30px' }}

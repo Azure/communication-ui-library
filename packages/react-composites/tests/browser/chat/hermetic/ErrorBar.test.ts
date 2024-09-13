@@ -4,9 +4,9 @@
 import {
   stubMessageTimestamps,
   waitForChatCompositeToLoad,
-  dataUiId,
   pageClick,
-  stableScreenshot
+  stableScreenshot,
+  dataTestId
 } from '../../common/utils';
 import { buildUrlForChatAppUsingFakeAdapter, DEFAULT_FAKE_CHAT_ADAPTER_ARGS, test } from './fixture';
 import { expect } from '@playwright/test';
@@ -35,9 +35,9 @@ test.describe('ErrorBar is shown correctly', async () => {
     await stubMessageTimestamps(page);
     expect(await stableScreenshot(page)).toMatchSnapshot('error-bar-send-message-with-wrong-thread-id.png');
     // test resend button in contextual menu
-    await pageClick(page, dataUiId('chat-composite-message'));
-    await pageClick(page, dataUiId('chat-composite-message-action-icon'));
-    await page.waitForSelector(dataUiId('chat-composite-message-contextual-menu-edit-action'));
+    await pageClick(page, dataTestId('chat-composite-message'));
+    await pageClick(page, dataTestId('chat-composite-message-action-icon'));
+    await page.waitForSelector(dataTestId('chat-composite-message-contextual-menu-edit-action'));
 
     expect(await stableScreenshot(page)).toMatchSnapshot(
       'error-bar-send-message-with-wrong-thread-id-show-resend-button.png'
