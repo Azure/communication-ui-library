@@ -51,8 +51,10 @@ We are excited to announce that the Azure Communication Services Web UI Library 
 
 This release brings Rich Text Editor to the ChatComposite and the CallWithChatComposite with the following new features:
 - We have added support for sending/editing messages that include images when in a Teams meeting using the CallWithChatComposite.
-- We now support setting a Text Only MessagingPolicy on the ChatComposite. This prevents attachments and inline images to be added as part of a message in Send Box and Message Edit Box.
 - An additional `onPaste` callback that can be used to customize content pasted to Rich Text Editor.
+
+#### Text Only Messaging Policy
+We now support the ability to set a text-only messaging policy for a chat thread. In Teams Meeting Chat scenarios, the CallWithChatComposite will enable/disable image upload based on the text only message policy of the meeting.
 
 ### Improvements
 - Update @fluentui-contrib/react-chat to fix focus issues in chat component ([PR #4862](https://github.com/azure/communication-ui-library/pull/4862) by 98852890+vhuseinova-msft@users.noreply.github.com)
