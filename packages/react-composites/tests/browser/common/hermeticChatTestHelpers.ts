@@ -5,7 +5,7 @@ import type { ChatParticipant } from '@azure/communication-chat';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { Page } from '@playwright/test';
 import { IDS } from './constants';
-import { dataUiId, perStepLocalTimeout, screenshotOnFailure, waitForSelector } from './utils';
+import { dataTestId, dataUiId, perStepLocalTimeout, screenshotOnFailure, waitForSelector } from './utils';
 
 /**
  * <HiddenChatComposites /> are, well, hidden.
@@ -16,7 +16,7 @@ import { dataUiId, perStepLocalTimeout, screenshotOnFailure, waitForSelector } f
 export async function temporarilyShowHiddenChatComposite(page: Page, participant: ChatParticipant): Promise<void> {
   await withHiddenChatCompositeInForeground(page, participant, async () => {
     // wait for messages to have loaded
-    await waitForSelector(page, dataUiId('chat-composite-message'));
+    await waitForSelector(page, dataTestId('chat-composite-message'));
     // sleep for 100ms to give time for the messagethread hook to send the read receipt
     await page.waitForTimeout(100);
   });

@@ -22,6 +22,9 @@ export function perStepLocalTimeout(): number {
 /** Selector string to get element by data-ui-id property */
 export const dataUiId = (id: string): string => `[data-ui-id="${id}"]`;
 
+/** Selector string to get element by data-testid property */
+export const dataTestId = (id: string): string => `[data-testid="${id}"]`;
+
 /**
  * Wrapper function to take a screenshot if the provided callback fails.
  */
