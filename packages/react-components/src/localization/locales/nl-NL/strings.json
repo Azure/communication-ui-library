@@ -99,14 +99,15 @@
     "cameraMenuTitle": "Camera",
     "cameraMenuTooltip": "Camera kiezen",
     "cameraButtonSplitRoleDescription": "Knop Splitsen",
-    "onSplitButtonAriaLabel": "Camera- en cameraopties uitschakelen",
-    "offSplitButtonAriaLabel": "Camera- en cameraopties inschakelen",
+    "onSplitButtonAriaLabel": "Camera uitschakelen",
+    "offSplitButtonAriaLabel": "Camera inschakelen",
     "cameraActionTurnedOnAnnouncement": "Uw camera is ingeschakeld",
     "cameraActionTurnedOffAnnouncement": "Uw camera is uitgeschakeld",
     "onSplitButtonPrimaryActionCamera": "Camera uitschakelen",
     "offSplitButtonPrimaryActionCamera": "Camera inschakelen",
     "cameraPrimaryActionSplitButtonTitle": "Camera gebruiken",
-    "videoEffectsMenuItemTitle": "Effecten"
+    "videoEffectsMenuItemTitle": "Effecten",
+    "cameraButtonAriaDescription": "camera-opties"
   },
   "microphoneButton": {
     "onLabel": "Microfoon",
@@ -119,13 +120,17 @@
     "speakerMenuTitle": "Luidspreker",
     "speakerMenuTooltip": "Luidspreker kiezen",
     "microphoneButtonSplitRoleDescription": "Knop Splitsen",
-    "onSplitButtonAriaLabel": "Microfoon- en audioopties dempen",
-    "offSplitButtonAriaLabel": "Microfoon- en audioopties dempen opheffen",
+    "onSplitButtonAriaLabel": "Microfoon dempen",
+    "offSplitButtonAriaLabel": "Dempen opheffen voor microfoon",
     "microphoneActionTurnedOnAnnouncement": "Uw microfoon is ingeschakeld",
     "microphoneActionTurnedOffAnnouncement": "Uw microfoon is uitgeschakeld",
-    "offSplitButtonMicrophonePrimaryAction": "Microfoon inschakelen",
-    "onSplitButtonMicrophonePrimaryAction": "Microfoon uitschakelen",
-    "microphonePrimaryActionSplitButtonTitle": "Microfoon gebruiken"
+    "offSplitButtonMicrophonePrimaryAction": "Dempen opheffen voor microfoon",
+    "onSplitButtonMicrophonePrimaryAction": "Microfoon dempen",
+    "microphonePrimaryActionSplitButtonTitle": "Microfoon gebruiken",
+    "microphoneAriaDescription": "Audio-opties",
+    "deepNoiseSuppressionTitle": "Ruisonderdrukking",
+    "deepNoiseSuppressionOnAnnouncement": "Diepe ruisonderdrukking is ingeschakeld",
+    "deepNoiseSuppressionOffAnnouncement": "Diepe ruisonderdrukking is uitgeschakeld"
   },
   "devicesButton": {
     "label": "Apparaten",
@@ -504,7 +509,8 @@
     "stopSpotlightVideoTileMenuLabel": "Spotlighten stoppen",
     "stopSpotlightOnSelfVideoTileMenuLabel": "Spotlight afsluiten",
     "attendeeRole": "Genodigde",
-    "muteParticipantMenuItemLabel": "Dempen"
+    "muteParticipantMenuItemLabel": "Dempen",
+    "waitingScreenText": "Wachten tot anderen deelnemen"
   },
   "dialpad": {
     "placeholderText": "Telefoonnummer invoeren",
@@ -658,6 +664,7 @@
     "incomingCallNoticicationRejectAriaLabel": "Weigeren",
     "incomingCallNotificationAcceptButtonLabel": "Accepteren",
     "incomingCallNotificationRejectButtonLabel": "Weigeren",
-    "incomingCallNotificationAccceptWithVideoButtonLabel": "Accepteren met video"
+    "incomingCallNotificationAccceptWithVideoButtonLabel": "Accepteren met video",
+    "incomingCallNotificationDismissButtonAriaLabel": "Sluiten"
   }
 }
