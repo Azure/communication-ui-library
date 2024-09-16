@@ -958,7 +958,7 @@ export interface CallWithChatAdapterManagement {
     // (undocumented)
     downloadResourceToCache(resourceDetails: ResourceDetails): Promise<void>;
     fetchInitialData(): Promise<void>;
-    holdCall: () => Promise<void>;
+    holdCall(): Promise<void>;
     // @deprecated
     joinCall(microphoneOn?: boolean): Call | undefined;
     joinCall(options?: JoinCallOptions): Call | undefined;
@@ -975,7 +975,7 @@ export interface CallWithChatAdapterManagement {
     removeParticipant(participant: CommunicationIdentifier): Promise<void>;
     // (undocumented)
     removeResourceFromCache(resourceDetails: ResourceDetails): void;
-    resumeCall: () => Promise<void>;
+    resumeCall(): Promise<void>;
     sendDtmfTone: (dtmfTone: DtmfTone_2) => Promise<void>;
     sendMessage(content: string, options?: SendMessageOptions): Promise<void>;
     sendReadReceipt(chatMessageId: string): Promise<void>;
@@ -1125,7 +1125,7 @@ export interface CallWithChatAdapterUiState {
 
 // @public
 export interface CallWithChatClientState {
-    alternateCallerId?: string | undefined;
+    alternateCallerId?: string;
     call?: CallState;
     chat?: ChatThreadClientState;
     devices: DeviceManagerState;

@@ -77,7 +77,7 @@ export interface CallWithChatClientState {
   isTeamsMeeting: boolean;
   /* @conditional-compile-remove(PSTN-calls) */
   /** alternateCallerId for PSTN call */
-  alternateCallerId?: string | undefined;
+  alternateCallerId?: string;
   /* @conditional-compile-remove(unsupported-browser) */
   /** Environment information for system adapter is made on */
   environmentInfo?: EnvironmentInfo;
