@@ -99,14 +99,15 @@
     "cameraMenuTitle": "Kamera",
     "cameraMenuTooltip": "Välj kamera",
     "cameraButtonSplitRoleDescription": "Delningsknapp",
-    "onSplitButtonAriaLabel": "Inaktivera kamera- och kameraalternativ",
-    "offSplitButtonAriaLabel": "Aktivera kamera- och kameraalternativ",
+    "onSplitButtonAriaLabel": "Stäng av kameran",
+    "offSplitButtonAriaLabel": "Aktivera kameran",
     "cameraActionTurnedOnAnnouncement": "Kameran har aktiverats",
     "cameraActionTurnedOffAnnouncement": "Kameran har stängts av",
     "onSplitButtonPrimaryActionCamera": "Stäng av kameran",
     "offSplitButtonPrimaryActionCamera": "Aktivera kameran",
     "cameraPrimaryActionSplitButtonTitle": "Använd kamera",
-    "videoEffectsMenuItemTitle": "Effekter"
+    "videoEffectsMenuItemTitle": "Effekter",
+    "cameraButtonAriaDescription": "kameraalternativ"
   },
   "microphoneButton": {
     "onLabel": "Mikrofon",
@@ -119,13 +120,17 @@
     "speakerMenuTitle": "Högtalare",
     "speakerMenuTooltip": "Välj högtalare",
     "microphoneButtonSplitRoleDescription": "Delningsknapp",
-    "onSplitButtonAriaLabel": "Ljud av mikrofon och ljudalternativ",
-    "offSplitButtonAriaLabel": "Slå på ljudet för mikrofon och ljudalternativ",
+    "onSplitButtonAriaLabel": "Inaktivera mikrofonen",
+    "offSplitButtonAriaLabel": "Slå på mikrofonen",
     "microphoneActionTurnedOnAnnouncement": "Mikrofonen har aktiverats",
     "microphoneActionTurnedOffAnnouncement": "Mikrofonen har inaktiverats",
     "offSplitButtonMicrophonePrimaryAction": "Slå på mikrofonen",
-    "onSplitButtonMicrophonePrimaryAction": "Stäng av mikrofonen",
-    "microphonePrimaryActionSplitButtonTitle": "Använd mikrofon"
+    "onSplitButtonMicrophonePrimaryAction": "Inaktivera mikrofonen",
+    "microphonePrimaryActionSplitButtonTitle": "Använd mikrofon",
+    "microphoneAriaDescription": "Ljudalternativ",
+    "deepNoiseSuppressionTitle": "Ljuddämpning",
+    "deepNoiseSuppressionOnAnnouncement": "Djup brusreducering har aktiverats",
+    "deepNoiseSuppressionOffAnnouncement": "Djup brusreducering har inaktiverats"
   },
   "devicesButton": {
     "label": "Enheter",
@@ -504,7 +509,8 @@
     "stopSpotlightVideoTileMenuLabel": "Sluta uppmärksamma",
     "stopSpotlightOnSelfVideoTileMenuLabel": "Spotlight",
     "attendeeRole": "Deltagare",
-    "muteParticipantMenuItemLabel": "Stäng av ljudet"
+    "muteParticipantMenuItemLabel": "Stäng av ljudet",
+    "waitingScreenText": "Väntar på att andra ska ansluta"
   },
   "dialpad": {
     "placeholderText": "Ange telefonnummer",
@@ -658,6 +664,7 @@
     "incomingCallNoticicationRejectAriaLabel": "Avvisa",
     "incomingCallNotificationAcceptButtonLabel": "Acceptera",
     "incomingCallNotificationRejectButtonLabel": "Avböj",
-    "incomingCallNotificationAccceptWithVideoButtonLabel": "Acceptera med video"
+    "incomingCallNotificationAccceptWithVideoButtonLabel": "Acceptera med video",
+    "incomingCallNotificationDismissButtonAriaLabel": "Stäng"
   }
 }

@@ -99,14 +99,15 @@
     "cameraMenuTitle": "Kamera",
     "cameraMenuTooltip": "Kamera seç",
     "cameraButtonSplitRoleDescription": "Bölünmüş düğme",
-    "onSplitButtonAriaLabel": "Kamerayı ve kamera seçeneklerini devre dışı bırak",
-    "offSplitButtonAriaLabel": "Kamerayı ve kamera seçeneklerini etkinleştir",
+    "onSplitButtonAriaLabel": "Kamerayı kapat",
+    "offSplitButtonAriaLabel": "Kamerayı aç",
     "cameraActionTurnedOnAnnouncement": "Kameranız açıldı",
     "cameraActionTurnedOffAnnouncement": "Kameranız kapatıldı",
     "onSplitButtonPrimaryActionCamera": "Kamerayı kapat",
     "offSplitButtonPrimaryActionCamera": "Kamerayı aç",
     "cameraPrimaryActionSplitButtonTitle": "Kamerayı kullan",
-    "videoEffectsMenuItemTitle": "Efektler"
+    "videoEffectsMenuItemTitle": "Efektler",
+    "cameraButtonAriaDescription": "kamera seçenekleri"
   },
   "microphoneButton": {
     "onLabel": "Mikrofon",
@@ -119,13 +120,17 @@
     "speakerMenuTitle": "Hoparlör",
     "speakerMenuTooltip": "Hoparlör seç",
     "microphoneButtonSplitRoleDescription": "Bölünmüş düğme",
-    "onSplitButtonAriaLabel": "Mikrofonun ve ses seçeneklerinin sesini kapat",
-    "offSplitButtonAriaLabel": "Mikrofonun ve ses seçeneklerinin sesini aç",
+    "onSplitButtonAriaLabel": "Mikrofonu sessize al",
+    "offSplitButtonAriaLabel": "Mikrofonun sesini aç",
     "microphoneActionTurnedOnAnnouncement": "Mikrofonunuz açıldı",
     "microphoneActionTurnedOffAnnouncement": "Mikrofonunuz kapatıldı",
     "offSplitButtonMicrophonePrimaryAction": "Mikrofonun sesini aç",
-    "onSplitButtonMicrophonePrimaryAction": "Mikrofonun sesini kapat",
-    "microphonePrimaryActionSplitButtonTitle": "Mikrofonu kullan"
+    "onSplitButtonMicrophonePrimaryAction": "Mikrofonu sessize al",
+    "microphonePrimaryActionSplitButtonTitle": "Mikrofonu kullan",
+    "microphoneAriaDescription": "Ses seçenekleri",
+    "deepNoiseSuppressionTitle": "Gürültü engelleme",
+    "deepNoiseSuppressionOnAnnouncement": "Derin gürültü önleme açıldı",
+    "deepNoiseSuppressionOffAnnouncement": "Derin gürültü önleme kapatıldı"
   },
   "devicesButton": {
     "label": "Cihazlar",
@@ -504,7 +509,8 @@
     "stopSpotlightVideoTileMenuLabel": "Öne çıkarmayı durdur",
     "stopSpotlightOnSelfVideoTileMenuLabel": "Öne çıkarmadan çık",
     "attendeeRole": "Katılımcı",
-    "muteParticipantMenuItemLabel": "Sesi kapat"
+    "muteParticipantMenuItemLabel": "Sesi kapat",
+    "waitingScreenText": "Diğerlerinin katılması bekleniyor"
   },
   "dialpad": {
     "placeholderText": "Telefon numarası gir",
@@ -658,6 +664,7 @@
     "incomingCallNoticicationRejectAriaLabel": "Reddet",
     "incomingCallNotificationAcceptButtonLabel": "Kabul et",
     "incomingCallNotificationRejectButtonLabel": "Reddet",
-    "incomingCallNotificationAccceptWithVideoButtonLabel": "Görüntülü Kabul Et"
+    "incomingCallNotificationAccceptWithVideoButtonLabel": "Görüntülü Kabul Et",
+    "incomingCallNotificationDismissButtonAriaLabel": "Kapat"
   }
 }
