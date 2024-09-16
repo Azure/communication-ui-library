@@ -107,7 +107,7 @@
     "offSplitButtonPrimaryActionCamera": "打开摄像头",
     "cameraPrimaryActionSplitButtonTitle": "使用照相机",
     "videoEffectsMenuItemTitle": "效果",
-    "cameraButtonAriaDescription": "camera options"
+    "cameraButtonAriaDescription": "摄像头选项"
   },
   "microphoneButton": {
     "onLabel": "麦克风",
@@ -127,7 +127,7 @@
     "offSplitButtonMicrophonePrimaryAction": "取消麦克风静音",
     "onSplitButtonMicrophonePrimaryAction": "将麦克风静音",
     "microphonePrimaryActionSplitButtonTitle": "使用麦克风",
-    "microphoneAriaDescription": "Audio options",
+    "microphoneAriaDescription": "音频选项",
     "deepNoiseSuppressionTitle": "噪音抑制",
     "deepNoiseSuppressionOnAnnouncement": "深层噪音抑制已打开",
     "deepNoiseSuppressionOffAnnouncement": "深层噪音抑制已关闭"
@@ -665,6 +665,6 @@
     "incomingCallNotificationAcceptButtonLabel": "接受",
     "incomingCallNotificationRejectButtonLabel": "拒绝",
     "incomingCallNotificationAccceptWithVideoButtonLabel": "使用视频接受",
-    "incomingCallNotificationDismissButtonAriaLabel": "Dismiss"
+    "incomingCallNotificationDismissButtonAriaLabel": "关闭"
   }
 }

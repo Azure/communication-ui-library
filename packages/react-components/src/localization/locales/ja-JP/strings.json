@@ -107,7 +107,7 @@
     "offSplitButtonPrimaryActionCamera": "カメラをオンにする",
     "cameraPrimaryActionSplitButtonTitle": "カメラを使用する",
     "videoEffectsMenuItemTitle": "効果",
-    "cameraButtonAriaDescription": "camera options"
+    "cameraButtonAriaDescription": "カメラのオプション"
   },
   "microphoneButton": {
     "onLabel": "マイク",
@@ -127,7 +127,7 @@
     "offSplitButtonMicrophonePrimaryAction": "マイクのミュートを解除する",
     "onSplitButtonMicrophonePrimaryAction": "マイクをミュートする",
     "microphonePrimaryActionSplitButtonTitle": "マイクを使用する",
-    "microphoneAriaDescription": "Audio options",
+    "microphoneAriaDescription": "オーディオのオプション",
     "deepNoiseSuppressionTitle": "ノイズ抑制",
     "deepNoiseSuppressionOnAnnouncement": "ディープ ノイズ抑制がオンになっています",
     "deepNoiseSuppressionOffAnnouncement": "ディープ ノイズ抑制がオフになっています"
@@ -665,6 +665,6 @@
     "incomingCallNotificationAcceptButtonLabel": "承諾",
     "incomingCallNotificationRejectButtonLabel": "拒否",
     "incomingCallNotificationAccceptWithVideoButtonLabel": "ビデオで受ける",
-    "incomingCallNotificationDismissButtonAriaLabel": "Dismiss"
+    "incomingCallNotificationDismissButtonAriaLabel": "閉じる"
   }
 }

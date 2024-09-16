@@ -107,7 +107,7 @@
     "offSplitButtonPrimaryActionCamera": "카메라 켜기",
     "cameraPrimaryActionSplitButtonTitle": "카메라 사용",
     "videoEffectsMenuItemTitle": "효과",
-    "cameraButtonAriaDescription": "camera options"
+    "cameraButtonAriaDescription": "카메라 옵션"
   },
   "microphoneButton": {
     "onLabel": "마이크",
@@ -127,7 +127,7 @@
     "offSplitButtonMicrophonePrimaryAction": "마이크 음소거 해제",
     "onSplitButtonMicrophonePrimaryAction": "마이크 음소거",
     "microphonePrimaryActionSplitButtonTitle": "마이크 사용",
-    "microphoneAriaDescription": "Audio options",
+    "microphoneAriaDescription": "오디오 옵션",
     "deepNoiseSuppressionTitle": "노이즈 억제",
     "deepNoiseSuppressionOnAnnouncement": "심층 노이즈 억제가 켜졌습니다.",
     "deepNoiseSuppressionOffAnnouncement": "심층 노이즈 억제가 꺼졌습니다."
@@ -665,6 +665,6 @@
     "incomingCallNotificationAcceptButtonLabel": "수락",
     "incomingCallNotificationRejectButtonLabel": "거절",
     "incomingCallNotificationAccceptWithVideoButtonLabel": "영상 수락",
-    "incomingCallNotificationDismissButtonAriaLabel": "Dismiss"
+    "incomingCallNotificationDismissButtonAriaLabel": "해제"
   }
 }

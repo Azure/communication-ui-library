@@ -107,7 +107,7 @@
     "offSplitButtonPrimaryActionCamera": "Käynnistä kamera",
     "cameraPrimaryActionSplitButtonTitle": "Käytä kameraa",
     "videoEffectsMenuItemTitle": "Tehosteet",
-    "cameraButtonAriaDescription": "camera options"
+    "cameraButtonAriaDescription": "kamera-asetukset"
   },
   "microphoneButton": {
     "onLabel": "Mikrofoni",
@@ -127,7 +127,7 @@
     "offSplitButtonMicrophonePrimaryAction": "Poista mikrofonin mykistys",
     "onSplitButtonMicrophonePrimaryAction": "Mykistä mikrofoni",
     "microphonePrimaryActionSplitButtonTitle": "Käytä mikrofonia",
-    "microphoneAriaDescription": "Audio options",
+    "microphoneAriaDescription": "Ääniasetukset",
     "deepNoiseSuppressionTitle": "Melunvaimennus",
     "deepNoiseSuppressionOnAnnouncement": "Syvä melunvaimennus on otettu käyttöön",
     "deepNoiseSuppressionOffAnnouncement": "Syvä melunvaimennus on poistettu käytöstä"
@@ -665,6 +665,6 @@
     "incomingCallNotificationAcceptButtonLabel": "Hyväksy",
     "incomingCallNotificationRejectButtonLabel": "Hylkää",
     "incomingCallNotificationAccceptWithVideoButtonLabel": "Vastaa videopuhelulla",
-    "incomingCallNotificationDismissButtonAriaLabel": "Dismiss"
+    "incomingCallNotificationDismissButtonAriaLabel": "Hylkää"
   }
 }

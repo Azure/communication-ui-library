@@ -107,7 +107,7 @@
     "offSplitButtonPrimaryActionCamera": "Kamerayı aç",
     "cameraPrimaryActionSplitButtonTitle": "Kamerayı kullan",
     "videoEffectsMenuItemTitle": "Efektler",
-    "cameraButtonAriaDescription": "camera options"
+    "cameraButtonAriaDescription": "kamera seçenekleri"
   },
   "microphoneButton": {
     "onLabel": "Mikrofon",
@@ -127,7 +127,7 @@
     "offSplitButtonMicrophonePrimaryAction": "Mikrofonun sesini aç",
     "onSplitButtonMicrophonePrimaryAction": "Mikrofonu sessize al",
     "microphonePrimaryActionSplitButtonTitle": "Mikrofonu kullan",
-    "microphoneAriaDescription": "Audio options",
+    "microphoneAriaDescription": "Ses seçenekleri",
     "deepNoiseSuppressionTitle": "Gürültü engelleme",
     "deepNoiseSuppressionOnAnnouncement": "Derin gürültü önleme açıldı",
     "deepNoiseSuppressionOffAnnouncement": "Derin gürültü önleme kapatıldı"
@@ -665,6 +665,6 @@
     "incomingCallNotificationAcceptButtonLabel": "Kabul et",
     "incomingCallNotificationRejectButtonLabel": "Reddet",
     "incomingCallNotificationAccceptWithVideoButtonLabel": "Görüntülü Kabul Et",
-    "incomingCallNotificationDismissButtonAriaLabel": "Dismiss"
+    "incomingCallNotificationDismissButtonAriaLabel": "Kapat"
   }
 }

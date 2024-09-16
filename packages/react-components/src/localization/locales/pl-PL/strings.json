@@ -107,7 +107,7 @@
     "offSplitButtonPrimaryActionCamera": "Włącz kamerę",
     "cameraPrimaryActionSplitButtonTitle": "Użyj kamery",
     "videoEffectsMenuItemTitle": "Efekty",
-    "cameraButtonAriaDescription": "camera options"
+    "cameraButtonAriaDescription": "opcje kamery"
   },
   "microphoneButton": {
     "onLabel": "Mikrofon",
@@ -127,7 +127,7 @@
     "offSplitButtonMicrophonePrimaryAction": "Wyłącz wyciszenie mikrofonu",
     "onSplitButtonMicrophonePrimaryAction": "Wycisz mikrofon",
     "microphonePrimaryActionSplitButtonTitle": "Użyj mikrofonu",
-    "microphoneAriaDescription": "Audio options",
+    "microphoneAriaDescription": "Opcje dźwięku",
     "deepNoiseSuppressionTitle": "Tłumienie szumu",
     "deepNoiseSuppressionOnAnnouncement": "Głębokie tłumienie szumów zostało włączone",
     "deepNoiseSuppressionOffAnnouncement": "Głębokie tłumienie szumów zostało wyłączone"
@@ -665,6 +665,6 @@
     "incomingCallNotificationAcceptButtonLabel": "Akceptuj",
     "incomingCallNotificationRejectButtonLabel": "Odrzuć",
     "incomingCallNotificationAccceptWithVideoButtonLabel": "Odbierz jako połączenie wideo",
-    "incomingCallNotificationDismissButtonAriaLabel": "Dismiss"
+    "incomingCallNotificationDismissButtonAriaLabel": "Odrzuć"
   }
 }

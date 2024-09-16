@@ -107,7 +107,7 @@
     "offSplitButtonPrimaryActionCamera": "Camera inschakelen",
     "cameraPrimaryActionSplitButtonTitle": "Camera gebruiken",
     "videoEffectsMenuItemTitle": "Effecten",
-    "cameraButtonAriaDescription": "camera options"
+    "cameraButtonAriaDescription": "camera-opties"
   },
   "microphoneButton": {
     "onLabel": "Microfoon",
@@ -127,7 +127,7 @@
     "offSplitButtonMicrophonePrimaryAction": "Dempen opheffen voor microfoon",
     "onSplitButtonMicrophonePrimaryAction": "Microfoon dempen",
     "microphonePrimaryActionSplitButtonTitle": "Microfoon gebruiken",
-    "microphoneAriaDescription": "Audio options",
+    "microphoneAriaDescription": "Audio-opties",
     "deepNoiseSuppressionTitle": "Ruisonderdrukking",
     "deepNoiseSuppressionOnAnnouncement": "Diepe ruisonderdrukking is ingeschakeld",
     "deepNoiseSuppressionOffAnnouncement": "Diepe ruisonderdrukking is uitgeschakeld"
@@ -665,6 +665,6 @@
     "incomingCallNotificationAcceptButtonLabel": "Accepteren",
     "incomingCallNotificationRejectButtonLabel": "Weigeren",
     "incomingCallNotificationAccceptWithVideoButtonLabel": "Accepteren met video",
-    "incomingCallNotificationDismissButtonAriaLabel": "Dismiss"
+    "incomingCallNotificationDismissButtonAriaLabel": "Sluiten"
   }
 }

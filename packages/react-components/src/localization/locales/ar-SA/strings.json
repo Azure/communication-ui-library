@@ -107,7 +107,7 @@
     "offSplitButtonPrimaryActionCamera": "تشغيل الكاميرا",
     "cameraPrimaryActionSplitButtonTitle": "استخدام الكاميرا",
     "videoEffectsMenuItemTitle": "التأثيرات",
-    "cameraButtonAriaDescription": "camera options"
+    "cameraButtonAriaDescription": "خيارات الكاميرا"
   },
   "microphoneButton": {
     "onLabel": "الميكروفون",
@@ -127,7 +127,7 @@
     "offSplitButtonMicrophonePrimaryAction": "إلغاء كتم الميكروفون",
     "onSplitButtonMicrophonePrimaryAction": "كتم الميكروفون",
     "microphonePrimaryActionSplitButtonTitle": "استخدام الميكروفون",
-    "microphoneAriaDescription": "Audio options",
+    "microphoneAriaDescription": "خيارات الصوت",
     "deepNoiseSuppressionTitle": "منع الضوضاء",
     "deepNoiseSuppressionOnAnnouncement": "تم تشغيل منع الضوضاء العميقة",
     "deepNoiseSuppressionOffAnnouncement": "تم إيقاف تشغيل منع الضوضاء العميقة"
@@ -665,6 +665,6 @@
     "incomingCallNotificationAcceptButtonLabel": "قبول",
     "incomingCallNotificationRejectButtonLabel": "رفض",
     "incomingCallNotificationAccceptWithVideoButtonLabel": "قبول مع الفيديو",
-    "incomingCallNotificationDismissButtonAriaLabel": "Dismiss"
+    "incomingCallNotificationDismissButtonAriaLabel": "تجاهل"
   }
 }

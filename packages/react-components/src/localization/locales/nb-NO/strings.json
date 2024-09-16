@@ -107,7 +107,7 @@
     "offSplitButtonPrimaryActionCamera": "Slå på kamera",
     "cameraPrimaryActionSplitButtonTitle": "Bruk kamera",
     "videoEffectsMenuItemTitle": "Effekter",
-    "cameraButtonAriaDescription": "camera options"
+    "cameraButtonAriaDescription": "kameraalternativer"
   },
   "microphoneButton": {
     "onLabel": "Mikrofon",
@@ -127,7 +127,7 @@
     "offSplitButtonMicrophonePrimaryAction": "Opphev demping av mikrofon",
     "onSplitButtonMicrophonePrimaryAction": "Demp mikrofon",
     "microphonePrimaryActionSplitButtonTitle": "Bruk mikrofon",
-    "microphoneAriaDescription": "Audio options",
+    "microphoneAriaDescription": "Lydalternativer",
     "deepNoiseSuppressionTitle": "Støydemping",
     "deepNoiseSuppressionOnAnnouncement": "Dyp støydemping er aktivert",
     "deepNoiseSuppressionOffAnnouncement": "Dyp støydemping er deaktivert"
@@ -665,6 +665,6 @@
     "incomingCallNotificationAcceptButtonLabel": "Godta",
     "incomingCallNotificationRejectButtonLabel": "Avslå",
     "incomingCallNotificationAccceptWithVideoButtonLabel": "Svar med video",
-    "incomingCallNotificationDismissButtonAriaLabel": "Dismiss"
+    "incomingCallNotificationDismissButtonAriaLabel": "Lukk"
   }
 }

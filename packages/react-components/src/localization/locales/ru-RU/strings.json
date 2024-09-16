@@ -107,7 +107,7 @@
     "offSplitButtonPrimaryActionCamera": "Включить камеру",
     "cameraPrimaryActionSplitButtonTitle": "Использовать камеру",
     "videoEffectsMenuItemTitle": "Эффекты",
-    "cameraButtonAriaDescription": "camera options"
+    "cameraButtonAriaDescription": "параметры камеры"
   },
   "microphoneButton": {
     "onLabel": "Микрофон",
@@ -127,7 +127,7 @@
     "offSplitButtonMicrophonePrimaryAction": "Включить микрофон",
     "onSplitButtonMicrophonePrimaryAction": "Отключить микрофон",
     "microphonePrimaryActionSplitButtonTitle": "Использовать микрофон",
-    "microphoneAriaDescription": "Audio options",
+    "microphoneAriaDescription": "Параметры звука",
     "deepNoiseSuppressionTitle": "Подавление шума",
     "deepNoiseSuppressionOnAnnouncement": "Глубокое подавление шума включено",
     "deepNoiseSuppressionOffAnnouncement": "Глубокое подавление шума отключено"
@@ -665,6 +665,6 @@
     "incomingCallNotificationAcceptButtonLabel": "Принять",
     "incomingCallNotificationRejectButtonLabel": "Отклонить",
     "incomingCallNotificationAccceptWithVideoButtonLabel": "Ответить с видео",
-    "incomingCallNotificationDismissButtonAriaLabel": "Dismiss"
+    "incomingCallNotificationDismissButtonAriaLabel": "Закрыть"
   }
 }

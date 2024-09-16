@@ -107,7 +107,7 @@
     "offSplitButtonPrimaryActionCamera": "Zapnout kameru",
     "cameraPrimaryActionSplitButtonTitle": "Použít kameru",
     "videoEffectsMenuItemTitle": "Efekty",
-    "cameraButtonAriaDescription": "camera options"
+    "cameraButtonAriaDescription": "možnosti kamery"
   },
   "microphoneButton": {
     "onLabel": "Mikrofon",
@@ -127,7 +127,7 @@
     "offSplitButtonMicrophonePrimaryAction": "Zrušit ztlumení mikrofonu",
     "onSplitButtonMicrophonePrimaryAction": "Ztlumit mikrofon",
     "microphonePrimaryActionSplitButtonTitle": "Použít mikrofon",
-    "microphoneAriaDescription": "Audio options",
+    "microphoneAriaDescription": "Možnosti zvuku",
     "deepNoiseSuppressionTitle": "Potlačení šumu",
     "deepNoiseSuppressionOnAnnouncement": "Potlačení hlubokého šumu je zapnuté",
     "deepNoiseSuppressionOffAnnouncement": "Potlačení hlubokého šumu je vypnuté"
@@ -665,6 +665,6 @@
     "incomingCallNotificationAcceptButtonLabel": "Přijmout",
     "incomingCallNotificationRejectButtonLabel": "Odmítnout",
     "incomingCallNotificationAccceptWithVideoButtonLabel": "Přijmout s videem",
-    "incomingCallNotificationDismissButtonAriaLabel": "Dismiss"
+    "incomingCallNotificationDismissButtonAriaLabel": "Zavřít"
   }
 }

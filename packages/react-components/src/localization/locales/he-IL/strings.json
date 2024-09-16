@@ -107,7 +107,7 @@
     "offSplitButtonPrimaryActionCamera": "הפעל את המצלמה",
     "cameraPrimaryActionSplitButtonTitle": "השתמש במצלמה",
     "videoEffectsMenuItemTitle": "אפקטים",
-    "cameraButtonAriaDescription": "camera options"
+    "cameraButtonAriaDescription": "אפשרויות מצלמה"
   },
   "microphoneButton": {
     "onLabel": "מיקרופון",
@@ -127,7 +127,7 @@
     "offSplitButtonMicrophonePrimaryAction": "בטל את השתקת המיקרופון",
     "onSplitButtonMicrophonePrimaryAction": "השתק את המיקרופון",
     "microphonePrimaryActionSplitButtonTitle": "השתמש במיקרופון",
-    "microphoneAriaDescription": "Audio options",
+    "microphoneAriaDescription": "אפשרויות שמע",
     "deepNoiseSuppressionTitle": "העלמת רעש",
     "deepNoiseSuppressionOnAnnouncement": "דיכוי רעשים עמוקים הופעל",
     "deepNoiseSuppressionOffAnnouncement": "דיכוי רעשים עמוקים בוטל"
@@ -665,6 +665,6 @@
     "incomingCallNotificationAcceptButtonLabel": "קבל",
     "incomingCallNotificationRejectButtonLabel": "דחה",
     "incomingCallNotificationAccceptWithVideoButtonLabel": "קבל עם וידאו",
-    "incomingCallNotificationDismissButtonAriaLabel": "Dismiss"
+    "incomingCallNotificationDismissButtonAriaLabel": "בטל"
   }
 }
