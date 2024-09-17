@@ -6,7 +6,7 @@ import { CallCompositeOptions } from '@internal/react-composites';
 /* @conditional-compile-remove(composite-js-helpers) */
 import { CallCompositeLoaderProps } from './callCompositeLoader';
 
-jest.mock('@Internal/react-composites', () => {
+jest.mock('@internal/react-composites', () => {
   return {
     createAzureCommunicationCallAdapter: jest.fn().mockResolvedValue('mockAdapter'),
     CallComposite: jest.fn().mockReturnValue('mockCallComposite')

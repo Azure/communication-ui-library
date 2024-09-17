@@ -35,7 +35,7 @@ const MockRemoteParticipants = [
 // This must be the only named export from this module, and must be named to match the storybook path suffix.
 // This ensures that storybook hoists the story instead of creating a folder with a single entry.
 export const SpeakerLayoutExample: () => JSX.Element = () => {
-  const containerStyle = { height: '50vh' };
+  const containerStyle = { height: '60vh' };
   return (
     <Stack style={containerStyle}>
       <VideoGallery

@@ -99,14 +99,15 @@
     "cameraMenuTitle": "カメラ",
     "cameraMenuTooltip": "カメラを選択する",
     "cameraButtonSplitRoleDescription": "分割ボタン",
-    "onSplitButtonAriaLabel": "カメラとカメラ オプションをオフにする",
-    "offSplitButtonAriaLabel": "カメラとカメラ オプションをオンにする",
+    "onSplitButtonAriaLabel": "カメラをオフにする",
+    "offSplitButtonAriaLabel": "カメラをオンにする",
     "cameraActionTurnedOnAnnouncement": "カメラがオンになっています",
     "cameraActionTurnedOffAnnouncement": "カメラがオフになっています",
     "onSplitButtonPrimaryActionCamera": "カメラをオフにする",
     "offSplitButtonPrimaryActionCamera": "カメラをオンにする",
     "cameraPrimaryActionSplitButtonTitle": "カメラを使用する",
-    "videoEffectsMenuItemTitle": "効果"
+    "videoEffectsMenuItemTitle": "効果",
+    "cameraButtonAriaDescription": "カメラのオプション"
   },
   "microphoneButton": {
     "onLabel": "マイク",
@@ -119,13 +120,17 @@
     "speakerMenuTitle": "スピーカー",
     "speakerMenuTooltip": "スピーカーを選択する",
     "microphoneButtonSplitRoleDescription": "分割ボタン",
-    "onSplitButtonAriaLabel": "マイクとオーディオのオプションをミュートにする",
-    "offSplitButtonAriaLabel": "マイクとオーディオのオプションのミュートを解除する",
+    "onSplitButtonAriaLabel": "マイクをミュートする",
+    "offSplitButtonAriaLabel": "マイクのミュートを解除する",
     "microphoneActionTurnedOnAnnouncement": "マイクがオンになっています",
     "microphoneActionTurnedOffAnnouncement": "マイクがオフになっています",
     "offSplitButtonMicrophonePrimaryAction": "マイクのミュートを解除する",
-    "onSplitButtonMicrophonePrimaryAction": "マイクをミュートにする",
-    "microphonePrimaryActionSplitButtonTitle": "マイクを使用する"
+    "onSplitButtonMicrophonePrimaryAction": "マイクをミュートする",
+    "microphonePrimaryActionSplitButtonTitle": "マイクを使用する",
+    "microphoneAriaDescription": "オーディオのオプション",
+    "deepNoiseSuppressionTitle": "ノイズ抑制",
+    "deepNoiseSuppressionOnAnnouncement": "ディープ ノイズ抑制がオンになっています",
+    "deepNoiseSuppressionOffAnnouncement": "ディープ ノイズ抑制がオフになっています"
   },
   "devicesButton": {
     "label": "デバイス",
@@ -504,7 +509,8 @@
     "stopSpotlightVideoTileMenuLabel": "スポットライトの設定を解除",
     "stopSpotlightOnSelfVideoTileMenuLabel": "スポットライトを終了",
     "attendeeRole": "出席者",
-    "muteParticipantMenuItemLabel": "ミュート"
+    "muteParticipantMenuItemLabel": "ミュート",
+    "waitingScreenText": "他のユーザーの参加を待っています"
   },
   "dialpad": {
     "placeholderText": "電話番号を入力してください",
@@ -658,6 +664,7 @@
     "incomingCallNoticicationRejectAriaLabel": "拒否する",
     "incomingCallNotificationAcceptButtonLabel": "承諾",
     "incomingCallNotificationRejectButtonLabel": "拒否",
-    "incomingCallNotificationAccceptWithVideoButtonLabel": "ビデオで受ける"
+    "incomingCallNotificationAccceptWithVideoButtonLabel": "ビデオで受ける",
+    "incomingCallNotificationDismissButtonAriaLabel": "閉じる"
   }
 }
