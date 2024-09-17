@@ -44,7 +44,7 @@ We are excited to announce that the Azure Communication Services Web UI Library 
 
 ### Teams Ad Hoc with Teams users
 
-We are excited to announce that the Azure Communication Services Web UI Library now supports Ad-hoc Calling with Teams users. This feature enables users to start a call directly with a Teams user by using their ID. UI Library already supports Ad Hoc Calls with a Teams but, but now Developers can use this functionality today through our CallComposite with Teams users directly. 
+We are excited to announce that the Azure Communication Services Web UI Library now supports Ad-hoc Calling with Teams users. This feature enables users to start a call directly with a Teams user by using their ID. UI Library already supports Ad Hoc Calls with a Teams bot, but now Developers can use this functionality today through our CallComposite with Teams users directly. 
 
 - Connect directly to a Teams user through Adhoc calling
 
@@ -58,7 +58,6 @@ We are excited to announce that the Azure Communication Services Web UI Library 
 - Update communication-calling to 1.29.1-beta.1 and 1.28.1 ([PR #5088](https://github.com/azure/communication-ui-library/pull/5088) by 79475487+mgamis-msft@users.noreply.github.com)
 - Update communication-chat and signaling dependencies ([PR #5138](https://github.com/azure/communication-ui-library/pull/5138) by 98852890+vhuseinova-msft@users.noreply.github.com)
 - Update RoosterJS version to improve keyboard table navigation in Rich Text Editor components ([PR #5050](https://github.com/azure/communication-ui-library/pull/5050) by 98852890+vhuseinova-msft@users.noreply.github.com)
-
 
 ### Bug Fixes
 - Add announcements for applying bulleted/numbered lists in rich text editor and for adding new list items to them ([PR #4874](https://github.com/azure/communication-ui-library/pull/4874) by 98852890+vhuseinova-msft@users.noreply.github.com)
@@ -83,7 +82,6 @@ We are excited to announce that the Azure Communication Services Web UI Library 
 - Suppress initial notifications of capabilities being present when joining a call ([PR #4994](https://github.com/azure/communication-ui-library/pull/4994) by 79475487+mgamis-msft@users.noreply.github.com)
 - Truncate long text used in video effects button ([PR #5097](https://github.com/azure/communication-ui-library/pull/5097) by 79475487+mgamis-msft@users.noreply.github.com)
 - Update contrast issues when interacting with other participants in the call ([PR #5141](https://github.com/azure/communication-ui-library/pull/5141) by dmceachern@microsoft.com)
-- Update paddings and theme handling for rich text editor toolbar ([PR #4852](https://github.com/azure/communication-ui-library/pull/4852) by 98852890+vhuseinova-msft@users.noreply.github.com)
 
 
 ## [1.18.0](https://github.com/azure/communication-ui-library/tree/1.18.0)
