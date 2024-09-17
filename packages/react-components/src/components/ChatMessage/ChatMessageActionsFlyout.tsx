@@ -102,7 +102,7 @@ export const ChatMessageActionFlyout = (props: ChatMessageActionFlyoutProps): JS
     const items: IContextualMenuItem[] = [
       {
         key: 'Edit',
-        'data-ui-id': 'chat-composite-message-contextual-menu-edit-action',
+        'data-testid': 'chat-composite-message-contextual-menu-edit-action',
         text: props.strings.editMessage,
         itemProps: {
           styles: props.increaseFlyoutItemSize ? menuItemIncreasedSizeStyles : undefined
@@ -112,6 +112,7 @@ export const ChatMessageActionFlyout = (props: ChatMessageActionFlyoutProps): JS
       },
       {
         key: 'Remove',
+        'data-testid': 'chat-composite-message-contextual-menu-remove-action',
         text: props.strings.removeMessage,
         itemProps: { styles: props.increaseFlyoutItemSize ? menuItemIncreasedSizeStyles : undefined },
         iconProps: {

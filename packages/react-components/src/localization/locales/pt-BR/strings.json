@@ -99,14 +99,15 @@
     "cameraMenuTitle": "Câmera",
     "cameraMenuTooltip": "Escolher câmera",
     "cameraButtonSplitRoleDescription": "Botão de divisão",
-    "onSplitButtonAriaLabel": "Desabilitar a câmera e as opções da câmera",
-    "offSplitButtonAriaLabel": "Habilitar a câmera e as opções da câmera",
+    "onSplitButtonAriaLabel": "Desligar a câmera",
+    "offSplitButtonAriaLabel": "Ligar a câmera",
     "cameraActionTurnedOnAnnouncement": "A câmera foi ligada",
     "cameraActionTurnedOffAnnouncement": "A câmera foi desligada",
     "onSplitButtonPrimaryActionCamera": "Desligar a câmera",
     "offSplitButtonPrimaryActionCamera": "Ligar a câmera",
     "cameraPrimaryActionSplitButtonTitle": "Usar câmera",
-    "videoEffectsMenuItemTitle": "Efeitos"
+    "videoEffectsMenuItemTitle": "Efeitos",
+    "cameraButtonAriaDescription": "opções de câmera"
   },
   "microphoneButton": {
     "onLabel": "Microfone",
@@ -119,13 +120,17 @@
     "speakerMenuTitle": "Alto-falante",
     "speakerMenuTooltip": "Escolher alto-falante",
     "microphoneButtonSplitRoleDescription": "Botão de divisão",
-    "onSplitButtonAriaLabel": "Ativar mudo das opções de microfone e áudio",
-    "offSplitButtonAriaLabel": "Desativar mudo do microfone e opções de áudio",
+    "onSplitButtonAriaLabel": "Ativar mudo do microfone",
+    "offSplitButtonAriaLabel": "Desativar mudo do microfone",
     "microphoneActionTurnedOnAnnouncement": "O microfone foi ligado",
     "microphoneActionTurnedOffAnnouncement": "O microfone foi desligado",
-    "offSplitButtonMicrophonePrimaryAction": "Desativar mudo do microfone",
-    "onSplitButtonMicrophonePrimaryAction": "Ativar mudo do microfone",
-    "microphonePrimaryActionSplitButtonTitle": "Usar o microfone"
+    "offSplitButtonMicrophonePrimaryAction": "Desativar mudo do microfone",
+    "onSplitButtonMicrophonePrimaryAction": "Ativar mudo do microfone",
+    "microphonePrimaryActionSplitButtonTitle": "Usar o microfone",
+    "microphoneAriaDescription": "Opções de áudio",
+    "deepNoiseSuppressionTitle": "Supressão de ruído",
+    "deepNoiseSuppressionOnAnnouncement": "A supressão de ruído profundo foi ativada",
+    "deepNoiseSuppressionOffAnnouncement": "A supressão de ruído profundo foi desativada"
   },
   "devicesButton": {
     "label": "Dispositivos",
@@ -504,7 +509,8 @@
     "stopSpotlightVideoTileMenuLabel": "Parar de destacar",
     "stopSpotlightOnSelfVideoTileMenuLabel": "Sair de destaque",
     "attendeeRole": "Participante",
-    "muteParticipantMenuItemLabel": "Ativar mudo"
+    "muteParticipantMenuItemLabel": "Ativar mudo",
+    "waitingScreenText": "Aguardando o ingresso de outros participantes"
   },
   "dialpad": {
     "placeholderText": "Inserir o número do telefone",
@@ -658,6 +664,7 @@
     "incomingCallNoticicationRejectAriaLabel": "Rejeitar",
     "incomingCallNotificationAcceptButtonLabel": "Aceitar",
     "incomingCallNotificationRejectButtonLabel": "Recusar",
-    "incomingCallNotificationAccceptWithVideoButtonLabel": "Aceitar com Vídeo"
+    "incomingCallNotificationAccceptWithVideoButtonLabel": "Aceitar com Vídeo",
+    "incomingCallNotificationDismissButtonAriaLabel": "Ignorar"
   }
 }

@@ -6,7 +6,7 @@ import { ChatCompositeOptions } from '@internal/react-composites';
 /* @conditional-compile-remove(composite-js-helpers) */
 import { ChatCompositeLoaderProps } from './chatCompositeLoader';
 
-jest.mock('@Internal/react-composites', () => {
+jest.mock('@internal/react-composites', () => {
   return {
     createAzureCommunicationChatAdapter: jest.fn().mockResolvedValue('mockAdapter'),
     ChatComposite: jest.fn().mockReturnValue('mockCallComposite')

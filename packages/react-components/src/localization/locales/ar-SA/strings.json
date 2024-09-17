@@ -99,14 +99,15 @@
     "cameraMenuTitle": "الكاميرا",
     "cameraMenuTooltip": "اختيار الكاميرا",
     "cameraButtonSplitRoleDescription": "زر الانقسام",
-    "onSplitButtonAriaLabel": "خيارات إيقاف تشغيل الكاميرا",
-    "offSplitButtonAriaLabel": "خيارات تشغيل الكاميرا",
+    "onSplitButtonAriaLabel": "إيقاف تشغيل الكاميرا",
+    "offSplitButtonAriaLabel": "تشغيل الكاميرا",
     "cameraActionTurnedOnAnnouncement": "تم تشغيل كاميراتك",
     "cameraActionTurnedOffAnnouncement": "تم إيقاف تشغيل كاميراتك",
     "onSplitButtonPrimaryActionCamera": "إيقاف تشغيل الكاميرا",
     "offSplitButtonPrimaryActionCamera": "تشغيل الكاميرا",
     "cameraPrimaryActionSplitButtonTitle": "استخدام الكاميرا",
-    "videoEffectsMenuItemTitle": "التأثيرات"
+    "videoEffectsMenuItemTitle": "التأثيرات",
+    "cameraButtonAriaDescription": "خيارات الكاميرا"
   },
   "microphoneButton": {
     "onLabel": "الميكروفون",
@@ -119,13 +120,17 @@
     "speakerMenuTitle": "مكبر الصوت",
     "speakerMenuTooltip": "اختيار مكبر صوت",
     "microphoneButtonSplitRoleDescription": "زر الانقسام",
-    "onSplitButtonAriaLabel": "كتم صوت الميكروفون وخيارات الصوت",
-    "offSplitButtonAriaLabel": "إلغاء كتم صوت الميكروفون وخيارات الصوت",
+    "onSplitButtonAriaLabel": "كتم الميكروفون",
+    "offSplitButtonAriaLabel": "إلغاء كتم الميكروفون",
     "microphoneActionTurnedOnAnnouncement": "تم تشغيل الميكروفون",
     "microphoneActionTurnedOffAnnouncement": "تم إيقاف الميكروفون",
-    "offSplitButtonMicrophonePrimaryAction": "إلغاء كتم صوت الميكروفون",
-    "onSplitButtonMicrophonePrimaryAction": "كتم صوت الميكروفون",
-    "microphonePrimaryActionSplitButtonTitle": "استخدام الميكروفون"
+    "offSplitButtonMicrophonePrimaryAction": "إلغاء كتم الميكروفون",
+    "onSplitButtonMicrophonePrimaryAction": "كتم الميكروفون",
+    "microphonePrimaryActionSplitButtonTitle": "استخدام الميكروفون",
+    "microphoneAriaDescription": "خيارات الصوت",
+    "deepNoiseSuppressionTitle": "منع الضوضاء",
+    "deepNoiseSuppressionOnAnnouncement": "تم تشغيل منع الضوضاء العميقة",
+    "deepNoiseSuppressionOffAnnouncement": "تم إيقاف تشغيل منع الضوضاء العميقة"
   },
   "devicesButton": {
     "label": "الأجهزة",
@@ -504,7 +509,8 @@
     "stopSpotlightVideoTileMenuLabel": "التوقف عن تسليط الضوء",
     "stopSpotlightOnSelfVideoTileMenuLabel": "الخروج من وضع تسليط الضوء",
     "attendeeRole": "الحضور",
-    "muteParticipantMenuItemLabel": "كتم الصوت"
+    "muteParticipantMenuItemLabel": "كتم الصوت",
+    "waitingScreenText": "في انتظار انضمام الآخرين"
   },
   "dialpad": {
     "placeholderText": "أدخل رقم الهاتف",
@@ -658,6 +664,7 @@
     "incomingCallNoticicationRejectAriaLabel": "رفض",
     "incomingCallNotificationAcceptButtonLabel": "قبول",
     "incomingCallNotificationRejectButtonLabel": "رفض",
-    "incomingCallNotificationAccceptWithVideoButtonLabel": "قبول مع الفيديو"
+    "incomingCallNotificationAccceptWithVideoButtonLabel": "قبول مع الفيديو",
+    "incomingCallNotificationDismissButtonAriaLabel": "تجاهل"
   }
 }

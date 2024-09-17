@@ -406,14 +406,14 @@ export interface CallWithChatAdapterManagement {
    *
    * @public
    */
-  holdCall: () => Promise<void>;
+  holdCall(): Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Resumes the call from a LocalHold state.
    *
    * @public
    */
-  resumeCall: () => Promise<void>;
+  resumeCall(): Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Adds a new Participant to the call.
