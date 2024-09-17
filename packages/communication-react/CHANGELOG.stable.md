@@ -42,12 +42,11 @@ We are excited to announce that the Azure Communication Services Web UI Library 
 - Enables 1:N outbound calls with both ACS and PSTN users (if an alternate caller ID is provided) 
 - Supports On/Off hold features and ability to remove participants from a call. 
 
-### Teams Ad Hoc 
+### Teams Ad Hoc with Teams users
 
-We are excited to announce that the Azure Communication Services Web UI Library now supports Ad-hoc Calling. This feature enables users to start a call directly with a Teams user or a call queue by using their ID. Developers can use this functionality today through our CallComposite. 
+We are excited to announce that the Azure Communication Services Web UI Library now supports Ad-hoc Calling with Teams users. This feature enables users to start a call directly with a Teams user by using their ID. UI Library already supports Ad Hoc Calls with a Teams but, but now Developers can use this functionality today through our CallComposite with Teams users directly. 
 
-- Call a Teams voice application such as call queue or autoattendant directly  
-- Call multiple Teams users at the same time 
+- Connect directly to a Teams user through Adhoc calling
 
 ### Improvements
 - Add CallAdapter API to start captions in the background ([PR #5064](https://github.com/azure/communication-ui-library/pull/5064) by 2684369+JamesBurnside@users.noreply.github.com)
