@@ -187,16 +187,18 @@ export const _RemoteVideoTile = React.memo(
       [setDrawerMenuItemProps, contextualMenuProps]
     );
 
-    let displayName = remoteParticipant.displayName || strings.displayNamePlaceholder;
     const attendeeRoleString = props.strings?.attendeeRole;
 
-    const formatDisplayName = (): string => {
-      if (displayName && attendeeRoleString) {
-        return _formatString(displayName, { AttendeeRole: attendeeRoleString });
+    const formatDisplayName = (displayName: string, role: string): string => {
+      if (displayName && role) {
+        return _formatString(displayName, { AttendeeRole: role });
       }
       return displayName;
     };
-
+    const displayName = formatDisplayName(
+      remoteParticipant.displayName ? remoteParticipant.displayName : strings.displayNamePlaceholder,
+      attendeeRoleString
+    );
     const formatInitialsName = (): string | undefined => {
       if (remoteParticipant.displayName && attendeeRoleString) {
         return _formatString(remoteParticipant.displayName, { AttendeeRole: attendeeRoleString });
@@ -212,7 +214,6 @@ export const _RemoteVideoTile = React.memo(
       />
     );
 
-    displayName = formatDisplayName();
     return (
       <Stack
         tabIndex={menuKind === 'drawer' ? 0 : undefined}

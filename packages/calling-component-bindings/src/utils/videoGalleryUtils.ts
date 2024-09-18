@@ -57,9 +57,8 @@ export const _videoGalleryRemoteParticipantsMemo: _VideoGalleryRemoteParticipant
         })
         .map((participant: RemoteParticipantState) => {
           const state = _isRingingPSTNParticipant(participant);
-          let displayName = participant.displayName;
-          displayName = maskDisplayNameWithRole(
-            displayName,
+          const displayName = maskDisplayNameWithRole(
+            participant.displayName,
             localUserRole,
             participant.role,
             isHideAttendeeNamesEnabled

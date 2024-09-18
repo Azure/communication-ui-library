@@ -62,9 +62,8 @@ const convertRemoteParticipantsToParticipantListParticipants = (
            * and mapping their state to be 'Ringing'
            */
           const state = _isRingingPSTNParticipant(participant);
-          let displayName = participant.displayName;
-          displayName = maskDisplayNameWithRole(
-            displayName,
+          const displayName = maskDisplayNameWithRole(
+            participant.displayName,
             localUserRole,
             participant.role,
             isHideAttendeeNamesEnabled
@@ -159,8 +158,8 @@ export const participantListSelector: ParticipantListSelector = createSelector(
       ? convertRemoteParticipantsToParticipantListParticipants(
           updateUserDisplayNamesTrampoline(Object.values(remoteParticipants)),
           localUserCanRemoveOthers,
-          undefined || isHideAttendeeNamesEnabled,
-          undefined || role,
+          isHideAttendeeNamesEnabled,
+          role,
           spotlightCallFeature?.spotlightedParticipants
         )
       : [];
