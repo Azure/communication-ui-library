@@ -36,7 +36,6 @@ export interface CallScreenProps {
   callLocator?: CallAdapterLocator;
   targetCallees?: StartCallIdentifier[];
   displayName: string;
-  /* @conditional-compile-remove(PSTN-calls) */
   alternateCallerId?: string;
   /* @conditional-compile-remove(teams-identity-support) */
   isTeamsIdentityCall?: boolean;
@@ -176,10 +175,9 @@ const AzureCommunicationCallScreen = (props: AzureCommunicationCallScreenProps):
         applauseReaction: { url: '/assets/reactions/clapEmoji.png', frameCount: 102 },
         surprisedReaction: { url: '/assets/reactions/surprisedEmoji.png', frameCount: 102 }
       },
-      /* @conditional-compile-remove(PSTN-calls) */
       alternateCallerId: adapterArgs.alternateCallerId
     };
-  }, [/* @conditional-compile-remove(PSTN-calls) */ adapterArgs.alternateCallerId]);
+  }, [adapterArgs.alternateCallerId]);
 
   const adapter = useAzureCommunicationCallAdapter(
     {
@@ -226,10 +224,9 @@ const AzureCommunicationOutboundCallScreen = (props: AzureCommunicationCallScree
         }
         return defaultProfile;
       },
-      /* @conditional-compile-remove(PSTN-calls) */
       alternateCallerId: adapterArgs.alternateCallerId
     };
-  }, [/* @conditional-compile-remove(PSTN-calls) */ adapterArgs.alternateCallerId]);
+  }, [adapterArgs.alternateCallerId]);
 
   const adapter = useAzureCommunicationCallAdapter(
     {

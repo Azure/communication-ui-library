@@ -21,7 +21,7 @@ import { CallingTheme } from '../theming';
 import { RaisedHand } from '../types';
 import { RaisedHandIcon } from './assets/RaisedHandIcon';
 /* @conditional-compile-remove(one-to-n-calling) */
-/* @conditional-compile-remove(PSTN-calls) */
+
 import { ParticipantState } from '../types';
 import {
   disabledVideoHint,
@@ -47,10 +47,8 @@ export interface VideoTileStrings {
   /** Aria label for announcing the remote video tile drawer menu */
   moreOptionsButtonAriaLabel: string;
   /* @conditional-compile-remove(one-to-n-calling) */
-  /* @conditional-compile-remove(PSTN-calls) */
   participantStateRinging: string;
   /* @conditional-compile-remove(one-to-n-calling) */
-  /* @conditional-compile-remove(PSTN-calls) */
   participantStateHold: string;
 }
 
@@ -152,7 +150,6 @@ export interface VideoTileProps {
   raisedHand?: RaisedHand;
 
   /* @conditional-compile-remove(one-to-n-calling) */
-  /* @conditional-compile-remove(PSTN-calls) */
   /**
    * The call connection state of the participant.
    * For example, `Hold` means the participant is on hold.
@@ -424,11 +421,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
         ) : (
           <Stack
             className={mergeStyles(videoContainerStyles, {
-              opacity:
-                participantStateString ||
-                /* @conditional-compile-remove(PSTN-calls) */ props.participantState === 'Idle'
-                  ? 0.4
-                  : 1
+              opacity: participantStateString || props.participantState === 'Idle' ? 0.4 : 1
             })}
           >
             {onRenderPlaceholder ? (
@@ -504,10 +497,8 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
 
 const participantStateStringTrampoline = (props: VideoTileProps, locale: ComponentLocale): string | undefined => {
   /* @conditional-compile-remove(one-to-n-calling) */
-  /* @conditional-compile-remove(PSTN-calls) */
   const strings = { ...locale.strings.videoTile, ...props.strings };
   /* @conditional-compile-remove(one-to-n-calling) */
-  /* @conditional-compile-remove(PSTN-calls) */
   return props.participantState === 'EarlyMedia' || props.participantState === 'Ringing'
     ? strings?.participantStateRinging
     : props.participantState === 'Hold'

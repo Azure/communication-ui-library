@@ -322,9 +322,7 @@ export const getCallCompositePage: GetCallCompositePageFunction = (
       return 'lobby';
       // `LocalHold` needs to be checked before `isInCall` since it is also a state that's considered in call.
     } else if (call?.state === 'LocalHold') {
-      /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
       return 'hold';
-      return 'call';
     } else if (call?.state === 'Disconnecting') {
       return 'leaving';
     } else if (_isInCall(call?.state)) {

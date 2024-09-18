@@ -42,7 +42,6 @@ function LiveAppImpl(props: { queryArgs: CommonQueryArgs & LiveQueryArgs }): JSX
       credential,
       endpoint: args.endpoint,
       locator,
-      /* @conditional-compile-remove(PSTN-calls) */
       alternateCallerId: '+182927203720'
     },
     wrapAdapterForTests

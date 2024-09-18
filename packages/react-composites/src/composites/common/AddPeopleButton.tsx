@@ -5,7 +5,7 @@ import { concatStyleSets, DefaultButton, IButtonStyles, PrimaryButton, Stack, us
 import copy from 'copy-to-clipboard';
 import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { CallWithChatCompositeStrings } from '../../index-public';
-/* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
+
 import { CallCompositeStrings } from '../../index-public';
 import { CallWithChatCompositeIcon } from './icons';
 import { peoplePaneContainerTokens } from './styles/ParticipantContainer.styles';
@@ -16,11 +16,8 @@ import {
   linkIconStyles,
   themedCopyLinkButtonStyles
 } from './styles/PeoplePaneContent.styles';
-/* @conditional-compile-remove(PSTN-calls) */
 import { AddPeopleDropdown } from './AddPeopleDropdown';
-/* @conditional-compile-remove(PSTN-calls) */
 import { PhoneNumberIdentifier } from '@azure/communication-common';
-/* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { Announcer } from '@internal/react-components';
 import { useId } from '@fluentui/react-hooks';
@@ -31,10 +28,7 @@ export interface AddPeopleButtonProps {
   inviteLink?: string;
   mobileView?: boolean;
   participantList?: JSX.Element;
-  strings:
-    | CallWithChatCompositeStrings
-    | /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */ CallCompositeStrings;
-  /* @conditional-compile-remove(PSTN-calls) */
+  strings: CallWithChatCompositeStrings | CallCompositeStrings;
   onAddParticipant: (participant: PhoneNumberIdentifier, options?: AddPhoneNumberOptions) => void;
   alternateCallerId?: string;
 }
@@ -79,7 +73,6 @@ export const AddPeopleButton = (props: AddPeopleButtonProps): JSX.Element => {
 
   const calloutButtonId = useId('callout-button');
 
-  /* @conditional-compile-remove(PSTN-calls) */
   if (mobileView) {
     return (
       <AddPeopleDropdown

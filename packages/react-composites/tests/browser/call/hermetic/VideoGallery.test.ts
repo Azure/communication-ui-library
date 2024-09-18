@@ -36,7 +36,6 @@ test.describe('VideoGallery tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot('video-avatar-with-person-icon-when-no-displayname.png');
   });
 
-  /* @conditional-compile-remove(PSTN-calls) */
   test('VideoGallery Should have 1 Audio participant and one PSTN participant', async ({ page, serverUrl }) => {
     const paul = defaultMockRemoteParticipant('Paul Bridges');
     const vasily = defaultMockRemotePSTNParticipant('+15551236789');
@@ -79,7 +78,6 @@ test.describe('VideoGallery tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot('video-gallery-with-2-joining-gridview-participant.png');
   });
 
-  /* @conditional-compile-remove(PSTN-calls) */
   test('VideoGallery Should show the remote participant on hold', async ({ page, serverUrl }) => {
     const paul = defaultMockRemoteParticipant('Paul Bridges');
     paul.state = 'Hold';

@@ -33,7 +33,7 @@ export interface CallScreenProps {
   displayName: string;
   endpoint: string;
   locator: CallAndChatLocator | TeamsMeetingLinkLocator | TeamsMeetingIdLocator;
-  /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId?: string;
+  alternateCallerId?: string;
   /* @conditional-compile-remove(rich-text-editor-composite-support) */ isRichTextEditorEnabled?: boolean;
 }
 
@@ -44,7 +44,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     displayName,
     endpoint,
     locator,
-    /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
+    alternateCallerId,
     /* @conditional-compile-remove(rich-text-editor-composite-support) */ isRichTextEditorEnabled
   } = props;
 
@@ -175,7 +175,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
       credential,
       endpoint,
       locator,
-      /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
+      alternateCallerId,
       callAdapterOptions: callAdapterOptions
     },
     afterAdapterCreate

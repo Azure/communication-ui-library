@@ -60,7 +60,6 @@ const App = (): JSX.Element => {
   /* @conditional-compile-remove(teams-identity-support) */
   const [isTeamsCall, setIsTeamsCall] = useState<boolean>(false);
 
-  /* @conditional-compile-remove(PSTN-calls) */
   const [alternateCallerId, setAlternateCallerId] = useState<string | undefined>();
 
   // Get Azure Communications Service token from the server
@@ -102,7 +101,6 @@ const App = (): JSX.Element => {
           joiningExistingCall={joiningExistingCall}
           startCallHandler={async (callDetails) => {
             setDisplayName(callDetails.displayName);
-            /* @conditional-compile-remove(PSTN-calls) */
             setAlternateCallerId(callDetails.alternateCallerId);
             let callLocator: CallAdapterLocator | undefined =
               callDetails.callLocator ||
@@ -116,7 +114,6 @@ const App = (): JSX.Element => {
               callLocator = getRoomIdFromUrl() || callDetails.callLocator;
             }
 
-            /* @conditional-compile-remove(PSTN-calls) */
             if (callDetails.option === '1:N' || callDetails.option === 'PSTN') {
               const outboundUsers = callDetails.outboundParticipants?.map((user) => {
                 return fromFlatCommunicationIdentifier(user);
@@ -216,7 +213,6 @@ const App = (): JSX.Element => {
           displayName={displayName}
           callLocator={callLocator}
           targetCallees={targetCallees}
-          /* @conditional-compile-remove(PSTN-calls) */
           alternateCallerId={alternateCallerId}
           /* @conditional-compile-remove(teams-identity-support) */
           isTeamsIdentityCall={isTeamsCall}
@@ -246,7 +242,6 @@ const getJoinParams = (locator: CallAdapterLocator): string => {
   if ('roomId' in locator) {
     return '?roomId=' + encodeURIComponent(locator.roomId);
   }
-  /* @conditional-compile-remove(PSTN-calls) */
   if ('participantIds' in locator) {
     return '';
   }

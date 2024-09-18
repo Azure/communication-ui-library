@@ -4,9 +4,7 @@
 import { Call, CallAgent, StartCallOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(one-to-n-calling) */
 import { IncomingCallCommon } from '@azure/communication-calling';
-/* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
-/* @conditional-compile-remove(PSTN-calls) */
 import {
   isCommunicationUserIdentifier,
   isMicrosoftTeamsUserIdentifier,
@@ -96,7 +94,6 @@ export const createDefaultCallingHandlers: CreateDefaultCallingHandlers = memoiz
       }
       return callAgent?.startCall(participants, options);
     },
-    /* @conditional-compile-remove(PSTN-calls) */
     onAddParticipant: async (
       userId: string | CommunicationIdentifier,
       options?: AddPhoneNumberOptions
@@ -108,9 +105,7 @@ export const createDefaultCallingHandlers: CreateDefaultCallingHandlers = memoiz
         call?.addParticipant(participant);
       }
     },
-    onRemoveParticipant: async (
-      userId: string | /* @conditional-compile-remove(PSTN-calls) */ CommunicationIdentifier
-    ): Promise<void> => {
+    onRemoveParticipant: async (userId: string | CommunicationIdentifier): Promise<void> => {
       const participant = _toCommunicationIdentifier(userId);
       await call?.removeParticipant(participant);
     },

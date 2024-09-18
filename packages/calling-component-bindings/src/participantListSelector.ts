@@ -156,7 +156,7 @@ export const participantListSelector: ParticipantListSelector = createSelector(
     const localUserCanRemoveOthers = localUserCanRemoveOthersTrampoline(role);
     const participants = remoteParticipants
       ? convertRemoteParticipantsToParticipantListParticipants(
-          updateUserDisplayNamesTrampoline(Object.values(remoteParticipants)),
+          _updateUserDisplayNames(Object.values(remoteParticipants)),
           localUserCanRemoveOthers,
           isHideAttendeeNamesEnabled,
           role,
@@ -185,12 +185,6 @@ export const participantListSelector: ParticipantListSelector = createSelector(
     };
   }
 );
-
-const updateUserDisplayNamesTrampoline = (remoteParticipants: RemoteParticipantState[]): RemoteParticipantState[] => {
-  /* @conditional-compile-remove(PSTN-calls) */
-  return _updateUserDisplayNames(remoteParticipants);
-  return remoteParticipants;
-};
 
 const localUserCanRemoveOthersTrampoline = (role?: string): boolean => {
   return role === 'Presenter' || role === 'Unknown' || role === undefined;

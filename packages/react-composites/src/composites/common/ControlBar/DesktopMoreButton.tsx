@@ -5,12 +5,12 @@ import { IContextualMenuItem } from '@fluentui/react';
 import { ControlBarButtonProps } from '@internal/react-components';
 import { VideoGalleryLayout } from '@internal/react-components';
 import { _StartCaptionsButton } from '@internal/react-components';
-/*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+/* @conditional-compile-remove(one-to-n-calling) */
 import { HoldButton } from '@internal/react-components';
 import React from 'react';
 import { useState } from 'react';
 import { useMemo, useCallback } from 'react';
-/*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+/* @conditional-compile-remove(one-to-n-calling) */
 import { usePropsFor } from '../../CallComposite/hooks/usePropsFor';
 import { buttonFlyoutIncreasedSizeStyles } from '../../CallComposite/styles/Buttons.styles';
 import { MoreButton } from '../MoreButton';
@@ -52,7 +52,7 @@ export interface DesktopMoreButtonProps extends ControlBarButtonProps {
  */
 export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element => {
   const localeStrings = useLocale();
-  /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+  /* @conditional-compile-remove(one-to-n-calling) */
   const holdButtonProps = usePropsFor(HoldButton);
   const startCaptionsButtonProps = useAdaptedSelector(_startCaptionsButtonSelector);
   const startCaptionsButtonHandlers = useHandlers(_StartCaptionsButton);
@@ -95,7 +95,7 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
     }
   };
 
-  /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+  /* @conditional-compile-remove(one-to-n-calling) */
   moreButtonContextualMenuItems.push({
     key: 'holdButtonKey',
     text: localeStrings.component.strings.holdButton.tooltipOffContent,
