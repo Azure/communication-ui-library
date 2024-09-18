@@ -529,12 +529,14 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       if (!participant || !participant.videoStreams) {
         return;
       }
-      const screenShareStream = Object.values(participant.videoStreams).find(
+      const screenShareStreams = Object.values(participant.videoStreams).filter(
         (i) => i.mediaStreamType === 'ScreenSharing'
       );
 
-      if (screenShareStream && screenShareStream.view) {
-        callClient.disposeView(call.id, participant.identifier, screenShareStream);
+      for (const stream of screenShareStreams) {
+        if (stream.view) {
+          callClient.disposeView(call.id, participant.identifier, stream);
+        }
       }
     };
 

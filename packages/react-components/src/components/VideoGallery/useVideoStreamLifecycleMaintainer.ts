@@ -67,6 +67,8 @@ const useVideoStreamLifecycleMaintainer = (
         if (!isScreenSharingOn) {
           onDisposeStreamView?.();
         }
+      } else {
+        console.warn('Stream view element does not exist when disposing stream view');
       }
     };
   }, [
