@@ -3,6 +3,7 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import { VideoStreamOptions, CreateVideoStreamViewResult, ViewScalingMode } from '../../types';
+import { callingComponentLogger } from '../utils/Logger';
 
 /** @private */
 export interface VideoStreamLifecycleMaintainerExtendableProps {
@@ -68,7 +69,7 @@ const useVideoStreamLifecycleMaintainer = (
           onDisposeStreamView?.();
         }
       } else {
-        console.warn('Stream view element does not exist when disposing stream view');
+        callingComponentLogger.warning('Stream view element does not exist when disposing stream view');
       }
     };
   }, [
