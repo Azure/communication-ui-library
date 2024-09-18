@@ -238,7 +238,7 @@ export class CallSubscriber {
     try {
       subscriber();
     } catch (e) {
-      this._context.teeErrorToState(e as Error, 'CallAgent.feature');
+      this._context.teeErrorToState(e as Error, 'Call.on');
     }
   }
 
