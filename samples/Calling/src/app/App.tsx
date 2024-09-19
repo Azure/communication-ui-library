@@ -169,6 +169,7 @@ const App = (): JSX.Element => {
                 {},
                 document.title,
                 window.location.origin +
+                  window.location.pathname +
                   getJoinParams(callLocator) +
                   /* @conditional-compile-remove(teams-identity-support) */
                   getIsCTEParam(!!callDetails.teamsToken)
