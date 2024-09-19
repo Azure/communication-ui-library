@@ -161,7 +161,7 @@ const sendLogs = async (): Promise<string | false> => {
 };
 
 const postLogsToServer = async (containerName: string, logs: string): Promise<Response> =>
-  fetch(`/uploadToAzureBlobStorage/log`, {
+  fetch(`uploadToAzureBlobStorage/log`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
