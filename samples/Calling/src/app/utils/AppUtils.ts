@@ -4,7 +4,6 @@
 import { GroupLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { ParticipantRole, RoomCallLocator } from '@azure/communication-calling';
 import { TeamsMeetingIdLocator } from '@azure/communication-calling';
-/* @conditional-compile-remove(teams-adhoc-call) */
 import { fromFlatCommunicationIdentifier, StartCallIdentifier } from '@azure/communication-react';
 import { v1 as generateGUID } from 'uuid';
 
