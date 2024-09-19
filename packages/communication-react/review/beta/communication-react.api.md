@@ -1225,11 +1225,7 @@ export interface CallWithChatAdapterManagement {
     setSpeaker(sourceInfo: AudioDeviceInfo): Promise<void>;
     setSpokenLanguage(language: string): Promise<void>;
     startCall(participants: string[], options?: StartCallOptions): Call | undefined;
-<<<<<<< HEAD
     startCall(participants: (MicrosoftTeamsAppIdentifier | PhoneNumberIdentifier | CommunicationUserIdentifier | MicrosoftTeamsUserIdentifier | UnknownIdentifier)[], options?: StartCallOptions): Call | undefined;
-=======
-    startCall(participants: (MicrosoftTeamsAppIdentifier | PhoneNumberIdentifier | CommunicationUserIdentifier | /* @conditional-compile-remove(teams-adhoc-call) */ MicrosoftTeamsUserIdentifier | UnknownIdentifier)[], options?: StartCallOptions): Call | undefined;
->>>>>>> 2f92df52a10037151a2b040b9330e7bd885f490c
     startCamera(options?: VideoStreamOptions): Promise<void>;
     startCaptions(options?: StartCaptionsAdapterOptions): Promise<void>;
     // @beta
@@ -4623,11 +4619,7 @@ export interface SpotlightState {
 }
 
 // @public
-<<<<<<< HEAD
 export type StartCallIdentifier = (MicrosoftTeamsAppIdentifier | PhoneNumberIdentifier | CommunicationUserIdentifier | MicrosoftTeamsUserIdentifier | UnknownIdentifier) | /* @conditional-compile-remove(start-call-beta) */ CommunicationIdentifier;
-=======
-export type StartCallIdentifier = (MicrosoftTeamsAppIdentifier | PhoneNumberIdentifier | CommunicationUserIdentifier | /* @conditional-compile-remove(teams-adhoc-call) */ MicrosoftTeamsUserIdentifier | UnknownIdentifier) | /* @conditional-compile-remove(start-call-beta) */ CommunicationIdentifier;
->>>>>>> 2f92df52a10037151a2b040b9330e7bd885f490c
 
 // @public
 export interface StartCaptionsAdapterOptions extends StartCaptionsOptions {
