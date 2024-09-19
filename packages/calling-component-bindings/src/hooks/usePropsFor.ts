@@ -140,9 +140,6 @@ export type GetSelector<Component extends (props: any) => JSX.Element | undefine
 export const getSelector = <Component extends (props: any) => JSX.Element | undefined>(
   component: Component
 ): GetSelector<Component> => {
-  if (component === HoldButton) {
-    return findConditionalCompiledSelector(component);
-  }
   /* @conditional-compile-remove(one-to-n-calling) */
   if (component === IncomingCallStack) {
     return findConditionalCompiledSelector(component);
