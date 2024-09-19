@@ -12,7 +12,7 @@ import { pushQSPUrl } from './pushQSPUrl';
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const fetchTokenResponse = async (): Promise<any> => {
-  const response = await fetch('/token');
+  const response = await fetch('token');
   if (response.ok) {
     const responseAsJson = await response.json();
     const token = responseAsJson.token;

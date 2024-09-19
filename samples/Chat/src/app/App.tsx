@@ -92,7 +92,7 @@ export default (): JSX.Element => {
               setPage('chat'); // use stored information to attempt to rejoin the chat thread
             }}
             homeHandler={() => {
-              window.location.href = window.location.origin;
+              window.location.href = window.location.origin + window.location.pathname;
             }}
             userId={userId}
             displayName={displayName}
@@ -105,7 +105,7 @@ export default (): JSX.Element => {
           <ErrorScreen
             title={ERROR_PAGE_TITLE_REMOVED}
             homeHandler={() => {
-              window.location.href = window.location.origin;
+              window.location.href = window.location.origin + window.location.pathname;
             }}
           />
         );
