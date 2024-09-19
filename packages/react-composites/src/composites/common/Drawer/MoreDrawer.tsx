@@ -309,7 +309,9 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
    * Only render the dtmf dialer if the dialpad for PSTN calls is not present
    */
   if (props.onSetDialpadPage && allowDtmfDialer) {
-    drawerMenuItems.push(dtmfDialerScreenOption);
+    if (props.callControls === true || props.callControls === false || props.callControls?.dtmfDialerButton === false) {
+      drawerMenuItems.push(dtmfDialerScreenOption);
+    }
   }
 
   const galleryLayoutOptions = {
@@ -368,8 +370,13 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   /* @conditional-compile-remove(gallery-layout-composite) */
   galleryLayoutOptions.subMenuProps?.push(galleryOption);
 
-  drawerMenuItems.push(galleryLayoutOptions);
-
+  if (
+    props.callControls === true ||
+    props.callControls === false ||
+    props.callControls?.galleryControlsButton === false
+  ) {
+    drawerMenuItems.push(galleryLayoutOptions);
+  }
   if (drawerSelectionOptions !== false && isEnabled(drawerSelectionOptions?.peopleButton)) {
     drawerMenuItems.push({
       itemKey: 'people',
