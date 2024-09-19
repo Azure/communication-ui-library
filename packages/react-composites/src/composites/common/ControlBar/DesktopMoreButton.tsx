@@ -96,7 +96,7 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
     }
   };
 
-  if (props.callControls === true || (props.callControls as CallControlOptions).holdButton !== false) {
+  if (props.callControls === true || (props.callControls as CallControlOptions)?.holdButton !== false) {
     /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
     moreButtonContextualMenuItems.push({
       key: 'holdButtonKey',
@@ -200,7 +200,7 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
    * Only render the dtmf dialer if the dialpad for PSTN calls is not present
    */
   if (props.onSetDialpadPage && allowDtmfDialer) {
-    if (props.callControls === true || (props.callControls as CallControlOptions).dtmfDialerButton !== false) {
+    if (props.callControls === true || (props.callControls as CallControlOptions)?.dtmfDialerButton !== false) {
       moreButtonContextualMenuItems.push(dtmfDialerScreenOption);
     }
   }
