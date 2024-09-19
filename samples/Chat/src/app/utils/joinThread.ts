@@ -20,7 +20,7 @@ export const joinThread = async (threadId: string, userId: string, displayName: 
       },
       body: JSON.stringify({ Id: userId, DisplayName: displayName })
     };
-    const response = await fetch(`/addUser/${threadId}`, requestOptions);
+    const response = await fetch(`addUser/${threadId}`, requestOptions);
     if (response.status === StatusCode.CREATED) {
       return true;
     }
