@@ -4490,9 +4490,7 @@ export interface VideoTilesOptions {
 // @public
 export interface VideoTileStrings {
     moreOptionsButtonAriaLabel: string;
-    // (undocumented)
     participantStateHold: string;
-    // (undocumented)
     participantStateRinging: string;
 }
 
