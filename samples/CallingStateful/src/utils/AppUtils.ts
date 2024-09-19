@@ -33,7 +33,7 @@ export type AdapterArgs = {
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const fetchTokenResponse = async (): Promise<any> => {
-  const response = await fetch('/token?scope=voip');
+  const response = await fetch('token?scope=voip');
   if (response.ok) {
     const responseAsJson = await response.json(); //(await response.json())?.value?.token;
     const token = responseAsJson.token;
@@ -53,7 +53,7 @@ export const fetchCallQueueId = async (): Promise<string> => {
   const getRequestOptions = {
     method: 'GET'
   };
-  const response = await fetch('/getCallQueueId', getRequestOptions);
+  const response = await fetch('getCallQueueId', getRequestOptions);
   if (response.ok) {
     const retrieveCallQueueId = await response.text().then((callQueueId) => callQueueId);
     if (retrieveCallQueueId) {
@@ -67,7 +67,7 @@ export const fetchAutoAttendantId = async (): Promise<string> => {
   const getRequestOptions = {
     method: 'GET'
   };
-  const response = await fetch('/getAutoAttendantId', getRequestOptions);
+  const response = await fetch('getAutoAttendantId', getRequestOptions);
   if (response.ok) {
     const retrieveCallQueueId = await response.text().then((callQueueId) => callQueueId);
     if (retrieveCallQueueId) {

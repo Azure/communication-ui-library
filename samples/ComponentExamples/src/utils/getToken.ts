@@ -14,7 +14,7 @@ export const getToken = async (): Promise<UserToken> => {
   const getTokenRequestOptions = {
     method: 'POST'
   };
-  const getTokenResponse = await fetch('/token', getTokenRequestOptions);
+  const getTokenResponse = await fetch('token', getTokenRequestOptions);
   const responseJson = await getTokenResponse.json();
   return {
     expiresOn: responseJson.expiresOn,
