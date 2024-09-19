@@ -41,7 +41,6 @@ export interface HomeScreenProps {
   startCallHandler(callDetails: {
     displayName: string;
     meetingLocator?: TeamsMeetingLinkLocator | TeamsMeetingIdLocator;
-    /* @conditional-compile-remove(one-to-n-calling)  */
     outboundParticipants?: string[];
     alternateCallerId?: string;
     /* @conditional-compile-remove(rich-text-editor-composite-support) */
@@ -76,7 +75,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const [passcode, setPasscode] = useState<string>();
 
   const [alternateCallerId, setAlternateCallerId] = useState<string>();
-  /* @conditional-compile-remove(one-to-n-calling)  */
+
   const [outboundParticipants, setOutboundParticipants] = useState<string>();
   const [dialpadParticipant, setDialpadParticipant] = useState<string>();
 
@@ -85,7 +84,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const teamsCallChosen: boolean = chosenCallOption.key === 'TeamsMeeting';
   const startGroupCall: boolean = chosenCallOption.key === 'ACSCallWithChat';
   const pstnCallChosen: boolean = chosenCallOption.key === 'PSTN';
-  /* @conditional-compile-remove(one-to-n-calling)  */
+
   const acsCallChosen: boolean = chosenCallOption.key === '1:N';
   const buttonEnabled =
     displayName &&
@@ -259,14 +258,14 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
             onClick={() => {
               if (displayName) {
                 saveDisplayNameToLocalStorage(displayName);
-                /* @conditional-compile-remove(one-to-n-calling)  */
+
                 const acsParticipantsToCall = parseParticipants(outboundParticipants);
                 const dialpadParticipantToCall = parseParticipants(dialpadParticipant);
                 startCallHandler({
                   displayName,
                   meetingLocator,
                   alternateCallerId,
-                  /* @conditional-compile-remove(one-to-n-calling)  */
+
                   outboundParticipants: acsParticipantsToCall ? acsParticipantsToCall : dialpadParticipantToCall,
                   /* @conditional-compile-remove(rich-text-editor-composite-support) */
                   isRichTextEditorEnabled: isRichTextEditorEnabled
@@ -284,7 +283,6 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   );
 };
 
-/* @conditional-compile-remove(one-to-n-calling)  */
 /**
  * splits the participant Id's so we can call multiple people.
  */
