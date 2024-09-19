@@ -214,17 +214,6 @@ test.describe('Overflow gallery tests', async () => {
     );
   });
 
-  /*
-    This test should actually be stabilized only when *both* the `PSTN-calls` and `one-to-n-calling`
-    features are stabilized.
-    There is no way to specify this in conditional compilation directives though.
-
-    If one of these features is stabilized alone, this test will be stabilized, and will likely fail.
-    We will need to update the conditional compilation directive at that time to only reference
-    the unstabilized feature.
-
-    @conditional-compile-remove(PSTN-calls) @conditional-compile-remove(one-to-n-calling)
-  */
   test('Overflow gallery should have 1 PSTN and 1 1-N participants', async ({ page, serverUrl }) => {
     const reina = defaultMockRemoteParticipant('Reina Takizawa');
     addVideoStream(reina, true);
