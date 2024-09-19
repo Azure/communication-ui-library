@@ -100,7 +100,7 @@ export type StartCallIdentifier =
   | (
       | MicrosoftTeamsAppIdentifier
       | PhoneNumberIdentifier
-      | /* @conditional-compile-remove(one-to-n-calling) */ CommunicationUserIdentifier
+      | CommunicationUserIdentifier
       | /* @conditional-compile-remove(teams-adhoc-call) */ MicrosoftTeamsUserIdentifier
       | UnknownIdentifier
     )

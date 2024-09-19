@@ -46,7 +46,7 @@ export type CallOption =
   | 'Rooms'
   | 'StartRooms'
   | /* @conditional-compile-remove(teams-identity-support) */ 'TeamsIdentity'
-  | /* @conditional-compile-remove(one-to-n-calling) */ '1:N'
+  | '1:N'
   | 'PSTN'
   | 'TeamsAdhoc';
 
@@ -81,7 +81,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
     { key: 'Rooms', text: 'Join a Rooms Call' },
     /* @conditional-compile-remove(teams-identity-support) */
     { key: 'TeamsIdentity', text: 'Join a Teams call using Teams identity' },
-    /* @conditional-compile-remove(one-to-n-calling) */
+
     { key: '1:N', text: 'Start a 1:N ACS Call' },
     { key: 'PSTN', text: 'Start a PSTN Call' },
     { key: 'TeamsAdhoc', text: 'Call a Teams User or voice application' }
@@ -134,7 +134,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
         chosenRoomsRoleOption) ||
       (pstnCallChosen && dialPadParticipant && alternateCallerId) ||
       (teamsAdhocChosen && outboundTeamsUsers) ||
-      /* @conditional-compile-remove(one-to-n-calling) */ (outboundParticipants && acsCallChosen) ||
+      (outboundParticipants && acsCallChosen) ||
       /* @conditional-compile-remove(teams-identity-support) */ (teamsIdentityChosen &&
         callLocator &&
         teamsToken &&
@@ -292,19 +292,17 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                 onChange={(_, option) => option && setRoomsRoleOption(option)}
               />
             )}
-            {
-              /* @conditional-compile-remove(one-to-n-calling) */ acsCallChosen && (
-                <Stack>
-                  <TextField
-                    className={outboundTextField}
-                    label={'Participants'}
-                    required
-                    placeholder={"Comma seperated ACS user ID's"}
-                    onChange={(_, newValue) => setOutboundParticipants(newValue)}
-                  />
-                </Stack>
-              )
-            }
+            {acsCallChosen && (
+              <Stack>
+                <TextField
+                  className={outboundTextField}
+                  label={'Participants'}
+                  required
+                  placeholder={"Comma seperated ACS user ID's"}
+                  onChange={(_, newValue) => setOutboundParticipants(newValue)}
+                />
+              </Stack>
+            )}
             {teamsAdhocChosen && (
               <Stack>
                 <TextField
@@ -392,7 +390,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
             onClick={() => {
               if (displayName || /* @conditional-compile-remove(teams-identity-support) */ teamsIdentityChosen) {
                 displayName && saveDisplayNameToLocalStorage(displayName);
-                /* @conditional-compile-remove(one-to-n-calling) */
+
                 const acsParticipantsToCall = parseParticipants(outboundParticipants);
                 const teamsParticipantsToCall = parseParticipants(outboundTeamsUsers);
                 const dialpadParticipantToCall = parseParticipants(dialPadParticipant);

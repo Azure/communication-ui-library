@@ -44,7 +44,6 @@ export const _isTeamsCallAgent = (callAgent: CallAgentCommon): callAgent is Team
  * @internal
  */
 export const _isTeamsIncomingCall = (call: IncomingCallCommon): boolean => {
-  /* @conditional-compile-remove(one-to-n-calling) */
   return call.kind === 'TeamsIncomingCall';
   return false;
 };
@@ -53,7 +52,6 @@ export const _isTeamsIncomingCall = (call: IncomingCallCommon): boolean => {
  * @internal
  */
 export const _isACSIncomingCall = (call: IncomingCallCommon): boolean => {
-  /* @conditional-compile-remove(one-to-n-calling) */
   return call.kind === 'IncomingCall';
   return false;
 };

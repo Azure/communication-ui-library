@@ -98,7 +98,6 @@ export type { HoldButtonSelector } from '../../calling-component-bindings/src';
 export type { RaiseHandButtonSelector } from '../../calling-component-bindings/src';
 
 export type { NotificationStackSelector } from '../../calling-component-bindings/src';
-/* @conditional-compile-remove(one-to-n-calling) */
 export type { IncomingCallStackSelector } from '../../calling-component-bindings/src';
 
 export {
@@ -168,9 +167,7 @@ export { RaiseHandButton } from '../../react-components/src';
 
 export { Dialpad } from '../../react-components/src';
 
-/* @conditional-compile-remove(one-to-n-calling) */
 export { IncomingCallNotification, IncomingCallStack } from '../../react-components/src';
-/* @conditional-compile-remove(one-to-n-calling) */
 export type {
   IncomingCallNotificationProps,
   IncomingCallNotificationStrings,
@@ -382,7 +379,6 @@ export type { LocalVideoTileSize } from '../../react-components/src';
 export * from '../../react-components/src/localization/locales';
 export * from '../../react-components/src/theming';
 export * from '../../calling-stateful-client/src/index-public';
-/* @conditional-compile-remove(one-to-n-calling) */
 export type { DeclarativeCallAgent } from '../../calling-stateful-client/src';
 export { createStatefulChatClient } from '../../chat-stateful-client/src';
 export type {

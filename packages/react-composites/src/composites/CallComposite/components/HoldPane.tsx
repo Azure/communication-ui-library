@@ -5,9 +5,7 @@ import { PrimaryButton, Stack, Text } from '@fluentui/react';
 import { _pxToRem } from '@internal/acs-ui-common';
 import React, { useRef, useState } from 'react';
 import { CompositeLocale, useLocale } from '../../localization';
-/* @conditional-compile-remove(one-to-n-calling) */
 import { HoldButton } from '@internal/react-components';
-/* @conditional-compile-remove(one-to-n-calling) */
 import { usePropsFor } from '../hooks/usePropsFor';
 import {
   holdPaneContentStyles,
@@ -31,7 +29,6 @@ interface HoldPaneStrings {
  * @beta
  */
 export const HoldPane = (): JSX.Element => {
-  /* @conditional-compile-remove(one-to-n-calling) */
   const holdButtonProps = usePropsFor(HoldButton);
   const locale = useLocale();
 
@@ -68,7 +65,6 @@ export const HoldPane = (): JSX.Element => {
           onClick={async () => {
             setResumingCall(true);
             try {
-              /* @conditional-compile-remove(one-to-n-calling) */
               await holdButtonProps.onToggleHold();
             } catch (e) {
               setResumingCall(false);
@@ -106,7 +102,6 @@ export const getReadableTime = (time: number): string => {
 };
 
 const stringsTrampoline = (locale: CompositeLocale): HoldPaneStrings => {
-  /* @conditional-compile-remove(one-to-n-calling) */
   return {
     holdScreenLabel: locale.strings.call.holdScreenLabel ?? '',
     resumeCallButtonLabel: locale.strings.call.resumeCallButtonLabel ?? '',

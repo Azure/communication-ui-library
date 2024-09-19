@@ -59,7 +59,6 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const callOptions: IChoiceGroupOption[] = [
     { key: 'ACSCallWithChat', text: 'Start a ACS Call with Chat' },
     { key: 'TeamsMeeting', text: 'Join a Teams Meeting' },
-    /* @conditional-compile-remove(one-to-n-calling) */
     { key: '1:N', text: 'Start a 1:N ACS Call' },
     { key: 'PSTN', text: 'Start a PSTN Call' }
   ];
@@ -94,7 +93,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
       meetingLocator ||
       (teamsCallChosen && meetingLocator) ||
       (pstnCallChosen && dialpadParticipant && alternateCallerId) ||
-      /* @conditional-compile-remove(one-to-n-calling) */ (outboundParticipants && acsCallChosen));
+      (outboundParticipants && acsCallChosen));
 
   registerIcons({ icons: { DialpadBackspace: <Backspace20Regular /> } });
 
@@ -183,19 +182,17 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                 <b>And</b>
               </Text>
             )}
-            {
-              /* @conditional-compile-remove(one-to-n-calling) */ acsCallChosen && (
-                <Stack>
-                  <TextField
-                    className={outboundTextField}
-                    label={'Participants'}
-                    required
-                    placeholder={"Comma seperated phone numbers or ACS ID's"}
-                    onChange={(_, newValue) => newValue && setOutboundParticipants(newValue)}
-                  />
-                </Stack>
-              )
-            }
+            {acsCallChosen && (
+              <Stack>
+                <TextField
+                  className={outboundTextField}
+                  label={'Participants'}
+                  required
+                  placeholder={"Comma seperated phone numbers or ACS ID's"}
+                  onChange={(_, newValue) => newValue && setOutboundParticipants(newValue)}
+                />
+              </Stack>
+            )}
             {pstnCallChosen && (
               <Stack>
                 <Stack>

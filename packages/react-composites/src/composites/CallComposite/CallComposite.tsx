@@ -36,7 +36,6 @@ import { CallControlOptions } from './types/CallControlOptions';
 import { LayerHost, mergeStyles } from '@fluentui/react';
 import { modalLayerHostStyle } from '../common/styles/ModalLocalAndRemotePIP.styles';
 import { useId } from '@fluentui/react-hooks';
-/* @conditional-compile-remove(one-to-n-calling) */
 import { HoldPage } from './pages/HoldPage';
 /* @conditional-compile-remove(unsupported-browser) */
 import { UnsupportedBrowserPage } from './pages/UnsupportedBrowser';
@@ -708,7 +707,6 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
         />
       );
       break;
-    /* @conditional-compile-remove(one-to-n-calling) */
     case 'hold':
       pageElement = (
         <>

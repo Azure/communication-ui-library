@@ -29,7 +29,6 @@ import {
   participantStateStringStyles
 } from './styles/ParticipantItem.styles';
 import { _preventDismissOnEvent as preventDismissOnEvent } from '@internal/acs-ui-common';
-/* @conditional-compile-remove(one-to-n-calling) */
 import { ParticipantState } from '../types';
 import { useId } from '@fluentui/react-hooks';
 
@@ -67,10 +66,8 @@ export interface ParticipantItemStrings {
   mutedIconLabel: string;
   /** placeholder text for participants who does not have a display name*/
   displayNamePlaceholder?: string;
-  /* @conditional-compile-remove(one-to-n-calling) */
   /** String shown when `participantState` is `Ringing` */
   participantStateRinging?: string;
-  /* @conditional-compile-remove(one-to-n-calling) */
   /** String shown when `participantState` is `Hold` */
   participantStateHold?: string;
   /** String for the attendee role */
@@ -115,7 +112,6 @@ export interface ParticipantItemProps {
   onClick?: (props?: ParticipantItemProps) => void;
   /** Optional value to determine if the tooltip should be shown for participants or not */
   showParticipantOverflowTooltip?: boolean;
-  /* @conditional-compile-remove(one-to-n-calling) */
   /**
    * Optional value to determine and display a participants connection status.
    * For example, `Connecting`, `Ringing` etc.
@@ -306,7 +302,6 @@ const participantStateStringTrampoline = (
   props: ParticipantItemProps,
   strings: ParticipantItemStrings
 ): string | undefined => {
-  /* @conditional-compile-remove(one-to-n-calling) */
   return props.participantState === 'EarlyMedia' || props.participantState === 'Ringing'
     ? strings?.participantStateRinging
     : props.participantState === 'Hold'
