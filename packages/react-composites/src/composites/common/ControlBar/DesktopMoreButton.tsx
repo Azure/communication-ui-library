@@ -29,6 +29,8 @@ import { showDtmfDialer } from '../../CallComposite/utils/MediaGalleryUtils';
 import { useSelector } from '../../CallComposite/hooks/useSelector';
 import { getTargetCallees } from '../../CallComposite/selectors/baseSelectors';
 import { getTeamsMeetingCoordinates, getIsTeamsMeeting } from '../../CallComposite/selectors/baseSelectors';
+import { boolean } from 'yargs';
+import { CallControlOptions } from '../../CallComposite';
 
 /** @private */
 export interface DesktopMoreButtonProps extends ControlBarButtonProps {
@@ -95,7 +97,7 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
     }
   };
 
-  if (props.callControls === true || (typeof props.callControls === 'object' && props.callControls.holdButton)) {
+  if (props.callControls === true || (props.callControls as CallControlOptions).holdButton !== false) {
     /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
     moreButtonContextualMenuItems.push({
       key: 'holdButtonKey',
@@ -199,10 +201,7 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
    * Only render the dtmf dialer if the dialpad for PSTN calls is not present
    */
   if (props.onSetDialpadPage && allowDtmfDialer) {
-    if (
-      props.callControls === true ||
-      (typeof props.callControls === 'object' && props.callControls.dtmfDialerButton)
-    ) {
+    if (props.callControls === true || (props.callControls as CallControlOptions).dtmfDialerButton !== false) {
       moreButtonContextualMenuItems.push(dtmfDialerScreenOption);
     }
   }
@@ -376,10 +375,7 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
     galleryOptions.subMenuProps?.items?.push(galleryOption);
     /* @conditional-compile-remove(overflow-top-composite) */
     galleryOptions.subMenuProps?.items?.push(overflowGalleryOption);
-    if (
-      props.callControls === true ||
-      (typeof props.callControls === 'object' && props.callControls.galleryControlsButton)
-    ) {
+    if (props.callControls === true || (props.callControls as CallControlOptions)?.galleryControlsButton !== false) {
       moreButtonContextualMenuItems.push(galleryOptions);
     }
   }
