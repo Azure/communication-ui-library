@@ -110,7 +110,6 @@ export const getRoomIdFromUrl = (): RoomCallLocator | undefined => {
   return roomId ? { roomId } : undefined;
 };
 
-/* @conditional-compile-remove(one-to-n-calling)  */
 export const getOutboundParticipants = (outboundParticipants?: string[]): StartCallIdentifier[] | undefined => {
   if (outboundParticipants && outboundParticipants.length > 0) {
     const participants: StartCallIdentifier[] = outboundParticipants.map((participantId) => {
