@@ -757,7 +757,6 @@ jobs:
 
   deploy_samples:
     needs: [build_chat_sample, build_call_sample, build_call_with_chat_sample]
-    if: ${{ matrix.flavor == 'beta' }}
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
