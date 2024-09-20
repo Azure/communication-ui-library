@@ -687,7 +687,7 @@ jobs:
         id: get_version
         run: |
           if [[ "$GITHUB_EVENT_NAME" == "pull_request" ]]; then
-            echo "deploy_version=PR-${{ github.event.number }}" >> $GITHUB_OUTPUT
+            echo "deploy_version=pr-${{ github.event.number }}" >> $GITHUB_OUTPUT
           elif [[ "$GITHUB_REF" == "refs/heads/main" ]]; then
             echo "deploy_version=latest" >> $GITHUB_OUTPUT
           elif [[ "$GITHUB_REF" == refs/heads/release/* ]]; then
@@ -714,7 +714,7 @@ jobs:
       # Upload the bundle to the azure blob store
       - name: Upload bundle to azure blob store
         if: steps.get_version.outputs.deploy_version != ''
-        run: az storage blob upload --account-name ${{ secrets.SAMPLE_APP_BLOB_STORE_AZURE_ACCOUNT_NAME }} --container-name ${{ secrets.SAMPLE_APP_BLOB_STORE_AZURE_CONTAINER_NAME }} --file chat.zip --name ${{ steps.get_version.outputs.deploy_version }}/chat.zip
+        run: az storage blob upload --account-name ${{ secrets.SAMPLE_APP_BLOB_STORE_AZURE_ACCOUNT_NAME }} --container-name ${{ secrets.SAMPLE_APP_BLOB_STORE_AZURE_CONTAINER_NAME }} --file chat.zip --name ${{ steps.get_version.outputs.deploy_version }}/chat.zip --auth-mode login
         working-directory: samples/Chat
       # Comment on PR with the link to the deployed sample app
       - name: Comment on PR with deployed sample app
