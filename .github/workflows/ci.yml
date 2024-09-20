@@ -646,14 +646,14 @@ jobs:
           path: samples/Calling/dist/build/report.json
       # Package and zip the bundle
       - name: Package sample app for upload
-        if: steps.get_version.outputs.deploy_version != ''
+        if: ${{ matrix.flavor == 'beta'}}
         run: |
           rush build -o server
           npm run package
           zip -r calling.zip dist
         working-directory: samples/Calling
       - name: Upload build artifact
-        if: steps.get_version.outputs.deploy_version != ''
+        if: ${{ matrix.flavor == 'beta'}}
         uses: actions/upload-artifact@v2
         with:
           name: calling-build
@@ -692,30 +692,16 @@ jobs:
         with:
           name: Chat-report
           path: samples/Chat/dist/build/report.json
-      # Get version name. If PR use the PR number. If its main branch use "latest". If it's a release branch use the version in the package.json. Output to GITHUB_OUTPUT with the name deploy_version
-      - name: Get version name
-        id: get_version
-        run: |
-          if [[ "$GITHUB_EVENT_NAME" == "pull_request" ]]; then
-            echo "deploy_version=pr-${{ github.event.number }}" >> $GITHUB_OUTPUT
-          elif [[ "$GITHUB_REF" == "refs/heads/main" ]]; then
-            echo "deploy_version=latest" >> $GITHUB_OUTPUT
-          elif [[ "$GITHUB_REF" == refs/heads/release/* ]]; then
-            release_version=${GITHUB_REF#refs/heads/release/}  # Extract the version after 'release/'
-            echo "deploy_version=$release_version" >> $GITHUB_OUTPUT
-          else
-            echo "No deploy version will be set"
-          fi
       # Package and zip the bundle
       - name: Package sample app for upload
-        if: steps.get_version.outputs.deploy_version != ''
+        if: ${{ matrix.flavor == 'beta'}}
         run: |
           rush build -o server
           npm run package
           zip -r chat.zip dist
         working-directory: samples/Chat
       - name: Upload build artifact
-        if: steps.get_version.outputs.deploy_version != ''
+        if: ${{ matrix.flavor == 'beta'}}
         uses: actions/upload-artifact@v2
         with:
           name: chat-build
@@ -757,14 +743,14 @@ jobs:
       - name: Upload build artifact
       # Package and zip the bundle
       - name: Package sample app for upload
-        if: steps.get_version.outputs.deploy_version != ''
+        if: ${{ matrix.flavor == 'beta'}}
         run: |
           rush build -o server
           npm run package
           zip -r callwithchat.zip dist
         working-directory: samples/CallWithChat
       - name: Upload build artifact
-        if: steps.get_version.outputs.deploy_version != ''
+        if: ${{ matrix.flavor == 'beta'}}
         uses: actions/upload-artifact@v2
         with:
           name: callwithchat-build
