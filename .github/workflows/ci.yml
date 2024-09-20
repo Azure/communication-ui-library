@@ -740,7 +740,6 @@ jobs:
         with:
           name: CallWithChat-report
           path: samples/CallWithChat/dist/build/report.json
-      - name: Upload build artifact
       # Package and zip the bundle
       - name: Package sample app for upload
         if: ${{ matrix.flavor == 'beta'}}
