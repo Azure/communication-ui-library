@@ -650,13 +650,14 @@ jobs:
         run: |
           rush build -o server
           npm run package
+          zip -r calling.zip dist
         working-directory: samples/Calling
       - name: Upload build artifact
         if: ${{ matrix.flavor == 'beta'}}
         uses: actions/upload-artifact@v4
         with:
           name: calling
-          path: samples/Calling/dist/*
+          path: samples/Calling/calling.zip
 
   build_chat_sample:
     needs: get_matrix
@@ -697,13 +698,14 @@ jobs:
         run: |
           rush build -o server
           npm run package
+          zip -r chat.zip dist
         working-directory: samples/Chat
       - name: Upload build artifact
         if: ${{ matrix.flavor == 'beta'}}
         uses: actions/upload-artifact@v4
         with:
           name: chat
-          path: samples/Chat/dist/*
+          path: samples/Chat/chat.zip
 
   build_call_with_chat_sample:
     needs: get_matrix
@@ -744,13 +746,14 @@ jobs:
         run: |
           rush build -o server
           npm run package
+          zip -r callwithchat.zip dist
         working-directory: samples/CallWithChat
       - name: Upload build artifact
         if: ${{ matrix.flavor == 'beta'}}
         uses: actions/upload-artifact@v4
         with:
           name: callwithchat
-          path: samples/CallWithChat/dist/*
+          path: samples/CallWithChat/callwithchat.zip
 
   deploy_samples:
     name: Deploy samples to staging
