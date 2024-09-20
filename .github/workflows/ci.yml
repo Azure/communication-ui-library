@@ -769,16 +769,22 @@ jobs:
         with:
           name: chat
           path: samples/Chat
+      - name: Display structure of downloaded files
+        run: ls -R samples/Chat
       - name: Download calling sample artifact
         uses: actions/download-artifact@v4
         with:
           name: calling
           path: samples/Calling
+      - name: Display structure of downloaded files
+        run: ls -R samples/Calling
       - name: Download callwithchat sample artifact
         uses: actions/download-artifact@v4
         with:
           name: callwithchat
           path: samples/CallWithChat
+      - name: Display structure of downloaded files
+        run: ls -R samples/CallWithChat
       # Get version name.
       # - If the run is a PR, use pr + the PR number.
       # - If the run is CI on main branch, use "latest".
