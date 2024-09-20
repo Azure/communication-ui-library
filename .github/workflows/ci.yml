@@ -650,14 +650,13 @@ jobs:
         run: |
           rush build -o server
           npm run package
-          zip -r calling.zip dist
         working-directory: samples/Calling
       - name: Upload build artifact
         if: ${{ matrix.flavor == 'beta'}}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
-          name: calling-build
-          path: samples/Calling/calling.zip
+          name: calling
+          path: samples/Calling/dist/*
 
   build_chat_sample:
     needs: get_matrix
@@ -692,20 +691,19 @@ jobs:
         with:
           name: Chat-report
           path: samples/Chat/dist/build/report.json
-      # Package and zip the bundle
+      # Package bundle
       - name: Package sample app for upload
         if: ${{ matrix.flavor == 'beta'}}
         run: |
           rush build -o server
           npm run package
-          zip -r chat.zip dist
         working-directory: samples/Chat
       - name: Upload build artifact
         if: ${{ matrix.flavor == 'beta'}}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
-          name: chat-build
-          path: samples/Chat/chat.zip
+          name: chat
+          path: samples/Chat/dist/*
 
   build_call_with_chat_sample:
     needs: get_matrix
@@ -746,16 +744,16 @@ jobs:
         run: |
           rush build -o server
           npm run package
-          zip -r callwithchat.zip dist
         working-directory: samples/CallWithChat
       - name: Upload build artifact
         if: ${{ matrix.flavor == 'beta'}}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
-          name: callwithchat-build
-          path: samples/CallWithChat/callwithchat.zip
+          name: callwithchat
+          path: samples/CallWithChat/dist/*
 
   deploy_samples:
+    name: Deploy samples to Staging
     needs: [build_chat_sample, build_calling_sample, build_call_with_chat_sample]
     runs-on: ubuntu-latest
     permissions:
