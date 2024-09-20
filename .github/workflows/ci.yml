@@ -650,7 +650,7 @@ jobs:
         run: |
           rush build -o server
           npm run package
-          zip -r calling.zip dist
+          zip -r calling.zip dist/*
         working-directory: samples/Calling
       - name: Upload build artifact
         if: ${{ matrix.flavor == 'beta'}}
@@ -698,7 +698,7 @@ jobs:
         run: |
           rush build -o server
           npm run package
-          zip -r chat.zip dist
+          zip -r chat.zip dist/*
         working-directory: samples/Chat
       - name: Upload build artifact
         if: ${{ matrix.flavor == 'beta'}}
@@ -746,7 +746,7 @@ jobs:
         run: |
           rush build -o server
           npm run package
-          zip -r callwithchat.zip dist
+          zip -r callwithchat.zip dist/*
         working-directory: samples/CallWithChat
       - name: Upload build artifact
         if: ${{ matrix.flavor == 'beta'}}
@@ -813,13 +813,13 @@ jobs:
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       - name: Upload chat sample to azure blob store
         if: steps.get_version.outputs.deploy_version != ''
-        run: az storage blob upload --account-name ${{ secrets.SAMPLE_APP_BLOB_STORE_AZURE_ACCOUNT_NAME }} --container-name ${{ secrets.SAMPLE_APP_BLOB_STORE_AZURE_CONTAINER_NAME }} --file samples/Chat/chat.zip --name ${{ steps.get_version.outputs.deploy_version }}/chat.zip --auth-mode login
+        run: az storage blob upload --account-name ${{ secrets.SAMPLE_APP_BLOB_STORE_AZURE_ACCOUNT_NAME }} --container-name ${{ secrets.SAMPLE_APP_BLOB_STORE_AZURE_CONTAINER_NAME }} --file samples/Chat/chat.zip --name ${{ steps.get_version.outputs.deploy_version }}/chat.zip --overwrite --auth-mode login
       - name: Upload calling sample to azure blob store
         if: steps.get_version.outputs.deploy_version != ''
-        run: az storage blob upload --account-name ${{ secrets.SAMPLE_APP_BLOB_STORE_AZURE_ACCOUNT_NAME }} --container-name ${{ secrets.SAMPLE_APP_BLOB_STORE_AZURE_CONTAINER_NAME }} --file samples/Calling/calling.zip --name ${{ steps.get_version.outputs.deploy_version }}/calling.zip --auth-mode login
+        run: az storage blob upload --account-name ${{ secrets.SAMPLE_APP_BLOB_STORE_AZURE_ACCOUNT_NAME }} --container-name ${{ secrets.SAMPLE_APP_BLOB_STORE_AZURE_CONTAINER_NAME }} --file samples/Calling/calling.zip --name ${{ steps.get_version.outputs.deploy_version }}/calling.zip --overwrite --auth-mode login
       - name: Upload callwithchat sample to azure blob store
         if: steps.get_version.outputs.deploy_version != ''
-        run: az storage blob upload --account-name ${{ secrets.SAMPLE_APP_BLOB_STORE_AZURE_ACCOUNT_NAME }} --container-name ${{ secrets.SAMPLE_APP_BLOB_STORE_AZURE_CONTAINER_NAME }} --file samples/CallWithChat/callwithchat.zip --name ${{ steps.get_version.outputs.deploy_version }}/callwithchat.zip --auth-mode login
+        run: az storage blob upload --account-name ${{ secrets.SAMPLE_APP_BLOB_STORE_AZURE_ACCOUNT_NAME }} --container-name ${{ secrets.SAMPLE_APP_BLOB_STORE_AZURE_CONTAINER_NAME }} --file samples/CallWithChat/callwithchat.zip --name ${{ steps.get_version.outputs.deploy_version }}/callwithchat.zip --overwrite --auth-mode login
       - name: Comment on PR with deployed sample app
         if: ${{ github.event_name == 'pull_request' }} && steps.get_version.outputs.deploy_version != ''
         uses: actions/github-script@v3
