@@ -644,14 +644,24 @@ jobs:
         with:
           name: Calling-report
           path: samples/Calling/dist/build/report.json
+      # Package and zip the bundle
+      - name: Package sample app for upload
+        if: steps.get_version.outputs.deploy_version != ''
+        run: |
+          rush build -o server
+          npm run package
+          zip -r calling.zip dist
+        working-directory: samples/Calling
+      - name: Upload build artifact
+        if: steps.get_version.outputs.deploy_version != ''
+        uses: actions/upload-artifact@v2
+        with:
+          name: calling-build
+          path: samples/Calling/calling.zip
 
   build_chat_sample:
     needs: get_matrix
     name: 'Build Chat Sample (${{ matrix.flavor }})'
-    permissions:
-      pull-requests: write
-      id-token: write
-    environment: staging
     runs-on: ubuntu-latest
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
@@ -704,31 +714,12 @@ jobs:
           npm run package
           zip -r chat.zip dist
         working-directory: samples/Chat
-      # Login via OIDC to permit uploading to azure blob store
-      - name: Azure login
-        uses: azure/login@v1
-        with:
-          client-id: ${{ secrets.AZURE_CLIENT_ID }}
-          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-      # Upload the bundle to the azure blob store
-      - name: Upload bundle to azure blob store
+      - name: Upload build artifact
         if: steps.get_version.outputs.deploy_version != ''
-        run: az storage blob upload --account-name ${{ secrets.SAMPLE_APP_BLOB_STORE_AZURE_ACCOUNT_NAME }} --container-name ${{ secrets.SAMPLE_APP_BLOB_STORE_AZURE_CONTAINER_NAME }} --file chat.zip --name ${{ steps.get_version.outputs.deploy_version }}/chat.zip --auth-mode login
-        working-directory: samples/Chat
-      # Comment on PR with the link to the deployed sample app
-      - name: Comment on PR with deployed sample app
-        if: ${{ github.event_name == 'pull_request' }}
-        uses: actions/github-script@v3
+        uses: actions/upload-artifact@v2
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            github.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: `Deployed sample app: [Chat/PR-${{ github.event.number }}](https://acs-ui-dev-web-proxy-server.azurewebsites.net/pr=${{ github.event.number }}/chat/index.html)`
-            })
+          name: chat-build
+          path: samples/Chat/chat.zip
 
   build_call_with_chat_sample:
     needs: get_matrix
@@ -763,6 +754,95 @@ jobs:
         with:
           name: CallWithChat-report
           path: samples/CallWithChat/dist/build/report.json
+      - name: Upload build artifact
+      # Package and zip the bundle
+      - name: Package sample app for upload
+        if: steps.get_version.outputs.deploy_version != ''
+        run: |
+          rush build -o server
+          npm run package
+          zip -r callwithchat.zip dist
+        working-directory: samples/CallWithChat
+      - name: Upload build artifact
+        if: steps.get_version.outputs.deploy_version != ''
+        uses: actions/upload-artifact@v2
+        with:
+          name: callwithchat-build
+          path: samples/CallWithChat/callwithchat.zip
+
+  deploy_samples:
+    needs: [build_chat_sample, build_call_sample, build_call_with_chat_sample]
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      id-token: write
+    environment: staging
+    steps:
+      - name: Download chat sample artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: chat-build
+          path: samples/Chat
+      - name: Download calling sample artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: calling-build
+          path: samples/Calling
+      - name: Download callwithchat sample artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: callwithchat-build
+          path: samples/CallWithChat
+      # Get version name.
+      # - If the run is a PR, use pr + the PR number.
+      # - If the run is CI on main branch, use "latest".
+      # - If the run is on a release branch, use the version in the package.json.
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - name: Get version name
+        id: get_version
+        run: |
+          if [[ "$GITHUB_EVENT_NAME" == "pull_request" ]]; then
+            echo "deploy_version=pr${{ github.event.number }}" >> $GITHUB_OUTPUT
+          elif [[ "$GITHUB_REF" == "refs/heads/main" ]]; then
+            echo "deploy_version=latest" >> $GITHUB_OUTPUT
+          elif [[ "$GITHUB_REF" == refs/heads/release/* ]]; then
+            release_version=${GITHUB_REF#refs/heads/release/}  # Extract the version after 'release/'
+            echo "deploy_version=$release_version" >> $GITHUB_OUTPUT
+          else
+            echo "No deploy version will be set"
+          fi
+      - name: Azure login
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      - name: Upload chat sample to azure blob store
+        if: steps.get_version.outputs.deploy_version != ''
+        run: az storage blob upload --account-name ${{ secrets.SAMPLE_APP_BLOB_STORE_AZURE_ACCOUNT_NAME }} --container-name ${{ secrets.SAMPLE_APP_BLOB_STORE_AZURE_CONTAINER_NAME }} --file samples/Chat/chat.zip --name ${{ steps.get_version.outputs.deploy_version }}/chat.zip --auth-mode login
+      - name: Upload calling sample to azure blob store
+        if: steps.get_version.outputs.deploy_version != ''
+        run: az storage blob upload --account-name ${{ secrets.SAMPLE_APP_BLOB_STORE_AZURE_ACCOUNT_NAME }} --container-name ${{ secrets.SAMPLE_APP_BLOB_STORE_AZURE_CONTAINER_NAME }} --file samples/Calling/calling.zip --name ${{ steps.get_version.outputs.deploy_version }}/calling.zip --auth-mode login
+      - name: Upload callwithchat sample to azure blob store
+        if: steps.get_version.outputs.deploy_version != ''
+        run: az storage blob upload --account-name ${{ secrets.SAMPLE_APP_BLOB_STORE_AZURE_ACCOUNT_NAME }} --container-name ${{ secrets.SAMPLE_APP_BLOB_STORE_AZURE_CONTAINER_NAME }} --file samples/CallWithChat/callwithchat.zip --name ${{ steps.get_version.outputs.deploy_version }}/callwithchat.zip --auth-mode login
+      - name: Comment on PR with deployed sample app
+        if: ${{ github.event_name == 'pull_request' }} && steps.get_version.outputs.deploy_version != ''
+        uses: actions/github-script@v3
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            github.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `Deployed sample apps:
+              - [Chat](https://acs-ui-dev-web-proxy-server-evd5c9e6guafaehu.westus2-01.azurewebsites.net/pr${{ github.event.number }}/chat/index.html)
+              - [Call](https://acs-ui-dev-web-proxy-server-evd5c9e6guafaehu.westus2-01.azurewebsites.net/pr${{ github.event.number }}/calling/index.html)
+              - [CallWithChat](https://acs-ui-dev-web-proxy-server-evd5c9e6guafaehu.westus2-01.azurewebsites.net/pr${{ github.event.number }}/callwithchat/index.html)`
+            })
 
   build_static_html_composites_sample:
     needs: get_matrix
