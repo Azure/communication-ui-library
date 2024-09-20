@@ -654,7 +654,7 @@ jobs:
         working-directory: samples/Calling
       - name: Upload build artifact
         if: ${{ matrix.flavor == 'beta'}}
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: calling-build
           path: samples/Calling/calling.zip
@@ -702,7 +702,7 @@ jobs:
         working-directory: samples/Chat
       - name: Upload build artifact
         if: ${{ matrix.flavor == 'beta'}}
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: chat-build
           path: samples/Chat/chat.zip
@@ -750,7 +750,7 @@ jobs:
         working-directory: samples/CallWithChat
       - name: Upload build artifact
         if: ${{ matrix.flavor == 'beta'}}
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: callwithchat-build
           path: samples/CallWithChat/callwithchat.zip
