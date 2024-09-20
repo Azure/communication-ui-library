@@ -379,6 +379,11 @@ export interface CallCompositeStrings {
   videoEffectsPaneBackgroundSelectionTitle: string;
 
   /**
+   * Aria label for video effects pane
+   */
+  videoEffectsPaneAriaLabel: string;
+
+  /**
    * Label for the button to open effects
    */
   configurationPageVideoEffectsButtonLabel?: string;

@@ -20,6 +20,7 @@ export interface SidePaneProps {
   mobileView?: boolean;
   maxWidth?: string;
   minWidth?: string;
+  ariaLabel?: string;
 
   // legacy arguments to be removed in breaking change
   disablePeopleButton?: boolean;
@@ -99,6 +100,10 @@ export const SidePane = (props: SidePaneProps): JSX.Element => {
 
   return (
     <Stack
+      aria-label={props.ariaLabel}
+      data-is-focusable={!!props.ariaLabel}
+      role={props.ariaLabel ? 'navigation' : undefined}
+      tabIndex={props.ariaLabel ? 0 : undefined}
       verticalFill
       grow
       styles={paneStyles}
