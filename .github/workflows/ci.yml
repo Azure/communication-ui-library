@@ -650,7 +650,8 @@ jobs:
         run: |
           rush build -o server
           npm run package
-          zip -r calling.zip dist/*
+          cd dist
+          zip -r ../calling.zip .
         working-directory: samples/Calling
       - name: Upload build artifact
         if: ${{ matrix.flavor == 'beta'}}
@@ -698,7 +699,8 @@ jobs:
         run: |
           rush build -o server
           npm run package
-          zip -r chat.zip dist/*
+          cd dist
+          zip -r ../chat.zip .
         working-directory: samples/Chat
       - name: Upload build artifact
         if: ${{ matrix.flavor == 'beta'}}
@@ -746,7 +748,8 @@ jobs:
         run: |
           rush build -o server
           npm run package
-          zip -r callwithchat.zip dist/*
+          cd dist
+          zip -r ../callwithchat.zip .
         working-directory: samples/CallWithChat
       - name: Upload build artifact
         if: ${{ matrix.flavor == 'beta'}}
