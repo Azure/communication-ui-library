@@ -656,7 +656,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: calling
-          path: samples/Calling/dist/**/*
+          path: samples/Calling/dist/*
 
   build_chat_sample:
     needs: get_matrix
@@ -703,7 +703,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: chat
-          path: samples/Chat/dist/**/*
+          path: samples/Chat/dist/*
 
   build_call_with_chat_sample:
     needs: get_matrix
@@ -750,10 +750,10 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: callwithchat
-          path: samples/CallWithChat/dist/**/*
+          path: samples/CallWithChat/dist/*
 
   deploy_samples:
-    name: Deploy samples to Staging
+    name: Deploy samples to staging
     needs: [build_chat_sample, build_calling_sample, build_call_with_chat_sample]
     runs-on: ubuntu-latest
     permissions:
@@ -764,17 +764,17 @@ jobs:
       - name: Download chat sample artifact
         uses: actions/download-artifact@v3
         with:
-          name: chat-build
+          name: chat
           path: samples/Chat
       - name: Download calling sample artifact
         uses: actions/download-artifact@v3
         with:
-          name: calling-build
+          name: calling
           path: samples/Calling
       - name: Download callwithchat sample artifact
         uses: actions/download-artifact@v3
         with:
-          name: callwithchat-build
+          name: callwithchat
           path: samples/CallWithChat
       # Get version name.
       # - If the run is a PR, use pr + the PR number.
