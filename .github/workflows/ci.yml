@@ -756,7 +756,7 @@ jobs:
           path: samples/CallWithChat/callwithchat.zip
 
   deploy_samples:
-    needs: [build_chat_sample, build_call_sample, build_call_with_chat_sample]
+    needs: [build_chat_sample, build_calling_sample, build_call_with_chat_sample]
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
