@@ -761,6 +761,9 @@ jobs:
       id-token: write
     environment: staging
     steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
       - name: Download chat sample artifact
         uses: actions/download-artifact@v4
         with:
@@ -780,9 +783,6 @@ jobs:
       # - If the run is a PR, use pr + the PR number.
       # - If the run is CI on main branch, use "latest".
       # - If the run is on a release branch, use the version in the package.json.
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
       - name: Get version name
         id: get_version
         run: |
