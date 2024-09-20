@@ -764,17 +764,17 @@ jobs:
     environment: staging
     steps:
       - name: Download chat sample artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: chat-build
           path: samples/Chat
       - name: Download calling sample artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: calling-build
           path: samples/Calling
       - name: Download callwithchat sample artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: callwithchat-build
           path: samples/CallWithChat
