@@ -14,9 +14,7 @@ import { RaisedHand } from '@azure/communication-calling';
 /* @conditional-compile-remove(breakout-rooms) */
 import { BreakoutRoom, BreakoutRoomsSettings } from '@azure/communication-calling';
 
-/* @conditional-compile-remove(teams-meeting-conference) */
 import { TeamsMeetingAudioConferencingDetails } from '@azure/communication-calling';
-/* @conditional-compile-remove(teams-meeting-conference) */
 import { convertConferencePhoneInfo } from './Converter';
 
 import { CapabilitiesChangeInfo, ParticipantCapabilities } from '@azure/communication-calling';
@@ -26,7 +24,7 @@ import { CaptionsKind, CaptionsInfo as AcsCaptionsInfo } from '@azure/communicat
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
 import { AzureLogger, createClientLogger, getLogLevel } from '@azure/logger';
-import EventEmitter from 'events';
+import { EventEmitter } from 'events';
 import { enableMapSet, enablePatches, Patch, produce } from 'immer';
 import {
   CallEndReason,
@@ -95,11 +93,7 @@ export class CallContext {
   /* @conditional-compile-remove(breakout-rooms) */
   private _latestCallIdsThatPushedNotifications: Partial<Record<NotificationTarget, string>> = {};
 
-  constructor(
-    userId: CommunicationIdentifierKind,
-    maxListeners = 50,
-    /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId?: string
-  ) {
+  constructor(userId: CommunicationIdentifierKind, maxListeners = 50) {
     this._logger = createClientLogger('communication-react:calling-context');
     this._state = {
       calls: {},
@@ -116,7 +110,6 @@ export class CallContext {
       callAgent: undefined,
       userId: userId,
       /* @conditional-compile-remove(unsupported-browser) */ environmentInfo: undefined,
-      /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId: alternateCallerId,
       latestErrors: {} as CallErrors,
       /* @conditional-compile-remove(breakout-rooms) */ latestNotifications: {} as CallNotifications
     };
@@ -194,7 +187,7 @@ export class CallContext {
         existingCall.captionsFeature.currentSpokenLanguage = call.captionsFeature.currentSpokenLanguage;
         existingCall.captionsFeature.currentCaptionLanguage = call.captionsFeature.currentCaptionLanguage;
         existingCall.info = call.info;
-        /* @conditional-compile-remove(teams-meeting-conference) */
+
         existingCall.meetingConference = call.meetingConference;
       } else {
         draft.calls[latestCallId] = call;
@@ -546,7 +539,6 @@ export class CallContext {
     });
   }
 
-  /* @conditional-compile-remove(hide-attendee-name) */
   public setHideAttendeeNames(callId: string, capabilitiesChangeInfo: CapabilitiesChangeInfo): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
@@ -579,7 +571,6 @@ export class CallContext {
     });
   }
 
-  /* @conditional-compile-remove(teams-meeting-conference) */
   public setTeamsMeetingConference(
     callId: string,
     teamsMeetingConferenceDetails: TeamsMeetingAudioConferencingDetails

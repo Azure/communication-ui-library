@@ -22,7 +22,6 @@ import {
 } from './VideoGallery/useVideoStreamLifecycleMaintainer';
 import { useVideoTileContextualMenuProps } from './VideoGallery/useVideoTileContextualMenuProps';
 import { VideoTile } from './VideoTile';
-/* @conditional-compile-remove(hide-attendee-name) */
 import { _formatString } from '@internal/acs-ui-common';
 import { ReactionResources } from '../types/ReactionTypes';
 import { MeetingReactionOverlay } from './MeetingReactionOverlay';
@@ -192,18 +191,18 @@ export const _RemoteVideoTile = React.memo(
       [setDrawerMenuItemProps, contextualMenuProps]
     );
 
-    let displayName = remoteParticipant.displayName || strings.displayNamePlaceholder;
-    /* @conditional-compile-remove(hide-attendee-name) */
     const attendeeRoleString = props.strings?.attendeeRole;
 
-    /* @conditional-compile-remove(hide-attendee-name) */
-    const formatDisplayName = (): string => {
-      if (displayName && attendeeRoleString) {
-        return _formatString(displayName, { AttendeeRole: attendeeRoleString });
+    const formatDisplayName = (displayName: string, role: string): string => {
+      if (displayName && role) {
+        return _formatString(displayName, { AttendeeRole: role });
       }
       return displayName;
     };
-
+    const displayName = formatDisplayName(
+      remoteParticipant.displayName ? remoteParticipant.displayName : strings.displayNamePlaceholder,
+      attendeeRoleString
+    );
     const formatInitialsName = (): string | undefined => {
       if (remoteParticipant.displayName && attendeeRoleString) {
         return _formatString(remoteParticipant.displayName, { AttendeeRole: attendeeRoleString });
@@ -219,8 +218,6 @@ export const _RemoteVideoTile = React.memo(
       />
     );
 
-    /* @conditional-compile-remove(hide-attendee-name) */
-    displayName = formatDisplayName();
     return (
       <Stack
         tabIndex={menuKind === 'drawer' ? 0 : undefined}

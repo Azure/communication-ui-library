@@ -3,14 +3,13 @@
 
 import { DominantSpeakersInfo } from '@azure/communication-calling';
 import { SpotlightedParticipant } from '@azure/communication-calling';
-/* @conditional-compile-remove(hide-attendee-name) */
 import { ParticipantRole } from '@azure/communication-calling';
 import { memoizeFnAll, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { RemoteParticipantState, RemoteVideoStreamState } from '@internal/calling-stateful-client';
 import { VideoGalleryRemoteParticipant, VideoGalleryStream } from '@internal/react-components';
 import memoizeOne from 'memoize-one';
 import { _convertParticipantState, ParticipantConnectionState } from './callUtils';
-/* @conditional-compile-remove(hide-attendee-name) */
+import { _isRingingPSTNParticipant } from './callUtils';
 import { maskDisplayNameWithRole } from './callUtils';
 import { checkIsSpeaking } from './SelectorUtils';
 import { isPhoneNumberIdentifier } from '@azure/communication-common';
@@ -27,9 +26,7 @@ export const _dominantSpeakersWithFlatId = (dominantSpeakers?: DominantSpeakersI
 /** @internal */
 export type _VideoGalleryRemoteParticipantsMemoFn = (
   remoteParticipants: RemoteParticipantState[] | undefined,
-  /* @conditional-compile-remove(hide-attendee-name) */
   isHideAttendeeNamesEnabled?: boolean,
-  /* @conditional-compile-remove(hide-attendee-name) */
   localUserRole?: ParticipantRole
 ) => VideoGalleryRemoteParticipant[];
 
@@ -37,7 +34,7 @@ export type _VideoGalleryRemoteParticipantsMemoFn = (
 export const _videoGalleryRemoteParticipantsMemo: _VideoGalleryRemoteParticipantsMemoFn = (
   remoteParticipants: RemoteParticipantState[] | undefined,
   isHideAttendeeNamesEnabled?: boolean,
-  /* @conditional-compile-remove(hide-attendee-name) */ localUserRole?
+  localUserRole?
 ): VideoGalleryRemoteParticipant[] => {
   if (!remoteParticipants) {
     return [];
@@ -58,10 +55,8 @@ export const _videoGalleryRemoteParticipantsMemo: _VideoGalleryRemoteParticipant
         })
         .map((participant: RemoteParticipantState) => {
           const state = _convertParticipantState(participant);
-          let displayName = participant.displayName;
-          /* @conditional-compile-remove(hide-attendee-name) */
-          displayName = maskDisplayNameWithRole(
-            displayName,
+          const displayName = maskDisplayNameWithRole(
+            participant.displayName,
             localUserRole,
             participant.role,
             isHideAttendeeNamesEnabled

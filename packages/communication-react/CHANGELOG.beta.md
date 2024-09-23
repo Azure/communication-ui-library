@@ -1,8 +1,40 @@
 # Change Log - @azure/communication-react
 
-This log was last generated on Tue, 06 Aug 2024 19:45:27 GMT and should not be manually modified.
+This log was last generated on Fri, 06 Sep 2024 23:30:32 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.19.0-beta.3](https://github.com/azure/communication-ui-library/tree/1.19.0-beta.3)
+
+Fri, 06 Sep 2024 23:30:32 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.19.0-beta.2...1.19.0-beta.3)
+
+### Bug Fixes
+- Fix lazy loading for Composites ([PR #5126](https://github.com/azure/communication-ui-library/pull/5126) by 107075081+Leah-Xia-Microsoft@users.noreply.github.com)
+
+
+## [1.19.0-beta.2](https://github.com/azure/communication-ui-library/tree/1.19.0-beta.2)
+
+Mon, 26 Aug 2024 18:25:58 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.19.0-beta.1...1.19.0-beta.2)
+
+### Features
+
+#### Breakout Rooms
+
+We are excited to announce that the Azure Communication Services Web UI Library enables ACS users to be moved to assigned breakout rooms when in Teams meetings. ACS
+users will readily be able move to breakout rooms in the Call and CallWithChat composite. In the CallWithChat composite, the chat thread will be updated when in the breakout room. Breakout rooms can also be incorporated into apps that use only our stateful layer. It is important to note that ACS users will not yet be able to choose their own breakout room or manage breakout rooms as a Teams user with an organizer role.
+
+### Improvements
+- Update communication calling to 1.28.1-beta.4 and 1.27.5 ([PR #5051](https://github.com/azure/communication-ui-library/pull/5051) by edwardlee@microsoft.com)
+- Add PPTLive presenter information ([PR #4494](https://github.com/azure/communication-ui-library/pull/4494) by 93549644+ShaunaSong@users.noreply.github.com)
+### Bug Fixes
+- Fix CallComposite camera prompts to respect deviceChecks property ([PR #5052](https://github.com/azure/communication-ui-library/pull/5052) by 2684369+JamesBurnside@users.noreply.github.com)
+- Fix error when listening to capabilitiesChanged and spotlightChanged events from AzureCommunicationCallWithChatAdapter ([PR #5066](https://github.com/azure/communication-ui-library/pull/5066) by 79475487+mgamis-msft@users.noreply.github.com)
+- Fix bug when adapter caption events are not firing ([PR #5065](https://github.com/azure/communication-ui-library/pull/5065) by 96077406+carocao-msft@users.noreply.github.com)
+- Update RoosterJS version to fix some issues with keyboard table navigation in Rich Text Editor components ([PR #5050](https://github.com/azure/communication-ui-library/pull/5050) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- Fix chat selectors using read receipts from state ([PR #5063](https://github.com/azure/communication-ui-library/pull/5063) by 79475487+mgamis-msft@users.noreply.github.com)
+
 
 ## [1.19.0-beta.1](https://github.com/azure/communication-ui-library/tree/1.19.0-beta.1)
 
@@ -19,8 +51,10 @@ We are excited to announce that the Azure Communication Services Web UI Library 
 
 This release brings Rich Text Editor to the ChatComposite and the CallWithChatComposite with the following new features:
 - We have added support for sending/editing messages that include images when in a Teams meeting using the CallWithChatComposite.
-- We now support setting a Text Only MessagingPolicy on the ChatComposite. This prevents attachments and inline images to be added as part of a message in Send Box and Message Edit Box.
 - An additional `onPaste` callback that can be used to customize content pasted to Rich Text Editor.
+
+#### Text Only Messaging Policy
+We now support the ability to set a text-only messaging policy for a chat thread. In Teams Meeting Chat scenarios, the CallWithChatComposite will enable/disable image upload based on the text only message policy of the meeting.
 
 ### Improvements
 - Update @fluentui-contrib/react-chat to fix focus issues in chat component ([PR #4862](https://github.com/azure/communication-ui-library/pull/4862) by 98852890+vhuseinova-msft@users.noreply.github.com)

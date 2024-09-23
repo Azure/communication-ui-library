@@ -28,21 +28,6 @@ export type {
   AreParamEqual
 } from '../../acs-ui-common/src';
 
-/* @conditional-compile-remove(composite-js-helpers) */
-export {
-  loadOutboundCallComposite,
-  loadCallComposite,
-  loadChatComposite,
-  loadCallWithChatComposite
-} from '../../acs-ui-javascript-loaders/src';
-/* @conditional-compile-remove(composite-js-helpers) */
-export type {
-  OutboundCallCompositeLoaderProps,
-  CallCompositeLoaderProps,
-  ChatCompositeLoaderProps,
-  CallWithChatCompositeLoaderProps
-} from '../../acs-ui-javascript-loaders/src';
-
 // Not to export chat/calling specific hook from binding package
 export type {
   CallClientProviderProps,
@@ -55,6 +40,9 @@ export type {
 } from '../../calling-component-bindings/src';
 
 export type { VideoBackgroundEffectsDependency, CallingHandlersOptions } from '../../calling-component-bindings/src';
+
+/* @conditional-compile-remove(DNS) */
+export type { DeepNoiseSuppressionEffectDependency } from '../../calling-component-bindings/src';
 
 export type { CaptionsOptions } from '../../calling-component-bindings/src';
 
@@ -190,7 +178,7 @@ export type {
   IncomingCallNotificationStrings,
   IncomingCallNotificationStyles,
   IncomingCallStackProps,
-  ActiveIncomingCall
+  IncomingCallStackCall
 } from '../../react-components/src';
 
 /* @conditional-compile-remove(call-readiness) */
@@ -455,5 +443,4 @@ export type {
   NotificationType,
   ActiveNotification
 } from '../../react-components/src';
-/* @conditional-compile-remove(teams-meeting-conference) */
 export type { MeetingConferencePhoneInfoModalStrings } from '../../react-components/src';

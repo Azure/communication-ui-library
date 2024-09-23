@@ -17,6 +17,8 @@ import {
 import { attachmentUploadOptions } from '../../../../Chat/src/app/utils/uploadHandler';
 
 import { onResolveVideoEffectDependencyLazy, AzureCommunicationCallAdapterOptions } from '@azure/communication-react';
+/* @conditional-compile-remove(DNS) */
+import { onResolveDeepNoiseSuppressionDependencyLazy } from '@azure/communication-react';
 import { Spinner } from '@fluentui/react';
 import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import { useSwitchableFluentTheme } from '../theming/SwitchableFluentThemeProvider';
@@ -50,37 +52,37 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     const videoBackgroundImages = [
       {
         key: 'ab1',
-        url: '/assets/backgrounds/contoso.png',
+        url: 'assets/backgrounds/contoso.png',
         tooltipText: 'Custom Background'
       },
       {
         key: 'ab2',
-        url: '/assets/backgrounds/abstract2.jpg',
+        url: 'assets/backgrounds/abstract2.jpg',
         tooltipText: 'Custom Background'
       },
       {
         key: 'ab3',
-        url: '/assets/backgrounds/abstract3.jpg',
+        url: 'assets/backgrounds/abstract3.jpg',
         tooltipText: 'Custom Background'
       },
       {
         key: 'ab4',
-        url: '/assets/backgrounds/room1.jpg',
+        url: 'assets/backgrounds/room1.jpg',
         tooltipText: 'Custom Background'
       },
       {
         key: 'ab5',
-        url: '/assets/backgrounds/room2.jpg',
+        url: 'assets/backgrounds/room2.jpg',
         tooltipText: 'Custom Background'
       },
       {
         key: 'ab6',
-        url: '/assets/backgrounds/room3.jpg',
+        url: 'assets/backgrounds/room3.jpg',
         tooltipText: 'Custom Background'
       },
       {
         key: 'ab7',
-        url: '/assets/backgrounds/room4.jpg',
+        url: 'assets/backgrounds/room4.jpg',
         tooltipText: 'Custom Background'
       }
     ];
@@ -90,12 +92,16 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
 
         onResolveDependency: onResolveVideoEffectDependencyLazy
       },
+      /* @conditional-compile-remove(DNS) */
+      deepNoiseSuppressionOptions: {
+        onResolveDependency: onResolveDeepNoiseSuppressionDependencyLazy
+      },
       reactionResources: {
-        likeReaction: { url: '/assets/reactions/likeEmoji.png', frameCount: 102 },
-        heartReaction: { url: '/assets/reactions/heartEmoji.png', frameCount: 102 },
-        laughReaction: { url: '/assets/reactions/laughEmoji.png', frameCount: 102 },
-        applauseReaction: { url: '/assets/reactions/clapEmoji.png', frameCount: 102 },
-        surprisedReaction: { url: '/assets/reactions/surprisedEmoji.png', frameCount: 102 }
+        likeReaction: { url: 'assets/reactions/likeEmoji.png', frameCount: 102 },
+        heartReaction: { url: 'assets/reactions/heartEmoji.png', frameCount: 102 },
+        laughReaction: { url: 'assets/reactions/laughEmoji.png', frameCount: 102 },
+        applauseReaction: { url: 'assets/reactions/clapEmoji.png', frameCount: 102 },
+        surprisedReaction: { url: 'assets/reactions/surprisedEmoji.png', frameCount: 102 }
       }
     };
   }, []);

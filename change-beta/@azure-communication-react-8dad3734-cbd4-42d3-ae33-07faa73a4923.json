@@ -1,0 +1,9 @@
+{
+  "type": "patch",
+  "area": "fix",
+  "workstream": "CallSubscriber",
+  "comment": "Safely subscribe to on stateChanged events to prevent related events from failing if listeners throw an error",
+  "packageName": "@azure/communication-react",
+  "email": "edwardlee@microsoft.com",
+  "dependentChangeType": "patch"
+}

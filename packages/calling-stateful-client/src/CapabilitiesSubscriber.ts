@@ -33,7 +33,6 @@ export class CapabilitiesSubscriber {
 
   private capabilitiesChanged = (data: CapabilitiesChangeInfo): void => {
     this._context.setCapabilities(this._callIdRef.callId, this._capabilitiesFeature.capabilities, data);
-    /* @conditional-compile-remove(hide-attendee-name) */
     if (data.oldValue.viewAttendeeNames !== data.newValue.viewAttendeeNames) {
       this._context.setHideAttendeeNames(this._callIdRef.callId, data);
     }

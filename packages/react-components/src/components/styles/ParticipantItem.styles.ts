@@ -1,14 +1,14 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { IStyle, mergeStyles } from '@fluentui/react';
+import { IStyle, mergeStyles, Theme } from '@fluentui/react';
 
 const menuIconClass = 'ms-acs-participant-item-menu-icon';
 
 /**
  * @private
  */
-export const participantItemContainerStyle = (options: { clickable: boolean }): IStyle => {
+export const participantItemContainerStyle = (options: { clickable: boolean }, theme: Theme): IStyle => {
   return {
     paddingTop: '0.25rem',
     paddingBottom: '0.25rem',
@@ -20,7 +20,8 @@ export const participantItemContainerStyle = (options: { clickable: boolean }): 
     ':focus-visible': {
       [` .${menuIconClass}`]: {
         display: 'flex'
-      }
+      },
+      outline: `0.1rem solid ${theme.palette.themePrimary}`
     }
   };
 };

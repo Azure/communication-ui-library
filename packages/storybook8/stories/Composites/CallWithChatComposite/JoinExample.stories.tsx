@@ -75,15 +75,6 @@ export default {
     endpointUrl: '',
     displayName: 'John Smith',
     formFactor: 'desktop',
-    callWithChatControlOptions: {
-      microphoneButton: true,
-      cameraButton: true,
-      screenShareButton: true,
-      devicesButton: true,
-      peopleButton: true,
-      chatButton: true,
-      displayType: 'default'
-    },
     richTextEditor: false
   },
   parameters: {

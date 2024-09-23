@@ -2,6 +2,7 @@ import { Canvas, Meta, Source, ArgTypes } from '@storybook/blocks';
 import { ChatComposite } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
 import { SingleLineBetaBanner } from '../../BetaBanners/SingleLineBetaBanner';
+import * as ChatCompositStory from './index.stories';
 
 import { JoinExistingChatThread } from './JoinExistingChatThread.stories';
 import { overviewPageImagesStackStyle } from '../../constants';
@@ -11,7 +12,7 @@ import customDateTimeFormatExampleText from '!!raw-loader!./snippets/CustomDateT
 import customBehaviorExampleText from '!!raw-loader!./snippets/CustomizeBehavior.snippet.tsx';
 import richTextEditorExampleText from '!!raw-loader!./snippets/RichTextEditor.snippet.tsx';
 
-<Meta title="Composites/ChatComposite" />
+<Meta of={ChatCompositStory} />
 
 # ChatComposite
 
@@ -51,15 +52,15 @@ tokens are served to the client application that then passes it to the ChatCompo
 ## Theming
 
 ChatComposite can be themed with Fluent UI themes, just like the base components. Look at the [ChatComposite
-themes canvas](./?path=/story/composites-chat-themeexample--theme-example) to see theming in action or the
-[overall theming example](./?path=/story/theming--page) to see how theming works for all the components in
+themes canvas](./?path=/story/composites-chatcomposite-theme-example--theme-example) to see theming in action or the
+[overall theming example](./?path=/docs/concepts-theming--docs) to see how theming works for all the components in
 this UI library.
 
 ## Fonts
 
 Custom fonts can be applied to the ChatComposite using the in built theming mechanism. Look at the
-[ChatComposite themes canvas](./?path=/story/composites-chat-themeexample--theme-example) to see custom fonts
-in action or the [overall theming example](./?path=/story/theming--page) to see how theming works for all the
+[ChatComposite themes canvas](./?path=/story/composites-chatcomposite-theme-example--theme-example) to see custom fonts
+in action or the [overall theming example](./?path=/docs/concepts-theming--docs) to see how theming works for all the
 components in this UI library. Read more about fonts in [Fluent UI Typography
 here](https://developer.microsoft.com/fluentui#/styles/web/typography).
 
@@ -104,21 +105,21 @@ It is a primary tenet of Azure Communication Services that customers bring their
 Customers then use the Azure Communication Services identity service to create corresponding authentication
 tokens for their users. The ChatComposite allows developers to easily inject custom data associated with these
 user identities. Look at the [example
-canvas](./?path=/story/composites-chat-customdatamodelexample--custom-data-model-example) to see how the name
+canvas](./?path=/story/composites-chatcomposite-custom-data-model-example--custom-data-model-example) to see how the name
 and avatar displayed for users can be provided by Contoso.
 
 Note that, by default, the initials text color is setup to `white`
 
 <Source code={customDataModelExampleContainerText} />
 
-See the [Custom data model example documentation](./?path=/docs/customuserdatamodel--page) to understand how
+See the [Custom data model example documentation](./?path=/docs/concepts-custom-user-data-model--docs) to understand how
 custom data model can be injected for all the components in this UI library.
 
 ## Customize Behavior
 
 The `ChatAdapter` makes it possible to arbitrarily modify the communication between the `ChatComposite`
 component and the Azure Communication Services backend. This adds powerful customization possibilities. The
-[Customized Behavior Example](./?path=/story/composites-chat-custombehaviorexample--custom-behavior-example)
+[Customized Behavior Example](./?path=/story/composites-chatcomposite-custom-behavior-example--custom-behavior-example)
 shows a way to intercept messages entered by the user and modify them before sending them on to the backend.
 
 <Source code={customBehaviorExampleText} />
@@ -152,10 +153,13 @@ details. File sharing in Teams interop scenarios is available with the CallWithC
 <SingleLineBetaBanner />
 
 The following example show how to enable rich text editor for message editing by providing the `richTextEditor` property.
-The insert inline images feature is only supported in the Teams Interop chats. Please try it out in the Join Teams Meeting page.
+The insert inline images feature is only supported in the Teams Interop chats. Please try it out in the [Join Teams Meeting](./?path=/story/composites-callwithchatcomposite-join-teams-meeting--join-teams-meeting) page.
 
 <Source code={richTextEditorExampleText} />
 
 ## Props
 
-<ArgTypes of={ChatComposite} />
+<ArgTypes
+  of={ChatCompositStory}
+  exclude={['fluentTheme', 'icons', 'locale', 'rtl', 'onFetchAvatarPersonaData', 'onFetchParticipantMenuItems']}
+/>

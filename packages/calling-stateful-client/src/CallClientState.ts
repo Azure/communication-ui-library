@@ -641,7 +641,6 @@ export interface CallState {
    * Proxy of {@link @azure/communication-calling#CapabilitiesFeature}.
    */
   capabilitiesFeature?: CapabilitiesFeatureState;
-  /* @conditional-compile-remove(hide-attendee-name) */
   /**
    * Hide attendee names in teams meeting
    */
@@ -655,7 +654,6 @@ export interface CallState {
    */
   info?: TeamsCallInfo | /* @conditional-compile-remove(calling-beta-sdk) */ CallInfo;
 
-  /* @conditional-compile-remove(teams-meeting-conference) */
   /**
    * Proxy of {@link @azure/communication-calling#TeamsMeetingAudioConferencingCallFeature}.
    */
@@ -757,7 +755,7 @@ export interface IncomingCallState {
 
 /**
  * State only version of {@link @azure/communication-calling#TeamsIncomingCall}
- * @beta
+ * @public
  */
 export interface TeamsIncomingCallState {
   /**

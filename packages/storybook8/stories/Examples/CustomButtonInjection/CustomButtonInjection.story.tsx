@@ -89,22 +89,24 @@ const CustomButtonInjectionStory = (args: any): JSX.Element => {
   ];
 
   return (
-    <CallComposite
-      adapter={adapter}
-      formFactor={args.formFactor}
-      options={{
-        callControls: {
-          raiseHandButton: false,
-          screenShareButton: false,
-          peopleButton: false,
-          onFetchCustomButtonProps: args.allowRawObjectInput
-            ? args.options
-            : args.injectMaximumNumberOfButtons
-              ? maxCustomButtonsForInjection
-              : customButtonArray
-        }
-      }}
-    />
+    <div style={{ width: '100wh', height: '100vh' }}>
+      <CallComposite
+        adapter={adapter}
+        formFactor={args.formFactor}
+        options={{
+          callControls: {
+            raiseHandButton: false,
+            screenShareButton: false,
+            peopleButton: false,
+            onFetchCustomButtonProps: args.allowRawObjectInput
+              ? args.options
+              : args.injectMaximumNumberOfButtons
+                ? maxCustomButtonsForInjection
+                : customButtonArray
+          }
+        }}
+      />
+    </div>
   );
 };
 

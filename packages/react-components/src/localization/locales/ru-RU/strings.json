@@ -99,14 +99,15 @@
     "cameraMenuTitle": "Камера",
     "cameraMenuTooltip": "Выбрать камеру",
     "cameraButtonSplitRoleDescription": "Разворачивающаяся кнопка",
-    "onSplitButtonAriaLabel": "Отключить камеру и параметры камеры",
-    "offSplitButtonAriaLabel": "Включить камеру и параметры камеры",
+    "onSplitButtonAriaLabel": "Отключить камеру",
+    "offSplitButtonAriaLabel": "Включить камеру",
     "cameraActionTurnedOnAnnouncement": "Камера включена",
     "cameraActionTurnedOffAnnouncement": "Камера отключена",
     "onSplitButtonPrimaryActionCamera": "Выключить камеру",
     "offSplitButtonPrimaryActionCamera": "Включить камеру",
     "cameraPrimaryActionSplitButtonTitle": "Использовать камеру",
-    "videoEffectsMenuItemTitle": "Эффекты"
+    "videoEffectsMenuItemTitle": "Эффекты",
+    "cameraButtonAriaDescription": "параметры камеры"
   },
   "microphoneButton": {
     "onLabel": "Микрофон",
@@ -119,13 +120,17 @@
     "speakerMenuTitle": "Динамик",
     "speakerMenuTooltip": "Выбрать динамик",
     "microphoneButtonSplitRoleDescription": "Разворачивающаяся кнопка",
-    "onSplitButtonAriaLabel": "Отключить микрофон и параметры звука",
-    "offSplitButtonAriaLabel": "Включить микрофон и параметры звука",
+    "onSplitButtonAriaLabel": "Отключить микрофон",
+    "offSplitButtonAriaLabel": "Включить микрофон",
     "microphoneActionTurnedOnAnnouncement": "Ваш микрофон включен",
     "microphoneActionTurnedOffAnnouncement": "Ваш микрофон отключен",
     "offSplitButtonMicrophonePrimaryAction": "Включить микрофон",
     "onSplitButtonMicrophonePrimaryAction": "Отключить микрофон",
-    "microphonePrimaryActionSplitButtonTitle": "Использовать микрофон"
+    "microphonePrimaryActionSplitButtonTitle": "Использовать микрофон",
+    "microphoneAriaDescription": "Параметры звука",
+    "deepNoiseSuppressionTitle": "Подавление шума",
+    "deepNoiseSuppressionOnAnnouncement": "Глубокое подавление шума включено",
+    "deepNoiseSuppressionOffAnnouncement": "Глубокое подавление шума отключено"
   },
   "devicesButton": {
     "label": "Устройства",
@@ -452,6 +457,31 @@
       "title": "Транскрибирование остановлено.",
       "message": "Сейчас для этого собрания ведется только запись.",
       "dismissButtonAriaLabel": "Закрыть"
+    },
+    "assignedBreakoutRoomOpened": {
+      "title": "Мы переместим вас в назначенную комнату через 5 секунд.",
+      "dismissButtonAriaLabel": "Закрыть"
+    },
+    "assignedBreakoutRoomChanged": {
+      "title": "Переговорная комната изменилась",
+      "message": "Мы переместим вас в назначенную комнату через 5 секунд.",
+      "dismissButtonAriaLabel": "Закрыть"
+    },
+    "assignedBreakoutRoomOpenedPromptJoin": {
+      "title": "Присоединиться к переговорной комнате?",
+      "message": "Вам назначена переговорная комната.",
+      "dismissButtonAriaLabel": "Закрыть",
+      "primaryButtonLabel": "Присоединиться к комнате",
+      "secondaryButtonLabel": "Позже"
+    },
+    "breakoutRoomJoined": {
+      "title": "Вы присоединились к переговорной комнате.",
+      "dismissButtonAriaLabel": "Закрыть"
+    },
+    "breakoutRoomClosingSoon": {
+      "title": "Скоро будет достигнуто ограничение времени для комнаты.",
+      "message": "Эта комната будет закрыта через 30 секунд",
+      "dismissButtonAriaLabel": "Закрыть"
     }
   },
   "videoGallery": {
@@ -479,7 +509,8 @@
     "stopSpotlightVideoTileMenuLabel": "Не закреплять",
     "stopSpotlightOnSelfVideoTileMenuLabel": "Открепить",
     "attendeeRole": "Участник",
-    "muteParticipantMenuItemLabel": "Отключить микрофон"
+    "muteParticipantMenuItemLabel": "Отключить микрофон",
+    "waitingScreenText": "Ожидание присоединения других участников"
   },
   "dialpad": {
     "placeholderText": "Введите номер телефона",
@@ -633,6 +664,7 @@
     "incomingCallNoticicationRejectAriaLabel": "Отклонить",
     "incomingCallNotificationAcceptButtonLabel": "Принять",
     "incomingCallNotificationRejectButtonLabel": "Отклонить",
-    "incomingCallNotificationAccceptWithVideoButtonLabel": "Ответить с видео"
+    "incomingCallNotificationAccceptWithVideoButtonLabel": "Ответить с видео",
+    "incomingCallNotificationDismissButtonAriaLabel": "Закрыть"
   }
 }

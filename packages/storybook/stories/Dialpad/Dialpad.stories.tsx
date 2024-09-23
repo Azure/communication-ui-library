@@ -7,7 +7,6 @@ import { Canvas, Description, Heading, Props, Subheading, Title } from '@storybo
 import { Meta } from '@storybook/react/types-6-0';
 import MobileDetect from 'mobile-detect';
 import React from 'react';
-import { SingleLineBetaBanner } from '../BetaBanners/SingleLineBetaBanner';
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
 import { hiddenControl } from '../controlsUtils';
 import { CustomDialpadExample } from './snippets/CustomDialpad.snippet';
@@ -26,7 +25,6 @@ const getDocs: () => JSX.Element = () => {
   /* eslint-disable react/no-unescaped-entities */
   return (
     <>
-      <SingleLineBetaBanner topOfPage={true} />
       <Title>Dialpad</Title>
       <Heading>Dialpad modes</Heading>
       <Description>

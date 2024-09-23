@@ -16,6 +16,8 @@ import { AdapterNotifications } from '../../common/adapters';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
 import { ReactionResources } from '@internal/react-components';
+/* @conditional-compile-remove(DNS) */
+import { DeepNoiseSuppressionEffectDependency } from '@internal/calling-component-bindings';
 
 /**
  * UI state pertaining to the {@link CallWithChatComposite}.
@@ -75,7 +77,7 @@ export interface CallWithChatClientState {
   isTeamsMeeting: boolean;
   /* @conditional-compile-remove(PSTN-calls) */
   /** alternateCallerId for PSTN call */
-  alternateCallerId?: string | undefined;
+  alternateCallerId?: string;
   /* @conditional-compile-remove(unsupported-browser) */
   /** Environment information for system adapter is made on */
   environmentInfo?: EnvironmentInfo;
@@ -85,10 +87,25 @@ export interface CallWithChatClientState {
 
   /** Dependency to be injected for video background effects */
   onResolveVideoEffectDependency?: () => Promise<VideoBackgroundEffectsDependency>;
+  /* @conditional-compile-remove(DNS) */
+  /**
+   * Dependency to be injected for deep noise suppression effect.
+   * @beta
+   */
+  onResolveDeepNoiseSuppressionDependency?: () => Promise<DeepNoiseSuppressionEffectDependency>;
+  /* @conditional-compile-remove(DNS) */
+  /** State to track whether the noise suppression should be on by default.
+   * @beta
+   */
+  deepNoiseSuppressionOnByDefault?: boolean;
+  /* @conditional-compile-remove(DNS) */
+  /** State to track whether to hide the noise suppression button.
+   * @beta
+   */
+  hideDeepNoiseSuppressionButton?: boolean;
 
   /** State to track the selected video background effect */
   selectedVideoBackgroundEffect?: VideoBackgroundEffect;
-  /* @conditional-compile-remove(hide-attendee-name) */
   /** Hide attendee names in teams meeting */
   hideAttendeeNames?: boolean;
   /**
@@ -131,8 +148,10 @@ export function callWithChatAdapterStateFromBackingStates(callAdapter: CallAdapt
     environmentInfo: callAdapterState.environmentInfo,
     videoBackgroundImages: callAdapterState.videoBackgroundImages,
     onResolveVideoEffectDependency: callAdapterState.onResolveVideoEffectDependency,
+    /* @conditional-compile-remove(DNS) */
+    onResolveDeepNoiseSuppressionDependency: callAdapterState.onResolveDeepNoiseSuppressionDependency,
     selectedVideoBackgroundEffect: callAdapterState.selectedVideoBackgroundEffect,
-    /* @conditional-compile-remove(hide-attendee-name) */
+
     /** Hide attendee names in teams meeting */
     hideAttendeeNames: callAdapterState.hideAttendeeNames,
     reactions: callAdapterState.reactions
@@ -177,6 +196,12 @@ export function mergeCallAdapterStateIntoCallWithChatAdapterState(
     videoBackgroundImages: callAdapterState.videoBackgroundImages,
 
     onResolveVideoEffectDependency: callAdapterState.onResolveVideoEffectDependency,
+    /* @conditional-compile-remove(DNS) */
+    onResolveDeepNoiseSuppressionDependency: callAdapterState.onResolveDeepNoiseSuppressionDependency,
+    /* @conditional-compile-remove(DNS) */
+    deepNoiseSuppressionOnByDefault: callAdapterState.deepNoiseSuppressionOnByDefault,
+    /* @conditional-compile-remove(DNS) */
+    hideDeepNoiseSuppressionButton: callAdapterState.hideDeepNoiseSuppressionButton,
 
     selectedVideoBackgroundEffect: callAdapterState.selectedVideoBackgroundEffect
   };

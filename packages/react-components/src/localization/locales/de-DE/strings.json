@@ -99,14 +99,15 @@
     "cameraMenuTitle": "Kamera",
     "cameraMenuTooltip": "Kamera auswählen",
     "cameraButtonSplitRoleDescription": "Unterteilte Schaltfläche",
-    "onSplitButtonAriaLabel": "Kamera und Kameraoptionen deaktivieren",
-    "offSplitButtonAriaLabel": "Kamera und Kameraoptionen aktivieren",
+    "onSplitButtonAriaLabel": "Kamera ausschalten",
+    "offSplitButtonAriaLabel": "Kamera einschalten",
     "cameraActionTurnedOnAnnouncement": "Ihre Kamera wurde eingeschaltet.",
     "cameraActionTurnedOffAnnouncement": "Ihre Kamera wurde ausgeschaltet.",
     "onSplitButtonPrimaryActionCamera": "Kamera ausschalten",
     "offSplitButtonPrimaryActionCamera": "Kamera einschalten",
     "cameraPrimaryActionSplitButtonTitle": "Kamera verwenden",
-    "videoEffectsMenuItemTitle": "Effekte"
+    "videoEffectsMenuItemTitle": "Effekte",
+    "cameraButtonAriaDescription": "Kameraoptionen"
   },
   "microphoneButton": {
     "onLabel": "Mikrofon",
@@ -119,13 +120,17 @@
     "speakerMenuTitle": "Lautsprecher",
     "speakerMenuTooltip": "Lautsprecher auswählen",
     "microphoneButtonSplitRoleDescription": "Unterteilte Schaltfläche",
-    "onSplitButtonAriaLabel": "Mikrofon- und Audiooptionen stummschalten",
-    "offSplitButtonAriaLabel": "Stummschaltung von Mikrofon- und Audiooptionen aufheben",
+    "onSplitButtonAriaLabel": "Mikrofon stummschalten",
+    "offSplitButtonAriaLabel": "Stummschaltung des Mikrofons aufheben",
     "microphoneActionTurnedOnAnnouncement": "Ihr Mikrofon wurde eingeschaltet.",
     "microphoneActionTurnedOffAnnouncement": "Ihr Mikrofon wurde ausgeschaltet.",
-    "offSplitButtonMicrophonePrimaryAction": "Mikrofonstummschaltung aufheben",
+    "offSplitButtonMicrophonePrimaryAction": "Stummschaltung des Mikrofons aufheben",
     "onSplitButtonMicrophonePrimaryAction": "Mikrofon stummschalten",
-    "microphonePrimaryActionSplitButtonTitle": "Mikrofon verwenden"
+    "microphonePrimaryActionSplitButtonTitle": "Mikrofon verwenden",
+    "microphoneAriaDescription": "Audiooptionen",
+    "deepNoiseSuppressionTitle": "Rauschunterdrückung",
+    "deepNoiseSuppressionOnAnnouncement": "Die Unterdrückung tiefer Geräusche wurde aktiviert.",
+    "deepNoiseSuppressionOffAnnouncement": "Die Unterdrückung tiefer Geräusche wurde deaktiviert."
   },
   "devicesButton": {
     "label": "Geräte",
@@ -452,6 +457,31 @@
       "title": "Die Transkription wurde beendet.",
       "message": "Sie zeichnen nun nur diese Besprechung auf.",
       "dismissButtonAriaLabel": "Schließen"
+    },
+    "assignedBreakoutRoomOpened": {
+      "title": "Wir verschieben Sie in 5 Sekunden zu Ihrem zugewiesenen Raum.",
+      "dismissButtonAriaLabel": "Schließen"
+    },
+    "assignedBreakoutRoomChanged": {
+      "title": "Ihr Gruppenraum hat sich geändert.",
+      "message": "Wir verschieben Sie in 5 Sekunden zu Ihrem zugewiesenen Raum.",
+      "dismissButtonAriaLabel": "Schließen"
+    },
+    "assignedBreakoutRoomOpenedPromptJoin": {
+      "title": "Gruppenraum betreten?",
+      "message": "Sie wurden einem Gruppenraum zugewiesen.",
+      "dismissButtonAriaLabel": "Schließen",
+      "primaryButtonLabel": "Raum betreten",
+      "secondaryButtonLabel": "Später"
+    },
+    "breakoutRoomJoined": {
+      "title": "Sie sind einem Gruppenraum beigetreten.",
+      "dismissButtonAriaLabel": "Schließen"
+    },
+    "breakoutRoomClosingSoon": {
+      "title": "Das Raumzeitlimit läuft bald ab.",
+      "message": "Dieser Raum wird in 30 Sekunden geschlossen.",
+      "dismissButtonAriaLabel": "Schließen"
     }
   },
   "videoGallery": {
@@ -479,7 +509,8 @@
     "stopSpotlightVideoTileMenuLabel": "Spotlight beenden",
     "stopSpotlightOnSelfVideoTileMenuLabel": "Spotlight beenden",
     "attendeeRole": "Teilnehmer",
-    "muteParticipantMenuItemLabel": "Stummschalten"
+    "muteParticipantMenuItemLabel": "Stummschalten",
+    "waitingScreenText": "Warten auf andere Teilnehmer"
   },
   "dialpad": {
     "placeholderText": "Telefonnummer eingeben",
@@ -633,6 +664,7 @@
     "incomingCallNoticicationRejectAriaLabel": "Ablehnen",
     "incomingCallNotificationAcceptButtonLabel": "Akzeptieren",
     "incomingCallNotificationRejectButtonLabel": "Ablehnen",
-    "incomingCallNotificationAccceptWithVideoButtonLabel": "Mit Video annehmen"
+    "incomingCallNotificationAccceptWithVideoButtonLabel": "Mit Video annehmen",
+    "incomingCallNotificationDismissButtonAriaLabel": "Verwerfen"
   }
 }

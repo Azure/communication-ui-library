@@ -2,6 +2,51 @@
   "name": "@internal/check-typescript-regression",
   "entries": [
     {
+      "date": "Thu, 12 Sep 2024 18:13:19 GMT",
+      "version": "0.1.0",
+      "tag": "@internal/check-typescript-regression_v0.1.0",
+      "comments": {
+        "undefined": [
+          {
+            "author": "beachball",
+            "package": "@internal/check-typescript-regression",
+            "comment": "Bump @azure/communication-react to v1.19.0",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 06 Sep 2024 23:30:32 GMT",
+      "version": "0.1.0",
+      "tag": "@internal/check-typescript-regression_v0.1.0",
+      "comments": {
+        "undefined": [
+          {
+            "author": "beachball",
+            "package": "@internal/check-typescript-regression",
+            "comment": "Bump @azure/communication-react to v1.19.0-beta.3",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 26 Aug 2024 18:25:59 GMT",
+      "version": "0.1.0",
+      "tag": "@internal/check-typescript-regression_v0.1.0",
+      "comments": {
+        "undefined": [
+          {
+            "author": "beachball",
+            "package": "@internal/check-typescript-regression",
+            "comment": "Bump @azure/communication-react to v1.19.0-beta.2",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 06 Aug 2024 19:45:33 GMT",
       "tag": "@internal/check-typescript-regression_v0.1.0",
       "version": "0.1.0",
