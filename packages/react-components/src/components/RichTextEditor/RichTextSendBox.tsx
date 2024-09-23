@@ -472,7 +472,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
         />
       );
     },
-    [theme, isSendBoxButtonDisabledValue]
+    [theme, isSendBoxButtonDisabledValue, hasContent]
   );
 
   const sendBoxErrorsProps: RichTextSendBoxErrorsProps = useMemo(() => {
