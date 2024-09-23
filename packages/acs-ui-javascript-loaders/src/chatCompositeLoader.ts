@@ -20,7 +20,7 @@ import { initializeIcons } from '@fluentui/react';
 
 /**
  * Props for the ChatComposite that you can use in your application.
- * @beta
+ * @public
  */
 export type ChatCompositeLoaderProps = {
   userId: string;
@@ -32,7 +32,7 @@ export type ChatCompositeLoaderProps = {
 
 /**
  * Loader function for the ChatComposite that you can use in your application.
- * @beta
+ * @public
  */
 export const loadChatComposite = async function (
   args: ChatCompositeLoaderProps,
