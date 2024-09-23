@@ -4,7 +4,7 @@
 import { PrimaryButton, Stack, Text } from '@fluentui/react';
 import { _pxToRem } from '@internal/acs-ui-common';
 import React, { useRef, useState } from 'react';
-import { CompositeLocale, useLocale } from '../../localization';
+import { useLocale } from '../../localization';
 import { HoldButton } from '@internal/react-components';
 import { usePropsFor } from '../hooks/usePropsFor';
 import {
@@ -32,7 +32,13 @@ export const HoldPane = (): JSX.Element => {
   const holdButtonProps = usePropsFor(HoldButton);
   const locale = useLocale();
 
-  const strings = stringsTrampoline(locale);
+  const strings: HoldPaneStrings = {
+    holdScreenLabel: locale.strings.call.holdScreenLabel ?? '',
+    resumeCallButtonLabel: locale.strings.call.resumeCallButtonLabel ?? '',
+    resumeCallButtonAriaLabel: locale.strings.call.resumeCallButtonAriaLabel ?? '',
+    resumingCallButtonLabel: locale.strings.call.resumingCallButtonLabel ?? '',
+    resumingCallButtonAriaLabel: locale.strings.call.resumingCallButtonAriaLabel ?? ''
+  };
 
   const [time, setTime] = useState<number>(0);
 
@@ -99,21 +105,4 @@ export const getReadableTime = (time: number): string => {
   const readableMinutes = ('0' + (getMinutes(time) % 60)).slice(-2);
   const readableSeconds = ('0' + (getSeconds(time) % 60)).slice(-2);
   return `${hours > 0 ? hours + ':' : ''}${readableMinutes}:${readableSeconds}`;
-};
-
-const stringsTrampoline = (locale: CompositeLocale): HoldPaneStrings => {
-  return {
-    holdScreenLabel: locale.strings.call.holdScreenLabel ?? '',
-    resumeCallButtonLabel: locale.strings.call.resumeCallButtonLabel ?? '',
-    resumeCallButtonAriaLabel: locale.strings.call.resumeCallButtonAriaLabel ?? '',
-    resumingCallButtonLabel: locale.strings.call.resumingCallButtonLabel ?? '',
-    resumingCallButtonAriaLabel: locale.strings.call.resumingCallButtonAriaLabel ?? ''
-  };
-  return {
-    holdScreenLabel: '',
-    resumeCallButtonLabel: '',
-    resumeCallButtonAriaLabel: '',
-    resumingCallButtonLabel: '',
-    resumingCallButtonAriaLabel: ''
-  };
 };

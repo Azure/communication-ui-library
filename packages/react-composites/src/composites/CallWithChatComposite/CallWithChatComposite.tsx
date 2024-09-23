@@ -741,7 +741,6 @@ const hasJoinedCallFn = (page: CallCompositePage, callStatus: CallState): boolea
       (callStatus === 'Connected' || callStatus === 'RemoteHold' || callStatus === 'Disconnecting')) ||
     (page === 'hold' && (callStatus === 'LocalHold' || callStatus === 'Disconnecting'))
   );
-  return page === 'call' && (callStatus === 'Connected' || callStatus === 'Disconnecting');
 };
 
 const checkShowChatButton = (callControls?: boolean | CallWithChatControlOptions): boolean => {

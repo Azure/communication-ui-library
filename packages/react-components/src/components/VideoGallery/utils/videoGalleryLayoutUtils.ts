@@ -56,9 +56,7 @@ const getOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedPa
 
   const callingParticipantsSet = new Set(callingParticipants.map((p) => p.userId));
 
-  let connectedParticipants = remoteParticipants;
-
-  connectedParticipants = connectedParticipants.filter((p) => !callingParticipantsSet.has(p.userId));
+  const connectedParticipants = remoteParticipants.filter((p) => !callingParticipantsSet.has(p.userId));
 
   const remoteParticipantsOrdered = putVideoParticipantsFirst(connectedParticipants);
   const videoParticipants = remoteParticipants.filter((p) => p.videoStream?.isAvailable);
