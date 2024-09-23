@@ -198,6 +198,7 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
                 onCancel && onCancel(message.messageId);
               }}
               id={'dismissIconWrapper'}
+              data-testId="chat-message-edit-box-cancel-button"
             />
           </Stack.Item>
           <Stack.Item align="end">
@@ -216,6 +217,7 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
                 e.stopPropagation();
               }}
               id={'submitIconWrapper'}
+              data-testId="chat-message-edit-box-submit-button"
             />
           </Stack.Item>
         </Stack>

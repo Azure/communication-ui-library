@@ -23,7 +23,10 @@ import { ChatMessageComponentAsEditBoxPicker } from './ChatMessageComponentAsEdi
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { removeBrokenImageContentAndClearImageSizeStyles } from '../../utils/SendBoxUtils';
 
-type ChatMyMessageComponentProps = {
+/**
+ * Props for the ChatMyMessageComponent component.
+ */
+export type ChatMyMessageComponentProps = {
   message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage;
   userId: string;
   messageContainerStyle?: ComponentSlotStyle;
