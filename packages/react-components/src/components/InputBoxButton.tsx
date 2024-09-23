@@ -37,7 +37,7 @@ export const InputBoxButton = (props: InputBoxButtonProps): JSX.Element => {
     tooltipContent,
     'data-testId': dataTestId,
     disabled = false,
-    ariaExpanded = false
+    ariaExpanded
   } = props;
   const [isHover, setIsHover] = useState(false);
   const mergedButtonStyle = mergeStyles(inputBoxButtonStyle, className);
