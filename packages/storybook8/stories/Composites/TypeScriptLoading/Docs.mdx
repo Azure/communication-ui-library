@@ -1,0 +1,24 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Composites/TypeScript Loaders" />
+
+# Using the UI Composites in other Frameworks
+
+The Azure Communication Services UI library is written in [React]() and [TypeScript](). If you are using a different framework,
+you can still use the UI Composites by using our TypeScript Loader functions for each of the composites.
+
+These functions mount each of our React Composites to your applications DOM. The Functions that are available are:
+
+- `loadChatComposite`
+- `loadCallComposite`
+- `loadCallWithChatComposite`
+- `loadOutboundCallComposite`
+
+## How they work
+
+Since all different [Node]() frameworks are just JavaScript, CSS, and HTML you can use each of the
+different frameworks inside each other. In the case of using [React]() inside your application you would use
+the `createRoot` function to attach a React node to your application and then use your react component inside that.
+
+Our loader functions work in a similar way. They take a DOM element and attach the React Composite to that element. What this means
+is that you can use the UI Composites in any framework that can render HTML elements to the DOM.
