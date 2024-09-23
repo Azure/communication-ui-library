@@ -22,15 +22,15 @@ export const loadConfigFromUrlQuery = () => {
 export const createUserWithToken = async () => {
   // Calling the samples/Server. In your real app, your authenticated service should create users and issue tokens.
   // For more info, see https://docs.microsoft.com/azure/communication-services/quickstarts/access-tokens?pivots=programming-language-javascript
-  return (await fetch('/token?scope=chat,voip')).json();
+  return (await fetch('token?scope=chat,voip')).json();
 };
 
 export const createChatThread = async () => {
-  return (await fetch('/createThread', { method: 'POST' })).text();
+  return (await fetch('createThread', { method: 'POST' })).text();
 };
 
 export const addChatUser = async (threadId, user, displayName) => {
-  await fetch(`/addUser/${threadId}`, {
+  await fetch(`addUser/${threadId}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -41,5 +41,5 @@ export const addChatUser = async (threadId, user, displayName) => {
 
 export const getEndpointUrl = async () => {
   // Pure convenience for running this sample, you would hard-code your Azure Communication Resource domain instead.
-  return (await fetch('/getEndpointUrl')).text();
+  return (await fetch('getEndpointUrl')).text();
 };

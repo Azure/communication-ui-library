@@ -2127,6 +2127,7 @@ export type CommonCallControlOptions = {
     };
     exitSpotlightButton?: boolean;
     captionsButton?: boolean;
+    galleryControlsButton?: boolean;
     teamsMeetingPhoneCallButton?: boolean;
 };
 
