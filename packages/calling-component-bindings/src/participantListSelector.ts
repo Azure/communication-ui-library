@@ -62,7 +62,7 @@ const convertRemoteParticipantsToParticipantListParticipants = (
            * and mapping their state to be 'Ringing'
            */
           const state = _convertParticipantState(participant);
-           const displayName = maskDisplayNameWithRole(
+          const displayName = maskDisplayNameWithRole(
             participant.displayName,
             localUserRole,
             participant.role,
