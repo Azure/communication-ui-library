@@ -29,6 +29,7 @@ import { showDtmfDialer } from '../../CallComposite/utils/MediaGalleryUtils';
 import { useSelector } from '../../CallComposite/hooks/useSelector';
 import { getTargetCallees } from '../../CallComposite/selectors/baseSelectors';
 import { getTeamsMeetingCoordinates, getIsTeamsMeeting } from '../../CallComposite/selectors/baseSelectors';
+import { CallControlOptions } from '../../CallComposite';
 
 /** @private */
 export interface DesktopMoreButtonProps extends ControlBarButtonProps {
@@ -95,19 +96,21 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
     }
   };
 
-  /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
-  moreButtonContextualMenuItems.push({
-    key: 'holdButtonKey',
-    text: localeStrings.component.strings.holdButton.tooltipOffContent,
-    onClick: () => {
-      holdButtonProps.onToggleHold();
-    },
-    iconProps: { iconName: 'HoldCallContextualMenuItem', styles: { root: { lineHeight: 0 } } },
-    itemProps: {
-      styles: buttonFlyoutIncreasedSizeStyles
-    },
-    disabled: props.disableButtonsForHoldScreen
-  });
+  if (props.callControls === true || (props.callControls as CallControlOptions)?.holdButton !== false) {
+    /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+    moreButtonContextualMenuItems.push({
+      key: 'holdButtonKey',
+      text: localeStrings.component.strings.holdButton.tooltipOffContent,
+      onClick: () => {
+        holdButtonProps.onToggleHold();
+      },
+      iconProps: { iconName: 'HoldCallContextualMenuItem', styles: { root: { lineHeight: 0 } } },
+      itemProps: {
+        styles: buttonFlyoutIncreasedSizeStyles
+      },
+      disabled: props.disableButtonsForHoldScreen
+    });
+  }
 
   // is captions feature is active
   if (props.isCaptionsSupported) {
@@ -197,7 +200,9 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
    * Only render the dtmf dialer if the dialpad for PSTN calls is not present
    */
   if (props.onSetDialpadPage && allowDtmfDialer) {
-    moreButtonContextualMenuItems.push(dtmfDialerScreenOption);
+    if (props.callControls === true || (props.callControls as CallControlOptions)?.dtmfDialerButton !== false) {
+      moreButtonContextualMenuItems.push(dtmfDialerScreenOption);
+    }
   }
 
   const joinByPhoneOption = {
@@ -369,7 +374,9 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
     galleryOptions.subMenuProps?.items?.push(galleryOption);
     /* @conditional-compile-remove(overflow-top-composite) */
     galleryOptions.subMenuProps?.items?.push(overflowGalleryOption);
-    moreButtonContextualMenuItems.push(galleryOptions);
+    if (props.callControls === true || (props.callControls as CallControlOptions)?.galleryControlsButton !== false) {
+      moreButtonContextualMenuItems.push(galleryOptions);
+    }
   }
 
   const customDrawerButtons = useMemo(
