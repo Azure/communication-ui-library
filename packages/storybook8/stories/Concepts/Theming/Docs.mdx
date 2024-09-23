@@ -1,13 +1,11 @@
-import { Meta, Controls, Primary, Source } from '@storybook/addon-docs';
-import { DarkControlBar } from './DarkControlBar.story';
-import { DefaultTheme } from './DefaultTheme.story';
-import { ThemedButton } from './ThemedButton.story';
+import { Meta, Controls, Primary, Source, Canvas } from '@storybook/addon-docs';
+import * as ThemingStories from './index.stories';
 
 import DarkControlBarText from '!!raw-loader!./snippets/DarkControlBar.snippet.tsx';
 import DefaultThemeSnippetText from '!!raw-loader!./snippets/DefaultTheme.snippet.tsx';
 import ThemedButtonText from '!!raw-loader!./snippets/ThemedButton.snippet.tsx';
 
-<Meta title="Concepts/Theming" />
+<Meta of={ThemingStories} />
 
 # Theming
 
@@ -20,14 +18,14 @@ is a wrapping component that allows you to theme all ACS UI Library components c
 ACS UI Library components are themed with a light theme by default as shown by the `ControlBar` and buttons below.
 
 <Source code={DefaultThemeSnippetText} />
-<DefaultTheme />
+<Canvas of={ThemingStories.DefaultThemeDocsOnly} sourceState={'none'} layout={'padded'} />
 
 To theme this ControlBar, import `FluentThemeProvider` from `@azure/communication-react` and wrap it around the `ControlBar`.
 Then import `darkTheme` from `@azure/communication-react` and assign it to the `fluentTheme` property of `FluentThemeProvider`.
 `darkTheme` is a [Theme](https://aka.ms/fluentui#/controls/web/references/theme) object from Fluent UI.
 
 <Source code={DarkControlBarText} />
-<DarkControlBar />
+<Canvas of={ThemingStories.DarkControlBarDocsOnly} sourceState={'none'} layout={'padded'} />
 
 ## FluentThemeProvider Props
 
@@ -78,7 +76,7 @@ But if you wish to override the mapping, we recommend that you use the `useTheme
 use the component's `styles` prop like in the example below.
 
 <Source code={ThemedButtonText} />
-<ThemedButton />
+<Canvas of={ThemingStories.ThemedButtonDocsOnly} sourceState={'none'} layout={'padded'} />
 
 Should you override the palette mapping, please note that ACS UI Library components abide by the general Fluent UI
 mappings. Foreground colors are used for text, icons, and outlines while background colors for component

@@ -138,17 +138,13 @@ const onRenderParticipantDefault = (
 
   const menuItems = createParticipantMenuItems && createParticipantMenuItems(participant);
 
-  let displayName = participant.displayName;
-
-  /* @conditional-compile-remove(hide-attendee-name) */
-  const formatDisplayName = (): string | undefined => {
+  const formatDisplayName = (displayName?: string): string | undefined => {
     if (displayName && strings.attendeeRole) {
       return _formatString(displayName, { AttendeeRole: strings.attendeeRole });
     }
     return displayName;
   };
-  /* @conditional-compile-remove(hide-attendee-name) */
-  displayName = formatDisplayName();
+  const displayName = formatDisplayName(participant.displayName);
 
   const callingPalette = (theme as unknown as CallingTheme).callingPalette;
 

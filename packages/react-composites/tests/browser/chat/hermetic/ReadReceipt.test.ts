@@ -5,6 +5,7 @@ import { expect } from '@playwright/test';
 import { temporarilyShowHiddenChatComposite } from '../../common/hermeticChatTestHelpers';
 import { sendMessage, waitForMessageDelivered, waitForMessageSeen } from '../../common/chatTestHelpers';
 import {
+  dataTestId,
   dataUiId,
   perStepLocalTimeout,
   screenshotOnFailure,
@@ -62,9 +63,9 @@ test.describe('Chat Composite E2E Tests', () => {
     await waitForMessageSeen(page);
 
     await screenshotOnFailure(page, async () => {
-      await page.locator(dataUiId('chat-composite-message')).first().click();
-      await page.locator(dataUiId('chat-composite-message-action-icon')).first().click();
-      await page.waitForSelector(dataUiId('chat-composite-message-contextual-menu-edit-action'));
+      await page.locator(dataTestId('chat-composite-message')).first().click();
+      await page.locator(dataTestId('chat-composite-message-action-icon')).first().click();
+      await page.waitForSelector(dataTestId('chat-composite-message-contextual-menu-edit-action'));
       await page.locator(dataUiId('chat-composite-message-contextual-menu-read-info')).click();
       await page.waitForSelector(dataUiId('chat-composite-message-contextual-menu-read-name-list-item'));
     });

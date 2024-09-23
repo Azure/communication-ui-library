@@ -8,7 +8,7 @@ export const getEndpointUrl = async (): Promise<string> => {
       const getRequestOptions = {
         method: 'GET'
       };
-      const response = await fetch('/getEndpointUrl', getRequestOptions);
+      const response = await fetch('getEndpointUrl', getRequestOptions);
       const retrievedEndpointUrl = await response.text().then((endpointUrl) => endpointUrl);
       endpointUrl = retrievedEndpointUrl;
       return retrievedEndpointUrl;

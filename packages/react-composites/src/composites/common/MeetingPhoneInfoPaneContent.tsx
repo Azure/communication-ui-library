@@ -1,21 +1,16 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/* @conditional-compile-remove(teams-meeting-conference) */
 // eslint-disable-next-line no-restricted-imports
 import { Stack, Text, useTheme, Icon, Link } from '@fluentui/react';
-/* @conditional-compile-remove(teams-meeting-conference) */
 import { _DrawerMenuItemProps } from '@internal/react-components';
-/* @conditional-compile-remove(teams-meeting-conference) */
 import React from 'react';
-/* @conditional-compile-remove(teams-meeting-conference) */
 import {
   ConferencePhoneInfo,
   formatPhoneNumberInfo,
   _formatPhoneNumber,
   formatPhoneNumberLink
 } from '@internal/react-components';
-/* @conditional-compile-remove(teams-meeting-conference) */
 import {
   phoneInfoTextStyle,
   phoneInfoIcon,
@@ -26,10 +21,8 @@ import {
   phoneInfoContainerTokens,
   phoneInfoContainerStyle
 } from './styles/TeamsMeetingConferenceInfo.style';
-/* @conditional-compile-remove(teams-meeting-conference) */
 import { useLocale } from '../localization';
 
-/* @conditional-compile-remove(teams-meeting-conference) */
 /**
  * @private
  */

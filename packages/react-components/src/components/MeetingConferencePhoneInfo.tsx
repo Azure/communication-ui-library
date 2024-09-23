@@ -1,14 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/* @conditional-compile-remove(teams-meeting-conference) */
 import React, { useCallback } from 'react';
-/* @conditional-compile-remove(teams-meeting-conference) */
 import { useMemo } from 'react';
-/* @conditional-compile-remove(teams-meeting-conference) */
 import { IModalStyles, Modal, Stack, useTheme, Text, IconButton, Icon } from '@fluentui/react';
 
-/* @conditional-compile-remove(teams-meeting-conference) */
 import {
   themedPhoneInfoModalStyle,
   titleClassName,
@@ -21,15 +17,11 @@ import {
   infoConnectionLinkStyle,
   phoneInfoIconStyle
 } from './styles/TeamsMeetingConferenceInfo';
-/* @conditional-compile-remove(teams-meeting-conference) */
 import { _preventDismissOnEvent } from '@internal/acs-ui-common';
-/* @conditional-compile-remove(teams-meeting-conference) */
 import { useLocale } from '../localization';
-/* @conditional-compile-remove(teams-meeting-conference) */
 import { _pxToRem } from '@internal/acs-ui-common';
 import { _formatPhoneNumber } from './utils/formatPhoneNumber';
 
-/* @conditional-compile-remove(teams-meeting-conference) */
 /**
  * strings for phone info modal
  * @public
@@ -69,7 +61,6 @@ export interface MeetingConferencePhoneInfoModalStrings {
   meetingConferencePhoneInfoModalNoPhoneAvailable: string;
 }
 
-/* @conditional-compile-remove(teams-meeting-conference) */
 /**
  * @public
  * MeetingConferencePhoneInfoModal Component Props.
@@ -80,7 +71,6 @@ export interface MeetingConferencePhoneInfoModalProps {
   onDismissMeetingPhoneInfoSettings?: () => void;
 }
 
-/* @conditional-compile-remove(teams-meeting-conference) */
 /**
  * @public
  * a component for setting spoken languages
@@ -191,7 +181,6 @@ export const MeetingConferencePhoneInfoModal = (props: MeetingConferencePhoneInf
   );
 };
 
-/* @conditional-compile-remove(teams-meeting-conference) */
 /**
  * @internal
  * format phone number link
@@ -200,7 +189,6 @@ export const formatPhoneNumberLink = (phoneNumber: ConferencePhoneInfo): string 
   return `tel:+${phoneNumber.phoneNumber},,${phoneNumber.conferenceId}#`;
 };
 
-/* @conditional-compile-remove(teams-meeting-conference) */
 /**
  * @internal
  * format phone number
@@ -219,7 +207,6 @@ export const formatPhoneNumberInfo = (
   );
 };
 
-/* @conditional-compile-remove(teams-meeting-conference) */
 /**
  * @internal
  * format meeting id
@@ -235,7 +222,6 @@ export const formatMeetingId = (meetingId?: string): string => {
   return [meetingId.slice(0, 3), meetingId.slice(3, 6), meetingId.slice(6, 9)].join(' ') + '#';
 };
 
-/* @conditional-compile-remove(teams-meeting-conference) */
 /**
  * @public
  * Information for conference phone info

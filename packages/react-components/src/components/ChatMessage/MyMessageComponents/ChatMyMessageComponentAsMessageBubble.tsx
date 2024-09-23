@@ -266,7 +266,7 @@ const MessageBubble = (props: ChatMyMessageComponentAsMessageBubbleProps): JSX.E
               setFocused(true);
             }
           }}
-          data-ui-id="chat-composite-message"
+          data-testid="chat-composite-message"
           author={<Text className={chatMessageDateStyle(theme)}>{message.senderDisplayName}</Text>}
           timestamp={
             <Text

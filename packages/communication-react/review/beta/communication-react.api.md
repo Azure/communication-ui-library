@@ -726,17 +726,11 @@ export type CallCompositeIcons = {
     StopAllSpotlightMenuButton?: JSX.Element;
 };
 
-// @beta
-export type CallCompositeLoaderProps = {
-    userId: string;
-    token: string;
-    displayName: string;
-    locator: CallAdapterLocator;
-    options?: AzureCommunicationCallAdapterOptions;
-};
-
 // @public
 export type CallCompositeOptions = {
+    captionsBanner?: {
+        height: 'full' | 'default';
+    };
     errorBar?: boolean;
     callControls?: boolean | CallControlOptions;
     deviceChecks?: DeviceCheckOptions;
@@ -1200,7 +1194,7 @@ export interface CallWithChatAdapterManagement {
     // (undocumented)
     downloadResourceToCache(resourceDetails: ResourceDetails): Promise<void>;
     fetchInitialData(): Promise<void>;
-    holdCall: () => Promise<void>;
+    holdCall(): Promise<void>;
     // @deprecated
     joinCall(microphoneOn?: boolean): Call | undefined;
     joinCall(options?: JoinCallOptions): Call | undefined;
@@ -1219,7 +1213,7 @@ export interface CallWithChatAdapterManagement {
     removeParticipant(participant: CommunicationIdentifier): Promise<void>;
     // (undocumented)
     removeResourceFromCache(resourceDetails: ResourceDetails): void;
-    resumeCall: () => Promise<void>;
+    resumeCall(): Promise<void>;
     returnFromBreakoutRoom(): Promise<void>;
     sendDtmfTone: (dtmfTone: DtmfTone_2) => Promise<void>;
     sendMessage(content: string, options?: SendMessageOptions | /* @conditional-compile-remove(file-sharing-acs) */ MessageOptions): Promise<void>;
@@ -1382,7 +1376,7 @@ export interface CallWithChatAdapterUiState {
 
 // @public
 export interface CallWithChatClientState {
-    alternateCallerId?: string | undefined;
+    alternateCallerId?: string;
     call?: CallState;
     chat?: ChatThreadClientState;
     // @beta
@@ -1485,15 +1479,6 @@ export type CallWithChatCompositeIcons = {
     ParticipantItemOptionsHovered?: JSX.Element;
     PeoplePaneMoreButton?: JSX.Element;
     StopAllSpotlightMenuButton?: JSX.Element;
-};
-
-// @beta
-export type CallWithChatCompositeLoaderProps = {
-    userId: string;
-    token: string;
-    displayName: string;
-    endpoint: string;
-    locator: CallAndChatLocator;
 };
 
 // @public
@@ -1920,15 +1905,6 @@ export type ChatCompositeIcons = {
     SendBoxAttachFile?: JSX.Element;
 };
 
-// @beta
-export type ChatCompositeLoaderProps = {
-    userId: string;
-    token: string;
-    displayName?: string;
-    endpoint: string;
-    threadId: string;
-};
-
 // @public
 export type ChatCompositeOptions = {
     errorBar?: boolean;
@@ -2101,6 +2077,8 @@ export type CommonCallAdapterOptions = {
     };
     deepNoiseSuppressionOptions?: {
         onResolveDependency?: () => Promise<DeepNoiseSuppressionEffectDependency>;
+        deepNoiseSuppressionOnByDefault?: boolean;
+        hideDeepNoiseSuppressionButton?: boolean;
     };
     onFetchProfile?: OnFetchProfileCallback;
     callingSounds?: CallingSounds;
@@ -2149,6 +2127,7 @@ export type CommonCallControlOptions = {
     };
     exitSpotlightButton?: boolean;
     captionsButton?: boolean;
+    galleryControlsButton?: boolean;
     teamsMeetingPhoneCallButton?: boolean;
 };
 
@@ -3459,20 +3438,8 @@ export interface JumpToNewMessageButtonProps {
 // @public
 export const lightTheme: PartialTheme & CallingTheme;
 
-// @beta
-export const loadCallComposite: (adapterArgs: CallCompositeLoaderProps, htmlElement: HTMLElement | null, props?: CallCompositeOptions) => Promise<CallAdapter | undefined>;
-
-// @beta
-export const loadCallWithChatComposite: (args: CallWithChatCompositeLoaderProps, htmlElement: HTMLElement | null, props: CallWithChatCompositeOptions) => Promise<CallWithChatAdapter | undefined>;
-
-// @beta
-export const loadChatComposite: (args: ChatCompositeLoaderProps, htmlElement: HTMLElement | null, props: ChatCompositeOptions) => Promise<ChatAdapter | undefined>;
-
 // @public
 export type LoadingState = 'loading' | 'none';
-
-// @beta
-export const loadOutboundCallComposite: (adapterArgs: OutboundCallCompositeLoaderProps, htmlElement: HTMLElement | null, props?: CallCompositeOptions) => Promise<CallAdapter | undefined>;
 
 // @public
 export const LocalizationProvider: (props: LocalizationProviderProps) => JSX.Element;
@@ -3986,15 +3953,6 @@ export interface OptionsDevice {
     id: string;
     name: string;
 }
-
-// @beta
-export type OutboundCallCompositeLoaderProps = {
-    userId: string;
-    token: string;
-    displayName: string;
-    targetCallees: string[] | StartCallIdentifier[];
-    options?: AzureCommunicationCallAdapterOptions;
-};
 
 // @public
 export type OverflowGalleryPosition = 'horizontalBottom' | 'verticalRight' | 'horizontalTop';

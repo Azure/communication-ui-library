@@ -120,7 +120,11 @@ export type CommonCallControlOptions = {
    * @defaultValue true
    */
   captionsButton?: boolean;
-  /* @conditional-compile-remove(teams-meeting-conference) */
+  /**
+   * Show, Hide or Disable gallery controls button during a call.
+   * @defaultValue true
+   */
+  galleryControlsButton?: boolean;
   /**
    * Show, meeting conference phone information.
    * @defaultValue true

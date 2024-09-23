@@ -41,7 +41,6 @@ import { _spokenLanguageToCaptionLanguage } from '@internal/react-components';
 import { useAdapter } from '../../CallComposite/adapter/CallAdapterProvider';
 import { useSelector } from '../../CallComposite/hooks/useSelector';
 import { getTargetCallees } from '../../CallComposite/selectors/baseSelectors';
-/* @conditional-compile-remove(teams-meeting-conference) */
 import { getTeamsMeetingCoordinates, getIsTeamsMeeting } from '../../CallComposite/selectors/baseSelectors';
 import { showDtmfDialer } from '../../CallComposite/utils/MediaGalleryUtils';
 import { SpokenLanguageSettingsDrawer } from './SpokenLanguageSettingsDrawer';
@@ -152,7 +151,7 @@ export interface MoreDrawerProps extends MoreDrawerDevicesMenuProps {
   useTeamsCaptions?: boolean;
   reactionResources?: ReactionResources;
   onReactionClick?: (reaction: string) => Promise<void>;
-  /* @conditional-compile-remove(teams-meeting-conference) */
+
   onClickMeetingPhoneInfo?: () => void;
   /* @conditional-compile-remove(soft-mute) */
   onMuteAllRemoteParticipants?: () => void;
@@ -309,7 +308,12 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   /**
    * Only render the dtmf dialer if the dialpad for PSTN calls is not present
    */
-  if (props.onSetDialpadPage && allowDtmfDialer) {
+  if (
+    props.onSetDialpadPage &&
+    allowDtmfDialer &&
+    drawerSelectionOptions !== false &&
+    isEnabled(drawerSelectionOptions.dtmfDialerButton)
+  ) {
     drawerMenuItems.push(dtmfDialerScreenOption);
   }
 
@@ -369,8 +373,9 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   /* @conditional-compile-remove(gallery-layout-composite) */
   galleryLayoutOptions.subMenuProps?.push(galleryOption);
 
-  drawerMenuItems.push(galleryLayoutOptions);
-
+  if (drawerSelectionOptions !== false && isEnabled(drawerSelectionOptions?.galleryControlsButton)) {
+    drawerMenuItems.push(galleryLayoutOptions);
+  }
   if (drawerSelectionOptions !== false && isEnabled(drawerSelectionOptions?.peopleButton)) {
     drawerMenuItems.push({
       itemKey: 'people',
@@ -425,12 +430,10 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
     });
   }
 
-  /* @conditional-compile-remove(teams-meeting-conference) */
   const isTeamsMeeting = getIsTeamsMeeting(callAdapter.getState());
-  /* @conditional-compile-remove(teams-meeting-conference) */
+
   const teamsMeetingCoordinates = getTeamsMeetingCoordinates(callAdapter.getState());
 
-  /* @conditional-compile-remove(teams-meeting-conference) */
   if (
     drawerSelectionOptions !== false &&
     isEnabled(drawerSelectionOptions?.teamsMeetingPhoneCallButton) &&

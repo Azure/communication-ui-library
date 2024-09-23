@@ -41,6 +41,8 @@ import { Reaction } from './buttons/Reaction';
 import { useSelector } from '../hooks/useSelector';
 import { capabilitySelector } from '../../CallComposite/selectors/capabilitySelector';
 import { callStatusSelector } from '../../CallComposite/selectors/callStatusSelector';
+/* @conditional-compile-remove(DNS) */
+import { _isSafari } from '../../CallComposite/utils';
 
 /**
  * @private
@@ -111,9 +113,17 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
       setDeepNoiseSuppressionOn(true);
     }
   }, [adapter, startDeepNoiseSuppression]);
+
+  /* @conditional-compile-remove(DNS) */
+  const environmentInfo = adapter.getState().environmentInfo;
+
+  /* @conditional-compile-remove(DNS) */
+  const isSafari = _isSafari(environmentInfo);
   /* @conditional-compile-remove(DNS) */
   const showNoiseSuppressionButton =
-    adapter.getState().onResolveDeepNoiseSuppressionDependency && !adapter.getState().hideDeepNoiseSuppressionButton
+    adapter.getState().onResolveDeepNoiseSuppressionDependency &&
+    !adapter.getState().hideDeepNoiseSuppressionButton &&
+    !isSafari
       ? true
       : false;
 
