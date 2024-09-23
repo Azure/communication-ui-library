@@ -9,7 +9,7 @@ import { CallWithChatCompositeLoaderProps } from './callWithChatCompositeLoader'
 jest.mock('@internal/react-composites', () => {
   return {
     createAzureCommunicationCallWithChatAdapter: jest.fn().mockResolvedValue('mockAdapter'),
-    CallWithChatComposite: jest.fn().mockReturnValue('mockCallComposite')
+    CallWithChatComposite: jest.fn().mockReturnValue('mockCallWithChatComposite')
   };
 });
 const mockCreateRoot = jest.fn();
