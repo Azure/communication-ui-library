@@ -8,6 +8,7 @@ on:
       - release/**
   # Presubmit CI on PRs to all branches.
   pull_request:
+    types: [labeled, unlabeled, opened, synchronize, reopened]
   # Allows you to run this workflow manually from the Actions tab.
   workflow_dispatch:
 
