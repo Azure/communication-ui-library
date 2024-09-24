@@ -26,7 +26,6 @@ import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 
 const participantListShownAsFlyout = (): boolean => {
   return false;
-  return true;
 };
 
 const participantListShownAsSidePane = (testInfo: TestInfo): boolean => {
