@@ -265,7 +265,6 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                   displayName,
                   meetingLocator,
                   alternateCallerId,
-
                   outboundParticipants: acsParticipantsToCall ? acsParticipantsToCall : dialpadParticipantToCall,
                   /* @conditional-compile-remove(rich-text-editor-composite-support) */
                   isRichTextEditorEnabled: isRichTextEditorEnabled

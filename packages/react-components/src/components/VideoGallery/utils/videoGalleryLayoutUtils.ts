@@ -92,7 +92,6 @@ const getOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedPa
 
   let gridParticipants = newGridParticipants;
   let overflowGalleryParticipants = newOverflowGalleryParticipants;
-
   if (gridParticipants.length + callingParticipants.length <= maxGridParticipants) {
     gridParticipants = gridParticipants.concat(callingParticipants);
   } else {

@@ -616,7 +616,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                       )}
                   </Stack.Item>
                   {renderGallery && props.onRenderGalleryContent && props.onRenderGalleryContent()}
-                  {true && !isInLocalHold && (
+                  {!isInLocalHold && (
                     <CaptionsBanner
                       captionsOptions={props.captionsOptions}
                       isMobile={props.mobileView}
