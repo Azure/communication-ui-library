@@ -67,7 +67,7 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 50 # this job requires depth of 2 for access to diff the SHA for change file check
+          fetch-depth: 2 # this job requires depth of 2 for access to diff the SHA for change file check
       # Ensure node version is great enough
       - name: Use Node.js
         uses: actions/setup-node@v4
