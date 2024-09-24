@@ -53,7 +53,6 @@ test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
     expect(await stableScreenshot(page)).toMatchSnapshot(`call-with-chat-gallery-screen-with-people-pane.png`);
   });
 
-  /* @conditional-compile-remove(PSTN-calls) @conditional-compile-remove(one-to-n-calling) */
   test('More Drawer menu opens and can choose to be on hold', async ({ pages }) => {
     const page = pages[1];
     await pageClick(page, dataUiId('common-call-composite-more-button'));

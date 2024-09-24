@@ -47,7 +47,7 @@ import { callStatusSelector } from '../selectors/callStatusSelector';
 import { CallControlOptions } from '../types/CallControlOptions';
 import { PreparedMoreDrawer } from '../../common/Drawer/PreparedMoreDrawer';
 import { getIsTeamsMeeting, getRemoteParticipants } from '../selectors/baseSelectors';
-/* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+/* @conditional-compile-remove(one-to-n-calling) */
 import { getPage } from '../selectors/baseSelectors';
 import { getCallStatus, getCaptionsStatus } from '../selectors/baseSelectors';
 import { drawerContainerStyles } from '../styles/CallComposite.styles';
@@ -170,7 +170,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   const isInLobby = _isInLobbyOrConnecting(useSelector(callStatusSelector).callStatus);
 
   const { updateSidePaneRenderer } = props;
-  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+  /* @conditional-compile-remove(one-to-n-calling) */
   const isInLocalHold = useSelector(getPage) === 'hold';
 
   const adapter = useAdapter();
@@ -367,7 +367,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     }
   }, [closePeoplePane, isPeoplePaneOpen, openPeoplePane]);
 
-  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+  /* @conditional-compile-remove(one-to-n-calling) */
   useEffect(() => {
     if (isInLocalHold) {
       // close side pane on local hold
@@ -539,7 +539,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                   callAdapter={adapter as CallAdapter}
                   mobileView={props.mobileView}
                   disableButtonsForLobbyPage={isInLobby}
-                  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+                  /* @conditional-compile-remove(one-to-n-calling) */
                   disableButtonsForHoldScreen={isInLocalHold}
                   peopleButtonChecked={isPeoplePaneOpen}
                   onPeopleButtonClicked={togglePeoplePane}
@@ -574,7 +574,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                 callControls={props.callControlProps.options}
                 onLightDismiss={closeDrawer}
                 onPeopleButtonClicked={onMoreDrawerPeopleClicked}
-                /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+                /* @conditional-compile-remove(one-to-n-calling) */
                 disableButtonsForHoldScreen={isInLocalHold}
                 isCaptionsSupported={
                   (useTeamsCaptions && hasJoinedCall) ||
@@ -628,15 +628,14 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                       )}
                   </Stack.Item>
                   {renderGallery && props.onRenderGalleryContent && props.onRenderGalleryContent()}
-                  {true &&
-                    /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ !isInLocalHold && (
-                      <CaptionsBanner
-                        captionsOptions={props.captionsOptions}
-                        isMobile={props.mobileView}
-                        onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
-                        useTeamsCaptions={useTeamsCaptions}
-                      />
-                    )}
+                  {true && /* @conditional-compile-remove(one-to-n-calling) */ !isInLocalHold && (
+                    <CaptionsBanner
+                      captionsOptions={props.captionsOptions}
+                      isMobile={props.mobileView}
+                      onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
+                      useTeamsCaptions={useTeamsCaptions}
+                    />
+                  )}
                 </Stack>
               </Stack.Item>
             </Stack.Item>

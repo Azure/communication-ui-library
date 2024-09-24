@@ -21,7 +21,7 @@ import {
 import { NotificationStackStrings } from '../components';
 
 import { RaiseHandButtonStrings } from '../components';
-/* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+/* @conditional-compile-remove(one-to-n-calling) */
 import { HoldButtonStrings } from '../components';
 import { DialpadStrings } from '../components';
 /* @conditional-compile-remove(call-readiness) */
@@ -120,7 +120,6 @@ export interface ComponentStrings {
   dialpad: DialpadStrings;
   /** Strings for VideoTile */
   videoTile: VideoTileStrings;
-  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   /** Strings for HoldButton */
   holdButton: HoldButtonStrings;
   /* @conditional-compile-remove(call-readiness) */

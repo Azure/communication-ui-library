@@ -95,7 +95,6 @@ import { Sparkle20Filled, VideoProhibited20Filled, MicProhibited20Filled } from 
 import { Open20Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(file-sharing-acs) */
 import { ArrowDownload20Regular } from '@fluentui/react-icons';
-/* @conditional-compile-remove(PSTN-calls) */
 import { CallPause20Regular, CallPause20Filled, Play20Regular } from '@fluentui/react-icons';
 import { People20Regular } from '@fluentui/react-icons';
 
@@ -335,11 +334,8 @@ export const DEFAULT_COMPONENT_ICONS = {
   ParticipantItemOptionsHovered: <MoreHorizontal20Filled />,
   ParticipantItemScreenShareStart: <ShareScreenStart20Filled />,
   ParticipantItemSpotlighted: <VideoPersonStar20Filled />,
-  /* @conditional-compile-remove(PSTN-calls) */
   HoldCallContextualMenuItem: <CallPause20Regular />,
-  /* @conditional-compile-remove(PSTN-calls) */
   HoldCallButton: <CallPause20Filled />,
-  /* @conditional-compile-remove(PSTN-calls) */
   ResumeCall: <Play20Regular />,
   SendBoxSend: <Send20Regular />,
   SendBoxSendHovered: <Send20Filled />,

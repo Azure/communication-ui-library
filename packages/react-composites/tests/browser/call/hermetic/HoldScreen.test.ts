@@ -6,7 +6,6 @@ import { IDS } from '../../common/constants';
 import { dataUiId, pageClick, stableScreenshot, waitForSelector } from '../../common/utils';
 import { buildUrlWithMockAdapter, defaultMockCallAdapterState, defaultMockRemoteParticipant, test } from './fixture';
 
-/* @conditional-compile-remove(PSTN-calls) @conditional-compile-remove(one-to-n-calling) */
 test.describe('Hold screen tests', async () => {
   test('Hold screen should render correctly', async ({ page, serverUrl }) => {
     const paul = defaultMockRemoteParticipant('Paul Bridges');

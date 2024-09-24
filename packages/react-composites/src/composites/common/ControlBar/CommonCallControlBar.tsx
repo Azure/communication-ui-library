@@ -72,7 +72,6 @@ export interface CommonCallControlBarProps {
   disableButtonsForLobbyPage: boolean;
   callControls?: boolean | CommonCallControlOptions | CallWithChatControlOptions;
   disableButtonsForHoldScreen?: boolean;
-  /* @conditional-compile-remove(PSTN-calls) */
   onClickShowDialpad?: () => void;
   onClickVideoEffects?: (showVideoEffects: boolean) => void;
   isCaptionsSupported?: boolean;
@@ -348,9 +347,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
   const showDesktopMoreButton =
     isEnabled(options?.moreButton) &&
     (false ||
-      /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ isEnabled(
-        options?.holdButton
-      ) ||
+      /* @conditional-compile-remove(one-to-n-calling) */ isEnabled(options?.holdButton) ||
       showCaptionsButton ||
       props.onUserSetGalleryLayout);
 
@@ -426,7 +423,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                         displayType={options.displayType}
                         styles={commonButtonStyles}
                         splitButtonsForDeviceSelection={!props.mobileView}
-                        /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+                        /* @conditional-compile-remove(one-to-n-calling) */
                         disabled={props.disableButtonsForHoldScreen || isDisabled(options.microphoneButton)}
                         disableTooltip={props.mobileView}
                         /* @conditional-compile-remove(DNS) */
@@ -442,7 +439,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                         displayType={options.displayType}
                         styles={commonButtonStyles}
                         splitButtonsForDeviceSelection={!props.mobileView}
-                        /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+                        /* @conditional-compile-remove(one-to-n-calling) */
                         disabled={props.disableButtonsForHoldScreen || isDisabled(options.cameraButton)}
                         onClickVideoEffects={props.onClickVideoEffects}
                         componentRef={props.cameraButtonRef}
@@ -464,7 +461,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                       <RaiseHand
                         displayType={options.displayType}
                         styles={commonButtonStyles}
-                        /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+                        /* @conditional-compile-remove(one-to-n-calling) */
                         disabled={props.disableButtonsForHoldScreen || isDisabled(options.microphoneButton)}
                       />
                     )}
@@ -492,7 +489,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                         option={options.screenShareButton}
                         displayType={options.displayType}
                         styles={screenShareButtonStyles}
-                        /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+                        /* @conditional-compile-remove(one-to-n-calling) */
                         disabled={props.disableButtonsForHoldScreen || isDisabled(options.screenShareButton)}
                       />
                     )}
@@ -526,7 +523,6 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                       <DesktopMoreButton
                         disableButtonsForHoldScreen={props.disableButtonsForHoldScreen}
                         styles={commonButtonStyles}
-                        /*@conditional-compile-remove(PSTN-calls) */
                         onClickShowDialpad={props.onClickShowDialpad}
                         callControls={props.callControls}
                         isCaptionsSupported={showCaptionsButton}
