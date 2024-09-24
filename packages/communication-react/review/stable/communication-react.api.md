@@ -2992,7 +2992,7 @@ export interface JumpToNewMessageButtonProps {
 export const lightTheme: PartialTheme & CallingTheme;
 
 // @public
-export type LoadingState = 'loading' | 'none';
+export type LoadingState = 'loading' | 'none' | 'reconnecting';
 
 // @public
 export const LocalizationProvider: (props: LocalizationProviderProps) => JSX.Element;
