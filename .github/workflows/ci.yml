@@ -77,17 +77,17 @@ jobs:
         with:
           node-version: 'lts/*'
       # Try get node_modules from cache
-      # - name: Restore node_modules from cache
-      #   uses: actions/cache@v4
-      #   with:
-      #     path: common/temp/pnpm-store
-      #     key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
-      # - name: Install Dependencies
-      #   id: install-dependencies
-      #   run: node ./common/scripts/install-dependencies-ci.mjs ${{ matrix.flavor }}
-      # - name: Check result of flavor switch
-      #   if: ${{ always() && steps.install-dependencies.outcome == 'failure' }}
-      #   run: echo "Failed to install dependencies, please make sure you run `rush update:all-flavors` if dependencies were updated." && exit 1
+      - name: Restore node_modules from cache
+        uses: actions/cache@v4
+        with:
+          path: common/temp/pnpm-store
+          key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
+      - name: Install Dependencies
+        id: install-dependencies
+        run: node ./common/scripts/install-dependencies-ci.mjs ${{ matrix.flavor }}
+      - name: Check result of flavor switch
+        if: ${{ always() && steps.install-dependencies.outcome == 'failure' }}
+        run: echo "Failed to install dependencies, please make sure you run `rush update:all-flavors` if dependencies were updated." && exit 1
       - name: Check the necessary change file has been submitted
         if: ${{ github.event_name == 'pull_request' && !contains( github.event.pull_request.labels.*.name, 'do not need changelog')}}
         run: |
