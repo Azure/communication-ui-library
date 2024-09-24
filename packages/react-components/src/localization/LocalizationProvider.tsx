@@ -17,11 +17,8 @@ import {
   TypingIndicatorStrings,
   VideoGalleryStrings
 } from '../components';
-
 import { NotificationStackStrings } from '../components';
-
 import { RaiseHandButtonStrings } from '../components';
-/* @conditional-compile-remove(one-to-n-calling) */
 import { HoldButtonStrings } from '../components';
 import { DialpadStrings } from '../components';
 /* @conditional-compile-remove(call-readiness) */
@@ -48,7 +45,6 @@ import { ReactionButtonStrings } from '../components';
 /* @conditional-compile-remove(rich-text-editor) */
 import { RichTextSendBoxStrings } from '../components/RichTextEditor/RichTextSendBox';
 import { MeetingConferencePhoneInfoModalStrings } from '../components/MeetingConferencePhoneInfo';
-/* @conditional-compile-remove(one-to-n-calling) */
 import { IncomingCallNotificationStrings } from '../components/IncomingCallNotification';
 
 /**
@@ -183,7 +179,7 @@ export interface ComponentStrings {
   ParticipantList: ParticipantListStrings;
   /** Strings for the MeetingConferencePhoneInfoModal */
   meetingConferencePhoneInfo: MeetingConferencePhoneInfoModalStrings;
-  /* @conditional-compile-remove(one-to-n-calling) */
+
   IncomingCallNotification: IncomingCallNotificationStrings;
 }
 

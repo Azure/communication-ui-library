@@ -99,7 +99,6 @@ export type CommonCallControlOptions = {
    * Inject custom buttons in the call controls.
    */
   onFetchCustomButtonProps?: CustomCallControlButtonCallback[];
-  /* @conditional-compile-remove(one-to-n-calling) */
   holdButton?: boolean | { disabled: boolean };
   /**
    * Show or hide the people button in the composite control bar.

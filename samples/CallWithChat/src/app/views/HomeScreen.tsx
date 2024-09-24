@@ -41,7 +41,6 @@ export interface HomeScreenProps {
   startCallHandler(callDetails: {
     displayName: string;
     meetingLocator?: TeamsMeetingLinkLocator | TeamsMeetingIdLocator;
-    /* @conditional-compile-remove(one-to-n-calling)  */
     outboundParticipants?: string[];
     alternateCallerId?: string;
     /* @conditional-compile-remove(rich-text-editor-composite-support) */
@@ -59,7 +58,6 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const callOptions: IChoiceGroupOption[] = [
     { key: 'ACSCallWithChat', text: 'Start a ACS Call with Chat' },
     { key: 'TeamsMeeting', text: 'Join a Teams Meeting' },
-    /* @conditional-compile-remove(one-to-n-calling) */
     { key: '1:N', text: 'Start a 1:N ACS Call' },
     { key: 'PSTN', text: 'Start a PSTN Call' }
   ];
@@ -77,7 +75,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const [passcode, setPasscode] = useState<string>();
 
   const [alternateCallerId, setAlternateCallerId] = useState<string>();
-  /* @conditional-compile-remove(one-to-n-calling)  */
+
   const [outboundParticipants, setOutboundParticipants] = useState<string>();
   const [dialpadParticipant, setDialpadParticipant] = useState<string>();
 
@@ -86,7 +84,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const teamsCallChosen: boolean = chosenCallOption.key === 'TeamsMeeting';
   const startGroupCall: boolean = chosenCallOption.key === 'ACSCallWithChat';
   const pstnCallChosen: boolean = chosenCallOption.key === 'PSTN';
-  /* @conditional-compile-remove(one-to-n-calling)  */
+
   const acsCallChosen: boolean = chosenCallOption.key === '1:N';
   const buttonEnabled =
     displayName &&
@@ -94,7 +92,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
       meetingLocator ||
       (teamsCallChosen && meetingLocator) ||
       (pstnCallChosen && dialpadParticipant && alternateCallerId) ||
-      /* @conditional-compile-remove(one-to-n-calling) */ (outboundParticipants && acsCallChosen));
+      (outboundParticipants && acsCallChosen));
 
   registerIcons({ icons: { DialpadBackspace: <Backspace20Regular /> } });
 
@@ -183,19 +181,17 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                 <b>And</b>
               </Text>
             )}
-            {
-              /* @conditional-compile-remove(one-to-n-calling) */ acsCallChosen && (
-                <Stack>
-                  <TextField
-                    className={outboundTextField}
-                    label={'Participants'}
-                    required
-                    placeholder={"Comma seperated phone numbers or ACS ID's"}
-                    onChange={(_, newValue) => newValue && setOutboundParticipants(newValue)}
-                  />
-                </Stack>
-              )
-            }
+            {acsCallChosen && (
+              <Stack>
+                <TextField
+                  className={outboundTextField}
+                  label={'Participants'}
+                  required
+                  placeholder={"Comma seperated phone numbers or ACS ID's"}
+                  onChange={(_, newValue) => newValue && setOutboundParticipants(newValue)}
+                />
+              </Stack>
+            )}
             {pstnCallChosen && (
               <Stack>
                 <Stack>
@@ -262,14 +258,13 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
             onClick={() => {
               if (displayName) {
                 saveDisplayNameToLocalStorage(displayName);
-                /* @conditional-compile-remove(one-to-n-calling)  */
+
                 const acsParticipantsToCall = parseParticipants(outboundParticipants);
                 const dialpadParticipantToCall = parseParticipants(dialpadParticipant);
                 startCallHandler({
                   displayName,
                   meetingLocator,
                   alternateCallerId,
-                  /* @conditional-compile-remove(one-to-n-calling)  */
                   outboundParticipants: acsParticipantsToCall ? acsParticipantsToCall : dialpadParticipantToCall,
                   /* @conditional-compile-remove(rich-text-editor-composite-support) */
                   isRichTextEditorEnabled: isRichTextEditorEnabled
@@ -287,7 +282,6 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   );
 };
 
-/* @conditional-compile-remove(one-to-n-calling)  */
 /**
  * splits the participant Id's so we can call multiple people.
  */

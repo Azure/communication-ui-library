@@ -11,7 +11,7 @@ import {
   PhoneNumberIdentifier
 } from '@azure/communication-common';
 import { Dialpad, fromFlatCommunicationIdentifier } from '@azure/communication-react';
-/* @conditional-compile-remove(one-to-n-calling) */
+
 import { IncomingCallStack, usePropsFor } from '@azure/communication-react';
 import { PrimaryButton, Stack, TextField, Image } from '@fluentui/react';
 import React, { useState } from 'react';
@@ -28,17 +28,12 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const { callAgent, headerImageProps } = props;
   const [targetParticipants, setTargetParticipants] = useState<CommunicationIdentifier[]>();
   const [alternateCallerId, setAlternateCallerId] = useState<string>();
-  /* @conditional-compile-remove(one-to-n-calling) */
+
   const incomingCallStackProps = usePropsFor(IncomingCallStack);
   return (
     <Stack horizontal tokens={{ childrenGap: '1rem' }}>
       <Stack style={{ position: 'absolute', top: '0', right: '0' }}>
-        {
-          /* @conditional-compile-remove(one-to-n-calling) */ <IncomingCallStack
-            {...incomingCallStackProps}
-            tabIndex={1}
-          />
-        }
+        {<IncomingCallStack {...incomingCallStackProps} tabIndex={1} />}
       </Stack>
       <Stack verticalAlign="center">
         <Image alt="Welcome to the ACS Calling sample app" className={imgStyle} {...headerImageProps} />

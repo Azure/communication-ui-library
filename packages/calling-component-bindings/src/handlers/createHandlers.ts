@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 import { Call, CallAgent, StartCallOptions } from '@azure/communication-calling';
-/* @conditional-compile-remove(one-to-n-calling) */
 import { IncomingCallCommon } from '@azure/communication-calling';
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import {
@@ -13,12 +12,10 @@ import {
 import { CommunicationIdentifier } from '@azure/communication-common';
 
 import { _toCommunicationIdentifier } from '@internal/acs-ui-common';
-/* @conditional-compile-remove(one-to-n-calling) */
 import { DeclarativeCallAgent } from '@internal/calling-stateful-client';
 import { StatefulCallClient, StatefulDeviceManager } from '@internal/calling-stateful-client';
 import memoizeOne from 'memoize-one';
 import { isACSCallParticipants } from '../utils/callUtils';
-/* @conditional-compile-remove(one-to-n-calling) */
 import { createLocalVideoStream } from '../utils/callUtils';
 import { createDefaultCommonCallingHandlers, CommonCallingHandlers } from './createCommonHandlers';
 
@@ -109,7 +106,6 @@ export const createDefaultCallingHandlers: CreateDefaultCallingHandlers = memoiz
       const participant = _toCommunicationIdentifier(userId);
       await call?.removeParticipant(participant);
     },
-    /* @conditional-compile-remove(one-to-n-calling) */
     onAcceptCall: async (incomingCallId: string, useVideo?: boolean): Promise<void> => {
       const localVideoStream = useVideo ? await createLocalVideoStream(callClient) : undefined;
       const incomingCall = (callAgent as DeclarativeCallAgent)?.incomingCalls.find(
@@ -121,7 +117,6 @@ export const createDefaultCallingHandlers: CreateDefaultCallingHandlers = memoiz
         );
       }
     },
-    /* @conditional-compile-remove(one-to-n-calling) */
     onRejectCall: async (incomingCallId: string): Promise<void> => {
       const incomingCall = (callAgent as DeclarativeCallAgent)?.incomingCalls.find(
         (incomingCall: IncomingCallCommon) => incomingCall.id === incomingCallId
