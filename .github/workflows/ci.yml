@@ -90,7 +90,7 @@ jobs:
         if: ${{ always() && steps.install-dependencies.outcome == 'failure' }}
         run: echo "Failed to install dependencies, please make sure you run `rush update:all-flavors` if dependencies were updated." && exit 1
       - name: Check the necessary change file has been submitted
-        if: ${{ github.event_name == 'pull_request' && !contains( github.event.pull_request.labels.*.name, 'do not need changelog')}}
+        if: ${{ github.event_name == 'pull_request' && !contains( github.event.pull_request.labels.*.name, 'does not need changelog')}}
         run: |
           git fetch origin main:main
           node common/scripts/changelog/check.mjs ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }}
