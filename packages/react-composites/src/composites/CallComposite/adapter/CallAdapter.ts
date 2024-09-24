@@ -34,11 +34,9 @@ import type {
 } from '@azure/communication-common';
 /* @conditional-compile-remove(teams-adhoc-call) */
 import type { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
-/* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { DtmfTone } from '@azure/communication-calling';
 import { CommunicationIdentifier } from '@azure/communication-common';
-/* @conditional-compile-remove(PSTN-calls) */
 import type { CommunicationUserIdentifier, PhoneNumberIdentifier } from '@azure/communication-common';
 import type { AdapterState, Disposable, AdapterError, AdapterErrors } from '../../common/adapters';
 /* @conditional-compile-remove(breakout-rooms) */
@@ -60,7 +58,7 @@ export type CallCompositePage =
   | 'accessDeniedTeamsMeeting'
   | 'call'
   | 'configuration'
-  | /* @conditional-compile-remove(PSTN-calls) */ 'hold'
+  | 'hold'
   | 'joinCallFailedDueToNoNetwork'
   | 'leftCall'
   | 'leaving'
@@ -101,8 +99,8 @@ export type CallAdapterUiState = {
 export type StartCallIdentifier =
   | (
       | MicrosoftTeamsAppIdentifier
-      | /* @conditional-compile-remove(PSTN-calls) */ PhoneNumberIdentifier
-      | /* @conditional-compile-remove(one-to-n-calling) */ CommunicationUserIdentifier
+      | PhoneNumberIdentifier
+      | CommunicationUserIdentifier
       | /* @conditional-compile-remove(teams-adhoc-call) */ MicrosoftTeamsUserIdentifier
       | UnknownIdentifier
     )
@@ -145,7 +143,6 @@ export type CallAdapterClientState = {
    * Latest notifications from call client state.
    */
   latestNotifications: AdapterNotifications;
-  /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Azure communications Phone number to make PSTN calls with.
    */
@@ -198,7 +195,6 @@ export type CallAdapterClientState = {
    * Call from transfer request accepted by local user
    */
   acceptedTransferCallState?: CallState;
-  /* @conditional-compile-remove(hide-attendee-name) */
   /**
    * Hide attendee names in teams meeting
    */
@@ -605,7 +601,6 @@ export interface CallAdapterCallOperations {
    * @public
    */
   removeParticipant(userId: string): Promise<void>;
-  /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Remove a participant from the call.
    * @param participant - {@link @azure/communication-common#CommunicationIdentifier} of the participant to be removed
@@ -663,28 +658,24 @@ export interface CallAdapterCallOperations {
    * @public
    */
   disposeLocalVideoStreamView(): Promise<void>;
-  /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Holds the call.
    *
    * @public
    */
   holdCall(): Promise<void>;
-  /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Resumes the call from a `LocalHold` state.
    *
    * @public
    */
   resumeCall(): Promise<void>;
-  /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Add a participant to the call.
    *
    * @public
    */
   addParticipant(participant: PhoneNumberIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
-  /* @conditional-compile-remove(PSTN-calls) */
   addParticipant(participant: CommunicationUserIdentifier): Promise<void>;
   /**
    * send dtmf tone to another participant in a 1:1 PSTN call
@@ -1118,7 +1109,6 @@ export interface CallAdapterCallManagement extends CallAdapterCallOperations {
    * @public
    */
   startCall(participants: string[], options?: StartCallOptions): Call | undefined;
-  /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Start the call.
    * @param participants - An array of {@link @azure/communication-common#CommunicationIdentifier} to be called

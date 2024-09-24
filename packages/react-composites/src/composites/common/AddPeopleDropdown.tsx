@@ -14,7 +14,6 @@ import {
 import { _DrawerMenu, _DrawerMenuItemProps, Announcer } from '@internal/react-components';
 import copy from 'copy-to-clipboard';
 import { useMemo, useState } from 'react';
-/* @conditional-compile-remove(PSTN-calls) */
 import { CallWithChatCompositeIcon } from './icons';
 import { iconStyles, themedCopyLinkButtonStyles, themedMenuStyle } from './AddPeopleDropdown.styles';
 import { CallingDialpad } from './CallingDialpad';
@@ -104,7 +103,7 @@ export const AddPeopleDropdown = (props: AddPeopleDropdownProps): JSX.Element =>
         key: 'DialpadKey',
         text: strings.openDialpadButtonLabel,
         itemProps: { styles: copyLinkButtonStylesThemed },
-        iconProps: { iconName: PeoplePaneOpenDialpadIconNameTrampoline(), style: iconStyles },
+        iconProps: { iconName: 'PeoplePaneOpenDialpad', style: iconStyles },
         onClick: () => setShowDialpad(true),
         'data-ui-id': 'call-dial-phone-number-button'
       });
@@ -149,7 +148,7 @@ export const AddPeopleDropdown = (props: AddPeopleDropdownProps): JSX.Element =>
               id={calloutButtonId}
               onClick={setDrawerMenuItemsForAddPeople}
               styles={copyLinkButtonStylesThemed}
-              onRenderIcon={() => PeoplePaneAddPersonIconTrampoline()}
+              onRenderIcon={() => <CallWithChatCompositeIcon iconName="PeoplePaneAddPerson" />}
               text={strings.peoplePaneAddPeopleButtonLabel}
               data-ui-id="call-add-people-button"
             />
@@ -206,7 +205,7 @@ export const AddPeopleDropdown = (props: AddPeopleDropdownProps): JSX.Element =>
             <Stack styles={copyLinkButtonStackStyles}>
               <DefaultButton
                 id={calloutButtonId}
-                onRenderIcon={() => PeoplePaneAddPersonIconTrampoline()}
+                onRenderIcon={() => <CallWithChatCompositeIcon iconName="PeoplePaneAddPerson" />}
                 text={strings.peoplePaneAddPeopleButtonLabel}
                 menuProps={defaultMenuProps}
                 styles={copyLinkButtonStylesThemed}
@@ -222,17 +221,3 @@ export const AddPeopleDropdown = (props: AddPeopleDropdownProps): JSX.Element =>
     </>
   );
 };
-
-function PeoplePaneOpenDialpadIconNameTrampoline(): string {
-  /* @conditional-compile-remove(PSTN-calls) */
-  return 'PeoplePaneOpenDialpad';
-
-  return '';
-}
-
-function PeoplePaneAddPersonIconTrampoline(): JSX.Element {
-  /* @conditional-compile-remove(PSTN-calls) */
-  return <CallWithChatCompositeIcon iconName="PeoplePaneAddPerson" />;
-
-  return <></>;
-}

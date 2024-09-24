@@ -75,9 +75,9 @@ export interface CallWithChatClientState {
   isTeamsCall: boolean;
   /** State of whether the active call is a Teams interop meeting */
   isTeamsMeeting: boolean;
-  /* @conditional-compile-remove(PSTN-calls) */
+
   /** alternateCallerId for PSTN call */
-  alternateCallerId?: string | undefined;
+  alternateCallerId?: string;
   /* @conditional-compile-remove(unsupported-browser) */
   /** Environment information for system adapter is made on */
   environmentInfo?: EnvironmentInfo;
@@ -106,7 +106,6 @@ export interface CallWithChatClientState {
 
   /** State to track the selected video background effect */
   selectedVideoBackgroundEffect?: VideoBackgroundEffect;
-  /* @conditional-compile-remove(hide-attendee-name) */
   /** Hide attendee names in teams meeting */
   hideAttendeeNames?: boolean;
   /**
@@ -143,7 +142,6 @@ export function callWithChatAdapterStateFromBackingStates(callAdapter: CallAdapt
     /* @conditional-compile-remove(breakout-rooms) */
     latestCallNotifications: callAdapterState.latestNotifications,
     latestChatErrors: {},
-    /* @conditional-compile-remove(PSTN-calls) */
     alternateCallerId: callAdapterState.alternateCallerId,
     /* @conditional-compile-remove(unsupported-browser) */
     environmentInfo: callAdapterState.environmentInfo,
@@ -152,7 +150,7 @@ export function callWithChatAdapterStateFromBackingStates(callAdapter: CallAdapt
     /* @conditional-compile-remove(DNS) */
     onResolveDeepNoiseSuppressionDependency: callAdapterState.onResolveDeepNoiseSuppressionDependency,
     selectedVideoBackgroundEffect: callAdapterState.selectedVideoBackgroundEffect,
-    /* @conditional-compile-remove(hide-attendee-name) */
+
     /** Hide attendee names in teams meeting */
     hideAttendeeNames: callAdapterState.hideAttendeeNames,
     reactions: callAdapterState.reactions

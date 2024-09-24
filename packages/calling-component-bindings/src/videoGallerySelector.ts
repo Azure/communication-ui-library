@@ -16,7 +16,6 @@ import {
   getRole,
   getScreenShareRemoteParticipant
 } from './baseSelectors';
-/* @conditional-compile-remove(hide-attendee-name) */
 import { isHideAttendeeNamesEnabled } from './baseSelectors';
 import { getOptimalVideoCount } from './baseSelectors';
 import { _updateUserDisplayNames } from './utils/callUtils';
@@ -69,7 +68,6 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     getOptimalVideoCount,
     getRole,
     getLocalParticipantRaisedHand,
-    /* @conditional-compile-remove(hide-attendee-name) */
     isHideAttendeeNamesEnabled,
     getLocalParticipantReactionState,
     getSpotlightCallFeature,
@@ -87,7 +85,6 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     optimalVideoCount,
     role,
     raisedHand,
-    /* @conditional-compile-remove(hide-attendee-name) */
     isHideAttendeeNamesEnabled,
     localParticipantReaction,
     spotlightCallFeature,
@@ -135,10 +132,8 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
         capabilities
       ),
       remoteParticipants: _videoGalleryRemoteParticipantsMemo(
-        updateUserDisplayNamesTrampoline(remoteParticipants ? Object.values(remoteParticipants) : noRemoteParticipants),
-        /* @conditional-compile-remove(hide-attendee-name) */
+        _updateUserDisplayNames(remoteParticipants ? Object.values(remoteParticipants) : noRemoteParticipants),
         isHideAttendeeNamesEnabled,
-        /* @conditional-compile-remove(hide-attendee-name) */
         role
       ),
       dominantSpeakers: dominantSpeakerIds,
@@ -148,9 +143,3 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     };
   }
 );
-
-const updateUserDisplayNamesTrampoline = (remoteParticipants: RemoteParticipantState[]): RemoteParticipantState[] => {
-  /* @conditional-compile-remove(PSTN-calls) */
-  return _updateUserDisplayNames(remoteParticipants);
-  return remoteParticipants;
-};

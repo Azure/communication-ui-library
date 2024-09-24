@@ -47,7 +47,6 @@ import {
 } from './CallClientState';
 /* @conditional-compile-remove(breakout-rooms) */
 import { NotificationTarget, CallNotification, CallNotifications } from './CallClientState';
-/* @conditional-compile-remove(one-to-n-calling) */
 import { TeamsIncomingCallState } from './CallClientState';
 import { CaptionsInfo } from './CallClientState';
 import { ReactionState } from './CallClientState';
@@ -539,7 +538,6 @@ export class CallContext {
     });
   }
 
-  /* @conditional-compile-remove(hide-attendee-name) */
   public setHideAttendeeNames(callId: string, capabilitiesChangeInfo: CapabilitiesChangeInfo): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
@@ -909,9 +907,7 @@ export class CallContext {
     });
   }
 
-  public setIncomingCall(
-    call: IncomingCallState | /* @conditional-compile-remove(one-to-n-calling) */ TeamsIncomingCallState
-  ): void {
+  public setIncomingCall(call: IncomingCallState | TeamsIncomingCallState): void {
     this.modifyState((draft: CallClientState) => {
       const existingCall = draft.incomingCalls[call.id];
       if (existingCall) {

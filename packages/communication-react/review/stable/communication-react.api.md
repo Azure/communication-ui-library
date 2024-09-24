@@ -958,7 +958,7 @@ export interface CallWithChatAdapterManagement {
     // (undocumented)
     downloadResourceToCache(resourceDetails: ResourceDetails): Promise<void>;
     fetchInitialData(): Promise<void>;
-    holdCall: () => Promise<void>;
+    holdCall(): Promise<void>;
     // @deprecated
     joinCall(microphoneOn?: boolean): Call | undefined;
     joinCall(options?: JoinCallOptions): Call | undefined;
@@ -975,7 +975,7 @@ export interface CallWithChatAdapterManagement {
     removeParticipant(participant: CommunicationIdentifier): Promise<void>;
     // (undocumented)
     removeResourceFromCache(resourceDetails: ResourceDetails): void;
-    resumeCall: () => Promise<void>;
+    resumeCall(): Promise<void>;
     sendDtmfTone: (dtmfTone: DtmfTone_2) => Promise<void>;
     sendMessage(content: string, options?: SendMessageOptions): Promise<void>;
     sendReadReceipt(chatMessageId: string): Promise<void>;
@@ -1125,7 +1125,7 @@ export interface CallWithChatAdapterUiState {
 
 // @public
 export interface CallWithChatClientState {
-    alternateCallerId?: string | undefined;
+    alternateCallerId?: string;
     call?: CallState;
     chat?: ChatThreadClientState;
     devices: DeviceManagerState;
@@ -1807,6 +1807,7 @@ export type CommonCallControlOptions = {
     };
     exitSpotlightButton?: boolean;
     captionsButton?: boolean;
+    galleryControlsButton?: boolean;
     teamsMeetingPhoneCallButton?: boolean;
 };
 
@@ -2991,7 +2992,7 @@ export interface JumpToNewMessageButtonProps {
 export const lightTheme: PartialTheme & CallingTheme;
 
 // @public
-export type LoadingState = 'loading' | 'none';
+export type LoadingState = 'loading' | 'none' | 'reconnecting';
 
 // @public
 export const LocalizationProvider: (props: LocalizationProviderProps) => JSX.Element;
@@ -3582,7 +3583,7 @@ export type ParticipantsRemovedListener = (event: {
 }) => void;
 
 // @public
-export type ParticipantState = 'Idle' | 'Connecting' | 'Ringing' | 'Connected' | 'Hold' | 'InLobby' | 'EarlyMedia' | 'Disconnected';
+export type ParticipantState = 'Idle' | 'Connecting' | 'Ringing' | 'Connected' | 'Hold' | 'InLobby' | 'EarlyMedia' | 'Disconnected' | 'Reconnecting';
 
 // @public
 export interface PPTLiveCallFeatureState {
@@ -4490,9 +4491,7 @@ export interface VideoTilesOptions {
 // @public
 export interface VideoTileStrings {
     moreOptionsButtonAriaLabel: string;
-    // (undocumented)
     participantStateHold: string;
-    // (undocumented)
     participantStateRinging: string;
 }
 

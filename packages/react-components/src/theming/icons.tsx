@@ -95,7 +95,6 @@ import { Sparkle20Filled, VideoProhibited20Filled, MicProhibited20Filled } from 
 import { Open20Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(file-sharing-acs) */
 import { ArrowDownload20Regular } from '@fluentui/react-icons';
-/* @conditional-compile-remove(PSTN-calls) */
 import { CallPause20Regular, CallPause20Filled, Play20Regular } from '@fluentui/react-icons';
 import { People20Regular } from '@fluentui/react-icons';
 
@@ -113,7 +112,6 @@ import React from 'react';
 import { useTheme } from './FluentThemeProvider';
 /* @conditional-compile-remove(call-readiness) */
 import { sitePermissionIconBackgroundStyle, scaledIconStyles } from './icons.styles';
-/* @conditional-compile-remove(one-to-n-calling) */
 import { Call20Filled } from '@fluentui/react-icons';
 
 /**
@@ -335,11 +333,8 @@ export const DEFAULT_COMPONENT_ICONS = {
   ParticipantItemOptionsHovered: <MoreHorizontal20Filled />,
   ParticipantItemScreenShareStart: <ShareScreenStart20Filled />,
   ParticipantItemSpotlighted: <VideoPersonStar20Filled />,
-  /* @conditional-compile-remove(PSTN-calls) */
   HoldCallContextualMenuItem: <CallPause20Regular />,
-  /* @conditional-compile-remove(PSTN-calls) */
   HoldCallButton: <CallPause20Filled />,
-  /* @conditional-compile-remove(PSTN-calls) */
   ResumeCall: <Play20Regular />,
   SendBoxSend: <Send20Regular />,
   SendBoxSendHovered: <Send20Filled />,
@@ -418,10 +413,7 @@ export const DEFAULT_COMPONENT_ICONS = {
   RichTextTableDeleteMenuIcon: <TableDismiss20Regular />,
   /* @conditional-compile-remove(soft-mute) */
   ContextualMenuMicMutedIcon: <MicOff20Regular />,
-  /* @conditional-compile-remove(one-to-n-calling) */
   IncomingCallNotificationRejectIcon: <CallEnd20Filled />,
-  /* @conditional-compile-remove(one-to-n-calling) */
   IncomingCallNotificationAcceptIcon: <Call20Filled />,
-  /* @conditional-compile-remove(one-to-n-calling) */
   IncomingCallNotificationAcceptWithVideoIcon: <Video20Filled />
 };

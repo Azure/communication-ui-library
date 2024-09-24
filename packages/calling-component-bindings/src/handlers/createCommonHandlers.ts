@@ -18,7 +18,6 @@ import { AudioEffectsStartConfig, AudioEffectsStopConfig } from '@azure/communic
 import { RemoteParticipant } from '@azure/communication-calling';
 import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
 import { DtmfTone } from '@azure/communication-calling';
-/* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support) */
 import { TeamsCall } from '@azure/communication-calling';
@@ -30,7 +29,6 @@ import { CreateViewResult, StatefulCallClient, StatefulDeviceManager } from '@in
 import memoizeOne from 'memoize-one';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 import { disposeAllLocalPreviewViews, _isInCall, _isInLobbyOrConnecting, _isPreviewOn } from '../utils/callUtils';
-/* @conditional-compile-remove(PSTN-calls) */
 import { CommunicationUserIdentifier, PhoneNumberIdentifier } from '@azure/communication-common';
 import { CommunicationIdentifier } from '@azure/communication-common';
 import { Features } from '@azure/communication-calling';
@@ -61,11 +59,8 @@ export interface CommonCallingHandlers {
   onLowerHand: () => Promise<void>;
   onToggleRaiseHand: () => Promise<void>;
   onReactionClick: (reaction: Reaction) => Promise<void>;
-  /* @conditional-compile-remove(PSTN-calls) */
   onToggleHold: () => Promise<void>;
-  /* @conditional-compile-remove(PSTN-calls) */
   onAddParticipant(participant: CommunicationUserIdentifier): Promise<void>;
-  /* @conditional-compile-remove(PSTN-calls) */
   onAddParticipant(participant: PhoneNumberIdentifier, options: AddPhoneNumberOptions): Promise<void>;
   onCreateLocalStreamView: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
   onCreateRemoteStreamView: (
@@ -82,14 +77,12 @@ export interface CommonCallingHandlers {
   onDisposeLocalScreenShareStreamView: () => Promise<void>;
   onSendDtmfTone: (dtmfTone: DtmfTone) => Promise<void>;
   onRemoveParticipant(userId: string): Promise<void>;
-  /* @conditional-compile-remove(PSTN-calls) */
+
   onRemoveParticipant(participant: CommunicationIdentifier): Promise<void>;
   /* @conditional-compile-remove(call-readiness) */
   askDevicePermission: (constrain: PermissionConstraints) => Promise<void>;
   onStartCall: (participants: CommunicationIdentifier[], options?: StartCallOptions) => void;
-  /* @conditional-compile-remove(one-to-n-calling) */
   onAcceptCall: (incomingCallId: string, useVideo?: boolean) => Promise<void>;
-  /* @conditional-compile-remove(one-to-n-calling) */
   onRejectCall: (incomingCallId: string) => Promise<void>;
   onRemoveVideoBackgroundEffects: () => Promise<void>;
 
@@ -367,7 +360,6 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
     const onHangUp = async (forEveryone?: boolean): Promise<void> =>
       await call?.hangUp({ forEveryone: forEveryone === true ? true : false });
 
-    /* @conditional-compile-remove(PSTN-calls) */
     const onToggleHold = async (): Promise<void> =>
       call?.state === 'LocalHold' ? await call?.resume() : await call?.hold();
 
@@ -725,7 +717,6 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
 
     return {
       onHangUp,
-      /* @conditional-compile-remove(PSTN-calls) */
       onToggleHold,
       onSelectCamera,
       onSelectMicrophone,
@@ -747,7 +738,6 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       onLowerHand,
       onToggleRaiseHand,
       onReactionClick: onReactionClick,
-      /* @conditional-compile-remove(PSTN-calls) */
       onAddParticipant: notImplemented,
       onRemoveParticipant: notImplemented,
       onStartCall: notImplemented,
@@ -777,9 +767,7 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       onMuteParticipant,
       /* @conditional-compile-remove(soft-mute) */
       onMuteAllRemoteParticipants,
-      /* @conditional-compile-remove(one-to-n-calling) */
       onAcceptCall: notImplemented,
-      /* @conditional-compile-remove(one-to-n-calling) */
       onRejectCall: notImplemented
     };
   }

@@ -88,8 +88,6 @@ module.exports = {
     "stabilizedDemo",
     // Joining calls using teams token
     "teams-identity-support",
-    // feature for hiding attendee name in the teams meeting
-    "hide-attendee-name",
     // Feature for end call options 
     'end-call-options',
     // Feature to support file sharing in Teams interoperability chats
@@ -98,10 +96,6 @@ module.exports = {
     "acs-close-captions",
     // Feature for showing notifications
     "notifications",
-    // 1 to N Calling feature.
-    "one-to-n-calling",
-    // PSTN calls 
-    "PSTN-calls",
     // Adhoc calls to a Teams user.
     "teams-adhoc-call",
     // Feature for tracking beta start call identifier
