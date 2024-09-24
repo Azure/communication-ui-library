@@ -1,11 +1,11 @@
 import { Meta } from '@storybook/addon-docs/blocks';
 
-<Meta title="Composites/TypeScript Loaders" />
+<Meta title="Composites/JavaScript Loaders" />
 
 # Using the UI Composites in other Frameworks
 
 The Azure Communication Services UI library is written in [React]() and [TypeScript](). If you are using a different framework,
-you can still use the UI Composites by using our TypeScript Loader functions for each of the composites.
+you can still use the UI Composites by using our Loader functions for each of the composites.
 
 These functions mount each of our React Composites to your applications DOM. The Functions that are available are:
 
@@ -22,3 +22,104 @@ the `createRoot` function to attach a React node to your application and then us
 
 Our loader functions work in a similar way. They take a DOM element and attach the React Composite to that element. What this means
 is that you can use the UI Composites in any framework that can render HTML elements to the DOM.
+
+**Note:** Something to keep in mind when using these loader functions for the UI Composites is that you are taking on
+not just the bundle for `@azure/communication-react` but also the bundle for `react` and `react-dom`. Best practice here
+is to lazy load these chunks so that you don't get caught waiting for the large bundle when you don't need your
+composite experience yet.
+
+## Setup needed before calling the functions
+
+All of the loaders are not included on the main API for the UI library. To better support our other customers using supported
+versions of React, we are providing these loaders in a submodule of `@azure/communication-react`. To use these loaders you will import
+from a different path than the main UI library.
+
+```ts
+import {
+  loadChatComposite,
+  loadCallComposite,
+  loadCallWithChatComposite,
+  loadOutboundCallComposite
+} from '@azure/communication-react/javascript-loaders';
+```
+
+Since these functions are imported from a submodule you might need to make some changes to your
+`tsconfig.json` to handle the submodule. To do this you will need to set the following fields as follows
+
+```json
+"compilerOptions": {
+  "module": "NodeNext",
+  "moduleResolution": "NodeNext",
+}
+```
+
+Once you have set these you will be able to import them from the submodule. You do not need to state the
+submodule in your `package.json` as the submodule is included when you define you `@azure/communication-react`
+dependency.
+
+## Using the Loaders
+
+The following snippet is an example of how you might import the CallComposite in your [Angular]() application.
+
+```ts
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-calling',
+  standalone: true,
+  templateUrl: './calling.component.html',
+  styleUrls: ['./calling.component.css']
+})
+export class CallingComponent {
+  userId = '<ACS User Id>';
+  token = '<ACS Token>';
+  displayName = 'User';
+  groupId = '<GUID for call>';
+  adapter: any;
+
+  /**
+   * This is how you would load in the CallComposite with lazy loading. This
+   * will only load the CallComposite and the UI library when the function is called.
+   */
+  async loadCalling(): Promise<void> {
+    import('@azure/communication-react/javascript-loaders').then(async (uiLib) => {
+      this.adapter = await uiLib
+        .loadCallComposite(
+          {
+            userId: this.userId,
+            token: this.token,
+            displayName: this.displayName,
+            locator: { groupId: this.groupId }
+          },
+          // this is the DOM element you want to attach the composite to. This will be in your Template for the component.
+          document.getElementById('call-composite-container'),
+          {
+            callControls: {
+              displayType: 'compact'
+            }
+          }
+        )
+        .then((adapter) => {
+          if (adapter) {
+            /**
+             * Here is where you can subscribe to events from the Adapter after it has been created.
+             */
+            adapter.on('callEnded', () => {
+              console.log('Call ended');
+            });
+          }
+        });
+    });
+  }
+
+  /**
+   * You will want to observe your frameworks Component life cycle and make sure you asking
+   * that the adapter is disposed of when the component is destroyed.
+   */
+  ngOnDestroy(): void {
+    if (this.adapter) {
+      this.adapter.dispose();
+    }
+  }
+}
+```
