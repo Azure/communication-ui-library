@@ -5,7 +5,6 @@ import { memoizeFunction, Stack, useTheme } from '@fluentui/react';
 import { IContextualMenuItem } from '@fluentui/react';
 import { _isInLobbyOrConnecting } from '@internal/calling-component-bindings';
 import { ControlBar, DevicesButton, ParticipantMenuItemsCallback } from '@internal/react-components';
-/* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { HoldButton } from '@internal/react-components';
 import React, { useMemo } from 'react';
 /* @conditional-compile-remove(DNS) */
@@ -18,7 +17,7 @@ import { Microphone } from './buttons/Microphone';
 import { Participants } from './buttons/Participants';
 import { ScreenShare } from './buttons/ScreenShare';
 import { ContainerRectProps } from '../../common/ContainerRectProps';
-/* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
+
 import { People } from './buttons/People';
 import { useLocale } from '../../localization';
 import { MoreButton } from '../../common/MoreButton';
@@ -48,7 +47,6 @@ import { _isSafari } from '../../CallComposite/utils';
  * @private
  */
 export type CallControlsProps = {
-  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   peopleButtonChecked?: boolean;
   onPeopleButtonClicked?: () => void;
   callInvitationURL?: string;
@@ -138,7 +136,6 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
     }
   }, [adapter, isDeepNoiseSuppressionOn]);
 
-  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   const peopleButtonStrings = useMemo(
     () => ({
       label: localeStrings.strings.call.peopleButtonLabel,
@@ -156,7 +153,6 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
     [localeStrings]
   );
 
-  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   const holdButtonProps = usePropsFor(HoldButton);
 
   const raiseHandButtonProps = usePropsFor(RaiseHandButton) as RaiseHandButtonProps;
@@ -191,10 +187,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
     numberOfButtons++;
   }
 
-  const showParticipantsButtonInControlBar =
-    isEnabled(options?.participantsButton) &&
-    /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
-    !props.isMobile;
+  const showParticipantsButtonInControlBar = isEnabled(options?.participantsButton) && !props.isMobile;
   if (showParticipantsButtonInControlBar) {
     numberOfButtons++;
   }
@@ -225,7 +218,6 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
       });
     }
 
-    /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
     if (!isRoomsCallTrampoline(adapter)) {
       items.push({
         key: 'holdButtonKey',
@@ -425,7 +417,6 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
                 disabled={isDisabled(options?.participantsButton)}
               />
             ) && (
-              /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
               <People
                 checked={props.peopleButtonChecked}
                 ariaLabel={peopleButtonStrings?.label}

@@ -1,8 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/* @conditional-compile-remove(one-to-n-calling) */
-/* @conditional-compile-remove(PSTN-calls) */
 import { ParticipantState } from './ParticipantListParticipant';
 
 import { RaisedHand } from './ParticipantListParticipant';
@@ -115,8 +113,6 @@ export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
   isSpeaking?: boolean;
   /** Video stream of shared screen */
   screenShareStream?: VideoGalleryStream;
-  /* @conditional-compile-remove(one-to-n-calling) */
-  /* @conditional-compile-remove(PSTN-calls) */
   /**
    * @public
    * The connection state of the participant. For example, 'Hold', 'Connecting' etc.

@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 import { CallClientState, IncomingCallState } from '@internal/calling-stateful-client';
-/* @conditional-compile-remove(one-to-n-calling) */
 import { TeamsIncomingCallState } from '@internal/calling-stateful-client';
 import { getDeviceManager, getIncomingCalls, getRemovedIncomingCalls } from './baseSelectors';
 import { createSelector } from 'reselect';
@@ -33,27 +32,21 @@ export const incomingCallStackSelector: IncomingCallStackSelector = createSelect
     removedIncomingCalls: IncomingCallStackCall[];
   } => {
     // Convert incoming call state to active incoming call
-    const componentIncomingCalls = incomingCalls.map(
-      (
-        incomingCall: IncomingCallState | /* @conditional-compile-remove(one-to-n-calling) */ TeamsIncomingCallState
-      ) => {
-        return {
-          ...incomingCall,
-          callerInfo: {
-            displayName: incomingCall.callerInfo.displayName || 'Unknown Caller'
-          },
-          videoAvailable:
-            (incomingCall.callerInfo.identifier && isPhoneNumberIdentifier(incomingCall.callerInfo.identifier)) ||
-            deviceManager?.cameras.length === 0
-              ? false
-              : true
-        };
-      }
-    );
+    const componentIncomingCalls = incomingCalls.map((incomingCall: IncomingCallState | TeamsIncomingCallState) => {
+      return {
+        ...incomingCall,
+        callerInfo: {
+          displayName: incomingCall.callerInfo.displayName || 'Unknown Caller'
+        },
+        videoAvailable:
+          (incomingCall.callerInfo.identifier && isPhoneNumberIdentifier(incomingCall.callerInfo.identifier)) ||
+          deviceManager?.cameras.length === 0
+            ? false
+            : true
+      };
+    });
     const componentRemovedIncomingCalls = removedIncomingCalls.map(
-      (
-        incomingCall: IncomingCallState | /* @conditional-compile-remove(one-to-n-calling) */ TeamsIncomingCallState
-      ) => {
+      (incomingCall: IncomingCallState | TeamsIncomingCallState) => {
         return {
           ...incomingCall,
           callerInfo: {

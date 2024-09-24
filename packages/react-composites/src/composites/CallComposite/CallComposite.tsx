@@ -36,7 +36,6 @@ import { CallControlOptions } from './types/CallControlOptions';
 import { LayerHost, mergeStyles } from '@fluentui/react';
 import { modalLayerHostStyle } from '../common/styles/ModalLocalAndRemotePIP.styles';
 import { useId } from '@fluentui/react-hooks';
-/* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
 import { HoldPage } from './pages/HoldPage';
 /* @conditional-compile-remove(unsupported-browser) */
 import { UnsupportedBrowserPage } from './pages/UnsupportedBrowser';
@@ -528,7 +527,6 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   const callees = useSelector(getTargetCallees) as StartCallIdentifier[];
   const locale = useLocale();
   const palette = useTheme().palette;
-  /* @conditional-compile-remove(PSTN-calls) */
   const alternateCallerId = adapter.getState().alternateCallerId;
   const leavePageStyle = useMemo(() => leavingPageStyle(palette), [palette]);
   let pageElement: JSX.Element | undefined;
@@ -542,9 +540,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
             if (callees) {
               adapter.startCall(
                 callees,
-                /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId
-                  ? { alternateCallerId: { phoneNumber: alternateCallerId } }
-                  : {}
+                alternateCallerId ? { alternateCallerId: { phoneNumber: alternateCallerId } } : {}
               );
             } else {
               adapter.joinCall({
@@ -711,7 +707,6 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
         />
       );
       break;
-    /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
     case 'hold':
       pageElement = (
         <>

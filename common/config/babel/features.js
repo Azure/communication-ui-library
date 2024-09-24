@@ -94,10 +94,6 @@ module.exports = {
     "acs-close-captions",
     // Feature for showing notifications
     "notifications",
-    // 1 to N Calling feature.
-    "one-to-n-calling",
-    // PSTN calls 
-    "PSTN-calls",
     // Adhoc calls to a Teams user.
     "teams-adhoc-call",
     // Feature for tracking beta start call identifier
