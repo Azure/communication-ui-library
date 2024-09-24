@@ -18,7 +18,6 @@ import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { DtmfTone } from '@azure/communication-calling';
 import { CallWithChatAdapterState } from '../state/CallWithChatAdapterState';
 import { CommunicationIdentifier, isPhoneNumberIdentifier, PhoneNumberIdentifier } from '@azure/communication-common';
-/* @conditional-compile-remove(one-to-n-calling) */
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { _toCommunicationIdentifier } from '@internal/acs-ui-common';
 import {

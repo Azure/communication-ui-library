@@ -158,7 +158,6 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
     videoStream,
     screenShareStream,
     isScreenSharingOn: screenShareStream !== undefined && screenShareStream.isAvailable,
-    /* @conditional-compile-remove(one-to-n-calling) */
     state,
     raisedHand,
     reaction,

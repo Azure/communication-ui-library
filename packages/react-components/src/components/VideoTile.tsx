@@ -20,7 +20,6 @@ import { BaseCustomStyles, CustomAvatarOptions, OnRenderAvatarCallback } from '.
 import { CallingTheme } from '../theming';
 import { RaisedHand } from '../types';
 import { RaisedHandIcon } from './assets/RaisedHandIcon';
-/* @conditional-compile-remove(one-to-n-calling) */
 
 import { ParticipantState } from '../types';
 import {
@@ -46,9 +45,9 @@ import { ReactionResources } from '../types/ReactionTypes';
 export interface VideoTileStrings {
   /** Aria label for announcing the remote video tile drawer menu */
   moreOptionsButtonAriaLabel: string;
-  /* @conditional-compile-remove(one-to-n-calling) */
+  /** String for displaying the Ringing of the remote participant */
   participantStateRinging: string;
-  /* @conditional-compile-remove(one-to-n-calling) */
+  /** String for displaying the Hold state of the remote participant */
   participantStateHold: string;
 }
 
@@ -149,7 +148,6 @@ export interface VideoTileProps {
   /** Whether the participant is raised hand. Show a indicator (border) and icon with order */
   raisedHand?: RaisedHand;
 
-  /* @conditional-compile-remove(one-to-n-calling) */
   /**
    * The call connection state of the participant.
    * For example, `Hold` means the participant is on hold.
@@ -378,7 +376,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
   const ids = useIdentifiers();
 
   const canShowLabel = showLabel && (displayName || (showMuteIndicator && isMuted));
-  const participantStateString = participantStateStringTrampoline(props, locale);
+  const participantStateString = getParticipantStateString(props, locale);
   const canShowContextMenuButton = isHovered || isFocused;
   let raisedHandBackgroundColor = '';
   raisedHandBackgroundColor = callingPalette.raiseHandGold;
@@ -495,17 +493,13 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
   );
 };
 
-const participantStateStringTrampoline = (props: VideoTileProps, locale: ComponentLocale): string | undefined => {
-  /* @conditional-compile-remove(one-to-n-calling) */
+const getParticipantStateString = (props: VideoTileProps, locale: ComponentLocale): string | undefined => {
   const strings = { ...locale.strings.videoTile, ...props.strings };
-  /* @conditional-compile-remove(one-to-n-calling) */
   return props.participantState === 'EarlyMedia' || props.participantState === 'Ringing'
     ? strings?.participantStateRinging
     : props.participantState === 'Hold'
       ? strings?.participantStateHold
       : undefined;
-
-  return undefined;
 };
 
 const tileInfoContainerTokens = {

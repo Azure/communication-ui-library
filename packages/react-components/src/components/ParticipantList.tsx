@@ -219,7 +219,6 @@ const onRenderParticipantDefault = (
       onRenderAvatar={onRenderAvatarWithRaiseHand}
       onClick={onParticipantClick ? () => onParticipantClick?.(participant) : undefined}
       showParticipantOverflowTooltip={showParticipantOverflowTooltip}
-      /* @conditional-compile-remove(one-to-n-calling) */
       participantState={callingParticipant.state}
       ariaLabelledBy={participantAriaLabelledBy}
     />

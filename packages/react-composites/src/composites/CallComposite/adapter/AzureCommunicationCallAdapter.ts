@@ -968,7 +968,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
       | (
           | MicrosoftTeamsAppIdentifier
           | PhoneNumberIdentifier
-          | /* @conditional-compile-remove(one-to-n-calling) */ CommunicationUserIdentifier
+          | CommunicationUserIdentifier
           | /* @conditional-compile-remove(teams-adhoc-call) */ MicrosoftTeamsUserIdentifier
           | UnknownIdentifier
         )[],
@@ -1003,7 +1003,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
       idsToAdd as (
         | MicrosoftTeamsAppIdentifier
         | PhoneNumberIdentifier
-        | /* @conditional-compile-remove(one-to-n-calling) */ CommunicationUserIdentifier
+        | CommunicationUserIdentifier
         | /* @conditional-compile-remove(teams-adhoc-call) */ MicrosoftTeamsUserIdentifier
         | UnknownIdentifier
       )[]
