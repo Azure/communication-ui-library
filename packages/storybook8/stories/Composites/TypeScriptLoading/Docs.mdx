@@ -4,7 +4,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
 # Using the UI Composites in other Frameworks
 
-The Azure Communication Services UI library is written in [React]() and [TypeScript](). If you are using a different framework,
+The Azure Communication Services UI library is written in [React](https://react.dev/). If you are using a different framework,
 you can still use the UI Composites by using our Loader functions for each of the composites.
 
 These functions mount each of our React Composites to your applications DOM. The Functions that are available are:
@@ -16,8 +16,8 @@ These functions mount each of our React Composites to your applications DOM. The
 
 ## How they work
 
-Since all different [Node]() frameworks are just JavaScript, CSS, and HTML you can use each of the
-different frameworks inside each other. In the case of using [React]() inside your application you would use
+Since all different [Node](https://nodejs.org/en) frameworks are just JavaScript, CSS, and HTML you can use each of the
+different frameworks inside each other. In the case of using [React](https://react.dev/) inside your application you would use
 the `createRoot` function to attach a React node to your application and then use your react component inside that.
 
 Our loader functions work in a similar way. They take a DOM element and attach the React Composite to that element. What this means
@@ -44,7 +44,7 @@ import {
 ```
 
 Since these functions are imported from a submodule you might need to make some changes to your
-`tsconfig.json` to handle the submodule. To do this you will need to set the following fields as follows
+`tsconfig.json` to [handle the submodule](https://www.typescriptlang.org/tsconfig/#module). To do this you will need to set the following fields as follows
 
 ```json
 "compilerOptions": {
@@ -59,7 +59,7 @@ dependency.
 
 ## Using the Loaders
 
-The following snippet is an example of how you might import the CallComposite in your [Angular]() application.
+The following snippet is an example of how you might import the `CallComposite` in your [Angular](https://angular.dev/) application.
 
 ```ts
 import { Component } from '@angular/core';
