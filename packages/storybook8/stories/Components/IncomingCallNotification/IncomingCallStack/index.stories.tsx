@@ -43,7 +43,7 @@ const meta: Meta = {
       },
       {
         callerInfo: {
-          displayName: 'Cat'
+          displayName: 'Dog2'
         },
         id: '3'
       }
