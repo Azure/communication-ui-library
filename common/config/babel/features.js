@@ -94,8 +94,6 @@ module.exports = {
     "acs-close-captions",
     // Feature for showing notifications
     "notifications",
-    // Adhoc calls to a Teams user.
-    "teams-adhoc-call",
     // Feature for tracking beta start call identifier
     'start-call-beta',
     // feature for adding JS helpers to the UI library API

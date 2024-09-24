@@ -53,7 +53,6 @@ import { MessageOptions } from '@internal/acs-ui-common';
 import { PhoneNumberIdentifier } from '@azure/communication-common';
 import { UnknownIdentifier, MicrosoftTeamsAppIdentifier } from '@azure/communication-common';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
-/* @conditional-compile-remove(teams-adhoc-call) */
 import { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 import { CommunicationIdentifier } from '@azure/communication-common';
 import {
@@ -167,7 +166,7 @@ export interface CallWithChatAdapterManagement {
       | MicrosoftTeamsAppIdentifier
       | PhoneNumberIdentifier
       | CommunicationUserIdentifier
-      | /* @conditional-compile-remove(teams-adhoc-call) */ MicrosoftTeamsUserIdentifier
+      | MicrosoftTeamsUserIdentifier
       | UnknownIdentifier
     )[],
     options?: StartCallOptions
