@@ -78,9 +78,8 @@ jobs:
         with:
           node-version: 'lts/*'
       - name: Test
-        if: ${{ !contains(github.event.pull_request.labels.*.name, 'do not need changelog') }}
         run: |
-          echo  ${{ toJSON(github.event.pull_request) }}
+          echo contains(github.event.pull_request.labels.*.name, 'do not need changelog')  ${{ !contains(github.event.pull_request.labels.*.name, 'do not need changelog') }} !contains(github.event.pull_request.labels.*.name, 'do-not-need-changelog') ${{ !contains(github.event.pull_request.labels.*.name, 'do-not-need-changelog') }} !contains(github.event.pull_request.labels.*.name, 'breaking-change') ${{ !contains(github.event.pull_request.labels.*.name, 'breaking-change') }}
       #     # Try get node_modules from cache
       #     - name: Restore node_modules from cache
       #       uses: actions/cache@v4
