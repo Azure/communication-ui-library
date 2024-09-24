@@ -80,7 +80,7 @@ jobs:
       - name: Test
         if: ${{ !contains(github.event.pull_request.labels.*.name, 'do not need changelog') }}
         run: |
-          echo  ${{ !contains(github.event.pull_request.labels.*.name, 'do not need changelog') }}
+          echo  ${{ github.event.pull_request }}
       #     # Try get node_modules from cache
       #     - name: Restore node_modules from cache
       #       uses: actions/cache@v4
