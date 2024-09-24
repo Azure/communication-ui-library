@@ -12,7 +12,6 @@ import { VideoBackgroundBlurEffect, VideoBackgroundReplacementEffect } from '..'
 import { useAdapter } from '../adapter/CallAdapterProvider';
 import { isCameraOn } from '../utils';
 import { DtmfTone } from '@azure/communication-calling';
-/* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { Reaction } from '@azure/communication-calling';
 
@@ -22,13 +21,11 @@ import type {
   ParticipantCapabilities
 } from '@azure/communication-calling';
 import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
-/* @conditional-compile-remove(PSTN-calls) */
 import {
   CommunicationIdentifier,
   CommunicationUserIdentifier,
   PhoneNumberIdentifier
 } from '@azure/communication-common';
-/* @conditional-compile-remove(PSTN-calls) */
 import { _toCommunicationIdentifier } from '@internal/acs-ui-common';
 
 type AdapterCommonCallingHandlers = Omit<CommonCallingHandlers, 'onAcceptCall' | 'onRejectCall'>;
@@ -62,11 +59,9 @@ const createCompositeHandlers = memoizeOne(
       onHangUp: async (forEveryone?: boolean) => {
         await adapter.leaveCall(forEveryone);
       },
-      /* @conditional-compile-remove(PSTN-calls) */
       onToggleHold: async () => {
         return adapter.getState().call?.state === 'LocalHold' ? await adapter.resumeCall() : await adapter.holdCall();
       },
-      /* @conditional-compile-remove(PSTN-calls) */
       onAddParticipant: async (
         participant: Partial<CommunicationUserIdentifier & PhoneNumberIdentifier>,
         options?: AddPhoneNumberOptions
@@ -80,13 +75,10 @@ const createCompositeHandlers = memoizeOne(
       onSendDtmfTone: async (dtmfTone: DtmfTone) => {
         await adapter.sendDtmfTone(dtmfTone);
       },
-      onRemoveParticipant: async (
-        userId: string | /* @conditional-compile-remove(PSTN-calls) */ CommunicationIdentifier
-      ) => {
+      onRemoveParticipant: async (userId: string | CommunicationIdentifier) => {
         if (typeof userId === 'string') {
           await adapter.removeParticipant(userId);
         } else {
-          /* @conditional-compile-remove(PSTN-calls) */
           await adapter.removeParticipant(_toCommunicationIdentifier(userId));
         }
       },

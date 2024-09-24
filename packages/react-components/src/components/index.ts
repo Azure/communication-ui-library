@@ -243,9 +243,7 @@ export * from './Survey/SurveyTypes';
 export { _TagsSurvey } from './Survey/TagsSurvey/TagsSurvey';
 
 export type { _TagsSurveyProps, _TagsSurveyStrings, _IssueCategory, _SurveyTag } from './Survey/TagsSurvey/TagsSurvey';
-/* @conditional-compile-remove(PSTN-calls) */
 export { HoldButton } from './HoldButton';
-/* @conditional-compile-remove(PSTN-calls) */
 export type { HoldButtonProps, HoldButtonStrings } from './HoldButton';
 
 export { _LocalVideoTile } from './LocalVideoTile';

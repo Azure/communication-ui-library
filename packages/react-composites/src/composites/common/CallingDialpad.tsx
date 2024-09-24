@@ -11,7 +11,6 @@ import { IButtonStyles, PrimaryButton } from '@fluentui/react';
 
 import { themeddialpadModalStyle } from './CallingDialpad.styles';
 import { themedCallButtonStyle, themedDialpadStyle } from './CallingDialpad.styles';
-/* @conditional-compile-remove(PSTN-calls) */
 import { CallWithChatCompositeIcon } from './icons';
 
 import { PhoneNumberIdentifier } from '@azure/communication-common';
@@ -78,7 +77,7 @@ export const CallingDialpad = (props: CallingDialpadProps): JSX.Element => {
         />
         <PrimaryButton
           text={strings.dialpadStartCallButtonLabel}
-          onRenderIcon={() => DialpadStartCallIconTrampoline()}
+          onRenderIcon={() => <CallWithChatCompositeIcon iconName="DialpadStartCall" />}
           onClick={onClickCall}
           styles={callButtonStyle}
           disabled={textFieldInput === ''}
@@ -130,9 +129,3 @@ export const CallingDialpad = (props: CallingDialpadProps): JSX.Element => {
     </>
   );
 };
-
-function DialpadStartCallIconTrampoline(): JSX.Element {
-  /* @conditional-compile-remove(PSTN-calls) */
-  return <CallWithChatCompositeIcon iconName="DialpadStartCall" />;
-  return <></>;
-}

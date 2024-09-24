@@ -239,7 +239,6 @@ export const _RemoteVideoTile = React.memo(
           showLabel={props.showLabel}
           alwaysShowLabelBackground={props.alwaysShowLabelBackground}
           /* @conditional-compile-remove(one-to-n-calling) */
-          /* @conditional-compile-remove(PSTN-calls) */
           participantState={participantState}
           {...videoTileContextualMenuProps}
           isPinned={props.isPinned}
