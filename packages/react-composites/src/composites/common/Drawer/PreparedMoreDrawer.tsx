@@ -17,7 +17,6 @@ export interface PreparedMoreDrawerProps {
   onLightDismiss: () => void;
   onPeopleButtonClicked: () => void;
   callControls?: boolean | CommonCallControlOptions;
-  /* @conditional-compile-remove(PSTN-calls) */
   onClickShowDialpad?: () => void;
   isCaptionsSupported?: boolean;
   disableButtonsForHoldScreen?: boolean;

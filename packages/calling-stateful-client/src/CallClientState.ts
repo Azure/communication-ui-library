@@ -483,7 +483,7 @@ export interface RemoteParticipantState {
   /**
    * The diagnostic status of RemoteParticipant{@link @azure/communication-calling#RemoteDiagnostics}.
    */
-  diagnostic?: RemoteDiagnosticState;
+  diagnostics?: Record<string, RemoteDiagnosticState>;
 }
 
 /**
@@ -870,7 +870,7 @@ export interface CallClientState {
    * It is keyed by {@link @azure/communication-calling#IncomingCall.id}.
    */
   incomingCalls: {
-    [key: string]: IncomingCallState | /* @conditional-compile-remove(one-to-n-calling) */ TeamsIncomingCallState;
+    [key: string]: IncomingCallState | TeamsIncomingCallState;
   };
   /**
    * Incoming Calls that have ended are stored here so the callEndReason could be checked.
@@ -879,7 +879,7 @@ export interface CallClientState {
    * Only {@link MAX_CALL_HISTORY_LENGTH} Calls are kept in the history. Oldest calls are evicted if required.
    */
   incomingCallsEnded: {
-    [key: string]: IncomingCallState | /* @conditional-compile-remove(one-to-n-calling) */ TeamsIncomingCallState;
+    [key: string]: IncomingCallState | TeamsIncomingCallState;
   };
   /**
    * Proxy of {@link @azure/communication-calling#DeviceManager}. Please review {@link DeviceManagerState}.
@@ -908,7 +908,6 @@ export interface CallClientState {
    * See documentation of {@Link CallNotifications} for details.
    */
   latestNotifications: CallNotifications;
-  /* @conditional-compile-remove(PSTN-calls) */
   /**
    * A phone number in E.164 format that will be used to represent callers identity.
    * For example, using the alternateCallerId to add a participant using PSTN, this number will

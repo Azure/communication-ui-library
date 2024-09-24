@@ -243,9 +243,7 @@ export * from './Survey/SurveyTypes';
 export { _TagsSurvey } from './Survey/TagsSurvey/TagsSurvey';
 
 export type { _TagsSurveyProps, _TagsSurveyStrings, _IssueCategory, _SurveyTag } from './Survey/TagsSurvey/TagsSurvey';
-/* @conditional-compile-remove(PSTN-calls) */
 export { HoldButton } from './HoldButton';
-/* @conditional-compile-remove(PSTN-calls) */
 export type { HoldButtonProps, HoldButtonStrings } from './HoldButton';
 
 export { _LocalVideoTile } from './LocalVideoTile';
@@ -306,6 +304,6 @@ export { _ErrorBoundary } from './ErrorBoundary';
 export * from './Notification';
 
 export * from './NotificationStack';
-/* @conditional-compile-remove(one-to-n-calling) */
+
 export * from './IncomingCallNotification';
 export * from './IncomingCallStack';

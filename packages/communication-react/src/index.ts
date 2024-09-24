@@ -93,13 +93,11 @@ export type {
   ParticipantsButtonSelector,
   CreateDefaultCallingHandlers
 } from '../../calling-component-bindings/src';
-/* @conditional-compile-remove(PSTN-calls) */
 export type { HoldButtonSelector } from '../../calling-component-bindings/src';
 
 export type { RaiseHandButtonSelector } from '../../calling-component-bindings/src';
 
 export type { NotificationStackSelector } from '../../calling-component-bindings/src';
-/* @conditional-compile-remove(one-to-n-calling) */
 export type { IncomingCallStackSelector } from '../../calling-component-bindings/src';
 
 export {
@@ -163,16 +161,13 @@ export {
   COMPONENT_LOCALE_ZH_TW
 } from '../../react-components/src';
 export { ImageOverlay } from '../../react-components/src';
-/* @conditional-compile-remove(PSTN-calls) */
 export { HoldButton } from '../../react-components/src';
 
 export { RaiseHandButton } from '../../react-components/src';
 
 export { Dialpad } from '../../react-components/src';
 
-/* @conditional-compile-remove(one-to-n-calling) */
 export { IncomingCallNotification, IncomingCallStack } from '../../react-components/src';
-/* @conditional-compile-remove(one-to-n-calling) */
 export type {
   IncomingCallNotificationProps,
   IncomingCallNotificationStrings,
@@ -369,7 +364,6 @@ export type { ChatAttachmentType } from '../../react-components/src';
 export type { InlineImageOptions, InlineImage } from '../../react-components/src';
 /* @conditional-compile-remove(rich-text-editor) */
 export type { RichTextEditorOptions, RichTextEditBoxOptions } from '../../react-components/src';
-/* @conditional-compile-remove(PSTN-calls) */
 export type { HoldButtonProps, HoldButtonStrings } from '../../react-components/src';
 export type { VideoTileStrings } from '../../react-components/src';
 /* @conditional-compile-remove(call-readiness) */
@@ -385,7 +379,6 @@ export type { LocalVideoTileSize } from '../../react-components/src';
 export * from '../../react-components/src/localization/locales';
 export * from '../../react-components/src/theming';
 export * from '../../calling-stateful-client/src/index-public';
-/* @conditional-compile-remove(one-to-n-calling) */
 export type { DeclarativeCallAgent } from '../../calling-stateful-client/src';
 export { createStatefulChatClient } from '../../chat-stateful-client/src';
 export type {

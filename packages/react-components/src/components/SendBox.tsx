@@ -32,7 +32,7 @@ import {
   MAXIMUM_LENGTH_OF_MESSAGE,
   isMessageTooLong,
   sanitizeText,
-  isSendBoxButtonAriaDisabled
+  isSendBoxButtonDisabled
 } from './utils/SendBoxUtils';
 /* @conditional-compile-remove(mention) */
 import { MentionLookupOptions } from './MentionPopover';
@@ -285,35 +285,8 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
   const textTooLongMessage = textValueOverflow ? strings.textTooLong : undefined;
   const errorMessage = systemMessage ?? textTooLongMessage;
 
-  const mergedSendButtonStyle = useMemo(
-    () => mergeStyles(sendButtonStyle, styles?.sendMessageIconContainer),
-    [styles?.sendMessageIconContainer]
-  );
-
-  const mergedStyles = useMemo(() => concatStyleSets(styles), [styles]);
-
-  const mergedSendIconStyle = useMemo(
-    () =>
-      sendIconStyle({
-        theme,
-        hasText: sanitizeText(textValue).length > 0,
-        /* @conditional-compile-remove(file-sharing-acs) */ hasAttachment: isAttachmentUploadCompleted(attachments),
-        hasErrorMessage: !!errorMessage,
-        customSendIconStyle: styles?.sendMessageIcon,
-        disabled: !!disabled
-      }),
-    [
-      theme,
-      textValue,
-      /* @conditional-compile-remove(file-sharing-acs) */ attachments,
-      errorMessage,
-      styles?.sendMessageIcon,
-      disabled
-    ]
-  );
-
-  const isSendBoxButtonAriaDisabledValue = useMemo(() => {
-    return isSendBoxButtonAriaDisabled({
+  const isSendBoxButtonDisabledValue = useMemo(() => {
+    return isSendBoxButtonDisabled({
       hasContent: sanitizeText(textValue).length > 0,
       /* @conditional-compile-remove(file-sharing-acs) */ hasCompletedAttachmentUploads:
         isAttachmentUploadCompleted(attachments),
@@ -327,6 +300,23 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     errorMessage,
     textValue
   ]);
+
+  const mergedSendButtonStyle = useMemo(
+    () => mergeStyles(sendButtonStyle, styles?.sendMessageIconContainer),
+    [styles?.sendMessageIconContainer]
+  );
+
+  const mergedStyles = useMemo(() => concatStyleSets(styles), [styles]);
+
+  const mergedSendIconStyle = useMemo(
+    () =>
+      sendIconStyle({
+        theme,
+        isSendBoxButtonDisabled: isSendBoxButtonDisabledValue,
+        customSendIconStyle: styles?.sendMessageIcon
+      }),
+    [theme, isSendBoxButtonDisabledValue, styles?.sendMessageIcon]
+  );
 
   const onRenderSendIcon = useCallback(
     (isHover: boolean) =>
@@ -455,7 +445,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
             className={mergedSendButtonStyle}
             ariaLabel={localeStrings.sendButtonAriaLabel}
             tooltipContent={localeStrings.sendButtonAriaLabel}
-            ariaDisabled={isSendBoxButtonAriaDisabledValue}
+            disabled={isSendBoxButtonDisabledValue}
           />
         </InputBoxComponent>
         {
