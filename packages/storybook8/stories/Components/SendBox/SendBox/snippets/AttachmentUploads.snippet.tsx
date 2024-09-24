@@ -1,5 +1,11 @@
 import { SendBox, FluentThemeProvider } from '@azure/communication-react';
+import { initializeIcons } from '@fluentui/react';
+import { initializeFileTypeIcons } from '@fluentui/react-file-type-icons';
 import React from 'react';
+
+// initializeIcons() and initializeFileTypeIcons() should only be called once in the application
+initializeIcons();
+initializeFileTypeIcons();
 
 export const AttachmentUploadsExample: () => JSX.Element = () => (
   <FluentThemeProvider>
