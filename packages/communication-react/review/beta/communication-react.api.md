@@ -770,11 +770,7 @@ export type CallCompositeOptions = {
 };
 
 // @public
-<<<<<<< HEAD
 export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configuration' | 'hold' | 'joinCallFailedDueToNoNetwork' | 'leftCall' | 'leaving' | 'lobby' | 'removedFromCall' | /* @conditional-compile-remove(unsupported-browser) */ 'unsupportedEnvironment' | 'transferring' | 'badRequest';
-=======
-export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configuration' |  'hold' | 'joinCallFailedDueToNoNetwork' | 'leftCall' | 'leaving' | 'lobby' | 'removedFromCall' | /* @conditional-compile-remove(unsupported-browser) */ 'unsupportedEnvironment' | 'transferring' | 'badRequest';
->>>>>>> 6efd84490cee8ed4acb9510f998d7d5d944e6274
 
 // @public
 export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcons> {
@@ -1229,11 +1225,7 @@ export interface CallWithChatAdapterManagement {
     setSpeaker(sourceInfo: AudioDeviceInfo): Promise<void>;
     setSpokenLanguage(language: string): Promise<void>;
     startCall(participants: string[], options?: StartCallOptions): Call | undefined;
-<<<<<<< HEAD
     startCall(participants: (MicrosoftTeamsAppIdentifier | PhoneNumberIdentifier | CommunicationUserIdentifier | /* @conditional-compile-remove(teams-adhoc-call) */ MicrosoftTeamsUserIdentifier | UnknownIdentifier)[], options?: StartCallOptions): Call | undefined;
-=======
-    startCall(participants: (MicrosoftTeamsAppIdentifier |  PhoneNumberIdentifier | /* @conditional-compile-remove(one-to-n-calling) */ CommunicationUserIdentifier | /* @conditional-compile-remove(teams-adhoc-call) */ MicrosoftTeamsUserIdentifier | UnknownIdentifier)[], options?: StartCallOptions): Call | undefined;
->>>>>>> 6efd84490cee8ed4acb9510f998d7d5d944e6274
     startCamera(options?: VideoStreamOptions): Promise<void>;
     startCaptions(options?: StartCaptionsAdapterOptions): Promise<void>;
     // @beta
@@ -1585,11 +1577,7 @@ export interface CallWithChatCompositeStrings {
 
 // @public
 export interface CallWithChatControlOptions extends CommonCallControlOptions {
-<<<<<<< HEAD
     chatButton?: boolean | {
-=======
-    chatButton?: boolean |  {
->>>>>>> 6efd84490cee8ed4acb9510f998d7d5d944e6274
         disabled: boolean;
     };
 }
@@ -2101,28 +2089,17 @@ export type CommonCallAdapterOptions = {
 // @public
 export type CommonCallControlOptions = {
     displayType?: CallControlDisplayType;
-<<<<<<< HEAD
     cameraButton?: boolean | {
-=======
-    cameraButton?: boolean |  {
->>>>>>> 6efd84490cee8ed4acb9510f998d7d5d944e6274
         disabled: boolean;
     };
     endCallButton?: boolean | /* @conditional-compile-remove(end-call-options) */ {
         hangUpForEveryone?: false | 'endCallOptions';
         disableEndCallModal?: boolean;
     };
-<<<<<<< HEAD
     microphoneButton?: boolean | {
         disabled: boolean;
     };
     devicesButton?: boolean | {
-=======
-    microphoneButton?: boolean |  {
-        disabled: boolean;
-    };
-    devicesButton?: boolean |  {
->>>>>>> 6efd84490cee8ed4acb9510f998d7d5d944e6274
         disabled: boolean;
     };
     participantsButton?: boolean | {
@@ -2142,11 +2119,7 @@ export type CommonCallControlOptions = {
     holdButton?: boolean | {
         disabled: boolean;
     };
-<<<<<<< HEAD
     peopleButton?: boolean | {
-=======
-    peopleButton?: boolean |  {
->>>>>>> 6efd84490cee8ed4acb9510f998d7d5d944e6274
         disabled: boolean;
     };
     dtmfDialerButton?: boolean | {
@@ -4647,11 +4620,7 @@ export interface SpotlightState {
 }
 
 // @public
-<<<<<<< HEAD
 export type StartCallIdentifier = (MicrosoftTeamsAppIdentifier | PhoneNumberIdentifier | CommunicationUserIdentifier | /* @conditional-compile-remove(teams-adhoc-call) */ MicrosoftTeamsUserIdentifier | UnknownIdentifier) | /* @conditional-compile-remove(start-call-beta) */ CommunicationIdentifier;
-=======
-export type StartCallIdentifier = (MicrosoftTeamsAppIdentifier |  PhoneNumberIdentifier | /* @conditional-compile-remove(one-to-n-calling) */ CommunicationUserIdentifier | /* @conditional-compile-remove(teams-adhoc-call) */ MicrosoftTeamsUserIdentifier | UnknownIdentifier) | /* @conditional-compile-remove(start-call-beta) */ CommunicationIdentifier;
->>>>>>> 6efd84490cee8ed4acb9510f998d7d5d944e6274
 
 // @public
 export interface StartCaptionsAdapterOptions extends StartCaptionsOptions {
