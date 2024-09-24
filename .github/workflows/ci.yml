@@ -78,9 +78,9 @@ jobs:
         with:
           node-version: 'lts/*'
       - name: Test
-        if: ${{ github.event_name == 'pull_request'}}
+        if: ${{ !contains(github.event.pull_request.labels.*.name, 'do not need changelog') }}
         run: |
-          echo  ${{ !contains(github.event.pull_request.labels.*.name, 'do not need changelog') }} ${{ toJSON(github.event.pull_request.labels)  }}
+          echo  ${{ !contains(github.event.pull_request.labels.*.name, 'do not need changelog') }}
       #     # Try get node_modules from cache
       #     - name: Restore node_modules from cache
       #       uses: actions/cache@v4
