@@ -79,7 +79,7 @@ jobs:
           node-version: 'lts/*'
       - name: Test
         run: |
-          echo contains(github.event.pull_request.labels.*.name, 'do not need changelog')  ${{ !contains(github.event.pull_request.labels.*.name, 'do not need changelog') }} !contains(github.event.pull_request.labels.*.name, 'do-not-need-changelog') ${{ !contains(github.event.pull_request.labels.*.name, 'do-not-need-changelog') }} !contains(github.event.pull_request.labels.*.name, 'breaking-change') ${{ !contains(github.event.pull_request.labels.*.name, 'breaking-change') }}
+          echo contains(github.event.pull_request.labels.*.name, 'does not need changelog')  ${{ !contains(github.event.pull_request.labels.*.name, 'does not need changelog') }} !contains(github.event.pull_request.labels.*.name, 'does-not-need-changelog') ${{ !contains(github.event.pull_request.labels.*.name, 'does-not-need-changelog') }} !contains(github.event.pull_request.labels.*.name, 'breaking-change') ${{ !contains(github.event.pull_request.labels.*.name, 'breaking-change') }} !contains(github.event.pull_request.labels.*.name, 'does_not_need_changelog') ${{ !contains(github.event.pull_request.labels.*.name, 'does_not_need_changelog') }}
       #     # Try get node_modules from cache
       #     - name: Restore node_modules from cache
       #       uses: actions/cache@v4
