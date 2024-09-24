@@ -220,7 +220,6 @@ const onRenderParticipantDefault = (
       onClick={onParticipantClick ? () => onParticipantClick?.(participant) : undefined}
       showParticipantOverflowTooltip={showParticipantOverflowTooltip}
       /* @conditional-compile-remove(one-to-n-calling) */
-      /* @conditional-compile-remove(PSTN-calls) */
       participantState={callingParticipant.state}
       ariaLabelledBy={participantAriaLabelledBy}
     />

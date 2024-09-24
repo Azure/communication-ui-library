@@ -93,7 +93,6 @@ export type {
   ParticipantsButtonSelector,
   CreateDefaultCallingHandlers
 } from '../../calling-component-bindings/src';
-/* @conditional-compile-remove(PSTN-calls) */
 export type { HoldButtonSelector } from '../../calling-component-bindings/src';
 
 export type { RaiseHandButtonSelector } from '../../calling-component-bindings/src';
@@ -163,7 +162,6 @@ export {
   COMPONENT_LOCALE_ZH_TW
 } from '../../react-components/src';
 export { ImageOverlay } from '../../react-components/src';
-/* @conditional-compile-remove(PSTN-calls) */
 export { HoldButton } from '../../react-components/src';
 
 export { RaiseHandButton } from '../../react-components/src';
@@ -369,7 +367,6 @@ export type { ChatAttachmentType } from '../../react-components/src';
 export type { InlineImageOptions, InlineImage } from '../../react-components/src';
 /* @conditional-compile-remove(rich-text-editor) */
 export type { RichTextEditorOptions, RichTextEditBoxOptions } from '../../react-components/src';
-/* @conditional-compile-remove(PSTN-calls) */
 export type { HoldButtonProps, HoldButtonStrings } from '../../react-components/src';
 export type { VideoTileStrings } from '../../react-components/src';
 /* @conditional-compile-remove(call-readiness) */

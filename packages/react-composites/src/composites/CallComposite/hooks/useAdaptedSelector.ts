@@ -99,7 +99,6 @@ const memoizeState = memoizeOne(
     latestErrors,
     /* @conditional-compile-remove(breakout-rooms) */
     latestNotifications: latestNotifications ?? ({} as CallNotifications),
-    /* @conditional-compile-remove(PSTN-calls) */
     alternateCallerId,
     /* @conditional-compile-remove(unsupported-browser) */
     environmentInfo
@@ -130,7 +129,6 @@ const adaptCompositeState = (compositeState: CallAdapterState): CallClientState 
     undefined ||
       /* @conditional-compile-remove(breakout-rooms) */ (compositeState.latestNotifications as CallNotifications),
     compositeState.displayName,
-    /* @conditional-compile-remove(PSTN-calls) */
     compositeState.alternateCallerId,
     /* @conditional-compile-remove(unsupported-browser) */
     compositeState.environmentInfo

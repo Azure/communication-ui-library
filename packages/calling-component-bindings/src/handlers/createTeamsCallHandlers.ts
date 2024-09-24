@@ -106,9 +106,7 @@ export const createDefaultTeamsCallingHandlers = memoizeOne(
         /* @conditional-compile-remove(teams-identity-support) */
         call?.addParticipant(participant);
       },
-      onRemoveParticipant: async (
-        userId: string | /* @conditional-compile-remove(PSTN-calls) */ CommunicationIdentifier
-      ): Promise<void> => {
+      onRemoveParticipant: async (userId: string | CommunicationIdentifier): Promise<void> => {
         const participant = _toCommunicationIdentifier(userId);
         if (isCommunicationUserIdentifier(participant)) {
           throw new Error('CommunicationIdentifier in Teams call is not supported!');

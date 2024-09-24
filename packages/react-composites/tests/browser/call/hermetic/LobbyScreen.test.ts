@@ -55,7 +55,6 @@ test.describe('Lobby page tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot('lobby-page-one-to-n-call.png');
   });
 
-  /* @conditional-compile-remove(PSTN-calls) */
   test('lobby page shows correct strings when starting a PSTN outbound call', async ({ page, serverUrl }) => {
     const ellie = defaultMockRemotePSTNParticipant('15556667777');
     ellie.state = 'Ringing';
