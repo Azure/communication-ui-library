@@ -123,3 +123,23 @@ export class CallingComponent {
   }
 }
 ```
+
+In this example, we are using the `loadCallComposite` function to load the `CallComposite` into the DOM. To
+do this we are using the window object to get this element. In the example we have given the element the `id`
+of `call-composite-container`. This is the element that the `CallComposite` will be attached to.
+
+In order for this to work the return from the DOM element must be defined. if the element is not set then the composite
+will not be attached to the DOM.
+
+## FAQ
+
+### Should I use this in my React application?
+
+While you can technically call these functions in your React application, it is not recommended. We recommend to have better
+control over the lifecycle of the Composites and how you construct the adapter it is best to use them directly from `@azure/communication-react`.
+
+### How can I use these in a Server side rendered application?
+
+In order to have these functions work, you need to make sure that they are called **only** once there is a reference
+to the DOM. If these functions are called before there is a reference to the DOM then the function will throw when React tries to mount
+the composite to the DOM.
