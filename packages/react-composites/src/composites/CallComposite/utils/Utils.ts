@@ -194,7 +194,6 @@ export const getEndedCallPageProps = (
       }
       break;
   }
-
   switch (endedCall?.callEndReason?.code) {
     case CALL_REJECTED_CODE:
       if (locale.strings.call.callRejectedTitle) {
@@ -205,7 +204,6 @@ export const getEndedCallPageProps = (
       }
       break;
   }
-  /* @conditional-compile-remove(teams-adhoc-call) */
   switch (endedCall?.callEndReason?.subCode) {
     case 10037:
       if (locale.strings.call.participantCouldNotBeReachedTitle) {

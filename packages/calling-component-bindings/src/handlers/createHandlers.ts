@@ -84,7 +84,6 @@ export const createDefaultCallingHandlers: CreateDefaultCallingHandlers = memoiz
     ...commonCallingHandlers,
     // FIXME: onStartCall API should use string, not the underlying SDK types.
     onStartCall: (participants: CommunicationIdentifier[], options?: StartCallOptions): Call | undefined => {
-      /* @conditional-compile-remove(teams-adhoc-call) */
       return callAgent?.startCall(participants, options);
       if (!isACSCallParticipants(participants)) {
         throw new Error('TeamsUserIdentifier in Teams call is not supported!');
