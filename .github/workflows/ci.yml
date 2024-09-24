@@ -67,7 +67,10 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 2 # this job requires depth of 2 for access to diff the SHA for change file check
+          # This job requires to fetch the entire history to access to diff the SHA for change file check.
+          # Otherwise, it can lead to issues when trying to compare branches, as the fetched commits may not
+          # include the common ancestor between the branches.
+          fetch-depth: 0
       # Ensure node version is great enough
       - name: Use Node.js
         uses: actions/setup-node@v4
@@ -88,7 +91,7 @@ jobs:
       - name: Check the necessary change file has been submitted
         if: ${{ github.event_name == 'pull_request' && !contains( github.event.pull_request.labels.*.name, 'do not need changelog')}}
         run: |
-          git fetch origin main:main --depth=2
+          git fetch origin main:main
           node common/scripts/changelog/check.mjs ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }}
 
   #     # Perform lint check
