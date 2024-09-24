@@ -988,6 +988,7 @@ export interface CallCompositeStrings {
     unnamedParticipantString: string;
     unpinParticipantMenuItemAriaLabel: string;
     unpinParticipantMenuLabel: string;
+    videoEffectsPaneAriaLabel: string;
     videoEffectsPaneBackgroundSelectionTitle: string;
     videoEffectsPaneTitle: string;
 }
