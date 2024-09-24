@@ -132,7 +132,7 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
         capabilities
       ),
       remoteParticipants: _videoGalleryRemoteParticipantsMemo(
-        updateUserDisplayNamesTrampoline(remoteParticipants ? Object.values(remoteParticipants) : noRemoteParticipants),
+        _updateUserDisplayNames(remoteParticipants ? Object.values(remoteParticipants) : noRemoteParticipants),
         isHideAttendeeNamesEnabled,
         role
       ),
@@ -143,9 +143,3 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     };
   }
 );
-
-const updateUserDisplayNamesTrampoline = (remoteParticipants: RemoteParticipantState[]): RemoteParticipantState[] => {
-  /* @conditional-compile-remove(PSTN-calls) */
-  return _updateUserDisplayNames(remoteParticipants);
-  return remoteParticipants;
-};

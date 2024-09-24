@@ -21,7 +21,6 @@ import {
 import type { MockRemoteParticipantState } from '../../../common';
 
 test.describe('Participant pane tests', async () => {
-  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   test('People pane opens and displays correctly', async ({ page, serverUrl }, testInfo) => {
     const initialState = defaultMockCallAdapterState();
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { callInvitationUrl: 'testUrl' }));
@@ -40,7 +39,6 @@ test.describe('Participant pane tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot('call-screen-with-people-pane.png');
   });
 
-  /* @conditional-compile-remove(PSTN-calls) */
   test('Add people button should be hidden for ACS group call when there is no alternate call id and callInvitationUrl', async ({
     page,
     serverUrl
@@ -63,7 +61,6 @@ test.describe('Participant pane tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot(`ACS-group-call-screen-with-no-add-people-button.png`);
   });
 
-  /* @conditional-compile-remove(PSTN-calls) */
   test('click on add people button will show dialpad option for PSTN call', async ({ page, serverUrl }, testInfo) => {
     const initialState = defaultMockCallAdapterState();
     //PSTN call has alternate caller id
@@ -87,7 +84,6 @@ test.describe('Participant pane tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot(`PSTN-call-screen-with-dialpad-dropdown.png`);
   });
 
-  /* @conditional-compile-remove(PSTN-calls) */
   test('click on dial phone number will open dialpad in PTSN call', async ({ page, serverUrl }, testInfo) => {
     const initialState = defaultMockCallAdapterState();
     //PSTN call has alternate caller id
@@ -120,7 +116,6 @@ test.describe('Participant pane tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot(`PSTN-call-screen-with-dialpad.png`);
   });
 
-  /* @conditional-compile-remove(PSTN-calls) */
   test('callee participant is displayed with connection state', async ({ page, serverUrl }, testInfo) => {
     const paul = defaultMockRemotePSTNParticipant('+12324567890');
     paul.state = 'Ringing';
@@ -142,7 +137,6 @@ test.describe('Participant pane tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot('PSTN-participant-pane-connecting-participant.png');
   });
 
-  /* @conditional-compile-remove(PSTN-calls) */
   test('callee participant name and connection state are truncated', async ({ page, serverUrl }, testInfo) => {
     const longPaul = defaultMockRemoteParticipant(
       'I have a really really really really long name. Trust me you dont wanna know.'
@@ -173,7 +167,6 @@ test.describe('Participant pane tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot('participant-pane-callee-name-truncation.png');
   });
 
-  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   test('Participant shows unknown icon when displayName is missing', async ({ page, serverUrl }, testInfo) => {
     const remoteParticipantWithNoName = defaultMockRemoteParticipant();
     const initialState = defaultMockCallAdapterState([remoteParticipantWithNoName]);
@@ -193,7 +186,6 @@ test.describe('Participant pane tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot('participant-with-no-name-unknown-icon.png');
   });
 
-  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   test('PSTN ParticipantState string should be set correctly when idle to connecting desktop', async ({
     page,
     serverUrl
@@ -219,7 +211,6 @@ test.describe('Participant pane tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot('pstn-participant-list-connecting-participant-desktop.png');
   });
 
-  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   test('PSTN ParticipantState string should be set correctly when idle to connecting mobile', async ({
     page,
     serverUrl
@@ -251,7 +242,6 @@ test.describe('Participant pane tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot('pstn-participant-list-connecting-participant-mobile.png');
   });
 
-  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   test('Participant should be hidden when idle to connecting mobile', async ({ page, serverUrl }, testInfo) => {
     test.skip(isTestProfileDesktop(testInfo));
     const idleRemoteParticipant = defaultMockRemoteParticipant('Joni Solberg');
@@ -280,7 +270,6 @@ test.describe('Participant pane tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot('participant-list-connecting-participant-mobile.png');
   });
 
-  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   test('Participant should be hidden when idle to connecting desktop', async ({ page, serverUrl }, testInfo) => {
     test.skip(!isTestProfileDesktop(testInfo));
     const idleRemoteParticipant = defaultMockRemoteParticipant('Joni Solberg');
