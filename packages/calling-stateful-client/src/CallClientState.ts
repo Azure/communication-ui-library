@@ -483,7 +483,7 @@ export interface RemoteParticipantState {
   /**
    * The diagnostic status of RemoteParticipant{@link @azure/communication-calling#RemoteDiagnostics}.
    */
-  diagnostic?: RemoteDiagnosticState;
+  diagnostics?: Record<string, RemoteDiagnosticState>;
 }
 
 /**
