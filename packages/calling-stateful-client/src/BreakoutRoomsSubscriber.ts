@@ -97,7 +97,10 @@ export class BreakoutRoomsSubscriber {
         });
       }
     } else if (breakoutRoom.state === 'open') {
-      if (!this._context.getState().latestNotifications['assignedBreakoutRoomChanged']) {
+      if (
+        !this._context.getState().latestNotifications['assignedBreakoutRoomChanged'] &&
+        this._context.getState().calls[this._callIdRef.callId].state === 'Connected'
+      ) {
         const target: NotificationTarget =
           breakoutRoom.autoMoveParticipantToBreakoutRoom === false
             ? 'assignedBreakoutRoomOpenedPromptJoin'

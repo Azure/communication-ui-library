@@ -493,6 +493,15 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
         this.context.setCurrentCallId(this.call.id);
       }
 
+      console.log(
+        'DEBUG clientState.calls: ',
+        Object.values(clientState.calls)
+          .map((c) => `${c.id}-${c.state}`)
+          .join(', ')
+      );
+
+      console.log('DEBUG this.callAgent.calls: ', this.callAgent.calls.map((c) => `${c.id}-${c.state}`).join(', '));
+
       // if the call hits the connected state we want to pause all calling sounds if playing.
       if (this.call?.state === 'Connected' && this.callingSoundSubscriber?.playingSounds) {
         this.callingSoundSubscriber.pauseSounds();
@@ -526,6 +535,15 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     if (this.callAgent.kind === 'CallAgent') {
       const onCallsUpdated = (args: { added: Call[]; removed: Call[] }): void => {
         if (this.call?.id) {
+          console.log('Added calls: ', args.added);
+          console.log('Origin call id: ', this.originCall?.id);
+          console.log('this.call.id: ', this.call?.id);
+          for (const call of args.added) {
+            if (call.id !== this.call?.id) {
+              call.feature(Features.BreakoutRooms).on('breakoutRoomsUpdated', this.observingCallListener);
+            }
+          }
+
           const removedCall = args.removed.find((call) => call.id === this.call?.id);
           if (removedCall) {
             const removedCallState = this.callClient.getState().callsEnded[removedCall.id];
@@ -559,6 +577,14 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
       (this.callAgent as TeamsCallAgent).on('callsUpdated', onTeamsCallsUpdated);
     }
   }
+
+  private observingCallListener: (eventData: BreakoutRoomsEventData) => void = (eventData: BreakoutRoomsEventData) => {
+    console.log('DEBUG eventData: ', eventData);
+    if (eventData.type === 'assignedBreakoutRooms' && eventData.data?.state === 'closed') {
+      console.log('DEBUG Assigned breakout rooms closed');
+      this.returnFromBreakoutRoom();
+    }
+  };
 
   // TODO: update this to include the 'selectedCameraChanged' when calling adds it to the device manager
   private subscribeDeviceManagerEvents(): void {
@@ -1164,11 +1190,21 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
       return;
     }
 
-    const breakoutRoomCall = this.call;
-    this.processNewCall(this.originCall);
-    await this.resumeCall();
-    if (breakoutRoomCall?.state && !['Disconnecting', 'Disconnected'].includes(breakoutRoomCall.state)) {
-      breakoutRoomCall.hangUp();
+    if (this.locator && 'meetingLink' in this.locator && this.originCall && this.call?.id) {
+      // if (this.call?.state && !['Disconnecting', 'Disconnected'].includes(this.call.state)) {
+      //   this.call.hangUp();
+      // }
+      // const mainMeetingUrl = this.call.feature(Features.BreakoutRooms).breakoutRoomsSettings?.mainMeetingUrl;
+      // if (mainMeetingUrl) {
+      //   this.locator = { meetingLink: mainMeetingUrl };
+      // }
+      // const call = this.joinCall();
+      // console.log('DEBUG call from join call: ', call);
+      if (this.originCall) {
+        alert('back to origin call');
+        this._joinCall({ muted: false }, {});
+        this.processNewCall(this.originCall);
+      }
     }
   }
 
@@ -1444,6 +1480,9 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     if (!this.call?.id) {
       return;
     }
+    // if (breakoutRoom?.state === 'open') {
+    //   setTimeout(() => this.call?.hangUp(), 6000);
+    // }
     if (this.originCall?.id !== this.call?.id && (!breakoutRoom || breakoutRoom.state === 'closed')) {
       this.returnFromBreakoutRoom();
     }
@@ -1452,6 +1491,22 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
   /* @conditional-compile-remove(breakout-rooms) */
   private breakoutRoomJoined(call: Call | TeamsCall): void {
     if (this.call?.id !== call.id) {
+      console.log('DEBUG breakout room joined event. origin call id:', this.originCall?.id);
+      // setTimeout(() => {
+      //   const testCall = this.callAgent.calls.find(
+      //     (callAgentCall) => callAgentCall.id === this.originCall?.id && callAgentCall.state !== 'Connected'
+      //   );
+      //   if (testCall) {
+      //     alert('Found connected origin call from breakoutRoomJoined');
+      //     console.log('DEBUG testCall', testCall);
+      //     testCall.feature(Features.BreakoutRooms).on('breakoutRoomsUpdated', (e: BreakoutRoomsEventData) => {
+      //       if (e.type === 'assignedBreakoutRooms' && e.data?.state === 'closed') {
+      //         console.log('DEBUG breakoutRoomsUpdated', e);
+      //         this.returnFromBreakoutRoom();
+      //       }
+      //     });
+      //   }
+      // }, 5000);
       this.processNewCall(call);
     }
     // Hang up other breakout room calls in case we are joining a new breakout room while already in one
