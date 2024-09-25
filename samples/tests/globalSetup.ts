@@ -7,12 +7,8 @@ dotenv.config({ path: path.join(__dirname, '..', '.env') });
 
 async function globalSetup() {
   const fileServer = express();
-  var file = fileServer.use(express.static(path.resolve(process.cwd(), process.env.SERVE_PATH)));
-  const server = http
-    .createServer(function (req, res) {
-      file.serve(req, res);
-    })
-    .listen(8080);
+  fileServer.use(express.static(path.resolve(process.cwd(), process.env.SERVE_PATH)));
+  const server = http.createServer(fileServer).listen(8080);
 
   // Expose port to the tests.
   process.env.SERVER_PORT = String(server.address().toString());
