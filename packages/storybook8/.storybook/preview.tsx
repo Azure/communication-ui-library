@@ -6,6 +6,8 @@ import React from 'react';
 
 import { THEMES } from '../stories/themes';
 import { LOCALES } from '../stories/locales'
+import { initializeIcons } from '@fluentui/react';
+initializeIcons();
 
 export const parameters = {
   layout: 'fullscreen',
