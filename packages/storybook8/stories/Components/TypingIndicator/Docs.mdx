@@ -19,13 +19,21 @@ import { TypingIndicator } from '@azure/communication-react';
 
 ## Example
 
-<Canvas of={TypingIndicatorStories.TypingIndicatorExampleDocsOnly} source={{ code: TypingIndicatorExampleText }} />
+<Canvas
+  of={TypingIndicatorStories.TypingIndicatorExampleDocsOnly}
+  source={{ code: TypingIndicatorExampleText }}
+  layout="padded"
+/>
 
 ## Customize Style
 
 To customize the style of `TypingIndicator`, use the `styles` property like in the example below. Notice that the keys of `styles` property are the root and sub-components of `TypingIndicator`, each of which can be styled independently.
 
-<Canvas of={TypingIndicatorStories.CustomizeStyleExampleDocsOnly} source={{ code: CustomizeStyleExampleText }} />
+<Canvas
+  of={TypingIndicatorStories.CustomizeStyleExampleDocsOnly}
+  source={{ code: CustomizeStyleExampleText }}
+  layout="padded"
+/>
 
 ## Customize user rendering
 
@@ -34,6 +42,7 @@ To customize user rendering of `TypingIndicator`, use the `onRenderUsers` proper
 <Canvas
   of={TypingIndicatorStories.CustomizeUserRenderingExampleDocsOnly}
   source={{ code: CustomizeUserRenderingExampleText }}
+  layout="padded"
 />
 
 ## Props
