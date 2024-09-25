@@ -35,7 +35,7 @@ This can be done like so:
 // This is an example of how you might lazy load the UI library in your application.
 import('@azure/communication-react/javascript-loaders').then(async (uiLib) => {
   this.adapter = await uiLib
-    .loadCallComposite
+    .loadCallComposite() // <- you can then use the loader functions here.
 ...
 ```
 
