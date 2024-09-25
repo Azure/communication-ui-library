@@ -18117,13 +18117,6 @@ packages:
     engines: {node: '>=8'}
     dev: false
 
-  /path@0.12.7:
-    resolution: {integrity: sha512-aXXC6s+1w7otVF9UletFkFcDsJeO7lSZBPUQhtb5O0xJe8LtYhj/GxldoL09bBj9+ZmE2hNoHqQSFMN5fikh4Q==}
-    dependencies:
-      process: 0.11.10
-      util: 0.10.4
-    dev: false
-
   /pause-stream@0.0.11:
     resolution: {integrity: sha512-e3FBlXLmN/D1S+zHzanP4E/4Z60oFAa3O051qt1pxa7DEJWKAyil6upYVXCWadEnuoqa4Pkc9oUx9zsxYeRv8A==}
     dependencies:
@@ -23442,7 +23435,7 @@ packages:
     dev: false
 
   file:projects/chat-stateful-client.tgz:
-    resolution: {integrity: sha512-YR08xKvki1VTYHi1LWGpTv04PtRqIevv/5+up1Qgc2FLwcnkqHijIblZMssgfSwfc8Y3CD3DUdk9+CyFhkZU6Q==, tarball: file:projects/chat-stateful-client.tgz}
+    resolution: {integrity: sha512-5v38UEJnMLYqVF0eSRViK9WaoKen1XwQd5XYI6uoPCr1C/VvK32isrNqofG6+G5A6nPh2oyy/8SF7KOVa2lpIw==, tarball: file:projects/chat-stateful-client.tgz}
     name: '@rush-temp/chat-stateful-client'
     version: 0.0.0
     dependencies:
@@ -23474,7 +23467,6 @@ packages:
       immer: 10.1.1
       jest: 29.7.0(@types/node@20.16.8)(ts-node@10.9.2)
       nanoid: 3.3.6
-      path: 0.12.7
       prettier: 3.3.2
       rimraf: 2.7.1
       rollup: 4.22.4
