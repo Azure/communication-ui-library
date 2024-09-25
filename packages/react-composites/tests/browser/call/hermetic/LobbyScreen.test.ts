@@ -36,7 +36,6 @@ test.describe('Lobby page tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot('lobby-page-group-call.png');
   });
 
-  /* @conditional-compile-remove(one-to-n-calling) */
   test('lobby page shows correct strings when starting a ACS outbound call', async ({ page, serverUrl }) => {
     const joel = defaultMockRemoteParticipant('Joel');
     joel.state = 'Connecting';

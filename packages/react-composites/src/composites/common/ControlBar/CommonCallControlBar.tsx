@@ -346,10 +346,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
 
   const showDesktopMoreButton =
     isEnabled(options?.moreButton) &&
-    (false ||
-      /* @conditional-compile-remove(one-to-n-calling) */ isEnabled(options?.holdButton) ||
-      showCaptionsButton ||
-      props.onUserSetGalleryLayout);
+    (false || isEnabled(options?.holdButton) || showCaptionsButton || props.onUserSetGalleryLayout);
 
   const role = props.callAdapter.getState().call?.role;
   const hideRaiseHandButtonInRoomsCall =
@@ -423,7 +420,6 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                         displayType={options.displayType}
                         styles={commonButtonStyles}
                         splitButtonsForDeviceSelection={!props.mobileView}
-                        /* @conditional-compile-remove(one-to-n-calling) */
                         disabled={props.disableButtonsForHoldScreen || isDisabled(options.microphoneButton)}
                         disableTooltip={props.mobileView}
                         /* @conditional-compile-remove(DNS) */
@@ -439,7 +435,6 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                         displayType={options.displayType}
                         styles={commonButtonStyles}
                         splitButtonsForDeviceSelection={!props.mobileView}
-                        /* @conditional-compile-remove(one-to-n-calling) */
                         disabled={props.disableButtonsForHoldScreen || isDisabled(options.cameraButton)}
                         onClickVideoEffects={props.onClickVideoEffects}
                         componentRef={props.cameraButtonRef}
@@ -461,7 +456,6 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                       <RaiseHand
                         displayType={options.displayType}
                         styles={commonButtonStyles}
-                        /* @conditional-compile-remove(one-to-n-calling) */
                         disabled={props.disableButtonsForHoldScreen || isDisabled(options.microphoneButton)}
                       />
                     )}
@@ -489,7 +483,6 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                         option={options.screenShareButton}
                         displayType={options.displayType}
                         styles={screenShareButtonStyles}
-                        /* @conditional-compile-remove(one-to-n-calling) */
                         disabled={props.disableButtonsForHoldScreen || isDisabled(options.screenShareButton)}
                       />
                     )}

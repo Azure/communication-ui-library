@@ -32,7 +32,7 @@ import type {
   MicrosoftTeamsAppIdentifier,
   UnknownIdentifier
 } from '@azure/communication-common';
-/* @conditional-compile-remove(teams-adhoc-call) */
+
 import type { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { DtmfTone } from '@azure/communication-calling';
@@ -100,8 +100,8 @@ export type StartCallIdentifier =
   | (
       | MicrosoftTeamsAppIdentifier
       | PhoneNumberIdentifier
-      | /* @conditional-compile-remove(one-to-n-calling) */ CommunicationUserIdentifier
-      | /* @conditional-compile-remove(teams-adhoc-call) */ MicrosoftTeamsUserIdentifier
+      | CommunicationUserIdentifier
+      | MicrosoftTeamsUserIdentifier
       | UnknownIdentifier
     )
   | /* @conditional-compile-remove(start-call-beta) */ CommunicationIdentifier;

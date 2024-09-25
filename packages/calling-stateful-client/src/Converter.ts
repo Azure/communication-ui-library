@@ -9,7 +9,6 @@ import {
   IncomingCall,
   IncomingCallCommon
 } from '@azure/communication-calling';
-/* @conditional-compile-remove(one-to-n-calling) */
 import { TeamsIncomingCall } from '@azure/communication-calling';
 import { TeamsCaptionsInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(acs-close-captions) */
@@ -30,9 +29,7 @@ import {
   CallInfoState
 } from './CallClientState';
 import { CaptionsInfo } from './CallClientState';
-/* @conditional-compile-remove(one-to-n-calling) */
 import { TeamsIncomingCallState as DeclarativeTeamsIncomingCall } from './CallClientState';
-/* @conditional-compile-remove(one-to-n-calling) */
 import { _isTeamsIncomingCall } from './TypeGuards';
 import { _isACSCall } from './TypeGuards';
 /* @conditional-compile-remove(acs-close-captions) */
@@ -193,8 +190,7 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
  */
 export function convertSdkIncomingCallToDeclarativeIncomingCall(
   call: IncomingCallCommon
-): DeclarativeIncomingCall | /* @conditional-compile-remove(one-to-n-calling) */ DeclarativeTeamsIncomingCall {
-  /* @conditional-compile-remove(one-to-n-calling) */
+): DeclarativeIncomingCall | DeclarativeTeamsIncomingCall {
   if (_isTeamsIncomingCall(call)) {
     const newInfo: CallInfoState = { ...(call as TeamsIncomingCall).info, kind: call.kind };
     return {
