@@ -16,7 +16,7 @@ These functions mount each of our React Composites to your applications DOM. The
 
 ## How they work
 
-Since all different [Node](https://nodejs.org/en) frameworks are just JavaScript, CSS, and HTML you can use each of the
+Since all different [Node](https://nodejs.org/en) front end libraries are just JavaScript, CSS, and HTML you can use each of the
 different frameworks inside each other. In the case of using [React](https://react.dev/) inside your application you would use
 the `createRoot` function to attach a React node to your application and then use your react component inside that.
 
@@ -27,6 +27,17 @@ is that you can use the UI Composites in any framework that can render HTML elem
 not just the bundle for `@azure/communication-react` but also the bundle for `react` and `react-dom`. Best practice here
 is to lazy load these chunks so that you don't get caught waiting for the large bundle when you don't need your
 composite experience yet.
+
+This can be done like so:
+
+```ts
+...
+// This is an example of how you might lazy load the UI library in your application.
+import('@azure/communication-react/javascript-loaders').then(async (uiLib) => {
+  this.adapter = await uiLib
+    .loadCallComposite
+...
+```
 
 ## Setup needed before calling the functions
 
@@ -44,7 +55,7 @@ import {
 ```
 
 Since these functions are imported from a submodule you might need to make some changes to your
-`tsconfig.json` to [handle the submodule](https://www.typescriptlang.org/tsconfig/#module). To do this you will need to set the following fields as follows
+`tsconfig.json` to [handle the **submodule**](https://www.typescriptlang.org/tsconfig/#module). To do this you will need to set the following fields as follows
 
 ```json
 "compilerOptions": {
