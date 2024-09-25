@@ -1,11 +1,16 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { FluentThemeProvider, LocalizationProvider } from '@azure/communication-react';
+import { DEFAULT_COMPONENT_ICONS, FluentThemeProvider, LocalizationProvider } from '@azure/communication-react';
 import React from 'react';
 
 import { THEMES } from '../stories/themes';
 import { LOCALES } from '../stories/locales'
+import { initializeIcons, registerIcons } from '@fluentui/react';
+import { initializeFileTypeIcons } from '@fluentui/react-file-type-icons';
+initializeIcons();
+initializeFileTypeIcons();
+registerIcons({ icons: { ...DEFAULT_COMPONENT_ICONS } });
 
 export const parameters = {
   layout: 'fullscreen',
