@@ -16,12 +16,11 @@ These functions mount each of our React Composites to your applications DOM. The
 
 ## How they work
 
-Since all different [Node](https://nodejs.org/en) front end libraries are just JavaScript, CSS, and HTML you can use each of the
-different frameworks inside each other. In the case of using [React](https://react.dev/) inside your application you would use
-the `createRoot` function to attach a React node to your application and then use your react component inside that.
+Our JavaScript loaders use [react](https://react.dev/) under the hood. They handle all of the react complexity and allow the composites
+to be placed in any application, including applications written with JQuery, Angular, or any Node application using [module imports](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import).
 
-Our loader functions work in a similar way. They take a DOM element and attach the React Composite to that element. What this means
-is that you can use the UI Composites in any framework that can render HTML elements to the DOM.
+They work by taking in a DOM element. They render and attach the React Composite to that element. This means
+that you can use the UI Composites in any application that can render HTML elements to the browser DOM.
 
 **Note:** Something to keep in mind when using these loader functions for the UI Composites is that you are taking on
 not just the bundle for `@azure/communication-react` but also the bundle for `react` and `react-dom`. Best practice here
@@ -32,7 +31,11 @@ This can be done like so:
 
 ```ts
 ...
-// This is an example of how you might lazy load the UI library in your application.
+/**
+ * This is how you would load in the CallComposite with lazy loading. This goes in
+ * line in whatever function might initiate your call experience.
+ */
+*/
 import('@azure/communication-react/javascript-loaders').then(async (uiLib) => {
   this.adapter = await uiLib
     .loadCallComposite() // <- you can then use the loader functions here.
