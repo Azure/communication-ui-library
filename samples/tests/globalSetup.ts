@@ -1,12 +1,13 @@
 import * as http from 'http';
-import { Server } from 'node-static';
+import express from 'express';
 import * as path from 'path';
 import dotenv from 'dotenv';
 
 dotenv.config({ path: path.join(__dirname, '..', '.env') });
 
 async function globalSetup() {
-  var file = new Server(path.resolve(process.cwd(), process.env.SERVE_PATH));
+  const fileServer = express();
+  var file = fileServer.use(express.static(path.resolve(process.cwd(), process.env.SERVE_PATH)));
   const server = http
     .createServer(function (req, res) {
       file.serve(req, res);
