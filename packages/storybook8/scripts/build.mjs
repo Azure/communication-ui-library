@@ -10,7 +10,7 @@ async function main() {
     console.log('Skipping storybook build for stable build');
     return;
   }
-  await exec(quote(['npx', 'storybook', 'build', '--loglevel', 'warn', ...process.argv.slice(2)]));
+  await exec(quote(['npx', 'storybook', 'build', '--quiet', '--loglevel', 'warn', ...process.argv.slice(2)]));
 }
 
 await main();
