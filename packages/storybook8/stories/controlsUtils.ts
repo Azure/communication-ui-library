@@ -562,6 +562,7 @@ export const defaultChatCompositeHiddenControls = {
   identifiers: hiddenControl,
   locale: hiddenControl,
   onFetchAvatarPersonaData: hiddenControl,
+  onFetchParticipantMenuItems: hiddenControl,
   rtl: hiddenControl,
   formFactor: hiddenControl // formFactor is hidden by default and compositeFormFactor is used as a prop instead to workaround a bug where formFactor is not put in the correct order when the controls are generated
 };
