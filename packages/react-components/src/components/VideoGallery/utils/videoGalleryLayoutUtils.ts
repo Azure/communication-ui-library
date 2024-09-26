@@ -52,14 +52,11 @@ const getOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedPa
     previousOverflowParticipants = []
   } = props;
 
-  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   const callingParticipants = remoteParticipants.filter((p) => p.state === ('Connecting' || 'Ringing'));
-  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+
   const callingParticipantsSet = new Set(callingParticipants.map((p) => p.userId));
 
-  let connectedParticipants = remoteParticipants;
-  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
-  connectedParticipants = connectedParticipants.filter((p) => !callingParticipantsSet.has(p.userId));
+  const connectedParticipants = remoteParticipants.filter((p) => !callingParticipantsSet.has(p.userId));
 
   const remoteParticipantsOrdered = putVideoParticipantsFirst(connectedParticipants);
   const videoParticipants = remoteParticipants.filter((p) => p.videoStream?.isAvailable);
@@ -95,7 +92,6 @@ const getOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedPa
 
   let gridParticipants = newGridParticipants;
   let overflowGalleryParticipants = newOverflowGalleryParticipants;
-  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   if (gridParticipants.length + callingParticipants.length <= maxGridParticipants) {
     gridParticipants = gridParticipants.concat(callingParticipants);
   } else {

@@ -82,7 +82,7 @@ type CallWithChatClientStateInternal = Omit<
   | 'latestErrors'
   | /* @conditional-compile-remove(breakout-rooms) */ 'latestNotifications'
   | 'userId'
-  | /* @conditional-compile-remove(PSTN-calls) */ 'alternateCallerId'
+  | 'alternateCallerId'
   | /* @conditional-compile-remove(unsupported-browser) */ 'features'
   | 'videoBackgroundImages'
   | 'selectedVideoBackgroundEffect'

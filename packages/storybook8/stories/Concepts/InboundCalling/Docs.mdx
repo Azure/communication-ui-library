@@ -1,0 +1,38 @@
+import { Meta, Source } from '@storybook/react';
+
+<Meta title="Concepts/Inbound Calling" />
+
+import InboundCallingSource from '!!raw-loader!./snippets/IncomingCallStackPropsExample.snippet.tsx';
+
+# Inbound Calling
+
+Azure Communication Services UI Library is adding support for Inbound Calling. With this new feature, users will
+be able to see and monitor new incoming calls when signed in to Azure Communication Services or as a Teams User.
+Users will be able to accept with audio, accept with video, and reject incoming calls.
+
+Enabling this feature will allow them to see multiple incoming calls allowing the user to service multiple people
+at once. In any scenario, when your users are logged in, you are able to connect with your customers in a more direct way.
+
+## Incorporating Inbound Calling into your Experience
+
+Currently the UI library exports a series of components like the [Video
+Gallery](./?path=/docs/ui-components-videogallery--video-gallery) or
+[CallControls](./?path=/docs/ui-components-controlbar--control-bar) that allow you to build a Video calling
+experience that you can join through our [stateful client](./?path=/docs/quickstarts-statefulcallclient--page).
+With the introduction of these components, we are also allowing you to attach to your experience a way to have
+the calls come to you through these new react components. We are adding this capability with the new
+[IncomingCallStack](./?path=/docs/ui-components-internal-inboundcalling-incomingcallstack--incoming-call-stack) and
+[IncomingCallNotification](./?path=/docs/ui-components-internal-inboundcalling-incomingcallnotification--incoming-call-notification) Component.
+These new components will allow you to accept the call, accept with video, or reject the call. Accepting will bring you straight into the call.
+
+The following code is a snippet of how you can incorporate the Inbound Calling feature into your experience:
+
+<Source code={InboundCallingSource} />
+
+**Note:** this code should be wrapped in our different stateful client providers to fetch state. See how to use our [`usePropsFor` react hook](./?path=/docs/statefulclient-reacthooks-usepropsfor--page).
+
+## FAQ
+
+- I am having trouble with the Inbound Calling feature, what should I do?
+  - Please reach out to the ACS UI Library team for support. We are here to help you with any issues you may have. You can do this
+    by creating a new issue in the [GitHub repository](https://github.com/Azure/communication-ui-library/issues)

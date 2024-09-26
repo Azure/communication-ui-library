@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/* @conditional-compile-remove(one-to-n-calling) */
 import { AzureCommunicationTokenCredential } from '@azure/communication-common';
 import { CommunicationUserIdentifier, MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 import React, { useEffect, useState } from 'react';
@@ -12,18 +11,14 @@ import {
   createStatefulCallClient,
   fromFlatCommunicationIdentifier
 } from '@azure/communication-react';
-/* @conditional-compile-remove(one-to-n-calling) */
 import { DeclarativeCallAgent, DeclarativeTeamsCallAgent } from '@azure/communication-react';
 import { Stack, Image, Text, TextField, PrimaryButton } from '@fluentui/react';
 import { imgStyle } from '../styles/HomeScreen.styles';
 
 export interface LoginProps {
-  /* @conditional-compile-remove(one-to-n-calling) */
   onSetUserIdentifier: (user: CommunicationUserIdentifier) => void;
   onSetStatefulClient: (client: StatefulCallClient) => void;
-  /* @conditional-compile-remove(one-to-n-calling) */
   onSetCallAgent: (callAgent: DeclarativeCallAgent | DeclarativeTeamsCallAgent) => void;
-  /* @conditional-compile-remove(one-to-n-calling) */
   onSetTeamsIdentity: (identity: string) => void;
   setTokenCredentialError: (error: boolean) => void;
   headerImageProps?: {
@@ -33,11 +28,8 @@ export interface LoginProps {
 
 export const LoginScreen = (props: LoginProps): JSX.Element => {
   const {
-    /* @conditional-compile-remove(one-to-n-calling) */
     onSetCallAgent,
-    /* @conditional-compile-remove(one-to-n-calling) */
     onSetUserIdentifier,
-    /* @conditional-compile-remove(one-to-n-calling) */
     onSetTeamsIdentity,
     onSetStatefulClient,
     headerImageProps,
@@ -46,11 +38,8 @@ export const LoginScreen = (props: LoginProps): JSX.Element => {
   // Get Azure Communications Service token and Voice app identification from the server.
 
   const [userIdentifier, setUserIdentifier] = useState<CommunicationUserIdentifier>();
-  /* @conditional-compile-remove(one-to-n-calling) */
   const [callAgent, setCallAgent] = useState<DeclarativeCallAgent | DeclarativeTeamsCallAgent>();
-  /* @conditional-compile-remove(one-to-n-calling) */
   const [displayName, setDisplayName] = useState<string>();
-  /* @conditional-compile-remove(one-to-n-calling) */
   const [tokenCredential, setTokenCredential] = useState<AzureCommunicationTokenCredential>();
   const [statefulCallClient, setStatefulCallClient] = useState<StatefulCallClient>();
 
@@ -68,9 +57,7 @@ export const LoginScreen = (props: LoginProps): JSX.Element => {
           console.log('Token fetched: ', token);
           console.log('User fetched: ', user);
           setUserIdentifier(user);
-          /* @conditional-compile-remove(one-to-n-calling) */
           onSetUserIdentifier(user);
-          /* @conditional-compile-remove(one-to-n-calling) */
           setTokenCredential(new AzureCommunicationTokenCredential(token));
         } catch (e) {
           console.error(e);
@@ -78,12 +65,7 @@ export const LoginScreen = (props: LoginProps): JSX.Element => {
         }
       }
     })();
-  }, [
-    isCTE,
-    setTokenCredentialError,
-    /* @conditional-compile-remove(one-to-n-calling) */ onSetUserIdentifier,
-    setUserIdentifier
-  ]);
+  }, [isCTE, setTokenCredentialError, onSetUserIdentifier, setUserIdentifier]);
 
   useEffect(() => {
     if (statefulCallClient === undefined) {
@@ -93,7 +75,6 @@ export const LoginScreen = (props: LoginProps): JSX.Element => {
         });
         onSetStatefulClient(statefulClient);
         setStatefulCallClient(statefulClient);
-        /* @conditional-compile-remove(one-to-n-calling) */
         onSetTeamsIdentity(teamsIdentityInformation.identifier);
         return;
       }
@@ -109,15 +90,12 @@ export const LoginScreen = (props: LoginProps): JSX.Element => {
     userIdentifier,
     isCTE,
     teamsIdentityInformation,
-    /* @conditional-compile-remove(one-to-n-calling) */
     onSetStatefulClient,
-    /* @conditional-compile-remove(one-to-n-calling) */
     onSetTeamsIdentity,
     setStatefulCallClient,
     statefulCallClient
   ]);
 
-  /* @conditional-compile-remove(one-to-n-calling) */
   useEffect(() => {
     if (!isCTE && callAgent === undefined && statefulCallClient && tokenCredential && displayName) {
       const createCallAgent = async (): Promise<void> => {
@@ -175,7 +153,6 @@ export const LoginScreen = (props: LoginProps): JSX.Element => {
         <TextField
           placeholder="Enter your display name"
           onChange={(_, value) => {
-            /* @conditional-compile-remove(one-to-n-calling) */
             setDisplayName(value);
           }}
         ></TextField>

@@ -178,8 +178,8 @@ export const reactionButtonSelector: ReactionButtonSelector = reselect.createSel
  * @public
  */
 export const screenShareButtonSelector: ScreenShareButtonSelector = reselect.createSelector(
-  [getIsScreenSharingOn, /* @conditional-compile-remove(PSTN-calls) */ getCallState, getCapabilities, getRole],
-  (isScreenSharingOn, /* @conditional-compile-remove(PSTN-calls) */ callState, capabilities, role) => {
+  [getIsScreenSharingOn, getCallState, getCapabilities, getRole],
+  (isScreenSharingOn, callState, capabilities, role) => {
     let disabled: boolean | undefined = undefined;
 
     disabled =
@@ -187,7 +187,6 @@ export const screenShareButtonSelector: ScreenShareButtonSelector = reselect.cre
       (capabilities?.shareScreen.isPresent === false && capabilities?.shareScreen.reason !== 'NotInitialized') ||
       role === 'Consumer' ||
       role === 'Attendee';
-    /* @conditional-compile-remove(PSTN-calls) */
     disabled = disabled || ['InLobby', 'Connecting', 'LocalHold'].includes(callState);
     return {
       checked: isScreenSharingOn,
@@ -236,7 +235,6 @@ function removeBlankNameDevices<T extends { name: string }>(devices: T[]): T[] {
   return devices.filter((device) => device.name !== '');
 }
 
-/* @conditional-compile-remove(PSTN-calls) */
 /**
  * Selector type for the {@link HoldButton} component.
  * @public
@@ -248,7 +246,6 @@ export type HoldButtonSelector = (
   checked: boolean;
 };
 
-/* @conditional-compile-remove(PSTN-calls) */
 /**
  * Selector for the {@link HoldButton} component.
  * @public

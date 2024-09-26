@@ -17,7 +17,6 @@ import { ReactionResources } from '@internal/react-components';
 import { VideoGalleryLayout } from '@internal/react-components';
 import { _StartCaptionsButton, _CaptionsSettingsModal } from '@internal/react-components';
 
-/* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { HoldButton } from '@internal/react-components';
 import { RaiseHandButton, RaiseHandButtonProps } from '@internal/react-components';
 import { AudioDeviceInfo } from '@azure/communication-calling';
@@ -176,7 +175,6 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   const { speakers, onSelectSpeaker, onLightDismiss } = props;
 
   const localeStrings = useLocale();
-  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   const holdButtonProps = usePropsFor(HoldButton);
 
   const callees = useSelector(getTargetCallees);
@@ -308,7 +306,12 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   /**
    * Only render the dtmf dialer if the dialpad for PSTN calls is not present
    */
-  if (props.onSetDialpadPage && allowDtmfDialer) {
+  if (
+    props.onSetDialpadPage &&
+    allowDtmfDialer &&
+    drawerSelectionOptions !== false &&
+    isEnabled(drawerSelectionOptions.dtmfDialerButton)
+  ) {
     drawerMenuItems.push(dtmfDialerScreenOption);
   }
 
@@ -368,8 +371,9 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   /* @conditional-compile-remove(gallery-layout-composite) */
   galleryLayoutOptions.subMenuProps?.push(galleryOption);
 
-  drawerMenuItems.push(galleryLayoutOptions);
-
+  if (drawerSelectionOptions !== false && isEnabled(drawerSelectionOptions?.galleryControlsButton)) {
+    drawerMenuItems.push(galleryLayoutOptions);
+  }
   if (drawerSelectionOptions !== false && isEnabled(drawerSelectionOptions?.peopleButton)) {
     drawerMenuItems.push({
       itemKey: 'people',
@@ -381,7 +385,6 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
     });
   }
 
-  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   if (drawerSelectionOptions !== false && isEnabled(drawerSelectionOptions?.holdButton)) {
     drawerMenuItems.push({
       itemKey: 'holdButtonKey',

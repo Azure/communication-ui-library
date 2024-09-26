@@ -4,7 +4,6 @@
 import { GroupLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { ParticipantRole, RoomCallLocator } from '@azure/communication-calling';
 import { TeamsMeetingIdLocator } from '@azure/communication-calling';
-/* @conditional-compile-remove(teams-adhoc-call) */ /* @conditional-compile-remove(PSTN-calls) */
 import { fromFlatCommunicationIdentifier, StartCallIdentifier } from '@azure/communication-react';
 import { v1 as generateGUID } from 'uuid';
 
@@ -13,7 +12,7 @@ import { v1 as generateGUID } from 'uuid';
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const fetchTokenResponse = async (): Promise<any> => {
-  const response = await fetch('/token?scope=voip');
+  const response = await fetch('token?scope=voip');
   if (response.ok) {
     const responseAsJson = await response.json(); //(await response.json())?.value?.token;
     const token = responseAsJson.token;
@@ -48,7 +47,7 @@ export const createRoom = async (): Promise<string> => {
   const requestOptions = {
     method: 'POST'
   };
-  const response = await fetch(`/createRoom`, requestOptions);
+  const response = await fetch(`createRoom`, requestOptions);
   if (!response.ok) {
     throw 'Unable to create room';
   }
@@ -68,7 +67,7 @@ export const addUserToRoom = async (userId: string, roomId: string, role: Partic
     },
     body: JSON.stringify({ userId: userId, roomId: roomId, role: role })
   };
-  const response = await fetch('/addUserToRoom', requestOptions);
+  const response = await fetch('addUserToRoom', requestOptions);
   if (!response.ok) {
     throw 'Unable to add user to room';
   }
@@ -111,7 +110,6 @@ export const getRoomIdFromUrl = (): RoomCallLocator | undefined => {
   return roomId ? { roomId } : undefined;
 };
 
-/* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling)  */
 export const getOutboundParticipants = (outboundParticipants?: string[]): StartCallIdentifier[] | undefined => {
   if (outboundParticipants && outboundParticipants.length > 0) {
     const participants: StartCallIdentifier[] = outboundParticipants.map((participantId) => {

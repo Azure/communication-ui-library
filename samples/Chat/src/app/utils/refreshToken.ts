@@ -6,7 +6,7 @@ const postRefreshTokenParameters = {
 };
 
 export const refreshToken = async (userIdentity: string): Promise<string> => {
-  const response = await fetch(`/refreshToken/${userIdentity}`, postRefreshTokenParameters);
+  const response = await fetch(`refreshToken/${userIdentity}`, postRefreshTokenParameters);
   if (response.ok) {
     return (await response.json()).token;
   } else {

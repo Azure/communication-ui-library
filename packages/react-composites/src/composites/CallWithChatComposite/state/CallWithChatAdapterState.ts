@@ -75,7 +75,7 @@ export interface CallWithChatClientState {
   isTeamsCall: boolean;
   /** State of whether the active call is a Teams interop meeting */
   isTeamsMeeting: boolean;
-  /* @conditional-compile-remove(PSTN-calls) */
+
   /** alternateCallerId for PSTN call */
   alternateCallerId?: string;
   /* @conditional-compile-remove(unsupported-browser) */
@@ -142,7 +142,6 @@ export function callWithChatAdapterStateFromBackingStates(callAdapter: CallAdapt
     /* @conditional-compile-remove(breakout-rooms) */
     latestCallNotifications: callAdapterState.latestNotifications,
     latestChatErrors: {},
-    /* @conditional-compile-remove(PSTN-calls) */
     alternateCallerId: callAdapterState.alternateCallerId,
     /* @conditional-compile-remove(unsupported-browser) */
     environmentInfo: callAdapterState.environmentInfo,

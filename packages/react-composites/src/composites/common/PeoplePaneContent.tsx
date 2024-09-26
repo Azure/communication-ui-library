@@ -18,12 +18,9 @@ import { peoplePaneContainerTokens } from '../common/styles/ParticipantContainer
 import { participantListContainerStyles, peoplePaneContainerStyle } from './styles/PeoplePaneContent.styles';
 import { convertContextualMenuItemToDrawerMenuItem } from './ConvertContextualMenuItemToDrawerMenuItem';
 import { CommonCallAdapter } from '../CallComposite';
-/* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
 import { CallCompositeStrings } from '../CallComposite';
 import { AddPeopleButton } from './AddPeopleButton';
-/* @conditional-compile-remove(PSTN-calls) */
 import { PhoneNumberIdentifier } from '@azure/communication-common';
-/* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { useAdapter } from '../CallComposite/adapter/CallAdapterProvider';
 import { useLocale } from '../localization';
@@ -53,7 +50,6 @@ export const PeoplePaneContent = (props: {
 
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   const getStrings = () => {
-    /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
     return localeStrings.strings.call;
 
     return localeStrings.strings.callWithChat;
@@ -67,7 +63,6 @@ export const PeoplePaneContent = (props: {
     [adapter]
   );
 
-  /* @conditional-compile-remove(PSTN-calls) */
   const addParticipantToCall = useCallback(
     async (participant: PhoneNumberIdentifier, options?: AddPhoneNumberOptions): Promise<void> => {
       await adapter.addParticipant(participant, options);
@@ -75,7 +70,6 @@ export const PeoplePaneContent = (props: {
     [adapter]
   );
 
-  /* @conditional-compile-remove(PSTN-calls) */
   const alternateCallerId = adapter.getState().alternateCallerId;
 
   const participantListDefaultProps = usePropsFor(ParticipantList);
@@ -163,9 +157,7 @@ export const PeoplePaneContent = (props: {
           mobileView={props.mobileView}
           participantList={participantList}
           strings={strings}
-          /* @conditional-compile-remove(PSTN-calls) */
           onAddParticipant={addParticipantToCall}
-          /* @conditional-compile-remove(PSTN-calls) */
           alternateCallerId={alternateCallerId}
         />
       </Stack>
@@ -178,9 +170,7 @@ export const PeoplePaneContent = (props: {
       mobileView={props.mobileView}
       participantList={participantList}
       strings={strings}
-      /* @conditional-compile-remove(PSTN-calls) */
       onAddParticipant={addParticipantToCall}
-      /* @conditional-compile-remove(PSTN-calls) */
       alternateCallerId={alternateCallerId}
     />
   );
@@ -196,9 +186,7 @@ export const PeoplePaneContent = (props: {
  */
 const createDefaultContextualMenuItems = (
   participant: ParticipantListParticipant,
-  strings:
-    | CallWithChatCompositeStrings
-    | /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */ CallCompositeStrings,
+  strings: CallWithChatCompositeStrings | CallCompositeStrings,
   onRemoveParticipant?: (userId: string) => Promise<void>,
   localParticipantUserId?: string
 ): IContextualMenuItem[] => {
