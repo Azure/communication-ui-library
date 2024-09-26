@@ -38,7 +38,6 @@ import {
   CONTROL_BAR_Z_INDEX,
   DRAWER_Z_INDEX
 } from '../styles/CallPage.styles';
-
 import { notificationStackStyles } from '../styles/CallPage.styles';
 import { MutedNotificationProps } from './MutedNotification';
 import { CallAdapter } from '../adapter';
@@ -47,17 +46,13 @@ import { callStatusSelector } from '../selectors/callStatusSelector';
 import { CallControlOptions } from '../types/CallControlOptions';
 import { PreparedMoreDrawer } from '../../common/Drawer/PreparedMoreDrawer';
 import { getIsTeamsMeeting, getRemoteParticipants } from '../selectors/baseSelectors';
-/* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { getPage } from '../selectors/baseSelectors';
 import { getCallStatus, getCaptionsStatus } from '../selectors/baseSelectors';
 import { drawerContainerStyles } from '../styles/CallComposite.styles';
 import { SidePane } from './SidePane/SidePane';
 import { usePeoplePane } from './SidePane/usePeoplePane';
-/* @conditional-compile-remove(teams-meeting-conference) */
 import { useMeetingPhoneInfoPane } from './SidePane/useMeetingPhoneInfo';
-/* @conditional-compile-remove(teams-meeting-conference) */
 import { getTeamsMeetingCoordinates } from '../selectors/baseSelectors';
-
 import {
   useVideoEffectsPane,
   VIDEO_EFFECTS_SIDE_PANE_ID,
@@ -65,16 +60,13 @@ import {
 } from './SidePane/useVideoEffectsPane';
 import { isDisabled } from '../utils';
 import { SidePaneRenderer, useIsSidePaneOpen } from './SidePane/SidePaneProvider';
-
 import { useIsParticularSidePaneOpen } from './SidePane/SidePaneProvider';
 import { ModalLocalAndRemotePIP } from '../../common/ModalLocalAndRemotePIP';
 import { getPipStyles } from '../../common/styles/ModalLocalAndRemotePIP.styles';
 import { useMinMaxDragPosition } from '../../common/utils';
 import { MobileChatSidePaneTabHeaderProps } from '../../common/TabHeader';
 import { CommonCallControlOptions } from '../../common/types/CommonCallControlOptions';
-
 import { localVideoSelector } from '../../CallComposite/selectors/localVideoStreamSelector';
-
 import {
   CapabilitiesChangedNotificationBar,
   CapabilitiesChangeNotificationBarProps
@@ -137,6 +129,9 @@ export interface CallArrangementProps {
   pinnedParticipants?: string[];
   setPinnedParticipants?: (pinnedParticipants: string[]) => void;
   doNotShowCameraAccessNotifications?: boolean;
+  captionsOptions?: {
+    height: 'full' | 'default';
+  };
 }
 
 /**
@@ -169,7 +164,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   const isInLobby = _isInLobbyOrConnecting(useSelector(callStatusSelector).callStatus);
 
   const { updateSidePaneRenderer } = props;
-  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   const isInLocalHold = useSelector(getPage) === 'hold';
 
   const adapter = useAdapter();
@@ -185,10 +179,8 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     }
   }, [participantActioned, remoteParticipants]);
 
-  /* @conditional-compile-remove(teams-meeting-conference) */
   const conferencePhoneInfo = useSelector(getTeamsMeetingCoordinates);
 
-  /* @conditional-compile-remove(teams-meeting-conference) */
   const meetingPhoneInfoPaneProps = {
     updateSidePaneRenderer,
     mobileView: props.mobileView,
@@ -235,19 +227,15 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     localParticipant
   } = videoGalleryProps;
 
-  /* @conditional-compile-remove(teams-meeting-conference) */
   const [showTeamsMeetingConferenceModal, setShowTeamsMeetingConferenceModal] = useState(false);
-  /* @conditional-compile-remove(teams-meeting-conference) */
   const toggleTeamsMeetingConferenceModal = useCallback((): void => {
     setShowTeamsMeetingConferenceModal(!showTeamsMeetingConferenceModal);
   }, [showTeamsMeetingConferenceModal]);
 
-  /* @conditional-compile-remove(teams-meeting-conference) */
   const { isMeetingPhoneInfoPaneOpen, openMeetingPhoneInfoPane, closeMeetingPhoneInfoPane } = useMeetingPhoneInfoPane({
     ...meetingPhoneInfoPaneProps
   });
 
-  /* @conditional-compile-remove(teams-meeting-conference) */
   const toggleMeetingPhoneInfoPane = useCallback(() => {
     if (isMeetingPhoneInfoPaneOpen) {
       closeMeetingPhoneInfoPane();
@@ -256,7 +244,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     }
   }, [closeMeetingPhoneInfoPane, isMeetingPhoneInfoPaneOpen, openMeetingPhoneInfoPane]);
 
-  /* @conditional-compile-remove(teams-meeting-conference) */
   const onMeetingPhoneInfoClicked = useCallback(() => {
     setShowDrawer(false);
     toggleMeetingPhoneInfoPane();
@@ -373,7 +360,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     }
   }, [closePeoplePane, isPeoplePaneOpen, openPeoplePane]);
 
-  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   useEffect(() => {
     if (isInLocalHold) {
       // close side pane on local hold
@@ -471,6 +457,13 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   const minMaxDragPosition = useMinMaxDragPosition(props.modalLayerHostId);
   const pipStyles = useMemo(() => getPipStyles(theme), [theme]);
 
+  const galleryContainerStyles = useMemo(() => {
+    return {
+      ...mediaGalleryContainerStyles,
+      ...(props?.captionsOptions?.height === 'full' ? { root: { postion: 'absolute' } } : {})
+    };
+  }, [props?.captionsOptions?.height]);
+
   if (isTeamsMeeting) {
     filteredLatestErrorNotifications
       .filter((notification) => notification.type === 'teamsMeetingCallNetworkQualityLow')
@@ -525,9 +518,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                   containerWidth={containerWidth}
                   containerHeight={containerHeight}
                   isMobile={props.mobileView}
-                  /* @conditional-compile-remove(one-to-n-calling) */
                   peopleButtonChecked={isPeoplePaneOpen}
-                  /* @conditional-compile-remove(one-to-n-calling) */
                   onPeopleButtonClicked={togglePeoplePane}
                   displayVertical={verticalControlBar}
                 />
@@ -538,7 +529,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                   callAdapter={adapter as CallAdapter}
                   mobileView={props.mobileView}
                   disableButtonsForLobbyPage={isInLobby}
-                  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
                   disableButtonsForHoldScreen={isInLocalHold}
                   peopleButtonChecked={isPeoplePaneOpen}
                   onPeopleButtonClicked={togglePeoplePane}
@@ -561,9 +551,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                   onStopLocalSpotlight={
                     !hideSpotlightButtons && localParticipant.spotlight ? onStopLocalSpotlightWithPrompt : undefined
                   }
-                  /* @conditional-compile-remove(teams-meeting-conference) */
                   onToggleTeamsMeetingConferenceModal={toggleTeamsMeetingConferenceModal}
-                  /* @conditional-compile-remove(teams-meeting-conference) */
                   teamsMeetingConferenceModalPresent={showTeamsMeetingConferenceModal}
                 />
               )}
@@ -575,7 +563,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                 callControls={props.callControlProps.options}
                 onLightDismiss={closeDrawer}
                 onPeopleButtonClicked={onMoreDrawerPeopleClicked}
-                /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
                 disableButtonsForHoldScreen={isInLocalHold}
                 isCaptionsSupported={
                   (useTeamsCaptions && hasJoinedCall) ||
@@ -587,7 +574,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                 onSetDialpadPage={props.onSetDialpadPage}
                 dtmfDialerPresent={props.dtmfDialerPresent}
                 reactionResources={adapter.getState().reactions}
-                /* @conditional-compile-remove(teams-meeting-conference) */
                 onClickMeetingPhoneInfo={onMeetingPhoneInfoClicked}
               />
             </Stack>
@@ -595,7 +581,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
           <Stack horizontal grow>
             <Stack.Item style={callCompositeContainerCSS}>
               <Stack.Item styles={callGalleryStyles} grow>
-                <Stack verticalFill styles={mediaGalleryContainerStyles}>
+                <Stack verticalFill styles={galleryContainerStyles}>
                   <Stack.Item styles={notificationsContainerStyles}>
                     {
                       /* @conditional-compile-remove(breakout-rooms) */
@@ -630,14 +616,14 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                       )}
                   </Stack.Item>
                   {renderGallery && props.onRenderGalleryContent && props.onRenderGalleryContent()}
-                  {true &&
-                    /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ !isInLocalHold && (
-                      <CaptionsBanner
-                        isMobile={props.mobileView}
-                        onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
-                        useTeamsCaptions={useTeamsCaptions}
-                      />
-                    )}
+                  {!isInLocalHold && (
+                    <CaptionsBanner
+                      captionsOptions={props.captionsOptions}
+                      isMobile={props.mobileView}
+                      onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
+                      useTeamsCaptions={useTeamsCaptions}
+                    />
+                  )}
                 </Stack>
               </Stack.Item>
             </Stack.Item>

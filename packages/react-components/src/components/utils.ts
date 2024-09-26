@@ -323,7 +323,6 @@ export const NotificationIconProps = (notificationType: NotificationType): IIcon
  */
 export const customNotificationIconName: Partial<{ [key in NotificationType]: string }> = {
   callNetworkQualityLow: 'ErrorBarCallNetworkQualityLow',
-  /* @conditional-compile-remove(teams-meeting-conference) */
   teamsMeetingCallNetworkQualityLow: 'ErrorBarCallNetworkQualityLow',
   callNoSpeakerFound: 'ErrorBarCallNoSpeakerFound',
   callNoMicrophoneFound: 'ErrorBarCallNoMicrophoneFound',
@@ -342,21 +341,13 @@ export const customNotificationIconName: Partial<{ [key in NotificationType]: st
   /* @conditional-compile-remove(soft-mute) */
   mutedByRemoteParticipant: 'ErrorBarMutedByRemoteParticipant',
   speakingWhileMuted: 'ErrorBarCallMicrophoneMutedBySystem',
-
   recordingStarted: 'NotificationBarRecording',
-
   transcriptionStarted: 'NotificationBarRecording',
-
   recordingStopped: 'NotificationBarRecording',
-
   transcriptionStopped: 'NotificationBarRecording',
-
   recordingAndTranscriptionStarted: 'NotificationBarRecording',
-
   recordingAndTranscriptionStopped: 'NotificationBarRecording',
-
   recordingStoppedStillTranscribing: 'NotificationBarRecording',
-
   transcriptionStoppedStillRecording: 'NotificationBarRecording',
   /* @conditional-compile-remove(breakout-rooms) */
   assignedBreakoutRoomOpened: 'NotificationBarBreakoutRoomOpened',

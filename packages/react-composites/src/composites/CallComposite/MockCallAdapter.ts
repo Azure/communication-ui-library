@@ -11,7 +11,6 @@ import {
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support) */
 import { CallKind } from '@azure/communication-calling';
-/* @conditional-compile-remove(PSTN-calls) */
 import { EnvironmentInfo } from '@azure/communication-calling';
 import { EventEmitter } from 'events';
 import type { CallAdapter, CallAdapterState } from './adapter';
@@ -158,7 +157,6 @@ export class _MockCallAdapter implements CallAdapter {
   off(): void {
     return;
   }
-  /* @conditional-compile-remove(PSTN-calls) */
   getEnvironmentInfo(): Promise<EnvironmentInfo> {
     throw Error('getEnvironmentInfo not implemented');
   }

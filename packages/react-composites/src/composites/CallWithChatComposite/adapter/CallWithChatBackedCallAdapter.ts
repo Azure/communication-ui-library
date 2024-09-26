@@ -14,13 +14,10 @@ import {
   StartCallOptions
 } from '@azure/communication-calling';
 import { Reaction } from '@azure/communication-calling';
-/* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { DtmfTone } from '@azure/communication-calling';
 import { CallWithChatAdapterState } from '../state/CallWithChatAdapterState';
-/* @conditional-compile-remove(PSTN-calls) */
 import { CommunicationIdentifier, isPhoneNumberIdentifier, PhoneNumberIdentifier } from '@azure/communication-common';
-/* @conditional-compile-remove(one-to-n-calling) */
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { _toCommunicationIdentifier } from '@internal/acs-ui-common';
 import {
@@ -127,11 +124,8 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
   public lowerHand = async (): Promise<void> => await this.callWithChatAdapter.lowerHand();
   public onReactionClick = async (reaction: Reaction): Promise<void> =>
     await this.callWithChatAdapter.onReactionClick(reaction);
-  public removeParticipant = async (
-    userId: string | /* @conditional-compile-remove(PSTN-calls) */ CommunicationIdentifier
-  ): Promise<void> => {
+  public removeParticipant = async (userId: string | CommunicationIdentifier): Promise<void> => {
     let participant = userId;
-    /* @conditional-compile-remove(PSTN-calls) */
     participant = _toCommunicationIdentifier(userId);
     await this.callWithChatAdapter.removeParticipant(participant);
   };
@@ -151,19 +145,14 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
   public disposeLocalVideoStreamView(): Promise<void> {
     return this.callWithChatAdapter.disposeLocalVideoStreamView();
   }
-  /* @conditional-compile-remove(PSTN-calls) */
   public holdCall = async (): Promise<void> => {
     await this.callWithChatAdapter.holdCall();
   };
-  /* @conditional-compile-remove(PSTN-calls) */
   public resumeCall = async (): Promise<void> => {
     await this.callWithChatAdapter.resumeCall();
   };
-  /* @conditional-compile-remove(PSTN-calls) */
   public async addParticipant(participant: PhoneNumberIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
-  /* @conditional-compile-remove(PSTN-calls) */
   public async addParticipant(participant: CommunicationUserIdentifier): Promise<void>;
-  /* @conditional-compile-remove(PSTN-calls) */
   public async addParticipant(
     participant: PhoneNumberIdentifier | CommunicationUserIdentifier,
     options?: AddPhoneNumberOptions
@@ -274,7 +263,6 @@ function callAdapterStateFromCallWithChatAdapterState(
     latestErrors: callWithChatAdapterState.latestCallErrors,
     /* @conditional-compile-remove(breakout-rooms) */
     latestNotifications: callWithChatAdapterState.latestCallNotifications,
-    /* @conditional-compile-remove(PSTN-calls) */
     alternateCallerId: callWithChatAdapterState.alternateCallerId,
     /* @conditional-compile-remove(unsupported-browser) */
     environmentInfo: callWithChatAdapterState.environmentInfo,
@@ -284,6 +272,10 @@ function callAdapterStateFromCallWithChatAdapterState(
     onResolveVideoEffectDependency: callWithChatAdapterState.onResolveVideoEffectDependency,
     /* @conditional-compile-remove(DNS) */
     onResolveDeepNoiseSuppressionDependency: callWithChatAdapterState.onResolveDeepNoiseSuppressionDependency,
+    /* @conditional-compile-remove(DNS) */
+    deepNoiseSuppressionOnByDefault: callWithChatAdapterState.deepNoiseSuppressionOnByDefault,
+    /* @conditional-compile-remove(DNS) */
+    hideDeepNoiseSuppressionButton: callWithChatAdapterState.hideDeepNoiseSuppressionButton,
     selectedVideoBackgroundEffect: callWithChatAdapterState.selectedVideoBackgroundEffect,
     reactions: callWithChatAdapterState.reactions
   };

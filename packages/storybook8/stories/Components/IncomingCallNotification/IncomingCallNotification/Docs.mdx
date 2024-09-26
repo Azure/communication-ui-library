@@ -1,0 +1,28 @@
+import { Canvas, Meta, ArgTypes } from '@storybook/addon-docs';
+import {
+  IncomingCallNotificationExampleDocsOnly,
+  IncomingCallNotificationStylingExampleDocsOnly
+} from './index.stories';
+import * as IncomingCallNotificationStories from './index.stories';
+import IncomingCallNotificationText from '!!raw-loader!./snippets/IncomingCallNotification.snippet';
+import IncomingCallNotificationStylingText from '!!raw-loader!./snippets/IncomingCallNotificationStyling.snippet';
+import { IncomingCallNotification } from '@azure/communication-react';
+
+<Meta of={IncomingCallNotificationStories} />
+
+# IncomingCallNotification
+
+This component is a representation of an incoming call. It will show the name of the caller and allow you to
+accept the call with either audio or video or reject the call. This component is used by the `IncomingCallStack`
+for each of the calls held in its state.
+
+<Canvas of={IncomingCallNotificationExampleDocsOnly} source={{ code: IncomingCallNotificationText }} />
+## Styling Depending on your use of `IncomingCallNotification` and the `IncomingCallStack` you might want to customize
+Match your notification's appearance to your needs. Both components includes API's to adjust the CSS on many different
+elements of the notification. Below is an example of how you can customize `IncomingCallNotification`.
+
+<Canvas of={IncomingCallNotificationStylingExampleDocsOnly} source={{ code: IncomingCallNotificationStylingText }} />
+
+## Props
+
+<ArgTypes of={IncomingCallNotification}></ArgTypes>

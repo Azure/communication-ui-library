@@ -2,6 +2,120 @@
   "name": "@internal/check-treeshaking",
   "entries": [
     {
+      "date": "Thu, 12 Sep 2024 18:13:19 GMT",
+      "version": "0.1.0",
+      "tag": "@internal/check-treeshaking_v0.1.0",
+      "comments": {
+        "undefined": [
+          {
+            "author": "beachball",
+            "package": "@internal/check-treeshaking",
+            "comment": "Bump @internal/acs-ui-common to v1.19.0",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/check-treeshaking",
+            "comment": "Bump @internal/react-components to v1.19.0",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/check-treeshaking",
+            "comment": "Bump @internal/chat-stateful-client to v1.19.0",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/check-treeshaking",
+            "comment": "Bump @internal/calling-stateful-client to v1.19.0",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/check-treeshaking",
+            "comment": "Bump @internal/chat-component-bindings to v1.19.0",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/check-treeshaking",
+            "comment": "Bump @internal/calling-component-bindings to v1.19.0",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/check-treeshaking",
+            "comment": "Bump @internal/react-composites to v1.19.0",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/check-treeshaking",
+            "comment": "Bump @internal/acs-ui-javascript-loaders to v1.19.0",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 06 Sep 2024 23:30:32 GMT",
+      "version": "0.1.0",
+      "tag": "@internal/check-treeshaking_v0.1.0",
+      "comments": {
+        "undefined": [
+          {
+            "author": "beachball",
+            "package": "@internal/check-treeshaking",
+            "comment": "Bump @internal/acs-ui-common to v1.19.0-beta.3",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/check-treeshaking",
+            "comment": "Bump @internal/react-components to v1.19.0-beta.3",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/check-treeshaking",
+            "comment": "Bump @internal/chat-stateful-client to v1.19.0-beta.3",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/check-treeshaking",
+            "comment": "Bump @internal/calling-stateful-client to v1.19.0-beta.3",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/check-treeshaking",
+            "comment": "Bump @internal/chat-component-bindings to v1.19.0-beta.3",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/check-treeshaking",
+            "comment": "Bump @internal/calling-component-bindings to v1.19.0-beta.3",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/check-treeshaking",
+            "comment": "Bump @internal/react-composites to v1.19.0-beta.3",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/check-treeshaking",
+            "comment": "Bump @internal/acs-ui-javascript-loaders to v1.19.0-beta.3",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 26 Aug 2024 18:25:59 GMT",
       "version": "0.1.0",
       "tag": "@internal/check-treeshaking_v0.1.0",

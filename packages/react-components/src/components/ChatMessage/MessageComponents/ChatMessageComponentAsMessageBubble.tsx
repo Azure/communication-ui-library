@@ -181,7 +181,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
             className: chatItemMessageContainerClassName,
             style: { ...createStyleFromV8Style(messageContainerStyle) }
           }}
-          data-ui-id="chat-composite-message"
+          data-testid="chat-composite-message"
           timestamp={
             <Text
               className={

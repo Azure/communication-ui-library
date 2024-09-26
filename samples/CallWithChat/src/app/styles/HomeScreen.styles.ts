@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 import { IStackTokens, mergeStyles } from '@fluentui/react';
-/* @conditional-compile-remove(PSTN-calls) */
 import { IStackStyles, IStyle, FontWeights } from '@fluentui/react';
 export const imgStyle = mergeStyles({
   width: '16.5rem',
@@ -60,11 +59,9 @@ export const buttonStyle = mergeStyles({
   borderRadius: 3,
   padding: '0.625rem'
 });
-/* @conditional-compile-remove(PSTN-calls) */
 export const outboundTextField = mergeStyles({
   paddingTop: '0.5rem'
 });
-/* @conditional-compile-remove(PSTN-calls) */
 export const dialpadOptionStyles: IStackStyles = {
   root: {
     margin: 'auto',
@@ -73,7 +70,6 @@ export const dialpadOptionStyles: IStackStyles = {
   }
 };
 
-/* @conditional-compile-remove(PSTN-calls) */
 export const alternateCallerIdCalloutStyles: IStyle = {
   width: '25rem',
   height: '12rem',
@@ -81,13 +77,11 @@ export const alternateCallerIdCalloutStyles: IStyle = {
   padding: '20px 24px'
 };
 
-/* @conditional-compile-remove(PSTN-calls) */
 export const alternateCallerIdCalloutTitleStyles: IStyle = {
   marginBottom: 12,
   fontWeight: FontWeights.semilight
 };
 
-/* @conditional-compile-remove(PSTN-calls) */
 export const alternateCallerIdCalloutLinkStyles: IStyle = {
   display: 'block',
   marginTop: 20

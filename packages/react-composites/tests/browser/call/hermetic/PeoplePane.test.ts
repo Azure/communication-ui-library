@@ -25,9 +25,7 @@ import type { MockCallAdapterState } from '../../../common';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 
 const participantListShownAsFlyout = (): boolean => {
-  /* @conditional-compile-remove(one-to-n-calling) */
   return false;
-  return true;
 };
 
 const participantListShownAsSidePane = (testInfo: TestInfo): boolean => {

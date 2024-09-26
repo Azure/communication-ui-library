@@ -1,0 +1,9 @@
+{
+  "type": "minor",
+  "area": "fix",
+  "workstream": "Call Controls",
+  "comment": "Fix Call Controls to allow proper customization of buttons shown",
+  "packageName": "@azure/communication-react",
+  "email": "dmceachern@microsoft.com",
+  "dependentChangeType": "patch"
+}

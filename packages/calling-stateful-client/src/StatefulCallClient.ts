@@ -153,7 +153,6 @@ export interface StatefulCallClient extends CallClient {
     stream: LocalVideoStreamState | RemoteVideoStreamState
   ): void;
 
-  /** @conditional-compile-remove(one-to-n-calling) */
   /**
    * The CallAgent is used to handle calls.
    * To create the CallAgent, pass a CommunicationTokenCredential object provided from SDK.

@@ -1,6 +1,6 @@
 import { Meta } from '@storybook/react/*';
 import { controlsToAdd, hiddenControl } from '../../../controlsUtils';
-import { IncomingCallModal as IncomingCallModalStory } from './snippets/exampleIncomingCallModal.snippet';
+import { IncomingCallModal as IncomingCallModalStory } from './IncomingCallModal.story';
 
 export const IncomingCallModal = {
   render: IncomingCallModalStory

@@ -18,7 +18,6 @@ import {
   SpotlightCallFeatureState,
   IncomingCallState
 } from '@internal/calling-stateful-client';
-/* @conditional-compile-remove(one-to-n-calling) */
 import { TeamsIncomingCallState } from '@internal/calling-stateful-client';
 import { ReactionState } from '@internal/calling-stateful-client';
 import { CaptionsInfo } from '@internal/calling-stateful-client';
@@ -26,7 +25,6 @@ import { CaptionsInfo } from '@internal/calling-stateful-client';
 import { CaptionsKind } from '@azure/communication-calling';
 import { RaisedHandState } from '@internal/calling-stateful-client';
 import { _SupportedCaptionLanguage, _SupportedSpokenLanguage } from '@internal/react-components';
-/* @conditional-compile-remove(teams-meeting-conference) */
 import { ConferencePhoneInfo } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(breakout-rooms) */
 import { CallNotifications } from '@internal/calling-stateful-client';
@@ -56,9 +54,7 @@ export const getRole = (state: CallClientState, props: CallingBaseSelectorProps)
  * @private
  */
 export const isHideAttendeeNamesEnabled = (state: CallClientState, props: CallingBaseSelectorProps): boolean => {
-  /* @conditional-compile-remove(hide-attendee-name) */
   return state.calls[props.callId]?.hideAttendeeNames ?? false;
-  return false;
 };
 
 /**
@@ -270,7 +266,6 @@ export const getSupportedSpokenLanguages = (
   return state.calls[props.callId]?.captionsFeature.supportedSpokenLanguages as _SupportedSpokenLanguage[];
 };
 
-/* @conditional-compile-remove(teams-meeting-conference) */
 /** @private */
 export const getMeetingConferencePhones = (
   state: CallClientState,
@@ -284,9 +279,7 @@ export const getMeetingConferencePhones = (
  * @returns the incoming calls in the call client state
  * @private
  */
-export const getIncomingCalls = (
-  state: CallClientState
-): IncomingCallState[] | /* @conditional-compile-remove(one-to-n-calling) */ TeamsIncomingCallState[] => {
+export const getIncomingCalls = (state: CallClientState): IncomingCallState[] | TeamsIncomingCallState[] => {
   return Object.values(state.incomingCalls);
 };
 
@@ -295,9 +288,7 @@ export const getIncomingCalls = (
  * @returns the incoming calls that have been removed
  * @private
  */
-export const getRemovedIncomingCalls = (
-  state: CallClientState
-): IncomingCallState[] | /* @conditional-compile-remove(one-to-n-calling) */ TeamsIncomingCallState[] => {
+export const getRemovedIncomingCalls = (state: CallClientState): IncomingCallState[] | TeamsIncomingCallState[] => {
   return Object.values(state.incomingCallsEnded);
 };
 

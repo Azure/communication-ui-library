@@ -19,8 +19,14 @@ export function perStepLocalTimeout(): number {
   return PER_STEP_TIMEOUT_MS;
 }
 
-/** Selector string to get element by data-ui-id property */
+/**
+ *  Selector string to get element by data-ui-id property
+ * @deprecated Use native Playwright functions to get locators or use `dataTestId` instead.
+ */
 export const dataUiId = (id: string): string => `[data-ui-id="${id}"]`;
+
+/** Selector string to get element by data-testid property */
+export const dataTestId = (id: string): string => `[data-testid="${id}"]`;
 
 /**
  * Wrapper function to take a screenshot if the provided callback fails.

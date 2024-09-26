@@ -143,7 +143,6 @@ export interface CallWithChatCompositeStrings {
    * Label for button to copy invite link when it has been actioned
    */
   copyInviteLinkButtonActionedLabel: string;
-  /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Label for button to open dialpad
    */
@@ -161,37 +160,30 @@ export interface CallWithChatCompositeStrings {
    */
   returnToCallButtonAriaLabel?: string;
 
-  /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Label for add people dropdown
    */
   peoplePaneAddPeopleButtonLabel: string;
-  /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Label for button to start a call
    */
   dialpadStartCallButtonLabel: string;
-  /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Title for dialpad Modal
    */
   dialpadModalTitle: string;
-  /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Aria Label for dialpad Modal
    */
   dialpadModalAriaLabel: string;
-  /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Aria Label for dialpad Modal close button
    */
   dialpadCloseModalButtonAriaLabel: string;
-  /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Placeholder text for dtmf dialpad
    */
   dtmfDialpadPlaceholderText: string;
-  /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Label for the button to open dtmf dialpad
    */

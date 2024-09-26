@@ -1,19 +1,14 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import {
-  DominantSpeakersInfo,
-  RemoteParticipantState as RemoteParticipantConnectionState
-} from '@azure/communication-calling';
+import { DominantSpeakersInfo } from '@azure/communication-calling';
 import { SpotlightedParticipant } from '@azure/communication-calling';
-/* @conditional-compile-remove(hide-attendee-name) */
 import { ParticipantRole } from '@azure/communication-calling';
 import { memoizeFnAll, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { RemoteParticipantState, RemoteVideoStreamState } from '@internal/calling-stateful-client';
 import { VideoGalleryRemoteParticipant, VideoGalleryStream } from '@internal/react-components';
 import memoizeOne from 'memoize-one';
-import { _isRingingPSTNParticipant } from './callUtils';
-/* @conditional-compile-remove(hide-attendee-name) */
+import { _convertParticipantState, ParticipantConnectionState } from './callUtils';
 import { maskDisplayNameWithRole } from './callUtils';
 import { checkIsSpeaking } from './SelectorUtils';
 import { isPhoneNumberIdentifier } from '@azure/communication-common';
@@ -30,9 +25,7 @@ export const _dominantSpeakersWithFlatId = (dominantSpeakers?: DominantSpeakersI
 /** @internal */
 export type _VideoGalleryRemoteParticipantsMemoFn = (
   remoteParticipants: RemoteParticipantState[] | undefined,
-  /* @conditional-compile-remove(hide-attendee-name) */
   isHideAttendeeNamesEnabled?: boolean,
-  /* @conditional-compile-remove(hide-attendee-name) */
   localUserRole?: ParticipantRole
 ) => VideoGalleryRemoteParticipant[];
 
@@ -40,7 +33,7 @@ export type _VideoGalleryRemoteParticipantsMemoFn = (
 export const _videoGalleryRemoteParticipantsMemo: _VideoGalleryRemoteParticipantsMemoFn = (
   remoteParticipants: RemoteParticipantState[] | undefined,
   isHideAttendeeNamesEnabled?: boolean,
-  /* @conditional-compile-remove(hide-attendee-name) */ localUserRole?
+  localUserRole?
 ): VideoGalleryRemoteParticipant[] => {
   if (!remoteParticipants) {
     return [];
@@ -60,11 +53,9 @@ export const _videoGalleryRemoteParticipantsMemo: _VideoGalleryRemoteParticipant
           );
         })
         .map((participant: RemoteParticipantState) => {
-          const state = _isRingingPSTNParticipant(participant);
-          let displayName = participant.displayName;
-          /* @conditional-compile-remove(hide-attendee-name) */
-          displayName = maskDisplayNameWithRole(
-            displayName,
+          const state = _convertParticipantState(participant);
+          const displayName = maskDisplayNameWithRole(
+            participant.displayName,
             localUserRole,
             participant.role,
             isHideAttendeeNamesEnabled
@@ -94,7 +85,7 @@ const memoizedAllConvertRemoteParticipant = memoizeFnAll(
     isMuted: boolean,
     isSpeaking: boolean,
     videoStreams: { [key: number]: RemoteVideoStreamState },
-    state: RemoteParticipantConnectionState,
+    state: ParticipantConnectionState,
     displayName?: string,
     raisedHand?: RaisedHandState,
     contentSharingStream?: HTMLElement,
@@ -122,7 +113,7 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
   isMuted: boolean,
   isSpeaking: boolean,
   videoStreams: { [key: number]: RemoteVideoStreamState },
-  state: RemoteParticipantConnectionState,
+  state: ParticipantConnectionState,
   displayName?: string,
   raisedHand?: RaisedHandState,
   contentSharingStream?: HTMLElement,
@@ -167,8 +158,6 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
     videoStream,
     screenShareStream,
     isScreenSharingOn: screenShareStream !== undefined && screenShareStream.isAvailable,
-    /* @conditional-compile-remove(one-to-n-calling) */
-    /* @conditional-compile-remove(PSTN-calls) */
     state,
     raisedHand,
     reaction,

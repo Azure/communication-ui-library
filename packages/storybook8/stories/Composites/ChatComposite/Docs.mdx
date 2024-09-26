@@ -2,6 +2,7 @@ import { Canvas, Meta, Source, ArgTypes } from '@storybook/blocks';
 import { ChatComposite } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
 import { SingleLineBetaBanner } from '../../BetaBanners/SingleLineBetaBanner';
+import * as ChatCompositStory from './index.stories';
 
 import { JoinExistingChatThread } from './JoinExistingChatThread.stories';
 import { overviewPageImagesStackStyle } from '../../constants';
@@ -11,7 +12,7 @@ import customDateTimeFormatExampleText from '!!raw-loader!./snippets/CustomDateT
 import customBehaviorExampleText from '!!raw-loader!./snippets/CustomizeBehavior.snippet.tsx';
 import richTextEditorExampleText from '!!raw-loader!./snippets/RichTextEditor.snippet.tsx';
 
-<Meta title="Composites/ChatComposite" />
+<Meta of={ChatCompositStory} />
 
 # ChatComposite
 
@@ -139,8 +140,9 @@ You can pass in a function that formats the datetime displayed in chat messages 
 
 ## Adding file sharing
 
-<SingleLineBetaBanner />
 ### In Azure Communication Service Chat Thread
+
+<SingleLineBetaBanner />
 
 The Chat Composite supports file sharing capabilities in conjunction with your choice of a storage solution.
 Please refer to our
@@ -159,6 +161,6 @@ The insert inline images feature is only supported in the Teams Interop chats. P
 ## Props
 
 <ArgTypes
-  of={ChatComposite}
+  of={ChatCompositStory}
   exclude={['fluentTheme', 'icons', 'locale', 'rtl', 'onFetchAvatarPersonaData', 'onFetchParticipantMenuItems']}
 />

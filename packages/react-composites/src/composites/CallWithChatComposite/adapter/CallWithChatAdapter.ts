@@ -35,7 +35,6 @@ import {
   VideoDeviceInfo
 } from '@azure/communication-calling';
 import { Reaction } from '@azure/communication-calling';
-/* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(breakout-rooms) */
 import { BreakoutRoomsUpdatedListener } from '@azure/communication-calling';
@@ -51,14 +50,10 @@ import {
 } from '../../CallComposite/adapter/CallAdapter';
 /* @conditional-compile-remove(file-sharing-acs) */
 import { MessageOptions } from '@internal/acs-ui-common';
-/* @conditional-compile-remove(PSTN-calls) */
 import { PhoneNumberIdentifier } from '@azure/communication-common';
 import { UnknownIdentifier, MicrosoftTeamsAppIdentifier } from '@azure/communication-common';
-/* @conditional-compile-remove(one-to-n-calling) */
 import { CommunicationUserIdentifier } from '@azure/communication-common';
-/* @conditional-compile-remove(teams-adhoc-call) */
 import { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
-/* @conditional-compile-remove(PSTN-calls) */
 import { CommunicationIdentifier } from '@azure/communication-common';
 import {
   CaptionsReceivedListener,
@@ -88,7 +83,6 @@ export interface CallWithChatAdapterManagement {
    * @public
    */
   removeParticipant(userId: string): Promise<void>;
-  /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Remove a participant from the call.
    * @param participant - {@link @azure/communication-common#CommunicationIdentifier} of the participant to be removed
@@ -170,9 +164,9 @@ export interface CallWithChatAdapterManagement {
   startCall(
     participants: (
       | MicrosoftTeamsAppIdentifier
-      | /* @conditional-compile-remove(PSTN-calls) */ PhoneNumberIdentifier
-      | /* @conditional-compile-remove(one-to-n-calling) */ CommunicationUserIdentifier
-      | /* @conditional-compile-remove(teams-adhoc-call) */ MicrosoftTeamsUserIdentifier
+      | PhoneNumberIdentifier
+      | CommunicationUserIdentifier
+      | MicrosoftTeamsUserIdentifier
       | UnknownIdentifier
     )[],
     options?: StartCallOptions
@@ -400,28 +394,24 @@ export interface CallWithChatAdapterManagement {
   downloadResourceToCache(resourceDetails: ResourceDetails): Promise<void>;
   /** @public */
   removeResourceFromCache(resourceDetails: ResourceDetails): void;
-  /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Puts the Call in a Localhold.
    *
    * @public
    */
-  holdCall: () => Promise<void>;
-  /* @conditional-compile-remove(PSTN-calls) */
+  holdCall(): Promise<void>;
   /**
    * Resumes the call from a LocalHold state.
    *
    * @public
    */
-  resumeCall: () => Promise<void>;
-  /* @conditional-compile-remove(PSTN-calls) */
+  resumeCall(): Promise<void>;
   /**
    * Adds a new Participant to the call.
    *
    * @public
    */
   addParticipant(participant: PhoneNumberIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
-  /* @conditional-compile-remove(PSTN-calls) */
   addParticipant(participant: CommunicationUserIdentifier): Promise<void>;
   /**
    * send dtmf tone to another participant in the call in 1:1 calls
