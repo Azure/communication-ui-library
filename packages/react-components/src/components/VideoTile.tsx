@@ -49,6 +49,8 @@ export interface VideoTileStrings {
   participantStateRinging: string;
   /** String for displaying the Hold state of the remote participant */
   participantStateHold: string;
+  /** String for displaying the reconnecting state of the remote participant */
+  participantReconnecting?: string;
 }
 
 /**

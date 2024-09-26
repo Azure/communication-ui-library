@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { mergeStyles, Spinner, Text } from '@fluentui/react';
+import { mergeStyles, Spinner, Stack } from '@fluentui/react';
 import React, { useEffect, useRef, useState } from 'react';
 import {
   invertedVideoInPipStyle,
@@ -10,8 +10,9 @@ import {
   loadingSpinnerContainer,
   loadSpinnerStyles,
   reconnectingContainer,
-  reconnectingText
+  reconnectSpinnerStyles
 } from './styles/StreamMedia.styles';
+import { useLocale } from '../localization';
 import { useTheme } from '../theming';
 import { BaseCustomStyles } from '../types';
 
@@ -53,6 +54,7 @@ export interface StreamMediaProps {
 export const StreamMedia = (props: StreamMediaProps): JSX.Element => {
   const containerEl = useRef<HTMLDivElement>(null);
   const theme = useTheme();
+  const reconnectingText = useLocale().strings.videoTile.participantReconnecting || 'Reconnecting...';
 
   const { isMirrored, videoStreamElement, styles, loadingState = 'none' } = props;
   const [pipEnabled, setPipEnabled] = useState(false);
@@ -100,11 +102,13 @@ export const StreamMedia = (props: StreamMediaProps): JSX.Element => {
         </div>
       )}
       {loadingState === 'reconnecting' && (
-        <div className={reconnectingContainer()}>
-          <Text data-ui-id="stream-media-reconnecting" className={reconnectingText(theme)}>
-            Reconnecting...
-          </Text>
-        </div>
+        <Stack className={reconnectingContainer()}>
+          <Spinner
+            data-ui-id="stream-media-loading-spinner"
+            styles={reconnectSpinnerStyles(theme)}
+            label={reconnectingText}
+          />
+        </Stack>
       )}
     </div>
   );

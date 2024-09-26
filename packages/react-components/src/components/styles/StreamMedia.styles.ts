@@ -46,20 +46,6 @@ export const reconnectingContainer = (): string =>
 /**
  * @private
  */
-export const reconnectingText = (theme: Theme): string =>
-  mergeStyles({
-    // Position centrally on top of content. Parent must have position: relative.
-    height: '3rem',
-    lineHeight: '3rem',
-    justifyContent: 'center',
-    alignItems: 'center',
-    color: theme.palette.themeLight,
-    fontSize: theme.fonts.large.fontSize
-  });
-
-/**
- * @private
- */
 export const loadSpinnerStyles: ISpinnerStyles = {
   root: {
     height: '100%' // ensure height fills container
@@ -72,6 +58,21 @@ export const loadSpinnerStyles: ISpinnerStyles = {
     borderWidth: '0.25em'
   }
 };
+
+/**
+ * @private
+ */
+export const reconnectSpinnerStyles = (theme: Theme): ISpinnerStyles => ({
+  ...loadSpinnerStyles,
+  label: {
+    color: theme.palette.white
+  },
+  circle: {
+    ...(loadSpinnerStyles.circle as object),
+    maxHeight: '2rem',
+    borderWidth: 'unset'
+  }
+});
 
 /**
  * @private
