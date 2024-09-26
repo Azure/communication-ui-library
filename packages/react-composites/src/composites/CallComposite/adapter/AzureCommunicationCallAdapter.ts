@@ -407,6 +407,8 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
   private onClientStateChange: (clientState: CallClientState) => void;
   /* @conditional-compile-remove(breakout-rooms) */
   private originCall: CallCommon | undefined;
+  /* @conditional-compile-remove(breakout-rooms) */
+  private originCallStartCallOptions: boolean | JoinCallOptions | undefined;
 
   private onResolveVideoBackgroundEffectsDependency?: () => Promise<VideoBackgroundEffectsDependency>;
   /* @conditional-compile-remove(DNS) */
@@ -494,13 +496,13 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
       }
 
       console.log(
-        'DEBUG clientState.calls: ',
+        'DEBUG2 clientState.calls: ',
         Object.values(clientState.calls)
-          .map((c) => `${c.id}-${c.state}`)
+          .map((c) => `${c.id}-${c.state}${c.breakoutRooms?.breakoutRoomOriginCallId ? '(BR)' : ''}`)
           .join(', ')
       );
 
-      console.log('DEBUG this.callAgent.calls: ', this.callAgent.calls.map((c) => `${c.id}-${c.state}`).join(', '));
+      console.log('DEBUG2 this.callAgent.calls: ', this.callAgent.calls.map((c) => `${c.id}-${c.state}`).join(', '));
 
       // if the call hits the connected state we want to pause all calling sounds if playing.
       if (this.call?.state === 'Connected' && this.callingSoundSubscriber?.playingSounds) {
@@ -705,6 +707,8 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
   }
 
   public joinCall(options?: boolean | JoinCallOptions): CallTypeOf<AgentType> | undefined {
+    this.originCallStartCallOptions = options;
+
     if (_isInCall(this.getState().call?.state ?? 'None')) {
       throw new Error('You are already in the call!');
     } else if (this.locator === undefined) {
@@ -1191,20 +1195,34 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     }
 
     if (this.locator && 'meetingLink' in this.locator && this.originCall && this.call?.id) {
-      // if (this.call?.state && !['Disconnecting', 'Disconnected'].includes(this.call.state)) {
-      //   this.call.hangUp();
-      // }
-      // const mainMeetingUrl = this.call.feature(Features.BreakoutRooms).breakoutRoomsSettings?.mainMeetingUrl;
-      // if (mainMeetingUrl) {
-      //   this.locator = { meetingLink: mainMeetingUrl };
-      // }
-      // const call = this.joinCall();
-      // console.log('DEBUG call from join call: ', call);
-      if (this.originCall) {
-        alert('back to origin call');
-        this._joinCall({ muted: false }, {});
-        this.processNewCall(this.originCall);
+      let shouldCameraBeOnInCall = this.getState().cameraStatus === 'On';
+      let shouldMicrophoneBeOnInCall = this.getState().isLocalPreviewMicrophoneEnabled;
+
+      // Apply override arguments
+      if (typeof this.originCallStartCallOptions === 'boolean') {
+        // Deprecated joinCall API (boolean)
+        shouldMicrophoneBeOnInCall = this.originCallStartCallOptions;
+      } else if (typeof this.originCallStartCallOptions === 'object') {
+        // Options bag API
+        if (this.originCallStartCallOptions.microphoneOn && this.originCallStartCallOptions.microphoneOn !== 'keep') {
+          shouldMicrophoneBeOnInCall = this.originCallStartCallOptions.microphoneOn;
+        }
+        if (this.originCallStartCallOptions.cameraOn && this.originCallStartCallOptions.cameraOn !== 'keep') {
+          shouldCameraBeOnInCall = this.originCallStartCallOptions.cameraOn;
+        }
       }
+
+      const audioOptions: AudioOptions = { muted: !shouldMicrophoneBeOnInCall };
+      const selectedCamera = getSelectedCameraFromAdapterState(this.getState());
+      const videoOptions: VideoOptions =
+        selectedCamera && shouldCameraBeOnInCall
+          ? { localVideoStreams: [new SDKLocalVideoStream(selectedCamera)] }
+          : {};
+      const call = this._joinCall(audioOptions, videoOptions);
+      this.leaveCall();
+      this.processNewCall(call);
+      this.resumeCall();
+      this.originCall = this.call;
     }
   }
 
@@ -1492,21 +1510,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
   private breakoutRoomJoined(call: Call | TeamsCall): void {
     if (this.call?.id !== call.id) {
       console.log('DEBUG breakout room joined event. origin call id:', this.originCall?.id);
-      // setTimeout(() => {
-      //   const testCall = this.callAgent.calls.find(
-      //     (callAgentCall) => callAgentCall.id === this.originCall?.id && callAgentCall.state !== 'Connected'
-      //   );
-      //   if (testCall) {
-      //     alert('Found connected origin call from breakoutRoomJoined');
-      //     console.log('DEBUG testCall', testCall);
-      //     testCall.feature(Features.BreakoutRooms).on('breakoutRoomsUpdated', (e: BreakoutRoomsEventData) => {
-      //       if (e.type === 'assignedBreakoutRooms' && e.data?.state === 'closed') {
-      //         console.log('DEBUG breakoutRoomsUpdated', e);
-      //         this.returnFromBreakoutRoom();
-      //       }
-      //     });
-      //   }
-      // }, 5000);
       this.processNewCall(call);
     }
     // Hang up other breakout room calls in case we are joining a new breakout room while already in one
@@ -1531,6 +1534,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
       const breakoutRoomCall = this.callAgent.calls.find((callAgentCall) => {
         return callAgentCall.id === breakoutRoom.id;
       });
+      console.log('DEBUG hanging up breakoutRoomCall: ', breakoutRoomCall);
       breakoutRoomCall?.hangUp();
     }
   }

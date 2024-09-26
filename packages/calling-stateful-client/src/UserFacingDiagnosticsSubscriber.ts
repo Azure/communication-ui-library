@@ -20,8 +20,10 @@ export class UserFacingDiagnosticsSubscriber {
   private _callIdRef: CallIdRef;
   private _context: CallContext;
   private _diagnostics: UserFacingDiagnosticsFeature;
+  private id: number;
 
   constructor(callIdRef: CallIdRef, context: CallContext, diagnostics: UserFacingDiagnosticsFeature) {
+    this.id = Math.floor(Math.random() * 1000);
     this._callIdRef = callIdRef;
     this._context = context;
     this._diagnostics = diagnostics;
@@ -101,6 +103,11 @@ export class UserFacingDiagnosticsSubscriber {
         return;
       }
       const media = call.diagnostics?.media.latest;
+      if (media.speakingWhileMicrophoneIsMuted) {
+        console.log(
+          `DEBUG2 UserFacingDiagnosticsSubscriber-${this._callIdRef.callId}-${this.id} speakingWhileMicrophoneIsMuted`
+        );
+      }
       if (media) {
         media[args.diagnostic] = latestFromEvent(args);
       }

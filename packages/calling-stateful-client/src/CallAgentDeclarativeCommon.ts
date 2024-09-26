@@ -145,7 +145,13 @@ export abstract class ProxyCallAgentCommon {
   };
 
   protected addCall = (call: CallCommon): DeclarativeCallCommon => {
-    this._callSubscribers.get(call)?.unsubscribe();
+    console.log('DEBUG2 addCall');
+    const callSubscriber = this._callSubscribers.get(call);
+    if (callSubscriber) {
+      console.log('DEBUG2 unsubscribing callSubscriber');
+      callSubscriber.unsubscribe();
+    }
+    console.log('DEBUG2 call subscribers length: ' + Object.values(this._callSubscribers).length);
 
     // For API extentions we need to have the call in the state when we are subscribing as we may want to update the
     // state during the subscription process in the subscriber so we add the call to state before subscribing.
