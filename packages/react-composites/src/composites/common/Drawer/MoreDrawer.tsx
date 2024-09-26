@@ -17,7 +17,6 @@ import { ReactionResources } from '@internal/react-components';
 import { VideoGalleryLayout } from '@internal/react-components';
 import { _StartCaptionsButton, _CaptionsSettingsModal } from '@internal/react-components';
 
-/* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { HoldButton } from '@internal/react-components';
 import { RaiseHandButton, RaiseHandButtonProps } from '@internal/react-components';
 import { AudioDeviceInfo } from '@azure/communication-calling';
@@ -41,7 +40,6 @@ import { _spokenLanguageToCaptionLanguage } from '@internal/react-components';
 import { useAdapter } from '../../CallComposite/adapter/CallAdapterProvider';
 import { useSelector } from '../../CallComposite/hooks/useSelector';
 import { getTargetCallees } from '../../CallComposite/selectors/baseSelectors';
-/* @conditional-compile-remove(teams-meeting-conference) */
 import { getTeamsMeetingCoordinates, getIsTeamsMeeting } from '../../CallComposite/selectors/baseSelectors';
 import { showDtmfDialer } from '../../CallComposite/utils/MediaGalleryUtils';
 import { SpokenLanguageSettingsDrawer } from './SpokenLanguageSettingsDrawer';
@@ -152,7 +150,7 @@ export interface MoreDrawerProps extends MoreDrawerDevicesMenuProps {
   useTeamsCaptions?: boolean;
   reactionResources?: ReactionResources;
   onReactionClick?: (reaction: string) => Promise<void>;
-  /* @conditional-compile-remove(teams-meeting-conference) */
+
   onClickMeetingPhoneInfo?: () => void;
   /* @conditional-compile-remove(soft-mute) */
   onMuteAllRemoteParticipants?: () => void;
@@ -177,7 +175,6 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   const { speakers, onSelectSpeaker, onLightDismiss } = props;
 
   const localeStrings = useLocale();
-  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   const holdButtonProps = usePropsFor(HoldButton);
 
   const callees = useSelector(getTargetCallees);
@@ -309,7 +306,12 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   /**
    * Only render the dtmf dialer if the dialpad for PSTN calls is not present
    */
-  if (props.onSetDialpadPage && allowDtmfDialer) {
+  if (
+    props.onSetDialpadPage &&
+    allowDtmfDialer &&
+    drawerSelectionOptions !== false &&
+    isEnabled(drawerSelectionOptions.dtmfDialerButton)
+  ) {
     drawerMenuItems.push(dtmfDialerScreenOption);
   }
 
@@ -369,8 +371,9 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   /* @conditional-compile-remove(gallery-layout-composite) */
   galleryLayoutOptions.subMenuProps?.push(galleryOption);
 
-  drawerMenuItems.push(galleryLayoutOptions);
-
+  if (drawerSelectionOptions !== false && isEnabled(drawerSelectionOptions?.galleryControlsButton)) {
+    drawerMenuItems.push(galleryLayoutOptions);
+  }
   if (drawerSelectionOptions !== false && isEnabled(drawerSelectionOptions?.peopleButton)) {
     drawerMenuItems.push({
       itemKey: 'people',
@@ -382,7 +385,6 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
     });
   }
 
-  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   if (drawerSelectionOptions !== false && isEnabled(drawerSelectionOptions?.holdButton)) {
     drawerMenuItems.push({
       itemKey: 'holdButtonKey',
@@ -425,12 +427,10 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
     });
   }
 
-  /* @conditional-compile-remove(teams-meeting-conference) */
   const isTeamsMeeting = getIsTeamsMeeting(callAdapter.getState());
-  /* @conditional-compile-remove(teams-meeting-conference) */
+
   const teamsMeetingCoordinates = getTeamsMeetingCoordinates(callAdapter.getState());
 
-  /* @conditional-compile-remove(teams-meeting-conference) */
   if (
     drawerSelectionOptions !== false &&
     isEnabled(drawerSelectionOptions?.teamsMeetingPhoneCallButton) &&

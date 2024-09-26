@@ -629,10 +629,10 @@ export interface CallClientState {
     deviceManager: DeviceManagerState;
     environmentInfo?: EnvironmentInfo;
     incomingCalls: {
-        [key: string]: IncomingCallState | /* @conditional-compile-remove(one-to-n-calling) */ TeamsIncomingCallState;
+        [key: string]: IncomingCallState | TeamsIncomingCallState;
     };
     incomingCallsEnded: {
-        [key: string]: IncomingCallState | /* @conditional-compile-remove(one-to-n-calling) */ TeamsIncomingCallState;
+        [key: string]: IncomingCallState | TeamsIncomingCallState;
     };
     latestErrors: CallErrors;
     latestNotifications: CallNotifications;
@@ -726,17 +726,11 @@ export type CallCompositeIcons = {
     StopAllSpotlightMenuButton?: JSX.Element;
 };
 
-// @beta
-export type CallCompositeLoaderProps = {
-    userId: string;
-    token: string;
-    displayName: string;
-    locator: CallAdapterLocator;
-    options?: AzureCommunicationCallAdapterOptions;
-};
-
 // @public
 export type CallCompositeOptions = {
+    captionsBanner?: {
+        height: 'full' | 'default';
+    };
     errorBar?: boolean;
     callControls?: boolean | CallControlOptions;
     deviceChecks?: DeviceCheckOptions;
@@ -776,7 +770,7 @@ export type CallCompositeOptions = {
 };
 
 // @public
-export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configuration' | /* @conditional-compile-remove(PSTN-calls) */ 'hold' | 'joinCallFailedDueToNoNetwork' | 'leftCall' | 'leaving' | 'lobby' | 'removedFromCall' | /* @conditional-compile-remove(unsupported-browser) */ 'unsupportedEnvironment' | 'transferring' | 'badRequest';
+export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configuration' | 'hold' | 'joinCallFailedDueToNoNetwork' | 'leftCall' | 'leaving' | 'lobby' | 'removedFromCall' | /* @conditional-compile-remove(unsupported-browser) */ 'unsupportedEnvironment' | 'transferring' | 'badRequest';
 
 // @public
 export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcons> {
@@ -1200,7 +1194,7 @@ export interface CallWithChatAdapterManagement {
     // (undocumented)
     downloadResourceToCache(resourceDetails: ResourceDetails): Promise<void>;
     fetchInitialData(): Promise<void>;
-    holdCall: () => Promise<void>;
+    holdCall(): Promise<void>;
     // @deprecated
     joinCall(microphoneOn?: boolean): Call | undefined;
     joinCall(options?: JoinCallOptions): Call | undefined;
@@ -1219,7 +1213,7 @@ export interface CallWithChatAdapterManagement {
     removeParticipant(participant: CommunicationIdentifier): Promise<void>;
     // (undocumented)
     removeResourceFromCache(resourceDetails: ResourceDetails): void;
-    resumeCall: () => Promise<void>;
+    resumeCall(): Promise<void>;
     returnFromBreakoutRoom(): Promise<void>;
     sendDtmfTone: (dtmfTone: DtmfTone_2) => Promise<void>;
     sendMessage(content: string, options?: SendMessageOptions | /* @conditional-compile-remove(file-sharing-acs) */ MessageOptions): Promise<void>;
@@ -1231,7 +1225,7 @@ export interface CallWithChatAdapterManagement {
     setSpeaker(sourceInfo: AudioDeviceInfo): Promise<void>;
     setSpokenLanguage(language: string): Promise<void>;
     startCall(participants: string[], options?: StartCallOptions): Call | undefined;
-    startCall(participants: (MicrosoftTeamsAppIdentifier | /* @conditional-compile-remove(PSTN-calls) */ PhoneNumberIdentifier | /* @conditional-compile-remove(one-to-n-calling) */ CommunicationUserIdentifier | /* @conditional-compile-remove(teams-adhoc-call) */ MicrosoftTeamsUserIdentifier | UnknownIdentifier)[], options?: StartCallOptions): Call | undefined;
+    startCall(participants: (MicrosoftTeamsAppIdentifier | PhoneNumberIdentifier | CommunicationUserIdentifier | MicrosoftTeamsUserIdentifier | UnknownIdentifier)[], options?: StartCallOptions): Call | undefined;
     startCamera(options?: VideoStreamOptions): Promise<void>;
     startCaptions(options?: StartCaptionsAdapterOptions): Promise<void>;
     // @beta
@@ -1382,7 +1376,7 @@ export interface CallWithChatAdapterUiState {
 
 // @public
 export interface CallWithChatClientState {
-    alternateCallerId?: string | undefined;
+    alternateCallerId?: string;
     call?: CallState;
     chat?: ChatThreadClientState;
     // @beta
@@ -1487,15 +1481,6 @@ export type CallWithChatCompositeIcons = {
     StopAllSpotlightMenuButton?: JSX.Element;
 };
 
-// @beta
-export type CallWithChatCompositeLoaderProps = {
-    userId: string;
-    token: string;
-    displayName: string;
-    endpoint: string;
-    locator: CallAndChatLocator;
-};
-
 // @public
 export type CallWithChatCompositeOptions = {
     callControls?: boolean | CallWithChatControlOptions;
@@ -1592,7 +1577,7 @@ export interface CallWithChatCompositeStrings {
 
 // @public
 export interface CallWithChatControlOptions extends CommonCallControlOptions {
-    chatButton?: boolean | /* @conditional-compile-remove(PSTN-calls) */ {
+    chatButton?: boolean | {
         disabled: boolean;
     };
 }
@@ -1920,15 +1905,6 @@ export type ChatCompositeIcons = {
     SendBoxAttachFile?: JSX.Element;
 };
 
-// @beta
-export type ChatCompositeLoaderProps = {
-    userId: string;
-    token: string;
-    displayName?: string;
-    endpoint: string;
-    threadId: string;
-};
-
 // @public
 export type ChatCompositeOptions = {
     errorBar?: boolean;
@@ -2113,17 +2089,17 @@ export type CommonCallAdapterOptions = {
 // @public
 export type CommonCallControlOptions = {
     displayType?: CallControlDisplayType;
-    cameraButton?: boolean | /* @conditional-compile-remove(PSTN-calls) */ {
+    cameraButton?: boolean | {
         disabled: boolean;
     };
     endCallButton?: boolean | /* @conditional-compile-remove(end-call-options) */ {
         hangUpForEveryone?: false | 'endCallOptions';
         disableEndCallModal?: boolean;
     };
-    microphoneButton?: boolean | /* @conditional-compile-remove(PSTN-calls) */ {
+    microphoneButton?: boolean | {
         disabled: boolean;
     };
-    devicesButton?: boolean | /* @conditional-compile-remove(PSTN-calls) */ {
+    devicesButton?: boolean | {
         disabled: boolean;
     };
     participantsButton?: boolean | {
@@ -2143,7 +2119,7 @@ export type CommonCallControlOptions = {
     holdButton?: boolean | {
         disabled: boolean;
     };
-    peopleButton?: boolean | /* @conditional-compile-remove(PSTN-calls) */ {
+    peopleButton?: boolean | {
         disabled: boolean;
     };
     dtmfDialerButton?: boolean | {
@@ -2151,6 +2127,7 @@ export type CommonCallControlOptions = {
     };
     exitSpotlightButton?: boolean;
     captionsButton?: boolean;
+    galleryControlsButton?: boolean;
     teamsMeetingPhoneCallButton?: boolean;
 };
 
@@ -3474,20 +3451,8 @@ export interface JumpToNewMessageButtonProps {
 // @public
 export const lightTheme: PartialTheme & CallingTheme;
 
-// @beta
-export const loadCallComposite: (adapterArgs: CallCompositeLoaderProps, htmlElement: HTMLElement | null, props?: CallCompositeOptions) => Promise<CallAdapter | undefined>;
-
-// @beta
-export const loadCallWithChatComposite: (args: CallWithChatCompositeLoaderProps, htmlElement: HTMLElement | null, props: CallWithChatCompositeOptions) => Promise<CallWithChatAdapter | undefined>;
-
-// @beta
-export const loadChatComposite: (args: ChatCompositeLoaderProps, htmlElement: HTMLElement | null, props: ChatCompositeOptions) => Promise<ChatAdapter | undefined>;
-
 // @public
-export type LoadingState = 'loading' | 'none';
-
-// @beta
-export const loadOutboundCallComposite: (adapterArgs: OutboundCallCompositeLoaderProps, htmlElement: HTMLElement | null, props?: CallCompositeOptions) => Promise<CallAdapter | undefined>;
+export type LoadingState = 'loading' | 'none' | 'reconnecting';
 
 // @public
 export const LocalizationProvider: (props: LocalizationProviderProps) => JSX.Element;
@@ -4002,15 +3967,6 @@ export interface OptionsDevice {
     name: string;
 }
 
-// @beta
-export type OutboundCallCompositeLoaderProps = {
-    userId: string;
-    token: string;
-    displayName: string;
-    targetCallees: string[] | StartCallIdentifier[];
-    options?: AzureCommunicationCallAdapterOptions;
-};
-
 // @public
 export type OverflowGalleryPosition = 'horizontalBottom' | 'verticalRight' | 'horizontalTop';
 
@@ -4194,7 +4150,7 @@ export type ParticipantsRemovedListener = (event: {
 }) => void;
 
 // @public
-export type ParticipantState = 'Idle' | 'Connecting' | 'Ringing' | 'Connected' | 'Hold' | 'InLobby' | 'EarlyMedia' | 'Disconnected';
+export type ParticipantState = 'Idle' | 'Connecting' | 'Ringing' | 'Connected' | 'Hold' | 'InLobby' | 'EarlyMedia' | 'Disconnected' | 'Reconnecting';
 
 // @public
 export interface PPTLiveCallFeatureState {
@@ -4319,7 +4275,7 @@ export type RemoteDiagnosticState = {
 export interface RemoteParticipantState {
     callEndReason?: CallEndReason;
     contentSharingStream?: HTMLElement;
-    diagnostic?: RemoteDiagnosticState;
+    diagnostics?: Record<string, RemoteDiagnosticState>;
     displayName?: string;
     identifier: CommunicationIdentifierKind;
     isMuted: boolean;
@@ -4677,7 +4633,7 @@ export interface SpotlightState {
 }
 
 // @public
-export type StartCallIdentifier = (MicrosoftTeamsAppIdentifier | /* @conditional-compile-remove(PSTN-calls) */ PhoneNumberIdentifier | /* @conditional-compile-remove(one-to-n-calling) */ CommunicationUserIdentifier | /* @conditional-compile-remove(teams-adhoc-call) */ MicrosoftTeamsUserIdentifier | UnknownIdentifier) | /* @conditional-compile-remove(start-call-beta) */ CommunicationIdentifier;
+export type StartCallIdentifier = (MicrosoftTeamsAppIdentifier | PhoneNumberIdentifier | CommunicationUserIdentifier | MicrosoftTeamsUserIdentifier | UnknownIdentifier) | /* @conditional-compile-remove(start-call-beta) */ CommunicationIdentifier;
 
 // @public
 export interface StartCaptionsAdapterOptions extends StartCaptionsOptions {
@@ -5292,9 +5248,7 @@ export interface VideoTilesOptions {
 // @public
 export interface VideoTileStrings {
     moreOptionsButtonAriaLabel: string;
-    // (undocumented)
     participantStateHold: string;
-    // (undocumented)
     participantStateRinging: string;
 }
 

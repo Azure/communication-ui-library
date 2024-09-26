@@ -29,6 +29,37 @@ export const loadingSpinnerContainer = (): string =>
 /**
  * @private
  */
+export const reconnectingContainer = (): string =>
+  mergeStyles({
+    // Position centrally on top of content. Parent must have position: relative.
+    position: 'absolute',
+    top: '0',
+    bottom: '0',
+    left: '0',
+    right: '0',
+    background: 'rgba(0, 0, 0, 0.5)',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
+  });
+
+/**
+ * @private
+ */
+export const reconnectingText = (theme: Theme): string =>
+  mergeStyles({
+    // Position centrally on top of content. Parent must have position: relative.
+    height: '3rem',
+    lineHeight: '3rem',
+    justifyContent: 'center',
+    alignItems: 'center',
+    color: theme.palette.themeLight,
+    fontSize: theme.fonts.large.fontSize
+  });
+
+/**
+ * @private
+ */
 export const loadSpinnerStyles: ISpinnerStyles = {
   root: {
     height: '100%' // ensure height fills container

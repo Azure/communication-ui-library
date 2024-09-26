@@ -50,7 +50,6 @@ import type { CapabilitiesChangeInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support)) */
 import { TeamsCallAgent } from '@azure/communication-calling';
 import { Features } from '@azure/communication-calling';
-/* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { DtmfTone } from '@azure/communication-calling';
 /* @conditional-compile-remove(breakout-rooms) */
@@ -108,9 +107,8 @@ import {
   UnknownIdentifier,
   isMicrosoftTeamsAppIdentifier
 } from '@azure/communication-common';
-/* @conditional-compile-remove(teams-identity-support) */ /* @conditional-compile-remove(PSTN-calls) */
+/* @conditional-compile-remove(teams-identity-support) */
 import { isCommunicationUserIdentifier } from '@azure/communication-common';
-/* @conditional-compile-remove(PSTN-calls) */
 import { isPhoneNumberIdentifier, PhoneNumberIdentifier } from '@azure/communication-common';
 import { ParticipantSubscriber } from './ParticipantSubcriber';
 import { AdapterError } from '../../common/adapters';
@@ -169,7 +167,7 @@ class CallContext {
       };
       callingSounds?: CallingSounds;
       reactionResources?: ReactionResources;
-      /* @conditional-compile-remove(PSTN-calls) */
+
       alternateCallerId?: string;
     },
     targetCallees?: StartCallIdentifier[]
@@ -187,7 +185,7 @@ class CallContext {
       isTeamsCall,
       isTeamsMeeting,
       isRoomsCall,
-      /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId: options?.alternateCallerId,
+      alternateCallerId: options?.alternateCallerId,
       /* @conditional-compile-remove(unsupported-browser) */ environmentInfo: clientState.environmentInfo,
       /* @conditional-compile-remove(unsupported-browser) */ unsupportedBrowserVersionsAllowed: false,
       videoBackgroundImages: options?.videoBackgroundOptions?.videoBackgroundImages,
@@ -624,11 +622,8 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     this.on.bind(this);
     this.off.bind(this);
     this.processNewCall.bind(this);
-    /* @conditional-compile-remove(PSTN-calls) */
     this.addParticipant.bind(this);
-    /* @conditional-compile-remove(PSTN-calls) */
     this.holdCall.bind(this);
-    /* @conditional-compile-remove(PSTN-calls) */
     this.resumeCall.bind(this);
     this.sendDtmfTone.bind(this);
     /* @conditional-compile-remove(unsupported-browser) */
@@ -993,9 +988,9 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
       | string[]
       | (
           | MicrosoftTeamsAppIdentifier
-          | /* @conditional-compile-remove(PSTN-calls) */ PhoneNumberIdentifier
-          | /* @conditional-compile-remove(one-to-n-calling) */ CommunicationUserIdentifier
-          | /* @conditional-compile-remove(teams-adhoc-call) */ MicrosoftTeamsUserIdentifier
+          | PhoneNumberIdentifier
+          | CommunicationUserIdentifier
+          | MicrosoftTeamsUserIdentifier
           | UnknownIdentifier
         )[],
     options?: StartCallOptions
@@ -1028,9 +1023,9 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     this.context.setTargetCallee(
       idsToAdd as (
         | MicrosoftTeamsAppIdentifier
-        | /* @conditional-compile-remove(PSTN-calls) */ PhoneNumberIdentifier
-        | /* @conditional-compile-remove(one-to-n-calling) */ CommunicationUserIdentifier
-        | /* @conditional-compile-remove(teams-adhoc-call) */ MicrosoftTeamsUserIdentifier
+        | PhoneNumberIdentifier
+        | CommunicationUserIdentifier
+        | MicrosoftTeamsUserIdentifier
         | UnknownIdentifier
       )[]
     );
@@ -1066,20 +1061,16 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     return effect.effectName === 'replacement';
   }
 
-  public async removeParticipant(
-    userId: string | /* @conditional-compile-remove(PSTN-calls) */ CommunicationIdentifier
-  ): Promise<void> {
+  public async removeParticipant(userId: string | CommunicationIdentifier): Promise<void> {
     let participant = userId;
-    /* @conditional-compile-remove(PSTN-calls) */
     participant = _toCommunicationIdentifier(userId);
     this.handlers.onRemoveParticipant(participant);
   }
 
-  /* @conditional-compile-remove(PSTN-calls) */
   public async addParticipant(participant: PhoneNumberIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
-  /* @conditional-compile-remove(PSTN-calls) */
+
   public async addParticipant(participant: CommunicationUserIdentifier): Promise<void>;
-  /* @conditional-compile-remove(PSTN-calls) */
+
   public async addParticipant(
     participant: PhoneNumberIdentifier | CommunicationUserIdentifier,
     options?: AddPhoneNumberOptions
@@ -1091,7 +1082,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     }
   }
 
-  /* @conditional-compile-remove(PSTN-calls) */
   public async holdCall(): Promise<void> {
     if (this.call?.state !== 'LocalHold') {
       if (this.call?.isLocalVideoStarted) {
@@ -1104,7 +1094,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     }
   }
 
-  /* @conditional-compile-remove(PSTN-calls) */
   public async resumeCall(): Promise<void> {
     if (this.call?.state === 'LocalHold') {
       this.handlers.onToggleHold().then(() => {
@@ -1635,7 +1624,6 @@ export type CommonCallAdapterOptions = {
    * @beta
    */
   reactionResources?: ReactionResources;
-  /* @conditional-compile-remove(PSTN-calls) */
   /**
    * A phone number in E.164 format procured using Azure Communication Services that will be used to represent callers identity.
    * E.164 numbers are formatted as [+] [country code] [phone number including area code]. For example, +14255550123 for a US phone number.
@@ -1682,7 +1670,6 @@ export type AzureCommunicationOutboundCallAdapterArgs = {
   displayName: string;
   credential: CommunicationTokenCredential;
   targetCallees: StartCallIdentifier[];
-  /* @conditional-compile-remove(PSTN-calls) */
   /**
    * A phone number in E.164 format procured using Azure Communication Services that will be used to represent callers identity.
    * E.164 numbers are formatted as [+] [country code] [phone number including area code]. For example, +14255550123 for a US phone number.
@@ -1822,7 +1809,7 @@ export const _createAzureCommunicationCallAdapterInner = async ({
   credential: CommunicationTokenCredential;
   locator: CallAdapterLocator;
   targetCallees?: StartCallIdentifier[];
-  /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId?: string;
+  alternateCallerId?: string;
   options?: AzureCommunicationCallAdapterOptions;
   telemetryImplementationHint?: _TelemetryImplementationHint;
 }): Promise<CallAdapter> => {

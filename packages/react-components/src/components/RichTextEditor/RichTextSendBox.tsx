@@ -13,7 +13,7 @@ import { InputBoxButton } from '../InputBoxButton';
 import { RichTextSendBoxErrors, RichTextSendBoxErrorsProps } from './RichTextSendBoxErrors';
 import {
   isMessageTooLong,
-  isSendBoxButtonAriaDisabled,
+  isSendBoxButtonDisabled,
   sanitizeText,
   modifyInlineImagesInContentString
 } from '../utils/SendBoxUtils';
@@ -449,6 +449,16 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     inlineImagesWithProgress
   ]);
 
+  const isSendBoxButtonDisabledValue = useMemo(() => {
+    return isSendBoxButtonDisabled({
+      hasContent,
+      /* @conditional-compile-remove(file-sharing-acs) */ hasCompletedAttachmentUploads:
+        isAttachmentUploadCompleted(attachments),
+      hasError: hasErrorMessage,
+      disabled
+    });
+  }, [/* @conditional-compile-remove(file-sharing-acs) */ attachments, disabled, hasContent, hasErrorMessage]);
+
   const onRenderSendIcon = useCallback(
     (isHover: boolean) => {
       return (
@@ -456,17 +466,13 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
           iconName={isHover && hasContent ? 'SendBoxSendHovered' : 'SendBoxSend'}
           className={sendIconStyle({
             theme,
-            hasText: hasContent,
-            /* @conditional-compile-remove(file-sharing-acs) */
-            hasAttachment: false,
-            hasErrorMessage: hasErrorMessage,
-            defaultTextColor: theme.palette.neutralSecondary,
-            disabled: disabled
+            isSendBoxButtonDisabled: isSendBoxButtonDisabledValue,
+            defaultTextColor: theme.palette.neutralSecondary
           })}
         />
       );
     },
-    [disabled, hasContent, hasErrorMessage, theme]
+    [theme, isSendBoxButtonDisabledValue, hasContent]
   );
 
   const sendBoxErrorsProps: RichTextSendBoxErrorsProps = useMemo(() => {
@@ -535,16 +541,6 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     disabled
   ]);
 
-  const isSendBoxButtonAriaDisabledValue = useMemo(() => {
-    return isSendBoxButtonAriaDisabled({
-      hasContent,
-      /* @conditional-compile-remove(file-sharing-acs) */ hasCompletedAttachmentUploads:
-        isAttachmentUploadCompleted(attachments),
-      hasError: hasErrorMessage,
-      disabled
-    });
-  }, [/* @conditional-compile-remove(file-sharing-acs) */ attachments, disabled, hasContent, hasErrorMessage]);
-
   const sendButton = useMemo(() => {
     return (
       <InputBoxButton
@@ -556,10 +552,10 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
         className={richTextActionButtonsStyle}
         ariaLabel={localeStrings.sendButtonAriaLabel}
         tooltipContent={localeStrings.sendButtonAriaLabel}
-        ariaDisabled={isSendBoxButtonAriaDisabledValue}
+        disabled={isSendBoxButtonDisabledValue}
       />
     );
-  }, [isSendBoxButtonAriaDisabledValue, localeStrings.sendButtonAriaLabel, onRenderSendIcon, sendMessageOnClick]);
+  }, [isSendBoxButtonDisabledValue, localeStrings.sendButtonAriaLabel, onRenderSendIcon, sendMessageOnClick]);
 
   /* @conditional-compile-remove(file-sharing-acs) */
   const hasAttachmentUploads = useMemo(() => {

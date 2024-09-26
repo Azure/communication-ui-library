@@ -22,7 +22,6 @@ import {
 } from './VideoGallery/useVideoStreamLifecycleMaintainer';
 import { useVideoTileContextualMenuProps } from './VideoGallery/useVideoTileContextualMenuProps';
 import { VideoTile } from './VideoTile';
-/* @conditional-compile-remove(hide-attendee-name) */
 import { _formatString } from '@internal/acs-ui-common';
 import { ReactionResources } from '../types/ReactionTypes';
 import { MeetingReactionOverlay } from './MeetingReactionOverlay';
@@ -161,21 +160,25 @@ export const _RemoteVideoTile = React.memo(
     }, [contextualMenuProps, menuKind]);
 
     const showLoadingIndicator = isAvailable && isReceiving === false && participantState !== 'Disconnected';
+    const isReconnecting = participantState === 'Reconnecting';
 
     const [drawerMenuItemProps, setDrawerMenuItemProps] = React.useState<_DrawerMenuItemProps[]>([]);
 
     const renderVideoStreamElement = useMemo(() => {
       // Checking if renderElement is well defined or not as calling SDK has a number of video streams limitation which
       // implies that, after their threshold, all streams have no child (blank video)
-      if (!renderElement || !renderElement.childElementCount) {
+      if ((!renderElement || !renderElement.childElementCount) && !isReconnecting) {
         // Returning `undefined` results in the placeholder with avatar being shown
         return undefined;
       }
 
       return (
-        <StreamMedia videoStreamElement={renderElement} loadingState={showLoadingIndicator ? 'loading' : 'none'} />
+        <StreamMedia
+          videoStreamElement={renderElement ?? null}
+          loadingState={showLoadingIndicator ? 'loading' : isReconnecting ? 'reconnecting' : 'none'}
+        />
       );
-    }, [renderElement, showLoadingIndicator]);
+    }, [isReconnecting, renderElement, showLoadingIndicator]);
 
     const onKeyDown = useCallback(
       (e: KeyboardEvent) => {
@@ -188,18 +191,18 @@ export const _RemoteVideoTile = React.memo(
       [setDrawerMenuItemProps, contextualMenuProps]
     );
 
-    let displayName = remoteParticipant.displayName || strings.displayNamePlaceholder;
-    /* @conditional-compile-remove(hide-attendee-name) */
     const attendeeRoleString = props.strings?.attendeeRole;
 
-    /* @conditional-compile-remove(hide-attendee-name) */
-    const formatDisplayName = (): string => {
-      if (displayName && attendeeRoleString) {
-        return _formatString(displayName, { AttendeeRole: attendeeRoleString });
+    const formatDisplayName = (displayName: string, role: string): string => {
+      if (displayName && role) {
+        return _formatString(displayName, { AttendeeRole: role });
       }
       return displayName;
     };
-
+    const displayName = formatDisplayName(
+      remoteParticipant.displayName ? remoteParticipant.displayName : strings.displayNamePlaceholder,
+      attendeeRoleString
+    );
     const formatInitialsName = (): string | undefined => {
       if (remoteParticipant.displayName && attendeeRoleString) {
         return _formatString(remoteParticipant.displayName, { AttendeeRole: attendeeRoleString });
@@ -215,8 +218,6 @@ export const _RemoteVideoTile = React.memo(
       />
     );
 
-    /* @conditional-compile-remove(hide-attendee-name) */
-    displayName = formatDisplayName();
     return (
       <Stack
         tabIndex={menuKind === 'drawer' ? 0 : undefined}
@@ -237,8 +238,6 @@ export const _RemoteVideoTile = React.memo(
           personaMinSize={props.personaMinSize}
           showLabel={props.showLabel}
           alwaysShowLabelBackground={props.alwaysShowLabelBackground}
-          /* @conditional-compile-remove(one-to-n-calling) */
-          /* @conditional-compile-remove(PSTN-calls) */
           participantState={participantState}
           {...videoTileContextualMenuProps}
           isPinned={props.isPinned}

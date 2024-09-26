@@ -194,7 +194,6 @@ export const getEndedCallPageProps = (
       }
       break;
   }
-
   switch (endedCall?.callEndReason?.code) {
     case CALL_REJECTED_CODE:
       if (locale.strings.call.callRejectedTitle) {
@@ -205,7 +204,6 @@ export const getEndedCallPageProps = (
       }
       break;
   }
-  /* @conditional-compile-remove(teams-adhoc-call) */
   switch (endedCall?.callEndReason?.subCode) {
     case 10037:
       if (locale.strings.call.participantCouldNotBeReachedTitle) {
@@ -322,9 +320,7 @@ export const getCallCompositePage: GetCallCompositePageFunction = (
       return 'lobby';
       // `LocalHold` needs to be checked before `isInCall` since it is also a state that's considered in call.
     } else if (call?.state === 'LocalHold') {
-      /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
       return 'hold';
-      return 'call';
     } else if (call?.state === 'Disconnecting') {
       return 'leaving';
     } else if (_isInCall(call?.state)) {
@@ -502,7 +498,7 @@ export const _isSafari = (
   environmentInfo: undefined | /* @conditional-compile-remove(unsupported-browser) */ EnvironmentInfo
 ): boolean => {
   /* @conditional-compile-remove(unsupported-browser) */
-  return environmentInfo?.environment.browser === 'safari';
+  return environmentInfo?.environment.browser.toLowerCase() === 'safari';
   return /^((?!chrome|android|crios|fxios).)*safari/i.test(navigator.userAgent);
 };
 

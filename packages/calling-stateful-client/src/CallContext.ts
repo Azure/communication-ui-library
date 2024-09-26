@@ -14,9 +14,7 @@ import { RaisedHand } from '@azure/communication-calling';
 /* @conditional-compile-remove(breakout-rooms) */
 import { BreakoutRoom, BreakoutRoomsSettings } from '@azure/communication-calling';
 
-/* @conditional-compile-remove(teams-meeting-conference) */
 import { TeamsMeetingAudioConferencingDetails } from '@azure/communication-calling';
-/* @conditional-compile-remove(teams-meeting-conference) */
 import { convertConferencePhoneInfo } from './Converter';
 
 import { CapabilitiesChangeInfo, ParticipantCapabilities } from '@azure/communication-calling';
@@ -49,7 +47,6 @@ import {
 } from './CallClientState';
 /* @conditional-compile-remove(breakout-rooms) */
 import { NotificationTarget, CallNotification, CallNotifications } from './CallClientState';
-/* @conditional-compile-remove(one-to-n-calling) */
 import { TeamsIncomingCallState } from './CallClientState';
 import { CaptionsInfo } from './CallClientState';
 import { ReactionState } from './CallClientState';
@@ -189,7 +186,7 @@ export class CallContext {
         existingCall.captionsFeature.currentSpokenLanguage = call.captionsFeature.currentSpokenLanguage;
         existingCall.captionsFeature.currentCaptionLanguage = call.captionsFeature.currentCaptionLanguage;
         existingCall.info = call.info;
-        /* @conditional-compile-remove(teams-meeting-conference) */
+
         existingCall.meetingConference = call.meetingConference;
       } else {
         draft.calls[latestCallId] = call;
@@ -541,7 +538,6 @@ export class CallContext {
     });
   }
 
-  /* @conditional-compile-remove(hide-attendee-name) */
   public setHideAttendeeNames(callId: string, capabilitiesChangeInfo: CapabilitiesChangeInfo): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
@@ -574,7 +570,6 @@ export class CallContext {
     });
   }
 
-  /* @conditional-compile-remove(teams-meeting-conference) */
   public setTeamsMeetingConference(
     callId: string,
     teamsMeetingConferenceDetails: TeamsMeetingAudioConferencingDetails
@@ -912,9 +907,7 @@ export class CallContext {
     });
   }
 
-  public setIncomingCall(
-    call: IncomingCallState | /* @conditional-compile-remove(one-to-n-calling) */ TeamsIncomingCallState
-  ): void {
+  public setIncomingCall(call: IncomingCallState | TeamsIncomingCallState): void {
     this.modifyState((draft: CallClientState) => {
       const existingCall = draft.incomingCalls[call.id];
       if (existingCall) {

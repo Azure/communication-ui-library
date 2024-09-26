@@ -36,7 +36,6 @@ test.describe('VideoGallery tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot('video-avatar-with-person-icon-when-no-displayname.png');
   });
 
-  /* @conditional-compile-remove(PSTN-calls) */
   test('VideoGallery Should have 1 Audio participant and one PSTN participant', async ({ page, serverUrl }) => {
     const paul = defaultMockRemoteParticipant('Paul Bridges');
     const vasily = defaultMockRemotePSTNParticipant('+15551236789');
@@ -53,17 +52,6 @@ test.describe('VideoGallery tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot('video-gallery-with-one-joining-gridview-participant.png');
   });
 
-  /*
-    This test should actually be stabilized only when *both* the `PSTN-calls` and `one-to-n-calling`
-    features are stabilized.
-    There is no way to specify this in conditional compilation directives though.
-
-    If one of these features is stabilized alone, this test will be stabilized, and will likely fail.
-    We will need to update the conditional compilation directive at that time to only reference
-    the unstabilized feature.
-
-    @conditional-compile-remove(PSTN-calls) @conditional-compile-remove(one-to-n-calling)
-  */
   test('VideoGallery Should have 1 PSTN and 1 1-N participants', async ({ page, serverUrl }) => {
     const paul = defaultMockRemoteParticipant('Paul Bridges');
     paul.state = 'Ringing';
@@ -79,7 +67,6 @@ test.describe('VideoGallery tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot('video-gallery-with-2-joining-gridview-participant.png');
   });
 
-  /* @conditional-compile-remove(PSTN-calls) */
   test('VideoGallery Should show the remote participant on hold', async ({ page, serverUrl }) => {
     const paul = defaultMockRemoteParticipant('Paul Bridges');
     paul.state = 'Hold';

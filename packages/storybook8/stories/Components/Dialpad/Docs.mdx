@@ -1,0 +1,49 @@
+import { Dialpad } from '@azure/communication-react';
+import { Canvas, Meta, ArgTypes } from '@storybook/blocks';
+import * as DialpadStories from './index.stories';
+
+import CustomDialpadText from '!!raw-loader!./snippets/CustomDialpad.snippet.tsx';
+import ExampleDialpadText from '!!raw-loader!./snippets/Dialpad.snippet.tsx';
+import DialerExampleText from '!!raw-loader!./snippets/DialpadDialer.snippet.tsx';
+
+<Meta of={DialpadStories} component={Dialpad} />
+
+# Dialpad
+
+## Dialpad modes
+
+The Dialpad component is versatile in its usage. Like on a physical phone, the dialpad can have many different
+roles. Our Dialpad component is designed to accommodate different scenarios encountered in calling experiences.
+
+### Dialer Mode
+
+This is the default mode of the Dialpad component. In this mode you are able to enter and edit numbers in the
+Dialpad's input box. The typical scenario to use this mode is when you are dialling a phone number to call the
+number, or to dial in a new participant into an ongoing call.
+
+<Canvas of={DialpadStories.DialerExampleDocsOnly} source={{ code: DialerExampleText }} />
+
+### DTMF Mode
+
+This mode is for sending DTMF tones when in a call. These tones are used for controlling bots or other services
+that you might encounter. Each tone is mapped to a sound that is played when pressing each key. You can disable
+these sounds by using the `disableDtmfPlayback` property on the component. In this mode, the input box in the
+dialpad is hidden since you are not able to edit DTMF tones that are sent.
+
+<Canvas of={DialpadStories.DialpadExampleDocsOnly} source={{ code: ExampleDialpadText }} />
+
+Component to render a Dialpad. This component allows numbers and +, \*, # input by clicking on dialpad or using
+keyboard
+
+### Customizing your Dialpad
+
+We provide many different ways to customize the Dialpad component. This example showcases how to customize the
+format for dialpad input using onChange, how to grab textfield values using onChange, and how to add extra
+functionality to dialpad buttons. This overrides the included number formatting behavior to North American phone
+numbers. In this example, the sounds are also disabled.
+
+<Canvas of={DialpadStories.CustomDialpadExampleDocsOnly} source={{ code: CustomDialpadText }} />
+
+## Dialpad Props
+
+<ArgTypes of={Dialpad} />
