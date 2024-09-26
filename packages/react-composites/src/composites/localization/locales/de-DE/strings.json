@@ -406,6 +406,6 @@
     "openDtmfDialpadLabel": "Wähltastatur anzeigen",
     "dtmfDialpadPlaceholderText": "Nummer eingeben",
     "breakoutRoomChatPaneTitle": "Chat im Gruppenraum",
-    "chatContentSpinnerLabel": "Loading..."
+    "chatContentSpinnerLabel": "Wird geladen..."
   }
 }

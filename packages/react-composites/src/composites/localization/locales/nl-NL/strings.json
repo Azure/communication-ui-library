@@ -406,6 +406,6 @@
     "openDtmfDialpadLabel": "Toetsenblok weergeven",
     "dtmfDialpadPlaceholderText": "Nummer invoeren",
     "breakoutRoomChatPaneTitle": "Aparte vergaderruimte chat",
-    "chatContentSpinnerLabel": "Loading..."
+    "chatContentSpinnerLabel": "Laden..."
   }
 }
