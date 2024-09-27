@@ -18,17 +18,12 @@ async function main() {
   const [base, head] = parseArgs(process.argv);
 
   // Check if the changelog files are present
-  // const stableFiles = await exec_output(`git diff --diff-filter=A --name-status ${base}..${head} -- ${CHANGE_DIR_STABLE}`).split('\n');
-  // const betaFiles = await exec_output(`git diff --diff-filter=A --name-status ${base}..${head} -- ${CHANGE_DIR_BETA}`).split('\n');
   const currentStableFiles = await exec_output(`git diff --diff-filter=A --name-status ${base}..${head} -- ${CHANGE_DIR_STABLE}`);
   const currentBetaFiles = await exec_output(`git diff --diff-filter=A --name-status ${base}..${head} -- ${CHANGE_DIR_BETA}`);
-  console.log("currentStableFiles", currentStableFiles);
-  console.log("currentBetaFiles", currentBetaFiles);
-  const stableFiles = currentStableFiles.split('\n').map(line => line.split('\t')[1]);
-  const betaFiles = currentBetaFiles.split('\n').map(line => line.split('\t')[1]);
+  // Process the output to get the list of files
+  const stableFiles = currentStableFiles.split('\n').filter(line => line.startsWith('A')).map(line => line.split('\t')[1]);
+  const betaFiles = currentBetaFiles.split('\n').filter(line => line.startsWith('A')).map(line => line.split('\t')[1]);
   const finalChangeFiles = [...stableFiles, ...betaFiles];
-
-  console.log(finalChangeFiles);
 
   const newChangeFilesCount = finalChangeFiles.length;
 
