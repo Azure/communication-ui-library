@@ -3,7 +3,6 @@ name: 'Publish Chromatic'
 on:
   pull_request:
     paths:
-      - packages/storybook/**
       - packages/storybook8/**
       - packages/react-components/**
       - packages/react-composites/**
@@ -19,66 +18,6 @@ concurrency:
 
 jobs:
   chromatic_deployment:
-    name: Publish Chromatic Storybook 6
-    runs-on: ubuntu-latest
-    permissions:
-      packages: write
-      pull-requests: write
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Use Node.js 20.x
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20.x
-
-      - name: Restore node_modules from cache
-        uses: actions/cache@v4
-        with:
-          path: common/temp/pnpm-store
-          key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
-
-      - name: Install Rush
-        run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
-
-      - name: Install Dependencies
-        run: rush install --max-install-attempts 3
-
-      - name: Publish Chromatic
-        id: publish_chromatic
-        uses: chromaui/action@v1
-        with:
-          workingDir: ./packages/storybook
-          buildScriptName: build:dev
-          token: ${{ secrets.GITHUB_TOKEN }}
-          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
-          allowConsoleErrors: true
-
-      - name: Format storybook URL
-        id: storybook_url
-        # Get the url from chromatic job then remove the iframe.html at the end of the url (this looks like a bug)
-        run: |
-          storybookurl=${{ steps.publish_chromatic.outputs.storybookUrl }}
-          echo "Storybook URL before: $storybookurl"
-          newurl=${storybookurl/%iframe.html}
-          echo "Storybook URL after: $newurl"
-          echo "url=$newurl" >> $GITHUB_OUTPUT
-
-      - name: Add Storybook URL as Issue Comment
-        if: github.event_name == 'pull_request'
-        uses: actions/github-script@v3
-        with:
-          github-token: ${{secrets.GITHUB_TOKEN}}
-          script: |
-            github.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: 'Storybook 6 URL ${{ steps.storybook_url.outputs.url }}'
-            })
-  chromatic_deployment8:
     name: Publish Chromatic Storybook 8
     runs-on: ubuntu-latest
     permissions:
@@ -111,7 +50,7 @@ jobs:
         uses: chromaui/action@v1
         with:
           workingDir: ./packages/storybook8
-          buildScriptName: build:dev-s8
+          buildScriptName: build:dev
           token: ${{ secrets.GITHUB_TOKEN }}
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           allowConsoleErrors: true
