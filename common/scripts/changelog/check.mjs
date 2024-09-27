@@ -16,36 +16,15 @@ import { CHANGE_DIR_BETA, CHANGE_DIR_STABLE } from "./constants.mjs";
 
 async function main() {
   const [base, head] = parseArgs(process.argv);
-  const gitLogStdoutStableChangeFiles = await exec_output(`git log --diff-filter=A --name-status ${base}..${head} -- ${CHANGE_DIR_STABLE}`);
-  const gitLogStdoutBetaChangeFiles = await exec_output(`git log --diff-filter=A --name-status ${base}..${head} -- ${CHANGE_DIR_BETA}`);
-  // console.log(gitLogStdoutStableChangeFiles);
-  // console.log(gitLogStdoutBetaChangeFiles);
-  const newStableChangeFiles = parseNewChangeFiles(gitLogStdoutStableChangeFiles);
-  const newBetaChangeFiles = parseNewChangeFiles(gitLogStdoutBetaChangeFiles);
-  //   console.log(newStableChangeFiles);
-  // console.log(newBetaChangeFiles);
-  // const newChangeFilesCount = (newStableChangeFiles?.length ?? 0) + (newBetaChangeFiles?.length ?? 0);
 
-  // Combine the lists
-  const allNewChangeFiles = [...newStableChangeFiles, ...newBetaChangeFiles];
-
-  // Check if the files are still present
-  const currentStableFiles = await exec_output(`git diff --diff-filter=A --name-status ${base}..${head} -- ${CHANGE_DIR_STABLE}`);
-  const currentBetaFiles = await exec_output(`git diff --diff-filter=A --name-status ${base}..${head} -- ${CHANGE_DIR_BETA}`);
-  console.log("currentStableFiles", currentStableFiles);
-  console.log("currentBetaFiles", currentBetaFiles);
-  const currentFilesStableList = currentStableFiles.split('\n').filter(line => line.startsWith('A')).map(line => line.split('\t')[1]);
-  const currentFilesSBetaList = currentBetaFiles.split('\n').filter(line => line.startsWith('A')).map(line => line.split('\t')[1]);
-console.log("currentFilesStableList", currentFilesStableList);
-  console.log("currentFilesSBetaList", currentFilesSBetaList);
-  const currentFilesList = [...currentFilesStableList, ...currentFilesSBetaList];
-  // Filter out the deleted files
-  const finalChangeFiles = allNewChangeFiles.filter(file => currentFilesList.includes(file));
+  // Check if the changelog files are present
+  const stableFiles = await exec_output(`git diff --diff-filter=A --name-status ${base}..${head} -- ${CHANGE_DIR_STABLE}`);
+  const betaFiles = await exec_output(`git diff --diff-filter=A --name-status ${base}..${head} -- ${CHANGE_DIR_BETA}`);
+  const finalChangeFiles = [...stableFiles, ...betaFiles];
 
   console.log(finalChangeFiles);
 
   const newChangeFilesCount = finalChangeFiles.length;
-
 
   if (newChangeFilesCount === 0) {
     console.error('No changefile detected! Please run `rush changelog` to document your change. Or if your changes do not affect the published packages in any way, please add `does not need changelog` label to the PR.');
