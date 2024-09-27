@@ -16,11 +16,14 @@ import { CHANGE_DIR_BETA, CHANGE_DIR_STABLE } from "./constants.mjs";
 
 async function main() {
   const [base, head] = parseArgs(process.argv);
-  const gitLogStdoutStableChangeFiles = await exec_output(`git log --name-status ${base}..${head} -- ${CHANGE_DIR_STABLE}`);
-  const gitLogStdoutBetaChangeFiles = await exec_output(`git log --name-status ${base}..${head} -- ${CHANGE_DIR_BETA}`);
-
+  const gitLogStdoutStableChangeFiles = await exec_output(`git log --diff-filter=A --name-status ${base}..${head} -- ${CHANGE_DIR_STABLE}`);
+  const gitLogStdoutBetaChangeFiles = await exec_output(`git log --diff-filter=A --name-status ${base}..${head} -- ${CHANGE_DIR_BETA}`);
+  // console.log(gitLogStdoutStableChangeFiles);
+  // console.log(gitLogStdoutBetaChangeFiles);
   const newStableChangeFiles = parseNewChangeFiles(gitLogStdoutStableChangeFiles);
   const newBetaChangeFiles = parseNewChangeFiles(gitLogStdoutBetaChangeFiles);
+  //   console.log(newStableChangeFiles);
+  // console.log(newBetaChangeFiles);
   const newChangeFilesCount = (newStableChangeFiles?.length ?? 0) + (newBetaChangeFiles?.length ?? 0);
 
   if (newChangeFilesCount === 0) {
