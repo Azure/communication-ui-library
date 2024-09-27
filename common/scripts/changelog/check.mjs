@@ -18,8 +18,8 @@ async function main() {
   const [base, head] = parseArgs(process.argv);
 
   // Check if the changelog files are present
-  const stableFiles = await exec_output(`git diff --diff-filter=A --name-status ${base}..${head} -- ${CHANGE_DIR_STABLE}`);
-  const betaFiles = await exec_output(`git diff --diff-filter=A --name-status ${base}..${head} -- ${CHANGE_DIR_BETA}`);
+  const stableFiles = await exec_output(`git diff --diff-filter=A --name-status ${base}..${head} -- ${CHANGE_DIR_STABLE}`).split('\n');
+  const betaFiles = await exec_output(`git diff --diff-filter=A --name-status ${base}..${head} -- ${CHANGE_DIR_BETA}`).split('\n');
   const finalChangeFiles = [...stableFiles, ...betaFiles];
 
   console.log(finalChangeFiles);
