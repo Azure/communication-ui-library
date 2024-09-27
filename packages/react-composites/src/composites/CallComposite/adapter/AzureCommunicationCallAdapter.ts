@@ -541,7 +541,8 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
           console.log('Origin call id: ', this.originCall?.id);
           console.log('this.call.id: ', this.call?.id);
           for (const call of args.added) {
-            if (call.id !== this.call?.id) {
+            if (call.id === this.originCall?.id) {
+              this.originCall = call;
               call.feature(Features.BreakoutRooms).on('breakoutRoomsUpdated', this.observingCallListener);
             }
           }
@@ -580,10 +581,13 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     }
   }
 
-  private observingCallListener: (eventData: BreakoutRoomsEventData) => void = (eventData: BreakoutRoomsEventData) => {
+  private observingCallListener: (eventData: BreakoutRoomsEventData) => Promise<void> = async (
+    eventData: BreakoutRoomsEventData
+  ) => {
     console.log('DEBUG eventData: ', eventData);
     if (eventData.type === 'assignedBreakoutRooms' && eventData.data?.state === 'closed') {
       console.log('DEBUG Assigned breakout rooms closed');
+      await this.originCall?.hangUp();
       this.returnFromBreakoutRoom();
     }
   };
@@ -1183,6 +1187,46 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     this.handlers.onStopAllSpotlight();
   }
 
+  // /* @conditional-compile-remove(breakout-rooms) */
+  // public async returnFromBreakoutRoom(): Promise<void> {
+  //   if (!this.originCall) {
+  //     throw new Error('Could not return from breakout room because the origin call could not be retrieved.');
+  //   }
+
+  //   if (this.call?.id === this.originCall.id) {
+  //     console.error('Return from breakout room will not be done because current call is the origin call.');
+  //     return;
+  //   }
+
+  //   let shouldCameraBeOnInCall = this.getState().cameraStatus === 'On';
+  //   let shouldMicrophoneBeOnInCall = this.getState().isLocalPreviewMicrophoneEnabled;
+
+  //   // Apply override arguments
+  //   if (typeof this.originCallStartCallOptions === 'boolean') {
+  //     // Deprecated joinCall API (boolean)
+  //     shouldMicrophoneBeOnInCall = this.originCallStartCallOptions;
+  //   } else if (typeof this.originCallStartCallOptions === 'object') {
+  //     // Options bag API
+  //     if (this.originCallStartCallOptions.microphoneOn && this.originCallStartCallOptions.microphoneOn !== 'keep') {
+  //       shouldMicrophoneBeOnInCall = this.originCallStartCallOptions.microphoneOn;
+  //     }
+  //     if (this.originCallStartCallOptions.cameraOn && this.originCallStartCallOptions.cameraOn !== 'keep') {
+  //       shouldCameraBeOnInCall = this.originCallStartCallOptions.cameraOn;
+  //     }
+  //   }
+
+  //   const audioOptions: AudioOptions = { muted: !shouldMicrophoneBeOnInCall };
+  //   const selectedCamera = getSelectedCameraFromAdapterState(this.getState());
+  //   const videoOptions: VideoOptions =
+  //     selectedCamera && shouldCameraBeOnInCall
+  //       ? { localVideoStreams: [new SDKLocalVideoStream(selectedCamera)] }
+  //       : {};
+  //   const call = this._joinCall(audioOptions, videoOptions);
+  //   this.processNewCall(call);
+  //   this.resumeCall();
+  //   this.originCall = this.call;
+  // }
+
   /* @conditional-compile-remove(breakout-rooms) */
   public async returnFromBreakoutRoom(): Promise<void> {
     if (!this.originCall) {
@@ -1194,35 +1238,13 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
       return;
     }
 
-    if (this.locator && 'meetingLink' in this.locator && this.originCall && this.call?.id) {
-      let shouldCameraBeOnInCall = this.getState().cameraStatus === 'On';
-      let shouldMicrophoneBeOnInCall = this.getState().isLocalPreviewMicrophoneEnabled;
-
-      // Apply override arguments
-      if (typeof this.originCallStartCallOptions === 'boolean') {
-        // Deprecated joinCall API (boolean)
-        shouldMicrophoneBeOnInCall = this.originCallStartCallOptions;
-      } else if (typeof this.originCallStartCallOptions === 'object') {
-        // Options bag API
-        if (this.originCallStartCallOptions.microphoneOn && this.originCallStartCallOptions.microphoneOn !== 'keep') {
-          shouldMicrophoneBeOnInCall = this.originCallStartCallOptions.microphoneOn;
-        }
-        if (this.originCallStartCallOptions.cameraOn && this.originCallStartCallOptions.cameraOn !== 'keep') {
-          shouldCameraBeOnInCall = this.originCallStartCallOptions.cameraOn;
-        }
-      }
-
-      const audioOptions: AudioOptions = { muted: !shouldMicrophoneBeOnInCall };
-      const selectedCamera = getSelectedCameraFromAdapterState(this.getState());
-      const videoOptions: VideoOptions =
-        selectedCamera && shouldCameraBeOnInCall
-          ? { localVideoStreams: [new SDKLocalVideoStream(selectedCamera)] }
-          : {};
-      const call = this._joinCall(audioOptions, videoOptions);
-      this.leaveCall();
-      this.processNewCall(call);
-      this.resumeCall();
-      this.originCall = this.call;
+    const breakoutRoomCall = this.call;
+    const call = this.callAgent.join(this.locator as TeamsMeetingLinkLocator);
+    this.originCall = call;
+    this.processNewCall(this.originCall);
+    await this.resumeCall();
+    if (breakoutRoomCall?.state && !['Disconnecting', 'Disconnected'].includes(breakoutRoomCall.state)) {
+      breakoutRoomCall.hangUp();
     }
   }
 
