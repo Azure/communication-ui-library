@@ -7,5 +7,13 @@
   },
   "bugs": {
     "url": "https://github.com/Azure/communication-ui-library/issues/new/choose"
+  },
+  "dependencies": {
+    "globals": "^15.9.0"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3.1.0",
+    "@eslint/js": "^9.11.1",
+    "eslint-plugin-jsdoc": "^50.3.0"
   }
 }
