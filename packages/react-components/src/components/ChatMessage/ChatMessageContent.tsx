@@ -25,6 +25,7 @@ import { _AttachmentDownloadCardsStrings } from '../Attachment/AttachmentDownloa
 import { AttachmentMetadata } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { dataLossIconStyle } from '../styles/MessageThread.styles';
+import { messageTextContentStyles } from '../styles/MessageThread.styles';
 
 type ChatMessageContentProps = {
   message: ChatMessage;
@@ -45,6 +46,7 @@ type MessageContentWithLiveAriaProps = {
   liveMessage: string;
   ariaLabel?: string;
   content: JSX.Element;
+  className?: string;
 };
 
 /**
@@ -91,7 +93,7 @@ export const ChatMessageContent = (props: ChatMessageContentProps): JSX.Element 
 
 const MessageContentWithLiveAria = (props: MessageContentWithLiveAriaProps): JSX.Element => {
   return (
-    <div data-ui-status={props.message.status} role="text" aria-label={props.ariaLabel}>
+    <div data-ui-status={props.message.status} role="text" aria-label={props.ariaLabel} className={props.className}>
       <LiveMessage message={props.liveMessage} ariaLive="polite" />
       {props.content}
     </div>
@@ -115,6 +117,7 @@ const MessageContentAsText = (props: ChatMessageContentProps): JSX.Element => {
       message={props.message}
       liveMessage={generateLiveMessage(props)}
       ariaLabel={messageContentAriaText(props)}
+      className={messageTextContentStyles}
       content={
         <Linkify
           componentDecorator={(decoratedHref: string, decoratedText: string, key: number) => {
