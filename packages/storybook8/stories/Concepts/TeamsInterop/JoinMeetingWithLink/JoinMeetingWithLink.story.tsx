@@ -4,7 +4,7 @@
 import { Stack } from '@fluentui/react';
 import React, { useState, useEffect } from 'react';
 import { compositeExperienceContainerStyle } from '../../constants';
-import { ArgsFrom, controlsToAdd, defaultCallWithChatCompositeHiddenControls } from '../utils/controlsUtils';
+import { ArgsFrom, controlsToAdd } from '../utils/controlsUtils';
 import { ConfigJoinMeetingHintBanner } from '../utils/Utils';
 import { CallWithChatExampleProps } from './snippets/CallWithChat.snippet';
 import { CallWithChatExperienceWithErrorChecks } from './snippets/CallWithChatWithErrorChecks.snippet';

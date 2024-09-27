@@ -6,7 +6,7 @@ import { Meta } from '@storybook/react';
 import React, { useMemo } from 'react';
 import { v1 as createGUID } from 'uuid';
 import { compositeExperienceContainerStyle } from '../../constants';
-import { ArgsFrom, controlsToAdd, defaultCallCompositeHiddenControls, hiddenControl } from '../../controlsUtils';
+import { ArgsFrom, controlsToAdd, defaultCallCompositeHiddenControls } from '../../controlsUtils';
 import { compositeLocale } from '../../localizationUtils';
 import { ContosoCallContainer } from './snippets/Container.snippet';
 import { ConfigHintBanner } from './snippets/Utils';

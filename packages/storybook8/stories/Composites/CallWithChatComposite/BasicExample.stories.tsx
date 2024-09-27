@@ -6,12 +6,7 @@ import { Stack } from '@fluentui/react';
 import { Meta } from '@storybook/react';
 import React, { useState, useEffect } from 'react';
 import { compositeExperienceContainerStyle } from '../../constants';
-import {
-  ArgsFrom,
-  controlsToAdd,
-  defaultCallWithChatCompositeHiddenControls,
-  hiddenControl
-} from '../../controlsUtils';
+import { ArgsFrom, controlsToAdd, defaultCallWithChatCompositeHiddenControls } from '../../controlsUtils';
 import { CallWithChatExampleProps } from './snippets/CallWithChat.snippet';
 import { CallWithChatExperienceWithErrorChecks } from './snippets/CallWithChatWithErrorChecks.snippet';
 import { createCallWithChat } from './snippets/Server.snippet';
