@@ -60,17 +60,17 @@ jobs:
         with:
           node-version: 'lts/*'
       # Try get node_modules from cache
-      # - name: Restore node_modules from cache
-      #   uses: actions/cache@v4
-      #   with:
-      #     path: common/temp/pnpm-store
-      #     key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
-      # - name: Install Dependencies
-      #   id: install-dependencies
-      #   run: node ./common/scripts/install-dependencies-ci.mjs ${{ matrix.flavor }}
-      # - name: Check result of flavor switch
-      #   if: ${{ always() && steps.install-dependencies.outcome == 'failure' }}
-      #   run: echo "Failed to install dependencies, please make sure you run `rush update:all-flavors` if dependencies were updated." && exit 1
+      - name: Restore node_modules from cache
+        uses: actions/cache@v4
+        with:
+          path: common/temp/pnpm-store
+          key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
+      - name: Install Dependencies
+        id: install-dependencies
+        run: node ./common/scripts/install-dependencies-ci.mjs ${{ matrix.flavor }}
+      - name: Check result of flavor switch
+        if: ${{ always() && steps.install-dependencies.outcome == 'failure' }}
+        run: echo "Failed to install dependencies, please make sure you run `rush update:all-flavors` if dependencies were updated." && exit 1
       - name: Check the necessary change file has been submitted
         if: ${{ github.event_name == 'pull_request' && !contains( github.event.pull_request.labels.*.name, 'does not need changelog')}}
         run: node common/scripts/changelog/check.mjs ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }}
@@ -117,765 +117,765 @@ jobs:
           path: |
             packages/communication-react/temp/communication-react.api.json
 
-  # jest-test-coverage:
-  #   needs: [get_matrix, build_packages]
-  #   name: 'Jest Test Coverage (${{ matrix.flavor }})'
-  #   runs-on: ubuntu-latest
-  #   permissions:
-  #     pull-requests: write
-  #   strategy:
-  #     matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
-  #   steps:
-  #     # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
-  #     - uses: actions/checkout@v4
-  #     # Ensure node version is great enough
-  #     - name: Use Node.js
-  #       uses: actions/setup-node@v4
-  #       with:
-  #         node-version: 'lts/*'
-  #     # Try get node_modules from cache
-  #     - name: Restore node_modules from cache
-  #       uses: actions/cache@v4
-  #       with:
-  #         path: common/temp/pnpm-store
-  #         key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
-  #     # Install dependencies
-  #     - name: Install Dependencies
-  #       run: node ./common/scripts/install-dependencies-ci.mjs ${{ matrix.flavor }}
-  #     # Build and test
-  #     - name: Build Packages
-  #       run: rush build -t @azure/communication-react
-  #     - name: Test Packages
-  #       run: rush test:ci-coverage -t @azure/communication-react
-  #       env:
-  #         NODE_OPTIONS: '--max_old_space_size=4096'
-  #     - name: Merge all jest test coverage reports from the current branch
-  #       # No need to run this step when the base is a release branch
-  #       # but it's still needed for the upload bundle report step when main is updated
-  #       if: ${{ !startsWith(github.event.pull_request.base.ref, 'release/') }}
-  #       run: npx nyc merge temp/jest/coverage/detailed-report/ temp/jest/current/merge/detailed-full/coverage-report.json
-  #     - name: Create a summary report from the detailed report
-  #       # No need to run this step when the base is a release branch
-  #       # but it's still needed for the upload bundle report step when main is updated
-  #       if: ${{ !startsWith(github.event.pull_request.base.ref, 'release/') }}
-  #       run: npx nyc report --temp-dir temp/jest/current/merge/detailed-full/ --report-dir temp/jest/current/merge/summary/ --reporter json-summary
-  #     # Upload coverage report to review the merged report locally
-  #     - name: Upload detailed and summary jest coverage reports
-  #       uses: actions/upload-artifact@v3
-  #       with:
-  #         name: jest-coverage-report-${{ matrix.flavor }}
-  #         path: temp/jest/current/merge/
-  #     # Pull requests show details of coverage changes
-  #     - name: Get jest tests coverage of main from gist
-  #       if: ${{ github.event_name == 'pull_request' && !startsWith(github.event.pull_request.base.ref, 'release/') }}
-  #       run: curl -o temp/jest/base/coverage-report.json "https://gist.github.com/communication-ui-bot/${{ matrix.coverage_gist_id }}/raw/communication-react-jest-report-${{ matrix.flavor }}.json" --create-dirs -L
-  #     - name: Calculate coverage change
-  #       if: ${{ github.event_name == 'pull_request' && !startsWith(github.event.pull_request.base.ref, 'release/') }}
-  #       id: coverage
-  #       run: |
-  #         node ./common/config/workflows/coverage-utils.js ../../../temp/jest/base/coverage-report.json ../../../temp/jest/current/merge/summary/coverage-summary.json lines
-  #         node ./common/config/workflows/coverage-utils.js ../../../temp/jest/base/coverage-report.json ../../../temp/jest/current/merge/summary/coverage-summary.json statements
-  #         node ./common/config/workflows/coverage-utils.js ../../../temp/jest/base/coverage-report.json ../../../temp/jest/current/merge/summary/coverage-summary.json functions
-  #         node ./common/config/workflows/coverage-utils.js ../../../temp/jest/base/coverage-report.json ../../../temp/jest/current/merge/summary/coverage-summary.json branches
-  #     - name: Find Comment
-  #       if: ${{ github.event_name == 'pull_request' && !startsWith(github.event.pull_request.base.ref, 'release/') }}
-  #       uses: peter-evans/find-comment@v2
-  #       id: fc
-  #       with:
-  #         issue-number: ${{ github.event.pull_request.number }}
-  #         comment-author: 'github-actions[bot]'
-  #         body-includes: '## @azure/communication-react jest test coverage for ***${{ matrix.flavor }}'
-  #     - name: Create or update comment
-  #       if: ${{ github.event_name == 'pull_request' && !startsWith(github.event.pull_request.base.ref, 'release/') }}
-  #       uses: peter-evans/create-or-update-comment@v2
-  #       with:
-  #         comment-id: ${{ steps.fc.outputs.comment-id }}
-  #         issue-number: ${{ github.event.pull_request.number }}
-  #         body: |
-  #           ## @azure/communication-react jest test coverage for ***${{ matrix.flavor }}***.
+  jest-test-coverage:
+    needs: [get_matrix, build_packages]
+    name: 'Jest Test Coverage (${{ matrix.flavor }})'
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    strategy:
+      matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
+      - uses: actions/checkout@v4
+      # Ensure node version is great enough
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 'lts/*'
+      # Try get node_modules from cache
+      - name: Restore node_modules from cache
+        uses: actions/cache@v4
+        with:
+          path: common/temp/pnpm-store
+          key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
+      # Install dependencies
+      - name: Install Dependencies
+        run: node ./common/scripts/install-dependencies-ci.mjs ${{ matrix.flavor }}
+      # Build and test
+      - name: Build Packages
+        run: rush build -t @azure/communication-react
+      - name: Test Packages
+        run: rush test:ci-coverage -t @azure/communication-react
+        env:
+          NODE_OPTIONS: '--max_old_space_size=4096'
+      - name: Merge all jest test coverage reports from the current branch
+        # No need to run this step when the base is a release branch
+        # but it's still needed for the upload bundle report step when main is updated
+        if: ${{ !startsWith(github.event.pull_request.base.ref, 'release/') }}
+        run: npx nyc merge temp/jest/coverage/detailed-report/ temp/jest/current/merge/detailed-full/coverage-report.json
+      - name: Create a summary report from the detailed report
+        # No need to run this step when the base is a release branch
+        # but it's still needed for the upload bundle report step when main is updated
+        if: ${{ !startsWith(github.event.pull_request.base.ref, 'release/') }}
+        run: npx nyc report --temp-dir temp/jest/current/merge/detailed-full/ --report-dir temp/jest/current/merge/summary/ --reporter json-summary
+      # Upload coverage report to review the merged report locally
+      - name: Upload detailed and summary jest coverage reports
+        uses: actions/upload-artifact@v3
+        with:
+          name: jest-coverage-report-${{ matrix.flavor }}
+          path: temp/jest/current/merge/
+      # Pull requests show details of coverage changes
+      - name: Get jest tests coverage of main from gist
+        if: ${{ github.event_name == 'pull_request' && !startsWith(github.event.pull_request.base.ref, 'release/') }}
+        run: curl -o temp/jest/base/coverage-report.json "https://gist.github.com/communication-ui-bot/${{ matrix.coverage_gist_id }}/raw/communication-react-jest-report-${{ matrix.flavor }}.json" --create-dirs -L
+      - name: Calculate coverage change
+        if: ${{ github.event_name == 'pull_request' && !startsWith(github.event.pull_request.base.ref, 'release/') }}
+        id: coverage
+        run: |
+          node ./common/config/workflows/coverage-utils.js ../../../temp/jest/base/coverage-report.json ../../../temp/jest/current/merge/summary/coverage-summary.json lines
+          node ./common/config/workflows/coverage-utils.js ../../../temp/jest/base/coverage-report.json ../../../temp/jest/current/merge/summary/coverage-summary.json statements
+          node ./common/config/workflows/coverage-utils.js ../../../temp/jest/base/coverage-report.json ../../../temp/jest/current/merge/summary/coverage-summary.json functions
+          node ./common/config/workflows/coverage-utils.js ../../../temp/jest/base/coverage-report.json ../../../temp/jest/current/merge/summary/coverage-summary.json branches
+      - name: Find Comment
+        if: ${{ github.event_name == 'pull_request' && !startsWith(github.event.pull_request.base.ref, 'release/') }}
+        uses: peter-evans/find-comment@v2
+        id: fc
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          comment-author: 'github-actions[bot]'
+          body-includes: '## @azure/communication-react jest test coverage for ***${{ matrix.flavor }}'
+      - name: Create or update comment
+        if: ${{ github.event_name == 'pull_request' && !startsWith(github.event.pull_request.base.ref, 'release/') }}
+        uses: peter-evans/create-or-update-comment@v2
+        with:
+          comment-id: ${{ steps.fc.outputs.comment-id }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            ## @azure/communication-react jest test coverage for ***${{ matrix.flavor }}***.
 
-  #           |   | Lines | Statements | Functions | Branches |
-  #           | --- | :-------: | :-------: | :-------: | :-------: |
-  #           | Base |${{ steps.coverage.outputs.base_lines }}|${{ steps.coverage.outputs.base_statements }}|${{ steps.coverage.outputs.base_functions }}|${{ steps.coverage.outputs.base_branches }}|
-  #           | Current |${{ steps.coverage.outputs.current_lines }}|${{ steps.coverage.outputs.current_statements }}|${{ steps.coverage.outputs.current_functions }}|${{ steps.coverage.outputs.current_branches }}|
-  #           | Diff |${{ steps.coverage.outputs.lines_diff }}|${{ steps.coverage.outputs.statements_diff }}|${{ steps.coverage.outputs.functions_diff }}|${{ steps.coverage.outputs.branches_diff }}|
-  #         edit-mode: replace
+            |   | Lines | Statements | Functions | Branches |
+            | --- | :-------: | :-------: | :-------: | :-------: |
+            | Base |${{ steps.coverage.outputs.base_lines }}|${{ steps.coverage.outputs.base_statements }}|${{ steps.coverage.outputs.base_functions }}|${{ steps.coverage.outputs.base_branches }}|
+            | Current |${{ steps.coverage.outputs.current_lines }}|${{ steps.coverage.outputs.current_statements }}|${{ steps.coverage.outputs.current_functions }}|${{ steps.coverage.outputs.current_branches }}|
+            | Diff |${{ steps.coverage.outputs.lines_diff }}|${{ steps.coverage.outputs.statements_diff }}|${{ steps.coverage.outputs.functions_diff }}|${{ steps.coverage.outputs.branches_diff }}|
+          edit-mode: replace
 
-  #       # Main branch gets coverage report uploaded
-  #     - name: Upload bundle report to gist
-  #       if: github.ref == 'refs/heads/main'
-  #       uses: exuanbo/actions-deploy-gist@v1
-  #       with:
-  #         token: ${{ secrets.MACHINE_ACCOUNT_PAT }}
-  #         gist_id: ${{ matrix.coverage_gist_id }}
-  #         gist_description: 'Jest report for tracking tests coverage for ${{ matrix.flavor }}'
-  #         gist_file_name: communication-react-jest-report-${{ matrix.flavor }}.json
-  #         file_path: temp/jest/current/merge/summary/coverage-summary.json
+        # Main branch gets coverage report uploaded
+      - name: Upload bundle report to gist
+        if: github.ref == 'refs/heads/main'
+        uses: exuanbo/actions-deploy-gist@v1
+        with:
+          token: ${{ secrets.MACHINE_ACCOUNT_PAT }}
+          gist_id: ${{ matrix.coverage_gist_id }}
+          gist_description: 'Jest report for tracking tests coverage for ${{ matrix.flavor }}'
+          gist_file_name: communication-react-jest-report-${{ matrix.flavor }}.json
+          file_path: temp/jest/current/merge/summary/coverage-summary.json
 
-  # in-progress-feature-validation:
-  #   needs: get_matrix
-  #   name: Check if in progress feature can be removed separately (${{ matrix.flavor }})
-  #   strategy:
-  #     matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
-  #     - uses: actions/checkout@v4
-  #     # Ensure node version is great enough
-  #     - name: Use Node.js
-  #       uses: actions/setup-node@v4
-  #       with:
-  #         node-version: 'lts/*'
-  #     # Try get node_modules from cache
-  #     - name: Restore node_modules from cache
-  #       uses: actions/cache@v4
-  #       with:
-  #         path: common/temp/pnpm-store
-  #         key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
-  #     # Install dependencies
-  #     - name: Install Dependencies
-  #       if: ${{ matrix.flavor == 'beta-release'}}
-  #       run: node ./common/scripts/install-dependencies-ci.mjs ${{ matrix.flavor }}
-  #     # Perform lint check
-  #     - name: Run linter
-  #       if: ${{ matrix.flavor == 'beta-release'}}
-  #       run: rush lint
-  #     # Builds
-  #     - name: Build Packages
-  #       if: ${{ matrix.flavor == 'beta-release'}}
-  #       run: rush build -t @azure/communication-react
-  #     # # Type check test folder
-  #     # # - must be run after building all packlets because it depends on compiled packlet dependencies
-  #     # # - must be run only on beta flavor build because the browser test code is not conditional compiled
-  #     # - name: Type check test folder
-  #     #   if: ${{ matrix.flavor == 'beta' }}
-  #     #   run: cd packages/react-composites && rushx tsc:e2e
-  #     # Tests
-  #     - name: Test Packages
-  #       if: ${{ matrix.flavor == 'beta-release'}}
-  #       run: rush test -t @azure/communication-react
-  #     # Upload azure-communication api.md files for easy access
-  #     - name: Upload communication-react api files
-  #       if: ${{ matrix.flavor == 'beta-release'}}
-  #       uses: actions/upload-artifact@v3
-  #       with:
-  #         name: communication-react.beta-release.api.json
-  #         path: |
-  #           packages/communication-react/temp/communication-react.api.json
+  in-progress-feature-validation:
+    needs: get_matrix
+    name: Check if in progress feature can be removed separately (${{ matrix.flavor }})
+    strategy:
+      matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
+    runs-on: ubuntu-latest
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
+      - uses: actions/checkout@v4
+      # Ensure node version is great enough
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 'lts/*'
+      # Try get node_modules from cache
+      - name: Restore node_modules from cache
+        uses: actions/cache@v4
+        with:
+          path: common/temp/pnpm-store
+          key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
+      # Install dependencies
+      - name: Install Dependencies
+        if: ${{ matrix.flavor == 'beta-release'}}
+        run: node ./common/scripts/install-dependencies-ci.mjs ${{ matrix.flavor }}
+      # Perform lint check
+      - name: Run linter
+        if: ${{ matrix.flavor == 'beta-release'}}
+        run: rush lint
+      # Builds
+      - name: Build Packages
+        if: ${{ matrix.flavor == 'beta-release'}}
+        run: rush build -t @azure/communication-react
+      # # Type check test folder
+      # # - must be run after building all packlets because it depends on compiled packlet dependencies
+      # # - must be run only on beta flavor build because the browser test code is not conditional compiled
+      # - name: Type check test folder
+      #   if: ${{ matrix.flavor == 'beta' }}
+      #   run: cd packages/react-composites && rushx tsc:e2e
+      # Tests
+      - name: Test Packages
+        if: ${{ matrix.flavor == 'beta-release'}}
+        run: rush test -t @azure/communication-react
+      # Upload azure-communication api.md files for easy access
+      - name: Upload communication-react api files
+        if: ${{ matrix.flavor == 'beta-release'}}
+        uses: actions/upload-artifact@v3
+        with:
+          name: communication-react.beta-release.api.json
+          path: |
+            packages/communication-react/temp/communication-react.api.json
 
-  # call_composite_automation_test:
-  #   needs: get_matrix
-  #   name: 'Call Composite automation test (${{ matrix.flavor }})'
-  #   runs-on: ubuntu-latest
-  #   permissions:
-  #     pull-requests: write
-  #   strategy:
-  #     matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #     - name: Use Node.js
-  #       uses: actions/setup-node@v4
-  #       with:
-  #         node-version: 'lts/*'
-  #     - name: Restore node_modules from cache
-  #       uses: actions/cache@v4
-  #       with:
-  #         path: common/temp/pnpm-store
-  #         key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
-  #     - name: Install Dependencies
-  #       run: node ./common/scripts/install-dependencies-ci.mjs ${{ matrix.flavor }}
-  #     - uses: browser-actions/setup-chrome@v1
-  #       id: setup-chrome
-  #       with:
-  #         chrome-version: 120.0.6099
-  #     - name: Build Call Composite Test App
-  #       run: |
-  #         cd packages/react-composites
-  #         rushx build:e2e:call
-  #     - name: Install packlets used by browser tests
-  #       run: |
-  #         cd packages/react-composites
-  #         rush build -t .
-  #     - name: Call Composite Visual Regression Tests
-  #       id: visualregressiontests
-  #       run: |
-  #         cd packages/react-composites
-  #         rushx test:e2e:call
-  #       env:
-  #         CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
-  #         CHROME_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
-  #     - name: Upload playwright test results
-  #       uses: actions/upload-artifact@v3
-  #       if: ${{ always() }}
-  #       with:
-  #         name: e2e-results-${{ github.run_id }}-${{ github.run_attempt }}-${{ matrix.flavor }}-call.json
-  #         path: packages/react-composites/test-results/*/e2e-results.json
-  #         if-no-files-found: error
-  #     - name: Upload snapshot diff
-  #       if: ${{ always() && steps.visualregressiontests.outcome == 'failure' }}
-  #       uses: actions/upload-artifact@v3
-  #       with:
-  #         name: snapshots
-  #         path: packages/react-composites/test-results
-  #     - name: Comment on PR
-  #       if: ${{ github.event_name == 'pull_request' && always() && steps.visualregressiontests.outcome == 'failure' && !contains( github.event.pull_request.labels.*.name, 'update_snapshots') }}
-  #       uses: actions/github-script@v3
-  #       with:
-  #         github-token: ${{secrets.GITHUB_TOKEN}}
-  #         script: |
-  #           github.issues.createComment({
-  #             issue_number: context.issue.number,
-  #             owner: context.repo.owner,
-  #             repo: context.repo.repo,
-  #             body: 'Failed to pass the UI Test. If this PR is for UI change and the error is snapshot mismatch, please add "update_snapshots" label to the PR for updating the snapshot.'
-  #           })
+  call_composite_automation_test:
+    needs: get_matrix
+    name: 'Call Composite automation test (${{ matrix.flavor }})'
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    strategy:
+      matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 'lts/*'
+      - name: Restore node_modules from cache
+        uses: actions/cache@v4
+        with:
+          path: common/temp/pnpm-store
+          key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
+      - name: Install Dependencies
+        run: node ./common/scripts/install-dependencies-ci.mjs ${{ matrix.flavor }}
+      - uses: browser-actions/setup-chrome@v1
+        id: setup-chrome
+        with:
+          chrome-version: 120.0.6099
+      - name: Build Call Composite Test App
+        run: |
+          cd packages/react-composites
+          rushx build:e2e:call
+      - name: Install packlets used by browser tests
+        run: |
+          cd packages/react-composites
+          rush build -t .
+      - name: Call Composite Visual Regression Tests
+        id: visualregressiontests
+        run: |
+          cd packages/react-composites
+          rushx test:e2e:call
+        env:
+          CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
+          CHROME_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
+      - name: Upload playwright test results
+        uses: actions/upload-artifact@v3
+        if: ${{ always() }}
+        with:
+          name: e2e-results-${{ github.run_id }}-${{ github.run_attempt }}-${{ matrix.flavor }}-call.json
+          path: packages/react-composites/test-results/*/e2e-results.json
+          if-no-files-found: error
+      - name: Upload snapshot diff
+        if: ${{ always() && steps.visualregressiontests.outcome == 'failure' }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: snapshots
+          path: packages/react-composites/test-results
+      - name: Comment on PR
+        if: ${{ github.event_name == 'pull_request' && always() && steps.visualregressiontests.outcome == 'failure' && !contains( github.event.pull_request.labels.*.name, 'update_snapshots') }}
+        uses: actions/github-script@v3
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            github.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: 'Failed to pass the UI Test. If this PR is for UI change and the error is snapshot mismatch, please add "update_snapshots" label to the PR for updating the snapshot.'
+            })
 
-  # chat_composite_automation_test:
-  #   needs: get_matrix
-  #   name: 'Chat Composite automation test (${{ matrix.flavor }})'
-  #   runs-on: ubuntu-latest
-  #   permissions:
-  #     pull-requests: write
-  #   strategy:
-  #     matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #     - name: Use Node.js
-  #       uses: actions/setup-node@v4
-  #       with:
-  #         node-version: 'lts/*'
-  #     - name: Restore node_modules from cache
-  #       uses: actions/cache@v4
-  #       with:
-  #         path: common/temp/pnpm-store
-  #         key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
-  #     - name: Install Dependencies
-  #       run: node ./common/scripts/install-dependencies-ci.mjs ${{ matrix.flavor }}
-  #     - uses: browser-actions/setup-chrome@v1
-  #       id: setup-chrome
-  #       with:
-  #         chrome-version: 120.0.6099
-  #     - name: Build Chat Composite Test App
-  #       run: |
-  #         cd packages/react-composites
-  #         rushx build:e2e:chat
-  #     - name: Install packlets used by browser tests
-  #       run: |
-  #         cd packages/react-composites
-  #         rush build -t .
-  #     - name: Chat Composite Visual Regression Tests
-  #       id: visualregressiontests
-  #       run: |
-  #         cd packages/react-composites
-  #         rushx test:e2e:chat
-  #       env:
-  #         CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
-  #         CHROME_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
-  #     - name: Upload playwright test results
-  #       uses: actions/upload-artifact@v3
-  #       if: ${{ always() }}
-  #       with:
-  #         name: e2e-results-${{ github.run_id }}-${{ github.run_attempt }}-${{ matrix.flavor }}-chat.json
-  #         path: packages/react-composites/test-results/*/e2e-results.json
-  #         if-no-files-found: error
-  #     - name: Upload snapshot diff
-  #       if: ${{ always() && steps.visualregressiontests.outcome == 'failure' }}
-  #       uses: actions/upload-artifact@v3
-  #       with:
-  #         name: snapshots
-  #         path: packages/react-composites/test-results
-  #     - name: Comment on PR
-  #       if: ${{ github.event_name == 'pull_request' && always() && steps.visualregressiontests.outcome == 'failure' && !contains( github.event.pull_request.labels.*.name, 'update_snapshots') }}
-  #       uses: actions/github-script@v3
-  #       with:
-  #         github-token: ${{secrets.GITHUB_TOKEN}}
-  #         script: |
-  #           github.issues.createComment({
-  #             issue_number: context.issue.number,
-  #             owner: context.repo.owner,
-  #             repo: context.repo.repo,
-  #             body: 'Failed to pass the UI Test. If this PR is for UI change and the error is snapshot mismatch, please add "update_snapshots" label to the PR for updating the snapshot.'
-  #           })
+  chat_composite_automation_test:
+    needs: get_matrix
+    name: 'Chat Composite automation test (${{ matrix.flavor }})'
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    strategy:
+      matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 'lts/*'
+      - name: Restore node_modules from cache
+        uses: actions/cache@v4
+        with:
+          path: common/temp/pnpm-store
+          key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
+      - name: Install Dependencies
+        run: node ./common/scripts/install-dependencies-ci.mjs ${{ matrix.flavor }}
+      - uses: browser-actions/setup-chrome@v1
+        id: setup-chrome
+        with:
+          chrome-version: 120.0.6099
+      - name: Build Chat Composite Test App
+        run: |
+          cd packages/react-composites
+          rushx build:e2e:chat
+      - name: Install packlets used by browser tests
+        run: |
+          cd packages/react-composites
+          rush build -t .
+      - name: Chat Composite Visual Regression Tests
+        id: visualregressiontests
+        run: |
+          cd packages/react-composites
+          rushx test:e2e:chat
+        env:
+          CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
+          CHROME_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
+      - name: Upload playwright test results
+        uses: actions/upload-artifact@v3
+        if: ${{ always() }}
+        with:
+          name: e2e-results-${{ github.run_id }}-${{ github.run_attempt }}-${{ matrix.flavor }}-chat.json
+          path: packages/react-composites/test-results/*/e2e-results.json
+          if-no-files-found: error
+      - name: Upload snapshot diff
+        if: ${{ always() && steps.visualregressiontests.outcome == 'failure' }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: snapshots
+          path: packages/react-composites/test-results
+      - name: Comment on PR
+        if: ${{ github.event_name == 'pull_request' && always() && steps.visualregressiontests.outcome == 'failure' && !contains( github.event.pull_request.labels.*.name, 'update_snapshots') }}
+        uses: actions/github-script@v3
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            github.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: 'Failed to pass the UI Test. If this PR is for UI change and the error is snapshot mismatch, please add "update_snapshots" label to the PR for updating the snapshot.'
+            })
 
-  # call_with_chat_composite_automation_test:
-  #   needs: get_matrix
-  #   name: 'Call With Chat Composite automation test (${{ matrix.flavor }})'
-  #   runs-on: ubuntu-latest
-  #   permissions:
-  #     pull-requests: write
-  #   strategy:
-  #     matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #     - name: Use Node.js
-  #       uses: actions/setup-node@v4
-  #       with:
-  #         node-version: 'lts/*'
-  #     - name: Restore node_modules from cache
-  #       uses: actions/cache@v4
-  #       with:
-  #         path: common/temp/pnpm-store
-  #         key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
-  #     - name: Install Dependencies
-  #       run: node ./common/scripts/install-dependencies-ci.mjs ${{ matrix.flavor }}
-  #     - uses: browser-actions/setup-chrome@v1
-  #       id: setup-chrome
-  #       with:
-  #         chrome-version: 120.0.6099
-  #     - name: Build CallWithChatComposite Test App
-  #       run: |
-  #         cd packages/react-composites
-  #         rushx build:e2e:callwithchat
-  #     - name: Install packlets used by browser tests
-  #       run: |
-  #         cd packages/react-composites
-  #         rush build -t .
-  #     - name: CallWithChatComposite Visual Regression Tests
-  #       id: visualregressiontests
-  #       run: |
-  #         cd packages/react-composites
-  #         rushx test:e2e:callwithchat
-  #       env:
-  #         CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
-  #         CHROME_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
-  #     - name: Upload playwright test results
-  #       uses: actions/upload-artifact@v3
-  #       if: ${{ always() }}
-  #       with:
-  #         name: e2e-results-${{ github.run_id }}-${{ github.run_attempt }}-${{ matrix.flavor }}-callwithchat.json
-  #         path: packages/react-composites/test-results/*/e2e-results.json
-  #         if-no-files-found: error
-  #     - name: Upload snapshot diff
-  #       if: ${{ always() && steps.visualregressiontests.outcome == 'failure' }}
-  #       uses: actions/upload-artifact@v3
-  #       with:
-  #         name: snapshots
-  #         path: packages/react-composites/test-results
-  #     - name: Comment on PR
-  #       if: ${{ github.event_name == 'pull_request' && always() && steps.visualregressiontests.outcome == 'failure' && !contains( github.event.pull_request.labels.*.name, 'update_snapshots') }}
-  #       uses: actions/github-script@v3
-  #       with:
-  #         github-token: ${{secrets.GITHUB_TOKEN}}
-  #         script: |
-  #           github.issues.createComment({
-  #             issue_number: context.issue.number,
-  #             owner: context.repo.owner,
-  #             repo: context.repo.repo,
-  #             body: 'Failed to pass the composite UI Test. If this PR is for UI change and the error is snapshot mismatch, please add "update_snapshots" label to the PR for updating the snapshot.'
-  #           })
-  # components_automation_test:
-  #   needs: get_matrix
-  #   name: 'Components automation test (${{ matrix.flavor }})'
-  #   runs-on: ubuntu-latest
-  #   permissions:
-  #     pull-requests: write
-  #   strategy:
-  #     matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #     - name: Use Node.js
-  #       uses: actions/setup-node@v4
-  #       with:
-  #         node-version: 'lts/*'
-  #     - name: Restore node_modules from cache
-  #       uses: actions/cache@v4
-  #       with:
-  #         path: common/temp/pnpm-store
-  #         key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
-  #     - name: Install Dependencies
-  #       run: node ./common/scripts/install-dependencies-ci.mjs ${{ matrix.flavor }}
-  #     - uses: browser-actions/setup-chrome@v1
-  #       id: setup-chrome
-  #       with:
-  #         chrome-version: 120.0.6099
-  #     # Build the packages
-  #     # This is needed because react-components depends on acs-ui-common and
-  #     # acs-ui-common specifies main/module variables in package.json
-  #     - name: Build Common Package
-  #       run: rush build -t acs-ui-common
-  #     - name: Components Visual Regression Tests
-  #       id: visualregressiontests
-  #       run: |
-  #         cd packages/react-components
-  #         rushx test:components
-  #       env:
-  #         CHROME_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
-  #     - name: Upload snapshot diff
-  #       if: ${{ always() && steps.visualregressiontests.outcome == 'failure' }}
-  #       uses: actions/upload-artifact@v3
-  #       with:
-  #         name: Components-snapshots
-  #         path: packages/react-components/tests/temp
-  #     - name: Comment on PR
-  #       if: ${{ github.event_name == 'pull_request' && always() && steps.visualregressiontests.outcome == 'failure' && !contains( github.event.pull_request.labels.*.name, 'update_snapshots') }}
-  #       uses: actions/github-script@v3
-  #       with:
-  #         github-token: ${{secrets.GITHUB_TOKEN}}
-  #         script: |
-  #           github.issues.createComment({
-  #             issue_number: context.issue.number,
-  #             owner: context.repo.owner,
-  #             repo: context.repo.repo,
-  #             body: 'Failed to pass the UI Test. If this PR is for UI change and the error is snapshot mismatch, please add "update_snapshots" label to the PR for updating the snapshot.'
-  #           })
+  call_with_chat_composite_automation_test:
+    needs: get_matrix
+    name: 'Call With Chat Composite automation test (${{ matrix.flavor }})'
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    strategy:
+      matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 'lts/*'
+      - name: Restore node_modules from cache
+        uses: actions/cache@v4
+        with:
+          path: common/temp/pnpm-store
+          key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
+      - name: Install Dependencies
+        run: node ./common/scripts/install-dependencies-ci.mjs ${{ matrix.flavor }}
+      - uses: browser-actions/setup-chrome@v1
+        id: setup-chrome
+        with:
+          chrome-version: 120.0.6099
+      - name: Build CallWithChatComposite Test App
+        run: |
+          cd packages/react-composites
+          rushx build:e2e:callwithchat
+      - name: Install packlets used by browser tests
+        run: |
+          cd packages/react-composites
+          rush build -t .
+      - name: CallWithChatComposite Visual Regression Tests
+        id: visualregressiontests
+        run: |
+          cd packages/react-composites
+          rushx test:e2e:callwithchat
+        env:
+          CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
+          CHROME_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
+      - name: Upload playwright test results
+        uses: actions/upload-artifact@v3
+        if: ${{ always() }}
+        with:
+          name: e2e-results-${{ github.run_id }}-${{ github.run_attempt }}-${{ matrix.flavor }}-callwithchat.json
+          path: packages/react-composites/test-results/*/e2e-results.json
+          if-no-files-found: error
+      - name: Upload snapshot diff
+        if: ${{ always() && steps.visualregressiontests.outcome == 'failure' }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: snapshots
+          path: packages/react-composites/test-results
+      - name: Comment on PR
+        if: ${{ github.event_name == 'pull_request' && always() && steps.visualregressiontests.outcome == 'failure' && !contains( github.event.pull_request.labels.*.name, 'update_snapshots') }}
+        uses: actions/github-script@v3
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            github.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: 'Failed to pass the composite UI Test. If this PR is for UI change and the error is snapshot mismatch, please add "update_snapshots" label to the PR for updating the snapshot.'
+            })
+  components_automation_test:
+    needs: get_matrix
+    name: 'Components automation test (${{ matrix.flavor }})'
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    strategy:
+      matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 'lts/*'
+      - name: Restore node_modules from cache
+        uses: actions/cache@v4
+        with:
+          path: common/temp/pnpm-store
+          key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
+      - name: Install Dependencies
+        run: node ./common/scripts/install-dependencies-ci.mjs ${{ matrix.flavor }}
+      - uses: browser-actions/setup-chrome@v1
+        id: setup-chrome
+        with:
+          chrome-version: 120.0.6099
+      # Build the packages
+      # This is needed because react-components depends on acs-ui-common and
+      # acs-ui-common specifies main/module variables in package.json
+      - name: Build Common Package
+        run: rush build -t acs-ui-common
+      - name: Components Visual Regression Tests
+        id: visualregressiontests
+        run: |
+          cd packages/react-components
+          rushx test:components
+        env:
+          CHROME_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
+      - name: Upload snapshot diff
+        if: ${{ always() && steps.visualregressiontests.outcome == 'failure' }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: Components-snapshots
+          path: packages/react-components/tests/temp
+      - name: Comment on PR
+        if: ${{ github.event_name == 'pull_request' && always() && steps.visualregressiontests.outcome == 'failure' && !contains( github.event.pull_request.labels.*.name, 'update_snapshots') }}
+        uses: actions/github-script@v3
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            github.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: 'Failed to pass the UI Test. If this PR is for UI change and the error is snapshot mismatch, please add "update_snapshots" label to the PR for updating the snapshot.'
+            })
 
-  # build_storybook:
-  #   needs: get_matrix
-  #   name: Build Storybook (${{ matrix.flavor }})
-  #   strategy:
-  #     matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #     - name: Use Node.js
-  #       uses: actions/setup-node@v4
-  #       with:
-  #         node-version: 'lts/*'
-  #     - name: Restore node_modules from cache
-  #       uses: actions/cache@v4
-  #       with:
-  #         path: common/temp/pnpm-store
-  #         key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
-  #     - name: Install Dependencies
-  #       if: ${{ matrix.flavor == 'beta' || matrix.flavor == 'beta-release'}}
-  #       run: node ./common/scripts/install-dependencies-ci.mjs ${{ matrix.flavor }}
-  #     - name: Build
-  #       if: ${{ matrix.flavor == 'beta' || matrix.flavor == 'beta-release' }}
-  #       run: rush build -o storybook
-  #     - name: Tests
-  #       if: ${{ matrix.flavor == 'beta' || matrix.flavor == 'beta-release' }}
-  #       run: rushx test
-  #       working-directory: packages/storybook
+  build_storybook:
+    needs: get_matrix
+    name: Build Storybook (${{ matrix.flavor }})
+    strategy:
+      matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 'lts/*'
+      - name: Restore node_modules from cache
+        uses: actions/cache@v4
+        with:
+          path: common/temp/pnpm-store
+          key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
+      - name: Install Dependencies
+        if: ${{ matrix.flavor == 'beta' || matrix.flavor == 'beta-release'}}
+        run: node ./common/scripts/install-dependencies-ci.mjs ${{ matrix.flavor }}
+      - name: Build
+        if: ${{ matrix.flavor == 'beta' || matrix.flavor == 'beta-release' }}
+        run: rush build -o storybook
+      - name: Tests
+        if: ${{ matrix.flavor == 'beta' || matrix.flavor == 'beta-release' }}
+        run: rushx test
+        working-directory: packages/storybook
 
-  # build_storybook8:
-  #   needs: get_matrix
-  #   name: Build Storybook v8 (${{ matrix.flavor }})
-  #   strategy:
-  #     matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #     - name: Use Node.js
-  #       uses: actions/setup-node@v4
-  #       with:
-  #         node-version: 'lts/*'
-  #     - name: Restore node_modules from cache
-  #       uses: actions/cache@v4
-  #       with:
-  #         path: common/temp/pnpm-store
-  #         key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
-  #     - name: Install rush
-  #       run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
-  #     - name: Install dependencies
-  #       if: ${{ matrix.flavor == 'beta' || matrix.flavor == 'beta-release'}}
-  #       run: rush install --max-install-attempts 3
-  #     - name: Build
-  #       if: ${{ matrix.flavor == 'beta' || matrix.flavor == 'beta-release' }}
-  #       run: rushx build
-  #       working-directory: packages/storybook8
-  #     - name: Tests
-  #       if: ${{ matrix.flavor == 'beta' || matrix.flavor == 'beta-release' }}
-  #       run: rushx test
-  #       working-directory: packages/storybook8
+  build_storybook8:
+    needs: get_matrix
+    name: Build Storybook v8 (${{ matrix.flavor }})
+    strategy:
+      matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 'lts/*'
+      - name: Restore node_modules from cache
+        uses: actions/cache@v4
+        with:
+          path: common/temp/pnpm-store
+          key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
+      - name: Install rush
+        run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
+      - name: Install dependencies
+        if: ${{ matrix.flavor == 'beta' || matrix.flavor == 'beta-release'}}
+        run: rush install --max-install-attempts 3
+      - name: Build
+        if: ${{ matrix.flavor == 'beta' || matrix.flavor == 'beta-release' }}
+        run: rushx build
+        working-directory: packages/storybook8
+      - name: Tests
+        if: ${{ matrix.flavor == 'beta' || matrix.flavor == 'beta-release' }}
+        run: rushx test
+        working-directory: packages/storybook8
 
-  # build_calling_sample:
-  #   needs: get_matrix
-  #   name: 'Build Calling Sample (${{ matrix.flavor }})'
-  #   runs-on: ubuntu-latest
-  #   strategy:
-  #     matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #     - name: Use Node.js
-  #       uses: actions/setup-node@v4
-  #       with:
-  #         node-version: 'lts/*'
-  #     - name: Restore node_modules from cache
-  #       uses: actions/cache@v4
-  #       with:
-  #         path: common/temp/pnpm-store
-  #         key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
-  #     - name: Install Dependencies
-  #       run: node ./common/scripts/install-dependencies-ci.mjs ${{ matrix.flavor }}
-  #     - name: Build dependencies
-  #       run: rush build -t @azure/communication-react
-  #     - name: Build
-  #       run: rush build:minify -o calling
-  #     - name: Tests
-  #       run: rush test -o calling
-  #     # upload bundle stats.json which will be consumed later
-  #     - uses: actions/upload-artifact@v3
-  #       if: ${{ matrix.flavor == 'beta'}}
-  #       with:
-  #         name: Calling-report
-  #         path: samples/Calling/dist/build/report.json
+  build_calling_sample:
+    needs: get_matrix
+    name: 'Build Calling Sample (${{ matrix.flavor }})'
+    runs-on: ubuntu-latest
+    strategy:
+      matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 'lts/*'
+      - name: Restore node_modules from cache
+        uses: actions/cache@v4
+        with:
+          path: common/temp/pnpm-store
+          key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
+      - name: Install Dependencies
+        run: node ./common/scripts/install-dependencies-ci.mjs ${{ matrix.flavor }}
+      - name: Build dependencies
+        run: rush build -t @azure/communication-react
+      - name: Build
+        run: rush build:minify -o calling
+      - name: Tests
+        run: rush test -o calling
+      # upload bundle stats.json which will be consumed later
+      - uses: actions/upload-artifact@v3
+        if: ${{ matrix.flavor == 'beta'}}
+        with:
+          name: Calling-report
+          path: samples/Calling/dist/build/report.json
 
-  # build_chat_sample:
-  #   needs: get_matrix
-  #   name: 'Build Chat Sample (${{ matrix.flavor }})'
-  #   runs-on: ubuntu-latest
-  #   strategy:
-  #     matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #     - name: Use Node.js
-  #       uses: actions/setup-node@v4
-  #       with:
-  #         node-version: 'lts/*'
-  #     - name: Restore node_modules from cache
-  #       uses: actions/cache@v4
-  #       with:
-  #         path: common/temp/pnpm-store
-  #         key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
-  #     - name: Install Dependencies
-  #       run: node ./common/scripts/install-dependencies-ci.mjs ${{ matrix.flavor }}
-  #     - name: Build dependencies
-  #       run: rush build -t @azure/communication-react
-  #     - name: Build
-  #       run: rush build:minify -o chat
-  #     - name: Tests
-  #       run: rush test -o chat
-  #     # upload bundle stats.json which will be consumed later
-  #     - uses: actions/upload-artifact@v3
-  #       if: ${{ matrix.flavor == 'beta'}}
-  #       with:
-  #         name: Chat-report
-  #         path: samples/Chat/dist/build/report.json
+  build_chat_sample:
+    needs: get_matrix
+    name: 'Build Chat Sample (${{ matrix.flavor }})'
+    runs-on: ubuntu-latest
+    strategy:
+      matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 'lts/*'
+      - name: Restore node_modules from cache
+        uses: actions/cache@v4
+        with:
+          path: common/temp/pnpm-store
+          key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
+      - name: Install Dependencies
+        run: node ./common/scripts/install-dependencies-ci.mjs ${{ matrix.flavor }}
+      - name: Build dependencies
+        run: rush build -t @azure/communication-react
+      - name: Build
+        run: rush build:minify -o chat
+      - name: Tests
+        run: rush test -o chat
+      # upload bundle stats.json which will be consumed later
+      - uses: actions/upload-artifact@v3
+        if: ${{ matrix.flavor == 'beta'}}
+        with:
+          name: Chat-report
+          path: samples/Chat/dist/build/report.json
 
-  # build_call_with_chat_sample:
-  #   needs: get_matrix
-  #   name: 'Build CallWithChat Sample (${{ matrix.flavor }})'
-  #   runs-on: ubuntu-latest
-  #   strategy:
-  #     matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #     - name: Use Node.js
-  #       uses: actions/setup-node@v4
-  #       with:
-  #         node-version: 'lts/*'
-  #     - name: Restore node_modules from cache
-  #       uses: actions/cache@v4
-  #       with:
-  #         path: common/temp/pnpm-store
-  #         key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
-  #     - name: Install Dependencies
-  #       run: node ./common/scripts/install-dependencies-ci.mjs ${{ matrix.flavor }}
-  #     - name: Build dependencies
-  #       run: rush build -t @azure/communication-react
-  #     - name: Build
-  #       run: rush build:minify -o callwithchat
-  #     - name: Tests
-  #       run: rush test -o callwithchat
-  #     # upload bundle stats.json which will be consumed later
-  #     - uses: actions/upload-artifact@v3
-  #       if: ${{ matrix.flavor == 'beta'}}
-  #       with:
-  #         name: CallWithChat-report
-  #         path: samples/CallWithChat/dist/build/report.json
+  build_call_with_chat_sample:
+    needs: get_matrix
+    name: 'Build CallWithChat Sample (${{ matrix.flavor }})'
+    runs-on: ubuntu-latest
+    strategy:
+      matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 'lts/*'
+      - name: Restore node_modules from cache
+        uses: actions/cache@v4
+        with:
+          path: common/temp/pnpm-store
+          key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
+      - name: Install Dependencies
+        run: node ./common/scripts/install-dependencies-ci.mjs ${{ matrix.flavor }}
+      - name: Build dependencies
+        run: rush build -t @azure/communication-react
+      - name: Build
+        run: rush build:minify -o callwithchat
+      - name: Tests
+        run: rush test -o callwithchat
+      # upload bundle stats.json which will be consumed later
+      - uses: actions/upload-artifact@v3
+        if: ${{ matrix.flavor == 'beta'}}
+        with:
+          name: CallWithChat-report
+          path: samples/CallWithChat/dist/build/report.json
 
-  # build_static_html_composites_sample:
-  #   needs: get_matrix
-  #   name: 'Build And Test Static HTML Composites Sample (${{ matrix.flavor }})'
-  #   runs-on: ubuntu-latest
-  #   permissions:
-  #     pull-requests: write
-  #   strategy:
-  #     matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #     - name: Use Node.js
-  #       uses: actions/setup-node@v4
-  #       with:
-  #         node-version: 'lts/*'
-  #     - name: Install Dependencies
-  #       run: node ./common/scripts/install-dependencies-ci.mjs ${{ matrix.flavor }}
-  #     - uses: browser-actions/setup-chrome@v1
-  #       id: setup-chrome
-  #       with:
-  #         chrome-version: 120.0.6099
-  #     - name: Build
-  #       run: rush build -t sample-static-html-composites
-  #     - name: Visual Regression Tests
-  #       id: visualregressiontests
-  #       run: |
-  #         cd samples/tests
-  #         npx playwright install --with-deps
-  #         rushx test:e2e:bundle
-  #       env:
-  #         CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
-  #         CHROME_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
-  #     - name: Upload snapshot diff
-  #       if: ${{ always() && steps.visualregressiontests.outcome == 'failure' }}
-  #       uses: actions/upload-artifact@v3
-  #       with:
-  #         name: snapshots
-  #         path: samples/tests/test-results/ # or path/to/artifact
-  #     - name: Comment on PR
-  #       if: ${{ github.event_name == 'pull_request' && always() && steps.visualregressiontests.outcome == 'failure' && !contains( github.event.pull_request.labels.*.name, 'update_snapshots') }}
-  #       uses: actions/github-script@v3
-  #       with:
-  #         github-token: ${{secrets.GITHUB_TOKEN}}
-  #         script: |
-  #           github.issues.createComment({
-  #             issue_number: context.issue.number,
-  #             owner: context.repo.owner,
-  #             repo: context.repo.repo,
-  #             body: 'Failed to pass the Static HTML UI Test. If this PR is for UI change and the error is snapshot mismatch, please add "update_snapshots" label to the PR for updating the snapshot.'
-  #           })
+  build_static_html_composites_sample:
+    needs: get_matrix
+    name: 'Build And Test Static HTML Composites Sample (${{ matrix.flavor }})'
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    strategy:
+      matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 'lts/*'
+      - name: Install Dependencies
+        run: node ./common/scripts/install-dependencies-ci.mjs ${{ matrix.flavor }}
+      - uses: browser-actions/setup-chrome@v1
+        id: setup-chrome
+        with:
+          chrome-version: 120.0.6099
+      - name: Build
+        run: rush build -t sample-static-html-composites
+      - name: Visual Regression Tests
+        id: visualregressiontests
+        run: |
+          cd samples/tests
+          npx playwright install --with-deps
+          rushx test:e2e:bundle
+        env:
+          CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
+          CHROME_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
+      - name: Upload snapshot diff
+        if: ${{ always() && steps.visualregressiontests.outcome == 'failure' }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: snapshots
+          path: samples/tests/test-results/ # or path/to/artifact
+      - name: Comment on PR
+        if: ${{ github.event_name == 'pull_request' && always() && steps.visualregressiontests.outcome == 'failure' && !contains( github.event.pull_request.labels.*.name, 'update_snapshots') }}
+        uses: actions/github-script@v3
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            github.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: 'Failed to pass the Static HTML UI Test. If this PR is for UI change and the error is snapshot mismatch, please add "update_snapshots" label to the PR for updating the snapshot.'
+            })
 
-  # build_component_examples:
-  #   needs: get_matrix
-  #   name: 'Build And Test Component+Binding Examples (${{ matrix.flavor }})'
-  #   runs-on: ubuntu-latest
-  #   permissions:
-  #     pull-requests: write
-  #   strategy:
-  #     matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #     - name: Use Node.js
-  #       uses: actions/setup-node@v4
-  #       with:
-  #         node-version: 'lts/*'
-  #     - name: Install Dependencies
-  #       run: node ./common/scripts/install-dependencies-ci.mjs ${{ matrix.flavor }}
-  #     - uses: browser-actions/setup-chrome@v1
-  #       id: setup-chrome
-  #       with:
-  #         chrome-version: 120.0.6099
-  #     - name: Build
-  #       run: rush build -t component-examples
-  #     - name: Visual Regression Tests
-  #       id: visualregressiontests
-  #       run: |
-  #         cd samples/tests
-  #         npx playwright install --with-deps
-  #         rushx test:e2e:examples
-  #       env:
-  #         CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
-  #         CHROME_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
-  #     - name: Upload snapshot diff
-  #       if: ${{ always() && steps.visualregressiontests.outcome == 'failure' }}
-  #       uses: actions/upload-artifact@v3
-  #       with:
-  #         name: snapshots
-  #         path: samples/tests/test-results/ # or path/to/artifact
-  #     - name: Comment on PR
-  #       if: ${{ github.event_name == 'pull_request' && always() && steps.visualregressiontests.outcome == 'failure' && !contains( github.event.pull_request.labels.*.name, 'update_snapshots') }}
-  #       uses: actions/github-script@v3
-  #       with:
-  #         github-token: ${{secrets.GITHUB_TOKEN}}
-  #         script: |
-  #           github.issues.createComment({
-  #             issue_number: context.issue.number,
-  #             owner: context.repo.owner,
-  #             repo: context.repo.repo,
-  #             body: 'Failed to pass the component examples UI Test. If this PR is for UI change and the error is snapshot mismatch, please add "update_snapshots" label to the PR for updating the snapshot.'
-  #           })
+  build_component_examples:
+    needs: get_matrix
+    name: 'Build And Test Component+Binding Examples (${{ matrix.flavor }})'
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    strategy:
+      matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 'lts/*'
+      - name: Install Dependencies
+        run: node ./common/scripts/install-dependencies-ci.mjs ${{ matrix.flavor }}
+      - uses: browser-actions/setup-chrome@v1
+        id: setup-chrome
+        with:
+          chrome-version: 120.0.6099
+      - name: Build
+        run: rush build -t component-examples
+      - name: Visual Regression Tests
+        id: visualregressiontests
+        run: |
+          cd samples/tests
+          npx playwright install --with-deps
+          rushx test:e2e:examples
+        env:
+          CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
+          CHROME_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
+      - name: Upload snapshot diff
+        if: ${{ always() && steps.visualregressiontests.outcome == 'failure' }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: snapshots
+          path: samples/tests/test-results/ # or path/to/artifact
+      - name: Comment on PR
+        if: ${{ github.event_name == 'pull_request' && always() && steps.visualregressiontests.outcome == 'failure' && !contains( github.event.pull_request.labels.*.name, 'update_snapshots') }}
+        uses: actions/github-script@v3
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            github.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: 'Failed to pass the component examples UI Test. If this PR is for UI change and the error is snapshot mismatch, please add "update_snapshots" label to the PR for updating the snapshot.'
+            })
 
-  # compare_base_bundle_stats:
-  #   runs-on: ubuntu-latest
-  #   permissions:
-  #     pull-requests: write
-  #   if: ${{ github.event_name == 'pull_request' && !startsWith(github.event.pull_request.base.ref, 'release/') }}
-  #   name: Compare bundle size from pr head ref to base ref - ${{ matrix.app }}
-  #   needs: [build_calling_sample, build_chat_sample, build_call_with_chat_sample]
-  #   strategy:
-  #     matrix:
-  #       include:
-  #         # These are gist to track bundle sizes
-  #         - app: Chat
-  #           gist: https://gist.github.com/communication-ui-bot/db13fa7067b083b7a91d7a95adf28be1
-  #         - app: Calling
-  #           gist: https://gist.github.com/communication-ui-bot/87d57b63bbbaee12273a9a901b67885c
-  #         - app: CallWithChat
-  #           gist: https://gist.github.com/communication-ui-bot/72a7fca0af8a3c5b37f966bb6d4bcd11
-  #   steps:
-  #     # checkout base bundle stats
-  #     - name: Get bundle stats of main from gist
-  #       run: curl -o base/report.json "${{ matrix.gist }}/raw/${{ matrix.app }}-report.json" --create-dirs -L
-  #     - uses: actions/download-artifact@v3
-  #       with:
-  #         path: current
-  #         name: ${{ matrix.app }}-report
-  #     - name: Calculate size change
-  #       id: bundles
-  #       run: |
-  #         base_size=$(jq -r ".[0].parsedSize" base/report.json)
-  #         echo "base_size=${base_size}" >> $GITHUB_OUTPUT
-  #         current_size=$(jq -r ".[0].parsedSize" current/report.json)
-  #         echo "current_size=${current_size}" >> $GITHUB_OUTPUT
-  #         change=$([ $current_size -gt $base_size ] && echo "increased❗" || ([ $current_size = $base_size ] && echo "not changed" || echo "decreased✅"))
-  #         echo "change=${change}" >> $GITHUB_OUTPUT
-  #         echo "diff=$(($current_size - $base_size))" >> $GITHUB_OUTPUT
-  #     - name: Find Comment
-  #       uses: peter-evans/find-comment@v2
-  #       id: fc
-  #       with:
-  #         issue-number: ${{ github.event.pull_request.number }}
-  #         comment-author: 'github-actions[bot]'
-  #         body-includes: '## ${{ matrix.app }} bundle size is'
-  #     - name: Create or update comment
-  #       uses: peter-evans/create-or-update-comment@v2
-  #       with:
-  #         comment-id: ${{ steps.fc.outputs.comment-id }}
-  #         issue-number: ${{ github.event.pull_request.number }}
-  #         body: |
-  #           ## ${{ matrix.app }} bundle size is ***${{ steps.bundles.outputs.change }}***.
-  #           - Current size: ${{ steps.bundles.outputs.current_size }}
-  #           - Base size: ${{ steps.bundles.outputs.base_size}}
-  #           - Diff size: ${{ steps.bundles.outputs.diff}}
-  #         edit-mode: replace
+  compare_base_bundle_stats:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    if: ${{ github.event_name == 'pull_request' && !startsWith(github.event.pull_request.base.ref, 'release/') }}
+    name: Compare bundle size from pr head ref to base ref - ${{ matrix.app }}
+    needs: [build_calling_sample, build_chat_sample, build_call_with_chat_sample]
+    strategy:
+      matrix:
+        include:
+          # These are gist to track bundle sizes
+          - app: Chat
+            gist: https://gist.github.com/communication-ui-bot/db13fa7067b083b7a91d7a95adf28be1
+          - app: Calling
+            gist: https://gist.github.com/communication-ui-bot/87d57b63bbbaee12273a9a901b67885c
+          - app: CallWithChat
+            gist: https://gist.github.com/communication-ui-bot/72a7fca0af8a3c5b37f966bb6d4bcd11
+    steps:
+      # checkout base bundle stats
+      - name: Get bundle stats of main from gist
+        run: curl -o base/report.json "${{ matrix.gist }}/raw/${{ matrix.app }}-report.json" --create-dirs -L
+      - uses: actions/download-artifact@v3
+        with:
+          path: current
+          name: ${{ matrix.app }}-report
+      - name: Calculate size change
+        id: bundles
+        run: |
+          base_size=$(jq -r ".[0].parsedSize" base/report.json)
+          echo "base_size=${base_size}" >> $GITHUB_OUTPUT
+          current_size=$(jq -r ".[0].parsedSize" current/report.json)
+          echo "current_size=${current_size}" >> $GITHUB_OUTPUT
+          change=$([ $current_size -gt $base_size ] && echo "increased❗" || ([ $current_size = $base_size ] && echo "not changed" || echo "decreased✅"))
+          echo "change=${change}" >> $GITHUB_OUTPUT
+          echo "diff=$(($current_size - $base_size))" >> $GITHUB_OUTPUT
+      - name: Find Comment
+        uses: peter-evans/find-comment@v2
+        id: fc
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          comment-author: 'github-actions[bot]'
+          body-includes: '## ${{ matrix.app }} bundle size is'
+      - name: Create or update comment
+        uses: peter-evans/create-or-update-comment@v2
+        with:
+          comment-id: ${{ steps.fc.outputs.comment-id }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            ## ${{ matrix.app }} bundle size is ***${{ steps.bundles.outputs.change }}***.
+            - Current size: ${{ steps.bundles.outputs.current_size }}
+            - Base size: ${{ steps.bundles.outputs.base_size}}
+            - Diff size: ${{ steps.bundles.outputs.diff}}
+          edit-mode: replace
 
-  # update_base_bundle_report:
-  #   runs-on: ubuntu-latest
-  #   name: Upload bundle size report to gist - ${{ matrix.app }}
-  #   needs: [build_calling_sample, build_chat_sample, build_call_with_chat_sample]
-  #   if: github.ref == 'refs/heads/main'
-  #   strategy:
-  #     matrix:
-  #       include:
-  #         # These are gist to track bundle sizes
-  #         - app: Chat
-  #           gist_id: db13fa7067b083b7a91d7a95adf28be1
-  #         - app: Calling
-  #           gist_id: 87d57b63bbbaee12273a9a901b67885c
-  #         - app: CallWithChat
-  #           gist_id: 72a7fca0af8a3c5b37f966bb6d4bcd11
-  #   steps:
-  #     - uses: actions/download-artifact@v3
-  #       with:
-  #         name: ${{ matrix.app }}-report
-  #     - name: Upload bundle report to gist
-  #       uses: exuanbo/actions-deploy-gist@v1
-  #       with:
-  #         token: ${{ secrets.MACHINE_ACCOUNT_PAT }}
-  #         gist_id: ${{ matrix.gist_id }}
-  #         gist_description: 'Bundle report for tracking ${{ matrix.app }} sample app'
-  #         gist_file_name: ${{ matrix.app }}-report.json
-  #         file_path: report.json
+  update_base_bundle_report:
+    runs-on: ubuntu-latest
+    name: Upload bundle size report to gist - ${{ matrix.app }}
+    needs: [build_calling_sample, build_chat_sample, build_call_with_chat_sample]
+    if: github.ref == 'refs/heads/main'
+    strategy:
+      matrix:
+        include:
+          # These are gist to track bundle sizes
+          - app: Chat
+            gist_id: db13fa7067b083b7a91d7a95adf28be1
+          - app: Calling
+            gist_id: 87d57b63bbbaee12273a9a901b67885c
+          - app: CallWithChat
+            gist_id: 72a7fca0af8a3c5b37f966bb6d4bcd11
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: ${{ matrix.app }}-report
+      - name: Upload bundle report to gist
+        uses: exuanbo/actions-deploy-gist@v1
+        with:
+          token: ${{ secrets.MACHINE_ACCOUNT_PAT }}
+          gist_id: ${{ matrix.gist_id }}
+          gist_description: 'Bundle report for tracking ${{ matrix.app }} sample app'
+          gist_file_name: ${{ matrix.app }}-report.json
+          file_path: report.json
 
-  # check_failure:
-  #   runs-on: ubuntu-latest
-  #   permissions:
-  #     issues: write
-  #   needs:
-  #     [build_packages, build_calling_sample, build_chat_sample, build_static_html_composites_sample, build_storybook]
-  #   if: failure() && github.ref == 'refs/heads/main'
-  #   name: File issue if main CI failed
-  #   steps:
-  #     # Create a GitHub issue if the CI failed when running on the `main` branch
-  #     - name: Create issue if main branch CI failed
-  #       id: create-issue
-  #       run: |
-  #         # check for an issue that is already open
-  #         curl -H "Accept: application/vnd.github.v3+json" https://api.github.com/search/issues?q=org:Azure+repo:communication-ui-library+label:CI_FAILURE+state:open > $HOME/ci_issues.json
-  #         issue_count=$(jq -r '.total_count' $HOME/ci_issues.json)
-  #         if [ $issue_count -gt 0 ]; then
-  #           echo "No need to create new issue, one already exists"
-  #         else
-  #           curl -X POST -H 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' https://api.github.com/repos/Azure/communication-ui-library/issues -d '{"title":"Main branch CI Failed", "body": "Main CI Pipeline has failed. Please investigate: https://github.com/Azure/communication-ui-library/actions/runs/${{ github.run_id }}", "labels":["CI_FAILURE", "status:triage"]}'
-  #         fi
-  #       env:
-  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  check_failure:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    needs:
+      [build_packages, build_calling_sample, build_chat_sample, build_static_html_composites_sample, build_storybook]
+    if: failure() && github.ref == 'refs/heads/main'
+    name: File issue if main CI failed
+    steps:
+      # Create a GitHub issue if the CI failed when running on the `main` branch
+      - name: Create issue if main branch CI failed
+        id: create-issue
+        run: |
+          # check for an issue that is already open
+          curl -H "Accept: application/vnd.github.v3+json" https://api.github.com/search/issues?q=org:Azure+repo:communication-ui-library+label:CI_FAILURE+state:open > $HOME/ci_issues.json
+          issue_count=$(jq -r '.total_count' $HOME/ci_issues.json)
+          if [ $issue_count -gt 0 ]; then
+            echo "No need to create new issue, one already exists"
+          else
+            curl -X POST -H 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' https://api.github.com/repos/Azure/communication-ui-library/issues -d '{"title":"Main branch CI Failed", "body": "Main CI Pipeline has failed. Please investigate: https://github.com/Azure/communication-ui-library/actions/runs/${{ github.run_id }}", "labels":["CI_FAILURE", "status:triage"]}'
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
