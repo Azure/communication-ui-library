@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { FluentThemeProvider } from '@azure/communication-react';
 import {
   _TagsSurvey as TagsSurvey,
   _AudioIssue,
@@ -10,7 +11,6 @@ import {
   _VideoIssue
 } from '@internal/react-components';
 import React from 'react';
-import { FluentThemeProvider } from '@azure/communication-react';
 
 export const TagsSurveyExample: () => JSX.Element = () => {
   const strings = {

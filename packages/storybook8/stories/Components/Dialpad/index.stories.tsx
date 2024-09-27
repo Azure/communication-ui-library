@@ -1,6 +1,8 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+import { Dialpad as DialpadComponent } from '@azure/communication-react';
 import { Meta } from '@storybook/react';
 import { hiddenControl } from '../../controlsUtils';
-import { Dialpad as DialpadComponent } from '@azure/communication-react';
 import { CustomDialpadExample } from './snippets/CustomDialpad.snippet';
 import { DialpadExample } from './snippets/Dialpad.snippet';
 import { DialerExample } from './snippets/DialpadDialer.snippet';

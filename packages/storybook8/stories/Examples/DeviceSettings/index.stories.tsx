@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
 import { Meta } from '@storybook/react';
 import { DeviceSettings as DeviceSettingsStory } from './DeviceSettingsDropDown.story';
 

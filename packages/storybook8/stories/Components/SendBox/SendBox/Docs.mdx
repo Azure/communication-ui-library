@@ -1,16 +1,15 @@
 import { SendBox } from '@azure/communication-react';
-import { Title, Description, Props, Heading, Source, Canvas, Meta, ArgTypes } from '@storybook/addon-docs';
-import { SingleLineBetaBanner } from '../../../BetaBanners/SingleLineBetaBanner';
+import { Canvas, Meta, ArgTypes } from '@storybook/addon-docs';
 import { DetailedBetaBanner } from '../../../BetaBanners/DetailedBetaBanner';
+import { SingleLineBetaBanner } from '../../../BetaBanners/SingleLineBetaBanner';
 
+import * as SendBoxStories from './index.stories';
 import AttachmentUploadsExampleText from '!!raw-loader!./snippets/AttachmentUploads.snippet.tsx';
 import CustomIconExampleText from '!!raw-loader!./snippets/CustomIcon.snippet.tsx';
 import CustomStylingExampleText from '!!raw-loader!./snippets/CustomStyling.snippet.tsx';
 import MentionsExampleText from '!!raw-loader!./snippets/Mentions.snippet.tsx';
 import SendBoxExampleText from '!!raw-loader!./snippets/SendBox.snippet.tsx';
 import SendBoxWithSystemMessageExampleText from '!!raw-loader!./snippets/SendBoxWithSystemMessage.snippet.tsx';
-
-import * as SendBoxStories from './index.stories';
 
 <Meta of={SendBoxStories} component={SendBox} />
 

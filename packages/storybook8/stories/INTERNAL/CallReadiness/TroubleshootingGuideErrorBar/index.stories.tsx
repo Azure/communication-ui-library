@@ -1,11 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+import { _TroubleshootingGuideErrorBar } from '@internal/react-components';
 import { Meta } from '@storybook/react';
 import { controlsToAdd, hiddenControl } from '../../../controlsUtils';
 import { TroubleshootingGuideErrorBar } from './TroubleshootingGuideErrorBar.story';
 export { TroubleshootingGuideErrorBar } from './TroubleshootingGuideErrorBar.story';
-import { _TroubleshootingGuideErrorBar } from '@internal/react-components';
 export const TroubleshootingGuideErrorBarExampleDocsOnly = {
   render: TroubleshootingGuideErrorBar
 };

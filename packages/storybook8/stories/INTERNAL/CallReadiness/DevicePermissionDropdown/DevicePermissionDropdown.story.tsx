@@ -2,9 +2,13 @@
 // Licensed under the MIT License.
 
 import { Icon, IDropdownStyles, mergeStyles } from '@fluentui/react';
-import { useTheme, _DevicePermissionDropdown } from '@internal/react-components';
+import {
+  useTheme,
+  _DevicePermissionDropdown,
+  _DevicePermissionDropdownProps,
+  _DevicePermissionDropdownStrings
+} from '@internal/react-components';
 import React from 'react';
-import { _DevicePermissionDropdownProps, _DevicePermissionDropdownStrings } from '@internal/react-components';
 
 const DevicePermissionDropdownStory = (): JSX.Element => {
   const theme = useTheme();

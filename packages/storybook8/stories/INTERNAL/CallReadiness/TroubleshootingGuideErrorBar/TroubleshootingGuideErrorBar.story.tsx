@@ -2,13 +2,13 @@
 // Licensed under the MIT License.
 
 import { mergeStyles } from '@fluentui/react';
-import React from 'react';
 import {
   _TroubleshootingGuideErrorBarProps,
   _TroubleshootingGuideErrorBarStrings,
   _TroubleshootingGuideErrorBar,
   useTheme
 } from '@internal/react-components';
+import React from 'react';
 
 const TroubleshootingGuideErrorBarStory = (args): JSX.Element => {
   const theme = useTheme();

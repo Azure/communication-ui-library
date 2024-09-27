@@ -2,8 +2,8 @@ import { CallComposite, CustomCallControlButtonCallback } from '@azure/communica
 // eslint-disable-next-line no-restricted-imports
 import { _MockCallAdapter } from '@internal/react-composites';
 import React from 'react';
-import { compositeCanvasContainerStyles } from './CustomButtonInjectionTypes';
 import { addCSS } from '../../../utils';
+import { compositeCanvasContainerStyles } from './CustomButtonInjectionTypes';
 
 //boiler plate for testing
 const maxCustomButtonsForInjection: CustomCallControlButtonCallback[] = [

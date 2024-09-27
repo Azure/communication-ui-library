@@ -3,14 +3,7 @@
 
 import { mergeStyles } from '@fluentui/react';
 import { _StarSurvey as StarSurveyComponent, useTheme } from '@internal/react-components';
-import { Canvas, Description, Heading, Props, Title } from '@storybook/addon-docs';
-import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
-import { COMPONENT_FOLDER_PREFIX } from '../../../constants';
-import { hiddenControl } from '../../../controlsUtils';
-import { StarSurveyExample } from './snippets/StarSurvey.snippet';
-
-const ExampleSurveyText = require('!!raw-loader!./snippets/StarSurvey.snippet.tsx').default;
 
 const StarSurveyStory = (args: any): JSX.Element => {
   const theme = useTheme();

@@ -3,7 +3,6 @@
 
 import { Meta } from '@storybook/react';
 import { controlsToAdd, hiddenControl } from '../../controlsUtils';
-import { CustomButtonInjection as CustomButtonInjectionComponent } from './snippets/CustomButtonInjectionTypes';
 import {
   CustomButtonWithAsyncStateExample,
   CustomButtonWithStateExample,
@@ -13,6 +12,7 @@ import {
   PrimaryCustomButtonInjectionExample,
   SecondaryCustomButtonInjectionExample
 } from './snippets/CustomButtonImages';
+import { CustomButtonInjection as CustomButtonInjectionComponent } from './snippets/CustomButtonInjectionTypes';
 
 export { CustomButtonInjection } from './CustomButtonInjection.story';
 

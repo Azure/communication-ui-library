@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { Meta } from '@storybook/react';
 import { _DrawerMenu as DrawerMenuComponent } from '@internal/react-components';
+import { Meta } from '@storybook/react';
 import { hiddenControl } from '../../../controlsUtils';
 import { DrawerMenu } from './DrawerMenu.story';
 export { DrawerMenu } from './DrawerMenu.story';

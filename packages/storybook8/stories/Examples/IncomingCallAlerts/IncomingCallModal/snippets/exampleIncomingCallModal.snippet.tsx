@@ -1,9 +1,18 @@
 import { StreamMedia, VideoTile } from '@azure/communication-react';
-import { DefaultButton, Persona, PersonaSize, Stack, Dialog, DialogType, DialogFooter } from '@fluentui/react';
-import { VideoOff20Regular, Video20Regular } from '@fluentui/react-icons';
-import { DefaultPalette, mergeStyles } from '@fluentui/react';
-import React from 'react';
+import {
+  DefaultButton,
+  Persona,
+  PersonaSize,
+  Stack,
+  Dialog,
+  DialogType,
+  DialogFooter,
+  DefaultPalette,
+  mergeStyles
+} from '@fluentui/react';
 import { useBoolean } from '@fluentui/react-hooks';
+import { VideoOff20Regular, Video20Regular } from '@fluentui/react-icons';
+import React from 'react';
 
 const palette = DefaultPalette;
 

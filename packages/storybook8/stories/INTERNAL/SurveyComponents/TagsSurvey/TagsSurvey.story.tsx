@@ -10,11 +10,7 @@ import {
   _SurveyTag,
   _VideoIssue
 } from '@internal/react-components';
-import { Canvas, Description, Heading, Props, Title } from '@storybook/addon-docs';
 import React from 'react';
-import { TagsSurveyExample } from './snippets/TagsSurvey.snippet';
-
-const ExampleSurveyText = require('!!raw-loader!./snippets/TagsSurvey.snippet.tsx').default;
 
 const TagsSurveyStory = (): JSX.Element => {
   const strings = {

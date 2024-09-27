@@ -1,10 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import React from 'react';
-import { Lobby as LobbyComponent, LobbyProps } from './snippets/Lobby.snippet';
-import { compositeExperienceContainerStyle } from '../../constants';
 import { Stack } from '@fluentui/react';
+import React from 'react';
+import { compositeExperienceContainerStyle } from '../../constants';
+import { Lobby as LobbyComponent, LobbyProps } from './snippets/Lobby.snippet';
 
 const LobbyStory: (args: LobbyProps) => JSX.Element = (args) => {
   return (

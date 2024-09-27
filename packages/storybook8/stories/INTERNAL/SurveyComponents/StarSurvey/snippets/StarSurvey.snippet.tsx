@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { _StarSurvey as StarSurvey } from '@internal/react-components';
 import { FluentThemeProvider } from '@azure/communication-react';
+import { _StarSurvey as StarSurvey } from '@internal/react-components';
 import React from 'react';
 
 export const StarSurveyExample: () => JSX.Element = () => {

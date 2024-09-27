@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
 import { Meta } from '@storybook/react/*';
 import { controlsToAdd } from '../../controlsUtils';
 import { LocalPreview as LocalPreviewExample } from './LocalPreview.story';

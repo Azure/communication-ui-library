@@ -1,6 +1,5 @@
-import { IconButton, Persona, PersonaSize, Stack } from '@fluentui/react';
+import { IconButton, Persona, PersonaSize, Stack, DefaultPalette, mergeStyles } from '@fluentui/react';
 import { CallEnd20Filled, Call20Filled } from '@fluentui/react-icons';
-import { DefaultPalette, mergeStyles } from '@fluentui/react';
 import React from 'react';
 
 const palette = DefaultPalette;

@@ -9,11 +9,11 @@ import {
   useTheme,
   DEFAULT_COMPONENT_ICONS
 } from '@azure/communication-react';
+import { initializeIcons, registerIcons } from '@fluentui/react';
 import React from 'react';
 
 // Don't import this. It's just a helper for the story.
 import { useVideoStreams } from '../../../../utils';
-import { initializeIcons, registerIcons } from '@fluentui/react';
 
 export interface LobbyProps {
   isVideoReady: boolean;
