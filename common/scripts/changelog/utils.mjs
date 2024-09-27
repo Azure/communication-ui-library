@@ -8,7 +8,7 @@ export function parseNewChangeFiles(stdout) {
     // Filter out the lines that are not changefiles
     const matches = lines.filter(line => line.startsWith('A'));
     console.log("1", matches.map(line => line.split('\t')[1]));
-    console.log("2", matches.map(match => match[1]););
+    console.log("2", matches.map(match => match[1]));
 
     return matches.map(line => line.split('\t')[1]);
 }
