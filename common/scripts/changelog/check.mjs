@@ -32,8 +32,13 @@ async function main() {
   // Check if the files are still present
   const currentStableFiles = await exec_output(`git diff --name-status ${base}..${head} -- ${CHANGE_DIR_STABLE}`);
   const currentBetaFiles = await exec_output(`git diff --name-status ${base}..${head} -- ${CHANGE_DIR_BETA}`);
-  const currentFilesList = [...currentStableFiles, ...currentBetaFiles].split('\n').filter(line => line.startsWith('A')).map(line => line.split('\t')[1]);
-console.log("currentFilesList", currentFilesList);
+  console.log("currentStableFiles", currentStableFiles);
+  console.log("currentBetaFiles", currentBetaFiles);
+  const currentFilesStableList = currentStableFiles.split('\n').filter(line => line.startsWith('A')).map(line => line.split('\t')[1]);
+  const currentFilesSBetaList = currentBetaFiles.split('\n').filter(line => line.startsWith('A')).map(line => line.split('\t')[1]);
+console.log("currentFilesStableList", currentFilesStableList);
+  console.log("currentFilesSBetaList", currentFilesSBetaList);
+  const currentFilesList = [...currentFilesStableList, ...currentFilesSBetaList];
   // Filter out the deleted files
   const finalChangeFiles = allNewChangeFiles.filter(file => currentFilesList.includes(file));
 
