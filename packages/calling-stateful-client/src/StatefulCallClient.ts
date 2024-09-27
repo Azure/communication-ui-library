@@ -5,12 +5,9 @@ import { deviceManagerDeclaratify } from './DeviceManagerDeclarative';
 import { CallClient, CallClientOptions, CreateViewOptions, DeviceManager } from '@azure/communication-calling';
 /* @conditional-compile-remove(unsupported-browser) */
 import { Features } from '@azure/communication-calling';
-import {
-  CallClientState,
-  LocalVideoStreamState,
-  RemoteVideoStreamState,
-  TogetherModeStreamState
-} from './CallClientState';
+import { CallClientState, LocalVideoStreamState, RemoteVideoStreamState } from './CallClientState';
+/* @conditional-compile-remove(together-mode) */
+import { TogetherModeStreamState } from './CallClientState';
 import { CallContext } from './CallContext';
 import { callAgentDeclaratify, DeclarativeCallAgent } from './CallAgentDeclarative';
 import { InternalCallContext } from './InternalCallContext';
@@ -119,8 +116,7 @@ export interface StatefulCallClient extends CallClient {
     stream:
       | LocalVideoStreamState
       | RemoteVideoStreamState
-      /* @conditional-compile-remove(together-mode) */
-      | TogetherModeStreamState,
+      | /* @conditional-compile-remove(together-mode) */ TogetherModeStreamState,
     options?: CreateViewOptions
   ): Promise<CreateViewResult | undefined>;
   /**

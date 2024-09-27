@@ -1,12 +1,16 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+/* @conditional-compile-remove(together-mode) */
 import { TogetherModeCallFeature, TogetherModeVideoStream } from '@azure/communication-calling';
+/* @conditional-compile-remove(together-mode) */
 import { CallContext } from './CallContext';
+/* @conditional-compile-remove(together-mode) */
 import { CallIdRef } from './CallIdRef';
 /**
  * @private
  */
+/* @conditional-compile-remove(together-mode) */
 export class TogetherModeSubscriber {
   private _callIdRef: CallIdRef;
   private _context: CallContext;

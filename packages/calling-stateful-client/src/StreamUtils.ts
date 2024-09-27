@@ -9,7 +9,9 @@ import {
   VideoStreamRendererView
 } from '@azure/communication-calling';
 import { CommunicationIdentifierKind } from '@azure/communication-common';
-import { LocalVideoStreamState, RemoteVideoStreamState, TogetherModeStreamState } from './CallClientState';
+import { LocalVideoStreamState, RemoteVideoStreamState } from './CallClientState';
+/* @conditional-compile-remove(together-mode) */
+import { TogetherModeStreamState } from './CallClientState';
 import { CallContext } from './CallContext';
 import {
   convertSdkLocalStreamToDeclarativeLocalStream,
@@ -38,8 +40,7 @@ async function createViewVideo(
   stream?:
     | RemoteVideoStreamState
     | LocalVideoStreamState
-    /* @conditional-compile-remove(together-mode) */
-    | TogetherModeStreamState,
+    | /* @conditional-compile-remove(together-mode) */ TogetherModeStreamState,
   participantId?: CommunicationIdentifierKind | string,
   options?: CreateViewOptions
 ): Promise<CreateViewResult | undefined> {
@@ -495,8 +496,7 @@ export function createView(
   stream:
     | LocalVideoStreamState
     | RemoteVideoStreamState
-    /* @conditional-compile-remove(together-mode) */
-    | TogetherModeStreamState,
+    | /* @conditional-compile-remove(together-mode) */ TogetherModeStreamState,
   options?: CreateViewOptions
 ): Promise<CreateViewResult | undefined> {
   const streamType = stream.mediaStreamType;
