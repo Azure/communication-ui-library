@@ -30,8 +30,8 @@ async function main() {
   const allNewChangeFiles = [...newStableChangeFiles, ...newBetaChangeFiles];
 
   // Check if the files are still present
-  const currentStableFiles = await exec_output(`git diff --name-status ${base}..${head} -- ${CHANGE_DIR_STABLE}`);
-  const currentBetaFiles = await exec_output(`git diff --name-status ${base}..${head} -- ${CHANGE_DIR_BETA}`);
+  const currentStableFiles = await exec_output(`git diff --diff-filter=A --name-status ${base}..${head} -- ${CHANGE_DIR_STABLE}`);
+  const currentBetaFiles = await exec_output(`git diff --diff-filter=A --name-status ${base}..${head} -- ${CHANGE_DIR_BETA}`);
   console.log("currentStableFiles", currentStableFiles);
   console.log("currentBetaFiles", currentBetaFiles);
   const currentFilesStableList = currentStableFiles.split('\n').filter(line => line.startsWith('A')).map(line => line.split('\t')[1]);
