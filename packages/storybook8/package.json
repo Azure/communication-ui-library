@@ -15,7 +15,8 @@
     "snapshot:update": "rushx test --update-snapshot",
     "prettier": "prettier --no-error-on-unmatched-pattern --write --config ../../.prettierrc --ignore-path=../../.prettierignore \"**/*.js\" \"**/*.jsx\" \"**/*.ts\" \"**/*.tsx\"",
     "prettier:check": "prettier --no-error-on-unmatched-pattern --check --config ../../.prettierrc --ignore-path=../../.prettierignore \"**/*.js\" \"**/*.jsx\" \"**/*.ts\" \"**/*.tsx\"",
-    "lint": "node ./scripts/lint.mjs",
+    "lint": "echo Storybook 8 lint via 'lint-s8' target",
+    "lint-s8": "node ./scripts/lint.mjs",
     "lint:fix": "rushx lint --fix --",
     "lint:quiet": "rushx lint -- --quiet"
   },
