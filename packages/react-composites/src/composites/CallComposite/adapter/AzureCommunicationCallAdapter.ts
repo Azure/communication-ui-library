@@ -498,11 +498,15 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
       console.log(
         'DEBUG2 clientState.calls: ',
         Object.values(clientState.calls)
-          .map((c) => `${c.id}-${c.state}${c.breakoutRooms?.breakoutRoomOriginCallId ? '(BR)' : ''}`)
+          .map(
+            (c) =>
+              `${c.id}-${c.state}${c.breakoutRooms?.breakoutRoomOriginCallId ? '-(BR)' : ''}${this.call?.id === c.id ? '-(current)' : ''}`
+          )
           .join(', ')
       );
+      console.log('DEBUG2 call.id: ', this.call?.id);
 
-      console.log('DEBUG2 this.callAgent.calls: ', this.callAgent.calls.map((c) => `${c.id}-${c.state}`).join(', '));
+      //console.log('DEBUG2 this.callAgent.calls: ', this.callAgent.calls.map((c) => `${c.id}-${c.state}`).join(', '));
 
       // if the call hits the connected state we want to pause all calling sounds if playing.
       if (this.call?.state === 'Connected' && this.callingSoundSubscriber?.playingSounds) {
@@ -537,9 +541,8 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     if (this.callAgent.kind === 'CallAgent') {
       const onCallsUpdated = (args: { added: Call[]; removed: Call[] }): void => {
         if (this.call?.id) {
-          console.log('Added calls: ', args.added);
-          console.log('Origin call id: ', this.originCall?.id);
-          console.log('this.call.id: ', this.call?.id);
+          console.log('Added calls: ', args.added.map((call) => call.id).join(', '));
+          console.log('Removed calls: ', args.removed.map((call) => call.id).join(', '));
           for (const call of args.added) {
             if (call.id === this.originCall?.id) {
               this.originCall = call;
@@ -589,6 +592,8 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
       console.log('DEBUG Assigned breakout rooms closed');
       await this.originCall?.hangUp();
       this.returnFromBreakoutRoom();
+    } else if (eventData.type === 'rejoinMainMeeting') {
+      alert('WOW');
     }
   };
 
@@ -1069,6 +1074,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
       onResolveDeepNoiseSuppressionDependency: this.onResolveDeepNoiseSuppressionDependency
     });
     this.subscribeCallEvents();
+    console.log('DEBUG2 PROCESSED NEW CALL: ', call.id);
   }
 
   private isBlurEffect(effect: VideoBackgroundEffect): effect is VideoBackgroundBlurEffect {
