@@ -3,7 +3,7 @@
 ## [1.20.0-beta.1](https://github.com/azure/communication-ui-library/tree/1.20.0-beta.1)
 
 Tue, 01 Oct 2024 17:03:44 GMT 
-[Compare changes](https://github.com/azure/communication-ui-library/compare/1.19.0...1.20.0-beta.1)
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.19.0-beta.3...1.20.0-beta.1)
 
 ### Features
 
@@ -24,7 +24,7 @@ Azure Communication services is excited to introduce a new way to consume our Co
 - Fix compliance notification not showing that transcription has stopped in react18 strict mode ([PR #5092](https://github.com/azure/communication-ui-library/pull/5092) by 2684369+JamesBurnside@users.noreply.github.com)
 - Safely subscribe to on stateChanged events to prevent related events from failing if listeners throw an error ([PR #5165](https://github.com/azure/communication-ui-library/pull/5165) by edwardlee@microsoft.com)
 - Introduce logic to flag when the `AzureCommunicationServicesChatAdapter` is in the middle of creation when using the react hook: `useAzureCommunicationServicesChatAdapter` ([PR #5182](https://github.com/azure/communication-ui-library/pull/5182) by 9044372+JoshuaLai@users.noreply.github.com)
-- Fix call control configuration API. There was an issue where some controls weren't hidden when configured to be removed. ([PR #5193](https://github.com/azure/communication-ui-library/pull/5193) by dmceachern@microsoft.com)
+- Fix call control configuration API there was an issue where some controls weren't hidden when configured to be removed ([PR #5193](https://github.com/azure/communication-ui-library/pull/5193) by dmceachern@microsoft.com)
 
 
 ## [1.19.0-beta.3](https://github.com/azure/communication-ui-library/tree/1.19.0-beta.3)
