@@ -1,40 +1,30 @@
 # Change Log - @azure/communication-react
 
-<!-- This log was last generated on Tue, 01 Oct 2024 17:03:44 GMT and should not be manually modified. -->
-
-<!-- Start content -->
-
 ## [1.20.0-beta.1](https://github.com/azure/communication-ui-library/tree/1.20.0-beta.1)
 
 Tue, 01 Oct 2024 17:03:44 GMT 
 [Compare changes](https://github.com/azure/communication-ui-library/compare/1.19.0...1.20.0-beta.1)
 
 ### Features
-- Move loaders to external directory import ([PR #5106](https://github.com/azure/communication-ui-library/pull/5106) by dmceachern@microsoft.com)
-- DNS update design and set on default toggle to true ([PR #5130](https://github.com/azure/communication-ui-library/pull/5130) by 97124699+prabhjot-msft@users.noreply.github.com)
-- Add waiting overlay when only one person is in the call ([PR #5054](https://github.com/azure/communication-ui-library/pull/5054) by 96077406+carocao-msft@users.noreply.github.com)
-- Conceptual docs for DNS ([PR #5145](https://github.com/azure/communication-ui-library/pull/5145) by 97124699+prabhjot-msft@users.noreply.github.com)
-- Update API per Team discussion ([PR #5073](https://github.com/azure/communication-ui-library/pull/5073) by dmceachern@microsoft.com)
-- Add default option in CallWithChat ([PR #5157](https://github.com/azure/communication-ui-library/pull/5157) by 97124699+prabhjot-msft@users.noreply.github.com)
-- Azure Communication services is excited to introduce a new way to consume our Composite experiences. If you are wanting to use the Azure Communication Services UI library Composites and don't develop in react, we are introducing a series of loader functions to allow you to use the Composites in your application. These functions load a react node and attach it to your application allowing you to use the Composites as if you were building in react. ([PR #5226](https://github.com/azure/communication-ui-library/pull/5226) by dmceachern@microsoft.com)
-- Update inbound components to address the Accessibility concerns\ ([PR #5067](https://github.com/azure/communication-ui-library/pull/5067) by dmceachern@microsoft.com)
-- ARB comments ([PR #5143](https://github.com/azure/communication-ui-library/pull/5143) by 97124699+prabhjot-msft@users.noreply.github.com)
-- Add toggle for DNS on by default and hide DNS button in adapter options ([PR #5095](https://github.com/azure/communication-ui-library/pull/5095) by 97124699+prabhjot-msft@users.noreply.github.com)
-- Stabilize, Inbound calling, PSTN, Teams Adhoc calling ([PR #4958](https://github.com/azure/communication-ui-library/pull/4958) by dmceachern@microsoft.com)
-- Add DNS toggle to Microphone button menu options ([PR #5085](https://github.com/azure/communication-ui-library/pull/5085) by 97124699+prabhjot-msft@users.noreply.github.com)
-- GA acs captions ([PR #5084](https://github.com/azure/communication-ui-library/pull/5084) by 96077406+carocao-msft@users.noreply.github.com)
-- [DNS] Adapter API changes and common calling handlers ([PR #5062](https://github.com/azure/communication-ui-library/pull/5062) by 97124699+prabhjot-msft@users.noreply.github.com)
+
+#### JavaScript loaders
+
+Azure Communication services is excited to introduce a new way to consume our Composite experiences. If you are wanting to use the Azure Communication Services UI library Composites and don't develop in react, we are introducing a series of loader functions to allow you to use the Composites in your application. These functions load a react node and attach it to your application allowing you to use the Composites as if you were building in react.
+
 ### Improvements
+
 - Change logic of showing button to join breakout room when the breakout room call is available ([PR #5109](https://github.com/azure/communication-ui-library/pull/5109) by 79475487+mgamis-msft@users.noreply.github.com)
+- Add waiting overlay when only one person is in the call ([PR #5054](https://github.com/azure/communication-ui-library/pull/5054) by 96077406+carocao-msft@users.noreply.github.com)
+- Add new sub package `@azure/communication-react/javascript-loaders` to export the JavaScript loader functions ([PR #5106](https://github.com/azure/communication-ui-library/pull/5106) by dmceachern@microsoft.com)
+
 ### Bug Fixes
-- White spaces handling update for text messages in message components ([PR #5225](https://github.com/azure/communication-ui-library/pull/5225) by 98852890+vhuseinova-msft@users.noreply.github.com)
+
+- Add better white space handling for text messages in message components ([PR #5225](https://github.com/azure/communication-ui-library/pull/5225) by 98852890+vhuseinova-msft@users.noreply.github.com)
 - Delete joined and closing breakout room notifications when user is unassigned from breakout room or re-assigned to a closed breakout room ([PR #5108](https://github.com/azure/communication-ui-library/pull/5108) by 79475487+mgamis-msft@users.noreply.github.com)
-- Hide DNS on Safari ([PR #5159](https://github.com/azure/communication-ui-library/pull/5159) by 97124699+prabhjot-msft@users.noreply.github.com)
 - Fix compliance notification not showing that transcription has stopped in react18 strict mode ([PR #5092](https://github.com/azure/communication-ui-library/pull/5092) by 2684369+JamesBurnside@users.noreply.github.com)
 - Safely subscribe to on stateChanged events to prevent related events from failing if listeners throw an error ([PR #5165](https://github.com/azure/communication-ui-library/pull/5165) by edwardlee@microsoft.com)
-- Adding logic to flag when the adapter is in the middle of creation ([PR #5182](https://github.com/azure/communication-ui-library/pull/5182) by 9044372+JoshuaLai@users.noreply.github.com)
-- Add new sub package to communication react to import the loader functions ([PR #5106](https://github.com/azure/communication-ui-library/pull/5106) by dmceachern@microsoft.com)
-- Fix Call Controls to allow proper customization of buttons shown ([PR #5193](https://github.com/azure/communication-ui-library/pull/5193) by dmceachern@microsoft.com)
+- Introduce logic to flag when the `AzureCommunicationServicesChatAdapter` is in the middle of creation when using the react hook: `useAzureCommunicationServicesChatAdapter` ([PR #5182](https://github.com/azure/communication-ui-library/pull/5182) by 9044372+JoshuaLai@users.noreply.github.com)
+- Fix call control configuration API. There was an issue where some controls weren't hidden when configured to be removed. ([PR #5193](https://github.com/azure/communication-ui-library/pull/5193) by dmceachern@microsoft.com)
 
 
 ## [1.19.0-beta.3](https://github.com/azure/communication-ui-library/tree/1.19.0-beta.3)
