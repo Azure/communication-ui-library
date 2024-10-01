@@ -8,6 +8,7 @@
 
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { AudioDeviceInfo } from '@azure/communication-calling';
+import { AudioEffectsStartConfig } from '@azure/communication-calling';
 import { BackgroundBlurConfig } from '@azure/communication-calling';
 import { BackgroundBlurEffect } from '@azure/communication-calling';
 import { BackgroundReplacementConfig } from '@azure/communication-calling';
@@ -42,6 +43,7 @@ import { DeviceAccess } from '@azure/communication-calling';
 import { DeviceManager } from '@azure/communication-calling';
 import { DominantSpeakersInfo } from '@azure/communication-calling';
 import { DtmfTone as DtmfTone_2 } from '@azure/communication-calling';
+import { EnvironmentInfo } from '@azure/communication-calling';
 import { GroupCallLocator } from '@azure/communication-calling';
 import { IButtonProps } from '@fluentui/react';
 import { IButtonStyles } from '@fluentui/react';
@@ -269,6 +271,7 @@ export interface CallAdapterCallOperations {
     addParticipant(participant: PhoneNumberIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
     // (undocumented)
     addParticipant(participant: CommunicationUserIdentifier): Promise<void>;
+    allowUnsupportedBrowserVersion(): void;
     createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void | CreateVideoStreamViewResult>;
     disposeLocalVideoStreamView(): Promise<void>;
     disposeRemoteVideoStreamView(remoteUserId: string): Promise<void>;
@@ -289,12 +292,16 @@ export interface CallAdapterCallOperations {
     setSpokenLanguage(language: string): Promise<void>;
     startCamera(options?: VideoStreamOptions): Promise<void>;
     startCaptions(options?: StartCaptionsAdapterOptions): Promise<void>;
+    // @beta
+    startNoiseSuppressionEffect(): Promise<void>;
     startScreenShare(): Promise<void>;
     startSpotlight(userIds?: string[]): Promise<void>;
     startVideoBackgroundEffect(videoBackgroundEffect: VideoBackgroundEffect): Promise<void>;
     stopAllSpotlight(): Promise<void>;
     stopCamera(): Promise<void>;
     stopCaptions(options?: StopCaptionsAdapterOptions): Promise<void>;
+    // @beta
+    stopNoiseSuppressionEffect(): Promise<void>;
     stopScreenShare(): Promise<void>;
     stopSpotlight(userIds?: string[]): Promise<void>;
     stopVideoBackgroundEffects(): Promise<void>;
@@ -317,9 +324,13 @@ export type CallAdapterClientState = {
     isRoomsCall: boolean;
     latestErrors: AdapterErrors;
     alternateCallerId?: string;
+    environmentInfo?: EnvironmentInfo;
     cameraStatus?: 'On' | 'Off';
     videoBackgroundImages?: VideoBackgroundImage[];
     onResolveVideoEffectDependency?: () => Promise<VideoBackgroundEffectsDependency>;
+    onResolveDeepNoiseSuppressionDependency?: () => Promise<DeepNoiseSuppressionEffectDependency>;
+    deepNoiseSuppressionOnByDefault?: boolean;
+    hideDeepNoiseSuppressionButton?: boolean;
     selectedVideoBackgroundEffect?: VideoBackgroundEffect;
     acceptedTransferCallState?: CallState;
     hideAttendeeNames?: boolean;
@@ -392,6 +403,7 @@ export interface CallAdapterSubscribers {
 export type CallAdapterUiState = {
     isLocalPreviewMicrophoneEnabled: boolean;
     page: CallCompositePage;
+    unsupportedBrowserVersionsAllowed?: boolean;
 };
 
 // @public
@@ -438,6 +450,7 @@ export interface CallClientState {
         [key: string]: CallState;
     };
     deviceManager: DeviceManagerState;
+    environmentInfo?: EnvironmentInfo;
     incomingCalls: {
         [key: string]: IncomingCallState | TeamsIncomingCallState;
     };
@@ -542,6 +555,7 @@ export type CallCompositeOptions = {
     };
     errorBar?: boolean;
     callControls?: boolean | CallControlOptions;
+    onEnvironmentInfoTroubleshootingClick?: () => void;
     remoteVideoTileMenuOptions?: RemoteVideoTileMenuOptions;
     localVideoTile?: boolean | LocalVideoTileOptions;
     videoTilesOptions?: VideoTilesOptions;
@@ -572,7 +586,7 @@ export type CallCompositeOptions = {
 };
 
 // @public
-export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configuration' | 'hold' | 'joinCallFailedDueToNoNetwork' | 'leftCall' | 'leaving' | 'lobby' | 'removedFromCall' | 'transferring' | 'badRequest';
+export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configuration' | 'hold' | 'joinCallFailedDueToNoNetwork' | 'leftCall' | 'leaving' | 'lobby' | 'removedFromCall' | 'unsupportedEnvironment' | 'transferring' | 'badRequest';
 
 // @public
 export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcons> {
@@ -843,6 +857,7 @@ export interface CallingHandlers extends CommonCallingHandlers {
 // @public
 export type CallingHandlersOptions = {
     onResolveVideoBackgroundEffectsDependency?: () => Promise<VideoBackgroundEffectsDependency>;
+    onResolveDeepNoiseSuppressionDependency?: () => Promise<DeepNoiseSuppressionEffectDependency>;
 };
 
 // @public
@@ -948,6 +963,7 @@ export interface CallWithChatAdapterManagement {
     addParticipant(participant: PhoneNumberIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
     // (undocumented)
     addParticipant(participant: CommunicationUserIdentifier): Promise<void>;
+    allowUnsupportedBrowserVersion(): void;
     askDevicePermission(constrain: PermissionConstraints): Promise<void>;
     createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void | CreateVideoStreamViewResult>;
     deleteMessage(messageId: string): Promise<void>;
@@ -989,12 +1005,16 @@ export interface CallWithChatAdapterManagement {
     startCall(participants: (MicrosoftTeamsAppIdentifier | PhoneNumberIdentifier | CommunicationUserIdentifier | MicrosoftTeamsUserIdentifier | UnknownIdentifier)[], options?: StartCallOptions): Call | undefined;
     startCamera(options?: VideoStreamOptions): Promise<void>;
     startCaptions(options?: StartCaptionsAdapterOptions): Promise<void>;
+    // @beta
+    startNoiseSuppressionEffect(): Promise<void>;
     startScreenShare(): Promise<void>;
     startSpotlight(userIds?: string[]): Promise<void>;
     startVideoBackgroundEffect(videoBackgroundEffect: VideoBackgroundEffect): Promise<void>;
     stopAllSpotlight(): Promise<void>;
     stopCamera(): Promise<void>;
     stopCaptions(options?: StopCaptionsAdapterOptions): Promise<void>;
+    // @beta
+    stopNoiseSuppressionEffect(): Promise<void>;
     stopScreenShare(): Promise<void>;
     stopSpotlight(userIds?: string[]): Promise<void>;
     stopVideoBackgroundEffects(): Promise<void>;
@@ -1121,6 +1141,8 @@ export interface CallWithChatAdapterSubscriptions {
 export interface CallWithChatAdapterUiState {
     isLocalPreviewMicrophoneEnabled: boolean;
     page: CallCompositePage;
+    // @beta
+    unsupportedBrowserVersionsAllowed?: boolean;
 }
 
 // @public
@@ -1128,13 +1150,20 @@ export interface CallWithChatClientState {
     alternateCallerId?: string;
     call?: CallState;
     chat?: ChatThreadClientState;
+    // @beta
+    deepNoiseSuppressionOnByDefault?: boolean;
     devices: DeviceManagerState;
     displayName: string | undefined;
+    environmentInfo?: EnvironmentInfo;
     hideAttendeeNames?: boolean;
+    // @beta
+    hideDeepNoiseSuppressionButton?: boolean;
     isTeamsCall: boolean;
     isTeamsMeeting: boolean;
     latestCallErrors: AdapterErrors;
     latestChatErrors: AdapterErrors;
+    // @beta
+    onResolveDeepNoiseSuppressionDependency?: () => Promise<DeepNoiseSuppressionEffectDependency>;
     onResolveVideoEffectDependency?: () => Promise<VideoBackgroundEffectsDependency>;
     reactions?: ReactionResources;
     selectedVideoBackgroundEffect?: VideoBackgroundEffect;
@@ -1225,6 +1254,7 @@ export type CallWithChatCompositeIcons = {
 // @public
 export type CallWithChatCompositeOptions = {
     callControls?: boolean | CallWithChatControlOptions;
+    onEnvironmentInfoTroubleshootingClick?: () => void;
     remoteVideoTileMenuOptions?: RemoteVideoTileMenuOptions;
     localVideoTile?: boolean | LocalVideoTileOptions;
     galleryOptions?: {
@@ -1760,6 +1790,11 @@ export type CommonCallAdapterOptions = {
         videoBackgroundImages?: VideoBackgroundImage[];
         onResolveDependency?: () => Promise<VideoBackgroundEffectsDependency>;
     };
+    deepNoiseSuppressionOptions?: {
+        onResolveDependency?: () => Promise<DeepNoiseSuppressionEffectDependency>;
+        deepNoiseSuppressionOnByDefault?: boolean;
+        hideDeepNoiseSuppressionButton?: boolean;
+    };
     onFetchProfile?: OnFetchProfileCallback;
     callingSounds?: CallingSounds;
     reactionResources?: ReactionResources;
@@ -1872,6 +1907,8 @@ export interface CommonCallingHandlers {
     // (undocumented)
     onStartLocalVideo: () => Promise<void>;
     // (undocumented)
+    onStartNoiseSuppressionEffect: () => Promise<void>;
+    // (undocumented)
     onStartScreenShare: () => Promise<void>;
     // (undocumented)
     onStartSpotlight: (userIds?: string[]) => Promise<void>;
@@ -1879,6 +1916,8 @@ export interface CommonCallingHandlers {
     onStopAllSpotlight: () => Promise<void>;
     // (undocumented)
     onStopCaptions: () => Promise<void>;
+    // (undocumented)
+    onStopNoiseSuppressionEffect: () => Promise<void>;
     // (undocumented)
     onStopScreenShare: () => Promise<void>;
     // (undocumented)
@@ -2008,6 +2047,9 @@ export interface ComponentStrings {
     screenShareButton: ScreenShareButtonStrings;
     sendBox: SendBoxStrings;
     typingIndicator: TypingIndicatorStrings;
+    UnsupportedBrowser: UnsupportedBrowserStrings;
+    UnsupportedBrowserVersion: UnsupportedBrowserVersionStrings;
+    UnsupportedOperatingSystem: UnsupportedOperatingSystemStrings;
     verticalGallery: VerticalGalleryStrings;
     videoGallery: VideoGalleryStrings;
     videoTile: VideoTileStrings;
@@ -2190,6 +2232,7 @@ export const createDefaultChatHandlers: (chatClient: StatefulChatClient, chatThr
 // @public
 export const createDefaultTeamsCallingHandlers: (callClient: StatefulCallClient, callAgent?: TeamsCallAgent, deviceManager?: StatefulDeviceManager, call?: TeamsCall, options?: {
     onResolveVideoBackgroundEffectsDependency?: () => Promise<VideoBackgroundEffectsDependency>;
+    onResolveDeepNoiseSuppressionDependency?: () => Promise<DeepNoiseSuppressionEffectDependency>;
 }) => TeamsCallingHandlers;
 
 // @public
@@ -2278,6 +2321,11 @@ export type DeclarativeCallAgent = CallAgent & IncomingCallManagement;
 // @public
 export type DeclarativeTeamsCallAgent = TeamsCallAgent & TeamsIncomingCallManagement;
 
+// @beta
+export type DeepNoiseSuppressionEffectDependency = {
+    deepNoiseSuppressionEffect: AudioEffectsStartConfig;
+};
+
 // @public
 export const DEFAULT_COMPONENT_ICONS: {
     ChatMessageOptions: React_2.JSX.Element;
@@ -2338,6 +2386,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     SendBoxSendHovered: React_2.JSX.Element;
     VideoTileMicOff: React_2.JSX.Element;
     DialpadBackspace: React_2.JSX.Element;
+    UnsupportedEnvironmentWarning: React_2.JSX.Element;
     VideoTilePinned: React_2.JSX.Element;
     ParticipantItemPinned: React_2.JSX.Element;
     VideoTileMoreOptions: React_2.JSX.Element;
@@ -2486,6 +2535,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     HoldCallButton: React_2.JSX.Element;
     ResumeCall: React_2.JSX.Element;
     DialpadBackspace: React_2.JSX.Element;
+    UnsupportedEnvironmentWarning: React_2.JSX.Element;
     VideoTilePinned: React_2.JSX.Element;
     ParticipantItemPinned: React_2.JSX.Element;
     VideoTileMoreOptions: React_2.JSX.Element;
@@ -3238,12 +3288,18 @@ export interface MicrophoneButtonContextualMenuStyles extends IContextualMenuSty
 // @public
 export interface MicrophoneButtonProps extends ControlBarButtonProps {
     enableDeviceSelectionMenu?: boolean;
+    // @beta
+    isDeepNoiseSuppressionOn?: boolean;
     microphones?: OptionsDevice[];
+    // @beta
+    onClickNoiseSuppression?: () => void;
     onSelectMicrophone?: (device: OptionsDevice) => Promise<void>;
     onSelectSpeaker?: (device: OptionsDevice) => Promise<void>;
     onToggleMicrophone?: () => Promise<void>;
     selectedMicrophone?: OptionsDevice;
     selectedSpeaker?: OptionsDevice;
+    // @beta
+    showNoiseSuppressionButton?: boolean;
     speakers?: OptionsDevice[];
     strings?: Partial<MicrophoneButtonStrings>;
     styles?: Partial<MicrophoneButtonStyles>;
@@ -3261,6 +3317,12 @@ export type MicrophoneButtonSelector = (state: CallClientState, props: CallingBa
 
 // @public
 export interface MicrophoneButtonStrings {
+    // @beta
+    deepNoiseSuppressionOffAnnouncement?: string;
+    // @beta
+    deepNoiseSuppressionOnAnnouncement?: string;
+    // @beta
+    deepNoiseSuppressionTitle?: string;
     microphoneActionTurnedOffAnnouncement?: string;
     microphoneActionTurnedOnAnnouncement?: string;
     microphoneAriaDescription?: string;
@@ -3391,6 +3453,12 @@ export type OnFetchProfileCallback = (userId: string, defaultProfile?: Profile) 
 export type OnRenderAvatarCallback = (
 userId?: string, options?: CustomAvatarOptions,
 defaultOnRender?: (props: CustomAvatarOptions) => JSX.Element) => JSX.Element | undefined;
+
+// @beta
+export const onResolveDeepNoiseSuppressionDependency: () => Promise<DeepNoiseSuppressionEffectDependency>;
+
+// @beta
+export const onResolveDeepNoiseSuppressionDependencyLazy: () => Promise<DeepNoiseSuppressionEffectDependency>;
 
 // @public
 export const onResolveVideoEffectDependency: () => Promise<VideoBackgroundEffectsDependency>;
@@ -4192,6 +4260,56 @@ export interface TypingIndicatorStrings {
 export interface TypingIndicatorStylesProps extends BaseCustomStyles {
     typingString?: IStyle;
     typingUserDisplayName?: IStyle;
+}
+
+// @beta
+export const UnsupportedBrowser: (props: UnsupportedBrowserProps) => JSX.Element;
+
+// @beta
+export interface UnsupportedBrowserProps {
+    onTroubleshootingClick?: () => void;
+    strings?: UnsupportedBrowserStrings;
+}
+
+// @beta
+export interface UnsupportedBrowserStrings {
+    moreHelpLinkText: string;
+    primaryText: string;
+    secondaryText: string;
+}
+
+// @beta
+export const UnsupportedBrowserVersion: (props: UnsupportedBrowserVersionProps) => JSX.Element;
+
+// @beta
+export interface UnsupportedBrowserVersionProps {
+    onContinueAnywayClick?: () => void;
+    onTroubleshootingClick?: () => void;
+    strings?: UnsupportedBrowserVersionStrings;
+}
+
+// @beta
+export interface UnsupportedBrowserVersionStrings {
+    continueAnywayButtonText?: string;
+    moreHelpLinkText: string;
+    primaryText: string;
+    secondaryText: string;
+}
+
+// @beta
+export const UnsupportedOperatingSystem: (props: UnsupportedOperatingSystemProps) => JSX.Element;
+
+// @beta
+export interface UnsupportedOperatingSystemProps {
+    onTroubleshootingClick?: () => void;
+    strings?: UnsupportedOperatingSystemStrings;
+}
+
+// @beta
+export interface UnsupportedOperatingSystemStrings {
+    moreHelpLinkText: string;
+    primaryText: string;
+    secondaryText: string;
 }
 
 // @public

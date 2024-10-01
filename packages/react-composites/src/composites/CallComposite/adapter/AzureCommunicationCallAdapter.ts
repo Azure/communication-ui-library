@@ -298,8 +298,8 @@ class CallContext {
       call,
       latestEndedCall,
       transferCall,
-      /* @conditional-compile-remove(breakout-rooms) */ originCall,
-      /* @conditional-compile-remove(unsupported-browser) */ environmentInfo
+      /* @conditional-compile-remove(unsupported-browser) */ environmentInfo,
+      /* @conditional-compile-remove(breakout-rooms) */ originCall
     );
     if (!IsCallEndedPage(oldPage) && IsCallEndedPage(newPage)) {
       this.emitter.emit('callEnded', { callId: this.callId });

@@ -111,7 +111,9 @@ import { _pxToRem } from '@internal/acs-ui-common';
 import React from 'react';
 import { useTheme } from './FluentThemeProvider';
 /* @conditional-compile-remove(call-readiness) */
-import { sitePermissionIconBackgroundStyle, scaledIconStyles } from './icons.styles';
+import { sitePermissionIconBackgroundStyle } from './icons.styles';
+/* @conditional-compile-remove(unsupported-browser) */ /* @conditional-compile-remove(call-readiness) */
+import { scaledIconStyles } from './icons.styles';
 import { Call20Filled } from '@fluentui/react-icons';
 
 /**

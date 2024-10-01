@@ -13,7 +13,7 @@ import {
 import { _ModalClone } from '@internal/react-components';
 /* @conditional-compile-remove(call-readiness) */
 import { drawerContainerStyles } from '../styles/CallComposite.styles';
-/* @conditional-compile-remove(unsupported-browser) */
+/* @conditional-compile-remove(call-readiness) */
 import { EnvironmentInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(call-readiness) */ /* @conditional-compile-remove(unsupported-browser) */
 import { _isSafari } from '../utils';

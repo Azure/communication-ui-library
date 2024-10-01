@@ -51,12 +51,8 @@ module.exports = {
     "data-loss-prevention",
     // Mention feature
     "mention",
-    // Block joining calls if the user is on an unsupported browser
-    "unsupported-browser",
     // Feature to show the total number of participants in a call (currently in beta in calling SDK, hence this must be conditionally compiled)
     "total-participant-count",
-    // feature for tracking environment info API different than unsupported browser. stable use of environment info affects other components possibly sooner
-    "calling-environment-info",
     // conditional-compile for new signaling beta
     "signaling-beta",
     // Image overlay theme
@@ -98,5 +94,9 @@ module.exports = {
     'start-call-beta',
     // Deep Noise Suppression feature
     "DNS",
+    // feature for tracking environment info API different than unsupported browser. stable use of environment info affects other components possibly sooner
+    "calling-environment-info",
+    // Block joining calls if the user is on an unsupported browser
+    "unsupported-browser",
   ]
 }
