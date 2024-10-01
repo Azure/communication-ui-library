@@ -17,7 +17,10 @@ import { CHANGE_DIR_BETA, CHANGE_DIR_STABLE } from "./constants.mjs";
 async function main() {
   const [base, head] = parseArgs(process.argv);
 
-  // Check if the changelog files are present
+  // Check if the changelog files are present. 
+  // For this, check for new files (`git diff --diff-filter=A`) in the changelog directory(`-- ${CHANGE_DIR}`
+  // or`-- ${CHANGE_DIR_BETA}`) and return only the file names and statuses(`--name-status`).
+  // See https://git-scm.com/docs/git-diff for more info.
   const changedStableFiles = await exec_output(`git diff --diff-filter=A --name-status ${base}..${head} -- ${CHANGE_DIR_STABLE}`);
   const changedBetaFiles = await exec_output(`git diff --diff-filter=A --name-status ${base}..${head} -- ${CHANGE_DIR_BETA}`);
   // Process the output to get the list of files
