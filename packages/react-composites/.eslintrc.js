@@ -111,7 +111,7 @@ module.exports = {
     {
       files: ['*.test.ts', 'AzureCommunicationCallAdapter.ts'],
       rules: {
-        '@internal/custom-rules/noGetState': 'off'
+        '@internal/custom-rules/no-getstate': 'off'
       }
     }
   ]
