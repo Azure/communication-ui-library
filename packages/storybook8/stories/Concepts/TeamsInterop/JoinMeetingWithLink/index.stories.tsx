@@ -1,6 +1,8 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
 import { Meta } from '@storybook/react';
-import { JoinMeetingWithLink as JoinMeetingWithLinkComponent, storyControls } from './JoinMeetingWithLink.story';
 import { defaultCallWithChatCompositeHiddenControls } from '../utils/controlsUtils';
+import { JoinMeetingWithLink as JoinMeetingWithLinkComponent, storyControls } from './JoinMeetingWithLink.story';
 
 export const JoinMeetingWithLink = {
   render: JoinMeetingWithLinkComponent
