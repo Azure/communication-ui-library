@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { Meta } from '@storybook/react';
 import { CallComposite } from '@azure/communication-react';
+import { Meta } from '@storybook/react';
 import { BasicExample } from './BasicExample.stories';
 
 export const BasicExampleDocsOnly = (): JSX.Element => {
