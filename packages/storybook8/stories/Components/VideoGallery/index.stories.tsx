@@ -17,10 +17,9 @@ import { PinnedParticipantsDisabledExample } from './snippets/PinnedParticipants
 import { PinnedParticipantsMobileExample } from './snippets/PinnedParticipantsMobile.snippet';
 import { ScreenSharingFromViewerExample } from './snippets/ScreenSharingFromViewer.snippet';
 import { SpeakerLayoutExample } from './snippets/SpeakerLayout.snippet';
+import { ScreenSharingFromPresenterExample } from './snippets/VideoGalleryImages';
 import { WithHorizontalGalleryExample } from './snippets/WithHorizontalGallery.snippet';
 import { WithVerticalGalleryExample } from './snippets/WithVerticalGallery.snippet';
-import { ScreenSharingFromPresenterExample } from './snippets/VideoGalleryImages';
-
 
 export const DefaultVideoGalleryExampleDocsOnly = {
   render: DefaultVideoGalleryExample
