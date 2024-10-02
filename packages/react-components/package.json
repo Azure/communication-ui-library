@@ -92,7 +92,7 @@
     "concurrently": "^5.3.0",
     "copyfiles": "^2.4.1",
     "core-js": "^3.34.0",
-    "cpy": "^11.1.0",
+    "cpy-cli": "^5.0.0",
     "cross-env": "^7.0.3",
     "env-cmd": "^10.1.0",
     "eslint-config-prettier": "^9.1.0",

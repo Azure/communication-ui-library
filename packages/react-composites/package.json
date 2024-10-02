@@ -110,7 +110,7 @@
     "copyfiles": "^2.4.1",
     "copy-webpack-plugin": "^11.0.0",
     "core-js": "^3.34.0",
-    "cpy": "^11.1.0",
+    "cpy-cli": "^5.0.0",
     "cross-env": "^7.0.3",
     "css-loader": "^4.3.0",
     "dotenv": "^10.0.0",
