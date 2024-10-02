@@ -85,6 +85,7 @@
     "@babel/cli": "^7.24.8",
     "@babel/core": "^7.25.2",
     "@babel/preset-env": "7.23.9",
+    "@internal/eslint-plugin-custom-rules": "0.1.0",
     "@internal/fake-backends": "1.20.0-beta.0",
     "@microsoft/api-documenter": "~7.25.9",
     "@microsoft/api-extractor": "~7.47.4",

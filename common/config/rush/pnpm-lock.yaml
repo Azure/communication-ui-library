@@ -62,6 +62,9 @@ dependencies:
   '@rush-temp/config':
     specifier: file:./projects/config.tgz
     version: file:projects/config.tgz
+  '@rush-temp/eslint-plugin-custom-rules':
+    specifier: file:./projects/eslint-plugin-custom-rules.tgz
+    version: file:projects/eslint-plugin-custom-rules.tgz
   '@rush-temp/fake-backends':
     specifier: file:./projects/fake-backends.tgz
     version: file:projects/fake-backends.tgz
@@ -24061,6 +24064,16 @@ packages:
       - '@swc/core'
       - '@swc/wasm'
       - encoding
+    dev: false
+
+  file:projects/eslint-plugin-custom-rules.tgz:
+    resolution: {integrity: sha512-x1AbWT3cjJ6u8SMkv+SYREtmC1+YqIqGPHzFWKVrDOQdY95rNB26uZOPE/rPqKpx2Cm/5WlrxrXorb90V7cKcQ==, tarball: file:projects/eslint-plugin-custom-rules.tgz}
+    name: '@rush-temp/eslint-plugin-custom-rules'
+    version: 0.0.0
+    dependencies:
+      eslint: 8.57.1
+    transitivePeerDependencies:
+      - supports-color
     dev: false
 
   file:projects/fake-backends.tgz:
