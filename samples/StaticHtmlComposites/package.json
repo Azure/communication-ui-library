@@ -13,7 +13,7 @@
     "update:snapshot": "playwright test tests --update-snapshots",
     "lint": "echo skip",
     "lint:fix": "echo skip",
-    "preprocess": "cpx \"./src/**\" ./preprocessed && babel ./src --out-dir ../preprocessed --extensions \".ts,.tsx\" --keep-file-extension --config-file ./.babelrc.js --relative",
+    "preprocess": "cpy './src/**' ./preprocessed && babel ./src --out-dir ../preprocessed --extensions \".ts,.tsx\" --keep-file-extension --config-file ./.babelrc.js --relative",
     "preprocess:stable-flavor": "rushx _stable-flavor \"rushx preprocess && rushx lint:fix && rushx prettier\"",
     "prettier": "",
     "prettier:check": "",
@@ -54,7 +54,7 @@
     "webpack": "5.89.0",
     "webpack-cli": "^5.1.4",
     "webpack-bundle-analyzer": "^4.5.0",
-    "cpx": "^1.5.0",
+    "cpy": "^11.1.0",
     "@babel/cli": "^7.24.8"
   }
 }
