@@ -2,11 +2,11 @@
 // Licensed under the MIT License.
 
 import { AttachmentMetadataInProgress, RichTextSendBox as RichTextSendBoxComponent } from '@azure/communication-react';
+// eslint-disable-next-line no-restricted-imports
+import { _IMAGE_ATTRIBUTE_INLINE_IMAGE_FILE_NAME_KEY } from '@internal/acs-ui-common';
+// eslint-disable-next-line no-restricted-imports
+import { _DEFAULT_INLINE_IMAGE_FILE_NAME } from '@internal/react-composites';
 import React, { useState } from 'react';
-import {
-  _DEFAULT_INLINE_IMAGE_FILE_NAME,
-  _IMAGE_ATTRIBUTE_INLINE_IMAGE_FILE_NAME_KEY
-} from '../../../../../react-composites/src/composites/common/constants';
 
 const RichTextSendBoxStory = (args: {
   disabled: boolean | undefined;
