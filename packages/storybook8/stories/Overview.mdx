@@ -1,21 +1,15 @@
 import { Image, Stack, Text } from '@fluentui/react';
-import { Markdown, Meta } from '@storybook/addon-docs';
+import { Meta } from '@storybook/addon-docs';
 import {
   overviewPageImagesStackStyle,
   overviewPageUIArtifactTextStyle,
   overviewPageUIArtifactImageStyle,
   overviewPageUIArtifactsStackStyle
 } from './constants';
-import { addCSS } from './utils';
 
 <Meta title="Overview" parameters={{ previewTabs: { canvas: { disable: true, hidden: true } } }} />
 
 <div id='overview-page'>
-<script> { 
-  addCSS(' '.concat(
-  '#overview-page h1 { font-family: Segoe UI, sans-serif; color: #0078D4; font-weight: 600; font-size: 2rem; margin: 0rem; line-height: 2.5rem; }',
-  '#overview-page h2 { font-family: Segoe UI, sans-serif; color: rgba(0,0,0,0.5); font-weight: 500; font-size: 1.125rem; margin: 0rem 0rem 0.25rem 0rem; line-height: 1.5rem; border: none; }'
-)) } </script>
 
 <Stack horizontal horizontalAlign="space-between" style={overviewPageImagesStackStyle}>
   <Stack.Item align="center">
