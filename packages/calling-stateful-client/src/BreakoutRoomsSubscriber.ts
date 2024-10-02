@@ -56,8 +56,13 @@ export class BreakoutRoomsSubscriber {
       this.onAssignedBreakoutRoomUpdated(eventData.data);
     } else if (eventData.type === 'join') {
       this.onBreakoutRoomsJoined(eventData.data);
-    } else if (eventData.type === 'breakoutRoomsSettings' && eventData.data) {
-      this.onBreakoutRoomSettingsUpdated(eventData.data);
+    } else {
+      console.log('DEBUG2 BreakoutRoomsSubscriber eventData: ', eventData);
+      if (eventData.type === 'breakoutRoomsSettings' && eventData.data) {
+        this.onBreakoutRoomSettingsUpdated(eventData.data);
+      } else if (eventData.type === 'rejoinMainMeeting') {
+        alert('YO');
+      }
     }
   };
 

@@ -407,8 +407,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
   private onClientStateChange: (clientState: CallClientState) => void;
   /* @conditional-compile-remove(breakout-rooms) */
   private originCall: CallCommon | undefined;
-  /* @conditional-compile-remove(breakout-rooms) */
-  private originCallStartCallOptions: boolean | JoinCallOptions | undefined;
 
   private onResolveVideoBackgroundEffectsDependency?: () => Promise<VideoBackgroundEffectsDependency>;
   /* @conditional-compile-remove(DNS) */
@@ -545,7 +543,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
           console.log('Removed calls: ', args.removed.map((call) => call.id).join(', '));
           for (const call of args.added) {
             if (call.id === this.originCall?.id) {
-              this.originCall = call;
               call.feature(Features.BreakoutRooms).on('breakoutRoomsUpdated', this.observingCallListener);
             }
           }
@@ -716,8 +713,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
   }
 
   public joinCall(options?: boolean | JoinCallOptions): CallTypeOf<AgentType> | undefined {
-    this.originCallStartCallOptions = options;
-
     if (_isInCall(this.getState().call?.state ?? 'None')) {
       throw new Error('You are already in the call!');
     } else if (this.locator === undefined) {
