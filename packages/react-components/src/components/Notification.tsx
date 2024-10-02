@@ -126,7 +126,7 @@ export const Notification = (props: NotificationProps): JSX.Element => {
             onClick={props.onDismiss}
           />
         </Stack>
-        <Text className={messageTextStyle(theme)} style={{marginTop: '0.375rem'}}>{strings?.message}</Text>
+        <Text className={messageTextStyle(theme)} style={{marginTop: '0.25rem'}}>{strings?.message}</Text>
         <Stack horizontal horizontalAlign="space-evenly">
           {strings?.secondaryButtonLabel && (
             <DefaultButton onClick={props.onClickSecondaryButton} style={{ marginTop: '1rem' }}>
