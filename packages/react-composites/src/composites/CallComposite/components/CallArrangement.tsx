@@ -79,7 +79,7 @@ import {
   useRemoteSpotlightCallbacksWithPrompt,
   useStopAllSpotlightCallbackWithPrompt
 } from '../utils/spotlightUtils';
-/* @conditional-compile-remove(acs-close-captions) */
+
 import { getCaptionsKind, getIsTeamsCall } from '../selectors/baseSelectors';
 /* @conditional-compile-remove(soft-mute) */
 import { useHandlers } from '../hooks/useHandlers';
@@ -443,15 +443,11 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     );
   }
 
-  /* @conditional-compile-remove(acs-close-captions) */
   const isTeamsCaptions = useSelector(getCaptionsKind) === 'TeamsCaptions';
   const isTeamsMeeting = useSelector(getIsTeamsMeeting);
-  /* @conditional-compile-remove(acs-close-captions) */
+
   const isTeamsCall = useSelector(getIsTeamsCall);
-  const useTeamsCaptions =
-    isTeamsMeeting ||
-    /* @conditional-compile-remove(acs-close-captions) */ isTeamsCall ||
-    /* @conditional-compile-remove(acs-close-captions) */ isTeamsCaptions;
+  const useTeamsCaptions = isTeamsMeeting || isTeamsCall || isTeamsCaptions;
   const hasJoinedCall = useSelector(getCallStatus) === 'Connected';
   const isCaptionsOn = useSelector(getCaptionsStatus);
   const minMaxDragPosition = useMinMaxDragPosition(props.modalLayerHostId);
@@ -533,10 +529,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                   peopleButtonChecked={isPeoplePaneOpen}
                   onPeopleButtonClicked={togglePeoplePane}
                   onMoreButtonClicked={onMoreButtonClicked}
-                  isCaptionsSupported={
-                    (useTeamsCaptions && hasJoinedCall) ||
-                    /* @conditional-compile-remove(acs-close-captions) */ hasJoinedCall
-                  }
+                  isCaptionsSupported={(useTeamsCaptions && hasJoinedCall) || hasJoinedCall}
                   useTeamsCaptions={useTeamsCaptions}
                   isCaptionsOn={isCaptionsOn}
                   onClickVideoEffects={onResolveVideoEffectDependency ? openVideoEffectsPane : undefined}
@@ -564,10 +557,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                 onLightDismiss={closeDrawer}
                 onPeopleButtonClicked={onMoreDrawerPeopleClicked}
                 disableButtonsForHoldScreen={isInLocalHold}
-                isCaptionsSupported={
-                  (useTeamsCaptions && hasJoinedCall) ||
-                  /* @conditional-compile-remove(acs-close-captions) */ hasJoinedCall
-                }
+                isCaptionsSupported={(useTeamsCaptions && hasJoinedCall) || hasJoinedCall}
                 useTeamsCaptions={useTeamsCaptions}
                 onUserSetGalleryLayout={props.onUserSetGalleryLayoutChange}
                 userSetGalleryLayout={props.userSetGalleryLayout}

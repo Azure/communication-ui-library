@@ -39,7 +39,7 @@ import { SpotlightedParticipant } from '@azure/communication-calling';
 import { TeamsMeetingIdLocator } from '@azure/communication-calling';
 import { Reaction } from '@azure/communication-calling';
 import { TeamsCaptions } from '@azure/communication-calling';
-/* @conditional-compile-remove(acs-close-captions) */
+
 import { Captions, CaptionsInfo } from '@azure/communication-calling';
 import { TransferEventArgs } from '@azure/communication-calling';
 import { TeamsCaptionsInfo } from '@azure/communication-calling';
@@ -1215,15 +1215,14 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
       teamsCaptionsFeature.on('CaptionLanguageChanged', this.isCaptionLanguageChanged.bind(this));
       teamsCaptionsFeature.on('SpokenLanguageChanged', this.isSpokenLanguageChanged.bind(this));
     } else {
-      /* @conditional-compile-remove(acs-close-captions) */
       const acsCaptionsFeature = captionsFeature?.captions as Captions;
-      /* @conditional-compile-remove(acs-close-captions) */
+
       acsCaptionsFeature.on('CaptionsReceived', this.captionsReceived.bind(this));
-      /* @conditional-compile-remove(acs-close-captions) */
+
       acsCaptionsFeature.on('CaptionsActiveChanged', this.isCaptionsActiveChanged.bind(this));
-      /* @conditional-compile-remove(acs-close-captions) */
+
       acsCaptionsFeature.on('SpokenLanguageChanged', this.isSpokenLanguageChanged.bind(this));
-      /* @conditional-compile-remove(acs-close-captions) */
+
       captionsFeature?.on('CaptionsKindChanged', this.captionsKindChanged.bind(this));
     }
   }
@@ -1240,15 +1239,14 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
       teamsCaptionsFeature.off('CaptionLanguageChanged', this.isCaptionLanguageChanged.bind(this));
       teamsCaptionsFeature.off('SpokenLanguageChanged', this.isSpokenLanguageChanged.bind(this));
     } else {
-      /* @conditional-compile-remove(acs-close-captions) */
       const acsCaptionsFeature = captionsFeature?.captions as Captions;
-      /* @conditional-compile-remove(acs-close-captions) */
+
       acsCaptionsFeature.off('CaptionsReceived', this.captionsReceived.bind(this));
-      /* @conditional-compile-remove(acs-close-captions) */
+
       acsCaptionsFeature.off('CaptionsActiveChanged', this.isCaptionsActiveChanged.bind(this));
-      /* @conditional-compile-remove(acs-close-captions) */
+
       acsCaptionsFeature.off('SpokenLanguageChanged', this.isSpokenLanguageChanged.bind(this));
-      /* @conditional-compile-remove(acs-close-captions) */
+
       captionsFeature?.off('CaptionsKindChanged', this.captionsKindChanged.bind(this));
     }
   }
@@ -1309,7 +1307,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     });
   };
 
-  /* @conditional-compile-remove(acs-close-captions) */
   private captionsKindChanged(): void {
     const captionsFeature = this.call?.feature(Features.Captions);
     const teamsCaptionsFeature = captionsFeature?.captions as TeamsCaptions;
@@ -1355,24 +1352,19 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     this.emitter.emit('captionsReceived', { captionsInfo });
   }
 
-  /* @conditional-compile-remove(acs-close-captions) */
   private captionsReceived(captionsInfo: CaptionsInfo): void {
     this.emitter.emit('captionsReceived', { captionsInfo });
   }
 
   private isCaptionsActiveChanged(): void {
-    const captionsFeature = this.call?.feature(Features.Captions).captions as
-      | TeamsCaptions
-      | /* @conditional-compile-remove(acs-close-captions) */ Captions;
+    const captionsFeature = this.call?.feature(Features.Captions).captions as TeamsCaptions | Captions;
     this.emitter.emit('isCaptionsActiveChanged', {
       isActive: captionsFeature.isCaptionsFeatureActive
     });
   }
 
   private isSpokenLanguageChanged(): void {
-    const captionsFeature = this.call?.feature(Features.Captions).captions as
-      | TeamsCaptions
-      | /* @conditional-compile-remove(acs-close-captions) */ Captions;
+    const captionsFeature = this.call?.feature(Features.Captions).captions as TeamsCaptions | Captions;
     this.emitter.emit('isSpokenLanguageChanged', {
       activeSpokenLanguage: captionsFeature.activeSpokenLanguage
     });
