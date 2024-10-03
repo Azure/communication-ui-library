@@ -288,16 +288,25 @@ describe('Stateful call client', () => {
   test('should update local video stream with createView and disposeView', async () => {
     const { client, callId } = await prepareCallWithLocalVideoStream();
 
-    const localVideoStream = client.getState().calls[callId]?.localVideoStreams[0];
-    if (!localVideoStream) {
-      fail('Local video stream is not defined');
+    const intiallocalVideoStream = client.getState().calls[callId]?.localVideoStreams[0];
+    if (!intiallocalVideoStream) {
+      throw new Error('Local video stream is not defined');
     }
 
-    await client.createView(callId, undefined, localVideoStream);
-    expect(await waitWithBreakCondition(() => localVideoStream.view !== undefined)).toBe(true);
+    await client.createView(callId, undefined, intiallocalVideoStream);
+    expect(
+      await waitWithBreakCondition(() => client.getState().calls[callId]?.localVideoStreams[0]?.view !== undefined)
+    ).toBe(true);
 
-    client.disposeView(callId, undefined, localVideoStream);
-    expect(await waitWithBreakCondition(() => localVideoStream.view === undefined)).toBe(true);
+    const updatedLocalVideoStream = client.getState().calls[callId]?.localVideoStreams[0];
+    if (!updatedLocalVideoStream) {
+      throw new Error('Local video stream is not defined');
+    }
+
+    client.disposeView(callId, undefined, updatedLocalVideoStream);
+    expect(
+      await waitWithBreakCondition(() => client.getState().calls[callId]?.localVideoStreams[0]?.view === undefined)
+    ).toBe(true);
   });
 
   test('should update remote video stream with createView and disposeView', async () => {
@@ -308,7 +317,7 @@ describe('Stateful call client', () => {
       client.getState().calls[callId]?.remoteParticipants[participantKey]?.videoStreams[streamId];
 
     if (!remoteVideoStream) {
-      fail('Local video stream is not defined');
+      throw new Error('Local video stream is not defined');
     }
 
     await client.createView(callId, participant.identifier, remoteVideoStream);
@@ -343,12 +352,9 @@ describe('Stateful call client', () => {
     agent.testHelperPopCall();
 
     const localVideoStream = client.getState().calls[callId]?.localVideoStreams[0];
-    if (!localVideoStream) {
-      fail('Local video stream is not defined');
-    }
 
     // Expect all views to be removed.
-    expect(await waitWithBreakCondition(() => localVideoStream.view === undefined)).toBe(true);
+    expect(await waitWithBreakCondition(() => localVideoStream?.view === undefined)).toBe(true);
     expect(
       await waitWithBreakCondition(
         () =>
@@ -604,7 +610,7 @@ describe('errors should be reported correctly from Call when', () => {
     const call = agent.calls[0];
 
     if (!call) {
-      fail('Call is not defined');
+      throw new Error('Call is not defined');
     }
 
     {
@@ -632,7 +638,7 @@ describe('errors should be reported correctly from Call when', () => {
 
     const call = agent.calls[0];
     if (!call) {
-      fail('Call is not defined');
+      throw new Error('Call is not defined');
     }
 
     {
@@ -664,7 +670,7 @@ describe('errors should be reported correctly from Call when', () => {
 
     const call = agent.calls[0];
     if (!call) {
-      fail('Call is not defined');
+      throw new Error('Call is not defined');
     }
 
     {
