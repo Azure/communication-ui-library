@@ -94,6 +94,7 @@ export function defaultMockCallAdapterState(
       remoteParticipants,
       remoteParticipantsEnded: {},
       raiseHand: { raisedHands: [] },
+      /* @conditional-compile-remove(together-mode) */
       togetherMode: { stream: [] },
       pptLive: { isActive: false },
       role: role ?? 'Unknown',
@@ -538,6 +539,7 @@ const defaultEndedCallState: CallState = {
   remoteParticipants: {},
   remoteParticipantsEnded: {},
   raiseHand: { raisedHands: [] },
+  /* @conditional-compile-remove(together-mode) */
   togetherMode: { stream: [] },
   pptLive: { isActive: false },
   captionsFeature: {
