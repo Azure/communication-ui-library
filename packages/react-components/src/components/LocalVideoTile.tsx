@@ -236,6 +236,7 @@ export const _LocalVideoTile = React.memo(
 
     return (
       <Stack
+        data-ui-id="local-video-tile"
         className={mergeStyles({ width: '100%', height: '100%' })}
         onKeyDown={menuKind === 'drawer' ? onKeyDown : undefined}
       >
