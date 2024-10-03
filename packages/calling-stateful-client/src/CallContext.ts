@@ -468,7 +468,12 @@ export class CallContext {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
-        call.togetherMode = { stream: [] };
+        for (const stream of removedStream) {
+          if (stream.mediaStreamType in call.togetherMode.stream) {
+            // Temporary lint fix: Remove the stream from the list
+            call.togetherMode.stream = [];
+          }
+        }
       }
     });
   }

@@ -10,7 +10,11 @@ import { CallIdRef } from './CallIdRef';
 /**
  * @private
  */
+
 /* @conditional-compile-remove(together-mode) */
+/**
+ * TogetherModeSubscriber is responsible for subscribing to together mode events and updating the call context accordingly.
+ */
 export class TogetherModeSubscriber {
   private _callIdRef: CallIdRef;
   private _context: CallContext;
