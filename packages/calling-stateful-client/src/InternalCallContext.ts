@@ -5,6 +5,7 @@ import {
   LocalVideoStream,
   MediaStreamType,
   RemoteVideoStream,
+  RemoteVideoStreamCommon,
   VideoStreamRenderer
 } from '@azure/communication-calling';
 import { LocalVideoStreamState } from './CallClientState';
@@ -46,6 +47,11 @@ export type LocalRenderInfo = RenderInfo<LocalVideoStream>;
 export type RemoteRenderInfo = RenderInfo<RemoteVideoStream>;
 
 /**
+ * Internally used to keep track of the status, renderer, and awaiting promise, associated with a CallFeatureVideoStream.
+ */
+export type CallFeatureRenderInfo = RenderInfo<RemoteVideoStreamCommon>;
+
+/**
  * Contains internal data used between different Declarative components to share data.
  */
 export class InternalCallContext {
@@ -55,6 +61,8 @@ export class InternalCallContext {
   // <CallId, <MediaStreamType, LocalRenderInfo>>.
   private _localRenderInfos = new Map<string, Map<MediaStreamType, LocalRenderInfo>>();
 
+  // <CallId, <featureName, <MediaStreamType, CallFeatureRenderInfo>>>.
+  private _callFeatureRenderInfos = new Map<string, Map<string, Map<MediaStreamType, CallFeatureRenderInfo>>>();
   // Used for keeping track of rendered LocalVideoStreams that are not part of a Call.
   private _unparentedRenderInfos = new Map<MediaStreamType, LocalRenderInfo>();
   private _callIdHistory = new CallIdHistory();
@@ -76,6 +84,12 @@ export class InternalCallContext {
     if (localRenderInfos) {
       this._localRenderInfos.delete(oldCallId);
       this._localRenderInfos.set(newCallId, localRenderInfos);
+    }
+
+    const callFeatureRenderInfos = this._callFeatureRenderInfos.get(oldCallId);
+    if (callFeatureRenderInfos) {
+      this._callFeatureRenderInfos.delete(oldCallId);
+      this._callFeatureRenderInfos.set(newCallId, callFeatureRenderInfos);
     }
   }
 
@@ -221,5 +235,59 @@ export class InternalCallContext {
   public clearCallRelatedState(): void {
     this._remoteRenderInfos.clear();
     this._localRenderInfos.clear();
+    this._callFeatureRenderInfos.clear();
+  }
+
+  public getCallFeatureRenderInfosForCall(
+    callId: string,
+    featureNameKey: string
+  ): Map<MediaStreamType, CallFeatureRenderInfo> | undefined {
+    return this._callFeatureRenderInfos.get(this._callIdHistory.latestCallId(callId))?.get(featureNameKey);
+  }
+
+  public getCallFeatureRenderInfo(
+    callId: string,
+    featureNameKey: string,
+    streamKey: MediaStreamType
+  ): CallFeatureRenderInfo | undefined {
+    const callFeatureRenderInfosForCall = this._callFeatureRenderInfos
+      .get(this._callIdHistory.latestCallId(callId))
+      ?.get(featureNameKey)
+      ?.get(streamKey);
+    if (!callFeatureRenderInfosForCall) {
+      return undefined;
+    }
+    return callFeatureRenderInfosForCall;
+  }
+
+  public setCallFeatureRenderInfo(
+    callId: string,
+    featureNameKey: string,
+    streamKey: MediaStreamType,
+    stream: RemoteVideoStreamCommon,
+    status: RenderStatus,
+    renderer: VideoStreamRenderer | undefined
+  ): void {
+    let callRenderInfos = this._callFeatureRenderInfos.get(this._callIdHistory.latestCallId(callId));
+    if (!callRenderInfos) {
+      callRenderInfos = new Map<string, Map<MediaStreamType, CallFeatureRenderInfo>>();
+      // If the callId is not found, create a new map for the callId.
+      this._callFeatureRenderInfos.set(this._callIdHistory.latestCallId(callId), callRenderInfos);
+    }
+    let featureRenderInfos = callRenderInfos.get(featureNameKey);
+    if (!featureRenderInfos) {
+      featureRenderInfos = new Map<MediaStreamType, CallFeatureRenderInfo>();
+      callRenderInfos.set(featureNameKey, featureRenderInfos);
+    }
+    featureRenderInfos.set(streamKey, { stream, status, renderer });
+  }
+
+  public deleteCallFeatureRenderInfo(callId: string, featureName: string, streamKey: MediaStreamType): void {
+    const callFeatureRenderInfoForCall = this._callFeatureRenderInfos.get(this._callIdHistory.latestCallId(callId));
+    if (!callFeatureRenderInfoForCall || !callFeatureRenderInfoForCall.get(featureName)) {
+      return;
+    }
+
+    callFeatureRenderInfoForCall.get(featureName)?.delete(streamKey);
   }
 }

@@ -8,6 +8,7 @@ import {
   DominantSpeakersInfo,
   ParticipantRole,
   ScalingMode,
+  TogetherModeSeatingMap,
   VideoDeviceInfo
 } from '@azure/communication-calling';
 import { RaisedHand } from '@azure/communication-calling';
@@ -45,7 +46,9 @@ import {
   CallAgentState,
   CallErrors,
   CallErrorTarget,
-  CallError
+  CallError,
+  TogetherModeStreamState,
+  TogetherModeSeatingCoordinates
 } from './CallClientState';
 /* @conditional-compile-remove(breakout-rooms) */
 import { NotificationTarget, CallNotification, CallNotifications } from './CallClientState';
@@ -454,11 +457,25 @@ export class CallContext {
   }
 
   /* @conditional-compile-remove(together-mode) */
-  public setTogetherModeVideoStream(callId: string, addedStream: TogetherModeVideoStream[]): void {
+  public setTogetherModeVideoStream(callId: string, addedStreams: TogetherModeVideoStream[]): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
-        call.togetherMode = { stream: addedStream };
+        const streamsToAdd: Map<string, TogetherModeStreamState> = new Map();
+        for (const stream of addedStreams) {
+          const streamToAdd: TogetherModeStreamState = {
+            feature: 'togetherMode',
+            id: stream.id,
+            view: undefined,
+            mediaStreamType: stream.mediaStreamType,
+            isReceiving: stream.isReceiving
+          };
+          streamsToAdd.set(stream.mediaStreamType, streamToAdd);
+        }
+        call.togetherMode.streams = streamsToAdd;
+        if (!call.togetherMode.seatingCoordinates) {
+          call.togetherMode.seatingCoordinates = new Map<string, TogetherModeSeatingCoordinates>();
+        }
       }
     });
   }
@@ -469,11 +486,20 @@ export class CallContext {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
         for (const stream of removedStream) {
-          if (stream.mediaStreamType in call.togetherMode.stream) {
-            // Temporary lint fix: Remove the stream from the list
-            call.togetherMode.stream = [];
+          if (stream.mediaStreamType in call.togetherMode.streams) {
+            call.togetherMode.streams.delete(stream.mediaStreamType);
           }
         }
+      }
+    });
+  }
+
+  /* @conditional-compile-remove(together-mode) */
+  public setTogetherModeSeatingCoordinates(callId: string, seatingMap: TogetherModeSeatingMap): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        call.togetherMode.seatingCoordinates = seatingMap;
       }
     });
   }
@@ -707,6 +733,22 @@ export class CallContext {
         );
         if (localVideoStream) {
           localVideoStream.view = view;
+        }
+      }
+    });
+  }
+
+  public setTogetherModeVideoStreamRendererView(
+    callId: string,
+    togetherModeStreamType: string,
+    view: VideoStreamRendererViewState | undefined
+  ): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        const togetherModeStream = call.togetherMode.streams.get(togetherModeStreamType);
+        if (togetherModeStream) {
+          togetherModeStream.view = view;
         }
       }
     });

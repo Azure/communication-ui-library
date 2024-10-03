@@ -284,7 +284,19 @@ export interface TogetherModeCallFeatureState {
   /**
    * Proxy of {@link @azure/communication-calling#TogetherModeCallFeature.togetherModeStream}.
    */
-  stream: TogetherModeStreamState[];
+  streams: Map<string, TogetherModeStreamState>;
+  /**
+   * Proxy of {@link @azure/communication-calling#TogetherModeCallFeature.TogetherModeSeatingMap}.
+   */
+  seatingCoordinates: Map<string, TogetherModeSeatingCoordinates>;
+}
+
+/* @conditional-compile-remove(together-mode) */
+/**
+ * @alpha
+ */
+export interface CallFeatureStreamState {
+  feature: 'togetherMode';
 }
 
 /* @conditional-compile-remove(together-mode) */
@@ -292,7 +304,7 @@ export interface TogetherModeCallFeatureState {
  * State only version of {@link @azure/communication-calling#TogetherModeVideoStream}.
  * @alpha
  */
-export interface TogetherModeStreamState {
+export interface TogetherModeStreamState extends CallFeatureStreamState {
   /**
    * Proxy of {@link @azure/communication-calling#TogetherModeVideoStream.id}.
    */
@@ -315,6 +327,22 @@ export interface TogetherModeStreamState {
    * Proxy of {@link @azure/communication-calling#RemoteVideoStream.size}.
    */
   streamSize?: { width: number; height: number };
+}
+
+/* @conditional-compile-remove(together-mode) */
+/**
+ * State only version of {@link @azure/communication-calling#TogetherModeSeatingMap}.
+ * @alpha
+ */
+export interface TogetherModeSeatingCoordinates {
+  // the y coordinate of the participant
+  top: number;
+  // the x coordinate of the participant
+  left: number;
+  // the width of the participant
+  width: number;
+  // the height of the participant
+  height: number;
 }
 
 /**

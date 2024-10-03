@@ -7,11 +7,11 @@ import { CallClient, CallClientOptions, CreateViewOptions, DeviceManager } from 
 import { Features } from '@azure/communication-calling';
 import { CallClientState, LocalVideoStreamState, RemoteVideoStreamState } from './CallClientState';
 /* @conditional-compile-remove(together-mode) */
-import { TogetherModeStreamState } from './CallClientState';
+import { CallFeatureStreamState, TogetherModeStreamState } from './CallClientState';
 import { CallContext } from './CallContext';
 import { callAgentDeclaratify, DeclarativeCallAgent } from './CallAgentDeclarative';
 import { InternalCallContext } from './InternalCallContext';
-import { createView, disposeView, CreateViewResult } from './StreamUtils';
+import { createView, disposeView, CreateViewResult, createCallFeatureView } from './StreamUtils';
 import { CommunicationIdentifier, CommunicationUserIdentifier, getIdentifierKind } from '@azure/communication-common';
 import {
   toFlatCommunicationIdentifier,
@@ -113,10 +113,7 @@ export interface StatefulCallClient extends CallClient {
   createView(
     callId: string | undefined,
     participantId: CommunicationIdentifier | undefined,
-    stream:
-      | LocalVideoStreamState
-      | RemoteVideoStreamState
-      | /* @conditional-compile-remove(together-mode) */ TogetherModeStreamState,
+    stream: LocalVideoStreamState | RemoteVideoStreamState,
     options?: CreateViewOptions
   ): Promise<CreateViewResult | undefined>;
   /**
@@ -149,6 +146,13 @@ export interface StatefulCallClient extends CallClient {
     stream: LocalVideoStreamState | RemoteVideoStreamState
   ): void;
 
+  createCallFeatureView(
+    callId: string,
+    stream: CallFeatureStreamState,
+    options?: CreateViewOptions
+  ): Promise<CreateViewResult | undefined>;
+
+  disposeCallFeatureView(callId: string, stream: CallFeatureStreamState): void;
   /**
    * The CallAgent is used to handle calls.
    * To create the CallAgent, pass a CommunicationTokenCredential object provided from SDK.
@@ -402,6 +406,17 @@ export const createStatefulCallClientWithDeps = (
         const participantKey = toFlatCommunicationIdentifier(participantId);
         result.view = videoStreamRendererViewDeclaratify(result.view, context, callId, participantKey, stream.id);
       }
+      return result;
+    }
+  });
+  Object.defineProperty(callClient, 'createCallFeatureView', {
+    configurable: false,
+    value: async (
+      callId: string | undefined,
+      stream: TogetherModeStreamState,
+      options?: CreateViewOptions
+    ): Promise<CreateViewResult | undefined> => {
+      const result = await createCallFeatureView(context, internalContext, callId, stream, options);
       return result;
     }
   });

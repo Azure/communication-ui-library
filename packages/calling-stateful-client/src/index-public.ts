@@ -34,7 +34,11 @@ export type { RaiseHandCallFeatureState as RaiseHandCallFeature } from './CallCl
 /* @conditional-compile-remove(together-mode) */
 export type { TogetherModeCallFeatureState as TogetherModeCallFeature } from './CallClientState';
 /* @conditional-compile-remove(together-mode) */
-export type { TogetherModeStreamState } from './CallClientState';
+export type {
+  CallFeatureStreamState,
+  TogetherModeStreamState,
+  TogetherModeSeatingCoordinates
+} from './CallClientState';
 
 export type { RaisedHandState } from './CallClientState';
 export type { DeclarativeCallAgent, IncomingCallManagement } from './CallAgentDeclarative';
