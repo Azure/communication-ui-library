@@ -494,3 +494,8 @@ export const dataLossIconStyle = mergeStyles({
   width: '1.25rem',
   height: '1.25rem'
 });
+
+/** @private */
+export const messageTextContentStyles = mergeStyles({
+  whiteSpace: 'pre-wrap'
+});

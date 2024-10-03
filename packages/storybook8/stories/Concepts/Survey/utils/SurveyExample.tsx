@@ -3,8 +3,16 @@
 
 import { CallSurvey } from '@azure/communication-calling';
 import { CallSurveyImprovementSuggestions, DEFAULT_COMPONENT_ICONS } from '@azure/communication-react';
-import { Text, PrimaryButton, Stack, Theme, mergeStyles, useTheme } from '@fluentui/react';
-import { initializeIcons, registerIcons } from '@fluentui/react';
+import {
+  Text,
+  PrimaryButton,
+  Stack,
+  Theme,
+  mergeStyles,
+  useTheme,
+  initializeIcons,
+  registerIcons
+} from '@fluentui/react';
 import React, { useState } from 'react';
 import { SurveyContent } from '../../../../../react-composites/src/composites/common/SurveyContent';
 
