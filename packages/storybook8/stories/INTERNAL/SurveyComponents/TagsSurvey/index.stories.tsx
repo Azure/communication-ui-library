@@ -1,6 +1,8 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
 import { _TagsSurvey as TagsSurveyComponent } from '@internal/react-components';
-import { hiddenControl } from '../../../controlsUtils';
 import { Meta } from '@storybook/react';
+import { hiddenControl } from '../../../controlsUtils';
 import { TagsSurveyExample } from './snippets/TagsSurvey.snippet';
 export { TagsSurvey } from './TagsSurvey.story';
 

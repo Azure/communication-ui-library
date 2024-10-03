@@ -1,21 +1,8 @@
-import { Image, Stack, Text } from '@fluentui/react';
-import { Canvas, Description, Meta, ArgTypes } from '@storybook/blocks';
-import { VideoGallery } from '@azure/communication-react';
+import { Link, Image, Stack, Text } from '@fluentui/react';
+import { Canvas, Meta, ArgTypes } from '@storybook/blocks';
 import { yellowBannerPalette } from '../../BetaBanners/BannerPalettes';
 import { StorybookBanner } from '../../BetaBanners/StorybookBanner';
 import * as VideoGalleryStories from './index.stories';
-
-import { CustomAvatarVideoGalleryExample } from './snippets/CustomAvatar.snippet';
-import { CustomStyleVideoGalleryExample } from './snippets/CustomStyle.snippet';
-import { DefaultVideoGalleryExample } from './snippets/Default.snippet';
-import { FloatingLocalVideoExample } from './snippets/FloatingLocalVideo.snippet';
-import { FocusedContentExample } from './snippets/FocusedContent.snippet';
-import { MobileWrapper } from './snippets/MobileWrapper';
-
-import { PinnedParticipantsMobileExample } from './snippets/PinnedParticipantsMobile.snippet';
-import { SpeakerLayoutExample } from './snippets/SpeakerLayout.snippet';
-import { WithHorizontalGalleryExample } from './snippets/WithHorizontalGallery.snippet';
-import { WithVerticalGalleryExample } from './snippets/WithVerticalGallery.snippet';
 
 import CustomAvatarVideoGalleryExampleText from '!!raw-loader!./snippets/CustomAvatar.snippet.tsx';
 import CustomStyleVideoGalleryExampleText from '!!raw-loader!./snippets/CustomStyle.snippet.tsx';
@@ -187,7 +174,7 @@ Currently, the VideoGallery component supports two primary features to enhance c
 - <strong>Screen Sharing:</strong> Share your local screen with participants in real-time or view remote screen shares.
   For more details, see the sections below.
 - <strong>PowerPoint Live:</strong> Exclusively view remote PowerPoint presentations.
-  <a href="?path=/docs/ppt-live--page">Learn more about PowerPoint Live</a>.
+  <Link href="?path=/docs/ppt-live--page">Learn more about PowerPoint Live</Link>.
 
 ### From a presenter point of view
 
