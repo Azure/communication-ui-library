@@ -208,6 +208,8 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
     numberOfButtons++;
   }
 
+  const isRoomsCall = useSelector(getIsRoomsCall);
+
   const moreButtonContextualMenuItems = (): IContextualMenuItem[] => {
     const items: IContextualMenuItem[] = [];
 
@@ -282,7 +284,6 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
   const raiseHandButtonIsEnabled = isEnabled(options?.raiseHandButton);
   let showRaiseHandButtonInControlBar = raiseHandButtonIsEnabled;
   const role = useSelector(getRole);
-  const isRoomsCall = useSelector(getIsRoomsCall);
   const hideRaiseHandButtonInRoomsCall = isRoomsCall && role && ['Consumer', 'Unknown'].includes(role);
   if (showRaiseHandButtonInControlBar && (props.isMobile ? numberOfButtons < 5 : true)) {
     numberOfButtons++;
