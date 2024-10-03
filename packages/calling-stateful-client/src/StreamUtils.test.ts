@@ -230,7 +230,7 @@ describe('stream utils', () => {
     expect(internalContext.getLocalRenderInfo(mockCallId, 'Video')?.stream).toBeDefined();
     expect(internalContext.getLocalRenderInfo(mockCallId, 'Video')?.renderer).toBeDefined();
     expect(internalContext.getLocalRenderInfo(mockCallId, 'Video')?.status).toBe('Rendered');
-    expect(context.getState().calls[mockCallId]?.localVideoStreams[0].view).toBeDefined();
+    expect(context.getState().calls[mockCallId]?.localVideoStreams[0]?.view).toBeDefined();
   });
 
   test('cleans up state and stop rendering when disposeView is called on remote stream', async () => {
@@ -459,7 +459,7 @@ describe('stream utils', () => {
 
     const views = context.getState().deviceManager.unparentedViews;
     expect(views.length).toBe(1);
-    expect(views[0].view).toBeDefined();
+    expect(views[0]?.view).toBeDefined();
   });
 
   test('is able to render LocalVideoStream not tied to a call and stop rendering it by reference find', async () => {
@@ -494,7 +494,7 @@ describe('stream utils', () => {
 
     const views = context.getState().deviceManager.unparentedViews;
     expect(views.length).toBe(1);
-    expect(views[0].view).toBeDefined();
+    expect(views[0]?.view).toBeDefined();
   });
 
   test('context state correctly has startVideo error when unparentedView throws an error creating a video stream', async () => {

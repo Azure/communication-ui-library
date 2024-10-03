@@ -2,6 +2,7 @@
   "extends": "../../common/config/tsc/tsconfig.json",
   "compilerOptions": {
     "outDir": "./dist",
+    "noUncheckedIndexedAccess": false, // todo: turn this to true when instances have been fixed
     "paths": {
       "@azure/communication-react": ["../communication-react/src"],
       "@internal/acs-ui-common": ["../acs-ui-common/src"],
