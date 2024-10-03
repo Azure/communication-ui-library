@@ -23,6 +23,8 @@ import { TeamsCaptionsInfo } from '@azure/communication-calling';
 import { CaptionsKind, CaptionsInfo as AcsCaptionsInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
+/* @conditional-compile-remove(together-mode) */
+import { TogetherModeVideoStream } from '@azure/communication-calling';
 import { AzureLogger, createClientLogger, getLogLevel } from '@azure/logger';
 import { EventEmitter } from 'events';
 import { enableMapSet, enablePatches, Patch, produce } from 'immer';
@@ -449,6 +451,31 @@ export class CallContext {
         if (participant) {
           participant.contentSharingStream = target;
           call.contentSharingRemoteParticipant = participantKey;
+        }
+      }
+    });
+  }
+
+  /* @conditional-compile-remove(together-mode) */
+  public setTogetherModeVideoStream(callId: string, addedStream: TogetherModeVideoStream[]): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        call.togetherMode = { stream: addedStream };
+      }
+    });
+  }
+
+  /* @conditional-compile-remove(together-mode) */
+  public removeTogetherModeVideoStream(callId: string, removedStream: TogetherModeVideoStream[]): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        for (const stream of removedStream) {
+          if (stream.mediaStreamType in call.togetherMode.stream) {
+            // Temporary lint fix: Remove the stream from the list
+            call.togetherMode.stream = [];
+          }
         }
       }
     });

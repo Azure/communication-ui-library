@@ -1,0 +1,9 @@
+{
+  "type": "prerelease",
+  "area": "feature",
+  "workstream": "Together Mode",
+  "comment": "This PR contains implementation of together mode client state changes and the event listener for together mode stream updates",
+  "packageName": "@azure/communication-react",
+  "email": "nwankwojustin93@gmail.com",
+  "dependentChangeType": "patch"
+}
