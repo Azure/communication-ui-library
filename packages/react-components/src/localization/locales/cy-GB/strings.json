@@ -155,7 +155,7 @@
   },
   "screenShareButton": {
     "onLabel": "Stopio cyflwyno",
-    "offLabel": "Presennol",
+    "offLabel": "Cyflwyno",
     "tooltipDisabledContent": "Mae cyflwyno wedi'i analluogi",
     "tooltipOnContent": "Wrthi'n cyflwyno eich sgrin",
     "tooltipOffContent": "Cyflwyno eich sgrin"
