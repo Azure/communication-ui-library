@@ -62,6 +62,9 @@ dependencies:
   '@rush-temp/config':
     specifier: file:./projects/config.tgz
     version: file:projects/config.tgz
+  '@rush-temp/eslint-plugin-custom-rules':
+    specifier: file:./projects/eslint-plugin-custom-rules.tgz
+    version: file:projects/eslint-plugin-custom-rules.tgz
   '@rush-temp/fake-backends':
     specifier: file:./projects/fake-backends.tgz
     version: file:projects/fake-backends.tgz
@@ -9243,8 +9246,10 @@ packages:
       ajv: 6.12.6
     dev: false
 
-  /ajv-formats@2.1.1:
+  /ajv-formats@2.1.1(ajv@8.17.1):
     resolution: {integrity: sha512-Wx0Kx52hxE7C18hkMEggYlEifqWZtYaRgouJor+WMdPnQyEK13vgEWyVNup7SoeeoLMsr4kf5h6dOW11I15MUA==}
+    peerDependencies:
+      ajv: ^8.0.0
     peerDependenciesMeta:
       ajv:
         optional: true
@@ -19980,7 +19985,7 @@ packages:
     dependencies:
       '@types/json-schema': 7.0.15
       ajv: 8.17.1
-      ajv-formats: 2.1.1
+      ajv-formats: 2.1.1(ajv@8.17.1)
       ajv-keywords: 5.1.0(ajv@8.17.1)
     dev: false
 
@@ -23990,6 +23995,16 @@ packages:
       - encoding
     dev: false
 
+  file:projects/eslint-plugin-custom-rules.tgz:
+    resolution: {integrity: sha512-x1AbWT3cjJ6u8SMkv+SYREtmC1+YqIqGPHzFWKVrDOQdY95rNB26uZOPE/rPqKpx2Cm/5WlrxrXorb90V7cKcQ==, tarball: file:projects/eslint-plugin-custom-rules.tgz}
+    name: '@rush-temp/eslint-plugin-custom-rules'
+    version: 0.0.0
+    dependencies:
+      eslint: 8.57.1
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
+
   file:projects/fake-backends.tgz:
     resolution: {integrity: sha512-LbVteqhoFR1NOEpDbMawqbHX7c90/f/0y7NVHkdeN1XJGm6vYMXOwzCojpxVrndFzI+rJiwq+zMJ635GI3rFFQ==, tarball: file:projects/fake-backends.tgz}
     name: '@rush-temp/fake-backends'
@@ -24160,7 +24175,7 @@ packages:
     dev: false
 
   file:projects/react-composites.tgz:
-    resolution: {integrity: sha512-wN4szO6GjqFMdwCMZuypd0yqAdps3JhUCL5JtRv81Ew85/mHZ/vfKBCyBvoh1W31b9noBmfvFuo1bPMTGTe4yA==, tarball: file:projects/react-composites.tgz}
+    resolution: {integrity: sha512-LgJh/M9GelyXegvPyaHg7x+YdXjg63VrUSiUgO+xlmBMXgDBmEMuepx+NjcAfJjjIWiMwMBvsCdKUZTs26wxCQ==, tarball: file:projects/react-composites.tgz}
     name: '@rush-temp/react-composites'
     version: 0.0.0
     dependencies:
