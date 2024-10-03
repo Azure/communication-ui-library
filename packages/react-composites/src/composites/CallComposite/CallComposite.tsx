@@ -23,14 +23,9 @@ import { CallPage } from './pages/CallPage';
 import { ConfigurationPage } from './pages/ConfigurationPage';
 import { NoticePage } from './pages/NoticePage';
 import { useSelector } from './hooks/useSelector';
-import {
-  getAlternateCallerId,
-  getEndedCall,
-  getEnvironmentInfo,
-  getPage,
-  getRole,
-  getTargetCallees
-} from './selectors/baseSelectors';
+import { getAlternateCallerId, getEndedCall, getPage, getRole, getTargetCallees } from './selectors/baseSelectors';
+/* @conditional-compile-remove(unsupported-browser) */
+import { getEnvironmentInfo } from './selectors/baseSelectors';
 import { LobbyPage } from './pages/LobbyPage';
 import { TransferPage } from './pages/TransferPage';
 import {
@@ -739,6 +734,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
 
   useEndedCallConsoleErrors(endedCall);
 
+  /* @conditional-compile-remove(unsupported-browser) */
   const environmentInfo = useSelector(getEnvironmentInfo);
 
   /* @conditional-compile-remove(unsupported-browser) */

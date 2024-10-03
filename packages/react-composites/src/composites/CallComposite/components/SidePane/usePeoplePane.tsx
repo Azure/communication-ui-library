@@ -9,10 +9,10 @@ import { useLocale } from '../../../localization';
 import { ParticipantMenuItemsCallback, _DrawerMenuItemProps } from '@internal/react-components';
 import { AvatarPersonaDataCallback } from '../../../common/AvatarPersona';
 import { IButton, IContextualMenuProps, IContextualMenuItem } from '@fluentui/react';
-/* @conditional-compile-remove(soft-mute) */
-import { getAlternateCallerId, getRemoteParticipants, getRole } from '../../selectors/baseSelectors';
-/* @conditional-compile-remove(soft-mute) */
 import { useSelector } from '../../hooks/useSelector';
+import { getAlternateCallerId, getRole } from '../../selectors/baseSelectors';
+/* @conditional-compile-remove(soft-mute) */
+import { getRemoteParticipants } from '../../selectors/baseSelectors';
 /* @conditional-compile-remove(soft-mute) */
 import { Prompt } from '../Prompt';
 

@@ -23,6 +23,7 @@ import { useLocale } from '../../localization';
 import { MoreButton } from '../../common/MoreButton';
 import { usePropsFor } from '../hooks/usePropsFor';
 import { buttonFlyoutIncreasedSizeStyles } from '../styles/Buttons.styles';
+/* @conditional-compile-remove(DNS) */
 import { useAdapter } from '../adapter/CallAdapterProvider';
 import { isDisabled } from '../utils';
 import { callControlsContainerStyles } from '../styles/CallPage.styles';
@@ -97,13 +98,13 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
     [props.isMobile, props.options]
   );
 
-  const adapter = useAdapter();
-
   const localeStrings = useLocale();
 
   /* @conditional-compile-remove(DNS) */
   const [isDeepNoiseSuppressionOn, setDeepNoiseSuppressionOn] = useState<boolean>(false);
 
+  /* @conditional-compile-remove(DNS) */
+  const adapter = useAdapter();
   /* @conditional-compile-remove(DNS) */
   const startDeepNoiseSuppression = useCallback(async () => {
     await adapter.startNoiseSuppressionEffect();
