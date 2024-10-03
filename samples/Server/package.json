@@ -48,7 +48,7 @@
     "@types/http-errors": "^1.8.0",
     "@types/jest": "^29.5.11",
     "@types/morgan": "^1.9.2",
-    "@types/node": "^20.14.12",
+    "@types/node": "^22.7.4",
     "@types/supertest": "^2.0.12",
     "@types/webpack-node-externals": "^3.0.4",
     "@typescript-eslint/eslint-plugin": "^7.14.1",
