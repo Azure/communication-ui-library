@@ -41,7 +41,6 @@ import {
 import { useLocale } from '../../localization';
 import { bannerNotificationStyles } from '../styles/CallPage.styles';
 import { usePropsFor } from '../hooks/usePropsFor';
-import { useAdapter } from '../adapter/CallAdapterProvider';
 /* @conditional-compile-remove(call-readiness) */
 import { DeviceCheckOptions } from '../CallComposite';
 import { ConfigurationPageErrorBar } from '../components/ConfigurationPageErrorBar';
@@ -61,6 +60,11 @@ import { localVideoSelector } from '../../CallComposite/selectors/localVideoStre
 import { CapabilitiesChangeNotificationBarProps } from '../components/CapabilitiesChangedNotificationBar';
 import { SvgWithWordWrapping } from '../components/SvgWithWordWrapping';
 import { EnvironmentInfo } from '@azure/communication-calling';
+import { getMicrophones, getRole } from '../selectors/baseSelectors';
+/* @conditional-compile-remove(unsupported-browser) */
+import { getEnvironmentInfo } from '../selectors/baseSelectors';
+/* @conditional-compile-remove(call-readiness) */
+import { getCameras } from '../selectors/baseSelectors';
 
 /**
  * @private
@@ -120,13 +124,12 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   getDevicePermissionState(setVideoState, setAudioState);
 
   const errorBarProps = usePropsFor(ErrorBar);
-  const adapter = useAdapter();
-  const deviceState = adapter.getState().devices;
+  const microphones = useSelector(getMicrophones);
   /* @conditional-compile-remove(unsupported-browser) */
-  const environmentInfo = adapter.getState().environmentInfo;
+  const environmentInfo = useSelector(getEnvironmentInfo);
 
-  let disableStartCallButton = !microphonePermissionGranted || deviceState.microphones?.length === 0;
-  const role = adapter.getState().call?.role;
+  let disableStartCallButton = !microphonePermissionGranted || microphones?.length === 0;
+  const role = useSelector(getRole);
 
   const isCameraOn = useSelector(localVideoSelector).isAvailable;
 
@@ -150,6 +153,9 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   }
 
   /* @conditional-compile-remove(call-readiness) */
+  const cameras = useSelector(getCameras);
+
+  /* @conditional-compile-remove(call-readiness) */
   // Overrides role permissions if CallCompositeOptions deviceChecks are set
   if (deviceChecks) {
     if (
@@ -158,7 +164,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
     ) {
       disableStartCallButton = false;
     } else if (deviceChecks.camera === 'required') {
-      disableStartCallButton = !cameraPermissionGranted || deviceState.cameras?.length === 0;
+      disableStartCallButton = !cameraPermissionGranted || cameras?.length === 0;
     }
   }
 

@@ -53,7 +53,7 @@ import { AttachmentDownloadErrorBar } from './AttachmentDownloadErrorBar';
 import { _AttachmentDownloadCards } from '@internal/react-components';
 import { ImageOverlay } from '@internal/react-components';
 import { InlineImage } from '@internal/react-components';
-import { ResourceFetchResult } from '@internal/chat-stateful-client';
+import { ChatMessageWithStatus, ResourceFetchResult } from '@internal/chat-stateful-client';
 /* @conditional-compile-remove(file-sharing-acs) */
 import { AttachmentOptions } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing-acs) */
@@ -86,6 +86,8 @@ import { SEND_BOX_UPLOADS_KEY_VALUE, _DEFAULT_INLINE_IMAGE_FILE_NAME } from '../
 import { ImageUploadReducer } from './ImageUpload/ImageUploadReducer';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { useLocale } from '../localization';
+import { useSelector } from './hooks/useSelector';
+import { getChatMessages, getThreadId, getUserId } from './selectors/baseSelectors';
 
 /**
  * @private
@@ -168,6 +170,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       }
     };
     // set initial state for textOnlyChat and isACSChat
+    // eslint-disable-next-line @internal/custom-rules/no-getstate
     updateChatState(adapter.getState());
 
     adapter.onStateChange(updateChatState);
@@ -202,28 +205,37 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const headerProps = useAdaptedSelector(getHeaderProps);
   const errorBarProps = usePropsFor(ErrorBar);
 
+  const overlayImageItemRef = React.useRef<OverlayImageItem | undefined>(overlayImageItem);
+  overlayImageItemRef.current = overlayImageItem;
+  const adapterChatMessages = useSelector(getChatMessages);
   useEffect(() => {
-    if (overlayImageItem === undefined) {
+    if (overlayImageItemRef.current === undefined) {
       return;
     }
-    const message = adapter.getState().thread.chatMessages[overlayImageItem.messageId];
+    const message: ChatMessageWithStatus | undefined = adapterChatMessages[overlayImageItemRef.current.messageId];
     if (message === undefined) {
       return;
     }
     const resourceCache = message.resourceCache;
-    if (overlayImageItem.imageSrc === '' && resourceCache && resourceCache[overlayImageItem.imageUrl]) {
-      const fullSizeImageSrc = getResourceSourceUrl(resourceCache[overlayImageItem.imageUrl]);
-      if (fullSizeImageSrc === undefined || fullSizeImageSrc === '' || overlayImageItem.imageSrc === fullSizeImageSrc) {
+    if (
+      overlayImageItemRef.current.imageSrc === '' &&
+      resourceCache &&
+      resourceCache[overlayImageItemRef.current.imageUrl]
+    ) {
+      const fullSizeImageSrc = getResourceSourceUrl(resourceCache[overlayImageItemRef.current.imageUrl]);
+      if (
+        fullSizeImageSrc === undefined ||
+        fullSizeImageSrc === '' ||
+        overlayImageItemRef.current.imageSrc === fullSizeImageSrc
+      ) {
         return;
       }
       setOverlayImageItem({
-        ...overlayImageItem,
+        ...overlayImageItemRef.current,
         imageSrc: fullSizeImageSrc
       });
     }
-    // Disable eslint because we are using the overlayImageItem in this effect but don't want to have it as a dependency, as it will cause an infinite loop.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [messageThreadProps.messages]);
+  }, [adapterChatMessages, messageThreadProps.messages]);
 
   const getResourceSourceUrl = (result: ResourceFetchResult): string => {
     let src = '';
@@ -266,7 +278,8 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     return Object.assign({}, styles?.sendBox);
   }, [styles?.sendBox]);
 
-  const userId = toFlatCommunicationIdentifier(adapter.getState().userId);
+  const userIdObject = useSelector(getUserId);
+  const userId = toFlatCommunicationIdentifier(userIdObject);
 
   /* @conditional-compile-remove(file-sharing-acs) */
   const setKeyboardFocusAfterFileSelection = useCallback(() => {
@@ -348,9 +361,10 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     [attachmentOptions?.downloadOptions?.actionsForAttachment]
   );
 
+  const threadId = useSelector(getThreadId);
   const onInlineImageClicked = useCallback(
     (attachmentId: string, messageId: string) => {
-      const message = adapter.getState().thread.chatMessages[messageId];
+      const message: ChatMessageWithStatus | undefined = adapterChatMessages[messageId];
       const inlinedImages = message.content?.attachments?.filter((attachment) => {
         return attachment.attachmentType === 'image' && attachment.id === attachmentId;
       });
@@ -369,8 +383,8 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
           imageSrc = getResourceSourceUrl(resourceCache[attachment.url]);
         } else {
           adapter.downloadResourceToCache({
-            threadId: adapter.getState().thread.threadId,
-            messageId: messageId,
+            threadId,
+            messageId,
             resourceUrl: attachment.url
           });
         }
@@ -397,12 +411,12 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       setIsImageOverlayOpen(true);
       setOverlayImageItem(overlayImage);
     },
-    [adapter, onRenderAvatarCallback, userId]
+    [adapter, adapterChatMessages, onRenderAvatarCallback, userId, threadId]
   );
 
   const onRenderInlineImage = useCallback(
     (inlineImage: InlineImage, defaultOnRender: (inlineImage: InlineImage) => JSX.Element): JSX.Element => {
-      const message = adapter.getState().thread.chatMessages[inlineImage.messageId];
+      const message = adapterChatMessages[inlineImage.messageId];
       const attachment = message?.content?.attachments?.find(
         (attachment) => attachment.id === inlineImage.imageAttributes.id
       );
@@ -439,7 +453,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
         </span>
       );
     },
-    [adapter, onInlineImageClicked]
+    [adapterChatMessages, onInlineImageClicked]
   );
 
   const inlineImageOptions = useMemo(() => {
@@ -756,7 +770,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             setOverlayImageItem(undefined);
             setIsImageOverlayOpen(false);
             adapter.removeResourceFromCache({
-              threadId: adapter.getState().thread.threadId,
+              threadId,
               messageId: overlayImageItem.messageId,
               resourceUrl: overlayImageItem.imageUrl
             });

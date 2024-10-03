@@ -45,7 +45,14 @@ import { useSelector } from '../hooks/useSelector';
 import { callStatusSelector } from '../selectors/callStatusSelector';
 import { CallControlOptions } from '../types/CallControlOptions';
 import { PreparedMoreDrawer } from '../../common/Drawer/PreparedMoreDrawer';
-import { getIsTeamsMeeting, getRemoteParticipants } from '../selectors/baseSelectors';
+import {
+  getCapabilites,
+  getIsTeamsMeeting,
+  getReactionResources,
+  getRemoteParticipants,
+  getRole,
+  getVideoEffectsDependency
+} from '../selectors/baseSelectors';
 import { getPage } from '../selectors/baseSelectors';
 import { getCallStatus, getCaptionsStatus } from '../selectors/baseSelectors';
 import { drawerContainerStyles } from '../styles/CallComposite.styles';
@@ -210,7 +217,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   );
 
   const locale = useLocale();
-  const role = adapter.getState().call?.role;
+  const role = useSelector(getRole);
   const videoGalleryProps = usePropsFor(VideoGallery);
   /* @conditional-compile-remove(soft-mute) */
   const muteAllHandlers = useHandlers(MoreDrawer);
@@ -294,8 +301,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     setPromptProps
   );
 
-  const canRemoveSpotlight =
-    adapter.getState().call?.capabilitiesFeature?.capabilities.removeParticipantsSpotlight.isPresent;
+  const canRemoveSpotlight = useSelector(getCapabilites)?.removeParticipantsSpotlight.isPresent;
   const stopAllSpotlight = useMemo(
     () => (canRemoveSpotlight ? () => adapter.stopAllSpotlight() : undefined),
     [canRemoveSpotlight, adapter]
@@ -393,7 +399,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     };
   }, [isMobileWithActivePane, props.mobileView]);
 
-  const onResolveVideoEffectDependency = adapter.getState().onResolveVideoEffectDependency;
+  const onResolveVideoEffectDependency = useSelector(getVideoEffectsDependency);
 
   const { openVideoEffectsPane } = useVideoEffectsPane(
     props.updateSidePaneRenderer,
@@ -495,6 +501,8 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     ? (latestNotifications ?? []).filter((notification) => notification.type !== 'assignedBreakoutRoomOpenedPromptJoin')
     : latestNotifications;
 
+  const reactionResources = useSelector(getReactionResources);
+
   return (
     <div ref={containerRef} className={mergeStyles(containerDivStyles)} id={props.id}>
       <Stack verticalFill horizontalAlign="stretch" className={containerClassName} data-ui-id={props.dataUiId}>
@@ -573,7 +581,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                 userSetGalleryLayout={props.userSetGalleryLayout}
                 onSetDialpadPage={props.onSetDialpadPage}
                 dtmfDialerPresent={props.dtmfDialerPresent}
-                reactionResources={adapter.getState().reactions}
+                reactionResources={reactionResources}
                 onClickMeetingPhoneInfo={onMeetingPhoneInfoClicked}
               />
             </Stack>
