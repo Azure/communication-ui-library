@@ -60,8 +60,6 @@ export class BreakoutRoomsSubscriber {
       console.log('DEBUG2 BreakoutRoomsSubscriber eventData: ', eventData);
       if (eventData.type === 'breakoutRoomsSettings' && eventData.data) {
         this.onBreakoutRoomSettingsUpdated(eventData.data);
-      } else if (eventData.type === 'rejoinMainMeeting') {
-        alert('YO');
       }
     }
   };

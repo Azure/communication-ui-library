@@ -541,11 +541,11 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
         if (this.call?.id) {
           console.log('Added calls: ', args.added.map((call) => call.id).join(', '));
           console.log('Removed calls: ', args.removed.map((call) => call.id).join(', '));
-          for (const call of args.added) {
-            if (call.id === this.originCall?.id) {
-              call.feature(Features.BreakoutRooms).on('breakoutRoomsUpdated', this.observingCallListener);
-            }
-          }
+          // for (const call of args.added) {
+          //   if (call.id === this.originCall?.id) {
+          //     call.feature(Features.BreakoutRooms).on('breakoutRoomsUpdated', this.observingCallListener);
+          //   }
+          // }
 
           const removedCall = args.removed.find((call) => call.id === this.call?.id);
           if (removedCall) {
@@ -581,18 +581,18 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     }
   }
 
-  private observingCallListener: (eventData: BreakoutRoomsEventData) => Promise<void> = async (
-    eventData: BreakoutRoomsEventData
-  ) => {
-    console.log('DEBUG eventData: ', eventData);
-    if (eventData.type === 'assignedBreakoutRooms' && eventData.data?.state === 'closed') {
-      console.log('DEBUG Assigned breakout rooms closed');
-      await this.originCall?.hangUp();
-      this.returnFromBreakoutRoom();
-    } else if (eventData.type === 'rejoinMainMeeting') {
-      alert('WOW');
-    }
-  };
+  // private observingCallListener: (eventData: BreakoutRoomsEventData) => Promise<void> = async (
+  //   eventData: BreakoutRoomsEventData
+  // ) => {
+  //   console.log('DEBUG eventData: ', eventData);
+  //   if (eventData.type === 'assignedBreakoutRooms' && eventData.data?.state === 'closed') {
+  //     console.log('DEBUG Assigned breakout rooms closed');
+  //     await this.originCall?.hangUp();
+  //     this.returnFromBreakoutRoom();
+  //   } else if (eventData.type === 'rejoinMainMeeting') {
+  //     alert('WOW');
+  //   }
+  // };
 
   // TODO: update this to include the 'selectedCameraChanged' when calling adds it to the device manager
   private subscribeDeviceManagerEvents(): void {
