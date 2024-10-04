@@ -648,7 +648,7 @@ export const dragToRight = async (page: Page, selector: string): Promise<void> =
   const boundingBox = await handle.boundingBox();
   if (!boundingBox) {
     page.screenshot({ path: `test-results/failure-screenshot-${generateGUID()}.png` });
-    fail(`Bounding box for selector '${selector}' could not be found.`);
+    throw new Error(`Bounding box for selector '${selector}' could not be found.`);
   }
   await screenshotOnFailure(
     page,
