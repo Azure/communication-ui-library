@@ -108,7 +108,7 @@ export const VerticalGallery = (props: VerticalGalleryProps): JSX.Element => {
 
   useEffect(() => {
     if (onFetchTilesToRender && indexesArray) {
-      onFetchTilesToRender(indexesArray[page - 1]);
+      onFetchTilesToRender(indexesArray[page - 1] ?? []);
     }
   }, [indexesArray, onFetchTilesToRender, page]);
 
