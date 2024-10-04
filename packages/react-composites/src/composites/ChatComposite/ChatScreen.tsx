@@ -77,8 +77,6 @@ import {
   updateContentStringWithUploadedInlineImages
 } from './ImageUpload/ImageUploadUtils';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
-import type { ChatAdapterState } from './adapter/ChatAdapter';
-/* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { isMicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { SEND_BOX_UPLOADS_KEY_VALUE, _DEFAULT_INLINE_IMAGE_FILE_NAME } from '../common/constants';
@@ -88,6 +86,8 @@ import { ImageUploadReducer } from './ImageUpload/ImageUploadReducer';
 import { useLocale } from '../localization';
 import { useSelector } from './hooks/useSelector';
 import { getChatMessages, getThreadId, getUserId } from './selectors/baseSelectors';
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+import { getCreatedBy, getTextOnlyChat } from './selectors/baseSelectors';
 
 /**
  * @private
@@ -153,31 +153,15 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const localeStrings = useLocale().strings;
 
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  const [textOnlyChat, setTextOnlyChat] = useState(false);
+  const textOnlyChat = !!useSelector(getTextOnlyChat);
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  const [isACSChat, setIsACSChat] = useState(false);
+  const createdBy = useSelector(getCreatedBy);
+  /* @conditional-compile-remove(rich-text-editor-image-upload) */
+  const isACSChat = !createdBy || !isMicrosoftTeamsUserIdentifier(createdBy);
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   const [editBoxInlineImageUploads, handleEditBoxInlineImageUploadAction] = useReducer(ImageUploadReducer, undefined);
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   const [sendBoxInlineImageUploads, handleSendBoxInlineImageUploadAction] = useReducer(ImageUploadReducer, undefined);
-
-  /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  useEffect(() => {
-    const updateChatState = (newState: ChatAdapterState): void => {
-      setTextOnlyChat(newState.thread.properties?.messagingPolicy?.textOnlyChat === true);
-      if (newState.thread.properties?.createdBy) {
-        setIsACSChat(!isMicrosoftTeamsUserIdentifier(newState.thread.properties?.createdBy));
-      }
-    };
-    // set initial state for textOnlyChat and isACSChat
-    // eslint-disable-next-line @internal/custom-rules/no-getstate
-    updateChatState(adapter.getState());
-
-    adapter.onStateChange(updateChatState);
-    return () => {
-      adapter.offStateChange(updateChatState);
-    };
-  }, [adapter]);
 
   useEffect(() => {
     // Initial data should be always fetched by the composite(or external caller) instead of the adapter
@@ -235,7 +219,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
         imageSrc: fullSizeImageSrc
       });
     }
-  }, [adapterChatMessages, messageThreadProps.messages]);
+  }, [adapterChatMessages]);
 
   const getResourceSourceUrl = (result: ResourceFetchResult): string => {
     let src = '';

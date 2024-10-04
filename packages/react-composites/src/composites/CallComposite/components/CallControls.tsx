@@ -120,7 +120,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
       startDeepNoiseSuppression();
       setDeepNoiseSuppressionOn(true);
     }
-  }, [adapter, deepNoiseSuppresionEffectsDependency, deepNoiseSuppressionOnByDefault, startDeepNoiseSuppression]);
+  }, [deepNoiseSuppresionEffectsDependency, deepNoiseSuppressionOnByDefault, startDeepNoiseSuppression]);
 
   /* @conditional-compile-remove(DNS) */
   const environmentInfo = useSelector(getEnvironmentInfo);

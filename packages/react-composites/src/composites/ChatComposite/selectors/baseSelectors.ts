@@ -14,3 +14,11 @@ export const getThreadId = (state: ChatAdapterState): string => state.thread.thr
 /** @private */
 export const getChatMessages = (state: ChatAdapterState): { [key: string]: ChatMessageWithStatus } =>
   state.thread.chatMessages;
+
+/** @private */
+export const getTextOnlyChat = (state: ChatAdapterState): boolean | undefined =>
+  state.thread.properties?.messagingPolicy?.textOnlyChat;
+
+/** @private */
+export const getCreatedBy = (state: ChatAdapterState): CommunicationIdentifierKind | undefined =>
+  state.thread.properties?.createdBy;
