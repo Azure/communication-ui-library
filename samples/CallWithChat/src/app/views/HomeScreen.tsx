@@ -63,7 +63,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   ];
 
   /* @conditional-compile-remove(rich-text-editor-composite-support) */
-  const [isRichTextEditorEnabled, setIsRichTextEditorEnabled] = useState<boolean>(false);
+  const [isRichTextEditorEnabled, setIsRichTextEditorEnabled] = useState<boolean>(true);
 
   // Get display name from local storage if available
   const defaultDisplayName = localStorageAvailable ? getDisplayNameFromLocalStorage() : null;
