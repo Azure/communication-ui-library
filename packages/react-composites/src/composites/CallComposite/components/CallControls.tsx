@@ -113,7 +113,9 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
   }, [adapter, startDeepNoiseSuppression]);
 
   /* @conditional-compile-remove(DNS) */
-  const environmentInfo = adapter.getState().environmentInfo;
+  let environmentInfo = undefined;
+  /* @conditional-compile-remove(unsupported-browser) */
+  environmentInfo = adapter.getState().environmentInfo;
 
   /* @conditional-compile-remove(DNS) */
   const isSafari = _isSafari(environmentInfo);
