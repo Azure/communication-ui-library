@@ -16,6 +16,7 @@ Azure Communication services is excited to introduce a new way to consume our Co
 - Change logic of showing button to join breakout room when the breakout room call is available ([PR #5109](https://github.com/azure/communication-ui-library/pull/5109) by 79475487+mgamis-msft@users.noreply.github.com)
 - Add waiting overlay when only one person is in the call ([PR #5054](https://github.com/azure/communication-ui-library/pull/5054) by 96077406+carocao-msft@users.noreply.github.com)
 - Add new sub package `@azure/communication-react/javascript-loaders` to export the JavaScript loader functions ([PR #5106](https://github.com/azure/communication-ui-library/pull/5106) by dmceachern@microsoft.com)
+- Add Welsh component and composite locales ([PR #5243](https://github.com/Azure/communication-ui-library/pull/5243) by 79475487+mgamis-msft@users.noreply.github.com)
 
 ### Bug Fixes
 
@@ -25,6 +26,7 @@ Azure Communication services is excited to introduce a new way to consume our Co
 - Safely subscribe to on stateChanged events to prevent related events from failing if listeners throw an error ([PR #5165](https://github.com/azure/communication-ui-library/pull/5165) by edwardlee@microsoft.com)
 - Introduce logic to flag when the `AzureCommunicationServicesChatAdapter` is in the middle of creation when using the react hook: `useAzureCommunicationServicesChatAdapter` ([PR #5182](https://github.com/azure/communication-ui-library/pull/5182) by 9044372+JoshuaLai@users.noreply.github.com)
 - Fix call control configuration API there was an issue where some controls weren't hidden when configured to be removed ([PR #5193](https://github.com/azure/communication-ui-library/pull/5193) by dmceachern@microsoft.com)
+- Fix runtime error when starting screenshare alone in a call ([PR #5240](https://github.com/Azure/communication-ui-library/pull/5240) by 79475487+mgamis-msft@users.noreply.github.com)
 
 
 ## [1.19.0-beta.3](https://github.com/azure/communication-ui-library/tree/1.19.0-beta.3)
