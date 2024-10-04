@@ -396,6 +396,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
           customWidth={`${VIDEO_EFFECTS_SIDE_PANE_WIDTH_REM}rem`}
         >
           <SidePane
+            ariaLabel={isVideoEffectsPaneOpen ? locale.strings.call.videoEffectsPaneAriaLabel : undefined}
             mobileView={props.mobileView}
             updateSidePaneRenderer={props.updateSidePaneRenderer}
             maxWidth={`${VIDEO_EFFECTS_SIDE_PANE_WIDTH_REM}rem`}
