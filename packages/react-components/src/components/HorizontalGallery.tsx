@@ -68,7 +68,7 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
 
   useEffect(() => {
     if (onFetchTilesToRender && indexesArray) {
-      onFetchTilesToRender(indexesArray[page]);
+      onFetchTilesToRender(indexesArray[page] ?? []);
     }
   }, [indexesArray, onFetchTilesToRender, page]);
 

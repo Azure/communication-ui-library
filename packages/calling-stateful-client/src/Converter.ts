@@ -156,6 +156,8 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
     localRecording: { isLocalRecordingActive: false },
     pptLive: { isActive: false },
     raiseHand: { raisedHands: [] },
+    /* @conditional-compile-remove(together-mode) */
+    togetherMode: { stream: [] },
     localParticipantReaction: undefined,
     transcription: { isTranscriptionActive: false },
     screenShareRemoteParticipant: undefined,
