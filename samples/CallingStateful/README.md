@@ -67,7 +67,7 @@ Then hit the `Start Call` button and the call should begin to the user. Using th
 
 ### PSTN
 
-To make a PSTN call you need to provide an alternate caller ID in the `Alternate Caller ID` field. Then either type in the number you wish to dial with the number pad, or enter the number in the dialpad's field on your own.
+To make a PSTN call you need to provide an alternate caller ID in the `Alternate Caller ID` field. Then either type in the number you wish to dial with the number pad, or enter the number in the dialpad's field on your own. See our [documentation on PSTN](https://azure.github.io/communication-ui-library/?path=/docs/quickstarts-pstn--page) for more info.
 
 
 ## Additional Reading
