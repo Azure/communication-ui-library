@@ -157,7 +157,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   const createdBy = useSelector(getCreatedBy);
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  const isACSChat = !!createdBy && !isMicrosoftTeamsUserIdentifier(createdBy);
+  const isACSChat = createdBy && !isMicrosoftTeamsUserIdentifier(createdBy);
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   const [editBoxInlineImageUploads, handleEditBoxInlineImageUploadAction] = useReducer(ImageUploadReducer, undefined);
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
@@ -580,7 +580,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   /* @conditional-compile-remove(rich-text-editor-composite-support) */
   const richTextEditorOptions = useMemo(() => {
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    const onPasteCallback = isACSChat || textOnlyChat ? removeImageTags : undefined;
+    const onPasteCallback = !!isACSChat || textOnlyChat ? removeImageTags : undefined;
     return options?.richTextEditor
       ? {
           /* @conditional-compile-remove(rich-text-editor-image-upload) */ onPaste: onPasteCallback
