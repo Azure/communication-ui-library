@@ -23,7 +23,7 @@ export const ScrollableHorizontalGallery = (props: {
   useEffect(() => {
     const indexesArray = [...Array(horizontalGalleryElements?.length).keys()];
     if (onFetchTilesToRender && indexesArray) {
-      onFetchTilesToRender(indexesArray);
+      onFetchTilesToRender(indexesArray ?? []);
     }
   }, [onFetchTilesToRender, horizontalGalleryElements?.length]);
 

@@ -1,11 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-const NEW_CHANGE_FILE_REGEXP = /\s*change\/(.*\.json)\s*/;
-
 export function parseNewChangeFiles(stdout) {
+    // Split the output into lines
     const lines = stdout.split('\n');
-    const matches = lines.map(line => line.match(NEW_CHANGE_FILE_REGEXP)).filter(match => !!match);
-    // Extract the first capture group.
-    return matches.map(match => match[1]);
+    // Filter out the empty lines (`lines` list might have empty lines as part of the output)
+    const matches = lines.filter(line => line && line.toString().trim().length > 0);
+    // Parse the change file name from the output (remove the status and return only file information)
+    return matches.map(line => line.split('\t')[1]);
 }

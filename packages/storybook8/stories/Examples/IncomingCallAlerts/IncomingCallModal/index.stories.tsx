@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
 import { Meta } from '@storybook/react/*';
 import { controlsToAdd, hiddenControl } from '../../../controlsUtils';
 import { IncomingCallModal as IncomingCallModalStory } from './IncomingCallModal.story';
