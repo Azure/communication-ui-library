@@ -4640,11 +4640,9 @@ export type StartTeamsCallIdentifier = MicrosoftTeamsUserIdentifier | PhoneNumbe
 // @public
 export interface StatefulCallClient extends CallClient {
     createCallAgent(...args: Parameters<CallClient['createCallAgent']>): Promise<DeclarativeCallAgent>;
-    // (undocumented)
     createCallFeatureView(callId: string, stream: CallFeatureStreamState, options?: CreateViewOptions): Promise<CreateViewResult | undefined>;
     createTeamsCallAgent(...args: Parameters<CallClient['createTeamsCallAgent']>): Promise<DeclarativeTeamsCallAgent>;
     createView(callId: string | undefined, participantId: CommunicationIdentifier | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState, options?: CreateViewOptions): Promise<CreateViewResult | undefined>;
-    // (undocumented)
     disposeCallFeatureView(callId: string, stream: CallFeatureStreamState): void;
     disposeView(callId: string | undefined, participantId: CommunicationIdentifier | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState): void;
     getState(): CallClientState;
@@ -4833,12 +4831,12 @@ export const toFlatCommunicationIdentifier: (identifier: CommunicationIdentifier
 
 // @alpha
 export interface TogetherModeCallFeature {
-    seatingCoordinates: Map<string, TogetherModeSeatingCoordinates>;
+    seatingCoordinates: Map<string, TogetherModeSeatingCoordinatesState>;
     streams: Map<string, TogetherModeStreamState>;
 }
 
 // @alpha
-export interface TogetherModeSeatingCoordinates {
+export interface TogetherModeSeatingCoordinatesState {
     // (undocumented)
     height: number;
     // (undocumented)

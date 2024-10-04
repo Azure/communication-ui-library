@@ -8,7 +8,6 @@ import {
   DominantSpeakersInfo,
   ParticipantRole,
   ScalingMode,
-  TogetherModeSeatingMap,
   VideoDeviceInfo
 } from '@azure/communication-calling';
 import { RaisedHand } from '@azure/communication-calling';
@@ -25,7 +24,7 @@ import { CaptionsKind, CaptionsInfo as AcsCaptionsInfo } from '@azure/communicat
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(together-mode) */
-import { TogetherModeVideoStream } from '@azure/communication-calling';
+import { TogetherModeVideoStream, TogetherModeSeatingMap } from '@azure/communication-calling';
 import { AzureLogger, createClientLogger, getLogLevel } from '@azure/logger';
 import { EventEmitter } from 'events';
 import { enableMapSet, enablePatches, Patch, produce } from 'immer';
@@ -46,10 +45,10 @@ import {
   CallAgentState,
   CallErrors,
   CallErrorTarget,
-  CallError,
-  TogetherModeStreamState,
-  TogetherModeSeatingCoordinates
+  CallError
 } from './CallClientState';
+/* @conditional-compile-remove(together-mode) */
+import { TogetherModeStreamState, TogetherModeSeatingCoordinatesState } from './CallClientState';
 /* @conditional-compile-remove(breakout-rooms) */
 import { NotificationTarget, CallNotification, CallNotifications } from './CallClientState';
 import { TeamsIncomingCallState } from './CallClientState';
@@ -474,7 +473,7 @@ export class CallContext {
         }
         call.togetherMode.streams = streamsToAdd;
         if (!call.togetherMode.seatingCoordinates) {
-          call.togetherMode.seatingCoordinates = new Map<string, TogetherModeSeatingCoordinates>();
+          call.togetherMode.seatingCoordinates = new Map<string, TogetherModeSeatingCoordinatesState>();
         }
       }
     });
@@ -495,7 +494,7 @@ export class CallContext {
   }
 
   /* @conditional-compile-remove(together-mode) */
-  public setTogetherModeSeatingCoordinates(callId: string, seatingMap: TogetherModeSeatingMap): void {
+  public setTogetherModeSeatingCoordinatesState(callId: string, seatingMap: TogetherModeSeatingMap): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {

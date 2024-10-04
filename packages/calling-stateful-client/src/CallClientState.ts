@@ -288,7 +288,7 @@ export interface TogetherModeCallFeatureState {
   /**
    * Proxy of {@link @azure/communication-calling#TogetherModeCallFeature.TogetherModeSeatingMap}.
    */
-  seatingCoordinates: Map<string, TogetherModeSeatingCoordinates>;
+  seatingCoordinates: Map<string, TogetherModeSeatingCoordinatesState>;
 }
 
 /* @conditional-compile-remove(together-mode) */
@@ -334,14 +334,14 @@ export interface TogetherModeStreamState extends CallFeatureStreamState {
  * State only version of {@link @azure/communication-calling#TogetherModeSeatingMap}.
  * @alpha
  */
-export interface TogetherModeSeatingCoordinates {
-  // the y coordinate of the participant
+export interface TogetherModeSeatingCoordinatesState {
+  // the y coordinate of the participant seating position in the together mode stream
   top: number;
-  // the x coordinate of the participant
+  // the x coordinate of the participant seating position in the together mode stream
   left: number;
-  // the width of the participant
+  // the width of the participant in the together mode stream
   width: number;
-  // the height of the participant
+  // the height of the participant in the together mode stream
   height: number;
 }
 

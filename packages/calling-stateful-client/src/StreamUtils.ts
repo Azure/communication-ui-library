@@ -5,12 +5,13 @@ import {
   CreateViewOptions,
   LocalVideoStream,
   RemoteVideoStream,
-  TogetherModeVideoStream,
   VideoStreamRenderer,
   VideoStreamRendererView
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(together-mode) */
+import { TogetherModeVideoStream } from '@azure/communication-calling';
 import { CommunicationIdentifierKind } from '@azure/communication-common';
-import { LocalVideoStreamState, RemoteVideoStreamState } from './CallClientState';
+import { CallFeatureStreamState, LocalVideoStreamState, RemoteVideoStreamState } from './CallClientState';
 /* @conditional-compile-remove(together-mode) */
 import { TogetherModeStreamState } from './CallClientState';
 import { CallContext } from './CallContext';
@@ -262,6 +263,7 @@ async function createViewVideo(
   };
 }
 
+/* @conditional-compile-remove(together-mode) */
 const getStreamFeatureName = (stream: TogetherModeStreamState): string => {
   if ('feature' in stream) {
     return stream.feature;
@@ -269,19 +271,19 @@ const getStreamFeatureName = (stream: TogetherModeStreamState): string => {
   throw new Error('Feature name not found');
 };
 
+/* @conditional-compile-remove(together-mode) */
 // This function is used to create a view for a stream that is part of a call feature.
 async function createCallFeatureViewVideo(
   context: CallContext,
   internalContext: InternalCallContext,
   callId: string,
-  stream: TogetherModeStreamState /* @conditional-compile-remove(together-mode) */,
+  stream: TogetherModeStreamState,
   options?: CreateViewOptions
 ): Promise<CreateViewResult | undefined> {
   const streamEventType = 'createViewCallFeature';
 
   const streamType = stream?.mediaStreamType;
   const callFeatureStreamId = stream && stream.id;
-  console.log('CHUK: createCallFeatureViewVideo');
   const streamLogInfo = {
     callId,
     undefined,
@@ -671,7 +673,6 @@ export function createCallFeatureView(
   const streamType = stream.mediaStreamType;
 
   if (callId && isCallFeatureStream(stream)) {
-    console.log('CHUK: createCallFeatureView');
     return createCallFeatureViewVideo(context, internalContext, callId, stream, options);
   } else {
     _logStreamEvent(EventNames.CREATE_STREAM_INVALID_PARAMS, { streamType });
@@ -748,22 +749,20 @@ export function disposeAllViewsFromCall(
       }
     }
   }
-  // const callFeatureStreams = internalContext.getLocalRenderInfosForCall(callId);
-  // if (localStreams) {
-  //   for (const localStreamAndRenderer of localStreams.values()) {
-  //     if (localStreamAndRenderer && localStreamAndRenderer.renderer) {
-  //       // We don't want to accept SDK stream as parameter but we also don't cache the declarative stream so we have to
-  //       // convert the SDK stream to declarative stream which is not pretty so this could use some further refactoring.
-  //       disposeView(
-  //         context,
-  //         internalContext,
-  //         callId,
-  //         undefined,
-  //         convertSdkLocalStreamToDeclarativeLocalStream(localStreamAndRenderer.stream)
-  //       );
-  //     }
-  //   }
-  // }
+  const callFeatureStreams = internalContext.getCallFeatureRenderInfosForCall(callId);
+  if (callFeatureStreams) {
+    for (const [, featureStreams] of callFeatureStreams.entries()) {
+      for (const [, streamAndRenderer] of featureStreams.entries()) {
+        disposeView(
+          context,
+          internalContext,
+          callId,
+          undefined,
+          convertSdkRemoteStreamToDeclarativeRemoteStream(streamAndRenderer.stream as RemoteVideoStream)
+        );
+      }
+    }
+  }
 }
 
 /**
@@ -779,8 +778,6 @@ export function disposeAllViews(context: CallContext, internalContext: InternalC
 /**
  * @private
  */
-function isCallFeatureStream(
-  stream?: TogetherModeStreamState | LocalVideoStreamState | RemoteVideoStreamState
-): boolean {
-  return (stream && 'feature' in stream) || false;
+function isCallFeatureStream(stream: CallFeatureStreamState): boolean {
+  return 'feature' in stream || false;
 }

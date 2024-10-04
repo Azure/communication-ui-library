@@ -110,6 +110,7 @@ export class _MockCallAdapter implements CallAdapter {
   createStreamView(): Promise<void> {
     throw Error('createStreamView not implemented');
   }
+  /* @conditional-compile-remove(together-mode) */
   createFeatureStreamView(): Promise<void> {
     throw Error('createFeatureStreamView not implemented');
   }
@@ -125,6 +126,7 @@ export class _MockCallAdapter implements CallAdapter {
   disposeRemoteVideoStreamView(): Promise<void> {
     return Promise.resolve();
   }
+  /* @conditional-compile-remove(together-mode) */
   disposeFeatureStreamView(): Promise<void> {
     return Promise.resolve();
   }
