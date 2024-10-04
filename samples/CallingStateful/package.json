@@ -13,8 +13,8 @@
     "start:prod": "node dist/server.js",
     "test": "",
     "test:ci-coverage": "echo skip",
-    "port:sample": "rushx preprocess:stable-flavor && cpx \"./preprocessed/**\" sample-dist/src && cpx \"./Media/**\" sample-dist/Media && cpx \"./public/**\" sample-dist/public",
-    "preprocess": "cpx \"./src/**\" ./preprocessed && babel ./src --out-dir ../preprocessed --extensions \".ts,.tsx\" --keep-file-extension --config-file ./.babelrc.js --relative",
+    "port:sample": "rushx preprocess:stable-flavor && cpy './preprocessed/**' sample-dist/src && cpy './Media/**' sample-dist/Media && cpy './public/**' sample-dist/public",
+    "preprocess": "cpy './src/**' ./preprocessed && babel ./src --out-dir ../preprocessed --extensions \".ts,.tsx\" --keep-file-extension --config-file ./.babelrc.js --relative",
     "preprocess:stable-flavor": "rushx _stable-flavor \"rushx preprocess && rushx lint:fix && rushx prettier\"",
     "prettier": "prettier --no-error-on-unmatched-pattern --write --config ../../.prettierrc --ignore-path=../../.prettierignore \"**/*.js\" \"**/*.jsx\" \"**/*.ts\" \"**/*.tsx\"",
     "prettier:check": "prettier --no-error-on-unmatched-pattern --check --config ../../.prettierrc --ignore-path=../../.prettierignore \"**/*.js\" \"**/*.jsx\" \"**/*.ts\" \"**/*.tsx\"",
@@ -75,8 +75,8 @@
     "babel-loader": "8.1.0",
     "concurrently": "^5.3.0",
     "copyfiles": "^2.4.1",
-    "cpx": "^1.5.0",
-    "css-loader": "^4.3.0",
+    "cpy-cli": "^5.0.0",
+    "css-loader": "^7.1.2",
     "env-cmd": "^10.1.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-config-react-app": "^6.0.0",
@@ -103,7 +103,7 @@
     "url-loader": "^4.1.1",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "4.15.2",
-    "webpack": "5.89.0",
+    "webpack": "5.95.0",
     "webpack-bundle-analyzer": "^4.5.0"
   }
 }
