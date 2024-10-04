@@ -766,7 +766,7 @@ describe('VideoGallery with vertical overflow gallery tests', () => {
   });
 });
 
-test.only('should render screenshare component and local user video tile when local user is alone', () => {
+test('should render screenshare component and local user video tile when local user is alone', () => {
   const localParticipant = createLocalParticipant({
     videoStream: { isAvailable: true, renderElement: createVideoDivElement() }
   });
