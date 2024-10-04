@@ -1,6 +1,6 @@
+import { MessageStatusIndicator } from '@azure/communication-react';
 import { Canvas, Meta, ArgTypes } from '@storybook/blocks';
 import * as MessageStatusIndicatorStories from './index.stories';
-import { MessageStatusIndicator } from '@azure/communication-react';
 import MessageStatusIndicatorStoriesExampleText from '!!raw-loader!./snippets/MessageStatusIndicator.snippet.tsx';
 
 <Meta of={MessageStatusIndicatorStories} />
@@ -20,6 +20,7 @@ import { MessageStatus, MessageStatusIndicator } from '@azure/communication-reac
 <Canvas
   of={MessageStatusIndicatorStories.MessageStatusIndicatorSnippetDocsOnly}
   source={{ code: MessageStatusIndicatorStoriesExampleText }}
+  layout="padded"
 />
 
 ## Props

@@ -6,6 +6,8 @@ import { CallClient, CallClientOptions, CreateViewOptions, DeviceManager } from 
 /* @conditional-compile-remove(unsupported-browser) */
 import { Features } from '@azure/communication-calling';
 import { CallClientState, LocalVideoStreamState, RemoteVideoStreamState } from './CallClientState';
+/* @conditional-compile-remove(together-mode) */
+import { TogetherModeStreamState } from './CallClientState';
 import { CallContext } from './CallContext';
 import { callAgentDeclaratify, DeclarativeCallAgent } from './CallAgentDeclarative';
 import { InternalCallContext } from './InternalCallContext';
@@ -111,7 +113,10 @@ export interface StatefulCallClient extends CallClient {
   createView(
     callId: string | undefined,
     participantId: CommunicationIdentifier | undefined,
-    stream: LocalVideoStreamState | RemoteVideoStreamState,
+    stream:
+      | LocalVideoStreamState
+      | RemoteVideoStreamState
+      | /* @conditional-compile-remove(together-mode) */ TogetherModeStreamState,
     options?: CreateViewOptions
   ): Promise<CreateViewResult | undefined>;
   /**
@@ -144,7 +149,6 @@ export interface StatefulCallClient extends CallClient {
     stream: LocalVideoStreamState | RemoteVideoStreamState
   ): void;
 
-  /** @conditional-compile-remove(one-to-n-calling) */
   /**
    * The CallAgent is used to handle calls.
    * To create the CallAgent, pass a CommunicationTokenCredential object provided from SDK.

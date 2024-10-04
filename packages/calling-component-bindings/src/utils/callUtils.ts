@@ -17,7 +17,12 @@ import {
 } from '@azure/communication-common';
 import { memoizeFnAll, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 
-type ParticipantConnectionState =
+/**
+ * Type for connmection state
+ *
+ * @internal
+ */
+export type ParticipantConnectionState =
   | 'Idle'
   | 'Connecting'
   | 'Ringing'
@@ -25,7 +30,8 @@ type ParticipantConnectionState =
   | 'Hold'
   | 'InLobby'
   | 'EarlyMedia'
-  | 'Disconnected';
+  | 'Disconnected'
+  | 'Reconnecting';
 
 /**
  * Check if the call state represents being in the call
@@ -53,7 +59,7 @@ export const _isInLobbyOrConnecting = (callStatus: CallStatus | undefined): bool
 export const _isPreviewOn = (deviceManager: DeviceManagerState): boolean => {
   // TODO: we should take in a LocalVideoStream that developer wants to use as their 'Preview' view. We should also
   // handle cases where 'Preview' view is in progress and not necessary completed.
-  return deviceManager.unparentedViews.length > 0 && deviceManager.unparentedViews[0].view !== undefined;
+  return deviceManager.unparentedViews[0]?.view !== undefined;
 };
 
 /**
@@ -133,7 +139,15 @@ export const isACSCallParticipants = (
  * @private
  * Checks whether the user is a 'Ringing' PSTN user.
  */
-export const _isRingingPSTNParticipant = (participant: RemoteParticipantState): ParticipantConnectionState => {
+export const _convertParticipantState = (participant: RemoteParticipantState): ParticipantConnectionState => {
+  /* @conditional-compile-remove(remote-ufd) */
+  if (
+    participant.diagnostics &&
+    participant.diagnostics['ServerConnection'] &&
+    participant.diagnostics['ServerConnection']?.value === false
+  ) {
+    return 'Reconnecting';
+  }
   return isPhoneNumberIdentifier(participant.identifier) && participant.state === 'Connecting'
     ? 'Ringing'
     : participant.state;

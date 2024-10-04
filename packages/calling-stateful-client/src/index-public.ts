@@ -26,18 +26,20 @@ export type {
 } from './CallClientState';
 /* @conditional-compile-remove(breakout-rooms) */
 export type { CallNotification, CallNotifications, NotificationTarget } from './CallClientState';
-/* @conditional-compile-remove(one-to-n-calling) */
 export type { TeamsIncomingCallState } from './CallClientState';
 /* @conditional-compile-remove(remote-ufd) */
 export type { RemoteDiagnosticState } from './CallClientState';
 export type { CreateViewResult } from './StreamUtils';
 export type { RaiseHandCallFeatureState as RaiseHandCallFeature } from './CallClientState';
+/* @conditional-compile-remove(together-mode) */
+export type { TogetherModeCallFeatureState as TogetherModeCallFeature } from './CallClientState';
+/* @conditional-compile-remove(together-mode) */
+export type { TogetherModeStreamState } from './CallClientState';
+
 export type { RaisedHandState } from './CallClientState';
-/* @conditional-compile-remove(one-to-n-calling) */
 export type { DeclarativeCallAgent, IncomingCallManagement } from './CallAgentDeclarative';
 /* @conditional-compile-remove(teams-identity-support) */
 export type { DeclarativeTeamsCallAgent } from './TeamsCallAgentDeclarative';
-/* @conditional-compile-remove(one-to-n-calling) */
 export type { TeamsIncomingCallManagement } from './TeamsCallAgentDeclarative';
 export type { LocalVideoStreamVideoEffectsState } from './CallClientState';
 

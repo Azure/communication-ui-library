@@ -4,11 +4,11 @@
 import { Stack } from '@fluentui/react';
 
 import React, { useState, useEffect } from 'react';
-import { CallWithChatExampleProps } from './snippets/CallWithChat.snippet';
-import { CallWithChatExperienceWithErrorChecks } from './snippets/CallWithChatWithErrorChecks.snippet';
-import { ConfigJoinMeetingHintBanner } from '../utils/Utils';
 import { compositeExperienceContainerStyle } from '../../constants';
 import { controlsToAdd, ArgsFrom } from '../utils/controlsUtils';
+import { ConfigJoinMeetingHintBanner } from '../utils/Utils';
+import { CallWithChatExampleProps } from './snippets/CallWithChat.snippet';
+import { CallWithChatExperienceWithErrorChecks } from './snippets/CallWithChatWithErrorChecks.snippet';
 
 export const storyControls = {
   userId: controlsToAdd.userId,

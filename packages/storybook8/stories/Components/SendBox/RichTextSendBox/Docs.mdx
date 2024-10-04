@@ -1,15 +1,14 @@
-import { Canvas, Meta, ArgTypes } from '@storybook/addon-docs';
-import { SingleLineBetaBanner } from '../../../BetaBanners/SingleLineBetaBanner';
-import { DetailedBetaBanner } from '../../../BetaBanners/DetailedBetaBanner';
 import { RichTextSendBox } from '@azure/communication-react';
+import { Canvas, Meta, ArgTypes } from '@storybook/addon-docs';
+import { DetailedBetaBanner } from '../../../BetaBanners/DetailedBetaBanner';
+import { SingleLineBetaBanner } from '../../../BetaBanners/SingleLineBetaBanner';
 
+import * as RichTextSendBoxStories from './index.stories';
 import RichTextSendBoxExampleText from '!!raw-loader!./snippets/RichTextSendBox.snippet.tsx';
 import RichTextSendBoxAttachmentUploadsExampleText from '!!raw-loader!./snippets/RichTextSendBoxAttachmentUploads.snippet.tsx';
 import RichTextSendBoxOnPasteCallbackExampleText from '!!raw-loader!./snippets/RichTextSendBoxOnPasteCallback.snippet.tsx';
 import RichTextSendBoxWithInlineImagesExampleText from '!!raw-loader!./snippets/RichTextSendBoxWithInlineImages.snippet.tsx';
 import RichTextSendBoxWithSystemMessageExampleText from '!!raw-loader!./snippets/RichTextSendBoxWithSystemMessage.snippet.tsx';
-
-import * as RichTextSendBoxStories from './index.stories';
 
 <Meta of={RichTextSendBoxStories} />
 
@@ -36,6 +35,7 @@ To add a system message, use the systemMessage property like in the example belo
 <Canvas
   of={RichTextSendBoxStories.RichTextSendBoxWithSystemMessageSnippetDocsOnly}
   source={{ code: RichTextSendBoxWithSystemMessageExampleText }}
+  layout="padded"
 />
 
 ## Display File Uploads
@@ -47,6 +47,7 @@ their own attachment upload logic and utilize the UI provided by RichTextSendBox
 <Canvas
   of={RichTextSendBoxStories.RichTextSendBoxAttachmentUploadsSnippetDocsOnly}
   source={{ code: RichTextSendBoxAttachmentUploadsExampleText }}
+  layout="padded"
 />
 
 ## Enable Inserting Inline Images
@@ -71,6 +72,7 @@ their own attachment upload logic and utilize the UI provided by RichTextSendBox
 <Canvas
   of={RichTextSendBoxStories.RichTextSendBoxWithInlineImagesSnippetDocsOnly}
   source={{ code: RichTextSendBoxWithInlineImagesExampleText }}
+  layout="padded"
 />
 
 ## Process pasted content
@@ -80,6 +82,7 @@ RichTextSendBox provides `onPaste` callback for custom processing of the pasted 
 <Canvas
   of={RichTextSendBoxStories.RichTextSendBoxOnPasteCallbackSnippetDocsOnly}
   source={{ code: RichTextSendBoxOnPasteCallbackExampleText }}
+  layout="padded"
 />
 
 ## Props

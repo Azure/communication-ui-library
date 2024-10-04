@@ -126,7 +126,6 @@ export interface VideoGalleryStrings {
   stopSpotlightVideoTileMenuLabel: string;
   /** Menu text shown in Video Tile contextual menu to stop spotlight on local user's video tile */
   stopSpotlightOnSelfVideoTileMenuLabel: string;
-  /* @conditional-compile-remove(hide-attendee-name) */
   /** String for the attendee role */
   attendeeRole: string;
   /* @conditional-compile-remove(soft-mute) */
@@ -227,7 +226,7 @@ export interface VideoGalleryProps {
   onDisposeRemoteScreenShareStreamView?: (userId: string) => Promise<void>;
   /** Callback to dispose a local screen share stream view */
   onDisposeLocalScreenShareStreamView?: () => Promise<void>;
-  /** Callback to render a particpant avatar */
+  /** Callback to render a participant avatar */
   onRenderAvatar?: OnRenderAvatarCallback;
   /**
    * Whether to display the local video camera switcher button
@@ -632,7 +631,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           onRenderAvatar={onRenderAvatar}
           showMuteIndicator={showMuteIndicator}
           strings={strings}
-          /* @conditional-compile-remove(PSTN-calls) */
           participantState={participant.state}
           menuKind={
             participant.userId === localParticipant.userId

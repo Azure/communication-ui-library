@@ -1,17 +1,14 @@
 import * as http from 'http';
-import { Server } from 'node-static';
+import express from 'express';
 import * as path from 'path';
 import dotenv from 'dotenv';
 
 dotenv.config({ path: path.join(__dirname, '..', '.env') });
 
 async function globalSetup() {
-  var file = new Server(path.resolve(process.cwd(), process.env.SERVE_PATH));
-  const server = http
-    .createServer(function (req, res) {
-      file.serve(req, res);
-    })
-    .listen(8080);
+  const fileServer = express();
+  fileServer.use(express.static(path.resolve(process.cwd(), process.env.SERVE_PATH)));
+  const server = http.createServer(fileServer).listen(8080);
 
   // Expose port to the tests.
   process.env.SERVER_PORT = String(server.address().toString());

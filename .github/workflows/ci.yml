@@ -8,6 +8,7 @@ on:
       - release/**
   # Presubmit CI on PRs to all branches.
   pull_request:
+    types: [labeled, unlabeled, opened, synchronize, reopened]
   # Allows you to run this workflow manually from the Actions tab.
   workflow_dispatch:
 
@@ -19,24 +20,6 @@ concurrency:
 permissions: read-all
 
 jobs:
-  files_changed:
-    name: Determine Changes
-    runs-on: ubuntu-latest
-    timeout-minutes: 3
-    # Map a step output to a job output
-    outputs:
-      storybook8_changes: ${{ steps.changes.outputs.storybook8 }}
-    steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
-      - uses: actions/checkout@v4
-      - uses: dorny/paths-filter@v3
-        id: changes
-        with:
-          # token: ${{ secrets.GITHUB_TOKEN }}
-          filters: |
-            storybook8:
-              - 'packages/storybook8/**'
-
   # get matrix for ci-jobs
   get_matrix:
     name: Load CI Matrix Details
@@ -67,7 +50,10 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 2 # this job requires depth of 2 for access to diff the SHA for change file check
+          # This job requires to fetch the entire history to access to diff the SHA for change file check.
+          # Otherwise, it can lead to issues when trying to compare branches, as the fetched commits may not
+          # include the common ancestor between the branches.
+          fetch-depth: 0
       # Ensure node version is great enough
       - name: Use Node.js
         uses: actions/setup-node@v4
@@ -86,10 +72,8 @@ jobs:
         if: ${{ always() && steps.install-dependencies.outcome == 'failure' }}
         run: echo "Failed to install dependencies, please make sure you run `rush update:all-flavors` if dependencies were updated." && exit 1
       - name: Check the necessary change file has been submitted
-        if: ${{ github.event_name == 'pull_request' && !contains( github.event.pull_request.labels.*.name, 'do not need changelog')}}
-        run: |
-          git fetch origin main:main --depth=2
-          node common/scripts/changelog/check.mjs ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }}
+        if: ${{ github.event_name == 'pull_request' && !contains( github.event.pull_request.labels.*.name, 'does not need changelog')}}
+        run: node common/scripts/changelog/check.mjs ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }}
 
       # Perform lint check
       - name: Run linter
@@ -144,8 +128,6 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
       # Ensure node version is great enough
       - name: Use Node.js
         uses: actions/setup-node@v4
@@ -239,8 +221,6 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
       # Ensure node version is great enough
       - name: Use Node.js
         uses: actions/setup-node@v4
@@ -293,8 +273,6 @@ jobs:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
@@ -362,8 +340,6 @@ jobs:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
@@ -431,8 +407,6 @@ jobs:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
@@ -499,8 +473,6 @@ jobs:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
@@ -555,8 +527,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
@@ -578,16 +548,13 @@ jobs:
         working-directory: packages/storybook
 
   build_storybook8:
-    needs: [get_matrix, files_changed]
-    if: needs.files_changed.outputs.storybook8_changes == 'true'
+    needs: get_matrix
     name: Build Storybook v8 (${{ matrix.flavor }})
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
@@ -604,11 +571,11 @@ jobs:
         run: rush install --max-install-attempts 3
       - name: Build
         if: ${{ matrix.flavor == 'beta' || matrix.flavor == 'beta-release' }}
-        run: rushx build-s8
+        run: rushx build
         working-directory: packages/storybook8
       - name: Tests
         if: ${{ matrix.flavor == 'beta' || matrix.flavor == 'beta-release' }}
-        run: rushx test-s8
+        run: rushx test
         working-directory: packages/storybook8
 
   build_calling_sample:
@@ -619,8 +586,6 @@ jobs:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
@@ -653,8 +618,6 @@ jobs:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
@@ -687,8 +650,6 @@ jobs:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
@@ -723,8 +684,6 @@ jobs:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
@@ -775,8 +734,6 @@ jobs:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:

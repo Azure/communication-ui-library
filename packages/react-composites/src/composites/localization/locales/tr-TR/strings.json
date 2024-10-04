@@ -406,6 +406,6 @@
     "openDtmfDialpadLabel": "Tuş takımını göster",
     "dtmfDialpadPlaceholderText": "Numara girin",
     "breakoutRoomChatPaneTitle": "Tartışma Odası Sohbeti",
-    "chatContentSpinnerLabel": "Loading..."
+    "chatContentSpinnerLabel": "Yükleniyor..."
   }
 }

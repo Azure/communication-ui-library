@@ -5,7 +5,6 @@ import { memoizeFunction, Stack, useTheme } from '@fluentui/react';
 import { IContextualMenuItem } from '@fluentui/react';
 import { _isInLobbyOrConnecting } from '@internal/calling-component-bindings';
 import { ControlBar, DevicesButton, ParticipantMenuItemsCallback } from '@internal/react-components';
-/* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { HoldButton } from '@internal/react-components';
 import React, { useMemo } from 'react';
 /* @conditional-compile-remove(DNS) */
@@ -18,16 +17,16 @@ import { Microphone } from './buttons/Microphone';
 import { Participants } from './buttons/Participants';
 import { ScreenShare } from './buttons/ScreenShare';
 import { ContainerRectProps } from '../../common/ContainerRectProps';
-/* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
+
 import { People } from './buttons/People';
 import { useLocale } from '../../localization';
 import { MoreButton } from '../../common/MoreButton';
 import { usePropsFor } from '../hooks/usePropsFor';
 import { buttonFlyoutIncreasedSizeStyles } from '../styles/Buttons.styles';
+/* @conditional-compile-remove(DNS) */
 import { useAdapter } from '../adapter/CallAdapterProvider';
 import { isDisabled } from '../utils';
 import { callControlsContainerStyles } from '../styles/CallPage.styles';
-import { CommonCallAdapter } from '../adapter';
 import { RaiseHand } from './buttons/RaiseHand';
 import { RaiseHandButton, RaiseHandButtonProps } from '@internal/react-components';
 import { _generateDefaultDeviceMenuProps } from '@internal/react-components';
@@ -43,12 +42,20 @@ import { capabilitySelector } from '../../CallComposite/selectors/capabilitySele
 import { callStatusSelector } from '../../CallComposite/selectors/callStatusSelector';
 /* @conditional-compile-remove(DNS) */
 import { _isSafari } from '../../CallComposite/utils';
+import { getIsRoomsCall, getReactionResources, getRole } from '../selectors/baseSelectors';
+/* @conditional-compile-remove(calling-environment-info) */
+import { getEnvironmentInfo } from '../selectors/baseSelectors';
+/* @conditional-compile-remove(DNS) */
+import {
+  getDeepNoiseSuppresionEffectsDependency,
+  getDeepNoiseSuppresionIsOnByDefault,
+  getHideDeepNoiseSupressionButton
+} from '../selectors/baseSelectors';
 
 /**
  * @private
  */
 export type CallControlsProps = {
-  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   peopleButtonChecked?: boolean;
   onPeopleButtonClicked?: () => void;
   callInvitationURL?: string;
@@ -91,41 +98,43 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
     [props.isMobile, props.options]
   );
 
-  const adapter = useAdapter();
-
   const localeStrings = useLocale();
 
   /* @conditional-compile-remove(DNS) */
   const [isDeepNoiseSuppressionOn, setDeepNoiseSuppressionOn] = useState<boolean>(false);
 
   /* @conditional-compile-remove(DNS) */
+  const adapter = useAdapter();
+  /* @conditional-compile-remove(DNS) */
   const startDeepNoiseSuppression = useCallback(async () => {
     await adapter.startNoiseSuppressionEffect();
   }, [adapter]);
 
   /* @conditional-compile-remove(DNS) */
+  const deepNoiseSuppresionEffectsDependency = useSelector(getDeepNoiseSuppresionEffectsDependency);
+  /* @conditional-compile-remove(DNS) */
+  const deepNoiseSuppressionOnByDefault = useSelector(getDeepNoiseSuppresionIsOnByDefault);
+  /* @conditional-compile-remove(DNS) */
   useEffect(() => {
-    if (
-      adapter.getState().onResolveDeepNoiseSuppressionDependency &&
-      adapter.getState().deepNoiseSuppressionOnByDefault
-    ) {
+    if (deepNoiseSuppresionEffectsDependency && deepNoiseSuppressionOnByDefault) {
       startDeepNoiseSuppression();
       setDeepNoiseSuppressionOn(true);
     }
-  }, [adapter, startDeepNoiseSuppression]);
+  }, [deepNoiseSuppresionEffectsDependency, deepNoiseSuppressionOnByDefault, startDeepNoiseSuppression]);
 
   /* @conditional-compile-remove(DNS) */
-  const environmentInfo = adapter.getState().environmentInfo;
+  const environmentInfo = useSelector(getEnvironmentInfo);
 
   /* @conditional-compile-remove(DNS) */
   const isSafari = _isSafari(environmentInfo);
   /* @conditional-compile-remove(DNS) */
-  const showNoiseSuppressionButton =
-    adapter.getState().onResolveDeepNoiseSuppressionDependency &&
-    !adapter.getState().hideDeepNoiseSuppressionButton &&
+  const hideDeepNoiseSuppressionButton = useSelector(getHideDeepNoiseSupressionButton);
+  /* @conditional-compile-remove(DNS) */
+  const showNoiseSuppressionButton = !!(
+    deepNoiseSuppresionEffectsDependency &&
+    !hideDeepNoiseSuppressionButton &&
     !isSafari
-      ? true
-      : false;
+  );
 
   /* @conditional-compile-remove(DNS) */
   const onClickNoiseSuppression = useCallback(async () => {
@@ -138,7 +147,6 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
     }
   }, [adapter, isDeepNoiseSuppressionOn]);
 
-  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   const peopleButtonStrings = useMemo(
     () => ({
       label: localeStrings.strings.call.peopleButtonLabel,
@@ -156,7 +164,6 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
     [localeStrings]
   );
 
-  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   const holdButtonProps = usePropsFor(HoldButton);
 
   const raiseHandButtonProps = usePropsFor(RaiseHandButton) as RaiseHandButtonProps;
@@ -191,10 +198,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
     numberOfButtons++;
   }
 
-  const showParticipantsButtonInControlBar =
-    isEnabled(options?.participantsButton) &&
-    /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
-    !props.isMobile;
+  const showParticipantsButtonInControlBar = isEnabled(options?.participantsButton) && !props.isMobile;
   if (showParticipantsButtonInControlBar) {
     numberOfButtons++;
   }
@@ -203,6 +207,8 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
   if (showReactionButtonInControlBar) {
     numberOfButtons++;
   }
+
+  const isRoomsCall = useSelector(getIsRoomsCall);
 
   const moreButtonContextualMenuItems = (): IContextualMenuItem[] => {
     const items: IContextualMenuItem[] = [];
@@ -225,8 +231,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
       });
     }
 
-    /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
-    if (!isRoomsCallTrampoline(adapter)) {
+    if (!isRoomsCall) {
       items.push({
         key: 'holdButtonKey',
         text: localeStrings.component.strings.holdButton.tooltipOffContent,
@@ -275,12 +280,11 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
     showMoreButton = isEnabled(options?.moreButton);
   }
 
-  const reactionResources = adapter.getState().reactions;
+  const reactionResources = useSelector(getReactionResources);
   const raiseHandButtonIsEnabled = isEnabled(options?.raiseHandButton);
   let showRaiseHandButtonInControlBar = raiseHandButtonIsEnabled;
-  const role = adapter.getState().call?.role;
-  const hideRaiseHandButtonInRoomsCall =
-    adapter.getState().isRoomsCall && role && ['Consumer', 'Unknown'].includes(role);
+  const role = useSelector(getRole);
+  const hideRaiseHandButtonInRoomsCall = isRoomsCall && role && ['Consumer', 'Unknown'].includes(role);
   if (showRaiseHandButtonInControlBar && (props.isMobile ? numberOfButtons < 5 : true)) {
     numberOfButtons++;
   } else {
@@ -425,7 +429,6 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
                 disabled={isDisabled(options?.participantsButton)}
               />
             ) && (
-              /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
               <People
                 checked={props.peopleButtonChecked}
                 ariaLabel={peopleButtonStrings?.label}
@@ -479,8 +482,3 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
 };
 
 const isEnabled = (option: unknown): boolean => option !== false;
-
-/** @private */
-export const isRoomsCallTrampoline = (adapter: CommonCallAdapter): boolean => {
-  return adapter.getState().isRoomsCall;
-};

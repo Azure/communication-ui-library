@@ -11,12 +11,11 @@ import {
   ScreenShareButton,
   VideoGallery
 } from '@internal/react-components';
-/* @conditional-compile-remove(one-to-n-calling) */
 import { IncomingCallStack } from '@internal/react-components';
 
 import { NotificationStack } from '@internal/react-components';
 import { Dialpad } from '@internal/react-components';
-/* @conditional-compile-remove(PSTN-calls) */
+
 import { HoldButton } from '@internal/react-components';
 import { RaiseHandButton } from '@internal/react-components';
 import { raiseHandButtonSelector } from '../callControlSelectors';
@@ -30,7 +29,6 @@ import {
   ScreenShareButtonSelector,
   screenShareButtonSelector
 } from '../callControlSelectors';
-/* @conditional-compile-remove(PSTN-calls) */
 import { holdButtonSelector, HoldButtonSelector } from '../callControlSelectors';
 import { VideoGallerySelector, videoGallerySelector } from '../videoGallerySelector';
 import { ParticipantListSelector, participantListSelector } from '../participantListSelector';
@@ -45,9 +43,7 @@ import { CommonCallingHandlers } from '../handlers/createCommonHandlers';
 import { reactionButtonSelector } from '../callControlSelectors';
 import { ReactionButton } from '@internal/react-components';
 import { _ComponentCallingHandlers } from '../handlers/createHandlers';
-
 import { notificationStackSelector, NotificationStackSelector } from '../notificationStackSelector';
-/* @conditional-compile-remove(one-to-n-calling) */
 import { incomingCallStackSelector, IncomingCallStackSelector } from '../incomingCallStackSelector';
 
 /**
@@ -121,11 +117,11 @@ export type GetSelector<Component extends (props: any) => JSX.Element | undefine
                     : AreEqual<Component, typeof Dialpad> extends true
                       ? EmptySelector
                       : AreEqual<Component, typeof HoldButton> extends true
-                        ? /* @conditional-compile-remove(PSTN-calls) */ HoldButtonSelector
+                        ? HoldButtonSelector
                         : AreEqual<Component, typeof NotificationStack> extends true
                           ? NotificationStackSelector
                           : AreEqual<Component, typeof IncomingCallStack> extends true
-                            ? /* @conditional-compile-remove(one-to-n-calling) */ IncomingCallStackSelector
+                            ? IncomingCallStackSelector
                             : undefined;
 
 /**
@@ -140,15 +136,6 @@ export type GetSelector<Component extends (props: any) => JSX.Element | undefine
 export const getSelector = <Component extends (props: any) => JSX.Element | undefined>(
   component: Component
 ): GetSelector<Component> => {
-  /* @conditional-compile-remove(PSTN-calls) */
-  if (component === HoldButton) {
-    return findConditionalCompiledSelector(component);
-  }
-  /* @conditional-compile-remove(one-to-n-calling) */
-  if (component === IncomingCallStack) {
-    return findConditionalCompiledSelector(component);
-  }
-
   return findSelector(component);
 };
 
@@ -183,20 +170,17 @@ const findSelector = (component: (props: any) => JSX.Element | undefined): any =
       return reactionButtonSelector;
     case NotificationStack:
       return notificationStackSelector;
+    case HoldButton:
+      return holdButtonSelector;
+    case IncomingCallStack:
+      return incomingCallStackSelector;
   }
   return undefined;
 };
-
-/* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
-const findConditionalCompiledSelector = (component: (props: any) => JSX.Element | undefined): any => {
-  switch (component) {
-    /* @conditional-compile-remove(PSTN-calls) */
-    case HoldButton:
-      /* @conditional-compile-remove(PSTN-calls) */
-      return holdButtonSelector;
-    /* @conditional-compile-remove(one-to-n-calling) */
-    case IncomingCallStack:
-      /* @conditional-compile-remove(one-to-n-calling) */
-      return incomingCallStackSelector;
-  }
-};
+/**
+ * Selector for new components that are conditionally compiled. Comment out when there is no CC'd components
+ */
+// const findConditionalCompiledSelector = (component: (props: any) => JSX.Element | undefined): any => {
+//   switch (component) {
+//   }
+// };

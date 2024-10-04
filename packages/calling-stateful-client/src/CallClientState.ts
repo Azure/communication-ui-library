@@ -274,6 +274,49 @@ export interface RaiseHandCallFeatureState {
   localParticipantRaisedHand?: RaisedHandState;
 }
 
+/* @conditional-compile-remove(together-mode) */
+/**
+ * State only version of {@link @azure/communication-calling#TogetherModeCallFeature}. {@link StatefulCallClient} will
+ * automatically listen for raised hands on the call and update the state exposed by {@link StatefulCallClient} accordingly.
+ * @alpha
+ */
+export interface TogetherModeCallFeatureState {
+  /**
+   * Proxy of {@link @azure/communication-calling#TogetherModeCallFeature.togetherModeStream}.
+   */
+  stream: TogetherModeStreamState[];
+}
+
+/* @conditional-compile-remove(together-mode) */
+/**
+ * State only version of {@link @azure/communication-calling#TogetherModeVideoStream}.
+ * @alpha
+ */
+export interface TogetherModeStreamState {
+  /**
+   * Proxy of {@link @azure/communication-calling#TogetherModeVideoStream.id}.
+   */
+  id: number;
+  /**
+   * Proxy of {@link @azure/communication-calling#TogetherModeVideoStream.mediaStreamType}.
+   */
+  mediaStreamType: MediaStreamType;
+  /**
+   * Proxy of {@link @azure/communication-calling#TogetherModeVideoStream.isReceiving}.
+   * @public
+   */
+  isReceiving: boolean;
+  /**
+   * {@link VideoStreamRendererView} that is managed by createView/disposeView in {@link StatefulCallClient}
+   * API. This can be undefined if the stream has not yet been rendered and defined after createView creates the view.
+   */
+  view?: VideoStreamRendererViewState;
+  /**
+   * Proxy of {@link @azure/communication-calling#RemoteVideoStream.size}.
+   */
+  streamSize?: { width: number; height: number };
+}
+
 /**
  * State only version of {@link @azure/communication-calling#PPTLiveCallFeature}. {@link StatefulCallClient} will
  * automatically listen for pptLive on the call and update the state exposed by {@link StatefulCallClient} accordingly.
@@ -483,7 +526,7 @@ export interface RemoteParticipantState {
   /**
    * The diagnostic status of RemoteParticipant{@link @azure/communication-calling#RemoteDiagnostics}.
    */
-  diagnostic?: RemoteDiagnosticState;
+  diagnostics?: Record<string, RemoteDiagnosticState>;
 }
 
 /**
@@ -579,6 +622,11 @@ export interface CallState {
    * Proxy of {@link @azure/communication-calling#RaiseHandCallFeature}.
    */
   raiseHand: RaiseHandCallFeatureState;
+  /* @conditional-compile-remove(together-mode) */
+  /**
+   * Proxy of {@link @azure/communication-calling#TogetherModeCallFeature}.
+   */
+  togetherMode: TogetherModeCallFeatureState;
   /**
    * Proxy of {@link @azure/communication-calling#Call.ReactionMessage} with
    * UI helper props receivedOn which indicates the timestamp when the message was received.
@@ -641,7 +689,6 @@ export interface CallState {
    * Proxy of {@link @azure/communication-calling#CapabilitiesFeature}.
    */
   capabilitiesFeature?: CapabilitiesFeatureState;
-  /* @conditional-compile-remove(hide-attendee-name) */
   /**
    * Hide attendee names in teams meeting
    */
@@ -871,7 +918,7 @@ export interface CallClientState {
    * It is keyed by {@link @azure/communication-calling#IncomingCall.id}.
    */
   incomingCalls: {
-    [key: string]: IncomingCallState | /* @conditional-compile-remove(one-to-n-calling) */ TeamsIncomingCallState;
+    [key: string]: IncomingCallState | TeamsIncomingCallState;
   };
   /**
    * Incoming Calls that have ended are stored here so the callEndReason could be checked.
@@ -880,7 +927,7 @@ export interface CallClientState {
    * Only {@link MAX_CALL_HISTORY_LENGTH} Calls are kept in the history. Oldest calls are evicted if required.
    */
   incomingCallsEnded: {
-    [key: string]: IncomingCallState | /* @conditional-compile-remove(one-to-n-calling) */ TeamsIncomingCallState;
+    [key: string]: IncomingCallState | TeamsIncomingCallState;
   };
   /**
    * Proxy of {@link @azure/communication-calling#DeviceManager}. Please review {@link DeviceManagerState}.
@@ -909,7 +956,6 @@ export interface CallClientState {
    * See documentation of {@Link CallNotifications} for details.
    */
   latestNotifications: CallNotifications;
-  /* @conditional-compile-remove(PSTN-calls) */
   /**
    * A phone number in E.164 format that will be used to represent callers identity.
    * For example, using the alternateCallerId to add a participant using PSTN, this number will

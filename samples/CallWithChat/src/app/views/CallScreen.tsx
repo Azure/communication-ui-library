@@ -33,7 +33,7 @@ export interface CallScreenProps {
   displayName: string;
   endpoint: string;
   locator: CallAndChatLocator | TeamsMeetingLinkLocator | TeamsMeetingIdLocator;
-  /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId?: string;
+  alternateCallerId?: string;
   /* @conditional-compile-remove(rich-text-editor-composite-support) */ isRichTextEditorEnabled?: boolean;
 }
 
@@ -44,7 +44,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     displayName,
     endpoint,
     locator,
-    /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
+    alternateCallerId,
     /* @conditional-compile-remove(rich-text-editor-composite-support) */ isRichTextEditorEnabled
   } = props;
 
@@ -52,37 +52,37 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     const videoBackgroundImages = [
       {
         key: 'ab1',
-        url: '/assets/backgrounds/contoso.png',
+        url: 'assets/backgrounds/contoso.png',
         tooltipText: 'Custom Background'
       },
       {
         key: 'ab2',
-        url: '/assets/backgrounds/abstract2.jpg',
+        url: 'assets/backgrounds/abstract2.jpg',
         tooltipText: 'Custom Background'
       },
       {
         key: 'ab3',
-        url: '/assets/backgrounds/abstract3.jpg',
+        url: 'assets/backgrounds/abstract3.jpg',
         tooltipText: 'Custom Background'
       },
       {
         key: 'ab4',
-        url: '/assets/backgrounds/room1.jpg',
+        url: 'assets/backgrounds/room1.jpg',
         tooltipText: 'Custom Background'
       },
       {
         key: 'ab5',
-        url: '/assets/backgrounds/room2.jpg',
+        url: 'assets/backgrounds/room2.jpg',
         tooltipText: 'Custom Background'
       },
       {
         key: 'ab6',
-        url: '/assets/backgrounds/room3.jpg',
+        url: 'assets/backgrounds/room3.jpg',
         tooltipText: 'Custom Background'
       },
       {
         key: 'ab7',
-        url: '/assets/backgrounds/room4.jpg',
+        url: 'assets/backgrounds/room4.jpg',
         tooltipText: 'Custom Background'
       }
     ];
@@ -97,11 +97,11 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
         onResolveDependency: onResolveDeepNoiseSuppressionDependencyLazy
       },
       reactionResources: {
-        likeReaction: { url: '/assets/reactions/likeEmoji.png', frameCount: 102 },
-        heartReaction: { url: '/assets/reactions/heartEmoji.png', frameCount: 102 },
-        laughReaction: { url: '/assets/reactions/laughEmoji.png', frameCount: 102 },
-        applauseReaction: { url: '/assets/reactions/clapEmoji.png', frameCount: 102 },
-        surprisedReaction: { url: '/assets/reactions/surprisedEmoji.png', frameCount: 102 }
+        likeReaction: { url: 'assets/reactions/likeEmoji.png', frameCount: 102 },
+        heartReaction: { url: 'assets/reactions/heartEmoji.png', frameCount: 102 },
+        laughReaction: { url: 'assets/reactions/laughEmoji.png', frameCount: 102 },
+        applauseReaction: { url: 'assets/reactions/clapEmoji.png', frameCount: 102 },
+        surprisedReaction: { url: 'assets/reactions/surprisedEmoji.png', frameCount: 102 }
       }
     };
   }, []);
@@ -175,7 +175,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
       credential,
       endpoint,
       locator,
-      /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
+      alternateCallerId,
       callAdapterOptions: callAdapterOptions
     },
     afterAdapterCreate

@@ -1,6 +1,7 @@
 {
   "extends": "../../common/config/tsc/tsconfig.json",
   "compilerOptions": {
+    "noUncheckedIndexedAccess": false, // todo: turn this to true when instances have been fixed
     "baseUrl": "./preprocess-dist",
     "outDir": "./dist/dist-esm",
     "paths": {
@@ -10,7 +11,7 @@
       "@internal/calling-stateful-client": ["calling-stateful-client/src"],
       "@internal/chat-stateful-client": ["chat-stateful-client/src"],
       "@internal/react-components": ["react-components/src"],
-      "@internal/react-composites": ["react-composites/src"]
+      "@internal/react-composites": ["react-composites/src/index-public"]
     },
     "plugins": [
       { "transform": "typescript-transform-paths" },

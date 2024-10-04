@@ -1,8 +1,88 @@
 # Change Log - @azure/communication-react
 
-This log was last generated on Mon, 15 Jul 2024 18:16:36 GMT and should not be manually modified.
+<!-- This log was last generated on Thu, 12 Sep 2024 18:13:15 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## [1.19.0](https://github.com/azure/communication-ui-library/tree/1.19.0)
+
+Thu, 12 Sep 2024 18:13:15 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.19.0-beta.3...1.19.0)
+
+### Features
+
+### Closed Captions
+
+We are excited to announce that Azure Communications Services has recently added the Closed Captions feature. With closed captions, developers can provide a textual representation of the audio content in their videos, making it easier for users who are deaf or hard of hearing to follow along. Developers can enable this functionality today through our composites (e.g CallComposite, CallWithChatComposite). This feature includes support for:
+
+- Enable and disable closed captions in the call
+- Change spoken language
+- Being able to use captions outside of teams scenario
+
+### Inbound Calling 
+
+We are excited to announce that the Azure Communication Services Web UI Library now supports Inbound Calling. This feature enables users to see, monitor, and handle new incoming calls. This feature is available for users within the Azure Communications ecosystem, and for users using “Communication as a Teams user”. Developers can use this functionality today through our UI components – the Incoming Call Stack and the Incoming Call Toast Notification.  
+
+- Accept calls with Audio, Accept with video, and reject incoming calls.  
+- Manage and service multiple calls at once 
+
+### PSTN 
+
+We are excited to announce that the Azure Communication Services Web UI Library now supports PSTN in general availability. This feature enables developers using the UI library to dial and call phone numbers through the Azure Communication Services call service. Developers can use this functionality today through our CallComposite as well as through components (DTMF, Dialpad). 
+
+- PSTN calling support for both 1 to 1 and multi-partcipant calls. 
+- Renders a dialpad that supports DTMF (dual tone multi-frequency 
+- Enables support for being put on hold, dialing in, removing users from an existing call 
+
+### ACS 1 to N Calling 
+
+We are excited to announce that the Azure Communication Services Web UI Library now supports 1:N Calling. This feature enables developers using the UI library to perform outbound calls through Azure Communication Services call service. Developers can use this functionality today through our CallComposite. 
+
+- Enables 1:1 and 1:N outbound calls with ACS users 
+- Enables 1:N outbound calls with both ACS and PSTN users (if an alternate caller ID is provided) 
+- Supports On/Off hold features and ability to remove participants from a call. 
+
+### Teams Ad Hoc with Teams users
+
+We are excited to announce that the Azure Communication Services Web UI Library now supports Ad-hoc Calling with Teams users. This feature enables users to start a call directly with a Teams user by using their ID. UI Library already supports Ad Hoc Calls with a Teams bot, but now Developers can use this functionality today through our CallComposite with Teams users directly. 
+
+- Connect directly to a Teams user through Adhoc calling
+
+### Improvements
+- Add CallAdapter API to start captions in the background ([PR #5064](https://github.com/azure/communication-ui-library/pull/5064) by 2684369+JamesBurnside@users.noreply.github.com)
+- Add PPTLive presenter information ([PR #4494](https://github.com/azure/communication-ui-library/pull/4494) by 93549644+ShaunaSong@users.noreply.github.com)
+- Caption fullscreen mode ([PR #5164](https://github.com/azure/communication-ui-library/pull/5164) by jiangnanhello@live.com)
+- Update @fluentui-contrib/react-chat to resolve focus in chat component ([PR #4862](https://github.com/azure/communication-ui-library/pull/4862) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- Update all dependencies with patch updates ([PR #4930](https://github.com/azure/communication-ui-library/pull/4930) by 2684369+JamesBurnside@users.noreply.github.com)
+- Update axios to 1.7.5 with a security fix ([PR #5114](https://github.com/azure/communication-ui-library/pull/5114) by 107075081+Leah-Xia-Microsoft@users.noreply.github.com)
+- Update communication-calling to 1.29.1-beta.1 and 1.28.1 ([PR #5088](https://github.com/azure/communication-ui-library/pull/5088) by 79475487+mgamis-msft@users.noreply.github.com)
+- Update communication-chat and signaling dependencies ([PR #5138](https://github.com/azure/communication-ui-library/pull/5138) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- Update RoosterJS version to improve keyboard table navigation in Rich Text Editor components ([PR #5050](https://github.com/azure/communication-ui-library/pull/5050) by 98852890+vhuseinova-msft@users.noreply.github.com)
+
+### Bug Fixes
+- Add announcements for applying bulleted/numbered lists in rich text editor and for adding new list items to them ([PR #4874](https://github.com/azure/communication-ui-library/pull/4874) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- Add role to SvgWithWorkWrapping and set as a heading in the configuration page on use ([PR #5127](https://github.com/azure/communication-ui-library/pull/5127) by edwardlee@microsoft.com)
+- Disable image pasting when onInsertInlineImage is not provided ([PR #5053](https://github.com/azure/communication-ui-library/pull/5053) by 107075081+Leah-Xia-Microsoft@users.noreply.github.com)
+- Ensure dominant speaker streams are rendered ([PR #5129](https://github.com/azure/communication-ui-library/pull/5129) by 79475487+mgamis-msft@users.noreply.github.com)
+- Fix an issue where cursor position was incorrect after rich text input box was reset ([PR #4887](https://github.com/azure/communication-ui-library/pull/4887) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- Fix bug where speakers are getting selected on safari ([PR #4893](https://github.com/azure/communication-ui-library/pull/4893) by 96077406+carocao-msft@users.noreply.github.com)
+- Fix chat selectors using read receipts from state ([PR #5063](https://github.com/azure/communication-ui-library/pull/5063) by 79475487+mgamis-msft@users.noreply.github.com)
+- Fix error when listening to capabilitiesChanged and spotlightChanged events from AzureCommunicationCallWithChatAdapter ([PR #5066](https://github.com/azure/communication-ui-library/pull/5066) by 79475487+mgamis-msft@users.noreply.github.com)
+- Fix for an issue where toolbar didn't correctly show the selected style format during message editing ([PR #4940](https://github.com/azure/communication-ui-library/pull/4940) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- Fix frequent tooltip dismissal when trying to mouse over tooltip content ([PR #5158](https://github.com/azure/communication-ui-library/pull/5158) by 79475487+mgamis-msft@users.noreply.github.com)
+- Fix lazy loading for Composites ([PR #5126](https://github.com/azure/communication-ui-library/pull/5126) by 107075081+Leah-Xia-Microsoft@users.noreply.github.com)
+- Fix Message status announcement where it sometimes takes priority over "Message is deleted" ([PR #4334](https://github.com/azure/communication-ui-library/pull/4334) by 3941071+emlynmac@users.noreply.github.com)
+- Fix pinned participant limit to update correctly when pinned participants are removed from call ([PR #4761](https://github.com/azure/communication-ui-library/pull/4761) by 79475487+mgamis-msft@users.noreply.github.com)
+- Fix vulnerability of having NaN from calculations in horizontal or vertical overflow gallery ([PR #4861](https://github.com/azure/communication-ui-library/pull/4861) by 79475487+mgamis-msft@users.noreply.github.com)
+- Fix visible names for pinning, camera, and mic buttons ([PR #5079](https://github.com/azure/communication-ui-library/pull/5079) by dmceachern@microsoft.com)
+- Fixed the issue where image loading placeholder doesn't work for safari ([PR #4846](https://github.com/azure/communication-ui-library/pull/4846) by 109105353+jpeng-ms@users.noreply.github.com)
+- Refactored Teams Identity Logic for File Sharing ([PR #4918](https://github.com/azure/communication-ui-library/pull/4918) by 109105353+jpeng-ms@users.noreply.github.com)
+- Remove use of phonenumberlib-js and manually format NA numbers ([PR #4920](https://github.com/azure/communication-ui-library/pull/4920) by 2684369+JamesBurnside@users.noreply.github.com)
+- Resolve adapter caption events not firing ([PR #5065](https://github.com/azure/communication-ui-library/pull/5065) by 96077406+carocao-msft@users.noreply.github.com)
+- Suppress initial notifications of capabilities being present when joining a call ([PR #4994](https://github.com/azure/communication-ui-library/pull/4994) by 79475487+mgamis-msft@users.noreply.github.com)
+- Truncate long text used in video effects button ([PR #5097](https://github.com/azure/communication-ui-library/pull/5097) by 79475487+mgamis-msft@users.noreply.github.com)
+- Update contrast issues when interacting with other participants in the call ([PR #5141](https://github.com/azure/communication-ui-library/pull/5141) by dmceachern@microsoft.com)
+
 
 ## [1.18.0](https://github.com/azure/communication-ui-library/tree/1.18.0)
 

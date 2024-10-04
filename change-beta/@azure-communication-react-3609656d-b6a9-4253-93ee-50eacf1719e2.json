@@ -1,0 +1,9 @@
+{
+  "type": "patch",
+  "area": "fix",
+  "workstream": "AzureCommunicationChatAdapter",
+  "comment": "Adding logic to flag when the adapter is in the middle of creation",
+  "packageName": "@azure/communication-react",
+  "email": "9044372+JoshuaLai@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

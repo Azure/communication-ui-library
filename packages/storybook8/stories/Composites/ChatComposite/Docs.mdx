@@ -1,11 +1,9 @@
-import { Canvas, Meta, Source, ArgTypes } from '@storybook/blocks';
-import { ChatComposite } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
+import { Meta, Source, ArgTypes } from '@storybook/blocks';
 import { SingleLineBetaBanner } from '../../BetaBanners/SingleLineBetaBanner';
+import { overviewPageImagesStackStyle } from '../../constants';
 import * as ChatCompositStory from './index.stories';
 
-import { JoinExistingChatThread } from './JoinExistingChatThread.stories';
-import { overviewPageImagesStackStyle } from '../../constants';
 import containerText from '!!raw-loader!./snippets/Container.snippet.tsx';
 import customDataModelExampleContainerText from '!!raw-loader!./snippets/CustomDataModelExampleContainer.snippet.tsx';
 import customDateTimeFormatExampleText from '!!raw-loader!./snippets/CustomDateTimeFormat.snippet.tsx';
@@ -140,8 +138,9 @@ You can pass in a function that formats the datetime displayed in chat messages 
 
 ## Adding file sharing
 
-<SingleLineBetaBanner />
 ### In Azure Communication Service Chat Thread
+
+<SingleLineBetaBanner />
 
 The Chat Composite supports file sharing capabilities in conjunction with your choice of a storage solution.
 Please refer to our

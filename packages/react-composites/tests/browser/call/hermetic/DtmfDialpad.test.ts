@@ -18,7 +18,6 @@ import {
   test
 } from './fixture';
 
-/* @conditional-compile-remove(PSTN-calls) */
 test.describe('Dtmf dialpad tests', async () => {
   test('Dtmf dialpad should render in 1:1 PSTN call', async ({ page, serverUrl }) => {
     const participant = defaultMockRemotePSTNParticipant('+14255550123');
@@ -46,7 +45,6 @@ test.describe('Dtmf dialpad tests', async () => {
 
     expect(await stableScreenshot(page)).toMatchSnapshot(`Dtmf-Dialpad-Hidden-Non-PSTN.png`);
   });
-  /* @conditional-compile-remove(PSTN-calls) */
   test('More Button menu opens and shows dialpad Control', async ({ page, serverUrl }, testInfo) => {
     test.skip(isTestProfileMobile(testInfo) || isTestProfileLandscapeMobile(testInfo));
     const initialState = defaultMockCallAdapterState([defaultMockRemotePSTNParticipant('+14255550123')]);
@@ -60,7 +58,6 @@ test.describe('Dtmf dialpad tests', async () => {
     await moreButtonShowDialpadButton?.click();
     expect(await stableScreenshot(page)).toMatchSnapshot(`call-more-button-dtmf-dialpad-closed.png`);
   });
-  /* @conditional-compile-remove(PSTN-calls) */
   test('More Drawer menu opens and shows dialpad Control', async ({ page, serverUrl }, testInfo) => {
     test.skip(isTestProfileDesktop(testInfo));
     const initialState = defaultMockCallAdapterState([defaultMockRemotePSTNParticipant('+14255550123')]);
@@ -75,7 +72,6 @@ test.describe('Dtmf dialpad tests', async () => {
     await moreButtonShowDialpadButton?.click();
     expect(await stableScreenshot(page)).toMatchSnapshot(`call-more-drawer-dtmf-dialpad-closed.png`);
   });
-  /* @conditional-compile-remove(PSTN-calls) */
   test('Dtmf dialer should be visible when disable auto show is false', async ({ page, serverUrl }, testInfo) => {
     test.skip(!isTestProfileDesktop(testInfo));
     const initialState = defaultMockCallAdapterState([defaultMockRemotePSTNParticipant('+14255550123')]);
@@ -90,7 +86,6 @@ test.describe('Dtmf dialpad tests', async () => {
     await waitForSelector(page, dataUiId('common-call-composite-more-button'));
     expect(await stableScreenshot(page)).toMatchSnapshot(`call-dtmf-dialpad-auto-show-true.png`);
   });
-  /* @conditional-compile-remove(PSTN-calls) */
   test('Dtmf dialer should not be visible when disable auto show is true', async ({ page, serverUrl }, testInfo) => {
     test.skip(!isTestProfileDesktop(testInfo));
     const initialState = defaultMockCallAdapterState([defaultMockRemotePSTNParticipant('+14255550123')]);

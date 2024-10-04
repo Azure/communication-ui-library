@@ -92,7 +92,7 @@ export interface CallWithChatControlOptions extends CommonCallControlOptions {
    * Show or hide the chat button in the call-with-chat composite control bar.
    * @defaultValue true
    */
-  chatButton?: boolean | /* @conditional-compile-remove(PSTN-calls) */ { disabled: boolean };
+  chatButton?: boolean | { disabled: boolean };
 }
 
 /**
@@ -423,7 +423,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
     }, 300);
   }, [compositeParentDivId]);
 
-  const isOnHold = isOnHoldTrampoline(currentPage);
+  const isOnHold = currentPage === 'hold';
   useEffect(() => {
     if (isOnHold) {
       closeChat();
@@ -736,13 +736,11 @@ export const CallWithChatComposite = (props: CallWithChatCompositeProps): JSX.El
 };
 
 const hasJoinedCallFn = (page: CallCompositePage, callStatus: CallState): boolean => {
-  /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(one-to-n-calling) */
   return (
     (page === 'call' &&
       (callStatus === 'Connected' || callStatus === 'RemoteHold' || callStatus === 'Disconnecting')) ||
     (page === 'hold' && (callStatus === 'LocalHold' || callStatus === 'Disconnecting'))
   );
-  return page === 'call' && (callStatus === 'Connected' || callStatus === 'Disconnecting');
 };
 
 const checkShowChatButton = (callControls?: boolean | CallWithChatControlOptions): boolean => {
@@ -757,10 +755,4 @@ const checkShowChatButton = (callControls?: boolean | CallWithChatControlOptions
 
 const checkChatButtonIsDisabled = (callControls?: boolean | CallWithChatControlOptions): boolean => {
   return typeof callControls === 'object' && isDisabled(callControls?.chatButton);
-};
-
-const isOnHoldTrampoline = (page: CallCompositePage | undefined): boolean => {
-  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
-  return page === 'hold';
-  return false;
 };
