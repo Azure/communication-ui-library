@@ -187,7 +187,7 @@ export const screenShareButtonSelector: ScreenShareButtonSelector = reselect.cre
       (capabilities?.shareScreen.isPresent === false && capabilities?.shareScreen.reason !== 'NotInitialized') ||
       role === 'Consumer' ||
       role === 'Attendee';
-    disabled = disabled || ['InLobby', 'Connecting', 'LocalHold'].includes(callState);
+    disabled = disabled || ['InLobby', 'Connecting', 'LocalHold'].includes(callState ?? 'None');
     return {
       checked: isScreenSharingOn,
       disabled
