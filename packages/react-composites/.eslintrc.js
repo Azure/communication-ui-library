@@ -114,6 +114,7 @@ module.exports = {
         '*.test.ts',
         'AzureCommunicationCallAdapter.ts',
         'AzureCommunicationCallWithChatAdapter.ts',
+        'AzureCommunicationChatAdapter.ts',
         'useAdaptedSelector.ts',
         'useHandlers.ts'
       ],
