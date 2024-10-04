@@ -112,7 +112,7 @@
     "core-js": "^3.34.0",
     "cpx": "^1.5.0",
     "cross-env": "^7.0.3",
-    "css-loader": "^4.3.0",
+    "css-loader": "^7.1.2",
     "dotenv": "^10.0.0",
     "env-cmd": "^10.1.0",
     "eslint-config-prettier": "^9.1.0",
@@ -153,7 +153,7 @@
     "typescript": "5.4.5",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "4.15.2",
-    "webpack": "5.89.0",
+    "webpack": "5.95.0",
     "yargs": "^17.7.2"
   }
 }
