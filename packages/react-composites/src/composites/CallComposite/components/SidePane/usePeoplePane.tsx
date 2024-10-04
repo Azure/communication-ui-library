@@ -9,10 +9,10 @@ import { useLocale } from '../../../localization';
 import { ParticipantMenuItemsCallback, _DrawerMenuItemProps } from '@internal/react-components';
 import { AvatarPersonaDataCallback } from '../../../common/AvatarPersona';
 import { IButton, IContextualMenuProps, IContextualMenuItem } from '@fluentui/react';
+import { useSelector } from '../../hooks/useSelector';
+import { getAlternateCallerId, getRole } from '../../selectors/baseSelectors';
 /* @conditional-compile-remove(soft-mute) */
 import { getRemoteParticipants } from '../../selectors/baseSelectors';
-/* @conditional-compile-remove(soft-mute) */
-import { useSelector } from '../../hooks/useSelector';
 /* @conditional-compile-remove(soft-mute) */
 import { Prompt } from '../Prompt';
 
@@ -322,6 +322,9 @@ export const usePeoplePane = (props: {
     ]
   );
 
+  const role = useSelector(getRole);
+  const alternateCallerId = useSelector(getAlternateCallerId);
+
   const onRenderContent = useCallback((): JSX.Element => {
     return (
       <>
@@ -344,6 +347,8 @@ export const usePeoplePane = (props: {
           setParticipantActioned={setParticipantActioned}
           participantListHeadingMoreButtonProps={sidePaneHeaderMenuProps}
           pinnedParticipants={pinnedParticipants}
+          role={role}
+          alternateCallerId={alternateCallerId}
         />
       </>
     );
@@ -356,6 +361,8 @@ export const usePeoplePane = (props: {
     setParticipantActioned,
     sidePaneHeaderMenuProps,
     pinnedParticipants,
+    role,
+    alternateCallerId,
     /* @conditional-compile-remove(soft-mute) */ showMuteAllPrompt,
     /* @conditional-compile-remove(soft-mute) */ setShowMuteAllPrompt,
     /* @conditional-compile-remove(soft-mute) */ muteAllPromptLabels,

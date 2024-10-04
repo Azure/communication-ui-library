@@ -24,7 +24,7 @@ module.exports = {
     sourceType: 'module'
   },
   rules: {
-    '@internal/custom-rules/no-getstate': 'off', // TODO: CHANGE TO ERROR ONCE INSTANCES ARE FIXED
+    '@internal/custom-rules/no-getstate': 'error',
     '@typescript-eslint/explicit-function-return-type': [
       'warn',
       {
@@ -109,7 +109,15 @@ module.exports = {
       }
     },
     {
-      files: ['*.test.ts', 'AzureCommunicationCallAdapter.ts'],
+      files: [
+        'tests/**/*',
+        '*.test.ts',
+        'AzureCommunicationCallAdapter.ts',
+        'AzureCommunicationCallWithChatAdapter.ts',
+        'AzureCommunicationChatAdapter.ts',
+        'useAdaptedSelector.ts',
+        'useHandlers.ts'
+      ],
       rules: {
         '@internal/custom-rules/no-getstate': 'off'
       }

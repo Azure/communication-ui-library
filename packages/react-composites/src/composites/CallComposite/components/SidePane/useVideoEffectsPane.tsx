@@ -9,6 +9,8 @@ import { useLocale } from '../../../localization';
 import { VideoEffectsPaneContent } from '../../../common/VideoEffectsPane';
 import { ActiveErrorMessage } from '@internal/react-components';
 import { IButton } from '@fluentui/react';
+import { useSelector } from '../../hooks/useSelector';
+import { getVideoBackgroundImages } from '../../selectors/baseSelectors';
 
 /** @private */
 export const VIDEO_EFFECTS_SIDE_PANE_ID = 'videoeffects';
@@ -54,6 +56,8 @@ export const useVideoEffectsPane = (
   const latestVideoEffectError = latestErrors.find((error) => error.type === 'unableToStartVideoEffect');
   const updateFocusHandle = useMemo(() => createRef<{ focus: () => void }>(), []);
 
+  const backgroundImages = useSelector(getVideoBackgroundImages);
+
   const onRenderContent = useCallback((): JSX.Element => {
     return (
       <VideoEffectsPaneContent
@@ -65,9 +69,10 @@ export const useVideoEffectsPane = (
           latestVideoEffectError && onDismissError?.(latestVideoEffectError);
         }}
         updateFocusHandle={updateFocusHandle}
+        backgroundImages={backgroundImages}
       />
     );
-  }, [latestVideoEffectError, onDismissError, updateFocusHandle]);
+  }, [latestVideoEffectError, onDismissError, updateFocusHandle, backgroundImages]);
 
   const sidePaneRenderer: SidePaneRenderer = useMemo(
     () => ({

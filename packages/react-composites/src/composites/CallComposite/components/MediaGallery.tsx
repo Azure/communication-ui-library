@@ -24,10 +24,10 @@ import { _formatString } from '@internal/acs-ui-common';
 import { useParticipantChangedAnnouncement } from '../utils/MediaGalleryUtils';
 import { RemoteVideoTileMenuOptions } from '../CallComposite';
 import { LocalVideoTileOptions } from '../CallComposite';
-import { useAdapter } from '../adapter/CallAdapterProvider';
 import { PromptProps } from './Prompt';
 import { useLocalSpotlightCallbacksWithPrompt, useRemoteSpotlightCallbacksWithPrompt } from '../utils/spotlightUtils';
 import { VideoTilesOptions } from '@internal/react-components';
+import { getIsRoomsCall, getReactionResources, getRole } from '../selectors/baseSelectors';
 
 const VideoGalleryStyles = {
   root: {
@@ -90,15 +90,14 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
   const cameraSwitcherCallback = useHandlers(LocalVideoCameraCycleButton);
   const announcerString = useParticipantChangedAnnouncement();
 
-  const adapter = useAdapter();
-  const userRole = adapter.getState().call?.role;
-  const isRoomsCall = adapter.getState().isRoomsCall;
+  const userRole = useSelector(getRole);
+  const isRoomsCall = useSelector(getIsRoomsCall);
 
   const containerRef = useRef<HTMLDivElement>(null);
   const containerWidth = _useContainerWidth(containerRef);
   const containerHeight = _useContainerHeight(containerRef);
   const containerAspectRatio = containerWidth && containerHeight ? containerWidth / containerHeight : 0;
-  const reactionResources = adapter.getState().reactions;
+  const reactionResources = useSelector(getReactionResources);
 
   const layoutBasedOnTilePosition: VideoGalleryLayout = getVideoGalleryLayoutBasedOnLocalOptions(
     (props.localVideoTileOptions as LocalVideoTileOptions)?.position
