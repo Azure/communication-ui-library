@@ -26,9 +26,9 @@ describe('Verify convert of TeamsMeetingAudioConferencingDetails to ConferencePh
       ]
     });
     expect(phoneInfo.length).toBe(1);
-    expect(phoneInfo[0].phoneNumber).toBe('1234567890');
-    expect(phoneInfo[0].conferenceId).toBe('123');
-    expect(phoneInfo[0].isTollFree).toBe(false);
+    expect(phoneInfo[0]?.phoneNumber).toBe('1234567890');
+    expect(phoneInfo[0]?.conferenceId).toBe('123');
+    expect(phoneInfo[0]?.isTollFree).toBe(false);
   });
 
   test('Phone number with country code and city has to contains all fields', async () => {
@@ -45,11 +45,11 @@ describe('Verify convert of TeamsMeetingAudioConferencingDetails to ConferencePh
       ]
     });
     expect(phoneInfo.length).toBe(1);
-    expect(phoneInfo[0].phoneNumber).toBe('1234567890');
-    expect(phoneInfo[0].conferenceId).toBe('123');
-    expect(phoneInfo[0].isTollFree).toBe(false);
-    expect(phoneInfo[0].country).toBe('US');
-    expect(phoneInfo[0].city).toBe('Redmond');
+    expect(phoneInfo[0]?.phoneNumber).toBe('1234567890');
+    expect(phoneInfo[0]?.conferenceId).toBe('123');
+    expect(phoneInfo[0]?.isTollFree).toBe(false);
+    expect(phoneInfo[0]?.country).toBe('US');
+    expect(phoneInfo[0]?.city).toBe('Redmond');
   });
 
   test('Toll free phone number has to be marked as toll free', async () => {
@@ -64,7 +64,7 @@ describe('Verify convert of TeamsMeetingAudioConferencingDetails to ConferencePh
       ]
     });
     expect(phoneInfo.length).toBe(1);
-    expect(phoneInfo[0].isTollFree).toBe(true);
+    expect(phoneInfo[0]?.isTollFree).toBe(true);
   });
 
   test('Toll free phone number info with multiple numbers', async () => {
@@ -84,10 +84,10 @@ describe('Verify convert of TeamsMeetingAudioConferencingDetails to ConferencePh
       ]
     });
     expect(phoneInfo.length).toBe(2);
-    expect(phoneInfo[0].isTollFree).toBe(true);
-    expect(phoneInfo[0].phoneNumber).toBe('1234567890');
-    expect(phoneInfo[1].isTollFree).toBe(true);
-    expect(phoneInfo[1].phoneNumber).toBe('0987654321');
+    expect(phoneInfo[0]?.isTollFree).toBe(true);
+    expect(phoneInfo[0]?.phoneNumber).toBe('1234567890');
+    expect(phoneInfo[1]?.isTollFree).toBe(true);
+    expect(phoneInfo[1]?.phoneNumber).toBe('0987654321');
   });
 
   test('Details with two phone numbers has to export both', async () => {
@@ -105,9 +105,9 @@ describe('Verify convert of TeamsMeetingAudioConferencingDetails to ConferencePh
       ]
     });
     expect(phoneInfo.length).toBe(2);
-    expect(phoneInfo[0].isTollFree).toBe(false);
-    expect(phoneInfo[0].phoneNumber).toBe('0987654321');
-    expect(phoneInfo[1].isTollFree).toBe(true);
-    expect(phoneInfo[1].phoneNumber).toBe('1234567890');
+    expect(phoneInfo[0]?.isTollFree).toBe(false);
+    expect(phoneInfo[0]?.phoneNumber).toBe('0987654321');
+    expect(phoneInfo[1]?.isTollFree).toBe(true);
+    expect(phoneInfo[1]?.phoneNumber).toBe('1234567890');
   });
 });
