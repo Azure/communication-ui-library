@@ -15,10 +15,12 @@ export const getThreadId = (state: ChatAdapterState): string => state.thread.thr
 export const getChatMessages = (state: ChatAdapterState): { [key: string]: ChatMessageWithStatus } =>
   state.thread.chatMessages;
 
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
 /** @private */
 export const getTextOnlyChat = (state: ChatAdapterState): boolean | undefined =>
   state.thread.properties?.messagingPolicy?.textOnlyChat;
 
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
 /** @private */
 export const getCreatedBy = (state: ChatAdapterState): CommunicationIdentifierKind | undefined =>
   state.thread.properties?.createdBy;
