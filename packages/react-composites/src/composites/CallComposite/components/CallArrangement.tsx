@@ -401,7 +401,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
 
   const onResolveVideoEffectDependency = useSelector(getVideoEffectsDependency);
 
-  const { openVideoEffectsPane } = useVideoEffectsPane(
+  const { openVideoEffectsPane, isVideoEffectsPaneOpen } = useVideoEffectsPane(
     props.updateSidePaneRenderer,
     props.mobileView,
     props.latestErrors as ActiveErrorMessage[],
@@ -652,6 +652,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
               onChatButtonClicked={props.mobileChatTabHeader?.onClick}
               disableChatButton={props.mobileChatTabHeader?.disabled}
               showAddPeopleButton={!!props.callControlProps.callInvitationURL}
+              ariaLabel={isVideoEffectsPaneOpen ? locale.strings.call.videoEffectsPaneAriaLabel : undefined}
             />
             {props.mobileView && (
               <ModalLocalAndRemotePIP
