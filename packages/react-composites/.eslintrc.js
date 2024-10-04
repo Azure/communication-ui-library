@@ -1,5 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
+
 module.exports = {
   env: {
     browser: true,
@@ -14,7 +15,7 @@ module.exports = {
     'plugin:react-hooks/recommended'
   ],
   parser: '@typescript-eslint/parser',
-  plugins: ['@typescript-eslint', 'header', 'jsdoc'],
+  plugins: ['@typescript-eslint', 'header', 'jsdoc', '@internal/custom-rules'],
   parserOptions: {
     ecmaFeatures: {
       jsx: true
@@ -23,6 +24,7 @@ module.exports = {
     sourceType: 'module'
   },
   rules: {
+    '@internal/custom-rules/no-getstate': 'off', // TODO: CHANGE TO ERROR ONCE INSTANCES ARE FIXED
     '@typescript-eslint/explicit-function-return-type': [
       'warn',
       {
@@ -104,6 +106,12 @@ module.exports = {
       files: ['tests/**/*.ts'],
       rules: {
         'jsdoc/require-jsdoc': 'off'
+      }
+    },
+    {
+      files: ['*.test.ts', 'AzureCommunicationCallAdapter.ts'],
+      rules: {
+        '@internal/custom-rules/no-getstate': 'off'
       }
     }
   ]

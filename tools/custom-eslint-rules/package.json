@@ -1,0 +1,26 @@
+{
+  "name": "@internal/eslint-plugin-custom-rules",
+  "version": "0.1.0",
+  "private": "true",
+  "description": "Custom eslint rules for the project",
+  "scripts": {
+    "clean": "echo skip",
+    "build": "echo skip",
+    "build:watch": "echo skip",
+    "build:stable": "echo skip",
+    "prettier": "prettier --no-error-on-unmatched-pattern --write --config ../../.prettierrc --ignore-path=../../.prettierignore \"**/*.js\" \"**/*.jsx\" \"**/*.ts\" \"**/*.tsx\"",
+    "prettier:check": "prettier --no-error-on-unmatched-pattern --check --config ../../.prettierrc --ignore-path=../../.prettierignore \"**/*.js\" \"**/*.jsx\" \"**/*.ts\" \"**/*.tsx\"",
+    "test": "echo skip",
+    "test:ci-coverage": "echo skip",
+    "test:stable": "echo skip",
+    "test:coverage": "echo skip",
+    "lint": "echo skip",
+    "lint:fix": "echo skip",
+    "lint:quiet": "echo skip"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+    "eslint": "^8.57.0"
+  }
+}

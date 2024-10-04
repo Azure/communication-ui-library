@@ -139,6 +139,11 @@
       "packageName": "@internal/fake-backends",
       "projectFolder": "packages/fake-backends",
       "reviewCategory": "tools"
+    },
+    {
+      "packageName": "@internal/eslint-plugin-custom-rules",
+      "projectFolder": "tools/custom-eslint-rules",
+      "reviewCategory": "tools"
     }
   ]
 }
