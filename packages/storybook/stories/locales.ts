@@ -7,6 +7,7 @@ import {
   COMPONENT_LOCALE_EN_GB,
   COMPONENT_LOCALE_AR_SA,
   COMPONENT_LOCALE_CS_CZ,
+  COMPONENT_LOCALE_CY_GB,
   COMPONENT_LOCALE_DE_DE,
   COMPONENT_LOCALE_ES_ES,
   COMPONENT_LOCALE_FI_FI,
@@ -34,7 +35,7 @@ export const LOCALES: Record<string, { locale: ComponentLocale; englishName: str
   },
   en_GB: {
     locale: COMPONENT_LOCALE_EN_GB,
-    englishName: 'English (British)'
+    englishName: 'English (GB)'
   },
   ar_SA: {
     locale: COMPONENT_LOCALE_AR_SA,
@@ -43,6 +44,10 @@ export const LOCALES: Record<string, { locale: ComponentLocale; englishName: str
   cs_CZ: {
     locale: COMPONENT_LOCALE_CS_CZ,
     englishName: 'Czech (Czech Republic)'
+  },
+  cy_GB: {
+    locale: COMPONENT_LOCALE_CY_GB,
+    englishName: 'Welsh (GB)'
   },
   de_DE: {
     locale: COMPONENT_LOCALE_DE_DE,
