@@ -27,7 +27,7 @@ test.describe('JS Bundle Test', () => {
     expect(await page.screenshot()).toMatchSnapshot('callCompositeHtmlCheck.png');
   });
 
-  test.only('Whether html page is loaded correctly with chat composite', async ({ page }) => {
+  test('Whether html page is loaded correctly with chat composite', async ({ page }) => {
     const user = await createChatThreadAndUsers(PARTICIPANTS);
     const qs = encodeQueryData(user[0]);
     const getTestUrl = (subPageHtml) => `${SERVER_BASE_URL}${subPageHtml}?${qs}`;
