@@ -31,7 +31,6 @@ test.describe('JS Bundle Test', () => {
     const user = await createChatThreadAndUsers(PARTICIPANTS);
     const qs = encodeQueryData(user[0]);
     const getTestUrl = (subPageHtml) => `${SERVER_BASE_URL}${subPageHtml}?${qs}`;
-    console.log('TEST URL:', getTestUrl('chatComposite.html'));
     await page.goto(getTestUrl('chatComposite.html'));
 
     expect(await page.waitForSelector('text=Hello to you')).toBeTruthy();
