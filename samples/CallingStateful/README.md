@@ -59,7 +59,7 @@ You have two choices here.
 1. Login as a CTE user - See our CTE [documentation](https://azure.github.io/communication-ui-library/?path=/docs/communicationasteamsuser--page) for more instructions on how to login
 2. Login as a ACS user - Just enter a name the server will do the rest
 
-Once you have login you will be on the home page. To make a call you can simply enter the id of any user in the `Acs or Teams user ID` field. This can be the id of an Azure Communication Services user in your resrouce's scope. Or a Teams user from an org that you have [federated your resource](https://learn.microsoft.com/en-us/azure/communication-services/quickstarts/voice-video-calling/get-started-teams-call-queue?pivots=platform-web) with.
+Once you have login you will be on the home page. To make a call you can simply enter the id of any user in the `ACS or Teams user ID` field. This can be the id of an Azure Communication Services user in your resrouces scope. Or a Teams user from an org that you have [federated your resource](https://learn.microsoft.com/en-us/azure/communication-services/quickstarts/voice-video-calling/get-started-teams-call-queue?pivots=platform-web) with.
 
 ![Homepage](./Media/homescreen.png)
 
