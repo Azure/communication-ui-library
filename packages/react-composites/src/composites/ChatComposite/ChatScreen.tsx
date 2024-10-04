@@ -157,7 +157,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   const createdBy = useSelector(getCreatedBy);
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
-  const isACSChat = !createdBy || !isMicrosoftTeamsUserIdentifier(createdBy);
+  const isACSChat = !!createdBy && !isMicrosoftTeamsUserIdentifier(createdBy);
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   const [editBoxInlineImageUploads, handleEditBoxInlineImageUploadAction] = useReducer(ImageUploadReducer, undefined);
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
