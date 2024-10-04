@@ -55,7 +55,7 @@
     "uuid": "^9.0.0"
   },
   "peerDependencies": {
-    "@azure/communication-calling": "1.29.1-beta.2 || ^1.28.4",
+    "@azure/communication-calling": "1.30.1-beta.1 || ^1.28.4",
     "@azure/communication-calling-effects": "1.0.1",
     "@azure/communication-chat": "1.6.0-beta.3 || >=1.5.2",
     "@types/react": ">=16.8.0 <19.0.0",
@@ -77,9 +77,9 @@
     }
   },
   "scripts": {
-    "copy-original": "cpx \"../*/src/**\" ./preprocess-dist && renamer --find src --replace preprocessed ./preprocess-dist/**/*",
+    "copy-original": "cpy '../*/src/**' ./preprocess-dist && renamer --find src --replace preprocessed ./preprocess-dist/**/*",
     "preprocess": "babel ../*/src --out-dir ../preprocessed --extensions \".ts,.tsx\" --keep-file-extension --config-file ./.babelrc.js --relative && rimraf ../preprocessed",
-    "copy-preprocess": "cpx \"../*/preprocessed/**\" ./preprocess-dist && renamer --find preprocessed --replace src ./preprocess-dist/**/*",
+    "copy-preprocess": "cpy '../*/preprocessed/**' ./preprocess-dist && renamer --find preprocessed --replace src ./preprocess-dist/**/*",
     "build:test": "tspc",
     "build": "rushx check-deps && rushx _by-flavor \"rushx _build:by-flavor\"",
     "build:cjs": "rollup -c --silent",
@@ -101,7 +101,7 @@
     "lint:quiet": "rushx lint -- --quiet",
     "postpack": "copyfiles -E \"./*.tgz\" release",
     "check-breaking-change": "tsc --project breaking-change-check/tsconfig.json --strict --noEmit --allowSyntheticDefaultImports",
-    "copy-api-snapshot": "cpx \"./dist/communication-react.d.ts\" \"./breaking-change-check/snapshots/\"",
+    "copy-api-snapshot": "cpy './dist/communication-react.d.ts' ./breaking-change-check/snapshots/",
     "_if-preprocess": "if-env COMMUNICATION_REACT_FLAVOR=stable || if-env COMMUNICATION_REACT_FLAVOR=beta-release",
     "_if-beta": "if-env COMMUNICATION_REACT_FLAVOR=beta || if-env COMMUNICATION_REACT_FLAVOR=beta-release",
     "_api-extractor:by-flavor": "if-env COMMUNICATION_REACT_FLAVOR=stable && api-extractor run -c api-extractor.stable.json --local || (rushx _if-beta && api-extractor run --local)",
@@ -111,7 +111,7 @@
     "_by-flavor": "rushx _current-flavor && env-cmd -f ../../common/config/env/.env --use-shell"
   },
   "devDependencies": {
-    "@azure/communication-calling": "1.29.1-beta.2 || ^1.28.4",
+    "@azure/communication-calling": "1.30.1-beta.1 || ^1.28.4",
     "@azure/communication-calling-effects": "1.1.1-beta.1 || ^1.1.0",
     "@azure/core-auth": "^1.7.2",
     "@babel/cli": "^7.24.8",
@@ -141,7 +141,7 @@
     "@typescript-eslint/parser": "^7.14.1",
     "ajv": "^8.17.1",
     "copyfiles": "^2.4.1",
-    "cpx": "^1.5.0",
+    "cpy-cli": "^5.0.0",
     "cross-env": "^7.0.3",
     "env-cmd": "^10.1.0",
     "eslint-config-prettier": "^9.1.0",

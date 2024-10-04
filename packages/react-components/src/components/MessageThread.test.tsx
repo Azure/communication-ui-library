@@ -391,7 +391,7 @@ describe('Message should display Mention correctly', () => {
     // Find message bubble does not contain mention yet
     const messageBubble = screen.queryByTestId('chat-composite-message');
     if (!messageBubble) {
-      fail('Failed to find chat message bubble');
+      throw new Error('Failed to find chat message bubble');
     }
     expect(messageBubble.innerHTML).not.toContain(user1Name);
     expect(messageBubble.innerHTML).not.toContain(MSFT_MENTION);
@@ -399,7 +399,7 @@ describe('Message should display Mention correctly', () => {
     // Click on ... button to trigger context menu
     const menuButton = screen.queryByTestId('chat-composite-message-action-icon');
     if (!menuButton) {
-      fail('Failed to find "More" action button');
+      throw new Error('Failed to find "More" action button');
     }
     fireEvent.click(menuButton);
 
@@ -454,7 +454,7 @@ describe('Message should display Mention correctly', () => {
     // After re-render with edited message, verify content includes mentions html tag
     const messageBubbleAfterRerender = screen.queryByTestId('chat-composite-message');
     if (!messageBubbleAfterRerender) {
-      fail('Failed to find "More" action button after rerender');
+      throw new Error('Failed to find "More" action button after rerender');
     }
     expect(messageBubbleAfterRerender.innerHTML).toContain(user1Name);
     expect(messageBubbleAfterRerender.innerHTML).toContain(MSFT_MENTION);
