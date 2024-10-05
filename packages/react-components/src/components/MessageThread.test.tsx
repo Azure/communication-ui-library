@@ -297,12 +297,11 @@ describe('Message should display Mention correctly', () => {
 
     // edit message
     const message1ContentAfterEdit = `Hey <msft-mention id="${user2Id}">${user2Name}</msft-mention> and <msft-mention id="${user3Id}">${user3Name}</msft-mention>, can you help me with my internet connection?`;
-    const message0 = messages[0];
-    if (!message0) {
+    if (!messages[0]) {
       throw new Error('Failed to find message to edit');
     }
-    message0.content = message1ContentAfterEdit;
-    message0.editedOn = new Date('2019-04-13T00:01:00.000+08:10');
+    messages[0].content = message1ContentAfterEdit;
+    messages[0].editedOn = new Date('2019-04-13T00:01:00.000+08:10');
     const expectedOnRenderMentionCount = 2;
     let onRenderMentionCount = 0;
     const processedMentionIds: string[] = [];

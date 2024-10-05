@@ -880,7 +880,6 @@ export const textToTagParser = (text: string, trigger: string): { tags: TagData[
           plainTextRepresentation += unEscapeHtmlCharacters(currentOpenTag.content);
         } else if (lastSubTag) {
           // Add text after the last tag
-          const lastSubTag = currentOpenTag.subTags[currentOpenTag.subTags.length - 1]!;
           const startOfRemainingText =
             (lastSubTag?.closingTagIndex ?? lastSubTag.openTagIndex) + lastSubTag.tagType.length + 3;
           const trailingText = currentOpenTag.content.substring(startOfRemainingText);

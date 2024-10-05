@@ -337,7 +337,7 @@ describe('VideoGallery Speaker layout tests', () => {
     );
 
     remoteParticipants.forEach((participant, index) => {
-      participant.displayName = `${participant.displayName} ${index}`;
+      participant.displayName = `${participant.displayName} ${index + 1}`;
     });
 
     const dominantSpeaker = remoteParticipants[0]?.userId;
@@ -372,7 +372,7 @@ describe('VideoGallery Speaker layout tests', () => {
     );
 
     remoteParticipants.forEach((participant, index) => {
-      participant.displayName = `${participant.displayName} ${index}`;
+      participant.displayName = `${participant.displayName} ${index + 1}`;
     });
 
     const dominantSpeaker = remoteParticipants[1]?.userId;
