@@ -74,8 +74,11 @@ describe('Display mention popover in the correct position', () => {
     renderMentionPopoverComponent(targetPositionOffset, 'above');
 
     const mentionPopover = await screen.findByTestId(mentionSuggestionListContainerId);
-    const elements = document.getElementsByClassName(mentionPopover.className);
-    const style = window.getComputedStyle(elements[0]);
+    const element = document.getElementsByClassName(mentionPopover.className)[0];
+    if (!element) {
+      throw new Error('Mention Popover not found');
+    }
+    const style = window.getComputedStyle(element);
     expect(style.position).toBe('absolute');
     expect(style.maxWidth).toBe('200px');
     expect(style.left).toBe('100px');
@@ -90,8 +93,11 @@ describe('Display mention popover in the correct position', () => {
     renderMentionPopoverComponent(targetPositionOffset);
 
     const mentionPopover = await screen.findByTestId(mentionSuggestionListContainerId);
-    const elements = document.getElementsByClassName(mentionPopover.className);
-    const style = window.getComputedStyle(elements[0]);
+    const element = document.getElementsByClassName(mentionPopover.className)[0];
+    if (!element) {
+      throw new Error('Mention Popover not found');
+    }
+    const style = window.getComputedStyle(element);
     expect(style.position).toBe('absolute');
     expect(style.maxWidth).toBe('200px');
     expect(style.left).toBe('');
@@ -106,8 +112,11 @@ describe('Display mention popover in the correct position', () => {
     renderMentionPopoverComponent(targetPositionOffset, 'below');
 
     const mentionPopover = await screen.findByTestId(mentionSuggestionListContainerId);
-    const elements = document.getElementsByClassName(mentionPopover.className);
-    const style = window.getComputedStyle(elements[0]);
+    const element = document.getElementsByClassName(mentionPopover.className)[0];
+    if (!element) {
+      throw new Error('Mention Popover not found');
+    }
+    const style = window.getComputedStyle(element);
     expect(style.position).toBe('absolute');
     expect(style.maxWidth).toBe('200px');
     expect(style.left).toBe('100px');
@@ -122,8 +131,11 @@ describe('Display mention popover in the correct position', () => {
     renderMentionPopoverComponent(targetPositionOffset, 'below');
 
     const mentionPopover = await screen.findByTestId(mentionSuggestionListContainerId);
-    const elements = document.getElementsByClassName(mentionPopover.className);
-    const style = window.getComputedStyle(elements[0]);
+    const element = document.getElementsByClassName(mentionPopover.className)[0];
+    if (!element) {
+      throw new Error('Mention Popover not found');
+    }
+    const style = window.getComputedStyle(element);
     expect(style.position).toBe('absolute');
     expect(style.maxWidth).toBe('200px');
     expect(style.left).toBe('');
@@ -136,8 +148,11 @@ describe('Display mention popover in the correct position', () => {
     renderMentionPopoverComponent();
 
     const mentionPopover = await screen.findByTestId(mentionSuggestionListContainerId);
-    const elements = document.getElementsByClassName(mentionPopover.className);
-    const style = window.getComputedStyle(elements[0]);
+    const element = document.getElementsByClassName(mentionPopover.className)[0];
+    if (!element) {
+      throw new Error('Mention Popover not found');
+    }
+    const style = window.getComputedStyle(element);
     expect(style.position).toBe('absolute');
     expect(style.maxWidth).toBe('200px');
     expect(style.left).toBe('0px');

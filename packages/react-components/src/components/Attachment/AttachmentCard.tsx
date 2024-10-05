@@ -180,18 +180,20 @@ const MappedMenuItems = (
 ): JSX.Element => {
   const localeStrings = useLocaleAttachmentCardStringsTrampoline();
 
-  if (menuActions.length === 0) {
+  const firstMenuAction = menuActions.at(0);
+
+  if (!firstMenuAction) {
     return <></>;
   }
   return menuActions.length === 1 ? (
-    <TooltipHost content={menuActions[0].name}>
+    <TooltipHost content={firstMenuAction.name}>
       <ToolbarButton
-        aria-label={menuActions[0].name}
+        aria-label={firstMenuAction.name}
         role="button"
-        icon={menuActions[0].icon}
+        icon={firstMenuAction.icon}
         onClick={() => {
           try {
-            menuActions[0].onClick(attachment);
+            firstMenuAction.onClick(attachment);
           } catch (e) {
             handleOnClickError?.((e as Error).message);
           }

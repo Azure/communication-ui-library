@@ -65,7 +65,9 @@ export const LocalVideoCameraCycleButton = (props: LocalVideoCameraCycleButtonPr
         if (cameras && cameras.length > 1 && selectedCamera !== undefined) {
           const index = cameras.findIndex((camera) => selectedCamera.id === camera.id);
           const newCamera = cameras[(index + 1) % cameras.length];
-          onChangeCameraClick(newCamera);
+          if (newCamera) {
+            onChangeCameraClick(newCamera);
+          }
         }
       }}
     />

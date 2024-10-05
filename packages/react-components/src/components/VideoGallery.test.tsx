@@ -336,14 +336,18 @@ describe('VideoGallery Speaker layout tests', () => {
       })
     );
 
-    remoteParticipants[0].displayName = remoteParticipants[0].displayName + '1';
-    remoteParticipants[1].displayName = remoteParticipants[1].displayName + '2';
+    remoteParticipants.forEach((participant, index) => {
+      participant.displayName = `${participant.displayName} ${index}`;
+    });
+
+    const dominantSpeaker = remoteParticipants[0]?.userId;
+
     const { container } = render(
       <VideoGallery
         layout="speaker"
         localParticipant={localParticipant}
         remoteParticipants={remoteParticipants}
-        dominantSpeakers={[remoteParticipants[0].userId]}
+        dominantSpeakers={dominantSpeaker ? [dominantSpeaker] : undefined}
       />
     );
 
@@ -367,14 +371,17 @@ describe('VideoGallery Speaker layout tests', () => {
       })
     );
 
-    remoteParticipants[0].displayName = remoteParticipants[0].displayName + '1';
-    remoteParticipants[1].displayName = remoteParticipants[1].displayName + '2';
+    remoteParticipants.forEach((participant, index) => {
+      participant.displayName = `${participant.displayName} ${index}`;
+    });
+
+    const dominantSpeaker = remoteParticipants[1]?.userId;
     const { container } = render(
       <VideoGallery
         layout="speaker"
         localParticipant={localParticipant}
         remoteParticipants={remoteParticipants}
-        dominantSpeakers={[remoteParticipants[1].userId]}
+        dominantSpeakers={dominantSpeaker ? [dominantSpeaker] : undefined}
       />
     );
 
@@ -815,9 +822,9 @@ const getVerticalGallery = (root: Element | null): Element | null =>
 const getTiles = (root: Element | null): Element[] =>
   Array.from(root?.querySelectorAll('[data-ui-id="video-tile"]') ?? []);
 const getGridTiles = (root: Element | null): Element[] => Array.from(getTiles(getGridLayout(root)));
-const tileIsVideo = (tile: Element): boolean => !!tile.querySelector('video');
-const tileIsAudio = (tile: Element): boolean => !tile.querySelector('video');
-const getDisplayName = (root: Element): string | null | undefined => {
+const tileIsVideo = (tile: Element | undefined): boolean => !!tile?.querySelector('video');
+const tileIsAudio = (tile: Element | undefined): boolean => !!tile && !tile.querySelector('video');
+const getDisplayName = (root: Element | undefined): string | null | undefined => {
   return root?.querySelector('[data-ui-id="video-tile-display-name"]')?.textContent;
 };
 

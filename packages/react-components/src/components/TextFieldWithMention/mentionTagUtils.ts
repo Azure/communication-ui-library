@@ -331,7 +331,7 @@ export const updateHTML = (props: UpdateHTMLProps): { updatedHTML: string; updat
 
   for (let i = 0; i < tags.length; i++) {
     const tag = tags[i];
-    if (tag.plainTextBeginIndex === undefined) {
+    if (tag?.plainTextBeginIndex === undefined) {
       continue;
     }
     // all plain text indexes includes trigger length for the mention that shouldn't be included in
@@ -875,13 +875,14 @@ export const textToTagParser = (text: string, trigger: string): { tags: TagData[
             plainTextRepresentation.slice(currentOpenTag.plainTextBeginIndex);
         }
 
+        const lastSubTag = currentOpenTag.subTags?.[currentOpenTag.subTags.length - 1];
         if (!currentOpenTag.subTags) {
           plainTextRepresentation += unEscapeHtmlCharacters(currentOpenTag.content);
-        } else if (currentOpenTag.subTags.length > 0) {
+        } else if (lastSubTag) {
           // Add text after the last tag
-          const lastSubTag = currentOpenTag.subTags[currentOpenTag.subTags.length - 1];
+          const lastSubTag = currentOpenTag.subTags[currentOpenTag.subTags.length - 1]!;
           const startOfRemainingText =
-            (lastSubTag.closingTagIndex ?? lastSubTag.openTagIndex) + lastSubTag.tagType.length + 3;
+            (lastSubTag?.closingTagIndex ?? lastSubTag.openTagIndex) + lastSubTag.tagType.length + 3;
           const trailingText = currentOpenTag.content.substring(startOfRemainingText);
           plainTextRepresentation += unEscapeHtmlCharacters(trailingText);
         }
@@ -907,11 +908,9 @@ export const textToTagParser = (text: string, trigger: string): { tags: TagData[
 };
 
 const parseOpenTag = (tag: string, startIdx: number): TagData => {
-  const tagType = tag
-    .substring(1, tag.length - 1)
-    .split(' ')[0]
-    .toLowerCase()
-    .replace('/', '');
+  let tagType = tag.substring(1, tag.length - 1);
+  tagType = tagType.split(' ')[0] ?? tagType;
+  tagType = tagType.toLowerCase().replace('/', '');
   return {
     tagType,
     openTagIndex: startIdx,

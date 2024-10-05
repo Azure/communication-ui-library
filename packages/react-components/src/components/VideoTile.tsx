@@ -284,7 +284,11 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
 
   const observer = useRef(
     new ResizeObserver((entries): void => {
-      const { width, height } = entries[0].contentRect;
+      const entry = entries[0];
+      if (!entry) {
+        return;
+      }
+      const { width, height } = entry.contentRect;
       const personaCalcSize = Math.min(width, height) / 3;
       // we only want to set the persona size if it has changed
       if (personaCalcSize !== personaSize) {

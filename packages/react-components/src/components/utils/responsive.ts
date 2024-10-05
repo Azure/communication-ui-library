@@ -15,7 +15,11 @@ export const _useContainerWidth = (containerRef: RefObject<HTMLElement>): number
 
   const observer = useRef(
     new ResizeObserver((entries) => {
-      const { width } = entries[0].contentRect;
+      const entry = entries[0];
+      if (!entry) {
+        return;
+      }
+      const { width } = entry.contentRect;
       if (Number.isNaN(width)) {
         setWidth(0);
       } else {
@@ -49,7 +53,11 @@ export const _useContainerHeight = (containerRef: RefObject<HTMLElement>): numbe
 
   const observer = useRef(
     new ResizeObserver((entries) => {
-      const { height } = entries[0].contentRect;
+      const entry = entries[0];
+      if (!entry) {
+        return;
+      }
+      const { height } = entry.contentRect;
       if (Number.isNaN(height)) {
         setHeight(0);
       } else {
