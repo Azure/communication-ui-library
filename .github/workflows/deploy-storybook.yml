@@ -39,23 +39,23 @@ jobs:
         run: rush install --max-install-attempts 3
 
       - name: Build Storybook
-        run: rush build -o storybook
+        run: rush build -o storybook8
 
       - name: Run Storybook tests
-        run: rush test -o storybook
+        run: rush test -o storybook8
 
       - name: Copy .env values
         # storybook requires the env vars to be in a .env file for access in the manager.ts
         run: |
           echo TELEMETRY_INSTRUMENTATION_KEY=${{ secrets.TELEMETRY_INSTRUMENTATION_KEY }} > .env
-        working-directory: ./packages/storybook
+        working-directory: ./packages/storybook8
         env:
           GH_TOKEN: ${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload Storybook GH Pages Artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./packages/storybook/storybook-static
+          path: ./packages/storybook8/storybook-static
 
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v4

@@ -20,7 +20,7 @@ export const getRemoteParticipantsExcludingConsumers = createSelector(
     {
       const newRemoteParticipants = { ...remoteParticipants };
       Object.keys(newRemoteParticipants).forEach((k) => {
-        if (newRemoteParticipants[k].role === 'Consumer') {
+        if (newRemoteParticipants[k]?.role === 'Consumer') {
           delete newRemoteParticipants[k];
         }
       });

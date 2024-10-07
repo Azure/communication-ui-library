@@ -988,6 +988,7 @@ export interface CallCompositeStrings {
     unnamedParticipantString: string;
     unpinParticipantMenuItemAriaLabel: string;
     unpinParticipantMenuLabel: string;
+    videoEffectsPaneAriaLabel: string;
     videoEffectsPaneBackgroundSelectionTitle: string;
     videoEffectsPaneTitle: string;
 }
@@ -1159,6 +1160,7 @@ export interface CallState {
     spotlight?: SpotlightCallFeatureState;
     startTime: Date;
     state: CallState_2;
+    togetherMode: TogetherModeCallFeature;
     totalParticipantCount?: number;
     transcription: TranscriptionCallFeature;
     transfer: TransferFeature;
@@ -2255,6 +2257,9 @@ export const COMPONENT_LOCALE_AR_SA: ComponentLocale;
 export const COMPONENT_LOCALE_CS_CZ: ComponentLocale;
 
 // @public
+export const COMPONENT_LOCALE_CY_GB: ComponentLocale;
+
+// @public
 export const COMPONENT_LOCALE_DE_DE: ComponentLocale;
 
 // @public
@@ -2380,6 +2385,9 @@ export const COMPOSITE_LOCALE_AR_SA: CompositeLocale;
 
 // @public
 export const COMPOSITE_LOCALE_CS_CZ: CompositeLocale;
+
+// @public
+export const COMPOSITE_LOCALE_CY_GB: CompositeLocale;
 
 // @public
 export const COMPOSITE_LOCALE_DE_DE: CompositeLocale;
@@ -4634,7 +4642,7 @@ export type StartTeamsCallIdentifier = MicrosoftTeamsUserIdentifier | PhoneNumbe
 export interface StatefulCallClient extends CallClient {
     createCallAgent(...args: Parameters<CallClient['createCallAgent']>): Promise<DeclarativeCallAgent>;
     createTeamsCallAgent(...args: Parameters<CallClient['createTeamsCallAgent']>): Promise<DeclarativeTeamsCallAgent>;
-    createView(callId: string | undefined, participantId: CommunicationIdentifier | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState, options?: CreateViewOptions): Promise<CreateViewResult | undefined>;
+    createView(callId: string | undefined, participantId: CommunicationIdentifier | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState | /* @conditional-compile-remove(together-mode) */ TogetherModeStreamState, options?: CreateViewOptions): Promise<CreateViewResult | undefined>;
     disposeView(callId: string | undefined, participantId: CommunicationIdentifier | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState): void;
     getState(): CallClientState;
     offStateChange(handler: (state: CallClientState) => void): void;
@@ -4819,6 +4827,24 @@ export type TeamsOutboundCallAdapterArgs = TeamsCallAdapterArgsCommon & {
 
 // @public
 export const toFlatCommunicationIdentifier: (identifier: CommunicationIdentifier) => string;
+
+// @alpha
+export interface TogetherModeCallFeature {
+    stream: TogetherModeStreamState[];
+}
+
+// @alpha
+export interface TogetherModeStreamState {
+    id: number;
+    // @public
+    isReceiving: boolean;
+    mediaStreamType: MediaStreamType;
+    streamSize?: {
+        width: number;
+        height: number;
+    };
+    view?: VideoStreamRendererViewState;
+}
 
 // @public
 export type TopicChangedListener = (event: {

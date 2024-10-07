@@ -1,6 +1,8 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+import { _PictureInPictureInPicture as PictureInPictureInPictureComponent } from '@internal/react-components';
 import { Meta } from '@storybook/react';
 import { hiddenControl, orientationArg } from '../../controlsUtils';
-import { _PictureInPictureInPicture as PictureInPictureInPictureComponent } from '@internal/react-components';
 import { PictureInPictureInPicture } from './PictureInPictureInPicture.story';
 export { PictureInPictureInPicture } from './PictureInPictureInPicture.story';
 

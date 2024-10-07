@@ -1,6 +1,6 @@
 # Calling Stateful Sample
 
-![Homepage](./Media/homepage-sample-calling.png)
+![Homepage](./Media/loginscreen.png)
 
 🚧 Be advised we are currently working on polishing the samples in this repo. 🚧
 
@@ -42,11 +42,33 @@ The client-side application is a React based user interface. Alongside this fron
 1. Start the calling app
 
     ```bash
-    cd samples\Calling
+    cd samples\CallingStateful
     rushx start
     ```
 
     This will open a client server on port 3000 that serves the website files, and an api server on port 8080 that performs functionality like minting tokens for call participants.
+
+## Making a Call
+
+When you start the app you will be greeted with a login screen.
+
+![loginscreen](./Media/loginscreen.png)
+
+You have two choices here. 
+
+1. Login as a CTE user - See our CTE [documentation](https://azure.github.io/communication-ui-library/?path=/docs/communicationasteamsuser--page) for more instructions on how to login
+2. Login as a ACS user - Just enter a name the server will do the rest
+
+Once you have login you will be on the home page. To make a call you can simply enter the id of any user in the `ACS or Teams user ID` field. This can be the id of an Azure Communication Services user in your resrouces scope. Or a Teams user from an org that you have [federated your resource](https://learn.microsoft.com/en-us/azure/communication-services/quickstarts/voice-video-calling/get-started-teams-call-queue?pivots=platform-web) with.
+
+![Homepage](./Media/homescreen.png)
+
+Then hit the `Start Call` button and the call should begin to the user. Using this app in another window with another user you can use the integrated IncomingCallNotifications to answer this call if you call their provided ID. **This is recommended for the fastest testing experience.**
+
+### PSTN
+
+To make a PSTN call you need to provide an alternate caller ID in the `Alternate Caller ID` field. Then either type in the number you wish to dial with the number pad, or enter the number in the dialpad's field on your own. See our [documentation on PSTN](https://azure.github.io/communication-ui-library/?path=/docs/quickstarts-pstn--page) for more info.
+
 
 ## Additional Reading
 

@@ -20,24 +20,6 @@ concurrency:
 permissions: read-all
 
 jobs:
-  files_changed:
-    name: Determine Changes
-    runs-on: ubuntu-latest
-    timeout-minutes: 3
-    # Map a step output to a job output
-    outputs:
-      storybook8_changes: ${{ steps.changes.outputs.storybook8 }}
-    steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
-      - uses: actions/checkout@v4
-      - uses: dorny/paths-filter@v3
-        id: changes
-        with:
-          # token: ${{ secrets.GITHUB_TOKEN }}
-          filters: |
-            storybook8:
-              - 'packages/storybook8/**'
-
   # get matrix for ci-jobs
   get_matrix:
     name: Load CI Matrix Details
@@ -537,37 +519,8 @@ jobs:
               body: 'Failed to pass the UI Test. If this PR is for UI change and the error is snapshot mismatch, please add "update_snapshots" label to the PR for updating the snapshot.'
             })
 
-  build_storybook:
-    needs: get_matrix
-    name: Build Storybook (${{ matrix.flavor }})
-    strategy:
-      matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Use Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 'lts/*'
-      - name: Restore node_modules from cache
-        uses: actions/cache@v4
-        with:
-          path: common/temp/pnpm-store
-          key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
-      - name: Install Dependencies
-        if: ${{ matrix.flavor == 'beta' || matrix.flavor == 'beta-release'}}
-        run: node ./common/scripts/install-dependencies-ci.mjs ${{ matrix.flavor }}
-      - name: Build
-        if: ${{ matrix.flavor == 'beta' || matrix.flavor == 'beta-release' }}
-        run: rush build -o storybook
-      - name: Tests
-        if: ${{ matrix.flavor == 'beta' || matrix.flavor == 'beta-release' }}
-        run: rushx test
-        working-directory: packages/storybook
-
   build_storybook8:
-    needs: [get_matrix, files_changed]
-    if: needs.files_changed.outputs.storybook8_changes == 'true'
+    needs: get_matrix
     name: Build Storybook v8 (${{ matrix.flavor }})
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
@@ -590,11 +543,11 @@ jobs:
         run: rush install --max-install-attempts 3
       - name: Build
         if: ${{ matrix.flavor == 'beta' || matrix.flavor == 'beta-release' }}
-        run: rushx build-s8
+        run: rushx build
         working-directory: packages/storybook8
       - name: Tests
         if: ${{ matrix.flavor == 'beta' || matrix.flavor == 'beta-release' }}
-        run: rushx test-s8
+        run: rushx test
         working-directory: packages/storybook8
 
   build_calling_sample:
@@ -880,7 +833,7 @@ jobs:
     permissions:
       issues: write
     needs:
-      [build_packages, build_calling_sample, build_chat_sample, build_static_html_composites_sample, build_storybook]
+      [build_packages, build_calling_sample, build_chat_sample, build_static_html_composites_sample, build_storybook8]
     if: failure() && github.ref == 'refs/heads/main'
     name: File issue if main CI failed
     steps:

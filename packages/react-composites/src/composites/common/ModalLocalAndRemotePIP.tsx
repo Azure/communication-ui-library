@@ -15,8 +15,8 @@ import {
   modalStyle,
   PIPContainerStyle
 } from './styles/ModalLocalAndRemotePIP.styles';
-import { useAdapter } from '../CallComposite/adapter/CallAdapterProvider';
 import { useLocale } from '../localization';
+import { getRole } from '../CallComposite/selectors/baseSelectors';
 
 /**
  * Drag options for Modal in {@link ModalLocalAndRemotePIP} component
@@ -54,8 +54,7 @@ export const ModalLocalAndRemotePIP = (props: {
 }): JSX.Element | null => {
   const rootStyles = props.hidden ? hiddenStyle : PIPContainerStyle;
 
-  const adapter = useAdapter();
-  const role = adapter.getState().call?.role;
+  const role = useSelector(getRole);
 
   const locale = useLocale();
 

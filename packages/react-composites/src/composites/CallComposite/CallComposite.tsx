@@ -23,7 +23,9 @@ import { CallPage } from './pages/CallPage';
 import { ConfigurationPage } from './pages/ConfigurationPage';
 import { NoticePage } from './pages/NoticePage';
 import { useSelector } from './hooks/useSelector';
-import { getEndedCall, getPage, getTargetCallees } from './selectors/baseSelectors';
+import { getAlternateCallerId, getEndedCall, getPage, getRole, getTargetCallees } from './selectors/baseSelectors';
+/* @conditional-compile-remove(unsupported-browser) */
+import { getEnvironmentInfo } from './selectors/baseSelectors';
 import { LobbyPage } from './pages/LobbyPage';
 import { TransferPage } from './pages/TransferPage';
 import {
@@ -362,11 +364,11 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   const hasCameras = camerasCount > 0;
   const hasMicrophones = microphonesCount > 0;
 
+  const role = useSelector(getRole);
+
   useEffect(() => {
     (async () => {
-      const constrain = getQueryOptions({
-        role: adapter.getState().call?.role
-      });
+      const constrain = getQueryOptions({ role });
       /* @conditional-compile-remove(call-readiness) */
       {
         constrain.audio = props.options?.deviceChecks?.microphone === 'doNotPrompt' ? false : constrain.audio;
@@ -379,6 +381,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
     })();
   }, [
     adapter,
+    role,
     /* @conditional-compile-remove(call-readiness) */
     props.options?.deviceChecks,
     // Ensure we re-ask for permissions if the number of devices goes from 0 -> n during a call
@@ -527,7 +530,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   const callees = useSelector(getTargetCallees) as StartCallIdentifier[];
   const locale = useLocale();
   const palette = useTheme().palette;
-  const alternateCallerId = adapter.getState().alternateCallerId;
+  const alternateCallerId = useSelector(getAlternateCallerId);
   const leavePageStyle = useMemo(() => leavingPageStyle(palette), [palette]);
   let pageElement: JSX.Element | undefined;
   const [pinnedParticipants, setPinnedParticipants] = useState<string[]>([]);
@@ -732,6 +735,9 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   useEndedCallConsoleErrors(endedCall);
 
   /* @conditional-compile-remove(unsupported-browser) */
+  const environmentInfo = useSelector(getEnvironmentInfo);
+
+  /* @conditional-compile-remove(unsupported-browser) */
   switch (page) {
     case 'unsupportedEnvironment':
       pageElement = (
@@ -740,7 +746,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
             /* @conditional-compile-remove(unsupported-browser) */
             <UnsupportedBrowserPage
               onTroubleshootingClick={props.options?.onEnvironmentInfoTroubleshootingClick}
-              environmentInfo={adapter.getState().environmentInfo}
+              environmentInfo={environmentInfo}
             />
           }
         </>

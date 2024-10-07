@@ -54,6 +54,6 @@ export const loadCallWithChatComposite = async function (
     throw new Error('Failed to find the root element');
   }
 
-  createRoot(htmlElement).render(React.createElement(CallWithChatComposite, { ...props, adapter }, null));
+  createRoot(htmlElement).render(React.createElement(CallWithChatComposite, { options: props, adapter }, null));
   return adapter;
 };
