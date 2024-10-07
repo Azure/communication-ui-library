@@ -42,9 +42,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: ${{ github.event.pull_request.head.ref }}
-      - name: Fetch all branches
-        if: ${{ steps.checkout-pr-branch.outcome == 'success' }}
-        run: git fetch origin
       - name: Merge main into PR branch
         if: ${{ steps.checkout-pr-branch.outcome == 'success' }}
         run: git merge origin/main
