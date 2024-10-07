@@ -173,6 +173,8 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   const { updateSidePaneRenderer } = props;
   const isInLocalHold = useSelector(getPage) === 'hold';
 
+  const capabilities = useSelector(getCapabilites);
+
   const adapter = useAdapter();
 
   const [participantActioned, setParticipantActioned] = useState<string>();
@@ -301,7 +303,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     setPromptProps
   );
 
-  const canRemoveSpotlight = useSelector(getCapabilites)?.removeParticipantsSpotlight.isPresent;
+  const canRemoveSpotlight = capabilities?.removeParticipantsSpotlight.isPresent;
   const stopAllSpotlight = useMemo(
     () => (canRemoveSpotlight ? () => adapter.stopAllSpotlight() : undefined),
     [canRemoveSpotlight, adapter]
@@ -316,17 +318,17 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   const onMuteParticipantPeoplePaneProps = useMemo(() => {
     /* @conditional-compile-remove(soft-mute) */
     return {
-      onMuteParticipant: ['Unknown', 'Organizer', 'Presenter', 'Co-organizer'].includes(role ?? '')
-        ? onMuteParticipant
-        : undefined,
-      onMuteAllRemoteParticipants: ['Unknown', 'Organizer', 'Presenter', 'Co-organizer'].includes(role ?? '')
-        ? muteAllHandlers.onMuteAllRemoteParticipants
-        : undefined
+      onMuteParticipant: capabilities?.muteOthers?.isPresent || role === 'Unknown' ? onMuteParticipant : undefined,
+      onMuteAllRemoteParticipants:
+        capabilities?.muteOthers?.isPresent || role === 'Unknown'
+          ? muteAllHandlers.onMuteAllRemoteParticipants
+          : undefined
     };
     return {};
   }, [
     /* @conditional-compile-remove(soft-mute) */ onMuteParticipant,
     /* @conditional-compile-remove(soft-mute) */ role,
+    /* @conditional-compile-remove(soft-mute) */ capabilities?.muteOthers,
     /* @conditional-compile-remove(soft-mute) */ muteAllHandlers.onMuteAllRemoteParticipants
   ]);
 
