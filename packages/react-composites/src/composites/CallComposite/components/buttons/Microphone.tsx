@@ -9,9 +9,14 @@ import React, { useMemo } from 'react';
 import { CallControlDisplayType } from '../../../common/types/CommonCallControlOptions';
 import { usePropsFor } from '../../hooks/usePropsFor';
 import { useSelector } from '../../hooks/useSelector';
-import { getCallStatus, getLocalMicrophoneEnabled } from '../../selectors/baseSelectors';
+import {
+  getCallStatus,
+  getCapabilites,
+  getIsRoomsCall,
+  getLocalMicrophoneEnabled,
+  getRole
+} from '../../selectors/baseSelectors';
 import { concatButtonBaseStyles } from '../../styles/Buttons.styles';
-import { useAdapter } from '../../adapter/CallAdapterProvider';
 
 /**
  * @private
@@ -32,10 +37,9 @@ export const Microphone = (props: {
   const microphoneButtonProps = usePropsFor(MicrophoneButton);
   const callStatus = useSelector(getCallStatus);
   const isLocalMicrophoneEnabled = useSelector(getLocalMicrophoneEnabled);
-  const adapter = useAdapter();
-  const isRoomsCall = adapter.getState().isRoomsCall;
-
-  const unmuteMicCapability = adapter.getState().call?.capabilitiesFeature?.capabilities.unmuteMic;
+  const isRoomsCall = useSelector(getIsRoomsCall);
+  const role = useSelector(getRole);
+  const unmuteMicCapability = useSelector(getCapabilites)?.unmuteMic;
 
   /**
    * When call is in connecting state, microphone button should be disabled.
@@ -62,9 +66,7 @@ export const Microphone = (props: {
       disableTooltip={props.disableTooltip}
       styles={styles}
       enableDeviceSelectionMenu={props.splitButtonsForDeviceSelection}
-      disabled={
-        microphoneButtonProps.disabled || props.disabled || (isRoomsCall && adapter.getState().call?.role === 'Unknown')
-      }
+      disabled={microphoneButtonProps.disabled || props.disabled || !!(isRoomsCall && role === 'Unknown')}
       onRenderOffIcon={
         unmuteMicCapability && !unmuteMicCapability.isPresent
           ? () => <_HighContrastAwareIcon disabled={true} iconName={'ControlButtonMicProhibited'} />

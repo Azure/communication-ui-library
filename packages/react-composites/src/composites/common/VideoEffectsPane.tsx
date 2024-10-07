@@ -40,6 +40,7 @@ export const VideoEffectsPaneContent = (props: {
   updateFocusHandle: React.RefObject<{
     focus: () => void;
   }>;
+  backgroundImages: VideoBackgroundImage[] | undefined;
 }): JSX.Element => {
   const { onDismissError, activeVideoEffectError, activeVideoEffectChange } = props;
 
@@ -74,10 +75,9 @@ export const VideoEffectsPaneContent = (props: {
         }
       }
     ];
-    const videoEffectImages = adapter.getState().videoBackgroundImages;
 
-    if (videoEffectImages) {
-      videoEffectImages.forEach((img: VideoBackgroundImage) => {
+    if (props.backgroundImages) {
+      props.backgroundImages.forEach((img: VideoBackgroundImage) => {
         videoEffects.push({
           itemKey: img.key,
           backgroundProps: {
@@ -90,7 +90,13 @@ export const VideoEffectsPaneContent = (props: {
       });
     }
     return videoEffects;
-  }, [strings, adapter]);
+  }, [
+    strings.removeBackgroundEffectButtonLabel,
+    strings.removeBackgroundTooltip,
+    strings.blurBackgroundEffectButtonLabel,
+    strings.blurBackgroundTooltip,
+    props.backgroundImages
+  ]);
 
   const onEffectChange = useCallback(
     async (effectKey: string) => {

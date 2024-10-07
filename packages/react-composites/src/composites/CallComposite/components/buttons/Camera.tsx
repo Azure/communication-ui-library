@@ -8,8 +8,9 @@ import React, { useMemo } from 'react';
 import { CallControlDisplayType } from '../../../common/types/CommonCallControlOptions';
 import { usePropsFor } from '../../hooks/usePropsFor';
 import { concatButtonBaseStyles } from '../../styles/Buttons.styles';
-import { useAdapter } from '../../adapter/CallAdapterProvider';
 import { IButton } from '@fluentui/react';
+import { useSelector } from '../../hooks/useSelector';
+import { getCapabilites, getIsRoomsCall, getRole } from '../../selectors/baseSelectors';
 
 /**
  * @private
@@ -26,10 +27,10 @@ export const Camera = (props: {
 }): JSX.Element => {
   const cameraButtonProps = usePropsFor(CameraButton);
   const styles = useMemo(() => concatButtonBaseStyles(props.styles ?? {}), [props.styles]);
-  const adapter = useAdapter();
-  const isRoomsCall = adapter.getState().isRoomsCall;
+  const isRoomsCall = useSelector(getIsRoomsCall);
+  const role = useSelector(getRole);
 
-  const turnVideoOnCapability = adapter.getState().call?.capabilitiesFeature?.capabilities.turnVideoOn;
+  const turnVideoOnCapability = useSelector(getCapabilites)?.turnVideoOn;
 
   return (
     <CameraButton
@@ -39,9 +40,7 @@ export const Camera = (props: {
       styles={styles}
       enableDeviceSelectionMenu={props.splitButtonsForDeviceSelection}
       disableTooltip={props.disableTooltip}
-      disabled={
-        cameraButtonProps.disabled || props.disabled || (isRoomsCall && adapter.getState().call?.role === 'Unknown')
-      }
+      disabled={cameraButtonProps.disabled || props.disabled || !!(isRoomsCall && role === 'Unknown')}
       onRenderOffIcon={
         turnVideoOnCapability && !turnVideoOnCapability.isPresent
           ? () => <_HighContrastAwareIcon disabled={true} iconName={'ControlButtonCameraProhibited'} />
