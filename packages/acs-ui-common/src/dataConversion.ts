@@ -7,7 +7,12 @@
  * @internal
  */
 export const _base64ToBlob = (dataURI: string): Blob => {
-  const byteString = atob(dataURI.split(',')[1]);
+  const str = dataURI.split(',')[1];
+  if (!str) {
+    throw new Error('Invalid base64 string');
+  }
+
+  const byteString = atob(str);
   const arrayBuffer = new ArrayBuffer(byteString.length);
   const uint8Array = new Uint8Array(arrayBuffer);
 

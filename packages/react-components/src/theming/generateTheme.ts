@@ -33,8 +33,18 @@ export const _generateTheme = (accentColor: string, variant: 'light' | 'dark'): 
   // For usage, see: https://github.com/microsoft/fluentui/blob/88efc19c9513db18cb5b7c63fa0f47ba496755a2/packages/react/src/components/ThemeGenerator/ThemeGenerator.ts
   const themeRules = themeRulesStandardCreator();
   ThemeGenerator.insureSlots(themeRules, isDark);
-  ThemeGenerator.setSlot(themeRules[BaseSlots[BaseSlots.primaryColor]], primaryColor, isDark, true, true);
-  ThemeGenerator.setSlot(themeRules[BaseSlots[BaseSlots.backgroundColor]], backgroundColor, isDark, true, true);
+
+  const primaryColorSlot = themeRules[BaseSlots[BaseSlots.primaryColor]];
+  if (!primaryColorSlot) {
+    throw new Error('Primary color slot not found');
+  }
+  ThemeGenerator.setSlot(primaryColorSlot, primaryColor, isDark, true, true);
+
+  const backgroundColorSlot = themeRules[BaseSlots[BaseSlots.backgroundColor]];
+  if (!backgroundColorSlot) {
+    throw new Error('Background color slot not found');
+  }
+  ThemeGenerator.setSlot(backgroundColorSlot, backgroundColor, isDark, true, true);
 
   // There is a bug in fluentv8 theme generator that causes the foregroundColor to be generated incorrectly: https://github.com/microsoft/fluentui/issues/29853.
   // Ideally we could do: ThemeGenerator.setSlot(themeRules[BaseSlots[foregroundColor]], colors.textColor, isDark, true, true);

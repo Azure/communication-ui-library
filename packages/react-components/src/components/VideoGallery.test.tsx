@@ -766,8 +766,44 @@ describe('VideoGallery with vertical overflow gallery tests', () => {
   });
 });
 
+test('should render screenshare component and local user video tile when local user is alone', () => {
+  const localParticipant = createLocalParticipant({
+    videoStream: { isAvailable: true, renderElement: createVideoDivElement() }
+  });
+
+  const videoGalleryProps: VideoGalleryProps = {
+    layout: 'floatingLocalVideo',
+    localParticipant,
+    overflowGalleryPosition: 'verticalRight'
+  };
+  const { rerender, container } = render(<VideoGallery {...videoGalleryProps} />);
+  (localParticipant.isScreenSharingOn = true),
+    (localParticipant.screenShareStream = {
+      isAvailable: true,
+      renderElement: createRemoteScreenShareVideoDivElement()
+    });
+  rerender(<VideoGallery {...videoGalleryProps} />);
+
+  const videoGalleryTiles = getTiles(container);
+  // Should have 2 tiles in video gallery: local video tile and local screenshare tile
+  expect(videoGalleryTiles.length).toBe(2);
+  expect(getDisplayName(videoGalleryTiles[0])).toBe('You');
+  expect(tileIsVideo(videoGalleryTiles[0])).toBe(true);
+  expect(getDisplayName(videoGalleryTiles[1])).toBe('Local Participant');
+  expect(tileIsVideo(videoGalleryTiles[1])).toBe(true);
+
+  const localVideoTile = getLocalVideoTile(container);
+  if (!localVideoTile) {
+    throw Error('Local video tile not found');
+  }
+  expect(getDisplayName(localVideoTile)).toBe('You');
+  expect(tileIsVideo(localVideoTile)).toBe(true);
+});
+
 const getFloatingLocalVideoModal = (root: Element | null): Element | null =>
   root?.querySelector('[data-ui-id="floating-local-video-host"]') ?? null;
+const getLocalVideoTile = (root: Element | null): Element | null =>
+  root?.querySelector('[data-ui-id="local-video-tile"]') ?? null;
 
 const getGridLayout = (root: Element | null): Element | null =>
   root?.querySelector('[data-ui-id="grid-layout"]') ?? null;
