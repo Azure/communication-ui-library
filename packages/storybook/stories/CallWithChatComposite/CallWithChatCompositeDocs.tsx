@@ -233,7 +233,7 @@ export const Docs: () => JSX.Element = () => {
         <Subheading>File Sharing In Teams Interop Meeting Chat Thread</Subheading>
         <Description>
           When using the `CallWithChat` Composite in a Teams interop scenario, the Azure Communication Services end user
-          can recieve file attachments from Teams user without any additional setup. Simply join the Teams meeting as an
+          can receive file attachments from Teams user without any additional setup. Simply join the Teams meeting as an
           Azure Communication Services end user, as soon as the Teams user sends a file from the Teams client, the Azure
           Communication Services end user will be able to see shared files in the chat thread.
         </Description>
