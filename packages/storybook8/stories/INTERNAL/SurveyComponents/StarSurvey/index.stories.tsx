@@ -1,6 +1,8 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+import { _StarSurvey as StarSurveyComponent } from '@internal/react-components';
 import { Meta } from '@storybook/react';
 import { hiddenControl } from '../../../controlsUtils';
-import { _StarSurvey as StarSurveyComponent } from '@internal/react-components';
 import { StarSurveyExample } from './snippets/StarSurvey.snippet';
 export { StarSurvey } from './StarSurvey.story';
 

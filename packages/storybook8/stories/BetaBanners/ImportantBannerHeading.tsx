@@ -19,7 +19,7 @@ export const ImportantHeading = (props: { color: string }): JSX.Element => (
 const importantIconStyles = {
   // Ensure icon aligns with text by setting to the height to the same as the font size (1rem)
   // And aligning the icon with the bottom of the text
-  height: '1rem',
+  height: '1.5rem',
   verticalAlign: 'text-bottom',
 
   // display must be block or inline-block for verticalAlign to work

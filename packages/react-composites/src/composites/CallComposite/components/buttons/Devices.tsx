@@ -9,8 +9,9 @@ import { concatButtonBaseStyles, devicesButtonWithIncreasedTouchTargets } from '
 import { CompositeLocale, useLocale } from '../../../localization';
 import { _HighContrastAwareIcon } from '@internal/react-components';
 import { CallControlDisplayType } from '../../../common/types/CommonCallControlOptions';
-import { useAdapter } from '../../adapter/CallAdapterProvider';
 import { ParticipantRole } from '@azure/communication-calling';
+import { useSelector } from '../../hooks/useSelector';
+import { getRole } from '../../selectors/baseSelectors';
 
 /** @private */
 export const Devices = (props: {
@@ -20,8 +21,7 @@ export const Devices = (props: {
   disabled?: boolean;
 }): JSX.Element => {
   const devicesButtonProps = usePropsFor(DevicesButton);
-  const adapter = useAdapter();
-  const role: ParticipantRole = adapter.getState().call?.role ?? 'Unknown';
+  const role: ParticipantRole = useSelector(getRole) ?? 'Unknown';
 
   const augmentedDeviceButtonProps = useMemo(
     () => ({

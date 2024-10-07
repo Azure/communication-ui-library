@@ -406,6 +406,6 @@
     "openDtmfDialpadLabel": "Mostra tastiera",
     "dtmfDialpadPlaceholderText": "Immetti il numero",
     "breakoutRoomChatPaneTitle": "Chat della stanza di lavoro",
-    "chatContentSpinnerLabel": "Loading..."
+    "chatContentSpinnerLabel": "Caricamento in corso..."
   }
 }
