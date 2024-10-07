@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-import { DominantSpeakersInfo } from '@azure/communication-calling';
+import { CallState, DominantSpeakersInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(breakout-rooms) */
 import { BreakoutRoom } from '@azure/communication-calling';
 import { ParticipantCapabilities } from '@azure/communication-calling';
@@ -189,7 +189,7 @@ export const getDiagnostics = (
 /**
  * @private
  */
-export const getCallState = (state: CallClientState, props: CallingBaseSelectorProps): string =>
+export const getCallState = (state: CallClientState, props: CallingBaseSelectorProps): CallState | undefined =>
   state.calls[props.callId]?.state;
 
 /**
@@ -212,7 +212,7 @@ export const getParticipantCount = (state: CallClientState, props: CallingBaseSe
 
 /* @conditional-compile-remove(acs-close-captions) */
 /** @private */
-export const getCaptionsKind = (state: CallClientState, props: CallingBaseSelectorProps): CaptionsKind => {
+export const getCaptionsKind = (state: CallClientState, props: CallingBaseSelectorProps): CaptionsKind | undefined => {
   return state.calls[props.callId]?.captionsFeature.captionsKind;
 };
 

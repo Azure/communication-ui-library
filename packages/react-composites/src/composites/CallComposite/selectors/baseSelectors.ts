@@ -22,10 +22,17 @@ import {
 import { CaptionsInfo } from '@internal/calling-stateful-client';
 import { ConferencePhoneInfo } from '@internal/calling-stateful-client';
 import { SpotlightedParticipant } from '@azure/communication-calling';
-import { CallAdapterState, CallCompositePage } from '../adapter/CallAdapter';
+import { CallAdapterState, CallCompositePage, VideoBackgroundImage } from '../adapter/CallAdapter';
 
 import { VideoBackgroundEffect } from '../adapter/CallAdapter';
-import { _isInCall, _isPreviewOn, _dominantSpeakersWithFlatId } from '@internal/calling-component-bindings';
+import {
+  _isInCall,
+  _isPreviewOn,
+  _dominantSpeakersWithFlatId,
+  VideoBackgroundEffectsDependency
+} from '@internal/calling-component-bindings';
+/* @conditional-compile-remove(DNS) */
+import { DeepNoiseSuppressionEffectDependency } from '@internal/calling-component-bindings';
 import { AdapterErrors } from '../../common/adapters';
 /* @conditional-compile-remove(breakout-rooms) */
 import { AdapterNotifications } from '../../common/adapters';
@@ -33,6 +40,7 @@ import { RaisedHandState } from '@internal/calling-stateful-client';
 import { CommunicationIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(acs-close-captions) */
 import { CaptionsKind } from '@azure/communication-calling';
+import { ReactionResources } from '@internal/react-components';
 
 /**
  * @private
@@ -269,3 +277,37 @@ export const getBreakoutRoomDisplayName = (state: CallAdapterState): string | un
  * @private
  */
 export const getLatestNotifications = (state: CallAdapterState): AdapterNotifications => state.latestNotifications;
+
+/** @private */
+export const getVideoEffectsDependency = (
+  state: CallAdapterState
+): (() => Promise<VideoBackgroundEffectsDependency>) | undefined => state.onResolveVideoEffectDependency;
+
+/* @conditional-compile-remove(DNS) */
+/** @private */
+export const getDeepNoiseSuppresionEffectsDependency = (
+  state: CallAdapterState
+): (() => Promise<DeepNoiseSuppressionEffectDependency>) | undefined => state.onResolveDeepNoiseSuppressionDependency;
+
+/* @conditional-compile-remove(DNS) */
+/** @private */
+export const getDeepNoiseSuppresionIsOnByDefault = (state: CallAdapterState): boolean | undefined =>
+  state.deepNoiseSuppressionOnByDefault;
+
+/* @conditional-compile-remove(DNS) */
+/** @private */
+export const getHideDeepNoiseSupressionButton = (state: CallAdapterState): boolean | undefined =>
+  state.hideDeepNoiseSuppressionButton;
+
+/** @private */
+export const getReactionResources = (state: CallAdapterState): ReactionResources | undefined => state.reactions;
+
+/** @private */
+export const getAlternateCallerId = (state: CallAdapterState): string | undefined => state.alternateCallerId;
+
+/** @private */
+export const getIsRoomsCall = (state: CallAdapterState): boolean => state.isRoomsCall;
+
+/** @private */
+export const getVideoBackgroundImages = (state: CallAdapterState): VideoBackgroundImage[] | undefined =>
+  state.videoBackgroundImages;

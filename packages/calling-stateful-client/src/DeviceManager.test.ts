@@ -33,10 +33,10 @@ describe('device manager', () => {
 
     const cameras = await (await client.getDeviceManager()).getCameras();
     expect(cameras.length).toBe(1);
-    expect(cameras[0].name).toBe('camera');
+    expect(cameras[0]?.name).toBe('camera');
 
     expect(client.getState().deviceManager.cameras.length).toBe(1);
-    expect(client.getState().deviceManager.cameras[0].name).toBe('camera');
+    expect(client.getState().deviceManager.cameras[0]?.name).toBe('camera');
   });
 
   test('should detect videoDevicesUpdated and update cameras in state using deviceManager', async () => {
@@ -47,7 +47,7 @@ describe('device manager', () => {
 
     manager.emit('videoDevicesUpdated', {});
     expect(await waitWithBreakCondition(() => client.getState().deviceManager.cameras.length === 1)).toBe(true);
-    expect(client.getState().deviceManager.cameras[0].name).toBe('camera');
+    expect(client.getState().deviceManager.cameras[0]?.name).toBe('camera');
   });
 
   test('should proxy getMicrophones and update microphones in state', async () => {
@@ -57,10 +57,10 @@ describe('device manager', () => {
 
     const microphones = await (await client.getDeviceManager()).getMicrophones();
     expect(microphones.length).toBe(1);
-    expect(microphones[0].name).toBe('microphone');
+    expect(microphones[0]?.name).toBe('microphone');
 
     expect(client.getState().deviceManager.microphones.length).toBe(1);
-    expect(client.getState().deviceManager.microphones[0].name).toBe('microphone');
+    expect(client.getState().deviceManager.microphones[0]?.name).toBe('microphone');
   });
 
   test('should proxy selectMicrophone and update selectedMicrophone in state', async () => {
@@ -95,10 +95,10 @@ describe('device manager', () => {
 
     const speakers = await (await client.getDeviceManager()).getSpeakers();
     expect(speakers.length).toBe(1);
-    expect(speakers[0].name).toBe('speaker');
+    expect(speakers[0]?.name).toBe('speaker');
 
     expect(client.getState().deviceManager.speakers.length).toBe(1);
-    expect(client.getState().deviceManager.speakers[0].name).toBe('speaker');
+    expect(client.getState().deviceManager.speakers[0]?.name).toBe('speaker');
   });
 
   test('should proxy selectSpeaker and update selectedSpeaker in state', async () => {
