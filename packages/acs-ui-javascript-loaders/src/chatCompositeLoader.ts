@@ -28,6 +28,7 @@ export type ChatCompositeLoaderProps = {
   displayName?: string;
   endpoint: string;
   threadId: string;
+  chatCompositeOptions?: ChatCompositeOptions;
 };
 
 /**
@@ -35,12 +36,11 @@ export type ChatCompositeLoaderProps = {
  * @public
  */
 export const loadChatComposite = async function (
-  args: ChatCompositeLoaderProps,
-  htmlElement: HTMLElement | null,
-  props: ChatCompositeOptions
+  loaderArgs: ChatCompositeLoaderProps,
+  htmlElement: HTMLElement
 ): Promise<ChatAdapter | undefined> {
   initializeIcons();
-  const { userId, token, endpoint, threadId, displayName } = args;
+  const { userId, token, endpoint, threadId, displayName, chatCompositeOptions } = loaderArgs;
   const adapter = await createAzureCommunicationChatAdapter({
     endpoint,
     userId: fromFlatCommunicationIdentifier(userId) as CommunicationUserIdentifier,
@@ -53,6 +53,6 @@ export const loadChatComposite = async function (
     throw new Error('Failed to find the root element');
   }
 
-  createRoot(htmlElement).render(React.createElement(ChatComposite, { options: props, adapter }, null));
+  createRoot(htmlElement).render(React.createElement(ChatComposite, { options: chatCompositeOptions, adapter }, null));
   return adapter;
 };

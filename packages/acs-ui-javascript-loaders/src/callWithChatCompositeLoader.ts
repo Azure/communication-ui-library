@@ -15,7 +15,8 @@ import {
   CallAndChatLocator,
   CallWithChatCompositeOptions,
   createAzureCommunicationCallWithChatAdapter,
-  CallWithChatComposite
+  CallWithChatComposite,
+  AzureCommunicationCallAdapterOptions
 } from '@internal/react-composites';
 import { initializeIcons } from '@fluentui/react';
 
@@ -29,6 +30,8 @@ export type CallWithChatCompositeLoaderProps = {
   displayName: string;
   endpoint: string;
   locator: CallAndChatLocator;
+  callAdapterOptions?: AzureCommunicationCallAdapterOptions;
+  callWithChatCompositeOptions?: CallWithChatCompositeOptions;
 };
 
 /**
@@ -36,24 +39,27 @@ export type CallWithChatCompositeLoaderProps = {
  * @public
  */
 export const loadCallWithChatComposite = async function (
-  args: CallWithChatCompositeLoaderProps,
-  htmlElement: HTMLElement | null,
-  props: CallWithChatCompositeOptions
+  loaderArgs: CallWithChatCompositeLoaderProps,
+  htmlElement: HTMLElement
 ): Promise<CallWithChatAdapter | undefined> {
   initializeIcons();
-  const { userId, token, displayName, endpoint, locator } = args;
+  const { userId, token, displayName, endpoint, locator, callAdapterOptions, callWithChatCompositeOptions } =
+    loaderArgs;
   const adapter = await createAzureCommunicationCallWithChatAdapter({
     userId: fromFlatCommunicationIdentifier(userId) as CommunicationUserIdentifier,
     displayName: displayName ?? 'anonymous',
     credential: new AzureCommunicationTokenCredential(token),
     endpoint: endpoint,
-    locator: locator
+    locator: locator,
+    callAdapterOptions
   });
 
   if (!htmlElement) {
     throw new Error('Failed to find the root element');
   }
 
-  createRoot(htmlElement).render(React.createElement(CallWithChatComposite, { options: props, adapter }, null));
+  createRoot(htmlElement).render(
+    React.createElement(CallWithChatComposite, { options: callWithChatCompositeOptions, adapter }, null)
+  );
   return adapter;
 };

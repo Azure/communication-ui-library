@@ -29,7 +29,8 @@ export type OutboundCallCompositeLoaderProps = {
   token: string;
   displayName: string;
   targetCallees: string[] | StartCallIdentifier[];
-  options?: AzureCommunicationCallAdapterOptions;
+  adapterOptions?: AzureCommunicationCallAdapterOptions;
+  callCompositeOptions?: CallCompositeOptions;
 };
 
 /**
@@ -38,12 +39,11 @@ export type OutboundCallCompositeLoaderProps = {
  * @public
  */
 export const loadOutboundCallComposite = async function (
-  adapterArgs: OutboundCallCompositeLoaderProps,
-  htmlElement: HTMLElement | null,
-  props?: CallCompositeOptions
+  loaderArgs: OutboundCallCompositeLoaderProps,
+  htmlElement: HTMLElement
 ): Promise<CallAdapter | undefined> {
   initializeIcons();
-  const { userId, token, displayName, targetCallees, options } = adapterArgs;
+  const { userId, token, displayName, targetCallees, adapterOptions, callCompositeOptions } = loaderArgs;
   const formattedTargetCallees =
     typeof targetCallees[0] === 'string'
       ? (targetCallees as string[]).map((callee: string) => {
@@ -56,13 +56,13 @@ export const loadOutboundCallComposite = async function (
     displayName: displayName ?? 'anonymous',
     credential: new AzureCommunicationTokenCredential(token),
     targetCallees: (formattedTargetCallees as StartCallIdentifier[]) ?? (targetCallees as StartCallIdentifier[]),
-    options
+    options: adapterOptions
   });
 
   if (!htmlElement) {
     throw new Error('Failed to find the root element');
   }
 
-  createRoot(htmlElement).render(React.createElement(CallComposite, { options: props, adapter }, null));
+  createRoot(htmlElement).render(React.createElement(CallComposite, { options: callCompositeOptions, adapter }, null));
   return adapter;
 };
