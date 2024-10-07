@@ -29,7 +29,8 @@ export type CallCompositeLoaderProps = {
   token: string;
   displayName: string;
   locator: CallAdapterLocator;
-  options?: AzureCommunicationCallAdapterOptions;
+  adapterOptions?: AzureCommunicationCallAdapterOptions;
+  callCompositeOptions?: CallCompositeOptions;
 };
 
 /**
@@ -38,25 +39,24 @@ export type CallCompositeLoaderProps = {
  * @public
  */
 export const loadCallComposite = async function (
-  adapterArgs: CallCompositeLoaderProps,
-  htmlElement: HTMLElement | null,
-  props?: CallCompositeOptions
+  loaderArgs: CallCompositeLoaderProps,
+  htmlElement: HTMLElement
 ): Promise<CallAdapter | undefined> {
   initializeIcons();
-  const { userId, token, displayName, locator, options } = adapterArgs;
+  const { userId, token, displayName, locator, adapterOptions, callCompositeOptions } = loaderArgs;
 
   const adapter = await createAzureCommunicationCallAdapter({
     userId: fromFlatCommunicationIdentifier(userId) as CommunicationUserIdentifier,
     displayName: displayName ?? 'anonymous',
     credential: new AzureCommunicationTokenCredential(token),
     locator,
-    options
+    options: adapterOptions
   });
 
   if (!htmlElement) {
     throw new Error('Failed to find the root element');
   }
 
-  createRoot(htmlElement).render(React.createElement(CallComposite, { options: props, adapter }, null));
+  createRoot(htmlElement).render(React.createElement(CallComposite, { options: callCompositeOptions, adapter }, null));
   return adapter;
 };
