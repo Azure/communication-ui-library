@@ -2649,7 +2649,7 @@ export type DeclarativeCallAgent = CallAgent & IncomingCallManagement;
 // @public
 export type DeclarativeTeamsCallAgent = TeamsCallAgent & TeamsIncomingCallManagement;
 
-// @beta
+// @public
 export type DeepNoiseSuppressionEffectDependency = {
     deepNoiseSuppressionEffect: AudioEffectsStartConfig;
 };
