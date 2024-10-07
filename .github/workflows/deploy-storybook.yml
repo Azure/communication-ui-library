@@ -14,10 +14,7 @@ jobs:
     name: Build and Deploy Storybook
     runs-on: ubuntu-latest
     permissions: # permissions needed for the deploy-storybook script
-      packages: write
-      pull-requests: write
-      contents: write
-      issues: write
+      pages: write
       id-token: write
     steps:
       - uses: actions/checkout@v4
