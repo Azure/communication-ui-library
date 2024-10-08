@@ -44,7 +44,7 @@ import { Captions, CaptionsInfo } from '@azure/communication-calling';
 import { TransferEventArgs } from '@azure/communication-calling';
 import { TeamsCaptionsInfo } from '@azure/communication-calling';
 
-import type { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling';
+import type { BackgroundBlurConfig, BackgroundReplacementConfig, DeviceAccess } from '@azure/communication-calling';
 
 import type { CapabilitiesChangeInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support)) */
@@ -664,12 +664,13 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     });
   }
 
-  public async askDevicePermission(constrain: PermissionConstraints): Promise<void> {
+  public async askDevicePermission(constrain: PermissionConstraints): Promise<DeviceAccess> {
     const startTime = new Date().getTime();
     return await this.asyncTeeErrorToEventEmitter(async () => {
-      await this.deviceManager.askDevicePermission(constrain);
+      const result = await this.deviceManager.askDevicePermission(constrain);
       const endTime = new Date().getTime();
       compositeLogger.info('time to query askDevicePermissions', endTime - startTime, 'ms');
+      return result;
     });
   }
 
