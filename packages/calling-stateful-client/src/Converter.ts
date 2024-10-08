@@ -11,7 +11,7 @@ import {
 } from '@azure/communication-calling';
 import { TeamsIncomingCall } from '@azure/communication-calling';
 import { TeamsCaptionsInfo } from '@azure/communication-calling';
-/* @conditional-compile-remove(acs-close-captions) */
+
 import { CaptionsInfo as AcsCaptionsInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support) */
 import { CallKind } from '@azure/communication-calling';
@@ -32,7 +32,7 @@ import { CaptionsInfo } from './CallClientState';
 import { TeamsIncomingCallState as DeclarativeTeamsIncomingCall } from './CallClientState';
 import { _isTeamsIncomingCall } from './TypeGuards';
 import { _isACSCall } from './TypeGuards';
-/* @conditional-compile-remove(acs-close-captions) */
+
 import { _isTeamsCall } from './TypeGuards';
 import { CallCommon } from './BetaToStableTypes';
 
@@ -172,7 +172,7 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
       currentSpokenLanguage: '',
       isCaptionsFeatureActive: false,
       startCaptionsInProgress: false,
-      /* @conditional-compile-remove(acs-close-captions) */
+
       captionsKind: _isTeamsCall(call) ? 'TeamsCaptions' : 'Captions'
     },
     transfer: {
@@ -244,7 +244,6 @@ export function convertFromTeamsSDKToCaptionInfoState(caption: TeamsCaptionsInfo
   };
 }
 
-/* @conditional-compile-remove(acs-close-captions) */
 /**
  * @private
  */

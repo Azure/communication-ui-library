@@ -19,7 +19,7 @@ import { convertConferencePhoneInfo } from './Converter';
 
 import { CapabilitiesChangeInfo, ParticipantCapabilities } from '@azure/communication-calling';
 import { TeamsCaptionsInfo } from '@azure/communication-calling';
-/* @conditional-compile-remove(acs-close-captions) */
+
 import { CaptionsKind, CaptionsInfo as AcsCaptionsInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
@@ -59,7 +59,7 @@ import { callingStatefulLogger } from './Logger';
 import { CallIdHistory } from './CallIdHistory';
 import { LocalVideoStreamVideoEffectsState } from './CallClientState';
 import { convertFromTeamsSDKToCaptionInfoState } from './Converter';
-/* @conditional-compile-remove(acs-close-captions) */
+
 import { convertFromSDKToCaptionInfoState } from './Converter';
 import { convertFromSDKToRaisedHandState } from './Converter';
 import { ReactionMessage } from '@azure/communication-calling';
@@ -1178,7 +1178,6 @@ export class CallContext {
     });
   }
 
-  /* @conditional-compile-remove(acs-close-captions) */
   public addCaption(callId: string, caption: AcsCaptionsInfo): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
@@ -1188,7 +1187,6 @@ export class CallContext {
     });
   }
 
-  /* @conditional-compile-remove(acs-close-captions) */
   public setCaptionsKind(callId: string, kind: CaptionsKind): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
