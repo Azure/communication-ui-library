@@ -77,6 +77,7 @@ The following snippet is an example of how you might import the `CallComposite` 
 
 ```ts
 import { Component } from '@angular/core';
+import { CallCompositeOptions } from '@azure/communication-react';
 
 @Component({
   selector: 'app-calling',
@@ -96,33 +97,42 @@ export class CallingComponent {
    * will only load the CallComposite and the UI library when the function is called.
    */
   async loadCalling(): Promise<void> {
-    import('@azure/communication-react/javascript-loaders').then(async (uiLib) => {
-      this.adapter = await uiLib
-        .loadCallComposite(
-          {
-            userId: this.userId,
-            token: this.token,
-            displayName: this.displayName,
-            locator: { groupId: this.groupId }
-          },
-          // this is the DOM element you want to attach the composite to. This will be in your Template for the component.
-          document.getElementById('call-composite-container'),
-          {
-            callControls: {
-              displayType: 'compact'
+    import('@azure/communication-react/javascript-loaders').then(async (communicationreact) => {
+      const compositeOptions: CallCompositeOptions = {
+        callControls: {
+          displayType: 'compact',
+          cameraButton: false
+        }
+      };
+      /**
+       * We want to fetch a reference to the container element where the call composite will be rendered.
+       */
+      const compositeContainer = document.getElementById('call-composite-container');
+      /**
+       * we only want to call this if the container element is available.
+       */
+      if (compositeContainer) {
+        this.adapter = await communicationreact
+          .loadCallComposite(
+            {
+              userId: this.userId,
+              token: this.token,
+              displayName: this.displayName,
+              locator: {
+                groupId: this.groupId
+              },
+              callCompositeOptions: compositeOptions
+            },
+            compositeContainer
+          )
+          .then((adapter) => {
+            if (adapter) {
+              adapter.on('callEnded', () => {
+                console.log('Call ended');
+              });
             }
-          }
-        )
-        .then((adapter) => {
-          if (adapter) {
-            /**
-             * Here is where you can subscribe to events from the Adapter after it has been created.
-             */
-            adapter.on('callEnded', () => {
-              console.log('Call ended');
-            });
-          }
-        });
+          });
+      }
     });
   }
 
