@@ -1,6 +1,6 @@
 {
   "name": "@internal/react-components",
-  "version": "1.20.0-beta.0",
+  "version": "1.20.0-beta.1",
   "description": "React component library",
   "module": "dist/dist-esm/index.js",
   "main": "dist/dist-cjs/index.js",
@@ -18,7 +18,7 @@
     "test:ci-coverage": "rushx _by-flavor \"rushx _test:by-flavor --coverage\"",
     "test:coverage": "rushx _by-flavor \"rushx _test:by-flavor --coverage --coverageReporters=lcov\"",
     "snapshot:update": "rushx test -- --update-snapshot",
-    "preprocess": "cpx \"./src/**\" ./preprocessed && babel ./src --out-dir ../preprocessed --extensions \".ts,.tsx\" --keep-file-extension --config-file ./.babelrc.js --relative && rimraf ../preprocessed",
+    "preprocess": "cpy './src/**' ./preprocessed && babel ./src --out-dir ../preprocessed --extensions \".ts,.tsx\" --keep-file-extension --config-file ./.babelrc.js --relative && rimraf ../preprocessed",
     "prettier": "prettier --no-error-on-unmatched-pattern --write --config ../../.prettierrc --ignore-path=../../.prettierignore \"**/*.js\" \"**/*.jsx\" \"**/*.ts\" \"**/*.tsx\"",
     "prettier:check": "prettier --no-error-on-unmatched-pattern --check --config ../../.prettierrc --ignore-path=../../.prettierignore \"**/*.js\" \"**/*.jsx\" \"**/*.ts\" \"**/*.tsx\"",
     "lint": "eslint --max-warnings 0 \"*/**/*.{ts,tsx}\"",
@@ -43,7 +43,7 @@
     "@fluentui/react-window-provider": "^2.2.27",
     "@fluentui-contrib/react-chat": "0.1.10",
     "@griffel/react": "^1.5.25",
-    "@internal/acs-ui-common": "1.20.0-beta.0",
+    "@internal/acs-ui-common": "1.20.0-beta.1",
     "copy-to-clipboard": "^3.3.1",
     "dompurify": "^3.1.6",
     "html-react-parser": "^5.1.12",
@@ -92,7 +92,7 @@
     "concurrently": "^5.3.0",
     "copyfiles": "^2.4.1",
     "core-js": "^3.34.0",
-    "cpx": "^1.5.0",
+    "cpy-cli": "^5.0.0",
     "cross-env": "^7.0.3",
     "env-cmd": "^10.1.0",
     "eslint-config-prettier": "^9.1.0",
@@ -127,6 +127,6 @@
     "ts-node": "^10.9.2",
     "type-fest": "^4.14.0",
     "typescript": "5.4.5",
-    "webpack": "5.89.0"
+    "webpack": "5.95.0"
   }
 }

@@ -65,7 +65,7 @@ describe('RichTextSendBox should only call onSendMessage when there is content a
     // fix for an issue when contentEditable is not set to RoosterJS for tests
     editorDiv?.setAttribute('contentEditable', 'true');
     if (editorDiv === null) {
-      fail('Editor div not found');
+      throw new Error('Editor div not found');
     }
     // Find and click the send button
     const sendButton = await screen.findByRole('button', {
@@ -98,7 +98,7 @@ describe('RichTextSendBox should return text correctly', () => {
     // fix for an issue when contentEditable is not set to RoosterJS for tests
     editorDiv?.setAttribute('contentEditable', 'true');
     if (editorDiv === null) {
-      fail('Editor div not found');
+      throw new Error('Editor div not found');
     }
     await userEvent.click(editorDiv);
     await waitFor(async () => {

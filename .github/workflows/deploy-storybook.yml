@@ -14,10 +14,8 @@ jobs:
     name: Build and Deploy Storybook
     runs-on: ubuntu-latest
     permissions: # permissions needed for the deploy-storybook script
-      packages: write
-      pull-requests: write
-      contents: write
-      issues: write
+      pages: write
+      id-token: write
     steps:
       - uses: actions/checkout@v4
 
@@ -39,10 +37,10 @@ jobs:
         run: rush install --max-install-attempts 3
 
       - name: Build Storybook
-        run: rush build -o storybook
+        run: rush build -o storybook8
 
       - name: Run Storybook tests
-        run: rush test -o storybook
+        run: rush test -o storybook8
 
       - name: Copy .env values
         # storybook requires the env vars to be in a .env file for access in the manager.ts

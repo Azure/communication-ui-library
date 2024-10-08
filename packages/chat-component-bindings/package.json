@@ -1,6 +1,6 @@
 {
   "name": "@internal/chat-component-bindings",
-  "version": "1.20.0-beta.0",
+  "version": "1.20.0-beta.1",
   "description": "Component bindings specific to components that integrate with the Azure Communication Services Chat JavaScript SDK",
   "module": "dist/dist-esm/index.js",
   "main": "dist/dist-cjs/index.js",
@@ -11,7 +11,7 @@
     "build:cjs": "rollup -c --silent --failAfterWarnings",
     "build:watch": "rushx build",
     "clean": "rimraf dist && rimraf preprocessed",
-    "preprocess": "cpx \"./src/**\" ./preprocessed && babel ./src --out-dir ../preprocessed --extensions \".ts,.tsx\" --keep-file-extension --config-file ./.babelrc.js --relative && rimraf ../preprocessed",
+    "preprocess": "cpy './src/**' ./preprocessed && babel ./src --out-dir ../preprocessed --extensions \".ts,.tsx\" --keep-file-extension --config-file ./.babelrc.js --relative && rimraf ../preprocessed",
     "prettier": "prettier --no-error-on-unmatched-pattern --write --config ../../.prettierrc --ignore-path=../../.prettierignore \"**/*.js\" \"**/*.jsx\" \"**/*.ts\" \"**/*.tsx\"",
     "prettier:check": "prettier --no-error-on-unmatched-pattern --check --config ../../.prettierrc --ignore-path=../../.prettierignore \"**/*.js\" \"**/*.jsx\" \"**/*.ts\" \"**/*.tsx\"",
     "test:ci-coverage": "rushx _by-flavor \"rushx _test:by-flavor --coverage\"",
@@ -31,9 +31,9 @@
   "dependencies": {
     "@azure/communication-common": "^2.3.1",
     "@azure/core-paging": "^1.5.0",
-    "@internal/acs-ui-common": "1.20.0-beta.0",
-    "@internal/chat-stateful-client": "1.20.0-beta.0",
-    "@internal/react-components": "1.20.0-beta.0",
+    "@internal/acs-ui-common": "1.20.0-beta.1",
+    "@internal/chat-stateful-client": "1.20.0-beta.1",
+    "@internal/react-components": "1.20.0-beta.1",
     "reselect": "^4.0.0",
     "memoize-one": "^5.2.1"
   },
@@ -48,7 +48,7 @@
     "@types/jest": "^29.5.11",
     "@types/react": "18.3.3",
     "copyfiles": "^2.4.1",
-    "cpx": "^1.5.0",
+    "cpy-cli": "^5.0.0",
     "cross-env": "^7.0.3",
     "env-cmd": "^10.1.0",
     "eslint-config-prettier": "^9.1.0",
