@@ -1,7 +1,15 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { ITooltipHostStyles, keyframes, memoizeFunction, IStyle } from '@fluentui/react';
+import {
+  ITooltipHostStyles,
+  keyframes,
+  memoizeFunction,
+  IStyle,
+  IButtonStyles,
+  Theme,
+  ICalloutContentStyles
+} from '@fluentui/react';
 import React from 'react';
 
 /**
@@ -37,6 +45,7 @@ export const emojiStyles = (backgroundImage: string, frameCount: number): IStyle
     alignItems: 'center',
     backgroundSize: `2.75rem 133.875rem`,
     transition: 'opacity 2s',
+    minWidth: '2.75rem',
     backgroundColor: 'transparent',
     transform: 'scale(0.6)',
     ':hover': {
@@ -83,7 +92,7 @@ export const reactionToolTipHostStyle = (): ITooltipHostStyles => {
       display: 'flex',
       flexDirection: 'column',
       height: '100%',
-      width: '100%'
+      width: '2.75rem'
     }
   };
 };
@@ -130,4 +139,42 @@ export const mobileViewEmojiStyles = (backgroundImage: string, animationPlayStat
     backgroundColor: 'transparent',
     transform: `${animationPlayState === 'running' ? 'scale(0.8)' : 'scale(0.6)'}`
   };
+};
+/**
+ * @private
+ */
+export const reactionButtonStyles = (theme: Theme): IButtonStyles => ({
+  rootChecked: {
+    background: theme.palette.themePrimary,
+    color: theme.palette.white
+  },
+  rootCheckedHovered: {
+    background: theme.palette.themePrimary,
+    color: theme.palette.white
+  },
+  labelChecked: { color: theme.palette.white }
+});
+
+/**
+ * @private
+ */
+export const reactionItemButtonStyles: IButtonStyles = {
+  root: {
+    border: 'none',
+    height: '2.75rem',
+    width: '2.75rem'
+  }
+};
+
+/**
+ * @private
+ */
+export const reactionButtonCalloutStyles: ICalloutContentStyles = {
+  container: {},
+  root: {},
+  beak: {},
+  beakCurtain: {},
+  calloutMain: {
+    height: '100%'
+  }
 };
