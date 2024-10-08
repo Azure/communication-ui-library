@@ -595,6 +595,10 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     this.removeParticipant.bind(this);
     this.createStreamView.bind(this);
     this.disposeStreamView.bind(this);
+    /* @conditional-compile-remove(together-mode) */
+    this.createFeatureStreamView.bind(this);
+    /* @conditional-compile-remove(together-mode) */
+    this.disposeFeatureStreamView.bind(this);
     this.disposeScreenShareStreamView.bind(this);
     this.disposeRemoteVideoStreamView.bind(this);
     this.disposeLocalVideoStreamView.bind(this);
@@ -794,6 +798,24 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
 
   public async disposeLocalVideoStreamView(): Promise<void> {
     await this.handlers.onDisposeLocalStreamView();
+  }
+
+  /* @conditional-compile-remove(together-mode) */
+  public async createFeatureStreamView(
+    featureName: string,
+    options?: VideoStreamOptions
+  ): Promise<void | CreateVideoStreamViewResult> {
+    if (featureName === 'togetherMode') {
+      /* @conditional-compile-remove(together-mode) */
+      return await this.handlers.onCreateTogetherModeStreamView(options);
+    }
+  }
+  /* @conditional-compile-remove(together-mode) */
+  public async disposeFeatureStreamView(featureName: string, options?: VideoStreamOptions): Promise<void> {
+    if (featureName === 'togetherMode') {
+      /* @conditional-compile-remove(together-mode) */
+      return await this.handlers.onDisposeTogetherModeStreamViews();
+    }
   }
 
   public async leaveCall(forEveryone?: boolean): Promise<void> {

@@ -226,6 +226,37 @@ export interface CallWithChatAdapterManagement {
    * @public
    */
   disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
+  /* @conditional-compile-remove(together-mode) */
+  /**
+   * Create the html view for a stream.
+   *
+   * @remarks
+   * This method is implemented for composite
+   *
+   * @param featureName - Name of feature to render
+   * @param options - Options to control how video streams are rendered {@link @azure/communication-calling#VideoStreamOptions }
+   *
+   * @beta
+   */
+  createFeatureStreamView(
+    featureName: string,
+    options?: VideoStreamOptions
+  ): Promise<void | CreateVideoStreamViewResult>;
+
+  /* @conditional-compile-remove(together-mode) */
+  /**
+   * Dispose the html view for a stream.
+   *
+   * @remarks
+   * This method is implemented for composite
+   *
+   *
+   * @param featureName - Name of the feature to dispose
+   * @param options - Options to control how video streams are rendered {@link @azure/communication-calling#VideoStreamOptions }
+   *
+   * @beta
+   */
+  disposeFeatureStreamView(featureName: string, options?: VideoStreamOptions): Promise<void>;
   /**
    * Dispose the html view for a screen share stream
    *

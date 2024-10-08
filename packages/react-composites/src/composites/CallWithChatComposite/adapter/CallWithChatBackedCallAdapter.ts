@@ -134,6 +134,12 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
     options?: VideoStreamOptions
   ): Promise<void | CreateVideoStreamViewResult> =>
     await this.callWithChatAdapter.createStreamView(remoteUserId, options);
+  /* @conditional-compile-remove(together-mode) */
+  public createFeatureStreamView = async (
+    featureName: string,
+    options?: VideoStreamOptions
+  ): Promise<void | CreateVideoStreamViewResult> =>
+    await this.callWithChatAdapter.createFeatureStreamView(featureName, options);
   public disposeStreamView = async (remoteUserId?: string, options?: VideoStreamOptions): Promise<void> =>
     await this.callWithChatAdapter.disposeStreamView(remoteUserId, options);
   public disposeScreenShareStreamView(remoteUserId: string): Promise<void> {
@@ -145,6 +151,9 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
   public disposeLocalVideoStreamView(): Promise<void> {
     return this.callWithChatAdapter.disposeLocalVideoStreamView();
   }
+  /* @conditional-compile-remove(together-mode) */
+  public disposeFeatureStreamView = async (featureName: string, options?: VideoStreamOptions): Promise<void> =>
+    await this.callWithChatAdapter.disposeStreamView(featureName, options);
   public holdCall = async (): Promise<void> => {
     await this.callWithChatAdapter.holdCall();
   };

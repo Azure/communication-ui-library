@@ -231,6 +231,14 @@ const createCompositeHandlers = memoizeOne(
       /* @conditional-compile-remove(soft-mute) */
       onMuteAllRemoteParticipants: async (): Promise<void> => {
         await adapter.muteAllRemoteParticipants();
+      },
+      /* @conditional-compile-remove(together-mode) */
+      onCreateTogetherModeStreamView: async (options) => {
+        return await adapter.createFeatureStreamView('togetherMode', options);
+      },
+      /* @conditional-compile-remove(together-mode) */
+      onDisposeTogetherModeStreamViews: async () => {
+        return await adapter.disposeFeatureStreamView('togetherMode');
       }
     };
   }

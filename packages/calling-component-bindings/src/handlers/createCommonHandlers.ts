@@ -106,6 +106,10 @@ export interface CommonCallingHandlers {
   onMuteParticipant: (userId: string) => Promise<void>;
   /* @conditional-compile-remove(soft-mute) */
   onMuteAllRemoteParticipants: () => Promise<void>;
+  /* @conditional-compile-remove(together-mode) */
+  onCreateTogetherModeStreamView: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
+  /* @conditional-compile-remove(together-mode) */
+  onDisposeTogetherModeStreamViews: () => Promise<void>;
 }
 
 /**
@@ -715,6 +719,58 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
         }
       : undefined;
 
+    /* @conditional-compile-remove(together-mode) */
+    const onCreateTogetherModeStreamView = async (
+      options = { scalingMode: 'Fit', isMirrored: true } as VideoStreamOptions
+    ): Promise<void | CreateVideoStreamViewResult> => {
+      if (!call) {
+        return;
+      }
+      const callState = callClient.getState().calls[call.id];
+      if (!callState) {
+        return;
+      }
+      const togetherModeStreams = callState.togetherMode.streams;
+      const createViewStreamResults: Map<string, CreateVideoStreamViewResult | undefined> = new Map();
+      if (!togetherModeStreams.size) {
+        const togetherModeFeature = call?.feature(Features.TogetherMode);
+        await togetherModeFeature?.start();
+      } else {
+        for (const stream of togetherModeStreams) {
+          if (!stream[1].view) {
+            const createViewResult = await callClient.createCallFeatureView(call.id, stream[1], options);
+            createViewStreamResults.set(
+              stream[0],
+              createViewResult?.view ? { view: createViewResult?.view } : undefined
+            );
+          }
+        }
+      }
+      const createViewResult = createViewStreamResults.get('Video');
+      return createViewResult?.view ? { view: createViewResult?.view } : undefined;
+    };
+    /* @conditional-compile-remove(together-mode) */
+    const onDisposeTogetherModeStreamViews = async (): Promise<void> => {
+      if (!call) {
+        return;
+      }
+      const callState = callClient.getState().calls[call.id];
+      if (!callState) {
+        throw new Error(`Call Not Found: ${call.id}`);
+      }
+
+      const togetherModeStreams = callState.togetherMode.streams;
+
+      if (!togetherModeStreams.size) {
+        return;
+      }
+
+      for (const stream of togetherModeStreams) {
+        if (stream[1].view) {
+          callClient.disposeCallFeatureView(call.id, stream[1]);
+        }
+      }
+    };
     return {
       onHangUp,
       onToggleHold,
@@ -768,7 +824,11 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       /* @conditional-compile-remove(soft-mute) */
       onMuteAllRemoteParticipants,
       onAcceptCall: notImplemented,
-      onRejectCall: notImplemented
+      onRejectCall: notImplemented,
+      /* @conditional-compile-remove(together-mode) */
+      onCreateTogetherModeStreamView,
+      /* @conditional-compile-remove(together-mode) */
+      onDisposeTogetherModeStreamViews
     };
   }
 );
