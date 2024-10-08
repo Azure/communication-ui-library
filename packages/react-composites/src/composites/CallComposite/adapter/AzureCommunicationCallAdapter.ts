@@ -811,7 +811,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     }
   }
   /* @conditional-compile-remove(together-mode) */
-  public async disposeFeatureStreamView(featureName: string, options?: VideoStreamOptions): Promise<void> {
+  public async disposeFeatureStreamView(featureName: string): Promise<void> {
     if (featureName === 'togetherMode') {
       /* @conditional-compile-remove(together-mode) */
       return await this.handlers.onDisposeTogetherModeStreamViews();
