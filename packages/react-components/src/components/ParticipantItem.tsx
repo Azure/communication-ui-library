@@ -147,7 +147,6 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
     onClick,
     showParticipantOverflowTooltip
   } = props;
-  const [itemHovered, setItemHovered] = useState<boolean>(false);
   const [menuHidden, setMenuHidden] = useState<boolean>(true);
   const containerRef = useRef<HTMLDivElement>(null);
   const theme = useTheme();
@@ -157,7 +156,7 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
 
   const strings = { ...localeStrings, ...props.strings };
   const participantStateString = participantStateStringTrampoline(props, strings);
-  const showMenuIcon = !participantStateString && (itemHovered || !menuHidden) && menuItems && menuItems?.length > 0;
+  const showMenuIcon = !participantStateString && menuItems && menuItems?.length > 0;
 
   // For 'me' show empty name so avatar will get 'Person' icon, when there is no name
   const meAvatarText = displayName?.trim() || '';
@@ -205,7 +204,6 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
   );
 
   const onDismissMenu = (): void => {
-    setItemHovered(false);
     setMenuHidden(true);
   };
 
@@ -238,11 +236,8 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
         participantItemContainerStyle({ clickable: !!menuItems && menuItems.length > 0 }, theme),
         styles?.root
       )}
-      onMouseEnter={() => setItemHovered(true)}
-      onMouseLeave={() => setItemHovered(false)}
       onClick={() => {
         if (!participantStateString) {
-          setItemHovered(true);
           setMenuHidden(false);
           onClick?.(props);
         }
