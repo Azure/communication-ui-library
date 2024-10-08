@@ -17768,7 +17768,6 @@ packages:
       '@typescript-eslint/eslint-plugin': 7.18.0(@typescript-eslint/parser@7.18.0)(eslint@8.57.1)(typescript@5.4.5)
       '@typescript-eslint/parser': 7.18.0(eslint@8.57.1)(typescript@5.4.5)
       copyfiles: 2.4.1
-      cpx: 1.5.0
       cpy-cli: 5.0.0
       cross-env: 7.0.3
       env-cmd: 10.1.0
@@ -17815,7 +17814,6 @@ packages:
       '@typescript-eslint/eslint-plugin': 7.18.0(@typescript-eslint/parser@7.18.0)(eslint@8.57.1)(typescript@5.4.5)
       '@typescript-eslint/parser': 7.18.0(eslint@8.57.1)(typescript@5.4.5)
       copyfiles: 2.4.1
-      cpx: 1.5.0
       cpy-cli: 5.0.0
       cross-env: 7.0.3
       env-cmd: 10.1.0
@@ -17862,7 +17860,6 @@ packages:
       '@typescript-eslint/eslint-plugin': 7.18.0(@typescript-eslint/parser@7.18.0)(eslint@8.57.1)(typescript@5.4.5)
       '@typescript-eslint/parser': 7.18.0(eslint@8.57.1)(typescript@5.4.5)
       copyfiles: 2.4.1
-      cpx: 1.5.0
       cpy-cli: 5.0.0
       cross-env: 7.0.3
       env-cmd: 10.1.0
@@ -17912,7 +17909,6 @@ packages:
       '@typescript-eslint/eslint-plugin': 7.18.0(@typescript-eslint/parser@7.18.0)(eslint@8.57.1)(typescript@5.4.5)
       '@typescript-eslint/parser': 7.18.0(eslint@8.57.1)(typescript@5.4.5)
       copyfiles: 2.4.1
-      cpx: 1.5.0
       cpy-cli: 5.0.0
       cross-env: 7.0.3
       env-cmd: 10.1.0
@@ -17974,7 +17970,6 @@ packages:
       babel-loader: 8.1.0(@babel/core@7.25.2)(webpack@5.95.0)
       concurrently: 5.3.0
       copyfiles: 2.4.1
-      cpx: 1.5.0
       cpy-cli: 5.0.0
       css-loader: 7.1.2(webpack@5.95.0)
       env-cmd: 10.1.0
@@ -18069,7 +18064,6 @@ packages:
       babel-loader: 8.1.0(@babel/core@7.25.2)(webpack@5.95.0)
       concurrently: 5.3.0
       copyfiles: 2.4.1
-      cpx: 1.5.0
       cpy-cli: 5.0.0
       css-loader: 7.1.2(webpack@5.95.0)
       env-cmd: 10.1.0
@@ -18165,7 +18159,6 @@ packages:
       babel-loader: 8.1.0(@babel/core@7.25.2)(webpack@5.95.0)
       concurrently: 5.3.0
       copyfiles: 2.4.1
-      cpx: 1.5.0
       cpy-cli: 5.0.0
       cross-env: 7.0.3
       css-loader: 7.1.2(webpack@5.95.0)
@@ -18240,7 +18233,6 @@ packages:
       '@types/jest': 29.5.13
       '@types/react': 18.3.3
       copyfiles: 2.4.1
-      cpx: 1.5.0
       cpy-cli: 5.0.0
       cross-env: 7.0.3
       env-cmd: 10.1.0
@@ -18287,7 +18279,6 @@ packages:
       '@typescript-eslint/eslint-plugin': 7.18.0(@typescript-eslint/parser@7.18.0)(eslint@8.57.1)(typescript@5.4.5)
       '@typescript-eslint/parser': 7.18.0(eslint@8.57.1)(typescript@5.4.5)
       copyfiles: 2.4.1
-      cpx: 1.5.0
       cpy-cli: 5.0.0
       cross-env: 7.0.3
       env-cmd: 10.1.0
@@ -18346,7 +18337,6 @@ packages:
       babel-loader: 8.1.0(@babel/core@7.25.2)(webpack@5.95.0)
       concurrently: 5.3.0
       copyfiles: 2.4.1
-      cpx: 1.5.0
       cpy-cli: 5.0.0
       css-loader: 7.1.2(webpack@5.95.0)
       env-cmd: 10.1.0
@@ -18496,7 +18486,6 @@ packages:
       ajv: 8.17.1
       copy-to-clipboard: 3.3.3
       copyfiles: 2.4.1
-      cpx: 1.5.0
       cpy-cli: 5.0.0
       cross-env: 7.0.3
       dompurify: 3.1.6
@@ -18680,7 +18669,6 @@ packages:
       babel-jest: 29.7.0(@babel/core@7.25.2)
       babel-loader: 8.1.0(@babel/core@7.25.2)(webpack@5.95.0)
       copyfiles: 2.4.1
-      cpx: 1.5.0
       cpy-cli: 5.0.0
       cross-env: 7.0.3
       env-cmd: 10.1.0
@@ -18756,7 +18744,6 @@ packages:
       copy-to-clipboard: 3.3.3
       copyfiles: 2.4.1
       core-js: 3.38.1
-      cpx: 1.5.0
       cpy-cli: 5.0.0
       cross-env: 7.0.3
       dompurify: 3.1.6
@@ -18877,7 +18864,6 @@ packages:
       copy-webpack-plugin: 11.0.0(webpack@5.95.0)
       copyfiles: 2.4.1
       core-js: 3.38.1
-      cpx: 1.5.0
       cpy-cli: 5.0.0
       cross-env: 7.0.3
       css-loader: 7.1.2(webpack@5.95.0)
@@ -18995,7 +18981,6 @@ packages:
       babel-loader: 8.1.0(@babel/core@7.25.2)(webpack@5.95.0)
       concurrently: 5.3.0
       copy-webpack-plugin: 11.0.0(webpack@5.95.0)
-      cpx: 1.5.0
       cpy-cli: 5.0.0
       dotenv: 10.0.0
       env-cmd: 10.1.0
@@ -19060,7 +19045,6 @@ packages:
       cookie-parser: 1.4.6
       copy-webpack-plugin: 11.0.0(webpack@5.95.0)
       cors: 2.8.5
-      cpx: 1.5.0
       cpy-cli: 5.0.0
       debug: 2.6.9
       eslint: 8.57.1
