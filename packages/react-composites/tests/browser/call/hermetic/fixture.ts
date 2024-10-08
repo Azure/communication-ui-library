@@ -109,7 +109,7 @@ export function defaultMockCallAdapterState(
         currentSpokenLanguage: '',
         isCaptionsFeatureActive: false,
         startCaptionsInProgress: false,
-        /* @conditional-compile-remove(acs-close-captions) */
+
         captionsKind: 'Captions'
       },
       transfer: {
@@ -550,7 +550,7 @@ const defaultEndedCallState: CallState = {
     currentSpokenLanguage: '',
     isCaptionsFeatureActive: false,
     startCaptionsInProgress: false,
-    /* @conditional-compile-remove(acs-close-captions) */
+
     captionsKind: 'Captions'
   },
   transfer: {

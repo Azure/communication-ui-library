@@ -8,7 +8,7 @@ import {
   TeamsCaptionsHandler,
   TeamsCaptionsInfo
 } from '@azure/communication-calling';
-/* @conditional-compile-remove(acs-close-captions) */
+
 import { Captions, CaptionsHandler, CaptionsInfo } from '@azure/communication-calling';
 import { CallContext } from './CallContext';
 import { CallIdRef } from './CallIdRef';
@@ -66,7 +66,6 @@ export class TeamsCaptionsSubscriber {
   };
 }
 
-/* @conditional-compile-remove(acs-close-captions) */
 /**
  * @private
  */
@@ -119,14 +118,13 @@ export class CaptionsFeatureSubscriber {
   private _context: CallContext;
   private _captions: CaptionsCallFeature;
   private _TeamsCaptionsSubscriber?: TeamsCaptionsSubscriber;
-  /* @conditional-compile-remove(acs-close-captions) */
   private _CaptionsSubscriber?: CaptionsSubscriber;
 
   constructor(callIdRef: CallIdRef, context: CallContext, captions: CaptionsCallFeature) {
     this._callIdRef = callIdRef;
     this._context = context;
     this._captions = captions;
-    /* @conditional-compile-remove(acs-close-captions) */
+
     this._context.setCaptionsKind(this._callIdRef.callId, this._captions.captions.kind);
     if (this._captions.captions.kind === 'TeamsCaptions') {
       this._TeamsCaptionsSubscriber = new TeamsCaptionsSubscriber(
@@ -135,7 +133,6 @@ export class CaptionsFeatureSubscriber {
         this._captions.captions as TeamsCaptions
       );
     } else {
-      /* @conditional-compile-remove(acs-close-captions) */
       this._CaptionsSubscriber = new CaptionsSubscriber(
         this._callIdRef,
         this._context,
@@ -146,19 +143,15 @@ export class CaptionsFeatureSubscriber {
   }
 
   private subscribe = (): void => {
-    /* @conditional-compile-remove(acs-close-captions) */
     this._captions.on('CaptionsKindChanged', this.isCaptionsKindChanged);
   };
 
   public unsubscribe = (): void => {
-    /* @conditional-compile-remove(acs-close-captions) */
     this._captions.off('CaptionsKindChanged', this.isCaptionsKindChanged);
     this._TeamsCaptionsSubscriber?.unsubscribe();
-    /* @conditional-compile-remove(acs-close-captions) */
     this._CaptionsSubscriber?.unsubscribe();
   };
 
-  /* @conditional-compile-remove(acs-close-captions) */
   private isCaptionsKindChanged: PropertyChangedEvent = (): void => {
     this._context.setCaptionsKind(this._callIdRef.callId, this._captions.captions.kind);
     // ACS call can turn into teams call but teams call will never turn into ACS call so we only need to handle the case when captions kind is TeamsCaptions
