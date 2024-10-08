@@ -5,6 +5,7 @@ import {
   Callout,
   DefaultButton,
   FocusZone,
+  IButton,
   ICalloutContentStyles,
   mergeStyles,
   Stack,
@@ -19,7 +20,6 @@ import {
   emojiStyles,
   reactionButtonCalloutStyles,
   reactionButtonStyles,
-  reactionEmojiMenuStyles,
   reactionItemButtonStyles,
   reactionToolTipHostStyle
 } from './styles/ReactionButton.styles';
@@ -113,26 +113,25 @@ export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
     backgroundColor: isDarkThemed(theme) ? theme.palette.neutralLighter : ''
   };
 
-  const classname = mergeStyles(reactionEmojiMenuStyles());
-
-  const reactionButtonRef = useRef<HTMLDivElement>(null);
+  const reactionButtonCalloutRef = useRef<HTMLDivElement>(null);
+  const reactionButtonRef = useRef<IButton>(null);
 
   const [calloutIsVisible, setCalloutIsVisible] = useState(false);
 
   return (
-    <>
+    <Stack>
       {calloutIsVisible && (
         <Callout
           data-ui-id="reaction-sub-menu"
-          className={classname}
+          isBeakVisible={false}
           styles={reactionButtonCalloutStyles}
-          target={reactionButtonRef.current}
+          target={reactionButtonCalloutRef.current}
           onDismiss={() => {
             reactionButtonRef.current?.focus();
             setCalloutIsVisible(false);
           }}
         >
-          <FocusZone autoFocus style={{ height: '100%' }}>
+          <FocusZone shouldFocusOnMount style={{ height: '100%' }}>
             <Stack horizontal style={{ height: 'inherit' }}>
               {emojis.map((emoji, index) => {
                 const resourceUrl = emojiResource.get(emoji);
@@ -149,11 +148,11 @@ export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
                     calloutProps={{ ...calloutProps }}
                   >
                     <DefaultButton
-                      autoFocus={index === 0}
                       role="menuitem"
                       key={index}
                       onClick={() => {
                         props.onReactionClick(emoji);
+                        console.log(reactionButtonRef.current);
                         reactionButtonRef.current?.focus();
                         setCalloutIsVisible(false);
                       }}
@@ -168,10 +167,11 @@ export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
           </FocusZone>
         </Callout>
       )}
-      <div ref={reactionButtonRef}>
+      <div ref={reactionButtonCalloutRef}>
         <ControlBarButton
           {...props}
           data-ui-id="reaction-button"
+          componentRef={reactionButtonRef}
           className={mergeStyles(styles, props.styles)}
           onClick={() => setCalloutIsVisible(!calloutIsVisible)}
           onRenderIcon={props.onRenderIcon ?? onRenderIcon}
@@ -183,6 +183,6 @@ export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
           ariaLabel={strings.ariaLabel}
         />
       </div>
-    </>
+    </Stack>
   );
 };

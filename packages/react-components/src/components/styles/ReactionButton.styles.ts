@@ -66,26 +66,6 @@ export const emojiStyles = (backgroundImage: string, frameCount: number): IStyle
  *
  * @private
  */
-export const reactionEmojiMenuStyles = (): IStyle => {
-  return {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'row',
-    width: '13.75rem',
-    height: '2.625rem',
-
-    // Ensure that when one emoji is hovered, the other emojis are partially faded out
-    ':hover > :not(:hover)': {
-      opacity: '0.5'
-    }
-  };
-};
-
-/**
- *
- * @private
- */
 export const reactionToolTipHostStyle = (): ITooltipHostStyles => {
   return {
     root: {
@@ -175,6 +155,15 @@ export const reactionButtonCalloutStyles: ICalloutContentStyles = {
   beak: {},
   beakCurtain: {},
   calloutMain: {
-    height: '100%'
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+    width: '13.75rem',
+    height: '2.625rem',
+    // Ensure that when one emoji is hovered, the other emojis are partially faded out
+    ':hover > :not(:hover)': {
+      opacity: '0.5'
+    }
   }
 };
