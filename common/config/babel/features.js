@@ -79,8 +79,6 @@ module.exports = {
     "call-participants-locator",
     // feature for breakout rooms
     "breakout-rooms",
-    // feature for adding JS helpers to the UI library API
-    "composite-js-helpers"
   ],
   stable: [
     // Demo feature. Used in live-documentation of conditional compilation.

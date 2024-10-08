@@ -22,6 +22,11 @@ import { initializeIcons } from '@fluentui/react';
 
 /**
  * Props for the OutboundCallComposite that you can use in your application.
+ *
+ * Contains two options bags:
+ * - adapterOptions: Options for the {@link AzureCommunicationCallAdapter}
+ * - callCompositeOptions: Options for the {@link CallComposite} {@link CallCompositeOptions}
+ *
  * @public
  */
 export type CallCompositeLoaderProps = {
@@ -34,7 +39,9 @@ export type CallCompositeLoaderProps = {
 };
 
 /**
- * Loader function for the OutboundCallComposite that you can use in your application.
+ * Loader function for the CallComposite that you can use in your application. This
+ * function will load the CallComposite into the provided HTML element. The best use case for this
+ * is in a Node ui framework that is not React based.
  *
  * @public
  */

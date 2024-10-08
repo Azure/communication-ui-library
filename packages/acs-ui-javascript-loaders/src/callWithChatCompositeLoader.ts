@@ -22,6 +22,10 @@ import { initializeIcons } from '@fluentui/react';
 
 /**
  * Props for the CallWithChatComposite that you can use in your application.
+ *
+ * Contains two options bags:
+ * - adapterOptions: Options for the {@link AzureCommunicationCallAdapterOptions}
+ * - callCompositeOptions: Options for the {@link CallWithChatComposite} {@link CallWithChatCompositeOptions}
  * @public
  */
 export type CallWithChatCompositeLoaderProps = {
@@ -35,7 +39,10 @@ export type CallWithChatCompositeLoaderProps = {
 };
 
 /**
- * Props for the CallWithChatComposite that you can use in your application.
+ * Props for the CallWithChatComposite that you can use in your application. This
+ * function will load the CallWithChatComposite into the provided HTML element.
+ * The best use case for this is in a Node UI framework that is not React based.
+ *
  * @public
  */
 export const loadCallWithChatComposite = async function (

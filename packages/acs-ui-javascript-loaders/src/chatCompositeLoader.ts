@@ -19,7 +19,8 @@ import { fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { initializeIcons } from '@fluentui/react';
 
 /**
- * Props for the ChatComposite that you can use in your application.
+ * Props for the ChatComposite that you can use in your application. Contains the
+ * options for the {@link ChatComposite} {@link ChatCompositeOptions}.
  * @public
  */
 export type ChatCompositeLoaderProps = {
@@ -32,7 +33,10 @@ export type ChatCompositeLoaderProps = {
 };
 
 /**
- * Loader function for the ChatComposite that you can use in your application.
+ * Loader function for the ChatComposite that you can use in your application. This
+ * function will load the ChatComposite into the provided HTML element.
+ * The best use case for this is in a Node UI framework that is not React based.
+ *
  * @public
  */
 export const loadChatComposite = async function (
