@@ -827,6 +827,22 @@ jobs:
             - Base size: ${{ steps.bundles.outputs.base_size}}
             - Diff size: ${{ steps.bundles.outputs.diff}}
           edit-mode: replace
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Update PR Description
+        uses: nefrob/pr-description@v1.1.2
+        with:
+          content: |
+            <!-- ${{ matrix.app }} bundle-size-report -->
+            ## ${{ matrix.app }} bundle size is ***${{ steps.bundles.outputs.change }}***.
+            - Current size: ${{ steps.bundles.outputs.current_size }}
+            - Base size: ${{ steps.bundles.outputs.base_size}}
+            - Diff size: ${{ steps.bundles.outputs.diff}}
+            <!-- end-bundle-size-report -->
+          regex: '<!-- ${{ matrix.app }} bundle-size-report -->.*?<!-- end-bundle-size-report -->'
+          regexFlags: 'ims'
+          appendContentOnMatchOnly: 'false'
+          token: ${{ secrets.GITHUB_TOKEN }}
 
   update_base_bundle_report:
     runs-on: ubuntu-latest
