@@ -132,7 +132,7 @@ export class BreakoutRoomsSubscriber {
 
     // If assigned breakout room has a display name, set the display name for its call state.
     const assignedBreakoutRoomDisplayName =
-      this._context.getState().calls[this._callIdRef.callId].breakoutRooms?.assignedBreakoutRoom?.displayName;
+      this._context.getState().calls[this._callIdRef.callId]?.breakoutRooms?.assignedBreakoutRoom?.displayName;
     if (assignedBreakoutRoomDisplayName) {
       this._context.setBreakoutRoomDisplayName(call.id, assignedBreakoutRoomDisplayName);
     }
