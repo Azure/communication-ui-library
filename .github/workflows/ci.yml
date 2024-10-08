@@ -825,6 +825,9 @@ jobs:
           regexFlags: 'ims'
           appendContentOnMatchOnly: 'false'
           token: ${{ secrets.GITHUB_TOKEN }}
+      - name:
+        run: |
+          echo "diff size: ${{ steps.bundles.outputs.diff }}"
 
   update_base_bundle_report:
     runs-on: ubuntu-latest
