@@ -737,6 +737,7 @@ export class CallContext {
     });
   }
 
+  /* @conditional-compile-remove(together-mode) */
   public setTogetherModeVideoStreamRendererView(
     callId: string,
     togetherModeStreamType: string,
@@ -744,6 +745,7 @@ export class CallContext {
   ): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      /* @conditional-compile-remove(together-mode) */
       if (call) {
         const togetherModeStream = call.togetherMode.streams.get(togetherModeStreamType);
         if (togetherModeStream) {

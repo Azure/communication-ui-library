@@ -162,6 +162,7 @@ export interface StatefulCallClient extends CallClient {
    * @param callId - CallId for the given stream. Can be undefined if the stream is not part of any call.
    * @param stream - The LocalVideoStreamState or RemoteVideoStreamState to start rendering.
    * @param options - Options that are passed to the {@link @azure/communication-calling#VideoStreamRenderer}.
+   * @beta
    */
   createCallFeatureView(
     callId: string,
@@ -182,6 +183,7 @@ export interface StatefulCallClient extends CallClient {
    *
    * @param callId - CallId for the given stream. Can be undefined if the stream is not part of any call.
    * @param stream - The LocalVideoStreamState or RemoteVideoStreamState to dispose.
+   * @beta
    */
   disposeCallFeatureView(callId: string, stream: CallFeatureStreamState): void;
   /**

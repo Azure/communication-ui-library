@@ -5,9 +5,10 @@ import {
   LocalVideoStream,
   MediaStreamType,
   RemoteVideoStream,
-  /* @conditional-compile-remove(together-mode) */ RemoteVideoStreamCommon,
   VideoStreamRenderer
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(together-mode) */
+import { RemoteVideoStreamCommon } from '@azure/communication-calling';
 import { LocalVideoStreamState } from './CallClientState';
 import type { CallContext } from './CallContext';
 import { CallIdHistory } from './CallIdHistory';
@@ -89,6 +90,7 @@ export class InternalCallContext {
     }
     /* @conditional-compile-remove(together-mode) */
     const callFeatureRenderInfos = this._callFeatureRenderInfos.get(oldCallId);
+    /* @conditional-compile-remove(together-mode) */
     if (callFeatureRenderInfos) {
       this._callFeatureRenderInfos.delete(oldCallId);
       this._callFeatureRenderInfos.set(newCallId, callFeatureRenderInfos);
@@ -237,6 +239,7 @@ export class InternalCallContext {
   public clearCallRelatedState(): void {
     this._remoteRenderInfos.clear();
     this._localRenderInfos.clear();
+    /* @conditional-compile-remove(together-mode) */
     this._callFeatureRenderInfos.clear();
   }
 

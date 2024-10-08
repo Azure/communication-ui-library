@@ -11,9 +11,9 @@ import {
 /* @conditional-compile-remove(together-mode) */
 import { TogetherModeVideoStream } from '@azure/communication-calling';
 import { CommunicationIdentifierKind } from '@azure/communication-common';
-import { CallFeatureStreamState, LocalVideoStreamState, RemoteVideoStreamState } from './CallClientState';
+import { LocalVideoStreamState, RemoteVideoStreamState } from './CallClientState';
 /* @conditional-compile-remove(together-mode) */
-import { TogetherModeStreamState } from './CallClientState';
+import { CallFeatureStreamState, TogetherModeStreamState } from './CallClientState';
 import { CallContext } from './CallContext';
 import {
   convertSdkLocalStreamToDeclarativeLocalStream,
@@ -660,6 +660,7 @@ export function createView(
   }
 }
 
+/* @conditional-compile-remove(together-mode) */
 /**
  * @private
  */
@@ -749,7 +750,9 @@ export function disposeAllViewsFromCall(
       }
     }
   }
+  /* @conditional-compile-remove(together-mode) */
   const callFeatureStreams = internalContext.getCallFeatureRenderInfosForCall(callId);
+  /* @conditional-compile-remove(together-mode) */
   if (callFeatureStreams) {
     for (const [, featureStreams] of callFeatureStreams.entries()) {
       for (const [, streamAndRenderer] of featureStreams.entries()) {
@@ -775,6 +778,7 @@ export function disposeAllViews(context: CallContext, internalContext: InternalC
   }
 }
 
+/* @conditional-compile-remove(together-mode) */
 /**
  * @private
  */
