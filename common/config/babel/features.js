@@ -73,8 +73,6 @@ module.exports = {
     "file-sharing-acs",
     // Beta feature for joining calls using teams token
     "teams-identity-support-beta",
-    // Soft Mute feature for ACS calls and Interop calls
-    "soft-mute",
     // feature for tracking the callParticipantsLocator
     "call-participants-locator",
     // feature for breakout rooms
@@ -97,6 +95,8 @@ module.exports = {
     // Feature for showing notifications
     "notifications",
     // Feature for tracking beta start call identifier
-    'start-call-beta'
+    'start-call-beta',
+    // Soft Mute feature for ACS calls and Interop calls
+    "soft-mute"
   ]
 }
