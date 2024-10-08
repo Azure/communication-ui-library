@@ -340,9 +340,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
 
   const showExitSpotlightButton = options?.exitSpotlightButton !== false;
 
-  const showCaptionsButton =
-    props.isCaptionsSupported &&
-    /* @conditional-compile-remove(acs-close-captions) */ isEnabled(options.captionsButton);
+  const showCaptionsButton = props.isCaptionsSupported && isEnabled(options.captionsButton);
 
   const showTeamsMeetingPhoneCallButton = isEnabled(options?.teamsMeetingPhoneCallButton);
 
