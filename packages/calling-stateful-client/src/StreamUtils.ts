@@ -8,8 +8,6 @@ import {
   VideoStreamRenderer,
   VideoStreamRendererView
 } from '@azure/communication-calling';
-/* @conditional-compile-remove(together-mode) */
-import { TogetherModeVideoStream } from '@azure/communication-calling';
 import { CommunicationIdentifierKind } from '@azure/communication-common';
 import { LocalVideoStreamState, RemoteVideoStreamState } from './CallClientState';
 /* @conditional-compile-remove(together-mode) */
@@ -324,7 +322,7 @@ async function createCallFeatureViewVideo(
       callId,
       featureName,
       stream.mediaStreamType,
-      renderInfo.stream as TogetherModeVideoStream,
+      renderInfo.stream,
       'Rendering',
       renderInfo.renderer
     );
@@ -336,7 +334,7 @@ async function createCallFeatureViewVideo(
     callId,
     featureName,
     stream.mediaStreamType,
-    renderInfo.stream as TogetherModeVideoStream,
+    renderInfo.stream,
     'Rendering',
     undefined
   );
@@ -379,7 +377,7 @@ async function createCallFeatureViewVideo(
       callId,
       featureName,
       stream.mediaStreamType,
-      refreshedRenderInfo.stream as TogetherModeVideoStream,
+      refreshedRenderInfo.stream,
       'NotRendered',
       undefined
     );
@@ -393,7 +391,7 @@ async function createCallFeatureViewVideo(
     callId,
     featureName,
     stream.mediaStreamType,
-    refreshedRenderInfo.stream as TogetherModeVideoStream,
+    refreshedRenderInfo.stream,
     'Rendered',
     renderer
   );

@@ -107,8 +107,18 @@ export interface CommonCallingHandlers {
   /* @conditional-compile-remove(soft-mute) */
   onMuteAllRemoteParticipants: () => Promise<void>;
   /* @conditional-compile-remove(together-mode) */
+  /**
+   * Call back to create a view for together mode
+   *
+   * @beta
+   */
   onCreateTogetherModeStreamView: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
   /* @conditional-compile-remove(together-mode) */
+  /**
+   * Call back to dispose together mode views
+   *
+   * @beta
+   */
   onDisposeTogetherModeStreamViews: () => Promise<void>;
 }
 
