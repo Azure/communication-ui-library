@@ -2,7 +2,7 @@
 
 `@Azure/communication-react` is a react library that makes it easy for you to build modern communications user experiences using [Azure Communication Services](https://azure.microsoft.com/services/communication-services/). It gives you a library of react components built on top of [FluentUI](https://developer.microsoft.com/fluentui#/) that you can drop into your applications.
 
-Read more about Azure Communication Services - UI Library [here](https://azure.github.io/communication-ui-library/?path=/story/overview--page).
+Read more about Azure Communication Services - UI Library [here](https://aka.ms/acsstorybook).
 
 ## Prerequisites
 
@@ -29,4 +29,4 @@ npm i @azure/communication-chat
 
 ## Storybook
 
-For complete documentation, quickstarts, and interactive components, check out our [Storybook](https://azure.github.io/communication-ui-library/?path=/story/overview--page).
+For complete documentation, quickstarts, and interactive components, check out our [Storybook](https://aka.ms/acsstorybook).
