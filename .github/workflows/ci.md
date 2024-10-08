@@ -31,7 +31,7 @@ Many of checks build and test the library code in both the [`beta` and `stable` 
   - Run some Playwright smoke tests against the sample application. These tests only sanity test the sample application. They are not as extensive as the browser tests in the job above.
   - Upload any UI snapshot differences as GitHub workflow artifacts
 
-- `build_storybook`: Build and test [storybook](../../packages/storybook/). This job is *not* build flavor aware. Storybook is always built using the `beta` build flavor.
+- `build_storybook`: Build and test [storybook](../../packages/storybook8/). This job is *not* build flavor aware. Storybook is always built using the `beta` build flavor.
   - Run linting tool `eslint`
   - Build storybook using `webpack`.
   - Run unit-tests.
