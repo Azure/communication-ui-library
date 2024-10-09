@@ -331,7 +331,7 @@ export type CallAdapterClientState = {
 
 // @public
 export interface CallAdapterDeviceManagement {
-    askDevicePermission(constrain: PermissionConstraints): Promise<void>;
+    askDevicePermission(constrain: PermissionConstraints): Promise<DeviceAccess>;
     queryCameras(): Promise<VideoDeviceInfo[]>;
     queryMicrophones(): Promise<AudioDeviceInfo[]>;
     querySpeakers(): Promise<AudioDeviceInfo[]>;
@@ -958,7 +958,7 @@ export interface CallWithChatAdapterManagement {
     addParticipant(participant: PhoneNumberIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
     // (undocumented)
     addParticipant(participant: CommunicationUserIdentifier): Promise<void>;
-    askDevicePermission(constrain: PermissionConstraints): Promise<void>;
+    askDevicePermission(constrain: PermissionConstraints): Promise<DeviceAccess>;
     createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void | CreateVideoStreamViewResult>;
     deleteMessage(messageId: string): Promise<void>;
     disposeLocalVideoStreamView(): Promise<void>;

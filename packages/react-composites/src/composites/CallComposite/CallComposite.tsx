@@ -379,11 +379,11 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
       const permissionsResult = await adapter.askDevicePermission(constrain);
       if (permissionsResult.audio) {
         adapter.queryMicrophones();
-        adapter.querySpeakers();
       }
       if (permissionsResult.video) {
         adapter.queryCameras();
       }
+      adapter.querySpeakers();
     })();
   }, [
     adapter,
