@@ -119,7 +119,7 @@ export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
   const [calloutIsVisible, setCalloutIsVisible] = useState(false);
 
   return (
-    <>
+    <Stack>
       {calloutIsVisible && (
         <Callout
           data-ui-id="reaction-sub-menu"
@@ -181,6 +181,6 @@ export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
           ariaLabel={strings.ariaLabel}
         />
       </div>
-    </>
+    </Stack>
   );
 };
