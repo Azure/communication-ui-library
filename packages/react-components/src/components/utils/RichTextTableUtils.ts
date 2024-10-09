@@ -30,6 +30,11 @@ export function createKey(row: number, column: number): string {
  */
 export function parseKey(key: string): { row: number; column: number } {
   const [row, column] = key.split(',');
+
+  if (row === undefined || column === undefined) {
+    throw new Error('Invalid key format');
+  }
+
   return {
     row: parseInt(row),
     column: parseInt(column)

@@ -158,7 +158,9 @@ const messageBarCount = (): number => screen.queryAllByRole('alert').length;
 
 const simulateDismissOneError = (): void => {
   const button = screen.getAllByRole('button')[0];
-  fireEvent.click(button);
+  if (button) {
+    fireEvent.click(button);
+  }
 };
 
 const rerenderWithAccessDeniedErrorAt = (
