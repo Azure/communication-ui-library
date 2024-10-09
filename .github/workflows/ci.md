@@ -2,7 +2,7 @@
 
 [ci.yml](./ci.yml) contains the [GitHub workflow](https://docs.github.com/en/get-started/getting-started-with-git/git-workflows) definition for presubmit tests in this repository.
 
-All Pull Requests in this repository must pass the checks in this workflow before being merged into the `main` branch. The checks are distributed across several jobs. Each job runs on a septate build agent. Most of them can run concurrently.
+All Pull Requests in this repository must pass the checks in this workflow before being merged into the `main` branch. The checks are distributed across several jobs. Each job runs on a separate build agent. Most of them can run concurrently.
 
 Many of checks build and test the library code in both the [`beta` and `stable` build flavors](../../docs/references/beta-only-features.md). For such jobs, we use a [job matrix](https://docs.github.com/en/actions/using-jobs/using-a-matrix-for-your-jobs) to run an instance of the job for each build flavor. The following high-level description of the checks calls out which checks are build-flavor aware.
 
