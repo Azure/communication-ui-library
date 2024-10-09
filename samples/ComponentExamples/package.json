@@ -68,7 +68,8 @@
     "typescript": "5.4.5",
     "webpack": "5.95.0",
     "webpack-cli": "^5.1.4",
-    "webpack-dev-server": "4.15.2"
+    "webpack-dev-server": "4.15.2",
+    "synckit": "0.8.8"
   },
   "overrides": {    
     "eslint-plugin-prettier": {      

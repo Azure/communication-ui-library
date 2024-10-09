@@ -69,7 +69,8 @@
     "rimraf": "^2.6.2",
     "rollup": "^4.21.2",
     "ts-jest": "^29.1.5",
-    "typescript": "5.4.5"
+    "typescript": "5.4.5",
+    "synckit": "0.8.8"
   },
   "overrides": {    
     "eslint-plugin-prettier": {      
