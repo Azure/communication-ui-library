@@ -52,7 +52,7 @@ const getOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedPa
     previousOverflowParticipants = []
   } = props;
 
-  const callingParticipants = remoteParticipants.filter((p) => p.state === 'Connecting' || p.state === 'Ringing');
+  const callingParticipants = remoteParticipants.filter((p) => p.state === ('Connecting' || 'Ringing'));
 
   const callingParticipantsSet = new Set(callingParticipants.map((p) => p.userId));
 
