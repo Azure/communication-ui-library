@@ -106,7 +106,8 @@ export const useOrganizedParticipants = (props: OrganizedParticipantsArgs): Orga
   const spotlightedParticipantUserIds = props.spotlightedParticipantUserIds ?? [];
   const pinnedParticipantUserIds = props.pinnedParticipantUserIds ?? [];
 
-  // Focussed participants are the participants that are either spotlighted or pinned. Ordered by spotlighted first and then pinned
+  // Focussed participants are the participants that are either spotlighted or pinned. Ordered by spotlighted first and then pinned.
+  // A set is used to dedupe participants.
   const focusedParticipantUserIdSet = new Set(spotlightedParticipantUserIds.concat(pinnedParticipantUserIds));
   const focusedParticipants: VideoGalleryRemoteParticipant[] = [...focusedParticipantUserIdSet]
     .map((userId) => props.remoteParticipants.find((p) => p.userId === userId))
