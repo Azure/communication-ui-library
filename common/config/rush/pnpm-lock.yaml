@@ -7641,31 +7641,6 @@ packages:
       balanced-match: 1.0.2
     dev: false
 
-  /braces@1.8.5:
-    resolution: {integrity: sha512-xU7bpz2ytJl1bH9cgIurjpg/n8Gohy9GTw81heDYLJQ4RU60dlyJsa+atVF2pI0yMMvKxI9HkKwjePCj5XI1hw==}
-    engines: {node: '>=0.10.0'}
-    dependencies:
-      expand-range: 1.8.2
-      preserve: 0.2.0
-      repeat-element: 1.1.4
-    dev: false
-
-  /braces@2.3.2:
-    resolution: {integrity: sha512-aNdbnj9P8PjdXU4ybaWLK2IF3jc/EoDYbC7AazW6to3TRsfXxscC9UXOB5iDiEQrkyIbWp2SLQda4+QAa7nc3w==}
-    engines: {node: '>=0.10.0'}
-    dependencies:
-      arr-flatten: 1.1.0
-      array-unique: 0.3.2
-      extend-shallow: 2.0.1
-      fill-range: 4.0.0
-      isobject: 3.0.1
-      repeat-element: 1.1.4
-      snapdragon: 0.8.2
-      snapdragon-node: 2.1.1
-      split-string: 3.1.0
-      to-regex: 3.0.2
-    dev: false
-
   /braces@3.0.3:
     resolution: {integrity: sha512-yQbXgO/OSZVD2IsiLlro+7Hf6Q18EJrKSEsdoMzKePKXct3gvD8oLcOQdIzGupr5Fj+EDe8gO/lxc1BzfMpxvA==}
     engines: {node: '>=8'}
@@ -13198,25 +13173,6 @@ packages:
       micromark-util-types: 2.0.0
     transitivePeerDependencies:
       - supports-color
-    dev: false
-
-  /micromatch@2.3.11:
-    resolution: {integrity: sha512-LnU2XFEk9xxSJ6rfgAry/ty5qwUTyHYOBU0g4R6tIw5ljwgGIBmiKhRWLw5NpMOnrgUNcDJ4WMp8rl3sYVHLNA==}
-    engines: {node: '>=0.10.0'}
-    dependencies:
-      arr-diff: 2.0.0
-      array-unique: 0.2.1
-      braces: 1.8.5
-      expand-brackets: 0.1.5
-      extglob: 0.3.2
-      filename-regex: 2.0.1
-      is-extglob: 1.0.0
-      is-glob: 2.0.1
-      kind-of: 3.2.2
-      normalize-path: 2.1.1
-      object.omit: 2.0.1
-      parse-glob: 3.0.4
-      regex-cache: 0.4.4
     dev: false
 
   /micromatch@3.1.10:
