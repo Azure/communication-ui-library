@@ -790,13 +790,16 @@ jobs:
             <!-- ${{ matrix.app }} bundle-size-report -->
             ## ${{ matrix.app }} bundle size is ***${{ steps.bundles.outputs.change }}***.
             - Current size: ${{ steps.bundles.outputs.current_size }}
-            - Base size: ${{ steps.bundles.outputs.base_size}}
-            - Diff size: ${{ steps.bundles.outputs.diff}}
+            - Base size: ${{ steps.bundles.outputs.base_size }}
+            - Diff size: ${{ steps.bundles.outputs.diff }}
             <!-- end-bundle-size-report -->
           regex: '<!-- ${{ matrix.app }} bundle-size-report -->.*?<!-- end-bundle-size-report -->'
           regexFlags: 'ims'
           appendContentOnMatchOnly: 'false'
           token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Check the whether the bundle size is increased significantly
+        if: ${{ github.event_name == 'pull_request' && !contains( github.event.pull_request.labels.*.name, 'significant bundle size change') }}
+        run: node common/scripts/bundleSize/bundleSizeCheck.mjs ${{ matrix.app }} ${{ steps.bundles.outputs.diff }}
 
   update_base_bundle_report:
     runs-on: ubuntu-latest
