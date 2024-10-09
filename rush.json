@@ -106,11 +106,6 @@
       "reviewCategory": "sample"
     },
     {
-      "packageName": "@internal/storybook",
-      "projectFolder": "packages/storybook",
-      "reviewCategory": "tools"
-    },
-    {
       "packageName": "@internal/storybook8",
       "projectFolder": "packages/storybook8",
       "reviewCategory": "tools"
