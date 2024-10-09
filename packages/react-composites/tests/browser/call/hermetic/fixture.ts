@@ -109,7 +109,7 @@ export function defaultMockCallAdapterState(
         currentSpokenLanguage: '',
         isCaptionsFeatureActive: false,
         startCaptionsInProgress: false,
-        /* @conditional-compile-remove(acs-close-captions) */
+
         captionsKind: 'Captions'
       },
       transfer: {
@@ -460,8 +460,8 @@ const presenterCapabilitiesInRoomsCall: ParticipantCapabilities = {
   },
   turnVideoOn: { isPresent: true, reason: 'Capable' },
   muteOthers: {
-    isPresent: false,
-    reason: 'CapabilityNotApplicableForTheCallType'
+    isPresent: true,
+    reason: 'Capable'
   },
   useReactions: {
     isPresent: true,
@@ -502,8 +502,8 @@ const presenterCapabilitiesInTeamsCall: ParticipantCapabilities = {
   },
   turnVideoOn: { isPresent: true, reason: 'Capable' },
   muteOthers: {
-    isPresent: false,
-    reason: 'CapabilityNotApplicableForTheCallType'
+    isPresent: true,
+    reason: 'Capable'
   },
   useReactions: {
     isPresent: false,
@@ -550,7 +550,7 @@ const defaultEndedCallState: CallState = {
     currentSpokenLanguage: '',
     isCaptionsFeatureActive: false,
     startCaptionsInProgress: false,
-    /* @conditional-compile-remove(acs-close-captions) */
+
     captionsKind: 'Captions'
   },
   transfer: {

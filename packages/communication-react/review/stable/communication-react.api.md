@@ -279,6 +279,8 @@ export interface CallAdapterCallOperations {
     leaveCall(forEveryone?: boolean): Promise<void>;
     lowerHand(): Promise<void>;
     mute(): Promise<void>;
+    muteAllRemoteParticipants(): Promise<void>;
+    muteParticipant(userId: string): Promise<void>;
     onReactionClick(reaction: Reaction_2): Promise<void>;
     raiseHand(): Promise<void>;
     removeParticipant(userId: string): Promise<void>;
@@ -366,6 +368,7 @@ export interface CallAdapterSubscribers {
     off(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
     off(event: 'roleChanged', listener: PropertyChangedEvent): void;
     off(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
+    off(event: 'mutedByOthers', listener: PropertyChangedEvent): void;
     on(event: 'participantsJoined', listener: ParticipantsJoinedListener): void;
     on(event: 'participantsLeft', listener: ParticipantsLeftListener): void;
     on(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
@@ -386,6 +389,7 @@ export interface CallAdapterSubscribers {
     on(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
     on(event: 'roleChanged', listener: PropertyChangedEvent): void;
     on(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
+    on(event: 'mutedByOthers', listener: PropertyChangedEvent): void;
 }
 
 // @public
@@ -686,6 +690,11 @@ export interface CallCompositeStrings {
     moreButtonGalleryPositionToggleLabel?: string;
     moreButtonGallerySpeakerLayoutLabel?: string;
     moreButtonLargeGalleryDefaultLayoutLabel?: string;
+    muteAllCancelButtonLabel: string;
+    muteAllConfirmButtonLabel: string;
+    muteAllDialogContent: string;
+    muteAllDialogTitle: string;
+    muteAllMenuLabel: string;
     mutedMessage: string;
     networkReconnectMoreDetails: string;
     networkReconnectTitle: string;
@@ -815,7 +824,7 @@ export type CallErrors = {
 };
 
 // @public
-export type CallErrorTarget = 'Call.addParticipant' | 'Call.dispose' | 'Call.feature' | 'Call.hangUp' | 'Call.hold' | 'Call.mute' | 'Call.muteIncomingAudio' | 'Call.off' | 'Call.on' | 'Call.removeParticipant' | 'Call.resume' | 'Call.sendDtmf' | 'Call.startAudio' | 'Call.startScreenSharing' | 'Call.startVideo' | 'Call.stopScreenSharing' | 'Call.stopAudio' | 'Call.stopVideo' | 'Call.unmute' | 'Call.unmuteIncomingAudio' | 'CallAgent.dispose' | 'CallAgent.feature' | 'CallAgent.join' | 'CallAgent.off' | 'CallAgent.on' | 'CallAgent.startCall' | 'CallClient.createCallAgent' | 'CallClient.createTeamsCallAgent' | 'CallClient.feature' | 'CallClient.getDeviceManager' | 'DeviceManager.askDevicePermission' | 'DeviceManager.getCameras' | 'DeviceManager.getMicrophones' | 'DeviceManager.getSpeakers' | 'DeviceManager.off' | 'DeviceManager.on' | 'DeviceManager.selectMicrophone' | 'DeviceManager.selectSpeaker' | 'IncomingCall.accept' | 'IncomingCall.reject' | 'TeamsCall.addParticipant' | 'VideoEffectsFeature.startEffects' | 'Call.muteAllRemoteParticipants' | 'Call.setConstraints';
+export type CallErrorTarget = 'Call.addParticipant' | 'Call.dispose' | 'Call.feature' | 'Call.hangUp' | 'Call.hold' | 'Call.mute' | 'Call.muteIncomingAudio' | 'Call.off' | 'Call.on' | 'Call.removeParticipant' | 'Call.resume' | 'Call.sendDtmf' | 'Call.startAudio' | 'Call.startScreenSharing' | 'Call.startVideo' | 'Call.stopScreenSharing' | 'Call.stopAudio' | 'Call.stopVideo' | 'Call.unmute' | 'Call.unmuteIncomingAudio' | 'CallAgent.dispose' | 'CallAgent.feature' | 'CallAgent.join' | 'CallAgent.off' | 'CallAgent.on' | 'CallAgent.startCall' | 'CallClient.createCallAgent' | 'CallClient.createTeamsCallAgent' | 'CallClient.feature' | 'CallClient.getDeviceManager' | 'DeviceManager.askDevicePermission' | 'DeviceManager.getCameras' | 'DeviceManager.getMicrophones' | 'DeviceManager.getSpeakers' | 'DeviceManager.off' | 'DeviceManager.on' | 'DeviceManager.selectMicrophone' | 'DeviceManager.selectSpeaker' | 'IncomingCall.accept' | 'IncomingCall.reject' | 'TeamsCall.addParticipant' | 'VideoEffectsFeature.startEffects' | 'Call.mutedByOthers' | 'Call.muteAllRemoteParticipants' | 'Call.setConstraints';
 
 // @public
 export type CallIdChangedListener = (event: {
@@ -967,6 +976,8 @@ export interface CallWithChatAdapterManagement {
     loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
     lowerHand(): Promise<void>;
     mute(): Promise<void>;
+    muteAllRemoteParticipants(): Promise<void>;
+    muteParticipant(userId: string): Promise<void>;
     onReactionClick(reaction: Reaction_2): Promise<void>;
     queryCameras(): Promise<VideoDeviceInfo[]>;
     queryMicrophones(): Promise<AudioDeviceInfo[]>;
@@ -1841,6 +1852,10 @@ export interface CommonCallingHandlers {
     // (undocumented)
     onLowerHand: () => Promise<void>;
     // (undocumented)
+    onMuteAllRemoteParticipants: () => Promise<void>;
+    // (undocumented)
+    onMuteParticipant: (userId: string) => Promise<void>;
+    // (undocumented)
     onRaiseHand: () => Promise<void>;
     // (undocumented)
     onReactionClick: (reaction: Reaction_2) => Promise<void>;
@@ -2320,6 +2335,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     ErrorBarClear: React_2.JSX.Element;
     ErrorBarCallVideoRecoveredBySystem: React_2.JSX.Element;
     ErrorBarCallVideoStoppedBySystem: React_2.JSX.Element;
+    ErrorBarMutedByRemoteParticipant: React_2.JSX.Element;
     NotificationBarRecording: React_2.JSX.Element;
     HorizontalGalleryLeftButton: React_2.JSX.Element;
     HorizontalGalleryRightButton: React_2.JSX.Element;
@@ -2374,6 +2390,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     StartSpotlightContextualMenuItem: React_2.JSX.Element;
     StopSpotlightContextualMenuItem: React_2.JSX.Element;
     VideoTileSpotlighted: React_2.JSX.Element;
+    ContextualMenuMicMutedIcon: React_2.JSX.Element;
     IncomingCallNotificationRejectIcon: React_2.JSX.Element;
     IncomingCallNotificationAcceptIcon: React_2.JSX.Element;
     IncomingCallNotificationAcceptWithVideoIcon: React_2.JSX.Element;
@@ -2486,6 +2503,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     OpenAttachment: React_2.JSX.Element;
     ErrorBarCallVideoRecoveredBySystem: React_2.JSX.Element;
     ErrorBarCallVideoStoppedBySystem: React_2.JSX.Element;
+    ErrorBarMutedByRemoteParticipant: React_2.JSX.Element;
     NotificationBarRecording: React_2.JSX.Element;
     MessageResend: React_2.JSX.Element;
     ParticipantItemSpotlighted: React_2.JSX.Element;
@@ -2522,6 +2540,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     StartSpotlightContextualMenuItem: React_2.JSX.Element;
     StopSpotlightContextualMenuItem: React_2.JSX.Element;
     VideoTileSpotlighted: React_2.JSX.Element;
+    ContextualMenuMicMutedIcon: React_2.JSX.Element;
     IncomingCallNotificationRejectIcon: React_2.JSX.Element;
     IncomingCallNotificationAcceptIcon: React_2.JSX.Element;
     IncomingCallNotificationAcceptWithVideoIcon: React_2.JSX.Element;
@@ -2715,6 +2734,7 @@ export interface ErrorBarStrings {
     dismissButtonAriaLabel?: string;
     failedToJoinCallGeneric?: string;
     failedToJoinCallInvalidMeetingLink?: string;
+    mutedByRemoteParticipant: string;
     muteGeneric: string;
     sendMessageGeneric: string;
     sendMessageNotInChatThread: string;
@@ -3359,6 +3379,7 @@ export interface NotificationStackStrings {
     dismissButtonAriaLabel?: NotificationStrings;
     failedToJoinCallGeneric?: NotificationStrings;
     failedToJoinCallInvalidMeetingLink?: NotificationStrings;
+    mutedByRemoteParticipant?: NotificationStrings;
     muteGeneric?: NotificationStrings;
     recordingAndTranscriptionStarted?: NotificationStrings;
     recordingAndTranscriptionStopped?: NotificationStrings;
@@ -3491,6 +3512,7 @@ export type ParticipantListProps = {
     onRemoveParticipant?: (userId: string) => void;
     onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
     onParticipantClick?: (participant?: ParticipantListParticipant) => void;
+    onMuteParticipant?: (userId: string) => Promise<void>;
     styles?: ParticipantListStyles;
     showParticipantOverflowTooltip?: boolean;
     participantAriaLabelledBy?: string;
@@ -4341,6 +4363,7 @@ export interface VideoGalleryProps {
     // @deprecated (undocumented)
     onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
     onDisposeRemoteVideoStreamView?: (userId: string) => Promise<void>;
+    onMuteParticipant?: (userId: string) => Promise<void>;
     onPinParticipant?: (userId: string) => void;
     onRenderAvatar?: OnRenderAvatarCallback;
     onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
@@ -4411,6 +4434,7 @@ export interface VideoGalleryStrings {
     localVideoMovementAriaLabel: string;
     localVideoMovementLabel: string;
     localVideoSelectedDescription: string;
+    muteParticipantMenuItemLabel: string;
     pinnedParticipantAnnouncementAriaLabel: string;
     pinParticipantForMe: string;
     pinParticipantMenuItemAriaLabel: string;
