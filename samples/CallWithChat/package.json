@@ -106,5 +106,10 @@
     "webpack-dev-server": "4.15.2",
     "webpack-bundle-analyzer": "^4.5.0",
     "@babel/cli": "^7.24.8"
+  },
+  "overrides": {    
+    "eslint-plugin-prettier": {      
+      "synckit": "0.8.8"    
+    }  
   }
 }

@@ -117,5 +117,10 @@
     "ts-node": "^10.9.2",
     "typescript": "5.4.5",
     "webpack": "5.95.0"
+  },
+  "overrides": {    
+    "eslint-plugin-prettier": {      
+      "synckit": "0.8.8"    
+    }  
   }
 }

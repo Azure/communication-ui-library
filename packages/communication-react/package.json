@@ -176,5 +176,10 @@
   },
   "beachball": {
     "shouldPublish": false
+  },
+  "overrides": {    
+    "eslint-plugin-prettier": {      
+      "synckit": "0.8.8"    
+    }  
   }
 }

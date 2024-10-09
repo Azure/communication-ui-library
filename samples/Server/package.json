@@ -77,5 +77,10 @@
     "webpack": "5.95.0",
     "webpack-cli": "^5.1.4",
     "webpack-node-externals": "^3.0.0"
+  },
+  "overrides": {    
+    "eslint-plugin-prettier": {      
+      "synckit": "0.8.8"    
+    }  
   }
 }

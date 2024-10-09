@@ -61,5 +61,10 @@
     "rollup": "^4.21.2",
     "ts-jest": "^29.1.5",
     "typescript": "5.4.5"
+  },
+  "overrides": {    
+    "eslint-plugin-prettier": {      
+      "synckit": "0.8.8"    
+    }  
   }
 }
