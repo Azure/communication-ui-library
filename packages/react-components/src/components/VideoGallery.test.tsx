@@ -355,7 +355,7 @@ describe('VideoGallery Speaker layout tests', () => {
     expect(tiles.length).toBe(1);
     expect(
       tiles.some((tile) => {
-        return getDisplayName(tile) === 'Remote Participant1';
+        return getDisplayName(tile) === 'Remote Participant 1';
       })
     ).toBe(true);
   });
@@ -389,7 +389,7 @@ describe('VideoGallery Speaker layout tests', () => {
     expect(tiles.length).toBe(1);
     expect(
       tiles.some((tile) => {
-        return getDisplayName(tile) === 'Remote Participant2';
+        return getDisplayName(tile) === 'Remote Participant 2';
       })
     ).toBe(true);
   });

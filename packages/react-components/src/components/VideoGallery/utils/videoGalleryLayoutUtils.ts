@@ -106,21 +106,14 @@ export const useOrganizedParticipants = (props: OrganizedParticipantsArgs): Orga
   const spotlightedParticipantUserIds = props.spotlightedParticipantUserIds ?? [];
   const pinnedParticipantUserIds = props.pinnedParticipantUserIds ?? [];
 
-  // declare set of focused participant user ids as spotlighted participants user ids followed by
-  // pinned participants user ids which is deduplicated
+  // Focussed participants are the participants that are either spotlighted or pinned. Ordered by spotlighted first and then pinned
   const focusedParticipantUserIdSet = new Set(spotlightedParticipantUserIds.concat(pinnedParticipantUserIds));
+  const focusedParticipants: VideoGalleryRemoteParticipant[] = [...focusedParticipantUserIdSet]
+    .map((userId) => props.remoteParticipants.find((p) => p.userId === userId))
+    .filter((p) => p !== undefined) as VideoGalleryRemoteParticipant[];
 
-  // get focused and unfocused remote participants in the order of the user ids
-  const focusedParticipants: VideoGalleryRemoteParticipant[] = [];
-  const unfocusedParticipants: VideoGalleryRemoteParticipant[] = [];
-  const sortedRemoteParticipants = props.remoteParticipants.sort((a, b) => a.userId.localeCompare(b.userId));
-  for (const participant of sortedRemoteParticipants) {
-    if (focusedParticipantUserIdSet.has(participant.userId)) {
-      focusedParticipants.push(participant);
-    } else {
-      unfocusedParticipants.push(participant);
-    }
-  }
+  // Unfocused participants are the rest of the participants
+  const unfocusedParticipants = props.remoteParticipants.filter((p) => !focusedParticipantUserIdSet.has(p.userId));
 
   const currentGridParticipants = useRef<VideoGalleryRemoteParticipant[]>([]);
   const currentOverflowGalleryParticipants = useRef<VideoGalleryRemoteParticipant[]>([]);
