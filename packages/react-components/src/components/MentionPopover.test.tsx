@@ -5,6 +5,8 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { Mention, _MentionPopover } from './MentionPopover';
 
+const mentionSuggestionListContainerId = 'mention-suggestion-list-container';
+
 describe('Display mention popover in the correct position', () => {
   interface TargetRect {
     x: number;
@@ -16,7 +18,6 @@ describe('Display mention popover in the correct position', () => {
     bottom: number;
     left: number;
   }
-  const mentionSuggestionListContainerId = 'mention-suggestion-list-container';
   const suggestions: Mention[] = [
     {
       id: '1',
@@ -73,12 +74,7 @@ describe('Display mention popover in the correct position', () => {
 
     renderMentionPopoverComponent(targetPositionOffset, 'above');
 
-    const mentionPopover = await screen.findByTestId(mentionSuggestionListContainerId);
-    const element = document.getElementsByClassName(mentionPopover.className)[0];
-    if (!element) {
-      throw new Error('Mention Popover not found');
-    }
-    const style = window.getComputedStyle(element);
+    const style = await getMentionPopoverStyle();
     expect(style.position).toBe('absolute');
     expect(style.maxWidth).toBe('200px');
     expect(style.left).toBe('100px');
@@ -92,12 +88,7 @@ describe('Display mention popover in the correct position', () => {
 
     renderMentionPopoverComponent(targetPositionOffset);
 
-    const mentionPopover = await screen.findByTestId(mentionSuggestionListContainerId);
-    const element = document.getElementsByClassName(mentionPopover.className)[0];
-    if (!element) {
-      throw new Error('Mention Popover not found');
-    }
-    const style = window.getComputedStyle(element);
+    const style = await getMentionPopoverStyle();
     expect(style.position).toBe('absolute');
     expect(style.maxWidth).toBe('200px');
     expect(style.left).toBe('');
@@ -111,12 +102,7 @@ describe('Display mention popover in the correct position', () => {
 
     renderMentionPopoverComponent(targetPositionOffset, 'below');
 
-    const mentionPopover = await screen.findByTestId(mentionSuggestionListContainerId);
-    const element = document.getElementsByClassName(mentionPopover.className)[0];
-    if (!element) {
-      throw new Error('Mention Popover not found');
-    }
-    const style = window.getComputedStyle(element);
+    const style = await getMentionPopoverStyle();
     expect(style.position).toBe('absolute');
     expect(style.maxWidth).toBe('200px');
     expect(style.left).toBe('100px');
@@ -130,12 +116,7 @@ describe('Display mention popover in the correct position', () => {
 
     renderMentionPopoverComponent(targetPositionOffset, 'below');
 
-    const mentionPopover = await screen.findByTestId(mentionSuggestionListContainerId);
-    const element = document.getElementsByClassName(mentionPopover.className)[0];
-    if (!element) {
-      throw new Error('Mention Popover not found');
-    }
-    const style = window.getComputedStyle(element);
+    const style = await getMentionPopoverStyle();
     expect(style.position).toBe('absolute');
     expect(style.maxWidth).toBe('200px');
     expect(style.left).toBe('');
@@ -146,13 +127,7 @@ describe('Display mention popover in the correct position', () => {
 
   test('Show mention popover in the correct position when optional params are not passed in', async () => {
     renderMentionPopoverComponent();
-
-    const mentionPopover = await screen.findByTestId(mentionSuggestionListContainerId);
-    const element = document.getElementsByClassName(mentionPopover.className)[0];
-    if (!element) {
-      throw new Error('Mention Popover not found');
-    }
-    const style = window.getComputedStyle(element);
+    const style = await getMentionPopoverStyle();
     expect(style.position).toBe('absolute');
     expect(style.maxWidth).toBe('200px');
     expect(style.left).toBe('0px');
@@ -161,3 +136,12 @@ describe('Display mention popover in the correct position', () => {
     expect(style.bottom).toBe('204px');
   });
 });
+
+const getMentionPopoverStyle = async (): Promise<CSSStyleDeclaration> => {
+  const mentionPopover = await screen.findByTestId(mentionSuggestionListContainerId);
+  const element = document.getElementsByClassName(mentionPopover.className)[0];
+  if (!element) {
+    throw new Error('Mention Popover not found');
+  }
+  return window.getComputedStyle(element);
+};

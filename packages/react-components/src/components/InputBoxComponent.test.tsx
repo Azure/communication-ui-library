@@ -74,13 +74,9 @@ describe('InputBoxComponent should show mention popover', () => {
   };
 
   const checkExpectedSuggestions = async (): Promise<void> => {
-    for (let i = 0; i < suggestions.length; i++) {
+    for (const suggestion of suggestions) {
       // Check that all suggestions are presented
-      const suggestionText = suggestions[i]?.displayText;
-      if (!suggestionText) {
-        throw new Error('Suggestion text is not defined');
-      }
-      const contextMenuItem = await screen.findByText(suggestionText);
+      const contextMenuItem = await screen.findByText(suggestion.displayText);
       expect(contextMenuItem.classList.contains('ms-Persona-primaryText')).toBe(true);
     }
   };
@@ -157,13 +153,8 @@ describe('InputBoxComponent should show mention popover for a custom trigger', (
   };
 
   const checkExpectedSuggestions = async (): Promise<void> => {
-    for (let i = 0; i < suggestions.length; i++) {
-      // Check that all suggestions are presented
-      const suggestionText = suggestions[i]?.displayText;
-      if (!suggestionText) {
-        throw new Error('Suggestion text is not defined');
-      }
-      const contextMenuItem = await screen.findByText(suggestionText);
+    for (const suggestion of suggestions) {
+      const contextMenuItem = await screen.findByText(suggestion?.displayText);
       expect(contextMenuItem.classList.contains('ms-Persona-primaryText')).toBe(true);
     }
   };
@@ -233,12 +224,8 @@ describe('InputBoxComponent should not show mention popover', () => {
     });
     expect((input as HTMLInputElement).value).toBe(value);
     // Check that suggestions list is not shown
-    for (let i = 0; i < suggestions.length; i++) {
-      const suggestionText = suggestions[i]?.displayText;
-      if (!suggestionText) {
-        throw new Error('Suggestion text is not defined');
-      }
-      const contextMenuItem = screen.queryByText(suggestionText);
+    for (const suggestion of suggestions) {
+      const contextMenuItem = screen.queryByText(suggestion?.displayText);
       expect(contextMenuItem).toBeNull();
     }
   });
@@ -278,12 +265,8 @@ describe('InputBoxComponent should hide mention popover', () => {
   };
 
   const checkSuggestionsNotShown = (): void => {
-    for (let i = 0; i < suggestions.length; i++) {
-      const suggestionText = suggestions[i]?.displayText;
-      if (!suggestionText) {
-        throw new Error('Suggestion text is not defined');
-      }
-      const contextMenuItem = screen.queryByText(suggestionText);
+    for (const suggestion of suggestions) {
+      const contextMenuItem = screen.queryByText(suggestion?.displayText);
       expect(contextMenuItem).toBeNull();
     }
   };
