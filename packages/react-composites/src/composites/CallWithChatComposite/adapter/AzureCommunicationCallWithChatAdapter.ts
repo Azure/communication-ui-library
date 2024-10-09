@@ -108,6 +108,7 @@ import { VideoBackgroundImage, VideoBackgroundEffect } from '../../CallComposite
 import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
 /* @conditional-compile-remove(breakout-rooms) */
 import { busyWait } from '../../common/utils';
+/* @conditional-compile-remove(together-mode) */
 import { TogetherModeStreamViewResult } from '@internal/react-components/dist/dist-esm/types';
 
 type CallWithChatAdapterStateChangedHandler = (newState: CallWithChatAdapterState) => void;

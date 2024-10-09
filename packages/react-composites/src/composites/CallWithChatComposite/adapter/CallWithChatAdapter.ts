@@ -68,6 +68,7 @@ import { SpotlightChangedListener } from '../../CallComposite/adapter/CallAdapte
 import { VideoBackgroundImage, VideoBackgroundEffect } from '../../CallComposite';
 
 import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
+/* @conditional-compile-remove(together-mode) */
 import { TogetherModeStreamViewResult } from '@internal/react-components/dist/dist-esm/types';
 
 /**

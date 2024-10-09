@@ -27,6 +27,7 @@ import {
   StopCaptionsAdapterOptions
 } from '../../CallComposite/adapter/CallAdapter';
 import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
+/* @conditional-compile-remove(together-mode) */
 import { TogetherModeStreamViewResult } from '@internal/react-components/dist/dist-esm/types';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */

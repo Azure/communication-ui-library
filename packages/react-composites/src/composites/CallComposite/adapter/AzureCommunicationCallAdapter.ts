@@ -124,6 +124,7 @@ import { CallingSoundSubscriber } from './CallingSoundSubscriber';
 import { CallingSounds } from './CallAdapter';
 /* @conditional-compile-remove(DNS) */
 import { DeepNoiseSuppressionEffectDependency } from '@internal/calling-component-bindings';
+/* @conditional-compile-remove(together-mode) */
 import { TogetherModeStreamViewResult } from '@internal/react-components/dist/dist-esm/types';
 type CallTypeOf<AgentType extends CallAgent | TeamsCallAgent> = AgentType extends CallAgent ? Call : TeamsCall;
 

@@ -48,6 +48,7 @@ import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
 import { ReactionResources } from '@internal/react-components';
 /* @conditional-compile-remove(DNS) */
 import { DeepNoiseSuppressionEffectDependency } from '@internal/calling-component-bindings';
+/* @conditional-compile-remove(together-mode) */
 import { TogetherModeStreamViewResult } from '@internal/react-components/dist/dist-esm/types';
 
 /**
