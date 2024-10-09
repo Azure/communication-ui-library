@@ -97,7 +97,7 @@ export const RemoteContentShareReactionOverlay = React.memo(
           return;
         }
 
-        const activeCount = activeTypeCount.current[reaction.reactionType];
+        const activeCount = activeTypeCount.current[reaction.reactionType] ?? 0;
 
         if (activeCount >= MAX_NUMBER_OF_EMOJIS / NUMBER_OF_EMOJI_TYPES) {
           latestReceivedReaction.current[userId] = {
@@ -133,8 +133,9 @@ export const RemoteContentShareReactionOverlay = React.memo(
       visibleReactionPosition.current[index] = false;
       activeTypeCount.current[reactionType] -= 1;
       Object.entries(latestReceivedReaction.current).forEach(([userId, reaction]) => {
-        if (reaction.id === id) {
-          latestReceivedReaction.current[userId].status = 'completedAnimating';
+        const userLastReaction = latestReceivedReaction.current[userId];
+        if (reaction.id === id && userLastReaction) {
+          userLastReaction.status = 'completedAnimating';
         }
       });
     };

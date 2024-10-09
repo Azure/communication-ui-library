@@ -48,6 +48,9 @@ export const GridLayout = (props: GridLayoutProps): JSX.Element => {
 
   const observer = useRef(
     new ResizeObserver((entries): void => {
+      if (!entries[0]) {
+        return;
+      }
       const { width, height } = entries[0].contentRect;
       setCurrentWidth(width);
       setCurrentHeight(height);
