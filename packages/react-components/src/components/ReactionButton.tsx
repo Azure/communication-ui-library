@@ -152,7 +152,6 @@ export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
                       key={index}
                       onClick={() => {
                         props.onReactionClick(emoji);
-                        console.log(reactionButtonRef.current);
                         reactionButtonRef.current?.focus();
                         setCalloutIsVisible(false);
                       }}
