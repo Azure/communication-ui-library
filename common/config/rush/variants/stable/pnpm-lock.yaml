@@ -952,7 +952,6 @@ packages:
     dev: false
 
   /@babel/plugin-syntax-optional-chaining@7.8.3(@babel/core@7.25.2):
-    resolution: {integrity: sha512-KoK9ErH1MBlCPxV0VANkXW2/dw4vlbGDrFgz8bmUsBGYkFRcbRwMh6cIJubdPrkxRwuGdtCk0v/wPTKbQgBjkg==}
     peerDependencies:
       '@babel/core': ^7.0.0-0
     dependencies:
@@ -8294,23 +8293,6 @@ packages:
       p-event: 5.0.1
     dev: false
 
-  /cpx@1.5.0:
-    resolution: {integrity: sha512-jHTjZhsbg9xWgsP2vuNW2jnnzBX+p4T+vNI9Lbjzs1n4KhOfa22bQppiFYLsWQKd8TzmL5aSP/Me3yfsCwXbDA==}
-    hasBin: true
-    dependencies:
-      babel-runtime: 6.26.0
-      chokidar: 1.7.0
-      duplexer: 0.1.2
-      glob: 7.2.3
-      glob2base: 0.0.12
-      minimatch: 3.1.2
-      mkdirp: 0.5.6
-      resolve: 1.22.8
-      safe-buffer: 5.2.1
-      shell-quote: 1.8.1
-      subarg: 1.0.0
-    dev: false
-
   /cpy-cli@5.0.0:
     resolution: {integrity: sha512-fb+DZYbL9KHc0BC4NYqGRrDIJZPXUmjjtqdw4XRRg8iV8dIfghUX/WiL+q4/B/KFTy3sK6jsbUhBaz0/Hxg7IQ==}
     engines: {node: '>=16'}
@@ -9314,7 +9296,6 @@ packages:
     dev: false
 
   /eslint-config-react-app@6.0.0(@typescript-eslint/eslint-plugin@7.18.0)(@typescript-eslint/parser@7.18.0)(eslint-plugin-flowtype@8.0.3)(eslint-plugin-import@2.30.0)(eslint-plugin-jsx-a11y@6.10.0)(eslint-plugin-react-hooks@4.6.2)(eslint-plugin-react@7.36.1)(eslint@8.57.1):
-    resolution: {integrity: sha512-bpoAAC+YRfzq0dsTk+6v9aHm/uqnDwayNAXleMypGl6CpxI9oXXscVHo4fk3eJPIn+rsbtNetB4r/ZIidFIE8A==}
     engines: {node: ^10.12.0 || >=12.0.0}
     peerDependencies:
       '@typescript-eslint/eslint-plugin': ^4.0.0
@@ -17768,7 +17749,6 @@ packages:
       '@typescript-eslint/eslint-plugin': 7.18.0(@typescript-eslint/parser@7.18.0)(eslint@8.57.1)(typescript@5.4.5)
       '@typescript-eslint/parser': 7.18.0(eslint@8.57.1)(typescript@5.4.5)
       copyfiles: 2.4.1
-      cpx: 1.5.0
       cpy-cli: 5.0.0
       cross-env: 7.0.3
       env-cmd: 10.1.0
@@ -17815,7 +17795,6 @@ packages:
       '@typescript-eslint/eslint-plugin': 7.18.0(@typescript-eslint/parser@7.18.0)(eslint@8.57.1)(typescript@5.4.5)
       '@typescript-eslint/parser': 7.18.0(eslint@8.57.1)(typescript@5.4.5)
       copyfiles: 2.4.1
-      cpx: 1.5.0
       cpy-cli: 5.0.0
       cross-env: 7.0.3
       env-cmd: 10.1.0
@@ -17862,7 +17841,6 @@ packages:
       '@typescript-eslint/eslint-plugin': 7.18.0(@typescript-eslint/parser@7.18.0)(eslint@8.57.1)(typescript@5.4.5)
       '@typescript-eslint/parser': 7.18.0(eslint@8.57.1)(typescript@5.4.5)
       copyfiles: 2.4.1
-      cpx: 1.5.0
       cpy-cli: 5.0.0
       cross-env: 7.0.3
       env-cmd: 10.1.0
@@ -17912,7 +17890,6 @@ packages:
       '@typescript-eslint/eslint-plugin': 7.18.0(@typescript-eslint/parser@7.18.0)(eslint@8.57.1)(typescript@5.4.5)
       '@typescript-eslint/parser': 7.18.0(eslint@8.57.1)(typescript@5.4.5)
       copyfiles: 2.4.1
-      cpx: 1.5.0
       cpy-cli: 5.0.0
       cross-env: 7.0.3
       env-cmd: 10.1.0
@@ -17974,7 +17951,6 @@ packages:
       babel-loader: 8.1.0(@babel/core@7.25.2)(webpack@5.95.0)
       concurrently: 5.3.0
       copyfiles: 2.4.1
-      cpx: 1.5.0
       cpy-cli: 5.0.0
       css-loader: 7.1.2(webpack@5.95.0)
       env-cmd: 10.1.0
@@ -18069,7 +18045,6 @@ packages:
       babel-loader: 8.1.0(@babel/core@7.25.2)(webpack@5.95.0)
       concurrently: 5.3.0
       copyfiles: 2.4.1
-      cpx: 1.5.0
       cpy-cli: 5.0.0
       css-loader: 7.1.2(webpack@5.95.0)
       env-cmd: 10.1.0
@@ -18165,7 +18140,6 @@ packages:
       babel-loader: 8.1.0(@babel/core@7.25.2)(webpack@5.95.0)
       concurrently: 5.3.0
       copyfiles: 2.4.1
-      cpx: 1.5.0
       cpy-cli: 5.0.0
       cross-env: 7.0.3
       css-loader: 7.1.2(webpack@5.95.0)
@@ -18240,7 +18214,6 @@ packages:
       '@types/jest': 29.5.13
       '@types/react': 18.3.3
       copyfiles: 2.4.1
-      cpx: 1.5.0
       cpy-cli: 5.0.0
       cross-env: 7.0.3
       env-cmd: 10.1.0
@@ -18287,7 +18260,6 @@ packages:
       '@typescript-eslint/eslint-plugin': 7.18.0(@typescript-eslint/parser@7.18.0)(eslint@8.57.1)(typescript@5.4.5)
       '@typescript-eslint/parser': 7.18.0(eslint@8.57.1)(typescript@5.4.5)
       copyfiles: 2.4.1
-      cpx: 1.5.0
       cpy-cli: 5.0.0
       cross-env: 7.0.3
       env-cmd: 10.1.0
@@ -18346,7 +18318,6 @@ packages:
       babel-loader: 8.1.0(@babel/core@7.25.2)(webpack@5.95.0)
       concurrently: 5.3.0
       copyfiles: 2.4.1
-      cpx: 1.5.0
       cpy-cli: 5.0.0
       css-loader: 7.1.2(webpack@5.95.0)
       env-cmd: 10.1.0
@@ -18496,7 +18467,6 @@ packages:
       ajv: 8.17.1
       copy-to-clipboard: 3.3.3
       copyfiles: 2.4.1
-      cpx: 1.5.0
       cpy-cli: 5.0.0
       cross-env: 7.0.3
       dompurify: 3.1.6
@@ -18680,7 +18650,6 @@ packages:
       babel-jest: 29.7.0(@babel/core@7.25.2)
       babel-loader: 8.1.0(@babel/core@7.25.2)(webpack@5.95.0)
       copyfiles: 2.4.1
-      cpx: 1.5.0
       cpy-cli: 5.0.0
       cross-env: 7.0.3
       env-cmd: 10.1.0
@@ -18756,7 +18725,6 @@ packages:
       copy-to-clipboard: 3.3.3
       copyfiles: 2.4.1
       core-js: 3.38.1
-      cpx: 1.5.0
       cpy-cli: 5.0.0
       cross-env: 7.0.3
       dompurify: 3.1.6
@@ -18877,7 +18845,6 @@ packages:
       copy-webpack-plugin: 11.0.0(webpack@5.95.0)
       copyfiles: 2.4.1
       core-js: 3.38.1
-      cpx: 1.5.0
       cpy-cli: 5.0.0
       cross-env: 7.0.3
       css-loader: 7.1.2(webpack@5.95.0)
@@ -18995,7 +18962,6 @@ packages:
       babel-loader: 8.1.0(@babel/core@7.25.2)(webpack@5.95.0)
       concurrently: 5.3.0
       copy-webpack-plugin: 11.0.0(webpack@5.95.0)
-      cpx: 1.5.0
       cpy-cli: 5.0.0
       dotenv: 10.0.0
       env-cmd: 10.1.0
@@ -19060,7 +19026,6 @@ packages:
       cookie-parser: 1.4.6
       copy-webpack-plugin: 11.0.0(webpack@5.95.0)
       cors: 2.8.5
-      cpx: 1.5.0
       cpy-cli: 5.0.0
       debug: 2.6.9
       eslint: 8.57.1
