@@ -111,7 +111,7 @@ export class _MockCallAdapter implements CallAdapter {
     throw Error('createStreamView not implemented');
   }
   /* @conditional-compile-remove(together-mode) */
-  createFeatureStreamView(): Promise<void> {
+  createTogetherModeStreamViews(): Promise<void> {
     throw Error('createFeatureStreamView not implemented');
   }
   disposeStreamView(): Promise<void> {
@@ -127,7 +127,7 @@ export class _MockCallAdapter implements CallAdapter {
     return Promise.resolve();
   }
   /* @conditional-compile-remove(together-mode) */
-  disposeFeatureStreamView(): Promise<void> {
+  disposeTogetherModeStreamViews(): Promise<void> {
     return Promise.resolve();
   }
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

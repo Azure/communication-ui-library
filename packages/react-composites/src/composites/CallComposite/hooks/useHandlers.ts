@@ -234,11 +234,11 @@ const createCompositeHandlers = memoizeOne(
       },
       /* @conditional-compile-remove(together-mode) */
       onCreateTogetherModeStreamView: async (options) => {
-        return await adapter.createFeatureStreamView('togetherMode', options);
+        return await adapter.createTogetherModeStreamViews(options);
       },
       /* @conditional-compile-remove(together-mode) */
       onDisposeTogetherModeStreamViews: async () => {
-        return await adapter.disposeFeatureStreamView('togetherMode');
+        return await adapter.disposeTogetherModeStreamViews();
       }
     };
   }

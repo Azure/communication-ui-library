@@ -68,6 +68,7 @@ import { SpotlightChangedListener } from '../../CallComposite/adapter/CallAdapte
 import { VideoBackgroundImage, VideoBackgroundEffect } from '../../CallComposite';
 
 import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
+import { TogetherModeStreamViewResult } from '@internal/react-components/dist/dist-esm/types';
 
 /**
  * Functionality for managing the current call with chat.
@@ -233,15 +234,11 @@ export interface CallWithChatAdapterManagement {
    * @remarks
    * This method is implemented for composite
    *
-   * @param featureName - Name of feature to render
    * @param options - Options to control how video streams are rendered {@link @azure/communication-calling#VideoStreamOptions }
    *
    * @beta
    */
-  createFeatureStreamView(
-    featureName: string,
-    options?: VideoStreamOptions
-  ): Promise<void | CreateVideoStreamViewResult>;
+  createTogetherModeStreamViews(options?: VideoStreamOptions): Promise<void | TogetherModeStreamViewResult>;
 
   /* @conditional-compile-remove(together-mode) */
   /**
@@ -250,13 +247,9 @@ export interface CallWithChatAdapterManagement {
    * @remarks
    * This method is implemented for composite
    *
-   *
-   * @param featureName - Name of the feature to dispose
-   * @param options - Options to control how video streams are rendered {@link @azure/communication-calling#VideoStreamOptions }
-   *
    * @beta
    */
-  disposeFeatureStreamView(featureName: string, options?: VideoStreamOptions): Promise<void>;
+  disposeTogetherModeStreamViews(): Promise<void>;
   /**
    * Dispose the html view for a screen share stream
    *

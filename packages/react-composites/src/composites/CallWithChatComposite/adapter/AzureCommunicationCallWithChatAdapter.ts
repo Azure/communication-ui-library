@@ -108,6 +108,7 @@ import { VideoBackgroundImage, VideoBackgroundEffect } from '../../CallComposite
 import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
 /* @conditional-compile-remove(breakout-rooms) */
 import { busyWait } from '../../common/utils';
+import { TogetherModeStreamViewResult } from '@internal/react-components/dist/dist-esm/types';
 
 type CallWithChatAdapterStateChangedHandler = (newState: CallWithChatAdapterState) => void;
 
@@ -527,15 +528,14 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     await this.callAdapter.disposeLocalVideoStreamView();
   }
   /* @conditional-compile-remove(together-mode) */
-  public async createFeatureStreamView(
-    featureName: string,
+  public async createTogetherModeStreamViews(
     options?: VideoStreamOptions
-  ): Promise<void | CreateVideoStreamViewResult> {
-    return await this.callAdapter.createFeatureStreamView(featureName, options);
+  ): Promise<void | TogetherModeStreamViewResult> {
+    return await this.callAdapter.createTogetherModeStreamViews(options);
   }
   /* @conditional-compile-remove(together-mode) */
-  public async disposeFeatureStreamView(featureName: string, options?: VideoStreamOptions): Promise<void> {
-    await this.callAdapter.disposeFeatureStreamView(featureName, options);
+  public async disposeTogetherModeStreamViews(): Promise<void> {
+    await this.callAdapter.disposeTogetherModeStreamViews();
   }
   /** Fetch initial Call and Chat data such as chat messages. */
   public async fetchInitialData(): Promise<void> {

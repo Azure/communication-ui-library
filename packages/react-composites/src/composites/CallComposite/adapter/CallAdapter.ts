@@ -48,6 +48,7 @@ import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
 import { ReactionResources } from '@internal/react-components';
 /* @conditional-compile-remove(DNS) */
 import { DeepNoiseSuppressionEffectDependency } from '@internal/calling-component-bindings';
+import { TogetherModeStreamViewResult } from '@internal/react-components/dist/dist-esm/types';
 
 /**
  * Major UI screens shown in the {@link CallComposite}.
@@ -645,10 +646,7 @@ export interface CallAdapterCallOperations {
    *
    * @beta
    */
-  createFeatureStreamView(
-    featureName: string,
-    options?: VideoStreamOptions
-  ): Promise<void | CreateVideoStreamViewResult>;
+  createTogetherModeStreamViews(options?: VideoStreamOptions): Promise<void | TogetherModeStreamViewResult>;
 
   /* @conditional-compile-remove(together-mode) */
   /**
@@ -663,7 +661,7 @@ export interface CallAdapterCallOperations {
    *
    * @beta
    */
-  disposeFeatureStreamView(featureName: string, options?: VideoStreamOptions): Promise<void>;
+  disposeTogetherModeStreamViews(options?: VideoStreamOptions): Promise<void>;
   /**
    * Dispose the html view for a screen share stream
    *

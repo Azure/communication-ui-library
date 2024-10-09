@@ -91,10 +91,10 @@ export class MockCallAdapter implements CallAdapter {
   disposeStreamView(): Promise<void> {
     throw Error('disposeStreamView not implemented');
   }
-  createFeatureStreamView(): Promise<void> {
+  createTogetherModeStreamViews(): Promise<void> {
     throw Error('createFeatureStreamView not implemented');
   }
-  disposeFeatureStreamView(): Promise<void> {
+  disposeTogetherModeStreamViews(): Promise<void> {
     throw Error('disposeFeatureStreamView not implemented');
   }
   disposeScreenShareStreamView(): Promise<void> {

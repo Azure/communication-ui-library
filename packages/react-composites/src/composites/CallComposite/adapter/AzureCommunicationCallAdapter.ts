@@ -124,6 +124,7 @@ import { CallingSoundSubscriber } from './CallingSoundSubscriber';
 import { CallingSounds } from './CallAdapter';
 /* @conditional-compile-remove(DNS) */
 import { DeepNoiseSuppressionEffectDependency } from '@internal/calling-component-bindings';
+import { TogetherModeStreamViewResult } from '@internal/react-components/dist/dist-esm/types';
 type CallTypeOf<AgentType extends CallAgent | TeamsCallAgent> = AgentType extends CallAgent ? Call : TeamsCall;
 
 /**
@@ -596,9 +597,9 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     this.createStreamView.bind(this);
     this.disposeStreamView.bind(this);
     /* @conditional-compile-remove(together-mode) */
-    this.createFeatureStreamView.bind(this);
+    this.createTogetherModeStreamViews.bind(this);
     /* @conditional-compile-remove(together-mode) */
-    this.disposeFeatureStreamView.bind(this);
+    this.disposeTogetherModeStreamViews.bind(this);
     this.disposeScreenShareStreamView.bind(this);
     this.disposeRemoteVideoStreamView.bind(this);
     this.disposeLocalVideoStreamView.bind(this);
@@ -801,21 +802,15 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
   }
 
   /* @conditional-compile-remove(together-mode) */
-  public async createFeatureStreamView(
-    featureName: string,
+  public async createTogetherModeStreamViews(
     options?: VideoStreamOptions
-  ): Promise<void | CreateVideoStreamViewResult> {
-    if (featureName === 'togetherMode') {
-      /* @conditional-compile-remove(together-mode) */
-      return await this.handlers.onCreateTogetherModeStreamView(options);
-    }
+  ): Promise<void | TogetherModeStreamViewResult> {
+    return await this.handlers.onCreateTogetherModeStreamView(options);
   }
+
   /* @conditional-compile-remove(together-mode) */
-  public async disposeFeatureStreamView(featureName: string): Promise<void> {
-    if (featureName === 'togetherMode') {
-      /* @conditional-compile-remove(together-mode) */
-      return await this.handlers.onDisposeTogetherModeStreamViews();
-    }
+  public async disposeTogetherModeStreamViews(): Promise<void> {
+    return await this.handlers.onDisposeTogetherModeStreamViews();
   }
 
   public async leaveCall(forEveryone?: boolean): Promise<void> {

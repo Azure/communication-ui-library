@@ -35,6 +35,7 @@ import { Features } from '@azure/communication-calling';
 import { TeamsCaptions } from '@azure/communication-calling';
 import { Reaction } from '@azure/communication-calling';
 import { _ComponentCallingHandlers } from './createHandlers';
+import { TogetherModeStreamViewResult } from '@internal/react-components/dist/dist-esm/types/TogetherModeTypes';
 
 /**
  * Object containing all the handlers required for calling components.
@@ -112,7 +113,7 @@ export interface CommonCallingHandlers {
    *
    * @beta
    */
-  onCreateTogetherModeStreamView: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
+  onCreateTogetherModeStreamView: (options?: VideoStreamOptions) => Promise<void | TogetherModeStreamViewResult>;
   /* @conditional-compile-remove(together-mode) */
   /**
    * Call back to dispose together mode views
@@ -732,7 +733,7 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
     /* @conditional-compile-remove(together-mode) */
     const onCreateTogetherModeStreamView = async (
       options = { scalingMode: 'Fit', isMirrored: true } as VideoStreamOptions
-    ): Promise<void | CreateVideoStreamViewResult> => {
+    ): Promise<void | TogetherModeStreamViewResult> => {
       if (!call) {
         return;
       }
@@ -741,7 +742,7 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
         return;
       }
       const togetherModeStreams = callState.togetherMode.streams;
-      const createViewStreamResults: Map<string, CreateVideoStreamViewResult | undefined> = new Map();
+      const togetherModeCreateViewResult: TogetherModeStreamViewResult = {};
       if (!togetherModeStreams.size) {
         const togetherModeFeature = call?.feature(Features.TogetherMode);
         await togetherModeFeature?.start();
@@ -749,15 +750,16 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
         for (const stream of togetherModeStreams) {
           if (!stream[1].view) {
             const createViewResult = await callClient.createCallFeatureView(call.id, stream[1], options);
-            createViewStreamResults.set(
-              stream[0],
-              createViewResult?.view ? { view: createViewResult?.view } : undefined
-            );
+            // SDK currently only supports 1 Video media stream type
+            if (stream[1].mediaStreamType === 'Video') {
+              togetherModeCreateViewResult.mainVideoView = createViewResult?.view
+                ? { view: createViewResult?.view }
+                : undefined;
+            }
           }
         }
       }
-      const createViewResult = createViewStreamResults.get('Video');
-      return createViewResult?.view ? { view: createViewResult?.view } : undefined;
+      return togetherModeCreateViewResult;
     };
     /* @conditional-compile-remove(together-mode) */
     const onDisposeTogetherModeStreamViews = async (): Promise<void> => {
