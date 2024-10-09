@@ -119,7 +119,7 @@ export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
   const [calloutIsVisible, setCalloutIsVisible] = useState(false);
 
   return (
-    <Stack>
+    <>
       {calloutIsVisible && (
         <Callout
           data-ui-id="reaction-sub-menu"
@@ -169,7 +169,6 @@ export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
       <div ref={reactionButtonCalloutRef}>
         <ControlBarButton
           {...props}
-          data-ui-id="reaction-button"
           componentRef={reactionButtonRef}
           className={mergeStyles(styles, props.styles)}
           onClick={() => setCalloutIsVisible(!calloutIsVisible)}
@@ -182,6 +181,6 @@ export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
           ariaLabel={strings.ariaLabel}
         />
       </div>
-    </Stack>
+    </>
   );
 };
