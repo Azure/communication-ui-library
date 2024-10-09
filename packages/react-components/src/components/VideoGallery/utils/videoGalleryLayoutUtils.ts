@@ -72,7 +72,7 @@ const getOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedPa
 
   if (layout === 'speaker') {
     if (dominantSpeakers?.[0]) {
-      newGridParticipants = newGridParticipants.filter((p) => p.userId !== dominantSpeakers[0]);
+      newGridParticipants = newGridParticipants.filter((p) => p.userId === dominantSpeakers[0]);
     } else {
       newGridParticipants = newGridParticipants.slice(1);
     }
