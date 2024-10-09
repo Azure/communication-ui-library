@@ -1,0 +1,169 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Composites/JavaScript Loaders" />
+
+# Using the UI Composites in other Frameworks
+
+The Azure Communication Services UI library is written in [React](https://react.dev/). If you are using a different framework,
+you can still use the UI Composites by using our Loader functions for each of the composites.
+
+These functions mount each of our React Composites to your applications DOM. The Functions that are available are:
+
+- `loadChatComposite`
+- `loadCallComposite`
+- `loadCallWithChatComposite`
+- `loadOutboundCallComposite`
+
+## How they work
+
+Our JavaScript loaders use [react](https://react.dev/) under the hood. They handle all of the react complexity and allow the composites
+to be placed in any application, including applications written with JQuery, Angular, or any Node application using [module imports](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import).
+
+They work by taking in a DOM element. They render and attach the React Composite to that element. This means
+that you can use the UI Composites in any application that can render HTML elements to the browser DOM.
+
+**Note:** Something to keep in mind when using these loader functions for the UI Composites is that you are taking on
+not just the bundle for `@azure/communication-react` but also the bundle for `react` and `react-dom`. Best practice here
+is to lazy load these chunks so that you don't get caught waiting for the large bundle when you don't need your
+composite experience yet.
+
+This can be done like so:
+
+```ts
+...
+/**
+ * This is how you would load in the CallComposite with lazy loading. This goes in
+ * line in whatever function might initiate your call experience.
+ */
+*/
+import('@azure/communication-react/javascript-loaders').then(async (uiLib) => {
+  this.adapter = await uiLib
+    .loadCallComposite() // <- you can then use the loader functions here.
+...
+```
+
+## Setup needed before calling the functions
+
+All of the loaders are not included on the main API for the UI library. To better support our other customers using supported
+versions of React, we are providing these loaders in a submodule of `@azure/communication-react`. To use these loaders you will import
+from a different path than the main UI library.
+
+```ts
+import {
+  loadChatComposite,
+  loadCallComposite,
+  loadCallWithChatComposite,
+  loadOutboundCallComposite
+} from '@azure/communication-react/javascript-loaders';
+```
+
+Since these functions are imported from a submodule you might need to make some changes to your
+`tsconfig.json` to [handle the **submodule**](https://www.typescriptlang.org/tsconfig/#module). To do this you will need to set the following fields as follows
+
+```json
+"compilerOptions": {
+  "module": "NodeNext",
+  "moduleResolution": "NodeNext",
+}
+```
+
+Once you have set these you will be able to import them from the submodule. You do not need to state the
+submodule in your `package.json` as the submodule is included when you define you `@azure/communication-react`
+dependency.
+
+## Using the Loaders
+
+The following snippet is an example of how you might import the `CallComposite` in your [Angular](https://angular.dev/) application.
+
+```ts
+import { Component } from '@angular/core';
+import { CallCompositeOptions } from '@azure/communication-react';
+
+@Component({
+  selector: 'app-calling',
+  standalone: true,
+  templateUrl: './calling.component.html',
+  styleUrls: ['./calling.component.css']
+})
+export class CallingComponent {
+  userId = '<ACS User Id>';
+  token = '<ACS Token>';
+  displayName = 'User';
+  groupId = '<GUID for call>';
+  adapter: any;
+
+  /**
+   * This is how you would load in the CallComposite with lazy loading. This
+   * will only load the CallComposite and the UI library when the function is called.
+   */
+  async loadCalling(): Promise<void> {
+    import('@azure/communication-react/javascript-loaders').then(async (communicationreact) => {
+      const compositeOptions: CallCompositeOptions = {
+        callControls: {
+          displayType: 'compact',
+          cameraButton: false
+        }
+      };
+      /**
+       * We want to fetch a reference to the container element where the call composite will be rendered.
+       */
+      const compositeContainer = document.getElementById('call-composite-container');
+      /**
+       * we only want to call this if the container element is available.
+       */
+      if (compositeContainer) {
+        this.adapter = await communicationreact
+          .loadCallComposite(
+            {
+              userId: this.userId,
+              token: this.token,
+              displayName: this.displayName,
+              locator: {
+                groupId: this.groupId
+              },
+              callCompositeOptions: compositeOptions
+            },
+            compositeContainer
+          )
+          .then((adapter) => {
+            if (adapter) {
+              adapter.on('callEnded', () => {
+                console.log('Call ended');
+              });
+            }
+          });
+      }
+    });
+  }
+
+  /**
+   * You will want to observe your frameworks Component life cycle and make sure you asking
+   * that the adapter is disposed of when the component is destroyed.
+   */
+  ngOnDestroy(): void {
+    if (this.adapter) {
+      this.adapter.dispose();
+    }
+  }
+}
+```
+
+In this example, we are using the `loadCallComposite` function to load the `CallComposite` into the DOM. To
+do this we are using the window object to get this element. In the example we have given the element the `id`
+of `call-composite-container`. This is the element that the `CallComposite` will be attached to.
+
+In order for this to work the return from the DOM element must be defined. if the element is not set then the composite
+will not be attached to the DOM.
+
+## FAQ
+
+### Should I use this in my React application?
+
+While you can technically call these functions in your React application, it is not recommended. We recommend to have better
+control over the lifecycle of the Composites and how you construct the adapter it is best to use them directly from `@azure/communication-react`.
+
+### How can I use these in a Server side rendered application?
+
+In order to have these functions work, you need to make sure that they are called **only** once there is a reference
+to the DOM. If these functions are called before there is a reference to the DOM then the function will throw when React tries to mount
+the composite to the DOM.
