@@ -3,7 +3,7 @@
 import { ErrorBar, MessageThread, ParticipantList, SendBox, TypingIndicator } from '@internal/react-components';
 
 /* @conditional-compile-remove(rich-text-editor) */
-import type { RichTextSendBox } from '@internal/react-components';
+import { RichTextSendBox } from '@internal/react-components';
 
 import { useHandlers } from './useHandlers';
 import { useSelector } from './useSelector';
@@ -98,12 +98,11 @@ const findSelector = (component: (props: any) => JSX.Element | undefined): any =
     }
     return messageThreadSelectorImpl;
   };
-  /* @conditional-compile-remove(rich-text-editor) */
-  if (typeof component === 'function' && component.name === 'RichTextSendBox') {
-    return sendBoxSelector;
-  }
   switch (component) {
     case SendBox:
+      return sendBoxSelector;
+    /* @conditional-compile-remove(rich-text-editor) */
+    case RichTextSendBox:
       return sendBoxSelector;
     case MessageThread:
       return getMessageThreadSelector();
