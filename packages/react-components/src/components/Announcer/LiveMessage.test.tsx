@@ -16,24 +16,24 @@ describe('LiveMessage tests', () => {
     const { rerender } = renderWithLiveAnnouncer(<LiveMessage message="Demo message" ariaLive="assertive" />);
     const liveMessages = getLiveMessages('assertive');
     expect(liveMessages.length).toBe(1);
-    expect(liveMessages[0].textContent).toBe('Demo message');
+    expect(liveMessages[0]?.textContent).toBe('Demo message');
 
     rerender(<LiveMessage message="Demo message 2" ariaLive="assertive" />);
     const updatedLiveMessages = getLiveMessages('assertive');
     expect(updatedLiveMessages.length).toBe(1);
-    expect(updatedLiveMessages[0].textContent).toBe('Demo message 2');
+    expect(updatedLiveMessages[0]?.textContent).toBe('Demo message 2');
   });
 
   it('Live message should have polite message and update appropriately', () => {
     const { rerender } = renderWithLiveAnnouncer(<LiveMessage message="Demo message" ariaLive="polite" />);
     const liveMessages = getLiveMessages('polite');
     expect(liveMessages.length).toBe(1);
-    expect(liveMessages[0].textContent).toBe('Demo message');
+    expect(liveMessages[0]?.textContent).toBe('Demo message');
 
     rerender(<LiveMessage message="Demo message 2" ariaLive="polite" />);
     const updatedLiveMessages = getLiveMessages('polite');
     expect(updatedLiveMessages.length).toBe(1);
-    expect(updatedLiveMessages[0].textContent).toBe('Demo message 2');
+    expect(updatedLiveMessages[0]?.textContent).toBe('Demo message 2');
   });
 
   it('Only the latest message is announced', () => {
@@ -48,6 +48,6 @@ describe('LiveMessage tests', () => {
     );
     const liveMessages = getLiveMessages('polite');
     expect(liveMessages.length).toBe(1);
-    expect(liveMessages[0].textContent).toBe(FINAL_MESSAGE);
+    expect(liveMessages[0]?.textContent).toBe(FINAL_MESSAGE);
   });
 });
