@@ -333,8 +333,9 @@ const DialpadContainer = (props: {
 
   const onClickDialpad = (input: string, index: number): void => {
     setText(plainTextValue + input);
-    if (onSendDtmfTone) {
-      onSendDtmfTone(DtmfTones[index]);
+    const tone = DtmfTones[index];
+    if (onSendDtmfTone && tone) {
+      onSendDtmfTone(tone);
     }
     if (onClickDialpadButton) {
       onClickDialpadButton(input, index);
@@ -347,8 +348,9 @@ const DialpadContainer = (props: {
     } else {
       setText(plainTextValue + input);
     }
-    if (onSendDtmfTone) {
-      onSendDtmfTone(DtmfTones[index]);
+    const tone = DtmfTones[index];
+    if (onSendDtmfTone && tone) {
+      onSendDtmfTone(tone);
     }
     if (onClickDialpadButton) {
       onClickDialpadButton(input, index);

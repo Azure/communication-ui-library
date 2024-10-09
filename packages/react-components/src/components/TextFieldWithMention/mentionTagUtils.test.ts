@@ -176,10 +176,10 @@ describe('Mention logic should be robust and accurate', () => {
     expect(tag).toEqual(undefined);
 
     tag = findMentionTagForSelection(nestedMentionTags, 14);
-    expect(tag).toEqual(nestedMentionTags[0].subTags?.[1]);
+    expect(tag).toEqual(nestedMentionTags[0]?.subTags?.[1]);
 
     tag = findMentionTagForSelection(nestedMentionTags, 7);
-    expect(tag).toEqual(nestedMentionTags[0].subTags?.[1]);
+    expect(tag).toEqual(nestedMentionTags[0]?.subTags?.[1]);
 
     tag = findMentionTagForSelection(nestedMentionTags, 3);
     expect(tag).toEqual(undefined);
