@@ -285,8 +285,10 @@ const processHtmlToReact = (props: ChatMessageContentProps): JSX.Element => {
         }
 
         // Transform inline images
-        if (domNode.name && domNode.name === 'img' && domNode.attribs && domNode.attribs.id && domNode.attribs.name) {
-          domNode.attribs['aria-label'] = domNode.attribs.name;
+        if (domNode.name && domNode.name === 'img' && domNode.attribs && domNode.attribs.id) {
+          if (domNode.attribs.name) {
+            domNode.attribs['aria-label'] = domNode.attribs.name;
+          }
           const imgProps = attributesToProps(domNode.attribs);
           const inlineImageProps: InlineImage = { messageId: props.message.messageId, imageAttributes: imgProps };
 
