@@ -23,8 +23,6 @@ module.exports = {
     "remote-ufd",
     // Feature for showing dtmp dialer by default
     "dtmf-dialer-on-by-default",
-    // Deep Noise Suppression feature
-    "DNS",
     // Feature for together mode
     "together-mode"
   ],
@@ -94,6 +92,8 @@ module.exports = {
     "notifications",
     // Feature for tracking beta start call identifier
     'start-call-beta',
+    // Deep Noise Suppression feature
+    "DNS",
     // Soft Mute feature for ACS calls and Interop calls
     "soft-mute"
   ]
