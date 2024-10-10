@@ -23,8 +23,7 @@ test.describe('CallWithChat Composite Pre-Join Tests', () => {
     await callWithChatTestSetup({ pages, users, serverUrl });
   });
 
-  test('Pre-join screen loads correctly', async ({ pages }) => {
-    const page = pages[0];
+  test('Pre-join screen loads correctly', async ({ page }) => {
     expect(await stableScreenshot(page)).toMatchSnapshot(`call-with-chat-pre-join-screen.png`);
   });
 });
@@ -37,6 +36,10 @@ test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
 
   test('People pane opens and displays correctly', async ({ pages }, testInfo) => {
     const page = pages[1];
+    if (!page) {
+      throw new Error('Pages[1] not found');
+    }
+
     if (isTestProfileDesktop(testInfo)) {
       await pageClick(page, dataUiId('common-call-composite-people-button'));
     } else {
@@ -55,6 +58,10 @@ test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
 
   test('More Drawer menu opens and can choose to be on hold', async ({ pages }) => {
     const page = pages[1];
+    if (!page) {
+      throw new Error('Pages[1] not found');
+    }
+
     await pageClick(page, dataUiId('common-call-composite-more-button'));
     const moreButtonHoldCallButton = await page.$('div[role="menu"] >> text="Hold call"');
     await moreButtonHoldCallButton?.click();
@@ -81,6 +88,11 @@ export const callWithChatTestSetup = async ({
   for (const i in pages) {
     const page = pages[i];
     const user = users[i];
+
+    if (!page || !user) {
+      throw new Error('Page and user must be defined');
+    }
+
     await page.goto(buildUrl(serverUrl, user, qArgs));
     await waitForCallWithChatCompositeToLoad(page);
   }

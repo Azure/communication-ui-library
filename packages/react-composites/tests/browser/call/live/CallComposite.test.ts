@@ -38,6 +38,11 @@ test.describe('Call Composite E2E Configuration Screen Tests', () => {
     for (let i = 0; i < pages.length; i++) {
       const page = pages[i];
       const user = users[i];
+
+      if (!user || !page) {
+        throw new Error('Page and user must be defined');
+      }
+
       user.groupId = newTestGuid;
 
       await page.goto(buildUrl(serverUrl, user));
@@ -49,8 +54,7 @@ test.describe('Call Composite E2E Configuration Screen Tests', () => {
   //
   // Updating local video streams before joinging a call is a non-trivial operation.
   // TODO(prprabhu) Rename this test once metrics show that it has been stabilized.
-  test('local device settings can toggle camera & audio', async ({ pages }) => {
-    const page = pages[0];
+  test('local device settings can toggle camera & audio', async ({ page }) => {
     await pageClick(page, dataUiId('call-composite-local-device-settings-microphone-button'));
     await pageClick(page, dataUiId('call-composite-local-device-settings-camera-button'));
     await waitForFunction(page, () => {
@@ -72,6 +76,11 @@ test.describe('Call Composite E2E CallPage Tests', () => {
     for (let i = 0; i < pages.length; i++) {
       const page = pages[i];
       const user = users[i];
+
+      if (!user || !page) {
+        throw new Error('Page and user must be defined');
+      }
+
       user.groupId = newTestGuid;
 
       await page.goto(buildUrl(serverUrl, user));
@@ -91,23 +100,20 @@ test.describe('Call Composite E2E CallPage Tests', () => {
   // and hence the flakiness introduced in CI due to dependence on live services.
   //
   // TODO(prprabhu) Rename this test to better reflect the intent once metrics show that this test is stable.
-  test('can turn off local video', async ({ pages }) => {
+  test('can turn off local video', async ({ pages, page: page0 }) => {
     // First, ensure all pages' videos load correctly.
-    for (const idx in pages) {
-      const page = pages[idx];
+    for (const [idx, page] of pages.entries()) {
       await page.bringToFront();
       expect(await stableScreenshot(page)).toMatchSnapshot(`video-gallery-page-${idx}.png`);
     }
 
     // Then turn off video and check again.
-    const page = pages[0];
-    await pageClick(page, dataUiId('call-composite-camera-button'));
+    await pageClick(page0, dataUiId('call-composite-camera-button'));
 
     // We turned off 1 video.
     await waitForCallPageParticipantVideos(pages, pages.length - 1);
 
-    for (const idx in pages) {
-      const page = pages[idx];
+    for (const [idx, page] of pages.entries()) {
       await page.bringToFront();
       expect(await stableScreenshot(page)).toMatchSnapshot(`video-gallery-camera-off-page-${idx}.png`);
     }

@@ -11,6 +11,9 @@ import { buildUrlForChatAppUsingFakeAdapter, DEFAULT_FAKE_CHAT_ADAPTER_ARGS, tes
 test.describe('Tests related to typing indicator', async () => {
   test('page can view typing indicator within 10s', async ({ serverUrl, page }) => {
     const typingParticipant = DEFAULT_FAKE_CHAT_ADAPTER_ARGS.remoteParticipants[0];
+    if (!typingParticipant) {
+      throw new Error('No remote participants found');
+    }
     page.goto(
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
         ...DEFAULT_FAKE_CHAT_ADAPTER_ARGS,

@@ -16,13 +16,17 @@ test.describe('Chat Composite E2E Tests', () => {
     await chatTestSetup({ pages, users, serverUrl });
   });
 
-  test('composite pages load completely', async ({ pages }) => {
-    expect(await pages[0].screenshot()).toMatchSnapshot(`chat-screen.png`);
+  test('composite pages load completely', async ({ page }) => {
+    expect(await page.screenshot()).toMatchSnapshot(`chat-screen.png`);
   });
 
   test('page[1] can rejoin the chat', async ({ pages }) => {
     const testMessageText = 'How the turn tables';
     const page1 = pages[1];
+    if (!page1) {
+      throw new Error('Pages[1] not found');
+    }
+
     await sendMessage(page1, testMessageText);
 
     // Read the message to generate stable result
