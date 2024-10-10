@@ -377,10 +377,10 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
         constrain.video = props.options?.deviceChecks?.camera === 'doNotPrompt' ? false : constrain.video;
       }
       const permissionsResult = await adapter.askDevicePermission(constrain);
-      if (permissionsResult.audio) {
+      if (permissionsResult?.audio) {
         adapter.queryMicrophones();
       }
-      if (permissionsResult.video) {
+      if (permissionsResult?.video) {
         adapter.queryCameras();
       }
       adapter.querySpeakers();
