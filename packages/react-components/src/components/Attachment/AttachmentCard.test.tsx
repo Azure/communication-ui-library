@@ -72,7 +72,7 @@ describe('AttachmentCard action handler should be called', () => {
     });
 
     const button = screen.getAllByRole('button')[0];
-    button.click();
+    button?.click();
     expect(actionHandler).toHaveBeenCalledTimes(1);
   });
 });

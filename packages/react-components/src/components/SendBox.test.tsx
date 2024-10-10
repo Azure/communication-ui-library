@@ -71,9 +71,12 @@ describe('SendBox should return correct value with a selected mention', () => {
     );
   };
   const selectFirstMention = async (): Promise<void> => {
+    if (!suggestions[0]) {
+      throw new Error('No suggestions found');
+    }
     const contextMenuItem = await screen.findByText(suggestions[0].displayText);
     expect(contextMenuItem.classList.contains('ms-Persona-primaryText')).toBe(true);
-    fireEvent.click(contextMenuItem);
+    contextMenuItem && fireEvent.click(contextMenuItem);
   };
 
   test('HTML string should be correct when send button is clicked', async () => {
@@ -93,7 +96,7 @@ describe('SendBox should return correct value with a selected mention', () => {
     });
     // Select the suggestion
     await selectFirstMention();
-    expect((input as HTMLInputElement).value).toBe(trigger + suggestions[0].displayText);
+    expect((input as HTMLInputElement).value).toBe(trigger + suggestions[0]?.displayText);
     // Find and click the send button
     const sendButton = await screen.findByRole('button', {
       name: 'Send message'
@@ -120,7 +123,7 @@ describe('SendBox should return correct value with a selected mention', () => {
     });
     // Select the suggestion
     await selectFirstMention();
-    expect((input as HTMLInputElement).value).toBe(trigger + suggestions[0].displayText);
+    expect((input as HTMLInputElement).value).toBe(trigger + suggestions[0]?.displayText);
     // Press Enter key
     await waitFor(async () => {
       // Type into the input field
@@ -163,6 +166,9 @@ describe('Clicks/Touch should select mention', () => {
     );
   };
   const selectFirstMention = async (): Promise<void> => {
+    if (!suggestions[0]) {
+      throw new Error('No suggestions found');
+    }
     const contextMenuItem = await screen.findByText(suggestions[0].displayText);
     expect(contextMenuItem.classList.contains('ms-Persona-primaryText')).toBe(true);
     fireEvent.click(contextMenuItem);
@@ -203,7 +209,7 @@ describe('Clicks/Touch should select mention', () => {
     });
     // Select the suggestion
     await selectFirstMention();
-    expect(input.value).toBe(value + suggestions[0].displayText);
+    expect(input.value).toBe(value + suggestions[0]?.displayText);
   };
 
   test('Mouse click on first word in mention should select mention', async () => {
@@ -218,7 +224,7 @@ describe('Clicks/Touch should select mention', () => {
       offset: 6
     });
     expect(input.selectionStart).toBe(initialValue.length);
-    expect(input.selectionEnd).toBe((value + suggestions[0].displayText).length);
+    expect(input.selectionEnd).toBe((value + suggestions[0]?.displayText).length);
   });
 
   test('Mouse click on second word in mention should select mention', async () => {
@@ -233,7 +239,7 @@ describe('Clicks/Touch should select mention', () => {
       offset: 12
     });
     expect(input.selectionStart).toBe(initialValue.length);
-    expect(input.selectionEnd).toBe((value + suggestions[0].displayText).length);
+    expect(input.selectionEnd).toBe((value + suggestions[0]?.displayText).length);
   });
 
   test('Mouse double click on mention should select mention', async () => {
@@ -248,7 +254,7 @@ describe('Clicks/Touch should select mention', () => {
       offset: 12
     });
     expect(input.selectionStart).toBe(initialValue.length);
-    expect(input.selectionEnd).toBe((value + suggestions[0].displayText).length);
+    expect(input.selectionEnd).toBe((value + suggestions[0]?.displayText).length);
   });
 
   test('Mouse triple click on mention should select the text in the input field', async () => {
@@ -263,7 +269,7 @@ describe('Clicks/Touch should select mention', () => {
       offset: 12
     });
     expect(input.selectionStart).toBe(0);
-    expect(input.selectionEnd).toBe((value + suggestions[0].displayText).length);
+    expect(input.selectionEnd).toBe((value + suggestions[0]?.displayText).length);
   });
 
   test('Mouse triple click when text starts from mention should select the text in the input field', async () => {
@@ -280,12 +286,12 @@ describe('Clicks/Touch should select mention', () => {
     });
     // Select the suggestion
     await selectFirstMention();
-    expect(input.value).toBe(trigger + suggestions[0].displayText);
+    expect(input.value).toBe(trigger + suggestions[0]?.displayText);
     await waitFor(async () => {
       // Type into the input field
       await userEvent.keyboard(' and');
     });
-    const typedValue = trigger + suggestions[0].displayText + ' and';
+    const typedValue = trigger + suggestions[0]?.displayText + ' and';
     // Triple click a letter at 14-th index
     await userEvent.pointer({
       keys: '[MouseLeft][MouseLeft][MouseLeft]',
@@ -334,7 +340,7 @@ describe('Clicks/Touch should select mention', () => {
       offset: 6
     });
     expect(input.selectionStart).toBe(initialValue.length);
-    expect(input.selectionEnd).toBe((value + suggestions[0].displayText).length);
+    expect(input.selectionEnd).toBe((value + suggestions[0]?.displayText).length);
   });
 
   test('Tap on second word in mention should select mention', async () => {
@@ -349,7 +355,7 @@ describe('Clicks/Touch should select mention', () => {
       offset: 12
     });
     expect(input.selectionStart).toBe(initialValue.length);
-    expect(input.selectionEnd).toBe((value + suggestions[0].displayText).length);
+    expect(input.selectionEnd).toBe((value + suggestions[0]?.displayText).length);
   });
 
   test('Double tap on mention should select mention', async () => {
@@ -364,7 +370,7 @@ describe('Clicks/Touch should select mention', () => {
       offset: 12
     });
     expect(input.selectionStart).toBe(initialValue.length);
-    expect(input.selectionEnd).toBe((value + suggestions[0].displayText).length);
+    expect(input.selectionEnd).toBe((value + suggestions[0]?.displayText).length);
   });
 
   test('Triple tap on mention should select the text in the input field', async () => {
@@ -379,7 +385,7 @@ describe('Clicks/Touch should select mention', () => {
       offset: 12
     });
     expect(input.selectionStart).toBe(0);
-    expect(input.selectionEnd).toBe((value + suggestions[0].displayText).length);
+    expect(input.selectionEnd).toBe((value + suggestions[0]?.displayText).length);
   });
 });
 
@@ -419,7 +425,11 @@ describe('Keyboard events should be handled for mentions', () => {
     );
   };
   const selectMention = async (index: number): Promise<void> => {
-    const contextMenuItem = await screen.findByText(suggestions[index].displayText);
+    const suggestion = suggestions[index];
+    if (!suggestion) {
+      throw new Error('Suggestion not found');
+    }
+    const contextMenuItem = await screen.findByText(suggestion.displayText);
     expect(contextMenuItem.classList.contains('ms-Persona-primaryText')).toBe(true);
     fireEvent.click(contextMenuItem);
   };
@@ -435,7 +445,7 @@ describe('Keyboard events should be handled for mentions', () => {
     });
     // Select the suggestion
     await selectMention(0);
-    expect(input.value).toBe(value + suggestions[0].displayText);
+    expect(input.value).toBe(value + suggestions[0]?.displayText);
   };
 
   test('Keyboard navigation with arrows should navigate mention by words', async () => {
@@ -487,7 +497,7 @@ describe('Keyboard events should be handled for mentions', () => {
     });
     // Select the suggestion
     await selectMention(1);
-    expect(input.value).toBe(value + suggestions[0].displayText + ' and ' + trigger + suggestions[1].displayText);
+    expect(input.value).toBe(value + suggestions[0]?.displayText + ' and ' + trigger + suggestions[1]?.displayText);
 
     // Delete the second part of the second mention
     await userEvent.keyboard('[Backspace]');
@@ -518,7 +528,7 @@ describe('Keyboard events should be handled for mentions', () => {
     });
     // Select the suggestion
     await selectMention(1);
-    expect(input.value).toBe(value + suggestions[0].displayText + ' and ' + trigger + suggestions[1].displayText);
+    expect(input.value).toBe(value + suggestions[0]?.displayText + ' and ' + trigger + suggestions[1]?.displayText);
 
     // Navigate to the second part of the first mention
     await userEvent.keyboard('[ArrowLeft]');

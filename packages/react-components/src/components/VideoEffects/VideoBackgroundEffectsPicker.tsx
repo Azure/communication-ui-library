@@ -128,7 +128,7 @@ export const _VideoBackgroundEffectsPicker = (props: _VideoBackgroundEffectsPick
   const optionsByRow = itemsPerRow === 'wrap' ? [convertedOptions] : chunk(convertedOptions, itemsPerRow);
 
   // If the final row is not full, fill it with hidden items to ensure layout.
-  const fillCount = itemsPerRow === 'wrap' ? 0 : itemsPerRow - optionsByRow[optionsByRow.length - 1].length;
+  const fillCount = itemsPerRow === 'wrap' ? 0 : itemsPerRow - (optionsByRow[optionsByRow.length - 1]?.length ?? 0);
 
   return (
     <Stack tokens={{ childrenGap: '0.5rem' }}>

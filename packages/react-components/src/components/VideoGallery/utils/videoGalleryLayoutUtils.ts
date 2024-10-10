@@ -70,15 +70,12 @@ const getOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedPa
     maxDominantSpeakers: maxGridParticipants
   }).slice(0, maxGridParticipants);
 
-  const dominantSpeakerToGrid =
-    layout === 'speaker'
-      ? dominantSpeakers && dominantSpeakers[0]
-        ? newGridParticipants.filter((p) => p.userId === dominantSpeakers[0])
-        : [newGridParticipants[0]]
-      : [];
-
-  if (dominantSpeakerToGrid[0]) {
-    newGridParticipants = dominantSpeakerToGrid;
+  if (layout === 'speaker') {
+    if (dominantSpeakers?.[0]) {
+      newGridParticipants = newGridParticipants.filter((p) => p.userId === dominantSpeakers[0]);
+    } else {
+      newGridParticipants = newGridParticipants.slice(1);
+    }
   }
 
   const gridParticipantSet = new Set(newGridParticipants.map((p) => p.userId));
@@ -105,37 +102,26 @@ const getOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedPa
   return { gridParticipants, overflowGalleryParticipants };
 };
 
-interface SortedRemoteParticipants {
-  [key: string]: VideoGalleryRemoteParticipant;
-}
-
 /**
  * Hook to determine which participants should be in grid and overflow gallery and their order respectively
  * @private
  */
 export const useOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedParticipantsResult => {
-  // map remote participants by userId
-  const remoteParticipantMap = props.remoteParticipants.reduce((map, remoteParticipant) => {
-    map[remoteParticipant.userId] = remoteParticipant;
-    return map;
-  }, {} as SortedRemoteParticipants);
-
   const spotlightedParticipantUserIds = props.spotlightedParticipantUserIds ?? [];
   const pinnedParticipantUserIds = props.pinnedParticipantUserIds ?? [];
-  // declare set of focused participant user ids as spotlighted participants user ids followed by
-  // pinned participants user ids which is deduplicated while maintaining order
-  const focusedParticipantUserIdSet = new Set(
-    spotlightedParticipantUserIds.concat(pinnedParticipantUserIds).filter((p) => remoteParticipantMap[p])
-  );
-  // get focused participants from map of remote participants in the order of the user ids
-  const focusedParticipants: VideoGalleryRemoteParticipant[] = [...focusedParticipantUserIdSet].map(
-    (p) => remoteParticipantMap[p]
-  );
+
+  // Focussed participants are the participants that are either spotlighted or pinned. Ordered by spotlighted first and then pinned.
+  // A set is used to dedupe participants.
+  const focusedParticipantUserIdSet = new Set(spotlightedParticipantUserIds.concat(pinnedParticipantUserIds));
+  const focusedParticipants: VideoGalleryRemoteParticipant[] = [...focusedParticipantUserIdSet]
+    .map((userId) => props.remoteParticipants.find((p) => p.userId === userId))
+    .filter((p) => p !== undefined) as VideoGalleryRemoteParticipant[];
+
+  // Unfocused participants are the rest of the participants
+  const unfocusedParticipants = props.remoteParticipants.filter((p) => !focusedParticipantUserIdSet.has(p.userId));
 
   const currentGridParticipants = useRef<VideoGalleryRemoteParticipant[]>([]);
   const currentOverflowGalleryParticipants = useRef<VideoGalleryRemoteParticipant[]>([]);
-
-  const unfocusedParticipants = props.remoteParticipants.filter((p) => !focusedParticipantUserIdSet.has(p.userId));
 
   const organizedParticipantsArgs: OrganizedParticipantsArgs = {
     ...props,
