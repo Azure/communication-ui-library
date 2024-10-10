@@ -1573,7 +1573,6 @@ export type CommonCallAdapterOptions = {
   /* @conditional-compile-remove(DNS) */
   /**
    * `DeepNoiseSuppressionEffect` options to be used for noise suppression.
-   * @beta
    */
   deepNoiseSuppressionOptions?: {
     onResolveDependency?: () => Promise<DeepNoiseSuppressionEffectDependency>;
