@@ -138,7 +138,7 @@ export type VideoBackgroundEffectsDependency = {
 /**
  * Dependency type to be injected for deep noise suppression
  *
- * @beta
+ * @public
  */
 export type DeepNoiseSuppressionEffectDependency = {
   deepNoiseSuppressionEffect: AudioEffectsStartConfig;
