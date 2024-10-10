@@ -76,7 +76,7 @@ const isMessageSame = (first: ChatMessage, second: ChatMessage): boolean => {
 const getLatestChatMessage = (messages: Message[]): ChatMessage | undefined => {
   for (let i = messages.length - 1; i >= 0; i--) {
     const message = messages[i];
-    if (message.messageType === 'chat' && !!message.createdOn) {
+    if (message?.messageType === 'chat' && !!message.createdOn) {
       return message;
     }
   }
@@ -341,7 +341,7 @@ const memoizeAllMessages = memoizeFnAll(
 const getLastChatMessageIdWithStatus = (messages: Message[], status: MessageStatus): string | undefined => {
   for (let i = messages.length - 1; i >= 0; i--) {
     const message = messages[i];
-    if (message.messageType === 'chat' && message.status === status && message.mine) {
+    if (message?.messageType === 'chat' && message.status === status && message.mine) {
       return message.messageId;
     }
   }
@@ -351,7 +351,7 @@ const getLastChatMessageIdWithStatus = (messages: Message[], status: MessageStat
 const getLastChatMessageForCurrentUser = (messages: Message[]): ChatMessage | undefined => {
   for (let i = messages.length - 1; i >= 0; i--) {
     const message = messages[i];
-    if (message.messageType === 'chat' && message.mine) {
+    if (message?.messageType === 'chat' && message.mine) {
       return message;
     }
   }
