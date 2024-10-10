@@ -62,11 +62,10 @@ const getOptionIcon = (type: iconType): JSX.Element | undefined => {
 };
 
 const onRenderTitle = (iconType: iconType, props?: IDropdownOption[]): JSX.Element => {
-  const icon = props && getOptionIcon(iconType);
   return props ? (
     <div className={dropDownTitleIconStyles}>
-      {icon}
-      <span>{props[0].text}</span>
+      {getOptionIcon(iconType)}
+      <span>{props[0]?.text}</span>
     </div>
   ) : (
     <></>
@@ -168,7 +167,12 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
           : 'deniedOrUnknown'
       }
       onChange={(event, option, index) => {
-        props.onSelectCamera(props.cameras[index ?? 0], localVideoViewOptions);
+        const camera = props.cameras[index ?? 0];
+        if (camera) {
+          props.onSelectCamera(camera, localVideoViewOptions);
+        } else {
+          console.error('No cameras available');
+        }
       }}
       onRenderTitle={(props?: IDropdownOption[]) => onRenderTitle('Camera', props)}
     />
@@ -200,7 +204,12 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
             option?: IDropdownOption | undefined,
             index?: number | undefined
           ) => {
-            props.onSelectMicrophone(props.microphones[index ?? 0]);
+            const microphone = props.microphones[index ?? 0];
+            if (microphone) {
+              props.onSelectMicrophone(microphone);
+            } else {
+              console.error('No microphones available');
+            }
           }}
           onRenderTitle={(props?: IDropdownOption[]) => onRenderTitle('Microphone', props)}
         />
@@ -221,7 +230,12 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
         option?: IDropdownOption | undefined,
         index?: number | undefined
       ) => {
-        props.onSelectSpeaker(props.speakers[index ?? 0]);
+        const speaker = props.speakers[index ?? 0];
+        if (speaker) {
+          props.onSelectSpeaker(speaker);
+        } else {
+          console.error('No speakers available');
+        }
       }}
       onRenderTitle={(props?: IDropdownOption[]) => onRenderTitle('Speaker', props)}
     />
@@ -293,13 +307,13 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
   );
 };
 
-const defaultDeviceId = (devices: AudioDeviceInfo[]): string => {
+const defaultDeviceId = (devices: AudioDeviceInfo[]): string | undefined => {
   if (devices.length === 0) {
-    return '';
+    return undefined;
   }
   const defaultDevice = devices.find((device) => device.isSystemDefault);
   if (defaultDevice) {
     return defaultDevice.id;
   }
-  return devices[0].id;
+  return devices[0]?.id;
 };
