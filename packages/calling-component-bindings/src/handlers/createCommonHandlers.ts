@@ -277,6 +277,9 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
         deviceManager.selectCamera(device);
         const stream = call.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video');
         await stream?.switchSource(device);
+        alert(
+          `FROM call.localVideoStreams.length: ${call.localVideoStreams.length} STREAM: ${stream?.mediaStreamType}, name: ${stream?.source.name}`
+        );
 
         /// TODO: TEMPORARY SOLUTION
         /// The Calling SDK needs to wait until the stream is ready before resolving the switchSource promise.
@@ -284,7 +287,21 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
         /// This allows the onSelectCamera to be throttled to prevent the streams from getting in to a frozen state
         /// if the user switches cameras too rapidly.
         /// This is to be removed once the Calling SDK has issued a fix.
-        await stream?.getMediaStream();
+        let mediaStream: MediaStream | undefined = undefined;
+        let attempt = 0;
+        while (mediaStream === undefined && ++attempt <= 1) {
+          await stream
+            ?.getMediaStream()
+            .then((result) => {
+              mediaStream = result;
+            })
+            .catch((error) => {
+              alert(error.message);
+              console.log(error);
+            });
+          await new Promise((_) => setTimeout(_, 1000));
+        }
+        alert('ATTEMPTS: ' + attempt);
       } else {
         const previewOn = _isPreviewOn(callClient.getState().deviceManager);
 
@@ -366,6 +383,7 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
     const onCreateLocalStreamView = async (
       options = { scalingMode: 'Crop', isMirrored: true } as VideoStreamOptions
     ): Promise<void | CreateVideoStreamViewResult> => {
+      alert('onCreateLocalStreamView');
       if (!call || call.localVideoStreams.length === 0) {
         return;
       }

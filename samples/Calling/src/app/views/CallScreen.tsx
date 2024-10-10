@@ -161,7 +161,7 @@ const AzureCommunicationCallScreen = (props: AzureCommunicationCallScreenProps):
       // /* @conditional-compile-remove(DNS) */
       deepNoiseSuppressionOptions: {
         onResolveDependency: onResolveDeepNoiseSuppressionDependencyLazy,
-        deepNoiseSuppressionOnByDefault: true
+        deepNoiseSuppressionOnByDefault: false
       },
       callingSounds: {
         callEnded: { url: 'assets/sounds/callEnded.mp3' },
