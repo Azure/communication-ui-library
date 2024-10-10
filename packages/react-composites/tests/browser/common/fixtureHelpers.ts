@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import { ChatClient } from '@azure/communication-chat';
-import { CommunicationIdentityClient, CommunicationUserToken } from '@azure/communication-identity';
+import { CommunicationIdentityClient } from '@azure/communication-identity';
 import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import { Browser, ConsoleMessage, Page, PlaywrightWorkerArgs } from '@playwright/test';
 import { v1 } from 'uuid';
