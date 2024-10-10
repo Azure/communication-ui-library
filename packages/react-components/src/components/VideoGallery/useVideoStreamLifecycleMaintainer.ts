@@ -66,7 +66,6 @@ const useVideoStreamLifecycleMaintainer = (
         // TODO: Remove `if isScreenSharingOn` when we isolate dispose behavior for screen share
         if (!isScreenSharingOn) {
           onDisposeStreamView?.();
-          alert('DISPOSED');
         }
       }
     };
