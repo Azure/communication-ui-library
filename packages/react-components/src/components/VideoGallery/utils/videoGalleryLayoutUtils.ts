@@ -52,7 +52,7 @@ const getOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedPa
     previousOverflowParticipants = []
   } = props;
 
-  const callingParticipants = remoteParticipants.filter((p) => p.state === ('Connecting' || 'Ringing'));
+  const callingParticipants = remoteParticipants.filter((p) => p.state === 'Connecting' || p.state === 'Ringing');
 
   const callingParticipantsSet = new Set(callingParticipants.map((p) => p.userId));
 
@@ -89,8 +89,16 @@ const getOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedPa
 
   let gridParticipants = newGridParticipants;
   let overflowGalleryParticipants = newOverflowGalleryParticipants;
-  if (gridParticipants.length + callingParticipants.length <= maxGridParticipants) {
-    gridParticipants = gridParticipants.concat(callingParticipants);
+
+  // Add the participants being called into the call.
+  // If there are already overflow participants, add these to the array of overflow participants
+  // Otherwise, add the maximum number to the main grid, then put the rest in the overflow
+  if (overflowGalleryParticipants.length === 0) {
+    const numberOfCallingParticipantsInGrid = maxGridParticipants - gridParticipants.length;
+    const gridCallingParticipants = callingParticipants.slice(0, numberOfCallingParticipantsInGrid);
+    const overflowGalleryCallingParticipants = callingParticipants.slice(numberOfCallingParticipantsInGrid);
+    gridParticipants = gridParticipants.concat(gridCallingParticipants);
+    overflowGalleryParticipants = overflowGalleryCallingParticipants;
   } else {
     overflowGalleryParticipants = overflowGalleryParticipants.concat(callingParticipants);
   }

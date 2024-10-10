@@ -140,6 +140,37 @@ test.describe('Overflow gallery tests', async () => {
     );
   });
 
+  test('Overflow gallery should have multiple calling participants in the grid and overflow when there are no overflow participants', async ({
+    page,
+    serverUrl
+  }) => {
+    const paul = defaultMockRemoteParticipant('Paul Bridges');
+    paul.isSpeaking = true;
+    const fiona = defaultMockRemoteParticipant('Fiona Harper');
+    const reina = defaultMockRemoteParticipant('Reina Takizawa');
+    reina.isSpeaking = true;
+    const phoneUser = defaultMockRemotePSTNParticipant('+15555555555');
+    const luciana = defaultMockRemoteParticipant('Luciana Rodriguez');
+    luciana.state = 'Ringing';
+    const antonie = defaultMockRemoteParticipant('Antonie van Leeuwenhoek');
+    antonie.state = 'Ringing';
+    const gerald = defaultMockRemoteParticipant('Gerald Ho');
+    gerald.state = 'Ringing';
+    const pardeep = defaultMockRemoteParticipant('Pardeep Singh');
+    pardeep.state = 'Ringing';
+    const eryka = defaultMockRemoteParticipant('Eryka Klein');
+    eryka.state = 'Ringing';
+    const phone2 = defaultMockRemotePSTNParticipant('+15553334444');
+    phone2.state = 'Connecting';
+    const participants = [paul, fiona, reina, phoneUser, luciana, antonie, gerald, pardeep, eryka, phone2];
+    const initialState = defaultMockCallAdapterState(participants);
+    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
+
+    await waitForSelector(page, dataUiId(IDS.videoGallery));
+
+    expect(await stableScreenshot(page)).toMatchSnapshot('overflow-gallery-with-joining-in-grid-and-overflow.png');
+  });
+
   test('Overflow gallery should have multiple audio participants and 1 PSTN participant on second page', async ({
     page,
     serverUrl
