@@ -35,6 +35,8 @@ import { Features } from '@azure/communication-calling';
 import { TeamsCaptions } from '@azure/communication-calling';
 import { Reaction } from '@azure/communication-calling';
 import { _ComponentCallingHandlers } from './createHandlers';
+/* @conditional-compile-remove(together-mode) */
+import { TogetherModeStreamViewResult } from '@internal/react-components/dist/dist-esm/types/TogetherModeTypes';
 
 /**
  * Object containing all the handlers required for calling components.
@@ -106,6 +108,20 @@ export interface CommonCallingHandlers {
   onMuteParticipant: (userId: string) => Promise<void>;
   /* @conditional-compile-remove(soft-mute) */
   onMuteAllRemoteParticipants: () => Promise<void>;
+  /* @conditional-compile-remove(together-mode) */
+  /**
+   * Call back to create a view for together mode
+   *
+   * @beta
+   */
+  onCreateTogetherModeStreamView: (options?: VideoStreamOptions) => Promise<void | TogetherModeStreamViewResult>;
+  /* @conditional-compile-remove(together-mode) */
+  /**
+   * Call back to dispose together mode views
+   *
+   * @beta
+   */
+  onDisposeTogetherModeStreamViews: () => Promise<void>;
 }
 
 /**
@@ -715,6 +731,59 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
         }
       : undefined;
 
+    /* @conditional-compile-remove(together-mode) */
+    const onCreateTogetherModeStreamView = async (
+      options = { scalingMode: 'Fit', isMirrored: true } as VideoStreamOptions
+    ): Promise<void | TogetherModeStreamViewResult> => {
+      if (!call) {
+        return;
+      }
+      const callState = callClient.getState().calls[call.id];
+      if (!callState) {
+        return;
+      }
+      const togetherModeStreams = callState.togetherMode.streams;
+      const togetherModeCreateViewResult: TogetherModeStreamViewResult = {};
+      if (!togetherModeStreams.size) {
+        const togetherModeFeature = call?.feature(Features.TogetherMode);
+        await togetherModeFeature?.start();
+      } else {
+        for (const stream of togetherModeStreams) {
+          if (!stream[1].view) {
+            const createViewResult = await callClient.createCallFeatureView(call.id, stream[1], options);
+            // SDK currently only supports 1 Video media stream type
+            if (stream[1].mediaStreamType === 'Video') {
+              togetherModeCreateViewResult.mainVideoView = createViewResult?.view
+                ? { view: createViewResult?.view }
+                : undefined;
+            }
+          }
+        }
+      }
+      return togetherModeCreateViewResult;
+    };
+    /* @conditional-compile-remove(together-mode) */
+    const onDisposeTogetherModeStreamViews = async (): Promise<void> => {
+      if (!call) {
+        return;
+      }
+      const callState = callClient.getState().calls[call.id];
+      if (!callState) {
+        throw new Error(`Call Not Found: ${call.id}`);
+      }
+
+      const togetherModeStreams = callState.togetherMode.streams;
+
+      if (!togetherModeStreams.size) {
+        return;
+      }
+
+      for (const stream of togetherModeStreams) {
+        if (stream[1].view) {
+          callClient.disposeCallFeatureView(call.id, stream[1]);
+        }
+      }
+    };
     return {
       onHangUp,
       onToggleHold,
@@ -768,7 +837,11 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       /* @conditional-compile-remove(soft-mute) */
       onMuteAllRemoteParticipants,
       onAcceptCall: notImplemented,
-      onRejectCall: notImplemented
+      onRejectCall: notImplemented,
+      /* @conditional-compile-remove(together-mode) */
+      onCreateTogetherModeStreamView,
+      /* @conditional-compile-remove(together-mode) */
+      onDisposeTogetherModeStreamViews
     };
   }
 );

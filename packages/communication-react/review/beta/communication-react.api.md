@@ -111,6 +111,8 @@ import { TeamsIncomingCall } from '@azure/communication-calling';
 import { TeamsMeetingIdLocator } from '@azure/communication-calling';
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { Theme } from '@fluentui/react';
+import { TogetherModeStreamViewResult } from '@internal/react-components/dist/dist-esm/types/TogetherModeTypes';
+import { TogetherModeStreamViewResult as TogetherModeStreamViewResult_2 } from '@internal/react-components/dist/dist-esm/types';
 import { TransferEventArgs } from '@azure/communication-calling';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-chat';
 import { UnknownIdentifier } from '@azure/communication-common';
@@ -442,11 +444,15 @@ export interface CallAdapterCallOperations {
     addParticipant(participant: CommunicationUserIdentifier): Promise<void>;
     allowUnsupportedBrowserVersion(): void;
     createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void | CreateVideoStreamViewResult>;
+    // @beta
+    createTogetherModeStreamViews(options?: VideoStreamOptions): Promise<void | TogetherModeStreamViewResult_2>;
     disposeLocalVideoStreamView(): Promise<void>;
     disposeRemoteVideoStreamView(remoteUserId: string): Promise<void>;
     disposeScreenShareStreamView(remoteUserId: string): Promise<void>;
     // @deprecated
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
+    // @beta
+    disposeTogetherModeStreamViews(): Promise<void>;
     holdCall(): Promise<void>;
     leaveCall(forEveryone?: boolean): Promise<void>;
     lowerHand(): Promise<void>;
@@ -1026,6 +1032,15 @@ export type CallErrors = {
 // @public
 export type CallErrorTarget = 'Call.addParticipant' | 'Call.dispose' | 'Call.feature' | 'Call.hangUp' | 'Call.hold' | 'Call.mute' | 'Call.muteIncomingAudio' | 'Call.off' | 'Call.on' | 'Call.removeParticipant' | 'Call.resume' | 'Call.sendDtmf' | 'Call.startAudio' | 'Call.startScreenSharing' | 'Call.startVideo' | 'Call.stopScreenSharing' | 'Call.stopAudio' | 'Call.stopVideo' | 'Call.unmute' | 'Call.unmuteIncomingAudio' | 'CallAgent.dispose' | 'CallAgent.feature' | 'CallAgent.join' | 'CallAgent.off' | 'CallAgent.on' | 'CallAgent.startCall' | 'CallClient.createCallAgent' | 'CallClient.createTeamsCallAgent' | 'CallClient.feature' | 'CallClient.getDeviceManager' | /* @conditional-compile-remove(calling-beta-sdk) */ 'CallClient.getEnvironmentInfo' | 'DeviceManager.askDevicePermission' | 'DeviceManager.getCameras' | 'DeviceManager.getMicrophones' | 'DeviceManager.getSpeakers' | 'DeviceManager.off' | 'DeviceManager.on' | 'DeviceManager.selectMicrophone' | 'DeviceManager.selectSpeaker' | 'IncomingCall.accept' | 'IncomingCall.reject' | /* @conditional-compile-remove(calling-beta-sdk) */ /* @conditional-compile-remove(teams-identity-support) */ 'TeamsCall.addParticipant' | 'VideoEffectsFeature.startEffects' | /* @conditional-compile-remove(calling-beta-sdk) */ 'CallAgent.handlePushNotification' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.admit' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.rejectParticipant' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.admitAll' | /* @conditional-compile-remove(soft-mute) */ 'Call.mutedByOthers' | 'Call.muteAllRemoteParticipants' | 'Call.setConstraints';
 
+// @beta (undocumented)
+export type CallFeatureStreamName = 'togetherMode';
+
+// @beta (undocumented)
+export interface CallFeatureStreamState {
+    // (undocumented)
+    feature: CallFeatureStreamName;
+}
+
 // @public
 export type CallIdChangedListener = (event: {
     callId: string;
@@ -1158,6 +1173,7 @@ export interface CallState {
     spotlight?: SpotlightCallFeatureState;
     startTime: Date;
     state: CallState_2;
+    // @beta
     togetherMode: TogetherModeCallFeature;
     totalParticipantCount?: number;
     transcription: TranscriptionCallFeature;
@@ -1185,12 +1201,16 @@ export interface CallWithChatAdapterManagement {
     askDevicePermission(constrain: PermissionConstraints): Promise<void>;
     createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void | CreateVideoStreamViewResult>;
     // @beta
+    createTogetherModeStreamViews(options?: VideoStreamOptions): Promise<void | TogetherModeStreamViewResult_2>;
+    // @beta
     deleteImage(imageId: string): Promise<void>;
     deleteMessage(messageId: string): Promise<void>;
     disposeLocalVideoStreamView(): Promise<void>;
     disposeRemoteVideoStreamView(remoteUserId: string): Promise<void>;
     disposeScreenShareStreamView(remoteUserId: string): Promise<void>;
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
+    // @beta
+    disposeTogetherModeStreamViews(): Promise<void>;
     // (undocumented)
     downloadResourceToCache(resourceDetails: ResourceDetails): Promise<void>;
     fetchInitialData(): Promise<void>;
@@ -2142,6 +2162,8 @@ export interface CommonCallingHandlers {
     onCreateLocalStreamView: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
     // (undocumented)
     onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
+    // @beta
+    onCreateTogetherModeStreamView: (options?: VideoStreamOptions) => Promise<void | TogetherModeStreamViewResult>;
     // (undocumented)
     onDisposeLocalScreenShareStreamView: () => Promise<void>;
     // (undocumented)
@@ -2152,6 +2174,8 @@ export interface CommonCallingHandlers {
     onDisposeRemoteStreamView: (userId: string) => Promise<void>;
     // (undocumented)
     onDisposeRemoteVideoStreamView: (userId: string) => Promise<void>;
+    // @beta
+    onDisposeTogetherModeStreamViews: () => Promise<void>;
     // (undocumented)
     onHangUp: (forEveryone?: boolean) => Promise<void>;
     // (undocumented)
@@ -4628,8 +4652,12 @@ export type StartTeamsCallIdentifier = MicrosoftTeamsUserIdentifier | PhoneNumbe
 // @public
 export interface StatefulCallClient extends CallClient {
     createCallAgent(...args: Parameters<CallClient['createCallAgent']>): Promise<DeclarativeCallAgent>;
+    // @beta
+    createCallFeatureView(callId: string, stream: CallFeatureStreamState, options?: CreateViewOptions): Promise<CreateViewResult | undefined>;
     createTeamsCallAgent(...args: Parameters<CallClient['createTeamsCallAgent']>): Promise<DeclarativeTeamsCallAgent>;
-    createView(callId: string | undefined, participantId: CommunicationIdentifier | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState | /* @conditional-compile-remove(together-mode) */ TogetherModeStreamState, options?: CreateViewOptions): Promise<CreateViewResult | undefined>;
+    createView(callId: string | undefined, participantId: CommunicationIdentifier | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState, options?: CreateViewOptions): Promise<CreateViewResult | undefined>;
+    // @beta
+    disposeCallFeatureView(callId: string, stream: CallFeatureStreamState): void;
     disposeView(callId: string | undefined, participantId: CommunicationIdentifier | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState): void;
     getState(): CallClientState;
     offStateChange(handler: (state: CallClientState) => void): void;
@@ -4815,13 +4843,26 @@ export type TeamsOutboundCallAdapterArgs = TeamsCallAdapterArgsCommon & {
 // @public
 export const toFlatCommunicationIdentifier: (identifier: CommunicationIdentifier) => string;
 
-// @alpha
+// @beta
 export interface TogetherModeCallFeature {
-    stream: TogetherModeStreamState[];
+    seatingCoordinates: Map<string, TogetherModeSeatingCoordinatesState>;
+    streams: Map<string, TogetherModeStreamState>;
 }
 
-// @alpha
-export interface TogetherModeStreamState {
+// @beta
+export interface TogetherModeSeatingCoordinatesState {
+    // (undocumented)
+    height: number;
+    // (undocumented)
+    left: number;
+    // (undocumented)
+    top: number;
+    // (undocumented)
+    width: number;
+}
+
+// @beta
+export interface TogetherModeStreamState extends CallFeatureStreamState {
     id: number;
     // @public
     isReceiving: boolean;

@@ -27,6 +27,8 @@ import {
   StopCaptionsAdapterOptions
 } from '../../CallComposite/adapter/CallAdapter';
 import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
+/* @conditional-compile-remove(together-mode) */
+import { TogetherModeStreamViewResult } from '@internal/react-components/dist/dist-esm/types';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
@@ -134,6 +136,11 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
     options?: VideoStreamOptions
   ): Promise<void | CreateVideoStreamViewResult> =>
     await this.callWithChatAdapter.createStreamView(remoteUserId, options);
+  /* @conditional-compile-remove(together-mode) */
+  public createTogetherModeStreamViews = async (
+    options?: VideoStreamOptions
+  ): Promise<void | TogetherModeStreamViewResult> =>
+    await this.callWithChatAdapter.createTogetherModeStreamViews(options);
   public disposeStreamView = async (remoteUserId?: string, options?: VideoStreamOptions): Promise<void> =>
     await this.callWithChatAdapter.disposeStreamView(remoteUserId, options);
   public disposeScreenShareStreamView(remoteUserId: string): Promise<void> {
@@ -145,6 +152,9 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
   public disposeLocalVideoStreamView(): Promise<void> {
     return this.callWithChatAdapter.disposeLocalVideoStreamView();
   }
+  /* @conditional-compile-remove(together-mode) */
+  public disposeTogetherModeStreamViews = async (): Promise<void> =>
+    await this.callWithChatAdapter.disposeTogetherModeStreamViews();
   public holdCall = async (): Promise<void> => {
     await this.callWithChatAdapter.holdCall();
   };
