@@ -54,7 +54,11 @@ test.describe('Call Composite E2E Configuration Screen Tests', () => {
   //
   // Updating local video streams before joinging a call is a non-trivial operation.
   // TODO(prprabhu) Rename this test once metrics show that it has been stabilized.
-  test('local device settings can toggle camera & audio', async ({ page }) => {
+  test('local device settings can toggle camera & audio', async ({ pages }) => {
+    const page = pages[0];
+    if (!page) {
+      throw new Error('Pages[0] not found');
+    }
     await pageClick(page, dataUiId('call-composite-local-device-settings-microphone-button'));
     await pageClick(page, dataUiId('call-composite-local-device-settings-camera-button'));
     await waitForFunction(page, () => {
@@ -100,7 +104,7 @@ test.describe('Call Composite E2E CallPage Tests', () => {
   // and hence the flakiness introduced in CI due to dependence on live services.
   //
   // TODO(prprabhu) Rename this test to better reflect the intent once metrics show that this test is stable.
-  test('can turn off local video', async ({ pages, page: page0 }) => {
+  test('can turn off local video', async ({ pages }) => {
     // First, ensure all pages' videos load correctly.
     for (const [idx, page] of pages.entries()) {
       await page.bringToFront();
@@ -108,6 +112,10 @@ test.describe('Call Composite E2E CallPage Tests', () => {
     }
 
     // Then turn off video and check again.
+    const page0 = pages[0];
+    if (!page0) {
+      throw new Error('Pages[0] not found');
+    }
     await pageClick(page0, dataUiId('call-composite-camera-button'));
 
     // We turned off 1 video.

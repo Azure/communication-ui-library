@@ -23,7 +23,11 @@ test.describe('CallWithChat Composite Pre-Join Tests', () => {
     await callWithChatTestSetup({ pages, users, serverUrl });
   });
 
-  test('Pre-join screen loads correctly', async ({ page }) => {
+  test('Pre-join screen loads correctly', async ({ pages }) => {
+    const page = pages[0];
+    if (!page) {
+      throw new Error('Pages[0] not found');
+    }
     expect(await stableScreenshot(page)).toMatchSnapshot(`call-with-chat-pre-join-screen.png`);
   });
 });

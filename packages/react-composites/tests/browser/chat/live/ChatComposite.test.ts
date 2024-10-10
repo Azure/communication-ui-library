@@ -16,7 +16,11 @@ test.describe('Chat Composite E2E Tests', () => {
     await chatTestSetup({ pages, users, serverUrl });
   });
 
-  test('composite pages load completely', async ({ page }) => {
+  test('composite pages load completely', async ({ pages }) => {
+    const page = pages[0];
+    if (!page) {
+      throw new Error('Pages[0] not found');
+    }
     expect(await page.screenshot()).toMatchSnapshot(`chat-screen.png`);
   });
 
