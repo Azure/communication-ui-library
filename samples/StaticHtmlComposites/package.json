@@ -46,7 +46,6 @@
     "dotenv": "^10.0.0",
     "env-cmd": "^10.1.0",
     "html-webpack-plugin": "^5.3.1",
-    "http": "^0.0.1-security",
     "http-server": "14.1.1",
     "if-env": "^1.0.4",
     "rimraf": "^2.6.2",
