@@ -16,6 +16,7 @@ export const RichTextEditorToggle = (props: RichTextEditorToggleProps): JSX.Elem
   return (
     <Toggle
       label="Enable Rich Text Editor"
+      defaultChecked
       onChange={(_, checked) => {
         props.setRichTextEditorIsEnabled(!!checked);
       }}
