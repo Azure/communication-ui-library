@@ -155,6 +155,12 @@
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "4.15.2",
     "webpack": "5.95.0",
-    "yargs": "^17.7.2"
+    "yargs": "^17.7.2",
+    "synckit": "0.8.8"
+  },
+  "overrides": {    
+    "eslint-plugin-prettier": {      
+      "synckit": "0.8.8"    
+    }  
   }
 }
