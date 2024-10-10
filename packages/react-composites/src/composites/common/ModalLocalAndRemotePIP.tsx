@@ -64,7 +64,13 @@ export const ModalLocalAndRemotePIP = (props: {
 
   const onTouchEnd = useCallback(
     (event: React.TouchEvent) => {
-      if (touchStartTouches && touchStartTouches.length === 1 && event.changedTouches.length === 1) {
+      if (
+        touchStartTouches &&
+        touchStartTouches[0] &&
+        touchStartTouches.length === 1 &&
+        event.changedTouches[0] &&
+        event.changedTouches.length === 1
+      ) {
         const touchStartTouch = touchStartTouches[0];
         const touchEndTouch = event.changedTouches[0];
         if (

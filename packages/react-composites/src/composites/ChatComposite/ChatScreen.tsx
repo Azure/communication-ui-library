@@ -200,13 +200,9 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     if (message === undefined) {
       return;
     }
-    const resourceCache = message.resourceCache;
-    if (
-      overlayImageItemRef.current.imageSrc === '' &&
-      resourceCache &&
-      resourceCache[overlayImageItemRef.current.imageUrl]
-    ) {
-      const fullSizeImageSrc = getResourceSourceUrl(resourceCache[overlayImageItemRef.current.imageUrl]);
+    const resourceFetchResult = message.resourceCache?.[overlayImageItemRef.current.imageUrl];
+    if (overlayImageItemRef.current.imageSrc === '' && resourceFetchResult) {
+      const fullSizeImageSrc = getResourceSourceUrl(resourceFetchResult);
       if (
         fullSizeImageSrc === undefined ||
         fullSizeImageSrc === '' ||
@@ -349,22 +345,21 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const onInlineImageClicked = useCallback(
     (attachmentId: string, messageId: string) => {
       const message: ChatMessageWithStatus | undefined = adapterChatMessages[messageId];
-      const inlinedImages = message.content?.attachments?.filter((attachment) => {
+      const inlinedImages = message?.content?.attachments?.filter((attachment) => {
         return attachment.attachmentType === 'image' && attachment.id === attachmentId;
       });
 
-      if (!inlinedImages || inlinedImages.length <= 0) {
+      const attachment = inlinedImages?.[0];
+      if (!attachment) {
         return;
       }
 
-      const attachment = inlinedImages[0];
-
-      const resourceCache = message.resourceCache;
       let imageSrc = '';
 
       if (attachment.url) {
-        if (resourceCache && resourceCache[attachment.url]) {
-          imageSrc = getResourceSourceUrl(resourceCache[attachment.url]);
+        const resourceFetchResult = message?.resourceCache?.[attachment.url];
+        if (resourceFetchResult) {
+          imageSrc = getResourceSourceUrl(resourceFetchResult);
         } else {
           adapter.downloadResourceToCache({
             threadId,
@@ -375,16 +370,16 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       }
 
       const titleIconRenderOptions = {
-        text: message.senderDisplayName,
+        text: message?.senderDisplayName,
         size: PersonaSize.size32,
         showOverflowTooltip: false,
-        imageAlt: message.senderDisplayName
+        imageAlt: message?.senderDisplayName
       };
 
-      const messageSenderId = message.sender !== undefined ? toFlatCommunicationIdentifier(message.sender) : userId;
+      const messageSenderId = message?.sender !== undefined ? toFlatCommunicationIdentifier(message.sender) : userId;
       const titleIcon = onRenderAvatarCallback && onRenderAvatarCallback(messageSenderId, titleIconRenderOptions);
       const overlayImage: OverlayImageItem = {
-        title: message.senderDisplayName || '',
+        title: message?.senderDisplayName || '',
         titleIcon: titleIcon,
         attachmentId: attachment.id,
         imageSrc: imageSrc,
@@ -410,12 +405,12 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       }
 
       let pointerEvents: 'none' | 'auto' = inlineImage.imageAttributes.src === '' ? 'none' : 'auto';
-      const resourceCache = message.resourceCache;
+      const resourceCache = message?.resourceCache;
       if (
         resourceCache &&
         attachment.previewUrl &&
         resourceCache[attachment.previewUrl] &&
-        resourceCache[attachment.previewUrl].error
+        resourceCache[attachment.previewUrl]?.error
       ) {
         pointerEvents = 'none';
       }

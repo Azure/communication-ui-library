@@ -47,7 +47,7 @@ export const MeetingPhoneInfoPaneContent = (props: {
             <Text className={phoneInfoTextStyle}>{localeStrings.meetingConferencePhoneInfoModalNoPhoneAvailable}</Text>
           </Stack>
         )}
-        {conferencePhoneInfoList && conferencePhoneInfoList.length > 0 && (
+        {conferencePhoneInfoList && conferencePhoneInfoList[0] && (
           <Stack>
             <Stack horizontal horizontalAlign="space-between" className={phoneInfoInstructionLine}>
               <Stack.Item>

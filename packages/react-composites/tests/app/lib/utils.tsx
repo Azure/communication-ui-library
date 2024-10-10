@@ -57,7 +57,7 @@ export function initializeIconsForUITests(): void {
  *
  * @private
  */
-export function verifyParamExists<T>(param: T, paramName: string): T {
+export function verifyParamExists<T>(param: T, paramName: string): NonNullable<T> {
   if (!param) {
     throw `${paramName} was not included in the query parameters of the URL.`;
   }

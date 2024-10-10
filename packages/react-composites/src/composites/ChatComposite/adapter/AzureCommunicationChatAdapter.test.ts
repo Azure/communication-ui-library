@@ -46,7 +46,7 @@ describe('Error is reflected in state and events', () => {
     const latestError = stateListener.state.latestErrors['ChatThreadClient.sendMessage'];
     expect(latestError).toBeDefined();
     expect(errorListener.errors.length).toBe(1);
-    expect(errorListener.errors[0].target).toBe('ChatThreadClient.sendMessage');
+    expect(errorListener.errors[0]?.target).toBe('ChatThreadClient.sendMessage');
   });
 
   it('when removeParticipant fails', async () => {
@@ -64,7 +64,7 @@ describe('Error is reflected in state and events', () => {
     const latestError = stateListener.state.latestErrors['ChatThreadClient.removeParticipant'];
     expect(latestError).toBeDefined();
     expect(errorListener.errors.length).toBe(1);
-    expect(errorListener.errors[0].target).toBe('ChatThreadClient.removeParticipant');
+    expect(errorListener.errors[0]?.target).toBe('ChatThreadClient.removeParticipant');
   });
 
   it('when setTopic fails', async () => {
@@ -82,7 +82,7 @@ describe('Error is reflected in state and events', () => {
     const latestError = stateListener.state.latestErrors['ChatThreadClient.updateTopic'];
     expect(latestError).toBeDefined();
     expect(errorListener.errors.length).toBe(1);
-    expect(errorListener.errors[0].target).toBe('ChatThreadClient.updateTopic');
+    expect(errorListener.errors[0]?.target).toBe('ChatThreadClient.updateTopic');
   });
 
   it('when listMessages fails on iteration', async () => {
@@ -100,7 +100,7 @@ describe('Error is reflected in state and events', () => {
     const latestError = stateListener.state.latestErrors['ChatThreadClient.listMessages'];
     expect(latestError).toBeDefined();
     expect(errorListener.errors.length).toBe(1);
-    expect(errorListener.errors[0].target).toBe('ChatThreadClient.listMessages');
+    expect(errorListener.errors[0]?.target).toBe('ChatThreadClient.listMessages');
   });
 
   it('when listMessages fails immediately', async () => {
@@ -118,7 +118,7 @@ describe('Error is reflected in state and events', () => {
     const latestError = stateListener.state.latestErrors['ChatThreadClient.listMessages'];
     expect(latestError).toBeDefined();
     expect(errorListener.errors.length).toBe(1);
-    expect(errorListener.errors[0].target).toBe('ChatThreadClient.listMessages');
+    expect(errorListener.errors[0]?.target).toBe('ChatThreadClient.listMessages');
 
     threadClient.listMessages = (): PagedAsyncIterableIterator<ChatMessage> => {
       return pagedAsyncIterator([]);
@@ -142,7 +142,7 @@ describe('Error is reflected in state and events', () => {
     const latestError = stateListener.state.latestErrors['ChatThreadClient.sendTypingNotification'];
     expect(latestError).toBeDefined();
     expect(errorListener.errors.length).toBe(1);
-    expect(errorListener.errors[0].target).toBe('ChatThreadClient.sendTypingNotification');
+    expect(errorListener.errors[0]?.target).toBe('ChatThreadClient.sendTypingNotification');
   });
 
   it('when downloadResourceToCache is called should call to stateful client', async () => {

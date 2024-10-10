@@ -38,20 +38,27 @@ export const createProfileStateModifier = (
 
   return (state: CallAdapterState) => {
     const originalParticipants = state.call?.remoteParticipants;
+
     (async () => {
       let shouldNotifyUpdates = false;
-      for (const key in originalParticipants) {
+      if (!originalParticipants) {
+        return;
+      }
+
+      for (const [key, participant] of Object.entries(originalParticipants)) {
         if (cachedDisplayName[key]) {
           continue;
         }
-        const profile = await onFetchProfile(key, { displayName: originalParticipants[key].displayName });
-        if (profile?.displayName && originalParticipants[key].displayName !== profile?.displayName) {
+        const profile = await onFetchProfile(key, { displayName: participant.displayName });
+        if (profile?.displayName && participant.displayName !== profile?.displayName) {
           cachedDisplayName[key] = profile?.displayName;
           shouldNotifyUpdates = true;
         }
       }
       // notify update only when there is a change, which most likely will trigger modifier and setState again
-      shouldNotifyUpdates && notifyUpdate();
+      if (shouldNotifyUpdates) {
+        notifyUpdate();
+      }
     })();
 
     const participantsModifier = createParticipantModifier(

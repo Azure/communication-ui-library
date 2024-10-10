@@ -17,6 +17,9 @@ import { buildUrlForChatAppUsingFakeAdapter, DEFAULT_FAKE_CHAT_ADAPTER_ARGS, tes
 test.describe('Chat Composite E2E Tests', () => {
   test('participant can receive message and send readReceipt to message sender', async ({ serverUrl, page }) => {
     const messageReader = DEFAULT_FAKE_CHAT_ADAPTER_ARGS.remoteParticipants[0];
+    if (!messageReader) {
+      throw new Error('No remote participants found');
+    }
     page.goto(
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
         ...DEFAULT_FAKE_CHAT_ADAPTER_ARGS,

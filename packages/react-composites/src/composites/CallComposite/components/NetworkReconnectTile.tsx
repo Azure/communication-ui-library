@@ -80,7 +80,7 @@ export const NetworkReconnectTile = (props: NetworkReconnectTileProps): JSX.Elem
           <Text className={mergeStyles(moreDetailsStyle(palette, isVideoReady))} aria-live={'assertive'}>
             {strings.networkReconnectMoreDetails}
           </Text>
-          {isTeamsMeeting && meetingCoordinates && meetingCoordinates.length > 0 && (
+          {isTeamsMeeting && meetingCoordinates && meetingCoordinates[0] && (
             <Stack>
               <Stack horizontal horizontalAlign="center" verticalAlign="center" className={titleContainerClassName}>
                 <Text className={titleClassName}>{localeStrings.meetingConferencePhoneInfoModalTitle}</Text>

@@ -379,8 +379,8 @@ export const waitForParticipants = async (page: Page, numParticipants: number): 
 
 export const encodeQueryData = (qArgs?: { [key: string]: string }): string => {
   const qs: Array<string> = [];
-  for (const key in qArgs) {
-    qs.push(encodeURIComponent(key) + '=' + encodeURIComponent(qArgs[key]));
+  for (const [key, value] of Object.entries(qArgs || {})) {
+    qs.push(encodeURIComponent(key) + '=' + encodeURIComponent(value));
   }
   return qs.join('&');
 };

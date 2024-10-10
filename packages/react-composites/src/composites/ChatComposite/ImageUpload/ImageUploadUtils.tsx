@@ -69,10 +69,10 @@ export const getEditBoxMessagesInlineImages = (
   if (!editBoxInlineImageUploads) {
     return;
   }
-  const messageIds = Object.keys(editBoxInlineImageUploads || {});
+
   const messagesInlineImagesWithProgress: Record<string, AttachmentMetadataInProgress[]> = {};
-  messageIds.map((messageId) => {
-    const messageUploads = editBoxInlineImageUploads[messageId].map((upload) => {
+  Object.entries(editBoxInlineImageUploads || {}).map(([messageId, attachmentUploads]) => {
+    const messageUploads = attachmentUploads.map((upload) => {
       return upload.metadata;
     });
     messagesInlineImagesWithProgress[messageId] = messageUploads;
@@ -142,6 +142,14 @@ const generateUploadTask = async (
   messageId: string,
   inlineImageUploadActionHandler: Dispatch<ImageActions>
 ): Promise<AttachmentUpload | undefined> => {
+  if (!imageAttributes.src) {
+    console.error('Cannot upload image - Image src is not provided');
+    return;
+  }
+  if (!imageAttributes.id) {
+    console.error('Cannot upload image - Image id is not provided');
+    return;
+  }
   const imageData = await getInlineImageData(imageAttributes.src);
   if (!imageData) {
     return;
@@ -256,11 +264,16 @@ export const cancelInlineImageUpload = (
   inlineImageUploadActionHandler: Dispatch<ImageActions>,
   adapter: ChatAdapter
 ): void => {
+  if (!imageAttributes.id) {
+    console.error('Cannot cancel image upload - Image id is not provided');
+    return;
+  }
+
   if (!imageUploads || !imageUploads[messageId]) {
     deleteExistingInlineImageForEditBox(imageAttributes.id, messageId, adapter);
     return;
   }
-  const imageUpload = imageUploads[messageId].find((upload) => upload.metadata.id === imageAttributes.id);
+  const imageUpload = imageUploads[messageId]?.find((upload) => upload.metadata.id === imageAttributes.id);
 
   if (!imageUpload || !imageUpload?.metadata.id) {
     deleteExistingInlineImageForEditBox(imageAttributes.id, messageId, adapter);
@@ -310,7 +323,7 @@ export const updateContentStringWithUploadedInlineImages = (
   const messageUploads = imageUploads[messageId];
   const document = new DOMParser().parseFromString(content ?? '', 'text/html');
   document.querySelectorAll('img').forEach((img) => {
-    const uploadInlineImage = messageUploads.find(
+    const uploadInlineImage = messageUploads?.find(
       (upload) => !upload.metadata.error && upload.metadata.progress === 1 && upload.metadata.id === img.id
     );
 

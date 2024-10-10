@@ -155,6 +155,9 @@ const TransferTile = (props: TransferTileProps): JSX.Element => {
 
   const observer = useRef(
     new ResizeObserver((entries): void => {
+      if (!entries[0]) {
+        return;
+      }
       const { width, height } = entries[0].contentRect;
       const personaSize = Math.min(width, height) / 2;
       setPersonaSize(Math.max(Math.min(personaSize, 150), 32));

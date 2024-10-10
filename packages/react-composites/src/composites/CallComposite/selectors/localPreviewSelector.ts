@@ -13,7 +13,7 @@ export const localPreviewSelector = reselect.createSelector([getDeviceManager], 
   const view =
     deviceManager.cameras.length > 0 && // This ensures that the video stream is reset if camera devices are removed.
     deviceManager.unparentedViews.length > 0 &&
-    deviceManager.unparentedViews[0].view;
+    deviceManager.unparentedViews[0]?.view;
   return {
     videoStreamElement: view ? view.target : null
   };

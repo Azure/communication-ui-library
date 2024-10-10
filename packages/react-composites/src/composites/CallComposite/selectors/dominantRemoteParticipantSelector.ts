@@ -28,7 +28,7 @@ export const dominantRemoteParticipantSelector = reselect.createSelector(
 const findDominantRemoteParticipant = (
   remoteParticipants: { [keys: string]: RemoteParticipantState },
   dominantSpeakerIds: string[]
-): RemoteParticipantState => {
+): RemoteParticipantState | undefined => {
   let dominantRemoteParticipantId = dominantSpeakerIds[0];
 
   // Fallback to using the first remote participant if there are no dominant speaker IDs
@@ -38,5 +38,5 @@ const findDominantRemoteParticipant = (
     dominantRemoteParticipantId = remoteParticipantIds[0];
   }
 
-  return remoteParticipants[dominantRemoteParticipantId];
+  return dominantRemoteParticipantId ? remoteParticipants[dominantRemoteParticipantId] : undefined;
 };

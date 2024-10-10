@@ -38,6 +38,11 @@ test.describe('Call Composite E2E Configuration Screen Tests', () => {
     for (let i = 0; i < pages.length; i++) {
       const page = pages[i];
       const user = users[i];
+
+      if (!user || !page) {
+        throw new Error('Page and user must be defined');
+      }
+
       user.groupId = newTestGuid;
 
       await page.goto(buildUrl(serverUrl, user));
@@ -51,6 +56,9 @@ test.describe('Call Composite E2E Configuration Screen Tests', () => {
   // TODO(prprabhu) Rename this test once metrics show that it has been stabilized.
   test('local device settings can toggle camera & audio', async ({ pages }) => {
     const page = pages[0];
+    if (!page) {
+      throw new Error('Pages[0] not found');
+    }
     await pageClick(page, dataUiId('call-composite-local-device-settings-microphone-button'));
     await pageClick(page, dataUiId('call-composite-local-device-settings-camera-button'));
     await waitForFunction(page, () => {
@@ -72,6 +80,11 @@ test.describe('Call Composite E2E CallPage Tests', () => {
     for (let i = 0; i < pages.length; i++) {
       const page = pages[i];
       const user = users[i];
+
+      if (!user || !page) {
+        throw new Error('Page and user must be defined');
+      }
+
       user.groupId = newTestGuid;
 
       await page.goto(buildUrl(serverUrl, user));
@@ -93,21 +106,22 @@ test.describe('Call Composite E2E CallPage Tests', () => {
   // TODO(prprabhu) Rename this test to better reflect the intent once metrics show that this test is stable.
   test('can turn off local video', async ({ pages }) => {
     // First, ensure all pages' videos load correctly.
-    for (const idx in pages) {
-      const page = pages[idx];
+    for (const [idx, page] of pages.entries()) {
       await page.bringToFront();
       expect(await stableScreenshot(page)).toMatchSnapshot(`video-gallery-page-${idx}.png`);
     }
 
     // Then turn off video and check again.
-    const page = pages[0];
-    await pageClick(page, dataUiId('call-composite-camera-button'));
+    const page0 = pages[0];
+    if (!page0) {
+      throw new Error('Pages[0] not found');
+    }
+    await pageClick(page0, dataUiId('call-composite-camera-button'));
 
     // We turned off 1 video.
     await waitForCallPageParticipantVideos(pages, pages.length - 1);
 
-    for (const idx in pages) {
-      const page = pages[idx];
+    for (const [idx, page] of pages.entries()) {
       await page.bringToFront();
       expect(await stableScreenshot(page)).toMatchSnapshot(`video-gallery-camera-off-page-${idx}.png`);
     }
