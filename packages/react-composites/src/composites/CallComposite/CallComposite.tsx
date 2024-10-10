@@ -64,6 +64,7 @@ import { SurveyPage } from './pages/SurveyPage';
 import { useAudio } from '../common/AudioProvider';
 
 import { complianceBannerSelector } from './selectors/complianceBannerSelector';
+import { devicePermissionSelector } from './selectors/devicePermissionSelector';
 
 /**
  * Props for {@link CallComposite}.
@@ -365,6 +366,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   const hasMicrophones = microphonesCount > 0;
 
   const role = useSelector(getRole);
+  const { video: cameraHasPermission, audio: micHasPermission } = useSelector(devicePermissionSelector);
 
   useEffect(() => {
     (async () => {
@@ -374,9 +376,13 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
         constrain.audio = props.options?.deviceChecks?.microphone === 'doNotPrompt' ? false : constrain.audio;
         constrain.video = props.options?.deviceChecks?.camera === 'doNotPrompt' ? false : constrain.video;
       }
-      await adapter.askDevicePermission(constrain);
-      adapter.queryCameras();
-      adapter.queryMicrophones();
+      const permissionsResult = await adapter.askDevicePermission(constrain);
+      if (permissionsResult?.audio) {
+        adapter.queryMicrophones();
+      }
+      if (permissionsResult?.video) {
+        adapter.queryCameras();
+      }
       adapter.querySpeakers();
     })();
   }, [
@@ -387,7 +393,10 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
     // Ensure we re-ask for permissions if the number of devices goes from 0 -> n during a call
     // as we cannot request permissions when there are no devices.
     hasCameras,
-    hasMicrophones
+    hasMicrophones,
+    // Ensure we re-query for devices when permission for the device is granted.
+    cameraHasPermission,
+    micHasPermission
   ]);
 
   const { callInvitationUrl, onFetchAvatarPersonaData, onFetchParticipantMenuItems } = props;
