@@ -143,7 +143,7 @@ test.describe('Overflow gallery tests', async () => {
   test('Overflow gallery should have multiple calling participants in the grid and overflow when there are no overflow participants', async ({
     page,
     serverUrl
-  }, testInfo) => {
+  }) => {
     const paul = defaultMockRemoteParticipant('Paul Bridges');
     paul.isSpeaking = true;
     const fiona = defaultMockRemoteParticipant('Fiona Harper');
