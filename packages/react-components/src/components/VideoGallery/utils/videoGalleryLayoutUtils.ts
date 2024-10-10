@@ -89,6 +89,10 @@ const getOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedPa
 
   let gridParticipants = newGridParticipants;
   let overflowGalleryParticipants = newOverflowGalleryParticipants;
+
+  // Add the participants being called into the call.
+  // If there are already overflow participants, add these to the array of overflow participants
+  // Otherwise, add the maximum number to the main grid, then put the rest in the overflow
   if (overflowGalleryParticipants.length === 0) {
     const numberOfCallingParticipantsInGrid = maxGridParticipants - gridParticipants.length;
     const gridCallingParticipants = callingParticipants.slice(0, numberOfCallingParticipantsInGrid);
