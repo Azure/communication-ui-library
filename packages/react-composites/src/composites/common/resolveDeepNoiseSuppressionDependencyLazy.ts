@@ -10,7 +10,7 @@ import { DeepNoiseSuppressionEffectDependency } from '@internal/calling-componen
 /**
  *
  * Dependency resolution for video background effects using lazy loading.
- * @beta
+ * @public
  */
 export const onResolveDeepNoiseSuppressionDependencyLazy = async (): Promise<DeepNoiseSuppressionEffectDependency> => {
   const module = await import('@azure/communication-calling-effects');
