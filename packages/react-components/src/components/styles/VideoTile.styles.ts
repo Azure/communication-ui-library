@@ -229,7 +229,7 @@ export const loadSpinnerStyles = (theme: ITheme, isOverLay: boolean): ISpinnerSt
     },
     label: {
       fontSize: '1rem',
-      color: isOverLay ? theme.palette.white : theme.palette.themePrimary
+      color: isOverLay ? 'white' : theme.palette.themePrimary
     }
   };
 };
