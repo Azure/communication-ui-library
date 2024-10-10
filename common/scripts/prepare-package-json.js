@@ -13,6 +13,7 @@ const main = () => {
 
     delete result.devDependencies;
     delete result.beachball;
+    delete result.overrides;
 
     // write back to the package.json
     fs.writeFileSync(packagePath, JSON.stringify(result, null, 2));
