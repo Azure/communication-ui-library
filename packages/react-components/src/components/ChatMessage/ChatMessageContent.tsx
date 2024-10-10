@@ -272,7 +272,7 @@ const processHtmlToReact = (props: ChatMessageContentProps): JSX.Element => {
       if (domNode instanceof DOMElement && domNode.attribs) {
         // Transform custom rendering of mentions
         /* @conditional-compile-remove(mention) */
-        if (domNode.name === 'msft-mention') {
+        if (domNode.name === 'msft-mention' && domNode.attribs.id) {
           const { id } = domNode.attribs;
           const mention: Mention = {
             id: id,
@@ -286,7 +286,9 @@ const processHtmlToReact = (props: ChatMessageContentProps): JSX.Element => {
 
         // Transform inline images
         if (domNode.name && domNode.name === 'img' && domNode.attribs && domNode.attribs.id) {
-          domNode.attribs['aria-label'] = domNode.attribs.name;
+          if (domNode.attribs.name) {
+            domNode.attribs['aria-label'] = domNode.attribs.name;
+          }
           const imgProps = attributesToProps(domNode.attribs);
           const inlineImageProps: InlineImage = { messageId: props.message.messageId, imageAttributes: imgProps };
 
@@ -327,7 +329,7 @@ const decodeEntities = (encodedString: string): string => {
       // Find all matches of HTML entities defined in translate_re and
       // replace them with the corresponding character from the translate object.
       .replace(translate_re, function (match, entity) {
-        return translate[entity];
+        return translate[entity] ?? match;
       })
       // Find numeric entities (e.g., &#65;)
       // and replace them with the equivalent character using the String.fromCharCode method,

@@ -162,7 +162,7 @@ export const MeetingConferencePhoneInfoModal = (props: MeetingConferencePhoneInf
                   </Stack.Item>
                 </Stack>
               </Stack.Item>
-              <Text className={phoneInfoTextStyle}>{formatMeetingId(conferencePhoneInfoList[0].conferenceId)}</Text>
+              <Text className={phoneInfoTextStyle}>{formatMeetingId(conferencePhoneInfoList[0]?.conferenceId)}</Text>
             </Stack>
             <Stack horizontal horizontalAlign="space-between" verticalAlign="center">
               <Stack horizontal>
