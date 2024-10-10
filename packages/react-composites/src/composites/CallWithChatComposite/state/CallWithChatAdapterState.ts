@@ -90,17 +90,14 @@ export interface CallWithChatClientState {
   /* @conditional-compile-remove(DNS) */
   /**
    * Dependency to be injected for deep noise suppression effect.
-   * @beta
    */
   onResolveDeepNoiseSuppressionDependency?: () => Promise<DeepNoiseSuppressionEffectDependency>;
   /* @conditional-compile-remove(DNS) */
   /** State to track whether the noise suppression should be on by default.
-   * @beta
    */
   deepNoiseSuppressionOnByDefault?: boolean;
   /* @conditional-compile-remove(DNS) */
   /** State to track whether to hide the noise suppression button.
-   * @beta
    */
   hideDeepNoiseSuppressionButton?: boolean;
 
