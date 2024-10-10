@@ -212,7 +212,8 @@ export const _LocalVideoTile = React.memo(
       showCameraSwitcherInLocalPreview,
       props.participantsCount,
       strings?.waitingScreenText,
-      theme
+      theme,
+      isScreenSharingOn
     ]);
 
     const videoTileOverlay = useMemo(() => {
