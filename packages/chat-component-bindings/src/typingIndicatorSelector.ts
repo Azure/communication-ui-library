@@ -17,8 +17,8 @@ const filterTypingIndicators = (
   const filteredTypingIndicators: TypingIndicatorReceivedEvent[] = [];
   const seen = new Set();
   const date8SecondsAgo = new Date(Date.now() - MINIMUM_TYPING_INTERVAL_IN_MILLISECONDS);
-  for (let i = typingIndicators.length - 1; i >= 0; i--) {
-    const typingIndicator = typingIndicators[i];
+  const reversedTypingIndicators = typingIndicators.toReversed();
+  for (const typingIndicator of reversedTypingIndicators) {
     if (toFlatCommunicationIdentifier(typingIndicator.sender) === userId) {
       continue;
     }
