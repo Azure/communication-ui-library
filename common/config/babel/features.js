@@ -77,8 +77,6 @@ module.exports = {
     "call-participants-locator",
     // feature for breakout rooms
     "breakout-rooms",
-    // feature for adding JS helpers to the UI library API
-    "composite-js-helpers"
   ],
   stable: [
     // Demo feature. Used in live-documentation of conditional compilation.
@@ -94,6 +92,8 @@ module.exports = {
     "notifications",
     // Feature for tracking beta start call identifier
     'start-call-beta',
+    // feature for adding JS helpers to the UI library API
+    "composite-js-helpers",
     // Soft Mute feature for ACS calls and Interop calls
     "soft-mute"
   ]

@@ -15,13 +15,18 @@ import {
   CallAndChatLocator,
   CallWithChatCompositeOptions,
   createAzureCommunicationCallWithChatAdapter,
-  CallWithChatComposite
+  CallWithChatComposite,
+  AzureCommunicationCallAdapterOptions
 } from '@internal/react-composites';
 import { initializeIcons } from '@fluentui/react';
 
 /**
  * Props for the CallWithChatComposite that you can use in your application.
- * @beta
+ *
+ * Contains two options bags:
+ * - adapterOptions: Options for the {@link AzureCommunicationCallAdapterOptions}
+ * - callCompositeOptions: Options for the {@link CallWithChatComposite} {@link CallWithChatCompositeOptions}
+ * @public
  */
 export type CallWithChatCompositeLoaderProps = {
   userId: string;
@@ -29,31 +34,39 @@ export type CallWithChatCompositeLoaderProps = {
   displayName: string;
   endpoint: string;
   locator: CallAndChatLocator;
+  callAdapterOptions?: AzureCommunicationCallAdapterOptions;
+  callWithChatCompositeOptions?: CallWithChatCompositeOptions;
 };
 
 /**
- * Props for the CallWithChatComposite that you can use in your application.
- * @beta
+ * Props for the CallWithChatComposite that you can use in your application. This
+ * function will load the CallWithChatComposite into the provided HTML element.
+ * The best use case for this is in a Node UI framework that is not React based.
+ *
+ * @public
  */
 export const loadCallWithChatComposite = async function (
-  args: CallWithChatCompositeLoaderProps,
-  htmlElement: HTMLElement | null,
-  props: CallWithChatCompositeOptions
+  loaderArgs: CallWithChatCompositeLoaderProps,
+  htmlElement: HTMLElement
 ): Promise<CallWithChatAdapter | undefined> {
   initializeIcons();
-  const { userId, token, displayName, endpoint, locator } = args;
+  const { userId, token, displayName, endpoint, locator, callAdapterOptions, callWithChatCompositeOptions } =
+    loaderArgs;
   const adapter = await createAzureCommunicationCallWithChatAdapter({
     userId: fromFlatCommunicationIdentifier(userId) as CommunicationUserIdentifier,
     displayName: displayName ?? 'anonymous',
     credential: new AzureCommunicationTokenCredential(token),
     endpoint: endpoint,
-    locator: locator
+    locator: locator,
+    callAdapterOptions
   });
 
   if (!htmlElement) {
     throw new Error('Failed to find the root element');
   }
 
-  createRoot(htmlElement).render(React.createElement(CallWithChatComposite, { options: props, adapter }, null));
+  createRoot(htmlElement).render(
+    React.createElement(CallWithChatComposite, { options: callWithChatCompositeOptions, adapter }, null)
+  );
   return adapter;
 };
