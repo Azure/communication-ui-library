@@ -28,7 +28,7 @@ export const createMockIterator = <T>(mockItems: T[]): any => {
       return {
         next() {
           if (i < end) {
-            const page: T[] = [];
+            const page: (T | undefined)[] = [];
             for (let j = 0; j < pageSize; j++) {
               if (i >= end) {
                 break;
