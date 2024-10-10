@@ -295,8 +295,14 @@ export interface TogetherModeCallFeatureState {
 /**
  * @beta
  */
+export type CallFeatureStreamName = 'togetherMode';
+
+/* @conditional-compile-remove(together-mode) */
+/**
+ * @beta
+ */
 export interface CallFeatureStreamState {
-  feature: 'togetherMode';
+  feature: CallFeatureStreamName;
 }
 
 /* @conditional-compile-remove(together-mode) */

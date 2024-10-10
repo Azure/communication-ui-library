@@ -662,7 +662,7 @@ export interface CallAdapterCallOperations {
    *
    * @beta
    */
-  disposeTogetherModeStreamViews(options?: VideoStreamOptions): Promise<void>;
+  disposeTogetherModeStreamViews(): Promise<void>;
   /**
    * Dispose the html view for a screen share stream
    *
