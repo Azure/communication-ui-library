@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "area": "feature",
+  "workstream": "togetherMode",
+  "comment": "Implemented support logic for call feature streams. This functionality will facilitate the creation of call feature streams that are independent of any participant in the call or the device manager",
+  "packageName": "@azure/communication-react",
+  "dependentChangeType": "patch"
+}
