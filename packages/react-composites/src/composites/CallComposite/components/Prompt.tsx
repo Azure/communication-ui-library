@@ -44,7 +44,12 @@ export const Prompt = (props: PromptProps): JSX.Element => {
     <Modal styles={styles} isOpen={props.isOpen} onDismiss={props.onDismiss} isBlocking={false}>
       <Stack className={mergeStyles({ position: 'relative' })}>
         <Text className={mergeStyles({ fontWeight: 600, fontSize: '1.25rem' })}>{props.heading}</Text>
-        <IconButton styles={iconButtonStyles(theme)} iconProps={{ iconName: 'Cancel' }} onClick={props.onCancel} ariaLabel={props.closeButtonLabel}/>
+        <IconButton
+          styles={iconButtonStyles(theme)}
+          iconProps={{ iconName: 'Cancel' }}
+          onClick={props.onCancel}
+          ariaLabel={props.closeButtonLabel}
+        />
       </Stack>
       <Stack verticalAlign="center" className={mergeStyles({ minHeight: '6rem' })}>
         <Text className={mergeStyles({ fontSize: '0.875rem' })}>{props.text}</Text>
