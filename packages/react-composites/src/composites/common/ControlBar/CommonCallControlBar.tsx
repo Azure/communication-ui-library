@@ -224,7 +224,9 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
   }, [props.callAdapter]);
 
   /* @conditional-compile-remove(DNS) */
-  const environmentInfo = props.callAdapter.getState().environmentInfo;
+  let environmentInfo = undefined;
+  /* @conditional-compile-remove(unsupported-browser) */
+  environmentInfo = props.callAdapter.getState().environmentInfo;
 
   /* @conditional-compile-remove(DNS) */
   const isSafari = _isSafari(environmentInfo);
