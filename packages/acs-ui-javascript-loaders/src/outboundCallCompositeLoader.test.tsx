@@ -46,7 +46,7 @@ describe('CallCompositeLoader tests', () => {
       token: 'token',
       displayName: 'displayName',
       targetCallees: [{ phoneNumber: '+14035556666' }],
-      adapterOptions: { callingSounds: { callEnded: { url: 'test/url/ended' } } },
+      callAdapterOptions: { callingSounds: { callEnded: { url: 'test/url/ended' } } },
       callCompositeOptions: mockCompositeOptions
     };
 
