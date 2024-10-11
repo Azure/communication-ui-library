@@ -26,11 +26,9 @@ export interface EndCallButtonStrings {
   /** Tooltip content. */
   tooltipContent?: string;
 
-  /* @conditional-compile-remove(end-call-options) */
   /** Label for leave option when ending call */
   leaveOption?: string;
 
-  /* @conditional-compile-remove(end-call-options) */
   /** Label for end the whole call option when ending call */
   endCallOption?: string;
 }
@@ -47,7 +45,6 @@ export interface EndCallButtonProps extends ControlBarButtonProps {
    */
   onHangUp?: (forEveryone?: boolean) => Promise<void>;
 
-  /* @conditional-compile-remove(end-call-options) */
   /**
    * Set this to true to make it a split button.
    * The split arrow will trigger a contextual menu to allow end for everyone or just for the user.
@@ -73,7 +70,7 @@ const spacerClass = mergeStyles({
  * @public
  */
 export const EndCallButton = (props: EndCallButtonProps): JSX.Element => {
-  const { styles, /* @conditional-compile-remove(end-call-options) */ enableEndCallMenu, onHangUp } = props;
+  const { styles, enableEndCallMenu, onHangUp } = props;
 
   const localeStrings = useLocale().strings.endCallButton;
   const strings = { ...localeStrings, ...props.strings };
@@ -82,7 +79,7 @@ export const EndCallButton = (props: EndCallButtonProps): JSX.Element => {
   const isDarkTheme = isDarkThemed(theme);
   const componentStyles = concatStyleSets(
     isDarkTheme ? darkThemeCallButtonStyles : lightThemeCallButtonStyles,
-    /* @conditional-compile-remove(end-call-options) */ enableEndCallMenu ? menupButtonPadding : {},
+    enableEndCallMenu ? menupButtonPadding : {},
     styles ?? {}
   );
 
@@ -96,7 +93,6 @@ export const EndCallButton = (props: EndCallButtonProps): JSX.Element => {
     [/* @conditional-compile-remove(end-call-options) */ enableEndCallMenu]
   );
 
-  /* @conditional-compile-remove(end-call-options) */
   const defaultMenuProps: IContextualMenuProps = {
     items: [
       {
@@ -131,7 +127,6 @@ export const EndCallButton = (props: EndCallButtonProps): JSX.Element => {
     <>
       <ControlBarButton
         {...props}
-        /* @conditional-compile-remove(end-call-options) */
         menuProps={enableEndCallMenu ? defaultMenuProps : props.menuProps}
         onClick={onHangUp ? () => onHangUp() : props.onClick}
         styles={componentStyles}

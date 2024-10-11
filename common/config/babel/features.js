@@ -86,8 +86,6 @@ module.exports = {
     "stabilizedDemo",
     // Joining calls using teams token
     "teams-identity-support",
-    // Feature for end call options 
-    'end-call-options',
     // Feature to support file sharing in Teams interoperability chats
     "file-sharing-teams-interop",
     // Feature for showing notifications
