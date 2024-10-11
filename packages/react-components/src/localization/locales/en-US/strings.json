@@ -524,6 +524,7 @@
   },
   "videoTile": {
     "participantStateRinging": "Calling...",
+    "participantReconnecting": "Reconnecting...",
     "participantStateHold": "On hold",
     "moreOptionsButtonAriaLabel": "More Options"
   },
