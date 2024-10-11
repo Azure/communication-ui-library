@@ -487,13 +487,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     };
 
     return (
-      <Stack
-        styles={localVideoTileContainerStyles}
-        key="local-video-tile-key"
-        tabIndex={0}
-        aria-label={strings.localVideoMovementAriaLabel ?? strings.localVideoMovementLabel}
-        role={'dialog'}
-      >
+      <Stack styles={localVideoTileContainerStyles} key="local-video-tile-key" role={'dialog'}>
         <_LocalVideoTile
           alwaysShowLabelBackground={videoTilesOptions?.alwaysShowLabelBackground}
           userId={localParticipant.userId}
