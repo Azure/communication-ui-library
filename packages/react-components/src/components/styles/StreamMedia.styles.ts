@@ -54,6 +54,8 @@ export const reconnectingText = (theme: Theme): string =>
     lineHeight: '3rem',
     justifyContent: 'center',
     alignItems: 'center',
+    // DarkTheme check is done cause the text color should be light in both dark and light themes
+    // due to background overlay being dark in both themes.
     color: isDarkThemed(theme) ? theme.palette.themeDarker : theme.palette.neutralLighter,
     fontSize: theme.fonts.large.fontSize
   });
