@@ -10697,10 +10697,6 @@ packages:
       - debug
     dev: false
 
-  /http@0.0.1-security:
-    resolution: {integrity: sha512-RnDvP10Ty9FxqOtPZuxtebw1j4L/WiqNMDtuc1YMH1XQm5TgDRaR1G9u8upL6KD1bXHSp9eSXo/ED+8Q7FAr+g==}
-    dev: false
-
   /https-proxy-agent@5.0.1:
     resolution: {integrity: sha512-dFcAjpTQFgoLMzC2VwU+C/CbS7uRL0lWmxDITmqm7C+7F0Odmj6s9l6alZc6AELXhrnggM2CeWSXHGOdX2YtwA==}
     engines: {node: '>= 6'}
@@ -15661,14 +15657,6 @@ packages:
     resolution: {integrity: sha512-9QNk5KwDF+Bvz+PyObkmSYjI5ksVUYtjW7AU22r2NKcfLJcXp96hkDWU3+XndOsUb+AQ9QhfzfCT2O+CNWT5Tw==}
     dev: false
 
-  /synckit@0.8.8:
-    resolution: {integrity: sha512-HwOKAP7Wc5aRGYdKH+dw0PRRpbO841v2DENBtjnR5HFWoiNByAl7vrx3p0G/rCyYXQsrxqtX48TImFtPcIHSpQ==}
-    engines: {node: ^14.18.0 || >=16.0.0}
-    dependencies:
-      '@pkgr/core': 0.1.1
-      tslib: 2.7.0
-    dev: false
-
   /synckit@0.9.1:
     resolution: {integrity: sha512-7gr8p9TQP6RAHusBOSLs46F4564ZrjV8xFmw5zCmgmhGUcw2hxsShhJ6CEiHQMgPDwAQ1fWHPM0ypc4RMAig4A==}
     engines: {node: ^14.18.0 || >=16.0.0}
@@ -17376,7 +17364,7 @@ packages:
     dev: false
 
   file:projects/acs-ui-common.tgz:
-    resolution: {integrity: sha512-0wPYOTYLeCbIoJY4sIFJSrYpShmFSbKDOEAohVt3xkwrqjwFSAQp7ti+fyTdyhJgiI5fNsU0SsT+V5OhLA/o1w==, tarball: file:projects/acs-ui-common.tgz}
+    resolution: {integrity: sha512-7CTxPCR31wvBkFzX7MPqGyHbDFKfI3MYW7RPQhX4fQ23wY+urkeML04+DZwc3yhDjLqj44HrpreVPfmtZ/CsPA==, tarball: file:projects/acs-ui-common.tgz}
     name: '@rush-temp/acs-ui-common'
     version: 0.0.0
     dependencies:
@@ -17404,7 +17392,6 @@ packages:
       react: 18.3.1
       rimraf: 2.7.1
       rollup: 4.22.4
-      synckit: 0.8.8
       ts-jest: 29.2.5(@babel/core@7.25.2)(babel-jest@29.7.0)(jest@29.7.0)(typescript@5.4.5)
       typescript: 5.4.5
     transitivePeerDependencies:
@@ -17421,7 +17408,7 @@ packages:
     dev: false
 
   file:projects/acs-ui-javascript-loaders.tgz:
-    resolution: {integrity: sha512-Y0JvME4pRn9uzDijJcL/i8Xl5v7HJE9+KSXaehtlis8X946G2UrVWs23U39oHlvc0AeyVCODEOcp2p1VxvJOmg==, tarball: file:projects/acs-ui-javascript-loaders.tgz}
+    resolution: {integrity: sha512-OCSEKRhVe1Popqj7Cy5YcZ0c6BFAiTN898VuPTPeAsfZ28xa89grbBITRnwT81T69e+i0NwbkCi8VOWAQL8m5w==, tarball: file:projects/acs-ui-javascript-loaders.tgz}
     name: '@rush-temp/acs-ui-javascript-loaders'
     version: 0.0.0
     dependencies:
@@ -17452,7 +17439,6 @@ packages:
       react-dom: 18.3.1(react@18.3.1)
       rimraf: 2.7.1
       rollup: 4.22.4
-      synckit: 0.8.8
       ts-jest: 29.2.5(@babel/core@7.25.2)(babel-jest@29.7.0)(jest@29.7.0)(typescript@5.4.5)
       typescript: 5.4.5
     transitivePeerDependencies:
@@ -17469,7 +17455,7 @@ packages:
     dev: false
 
   file:projects/calling-component-bindings.tgz:
-    resolution: {integrity: sha512-tchnylHgxEDDgou3qybbartFsSTx1elHnRnuJsLDs0Mo7jc5o/GHMdbvV78cMyuxrexk2kUfrQRU2gdPQXEfwQ==, tarball: file:projects/calling-component-bindings.tgz}
+    resolution: {integrity: sha512-bagHKgaQe5iCwuTnPV3NCH8JTSAsL77y9PjBuP8JrNgtxFfMENK6RhhRef6lH0PDbRXWFnH+TO/RFobjnDParg==, tarball: file:projects/calling-component-bindings.tgz}
     name: '@rush-temp/calling-component-bindings'
     version: 0.0.0
     dependencies:
@@ -17500,7 +17486,6 @@ packages:
       reselect: 4.1.8
       rimraf: 2.7.1
       rollup: 4.22.4
-      synckit: 0.8.8
       ts-jest: 29.2.5(@babel/core@7.25.2)(babel-jest@29.7.0)(jest@29.7.0)(typescript@5.4.5)
       typescript: 5.4.5
     transitivePeerDependencies:
@@ -17517,7 +17502,7 @@ packages:
     dev: false
 
   file:projects/calling-stateful-client.tgz:
-    resolution: {integrity: sha512-NVVmfYPBXJRH5chdmUu3GB7X5cuZiXqxIIQ2D2aRuMdczndWiJ1yWvBv1oQCdDYsw5ZokX5zeEFE/RUgPQnBZA==, tarball: file:projects/calling-stateful-client.tgz}
+    resolution: {integrity: sha512-Nm+rMX2vUAvMtN5/I3RviZhANxTyIfXcSsqLDxm5brIekkQxnmLJnEro/C2WaOBZ4BUXeIRkzrmyGTiSXrBoBw==, tarball: file:projects/calling-stateful-client.tgz}
     name: '@rush-temp/calling-stateful-client'
     version: 0.0.0
     dependencies:
@@ -17549,7 +17534,6 @@ packages:
       prettier: 3.3.2
       rimraf: 2.7.1
       rollup: 4.22.4
-      synckit: 0.8.8
       ts-jest: 29.2.5(@babel/core@7.25.2)(babel-jest@29.7.0)(jest@29.7.0)(typescript@5.4.5)
       typescript: 5.4.5
     transitivePeerDependencies:
@@ -17566,7 +17550,7 @@ packages:
     dev: false
 
   file:projects/calling.tgz:
-    resolution: {integrity: sha512-RYgXpxLA+BepYwOEGxJSMDt+v4ac8O7PxRJsPiI21qOj9rcLk/dxsfeeR7oQZRp5Fe9KHzBVcyjW3kbYnkXNXw==, tarball: file:projects/calling.tgz}
+    resolution: {integrity: sha512-/q/K23Eq/058RR6mgWV/I34rG0ec4sB1gtj8nR3GiZHwmqWbyKRxn3YOZmZBDH4XL1B/AaMJouBOahYMJKXpNA==, tarball: file:projects/calling.tgz}
     name: '@rush-temp/calling'
     version: 0.0.0
     dependencies:
@@ -17628,7 +17612,6 @@ packages:
       shake.js: 1.2.2
       source-map-explorer: 2.5.3
       style-loader: 2.0.0(webpack@5.95.0)
-      synckit: 0.8.8
       ts-loader: 8.4.0(typescript@5.4.5)(webpack@5.95.0)
       typescript: 5.4.5
       url-loader: 4.1.1(webpack@5.95.0)
@@ -17661,7 +17644,7 @@ packages:
     dev: false
 
   file:projects/callingstateful.tgz:
-    resolution: {integrity: sha512-pLDFpJbTMej6HpTwMNtKu4ZeAFah6bNgAcRdlItmAAw0EXI4/U91vG27+wb6Ezd0DfMES1lOokmW6Z0IcfwqNA==, tarball: file:projects/callingstateful.tgz}
+    resolution: {integrity: sha512-cXlZOg56Uyc3/ePlIbWrfrYWqPEMQvVZ/40m5dJkrNIqlWbNhVUrsvpO9VNJ9ChU4u01UNw3jqL8FwcXt7EPjg==, tarball: file:projects/callingstateful.tgz}
     name: '@rush-temp/callingstateful'
     version: 0.0.0
     dependencies:
@@ -17723,7 +17706,6 @@ packages:
       shake.js: 1.2.2
       source-map-explorer: 2.5.3
       style-loader: 2.0.0(webpack@5.95.0)
-      synckit: 0.8.8
       ts-loader: 8.4.0(typescript@5.4.5)(webpack@5.95.0)
       typescript: 5.4.5
       url-loader: 4.1.1(webpack@5.95.0)
@@ -17756,7 +17738,7 @@ packages:
     dev: false
 
   file:projects/callwithchat.tgz:
-    resolution: {integrity: sha512-W+RU3w7uNCAY6CLqbGaB2dT9p7lggAR5nG+vOo1ChjOEj4LlkwAuQzJ0HOQoHIilXFvKxz9tdBm0U5mHgiLVeQ==, tarball: file:projects/callwithchat.tgz}
+    resolution: {integrity: sha512-yelzzeV5uf0cMFtLqXiyeswEVnUD/i+48rQK9MbTymCKrGzFerngLrSyfS8O+7k2gkyrAUOgsG2yHbFlZMyy8A==, tarball: file:projects/callwithchat.tgz}
     name: '@rush-temp/callwithchat'
     version: 0.0.0
     dependencies:
@@ -17817,7 +17799,6 @@ packages:
       shake.js: 1.2.2
       source-map-explorer: 2.5.3
       style-loader: 2.0.0(webpack@5.95.0)
-      synckit: 0.8.8
       ts-loader: 8.4.0(typescript@5.4.5)(webpack@5.95.0)
       typescript: 5.4.5
       url-loader: 4.1.1(webpack@5.95.0)
@@ -17850,7 +17831,7 @@ packages:
     dev: false
 
   file:projects/chat-component-bindings.tgz:
-    resolution: {integrity: sha512-Aiokg9704h7JyZAMyprf3UJy5perMFdJ8LZ4QN4q/dUbgE87UwjHUW+4R996AalWhLYBkzY5ALkaTYp5JMXXWg==, tarball: file:projects/chat-component-bindings.tgz}
+    resolution: {integrity: sha512-anvdo5oAH4+IFAdlY8B3RH+ui9z5qE3hncYODByrlMIwolkj4bQcmd/JEjeY92mgM29zcM9SvP5wplAdFwPY7g==, tarball: file:projects/chat-component-bindings.tgz}
     name: '@rush-temp/chat-component-bindings'
     version: 0.0.0
     dependencies:
@@ -17879,7 +17860,6 @@ packages:
       reselect: 4.1.8
       rimraf: 2.7.1
       rollup: 4.22.4
-      synckit: 0.8.8
       typescript: 5.4.5
     transitivePeerDependencies:
       - '@types/eslint'
@@ -17892,7 +17872,7 @@ packages:
     dev: false
 
   file:projects/chat-stateful-client.tgz:
-    resolution: {integrity: sha512-9527wwN/2TugYd0UEQdUlhAsh9hkWpS/JnBDvrZq8WBF0mj6YXUIG3+4NWOENHi6IgLMcvsFrjN//rjzpXW76w==, tarball: file:projects/chat-stateful-client.tgz}
+    resolution: {integrity: sha512-4ZozyqQL/PjgRY3fvRAGc17zelvok5D6aHWKTTdlxQIpkuyG6glhgMbpDNc7ePBjcVdUpsVs4rbJGO1P6FS6zQ==, tarball: file:projects/chat-stateful-client.tgz}
     name: '@rush-temp/chat-stateful-client'
     version: 0.0.0
     dependencies:
@@ -17927,7 +17907,6 @@ packages:
       prettier: 3.3.2
       rimraf: 2.7.1
       rollup: 4.22.4
-      synckit: 0.8.8
       ts-jest: 29.2.5(@babel/core@7.25.2)(babel-jest@29.7.0)(jest@29.7.0)(typescript@5.4.5)
       typescript: 5.4.5
     transitivePeerDependencies:
@@ -17944,7 +17923,7 @@ packages:
     dev: false
 
   file:projects/chat.tgz:
-    resolution: {integrity: sha512-UwayeQuoTLXn46Z2NBex5Ch7gAE/1e+CWZqe7twwFWMfRGUDMy1YgBLWmIdQMpD5ae5rS8kyA35vCE24/jc7GQ==, tarball: file:projects/chat.tgz}
+    resolution: {integrity: sha512-hfMe2vnQyPI1r6sNRMyah874XW+bYXH578EocGAv2YUwoda0UjjbxVN9MvL+pxEnanpEdFREfyzbJ8UIikqwrg==, tarball: file:projects/chat.tgz}
     name: '@rush-temp/chat'
     version: 0.0.0
     dependencies:
@@ -18001,7 +17980,6 @@ packages:
       rimraf: 2.7.1
       shake.js: 1.2.2
       style-loader: 2.0.0(webpack@5.95.0)
-      synckit: 0.8.8
       ts-loader: 8.4.0(typescript@5.4.5)(webpack@5.95.0)
       typescript: 5.4.5
       url-loader: 4.1.1(webpack@5.95.0)
@@ -18034,7 +18012,7 @@ packages:
     dev: false
 
   file:projects/check-treeshaking.tgz:
-    resolution: {integrity: sha512-1hS20LBHVepcmUA9qasPaMv2AO9NIEwAomF7brtKYCr/wwdAJU5gndALdse7acHclpoRP4BKoGeTdRA6b9sLJg==, tarball: file:projects/check-treeshaking.tgz}
+    resolution: {integrity: sha512-erB+fijeIpXzuY8hCpJ725p9EKPD0erGW0c561VLUS1pAbSREKhzEBhojGK68y3jBoz30fRK1JL3IMP0pJvKmQ==, tarball: file:projects/check-treeshaking.tgz}
     name: '@rush-temp/check-treeshaking'
     version: 0.0.0
     dependencies:
@@ -18048,7 +18026,6 @@ packages:
       eslint-plugin-prettier: 5.2.1(eslint-config-prettier@9.1.0)(eslint@8.57.1)(prettier@3.3.2)
       prettier: 3.3.2
       rimraf: 2.7.1
-      synckit: 0.8.8
       webpack: 5.95.0(webpack-cli@5.1.4)
       webpack-cli: 5.1.4(webpack-bundle-analyzer@4.10.2)(webpack@5.95.0)
     transitivePeerDependencies:
@@ -18063,7 +18040,7 @@ packages:
     dev: false
 
   file:projects/check-typescript-regression.tgz:
-    resolution: {integrity: sha512-mUlZEPzOjYUydSvYvtGBnpI0b8xTr5QU3ZlrCW8r2A1zL1UzuIhg1aNN9N1iZ4VBWFOKG4IE09aQpxdxQ89LqQ==, tarball: file:projects/check-typescript-regression.tgz}
+    resolution: {integrity: sha512-WnHoHw1kbD6T4aAeF96X2gBqdN/l3tPFFfd6CylZhddnn+dbNFv9wnN904TiAIBYbSxBjhg9sjZGScf6zK+91g==, tarball: file:projects/check-typescript-regression.tgz}
     name: '@rush-temp/check-typescript-regression'
     version: 0.0.0
     dependencies:
@@ -18074,7 +18051,6 @@ packages:
       eslint-plugin-prettier: 5.2.1(eslint-config-prettier@9.1.0)(eslint@8.57.1)(prettier@3.3.2)
       prettier: 3.3.2
       rimraf: 2.7.1
-      synckit: 0.8.8
       typescript: 4.6.3
     transitivePeerDependencies:
       - '@types/eslint'
@@ -18082,7 +18058,7 @@ packages:
     dev: false
 
   file:projects/communication-react.tgz:
-    resolution: {integrity: sha512-16S65plQHhhaq7NnLz3YMi9eyxsu2Jzjo7xmmhOUyzms9VDn97KAUUO/tE4WeW0MKQ3k+iEkS6PEZW3KgEBS+g==, tarball: file:projects/communication-react.tgz}
+    resolution: {integrity: sha512-5rqHltREadF9EsLPIowH2mg88emQLrkrWTWysoIjBhmABB+jXKx9hFxks60sAkUdYlINFMozH5mAHVyn6WwT0A==, tarball: file:projects/communication-react.tgz}
     name: '@rush-temp/communication-react'
     version: 0.0.0
     dependencies:
@@ -18162,7 +18138,6 @@ packages:
       roosterjs-content-model-types: 9.10.0
       scheduler: 0.23.2
       source-map-explorer: 2.5.3
-      synckit: 0.8.8
       textarea-caret-ts: 4.1.1
       ts-jest: 29.2.5(@babel/core@7.25.2)(babel-jest@29.7.0)(jest@29.7.0)(typescript@5.4.5)
       ts-node: 10.9.2(@types/node@20.14.12)(typescript@5.4.5)
@@ -18189,7 +18164,7 @@ packages:
     dev: false
 
   file:projects/component-examples.tgz:
-    resolution: {integrity: sha512-llRUytdlKGFkCvlQS5nBqfAugfStmHy1O4cyZ7JEY68pWmW8YmyxfVmbUMIJG1rM8j3+iMZWmhrmjrkyQEcnlQ==, tarball: file:projects/component-examples.tgz}
+    resolution: {integrity: sha512-kELqxwXygZYjlKk/fld+kc/E/hPgydavSkXDfWlqDUcUkOfgjq+4ScUh5gdT4YEXe+/bbinW2RD3ziSm+Y3S2w==, tarball: file:projects/component-examples.tgz}
     name: '@rush-temp/component-examples'
     version: 0.0.0
     dependencies:
@@ -18229,7 +18204,6 @@ packages:
       react-dom: 18.3.1(react@18.3.1)
       rimraf: 2.7.1
       style-loader: 2.0.0(webpack@5.95.0)
-      synckit: 0.8.8
       ts-loader: 8.4.0(typescript@5.4.5)(webpack@5.95.0)
       typescript: 5.4.5
       uuid: 9.0.1
@@ -18257,7 +18231,7 @@ packages:
     dev: false
 
   file:projects/config.tgz:
-    resolution: {integrity: sha512-KqezfmWRlzwdUmWn+wrsSkO/I4iD4nEy6Gs9WyTVIw2b/U/OIIVgveHxX9Ee6+vEhSeuDXAGnkbdH+P1sLzLsA==, tarball: file:projects/config.tgz}
+    resolution: {integrity: sha512-xdEkh9H5mycFczOOmzU2Y+EADwSAA1UHjsxXEaEZjdQV7tborbQ3WIeYoOvlscUoqHelRd8qNVPAw3cJ/CPrvA==, tarball: file:projects/config.tgz}
     name: '@rush-temp/config'
     version: 0.0.0
     dependencies:
@@ -18271,7 +18245,6 @@ packages:
       rollup: 4.22.4
       rollup-plugin-sourcemaps: 0.6.3(@types/node@20.14.12)(rollup@4.22.4)
       rollup-plugin-svg: 2.0.0
-      synckit: 0.8.8
       ts-node: 10.9.2(@types/node@20.14.12)(typescript@5.4.5)
       typescript: 5.4.5
     transitivePeerDependencies:
@@ -18291,7 +18264,7 @@ packages:
     dev: false
 
   file:projects/fake-backends.tgz:
-    resolution: {integrity: sha512-4L9tDrPBa9abEgIk0J6Mgb+0dY6MgWnjg/bsvmIEwP8i/gRAy1nJq+iL8MXOZnImL9jwKPeYjuwpnBE/s10zCw==, tarball: file:projects/fake-backends.tgz}
+    resolution: {integrity: sha512-W5VVoXXZlzS8U2oLH2NtISQwQjL3qlZ9E2nx65xUBUO/wGHj03G1mG1XKos4vFDHs99auMeZLPwmL0J6s90e5w==, tarball: file:projects/fake-backends.tgz}
     name: '@rush-temp/fake-backends'
     version: 0.0.0
     dependencies:
@@ -18327,7 +18300,6 @@ packages:
       prettier: 3.3.2
       rimraf: 2.7.1
       rollup: 4.22.4
-      synckit: 0.8.8
       ts-jest: 29.2.5(@babel/core@7.25.2)(babel-jest@29.7.0)(jest@29.7.0)(typescript@5.4.5)
       typescript: 5.4.5
       webpack: 5.95.0(webpack-cli@5.1.4)
@@ -18348,7 +18320,7 @@ packages:
     dev: false
 
   file:projects/react-components.tgz:
-    resolution: {integrity: sha512-CuuOGtrSRksPfglvDO1QA9UKyiLJMGeZUTHmX9s/xXfM+WDx9RY9NV+7gmDMbJti6a13LKiedW7JYdyjhgC5WA==, tarball: file:projects/react-components.tgz}
+    resolution: {integrity: sha512-qYfk7bhLh4fsv+aaMobikL8kiCrVHCN1rh1lOKaaRfJV0qTQtn0VvlbDuRq5k0F/ic8aEco+2AwvUzsG60PwjA==, tarball: file:projects/react-components.tgz}
     name: '@rush-temp/react-components'
     version: 0.0.0
     dependencies:
@@ -18428,7 +18400,6 @@ packages:
       roosterjs-content-model-types: 9.10.0
       scheduler: 0.23.2
       source-map-explorer: 2.5.3
-      synckit: 0.8.8
       textarea-caret-ts: 4.1.1
       ts-jest: 29.2.5(@babel/core@7.25.2)(babel-jest@29.7.0)(jest@29.7.0)(typescript@5.4.5)
       ts-node: 10.9.2(@types/node@20.14.12)(typescript@5.4.5)
@@ -18550,7 +18521,6 @@ packages:
       shell-quote: 1.8.1
       source-map-explorer: 2.5.3
       style-loader: 2.0.0(webpack@5.95.0)
-      synckit: 0.8.8
       ts-jest: 29.2.5(@babel/core@7.25.2)(babel-jest@29.7.0)(jest@29.7.0)(typescript@5.4.5)
       ts-loader: 8.4.0(typescript@5.4.5)(webpack@5.95.0)
       ts-node: 10.9.2(@types/node@20.14.12)(typescript@5.4.5)
@@ -18711,7 +18681,6 @@ packages:
       react-refresh-typescript: 2.0.9(react-refresh@0.14.2)(typescript@5.4.5)
       rimraf: 2.7.1
       supertest: 6.3.4
-      synckit: 0.8.8
       ts-jest: 29.2.5(jest@29.7.0)(typescript@5.4.5)
       ts-loader: 8.4.0(typescript@5.4.5)(webpack@5.95.0)
       ts-node: 10.9.2(@types/node@20.14.12)(typescript@5.4.5)
@@ -18747,7 +18716,7 @@ packages:
     dev: false
 
   file:projects/storybook8.tgz:
-    resolution: {integrity: sha512-AexVxvi7wyWU3gjXZVI7w0kwTT8Kg1Y9i58MiiTehY38A02n0N+0DotYEkCPwZq1zjvil0jRcUJil6+lrgaPQw==, tarball: file:projects/storybook8.tgz}
+    resolution: {integrity: sha512-ZGfp3L4jxF5hibO4ju/HiGpw8yOMCVAE8wsynwAYqgpRmw2V71ixc3ubk09qTDoKzw2qaZMuIpEBdd4WqEjPfg==, tarball: file:projects/storybook8.tgz}
     name: '@rush-temp/storybook8'
     version: 0.0.0
     dependencies:
@@ -18835,7 +18804,6 @@ packages:
       source-map-explorer: 2.5.3
       storybook: 8.3.5
       styled-components: 5.3.11(@babel/core@7.25.2)(react-dom@18.3.1)(react-is@18.3.1)(react@18.3.1)
-      synckit: 0.8.8
       ts-jest: 29.2.5(@babel/core@7.25.2)(babel-jest@29.7.0)(jest@29.7.0)(typescript@5.4.5)
       ts-loader: 8.4.0(typescript@5.4.5)(webpack@5.95.0)
       ts-node: 10.9.2(@types/node@20.14.12)(typescript@5.4.5)
