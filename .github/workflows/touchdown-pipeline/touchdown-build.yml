@@ -71,15 +71,15 @@ extends:
                     # - Script to create a new branch and PR with changes
                     # ------------------------------------------------------------------------------------------------
 
-                    $teamProject = $env:SYSTEM_TEAMPROJECT
-                    $repoName= $env:Build_Repository_Name
+                    $repoOwner = "Azure"
+                    $repoName = "communication-ui-library"
                     $sourceBranch= $env:Build_SourceBranch
                     $sourceBranchName = $sourceBranch -replace "refs/heads/", ""
 
-                    Write-host "Azure DevOps organization: $env:System_TeamFoundationCollectionUri"
-                    Write-host "Team Project: $teamProject"
-                    Write-host "Repo Name: $repoName"
+                    Write-host "Repository Owner: $repoOwner"
+                    Write-host "Repository Name: $repoName"
                     Write-host "Source Branch: $sourceBranch"
+
 
                     if ("$(git status)".Contains("nothing to commit")) {
                         Write-Host "Nothing to commit, exiting immediately"
@@ -120,13 +120,13 @@ extends:
                     }
 
                     $prBody = @{
-                      "sourceRefName"  = "refs/heads/$newBranchName"
-                      "targetRefName"  = "refs/heads/$sourceBranchName"
-                      "title"          = "TDBuild PR for latest localization"
-                      "description"    = "Automated PR from pipeline to merge localization updates"
+                      "title"       = "TDBuild PR for latest localization"
+                      "head"        = $newBranchName
+                      "base"        = $sourceBranch
+                      "body"        = "Automated PR from pipeline to merge localization updates"
                     } | ConvertTo-Json
 
-                    $url = "$($env:System_TeamFoundationCollectionUri)$teamProject/_apis/git/repositories/$repoName/pullRequests?api-version=6.0"
+                    $url = "https://api.github.com/repos/$repoOwner/$repoName/pulls"
                     $response = Invoke-RestMethod -Uri $url -Method Post -Body $prBody -Headers $headers
 
                     if (!$response) {
