@@ -89,19 +89,16 @@ export interface MicrophoneButtonStrings {
   /* @conditional-compile-remove(DNS) */
   /**
    * Title for deep noise suppression button
-   * @beta
    */
   deepNoiseSuppressionTitle?: string;
   /* @conditional-compile-remove(DNS) */
   /**
    * Noise Suppression turned on string for announcer
-   * @beta
    */
   deepNoiseSuppressionOnAnnouncement?: string;
   /* @conditional-compile-remove(DNS) */
   /**
    * Noise Suppression turned off string for announcer
-   * @beta
    */
   deepNoiseSuppressionOffAnnouncement?: string;
 }
@@ -182,22 +179,16 @@ export interface MicrophoneButtonProps extends ControlBarButtonProps {
   /* @conditional-compile-remove(DNS) */
   /**
    * Whether the deep noise suppression is on or off
-   *
-   * @beta
    */
   isDeepNoiseSuppressionOn?: boolean;
   /* @conditional-compile-remove(DNS) */
   /**
    * Callback when noise suppression is clicked
-   *
-   * @beta
    */
   onClickNoiseSuppression?: () => void;
   /* @conditional-compile-remove(DNS) */
   /**
    * Show/Hide the deep noise suppression button
-   *
-   * @beta
    */
   showNoiseSuppressionButton?: boolean;
 }
