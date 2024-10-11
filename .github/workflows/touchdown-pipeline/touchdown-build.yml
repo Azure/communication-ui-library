@@ -13,9 +13,12 @@ resources:
       name: 1ESPipelineTemplates/M365GPT
       ref: refs/tags/release
 
-variables:
-  # Variable to control whether to only pass strings to touchdown (false) or to also create a PR with changes (true)
-  commit_new_strings: false
+parameters:
+  # Parameter to control whether to only pass strings to touchdown (false) or to also create a PR with changes (true)
+  - name: commit_new_strings
+    displayName: 'Create PR for new strings'
+    type: boolean
+    default: false
 
 extends:
   template: v1/M365.Unofficial.PipelineTemplate.yml@m365Pipelines
@@ -60,7 +63,7 @@ extends:
 
               - task: PowerShell@2
                 displayName: Create PR with changes
-                condition: eq(variables['commit_new_strings'], 'true') # Only create a PR if the variable is set to true
+                condition: eq('${{ parameters.commit_new_strings }}', true) # Only create a PR if the parameter is set to true
                 inputs:
                   targetType: 'inline'
                   script: |
