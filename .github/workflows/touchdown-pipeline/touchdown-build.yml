@@ -1,6 +1,9 @@
 # Touchdown build pipeline
 
-trigger: none
+trigger:
+  branches:
+    include:
+      - main
 pr: none
 
 resources:
@@ -9,6 +12,11 @@ resources:
       type: git
       name: 1ESPipelineTemplates/M365GPT
       ref: refs/tags/release
+
+variables:
+  # Variable to control whether to only pass strings to touchdown (false) or to also create a PR with changes (true)
+  commit_new_strings: false
+
 extends:
   template: v1/M365.Unofficial.PipelineTemplate.yml@m365Pipelines
   parameters:
@@ -51,23 +59,24 @@ extends:
                 displayName: 'Call Touchdown build task for composites and commit changes'
 
               - task: PowerShell@2
-                displayName: Push changes to repo
+                displayName: Create PR with changes
+                condition: eq(variables['commit_new_strings'], 'true') # Only create a PR if the variable is set to true
                 inputs:
                   targetType: 'inline'
                   script: |
                     # ------------------------------------------------------------------------------------------------
-                    # - Script to push changes
+                    # - Script to create a new branch and PR with changes
                     # ------------------------------------------------------------------------------------------------
 
                     $teamProject = $env:SYSTEM_TEAMPROJECT
                     $repoName= $env:Build_Repository_Name
-                    $pipelineName = $env:Build_DefinitionName
+                    $sourceBranch= $env:Build_SourceBranch
+                    $sourceBranchName = $sourceBranch -replace "refs/heads/", ""
 
                     Write-host "Azure DevOps organization: $env:System_TeamFoundationCollectionUri"
                     Write-host "Team Project: $teamProject"
                     Write-host "Repo Name: $repoName"
-                    Write-host "Source Branch: $(Build.SourceBranch)"
-
+                    Write-host "Source Branch: $sourceBranch"
 
                     if ("$(git status)".Contains("nothing to commit")) {
                         Write-Host "Nothing to commit, exiting immediately"
@@ -83,29 +92,46 @@ extends:
                     git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
                     git config user.name "github-actions[bot]"
 
-                    #**********************************************
-                    #***Checkout current branch and push changes***
-                    #**********************************************
+                    #***********************************************
+                    #*** Create a new branch and push changes to it ***
+                    #***********************************************
 
-                    Write-Host "##[group] Checkout current branch and push changes"
-                    #Create Branch and add changes
+                    # Get the current date and time in the format yyyyMMdd-HHmmss
+                    $dateTime = Get-Date -Format "yyyyMMdd-HHmmss"
+                    $newBranchName = "td/update-strings-$dateTime"
 
-                    Write-Host "Checkout current branch"
-
-                    $branchName = "$(Build.SourceBranch)"
-                    $branchName = $branchName -replace "refs/heads/", ""
-
-                    git checkout $branchName
+                    Write-Host "Creating new branch $newBranchName"
+                    git checkout -b $newBranchName
                     git add -A
-                    git commit -m "TDBuild latest localization" -a
-                    git push origin $branchName
+                    git commit -m "TDBuild latest localization"
+                    git push origin $newBranchName
 
-                    if (!$?) {
-                      # We ignore stderr (in task definition) due to git loving to write there even when things are fine.
-                      Write-Host "The git push command failed. Exiting."
-                      Exit 1
+                    #***********************************************
+                    #*** Create PR to source branch ***
+                    #***********************************************
+                    Write-Host "Creating Pull Request from $newBranchName to $sourceBranchName"
+
+                    $headers = @{
+                      "Content-Type" = "application/json"
+                      "Authorization" = "Bearer $env:SYSTEM_ACCESSTOKEN"
                     }
-                condition: eq(variables['commit'], 'true')
+
+                    $prBody = @{
+                      "sourceRefName"  = "refs/heads/$newBranchName"
+                      "targetRefName"  = "refs/heads/$sourceBranchName"
+                      "title"          = "TDBuild PR for latest localization"
+                      "description"    = "Automated PR from pipeline to merge localization updates"
+                    } | ConvertTo-Json
+
+                    $url = "$($env:System_TeamFoundationCollectionUri)$teamProject/_apis/git/repositories/$repoName/pullRequests?api-version=6.0"
+                    $response = Invoke-RestMethod -Uri $url -Method Post -Body $prBody -Headers $headers
+
+                    if (!$response) {
+                        Write-Host "PR creation failed."
+                        Exit 1
+                    }
+
+                    Write-Host "PR created successfully: $($response.url)"
     sdl:
       arrow:
         serviceConnection: Arrow_skype_PROD
