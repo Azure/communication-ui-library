@@ -120,7 +120,9 @@ export const _TroubleshootingGuideErrorBar = (props: _TroubleshootingGuideErrorB
                 }}
                 underline
               >
-                <span>{troubleshootingGuideStrings.devicePermissionLinkText}</span>
+                <span style={{ color: theme.palette.themeDarkAlt }}>
+                  {troubleshootingGuideStrings.devicePermissionLinkText}
+                </span>
               </Link>
             )}
           </div>
@@ -131,7 +133,9 @@ export const _TroubleshootingGuideErrorBar = (props: _TroubleshootingGuideErrorB
             {strings[error.type]}{' '}
             {onNetworkingTroubleshootingClick && (
               <Link onClick={onNetworkingTroubleshootingClick} underline>
-                <span>{troubleshootingGuideStrings.networkTroubleshootingLinkText}</span>
+                <span style={{ color: theme.palette.themeDarkAlt }}>
+                  {troubleshootingGuideStrings.networkTroubleshootingLinkText}
+                </span>
               </Link>
             )}
           </div>
