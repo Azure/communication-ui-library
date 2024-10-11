@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 import { ISpinnerStyles, mergeStyles, Theme } from '@fluentui/react';
+import { isDarkThemed } from '../../theming/themeUtils';
 
 /**
  * @private
@@ -53,7 +54,7 @@ export const reconnectingText = (theme: Theme): string =>
     lineHeight: '3rem',
     justifyContent: 'center',
     alignItems: 'center',
-    color: theme.palette.neutralLighter,
+    color: isDarkThemed(theme) ? theme.palette.themeDarker : theme.palette.neutralLighter,
     fontSize: theme.fonts.large.fontSize
   });
 
