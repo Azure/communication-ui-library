@@ -15,7 +15,7 @@ import {
   _isTeamsCall
 } from '@internal/calling-stateful-client';
 import { AcceptedTransfer } from '@internal/calling-stateful-client';
-/* @conditional-compile-remove(teams-identity-support) */
+
 import { _isTeamsCallAgent } from '@internal/calling-stateful-client';
 import { CallCommon } from '@internal/calling-stateful-client';
 import { _TelemetryImplementationHint } from '@internal/acs-ui-common';
@@ -47,7 +47,6 @@ import { TeamsCaptionsInfo } from '@azure/communication-calling';
 import type { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling';
 
 import type { CapabilitiesChangeInfo } from '@azure/communication-calling';
-/* @conditional-compile-remove(teams-identity-support)) */
 import { TeamsCallAgent } from '@azure/communication-calling';
 import { Features } from '@azure/communication-calling';
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
@@ -92,7 +91,7 @@ import {
   VideoBackgroundBlurEffect,
   VideoBackgroundReplacementEffect
 } from './CallAdapter';
-/* @conditional-compile-remove(teams-identity-support) */
+
 import { TeamsCallAdapter } from './CallAdapter';
 import { getCallCompositePage, getLocatorOrTargetCallees, IsCallEndedPage, isCameraOn } from '../utils';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
@@ -107,7 +106,7 @@ import {
   UnknownIdentifier,
   isMicrosoftTeamsAppIdentifier
 } from '@azure/communication-common';
-/* @conditional-compile-remove(teams-identity-support) */
+
 import { isCommunicationUserIdentifier } from '@azure/communication-common';
 import { isPhoneNumberIdentifier, PhoneNumberIdentifier } from '@azure/communication-common';
 import { ParticipantSubscriber } from './ParticipantSubcriber';
@@ -538,7 +537,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
       };
       (this.callAgent as CallAgent).on('callsUpdated', onCallsUpdated);
     }
-    /* @conditional-compile-remove(teams-identity-support) */
+
     if (this.callAgent.kind === 'TeamsCallAgent') {
       const onTeamsCallsUpdated = (args: { added: TeamsCall[]; removed: TeamsCall[] }): void => {
         if (this.call?.id) {
@@ -719,7 +718,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     const isTeamsMeetingId = this.locator ? 'meetingId' in this.locator : false;
     const isRoomsCall = this.locator ? 'roomId' in this.locator : false;
 
-    /* @conditional-compile-remove(teams-identity-support) */
     if (_isTeamsCallAgent(this.callAgent)) {
       if (isTeamsMeeting) {
         return this.callAgent.join(this.locator as TeamsMeetingLinkLocator, {
@@ -1810,7 +1808,6 @@ export const _createAzureCommunicationCallAdapterInner = async ({
   return adapter;
 };
 
-/* @conditional-compile-remove(teams-identity-support) */
 /**
  * @public
  */
@@ -1855,7 +1852,7 @@ type PartialArgsOutboundType<Adapter> = Adapter extends CallAdapter
 
 type AdapterOf<AdapterKind extends 'AzureCommunication' | 'Teams'> = AdapterKind extends 'AzureCommunication'
   ? CallAdapter
-  : never | /* @conditional-compile-remove(teams-identity-support) */ TeamsCallAdapter;
+  : never | TeamsCallAdapter;
 
 /**
  * @private
@@ -1982,7 +1979,6 @@ function useAzureCommunicationCallAdapterGeneric<
               options
             })) as Adapter;
           } else {
-            /* @conditional-compile-remove(teams-identity-support) */
             newAdapter = (await createTeamsCallAdapter({
               credential,
               locator: locator as TeamsMeetingLinkLocator,
@@ -2077,7 +2073,6 @@ export const useAzureCommunicationCallAdapter = (
   return useAzureCommunicationCallAdapterGeneric(args, 'AzureCommunication', afterCreate, beforeDispose);
 };
 
-/* @conditional-compile-remove(teams-identity-support) */
 /**
  * A custom React hook to simplify the creation of {@link TeamsCallAdapter}.
  *
@@ -2186,7 +2181,6 @@ export async function createAzureCommunicationCallAdapterFromClient(
   }
 }
 
-/* @conditional-compile-remove(teams-identity-support) */
 /**
  * Create a {@link TeamsCallAdapter} using the provided {@link StatefulCallClient}.
  *

@@ -3,7 +3,7 @@
 
 import React, { useContext, createContext } from 'react';
 import { Call } from '@azure/communication-calling';
-/* @conditional-compile-remove(teams-identity-support) */
+
 import { TeamsCall } from '@azure/communication-calling';
 import { _isACSCall, _isTeamsCall } from '@internal/calling-stateful-client';
 
@@ -11,7 +11,7 @@ import { _isACSCall, _isTeamsCall } from '@internal/calling-stateful-client';
  * @private
  */
 export type CallContextType = {
-  call: Call | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall | undefined;
+  call: Call | TeamsCall | undefined;
 };
 
 /**
@@ -21,7 +21,7 @@ export type CallContextType = {
  */
 export interface CallProviderProps {
   children: React.ReactNode;
-  call?: Call | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall;
+  call?: Call | TeamsCall;
 }
 
 /**
@@ -69,7 +69,6 @@ export const useCall = (): Call | undefined => {
   return call;
 };
 
-/* @conditional-compile-remove(teams-identity-support) */
 /**
  * Hook to obtain {@link @azure/communication-calling#TeamsCall} from the provider.
  *
@@ -80,7 +79,7 @@ export const useCall = (): Call | undefined => {
  *
  * @public
  */
-export const useTeamsCall = (): undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall => {
+export const useTeamsCall = (): undefined | TeamsCall => {
   const call = useContext(CallContext)?.call;
   if (call && !_isTeamsCall(call)) {
     throw new Error('Incorrect call type: Must provide a TeamsCall object.');

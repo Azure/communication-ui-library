@@ -13,7 +13,7 @@ import { TeamsIncomingCall } from '@azure/communication-calling';
 import { TeamsCaptionsInfo } from '@azure/communication-calling';
 
 import { CaptionsInfo as AcsCaptionsInfo } from '@azure/communication-calling';
-/* @conditional-compile-remove(teams-identity-support) */
+
 import { CallKind } from '@azure/communication-calling';
 import { TeamsCallInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(calling-beta-sdk) */
@@ -132,7 +132,7 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
 
   return {
     id: call.id,
-    /* @conditional-compile-remove(teams-identity-support) */
+
     kind: _isACSCall(call) ? ('Call' as CallKind) : ('TeamsCall' as CallKind),
     callerInfo: call.callerInfo,
     state: call.state,

@@ -37,7 +37,7 @@ import { CaptionsResultType } from '@azure/communication-calling';
 
 import { CaptionsKind } from '@azure/communication-calling';
 import { VideoEffectName } from '@azure/communication-calling';
-/* @conditional-compile-remove(teams-identity-support) */
+
 import { CallKind } from '@azure/communication-calling';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
@@ -540,7 +540,7 @@ export interface CallState {
    * Proxy of {@link @azure/communication-calling#Call.id}.
    */
   id: string;
-  /* @conditional-compile-remove(teams-identity-support) */
+
   /**
    * Type of the call.
    */
@@ -1063,7 +1063,7 @@ export type CallErrorTarget =
   | 'DeviceManager.selectSpeaker'
   | 'IncomingCall.accept'
   | 'IncomingCall.reject'
-  | /* @conditional-compile-remove(calling-beta-sdk) */ /* @conditional-compile-remove(teams-identity-support) */ 'TeamsCall.addParticipant'
+  | /* @conditional-compile-remove(calling-beta-sdk) */ 'TeamsCall.addParticipant'
   | 'VideoEffectsFeature.startEffects'
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'CallAgent.handlePushNotification'
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.admit'

@@ -19,9 +19,9 @@ import {
   _TelemetryImplementationHint
 } from '@internal/acs-ui-common';
 import { callingStatefulLogger } from './Logger';
-/* @conditional-compile-remove(teams-identity-support) */
+
 import { DeclarativeTeamsCallAgent, teamsCallAgentDeclaratify } from './TeamsCallAgentDeclarative';
-/* @conditional-compile-remove(teams-identity-support) */
+
 import { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 import { videoStreamRendererViewDeclaratify } from './VideoStreamRendererViewDeclarative';
 
@@ -162,7 +162,6 @@ export interface StatefulCallClient extends CallClient {
    */
   createCallAgent(...args: Parameters<CallClient['createCallAgent']>): Promise<DeclarativeCallAgent>;
 
-  /* @conditional-compile-remove(teams-identity-support) */
   /**
    * The TeamsCallAgent is used to handle calls.
    * To create the TeamsCallAgent, pass a CommunicationTokenCredential object provided from SDK.
@@ -197,10 +196,7 @@ export type CallStateModifier = (state: CallClientState) => void;
 class ProxyCallClient implements ProxyHandler<CallClient> {
   private _context: CallContext;
   private _internalContext: InternalCallContext;
-  private _callAgent:
-    | DeclarativeCallAgent
-    | /* @conditional-compile-remove(teams-identity-support) */ DeclarativeTeamsCallAgent
-    | undefined;
+  private _callAgent: DeclarativeCallAgent | DeclarativeTeamsCallAgent | undefined;
   private _deviceManager: DeviceManager | undefined;
   private _sdkDeviceManager: DeviceManager | undefined;
 
@@ -228,7 +224,7 @@ class ProxyCallClient implements ProxyHandler<CallClient> {
         );
       }
       case 'createTeamsCallAgent': {
-        /* @conditional-compile-remove(teams-identity-support) */ return this._context.withAsyncErrorTeedToState(
+        return this._context.withAsyncErrorTeedToState(
           async (...args: Parameters<CallClient['createTeamsCallAgent']>): Promise<DeclarativeTeamsCallAgent> => {
             // createCallAgent will throw an exception if the previous callAgent was not disposed. If the previous
             // callAgent was disposed then it would have unsubscribed to events so we can just create a new declarative
@@ -242,7 +238,6 @@ class ProxyCallClient implements ProxyHandler<CallClient> {
           },
           'CallClient.createTeamsCallAgent'
         );
-        return Reflect.get(target, prop);
       }
       case 'getDeviceManager': {
         return this._context.withAsyncErrorTeedToState(async () => {
@@ -302,9 +297,7 @@ export type StatefulCallClientArgs = {
    * UserId from SDK. This is provided for developer convenience to easily access the userId from the
    * state. It is not used by StatefulCallClient.
    */
-  userId:
-    | CommunicationUserIdentifier
-    | /* @conditional-compile-remove(teams-identity-support) */ MicrosoftTeamsUserIdentifier;
+  userId: CommunicationUserIdentifier | MicrosoftTeamsUserIdentifier;
 };
 
 /**

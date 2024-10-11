@@ -19,7 +19,7 @@ import { RemoteParticipant } from '@azure/communication-calling';
 import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
 import { DtmfTone } from '@azure/communication-calling';
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
-/* @conditional-compile-remove(teams-identity-support) */
+
 import { TeamsCall } from '@azure/communication-calling';
 /* @conditional-compile-remove(call-readiness) */
 import { PermissionConstraints } from '@azure/communication-calling';
@@ -152,7 +152,7 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
   (
     callClient: StatefulCallClient,
     deviceManager: StatefulDeviceManager | undefined,
-    call: Call | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall | undefined,
+    call: Call | TeamsCall | undefined,
     options?: {
       onResolveVideoBackgroundEffectsDependency?: () => Promise<VideoBackgroundEffectsDependency>;
       /* @conditional-compile-remove(DNS) */

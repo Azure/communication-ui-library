@@ -38,7 +38,7 @@ export type { TogetherModeStreamState } from './CallClientState';
 
 export type { RaisedHandState } from './CallClientState';
 export type { DeclarativeCallAgent, IncomingCallManagement } from './CallAgentDeclarative';
-/* @conditional-compile-remove(teams-identity-support) */
+
 export type { DeclarativeTeamsCallAgent } from './TeamsCallAgentDeclarative';
 export type { TeamsIncomingCallManagement } from './TeamsCallAgentDeclarative';
 export type { LocalVideoStreamVideoEffectsState } from './CallClientState';

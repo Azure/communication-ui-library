@@ -5,7 +5,7 @@ import { StartCallOptions } from '@azure/communication-calling';
 import { IncomingCallCommon } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support-beta) */
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
-/* @conditional-compile-remove(teams-identity-support) */
+
 import { TeamsCall, TeamsCallAgent, TeamsCallAgentOptions } from '@azure/communication-calling';
 import {
   CommunicationIdentifier,
@@ -37,10 +37,7 @@ import { DeepNoiseSuppressionEffectDependency } from './createCommonHandlers';
  * @public
  */
 export interface TeamsCallingHandlers extends CommonCallingHandlers {
-  onStartCall: (
-    participants: CommunicationIdentifier[],
-    options?: StartCallOptions
-  ) => undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall;
+  onStartCall: (participants: CommunicationIdentifier[], options?: StartCallOptions) => undefined | TeamsCall;
 }
 
 /**
@@ -74,7 +71,7 @@ export const createDefaultTeamsCallingHandlers = memoizeOne(
         if (callAgent) {
           /* @conditional-compile-remove(teams-identity-support-beta) */
           return callAgent.startCall(participants, threadId ? { threadId, ...options } : undefined);
-          /* @conditional-compile-remove(teams-identity-support) */
+
           // Remove when teams identity in stable support multiple participants
           return teamsSingleParticipantTrampoline(callAgent as TeamsCallAgent, participants, options);
         }
@@ -87,7 +84,7 @@ export const createDefaultTeamsCallingHandlers = memoizeOne(
         options?: AddPhoneNumberOptions
       ): Promise<void> => {
         const participant = _toCommunicationIdentifier(userId);
-        /* @conditional-compile-remove(teams-identity-support) */
+
         const threadId = options?.threadId;
         if (isCommunicationUserIdentifier(participant)) {
           throw new Error('CommunicationIdentifier in Teams call is not supported!');
@@ -96,11 +93,11 @@ export const createDefaultTeamsCallingHandlers = memoizeOne(
         if (isMicrosoftTeamsAppIdentifier(participant)) {
           throw new Error('Adding Microsoft Teams app identifier is not supported!');
         }
-        /* @conditional-compile-remove(teams-identity-support) */
+
         if (isPhoneNumberIdentifier(participant)) {
           call?.addParticipant(participant, threadId ? { threadId } : undefined);
         }
-        /* @conditional-compile-remove(teams-identity-support) */
+
         call?.addParticipant(participant);
       },
       onRemoveParticipant: async (userId: string | CommunicationIdentifier): Promise<void> => {
@@ -112,7 +109,7 @@ export const createDefaultTeamsCallingHandlers = memoizeOne(
         if (isMicrosoftTeamsAppIdentifier(participant)) {
           throw new Error('Removing Microsoft Teams app identifier is not supported!');
         }
-        /* @conditional-compile-remove(teams-identity-support) */
+
         await call?.removeParticipant(participant);
       },
       onAcceptCall: async (incomingCallId: string, useVideo?: boolean): Promise<void> => {
@@ -154,15 +151,14 @@ export const createDefaultTeamsCallingHandlers = memoizeOne(
  */
 export const createTeamsCallingHandlersForComponent = <Props>(
   callClient: StatefulCallClient,
-  callAgent: undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCallAgent,
+  callAgent: undefined | TeamsCallAgent,
   deviceManager: StatefulDeviceManager | undefined,
-  call: undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall,
+  call: undefined | TeamsCall,
   _Component: (props: Props) => ReactElement | null
 ): Common<TeamsCallingHandlers, Props> => {
   return createDefaultTeamsCallingHandlers(callClient, callAgent, deviceManager, call);
 };
 
-/* @conditional-compile-remove(teams-identity-support) */
 const teamsSingleParticipantTrampoline = (
   callAgent: TeamsCallAgent,
   participants: CommunicationIdentifier[],

@@ -10,7 +10,7 @@
 // In beta, Call | CallCommon = CallCommon because Call is just a super set of CallCommon
 
 import { Call, CallAgent } from '@azure/communication-calling';
-/* @conditional-compile-remove(teams-identity-support) */
+
 import {
   TeamsCall as TeamsCallBeta,
   CallCommon as CallCommonBeta,
@@ -21,15 +21,15 @@ import {
  * @public
  * The common interface for all types of Calls
  */
-export type CallCommon = Call | /* @conditional-compile-remove(teams-identity-support) */ CallCommonBeta;
+export type CallCommon = Call | CallCommonBeta;
 
 /**
  * @public
  * The common interface for all types of CallAgents
  */
-export type CallAgentCommon = CallAgent | /* @conditional-compile-remove(teams-identity-support) */ CallAgentCommonBeta;
+export type CallAgentCommon = CallAgent | CallAgentCommonBeta;
 
 /**
  * @beta
  */
-export type TeamsCall = never | /* @conditional-compile-remove(teams-identity-support) */ TeamsCallBeta;
+export type TeamsCall = never | TeamsCallBeta;

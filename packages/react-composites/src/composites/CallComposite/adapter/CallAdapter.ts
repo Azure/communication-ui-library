@@ -7,7 +7,7 @@ import type { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/c
 import { Reaction } from '@azure/communication-calling';
 import type { CapabilitiesChangeInfo } from '@azure/communication-calling';
 import type { SpotlightedParticipant } from '@azure/communication-calling';
-/* @conditional-compile-remove(teams-identity-support) */
+
 import { TeamsCall } from '@azure/communication-calling';
 import { TransferEventArgs } from '@azure/communication-calling';
 import { StartCaptionsOptions } from '@azure/communication-calling';
@@ -1201,7 +1201,6 @@ export interface CallAdapter extends CommonCallAdapter {
   startCall(participants: StartCallIdentifier[], options?: StartCallOptions): Call | undefined;
 }
 
-/* @conditional-compile-remove(teams-identity-support) */
 /**
  * An Adapter interface specific for Teams identity which extends {@link CommonCallAdapter}.
  *
