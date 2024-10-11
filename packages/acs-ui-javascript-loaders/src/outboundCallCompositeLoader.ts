@@ -34,7 +34,7 @@ export type OutboundCallCompositeLoaderProps = {
   token: string;
   displayName: string;
   targetCallees: string[] | StartCallIdentifier[];
-  adapterOptions?: AzureCommunicationCallAdapterOptions;
+  callAdapterOptions?: AzureCommunicationCallAdapterOptions;
   callCompositeOptions?: CallCompositeOptions;
 };
 
@@ -50,7 +50,7 @@ export const loadOutboundCallComposite = async function (
   htmlElement: HTMLElement
 ): Promise<CallAdapter | undefined> {
   initializeIcons();
-  const { userId, token, displayName, targetCallees, adapterOptions, callCompositeOptions } = loaderArgs;
+  const { userId, token, displayName, targetCallees, callAdapterOptions, callCompositeOptions } = loaderArgs;
   const formattedTargetCallees =
     typeof targetCallees[0] === 'string'
       ? (targetCallees as string[]).map((callee: string) => {
@@ -63,7 +63,7 @@ export const loadOutboundCallComposite = async function (
     displayName: displayName ?? 'anonymous',
     credential: new AzureCommunicationTokenCredential(token),
     targetCallees: (formattedTargetCallees as StartCallIdentifier[]) ?? (targetCallees as StartCallIdentifier[]),
-    options: adapterOptions
+    options: callAdapterOptions
   });
 
   if (!htmlElement) {
