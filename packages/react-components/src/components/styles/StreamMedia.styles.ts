@@ -37,7 +37,7 @@ export const reconnectingContainer = (): string =>
     bottom: '0',
     left: '0',
     right: '0',
-    background: 'rgba(0, 0, 0, 0.5)',
+    background: 'rgba(0, 0, 0, 0.55)',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center'
@@ -53,7 +53,7 @@ export const reconnectingText = (theme: Theme): string =>
     lineHeight: '3rem',
     justifyContent: 'center',
     alignItems: 'center',
-    color: theme.palette.themeLight,
+    color: theme.palette.neutralLighter,
     fontSize: theme.fonts.large.fontSize
   });
 
