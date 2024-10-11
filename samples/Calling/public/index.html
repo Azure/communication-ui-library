@@ -21,12 +21,33 @@
       script.src = 'https://cdn.jsdelivr.net/npm/react-render-tracker';
       document.head.appendChild(script);
     </script>
+    <style>
+      body { display: flex; flex-direction: column; height: 100vh; }
+      #Root { flex: 1; }
+    </style>
   </head>
 
   <body>
-    <main id="root" class="Root"></main>
+    <div id="signout-container"></div>
+    <div id="root" class="Root"></div>
     <script type="text/javascript">
       window.FabricConfig = {};
+    </script>
+    <script>
+      // Only displayed if Authentication is setup in App service
+      fetch('signout.html').then(response => response.text())
+        .then(data => {
+          document.getElementById('signout-container').innerHTML = data;
+          function handleSignOut() {
+            console.log("You have signed out!");
+            window.location.href = 'https://login.microsoftonline.com/common/oauth2/v2.0/logout';
+          }
+          var display = document.cookie.split(';').some(item => item.trim().startsWith('AppServiceAuthSession='))
+            ? 'flex' : 'none';
+          document.getElementById('signout-bar').style.display = display;
+
+          document.getElementById('signoutButton').addEventListener('click', handleSignOut);
+        });
     </script>
   </body>
 </html>
