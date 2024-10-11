@@ -26,6 +26,7 @@
     "dismissSidePaneButtonLabel": "Chiudi",
     "videoEffectsPaneTitle": "Effetti",
     "videoEffectsPaneBackgroundSelectionTitle": "In background",
+    "videoEffectsPaneAriaLabel": "Riquadro Effetti video",
     "configurationPageVideoEffectsButtonLabel": "Effetti",
     "unableToStartVideoEffect": "Non è possibile applicare l'effetto video.",
     "blurBackgroundEffectButtonLabel": "Sfocatura",

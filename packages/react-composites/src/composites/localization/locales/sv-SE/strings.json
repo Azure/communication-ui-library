@@ -26,6 +26,7 @@
     "dismissSidePaneButtonLabel": "Stäng",
     "videoEffectsPaneTitle": "Effekter",
     "videoEffectsPaneBackgroundSelectionTitle": "Bakgrund",
+    "videoEffectsPaneAriaLabel": "Fönstret Videoeffekter",
     "configurationPageVideoEffectsButtonLabel": "Effekter",
     "unableToStartVideoEffect": "Det går inte att tillämpa videoeffekten.",
     "blurBackgroundEffectButtonLabel": "Oskärpa",

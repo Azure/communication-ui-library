@@ -26,6 +26,7 @@
     "dismissSidePaneButtonLabel": "סגור",
     "videoEffectsPaneTitle": "אפקטים",
     "videoEffectsPaneBackgroundSelectionTitle": "רקע",
+    "videoEffectsPaneAriaLabel": "חלונית אפקטי וידאו",
     "configurationPageVideoEffectsButtonLabel": "אפקטים",
     "unableToStartVideoEffect": "לא ניתן להחיל אפקט וידאו.",
     "blurBackgroundEffectButtonLabel": "טשטוש",

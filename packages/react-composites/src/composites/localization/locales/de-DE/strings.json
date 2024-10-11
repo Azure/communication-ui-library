@@ -26,6 +26,7 @@
     "dismissSidePaneButtonLabel": "Schließen",
     "videoEffectsPaneTitle": "Effekte",
     "videoEffectsPaneBackgroundSelectionTitle": "Hintergrund",
+    "videoEffectsPaneAriaLabel": "Bereich \"Videoeffekte\"",
     "configurationPageVideoEffectsButtonLabel": "Effekte",
     "unableToStartVideoEffect": "Videoeffekt kann nicht angewendet werden.",
     "blurBackgroundEffectButtonLabel": "Unscharf machen",

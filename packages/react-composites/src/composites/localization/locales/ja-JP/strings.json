@@ -26,6 +26,7 @@
     "dismissSidePaneButtonLabel": "閉じる",
     "videoEffectsPaneTitle": "効果",
     "videoEffectsPaneBackgroundSelectionTitle": "バックグラウンド",
+    "videoEffectsPaneAriaLabel": "ビデオ効果ウィンドウ",
     "configurationPageVideoEffectsButtonLabel": "効果",
     "unableToStartVideoEffect": "ビデオ効果を適用できません。",
     "blurBackgroundEffectButtonLabel": "ぼかし",

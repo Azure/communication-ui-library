@@ -26,6 +26,7 @@
     "dismissSidePaneButtonLabel": "Cau",
     "videoEffectsPaneTitle": "Effeithiau",
     "videoEffectsPaneBackgroundSelectionTitle": "Cefndir",
+    "videoEffectsPaneAriaLabel": "Cwarel effeithiau fideo",
     "configurationPageVideoEffectsButtonLabel": "Effeithiau",
     "unableToStartVideoEffect": "Does dim modd defnyddio'r effaith fideo.",
     "blurBackgroundEffectButtonLabel": "Pylu",

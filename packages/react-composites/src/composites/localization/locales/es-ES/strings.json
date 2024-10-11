@@ -26,6 +26,7 @@
     "dismissSidePaneButtonLabel": "Cerrar",
     "videoEffectsPaneTitle": "Efectos",
     "videoEffectsPaneBackgroundSelectionTitle": "Fondo",
+    "videoEffectsPaneAriaLabel": "Panel de efectos de vídeo",
     "configurationPageVideoEffectsButtonLabel": "Efectos",
     "unableToStartVideoEffect": "No se puede aplicar el efecto de vídeo.",
     "blurBackgroundEffectButtonLabel": "Desenfoque",

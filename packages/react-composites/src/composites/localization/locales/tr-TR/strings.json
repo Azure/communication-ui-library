@@ -26,6 +26,7 @@
     "dismissSidePaneButtonLabel": "Kapat",
     "videoEffectsPaneTitle": "Efektler",
     "videoEffectsPaneBackgroundSelectionTitle": "Arka plan",
+    "videoEffectsPaneAriaLabel": "Video efektleri paneli",
     "configurationPageVideoEffectsButtonLabel": "Efektler",
     "unableToStartVideoEffect": "Video efekti uygulanamıyor.",
     "blurBackgroundEffectButtonLabel": "Bulanıklaştır",

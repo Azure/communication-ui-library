@@ -26,6 +26,7 @@
     "dismissSidePaneButtonLabel": "إغلاق",
     "videoEffectsPaneTitle": "التأثيرات",
     "videoEffectsPaneBackgroundSelectionTitle": "الخلفية",
+    "videoEffectsPaneAriaLabel": "جزء تأثيرات الفيديو",
     "configurationPageVideoEffectsButtonLabel": "التأثيرات",
     "unableToStartVideoEffect": "يتعذر تطبيق تأثير الفيديو.",
     "blurBackgroundEffectButtonLabel": "تمويه",

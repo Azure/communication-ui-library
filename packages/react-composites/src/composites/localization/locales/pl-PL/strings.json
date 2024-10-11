@@ -26,6 +26,7 @@
     "dismissSidePaneButtonLabel": "Zamknij",
     "videoEffectsPaneTitle": "Efekty",
     "videoEffectsPaneBackgroundSelectionTitle": "Tło",
+    "videoEffectsPaneAriaLabel": "Okienko efektów wideo",
     "configurationPageVideoEffectsButtonLabel": "Efekty",
     "unableToStartVideoEffect": "Nie można zastosować efektu wideo.",
     "blurBackgroundEffectButtonLabel": "Rozmycie",

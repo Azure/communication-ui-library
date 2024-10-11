@@ -26,6 +26,7 @@
     "dismissSidePaneButtonLabel": "Fermer",
     "videoEffectsPaneTitle": "Effets",
     "videoEffectsPaneBackgroundSelectionTitle": "Arrière-plan",
+    "videoEffectsPaneAriaLabel": "Volet Effets vidéo",
     "configurationPageVideoEffectsButtonLabel": "Effets",
     "unableToStartVideoEffect": "Impossible d’appliquer l’effet vidéo.",
     "blurBackgroundEffectButtonLabel": "Flouter",

@@ -26,6 +26,7 @@
     "dismissSidePaneButtonLabel": "关闭",
     "videoEffectsPaneTitle": "效果",
     "videoEffectsPaneBackgroundSelectionTitle": "背景",
+    "videoEffectsPaneAriaLabel": "视频效果窗格",
     "configurationPageVideoEffectsButtonLabel": "效果",
     "unableToStartVideoEffect": "无法应用视频效果。",
     "blurBackgroundEffectButtonLabel": "模糊",

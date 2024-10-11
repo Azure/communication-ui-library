@@ -26,6 +26,7 @@
     "dismissSidePaneButtonLabel": "Sluiten",
     "videoEffectsPaneTitle": "Effecten",
     "videoEffectsPaneBackgroundSelectionTitle": "Achtergrond",
+    "videoEffectsPaneAriaLabel": "Deelvenster video-effectenVideo",
     "configurationPageVideoEffectsButtonLabel": "Effecten",
     "unableToStartVideoEffect": "Kan video-effect niet toepassen.",
     "blurBackgroundEffectButtonLabel": "Vervagen",

@@ -26,6 +26,7 @@
     "dismissSidePaneButtonLabel": "Zavřít",
     "videoEffectsPaneTitle": "Efekty",
     "videoEffectsPaneBackgroundSelectionTitle": "Pozadí",
+    "videoEffectsPaneAriaLabel": "Podokno video efektů",
     "configurationPageVideoEffectsButtonLabel": "Efekty",
     "unableToStartVideoEffect": "Nelze použít efekt videa.",
     "blurBackgroundEffectButtonLabel": "Rozostření",

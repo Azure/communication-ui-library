@@ -26,6 +26,7 @@
     "dismissSidePaneButtonLabel": "Закрыть",
     "videoEffectsPaneTitle": "Эффекты",
     "videoEffectsPaneBackgroundSelectionTitle": "Фон",
+    "videoEffectsPaneAriaLabel": "Панель видеоэффектов",
     "configurationPageVideoEffectsButtonLabel": "Эффекты",
     "unableToStartVideoEffect": "Не удалось применить эффект видео.",
     "blurBackgroundEffectButtonLabel": "Размытие",
