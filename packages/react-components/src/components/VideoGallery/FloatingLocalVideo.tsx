@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { ContextualMenu, IDragOptions } from '@fluentui/react';
+import { ContextualMenu, IDragOptions, Stack } from '@fluentui/react';
 import { _convertRemToPx } from '@internal/acs-ui-common';
 import React, { useMemo } from 'react';
 import { useTheme } from '../../theming';
@@ -10,6 +10,7 @@ import {
   floatingLocalVideoModalStyle,
   floatinglocalVideoModalInitialPositionGapRem
 } from './styles/FloatingLocalVideo.styles';
+import { useLocale } from '../../localization';
 
 const DRAG_OPTIONS: IDragOptions = {
   moveMenuItemText: 'Move',
@@ -53,6 +54,7 @@ export const FloatingLocalVideo = (props: FloatingLocalVideoProps): JSX.Element 
   const { localVideoComponent, layerHostId, localVideoSizeRem, parentWidth, parentHeight } = props;
 
   const theme = useTheme();
+  const strings = useLocale().strings.videoGallery;
 
   // The minimum drag position is the top left of the video gallery. i.e. the modal (PiP) should not be able
   // to be dragged offscreen and these are the top and left bounds of that calculation.
@@ -89,7 +91,9 @@ export const FloatingLocalVideo = (props: FloatingLocalVideoProps): JSX.Element 
       minDragPosition={modalMinDragPosition}
       data-ui-id="floating-local-video-host"
     >
-      {localVideoComponent}
+      <Stack aria-label={strings.localVideoMovementAriaLabel ?? strings.localVideoMovementLabel} tabIndex={0}>
+        {localVideoComponent}
+      </Stack>
     </_ModalClone>
   );
 };
