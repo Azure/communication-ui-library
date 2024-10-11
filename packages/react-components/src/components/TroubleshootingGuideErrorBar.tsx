@@ -151,7 +151,7 @@ export const _TroubleshootingGuideErrorBar = (props: _TroubleshootingGuideErrorB
                 onClick={() => {
                   setDismissedErrors(dismissError(dismissedErrors, error));
                 }}
-                ariaLabel={strings.dismissButtonAriaLabel}
+                ariaLabel={troubleshootingGuideStrings.dismissButtonText}
               />
             }
             isMultiline={false}
