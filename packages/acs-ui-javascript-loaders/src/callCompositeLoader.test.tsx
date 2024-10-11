@@ -43,7 +43,7 @@ describe('CallCompositeLoader tests', () => {
       token: 'token',
       displayName: 'displayName',
       locator: { groupId: 'groupId' },
-      adapterOptions: { callingSounds: { callEnded: { url: 'test/url/ended' } } },
+      callAdapterOptions: { callingSounds: { callEnded: { url: 'test/url/ended' } } },
       callCompositeOptions: { callControls: { microphoneButton: false } }
     };
 
