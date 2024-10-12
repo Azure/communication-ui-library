@@ -1,0 +1,9 @@
+{
+  "type": "patch",
+  "area": "fix",
+  "workstream": "Waiting for others to join",
+  "comment": "Fix bug where waiting for others to join text shows up in black under dark mode, and showing up in screen share",
+  "packageName": "@azure/communication-react",
+  "email": "96077406+carocao-msft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
