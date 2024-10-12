@@ -730,7 +730,7 @@ export type CallCompositeLoaderProps = {
     token: string;
     displayName: string;
     locator: CallAdapterLocator;
-    adapterOptions?: AzureCommunicationCallAdapterOptions;
+    callAdapterOptions?: AzureCommunicationCallAdapterOptions;
     callCompositeOptions?: CallCompositeOptions;
 };
 
@@ -3998,7 +3998,7 @@ export type OutboundCallCompositeLoaderProps = {
     token: string;
     displayName: string;
     targetCallees: string[] | StartCallIdentifier[];
-    adapterOptions?: AzureCommunicationCallAdapterOptions;
+    callAdapterOptions?: AzureCommunicationCallAdapterOptions;
     callCompositeOptions?: CallCompositeOptions;
 };
 
