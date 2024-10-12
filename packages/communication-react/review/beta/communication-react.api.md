@@ -725,6 +725,16 @@ export type CallCompositeIcons = {
 };
 
 // @public
+export type CallCompositeLoaderProps = {
+    userId: string;
+    token: string;
+    displayName: string;
+    locator: CallAdapterLocator;
+    callAdapterOptions?: AzureCommunicationCallAdapterOptions;
+    callCompositeOptions?: CallCompositeOptions;
+};
+
+// @public
 export type CallCompositeOptions = {
     captionsBanner?: {
         height: 'full' | 'default';
@@ -1477,6 +1487,17 @@ export type CallWithChatCompositeIcons = {
 };
 
 // @public
+export type CallWithChatCompositeLoaderProps = {
+    userId: string;
+    token: string;
+    displayName: string;
+    endpoint: string;
+    locator: CallAndChatLocator;
+    callAdapterOptions?: AzureCommunicationCallAdapterOptions;
+    callWithChatCompositeOptions?: CallWithChatCompositeOptions;
+};
+
+// @public
 export type CallWithChatCompositeOptions = {
     callControls?: boolean | CallWithChatControlOptions;
     attachmentOptions?: AttachmentOptions;
@@ -1898,6 +1919,16 @@ export type ChatCompositeIcons = {
     SendBoxSend?: JSX.Element;
     SendBoxSendHovered?: JSX.Element;
     SendBoxAttachFile?: JSX.Element;
+};
+
+// @public
+export type ChatCompositeLoaderProps = {
+    userId: string;
+    token: string;
+    displayName?: string;
+    endpoint: string;
+    threadId: string;
+    chatCompositeOptions?: ChatCompositeOptions;
 };
 
 // @public
@@ -3440,7 +3471,19 @@ export interface JumpToNewMessageButtonProps {
 export const lightTheme: PartialTheme & CallingTheme;
 
 // @public
+export const loadCallComposite: (loaderArgs: CallCompositeLoaderProps, htmlElement: HTMLElement) => Promise<CallAdapter | undefined>;
+
+// @public
+export const loadCallWithChatComposite: (loaderArgs: CallWithChatCompositeLoaderProps, htmlElement: HTMLElement) => Promise<CallWithChatAdapter | undefined>;
+
+// @public
+export const loadChatComposite: (loaderArgs: ChatCompositeLoaderProps, htmlElement: HTMLElement) => Promise<ChatAdapter | undefined>;
+
+// @public
 export type LoadingState = 'loading' | 'none' | 'reconnecting';
+
+// @public
+export const loadOutboundCallComposite: (loaderArgs: OutboundCallCompositeLoaderProps, htmlElement: HTMLElement) => Promise<CallAdapter | undefined>;
 
 // @public
 export const LocalizationProvider: (props: LocalizationProviderProps) => JSX.Element;
@@ -3948,6 +3991,16 @@ export interface OptionsDevice {
     id: string;
     name: string;
 }
+
+// @public
+export type OutboundCallCompositeLoaderProps = {
+    userId: string;
+    token: string;
+    displayName: string;
+    targetCallees: string[] | StartCallIdentifier[];
+    callAdapterOptions?: AzureCommunicationCallAdapterOptions;
+    callCompositeOptions?: CallCompositeOptions;
+};
 
 // @public
 export type OverflowGalleryPosition = 'horizontalBottom' | 'verticalRight' | 'horizontalTop';
@@ -5261,5 +5314,7 @@ export interface VideoTileStylesProps extends BaseCustomStyles {
 
 // @public
 export type ViewScalingMode = 'Stretch' | 'Crop' | 'Fit';
+
+// (No @packageDocumentation comment for this package)
 
 ```
