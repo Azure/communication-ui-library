@@ -712,6 +712,14 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     }
   }
 
+  public async forbidParticipantAudio(userIds: string[]): Promise<void> {
+    return this.callAdapter.forbidParticipantAudio(userIds);
+  }
+
+  public async permitParticipantAudio(userIds: string[]): Promise<void> {
+    return this.callAdapter.permitParticipantAudio(userIds);
+  }
+
   on(event: 'callParticipantsJoined', listener: ParticipantsJoinedListener): void;
   on(event: 'callParticipantsLeft', listener: ParticipantsLeftListener): void;
   on(event: 'callEnded', listener: CallEndedListener): void;

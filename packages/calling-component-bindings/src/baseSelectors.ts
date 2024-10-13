@@ -28,6 +28,7 @@ import { _SupportedCaptionLanguage, _SupportedSpokenLanguage } from '@internal/r
 import { ConferencePhoneInfo } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(breakout-rooms) */
 import { CallNotifications } from '@internal/calling-stateful-client';
+import { MediaAccessCallFeatureState } from '@internal/calling-stateful-client/dist/dist-esm/CallClientState';
 
 /**
  * Common props used to reference calling declarative client state.
@@ -111,6 +112,16 @@ export const getSpotlightCallFeature = (
   props: CallingBaseSelectorProps
 ): SpotlightCallFeatureState | undefined => {
   return state.calls[props.callId]?.spotlight;
+};
+
+/**
+ * @private
+ */
+export const getMediaAccessCallFeature = (
+  state: CallClientState,
+  props: CallingBaseSelectorProps
+): MediaAccessCallFeatureState | undefined => {
+  return state.calls[props.callId]?.mediaAccess;
 };
 
 /**

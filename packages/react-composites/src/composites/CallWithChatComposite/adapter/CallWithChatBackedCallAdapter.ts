@@ -245,6 +245,14 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
   public async returnFromBreakoutRoom(): Promise<void> {
     return this.callWithChatAdapter.returnFromBreakoutRoom();
   }
+
+  public async forbidParticipantAudio(userIds: string[]): Promise<void> {
+    return this.callWithChatAdapter.forbidParticipantAudio(userIds);
+  }
+
+  public async permitParticipantAudio(userIds: string[]): Promise<void> {
+    return this.callWithChatAdapter.permitParticipantAudio(userIds);
+  }
 }
 
 function callAdapterStateFromCallWithChatAdapterState(
@@ -278,5 +286,7 @@ function callAdapterStateFromCallWithChatAdapterState(
     hideDeepNoiseSuppressionButton: callWithChatAdapterState.hideDeepNoiseSuppressionButton,
     selectedVideoBackgroundEffect: callWithChatAdapterState.selectedVideoBackgroundEffect,
     reactions: callWithChatAdapterState.reactions
+    // forbidParticipantAudio: callWithChatAdapterState.forbidParticipantAudio,
+    // permitParticipantAudio: callWithChatAdapterState.permitParticipantAudio,
   };
 }

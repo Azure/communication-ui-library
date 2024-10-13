@@ -27,6 +27,8 @@ export type CallParticipantListParticipant = ParticipantListParticipant & {
   reaction?: Reaction;
   /** Whether calling participant is spotlighted **/
   spotlight?: Spotlight;
+  /** Whether calling participant has media access **/
+  mediaAccess?: MediaAccess;
 };
 
 /**
@@ -48,6 +50,16 @@ export type Spotlight = {
  */
 export type RaisedHand = {
   raisedHandOrderPosition: number;
+};
+
+/**
+ * Media access state with order
+ *
+ * @public
+ */
+export type MediaAccess = {
+  isAudioPermitted: boolean;
+  isVideoPermitted: boolean;
 };
 
 /**

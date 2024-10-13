@@ -285,6 +285,38 @@ export const usePeoplePane = (props: {
             ariaLabel: localeStrings.pinParticipantMenuItemAriaLabel
           });
         }
+
+        // if (!remoteParticipants?.[participantId]?.mediaAccess && onUnBlockParticipantMicrophone) {
+        //   _defaultMenuItems.push({
+        //     key: 'unblock-microphone',
+        //     text: 'Unblock microphone',
+        //     iconProps: {
+        //       iconName: 'UnblockMicrophone',
+        //       styles: { root: { lineHeight: '1rem', textAlign: 'center' } }
+        //     },
+        //     onClick: () => {
+        //       onUnBlockParticipantMicrophone(participantId);
+        //     },
+        //     'data-ui-id': 'participant-item-unblock-microphone-button',
+        //     ariaLabel: 'Unblock microphone'
+        //   });
+        // }
+
+        // if (remoteParticipants?.[participantId]?.isAudioPermitted && onBlockParticipantMicrophone) {
+        //   _defaultMenuItems.push({
+        //     key: 'block-microphone',
+        //     text: 'Block microphone',
+        //     iconProps: {
+        //       iconName: 'BlockMicrophone',
+        //       styles: { root: { lineHeight: '1rem', textAlign: 'center' } }
+        //     },
+        //     onClick: () => {
+        //       onBlockParticipantMicrophone(participantId);
+        //     },
+        //     'data-ui-id': 'participant-item-block-microphone-button',
+        //     ariaLabel: 'Block microphone'
+        //   });
+        // }
       }
       if (defaultMenuItems) {
         _defaultMenuItems.push(...defaultMenuItems);

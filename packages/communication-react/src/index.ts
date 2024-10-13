@@ -438,3 +438,4 @@ export type {
   ActiveNotification
 } from '../../react-components/src';
 export type { MeetingConferencePhoneInfoModalStrings } from '../../react-components/src';
+export type { MediaAccess } from '../../react-components/src';

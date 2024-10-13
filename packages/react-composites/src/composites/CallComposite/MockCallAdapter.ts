@@ -228,6 +228,12 @@ export class _MockCallAdapter implements CallAdapter {
   returnFromBreakoutRoom(): Promise<void> {
     throw Error('returnFromBreakoutRoom not implemented');
   }
+  forbidParticipantAudio(userIds: string[]): Promise<void> {
+    throw Error('forbidParticipantAudio not implemented');
+  }
+  permitParticipantAudio(userIds: string[]): Promise<void> {
+    throw Error('permitParticipantAudio not implemented');
+  }
 }
 
 /**

@@ -182,7 +182,10 @@ const onRenderParticipantDefault = (
                 ariaLabel={strings.sharingIconLabel}
               />
             )}
-            {callingParticipant.isMuted && (
+            {!callingParticipant.mediaAccess?.isAudioPermitted && (
+              <Icon iconName="ControlButtonMicProhibited" className={iconStyles} ariaLabel={strings.mutedIconLabel} />
+            )}
+            {callingParticipant.mediaAccess?.isAudioPermitted && callingParticipant.isMuted && (
               <Icon iconName="ParticipantItemMicOff" className={iconStyles} ariaLabel={strings.mutedIconLabel} />
             )}
             {callingParticipant.spotlight && <Icon iconName="ParticipantItemSpotlighted" className={iconStyles} />}

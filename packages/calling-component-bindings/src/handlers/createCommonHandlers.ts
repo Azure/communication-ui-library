@@ -106,6 +106,10 @@ export interface CommonCallingHandlers {
   onMuteParticipant: (userId: string) => Promise<void>;
   /* @conditional-compile-remove(soft-mute) */
   onMuteAllRemoteParticipants: () => Promise<void>;
+
+  onForbidParticipantAudio?: (userIds: string[]) => Promise<void>;
+  onPermitParticipantAudio?: (userIds: string[]) => Promise<void>;
+  // onForbidAllRemoteParticipantsAudio: () => Promise<void>;
 }
 
 /**
@@ -714,6 +718,28 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
           await call?.feature(Features.Spotlight).stopSpotlight(participants);
         }
       : undefined;
+    // const canForbidOthersMedia = call?.feature(Features.Capabilities).capabilities.forbidOthersMedia.isPresent;
+    // const onForbidParticipantAudio = canForbidOthersMedia
+    //   ? async (userIds: string[]): Promise<void> => {
+    //       const participants = userIds?.map((userId) => _toCommunicationIdentifier(userId));
+    //       await call?.feature(Features.MediaAccess).forbidAudio(participants);
+    //     }
+    //   : undefined;
+    // const onPermitParticipantAudio = canForbidOthersMedia
+    //   ? async (userIds: string[]): Promise<void> => {
+    //       const participants = userIds?.map((userId) => _toCommunicationIdentifier(userId));
+    //       await call?.feature(Features.MediaAccess).permitAudio(participants);
+    //     }
+    //   : undefined;
+
+    const onForbidParticipantAudio = async (userIds: string[]): Promise<void> => {
+      const participants = userIds?.map((userId) => _toCommunicationIdentifier(userId));
+      await call?.feature(Features.MediaAccess).forbidAudio(participants);
+    };
+    const onPermitParticipantAudio = async (userIds: string[]): Promise<void> => {
+      const participants = userIds?.map((userId) => _toCommunicationIdentifier(userId));
+      await call?.feature(Features.MediaAccess).permitAudio(participants);
+    };
 
     return {
       onHangUp,
@@ -768,7 +794,9 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       /* @conditional-compile-remove(soft-mute) */
       onMuteAllRemoteParticipants,
       onAcceptCall: notImplemented,
-      onRejectCall: notImplemented
+      onRejectCall: notImplemented,
+      onForbidParticipantAudio,
+      onPermitParticipantAudio
     };
   }
 );

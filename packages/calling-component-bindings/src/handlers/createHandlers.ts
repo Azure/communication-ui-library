@@ -144,4 +144,7 @@ export interface _ComponentCallingHandlers {
   onStartRemoteSpotlight: (userIds: string[]) => Promise<void>;
   /** VideoGallery callback prop to stop remote spotlight */
   onStopRemoteSpotlight: (userIds: string[]) => Promise<void>;
+
+  // onForbidParticipantAudio: (userIds: string[]) => Promise<void>;
+  // onPermitParticipantAudio: (userIds: string[]) => Promise<void>;
 }

@@ -68,6 +68,8 @@ export type { Spotlight } from './types';
 
 export type { Reaction, ReactionResources, ReactionSprite } from './types';
 
+export type { MediaAccess } from './types';
+
 export type {
   SpokenLanguageStrings,
   CaptionLanguageStrings,

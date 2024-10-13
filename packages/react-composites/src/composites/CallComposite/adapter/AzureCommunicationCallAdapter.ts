@@ -230,7 +230,7 @@ class CallContext {
     // This context privately tracks how captions was started to determine if captions is running only in the background.
     // If so we should not show the UI.
     this.state = captionsUIVisibilityModifier(this.state);
-
+    console.log('hi there state', this.state.call?.remoteParticipants);
     this.emitter.emit('stateChanged', this.state);
   }
 
@@ -1140,6 +1140,14 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
 
   public async stopAllSpotlight(): Promise<void> {
     this.handlers.onStopAllSpotlight();
+  }
+
+  public async forbidParticipantAudio(userIds: string[]): Promise<void> {
+    this.handlers.onForbidParticipantAudio?.(userIds);
+  }
+
+  public async permitParticipantAudio(userIds: string[]): Promise<void> {
+    this.handlers.onPermitParticipantAudio?.(userIds);
   }
 
   /* @conditional-compile-remove(breakout-rooms) */

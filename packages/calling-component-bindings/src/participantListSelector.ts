@@ -8,7 +8,8 @@ import {
   getDisplayName,
   getIsScreenSharingOn,
   getIsMuted,
-  CallingBaseSelectorProps
+  CallingBaseSelectorProps,
+  getCapabilities
 } from './baseSelectors';
 import { getRole } from './baseSelectors';
 import { isHideAttendeeNamesEnabled } from './baseSelectors';
@@ -73,6 +74,11 @@ const convertRemoteParticipantsToParticipantListParticipants = (
             spotlightedParticipants,
             toFlatCommunicationIdentifier(participant.identifier)
           );
+          const mediaAccess = {
+            isAudioPermitted: participant.mediaAccess?.isAudioPermitted,
+            isVideoPermitted: participant.mediaAccess?.isVideoPermitted
+          };
+          console.log('hi there convertRemoteParticipantsToParticipantListParticipants', participant.mediaAccess);
           return memoizeFn(
             toFlatCommunicationIdentifier(participant.identifier),
             displayName,
@@ -83,7 +89,8 @@ const convertRemoteParticipantsToParticipantListParticipants = (
             participant.raisedHand,
             localUserCanRemoveOthers,
             remoteParticipantReaction,
-            spotlight
+            spotlight,
+            mediaAccess
           );
         })
         .sort((a, b) => {
@@ -134,7 +141,8 @@ export const participantListSelector: ParticipantListSelector = createSelector(
     getParticipantCount,
     isHideAttendeeNamesEnabled,
     getLocalParticipantReactionState,
-    getSpotlightCallFeature
+    getSpotlightCallFeature,
+    getCapabilities
   ],
   (
     userId,
@@ -147,13 +155,15 @@ export const participantListSelector: ParticipantListSelector = createSelector(
     partitipantCount,
     isHideAttendeeNamesEnabled,
     localParticipantReactionState,
-    spotlightCallFeature
+    spotlightCallFeature,
+    capabilities
   ): {
     participants: CallParticipantListParticipant[];
     myUserId: string;
     totalParticipantCount?: number;
   } => {
     const localUserCanRemoveOthers = localUserCanRemoveOthersTrampoline(role);
+    console.log('hi there participantListSelector', remoteParticipants);
     const participants = remoteParticipants
       ? convertRemoteParticipantsToParticipantListParticipants(
           _updateUserDisplayNames(Object.values(remoteParticipants)),
@@ -173,7 +183,11 @@ export const participantListSelector: ParticipantListSelector = createSelector(
       // Local participant can never remove themselves.
       isRemovable: false,
       reaction: memoizedConvertToVideoTileReaction(localParticipantReactionState),
-      spotlight: memoizedSpotlight(spotlightCallFeature?.spotlightedParticipants, userId)
+      spotlight: memoizedSpotlight(spotlightCallFeature?.spotlightedParticipants, userId),
+      mediaAccess: {
+        isAudioPermitted: !!capabilities?.unmuteMic.isPresent,
+        isVideoPermitted: !!capabilities?.turnVideoOn.isPresent
+      }
     });
     /* @conditional-compile-remove(total-participant-count) */
     const totalParticipantCount = partitipantCount;

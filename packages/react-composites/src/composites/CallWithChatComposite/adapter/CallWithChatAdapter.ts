@@ -516,6 +516,9 @@ export interface CallWithChatAdapterManagement {
    * Return to origin call of breakout room
    */
   returnFromBreakoutRoom(): Promise<void>;
+
+  forbidParticipantAudio: (userIds: string[]) => Promise<void>;
+  permitParticipantAudio: (userIds: string[]) => Promise<void>;
 }
 
 /**

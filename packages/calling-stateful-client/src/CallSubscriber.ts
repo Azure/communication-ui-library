@@ -32,6 +32,7 @@ import { LocalRecordingSubscriber } from './LocalRecordingSubscriber';
 import { BreakoutRoomsSubscriber } from './BreakoutRoomsSubscriber';
 /* @conditional-compile-remove(together-mode) */
 import { TogetherModeSubscriber } from './TogetherModeSubscriber';
+import { MediaAccessSubscriber } from './MediaAccessSubscriber';
 
 /**
  * Keeps track of the listeners assigned to a particular call because when we get an event from SDK, it doesn't tell us
@@ -64,6 +65,7 @@ export class CallSubscriber {
   private _breakoutRoomsSubscriber: BreakoutRoomsSubscriber;
   /* @conditional-compile-remove(together-mode) */
   private _togetherModeSubscriber: TogetherModeSubscriber;
+  private _mediaAccessSubscriber: MediaAccessSubscriber;
 
   constructor(call: CallCommon, context: CallContext, internalContext: InternalCallContext) {
     this._call = call;
@@ -103,7 +105,11 @@ export class CallSubscriber {
       context: this._context,
       localOptimalVideoCountFeature: this._call.feature(Features.OptimalVideoCount)
     });
-
+    this._mediaAccessSubscriber = new MediaAccessSubscriber(
+      this._callIdRef,
+      this._context,
+      this._call.feature(Features.MediaAccess)
+    );
     this._localVideoStreamVideoEffectsSubscribers = new Map();
 
     this._capabilitiesSubscriber = new CapabilitiesSubscriber(
@@ -240,6 +246,7 @@ export class CallSubscriber {
     this._breakoutRoomsSubscriber.unsubscribe();
     /* @conditional-compile-remove(together-mode) */
     this._togetherModeSubscriber.unsubscribe();
+    this._mediaAccessSubscriber.unsubscribe();
   };
 
   // This is a helper function to safely call subscriber functions. This is needed in order to prevent events

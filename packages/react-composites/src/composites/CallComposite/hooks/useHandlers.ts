@@ -231,7 +231,23 @@ const createCompositeHandlers = memoizeOne(
       /* @conditional-compile-remove(soft-mute) */
       onMuteAllRemoteParticipants: async (): Promise<void> => {
         await adapter.muteAllRemoteParticipants();
-      }
+      },
+      // onForbidParticipantAudio: async (userIds: string[]): Promise<void> => {
+      //   await adapter.forbidParticipantAudio(userIds);
+      // },
+      // onPermitParticipantAudio: async (userIds: string[]): Promise<void> => {
+      //   await adapter.permitParticipantAudio(userIds);
+      // }
+      onForbidParticipantAudio: capabilities?.forbidOthersMedia.isPresent
+        ? async (userIds: string[]): Promise<void> => {
+            await adapter.forbidParticipantAudio(userIds);
+          }
+        : undefined,
+      onPermitParticipantAudio: capabilities?.forbidOthersMedia.isPresent
+        ? async (userIds: string[]): Promise<void> => {
+            await adapter.permitParticipantAudio(userIds);
+          }
+        : undefined
     };
   }
 );
