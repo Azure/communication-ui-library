@@ -6,7 +6,7 @@ import { SpotlightedParticipant } from '@azure/communication-calling';
 import { ParticipantRole } from '@azure/communication-calling';
 import { memoizeFnAll, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { RemoteParticipantState, RemoteVideoStreamState } from '@internal/calling-stateful-client';
-import { VideoGalleryRemoteParticipant, VideoGalleryStream } from '@internal/react-components';
+import { MediaAccess, VideoGalleryRemoteParticipant, VideoGalleryStream } from '@internal/react-components';
 import memoizeOne from 'memoize-one';
 import { _convertParticipantState, ParticipantConnectionState } from './callUtils';
 import { maskDisplayNameWithRole } from './callUtils';
@@ -72,7 +72,8 @@ export const _videoGalleryRemoteParticipantsMemo: _VideoGalleryRemoteParticipant
             participant.raisedHand,
             participant.contentSharingStream,
             remoteParticipantReaction,
-            spotlight
+            spotlight,
+            participant.mediaAccess
           );
         })
     );
@@ -90,7 +91,8 @@ const memoizedAllConvertRemoteParticipant = memoizeFnAll(
     raisedHand?: RaisedHandState,
     contentSharingStream?: HTMLElement,
     reaction?: Reaction,
-    spotlight?: Spotlight
+    spotlight?: Spotlight,
+    mediaAccess?: MediaAccess
   ): VideoGalleryRemoteParticipant => {
     return convertRemoteParticipantToVideoGalleryRemoteParticipant(
       userId,
@@ -102,7 +104,8 @@ const memoizedAllConvertRemoteParticipant = memoizeFnAll(
       raisedHand,
       contentSharingStream,
       reaction,
-      spotlight
+      spotlight,
+      mediaAccess
     );
   }
 );
@@ -118,7 +121,8 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
   raisedHand?: RaisedHandState,
   contentSharingStream?: HTMLElement,
   reaction?: Reaction,
-  spotlight?: Spotlight
+  spotlight?: Spotlight,
+  mediaAccess?: MediaAccess
 ): VideoGalleryRemoteParticipant => {
   const rawVideoStreamsArray = Object.values(videoStreams);
   let videoStream: VideoGalleryStream | undefined = undefined;
@@ -161,7 +165,8 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
     state,
     raisedHand,
     reaction,
-    spotlight
+    spotlight,
+    mediaAccess
   };
 };
 

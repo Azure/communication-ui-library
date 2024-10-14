@@ -247,6 +247,16 @@ const createCompositeHandlers = memoizeOne(
         ? async (userIds: string[]): Promise<void> => {
             await adapter.permitParticipantAudio(userIds);
           }
+        : undefined,
+      onForbidAllAttendeesAudio: capabilities?.forbidOthersMedia.isPresent
+        ? async (): Promise<void> => {
+            await adapter.forbidAllAttendeesAudio();
+          }
+        : undefined,
+      onPermitAllAttendeesAudio: capabilities?.forbidOthersMedia.isPresent
+        ? async (): Promise<void> => {
+            await adapter.permitAllAttendeesAudio();
+          }
         : undefined
     };
   }

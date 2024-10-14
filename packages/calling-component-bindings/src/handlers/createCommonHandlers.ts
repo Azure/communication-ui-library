@@ -109,7 +109,8 @@ export interface CommonCallingHandlers {
 
   onForbidParticipantAudio?: (userIds: string[]) => Promise<void>;
   onPermitParticipantAudio?: (userIds: string[]) => Promise<void>;
-  // onForbidAllRemoteParticipantsAudio: () => Promise<void>;
+  onForbidAllAttendeesAudio?: () => Promise<void>;
+  onPermitAllAttendeesAudio?: () => Promise<void>;
 }
 
 /**
@@ -696,6 +697,7 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
     const onMuteAllRemoteParticipants = async (): Promise<void> => {
       call?.muteAllRemoteParticipants();
     };
+
     const canStartSpotlight = call?.feature(Features.Capabilities).capabilities.spotlightParticipant.isPresent;
     const canRemoveSpotlight = call?.feature(Features.Capabilities).capabilities.removeParticipantsSpotlight.isPresent;
     const onStartLocalSpotlight = canStartSpotlight
@@ -719,6 +721,7 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
         }
       : undefined;
     // const canForbidOthersMedia = call?.feature(Features.Capabilities).capabilities.forbidOthersMedia.isPresent;
+    // console.log('hi there canForbidOthersMedia', canForbidOthersMedia);
     // const onForbidParticipantAudio = canForbidOthersMedia
     //   ? async (userIds: string[]): Promise<void> => {
     //       const participants = userIds?.map((userId) => _toCommunicationIdentifier(userId));
@@ -740,6 +743,25 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       const participants = userIds?.map((userId) => _toCommunicationIdentifier(userId));
       await call?.feature(Features.MediaAccess).permitAudio(participants);
     };
+    const onForbidAllAttendeesAudio = async (): Promise<void> => {
+      await call?.feature(Features.MediaAccess).forbidOthersAudio();
+    };
+
+    const onPermitAllAttendeesAudio = async (): Promise<void> => {
+      await call?.feature(Features.MediaAccess).permitOthersAudio();
+    };
+
+    // const onForbidAllAttendeesAudio = canForbidOthersMedia
+    //   ? async (): Promise<void> => {
+    //       await call?.feature(Features.MediaAccess).forbidOthersAudio();
+    //     }
+    //   : undefined;
+
+    // const onPermitAllAttendeesAudio = canForbidOthersMedia
+    //   ? async (): Promise<void> => {
+    //       await call?.feature(Features.MediaAccess).permitOthersAudio();
+    //     }
+    //   : undefined;
 
     return {
       onHangUp,
@@ -796,7 +818,9 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       onAcceptCall: notImplemented,
       onRejectCall: notImplemented,
       onForbidParticipantAudio,
-      onPermitParticipantAudio
+      onPermitParticipantAudio,
+      onForbidAllAttendeesAudio,
+      onPermitAllAttendeesAudio
     };
   }
 );

@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { ParticipantState } from './ParticipantListParticipant';
+import { MediaAccess, ParticipantState } from './ParticipantListParticipant';
 
 import { RaisedHand } from './ParticipantListParticipant';
 import { Reaction } from './ParticipantListParticipant';
@@ -43,6 +43,7 @@ export type VideoGalleryParticipant = {
   isScreenSharingOn?: boolean;
   /** Whether participant is spotlighted **/
   spotlight?: Spotlight;
+  mediaAccess?: MediaAccess;
 };
 
 /**
@@ -126,4 +127,5 @@ export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
    * @public
    * */
   reaction?: Reaction;
+  mediaAccess?: MediaAccess;
 }

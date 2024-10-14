@@ -33,6 +33,7 @@ export class CapabilitiesSubscriber {
 
   private capabilitiesChanged = (data: CapabilitiesChangeInfo): void => {
     this._context.setCapabilities(this._callIdRef.callId, this._capabilitiesFeature.capabilities, data);
+    console.log('hi there capabilities changed', data);
     if (data.oldValue.viewAttendeeNames !== data.newValue.viewAttendeeNames) {
       this._context.setHideAttendeeNames(this._callIdRef.callId, data);
     }

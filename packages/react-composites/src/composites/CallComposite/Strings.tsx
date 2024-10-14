@@ -894,4 +894,16 @@ export interface CallCompositeStrings {
    * notification.
    */
   returnFromBreakoutRoomBannerButtonLabel: string;
+  forbidParticipantAudioMenuLabel: string;
+  permitParticipantAudioMenuLabel: string;
+  forbidAllAttendeesAudioDialogTitle: string;
+  forbidAllAttendeesAudioDialogContent: string;
+  forbidAllAttendeesAudioConfirmButtonLabel: string;
+  forbidAllAttendeesAudioCancelButtonLabel: string;
+  permitAllAttendeesAudioDialogTitle: string;
+  permitAllAttendeesAudioDialogContent: string;
+  permitAllAttendeesAudioConfirmButtonLabel: string;
+  permitAllAttendeesAudioCancelButtonLabel: string;
+  forbidAllAttendeesAudioMenuLabel: string;
+  permitAllAttendeesAudioMenuLabel: string;
 }

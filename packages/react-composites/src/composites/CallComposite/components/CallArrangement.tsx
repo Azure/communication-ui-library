@@ -233,7 +233,9 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     onMuteParticipant,
     spotlightedParticipants,
     maxParticipantsToSpotlight,
-    localParticipant
+    localParticipant,
+    onForbidParticipantAudio,
+    onPermitParticipantAudio
   } = videoGalleryProps;
 
   const [showTeamsMeetingConferenceModal, setShowTeamsMeetingConferenceModal] = useState(false);
@@ -332,6 +334,29 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     /* @conditional-compile-remove(soft-mute) */ muteAllHandlers.onMuteAllRemoteParticipants
   ]);
 
+  const onToggleParticipantMicPeoplePaneProps = useMemo(() => {
+    return {
+      onForbidParticipantAudio: ['Unknown', 'Organizer', 'Presenter', 'Co-organizer'].includes(role ?? '')
+        ? onForbidParticipantAudio
+        : undefined,
+      onPermitParticipantAudio: ['Unknown', 'Organizer', 'Presenter', 'Co-organizer'].includes(role ?? '')
+        ? onPermitParticipantAudio
+        : undefined,
+      onForbidAllAttendeesAudio: ['Unknown', 'Organizer', 'Presenter', 'Co-organizer'].includes(role ?? '')
+        ? muteAllHandlers.onForbidAllAttendeesAudio
+        : undefined,
+      onPermitAllAttendeesAudio: ['Unknown', 'Organizer', 'Presenter', 'Co-organizer'].includes(role ?? '')
+        ? muteAllHandlers.onPermitAllAttendeesAudio
+        : undefined
+    };
+  }, [
+    role,
+    onForbidParticipantAudio,
+    onPermitParticipantAudio,
+    muteAllHandlers.onForbidAllAttendeesAudio,
+    muteAllHandlers.onPermitAllAttendeesAudio
+  ]);
+
   const spotlightPeoplePaneProps = useMemo(() => {
     return {
       spotlightedParticipantUserIds: spotlightedParticipants,
@@ -358,7 +383,8 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     ...peoplePaneProps,
     ...spotlightPeoplePaneProps,
     ...onMuteParticipantPeoplePaneProps,
-    ...pinPeoplePaneProps
+    ...pinPeoplePaneProps,
+    ...onToggleParticipantMicPeoplePaneProps
   });
   const togglePeoplePane = useCallback(() => {
     if (isPeoplePaneOpen) {

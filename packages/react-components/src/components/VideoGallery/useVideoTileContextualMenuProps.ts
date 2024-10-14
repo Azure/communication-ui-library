@@ -29,6 +29,10 @@ export const useVideoTileContextualMenuProps = (props: {
     spotlightLimitReachedMenuTitle?: string;
     /* @conditional-compile-remove(soft-mute) */
     muteParticipantMenuItemLabel?: string;
+    forbidParticipantAudio?: string;
+    permitParticipantAudio?: string;
+    forbidParticipantAudioTileMenuLabel?: string;
+    permitParticipantAudioTileMenuLabel?: string;
   };
   view?: { updateScalingMode: (scalingMode: ViewScalingMode) => Promise<void> };
   isPinned?: boolean;
@@ -45,6 +49,8 @@ export const useVideoTileContextualMenuProps = (props: {
   myUserId?: string;
   /* @conditional-compile-remove(soft-mute) */
   onMuteParticipant?: (userId: string) => void;
+  onForbidParticipantAudio?: (userIds: string[]) => void;
+  onPermitParticipantAudio?: (userIds: string[]) => void;
 }): IContextualMenuProps | undefined => {
   const {
     participant,
@@ -62,7 +68,9 @@ export const useVideoTileContextualMenuProps = (props: {
     onStopSpotlight,
     maxParticipantsToSpotlight,
     myUserId,
-    /* @conditional-compile-remove(soft-mute) */ onMuteParticipant
+    /* @conditional-compile-remove(soft-mute) */ onMuteParticipant,
+    onForbidParticipantAudio,
+    onPermitParticipantAudio
   } = props;
   const scalingMode = useMemo(() => {
     return props.participant.videoStream?.scalingMode;
@@ -173,6 +181,35 @@ export const useVideoTileContextualMenuProps = (props: {
         });
       }
     }
+
+    if (!participant.mediaAccess?.isAudioPermitted && onPermitParticipantAudio) {
+      items.push({
+        key: 'permitParticipantAudio',
+        text: strings?.permitParticipantAudioTileMenuLabel,
+        iconProps: {
+          iconName: 'Microphone',
+          styles: { root: { lineHeight: 0 } }
+        },
+        onClick: () => onPermitParticipantAudio([participant.userId]),
+        'data-ui-id': 'video-tile-unblock-microphone',
+        ariaLabel: 'Unblock microphone'
+      });
+    }
+
+    if (participant.mediaAccess?.isAudioPermitted && onForbidParticipantAudio) {
+      items.push({
+        key: 'forbidParticipantAudio',
+        text: strings?.forbidParticipantAudioTileMenuLabel,
+        iconProps: {
+          iconName: 'ControlButtonMicProhibited',
+          styles: { root: { lineHeight: 0 } }
+        },
+        onClick: () => onForbidParticipantAudio([participant.userId]),
+        'data-ui-id': 'video-tile-block-microphone',
+        ariaLabel: 'Block microphone'
+      });
+    }
+
     if (scalingMode) {
       if (scalingMode === 'Crop' && strings?.fitRemoteParticipantToFrame) {
         items.push({

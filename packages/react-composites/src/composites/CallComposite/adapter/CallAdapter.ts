@@ -786,6 +786,8 @@ export interface CallAdapterCallOperations {
 
   forbidParticipantAudio(userIds: string[]): Promise<void>;
   permitParticipantAudio(userIds: string[]): Promise<void>;
+  forbidAllAttendeesAudio(): Promise<void>;
+  permitAllAttendeesAudio(): Promise<void>;
 }
 
 /**

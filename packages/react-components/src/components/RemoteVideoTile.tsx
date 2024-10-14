@@ -71,6 +71,8 @@ export const _RemoteVideoTile = React.memo(
     toggleAnnouncerString?: (announcerString: string) => void;
     reactionResources?: ReactionResources;
     onLongTouch?: (() => void) | undefined;
+    onForbidParticipantAudio?: (userIds: string[]) => Promise<void>;
+    onPermitParticipantAudio?: (userIds: string[]) => Promise<void>;
   }) => {
     const {
       isAvailable,
@@ -100,7 +102,9 @@ export const _RemoteVideoTile = React.memo(
       toggleAnnouncerString,
       strings,
       reactionResources,
-      streamId
+      streamId,
+      onForbidParticipantAudio,
+      onPermitParticipantAudio
     } = props;
 
     const remoteVideoStreamProps: RemoteVideoStreamLifecycleMaintainerProps = useMemo(
@@ -147,7 +151,9 @@ export const _RemoteVideoTile = React.memo(
       onStartSpotlight,
       onStopSpotlight,
       maxParticipantsToSpotlight,
-      /* @conditional-compile-remove(soft-mute) */ onMuteParticipant
+      /* @conditional-compile-remove(soft-mute) */ onMuteParticipant,
+      onForbidParticipantAudio,
+      onPermitParticipantAudio
     });
 
     const videoTileContextualMenuProps = useMemo(() => {

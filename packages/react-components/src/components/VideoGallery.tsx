@@ -133,6 +133,8 @@ export interface VideoGalleryStrings {
   muteParticipantMenuItemLabel: string;
   /** Text shown when waiting for others to join the call */
   waitingScreenText: string;
+  forbidParticipantAudio: string;
+  permitParticipantAudio: string;
 }
 
 /**
@@ -315,6 +317,8 @@ export interface VideoGalleryProps {
    * This callback is to mute a remote participant
    */
   onMuteParticipant?: (userId: string) => Promise<void>;
+  onForbidParticipantAudio?: (userIds: string[]) => Promise<void>;
+  onPermitParticipantAudio?: (userIds: string[]) => Promise<void>;
 }
 
 /**
@@ -400,7 +404,9 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     reactionResources,
     videoTilesOptions,
     /* @conditional-compile-remove(soft-mute) */
-    onMuteParticipant
+    onMuteParticipant,
+    onForbidParticipantAudio,
+    onPermitParticipantAudio
   } = props;
 
   const ids = useIdentifiers();
@@ -650,32 +656,36 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           reactionResources={reactionResources}
           /* @conditional-compile-remove(soft-mute) */
           onMuteParticipant={onMuteParticipant}
+          onForbidParticipantAudio={onForbidParticipantAudio}
+          onPermitParticipantAudio={onPermitParticipantAudio}
         />
       );
     },
     [
+      selectedScalingModeState,
+      pinnedParticipants,
+      videoTilesOptions?.alwaysShowLabelBackground,
       onCreateRemoteStreamView,
       onDisposeRemoteVideoStreamView,
-      remoteVideoViewOptions,
-      localParticipant,
       onRenderAvatar,
       showMuteIndicator,
       strings,
-      drawerMenuHostId,
+      localParticipant.userId,
       remoteVideoTileMenu,
-      selectedScalingModeState,
-      pinnedParticipants,
+      drawerMenuHostId,
       onPinParticipant,
       onUnpinParticipant,
-      toggleAnnouncerString,
       onUpdateScalingMode,
+      toggleAnnouncerString,
       spotlightedParticipants,
       onStartRemoteSpotlight,
       onStopRemoteSpotlight,
       maxParticipantsToSpotlight,
-      /* @conditional-compile-remove(soft-mute) */ onMuteParticipant,
       reactionResources,
-      videoTilesOptions
+      onMuteParticipant,
+      onForbidParticipantAudio,
+      onPermitParticipantAudio,
+      remoteVideoViewOptions
     ]
   );
 

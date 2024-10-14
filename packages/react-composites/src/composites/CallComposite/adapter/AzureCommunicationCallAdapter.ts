@@ -626,6 +626,10 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     this.muteParticipant.bind(this);
     /* @conditional-compile-remove(soft-mute) */
     this.muteAllRemoteParticipants.bind(this);
+    this.forbidAllAttendeesAudio.bind(this);
+    this.permitAllAttendeesAudio.bind(this);
+    this.forbidAllAttendeesAudio.bind(this);
+    this.permitAllAttendeesAudio.bind(this);
   }
 
   public dispose(): void {
@@ -1148,6 +1152,14 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
 
   public async permitParticipantAudio(userIds: string[]): Promise<void> {
     this.handlers.onPermitParticipantAudio?.(userIds);
+  }
+
+  public async forbidAllAttendeesAudio(): Promise<void> {
+    this.handlers.onForbidAllAttendeesAudio?.();
+  }
+
+  public async permitAllAttendeesAudio(): Promise<void> {
+    this.handlers.onPermitAllAttendeesAudio?.();
   }
 
   /* @conditional-compile-remove(breakout-rooms) */

@@ -356,7 +356,19 @@
     "joinBreakoutRoomBannerTitle": "Breakout room '{roomName}' is open",
     "joinBreakoutRoomBannerButtonLabel": "Join",
     "returnFromBreakoutRoomBannerTitle": "Return to main meeting",
-    "returnFromBreakoutRoomBannerButtonLabel": "Rejoin"
+    "returnFromBreakoutRoomBannerButtonLabel": "Rejoin",
+    "forbidParticipantAudioMenuLabel": "Disable mic",
+    "permitParticipantAudioMenuLabel": "Allow mic",
+    "forbidAllAttendeesAudioDialogTitle": "Disable mic for attendees?",
+    "forbidAllAttendeesAudioDialogContent": "Attendees won’t be able to unmute themselves. The organizer and presenters can let people unmute as needed.",
+    "forbidAllAttendeesAudioConfirmButtonLabel": "Disable mics",
+    "forbidAllAttendeesAudioCancelButtonLabel": "Cancel",
+    "permitAllAttendeesAudioDialogTitle": "Allow mic for attendees?",
+    "permitAllAttendeesAudioDialogContent": "Everyone in the meeting will be able to unmute themselves.",
+    "permitAllAttendeesAudioConfirmButtonLabel": "Allow mics",
+    "permitAllAttendeesAudioCancelButtonLabel": "Cancel",
+    "forbidAllAttendeesAudioMenuLabel": "Disable mic for attendees",
+    "permitAllAttendeesAudioMenuLabel": "Allow mic for attendees"
   },
   "chat": {
     "chatListHeader": "In this chat",

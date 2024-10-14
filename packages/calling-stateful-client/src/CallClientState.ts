@@ -213,8 +213,8 @@ export interface MediaAccessCallFeatureState {
  * @alpha
  */
 export interface MediaAccessState {
-  isAudioPermitted?: boolean;
-  isVideoPermitted?: boolean;
+  isAudioPermitted: boolean;
+  isVideoPermitted: boolean;
 }
 
 /* @conditional-compile-remove(breakout-rooms) */

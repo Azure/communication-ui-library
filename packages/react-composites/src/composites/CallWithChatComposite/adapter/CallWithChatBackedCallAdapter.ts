@@ -253,6 +253,14 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
   public async permitParticipantAudio(userIds: string[]): Promise<void> {
     return this.callWithChatAdapter.permitParticipantAudio(userIds);
   }
+
+  public async forbidAllAttendeesAudio(): Promise<void> {
+    return this.callWithChatAdapter.forbidAllAttendeesAudio();
+  }
+
+  public async permitAllAttendeesAudio(): Promise<void> {
+    return this.callWithChatAdapter.permitAllAttendeesAudio();
+  }
 }
 
 function callAdapterStateFromCallWithChatAdapterState(

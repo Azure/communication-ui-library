@@ -234,6 +234,12 @@ export class _MockCallAdapter implements CallAdapter {
   permitParticipantAudio(userIds: string[]): Promise<void> {
     throw Error('permitParticipantAudio not implemented');
   }
+  forbidAllAttendeesAudio(): Promise<void> {
+    throw Error('forbidAllAttendeesAudio not implemented');
+  }
+  permitAllAttendeesAudio(): Promise<void> {
+    throw Error('permitAllAttendeesAudio not implemented');
+  }
 }
 
 /**

@@ -114,6 +114,9 @@ export type ParticipantListProps = {
   participantAriaLabelledBy?: string;
   /** List of pinned participants */
   pinnedParticipants?: string[];
+
+  onForbidParticipantAudio?: (userIds: string[]) => Promise<void>;
+  onPermitParticipantAudio?: (userIds: string[]) => Promise<void>;
 };
 
 const onRenderParticipantDefault = (
