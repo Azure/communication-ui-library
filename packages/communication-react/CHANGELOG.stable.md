@@ -15,7 +15,7 @@ Tue, 15 Oct 2024 20:24:24 GMT
 
 - Azure Communication Services Web UI Library now supports Deep Noise Suppression. This feature enables noise suppression algorithms to filter out background noise, ensuring that only the speaker's voice is heard clearly. Developers can use this functionality today through our composites (e.g CallComposite, CallWithChatComposite). ([PR #5265](https://github.com/Azure/communication-ui-library/pull/5265/))
 
-- Stabilize Javascript Loaders from a sub export of communication react ([PR #5198](https://github.com/azure/communication-ui-library/pull/5198) by dmceachern@microsoft.com)
+- Azure Communication Services Web UI Library now supports a new way to consume our Composite experiences. If you are wanting to use the Azure Communication Services UI library Composites and don't develop in react, we are introducing a series of loader functions to allow you to use the Composites in your application. These functions load a react node and attach it to your application allowing you to use the Composites as if you were building in react. ([PR #5198](https://github.com/azure/communication-ui-library/pull/5198) by dmceachern@microsoft.com)
 
 ### Improvements
 
