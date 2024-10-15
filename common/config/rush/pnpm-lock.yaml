@@ -139,6 +139,17 @@ packages:
       events: 3.3.0
     dev: false
 
+  /@azure/communication-calling@1.0.0-custom.2:
+    resolution: {integrity: sha1-/xZyFFApWAgxvb2lXVmcWONjmMY=}
+    dependencies:
+      '@azure/communication-common': 2.3.0
+      '@azure/logger': 1.1.4
+    optionalDependencies:
+      bufferutil: 4.0.8
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
+
   /@azure/communication-calling@1.30.1-beta.1:
     resolution: {integrity: sha512-vGb2qCn6MWv2npLAYGHelhRXcT8knHiA1Gx/zuoBjJ55lkwMicI1TphUeyMfZMNyfEewbhNf/3WLUVz7rhgoGg==}
     dependencies:
@@ -1813,7 +1824,7 @@ packages:
     dev: false
 
   /@esbuild/aix-ppc64@0.23.1:
-    resolution: {integrity: sha512-6VhYk1diRqrhBAqpJEdjASR/+WVRtfjpqKuNw11cLiaWpAT/Uu+nokB+UJnevzy/P9C/ty6AOe0dwueMrGh/iQ==}
+    resolution: {integrity: sha1-USmTdN4XHb2Au32Djhz86a8281M=}
     engines: {node: '>=18'}
     cpu: [ppc64]
     os: [aix]
@@ -1822,7 +1833,7 @@ packages:
     optional: true
 
   /@esbuild/android-arm64@0.18.20:
-    resolution: {integrity: sha512-Nz4rJcchGDtENV0eMKUNa6L12zz2zBDXuhj/Vjh18zGqB44Bi7MBMSXjgunJgjRhCmKOjnPuZp4Mb6OKqtMHLQ==}
+    resolution: {integrity: sha1-mEtPnI0Dd0Q8wt/O8mbQIkRZNiI=}
     engines: {node: '>=12'}
     cpu: [arm64]
     os: [android]
@@ -1831,7 +1842,7 @@ packages:
     optional: true
 
   /@esbuild/android-arm64@0.23.1:
-    resolution: {integrity: sha512-xw50ipykXcLstLeWH7WRdQuysJqejuAGPd30vd1i5zSyKK3WE+ijzHmLKxdiCMtH1pHz78rOg0BKSYOSB/2Khw==}
+    resolution: {integrity: sha1-WFZSkaH+VIY4rbnFhCN0SeXhQBg=}
     engines: {node: '>=18'}
     cpu: [arm64]
     os: [android]
@@ -1840,7 +1851,7 @@ packages:
     optional: true
 
   /@esbuild/android-arm@0.18.20:
-    resolution: {integrity: sha512-fyi7TDI/ijKKNZTUJAQqiG5T7YjJXgnzkURqmGj13C6dCqckZBLdl4h7bkhHt/t0WP+zO9/zwroDvANaOqO5Sw==}
+    resolution: {integrity: sha1-/tsmW8OlichMwR+BCATyNJR8NoI=}
     engines: {node: '>=12'}
     cpu: [arm]
     os: [android]
@@ -1849,7 +1860,7 @@ packages:
     optional: true
 
   /@esbuild/android-arm@0.23.1:
-    resolution: {integrity: sha512-uz6/tEy2IFm9RYOyvKl88zdzZfwEfKZmnX9Cj1BHjeSGNuGLuMD1kR8y5bteYmwqKm1tj8m4cb/aKEorr6fHWQ==}
+    resolution: {integrity: sha1-XrjGUtTIKiQh4zlbgI5tnELIYu4=}
     engines: {node: '>=18'}
     cpu: [arm]
     os: [android]
@@ -1858,7 +1869,7 @@ packages:
     optional: true
 
   /@esbuild/android-x64@0.18.20:
-    resolution: {integrity: sha512-8GDdlePJA8D6zlZYJV/jnrRAi6rOiNaCC/JclcXpB+KIuvfBN4owLtgzY2bsxnx666XjJx2kDPUmnTtR8qKQUg==}
+    resolution: {integrity: sha1-Nc9BnEz8i6voiT0pbNmQ6en3VvI=}
     engines: {node: '>=12'}
     cpu: [x64]
     os: [android]
@@ -1867,7 +1878,7 @@ packages:
     optional: true
 
   /@esbuild/android-x64@0.23.1:
-    resolution: {integrity: sha512-nlN9B69St9BwUoB+jkyU090bru8L0NA3yFvAd7k8dNsVH8bi9a8cUAUSEcEEgTp2z3dbEDGJGfP6VUnkQnlReg==}
+    resolution: {integrity: sha1-rhnWZdLwbw9IpqyaIks/Zy5l1Rc=}
     engines: {node: '>=18'}
     cpu: [x64]
     os: [android]
@@ -1876,7 +1887,7 @@ packages:
     optional: true
 
   /@esbuild/darwin-arm64@0.18.20:
-    resolution: {integrity: sha512-bxRHW5kHU38zS2lPTPOyuyTm+S+eobPUnTNkdJEfAddYgEcll4xkT8DB9d2008DtTbl7uJag2HuE5NZAZgnNEA==}
+    resolution: {integrity: sha1-CBcsvsz5X7w4M5mn85z73a6w18E=}
     engines: {node: '>=12'}
     cpu: [arm64]
     os: [darwin]
@@ -1885,7 +1896,7 @@ packages:
     optional: true
 
   /@esbuild/darwin-arm64@0.23.1:
-    resolution: {integrity: sha512-YsS2e3Wtgnw7Wq53XXBLcV6JhRsEq8hkfg91ESVadIrzr9wO6jJDMZnCQbHm1Guc5t/CdDiFSSfWP58FNuvT3Q==}
+    resolution: {integrity: sha1-BbF/kah+VXtGipx16dhasQwSGxY=}
     engines: {node: '>=18'}
     cpu: [arm64]
     os: [darwin]
@@ -1894,7 +1905,7 @@ packages:
     optional: true
 
   /@esbuild/darwin-x64@0.18.20:
-    resolution: {integrity: sha512-pc5gxlMDxzm513qPGbCbDukOdsGtKhfxD1zJKXjCCcU7ju50O7MeAZ8c4krSJcOIJGFR+qx21yMMVYwiQvyTyQ==}
+    resolution: {integrity: sha1-1w1XkNi/R1VWtn0Pi3xb3/BT2F0=}
     engines: {node: '>=12'}
     cpu: [x64]
     os: [darwin]
@@ -1903,7 +1914,7 @@ packages:
     optional: true
 
   /@esbuild/darwin-x64@0.23.1:
-    resolution: {integrity: sha512-aClqdgTDVPSEGgoCS8QDG37Gu8yc9lTHNAQlsztQ6ENetKEO//b8y31MMu2ZaPbn4kVsIABzVLXYLhCGekGDqw==}
+    resolution: {integrity: sha1-xYNTuYL04E8NAiKEuLonM/X/CTE=}
     engines: {node: '>=18'}
     cpu: [x64]
     os: [darwin]
@@ -1912,7 +1923,7 @@ packages:
     optional: true
 
   /@esbuild/freebsd-arm64@0.18.20:
-    resolution: {integrity: sha512-yqDQHy4QHevpMAaxhhIwYPMv1NECwOvIpGCZkECn8w2WFHXjEwrBn3CeNIYsibZ/iZEUemj++M26W3cNR5h+Tw==}
+    resolution: {integrity: sha1-mHVc0ScH+T8hDiSU1qS1G5aXf1Q=}
     engines: {node: '>=12'}
     cpu: [arm64]
     os: [freebsd]
@@ -1921,7 +1932,7 @@ packages:
     optional: true
 
   /@esbuild/freebsd-arm64@0.23.1:
-    resolution: {integrity: sha512-h1k6yS8/pN/NHlMl5+v4XPfikhJulk4G+tKGFIOwURBSFzE8bixw1ebjluLOjfwtLqY0kewfjLSrO6tN2MgIhA==}
+    resolution: {integrity: sha1-+SINxl+A8DY14e+Wz61dofRG87w=}
     engines: {node: '>=18'}
     cpu: [arm64]
     os: [freebsd]
@@ -1930,7 +1941,7 @@ packages:
     optional: true
 
   /@esbuild/freebsd-x64@0.18.20:
-    resolution: {integrity: sha512-tgWRPPuQsd3RmBZwarGVHZQvtzfEBOreNuxEMKFcd5DaDn2PbBxfwLcj4+aenoh7ctXcbXmOQIn8HI6mCSw5MQ==}
+    resolution: {integrity: sha1-wesr/wORX4fCnOzkwaf6H0I7Bm4=}
     engines: {node: '>=12'}
     cpu: [x64]
     os: [freebsd]
@@ -1939,7 +1950,7 @@ packages:
     optional: true
 
   /@esbuild/freebsd-x64@0.23.1:
-    resolution: {integrity: sha512-lK1eJeyk1ZX8UklqFd/3A60UuZ/6UVfGT2LuGo3Wp4/z7eRTRYY+0xOu2kpClP+vMTi9wKOfXi2vjUpO1Ro76g==}
+    resolution: {integrity: sha1-ab2FEfoBO1nwIm0WCaxD985IlzA=}
     engines: {node: '>=18'}
     cpu: [x64]
     os: [freebsd]
@@ -1948,7 +1959,7 @@ packages:
     optional: true
 
   /@esbuild/linux-arm64@0.18.20:
-    resolution: {integrity: sha512-2YbscF+UL7SQAVIpnWvYwM+3LskyDmPhe31pE7/aoTMFKKzIc9lLbyGUpmmb8a8AixOL61sQ/mFh3jEjHYFvdA==}
+    resolution: {integrity: sha1-utQji9j0/CW1oCEoDHcKtfw6AqA=}
     engines: {node: '>=12'}
     cpu: [arm64]
     os: [linux]
@@ -1957,7 +1968,7 @@ packages:
     optional: true
 
   /@esbuild/linux-arm64@0.23.1:
-    resolution: {integrity: sha512-/93bf2yxencYDnItMYV/v116zff6UyTjo4EtEQjUBeGiVpMmffDNUyD9UN2zV+V3LRV3/on4xdZ26NKzn6754g==}
+    resolution: {integrity: sha1-gFCvbVHds4jHVlPvmHH1zNjxI4M=}
     engines: {node: '>=18'}
     cpu: [arm64]
     os: [linux]
@@ -1966,7 +1977,7 @@ packages:
     optional: true
 
   /@esbuild/linux-arm@0.18.20:
-    resolution: {integrity: sha512-/5bHkMWnq1EgKr1V+Ybz3s1hWXok7mDFUMQ4cG10AfW3wL02PSZi5kFpYKrptDsgb2WAJIvRcDm+qIvXf/apvg==}
+    resolution: {integrity: sha1-PmF8YfM1CKJxUO5BdUPIq1rMc7A=}
     engines: {node: '>=12'}
     cpu: [arm]
     os: [linux]
@@ -1975,7 +1986,7 @@ packages:
     optional: true
 
   /@esbuild/linux-arm@0.23.1:
-    resolution: {integrity: sha512-CXXkzgn+dXAPs3WBwE+Kvnrf4WECwBdfjfeYHpMeVxWE0EceB6vhWGShs6wi0IYEqMSIzdOF1XjQ/Mkm5d7ZdQ==}
+    resolution: {integrity: sha1-7Kq9HCO3AQcEhJkNuagvOC+Z53E=}
     engines: {node: '>=18'}
     cpu: [arm]
     os: [linux]
@@ -1984,7 +1995,7 @@ packages:
     optional: true
 
   /@esbuild/linux-ia32@0.18.20:
-    resolution: {integrity: sha512-P4etWwq6IsReT0E1KHU40bOnzMHoH73aXp96Fs8TIT6z9Hu8G6+0SHSw9i2isWrD2nbx2qo5yUqACgdfVGx7TA==}
+    resolution: {integrity: sha1-aZORzMupruYBm3+YkuuZIZ8VcKc=}
     engines: {node: '>=12'}
     cpu: [ia32]
     os: [linux]
@@ -1993,7 +2004,7 @@ packages:
     optional: true
 
   /@esbuild/linux-ia32@0.23.1:
-    resolution: {integrity: sha512-VTN4EuOHwXEkXzX5nTvVY4s7E/Krz7COC8xkftbbKRYAl96vPiUssGkeMELQMOnLOJ8k3BY1+ZY52tttZnHcXQ==}
+    resolution: {integrity: sha1-PtInMhQXgQl0HAm9BocJigJDszM=}
     engines: {node: '>=18'}
     cpu: [ia32]
     os: [linux]
@@ -2002,7 +2013,7 @@ packages:
     optional: true
 
   /@esbuild/linux-loong64@0.18.20:
-    resolution: {integrity: sha512-nXW8nqBTrOpDLPgPY9uV+/1DjxoQ7DoB2N8eocyq8I9XuqJ7BiAMDMf9n1xZM9TgW0J8zrquIb/A7s3BJv7rjg==}
+    resolution: {integrity: sha1-5vzLeqwXjdL/uYYEZayJ1/I7l30=}
     engines: {node: '>=12'}
     cpu: [loong64]
     os: [linux]
@@ -2011,7 +2022,7 @@ packages:
     optional: true
 
   /@esbuild/linux-loong64@0.23.1:
-    resolution: {integrity: sha512-Vx09LzEoBa5zDnieH8LSMRToj7ir/Jeq0Gu6qJ/1GcBq9GkfoEAoXvLiW1U9J1qE/Y/Oyaq33w5p2ZWrNNHNEw==}
+    resolution: {integrity: sha1-oP30QLVIXIGw+7MWsIkz0hf106w=}
     engines: {node: '>=18'}
     cpu: [loong64]
     os: [linux]
@@ -2020,7 +2031,7 @@ packages:
     optional: true
 
   /@esbuild/linux-mips64el@0.18.20:
-    resolution: {integrity: sha512-d5NeaXZcHp8PzYy5VnXV3VSd2D328Zb+9dEq5HE6bw6+N86JVPExrA6O68OPwobntbNJ0pzCpUFZTo3w0GyetQ==}
+    resolution: {integrity: sha1-7v86k33pwjEN4wYiqVetG9kYMjE=}
     engines: {node: '>=12'}
     cpu: [mips64el]
     os: [linux]
@@ -2029,7 +2040,7 @@ packages:
     optional: true
 
   /@esbuild/linux-mips64el@0.23.1:
-    resolution: {integrity: sha512-nrFzzMQ7W4WRLNUOU5dlWAqa6yVeI0P78WKGUo7lg2HShq/yx+UYkeNSE0SSfSure0SqgnsxPvmAUu/vu0E+3Q==}
+    resolution: {integrity: sha1-4RooBjRtuDdbGPXhBMWp1OgYB/Y=}
     engines: {node: '>=18'}
     cpu: [mips64el]
     os: [linux]
@@ -2038,7 +2049,7 @@ packages:
     optional: true
 
   /@esbuild/linux-ppc64@0.18.20:
-    resolution: {integrity: sha512-WHPyeScRNcmANnLQkq6AfyXRFr5D6N2sKgkFo2FqguP44Nw2eyDlbTdZwd9GYk98DZG9QItIiTlFLHJHjxP3FA==}
+    resolution: {integrity: sha1-L3FWveILAVJ5k+aIFDWtebqVmfs=}
     engines: {node: '>=12'}
     cpu: [ppc64]
     os: [linux]
@@ -2047,7 +2058,7 @@ packages:
     optional: true
 
   /@esbuild/linux-ppc64@0.23.1:
-    resolution: {integrity: sha512-dKN8fgVqd0vUIjxuJI6P/9SSSe/mB9rvA98CSH2sJnlZ/OCZWO1DJvxj8jvKTfYUdGfcq2dDxoKaC6bHuTlgcw==}
+    resolution: {integrity: sha1-BqJ0TF6vVisakJN4VbTWz3x17JY=}
     engines: {node: '>=18'}
     cpu: [ppc64]
     os: [linux]
@@ -2056,7 +2067,7 @@ packages:
     optional: true
 
   /@esbuild/linux-riscv64@0.18.20:
-    resolution: {integrity: sha512-WSxo6h5ecI5XH34KC7w5veNnKkju3zBRLEQNY7mv5mtBmrP/MjNBCAlsM2u5hDBlS3NGcTQpoBvRzqBcRtpq1A==}
+    resolution: {integrity: sha1-Zig4nyEBI9i0dDBFr4yqfU3fx6Y=}
     engines: {node: '>=12'}
     cpu: [riscv64]
     os: [linux]
@@ -2065,7 +2076,7 @@ packages:
     optional: true
 
   /@esbuild/linux-riscv64@0.23.1:
-    resolution: {integrity: sha512-5AV4Pzp80fhHL83JM6LoA6pTQVWgB1HovMBsLQ9OZWLDqVY8MVobBXNSmAJi//Csh6tcY7e7Lny2Hg1tElMjIA==}
+    resolution: {integrity: sha1-ZbRqKJL8DRr0ujQq8/4PpKj+COc=}
     engines: {node: '>=18'}
     cpu: [riscv64]
     os: [linux]
@@ -2074,7 +2085,7 @@ packages:
     optional: true
 
   /@esbuild/linux-s390x@0.18.20:
-    resolution: {integrity: sha512-+8231GMs3mAEth6Ja1iK0a1sQ3ohfcpzpRLH8uuc5/KVDFneH6jtAJLFGafpzpMRO6DzJ6AvXKze9LfFMrIHVQ==}
+    resolution: {integrity: sha1-JV6B+yibEBAmExhYq5n7pj3PAHE=}
     engines: {node: '>=12'}
     cpu: [s390x]
     os: [linux]
@@ -2083,7 +2094,7 @@ packages:
     optional: true
 
   /@esbuild/linux-s390x@0.23.1:
-    resolution: {integrity: sha512-9ygs73tuFCe6f6m/Tb+9LtYxWR4c9yg7zjt2cYkjDbDpV/xVn+68cQxMXCjUpYwEkze2RcU/rMnfIXNRFmSoDw==}
+    resolution: {integrity: sha1-5x6hjHDD9gTiQdFuTlqxk6l4XW8=}
     engines: {node: '>=18'}
     cpu: [s390x]
     os: [linux]
@@ -2092,7 +2103,7 @@ packages:
     optional: true
 
   /@esbuild/linux-x64@0.18.20:
-    resolution: {integrity: sha512-UYqiqemphJcNsFEskc73jQ7B9jgwjWrSayxawS6UVFZGWrAAtkzjxSqnoclCXxWtfwLdzU+vTpcNYhpn43uP1w==}
+    resolution: {integrity: sha1-x2kLNBevMYqbb5bfMDGohlF20zg=}
     engines: {node: '>=12'}
     cpu: [x64]
     os: [linux]
@@ -2101,7 +2112,7 @@ packages:
     optional: true
 
   /@esbuild/linux-x64@0.23.1:
-    resolution: {integrity: sha512-EV6+ovTsEXCPAp58g2dD68LxoP/wK5pRvgy0J/HxPGB009omFPv3Yet0HiaqvrIrgPTBuC6wCH1LTOY91EO5hQ==}
+    resolution: {integrity: sha1-1H+XOR6AaQ1N/oEaLn1pJ62e7SQ=}
     engines: {node: '>=18'}
     cpu: [x64]
     os: [linux]
@@ -2110,7 +2121,7 @@ packages:
     optional: true
 
   /@esbuild/netbsd-x64@0.18.20:
-    resolution: {integrity: sha512-iO1c++VP6xUBUmltHZoMtCUdPlnPGdBom6IrO4gyKPFFVBKioIImVooR5I83nTew5UOYrk3gIJhbZh8X44y06A==}
+    resolution: {integrity: sha1-MOjNij3e1jl14t8kOMoQlgHr4NE=}
     engines: {node: '>=12'}
     cpu: [x64]
     os: [netbsd]
@@ -2119,7 +2130,7 @@ packages:
     optional: true
 
   /@esbuild/netbsd-x64@0.23.1:
-    resolution: {integrity: sha512-aevEkCNu7KlPRpYLjwmdcuNz6bDFiE7Z8XC4CPqExjTvrHugh28QzUXVOZtiYghciKUacNktqxdpymplil1beA==}
+    resolution: {integrity: sha1-ROdDyXeNV6is5LcvPGuDmjt0plM=}
     engines: {node: '>=18'}
     cpu: [x64]
     os: [netbsd]
@@ -2128,7 +2139,7 @@ packages:
     optional: true
 
   /@esbuild/openbsd-arm64@0.23.1:
-    resolution: {integrity: sha512-3x37szhLexNA4bXhLrCC/LImN/YtWis6WXr1VESlfVtVeoFJBRINPJ3f0a/6LV8zpikqoUg4hyXw0sFBt5Cr+Q==}
+    resolution: {integrity: sha1-BcWh+vZ7mIGDR1jGnz5Rt97gFdc=}
     engines: {node: '>=18'}
     cpu: [arm64]
     os: [openbsd]
@@ -2137,7 +2148,7 @@ packages:
     optional: true
 
   /@esbuild/openbsd-x64@0.18.20:
-    resolution: {integrity: sha512-e5e4YSsuQfX4cxcygw/UCPIEP6wbIL+se3sxPdCiMbFLBWu0eiZOJ7WoD+ptCLrmjZBK1Wk7I6D/I3NglUGOxg==}
+    resolution: {integrity: sha1-eBKvMbIFBVh0yAguqc+asNpiF64=}
     engines: {node: '>=12'}
     cpu: [x64]
     os: [openbsd]
@@ -2146,7 +2157,7 @@ packages:
     optional: true
 
   /@esbuild/openbsd-x64@0.23.1:
-    resolution: {integrity: sha512-aY2gMmKmPhxfU+0EdnN+XNtGbjfQgwZj43k8G3fyrDM/UdZww6xrWxmDkuz2eCZchqVeABjV5BpildOrUbBTqA==}
+    resolution: {integrity: sha1-LliuURus9n0Z+fLc2ejFqT8AwnM=}
     engines: {node: '>=18'}
     cpu: [x64]
     os: [openbsd]
@@ -2155,7 +2166,7 @@ packages:
     optional: true
 
   /@esbuild/sunos-x64@0.18.20:
-    resolution: {integrity: sha512-kDbFRFp0YpTQVVrqUd5FTYmWo45zGaXe0X8E1G/LKFC0v8x0vWrhOWSLITcCn63lmZIxfOMXtCfti/RxN/0wnQ==}
+    resolution: {integrity: sha1-1cJ1w7TnPJsOzTjRymLAIPiHq50=}
     engines: {node: '>=12'}
     cpu: [x64]
     os: [sunos]
@@ -2164,7 +2175,7 @@ packages:
     optional: true
 
   /@esbuild/sunos-x64@0.23.1:
-    resolution: {integrity: sha512-RBRT2gqEl0IKQABT4XTj78tpk9v7ehp+mazn2HbUeZl1YMdaGAQqhapjGTCe7uw7y0frDi4gS0uHzhvpFuI1sA==}
+    resolution: {integrity: sha1-rbAiuVnRjTOJrHB2nO9aA9Or1AM=}
     engines: {node: '>=18'}
     cpu: [x64]
     os: [sunos]
@@ -2173,7 +2184,7 @@ packages:
     optional: true
 
   /@esbuild/win32-arm64@0.18.20:
-    resolution: {integrity: sha512-ddYFR6ItYgoaq4v4JmQQaAI5s7npztfV4Ag6NrhiaW0RrnOXqBkgwZLofVTlq1daVTQNhtI5oieTvkRPfZrePg==}
+    resolution: {integrity: sha1-c7x/Wp+Kd4BfNX+rl/KQ0OSCCsk=}
     engines: {node: '>=12'}
     cpu: [arm64]
     os: [win32]
@@ -2182,7 +2193,7 @@ packages:
     optional: true
 
   /@esbuild/win32-arm64@0.23.1:
-    resolution: {integrity: sha512-4O+gPR5rEBe2FpKOVyiJ7wNDPA8nGzDuJ6gN4okSA1gEOYZ67N8JPk58tkWtdtPeLz7lBnY6I5L3jdsr3S+A6A==}
+    resolution: {integrity: sha1-hJBvUMISty7DYPSEYdQyAvTIuaI=}
     engines: {node: '>=18'}
     cpu: [arm64]
     os: [win32]
@@ -2191,7 +2202,7 @@ packages:
     optional: true
 
   /@esbuild/win32-ia32@0.18.20:
-    resolution: {integrity: sha512-Wv7QBi3ID/rROT08SABTS7eV4hX26sVduqDOTe1MvGMjNd3EjOz4b7zeexIR62GTIEKrfJXKL9LFxTYgkyeu7g==}
+    resolution: {integrity: sha1-7JPL8O8QhcwS5x4NZh0gVp/0IQI=}
     engines: {node: '>=12'}
     cpu: [ia32]
     os: [win32]
@@ -2200,7 +2211,7 @@ packages:
     optional: true
 
   /@esbuild/win32-ia32@0.23.1:
-    resolution: {integrity: sha512-BcaL0Vn6QwCwre3Y717nVHZbAa4UBEigzFm6VdsVdT/MbZ38xoj1X9HPkZhbmaBGUD1W8vxAfffbDe8bA6AKnQ==}
+    resolution: {integrity: sha1-Xj6sxRWCD/cp6Q0MtGMYMSjoL6w=}
     engines: {node: '>=18'}
     cpu: [ia32]
     os: [win32]
@@ -2209,7 +2220,7 @@ packages:
     optional: true
 
   /@esbuild/win32-x64@0.18.20:
-    resolution: {integrity: sha512-kTdfRcSiDfQca/y9QIkng02avJ+NCaQvrMejlsB3RRv5sE9rRoeBPISaZpKxHELzRxZyLvNts1P27W3wV+8geQ==}
+    resolution: {integrity: sha1-eGxfQfBDsHr7GvN2g9fDNmiFj20=}
     engines: {node: '>=12'}
     cpu: [x64]
     os: [win32]
@@ -2218,7 +2229,7 @@ packages:
     optional: true
 
   /@esbuild/win32-x64@0.23.1:
-    resolution: {integrity: sha512-BHpFFeslkWrXWyUPnbKm+xYYVYruCinGcftSBaa8zoF9hZO4BcSCFUvHVTtzpIY6YzUnYtuEhZ+C9iEXjxnasg==}
+    resolution: {integrity: sha1-gf1Q0R4sMrLWJBRw4xhbcMezBpk=}
     engines: {node: '>=18'}
     cpu: [x64]
     os: [win32]
@@ -4548,7 +4559,7 @@ packages:
     dev: false
 
   /@nicolo-ribaudo/chokidar-2@2.1.8-no-fsevents.3:
-    resolution: {integrity: sha512-s88O1aVtXftvp5bCPB7WnmXc5IwOZZ7YPuwNPt+GtOOXpPvad1LfbmjYv+qII7zP6RU2QGnqve27dnLycEnyEQ==}
+    resolution: {integrity: sha1-Mj1y3SUQPQxPvc6J2t9XSnh7H5s=}
     requiresBuild: true
     dev: false
     optional: true
@@ -4774,7 +4785,7 @@ packages:
     dev: false
 
   /@pkgjs/parseargs@0.11.0:
-    resolution: {integrity: sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==}
+    resolution: {integrity: sha1-p36nQvqyV3UUVDTrHSMoz1ATrDM=}
     engines: {node: '>=14'}
     requiresBuild: true
     dev: false
@@ -4931,7 +4942,7 @@ packages:
     dev: false
 
   /@rollup/rollup-android-arm-eabi@4.22.4:
-    resolution: {integrity: sha512-Fxamp4aEZnfPOcGA8KSNEohV8hX7zVHOemC8jVBoBUHu5zpJK/Eu3uJwt6BMgy9fkvzxDaurgj96F/NiLukF2w==}
+    resolution: {integrity: sha1-i2E7lyXo+UedFClwsQa2roeGENU=}
     cpu: [arm]
     os: [android]
     requiresBuild: true
@@ -4939,7 +4950,7 @@ packages:
     optional: true
 
   /@rollup/rollup-android-arm64@4.22.4:
-    resolution: {integrity: sha512-VXoK5UMrgECLYaMuGuVTOx5kcuap1Jm8g/M83RnCHBKOqvPPmROFJGQaZhGccnsFtfXQ3XYa4/jMCJvZnbJBdA==}
+    resolution: {integrity: sha1-ZUyhBJGJEy/2Ar/PjfFMGNofFfs=}
     cpu: [arm64]
     os: [android]
     requiresBuild: true
@@ -4947,7 +4958,7 @@ packages:
     optional: true
 
   /@rollup/rollup-darwin-arm64@4.22.4:
-    resolution: {integrity: sha512-xMM9ORBqu81jyMKCDP+SZDhnX2QEVQzTcC6G18KlTQEzWK8r/oNZtKuZaCcHhnsa6fEeOBionoyl5JsAbE/36Q==}
+    resolution: {integrity: sha1-bSQdCZ0VGO8MIgXZaz+lLg/hlUs=}
     cpu: [arm64]
     os: [darwin]
     requiresBuild: true
@@ -4955,7 +4966,7 @@ packages:
     optional: true
 
   /@rollup/rollup-darwin-x64@4.22.4:
-    resolution: {integrity: sha512-aJJyYKQwbHuhTUrjWjxEvGnNNBCnmpHDvrb8JFDbeSH3m2XdHcxDd3jthAzvmoI8w/kSjd2y0udT+4okADsZIw==}
+    resolution: {integrity: sha1-Qr0Z0pKlfuEXNMmAxGUN4mtFd5E=}
     cpu: [x64]
     os: [darwin]
     requiresBuild: true
@@ -4963,79 +4974,88 @@ packages:
     optional: true
 
   /@rollup/rollup-linux-arm-gnueabihf@4.22.4:
-    resolution: {integrity: sha512-j63YtCIRAzbO+gC2L9dWXRh5BFetsv0j0va0Wi9epXDgU/XUi5dJKo4USTttVyK7fGw2nPWK0PbAvyliz50SCQ==}
+    resolution: {integrity: sha1-8jVV7j2P6UHFxf1FjNIrZescIjI=}
     cpu: [arm]
     os: [linux]
+    libc: [glibc]
     requiresBuild: true
     dev: false
     optional: true
 
   /@rollup/rollup-linux-arm-musleabihf@4.22.4:
-    resolution: {integrity: sha512-dJnWUgwWBX1YBRsuKKMOlXCzh2Wu1mlHzv20TpqEsfdZLb3WoJW2kIEsGwLkroYf24IrPAvOT/ZQ2OYMV6vlrg==}
+    resolution: {integrity: sha1-87vRriQg9VOdQKwf3is42md3m6o=}
     cpu: [arm]
     os: [linux]
+    libc: [musl]
     requiresBuild: true
     dev: false
     optional: true
 
   /@rollup/rollup-linux-arm64-gnu@4.22.4:
-    resolution: {integrity: sha512-AdPRoNi3NKVLolCN/Sp4F4N1d98c4SBnHMKoLuiG6RXgoZ4sllseuGioszumnPGmPM2O7qaAX/IJdeDU8f26Aw==}
+    resolution: {integrity: sha1-er6QASARPgih+Qr7hMfCh3QFTRU=}
     cpu: [arm64]
     os: [linux]
+    libc: [glibc]
     requiresBuild: true
     dev: false
     optional: true
 
   /@rollup/rollup-linux-arm64-musl@4.22.4:
-    resolution: {integrity: sha512-Gl0AxBtDg8uoAn5CCqQDMqAx22Wx22pjDOjBdmG0VIWX3qUBHzYmOKh8KXHL4UpogfJ14G4wk16EQogF+v8hmA==}
+    resolution: {integrity: sha1-nmVShcgXXNRPV9ah6OXe37uh2CA=}
     cpu: [arm64]
     os: [linux]
+    libc: [musl]
     requiresBuild: true
     dev: false
     optional: true
 
   /@rollup/rollup-linux-powerpc64le-gnu@4.22.4:
-    resolution: {integrity: sha512-3aVCK9xfWW1oGQpTsYJJPF6bfpWfhbRnhdlyhak2ZiyFLDaayz0EP5j9V1RVLAAxlmWKTDfS9wyRyY3hvhPoOg==}
+    resolution: {integrity: sha1-mnmubJ6dj+g9SeJxLs9DAttb714=}
     cpu: [ppc64]
     os: [linux]
+    libc: [glibc]
     requiresBuild: true
     dev: false
     optional: true
 
   /@rollup/rollup-linux-riscv64-gnu@4.22.4:
-    resolution: {integrity: sha512-ePYIir6VYnhgv2C5Xe9u+ico4t8sZWXschR6fMgoPUK31yQu7hTEJb7bCqivHECwIClJfKgE7zYsh1qTP3WHUA==}
+    resolution: {integrity: sha1-Z6xw7KSs6OKUL6vKlRZOiHSrgSg=}
     cpu: [riscv64]
     os: [linux]
+    libc: [glibc]
     requiresBuild: true
     dev: false
     optional: true
 
   /@rollup/rollup-linux-s390x-gnu@4.22.4:
-    resolution: {integrity: sha512-GqFJ9wLlbB9daxhVlrTe61vJtEY99/xB3C8e4ULVsVfflcpmR6c8UZXjtkMA6FhNONhj2eA5Tk9uAVw5orEs4Q==}
+    resolution: {integrity: sha1-n4g6dED1GiLtf5nh0HC9hOpQBfw=}
     cpu: [s390x]
     os: [linux]
+    libc: [glibc]
     requiresBuild: true
     dev: false
     optional: true
 
   /@rollup/rollup-linux-x64-gnu@4.22.4:
-    resolution: {integrity: sha512-87v0ol2sH9GE3cLQLNEy0K/R0pz1nvg76o8M5nhMR0+Q+BBGLnb35P0fVz4CQxHYXaAOhE8HhlkaZfsdUOlHwg==}
+    resolution: {integrity: sha1-cBFq5sV3/jZ/WFWeLP+1ZBod2dA=}
     cpu: [x64]
     os: [linux]
+    libc: [glibc]
     requiresBuild: true
     dev: false
     optional: true
 
   /@rollup/rollup-linux-x64-musl@4.22.4:
-    resolution: {integrity: sha512-UV6FZMUgePDZrFjrNGIWzDo/vABebuXBhJEqrHxrGiU6HikPy0Z3LfdtciIttEUQfuDdCn8fqh7wiFJjCNwO+g==}
+    resolution: {integrity: sha1-9HP4ghn+sHsLmLU6eSO+cW0dGC8=}
     cpu: [x64]
     os: [linux]
+    libc: [musl]
     requiresBuild: true
     dev: false
     optional: true
 
   /@rollup/rollup-win32-arm64-msvc@4.22.4:
-    resolution: {integrity: sha512-BjI+NVVEGAXjGWYHz/vv0pBqfGoUH0IGZ0cICTn7kB9PyjrATSkX+8WkguNjWoj2qSr1im/+tTGRaY+4/PdcQw==}
+    resolution: {integrity: sha1-Q0lILRf10cWGBNHIkAVA1nb0IOA=}
     cpu: [arm64]
     os: [win32]
     requiresBuild: true
@@ -5043,7 +5063,7 @@ packages:
     optional: true
 
   /@rollup/rollup-win32-ia32-msvc@4.22.4:
-    resolution: {integrity: sha512-SiWG/1TuUdPvYmzmYnmd3IEifzR61Tragkbx9D3+R8mzQqDBz8v+BvZNDlkiTtI9T15KYZhP0ehn3Dld4n9J5g==}
+    resolution: {integrity: sha1-pvw5oV22GAQOw8KiTB4my19NdCI=}
     cpu: [ia32]
     os: [win32]
     requiresBuild: true
@@ -5051,7 +5071,7 @@ packages:
     optional: true
 
   /@rollup/rollup-win32-x64-msvc@4.22.4:
-    resolution: {integrity: sha512-j8pPKp53/lq9lMXN57S8cFz0MynJk8OWNuUnXct/9KCpKU7DgU3bYMJhwWmcqC0UU29p8Lr0/7KEVcaM6bf47Q==}
+    resolution: {integrity: sha1-PdXVPpAN8qQIQYgsAuVvhmwE0gI=}
     cpu: [x64]
     os: [win32]
     requiresBuild: true
@@ -5705,7 +5725,7 @@ packages:
     dev: false
 
   /@swc/core-darwin-arm64@1.7.28:
-    resolution: {integrity: sha512-BNkj6enHo2pdzOpCtQGKZbXT2A/qWIr0CVtbTM4WkJ3MCK/glbFsyO6X59p1r8+gfaZG4bWYnTTu+RuUAcsL5g==}
+    resolution: {integrity: sha1-9P8cCUQ6AECinH4edhX19WQraUU=}
     engines: {node: '>=10'}
     cpu: [arm64]
     os: [darwin]
@@ -5714,7 +5734,7 @@ packages:
     optional: true
 
   /@swc/core-darwin-x64@1.7.28:
-    resolution: {integrity: sha512-96zQ+X5Fd6P/RNPkOyikTJgEc2M4TzznfYvjRd2hye5h22jhxCLL/csoauDgN7lYfd7mwsZ/sVXwJTMKl+vZSA==}
+    resolution: {integrity: sha1-zgptVZCEp5RReoFFfNrb9hpVxV0=}
     engines: {node: '>=10'}
     cpu: [x64]
     os: [darwin]
@@ -5723,7 +5743,7 @@ packages:
     optional: true
 
   /@swc/core-linux-arm-gnueabihf@1.7.28:
-    resolution: {integrity: sha512-l2100Wx6LdXMOmOW3+KoHhBhyZrGdz8ylkygcVOC0QHp6YIATfuG+rRHksfyEWCSOdL3anM9MJZJX26KT/s+XQ==}
+    resolution: {integrity: sha1-UBN1rITGHccY7QcjnH5Ely9sROA=}
     engines: {node: '>=10'}
     cpu: [arm]
     os: [linux]
@@ -5732,43 +5752,47 @@ packages:
     optional: true
 
   /@swc/core-linux-arm64-gnu@1.7.28:
-    resolution: {integrity: sha512-03m6iQ5Bv9u2VPnNRyaBmE8eHi056eE39L0gXcqGoo46GAGuoqYHt9pDz8wS6EgoN4t85iBMUZrkCNqFKkN6ZQ==}
+    resolution: {integrity: sha1-demdpiWTlif1tF0wBKbP2NbL9G4=}
     engines: {node: '>=10'}
     cpu: [arm64]
     os: [linux]
+    libc: [glibc]
     requiresBuild: true
     dev: false
     optional: true
 
   /@swc/core-linux-arm64-musl@1.7.28:
-    resolution: {integrity: sha512-vqVOpG/jc8mvTKQjaPBLhr7tnWyzuztOHsPnJqMWmg7zGcMeQC/2c5pU4uzRAfXMTp25iId6s4Y4wWfPS1EeDw==}
+    resolution: {integrity: sha1-xzfe81XAv4232Oe9h6Oui7P5+Pw=}
     engines: {node: '>=10'}
     cpu: [arm64]
     os: [linux]
+    libc: [musl]
     requiresBuild: true
     dev: false
     optional: true
 
   /@swc/core-linux-x64-gnu@1.7.28:
-    resolution: {integrity: sha512-HGwpWuB83Kr+V0E+zT5UwIIY9OxiS8aLd0UVMRVWuO8SrQyKm9HKJ46+zoAb8tfJrpZftfxvbn2ayZWR7gqosA==}
+    resolution: {integrity: sha1-62Eics6xMxMQ63nvYJTFpswIXSM=}
     engines: {node: '>=10'}
     cpu: [x64]
     os: [linux]
+    libc: [glibc]
     requiresBuild: true
     dev: false
     optional: true
 
   /@swc/core-linux-x64-musl@1.7.28:
-    resolution: {integrity: sha512-q2Y2T8y8EgFtIiRyInnAXNe94aaHX74F0ha1Bl9VdRxE0u1/So+3VLbPvtp4V3Z6pj5pOePfCQJKifnllgAQ9A==}
+    resolution: {integrity: sha1-o5dJpx5pBoWqvrf9YBQczKLmJBE=}
     engines: {node: '>=10'}
     cpu: [x64]
     os: [linux]
+    libc: [musl]
     requiresBuild: true
     dev: false
     optional: true
 
   /@swc/core-win32-arm64-msvc@1.7.28:
-    resolution: {integrity: sha512-bCqh4uBT/59h3dWK1v91In6qzz8rKoWoFRxCtNQLIK4jP55K0U231ZK9oN7neZD6bzcOUeFvOGgcyMAgDfFWfA==}
+    resolution: {integrity: sha1-k7ImZ7An4KUGDJHffgzHQG0nsB8=}
     engines: {node: '>=10'}
     cpu: [arm64]
     os: [win32]
@@ -5777,7 +5801,7 @@ packages:
     optional: true
 
   /@swc/core-win32-ia32-msvc@1.7.28:
-    resolution: {integrity: sha512-XTHbHrksnrqK3JSJ2sbuMWvdJ6/G0roRpgyVTmNDfhTYPOwcVaL/mSrPGLwbksYUbq7ckwoKzrobhdxvQzPsDA==}
+    resolution: {integrity: sha1-TX28Q6HeeawMfMzzW+v5/oh7LiQ=}
     engines: {node: '>=10'}
     cpu: [ia32]
     os: [win32]
@@ -5786,7 +5810,7 @@ packages:
     optional: true
 
   /@swc/core-win32-x64-msvc@1.7.28:
-    resolution: {integrity: sha512-jyXeoq6nX8abiCy2EpporsC5ywNENs4ocYuvxo1LSxDktWN1E2MTXq3cdJcEWB2Vydxq0rDcsGyzkRPMzFhkZw==}
+    resolution: {integrity: sha1-0ArOozOakHaCeQlubl8VQMWZ5s4=}
     engines: {node: '>=10'}
     cpu: [x64]
     os: [win32]
@@ -6937,10 +6961,8 @@ packages:
       ajv: 8.13.0
     dev: false
 
-  /ajv-formats@2.1.1(ajv@8.17.1):
+  /ajv-formats@2.1.1:
     resolution: {integrity: sha512-Wx0Kx52hxE7C18hkMEggYlEifqWZtYaRgouJor+WMdPnQyEK13vgEWyVNup7SoeeoLMsr4kf5h6dOW11I15MUA==}
-    peerDependencies:
-      ajv: ^8.0.0
     peerDependenciesMeta:
       ajv:
         optional: true
@@ -7632,6 +7654,15 @@ packages:
   /buffer-from@1.1.2:
     resolution: {integrity: sha512-E+XQCRwSbaaiChtv6k6Dwgc+bx+Bs6vuKJHHl5kox/BaKbhiXzqQOwK4cO22yElGp2OCmjwVhT3HmxgyPGnJfQ==}
     dev: false
+
+  /bufferutil@4.0.8:
+    resolution: {integrity: sha1-HeanEJLWXXdmxNilIrJhpueH6Oo=}
+    engines: {node: '>=6.14.2'}
+    requiresBuild: true
+    dependencies:
+      node-gyp-build: 4.8.2
+    dev: false
+    optional: true
 
   /busboy@1.6.0:
     resolution: {integrity: sha512-8SFQbg/0hQ9xy3UNTB0YEnsNBbWfhf7RtnzpL7TkBiTBRfrQ9Fxcnz7VJsleJpyp6rVLvXiuORqjlHi5q+PYuA==}
@@ -10103,7 +10134,7 @@ packages:
     dev: false
 
   /fsevents@2.3.2:
-    resolution: {integrity: sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==}
+    resolution: {integrity: sha1-ilJveLj99GI7cJ4Ll1xSwkwC/Ro=}
     engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
     os: [darwin]
     requiresBuild: true
@@ -10111,7 +10142,7 @@ packages:
     optional: true
 
   /fsevents@2.3.3:
-    resolution: {integrity: sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw==}
+    resolution: {integrity: sha1-ysZAd4XQNnWipeGlMFxpezR9kNY=}
     engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
     os: [darwin]
     requiresBuild: true
@@ -13182,6 +13213,13 @@ packages:
     engines: {node: '>= 6.13.0'}
     dev: false
 
+  /node-gyp-build@4.8.2:
+    resolution: {integrity: sha1-T4ArccGrLKFq+DDmwep90a2Ulvo=}
+    hasBin: true
+    requiresBuild: true
+    dev: false
+    optional: true
+
   /node-int64@0.4.0:
     resolution: {integrity: sha512-O5lz91xSOeoXP6DulyHfllpq+Eg00MWitZIbtPfoSEvqIHdl5gfcY6hYzDWnj0qD5tz52PI08u9qUvSVeUBeHw==}
     dev: false
@@ -14901,7 +14939,7 @@ packages:
     dependencies:
       '@types/json-schema': 7.0.15
       ajv: 8.17.1
-      ajv-formats: 2.1.1(ajv@8.17.1)
+      ajv-formats: 2.1.1
       ajv-keywords: 5.1.0(ajv@8.17.1)
     dev: false
 
@@ -17463,11 +17501,11 @@ packages:
     dev: false
 
   file:projects/calling-component-bindings.tgz:
-    resolution: {integrity: sha512-N7XcNXBQDqHU7AKpBLIJ2nPayr/4DLe36Rwy9rPKpVfZTp3kNHd/0fMPZG3ogJC9siv2cYFfcKPoFh2hYNTWDQ==, tarball: file:projects/calling-component-bindings.tgz}
+    resolution: {integrity: sha512-6i/ErrzpYwkk1RmRFQ3lfw8birjgBTlAf7RbwfMaGyxRzqsZHsEu9mlOtDp4mZQETM1AdN+w4uFsPsAKYwQSlQ==, tarball: file:projects/calling-component-bindings.tgz}
     name: '@rush-temp/calling-component-bindings'
     version: 0.0.0
     dependencies:
-      '@azure/communication-calling': 1.30.1-beta.1
+      '@azure/communication-calling': 1.0.0-custom.2
       '@azure/communication-calling-effects': 1.1.1
       '@azure/communication-common': 2.3.1
       '@babel/cli': 7.25.6(@babel/core@7.25.2)
@@ -17510,11 +17548,11 @@ packages:
     dev: false
 
   file:projects/calling-stateful-client.tgz:
-    resolution: {integrity: sha512-spZwcHALzd8sSAv/ZyiobqaLTYXSWBnZSJDklK3zjLBTHo/8/Lgu6MqEEPbnVhS7zGZ+ccA9x9DrqrcmW1zSyQ==, tarball: file:projects/calling-stateful-client.tgz}
+    resolution: {integrity: sha512-N4+8hIbjUE1/Bo6ZUY9PIdUq4s3twozFNV3bZHzF04bp/N0z2JRr/N8njrJKPtsipCpZ0i0DyD3gIdjoDmzU5w==, tarball: file:projects/calling-stateful-client.tgz}
     name: '@rush-temp/calling-stateful-client'
     version: 0.0.0
     dependencies:
-      '@azure/communication-calling': 1.30.1-beta.1
+      '@azure/communication-calling': 1.0.0-custom.2
       '@azure/communication-common': 2.3.1
       '@azure/core-auth': 1.8.0
       '@azure/logger': 1.1.4
@@ -17558,12 +17596,12 @@ packages:
     dev: false
 
   file:projects/calling.tgz:
-    resolution: {integrity: sha512-s2B68pifYgOEst3p+srenZT5ppsjqvjEDNGIdgeoHiQlucV72n1TsUrWWGdnWDgBT//FhrmfZfSuEt2Qd7NNjg==, tarball: file:projects/calling.tgz}
+    resolution: {integrity: sha512-QVS2cRbo4ljmvsfGZZ2pxa9bVMit5aT1NqhApusq9new+jgAq6JXoGCy3j48jRZyfYOIXuWvOmErvDlPEkbn0w==, tarball: file:projects/calling.tgz}
     name: '@rush-temp/calling'
     version: 0.0.0
     dependencies:
       '@azure/abort-controller': 1.1.0
-      '@azure/communication-calling': 1.30.1-beta.1
+      '@azure/communication-calling': 1.0.0-custom.2
       '@azure/communication-common': 2.3.1
       '@azure/communication-identity': 1.3.1
       '@azure/logger': 1.1.4
@@ -17652,12 +17690,12 @@ packages:
     dev: false
 
   file:projects/callingstateful.tgz:
-    resolution: {integrity: sha512-kvHKRePZ/wG1crN7/2RTE3PUJLkI5OXYIblq8h9nYzPKZ6CeH3WrUUOws6AgpVF29dA23f55QrMJ7fErAQxfBg==, tarball: file:projects/callingstateful.tgz}
+    resolution: {integrity: sha512-ODR9bKjZlJNP6i2Vc6F2X87t4PimAegbVEHGJwkx8DjKf+RivNoKmMAYh+BVB66qmb5jGoD/EDNA4DV1n7p0nQ==, tarball: file:projects/callingstateful.tgz}
     name: '@rush-temp/callingstateful'
     version: 0.0.0
     dependencies:
       '@azure/abort-controller': 1.1.0
-      '@azure/communication-calling': 1.30.1-beta.1
+      '@azure/communication-calling': 1.0.0-custom.2
       '@azure/communication-common': 2.3.1
       '@azure/communication-identity': 1.3.1
       '@azure/logger': 1.1.4
@@ -17746,12 +17784,12 @@ packages:
     dev: false
 
   file:projects/callwithchat.tgz:
-    resolution: {integrity: sha512-AsWyRrNzUU/IN55NTdv88iVkQDo18fomu5GF5rj68WRqFjGnQdKWef+o39h59aTubkBfOz7nVkpftXpqiX9a4A==, tarball: file:projects/callwithchat.tgz}
+    resolution: {integrity: sha512-XcoaofZlQIRMQCY/DESCCo7vuP8Jd1jJyxgVLs60WX7jju74jdIfVBUbwAsmOP8lQFl3kqicI2trEEWUCdm2Kg==, tarball: file:projects/callwithchat.tgz}
     name: '@rush-temp/callwithchat'
     version: 0.0.0
     dependencies:
       '@azure/abort-controller': 1.1.0
-      '@azure/communication-calling': 1.30.1-beta.1
+      '@azure/communication-calling': 1.0.0-custom.2
       '@azure/communication-chat': 1.6.0-beta.3
       '@azure/communication-common': 2.3.1
       '@azure/communication-identity': 1.3.1
@@ -18066,11 +18104,11 @@ packages:
     dev: false
 
   file:projects/communication-react.tgz:
-    resolution: {integrity: sha512-e+lU+vGMXMTfmUtCZm+EToLFjiJ04uiJz3FrI/7AeGhzEdNv6VVEY6O3EmlcdR86L3h03vIasKu824s03DWzng==, tarball: file:projects/communication-react.tgz}
+    resolution: {integrity: sha512-crX9Y/YI4KFgxjCvA4MGhWdr9q8k3bgUZH1zJa5w0THJjrJHPIJ7RipWnutt7eGOyQQkTiNFop3HFQFg2f7MMA==, tarball: file:projects/communication-react.tgz}
     name: '@rush-temp/communication-react'
     version: 0.0.0
     dependencies:
-      '@azure/communication-calling': 1.30.1-beta.1
+      '@azure/communication-calling': 1.0.0-custom.2
       '@azure/communication-calling-effects': 1.1.1
       '@azure/communication-chat': 1.6.0-beta.3
       '@azure/communication-common': 2.3.1
@@ -18172,11 +18210,11 @@ packages:
     dev: false
 
   file:projects/component-examples.tgz:
-    resolution: {integrity: sha512-pNaXpICOOcIXiMCvbyd9UZnKPvSM5CID6tZKgcBT6M1jfLZqH/T79Lz5LEyWH6yGD5+Lp0n0xvL9xK0OAHDIKQ==, tarball: file:projects/component-examples.tgz}
+    resolution: {integrity: sha512-6XLcDOZMkGbFLzNvVwfTCHZEoVyRZFK5+zkzPyIbS1L/eDgizhlBdTyDNoP8bwg7XNPgYDV7XSW/E589WWUD8w==, tarball: file:projects/component-examples.tgz}
     name: '@rush-temp/component-examples'
     version: 0.0.0
     dependencies:
-      '@azure/communication-calling': 1.30.1-beta.1
+      '@azure/communication-calling': 1.0.0-custom.2
       '@azure/communication-chat': 1.6.0-beta.3
       '@azure/communication-common': 2.3.1
       '@azure/communication-identity': 1.3.1
@@ -18442,11 +18480,11 @@ packages:
     dev: false
 
   file:projects/react-composites.tgz:
-    resolution: {integrity: sha512-0kcgKR6dfeLnYJv2Hf0E6a7xiF8sAiCECdyn+UBc8rs/veHR/32W9eIs5XaBmLTeoJamz4bs32UQMpDzBtoZqw==, tarball: file:projects/react-composites.tgz}
+    resolution: {integrity: sha512-OhRu8gMSNMvGdUWkpDYCUuyf/oJl71c3HcQuNKnKF2qFZZnlB3rxj7de8waaxjNdFWQ5atzFBmtXJOIMU7W3QQ==, tarball: file:projects/react-composites.tgz}
     name: '@rush-temp/react-composites'
     version: 0.0.0
     dependencies:
-      '@azure/communication-calling': 1.30.1-beta.1
+      '@azure/communication-calling': 1.0.0-custom.2
       '@azure/communication-calling-effects': 1.1.1
       '@azure/communication-chat': 1.6.0-beta.3
       '@azure/communication-common': 2.3.1
@@ -18561,11 +18599,11 @@ packages:
     dev: false
 
   file:projects/sample-automation-tests.tgz:
-    resolution: {integrity: sha512-smraiT4BKWmsM6VScdbBLxhizQiQV4JNJkAu/O4BTlcoQTb680BY2Ns0eXD5PjKDlDz3Us+b2o7d8NPS4TwEow==, tarball: file:projects/sample-automation-tests.tgz}
+    resolution: {integrity: sha512-Sv1Q/crk8cL4RPYjU4CCrChBWkMnQvLA26thdx0qgDo9Vqr8pJ/VPVfwcmL43ZSRBLXIWBi4KaS7buPstvuV8Q==, tarball: file:projects/sample-automation-tests.tgz}
     name: '@rush-temp/sample-automation-tests'
     version: 0.0.0
     dependencies:
-      '@azure/communication-calling': 1.30.1-beta.1
+      '@azure/communication-calling': 1.0.0-custom.2
       '@azure/communication-chat': 1.6.0-beta.3
       '@azure/communication-common': 2.3.1
       '@azure/communication-identity': 1.3.1
@@ -18586,11 +18624,11 @@ packages:
     dev: false
 
   file:projects/sample-static-html-composites.tgz:
-    resolution: {integrity: sha512-gF66/gHle/bQC1vz/g6OSm6XS3AigCHZkFjc0BZSvkVaqyBTapPbhCUP/fr7VSqOs4V53O+IPcPjWIf//21XwA==, tarball: file:projects/sample-static-html-composites.tgz}
+    resolution: {integrity: sha512-VktdqHAQdZepufiSweIGfz8HoUd1Btt5yzTdR+ahs73L3B+Z+UghpQ++vmxZG0Zg2busB6a4ybvdl0xLqykNcA==, tarball: file:projects/sample-static-html-composites.tgz}
     name: '@rush-temp/sample-static-html-composites'
     version: 0.0.0
     dependencies:
-      '@azure/communication-calling': 1.30.1-beta.1
+      '@azure/communication-calling': 1.0.0-custom.2
       '@azure/communication-chat': 1.6.0-beta.3
       '@azure/communication-common': 2.3.1
       '@azure/communication-identity': 1.3.1
@@ -18735,11 +18773,11 @@ packages:
     dev: false
 
   file:projects/storybook8.tgz:
-    resolution: {integrity: sha512-qAX7fCUTC0mUlL+3BG5Az0v8YQDljTSTH/E5gWrYSFLaLS5SnEPTDhmfMlIoXz/ozguh3VraJ8OWpvP70WrB0w==, tarball: file:projects/storybook8.tgz}
+    resolution: {integrity: sha512-YrXXyu4vFnzukqeD8CsTZTSa4tvxSa8pf7zpGFZWzLYIOseUinm3LoI4KgiWnzqRd9MPU/14+Oe/OumXriDMGw==, tarball: file:projects/storybook8.tgz}
     name: '@rush-temp/storybook8'
     version: 0.0.0
     dependencies:
-      '@azure/communication-calling': 1.30.1-beta.1
+      '@azure/communication-calling': 1.0.0-custom.2
       '@azure/communication-chat': 1.6.0-beta.3
       '@azure/communication-common': 2.3.1
       '@azure/communication-identity': 1.3.1
