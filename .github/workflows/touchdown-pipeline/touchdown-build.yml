@@ -16,7 +16,7 @@ resources:
 parameters:
   # Parameter to control whether to only pass strings to touchdown (false) or to also create a PR with changes (true)
   - name: commit_new_strings
-    displayName: 'Create branch with new strings'
+    displayName: 'Commit strings to GitHub'
     type: boolean
     default: false
 
