@@ -49,11 +49,15 @@ export const chatTestSetupWithPerUserArgs = async ({
   const pageLoadPromises: Promise<unknown>[] = [];
   for (const idx in pages) {
     const page = pages[idx];
-    const user: ChatUserType = usersWithArgs[idx].user;
-    const qArgs = usersWithArgs[idx].qArgs ? usersWithArgs[idx].qArgs : {};
+    const user = usersWithArgs[idx]?.user;
+    if (!page || !user) {
+      throw new Error('Page and user must be defined');
+    }
+
+    const qArgs = usersWithArgs[idx]?.qArgs ?? {};
     await page.goto(buildUrl(serverUrl, user, qArgs));
     pageLoadPromises.push(waitForChatCompositeToLoad(page));
-    await stubMessageTimestamps(pages[idx]);
+    await stubMessageTimestamps(page);
   }
   await Promise.all(pageLoadPromises);
 };

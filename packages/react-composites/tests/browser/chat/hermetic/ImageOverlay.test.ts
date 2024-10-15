@@ -7,6 +7,9 @@ import { dataUiId, stableScreenshot, waitForSelector } from '../../common/utils'
 
 test.describe('ImageOverlay tests', () => {
   test('ImageOverlay loads correctly when an inline image is clicked', async ({ page, serverUrl }) => {
+    if (!TEST_PARTICIPANTS[0] || !TEST_PARTICIPANTS[1] || !TEST_PARTICIPANTS[2]) {
+      throw new Error('TEST_PARTICIPANTS must be defined');
+    }
     await page.goto(
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
         localParticipant: TEST_PARTICIPANTS[1],
@@ -41,6 +44,9 @@ test.describe('ImageOverlay tests', () => {
       }
     });
 
+    if (!TEST_PARTICIPANTS[0] || !TEST_PARTICIPANTS[1] || !TEST_PARTICIPANTS[2]) {
+      throw new Error('TEST_PARTICIPANTS must be defined');
+    }
     await page.goto(
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
         localParticipant: TEST_PARTICIPANTS[1],
@@ -66,6 +72,9 @@ test.describe('ImageOverlay tests', () => {
       }, 3000);
     });
 
+    if (!TEST_PARTICIPANTS[0] || !TEST_PARTICIPANTS[1] || !TEST_PARTICIPANTS[2]) {
+      throw new Error('TEST_PARTICIPANTS must be defined');
+    }
     await page.goto(
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
         localParticipant: TEST_PARTICIPANTS[1],
@@ -88,6 +97,9 @@ test.describe('ImageOverlay tests', () => {
   });
 
   test('ImageOverlay loads correctly in dark theme', async ({ page, serverUrl }) => {
+    if (!TEST_PARTICIPANTS[0] || !TEST_PARTICIPANTS[1] || !TEST_PARTICIPANTS[2]) {
+      throw new Error('TEST_PARTICIPANTS must be defined');
+    }
     await page.goto(
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
         localParticipant: TEST_PARTICIPANTS[1],
@@ -102,6 +114,9 @@ test.describe('ImageOverlay tests', () => {
   });
 
   test('ImageOverlay loads correctly in light theme', async ({ page, serverUrl }) => {
+    if (!TEST_PARTICIPANTS[0] || !TEST_PARTICIPANTS[1] || !TEST_PARTICIPANTS[2]) {
+      throw new Error('TEST_PARTICIPANTS must be defined');
+    }
     await page.goto(
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
         localParticipant: TEST_PARTICIPANTS[1],
