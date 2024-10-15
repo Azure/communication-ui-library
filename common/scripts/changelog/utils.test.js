@@ -24,4 +24,15 @@ describe('parseNewChangeFiles', () => {
 
     expect(parseNewChangeFiles(test)).toStrictEqual(expectedMatch);
   });
+
+  test('parseNewChangeFiles should not return unrecognized lines in amonst legitmate changefiles', () => {
+    const testShouldnotMatch = 'change/randomfile.json';
+    const tests = [
+      testStrings[0],
+      testShouldnotMatch,
+      testStrings[1]
+    ].join('\n');
+    
+    expect(parseNewChangeFiles(tests)).toStrictEqual([testFilename, testFilename]);
+  });
 });
