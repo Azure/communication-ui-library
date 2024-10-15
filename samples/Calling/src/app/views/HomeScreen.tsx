@@ -63,7 +63,7 @@ export interface HomeScreenProps {
     /* @conditional-compile-remove(teams-identity-support) */
     teamsId?: string;
     outboundTeamsUsers?: string[];
-  }): void;
+  }): Promise<void>;
   joiningExistingCall: boolean;
 }
 
@@ -71,7 +71,7 @@ type ICallChoiceGroupOption = IChoiceGroupOption & { key: CallOption };
 
 export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const imageProps = { src: heroSVG.toString() };
-  const headerTitle = props.joiningExistingCall ? 'Join Call' : 'Start or join a call!';
+  const headerTitle = props.joiningExistingCall ? 'Start Experience' : 'Start or join a call!';
   const callOptionsGroupLabel = 'Select a call option';
   const buttonText = 'Next';
   const callOptions: ICallChoiceGroupOption[] = [
@@ -149,6 +149,8 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   showDisplayNameField = !teamsIdentityChosen;
 
   const [teamsIdFormatError, setTeamsIdFormatError] = useState<boolean>(false);
+
+  const [nextIsActive, setNextIsActive] = useState<boolean>(false);
 
   return (
     <Stack
@@ -383,30 +385,36 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
           </Stack>
           {showDisplayNameField && <DisplayNameField defaultName={displayName} setName={setDisplayName} />}
           <PrimaryButton
-            disabled={!buttonEnabled}
+            disabled={!buttonEnabled || nextIsActive}
             className={buttonStyle}
             text={buttonText}
-            onClick={() => {
-              if (displayName || /* @conditional-compile-remove(teams-identity-support) */ teamsIdentityChosen) {
-                displayName && saveDisplayNameToLocalStorage(displayName);
+            onClick={async () => {
+              setNextIsActive(true);
 
-                const acsParticipantsToCall = parseParticipants(outboundParticipants);
-                const teamsParticipantsToCall = parseParticipants(outboundTeamsUsers);
-                const dialpadParticipantToCall = parseParticipants(dialPadParticipant);
-                props.startCallHandler({
-                  //TODO: This needs to be updated after we change arg types of TeamsCall
-                  displayName: !displayName ? 'Teams UserName PlaceHolder' : displayName,
-                  callLocator: callLocator,
-                  option: chosenCallOption.key,
-                  role: chosenRoomsRoleOption.key,
-                  outboundParticipants: acsParticipantsToCall ? acsParticipantsToCall : dialpadParticipantToCall,
-                  alternateCallerId,
-                  /* @conditional-compile-remove(teams-identity-support) */
-                  teamsToken,
-                  /* @conditional-compile-remove(teams-identity-support) */
-                  teamsId,
-                  outboundTeamsUsers: teamsParticipantsToCall
-                });
+              try {
+                if (displayName || /* @conditional-compile-remove(teams-identity-support) */ teamsIdentityChosen) {
+                  displayName && saveDisplayNameToLocalStorage(displayName);
+
+                  const acsParticipantsToCall = parseParticipants(outboundParticipants);
+                  const teamsParticipantsToCall = parseParticipants(outboundTeamsUsers);
+                  const dialpadParticipantToCall = parseParticipants(dialPadParticipant);
+                  await props.startCallHandler({
+                    //TODO: This needs to be updated after we change arg types of TeamsCall
+                    displayName: !displayName ? 'Teams UserName PlaceHolder' : displayName,
+                    callLocator: callLocator,
+                    option: chosenCallOption.key,
+                    role: chosenRoomsRoleOption.key,
+                    outboundParticipants: acsParticipantsToCall ? acsParticipantsToCall : dialpadParticipantToCall,
+                    alternateCallerId,
+                    /* @conditional-compile-remove(teams-identity-support) */
+                    teamsToken,
+                    /* @conditional-compile-remove(teams-identity-support) */
+                    teamsId,
+                    outboundTeamsUsers: teamsParticipantsToCall
+                  });
+                }
+              } finally {
+                setNextIsActive(false);
               }
             }}
           />

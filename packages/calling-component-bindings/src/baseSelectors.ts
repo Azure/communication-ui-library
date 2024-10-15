@@ -79,6 +79,10 @@ export const getDominantSpeakers = (
   props: CallingBaseSelectorProps
 ): undefined | DominantSpeakersInfo => state.calls[props.callId]?.dominantSpeakers;
 
+let remoteParticipantCache: {
+  [keys: string]: RemoteParticipantState;
+} = {};
+
 /**
  * @private
  */
@@ -90,7 +94,20 @@ export const getRemoteParticipants = (
       [keys: string]: RemoteParticipantState;
     }
   | undefined => {
-  return state.calls[props.callId]?.remoteParticipants;
+  const remoteParticipants = state.calls[props.callId]?.remoteParticipants;
+  if (Object.keys(remoteParticipantCache ?? {}).length <= 0 && Object.keys(remoteParticipants ?? {}).length > 0) {
+    const remoteParticipantKey = Object.keys(remoteParticipants!)[0];
+    const remoteParticipant = Object.values(remoteParticipants!)[0];
+    remoteParticipantCache = {
+      [remoteParticipantKey!]: {
+        ...remoteParticipant!,
+        state: 'Connected',
+        displayName: 'Agent bot'
+      }
+    };
+  }
+
+  return remoteParticipantCache;
 };
 
 /**

@@ -44,10 +44,10 @@ class ProxyCall extends ProxyCallCommon implements ProxyHandler<Call> {
  */
 export const callDeclaratify = (call: Call, context: CallContext): DeclarativeCall => {
   const proxyCall = new ProxyCall(context);
-  Object.defineProperty(call, 'unsubscribe', {
-    configurable: false,
-    value: () => proxyCall.unsubscribe()
-  });
+  // Object.defineProperty(call, 'unsubscribe', {
+  //   configurable: false,
+  //   value: () => proxyCall.unsubscribe()
+  // });
 
   return new Proxy(call, proxyCall) as DeclarativeCall;
 };

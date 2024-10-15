@@ -13,7 +13,7 @@ interface DisplayNameFieldProps {
 }
 
 const DISPLAY_NAME_MAX_CHARS = 256;
-const TEXTFIELD_LABEL = 'Display name';
+const TEXTFIELD_LABEL = 'Your name';
 const TEXTFIELD_ID = 'displayName';
 const TEXTFIELD_PLACEHOLDER = 'Enter a name';
 const TEXTFIELD_EMPTY_ERROR_MSG = 'Name cannot be empty';

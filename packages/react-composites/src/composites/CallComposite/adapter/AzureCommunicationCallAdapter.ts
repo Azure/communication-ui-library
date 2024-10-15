@@ -1813,9 +1813,13 @@ export const _createAzureCommunicationCallAdapterInner = async ({
     undefined,
     telemetryImplementationHint
   );
+  console.log('[jaburnsi] assigning callclient to window');
+  (window as any).callClient = callClient;
   const callAgent = await callClient.createCallAgent(credential, {
     displayName
   });
+  console.log('[jaburnsi] assigning callagent to window');
+  (window as any).callAgent = callAgent;
   let adapter;
   if (locator) {
     adapter = createAzureCommunicationCallAdapterFromClient(callClient, callAgent, locator, options);
@@ -1827,6 +1831,9 @@ export const _createAzureCommunicationCallAdapterInner = async ({
       options
     );
   }
+  console.log('[jaburnsi] assigning adapter to window');
+  (window as any).adapter = adapter;
+
   return adapter;
 };
 
