@@ -68,7 +68,6 @@ import {
   isCommunicationUserIdentifier,
   PhoneNumberIdentifier
 } from '@azure/communication-common';
-import { getChatThreadFromTeamsLink } from './parseTeamsUrl';
 import { AdapterError } from '../../common/adapters';
 
 /* @conditional-compile-remove(call-participants-locator) */
@@ -1059,7 +1058,6 @@ export class TeamsMeetingLinkProvider implements ChatThreadProvider {
 
   public getChatThread(): string {
     throw new Error('Chat thread ID should be retrieved from call.callInfo using method getChatThreadPromise');
-    return getChatThreadFromTeamsLink(this.locator.meetingLink);
   }
 
   public async getChatThreadPromise(): Promise<string> {
@@ -1084,8 +1082,6 @@ export class TeamsMeetingLinkProvider implements ChatThreadProvider {
 
       return chatThreadPromise;
     }
-
-    return getChatThreadFromTeamsLink(this.locator.meetingLink);
   }
 }
 
