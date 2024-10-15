@@ -34,7 +34,7 @@ export type CallCompositeLoaderProps = {
   token: string;
   displayName: string;
   locator: CallAdapterLocator;
-  adapterOptions?: AzureCommunicationCallAdapterOptions;
+  callAdapterOptions?: AzureCommunicationCallAdapterOptions;
   callCompositeOptions?: CallCompositeOptions;
 };
 
@@ -50,14 +50,14 @@ export const loadCallComposite = async function (
   htmlElement: HTMLElement
 ): Promise<CallAdapter | undefined> {
   initializeIcons();
-  const { userId, token, displayName, locator, adapterOptions, callCompositeOptions } = loaderArgs;
+  const { userId, token, displayName, locator, callAdapterOptions, callCompositeOptions } = loaderArgs;
 
   const adapter = await createAzureCommunicationCallAdapter({
     userId: fromFlatCommunicationIdentifier(userId) as CommunicationUserIdentifier,
     displayName: displayName ?? 'anonymous',
     credential: new AzureCommunicationTokenCredential(token),
     locator,
-    options: adapterOptions
+    options: callAdapterOptions
   });
 
   if (!htmlElement) {

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 import { ISpinnerStyles, mergeStyles, Theme } from '@fluentui/react';
+import { isDarkThemed } from '../../theming/themeUtils';
 
 /**
  * @private
@@ -37,7 +38,7 @@ export const reconnectingContainer = (): string =>
     bottom: '0',
     left: '0',
     right: '0',
-    background: 'rgba(0, 0, 0, 0.5)',
+    background: 'rgba(0, 0, 0, 0.55)',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center'
@@ -53,7 +54,9 @@ export const reconnectingText = (theme: Theme): string =>
     lineHeight: '3rem',
     justifyContent: 'center',
     alignItems: 'center',
-    color: theme.palette.themeLight,
+    // DarkTheme check is done cause the text color should be light in both dark and light themes
+    // due to background overlay being dark in both themes.
+    color: isDarkThemed(theme) ? theme.palette.themeDarker : theme.palette.neutralLighter,
     fontSize: theme.fonts.large.fontSize
   });
 
