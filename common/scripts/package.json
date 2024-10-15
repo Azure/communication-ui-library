@@ -9,14 +9,18 @@
     "build": "",
     "build:stable": "",
     "clean": "",
-    "test": "",
+    "test": "jest",
     "test:ci-coverage": "",
     "test:stable": "",
     "prettier": "",
     "prettier:check": ""
   },
   "devDependencies": {
+    "@babel/preset-env": "7.23.9",
+    "@jest/transform": "29.7.0",
     "@types/yargs": "^17.0.29",
+    "babel-jest": "^29.5.0",
+    "jest": "29.7.0",
     "yargs": "^17.7.2"
   }
 }
