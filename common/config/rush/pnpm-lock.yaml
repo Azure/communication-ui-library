@@ -18634,14 +18634,18 @@ packages:
     dev: false
 
   file:projects/scripts.tgz:
-    resolution: {integrity: sha512-CHbYGRZ7kN64+2IJFP7PpfyH3u/efZ1IyTp5wWRY8hhQ9l++MbZLhfJ7VfhFa9ku1iuOCVk5PGdfPC+KELyOpA==, tarball: file:projects/scripts.tgz}
+    resolution: {integrity: sha512-Gz39L0FpcaiWmu0vIdx+ag3rElBIi12ECc4QgxWTV4SzlBOCZzDJKWddFdkqhNnqxrUWz7LuHOtSOgRW3tblJg==, tarball: file:projects/scripts.tgz}
     name: '@rush-temp/scripts'
     version: 0.0.0
     dependencies:
+      '@babel/preset-env': 7.23.9(@babel/core@7.25.2)
+      '@jest/transform': 29.7.0
       '@types/yargs': 17.0.33
+      babel-jest: 29.7.0(@babel/core@7.25.2)
       jest: 29.7.0(@types/node@20.14.12)(ts-node@10.9.2)
       yargs: 17.7.2
     transitivePeerDependencies:
+      - '@babel/core'
       - '@types/node'
       - babel-plugin-macros
       - node-notifier
