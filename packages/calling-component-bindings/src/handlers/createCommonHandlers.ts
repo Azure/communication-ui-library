@@ -744,20 +744,17 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       }
       const togetherModeStreams = callState.togetherMode.streams;
       const togetherModeCreateViewResult: TogetherModeStreamViewResult = {};
-      if (!togetherModeStreams.size) {
+      if (!togetherModeStreams.mainVideoStream) {
         const togetherModeFeature = call?.feature(Features.TogetherMode);
         await togetherModeFeature?.start();
       } else {
-        for (const stream of togetherModeStreams) {
-          if (!stream[1].view) {
-            const createViewResult = await callClient.createCallFeatureView(call.id, stream[1], options);
-            // SDK currently only supports 1 Video media stream type
-            if (stream[1].mediaStreamType === 'Video') {
-              togetherModeCreateViewResult.mainVideoView = createViewResult?.view
-                ? { view: createViewResult?.view }
-                : undefined;
-            }
-          }
+        const mainVideoStream = togetherModeStreams.mainVideoStream;
+        if (mainVideoStream && !mainVideoStream.view) {
+          const createViewResult = await callClient.createCallFeatureView(call.id, mainVideoStream, options);
+          // SDK currently only supports 1 Video media stream type
+          togetherModeCreateViewResult.mainVideoView = createViewResult?.view
+            ? { view: createViewResult?.view }
+            : undefined;
         }
       }
       return togetherModeCreateViewResult;
@@ -774,14 +771,12 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
 
       const togetherModeStreams = callState.togetherMode.streams;
 
-      if (!togetherModeStreams.size) {
+      if (!togetherModeStreams.mainVideoStream) {
         return;
       }
 
-      for (const stream of togetherModeStreams) {
-        if (stream[1].view) {
-          callClient.disposeCallFeatureView(call.id, stream[1]);
-        }
+      if (togetherModeStreams.mainVideoStream.view) {
+        callClient.disposeCallFeatureView(call.id, togetherModeStreams.mainVideoStream);
       }
     };
     return {

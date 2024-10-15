@@ -264,7 +264,7 @@ const createDefaultCallAdapterState = (role?: ParticipantRole): CallAdapterState
       remoteParticipantsEnded: {},
       raiseHand: { raisedHands: [] },
       /* @conditional-compile-remove(together-mode) */
-      togetherMode: { streams: new Map(), seatingCoordinates: new Map() },
+      togetherMode: { streams: {}, seatingPositions: [] },
       pptLive: { isActive: false },
       localParticipantReaction: undefined,
       role,

@@ -111,8 +111,9 @@ import { TeamsIncomingCall } from '@azure/communication-calling';
 import { TeamsMeetingIdLocator } from '@azure/communication-calling';
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { Theme } from '@fluentui/react';
-import { TogetherModeStreamViewResult } from '@internal/react-components/dist/dist-esm/types/TogetherModeTypes';
-import { TogetherModeStreamViewResult as TogetherModeStreamViewResult_2 } from '@internal/react-components/dist/dist-esm/types';
+import type { TogetherModeSeatingPosition } from '@azure/communication-calling';
+import { TogetherModeStreamViewResult } from '@internal/react-components/dist/dist-esm/types';
+import { TogetherModeStreamViewResult as TogetherModeStreamViewResult_2 } from '@internal/react-components/dist/dist-esm/types/TogetherModeTypes';
 import { TransferEventArgs } from '@azure/communication-calling';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-chat';
 import { UnknownIdentifier } from '@azure/communication-common';
@@ -445,7 +446,7 @@ export interface CallAdapterCallOperations {
     allowUnsupportedBrowserVersion(): void;
     createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void | CreateVideoStreamViewResult>;
     // @beta
-    createTogetherModeStreamViews(options?: VideoStreamOptions): Promise<void | TogetherModeStreamViewResult_2>;
+    createTogetherModeStreamViews(options?: VideoStreamOptions): Promise<void | TogetherModeStreamViewResult>;
     disposeLocalVideoStreamView(): Promise<void>;
     disposeRemoteVideoStreamView(remoteUserId: string): Promise<void>;
     disposeScreenShareStreamView(remoteUserId: string): Promise<void>;
@@ -1211,7 +1212,7 @@ export interface CallWithChatAdapterManagement {
     askDevicePermission(constrain: PermissionConstraints): Promise<void>;
     createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void | CreateVideoStreamViewResult>;
     // @beta
-    createTogetherModeStreamViews(options?: VideoStreamOptions): Promise<void | TogetherModeStreamViewResult_2>;
+    createTogetherModeStreamViews(options?: VideoStreamOptions): Promise<void | TogetherModeStreamViewResult>;
     // @beta
     deleteImage(imageId: string): Promise<void>;
     deleteMessage(messageId: string): Promise<void>;
@@ -2194,7 +2195,7 @@ export interface CommonCallingHandlers {
     // (undocumented)
     onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
     // @beta
-    onCreateTogetherModeStreamView: (options?: VideoStreamOptions) => Promise<void | TogetherModeStreamViewResult>;
+    onCreateTogetherModeStreamView: (options?: VideoStreamOptions) => Promise<void | TogetherModeStreamViewResult_2>;
     // (undocumented)
     onDisposeLocalScreenShareStreamView: () => Promise<void>;
     // (undocumented)
@@ -4898,28 +4899,31 @@ export const toFlatCommunicationIdentifier: (identifier: CommunicationIdentifier
 
 // @beta
 export interface TogetherModeCallFeature {
-    seatingCoordinates: Map<string, TogetherModeSeatingCoordinatesState>;
-    streams: Map<string, TogetherModeStreamState>;
+    seatingPositions: TogetherModeSeatingPositionState[];
+    streams: TogetherModeStreamsState;
 }
 
 // @beta
-export interface TogetherModeSeatingCoordinatesState {
+export interface TogetherModeSeatingPositionState {
     // (undocumented)
-    height: number;
+    participantId: string;
     // (undocumented)
-    left: number;
-    // (undocumented)
-    top: number;
-    // (undocumented)
-    width: number;
+    position: TogetherModeSeatingPosition;
 }
 
 // @beta
-export interface TogetherModeStreamState extends CallFeatureStreamState {
+export interface TogetherModeStreamsState {
+    // (undocumented)
+    mainVideoStream?: TogetherModeStreamViewState;
+}
+
+// @beta
+export interface TogetherModeStreamViewState extends CallFeatureStreamState {
     id: number;
     // @public
     isReceiving: boolean;
     mediaStreamType: MediaStreamType;
+    recalculateSeatingPositions: (width: number, height: number) => void;
     streamSize?: {
         width: number;
         height: number;

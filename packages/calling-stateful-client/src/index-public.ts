@@ -36,9 +36,10 @@ export type { TogetherModeCallFeatureState as TogetherModeCallFeature } from './
 /* @conditional-compile-remove(together-mode) */
 export type {
   CallFeatureStreamState,
-  TogetherModeStreamState,
-  TogetherModeSeatingCoordinatesState,
-  CallFeatureStreamName
+  TogetherModeStreamViewState,
+  TogetherModeSeatingPositionState,
+  CallFeatureStreamName,
+  TogetherModeStreamsState
 } from './CallClientState';
 
 export type { RaisedHandState } from './CallClientState';

@@ -43,7 +43,7 @@ import { callStatusSelector } from '../../CallComposite/selectors/callStatusSele
 /* @conditional-compile-remove(DNS) */
 import { _isSafari } from '../../CallComposite/utils';
 import { getIsRoomsCall, getReactionResources, getRole } from '../selectors/baseSelectors';
-/* @conditional-compile-remove(DNS) */
+/* @conditional-compile-remove(unsupported-browser) */
 import { getEnvironmentInfo } from '../selectors/baseSelectors';
 /* @conditional-compile-remove(DNS) */
 import {

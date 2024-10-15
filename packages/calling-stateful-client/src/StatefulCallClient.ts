@@ -7,13 +7,11 @@ import { CallClient, CallClientOptions, CreateViewOptions, DeviceManager } from 
 import { Features } from '@azure/communication-calling';
 import { CallClientState, LocalVideoStreamState, RemoteVideoStreamState } from './CallClientState';
 /* @conditional-compile-remove(together-mode) */
-import { CallFeatureStreamState, TogetherModeStreamState } from './CallClientState';
+import { CallFeatureStreamState, TogetherModeStreamViewState } from './CallClientState';
 import { CallContext } from './CallContext';
 import { callAgentDeclaratify, DeclarativeCallAgent } from './CallAgentDeclarative';
 import { InternalCallContext } from './InternalCallContext';
 import { createView, disposeView, CreateViewResult } from './StreamUtils';
-/* @conditional-compile-remove(together-mode) */
-import { createCallFeatureView } from './StreamUtils';
 import { CommunicationIdentifier, CommunicationUserIdentifier, getIdentifierKind } from '@azure/communication-common';
 import {
   toFlatCommunicationIdentifier,
@@ -26,6 +24,8 @@ import { DeclarativeTeamsCallAgent, teamsCallAgentDeclaratify } from './TeamsCal
 /* @conditional-compile-remove(teams-identity-support) */
 import { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 import { videoStreamRendererViewDeclaratify } from './VideoStreamRendererViewDeclarative';
+/* @conditional-compile-remove(together-mode) */
+import { createCallFeatureView } from './CallFeatureStreamUtils';
 
 /**
  * Defines the methods that allow CallClient {@link @azure/communication-calling#CallClient} to be used statefully.
@@ -447,7 +447,7 @@ export const createStatefulCallClientWithDeps = (
     configurable: false,
     value: async (
       callId: string | undefined,
-      stream: TogetherModeStreamState,
+      stream: TogetherModeStreamViewState,
       options?: CreateViewOptions
     ): Promise<CreateViewResult | undefined> => {
       const result = await createCallFeatureView(context, internalContext, callId, stream, options);

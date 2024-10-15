@@ -27,7 +27,8 @@ import type {
   NetworkDiagnosticType,
   DiagnosticValueType,
   DiagnosticQuality,
-  DiagnosticFlag
+  DiagnosticFlag,
+  TogetherModeSeatingPosition
 } from '@azure/communication-calling';
 import { TeamsCallInfo } from '@azure/communication-calling';
 import { CallInfo } from '@azure/communication-calling';
@@ -276,23 +277,6 @@ export interface RaiseHandCallFeatureState {
 
 /* @conditional-compile-remove(together-mode) */
 /**
- * State only version of {@link @azure/communication-calling#TogetherModeCallFeature}. {@link StatefulCallClient} will
- * automatically listen for raised hands on the call and update the state exposed by {@link StatefulCallClient} accordingly.
- * @beta
- */
-export interface TogetherModeCallFeatureState {
-  /**
-   * Proxy of {@link @azure/communication-calling#TogetherModeCallFeature.togetherModeStream}.
-   */
-  streams: Map<string, TogetherModeStreamState>;
-  /**
-   * Proxy of {@link @azure/communication-calling#TogetherModeCallFeature.TogetherModeSeatingMap}.
-   */
-  seatingCoordinates: Map<string, TogetherModeSeatingCoordinatesState>;
-}
-
-/* @conditional-compile-remove(together-mode) */
-/**
  * @beta
  */
 export type CallFeatureStreamName = 'togetherMode';
@@ -310,7 +294,7 @@ export interface CallFeatureStreamState {
  * State only version of {@link @azure/communication-calling#TogetherModeVideoStream}.
  * @beta
  */
-export interface TogetherModeStreamState extends CallFeatureStreamState {
+export interface TogetherModeStreamViewState extends CallFeatureStreamState {
   /**
    * Proxy of {@link @azure/communication-calling#TogetherModeVideoStream.id}.
    */
@@ -333,6 +317,11 @@ export interface TogetherModeStreamState extends CallFeatureStreamState {
    * Proxy of {@link @azure/communication-calling#RemoteVideoStream.size}.
    */
   streamSize?: { width: number; height: number };
+
+  /**
+   * Proxy of {@link @azure/communication-calling#TogetherModeVideoStream.position}.
+   */
+  recalculateSeatingPositions: (width: number, height: number) => void;
 }
 
 /* @conditional-compile-remove(together-mode) */
@@ -340,15 +329,36 @@ export interface TogetherModeStreamState extends CallFeatureStreamState {
  * State only version of {@link @azure/communication-calling#TogetherModeSeatingMap}.
  * @beta
  */
-export interface TogetherModeSeatingCoordinatesState {
-  // the y coordinate of the participant seating position in the together mode stream
-  top: number;
-  // the x coordinate of the participant seating position in the together mode stream
-  left: number;
-  // the width of the participant in the together mode stream
-  width: number;
-  // the height of the participant in the together mode stream
-  height: number;
+export interface TogetherModeSeatingPositionState {
+  participantId: string;
+  position: TogetherModeSeatingPosition;
+}
+
+/* @conditional-compile-remove(together-mode) */
+/**
+ * Interface representing the streams in Together Mode.
+ *
+ * @beta
+ */
+export interface TogetherModeStreamsState {
+  mainVideoStream?: TogetherModeStreamViewState;
+}
+
+/* @conditional-compile-remove(together-mode) */
+/**
+ * State only version of {@link @azure/communication-calling#TogetherModeCallFeature}. {@link StatefulCallClient} will
+ * automatically listen for raised hands on the call and update the state exposed by {@link StatefulCallClient} accordingly.
+ * @beta
+ */
+export interface TogetherModeCallFeatureState {
+  /**
+   * Proxy of {@link @azure/communication-calling#TogetherModeCallFeature.togetherModeStream}.
+   */
+  streams: TogetherModeStreamsState;
+  /**
+   * Proxy of {@link @azure/communication-calling#TogetherModeCallFeature.TogetherModeSeatingMap}.
+   */
+  seatingPositions: TogetherModeSeatingPositionState[];
 }
 
 /**
