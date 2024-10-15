@@ -18,7 +18,7 @@ parameters:
   - name: commit_new_strings
     displayName: 'Create branch with new strings'
     type: boolean
-    default: true
+    default: false
 
 extends:
   template: v1/M365.Unofficial.PipelineTemplate.yml@m365Pipelines
