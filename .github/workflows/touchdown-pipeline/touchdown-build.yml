@@ -16,9 +16,9 @@ resources:
 parameters:
   # Parameter to control whether to only pass strings to touchdown (false) or to also create a PR with changes (true)
   - name: commit_new_strings
-    displayName: 'Create PR for new strings'
+    displayName: 'Create branch with new strings'
     type: boolean
-    default: false
+    default: true
 
 extends:
   template: v1/M365.Unofficial.PipelineTemplate.yml@m365Pipelines
@@ -62,13 +62,13 @@ extends:
                 displayName: 'Call Touchdown build task for composites and commit changes'
 
               - task: PowerShell@2
-                displayName: Create PR with changes
+                displayName: Commit changes to a new branch
                 condition: eq('${{ parameters.commit_new_strings }}', true) # Only create a PR if the parameter is set to true
                 inputs:
                   targetType: 'inline'
                   script: |
                     # ------------------------------------------------------------------------------------------------
-                    # - Script to create a new branch and PR with changes
+                    # - Script to create a new branch with string changes
                     # ------------------------------------------------------------------------------------------------
 
                     $repoOwner = "Azure"
@@ -107,31 +107,6 @@ extends:
                     git add -A
                     git commit -m "TDBuild latest localization"
                     git push origin $newBranchName
-
-                    #***********************************************
-                    #*** Create PR to source branch ***
-                    #***********************************************
-                    Write-Host "Creating Pull Request from $newBranchName to $sourceBranchName"
-
-                    $headers = @{
-                      "Content-Type" = "application/json"
-                      "Authorization" = "Bearer $(System.AccessToken)"
-                    }
-
-                    $prBody = @{
-                      "title"       = "TDBuild PR for latest localization"
-                      "head"        = $newBranchName
-                      "base"        = $sourceBranch
-                      "body"        = "Automated PR from pipeline to merge localization updates"
-                    } | ConvertTo-Json
-
-                    $url = "https://api.github.com/repos/$repoOwner/$repoName/pulls"
-                    $response = Invoke-RestMethod -Uri $url -Method Post -Body $prBody -Headers $headers
-
-                    if (!$response) {
-                        Write-Host "PR creation failed."
-                        Exit 1
-                    }
 
                     Write-Host "PR created successfully: $($response.url)"
     sdl:
