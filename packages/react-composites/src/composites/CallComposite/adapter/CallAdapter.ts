@@ -3,7 +3,7 @@
 
 import { CallState, DeviceManagerState } from '@internal/calling-stateful-client';
 import { CaptionsInfo } from '@internal/calling-stateful-client';
-import type { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling';
+import type { BackgroundBlurConfig, BackgroundReplacementConfig, DeviceAccess } from '@azure/communication-calling';
 import { Reaction } from '@azure/communication-calling';
 import type { CapabilitiesChangeInfo } from '@azure/communication-calling';
 import type { SpotlightedParticipant } from '@azure/communication-calling';
@@ -170,20 +170,17 @@ export type CallAdapterClientState = {
   /* @conditional-compile-remove(DNS) */
   /**
    * Dependency to be injected for deep noise suppression effect.
-   * @beta
    */
   onResolveDeepNoiseSuppressionDependency?: () => Promise<DeepNoiseSuppressionEffectDependency>;
   /* @conditional-compile-remove(DNS) */
   /**
    * State to track whether the noise suppression should be on by default.
-   * @beta
    * @default true
    */
   deepNoiseSuppressionOnByDefault?: boolean;
   /* @conditional-compile-remove(DNS) */
   /**
    * State to track whether to hide the noise suppression button.
-   * @beta
    * @default false
    */
   hideDeepNoiseSuppressionButton?: boolean;
@@ -741,14 +738,12 @@ export interface CallAdapterCallOperations {
   /**
    * Start the noise suppression effect.
    *
-   * @beta
    */
   startNoiseSuppressionEffect(): Promise<void>;
   /* @conditional-compile-remove(DNS) */
   /**
    * Stop the noise suppression effect.
    *
-   * @beta
    */
   stopNoiseSuppressionEffect(): Promise<void>;
   /**
@@ -806,7 +801,7 @@ export interface CallAdapterDeviceManagement {
    *
    * @public
    */
-  askDevicePermission(constrain: PermissionConstraints): Promise<void>;
+  askDevicePermission(constrain: PermissionConstraints): Promise<DeviceAccess>;
   /**
    * Query for available camera devices.
    *

@@ -75,19 +75,17 @@ export class ChatContext {
     this.modifyState((draft: ChatClientState) => {
       this._inlineImageQueue?.cancelAllRequests();
       this._fullsizeImageQueue?.cancelAllRequests();
-      Object.keys(draft.threads).forEach((threadId) => {
-        const thread = draft.threads[threadId];
-        Object.keys(thread.chatMessages).forEach((messageId) => {
-          const cache = thread.chatMessages[messageId].resourceCache;
+      Object.values(draft.threads).forEach((thread) => {
+        Object.values(thread.chatMessages).forEach((message) => {
+          const cache = message.resourceCache;
           if (cache) {
-            Object.keys(cache).forEach((resourceUrl) => {
-              const resource = cache[resourceUrl];
+            Object.values(cache).forEach((resource) => {
               if (resource.sourceUrl) {
                 URL.revokeObjectURL(resource.sourceUrl);
               }
             });
           }
-          thread.chatMessages[messageId].resourceCache = undefined;
+          message.resourceCache = undefined;
         });
       });
     });
@@ -120,7 +118,7 @@ export class ChatContext {
       }
       if (message && message.resourceCache && message.resourceCache[resourceUrl]) {
         const resource = message.resourceCache[resourceUrl];
-        if (resource.sourceUrl) {
+        if (resource?.sourceUrl) {
           URL.revokeObjectURL(resource.sourceUrl);
         }
 

@@ -29,6 +29,7 @@ import type { AdapterError, AdapterState, Disposable } from '../../common/adapte
 import {
   AudioDeviceInfo,
   Call,
+  DeviceAccess,
   PermissionConstraints,
   PropertyChangedEvent,
   StartCallOptions,
@@ -261,7 +262,7 @@ export interface CallWithChatAdapterManagement {
    *
    * @public
    */
-  askDevicePermission(constrain: PermissionConstraints): Promise<void>;
+  askDevicePermission(constrain: PermissionConstraints): Promise<DeviceAccess>;
   /**
    * Query for available camera devices.
    *
@@ -476,15 +477,11 @@ export interface CallWithChatAdapterManagement {
   /* @conditional-compile-remove(DNS) */
   /**
    * Start the noise suppression effect.
-   *
-   * @beta
    */
   startNoiseSuppressionEffect(): Promise<void>;
   /* @conditional-compile-remove(DNS) */
   /**
    * Start the noise suppression effect.
-   *
-   * @beta
    */
   stopNoiseSuppressionEffect(): Promise<void>;
   /**
