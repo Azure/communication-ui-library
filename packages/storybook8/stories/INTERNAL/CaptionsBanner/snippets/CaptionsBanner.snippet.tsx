@@ -27,8 +27,11 @@ export const CaptionsBannerStory = (): JSX.Element => {
   };
 
   const extendLastCaption = (): void => {
-    captions[captions.length - 1].captionText = `${captions[captions.length - 1].captionText} hello`;
-    setCaptions([...captions]);
+    const caption = captions[captions.length - 1];
+    if (caption) {
+      caption.captionText = `${caption.captionText} hello`;
+      setCaptions([...captions]);
+    }
   };
 
   const containerStyles = {
