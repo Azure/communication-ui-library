@@ -29,6 +29,7 @@ import type { AdapterError, AdapterState, Disposable } from '../../common/adapte
 import {
   AudioDeviceInfo,
   Call,
+  DeviceAccess,
   PermissionConstraints,
   PropertyChangedEvent,
   StartCallOptions,
@@ -261,7 +262,7 @@ export interface CallWithChatAdapterManagement {
    *
    * @public
    */
-  askDevicePermission(constrain: PermissionConstraints): Promise<void>;
+  askDevicePermission(constrain: PermissionConstraints): Promise<DeviceAccess>;
   /**
    * Query for available camera devices.
    *
