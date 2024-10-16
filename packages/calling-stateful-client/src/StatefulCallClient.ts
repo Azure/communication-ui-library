@@ -19,9 +19,7 @@ import {
   _TelemetryImplementationHint
 } from '@internal/acs-ui-common';
 import { callingStatefulLogger } from './Logger';
-
 import { DeclarativeTeamsCallAgent, teamsCallAgentDeclaratify } from './TeamsCallAgentDeclarative';
-
 import { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 import { videoStreamRendererViewDeclaratify } from './VideoStreamRendererViewDeclarative';
 

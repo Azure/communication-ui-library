@@ -6,10 +6,8 @@ import { TeamsIncomingCall } from '@azure/communication-calling';
 import { CallCommon, CallAgentCommon } from './BetaToStableTypes';
 import { clearCallRelatedState, DeclarativeCallCommon, ProxyCallAgentCommon } from './CallAgentDeclarativeCommon';
 import { CallContext } from './CallContext';
-
 import { _isTeamsCall, _isTeamsCallAgent } from './TypeGuards';
 import { InternalCallContext } from './InternalCallContext';
-
 import { teamsCallDeclaratify } from './TeamsCallDeclarative';
 
 /**
@@ -48,9 +46,7 @@ class ProxyTeamsCallAgent extends ProxyCallAgentCommon implements ProxyHandler<D
 
   private subscribe = (): void => {
     this._callAgent.on('callsUpdated', this.callsUpdated);
-
     this._callAgent.on('incomingCall', this.incomingCall);
-
     // There could be scenario that when ProxyTeamsCallAgent is created that the given CallAgent already has TeamsCalls. In this
     // case we need to make sure to subscribe to those already existing Calls.
     for (const call of this._callAgent.calls) {
@@ -60,9 +56,7 @@ class ProxyTeamsCallAgent extends ProxyCallAgentCommon implements ProxyHandler<D
 
   protected unsubscribe = (): void => {
     this._callAgent.off('callsUpdated', this.callsUpdated);
-
     this._callAgent.off('incomingCall', this.incomingCall);
-
     this.unregisterSubscriber();
   };
 

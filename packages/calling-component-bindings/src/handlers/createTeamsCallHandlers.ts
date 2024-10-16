@@ -5,7 +5,6 @@ import { StartCallOptions } from '@azure/communication-calling';
 import { IncomingCallCommon } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support-beta) */
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
-
 import { TeamsCall, TeamsCallAgent, TeamsCallAgentOptions } from '@azure/communication-calling';
 import {
   CommunicationIdentifier,
@@ -71,11 +70,9 @@ export const createDefaultTeamsCallingHandlers = memoizeOne(
         if (callAgent) {
           /* @conditional-compile-remove(teams-identity-support-beta) */
           return callAgent.startCall(participants, threadId ? { threadId, ...options } : undefined);
-
           // Remove when teams identity in stable support multiple participants
           return teamsSingleParticipantTrampoline(callAgent as TeamsCallAgent, participants, options);
         }
-
         return undefined;
       },
       /* @conditional-compile-remove(teams-identity-support-beta) */

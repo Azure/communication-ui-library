@@ -33,7 +33,6 @@ import { DisplayNameField } from './DisplayNameField';
 import { RoomLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { TeamsMeetingIdLocator } from '@azure/communication-calling';
 import { getRoomIdFromUrl } from '../utils/AppUtils';
-
 import { getIsCTE } from '../utils/AppUtils';
 import { Dialpad } from '@azure/communication-react';
 import { Backspace20Regular } from '@fluentui/react-icons';

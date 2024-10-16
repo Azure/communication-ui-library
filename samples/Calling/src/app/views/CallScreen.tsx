@@ -3,7 +3,6 @@
 
 import { AzureCommunicationTokenCredential } from '@azure/communication-common';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
-
 import { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 import {
   AzureCommunicationCallAdapterOptions,
@@ -14,13 +13,10 @@ import {
   CallAdapter,
   toFlatCommunicationIdentifier
 } from '@azure/communication-react';
-
 import { useTeamsCallAdapter, TeamsCallAdapter } from '@azure/communication-react';
-
 import { onResolveVideoEffectDependencyLazy } from '@azure/communication-react';
 /* @conditional-compile-remove(DNS) */
 import { onResolveDeepNoiseSuppressionDependencyLazy } from '@azure/communication-react';
-
 import type { Profile, TeamsAdapterOptions } from '@azure/communication-react';
 import type { StartCallIdentifier } from '@azure/communication-react';
 import React, { useCallback, useMemo, useRef } from 'react';

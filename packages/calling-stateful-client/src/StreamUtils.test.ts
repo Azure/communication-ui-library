@@ -10,7 +10,6 @@ import {
   RemoteVideoStream as SdkRemoteVideoStream,
   VideoDeviceInfo
 } from '@azure/communication-calling';
-
 import { CallKind } from '@azure/communication-calling';
 import { CommunicationUserKind } from '@azure/communication-common';
 import { CallState, LocalVideoStreamState, RemoteParticipantState, RemoteVideoStreamState } from './CallClientState';

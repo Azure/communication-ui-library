@@ -12,11 +12,8 @@ import type {
   MockRemoteParticipantState,
   MockVideoStreamRendererViewState
 } from '../../../common';
-
 import type { CallKind, DominantSpeakersInfo, ParticipantRole } from '@azure/communication-calling';
-
 import type { ParticipantCapabilities } from '@azure/communication-calling';
-
 import { CallState, CapabilitiesFeatureState } from '@internal/calling-stateful-client';
 
 const SERVER_URL = 'http://localhost';

@@ -9,7 +9,6 @@ import {
   PermissionConstraints,
   VideoDeviceInfo
 } from '@azure/communication-calling';
-
 import { CallKind } from '@azure/communication-calling';
 import { EnvironmentInfo } from '@azure/communication-calling';
 import { EventEmitter } from 'events';
@@ -240,7 +239,6 @@ const createDefaultCallAdapterState = (role?: ParticipantRole): CallAdapterState
     page: 'call',
     call: {
       id: 'call1',
-
       kind: CallKind.Call,
       callerInfo: { displayName: 'caller', identifier: { kind: 'communicationUser', communicationUserId: '1' } },
       direction: 'Incoming',

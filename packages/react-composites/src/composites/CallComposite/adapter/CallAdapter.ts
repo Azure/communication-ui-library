@@ -7,7 +7,6 @@ import type { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/c
 import { Reaction } from '@azure/communication-calling';
 import type { CapabilitiesChangeInfo } from '@azure/communication-calling';
 import type { SpotlightedParticipant } from '@azure/communication-calling';
-
 import { TeamsCall } from '@azure/communication-calling';
 import { TransferEventArgs } from '@azure/communication-calling';
 import { StartCaptionsOptions } from '@azure/communication-calling';
@@ -32,7 +31,6 @@ import type {
   MicrosoftTeamsAppIdentifier,
   UnknownIdentifier
 } from '@azure/communication-common';
-
 import type { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { DtmfTone } from '@azure/communication-calling';
@@ -41,9 +39,7 @@ import type { CommunicationUserIdentifier, PhoneNumberIdentifier } from '@azure/
 import type { AdapterState, Disposable, AdapterError, AdapterErrors } from '../../common/adapters';
 /* @conditional-compile-remove(breakout-rooms) */
 import type { AdapterNotifications } from '../../common/adapters';
-
 import { VideoBackgroundEffectsDependency } from '@internal/calling-component-bindings';
-
 import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
 import { ReactionResources } from '@internal/react-components';
 /* @conditional-compile-remove(DNS) */

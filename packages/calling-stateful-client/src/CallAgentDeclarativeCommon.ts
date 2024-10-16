@@ -10,9 +10,7 @@ import {
   TeamsIncomingCall,
   IncomingCallCommon
 } from '@azure/communication-calling';
-
 import { CallAgentCommon, CallCommon } from './BetaToStableTypes';
-
 import { TeamsCallAgent } from '@azure/communication-calling';
 import { CallContext } from './CallContext';
 import { DeclarativeCall } from './CallDeclarative';

@@ -15,7 +15,6 @@ import {
   _isTeamsCall
 } from '@internal/calling-stateful-client';
 import { AcceptedTransfer } from '@internal/calling-stateful-client';
-
 import { _isTeamsCallAgent } from '@internal/calling-stateful-client';
 import { CallCommon } from '@internal/calling-stateful-client';
 import { _TelemetryImplementationHint } from '@internal/acs-ui-common';
@@ -39,13 +38,10 @@ import { SpotlightedParticipant } from '@azure/communication-calling';
 import { TeamsMeetingIdLocator } from '@azure/communication-calling';
 import { Reaction } from '@azure/communication-calling';
 import { TeamsCaptions } from '@azure/communication-calling';
-
 import { Captions, CaptionsInfo } from '@azure/communication-calling';
 import { TransferEventArgs } from '@azure/communication-calling';
 import { TeamsCaptionsInfo } from '@azure/communication-calling';
-
 import type { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling';
-
 import type { CapabilitiesChangeInfo } from '@azure/communication-calling';
 import { TeamsCallAgent } from '@azure/communication-calling';
 import { Features } from '@azure/communication-calling';
@@ -77,21 +73,18 @@ import { ReactionResources } from '@internal/react-components';
 import { TransferAcceptedListener } from './CallAdapter';
 import { CapabilitiesChangedListener } from './CallAdapter';
 import { SpotlightChangedListener } from './CallAdapter';
-
 import {
   CaptionsReceivedListener,
   IsCaptionsActiveChangedListener,
   IsCaptionLanguageChangedListener,
   IsSpokenLanguageChangedListener
 } from './CallAdapter';
-
 import {
   VideoBackgroundImage,
   VideoBackgroundEffect,
   VideoBackgroundBlurEffect,
   VideoBackgroundReplacementEffect
 } from './CallAdapter';
-
 import { TeamsCallAdapter } from './CallAdapter';
 import { getCallCompositePage, getLocatorOrTargetCallees, IsCallEndedPage, isCameraOn } from '../utils';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
@@ -106,7 +99,6 @@ import {
   UnknownIdentifier,
   isMicrosoftTeamsAppIdentifier
 } from '@azure/communication-common';
-
 import { isCommunicationUserIdentifier } from '@azure/communication-common';
 import { isPhoneNumberIdentifier, PhoneNumberIdentifier } from '@azure/communication-common';
 import { ParticipantSubscriber } from './ParticipantSubcriber';

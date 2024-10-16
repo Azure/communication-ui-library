@@ -3,7 +3,6 @@
 
 import React, { useContext, createContext } from 'react';
 import { Call } from '@azure/communication-calling';
-
 import { TeamsCall } from '@azure/communication-calling';
 import { _isACSCall, _isTeamsCall } from '@internal/calling-stateful-client';
 

@@ -10,7 +10,6 @@
 // In beta, Call | CallCommon = CallCommon because Call is just a super set of CallCommon
 
 import { Call, CallAgent } from '@azure/communication-calling';
-
 import {
   TeamsCall as TeamsCallBeta,
   CallCommon as CallCommonBeta,

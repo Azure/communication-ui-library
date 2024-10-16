@@ -4,7 +4,6 @@
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { ParticipantRole } from '@azure/communication-calling';
 import { fromFlatCommunicationIdentifier, StartCallIdentifier } from '@azure/communication-react';
-
 import { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 import { setLogLevel } from '@azure/logger';
 import { initializeIcons, Spinner, Stack } from '@fluentui/react';

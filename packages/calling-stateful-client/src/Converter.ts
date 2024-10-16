@@ -11,9 +11,7 @@ import {
 } from '@azure/communication-calling';
 import { TeamsIncomingCall } from '@azure/communication-calling';
 import { TeamsCaptionsInfo } from '@azure/communication-calling';
-
 import { CaptionsInfo as AcsCaptionsInfo } from '@azure/communication-calling';
-
 import { CallKind } from '@azure/communication-calling';
 import { TeamsCallInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(calling-beta-sdk) */
@@ -32,14 +30,10 @@ import { CaptionsInfo } from './CallClientState';
 import { TeamsIncomingCallState as DeclarativeTeamsIncomingCall } from './CallClientState';
 import { _isTeamsIncomingCall } from './TypeGuards';
 import { _isACSCall } from './TypeGuards';
-
 import { _isTeamsCall } from './TypeGuards';
 import { CallCommon } from './BetaToStableTypes';
-
 import { Features } from '@azure/communication-calling';
-
 import { VideoEffectName } from '@azure/communication-calling';
-
 import { LocalVideoStreamVideoEffectsState } from './CallClientState';
 import { RaisedHand } from '@azure/communication-calling';
 import { RaisedHandState } from './CallClientState';

@@ -35,14 +35,11 @@ export type { RaiseHandCallFeatureState as RaiseHandCallFeature } from './CallCl
 export type { TogetherModeCallFeatureState as TogetherModeCallFeature } from './CallClientState';
 /* @conditional-compile-remove(together-mode) */
 export type { TogetherModeStreamState } from './CallClientState';
-
 export type { RaisedHandState } from './CallClientState';
 export type { DeclarativeCallAgent, IncomingCallManagement } from './CallAgentDeclarative';
-
 export type { DeclarativeTeamsCallAgent } from './TeamsCallAgentDeclarative';
 export type { TeamsIncomingCallManagement } from './TeamsCallAgentDeclarative';
 export type { LocalVideoStreamVideoEffectsState } from './CallClientState';
-
 export type { CapabilitiesFeatureState } from './CallClientState';
 export type { CaptionsCallFeatureState, CaptionsInfo } from './CallClientState';
 export type { AcceptedTransfer, TransferFeatureState as TransferFeature } from './CallClientState';
