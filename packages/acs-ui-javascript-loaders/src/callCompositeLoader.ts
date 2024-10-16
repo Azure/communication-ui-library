@@ -8,8 +8,7 @@ const reactVersion = React.version;
 parseReactVersion(reactVersion);
 
 import { createRoot } from 'react-dom/client';
-import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
-import { fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
+import { CommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import {
   CallComposite,
   createAzureCommunicationCallAdapter,
@@ -30,8 +29,8 @@ import { initializeIcons } from '@fluentui/react';
  * @public
  */
 export type CallCompositeLoaderProps = {
-  userId: string;
-  token: string;
+  userId: CommunicationUserIdentifier;
+  credential: CommunicationTokenCredential;
   displayName: string;
   locator: CallAdapterLocator;
   callAdapterOptions?: AzureCommunicationCallAdapterOptions;
@@ -50,12 +49,11 @@ export const loadCallComposite = async function (
   htmlElement: HTMLElement
 ): Promise<CallAdapter | undefined> {
   initializeIcons();
-  const { userId, token, displayName, locator, callAdapterOptions, callCompositeOptions } = loaderArgs;
-
+  const { userId, credential, displayName, locator, callAdapterOptions, callCompositeOptions } = loaderArgs;
   const adapter = await createAzureCommunicationCallAdapter({
-    userId: fromFlatCommunicationIdentifier(userId) as CommunicationUserIdentifier,
+    userId,
     displayName: displayName ?? 'anonymous',
-    credential: new AzureCommunicationTokenCredential(token),
+    credential,
     locator,
     options: callAdapterOptions
   });
