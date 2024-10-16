@@ -6,14 +6,11 @@ import { concatStyleSets, Stack } from '@fluentui/react';
 import { IContextualMenuProps } from '@fluentui/react';
 import { ControlBarButtonStyles, EndCallButton } from '@internal/react-components';
 import React, { useMemo } from 'react';
-/* @conditional-compile-remove(end-call-options) */
 import { useState, useCallback } from 'react';
 import { CallControlDisplayType } from '../../../common/types/CommonCallControlOptions';
 import { usePropsFor } from '../../hooks/usePropsFor';
 import { groupCallLeaveButtonCompressedStyle, groupCallLeaveButtonStyle } from '../../styles/Buttons.styles';
-/* @conditional-compile-remove(end-call-options) */
 import { Prompt } from '../Prompt';
-/* @conditional-compile-remove(end-call-options) */
 import { useLocale } from '../../../localization';
 
 /** @private */

@@ -47,9 +47,7 @@ import { capabilitySelector } from '../../CallComposite/selectors/capabilitySele
 import { DtmfDialpadButton } from './DtmfDialerButton';
 import { ExitSpotlightButton } from '../ExitSpotlightButton';
 import { useLocale } from '../../localization';
-/* @conditional-compile-remove(end-call-options) */
 import { isBoolean } from '../utils';
-/* @conditional-compile-remove(end-call-options) */
 import { getIsTeamsCall } from '../../CallComposite/selectors/baseSelectors';
 /* @conditional-compile-remove(breakout-rooms) */
 import { getAssignedBreakoutRoom, getBreakoutRoomSettings } from '../../CallComposite/selectors/baseSelectors';
