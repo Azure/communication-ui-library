@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-import React, { useCallback, useEffect, useMemo } from 'react';
+import React, { useCallback, useEffect, useImperativeHandle, useMemo } from 'react';
 import { RichTextToolbarPlugin } from '../Plugins/RichTextToolbarPlugin';
 import { CommandBar, ContextualMenuItemType, Icon } from '@fluentui/react';
 import type { ICommandBar, ICommandBarItemProps, Theme } from '@fluentui/react';
@@ -252,18 +252,10 @@ export const RichTextToolbar = React.forwardRef<ICommandBar, RichTextToolbarProp
     };
   }, [strings.richTextToolbarMoreButtonAriaLabel, theme]);
 
-  // useImperativeHandle(ref, () => ({
-  //   focus: () => {
-  //     // Implement focus logic here
-  //   },
-  //   remeasure: () => {
-  //     // Implement remeasure logic here
-  //   }
-  // }));
-
   return (
     <CommandBar
       items={buttons}
+      overflowItems={buttons}
       data-testid={'rich-text-editor-toolbar'}
       styles={richTextToolbarStyle}
       overflowButtonProps={overflowButtonProps}
