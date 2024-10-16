@@ -185,18 +185,38 @@ const onRenderParticipantDefault = (
                 ariaLabel={strings.sharingIconLabel}
               />
             )}
-            {!callingParticipant.mediaAccess?.isAudioPermitted && (
-              <Icon iconName="ControlButtonMicProhibited" className={iconStyles} ariaLabel={strings.mutedIconLabel} />
-            )}
-            {callingParticipant.mediaAccess?.isAudioPermitted && callingParticipant.isMuted && (
-              <Icon iconName="ParticipantItemMicOff" className={iconStyles} ariaLabel={strings.mutedIconLabel} />
-            )}
+            {getControlButtonMicProhibitedTrampoline(callingParticipant)}
+            {getParticipantItemMicOffTrampoline(callingParticipant)}
             {callingParticipant.spotlight && <Icon iconName="ParticipantItemSpotlighted" className={iconStyles} />}
 
             {isPinned && <Icon iconName="ParticipantItemPinned" className={iconStyles} />}
           </Stack>
         )
       : () => null;
+
+  const getControlButtonMicProhibitedTrampoline = (callingParticipant: CallParticipantListParticipant) => {
+    /* @conditional-compile-remove(media-access) */
+    return (
+      !callingParticipant.mediaAccess?.isAudioPermitted && (
+        <Icon iconName="ControlButtonMicProhibited" className={iconStyles} ariaLabel={strings.mutedIconLabel} />
+      )
+    );
+
+    return <></>;
+  };
+
+  const getParticipantItemMicOffTrampoline = (callingParticipant: CallParticipantListParticipant) => {
+    /* @conditional-compile-remove(media-access) */
+    if (callingParticipant.mediaAccess?.isAudioPermitted && callingParticipant.isMuted) {
+      return <Icon iconName="ParticipantItemMicOff" className={iconStyles} ariaLabel={strings.mutedIconLabel} />;
+    }
+
+    if (callingParticipant.isMuted) {
+      return <Icon iconName="ParticipantItemMicOff" className={iconStyles} ariaLabel={strings.mutedIconLabel} />;
+    }
+
+    return <></>;
+  };
 
   const onRenderAvatarWithRaiseHand =
     callingParticipant?.raisedHand && onRenderAvatar

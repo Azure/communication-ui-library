@@ -16,7 +16,7 @@ import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from 're
 import { useIdentifiers } from '../identifiers';
 import { ComponentLocale, useLocale } from '../localization';
 import { useTheme } from '../theming';
-import { BaseCustomStyles, CustomAvatarOptions, OnRenderAvatarCallback } from '../types';
+import { BaseCustomStyles, CustomAvatarOptions, MediaAccess, OnRenderAvatarCallback } from '../types';
 import { CallingTheme } from '../theming';
 import { RaisedHand } from '../types';
 import { RaisedHandIcon } from './assets/RaisedHandIcon';
@@ -175,6 +175,7 @@ export interface VideoTileProps {
    * Reactions resources' url and metadata.
    */
   reactionResources?: ReactionResources;
+  mediaAccess?: MediaAccess;
 }
 
 // Coin max size is set to PersonaSize.size100
@@ -266,7 +267,8 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     raisedHand,
     personaMinSize = DEFAULT_PERSONA_MIN_SIZE_PX,
     personaMaxSize = DEFAULT_PERSONA_MAX_SIZE_PX,
-    contextualMenu
+    contextualMenu,
+    mediaAccess
   } = props;
 
   const [isHovered, setIsHovered] = useState<boolean>(false);
@@ -451,9 +453,14 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
                   {bracketedParticipantString(participantStateString, !!canShowLabel)}
                 </Text>
               )}
-              {showMuteIndicator && isMuted && (
+              {mediaAccess?.isAudioPermitted && showMuteIndicator && isMuted && (
                 <Stack className={mergeStyles(iconContainerStyle)}>
                   <Icon iconName="VideoTileMicOff" />
+                </Stack>
+              )}
+              {!mediaAccess?.isAudioPermitted && showMuteIndicator && (
+                <Stack className={mergeStyles(iconContainerStyle)}>
+                  <Icon iconName="ControlButtonMicProhibited" />
                 </Stack>
               )}
               {isSpotlighted && (

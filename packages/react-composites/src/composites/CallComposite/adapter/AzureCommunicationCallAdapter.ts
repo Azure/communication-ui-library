@@ -1145,19 +1145,19 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
   public async stopAllSpotlight(): Promise<void> {
     this.handlers.onStopAllSpotlight();
   }
-
+  /* @conditional-compile-remove(media-access) */
   public async forbidParticipantAudio(userIds: string[]): Promise<void> {
     this.handlers.onForbidParticipantAudio?.(userIds);
   }
-
+  /* @conditional-compile-remove(media-access) */
   public async permitParticipantAudio(userIds: string[]): Promise<void> {
     this.handlers.onPermitParticipantAudio?.(userIds);
   }
-
+  /* @conditional-compile-remove(media-access) */
   public async forbidAllAttendeesAudio(): Promise<void> {
     this.handlers.onForbidAllAttendeesAudio?.();
   }
-
+  /* @conditional-compile-remove(media-access) */
   public async permitAllAttendeesAudio(): Promise<void> {
     this.handlers.onPermitAllAttendeesAudio?.();
   }

@@ -9,7 +9,7 @@ import {
   ParticipantRole,
   ScalingMode,
   VideoDeviceInfo,
-  MediaAccess
+  /* @conditional-compile-remove(media-access) */ MediaAccess
 } from '@azure/communication-calling';
 import { RaisedHand } from '@azure/communication-calling';
 /* @conditional-compile-remove(breakout-rooms) */
@@ -191,7 +191,7 @@ export class CallContext {
         existingCall.info = call.info;
 
         existingCall.meetingConference = call.meetingConference;
-        existingCall.mediaAccess = call.mediaAccess;
+        // existingCall.mediaAccess = call.mediaAccess;
       } else {
         draft.calls[latestCallId] = call;
       }
@@ -1164,15 +1164,16 @@ export class CallContext {
     });
   }
 
+  /* @conditional-compile-remove(media-access) */
   public setMediaAccesses(callId: string, mediaAccesses: MediaAccess[]): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (!call) {
         return;
       }
-      call.mediaAccess = {
-        mediaAccesses
-      };
+      // call.mediaAccess = {
+      //   mediaAccesses
+      // };
       mediaAccesses.forEach((participantMediaAccess) => {
         const participant = call.remoteParticipants[toFlatCommunicationIdentifier(participantMediaAccess.participant)];
         if (participant) {

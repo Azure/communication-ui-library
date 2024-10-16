@@ -181,7 +181,7 @@ export const useVideoTileContextualMenuProps = (props: {
         });
       }
     }
-
+    /* @conditional-compile-remove(media-access) */
     if (!participant.mediaAccess?.isAudioPermitted && onPermitParticipantAudio) {
       items.push({
         key: 'permitParticipantAudio',
@@ -195,7 +195,7 @@ export const useVideoTileContextualMenuProps = (props: {
         ariaLabel: 'Unblock microphone'
       });
     }
-
+    /* @conditional-compile-remove(media-access) */
     if (participant.mediaAccess?.isAudioPermitted && onForbidParticipantAudio) {
       items.push({
         key: 'forbidParticipantAudio',

@@ -894,16 +894,28 @@ export interface CallCompositeStrings {
    * notification.
    */
   returnFromBreakoutRoomBannerButtonLabel: string;
+  /* @conditional-compile-remove(media-access) */
   forbidParticipantAudioMenuLabel: string;
+  /* @conditional-compile-remove(media-access) */
   permitParticipantAudioMenuLabel: string;
+  /* @conditional-compile-remove(media-access) */
   forbidAllAttendeesAudioDialogTitle: string;
+  /* @conditional-compile-remove(media-access) */
   forbidAllAttendeesAudioDialogContent: string;
+  /* @conditional-compile-remove(media-access) */
   forbidAllAttendeesAudioConfirmButtonLabel: string;
+  /* @conditional-compile-remove(media-access) */
   forbidAllAttendeesAudioCancelButtonLabel: string;
+  /* @conditional-compile-remove(media-access) */
   permitAllAttendeesAudioDialogTitle: string;
+  /* @conditional-compile-remove(media-access) */
   permitAllAttendeesAudioDialogContent: string;
+  /* @conditional-compile-remove(media-access) */
   permitAllAttendeesAudioConfirmButtonLabel: string;
+  /* @conditional-compile-remove(media-access) */
   permitAllAttendeesAudioCancelButtonLabel: string;
+  /* @conditional-compile-remove(media-access) */
   forbidAllAttendeesAudioMenuLabel: string;
+  /* @conditional-compile-remove(media-access) */
   permitAllAttendeesAudioMenuLabel: string;
 }

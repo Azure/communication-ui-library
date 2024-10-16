@@ -5,6 +5,7 @@ import { MediaAccessCallFeature, MediaAccessChangedEvent } from '@azure/communic
 import { CallContext } from './CallContext';
 import { CallIdRef } from './CallIdRef';
 
+/* @conditional-compile-remove(media-access) */
 /**
  * @private
  */

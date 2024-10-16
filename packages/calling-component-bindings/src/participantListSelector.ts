@@ -74,6 +74,7 @@ const convertRemoteParticipantsToParticipantListParticipants = (
             spotlightedParticipants,
             toFlatCommunicationIdentifier(participant.identifier)
           );
+          /* @conditional-compile-remove(media-access) */
           const mediaAccess = {
             isAudioPermitted: participant.mediaAccess?.isAudioPermitted,
             isVideoPermitted: participant.mediaAccess?.isVideoPermitted
@@ -90,6 +91,7 @@ const convertRemoteParticipantsToParticipantListParticipants = (
             localUserCanRemoveOthers,
             remoteParticipantReaction,
             spotlight,
+            /* @conditional-compile-remove(media-access) */
             mediaAccess
           );
         })
@@ -142,6 +144,7 @@ export const participantListSelector: ParticipantListSelector = createSelector(
     isHideAttendeeNamesEnabled,
     getLocalParticipantReactionState,
     getSpotlightCallFeature,
+    /* @conditional-compile-remove(media-access) */
     getCapabilities
   ],
   (
@@ -156,6 +159,7 @@ export const participantListSelector: ParticipantListSelector = createSelector(
     isHideAttendeeNamesEnabled,
     localParticipantReactionState,
     spotlightCallFeature,
+    /* @conditional-compile-remove(media-access) */
     capabilities
   ): {
     participants: CallParticipantListParticipant[];
@@ -184,6 +188,7 @@ export const participantListSelector: ParticipantListSelector = createSelector(
       isRemovable: false,
       reaction: memoizedConvertToVideoTileReaction(localParticipantReactionState),
       spotlight: memoizedSpotlight(spotlightCallFeature?.spotlightedParticipants, userId),
+      /* @conditional-compile-remove(media-access) */
       mediaAccess: {
         isAudioPermitted: !!capabilities?.unmuteMic.isPresent,
         isVideoPermitted: !!capabilities?.turnVideoOn.isPresent

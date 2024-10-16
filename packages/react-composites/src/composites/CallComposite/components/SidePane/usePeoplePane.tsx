@@ -43,9 +43,13 @@ export const usePeoplePane = (props: {
   onPinParticipant?: (userId: string) => void;
   onUnpinParticipant?: (userId: string) => void;
   disablePinMenuItem?: boolean;
+  /* @conditional-compile-remove(media-access) */
   onForbidParticipantAudio?: (userIds: string[]) => Promise<void>;
+  /* @conditional-compile-remove(media-access) */
   onPermitParticipantAudio?: (userIds: string[]) => Promise<void>;
+  /* @conditional-compile-remove(media-access) */
   onForbidAllAttendeesAudio?: () => Promise<void>;
+  /* @conditional-compile-remove(media-access) */
   onPermitAllAttendeesAudio?: () => Promise<void>;
 }): {
   openPeoplePane: () => void;
@@ -76,9 +80,13 @@ export const usePeoplePane = (props: {
     disablePinMenuItem,
     /* @conditional-compile-remove(soft-mute) */
     onMuteAllRemoteParticipants,
+    /* @conditional-compile-remove(media-access) */
     onForbidParticipantAudio,
+    /* @conditional-compile-remove(media-access) */
     onPermitParticipantAudio,
+    /* @conditional-compile-remove(media-access) */
     onForbidAllAttendeesAudio,
+    /* @conditional-compile-remove(media-access) */
     onPermitAllAttendeesAudio
   } = props;
 
@@ -155,7 +163,7 @@ export const usePeoplePane = (props: {
         disabled: isAllMuted
       });
     }
-
+    /* @conditional-compile-remove(media-access) */
     if (onForbidAllAttendeesAudio && remoteParticipants) {
       let hasAttendee = false;
       if (remoteParticipants) {
@@ -182,7 +190,7 @@ export const usePeoplePane = (props: {
           disabled: !hasAttendee
         });
     }
-
+    /* @conditional-compile-remove(media-access) */
     if (onPermitAllAttendeesAudio && remoteParticipants) {
       let hasAttendee = false;
       if (remoteParticipants) {
@@ -227,14 +235,14 @@ export const usePeoplePane = (props: {
   }, [
     onMuteAllRemoteParticipants,
     remoteParticipants,
-    onForbidAllAttendeesAudio,
-    onPermitAllAttendeesAudio,
     onStopAllSpotlight,
     spotlightedParticipantUserIds,
     localeStrings.muteAllMenuLabel,
-    localeStrings.forbidAllAttendeesAudioMenuLabel,
-    localeStrings.permitAllAttendeesAudioMenuLabel,
-    localeStrings.stopAllSpotlightMenuLabel
+    /* @conditional-compile-remove(media-access) */ onForbidAllAttendeesAudio,
+    /* @conditional-compile-remove(media-access) */ onPermitAllAttendeesAudio,
+    /* @conditional-compile-remove(media-access) */ localeStrings.forbidAllAttendeesAudioMenuLabel,
+    /* @conditional-compile-remove(media-access) */ localeStrings.permitAllAttendeesAudioMenuLabel,
+    /* @conditional-compile-remove(media-access) */ localeStrings.stopAllSpotlightMenuLabel
   ]);
 
   const onRenderHeader = useCallback(
@@ -364,7 +372,9 @@ export const usePeoplePane = (props: {
             ariaLabel: localeStrings.pinParticipantMenuItemAriaLabel
           });
         }
+        /* @conditional-compile-remove(media-access) */
         const remoteParticipant = remoteParticipants?.[participantId];
+        /* @conditional-compile-remove(media-access) */
         if (
           !remoteParticipant?.mediaAccess?.isAudioPermitted &&
           remoteParticipant?.role === 'Attendee' &&
@@ -384,7 +394,7 @@ export const usePeoplePane = (props: {
             ariaLabel: localeStrings.permitParticipantAudioMenuLabel
           });
         }
-
+        /* @conditional-compile-remove(media-access) */
         if (
           remoteParticipant?.mediaAccess?.isAudioPermitted &&
           remoteParticipant?.role === 'Attendee' &&
@@ -460,6 +470,7 @@ export const usePeoplePane = (props: {
           />
         }
         {
+          /* @conditional-compile-remove(media-access) */
           <Prompt
             heading={localeStrings.forbidAllAttendeesAudioDialogTitle}
             text={localeStrings.forbidAllAttendeesAudioDialogContent}
@@ -472,6 +483,7 @@ export const usePeoplePane = (props: {
           />
         }
         {
+          /* @conditional-compile-remove(media-access) */
           <Prompt
             heading={localeStrings.permitAllAttendeesAudioDialogTitle}
             text={localeStrings.permitAllAttendeesAudioDialogContent}
@@ -500,14 +512,6 @@ export const usePeoplePane = (props: {
   }, [
     muteAllPromptLabels,
     showMuteAllPrompt,
-    localeStrings.forbidAllAttendeesAudioDialogTitle,
-    localeStrings.forbidAllAttendeesAudioDialogContent,
-    localeStrings.forbidAllAttendeesAudioConfirmButtonLabel,
-    localeStrings.forbidAllAttendeesAudioCancelButtonLabel,
-    localeStrings.permitAllAttendeesAudioDialogTitle,
-    localeStrings.permitAllAttendeesAudioDialogContent,
-    localeStrings.permitAllAttendeesAudioConfirmButtonLabel,
-    localeStrings.permitAllAttendeesAudioCancelButtonLabel,
     showForbidAllAttendeesAudioPrompt,
     showPermitAllAttendeesAudioPrompt,
     inviteLink,
@@ -521,8 +525,26 @@ export const usePeoplePane = (props: {
     role,
     alternateCallerId,
     onMuteAllPromptConfirm,
+    /* @conditional-compile-remove(media-access) */
     onForbidAllAttendeesPromptConfirm,
-    onPermitAllAttendeesPromptConfirm
+    /* @conditional-compile-remove(media-access) */
+    onPermitAllAttendeesPromptConfirm,
+    /* @conditional-compile-remove(media-access) */
+    localeStrings.forbidAllAttendeesAudioDialogTitle,
+    /* @conditional-compile-remove(media-access) */
+    localeStrings.forbidAllAttendeesAudioDialogContent,
+    /* @conditional-compile-remove(media-access) */
+    localeStrings.forbidAllAttendeesAudioConfirmButtonLabel,
+    /* @conditional-compile-remove(media-access) */
+    localeStrings.forbidAllAttendeesAudioCancelButtonLabel,
+    /* @conditional-compile-remove(media-access) */
+    localeStrings.permitAllAttendeesAudioDialogTitle,
+    /* @conditional-compile-remove(media-access) */
+    localeStrings.permitAllAttendeesAudioDialogContent,
+    /* @conditional-compile-remove(media-access) */
+    localeStrings.permitAllAttendeesAudioConfirmButtonLabel,
+    /* @conditional-compile-remove(media-access) */
+    localeStrings.permitAllAttendeesAudioCancelButtonLabel
   ]);
 
   const sidePaneRenderer: SidePaneRenderer = useMemo(

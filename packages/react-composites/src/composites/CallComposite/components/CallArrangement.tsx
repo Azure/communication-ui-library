@@ -333,7 +333,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     /* @conditional-compile-remove(soft-mute) */ capabilities?.muteOthers,
     /* @conditional-compile-remove(soft-mute) */ muteAllHandlers.onMuteAllRemoteParticipants
   ]);
-
+  /* @conditional-compile-remove(media-access) */
   const onToggleParticipantMicPeoplePaneProps = useMemo(() => {
     return {
       onForbidParticipantAudio: ['Unknown', 'Organizer', 'Presenter', 'Co-organizer'].includes(role ?? '')
@@ -351,10 +351,10 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     };
   }, [
     role,
-    onForbidParticipantAudio,
-    onPermitParticipantAudio,
-    muteAllHandlers.onForbidAllAttendeesAudio,
-    muteAllHandlers.onPermitAllAttendeesAudio
+    /* @conditional-compile-remove(media-access) */ onForbidParticipantAudio,
+    /* @conditional-compile-remove(media-access) */ onPermitParticipantAudio,
+    /* @conditional-compile-remove(media-access) */ muteAllHandlers.onForbidAllAttendeesAudio,
+    /* @conditional-compile-remove(media-access) */ muteAllHandlers.onPermitAllAttendeesAudio
   ]);
 
   const spotlightPeoplePaneProps = useMemo(() => {
@@ -384,7 +384,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     ...spotlightPeoplePaneProps,
     ...onMuteParticipantPeoplePaneProps,
     ...pinPeoplePaneProps,
-    ...onToggleParticipantMicPeoplePaneProps
+    /* @conditional-compile-remove(media-access) */ ...onToggleParticipantMicPeoplePaneProps
   });
   const togglePeoplePane = useCallback(() => {
     if (isPeoplePaneOpen) {

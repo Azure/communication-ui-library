@@ -711,19 +711,19 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
       await this.callAdapter.returnFromBreakoutRoom();
     }
   }
-
+  /* @conditional-compile-remove(media-access) */
   public async forbidParticipantAudio(userIds: string[]): Promise<void> {
     return this.callAdapter.forbidParticipantAudio(userIds);
   }
-
+  /* @conditional-compile-remove(media-access) */
   public async permitParticipantAudio(userIds: string[]): Promise<void> {
     return this.callAdapter.permitParticipantAudio(userIds);
   }
-
+  /* @conditional-compile-remove(media-access) */
   public async forbidAllAttendeesAudio(): Promise<void> {
     return this.callAdapter.forbidAllAttendeesAudio();
   }
-
+  /* @conditional-compile-remove(media-access) */
   public async permitAllAttendeesAudio(): Promise<void> {
     return this.callAdapter.permitAllAttendeesAudio();
   }

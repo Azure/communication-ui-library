@@ -1174,7 +1174,6 @@ export interface CallState {
     localParticipantReaction?: ReactionState;
     localRecording: LocalRecordingCallFeatureState;
     localVideoStreams: LocalVideoStreamState[];
-    mediaAccess?: MediaAccessCallFeature;
     meetingConference?: {
         conferencePhones: ConferencePhoneInfo[];
     };

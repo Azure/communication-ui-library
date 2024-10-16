@@ -6,7 +6,7 @@ import { concatStyleSets, IContextualMenuProps, Layer } from '@fluentui/react';
 import { _formatString } from '@internal/acs-ui-common';
 import React, { useMemo } from 'react';
 import { KeyboardEvent, useCallback } from 'react';
-import { OnRenderAvatarCallback, VideoStreamOptions, CreateVideoStreamViewResult } from '../types';
+import { OnRenderAvatarCallback, VideoStreamOptions, CreateVideoStreamViewResult, MediaAccess } from '../types';
 import { Reaction } from '../types';
 import { LocalVideoCameraCycleButton, LocalVideoCameraCycleButtonProps } from './LocalVideoCameraButton';
 import { StreamMedia } from './StreamMedia';
@@ -68,6 +68,7 @@ export const _LocalVideoTile = React.memo(
     strings?: VideoGalleryStrings;
     reactionResources?: ReactionResources;
     participantsCount?: number;
+    mediaAccess?: MediaAccess;
   }) => {
     const {
       isAvailable,
@@ -97,7 +98,8 @@ export const _LocalVideoTile = React.memo(
       maxParticipantsToSpotlight,
       menuKind,
       strings,
-      reactionResources
+      reactionResources,
+      mediaAccess
     } = props;
 
     const theme = useTheme();
@@ -262,6 +264,7 @@ export const _LocalVideoTile = React.memo(
             )
           }
           overlay={videoTileOverlay}
+          mediaAccess={mediaAccess}
         >
           {drawerMenuItemProps.length > 0 && (
             <Layer hostId={props.drawerMenuHostId}>

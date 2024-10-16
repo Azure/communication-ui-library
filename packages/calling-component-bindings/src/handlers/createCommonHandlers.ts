@@ -106,10 +106,13 @@ export interface CommonCallingHandlers {
   onMuteParticipant: (userId: string) => Promise<void>;
   /* @conditional-compile-remove(soft-mute) */
   onMuteAllRemoteParticipants: () => Promise<void>;
-
+  /* @conditional-compile-remove(media-access) */
   onForbidParticipantAudio?: (userIds: string[]) => Promise<void>;
+  /* @conditional-compile-remove(media-access) */
   onPermitParticipantAudio?: (userIds: string[]) => Promise<void>;
+  /* @conditional-compile-remove(media-access) */
   onForbidAllAttendeesAudio?: () => Promise<void>;
+  /* @conditional-compile-remove(media-access) */
   onPermitAllAttendeesAudio?: () => Promise<void>;
 }
 
@@ -721,6 +724,11 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
         }
       : undefined;
     // const canForbidOthersMedia = call?.feature(Features.Capabilities).capabilities.forbidOthersMedia.isPresent;
+    // const callState = call && callClient.getState().calls[call.id];
+    // const canForbidOthersMedia = callState
+    //   ? callState.capabilitiesFeature?.capabilities.forbidOthersMedia.isPresent
+    //   : false;
+
     // console.log('hi there canForbidOthersMedia', canForbidOthersMedia);
     // const onForbidParticipantAudio = canForbidOthersMedia
     //   ? async (userIds: string[]): Promise<void> => {
@@ -735,18 +743,21 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
     //     }
     //   : undefined;
 
+    /* @conditional-compile-remove(media-access) */
     const onForbidParticipantAudio = async (userIds: string[]): Promise<void> => {
       const participants = userIds?.map((userId) => _toCommunicationIdentifier(userId));
       await call?.feature(Features.MediaAccess).forbidAudio(participants);
     };
+    /* @conditional-compile-remove(media-access) */
     const onPermitParticipantAudio = async (userIds: string[]): Promise<void> => {
       const participants = userIds?.map((userId) => _toCommunicationIdentifier(userId));
       await call?.feature(Features.MediaAccess).permitAudio(participants);
     };
+    /* @conditional-compile-remove(media-access) */
     const onForbidAllAttendeesAudio = async (): Promise<void> => {
       await call?.feature(Features.MediaAccess).forbidOthersAudio();
     };
-
+    /* @conditional-compile-remove(media-access) */
     const onPermitAllAttendeesAudio = async (): Promise<void> => {
       await call?.feature(Features.MediaAccess).permitOthersAudio();
     };
@@ -817,9 +828,13 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       onMuteAllRemoteParticipants,
       onAcceptCall: notImplemented,
       onRejectCall: notImplemented,
+      /* @conditional-compile-remove(media-access) */
       onForbidParticipantAudio,
+      /* @conditional-compile-remove(media-access) */
       onPermitParticipantAudio,
+      /* @conditional-compile-remove(media-access) */
       onForbidAllAttendeesAudio,
+      /* @conditional-compile-remove(media-access) */
       onPermitAllAttendeesAudio
     };
   }

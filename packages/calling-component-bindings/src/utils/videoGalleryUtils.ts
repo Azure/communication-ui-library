@@ -6,7 +6,11 @@ import { SpotlightedParticipant } from '@azure/communication-calling';
 import { ParticipantRole } from '@azure/communication-calling';
 import { memoizeFnAll, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { RemoteParticipantState, RemoteVideoStreamState } from '@internal/calling-stateful-client';
-import { MediaAccess, VideoGalleryRemoteParticipant, VideoGalleryStream } from '@internal/react-components';
+import {
+  VideoGalleryRemoteParticipant,
+  VideoGalleryStream,
+  /* @conditional-compile-remove(media-access) */ MediaAccess
+} from '@internal/react-components';
 import memoizeOne from 'memoize-one';
 import { _convertParticipantState, ParticipantConnectionState } from './callUtils';
 import { maskDisplayNameWithRole } from './callUtils';
@@ -73,6 +77,7 @@ export const _videoGalleryRemoteParticipantsMemo: _VideoGalleryRemoteParticipant
             participant.contentSharingStream,
             remoteParticipantReaction,
             spotlight,
+            /* @conditional-compile-remove(media-access) */
             participant.mediaAccess
           );
         })
@@ -92,6 +97,7 @@ const memoizedAllConvertRemoteParticipant = memoizeFnAll(
     contentSharingStream?: HTMLElement,
     reaction?: Reaction,
     spotlight?: Spotlight,
+    /* @conditional-compile-remove(media-access) */
     mediaAccess?: MediaAccess
   ): VideoGalleryRemoteParticipant => {
     return convertRemoteParticipantToVideoGalleryRemoteParticipant(
@@ -105,6 +111,7 @@ const memoizedAllConvertRemoteParticipant = memoizeFnAll(
       contentSharingStream,
       reaction,
       spotlight,
+      /* @conditional-compile-remove(media-access) */
       mediaAccess
     );
   }
@@ -122,6 +129,7 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
   contentSharingStream?: HTMLElement,
   reaction?: Reaction,
   spotlight?: Spotlight,
+  /* @conditional-compile-remove(media-access) */
   mediaAccess?: MediaAccess
 ): VideoGalleryRemoteParticipant => {
   const rawVideoStreamsArray = Object.values(videoStreams);
@@ -166,6 +174,7 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
     raisedHand,
     reaction,
     spotlight,
+    /* @conditional-compile-remove(media-access) */
     mediaAccess
   };
 };

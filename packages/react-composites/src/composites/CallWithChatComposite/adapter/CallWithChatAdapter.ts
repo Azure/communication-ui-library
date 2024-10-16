@@ -516,10 +516,13 @@ export interface CallWithChatAdapterManagement {
    * Return to origin call of breakout room
    */
   returnFromBreakoutRoom(): Promise<void>;
-
+  /* @conditional-compile-remove(media-access) */
   forbidParticipantAudio: (userIds: string[]) => Promise<void>;
+  /* @conditional-compile-remove(media-access) */
   permitParticipantAudio: (userIds: string[]) => Promise<void>;
+  /* @conditional-compile-remove(media-access) */
   forbidAllAttendeesAudio: () => Promise<void>;
+  /* @conditional-compile-remove(media-access) */
   permitAllAttendeesAudio: () => Promise<void>;
 }
 

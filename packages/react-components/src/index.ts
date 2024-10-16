@@ -67,7 +67,7 @@ export type { RaisedHand } from './types';
 export type { Spotlight } from './types';
 
 export type { Reaction, ReactionResources, ReactionSprite } from './types';
-
+/* @conditional-compile-remove(media-access) */
 export type { MediaAccess } from './types';
 
 export type {
