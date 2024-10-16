@@ -9,6 +9,7 @@
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { AudioDeviceInfo } from '@azure/communication-calling';
 import { AudioEffectsStartConfig } from '@azure/communication-calling';
+import { AzureCommunicationTokenCredential } from '@azure/communication-common';
 import { BackgroundBlurConfig } from '@azure/communication-calling';
 import { BackgroundBlurEffect } from '@azure/communication-calling';
 import { BackgroundReplacementConfig } from '@azure/communication-calling';
@@ -726,8 +727,8 @@ export type CallCompositeIcons = {
 
 // @public
 export type CallCompositeLoaderProps = {
-    userId: string;
-    token: string;
+    userId: CommunicationUserIdentifier;
+    credential: AzureCommunicationTokenCredential;
     displayName: string;
     locator: CallAdapterLocator;
     callAdapterOptions?: AzureCommunicationCallAdapterOptions;
@@ -1488,8 +1489,8 @@ export type CallWithChatCompositeIcons = {
 
 // @public
 export type CallWithChatCompositeLoaderProps = {
-    userId: string;
-    token: string;
+    userId: CommunicationUserIdentifier;
+    credential: AzureCommunicationTokenCredential;
     displayName: string;
     endpoint: string;
     locator: CallAndChatLocator;
@@ -1923,8 +1924,8 @@ export type ChatCompositeIcons = {
 
 // @public
 export type ChatCompositeLoaderProps = {
-    userId: string;
-    token: string;
+    userId: CommunicationUserIdentifier;
+    credential: AzureCommunicationTokenCredential;
     displayName?: string;
     endpoint: string;
     threadId: string;
@@ -3994,8 +3995,8 @@ export interface OptionsDevice {
 
 // @public
 export type OutboundCallCompositeLoaderProps = {
-    userId: string;
-    token: string;
+    userId: CommunicationUserIdentifier;
+    credential: AzureCommunicationTokenCredential;
     displayName: string;
     targetCallees: string[] | StartCallIdentifier[];
     callAdapterOptions?: AzureCommunicationCallAdapterOptions;
