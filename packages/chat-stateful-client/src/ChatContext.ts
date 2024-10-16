@@ -83,7 +83,7 @@ export class ChatContext {
           const cache = message.resourceCache;
           if (cache) {
             Object.values(cache).forEach((resource) => {
-              if (resource?.sourceUrl) {
+              if (resource.sourceUrl) {
                 URL.revokeObjectURL(resource.sourceUrl);
               }
             });
