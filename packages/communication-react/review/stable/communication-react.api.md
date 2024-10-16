@@ -173,7 +173,7 @@ export type AvatarPersonaData = {
 };
 
 // @public
-export type AvatarPersonaDataCallback = (userId: string) => Promise<AvatarPersonaData> | undefined;
+export type AvatarPersonaDataCallback = (userId: string) => Promise<AvatarPersonaData | undefined>;
 
 // @public
 export type AzureCommunicationCallAdapterArgs = {
