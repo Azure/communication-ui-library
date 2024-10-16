@@ -4,6 +4,7 @@
 import { IButtonStyles, IStyle, mergeStyles, Theme, ITheme, ISpinnerStyles } from '@fluentui/react';
 import { keyframes, memoizeFunction } from '@fluentui/react';
 import { REACTION_SCREEN_SHARE_ANIMATION_TIME_MS } from '../VideoGallery/utils/reactionUtils';
+import { isDarkThemed } from '../../theming/themeUtils';
 
 /**
  * @private
@@ -229,7 +230,7 @@ export const loadSpinnerStyles = (theme: ITheme, isOverLay: boolean): ISpinnerSt
     },
     label: {
       fontSize: '1rem',
-      color: isOverLay ? theme.palette.white : theme.palette.themePrimary
+      color: isOverLay ? (isDarkThemed(theme) ? theme.palette.black : theme.palette.white) : theme.palette.themeDarkAlt
     }
   };
 };
