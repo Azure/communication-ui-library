@@ -8,7 +8,7 @@ const reactVersion = React.version;
 parseReactVersion(reactVersion);
 
 import { createRoot } from 'react-dom/client';
-import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
+import { CommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import {
   ChatAdapter,
   ChatComposite,
@@ -24,7 +24,7 @@ import { initializeIcons } from '@fluentui/react';
  */
 export type ChatCompositeLoaderProps = {
   userId: CommunicationUserIdentifier;
-  credential: AzureCommunicationTokenCredential;
+  credential: CommunicationTokenCredential;
   displayName?: string;
   endpoint: string;
   threadId: string;

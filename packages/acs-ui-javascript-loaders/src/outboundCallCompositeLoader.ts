@@ -8,7 +8,7 @@ const reactVersion = React.version;
 parseReactVersion(reactVersion);
 
 import { createRoot } from 'react-dom/client';
-import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
+import { CommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import { fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import {
   CallComposite,
@@ -31,7 +31,7 @@ import { initializeIcons } from '@fluentui/react';
  */
 export type OutboundCallCompositeLoaderProps = {
   userId: CommunicationUserIdentifier;
-  credential: AzureCommunicationTokenCredential;
+  credential: CommunicationTokenCredential;
   displayName: string;
   targetCallees: string[] | StartCallIdentifier[];
   callAdapterOptions?: AzureCommunicationCallAdapterOptions;

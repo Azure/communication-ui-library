@@ -8,7 +8,7 @@ const reactVersion = React.version;
 parseReactVersion(reactVersion);
 
 import { createRoot } from 'react-dom/client';
-import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
+import { CommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import {
   CallComposite,
   createAzureCommunicationCallAdapter,
@@ -30,7 +30,7 @@ import { initializeIcons } from '@fluentui/react';
  */
 export type CallCompositeLoaderProps = {
   userId: CommunicationUserIdentifier;
-  credential: AzureCommunicationTokenCredential;
+  credential: CommunicationTokenCredential;
   displayName: string;
   locator: CallAdapterLocator;
   callAdapterOptions?: AzureCommunicationCallAdapterOptions;
