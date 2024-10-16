@@ -8,6 +8,7 @@
 
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { AudioDeviceInfo } from '@azure/communication-calling';
+import { AudioEffectsStartConfig } from '@azure/communication-calling';
 import { BackgroundBlurConfig } from '@azure/communication-calling';
 import { BackgroundBlurEffect } from '@azure/communication-calling';
 import { BackgroundReplacementConfig } from '@azure/communication-calling';
@@ -291,12 +292,14 @@ export interface CallAdapterCallOperations {
     setSpokenLanguage(language: string): Promise<void>;
     startCamera(options?: VideoStreamOptions): Promise<void>;
     startCaptions(options?: StartCaptionsAdapterOptions): Promise<void>;
+    startNoiseSuppressionEffect(): Promise<void>;
     startScreenShare(): Promise<void>;
     startSpotlight(userIds?: string[]): Promise<void>;
     startVideoBackgroundEffect(videoBackgroundEffect: VideoBackgroundEffect): Promise<void>;
     stopAllSpotlight(): Promise<void>;
     stopCamera(): Promise<void>;
     stopCaptions(options?: StopCaptionsAdapterOptions): Promise<void>;
+    stopNoiseSuppressionEffect(): Promise<void>;
     stopScreenShare(): Promise<void>;
     stopSpotlight(userIds?: string[]): Promise<void>;
     stopVideoBackgroundEffects(): Promise<void>;
@@ -322,6 +325,9 @@ export type CallAdapterClientState = {
     cameraStatus?: 'On' | 'Off';
     videoBackgroundImages?: VideoBackgroundImage[];
     onResolveVideoEffectDependency?: () => Promise<VideoBackgroundEffectsDependency>;
+    onResolveDeepNoiseSuppressionDependency?: () => Promise<DeepNoiseSuppressionEffectDependency>;
+    deepNoiseSuppressionOnByDefault?: boolean;
+    hideDeepNoiseSuppressionButton?: boolean;
     selectedVideoBackgroundEffect?: VideoBackgroundEffect;
     acceptedTransferCallState?: CallState;
     hideAttendeeNames?: boolean;
@@ -537,6 +543,16 @@ export type CallCompositeIcons = {
     JoinByPhoneWaitToBeAdmittedIcon?: JSX.Element;
     PeoplePaneMoreButton?: JSX.Element;
     StopAllSpotlightMenuButton?: JSX.Element;
+};
+
+// @public
+export type CallCompositeLoaderProps = {
+    userId: string;
+    token: string;
+    displayName: string;
+    locator: CallAdapterLocator;
+    callAdapterOptions?: AzureCommunicationCallAdapterOptions;
+    callCompositeOptions?: CallCompositeOptions;
 };
 
 // @public
@@ -853,6 +869,7 @@ export interface CallingHandlers extends CommonCallingHandlers {
 // @public
 export type CallingHandlersOptions = {
     onResolveVideoBackgroundEffectsDependency?: () => Promise<VideoBackgroundEffectsDependency>;
+    onResolveDeepNoiseSuppressionDependency?: () => Promise<DeepNoiseSuppressionEffectDependency>;
 };
 
 // @public
@@ -1001,12 +1018,14 @@ export interface CallWithChatAdapterManagement {
     startCall(participants: (MicrosoftTeamsAppIdentifier | PhoneNumberIdentifier | CommunicationUserIdentifier | MicrosoftTeamsUserIdentifier | UnknownIdentifier)[], options?: StartCallOptions): Call | undefined;
     startCamera(options?: VideoStreamOptions): Promise<void>;
     startCaptions(options?: StartCaptionsAdapterOptions): Promise<void>;
+    startNoiseSuppressionEffect(): Promise<void>;
     startScreenShare(): Promise<void>;
     startSpotlight(userIds?: string[]): Promise<void>;
     startVideoBackgroundEffect(videoBackgroundEffect: VideoBackgroundEffect): Promise<void>;
     stopAllSpotlight(): Promise<void>;
     stopCamera(): Promise<void>;
     stopCaptions(options?: StopCaptionsAdapterOptions): Promise<void>;
+    stopNoiseSuppressionEffect(): Promise<void>;
     stopScreenShare(): Promise<void>;
     stopSpotlight(userIds?: string[]): Promise<void>;
     stopVideoBackgroundEffects(): Promise<void>;
@@ -1140,13 +1159,16 @@ export interface CallWithChatClientState {
     alternateCallerId?: string;
     call?: CallState;
     chat?: ChatThreadClientState;
+    deepNoiseSuppressionOnByDefault?: boolean;
     devices: DeviceManagerState;
     displayName: string | undefined;
     hideAttendeeNames?: boolean;
+    hideDeepNoiseSuppressionButton?: boolean;
     isTeamsCall: boolean;
     isTeamsMeeting: boolean;
     latestCallErrors: AdapterErrors;
     latestChatErrors: AdapterErrors;
+    onResolveDeepNoiseSuppressionDependency?: () => Promise<DeepNoiseSuppressionEffectDependency>;
     onResolveVideoEffectDependency?: () => Promise<VideoBackgroundEffectsDependency>;
     reactions?: ReactionResources;
     selectedVideoBackgroundEffect?: VideoBackgroundEffect;
@@ -1232,6 +1254,17 @@ export type CallWithChatCompositeIcons = {
     ParticipantItemOptionsHovered?: JSX.Element;
     PeoplePaneMoreButton?: JSX.Element;
     StopAllSpotlightMenuButton?: JSX.Element;
+};
+
+// @public
+export type CallWithChatCompositeLoaderProps = {
+    userId: string;
+    token: string;
+    displayName: string;
+    endpoint: string;
+    locator: CallAndChatLocator;
+    callAdapterOptions?: AzureCommunicationCallAdapterOptions;
+    callWithChatCompositeOptions?: CallWithChatCompositeOptions;
 };
 
 // @public
@@ -1619,6 +1652,16 @@ export type ChatCompositeIcons = {
 };
 
 // @public
+export type ChatCompositeLoaderProps = {
+    userId: string;
+    token: string;
+    displayName?: string;
+    endpoint: string;
+    threadId: string;
+    chatCompositeOptions?: ChatCompositeOptions;
+};
+
+// @public
 export type ChatCompositeOptions = {
     errorBar?: boolean;
     topic?: boolean;
@@ -1772,6 +1815,11 @@ export type CommonCallAdapterOptions = {
         videoBackgroundImages?: VideoBackgroundImage[];
         onResolveDependency?: () => Promise<VideoBackgroundEffectsDependency>;
     };
+    deepNoiseSuppressionOptions?: {
+        onResolveDependency?: () => Promise<DeepNoiseSuppressionEffectDependency>;
+        deepNoiseSuppressionOnByDefault?: boolean;
+        hideDeepNoiseSuppressionButton?: boolean;
+    };
     onFetchProfile?: OnFetchProfileCallback;
     callingSounds?: CallingSounds;
     reactionResources?: ReactionResources;
@@ -1888,6 +1936,8 @@ export interface CommonCallingHandlers {
     // (undocumented)
     onStartLocalVideo: () => Promise<void>;
     // (undocumented)
+    onStartNoiseSuppressionEffect: () => Promise<void>;
+    // (undocumented)
     onStartScreenShare: () => Promise<void>;
     // (undocumented)
     onStartSpotlight: (userIds?: string[]) => Promise<void>;
@@ -1895,6 +1945,8 @@ export interface CommonCallingHandlers {
     onStopAllSpotlight: () => Promise<void>;
     // (undocumented)
     onStopCaptions: () => Promise<void>;
+    // (undocumented)
+    onStopNoiseSuppressionEffect: () => Promise<void>;
     // (undocumented)
     onStopScreenShare: () => Promise<void>;
     // (undocumented)
@@ -2212,6 +2264,7 @@ export const createDefaultChatHandlers: (chatClient: StatefulChatClient, chatThr
 // @public
 export const createDefaultTeamsCallingHandlers: (callClient: StatefulCallClient, callAgent?: TeamsCallAgent, deviceManager?: StatefulDeviceManager, call?: TeamsCall, options?: {
     onResolveVideoBackgroundEffectsDependency?: () => Promise<VideoBackgroundEffectsDependency>;
+    onResolveDeepNoiseSuppressionDependency?: () => Promise<DeepNoiseSuppressionEffectDependency>;
 }) => TeamsCallingHandlers;
 
 // @public
@@ -2299,6 +2352,11 @@ export type DeclarativeCallAgent = CallAgent & IncomingCallManagement;
 
 // @public
 export type DeclarativeTeamsCallAgent = TeamsCallAgent & TeamsIncomingCallManagement;
+
+// @public
+export type DeepNoiseSuppressionEffectDependency = {
+    deepNoiseSuppressionEffect: AudioEffectsStartConfig;
+};
 
 // @public
 export const DEFAULT_COMPONENT_ICONS: {
@@ -3019,7 +3077,19 @@ export interface JumpToNewMessageButtonProps {
 export const lightTheme: PartialTheme & CallingTheme;
 
 // @public
+export const loadCallComposite: (loaderArgs: CallCompositeLoaderProps, htmlElement: HTMLElement) => Promise<CallAdapter | undefined>;
+
+// @public
+export const loadCallWithChatComposite: (loaderArgs: CallWithChatCompositeLoaderProps, htmlElement: HTMLElement) => Promise<CallWithChatAdapter | undefined>;
+
+// @public
+export const loadChatComposite: (loaderArgs: ChatCompositeLoaderProps, htmlElement: HTMLElement) => Promise<ChatAdapter | undefined>;
+
+// @public
 export type LoadingState = 'loading' | 'none' | 'reconnecting';
+
+// @public
+export const loadOutboundCallComposite: (loaderArgs: OutboundCallCompositeLoaderProps, htmlElement: HTMLElement) => Promise<CallAdapter | undefined>;
 
 // @public
 export const LocalizationProvider: (props: LocalizationProviderProps) => JSX.Element;
@@ -3265,12 +3335,15 @@ export interface MicrophoneButtonContextualMenuStyles extends IContextualMenuSty
 // @public
 export interface MicrophoneButtonProps extends ControlBarButtonProps {
     enableDeviceSelectionMenu?: boolean;
+    isDeepNoiseSuppressionOn?: boolean;
     microphones?: OptionsDevice[];
+    onClickNoiseSuppression?: () => void;
     onSelectMicrophone?: (device: OptionsDevice) => Promise<void>;
     onSelectSpeaker?: (device: OptionsDevice) => Promise<void>;
     onToggleMicrophone?: () => Promise<void>;
     selectedMicrophone?: OptionsDevice;
     selectedSpeaker?: OptionsDevice;
+    showNoiseSuppressionButton?: boolean;
     speakers?: OptionsDevice[];
     strings?: Partial<MicrophoneButtonStrings>;
     styles?: Partial<MicrophoneButtonStyles>;
@@ -3288,6 +3361,9 @@ export type MicrophoneButtonSelector = (state: CallClientState, props: CallingBa
 
 // @public
 export interface MicrophoneButtonStrings {
+    deepNoiseSuppressionOffAnnouncement?: string;
+    deepNoiseSuppressionOnAnnouncement?: string;
+    deepNoiseSuppressionTitle?: string;
     microphoneActionTurnedOffAnnouncement?: string;
     microphoneActionTurnedOnAnnouncement?: string;
     microphoneAriaDescription?: string;
@@ -3421,6 +3497,12 @@ userId?: string, options?: CustomAvatarOptions,
 defaultOnRender?: (props: CustomAvatarOptions) => JSX.Element) => JSX.Element | undefined;
 
 // @public
+export const onResolveDeepNoiseSuppressionDependency: () => Promise<DeepNoiseSuppressionEffectDependency>;
+
+// @public
+export const onResolveDeepNoiseSuppressionDependencyLazy: () => Promise<DeepNoiseSuppressionEffectDependency>;
+
+// @public
 export const onResolveVideoEffectDependency: () => Promise<VideoBackgroundEffectsDependency>;
 
 // @public
@@ -3436,6 +3518,16 @@ export interface OptionsDevice {
     id: string;
     name: string;
 }
+
+// @public
+export type OutboundCallCompositeLoaderProps = {
+    userId: string;
+    token: string;
+    displayName: string;
+    targetCallees: string[] | StartCallIdentifier[];
+    callAdapterOptions?: AzureCommunicationCallAdapterOptions;
+    callCompositeOptions?: CallCompositeOptions;
+};
 
 // @public
 export type OverflowGalleryPosition = 'horizontalBottom' | 'verticalRight' | 'horizontalTop';
@@ -4535,5 +4627,7 @@ export interface VideoTileStylesProps extends BaseCustomStyles {
 
 // @public
 export type ViewScalingMode = 'Stretch' | 'Crop' | 'Fit';
+
+// (No @packageDocumentation comment for this package)
 
 ```
