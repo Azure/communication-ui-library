@@ -77,9 +77,6 @@ export class ChatContext {
       this._fullsizeImageQueue?.cancelAllRequests();
       Object.values(draft.threads).forEach((thread) => {
         Object.values(thread.chatMessages).forEach((message) => {
-          if (!message) {
-            return;
-          }
           const cache = message.resourceCache;
           if (cache) {
             Object.values(cache).forEach((resource) => {
