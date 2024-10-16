@@ -11,7 +11,8 @@ import {
   VideoDeviceInfo,
   Call,
   PermissionConstraints,
-  StartCallOptions
+  StartCallOptions,
+  DeviceAccess
 } from '@azure/communication-calling';
 import { Reaction } from '@azure/communication-calling';
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
@@ -108,7 +109,7 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
     await this.callWithChatAdapter.setMicrophone(sourceId);
   public setSpeaker = async (sourceId: AudioDeviceInfo): Promise<void> =>
     await this.callWithChatAdapter.setSpeaker(sourceId);
-  public askDevicePermission = async (constraints: PermissionConstraints): Promise<void> =>
+  public askDevicePermission = async (constraints: PermissionConstraints): Promise<DeviceAccess> =>
     await this.callWithChatAdapter.askDevicePermission(constraints);
   public queryCameras = async (): Promise<VideoDeviceInfo[]> => await this.callWithChatAdapter.queryCameras();
   public queryMicrophones = async (): Promise<AudioDeviceInfo[]> => await this.callWithChatAdapter.queryMicrophones();

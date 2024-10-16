@@ -342,7 +342,7 @@
     "pinParticipantMenuLabel": "Pin for me",
     "pinParticipantLimitReachedMenuLabel": "Pin (limit reached)",
     "unpinParticipantMenuLabel": "Unpin",
-    "pinParticipantMenuItemAriaLabel": "Pin",
+    "pinParticipantMenuItemAriaLabel": "Pin for me",
     "unpinParticipantMenuItemAriaLabel": "Unpin",
     "muteAllMenuLabel": "Mute all",
     "muteAllDialogTitle": "Mute everyone?",

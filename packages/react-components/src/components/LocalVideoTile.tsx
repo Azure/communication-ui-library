@@ -69,6 +69,7 @@ export const _LocalVideoTile = React.memo(
     reactionResources?: ReactionResources;
     participantsCount?: number;
     mediaAccess?: MediaAccess;
+    isScreenSharingOn?: boolean;
   }) => {
     const {
       isAvailable,
@@ -99,7 +100,8 @@ export const _LocalVideoTile = React.memo(
       menuKind,
       strings,
       reactionResources,
-      mediaAccess
+      mediaAccess,
+      isScreenSharingOn
     } = props;
 
     const theme = useTheme();
@@ -192,7 +194,7 @@ export const _LocalVideoTile = React.memo(
             localVideoSelectedDescription={localVideoSelectedDescription}
           />
           <StreamMedia videoStreamElement={renderElement} isMirrored={true} />
-          {props.participantsCount === 1 && (
+          {props.participantsCount === 1 && !isScreenSharingOn && (
             <Stack className={mergeStyles(videoContainerStyles, overlayStyles())}>
               <Spinner
                 label={strings?.waitingScreenText}
@@ -212,7 +214,8 @@ export const _LocalVideoTile = React.memo(
       showCameraSwitcherInLocalPreview,
       props.participantsCount,
       strings?.waitingScreenText,
-      theme
+      theme,
+      isScreenSharingOn
     ]);
 
     const videoTileOverlay = useMemo(() => {
@@ -251,7 +254,9 @@ export const _LocalVideoTile = React.memo(
           displayName={displayName}
           initialsName={initialsName}
           styles={videoTileStyles}
-          onRenderPlaceholder={props.participantsCount === 1 ? onRenderAvatarOneParticipant : onRenderAvatar}
+          onRenderPlaceholder={
+            props.participantsCount === 1 && !isScreenSharingOn ? onRenderAvatarOneParticipant : onRenderAvatar
+          }
           isMuted={isMuted}
           showMuteIndicator={showMuteIndicator}
           personaMinSize={props.personaMinSize}

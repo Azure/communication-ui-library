@@ -17,7 +17,7 @@ import {
 } from '@azure/communication-calling';
 import { TeamsMeetingIdLocator } from '@azure/communication-calling';
 import { Reaction } from '@azure/communication-calling';
-import { AddPhoneNumberOptions } from '@azure/communication-calling';
+import { AddPhoneNumberOptions, DeviceAccess } from '@azure/communication-calling';
 /* @conditional-compile-remove(breakout-rooms) */
 import type { BreakoutRoomsEventData, BreakoutRoomsUpdatedListener, TeamsCall } from '@azure/communication-calling';
 import { DtmfTone } from '@azure/communication-calling';
@@ -68,7 +68,6 @@ import {
   isCommunicationUserIdentifier,
   PhoneNumberIdentifier
 } from '@azure/communication-common';
-import { getChatThreadFromTeamsLink } from './parseTeamsUrl';
 import { AdapterError } from '../../common/adapters';
 
 /* @conditional-compile-remove(call-participants-locator) */
@@ -452,8 +451,8 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   public async setSpeaker(device: AudioDeviceInfo): Promise<void> {
     await this.callAdapter.setSpeaker(device);
   }
-  public async askDevicePermission(constraints: PermissionConstraints): Promise<void> {
-    await this.callAdapter.askDevicePermission(constraints);
+  public async askDevicePermission(constraints: PermissionConstraints): Promise<DeviceAccess> {
+    return await this.callAdapter.askDevicePermission(constraints);
   }
   /** Query for available cameras. */
   public async queryCameras(): Promise<VideoDeviceInfo[]> {
@@ -1063,7 +1062,6 @@ export class TeamsMeetingLinkProvider implements ChatThreadProvider {
 
   public getChatThread(): string {
     throw new Error('Chat thread ID should be retrieved from call.callInfo using method getChatThreadPromise');
-    return getChatThreadFromTeamsLink(this.locator.meetingLink);
   }
 
   public async getChatThreadPromise(): Promise<string> {
@@ -1088,8 +1086,6 @@ export class TeamsMeetingLinkProvider implements ChatThreadProvider {
 
       return chatThreadPromise;
     }
-
-    return getChatThreadFromTeamsLink(this.locator.meetingLink);
   }
 }
 

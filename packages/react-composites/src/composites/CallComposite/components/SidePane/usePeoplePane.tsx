@@ -267,7 +267,7 @@ export const usePeoplePane = (props: {
       /* @conditional-compile-remove(soft-mute) */
       if (onMuteParticipant && !isMe && remoteParticipants && remoteParticipants[participantId]) {
         const participant = remoteParticipants[participantId];
-        const isMuted = participant.isMuted;
+        const isMuted = !!participant?.isMuted;
         _defaultMenuItems.push({
           key: 'mute',
           text: 'Mute',

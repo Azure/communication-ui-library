@@ -3,7 +3,7 @@
 
 import { CallState, DeviceManagerState } from '@internal/calling-stateful-client';
 import { CaptionsInfo } from '@internal/calling-stateful-client';
-import type { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling';
+import type { BackgroundBlurConfig, BackgroundReplacementConfig, DeviceAccess } from '@azure/communication-calling';
 import { Reaction } from '@azure/communication-calling';
 import type { CapabilitiesChangeInfo } from '@azure/communication-calling';
 import type { SpotlightedParticipant } from '@azure/communication-calling';
@@ -809,7 +809,7 @@ export interface CallAdapterDeviceManagement {
    *
    * @public
    */
-  askDevicePermission(constrain: PermissionConstraints): Promise<void>;
+  askDevicePermission(constrain: PermissionConstraints): Promise<DeviceAccess>;
   /**
    * Query for available camera devices.
    *

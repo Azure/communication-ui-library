@@ -526,6 +526,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           reactionResources={reactionResources}
           participantsCount={remoteParticipants.length + 1}
           mediaAccess={localParticipant.mediaAccess}
+          isScreenSharingOn={localParticipant.isScreenSharingOn}
         />
       </Stack>
     );
