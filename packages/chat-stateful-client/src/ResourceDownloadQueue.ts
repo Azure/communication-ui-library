@@ -68,15 +68,15 @@ export class ResourceDownloadQueue {
   }
 
   public cancelAllRequests(): void {
-    for (const key in this._requestsToCancel) {
-      this._requestsToCancel[key].abortController.abort();
+    for (const cancelation of Object.values(this._requestsToCancel)) {
+      cancelation.abortController.abort();
     }
     this._requestsToCancel = {};
   }
 
   public cancelRequest(url: string): void {
     if (this._requestsToCancel[url]) {
-      this._requestsToCancel[url].abortController.abort();
+      this._requestsToCancel[url]?.abortController.abort();
       delete this._requestsToCancel[url];
     }
   }
