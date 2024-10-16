@@ -211,10 +211,6 @@ const onRenderParticipantDefault = (
       return <Icon iconName="ParticipantItemMicOff" className={iconStyles} ariaLabel={strings.mutedIconLabel} />;
     }
 
-    if (callingParticipant.isMuted) {
-      return <Icon iconName="ParticipantItemMicOff" className={iconStyles} ariaLabel={strings.mutedIconLabel} />;
-    }
-
     return <></>;
   };
 

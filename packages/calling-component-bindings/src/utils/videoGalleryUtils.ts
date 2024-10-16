@@ -232,7 +232,10 @@ export const memoizeLocalParticipant = memoizeOne(
     raisedHand: raisedHand,
     reaction,
     spotlight: localSpotlight,
-    capabilities
+    mediaAccess: {
+      isAudioPermitted: capabilities?.unmuteMic.isPresent,
+      isVideoPermitted: capabilities?.turnVideoOn.isPresent
+    }
   })
 );
 
