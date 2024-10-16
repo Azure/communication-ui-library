@@ -5,6 +5,7 @@
 import { CallCompositeOptions } from '@internal/react-composites';
 /* @conditional-compile-remove(composite-js-helpers) */
 import { OutboundCallCompositeLoaderProps } from './outboundCallCompositeLoader';
+import { AzureCommunicationTokenCredential } from '@azure/communication-common';
 
 jest.mock('@internal/react-composites', () => {
   return {
@@ -42,8 +43,8 @@ describe('CallCompositeLoader tests', () => {
   test('loadCallComposite should call createAzureCommunicationCallAdapter and createRoot', async () => {
     const mockCompositeOptions: CallCompositeOptions = {};
     const mockAdapterArgs: OutboundCallCompositeLoaderProps = {
-      userId: 'userId',
-      token: 'token',
+      userId: { communicationUserId: 'userId' },
+      credential: new AzureCommunicationTokenCredential('token'),
       displayName: 'displayName',
       targetCallees: [{ phoneNumber: '+14035556666' }],
       callAdapterOptions: { callingSounds: { callEnded: { url: 'test/url/ended' } } },
