@@ -75,22 +75,14 @@ export class ChatContext {
     this.modifyState((draft: ChatClientState) => {
       this._inlineImageQueue?.cancelAllRequests();
       this._fullsizeImageQueue?.cancelAllRequests();
-      Object.keys(draft.threads).forEach((threadId) => {
-        const thread = draft.threads[threadId];
-
-        if (!thread) {
-          return;
-        }
-
-        Object.keys(thread.chatMessages).forEach((messageId) => {
-          const message = thread.chatMessages[messageId];
+      Object.values(draft.threads).forEach((thread) => {
+        Object.values(thread.chatMessages).forEach((message) => {
           if (!message) {
             return;
           }
           const cache = message.resourceCache;
           if (cache) {
-            Object.keys(cache).forEach((resourceUrl) => {
-              const resource = cache[resourceUrl];
+            Object.values(cache).forEach((resource) => {
               if (resource?.sourceUrl) {
                 URL.revokeObjectURL(resource.sourceUrl);
               }
