@@ -26,6 +26,7 @@
     "dismissSidePaneButtonLabel": "닫기",
     "videoEffectsPaneTitle": "효과",
     "videoEffectsPaneBackgroundSelectionTitle": "백그라운드",
+    "videoEffectsPaneAriaLabel": "동영상 효과 창",
     "configurationPageVideoEffectsButtonLabel": "효과",
     "unableToStartVideoEffect": "비디오 효과를 적용할 수 없습니다.",
     "blurBackgroundEffectButtonLabel": "흐리기",
