@@ -486,7 +486,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
             'recordingAndTranscriptionStopped',
             'recordingStoppedStillTranscribing',
             'transcriptionStoppedStillRecording'
-          ].includes(activeNotifications[index].type)
+          ].includes(notification.type)
         ) {
           activeNotifications.splice(index, 1);
         }

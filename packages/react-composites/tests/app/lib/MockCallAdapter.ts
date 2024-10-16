@@ -194,13 +194,13 @@ export class MockCallAdapter implements CallAdapter {
   startVideoBackgroundEffect(videoBackgroundEffect: VideoBackgroundEffect): Promise<void> {
     if (videoBackgroundEffect.effectName === 'blur') {
       this.modifyState((draft: CallAdapterState) => {
-        if (!draft.call && draft.devices?.unparentedViews?.length > 0) {
+        if (!draft.call && draft.devices?.unparentedViews?.[0]) {
           draft.devices.unparentedViews[0].view = {
             scalingMode: 'Crop',
             isMirrored: false,
             target: createMockHTMLElement('blur background')
           };
-        } else if (draft.call && draft.call.localVideoStreams.length > 0) {
+        } else if (draft.call && draft.call.localVideoStreams[0]) {
           draft.call.localVideoStreams[0].view = {
             scalingMode: 'Crop',
             isMirrored: false,
@@ -210,13 +210,13 @@ export class MockCallAdapter implements CallAdapter {
       });
     } else if (videoBackgroundEffect.effectName === 'replacement') {
       this.modifyState((draft: CallAdapterState) => {
-        if (!draft.call && draft.devices?.unparentedViews?.length > 0) {
+        if (!draft.call && draft.devices?.unparentedViews?.[0]) {
           draft.devices.unparentedViews[0].view = {
             scalingMode: 'Crop',
             isMirrored: false,
             target: createMockHTMLElementWithCustomBackground(videoBackgroundEffect.backgroundImageUrl)
           };
-        } else if (draft.call && draft.call.localVideoStreams.length > 0) {
+        } else if (draft.call && draft.call.localVideoStreams[0]) {
           draft.call.localVideoStreams[0].view = {
             scalingMode: 'Crop',
             isMirrored: false,
