@@ -8,6 +8,9 @@ dependencies:
   '@azure/communication-calling':
     specifier: ^1.28.4
     version: 1.28.4
+  '@azure/communication-calling-effects':
+    specifier: ^1.1.1
+    version: 1.1.1
   '@azure/communication-chat':
     specifier: ^1.5.2
     version: 1.5.2
@@ -17390,7 +17393,7 @@ packages:
     dev: false
 
   file:projects/calling-component-bindings.tgz:
-    resolution: {integrity: sha512-N7XcNXBQDqHU7AKpBLIJ2nPayr/4DLe36Rwy9rPKpVfZTp3kNHd/0fMPZG3ogJC9siv2cYFfcKPoFh2hYNTWDQ==, tarball: file:projects/calling-component-bindings.tgz}
+    resolution: {integrity: sha512-aGbN6IFDB6RdO/pNI/LZqgyOEGFfYIWXPn1zvYbPtTK2qxlHRhBnRovul9JjANyD9b4RofHZFDk+1jWqRWSPjA==, tarball: file:projects/calling-component-bindings.tgz}
     name: '@rush-temp/calling-component-bindings'
     version: 0.0.0
     dependencies:
@@ -17990,7 +17993,7 @@ packages:
     dev: false
 
   file:projects/communication-react.tgz:
-    resolution: {integrity: sha512-e+lU+vGMXMTfmUtCZm+EToLFjiJ04uiJz3FrI/7AeGhzEdNv6VVEY6O3EmlcdR86L3h03vIasKu824s03DWzng==, tarball: file:projects/communication-react.tgz}
+    resolution: {integrity: sha512-EAM0d2weiCYfwBhZ4Nfg3G831DFqIkzUCxXmGKjEpsYFcEzETbyFq7UBbjdiBRUb7Wlbl5MLZDjmMt6QRYly9Q==, tarball: file:projects/communication-react.tgz}
     name: '@rush-temp/communication-react'
     version: 0.0.0
     dependencies:
@@ -18363,7 +18366,7 @@ packages:
     dev: false
 
   file:projects/react-composites.tgz:
-    resolution: {integrity: sha512-0kcgKR6dfeLnYJv2Hf0E6a7xiF8sAiCECdyn+UBc8rs/veHR/32W9eIs5XaBmLTeoJamz4bs32UQMpDzBtoZqw==, tarball: file:projects/react-composites.tgz}
+    resolution: {integrity: sha512-BoPSahl3KUB0ig+Oix9eJHBlRo+vrGB2qGdlJi8HXc8xWNNuzGGKmNZ80Hr5hbeTB2EWLFoEkEEI3Ftt+p9vnQ==, tarball: file:projects/react-composites.tgz}
     name: '@rush-temp/react-composites'
     version: 0.0.0
     dependencies:
