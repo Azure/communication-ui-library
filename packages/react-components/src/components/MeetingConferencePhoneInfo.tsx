@@ -99,7 +99,7 @@ export const MeetingConferencePhoneInfoModal = (props: MeetingConferencePhoneInf
         styles={PhoneInfoModalStyle}
       >
         <Stack horizontal horizontalAlign="space-between" verticalAlign="center" className={titleContainerClassName}>
-          <Text role="heading" aria-level={1} id="test" className={titleClassName}>
+          <Text role="heading" aria-level={2} className={titleClassName}>
             {strings?.meetingConferencePhoneInfoModalTitle}
           </Text>
           <IconButton
