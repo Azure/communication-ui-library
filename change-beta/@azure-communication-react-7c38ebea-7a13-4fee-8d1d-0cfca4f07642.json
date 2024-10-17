@@ -1,0 +1,9 @@
+{
+  "type": "minor",
+  "area": "fix",
+  "workstream": "",
+  "comment": "Update callAdapter.dispose and callWithChatAdapter.dispose to be async to match underlying behavior",
+  "packageName": "@azure/communication-react",
+  "email": "2684369+JamesBurnside@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
