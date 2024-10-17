@@ -43,7 +43,6 @@ import { callStatusSelector } from '../../CallComposite/selectors/callStatusSele
 /* @conditional-compile-remove(DNS) */
 import { _isSafari } from '../../CallComposite/utils';
 import { getIsRoomsCall, getReactionResources, getRole } from '../selectors/baseSelectors';
-/* @conditional-compile-remove(calling-environment-info) */
 import { getEnvironmentInfo } from '../selectors/baseSelectors';
 /* @conditional-compile-remove(DNS) */
 import {
@@ -122,10 +121,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
     }
   }, [deepNoiseSuppresionEffectsDependency, deepNoiseSuppressionOnByDefault, startDeepNoiseSuppression]);
 
-  /* @conditional-compile-remove(DNS) */
-  let environmentInfo = undefined;
-  /* @conditional-compile-remove(unsupported-browser) */
-  environmentInfo = useSelector(getEnvironmentInfo);
+  const environmentInfo = useSelector(getEnvironmentInfo);
 
   /* @conditional-compile-remove(DNS) */
   const isSafari = _isSafari(environmentInfo);
