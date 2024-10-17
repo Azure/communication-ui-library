@@ -38,7 +38,7 @@ import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { DtmfTone } from '@azure/communication-calling';
 import { CommunicationIdentifier } from '@azure/communication-common';
 import type { CommunicationUserIdentifier, PhoneNumberIdentifier } from '@azure/communication-common';
-import type { AdapterState, Disposable, AdapterError, AdapterErrors } from '../../common/adapters';
+import type { AdapterState, AdapterError, AdapterErrors } from '../../common/adapters';
 /* @conditional-compile-remove(breakout-rooms) */
 import type { AdapterNotifications } from '../../common/adapters';
 
@@ -1120,10 +1120,13 @@ export interface CallAdapterCallManagement extends CallAdapterCallOperations {
  */
 export interface CommonCallAdapter
   extends AdapterState<CallAdapterState>,
-    Disposable,
     CallAdapterCallOperations,
     CallAdapterDeviceManagement,
     CallAdapterSubscribers {
+  /**
+   * Dispose of the adapter. This performs cleanup of resources.
+   */
+  dispose(options?: { doNotDisposeCallAgent?: boolean }): Promise<void>;
   /**
    * Join the call with microphone initially on/off.
    * @deprecated Use joinCall(options?:JoinCallOptions) instead.

@@ -67,7 +67,7 @@ export class CallWithChatBackedChatAdapter implements ChatAdapter {
     await this.callWithChatAdapter.removeParticipant(userId);
   public loadPreviousChatMessages = async (messagesToLoad: number): Promise<boolean> =>
     await this.callWithChatAdapter.loadPreviousChatMessages(messagesToLoad);
-  public dispose = (): void => this.callWithChatAdapter.dispose();
+  public dispose = (): Promise<void> => this.callWithChatAdapter.dispose();
 
   public onStateChange = (handler: (state: ChatAdapterState) => void): void => {
     const convertedHandler = (state: CallWithChatAdapterState): void => {

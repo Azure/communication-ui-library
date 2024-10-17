@@ -60,7 +60,7 @@ export class _MockCallAdapter implements CallAdapter {
   getState(): CallAdapterState {
     return this.state;
   }
-  dispose(): void {
+  dispose(): Promise<void> {
     throw Error('dispose not implemented');
   }
   joinCall(): Call | undefined {

@@ -425,14 +425,14 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     return this.context.getState();
   }
   /** Dispose of the current CallWithChatAdapter. */
-  public dispose(): void {
+  public async dispose(options?: { doNotDisposeCallAgent?: boolean }): Promise<void> {
     this.isAdapterDisposed = true;
     if (this.chatAdapter) {
       this.chatAdapter.offStateChange(this.onChatStateChange);
       this.chatAdapter.dispose();
     }
     this.callAdapter.offStateChange(this.onCallStateChange);
-    this.callAdapter.dispose();
+    await this.callAdapter.dispose(options);
   }
   /** Remove a participant from the Call only. */
   public async removeParticipant(userId: string | CommunicationIdentifier): Promise<void> {
@@ -1299,7 +1299,7 @@ export const useAzureCommunicationCallWithChatAdapter = (
           if (beforeDisposeRef.current) {
             await beforeDisposeRef.current(adapterRef.current);
           }
-          adapterRef.current.dispose();
+          await adapterRef.current.dispose();
           adapterRef.current = undefined;
         }
         if (creatingAdapterRef.current) {
@@ -1349,7 +1349,7 @@ export const useAzureCommunicationCallWithChatAdapter = (
           if (beforeDisposeRef.current) {
             await beforeDisposeRef.current(adapterRef.current);
           }
-          adapterRef.current.dispose();
+          await adapterRef.current.dispose();
           adapterRef.current = undefined;
         }
       })();
