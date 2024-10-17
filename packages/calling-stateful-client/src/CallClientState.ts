@@ -27,7 +27,8 @@ import type {
   NetworkDiagnosticType,
   DiagnosticValueType,
   DiagnosticQuality,
-  DiagnosticFlag
+  DiagnosticFlag,
+  /* @conditional-compile-remove(media-access) */ MediaAccess
 } from '@azure/communication-calling';
 import { TeamsCallInfo } from '@azure/communication-calling';
 import { CallInfo } from '@azure/communication-calling';
@@ -191,6 +192,25 @@ export interface SpotlightState {
    * Order position of spotlight in call
    */
   spotlightedOrderPosition?: number;
+}
+/* @conditional-compile-remove(media-access) */
+/**
+ * State only version of {@link @azure/communication-calling#MediaAccessCallFeature}
+ *
+ * @alpha
+ */
+export interface MediaAccessCallFeatureState {
+  mediaAccesses: MediaAccess[];
+}
+/* @conditional-compile-remove(media-access) */
+/**
+ * Media access state
+ *
+ * @alpha
+ */
+export interface MediaAccessState {
+  isAudioPermitted: boolean;
+  isVideoPermitted: boolean;
 }
 
 /* @conditional-compile-remove(breakout-rooms) */
@@ -523,6 +543,11 @@ export interface RemoteParticipantState {
    * The diagnostic status of RemoteParticipant{@link @azure/communication-calling#RemoteDiagnostics}.
    */
   diagnostics?: Record<string, RemoteDiagnosticState>;
+  /* @conditional-compile-remove(meida-access) */
+  /**
+   * Proxy of {@link @azure/communication-calling#Call.MediaAccess.mediaAccesses}.
+   */
+  mediaAccess?: MediaAccessState;
 }
 
 /**
@@ -708,6 +733,11 @@ export interface CallState {
    * Proxy of {@link @azure/communication-calling#BreakoutRoomsFeature}.
    */
   breakoutRooms?: BreakoutRoomsState;
+
+  // /**
+  //  * Proxy of {@link @azure/communication-calling#MediaAccessCallFeature}.
+  //  */
+  // mediaAccess?: MediaAccessCallFeatureState;
 }
 
 /**

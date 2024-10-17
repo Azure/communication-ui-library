@@ -510,7 +510,11 @@
     "stopSpotlightOnSelfVideoTileMenuLabel": "Exit spotlight",
     "attendeeRole": "Attendee",
     "muteParticipantMenuItemLabel": "Mute",
-    "waitingScreenText": "Waiting for others to join"
+    "waitingScreenText": "Waiting for others to join",
+    "forbidParticipantAudio": "Disable mic",
+    "permitParticipantAudio": "Allow mic",
+    "forbidParticipantVideo": "Disable camera",
+    "permitParticipantVideo": "Allow camera"
   },
   "dialpad": {
     "placeholderText": "Enter phone number",

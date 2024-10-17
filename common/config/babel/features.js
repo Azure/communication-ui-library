@@ -24,7 +24,9 @@ module.exports = {
     // Feature for showing dtmp dialer by default
     "dtmf-dialer-on-by-default",
     // Feature for together mode
-    "together-mode"
+    "together-mode",
+    // Feature for hard mute audio/video
+    "meida-access"
   ],
   beta: [
     "call-readiness",

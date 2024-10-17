@@ -75,6 +75,7 @@ import { LatestMediaDiagnostics } from '@azure/communication-calling';
 import { LatestNetworkDiagnostics } from '@azure/communication-calling';
 import { LocalRecordingInfo } from '@azure/communication-calling';
 import { LocalVideoStream } from '@azure/communication-calling';
+import type { MediaAccess as MediaAccess_2 } from '@azure/communication-calling';
 import type { MediaDiagnosticChangedEventArgs } from '@azure/communication-calling';
 import type { MediaDiagnosticType } from '@azure/communication-calling';
 import { MediaStreamType } from '@azure/communication-calling';
@@ -447,6 +448,14 @@ export interface CallAdapterCallOperations {
     disposeScreenShareStreamView(remoteUserId: string): Promise<void>;
     // @deprecated
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
+    // (undocumented)
+    forbidAllAttendeesAudio(): Promise<void>;
+    // (undocumented)
+    forbidAllAttendeesVideo(): Promise<void>;
+    // (undocumented)
+    forbidParticipantAudio(userIds: string[]): Promise<void>;
+    // (undocumented)
+    forbidParticipantVideo(userIds: string[]): Promise<void>;
     holdCall(): Promise<void>;
     leaveCall(forEveryone?: boolean): Promise<void>;
     lowerHand(): Promise<void>;
@@ -454,6 +463,14 @@ export interface CallAdapterCallOperations {
     muteAllRemoteParticipants(): Promise<void>;
     muteParticipant(userId: string): Promise<void>;
     onReactionClick(reaction: Reaction_2): Promise<void>;
+    // (undocumented)
+    permitAllAttendeesAudio(): Promise<void>;
+    // (undocumented)
+    permitAllAttendeesVideo(): Promise<void>;
+    // (undocumented)
+    permitParticipantAudio(userIds: string[]): Promise<void>;
+    // (undocumented)
+    permitParticipantVideo(userIds: string[]): Promise<void>;
     raiseHand(): Promise<void>;
     removeParticipant(userId: string): Promise<void>;
     removeParticipant(participant: CommunicationIdentifier): Promise<void>;
@@ -653,7 +670,9 @@ export type CallCompositeIcons = {
     ControlButtonScreenShareStart?: JSX.Element;
     ControlButtonScreenShareStop?: JSX.Element;
     ControlButtonCameraProhibited?: JSX.Element;
+    ControlButtonCameraProhibitedSmall?: JSX.Element;
     ControlButtonMicProhibited?: JSX.Element;
+    ControlButtonMicProhibitedSmall?: JSX.Element;
     ControlButtonRaiseHand?: JSX.Element;
     ControlButtonLowerHand?: JSX.Element;
     ControlButtonExitSpotlight?: JSX.Element;
@@ -862,6 +881,30 @@ export interface CallCompositeStrings {
     failedToJoinCallDueToNoNetworkTitle: string;
     failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails?: string;
     failedToJoinTeamsMeetingReasonAccessDeniedTitle: string;
+    // (undocumented)
+    forbidAllAttendeesAudioCancelButtonLabel: string;
+    // (undocumented)
+    forbidAllAttendeesAudioConfirmButtonLabel: string;
+    // (undocumented)
+    forbidAllAttendeesAudioDialogContent: string;
+    // (undocumented)
+    forbidAllAttendeesAudioDialogTitle: string;
+    // (undocumented)
+    forbidAllAttendeesAudioMenuLabel: string;
+    // (undocumented)
+    forbidAllAttendeesVideoCancelButtonLabel: string;
+    // (undocumented)
+    forbidAllAttendeesVideoConfirmButtonLabel: string;
+    // (undocumented)
+    forbidAllAttendeesVideoDialogContent: string;
+    // (undocumented)
+    forbidAllAttendeesVideoDialogTitle: string;
+    // (undocumented)
+    forbidAllAttendeesVideoMenuLabel: string;
+    // (undocumented)
+    forbidParticipantAudioMenuLabel: string;
+    // (undocumented)
+    forbidParticipantVideoMenuLabel: string;
     hangUpCancelButtonLabel?: string;
     holdScreenLabel?: string;
     invalidMeetingIdentifier: string;
@@ -928,6 +971,30 @@ export interface CallCompositeStrings {
     peoplePaneTitle: string;
     permissionToReachTargetParticipantNotAllowedMoreDetails?: string;
     permissionToReachTargetParticipantNotAllowedTitle?: string;
+    // (undocumented)
+    permitAllAttendeesAudioCancelButtonLabel: string;
+    // (undocumented)
+    permitAllAttendeesAudioConfirmButtonLabel: string;
+    // (undocumented)
+    permitAllAttendeesAudioDialogContent: string;
+    // (undocumented)
+    permitAllAttendeesAudioDialogTitle: string;
+    // (undocumented)
+    permitAllAttendeesAudioMenuLabel: string;
+    // (undocumented)
+    permitAllAttendeesVideoCancelButtonLabel: string;
+    // (undocumented)
+    permitAllAttendeesVideoConfirmButtonLabel: string;
+    // (undocumented)
+    permitAllAttendeesVideoDialogContent: string;
+    // (undocumented)
+    permitAllAttendeesVideoDialogTitle: string;
+    // (undocumented)
+    permitAllAttendeesVideoMenuLabel: string;
+    // (undocumented)
+    permitParticipantAudioMenuLabel: string;
+    // (undocumented)
+    permitParticipantVideoMenuLabel: string;
     phoneCallMoreButtonLabel: string;
     pinParticipantLimitReachedMenuLabel: string;
     pinParticipantMenuItemAriaLabel: string;
@@ -1111,6 +1178,7 @@ export type CallParticipantListParticipant = ParticipantListParticipant & {
     raisedHand?: RaisedHand;
     reaction?: Reaction;
     spotlight?: Spotlight;
+    mediaAccess?: MediaAccess;
 };
 
 // @beta
@@ -1204,6 +1272,14 @@ export interface CallWithChatAdapterManagement {
     // (undocumented)
     downloadResourceToCache(resourceDetails: ResourceDetails): Promise<void>;
     fetchInitialData(): Promise<void>;
+    // (undocumented)
+    forbidAllAttendeesAudio: () => Promise<void>;
+    // (undocumented)
+    forbidAllAttendeesVideo: () => Promise<void>;
+    // (undocumented)
+    forbidParticipantAudio: (userIds: string[]) => Promise<void>;
+    // (undocumented)
+    forbidParticipantVideo: (userIds: string[]) => Promise<void>;
     holdCall(): Promise<void>;
     // @deprecated
     joinCall(microphoneOn?: boolean): Call | undefined;
@@ -1215,6 +1291,14 @@ export interface CallWithChatAdapterManagement {
     muteAllRemoteParticipants(): Promise<void>;
     muteParticipant(userId: string): Promise<void>;
     onReactionClick(reaction: Reaction_2): Promise<void>;
+    // (undocumented)
+    permitAllAttendeesAudio: () => Promise<void>;
+    // (undocumented)
+    permitAllAttendeesVideo: () => Promise<void>;
+    // (undocumented)
+    permitParticipantAudio: (userIds: string[]) => Promise<void>;
+    // (undocumented)
+    permitParticipantVideo: (userIds: string[]) => Promise<void>;
     queryCameras(): Promise<VideoDeviceInfo[]>;
     queryMicrophones(): Promise<AudioDeviceInfo[]>;
     querySpeakers(): Promise<AudioDeviceInfo[]>;
@@ -1430,7 +1514,9 @@ export type CallWithChatCompositeIcons = {
     ControlButtonScreenShareStart?: JSX.Element;
     ControlButtonScreenShareStop?: JSX.Element;
     ControlButtonCameraProhibited?: JSX.Element;
+    ControlButtonCameraProhibitedSmall?: JSX.Element;
     ControlButtonMicProhibited?: JSX.Element;
+    ControlButtonMicProhibitedSmall?: JSX.Element;
     ErrorBarCallCameraAccessDenied?: JSX.Element;
     ErrorBarCallCameraAlreadyInUse?: JSX.Element;
     ErrorBarCallLocalVideoFreeze?: JSX.Element;
@@ -2184,6 +2270,14 @@ export interface CommonCallingHandlers {
     // (undocumented)
     onDisposeRemoteVideoStreamView: (userId: string) => Promise<void>;
     // (undocumented)
+    onForbidAllAttendeesAudio?: () => Promise<void>;
+    // (undocumented)
+    onForbidAllAttendeesVideo?: () => Promise<void>;
+    // (undocumented)
+    onForbidParticipantAudio?: (userIds: string[]) => Promise<void>;
+    // (undocumented)
+    onForbidParticipantVideo?: (userIds: string[]) => Promise<void>;
+    // (undocumented)
     onHangUp: (forEveryone?: boolean) => Promise<void>;
     // (undocumented)
     onLowerHand: () => Promise<void>;
@@ -2191,6 +2285,14 @@ export interface CommonCallingHandlers {
     onMuteAllRemoteParticipants: () => Promise<void>;
     // (undocumented)
     onMuteParticipant: (userId: string) => Promise<void>;
+    // (undocumented)
+    onPermitAllAttendeesAudio?: () => Promise<void>;
+    // (undocumented)
+    onPermitAllAttendeesVideo?: () => Promise<void>;
+    // (undocumented)
+    onPermitParticipantAudio?: (userIds: string[]) => Promise<void>;
+    // (undocumented)
+    onPermitParticipantVideo?: (userIds: string[]) => Promise<void>;
     // (undocumented)
     onRaiseHand: () => Promise<void>;
     // (undocumented)
@@ -2747,6 +2849,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     SendBoxSend: React_2.JSX.Element;
     SendBoxSendHovered: React_2.JSX.Element;
     VideoTileMicOff: React_2.JSX.Element;
+    VideoTileCameraOff: React_2.JSX.Element;
     DialpadBackspace: React_2.JSX.Element;
     SitePermissionsSparkle: React_2.JSX.Element;
     SitePermissionCamera: React_2.JSX.Element;
@@ -2830,7 +2933,9 @@ export const DEFAULT_COMPOSITE_ICONS: {
     ControlButtonScreenShareStart: JSX.Element;
     ControlButtonScreenShareStop: JSX.Element;
     ControlButtonCameraProhibited?: JSX.Element | undefined;
+    ControlButtonCameraProhibitedSmall?: JSX.Element | undefined;
     ControlButtonMicProhibited?: JSX.Element | undefined;
+    ControlButtonMicProhibitedSmall?: JSX.Element | undefined;
     ControlButtonRaiseHand: JSX.Element;
     ControlButtonLowerHand: JSX.Element;
     ControlButtonExitSpotlight?: JSX.Element | undefined;
@@ -2927,6 +3032,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     HoldCallContextualMenuItem: React_2.JSX.Element;
     HoldCallButton: React_2.JSX.Element;
     ResumeCall: React_2.JSX.Element;
+    VideoTileCameraOff: React_2.JSX.Element;
     DialpadBackspace: React_2.JSX.Element;
     SitePermissionsSparkle: React_2.JSX.Element;
     SitePermissionCamera: React_2.JSX.Element;
@@ -3536,6 +3642,26 @@ export type LocalVideoTileSize = '9:16' | '16:9' | 'hidden' | 'followDeviceOrien
 export type LongPressTrigger = 'mouseAndTouch' | 'touch';
 
 // @public
+export type MediaAccess = {
+    isAudioPermitted: boolean;
+    isVideoPermitted: boolean;
+};
+
+// @alpha
+export interface MediaAccessCallFeature {
+    // (undocumented)
+    mediaAccesses: MediaAccess_2[];
+}
+
+// @alpha
+export interface MediaAccessState {
+    // (undocumented)
+    isAudioPermitted: boolean;
+    // (undocumented)
+    isVideoPermitted: boolean;
+}
+
+// @public
 export type MediaDiagnosticChangedEvent = MediaDiagnosticChangedEventArgs & {
     type: 'media';
 };
@@ -4084,6 +4210,10 @@ export type ParticipantListProps = {
     strings?: ParticipantListStrings;
     participantAriaLabelledBy?: string;
     pinnedParticipants?: string[];
+    onForbidParticipantAudio?: (userIds: string[]) => Promise<void>;
+    onPermitParticipantAudio?: (userIds: string[]) => Promise<void>;
+    onForbidParticipantVideo?: (userIds: string[]) => Promise<void>;
+    onPermitParticipantVideo?: (userIds: string[]) => Promise<void>;
 };
 
 // @public
@@ -4315,6 +4445,7 @@ export interface RemoteParticipantState {
     identifier: CommunicationIdentifierKind;
     isMuted: boolean;
     isSpeaking: boolean;
+    mediaAccess?: MediaAccessState;
     raisedHand?: RaisedHandState;
     reactionState?: ReactionState;
     role?: ParticipantRole;
@@ -5122,6 +5253,7 @@ export type VideoGalleryParticipant = {
     videoStream?: VideoGalleryStream;
     isScreenSharingOn?: boolean;
     spotlight?: Spotlight;
+    mediaAccess?: MediaAccess;
 };
 
 // @public
@@ -5142,7 +5274,15 @@ export interface VideoGalleryProps {
     // @deprecated (undocumented)
     onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
     onDisposeRemoteVideoStreamView?: (userId: string) => Promise<void>;
+    // (undocumented)
+    onForbidParticipantAudio?: (userIds: string[]) => Promise<void>;
+    // (undocumented)
+    onForbidParticipantVideo?: (userIds: string[]) => Promise<void>;
     onMuteParticipant?: (userId: string) => Promise<void>;
+    // (undocumented)
+    onPermitParticipantAudio?: (userIds: string[]) => Promise<void>;
+    // (undocumented)
+    onPermitParticipantVideo?: (userIds: string[]) => Promise<void>;
     onPinParticipant?: (userId: string) => void;
     onRenderAvatar?: OnRenderAvatarCallback;
     onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
@@ -5169,6 +5309,8 @@ export interface VideoGalleryProps {
 // @public
 export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
     isSpeaking?: boolean;
+    // (undocumented)
+    mediaAccess?: MediaAccess;
     raisedHand?: RaisedHand;
     reaction?: Reaction;
     screenShareStream?: VideoGalleryStream;
@@ -5207,6 +5349,10 @@ export interface VideoGalleryStrings {
     displayNamePlaceholder: string;
     fillRemoteParticipantFrame: string;
     fitRemoteParticipantToFrame: string;
+    // (undocumented)
+    forbidParticipantAudio: string;
+    // (undocumented)
+    forbidParticipantVideo: string;
     localScreenShareLoadingMessage: string;
     localVideoCameraSwitcherLabel: string;
     localVideoLabel: string;
@@ -5214,6 +5360,10 @@ export interface VideoGalleryStrings {
     localVideoMovementLabel: string;
     localVideoSelectedDescription: string;
     muteParticipantMenuItemLabel: string;
+    // (undocumented)
+    permitParticipantAudio: string;
+    // (undocumented)
+    permitParticipantVideo: string;
     pinnedParticipantAnnouncementAriaLabel: string;
     pinParticipantForMe: string;
     pinParticipantMenuItemAriaLabel: string;
@@ -5276,6 +5426,8 @@ export interface VideoTileProps {
     isPinned?: boolean;
     isSpeaking?: boolean;
     isSpotlighted?: boolean;
+    // (undocumented)
+    mediaAccess?: MediaAccess;
     noVideoAvailableAriaLabel?: string;
     onLongTouch?: () => void;
     onRenderPlaceholder?: OnRenderAvatarCallback;
