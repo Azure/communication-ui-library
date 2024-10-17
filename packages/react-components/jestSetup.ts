@@ -3,7 +3,7 @@
 
 import { registerIconsForTests } from './src/components/utils/testUtils';
 
-// Ensure console errors and warnings fail tests
+// Ensure icons are registered for tests to prevent console warnings
 beforeAll(() => {
   registerIconsForTests();
 });
