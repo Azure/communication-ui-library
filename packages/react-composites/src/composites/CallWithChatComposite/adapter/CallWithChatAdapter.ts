@@ -525,6 +525,14 @@ export interface CallWithChatAdapterManagement {
   forbidAllAttendeesAudio: () => Promise<void>;
   /* @conditional-compile-remove(media-access) */
   permitAllAttendeesAudio: () => Promise<void>;
+  /* @conditional-compile-remove(media-access) */
+  forbidParticipantVideo: (userIds: string[]) => Promise<void>;
+  /* @conditional-compile-remove(media-access) */
+  permitParticipantVideo: (userIds: string[]) => Promise<void>;
+  /* @conditional-compile-remove(media-access) */
+  forbidAllAttendeesVideo: () => Promise<void>;
+  /* @conditional-compile-remove(media-access) */
+  permitAllAttendeesVideo: () => Promise<void>;
 }
 
 /**

@@ -31,8 +31,12 @@ export const useVideoTileContextualMenuProps = (props: {
     muteParticipantMenuItemLabel?: string;
     forbidParticipantAudio?: string;
     permitParticipantAudio?: string;
+    forbidParticipantVideo?: string;
+    permitParticipantVideo?: string;
     forbidParticipantAudioTileMenuLabel?: string;
     permitParticipantAudioTileMenuLabel?: string;
+    forbidParticipantVideoTileMenuLabel?: string;
+    permitParticipantVideoTileMenuLabel?: string;
   };
   view?: { updateScalingMode: (scalingMode: ViewScalingMode) => Promise<void> };
   isPinned?: boolean;
@@ -51,6 +55,8 @@ export const useVideoTileContextualMenuProps = (props: {
   onMuteParticipant?: (userId: string) => void;
   onForbidParticipantAudio?: (userIds: string[]) => void;
   onPermitParticipantAudio?: (userIds: string[]) => void;
+  onForbidParticipantVideo?: (userIds: string[]) => void;
+  onPermitParticipantVideo?: (userIds: string[]) => void;
 }): IContextualMenuProps | undefined => {
   const {
     participant,
@@ -70,7 +76,9 @@ export const useVideoTileContextualMenuProps = (props: {
     myUserId,
     /* @conditional-compile-remove(soft-mute) */ onMuteParticipant,
     onForbidParticipantAudio,
-    onPermitParticipantAudio
+    onPermitParticipantAudio,
+    onForbidParticipantVideo,
+    onPermitParticipantVideo
   } = props;
   const scalingMode = useMemo(() => {
     return props.participant.videoStream?.scalingMode;
@@ -191,7 +199,7 @@ export const useVideoTileContextualMenuProps = (props: {
           styles: { root: { lineHeight: 0 } }
         },
         onClick: () => onPermitParticipantAudio([participant.userId]),
-        'data-ui-id': 'video-tile-unblock-microphone',
+        'data-ui-id': 'audio-tile-unblock-microphone',
         ariaLabel: 'Unblock microphone'
       });
     }
@@ -205,6 +213,35 @@ export const useVideoTileContextualMenuProps = (props: {
           styles: { root: { lineHeight: 0 } }
         },
         onClick: () => onForbidParticipantAudio([participant.userId]),
+        'data-ui-id': 'audio-tile-block-microphone',
+        ariaLabel: 'Block microphone'
+      });
+    }
+
+    /* @conditional-compile-remove(media-access) */
+    if (!participant.mediaAccess?.isVideoPermitted && onPermitParticipantVideo) {
+      items.push({
+        key: 'permitParticipantVideo',
+        text: strings?.permitParticipantVideoTileMenuLabel,
+        iconProps: {
+          iconName: 'Microphone',
+          styles: { root: { lineHeight: 0 } }
+        },
+        onClick: () => onPermitParticipantVideo([participant.userId]),
+        'data-ui-id': 'video-tile-unblock-microphone',
+        ariaLabel: 'Unblock microphone'
+      });
+    }
+    /* @conditional-compile-remove(media-access) */
+    if (participant.mediaAccess?.isVideoPermitted && onForbidParticipantVideo) {
+      items.push({
+        key: 'forbidParticipantVideo',
+        text: strings?.forbidParticipantVideoTileMenuLabel,
+        iconProps: {
+          iconName: 'ControlButtonMicProhibited',
+          styles: { root: { lineHeight: 0 } }
+        },
+        onClick: () => onForbidParticipantVideo([participant.userId]),
         'data-ui-id': 'video-tile-block-microphone',
         ariaLabel: 'Block microphone'
       });
@@ -249,25 +286,47 @@ export const useVideoTileContextualMenuProps = (props: {
 
     return { items, styles: {}, calloutProps: { preventDismissOnEvent } };
   }, [
-    scalingMode,
-    strings,
-    view,
+    onMuteParticipant,
+    strings?.muteParticipantMenuItemLabel,
+    strings?.unpinParticipantForMe,
+    strings?.pinParticipantForMe,
+    strings?.unpinParticipantMenuItemAriaLabel,
+    strings?.pinnedParticipantAnnouncementAriaLabel,
+    strings?.pinParticipantForMeLimitReached,
+    strings?.stopSpotlightOnSelfVideoTileMenuLabel,
+    strings?.stopSpotlightVideoTileMenuLabel,
+    strings?.addSpotlightVideoTileMenuLabel,
+    strings?.startSpotlightVideoTileMenuLabel,
+    strings?.spotlightLimitReachedMenuTitle,
+    strings?.permitParticipantAudioTileMenuLabel,
+    strings?.forbidParticipantAudioTileMenuLabel,
+    strings?.permitParticipantVideoTileMenuLabel,
+    strings?.forbidParticipantVideoTileMenuLabel,
+    strings?.fitRemoteParticipantToFrame,
+    strings?.fillRemoteParticipantFrame,
     isPinned,
-    onPinParticipant,
-    onUnpinParticipant,
-    onUpdateScalingMode,
+    isSpotlighted,
+    participant.mediaAccess?.isAudioPermitted,
+    participant.mediaAccess?.isVideoPermitted,
+    participant.isMuted,
     participant.userId,
     participant.displayName,
-    disablePinMenuItem,
+    onPermitParticipantAudio,
+    onForbidParticipantAudio,
+    onPermitParticipantVideo,
+    onForbidParticipantVideo,
+    scalingMode,
+    onUnpinParticipant,
+    onPinParticipant,
     toggleAnnouncerString,
-    spotlightedParticipantUserIds,
-    isSpotlighted,
-    onStartSpotlight,
-    onStopSpotlight,
-    maxParticipantsToSpotlight,
+    disablePinMenuItem,
     myUserId,
-    /* @conditional-compile-remove(soft-mute) */ onMuteParticipant,
-    /* @conditional-compile-remove(soft-mute) */ participant.isMuted
+    onStopSpotlight,
+    spotlightedParticipantUserIds,
+    maxParticipantsToSpotlight,
+    onStartSpotlight,
+    onUpdateScalingMode,
+    view
   ]);
 
   return contextualMenuProps;

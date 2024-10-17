@@ -114,6 +114,15 @@ export interface CommonCallingHandlers {
   onForbidAllAttendeesAudio?: () => Promise<void>;
   /* @conditional-compile-remove(media-access) */
   onPermitAllAttendeesAudio?: () => Promise<void>;
+
+  /* @conditional-compile-remove(media-access) */
+  onForbidParticipantVideo?: (userIds: string[]) => Promise<void>;
+  /* @conditional-compile-remove(media-access) */
+  onPermitParticipantVideo?: (userIds: string[]) => Promise<void>;
+  /* @conditional-compile-remove(media-access) */
+  onForbidAllAttendeesVideo?: () => Promise<void>;
+  /* @conditional-compile-remove(media-access) */
+  onPermitAllAttendeesVideo?: () => Promise<void>;
 }
 
 /**
@@ -762,6 +771,25 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       await call?.feature(Features.MediaAccess).permitOthersAudio();
     };
 
+    /* @conditional-compile-remove(media-access) */
+    const onForbidParticipantVideo = async (userIds: string[]): Promise<void> => {
+      const participants = userIds?.map((userId) => _toCommunicationIdentifier(userId));
+      await call?.feature(Features.MediaAccess).forbidVideo(participants);
+    };
+    /* @conditional-compile-remove(media-access) */
+    const onPermitParticipantVideo = async (userIds: string[]): Promise<void> => {
+      const participants = userIds?.map((userId) => _toCommunicationIdentifier(userId));
+      await call?.feature(Features.MediaAccess).permitVideo(participants);
+    };
+    /* @conditional-compile-remove(media-access) */
+    const onForbidAllAttendeesVideo = async (): Promise<void> => {
+      await call?.feature(Features.MediaAccess).forbidOthersVideo();
+    };
+    /* @conditional-compile-remove(media-access) */
+    const onPermitAllAttendeesVideo = async (): Promise<void> => {
+      await call?.feature(Features.MediaAccess).permitOthersVideo();
+    };
+
     // const onForbidAllAttendeesAudio = canForbidOthersMedia
     //   ? async (): Promise<void> => {
     //       await call?.feature(Features.MediaAccess).forbidOthersAudio();
@@ -835,7 +863,15 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       /* @conditional-compile-remove(media-access) */
       onForbidAllAttendeesAudio,
       /* @conditional-compile-remove(media-access) */
-      onPermitAllAttendeesAudio
+      onPermitAllAttendeesAudio,
+      /* @conditional-compile-remove(media-access) */
+      onForbidParticipantVideo,
+      /* @conditional-compile-remove(media-access) */
+      onPermitParticipantVideo,
+      /* @conditional-compile-remove(media-access) */
+      onForbidAllAttendeesVideo,
+      /* @conditional-compile-remove(media-access) */
+      onPermitAllAttendeesVideo
     };
   }
 );

@@ -117,6 +117,8 @@ export type ParticipantListProps = {
 
   onForbidParticipantAudio?: (userIds: string[]) => Promise<void>;
   onPermitParticipantAudio?: (userIds: string[]) => Promise<void>;
+  onForbidParticipantVideo?: (userIds: string[]) => Promise<void>;
+  onPermitParticipantVideo?: (userIds: string[]) => Promise<void>;
 };
 
 const onRenderParticipantDefault = (
@@ -185,6 +187,7 @@ const onRenderParticipantDefault = (
                 ariaLabel={strings.sharingIconLabel}
               />
             )}
+            {getParticipantItemCameraProhibitedTrampoline(callingParticipant)}
             {getControlButtonMicProhibitedTrampoline(callingParticipant)}
             {getParticipantItemMicOffTrampoline(callingParticipant)}
             {callingParticipant.spotlight && <Icon iconName="ParticipantItemSpotlighted" className={iconStyles} />}
@@ -194,21 +197,32 @@ const onRenderParticipantDefault = (
         )
       : () => null;
 
-  const getControlButtonMicProhibitedTrampoline = (callingParticipant: CallParticipantListParticipant) => {
+  const getControlButtonMicProhibitedTrampoline = (callingParticipant: CallParticipantListParticipant): JSX.Element => {
     /* @conditional-compile-remove(media-access) */
-    return (
-      !callingParticipant.mediaAccess?.isAudioPermitted && (
-        <Icon iconName="ControlButtonMicProhibited" className={iconStyles} ariaLabel={strings.mutedIconLabel} />
-      )
-    );
+    if (!callingParticipant.mediaAccess?.isAudioPermitted) {
+      return <Icon iconName="ControlButtonMicProhibited" className={iconStyles} ariaLabel={strings.mutedIconLabel} />;
+    }
 
     return <></>;
   };
 
-  const getParticipantItemMicOffTrampoline = (callingParticipant: CallParticipantListParticipant) => {
+  const getParticipantItemMicOffTrampoline = (callingParticipant: CallParticipantListParticipant): JSX.Element => {
     /* @conditional-compile-remove(media-access) */
     if (callingParticipant.mediaAccess?.isAudioPermitted && callingParticipant.isMuted) {
       return <Icon iconName="ParticipantItemMicOff" className={iconStyles} ariaLabel={strings.mutedIconLabel} />;
+    }
+
+    return <></>;
+  };
+
+  const getParticipantItemCameraProhibitedTrampoline = (
+    callingParticipant: CallParticipantListParticipant
+  ): JSX.Element => {
+    /* @conditional-compile-remove(media-access) */
+    if (!callingParticipant.mediaAccess?.isVideoPermitted) {
+      return (
+        <Icon iconName="ControlButtonCameraProhibited" className={iconStyles} ariaLabel={strings.mutedIconLabel} />
+      );
     }
 
     return <></>;

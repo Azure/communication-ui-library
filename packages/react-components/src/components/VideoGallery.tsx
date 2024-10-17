@@ -135,6 +135,8 @@ export interface VideoGalleryStrings {
   waitingScreenText: string;
   forbidParticipantAudio: string;
   permitParticipantAudio: string;
+  forbidParticipantVideo: string;
+  permitParticipantVideo: string;
 }
 
 /**
@@ -319,6 +321,8 @@ export interface VideoGalleryProps {
   onMuteParticipant?: (userId: string) => Promise<void>;
   onForbidParticipantAudio?: (userIds: string[]) => Promise<void>;
   onPermitParticipantAudio?: (userIds: string[]) => Promise<void>;
+  onForbidParticipantVideo?: (userIds: string[]) => Promise<void>;
+  onPermitParticipantVideo?: (userIds: string[]) => Promise<void>;
 }
 
 /**
@@ -406,7 +410,9 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     /* @conditional-compile-remove(soft-mute) */
     onMuteParticipant,
     onForbidParticipantAudio,
-    onPermitParticipantAudio
+    onPermitParticipantAudio,
+    onForbidParticipantVideo,
+    onPermitParticipantVideo
   } = props;
 
   const ids = useIdentifiers();
@@ -660,6 +666,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           onMuteParticipant={onMuteParticipant}
           onForbidParticipantAudio={onForbidParticipantAudio}
           onPermitParticipantAudio={onPermitParticipantAudio}
+          onForbidParticipantVideo={onForbidParticipantVideo}
+          onPermitParticipantVideo={onPermitParticipantVideo}
         />
       );
     },
@@ -687,6 +695,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       onMuteParticipant,
       onForbidParticipantAudio,
       onPermitParticipantAudio,
+      onForbidParticipantVideo,
+      onPermitParticipantVideo,
       remoteVideoViewOptions
     ]
   );

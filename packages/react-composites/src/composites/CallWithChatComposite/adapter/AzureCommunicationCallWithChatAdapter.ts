@@ -727,6 +727,23 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     return this.callAdapter.permitAllAttendeesAudio();
   }
 
+  /* @conditional-compile-remove(media-access) */
+  public async forbidParticipantVideo(userIds: string[]): Promise<void> {
+    return this.callAdapter.forbidParticipantVideo(userIds);
+  }
+  /* @conditional-compile-remove(media-access) */
+  public async permitParticipantVideo(userIds: string[]): Promise<void> {
+    return this.callAdapter.permitParticipantVideo(userIds);
+  }
+  /* @conditional-compile-remove(media-access) */
+  public async forbidAllAttendeesVideo(): Promise<void> {
+    return this.callAdapter.forbidAllAttendeesVideo();
+  }
+  /* @conditional-compile-remove(media-access) */
+  public async permitAllAttendeesVideo(): Promise<void> {
+    return this.callAdapter.permitAllAttendeesVideo();
+  }
+
   on(event: 'callParticipantsJoined', listener: ParticipantsJoinedListener): void;
   on(event: 'callParticipantsLeft', listener: ParticipantsLeftListener): void;
   on(event: 'callEnded', listener: CallEndedListener): void;

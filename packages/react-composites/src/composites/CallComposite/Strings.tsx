@@ -918,4 +918,29 @@ export interface CallCompositeStrings {
   forbidAllAttendeesAudioMenuLabel: string;
   /* @conditional-compile-remove(media-access) */
   permitAllAttendeesAudioMenuLabel: string;
+
+  /* @conditional-compile-remove(media-access) */
+  forbidParticipantVideoMenuLabel: string;
+  /* @conditional-compile-remove(media-access) */
+  permitParticipantVideoMenuLabel: string;
+  /* @conditional-compile-remove(media-access) */
+  forbidAllAttendeesVideoDialogTitle: string;
+  /* @conditional-compile-remove(media-access) */
+  forbidAllAttendeesVideoDialogContent: string;
+  /* @conditional-compile-remove(media-access) */
+  forbidAllAttendeesVideoConfirmButtonLabel: string;
+  /* @conditional-compile-remove(media-access) */
+  forbidAllAttendeesVideoCancelButtonLabel: string;
+  /* @conditional-compile-remove(media-access) */
+  permitAllAttendeesVideoDialogTitle: string;
+  /* @conditional-compile-remove(media-access) */
+  permitAllAttendeesVideoDialogContent: string;
+  /* @conditional-compile-remove(media-access) */
+  permitAllAttendeesVideoConfirmButtonLabel: string;
+  /* @conditional-compile-remove(media-access) */
+  permitAllAttendeesVideoCancelButtonLabel: string;
+  /* @conditional-compile-remove(media-access) */
+  forbidAllAttendeesVideoMenuLabel: string;
+  /* @conditional-compile-remove(media-access) */
+  permitAllAttendeesVideoMenuLabel: string;
 }

@@ -235,7 +235,9 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     maxParticipantsToSpotlight,
     localParticipant,
     onForbidParticipantAudio,
-    onPermitParticipantAudio
+    onPermitParticipantAudio,
+    onForbidParticipantVideo,
+    onPermitParticipantVideo
   } = videoGalleryProps;
 
   const [showTeamsMeetingConferenceModal, setShowTeamsMeetingConferenceModal] = useState(false);
@@ -347,14 +349,30 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
         : undefined,
       onPermitAllAttendeesAudio: ['Unknown', 'Organizer', 'Presenter', 'Co-organizer'].includes(role ?? '')
         ? muteAllHandlers.onPermitAllAttendeesAudio
+        : undefined,
+      onForbidParticipantVideo: ['Unknown', 'Organizer', 'Presenter', 'Co-organizer'].includes(role ?? '')
+        ? onForbidParticipantVideo
+        : undefined,
+      onPermitParticipantVideo: ['Unknown', 'Organizer', 'Presenter', 'Co-organizer'].includes(role ?? '')
+        ? onPermitParticipantVideo
+        : undefined,
+      onForbidAllAttendeesVideo: ['Unknown', 'Organizer', 'Presenter', 'Co-organizer'].includes(role ?? '')
+        ? muteAllHandlers.onForbidAllAttendeesVideo
+        : undefined,
+      onPermitAllAttendeesVideo: ['Unknown', 'Organizer', 'Presenter', 'Co-organizer'].includes(role ?? '')
+        ? muteAllHandlers.onPermitAllAttendeesVideo
         : undefined
     };
   }, [
     role,
-    /* @conditional-compile-remove(media-access) */ onForbidParticipantAudio,
-    /* @conditional-compile-remove(media-access) */ onPermitParticipantAudio,
-    /* @conditional-compile-remove(media-access) */ muteAllHandlers.onForbidAllAttendeesAudio,
-    /* @conditional-compile-remove(media-access) */ muteAllHandlers.onPermitAllAttendeesAudio
+    onForbidParticipantAudio,
+    onPermitParticipantAudio,
+    muteAllHandlers.onForbidAllAttendeesAudio,
+    muteAllHandlers.onPermitAllAttendeesAudio,
+    muteAllHandlers.onForbidAllAttendeesVideo,
+    muteAllHandlers.onPermitAllAttendeesVideo,
+    onForbidParticipantVideo,
+    onPermitParticipantVideo
   ]);
 
   const spotlightPeoplePaneProps = useMemo(() => {

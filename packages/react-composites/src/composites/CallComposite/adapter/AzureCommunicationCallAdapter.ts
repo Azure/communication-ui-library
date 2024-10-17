@@ -1183,6 +1183,23 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     this.handlers.onPermitAllAttendeesAudio?.();
   }
 
+  /* @conditional-compile-remove(media-access) */
+  public async forbidParticipantVideo(userIds: string[]): Promise<void> {
+    this.handlers.onForbidParticipantVideo?.(userIds);
+  }
+  /* @conditional-compile-remove(media-access) */
+  public async permitParticipantVideo(userIds: string[]): Promise<void> {
+    this.handlers.onPermitParticipantVideo?.(userIds);
+  }
+  /* @conditional-compile-remove(media-access) */
+  public async forbidAllAttendeesVideo(): Promise<void> {
+    this.handlers.onForbidAllAttendeesVideo?.();
+  }
+  /* @conditional-compile-remove(media-access) */
+  public async permitAllAttendeesVideo(): Promise<void> {
+    this.handlers.onPermitAllAttendeesVideo?.();
+  }
+
   /* @conditional-compile-remove(breakout-rooms) */
   public async returnFromBreakoutRoom(): Promise<void> {
     if (!this.originCall) {

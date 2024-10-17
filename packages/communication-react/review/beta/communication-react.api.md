@@ -451,7 +451,11 @@ export interface CallAdapterCallOperations {
     // (undocumented)
     forbidAllAttendeesAudio(): Promise<void>;
     // (undocumented)
+    forbidAllAttendeesVideo(): Promise<void>;
+    // (undocumented)
     forbidParticipantAudio(userIds: string[]): Promise<void>;
+    // (undocumented)
+    forbidParticipantVideo(userIds: string[]): Promise<void>;
     holdCall(): Promise<void>;
     leaveCall(forEveryone?: boolean): Promise<void>;
     lowerHand(): Promise<void>;
@@ -462,7 +466,11 @@ export interface CallAdapterCallOperations {
     // (undocumented)
     permitAllAttendeesAudio(): Promise<void>;
     // (undocumented)
+    permitAllAttendeesVideo(): Promise<void>;
+    // (undocumented)
     permitParticipantAudio(userIds: string[]): Promise<void>;
+    // (undocumented)
+    permitParticipantVideo(userIds: string[]): Promise<void>;
     raiseHand(): Promise<void>;
     removeParticipant(userId: string): Promise<void>;
     removeParticipant(participant: CommunicationIdentifier): Promise<void>;
@@ -882,7 +890,19 @@ export interface CallCompositeStrings {
     // (undocumented)
     forbidAllAttendeesAudioMenuLabel: string;
     // (undocumented)
+    forbidAllAttendeesVideoCancelButtonLabel: string;
+    // (undocumented)
+    forbidAllAttendeesVideoConfirmButtonLabel: string;
+    // (undocumented)
+    forbidAllAttendeesVideoDialogContent: string;
+    // (undocumented)
+    forbidAllAttendeesVideoDialogTitle: string;
+    // (undocumented)
+    forbidAllAttendeesVideoMenuLabel: string;
+    // (undocumented)
     forbidParticipantAudioMenuLabel: string;
+    // (undocumented)
+    forbidParticipantVideoMenuLabel: string;
     hangUpCancelButtonLabel?: string;
     holdScreenLabel?: string;
     invalidMeetingIdentifier: string;
@@ -960,7 +980,19 @@ export interface CallCompositeStrings {
     // (undocumented)
     permitAllAttendeesAudioMenuLabel: string;
     // (undocumented)
+    permitAllAttendeesVideoCancelButtonLabel: string;
+    // (undocumented)
+    permitAllAttendeesVideoConfirmButtonLabel: string;
+    // (undocumented)
+    permitAllAttendeesVideoDialogContent: string;
+    // (undocumented)
+    permitAllAttendeesVideoDialogTitle: string;
+    // (undocumented)
+    permitAllAttendeesVideoMenuLabel: string;
+    // (undocumented)
     permitParticipantAudioMenuLabel: string;
+    // (undocumented)
+    permitParticipantVideoMenuLabel: string;
     phoneCallMoreButtonLabel: string;
     pinParticipantLimitReachedMenuLabel: string;
     pinParticipantMenuItemAriaLabel: string;
@@ -1241,7 +1273,11 @@ export interface CallWithChatAdapterManagement {
     // (undocumented)
     forbidAllAttendeesAudio: () => Promise<void>;
     // (undocumented)
+    forbidAllAttendeesVideo: () => Promise<void>;
+    // (undocumented)
     forbidParticipantAudio: (userIds: string[]) => Promise<void>;
+    // (undocumented)
+    forbidParticipantVideo: (userIds: string[]) => Promise<void>;
     holdCall(): Promise<void>;
     // @deprecated
     joinCall(microphoneOn?: boolean): Call | undefined;
@@ -1256,7 +1292,11 @@ export interface CallWithChatAdapterManagement {
     // (undocumented)
     permitAllAttendeesAudio: () => Promise<void>;
     // (undocumented)
+    permitAllAttendeesVideo: () => Promise<void>;
+    // (undocumented)
     permitParticipantAudio: (userIds: string[]) => Promise<void>;
+    // (undocumented)
+    permitParticipantVideo: (userIds: string[]) => Promise<void>;
     queryCameras(): Promise<VideoDeviceInfo[]>;
     queryMicrophones(): Promise<AudioDeviceInfo[]>;
     querySpeakers(): Promise<AudioDeviceInfo[]>;
@@ -2228,7 +2268,11 @@ export interface CommonCallingHandlers {
     // (undocumented)
     onForbidAllAttendeesAudio?: () => Promise<void>;
     // (undocumented)
+    onForbidAllAttendeesVideo?: () => Promise<void>;
+    // (undocumented)
     onForbidParticipantAudio?: (userIds: string[]) => Promise<void>;
+    // (undocumented)
+    onForbidParticipantVideo?: (userIds: string[]) => Promise<void>;
     // (undocumented)
     onHangUp: (forEveryone?: boolean) => Promise<void>;
     // (undocumented)
@@ -2240,7 +2284,11 @@ export interface CommonCallingHandlers {
     // (undocumented)
     onPermitAllAttendeesAudio?: () => Promise<void>;
     // (undocumented)
+    onPermitAllAttendeesVideo?: () => Promise<void>;
+    // (undocumented)
     onPermitParticipantAudio?: (userIds: string[]) => Promise<void>;
+    // (undocumented)
+    onPermitParticipantVideo?: (userIds: string[]) => Promise<void>;
     // (undocumented)
     onRaiseHand: () => Promise<void>;
     // (undocumented)
@@ -4156,6 +4204,8 @@ export type ParticipantListProps = {
     pinnedParticipants?: string[];
     onForbidParticipantAudio?: (userIds: string[]) => Promise<void>;
     onPermitParticipantAudio?: (userIds: string[]) => Promise<void>;
+    onForbidParticipantVideo?: (userIds: string[]) => Promise<void>;
+    onPermitParticipantVideo?: (userIds: string[]) => Promise<void>;
 };
 
 // @public
@@ -5218,9 +5268,13 @@ export interface VideoGalleryProps {
     onDisposeRemoteVideoStreamView?: (userId: string) => Promise<void>;
     // (undocumented)
     onForbidParticipantAudio?: (userIds: string[]) => Promise<void>;
+    // (undocumented)
+    onForbidParticipantVideo?: (userIds: string[]) => Promise<void>;
     onMuteParticipant?: (userId: string) => Promise<void>;
     // (undocumented)
     onPermitParticipantAudio?: (userIds: string[]) => Promise<void>;
+    // (undocumented)
+    onPermitParticipantVideo?: (userIds: string[]) => Promise<void>;
     onPinParticipant?: (userId: string) => void;
     onRenderAvatar?: OnRenderAvatarCallback;
     onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
@@ -5289,6 +5343,8 @@ export interface VideoGalleryStrings {
     fitRemoteParticipantToFrame: string;
     // (undocumented)
     forbidParticipantAudio: string;
+    // (undocumented)
+    forbidParticipantVideo: string;
     localScreenShareLoadingMessage: string;
     localVideoCameraSwitcherLabel: string;
     localVideoLabel: string;
@@ -5298,6 +5354,8 @@ export interface VideoGalleryStrings {
     muteParticipantMenuItemLabel: string;
     // (undocumented)
     permitParticipantAudio: string;
+    // (undocumented)
+    permitParticipantVideo: string;
     pinnedParticipantAnnouncementAriaLabel: string;
     pinParticipantForMe: string;
     pinParticipantMenuItemAriaLabel: string;

@@ -261,6 +261,30 @@ const createCompositeHandlers = memoizeOne(
         ? async (): Promise<void> => {
             await adapter.permitAllAttendeesAudio();
           }
+        : undefined,
+      /* @conditional-compile-remove(media-access) */
+      onForbidParticipantVideo: capabilities?.forbidOthersMedia.isPresent
+        ? async (userIds: string[]): Promise<void> => {
+            await adapter.forbidParticipantVideo(userIds);
+          }
+        : undefined,
+      /* @conditional-compile-remove(media-access) */
+      onPermitParticipantVideo: capabilities?.forbidOthersMedia.isPresent
+        ? async (userIds: string[]): Promise<void> => {
+            await adapter.permitParticipantVideo(userIds);
+          }
+        : undefined,
+      /* @conditional-compile-remove(media-access) */
+      onForbidAllAttendeesVideo: capabilities?.forbidOthersMedia.isPresent
+        ? async (): Promise<void> => {
+            await adapter.forbidAllAttendeesVideo();
+          }
+        : undefined,
+      /* @conditional-compile-remove(media-access) */
+      onPermitAllAttendeesVideo: capabilities?.forbidOthersMedia.isPresent
+        ? async (): Promise<void> => {
+            await adapter.permitAllAttendeesVideo();
+          }
         : undefined
     };
   }

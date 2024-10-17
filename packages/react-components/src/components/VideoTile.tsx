@@ -453,6 +453,11 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
                   {bracketedParticipantString(participantStateString, !!canShowLabel)}
                 </Text>
               )}
+              {!mediaAccess?.isVideoPermitted && (
+                <Stack className={mergeStyles(iconContainerStyle)}>
+                  <Icon iconName="ControlButtonCameraProhibited" />
+                </Stack>
+              )}
               {mediaAccess?.isAudioPermitted && showMuteIndicator && isMuted && (
                 <Stack className={mergeStyles(iconContainerStyle)}>
                   <Icon iconName="VideoTileMicOff" />

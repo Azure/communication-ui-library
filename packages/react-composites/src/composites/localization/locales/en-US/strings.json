@@ -368,7 +368,19 @@
     "permitAllAttendeesAudioConfirmButtonLabel": "Allow mics",
     "permitAllAttendeesAudioCancelButtonLabel": "Cancel",
     "forbidAllAttendeesAudioMenuLabel": "Disable mic for attendees",
-    "permitAllAttendeesAudioMenuLabel": "Allow mic for attendees"
+    "permitAllAttendeesAudioMenuLabel": "Allow mic for attendees",
+    "forbidParticipantVideoMenuLabel": "Disable camera",
+    "permitParticipantVideoMenuLabel": "Allow camera",
+    "forbidAllAttendeesVideoDialogTitle": "Disable camera for attendees?",
+    "forbidAllAttendeesVideoDialogContent": "Attendees won’t be able to turn on video themselves. The organizer and presenters can let people turn on camera as needed.",
+    "forbidAllAttendeesVideoConfirmButtonLabel": "Disable cameras",
+    "forbidAllAttendeesVideoCancelButtonLabel": "Cancel",
+    "permitAllAttendeesVideoDialogTitle": "Allow camera for attendees?",
+    "permitAllAttendeesVideoDialogContent": "Everyone in the meeting will be able to turn on video themselves.",
+    "permitAllAttendeesVideoConfirmButtonLabel": "Allow cameras",
+    "permitAllAttendeesVideoCancelButtonLabel": "Cancel",
+    "forbidAllAttendeesVideoMenuLabel": "Disable camera for attendees",
+    "permitAllAttendeesVideoMenuLabel": "Allow camera for attendees"
   },
   "chat": {
     "chatListHeader": "In this chat",

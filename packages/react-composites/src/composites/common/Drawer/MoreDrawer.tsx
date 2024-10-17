@@ -158,6 +158,10 @@ export interface MoreDrawerProps extends MoreDrawerDevicesMenuProps {
   onForbidAllAttendeesAudio?: () => void;
   /* @conditional-compile-remove(media-access) */
   onPermitAllAttendeesAudio?: () => void;
+  /* @conditional-compile-remove(media-access) */
+  onForbidAllAttendeesVideo?: () => void;
+  /* @conditional-compile-remove(media-access) */
+  onPermitAllAttendeesVideo?: () => void;
 }
 
 const inferCallWithChatControlOptions = (
