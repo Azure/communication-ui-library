@@ -5,6 +5,7 @@
 import { CallWithChatCompositeOptions } from '@internal/react-composites';
 /* @conditional-compile-remove(composite-js-helpers) */
 import { CallWithChatCompositeLoaderProps } from './callWithChatCompositeLoader';
+import { AzureCommunicationTokenCredential } from '@azure/communication-common';
 
 jest.mock('@internal/react-composites', () => {
   return {
@@ -44,8 +45,8 @@ describe('CallWithChatCompositeLoader tests', () => {
       galleryOptions: { layout: 'floatingLocalVideo' }
     };
     const mockAdapterArgs: CallWithChatCompositeLoaderProps = {
-      userId: 'userId',
-      token: 'token',
+      userId: { communicationUserId: 'userId' },
+      credential: new AzureCommunicationTokenCredential('token'),
       endpoint: 'endpoint',
       displayName: 'displayName',
       locator: { callLocator: { groupId: 'groupId' }, chatThreadId: 'threadId' },
