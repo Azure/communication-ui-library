@@ -7,7 +7,6 @@ import type { BackgroundBlurConfig, BackgroundReplacementConfig, DeviceAccess } 
 import { Reaction } from '@azure/communication-calling';
 import type { CapabilitiesChangeInfo } from '@azure/communication-calling';
 import type { SpotlightedParticipant } from '@azure/communication-calling';
-/* @conditional-compile-remove(teams-identity-support) */
 import { TeamsCall } from '@azure/communication-calling';
 import { TransferEventArgs } from '@azure/communication-calling';
 import { StartCaptionsOptions } from '@azure/communication-calling';
@@ -31,7 +30,6 @@ import type {
   MicrosoftTeamsAppIdentifier,
   UnknownIdentifier
 } from '@azure/communication-common';
-
 import type { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { DtmfTone } from '@azure/communication-calling';
@@ -40,9 +38,7 @@ import type { CommunicationUserIdentifier, PhoneNumberIdentifier } from '@azure/
 import type { AdapterState, Disposable, AdapterError, AdapterErrors } from '../../common/adapters';
 /* @conditional-compile-remove(breakout-rooms) */
 import type { AdapterNotifications } from '../../common/adapters';
-
 import { VideoBackgroundEffectsDependency } from '@internal/calling-component-bindings';
-
 import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
 import { ReactionResources } from '@internal/react-components';
 /* @conditional-compile-remove(DNS) */
@@ -1199,7 +1195,6 @@ export interface CallAdapter extends CommonCallAdapter {
   startCall(participants: StartCallIdentifier[], options?: StartCallOptions): Call | undefined;
 }
 
-/* @conditional-compile-remove(teams-identity-support) */
 /**
  * An Adapter interface specific for Teams identity which extends {@link CommonCallAdapter}.
  *
