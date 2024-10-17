@@ -3,7 +3,6 @@
 
 import { AzureCommunicationTokenCredential } from '@azure/communication-common';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
-/* @conditional-compile-remove(teams-identity-support) */
 import { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 import {
   AzureCommunicationCallAdapterOptions,
@@ -14,13 +13,10 @@ import {
   CallAdapter,
   toFlatCommunicationIdentifier
 } from '@azure/communication-react';
-/* @conditional-compile-remove(teams-identity-support) */
 import { useTeamsCallAdapter, TeamsCallAdapter } from '@azure/communication-react';
-
 import { onResolveVideoEffectDependencyLazy } from '@azure/communication-react';
 /* @conditional-compile-remove(DNS) */
 import { onResolveDeepNoiseSuppressionDependencyLazy } from '@azure/communication-react';
-/* @conditional-compile-remove(teams-identity-support) */
 import type { Profile, TeamsAdapterOptions } from '@azure/communication-react';
 import type { StartCallIdentifier } from '@azure/communication-react';
 import React, { useCallback, useMemo, useRef } from 'react';
@@ -30,19 +26,17 @@ import { CallCompositeContainer } from './CallCompositeContainer';
 
 export interface CallScreenProps {
   token: string;
-  userId:
-    | CommunicationUserIdentifier
-    | /* @conditional-compile-remove(teams-identity-support) */ MicrosoftTeamsUserIdentifier;
+  userId: CommunicationUserIdentifier | MicrosoftTeamsUserIdentifier;
   callLocator?: CallAdapterLocator;
   targetCallees?: StartCallIdentifier[];
   displayName: string;
   alternateCallerId?: string;
-  /* @conditional-compile-remove(teams-identity-support) */
+
   isTeamsIdentityCall?: boolean;
 }
 
 export const CallScreen = (props: CallScreenProps): JSX.Element => {
-  const { token, userId, /* @conditional-compile-remove(teams-identity-support) */ isTeamsIdentityCall } = props;
+  const { token, userId, isTeamsIdentityCall } = props;
   const callIdRef = useRef<string>();
 
   const subscribeAdapterEvents = useCallback((adapter: CommonCallAdapter) => {
@@ -73,7 +67,6 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     [subscribeAdapterEvents]
   );
 
-  /* @conditional-compile-remove(teams-identity-support) */
   const afterTeamsCallAdapterCreate = useCallback(
     async (adapter: TeamsCallAdapter): Promise<TeamsCallAdapter> => {
       subscribeAdapterEvents(adapter);
@@ -83,13 +76,12 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
   );
 
   const credential = useMemo(() => {
-    /* @conditional-compile-remove(teams-identity-support) */
     if (isTeamsIdentityCall) {
       return new AzureCommunicationTokenCredential(token);
     }
     return createAutoRefreshingCredential(toFlatCommunicationIdentifier(userId), token);
-  }, [token, userId, /* @conditional-compile-remove(teams-identity-support) */ isTeamsIdentityCall]);
-  /* @conditional-compile-remove(teams-identity-support) */
+  }, [token, userId, isTeamsIdentityCall]);
+
   if (isTeamsIdentityCall) {
     return <TeamsCallScreen afterCreate={afterTeamsCallAdapterCreate} credential={credential} {...props} />;
   }
@@ -102,13 +94,11 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
   }
 };
 
-/* @conditional-compile-remove(teams-identity-support) */
 type TeamsCallScreenProps = CallScreenProps & {
   afterCreate?: (adapter: TeamsCallAdapter) => Promise<TeamsCallAdapter>;
   credential: AzureCommunicationTokenCredential;
 };
 
-/* @conditional-compile-remove(teams-identity-support) */
 const TeamsCallScreen = (props: TeamsCallScreenProps): JSX.Element => {
   const { afterCreate, callLocator: locator, userId, ...adapterArgs } = props;
   if (!(locator && 'meetingLink' in locator)) {
@@ -224,7 +214,7 @@ const AzureCommunicationOutboundCallScreen = (props: AzureCommunicationCallScree
         applauseReaction: { url: 'assets/reactions/clapEmoji.png', frameCount: 102 },
         surprisedReaction: { url: 'assets/reactions/surprisedEmoji.png', frameCount: 102 }
       },
-      /* @conditional-compile-remove(teams-identity-support) */
+
       onFetchProfile: async (userId: string, defaultProfile?: Profile): Promise<Profile | undefined> => {
         if (userId === '<28:orgid:Enter your teams app here>') {
           return { displayName: 'Teams app display name' };

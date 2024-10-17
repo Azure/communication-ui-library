@@ -3,7 +3,6 @@
 
 import { CallAgent, TeamsCallAgent } from '@azure/communication-calling';
 import { CallingHandlers, createDefaultCallingHandlers } from '@internal/calling-component-bindings';
-/* @conditional-compile-remove(teams-identity-support)) */
 import { createDefaultTeamsCallingHandlers, TeamsCallingHandlers } from '@internal/calling-component-bindings';
 import {
   CallCommon,
@@ -24,7 +23,7 @@ import { DeepNoiseSuppressionEffectDependency } from '@internal/calling-componen
  */
 export type CallHandlersOf<AgentType extends CallAgent | TeamsCallAgent> = AgentType extends CallAgent
   ? CallingHandlers
-  : never | /* @conditional-compile-remove(teams-identity-support) */ TeamsCallingHandlers;
+  : never | TeamsCallingHandlers;
 
 /**
  * @private
@@ -54,7 +53,6 @@ export function createHandlers<AgentType extends CallAgent | TeamsCallAgent>(
     ) as CallHandlersOf<AgentType>;
   }
 
-  /* @conditional-compile-remove(teams-identity-support) */
   if (_isTeamsCallAgent(callAgent) && (!call || (call && _isTeamsCall(call)))) {
     return createDefaultTeamsCallingHandlers(
       callClient,
