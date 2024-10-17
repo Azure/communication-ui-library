@@ -5,6 +5,7 @@
 import { ChatCompositeOptions } from '@internal/react-composites';
 /* @conditional-compile-remove(composite-js-helpers) */
 import { ChatCompositeLoaderProps } from './chatCompositeLoader';
+import { AzureCommunicationTokenCredential } from '@azure/communication-common';
 
 jest.mock('@internal/react-composites', () => {
   return {
@@ -45,8 +46,8 @@ describe('ChatCompositeLoader tests', () => {
     };
     const mockAdapterArgs: ChatCompositeLoaderProps = {
       endpoint: 'endpoint',
-      token: 'token',
-      userId: 'userId',
+      credential: new AzureCommunicationTokenCredential('token'),
+      userId: { communicationUserId: 'userId' },
       displayName: 'displayName',
       threadId: 'threadId',
       chatCompositeOptions: mockCompositeOptions
