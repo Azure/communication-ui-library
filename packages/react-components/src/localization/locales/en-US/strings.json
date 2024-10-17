@@ -643,8 +643,8 @@
     "step4DigitText": "4"
   },
   "verticalGallery": {
-    "leftNavButtonAriaLabel": "previous page",
-    "rightNavButtonAriaLabel": "next page"
+    "leftNavButtonAriaLabel": "previous page {current} of {total}",
+    "rightNavButtonAriaLabel": "next page {current} of {total}"
   },
   "meetingConferencePhoneInfo": {
     "meetingConferencePhoneInfoModalTitle": "Join call from your phone",
