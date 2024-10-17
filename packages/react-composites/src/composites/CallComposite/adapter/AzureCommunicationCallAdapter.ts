@@ -186,7 +186,7 @@ class CallContext {
       isTeamsMeeting,
       isRoomsCall,
       alternateCallerId: options?.alternateCallerId,
-      /* @conditional-compile-remove(unsupported-browser) */ environmentInfo: clientState.environmentInfo,
+      environmentInfo: clientState.environmentInfo,
       /* @conditional-compile-remove(unsupported-browser) */ unsupportedBrowserVersionsAllowed: false,
       videoBackgroundImages: options?.videoBackgroundOptions?.videoBackgroundImages,
 
@@ -276,7 +276,6 @@ class CallContext {
     const latestEndedCall = clientState.callsEnded ? findLatestEndedCall(clientState.callsEnded) : undefined;
     // As the state is transitioning to a new state, trigger appropriate callback events.
     const oldPage = this.state.page;
-    /* @conditional-compile-remove(unsupported-browser) */
     const environmentInfo = {
       environmentInfo: this.state.environmentInfo,
       unsupportedBrowserVersionOptedIn: this.state.unsupportedBrowserVersionsAllowed
