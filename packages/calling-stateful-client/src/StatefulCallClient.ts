@@ -2,9 +2,13 @@
 // Licensed under the MIT License.
 
 import { deviceManagerDeclaratify } from './DeviceManagerDeclarative';
-import { CallClient, CallClientOptions, CreateViewOptions, DeviceManager } from '@azure/communication-calling';
-/* @conditional-compile-remove(unsupported-browser) */
-import { Features } from '@azure/communication-calling';
+import {
+  CallClient,
+  CallClientOptions,
+  CreateViewOptions,
+  DeviceManager,
+  Features
+} from '@azure/communication-calling';
 import { CallClientState, LocalVideoStreamState, RemoteVideoStreamState } from './CallClientState';
 /* @conditional-compile-remove(together-mode) */
 import { TogetherModeStreamState } from './CallClientState';
@@ -267,7 +271,6 @@ class ProxyCallClient implements ProxyHandler<CallClient> {
         }, 'CallClient.getDeviceManager');
       }
       case 'feature': {
-        /* @conditional-compile-remove(unsupported-browser) */
         return this._context.withErrorTeedToState((...args: Parameters<CallClient['feature']>) => {
           if (args[0] === Features.DebugInfo) {
             const feature = target.feature(Features.DebugInfo);
@@ -417,7 +420,15 @@ export const createStatefulCallClientWithDeps = (
     }
   });
 
-  return new Proxy(callClient, new ProxyCallClient(context, internalContext)) as StatefulCallClient;
+  const newStatefulCallClient = new Proxy(
+    callClient,
+    new ProxyCallClient(context, internalContext)
+  ) as StatefulCallClient;
+
+  // Populate initial state
+  newStatefulCallClient.feature(Features.DebugInfo).getEnvironmentInfo();
+
+  return newStatefulCallClient;
 };
 
 const withTelemetryTag = (
