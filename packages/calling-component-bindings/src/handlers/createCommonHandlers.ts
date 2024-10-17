@@ -499,10 +499,12 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
         return;
       }
 
-      const remoteVideoStream = Object.values(participant.videoStreams).find((i) => i.mediaStreamType === 'Video');
+      const remoteVideoStream = Object.values(participant.videoStreams).filter((i) => i.mediaStreamType === 'Video');
 
-      if (remoteVideoStream && remoteVideoStream.view) {
-        callClient.disposeView(call.id, participant.identifier, remoteVideoStream);
+      for (const stream of remoteVideoStream) {
+        if (stream.view) {
+          callClient.disposeView(call.id, participant.identifier, stream);
+        }
       }
     };
 
