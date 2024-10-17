@@ -263,7 +263,7 @@ export const usePeoplePane = (props: {
           key: 'forbidAllAttendeesVideo',
           text: localeStrings.forbidAllAttendeesVideoMenuLabel,
           iconProps: {
-            iconName: 'ControlButtonCameraProhibited', // ControlButtonMicProhibited
+            iconName: 'ControlButtonCameraProhibitedSmall',
             styles: { root: { lineHeight: 0 } }
           },
           onClick: () => {
@@ -318,14 +318,18 @@ export const usePeoplePane = (props: {
   }, [
     onMuteAllRemoteParticipants,
     remoteParticipants,
+    onForbidAllAttendeesAudio,
+    onPermitAllAttendeesAudio,
+    onForbidAllAttendeesVideo,
+    onPermitAllAttendeesVideo,
     onStopAllSpotlight,
     spotlightedParticipantUserIds,
     localeStrings.muteAllMenuLabel,
-    /* @conditional-compile-remove(media-access) */ onForbidAllAttendeesAudio,
-    /* @conditional-compile-remove(media-access) */ onPermitAllAttendeesAudio,
-    /* @conditional-compile-remove(media-access) */ localeStrings.forbidAllAttendeesAudioMenuLabel,
-    /* @conditional-compile-remove(media-access) */ localeStrings.permitAllAttendeesAudioMenuLabel,
-    /* @conditional-compile-remove(media-access) */ localeStrings.stopAllSpotlightMenuLabel
+    localeStrings.forbidAllAttendeesAudioMenuLabel,
+    localeStrings.permitAllAttendeesAudioMenuLabel,
+    localeStrings.forbidAllAttendeesVideoMenuLabel,
+    localeStrings.permitAllAttendeesVideoMenuLabel,
+    localeStrings.stopAllSpotlightMenuLabel
   ]);
 
   const onRenderHeader = useCallback(
@@ -527,7 +531,7 @@ export const usePeoplePane = (props: {
             key: 'forbid-video',
             text: localeStrings.forbidParticipantVideoMenuLabel,
             iconProps: {
-              iconName: 'ControlButtonCameraProhibited',
+              iconName: 'ControlButtonCameraProhibitedSmall',
               styles: { root: { lineHeight: '1rem', textAlign: 'center' } }
             },
             onClick: () => {
