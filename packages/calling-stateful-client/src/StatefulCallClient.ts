@@ -417,7 +417,14 @@ export const createStatefulCallClientWithDeps = (
     }
   });
 
-  return new Proxy(callClient, new ProxyCallClient(context, internalContext)) as StatefulCallClient;
+  const newStatefulCallClient = new Proxy(
+    callClient,
+    new ProxyCallClient(context, internalContext)
+  ) as StatefulCallClient;
+
+  // Populate initial state
+  newStatefulCallClient.feature(Features.DebugInfo).getEnvironmentInfo();
+  return newStatefulCallClient;
 };
 
 const withTelemetryTag = (
