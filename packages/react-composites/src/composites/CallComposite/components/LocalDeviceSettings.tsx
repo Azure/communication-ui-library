@@ -26,6 +26,10 @@ import { useHandlers } from '../hooks/useHandlers';
 import { cameraAndVideoEffectsContainerStyleDesktop } from '../styles/CallConfiguration.styles';
 
 import { effectsButtonStyles } from '../styles/CallConfiguration.styles';
+import { useSelector } from '../hooks/useSelector';
+import { getRole, getVideoEffectsDependency } from '../selectors/baseSelectors';
+/* @conditional-compile-remove(calling-environment-info) */
+import { getEnvironmentInfo } from '../selectors/baseSelectors';
 
 type iconType = 'Camera' | 'Microphone' | 'Speaker';
 
@@ -58,11 +62,10 @@ const getOptionIcon = (type: iconType): JSX.Element | undefined => {
 };
 
 const onRenderTitle = (iconType: iconType, props?: IDropdownOption[]): JSX.Element => {
-  const icon = props && getOptionIcon(iconType);
   return props ? (
     <div className={dropDownTitleIconStyles}>
-      {icon}
-      <span>{props[0].text}</span>
+      {getOptionIcon(iconType)}
+      <span>{props[0]?.text}</span>
     </div>
   ) : (
     <></>
@@ -103,14 +106,14 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
   const locale = useLocale();
   const adapter = useAdapter();
 
-  const onResolveVideoEffectDependency = adapter.getState().onResolveVideoEffectDependency;
+  const onResolveVideoEffectDependency = useSelector(getVideoEffectsDependency);
   const defaultPlaceHolder = locale.strings.call.defaultPlaceHolder;
   const cameraLabel = locale.strings.call.cameraLabel;
   const soundLabel = locale.strings.call.soundLabel;
   const noSpeakersLabel = locale.strings.call.noSpeakersLabel;
   const noCameraLabel = locale.strings.call.noCamerasLabel;
   const noMicLabel = locale.strings.call.noMicrophonesLabel;
-  const role = adapter.getState().call?.role;
+  const role = useSelector(getRole);
 
   const cameraPermissionGranted = props.cameraPermissionGranted;
   const micPermissionGranted = props.microphonePermissionGranted;
@@ -137,9 +140,9 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
   const hasCameras = props.cameras.length > 0;
   const hasMicrophones = props.microphones.length > 0;
   const hasSpeakers = props.speakers.length > 0;
-  /* @conditional-compile-remove(unsupported-browser) */
+  /* @conditional-compile-remove(calling-environment-info) */
   const isSafariWithNoSpeakers =
-    adapter.getState().environmentInfo?.environment.browser.toLowerCase() === 'safari' && !hasSpeakers;
+    useSelector(getEnvironmentInfo)?.environment.browser.toLowerCase() === 'safari' && !hasSpeakers;
 
   const cameraGrantedDropdown = (
     <Dropdown
@@ -164,7 +167,12 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
           : 'deniedOrUnknown'
       }
       onChange={(event, option, index) => {
-        props.onSelectCamera(props.cameras[index ?? 0], localVideoViewOptions);
+        const camera = props.cameras[index ?? 0];
+        if (camera) {
+          props.onSelectCamera(camera, localVideoViewOptions);
+        } else {
+          console.error('No cameras available');
+        }
       }}
       onRenderTitle={(props?: IDropdownOption[]) => onRenderTitle('Camera', props)}
     />
@@ -196,7 +204,12 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
             option?: IDropdownOption | undefined,
             index?: number | undefined
           ) => {
-            props.onSelectMicrophone(props.microphones[index ?? 0]);
+            const microphone = props.microphones[index ?? 0];
+            if (microphone) {
+              props.onSelectMicrophone(microphone);
+            } else {
+              console.error('No microphones available');
+            }
           }}
           onRenderTitle={(props?: IDropdownOption[]) => onRenderTitle('Microphone', props)}
         />
@@ -217,14 +230,19 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
         option?: IDropdownOption | undefined,
         index?: number | undefined
       ) => {
-        props.onSelectSpeaker(props.speakers[index ?? 0]);
+        const speaker = props.speakers[index ?? 0];
+        if (speaker) {
+          props.onSelectSpeaker(speaker);
+        } else {
+          console.error('No speakers available');
+        }
       }}
       onRenderTitle={(props?: IDropdownOption[]) => onRenderTitle('Speaker', props)}
     />
   );
 
   const safariBrowserSpeakerDropdownTrampoline = (): JSX.Element => {
-    /* @conditional-compile-remove(unsupported-browser) */
+    /* @conditional-compile-remove(calling-environment-info) */
     if (isSafariWithNoSpeakers) {
       return <></>;
     }
@@ -289,13 +307,13 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
   );
 };
 
-const defaultDeviceId = (devices: AudioDeviceInfo[]): string => {
+const defaultDeviceId = (devices: AudioDeviceInfo[]): string | undefined => {
   if (devices.length === 0) {
-    return '';
+    return undefined;
   }
   const defaultDevice = devices.find((device) => device.isSystemDefault);
   if (defaultDevice) {
     return defaultDevice.id;
   }
-  return devices[0].id;
+  return devices[0]?.id;
 };

@@ -27,6 +27,8 @@ import {
   PhoneNumberIdentifier
 } from '@azure/communication-common';
 import { _toCommunicationIdentifier } from '@internal/acs-ui-common';
+import { useSelector } from './useSelector';
+import { getCapabilites } from '../selectors/baseSelectors';
 
 type AdapterCommonCallingHandlers = Omit<CommonCallingHandlers, 'onAcceptCall' | 'onRejectCall'>;
 
@@ -40,7 +42,7 @@ export const useHandlers = <PropsT>(
 ): Pick<AdapterCommonCallingHandlers, CommonProperties<AdapterCommonCallingHandlers, PropsT>> &
   Partial<_ComponentCallingHandlers> => {
   const adapter = useAdapter();
-  const capabilities = adapter.getState().call?.capabilitiesFeature?.capabilities;
+  const capabilities = useSelector(getCapabilites);
   return createCompositeHandlers(adapter, capabilities);
 };
 
@@ -148,7 +150,7 @@ const createCompositeHandlers = memoizeOne(
       },
       /* @conditional-compile-remove(call-readiness) */
       askDevicePermission: async (constrain) => {
-        return adapter.askDevicePermission(constrain);
+        await adapter.askDevicePermission(constrain);
       },
 
       onRemoveVideoBackgroundEffects: async () => {

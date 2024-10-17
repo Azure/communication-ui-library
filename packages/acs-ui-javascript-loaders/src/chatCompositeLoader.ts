@@ -8,44 +8,47 @@ const reactVersion = React.version;
 parseReactVersion(reactVersion);
 
 import { createRoot } from 'react-dom/client';
-import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
+import { CommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import {
   ChatAdapter,
   ChatComposite,
   ChatCompositeOptions,
   createAzureCommunicationChatAdapter
 } from '@internal/react-composites';
-import { fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { initializeIcons } from '@fluentui/react';
 
 /**
- * Props for the ChatComposite that you can use in your application.
- * @beta
+ * Props for the ChatComposite that you can use in your application. Contains the
+ * options for the {@link ChatComposite} {@link ChatCompositeOptions}.
+ * @public
  */
 export type ChatCompositeLoaderProps = {
-  userId: string;
-  token: string;
+  userId: CommunicationUserIdentifier;
+  credential: CommunicationTokenCredential;
   displayName?: string;
   endpoint: string;
   threadId: string;
+  chatCompositeOptions?: ChatCompositeOptions;
 };
 
 /**
- * Loader function for the ChatComposite that you can use in your application.
- * @beta
+ * Loader function for the ChatComposite that you can use in your application. This
+ * function will load the ChatComposite into the provided HTML element.
+ * The best use case for this is in a Node UI framework that is not React based.
+ *
+ * @public
  */
 export const loadChatComposite = async function (
-  args: ChatCompositeLoaderProps,
-  htmlElement: HTMLElement | null,
-  props: ChatCompositeOptions
+  loaderArgs: ChatCompositeLoaderProps,
+  htmlElement: HTMLElement
 ): Promise<ChatAdapter | undefined> {
   initializeIcons();
-  const { userId, token, endpoint, threadId, displayName } = args;
+  const { userId, credential, endpoint, threadId, displayName, chatCompositeOptions } = loaderArgs;
   const adapter = await createAzureCommunicationChatAdapter({
     endpoint,
-    userId: fromFlatCommunicationIdentifier(userId) as CommunicationUserIdentifier,
+    userId,
     displayName: displayName ?? 'anonymous',
-    credential: new AzureCommunicationTokenCredential(token),
+    credential,
     threadId
   });
 
@@ -53,6 +56,6 @@ export const loadChatComposite = async function (
     throw new Error('Failed to find the root element');
   }
 
-  createRoot(htmlElement).render(React.createElement(ChatComposite, { ...props, adapter }, null));
+  createRoot(htmlElement).render(React.createElement(ChatComposite, { options: chatCompositeOptions, adapter }, null));
   return adapter;
 };

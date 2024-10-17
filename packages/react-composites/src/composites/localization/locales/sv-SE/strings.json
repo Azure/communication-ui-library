@@ -26,6 +26,7 @@
     "dismissSidePaneButtonLabel": "Stäng",
     "videoEffectsPaneTitle": "Effekter",
     "videoEffectsPaneBackgroundSelectionTitle": "Bakgrund",
+    "videoEffectsPaneAriaLabel": "Fönstret Videoeffekter",
     "configurationPageVideoEffectsButtonLabel": "Effekter",
     "unableToStartVideoEffect": "Det går inte att tillämpa videoeffekten.",
     "blurBackgroundEffectButtonLabel": "Oskärpa",
@@ -341,7 +342,7 @@
     "pinParticipantMenuLabel": "Fäst åt mig",
     "pinParticipantLimitReachedMenuLabel": "Fäst (gränsen har nåtts)",
     "unpinParticipantMenuLabel": "Ta bort",
-    "pinParticipantMenuItemAriaLabel": "Fäst",
+    "pinParticipantMenuItemAriaLabel": "Fäst åt mig",
     "unpinParticipantMenuItemAriaLabel": "Ta bort",
     "muteAllMenuLabel": "Stäng av ljudet för alla",
     "muteAllDialogTitle": "Stäng av ljudet för alla?",
@@ -406,6 +407,6 @@
     "openDtmfDialpadLabel": "Visa knappsats",
     "dtmfDialpadPlaceholderText": "Ange nummer",
     "breakoutRoomChatPaneTitle": "Grupprumschatt",
-    "chatContentSpinnerLabel": "Loading..."
+    "chatContentSpinnerLabel": "Läser in ..."
   }
 }

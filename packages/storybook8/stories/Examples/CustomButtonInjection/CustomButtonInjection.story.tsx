@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 import { CallComposite, CustomCallControlButtonCallback } from '@azure/communication-react';
+
+// eslint-disable-next-line no-restricted-imports
 import { _MockCallAdapter } from '@internal/react-composites';
 import React from 'react';
 

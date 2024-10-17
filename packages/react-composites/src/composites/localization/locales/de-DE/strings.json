@@ -26,6 +26,7 @@
     "dismissSidePaneButtonLabel": "Schließen",
     "videoEffectsPaneTitle": "Effekte",
     "videoEffectsPaneBackgroundSelectionTitle": "Hintergrund",
+    "videoEffectsPaneAriaLabel": "Bereich \"Videoeffekte\"",
     "configurationPageVideoEffectsButtonLabel": "Effekte",
     "unableToStartVideoEffect": "Videoeffekt kann nicht angewendet werden.",
     "blurBackgroundEffectButtonLabel": "Unscharf machen",
@@ -341,7 +342,7 @@
     "pinParticipantMenuLabel": "Für mich anheften",
     "pinParticipantLimitReachedMenuLabel": "Anheften (Limit erreicht)",
     "unpinParticipantMenuLabel": "Lösen",
-    "pinParticipantMenuItemAriaLabel": "Anheften",
+    "pinParticipantMenuItemAriaLabel": "Für mich anheften",
     "unpinParticipantMenuItemAriaLabel": "Lösen",
     "muteAllMenuLabel": "Alle stummschalten",
     "muteAllDialogTitle": "Alle stummschalten?",
@@ -406,6 +407,6 @@
     "openDtmfDialpadLabel": "Wähltastatur anzeigen",
     "dtmfDialpadPlaceholderText": "Nummer eingeben",
     "breakoutRoomChatPaneTitle": "Chat im Gruppenraum",
-    "chatContentSpinnerLabel": "Loading..."
+    "chatContentSpinnerLabel": "Wird geladen..."
   }
 }

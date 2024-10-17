@@ -5,11 +5,12 @@
 import { CallWithChatCompositeOptions } from '@internal/react-composites';
 /* @conditional-compile-remove(composite-js-helpers) */
 import { CallWithChatCompositeLoaderProps } from './callWithChatCompositeLoader';
+import { AzureCommunicationTokenCredential } from '@azure/communication-common';
 
 jest.mock('@internal/react-composites', () => {
   return {
     createAzureCommunicationCallWithChatAdapter: jest.fn().mockResolvedValue('mockAdapter'),
-    CallWithChatComposite: jest.fn().mockReturnValue('mockCallComposite')
+    CallWithChatComposite: jest.fn().mockReturnValue('mockCallWithChatComposite')
   };
 });
 const mockCreateRoot = jest.fn();
@@ -40,22 +41,23 @@ describe('CallWithChatCompositeLoader tests', () => {
   });
   /* @conditional-compile-remove(composite-js-helpers) */
   test('loadCallWithChatComposite should call createAzureCommunicationCallWithChatAdapter and createRoot', async () => {
-    const mockAdapterArgs: CallWithChatCompositeLoaderProps = {
-      userId: 'userId',
-      token: 'token',
-      endpoint: 'endpoint',
-      displayName: 'displayName',
-      locator: { callLocator: { groupId: 'groupId' }, chatThreadId: 'threadId' }
-    };
-
-    const mockHtmlElement = document.createElement('div');
     const mockCompositeOptions: CallWithChatCompositeOptions = {
       galleryOptions: { layout: 'floatingLocalVideo' }
     };
+    const mockAdapterArgs: CallWithChatCompositeLoaderProps = {
+      userId: { communicationUserId: 'userId' },
+      credential: new AzureCommunicationTokenCredential('token'),
+      endpoint: 'endpoint',
+      displayName: 'displayName',
+      locator: { callLocator: { groupId: 'groupId' }, chatThreadId: 'threadId' },
+      callWithChatCompositeOptions: mockCompositeOptions
+    };
+
+    const mockHtmlElement = document.createElement('div');
 
     const { loadCallWithChatComposite } = await import('./callWithChatCompositeLoader');
     const { createAzureCommunicationCallWithChatAdapter } = await import('@internal/react-composites');
-    await loadCallWithChatComposite(mockAdapterArgs, mockHtmlElement, mockCompositeOptions);
+    await loadCallWithChatComposite(mockAdapterArgs, mockHtmlElement);
 
     expect(mockInitializeIcons).toHaveBeenCalled();
     expect(createAzureCommunicationCallWithChatAdapter).toHaveBeenCalled();

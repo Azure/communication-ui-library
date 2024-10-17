@@ -4,6 +4,7 @@
 import {
   AudioDeviceInfo,
   Call,
+  DeviceAccess,
   DtmfTone,
   ParticipantRole,
   PermissionConstraints,
@@ -23,7 +24,7 @@ import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
 // TODO: Remove this simplified copy of the MockCallAdapter when the original MockCallAdapter is moved to fake-backends package and can be imported
 export class _MockCallAdapter implements CallAdapter {
   constructor(testState: {
-    askDevicePermission?: (constrain: PermissionConstraints) => Promise<void>;
+    askDevicePermission?: (constrain: PermissionConstraints) => Promise<DeviceAccess>;
     localParticipantRole?: ParticipantRole;
   }) {
     this.state = {
@@ -110,6 +111,9 @@ export class _MockCallAdapter implements CallAdapter {
   createStreamView(): Promise<void> {
     throw Error('createStreamView not implemented');
   }
+  startTogetherMode(): Promise<void> {
+    throw Error('startTogetherMode not implemented');
+  }
   disposeStreamView(): Promise<void> {
     return Promise.resolve();
   }
@@ -123,7 +127,7 @@ export class _MockCallAdapter implements CallAdapter {
     return Promise.resolve();
   }
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  askDevicePermission(constrain: PermissionConstraints): Promise<void> {
+  askDevicePermission(constrain: PermissionConstraints): Promise<DeviceAccess> {
     throw Error('askDevicePermission not implemented');
   }
   async queryCameras(): Promise<VideoDeviceInfo[]> {
@@ -255,6 +259,8 @@ const createDefaultCallAdapterState = (role?: ParticipantRole): CallAdapterState
       remoteParticipants: {},
       remoteParticipantsEnded: {},
       raiseHand: { raisedHands: [] },
+      /* @conditional-compile-remove(together-mode) */
+      togetherMode: { stream: [] },
       pptLive: { isActive: false },
       localParticipantReaction: undefined,
       role,
@@ -266,7 +272,7 @@ const createDefaultCallAdapterState = (role?: ParticipantRole): CallAdapterState
         currentSpokenLanguage: '',
         isCaptionsFeatureActive: false,
         startCaptionsInProgress: false,
-        /* @conditional-compile-remove(acs-close-captions) */
+
         captionsKind: 'Captions'
       },
       transfer: {

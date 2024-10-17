@@ -34,7 +34,7 @@ import { CallInfo } from '@azure/communication-calling';
 
 import { CapabilitiesChangeInfo, ParticipantCapabilities } from '@azure/communication-calling';
 import { CaptionsResultType } from '@azure/communication-calling';
-/* @conditional-compile-remove(acs-close-captions) */
+
 import { CaptionsKind } from '@azure/communication-calling';
 import { VideoEffectName } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support) */
@@ -128,7 +128,7 @@ export interface CaptionsCallFeatureState {
    * current caption language
    */
   currentCaptionLanguage: string;
-  /* @conditional-compile-remove(acs-close-captions) */
+
   /**
    * current caption kind: teams or acs captions
    */
@@ -272,6 +272,49 @@ export interface RaiseHandCallFeatureState {
    * Contains information for local participant from list {@link @azure/communication-calling#RaiseHandCallFeature.raisedHands}.
    */
   localParticipantRaisedHand?: RaisedHandState;
+}
+
+/* @conditional-compile-remove(together-mode) */
+/**
+ * State only version of {@link @azure/communication-calling#TogetherModeCallFeature}. {@link StatefulCallClient} will
+ * automatically listen for raised hands on the call and update the state exposed by {@link StatefulCallClient} accordingly.
+ * @alpha
+ */
+export interface TogetherModeCallFeatureState {
+  /**
+   * Proxy of {@link @azure/communication-calling#TogetherModeCallFeature.togetherModeStream}.
+   */
+  stream: TogetherModeStreamState[];
+}
+
+/* @conditional-compile-remove(together-mode) */
+/**
+ * State only version of {@link @azure/communication-calling#TogetherModeVideoStream}.
+ * @alpha
+ */
+export interface TogetherModeStreamState {
+  /**
+   * Proxy of {@link @azure/communication-calling#TogetherModeVideoStream.id}.
+   */
+  id: number;
+  /**
+   * Proxy of {@link @azure/communication-calling#TogetherModeVideoStream.mediaStreamType}.
+   */
+  mediaStreamType: MediaStreamType;
+  /**
+   * Proxy of {@link @azure/communication-calling#TogetherModeVideoStream.isReceiving}.
+   * @public
+   */
+  isReceiving: boolean;
+  /**
+   * {@link VideoStreamRendererView} that is managed by createView/disposeView in {@link StatefulCallClient}
+   * API. This can be undefined if the stream has not yet been rendered and defined after createView creates the view.
+   */
+  view?: VideoStreamRendererViewState;
+  /**
+   * Proxy of {@link @azure/communication-calling#RemoteVideoStream.size}.
+   */
+  streamSize?: { width: number; height: number };
 }
 
 /**
@@ -579,6 +622,11 @@ export interface CallState {
    * Proxy of {@link @azure/communication-calling#RaiseHandCallFeature}.
    */
   raiseHand: RaiseHandCallFeatureState;
+  /* @conditional-compile-remove(together-mode) */
+  /**
+   * Proxy of {@link @azure/communication-calling#TogetherModeCallFeature}.
+   */
+  togetherMode: TogetherModeCallFeatureState;
   /**
    * Proxy of {@link @azure/communication-calling#Call.ReactionMessage} with
    * UI helper props receivedOn which indicates the timestamp when the message was received.

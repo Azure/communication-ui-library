@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 import React from 'react';
-import { CompositeConnectionParamsErrMessage } from './CompositeStringUtils';
 import { MICROSOFT_AZURE_ACCESS_TOKEN_QUICKSTART } from '../../constants';
+import { CompositeConnectionParamsErrMessage } from './CompositeStringUtils';
 
 export const ConfigHintBanner = (): JSX.Element => {
   const emptyConfigTips = (

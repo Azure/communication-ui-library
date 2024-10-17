@@ -13,7 +13,7 @@
     "update:snapshot": "playwright test tests --update-snapshots",
     "lint": "echo skip",
     "lint:fix": "echo skip",
-    "preprocess": "cpx \"./src/**\" ./preprocessed && babel ./src --out-dir ../preprocessed --extensions \".ts,.tsx\" --keep-file-extension --config-file ./.babelrc.js --relative",
+    "preprocess": "cpy './src/**' ./preprocessed && babel ./src --out-dir ../preprocessed --extensions \".ts,.tsx\" --keep-file-extension --config-file ./.babelrc.js --relative",
     "preprocess:stable-flavor": "rushx _stable-flavor \"rushx preprocess && rushx lint:fix && rushx prettier\"",
     "prettier": "",
     "prettier:check": "",
@@ -23,9 +23,9 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@azure/communication-react": "1.20.0-beta.0",
+    "@azure/communication-react": "1.20.0-beta.1",
     "@azure/communication-common": "^2.3.1",
-    "@azure/communication-calling": "1.29.1-beta.2 || ^1.28.4",
+    "@azure/communication-calling": "1.30.1-beta.1 || ^1.28.4",
     "@azure/communication-chat": "1.6.0-beta.3 || ^1.5.2",
     "@fluentui/react": "^8.120.0",
     "react": "18.3.1",
@@ -46,15 +46,14 @@
     "dotenv": "^10.0.0",
     "env-cmd": "^10.1.0",
     "html-webpack-plugin": "^5.3.1",
-    "http": "^0.0.1-security",
     "http-server": "14.1.1",
     "if-env": "^1.0.4",
     "rimraf": "^2.6.2",
     "typescript": "5.4.5",
-    "webpack": "5.89.0",
+    "webpack": "5.95.0",
     "webpack-cli": "^5.1.4",
     "webpack-bundle-analyzer": "^4.5.0",
-    "cpx": "^1.5.0",
+    "cpy-cli": "^5.0.0",
     "@babel/cli": "^7.24.8"
   }
 }

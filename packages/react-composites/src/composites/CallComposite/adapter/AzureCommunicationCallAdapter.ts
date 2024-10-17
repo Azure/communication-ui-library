@@ -39,12 +39,12 @@ import { SpotlightedParticipant } from '@azure/communication-calling';
 import { TeamsMeetingIdLocator } from '@azure/communication-calling';
 import { Reaction } from '@azure/communication-calling';
 import { TeamsCaptions } from '@azure/communication-calling';
-/* @conditional-compile-remove(acs-close-captions) */
+
 import { Captions, CaptionsInfo } from '@azure/communication-calling';
 import { TransferEventArgs } from '@azure/communication-calling';
 import { TeamsCaptionsInfo } from '@azure/communication-calling';
 
-import type { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling';
+import type { BackgroundBlurConfig, BackgroundReplacementConfig, DeviceAccess } from '@azure/communication-calling';
 
 import type { CapabilitiesChangeInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support)) */
@@ -355,7 +355,7 @@ const findLatestEndedCall = (calls: { [key: string]: CallState }): CallState | u
   }
   let latestCall = callStates[0];
   for (const call of callStates.slice(1)) {
-    if ((call.endTime?.getTime() ?? 0) > (latestCall.endTime?.getTime() ?? 0)) {
+    if ((call.endTime?.getTime() ?? 0) > (latestCall?.endTime?.getTime() ?? 0)) {
       latestCall = call;
     }
   }
@@ -371,7 +371,7 @@ const findLatestAcceptedTransfer = (acceptedTransfers: {
   }
   let latestAcceptedTransfer = acceptedTransferValues[0];
   for (const acceptedTransfer of acceptedTransferValues.slice(1)) {
-    if ((acceptedTransfer.timestamp?.getTime() ?? 0) > (latestAcceptedTransfer.timestamp?.getTime() ?? 0)) {
+    if ((acceptedTransfer.timestamp?.getTime() ?? 0) > (latestAcceptedTransfer?.timestamp?.getTime() ?? 0)) {
       latestAcceptedTransfer = acceptedTransfer;
     }
   }
@@ -523,36 +523,56 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
 
     if (this.callAgent.kind === 'CallAgent') {
       const onCallsUpdated = (args: { added: Call[]; removed: Call[] }): void => {
-        if (this.call?.id) {
-          const removedCall = args.removed.find((call) => call.id === this.call?.id);
-          if (removedCall) {
-            const removedCallState = this.callClient.getState().callsEnded[removedCall.id];
-            const latestAcceptedTransfer = findLatestAcceptedTransfer(removedCallState.transfer.acceptedTransfers);
-            const _callAgent = callAgent as CallAgent;
-            const transferCall = _callAgent.calls.find((call: Call) => call.id === latestAcceptedTransfer?.callId);
-            if (transferCall) {
-              this.processNewCall(transferCall);
-            }
-          }
+        if (!this.call?.id) {
+          return;
         }
+
+        const removedCall = args.removed.find((call) => call.id === this.call?.id);
+        if (!removedCall) {
+          return;
+        }
+
+        const removedCallState = this.callClient.getState().callsEnded[removedCall.id];
+        if (!removedCallState) {
+          return;
+        }
+
+        const latestAcceptedTransfer = findLatestAcceptedTransfer(removedCallState.transfer.acceptedTransfers);
+        const _callAgent = callAgent as CallAgent;
+        const transferCall = _callAgent.calls.find((call: Call) => call.id === latestAcceptedTransfer?.callId);
+        if (!transferCall) {
+          return;
+        }
+
+        this.processNewCall(transferCall);
       };
       (this.callAgent as CallAgent).on('callsUpdated', onCallsUpdated);
     }
     /* @conditional-compile-remove(teams-identity-support) */
     if (this.callAgent.kind === 'TeamsCallAgent') {
       const onTeamsCallsUpdated = (args: { added: TeamsCall[]; removed: TeamsCall[] }): void => {
-        if (this.call?.id) {
-          const removedCall = args.removed.find((call) => call.id === this.call?.id);
-          if (removedCall) {
-            const removedCallState = this.callClient.getState().callsEnded[removedCall.id];
-            const latestAcceptedTransfer = findLatestAcceptedTransfer(removedCallState.transfer.acceptedTransfers);
-            const _callAgent = callAgent as TeamsCallAgent;
-            const transferCall = _callAgent.calls.find((call: TeamsCall) => call.id === latestAcceptedTransfer?.callId);
-            if (transferCall) {
-              this.processNewCall(transferCall);
-            }
-          }
+        if (!this.call?.id) {
+          return;
         }
+
+        const removedCall = args.removed.find((call) => call.id === this.call?.id);
+        if (!removedCall) {
+          return;
+        }
+
+        const removedCallState = this.callClient.getState().callsEnded[removedCall.id];
+        if (!removedCallState) {
+          return;
+        }
+
+        const latestAcceptedTransfer = findLatestAcceptedTransfer(removedCallState.transfer.acceptedTransfers);
+        const _callAgent = callAgent as TeamsCallAgent;
+        const transferCall = _callAgent.calls.find((call: TeamsCall) => call.id === latestAcceptedTransfer?.callId);
+        if (!transferCall) {
+          return;
+        }
+
+        this.processNewCall(transferCall);
       };
       (this.callAgent as TeamsCallAgent).on('callsUpdated', onTeamsCallsUpdated);
     }
@@ -664,12 +684,13 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     });
   }
 
-  public async askDevicePermission(constrain: PermissionConstraints): Promise<void> {
+  public async askDevicePermission(constrain: PermissionConstraints): Promise<DeviceAccess> {
     const startTime = new Date().getTime();
     return await this.asyncTeeErrorToEventEmitter(async () => {
-      await this.deviceManager.askDevicePermission(constrain);
+      const result = await this.deviceManager.askDevicePermission(constrain);
       const endTime = new Date().getTime();
       compositeLogger.info('time to query askDevicePermissions', endTime - startTime, 'ms');
+      return result;
     });
   }
 
@@ -1215,15 +1236,14 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
       teamsCaptionsFeature.on('CaptionLanguageChanged', this.isCaptionLanguageChanged.bind(this));
       teamsCaptionsFeature.on('SpokenLanguageChanged', this.isSpokenLanguageChanged.bind(this));
     } else {
-      /* @conditional-compile-remove(acs-close-captions) */
       const acsCaptionsFeature = captionsFeature?.captions as Captions;
-      /* @conditional-compile-remove(acs-close-captions) */
+
       acsCaptionsFeature.on('CaptionsReceived', this.captionsReceived.bind(this));
-      /* @conditional-compile-remove(acs-close-captions) */
+
       acsCaptionsFeature.on('CaptionsActiveChanged', this.isCaptionsActiveChanged.bind(this));
-      /* @conditional-compile-remove(acs-close-captions) */
+
       acsCaptionsFeature.on('SpokenLanguageChanged', this.isSpokenLanguageChanged.bind(this));
-      /* @conditional-compile-remove(acs-close-captions) */
+
       captionsFeature?.on('CaptionsKindChanged', this.captionsKindChanged.bind(this));
     }
   }
@@ -1240,15 +1260,14 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
       teamsCaptionsFeature.off('CaptionLanguageChanged', this.isCaptionLanguageChanged.bind(this));
       teamsCaptionsFeature.off('SpokenLanguageChanged', this.isSpokenLanguageChanged.bind(this));
     } else {
-      /* @conditional-compile-remove(acs-close-captions) */
       const acsCaptionsFeature = captionsFeature?.captions as Captions;
-      /* @conditional-compile-remove(acs-close-captions) */
+
       acsCaptionsFeature.off('CaptionsReceived', this.captionsReceived.bind(this));
-      /* @conditional-compile-remove(acs-close-captions) */
+
       acsCaptionsFeature.off('CaptionsActiveChanged', this.isCaptionsActiveChanged.bind(this));
-      /* @conditional-compile-remove(acs-close-captions) */
+
       acsCaptionsFeature.off('SpokenLanguageChanged', this.isSpokenLanguageChanged.bind(this));
-      /* @conditional-compile-remove(acs-close-captions) */
+
       captionsFeature?.off('CaptionsKindChanged', this.captionsKindChanged.bind(this));
     }
   }
@@ -1309,7 +1328,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     });
   };
 
-  /* @conditional-compile-remove(acs-close-captions) */
   private captionsKindChanged(): void {
     const captionsFeature = this.call?.feature(Features.Captions);
     const teamsCaptionsFeature = captionsFeature?.captions as TeamsCaptions;
@@ -1355,24 +1373,19 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     this.emitter.emit('captionsReceived', { captionsInfo });
   }
 
-  /* @conditional-compile-remove(acs-close-captions) */
   private captionsReceived(captionsInfo: CaptionsInfo): void {
     this.emitter.emit('captionsReceived', { captionsInfo });
   }
 
   private isCaptionsActiveChanged(): void {
-    const captionsFeature = this.call?.feature(Features.Captions).captions as
-      | TeamsCaptions
-      | /* @conditional-compile-remove(acs-close-captions) */ Captions;
+    const captionsFeature = this.call?.feature(Features.Captions).captions as TeamsCaptions | Captions;
     this.emitter.emit('isCaptionsActiveChanged', {
       isActive: captionsFeature.isCaptionsFeatureActive
     });
   }
 
   private isSpokenLanguageChanged(): void {
-    const captionsFeature = this.call?.feature(Features.Captions).captions as
-      | TeamsCaptions
-      | /* @conditional-compile-remove(acs-close-captions) */ Captions;
+    const captionsFeature = this.call?.feature(Features.Captions).captions as TeamsCaptions | Captions;
     this.emitter.emit('isSpokenLanguageChanged', {
       activeSpokenLanguage: captionsFeature.activeSpokenLanguage
     });
@@ -1451,7 +1464,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
   private hangupOtherBreakoutRoomCalls(currentBreakoutRoomCallId: string): void {
     // Get origin call id of breakout room call
     const breakoutRoomCallState = this.callClient.getState().calls[currentBreakoutRoomCallId];
-    const originCallId = breakoutRoomCallState.breakoutRooms?.breakoutRoomOriginCallId;
+    const originCallId = breakoutRoomCallState?.breakoutRooms?.breakoutRoomOriginCallId;
 
     // Get other breakout room calls with the same origin call
     const otherBreakoutRoomCallStates = Object.values(this.callClient.getState().calls).filter((callState) => {
@@ -1581,7 +1594,6 @@ export type CommonCallAdapterOptions = {
   /* @conditional-compile-remove(DNS) */
   /**
    * `DeepNoiseSuppressionEffect` options to be used for noise suppression.
-   * @beta
    */
   deepNoiseSuppressionOptions?: {
     onResolveDependency?: () => Promise<DeepNoiseSuppressionEffectDependency>;
