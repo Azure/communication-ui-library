@@ -25,7 +25,7 @@ import {
 } from '../../ChatComposite';
 import { ResourceDetails } from '../../ChatComposite';
 import { CallWithChatAdapterState } from '../state/CallWithChatAdapterState';
-import type { AdapterError, AdapterState, Disposable } from '../../common/adapters';
+import type { AdapterError, AdapterState } from '../../common/adapters';
 import {
   AudioDeviceInfo,
   Call,
@@ -603,8 +603,12 @@ export type ChatInitializedListener = (event: { adapter: CallWithChatAdapter }) 
 export interface CallWithChatAdapter
   extends CallWithChatAdapterManagement,
     AdapterState<CallWithChatAdapterState>,
-    Disposable,
-    CallWithChatAdapterSubscriptions {}
+    CallWithChatAdapterSubscriptions {
+  /**
+   * Dispose of the adapter. This performs cleanup of resources.
+   */
+  dispose(options?: { doNotDisposeCallAgent?: boolean }): Promise<void>;
+}
 
 /**
  * Events fired off by the {@link CallWithChatAdapter}.

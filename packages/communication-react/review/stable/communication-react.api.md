@@ -967,7 +967,10 @@ export interface CallSurveyImprovementSuggestions {
 }
 
 // @public
-export interface CallWithChatAdapter extends CallWithChatAdapterManagement, AdapterState<CallWithChatAdapterState>, Disposable_2, CallWithChatAdapterSubscriptions {
+export interface CallWithChatAdapter extends CallWithChatAdapterManagement, AdapterState<CallWithChatAdapterState>, CallWithChatAdapterSubscriptions {
+    dispose(options?: {
+        doNotDisposeCallAgent?: boolean;
+    }): Promise<void>;
 }
 
 // @public
@@ -1801,7 +1804,10 @@ export type ClientState = CallClientState & ChatClientState;
 export type Common<A, B> = Pick<A, CommonProperties<A, B>>;
 
 // @public
-export interface CommonCallAdapter extends AdapterState<CallAdapterState>, Disposable_2, CallAdapterCallOperations, CallAdapterDeviceManagement, CallAdapterSubscribers {
+export interface CommonCallAdapter extends AdapterState<CallAdapterState>, CallAdapterCallOperations, CallAdapterDeviceManagement, CallAdapterSubscribers {
+    dispose(options?: {
+        doNotDisposeCallAgent?: boolean;
+    }): Promise<void>;
     // @deprecated
     joinCall(microphoneOn?: boolean): void;
     joinCall(options?: JoinCallOptions): void;
