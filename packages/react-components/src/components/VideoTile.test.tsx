@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { initializeIcons, registerIcons } from '@fluentui/react';
 import React from 'react';
 import { VideoTile } from './VideoTile';
 import { act, fireEvent, render } from '@testing-library/react';
@@ -11,15 +10,6 @@ import { screen } from '@testing-library/react';
 import { VideoTileProps } from './VideoTile';
 
 describe('VideoTile', () => {
-  beforeAll(() => {
-    initializeIcons();
-    registerIcons({
-      icons: {
-        videotilemoreoptions: <></>
-      }
-    });
-  });
-
   test('onLongTouch should trigger callback', async () => {
     const mockCallback = jest.fn();
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

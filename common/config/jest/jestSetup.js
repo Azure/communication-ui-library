@@ -1,15 +1,24 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-// Ensure console errors fail tests
-console.error = (...args) => {
-  throw args;
-};
+// Ensure console errors and warnings fail tests
+beforeAll(() => {
+  // Mock console.error to throw an error
+  jest.spyOn(console, 'error').mockImplementation((message) => {
+    throw new Error(`Console error: ${message}`);
+  });
 
-// Ensure console warnings fail tests
-console.warning = (...args) => {
-  throw args;
-};
+  // Mock console.warn to throw an error
+  jest.spyOn(console, 'warn').mockImplementation((message) => {
+    throw new Error(`Console warning: ${message}`);
+  });
+});
+
+afterAll(() => {
+  // Restore console.error and console.warn to their original behavior
+  jest.restoreAllMocks();
+});
+
 window.AudioContext = jest.fn().mockImplementation(() => {
   return {};
 });

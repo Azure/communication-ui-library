@@ -8,6 +8,8 @@ import { PartialDeep } from 'type-fest';
 import { render } from '@testing-library/react';
 import LiveAnnouncer from '../Announcer/LiveAnnouncer';
 import { _getKeys } from '@internal/acs-ui-common';
+import { registerIcons } from '@fluentui/react';
+import { DEFAULT_COMPONENT_ICONS } from '../../theming/icons';
 
 const withLiveAnnouncerContext = (node: React.ReactElement): React.ReactElement => (
   <LiveAnnouncer>{node}</LiveAnnouncer>
@@ -59,4 +61,25 @@ export const createTestLocale = (testStrings: PartialDeep<ComponentStrings>): Co
     (strings as Record<keyof ComponentStrings, unknown>)[key] = { ...strings[key], ...testStrings[key] };
   });
   return { strings };
+};
+
+/** @private */
+export const registerIconsForTests = (): void => {
+  registerIcons({
+    icons: {
+      ...DEFAULT_COMPONENT_ICONS,
+      chevronDown: <></>,
+      clear: <></>,
+      cancel: <></>,
+      info: <></>,
+      download: <></>,
+      contact: <></>,
+      genericfile24_svg: <></>,
+      docx24_svg: <></>,
+      pdf24_svg: <></>,
+      ppt24_svg: <></>,
+      txt24_svg: <></>,
+      xlxs24_svg: <></>
+    }
+  });
 };

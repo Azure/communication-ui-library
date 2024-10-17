@@ -25,4 +25,6 @@ const config =
       }
     : { ...commonConfig, ...jestCoverageConfig };
 
+config.setupFilesAfterEnv = [...config.setupFilesAfterEnv, '../jestSetup.ts'];
+
 module.exports = config;
