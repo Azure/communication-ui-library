@@ -6,14 +6,12 @@ import { _isInCall, _isPreviewOn, _isInLobbyOrConnecting } from '@internal/calli
 import { CallControlOptions } from '../types/CallControlOptions';
 import { CallState, RemoteParticipantState } from '@internal/calling-stateful-client';
 import { isPhoneNumberIdentifier } from '@azure/communication-common';
-/* @conditional-compile-remove(unsupported-browser) */
-import { EnvironmentInfo } from '@azure/communication-calling';
 import { AdapterStateModifier, CallAdapterLocator } from '../adapter/AzureCommunicationCallAdapter';
 
 import { VideoBackgroundEffectsDependency } from '@internal/calling-component-bindings';
 
 import { VideoBackgroundEffect } from '../adapter/CallAdapter';
-import { VideoDeviceInfo } from '@azure/communication-calling';
+import { EnvironmentInfo, VideoDeviceInfo } from '@azure/communication-calling';
 
 import { VideoEffectProcessor } from '@azure/communication-calling';
 import { CompositeLocale } from '../../localization';
@@ -494,12 +492,8 @@ const isUnsupportedEnvironment = (
  * Check if we are using safari browser
  * @private
  */
-export const _isSafari = (
-  environmentInfo: undefined | /* @conditional-compile-remove(unsupported-browser) */ EnvironmentInfo
-): boolean => {
-  /* @conditional-compile-remove(unsupported-browser) */
+export const _isSafari = (environmentInfo: undefined | EnvironmentInfo): boolean => {
   return environmentInfo?.environment.browser.toLowerCase() === 'safari';
-  return /^((?!chrome|android|crios|fxios).)*safari/i.test(navigator.userAgent);
 };
 
 /**

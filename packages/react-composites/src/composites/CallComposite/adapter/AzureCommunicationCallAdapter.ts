@@ -177,7 +177,7 @@ class CallContext {
       isTeamsMeeting,
       isRoomsCall,
       alternateCallerId: options?.alternateCallerId,
-      /* @conditional-compile-remove(unsupported-browser) */ environmentInfo: clientState.environmentInfo,
+      environmentInfo: clientState.environmentInfo,
       /* @conditional-compile-remove(unsupported-browser) */ unsupportedBrowserVersionsAllowed: false,
       videoBackgroundImages: options?.videoBackgroundOptions?.videoBackgroundImages,
 
@@ -2173,8 +2173,6 @@ export async function createAzureCommunicationCallAdapterFromClient(
   if (deviceManager.isSpeakerSelectionAvailable) {
     await deviceManager.getSpeakers();
   }
-  /* @conditional-compile-remove(unsupported-browser) */
-  await callClient.feature(Features.DebugInfo).getEnvironmentInfo();
   if (getLocatorOrTargetCallees(locatorOrtargetCallees)) {
     return new AzureCommunicationCallAdapter(
       callClient,
@@ -2215,8 +2213,6 @@ export const createTeamsCallAdapterFromClient = async (
   if (deviceManager.isSpeakerSelectionAvailable) {
     await deviceManager.getSpeakers();
   }
-  /* @conditional-compile-remove(unsupported-browser) */
-  await callClient.feature(Features.DebugInfo).getEnvironmentInfo();
   if (Array.isArray(locator)) {
     return new AzureCommunicationCallAdapter(callClient, locator, callAgent, deviceManager, options);
   } else {

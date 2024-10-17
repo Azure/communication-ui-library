@@ -446,7 +446,21 @@ export const createMockCallClient = (callAgent?: CallAgent, deviceManager?: Devi
         throw new Error('callAgent not set');
       }
       return Promise.resolve(callAgent);
-    }
+    },
+    feature: () => ({
+      getEnvironmentInfo: () =>
+        Promise.resolve({
+          environment: {
+            platform: 'mockPlatform',
+            browser: 'mockBrowser',
+            browserVersion: 'mockBrowserVersion'
+          },
+          isSupportedPlatform: true,
+          isSupportedBrowser: true,
+          isSupportedBrowserVersion: true,
+          isSupportedEnvironment: true
+        })
+    })
   } as unknown as CallClient;
 };
 
