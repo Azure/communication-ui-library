@@ -15,7 +15,7 @@ import { VideoBackgroundEffectsDependency } from '@internal/calling-component-bi
 import { VideoBackgroundEffect } from '../adapter/CallAdapter';
 import { VideoDeviceInfo } from '@azure/communication-calling';
 
-import { VideoEffectProcessor } from '@azure/communication-calling';
+import { Call, VideoEffectProcessor } from '@azure/communication-calling';
 import { CompositeLocale } from '../../localization';
 import { CallCompositeIcons } from '../../common/icons';
 
@@ -588,14 +588,18 @@ export const getSelectedCameraFromAdapterState = (state: CallAdapterState): Vide
 
 /**
  * Helper to determine if the adapter has a locator or targetCallees
- * @param locatorOrTargetCallees
  * @returns boolean to determine if the adapter has a locator or targetCallees, true is locator, false is targetCallees
  * @private
  */
-export const getLocatorOrTargetCallees = (
-  locatorOrTargetCallees: CallAdapterLocator | StartCallIdentifier[]
-): locatorOrTargetCallees is StartCallIdentifier[] => {
-  return !!Array.isArray(locatorOrTargetCallees);
+export const isTargetCallees = (
+  overloadedParam: CallAdapterLocator | StartCallIdentifier[] | Call
+): overloadedParam is StartCallIdentifier[] => {
+  return !!Array.isArray(overloadedParam);
+};
+
+/** @private */
+export const isCall = (overloadedParam: CallAdapterLocator | StartCallIdentifier[] | Call): overloadedParam is Call => {
+  return 'kind' in overloadedParam && overloadedParam.kind === 'Call';
 };
 
 /**

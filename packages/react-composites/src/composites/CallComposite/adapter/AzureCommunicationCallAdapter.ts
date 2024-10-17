@@ -94,7 +94,7 @@ import {
 } from './CallAdapter';
 /* @conditional-compile-remove(teams-identity-support) */
 import { TeamsCallAdapter } from './CallAdapter';
-import { getCallCompositePage, getLocatorOrTargetCallees, IsCallEndedPage, isCameraOn } from '../utils';
+import { getCallCompositePage, isCall, IsCallEndedPage, isCameraOn, isTargetCallees } from '../utils';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 import { toFlatCommunicationIdentifier, _toCommunicationIdentifier, _isValidIdentifier } from '@internal/acs-ui-common';
 import {
@@ -434,7 +434,14 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
   );
   constructor(
     callClient: StatefulCallClient,
-    locatorOrTargetCalless: CallAdapterLocator | StartCallIdentifier[],
+    call: Call,
+    callAgent: AgentType,
+    deviceManager: StatefulDeviceManager,
+    options?: AzureCommunicationCallAdapterOptions | TeamsAdapterOptions
+  );
+  constructor(
+    callClient: StatefulCallClient,
+    overloadedParam: CallAdapterLocator | StartCallIdentifier[] | Call,
     callAgent: AgentType,
     deviceManager: StatefulDeviceManager,
     options?: AzureCommunicationCallAdapterOptions | TeamsAdapterOptions
@@ -442,16 +449,21 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     this.bindPublicMethods();
     this.callClient = callClient;
     this.callAgent = callAgent;
-    this.targetCallees =
-      getLocatorOrTargetCallees(locatorOrTargetCalless) === true
-        ? (locatorOrTargetCalless as StartCallIdentifier[])
-        : undefined;
-    this.locator =
-      getLocatorOrTargetCallees(locatorOrTargetCalless) === false
-        ? (locatorOrTargetCalless as CallAdapterLocator)
-        : undefined;
+
+    let overloadedParamAsCall: Call | undefined = undefined;
+    if (isTargetCallees(overloadedParam)) {
+      this.targetCallees = overloadedParam;
+    } else if (isCall(overloadedParam)) {
+      overloadedParamAsCall = overloadedParam;
+    } else {
+      this.locator = overloadedParam;
+    }
+
     this.deviceManager = deviceManager;
-    const isTeamsMeeting = this.locator ? 'meetingLink' in this.locator || 'meetingId' in this.locator : false;
+
+    const isTeamsMeeting = this.locator
+      ? 'meetingLink' in this.locator || 'meetingId' in this.locator
+      : !!overloadedParamAsCall?.info.threadId;
     let isTeamsCall: boolean | undefined;
     this.targetCallees?.forEach((callee) => {
       if (isMicrosoftTeamsUserIdentifier(callee) || isMicrosoftTeamsAppIdentifier(callee)) {
@@ -459,7 +471,12 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
       }
     });
 
-    const isRoomsCall = this.locator ? 'roomId' in this.locator : false;
+    const isOverloadedParamARoomsCallTrampoline = (): boolean => {
+      /* @conditional-compile-remove(calling-beta-sdk) */
+      return !!overloadedParamAsCall?.info.roomId;
+      return false;
+    };
+    const isRoomsCall = this.locator ? 'roomId' in this.locator : isOverloadedParamARoomsCallTrampoline();
 
     this.onResolveVideoBackgroundEffectsDependency = options?.videoBackgroundOptions?.onResolveDependency;
     /* @conditional-compile-remove(DNS) */
@@ -575,6 +592,10 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
         this.processNewCall(transferCall);
       };
       (this.callAgent as TeamsCallAgent).on('callsUpdated', onTeamsCallsUpdated);
+    }
+
+    if (overloadedParamAsCall) {
+      this.processNewCall(overloadedParamAsCall);
     }
   }
 
@@ -2178,7 +2199,18 @@ export async function createAzureCommunicationCallAdapterFromClient(
 export async function createAzureCommunicationCallAdapterFromClient(
   callClient: StatefulCallClient,
   callAgent: CallAgent,
-  locatorOrtargetCallees: CallAdapterLocator | StartCallIdentifier[],
+  call: Call,
+  options?: AzureCommunicationCallAdapterOptions
+): Promise<CallAdapter>;
+/**
+ * Implementation of overloads for {@link createAzureCommunicationCallAdapterFromClient}.
+ *
+ * @private
+ */
+export async function createAzureCommunicationCallAdapterFromClient(
+  callClient: StatefulCallClient,
+  callAgent: CallAgent,
+  overloadedParam: CallAdapterLocator | StartCallIdentifier[] | Call,
   options?: AzureCommunicationCallAdapterOptions
 ): Promise<CallAdapter> {
   const deviceManager = (await callClient.getDeviceManager()) as StatefulDeviceManager;
@@ -2188,22 +2220,12 @@ export async function createAzureCommunicationCallAdapterFromClient(
   }
   /* @conditional-compile-remove(unsupported-browser) */
   await callClient.feature(Features.DebugInfo).getEnvironmentInfo();
-  if (getLocatorOrTargetCallees(locatorOrtargetCallees)) {
-    return new AzureCommunicationCallAdapter(
-      callClient,
-      locatorOrtargetCallees as StartCallIdentifier[],
-      callAgent,
-      deviceManager,
-      options
-    );
+  if (isTargetCallees(overloadedParam)) {
+    return new AzureCommunicationCallAdapter(callClient, overloadedParam, callAgent, deviceManager, options);
+  } else if (isCall(overloadedParam)) {
+    return new AzureCommunicationCallAdapter(callClient, overloadedParam, callAgent, deviceManager, options);
   } else {
-    return new AzureCommunicationCallAdapter(
-      callClient,
-      locatorOrtargetCallees as CallAdapterLocator,
-      callAgent,
-      deviceManager,
-      options
-    );
+    return new AzureCommunicationCallAdapter(callClient, overloadedParam, callAgent, deviceManager, options);
   }
 }
 
