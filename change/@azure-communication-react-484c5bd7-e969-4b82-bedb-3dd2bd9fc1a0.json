@@ -1,0 +1,9 @@
+{
+  "type": "patch",
+  "area": "fix",
+  "workstream": "",
+  "comment": "Focus will move into the menu directly when menu open",
+  "packageName": "@azure/communication-react",
+  "email": "jiangnanhello@live.com",
+  "dependentChangeType": "patch"
+}
