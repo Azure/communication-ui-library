@@ -265,7 +265,6 @@ function callAdapterStateFromCallWithChatAdapterState(
     /* @conditional-compile-remove(breakout-rooms) */
     latestNotifications: callWithChatAdapterState.latestCallNotifications,
     alternateCallerId: callWithChatAdapterState.alternateCallerId,
-    /* @conditional-compile-remove(unsupported-browser) */
     environmentInfo: callWithChatAdapterState.environmentInfo,
 
     videoBackgroundImages: callWithChatAdapterState.videoBackgroundImages,

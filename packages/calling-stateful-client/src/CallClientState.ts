@@ -39,7 +39,6 @@ import { CaptionsKind } from '@azure/communication-calling';
 import { VideoEffectName } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support) */
 import { CallKind } from '@azure/communication-calling';
-/* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
 import { CommunicationIdentifierKind } from '@azure/communication-common';
 import { ReactionMessage } from '@azure/communication-calling';
@@ -962,7 +961,6 @@ export interface CallClientState {
    * be used as the caller id in the PSTN call.
    */
   alternateCallerId?: string;
-  /* @conditional-compile-remove(unsupported-browser) */
   /**
    * state to track the environment that the stateful client was made in is supported
    */
@@ -1052,7 +1050,7 @@ export type CallErrorTarget =
   | 'CallClient.createTeamsCallAgent'
   | 'CallClient.feature'
   | 'CallClient.getDeviceManager'
-  | /* @conditional-compile-remove(calling-beta-sdk) */ 'CallClient.getEnvironmentInfo'
+  | 'CallClient.getEnvironmentInfo'
   | 'DeviceManager.askDevicePermission'
   | 'DeviceManager.getCameras'
   | 'DeviceManager.getMicrophones'

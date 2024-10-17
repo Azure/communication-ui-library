@@ -2186,7 +2186,6 @@ export async function createAzureCommunicationCallAdapterFromClient(
   if (deviceManager.isSpeakerSelectionAvailable) {
     await deviceManager.getSpeakers();
   }
-  /* @conditional-compile-remove(unsupported-browser) */
   await callClient.feature(Features.DebugInfo).getEnvironmentInfo();
   if (getLocatorOrTargetCallees(locatorOrtargetCallees)) {
     return new AzureCommunicationCallAdapter(
@@ -2229,7 +2228,6 @@ export const createTeamsCallAdapterFromClient = async (
   if (deviceManager.isSpeakerSelectionAvailable) {
     await deviceManager.getSpeakers();
   }
-  /* @conditional-compile-remove(unsupported-browser) */
   await callClient.feature(Features.DebugInfo).getEnvironmentInfo();
   if (Array.isArray(locator)) {
     return new AzureCommunicationCallAdapter(callClient, locator, callAgent, deviceManager, options);
