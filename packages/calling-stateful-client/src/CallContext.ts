@@ -24,7 +24,7 @@ import { CaptionsKind, CaptionsInfo as AcsCaptionsInfo } from '@azure/communicat
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(together-mode) */
-import { TogetherModeVideoStream } from '@azure/communication-calling';
+import { TogetherModeVideoStream, TogetherModeSeatingMap } from '@azure/communication-calling';
 import { AzureLogger, createClientLogger, getLogLevel } from '@azure/logger';
 import { EventEmitter } from 'events';
 import { enableMapSet, enablePatches, Patch, produce } from 'immer';
@@ -66,6 +66,12 @@ import { SpotlightedParticipant } from '@azure/communication-calling';
 import { LocalRecordingInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(local-recording-notification) */
 import { RecordingInfo } from '@azure/communication-calling';
+/* @conditional-compile-remove(together-mode) */
+import {
+  TogetherModeStreamsState,
+  TogetherModeStreamViewState,
+  TogetherModeSeatingPositionState
+} from './CallClientState';
 
 enableMapSet();
 // Needed to generate state diff for verbose logging.
@@ -457,11 +463,33 @@ export class CallContext {
   }
 
   /* @conditional-compile-remove(together-mode) */
-  public setTogetherModeVideoStream(callId: string, addedStream: TogetherModeVideoStream[]): void {
+  public setTogetherModeVideoStream(
+    callId: string,
+    addedStreams: TogetherModeVideoStream[],
+    recalculateSeatingPositions: (width: number, height: number) => void
+  ): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
-        call.togetherMode = { stream: addedStream };
+        const togetherModeStreams: TogetherModeStreamsState = {
+          mainVideoStream: undefined
+        };
+        for (const stream of addedStreams) {
+          const streamToAdd: TogetherModeStreamViewState = {
+            feature: 'togetherMode',
+            id: stream.id,
+            view: undefined,
+            mediaStreamType: stream.mediaStreamType,
+            isReceiving: stream.isReceiving,
+            recalculateSeatingPositions
+          };
+          // SDK does not support panomaric media type
+          if (stream.mediaStreamType === 'Video') {
+            togetherModeStreams.mainVideoStream = streamToAdd;
+            call.togetherMode.seatingPositions = [];
+          }
+        }
+        call.togetherMode.streams = togetherModeStreams;
       }
     });
   }
@@ -472,11 +500,29 @@ export class CallContext {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
         for (const stream of removedStream) {
-          if (stream.mediaStreamType in call.togetherMode.stream) {
-            // Temporary lint fix: Remove the stream from the list
-            call.togetherMode.stream = [];
+          if (stream.mediaStreamType === 'Video') {
+            call.togetherMode.streams.mainVideoStream = undefined;
+            call.togetherMode.seatingPositions = [];
           }
         }
+      }
+    });
+  }
+
+  /* @conditional-compile-remove(together-mode) */
+  public setTogetherModeSeatingCoordinatesState(callId: string, seatingMap: TogetherModeSeatingMap): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        const seatingPositions: TogetherModeSeatingPositionState[] = [];
+        for (const [key, value] of seatingMap.entries()) {
+          const participantPosition: TogetherModeSeatingPositionState = {
+            participantId: key,
+            position: value
+          };
+          seatingPositions.push(participantPosition);
+        }
+        call.togetherMode.seatingPositions = seatingPositions;
       }
     });
   }
@@ -715,6 +761,26 @@ export class CallContext {
         );
         if (localVideoStream) {
           localVideoStream.view = view;
+        }
+      }
+    });
+  }
+
+  /* @conditional-compile-remove(together-mode) */
+  public setTogetherModeVideoStreamRendererView(
+    callId: string,
+    togetherModeStreamType: string,
+    view: VideoStreamRendererViewState | undefined
+  ): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      /* @conditional-compile-remove(together-mode) */
+      if (call) {
+        if (togetherModeStreamType === 'Video') {
+          const togetherModeStream = call.togetherMode.streams.mainVideoStream;
+          if (togetherModeStream) {
+            togetherModeStream.view = view;
+          }
         }
       }
     });

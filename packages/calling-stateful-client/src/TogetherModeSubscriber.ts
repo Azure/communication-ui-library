@@ -7,9 +7,6 @@ import { TogetherModeCallFeature, TogetherModeVideoStream } from '@azure/communi
 import { CallContext } from './CallContext';
 /* @conditional-compile-remove(together-mode) */
 import { CallIdRef } from './CallIdRef';
-/**
- * @private
- */
 
 /* @conditional-compile-remove(together-mode) */
 /**
@@ -36,12 +33,16 @@ export class TogetherModeSubscriber {
     this._togetherMode.off('togetherModeStreamsUpdated', this.onTogetherModeStreamUpdated);
   };
 
+  private recalculateSeatingPositions = (width: number, height: number): void => {
+    this._togetherMode.sceneSize = { width, height };
+  };
+
   private onTogetherModeStreamUpdated = (args: {
     added: TogetherModeVideoStream[];
     removed: TogetherModeVideoStream[];
   }): void => {
     if (args.added) {
-      this._context.setTogetherModeVideoStream(this._callIdRef.callId, args.added);
+      this._context.setTogetherModeVideoStream(this._callIdRef.callId, args.added, this.recalculateSeatingPositions);
     }
     if (args.removed) {
       this._context.removeTogetherModeVideoStream(this._callIdRef.callId, args.removed);
