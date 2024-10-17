@@ -337,7 +337,7 @@ export type CallAdapterClientState = {
 
 // @public
 export interface CallAdapterDeviceManagement {
-    askDevicePermission(constrain: PermissionConstraints): Promise<void>;
+    askDevicePermission(constrain: PermissionConstraints): Promise<DeviceAccess>;
     queryCameras(): Promise<VideoDeviceInfo[]>;
     queryMicrophones(): Promise<AudioDeviceInfo[]>;
     querySpeakers(): Promise<AudioDeviceInfo[]>;
@@ -547,8 +547,8 @@ export type CallCompositeIcons = {
 
 // @public
 export type CallCompositeLoaderProps = {
-    userId: string;
-    token: string;
+    userId: CommunicationUserIdentifier;
+    credential: CommunicationTokenCredential;
     displayName: string;
     locator: CallAdapterLocator;
     callAdapterOptions?: AzureCommunicationCallAdapterOptions;
@@ -975,7 +975,7 @@ export interface CallWithChatAdapterManagement {
     addParticipant(participant: PhoneNumberIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
     // (undocumented)
     addParticipant(participant: CommunicationUserIdentifier): Promise<void>;
-    askDevicePermission(constrain: PermissionConstraints): Promise<void>;
+    askDevicePermission(constrain: PermissionConstraints): Promise<DeviceAccess>;
     createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void | CreateVideoStreamViewResult>;
     deleteMessage(messageId: string): Promise<void>;
     disposeLocalVideoStreamView(): Promise<void>;
@@ -1258,8 +1258,8 @@ export type CallWithChatCompositeIcons = {
 
 // @public
 export type CallWithChatCompositeLoaderProps = {
-    userId: string;
-    token: string;
+    userId: CommunicationUserIdentifier;
+    credential: CommunicationTokenCredential;
     displayName: string;
     endpoint: string;
     locator: CallAndChatLocator;
@@ -1653,8 +1653,8 @@ export type ChatCompositeIcons = {
 
 // @public
 export type ChatCompositeLoaderProps = {
-    userId: string;
-    token: string;
+    userId: CommunicationUserIdentifier;
+    credential: CommunicationTokenCredential;
     displayName?: string;
     endpoint: string;
     threadId: string;
@@ -3521,8 +3521,8 @@ export interface OptionsDevice {
 
 // @public
 export type OutboundCallCompositeLoaderProps = {
-    userId: string;
-    token: string;
+    userId: CommunicationUserIdentifier;
+    credential: CommunicationTokenCredential;
     displayName: string;
     targetCallees: string[] | StartCallIdentifier[];
     callAdapterOptions?: AzureCommunicationCallAdapterOptions;
