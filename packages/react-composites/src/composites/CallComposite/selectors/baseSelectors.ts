@@ -1,15 +1,17 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { CallState as SDKCallStatus, DominantSpeakersInfo } from '@azure/communication-calling';
-import { ParticipantCapabilities } from '@azure/communication-calling';
-import { VideoDeviceInfo, AudioDeviceInfo } from '@azure/communication-calling';
+import {
+  CallState as SDKCallStatus,
+  DominantSpeakersInfo,
+  ParticipantCapabilities,
+  ParticipantRole,
+  VideoDeviceInfo,
+  AudioDeviceInfo,
+  CapabilitiesChangeInfo,
+  EnvironmentInfo
+} from '@azure/communication-calling';
 
-import { CapabilitiesChangeInfo } from '@azure/communication-calling';
-/* @conditional-compile-remove(unsupported-browser) */
-import { EnvironmentInfo } from '@azure/communication-calling';
-
-import { ParticipantRole } from '@azure/communication-calling';
 /* @conditional-compile-remove(breakout-rooms) */
 import { BreakoutRoom, BreakoutRoomsSettings } from '@azure/communication-calling';
 import {
@@ -159,7 +161,6 @@ export const getRemoteParticipants = (
       [keys: string]: RemoteParticipantState;
     } => state.call?.remoteParticipants;
 
-/* @conditional-compile-remove(unsupported-browser) */
 /**
  * @private
  */

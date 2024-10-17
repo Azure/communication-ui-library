@@ -28,8 +28,8 @@ import { cameraAndVideoEffectsContainerStyleDesktop } from '../styles/CallConfig
 import { effectsButtonStyles } from '../styles/CallConfiguration.styles';
 import { useSelector } from '../hooks/useSelector';
 import { getRole, getVideoEffectsDependency } from '../selectors/baseSelectors';
-/* @conditional-compile-remove(calling-environment-info) */
 import { getEnvironmentInfo } from '../selectors/baseSelectors';
+import { _isSafari } from '../utils';
 
 type iconType = 'Camera' | 'Microphone' | 'Speaker';
 
@@ -140,9 +140,8 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
   const hasCameras = props.cameras.length > 0;
   const hasMicrophones = props.microphones.length > 0;
   const hasSpeakers = props.speakers.length > 0;
-  /* @conditional-compile-remove(calling-environment-info) */
-  const isSafariWithNoSpeakers =
-    useSelector(getEnvironmentInfo)?.environment.browser.toLowerCase() === 'safari' && !hasSpeakers;
+  const environmentInfo = useSelector(getEnvironmentInfo);
+  const isSafariWithNoSpeakers = _isSafari(environmentInfo) && !hasSpeakers;
 
   const cameraGrantedDropdown = (
     <Dropdown
@@ -241,14 +240,6 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
     />
   );
 
-  const safariBrowserSpeakerDropdownTrampoline = (): JSX.Element => {
-    /* @conditional-compile-remove(calling-environment-info) */
-    if (isSafariWithNoSpeakers) {
-      return <></>;
-    }
-    return speakerDropdown;
-  };
-
   return (
     <Stack data-ui-id="call-composite-device-settings" tokens={mainStackTokens} styles={deviceSelectionContainerStyles}>
       {roleCanUseCamera && (
@@ -300,7 +291,7 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
             /* @conditional-compile-remove(call-readiness) */
             onClickEnableDevicePermission={props.onClickEnableDevicePermission}
           />
-          {safariBrowserSpeakerDropdownTrampoline()}
+          {isSafariWithNoSpeakers ? <></> : speakerDropdown}
         </Stack>
       </Stack>
     </Stack>
