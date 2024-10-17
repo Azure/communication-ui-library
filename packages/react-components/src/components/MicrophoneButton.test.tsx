@@ -4,19 +4,9 @@
 import React from 'react';
 import { MicrophoneButton } from './MicrophoneButton';
 import { createTestLocale, renderWithLocalization } from './utils/testUtils';
-import { registerIcons } from '@fluentui/react';
 import { screen } from '@testing-library/react';
 
 describe('MicrophoneButton strings should be localizable and overridable', () => {
-  beforeAll(() => {
-    registerIcons({
-      icons: {
-        controlbuttonmicoff: <></>,
-        chevrondown: <></>,
-        controlbuttonmicon: <></>
-      }
-    });
-  });
   test('Should localize button label', async () => {
     const testLocale = createTestLocale({
       microphoneButton: { offLabel: Math.random().toString(), onLabel: Math.random().toString() }

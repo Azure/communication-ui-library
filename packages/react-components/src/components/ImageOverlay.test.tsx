@@ -4,17 +4,8 @@
 import React from 'react';
 import { ImageOverlay } from './ImageOverlay';
 import { render, screen } from '@testing-library/react';
-import { registerIcons } from '@fluentui/react';
 
 describe('ImageOverlay default layout tests', () => {
-  beforeAll(() => {
-    registerIcons({
-      icons: {
-        cancel: <></>,
-        download: <></>
-      }
-    });
-  });
   test('Empty Mock Test', () => {
     expect(true).toBe(true);
   });
