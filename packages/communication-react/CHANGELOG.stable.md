@@ -40,6 +40,7 @@ Tue, 15 Oct 2024 20:24:24 GMT
 - Fix noUncheckedIndexedAccess for react-composites ([PR #5297](https://github.com/azure/communication-ui-library/pull/5297) by 2684369+JamesBurnside@users.noreply.github.com)
 - Enable noUncheckedIndexedAccess for react-components ([PR #5266](https://github.com/azure/communication-ui-library/pull/5266) by 2684369+JamesBurnside@users.noreply.github.com)
 - Fix safari showing no speakers in the speaker dropdown. Instead show a single audio dropdown for both mic and speakers ([PR #5328](https://github.com/azure/communication-ui-library/pull/5328))
+- Expose environmentInfo in call client state and call adapter state ([PR #5328](https://github.com/azure/communication-ui-library/pull/5328))
 
 ## [1.19.0](https://github.com/azure/communication-ui-library/tree/1.19.0)
 
