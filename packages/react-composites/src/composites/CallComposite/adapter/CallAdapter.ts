@@ -760,14 +760,12 @@ export interface CallAdapterCallOperations {
    * Stop all spotlights
    */
   stopAllSpotlight(): Promise<void>;
-  /* @conditional-compile-remove(soft-mute) */
   /**
    * Mute a participant
    *
    * @param userId - Id of the participant to mute
    */
   muteParticipant(userId: string): Promise<void>;
-  /* @conditional-compile-remove(soft-mute) */
   /**
    * Mute All participants
    */
@@ -960,7 +958,6 @@ export interface CallAdapterSubscribers {
    * Subscribe function for 'spotlightChanged' event.
    */
   on(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
-  /* @conditional-compile-remove(soft-mute) */
   /**
    * Subscribe function for 'mutedByOthers' event.
    */
@@ -1051,7 +1048,6 @@ export interface CallAdapterSubscribers {
    * Unsubscribe function for 'spotlightChanged' event.
    */
   off(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
-  /* @conditional-compile-remove(soft-mute) */
   /**
    * Unsubscribe function for 'mutedByOthers' event.
    */
