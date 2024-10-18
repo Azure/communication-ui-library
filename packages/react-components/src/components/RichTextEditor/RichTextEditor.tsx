@@ -213,12 +213,6 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     return <RichTextToolbar plugin={toolbarPlugin} strings={strings} />;
   }, [strings, toolbarPlugin]);
 
-  useEffect(() => {
-    if (showRichTextEditorFormatting) {
-      toolbarRef.current?.focus();
-    }
-  }, [showRichTextEditorFormatting]);
-
   const updatePlugin = useMemo(() => {
     return new UpdateContentPlugin();
   }, []);
@@ -416,6 +410,7 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
 
     const initialModel = createEditorInitialModel(initialContent, contentModel);
     if (editorDiv.current) {
+      console.log('Create new Editor');
       editor.current = new Editor(editorDiv.current, {
         inDarkMode: isDarkThemed(theme),
         // doNotAdjustEditorColor is used to disable default color and background color for Rooster component
@@ -435,8 +430,12 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
       });
     }
 
-    if (autoFocus === 'sendBoxTextField') {
-      // editor.current?.focus();
+    if (showRichTextEditorFormatting) {
+      console.log('Auto focus - Toolbar');
+      toolbarRef.current?.focus();
+    } else if (autoFocus === 'sendBoxTextField') {
+      console.log('Auto focus');
+      editor.current?.focus();
     }
 
     return () => {
@@ -447,7 +446,7 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     };
     // don't update the editor on deps update as everything is handled in separate hooks or plugins
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [theme, plugins, announcerStringGetter]);
+  }, [theme, plugins]);
 
   useEffect(() => {
     const themeDirectionValue = themeDirection(theme);
