@@ -19,7 +19,6 @@ import { RemoteParticipant } from '@azure/communication-calling';
 import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
 import { DtmfTone } from '@azure/communication-calling';
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
-/* @conditional-compile-remove(teams-identity-support) */
 import { TeamsCall } from '@azure/communication-calling';
 /* @conditional-compile-remove(call-readiness) */
 import { PermissionConstraints } from '@azure/communication-calling';
@@ -77,7 +76,6 @@ export interface CommonCallingHandlers {
   onDisposeLocalScreenShareStreamView: () => Promise<void>;
   onSendDtmfTone: (dtmfTone: DtmfTone) => Promise<void>;
   onRemoveParticipant(userId: string): Promise<void>;
-
   onRemoveParticipant(participant: CommunicationIdentifier): Promise<void>;
   /* @conditional-compile-remove(call-readiness) */
   askDevicePermission: (constrain: PermissionConstraints) => Promise<void>;
@@ -85,9 +83,7 @@ export interface CommonCallingHandlers {
   onAcceptCall: (incomingCallId: string, useVideo?: boolean) => Promise<void>;
   onRejectCall: (incomingCallId: string) => Promise<void>;
   onRemoveVideoBackgroundEffects: () => Promise<void>;
-
   onBlurVideoBackground: (backgroundBlurConfig?: BackgroundBlurConfig) => Promise<void>;
-
   onReplaceVideoBackground: (backgroundReplacementConfig: BackgroundReplacementConfig) => Promise<void>;
   /* @conditional-compile-remove(DNS) */
   onStartNoiseSuppressionEffect: () => Promise<void>;
@@ -97,7 +93,6 @@ export interface CommonCallingHandlers {
   onStopCaptions: () => Promise<void>;
   onSetSpokenLanguage: (language: string) => Promise<void>;
   onSetCaptionLanguage: (language: string) => Promise<void>;
-
   onSubmitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined>;
   onStartSpotlight: (userIds?: string[]) => Promise<void>;
   onStopSpotlight: (userIds?: string[]) => Promise<void>;
@@ -169,7 +164,7 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
   (
     callClient: StatefulCallClient,
     deviceManager: StatefulDeviceManager | undefined,
-    call: Call | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall | undefined,
+    call: Call | TeamsCall | undefined,
     options?: {
       onResolveVideoBackgroundEffectsDependency?: () => Promise<VideoBackgroundEffectsDependency>;
       /* @conditional-compile-remove(DNS) */
