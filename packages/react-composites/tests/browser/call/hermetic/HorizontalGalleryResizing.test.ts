@@ -44,7 +44,6 @@ test.describe('Height gallery resizing tests', async () => {
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
     // wait for the tiles to load
     const horiztonalTiles = await waitForSelector(page, dataUiId(IDS.horizontalGalleryVideoTile));
-    console.log(await horiztonalTiles.evaluate((e) => (e as HTMLDivElement).clientWidth));
     // check that the initial sizes are correct for the vertical tiles.
     expect(await horiztonalTiles.evaluate((e) => (e as HTMLDivElement).clientWidth)).toBeGreaterThanOrEqual(120);
     expect(await horiztonalTiles.evaluate((e) => (e as HTMLDivElement).clientWidth)).toBeLessThanOrEqual(215);

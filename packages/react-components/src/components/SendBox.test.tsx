@@ -5,7 +5,6 @@ import React from 'react';
 import { SendBox } from './SendBox';
 import { renderWithLocalization, createTestLocale } from './utils/testUtils';
 import { screen } from '@testing-library/react';
-import { registerIcons } from '@fluentui/react';
 /* @conditional-compile-remove(mention) */
 import { render, waitFor, act, fireEvent } from '@testing-library/react';
 /* @conditional-compile-remove(mention) */
@@ -14,13 +13,6 @@ import userEvent from '@testing-library/user-event';
 import { Mention } from './MentionPopover';
 
 describe('SendBox strings should be localizable and overridable', () => {
-  beforeAll(() => {
-    registerIcons({
-      icons: {
-        sendboxsend: <></>
-      }
-    });
-  });
   test('Should localize placeholder text', async () => {
     const testLocale = createTestLocale({ sendBox: { placeholderText: Math.random().toString() } });
     renderWithLocalization(<SendBox />, testLocale);
