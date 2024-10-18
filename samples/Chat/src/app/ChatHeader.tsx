@@ -30,7 +30,7 @@ export interface ChatHeaderProps extends PeopleButtonProps {
 export const ChatHeader = (props: ChatHeaderProps): JSX.Element => {
   const theme = useTheme();
 
-  const leaveString = 'Leave';
+  const leaveString = 'Leave Chat';
   return (
     <Stack
       horizontal={true}

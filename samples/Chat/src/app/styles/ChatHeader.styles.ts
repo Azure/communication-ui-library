@@ -15,7 +15,7 @@ export const chatHeaderContainerStyle = mergeStyles({
 
 export const leaveButtonStyle = mergeStyles({
   marginRight: '0.625rem',
-  width: '6.688rem',
+  width: '8rem',
   borderWidth: '0.125rem',
   fontSize: '0.875rem', // 14px
   fontWeight: 600
