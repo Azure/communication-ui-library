@@ -8,9 +8,13 @@ import {
   RemoteParticipantState,
   StatefulCallClient
 } from '@internal/calling-stateful-client';
-import { CallState as CallStatus, LocalVideoStream, ParticipantRole } from '@azure/communication-calling';
-/* @conditional-compile-remove(unsupported-browser) */
-import { Features, EnvironmentInfo } from '@azure/communication-calling';
+import {
+  CallState as CallStatus,
+  EnvironmentInfo,
+  Features,
+  LocalVideoStream,
+  ParticipantRole
+} from '@azure/communication-calling';
 import {
   CommunicationIdentifier,
   CommunicationUserIdentifier,
@@ -110,7 +114,6 @@ const memoizedUpdateDisplayName = memoizeFnAll((participantId: string, participa
   }
 });
 
-/* @conditional-compile-remove(unsupported-browser) */
 /**
  * Check whether the call is in a supported browser
  *

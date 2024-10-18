@@ -223,7 +223,7 @@ describe('ResourceDownloadQueue api functions', () => {
     queue.addMessage(first);
     await queue.startQueue(threadId, operation);
     expect(operation).toHaveBeenCalledTimes(1);
-    const resourceCache = context.getState().threads[threadId].chatMessages[messageId].resourceCache;
+    const resourceCache = context.getState().threads[threadId]?.chatMessages[messageId]?.resourceCache;
     expect(resourceCache).toBeDefined();
   });
   test('if operation fails, error should be in the cache', async () => {
@@ -245,10 +245,10 @@ describe('ResourceDownloadQueue api functions', () => {
     queue.addMessage(first);
     await queue.startQueue(threadId, operation);
     expect(operation).toHaveBeenCalledTimes(1);
-    const resourceCache = context.getState().threads[threadId].chatMessages[messageId].resourceCache;
+    const resourceCache = context.getState().threads[threadId]?.chatMessages[messageId]?.resourceCache;
     expect(resourceCache).toBeDefined();
-    expect(resourceCache?.['previewUrl1'].error).toBeDefined();
-    expect(resourceCache?.['previewUrl1'].sourceUrl).toEqual('');
+    expect(resourceCache?.['previewUrl1']?.error).toBeDefined();
+    expect(resourceCache?.['previewUrl1']?.sourceUrl).toEqual('');
   });
   test('if operation fails for first item, error should be in the cache only for first item', async () => {
     const threadId = 'threadId';
@@ -273,12 +273,12 @@ describe('ResourceDownloadQueue api functions', () => {
     queue.addMessage(first);
     await queue.startQueue(threadId, operation);
     expect(operation).toHaveBeenCalledTimes(3);
-    const resourceCache = context.getState().threads[threadId].chatMessages[messageId].resourceCache;
+    const resourceCache = context.getState().threads[threadId]?.chatMessages[messageId]?.resourceCache;
     expect(resourceCache).toBeDefined();
-    expect(resourceCache?.['previewUrl1'].error).toBeDefined();
-    expect(resourceCache?.['previewUrl1'].sourceUrl).toEqual('');
-    expect(resourceCache?.['previewUrl2'].error).toBeUndefined();
-    expect(resourceCache?.['previewUrl3'].error).toBeUndefined();
+    expect(resourceCache?.['previewUrl1']?.error).toBeDefined();
+    expect(resourceCache?.['previewUrl1']?.sourceUrl).toEqual('');
+    expect(resourceCache?.['previewUrl2']?.error).toBeUndefined();
+    expect(resourceCache?.['previewUrl3']?.error).toBeUndefined();
   });
 });
 

@@ -43,7 +43,7 @@ export const TEST_PARTICIPANTS: ChatParticipant[] = TEST_PARTICIPANTS_CHAT.map((
  * Default fake chat adapter args
  */
 export const DEFAULT_FAKE_CHAT_ADAPTER_ARGS = {
-  localParticipant: TEST_PARTICIPANTS[0],
+  localParticipant: TEST_PARTICIPANTS[0]!,
   remoteParticipants: TEST_PARTICIPANTS.slice(1)
 };
 

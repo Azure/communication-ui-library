@@ -3,15 +3,13 @@
 
 import { CallState, DeviceManagerState } from '@internal/calling-stateful-client';
 import { CaptionsInfo } from '@internal/calling-stateful-client';
-import type { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling';
+import type { BackgroundBlurConfig, BackgroundReplacementConfig, DeviceAccess } from '@azure/communication-calling';
 import { Reaction } from '@azure/communication-calling';
 import type { CapabilitiesChangeInfo } from '@azure/communication-calling';
 import type { SpotlightedParticipant } from '@azure/communication-calling';
-/* @conditional-compile-remove(teams-identity-support) */
 import { TeamsCall } from '@azure/communication-calling';
 import { TransferEventArgs } from '@azure/communication-calling';
 import { StartCaptionsOptions } from '@azure/communication-calling';
-/* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(breakout-rooms) */
 import type { BreakoutRoomsUpdatedListener } from '@azure/communication-calling';
@@ -32,7 +30,6 @@ import type {
   MicrosoftTeamsAppIdentifier,
   UnknownIdentifier
 } from '@azure/communication-common';
-
 import type { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { DtmfTone } from '@azure/communication-calling';
@@ -41,9 +38,7 @@ import type { CommunicationUserIdentifier, PhoneNumberIdentifier } from '@azure/
 import type { AdapterState, Disposable, AdapterError, AdapterErrors } from '../../common/adapters';
 /* @conditional-compile-remove(breakout-rooms) */
 import type { AdapterNotifications } from '../../common/adapters';
-
 import { VideoBackgroundEffectsDependency } from '@internal/calling-component-bindings';
-
 import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
 import { ReactionResources } from '@internal/react-components';
 /* @conditional-compile-remove(DNS) */
@@ -147,7 +142,6 @@ export type CallAdapterClientState = {
    * Azure communications Phone number to make PSTN calls with.
    */
   alternateCallerId?: string;
-  /* @conditional-compile-remove(unsupported-browser) */
   /**
    * Environment information about system the adapter is made on
    */
@@ -801,7 +795,7 @@ export interface CallAdapterDeviceManagement {
    *
    * @public
    */
-  askDevicePermission(constrain: PermissionConstraints): Promise<void>;
+  askDevicePermission(constrain: PermissionConstraints): Promise<DeviceAccess>;
   /**
    * Query for available camera devices.
    *
@@ -1201,7 +1195,6 @@ export interface CallAdapter extends CommonCallAdapter {
   startCall(participants: StartCallIdentifier[], options?: StartCallOptions): Call | undefined;
 }
 
-/* @conditional-compile-remove(teams-identity-support) */
 /**
  * An Adapter interface specific for Teams identity which extends {@link CommonCallAdapter}.
  *
