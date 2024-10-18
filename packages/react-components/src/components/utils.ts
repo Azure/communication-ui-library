@@ -5,6 +5,7 @@ import { IIconProps, MessageBarType } from '@fluentui/react';
 import { ActiveErrorMessage, ErrorType } from './ErrorBar';
 import { _SupportedSpokenLanguage } from '../types';
 import { ActiveNotification, NotificationType } from './NotificationStack';
+import { VideoTileStrings } from './VideoTile';
 
 /**
  * @private
@@ -410,3 +411,38 @@ export const isEnterKeyEventFromCompositionSession = (e: KeyboardEvent): boolean
  * @private
  */
 export const nullToUndefined = <T>(value: T | null): T | undefined => (value === null ? undefined : value);
+
+/**
+ * @private
+ */
+export const formatMoreButtonAiraDescription = (
+  displayName?: string,
+  isMuted?: boolean,
+  isHandRaised?: boolean,
+  state?: string,
+  isSpeaking?: boolean,
+  strings?: VideoTileStrings
+): string => {
+  let ariaDescription = '';
+  if (displayName) {
+    ariaDescription = ariaDescription += ` ${displayName}`;
+  }
+  if (isMuted) {
+    if (isMuted === true) {
+      ariaDescription = ariaDescription += ` ${strings?.moreOptionsParticipantMutedStateMutedAriaLabel}`;
+    } else {
+      ariaDescription = ariaDescription += ` ${strings?.moreOptionsParticipantMutedStateUnmutedAriaLabel}`;
+    }
+  }
+  if (isHandRaised) {
+    ariaDescription = ariaDescription += ` ${strings?.moreOptionsParticipantHandRaisedAriaLabel}`;
+  }
+  if (isSpeaking) {
+    ariaDescription = ariaDescription += ` ${strings?.moreOptionsParticipantIsSpeakingAriaLabel}`;
+  }
+  if (state) {
+    ariaDescription = ariaDescription += ` ${state}`;
+  }
+  console.log(ariaDescription);
+  return ariaDescription;
+};
