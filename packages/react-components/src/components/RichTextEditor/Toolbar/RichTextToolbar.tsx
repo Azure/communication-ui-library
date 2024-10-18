@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-import React, { useCallback, useEffect, useMemo } from 'react';
+import React, { useCallback, useEffect, useImperativeHandle, useMemo } from 'react';
 import { RichTextToolbarPlugin } from '../Plugins/RichTextToolbarPlugin';
 import { CommandBar, ContextualMenuItemType, Icon } from '@fluentui/react';
 import type { ICommandBarItemProps, Theme } from '@fluentui/react';
@@ -258,6 +258,7 @@ export const RichTextToolbar = (props: RichTextToolbarProps): JSX.Element => {
       data-testid={'rich-text-editor-toolbar'}
       styles={richTextToolbarStyle}
       overflowButtonProps={overflowButtonProps}
+      aria-label={strings.richTextToolbarAriaLabel}
     />
   );
 };
