@@ -158,7 +158,7 @@ const AzureCommunicationCallScreen = (props: AzureCommunicationCallScreenProps):
       },
       deepNoiseSuppressionOptions: {
         onResolveDependency: onResolveDeepNoiseSuppressionDependencyLazy,
-        deepNoiseSuppressionOnByDefault: true
+        deepNoiseSuppressionOnByDefault: false
       },
       callingSounds: {
         callEnded: { url: 'assets/sounds/callEnded.mp3' },

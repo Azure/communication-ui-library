@@ -476,6 +476,15 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
         this.context.setCurrentCallId(this.call.id);
       }
 
+      console.log(
+        'DEBUG clientState.calls: ',
+        Object.values(clientState.calls)
+          .map((c) => `${c.id}-${c.state}`)
+          .join(', ')
+      );
+
+      console.log('DEBUG this.callAgent.calls: ', this.callAgent.calls.map((c) => `${c.id}-${c.state}`).join(', '));
+
       // if the call hits the connected state we want to pause all calling sounds if playing.
       if (this.call?.state === 'Connected' && this.callingSoundSubscriber?.playingSounds) {
         this.callingSoundSubscriber.pauseSounds();
