@@ -46,7 +46,7 @@ export class MockCallAdapter implements CallAdapter {
   allowUnsupportedBrowserVersion(): void {
     throw Error('allowWithUnsupportedBrowserVersion not implemented');
   }
-  dispose(): void {
+  dispose(): Promise<void> {
     throw Error('dispose not implemented');
   }
   joinCall(): Call | undefined {
