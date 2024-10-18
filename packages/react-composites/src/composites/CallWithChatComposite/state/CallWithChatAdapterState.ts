@@ -13,7 +13,6 @@ import { ChatAdapterState } from '../../ChatComposite';
 import { AdapterErrors } from '../../common/adapters';
 /* @conditional-compile-remove(breakout-rooms) */
 import { AdapterNotifications } from '../../common/adapters';
-/* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
 import { ReactionResources } from '@internal/react-components';
 /* @conditional-compile-remove(DNS) */
@@ -78,7 +77,6 @@ export interface CallWithChatClientState {
 
   /** alternateCallerId for PSTN call */
   alternateCallerId?: string;
-  /* @conditional-compile-remove(unsupported-browser) */
   /** Environment information for system adapter is made on */
   environmentInfo?: EnvironmentInfo;
 
@@ -90,17 +88,14 @@ export interface CallWithChatClientState {
   /* @conditional-compile-remove(DNS) */
   /**
    * Dependency to be injected for deep noise suppression effect.
-   * @beta
    */
   onResolveDeepNoiseSuppressionDependency?: () => Promise<DeepNoiseSuppressionEffectDependency>;
   /* @conditional-compile-remove(DNS) */
   /** State to track whether the noise suppression should be on by default.
-   * @beta
    */
   deepNoiseSuppressionOnByDefault?: boolean;
   /* @conditional-compile-remove(DNS) */
   /** State to track whether to hide the noise suppression button.
-   * @beta
    */
   hideDeepNoiseSuppressionButton?: boolean;
 
@@ -143,7 +138,6 @@ export function callWithChatAdapterStateFromBackingStates(callAdapter: CallAdapt
     latestCallNotifications: callAdapterState.latestNotifications,
     latestChatErrors: {},
     alternateCallerId: callAdapterState.alternateCallerId,
-    /* @conditional-compile-remove(unsupported-browser) */
     environmentInfo: callAdapterState.environmentInfo,
     videoBackgroundImages: callAdapterState.videoBackgroundImages,
     onResolveVideoEffectDependency: callAdapterState.onResolveVideoEffectDependency,

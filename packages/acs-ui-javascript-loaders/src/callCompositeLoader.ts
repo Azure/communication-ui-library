@@ -8,8 +8,7 @@ const reactVersion = React.version;
 parseReactVersion(reactVersion);
 
 import { createRoot } from 'react-dom/client';
-import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
-import { fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
+import { CommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import {
   CallComposite,
   createAzureCommunicationCallAdapter,
@@ -22,41 +21,47 @@ import { initializeIcons } from '@fluentui/react';
 
 /**
  * Props for the OutboundCallComposite that you can use in your application.
- * @beta
+ *
+ * Contains two options bags:
+ * - adapterOptions: Options for the {@link AzureCommunicationCallAdapter}
+ * - callCompositeOptions: Options for the {@link CallComposite} {@link CallCompositeOptions}
+ *
+ * @public
  */
 export type CallCompositeLoaderProps = {
-  userId: string;
-  token: string;
+  userId: CommunicationUserIdentifier;
+  credential: CommunicationTokenCredential;
   displayName: string;
   locator: CallAdapterLocator;
-  options?: AzureCommunicationCallAdapterOptions;
+  callAdapterOptions?: AzureCommunicationCallAdapterOptions;
+  callCompositeOptions?: CallCompositeOptions;
 };
 
 /**
- * Loader function for the OutboundCallComposite that you can use in your application.
+ * Loader function for the CallComposite that you can use in your application. This
+ * function will load the CallComposite into the provided HTML element. The best use case for this
+ * is in a Node ui framework that is not React based.
  *
- * @beta
+ * @public
  */
 export const loadCallComposite = async function (
-  adapterArgs: CallCompositeLoaderProps,
-  htmlElement: HTMLElement | null,
-  props?: CallCompositeOptions
+  loaderArgs: CallCompositeLoaderProps,
+  htmlElement: HTMLElement
 ): Promise<CallAdapter | undefined> {
   initializeIcons();
-  const { userId, token, displayName, locator, options } = adapterArgs;
-
+  const { userId, credential, displayName, locator, callAdapterOptions, callCompositeOptions } = loaderArgs;
   const adapter = await createAzureCommunicationCallAdapter({
-    userId: fromFlatCommunicationIdentifier(userId) as CommunicationUserIdentifier,
+    userId,
     displayName: displayName ?? 'anonymous',
-    credential: new AzureCommunicationTokenCredential(token),
+    credential,
     locator,
-    options
+    options: callAdapterOptions
   });
 
   if (!htmlElement) {
     throw new Error('Failed to find the root element');
   }
 
-  createRoot(htmlElement).render(React.createElement(CallComposite, { options: props, adapter }, null));
+  createRoot(htmlElement).render(React.createElement(CallComposite, { options: callCompositeOptions, adapter }, null));
   return adapter;
 };

@@ -28,7 +28,8 @@
     "@azure/communication-calling": "^1.28.4",
     "@azure/communication-common": "2.3.0",
     "@azure/communication-chat": "^1.5.2",
-    "@azure/communication-signaling": "1.0.0-beta.28"
+    "@azure/communication-signaling": "1.0.0-beta.28",
+    "@azure/communication-calling-effects": "^1.1.1"
   },
 
   /**
@@ -61,17 +62,7 @@
     "@azure/communication-common": ["2.3.0"],
     "@azure/communication-chat": ["^1.5.2"],
     "@azure/communication-signaling": ["1.0.0-beta.28"],
-    "@storybook/addon-actions": ["^8.2.6"],
-    "@storybook/addon-controls": ["^8.2.6"],
-    "@storybook/addon-docs": ["^8.2.6"],
-    "@storybook/addon-essentials": ["^8.2.6"],
-    "@storybook/addon-links": ["^8.2.6"],
-    "@storybook/builder-webpack5": ["^8.2.6"],
-    "@storybook/components": ["^8.2.6"],
-    "@storybook/core-events": ["^8.2.6"],
-    "@storybook/node-logger": ["^8.2.6"],
-    "@storybook/react": ["^8.2.6"],
-    "@storybook/theming": ["^8.2.6"],
+    "@azure/communication-calling-effects": ["^1.1.1"],
     "typescript": [
       // All projects should use this version by default
       "5.3.3",

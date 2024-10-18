@@ -23,8 +23,6 @@ module.exports = {
     "remote-ufd",
     // Feature for showing dtmp dialer by default
     "dtmf-dialer-on-by-default",
-    // Deep Noise Suppression feature
-    "DNS",
     // Feature for together mode
     "together-mode"
   ],
@@ -77,23 +75,21 @@ module.exports = {
     "call-participants-locator",
     // feature for breakout rooms
     "breakout-rooms",
-    // feature for adding JS helpers to the UI library API
-    "composite-js-helpers"
   ],
   stable: [
     // Demo feature. Used in live-documentation of conditional compilation.
     // Do not use in production code.
     "stabilizedDemo",
-    // Joining calls using teams token
-    "teams-identity-support",
-    // Feature for end call options 
-    'end-call-options',
     // Feature to support file sharing in Teams interoperability chats
     "file-sharing-teams-interop",
     // Feature for showing notifications
     "notifications",
     // Feature for tracking beta start call identifier
     'start-call-beta',
+    // feature for adding JS helpers to the UI library API
+    "composite-js-helpers",
+    // Deep Noise Suppression feature
+    "DNS",
     // Soft Mute feature for ACS calls and Interop calls
     "soft-mute"
   ]

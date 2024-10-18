@@ -576,7 +576,7 @@ describe('errors should be reported correctly from StatefulCallClient when', () 
     await expect(client.createCallAgent(stubCommunicationTokenCredential())).rejects.toThrow(
       new CallError('CallClient.createCallAgent', new Error('injected error'))
     );
-    expect(listener.onChangeCalledCount).toBe(1);
+    expect(listener.onChangeCalledCount).toBe(2);
     expect(client.getState().latestErrors['CallClient.createCallAgent']).toBeDefined();
   });
 
@@ -592,7 +592,7 @@ describe('errors should be reported correctly from StatefulCallClient when', () 
     await expect(client.getDeviceManager()).rejects.toThrow(
       new CallError('CallClient.getDeviceManager', new Error('injected error'))
     );
-    expect(listener.onChangeCalledCount).toBe(1);
+    expect(listener.onChangeCalledCount).toBe(2);
     expect(client.getState().latestErrors['CallClient.getDeviceManager']).toBeDefined();
   });
 });
