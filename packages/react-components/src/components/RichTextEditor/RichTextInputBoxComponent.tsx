@@ -105,15 +105,6 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
     [disabled, showRichTextEditorFormatting, theme]
   );
 
-  useEffect(() => {
-    if (showRichTextEditorFormatting !== undefined) {
-      // Focus the editor when toolbar shown/hidden
-      editorComponentRef.current?.focus();
-    }
-    // we don't need execute this useEffect if editorComponentRef is changed
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [showRichTextEditorFormatting]);
-
   const actionButtons = useMemo(() => {
     return (
       <Stack.Item align="end" className={richTextActionButtonsStackStyle}>
