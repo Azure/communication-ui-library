@@ -4,7 +4,6 @@
 import { Icon } from '@fluentui/react';
 import React, { useCallback } from 'react';
 import { useMemo } from 'react';
-/* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
 import { useLocale } from '../../localization';
 import { _AttachmentCard } from './AttachmentCard';
 import { _AttachmentCardGroup, _AttachmentCardGroupLayout } from './AttachmentCardGroup';
@@ -20,10 +19,7 @@ import { useAttachmentCardGroupStyles } from '../styles/AttachmentCardGroup.styl
  * Represents the type of attachment
  * @public
  */
-export type ChatAttachmentType =
-  | 'unknown'
-  | 'image'
-  | /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */ 'file';
+export type ChatAttachmentType = 'unknown' | 'image' | 'file';
 
 /**
  * Strings of _AttachmentDownloadCards that can be overridden.
@@ -133,14 +129,7 @@ export const _AttachmentDownloadCards = (props: _AttachmentDownloadCardsProps): 
  * @private
  */
 const useLocaleStringsTrampoline = (): _AttachmentDownloadCardsStrings => {
-  /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
   return useLocale().strings.messageThread;
-  return {
-    /* @conditional-compile-remove(file-sharing-acs) */
-    downloadAttachment: '',
-    openAttachment: '',
-    attachmentCardGroupMessage: ''
-  };
 };
 
 /**

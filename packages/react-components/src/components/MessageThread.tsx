@@ -221,7 +221,6 @@ export interface MessageThreadStrings {
   /* @conditional-compile-remove(file-sharing-acs) */
   /** String for download attachment button in attachment card */
   downloadAttachment: string;
-  /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
   /** String for open attachment button in attachment card */
   openAttachment: string;
   /* @conditional-compile-remove(data-loss-prevention) */
@@ -230,7 +229,6 @@ export interface MessageThreadStrings {
   /* @conditional-compile-remove(data-loss-prevention) */
   /** String for policy violation message removal details link */
   blockedWarningLinkText: string;
-  /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
   /** String for aria text in attachment card group*/
   attachmentCardGroupMessage: string;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
