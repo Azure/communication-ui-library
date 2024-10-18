@@ -128,7 +128,6 @@ export interface VideoGalleryStrings {
   stopSpotlightOnSelfVideoTileMenuLabel: string;
   /** String for the attendee role */
   attendeeRole: string;
-  /* @conditional-compile-remove(soft-mute) */
   /** Menu text shown in Video Tile contextual menu to mute a remote participant */
   muteParticipantMenuItemLabel: string;
   /** Text shown when waiting for others to join the call */
@@ -310,7 +309,6 @@ export interface VideoGalleryProps {
    * Additional Options for Video Tiles
    */
   videoTilesOptions?: VideoTilesOptions;
-  /* @conditional-compile-remove(soft-mute) */
   /**
    * This callback is to mute a remote participant
    */
@@ -399,7 +397,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     maxParticipantsToSpotlight,
     reactionResources,
     videoTilesOptions,
-    /* @conditional-compile-remove(soft-mute) */
     onMuteParticipant
   } = props;
 
@@ -649,7 +646,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           onStopSpotlight={onStopRemoteSpotlight}
           maxParticipantsToSpotlight={maxParticipantsToSpotlight}
           reactionResources={reactionResources}
-          /* @conditional-compile-remove(soft-mute) */
           onMuteParticipant={onMuteParticipant}
         />
       );
@@ -674,7 +670,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       onStartRemoteSpotlight,
       onStopRemoteSpotlight,
       maxParticipantsToSpotlight,
-      /* @conditional-compile-remove(soft-mute) */ onMuteParticipant,
+      onMuteParticipant,
       reactionResources,
       videoTilesOptions
     ]

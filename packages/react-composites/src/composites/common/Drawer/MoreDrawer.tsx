@@ -150,9 +150,7 @@ export interface MoreDrawerProps extends MoreDrawerDevicesMenuProps {
   useTeamsCaptions?: boolean;
   reactionResources?: ReactionResources;
   onReactionClick?: (reaction: string) => Promise<void>;
-
   onClickMeetingPhoneInfo?: () => void;
-  /* @conditional-compile-remove(soft-mute) */
   onMuteAllRemoteParticipants?: () => void;
 }
 

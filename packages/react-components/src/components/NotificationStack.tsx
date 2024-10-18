@@ -195,7 +195,6 @@ export interface NotificationStackStrings {
    * Error string letting you know remote participants see a frozen stream for you.
    */
   cameraFrozenForRemoteParticipants?: NotificationStrings;
-
   /**
    * Unable to start effect
    */
@@ -204,7 +203,6 @@ export interface NotificationStackStrings {
    * An error message when starting spotlight while max participants are spotlighted
    */
   startSpotlightWhileMaxParticipantsAreSpotlighted?: NotificationStrings;
-  /* @conditional-compile-remove(soft-mute) */
   /**
    * Muted by a remote participant message
    */

@@ -66,7 +66,7 @@ export const _RemoteVideoTile = React.memo(
     onStartSpotlight?: (userIds: string[]) => void;
     onStopSpotlight?: (userIds: string[]) => void;
     maxParticipantsToSpotlight?: number;
-    /* @conditional-compile-remove(soft-mute) */ onMuteParticipant?: (userId: string) => void;
+    onMuteParticipant?: (userId: string) => void;
     disablePinMenuItem?: boolean;
     toggleAnnouncerString?: (announcerString: string) => void;
     reactionResources?: ReactionResources;
@@ -94,7 +94,7 @@ export const _RemoteVideoTile = React.memo(
       onStartSpotlight,
       onStopSpotlight,
       maxParticipantsToSpotlight,
-      /* @conditional-compile-remove(soft-mute) */ onMuteParticipant,
+      onMuteParticipant,
       onUpdateScalingMode,
       disablePinMenuItem,
       toggleAnnouncerString,
@@ -147,7 +147,7 @@ export const _RemoteVideoTile = React.memo(
       onStartSpotlight,
       onStopSpotlight,
       maxParticipantsToSpotlight,
-      /* @conditional-compile-remove(soft-mute) */ onMuteParticipant
+      onMuteParticipant
     });
 
     const videoTileContextualMenuProps = useMemo(() => {

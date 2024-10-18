@@ -148,11 +148,9 @@ export class MockCallAdapter implements CallAdapter {
   stopAllSpotlight(): Promise<void> {
     throw Error('stopAllSpotlight not implemented');
   }
-  /* @conditional-compile-remove(soft-mute) */
   muteParticipant(): Promise<void> {
     throw Error('muteParticipant not implemented');
   }
-  /* @conditional-compile-remove(soft-mute) */
   muteAllRemoteParticipants(): Promise<void> {
     throw Error('muteAllRemoteParticipants not implemented');
   }

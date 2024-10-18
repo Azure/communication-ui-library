@@ -502,12 +502,10 @@ export interface CallWithChatAdapterManagement {
    * Stop all spotlights
    */
   stopAllSpotlight(): Promise<void>;
-  /* @conditional-compile-remove(soft-mute) */
   /**
    * Mute a participant
    */
   muteParticipant(userId: string): Promise<void>;
-  /* @conditional-compile-remove(soft-mute) */
   /**
    * Mute a participant
    */

@@ -338,7 +338,6 @@ export const customNotificationIconName: Partial<{ [key in NotificationType]: st
   callVideoStoppedBySystem: 'ErrorBarCallVideoStoppedBySystem',
   callVideoRecoveredBySystem: 'ErrorBarCallVideoRecoveredBySystem',
   callMacOsCameraAccessDenied: 'ErrorBarCallMacOsCameraAccessDenied',
-  /* @conditional-compile-remove(soft-mute) */
   mutedByRemoteParticipant: 'ErrorBarMutedByRemoteParticipant',
   speakingWhileMuted: 'ErrorBarCallMicrophoneMutedBySystem',
   recordingStarted: 'NotificationBarRecording',
