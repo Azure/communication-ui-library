@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { MediaAccessCallFeature, MediaAccessChangedEvent } from '@azure/communication-calling';
+import { MediaAccessCallFeature } from '@azure/communication-calling';
 import { CallContext } from './CallContext';
 import { CallIdRef } from './CallIdRef';
 
@@ -32,8 +32,13 @@ export class MediaAccessSubscriber {
     this._mediaAccessCallFeature.off('mediaAccessChanged', this.mediaAccessChanged);
   };
 
-  private mediaAccessChanged = (data: MediaAccessChangedEvent): void => {
-    console.log('hi there audioVideoAccess changed', data);
-    this._context.setMediaAccesses(this._callIdRef.callId, data.mediaAccesses);
+  private mediaAccessChanged = (): void => {
+    const mediaAccesses = this._mediaAccessCallFeature.getOthersMediaAccess();
+    this._context.setMediaAccesses(this._callIdRef.callId, mediaAccesses);
   };
+
+  // private mediaAccessChanged = (data: MediaAccessChangedEvent): void => {
+  //   console.log('hi there audioVideoAccess changed', data);
+  //   this._context.setMediaAccesses(this._callIdRef.callId, data.mediaAccesses);
+  // };
 }
