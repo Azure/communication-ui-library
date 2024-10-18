@@ -781,22 +781,34 @@ jobs:
           change=$([ $current_size -gt $base_size ] && echo "increased❗" || ([ $current_size = $base_size ] && echo "not changed" || echo "decreased✅"))
           echo "change=${change}" >> $GITHUB_OUTPUT
           echo "diff=$(($current_size - $base_size))" >> $GITHUB_OUTPUT
-      - name: Checkout repository
-        uses: actions/checkout@v4
-      - name: Update PR Description
-        uses: nefrob/pr-description@v1.1.2
+      - name: Find Comment
+        uses: peter-evans/find-comment@v2
+        id: fc
         with:
-          content: |
-            <!-- ${{ matrix.app }} bundle-size-report -->
-            ## ${{ matrix.app }} bundle size is ***${{ steps.bundles.outputs.change }}***.
-            - Current size: ${{ steps.bundles.outputs.current_size }}
-            - Base size: ${{ steps.bundles.outputs.base_size }}
-            - Diff size: ${{ steps.bundles.outputs.diff }}
-            <!-- end-bundle-size-report -->
-          regex: '<!-- ${{ matrix.app }} bundle-size-report -->.*?<!-- end-bundle-size-report -->'
-          regexFlags: 'ims'
-          appendContentOnMatchOnly: 'false'
+          issue-number: ${{ github.event.pull_request.number }}
+          comment-author: 'github-actions[bot]'
+          body-includes: '## ${{ matrix.app }} bundle size is'
+      - name: Delete comment
+        uses: delete-comment@v1
+        with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          repository: ${{ github.event.repository.owner }}
+          comment-id: ${{ steps.fc.outputs.comment-id }}
+      - name: Comment on PR
+        uses: actions/github-script@v3
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            github.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '|
+                ## ${{ matrix.app }} bundle size is ***${{ steps.bundles.outputs.change }}***.
+                - Current size: ${{ steps.bundles.outputs.current_size }}
+                - Base size: ${{ steps.bundles.outputs.base_size}}
+                - Diff size: ${{ steps.bundles.outputs.diff}}'
+              })
       - name: Check whether the bundle size is increased significantly
         if: ${{ github.event_name == 'pull_request' && !contains( github.event.pull_request.labels.*.name, 'significant bundle size change') }}
         run: node common/scripts/bundleSize/bundleSizeCheck.mjs ${{ matrix.app }} ${{ steps.bundles.outputs.diff }}
