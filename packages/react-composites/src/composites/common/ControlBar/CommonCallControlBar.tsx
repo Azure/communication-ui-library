@@ -47,9 +47,8 @@ import { capabilitySelector } from '../../CallComposite/selectors/capabilitySele
 import { DtmfDialpadButton } from './DtmfDialerButton';
 import { ExitSpotlightButton } from '../ExitSpotlightButton';
 import { useLocale } from '../../localization';
-/* @conditional-compile-remove(end-call-options) */
 import { isBoolean } from '../utils';
-/* @conditional-compile-remove(end-call-options) */
+import { getEnvironmentInfo } from '../../CallComposite/selectors/baseSelectors';
 import { getIsTeamsCall } from '../../CallComposite/selectors/baseSelectors';
 /* @conditional-compile-remove(breakout-rooms) */
 import { getAssignedBreakoutRoom, getBreakoutRoomSettings } from '../../CallComposite/selectors/baseSelectors';
@@ -135,11 +134,9 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
 
   const [showCaptionsSettingsModal, setShowCaptionsSettingsModal] = useState(false);
 
-  /* @conditional-compile-remove(end-call-options) */
   // If the hangup capability is not present, we default to true
   const isHangUpForEveryoneAllowed =
     useSelector((state) => state.call?.capabilitiesFeature?.capabilities.hangUpForEveryOne.isPresent) ?? true;
-  /* @conditional-compile-remove(end-call-options) */
   const isTeams = useSelector(getIsTeamsCall);
 
   /* @conditional-compile-remove(breakout-rooms) */
@@ -224,9 +221,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
   }, [props.callAdapter]);
 
   /* @conditional-compile-remove(DNS) */
-  let environmentInfo = undefined;
-  /* @conditional-compile-remove(unsupported-browser) */
-  environmentInfo = props.callAdapter.getState().environmentInfo;
+  const environmentInfo = useSelector(getEnvironmentInfo);
 
   /* @conditional-compile-remove(DNS) */
   const isSafari = _isSafari(environmentInfo);
@@ -533,7 +528,6 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                       displayType="compact"
                       mobileView={props.mobileView}
                       styles={endCallButtonStyles}
-                      /* @conditional-compile-remove(end-call-options) */
                       enableEndCallMenu={
                         !isBoolean(props.callControls) &&
                         !isBoolean(props.callControls?.endCallButton) &&
