@@ -231,7 +231,61 @@ const createCompositeHandlers = memoizeOne(
       /* @conditional-compile-remove(soft-mute) */
       onMuteAllRemoteParticipants: async (): Promise<void> => {
         await adapter.muteAllRemoteParticipants();
-      }
+      },
+      // onForbidParticipantAudio: async (userIds: string[]): Promise<void> => {
+      //   await adapter.forbidParticipantAudio(userIds);
+      // },
+      // onPermitParticipantAudio: async (userIds: string[]): Promise<void> => {
+      //   await adapter.permitParticipantAudio(userIds);
+      // }
+      /* @conditional-compile-remove(media-access) */
+      onForbidParticipantAudio: capabilities?.forbidOthersMedia.isPresent
+        ? async (userIds: string[]): Promise<void> => {
+            await adapter.forbidParticipantAudio(userIds);
+          }
+        : undefined,
+      /* @conditional-compile-remove(media-access) */
+      onPermitParticipantAudio: capabilities?.forbidOthersMedia.isPresent
+        ? async (userIds: string[]): Promise<void> => {
+            await adapter.permitParticipantAudio(userIds);
+          }
+        : undefined,
+      /* @conditional-compile-remove(media-access) */
+      onForbidAllAttendeesAudio: capabilities?.forbidOthersMedia.isPresent
+        ? async (): Promise<void> => {
+            await adapter.forbidAllAttendeesAudio();
+          }
+        : undefined,
+      /* @conditional-compile-remove(media-access) */
+      onPermitAllAttendeesAudio: capabilities?.forbidOthersMedia.isPresent
+        ? async (): Promise<void> => {
+            await adapter.permitAllAttendeesAudio();
+          }
+        : undefined,
+      /* @conditional-compile-remove(media-access) */
+      onForbidParticipantVideo: capabilities?.forbidOthersMedia.isPresent
+        ? async (userIds: string[]): Promise<void> => {
+            await adapter.forbidParticipantVideo(userIds);
+          }
+        : undefined,
+      /* @conditional-compile-remove(media-access) */
+      onPermitParticipantVideo: capabilities?.forbidOthersMedia.isPresent
+        ? async (userIds: string[]): Promise<void> => {
+            await adapter.permitParticipantVideo(userIds);
+          }
+        : undefined,
+      /* @conditional-compile-remove(media-access) */
+      onForbidAllAttendeesVideo: capabilities?.forbidOthersMedia.isPresent
+        ? async (): Promise<void> => {
+            await adapter.forbidAllAttendeesVideo();
+          }
+        : undefined,
+      /* @conditional-compile-remove(media-access) */
+      onPermitAllAttendeesVideo: capabilities?.forbidOthersMedia.isPresent
+        ? async (): Promise<void> => {
+            await adapter.permitAllAttendeesVideo();
+          }
+        : undefined
     };
   }
 );
