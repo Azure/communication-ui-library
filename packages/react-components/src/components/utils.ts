@@ -443,6 +443,5 @@ export const formatMoreButtonAiraDescription = (
   if (state) {
     ariaDescription = ariaDescription += ` ${state}`;
   }
-  console.log(ariaDescription);
   return ariaDescription;
 };
