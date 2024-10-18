@@ -13,7 +13,6 @@ import { ChatAdapterState } from '../../ChatComposite';
 import { AdapterErrors } from '../../common/adapters';
 /* @conditional-compile-remove(breakout-rooms) */
 import { AdapterNotifications } from '../../common/adapters';
-/* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
 import { ReactionResources } from '@internal/react-components';
 /* @conditional-compile-remove(DNS) */
@@ -78,7 +77,6 @@ export interface CallWithChatClientState {
 
   /** alternateCallerId for PSTN call */
   alternateCallerId?: string;
-  /* @conditional-compile-remove(unsupported-browser) */
   /** Environment information for system adapter is made on */
   environmentInfo?: EnvironmentInfo;
 
@@ -140,7 +138,6 @@ export function callWithChatAdapterStateFromBackingStates(callAdapter: CallAdapt
     latestCallNotifications: callAdapterState.latestNotifications,
     latestChatErrors: {},
     alternateCallerId: callAdapterState.alternateCallerId,
-    /* @conditional-compile-remove(unsupported-browser) */
     environmentInfo: callAdapterState.environmentInfo,
     videoBackgroundImages: callAdapterState.videoBackgroundImages,
     onResolveVideoEffectDependency: callAdapterState.onResolveVideoEffectDependency,

@@ -71,14 +71,12 @@ export {
   createDefaultCallingHandlers
 } from '../../calling-component-bindings/src';
 
-/* @conditional-compile-remove(teams-identity-support) */
 export {
   useTeamsCallAgent,
   useTeamsCall,
   createDefaultTeamsCallingHandlers
 } from '../../calling-component-bindings/src';
 
-/* @conditional-compile-remove(teams-identity-support) */
 export type { TeamsCallingHandlers } from '../../calling-component-bindings/src';
 
 export type {

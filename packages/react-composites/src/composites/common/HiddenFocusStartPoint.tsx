@@ -12,13 +12,18 @@ import { useEffect, useState } from 'react';
  */
 export const HiddenFocusStartPoint = (): JSX.Element => {
   const [isMounted, setIsMounted] = useState(false);
+  // ariaHidden is used to hide the button from screen readers,
+  // we want to only focus it for once then never again
+  const [isUnfocused, setIsUnfocused] = useState(false);
+
   useEffect(() => {
     setIsMounted(true);
   }, []);
   return (
     <DefaultButton
       autoFocus
-      ariaHidden={true}
+      onBlur={() => setIsUnfocused(true)}
+      ariaHidden={isUnfocused}
       styles={isMounted ? invisibleHiddenFocusStartPoint : hiddenFocusStartPointStyles}
       tabIndex={-1}
     />

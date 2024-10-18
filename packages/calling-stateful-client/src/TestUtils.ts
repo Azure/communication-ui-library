@@ -264,7 +264,7 @@ export interface MockCall extends Mutable<Call>, MockEmitter {
 export function createMockCall(mockCallId = 'defaultCallID'): MockCall {
   return addMockEmitter({
     id: mockCallId,
-    /* @conditional-compile-remove(teams-identity-support) */
+
     kind: 'Call',
     info: {
       groupId: 'testGroupId'
@@ -446,7 +446,21 @@ export const createMockCallClient = (callAgent?: CallAgent, deviceManager?: Devi
         throw new Error('callAgent not set');
       }
       return Promise.resolve(callAgent);
-    }
+    },
+    feature: () => ({
+      getEnvironmentInfo: () =>
+        Promise.resolve({
+          environment: {
+            platform: 'mockPlatform',
+            browser: 'mockBrowser',
+            browserVersion: 'mockBrowserVersion'
+          },
+          isSupportedPlatform: true,
+          isSupportedBrowser: true,
+          isSupportedBrowserVersion: true,
+          isSupportedEnvironment: true
+        })
+    })
   } as unknown as CallClient;
 };
 
@@ -468,7 +482,7 @@ export const createMockCallAgent = (displayName = 'defaultDisplayName'): MockCal
   return addMockEmitter({
     calls: [] as Call[],
     displayName: displayName,
-    /* @conditional-compile-remove(teams-identity-support) */
+
     kind: 'CallAgent',
 
     testHelperPushCall(call: Call): void {

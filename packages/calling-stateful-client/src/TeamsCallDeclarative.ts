@@ -18,7 +18,6 @@ export type DeclarativeTeamsCall = TeamsCall & {
 
 class ProxyTeamsCall extends ProxyCallCommon implements ProxyHandler<TeamsCall> {
   public get<P extends keyof TeamsCall>(target: TeamsCall, prop: P): any {
-    /* @conditional-compile-remove(teams-identity-support) */
     switch (prop) {
       /* @conditional-compile-remove(teams-identity-support-beta) */
       case 'addParticipant': {
