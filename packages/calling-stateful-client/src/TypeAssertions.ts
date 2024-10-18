@@ -35,7 +35,7 @@ type InferredCallErrorTargets =
    */
   | 'CallAgent.feature'
   | 'CallClient.getEnvironmentInfo'
-  | /* @conditional-compile-remove(calling-beta-sdk) */ /* @conditional-compile-remove(teams-identity-support) */ 'TeamsCall.addParticipant'
+  | 'TeamsCall.addParticipant'
   | 'CallClient.feature'
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.admit'
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.rejectParticipant'
