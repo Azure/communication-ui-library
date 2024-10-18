@@ -32,10 +32,10 @@ export type { TeamsCallingHandlers } from './handlers/createTeamsCallHandlers';
 export type { CommonCallingHandlers } from './handlers/createCommonHandlers';
 export type { CaptionsOptions } from './handlers/createCommonHandlers';
 
-export type { VideoBackgroundEffectsDependency } from './handlers/createCommonHandlers';
-
-/* @conditional-compile-remove(DNS) */
-export type { DeepNoiseSuppressionEffectDependency } from './handlers/createCommonHandlers';
+export type {
+  DeepNoiseSuppressionEffectDependency,
+  VideoBackgroundEffectsDependency
+} from './handlers/createCommonHandlers';
 
 export type { _ComponentCallingHandlers, CallingHandlersOptions } from './handlers/createHandlers';
 

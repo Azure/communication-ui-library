@@ -1,24 +1,25 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { AzureCommunicationTokenCredential } from '@azure/communication-common';
-import { CommunicationUserIdentifier } from '@azure/communication-common';
-import { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
+import {
+  AzureCommunicationTokenCredential,
+  CommunicationUserIdentifier,
+  MicrosoftTeamsUserIdentifier
+} from '@azure/communication-common';
 import {
   AzureCommunicationCallAdapterOptions,
+  CallAdapter,
   CallAdapterLocator,
   CallAdapterState,
-  useAzureCommunicationCallAdapter,
   CommonCallAdapter,
-  CallAdapter,
-  toFlatCommunicationIdentifier
+  onResolveDeepNoiseSuppressionDependencyLazy,
+  onResolveVideoEffectDependencyLazy,
+  TeamsCallAdapter,
+  toFlatCommunicationIdentifier,
+  useAzureCommunicationCallAdapter,
+  useTeamsCallAdapter
 } from '@azure/communication-react';
-import { useTeamsCallAdapter, TeamsCallAdapter } from '@azure/communication-react';
-import { onResolveVideoEffectDependencyLazy } from '@azure/communication-react';
-/* @conditional-compile-remove(DNS) */
-import { onResolveDeepNoiseSuppressionDependencyLazy } from '@azure/communication-react';
-import type { Profile, TeamsAdapterOptions } from '@azure/communication-react';
-import type { StartCallIdentifier } from '@azure/communication-react';
+import type { Profile, StartCallIdentifier, TeamsAdapterOptions } from '@azure/communication-react';
 import React, { useCallback, useMemo, useRef } from 'react';
 import { createAutoRefreshingCredential } from '../utils/credential';
 import { WEB_APP_TITLE } from '../utils/AppUtils';
@@ -155,7 +156,6 @@ const AzureCommunicationCallScreen = (props: AzureCommunicationCallScreenProps):
         videoBackgroundImages,
         onResolveDependency: onResolveVideoEffectDependencyLazy
       },
-      // /* @conditional-compile-remove(DNS) */
       deepNoiseSuppressionOptions: {
         onResolveDependency: onResolveDeepNoiseSuppressionDependencyLazy,
         deepNoiseSuppressionOnByDefault: true

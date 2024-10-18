@@ -353,11 +353,8 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     this.off.bind(this);
     this.downloadResourceToCache = this.downloadResourceToCache.bind(this);
     this.removeResourceFromCache = this.removeResourceFromCache.bind(this);
-
     this.holdCall.bind(this);
-
     this.resumeCall.bind(this);
-
     this.addParticipant.bind(this);
     this.sendDtmfTone.bind(this);
     /* @conditional-compile-remove(unsupported-browser) */
@@ -367,13 +364,9 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     this.setSpokenLanguage.bind(this);
     this.setCaptionLanguage.bind(this);
     this.startVideoBackgroundEffect.bind(this);
-
     this.stopVideoBackgroundEffects.bind(this);
-
     this.updateBackgroundPickerImages.bind(this);
-    /* @conditional-compile-remove(DNS) */
     this.startNoiseSuppressionEffect.bind(this);
-    /* @conditional-compile-remove(DNS) */
     this.stopNoiseSuppressionEffect.bind(this);
   }
 
@@ -659,12 +652,10 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     return this.callAdapter.updateSelectedVideoBackgroundEffect(selectedVideoBackground);
   }
 
-  /* @conditional-compile-remove(DNS) */
   public async startNoiseSuppressionEffect(): Promise<void> {
     return await this.callAdapter.startNoiseSuppressionEffect();
   }
 
-  /* @conditional-compile-remove(DNS) */
   public async stopNoiseSuppressionEffect(): Promise<void> {
     return await this.callAdapter.stopNoiseSuppressionEffect();
   }
