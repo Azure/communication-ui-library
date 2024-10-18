@@ -88,8 +88,6 @@ module.exports = {
     "notifications",
     // Feature for tracking beta start call identifier
     'start-call-beta',
-    // feature for adding JS helpers to the UI library API
-    "composite-js-helpers",
     // Deep Noise Suppression feature
     "DNS",
     // Soft Mute feature for ACS calls and Interop calls
