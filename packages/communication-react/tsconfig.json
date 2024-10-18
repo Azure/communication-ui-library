@@ -1,7 +1,6 @@
 {
   "extends": "../../common/config/tsc/tsconfig.json",
   "compilerOptions": {
-    "noUncheckedIndexedAccess": false,
     "baseUrl": "./src",
     "outDir": "./dist/dist-esm",
     "paths": {

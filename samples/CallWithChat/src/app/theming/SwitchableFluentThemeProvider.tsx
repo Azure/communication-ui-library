@@ -63,7 +63,7 @@ interface SwitchableFluentThemeContext {
   themeStore: ThemeCollection;
 }
 
-const defaultTheme: NamedTheme = defaultThemes.Light;
+const defaultTheme: NamedTheme = defaultThemes.Light as NamedTheme;
 
 /**
  * React useContext for FluentTheme state of SwitchableFluentThemeProvider

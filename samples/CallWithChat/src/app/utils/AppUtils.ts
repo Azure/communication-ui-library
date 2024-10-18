@@ -96,7 +96,7 @@ export const isOnIphoneAndNotSafari = (): boolean => {
 export const isSmallScreen = (): boolean => window.innerWidth < 700 || window.innerHeight < 400;
 
 export const navigateToHomePage = (): void => {
-  window.location.href = window.location.href.split('?')[0];
+  window.location.href = window.location.href.split('?')[0] ?? window.location.href;
 };
 
 declare let __BUILDTIME__: string; // Injected by webpack

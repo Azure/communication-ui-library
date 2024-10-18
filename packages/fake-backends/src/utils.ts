@@ -75,8 +75,5 @@ export const chatToSignalingParticipant = (p: ChatParticipant): SignalingChatPar
 };
 
 export const latestMessageTimestamp = (messages: ChatMessage[]): Date | undefined => {
-  if (messages.length === 0) {
-    return undefined;
-  }
-  return messages[messages.length - 1].createdOn;
+  return messages[messages.length - 1]?.createdOn;
 };

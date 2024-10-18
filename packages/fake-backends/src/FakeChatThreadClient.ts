@@ -109,6 +109,10 @@ export class FakeChatThreadClient implements IChatThreadClient {
     const messages = this.checkedGetThread().messages;
     const message = messages[messages.length - 1];
 
+    if (!message) {
+      throw new Error(`${this.threadId} has no messages`);
+    }
+
     this.checkedGetThreadEventEmitter().chatMessageReceived(
       getThreadEventTargets(this.checkedGetThread(), this.userId),
       {
