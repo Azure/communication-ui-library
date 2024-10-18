@@ -255,7 +255,6 @@ export const RichTextToolbar = (props: RichTextToolbarProps): JSX.Element => {
   return (
     <CommandBar
       items={buttons}
-      overflowItems={buttons}
       data-testid={'rich-text-editor-toolbar'}
       styles={richTextToolbarStyle}
       overflowButtonProps={overflowButtonProps}
