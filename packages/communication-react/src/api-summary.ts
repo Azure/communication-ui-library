@@ -12,6 +12,5 @@
  * instance it is recommended that the developer use the react components and composites directly.
  */
 
-/* @conditional-compile-remove(composite-js-helpers) */
 export * from './javascript-loaders';
 export * from './index';
