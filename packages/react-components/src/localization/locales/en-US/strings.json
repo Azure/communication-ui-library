@@ -525,7 +525,11 @@
   "videoTile": {
     "participantStateRinging": "Calling...",
     "participantStateHold": "On hold",
-    "moreOptionsButtonAriaLabel": "More Options"
+    "moreOptionsButtonAriaLabel": "More Options {displayName} {isMuted} {isHandRaised} {state} {isSpeaking}",
+    "moreOptionsParticipantMutedStateMutedAriaLabel": "muted",
+    "moreOptionsParticipantMutedStateUnmutedAriaLabel": "unmuted",
+    "moreOptionsParticipantHandRaisedAriaLabel": "Hand raised",
+    "moreOptionsParticipantIsSpeakingAriaLabel": "Speaking"
   },
   "CameraAndMicrophoneSitePermissionsRequest": {
     "primaryText": "Allow {appName} to use your camera and microphone",

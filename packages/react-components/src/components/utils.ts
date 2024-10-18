@@ -5,6 +5,8 @@ import { IIconProps, MessageBarType } from '@fluentui/react';
 import { ActiveErrorMessage, ErrorType } from './ErrorBar';
 import { _SupportedSpokenLanguage } from '../types';
 import { ActiveNotification, NotificationType } from './NotificationStack';
+import { VideoTileStrings } from './VideoTile';
+import { _formatString } from '@internal/acs-ui-common';
 
 /**
  * @private
@@ -410,3 +412,44 @@ export const isEnterKeyEventFromCompositionSession = (e: KeyboardEvent): boolean
  * @private
  */
 export const nullToUndefined = <T>(value: T | null): T | undefined => (value === null ? undefined : value);
+
+/**
+ * @private
+ */
+export const formatMoreButtonAriaDescription = (
+  displayName?: string,
+  isMuted?: boolean,
+  isHandRaised?: boolean,
+  state?: string,
+  isSpeaking?: boolean,
+  strings?: VideoTileStrings
+): string => {
+  let mutedState;
+  let handRaisedState;
+  let isSpeakingState;
+  if (isMuted) {
+    if (isMuted === true) {
+      mutedState = strings?.moreOptionsParticipantMutedStateMutedAriaLabel;
+    } else {
+      mutedState = strings?.moreOptionsParticipantMutedStateUnmutedAriaLabel;
+    }
+  }
+  if (isHandRaised) {
+    handRaisedState = strings?.moreOptionsParticipantHandRaisedAriaLabel;
+  }
+  if (isSpeaking) {
+    isSpeakingState = strings?.moreOptionsParticipantIsSpeakingAriaLabel;
+  }
+
+  const description = strings?.moreOptionsButtonAriaLabel
+    ? _formatString(strings?.moreOptionsButtonAriaLabel, {
+        displayName: displayName ?? ' ',
+        isMuted: mutedState ?? ' ',
+        isHandRaised: handRaisedState ?? ' ',
+        state: state ?? ' ',
+        isSpeaking: isSpeakingState ?? ' '
+      })
+    : '';
+
+  return description;
+};
