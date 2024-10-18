@@ -44,7 +44,7 @@ import {
   removeLocalBlobs,
   cleanAllLocalBlobs
 } from '../utils/RichTextEditorUtils';
-import { ContextualMenu, ICommandBar, IContextualMenuItem, IContextualMenuProps, Theme } from '@fluentui/react';
+import { ContextualMenu, IContextualMenuItem, IContextualMenuProps, Theme } from '@fluentui/react';
 import { PlaceholderPlugin } from './Plugins/PlaceholderPlugin';
 import { getFormatState, setDirection } from 'roosterjs-content-model-api';
 import UndoRedoPlugin from './Plugins/UndoRedoPlugin';
@@ -130,7 +130,7 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
   } = props;
   const editor = useRef<IEditor | null>(null);
   const editorDiv = useRef<HTMLDivElement>(null);
-  const commandBar = useRef<ICommandBar>(null);
+  const toolbarRef = useRef<HTMLDivElement>(null);
   const theme = useTheme();
   const [contextMenuProps, setContextMenuProps] = useState<IContextualMenuProps | null>(null);
   const previousThemeDirection = useRef(themeDirection(theme));
@@ -210,12 +210,12 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
   }, [placeholderPlugin, placeholderText]);
 
   const toolbar = useMemo(() => {
-    return <RichTextToolbar plugin={toolbarPlugin} strings={strings} ref={commandBar} />;
-  }, [strings, toolbarPlugin, commandBar]);
+    return <RichTextToolbar plugin={toolbarPlugin} strings={strings} />;
+  }, [strings, toolbarPlugin]);
 
   useEffect(() => {
     if (showRichTextEditorFormatting) {
-      commandBar.current?.focus();
+      toolbarRef.current?.focus();
     }
   }, [showRichTextEditorFormatting]);
 
@@ -467,7 +467,9 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
 
   return (
     <div data-testid={'rich-text-editor-wrapper'}>
-      {showRichTextEditorFormatting && toolbar}
+      <div ref={toolbarRef} tabIndex={-1}>
+        {showRichTextEditorFormatting && toolbar}
+      </div>
       <div className={richTextEditorWrapperStyle(theme)}>
         {/* div that is used by Rooster JS as a parent of the editor */}
         <div

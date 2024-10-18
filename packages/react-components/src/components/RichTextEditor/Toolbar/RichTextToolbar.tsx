@@ -3,7 +3,7 @@
 import React, { useCallback, useEffect, useImperativeHandle, useMemo } from 'react';
 import { RichTextToolbarPlugin } from '../Plugins/RichTextToolbarPlugin';
 import { CommandBar, ContextualMenuItemType, Icon } from '@fluentui/react';
-import type { ICommandBar, ICommandBarItemProps, Theme } from '@fluentui/react';
+import type { ICommandBarItemProps, Theme } from '@fluentui/react';
 import {
   toolbarButtonStyle,
   ribbonDividerStyle,
@@ -44,7 +44,7 @@ export interface RichTextToolbarProps {
  *
  * @beta
  */
-export const RichTextToolbar = React.forwardRef<ICommandBar, RichTextToolbarProps>((props, ref) => {
+export const RichTextToolbar = (props: RichTextToolbarProps): JSX.Element => {
   const { plugin, strings } = props;
   const theme = useTheme();
   // need to re-render the buttons when format state changes
@@ -259,10 +259,10 @@ export const RichTextToolbar = React.forwardRef<ICommandBar, RichTextToolbarProp
       data-testid={'rich-text-editor-toolbar'}
       styles={richTextToolbarStyle}
       overflowButtonProps={overflowButtonProps}
-      componentRef={ref as React.RefObject<ICommandBar>}
+      aria-live={'polite'}
     />
   );
-});
+};
 
 const getCommandBarItem = ({
   key,
