@@ -6,6 +6,7 @@ import { ActiveErrorMessage, ErrorType } from './ErrorBar';
 import { _SupportedSpokenLanguage } from '../types';
 import { ActiveNotification, NotificationType } from './NotificationStack';
 import { VideoTileStrings } from './VideoTile';
+import { _formatString } from '@internal/acs-ui-common';
 
 /**
  * @private
@@ -415,7 +416,7 @@ export const nullToUndefined = <T>(value: T | null): T | undefined => (value ===
 /**
  * @private
  */
-export const formatMoreButtonAiraDescription = (
+export const formatMoreButtonAriaDescription = (
   displayName?: string,
   isMuted?: boolean,
   isHandRaised?: boolean,
@@ -423,25 +424,32 @@ export const formatMoreButtonAiraDescription = (
   isSpeaking?: boolean,
   strings?: VideoTileStrings
 ): string => {
-  let ariaDescription = '';
-  if (displayName) {
-    ariaDescription = ariaDescription += ` ${displayName}`;
-  }
+  let mutedState;
+  let handRaisedState;
+  let isSpeakingState;
   if (isMuted) {
     if (isMuted === true) {
-      ariaDescription = ariaDescription += ` ${strings?.moreOptionsParticipantMutedStateMutedAriaLabel}`;
+      mutedState = strings?.moreOptionsParticipantMutedStateMutedAriaLabel;
     } else {
-      ariaDescription = ariaDescription += ` ${strings?.moreOptionsParticipantMutedStateUnmutedAriaLabel}`;
+      mutedState = strings?.moreOptionsParticipantMutedStateUnmutedAriaLabel;
     }
   }
   if (isHandRaised) {
-    ariaDescription = ariaDescription += ` ${strings?.moreOptionsParticipantHandRaisedAriaLabel}`;
+    handRaisedState = strings?.moreOptionsParticipantHandRaisedAriaLabel;
   }
   if (isSpeaking) {
-    ariaDescription = ariaDescription += ` ${strings?.moreOptionsParticipantIsSpeakingAriaLabel}`;
+    isSpeakingState = strings?.moreOptionsParticipantIsSpeakingAriaLabel;
   }
-  if (state) {
-    ariaDescription = ariaDescription += ` ${state}`;
-  }
-  return ariaDescription;
+
+  const description = strings?.moreOptionsButtonAriaLabel
+    ? _formatString(strings?.moreOptionsButtonAriaLabel, {
+        displayName: displayName ?? ' ',
+        isMuted: mutedState ?? ' ',
+        isHandRaised: handRaisedState ?? ' ',
+        state: state ?? ' ',
+        isSpeaking: isSpeakingState ?? ' '
+      })
+    : '';
+
+  return description;
 };

@@ -37,7 +37,7 @@ import useLongPress from './utils/useLongPress';
 import { moreButtonStyles } from './styles/VideoTile.styles';
 import { raiseHandContainerStyles } from './styles/VideoTile.styles';
 import { ReactionResources } from '../types/ReactionTypes';
-import { formatMoreButtonAiraDescription } from './utils';
+import { formatMoreButtonAriaDescription } from './utils';
 
 /**
  * Strings of {@link VideoTile} that can be overridden.
@@ -245,7 +245,7 @@ const VideoTileMoreOptionsButton = (props: {
 
   useEffect(() => {
     setMoreButtonAriaDescription(
-      formatMoreButtonAiraDescription(
+      formatMoreButtonAriaDescription(
         participantDisplayName,
         participantIsMuted,
         participantHandRaised,
@@ -271,7 +271,7 @@ const VideoTileMoreOptionsButton = (props: {
   return (
     <IconButton
       data-ui-id="video-tile-more-options-button"
-      ariaLabel={locale.moreOptionsButtonAriaLabel + ` ${moreButtonAiraDescription}`}
+      ariaLabel={moreButtonAiraDescription}
       styles={moreButtonStyles(theme)}
       menuIconProps={videoTileMoreMenuIconProps}
       menuProps={{ ...videoTileMoreMenuProps, ...contextualMenu }}
