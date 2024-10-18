@@ -90,8 +90,6 @@ module.exports = {
     'start-call-beta',
     // feature for adding JS helpers to the UI library API
     "composite-js-helpers",
-    // Deep Noise Suppression feature
-    "DNS",
     // Soft Mute feature for ACS calls and Interop calls
     "soft-mute"
   ]
