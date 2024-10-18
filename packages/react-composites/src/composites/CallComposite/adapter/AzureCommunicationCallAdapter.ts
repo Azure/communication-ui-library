@@ -39,7 +39,7 @@ import { SpotlightedParticipant } from '@azure/communication-calling';
 import { TeamsMeetingIdLocator } from '@azure/communication-calling';
 import { Reaction } from '@azure/communication-calling';
 import { TeamsCaptions } from '@azure/communication-calling';
-/* @conditional-compile-remove(acs-close-captions) */
+
 import { Captions, CaptionsInfo } from '@azure/communication-calling';
 import { TransferEventArgs } from '@azure/communication-calling';
 import { TeamsCaptionsInfo } from '@azure/communication-calling';
@@ -50,7 +50,6 @@ import type { CapabilitiesChangeInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support)) */
 import { TeamsCallAgent } from '@azure/communication-calling';
 import { Features } from '@azure/communication-calling';
-/* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { DtmfTone } from '@azure/communication-calling';
 /* @conditional-compile-remove(breakout-rooms) */
@@ -108,9 +107,8 @@ import {
   UnknownIdentifier,
   isMicrosoftTeamsAppIdentifier
 } from '@azure/communication-common';
-/* @conditional-compile-remove(teams-identity-support) */ /* @conditional-compile-remove(PSTN-calls) */
+/* @conditional-compile-remove(teams-identity-support) */
 import { isCommunicationUserIdentifier } from '@azure/communication-common';
-/* @conditional-compile-remove(PSTN-calls) */
 import { isPhoneNumberIdentifier, PhoneNumberIdentifier } from '@azure/communication-common';
 import { ParticipantSubscriber } from './ParticipantSubcriber';
 import { AdapterError } from '../../common/adapters';
@@ -164,10 +162,12 @@ class CallContext {
       /* @conditional-compile-remove(DNS) */
       deepNoiseSuppressionOptions?: {
         onResolveDependency?: () => Promise<DeepNoiseSuppressionEffectDependency>;
+        deepNoiseSuppressionOnByDefault?: boolean;
+        hideDeepNoiseSuppressionButton?: boolean;
       };
       callingSounds?: CallingSounds;
       reactionResources?: ReactionResources;
-      /* @conditional-compile-remove(PSTN-calls) */
+
       alternateCallerId?: string;
     },
     targetCallees?: StartCallIdentifier[]
@@ -185,7 +185,7 @@ class CallContext {
       isTeamsCall,
       isTeamsMeeting,
       isRoomsCall,
-      /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId: options?.alternateCallerId,
+      alternateCallerId: options?.alternateCallerId,
       /* @conditional-compile-remove(unsupported-browser) */ environmentInfo: clientState.environmentInfo,
       /* @conditional-compile-remove(unsupported-browser) */ unsupportedBrowserVersionsAllowed: false,
       videoBackgroundImages: options?.videoBackgroundOptions?.videoBackgroundImages,
@@ -193,6 +193,10 @@ class CallContext {
       onResolveVideoEffectDependency: options?.videoBackgroundOptions?.onResolveDependency,
       /* @conditional-compile-remove(DNS) */
       onResolveDeepNoiseSuppressionDependency: options?.deepNoiseSuppressionOptions?.onResolveDependency,
+      /* @conditional-compile-remove(DNS) */
+      deepNoiseSuppressionOnByDefault: options?.deepNoiseSuppressionOptions?.deepNoiseSuppressionOnByDefault ?? true,
+      /* @conditional-compile-remove(DNS) */
+      hideDeepNoiseSuppressionButton: options?.deepNoiseSuppressionOptions?.hideDeepNoiseSuppressionButton ?? false,
       selectedVideoBackgroundEffect: undefined,
       cameraStatus: undefined,
       sounds: options?.callingSounds,
@@ -597,11 +601,8 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     this.on.bind(this);
     this.off.bind(this);
     this.processNewCall.bind(this);
-    /* @conditional-compile-remove(PSTN-calls) */
     this.addParticipant.bind(this);
-    /* @conditional-compile-remove(PSTN-calls) */
     this.holdCall.bind(this);
-    /* @conditional-compile-remove(PSTN-calls) */
     this.resumeCall.bind(this);
     this.sendDtmfTone.bind(this);
     /* @conditional-compile-remove(unsupported-browser) */
@@ -966,9 +967,9 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
       | string[]
       | (
           | MicrosoftTeamsAppIdentifier
-          | /* @conditional-compile-remove(PSTN-calls) */ PhoneNumberIdentifier
-          | /* @conditional-compile-remove(one-to-n-calling) */ CommunicationUserIdentifier
-          | /* @conditional-compile-remove(teams-adhoc-call) */ MicrosoftTeamsUserIdentifier
+          | PhoneNumberIdentifier
+          | CommunicationUserIdentifier
+          | MicrosoftTeamsUserIdentifier
           | UnknownIdentifier
         )[],
     options?: StartCallOptions
@@ -1001,9 +1002,9 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     this.context.setTargetCallee(
       idsToAdd as (
         | MicrosoftTeamsAppIdentifier
-        | /* @conditional-compile-remove(PSTN-calls) */ PhoneNumberIdentifier
-        | /* @conditional-compile-remove(one-to-n-calling) */ CommunicationUserIdentifier
-        | /* @conditional-compile-remove(teams-adhoc-call) */ MicrosoftTeamsUserIdentifier
+        | PhoneNumberIdentifier
+        | CommunicationUserIdentifier
+        | MicrosoftTeamsUserIdentifier
         | UnknownIdentifier
       )[]
     );
@@ -1039,20 +1040,16 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     return effect.effectName === 'replacement';
   }
 
-  public async removeParticipant(
-    userId: string | /* @conditional-compile-remove(PSTN-calls) */ CommunicationIdentifier
-  ): Promise<void> {
+  public async removeParticipant(userId: string | CommunicationIdentifier): Promise<void> {
     let participant = userId;
-    /* @conditional-compile-remove(PSTN-calls) */
     participant = _toCommunicationIdentifier(userId);
     this.handlers.onRemoveParticipant(participant);
   }
 
-  /* @conditional-compile-remove(PSTN-calls) */
   public async addParticipant(participant: PhoneNumberIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
-  /* @conditional-compile-remove(PSTN-calls) */
+
   public async addParticipant(participant: CommunicationUserIdentifier): Promise<void>;
-  /* @conditional-compile-remove(PSTN-calls) */
+
   public async addParticipant(
     participant: PhoneNumberIdentifier | CommunicationUserIdentifier,
     options?: AddPhoneNumberOptions
@@ -1064,7 +1061,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     }
   }
 
-  /* @conditional-compile-remove(PSTN-calls) */
   public async holdCall(): Promise<void> {
     if (this.call?.state !== 'LocalHold') {
       if (this.call?.isLocalVideoStarted) {
@@ -1077,7 +1073,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     }
   }
 
-  /* @conditional-compile-remove(PSTN-calls) */
   public async resumeCall(): Promise<void> {
     if (this.call?.state === 'LocalHold') {
       this.handlers.onToggleHold().then(() => {
@@ -1220,15 +1215,14 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
       teamsCaptionsFeature.on('CaptionLanguageChanged', this.isCaptionLanguageChanged.bind(this));
       teamsCaptionsFeature.on('SpokenLanguageChanged', this.isSpokenLanguageChanged.bind(this));
     } else {
-      /* @conditional-compile-remove(acs-close-captions) */
       const acsCaptionsFeature = captionsFeature?.captions as Captions;
-      /* @conditional-compile-remove(acs-close-captions) */
+
       acsCaptionsFeature.on('CaptionsReceived', this.captionsReceived.bind(this));
-      /* @conditional-compile-remove(acs-close-captions) */
+
       acsCaptionsFeature.on('CaptionsActiveChanged', this.isCaptionsActiveChanged.bind(this));
-      /* @conditional-compile-remove(acs-close-captions) */
+
       acsCaptionsFeature.on('SpokenLanguageChanged', this.isSpokenLanguageChanged.bind(this));
-      /* @conditional-compile-remove(acs-close-captions) */
+
       captionsFeature?.on('CaptionsKindChanged', this.captionsKindChanged.bind(this));
     }
   }
@@ -1245,15 +1239,14 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
       teamsCaptionsFeature.off('CaptionLanguageChanged', this.isCaptionLanguageChanged.bind(this));
       teamsCaptionsFeature.off('SpokenLanguageChanged', this.isSpokenLanguageChanged.bind(this));
     } else {
-      /* @conditional-compile-remove(acs-close-captions) */
       const acsCaptionsFeature = captionsFeature?.captions as Captions;
-      /* @conditional-compile-remove(acs-close-captions) */
+
       acsCaptionsFeature.off('CaptionsReceived', this.captionsReceived.bind(this));
-      /* @conditional-compile-remove(acs-close-captions) */
+
       acsCaptionsFeature.off('CaptionsActiveChanged', this.isCaptionsActiveChanged.bind(this));
-      /* @conditional-compile-remove(acs-close-captions) */
+
       acsCaptionsFeature.off('SpokenLanguageChanged', this.isSpokenLanguageChanged.bind(this));
-      /* @conditional-compile-remove(acs-close-captions) */
+
       captionsFeature?.off('CaptionsKindChanged', this.captionsKindChanged.bind(this));
     }
   }
@@ -1314,7 +1307,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     });
   };
 
-  /* @conditional-compile-remove(acs-close-captions) */
   private captionsKindChanged(): void {
     const captionsFeature = this.call?.feature(Features.Captions);
     const teamsCaptionsFeature = captionsFeature?.captions as TeamsCaptions;
@@ -1360,24 +1352,19 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     this.emitter.emit('captionsReceived', { captionsInfo });
   }
 
-  /* @conditional-compile-remove(acs-close-captions) */
   private captionsReceived(captionsInfo: CaptionsInfo): void {
     this.emitter.emit('captionsReceived', { captionsInfo });
   }
 
   private isCaptionsActiveChanged(): void {
-    const captionsFeature = this.call?.feature(Features.Captions).captions as
-      | TeamsCaptions
-      | /* @conditional-compile-remove(acs-close-captions) */ Captions;
+    const captionsFeature = this.call?.feature(Features.Captions).captions as TeamsCaptions | Captions;
     this.emitter.emit('isCaptionsActiveChanged', {
       isActive: captionsFeature.isCaptionsFeatureActive
     });
   }
 
   private isSpokenLanguageChanged(): void {
-    const captionsFeature = this.call?.feature(Features.Captions).captions as
-      | TeamsCaptions
-      | /* @conditional-compile-remove(acs-close-captions) */ Captions;
+    const captionsFeature = this.call?.feature(Features.Captions).captions as TeamsCaptions | Captions;
     this.emitter.emit('isSpokenLanguageChanged', {
       activeSpokenLanguage: captionsFeature.activeSpokenLanguage
     });
@@ -1540,8 +1527,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
   }
 }
 
-/* @conditional-compile-remove(teams-adhoc-call) */
-/* @conditional-compile-remove(PSTN-calls) */
+/* @conditional-compile-remove(call-participants-locator) */
 /**
  * Locator used by {@link createAzureCommunicationCallAdapter} to call one or more participants
  *
@@ -1568,7 +1554,7 @@ export type CallAdapterLocator =
   | TeamsMeetingLinkLocator
   | GroupCallLocator
   | RoomCallLocator
-  | /* @conditional-compile-remove(teams-adhoc-call) */ /* @conditional-compile-remove(PSTN-calls) */ CallParticipantsLocator
+  | /* @conditional-compile-remove(call-participants-locator) */ CallParticipantsLocator
   | TeamsMeetingIdLocator;
 
 /**
@@ -1587,9 +1573,12 @@ export type CommonCallAdapterOptions = {
   /* @conditional-compile-remove(DNS) */
   /**
    * `DeepNoiseSuppressionEffect` options to be used for noise suppression.
+   * @beta
    */
   deepNoiseSuppressionOptions?: {
     onResolveDependency?: () => Promise<DeepNoiseSuppressionEffectDependency>;
+    deepNoiseSuppressionOnByDefault?: boolean;
+    hideDeepNoiseSuppressionButton?: boolean;
   };
   /**
    * Use this to fetch profile information which will override data in {@link CallAdapterState} like display name
@@ -1606,7 +1595,6 @@ export type CommonCallAdapterOptions = {
    * @beta
    */
   reactionResources?: ReactionResources;
-  /* @conditional-compile-remove(PSTN-calls) */
   /**
    * A phone number in E.164 format procured using Azure Communication Services that will be used to represent callers identity.
    * E.164 numbers are formatted as [+] [country code] [phone number including area code]. For example, +14255550123 for a US phone number.
@@ -1653,7 +1641,6 @@ export type AzureCommunicationOutboundCallAdapterArgs = {
   displayName: string;
   credential: CommunicationTokenCredential;
   targetCallees: StartCallIdentifier[];
-  /* @conditional-compile-remove(PSTN-calls) */
   /**
    * A phone number in E.164 format procured using Azure Communication Services that will be used to represent callers identity.
    * E.164 numbers are formatted as [+] [country code] [phone number including area code]. For example, +14255550123 for a US phone number.
@@ -1692,7 +1679,7 @@ export type TeamsCallAdapterArgsCommon = {
 export type TeamsCallAdapterArgs = TeamsCallAdapterArgsCommon & {
   locator:
     | TeamsMeetingLinkLocator
-    | /* @conditional-compile-remove(teams-adhoc-call) */ /* @conditional-compile-remove(PSTN-calls) */ CallParticipantsLocator
+    | /* @conditional-compile-remove(call-participants-locator) */ CallParticipantsLocator
     | TeamsMeetingIdLocator;
 };
 
@@ -1793,7 +1780,7 @@ export const _createAzureCommunicationCallAdapterInner = async ({
   credential: CommunicationTokenCredential;
   locator: CallAdapterLocator;
   targetCallees?: StartCallIdentifier[];
-  /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId?: string;
+  alternateCallerId?: string;
   options?: AzureCommunicationCallAdapterOptions;
   telemetryImplementationHint?: _TelemetryImplementationHint;
 }): Promise<CallAdapter> => {

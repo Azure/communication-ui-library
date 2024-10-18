@@ -157,6 +157,7 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
           setPromptProps={setPromptProps}
           hideSpotlightButtons={options?.spotlight?.hideSpotlightButtons}
           videoTilesOptions={options?.videoTilesOptions}
+          captionsOptions={options?.captionsBanner}
         />
       );
     }
@@ -184,10 +185,7 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
             isNetworkHealthy(networkReconnectTileProps.networkReconnectValue) ? (
               onRenderGalleryContentTrampoline()
             ) : (
-              <NetworkReconnectTile
-                {...networkReconnectTileProps}
-                /* /* @conditional-compile-remove(teams-meeting-conference) */ isMobile={mobileView}
-              />
+              <NetworkReconnectTile {...networkReconnectTileProps} isMobile={mobileView} />
             )
           ) : (
             <></>
@@ -214,6 +212,7 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
         setPinnedParticipants={setPinnedParticipants}
         /* @conditional-compile-remove(call-readiness) */
         doNotShowCameraAccessNotifications={props.options?.deviceChecks?.camera === 'doNotPrompt'}
+        captionsOptions={options?.captionsBanner}
       />
       {<Prompt isOpen={isPromptOpen} onDismiss={() => setIsPromptOpen(false)} {...promptProps} />}
     </>

@@ -22,7 +22,7 @@ import type {
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import type { UploadChatImageResult } from '@internal/acs-ui-common';
 import { toFlatCommunicationIdentifier, _TelemetryImplementationHint } from '@internal/acs-ui-common';
-import EventEmitter from 'events';
+import { EventEmitter } from 'events';
 import {
   ChatAdapter,
   ChatAdapterState,
@@ -613,6 +613,7 @@ export const useAzureCommunicationChatAdapter = (
   const [adapter, setAdapter] = useState<ChatAdapter | undefined>(undefined);
   // Ref needed for cleanup to access the old adapter created asynchronously.
   const adapterRef = useRef<ChatAdapter | undefined>(undefined);
+  const creatingAdapterRef = useRef<boolean>(false);
 
   const afterCreateRef = useRef<((adapter: ChatAdapter) => Promise<ChatAdapter>) | undefined>(undefined);
   const beforeDisposeRef = useRef<((adapter: ChatAdapter) => Promise<void>) | undefined>(undefined);
@@ -641,7 +642,13 @@ export const useAzureCommunicationChatAdapter = (
           adapterRef.current.dispose();
           adapterRef.current = undefined;
         }
-
+        if (creatingAdapterRef.current) {
+          console.warn(
+            'Adapter is already being created, please see storybook for more information: https://azure.github.io/communication-ui-library/?path=/story/troubleshooting--page'
+          );
+          return;
+        }
+        creatingAdapterRef.current = true;
         let newAdapter = await createAzureCommunicationChatAdapter({
           credential,
           displayName,
@@ -653,6 +660,7 @@ export const useAzureCommunicationChatAdapter = (
           newAdapter = await afterCreateRef.current(newAdapter);
         }
         adapterRef.current = newAdapter;
+        creatingAdapterRef.current = false;
         setAdapter(newAdapter);
       })();
     },

@@ -26,6 +26,10 @@ import { useHandlers } from '../hooks/useHandlers';
 import { cameraAndVideoEffectsContainerStyleDesktop } from '../styles/CallConfiguration.styles';
 
 import { effectsButtonStyles } from '../styles/CallConfiguration.styles';
+import { useSelector } from '../hooks/useSelector';
+import { getRole, getVideoEffectsDependency } from '../selectors/baseSelectors';
+/* @conditional-compile-remove(calling-environment-info) */
+import { getEnvironmentInfo } from '../selectors/baseSelectors';
 
 type iconType = 'Camera' | 'Microphone' | 'Speaker';
 
@@ -103,14 +107,14 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
   const locale = useLocale();
   const adapter = useAdapter();
 
-  const onResolveVideoEffectDependency = adapter.getState().onResolveVideoEffectDependency;
+  const onResolveVideoEffectDependency = useSelector(getVideoEffectsDependency);
   const defaultPlaceHolder = locale.strings.call.defaultPlaceHolder;
   const cameraLabel = locale.strings.call.cameraLabel;
   const soundLabel = locale.strings.call.soundLabel;
   const noSpeakersLabel = locale.strings.call.noSpeakersLabel;
   const noCameraLabel = locale.strings.call.noCamerasLabel;
   const noMicLabel = locale.strings.call.noMicrophonesLabel;
-  const role = adapter.getState().call?.role;
+  const role = useSelector(getRole);
 
   const cameraPermissionGranted = props.cameraPermissionGranted;
   const micPermissionGranted = props.microphonePermissionGranted;
@@ -137,9 +141,9 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
   const hasCameras = props.cameras.length > 0;
   const hasMicrophones = props.microphones.length > 0;
   const hasSpeakers = props.speakers.length > 0;
-  /* @conditional-compile-remove(unsupported-browser) */
+  /* @conditional-compile-remove(calling-environment-info) */
   const isSafariWithNoSpeakers =
-    adapter.getState().environmentInfo?.environment.browser.toLowerCase() === 'safari' && !hasSpeakers;
+    useSelector(getEnvironmentInfo)?.environment.browser.toLowerCase() === 'safari' && !hasSpeakers;
 
   const cameraGrantedDropdown = (
     <Dropdown
@@ -223,8 +227,8 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
     />
   );
 
-  const SafariBrowserSpeakerDropdownTrampoline = (): JSX.Element => {
-    /* @conditional-compile-remove(unsupported-browser) */
+  const safariBrowserSpeakerDropdownTrampoline = (): JSX.Element => {
+    /* @conditional-compile-remove(calling-environment-info) */
     if (isSafariWithNoSpeakers) {
       return <></>;
     }
@@ -282,7 +286,7 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
             /* @conditional-compile-remove(call-readiness) */
             onClickEnableDevicePermission={props.onClickEnableDevicePermission}
           />
-          <SafariBrowserSpeakerDropdownTrampoline />
+          {safariBrowserSpeakerDropdownTrampoline()}
         </Stack>
       </Stack>
     </Stack>

@@ -46,7 +46,7 @@ import {
 } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(breakout-rooms) */
 import { CallNotifications } from '@internal/calling-stateful-client';
-import EventEmitter from 'events';
+import { EventEmitter } from 'events';
 /**
  * @private
  */
@@ -243,6 +243,8 @@ function createMockCall(mockCallId: string): CallState {
     endTime: undefined,
     dominantSpeakers: undefined,
     raiseHand: { raisedHands: [] },
+    /* @conditional-compile-remove(together-mode) */
+    togetherMode: { stream: [] },
     pptLive: { isActive: false },
     localParticipantReaction: undefined,
     captionsFeature: {
@@ -253,7 +255,6 @@ function createMockCall(mockCallId: string): CallState {
       currentSpokenLanguage: '',
       isCaptionsFeatureActive: false,
       startCaptionsInProgress: false,
-      /* @conditional-compile-remove(acs-close-captions) */
       captionsKind: 'Captions'
     },
     transfer: {

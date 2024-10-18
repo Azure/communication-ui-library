@@ -20,12 +20,14 @@ export interface SidePaneProps {
   mobileView?: boolean;
   maxWidth?: string;
   minWidth?: string;
+  ariaLabel?: string;
 
   // legacy arguments to be removed in breaking change
   disablePeopleButton?: boolean;
   disableChatButton?: boolean;
   onChatButtonClicked?: () => void;
   onPeopleButtonClicked?: () => void;
+  showAddPeopleButton?: boolean;
 }
 
 /** @private */
@@ -97,7 +99,19 @@ export const SidePane = (props: SidePaneProps): JSX.Element => {
   }
 
   return (
-    <Stack verticalFill grow styles={paneStyles} data-ui-id="SidePane" tokens={props.mobileView ? {} : sidePaneTokens}>
+    <Stack
+      aria-label={props.ariaLabel}
+      data-is-focusable={!!props.ariaLabel}
+      role={props.ariaLabel ? 'navigation' : undefined}
+      tabIndex={props.ariaLabel ? 0 : undefined}
+      verticalFill
+      grow
+      styles={paneStyles}
+      data-ui-id="SidePane"
+      tokens={
+        props.mobileView || (!props.showAddPeopleButton && sidePaneRenderer?.id === 'people') ? {} : sidePaneTokens
+      }
+    >
       {HeaderToRender}
       <Stack.Item verticalFill grow styles={paneBodyContainer}>
         <Stack verticalFill styles={scrollableContainer}>

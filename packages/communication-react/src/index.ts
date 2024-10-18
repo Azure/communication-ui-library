@@ -28,21 +28,6 @@ export type {
   AreParamEqual
 } from '../../acs-ui-common/src';
 
-/* @conditional-compile-remove(composite-js-helpers) */
-export {
-  loadOutboundCallComposite,
-  loadCallComposite,
-  loadChatComposite,
-  loadCallWithChatComposite
-} from '../../acs-ui-javascript-loaders/src';
-/* @conditional-compile-remove(composite-js-helpers) */
-export type {
-  OutboundCallCompositeLoaderProps,
-  CallCompositeLoaderProps,
-  ChatCompositeLoaderProps,
-  CallWithChatCompositeLoaderProps
-} from '../../acs-ui-javascript-loaders/src';
-
 // Not to export chat/calling specific hook from binding package
 export type {
   CallClientProviderProps,
@@ -108,13 +93,11 @@ export type {
   ParticipantsButtonSelector,
   CreateDefaultCallingHandlers
 } from '../../calling-component-bindings/src';
-/* @conditional-compile-remove(PSTN-calls) */
 export type { HoldButtonSelector } from '../../calling-component-bindings/src';
 
 export type { RaiseHandButtonSelector } from '../../calling-component-bindings/src';
 
 export type { NotificationStackSelector } from '../../calling-component-bindings/src';
-/* @conditional-compile-remove(one-to-n-calling) */
 export type { IncomingCallStackSelector } from '../../calling-component-bindings/src';
 
 export {
@@ -159,6 +142,7 @@ export {
   COMPONENT_LOCALE_EN_GB,
   COMPONENT_LOCALE_AR_SA,
   COMPONENT_LOCALE_CS_CZ,
+  COMPONENT_LOCALE_CY_GB,
   COMPONENT_LOCALE_DE_DE,
   COMPONENT_LOCALE_ES_ES,
   COMPONENT_LOCALE_FI_FI,
@@ -178,16 +162,13 @@ export {
   COMPONENT_LOCALE_ZH_TW
 } from '../../react-components/src';
 export { ImageOverlay } from '../../react-components/src';
-/* @conditional-compile-remove(PSTN-calls) */
 export { HoldButton } from '../../react-components/src';
 
 export { RaiseHandButton } from '../../react-components/src';
 
 export { Dialpad } from '../../react-components/src';
 
-/* @conditional-compile-remove(one-to-n-calling) */
 export { IncomingCallNotification, IncomingCallStack } from '../../react-components/src';
-/* @conditional-compile-remove(one-to-n-calling) */
 export type {
   IncomingCallNotificationProps,
   IncomingCallNotificationStrings,
@@ -384,7 +365,6 @@ export type { ChatAttachmentType } from '../../react-components/src';
 export type { InlineImageOptions, InlineImage } from '../../react-components/src';
 /* @conditional-compile-remove(rich-text-editor) */
 export type { RichTextEditorOptions, RichTextEditBoxOptions } from '../../react-components/src';
-/* @conditional-compile-remove(PSTN-calls) */
 export type { HoldButtonProps, HoldButtonStrings } from '../../react-components/src';
 export type { VideoTileStrings } from '../../react-components/src';
 /* @conditional-compile-remove(call-readiness) */
@@ -400,7 +380,6 @@ export type { LocalVideoTileSize } from '../../react-components/src';
 export * from '../../react-components/src/localization/locales';
 export * from '../../react-components/src/theming';
 export * from '../../calling-stateful-client/src/index-public';
-/* @conditional-compile-remove(one-to-n-calling) */
 export type { DeclarativeCallAgent } from '../../calling-stateful-client/src';
 export { createStatefulChatClient } from '../../chat-stateful-client/src';
 export type {
@@ -458,5 +437,4 @@ export type {
   NotificationType,
   ActiveNotification
 } from '../../react-components/src';
-/* @conditional-compile-remove(teams-meeting-conference) */
 export type { MeetingConferencePhoneInfoModalStrings } from '../../react-components/src';

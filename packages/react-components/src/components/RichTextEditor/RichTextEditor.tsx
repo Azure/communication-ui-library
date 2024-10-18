@@ -290,14 +290,19 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     if (onInsertInlineImage) {
       copyPastePlugin.onInsertInlineImage = (imageAttributes: Record<string, string>) => {
         const { id, src } = imageAttributes;
-        setInlineImageLocalBlobs({ ...inlineImageLocalBlobs, [id]: src });
+        setInlineImageLocalBlobs((prev) => {
+          if (!id || !src) {
+            return prev;
+          }
+          return { ...prev, [id]: src };
+        });
         onInsertInlineImage(imageAttributes);
       };
     } else {
       copyPastePlugin.onInsertInlineImage = undefined;
     }
     undoRedoPlugin.onInsertInlineImage = onInsertInlineImage;
-  }, [copyPastePlugin, inlineImageLocalBlobs, onInsertInlineImage, undoRedoPlugin]);
+  }, [copyPastePlugin, onInsertInlineImage, undoRedoPlugin]);
 
   useEffect(() => {
     undoRedoPlugin.onUpdateContent = () => {
@@ -506,7 +511,7 @@ const createEditorInitialModel = (
 
 const setSelectionAfterLastSegment = (model: ReadonlyContentModelBlockGroup, block: ContentModelParagraph): void => {
   //selection marker should have the same format as the last segment if any
-  const format = block.segments.length > 0 ? block.segments[block.segments.length - 1].format : undefined;
+  const format = block.segments.length > 0 ? block.segments[block.segments.length - 1]?.format : undefined;
   const marker = createSelectionMarker(format);
   block.segments.push(marker);
   setSelection(model, marker);

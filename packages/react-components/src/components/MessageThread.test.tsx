@@ -297,6 +297,9 @@ describe('Message should display Mention correctly', () => {
 
     // edit message
     const message1ContentAfterEdit = `Hey <msft-mention id="${user2Id}">${user2Name}</msft-mention> and <msft-mention id="${user3Id}">${user3Name}</msft-mention>, can you help me with my internet connection?`;
+    if (!messages[0]) {
+      throw new Error('Failed to find message to edit');
+    }
     messages[0].content = message1ContentAfterEdit;
     messages[0].editedOn = new Date('2019-04-13T00:01:00.000+08:10');
     const expectedOnRenderMentionCount = 2;
@@ -353,6 +356,9 @@ describe('Message should display Mention correctly', () => {
     const onUpdateMessageCallback = (messageId: string, content: string): Promise<void> => {
       const msgIdx = messages.findIndex((m) => m.messageId === messageId);
       const message = messages[msgIdx];
+      if (!message) {
+        throw new Error('Failed to find message to update');
+      }
       message.content = content;
       message.editedOn = new Date(Date.now());
       messages[msgIdx] = message;
@@ -375,7 +381,7 @@ describe('Message should display Mention correctly', () => {
       );
     };
 
-    const { container, rerender } = render(
+    const { rerender } = render(
       <MessageThread
         userId={user2Id}
         messages={messages}
@@ -389,17 +395,17 @@ describe('Message should display Mention correctly', () => {
     );
 
     // Find message bubble does not contain mention yet
-    const messageBubble = container.querySelector('[data-ui-id="chat-composite-message"]');
+    const messageBubble = screen.queryByTestId('chat-composite-message');
     if (!messageBubble) {
-      fail('Failed to find chat message bubble');
+      throw new Error('Failed to find chat message bubble');
     }
     expect(messageBubble.innerHTML).not.toContain(user1Name);
     expect(messageBubble.innerHTML).not.toContain(MSFT_MENTION);
 
     // Click on ... button to trigger context menu
-    const menuButton = container.querySelector('[data-ui-id="chat-composite-message-action-icon"]');
+    const menuButton = screen.queryByTestId('chat-composite-message-action-icon');
     if (!menuButton) {
-      fail('Failed to find "More" action button');
+      throw new Error('Failed to find "More" action button');
     }
     fireEvent.click(menuButton);
 
@@ -433,7 +439,7 @@ describe('Message should display Mention correctly', () => {
     // Verify message has new edited content includes mention HTML tag
     await waitFor(async () => {
       expect(onUpdateMessageCount).toEqual(expectedOnUpdateMessageCount);
-      const editedMessageContentWithMention = messages[0].content;
+      const editedMessageContentWithMention = messages[0]?.content;
       expect(editedMessageContentWithMention).toContain(user1Name);
       expect(editedMessageContentWithMention).toContain(MSFT_MENTION);
     });
@@ -452,9 +458,9 @@ describe('Message should display Mention correctly', () => {
     );
 
     // After re-render with edited message, verify content includes mentions html tag
-    const messageBubbleAfterRerender = container.querySelector('[data-ui-id="chat-composite-message"]');
+    const messageBubbleAfterRerender = screen.queryByTestId('chat-composite-message');
     if (!messageBubbleAfterRerender) {
-      fail('Failed to find "More" action button after rerender');
+      throw new Error('Failed to find "More" action button after rerender');
     }
     expect(messageBubbleAfterRerender.innerHTML).toContain(user1Name);
     expect(messageBubbleAfterRerender.innerHTML).toContain(MSFT_MENTION);

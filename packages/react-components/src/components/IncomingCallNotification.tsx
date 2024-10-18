@@ -14,17 +14,15 @@ import {
   Theme,
   useTheme
 } from '@fluentui/react';
-/* @conditional-compile-remove(one-to-n-calling) */
 import { IContextualMenuProps } from '@fluentui/react';
 import React from 'react';
-/* @conditional-compile-remove(one-to-n-calling) */
 import { useLocale } from '../localization';
 import { _formatString } from '@internal/acs-ui-common';
 
 /**
  * Strings for the incoming call notification component.
  *
- * @beta
+ * @public
  */
 export interface IncomingCallNotificationStrings {
   /**
@@ -68,7 +66,7 @@ export interface IncomingCallNotificationStrings {
 /**
  * Styles for the incoming call notification component.
  *
- * @beta
+ * @public
  */
 export interface IncomingCallNotificationStyles {
   /**
@@ -92,7 +90,7 @@ export interface IncomingCallNotificationStyles {
 /**
  * Properties for the incoming call notification component.
  *
- * @beta
+ * @public
  */
 export interface IncomingCallNotificationProps {
   /**
@@ -150,7 +148,7 @@ export interface IncomingCallNotificationProps {
 /**
  * A Notification component that is to be used to represent incoming calls to the end user.
  * Allows the user to accept or reject the incoming call.
- * @beta
+ * @public
  */
 export const IncomingCallNotification = (props: IncomingCallNotificationProps): JSX.Element => {
   const {
@@ -158,40 +156,37 @@ export const IncomingCallNotification = (props: IncomingCallNotificationProps): 
     alertText,
     avatarImage,
     onAcceptWithAudio,
-    /* @conditional-compile-remove(one-to-n-calling) */
     onAcceptWithVideo,
     onReject,
     onDismiss,
     personaSize,
     styles,
     strings,
-    /* @conditional-compile-remove(one-to-n-calling) */
     acceptOptions
   } = props;
   const theme = useTheme();
-  /* @conditional-compile-remove(one-to-n-calling) */
+
   const localeStrings = useLocale().strings.IncomingCallNotification;
-  /* @conditional-compile-remove(one-to-n-calling) */
+
   const formattedMessageString =
     localeStrings.incomingCallNotificationPlaceholderAlert && callerName
       ? _formatString(localeStrings.incomingCallNotificationPlaceholderAlert, { callerName: callerName })
       : callerName;
 
-  /* @conditional-compile-remove(one-to-n-calling) */
   const acceptManuOptions: IContextualMenuProps | undefined = acceptOptions.showAcceptWithVideo
     ? {
         items: [
           {
             key: 'audio',
             text:
-              /* @conditional-compile-remove(one-to-n-calling) */ strings?.incomingCallNotificationAcceptButtonLabel ??
+              strings?.incomingCallNotificationAcceptButtonLabel ??
               localeStrings.incomingCallNotificationAcceptButtonLabel,
             onClick: () => onAcceptWithAudio()
           },
           {
             key: 'video',
             text:
-              /* @conditional-compile-remove(one-to-n-calling) */ strings?.incomingCallNotificationAccceptWithVideoButtonLabel ??
+              strings?.incomingCallNotificationAccceptWithVideoButtonLabel ??
               localeStrings.incomingCallNotificationAccceptWithVideoButtonLabel,
             onClick: () => onAcceptWithVideo()
           }
@@ -221,18 +216,11 @@ export const IncomingCallNotification = (props: IncomingCallNotificationProps): 
         </Stack>
 
         <Stack grow horizontalAlign="center" style={{ alignItems: 'flex-start', fontFamily: 'Segoe UI' }}>
-          <Text
-            tabIndex={0}
-            aria-live={'assertive'}
-            aria-label={alertText ?? /* @conditional-compile-remove(one-to-n-calling) */ formattedMessageString}
-          >
-            {alertText ??
-              strings?.incomingCallNotificationPlaceholderAlert ??
-              /* @conditional-compile-remove(one-to-n-calling) */ formattedMessageString}
+          <Text tabIndex={0} aria-live={'assertive'} aria-label={alertText ?? formattedMessageString}>
+            {alertText ?? strings?.incomingCallNotificationPlaceholderAlert ?? formattedMessageString}
           </Text>
         </Stack>
         <IconButton
-          /* @conditional-compile-remove(one-to-n-calling) */
           ariaLabel={
             strings?.incomingCallNotificationDismissButtonAriaLabel ??
             localeStrings.incomingCallNotificationDismissButtonAriaLabel
@@ -248,32 +236,25 @@ export const IncomingCallNotification = (props: IncomingCallNotificationProps): 
           styles={styles?.acceptButton ? styles.acceptButton : incomingCallAcceptButtonStyle(theme)}
           onClick={() => onAcceptWithAudio()}
           iconProps={{ iconName: 'IncomingCallNotificationAcceptIcon', style: { lineHeight: '1rem' } }}
-          /* @conditional-compile-remove(one-to-n-calling) */
           ariaLabel={
             strings?.incomingCallNoticicationAcceptWithAudioAriaLabel ??
             localeStrings.incomingCallNoticicationAcceptWithAudioAriaLabel
           }
-          /* @conditional-compile-remove(one-to-n-calling) */
           menuProps={acceptManuOptions}
         >
-          {
-            /* @conditional-compile-remove(one-to-n-calling) */ strings?.incomingCallNotificationAcceptButtonLabel ??
-              localeStrings.incomingCallNotificationAcceptButtonLabel
-          }
+          {strings?.incomingCallNotificationAcceptButtonLabel ??
+            localeStrings.incomingCallNotificationAcceptButtonLabel}
         </PrimaryButton>
         <DefaultButton
           styles={styles?.rejectButton ? styles.rejectButton : incomingCallRejectButtonStyle(theme)}
           onClick={() => onReject()}
           iconProps={{ iconName: 'IncomingCallNotificationRejectIcon' }}
-          /* @conditional-compile-remove(one-to-n-calling) */
           ariaLabel={
             strings?.incomingCallNoticicationRejectAriaLabel ?? localeStrings.incomingCallNoticicationRejectAriaLabel
           }
         >
-          {
-            /* @conditional-compile-remove(one-to-n-calling) */ strings?.incomingCallNotificationRejectButtonLabel ??
-              localeStrings.incomingCallNotificationRejectButtonLabel
-          }
+          {strings?.incomingCallNotificationRejectButtonLabel ??
+            localeStrings.incomingCallNotificationRejectButtonLabel}
         </DefaultButton>
       </Stack>
     </Stack>

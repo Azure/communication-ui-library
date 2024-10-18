@@ -32,7 +32,7 @@ import { joinThread } from './utils/joinThread';
 import { getThread } from './utils/getThread';
 import { getExistingThreadIdFromURL } from './utils/getThreadId';
 import { WEB_APP_TITLE } from './utils/constants';
-/* @conditional-compile-remove(PSTN-calls) */
+/* @conditional-compile-remove(call-participants-locator) */
 import { CallParticipantsLocator } from '@azure/communication-react';
 import { initializeFileTypeIcons } from '@fluentui/react-file-type-icons';
 
@@ -49,7 +49,7 @@ interface CallWithChatArgs {
   endpointUrl: string;
   displayName: string;
   locator: CallAndChatLocator | TeamsMeetingLinkLocator | TeamsMeetingIdLocator;
-  /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId?: string;
+  alternateCallerId?: string;
   /* @conditional-compile-remove(rich-text-editor-composite-support) */ isRichTextEditorEnabled?: boolean;
 }
 type AppPages = 'home' | 'call' | 'error';
@@ -82,8 +82,8 @@ const App = (): JSX.Element => {
               const callWithChatArgs = await generateCallWithChatArgs(
                 homeScreenDetails.displayName,
                 homeScreenDetails?.meetingLocator,
-                /* @conditional-compile-remove(PSTN-calls) */ homeScreenDetails.alternateCallerId,
-                /* @conditional-compile-remove(PSTN-calls) */ homeScreenDetails.outboundParticipants,
+                homeScreenDetails.alternateCallerId,
+                homeScreenDetails.outboundParticipants,
                 /* @conditional-compile-remove(rich-text-editor-composite-support) */ homeScreenDetails.isRichTextEditorEnabled
               );
               setCallWithChatArgs(callWithChatArgs);
@@ -113,7 +113,6 @@ const App = (): JSX.Element => {
           displayName={callWithChatArgs.displayName}
           locator={callWithChatArgs.locator}
           endpoint={callWithChatArgs.endpointUrl}
-          /* @conditional-compile-remove(PSTN-calls) */
           alternateCallerId={callWithChatArgs.alternateCallerId}
           /* @conditional-compile-remove(rich-text-editor-composite-support) */
           isRichTextEditorEnabled={callWithChatArgs.isRichTextEditorEnabled}
@@ -131,9 +130,7 @@ export default App;
 const generateCallWithChatArgs = async (
   displayName: string,
   teamsLocator?: TeamsMeetingLinkLocator | TeamsMeetingIdLocator,
-  /* @conditional-compile-remove(PSTN-calls) */
   alternateCallerId?: string,
-  /* @conditional-compile-remove(PSTN-calls) */
   outboundParticipants?: string[],
   /* @conditional-compile-remove(rich-text-editor-composite-support) */
   isRichTextEditorEnabled?: boolean
@@ -176,15 +173,15 @@ const generateCallWithChatArgs = async (
     endpointUrl,
     credentials,
     locator,
-    /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
+    alternateCallerId,
     /* @conditional-compile-remove(rich-text-editor-composite-support) */ isRichTextEditorEnabled
   };
 };
 
 const callLocatorGen = (
-  /* @conditional-compile-remove(PSTN-calls) */ outBoundParticipants?: string[]
-): GroupCallLocator | /* @conditional-compile-remove(PSTN-calls) */ CallParticipantsLocator => {
-  /* @conditional-compile-remove(PSTN-calls) */
+  outBoundParticipants?: string[]
+): GroupCallLocator | /* @conditional-compile-remove(call-participants-locator) */ CallParticipantsLocator => {
+  /* @conditional-compile-remove(call-participants-locator) */
   if (outBoundParticipants) {
     return { participantIds: outBoundParticipants };
   }

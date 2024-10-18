@@ -2,21 +2,27 @@
 // Licensed under the MIT License.
 
 import {
-  ContextualMenuItemType,
-  DefaultPalette,
-  IButtonStyles,
+  Callout,
+  DefaultButton,
+  FocusZone,
+  IButton,
   ICalloutContentStyles,
-  IContextualMenuItem,
   mergeStyles,
-  Theme,
+  Stack,
   TooltipHost,
   useTheme
 } from '@fluentui/react';
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import { ControlBarButton, ControlBarButtonProps } from './ControlBarButton';
 import { _HighContrastAwareIcon } from './HighContrastAwareIcon';
 import { useLocale } from '../localization';
-import { emojiStyles, reactionEmojiMenuStyles, reactionToolTipHostStyle } from './styles/ReactionButton.styles';
+import {
+  emojiStyles,
+  reactionButtonCalloutStyles,
+  reactionButtonStyles,
+  reactionItemButtonStyles,
+  reactionToolTipHostStyle
+} from './styles/ReactionButton.styles';
 import { isDarkThemed } from '../theming/themeUtils';
 import { ReactionResources } from '..';
 import { getEmojiFrameCount } from './VideoGallery/utils/videoGalleryLayoutUtils';
@@ -103,76 +109,78 @@ export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
   const calloutStyle: Partial<ICalloutContentStyles> = { root: { padding: 0 }, calloutMain: { padding: '0.5rem' } };
 
   const calloutProps = {
-    gapSpace: 4,
     styles: calloutStyle,
     backgroundColor: isDarkThemed(theme) ? theme.palette.neutralLighter : ''
   };
 
-  const classname = mergeStyles(reactionEmojiMenuStyles());
+  const reactionButtonCalloutRef = useRef<HTMLDivElement>(null);
+  const reactionButtonRef = useRef<IButton>(null);
 
-  const renderEmoji = (item: IContextualMenuItem, dismissMenu: () => void): React.JSX.Element => (
-    <div data-ui-id="reaction-sub-menu" className={classname}>
-      {emojis.map((emoji, index) => {
-        const resourceUrl = emojiResource.get(emoji);
-        const frameCount: number =
-          props.reactionResources !== undefined ? getEmojiFrameCount(emoji, props.reactionResources) : 0;
-        const classname = mergeStyles(emojiStyles(resourceUrl ? resourceUrl : '', frameCount));
-        return (
-          <TooltipHost
-            key={index}
-            data-ui-id={index}
-            hidden={props.disableTooltip}
-            content={emojiButtonTooltip.get(emoji)}
-            styles={reactionToolTipHostStyle()}
-            calloutProps={{ ...calloutProps }}
-          >
-            <div
-              role="menuitem"
-              key={index}
-              onClick={() => {
-                props.onReactionClick(emoji);
-                dismissMenu();
-              }}
-              className={classname}
-              aria-label={emojiButtonTooltip.get(emoji)}
-            ></div>
-          </TooltipHost>
-        );
-      })}
-    </div>
-  );
-
-  const emojiList: IContextualMenuItem[] = [
-    { key: 'reactions', itemType: ContextualMenuItemType.Normal, onRender: renderEmoji }
-  ];
+  const [calloutIsVisible, setCalloutIsVisible] = useState(false);
 
   return (
-    <ControlBarButton
-      {...props}
-      className={mergeStyles(styles, props.styles)}
-      menuProps={{
-        shouldFocusOnMount: true,
-        items: emojiList,
-        calloutProps: { preventDismissOnEvent: _preventDismissOnEvent }
-      }}
-      onRenderIcon={props.onRenderIcon ?? onRenderIcon}
-      strings={strings}
-      labelKey={props.labelKey ?? 'reactionButtonLabel'}
-      onRenderMenuIcon={() => <div />}
-      disabled={props.disabled}
-      ariaLabel={strings.ariaLabel}
-    />
+    <Stack>
+      {calloutIsVisible && (
+        <Callout
+          data-ui-id="reaction-sub-menu"
+          isBeakVisible={false}
+          styles={reactionButtonCalloutStyles}
+          target={reactionButtonCalloutRef.current}
+          onDismiss={() => {
+            reactionButtonRef.current?.focus();
+            setCalloutIsVisible(false);
+          }}
+        >
+          <FocusZone shouldFocusOnMount style={{ height: '100%' }}>
+            <Stack horizontal style={{ height: 'inherit' }}>
+              {emojis.map((emoji, index) => {
+                const resourceUrl = emojiResource.get(emoji);
+                const frameCount: number =
+                  props.reactionResources !== undefined ? getEmojiFrameCount(emoji, props.reactionResources) : 0;
+                const classname = mergeStyles(emojiStyles(resourceUrl ? resourceUrl : '', frameCount));
+                return (
+                  <TooltipHost
+                    key={index}
+                    data-ui-id={index}
+                    hidden={props.disableTooltip}
+                    content={emojiButtonTooltip.get(emoji)}
+                    styles={reactionToolTipHostStyle()}
+                    calloutProps={{ ...calloutProps }}
+                  >
+                    <DefaultButton
+                      role="menuitem"
+                      key={index}
+                      onClick={() => {
+                        props.onReactionClick(emoji);
+                        reactionButtonRef.current?.focus();
+                        setCalloutIsVisible(false);
+                      }}
+                      className={classname}
+                      styles={reactionItemButtonStyles}
+                      aria-label={emojiButtonTooltip.get(emoji)}
+                    ></DefaultButton>
+                  </TooltipHost>
+                );
+              })}
+            </Stack>
+          </FocusZone>
+        </Callout>
+      )}
+      <div ref={reactionButtonCalloutRef}>
+        <ControlBarButton
+          {...props}
+          componentRef={reactionButtonRef}
+          className={mergeStyles(styles, props.styles)}
+          onClick={() => setCalloutIsVisible(!calloutIsVisible)}
+          onRenderIcon={props.onRenderIcon ?? onRenderIcon}
+          strings={strings}
+          split={true}
+          labelKey={props.labelKey ?? 'reactionButtonLabel'}
+          onRenderMenuIcon={() => <div />}
+          disabled={props.disabled}
+          ariaLabel={strings.ariaLabel}
+        />
+      </div>
+    </Stack>
   );
 };
-
-const reactionButtonStyles = (theme: Theme): IButtonStyles => ({
-  rootChecked: {
-    background: theme.palette.themePrimary,
-    color: DefaultPalette.white
-  },
-  rootCheckedHovered: {
-    background: theme.palette.themePrimary,
-    color: DefaultPalette.white
-  },
-  labelChecked: { color: DefaultPalette.white }
-});

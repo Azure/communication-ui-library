@@ -65,8 +65,8 @@ describe('ImageOverlay default layout tests', () => {
     renderImageOverlayComponent(undefined, undefined, undefined, onDismissHandler);
     const buttons = await screen.findAllByRole('button', { name: 'Close' });
     expect(buttons.length).toBe(1);
-    const closeButton: HTMLElement = buttons[0];
-    closeButton.click();
+    const closeButton = buttons[0];
+    closeButton?.click();
     expect(onDismissHandler).toBeCalledTimes(1);
   });
 
@@ -75,8 +75,8 @@ describe('ImageOverlay default layout tests', () => {
     renderImageOverlayComponent(undefined, undefined, undefined, undefined, onDownloadButtonClicked);
     const buttons = await screen.findAllByRole('button', { name: 'Download' });
     expect(buttons.length).toBe(2);
-    const downloadButton: HTMLElement = buttons[0];
-    downloadButton.click();
+    const downloadButton = buttons[0];
+    downloadButton?.click();
     expect(onDownloadButtonClicked).toBeCalledTimes(1);
     expect(onDownloadButtonClicked).toBeCalledWith(imageInfo.imageSrc);
   });

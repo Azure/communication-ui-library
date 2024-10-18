@@ -1,0 +1,57 @@
+import { Stack } from '@fluentui/react';
+import { Meta } from '@storybook/addon-docs';
+import { overviewPageImagesStackStyle } from '../../constants';
+
+<Meta title="Concepts/Deep Noise Suppression" />
+
+# Deep Noise Suppression
+
+Azure Communication Services UI Library has added support for Deep Noise Suppression.  
+With this new feature, users can now enable Deep Noise Suppression in their calls to enhance audio clarity. This feature leverages advanced noise suppression algorithms to filter out background noise, ensuring that only the speaker's voice is heard clearly. By incorporating Deep Noise Suppression, the UI Library provides a seamless experience where users can focus on the conversation without being distracted by environmental noise.
+
+This feature is important for most scenarios, as users from every single customer, regardless of segment (telehealth/contact centers/ad hoc 1:1s and group calls) can suffer from extraneous noise issues. Here are some examples:
+
+1. In a scenario where a patient is consulting the doctor, clarity is crucial for accurate diagnosis and effective communication, allowing the doctor to focus solely on the patient's symptoms and concerns without the interference of background noise. By enabling deep noise suppression, a telehealth organization can filter out these distracting noises, ensuring that the patient's voice is heard clearly by the doctor.
+2. In a scenario where a user is conducting a group meeting in a public space, there can often be noises that can interfere with the call. Being able to remove these distractions is important for the experience of other users, allowing them to focus on what is being said rather than extraneous sounds and distractions.
+
+## Toggles
+
+With the help of these adapter toggles, Contoso has maximum flexibility in the way they want to use DNS in the call.
+
+- DNS on by default: DNS is always enabled in the calling experience by default.
+- Hide UI: DNS button is hidden from user, and they cannot change the state of DNS in call.
+- Disable DNS : If dependency for DNS is not provided it will be disabled for the call.
+
+The UI Library enables users to enhance their video conferencing experiences by providing deep noise suppression by default within the CallComposite and CallWithChat experiences.
+
+<Stack tokens={{ childrenGap: '3rem' }} style={overviewPageImagesStackStyle}>
+  <Stack.Item align="center">
+    <img src="images/DNS-on.png" alt="example when deep noise suppression is on" />
+  </Stack.Item>
+</Stack>
+
+<Stack tokens={{ childrenGap: '3rem' }} style={overviewPageImagesStackStyle}>
+  <Stack.Item align="center">
+    <img src="images/DNS-off.png" alt="example when deep noise suppression is off" />
+  </Stack.Item>
+</Stack>
+
+## Usage
+
+1. Add import for dependency resolution for deep noise suppression:
+
+```ts
+import { onResolveDeepNoiseSuppressionDependencyLazy } from '@azure/communication-react';
+```
+
+2. Pass the dependency injection in AzureCommunicationCallAdapterOptions to enable Deep Noise Suppression in the call:
+
+```ts
+const callAdapterOptions: AzureCommunicationCallAdapterOptions = useMemo(() => {
+  return {
+    deepNoiseSuppressionOptions: {
+      onResolveDependency: onResolveDeepNoiseSuppressionDependencyLazy
+    }
+  };
+}, []);
+```

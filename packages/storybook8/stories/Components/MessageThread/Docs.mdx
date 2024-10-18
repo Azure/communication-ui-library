@@ -1,7 +1,6 @@
-import { Canvas, Description, Meta, Source, ArgTypes } from '@storybook/blocks';
-import { SingleLineBetaBanner } from '../../BetaBanners/SingleLineBetaBanner';
+import { Canvas, Meta, ArgTypes, Source } from '@storybook/blocks';
 import { DetailedBetaBanner } from '../../BetaBanners/DetailedBetaBanner';
-import { MessageThread } from '@azure/communication-react';
+import { SingleLineBetaBanner } from '../../BetaBanners/SingleLineBetaBanner';
 import * as MessageThreadStories from './index.stories';
 
 import MessageThreadWithBlockedMessagesExampleText from '!!raw-loader!./snippets/BlockedMessages.snippet.tsx';
@@ -36,6 +35,11 @@ MessageThread internally uses the `Chat` & `ChatMessage` components from `@fluen
 checkout the details about these components
 [here](https://microsoft.github.io/fluentui-contrib/react-chat/?path=/story/chat--default).
 
+The MessageThread component supports lazy loading for the rich text editor used for editing messages. This means
+that the rich text editor and its dependencies can be excluded from the bundle if they're not required,
+utilizing tree-shaking techniques such as [the sideEffects
+option](https://webpack.js.org/guides/tree-shaking/#mark-the-file-as-side-effect-free) in webpack.
+
 ## Importing
 
 ```ts
@@ -54,17 +58,29 @@ into that file.
 By default, MessageThread displays Chat messages with display name of only for other users and creation time
 of message when available.
 
-<Canvas of={MessageThreadStories.DefaultMessageThreadDocsOnly} source={{ code: DefaultMessageThreadExampleText }} />
+<Canvas
+  of={MessageThreadStories.DefaultMessageThreadDocsOnly}
+  source={{ code: DefaultMessageThreadExampleText }}
+  layout="padded"
+/>
 
 ## MessageThread With Message Date
 
-<Canvas of={MessageThreadStories.DateExampleDocsOnly} source={{ code: MessageThreadWithMessageDateExampleText }} />
+<Canvas
+  of={MessageThreadStories.DateExampleDocsOnly}
+  source={{ code: MessageThreadWithMessageDateExampleText }}
+  layout="padded"
+/>
 
 ## System Message
 
 The example below shows a message thread with a system message.
 
-<Canvas of={MessageThreadStories.SystemMessageDocsOnly} source={{ code: MessageThreadWithSystemMessagesExampleText }} />
+<Canvas
+  of={MessageThreadStories.SystemMessageDocsOnly}
+  source={{ code: MessageThreadWithSystemMessagesExampleText }}
+  layout="padded"
+/>
 
 ## Blocked Message
 
@@ -75,6 +91,7 @@ The example below shows a message thread with a blocked message. If `link` is no
 <Canvas
   of={MessageThreadStories.BlockedMessagesDocsOnly}
   source={{ code: MessageThreadWithBlockedMessagesExampleText }}
+  layout="padded"
 />
 
 ## Custom Message
@@ -84,6 +101,7 @@ he example below shows how to render a `custom` message with `onRenderMessage` i
 <Canvas
   of={MessageThreadStories.CustomMessagesDocsOnly}
   source={{ code: MessageThreadWithCustomMessagesExampleText }}
+  layout="padded"
 />
 
 ## Messages with Customized Chat Container
@@ -93,6 +111,7 @@ The example below shows how to render a `custom` chat container with `styles.cha
 <Canvas
   of={MessageThreadStories.CustomChatContainerDocsOnly}
   source={{ code: MessageThreadWithCustomChatContainerExampleText }}
+  layout="padded"
 />
 
 ## Messages with Customized Message Container
@@ -106,6 +125,7 @@ malformed issue when loading the storybook snippets
 <Canvas
   of={MessageThreadStories.CustomMessageContainerDocsOnly}
   source={{ code: MessageThreadWithCustomMessageContainerExampleText }}
+  layout="padded"
 />
 
 ## Messages with Customized Blocked message Container
@@ -119,6 +139,7 @@ in `MessageThread`
 <Canvas
   of={MessageThreadStories.CustomBlockedMessageDocsOnly}
   source={{ code: MessageThreadWithCustomBlockedMessageContainerExampleText }}
+  layout="padded"
 />
 
 ## Default Message Status Indicator
@@ -126,6 +147,7 @@ in `MessageThread`
 <Canvas
   of={MessageThreadStories.MessageStatusIndicatorDocsOnly}
   source={{ code: MessageThreadWithMessageStatusIndicatorExampleText }}
+  layout="padded"
 />
 
 ## Custom Message Status Indicator
@@ -136,11 +158,16 @@ The example below shows how to render a `custom` message status indicator with `
 <Canvas
   of={MessageThreadStories.CustomStatusIndicatorDocsOnly}
   source={{ code: MessageThreadWithCustomMessageStatusIndicatorExampleText }}
+  layout="padded"
 />
 
 ## Custom Avatar
 
-<Canvas of={MessageThreadStories.CustomAvatarDocsOnly} source={{ code: MessageThreadWithCustomAvatarExampleText }} />
+<Canvas
+  of={MessageThreadStories.CustomAvatarDocsOnly}
+  source={{ code: MessageThreadWithCustomAvatarExampleText }}
+  layout="padded"
+/>
 
 Note: You can view the details of the
 [Persona](https://developer.microsoft.com/fluentui#/controls/web/persona) component
@@ -151,11 +178,16 @@ Note: You can view the details of the
 <Canvas
   of={MessageThreadStories.CustomTimestampExampleDocsOnly}
   source={{ code: MessageThreadWithCustomTimestampExampleText }}
+  layout="padded"
 />
 
 ## Tapping Inline Images on Messages
 
-<Canvas of={MessageThreadStories.InlineImageDocsOnly} source={{ code: MessageThreadWithInlineImageExampleText }} />
+<Canvas
+  of={MessageThreadStories.InlineImageDocsOnly}
+  source={{ code: MessageThreadWithInlineImageExampleText }}
+  layout="padded"
+/>
 
 ## Display Messages with Attachments
 
@@ -168,16 +200,20 @@ content along with associated attachments.
 By default, the button associated with the attachment card will open the attachment in a new tab.
 Specifically, `window.open` method will be called for target `URL` defined in `AttachmentMetadata`.
 
-<Canvas of={MessageThreadStories.AttachmentsDocsOnly} source={{ code: MessageWithAttachmentText }} />
+<Canvas of={MessageThreadStories.AttachmentsDocsOnly} source={{ code: MessageWithAttachmentText }} layout="padded" />
 
 If the identity of message sender is a Microsoft Teams user, the attachment will be rendered with an `open`
 icon shown below.
 
-<Canvas of={MessageThreadStories.AttachmentFromTeamsDocsOnly} source={{ code: MessageWithAttachmentFromTeamsText }} />
+<Canvas
+  of={MessageThreadStories.AttachmentFromTeamsDocsOnly}
+  source={{ code: MessageWithAttachmentFromTeamsText }}
+  layout="padded"
+/>
 
 ### Advanced Usage: Customizing Attachment Rendering
 
-<SingleLineBetaBanner />
+<DetailedBetaBanner />
 
 The MessageThread component also supports multiple ways to customize the rendering. You can leverage the
 `attachmentOptions.downloadOptions` props to provide a dynamic list of menu action buttons that will be based
@@ -186,7 +222,11 @@ a static list for all scenarios.
 
 For example, the following code snippet demonstrates how to customize the download options for attachments.
 
-<Canvas of={MessageThreadStories.CustomAttachmentsDocsOnly} source={{ code: MessageWithCustomAttachmentText }} />
+<Canvas
+  of={MessageThreadStories.CustomAttachmentsDocsOnly}
+  source={{ code: MessageWithCustomAttachmentText }}
+  layout="padded"
+/>
 
 ## Mention of Users with a custom renderer within Message
 
@@ -202,7 +242,11 @@ further customization. The HTML Tag is defined:
 
 The MessageThread component also supports mentioning users when editing a message if the `lookupOptions` under the `mentionOptions` property is provided. However, if the `richTextEditorOptions` property is set, the `lookupOptions` will be ignored.
 
-<Canvas of={MessageThreadStories.CustomMentionsDocsOnly} source={{ code: MessageWithCustomMentionRendererText }} />
+<Canvas
+  of={MessageThreadStories.CustomMentionsDocsOnly}
+  source={{ code: MessageWithCustomMentionRendererText }}
+  layout="padded"
+/>
 
 ## Rich Text Editor Support for Editing Messages
 
@@ -215,6 +259,7 @@ Enabling the rich text editor for message editing, without customizing its behav
 <Canvas
   of={MessageThreadStories.RichTextEditorTextDocsOnly}
   source={{ code: MessageThreadWithRichTextEditorExampleText }}
+  layout="padded"
 />
 
 ## Rich Text Editor Support for Editing Messages with Inline Images
@@ -244,6 +289,7 @@ paste. Selecting from the clipboard view from keyboard may not be supported.
 <Canvas
   of={MessageThreadStories.RichTextEditorInlineImagesTextDocsOnly}
   source={{ code: MessageThreadWithRichTextEditorInlineImagesExampleText }}
+  layout="padded"
 />
 
 ## Process content on paste in Rich Text Editor during message editing
@@ -255,8 +301,9 @@ paste. Selecting from the clipboard view from keyboard may not be supported.
 <Canvas
   of={MessageThreadStories.RichTextEditorOnPasteTextDocsOnly}
   source={{ code: MessageThreadWithRichTextEditorOnPasteExampleText }}
+  layout="padded"
 />
 
 ## Props
 
-<ArgTypes of={MessageThread} />
+<ArgTypes />

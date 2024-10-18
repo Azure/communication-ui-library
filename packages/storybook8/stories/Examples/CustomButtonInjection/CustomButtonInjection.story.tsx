@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 import { CallComposite, CustomCallControlButtonCallback } from '@azure/communication-react';
+
+// eslint-disable-next-line no-restricted-imports
 import { _MockCallAdapter } from '@internal/react-composites';
 import React from 'react';
 
@@ -89,22 +91,24 @@ const CustomButtonInjectionStory = (args: any): JSX.Element => {
   ];
 
   return (
-    <CallComposite
-      adapter={adapter}
-      formFactor={args.formFactor}
-      options={{
-        callControls: {
-          raiseHandButton: false,
-          screenShareButton: false,
-          peopleButton: false,
-          onFetchCustomButtonProps: args.allowRawObjectInput
-            ? args.options
-            : args.injectMaximumNumberOfButtons
-              ? maxCustomButtonsForInjection
-              : customButtonArray
-        }
-      }}
-    />
+    <div style={{ width: '100wh', height: '100vh' }}>
+      <CallComposite
+        adapter={adapter}
+        formFactor={args.formFactor}
+        options={{
+          callControls: {
+            raiseHandButton: false,
+            screenShareButton: false,
+            peopleButton: false,
+            onFetchCustomButtonProps: args.allowRawObjectInput
+              ? args.options
+              : args.injectMaximumNumberOfButtons
+                ? maxCustomButtonsForInjection
+                : customButtonArray
+          }
+        }}
+      />
+    </div>
   );
 };
 

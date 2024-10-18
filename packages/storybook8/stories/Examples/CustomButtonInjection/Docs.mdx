@@ -1,8 +1,8 @@
-import { Canvas, Meta, ArgTypes } from '@storybook/blocks';
-import { CustomButtonInjection as CustomButtonInjectionComponent } from './snippets/CustomButtonInjectionTypes';
-import * as CustomButtonInjectionStories from './index.stories';
-import { addCSS } from '../../utils';
 import { initializeIcons } from '@fluentui/react';
+import { Canvas, Meta, ArgTypes } from '@storybook/blocks';
+import { addCSS } from '../../utils';
+import * as CustomButtonInjectionStories from './index.stories';
+import { CustomButtonInjection as CustomButtonInjectionComponent } from './snippets/CustomButtonInjectionTypes';
 
 import CustomButtonWithAsyncStateExampleText from '!!raw-loader!./snippets/CustomButtonWithAsyncStateText.snippet.tsx';
 import CustomButtonWithStateExampleText from '!!raw-loader!./snippets/CustomButtonWithStateText.snippet.tsx';
@@ -14,8 +14,8 @@ import SecondaryCustomButtonInjectionExampleText from '!!raw-loader!./snippets/S
 
 <Meta of={CustomButtonInjectionStories} component={CustomButtonInjectionComponent} />
 
-<div id='custom-button-injection-story'>
-<script> { addCSS('#custom-button-injection-story button[aria-label="Custom"]{ border: 1px solid green; }') } </script>
+<script> {addCSS('#custom-button-injection-story button[aria-label="Custom"]{ border: 1px solid green; }')} </script>
+
 <script> {initializeIcons()} </script>
 
 # Custom Button Injection
@@ -24,7 +24,7 @@ Custom Button Injection in our Composite experiences allows users to add their o
 options to build out their own custom experiences like components, we want to make sure injecting customer's own
 features is simple and achievable.
 
-# Examples
+## Examples
 
 There are multiple areas, `primary`, `secondary`, and `overflow`, that you can inject buttons into. Depending on
 which area, only a max number of custom injected buttons will be displayed. This also varies if you are mobile
@@ -33,65 +33,70 @@ or desktop.
 In all the examples below we use a mock adapter to quickly showcase custom button injection in our Call
 Composite. Please ensure you replace the mock adapter with your own adapter.
 
-## Desktop: Primary Main Bar
+### Desktop: Primary Main Bar
 
 Max number of buttons: '3'
 
 <Canvas
   of={CustomButtonInjectionStories.PrimaryCustomButtonInjectionDocsOnly}
   source={{ code: PrimaryCustomButtonInjectionExampleText }}
+  layout="centered"
 />
 
-## Desktop: Secondary Main Bar
+### Desktop: Secondary Main Bar
 
 Max number of buttons: '2'
 
 <Canvas
   of={CustomButtonInjectionStories.SecondaryCustomButtonInjectionDocsOnly}
   source={{ code: SecondaryCustomButtonInjectionExampleText }}
+  layout="centered"
 />
 
-## Desktop: Overflow More Button
+### Desktop: Overflow More Button
 
 Max number of buttons: '∞'
 
 <Canvas
   of={CustomButtonInjectionStories.OverflowCustomButtonInjectionDocsOnly}
   source={{ code: OverflowCustomButtonInjectionExampleText }}
+  layout="centered"
 />
 
-## Mobile: Primary and Overflow Contextual Menu
+### Mobile: Primary and Overflow Contextual Menu
 
 Max number of buttons in primary: '1' Max number of buttons in Contextual Menu: '∞'
 
 <Canvas
   of={CustomButtonInjectionStories.MobileCustomButtonInjectionDocsOnly}
   source={{ code: MobileCustomButtonInjectionExampleText }}
+  layout="centered"
 />
 
-## Custom Button With State
+### Custom Button With State
 
 <Canvas
   of={CustomButtonInjectionStories.CustomButtonWithStateDocsOnly}
   source={{ code: CustomButtonWithStateExampleText }}
+  layout="centered"
 />
 
-## Custom Button With Async loading State
+### Custom Button With Async loading State
 
 <Canvas
   of={CustomButtonInjectionStories.CustomButtonWithAsyncStateDocsOnly}
   source={{ code: CustomButtonWithAsyncStateExampleText }}
+  layout="centered"
 />
 
-## Legacy Control Bar Custom Button Injection
+### Legacy Control Bar Custom Button Injection
 
 <Canvas
   of={CustomButtonInjectionStories.LegacyControlBarCustomButtonInjectionDocsOnly}
   source={{ code: LegacyControlBarCustomButtonInjectionExampleText }}
+  layout="centered"
 />
 
 ## Props
 
 <ArgTypes of={CustomButtonInjectionComponent} />
-
-</div>

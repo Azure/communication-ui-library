@@ -1,6 +1,6 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/rush/v5/rush.schema.json",
-  "rushVersion": "5.112.2",
+  "rushVersion": "5.136.0",
   "pnpmVersion": "8.11.0",
   "nodeSupportedVersionRange": ">=16.19.0 <21.0.0",
   "ensureConsistentVersions": true,
@@ -106,11 +106,6 @@
       "reviewCategory": "sample"
     },
     {
-      "packageName": "@internal/storybook",
-      "projectFolder": "packages/storybook",
-      "reviewCategory": "tools"
-    },
-    {
       "packageName": "@internal/storybook8",
       "projectFolder": "packages/storybook8",
       "reviewCategory": "tools"
@@ -138,6 +133,11 @@
     {
       "packageName": "@internal/fake-backends",
       "projectFolder": "packages/fake-backends",
+      "reviewCategory": "tools"
+    },
+    {
+      "packageName": "@internal/eslint-plugin-custom-rules",
+      "projectFolder": "tools/custom-eslint-rules",
       "reviewCategory": "tools"
     }
   ]

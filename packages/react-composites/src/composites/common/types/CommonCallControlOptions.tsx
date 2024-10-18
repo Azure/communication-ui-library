@@ -32,7 +32,7 @@ export type CommonCallControlOptions = {
    */
   cameraButton?:
     | boolean
-    | /* @conditional-compile-remove(PSTN-calls) */ {
+    | {
         disabled: boolean;
       };
   /**
@@ -58,7 +58,7 @@ export type CommonCallControlOptions = {
    */
   microphoneButton?:
     | boolean
-    | /* @conditional-compile-remove(PSTN-calls) */ {
+    | {
         disabled: boolean;
       };
   /**
@@ -67,7 +67,7 @@ export type CommonCallControlOptions = {
    */
   devicesButton?:
     | boolean
-    | /* @conditional-compile-remove(PSTN-calls) */ {
+    | {
         disabled: boolean;
       };
   /**
@@ -99,13 +99,12 @@ export type CommonCallControlOptions = {
    * Inject custom buttons in the call controls.
    */
   onFetchCustomButtonProps?: CustomCallControlButtonCallback[];
-  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   holdButton?: boolean | { disabled: boolean };
   /**
    * Show or hide the people button in the composite control bar.
    * @defaultValue true
    */
-  peopleButton?: boolean | /* @conditional-compile-remove(PSTN-calls) */ { disabled: boolean };
+  peopleButton?: boolean | { disabled: boolean };
   /**
    * Show or hide the dialpad button in the composite control bar.
    */
@@ -114,13 +113,17 @@ export type CommonCallControlOptions = {
    * Show or hide the exit spotlight button in the composite control bar when local participant is spotlighted.
    */
   exitSpotlightButton?: boolean;
-  /* @conditional-compile-remove(acs-close-captions) */
+
   /**
    * Show, Hide or Disable captions during a call.
    * @defaultValue true
    */
   captionsButton?: boolean;
-  /* @conditional-compile-remove(teams-meeting-conference) */
+  /**
+   * Show, Hide or Disable gallery controls button during a call.
+   * @defaultValue true
+   */
+  galleryControlsButton?: boolean;
   /**
    * Show, meeting conference phone information.
    * @defaultValue true

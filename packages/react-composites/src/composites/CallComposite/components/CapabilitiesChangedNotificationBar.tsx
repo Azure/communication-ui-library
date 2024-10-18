@@ -110,7 +110,6 @@ const getCapabilityChangedNotificationString = (
         return strings?.shareScreen?.lostDueToRoleChangeToAttendee;
       }
       break;
-    /* @conditional-compile-remove(hide-attendee-name) */
     case 'viewAttendeeNames':
       if (
         !notification.isPresent &&
@@ -213,7 +212,7 @@ export interface CapabilityChangedNotificationStrings {
      */
     grantedDueToRoleChangeToPresenter?: string;
   };
-  /* @conditional-compile-remove(hide-attendee-name) */
+
   /**
    * Strings for hidden attendee names capability
    */

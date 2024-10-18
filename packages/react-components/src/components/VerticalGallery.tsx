@@ -108,7 +108,7 @@ export const VerticalGallery = (props: VerticalGalleryProps): JSX.Element => {
 
   useEffect(() => {
     if (onFetchTilesToRender && indexesArray) {
-      onFetchTilesToRender(indexesArray[page - 1]);
+      onFetchTilesToRender(indexesArray[page - 1] ?? []);
     }
   }, [indexesArray, onFetchTilesToRender, page]);
 
@@ -116,7 +116,7 @@ export const VerticalGallery = (props: VerticalGalleryProps): JSX.Element => {
   const clippedPage = firstIndexOfCurrentPage < numberOfChildren - 1 ? page : lastPage;
   const childrenOnCurrentPage = useMemo(() => {
     if (indexesArray[0] !== undefined) {
-      return indexesArray[clippedPage - 1].map((index) => {
+      return indexesArray[clippedPage - 1]?.map((index) => {
         return React.Children.toArray(children)[index];
       });
     }

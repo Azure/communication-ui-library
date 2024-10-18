@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-import { DominantSpeakersInfo } from '@azure/communication-calling';
+import { CallState, DominantSpeakersInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(breakout-rooms) */
 import { BreakoutRoom } from '@azure/communication-calling';
 import { ParticipantCapabilities } from '@azure/communication-calling';
@@ -18,15 +18,13 @@ import {
   SpotlightCallFeatureState,
   IncomingCallState
 } from '@internal/calling-stateful-client';
-/* @conditional-compile-remove(one-to-n-calling) */
 import { TeamsIncomingCallState } from '@internal/calling-stateful-client';
 import { ReactionState } from '@internal/calling-stateful-client';
 import { CaptionsInfo } from '@internal/calling-stateful-client';
-/* @conditional-compile-remove(acs-close-captions) */
+
 import { CaptionsKind } from '@azure/communication-calling';
 import { RaisedHandState } from '@internal/calling-stateful-client';
 import { _SupportedCaptionLanguage, _SupportedSpokenLanguage } from '@internal/react-components';
-/* @conditional-compile-remove(teams-meeting-conference) */
 import { ConferencePhoneInfo } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(breakout-rooms) */
 import { CallNotifications } from '@internal/calling-stateful-client';
@@ -56,9 +54,7 @@ export const getRole = (state: CallClientState, props: CallingBaseSelectorProps)
  * @private
  */
 export const isHideAttendeeNamesEnabled = (state: CallClientState, props: CallingBaseSelectorProps): boolean => {
-  /* @conditional-compile-remove(hide-attendee-name) */
   return state.calls[props.callId]?.hideAttendeeNames ?? false;
-  return false;
 };
 
 /**
@@ -193,7 +189,7 @@ export const getDiagnostics = (
 /**
  * @private
  */
-export const getCallState = (state: CallClientState, props: CallingBaseSelectorProps): string =>
+export const getCallState = (state: CallClientState, props: CallingBaseSelectorProps): CallState | undefined =>
   state.calls[props.callId]?.state;
 
 /**
@@ -214,9 +210,8 @@ export const getParticipantCount = (state: CallClientState, props: CallingBaseSe
   return undefined;
 };
 
-/* @conditional-compile-remove(acs-close-captions) */
 /** @private */
-export const getCaptionsKind = (state: CallClientState, props: CallingBaseSelectorProps): CaptionsKind => {
+export const getCaptionsKind = (state: CallClientState, props: CallingBaseSelectorProps): CaptionsKind | undefined => {
   return state.calls[props.callId]?.captionsFeature.captionsKind;
 };
 
@@ -270,7 +265,6 @@ export const getSupportedSpokenLanguages = (
   return state.calls[props.callId]?.captionsFeature.supportedSpokenLanguages as _SupportedSpokenLanguage[];
 };
 
-/* @conditional-compile-remove(teams-meeting-conference) */
 /** @private */
 export const getMeetingConferencePhones = (
   state: CallClientState,
@@ -284,9 +278,7 @@ export const getMeetingConferencePhones = (
  * @returns the incoming calls in the call client state
  * @private
  */
-export const getIncomingCalls = (
-  state: CallClientState
-): IncomingCallState[] | /* @conditional-compile-remove(one-to-n-calling) */ TeamsIncomingCallState[] => {
+export const getIncomingCalls = (state: CallClientState): IncomingCallState[] | TeamsIncomingCallState[] => {
   return Object.values(state.incomingCalls);
 };
 
@@ -295,9 +287,7 @@ export const getIncomingCalls = (
  * @returns the incoming calls that have been removed
  * @private
  */
-export const getRemovedIncomingCalls = (
-  state: CallClientState
-): IncomingCallState[] | /* @conditional-compile-remove(one-to-n-calling) */ TeamsIncomingCallState[] => {
+export const getRemovedIncomingCalls = (state: CallClientState): IncomingCallState[] | TeamsIncomingCallState[] => {
   return Object.values(state.incomingCallsEnded);
 };
 

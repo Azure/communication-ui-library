@@ -17,7 +17,6 @@ import {
 } from '@azure/communication-calling';
 import { TeamsMeetingIdLocator } from '@azure/communication-calling';
 import { Reaction } from '@azure/communication-calling';
-/* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(breakout-rooms) */
 import type { BreakoutRoomsEventData, BreakoutRoomsUpdatedListener, TeamsCall } from '@azure/communication-calling';
@@ -64,7 +63,6 @@ import {
 } from '../../ChatComposite/adapter/AzureCommunicationChatAdapter';
 import { EventEmitter } from 'events';
 import { CommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
-/* @conditional-compile-remove(PSTN-calls) */
 import {
   CommunicationIdentifier,
   isCommunicationUserIdentifier,
@@ -73,7 +71,7 @@ import {
 import { getChatThreadFromTeamsLink } from './parseTeamsUrl';
 import { AdapterError } from '../../common/adapters';
 
-/* @conditional-compile-remove(teams-adhoc-call) */
+/* @conditional-compile-remove(call-participants-locator) */
 import { CallParticipantsLocator } from '../../CallComposite/adapter/AzureCommunicationCallAdapter';
 
 import { _createAzureCommunicationCallAdapterInner } from '../../CallComposite/adapter/AzureCommunicationCallAdapter';
@@ -356,11 +354,11 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     this.off.bind(this);
     this.downloadResourceToCache = this.downloadResourceToCache.bind(this);
     this.removeResourceFromCache = this.removeResourceFromCache.bind(this);
-    /* @conditional-compile-remove(PSTN-calls) */
+
     this.holdCall.bind(this);
-    /* @conditional-compile-remove(PSTN-calls) */
+
     this.resumeCall.bind(this);
-    /* @conditional-compile-remove(PSTN-calls) */
+
     this.addParticipant.bind(this);
     this.sendDtmfTone.bind(this);
     /* @conditional-compile-remove(unsupported-browser) */
@@ -438,11 +436,8 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     this.callAdapter.dispose();
   }
   /** Remove a participant from the Call only. */
-  public async removeParticipant(
-    userId: string | /* @conditional-compile-remove(PSTN-calls) */ CommunicationIdentifier
-  ): Promise<void> {
+  public async removeParticipant(userId: string | CommunicationIdentifier): Promise<void> {
     let participant = userId;
-    /* @conditional-compile-remove(PSTN-calls) */
     participant = _toCommunicationIdentifier(userId);
     await this.callAdapter.removeParticipant(participant);
   }
@@ -605,19 +600,14 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
       adapter.removeResourceFromCache(resourceDetails);
     });
   }
-  /* @conditional-compile-remove(PSTN-calls) */
   public async holdCall(): Promise<void> {
     return await this.callAdapter.holdCall();
   }
-  /* @conditional-compile-remove(PSTN-calls) */
   public async resumeCall(): Promise<void> {
     return await this.callAdapter.resumeCall();
   }
-  /* @conditional-compile-remove(PSTN-calls) */
   public async addParticipant(participant: PhoneNumberIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
-  /* @conditional-compile-remove(PSTN-calls) */
   public async addParticipant(participant: CommunicationUserIdentifier): Promise<void>;
-  /* @conditional-compile-remove(PSTN-calls) */
   public async addParticipant(
     participant: PhoneNumberIdentifier | CommunicationUserIdentifier,
     options?: AddPhoneNumberOptions
@@ -1148,7 +1138,7 @@ export type CommunicationAdapter = CallAndChatProvider | TeamsMeetingLinkProvide
  */
 export interface CallAndChatLocator {
   /** Locator used by {@link createAzureCommunicationCallWithChatAdapter} to locate the call to join */
-  callLocator: GroupCallLocator | /* @conditional-compile-remove(teams-adhoc-call) */ CallParticipantsLocator;
+  callLocator: GroupCallLocator | /* @conditional-compile-remove(call-participants-locator) */ CallParticipantsLocator;
   /** Chat thread ID used by {@link createAzureCommunicationCallWithChatAdapter} to locate the chat thread to join */
   chatThreadId: string;
 }
@@ -1164,9 +1154,7 @@ export type AzureCommunicationCallWithChatAdapterArgs = {
   displayName: string;
   credential: CommunicationTokenCredential;
   locator: CallAndChatLocator | TeamsMeetingLinkLocator | TeamsMeetingIdLocator;
-  /* @conditional-compile-remove(PSTN-calls) */
   alternateCallerId?: string;
-
   callAdapterOptions?: AzureCommunicationCallAdapterOptions;
 };
 
@@ -1182,7 +1170,7 @@ export const createAzureCommunicationCallWithChatAdapter = async ({
   credential,
   endpoint,
   locator,
-  /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
+  alternateCallerId,
   callAdapterOptions
 }: AzureCommunicationCallWithChatAdapterArgs): Promise<CallWithChatAdapter> => {
   const callAdapterLocator = isTeamsMeetingLocator(locator) ? locator : locator.callLocator;
@@ -1191,7 +1179,7 @@ export const createAzureCommunicationCallWithChatAdapter = async ({
     displayName,
     credential,
     locator: callAdapterLocator,
-    /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
+    alternateCallerId,
     options: callAdapterOptions,
     telemetryImplementationHint: 'CallWithChat' as _TelemetryImplementationHint
   });
@@ -1281,15 +1269,7 @@ export const useAzureCommunicationCallWithChatAdapter = (
    */
   beforeDispose?: (adapter: CallWithChatAdapter) => Promise<void>
 ): CallWithChatAdapter | undefined => {
-  const {
-    credential,
-    displayName,
-    endpoint,
-    locator,
-    userId,
-    /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
-    callAdapterOptions
-  } = args;
+  const { credential, displayName, endpoint, locator, userId, alternateCallerId, callAdapterOptions } = args;
 
   // State update needed to rerender the parent component when a new adapter is created.
   const [adapter, setAdapter] = useState<CallWithChatAdapter | undefined>(undefined);
@@ -1339,7 +1319,7 @@ export const useAzureCommunicationCallWithChatAdapter = (
           endpoint,
           locator,
           userId,
-          /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
+          alternateCallerId,
           callAdapterOptions
         });
         if (afterCreateRef.current) {
@@ -1354,7 +1334,7 @@ export const useAzureCommunicationCallWithChatAdapter = (
     [
       adapterRef,
       afterCreateRef,
-      /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
+      alternateCallerId,
       beforeDisposeRef,
       credential,
       displayName,

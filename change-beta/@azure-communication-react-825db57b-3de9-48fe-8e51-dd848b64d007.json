@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "area": "fix",
-  "workstream": "",
-  "comment": "Fix CallComposite camera prompts to respect deviceChecks property",
-  "packageName": "@azure/communication-react",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

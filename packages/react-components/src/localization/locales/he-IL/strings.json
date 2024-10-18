@@ -99,14 +99,15 @@
     "cameraMenuTitle": "מצלמה",
     "cameraMenuTooltip": "בחר מצלמה",
     "cameraButtonSplitRoleDescription": "לחצן פיצול",
-    "onSplitButtonAriaLabel": "כבה את אפשרויות המצלמה והמצלמה",
-    "offSplitButtonAriaLabel": "הפעל אפשרויות מצלמה ומצלמה",
+    "onSplitButtonAriaLabel": "כבה מצלמה",
+    "offSplitButtonAriaLabel": "הפעל את המצלמה",
     "cameraActionTurnedOnAnnouncement": "המצלמה שלך הופעלה",
     "cameraActionTurnedOffAnnouncement": "המצלמה שלך כבויה",
     "onSplitButtonPrimaryActionCamera": "כבה מצלמה",
     "offSplitButtonPrimaryActionCamera": "הפעל את המצלמה",
     "cameraPrimaryActionSplitButtonTitle": "השתמש במצלמה",
-    "videoEffectsMenuItemTitle": "אפקטים"
+    "videoEffectsMenuItemTitle": "אפקטים",
+    "cameraButtonAriaDescription": "אפשרויות מצלמה"
   },
   "microphoneButton": {
     "onLabel": "מיקרופון",
@@ -119,13 +120,17 @@
     "speakerMenuTitle": "רמקול",
     "speakerMenuTooltip": "בחר רמקול",
     "microphoneButtonSplitRoleDescription": "לחצן פיצול",
-    "onSplitButtonAriaLabel": "השתק אפשרויות מיקרופון ושמע",
-    "offSplitButtonAriaLabel": "בטל השתקה של אפשרויות מיקרופון ושמע",
+    "onSplitButtonAriaLabel": "השתק את המיקרופון",
+    "offSplitButtonAriaLabel": "בטל את השתקת המיקרופון",
     "microphoneActionTurnedOnAnnouncement": "המיקרופון שלך הופעל",
     "microphoneActionTurnedOffAnnouncement": "המיקרופון שלך כובה",
-    "offSplitButtonMicrophonePrimaryAction": "בטל את ההשתקה של המיקרופון",
+    "offSplitButtonMicrophonePrimaryAction": "בטל את השתקת המיקרופון",
     "onSplitButtonMicrophonePrimaryAction": "השתק את המיקרופון",
-    "microphonePrimaryActionSplitButtonTitle": "השתמש במיקרופון"
+    "microphonePrimaryActionSplitButtonTitle": "השתמש במיקרופון",
+    "microphoneAriaDescription": "אפשרויות שמע",
+    "deepNoiseSuppressionTitle": "העלמת רעש",
+    "deepNoiseSuppressionOnAnnouncement": "דיכוי רעשים עמוקים הופעל",
+    "deepNoiseSuppressionOffAnnouncement": "דיכוי רעשים עמוקים בוטל"
   },
   "devicesButton": {
     "label": "מכשירים",
@@ -452,6 +457,31 @@
       "title": "התמלול הופסק.",
       "message": "אתה כעת רק מקליט את הפגישה.",
       "dismissButtonAriaLabel": "סגור"
+    },
+    "assignedBreakoutRoomOpened": {
+      "title": "נעביר אותך לחדר שהוקצה לך תוך 5 שניות.",
+      "dismissButtonAriaLabel": "סגור"
+    },
+    "assignedBreakoutRoomChanged": {
+      "title": "פיצול החדרים שלך השתנה",
+      "message": "נעביר אותך לחדר שהוקצה לך תוך 5 שניות.",
+      "dismissButtonAriaLabel": "סגור"
+    },
+    "assignedBreakoutRoomOpenedPromptJoin": {
+      "title": "להצטרף לפיצול חדרים?",
+      "message": "הוקצית לפיצול חדר.",
+      "dismissButtonAriaLabel": "סגור",
+      "primaryButtonLabel": "הצטרף לחדר",
+      "secondaryButtonLabel": "מאוחר יותר"
+    },
+    "breakoutRoomJoined": {
+      "title": "הצטרפת לפיצול חדרים.",
+      "dismissButtonAriaLabel": "סגור"
+    },
+    "breakoutRoomClosingSoon": {
+      "title": "תוקף מגבלת זמן החדר עומד לפוג.",
+      "message": "חדר זה ייסגר בעוד 30 שניות",
+      "dismissButtonAriaLabel": "סגור"
     }
   },
   "videoGallery": {
@@ -479,7 +509,8 @@
     "stopSpotlightVideoTileMenuLabel": "הפסק להציב זרקור",
     "stopSpotlightOnSelfVideoTileMenuLabel": "צא מזרקור",
     "attendeeRole": "משתתף",
-    "muteParticipantMenuItemLabel": "השתק"
+    "muteParticipantMenuItemLabel": "השתק",
+    "waitingScreenText": "מחכה שאחרים יצטרפו"
   },
   "dialpad": {
     "placeholderText": "הזן מספר טלפון",
@@ -633,6 +664,7 @@
     "incomingCallNoticicationRejectAriaLabel": "דחה",
     "incomingCallNotificationAcceptButtonLabel": "קבל",
     "incomingCallNotificationRejectButtonLabel": "דחה",
-    "incomingCallNotificationAccceptWithVideoButtonLabel": "קבל עם וידאו"
+    "incomingCallNotificationAccceptWithVideoButtonLabel": "קבל עם וידאו",
+    "incomingCallNotificationDismissButtonAriaLabel": "בטל"
   }
 }

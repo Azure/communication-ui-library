@@ -50,7 +50,7 @@ const JoinExistingCallStory = (args: ArgsFrom<typeof storyControls>, context: an
 export const JoinExistingCall = JoinExistingCallStory.bind({});
 
 const meta: Meta = {
-  title: 'Composites/CallComposite',
+  title: 'Composites/CallComposite/Join Existing Call',
   component: CallComposite,
   argTypes: {
     ...storyControls,

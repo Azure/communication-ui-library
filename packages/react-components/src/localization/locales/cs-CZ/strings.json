@@ -99,14 +99,15 @@
     "cameraMenuTitle": "Kamera",
     "cameraMenuTooltip": "Zvolit kameru",
     "cameraButtonSplitRoleDescription": "Tlačítko rozdělení",
-    "onSplitButtonAriaLabel": "Vypnout kameru a možnosti kamery",
-    "offSplitButtonAriaLabel": "Zapnout kameru a možnosti kamery",
+    "onSplitButtonAriaLabel": "Vypnout kameru",
+    "offSplitButtonAriaLabel": "Zapnout kameru",
     "cameraActionTurnedOnAnnouncement": "Vaše kamera je zapnutá",
     "cameraActionTurnedOffAnnouncement": "Vaše kamera je vypnutá",
     "onSplitButtonPrimaryActionCamera": "Vypnout kameru",
     "offSplitButtonPrimaryActionCamera": "Zapnout kameru",
     "cameraPrimaryActionSplitButtonTitle": "Použít kameru",
-    "videoEffectsMenuItemTitle": "Efekty"
+    "videoEffectsMenuItemTitle": "Efekty",
+    "cameraButtonAriaDescription": "možnosti kamery"
   },
   "microphoneButton": {
     "onLabel": "Mikrofon",
@@ -119,13 +120,17 @@
     "speakerMenuTitle": "Reproduktor",
     "speakerMenuTooltip": "Zvolit reproduktor",
     "microphoneButtonSplitRoleDescription": "Tlačítko rozdělení",
-    "onSplitButtonAriaLabel": "Ztlumit mikrofon a možnosti zvuku",
-    "offSplitButtonAriaLabel": "Zrušit ztlumení mikrofonu a možností zvuku",
+    "onSplitButtonAriaLabel": "Ztlumit mikrofon",
+    "offSplitButtonAriaLabel": "Zrušit ztlumení mikrofonu",
     "microphoneActionTurnedOnAnnouncement": "Váš mikrofon je zapnutý",
     "microphoneActionTurnedOffAnnouncement": "Váš mikrofon je vypnutý",
     "offSplitButtonMicrophonePrimaryAction": "Zrušit ztlumení mikrofonu",
     "onSplitButtonMicrophonePrimaryAction": "Ztlumit mikrofon",
-    "microphonePrimaryActionSplitButtonTitle": "Použít mikrofon"
+    "microphonePrimaryActionSplitButtonTitle": "Použít mikrofon",
+    "microphoneAriaDescription": "Možnosti zvuku",
+    "deepNoiseSuppressionTitle": "Potlačení šumu",
+    "deepNoiseSuppressionOnAnnouncement": "Potlačení hlubokého šumu je zapnuté",
+    "deepNoiseSuppressionOffAnnouncement": "Potlačení hlubokého šumu je vypnuté"
   },
   "devicesButton": {
     "label": "Zařízení",
@@ -452,6 +457,31 @@
       "title": "Přepis se zastavil.",
       "message": "Nyní tuto schůzku pouze nahráváte.",
       "dismissButtonAriaLabel": "Zavřít"
+    },
+    "assignedBreakoutRoomOpened": {
+      "title": "Za 5 sekund vás přesuneme do přiřazené místnosti.",
+      "dismissButtonAriaLabel": "Zavřít"
+    },
+    "assignedBreakoutRoomChanged": {
+      "title": "Vaše skupinová místnost se změnila",
+      "message": "Za 5 sekund vás přesuneme do přiřazené místnosti.",
+      "dismissButtonAriaLabel": "Zavřít"
+    },
+    "assignedBreakoutRoomOpenedPromptJoin": {
+      "title": "Připojit se ke skupinové místnosti?",
+      "message": "Byli jste přiřazeni ke skupinové místnosti.",
+      "dismissButtonAriaLabel": "Zavřít",
+      "primaryButtonLabel": "Připojit se k místnosti",
+      "secondaryButtonLabel": "Později"
+    },
+    "breakoutRoomJoined": {
+      "title": "Připojili jste se ke skupinové místnosti.",
+      "dismissButtonAriaLabel": "Zavřít"
+    },
+    "breakoutRoomClosingSoon": {
+      "title": "Časový limit místnosti brzy vyprší.",
+      "message": "Tato místnost se zavře během 30 sekund.",
+      "dismissButtonAriaLabel": "Zavřít"
     }
   },
   "videoGallery": {
@@ -479,7 +509,8 @@
     "stopSpotlightVideoTileMenuLabel": "Zastavit přidávání do hlavního výběru",
     "stopSpotlightOnSelfVideoTileMenuLabel": "Ukončit hlavní výběr",
     "attendeeRole": "Účastník",
-    "muteParticipantMenuItemLabel": "Ztlumit"
+    "muteParticipantMenuItemLabel": "Ztlumit",
+    "waitingScreenText": "Čeká se na připojení ostatních"
   },
   "dialpad": {
     "placeholderText": "Zadejte telefonní číslo",
@@ -633,6 +664,7 @@
     "incomingCallNoticicationRejectAriaLabel": "Odmítnout",
     "incomingCallNotificationAcceptButtonLabel": "Přijmout",
     "incomingCallNotificationRejectButtonLabel": "Odmítnout",
-    "incomingCallNotificationAccceptWithVideoButtonLabel": "Přijmout s videem"
+    "incomingCallNotificationAccceptWithVideoButtonLabel": "Přijmout s videem",
+    "incomingCallNotificationDismissButtonAriaLabel": "Zavřít"
   }
 }

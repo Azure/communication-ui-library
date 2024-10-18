@@ -2,9 +2,8 @@
 // Licensed under the MIT License.
 
 import { StartCallOptions } from '@azure/communication-calling';
-/* @conditional-compile-remove(one-to-n-calling) */
 import { IncomingCallCommon } from '@azure/communication-calling';
-/* @conditional-compile-remove(PSTN-calls) */
+/* @conditional-compile-remove(teams-identity-support-beta) */
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support) */
 import { TeamsCall, TeamsCallAgent, TeamsCallAgentOptions } from '@azure/communication-calling';
@@ -13,16 +12,14 @@ import {
   isCommunicationUserIdentifier,
   isMicrosoftTeamsAppIdentifier
 } from '@azure/communication-common';
-/* @conditional-compile-remove(PSTN-calls) */
+/* @conditional-compile-remove(teams-identity-support-beta) */
 import { isPhoneNumberIdentifier } from '@azure/communication-common';
 import { Common, _toCommunicationIdentifier } from '@internal/acs-ui-common';
 import { StatefulCallClient, StatefulDeviceManager } from '@internal/calling-stateful-client';
-/* @conditional-compile-remove(one-to-n-calling) */
 import { DeclarativeTeamsCallAgent } from '@internal/calling-stateful-client';
 import memoizeOne from 'memoize-one';
 import { ReactElement } from 'react';
 import { isTeamsCallParticipants } from '../utils/callUtils';
-/* @conditional-compile-remove(one-to-n-calling) */
 import { createLocalVideoStream } from '../utils/callUtils';
 import {
   createDefaultCommonCallingHandlers,
@@ -84,7 +81,7 @@ export const createDefaultTeamsCallingHandlers = memoizeOne(
 
         return undefined;
       },
-      /* @conditional-compile-remove(PSTN-calls) */
+      /* @conditional-compile-remove(teams-identity-support-beta) */
       onAddParticipant: async (
         userId: string | CommunicationIdentifier,
         options?: AddPhoneNumberOptions
@@ -106,9 +103,7 @@ export const createDefaultTeamsCallingHandlers = memoizeOne(
         /* @conditional-compile-remove(teams-identity-support) */
         call?.addParticipant(participant);
       },
-      onRemoveParticipant: async (
-        userId: string | /* @conditional-compile-remove(PSTN-calls) */ CommunicationIdentifier
-      ): Promise<void> => {
+      onRemoveParticipant: async (userId: string | CommunicationIdentifier): Promise<void> => {
         const participant = _toCommunicationIdentifier(userId);
         if (isCommunicationUserIdentifier(participant)) {
           throw new Error('CommunicationIdentifier in Teams call is not supported!');
@@ -120,7 +115,6 @@ export const createDefaultTeamsCallingHandlers = memoizeOne(
         /* @conditional-compile-remove(teams-identity-support) */
         await call?.removeParticipant(participant);
       },
-      /* @conditional-compile-remove(one-to-n-calling) */
       onAcceptCall: async (incomingCallId: string, useVideo?: boolean): Promise<void> => {
         const localVideoStream = useVideo ? await createLocalVideoStream(callClient) : undefined;
         const incomingCall = (callAgent as DeclarativeTeamsCallAgent)?.incomingCalls.find(
@@ -132,7 +126,6 @@ export const createDefaultTeamsCallingHandlers = memoizeOne(
           );
         }
       },
-      /* @conditional-compile-remove(one-to-n-calling) */
       onRejectCall: async (incomingCallId: string): Promise<void> => {
         const incomingCall = (callAgent as DeclarativeTeamsCallAgent)?.incomingCalls.find(
           (incomingCall: IncomingCallCommon) => incomingCall.id === incomingCallId

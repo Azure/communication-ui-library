@@ -99,14 +99,15 @@
     "cameraMenuTitle": "Kamera",
     "cameraMenuTooltip": "Valitse kamera",
     "cameraButtonSplitRoleDescription": "Jaettu painike",
-    "onSplitButtonAriaLabel": "Kameran ja sen käytöstä poistamisen asetukset",
-    "offSplitButtonAriaLabel": "Kameran ja sen käyttöön ottamisen asetukset",
+    "onSplitButtonAriaLabel": "Poista kamera käytöstä",
+    "offSplitButtonAriaLabel": "Ota kamera käyttöön",
     "cameraActionTurnedOnAnnouncement": "Kamerasi on otettu käyttöön",
     "cameraActionTurnedOffAnnouncement": "Kamerasi on poistettu käytöstä",
     "onSplitButtonPrimaryActionCamera": "Poista kamera käytöstä",
     "offSplitButtonPrimaryActionCamera": "Käynnistä kamera",
     "cameraPrimaryActionSplitButtonTitle": "Käytä kameraa",
-    "videoEffectsMenuItemTitle": "Tehosteet"
+    "videoEffectsMenuItemTitle": "Tehosteet",
+    "cameraButtonAriaDescription": "kamera-asetukset"
   },
   "microphoneButton": {
     "onLabel": "Mikrofoni",
@@ -119,13 +120,17 @@
     "speakerMenuTitle": "Kaiutin",
     "speakerMenuTooltip": "Valitse kaiutin",
     "microphoneButtonSplitRoleDescription": "Jaettu painike",
-    "onSplitButtonAriaLabel": "Äänen ja mikrofonin mykistyksen asetukset",
-    "offSplitButtonAriaLabel": "Äänen ja mikrofonin mykistyksen poistamisen asetukset",
+    "onSplitButtonAriaLabel": "Mykistä mikrofoni",
+    "offSplitButtonAriaLabel": "Poista mikrofonin mykistys",
     "microphoneActionTurnedOnAnnouncement": "Mikrofonisi on otettu käyttöön",
     "microphoneActionTurnedOffAnnouncement": "Mikrofonisi on poistettu käytöstä",
     "offSplitButtonMicrophonePrimaryAction": "Poista mikrofonin mykistys",
     "onSplitButtonMicrophonePrimaryAction": "Mykistä mikrofoni",
-    "microphonePrimaryActionSplitButtonTitle": "Käytä mikrofonia"
+    "microphonePrimaryActionSplitButtonTitle": "Käytä mikrofonia",
+    "microphoneAriaDescription": "Ääniasetukset",
+    "deepNoiseSuppressionTitle": "Melunvaimennus",
+    "deepNoiseSuppressionOnAnnouncement": "Syvä melunvaimennus on otettu käyttöön",
+    "deepNoiseSuppressionOffAnnouncement": "Syvä melunvaimennus on poistettu käytöstä"
   },
   "devicesButton": {
     "label": "Laitteet",
@@ -452,6 +457,31 @@
       "title": "Transkriptio on pysäytetty.",
       "message": "Tallennetta ollaan luomassa vain tästä kokouksesta.",
       "dismissButtonAriaLabel": "Sulje"
+    },
+    "assignedBreakoutRoomOpened": {
+      "title": "Siirrämme sinut määritettyihin huoneeseesi 5 sekunnin kuluttua.",
+      "dismissButtonAriaLabel": "Sulje"
+    },
+    "assignedBreakoutRoomChanged": {
+      "title": "Pienryhmätilasi on muuttunut",
+      "message": "Siirrämme sinut määritettyihin huoneeseesi 5 sekunnin kuluttua.",
+      "dismissButtonAriaLabel": "Sulje"
+    },
+    "assignedBreakoutRoomOpenedPromptJoin": {
+      "title": "Liitytäänkö pienryhmätilaan?",
+      "message": "Sinut on määritetty pienryhmätilaan.",
+      "dismissButtonAriaLabel": "Sulje",
+      "primaryButtonLabel": "Liity tilaan",
+      "secondaryButtonLabel": "Myöhemmin"
+    },
+    "breakoutRoomJoined": {
+      "title": "Olet liittynyt pienryhmätilaan.",
+      "dismissButtonAriaLabel": "Sulje"
+    },
+    "breakoutRoomClosingSoon": {
+      "title": "Pienryhmätilan aikaraja on täyttymässä.",
+      "message": "Tämä huone suljetaan 30 sekunnin kuluttua",
+      "dismissButtonAriaLabel": "Sulje"
     }
   },
   "videoGallery": {
@@ -479,7 +509,8 @@
     "stopSpotlightVideoTileMenuLabel": "Poista valokeilasta",
     "stopSpotlightOnSelfVideoTileMenuLabel": "Valokeila",
     "attendeeRole": "Osallistuja",
-    "muteParticipantMenuItemLabel": "Mykistä"
+    "muteParticipantMenuItemLabel": "Mykistä",
+    "waitingScreenText": "Odotetaan että muut liittyvät"
   },
   "dialpad": {
     "placeholderText": "Anna puhelinnumero",
@@ -633,6 +664,7 @@
     "incomingCallNoticicationRejectAriaLabel": "Hylkää",
     "incomingCallNotificationAcceptButtonLabel": "Hyväksy",
     "incomingCallNotificationRejectButtonLabel": "Hylkää",
-    "incomingCallNotificationAccceptWithVideoButtonLabel": "Vastaa videopuhelulla"
+    "incomingCallNotificationAccceptWithVideoButtonLabel": "Vastaa videopuhelulla",
+    "incomingCallNotificationDismissButtonAriaLabel": "Hylkää"
   }
 }

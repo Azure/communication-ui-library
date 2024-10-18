@@ -3,14 +3,16 @@
 
 import { Meta } from '@storybook/react';
 import { controlsToAdd, hiddenControl } from '../../controlsUtils';
+import {
+  CustomButtonWithAsyncStateExample,
+  CustomButtonWithStateExample,
+  LegacyControlBarCustomButtonInjectionExample,
+  MobileCustomButtonInjectionExample,
+  OverflowCustomButtonInjectionExample,
+  PrimaryCustomButtonInjectionExample,
+  SecondaryCustomButtonInjectionExample
+} from './snippets/CustomButtonImages';
 import { CustomButtonInjection as CustomButtonInjectionComponent } from './snippets/CustomButtonInjectionTypes';
-import { CustomButtonWithAsyncStateExample } from './snippets/CustomButtonWithAsyncState.snippet';
-import { CustomButtonWithStateExample } from './snippets/CustomButtonWithState.snippet';
-import { LegacyControlBarCustomButtonInjectionExample } from './snippets/LegacyControlBarCustomButtonInjection.snippet';
-import { MobileCustomButtonInjectionExample } from './snippets/MobileCustomButtonInjection.snippet';
-import { OverflowCustomButtonInjectionExample } from './snippets/OverflowCustomButtonInjection.snippet';
-import { PrimaryCustomButtonInjectionExample } from './snippets/PrimaryCustomButtonInjection.snippet';
-import { SecondaryCustomButtonInjectionExample } from './snippets/SecondaryCustomButtonInjection.snippet';
 
 export { CustomButtonInjection } from './CustomButtonInjection.story';
 
@@ -84,7 +86,7 @@ const meta: Meta = {
     label: controlsToAdd.customButtonInjectionControls.label.defaultValue,
     icon: controlsToAdd.customButtonInjectionControls.icon.defaultValue,
     injectMaximumNumberOfButtons: controlsToAdd.customButtonInjectionControls.injectMaximumNumberOfButtons.defaultValue,
-    disabled: controlsToAdd.customButtonInjectionControls.disabled.defaultValue
+    disabled: false
     // Storybook object parsing is causing function consts to convert to string. This causes them to be null and not usable
     // Need to resolve this issue before enabling these args
     // allowRawObjectInput: controlsToAdd.customButtonInjectionControls.allowRawObjectInput.defaultValue,

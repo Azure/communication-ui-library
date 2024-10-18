@@ -12,7 +12,7 @@ import { pushQSPUrl } from './pushQSPUrl';
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const fetchTokenResponse = async (): Promise<any> => {
-  const response = await fetch('/token');
+  const response = await fetch('token');
   if (response.ok) {
     const responseAsJson = await response.json();
     const token = responseAsJson.token;
@@ -21,21 +21,6 @@ export const fetchTokenResponse = async (): Promise<any> => {
     }
   }
   throw 'Invalid token response';
-};
-
-/**
- * Init React Render Tracker whenever it detects the query param 'rrt' is set to true.
- */
-export const initReactRenderTracker = (): void => {
-  const urlParams = new URLSearchParams(window.location.search);
-  const isEnabled = urlParams.get('rrt');
-  if (isEnabled !== 'true') {
-    return;
-  }
-
-  const script = document.createElement('script');
-  script.src = 'https://cdn.jsdelivr.net/npm/react-render-tracker';
-  document.head.appendChild(script);
 };
 
 /**

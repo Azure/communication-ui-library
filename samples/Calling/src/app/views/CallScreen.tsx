@@ -36,7 +36,6 @@ export interface CallScreenProps {
   callLocator?: CallAdapterLocator;
   targetCallees?: StartCallIdentifier[];
   displayName: string;
-  /* @conditional-compile-remove(PSTN-calls) */
   alternateCallerId?: string;
   /* @conditional-compile-remove(teams-identity-support) */
   isTeamsIdentityCall?: boolean;
@@ -161,24 +160,24 @@ const AzureCommunicationCallScreen = (props: AzureCommunicationCallScreenProps):
       },
       // /* @conditional-compile-remove(DNS) */
       deepNoiseSuppressionOptions: {
-        onResolveDependency: onResolveDeepNoiseSuppressionDependencyLazy
+        onResolveDependency: onResolveDeepNoiseSuppressionDependencyLazy,
+        deepNoiseSuppressionOnByDefault: true
       },
       callingSounds: {
-        callEnded: { url: '/assets/sounds/callEnded.mp3' },
-        callRinging: { url: '/assets/sounds/callRinging.mp3' },
-        callBusy: { url: '/assets/sounds/callBusy.mp3' }
+        callEnded: { url: 'assets/sounds/callEnded.mp3' },
+        callRinging: { url: 'assets/sounds/callRinging.mp3' },
+        callBusy: { url: 'assets/sounds/callBusy.mp3' }
       },
       reactionResources: {
-        likeReaction: { url: '/assets/reactions/likeEmoji.png', frameCount: 102 },
-        heartReaction: { url: '/assets/reactions/heartEmoji.png', frameCount: 102 },
-        laughReaction: { url: '/assets/reactions/laughEmoji.png', frameCount: 102 },
-        applauseReaction: { url: '/assets/reactions/clapEmoji.png', frameCount: 102 },
-        surprisedReaction: { url: '/assets/reactions/surprisedEmoji.png', frameCount: 102 }
+        likeReaction: { url: 'assets/reactions/likeEmoji.png', frameCount: 102 },
+        heartReaction: { url: 'assets/reactions/heartEmoji.png', frameCount: 102 },
+        laughReaction: { url: 'assets/reactions/laughEmoji.png', frameCount: 102 },
+        applauseReaction: { url: 'assets/reactions/clapEmoji.png', frameCount: 102 },
+        surprisedReaction: { url: 'assets/reactions/surprisedEmoji.png', frameCount: 102 }
       },
-      /* @conditional-compile-remove(PSTN-calls) */
       alternateCallerId: adapterArgs.alternateCallerId
     };
-  }, [/* @conditional-compile-remove(PSTN-calls) */ adapterArgs.alternateCallerId]);
+  }, [adapterArgs.alternateCallerId]);
 
   const adapter = useAzureCommunicationCallAdapter(
     {
@@ -207,16 +206,16 @@ const AzureCommunicationOutboundCallScreen = (props: AzureCommunicationCallScree
         onResolveDependency: onResolveVideoEffectDependencyLazy
       },
       callingSounds: {
-        callEnded: { url: '/assets/sounds/callEnded.mp3' },
-        callRinging: { url: '/assets/sounds/callRinging.mp3' },
-        callBusy: { url: '/assets/sounds/callBusy.mp3' }
+        callEnded: { url: 'assets/sounds/callEnded.mp3' },
+        callRinging: { url: 'assets/sounds/callRinging.mp3' },
+        callBusy: { url: 'assets/sounds/callBusy.mp3' }
       },
       reactionResources: {
-        likeReaction: { url: '/assets/reactions/likeEmoji.png', frameCount: 102 },
-        heartReaction: { url: '/assets/reactions/heartEmoji.png', frameCount: 102 },
-        laughReaction: { url: '/assets/reactions/laughEmoji.png', frameCount: 102 },
-        applauseReaction: { url: '/assets/reactions/clapEmoji.png', frameCount: 102 },
-        surprisedReaction: { url: '/assets/reactions/surprisedEmoji.png', frameCount: 102 }
+        likeReaction: { url: 'assets/reactions/likeEmoji.png', frameCount: 102 },
+        heartReaction: { url: 'assets/reactions/heartEmoji.png', frameCount: 102 },
+        laughReaction: { url: 'assets/reactions/laughEmoji.png', frameCount: 102 },
+        applauseReaction: { url: 'assets/reactions/clapEmoji.png', frameCount: 102 },
+        surprisedReaction: { url: 'assets/reactions/surprisedEmoji.png', frameCount: 102 }
       },
       /* @conditional-compile-remove(teams-identity-support) */
       onFetchProfile: async (userId: string, defaultProfile?: Profile): Promise<Profile | undefined> => {
@@ -225,10 +224,9 @@ const AzureCommunicationOutboundCallScreen = (props: AzureCommunicationCallScree
         }
         return defaultProfile;
       },
-      /* @conditional-compile-remove(PSTN-calls) */
       alternateCallerId: adapterArgs.alternateCallerId
     };
-  }, [/* @conditional-compile-remove(PSTN-calls) */ adapterArgs.alternateCallerId]);
+  }, [adapterArgs.alternateCallerId]);
 
   const adapter = useAzureCommunicationCallAdapter(
     {
@@ -261,37 +259,37 @@ const convertPageStateToString = (state: CallAdapterState): string => {
 const videoBackgroundImages = [
   {
     key: 'contoso',
-    url: '/assets/backgrounds/contoso.png',
+    url: 'assets/backgrounds/contoso.png',
     tooltipText: 'Contoso Background'
   },
   {
     key: 'pastel',
-    url: '/assets/backgrounds/abstract2.jpg',
+    url: 'assets/backgrounds/abstract2.jpg',
     tooltipText: 'Pastel Background'
   },
   {
     key: 'rainbow',
-    url: '/assets/backgrounds/abstract3.jpg',
+    url: 'assets/backgrounds/abstract3.jpg',
     tooltipText: 'Rainbow Background'
   },
   {
     key: 'office',
-    url: '/assets/backgrounds/room1.jpg',
+    url: 'assets/backgrounds/room1.jpg',
     tooltipText: 'Office Background'
   },
   {
     key: 'plant',
-    url: '/assets/backgrounds/room2.jpg',
+    url: 'assets/backgrounds/room2.jpg',
     tooltipText: 'Plant Background'
   },
   {
     key: 'bedroom',
-    url: '/assets/backgrounds/room3.jpg',
+    url: 'assets/backgrounds/room3.jpg',
     tooltipText: 'Bedroom Background'
   },
   {
     key: 'livingroom',
-    url: '/assets/backgrounds/room4.jpg',
+    url: 'assets/backgrounds/room4.jpg',
     tooltipText: 'Living Room Background'
   }
 ];

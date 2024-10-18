@@ -126,12 +126,13 @@ export interface VideoGalleryStrings {
   stopSpotlightVideoTileMenuLabel: string;
   /** Menu text shown in Video Tile contextual menu to stop spotlight on local user's video tile */
   stopSpotlightOnSelfVideoTileMenuLabel: string;
-  /* @conditional-compile-remove(hide-attendee-name) */
   /** String for the attendee role */
   attendeeRole: string;
   /* @conditional-compile-remove(soft-mute) */
   /** Menu text shown in Video Tile contextual menu to mute a remote participant */
   muteParticipantMenuItemLabel: string;
+  /** Text shown when waiting for others to join the call */
+  waitingScreenText: string;
 }
 
 /**
@@ -225,7 +226,7 @@ export interface VideoGalleryProps {
   onDisposeRemoteScreenShareStreamView?: (userId: string) => Promise<void>;
   /** Callback to dispose a local screen share stream view */
   onDisposeLocalScreenShareStreamView?: () => Promise<void>;
-  /** Callback to render a particpant avatar */
+  /** Callback to render a participant avatar */
   onRenderAvatar?: OnRenderAvatarCallback;
   /**
    * Whether to display the local video camera switcher button
@@ -523,6 +524,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           drawerMenuHostId={drawerMenuHostId}
           strings={strings}
           reactionResources={reactionResources}
+          participantsCount={remoteParticipants.length + 1}
         />
       </Stack>
     );
@@ -551,7 +553,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     strings,
     drawerMenuHostId,
     reactionResources,
-    videoTilesOptions
+    videoTilesOptions,
+    remoteParticipants.length
   ]);
 
   const onPinParticipant = useCallback(
@@ -628,7 +631,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           onRenderAvatar={onRenderAvatar}
           showMuteIndicator={showMuteIndicator}
           strings={strings}
-          /* @conditional-compile-remove(PSTN-calls) */
           participantState={participant.state}
           menuKind={
             participant.userId === localParticipant.userId

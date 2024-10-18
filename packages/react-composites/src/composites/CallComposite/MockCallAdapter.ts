@@ -11,7 +11,6 @@ import {
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support) */
 import { CallKind } from '@azure/communication-calling';
-/* @conditional-compile-remove(PSTN-calls) */
 import { EnvironmentInfo } from '@azure/communication-calling';
 import { EventEmitter } from 'events';
 import type { CallAdapter, CallAdapterState } from './adapter';
@@ -111,6 +110,9 @@ export class _MockCallAdapter implements CallAdapter {
   createStreamView(): Promise<void> {
     throw Error('createStreamView not implemented');
   }
+  startTogetherMode(): Promise<void> {
+    throw Error('startTogetherMode not implemented');
+  }
   disposeStreamView(): Promise<void> {
     return Promise.resolve();
   }
@@ -155,7 +157,6 @@ export class _MockCallAdapter implements CallAdapter {
   off(): void {
     return;
   }
-  /* @conditional-compile-remove(PSTN-calls) */
   getEnvironmentInfo(): Promise<EnvironmentInfo> {
     throw Error('getEnvironmentInfo not implemented');
   }
@@ -257,6 +258,8 @@ const createDefaultCallAdapterState = (role?: ParticipantRole): CallAdapterState
       remoteParticipants: {},
       remoteParticipantsEnded: {},
       raiseHand: { raisedHands: [] },
+      /* @conditional-compile-remove(together-mode) */
+      togetherMode: { stream: [] },
       pptLive: { isActive: false },
       localParticipantReaction: undefined,
       role,
@@ -268,7 +271,7 @@ const createDefaultCallAdapterState = (role?: ParticipantRole): CallAdapterState
         currentSpokenLanguage: '',
         isCaptionsFeatureActive: false,
         startCaptionsInProgress: false,
-        /* @conditional-compile-remove(acs-close-captions) */
+
         captionsKind: 'Captions'
       },
       transfer: {

@@ -194,7 +194,6 @@ export const getEndedCallPageProps = (
       }
       break;
   }
-
   switch (endedCall?.callEndReason?.code) {
     case CALL_REJECTED_CODE:
       if (locale.strings.call.callRejectedTitle) {
@@ -205,7 +204,6 @@ export const getEndedCallPageProps = (
       }
       break;
   }
-  /* @conditional-compile-remove(teams-adhoc-call) */
   switch (endedCall?.callEndReason?.subCode) {
     case 10037:
       if (locale.strings.call.participantCouldNotBeReachedTitle) {
@@ -322,9 +320,7 @@ export const getCallCompositePage: GetCallCompositePageFunction = (
       return 'lobby';
       // `LocalHold` needs to be checked before `isInCall` since it is also a state that's considered in call.
     } else if (call?.state === 'LocalHold') {
-      /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
       return 'hold';
-      return 'call';
     } else if (call?.state === 'Disconnecting') {
       return 'leaving';
     } else if (_isInCall(call?.state)) {
@@ -502,7 +498,7 @@ export const _isSafari = (
   environmentInfo: undefined | /* @conditional-compile-remove(unsupported-browser) */ EnvironmentInfo
 ): boolean => {
   /* @conditional-compile-remove(unsupported-browser) */
-  return environmentInfo?.environment.browser === 'safari';
+  return environmentInfo?.environment.browser.toLowerCase() === 'safari';
   return /^((?!chrome|android|crios|fxios).)*safari/i.test(navigator.userAgent);
 };
 
@@ -689,6 +685,12 @@ export function determineStates(previous: ComplianceState, current: boolean | un
   }
 }
 
+// The debounce time for the stopped state to be shown after both states are stopped.
+// This is to prevent stopped messages from being lost by transitioning to "Off" too
+// quickly if the states are toggled in quick succession.
+// This also prevents React strict mode from transitioning to "Off" too quickly.
+const ComplianceNotificationOffDebounceTimeMs = 2000;
+
 /**
  * Compute compliance notification based on latest compliance state and cached props.
  * @private
@@ -726,22 +728,24 @@ export function computeComplianceNotification(
     };
   }
 
-  // [2]: Compute the variant, using the transitioned state machine.
-  const variant = computeVariant(
-    cachedProps.current.latestStringState.callRecordState,
-    cachedProps.current.latestStringState.callTranscribeState
-  );
-
-  // [3]: Transition the state machine again to deal with some end-states.
+  // [2]: If the callRecordState and callTranscribeState are both stopped for a predetermined amount of time, mark both states as off.
+  // NOTE: this can be removed once lastStoppedRecording in the calling stateful client is GA.
   if (
     shouldUpdateCached &&
     cachedProps.current.latestStringState.callRecordState === 'stopped' &&
-    cachedProps.current.latestStringState.callTranscribeState === 'stopped'
+    cachedProps.current.latestStringState.callTranscribeState === 'stopped' &&
+    Date.now() - cachedProps.current.lastUpdated > ComplianceNotificationOffDebounceTimeMs
   ) {
     // When both states are stopped, after displaying message "RECORDING_AND_TRANSCRIPTION_STOPPED", change both states to off (going back to the default state).
     cachedProps.current.latestStringState.callRecordState = 'off';
     cachedProps.current.latestStringState.callTranscribeState = 'off';
   }
+
+  // [3]: Compute the variant, using the transitioned state machine.
+  const variant = computeVariant(
+    cachedProps.current.latestStringState.callRecordState,
+    cachedProps.current.latestStringState.callTranscribeState
+  );
 
   // If the variant is not 'noState', then show the notification.
   if (variant !== 'noState') {

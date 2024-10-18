@@ -90,4 +90,5 @@ export type ParticipantState =
   | 'Hold'
   | 'InLobby'
   | 'EarlyMedia'
-  | 'Disconnected';
+  | 'Disconnected'
+  | 'Reconnecting';

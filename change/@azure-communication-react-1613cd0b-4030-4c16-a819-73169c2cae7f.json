@@ -1,0 +1,9 @@
+{
+  "type": "patch",
+  "area": "fix",
+  "workstream": "update-api-files",
+  "comment": "Sanitize pr branch in update-api-files ci yaml file",
+  "packageName": "@azure/communication-react",
+  "email": "edwardlee@microsoft.com",
+  "dependentChangeType": "patch"
+}

@@ -17,11 +17,8 @@ import {
   TypingIndicatorStrings,
   VideoGalleryStrings
 } from '../components';
-
 import { NotificationStackStrings } from '../components';
-
 import { RaiseHandButtonStrings } from '../components';
-/* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { HoldButtonStrings } from '../components';
 import { DialpadStrings } from '../components';
 /* @conditional-compile-remove(call-readiness) */
@@ -47,9 +44,7 @@ import { ImageOverlayStrings } from '../components/ImageOverlay';
 import { ReactionButtonStrings } from '../components';
 /* @conditional-compile-remove(rich-text-editor) */
 import { RichTextSendBoxStrings } from '../components/RichTextEditor/RichTextSendBox';
-/* @conditional-compile-remove(teams-meeting-conference) */
 import { MeetingConferencePhoneInfoModalStrings } from '../components/MeetingConferencePhoneInfo';
-/* @conditional-compile-remove(one-to-n-calling) */
 import { IncomingCallNotificationStrings } from '../components/IncomingCallNotification';
 
 /**
@@ -121,7 +116,6 @@ export interface ComponentStrings {
   dialpad: DialpadStrings;
   /** Strings for VideoTile */
   videoTile: VideoTileStrings;
-  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   /** Strings for HoldButton */
   holdButton: HoldButtonStrings;
   /* @conditional-compile-remove(call-readiness) */
@@ -183,10 +177,9 @@ export interface ComponentStrings {
   /* @conditional-compile-remove(total-participant-count) */
   /** Strings for the participant list component */
   ParticipantList: ParticipantListStrings;
-  /* @conditional-compile-remove(teams-meeting-conference) */
   /** Strings for the MeetingConferencePhoneInfoModal */
   meetingConferencePhoneInfo: MeetingConferencePhoneInfoModalStrings;
-  /* @conditional-compile-remove(one-to-n-calling) */
+
   IncomingCallNotification: IncomingCallNotificationStrings;
 }
 

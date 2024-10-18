@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 import { CallAgent } from '@azure/communication-calling';
-/* @conditional-compile-remove(one-to-n-calling) */
 import { IncomingCall } from '@azure/communication-calling';
 import { clearCallRelatedState, DeclarativeCallCommon, ProxyCallAgentCommon } from './CallAgentDeclarativeCommon';
 import { CallContext } from './CallContext';
@@ -11,9 +10,8 @@ import { InternalCallContext } from './InternalCallContext';
 import { _isACSCall, _isACSCallAgent } from './TypeGuards';
 import { CallAgentCommon, CallCommon } from './BetaToStableTypes';
 
-/* @conditional-compile-remove(one-to-n-calling) */
 /**
- * @beta
+ * @public
  * This contains a readonly array that returns all the active `incomingCalls`.
  * An active incoming call is a call that has not been answered, declined or disconnected.
  */
@@ -27,11 +25,10 @@ export type IncomingCallManagement = {
 };
 
 /**
- * @beta
+ * @public
  * `DeclarativeCallAgent` extends and proxies the {@link @azure/communication-calling#CallAgent}
  */
-export type DeclarativeCallAgent = CallAgent &
-  /* @conditional-compile-remove(one-to-n-calling) */ IncomingCallManagement;
+export type DeclarativeCallAgent = CallAgent & IncomingCallManagement;
 
 /**
  * ProxyCallAgent proxies CallAgent and saves any returned state in the given context. It will subscribe to all state

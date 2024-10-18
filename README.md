@@ -23,7 +23,7 @@ If you're wondering where to start, here are a few scenarios to guide you:
   - Explore our [Storybook](https://azure.github.io/communication-ui-library) and [Sample Apps](#samples).
   
 - **I want to write my own communication application**
-  - Start with our [comprehensive documentation](https://azure.github.io/communication-ui-library/?path=/story/overview--page) to make the best choices for your application.
+  - Start with our [comprehensive documentation](https://aka.ms/acsstorybook) to make the best choices for your application.
   
 - **I want more information on the available npm packages**
   - Check out our [npm packages](#npm-packages) on offer.
@@ -50,5 +50,5 @@ We look forward to building an amazing open source library with you!
 ## Further Reading
 
 - [Repository Documentation](./docs/README.md)
-- [Conceptual Documentation](https://azure.github.io/communication-ui-library/?path=/story/overview--page)
+- [Conceptual Documentation](https://aka.ms/acsstorybook)
 - [Quick-start Documentation](https://azure.github.io/communication-ui-library/?path=/story/quickstarts-composites--page)

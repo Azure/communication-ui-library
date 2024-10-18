@@ -47,107 +47,79 @@ const getOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedPa
     dominantSpeakers = [],
     maxGridParticipants = DEFAULT_MAX_VIDEO_SREAMS,
     maxOverflowGalleryDominantSpeakers = DEFAULT_MAX_OVERFLOW_GALLERY_DOMINANT_SPEAKERS,
-    isScreenShareActive = false,
     layout,
     previousGridParticipants = [],
     previousOverflowParticipants = []
   } = props;
 
-  const remoteParticipantsOrdered = putVideoParticipantsFirst(remoteParticipants);
+  const callingParticipants = remoteParticipants.filter((p) => p.state === ('Connecting' || 'Ringing'));
+
+  const callingParticipantsSet = new Set(callingParticipants.map((p) => p.userId));
+
+  const connectedParticipants = remoteParticipants.filter((p) => !callingParticipantsSet.has(p.userId));
+
+  const remoteParticipantsOrdered = putVideoParticipantsFirst(connectedParticipants);
   const videoParticipants = remoteParticipants.filter((p) => p.videoStream?.isAvailable);
-  const participants =
+  const participantsForGrid =
     layout === 'floatingLocalVideo' && videoParticipants.length > 0 ? videoParticipants : remoteParticipantsOrdered;
 
   let newGridParticipants = smartDominantSpeakerParticipants({
-    participants: participants,
+    participants: participantsForGrid,
     dominantSpeakers,
     currentParticipants: previousGridParticipants,
     maxDominantSpeakers: maxGridParticipants
   }).slice(0, maxGridParticipants);
 
-  const dominantSpeakerToGrid =
-    layout === 'speaker'
-      ? dominantSpeakers && dominantSpeakers[0]
-        ? newGridParticipants.filter((p) => p.userId === dominantSpeakers[0])
-        : [newGridParticipants[0]]
-      : [];
-
-  if (dominantSpeakerToGrid[0]) {
-    newGridParticipants = dominantSpeakerToGrid;
+  if (layout === 'speaker') {
+    if (dominantSpeakers?.[0]) {
+      newGridParticipants = newGridParticipants.filter((p) => p.userId === dominantSpeakers[0]);
+    } else {
+      newGridParticipants = newGridParticipants.slice(1);
+    }
   }
 
   const gridParticipantSet = new Set(newGridParticipants.map((p) => p.userId));
 
-  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
-  const callingParticipants = remoteParticipantsOrdered.filter((p) => p.state === ('Connecting' || 'Ringing'));
-  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
-  const callingParticipantsSet = new Set(callingParticipants.map((p) => p.userId));
-
   const newOverflowGalleryParticipants = smartDominantSpeakerParticipants({
-    participants: remoteParticipantsOrdered.filter(
-      (p) =>
-        !gridParticipantSet.has(p.userId) &&
-        /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ !callingParticipantsSet.has(
-          p.userId
-        )
-    ),
+    participants: remoteParticipantsOrdered.filter((p) => !gridParticipantSet.has(p.userId)),
     dominantSpeakers: dominantSpeakers,
     currentParticipants: previousOverflowParticipants,
     maxDominantSpeakers: maxOverflowGalleryDominantSpeakers
   });
 
-  const gridParticipants = getGridParticipants({
-    isScreenShareActive,
-    gridParticipants: newGridParticipants,
-    overflowGalleryParticipants: newOverflowGalleryParticipants,
-    maxGridParticipants: maxGridParticipants,
-    /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ callingParticipants
-  });
-
-  const overflowGalleryParticipants = getOverflowGalleryRemoteParticipants({
-    isScreenShareActive,
-    gridParticipants: newGridParticipants,
-    overflowGalleryParticipants: newOverflowGalleryParticipants,
-    maxGridParticipants: maxGridParticipants,
-    /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ callingParticipants
-  });
+  let gridParticipants = newGridParticipants;
+  let overflowGalleryParticipants = newOverflowGalleryParticipants;
+  if (gridParticipants.length + callingParticipants.length <= maxGridParticipants) {
+    gridParticipants = gridParticipants.concat(callingParticipants);
+  } else {
+    overflowGalleryParticipants = overflowGalleryParticipants.concat(callingParticipants);
+  }
 
   return { gridParticipants, overflowGalleryParticipants };
 };
-
-interface SortedRemoteParticipants {
-  [key: string]: VideoGalleryRemoteParticipant;
-}
 
 /**
  * Hook to determine which participants should be in grid and overflow gallery and their order respectively
  * @private
  */
 export const useOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedParticipantsResult => {
-  // map remote participants by userId
-  const remoteParticipantMap = props.remoteParticipants.reduce((map, remoteParticipant) => {
-    map[remoteParticipant.userId] = remoteParticipant;
-    return map;
-  }, {} as SortedRemoteParticipants);
-
   const spotlightedParticipantUserIds = props.spotlightedParticipantUserIds ?? [];
   const pinnedParticipantUserIds = props.pinnedParticipantUserIds ?? [];
-  // declare set of focused participant user ids as spotlighted participants user ids followed by
-  // pinned participants user ids which is deduplicated while maintaining order
-  const focusedParticipantUserIdSet = new Set(
-    spotlightedParticipantUserIds.concat(pinnedParticipantUserIds).filter((p) => remoteParticipantMap[p])
-  );
-  // get focused participants from map of remote participants in the order of the user ids
-  const focusedParticipants: VideoGalleryRemoteParticipant[] = [...focusedParticipantUserIdSet].map(
-    (p) => remoteParticipantMap[p]
-  );
+
+  // Focussed participants are the participants that are either spotlighted or pinned. Ordered by spotlighted first and then pinned.
+  // A set is used to dedupe participants.
+  const focusedParticipantUserIdSet = new Set(spotlightedParticipantUserIds.concat(pinnedParticipantUserIds));
+  const focusedParticipants: VideoGalleryRemoteParticipant[] = [...focusedParticipantUserIdSet]
+    .map((userId) => props.remoteParticipants.find((p) => p.userId === userId))
+    .filter((p) => p !== undefined) as VideoGalleryRemoteParticipant[];
+
+  // Unfocused participants are the rest of the participants
+  const unfocusedParticipants = props.remoteParticipants.filter((p) => !focusedParticipantUserIdSet.has(p.userId));
 
   const currentGridParticipants = useRef<VideoGalleryRemoteParticipant[]>([]);
   const currentOverflowGalleryParticipants = useRef<VideoGalleryRemoteParticipant[]>([]);
 
-  const unfocusedParticipants = props.remoteParticipants.filter((p) => !focusedParticipantUserIdSet.has(p.userId));
-
-  const useOrganizedParticipantsProps: OrganizedParticipantsArgs = {
+  const organizedParticipantsArgs: OrganizedParticipantsArgs = {
     ...props,
     // if there are focused participants then leave no room in the grid by setting maxGridParticipants to 0
     maxGridParticipants: focusedParticipants.length > 0 || props.isScreenShareActive ? 0 : props.maxGridParticipants,
@@ -156,72 +128,19 @@ export const useOrganizedParticipants = (props: OrganizedParticipantsArgs): Orga
     previousOverflowParticipants: currentOverflowGalleryParticipants.current
   };
 
-  const useOrganizedParticipantsResult = getOrganizedParticipants(useOrganizedParticipantsProps);
+  const organizedParticipants = getOrganizedParticipants(organizedParticipantsArgs);
 
-  currentGridParticipants.current = useOrganizedParticipantsResult.gridParticipants;
-  currentOverflowGalleryParticipants.current = useOrganizedParticipantsResult.overflowGalleryParticipants;
+  currentGridParticipants.current = organizedParticipants.gridParticipants;
+  currentOverflowGalleryParticipants.current = organizedParticipants.overflowGalleryParticipants;
 
   return focusedParticipants.length > 0
     ? {
         gridParticipants: props.isScreenShareActive ? [] : focusedParticipants,
         overflowGalleryParticipants: props.isScreenShareActive
-          ? focusedParticipants.concat(useOrganizedParticipantsResult.overflowGalleryParticipants)
-          : useOrganizedParticipantsResult.overflowGalleryParticipants
+          ? focusedParticipants.concat(organizedParticipants.overflowGalleryParticipants)
+          : organizedParticipants.overflowGalleryParticipants
       }
-    : useOrganizedParticipantsResult;
-};
-
-const getGridParticipants = (args: {
-  isScreenShareActive: boolean;
-  gridParticipants: VideoGalleryParticipant[];
-  overflowGalleryParticipants: VideoGalleryParticipant[];
-  maxGridParticipants: number;
-  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ callingParticipants: VideoGalleryParticipant[];
-}): VideoGalleryRemoteParticipant[] => {
-  if (args.isScreenShareActive) {
-    return [];
-  }
-  // if we have no grid participants we need to cap the max number of overflowGallery participants in the grid
-  // we will use the max streams provided to the function to find the max participants that can go in the grid
-  // if there are less participants than max streams then we will use all participants including joining in the grid
-  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
-  return args.gridParticipants.length > 0
-    ? args.gridParticipants
-    : args.overflowGalleryParticipants.length > args.maxGridParticipants
-      ? args.overflowGalleryParticipants.slice(0, args.maxGridParticipants)
-      : args.overflowGalleryParticipants.slice(0, args.maxGridParticipants).concat(args.callingParticipants);
-  return args.gridParticipants.length > 0
-    ? args.gridParticipants
-    : args.overflowGalleryParticipants.slice(0, args.maxGridParticipants);
-};
-
-const getOverflowGalleryRemoteParticipants = (args: {
-  isScreenShareActive: boolean;
-  gridParticipants: VideoGalleryParticipant[];
-  overflowGalleryParticipants: VideoGalleryParticipant[];
-  maxGridParticipants: number;
-  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ callingParticipants: VideoGalleryParticipant[];
-}): VideoGalleryRemoteParticipant[] => {
-  if (args.isScreenShareActive) {
-    // If screen sharing is active, assign video and audio participants as overflow gallery participants
-    /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
-    return args.gridParticipants.concat(args.overflowGalleryParticipants.concat(args.callingParticipants));
-    return args.gridParticipants.concat(args.overflowGalleryParticipants);
-  } else {
-    // If screen sharing is not active, then assign all video tiles as grid tiles.
-    // If there are no video tiles, then assign audio tiles as grid tiles.
-    // if there are more overflow tiles than max streams then find the tiles that don't fit in the grid and put them in overflow
-    // overflow should be empty if total participants including calling participants is less than max streams
-    /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
-    return args.gridParticipants.length > 0
-      ? args.overflowGalleryParticipants.concat(args.callingParticipants)
-      : args.overflowGalleryParticipants.length > args.maxGridParticipants
-        ? args.overflowGalleryParticipants.slice(args.maxGridParticipants).concat(args.callingParticipants)
-        : [];
-    return args.gridParticipants.length > 0
-      ? args.overflowGalleryParticipants
-      : args.overflowGalleryParticipants.slice(args.maxGridParticipants);
-  }
+    : organizedParticipants;
 };
 
 const putVideoParticipantsFirst = (
@@ -238,6 +157,55 @@ const putVideoParticipantsFirst = (
   });
   const remoteParticipantSortedByVideo = videoParticipants.concat(audioParticipants);
   return remoteParticipantSortedByVideo;
+};
+
+/**
+ * @private
+ */
+export const renderTiles = (
+  gridParticipants: VideoGalleryParticipant[],
+  onRenderRemoteParticipant: (participant: VideoGalleryRemoteParticipant, isVideoParticipant?: boolean) => JSX.Element,
+  maxRemoteVideoStreams: number,
+  indexesToRender: number[],
+  overflowGalleryParticipants: VideoGalleryParticipant[],
+  dominantSpeakers?: string[]
+): { gridTiles: JSX.Element[]; overflowGalleryTiles: JSX.Element[] } => {
+  const _dominantSpeakers = dominantSpeakers ?? [];
+  let streamsLeftToRender = maxRemoteVideoStreams;
+
+  // Render the grid participants
+  const participantWithStreamsToRenderInGrid = gridParticipants.filter((p) => p?.videoStream?.isAvailable);
+  const dominantSpeakerWithStreamsToRenderInGrid = _dominantSpeakers
+    .filter((userId) => participantWithStreamsToRenderInGrid.find((p) => p?.userId === userId))
+    .slice(0, streamsLeftToRender);
+  streamsLeftToRender = streamsLeftToRender - dominantSpeakerWithStreamsToRenderInGrid.length;
+  const gridTiles = gridParticipants.map((p) => {
+    return onRenderRemoteParticipant(
+      p,
+      dominantSpeakerWithStreamsToRenderInGrid.includes(p.userId) ||
+        (p.videoStream?.isAvailable && streamsLeftToRender-- > 0)
+    );
+  });
+
+  // Render the overflow participants
+  const participantWithStreamsToRenderInOverflow = indexesToRender
+    .map((i) => {
+      return overflowGalleryParticipants.at(i);
+    })
+    .filter((p) => p?.videoStream?.isAvailable);
+  const dominantSpeakerWithStreamsToRenderInOverflow = _dominantSpeakers
+    .filter((userId) => participantWithStreamsToRenderInOverflow.find((p) => p?.userId === userId))
+    .slice(0, streamsLeftToRender);
+  streamsLeftToRender = streamsLeftToRender - dominantSpeakerWithStreamsToRenderInOverflow.length;
+  const overflowGalleryTiles = overflowGalleryParticipants.map((p) => {
+    return onRenderRemoteParticipant(
+      p,
+      dominantSpeakerWithStreamsToRenderInOverflow.includes(p.userId) ||
+        (p.videoStream?.isAvailable && streamsLeftToRender-- > 0)
+    );
+  });
+
+  return { gridTiles, overflowGalleryTiles };
 };
 
 /**

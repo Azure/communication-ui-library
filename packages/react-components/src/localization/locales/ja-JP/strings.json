@@ -99,14 +99,15 @@
     "cameraMenuTitle": "カメラ",
     "cameraMenuTooltip": "カメラを選択する",
     "cameraButtonSplitRoleDescription": "分割ボタン",
-    "onSplitButtonAriaLabel": "カメラとカメラ オプションをオフにする",
-    "offSplitButtonAriaLabel": "カメラとカメラ オプションをオンにする",
+    "onSplitButtonAriaLabel": "カメラをオフにする",
+    "offSplitButtonAriaLabel": "カメラをオンにする",
     "cameraActionTurnedOnAnnouncement": "カメラがオンになっています",
     "cameraActionTurnedOffAnnouncement": "カメラがオフになっています",
     "onSplitButtonPrimaryActionCamera": "カメラをオフにする",
     "offSplitButtonPrimaryActionCamera": "カメラをオンにする",
     "cameraPrimaryActionSplitButtonTitle": "カメラを使用する",
-    "videoEffectsMenuItemTitle": "効果"
+    "videoEffectsMenuItemTitle": "効果",
+    "cameraButtonAriaDescription": "カメラのオプション"
   },
   "microphoneButton": {
     "onLabel": "マイク",
@@ -119,13 +120,17 @@
     "speakerMenuTitle": "スピーカー",
     "speakerMenuTooltip": "スピーカーを選択する",
     "microphoneButtonSplitRoleDescription": "分割ボタン",
-    "onSplitButtonAriaLabel": "マイクとオーディオのオプションをミュートにする",
-    "offSplitButtonAriaLabel": "マイクとオーディオのオプションのミュートを解除する",
+    "onSplitButtonAriaLabel": "マイクをミュートする",
+    "offSplitButtonAriaLabel": "マイクのミュートを解除する",
     "microphoneActionTurnedOnAnnouncement": "マイクがオンになっています",
     "microphoneActionTurnedOffAnnouncement": "マイクがオフになっています",
     "offSplitButtonMicrophonePrimaryAction": "マイクのミュートを解除する",
-    "onSplitButtonMicrophonePrimaryAction": "マイクをミュートにする",
-    "microphonePrimaryActionSplitButtonTitle": "マイクを使用する"
+    "onSplitButtonMicrophonePrimaryAction": "マイクをミュートする",
+    "microphonePrimaryActionSplitButtonTitle": "マイクを使用する",
+    "microphoneAriaDescription": "オーディオのオプション",
+    "deepNoiseSuppressionTitle": "ノイズ抑制",
+    "deepNoiseSuppressionOnAnnouncement": "ディープ ノイズ抑制がオンになっています",
+    "deepNoiseSuppressionOffAnnouncement": "ディープ ノイズ抑制がオフになっています"
   },
   "devicesButton": {
     "label": "デバイス",
@@ -167,7 +172,7 @@
     "ariaLabel": "リアクション ボタン、リアクションの送信",
     "tooltipDisabledContent": "リアクション操作が無効になっています",
     "tooltipContent": "リアクションを送信します",
-    "likeReactionTooltipContent": "高く評価",
+    "likeReactionTooltipContent": "いいね!",
     "heartReactionTooltipContent": "大好き",
     "laughReactionTooltipContent": "笑い",
     "applauseReactionTooltipContent": "喝采",
@@ -452,6 +457,31 @@
       "title": "文字起こしが停止しました。",
       "message": "今はこの会議の録画のみを行っています。",
       "dismissButtonAriaLabel": "閉じる"
+    },
+    "assignedBreakoutRoomOpened": {
+      "title": "5 秒後に、割り当てられた会議室に移動します。",
+      "dismissButtonAriaLabel": "閉じる"
+    },
+    "assignedBreakoutRoomChanged": {
+      "title": "ブレークアウト ルームが変更されました",
+      "message": "5 秒後に、割り当てられた会議室に移動します。",
+      "dismissButtonAriaLabel": "閉じる"
+    },
+    "assignedBreakoutRoomOpenedPromptJoin": {
+      "title": "ブレークアウト ルームに参加しますか?",
+      "message": "ブレークアウト ルームに割り当てられました。",
+      "dismissButtonAriaLabel": "閉じる",
+      "primaryButtonLabel": "ルームに参加",
+      "secondaryButtonLabel": "後で"
+    },
+    "breakoutRoomJoined": {
+      "title": "ブレークアウト ルームに参加しました。",
+      "dismissButtonAriaLabel": "閉じる"
+    },
+    "breakoutRoomClosingSoon": {
+      "title": "ルームの時間制限がもうすぐ切れます。",
+      "message": "このルームは 30 秒後に終了します",
+      "dismissButtonAriaLabel": "閉じる"
     }
   },
   "videoGallery": {
@@ -479,7 +509,8 @@
     "stopSpotlightVideoTileMenuLabel": "スポットライトの設定を解除",
     "stopSpotlightOnSelfVideoTileMenuLabel": "スポットライトを終了",
     "attendeeRole": "出席者",
-    "muteParticipantMenuItemLabel": "ミュート"
+    "muteParticipantMenuItemLabel": "ミュート",
+    "waitingScreenText": "他のユーザーの参加を待っています"
   },
   "dialpad": {
     "placeholderText": "電話番号を入力してください",
@@ -633,6 +664,7 @@
     "incomingCallNoticicationRejectAriaLabel": "拒否する",
     "incomingCallNotificationAcceptButtonLabel": "承諾",
     "incomingCallNotificationRejectButtonLabel": "拒否",
-    "incomingCallNotificationAccceptWithVideoButtonLabel": "ビデオで受ける"
+    "incomingCallNotificationAccceptWithVideoButtonLabel": "ビデオで受ける",
+    "incomingCallNotificationDismissButtonAriaLabel": "閉じる"
   }
 }

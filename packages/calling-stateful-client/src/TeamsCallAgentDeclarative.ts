@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 import { TeamsCallAgent } from '@azure/communication-calling';
-/* @conditional-compile-remove(one-to-n-calling) */
 import { TeamsIncomingCall } from '@azure/communication-calling';
 import { CallCommon, CallAgentCommon } from './BetaToStableTypes';
 import { clearCallRelatedState, DeclarativeCallCommon, ProxyCallAgentCommon } from './CallAgentDeclarativeCommon';
@@ -13,9 +12,8 @@ import { InternalCallContext } from './InternalCallContext';
 /* @conditional-compile-remove(teams-identity-support) */
 import { teamsCallDeclaratify } from './TeamsCallDeclarative';
 
-/* @conditional-compile-remove(one-to-n-calling) */
 /**
- * @beta
+ * @public
  * Proxies the {@link @azure/communication-calling#TeamsIncomingCall} interface.
  */
 export type TeamsIncomingCallManagement = {
@@ -31,8 +29,7 @@ export type TeamsIncomingCallManagement = {
  * @public
  * `DeclarativeTeamsCallAgent` extends and proxies the {@link @azure/communication-calling#TeamsCallAgent}
  */
-export type DeclarativeTeamsCallAgent = TeamsCallAgent &
-  /* @conditional-compile-remove(one-to-n-calling) */ TeamsIncomingCallManagement;
+export type DeclarativeTeamsCallAgent = TeamsCallAgent & TeamsIncomingCallManagement;
 
 /**
  * ProxyTeamsCallAgent proxies TeamsCallAgent and saves any returned state in the given context. It will subscribe to all state

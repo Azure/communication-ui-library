@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/* @conditional-compile-remove(one-to-n-calling) */
 import { IncomingCallNotification } from './IncomingCallNotification';
 import { IncomingCallNotificationStyles, IncomingCallNotificationStrings } from './IncomingCallNotification';
 import { Stack } from '@fluentui/react';
@@ -9,7 +8,7 @@ import React from 'react';
 
 /**
  * Represents an active incoming call.
- * @beta
+ * @public
  */
 export interface IncomingCallStackCall {
   /**
@@ -32,7 +31,7 @@ export interface IncomingCallStackCall {
 }
 /**
  * Props for the IncomingCallManager component.
- * @beta
+ * @public
  */
 export interface IncomingCallStackProps {
   /**
@@ -75,36 +74,29 @@ export interface IncomingCallStackProps {
  * Wrapper to manage multiple incoming calls
  * @param props - {@link IncomingCallManagerProps}
  * @returns
- * @beta
+ * @public
  */
 export const IncomingCallStack = (props: IncomingCallStackProps): JSX.Element => {
-  /* @conditional-compile-remove(one-to-n-calling) */
   const { activeIncomingCalls, removedIncomingCalls, onAcceptCall, onRejectCall, styles, strings, tabIndex } = props;
   return (
-    <Stack
-      tokens={{ childrenGap: '0.25rem' }}
-      role={'group'}
-      /* @conditional-compile-remove(one-to-n-calling) */ tabIndex={tabIndex}
-    >
-      {
-        /* @conditional-compile-remove(one-to-n-calling) */ activeIncomingCalls
-          .filter((incomingCall) => !removedIncomingCalls.some((call) => call.id === incomingCall.id))
-          .map((incomingCall) => {
-            return (
-              <IncomingCallNotification
-                key={incomingCall.id}
-                callerName={incomingCall.callerInfo.displayName}
-                onAcceptWithAudio={() => onAcceptCall(incomingCall.id)}
-                onAcceptWithVideo={() => onAcceptCall(incomingCall.id, true)}
-                onReject={() => onRejectCall(incomingCall.id)}
-                onDismiss={() => onRejectCall(incomingCall.id)}
-                styles={styles}
-                strings={strings}
-                acceptOptions={{ showAcceptWithVideo: incomingCall.videoAvailable }}
-              ></IncomingCallNotification>
-            );
-          })
-      }
+    <Stack tokens={{ childrenGap: '0.25rem' }} role={'group'} tabIndex={tabIndex}>
+      {activeIncomingCalls
+        .filter((incomingCall) => !removedIncomingCalls.some((call) => call.id === incomingCall.id))
+        .map((incomingCall) => {
+          return (
+            <IncomingCallNotification
+              key={incomingCall.id}
+              callerName={incomingCall.callerInfo.displayName}
+              onAcceptWithAudio={() => onAcceptCall(incomingCall.id)}
+              onAcceptWithVideo={() => onAcceptCall(incomingCall.id, true)}
+              onReject={() => onRejectCall(incomingCall.id)}
+              onDismiss={() => onRejectCall(incomingCall.id)}
+              styles={styles}
+              strings={strings}
+              acceptOptions={{ showAcceptWithVideo: incomingCall.videoAvailable }}
+            ></IncomingCallNotification>
+          );
+        })}
     </Stack>
   );
 };
