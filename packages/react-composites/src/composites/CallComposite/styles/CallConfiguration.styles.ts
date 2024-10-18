@@ -224,7 +224,8 @@ export const startCallButtonContainerStyleMobile: IStackStyles = {
 export const startCallButtonStyleMobile = mergeStyles({
   width: '100%',
   maxWidth: 'unset',
-  borderRadius: '0.25rem'
+  borderRadius: '0.25rem',
+  height: '3.25rem'
 });
 
 /**
