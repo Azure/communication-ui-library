@@ -36,7 +36,7 @@ PLAYWRIGHT_OUTPUT_DIR = "temp"
   ```sh
   rush update; rush build -t .
   ```
-  (if there were some build failures, run `rush update -p`)
+  (if there were some build failures, run `rush update:beta -p`)
 * Build the test applications.
   ```sh
   rushx build:e2e

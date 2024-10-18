@@ -19,12 +19,14 @@ This sample shows how to embed the ready-to-use Calling, Chat, and CallWithChat 
 ## Commands
 
 ### Install dependencies
-```
-rush update
+
+```sh
+rush update:beta
 ```
 
 ### Bundle the app
-```
+
+```sh
 rushx build
 ```
 
