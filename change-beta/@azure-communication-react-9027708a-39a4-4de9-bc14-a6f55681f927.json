@@ -1,8 +1,8 @@
 {
   "type": "minor",
   "area": "feature",
-  "workstream": "JavsScript Loaders",
-  "comment": "Stabilize Javascript Loaders from a sub export of communication react",
+  "workstream": "js-loaders",
+  "comment": "Update API to allow for better identity control",
   "packageName": "@azure/communication-react",
   "email": "dmceachern@microsoft.com",
   "dependentChangeType": "patch"

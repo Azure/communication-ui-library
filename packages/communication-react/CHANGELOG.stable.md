@@ -1,8 +1,44 @@
 # Change Log - @azure/communication-react
 
-<!-- This log was last generated on Thu, 12 Sep 2024 18:13:15 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 15 Oct 2024 20:24:24 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## [1.20.0](https://github.com/azure/communication-ui-library/tree/1.20.0)
+
+Tue, 15 Oct 2024 20:24:24 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.20.0-beta.1...1.20.0)
+
+### Features
+
+- Azure Communication Services Web UI Library now supports the Soft Mute feature. This feature enables users to mute other users in a call. If a user has been soft muted, they retain the ability to unmute themselves. Developers can use this functionality today through our composites (e.g CallComposite, CallWithChatComposite). ([PR #5277](https://github.com/azure/communication-ui-library/pull/5277) by edwardlee@microsoft.com)
+
+- Azure Communication Services Web UI Library now supports Deep Noise Suppression. This feature enables noise suppression algorithms to filter out background noise, ensuring that only the speaker's voice is heard clearly. Developers can use this functionality today through our composites (e.g CallComposite, CallWithChatComposite). ([PR #5265](https://github.com/Azure/communication-ui-library/pull/5265/))
+
+- Azure Communication Services Web UI Library now supports a new way to consume our Composite experiences. If you are wanting to use the Azure Communication Services UI library Composites and don't develop in react, we are introducing a series of loader functions to allow you to use the Composites in your application. These functions load a react node and attach it to your application allowing you to use the Composites as if you were building in react. ([PR #5198](https://github.com/azure/communication-ui-library/pull/5198) by dmceachern@microsoft.com)
+
+### Improvements
+
+- Add accessible name to video effects pane ([PR #5196](https://github.com/azure/communication-ui-library/pull/5196) by 79475487+mgamis-msft@users.noreply.github.com)
+- Soft mute now utilizes capabilities to discern if the current user is able to use the feature ([PR #5276](https://github.com/azure/communication-ui-library/pull/5276) by edwardlee@microsoft.com)
+- Add Welsh component and composite locales ([PR #5243](https://github.com/azure/communication-ui-library/pull/5243) by 79475487+mgamis-msft@users.noreply.github.com)
+
+### Bug Fixes
+
+- Adding logic to flag when the adapter is in the middle of creation ([PR #5182](https://github.com/azure/communication-ui-library/pull/5182) by 9044372+JoshuaLai@users.noreply.github.com)
+- White spaces handling update for text messages in message components ([PR #5225](https://github.com/azure/communication-ui-library/pull/5225) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- Update aria-labels and contrast colors ([PR #5309](https://github.com/azure/communication-ui-library/pull/5309) by edwardlee@microsoft.com)
+- Enable noUncheckedIndexedAccess in statefulcallclient and calling bindings ([PR #5242](https://github.com/azure/communication-ui-library/pull/5242) by 2684369+JamesBurnside@users.noreply.github.com)
+- Safely subscribe to on stateChanged events to prevent related events from failing if listeners throw an error ([PR #5165](https://github.com/azure/communication-ui-library/pull/5165) by edwardlee@microsoft.com)
+- Fix bug where waiting for others to join text shows up in black under dark mode, and showing up in screen share ([PR #5295](https://github.com/azure/communication-ui-library/pull/5295) by 96077406+carocao-msft@users.noreply.github.com)
+- Fix runtime error when starting screenshare alone in a call ([PR #5240](https://github.com/azure/communication-ui-library/pull/5240) by 79475487+mgamis-msft@users.noreply.github.com)
+- Fix issue where reactions button was not accessible via keyboard ([PR #5281](https://github.com/azure/communication-ui-library/pull/5281) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Increase Notification spacing betwen Title and Description text ([PR #5238](https://github.com/azure/communication-ui-library/pull/5238) by edwardlee@microsoft.com)
+- Ensure components re-render when adapter state changes by using useSelector instead of adapter.getState ([PR #5239](https://github.com/azure/communication-ui-library/pull/5239) by 2684369+JamesBurnside@users.noreply.github.com)
+- Fix bug where waiting for others to join text shows up in black under dark mode, and showing up in screen share ([PR #5295](https://github.com/azure/communication-ui-library/pull/5295) by 96077406+carocao-msft@users.noreply.github.com)
+- Fix Call Controls to allow proper customization of buttons shown ([PR #5193](https://github.com/azure/communication-ui-library/pull/5193) by dmceachern@microsoft.com)
+- Fix noUncheckedIndexedAccess for react-composites ([PR #5297](https://github.com/azure/communication-ui-library/pull/5297) by 2684369+JamesBurnside@users.noreply.github.com)
+- Enable noUncheckedIndexedAccess for react-components ([PR #5266](https://github.com/azure/communication-ui-library/pull/5266) by 2684369+JamesBurnside@users.noreply.github.com)
 
 ## [1.19.0](https://github.com/azure/communication-ui-library/tree/1.19.0)
 
