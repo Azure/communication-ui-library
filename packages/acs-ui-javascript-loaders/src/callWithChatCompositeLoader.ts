@@ -8,8 +8,7 @@ const reactVersion = React.version;
 parseReactVersion(reactVersion);
 
 import { createRoot } from 'react-dom/client';
-import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
-import { fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
+import { CommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import {
   CallWithChatAdapter,
   CallAndChatLocator,
@@ -29,8 +28,8 @@ import { initializeIcons } from '@fluentui/react';
  * @public
  */
 export type CallWithChatCompositeLoaderProps = {
-  userId: string;
-  token: string;
+  userId: CommunicationUserIdentifier;
+  credential: CommunicationTokenCredential;
   displayName: string;
   endpoint: string;
   locator: CallAndChatLocator;
@@ -50,12 +49,12 @@ export const loadCallWithChatComposite = async function (
   htmlElement: HTMLElement
 ): Promise<CallWithChatAdapter | undefined> {
   initializeIcons();
-  const { userId, token, displayName, endpoint, locator, callAdapterOptions, callWithChatCompositeOptions } =
+  const { userId, credential, displayName, endpoint, locator, callAdapterOptions, callWithChatCompositeOptions } =
     loaderArgs;
   const adapter = await createAzureCommunicationCallWithChatAdapter({
-    userId: fromFlatCommunicationIdentifier(userId) as CommunicationUserIdentifier,
+    userId,
     displayName: displayName ?? 'anonymous',
-    credential: new AzureCommunicationTokenCredential(token),
+    credential,
     endpoint: endpoint,
     locator: locator,
     callAdapterOptions
