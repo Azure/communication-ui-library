@@ -84,8 +84,6 @@ module.exports = {
     'end-call-options',
     // Feature to support file sharing in Teams interoperability chats
     "file-sharing-teams-interop",
-    // Feature for showing notifications
-    "notifications",
     // Feature for tracking beta start call identifier
     'start-call-beta',
     // feature for adding JS helpers to the UI library API
