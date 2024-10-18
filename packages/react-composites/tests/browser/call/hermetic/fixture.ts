@@ -12,11 +12,8 @@ import type {
   MockRemoteParticipantState,
   MockVideoStreamRendererViewState
 } from '../../../common';
-/* @conditional-compile-remove(teams-identity-support) */
 import type { CallKind, DominantSpeakersInfo, ParticipantRole } from '@azure/communication-calling';
-
 import type { ParticipantCapabilities } from '@azure/communication-calling';
-
 import { CallState, CapabilitiesFeatureState } from '@internal/calling-stateful-client';
 
 const SERVER_URL = 'http://localhost';
@@ -76,7 +73,7 @@ export function defaultMockCallAdapterState(
     page: callEndReasonSubCode ? 'leftCall' : 'call',
     call: {
       id: 'call1',
-      /* @conditional-compile-remove(teams-identity-support) */
+
       kind: 'Call' as CallKind,
       callerInfo: { displayName: 'caller', identifier: { kind: 'communicationUser', communicationUserId: '1' } },
       direction: 'Incoming',
@@ -521,7 +518,7 @@ const presenterCapabilitiesInTeamsCall: ParticipantCapabilities = {
 
 const defaultEndedCallState: CallState = {
   id: 'call0',
-  /* @conditional-compile-remove(teams-identity-support) */
+
   kind: 'Call' as CallKind,
   callerInfo: { displayName: 'caller', identifier: { kind: 'communicationUser', communicationUserId: '1' } },
   direction: 'Incoming',

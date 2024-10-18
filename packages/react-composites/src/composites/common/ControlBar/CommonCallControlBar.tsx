@@ -48,6 +48,7 @@ import { DtmfDialpadButton } from './DtmfDialerButton';
 import { ExitSpotlightButton } from '../ExitSpotlightButton';
 import { useLocale } from '../../localization';
 import { isBoolean } from '../utils';
+import { getEnvironmentInfo } from '../../CallComposite/selectors/baseSelectors';
 import { getIsTeamsCall } from '../../CallComposite/selectors/baseSelectors';
 /* @conditional-compile-remove(breakout-rooms) */
 import { getAssignedBreakoutRoom, getBreakoutRoomSettings } from '../../CallComposite/selectors/baseSelectors';
@@ -220,9 +221,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
   }, [props.callAdapter]);
 
   /* @conditional-compile-remove(DNS) */
-  let environmentInfo = undefined;
-  /* @conditional-compile-remove(unsupported-browser) */
-  environmentInfo = props.callAdapter.getState().environmentInfo;
+  const environmentInfo = useSelector(getEnvironmentInfo);
 
   /* @conditional-compile-remove(DNS) */
   const isSafari = _isSafari(environmentInfo);

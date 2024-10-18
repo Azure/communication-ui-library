@@ -80,8 +80,6 @@ module.exports = {
     // Demo feature. Used in live-documentation of conditional compilation.
     // Do not use in production code.
     "stabilizedDemo",
-    // Joining calls using teams token
-    "teams-identity-support",
     // Feature to support file sharing in Teams interoperability chats
     "file-sharing-teams-interop",
     // Feature for showing notifications

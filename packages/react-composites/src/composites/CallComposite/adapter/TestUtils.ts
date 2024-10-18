@@ -41,7 +41,7 @@ export interface MockCall extends Mutable<CallCommon>, MockEmitter {
 export function createMockCall(mockCallId = 'defaultCallID'): MockCall {
   return addMockEmitter({
     id: mockCallId,
-    /* @conditional-compile-remove(teams-identity-support) */
+
     kind: 'Call',
     info: {
       groupId: 'testGroupId'
