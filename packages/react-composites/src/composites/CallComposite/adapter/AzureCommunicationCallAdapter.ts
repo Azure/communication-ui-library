@@ -621,9 +621,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     this.startSpotlight.bind(this);
     this.stopSpotlight.bind(this);
     this.stopAllSpotlight.bind(this);
-    /* @conditional-compile-remove(soft-mute) */
     this.muteParticipant.bind(this);
-    /* @conditional-compile-remove(soft-mute) */
     this.muteAllRemoteParticipants.bind(this);
   }
 
@@ -1115,12 +1113,10 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     return this.handlers.onSubmitSurvey(survey);
   }
 
-  /* @conditional-compile-remove(soft-mute) */
   public async muteParticipant(userId: string): Promise<void> {
     this.handlers.onMuteParticipant(userId);
   }
 
-  /* @conditional-compile-remove(soft-mute) */
   public async muteAllRemoteParticipants(): Promise<void> {
     this.handlers.onMuteAllRemoteParticipants();
   }
@@ -1188,7 +1184,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
   on(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
   on(event: 'roleChanged', listener: PropertyChangedEvent): void;
   on(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
-  /* @conditional-compile-remove(soft-mute) */
   on(event: 'mutedByOthers', listener: PropertyChangedEvent): void;
   /* @conditional-compile-remove(breakout-rooms) */
   on(event: 'breakoutRoomsUpdated', listener: BreakoutRoomsUpdatedListener): void;
@@ -1489,7 +1484,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
   off(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
   off(event: 'roleChanged', listener: PropertyChangedEvent): void;
   off(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
-  /* @conditional-compile-remove(soft-mute) */
   off(event: 'mutedByOthers', listener: PropertyChangedEvent): void;
   /* @conditional-compile-remove(breakout-rooms) */
   off(event: 'breakoutRoomsUpdated', listener: BreakoutRoomsUpdatedListener): void;
