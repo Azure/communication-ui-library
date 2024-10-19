@@ -206,12 +206,10 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
     return this.callWithChatAdapter.updateSelectedVideoBackgroundEffect(selectedVideoBackground);
   }
 
-  /* @conditional-compile-remove(DNS) */
   public async startNoiseSuppressionEffect(): Promise<void> {
     return this.callWithChatAdapter.startNoiseSuppressionEffect();
   }
 
-  /* @conditional-compile-remove(DNS) */
   public async stopNoiseSuppressionEffect(): Promise<void> {
     return this.callWithChatAdapter.stopNoiseSuppressionEffect();
   }
@@ -270,11 +268,8 @@ function callAdapterStateFromCallWithChatAdapterState(
     videoBackgroundImages: callWithChatAdapterState.videoBackgroundImages,
 
     onResolveVideoEffectDependency: callWithChatAdapterState.onResolveVideoEffectDependency,
-    /* @conditional-compile-remove(DNS) */
     onResolveDeepNoiseSuppressionDependency: callWithChatAdapterState.onResolveDeepNoiseSuppressionDependency,
-    /* @conditional-compile-remove(DNS) */
     deepNoiseSuppressionOnByDefault: callWithChatAdapterState.deepNoiseSuppressionOnByDefault,
-    /* @conditional-compile-remove(DNS) */
     hideDeepNoiseSuppressionButton: callWithChatAdapterState.hideDeepNoiseSuppressionButton,
     selectedVideoBackgroundEffect: callWithChatAdapterState.selectedVideoBackgroundEffect,
     reactions: callWithChatAdapterState.reactions
