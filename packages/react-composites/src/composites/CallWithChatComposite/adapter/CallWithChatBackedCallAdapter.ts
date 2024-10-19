@@ -11,7 +11,8 @@ import {
   VideoDeviceInfo,
   Call,
   PermissionConstraints,
-  StartCallOptions
+  StartCallOptions,
+  DeviceAccess
 } from '@azure/communication-calling';
 import { Reaction } from '@azure/communication-calling';
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
@@ -108,7 +109,7 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
     await this.callWithChatAdapter.setMicrophone(sourceId);
   public setSpeaker = async (sourceId: AudioDeviceInfo): Promise<void> =>
     await this.callWithChatAdapter.setSpeaker(sourceId);
-  public askDevicePermission = async (constraints: PermissionConstraints): Promise<void> =>
+  public askDevicePermission = async (constraints: PermissionConstraints): Promise<DeviceAccess> =>
     await this.callWithChatAdapter.askDevicePermission(constraints);
   public queryCameras = async (): Promise<VideoDeviceInfo[]> => await this.callWithChatAdapter.queryCameras();
   public queryMicrophones = async (): Promise<AudioDeviceInfo[]> => await this.callWithChatAdapter.queryMicrophones();
@@ -205,12 +206,10 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
     return this.callWithChatAdapter.updateSelectedVideoBackgroundEffect(selectedVideoBackground);
   }
 
-  /* @conditional-compile-remove(DNS) */
   public async startNoiseSuppressionEffect(): Promise<void> {
     return this.callWithChatAdapter.startNoiseSuppressionEffect();
   }
 
-  /* @conditional-compile-remove(DNS) */
   public async stopNoiseSuppressionEffect(): Promise<void> {
     return this.callWithChatAdapter.stopNoiseSuppressionEffect();
   }
@@ -264,17 +263,13 @@ function callAdapterStateFromCallWithChatAdapterState(
     /* @conditional-compile-remove(breakout-rooms) */
     latestNotifications: callWithChatAdapterState.latestCallNotifications,
     alternateCallerId: callWithChatAdapterState.alternateCallerId,
-    /* @conditional-compile-remove(unsupported-browser) */
     environmentInfo: callWithChatAdapterState.environmentInfo,
 
     videoBackgroundImages: callWithChatAdapterState.videoBackgroundImages,
 
     onResolveVideoEffectDependency: callWithChatAdapterState.onResolveVideoEffectDependency,
-    /* @conditional-compile-remove(DNS) */
     onResolveDeepNoiseSuppressionDependency: callWithChatAdapterState.onResolveDeepNoiseSuppressionDependency,
-    /* @conditional-compile-remove(DNS) */
     deepNoiseSuppressionOnByDefault: callWithChatAdapterState.deepNoiseSuppressionOnByDefault,
-    /* @conditional-compile-remove(DNS) */
     hideDeepNoiseSuppressionButton: callWithChatAdapterState.hideDeepNoiseSuppressionButton,
     selectedVideoBackgroundEffect: callWithChatAdapterState.selectedVideoBackgroundEffect,
     reactions: callWithChatAdapterState.reactions

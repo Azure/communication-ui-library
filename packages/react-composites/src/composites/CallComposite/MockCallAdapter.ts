@@ -4,12 +4,12 @@
 import {
   AudioDeviceInfo,
   Call,
+  DeviceAccess,
   DtmfTone,
   ParticipantRole,
   PermissionConstraints,
   VideoDeviceInfo
 } from '@azure/communication-calling';
-/* @conditional-compile-remove(teams-identity-support) */
 import { CallKind } from '@azure/communication-calling';
 import { EnvironmentInfo } from '@azure/communication-calling';
 import { EventEmitter } from 'events';
@@ -23,7 +23,7 @@ import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
 // TODO: Remove this simplified copy of the MockCallAdapter when the original MockCallAdapter is moved to fake-backends package and can be imported
 export class _MockCallAdapter implements CallAdapter {
   constructor(testState: {
-    askDevicePermission?: (constrain: PermissionConstraints) => Promise<void>;
+    askDevicePermission?: (constrain: PermissionConstraints) => Promise<DeviceAccess>;
     localParticipantRole?: ParticipantRole;
   }) {
     this.state = {
@@ -126,7 +126,7 @@ export class _MockCallAdapter implements CallAdapter {
     return Promise.resolve();
   }
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  askDevicePermission(constrain: PermissionConstraints): Promise<void> {
+  askDevicePermission(constrain: PermissionConstraints): Promise<DeviceAccess> {
     throw Error('askDevicePermission not implemented');
   }
   async queryCameras(): Promise<VideoDeviceInfo[]> {
@@ -240,7 +240,6 @@ const createDefaultCallAdapterState = (role?: ParticipantRole): CallAdapterState
     page: 'call',
     call: {
       id: 'call1',
-      /* @conditional-compile-remove(teams-identity-support) */
       kind: CallKind.Call,
       callerInfo: { displayName: 'caller', identifier: { kind: 'communicationUser', communicationUserId: '1' } },
       direction: 'Incoming',

@@ -93,8 +93,8 @@ const findSelector = (component: (props: any) => JSX.Element | undefined): any =
     const threadId = useContext(ChatThreadClientContext)?.threadId ?? 'default-id-when-not-in-provider';
     let messageThreadSelectorImpl = messageThreadSelectorsByThread[threadId];
     if (!messageThreadSelectorImpl) {
-      messageThreadSelectorsByThread[threadId] = messageThreadSelectorWithThread();
-      messageThreadSelectorImpl = messageThreadSelectorsByThread[threadId];
+      messageThreadSelectorImpl = messageThreadSelectorWithThread();
+      messageThreadSelectorsByThread[threadId] = messageThreadSelectorImpl;
     }
     return messageThreadSelectorImpl;
   };

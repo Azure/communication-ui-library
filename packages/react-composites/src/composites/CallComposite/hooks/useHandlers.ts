@@ -150,7 +150,7 @@ const createCompositeHandlers = memoizeOne(
       },
       /* @conditional-compile-remove(call-readiness) */
       askDevicePermission: async (constrain) => {
-        return adapter.askDevicePermission(constrain);
+        await adapter.askDevicePermission(constrain);
       },
 
       onRemoveVideoBackgroundEffects: async () => {
@@ -173,11 +173,10 @@ const createCompositeHandlers = memoizeOne(
         return await adapter.startVideoBackgroundEffect(replacementConfig);
       },
 
-      /* @conditional-compile-remove(DNS) */
       onStartNoiseSuppressionEffect: async () => {
         return await adapter.startNoiseSuppressionEffect();
       },
-      /* @conditional-compile-remove(DNS) */
+
       onStopNoiseSuppressionEffect: async () => {
         return await adapter.stopNoiseSuppressionEffect();
       },

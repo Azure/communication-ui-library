@@ -61,7 +61,7 @@ export const smartDominantSpeakerParticipants = (
 
   let newVisibleParticipants = newVisibleParticipantIds
     .map((participantId) => participantsMap[participantId])
-    .filter((p) => p !== undefined);
+    .filter((p) => p !== undefined) as VideoGalleryRemoteParticipant[];
 
   const newVisibleParticipantIdsSet = new Set(newVisibleParticipantIds);
   const remainingParticipants = participants.filter((p) => !newVisibleParticipantIdsSet.has(p.userId));

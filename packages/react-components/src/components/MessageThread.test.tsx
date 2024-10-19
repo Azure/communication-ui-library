@@ -297,6 +297,9 @@ describe('Message should display Mention correctly', () => {
 
     // edit message
     const message1ContentAfterEdit = `Hey <msft-mention id="${user2Id}">${user2Name}</msft-mention> and <msft-mention id="${user3Id}">${user3Name}</msft-mention>, can you help me with my internet connection?`;
+    if (!messages[0]) {
+      throw new Error('Failed to find message to edit');
+    }
     messages[0].content = message1ContentAfterEdit;
     messages[0].editedOn = new Date('2019-04-13T00:01:00.000+08:10');
     const expectedOnRenderMentionCount = 2;
@@ -353,6 +356,9 @@ describe('Message should display Mention correctly', () => {
     const onUpdateMessageCallback = (messageId: string, content: string): Promise<void> => {
       const msgIdx = messages.findIndex((m) => m.messageId === messageId);
       const message = messages[msgIdx];
+      if (!message) {
+        throw new Error('Failed to find message to update');
+      }
       message.content = content;
       message.editedOn = new Date(Date.now());
       messages[msgIdx] = message;
@@ -433,7 +439,7 @@ describe('Message should display Mention correctly', () => {
     // Verify message has new edited content includes mention HTML tag
     await waitFor(async () => {
       expect(onUpdateMessageCount).toEqual(expectedOnUpdateMessageCount);
-      const editedMessageContentWithMention = messages[0].content;
+      const editedMessageContentWithMention = messages[0]?.content;
       expect(editedMessageContentWithMention).toContain(user1Name);
       expect(editedMessageContentWithMention).toContain(MSFT_MENTION);
     });

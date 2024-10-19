@@ -17,7 +17,7 @@ import {
 } from '@azure/communication-calling';
 import { TeamsMeetingIdLocator } from '@azure/communication-calling';
 import { Reaction } from '@azure/communication-calling';
-import { AddPhoneNumberOptions } from '@azure/communication-calling';
+import { AddPhoneNumberOptions, DeviceAccess } from '@azure/communication-calling';
 /* @conditional-compile-remove(breakout-rooms) */
 import type { BreakoutRoomsEventData, BreakoutRoomsUpdatedListener, TeamsCall } from '@azure/communication-calling';
 import { DtmfTone } from '@azure/communication-calling';
@@ -68,7 +68,6 @@ import {
   isCommunicationUserIdentifier,
   PhoneNumberIdentifier
 } from '@azure/communication-common';
-import { getChatThreadFromTeamsLink } from './parseTeamsUrl';
 import { AdapterError } from '../../common/adapters';
 
 /* @conditional-compile-remove(call-participants-locator) */
@@ -354,11 +353,8 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     this.off.bind(this);
     this.downloadResourceToCache = this.downloadResourceToCache.bind(this);
     this.removeResourceFromCache = this.removeResourceFromCache.bind(this);
-
     this.holdCall.bind(this);
-
     this.resumeCall.bind(this);
-
     this.addParticipant.bind(this);
     this.sendDtmfTone.bind(this);
     /* @conditional-compile-remove(unsupported-browser) */
@@ -368,13 +364,9 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     this.setSpokenLanguage.bind(this);
     this.setCaptionLanguage.bind(this);
     this.startVideoBackgroundEffect.bind(this);
-
     this.stopVideoBackgroundEffects.bind(this);
-
     this.updateBackgroundPickerImages.bind(this);
-    /* @conditional-compile-remove(DNS) */
     this.startNoiseSuppressionEffect.bind(this);
-    /* @conditional-compile-remove(DNS) */
     this.stopNoiseSuppressionEffect.bind(this);
   }
 
@@ -452,8 +444,8 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   public async setSpeaker(device: AudioDeviceInfo): Promise<void> {
     await this.callAdapter.setSpeaker(device);
   }
-  public async askDevicePermission(constraints: PermissionConstraints): Promise<void> {
-    await this.callAdapter.askDevicePermission(constraints);
+  public async askDevicePermission(constraints: PermissionConstraints): Promise<DeviceAccess> {
+    return await this.callAdapter.askDevicePermission(constraints);
   }
   /** Query for available cameras. */
   public async queryCameras(): Promise<VideoDeviceInfo[]> {
@@ -660,12 +652,10 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     return this.callAdapter.updateSelectedVideoBackgroundEffect(selectedVideoBackground);
   }
 
-  /* @conditional-compile-remove(DNS) */
   public async startNoiseSuppressionEffect(): Promise<void> {
     return await this.callAdapter.startNoiseSuppressionEffect();
   }
 
-  /* @conditional-compile-remove(DNS) */
   public async stopNoiseSuppressionEffect(): Promise<void> {
     return await this.callAdapter.stopNoiseSuppressionEffect();
   }
@@ -1047,7 +1037,6 @@ export class TeamsMeetingLinkProvider implements ChatThreadProvider {
 
   public getChatThread(): string {
     throw new Error('Chat thread ID should be retrieved from call.callInfo using method getChatThreadPromise');
-    return getChatThreadFromTeamsLink(this.locator.meetingLink);
   }
 
   public async getChatThreadPromise(): Promise<string> {
@@ -1072,8 +1061,6 @@ export class TeamsMeetingLinkProvider implements ChatThreadProvider {
 
       return chatThreadPromise;
     }
-
-    return getChatThreadFromTeamsLink(this.locator.meetingLink);
   }
 }
 

@@ -10,10 +10,13 @@ import {
   ContextualMenuItemType,
   IContextualMenuItem,
   IContextualMenuItemStyles,
-  IContextualMenuStyles
+  IContextualMenuStyles,
+  Toggle,
+  Stack,
+  IStyleFunctionOrObject,
+  IToggleStyleProps,
+  IToggleStyles
 } from '@fluentui/react';
-/* @conditional-compile-remove(DNS) */
-import { Toggle, Stack, IStyleFunctionOrObject, IToggleStyleProps, IToggleStyles } from '@fluentui/react';
 import { ControlBarButtonStyles } from './ControlBarButton';
 import { OptionsDevice, generateDefaultDeviceMenuProps } from './DevicesButton';
 import { Announcer } from './Announcer';
@@ -86,22 +89,16 @@ export interface MicrophoneButtonStrings {
    * Aria description for the microphone button
    */
   microphoneAriaDescription?: string;
-  /* @conditional-compile-remove(DNS) */
   /**
    * Title for deep noise suppression button
-   * @beta
    */
   deepNoiseSuppressionTitle?: string;
-  /* @conditional-compile-remove(DNS) */
   /**
    * Noise Suppression turned on string for announcer
-   * @beta
    */
   deepNoiseSuppressionOnAnnouncement?: string;
-  /* @conditional-compile-remove(DNS) */
   /**
    * Noise Suppression turned off string for announcer
-   * @beta
    */
   deepNoiseSuppressionOffAnnouncement?: string;
 }
@@ -179,25 +176,16 @@ export interface MicrophoneButtonProps extends ControlBarButtonProps {
    * Styles for {@link MicrophoneButton} and the device selection flyout.
    */
   styles?: Partial<MicrophoneButtonStyles>;
-  /* @conditional-compile-remove(DNS) */
   /**
    * Whether the deep noise suppression is on or off
-   *
-   * @beta
    */
   isDeepNoiseSuppressionOn?: boolean;
-  /* @conditional-compile-remove(DNS) */
   /**
    * Callback when noise suppression is clicked
-   *
-   * @beta
    */
   onClickNoiseSuppression?: () => void;
-  /* @conditional-compile-remove(DNS) */
   /**
    * Show/Hide the deep noise suppression button
-   *
-   * @beta
    */
   showNoiseSuppressionButton?: boolean;
 }
@@ -258,7 +246,6 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
     }
   }, [isMicOn, onToggleMicrophone, toggleAnnouncerString]);
 
-  /* @conditional-compile-remove(DNS) */
   const deepNoiseSuppressionToggleStyles: IStyleFunctionOrObject<IToggleStyleProps, IToggleStyles> = {
     root: {
       margin: '4px',
@@ -271,7 +258,6 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
 
   const splitButtonMenuItems: IContextualMenuItem[] = [];
 
-  /* @conditional-compile-remove(DNS) */
   if (props.showNoiseSuppressionButton) {
     splitButtonMenuItems.push({
       key: 'microphoneDNSToggle',
