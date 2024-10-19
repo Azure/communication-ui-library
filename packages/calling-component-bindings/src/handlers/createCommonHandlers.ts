@@ -4,6 +4,8 @@
 import {
   AddPhoneNumberOptions,
   AudioDeviceInfo,
+  AudioEffectsStartConfig,
+  AudioEffectsStopConfig,
   BackgroundBlurConfig,
   BackgroundBlurEffect,
   BackgroundReplacementConfig,
@@ -18,8 +20,6 @@ import {
   TeamsCall,
   VideoDeviceInfo
 } from '@azure/communication-calling';
-/* @conditional-compile-remove(DNS) */
-import { AudioEffectsStartConfig, AudioEffectsStopConfig } from '@azure/communication-calling';
 /* @conditional-compile-remove(call-readiness) */
 import { PermissionConstraints } from '@azure/communication-calling';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
@@ -85,9 +85,7 @@ export interface CommonCallingHandlers {
   onRemoveVideoBackgroundEffects: () => Promise<void>;
   onBlurVideoBackground: (backgroundBlurConfig?: BackgroundBlurConfig) => Promise<void>;
   onReplaceVideoBackground: (backgroundReplacementConfig: BackgroundReplacementConfig) => Promise<void>;
-  /* @conditional-compile-remove(DNS) */
   onStartNoiseSuppressionEffect: () => Promise<void>;
-  /* @conditional-compile-remove(DNS) */
   onStopNoiseSuppressionEffect: () => Promise<void>;
   onStartCaptions: (options?: CaptionsOptions) => Promise<void>;
   onStopCaptions: () => Promise<void>;
@@ -127,7 +125,6 @@ export type VideoBackgroundEffectsDependency = {
   createBackgroundReplacementEffect: (config: BackgroundReplacementConfig) => BackgroundReplacementEffect;
 };
 
-/* @conditional-compile-remove(DNS) */
 /**
  * Dependency type to be injected for deep noise suppression
  *
@@ -148,7 +145,6 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
     call: Call | TeamsCall | undefined,
     options?: {
       onResolveVideoBackgroundEffectsDependency?: () => Promise<VideoBackgroundEffectsDependency>;
-      /* @conditional-compile-remove(DNS) */
       onResolveDeepNoiseSuppressionDependency?: () => Promise<DeepNoiseSuppressionEffectDependency>;
     }
   ): CommonCallingHandlers & Partial<_ComponentCallingHandlers> => {
@@ -611,7 +607,6 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       }
     };
 
-    /* @conditional-compile-remove(DNS) */
     const onStartNoiseSuppressionEffect = async (): Promise<void> => {
       const audioEffects =
         options?.onResolveDeepNoiseSuppressionDependency &&
@@ -628,7 +623,6 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       }
     };
 
-    /* @conditional-compile-remove(DNS) */
     const onStopNoiseSuppressionEffect = async (): Promise<void> => {
       const stream = call?.localAudioStreams.find((stream) => stream.mediaStreamType === 'Audio');
       if (stream && options?.onResolveDeepNoiseSuppressionDependency) {
@@ -738,9 +732,7 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       onRemoveVideoBackgroundEffects,
       onBlurVideoBackground,
       onReplaceVideoBackground,
-      /* @conditional-compile-remove(DNS) */
       onStartNoiseSuppressionEffect,
-      /* @conditional-compile-remove(DNS) */
       onStopNoiseSuppressionEffect,
       onStartCaptions,
       onStopCaptions,
