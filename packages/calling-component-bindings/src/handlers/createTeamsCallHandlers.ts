@@ -23,10 +23,9 @@ import { createLocalVideoStream } from '../utils/callUtils';
 import {
   createDefaultCommonCallingHandlers,
   CommonCallingHandlers,
+  DeepNoiseSuppressionEffectDependency,
   VideoBackgroundEffectsDependency
 } from './createCommonHandlers';
-/* @conditional-compile-remove(DNS) */
-import { DeepNoiseSuppressionEffectDependency } from './createCommonHandlers';
 /**
  * Object containing all the teams call handlers required for calling components.
  *
@@ -55,7 +54,6 @@ export const createDefaultTeamsCallingHandlers = memoizeOne(
     call?: TeamsCall,
     options?: {
       onResolveVideoBackgroundEffectsDependency?: () => Promise<VideoBackgroundEffectsDependency>;
-      /* @conditional-compile-remove(DNS) */
       onResolveDeepNoiseSuppressionDependency?: () => Promise<DeepNoiseSuppressionEffectDependency>;
     }
   ): TeamsCallingHandlers => {

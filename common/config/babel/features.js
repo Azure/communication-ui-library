@@ -80,17 +80,11 @@ module.exports = {
     // Demo feature. Used in live-documentation of conditional compilation.
     // Do not use in production code.
     "stabilizedDemo",
-    // Feature for end call options 
-    'end-call-options',
     // Feature to support file sharing in Teams interoperability chats
     "file-sharing-teams-interop",
     // Feature for showing notifications
     "notifications",
     // Feature for tracking beta start call identifier
     'start-call-beta',
-    // Deep Noise Suppression feature
-    "DNS",
-    // Soft Mute feature for ACS calls and Interop calls
-    "soft-mute"
   ]
 }

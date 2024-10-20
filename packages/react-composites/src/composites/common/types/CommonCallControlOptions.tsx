@@ -41,7 +41,7 @@ export type CommonCallControlOptions = {
    */
   endCallButton?:
     | boolean
-    | /* @conditional-compile-remove(end-call-options) */ {
+    | {
         /**
          * whether to make end call button to trigger a menu, which will enable end call for everybody functionality.
          * @defaultValue false
