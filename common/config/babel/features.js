@@ -86,7 +86,5 @@ module.exports = {
     "notifications",
     // Feature for tracking beta start call identifier
     'start-call-beta',
-    // feature for adding JS helpers to the UI library API
-    "composite-js-helpers",
   ]
 }
