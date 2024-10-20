@@ -793,6 +793,7 @@ jobs:
           comment-author: 'github-actions[bot]'
           body-includes: '## ${{ matrix.app }} bundle size is'
       - name: Delete comment
+        if: !!steps.fc.outputs.comment-id
         uses: actions/github-script@v4
         with:
           script: |
@@ -802,6 +803,21 @@ jobs:
               repo: context.repo.repo,
               comment_id: comment_id
             });
+      - name: Post new comment
+        uses: actions/github-script@v4
+        with:
+          script: |
+            const issue_number = ${{ github.event.pull_request.number }};
+            await github.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: ${{ github.event.pull_request.number }},
+              body: |
+                ## ${{ matrix.app }} bundle size is ***${{ steps.bundles.outputs.change }}***.
+                - Current size: ${{ steps.bundles.outputs.current_size }}
+                - Base size: ${{ steps.bundles.outputs.base_size}}
+                - Diff size: ${{ steps.bundles.outputs.diff}}
+              });
       # - name: Check whether the bundle size is increased significantly
       #   if: ${{ github.event_name == 'pull_request' && !contains( github.event.pull_request.labels.*.name, 'significant bundle size change') }}
       #   run: node common/scripts/bundleSize/bundleSizeCheck.mjs ${{ matrix.app }} ${{ steps.bundles.outputs.diff }}
