@@ -96,7 +96,7 @@ export class BreakoutRoomsSubscriber {
           timestamp: new Date(Date.now())
         });
       }
-    } else if (breakoutRoom.state === 'open') {
+    } else if (breakoutRoom.state === 'open' && !callState?.breakoutRooms?.breakoutRoomSettings) {
       if (!this._context.getState().latestNotifications['assignedBreakoutRoomChanged']) {
         const target: NotificationTarget =
           breakoutRoom.autoMoveParticipantToBreakoutRoom === false

@@ -496,11 +496,9 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
       console.log(
         'DEBUG clientState.calls: ',
         Object.values(clientState.calls)
-          .map((c) => `${c.id}-${c.state}`)
+          .map((c) => `${c.id}-${c.state}-assignedBR:${c.breakoutRooms?.assignedBreakoutRoom?.call?.id}`)
           .join(', ')
       );
-
-      console.log('DEBUG this.callAgent.calls: ', this.callAgent.calls.map((c) => `${c.id}-${c.state}`).join(', '));
 
       // if the call hits the connected state we want to pause all calling sounds if playing.
       if (this.call?.state === 'Connected' && this.callingSoundSubscriber?.playingSounds) {
@@ -1164,21 +1162,24 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
 
   /* @conditional-compile-remove(breakout-rooms) */
   public async returnFromBreakoutRoom(): Promise<void> {
-    if (!this.originCall) {
-      throw new Error('Could not return from breakout room because the origin call could not be retrieved.');
-    }
+    const callState = this.call?.id ? this.callClient.getState().calls[this.call.id] : undefined;
+    const assignedBreakoutRoom = callState?.breakoutRooms?.assignedBreakoutRoom;
 
-    if (this.call?.id === this.originCall.id) {
-      console.error('Return from breakout room will not be done because current call is the origin call.');
-      return;
+    if (!assignedBreakoutRoom) {
+      throw new Error(
+        'Could not return from breakout room because assigned breakout room state could not be retrieved.'
+      );
     }
 
     const breakoutRoomCall = this.call;
-    this.processNewCall(this.originCall);
-    await this.resumeCall();
-    if (breakoutRoomCall?.state && !['Disconnecting', 'Disconnected'].includes(breakoutRoomCall.state)) {
-      breakoutRoomCall.hangUp();
-    }
+
+    assignedBreakoutRoom.rejoinMainMeeting().then((call: Call | TeamsCall) => {
+      this.originCall = call;
+      this.processNewCall(this.originCall);
+      if (breakoutRoomCall?.state && !['Disconnecting', 'Disconnected'].includes(breakoutRoomCall.state)) {
+        breakoutRoomCall.hangUp();
+      }
+    });
   }
 
   public getState(): CallAdapterState {
