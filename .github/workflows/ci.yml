@@ -796,19 +796,19 @@ jobs:
         if: !!steps.fc.outputs.comment-id
         uses: actions/github-script@v4
         with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            const comment_id = ${{ steps.fc.outputs.comment-id }};
-            await github.issues.deleteComment({
+            github.issues.deleteComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              comment_id: comment_id
+              comment_id: ${{ steps.fc.outputs.comment-id }}
             });
       - name: Post new comment
         uses: actions/github-script@v4
         with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            const issue_number = ${{ github.event.pull_request.number }};
-            await github.issues.createComment({
+            github.issues.createComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: ${{ github.event.pull_request.number }},
