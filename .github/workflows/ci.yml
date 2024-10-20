@@ -795,7 +795,7 @@ jobs:
         uses: delete-comment@v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          repository: ${{ github.event.repository.owner }}
+          repository: ${{ github.event.repository.owner.login }}
           comment-id: ${{ steps.fc.outputs.comment-id }}
       - name: Check whether the bundle size is increased significantly
         if: ${{ github.event_name == 'pull_request' && !contains( github.event.pull_request.labels.*.name, 'significant bundle size change') }}
