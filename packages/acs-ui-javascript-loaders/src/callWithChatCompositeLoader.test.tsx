@@ -1,9 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/* @conditional-compile-remove(composite-js-helpers) */
 import { CallWithChatCompositeOptions } from '@internal/react-composites';
-/* @conditional-compile-remove(composite-js-helpers) */
 import { CallWithChatCompositeLoaderProps } from './callWithChatCompositeLoader';
 import { AzureCommunicationTokenCredential } from '@azure/communication-common';
 
@@ -36,10 +34,6 @@ jest.mock('@fluentui/react', () => {
 });
 
 describe('CallWithChatCompositeLoader tests', () => {
-  test('test to fulfill no empty test runners', () => {
-    expect(true).toBeTruthy();
-  });
-  /* @conditional-compile-remove(composite-js-helpers) */
   test('loadCallWithChatComposite should call createAzureCommunicationCallWithChatAdapter and createRoot', async () => {
     const mockCompositeOptions: CallWithChatCompositeOptions = {
       galleryOptions: { layout: 'floatingLocalVideo' }
