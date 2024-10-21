@@ -80,17 +80,9 @@ module.exports = {
     // Demo feature. Used in live-documentation of conditional compilation.
     // Do not use in production code.
     "stabilizedDemo",
-    // Feature for end call options 
-    'end-call-options',
     // Feature for showing notifications
     "notifications",
     // Feature for tracking beta start call identifier
     'start-call-beta',
-    // feature for adding JS helpers to the UI library API
-    "composite-js-helpers",
-    // Deep Noise Suppression feature
-    "DNS",
-    // Soft Mute feature for ACS calls and Interop calls
-    "soft-mute"
   ]
 }

@@ -297,9 +297,7 @@ export const DEFAULT_COMPONENT_ICONS = {
   ErrorBarClear: <Dismiss16Regular />,
   ErrorBarCallVideoRecoveredBySystem: <Video16Filled />,
   ErrorBarCallVideoStoppedBySystem: <VideoProhibited16Filled />,
-  /* @conditional-compile-remove(soft-mute) */
   ErrorBarMutedByRemoteParticipant: <MicOff16Regular />,
-
   NotificationBarRecording: <Record16Regular />,
   /* @conditional-compile-remove(breakout-rooms) */
   NotificationBarBreakoutRoomOpened: <DoorArrowRight16Regular />,
@@ -406,7 +404,6 @@ export const DEFAULT_COMPONENT_ICONS = {
   RichTextTableInsertMenuIcon: <TableAdd20Regular />,
   /* @conditional-compile-remove(rich-text-editor) */
   RichTextTableDeleteMenuIcon: <TableDismiss20Regular />,
-  /* @conditional-compile-remove(soft-mute) */
   ContextualMenuMicMutedIcon: <MicOff20Regular />,
   IncomingCallNotificationRejectIcon: <CallEnd20Filled />,
   IncomingCallNotificationAcceptIcon: <Call20Filled />,

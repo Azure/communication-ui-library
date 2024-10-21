@@ -39,10 +39,11 @@ export type {
   CommonCallingHandlers
 } from '../../calling-component-bindings/src';
 
-export type { VideoBackgroundEffectsDependency, CallingHandlersOptions } from '../../calling-component-bindings/src';
-
-/* @conditional-compile-remove(DNS) */
-export type { DeepNoiseSuppressionEffectDependency } from '../../calling-component-bindings/src';
+export type {
+  DeepNoiseSuppressionEffectDependency,
+  VideoBackgroundEffectsDependency,
+  CallingHandlersOptions
+} from '../../calling-component-bindings/src';
 
 export type { CaptionsOptions } from '../../calling-component-bindings/src';
 
