@@ -14,8 +14,6 @@ import { createTestLocale, renderWithLocalization } from './utils/testUtils';
 import { COMPONENT_LOCALE_EN_US } from '../localization/locales';
 /* @conditional-compile-remove(mention) */
 import { waitFor } from '@testing-library/react';
-/* @conditional-compile-remove(data-loss-prevention) */
-import { registerIcons } from '@fluentui/react';
 /* @conditional-compile-remove(mention) */
 import { MessageStatus } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(mention) */
@@ -174,14 +172,6 @@ describe('Message should display status of edited if message is edited', () => {
 
 /* @conditional-compile-remove(data-loss-prevention) */
 describe('Message blocked should display default blocked text correctly', () => {
-  beforeAll(() => {
-    registerIcons({
-      icons: {
-        datalosspreventionprohibited: <></>
-      }
-    });
-  });
-
   test('Should locale string for default message blocked by policy"', async () => {
     const testLocale = createTestLocale({ messageThread: { yesterday: Math.random().toString() } });
     const sampleMessage: BlockedMessage = {
@@ -205,19 +195,6 @@ describe('Message blocked should display default blocked text correctly', () => 
 /* @conditional-compile-remove(mention) */
 describe('Message should display Mention correctly', () => {
   const MSFT_MENTION = 'msft-mention';
-
-  beforeAll(() => {
-    registerIcons({
-      icons: {
-        chatmessageoptions: <></>,
-        messageedit: <></>,
-        messageremove: <></>,
-        messageresend: <></>,
-        editboxcancel: <></>,
-        editboxsubmit: <></>
-      }
-    });
-  });
 
   test('Message should include Mention', async () => {
     const user1Id = 'user1';

@@ -3,17 +3,9 @@
 import React from 'react';
 import { RichTextSendBoxErrors } from './RichTextSendBoxErrors';
 import { act, render, screen } from '@testing-library/react';
-import { registerIcons } from '@fluentui/react';
 
 jest.useFakeTimers();
 describe('RichTextSendBoxErrors should be shown correctly', () => {
-  beforeAll(() => {
-    registerIcons({
-      icons: {
-        info: <></>
-      }
-    });
-  });
   test('MessageBar shouldn`t be shown if there are no errors', async () => {
     render(<RichTextSendBoxErrors />);
     const messageBar = screen.queryByTestId('send-box-message-bar');
