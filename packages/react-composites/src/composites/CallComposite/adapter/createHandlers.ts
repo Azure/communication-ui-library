@@ -14,9 +14,10 @@ import {
   _isTeamsCallAgent
 } from '@internal/calling-stateful-client';
 
-import { VideoBackgroundEffectsDependency } from '@internal/calling-component-bindings';
-/* @conditional-compile-remove(DNS) */
-import { DeepNoiseSuppressionEffectDependency } from '@internal/calling-component-bindings';
+import {
+  DeepNoiseSuppressionEffectDependency,
+  VideoBackgroundEffectsDependency
+} from '@internal/calling-component-bindings';
 
 /**
  * @private
@@ -38,7 +39,6 @@ export function createHandlers<AgentType extends CallAgent | TeamsCallAgent>(
 
   options?: {
     onResolveVideoBackgroundEffectsDependency?: () => Promise<VideoBackgroundEffectsDependency>;
-    /* @conditional-compile-remove(DNS) */
     onResolveDeepNoiseSuppressionDependency?: () => Promise<DeepNoiseSuppressionEffectDependency>;
   }
 ): CallHandlersOf<AgentType> {
