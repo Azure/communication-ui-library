@@ -423,22 +423,11 @@ export const formatMoreButtonAriaDescription = (
   isSpeaking?: boolean,
   strings?: VideoTileStrings
 ): string => {
-  let mutedState;
-  let handRaisedState;
-  let isSpeakingState;
-  if (isMuted) {
-    if (isMuted === true) {
-      mutedState = strings?.moreOptionsParticipantMutedStateMutedAriaLabel;
-    } else {
-      mutedState = strings?.moreOptionsParticipantMutedStateUnmutedAriaLabel;
-    }
-  }
-  if (isHandRaised) {
-    handRaisedState = strings?.moreOptionsParticipantHandRaisedAriaLabel;
-  }
-  if (isSpeaking) {
-    isSpeakingState = strings?.moreOptionsParticipantIsSpeakingAriaLabel;
-  }
+  const mutedState = isMuted
+    ? strings?.moreOptionsParticipantMutedStateMutedAriaLabel
+    : strings?.moreOptionsParticipantMutedStateUnmutedAriaLabel;
+  const handRaisedState = isHandRaised ? strings?.moreOptionsParticipantHandRaisedAriaLabel : undefined;
+  const isSpeakingState = isSpeaking ? strings?.moreOptionsParticipantIsSpeakingAriaLabel : undefined;
 
   const description = strings?.moreOptionsButtonAriaLabel
     ? _formatString(strings?.moreOptionsButtonAriaLabel, {
