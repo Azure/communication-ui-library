@@ -19,7 +19,7 @@ export class MediaAccessSubscriber {
     this._context = context;
     this._mediaAccessCallFeature = mediaAccessCallFeature;
 
-    const mediaAccesses = this._mediaAccessCallFeature.getOthersMediaAccess();
+    const mediaAccesses = this._mediaAccessCallFeature.getRemoteParticipantsMediaAccess();
     this._context.setMediaAccesses(this._callIdRef.callId, mediaAccesses);
     this.subscribe();
   }
@@ -33,7 +33,7 @@ export class MediaAccessSubscriber {
   };
 
   private mediaAccessChanged = (): void => {
-    const mediaAccesses = this._mediaAccessCallFeature.getOthersMediaAccess();
+    const mediaAccesses = this._mediaAccessCallFeature.getRemoteParticipantsMediaAccess();
     this._context.setMediaAccesses(this._callIdRef.callId, mediaAccesses);
   };
 

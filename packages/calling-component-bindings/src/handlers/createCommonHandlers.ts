@@ -759,11 +759,11 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
     };
     /* @conditional-compile-remove(media-access) */
     const onForbidAllAttendeesAudio = async (): Promise<void> => {
-      await call?.feature(Features.MediaAccess).forbidOthersAudio();
+      await call?.feature(Features.MediaAccess).forbidRemoteParticipantsAudio();
     };
     /* @conditional-compile-remove(media-access) */
     const onPermitAllAttendeesAudio = async (): Promise<void> => {
-      await call?.feature(Features.MediaAccess).permitOthersAudio();
+      await call?.feature(Features.MediaAccess).permitRemoteParticipantsAudio();
     };
 
     /* @conditional-compile-remove(media-access) */
@@ -778,11 +778,11 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
     };
     /* @conditional-compile-remove(media-access) */
     const onForbidAllAttendeesVideo = async (): Promise<void> => {
-      await call?.feature(Features.MediaAccess).forbidOthersVideo();
+      await call?.feature(Features.MediaAccess).forbidRemoteParticipantsVideo();
     };
     /* @conditional-compile-remove(media-access) */
     const onPermitAllAttendeesVideo = async (): Promise<void> => {
-      await call?.feature(Features.MediaAccess).permitOthersVideo();
+      await call?.feature(Features.MediaAccess).permitRemoteParticipantsVideo();
     };
 
     // const onForbidAllAttendeesAudio = canForbidOthersMedia
