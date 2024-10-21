@@ -92,15 +92,7 @@ export type CallAdapterUiState = {
  * Identifier types for initiating a call using the CallAdapter
  * @public
  */
-export type StartCallIdentifier =
-  | (
-      | MicrosoftTeamsAppIdentifier
-      | PhoneNumberIdentifier
-      | CommunicationUserIdentifier
-      | MicrosoftTeamsUserIdentifier
-      | UnknownIdentifier
-    )
-  | /* @conditional-compile-remove(start-call-beta) */ CommunicationIdentifier;
+export type StartCallIdentifier = CommunicationIdentifier;
 
 /**
  * {@link CommonCallAdapter} state inferred from Azure Communication Services backend.
