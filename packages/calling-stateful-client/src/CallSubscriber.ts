@@ -32,6 +32,8 @@ import { LocalRecordingSubscriber } from './LocalRecordingSubscriber';
 import { BreakoutRoomsSubscriber } from './BreakoutRoomsSubscriber';
 /* @conditional-compile-remove(together-mode) */
 import { TogetherModeSubscriber } from './TogetherModeSubscriber';
+/* @conditional-compile-remove(media-access) */
+import { MediaAccessSubscriber } from './MediaAccessSubscriber';
 
 /**
  * Keeps track of the listeners assigned to a particular call because when we get an event from SDK, it doesn't tell us
@@ -64,6 +66,8 @@ export class CallSubscriber {
   private _breakoutRoomsSubscriber: BreakoutRoomsSubscriber;
   /* @conditional-compile-remove(together-mode) */
   private _togetherModeSubscriber: TogetherModeSubscriber;
+  /* @conditional-compile-remove(media-access) */
+  private _mediaAccessSubscriber: MediaAccessSubscriber;
 
   constructor(call: CallCommon, context: CallContext, internalContext: InternalCallContext) {
     this._call = call;
@@ -128,6 +132,13 @@ export class CallSubscriber {
       this._callIdRef,
       this._context,
       this._call.feature(Features.TogetherMode)
+    );
+
+    /* @conditional-compile-remove(media-access) */
+    this._mediaAccessSubscriber = new MediaAccessSubscriber(
+      this._callIdRef,
+      this._context,
+      this._call.feature(Features.MediaAccess)
     );
 
     this.subscribe();
@@ -238,6 +249,8 @@ export class CallSubscriber {
     this._breakoutRoomsSubscriber.unsubscribe();
     /* @conditional-compile-remove(together-mode) */
     this._togetherModeSubscriber.unsubscribe();
+    /* @conditional-compile-remove(media-access) */
+    this._mediaAccessSubscriber.unsubscribe();
   };
 
   // This is a helper function to safely call subscriber functions. This is needed in order to prevent events

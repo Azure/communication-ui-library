@@ -93,7 +93,8 @@ export function convertSdkParticipantToDeclarativeParticipant(
     isSpeaking: participant.isSpeaking,
     raisedHand: undefined,
     role: participant.role,
-    spotlight: undefined
+    spotlight: undefined,
+    /* @conditional-compile-remove(media-access) */ mediaAccess: undefined
   };
 }
 

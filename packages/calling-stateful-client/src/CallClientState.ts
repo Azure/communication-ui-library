@@ -457,6 +457,22 @@ export interface VideoStreamRendererViewState {
   target: HTMLElement;
 }
 
+/* @conditional-compile-remove(media-access) */
+/**
+ * Media access state
+ * @alpha
+ */
+export interface MediaAccessState {
+  /**
+   * is audio permitted
+   */
+  isAudioPermitted: boolean;
+  /**
+   * is video permitted
+   */
+  isVideoPermitted: boolean;
+}
+
 /**
  * State only version of {@link @azure/communication-calling#RemoteParticipant}. {@link StatefulCallClient} will
  * automatically retrieve RemoteParticipants and add their state to the state exposed by {@link StatefulCallClient}.
@@ -523,6 +539,11 @@ export interface RemoteParticipantState {
    * The diagnostic status of RemoteParticipant{@link @azure/communication-calling#RemoteDiagnostics}.
    */
   diagnostics?: Record<string, RemoteDiagnosticState>;
+  /* @conditional-compile-remove(meida-access) */
+  /**
+   * Proxy of {@link @azure/communication-calling#Call.MediaAccessCallFeature.MediaAccess}.
+   */
+  mediaAccess?: MediaAccessState;
 }
 
 /**

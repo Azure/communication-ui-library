@@ -52,3 +52,5 @@ export type { LocalRecordingCallFeatureState } from './CallClientState';
 export type { ConferencePhoneInfo } from './CallClientState';
 /* @conditional-compile-remove(breakout-rooms) */
 export type { BreakoutRoomsState } from './CallClientState';
+/* @conditional-compile-remove(media-access) */
+export type { MediaAccessState } from './CallClientState';
