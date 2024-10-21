@@ -66,7 +66,7 @@ export interface _AttachmentDownloadCardsProps {
  */
 export const _AttachmentDownloadCards = (props: _AttachmentDownloadCardsProps): JSX.Element => {
   const { attachments, message } = props;
-  const localeStrings = useLocaleStringsTrampoline();
+  const localeStrings = useLocale().strings.messageThread;
   const attachmentCardGroupStyles = useAttachmentCardGroupStyles();
 
   const getMenuActions = useCallback(
@@ -123,13 +123,6 @@ export const _AttachmentDownloadCards = (props: _AttachmentDownloadCardsProps): 
       </_AttachmentCardGroup>
     </div>
   );
-};
-
-/**
- * @private
- */
-const useLocaleStringsTrampoline = (): _AttachmentDownloadCardsStrings => {
-  return useLocale().strings.messageThread;
 };
 
 /**
