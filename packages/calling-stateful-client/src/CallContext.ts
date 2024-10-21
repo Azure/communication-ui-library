@@ -6,6 +6,7 @@ import {
   AudioDeviceInfo,
   DeviceAccess,
   DominantSpeakersInfo,
+  /* @conditional-compile-remove(media-access) */ MediaAccess,
   ParticipantRole,
   ScalingMode,
   VideoDeviceInfo
@@ -1313,6 +1314,26 @@ export class CallContext {
 
     this.modifyState((draft: CallClientState) => {
       delete draft.latestNotifications[notificationTarget];
+    });
+  }
+
+  /* @conditional-compile-remove(media-access) */
+  public setMediaAccesses(callId: string, mediaAccesses: MediaAccess[]): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (!call) {
+        return;
+      }
+
+      mediaAccesses.forEach((participantMediaAccess) => {
+        const participant = call.remoteParticipants[toFlatCommunicationIdentifier(participantMediaAccess.participant)];
+        if (participant) {
+          participant.mediaAccess = {
+            isAudioPermitted: participantMediaAccess.isAudioPermitted,
+            isVideoPermitted: participantMediaAccess.isVideoPermitted
+          };
+        }
+      });
     });
   }
 }
