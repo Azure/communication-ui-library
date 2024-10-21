@@ -5,13 +5,17 @@ import { IdentityType } from './utils';
 
 export const loadConfigFromUrlQuery = (): IdentityType => {
   const urlSearchParams = new URLSearchParams(window.location.search);
-  const params = Object.fromEntries(urlSearchParams.entries());
+  const { displayName, token, endpointUrl, threadId, userId } = Object.fromEntries(urlSearchParams.entries());
+
+  if (!displayName || !token || !endpointUrl || !threadId || !userId) {
+    throw new Error(`Missing config values in URL query: ${window.location.search}`);
+  }
 
   return {
-    displayName: params.displayName,
-    token: params.token,
-    endpointUrl: params.endpointUrl,
-    threadId: params.threadId,
-    userId: params.userId
+    displayName,
+    token,
+    endpointUrl,
+    threadId,
+    userId
   };
 };

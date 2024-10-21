@@ -27,7 +27,7 @@ export class Model {
   }
 
   public checkedGetThread(userId: CommunicationIdentifier, threadId: string): Thread {
-    const thread = this.threadMap[threadId].thread;
+    const thread = this.threadMap[threadId]?.thread;
     if (!thread) {
       throw new Error(`No thread with id ${threadId}`);
     }
@@ -39,14 +39,22 @@ export class Model {
 
   public checkedGetThreadEventEmitter(userId: CommunicationIdentifier, threadId: string): ThreadEventEmitter {
     this.checkedGetThread(userId, threadId);
-    return this.threadMap[threadId].eventEmitter;
+    const eventEmitter = this.threadMap[threadId]?.eventEmitter;
+    if (!eventEmitter) {
+      throw new Error(`No event emitter for thread ${threadId}`);
+    }
+    return eventEmitter;
   }
 
   public modifyThreadForUser(userId: CommunicationIdentifier, threadId: string, action: (t: Thread) => void): void {
     const thread = this.checkedGetThread(userId, threadId);
     const newThread = produce(thread, (draft: Thread) => action(draft));
+    const threadEntry = this.threadMap[threadId];
+    if (!threadEntry) {
+      throw new Error(`No thread with id ${threadId}`);
+    }
     if (thread !== newThread) {
-      this.threadMap[threadId].thread = produce(newThread, (draft) => {
+      threadEntry.thread = produce(newThread, (draft) => {
         draft.version++;
       });
     }

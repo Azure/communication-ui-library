@@ -47,7 +47,7 @@ export const VideoTileExample: () => JSX.Element = () => {
         <VideoTile
           renderElement={
             // NOTE: Replace with your own video provider. (An html element with video stream)
-            <StreamMedia styles={videoStyles} videoStreamElement={videoStreamElement} />
+            videoStreamElement ? <StreamMedia styles={videoStyles} videoStreamElement={videoStreamElement} /> : <></>
           }
           displayName={'Jack Reacher'}
           isMirrored={true}

@@ -10,11 +10,15 @@ import {
 } from '../../../../../controlsUtils';
 
 export const DevicesButtonWithKnobs = (deviceButtonProps: DevicesButtonProps): JSX.Element => {
-  const [selectedCamera, setSelectedCamera] = useState<{ id: string; name: string }>(defaultControlsCameras[0]);
-  const [selectedMicrophone, setSelectedMicrophone] = useState<{ id: string; name: string }>(
+  const [selectedCamera, setSelectedCamera] = useState<{ id: string; name: string } | undefined>(
+    defaultControlsCameras[0]
+  );
+  const [selectedMicrophone, setSelectedMicrophone] = useState<{ id: string; name: string } | undefined>(
     defaultControlsMicrophones[0]
   );
-  const [selectedSpeaker, setSelectedSpeaker] = useState<{ id: string; name: string }>(defaultControlsSpeakers[0]);
+  const [selectedSpeaker, setSelectedSpeaker] = useState<{ id: string; name: string } | undefined>(
+    defaultControlsSpeakers[0]
+  );
 
   const exampleOptionProps: DevicesButtonProps = {
     selectedCamera: selectedCamera,
