@@ -39,10 +39,11 @@ export type {
   CommonCallingHandlers
 } from '../../calling-component-bindings/src';
 
-export type { VideoBackgroundEffectsDependency, CallingHandlersOptions } from '../../calling-component-bindings/src';
-
-/* @conditional-compile-remove(DNS) */
-export type { DeepNoiseSuppressionEffectDependency } from '../../calling-component-bindings/src';
+export type {
+  DeepNoiseSuppressionEffectDependency,
+  VideoBackgroundEffectsDependency,
+  CallingHandlersOptions
+} from '../../calling-component-bindings/src';
 
 export type { CaptionsOptions } from '../../calling-component-bindings/src';
 
@@ -71,14 +72,12 @@ export {
   createDefaultCallingHandlers
 } from '../../calling-component-bindings/src';
 
-/* @conditional-compile-remove(teams-identity-support) */
 export {
   useTeamsCallAgent,
   useTeamsCall,
   createDefaultTeamsCallingHandlers
 } from '../../calling-component-bindings/src';
 
-/* @conditional-compile-remove(teams-identity-support) */
 export type { TeamsCallingHandlers } from '../../calling-component-bindings/src';
 
 export type {
