@@ -9,6 +9,8 @@ import {
   LocalVideoStream,
   ParticipantRole
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(remote-ufd) */
+import { ServerDiagnosticType } from '@azure/communication-calling';
 import {
   CommunicationIdentifier,
   CommunicationUserIdentifier,
@@ -146,8 +148,8 @@ export const _convertParticipantState = (participant: RemoteParticipantState): P
   /* @conditional-compile-remove(remote-ufd) */
   if (
     participant.diagnostics &&
-    participant.diagnostics['ServerConnection'] &&
-    participant.diagnostics['ServerConnection']?.value === false
+    participant.diagnostics['ServerConnection' as ServerDiagnosticType] &&
+    participant.diagnostics['ServerConnection' as ServerDiagnosticType]?.value === false
   ) {
     return 'Reconnecting';
   }
