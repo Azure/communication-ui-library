@@ -6,11 +6,12 @@ import {
   AudioDeviceInfo,
   DeviceAccess,
   DominantSpeakersInfo,
-  /* @conditional-compile-remove(media-access) */ MediaAccess,
   ParticipantRole,
   ScalingMode,
   VideoDeviceInfo
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(media-access) */
+import { MediaAccess } from '@azure/communication-calling';
 import { RaisedHand } from '@azure/communication-calling';
 /* @conditional-compile-remove(breakout-rooms) */
 import { BreakoutRoom, BreakoutRoomsSettings } from '@azure/communication-calling';

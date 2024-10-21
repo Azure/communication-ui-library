@@ -1,8 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+/* @conditional-compile-remove(media-access) */
 import { MediaAccessCallFeature, MediaAccessChangedEvent } from '@azure/communication-calling';
+/* @conditional-compile-remove(media-access) */
 import { CallContext } from './CallContext';
+/* @conditional-compile-remove(media-access) */
 import { CallIdRef } from './CallIdRef';
 
 /* @conditional-compile-remove(media-access) */

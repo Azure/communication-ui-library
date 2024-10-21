@@ -539,7 +539,7 @@ export interface RemoteParticipantState {
    * The diagnostic status of RemoteParticipant{@link @azure/communication-calling#RemoteDiagnostics}.
    */
   diagnostics?: Record<string, RemoteDiagnosticState>;
-  /* @conditional-compile-remove(meida-access) */
+  /* @conditional-compile-remove(media-access) */
   /**
    * Proxy of {@link @azure/communication-calling#Call.MediaAccessCallFeature.MediaAccess}.
    */
