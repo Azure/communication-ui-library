@@ -130,6 +130,7 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
   } = props;
   const editor = useRef<IEditor | null>(null);
   const editorDiv = useRef<HTMLDivElement>(null);
+  const toolbarRef = useRef<HTMLDivElement>(null);
   const theme = useTheme();
   const [contextMenuProps, setContextMenuProps] = useState<IContextualMenuProps | null>(null);
   const previousThemeDirection = useRef(themeDirection(theme));
@@ -428,7 +429,9 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
       });
     }
 
-    if (autoFocus === 'sendBoxTextField') {
+    if (showRichTextEditorFormatting) {
+      toolbarRef.current?.focus();
+    } else if (autoFocus === 'sendBoxTextField') {
       editor.current?.focus();
     }
 
@@ -458,9 +461,19 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     }
   }, [theme]);
 
+  useEffect(() => {
+    if (showRichTextEditorFormatting) {
+      toolbarRef.current?.focus();
+    } else {
+      editor.current?.focus();
+    }
+  }, [showRichTextEditorFormatting]);
+
   return (
     <div data-testid={'rich-text-editor-wrapper'}>
-      {showRichTextEditorFormatting && toolbar}
+      <div ref={toolbarRef} tabIndex={-1}>
+        {showRichTextEditorFormatting && toolbar}
+      </div>
       <div className={richTextEditorWrapperStyle(theme)}>
         {/* div that is used by Rooster JS as a parent of the editor */}
         <div
