@@ -824,7 +824,11 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
       transferCall?.hangUp();
     }
     await this.handlers.onHangUp(forEveryone);
-    this.unsubscribeCallEvents();
+    try {
+      this.unsubscribeCallEvents();
+    } catch (e) {
+      console.error('Error unsubscribing call events', e);
+    }
     this.handlers = createHandlers(this.callClient, this.callAgent, this.deviceManager, this.call, {
       onResolveVideoBackgroundEffectsDependency: this.onResolveVideoBackgroundEffectsDependency,
       /* @conditional-compile-remove(DNS) */

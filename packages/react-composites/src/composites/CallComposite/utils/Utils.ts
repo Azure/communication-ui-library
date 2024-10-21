@@ -129,7 +129,8 @@ const getCallEndReason = (call: CallState): CallEndReasons => {
     return CallEndReasons.LEFT_CALL;
   }
 
-  throw new Error('No matching call end reason');
+  console.error('No matching call end reason');
+  return CallEndReasons.LEFT_CALL;
 };
 
 /**
