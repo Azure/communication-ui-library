@@ -31,10 +31,9 @@ import {
   _isInCall,
   _isPreviewOn,
   _dominantSpeakersWithFlatId,
+  DeepNoiseSuppressionEffectDependency,
   VideoBackgroundEffectsDependency
 } from '@internal/calling-component-bindings';
-/* @conditional-compile-remove(DNS) */
-import { DeepNoiseSuppressionEffectDependency } from '@internal/calling-component-bindings';
 import { AdapterErrors } from '../../common/adapters';
 /* @conditional-compile-remove(breakout-rooms) */
 import { AdapterNotifications } from '../../common/adapters';
@@ -283,18 +282,15 @@ export const getVideoEffectsDependency = (
   state: CallAdapterState
 ): (() => Promise<VideoBackgroundEffectsDependency>) | undefined => state.onResolveVideoEffectDependency;
 
-/* @conditional-compile-remove(DNS) */
 /** @private */
 export const getDeepNoiseSuppresionEffectsDependency = (
   state: CallAdapterState
 ): (() => Promise<DeepNoiseSuppressionEffectDependency>) | undefined => state.onResolveDeepNoiseSuppressionDependency;
 
-/* @conditional-compile-remove(DNS) */
 /** @private */
 export const getDeepNoiseSuppresionIsOnByDefault = (state: CallAdapterState): boolean | undefined =>
   state.deepNoiseSuppressionOnByDefault;
 
-/* @conditional-compile-remove(DNS) */
 /** @private */
 export const getHideDeepNoiseSupressionButton = (state: CallAdapterState): boolean | undefined =>
   state.hideDeepNoiseSuppressionButton;
