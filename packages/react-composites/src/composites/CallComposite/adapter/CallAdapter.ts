@@ -25,12 +25,7 @@ import type {
   PropertyChangedEvent
 } from '@azure/communication-calling';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
-import type {
-  CommunicationIdentifierKind,
-  MicrosoftTeamsAppIdentifier,
-  UnknownIdentifier
-} from '@azure/communication-common';
-import type { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
+import type { CommunicationIdentifierKind } from '@azure/communication-common';
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { DtmfTone } from '@azure/communication-calling';
 import { CommunicationIdentifier } from '@azure/communication-common';
