@@ -155,7 +155,6 @@ export const _RemoteVideoTile = React.memo(
       onStartSpotlight,
       onStopSpotlight,
       maxParticipantsToSpotlight,
-      /* @conditional-compile-remove(soft-mute) */ onMuteParticipant,
       /* @conditional-compile-remove(media-access) */ onForbidParticipantAudio,
       /* @conditional-compile-remove(media-access) */ onPermitParticipantAudio,
       /* @conditional-compile-remove(media-access) */ onForbidParticipantVideo,
