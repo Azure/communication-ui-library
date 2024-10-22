@@ -173,11 +173,10 @@ const createCompositeHandlers = memoizeOne(
         return await adapter.startVideoBackgroundEffect(replacementConfig);
       },
 
-      /* @conditional-compile-remove(DNS) */
       onStartNoiseSuppressionEffect: async () => {
         return await adapter.startNoiseSuppressionEffect();
       },
-      /* @conditional-compile-remove(DNS) */
+
       onStopNoiseSuppressionEffect: async () => {
         return await adapter.stopNoiseSuppressionEffect();
       },
@@ -224,11 +223,9 @@ const createCompositeHandlers = memoizeOne(
             await adapter.stopSpotlight(userIds);
           }
         : undefined,
-      /* @conditional-compile-remove(soft-mute) */
       onMuteParticipant: async (userId: string): Promise<void> => {
         await adapter.muteParticipant(userId);
       },
-      /* @conditional-compile-remove(soft-mute) */
       onMuteAllRemoteParticipants: async (): Promise<void> => {
         await adapter.muteAllRemoteParticipants();
       },

@@ -1094,7 +1094,7 @@ export type CallErrorTarget =
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.admit'
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.rejectParticipant'
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.admitAll'
-  | /* @conditional-compile-remove(soft-mute) */ 'Call.mutedByOthers'
+  | 'Call.mutedByOthers'
   | 'Call.muteAllRemoteParticipants'
   | 'Call.setConstraints';
 

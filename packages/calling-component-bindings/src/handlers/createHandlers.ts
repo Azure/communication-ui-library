@@ -20,7 +20,6 @@ import { createLocalVideoStream } from '../utils/callUtils';
 import { createDefaultCommonCallingHandlers, CommonCallingHandlers } from './createCommonHandlers';
 
 import { VideoBackgroundEffectsDependency } from './createCommonHandlers';
-/* @conditional-compile-remove(DNS) */
 import { DeepNoiseSuppressionEffectDependency } from './createCommonHandlers';
 
 /**
@@ -41,7 +40,6 @@ export interface CallingHandlers extends CommonCallingHandlers {
  */
 export type CallingHandlersOptions = {
   onResolveVideoBackgroundEffectsDependency?: () => Promise<VideoBackgroundEffectsDependency>;
-  /* @conditional-compile-remove(DNS) */
   /**
    * Dependency resolver for deep noise suppression effect.
    * @beta

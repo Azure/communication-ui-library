@@ -27,7 +27,6 @@ export const useVideoTileContextualMenuProps = (props: {
     stopSpotlightVideoTileMenuLabel?: string;
     stopSpotlightOnSelfVideoTileMenuLabel?: string;
     spotlightLimitReachedMenuTitle?: string;
-    /* @conditional-compile-remove(soft-mute) */
     muteParticipantMenuItemLabel?: string;
     forbidParticipantAudio?: string;
     permitParticipantAudio?: string;
@@ -51,7 +50,6 @@ export const useVideoTileContextualMenuProps = (props: {
   onStopSpotlight?: (userIds: string[]) => void;
   maxParticipantsToSpotlight?: number;
   myUserId?: string;
-  /* @conditional-compile-remove(soft-mute) */
   onMuteParticipant?: (userId: string) => void;
   onForbidParticipantAudio?: (userIds: string[]) => void;
   onPermitParticipantAudio?: (userIds: string[]) => void;
@@ -74,7 +72,7 @@ export const useVideoTileContextualMenuProps = (props: {
     onStopSpotlight,
     maxParticipantsToSpotlight,
     myUserId,
-    /* @conditional-compile-remove(soft-mute) */ onMuteParticipant,
+    onMuteParticipant,
     onForbidParticipantAudio,
     onPermitParticipantAudio,
     onForbidParticipantVideo,
@@ -86,7 +84,6 @@ export const useVideoTileContextualMenuProps = (props: {
 
   const contextualMenuProps: IContextualMenuProps | undefined = useMemo(() => {
     const items: IContextualMenuItem[] = [];
-    /* @conditional-compile-remove(soft-mute) */
     if (onMuteParticipant && strings?.muteParticipantMenuItemLabel) {
       items.push({
         key: 'mute',

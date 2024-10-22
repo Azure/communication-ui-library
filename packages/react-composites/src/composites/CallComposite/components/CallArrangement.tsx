@@ -88,9 +88,7 @@ import {
 } from '../utils/spotlightUtils';
 
 import { getCaptionsKind, getIsTeamsCall } from '../selectors/baseSelectors';
-/* @conditional-compile-remove(soft-mute) */
 import { useHandlers } from '../hooks/useHandlers';
-/* @conditional-compile-remove(soft-mute) */
 import { MoreDrawer } from '../../common/Drawer/MoreDrawer';
 /* @conditional-compile-remove(breakout-rooms) */
 import { useCompositeStringsForNotificationStackStrings } from '../hooks/useCompositeStringsForNotificationStack';
@@ -221,7 +219,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   const locale = useLocale();
   const role = useSelector(getRole);
   const videoGalleryProps = usePropsFor(VideoGallery);
-  /* @conditional-compile-remove(soft-mute) */
   const muteAllHandlers = useHandlers(MoreDrawer);
   const { setPromptProps, setIsPromptOpen, hideSpotlightButtons } = props;
   const {
@@ -229,7 +226,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     onStopLocalSpotlight,
     onStartRemoteSpotlight,
     onStopRemoteSpotlight,
-    /* @conditional-compile-remove(soft-mute) */
     onMuteParticipant,
     spotlightedParticipants,
     maxParticipantsToSpotlight,
@@ -320,7 +316,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   );
 
   const onMuteParticipantPeoplePaneProps = useMemo(() => {
-    /* @conditional-compile-remove(soft-mute) */
     return {
       onMuteParticipant: capabilities?.muteOthers?.isPresent || role === 'Unknown' ? onMuteParticipant : undefined,
       onMuteAllRemoteParticipants:

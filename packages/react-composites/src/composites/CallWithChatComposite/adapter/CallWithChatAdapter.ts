@@ -444,21 +444,18 @@ export interface CallWithChatAdapterManagement {
    * Funtion to stop captions
    */
   stopCaptions(options?: StopCaptionsAdapterOptions): Promise<void>;
-
   /**
    * Start the video background effect.
    *
    * @public
    */
   startVideoBackgroundEffect(videoBackgroundEffect: VideoBackgroundEffect): Promise<void>;
-
   /**
    * Stop the video background effect.
    *
    * @public
    */
   stopVideoBackgroundEffects(): Promise<void>;
-
   /**
    * Override the background picker images for background replacement effect.
    *
@@ -467,19 +464,16 @@ export interface CallWithChatAdapterManagement {
    * @public
    */
   updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void;
-
   /**
    * Update the selected video background effect
    *
    * @public
    */
   updateSelectedVideoBackgroundEffect(selectedVideoBackground: VideoBackgroundEffect): void;
-  /* @conditional-compile-remove(DNS) */
   /**
    * Start the noise suppression effect.
    */
   startNoiseSuppressionEffect(): Promise<void>;
-  /* @conditional-compile-remove(DNS) */
   /**
    * Start the noise suppression effect.
    */
@@ -502,12 +496,10 @@ export interface CallWithChatAdapterManagement {
    * Stop all spotlights
    */
   stopAllSpotlight(): Promise<void>;
-  /* @conditional-compile-remove(soft-mute) */
   /**
    * Mute a participant
    */
   muteParticipant(userId: string): Promise<void>;
-  /* @conditional-compile-remove(soft-mute) */
   /**
    * Mute a participant
    */
