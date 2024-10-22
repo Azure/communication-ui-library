@@ -177,6 +177,8 @@ export const participantListSelector: ParticipantListSelector = createSelector(
           spotlightCallFeature?.spotlightedParticipants
         )
       : [];
+
+    console.log('hi there capabilties', capabilities);
     participants.push({
       userId: userId,
       displayName: displayName,
@@ -190,8 +192,8 @@ export const participantListSelector: ParticipantListSelector = createSelector(
       spotlight: memoizedSpotlight(spotlightCallFeature?.spotlightedParticipants, userId),
       /* @conditional-compile-remove(media-access) */
       mediaAccess: {
-        isAudioPermitted: !!capabilities?.unmuteMic.isPresent,
-        isVideoPermitted: !!capabilities?.turnVideoOn.isPresent
+        isAudioPermitted: capabilities ? capabilities.unmuteMic.isPresent : true,
+        isVideoPermitted: capabilities ? capabilities.turnVideoOn.isPresent : true
       }
     });
     /* @conditional-compile-remove(total-participant-count) */
