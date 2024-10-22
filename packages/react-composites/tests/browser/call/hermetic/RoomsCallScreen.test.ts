@@ -110,7 +110,7 @@ test.describe('Rooms Participant ParticipantItem tests for different roles', asy
     await page.goto(buildUrlWithMockAdapter(serverUrl, { ...initialState }));
     await expectNoRemoveParticipantMenuItem(page);
   });
-  // @conditional-compile-remove(soft-mute)
+
   test('No Mute button for remote participant items for Attendee', async ({ page, serverUrl }) => {
     const paul = defaultMockRemoteParticipant('Paul Bridges');
     const participants = [paul];
@@ -118,7 +118,7 @@ test.describe('Rooms Participant ParticipantItem tests for different roles', asy
     await page.goto(buildUrlWithMockAdapter(serverUrl, { ...initialState }));
     await expectNoMuteParticipantMenuItem(page);
   });
-  // @conditional-compile-remove(soft-mute)
+
   test('No Mute All button for Attendee', async ({ page, serverUrl }) => {
     const paul = defaultMockRemoteParticipant('Paul Bridges');
     const participants = [paul];
@@ -126,7 +126,7 @@ test.describe('Rooms Participant ParticipantItem tests for different roles', asy
     await page.goto(buildUrlWithMockAdapter(serverUrl, { ...initialState }));
     await expectNoMuteAllMenuItem(page);
   });
-  // @conditional-compile-remove(soft-mute)
+
   test('No Mute button for remote participant items for Consumer', async ({ page, serverUrl }) => {
     const paul = defaultMockRemoteParticipant('Paul Bridges');
     const participants = [paul];
@@ -134,7 +134,7 @@ test.describe('Rooms Participant ParticipantItem tests for different roles', asy
     await page.goto(buildUrlWithMockAdapter(serverUrl, { ...initialState }));
     await expectNoMuteAllMenuItem(page);
   });
-  // @conditional-compile-remove(soft-mute)
+
   test('No Mute All for Consumer', async ({ page, serverUrl }) => {
     const paul = defaultMockRemoteParticipant('Paul Bridges');
     const participants = [paul];
@@ -142,7 +142,7 @@ test.describe('Rooms Participant ParticipantItem tests for different roles', asy
     await page.goto(buildUrlWithMockAdapter(serverUrl, { ...initialState }));
     await expectNoMuteParticipantMenuItem(page);
   });
-  // @conditional-compile-remove(soft-mute)
+
   test('Mute button present for remote participant items for Presenter', async ({ page, serverUrl }) => {
     const paul = defaultMockRemoteParticipant('Paul Bridges');
     const participants = [paul];
@@ -150,7 +150,7 @@ test.describe('Rooms Participant ParticipantItem tests for different roles', asy
     await page.goto(buildUrlWithMockAdapter(serverUrl, { ...initialState }));
     await expectMuteParticipantMenuItem(page);
   });
-  // @conditional-compile-remove(soft-mute)
+
   test('Mute All button present for remote participant items for Presenter', async ({ page, serverUrl }) => {
     const paul = defaultMockRemoteParticipant('Paul Bridges');
     const participants = [paul];
@@ -158,7 +158,7 @@ test.describe('Rooms Participant ParticipantItem tests for different roles', asy
     await page.goto(buildUrlWithMockAdapter(serverUrl, { ...initialState }));
     await expectMuteAllMenuItem(page);
   });
-  // @conditional-compile-remove(soft-mute)
+
   test('Mute button participant item disabled for muted remote participants for Presenter', async ({
     page,
     serverUrl
@@ -176,7 +176,7 @@ test.describe('Rooms Participant ParticipantItem tests for different roles', asy
       'rooms-call-disabled-mute-remote-participant-item-presenter.png'
     );
   });
-  // @conditional-compile-remove(soft-mute)
+
   test('Mute All button disabled for muted remote participants for Presenter', async ({ page, serverUrl }) => {
     const displayNames = ['Tony Hawk', 'Marie Curie', 'Gal Gadot'];
     const participants = displayNames.map((name) => defaultMockRemoteParticipant(name));
@@ -262,7 +262,7 @@ const expectNoRemoveParticipantMenuItem = async (page: Page): Promise<void> => {
     expect(removeParticipantButton.length).toBe(0);
   }
 };
-// @conditional-compile-remove(soft-mute)
+
 const expectNoMuteParticipantMenuItem = async (page: Page): Promise<void> => {
   await waitForSelector(page, dataUiId(IDS.videoGallery));
 
@@ -295,7 +295,7 @@ const expectNoMuteParticipantMenuItem = async (page: Page): Promise<void> => {
     expect(muteParticipantButton.length).toBe(0);
   }
 };
-// @conditional-compile-remove(soft-mute)
+
 const expectNoMuteAllMenuItem = async (page: Page): Promise<void> => {
   await waitForSelector(page, dataUiId(IDS.videoGallery));
 
@@ -323,7 +323,7 @@ const expectNoMuteAllMenuItem = async (page: Page): Promise<void> => {
     }
   }
 };
-// @conditional-compile-remove(soft-mute)
+
 const expectMuteAllMenuItem = async (page: Page): Promise<void> => {
   await waitForSelector(page, dataUiId(IDS.videoGallery));
 
@@ -349,7 +349,7 @@ const expectMuteAllMenuItem = async (page: Page): Promise<void> => {
     expect(muteAllButton.length).toBe(1);
   }
 };
-// @conditional-compile-remove(soft-mute)
+
 const expectMuteParticipantMenuItem = async (page: Page): Promise<void> => {
   await waitForSelector(page, dataUiId(IDS.videoGallery));
 
@@ -383,7 +383,7 @@ const expectMuteParticipantMenuItem = async (page: Page): Promise<void> => {
     expect(muteParticipantButton.length).toBe(1);
   }
 };
-// @conditional-compile-remove(soft-mute)
+
 const openMuteParticipantMenuItem = async (page: Page): Promise<void> => {
   await waitForSelector(page, dataUiId(IDS.videoGallery));
 
@@ -413,7 +413,7 @@ const openMuteParticipantMenuItem = async (page: Page): Promise<void> => {
     await waitForSelector(page, '[data-icon-name="ContextualMenuMicMutedIcon"]');
   }
 };
-// @conditional-compile-remove(soft-mute)
+
 const openMuteAllMenuItem = async (page: Page): Promise<void> => {
   await waitForSelector(page, dataUiId(IDS.videoGallery));
 

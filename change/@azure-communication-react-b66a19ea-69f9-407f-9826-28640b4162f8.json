@@ -1,9 +1,9 @@
 {
   "type": "patch",
   "area": "fix",
-  "workstream": "A11y",
-  "comment": "Update aria-labels and contrast colors",
+  "workstream": "",
+  "comment": "Resolve console errors for aria-hidden",
   "packageName": "@azure/communication-react",
-  "email": "edwardlee@microsoft.com",
+  "email": "jiangnanhello@live.com",
   "dependentChangeType": "patch"
 }

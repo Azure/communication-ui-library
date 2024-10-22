@@ -18,8 +18,7 @@
     "lint:fix": "echo skip",
     "lint:quiet": "echo skip"
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "eslint": "^8.57.0"
   }
