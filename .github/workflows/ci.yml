@@ -791,7 +791,7 @@ jobs:
           issue-number: ${{ github.event.pull_request.number }}
           comment-author: 'github-actions[bot]'
           body-includes: '## ${{ matrix.app }} bundle size is'
-      - name: Delete comment
+      - name: Delete comment and post a new one
         uses: actions/github-script@v4
         with:
           script: |
@@ -801,11 +801,6 @@ jobs:
               repo: context.repo.repo,
               comment_id: comment_id
             });
-      - name: Post comment
-        uses: actions/github-script@v3
-        with:
-          github-token: ${{secrets.GITHUB_TOKEN}}
-          script: |
             github.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
