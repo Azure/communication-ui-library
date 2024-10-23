@@ -429,12 +429,6 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
       });
     }
 
-    if (showRichTextEditorFormatting) {
-      toolbarRef.current?.focus();
-    } else if (autoFocus === 'sendBoxTextField') {
-      editor.current?.focus();
-    }
-
     return () => {
       if (editor.current) {
         editor.current.dispose();

@@ -180,12 +180,16 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
       })}
     >
       {/* This layout is used for the compact view when formatting options are not shown */}
-      <Stack
-        grow
-        horizontal={useHorizontalLayout}
-        horizontalAlign={useHorizontalLayout ? 'end' : 'space-between'}
+      {/* We don't use a stack here as there is a bug in Fluent Stack that causes remount of children when using wrap */}
+      <div
         className={inputBoxContentStackStyle}
-        wrap={useHorizontalLayout}
+        style={{
+          display: 'flex',
+          flexGrow: 1,
+          flexDirection: useHorizontalLayout ? 'row' : 'column',
+          justifyContent: useHorizontalLayout ? 'flex-end' : 'space-between',
+          flexWrap: useHorizontalLayout ? 'wrap' : 'nowrap'
+        }}
       >
         {/* Fixes the issue when flex box can grow to be bigger than parent */}
         <Stack grow className={inputBoxRichTextStackStyle}>
@@ -211,7 +215,7 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
           {/* @conditional-compile-remove(file-sharing-acs) */ onRenderAttachmentUploads && onRenderAttachmentUploads()}
         </Stack>
         {actionButtons}
-      </Stack>
+      </div>
     </div>
   );
 };
