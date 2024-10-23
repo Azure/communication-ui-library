@@ -119,7 +119,7 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     placeholderText,
     strings,
     showRichTextEditorFormatting,
-    // autoFocus, Do we still need this prop?
+    autoFocus,
     onKeyDown,
     onContentModelUpdate,
     contentModel,
@@ -149,6 +149,16 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     // This effect should only run once when the component is unmounted, so we don't need to add any dependencies
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (editor.current) {
+      if (showRichTextEditorFormatting) {
+        toolbarRef.current?.focus();
+      } else {
+        editor.current?.focus();
+      }
+    }
+  }, [showRichTextEditorFormatting]);
 
   useImperativeHandle(ref, () => {
     return {
@@ -429,6 +439,10 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
       });
     }
 
+    if (autoFocus === 'sendBoxTextField' && editor.current) {
+      editor.current.focus();
+    }
+
     return () => {
       if (editor.current) {
         editor.current.dispose();
@@ -454,14 +468,6 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
       previousThemeDirection.current = themeDirectionValue;
     }
   }, [theme]);
-
-  useEffect(() => {
-    if (showRichTextEditorFormatting) {
-      toolbarRef.current?.focus();
-    } else {
-      editor.current?.focus();
-    }
-  }, [showRichTextEditorFormatting]);
 
   return (
     <div data-testid={'rich-text-editor-wrapper'}>
