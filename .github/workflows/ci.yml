@@ -791,7 +791,7 @@ jobs:
           issue-number: ${{ github.event.pull_request.number }}
           comment-author: 'github-actions[bot]'
           body-includes: '## ${{ matrix.app }} bundle size is'
-      - name: Delete comment and post a new one
+      - name: Delete comment
         uses: actions/github-script@v4
         with:
           script: |
