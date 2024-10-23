@@ -2393,6 +2393,8 @@ export interface ComponentStrings {
     raiseHandButton: RaiseHandButtonStrings;
     reactionButton: ReactionButtonStrings;
     richTextSendBox: RichTextSendBoxStrings;
+    // (undocumented)
+    rttModal: RTTModalStrings;
     screenShareButton: ScreenShareButtonStrings;
     sendBox: SendBoxStrings;
     typingIndicator: TypingIndicatorStrings;
@@ -4422,6 +4424,34 @@ export interface RichTextStrings {
     richTextNumberListTooltip: string;
     richTextToolbarMoreButtonAriaLabel: string;
     richTextUnderlineTooltip: string;
+}
+
+// @beta
+export interface RTTModalProps {
+    // (undocumented)
+    onDismissModal?: () => void;
+    // (undocumented)
+    onStartRTT?: () => Promise<void>;
+    // (undocumented)
+    showModal?: boolean;
+    // (undocumented)
+    strings?: RTTModalStrings;
+}
+
+// @beta
+export interface RTTModalStrings {
+    // (undocumented)
+    rttCancelButtonLabel?: string;
+    // (undocumented)
+    rttCloseModalButtonAriaLabel?: string;
+    // (undocumented)
+    rttConfirmButtonLabel?: string;
+    // (undocumented)
+    rttModalAriaLabel?: string;
+    // (undocumented)
+    rttModalText?: string;
+    // (undocumented)
+    rttModalTitle?: string;
 }
 
 // @public

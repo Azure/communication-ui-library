@@ -1,11 +1,16 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-
+/* @conditional-compile-remove(rtt) */
 import React, { useCallback } from 'react';
+/* @conditional-compile-remove(rtt) */
 import { useMemo } from 'react';
+/* @conditional-compile-remove(rtt) */
 import { IModalStyles, Modal, Stack, useTheme, Text, IconButton, DefaultButton, PrimaryButton } from '@fluentui/react';
+/* @conditional-compile-remove(rtt) */
 import { _captionsOptions } from './StartCaptionsButton';
+/* @conditional-compile-remove(rtt) */
 import { _preventDismissOnEvent } from '@internal/acs-ui-common';
+/* @conditional-compile-remove(rtt) */
 import {
   buttonsContainerClassName,
   buttonStyles,
@@ -13,8 +18,10 @@ import {
   titleClassName,
   titleContainerClassName
 } from './styles/CaptionsSettingsModal.styles';
+/* @conditional-compile-remove(rtt) */
 import { useLocale } from '../localization';
 
+/* @conditional-compile-remove(rtt) */
 /**
  * @beta
  * strings for rtt modal
@@ -27,7 +34,7 @@ export interface RTTModalStrings {
   rttModalAriaLabel?: string;
   rttCloseModalButtonAriaLabel?: string;
 }
-
+/* @conditional-compile-remove(rtt) */
 /**
  * @beta
  * RTTModal Component Props.
@@ -38,7 +45,7 @@ export interface RTTModalProps {
   onDismissModal?: () => void;
   onStartRTT?: () => Promise<void>;
 }
-
+/* @conditional-compile-remove(rtt) */
 /**
  * @beta
  * a component for rtt modal
