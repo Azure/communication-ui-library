@@ -793,7 +793,6 @@ jobs:
           comment-author: 'github-actions[bot]'
           body-includes: '## ${{ matrix.app }} bundle size is'
       - name: Delete comment
-        if: !!steps.fc.outputs.comment-id
         uses: actions/github-script@v4
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
