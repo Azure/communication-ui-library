@@ -439,8 +439,8 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
       });
     }
 
-    if (autoFocus === 'sendBoxTextField' && editor.current) {
-      editor.current.focus();
+    if (autoFocus === 'sendBoxTextField') {
+      editor.current?.focus();
     }
 
     return () => {
