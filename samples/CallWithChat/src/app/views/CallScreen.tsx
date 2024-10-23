@@ -1,24 +1,22 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
-import { TeamsMeetingIdLocator } from '@azure/communication-calling';
+import { TeamsMeetingLinkLocator, TeamsMeetingIdLocator } from '@azure/communication-calling';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import {
-  toFlatCommunicationIdentifier,
-  useAzureCommunicationCallWithChatAdapter,
+  AzureCommunicationCallAdapterOptions,
   CallAndChatLocator,
+  CallWithChatAdapter,
   CallWithChatAdapterState,
   CallWithChatComposite,
-  CallWithChatAdapter,
-  CallWithChatCompositeOptions
+  CallWithChatCompositeOptions,
+  onResolveDeepNoiseSuppressionDependencyLazy,
+  onResolveVideoEffectDependencyLazy,
+  toFlatCommunicationIdentifier,
+  useAzureCommunicationCallWithChatAdapter
 } from '@azure/communication-react';
 /* @conditional-compile-remove(file-sharing-acs) */
 import { attachmentUploadOptions } from '../../../../Chat/src/app/utils/uploadHandler';
-
-import { onResolveVideoEffectDependencyLazy, AzureCommunicationCallAdapterOptions } from '@azure/communication-react';
-/* @conditional-compile-remove(DNS) */
-import { onResolveDeepNoiseSuppressionDependencyLazy } from '@azure/communication-react';
 import { Spinner } from '@fluentui/react';
 import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import { useSwitchableFluentTheme } from '../theming/SwitchableFluentThemeProvider';
@@ -92,7 +90,6 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
 
         onResolveDependency: onResolveVideoEffectDependencyLazy
       },
-      /* @conditional-compile-remove(DNS) */
       deepNoiseSuppressionOptions: {
         onResolveDependency: onResolveDeepNoiseSuppressionDependencyLazy
       },
@@ -200,7 +197,6 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     () => ({
       callControls: {
         screenShareButton: shouldHideScreenShare ? false : undefined,
-        /* @conditional-compile-remove(end-call-options) */
         endCallButton: {
           hangUpForEveryone: 'endCallOptions'
         }
