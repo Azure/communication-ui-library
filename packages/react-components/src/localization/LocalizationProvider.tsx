@@ -171,7 +171,6 @@ export interface ComponentStrings {
   /* @conditional-compile-remove(call-readiness) */
   /** Strings for BrowserPemissionDeniedIOS */
   BrowserPermissionDeniedIOS: BrowserPermissionDeniedIOSStrings;
-
   /**
    * Strings for the VerticalGallery.
    */
@@ -181,10 +180,7 @@ export interface ComponentStrings {
   ParticipantList: ParticipantListStrings;
   /** Strings for the MeetingConferencePhoneInfoModal */
   meetingConferencePhoneInfo: MeetingConferencePhoneInfoModalStrings;
-
   IncomingCallNotification: IncomingCallNotificationStrings;
-  /* @conditional-compile-remove(rtt) */
-  rtt: _RTTStrings;
   /* @conditional-compile-remove(rtt) */
   rttModal: RTTModalStrings;
 }
