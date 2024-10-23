@@ -471,7 +471,7 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
 
   return (
     <div data-testid={'rich-text-editor-wrapper'}>
-      <div ref={toolbarRef} tabIndex={-1}>
+      <div ref={toolbarRef}>
         {showRichTextEditorFormatting && toolbar}
       </div>
       <div className={richTextEditorWrapperStyle(theme)}>
