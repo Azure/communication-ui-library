@@ -802,22 +802,6 @@ jobs:
               repo: context.repo.repo,
               comment_id: comment_id
             });
-      # - name: Post new comment
-      #   uses: actions/github-script@v4
-      #   with:
-      #     github-token: ${{secrets.GITHUB_TOKEN}}
-      #     script: |
-      #       const comment_body = `- Diff size: ${ steps.bundles.outputs.diff }`;
-      #       github.issues.createComment({
-      #         owner: context.repo.owner,
-      #         repo: context.repo.repo,
-      #         issue_number: github.event.pull_request.number,
-      #         body: comment_body
-      #       });
-      # - name: Check whether the bundle size is increased significantly
-      #   if: ${{ github.event_name == 'pull_request' && !contains( github.event.pull_request.labels.*.name, 'significant bundle size change') }}
-      #   run: node common/scripts/bundleSize/bundleSizeCheck.mjs ${{ matrix.app }} ${{ steps.bundles.outputs.diff }}
-
   update_base_bundle_report:
     runs-on: ubuntu-latest
     name: Upload bundle size report to gist - ${{ matrix.app }}
