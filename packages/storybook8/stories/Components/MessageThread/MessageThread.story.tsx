@@ -201,8 +201,12 @@ const MessageThreadStory = (args: ArgsFrom<typeof storyControls>): JSX.Element =
     return {
       onInsertInlineImage: (imageAttributes: Record<string, string>, messageId: string) => {
         const inlineImagesWithProgress = messagesInlineImagesWithProgress?.[messageId] ?? [];
+        const id = imageAttributes.id;
+        if (!id) {
+          throw new Error('Image id is missing');
+        }
         const newImage: AttachmentMetadataInProgress = {
-          id: imageAttributes.id,
+          id,
           name: getImageFileNameFromAttributes(imageAttributes),
           progress: 1,
           url: imageAttributes.src,
