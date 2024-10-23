@@ -5,6 +5,7 @@ import { overviewPageImagesStackStyle } from '../../constants';
 import * as CallCompositeStories from './index.stories';
 import containerText from '!!raw-loader!./snippets/Container.snippet.tsx';
 import customDataModelExampleContainerText from '!!raw-loader!./snippets/CustomDataModelExampleContainer.snippet.tsx';
+import { Note } from '../../utils/Note';
 
 <Meta of={CallCompositeStories} />
 
@@ -116,9 +117,10 @@ mobile device.
 <CallComposite formFactor="mobile" />
 ```
 
-<MessageBar>
-  Note: Only Portrait mode is supported when the `formFactor` is set to "mobile". Landscape mode is not supported.
-</MessageBar>
+<Note>
+  {' '}
+  Note: Only Portrait mode is supported when the `formFactor` is set to "mobile". Landscape mode is not supported.{' '}
+</Note>
 
 You can try out the form factor property in the [CallComposite Basic Example](./?path=/story/composites-callcomposite--basic-example).
 

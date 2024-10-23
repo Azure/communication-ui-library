@@ -1,9 +1,10 @@
-import { Image, Stack, MessageBar } from '@fluentui/react';
+import { Image, Stack } from '@fluentui/react';
 import { Meta, Source } from '@storybook/addon-docs';
 import { SingleLineBetaBanner } from '../../BetaBanners/SingleLineBetaBanner';
 import { overviewPageImagesStackStyle } from '../../constants';
 import containerText from '!!raw-loader!./snippets/CallWithChat.snippet.tsx';
 import serverText from '!!raw-loader!./snippets/Server.snippet.tsx';
+import { Note } from '../../utils/Note';
 
 <Meta title="Composites/CallWithChatComposite" />
 
@@ -49,9 +50,10 @@ to be optimized for a mobile device.
 <Stack horizontalAlign="center">
   <Image src="images/call-with-chat-composite-mobile-hero.png" alt="Call with chat composite mobile preview image" />
 </Stack>
-<MessageBar>
-  Note: Only Portrait mode is supported when the `formFactor` is set to "mobile". Landscape mode is not supported.
-</MessageBar>
+<Note>
+  {' '}
+  Note: Only Portrait mode is supported when the `formFactor` is set to "mobile". Landscape mode is not supported.{' '}
+</Note>
 You can try out the form factor property in the [CallWithChatComposite Basic
 Example](./?path=/story/composites-call-with-chat-basicexample-basic-example--basic-example).
 
@@ -177,7 +179,8 @@ Communication Services end user will be able to see shared files in the chat thr
 ## PSTN and 1:N Calling
 
 <SingleLineBetaBanner />
-<MessageBar>Note: see CallComposite for detailed implementation description</MessageBar>
+
+<Note> Note: see CallComposite for detailed implementation description </Note>
 
 The CallWithChatComposite supports the PSTN Calling modality as well. With CallWithChat you will need to still
 provide a chat thread Id for instances where you will add a Azure Communications user to the call. If you are
@@ -188,7 +191,7 @@ buttons](./?path=/story/composites-call-with-chat-basicexample-basic-example--ba
 ## Rich Text Editor Support
 
 <SingleLineBetaBanner />
-<MessageBar>Note: see ChatComposite for detailed implementation description</MessageBar>
+<Note> Note: see ChatComposite for detailed implementation description </Note>
 
 The CallWithChatComposite supports options to enable a rich text editor functionality in chat similar to
 ChatComposite. Check out [Rich Text Editor Support for
