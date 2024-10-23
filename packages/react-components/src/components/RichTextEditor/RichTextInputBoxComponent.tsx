@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import React, { ReactNode, useCallback, useMemo, useEffect, useState } from 'react';
+import React, { ReactNode, useCallback, useMemo, useState } from 'react';
 import { BaseCustomStyles } from '../../types';
 import { RichTextEditor, RichTextEditorComponentRef, RichTextEditorStyleProps } from './RichTextEditor';
 import { RichTextSendBoxStrings } from './RichTextSendBox';

@@ -119,7 +119,7 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     placeholderText,
     strings,
     showRichTextEditorFormatting,
-    autoFocus,
+    // autoFocus, Do we still need this prop?
     onKeyDown,
     onContentModelUpdate,
     contentModel,
