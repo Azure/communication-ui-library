@@ -92,7 +92,6 @@ export const getMeetingIdFromUrl = (): TeamsMeetingIdLocator | undefined => {
   return meetingId ? { meetingId: meetingId, passcode: passcode ? passcode : undefined } : undefined;
 };
 
-/* @conditional-compile-remove(teams-identity-support) */
 /**
  * Get teams meeting link from the url's query params.
  */

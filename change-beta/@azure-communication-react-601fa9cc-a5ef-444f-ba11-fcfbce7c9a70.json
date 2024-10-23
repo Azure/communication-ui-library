@@ -1,8 +1,8 @@
 {
   "type": "patch",
-  "area": "improvement",
+  "area": "fix",
   "workstream": "",
-  "comment": "Enable noUncheckedIndexedAccess for react-components",
+  "comment": "Expose environmentInfo in callClient state and callAdapter state",
   "packageName": "@azure/communication-react",
   "email": "2684369+JamesBurnside@users.noreply.github.com",
   "dependentChangeType": "patch"

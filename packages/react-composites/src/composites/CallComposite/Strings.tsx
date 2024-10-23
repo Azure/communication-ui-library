@@ -761,37 +761,30 @@ export interface CallCompositeStrings {
    * Tooltip for button to exit spotlight
    */
   exitSpotlightButtonTooltip: string;
-  /* @conditional-compile-remove(end-call-options) */
   /**
    * Label for confirm button of hang up for everyone dialog
    */
   leaveConfirmButtonLabel?: string;
-  /* @conditional-compile-remove(end-call-options) */
   /**
    * Label for confirm button of leave confim dialog
    */
   endCallConfirmButtonLabel?: string;
-  /* @conditional-compile-remove(end-call-options) */
   /**
    * Label for cancel button in hang up confirm dialog
    */
   hangUpCancelButtonLabel?: string;
-  /* @conditional-compile-remove(end-call-options) */
   /**
    * Title of confirm dialog when leaving
    */
   leaveConfirmDialogTitle?: string;
-  /* @conditional-compile-remove(end-call-options) */
   /**
    * Content of confirm dialog when leaving
    */
   leaveConfirmDialogContent?: string;
-  /* @conditional-compile-remove(end-call-options) */
   /**
    * Title of confirm dialog when leaving
    */
   endCallConfirmDialogTitle?: string;
-  /* @conditional-compile-remove(end-call-options) */
   /**
    * Content of confirm dialog when leaving
    */
@@ -827,27 +820,22 @@ export interface CallCompositeStrings {
    * Error message when the meeting identifier or passcode is invalid
    */
   phoneCallMoreButtonLabel: string;
-  /* @conditional-compile-remove(soft-mute) */
   /**
    * Label for mute all remote participants menu item in People Pane
    */
   muteAllMenuLabel: string;
-  /* @conditional-compile-remove(soft-mute) */
   /**
    * Label for mute all prompt title
    */
   muteAllDialogTitle: string;
-  /* @conditional-compile-remove(soft-mute) */
   /**
    * Label for mute all prompt content
    */
   muteAllDialogContent: string;
-  /* @conditional-compile-remove(soft-mute) */
   /**
    * Label for mute all confirm button
    */
   muteAllConfirmButtonLabel: string;
-  /* @conditional-compile-remove(soft-mute) */
   /**
    * Label for mute all cancel button
    */

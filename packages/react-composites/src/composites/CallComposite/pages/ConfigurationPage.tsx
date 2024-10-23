@@ -44,6 +44,7 @@ import { usePropsFor } from '../hooks/usePropsFor';
 /* @conditional-compile-remove(call-readiness) */
 import { DeviceCheckOptions } from '../CallComposite';
 import { ConfigurationPageErrorBar } from '../components/ConfigurationPageErrorBar';
+import { _isSafari } from '../utils';
 /* @conditional-compile-remove(call-readiness) */
 import { getDevicePermissionState } from '../utils';
 /* @conditional-compile-remove(call-readiness) */
@@ -59,9 +60,7 @@ import { localVideoSelector } from '../../CallComposite/selectors/localVideoStre
 
 import { CapabilitiesChangeNotificationBarProps } from '../components/CapabilitiesChangedNotificationBar';
 import { SvgWithWordWrapping } from '../components/SvgWithWordWrapping';
-import { EnvironmentInfo } from '@azure/communication-calling';
 import { getMicrophones, getRole } from '../selectors/baseSelectors';
-/* @conditional-compile-remove(unsupported-browser) */
 import { getEnvironmentInfo } from '../selectors/baseSelectors';
 /* @conditional-compile-remove(call-readiness) */
 import { getCameras } from '../selectors/baseSelectors';
@@ -125,7 +124,6 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
 
   const errorBarProps = usePropsFor(ErrorBar);
   const microphones = useSelector(getMicrophones);
-  /* @conditional-compile-remove(unsupported-browser) */
   const environmentInfo = useSelector(getEnvironmentInfo);
 
   let disableStartCallButton = !microphonePermissionGranted || microphones?.length === 0;
@@ -345,18 +343,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
             {localPreviewTrampoline(mobileWithPreview, !!(role === 'Consumer'))}
             <Stack styles={mobileView ? undefined : configurationSectionStyle}>
               {!mobileWithPreview && (
-                <Stack
-                  className={
-                    mobileView
-                      ? undefined
-                      : selectionContainerStyle(
-                          theme,
-                          isSafariBrowserEnvironmentTrampoline(
-                            /* @conditional-compile-remove(unsupported-browser) */ environmentInfo
-                          )
-                        )
-                  }
-                >
+                <Stack className={mobileView ? undefined : selectionContainerStyle(theme, _isSafari(environmentInfo))}>
                   <LocalDeviceSettings
                     {...options}
                     {...localDeviceSettingsHandlers}
@@ -446,11 +433,4 @@ const Logo = (props: { logo?: { url: string; alt?: string; shape?: 'unset' | 'ci
     return <></>;
   }
   return <Image styles={logoStyles(props.logo.shape)} src={props.logo.url} alt={props.logo.alt} />;
-};
-
-const isSafariBrowserEnvironmentTrampoline = (environmentInfo?: EnvironmentInfo): boolean | undefined => {
-  /* @conditional-compile-remove(unsupported-browser) */
-  return environmentInfo && environmentInfo?.environment.browser.toLowerCase() === 'safari';
-
-  return false;
 };
