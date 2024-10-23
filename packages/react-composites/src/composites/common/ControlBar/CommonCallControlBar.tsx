@@ -35,7 +35,7 @@ import {
   onFetchCustomButtonPropsTrampoline
 } from './CustomButton';
 import { DesktopMoreButton } from './DesktopMoreButton';
-import { isDisabled } from '../../CallComposite/utils';
+import { isDisabled, _isSafari } from '../../CallComposite/utils';
 import { HiddenFocusStartPoint } from '../HiddenFocusStartPoint';
 import { CallWithChatControlOptions } from '../../CallWithChatComposite';
 import { CommonCallControlOptions } from '../types/CommonCallControlOptions';
@@ -47,10 +47,8 @@ import { capabilitySelector } from '../../CallComposite/selectors/capabilitySele
 import { DtmfDialpadButton } from './DtmfDialerButton';
 import { ExitSpotlightButton } from '../ExitSpotlightButton';
 import { useLocale } from '../../localization';
-/* @conditional-compile-remove(end-call-options) */
 import { isBoolean } from '../utils';
 import { getEnvironmentInfo } from '../../CallComposite/selectors/baseSelectors';
-/* @conditional-compile-remove(end-call-options) */
 import { getIsTeamsCall } from '../../CallComposite/selectors/baseSelectors';
 /* @conditional-compile-remove(breakout-rooms) */
 import { getAssignedBreakoutRoom, getBreakoutRoomSettings } from '../../CallComposite/selectors/baseSelectors';
@@ -58,8 +56,6 @@ import { callStatusSelector } from '../../CallComposite/selectors/callStatusSele
 import { MeetingConferencePhoneInfoModal } from '@internal/react-components';
 /* @conditional-compile-remove(breakout-rooms) */
 import { Timer } from './Timer';
-/* @conditional-compile-remove(DNS) */
-import { _isSafari } from '../../CallComposite/utils';
 
 /**
  * @private
@@ -136,11 +132,9 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
 
   const [showCaptionsSettingsModal, setShowCaptionsSettingsModal] = useState(false);
 
-  /* @conditional-compile-remove(end-call-options) */
   // If the hangup capability is not present, we default to true
   const isHangUpForEveryoneAllowed =
     useSelector((state) => state.call?.capabilitiesFeature?.capabilities.hangUpForEveryOne.isPresent) ?? true;
-  /* @conditional-compile-remove(end-call-options) */
   const isTeams = useSelector(getIsTeamsCall);
 
   /* @conditional-compile-remove(breakout-rooms) */
@@ -216,21 +210,15 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
     [callStrings]
   );
 
-  /* @conditional-compile-remove(DNS) */
   const [isDeepNoiseSuppressionOn, setDeepNoiseSuppressionOn] = useState<boolean>(false);
 
-  /* @conditional-compile-remove(DNS) */
   const startDeepNoiseSuppression = useCallback(async () => {
     await props.callAdapter.startNoiseSuppressionEffect();
   }, [props.callAdapter]);
 
-  /* @conditional-compile-remove(DNS) */
   const environmentInfo = useSelector(getEnvironmentInfo);
-
-  /* @conditional-compile-remove(DNS) */
   const isSafari = _isSafari(environmentInfo);
 
-  /* @conditional-compile-remove(DNS) */
   useEffect(() => {
     if (
       props.callAdapter.getState().onResolveDeepNoiseSuppressionDependency &&
@@ -240,14 +228,14 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
       setDeepNoiseSuppressionOn(true);
     }
   }, [props.callAdapter, startDeepNoiseSuppression]);
-  /* @conditional-compile-remove(DNS) */
+
   const showNoiseSuppressionButton =
     props.callAdapter.getState().onResolveDeepNoiseSuppressionDependency &&
     !props.callAdapter.getState().hideDeepNoiseSuppressionButton &&
     !isSafari
       ? true
       : false;
-  /* @conditional-compile-remove(DNS) */
+
   const onClickNoiseSuppression = useCallback(async () => {
     if (isDeepNoiseSuppressionOn) {
       await props.callAdapter.stopNoiseSuppressionEffect();
@@ -421,11 +409,8 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                         splitButtonsForDeviceSelection={!props.mobileView}
                         disabled={props.disableButtonsForHoldScreen || isDisabled(options.microphoneButton)}
                         disableTooltip={props.mobileView}
-                        /* @conditional-compile-remove(DNS) */
                         onClickNoiseSuppression={onClickNoiseSuppression}
-                        /* @conditional-compile-remove(DNS) */
                         isDeepNoiseSuppressionOn={isDeepNoiseSuppressionOn}
-                        /* @conditional-compile-remove(DNS) */
                         showNoiseSuppressionButton={showNoiseSuppressionButton}
                       />
                     )}
@@ -532,7 +517,6 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                       displayType="compact"
                       mobileView={props.mobileView}
                       styles={endCallButtonStyles}
-                      /* @conditional-compile-remove(end-call-options) */
                       enableEndCallMenu={
                         !isBoolean(props.callControls) &&
                         !isBoolean(props.callControls?.endCallButton) &&
