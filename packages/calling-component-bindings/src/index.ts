@@ -4,7 +4,7 @@
 export type { CallingBaseSelectorProps } from './baseSelectors';
 export * from './callControlSelectors';
 export { createDefaultCallingHandlers } from './handlers/createHandlers';
-/* @conditional-compile-remove(teams-identity-support) */
+
 export { createDefaultTeamsCallingHandlers } from './handlers/createTeamsCallHandlers';
 export type { ParticipantListSelector } from './participantListSelector';
 export type { ParticipantsButtonSelector } from './participantsButtonSelector';
@@ -27,18 +27,18 @@ export type {
 export { _captionsBannerSelector, _startCaptionsButtonSelector, _captionSettingsSelector } from './captionsSelector';
 
 export type { CallingHandlers, CreateDefaultCallingHandlers } from './handlers/createHandlers';
-/* @conditional-compile-remove(teams-identity-support) */
+
 export type { TeamsCallingHandlers } from './handlers/createTeamsCallHandlers';
 export type { CommonCallingHandlers } from './handlers/createCommonHandlers';
 export type { CaptionsOptions } from './handlers/createCommonHandlers';
 
-export type { VideoBackgroundEffectsDependency } from './handlers/createCommonHandlers';
-
-/* @conditional-compile-remove(DNS) */
-export type { DeepNoiseSuppressionEffectDependency } from './handlers/createCommonHandlers';
+export type {
+  DeepNoiseSuppressionEffectDependency,
+  VideoBackgroundEffectsDependency
+} from './handlers/createCommonHandlers';
 
 export type { _ComponentCallingHandlers, CallingHandlersOptions } from './handlers/createHandlers';
-/* @conditional-compile-remove(teams-identity-support) */
+
 export { useTeamsCall, useTeamsCallAgent } from './providers';
 
 export {

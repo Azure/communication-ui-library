@@ -34,7 +34,7 @@ export const MessageWithCustomMentionRenderer: () => JSX.Element = () => {
 
   const onUpdateMessageCallback = (messageId: string, content: string): Promise<void> => {
     const msgIdx = messages.findIndex((m) => m.messageId === messageId);
-    const message = messages[msgIdx];
+    const message = messages[msgIdx] as ChatMessage;
     message.content = content;
     message.editedOn = new Date(Date.now());
     messages[msgIdx] = message;

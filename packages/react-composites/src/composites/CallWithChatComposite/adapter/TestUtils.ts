@@ -212,7 +212,6 @@ export declare interface MockCallerInfo {
 
 function createMockCall(mockCallId: string): CallState {
   const call: CallState = {
-    /* @conditional-compile-remove(teams-identity-support) */
     kind: 'Call' as CallKind,
     id: mockCallId,
     callerInfo: {} as MockCallerInfo,

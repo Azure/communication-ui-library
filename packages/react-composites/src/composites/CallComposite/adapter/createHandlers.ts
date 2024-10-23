@@ -3,7 +3,6 @@
 
 import { CallAgent, TeamsCallAgent } from '@azure/communication-calling';
 import { CallingHandlers, createDefaultCallingHandlers } from '@internal/calling-component-bindings';
-/* @conditional-compile-remove(teams-identity-support)) */
 import { createDefaultTeamsCallingHandlers, TeamsCallingHandlers } from '@internal/calling-component-bindings';
 import {
   CallCommon,
@@ -15,16 +14,17 @@ import {
   _isTeamsCallAgent
 } from '@internal/calling-stateful-client';
 
-import { VideoBackgroundEffectsDependency } from '@internal/calling-component-bindings';
-/* @conditional-compile-remove(DNS) */
-import { DeepNoiseSuppressionEffectDependency } from '@internal/calling-component-bindings';
+import {
+  DeepNoiseSuppressionEffectDependency,
+  VideoBackgroundEffectsDependency
+} from '@internal/calling-component-bindings';
 
 /**
  * @private
  */
 export type CallHandlersOf<AgentType extends CallAgent | TeamsCallAgent> = AgentType extends CallAgent
   ? CallingHandlers
-  : never | /* @conditional-compile-remove(teams-identity-support) */ TeamsCallingHandlers;
+  : never | TeamsCallingHandlers;
 
 /**
  * @private
@@ -39,7 +39,6 @@ export function createHandlers<AgentType extends CallAgent | TeamsCallAgent>(
 
   options?: {
     onResolveVideoBackgroundEffectsDependency?: () => Promise<VideoBackgroundEffectsDependency>;
-    /* @conditional-compile-remove(DNS) */
     onResolveDeepNoiseSuppressionDependency?: () => Promise<DeepNoiseSuppressionEffectDependency>;
   }
 ): CallHandlersOf<AgentType> {
@@ -54,7 +53,6 @@ export function createHandlers<AgentType extends CallAgent | TeamsCallAgent>(
     ) as CallHandlersOf<AgentType>;
   }
 
-  /* @conditional-compile-remove(teams-identity-support) */
   if (_isTeamsCallAgent(callAgent) && (!call || (call && _isTeamsCall(call)))) {
     return createDefaultTeamsCallingHandlers(
       callClient,

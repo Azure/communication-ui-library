@@ -1,9 +1,0 @@
-{
-  "type": "patch",
-  "area": "improvement",
-  "workstream": "",
-  "comment": "Enable noUncheckedIndexedAccess for react-components",
-  "packageName": "@azure/communication-react",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
