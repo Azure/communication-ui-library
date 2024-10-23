@@ -1,4 +1,4 @@
-import { FluentThemeProvider, MessageThread } from '@azure/communication-react';
+import { ChatMessage, FluentThemeProvider, MessageThread } from '@azure/communication-react';
 import React, { useCallback, useState } from 'react';
 import { GetHistoryHTMLChatMessages } from './placeholdermessages';
 
@@ -11,7 +11,7 @@ export const MessageThreadWithRichTextEditorExample: () => JSX.Element = () => {
       if (index === -1) {
         return Promise.reject('Message not found');
       }
-      const message = updatedMessages[index];
+      const message = updatedMessages[index] as ChatMessage;
       message.content = content;
       message.editedOn = new Date(Date.now());
       updatedMessages[index] = message;
