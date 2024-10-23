@@ -800,7 +800,7 @@ jobs:
             github.issues.deleteComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              comment_id: ${{ steps.fc.outputs.comment-id }}
+              comment_id: steps.fc.outputs.comment-id
             });
       # - name: Post new comment
       #   uses: actions/github-script@v4
