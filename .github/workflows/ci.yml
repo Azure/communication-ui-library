@@ -795,12 +795,12 @@ jobs:
       - name: Delete comment
         uses: actions/github-script@v4
         with:
-          github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            github.issues.deleteComment({
+            const comment_id = ${{ steps.fc.outputs.comment-id }};
+            await github.issues.deleteComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              comment_id: steps.fc.outputs.comment-id
+              comment_id: comment_id
             });
       # - name: Post new comment
       #   uses: actions/github-script@v4
