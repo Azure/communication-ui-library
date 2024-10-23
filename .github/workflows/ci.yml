@@ -801,8 +801,9 @@ jobs:
               repo: context.repo.repo,
               comment_id: comment_id
             });
+            const issue_number = ${{ github.event.pull_request.number }};
             github.issues.createComment({
-              issue_number: context.issue.number,
+              issue_number: issue_number,
               owner: context.repo.owner,
               repo: context.repo.repo,
               body: 'Bundle size report'
