@@ -80,7 +80,5 @@ module.exports = {
     // Demo feature. Used in live-documentation of conditional compilation.
     // Do not use in production code.
     "stabilizedDemo",
-    // Feature for tracking beta start call identifier
-    'start-call-beta',
   ]
 }
