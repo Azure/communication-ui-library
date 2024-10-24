@@ -15,8 +15,6 @@ import {
   LocalVideoStream,
   ParticipantRole
 } from '@azure/communication-calling';
-/* @conditional-compile-remove(remote-ufd) */
-import { ServerDiagnosticType } from '@azure/communication-calling';
 import {
   CommunicationIdentifier,
   CommunicationUserIdentifier,
