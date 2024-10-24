@@ -796,7 +796,7 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            comment-id: ${{ steps.fc.outputs.comment-id }}
+            const comment_id = ${{ steps.fc.outputs.comment-id }};
             await github.issues.deleteComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
