@@ -65,6 +65,10 @@ export class BreakoutRoomsSubscriber {
     const callState = this._context.getState().calls[this._callIdRef.callId];
     const currentAssignedBreakoutRoom = callState?.breakoutRooms?.assignedBreakoutRoom;
 
+    const returnedFromBreakoutRoom = Object.values(this._context.getState().callsEnded).find((call) => {
+      return call.id === this._callIdRef.callId;
+    })?.breakoutRooms?.returnCallId;
+
     // This call won't exist in the calls array in state if this call is a breakout room that was re-assigned.
     // If so, do nothing.
     if (callState === undefined) {
@@ -96,7 +100,11 @@ export class BreakoutRoomsSubscriber {
           timestamp: new Date(Date.now())
         });
       }
-    } else if (breakoutRoom.state === 'open') {
+    } else if (
+      breakoutRoom.state === 'open' &&
+      !returnedFromBreakoutRoom &&
+      !callState?.breakoutRooms?.breakoutRoomSettings
+    ) {
       if (!this._context.getState().latestNotifications['assignedBreakoutRoomChanged']) {
         const target: NotificationTarget =
           breakoutRoom.autoMoveParticipantToBreakoutRoom === false
