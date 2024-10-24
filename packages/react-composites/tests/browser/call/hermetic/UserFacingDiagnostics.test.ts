@@ -71,9 +71,7 @@ test.describe('User Facing Diagnostics tests', async () => {
   test('Teams meeting phone info notification in case of bad network connection ', async ({ page, serverUrl }) => {
     const initialState = defaultMockCallAdapterState();
     initialState.isTeamsMeeting = true;
-    console.log('zdor initial state ' + initialState);
     if (initialState.call) {
-      console.log('zdor initial state call ' + initialState.call);
       initialState.call.meetingConference = {
         conferencePhones: [
           {
