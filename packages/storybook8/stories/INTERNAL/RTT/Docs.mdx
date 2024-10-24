@@ -1,0 +1,16 @@
+import { RTT } from '@internal/react-components';
+import { Canvas, Meta, ArgTypes } from '@storybook/blocks';
+import * as RTTStories from './index.stories';
+import RTTExampleText from '!!raw-loader!./snippets/ExampleRTT.snippet.tsx';
+
+<Meta of={RTTStories} />
+
+# RTT
+
+A component for displaying a RTT message with user icon, displayName and captions text.
+
+<Canvas of={RTTStories.ExampleRTTExampleDocsOnly} source={{ code: RTTExampleText }} />
+
+## Props
+
+<ArgTypes of={RTT} />

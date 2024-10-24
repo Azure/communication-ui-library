@@ -21,6 +21,33 @@ export const displayNameClassName = mergeStyles({
   lineHeight: _pxToRem(16)
 });
 
+/* @conditional-compile-remove(rtt) */
+/**
+ * @private
+ */
+export const isTypingClassName = (theme: ITheme): string => {
+  return mergeStyles({
+    backgroundColor: theme.palette.themeLighter,
+    color: theme.palette.themeDarker,
+    borderRadius: _pxToRem(4),
+    marginLeft: _pxToRem(4),
+    fontWeight: 400,
+    paddingLeft: _pxToRem(4),
+    paddingRight: _pxToRem(4),
+    fontSize: _pxToRem(11),
+    lineHeight: _pxToRem(16)
+  });
+};
+/* @conditional-compile-remove(rtt) */
+/**
+ * @private
+ */
+export const rttContainerClassName = (theme: ITheme, isTyping: boolean): string => {
+  return mergeStyles({
+    borderLeft: isTyping ? `2px solid ${theme.palette.themeLighter}` : 'none'
+  });
+};
+
 /**
  * @private
  */
