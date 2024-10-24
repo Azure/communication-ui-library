@@ -46,6 +46,8 @@ import { ReactionButtonStrings } from '../components';
 import { RichTextSendBoxStrings } from '../components/RichTextEditor/RichTextSendBox';
 import { MeetingConferencePhoneInfoModalStrings } from '../components/MeetingConferencePhoneInfo';
 import { IncomingCallNotificationStrings } from '../components/IncomingCallNotification';
+/* @conditional-compile-remove(rtt) */
+import { RTTModalStrings } from '../components/RTTModal';
 
 /**
  * Locale information for all components exported from this library.
@@ -169,7 +171,6 @@ export interface ComponentStrings {
   /* @conditional-compile-remove(call-readiness) */
   /** Strings for BrowserPemissionDeniedIOS */
   BrowserPermissionDeniedIOS: BrowserPermissionDeniedIOSStrings;
-
   /**
    * Strings for the VerticalGallery.
    */
@@ -179,8 +180,9 @@ export interface ComponentStrings {
   ParticipantList: ParticipantListStrings;
   /** Strings for the MeetingConferencePhoneInfoModal */
   meetingConferencePhoneInfo: MeetingConferencePhoneInfoModalStrings;
-
   IncomingCallNotification: IncomingCallNotificationStrings;
+  /* @conditional-compile-remove(rtt) */
+  rttModal: RTTModalStrings;
 }
 
 /**

@@ -296,6 +296,9 @@ export * from './StartCaptionsButton';
 
 export * from './CaptionsSettingsModal';
 
+/* @conditional-compile-remove(rtt) */
+export * from './RTTModal';
+
 export * from './MeetingConferencePhoneInfo';
 export { _formatPhoneNumber } from './utils/formatPhoneNumber';
 
