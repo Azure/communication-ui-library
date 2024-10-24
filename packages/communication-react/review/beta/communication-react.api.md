@@ -2393,6 +2393,8 @@ export interface ComponentStrings {
     raiseHandButton: RaiseHandButtonStrings;
     reactionButton: ReactionButtonStrings;
     richTextSendBox: RichTextSendBoxStrings;
+    // (undocumented)
+    rttDisclosureBanner: RTTDisclosureBannerStrings;
     screenShareButton: ScreenShareButtonStrings;
     sendBox: SendBoxStrings;
     typingIndicator: TypingIndicatorStrings;
@@ -2802,6 +2804,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     IncomingCallNotificationRejectIcon: React_2.JSX.Element;
     IncomingCallNotificationAcceptIcon: React_2.JSX.Element;
     IncomingCallNotificationAcceptWithVideoIcon: React_2.JSX.Element;
+    RTTIcon: React_2.JSX.Element;
 };
 
 // @public
@@ -2982,6 +2985,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     IncomingCallNotificationRejectIcon: React_2.JSX.Element;
     IncomingCallNotificationAcceptIcon: React_2.JSX.Element;
     IncomingCallNotificationAcceptWithVideoIcon: React_2.JSX.Element;
+    RTTIcon: React_2.JSX.Element;
 };
 
 // @beta
@@ -4425,6 +4429,22 @@ export interface RichTextStrings {
     richTextNumberListTooltip: string;
     richTextToolbarMoreButtonAriaLabel: string;
     richTextUnderlineTooltip: string;
+}
+
+// @beta
+export interface RTTDisclosureBannerProps {
+    link?: string;
+    strings?: RTTDisclosureBannerStrings;
+}
+
+// @beta
+export interface RTTDisclosureBannerStrings {
+    // (undocumented)
+    bannerContent?: string;
+    // (undocumented)
+    bannerLinkLabel?: string;
+    // (undocumented)
+    bannerTitle?: string;
 }
 
 // @public
