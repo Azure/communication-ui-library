@@ -27,6 +27,9 @@ import { useLocale } from '../localization';
  * strings for rtt
  */
 export interface RTTStrings {
+  /**
+   * String indicating that the user is typing
+   */
   isTypingText?: string;
 }
 
@@ -35,7 +38,23 @@ export interface RTTStrings {
  * @beta
  * Props for a single line of RTT.
  */
-export interface RTTProps extends _CaptionsInfo {
+export interface RTTProps {
+  /**
+   * RTT id
+   */
+  id: string;
+  /**
+   * Display name of the user
+   */
+  displayName: string;
+  /**
+   * RTT content
+   */
+  captionText: string;
+  /**
+   * user id of the user
+   */
+  userId?: string;
   /**
    * Optional callback to override render of the avatar.
    *

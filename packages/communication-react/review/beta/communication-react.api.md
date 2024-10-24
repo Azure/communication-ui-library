@@ -4427,15 +4427,18 @@ export interface RichTextStrings {
 }
 
 // @beta
-export interface RTTProps extends _CaptionsInfo {
+export interface RTTProps {
+    captionText: string;
+    displayName: string;
+    id: string;
     isTyping?: boolean;
     onRenderAvatar?: OnRenderAvatarCallback;
     strings?: RTTStrings;
+    userId?: string;
 }
 
 // @beta
 export interface RTTStrings {
-    // (undocumented)
     isTypingText?: string;
 }
 
