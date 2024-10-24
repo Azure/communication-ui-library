@@ -9,34 +9,9 @@ import {
 } from './ChatMessageComponentAsRichTextEditBox';
 import { COMPONENT_LOCALE_EN_US } from '../../../localization/locales';
 import userEvent from '@testing-library/user-event';
-import { registerIcons } from '@fluentui/react';
 import { modifyInlineImagesInContentString } from '../../utils/SendBoxUtils';
 
-const icons: {
-  [key: string]: string | JSX.Element;
-} = {
-  editboxsubmit: <></>,
-  editboxcancel: <></>,
-  richtextboldbuttonicon: <></>,
-  richtextitalicbuttonicon: <></>,
-  richtextunderlinebuttonicon: <></>,
-  richtextbulletlistbuttonicon: <></>,
-  richtextnumberlistbuttonicon: <></>,
-  richtextindentdecreasebuttonicon: <></>,
-  richtextindentincreasebuttonicon: <></>,
-  richtextdividericon: <></>,
-  richtexteditorbuttonicon: <></>,
-  richtextinserttableregularicon: <></>,
-  richtextinserttablefilledicon: <></>
-};
-
 describe('ChatMessageComponentAsRichTextEditBox tests', () => {
-  beforeAll(() => {
-    registerIcons({
-      icons: icons
-    });
-  });
-
   const onCancelMock = jest.fn();
   const onSubmitMock = jest.fn();
   const text = 'Hello World!';
