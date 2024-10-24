@@ -46,6 +46,7 @@ import { ReactionButtonStrings } from '../components';
 import { RichTextSendBoxStrings } from '../components/RichTextEditor/RichTextSendBox';
 import { MeetingConferencePhoneInfoModalStrings } from '../components/MeetingConferencePhoneInfo';
 import { IncomingCallNotificationStrings } from '../components/IncomingCallNotification';
+import { RTTDisclosureBannerStrings } from '../components/RTTDisclosureBanner';
 
 /**
  * Locale information for all components exported from this library.
@@ -181,6 +182,8 @@ export interface ComponentStrings {
   meetingConferencePhoneInfo: MeetingConferencePhoneInfoModalStrings;
 
   IncomingCallNotification: IncomingCallNotificationStrings;
+  /* @conditional-compile-remove(rtt) */
+  rttDisclosureBanner: RTTDisclosureBannerStrings;
 }
 
 /**

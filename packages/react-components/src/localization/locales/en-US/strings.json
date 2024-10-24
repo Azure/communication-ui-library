@@ -670,5 +670,10 @@
     "incomingCallNotificationRejectButtonLabel": "Decline",
     "incomingCallNotificationAccceptWithVideoButtonLabel": "Accept with Video",
     "incomingCallNotificationDismissButtonAriaLabel": "Dismiss"
+  },
+  "rttDisclosureBanner": {
+    "bannerTitle": "RTT",
+    "bannerContent": "RTT (real-time text) is enabled for all participants for the entire duration of the meeting.",
+    "bannerLinkLabel": "Learn more"
   }
 }
