@@ -5,21 +5,9 @@ import React from 'react';
 import { _AttachmentCard, _AttachmentCardProps } from './AttachmentCard';
 import { _AttachmentCardGroup, _AttachmentCardGroupProps } from './AttachmentCardGroup';
 import { render, screen } from '@testing-library/react';
-import { registerIcons } from '@fluentui/react';
 import { defaultAttachmentMenuAction } from './AttachmentDownloadCards';
 
 describe('AttachmentCardGroup should be rendered properly', () => {
-  beforeEach(() => {
-    registerIcons({
-      icons: {
-        downloadattachment: <></>,
-        docx24_svg: <></>,
-        editboxcancel: <></>,
-        genericfile24_svg: <></>
-      }
-    });
-  });
-
   it('should render the component', async () => {
     const props = {
       children: <></>,
