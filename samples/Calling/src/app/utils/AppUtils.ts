@@ -92,7 +92,6 @@ export const getMeetingIdFromUrl = (): TeamsMeetingIdLocator | undefined => {
   return meetingId ? { meetingId: meetingId, passcode: passcode ? passcode : undefined } : undefined;
 };
 
-/* @conditional-compile-remove(teams-identity-support) */
 /**
  * Get teams meeting link from the url's query params.
  */
@@ -135,7 +134,7 @@ export const isOnIphoneAndNotSafari = (): boolean => {
 export const isLandscape = (): boolean => window.innerWidth < window.innerHeight;
 
 export const navigateToHomePage = (): void => {
-  window.location.href = window.location.href.split('?')[0];
+  window.location.href = window.location.href.split('?')[0] ?? window.location.href;
 };
 
 export const WEB_APP_TITLE = document.title;

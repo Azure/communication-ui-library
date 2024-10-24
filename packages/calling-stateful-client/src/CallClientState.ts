@@ -31,15 +31,11 @@ import type {
 } from '@azure/communication-calling';
 import { TeamsCallInfo } from '@azure/communication-calling';
 import { CallInfo } from '@azure/communication-calling';
-
 import { CapabilitiesChangeInfo, ParticipantCapabilities } from '@azure/communication-calling';
 import { CaptionsResultType } from '@azure/communication-calling';
-
 import { CaptionsKind } from '@azure/communication-calling';
 import { VideoEffectName } from '@azure/communication-calling';
-/* @conditional-compile-remove(teams-identity-support) */
 import { CallKind } from '@azure/communication-calling';
-/* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
 import { CommunicationIdentifierKind } from '@azure/communication-common';
 import { ReactionMessage } from '@azure/communication-calling';
@@ -545,7 +541,7 @@ export interface RemoteParticipantState {
   /**
    * The diagnostic status of RemoteParticipant{@link @azure/communication-calling#RemoteDiagnostics}.
    */
-  diagnostics?: Record<string, RemoteDiagnosticState>;
+  diagnostics?: Partial<Record<RemoteDiagnosticType, RemoteDiagnosticState>>;
 }
 
 /**
@@ -559,7 +555,7 @@ export interface CallState {
    * Proxy of {@link @azure/communication-calling#Call.id}.
    */
   id: string;
-  /* @conditional-compile-remove(teams-identity-support) */
+
   /**
    * Type of the call.
    */
@@ -982,7 +978,6 @@ export interface CallClientState {
    * be used as the caller id in the PSTN call.
    */
   alternateCallerId?: string;
-  /* @conditional-compile-remove(unsupported-browser) */
   /**
    * state to track the environment that the stateful client was made in is supported
    */
@@ -1072,7 +1067,7 @@ export type CallErrorTarget =
   | 'CallClient.createTeamsCallAgent'
   | 'CallClient.feature'
   | 'CallClient.getDeviceManager'
-  | /* @conditional-compile-remove(calling-beta-sdk) */ 'CallClient.getEnvironmentInfo'
+  | 'CallClient.getEnvironmentInfo'
   | 'DeviceManager.askDevicePermission'
   | 'DeviceManager.getCameras'
   | 'DeviceManager.getMicrophones'
@@ -1083,13 +1078,13 @@ export type CallErrorTarget =
   | 'DeviceManager.selectSpeaker'
   | 'IncomingCall.accept'
   | 'IncomingCall.reject'
-  | /* @conditional-compile-remove(calling-beta-sdk) */ /* @conditional-compile-remove(teams-identity-support) */ 'TeamsCall.addParticipant'
+  | 'TeamsCall.addParticipant'
   | 'VideoEffectsFeature.startEffects'
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'CallAgent.handlePushNotification'
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.admit'
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.rejectParticipant'
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.admitAll'
-  | /* @conditional-compile-remove(soft-mute) */ 'Call.mutedByOthers'
+  | 'Call.mutedByOthers'
   | 'Call.muteAllRemoteParticipants'
   | 'Call.setConstraints';
 
@@ -1139,12 +1134,20 @@ export interface DiagnosticsCallFeatureState {
 
 /* @conditional-compile-remove(remote-ufd) */
 /**
+ * All type names for {@link @azure/communication-calling#RemoteDiagnosticState}.
+ *
+ * @beta
+ */
+export type RemoteDiagnosticType = NetworkDiagnosticType | MediaDiagnosticType | ServerDiagnosticType;
+
+/* @conditional-compile-remove(remote-ufd) */
+/**
  * State only proxy for {@link @azure/communication-calling#DiagnosticsCallFeature}.
  *
  * @beta
  */
 export declare type RemoteDiagnosticState = {
-  readonly diagnostic: NetworkDiagnosticType | MediaDiagnosticType | ServerDiagnosticType;
+  readonly diagnostic: RemoteDiagnosticType;
   readonly value: DiagnosticQuality | DiagnosticFlag;
   readonly valueType: DiagnosticValueType;
 };

@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import React from 'react';
-import { _formatString } from '@internal/acs-ui-common';
+import { AttachmentMetadata, _formatString } from '@internal/acs-ui-common';
 import parse, { HTMLReactParserOptions, Element as DOMElement } from 'html-react-parser';
 import { attributesToProps } from 'html-react-parser';
 import Linkify from 'react-linkify';
@@ -21,8 +21,6 @@ import LiveMessage from '../Announcer/LiveMessage';
 import { defaultOnMentionRender } from './MentionRenderer';
 import DOMPurify from 'dompurify';
 import { _AttachmentDownloadCardsStrings } from '../Attachment/AttachmentDownloadCards';
-/* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
-import { AttachmentMetadata } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { dataLossIconStyle } from '../styles/MessageThread.styles';
 import { messageTextContentStyles } from '../styles/MessageThread.styles';
@@ -172,10 +170,7 @@ export const BlockedMessageContent = (props: BlockedMessageContentProps): JSX.El
 };
 
 const extractContentForAllyMessage = (props: ChatMessageContentProps): string => {
-  let attachments = undefined;
-  /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
-  attachments = props.message.attachments;
-  if (props.message.content || attachments) {
+  if (props.message.content || props.message.attachments) {
     // Replace all <img> tags with 'image' for aria.
     const parsedContent = DOMPurify.sanitize(props.message.content ?? '', {
       ALLOWED_TAGS: ['img'],
@@ -193,8 +188,7 @@ const extractContentForAllyMessage = (props: ChatMessageContentProps): string =>
 
     // Inject message attachment count for aria.
     // this is only applying to file attachments not for inline images.
-    /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
-    if (attachments && attachments.length > 0) {
+    if (props.message.attachments && props.message.attachments.length > 0) {
       const attachmentCardDescription = attachmentCardGroupDescription(props);
       const attachmentTextNode = document.createElement('div');
       attachmentTextNode.innerHTML = `${attachmentCardDescription}`;
@@ -232,13 +226,11 @@ const messageContentAriaText = (props: ChatMessageContentProps): string | undefi
       });
 };
 
-/* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
 const attachmentCardGroupDescription = (props: ChatMessageContentProps): string => {
   const attachments = props.message.attachments;
   return getAttachmentCountLiveMessage(attachments ?? [], props.strings.attachmentCardGroupMessage);
 };
 
-/* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
 /**
  * @private
  */

@@ -6,9 +6,7 @@ import { IContextualMenuItem } from '@fluentui/react';
 import { _isInLobbyOrConnecting } from '@internal/calling-component-bindings';
 import { ControlBar, DevicesButton, ParticipantMenuItemsCallback } from '@internal/react-components';
 import { HoldButton } from '@internal/react-components';
-import React, { useMemo } from 'react';
-/* @conditional-compile-remove(DNS) */
-import { useCallback, useState, useEffect } from 'react';
+import React, { useMemo, useCallback, useState, useEffect } from 'react';
 import { CallControlOptions } from '../types/CallControlOptions';
 import { Camera } from './buttons/Camera';
 import { Devices } from './buttons/Devices';
@@ -17,13 +15,11 @@ import { Microphone } from './buttons/Microphone';
 import { Participants } from './buttons/Participants';
 import { ScreenShare } from './buttons/ScreenShare';
 import { ContainerRectProps } from '../../common/ContainerRectProps';
-
 import { People } from './buttons/People';
 import { useLocale } from '../../localization';
 import { MoreButton } from '../../common/MoreButton';
 import { usePropsFor } from '../hooks/usePropsFor';
 import { buttonFlyoutIncreasedSizeStyles } from '../styles/Buttons.styles';
-/* @conditional-compile-remove(DNS) */
 import { useAdapter } from '../adapter/CallAdapterProvider';
 import { isDisabled } from '../utils';
 import { callControlsContainerStyles } from '../styles/CallPage.styles';
@@ -40,16 +36,15 @@ import { Reaction } from './buttons/Reaction';
 import { useSelector } from '../hooks/useSelector';
 import { capabilitySelector } from '../../CallComposite/selectors/capabilitySelector';
 import { callStatusSelector } from '../../CallComposite/selectors/callStatusSelector';
-/* @conditional-compile-remove(DNS) */
 import { _isSafari } from '../../CallComposite/utils';
-import { getIsRoomsCall, getReactionResources, getRole } from '../selectors/baseSelectors';
-/* @conditional-compile-remove(unsupported-browser) */
-import { getEnvironmentInfo } from '../selectors/baseSelectors';
-/* @conditional-compile-remove(DNS) */
 import {
+  getIsRoomsCall,
+  getReactionResources,
+  getRole,
   getDeepNoiseSuppresionEffectsDependency,
   getDeepNoiseSuppresionIsOnByDefault,
-  getHideDeepNoiseSupressionButton
+  getHideDeepNoiseSupressionButton,
+  getEnvironmentInfo
 } from '../selectors/baseSelectors';
 
 /**
@@ -100,21 +95,15 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
 
   const localeStrings = useLocale();
 
-  /* @conditional-compile-remove(DNS) */
   const [isDeepNoiseSuppressionOn, setDeepNoiseSuppressionOn] = useState<boolean>(false);
 
-  /* @conditional-compile-remove(DNS) */
   const adapter = useAdapter();
-  /* @conditional-compile-remove(DNS) */
   const startDeepNoiseSuppression = useCallback(async () => {
     await adapter.startNoiseSuppressionEffect();
   }, [adapter]);
 
-  /* @conditional-compile-remove(DNS) */
   const deepNoiseSuppresionEffectsDependency = useSelector(getDeepNoiseSuppresionEffectsDependency);
-  /* @conditional-compile-remove(DNS) */
   const deepNoiseSuppressionOnByDefault = useSelector(getDeepNoiseSuppresionIsOnByDefault);
-  /* @conditional-compile-remove(DNS) */
   useEffect(() => {
     if (deepNoiseSuppresionEffectsDependency && deepNoiseSuppressionOnByDefault) {
       startDeepNoiseSuppression();
@@ -122,23 +111,16 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
     }
   }, [deepNoiseSuppresionEffectsDependency, deepNoiseSuppressionOnByDefault, startDeepNoiseSuppression]);
 
-  /* @conditional-compile-remove(DNS) */
-  let environmentInfo = undefined;
-  /* @conditional-compile-remove(unsupported-browser) */
-  environmentInfo = useSelector(getEnvironmentInfo);
+  const environmentInfo = useSelector(getEnvironmentInfo);
 
-  /* @conditional-compile-remove(DNS) */
   const isSafari = _isSafari(environmentInfo);
-  /* @conditional-compile-remove(DNS) */
   const hideDeepNoiseSuppressionButton = useSelector(getHideDeepNoiseSupressionButton);
-  /* @conditional-compile-remove(DNS) */
   const showNoiseSuppressionButton = !!(
     deepNoiseSuppresionEffectsDependency &&
     !hideDeepNoiseSuppressionButton &&
     !isSafari
   );
 
-  /* @conditional-compile-remove(DNS) */
   const onClickNoiseSuppression = useCallback(async () => {
     if (isDeepNoiseSuppressionOn) {
       await adapter.stopNoiseSuppressionEffect();
@@ -396,11 +378,8 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
             <Microphone
               displayType={options?.displayType}
               disabled={isDisabled(options?.microphoneButton)}
-              /* @conditional-compile-remove(DNS) */
               onClickNoiseSuppression={onClickNoiseSuppression}
-              /* @conditional-compile-remove(DNS) */
               isDeepNoiseSuppressionOn={isDeepNoiseSuppressionOn}
-              /* @conditional-compile-remove(DNS) */
               showNoiseSuppressionButton={showNoiseSuppressionButton}
             />
           )}

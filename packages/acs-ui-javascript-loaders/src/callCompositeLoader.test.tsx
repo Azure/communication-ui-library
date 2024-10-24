@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/* @conditional-compile-remove(composite-js-helpers) */
+import { AzureCommunicationTokenCredential } from '@azure/communication-common';
 import { CallCompositeLoaderProps } from './callCompositeLoader';
 
 jest.mock('@internal/react-composites', () => {
@@ -33,14 +33,10 @@ jest.mock('@fluentui/react', () => {
 });
 
 describe('CallCompositeLoader tests', () => {
-  test('test to fulfill no empty test runners', () => {
-    expect(true).toBeTruthy();
-  });
-  /* @conditional-compile-remove(composite-js-helpers) */
   test('loadCallComposite should call createAzureCommunicationCallAdapter and createRoot', async () => {
     const mockAdapterArgs: CallCompositeLoaderProps = {
-      userId: 'userId',
-      token: 'token',
+      userId: { communicationUserId: 'userId' },
+      credential: new AzureCommunicationTokenCredential('token'),
       displayName: 'displayName',
       locator: { groupId: 'groupId' },
       callAdapterOptions: { callingSounds: { callEnded: { url: 'test/url/ended' } } },

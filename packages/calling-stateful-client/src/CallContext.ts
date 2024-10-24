@@ -21,7 +21,6 @@ import { CapabilitiesChangeInfo, ParticipantCapabilities } from '@azure/communic
 import { TeamsCaptionsInfo } from '@azure/communication-calling';
 
 import { CaptionsKind, CaptionsInfo as AcsCaptionsInfo } from '@azure/communication-calling';
-/* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(together-mode) */
 import { TogetherModeVideoStream, TogetherModeSeatingMap } from '@azure/communication-calling';
@@ -112,7 +111,7 @@ export class CallContext {
       },
       callAgent: undefined,
       userId: userId,
-      /* @conditional-compile-remove(unsupported-browser) */ environmentInfo: undefined,
+      environmentInfo: undefined,
       latestErrors: {} as CallErrors,
       /* @conditional-compile-remove(breakout-rooms) */ latestNotifications: {} as CallNotifications
     };
@@ -259,7 +258,6 @@ export class CallContext {
     });
   }
 
-  /* @conditional-compile-remove(unsupported-browser) */
   public setEnvironmentInfo(envInfo: EnvironmentInfo): void {
     this.modifyState((draft: CallClientState) => {
       draft.environmentInfo = envInfo;

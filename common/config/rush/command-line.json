@@ -85,6 +85,14 @@
     },
     {
       "commandKind": "global",
+      "name": "update:beta",
+      "summary": "Update dependencies to beta versions.",
+      "description": "Update dependencies to beta versions.",
+      "shellCommand": "rush update",
+      "safeForSimultaneousRushProcesses": true
+    },
+    {
+      "commandKind": "global",
       "name": "update:all-flavors",
       "summary": "Update dependencies for all flavors",
       "description": "Update dependencies for all flavors.",
@@ -113,6 +121,14 @@
       "summary": "SHORTNAME: update:stable",
       "description": "SHORTNAME: update:stable",
       "shellCommand": "rush update:stable",
+      "safeForSimultaneousRushProcesses": true
+    },
+    {
+      "commandKind": "global",
+      "name": "ub",
+      "summary": "SHORTNAME: update:beta",
+      "description": "SHORTNAME: update:beta",
+      "shellCommand": "rush update:beta",
       "safeForSimultaneousRushProcesses": true
     },
     {

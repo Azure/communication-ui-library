@@ -162,7 +162,6 @@ export class CallSubscriber {
     this._call.feature(Features.DominantSpeakers).on('dominantSpeakersChanged', this.dominantSpeakersChanged);
     /* @conditional-compile-remove(total-participant-count) */
     this._call.on('totalParticipantCountChanged', this.totalParticipantCountChangedHandler);
-    /* @conditional-compile-remove(soft-mute) */
     this._call.on('mutedByOthers', this.mutedByOthersHandler);
 
     for (const localVideoStream of this._call.localVideoStreams) {
@@ -202,7 +201,6 @@ export class CallSubscriber {
     this._call.off('roleChanged', this.callRoleChangedHandler);
     /* @conditional-compile-remove(total-participant-count) */
     this._call.off('totalParticipantCountChanged', this.totalParticipantCountChangedHandler);
-    /* @conditional-compile-remove(soft-mute) */
     this._call.off('mutedByOthers', this.mutedByOthersHandler);
 
     this._participantSubscribers.forEach((participantSubscriber: ParticipantSubscriber) => {
@@ -339,7 +337,6 @@ export class CallSubscriber {
   };
 
   // TODO: Tee to notification state once available
-  /* @conditional-compile-remove(soft-mute) */
   private mutedByOthersHandler = (): void => {
     this._context.teeErrorToState(
       { name: 'mutedByOthers', message: 'Muted by another participant' },

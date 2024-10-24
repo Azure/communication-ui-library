@@ -1,15 +1,17 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { CallState as SDKCallStatus, DominantSpeakersInfo } from '@azure/communication-calling';
-import { ParticipantCapabilities } from '@azure/communication-calling';
-import { VideoDeviceInfo, AudioDeviceInfo } from '@azure/communication-calling';
+import {
+  CallState as SDKCallStatus,
+  DominantSpeakersInfo,
+  ParticipantCapabilities,
+  ParticipantRole,
+  VideoDeviceInfo,
+  AudioDeviceInfo,
+  CapabilitiesChangeInfo,
+  EnvironmentInfo
+} from '@azure/communication-calling';
 
-import { CapabilitiesChangeInfo } from '@azure/communication-calling';
-/* @conditional-compile-remove(unsupported-browser) */
-import { EnvironmentInfo } from '@azure/communication-calling';
-
-import { ParticipantRole } from '@azure/communication-calling';
 /* @conditional-compile-remove(breakout-rooms) */
 import { BreakoutRoom, BreakoutRoomsSettings } from '@azure/communication-calling';
 import {
@@ -29,10 +31,9 @@ import {
   _isInCall,
   _isPreviewOn,
   _dominantSpeakersWithFlatId,
+  DeepNoiseSuppressionEffectDependency,
   VideoBackgroundEffectsDependency
 } from '@internal/calling-component-bindings';
-/* @conditional-compile-remove(DNS) */
-import { DeepNoiseSuppressionEffectDependency } from '@internal/calling-component-bindings';
 import { AdapterErrors } from '../../common/adapters';
 /* @conditional-compile-remove(breakout-rooms) */
 import { AdapterNotifications } from '../../common/adapters';
@@ -159,7 +160,6 @@ export const getRemoteParticipants = (
       [keys: string]: RemoteParticipantState;
     } => state.call?.remoteParticipants;
 
-/* @conditional-compile-remove(unsupported-browser) */
 /**
  * @private
  */
@@ -282,18 +282,15 @@ export const getVideoEffectsDependency = (
   state: CallAdapterState
 ): (() => Promise<VideoBackgroundEffectsDependency>) | undefined => state.onResolveVideoEffectDependency;
 
-/* @conditional-compile-remove(DNS) */
 /** @private */
 export const getDeepNoiseSuppresionEffectsDependency = (
   state: CallAdapterState
 ): (() => Promise<DeepNoiseSuppressionEffectDependency>) | undefined => state.onResolveDeepNoiseSuppressionDependency;
 
-/* @conditional-compile-remove(DNS) */
 /** @private */
 export const getDeepNoiseSuppresionIsOnByDefault = (state: CallAdapterState): boolean | undefined =>
   state.deepNoiseSuppressionOnByDefault;
 
-/* @conditional-compile-remove(DNS) */
 /** @private */
 export const getHideDeepNoiseSupressionButton = (state: CallAdapterState): boolean | undefined =>
   state.hideDeepNoiseSuppressionButton;

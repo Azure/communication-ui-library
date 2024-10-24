@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { AudioDeviceInfo, Call, EnvironmentInfo, VideoDeviceInfo } from '@azure/communication-calling';
+import { AudioDeviceInfo, Call, DeviceAccess, EnvironmentInfo, VideoDeviceInfo } from '@azure/communication-calling';
 import type { CallAdapter, CallAdapterState, VideoBackgroundEffect } from '../../../src';
 import type { MockCallAdapterState } from '../../common';
 import { produce } from 'immer';
@@ -106,8 +106,11 @@ export class MockCallAdapter implements CallAdapter {
   disposeRemoteVideoStreamView(): Promise<void> {
     return Promise.resolve();
   }
-  askDevicePermission(): Promise<void> {
-    return Promise.resolve();
+  askDevicePermission(): Promise<DeviceAccess> {
+    return Promise.resolve({
+      audio: false,
+      video: false
+    });
   }
   async queryCameras(): Promise<VideoDeviceInfo[]> {
     return [];
@@ -151,11 +154,9 @@ export class MockCallAdapter implements CallAdapter {
   stopAllSpotlight(): Promise<void> {
     throw Error('stopAllSpotlight not implemented');
   }
-  /* @conditional-compile-remove(soft-mute) */
   muteParticipant(): Promise<void> {
     throw Error('muteParticipant not implemented');
   }
-  /* @conditional-compile-remove(soft-mute) */
   muteAllRemoteParticipants(): Promise<void> {
     throw Error('muteAllRemoteParticipants not implemented');
   }

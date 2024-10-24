@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/* @conditional-compile-remove(teams-identity-support) */
 import { _isTeamsCall, _isTeamsCallAgent } from '@internal/calling-stateful-client';
 import { Common } from '@internal/acs-ui-common';
 import {
@@ -13,7 +12,7 @@ import {
   _isACSCallAgent
 } from '@internal/calling-stateful-client';
 import { ReactElement } from 'react';
-/* @conditional-compile-remove(teams-identity-support) */
+
 import { createDefaultTeamsCallingHandlers } from './createTeamsCallHandlers';
 import { createDefaultCallingHandlers } from './createHandlers';
 import { CommonCallingHandlers } from './createCommonHandlers';
@@ -42,7 +41,7 @@ export const createDefaultCallingHandlersForComponent = <Props>(
   if (!callAgent && !call && !deviceManager) {
     return createDefaultCallingHandlers(callClient, callAgent, deviceManager, call);
   }
-  /* @conditional-compile-remove(teams-identity-support) */
+
   if (callAgent && _isTeamsCallAgent(callAgent) && (!call || (call && _isTeamsCall(call)))) {
     return createDefaultTeamsCallingHandlers(callClient, callAgent, deviceManager, call);
   }
