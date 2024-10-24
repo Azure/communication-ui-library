@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { registerIcons } from '@fluentui/react';
 import React from 'react';
 import { _ModalClone } from '.';
 import { VideoGalleryLocalParticipant, VideoGalleryRemoteParticipant } from '../types';
@@ -17,21 +16,6 @@ jest.mock('@internal/acs-ui-common', () => {
     __esModule: true,
     ...jest.requireActual('@internal/acs-ui-common')
   };
-});
-
-registerIcons({
-  icons: {
-    horizontalgalleryleftbutton: <></>,
-    horizontalgalleryrightbutton: <></>,
-    videotilemoreoptions: <></>,
-    videotilepinned: <></>,
-    pinparticipant: <></>,
-    unpinparticipant: <></>,
-    videotilescalefit: <></>,
-    videotilescalefill: <></>,
-    verticalgalleryleftbutton: <></>,
-    verticalgalleryrightbutton: <></>
-  }
 });
 
 describe('VideoGallery default layout tests', () => {
