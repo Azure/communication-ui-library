@@ -10,7 +10,6 @@ import { useAdapter } from '../adapter/CallAdapterProvider';
 import { CallAdapterState } from '../adapter/CallAdapter';
 import { CallErrors, CallState, CallClientState, DeviceManagerState } from '@internal/calling-stateful-client';
 import { CommunicationIdentifierKind } from '@azure/communication-common';
-/* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(breakout-rooms) */
 import { CallNotifications } from '@internal/calling-stateful-client';
@@ -87,7 +86,7 @@ const memoizeState = memoizeOne(
     latestNotifications?: undefined | /* @conditional-compile-remove(breakout-rooms) */ CallNotifications,
     displayName?: string,
     alternateCallerId?: string,
-    environmentInfo?: undefined | /* @conditional-compile-remove(unsupported-browser) */ EnvironmentInfo
+    environmentInfo?: undefined | EnvironmentInfo
   ): CallClientState => ({
     userId,
     incomingCalls: {},
@@ -100,7 +99,6 @@ const memoizeState = memoizeOne(
     /* @conditional-compile-remove(breakout-rooms) */
     latestNotifications: latestNotifications ?? ({} as CallNotifications),
     alternateCallerId,
-    /* @conditional-compile-remove(unsupported-browser) */
     environmentInfo
   })
 );
@@ -130,7 +128,6 @@ const adaptCompositeState = (compositeState: CallAdapterState): CallClientState 
       /* @conditional-compile-remove(breakout-rooms) */ (compositeState.latestNotifications as CallNotifications),
     compositeState.displayName,
     compositeState.alternateCallerId,
-    /* @conditional-compile-remove(unsupported-browser) */
     compositeState.environmentInfo
   );
 };

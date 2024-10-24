@@ -1,9 +1,9 @@
 {
   "type": "patch",
   "area": "fix",
-  "workstream": "A11y",
-  "comment": "Update aria-labels and contrast colors",
+  "workstream": "",
+  "comment": "Fix call not found error when gets removed",
   "packageName": "@azure/communication-react",
-  "email": "edwardlee@microsoft.com",
+  "email": "jiangnanhello@live.com",
   "dependentChangeType": "patch"
 }

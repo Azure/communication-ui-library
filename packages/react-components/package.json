@@ -1,6 +1,6 @@
 {
   "name": "@internal/react-components",
-  "version": "1.20.0-beta.1",
+  "version": "1.21.0-beta.0",
   "description": "React component library",
   "module": "dist/dist-esm/index.js",
   "main": "dist/dist-cjs/index.js",
@@ -35,6 +35,7 @@
   },
   "license": "MIT",
   "dependencies": {
+    "@azure/logger": "^1.0.4",
     "@fluentui/react": "^8.120.0",
     "@fluentui/react-components": "^9.54.7",
     "@fluentui/react-file-type-icons": "8.11.18",
@@ -43,7 +44,7 @@
     "@fluentui/react-window-provider": "^2.2.27",
     "@fluentui-contrib/react-chat": "0.1.10",
     "@griffel/react": "^1.5.25",
-    "@internal/acs-ui-common": "1.20.0-beta.1",
+    "@internal/acs-ui-common": "1.21.0-beta.0",
     "copy-to-clipboard": "^3.3.1",
     "dompurify": "^3.1.6",
     "html-react-parser": "^5.1.12",

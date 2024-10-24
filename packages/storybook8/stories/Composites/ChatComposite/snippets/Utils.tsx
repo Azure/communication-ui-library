@@ -37,17 +37,21 @@ const sendMessagesAsBot = async (
   messages: string[]
 ): Promise<void> => {
   const chatClient = new ChatClient(envUrl, new AzureCommunicationTokenCredential(token));
-  const threadClient = await chatClient.getChatThreadClient(threadId);
+  const threadClient = chatClient.getChatThreadClient(threadId);
 
   let index = 0;
   // Send first message immediately so users aren't staring at an empty chat thread.
-  if (messages.length > 0) {
-    threadClient.sendMessage({ content: messages[index++] }, { senderDisplayName: botDisplayName });
+  if (messages[0]) {
+    threadClient.sendMessage({ content: messages[0] }, { senderDisplayName: botDisplayName });
+    index++;
   }
 
-  setInterval(() => {
-    if (index < messages.length) {
-      threadClient.sendMessage({ content: messages[index++] }, { senderDisplayName: botDisplayName });
+  const intervalHandle = setInterval(() => {
+    const message = messages[index++];
+    if (message) {
+      threadClient.sendMessage({ content: message }, { senderDisplayName: botDisplayName });
+    } else {
+      clearInterval(intervalHandle);
     }
   }, 5000);
 };
@@ -55,13 +59,17 @@ const sendMessagesAsBot = async (
 export const sendMessagesAsBotWithAdapter = async (adapter: ChatAdapter, messages: string[]): Promise<void> => {
   let index = 0;
   // Send first message immediately so users aren't staring at an empty chat thread.
-  if (messages.length > 0) {
-    adapter.sendMessage(messages[index++], { senderDisplayName: botDisplayName });
+  if (messages[0]) {
+    adapter.sendMessage(messages[0], { senderDisplayName: botDisplayName });
+    index++;
   }
 
-  setInterval(() => {
-    if (index < messages.length) {
-      adapter.sendMessage(messages[index++], { senderDisplayName: botDisplayName });
+  const intervalHandle = setInterval(() => {
+    const message = messages[index++];
+    if (message) {
+      adapter.sendMessage(message, { senderDisplayName: botDisplayName });
+    } else {
+      clearInterval(intervalHandle);
     }
   }, 5000);
 };
