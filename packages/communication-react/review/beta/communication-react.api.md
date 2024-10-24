@@ -2393,6 +2393,8 @@ export interface ComponentStrings {
     raiseHandButton: RaiseHandButtonStrings;
     reactionButton: ReactionButtonStrings;
     richTextSendBox: RichTextSendBoxStrings;
+    // (undocumented)
+    rtt: RTTStrings;
     screenShareButton: ScreenShareButtonStrings;
     sendBox: SendBoxStrings;
     typingIndicator: TypingIndicatorStrings;
@@ -4422,6 +4424,19 @@ export interface RichTextStrings {
     richTextNumberListTooltip: string;
     richTextToolbarMoreButtonAriaLabel: string;
     richTextUnderlineTooltip: string;
+}
+
+// @beta
+export interface RTTProps extends _CaptionsInfo {
+    isTyping?: boolean;
+    onRenderAvatar?: OnRenderAvatarCallback;
+    strings?: RTTStrings;
+}
+
+// @beta
+export interface RTTStrings {
+    // (undocumented)
+    isTypingText?: string;
 }
 
 // @public
