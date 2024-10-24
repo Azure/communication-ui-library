@@ -46,6 +46,7 @@ import { ReactionButtonStrings } from '../components';
 import { RichTextSendBoxStrings } from '../components/RichTextEditor/RichTextSendBox';
 import { MeetingConferencePhoneInfoModalStrings } from '../components/MeetingConferencePhoneInfo';
 import { IncomingCallNotificationStrings } from '../components/IncomingCallNotification';
+/* @conditional-compile-remove(rtt) */
 import { RTTDisclosureBannerStrings } from '../components/RTTDisclosureBanner';
 
 /**
