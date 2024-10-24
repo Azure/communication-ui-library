@@ -797,7 +797,7 @@ jobs:
         with:
           script: |
             const comment_id = ${{ steps.fc.outputs.comment-id }};
-            await github.issues.deleteComment({
+            await github.rest.issues.deleteComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
               comment_id: comment_id
@@ -806,7 +806,7 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            await github.issues.createComment({
+            await github.rest.issues.createComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: context.issue.number,
