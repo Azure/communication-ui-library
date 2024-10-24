@@ -25,7 +25,7 @@ import { Banner } from './Banner';
 export const BreakoutRoomsBanner = (props: {
   locale: CompositeLocale;
   adapter: CommonCallAdapter;
-}): JSX.Element | undefined => {
+}): JSX.Element | null => {
   const { locale, adapter } = props;
 
   const assignedBreakoutRoom = useSelector(getAssignedBreakoutRoom);
@@ -61,5 +61,5 @@ export const BreakoutRoomsBanner = (props: {
       </Stack>
     );
   }
-  return undefined;
+  return null;
 };
