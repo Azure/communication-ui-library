@@ -459,13 +459,13 @@ export class CallContext {
   /* @conditional-compile-remove(together-mode) */
   public setTogetherModeVideoStreams(
     callId: string,
-    addRemoteVideoStream: TogetherModeStreamViewState[],
-    removeRemoteVideoStream: TogetherModeStreamViewState[]
+    addedStreams: TogetherModeStreamViewState[],
+    removedStreams: TogetherModeStreamViewState[]
   ): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
-        for (const stream of removeRemoteVideoStream) {
+        for (const stream of removedStreams) {
           if (stream.mediaStreamType === 'Video') {
             call.togetherMode.streams.mainVideoStream = undefined;
             call.togetherMode.isActive = false;
@@ -473,7 +473,7 @@ export class CallContext {
           }
         }
 
-        for (const newStream of addRemoteVideoStream) {
+        for (const newStream of addedStreams) {
           // This should only be called by the subscriber and some properties are add by other components so if the
           // stream already exists, only update the values that subscriber knows about.
           const mainVideoStream = call.togetherMode.streams.mainVideoStream;

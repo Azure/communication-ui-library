@@ -295,12 +295,19 @@ export interface TogetherModeStreamViewState extends RemoteVideoStreamState, Cal
 /**
  * State only version of {@link @azure/communication-calling#TogetherModeSeatingMap}.
  * @beta
+ *
+ * Represents the seating position of a participant in Together Mode.
  */
 export interface TogetherModeSeatingPositionState {
+  // The participant id of the participant in the seating position.
   participantId: string;
+  // The top left offset from the top of the together mode view.
   top: number;
+  // The left offset position from the left of the together mode view.
   left: number;
+  //  The width of the seating area
   width: number;
+  // The height of the seating area.
   height: number;
 }
 
