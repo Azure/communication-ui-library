@@ -112,7 +112,7 @@ export class _MockCallAdapter implements CallAdapter {
   }
   /* @conditional-compile-remove(together-mode) */
   createTogetherModeStreamViews(): Promise<void> {
-    throw Error('createFeatureStreamView not implemented');
+    throw Error('createTogetherModeStreamViews not implemented');
   }
   /* @conditional-compile-remove(together-mode) */
   startTogetherMode(): Promise<void> {
@@ -120,7 +120,7 @@ export class _MockCallAdapter implements CallAdapter {
   }
   /* @conditional-compile-remove(together-mode) */
   setTogetherModeSceneSize(width: number, height: number): void {
-    throw Error('Setting Together Mode scene size not implemented');
+    throw Error(`Setting Together Mode scene to width ${width} and height ${height} is not implemented`);
   }
   disposeStreamView(): Promise<void> {
     return Promise.resolve();
