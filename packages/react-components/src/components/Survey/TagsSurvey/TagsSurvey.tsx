@@ -144,7 +144,7 @@ export const _TagsSurvey = (props: _TagsSurveyProps): JSX.Element => {
           setSelectedTags((prevState) => {
             const existingIssues = prevState?.[issueCategory]?.issues;
             if (existingIssues) {
-              prevState[issueCategory]!.issues = [...existingIssues, issue] as any;
+              prevState[issueCategory].issues = [...existingIssues, issue] as any;
             } else {
               prevState[issueCategory] = { issues: [issue] } as any;
             }

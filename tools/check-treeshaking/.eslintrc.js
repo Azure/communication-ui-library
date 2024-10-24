@@ -11,7 +11,6 @@ module.exports = {
   plugins: ['header'],
   rules: {
     eqeqeq: 'warn',
-    '@typescript-eslint/no-non-null-assertion': 'error',
     'header/header': ['error', 'line', ' Copyright (c) Microsoft Corporation.\n Licensed under the MIT License.']
   }
 };
