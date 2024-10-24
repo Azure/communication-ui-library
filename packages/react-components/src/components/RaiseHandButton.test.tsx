@@ -4,18 +4,9 @@
 import React from 'react';
 import { RaiseHandButton } from './RaiseHandButton';
 import { createTestLocale, renderWithLocalization } from './utils/testUtils';
-import { registerIcons } from '@fluentui/react';
 import { screen } from '@testing-library/react';
 
 describe('RaiseHandButton strings should be localizable and overridable', () => {
-  beforeAll(() => {
-    registerIcons({
-      icons: {
-        controlbuttonraisehand: <></>,
-        controlbuttonlowerhand: <></>
-      }
-    });
-  });
   test('Always true test for stable build to avoid error of no tests in suite', async () => {
     expect(true).toBe(true);
   });
