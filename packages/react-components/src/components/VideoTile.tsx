@@ -50,6 +50,8 @@ export interface VideoTileStrings {
   participantStateRinging: string;
   /** String for displaying the Hold state of the remote participant */
   participantStateHold: string;
+  /** String for displaying the reconnecting state of the remote participant */
+  participantReconnecting?: string;
   /** String for the announcement of the muted state of the participant when muted */
   moreOptionsParticipantMutedStateMutedAriaLabel: string;
   /** String for the announcement of the unmuted state of the participant when unmuted */
