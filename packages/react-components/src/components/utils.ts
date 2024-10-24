@@ -5,6 +5,8 @@ import { IIconProps, MessageBarType } from '@fluentui/react';
 import { ActiveErrorMessage, ErrorType } from './ErrorBar';
 import { _SupportedSpokenLanguage } from '../types';
 import { ActiveNotification, NotificationType } from './NotificationStack';
+import { VideoTileStrings } from './VideoTile';
+import { _formatString } from '@internal/acs-ui-common';
 
 /**
  * @private
@@ -338,7 +340,6 @@ export const customNotificationIconName: Partial<{ [key in NotificationType]: st
   callVideoStoppedBySystem: 'ErrorBarCallVideoStoppedBySystem',
   callVideoRecoveredBySystem: 'ErrorBarCallVideoRecoveredBySystem',
   callMacOsCameraAccessDenied: 'ErrorBarCallMacOsCameraAccessDenied',
-  /* @conditional-compile-remove(soft-mute) */
   mutedByRemoteParticipant: 'ErrorBarMutedByRemoteParticipant',
   speakingWhileMuted: 'ErrorBarCallMicrophoneMutedBySystem',
   recordingStarted: 'NotificationBarRecording',
@@ -410,3 +411,33 @@ export const isEnterKeyEventFromCompositionSession = (e: KeyboardEvent): boolean
  * @private
  */
 export const nullToUndefined = <T>(value: T | null): T | undefined => (value === null ? undefined : value);
+
+/**
+ * @private
+ */
+export const formatMoreButtonAriaDescription = (
+  displayName?: string,
+  isMuted?: boolean,
+  isHandRaised?: boolean,
+  state?: string,
+  isSpeaking?: boolean,
+  strings?: VideoTileStrings
+): string => {
+  const mutedState = isMuted
+    ? strings?.moreOptionsParticipantMutedStateMutedAriaLabel
+    : strings?.moreOptionsParticipantMutedStateUnmutedAriaLabel;
+  const handRaisedState = isHandRaised ? strings?.moreOptionsParticipantHandRaisedAriaLabel : undefined;
+  const isSpeakingState = isSpeaking ? strings?.moreOptionsParticipantIsSpeakingAriaLabel : undefined;
+
+  const description = strings?.moreOptionsButtonAriaLabel
+    ? _formatString(strings?.moreOptionsButtonAriaLabel, {
+        displayName: displayName ?? ' ',
+        isMuted: mutedState ?? ' ',
+        isHandRaised: handRaisedState ?? ' ',
+        state: state ?? ' ',
+        isSpeaking: isSpeakingState ?? ' '
+      })
+    : '';
+
+  return description;
+};

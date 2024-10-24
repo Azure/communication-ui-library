@@ -259,8 +259,8 @@ describe('declarative call agent', () => {
 
     expect(Object.keys(context.getState().calls).length).toBe(0);
     expect(Object.keys(context.getState().callsEnded).length).toBe(1);
-    expect(context.getState().callsEnded[mockCallId].callEndReason?.code).toBe(1);
-    expect(context.getState().callsEnded[mockCallId].endTime).toBeTruthy();
+    expect(context.getState().callsEnded[mockCallId]?.callEndReason?.code).toBe(1);
+    expect(context.getState().callsEnded[mockCallId]?.endTime).toBeTruthy();
   });
 
   test('should move incoming call to incomingCallEnded when incoming call is ended and add endTime', async () => {
@@ -283,8 +283,8 @@ describe('declarative call agent', () => {
 
     expect(Object.keys(context.getState().incomingCalls).length).toBe(0);
     expect(Object.keys(context.getState().incomingCallsEnded).length).toBe(1);
-    expect(context.getState().incomingCallsEnded[mockCallId].callEndReason?.code).toBe(1);
-    expect(context.getState().incomingCallsEnded[mockCallId].endTime).toBeTruthy();
+    expect(context.getState().incomingCallsEnded[mockCallId]?.callEndReason?.code).toBe(1);
+    expect(context.getState().incomingCallsEnded[mockCallId]?.endTime).toBeTruthy();
   });
 
   test('should make sure that callsEnded not exceed max length', async () => {

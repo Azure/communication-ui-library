@@ -872,7 +872,7 @@ class DraggableZone extends React.Component<IDraggableZoneProps, IDraggableZoneS
     }
 
     for (let i = 0; i < touchList.length; i++) {
-      if (touchList[i].identifier === this._touchId) {
+      if (touchList[i]?.identifier === this._touchId) {
         return touchList[i];
       }
     }

@@ -150,9 +150,7 @@ export interface MoreDrawerProps extends MoreDrawerDevicesMenuProps {
   useTeamsCaptions?: boolean;
   reactionResources?: ReactionResources;
   onReactionClick?: (reaction: string) => Promise<void>;
-
   onClickMeetingPhoneInfo?: () => void;
-  /* @conditional-compile-remove(soft-mute) */
   onMuteAllRemoteParticipants?: () => void;
 }
 
@@ -202,9 +200,7 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   const drawerSelectionOptions = inferCallWithChatControlOptions(props.callControls);
 
   const showCaptionsButton =
-    props.isCaptionsSupported &&
-    /* @conditional-compile-remove(acs-close-captions) */ drawerSelectionOptions !== false &&
-    /* @conditional-compile-remove(acs-close-captions) */ isEnabled(drawerSelectionOptions.captionsButton);
+    props.isCaptionsSupported && drawerSelectionOptions !== false && isEnabled(drawerSelectionOptions.captionsButton);
 
   if (props.reactionResources !== undefined) {
     drawerMenuItems.push({

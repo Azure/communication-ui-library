@@ -17,11 +17,10 @@ import { ParticipantListWithHeading } from '../common/ParticipantContainer';
 import { peoplePaneContainerTokens } from '../common/styles/ParticipantContainer.styles';
 import { participantListContainerStyles, peoplePaneContainerStyle } from './styles/PeoplePaneContent.styles';
 import { convertContextualMenuItemToDrawerMenuItem } from './ConvertContextualMenuItemToDrawerMenuItem';
-import { CommonCallAdapter } from '../CallComposite';
 import { CallCompositeStrings } from '../CallComposite';
 import { AddPeopleButton } from './AddPeopleButton';
 import { PhoneNumberIdentifier } from '@azure/communication-common';
-import { AddPhoneNumberOptions } from '@azure/communication-calling';
+import { AddPhoneNumberOptions, ParticipantRole } from '@azure/communication-calling';
 import { useAdapter } from '../CallComposite/adapter/CallAdapterProvider';
 import { useLocale } from '../localization';
 
@@ -37,6 +36,8 @@ export const PeoplePaneContent = (props: {
   mobileView?: boolean;
   participantListHeadingMoreButtonProps?: IContextualMenuProps;
   pinnedParticipants?: string[];
+  role: ParticipantRole | undefined;
+  alternateCallerId: string | undefined;
 }): JSX.Element => {
   const {
     inviteLink,
@@ -70,10 +71,8 @@ export const PeoplePaneContent = (props: {
     [adapter]
   );
 
-  const alternateCallerId = adapter.getState().alternateCallerId;
-
   const participantListDefaultProps = usePropsFor(ParticipantList);
-  const removeButtonAllowed = canRemoveParticipants(adapter);
+  const removeButtonAllowed = canRemoveParticipants(props.role);
   const setDrawerMenuItemsForParticipant: (participant?: ParticipantListParticipant) => void = useMemo(() => {
     return (participant?: ParticipantListParticipant) => {
       if (participant) {
@@ -158,7 +157,7 @@ export const PeoplePaneContent = (props: {
           participantList={participantList}
           strings={strings}
           onAddParticipant={addParticipantToCall}
-          alternateCallerId={alternateCallerId}
+          alternateCallerId={props.alternateCallerId}
         />
       </Stack>
     );
@@ -171,7 +170,7 @@ export const PeoplePaneContent = (props: {
       participantList={participantList}
       strings={strings}
       onAddParticipant={addParticipantToCall}
-      alternateCallerId={alternateCallerId}
+      alternateCallerId={props.alternateCallerId}
     />
   );
 };
@@ -210,12 +209,11 @@ const createDefaultContextualMenuItems = (
   return menuItems;
 };
 
-const canRemoveParticipants = (adapter: CommonCallAdapter): boolean => {
+const canRemoveParticipants = (role: ParticipantRole | undefined): boolean => {
   // TODO: We should be using the removeParticipant capability here but there is an SDK bug for Rooms where a
   // Presenter's removeParticipant capability is {isPresent: false, reason: 'CapabilityNotApplicableForTheCallType'}.
   // But a Presenter in Rooms should be able to remove participants according to the following documentation
   // https://learn.microsoft.com/en-us/azure/communication-services/concepts/rooms/room-concept#predefined-participant-roles-and-permissions
-  const role = adapter.getState().call?.role;
   const canRemove = role === 'Presenter' || role === 'Unknown' || role === undefined;
   return canRemove;
 };

@@ -10,7 +10,6 @@ import {
   RemoteVideoStream as SdkRemoteVideoStream,
   VideoDeviceInfo
 } from '@azure/communication-calling';
-/* @conditional-compile-remove(teams-identity-support) */
 import { CallKind } from '@azure/communication-calling';
 import { CommunicationUserKind } from '@azure/communication-common';
 import { CallState, LocalVideoStreamState, RemoteParticipantState, RemoteVideoStreamState } from './CallClientState';
@@ -66,7 +65,6 @@ interface TestData {
 
 function createMockCall(mockCallId: string): CallState {
   const call: CallState = {
-    /* @conditional-compile-remove(teams-identity-support) */
     kind: 'Call' as CallKind,
     id: mockCallId,
     callerInfo: {} as CallerInfo,
@@ -89,6 +87,8 @@ function createMockCall(mockCallId: string): CallState {
     /* @conditional-compile-remove(local-recording-notification) */
     localRecording: { isLocalRecordingActive: false },
     raiseHand: { raisedHands: [] },
+    /* @conditional-compile-remove(together-mode) */
+    togetherMode: { stream: [] },
     localParticipantReaction: undefined,
     transcription: { isTranscriptionActive: false },
     screenShareRemoteParticipant: undefined,
@@ -103,7 +103,7 @@ function createMockCall(mockCallId: string): CallState {
       currentSpokenLanguage: '',
       isCaptionsFeatureActive: false,
       startCaptionsInProgress: false,
-      /* @conditional-compile-remove(acs-close-captions) */
+
       captionsKind: 'Captions'
     },
     transfer: {
@@ -230,7 +230,7 @@ describe('stream utils', () => {
     expect(internalContext.getLocalRenderInfo(mockCallId, 'Video')?.stream).toBeDefined();
     expect(internalContext.getLocalRenderInfo(mockCallId, 'Video')?.renderer).toBeDefined();
     expect(internalContext.getLocalRenderInfo(mockCallId, 'Video')?.status).toBe('Rendered');
-    expect(context.getState().calls[mockCallId]?.localVideoStreams[0].view).toBeDefined();
+    expect(context.getState().calls[mockCallId]?.localVideoStreams[0]?.view).toBeDefined();
   });
 
   test('cleans up state and stop rendering when disposeView is called on remote stream', async () => {
@@ -459,7 +459,7 @@ describe('stream utils', () => {
 
     const views = context.getState().deviceManager.unparentedViews;
     expect(views.length).toBe(1);
-    expect(views[0].view).toBeDefined();
+    expect(views[0]?.view).toBeDefined();
   });
 
   test('is able to render LocalVideoStream not tied to a call and stop rendering it by reference find', async () => {
@@ -494,7 +494,7 @@ describe('stream utils', () => {
 
     const views = context.getState().deviceManager.unparentedViews;
     expect(views.length).toBe(1);
-    expect(views[0].view).toBeDefined();
+    expect(views[0]?.view).toBeDefined();
   });
 
   test('context state correctly has startVideo error when unparentedView throws an error creating a video stream', async () => {

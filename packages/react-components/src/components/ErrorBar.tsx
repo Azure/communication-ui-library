@@ -234,7 +234,6 @@ export interface ErrorBarStrings {
    */
   startSpotlightWhileMaxParticipantsAreSpotlighted: string;
 
-  /* @conditional-compile-remove(soft-mute) */
   /**
    * An error message when local user is muted by a remote participant
    */

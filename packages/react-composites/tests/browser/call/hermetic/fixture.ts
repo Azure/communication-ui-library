@@ -12,11 +12,8 @@ import type {
   MockRemoteParticipantState,
   MockVideoStreamRendererViewState
 } from '../../../common';
-/* @conditional-compile-remove(teams-identity-support) */
 import type { CallKind, DominantSpeakersInfo, ParticipantRole } from '@azure/communication-calling';
-
 import type { ParticipantCapabilities } from '@azure/communication-calling';
-
 import { CallState, CapabilitiesFeatureState } from '@internal/calling-stateful-client';
 
 const SERVER_URL = 'http://localhost';
@@ -76,7 +73,7 @@ export function defaultMockCallAdapterState(
     page: callEndReasonSubCode ? 'leftCall' : 'call',
     call: {
       id: 'call1',
-      /* @conditional-compile-remove(teams-identity-support) */
+
       kind: 'Call' as CallKind,
       callerInfo: { displayName: 'caller', identifier: { kind: 'communicationUser', communicationUserId: '1' } },
       direction: 'Incoming',
@@ -94,6 +91,8 @@ export function defaultMockCallAdapterState(
       remoteParticipants,
       remoteParticipantsEnded: {},
       raiseHand: { raisedHands: [] },
+      /* @conditional-compile-remove(together-mode) */
+      togetherMode: { stream: [] },
       pptLive: { isActive: false },
       role: role ?? 'Unknown',
       dominantSpeakers: dominantSpeakers,
@@ -107,7 +106,7 @@ export function defaultMockCallAdapterState(
         currentSpokenLanguage: '',
         isCaptionsFeatureActive: false,
         startCaptionsInProgress: false,
-        /* @conditional-compile-remove(acs-close-captions) */
+
         captionsKind: 'Captions'
       },
       transfer: {
@@ -236,7 +235,7 @@ export function addVideoStream(
   scalingMode?: 'Stretch' | 'Crop' | 'Fit'
 ): void {
   const streams = Object.values(participant.videoStreams).filter((s) => s.mediaStreamType === 'Video');
-  if (streams.length !== 1) {
+  if (streams.length !== 1 || !streams[0]) {
     throw new Error(`Expected 1 video stream for ${participant.displayName}, got ${streams.length}`);
   }
   addDummyView(streams[0], isReceiving, scalingMode);
@@ -253,7 +252,7 @@ export function addScreenshareStream(
   scalingMode?: 'Stretch' | 'Crop' | 'Fit'
 ): void {
   const streams = Object.values(participant.videoStreams).filter((s) => s.mediaStreamType === 'ScreenSharing');
-  if (streams.length !== 1) {
+  if (streams.length !== 1 || !streams[0]) {
     throw new Error(`Expected 1 screenshare stream for ${participant.displayName}, got ${streams.length}`);
   }
   addDummyView(streams[0], isReceiving, scalingMode);
@@ -458,8 +457,8 @@ const presenterCapabilitiesInRoomsCall: ParticipantCapabilities = {
   },
   turnVideoOn: { isPresent: true, reason: 'Capable' },
   muteOthers: {
-    isPresent: false,
-    reason: 'CapabilityNotApplicableForTheCallType'
+    isPresent: true,
+    reason: 'Capable'
   },
   useReactions: {
     isPresent: true,
@@ -500,8 +499,8 @@ const presenterCapabilitiesInTeamsCall: ParticipantCapabilities = {
   },
   turnVideoOn: { isPresent: true, reason: 'Capable' },
   muteOthers: {
-    isPresent: false,
-    reason: 'CapabilityNotApplicableForTheCallType'
+    isPresent: true,
+    reason: 'Capable'
   },
   useReactions: {
     isPresent: false,
@@ -519,7 +518,7 @@ const presenterCapabilitiesInTeamsCall: ParticipantCapabilities = {
 
 const defaultEndedCallState: CallState = {
   id: 'call0',
-  /* @conditional-compile-remove(teams-identity-support) */
+
   kind: 'Call' as CallKind,
   callerInfo: { displayName: 'caller', identifier: { kind: 'communicationUser', communicationUserId: '1' } },
   direction: 'Incoming',
@@ -537,6 +536,8 @@ const defaultEndedCallState: CallState = {
   remoteParticipants: {},
   remoteParticipantsEnded: {},
   raiseHand: { raisedHands: [] },
+  /* @conditional-compile-remove(together-mode) */
+  togetherMode: { stream: [] },
   pptLive: { isActive: false },
   captionsFeature: {
     captions: [],
@@ -546,7 +547,7 @@ const defaultEndedCallState: CallState = {
     currentSpokenLanguage: '',
     isCaptionsFeatureActive: false,
     startCaptionsInProgress: false,
-    /* @conditional-compile-remove(acs-close-captions) */
+
     captionsKind: 'Captions'
   },
   transfer: {

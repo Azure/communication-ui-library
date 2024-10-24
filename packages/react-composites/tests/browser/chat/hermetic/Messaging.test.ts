@@ -36,6 +36,9 @@ test.describe('Tests related to messaging', async () => {
 
     await waitForChatCompositeToLoad(page);
 
+    if (!TEST_PARTICIPANTS[0] || !TEST_PARTICIPANTS[1] || !TEST_PARTICIPANTS[2]) {
+      throw new Error('TEST_PARTICIPANTS must be defined');
+    }
     await page.goto(
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
         localParticipant: TEST_PARTICIPANTS[1],
@@ -66,6 +69,9 @@ test.describe('Tests related to messaging', async () => {
 
     await waitForChatCompositeToLoad(page);
 
+    if (!TEST_PARTICIPANTS[0] || !TEST_PARTICIPANTS[1] || !TEST_PARTICIPANTS[2]) {
+      throw new Error('TEST_PARTICIPANTS must be defined');
+    }
     await page.goto(
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
         localParticipant: TEST_PARTICIPANTS[1],

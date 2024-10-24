@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import React from 'react';
-import { _formatString } from '@internal/acs-ui-common';
+import { AttachmentMetadata, _formatString } from '@internal/acs-ui-common';
 import parse, { HTMLReactParserOptions, Element as DOMElement } from 'html-react-parser';
 import { attributesToProps } from 'html-react-parser';
 import Linkify from 'react-linkify';
@@ -21,10 +21,9 @@ import LiveMessage from '../Announcer/LiveMessage';
 import { defaultOnMentionRender } from './MentionRenderer';
 import DOMPurify from 'dompurify';
 import { _AttachmentDownloadCardsStrings } from '../Attachment/AttachmentDownloadCards';
-/* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
-import { AttachmentMetadata } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { dataLossIconStyle } from '../styles/MessageThread.styles';
+import { messageTextContentStyles } from '../styles/MessageThread.styles';
 
 type ChatMessageContentProps = {
   message: ChatMessage;
@@ -45,6 +44,7 @@ type MessageContentWithLiveAriaProps = {
   liveMessage: string;
   ariaLabel?: string;
   content: JSX.Element;
+  className?: string;
 };
 
 /**
@@ -91,7 +91,7 @@ export const ChatMessageContent = (props: ChatMessageContentProps): JSX.Element 
 
 const MessageContentWithLiveAria = (props: MessageContentWithLiveAriaProps): JSX.Element => {
   return (
-    <div data-ui-status={props.message.status} role="text" aria-label={props.ariaLabel}>
+    <div data-ui-status={props.message.status} role="text" aria-label={props.ariaLabel} className={props.className}>
       <LiveMessage message={props.liveMessage} ariaLive="polite" />
       {props.content}
     </div>
@@ -115,6 +115,7 @@ const MessageContentAsText = (props: ChatMessageContentProps): JSX.Element => {
       message={props.message}
       liveMessage={generateLiveMessage(props)}
       ariaLabel={messageContentAriaText(props)}
+      className={messageTextContentStyles}
       content={
         <Linkify
           componentDecorator={(decoratedHref: string, decoratedText: string, key: number) => {
@@ -169,10 +170,7 @@ export const BlockedMessageContent = (props: BlockedMessageContentProps): JSX.El
 };
 
 const extractContentForAllyMessage = (props: ChatMessageContentProps): string => {
-  let attachments = undefined;
-  /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
-  attachments = props.message.attachments;
-  if (props.message.content || attachments) {
+  if (props.message.content || props.message.attachments) {
     // Replace all <img> tags with 'image' for aria.
     const parsedContent = DOMPurify.sanitize(props.message.content ?? '', {
       ALLOWED_TAGS: ['img'],
@@ -190,8 +188,7 @@ const extractContentForAllyMessage = (props: ChatMessageContentProps): string =>
 
     // Inject message attachment count for aria.
     // this is only applying to file attachments not for inline images.
-    /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
-    if (attachments && attachments.length > 0) {
+    if (props.message.attachments && props.message.attachments.length > 0) {
       const attachmentCardDescription = attachmentCardGroupDescription(props);
       const attachmentTextNode = document.createElement('div');
       attachmentTextNode.innerHTML = `${attachmentCardDescription}`;
@@ -229,13 +226,11 @@ const messageContentAriaText = (props: ChatMessageContentProps): string | undefi
       });
 };
 
-/* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
 const attachmentCardGroupDescription = (props: ChatMessageContentProps): string => {
   const attachments = props.message.attachments;
   return getAttachmentCountLiveMessage(attachments ?? [], props.strings.attachmentCardGroupMessage);
 };
 
-/* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
 /**
  * @private
  */
@@ -269,7 +264,7 @@ const processHtmlToReact = (props: ChatMessageContentProps): JSX.Element => {
       if (domNode instanceof DOMElement && domNode.attribs) {
         // Transform custom rendering of mentions
         /* @conditional-compile-remove(mention) */
-        if (domNode.name === 'msft-mention') {
+        if (domNode.name === 'msft-mention' && domNode.attribs.id) {
           const { id } = domNode.attribs;
           const mention: Mention = {
             id: id,
@@ -283,7 +278,9 @@ const processHtmlToReact = (props: ChatMessageContentProps): JSX.Element => {
 
         // Transform inline images
         if (domNode.name && domNode.name === 'img' && domNode.attribs && domNode.attribs.id) {
-          domNode.attribs['aria-label'] = domNode.attribs.name;
+          if (domNode.attribs.name) {
+            domNode.attribs['aria-label'] = domNode.attribs.name;
+          }
           const imgProps = attributesToProps(domNode.attribs);
           const inlineImageProps: InlineImage = { messageId: props.message.messageId, imageAttributes: imgProps };
 
@@ -324,7 +321,7 @@ const decodeEntities = (encodedString: string): string => {
       // Find all matches of HTML entities defined in translate_re and
       // replace them with the corresponding character from the translate object.
       .replace(translate_re, function (match, entity) {
-        return translate[entity];
+        return translate[entity] ?? match;
       })
       // Find numeric entities (e.g., &#65;)
       // and replace them with the equivalent character using the String.fromCharCode method,

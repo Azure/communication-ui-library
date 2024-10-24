@@ -41,7 +41,7 @@ export type CommonCallControlOptions = {
    */
   endCallButton?:
     | boolean
-    | /* @conditional-compile-remove(end-call-options) */ {
+    | {
         /**
          * whether to make end call button to trigger a menu, which will enable end call for everybody functionality.
          * @defaultValue false
@@ -113,7 +113,7 @@ export type CommonCallControlOptions = {
    * Show or hide the exit spotlight button in the composite control bar when local participant is spotlighted.
    */
   exitSpotlightButton?: boolean;
-  /* @conditional-compile-remove(acs-close-captions) */
+
   /**
    * Show, Hide or Disable captions during a call.
    * @defaultValue true

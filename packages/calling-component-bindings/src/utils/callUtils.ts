@@ -1,10 +1,20 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { DeviceManagerState, RemoteParticipantState, StatefulCallClient } from '@internal/calling-stateful-client';
-import { CallState as CallStatus, LocalVideoStream, ParticipantRole } from '@azure/communication-calling';
-/* @conditional-compile-remove(unsupported-browser) */
-import { Features, EnvironmentInfo } from '@azure/communication-calling';
+import {
+  CallClientState,
+  CallState,
+  DeviceManagerState,
+  RemoteParticipantState,
+  StatefulCallClient
+} from '@internal/calling-stateful-client';
+import {
+  CallState as CallStatus,
+  EnvironmentInfo,
+  Features,
+  LocalVideoStream,
+  ParticipantRole
+} from '@azure/communication-calling';
 import {
   CommunicationIdentifier,
   CommunicationUserIdentifier,
@@ -59,7 +69,7 @@ export const _isInLobbyOrConnecting = (callStatus: CallStatus | undefined): bool
 export const _isPreviewOn = (deviceManager: DeviceManagerState): boolean => {
   // TODO: we should take in a LocalVideoStream that developer wants to use as their 'Preview' view. We should also
   // handle cases where 'Preview' view is in progress and not necessary completed.
-  return deviceManager.unparentedViews.length > 0 && deviceManager.unparentedViews[0].view !== undefined;
+  return deviceManager.unparentedViews[0]?.view !== undefined;
 };
 
 /**
@@ -104,7 +114,6 @@ const memoizedUpdateDisplayName = memoizeFnAll((participantId: string, participa
   }
 });
 
-/* @conditional-compile-remove(unsupported-browser) */
 /**
  * Check whether the call is in a supported browser
  *
@@ -188,4 +197,19 @@ export const createLocalVideoStream = async (callClient: StatefulCallClient): Pr
     return new LocalVideoStream(camera);
   }
   return undefined;
+};
+
+/**
+ * Get call state if existing, if not and the call not exists in ended record return undefined, if it never exists, throw an error.
+ * @private
+ */
+export const getCallStateIfExist = (state: CallClientState, callId: string): CallState | undefined => {
+  if (!state.calls[callId]) {
+    // If call has ended, we don't need to throw an error.
+    if (state.callsEnded[callId]) {
+      return undefined;
+    }
+    throw new Error(`Call Not Found: ${callId}`);
+  }
+  return state.calls[callId];
 };

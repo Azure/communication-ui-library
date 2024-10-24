@@ -26,6 +26,7 @@
     "dismissSidePaneButtonLabel": "Sluiten",
     "videoEffectsPaneTitle": "Effecten",
     "videoEffectsPaneBackgroundSelectionTitle": "Achtergrond",
+    "videoEffectsPaneAriaLabel": "Deelvenster video-effectenVideo",
     "configurationPageVideoEffectsButtonLabel": "Effecten",
     "unableToStartVideoEffect": "Kan video-effect niet toepassen.",
     "blurBackgroundEffectButtonLabel": "Vervagen",
@@ -341,7 +342,7 @@
     "pinParticipantMenuLabel": "Voor mij vastmaken",
     "pinParticipantLimitReachedMenuLabel": "Pin (limiet bereikt)",
     "unpinParticipantMenuLabel": "Losmaken",
-    "pinParticipantMenuItemAriaLabel": "Vastmaken",
+    "pinParticipantMenuItemAriaLabel": "Voor mij vastmaken",
     "unpinParticipantMenuItemAriaLabel": "Losmaken",
     "muteAllMenuLabel": "Allen dempen",
     "muteAllDialogTitle": "Iedereen dempen?",
@@ -406,6 +407,6 @@
     "openDtmfDialpadLabel": "Toetsenblok weergeven",
     "dtmfDialpadPlaceholderText": "Nummer invoeren",
     "breakoutRoomChatPaneTitle": "Aparte vergaderruimte chat",
-    "chatContentSpinnerLabel": "Loading..."
+    "chatContentSpinnerLabel": "Laden..."
   }
 }

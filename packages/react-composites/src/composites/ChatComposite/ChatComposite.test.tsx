@@ -184,7 +184,7 @@ describe('ChatComposite - text only mode', () => {
       const onPasteFunction = onPaste as (event: { content: DocumentFragment }) => void;
       expect(onPasteFunction).toBe(removeImageTags);
     } else {
-      fail('onPaste is undefined');
+      throw new Error('onPaste is undefined');
     }
   });
 

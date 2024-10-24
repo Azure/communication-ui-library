@@ -6,9 +6,7 @@ import { IContextualMenuItem } from '@fluentui/react';
 import { _isInLobbyOrConnecting } from '@internal/calling-component-bindings';
 import { ControlBar, DevicesButton, ParticipantMenuItemsCallback } from '@internal/react-components';
 import { HoldButton } from '@internal/react-components';
-import React, { useMemo } from 'react';
-/* @conditional-compile-remove(DNS) */
-import { useCallback, useState, useEffect } from 'react';
+import React, { useMemo, useCallback, useState, useEffect } from 'react';
 import { CallControlOptions } from '../types/CallControlOptions';
 import { Camera } from './buttons/Camera';
 import { Devices } from './buttons/Devices';
@@ -17,7 +15,6 @@ import { Microphone } from './buttons/Microphone';
 import { Participants } from './buttons/Participants';
 import { ScreenShare } from './buttons/ScreenShare';
 import { ContainerRectProps } from '../../common/ContainerRectProps';
-
 import { People } from './buttons/People';
 import { useLocale } from '../../localization';
 import { MoreButton } from '../../common/MoreButton';
@@ -26,7 +23,6 @@ import { buttonFlyoutIncreasedSizeStyles } from '../styles/Buttons.styles';
 import { useAdapter } from '../adapter/CallAdapterProvider';
 import { isDisabled } from '../utils';
 import { callControlsContainerStyles } from '../styles/CallPage.styles';
-import { CommonCallAdapter } from '../adapter';
 import { RaiseHand } from './buttons/RaiseHand';
 import { RaiseHandButton, RaiseHandButtonProps } from '@internal/react-components';
 import { _generateDefaultDeviceMenuProps } from '@internal/react-components';
@@ -40,8 +36,16 @@ import { Reaction } from './buttons/Reaction';
 import { useSelector } from '../hooks/useSelector';
 import { capabilitySelector } from '../../CallComposite/selectors/capabilitySelector';
 import { callStatusSelector } from '../../CallComposite/selectors/callStatusSelector';
-/* @conditional-compile-remove(DNS) */
 import { _isSafari } from '../../CallComposite/utils';
+import {
+  getIsRoomsCall,
+  getReactionResources,
+  getRole,
+  getDeepNoiseSuppresionEffectsDependency,
+  getDeepNoiseSuppresionIsOnByDefault,
+  getHideDeepNoiseSupressionButton,
+  getEnvironmentInfo
+} from '../selectors/baseSelectors';
 
 /**
  * @private
@@ -89,43 +93,34 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
     [props.isMobile, props.options]
   );
 
-  const adapter = useAdapter();
-
   const localeStrings = useLocale();
 
-  /* @conditional-compile-remove(DNS) */
   const [isDeepNoiseSuppressionOn, setDeepNoiseSuppressionOn] = useState<boolean>(false);
 
-  /* @conditional-compile-remove(DNS) */
+  const adapter = useAdapter();
   const startDeepNoiseSuppression = useCallback(async () => {
     await adapter.startNoiseSuppressionEffect();
   }, [adapter]);
 
-  /* @conditional-compile-remove(DNS) */
+  const deepNoiseSuppresionEffectsDependency = useSelector(getDeepNoiseSuppresionEffectsDependency);
+  const deepNoiseSuppressionOnByDefault = useSelector(getDeepNoiseSuppresionIsOnByDefault);
   useEffect(() => {
-    if (
-      adapter.getState().onResolveDeepNoiseSuppressionDependency &&
-      adapter.getState().deepNoiseSuppressionOnByDefault
-    ) {
+    if (deepNoiseSuppresionEffectsDependency && deepNoiseSuppressionOnByDefault) {
       startDeepNoiseSuppression();
       setDeepNoiseSuppressionOn(true);
     }
-  }, [adapter, startDeepNoiseSuppression]);
+  }, [deepNoiseSuppresionEffectsDependency, deepNoiseSuppressionOnByDefault, startDeepNoiseSuppression]);
 
-  /* @conditional-compile-remove(DNS) */
-  const environmentInfo = adapter.getState().environmentInfo;
+  const environmentInfo = useSelector(getEnvironmentInfo);
 
-  /* @conditional-compile-remove(DNS) */
   const isSafari = _isSafari(environmentInfo);
-  /* @conditional-compile-remove(DNS) */
-  const showNoiseSuppressionButton =
-    adapter.getState().onResolveDeepNoiseSuppressionDependency &&
-    !adapter.getState().hideDeepNoiseSuppressionButton &&
+  const hideDeepNoiseSuppressionButton = useSelector(getHideDeepNoiseSupressionButton);
+  const showNoiseSuppressionButton = !!(
+    deepNoiseSuppresionEffectsDependency &&
+    !hideDeepNoiseSuppressionButton &&
     !isSafari
-      ? true
-      : false;
+  );
 
-  /* @conditional-compile-remove(DNS) */
   const onClickNoiseSuppression = useCallback(async () => {
     if (isDeepNoiseSuppressionOn) {
       await adapter.stopNoiseSuppressionEffect();
@@ -197,6 +192,8 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
     numberOfButtons++;
   }
 
+  const isRoomsCall = useSelector(getIsRoomsCall);
+
   const moreButtonContextualMenuItems = (): IContextualMenuItem[] => {
     const items: IContextualMenuItem[] = [];
 
@@ -218,7 +215,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
       });
     }
 
-    if (!isRoomsCallTrampoline(adapter)) {
+    if (!isRoomsCall) {
       items.push({
         key: 'holdButtonKey',
         text: localeStrings.component.strings.holdButton.tooltipOffContent,
@@ -267,12 +264,11 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
     showMoreButton = isEnabled(options?.moreButton);
   }
 
-  const reactionResources = adapter.getState().reactions;
+  const reactionResources = useSelector(getReactionResources);
   const raiseHandButtonIsEnabled = isEnabled(options?.raiseHandButton);
   let showRaiseHandButtonInControlBar = raiseHandButtonIsEnabled;
-  const role = adapter.getState().call?.role;
-  const hideRaiseHandButtonInRoomsCall =
-    adapter.getState().isRoomsCall && role && ['Consumer', 'Unknown'].includes(role);
+  const role = useSelector(getRole);
+  const hideRaiseHandButtonInRoomsCall = isRoomsCall && role && ['Consumer', 'Unknown'].includes(role);
   if (showRaiseHandButtonInControlBar && (props.isMobile ? numberOfButtons < 5 : true)) {
     numberOfButtons++;
   } else {
@@ -382,11 +378,8 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
             <Microphone
               displayType={options?.displayType}
               disabled={isDisabled(options?.microphoneButton)}
-              /* @conditional-compile-remove(DNS) */
               onClickNoiseSuppression={onClickNoiseSuppression}
-              /* @conditional-compile-remove(DNS) */
               isDeepNoiseSuppressionOn={isDeepNoiseSuppressionOn}
-              /* @conditional-compile-remove(DNS) */
               showNoiseSuppressionButton={showNoiseSuppressionButton}
             />
           )}
@@ -470,8 +463,3 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
 };
 
 const isEnabled = (option: unknown): boolean => option !== false;
-
-/** @private */
-export const isRoomsCallTrampoline = (adapter: CommonCallAdapter): boolean => {
-  return adapter.getState().isRoomsCall;
-};

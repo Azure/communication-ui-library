@@ -2,6 +2,48 @@
   "name": "@internal/acs-ui-javascript-loaders",
   "entries": [
     {
+      "date": "Tue, 15 Oct 2024 20:24:25 GMT",
+      "version": "1.20.0",
+      "tag": "@internal/acs-ui-javascript-loaders_v1.20.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@internal/acs-ui-javascript-loaders",
+            "comment": "Bump @internal/acs-ui-common to v1.20.0",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/acs-ui-javascript-loaders",
+            "comment": "Bump @internal/react-composites to v1.20.0",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 01 Oct 2024 17:03:47 GMT",
+      "version": "1.20.0-beta.1",
+      "tag": "@internal/acs-ui-javascript-loaders_v1.20.0-beta.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@internal/acs-ui-javascript-loaders",
+            "comment": "Bump @internal/acs-ui-common to v1.20.0-beta.1",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/acs-ui-javascript-loaders",
+            "comment": "Bump @internal/react-composites to v1.20.0-beta.1",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 12 Sep 2024 18:13:19 GMT",
       "version": "1.19.0",
       "tag": "@internal/acs-ui-javascript-loaders_v1.19.0",

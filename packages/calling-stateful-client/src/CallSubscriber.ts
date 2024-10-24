@@ -30,6 +30,8 @@ import { SpotlightSubscriber } from './SpotlightSubscriber';
 import { LocalRecordingSubscriber } from './LocalRecordingSubscriber';
 /* @conditional-compile-remove(breakout-rooms) */
 import { BreakoutRoomsSubscriber } from './BreakoutRoomsSubscriber';
+/* @conditional-compile-remove(together-mode) */
+import { TogetherModeSubscriber } from './TogetherModeSubscriber';
 
 /**
  * Keeps track of the listeners assigned to a particular call because when we get an event from SDK, it doesn't tell us
@@ -60,6 +62,8 @@ export class CallSubscriber {
   private _spotlightSubscriber: SpotlightSubscriber;
   /* @conditional-compile-remove(breakout-rooms) */
   private _breakoutRoomsSubscriber: BreakoutRoomsSubscriber;
+  /* @conditional-compile-remove(together-mode) */
+  private _togetherModeSubscriber: TogetherModeSubscriber;
 
   constructor(call: CallCommon, context: CallContext, internalContext: InternalCallContext) {
     this._call = call;
@@ -119,6 +123,12 @@ export class CallSubscriber {
       this._context,
       this._call.feature(Features.BreakoutRooms)
     );
+    /* @conditional-compile-remove(together-mode) */
+    this._togetherModeSubscriber = new TogetherModeSubscriber(
+      this._callIdRef,
+      this._context,
+      this._call.feature(Features.TogetherMode)
+    );
 
     this.subscribe();
   }
@@ -151,7 +161,6 @@ export class CallSubscriber {
     this._call.feature(Features.DominantSpeakers).on('dominantSpeakersChanged', this.dominantSpeakersChanged);
     /* @conditional-compile-remove(total-participant-count) */
     this._call.on('totalParticipantCountChanged', this.totalParticipantCountChangedHandler);
-    /* @conditional-compile-remove(soft-mute) */
     this._call.on('mutedByOthers', this.mutedByOthersHandler);
 
     for (const localVideoStream of this._call.localVideoStreams) {
@@ -191,7 +200,6 @@ export class CallSubscriber {
     this._call.off('roleChanged', this.callRoleChangedHandler);
     /* @conditional-compile-remove(total-participant-count) */
     this._call.off('totalParticipantCountChanged', this.totalParticipantCountChangedHandler);
-    /* @conditional-compile-remove(soft-mute) */
     this._call.off('mutedByOthers', this.mutedByOthersHandler);
 
     this._participantSubscribers.forEach((participantSubscriber: ParticipantSubscriber) => {
@@ -228,6 +236,8 @@ export class CallSubscriber {
     this._spotlightSubscriber.unsubscribe();
     /* @conditional-compile-remove(breakout-rooms) */
     this._breakoutRoomsSubscriber.unsubscribe();
+    /* @conditional-compile-remove(together-mode) */
+    this._togetherModeSubscriber.unsubscribe();
   };
 
   // This is a helper function to safely call subscriber functions. This is needed in order to prevent events
@@ -326,7 +336,6 @@ export class CallSubscriber {
   };
 
   // TODO: Tee to notification state once available
-  /* @conditional-compile-remove(soft-mute) */
   private mutedByOthersHandler = (): void => {
     this._context.teeErrorToState(
       { name: 'mutedByOthers', message: 'Muted by another participant' },

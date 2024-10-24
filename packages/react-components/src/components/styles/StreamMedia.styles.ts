@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 import { ISpinnerStyles, mergeStyles, Theme } from '@fluentui/react';
+import { isDarkThemed } from '../../theming/themeUtils';
 
 /**
  * @private
@@ -37,7 +38,7 @@ export const reconnectingContainer = (): string =>
     bottom: '0',
     left: '0',
     right: '0',
-    background: 'rgba(0, 0, 0, 0.5)',
+    background: 'rgba(0, 0, 0, 0.55)',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center'
