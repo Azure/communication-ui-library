@@ -101,11 +101,11 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const defaultDisplayName = localStorageAvailable ? getDisplayNameFromLocalStorage() : null;
   const [displayName, setDisplayName] = useState<string | undefined>(defaultDisplayName ?? undefined);
 
-  const [chosenCallOption, setChosenCallOption] = useState<ICallChoiceGroupOption>(callOptions[0]);
+  const [chosenCallOption, setChosenCallOption] = useState(callOptions[0] as ICallChoiceGroupOption);
   const [callLocator, setCallLocator] = useState<TeamsMeetingLinkLocator | RoomLocator | TeamsMeetingIdLocator>();
   const [meetingId, setMeetingId] = useState<string>();
   const [passcode, setPasscode] = useState<string>();
-  const [chosenRoomsRoleOption, setRoomsRoleOption] = useState<IChoiceGroupOption>(roomRoleOptions[1]);
+  const [chosenRoomsRoleOption, setRoomsRoleOption] = useState<IChoiceGroupOption | undefined>(roomRoleOptions[1]);
   const [alternateCallerId, setAlternateCallerId] = useState<string>();
   const [outboundParticipants, setOutboundParticipants] = useState<string | undefined>();
   const [dialPadParticipant, setDialpadParticipant] = useState<string>();
@@ -388,7 +388,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                   displayName: !displayName ? 'Teams UserName PlaceHolder' : displayName,
                   callLocator: callLocator,
                   option: chosenCallOption.key,
-                  role: chosenRoomsRoleOption.key,
+                  role: chosenRoomsRoleOption?.key,
                   outboundParticipants: acsParticipantsToCall ? acsParticipantsToCall : dialpadParticipantToCall,
                   alternateCallerId,
 
