@@ -816,7 +816,7 @@ jobs:
             });
       - name: Check the whether the bundle size is increased significantly
         if: ${{ github.event_name == 'pull_request' && !contains( github.event.pull_request.labels.*.name, 'significant bundle size change') }}
-        run: node common/scripts/bundleSize/bundleSizeCheck.mjs ${{ matrix.app }} ${{ steps.bundles.outputs.diff }}
+        run: node ./common/scripts/bundleSize/bundleSizeCheck.mjs ${{ matrix.app }} ${{ steps.bundles.outputs.diff }}
 
   update_base_bundle_report:
     runs-on: ubuntu-latest
