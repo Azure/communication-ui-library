@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "area": "feature",
+  "workstream": "togetherMode",
+  "comment": "Addressed comments by moving createCallFeatureView and disposeCallFeatureView to its own file",
+  "packageName": "@azure/communication-react",
+  "dependentChangeType": "patch"
+}

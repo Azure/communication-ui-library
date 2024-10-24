@@ -10,8 +10,6 @@ import {
 } from '@azure/communication-calling';
 import { CommunicationIdentifierKind } from '@azure/communication-common';
 import { LocalVideoStreamState, RemoteVideoStreamState } from './CallClientState';
-/* @conditional-compile-remove(together-mode) */
-import { TogetherModeStreamState } from './CallClientState';
 import { CallContext } from './CallContext';
 import {
   convertSdkLocalStreamToDeclarativeLocalStream,
@@ -37,10 +35,7 @@ async function createViewVideo(
   context: CallContext,
   internalContext: InternalCallContext,
   callId: string,
-  stream?:
-    | RemoteVideoStreamState
-    | LocalVideoStreamState
-    | /* @conditional-compile-remove(together-mode) */ TogetherModeStreamState,
+  stream?: RemoteVideoStreamState | LocalVideoStreamState,
   participantId?: CommunicationIdentifierKind | string,
   options?: CreateViewOptions
 ): Promise<CreateViewResult | undefined> {
@@ -493,10 +488,7 @@ export function createView(
   internalContext: InternalCallContext,
   callId: string | undefined,
   participantId: CommunicationIdentifierKind | string | undefined,
-  stream:
-    | LocalVideoStreamState
-    | RemoteVideoStreamState
-    | /* @conditional-compile-remove(together-mode) */ TogetherModeStreamState,
+  stream: LocalVideoStreamState | RemoteVideoStreamState,
   options?: CreateViewOptions
 ): Promise<CreateViewResult | undefined> {
   const streamType = stream.mediaStreamType;
@@ -582,6 +574,22 @@ export function disposeAllViewsFromCall(
           callId,
           undefined,
           convertSdkLocalStreamToDeclarativeLocalStream(localStreamAndRenderer.stream)
+        );
+      }
+    }
+  }
+  /* @conditional-compile-remove(together-mode) */
+  const callFeatureStreams = internalContext.getCallFeatureRenderInfosForCall(callId);
+  /* @conditional-compile-remove(together-mode) */
+  if (callFeatureStreams) {
+    for (const [, featureStreams] of callFeatureStreams.entries()) {
+      for (const [, streamAndRenderer] of featureStreams.entries()) {
+        disposeView(
+          context,
+          internalContext,
+          callId,
+          undefined,
+          convertSdkRemoteStreamToDeclarativeRemoteStream(streamAndRenderer.stream as RemoteVideoStream)
         );
       }
     }
